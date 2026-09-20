@@ -199,6 +199,26 @@ the deflection 0.000 pixel and the delay 0.00 interval at a crowd where
 nature would capture the beam, the derivation of the physicist's entry 2
 held: light is neither bent nor delayed in this law, a plain
 disagreement with nature, registered and not tuned.
+## The entity catalog
+
+The folder [catalog/](catalog/README.md) holds the four worlds of
+[the catalog of the entities](../../docs/ENTITY_CATALOG.md) (the model
+owner, 2026-09-20: "that we can also support external ones such as the
+sun, a planet, a neutron star, so that they can be placed on the GameBoard
+and things tested"), written by `catalog/make_worlds.py`: `sun_planet.json`
+(a star as a mass and a lamp at adjacent Nodes, each on a set of three
+Nodes, a planet as a free body on a set of nine Nodes with the tangential
+momentum of a circular orbit that reflects the star's light, and a screen
+that is one `wave` detector set),
+`neutron_star.json` (eight neutrons of content 2^26 bound at one Link by
+the gravity column alone, six probes on the axes counting the presence and
+one the age moment), `lamp_mirror_screen.json` (a laser with a phase
+window, a mirror that re-releases on one direction, a wall with a slit and
+a screen read as pixels) and `clock_near_mass.json` (a mass on a fan of
+122 directions and two clocks, bodies on sets, at two radii). Placements,
+not experiments: each parses and runs its intervals with the books
+balanced, `tests/test_entity_catalog.py` pins no number, and the register
+tests things on them later.
 
 ## The detector definitions
 

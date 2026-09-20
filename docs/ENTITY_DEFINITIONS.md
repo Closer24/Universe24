@@ -9,6 +9,13 @@ ordinary measured events and detectors specified by [the Beam Law](BEAM_LAW.md)
 and [the engine](ENGINE.md). An external definition file is outside the
 engine; the instantiated detector is physically on the GameBoard.
 
+This document owns the definitions layer: how a reusable entity is
+authored in a file and placed by a world. What the entities are, every
+entity physics knows as one row of the law's keys with the world that
+places it, and the honest list of what the law cannot yet place, is
+[the catalog of the entities](ENTITY_CATALOG.md) (the model owner's
+decision of 2026-09-20, Highlights 5.4).
+
 ## Ownership and supported composition
 
 `event_universe.world_loading` is the single host owner of strict document
@@ -52,7 +59,7 @@ An authored world adds exactly two host-only keys to the ordinary world object:
 ```
 
 The shown fragment is added to a complete world declaring its law (`"law":
-"rays"`), model identity, families, shape, timing and topology. Both added
+"beam"`), model identity, families, shape, timing and topology. Both added
 keys must occur together. `entities` is a nonempty array. Each instance has exactly `name`,
 `definition`, `position`; names are nonempty strings and instance names are
 unique. Definition references must exist. Position is an exact three-integer
@@ -102,7 +109,14 @@ name, and a detector may not take a face detector's name (`face:+x` and the
 five others). All relative coordinates are exact integer triples in
 -4095..4095. Every detector position in the definition must refer to its own
 declared measured geometry. Family names refer to the world's explicit family
-declarations; no familiar physical names are built in.
+declarations; no familiar physical names are built in. Which keys of this
+schema place a given thing (a lamp, a laser, a mirror, a wall, a slit, a
+screen, a clock, a probe, a star, a planet, a neutron star) is one row of
+[the catalog of the entities](ENTITY_CATALOG.md#the-external-things): a
+definition carries the row's measured entries and detectors, and the world
+that places it declares the row's families and world keys. The catalog's
+own worlds (`examples/events/catalog/`) are plain inline worlds; a
+definition of any placeable row is authored the same way.
 
 Host structural validation covers every definition, including unused ones.
 Physical semantic validation applies when a definition is instantiated into its

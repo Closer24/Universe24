@@ -45,6 +45,7 @@ kept, their pins the law of events').
 | `test_nature_beam_books.py` | The books as running ledger lines: the transit, content and momentum lines of `books()` equal the recount over the store at every interval of a world that exercises every way a row comes or goes; an empty world ([below](#the-books)) | new (2026-09-19, the optimizations) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_entity_definitions.py`, `test_entity_loading_consumers.py` | The entity definitions loader and its consumers (the placement, the bundles, the refusals at runtime) |
+| `test_entity_catalog.py` | The worlds of the entity catalog (`examples/events/catalog/`; the model owner's decision of 2026-09-20): each is the one its generator writes, parses through the canonical loader with `quantum` on every family and `reading` on every detector, runs its 20 to 50 intervals with the books balanced at every interval, and its readings exist (a record per declared detector, a clock's identity age + waited = the intervals on every probe); no number of a world pinned ([below](#the-entity-catalog)) |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
 | `test_integer_arithmetic.py` | The shared bounded integer primitives |
 | `test_retention.py` | Generated-output ownership, lifetime and cleanup |
@@ -1057,6 +1058,33 @@ does what the law says and not as a result.
   clicked 2^17 per interval since the 13th, holds 2^63, beyond int64 and
   round-tripped through JSON; the two pushes are equal and opposite along
   x, toward each other (the third law on lone beams).
+
+## The entity catalog
+
+`tests/test_entity_catalog.py` ([the catalog of the entities](ENTITY_CATALOG.md);
+the model owner's decision of 2026-09-20, Highlights 5.4): the four worlds
+of `examples/events/catalog/` are placements of external things, not
+experiments, so the module pins no number of any world (the model owner's
+rule of 2026-09-17) and checks that each world is what its page says it
+is, the expectations written down first:
+
+- (a) the shipped files equal the documents `make_worlds.worlds()` writes,
+  world by world; each parses through the canonical loader as a world of
+  the Beam Law (its `law` the value `world.LAW_VALUE` names, `beam`, never
+  a literal in the test; its `model_id` naming the catalog), declares
+  `ticks` from 20 through 50, `quantum` on
+  every family and `reading` on every declared detector, and its parsed
+  measured events are as many as declared;
+- (b) each runs its declared intervals headless with the books balanced
+  at every interval and the tick at the end equal to the intervals;
+- (c) the readings the catalog names exist: every declared detector is in
+  the run's detector report with the reading `wave` and an integer
+  `record` per family; at least one declared detector of a world that
+  declares detectors wrote a `record` line; every probe (a measured event
+  whose table passes a family, the clock the catalog reads; the neutron
+  star and the clock near the mass declare them) ends with its clock's
+  identity, age + waited equal to the intervals run, its owed count a
+  non-negative integer.
 
 ## Generated-output lifetime
 
