@@ -123,8 +123,11 @@ bound passed silently); the refusal names the Node and the amount.
 World-file keys added: `"law": "beam"`; per family `charge`, since
 2026-09-20 the charge per unit of content rho, an integer c (the pair
 `[c, 1]`) or a pair `[n, d]` with d from 1 (a measured event's charge is
-rho times its content, a report; refused on a paid family unless 0, and
-refused with a denominator of 0 or a part that is not an integer); the
+rho times its content, a report; on a paid family since 2026-09-20 the
+whole charge per unit of amount, an integer, read on the charge line of the
+books alone, D-1, note 36 (ii); refused with a denominator of 0 or a part
+that is not an integer, and on a paid family with a denominator other than
+1); the
 key `charge` on a measured event is refused naming MIGRATION; since
 2026-09-20 (note 31; the model owner, "one mechanism for all the laws on
 the GameBoard") per family `columns`, an object of column name to
@@ -205,7 +208,8 @@ identity `meeting-v1` under `hypotheses` when it is true; absent, no world
 changes by a byte).
 Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
 `suspension`, `families`, `measured` (`table` with `read`, `measure`,
-`rerelease`, `pass` and `phase_window`), `in_transit` (gains `direction`,
+`rerelease`, `pass` and `phase_window`, since 2026-09-20 with its width
+`phase_width`, note 36 (i)), `in_transit` (gains `direction`,
 a vector, in place of `heading`; the six headings accepted as vectors),
 `detectors` (`threshold`).
 
@@ -415,7 +419,9 @@ order with each step's inverse:
    other than its own, as today: the threshold on the arrivals (section 5),
    then the `phase_window` on each ray's own phase (no coherent sum: the
    window reads the record; a bundle is now the rays of one number arriving
-   in one interval), then the rule: `read` (the push taken; the rays go
+   in one interval; since 2026-09-20 the window has a width, `phase_width`,
+   the w consecutive steps centred on the setting, N / 2 by default, note
+   36 (i)), then the rule: `read` (the push taken; the rays go
    on), `measure` (the click: the amount, its content and its label join;
    the border), `rerelease` (the re-emission, section 5), `pass`. **The
    push is ONE signed inner product over the columns** (since 2026-09-20,
@@ -994,10 +1000,12 @@ implementation's part of the contract. The design above is unchanged.
     one function that gives every measured event its table (section 2);
     `FamilyDefinition.free` is `quantum == 0`; the constraints the parser
     kept are expressed through the quantum and not widened: a charge is
-    refused on a paid family (h >= 1), a lamp on a free one, a free unit
+    refused on a paid family (h >= 1; lifted on 2026-09-20 by D-1, note 36
+    (ii): a paid family's whole charge per unit of amount on the charge
+    line), a lamp on a free one, a free unit
     carries no content and its label is `amount x D` (the mathematician's
     note that "paid => q = 0 and free => h = 1 are decisions, not
-    necessities" is recorded, not acted on). `quantum` is required: a
+    necessities" is recorded; the first was acted on by D-1). `quantum` is required: a
     default would be an implicit kind. The record (`run.json`) carries
     `quantum` per family and no `kind`. Every example world parses to the
     same `NatureBeamWorld` as before the change (checked structure by structure
@@ -2111,3 +2119,257 @@ implementation's part of the contract. The design above is unchanged.
     there (122 of the beam in `mass`, 169 in `near`, 1 in `heavy`), and the
     centroid at b = 6, M = 2^12 reads -1.8 pixels where the flight said
     -3.0 (EXPERIMENTS.md, K under the meeting).
+36. **The weak force in the world's terms: (i) the window's width** (the
+    model owner, 2026-09-20, Highlights 5.4, "DECIDED: go on everything;
+    just make sure again that it is good and generic", item (1): the weak
+    force in the recommended order, the neutrino first with the table-entry
+    key `phase_width` and no change of law; the physicist's design,
+    scratchpad/weak/WEAK.md 1.2, with its check `weak_integers.py` 1.1 and
+    1.2 and the engine's baseline `window_engine.py`, 320 of 640 arrivals
+    clicking under the half circle; `tests/test_window_width.py` (a) to
+    (e)). A window is its setting s and its width w: the w consecutive
+    steps of the circle [s - floor(w / 2), s - floor(w / 2) + w), a phase
+    at the distance d = (phase - s) mod N inside when (d + floor(w / 2))
+    mod N < w, the one floor of the window and its width
+    (`nature_beam.window_admits`; the mathematician's ONE_FORMULA row 11),
+    read as before under `beam` on each ray's own phase, under `wave` on
+    the set's pointer and on a lamp on its clock's phase. The key
+    `phase_width` on a table entry (any rule but `pass`) and on a lamp, an
+    integer from 1 through N, N / 2 by default (`world.default_width`): the
+    half circle as it was, d < N / 4 or d >= 3 N / 4, identical on every
+    (phase, setting) pair of every N from 2 through 4096 (test (a)), so
+    every registered world is bit-identical; the window table of
+    `NatureBeamTables` is deleted, the one floor its only spelling, and
+    `beam`'s pairing arc is the entry's width (test (c)). The admitted
+    fraction of a source's rays whose clock turns s steps per
+    self-creation (the stride s over the circle) is exactly w / N when
+    gcd(s, N) = 1 and g x (the residues of the coset inside the arc) / N
+    when gcd(s, N) = g (test (b): 10, 20, 40 and 320 of 640 arrivals at
+    w = 1, 2, 4, 32; the stride 2 at w = 1 centred on 0 admits 20, centred
+    on 1 none). Refused naming the key: a width outside 1 .. N, on `pass`,
+    on a family without a phase circle, and without its window's setting
+    (what the implementation decided where the design was silent: a width
+    is the width of a window, and never centres itself on 0 by default);
+    a lamp's width the same. The record: the measured events' states and
+    `state.json` carry `widths` (per family, None where none is declared)
+    beside `windows`; nothing else changes. Checked on the 85 example
+    worlds: `events.jsonl` byte-identical before and after, `state.json`
+    and `run.json` equal but for the added `widths` (VALIDATION.md). What
+    the detector's world sees (series J2, EXPERIMENTS): a cross-section
+    where the GameBoard has a stride, w / N per arrival, deterministic, no
+    draw, flat in the emitter's rate (the window reads the phase alone and
+    a free ray carries no content: PREDICTIONS entry 7, the law's own
+    limit against nature's rise with the neutrino's energy, stated and not
+    tuned), and a filter rather than an attenuation (entry 8: a beam that
+    survived one reader survives every identical reader behind it). No
+    identity: no law changed; the neutrino is a free family with a phase
+    circle, no charge and no content, gated by a reader's window.
+    **(ii) A paid family's charge per unit of amount, D-1** (the model
+    owner, 2026-09-20, "go on everything", item (2): "a paid family may
+    declare a whole charge per unit of amount, read on the charge line
+    only, the push untouched"; the physicist's design, WEAK.md 1.5, the
+    mathematician's note that "paid => q = 0" was a decision and not a
+    necessity; `tests/test_paid_charge.py` (a) to (e)). The wording of the
+    law: the charge of a measured event is rho times its content for a
+    free family and the declared whole charge times the amount for a paid
+    family. The family key `charge` on a paid family is an integer c (a
+    pair with a denominator other than 1 is refused: a charge per whole
+    unit is whole), the whole charge of one unit of amount, and it is read
+    in one place, the charge line of the books: per measured event the
+    free families' rho x content held (as before) plus the paid families'
+    c x the units it holds (`Measured.units`: the units it clicked and the
+    units waiting to be created again, at home, re-released or a product;
+    `Measured.charges` and the report `Measured.charge`), plus per paid
+    family c x the rows in transit (the transit line's running current) and
+    c x the units escaped (the rows through the faces and the border with
+    the units that stepped off with a body, `Ledger.units_escaped`): the
+    line is conserved exactly through the flight of a charged paid row,
+    its click, its home and re-creation, its escape and the escape of the
+    body that holds it (tests (a) to (d)), and it will be through a
+    transformation ((iii)). Nothing of the push changes: the paid family's
+    `charge` column value stays (0, 1) (`FamilyDefinition.column_charge`),
+    so the frame's `frame_charges` (`Measured.charges(for_push=True)`, the
+    reader's side of the push) leave the paid units out, a paid ray's push
+    stays its label, and a charged free reader reading a charged paid row
+    takes the label alone (test (a): (64, 0, 0) with the beta charge -1
+    and 0 alike). Refused naming the key: a fractional charge on a paid
+    family; a lamp on a measured event of a charged paid family (what the
+    implementation decided where the design was silent: a lamp's releases
+    would create charge from nothing, the lamp's own content being content
+    and not units; a charged paid family is born by a transformation or
+    declared in transit). The record: `run.json` carries the family's
+    `charge` as declared ([c, 1]) and its `charge` column value [0, 1];
+    the books' `charge` pair is the extended sum, the same pair as before
+    in every world without a charged paid family. No identity: a report of
+    the books. Checked on the 85 example worlds: byte-identical in
+    `events.jsonl`, `state.json` and `run.json` (VALIDATION.md; no
+    registered world declares a charge on a paid family).
+    **(iii) The transformation `become`, the identity `weak-v1`** (the
+    model owner, 2026-09-20, "go on everything", item (1): "the
+    transformation `become` with the identity `weak-v1`", in the
+    recommended order after the neutrino; the physicist's design, WEAK.md
+    sections 2 and 4.3 with its integers in `weak_integers.out` 2 to 6;
+    `tests/test_become.py` (a) to (f)). One table rule on the one-way side
+    of the border, beside `read`, `measure`, `rerelease` and `pass`: a
+    measured event becomes an event of another family and releases the
+    rest as products. Two triggers, one function (`nature_beam.transform`).
+    The clock trigger is the measured-event key `become`, `{"at": a,
+    "into": family, "products": [[family, amount, content per unit], ...],
+    "crowd": c}`, fired in step 5 at the self-creation whose clock reaches
+    `at` (the event's own age against the key by the one `by_clock`,
+    `ages_at_key`, the lifetime's form: first at `at`, then at every
+    multiple of it) while the gate is open: `crowd`, optional, an integer
+    from 0, lets the transformation fire only at a self-creation at which
+    the count the clock read is below it (the law's form of the condition
+    that keeps a bound neutron stable; absent, no gate). The click trigger
+    is a table entry whose rule is `become`, `{"rule": "become",
+    "phase_window": s, "phase_width": w, "into": ..., "products": [...]}`:
+    an arrival that passes the threshold and the window is clicked in
+    step 4 exactly as `measure` clicks it (a free arrival's push on the
+    reader, a paid arrival's label and units) and then the same
+    transformation fires, its products born at the reader's next
+    self-creation; no `at` and no `crowd` on it (the window is the gate).
+    What fires: the products are paid from what the event holds of its own
+    family, R = the sum of amount x content per unit, at most its declared
+    `amount` (refused at load) and refused at run time naming the event if
+    it holds less at the trigger (a declared transformation that cannot be
+    paid is a defect of the world, loud, never silent); the family line
+    moves, held[into] += held[from] - R and held[from] = 0, the event's
+    family is `into` and its rho the new family's; everything else of the
+    event (its number, Node, set, momentum, age, clock, phase, owed count,
+    detector set and every other family held) is untouched: it is the same
+    measured event with another family's content, and its rays come home
+    as before. The products are born at that self-creation as every
+    re-release is (`PendingRow`: product k apportioned whole over the
+    event's directions with the leftover counted from (clock age + k) mod
+    n, so that two products of amount 1 leave on different directions; the
+    parent's phase at the trigger; the age 0), the recoil over all of them,
+    free and paid (a free product is a thing thrown, not the field; the
+    design's "the nu label joins" a free ray's click is not this: on a
+    click a free ray takes the columns' push and its label never joins),
+    and the event's `become` key and every `become` entry of its table are
+    consumed (the entries reset to the keys' own rule for their family
+    with no window, the contact under them the default; the other entries
+    stay as declared): the transformation is the event's one change of
+    family. Charge exact: the parser refuses a transformation whose
+    charges do not balance (rho_into x (amount - R) plus the paid
+    products' whole charges per unit of amount, D-1, against rho_from x
+    amount), so the books' charge line is the same pair before and after
+    (test (a): [0, 1] at every tick, +1 on `p`'s content 5 against -1 on
+    the beta unit in transit, clicked or escaped; test (e) through the
+    click of the product). One-way (a change of a measured event's
+    record, as a click and a release are; the walk and the collision read
+    nothing of it), local (the event's own record, the arrival at its
+    Node), fixed work (one comparison per self-creation at the clock
+    trigger, one apportioning per product at the birth), fixed storage
+    (the declaration), no draw, no register, no formula in a payload. The
+    parser's refusals, naming the key: `become` without `into` or
+    `products`, `into` an unknown family or the event's own, a product
+    naming an unknown family, an amount below 1, a free product's content
+    other than 0, a paid product's content below 1, a label beyond the
+    bound, `at` below 1 or absent, `at` or `crowd` on a table entry,
+    `crowd` negative or fractional, `into` or `products` on another rule,
+    the products' content above the `amount`, the charges unbalanced,
+    `become` on a family (test (f)). What the implementation decided where
+    the design was silent: the crowd gate is read at every pulse of the
+    key (the clock trigger is `ages_at_key`, so a gated event whose count
+    falls below the gate fires at the next age that is a multiple of `at`,
+    never between; the bound neutron's stability is a gate on a pulse, not
+    a reset of its clock: test (c), the gate 64 holding a count of 128
+    over 40 intervals, the gate 129 letting tick 4 fire); the entries are
+    consumed at the transformation and the contact under a `become` entry
+    is the keys' `measure` (a body arriving at a `become` reader is a paid
+    arrival); the record's `become` line is written at the products'
+    birth, when their directions and the recoil are known; the count the
+    clock reads slows the trigger (test (c): a crowd of 128 at the
+    suspension [1, 128] fires tick 4 against tick 3), no special case for
+    a bound event. The record: `hypotheses` carries `weak-v1` when a
+    measured event declares `become` or a table entry's rule is `become`
+    (after `bohr-v1` and `columns-v1`); `run.json`'s `numbers` per
+    measured event carry `become` (the declaration by names, None
+    without); the measured events' states carry `became` (the
+    transformations fired) and their `family` after; the books' measured
+    line per family gains `became` (negative out of the family left,
+    positive into the family become, the sum over the families minus the
+    products' content: initial + measured + became = current + spent +
+    escaped); `events.jsonl` gains one `become` line per transformation
+    at the products' birth (`tick`, `node`, `measured`, `trigger` "clock"
+    or "click", `triggered` the tick of the trigger, `from`, `into`,
+    `products` as [family, amount, content, direction] with the direction
+    each was born on, `recoil`, `counted` the count the clock read at the
+    trigger); the tally of a `become` entry's clicks under `measure`.
+    Checked on the 85 example worlds: byte-identical in `events.jsonl`;
+    `state.json` and `run.json` equal but for the added `became` and
+    `become` (VALIDATION.md; no registered world declares a
+    transformation). What the detector's world sees (series J1 and J3,
+    EXPERIMENTS): a population of 64 neutrons decays in a step (the
+    shell's clicks within 23 intervals, a width of 0.036 of the median
+    against nature's 3.17 for a memoryless decay), every beta carries the
+    one declared content (a line), a neutron beside a proton decays later
+    than a free one (577 against 512) or, under `crowd`, not within the
+    run: PREDICTIONS entries 10 and 18, the law's own limits against
+    nature's exponential survival, continuous spectrum and stable bound
+    neutron, stated and not tuned; the trigger ticks are the engine's
+    clock slowed by its count as every clock is, and the three readings
+    outside their pins are the estimator's (one tick's count for a whole
+    history), reported and not moved.
+    **(iv) The W world: the exchange form at one Link, no key added** (the
+    model owner, 2026-09-20, "go on everything", item (3): the W world
+    after the transformation; the physicist's design, WEAK.md 1.1 and
+    4.5; `tests/test_w_world.py` (a) to (d)). The W is a paid family
+    (`quantum` 1) with a whole charge per unit of amount (D-1, (ii)) and
+    the family key `lifetime` 1 (note 31 (vii)), no column: a row born at
+    a self-creation makes its one step at the age 1 (m(1) = 1 on every
+    direction), is read by the table of the measured event it arrives at
+    (a paid arrival is measured by the keys' rule: its units clicked, its
+    label the push) and is booked on the border `lifetime` at the end of
+    that interval where no table took it; it exists on the neighbours of
+    its emitter and nowhere else. Nothing is added to the law: the W
+    world composes `become` ((iii)), D-1 and the lifetime. L = 0 is no
+    family at all (the parser refuses a lifetime of 0): the contact form
+    of the weak force is the `become` entry itself, its products released
+    by the measured event with no carrier on the GameBoard (Fermi's form;
+    series J1 and J3 are the contact form). No Z family: a neutral
+    current is the neutrino's own row met by a `rerelease` within a
+    window. The exchange: a neutron (1839 of `n`) with `become` at its
+    key into `p` and the one product `[["w", 1, 3]]` (the charges: 4 x
+    1836 on the proton left against -7344 on the W unit, 0 the neutron's)
+    throws the W on +x; one interval later the proton one Link away
+    measures it and holds it: its content 1836 + 3 = 1839 and its charge
+    7344 - 7344 = 0, a neutron's content and a neutron's charge in the
+    detector's terms, with no `become` entry on the proton at all (test
+    (a): the click at tick 4 for the key 3, the push (192, 0, 0), the
+    recoil (-192, 0, 0), the charge line [7344, 1] at every tick, the
+    store empty, the border 0). What the implementation decided where the
+    design was silent: the design's sketch of the proton's entry, `w:
+    {rule become, into n, products [["beta", ...]]}`, does not balance
+    under the law (the W unit clicked stays held with its own -7344, the
+    proton's line loses +7344 to `n`'s 0 and the beta carries another
+    -7344), so the parser refuses it (test (c)); a `become` entry on the
+    proton balances only with a positive paid product (a positron of
+    +7344: p + W -> n + e+, the W unit held), which the test pins and the
+    register does not use: the exchange is complete at the click, and the
+    family name `p` on the proton holding the W is the GameBoard's label,
+    not the detector's reading. The record: nothing new (`hypotheses`
+    carries `columns-v1` for the lifetime and `weak-v1` for the
+    transformation). Checked on the 85 example worlds: the source is
+    byte-identical to (iii)'s (the same fingerprint), so every replay is
+    (iii)'s (VALIDATION.md). What the detector's world sees (the
+    register's `w_exchange`, EXPERIMENTS): the W born at the key and
+    taken one Link and one interval later, the proton's charge 0 and
+    content 1839 after, nothing on the border, the momentum exchanged
+    (+192 and -192): 5 readings inside, 0 outside. What nature's W has and
+    this does not (the physicist's 5.3, registered as limits): the
+    electroweak scale and its broken symmetry, the W and Z masses fixing
+    the scale, the propagator's rise and V-A; the law's W is a carrier of
+    charge and momentum over one Link and nothing else.
+    **(v) The moving body's clock, unchanged** (the physicist's finding,
+    WEAK.md 2.4; the model owner, 2026-09-20: the engine stands). The
+    clock of a measured event ticks at every interval in which it owes
+    nothing, whether or not its body steps in that interval (`_frame_all`
+    before `_move`), so a body in flight fires its `become` at the same
+    tick as one at rest and its range is v x at, linear in v; TERMINOLOGY's
+    sentence on the self-creation ("a transfer is not one"), which read as
+    if a step skipped a tick, is corrected, and nature's gamma is recorded
+    as a limit of the law in HYPOTHESES.md entry 21 (series J4 the reading
+    to make), not tuned in. Nothing of the engine changes.

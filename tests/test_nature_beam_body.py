@@ -693,11 +693,13 @@ def test_the_refusals_and_the_record(tmp_path):
         and record["hypotheses"] == [BOHR_RULE]
         and record["status"] == "completed"
     )
+    # `become` per number since 2026-09-20 (the transformation): None without.
     assert record["numbers"]["1"] == {
         "position": [4, 1, 1],
         "family": "m",
         "span": [1, 3, 1],
         "phase_by_momentum": True,
+        "become": None,
     }
     assert record["measured"][0]["span"] == [1, 3, 1]
     state = json.loads((tmp_path / "run" / "state.json").read_text(encoding="utf-8"))

@@ -67,10 +67,22 @@ the model owner, 2026-09-19):
   carries that content and the momentum quantum x s along its direction,
   and a click measures it, E = h f), for a free family its `charge`, the
   charge per unit of content, rho, an integer or a pair `[n, d]` (d from
-  1; an integer c is `[c, 1]`; 0 by default; refused on a paid family; the
-  model owner's decision of 2026-09-20, Highlights 5.4: a measured event's
-  charge is rho times its content, and the electric push is one product
-  per arriving free ray, M_A x (rho_A rho_B - 1) x V_B), and since the
+  1; an integer c is `[c, 1]`; 0 by default; the model owner's decision
+  of 2026-09-20, Highlights 5.4: a measured event's charge is rho times
+  its content, and the electric push is one product per arriving free
+  ray, M_A x (rho_A rho_B - 1) x V_B), for a paid family since the same
+  day its `charge` as a whole charge per unit of amount (D-1, the
+  physicist's design of the weak force and the owner's "go on
+  everything", item (2); BEAM_LAW note 36 (ii)): an integer c, a pair
+  with a denominator other than 1 refused, read on the charge line of the
+  books only, so that the charge of a measured event is rho times its
+  content for a free family and the declared whole charge times the
+  amount (the units it clicked) for a paid family; the push is untouched
+  (a paid ray pushes by its label, and the paid family's electric column
+  value stays 0), and a lamp on a measured event of a charged paid family
+  is refused (its releases would create charge from nothing: a charged
+  paid family is born by a transformation or declared in transit), and
+  since the
   same day the columns (the model owner, Highlights 5.4, "one mechanism
   for all the laws on the GameBoard"; the mathematician's verified form,
   the identity `columns-v1`): the push is a signed inner product over the
@@ -137,16 +149,56 @@ the model owner, 2026-09-19):
   component; an entry equal to the default is accepted and changes nothing)
   and, for a measured event of a paid family, its `lamp` (`rate` `[n, d]` units
   per self-creation per direction, `directions` the directions it releases
-  on, the six headings by default, and optionally its `phase_window`);
+  on, the six headings by default, and optionally its `phase_window`); and,
+  since 2026-09-20 (the weak force, `weak-v1`: the model owner's "go on
+  everything", item (1), the transformation `become`; the physicist's
+  design, WEAK.md section 2; BEAM_LAW note 36 (iii)), its `become`, the
+  clock trigger of the transformation: `{"at": a, "into": family,
+  "products": [[family, amount, content per unit], ...], "crowd": c}`:
+  at the self-creation whose clock reaches `at` (the event's own age
+  against the key, `nature_beam.ages_at_key`, the one `by_clock` the
+  lifetime reads: first at `at`, then every `at`) the measured event
+  becomes an event of the family `into`, the products are paid from what
+  it holds of its own family (their content R = the sum of amount x
+  content, at most its declared `amount`), the rest moves to `into`, the
+  products are born at that self-creation as pending rows (product k on
+  the direction counted from (clock age + k) mod the directions, the
+  parent's phase, the recoil over all of them, free and paid), and its
+  `become` key and every `become` entry of its table are consumed;
+  `crowd`, optional, an integer from 0, the gate: the transformation
+  fires only at a self-creation at which the count the clock read is
+  below it (the law's form of the condition that keeps a bound neutron
+  stable). A free product carries the content 0, a paid one from 1; the
+  transformation's charges must balance at load (rho_into x (amount - R)
+  plus the paid products' whole charges against rho_from x amount), and
+  the run is refused at the trigger if the event holds less than R. The
+  click trigger is a table entry whose rule is `become`, `{"rule":
+  "become", "phase_window": s, "phase_width": w, "into": ...,
+  "products": [...]}`: an arrival that passes the threshold and the
+  window is clicked exactly as `measure` clicks it and then the same
+  transformation fires, its products born at the reader's next
+  self-creation (the same interval if it self-creates in it); no `at`,
+  no `crowd` (the window is the gate);
   every measured event is given its number at parsing, 1, 2, ... in
   declaration order;
 - `phase_window`, the declared window of a detector and of an emitter: a
-  setting `s`, an integer from 0 through N - 1, and the half circle centred
-  on it (with d = (phase - s) mod N, d < N / 4 or d >= 3 N / 4: exactly
-  N / 2 steps; for N = 2 the one step d = 0). On a table entry (any rule but
-  `pass`) the response is made only to a ray whose own phase falls in the
-  window; a ray outside it passes. On a lamp, a release only at the
-  self-creations whose clock phase falls in the window. On a table entry
+  setting `s`, an integer from 0 through N - 1, and since 2026-09-20 (the
+  weak force, the neutrino first: the model owner's "go on everything";
+  BEAM_LAW note 36) its width `phase_width`, an integer w from 1 through N,
+  N / 2 by default: the w consecutive steps of the circle centred on the
+  setting, [s - floor(w / 2), s - floor(w / 2) + w), a phase at the distance
+  d = (phase - s) mod N inside when (d + floor(w / 2)) mod N < w
+  (`nature_beam.window_admits`, the one floor of the window and its width;
+  at the default N / 2 it is the half circle as it was, d < N / 4 or
+  d >= 3 N / 4, exactly N / 2 steps, for N = 2 the one step d = 0). On a
+  table entry (any rule but `pass`) the response is made only to a ray
+  whose own phase falls in the window; a ray outside it passes. On a lamp,
+  a release only at the self-creations whose clock phase falls in the
+  window. A width is refused where a window is (on `pass`, on a family
+  without a phase circle), without its window's setting, at 0 and beyond
+  N; the admitted fraction of a source's rays is w / N exactly when the
+  source's stride over the circle is coprime to N (the register's series
+  J2). On a table entry
   the centre may instead be read from a reading (issue #363, 2026-09-20:
   the settings of a Bell run decided by GameBoard events): `{"reads":
   "<family>", "offset": s}` sets the centre to the phase of the coherent
@@ -197,7 +249,17 @@ the model owner, 2026-09-19):
 Refused, naming the key: `kind` on a family (the quantum decides it),
 `charge` on a measured event (since 2026-09-20 the charge is the family's
 per unit of content, docs/MIGRATION.md), a family `charge` whose
-denominator is 0 or whose parts are not integers, a detector named as a
+denominator is 0 or whose parts are not integers, a paid family's `charge`
+with a denominator other than 1, a lamp on a measured event of a charged
+paid family, a `become` without `into` or `products`, `into` naming an
+unknown family or the event's own, a product naming an unknown family, a
+product's amount below 1, a free product's content other than 0, a paid
+product's content below 1, a product's label beyond the bound, `at` below
+1 or absent on the clock trigger, `at` or `crowd` on a table entry, `crowd`
+negative or not an integer, `into` or `products` on an entry whose rule is
+not `become`, a `become` whose products' content exceeds the event's
+`amount` or whose charges do not balance, `become` on a family (a key of
+the measured event), a detector named as a
 face detector is (`face:+x` and the five others), `headings` on a lamp
 (`directions` replaces it),
 `heading` on a ray in transit (`direction` replaces it), a column named
@@ -228,7 +290,8 @@ phase circle, a turning body whose product `ticks x |p| x N` (the
 count of Links stepped within the run is at most `ticks`) exceeds
 2^62 - 1 for a declared momentum component p, a `lifetime` that is not
 one integer from 1 (a list or a per-axis value, 0, a negative number, a
-fraction) or beyond `age_bound`, a declared ray of a family with a
+fraction) or beyond `age_bound`, a `phase_width` outside 1 .. N, on `pass`,
+on a family without a phase circle or without a `phase_window`, a declared ray of a family with a
 lifetime at an age at or beyond it, a detector named `lifetime` (the
 border's name), and `held` naming the event's own family, an unknown
 family or a content that is not a positive integer.
@@ -246,7 +309,10 @@ LAW_VALUE = "beam"
 # The law's name before 2026-09-20 (rays-v1 is beam-v1, the same law): a world
 # that still declares it is refused naming the migration, never read as a default.
 OLD_LAW_VALUE = "rays"
-TABLES = ("read", "measure", "rerelease", "pass")
+TABLES = ("read", "measure", "rerelease", "pass", "become")
+# The rule of the transformation (the weak force, 2026-09-20): the click
+# and then the change of family with the products released.
+BECOME_RULE = "become"
 # The rule of a contact where the world declared none: a body that arrives
 # at a body is a paid arrival (its momentum is its own label, kappa = 1),
 # and the keys' rule for a paid arrival is `measure` (the model owner,
@@ -343,6 +409,11 @@ BOHR_RULE = "bohr-v1"
 # declares a column beyond `charge`. The two built-in columns, gravity
 # and charge, are the law as it was, integer by integer.
 COLUMNS_RULE = "columns-v1"
+# The identity of the transformation `become` (the weak force in the
+# world's terms, the model owner's "go on everything", 2026-09-20): the
+# record carries it when a measured event declares `become` or a table
+# entry's rule is `become`.
+WEAK_RULE = "weak-v1"
 # The identity of the meeting (the model owner, 2026-09-20, "DECIDED: the
 # meeting, M-R": an event in transit reads the crowd as a body does, a
 # report; `events/meeting.py`): the record carries it when the world
@@ -392,11 +463,20 @@ MEASURED_KEYS = {
     "directions",
     "table",
     "lamp",
+    "become",
 }
-LAMP_KEYS = {"rate", "directions", "phase_window"}
-# A table entry's object form: the rule, a window on any rule but `pass`,
-# and the reading's component the record carries.
-TABLE_ENTRY_KEYS = {"rule", "phase_window", "reads"}
+LAMP_KEYS = {"rate", "directions", "phase_window", "phase_width"}
+# A table entry's object form: the rule, a window on any rule but `pass`
+# with its width, the reading's component the record carries and, on a
+# `become` entry, the transformation's `into` and `products`.
+TABLE_ENTRY_KEYS = {"rule", "phase_window", "phase_width", "reads", "into", "products"}
+TRANSFORM_KEYS = {"into", "products"}
+# The clock trigger's keys (the measured event's `become`): the age `at`
+# which it fires, the family it becomes, its products and the `crowd` gate.
+BECOME_KEYS = {"at", "into", "products", "crowd"}
+# The keys of the clock trigger that a table entry (the click trigger) may
+# not carry: the window is its gate.
+CLOCK_ONLY_KEYS = ("at", "crowd")
 # A window read from a reading (issue #363, 2026-09-20): the family whose
 # rows at the set give the centre, and the offset added to it.
 WINDOW_READING_KEYS = {"reads", "offset"}
@@ -444,13 +524,16 @@ class FamilyDefinition:
     """One family of the world: its name, the content of one unit of it per
     phase step of its emitter's turn (`quantum`, h; 0 for a free family,
     1 or more for a paid one: the kind is derived, never declared), its
-    charge per unit of content (`charge`, rho, the pair (n, d) with d from
-    1: a measured event of the family of content M carries the charge
-    rho x M, and its rays push a charged reader by rho; (0, 1) for a paid
-    family, whose rays push by their content), its columns (`columns`:
-    gravity first, charge second, the declared columns after, aligned by
-    index across the families of the world; `charge` stays the value of
-    the second), whether it has a phase circle, the phase steps its rays
+    charge (`charge`: for a free family the charge per unit of content,
+    rho, the pair (n, d) with d from 1, a measured event of the family of
+    content M carrying rho x M and its rays pushing a charged reader by
+    rho; for a paid family, since 2026-09-20 (D-1), the whole charge per
+    unit of amount, the pair (c, 1), read on the charge line of the books
+    alone: its rays push by their label and its `charge` column value is
+    (0, 1)), its columns (`columns`: gravity first, charge second, the
+    declared columns after, aligned by index across the families of the
+    world; `charge` is the value of the second for a free family), whether
+    it has a phase circle, the phase steps its rays
     turn per Link crossed, and its `lifetime` (L, or None for ever: the
     age at which an event in transit of the family clicks on the border
     `lifetime` instead of making its next event, the range of the family's
@@ -466,9 +549,18 @@ class FamilyDefinition:
 
     def __post_init__(self) -> None:
         # A family made without its columns (the tests' bare definitions,
-        # the migration tool) carries the two built-in ones.
+        # the migration tool) carries the two built-in ones; a paid
+        # family's electric column is 0 (its charge is per unit of amount,
+        # read on the charge line, never by the push).
         if not self.columns:
-            object.__setattr__(self, "columns", built_in_columns(self.charge))
+            object.__setattr__(self, "columns", built_in_columns(self.column_charge))
+
+    @property
+    def column_charge(self) -> tuple[int, int]:
+        """The value of the family's `charge` column: rho for a free family,
+        (0, 1) for a paid one (D-1: a paid family's charge is per unit of
+        amount and is read on the charge line only)."""
+        return self.charge if self.free else NO_CHARGE
 
     @property
     def values(self) -> tuple[tuple[int, int], ...]:
@@ -516,6 +608,27 @@ def default_table(
 
 
 @dataclass(frozen=True)
+class Transformation:
+    """The transformation `become` as declared (the weak force,
+    2026-09-20): the family the measured event becomes (`into`, an index),
+    its products as (family index, amount, content per unit) in order,
+    and, for the clock trigger, the age `at` at which it fires and the
+    optional `crowd` gate (None: no gate); the click trigger (a table
+    entry) carries neither."""
+
+    into: int
+    products: tuple[tuple[int, int, int], ...]
+    at: int | None = None
+    crowd: int | None = None
+
+    @property
+    def needed(self) -> int:
+        """The content the products are paid with, R = sum of amount x
+        content per unit."""
+        return sum(amount * content for _, amount, content in self.products)
+
+
+@dataclass(frozen=True)
 class LampDefinition:
     """A measured event of a paid family that releases it at a declared rate,
     `rate` = (n, d) units per self-creation on each of its `directions`
@@ -526,6 +639,9 @@ class LampDefinition:
     rate: tuple[int, int]
     directions: tuple[int, ...]
     window: int | None
+    # The window's width in steps (`phase_width`), None for the default
+    # N / 2, the half circle.
+    width: int | None = None
 
 
 @dataclass(frozen=True)
@@ -582,15 +698,28 @@ class MeasuredDefinition:
     phase_by_momentum: bool = False
     held: tuple[int, ...] = ()
     contact: tuple[str, ...] = ()
+    # The width of each entry's window (`phase_width`, in family order):
+    # None where none is declared, the half circle N / 2.
+    widths: tuple[int | None, ...] = ()
+    # The transformation (the weak force, 2026-09-20): the clock trigger
+    # (`become`, None without) and per family the click trigger of the
+    # entry whose rule is `become` (None elsewhere).
+    become: Transformation | None = None
+    transforms: tuple[Transformation | None, ...] = ()
     window_reads: tuple[tuple[int, int] | None, ...] = ()
 
     def __post_init__(self) -> None:
         # A definition made without `held` (the tests' bare definitions)
-        # holds its amount under its own family alone.
+        # holds its amount under its own family alone, and without
+        # `widths` or `transforms` declares none.
         if not self.held:
             found = [0] * (self.family + 1)
             found[self.family] = self.amount
             object.__setattr__(self, "held", tuple(found))
+        if not self.widths:
+            object.__setattr__(self, "widths", (None,) * len(self.table))
+        if not self.transforms:
+            object.__setattr__(self, "transforms", (None,) * len(self.table))
         # A definition made without `window_reads` reads no window.
         if not self.window_reads:
             object.__setattr__(self, "window_reads", (None,) * len(self.table))
@@ -686,17 +815,29 @@ class NatureBeamWorld:
         return any(family.lifetime is not None for family in self.families)
 
     @property
+    def transformations(self) -> bool:
+        """Whether any measured event declares a transformation: the clock
+        trigger `become` or a table entry whose rule is `become`."""
+        return any(
+            entry.become is not None or any(t is not None for t in entry.transforms)
+            for entry in self.measured
+        )
+
+    @property
     def hypotheses(self) -> list[str]:
         """The identities of the physical hypotheses the world declares
         beside the law, in a fixed order: `bohr-v1` for the turn by momentum
         (`action`), `columns-v1` for the one mechanism of the columns (a
         column beyond `charge`, or a lifetime: a force of nature in this
-        law is a column with a sign and a range)."""
+        law is a column with a sign and a range), `weak-v1` for the
+        transformation `become` (the weak force in the world's terms)."""
         found = []
         if self.action is not None:
             found.append(BOHR_RULE)
         if self.declared_columns or self.lifetimes:
             found.append(COLUMNS_RULE)
+        if self.transformations:
+            found.append(WEAK_RULE)
         if self.meeting:
             found.append(MEETING_RULE)
         return found
@@ -720,9 +861,15 @@ class NatureBeamWorld:
             number = index + 1
             definition = self.families[family]
             holds = family < len(entry.held) and entry.held[family] > 0
+            rules = [t for t in (entry.become, *entry.transforms) if t is not None]
+            transforms_into = any(
+                (t.into == family and definition.free) or any(p[0] == family for p in t.products)
+                for t in rules
+            )
             if (
                 (holds and (definition.free or (entry.family == family and entry.lamp is not None)))
                 or entry.table[family] == "rerelease"
+                or transforms_into
                 or any(item.number == number and item.family == family for item in self.in_transit)
             ):
                 found.append(number)
@@ -1070,8 +1217,12 @@ def _families(
             if charge_value is not None
             else _signed_ratio(obj.get("charge", 0), f"families[{index}].charge")
         )
-        if quantum != FREE_QUANTUM and charge[0]:
-            raise ValueError(f"{BEAM_LAW}: a paid family (quantum {quantum}) carries no charge ({name})")
+        if quantum != FREE_QUANTUM and charge[1] != 1:
+            raise ValueError(
+                f"{BEAM_LAW}: families[{index}].charge: a paid family's charge is per unit of "
+                f"amount and whole (an integer; the pair {list(charge)} is refused on {name!r}; D-1, "
+                "2026-09-20)"
+            )
         for column, ((numerator, _), sign) in columns.items():
             if quantum != FREE_QUANTUM and numerator:
                 raise ValueError(
@@ -1116,7 +1267,7 @@ def _families(
             family.phase,
             family.phase_per_link,
             (
-                *built_in_columns(family.charge),
+                *built_in_columns(family.column_charge),
                 *(
                     Column(column, columns.get(column, (NO_CHARGE, 0))[0], signs[column][0])
                     for column in names
@@ -1131,6 +1282,39 @@ def _families(
 def _window(value: object, label: str, phase_steps: int) -> int:
     """A phase window's setting: a step of the circle, 0 through N - 1."""
     return _integer(value, label, 0, phase_steps - 1)
+
+
+def default_width(phase_steps: int) -> int:
+    """The width of a window that declares none: the half circle, N / 2
+    steps (for N = 2 the one step), the window as it was until 2026-09-20."""
+    return phase_steps // 2
+
+
+def _width(obj: dict[str, object], label: str, phase_steps: int, phased: bool, rule: str) -> int | None:
+    """A window's width (`phase_width`): an integer w from 1 through N, the
+    w consecutive steps centred on the window's setting; None where none is
+    declared (the half circle). Refused where a window is (on `pass`, which
+    responds to nothing, and for a family without a phase circle, whose rays
+    carry no phase) and without a `phase_window` (a width is the width of a
+    window, and the window's setting says where it is centred)."""
+    if "phase_width" not in obj:
+        return None
+    if rule == "pass":
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.phase_width is refused on pass: a width is a width of a "
+            "response, and pass responds to nothing"
+        )
+    if not phased:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.phase_width is refused for a family without a phase circle: "
+            "its rays carry no phase to read"
+        )
+    if "phase_window" not in obj:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.phase_width needs the window's setting `phase_window` (a "
+            "width is the width of a window centred on its setting)"
+        )
+    return _integer(obj["phase_width"], f"{label}.phase_width", 1, phase_steps)
 
 
 def _label_bound(
@@ -1174,12 +1358,119 @@ def _lamp(
                 "phase circle (a window is a width on the circle, and the family has none)"
             )
         window = _window(obj["phase_window"], f"{label}.phase_window", phase_steps)
+    width = _width(obj, label, phase_steps, phased, "measure")
     # The largest label a release can carry: the rate's numerator units at
     # the largest turn the content allows (the whole part of amount x n / d
     # at the clock's rate [n, d]).
     largest_turn = max(1, amount * turn_rate[0] // turn_rate[1])
     _label_bound(max(1, rate[0]), quantum * largest_turn, table, directions, f"{label} (the release)")
-    return LampDefinition(rate, directions, window)
+    return LampDefinition(rate, directions, window, width)
+
+
+def _products(
+    value: object,
+    label: str,
+    families: tuple[FamilyDefinition, ...],
+    table: tuple[Vector, ...],
+    directions: tuple[int, ...],
+) -> tuple[tuple[int, int, int], ...]:
+    """The products of a transformation: a list of `[family, amount,
+    content per unit]`, the amount an integer from 1, the content 0 for a
+    free family (its unit carries none) and from 1 for a paid one, each
+    product's label bounded on the event's directions as a release is."""
+    if not isinstance(value, list):
+        raise ValueError(
+            f"{BEAM_LAW}: {label} must be a list of [family, amount, content per unit] products"
+        )
+    names = {family.name: index for index, family in enumerate(families)}
+    found: list[tuple[int, int, int]] = []
+    for k, item in enumerate(value):
+        entry_label = f"{label}[{k}]"
+        if not isinstance(item, list) or len(item) != 3:
+            raise ValueError(f"{BEAM_LAW}: {entry_label} must be [family, amount, content per unit]")
+        name, amount_value, content_value = item
+        if not isinstance(name, str) or name not in names:
+            raise ValueError(f"{BEAM_LAW}: {entry_label} names an unknown family {name!r}")
+        family = names[name]
+        amount = _integer(amount_value, f"{entry_label} amount", 1)
+        if families[family].free:
+            if type(content_value) is not int or content_value != 0:
+                raise ValueError(
+                    f"{BEAM_LAW}: {entry_label}: a free family's product carries no content (0; "
+                    f"{name!r} is free)"
+                )
+            content = 0
+        else:
+            content = _integer(content_value, f"{entry_label} content", 1)
+        _label_bound(amount, content if content else 1, table, directions, entry_label)
+        found.append((family, amount, content))
+    return tuple(found)
+
+
+def _transformation(
+    value: object,
+    label: str,
+    families: tuple[FamilyDefinition, ...],
+    family: int,
+    amount: int,
+    table: tuple[Vector, ...],
+    directions: tuple[int, ...],
+    clock: bool,
+) -> Transformation:
+    """A transformation as declared: the clock trigger (`become` on the
+    measured event: `at`, `into`, `products`, `crowd`) or the click
+    trigger (`into` and `products` of a `become` table entry). `into` a
+    known family other than the event's own; the products' content at most
+    the event's `amount`; the charges balanced: rho_into x (amount - R)
+    plus the paid products' whole charges per unit of amount equal to
+    rho_from x amount (charge conservation is a refusal of the parser)."""
+    obj = _object(value, label, BECOME_KEYS if clock else TRANSFORM_KEYS, {"into", "products"})
+    names = {definition.name: index for index, definition in enumerate(families)}
+    into_name = obj["into"]
+    if not isinstance(into_name, str) or into_name not in names:
+        raise ValueError(f"{BEAM_LAW}: {label}.into names an unknown family {into_name!r}")
+    into = names[into_name]
+    if into == family:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.into names the event's own family {into_name!r}: a "
+            "transformation is a change of family"
+        )
+    products = _products(obj["products"], f"{label}.products", families, table, directions)
+    at = crowd = None
+    if clock:
+        if "at" not in obj:
+            raise ValueError(
+                f"{BEAM_LAW}: {label} lacks keys: at (the clock trigger fires at the self-creation "
+                "whose clock reaches `at`)"
+            )
+        at = _integer(obj["at"], f"{label}.at", 1)
+        if "crowd" in obj:
+            crowd = _integer(obj["crowd"], f"{label}.crowd", 0)
+    needed = sum(a * c for _, a, c in products)
+    if needed > amount:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}: the products' content {needed} exceeds the event's amount "
+            f"{amount} (a transformation is paid from what the event holds of its own family)"
+        )
+    before = rational_sum(
+        [(families[family].column_charge[0] * amount, families[family].column_charge[1])]
+    )
+    after_terms = [
+        (families[into].column_charge[0] * (amount - needed), families[into].column_charge[1])
+    ]
+    after_terms.extend(
+        (families[f].charge[0] * a, families[f].charge[1])
+        for f, a, _ in products
+        if not families[f].free
+    )
+    after = rational_sum(after_terms)
+    if before != after:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}: the transformation's charges do not balance: {into_name!r} on "
+            f"{amount - needed} with the paid products carries {list(after)} against "
+            f"{list(before)} on {families[family].name!r} (charge conservation is a refusal at load)"
+        )
+    return Transformation(into, products, at, crowd)
 
 
 def _window_reading(value: object, label: str, phase_steps: int) -> WindowReading:
@@ -1195,17 +1486,39 @@ def _window_reading(value: object, label: str, phase_steps: int) -> WindowReadin
 
 
 def _table_entry(
-    value: object, label: str, phase_steps: int, phased: bool, default: str
-) -> tuple[str, int | WindowReading | None, str]:
+    value: object,
+    label: str,
+    phase_steps: int,
+    phased: bool,
+    default: str,
+    families: tuple[FamilyDefinition, ...],
+    family: int,
+    amount: int,
+    table: tuple[Vector, ...],
+    directions: tuple[int, ...],
+) -> tuple[str, int | WindowReading | None, str, int | None, Transformation | None]:
     """One table entry: a rule string, or `{"rule": ..., "phase_window": s,
-    "reads": key}` (the rule the family's default when the object omits it,
-    so a window alone is a lawful entry; a window refused on `pass`, which
-    responds to nothing, and for a family without a phase circle, whose
-    rays carry no phase; the reading's component `vector` by default on
-    `read`, `scalar` otherwise). The window is a number, or a
-    `WindowReading` where the entry reads its centre from a reading."""
+    "phase_width": w, "reads": key}` (the rule the family's default when the
+    object omits it, so a window alone is a lawful entry; a window and its
+    width refused on `pass`, which responds to nothing, and for a family
+    without a phase circle, whose rays carry no phase; the width refused
+    without the window's setting; the reading's component `vector` by
+    default on `read`, `scalar` otherwise), or a `become` entry, the click
+    trigger of the transformation, with its `into` and `products` (refused
+    on any other rule; `at` and `crowd` refused: the window is the gate).
+    Returns the rule, the window's setting (a number, or a `WindowReading`
+    where the entry reads its centre from a reading, issue #363), the
+    component, the window's width (None: N / 2) and the transformation
+    (None but on `become`)."""
     reads: object = None
+    obj: dict[str, object] = {}
     if isinstance(value, dict):
+        clock_only = [key for key in CLOCK_ONLY_KEYS if key in value]
+        if clock_only:
+            raise ValueError(
+                f"{BEAM_LAW}: {label} declares {', '.join(clock_only)}: a key of the clock trigger "
+                "(the measured event's `become`), not of a table entry, whose gate is its window"
+            )
         obj = _object(value, label, TABLE_ENTRY_KEYS, set())
         rule = obj.get("rule", default)
         window: int | WindowReading | None = None
@@ -1228,11 +1541,35 @@ def _table_entry(
             f"{BEAM_LAW}: {label}.phase_window is refused for a family without a phase circle: "
             "its rays carry no phase to read"
         )
+    width = _width(obj, label, phase_steps, phased, str(rule))
+    transformation = None
+    if rule == BECOME_RULE:
+        missing = TRANSFORM_KEYS - set(obj)
+        if missing:
+            raise ValueError(
+                f"{BEAM_LAW}: {label} lacks keys: {', '.join(sorted(missing))} (a `become` entry "
+                "names the family the reader becomes and its products)"
+            )
+        transformation = _transformation(
+            {key: obj[key] for key in TRANSFORM_KEYS},
+            label,
+            families,
+            family,
+            amount,
+            table,
+            directions,
+            clock=False,
+        )
+    elif TRANSFORM_KEYS & set(obj):
+        raise ValueError(
+            f"{BEAM_LAW}: {label} declares into or products on the rule {rule!r}: they belong to a "
+            "`become` entry"
+        )
     if reads is None:
         reads = default_reads(str(rule))
     if reads not in READS:
         raise ValueError(f"{BEAM_LAW}: {label}.reads must be one of {READS}")
-    return str(rule), window, str(reads)
+    return str(rule), window, str(reads), width, transformation
 
 
 def _measured(
@@ -1356,20 +1693,34 @@ def _measured(
         rules: list[str] = []
         windows: list[int | None] = []
         reads: list[str] = []
+        widths: list[int | None] = []
+        transforms: list[Transformation | None] = []
         window_reads: list[tuple[int, int] | None] = [None] * len(families)
         for rule, window, component in default_table(families):
             rules.append(rule)
             windows.append(window)
             reads.append(component)
+            widths.append(None)
+            transforms.append(None)
         declared = obj.get("table", {})
         if not isinstance(declared, dict):
             raise ValueError(f"{BEAM_LAW}: {label}.table must map family names to rules")
         for key, entry_value in declared.items():
             if key not in names:
                 raise ValueError(f"{BEAM_LAW}: {label}.table names an unknown family {key!r}")
+            at = names[key]
             entry_label = f"{label}.table[{key!r}]"
-            rule, entry_window, component = _table_entry(
-                entry_value, entry_label, phase_steps, families[names[key]].phase, rules[names[key]]
+            rule, entry_window, component, widths[at], transforms[at] = _table_entry(
+                entry_value,
+                entry_label,
+                phase_steps,
+                families[at].phase,
+                rules[at],
+                families,
+                family,
+                amount,
+                table,
+                directions,
             )
             if isinstance(entry_window, WindowReading):
                 # The window read from a reading (issue #363): the named
@@ -1394,12 +1745,27 @@ def _measured(
                 window_reads[names[key]] = (names[entry_window.family], entry_window.offset)
             rules[names[key]], reads[names[key]] = rule, component
             windows[names[key]] = entry_window if isinstance(entry_window, int) else None
+        # The clock trigger of the transformation (`become` on the event).
+        become = None
+        if "become" in obj:
+            become = _transformation(
+                obj["become"],
+                f"{label}.become",
+                families,
+                family,
+                amount,
+                table,
+                directions,
+                clock=True,
+            )
         # The rule of a contact per family: the entry's rule where it
         # differs from the keys' own rule for the family, `measure` (the
         # keys' rule for a paid arrival, the body's momentum its own label)
-        # where the entry is the keys' own, declared or not.
+        # where the entry is the keys' own, declared or not, and under a
+        # `become` entry (the click's hand-over; no transformation fires
+        # at a contact: a body is not a click of the entry's family).
         contact = [
-            rule if rule != default_rule(family) else CONTACT_DEFAULT
+            rule if rule not in (default_rule(family), BECOME_RULE) else CONTACT_DEFAULT
             for rule, family in zip(rules, families, strict=True)
         ]
         for held_family, content in enumerate(held):
@@ -1411,6 +1777,12 @@ def _measured(
         if "lamp" in obj:
             if families[family].free:
                 raise ValueError(f"{BEAM_LAW}: {label}: a lamp is a measured event of a paid family")
+            if families[family].charge[0]:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}: a lamp of the charged paid family {family_name!r} is "
+                    "refused: its releases would create charge from nothing (a charged paid family "
+                    "is born by a transformation or declared in transit; D-1, 2026-09-20)"
+                )
             lamp = _lamp(
                 obj["lamp"],
                 f"{label}.lamp",
@@ -1438,6 +1810,9 @@ def _measured(
                 turning,
                 tuple(held),
                 tuple(contact),
+                tuple(widths),
+                become,
+                tuple(transforms),
                 tuple(window_reads),
             )
         )

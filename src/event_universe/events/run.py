@@ -133,6 +133,21 @@ def execute_nature_beam_run(
                 "family": world.families[entry.family].name,
                 "span": list(entry.span),
                 "phase_by_momentum": entry.phase_by_momentum,
+                # The clock trigger of the transformation as declared (the
+                # weak force, 2026-09-20), None without one.
+                "become": (
+                    None
+                    if entry.become is None
+                    else {
+                        "at": entry.become.at,
+                        "into": world.families[entry.become.into].name,
+                        "products": [
+                            [world.families[f].name, amount, content]
+                            for f, amount, content in entry.become.products
+                        ],
+                        "crowd": entry.become.crowd,
+                    }
+                ),
             }
             for index, entry in enumerate(world.measured)
         },

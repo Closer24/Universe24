@@ -11,6 +11,112 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The weak force in the world's terms: the 85 example worlds replayed after each commit, series J - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` from its tip `6a596b34`
+(the strong force, series I, the wave threshold and the four unifications
+landed; source fingerprint
+`da947becf3343b3e812d59ea88ba51650ba791cf19c7782f8d665763f2df0f49`, the
+fingerprint of the entry below), Python 3.14.0rc2, numpy 2.5.3, headless,
+four cores. Every world of `examples/events/` (85 before series J's worlds
+were added) was run with the runner at its declared `ticks` before the
+first change and after each commit of the model owner's decision of
+2026-09-20, "go on everything" ([BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+and `events.jsonl`, `state.json` and `run.json` (its volatile fields
+`elapsed_seconds`, `source_sha256` and `package_version` removed) compared
+by SHA-256, file by file, raw and normalized (the document parsed, the
+record keys the commit added removed wherever they occur, re-serialized
+with sorted keys and hashed: the added keys are reports of the record,
+named per row, and a raw difference by them alone is not a changed
+integer).
+
+| After | Source fingerprint | `events.jsonl` | `state.json` raw / normalized | `run.json` (stable) raw / normalized | Keys added to the record |
+| --- | --- | --- | --- | --- | --- |
+| (i) the window's width `phase_width` (N / 2 by default) | `55f30af0309c2812646384a0caf4d16a956e5ae525df878a008c6bf075e90941` | 85 identical, 0 changed | 4 / 85 identical | 4 / 85 identical | `widths` per measured event (None where no width is declared) |
+| (ii) D-1, a paid family's whole charge per unit of amount on the charge line | `b28c5865ec143004b36203e8aad70a4bed65f80896cc6b5f526f6d71748732b6` | 85 identical, 0 changed | 4 / 85 identical (the `widths` of (i) alone) | 4 / 85 identical (the same) | none (no registered world declares a charge on a paid family) |
+| (iii) the transformation `become`, the identity `weak-v1` | `071197bc5d0f08cbe52aa44dca0e0d7ad9adf99ef6bf6023231310b9bb8f211c` | 85 identical, 0 changed | 4 / 85 identical (the `widths` of (i) and the added `became` of the states) | 0 / 85 identical (the added `become` in `numbers` of every declared measured event, None everywhere) | `became` per measured event (the transformations fired) and its books' measured line; `become` per measured event in `numbers` (None where none is declared) |
+| (iv) the W world (no key added; the source byte-identical to (iii)'s) | `071197bc5d0f08cbe52aa44dca0e0d7ad9adf99ef6bf6023231310b9bb8f211c` | as (iii): 85 identical, 0 changed | as (iii) | as (iii) | none |
+
+No registered series moves (C, 7, D, E, G, H, I, K, Bell, A10, the
+catalog): every reading of the register is the same integer under the
+window's width, and the 81 worlds whose `state.json` and `run.json`
+differ raw differ by the added `widths` key alone (the four raw-identical
+ones, `deuteron_3`, `pp_1_weak`, `pp_3` and `alpha_square`, are the
+nucleus worlds whose bodies all left the GameBoard, so their final states
+hold no measured event for the key to enter). The commands: `python -m
+event_universe --init <world> --output <dir>` per world, four at a time,
+the outputs digested and pruned; `python tools/check.py --base 6a596b34`
+green after the commit (487 tests selected), `--base 2605f75f` green after
+(ii) (464 tests), `--base af7ce995` green after (iii) (507 tests), `--base
+HEAD` green after (iv) (196 tests) and after the clock's correction (28
+tests); `python tools/check.py --full` green on the merge with the branch
+tip `4c9be1f6` (the window read from a reading, issue #363, and the choosers
+on the GameBoard: both sides kept, the weak force's note renumbered 35):
+ruff, mypy strict and 603 tests; then on the merge with `origin/main`
+`a9c12384` (the G1 tie, the rays fixes, #363 and the meeting: both sides
+kept, the weak force's note renumbered 36 and its hypothesis 21) ruff,
+mypy strict and 619 tests, and six worlds replayed under the merged
+engine against their own side's engine (`two_slits`, `bell/read`,
+`lensing/mass_meeting` and `nucleus/deuteron_1` against main's,
+`weak/j2_default` and `weak/w_exchange` against this branch's):
+`events.jsonl` byte-identical in all six, `state.json` and `run.json`
+equal but for the other side's added keys (`widths`, `became` and
+`become` on main's worlds; `meeting` and `turned` on the weak worlds).
+
+**Series J1 and J3, the neutron's decay against its clock** (the register
+entry [J, the weak force (2026-09-20)](EXPERIMENTS.md#j-the-weak-force-2026-09-20)):
+the five worlds `j1_lattice`, `j1_source`, `j3_deuteron`,
+`j3_deuteron_crowd` and `j3_neutron_free` of `examples/events/weak/` run
+through `tools/run_series.py --jobs 3` at the fingerprint
+`071197bc5d0f08cbe52aa44dca0e0d7ad9adf99ef6bf6023231310b9bb8f211c`, 650, 650, 700, 700 and 600
+intervals, completed in 231, 238, 82, 70 and 53 s with the books balanced
+at every tick (the charge line the same pair through every
+transformation); `tools/weak_readings.py`: 0 record checks failed, 15
+readings inside, 3 outside, none moved. The expectations were written
+before the runs by `examples/events/weak/make_worlds.py` into
+`expectations.json` (each neutron's trigger tick from the count its
+clock read at tick 100 of a warm run without the `become` keys, at +
+floor(at x c / 2^20)). Inside: the shell's 64 beta clicks a step in both
+J1 worlds (the width over the median 0.036 and 0.038 against nature's
+3.17), every click the content 3, the count the neutrons'; the deuteron's
+pair holding after the transformation (0 steps of 39 and 21 attempted),
+the gated neutron never firing in 700 intervals, the free neutron firing
+at 512 exactly, every beta reaching its shell. Outside, the one GAMEBOARD
+criterion in three worlds: the corners of `j1_lattice` at 524 against the
+pinned 522 (the warm run's count at one tick, 12 rows of 1839, had caught
+a gap of their line-mates' rows; their count at the trigger 15 rows,
+27585), 48 neutrons of `j1_source` and the deuteron's neutron 1 to 3
+intervals after their pinned ticks (the count over a clock's history
+under a fan's dwells is not the one tick's count the estimator took); the
+numbers in the register, nothing moved.
+
+**The W world, the exchange at one Link** (the register entry
+[J, the weak force (2026-09-20)](EXPERIMENTS.md#j-the-weak-force-2026-09-20)):
+`examples/events/weak/w_exchange.json` run through `tools/run_series.py`
+at the fingerprint `071197bc5d0f08cbe52aa44dca0e0d7ad9adf99ef6bf6023231310b9bb8f211c` (the
+transformation's: the W world changes no source), 16 intervals, 0.1 s,
+the books balanced at every tick; `tools/weak_readings.py`: 0 record
+checks failed, 5 readings inside, 0 outside: the neutron's `become` at
+tick 8 with the W on +x, the proton's click at tick 9, its charge [0, 1]
+and content 1839 after, the border `lifetime` 0, the momenta -192 and
++192.
+
+**Series J2, the neutrino's passage through a filled bar** (the register
+entry [J, the weak force (2026-09-20)](EXPERIMENTS.md#j-the-weak-force-2026-09-20)):
+the five worlds of `examples/events/weak/j2_*.json` run through
+`tools/run_series.py --jobs 4` at the fingerprint
+`55f30af0309c2812646384a0caf4d16a956e5ae525df878a008c6bf075e90941`, 1037
+intervals each, every run completed in about 3 s with the books balanced
+at every tick; `tools/weak_readings.py`: 0 record checks failed, 13
+readings inside, 0 outside, none moved. The expectations were computed
+before the runs from the engine's flight table by
+`examples/events/weak/make_worlds.py` (the first-arrival ages 13 at 8
+Links and 326 at 190; 1024 arrivals at the first reader, 711 rays reaching
+the far detector) and every count came out exactly: 16 of 1024 at the
+first reader of `j2_filter` (1 / 64), 0 at the 127 behind it, 699 at the
+far detector; 64 readers of 16 in `j2_ladder` and 0 beyond; 512 and 352
+in `j2_default`; 32 and 688 in `j2_stride2`; 0 and 711 in
+`j2_stride2_odd`.
 ## The meeting: the 85 example worlds replayed with the key absent, the ten registered worlds replayed with it, and series K old against new - 2026-09-20
 
 The worktree of `claude/universe24-new-3ytqde` from its tip `329c5660`

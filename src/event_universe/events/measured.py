@@ -6,16 +6,24 @@ around it (the clocks, the steps, the books' identities) is `engine.py`.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import NamedTuple
 
 from event_universe.core.game_board import Address3
 from event_universe.core.integer import rational_sum, reduced
-from event_universe.events.world import AGE_READS, BEAM_LAW, CHARGE_INDEX, MOMENTUM_BOUND
+from event_universe.events.world import (
+    AGE_READS,
+    BEAM_LAW,
+    CHARGE_INDEX,
+    MOMENTUM_BOUND,
+    Transformation,
+)
 
 __all__ = [
     "TALLIES",
     "DetectorSet",
     "Ledger",
     "Measured",
+    "PendingRow",
     "column_charges",
     "count_component",
     "rational_sum",
@@ -26,8 +34,29 @@ TALLIES = ("home", "read", "measure", "rerelease")
 # default: the presence, the scalar over every ray at its Node of another
 # number.
 PRESENCE_READS = "scalar"
-Pending = tuple[int, int, int]
 Pair = tuple[int, int]
+
+
+class PendingRow(NamedTuple):
+    """A row waiting at a measured event to be created again at its next
+    self-creation: what came home or is re-released (`amount`, the
+    `content` per unit, the arriving `phase`) and, since 2026-09-20 (the
+    transformation `become`), a product of a transformation: `first` the
+    offset added to the clock age in the tie rule of the apportioning over
+    the directions (product k leaves on the direction counted from (clock
+    age + k) mod n, so that two products of amount 1 leave on different
+    directions; 0 for a home or a re-release), `thrown` whether the row is
+    a product, a thing thrown that takes a recoil even of a free family (a
+    free release or re-release takes none: a free ray is the field)."""
+
+    amount: int
+    content: int
+    phase: int
+    first: int = 0
+    thrown: bool = False
+
+
+Pending = PendingRow
 
 
 def column_charges(
@@ -173,9 +202,31 @@ class Measured:
     # what the event's charges are read from (`charges`).
     column_names: tuple[str, ...] = ()
     family_values: tuple[tuple[Pair, ...], ...] = ()
+    # The width of each entry's window in steps (`phase_width`, per family;
+    # None where none is declared: the half circle N / 2) and the lamp's.
+    widths: list[int | None] = field(default_factory=list)
+    lamp_width: int | None = None
+    # Every family's whole charge per unit of amount (D-1, 2026-09-20): the
+    # paid family's declared `charge`, (0, 1) for a free family, whose
+    # charge is per unit of content and enters the columns instead. Read by
+    # `charges` for the charge line of the books and the report, never by
+    # the push (`charges(for_push=True)` leaves it out).
+    unit_charges: tuple[Pair, ...] = ()
+    # The transformation `become` (the weak force, 2026-09-20): the clock
+    # trigger as declared (None without, and None once it fired), per
+    # family the click trigger of the entry whose rule is `become` (None
+    # elsewhere, and everywhere once one fired), the count of the
+    # transformations fired (`became`) and the ones whose products wait to
+    # be born, for the `become` record written at their birth: (trigger,
+    # the tick of the trigger, the family from, the family into, the count
+    # the clock read at the trigger).
+    become: Transformation | None = None
+    transforms: list[Transformation | None] = field(default_factory=list)
+    became: int = 0
+    transformed: list[tuple[str, int, int, int, int]] = field(default_factory=list)
     age: int = 0
     owed: int = 0
-    pending: list[list[Pending]] = field(default_factory=list)
+    pending: list[list[PendingRow]] = field(default_factory=list)
     waited: int = 0
     turned: int = 0
     steps: int = 0
@@ -222,14 +273,27 @@ class Measured:
         unifications (3))."""
         return tuple(node for node, number in self.detector_set.nodes.items() if number == self.number)
 
-    def charges(self) -> list[Pair]:
+    def units(self, family: int) -> int:
+        """The units of a paid family the event holds: the units it clicked
+        (`clicks`) and the units waiting to be created again (`pending`:
+        what came home, is re-released or is a product of a
+        transformation). Its charge in the `charge` column is their count
+        times the family's whole charge per unit of amount (D-1)."""
+        return self.clicks[family] + self.pending_amount(family)
+
+    def charges(self, for_push: bool = False) -> list[Pair]:
         """The event's charge in every column of the world, from what it
         holds (`column_charges`): the reduced pair (E, D) per column,
-        gravity first (the content, (M, 1)), charge second (rho x M, the
-        report of 2026-09-20), the declared columns after. The frame reads
-        it once per interval into `frame_charges`, the reader's side of
-        the push (`nature_beam.push_form`)."""
-        return column_charges(
+        gravity first (the content, (M, 1)), charge second (rho x M over
+        the free families held, the report of 2026-09-20, plus since
+        2026-09-20 the paid families' whole charge per unit of amount times
+        the units held, D-1), the declared columns after. The frame reads
+        it once per interval into `frame_charges` with `for_push`, the
+        reader's side of the push (`nature_beam.push_form`), which leaves
+        the paid units out: the charge of a measured event is rho times
+        its content for a free family and the declared whole charge times
+        the amount for a paid family, and the push reads only the former."""
+        charges = column_charges(
             [
                 (self.family_values[family], content)
                 for family, content in enumerate(self.held)
@@ -239,6 +303,16 @@ class Measured:
             self.number,
             self.position,
         )
+        if for_push or not self.unit_charges:
+            return charges
+        terms = [
+            (numerator * self.units(family), denominator)
+            for family, (numerator, denominator) in enumerate(self.unit_charges)
+            if numerator and self.units(family)
+        ]
+        if terms:
+            charges[CHARGE_INDEX] = rational_sum([charges[CHARGE_INDEX], *terms])
+        return charges
 
     @property
     def charge(self) -> Pair:
@@ -253,10 +327,19 @@ class Measured:
         return self.detector_set.threshold
 
     def pending_amount(self, family: int) -> int:
-        return sum(amount for amount, _, _ in self.pending[family])
+        return sum(row.amount for row in self.pending[family])
 
     def pending_content(self, family: int) -> int:
-        return sum(amount * content for amount, content, _ in self.pending[family])
+        return sum(row.amount * row.content for row in self.pending[family])
+
+    def pending_thrown_amount(self, family: int) -> int:
+        """The units of the products of a transformation waiting to be
+        born (never absorbed: booked as released when they leave with a
+        body that steps off the GameBoard)."""
+        return sum(row.amount for row in self.pending[family] if row.thrown)
+
+    def pending_thrown_content(self, family: int) -> int:
+        return sum(row.amount * row.content for row in self.pending[family] if row.thrown)
 
     def state(self) -> dict[str, object]:
         charges = self.charges()
@@ -274,6 +357,7 @@ class Measured:
             "fixed": self.fixed,
             "span": list(self.span),
             "windows": list(self.windows),
+            "widths": list(self.widths),
             "detector": self.detector,
             "age": self.age,
             "owed": self.owed,
@@ -286,6 +370,8 @@ class Measured:
             "events": list(self.clicks),
             "pushed": list(self.pushed),
             "contacts": list(self.contacts),
+            # The transformations fired (the weak force, 2026-09-20).
+            "became": self.became,
         }
 
 
@@ -328,6 +414,17 @@ class Ledger:
     lifetime_content: list[int] = field(default_factory=list)
     lifetime_record: list[int] = field(default_factory=list)
     lifetime_momentum: list[list[int]] = field(default_factory=list)
+    # The units a measured event had clicked when it left the GameBoard
+    # through a face, per family (D-1, 2026-09-20): their charge stays on
+    # the charge line as escaped, with the rows that left.
+    units_escaped: list[int] = field(default_factory=list)
+    # The `became` line of the measured books (the transformation `become`,
+    # 2026-09-20): per family the content that entered its line by
+    # transformations, positive into the family become, negative out of
+    # the family left; initial + measured + became = current + spent +
+    # escaped, and the sum over the families of `became` is minus the
+    # content the products took (their `released` content).
+    held_became: list[int] = field(default_factory=list)
     # The `turned` line (the meeting, 2026-09-20; `events/meeting.py`): per
     # family the change of the transit momentum line by the turns of its
     # units in transit, weight x (u_d' - u_d) summed, a report as `pushed`
@@ -347,6 +444,8 @@ class Ledger:
             "lifetime_amount",
             "lifetime_content",
             "lifetime_record",
+            "units_escaped",
+            "held_became",
         ):
             setattr(self, name, [0] * count)
         self.lifetime_momentum = [[0, 0, 0] for _ in range(count)]

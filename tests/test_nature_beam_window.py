@@ -61,7 +61,8 @@ from __future__ import annotations
 import pytest
 
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.nature_beam import nature_beam_tables
+from event_universe.events.nature_beam import nature_beam_tables, window_admits
+from event_universe.events.world import default_width
 
 LIGHT, COUNTER = 0, 1
 FAMILIES = [{"name": "light", "quantum": 1}, {"name": "counter", "quantum": 1}]
@@ -123,13 +124,16 @@ def beam(x: int, phase: int) -> dict[str, object]:
 
 def test_the_window_is_the_centred_half_circle_and_a_ray_outside_it_passes():
     """(a)."""
+    # The window is the one floor `window_admits` at the default width N / 2
+    # (since 2026-09-20; until then a table over the distances).
     for modulus, admitted in ((64, [*range(16), *range(48, 64)]), (2, [0]), (4, [0, 3])):
-        tables = nature_beam_tables(
-            parse_nature_beam_world(
-                world([7, 1, 1], [counter(6, {"light": "measure"})], 1 << 20) | {"N": modulus}
-            )
+        parsed = parse_nature_beam_world(
+            world([7, 1, 1], [counter(6, {"light": "measure"})], 1 << 20) | {"N": modulus}
         )
-        assert [d for d in range(modulus) if tables.window[d]] == admitted
+        assert not hasattr(nature_beam_tables(parsed), "window")
+        assert [
+            d for d in range(modulus) if window_admits(d, default_width(modulus), modulus)
+        ] == admitted
     source = {"position": [0, 0, 0], "family": "light", "amount": 8, "fixed": True}
     gate = counter(6, {"light": {"rule": "measure", "phase_window": 20}})
     beams = [beam(5, 35), beam(4, 36), beam(3, 3), beam(2, 4)]

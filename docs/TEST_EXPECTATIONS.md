@@ -44,6 +44,11 @@ kept, their pins the law of events').
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
+| `test_paid_charge.py` | A paid family's charge per unit of amount (D-1): the books' charge line conserved through the click of a charged paid row, its escape, its home and the escape of the body that holds it; the push untouched (the label alone, with the charge -1 and 0 alike); the refusals and the record ([below](#a-paid-familys-charge)) | new (2026-09-20, the model owner's "go on everything", item (2)) |
+| `test_window_width.py` | The width of a window, `phase_width`: the one floor `window_admits` equal to the half circle at the default width on every pair, the admitted fraction w / N against the source's stride (10, 20, 40, 320 of 640; the stride 2's coset), `beam`'s pairing arc, a lamp's width, the refusals ([below](#the-width-of-a-window)) | new (2026-09-20, the model owner's "go on everything", the neutrino first) |
+| `test_weak_readings.py` | The weak-force readings tool (series J) reads the runner's record and the flight table: on a short bar run through the runner, the first reader's 3 clicks of 192 arrivals, the far detector's 151, the first-arrival ages 13 and 51; on the toy of the transformation with a shell of 62 readers, the `become` line and the shell's one click ([below](#the-width-of-a-window), [the transformation](#the-transformation)) | new (2026-09-20, series J2; (b) with series J1) |
+| `test_become.py` | The transformation `become`, `weak-v1`: the clock trigger at the self-creation whose clock reaches `at`, the products born as a re-release is with the recoil over all of them, the `became` line and the charge line exact; the click trigger within a window and the entry consumed; the crowd slowing the trigger and the gate holding it; the charge line through the click of the product; the refusals and the run refused when the event cannot pay ([below](#the-transformation)) | new (2026-09-20, the model owner's "go on everything", item (1)) |
+| `test_w_world.py` | The W world, the exchange at one Link: the W (paid, charge -7344 per unit, lifetime 1) thrown at the neutron's key and measured by the proton one interval later, its content and charge a neutron's; the W into empty space on the border; the click trigger on the proton refused with the design's sketch and balanced with a positive product; the refusals ([below](#the-w-world)) | new (2026-09-20, the model owner's "go on everything", item (3)) |
 | `test_nature_beam_window_reads.py` | A table entry's window read from a reading (`phase_window` `{"reads": ..., "offset": ...}`): the centre the setting ray's phase plus the offset, a ray inside clicking with the `window` on its record and a ray outside passing with `window` and `reads`; the edge case of no setting ray (a `pass` naming `window` None) and of an antiphase pair; the parsing and the refusals ([below](#a-window-read-from-a-reading)) | new (2026-09-20, issue #363) |
 | `test_bell_choosers.py` | The reader of the Bell run with the choosers on the GameBoard (`tools/bell_choosers.py`) reads the engine on a minimal case run through the runner: the offsets off `FlightTable.manhattan_steps`, one bin at fixed settings with E the triangle exactly, the written windows reading the same and merging, the CHSH sums on synthetic bins ([below](#a-window-read-from-a-reading)) | new (2026-09-20, issue #363) |
 | `test_nature_beam_world_parsing.py` | The world file of the Beam Law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-beam-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
@@ -166,8 +171,10 @@ derived from `quantum`).
   is 1 for a free family and the quantum for a paid one; `kind` is refused
   naming the removal of 2026-09-19 and docs/MIGRATION.md for the values
   `free`, `paid` and `other`; a family without `quantum` is refused naming
-  the key; a negative quantum is refused; a charge on a paid family is
-  refused naming its quantum; a charge on a free family (-3 parsed as the
+  the key; a negative quantum is refused; a fractional charge on a paid
+  family is refused (since 2026-09-20, D-1: a paid family's charge is
+  whole per unit of amount; until then any charge on a paid family was
+  refused naming its quantum); a charge on a free family (-3 parsed as the
   pair (-3, 1), [1, 2] as (1, 2); since 2026-09-20 the charge per unit of
   content, no `charge` on the measured event) and a lamp on a paid family
   are accepted, and a lamp on a free family is refused.
@@ -1351,7 +1358,9 @@ flight table: a ray released at tick t first walks at t + 1; 10 Links take
   the momentum (128, 0, 0) (was (2, 0, 0)), 2 escaped, nothing in the
   store, the books balanced;
   `in_window` at N = 64 admits d in [0, 16) and [48, 64), at N = 2 the step
-  0, at N = 4 the steps 0 and 3.
+  0, at N = 4 the steps 0 and 3 (since 2026-09-20 read off the one floor
+  `window_admits` at the default width N / 2, the window table being
+  deleted; the same steps).
 - (b) the complement covers the circle exactly: a bar of 12 x 1 x 1,
   K 2^14, a lamp of `light` (content K + 2, phase 0, rate [1, 1] on +X
   only) at x = 0; a counter at x = 10 measuring through the window 40 and
@@ -1375,6 +1384,262 @@ flight table: a ray released at tick t first walks at t + 1; 10 Links take
   `rule` takes the family's default rule (since the night of 2026-09-19: a
   window alone on a paid family measures in the window 8).
 
+## The transformation
+
+`tests/test_become.py` (docs/BEAM_LAW.md, section 2 and section 10 note
+36 (iii); the model owner, 2026-09-20, "go on everything", item (1): the
+transformation `become` with the identity `weak-v1`; the physicist's
+design, WEAK.md sections 2 and 4.3). The toy of the design: `n` (free, no
+phase circle, content 7, charge 0), `p` (free, charge [1, 5]: +1 on a
+content of 5), `beta` (paid, quantum 1, charge -1 per unit of amount),
+`nu` (free, a phase circle, charge 0), `w` (free, the absorber, charge 0);
+an open 5^3 GameBoard, K 2^20, N 64, `release` [1, 4096], `suspension` 0
+unless said; the `become` of `n`: into `p`, the products `[["beta", 1,
+2], ["nu", 1, 0]]` (R = 2; the charges +1 on `p`'s 5 and -1 on the beta
+unit against 0 on `n`). The six headings in Port order are +x, -x, +y,
+-y, +z, -z; a heading row born at tick t is m(tau) Links on at tick
+t + tau, m(tau) = (128 tau + 110) // 220. The expected integers, written
+down before the first run:
+
+- (a) the clock trigger: `n` fixed at (2, 2, 2) with `at` 3: nothing at
+  the ticks 1 and 2 (`held` [7, 0, 0, 0, 0]); at tick 3 `held` [0, 5, 0,
+  0, 0] and the family `p`; the rows born at tick 3 with the age 0 and the
+  phase 0: `beta` on +y (the heading (2 + 0) mod 6 = 2), amount 1,
+  content 2, label (0, 128, 0); `nu` on -y (the next heading), amount 1,
+  content 0, label (0, -64, 0); the recoil and the event's momentum
+  (0, -64, 0); the `become` record at tick 3: trigger "clock", triggered
+  3, from `n`, into `p`, the products [["beta", 1, 2, [0, 1, 0]], ["nu",
+  1, 0, [0, -1, 0]]], recoil [0, -64, 0], counted 0; the books at every
+  tick: `n` `became` -7, `p` `became` +5, `beta` released 1 unit with
+  the content 2, `nu` 1 unit with the content 0 (-7 + 5 + 2 = 0), the
+  charge line [0, 1] at every tick; the beta row at (2, 3, 2) at the ticks
+  4 and 5, (2, 4, 2) at 6 and 7, `face:+y` at tick 8 (escaped content 2,
+  momentum (0, 128, 0)), the nu row `face:-y` at tick 8 (amount 1,
+  momentum (0, -64, 0)), the store empty after; `hypotheses` ["weak-v1"];
+  the state's `became` 1 and `family` 1; `run.json`'s
+  `numbers["1"]["become"]` the declaration by names. With `at` 10^6 over
+  20 intervals: `held` unchanged, no record, `became` 0, the board's rows
+  identical to the world without the key.
+- (b) the click trigger: a bar of 9 x 1 x 1, K 4096, `release` [1,
+  4096]; a fixed `nu` source of content 4096 at x = 0 (the turn 1) and
+  the reader `n` (content 7) fixed at x = 3 with the entry `nu: {rule
+  become, phase_window 0, phase_width 1, into p, products as (a)}`: a row
+  born at tick t arrives at tick t + 5 (m(5) = 3) with the phase t - 1;
+  the ray of phase 0 clicks at tick 6 (the push (-448, 0, 0)), the
+  products born in step 5 of tick 6 (the clock age 5): `beta` on -z (the
+  heading 5), label (0, 0, -128), `nu` on +x (the heading 0), label (64,
+  0, 0), the recoil (-64, 0, 128), the momentum (-512, 0, 128); the
+  `become` record at tick 6 with triggered 6; the beta row through
+  `face:-z` at tick 7, the nu product through `face:+x` at tick 16
+  (m(10) = 6); the entry consumed: the reader, now `p` (content 5), reads
+  every later arrival by the keys' `read` (the push (-320, 0, 0) each, 69
+  reads at the ticks 7 .. 75, none clicked or passed; the momentum
+  (-512 - 69 x 320, 0, 128) at the end). With the window 5: the phases
+  0 .. 4 pass (`pass` lines naming the window 5 at the ticks 6 .. 10) and
+  the phase 5 clicks at tick 11, the transformation at tick 11.
+- (c) the crowd slows the trigger and the gate holds it: `p` fixed at
+  (1, 2, 2) of content 64 releasing 64 units per heading per
+  self-creation (`release` [1, 1]) and `n` fixed at (2, 2, 2) with `at` 3
+  and `suspension` [1, 128]: `n` counts 64 at tick 2 and 128 from tick 3
+  on, owes 1 after every self-creation from tick 2, and fires at tick 4
+  (the age 3), against tick 3 alone; the record's `counted` 128. With
+  `crowd` 64 it never fires in 40 intervals (the count 128 at every pulse
+  of the key, the ages 3, 6, 9, ...); with `crowd` 129 at tick 4.
+- (e) the charge line through the click of the product: the world of (a)
+  with a fixed absorber `w` (content 1) at (2, 4, 2) measuring `beta` by
+  the keys: the click at tick 6 (the age 3, m(3) = 2): the absorber's
+  `held` [0, 0, 2, 0, 1], content 3, clicks [0, 0, 1, 0, 0], charge
+  (-1, 1); the charge line [0, 1] at every tick; the measured lines per
+  family `p` 5, `w` 1 and `beta` 2 (8 in all = 7 + 1 initial), the `beta`
+  line initial 0 + measured 2 + became 0 = 2; the books balanced at every
+  tick.
+- (f) the refusals, naming the key: `become` without `into` or
+  `products`; `into` unknown or the event's own; a product's family
+  unknown; a product's amount 0; a free product's content 1; a paid
+  product's content 0; a label beyond the bound (an amount of 2^57 of
+  `beta`); `at` 0, absent, or on a table entry; `crowd` on a table entry,
+  -1 or 1.5; `into` on a `measure` entry; the products' content 8 above
+  the amount 7; the charges unbalanced (the products `[["nu", 1, 0]]`
+  alone: 0 to +1; the beta charge 0; the `p` charge [1, 4]); `become` on a
+  family; and at run time a lamp of `light` (paid, content 20, K 20, one
+  unit on +x per turn of 1) with `become` at 10 into `w` and the product
+  `[["light", 1, 15]]` holds 13 at tick 10 and refuses the run naming the
+  event and the 13 it holds.
+
+`tests/test_nature_beam_body.py` re-pins `numbers` with `"become": None`
+and `tests/test_nature_beam_clock.py` the books' measured line with
+`"became": 0` (the added keys of the record).
+
+`tests/test_weak_readings.py` (b), the tool on the transformation: the toy
+of (a) with the beta content 3 in an open 9^3 GameBoard, K 2^20,
+`suspension` [1, 2^20], a shell of `d` at r = 2 (62 Nodes within a half
+Link of 2) as one `beam` set measuring `beta` with `reads` `age`, 12
+intervals: the `become` line at tick 3 with the count 0, the beta product
+on +y at (4, 6, 4) at tick 6 (the age 3, m(3) = 2), the shell's clicks
+{6: 1}, the contents {3: 1}, the ages [3], the nu product passing the
+shell; the tool's criteria against the pinned tick 3 all inside (the
+tick, the content, the count 1 of 1, the step: one click), a `never`
+expectation outside.
+
+## The W world
+
+`tests/test_w_world.py` (docs/BEAM_LAW.md, section 10 note 36 (iv); the
+model owner, 2026-09-20, "go on everything", item (3): the W world after
+the transformation; the physicist's design, WEAK.md 1.1 and 4.5). A bar
+of 7 x 1 x 1, K 2^20, N 64, `release` [1, 2^20] (no free release of 1839
+before the age 570), `suspension` 0; `n` (free, content 1839, charge 0),
+`p` (free, charge 4 per unit of content: 7344 on 1836), `w` (paid,
+quantum 1, a phase circle, charge -7344 per unit of amount, `lifetime` 1),
+`beta` (paid, charge -7344) and `positron` (paid, charge +7344); the
+neutron of 1839 fixed at x = 2 with `become` at 3 into `p` with the one
+product `[["w", 1, 3]]` on `directions` `[[1, 0, 0]]`, the proton of 1836
+fixed at x = 3; the W row's label 64 x 1 x 3 = 192. The expected
+integers, written down before the first run:
+
+- (a) the exchange: at tick 3 the neutron becomes `p` (`held` [0, 1836,
+  0, 0, 0], charge (7344, 1)) and throws the W on +x (the `become` record
+  with [["w", 1, 3, [1, 0, 0]]], the recoil [-192, 0, 0]); at tick 4 the
+  W (age 1) at x = 3 is measured by the keys' rule (a `click` naming the
+  measured event 2, `w`, amount 1, content 3, the push (192, 0, 0)): the
+  proton's `held` [0, 1836, 3, 0, 0], content 1839, clicks [0, 0, 1, 0,
+  0], charge (0, 1), momentum (192, 0, 0); the store empty after tick 4,
+  no click on the border; the charge line [7344, 1] at every tick of 8;
+  the `w` lines released 1, measured 3 (the content), current 0, the
+  lifetime line 0; the run's `hypotheses` ["columns-v1", "weak-v1"]; the
+  record's states and the border `lifetime` with 0 clicks of `w`.
+- (b) the W into empty space (`directions` `[[-1, 0, 0]]`): at tick 4
+  the W at x = 1 is booked on the border `lifetime` (a `click` naming
+  the detector `lifetime`, amount 1, content 3, momentum [-192, 0, 0]);
+  the proton untouched; the escaped amount of `w` 1; the charge line
+  [7344, 1] at every tick.
+- (c) the click trigger on the proton: the design's sketch `w: {rule
+  become, phase_window 0, phase_width 64, into n, products [["beta", 1,
+  3]]}` refused at load ("charges do not balance"); with the product
+  `[["positron", 1, 3]]` accepted: at tick 4 the W clicks and the proton
+  becomes `n`, the positron born on -y (the clock age 3), label (0,
+  -192, 0), the recoil (0, 192, 0), the momentum (192, 192, 0); the
+  `become` record at tick 4 with the trigger "click", triggered 4, the
+  products [["positron", 1, 3, [0, -1, 0]]], counted 1; `held` [1833, 0,
+  3, 0, 0], content 1836, charge (-7344, 1); the positron through
+  `face:-y` at tick 5; the charge line [7344, 1] at every tick; the
+  `became` lines `p` 0 and `n` -6, the `w` line measured 3, the
+  `positron` line released 1; the entry consumed.
+- (d) the refusals, naming the key: `lifetime` 0 on `w`; the W's charge
+  [-7344, 2].
+
+`tests/test_weak_readings.py` (c), the tool on the W world: the bar of
+(a) run through the runner with the model `beam-weak-w_exchange-v1`: the
+neutron's `become` line at tick 3 with [["w", 1, 3, [1, 0, 0]]], its
+momentum (-192, 0, 0); the proton's click of `w` at tick 4, its content
+1839, charge (0, 1), momentum (192, 0, 0); the border 0; the five
+criteria inside against the pinned integers (the kinds GAMEBOARD,
+DETECTOR, DETECTOR, DETECTOR, GAMEBOARD), the click tick pinned at 5
+outside.
+
+## A paid family's charge
+
+`tests/test_paid_charge.py` (docs/BEAM_LAW.md, section 2 and section 10
+note 36 (ii); the model owner, 2026-09-20, "go on everything", item (2),
+D-1: a paid family may declare a whole charge per unit of amount, read on
+the charge line only, the push untouched). Bars of 7 x 1 x 1, K 2^20,
+N 64, `release` [0, 1], `suspension` 0; `p` (free, charge [1, 5]: +1 on a
+content of 5), `beta` (paid, quantum 1, charge -1 per unit of amount), `w`
+(free, charge 0); a beta row of amount 1 declared at x = 1 on +x is at
+x = 2 at the ages 1, 2; 3 at 3, 4; 4 at 5, 6; 5 at 7; 6 at 8, 9; off the
+bar at 10 (m(tau) = (128 tau + 110) // 220). The expected integers,
+written down before the first run:
+
+- (a) `p` of content 5 fixed at x = 0 and the absorber `w` fixed at x = 4:
+  the books' charge line [0, 1] at every tick of 6 (p +1, the row -1;
+  then p +1, the absorber's unit -1); the click at tick 5: the absorber's
+  `held` [0, 1, 1], content 2, `clicks` [0, 1, 0], `units` of beta 1,
+  charge (-1, 1), `charges()` [(2, 1), (-1, 1)], `charges(for_push=True)`
+  [(2, 1), (0, 1)], momentum (64, 0, 0) (the label); with the beta charge
+  0 the same momentum and the line [1, 1]; a charged free reader (`p`
+  at x = 4 with `read` for beta) takes the label alone, the push
+  (64, 0, 0), its charge (1, 1).
+- (b) without the absorber the row leaves through `face:+x` at tick 10;
+  the line [0, 1] at every tick of 12; the escaped amount 1,
+  `units_escaped` [0, 0, 0].
+- (c) the absorber at x = 3 releasing on +x with the row of its own
+  number: `home` at tick 3, the row created again on +x in the same
+  interval, `face:+x` at tick 10; the line [-1, 1] at every tick of 12;
+  the absorber's momentum (0, 0, 0) and `units` 0 after; `transit_released`
+  [0, 1, 0].
+- (d) the absorber free: after the click (content 2, momentum (64, 0, 0))
+  it steps at the ticks 6, 9 and 12 (`by_clock(age - 1, 64, 192)`), to
+  x = 5, 6 and off the bar: the face click at tick 12 with `held`
+  [0, 1, 1]; `units_escaped` [0, 1, 0]; `held_escaped` [0, 1, 1]; the line
+  [0, 1] at every tick of 15.
+- (e) the refusals, naming the key: `charge` [-1, 2] on a paid family; a
+  lamp on a measured event of a charged paid family. The record: the
+  family's `charge` (-1, 1), its `charge` column value (0, 1), `values`
+  ((1, 1), (0, 1)), `hypotheses` []; `run.json`'s family `charge` [-1, 1]
+  and column value [0, 1], the audit's `charge` [0, 1] at every tick, the
+  absorber's `charge` and `charges.charge` [-1, 1].
+
+## The width of a window
+
+`tests/test_window_width.py` (docs/BEAM_LAW.md, section 2 and section 10
+note 36 (i); the model owner, 2026-09-20, "go on everything": the neutrino
+first with the table-entry key `phase_width` and no change of law; the
+physicist's design, WEAK.md 1.2). The expected integers, written down
+before the first run:
+
+- (a) the one floor `window_admits` at the default width N / 2 is the half
+  circle on every (phase, setting) pair, d < N / 4 or d >= 3 N / 4, at
+  N = 2, 4, 64 and 4096 (for N = 2 the one step d = 0); at N = 64 the
+  width 1 centred on s admits {s}, 2 admits {s - 1, s}, 3 admits {s - 1,
+  s, s + 1}, 4 admits {s - 2, s - 1, s, s + 1} (the arc starts at
+  s - floor(w / 2)), the width 64 every step.
+- (b) the admitted fraction w / N against the source's stride: a bar of
+  9 x 1 x 1, K 4096, N 64, `release` [1, 4096], `suspension` 0; a fixed
+  source of the free family `nu` of content 4096 at x = 0 releasing one
+  ray per self-creation on +x (the turn 1: the stride 1), the ray born at
+  tick t carrying the phase (t - 1) mod 64 and arriving at the fixed
+  reader `r` (free, no phase circle, content 1) at x = 5 at tick t + 8
+  (m(8) = 5); over 648 intervals 640 arrivals (the ticks 9 .. 648). The
+  reader's entry `nu: {measure, phase_window 0}`: with the width absent
+  320 click and 320 pass (the phases 0 .. 15 and 48 .. 63); with
+  `phase_width` 1: 10 clicks at the phase 0 alone, at the ticks 9 + 64 k;
+  2: 20 (the phases 63, 0); 4: 40 (62, 63, 0, 1); 32: 320 with the `click`
+  and `pass` records identical line by line to the width absent. With
+  K 2048 (the turn 2, the stride 2) the width 1 centred on 0 admits 20 of
+  640 (the even coset) and centred on 1 admits 0 (640 passes). The reader
+  declared as a `beam` detector reads the same counts. Each click of a
+  free ray takes the columns' push, gravity -M_A V = -64 on the reader of
+  content 1 (a free ray's label never joins), so the momentum after c
+  clicks is (-64 c, 0, 0). The reader's state carries `widths` [w, None];
+  a world without the key has every width None.
+- (c) `beam`'s pairing arc is the entry's width: two rays of `light` at
+  x = 5 with the phases 0 and 30 (and 0 and 10) arriving together at a
+  `beam` counter at x = 6 whose entry has the window 16: with the width
+  40 the pair (0, 30) is paired (d = 62, (62 + 20) mod 64 = 18 < 40: two
+  `pass` records with `cancelled`, no click) and the pair (0, 10) clicks
+  twice ((42 + 20) mod 64 = 62 < 40 false); with the width 64 every pair
+  is paired; with the default width (0, 30) pairs and (0, 10) clicks, as
+  until 2026-09-20.
+- (d) a lamp's window has the same width: the lamp of the window test (c)
+  (K 2^14, content K + 2, one ray per self-creation on +x) with
+  `phase_window` 8 and `phase_width` 4 releases at the self-creations
+  whose clock phase falls in [6, 10): over 64 intervals 4 rays at the
+  phases 6, 7, 8, 9, the content K + 2 - 4, the momentum (-256, 0, 0);
+  32 with the width absent.
+- (e) the refusals, naming the key: `phase_width` 0, 65 at N = 64, 1.5 and
+  "4"; on `pass`; for a family without a phase circle; without
+  `phase_window`; on a lamp without its window and at 0; `phase_width`
+  beside `phase_window` alone on a paid family takes the default rule
+  `measure`.
+
+`tests/test_weak_readings.py` (series J2's tool, `tools/weak_readings.py`,
+reads the runner's record and the flight table): a bar of 40 x 1 x 1 with
+the source of (b), three readers of `d` at x = 8, 9, 10 in the window 0
+of width 1 and a far detector at x = 30 without a window, 205 intervals,
+run through the runner: the first-arrival ages 13 at 8 Links and 51 at 30
+off `flight_table`; the first reader 192 arrivals, 3 clicks (the phases 0
+of the rays born at the ticks 1, 65, 129), 189 passes; the readers at 9
+and 10 no click; the far detector 151 clicks (154 rays reach it, less the
+three of phase 0); the stride 1; the three criteria of `j2_filter` inside.
 ## A window read from a reading
 
 `tests/test_nature_beam_window_reads.py` (issue #363, 2026-09-20;
@@ -1448,8 +1713,9 @@ re-pinned from `test_event_worlds` (e) and
   family, two measured events at one Node, an unknown table rule, N not a
   power of two, a detector on a Node without a measured event, a Node in
   two detectors, `kind` on a family (naming MIGRATION: the quantum decides
-  the kind), a family without `quantum`, a negative quantum, a charge on a
-  paid family, `charge` on a measured event (naming the removal of
+  the kind), a family without `quantum`, a negative quantum, a fractional
+  charge on a paid family (D-1, since 2026-09-20; until then any), `charge`
+  on a measured event (naming the removal of
   2026-09-20 and MIGRATION), a family `charge` of [1, 0] (the denominator
   from 1), [1.5, 2] (the numerator an integer), "1/2" and [1, 2, 3] (an
   integer or [numerator, denominator]), a detector named `face:+x` (the

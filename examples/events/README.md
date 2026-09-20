@@ -249,6 +249,44 @@ light bent toward the mass with the sign of gravity, the M / b form and
 the grain of the fan (-1.8 to -4.4 pixels; the lens crossing 71 Links
 past the mass), not delayed in time, the mass measuring the light turned
 into it; registered, 14 readings inside and 9 outside, not tuned.
+## The weak-force series
+
+The folder [weak/](weak/README.md) holds the worlds of series J, the weak
+force, written by `weak/make_worlds.py`: J2, the neutrino's passage through
+a filled bar (the neutrino first, no change of law: a bar of 200 x 1 x 1, a
+fixed source of the free family `nu` releasing one ray per self-creation
+with the stride 1 or 2 over the circle, 128 fixed readers of a paid family
+measuring `nu` under a window of `phase_width` 1 or the default half
+circle, their centres all 0, all 1 or a ladder x mod 64, and a far
+detector counting every ray that reaches it). `tools/weak_readings.py`
+reads the readers' clicks and passes and the far detector's clicks
+(DETECTOR) against the counts computed before the run from the engine's
+flight table (GAMEBOARD), every line labelled by its kind; the register
+entry is
+[J, the weak force (2026-09-20)](../../docs/EXPERIMENTS.md#j-the-weak-force-2026-09-20):
+the first reader takes exactly 1 / 64 of a stride-1 source's arrivals and
+the 127 behind it nothing (a filter, not an attenuation), the ladder
+exhausts the beam after 64 readers, the stride 2 gives 1 / 32 at the centre
+0 and nothing at the centre 1; 13 readings inside, 0 outside, registered
+and not tuned. J1, the free neutron's decay count against its clock (the
+transformation `become`, `weak-v1`, [BEAM_LAW note 36](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(iii)): 64 neutrons of the register's `n` on a lattice of pitch 4 in an
+open 41^3 GameBoard, each with `become` at 512 into `p` with the products
+`beta` and `nu`, a shell of readers at r = 18 declared as one `beam`
+detector measuring `beta` with `reads` `age`; alone (`j1_lattice`) and
+with a fixed source at the centre (`j1_source`). J3, the bound neutron:
+the deuteron of series I with `become` at 512 on the neutron
+(`j3_deuteron`), the same with the gate `crowd` 65536
+(`j3_deuteron_crowd`) and the neutron alone (`j3_neutron_free`). The tool
+reads each neutron's `become` line (its tick and the count its clock read,
+GAMEBOARD) and the shell's clicks per interval with their contents and
+ages (DETECTOR) against the ticks computed before the runs from the
+clock's rule and the counts a warm run read (`expectations.json`). The W
+world (`w_exchange`, no key added): the W a paid family with a whole
+charge per unit of amount and `lifetime` 1, thrown by a neutron's
+`become` and measured by the proton one Link away one interval later,
+which then has a neutron's charge and content.
+
 ## The entity catalog
 
 The folder [catalog/](catalog/README.md) holds the four worlds of
