@@ -38,6 +38,33 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   prose word "ray" stays the informal name, the documents' first mentions
   say "beam (the record of an event in transit)".
 
+### The catalog of the entities (2026-09-20)
+
+- The model owner's decision ("Make sure that every entity the world of
+  physics knows exists in our entity definitions, and that we can also
+  support external ones such as the sun, a planet, a neutron star, so that
+  they can be placed on the GameBoard and things tested";
+  [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector)):
+  [the catalog of the entities](docs/ENTITY_CATALOG.md), every entity
+  physics knows as one row of the law's keys as `world.py` accepts them
+  today (the fundamental things, the composites, the external things),
+  each with the world file that places it, the rows that wait for the
+  changes in flight marked by the names their designs give them (the
+  strong column, `lifetime`, the held content, the contact, `become`,
+  `phase_width`, D-1, a hand), the gap list (colour and
+  confinement, the Higgs, a black hole as the integer bound or as a body
+  whose clock the crowd stops, antimatter, spin, molecules, dark matter and
+  dark energy, light in a field) and the architect's judgements on what
+  could not be placed. Four placement worlds under
+  `examples/events/catalog/` written by `make_worlds.py`: `sun_planet`,
+  `neutron_star`, `lamp_mirror_screen`, `clock_near_mass`, each parsing and
+  running 40 to 50 intervals headless with the books balanced;
+  `tests/test_entity_catalog.py` checks each is what its page says and
+  pins no number ([expectations](docs/TEST_EXPECTATIONS.md#the-entity-catalog));
+  [entity definitions](docs/ENTITY_DEFINITIONS.md) stays the owner of the
+  definitions layer and links the catalog.
+
+
 ### Series G, the Hubble diagram behind the detector (2026-09-20)
 
 - The four worlds of `examples/events/hubble/` (`make_worlds.py`: a
