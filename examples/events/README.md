@@ -289,6 +289,24 @@ charge per unit of amount and `lifetime` 1, thrown by a neutron's
 `become` and measured by the proton one Link away one interval later,
 which then has a neutron's charge and content.
 
+## The hand series
+
+The folder [hand/](hand/README.md) holds the worlds of series P, the hand
+(`hand-v1`, the model owner's decision of 2026-09-20, record 128 of the
+log; [BEAM_LAW note 39](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+written by `hand/make_worlds.py`: `w_hand`, the W world with a second
+proton, the W family left-handed and the neutron given an axis (the W
+leaves against the axis to the proton on one side; the mirror image of the
+world sends it to the other: the parity test); `w_two_sides`, the control
+without a hand or an axis (mirror-equal); `wu`, Wu's experiment on a bar of
+17 (the left-handed beta against the nuclear axis to the reader at x = 0,
+the right-handed antineutrino along it out of the face); and `nu_hand`,
+J2's bar with the neutrino left-handed and two readers admitting one hand
+each (0 and 1022 clicks; mirror-equal, a hand without an axis being a
+datum a mirror cannot see). The register entry is
+[P, the hand (2026-09-20)](../../docs/EXPERIMENTS.md#p-the-hand-2026-09-20);
+the parity test itself is `tests/test_hand.py` (d).
+
 ## The amplitude series
 
 The folder [amplitude/](amplitude/README.md) holds the worlds of series L,

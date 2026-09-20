@@ -70,6 +70,7 @@ from event_universe.events.world import (
     LIFETIME_NAME,
     MOMENTUM_BOUND,
     NO_CHARGE,
+    NO_HAND,
     MeasuredDefinition,
     NatureBeamWorld,
     body_nodes,
@@ -194,6 +195,8 @@ class NatureBeamSimulation:
                 record=np.array([NO_RECORD]),
                 branch=np.array([NO_BRANCH]),
                 multiplicity=np.array([ONE_PATH]),
+                # The row's hand as declared, or its family's (`hand-v1`).
+                hand=np.array([item.hand]),
             )
             self.transit_initial[item.family] += item.amount
             self.content_initial[item.family] += content * item.amount
@@ -323,6 +326,17 @@ class NatureBeamSimulation:
             label_turns=list(definition.label_turns) + [0] * (count - len(definition.label_turns)),
             rotations=list(definition.rotations) + [None] * (count - len(definition.rotations)),
             gates=list(definition.gates) + [None] * (count - len(definition.gates)),
+            # The hand (`hand-v1`): the axis, the entries' parity filters,
+            # the lamp's hand (its own, or its family's) and the hands of
+            # its labels.
+            axis=definition.axis,
+            hands=tuple(definition.hands) + (NO_HAND,) * (count - len(definition.hands)),
+            lamp_hand=(
+                NO_HAND
+                if definition.lamp is None
+                else (definition.lamp.hand or self.families[definition.family].hand)
+            ),
+            lamp_label_hands=None if definition.lamp is None else definition.lamp.label_hands,
         )
 
     def occupant(self, node: Address3) -> int | None:
@@ -754,6 +768,7 @@ class NatureBeamSimulation:
         balanced = True
         ledger = self.ledger
         amplitude = self.world.amplitude
+        handed = self.world.handed
         # One pass over the measured events: what they hold per family,
         # their momentum and their charge (rho x content of the free
         # families and, since 2026-09-20 (D-1), the paid families' whole
@@ -786,6 +801,12 @@ class NatureBeamSimulation:
             measured["balanced"] = measured["initial"] + measured["measured"] + measured["became"] == (
                 measured["current"] + measured["spent"] + measured["escaped"]
             )
+            if handed:
+                # The `left` and `right` lines (`hand-v1`): the units the
+                # tables clicked of each hand, a report; only where a hand
+                # is declared, as the amplitude columns are.
+                measured["left"] = ledger.taken_left[index]
+                measured["right"] = ledger.taken_right[index]
             in_transit = {
                 "initial": self.transit_initial[index],
                 "released": ledger.transit_released[index],
@@ -1066,6 +1087,9 @@ class NatureBeamSimulation:
                 lo, hi = store.slice(flat)
                 if hi == lo:
                     continue
-                beams = [beam.record_line(vectors, self.world.amplitude) for beam in store.rows(lo, hi)]
+                beams = [
+                    beam.record_line(vectors, self.world.amplitude, self.world.handed)
+                    for beam in store.rows(lo, hi)
+                ]
                 families.append({"family": family.name, "rays": beams})
             yield entry

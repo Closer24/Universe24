@@ -6,6 +6,49 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The hand, on 2026-09-20 (`hand-v1`)
+
+The model owner's decision of 2026-09-20 (record 128 of
+[the log](LOG_2026-09-20.md), "the hand's three choices confirmed"; the
+physicist's design hand/DESIGN.md, record 122, with the mathematician's
+integer form, record 120; [BEAM_LAW note 39](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+`tests/test_hand.py`; the worlds of series P, `examples/events/hand/`):
+
+- The row's column `hand` (-1, 0, +1; 0 everywhere without a declaration),
+  the helicity relative to the row's direction, a pseudoscalar under the
+  48 symmetries, carried unchanged through every re-creation (a mirror, a
+  split, a rotation, a gate, a meeting, a collision, a home, the inverse
+  interval) and an identity field of the merge (opposite hands never merge
+  or cancel). `NatureBeam.hand`, `PendingRow.hand`, the store's field
+  `hand`, `BornRow`'s ninth entry.
+- The keys `hand` on a family (the catalog's home of the hand, as `charge`
+  is), on a lamp (circular light), on a transit row and on a table entry
+  (the parity filter, refused on `pass`), a third entry per branch of a
+  lamp's `branches` (the hand as a label bit's meaning, one or the other
+  per family) and `axis` on a measured event (one of the six headings as
+  a vector). `FamilyDefinition.hand`, `LampDefinition.hand` and
+  `label_hands`, `TransitDefinition.hand`, `MeasuredDefinition.axis` and
+  `hands`, `Measured.axis`, `hands`, `lamp_hand`, `lamp_label_hands`.
+- The right-hand rule in `become` (`nature_beam`, step 5; `world.axis_sign`):
+  a product's hand is its family's; at a parent with an axis a handed
+  product leaves only on the directions with sign(A . u_d) = h (a
+  left-handed product against the axis), an unhanded product is stamped
+  the sign of its direction; an empty set refused at load
+  (`world._handed_products`).
+- The record: `hand` on the `click`, `pass`, `read`, `rerelease`, face and
+  border lines, a fifth entry on the `become` line's products, `left` and
+  `right` per family in the books (`Ledger.taken_left`, `taken_right`),
+  `hand` per family and `axis` per number in `run.json`, `hand` on the
+  rows of `state.json`, all only in a world that declares a hand or an
+  axis (`NatureBeamWorld.handed`); the identity `hand-v1` under
+  `hypotheses`, last.
+- `_table_entry` returns a sixth value, the hand the entry admits;
+  `_branches` returns the branches and the label hands; `_lamp` takes
+  `family_hand`; `NatureBeam.record_line` takes `handed`.
+- Every world without a hand byte-identical: the gate set replayed
+  identical ([VALIDATION](VALIDATION.md)); `hand/wu.json` added to the
+  gate set as the first world declaring the keys. Nothing deleted.
+
 ## The reading's weight at the relative speed, on 2026-09-20 (`doppler-v1`, a world key, absent by default)
 
 The model owner's decision of 2026-09-20 (record 119 of

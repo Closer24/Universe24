@@ -443,9 +443,11 @@ def test_the_grain_the_pair_and_the_record(tmp_path: Path):
     record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
     assert record["doppler"] is True and record["hypotheses"] == [COLUMNS_RULE, DOPPLER_RULE]
     assert record["status"] == "completed"
-    # The gate set declares the key nowhere: every shipped world reads as it did.
+    # The gate set declares the key nowhere: every shipped world reads as it
+    # did (fifteen worlds at this change; `hand-v1` added `hand/wu.json`
+    # the same day, the sixteenth, which declares no `doppler` either).
     listing = json.loads((ROOT / "examples/events/gate_set.json").read_text(encoding="utf-8"))
-    assert len(listing["worlds"]) == 15
+    assert len(listing["worlds"]) == 16
     for item in listing["worlds"]:
         path = ROOT / "examples/events" / item["path"]
         parsed = load_world(path.read_bytes(), base_dir=path.parent).world

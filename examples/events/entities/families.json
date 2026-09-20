@@ -96,6 +96,18 @@
    "detectors": []
   },
   {
+   "name": "antineutrino",
+   "families": [
+    {
+     "name": "nubar",
+     "quantum": 0,
+     "hand": 1
+    }
+   ],
+   "measured": [],
+   "detectors": []
+  },
+  {
    "name": "w_boson",
    "families": [
     {

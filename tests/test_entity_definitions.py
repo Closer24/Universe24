@@ -495,7 +495,7 @@ def register_family_names() -> set[str]:
 
 
 def test_the_shipped_definitions_are_the_generators_and_define_every_family_once():
-    """(v2-f): the files equal `make_definitions.py`'s documents; the 47 names once."""
+    """(v2-f): the files equal `make_definitions.py`'s documents; the 48 names once."""
     path = ENTITIES / "make_definitions.py"
     spec = importlib.util.spec_from_file_location("entities_make_definitions", path)
     module = importlib.util.module_from_spec(spec)

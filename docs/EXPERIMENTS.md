@@ -5344,6 +5344,80 @@ sequential gates on an entangled record, the full register replay.
   11 and this entry before it is quoted again; the prediction above stands
   as recorded until then.
 
+### P, the hand (2026-09-20)
+
+- **Confronts.** The model owner's decision of 2026-09-20 (record 128 of
+  [the log](LOG_2026-09-20.md), "the hand's three choices confirmed"):
+  `hand-v1`, the hand on the message, built with the physicist's three
+  choices (hand/DESIGN.md, record 122; the mathematician's integer form,
+  record 120) taken as physics over convention: a left-handed product
+  leaves against the parent's axis (Wu's side), the strict hemisphere,
+  the hand's home on the family. Under the owner's standing principle the
+  GameBoard gets the generic mechanism only ([BEAM_LAW note 39](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+  one column on the row, one axial record on the body, one sign of an
+  inner product at a birth, one filter on a table entry) and parity
+  violation is compared with detector readings only: the mirror image of
+  the apparatus with the same left-handed catalog.
+- **Model prediction, pinned before the runs
+  ([the expectations](../examples/events/hand/README.md#the-expectations-pinned-before-the-runs)).**
+  `w_hand` (the W world with a second proton, the W family `hand` -1, the
+  neutron's `axis` -x, both protons filtering `hand` -1): the W born at
+  tick 8 on +x against the axis (the product `[["w", 1, 3, [1, 0, 0],
+  -1]]`, the recoil (-192, 0, 0)), clicked at the proton at x = 3 at tick
+  9 with the push (192, 0, 0) and `hand` -1, the proton at x = 1 taking
+  nothing, the border 0, the charge line [14688, 1] (two protons; the
+  design's table wrote 7344, one proton's), the books `left` 1, `right`
+  0; `w_two_sides` (the control, no axis, no hand): the one W unit sent by
+  the tie of the apportioning at the clock age 7 to the second declared
+  direction, -x, the click at x = 1 (the design read the clock age as 8
+  and pinned x = 3; the engine's documented tie, at - 1, was read before
+  the run); `wu` (Wu's bar of 17, the neutron at x = 8 with the axis +x,
+  `beta` left-handed and `nubar` right-handed): the beta on -x against
+  the axis, clicked at the reader at x = 0 at tick 21 (`hand` -1), the
+  antineutrino on +x out of `face:+x` at tick 23 (`hand` +1), the recoil
+  (128, 0, 0), the reader at x = 16 taking nothing; `nu_hand` (J2's bar
+  with `nu` left-handed, readers admitting the right hand at x = 8 and
+  the left at x = 9): 0 / 1022 / 0 clicks, `left` 1022. The parity test:
+  `w_hand` different by the click's side alone, `w_two_sides` equal, `wu`
+  different (the click at x = 16, the face -x), `nu_hand` equal; the
+  full mirror and a proper rotation equal on all four.
+- **Run.** `examples/events/hand/` (the four worlds written by
+  `make_worlds.py`, the model ids `beam-hand-<name>-v1`), 2026-09-20,
+  through `tools/run_series.py`; the parity test as `tests/test_hand.py`
+  (d), two runs of one world compared, no number of the world pinned.
+- **Result.** Every reading inside its pin: `w_hand` the `become` line
+  `[["w", 1, 3, [1, 0, 0], -1]]` with the recoil [-192, 0, 0], the click
+  at tick 9 at measured 3 with the push [192, 0, 0] and `hand` -1, the
+  proton at x = 1 nothing, the border 0, the charge line [14688, 1] at
+  every tick, `left` 1, `right` 0; `w_two_sides` the click at measured 1
+  at tick 9 with the push [-192, 0, 0], no `hand` on any line; `wu` the
+  beta's click at x = 0 at tick 21 with `hand` -1 and the push [-192, 0,
+  0], the antineutrino through `face:+x` at tick 23 with `hand` +1, the
+  recoil [128, 0, 0], the charge line [0, 1]; `nu_hand` 0 clicks and 1024
+  passes (`hand` -1) at x = 8, 1022 clicks at x = 9, 0 at the far
+  detector, `left` 1022. One reading outside its written form and inside
+  its physics: the antineutrino's passage at Wu's far reader writes no
+  `pass` line (a `pass` rule never writes one, in every registered world
+  too; the design's 3.4 expected a line), the passage shown by the face
+  click at tick 23 as pinned. The parity test as pinned on all four, the
+  full mirror and the rotation equal on all four (`tests/test_hand.py`).
+
+  | World | Reading | Expected | Measured | Verdict |
+  | --- | --- | --- | --- | --- |
+  | `w_hand` | the W's click | measured 3, tick 9, push (192, 0, 0), hand -1; measured 1 nothing; border 0 (DETECTOR) | as expected | inside |
+  | `w_hand` | the `become` line | [["w", 1, 3, [1, 0, 0], -1]], recoil (-192, 0, 0) (GAMEBOARD) | as expected | inside |
+  | `w_hand` | under the mirror | the click at measured 1, push (-192, 0, 0); the rest equal | as expected | inside (different, as pinned) |
+  | `w_two_sides` | the W's click; under the mirror | measured 1, tick 9 (the tie at the clock age 7); equal | as expected | inside |
+  | `wu` | the beta's click; the antineutrino | x = 0, tick 21, hand -1; `face:+x` at tick 23, hand +1 (DETECTOR); the recoil (128, 0, 0) (GAMEBOARD) | as expected; no `pass` line at x = 16 (the rule's record form) | inside (the line's form outside) |
+  | `wu` | under the mirror | the click at x = 16, the face -x | as expected | inside (different, as pinned) |
+  | `nu_hand` | the three readers; under the mirror | 0 / 1022 / 0, `left` 1022; equal | as expected | inside |
+- **Registered as the law's own predictions (against nature):** the
+  asymmetry is complete (one direction admitted among the six; nature's
+  is a cosine of the angle to the spin, sized by the electron's speed);
+  no spin dynamics and no angular-momentum ledger (the axis fixed); the
+  helicity of circular light kept at a mirror (nature reverses it at
+  normal incidence); no V-A energy dependence; no CP.
+
 ### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
 
 - **Confronts:** the single-graviton detector proposed by Tobar, Manikandan, Beitel and Pikovski (Nature Communications 15, 7229, 2024; construction begun in 2026): a massive acoustic resonator cooled to its ground state, weakly monitored, whose single quantum jump to its first level during a passing gravitational wave is one graviton absorbed, a gravito-phononic photoelectric effect; the key is to read individual transitions, since the mean energy is always consistent with a classical wave.
