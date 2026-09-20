@@ -5,6 +5,23 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### Series H, Bohr's lines behind the detector (2026-09-20)
+
+- The run of the model owner's decision on Bohr ([EXPERIMENTS.md](docs/EXPERIMENTS.md),
+  "H, Bohr's lines behind the detector"; `examples/events/bohr/`,
+  `tools/bohr_readings.py`, `tests/test_bohr_readings.py`): a fixed proton
+  releasing the physicist's fan of 2616 directions, an electron that is a
+  body on three Nodes turning its phase by its momentum, its released rays
+  read at the open faces as the `wave` detectors of what comes out of the
+  atom; the orbit, the phase's turn per orbit and the faces' coherent
+  record per turn and cumulatively, every line labelled DETECTOR or
+  GAMEBOARD. Measured: no orbit closed well enough for the coherence
+  reading (the reference orbit at r = 8 held its mean radius for two
+  eccentric turns and was thrown out at a close pass; C(2) = 0.84 against
+  the expected 1.0), registered as the finding, nothing tuned; the next
+  steps (a smoother field, a tilted orbit, a wider body, the absorption
+  reading with a lamp) are in the register ([validation](docs/VALIDATION.md)).
+
 ### The turn by momentum: Bohr as parameters outside the board (2026-09-20)
 
 - The model owner's decision ("On Bohr, go, and put it as parameters

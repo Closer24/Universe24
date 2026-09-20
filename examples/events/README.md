@@ -79,6 +79,27 @@ clocks; the register entry is
 the presence falls as M / r^2 and the age moment as M / r from the same
 rays, their ratio the flight's sqrt 3 / 2.
 
+## The Bohr series
+
+The folder [bohr/](bohr/README.md) holds the seven worlds of series H,
+written by `bohr/make_worlds.py`: an open cube sized to the orbit, a fixed
+proton (`p`, content 1836, `charge` [1, 1]) at the centre releasing one
+ray per direction of a shell of 2616 primitive directions every 10
+intervals, and an electron (`e`, content 1836, `charge` -15) that is a
+body on a set of three Nodes (`span` [1, 1, 3]) at r = 2, 4, 6, 8, 12, 15
+or 16 with the tangential momentum the README derives from the engine's
+own flight lines, turning its phase by its momentum at every Link it steps
+(`phase_by_momentum` under the world's `action`, h = 16 p(8) so that
+4 p r = 2 h at r = 8) and releasing rays that carry that phase to the
+open faces, the `wave` detectors of what comes out of the atom.
+`tools/bohr_readings.py` reads the orbit (GAMEBOARD) and the faces'
+coherent record per turn and cumulatively (DETECTOR), every line
+labelled by its kind; the register entry is
+[H, Bohr's lines behind the detector (2026-09-20)](../../docs/EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20):
+no orbit closed well enough for the coherence reading (the reference
+orbit held its mean radius for two eccentric turns and was thrown out at
+a close pass), registered as the finding and not tuned.
+
 ## The orbit series
 
 The folder [orbit/](orbit/README.md) holds the six worlds of the orbit
