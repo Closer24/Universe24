@@ -472,7 +472,164 @@ as r births), a set's offer of several multiplicities of one record, the
 columns written only where a record is, and the design's test 7 restated
 as identity on the worlds without a lamp. Until then the key `amplitude`
 stays as (i) declared it, false by default, and the crowd's `wave`
-threshold stays; nothing deleted, nothing added.
+threshold stays; nothing deleted, nothing added. Stage (vii) builds the
+four, below.
+
+## The amplitude law, on 2026-09-20, (vii-1): the one click's prerequisites under the key
+
+Stage (vii), step 1 (the model owner's order after the landing): nothing
+changes without the key, and a world without a lamp now reads the same
+with it.
+
+- A lamp's `rate` [n, d] is accepted under the key: a self-creation
+  births as many records as the rate says units per direction
+  (`by_clock(age, n, d)`), as many as the lamp can pay whole, each with
+  its own ordinal, the birth phase of the j-th record of a self-creation
+  the clock's phase advanced by j strides (the design's 2.1, the
+  extension). Until now the rate [1, 1] alone was accepted.
+- Rows of one record at one offer with multiplicities that differ by a
+  square factor add at the common denominator (the held pointers
+  rescaled by the root of the ratio, `amplitude.common_denominator`); a
+  ratio that is not a square is refused naming the record, the set and
+  the two multiplicities (the integer form has no cross term over the
+  square root of their product). Until now two multiplicities at one
+  offer were refused.
+- The columns `record`, `branch` and `multiplicity` (and `age` on a
+  click line, `rows` on a group line) are written on the rows of a
+  record alone, in `events.jsonl` and in `state.json`; the books'
+  `cancelled` lines are written in a recorded world alone (the key and a
+  lamp, `NatureBeamWorld.recorded`). A world without a lamp reads the
+  same with the key and without it (`tests/test_amplitude_click.py` (d)
+  on the gate set's lamp-free worlds at their caps); the gate set is
+  byte-identical without the key as before.
+- Nothing deleted.
+
+## The amplitude law, on 2026-09-20, (vii-2): u the record's own field, unread by the GameBoard
+
+Stage (vii), step 2 (the K finding of 2026-09-20, the first of its two
+changes; nothing changes without the key):
+
+- The row's column `birth`: the birth phase u of the row's record, the
+  lamp's count of births less one, mod N (the record's ordinal at its
+  lamp; a rebirth's u the re-emitter's own count), carried through every
+  re-creation, split, rotation and gate copy; 0 on a row of no record;
+  `u` on the rows of `state.json` and on the `click` lines of a record.
+  Until now u was the lamp's clock phase at the birth, so a lamp whose
+  clock turns 8 steps per interval gave u on 8 rungs and a rebirth's u
+  was always the re-emitter's phase (the layer's test (k) re-pinned: the
+  rebirths now go a 32, b 32 where every one went to a).
+- Every rule of the GameBoard that reads a record row's phase reads the
+  path phase, phase - u: the meeting's register (the wraps counted on
+  the path, the running phase restored after), the crowd's pointer of a
+  `wave` set and its window, a window read from a reading, the `beam`
+  pairing, the phase a set returns, the faces' and the border's
+  pointers. The layer's offers read the running phase as designed and u
+  enters at the click alone. A row of no record reads its phase itself:
+  nothing registered changes.
+- The Mach-Zehnder, Elitzur-Vaidman, two-slit, pair, GHZ, gate and
+  N = 1024 / 4096 integers are unchanged (the lamps of series L turn one
+  step per birth, so u was the ordinal already).
+- Nothing deleted.
+
+## The amplitude law, on 2026-09-20, (vii-3): the push by share, the remainder on the books
+
+Stage (vii), step 3 (the K finding of 2026-09-20, the second of its two
+changes; nothing changes without the key):
+
+- A record's row pushes matter with its share amount^2 / m of the
+  quantum's unit label (the record's norm in m: a record's shares sum to
+  one), the integer form label x amount // m floored toward zero
+  (`nature_beam.share_of`): at its absorption at a measured event (the
+  click's push, the entry's momentum), at a home, at the push of a `read`
+  and at the recoil of a paid re-creation (the born rows' shares: one
+  quantum's label over a record's rows, a lamp's birth and a split
+  alike). Until now every row pushed by its whole label, so a record of
+  k rows gave k labels to matter (the owner's (c), the sum over the
+  branches; note 37 (ix)); a row of no record pushes by its label as it
+  did, and the meeting's turn stays on the transit and `turned` lines.
+- The books' `remainder` line per family and in total, in a recorded
+  world: the labels less the shares at an absorption or a home, less the
+  born labels less the recoil at a re-creation, so that the momentum
+  books close with the transit line carrying the rows' whole labels
+  (`Ledger.remainder_momentum`). The click line of a record carries
+  `share` beside `push`.
+- Nothing deleted.
+
+## The amplitude law, on 2026-09-20, (vii-4): the one click, the record form the law
+
+Stage (vii), step 4 (the design's section 6; the model owner's order
+after the landing, under the stop rule of stage (vi)): the record form is
+the only form. Deleted, each with its consequence:
+
+- The world key `amplitude` and its parsing: a world that declares it
+  (true or false) is refused naming this entry; remove the key. The
+  parser's refusals "needs the world key `amplitude`" of the pair form of
+  `phase_per_link`, a lamp's `turns`, `arms` and `branches`, a table
+  entry's `turn`, `rotate`, `gate`, `weights`, `turns` and `inputs`, and
+  the reading `sum`: every one of them is accepted on any world.
+- The crowd form of a lamp (its rate's units per direction as rows of no
+  record): every lamp births records (the rate's count of records per
+  self-creation, (vii-1)), so every world with a lamp is a recorded world
+  (`NatureBeamWorld.recorded`), its rows read by the ladder, the identity
+  `amplitude-v1` under `hypotheses` (`run.json`'s key `amplitude` is
+  gone). A lamp is refused with N below 4 (a record's circle holds the
+  quarter turn of a reflection); the refusal of the key with N below 4
+  is gone with the key.
+- The crowd's `wave` threshold on the square of the coherent pointer
+  (issue #359 step A, BEAM_LAW note 32): the threshold is the amount
+  summed over the set under both readings; the crowd's pointer gives the
+  set's phase (the window under `wave`) and its record, not a gate. Rays
+  that cancel at a `wave` set no longer pass by the gate; a record's rows
+  in antiphase cancel at the merge before any set reads them.
+- The load-time ceiling of the multiplicity (the review's S6) multiplies
+  the declared `weights`, `rotate` and `gate` factors alone; a plain
+  `rerelease` (the equal split by the directions' count) is bounded by
+  the split's own check when the multiplicity is formed, since a path's
+  count of re-emissions is not known at load (the check now runs on
+  every world with a lamp).
+- The apparatus's layer exists on every world (`NatureBeamSimulation.layer`),
+  the merge is always the normal form, `tools/amplitude_path.py` replays
+  any run with a lamp; the design's test 7 is the pinned digests of the
+  gate set's lamp-free worlds (`tests/test_amplitude_click.py` (d)).
+- The 46 shipped worlds of series L no longer carry the key (regenerated
+  by `examples/events/amplitude/make_worlds.py`, the expectations
+  unchanged).
+
+What follows for every world with a lamp (the changed worlds of the gate
+set, re-run and marked "re-run under the one click; the verdict to be
+re-read", the old numbers kept as dated history): a lamp's rows are
+records born at u, the lamp's count of births, with the direction's turn
+as their path phase, so the phase returned to a lamp by a click no longer
+enters its births and a lamp's `phase_window` gates the release by the
+clock's phase but the row born carries u; a window on a table entry reads
+the path phase of a record's row, so the crowd form's phase correlations
+(the Bell worlds of series A2 in phase form, the choosers) read E = 1
+with every pair in (-1, -1) and their tools' checks fail: the pair is the
+record's (`branches`, `arms`, the reading `sum`, series L3 and L5); a
+lamp's birth recoils by its rows' shares and a re-emitter by the shares
+in and out, the rest on the `remainder` line; the crowd's clicks are the
+records' rows (k rows per record at k directions), so the clicked amounts
+of a lamp's crowd multiply by the directions' count and the click's
+momentum is the row's share. A high-rate lamp is a host cost: the records
+of `heisenberg/w27_beam` (47 per interval on 27 opening Nodes) run at
+seconds per interval where the crowd form ran in milliseconds, the
+layer's offers being kept per record until its completion; on a host of
+16 GB the run was killed at 7.1 GB after 68 minutes at interval 211 of
+350 (the gate set's world is not re-run to its length). After the gate
+review of the one click the layer's table releases a record at its
+completion (its offers with it, the identity kept for the lazy deletion
+of its rows; a completion visits the records whose live count reached 0
+alone; every reading byte-identical on the gate set at its caps and on
+the K worlds): the layer holds no offer open on this world and the cost
+is the GameBoard's rows, which do not merge across records (1457 records
+born per interval, 1.8 million rows and 2.75 s per interval at interval
+40; 3.3 GB at 20 minutes, interval 136). Series G2 (`examples/events/hubble_stars/`,
+registered after the gate set) is a lamp series too: its 18 worlds of
+`record/` and `doppler/` are carried without the key (their diff the key
+alone), its base worlds' stars birth records, and the acoustic reading
+rule (the slope of a `wave` set's phase) reads no turn under the record
+form; the record worlds' `source` rule is the record form's reading, the
+verdict to be re-read.
 
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 

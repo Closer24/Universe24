@@ -535,7 +535,6 @@ def entity_world(reference: str, definition: str, position: list[int]) -> dict[s
         "N": 64,
         "release": [1, 1],
         "suspension": 0,
-        "amplitude": True,
         "families": [{"name": "light", "quantum": 1}],
         "entity_definitions": reference,
         "entities": [{"name": "it", "definition": definition, "position": position}],
@@ -544,8 +543,7 @@ def entity_world(reference: str, definition: str, position: list[int]) -> dict[s
 
 @pytest.mark.parametrize("reference", ["entities/families.json", "entities/apparatus.json"])
 def test_every_shipped_definition_places_parses_and_runs(reference):
-    """(v2-f): each definition placed alone in a small world of `K` 4096 under
-    the amplitude key parses through the canonical loader and runs three
+    """(v2-f): each definition placed alone in a small world of `K` 4096 parses through the canonical loader and runs three
     intervals with the books balanced."""
     for entity in shipped_definitions(Path(reference).name)["entities"]:
         world = entity_world(reference, entity["name"], [4, 4, 1])

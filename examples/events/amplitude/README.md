@@ -77,7 +77,7 @@ are in the register's L1 entry.
 ## L2: the two slits at a low rate
 
 **The world** `slits_low` (the design's test 2): the shipped
-`examples/events/two_slits.json` under the key, the lamp's rate [1, 1] and
+`examples/events/two_slits.json` under the record form, the lamp's rate [1, 1] and
 content K (one phase step per interval: the birth at tick t has u = t - 1,
 64 births span the circle), the family's `phase_per_link` the pair
 [8591334592, 2^30] (the shipped lamp's turn per interval), the 121 pixels

@@ -227,14 +227,14 @@ def named_keys(cell: str) -> set[str]:
 def test_the_nested_key_sets_are_the_parsers():
     """The nested keys the test spells (`rotate`, `gate`) are the parser's:
     the parser accepts exactly them and refuses one more."""
-    assert schema._rotation({"rotate": {"setting": 1, "bit": 0, "turn": 0}}, "t", "rerelease", 64, True)
+    assert schema._rotation({"rotate": {"setting": 1, "bit": 0, "turn": 0}}, "t", "rerelease", 64)
     table = ((0, 0, 0), (0, 0, 0), *PORT_HEADINGS)
     gate = {"kind": "cnot", "hold": True, "parties": 2, "control": [0, 1, 0]}
-    assert schema._gate({"gate": gate}, "t", "rerelease", True, table)
+    assert schema._gate({"gate": gate}, "t", "rerelease", table)
     with pytest.raises(ValueError):
-        schema._rotation({"rotate": {"setting": 1, "extra": 0}}, "t", "rerelease", 64, True)
+        schema._rotation({"rotate": {"setting": 1, "extra": 0}}, "t", "rerelease", 64)
     with pytest.raises(ValueError):
-        schema._gate({"gate": {**gate, "extra": 0}}, "t", "rerelease", True, table)
+        schema._gate({"gate": {**gate, "extra": 0}}, "t", "rerelease", table)
 
 
 def test_every_key_the_catalog_names_is_a_key_the_parser_knows():

@@ -246,9 +246,12 @@ def test_two_rays_in_phase_record_four_units_and_in_antiphase_nothing():
         "table": {"light": "measure"},
     }
     other = {"position": [8, 1, 1], "family": "light", "amount": 4, "fixed": True}
+    # The antiphase pair: until stage (vii) step 4 the pointer 0 was below
+    # the threshold 1 and both passed; under the one click the threshold
+    # is the amount, both click and the record is 0 (re-run under the one click (stage (vii) step 4); the verdict to be re-read).
     for phases, expected, clicked in (
         ((0, 0), 4 * UNIT_RECORD, 2),
-        ((0, 32), 0, 0),
+        ((0, 32), 0, 2),
         ((0,), UNIT_RECORD, 1),
     ):
         beams = [arrival(1, number=2, phase=phases[0])]
@@ -271,15 +274,7 @@ def test_two_rays_in_phase_record_four_units_and_in_antiphase_nothing():
         }
         assert simulation.detectors()[0]["reading"] == "wave"
         lines = [r for r in records if r["event"] == "record"]
-        if clicked == 0:
-            # The antiphase pair: the pointer 0, below the threshold 1, both
-            # pass (since 2026-09-20) and nothing is recorded.
-            assert lines == [] and [(r["event"], r["threshold"]) for r in records] == [
-                ("pass", 1),
-                ("pass", 1),
-            ]
-            assert simulation.stores[LIGHT].size == 2
-            continue
+        assert simulation.stores[LIGHT].size == 0
         assert len(lines) == 1 and lines[0]["record"] == expected and lines[0]["detector"] == "d"
         pointer = lines[0]["pointer"]
         assert pointer[0] ** 2 + pointer[1] ** 2 == expected
@@ -663,12 +658,16 @@ def test_a_click_returns_the_sets_phase_to_its_measured_events():
     simulation.step()
     assert simulation.books()["balanced"]
     assert entry.phase == 41 and entry.clicks == [0, 1] and entry.held == [0, 24 - 6 + 1]
+    # The lamp's clock takes the received phase (41 after its turn), but its
+    # births are records born at u, the count of births, plus the
+    # direction's turn: the returned phase no longer enters a lamp's rows
+    # (re-run under the one click (stage (vii) step 4); the verdict to be re-read).
     fresh = light.age == 0
-    assert int(fresh.sum()) == 6 and (light.phase[fresh] == 40).all()
+    assert int(fresh.sum()) == 6 and (light.phase[fresh] == 0).all()
     simulation.step()
     assert simulation.books()["balanced"]
     assert entry.phase == 42
-    assert (light.phase[light.age == 0] == 41).all()
+    assert (light.phase[light.age == 0] == 1).all()
     # The set of three Nodes: every measured event of the set takes the phase.
     quarter = [at_node(SET_NODES[0], phase=0), at_node(SET_NODES[2], phase=16, number=5)]
     simulation = NatureBeamSimulation(parse_nature_beam_world(set_world(quarter)))
@@ -806,17 +805,22 @@ def test_the_wave_threshold_reads_the_pointers_square():
         arrival(1, number=3, phase=21, direction=[-1, 0, 0]),
         arrival(1, number=4, phase=43, direction=[0, 1, 0]),
     ]
+    # The threshold on the pointer's square is deleted at stage (vii) step 4
+    # (the one click): the threshold is the amount summed over the set under
+    # both readings, and the pointer gives the set's phase (the window) and
+    # its record alone (re-run under the one click (stage (vii) step 4); the verdict to be re-read). Until then: two in phase at 4 clicked 2,
+    # two opposite at 1 passed, three thirds apart passed, wave at 3 clicked.
     cases = (
-        ("one ray at 1", counter, [arrival(1, phase=8)], 1, "wave", 1),
-        ("two in phase at 4", counter, in_phase, 4, "wave", 2),
-        ("two in phase at 5", counter, in_phase, 5, "wave", 0),
-        ("two opposite at 1", counter, opposite, 1, "wave", 0),
-        ("two opposite at 1 with a window", gated, opposite, 1, "wave", 0),
-        ("three thirds apart at 1", counter, thirds, 1, "wave", 0),
-        ("beam: two in phase at 3", counter, in_phase, 3, "beam", 0),
-        ("wave: two in phase at 3", counter, in_phase, 3, "wave", 2),
+        ("one ray at 1", counter, [arrival(1, phase=8)], 1, "wave", 1, "threshold"),
+        ("two in phase at 4", counter, in_phase, 4, "wave", 0, "threshold"),
+        ("two in phase at 5", counter, in_phase, 5, "wave", 0, "threshold"),
+        ("two opposite at 1", counter, opposite, 1, "wave", 2, "threshold"),
+        ("two opposite at 1 with a window", gated, opposite, 1, "wave", 0, "window"),
+        ("three thirds apart at 1", counter, thirds, 1, "wave", 3, "threshold"),
+        ("beam: two in phase at 3", counter, in_phase, 3, "beam", 0, "threshold"),
+        ("wave: two in phase at 3", counter, in_phase, 3, "wave", 0, "threshold"),
     )
-    for label, measured, beams, threshold, reading, clicked in cases:
+    for label, measured, beams, threshold, reading, clicked, gate_kind in cases:
         records: list[dict[str, object]] = []
         simulation = NatureBeamSimulation(
             parse_nature_beam_world(
@@ -830,15 +834,20 @@ def test_the_wave_threshold_reads_the_pointers_square():
         assert entry.clicks == [0, clicked], label
         passes = [r for r in records if r["event"] == "pass"]
         assert len(passes) == len(beams) - clicked, label
-        assert all(r["threshold"] == threshold and r["window"] is None for r in passes), label
+        if gate_kind == "threshold":
+            assert all(r["threshold"] == threshold and r["window"] is None for r in passes), label
+        else:
+            # The pointer 0 has no phase: outside every window.
+            assert all("threshold" not in r and r["window"] == 0 for r in passes), label
         assert simulation.stores[LIGHT].size == len(beams) - clicked, label
         if clicked:
             assert simulation.detectors()[0]["families"]["light"]["clicks"] == clicked, label
         if label == "two opposite at 1":
-            # No memory between intervals: the pair goes on and nothing of
-            # it is read into the next interval's set.
+            # The pair clicked with the record 0 (the pointer 0); nothing is
+            # read into the next interval's set.
+            assert simulation.detectors()[0]["families"]["light"]["record"] == 0, label
             simulation.step()
-            assert simulation.books()["balanced"] and entry.clicks == [0, 0], label
+            assert simulation.books()["balanced"] and entry.clicks == [0, 2], label
 
 
 def test_the_pointer_gate_is_the_clicks_and_a_read_keeps_the_amount_gate():

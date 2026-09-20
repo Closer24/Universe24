@@ -264,22 +264,11 @@ def test_the_refusals_of_the_pair_keys():
 
     def lamp_world(amplitude: bool, **lamp: object) -> dict[str, object]:
         world = GENERATOR.bell("refusals", (0, 8))
-        world["amplitude"] = amplitude
         measured = world["measured"]
         assert isinstance(measured, list)
         measured[0]["lamp"] = {"rate": [1, 1], "directions": [[-1, 0, 0], [1, 0, 0]], **lamp}
-        if not amplitude:
-            for m in measured:
-                if m["family"] == "counter":
-                    m["table"]["light"] = {"phase_window": 0}
-            for detector in world["detectors"]:
-                detector["reading"] = "wave"
         return world
 
-    with pytest.raises(ValueError, match=r"lamp\.branches is the amplitude law's joint labels"):
-        parse_nature_beam_world(lamp_world(False, branches=[[0, 1], [3, 1]]))
-    with pytest.raises(ValueError, match=r"lamp\.arms is the amplitude law's count"):
-        parse_nature_beam_world(lamp_world(False, arms=2))
     with pytest.raises(ValueError, match=r"lamp\.arms must be an integer from 1 through 2"):
         parse_nature_beam_world(lamp_world(True, arms=3))
     world = lamp_world(True, arms=2)
@@ -294,12 +283,6 @@ def test_the_refusals_of_the_pair_keys():
         parse_nature_beam_world(lamp_world(True, arms=2, branches=[[3, 1], [3, 1]]))
     with pytest.raises(ValueError, match=r"branches\[0\]\.weight must be an integer from 1"):
         parse_nature_beam_world(lamp_world(True, arms=2, branches=[[0, 0], [3, 1]]))
-    plain = lamp_world(False)
-    measured = plain["measured"]
-    assert isinstance(measured, list)
-    measured[1]["table"]["light"] = {"phase_window": 0, "turn": 16}
-    with pytest.raises(ValueError, match=r"\.turn is the amplitude law's turn of the rotation"):
-        parse_nature_beam_world(plain)
     keyed = lamp_world(True, arms=2, branches=[[0, 1], [3, 1]])
     measured = keyed["measured"]
     assert isinstance(measured, list)

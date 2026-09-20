@@ -405,6 +405,35 @@ states "exactly" and means integer equality at every tick.
     measured first and recorded: depth 0.73 at 5.1 Links (2^26) and nothing
     at the screen (2^22).
 
+- **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**
+  `two_slits` under the record form (every lamp births records, the
+  world key `amplitude` deleted, MIGRATION (vii-4)): the lamp's 64 rows
+  per interval are records born at u, the count of births, with the path
+  phase alone, so the screen's `wave` record reads the per-Link turn
+  without the crowd form's emission lag (the lamp's clock turn per
+  interval) and the fringe's period doubles: the visibility's correlation
+  with the Euclidean cosine 0.80 at the period 16, 0.12 at 8 and 0.35 at
+  4 (`tests/test_nature_beam_worlds.py` (a); the crowd form read 0.85 or
+  more at 8 and below 0.5 at 4 and 16); the count per pixel is the rows'
+  (91 per record). That correlation reads the rows' `wave` record per
+  pixel, the GameBoard's absorptions, not the record's click: the record
+  form's reading of this world is its gathers (the ladder's cell per
+  record), read on the same world (2026-09-20, after the gate review of
+  the one click): 64 records per interval, one per u, 381 gathered per u
+  over the 500 intervals (24384 of 32000, 7616 open at the end), and the
+  ladder lands the records of five u alone on the screen, 381 each at
+  y = 22, 48, 60, 69 and 87 with both openings, of three u with one
+  opening alone (y = 12, 50, 72 for the opening at 55; y = 22, 60, 82 for
+  65; every other u at the wall or the faces), so no pixel receives
+  gathers under both single openings, the record's visibility per pixel
+  is not formed and no correlation at 16, 8 or 4 exists for the gathers
+  of this world: the record-form verdict on the two slits is to be read
+  from the gathers by the physicist. The digests of `two_slits` changed
+  (events, state); the numbers above are the crowd form's, kept as
+  history. The record form's own two-slit reading is series L2
+  (`slits_low`, the design's frequency as the pair form of
+  `phase_per_link`).
+
 ### A2. Bell test in phase form, symmetric geometry
 
 - **Confronts.** The CHSH inequality, S ≤ 2 for every local model (Clauser,
@@ -999,6 +1028,19 @@ states "exactly" and means integer equality at every tick.
   units as they did before), `tools/bell_chsh.py` 326 criteria, 0 failed;
   the paid labels x 64 appear in the momentum lines of the clicks only.
   Measured = expected; the Bell setup reads no momentum.
+
+- **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**
+  The ten worlds of `examples/events/bell/` under the record form: the
+  pair lamp's rows are records with the path phase 0 and the counters'
+  windows read the path phase, so every pair of a world lands in one
+  cell, E = +1 or -1 by the settings' half circles ((0, 0), (0, 8),
+  (0, 12), (0, 16), (4, 8), (4, 12), (16, 8) +1; (0, 24), (0, 32),
+  (16, 24) -1), S = 2 and S' = 2 (was 3/2), and 118 of the tool's 340
+  criteria of the crowd form fail (`tests/test_nature_beam_worlds.py`
+  (b)); the digests of `bell/read`, `bell/a0_b8`, `bell/a0_b0` and
+  `bell/fixed` changed. The phase-form Bell test is the crowd form's; the
+  record's pair is series L3 and L5 (`branches`, `arms`, the reading
+  `sum`: S = 176/64 at N = 64). The numbers above are kept as history.
 
 ### C, the couplings under the Beam Law, on the plane (2026-09-19)
 
@@ -1672,6 +1714,28 @@ states "exactly" and means integer equality at every tick.
     the fan's spread, the product growing as w: no bound. The triangle
     the owner expects between the extremes is not resolved by one to
     four rays per pixel per interval.
+- **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**
+  `w1_beam`, `w27_beam` and `w3_beam` under the record form: the lamp at
+  the rate [47, 1] births 47 records per interval, each a row of one unit
+  through the opening's re-emission (the equal split over the opening's
+  directions), and the screen's `beam` pairing reads the path phase; the
+  digests changed (events, state). The host cost of the record form on a
+  crowd world: `w27_beam` did not complete on the host (16 GB, four
+  cores): killed at 7.1 GB of memory after 68 minutes at interval 211 of
+  350, the layer keeping every record's offers for the whole run (47
+  records per interval on 27 opening Nodes, seconds per interval) where
+  the crowd form ran 350 intervals in 61 s. With the layer releasing a
+  record's offers at its completion (the gate review of the one click,
+  2026-09-20; every reading byte-identical) the memory is the rows' and
+  the time is not the layer's: stopped by a guard at 20 minutes at
+  interval 136 with the peak 3.3 GB, the layer holding no offer open (the
+  offers are made at the ends), the GameBoard holding the rows of 1457
+  records born per interval (the lamp's 47 per self-creation over its
+  Nodes) that do not merge across records, 1.8 million rows and 2.75 s
+  per interval at interval 40. The readings of the width against the lobe
+  are not re-read here. The numbers above are the crowd form's, kept as
+  history.
+
 - **Verdict.** The `wave` record narrows with the width of the opening
   and the count does not, as the law says; the product w x FWHM reaches
   0.886 lambda within 22 % at the one width where the sparse fan lets
@@ -1787,6 +1851,19 @@ states "exactly" and means integer equality at every tick.
     record's 0.184 at the rate 47 (A10's 0.185, w x FWHM 4.98 against the
     law's 4.09) and 0.278 at the rate 1, the half width of the comb's
     spikes.
+- **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**
+  The build-up worlds under the record form: a lamp at the rate [r, 1]
+  births r records per interval at u, the count of births (the r of one
+  interval one step apart), so a pixel's `wave` record per interval is
+  the tables' pointer of rows one step apart and not of rows in phase:
+  on the reading tool's small world the coincidence ratio at the centre
+  is 1.9985 at the rate 2 and 0.9994 at the rate 1 in place of 2 and 1
+  (`tests/test_buildup_readings.py`); the three registered worlds
+  (`w27_rate1`, `w27_rate8`, `w27_rate47`) are heavy under the record
+  form (the cost above) and are not re-run here. The numbers above are
+  the crowd form's, kept as history; the record form's own build-up is
+  one click per record by the ladder (series L2 at a low rate).
+
 - **Verdict.** Fringes do not build up one click at a time in this law:
   the lobe (the narrowing 0.31) exists at six rays per pixel per interval,
   is a sixth of itself at about one, and is gone at 0.14, where nature
@@ -2144,6 +2221,19 @@ states "exactly" and means integer equality at every tick.
 
 ### G2, the Hubble diagram with stars behind the detector (2026-09-20)
 
+- **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**
+  Every G2 world is a lamp world (the stars shine as lamps), so under the
+  record form (every lamp births records, the key `amplitude` deleted,
+  MIGRATION (vii-4)) its digests change and the acoustic reading rule
+  reads no turn: a star's rows are records born at u with the path phase,
+  the `wave` set's phase never turns and the redshift z the tool takes as
+  the slope of the record's phase is undefined (`tests/test_hubble_stars_readings.py`
+  (b) on the tool's bar world; until that step z within 0.05 of 0.5 / c).
+  The 18 worlds of `record/` and `doppler/` are carried without the key,
+  their diff the key alone; the record form's reading of the series is the
+  `source` rule of `record/expectations.json`. The registered worlds are
+  not re-run here (301^3 Nodes over 400 intervals); the numbers below are
+  the crowd form's, kept as history.
 - **Confronts.** The model owner's question (2026-09-20): "Can you run on
   a separate machine a test of whether dark energy is needed? What comes
   out of an experiment in our model? A star has to be placed there."
@@ -2829,6 +2919,21 @@ states "exactly" and means integer equality at every tick.
     rows 13618 at most; 162 Nodes per interval (156 in `near`) holding a
     ray of the beam and a ray of the crowd: the beam crossed the crowd at
     a third of its Nodes every interval and met it nowhere, as derived.
+- **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**
+  `heavy_meeting` and `mass_meeting` under the record form: the lamp's
+  rows are records born at u, the count of births, the meeting's register
+  reads the path phase (phase - u) and the phase rate the tool reads off
+  the clicks' phases is 0 (was 8, the clock's turn; two of the tool's six
+  checks fail on the small world, `tests/test_lensing_readings.py`); the
+  digests changed (events, state). The record form's own reading is the
+  K record worlds of record 97 and record 114 of the log: the click
+  centroid in y against the rows' in [110, 400] over 400 intervals,
+  control 25.871 against 26.000, mass 24.301 against 24.458, heavy 21.854
+  against 21.852, near 19.101 against 19.400 (the shifts against the
+  control -1.570 / -4.017 / -6.770 for the clicks and -1.542 / -4.148 /
+  -6.600 for the rows), no record row reaching the mass. The numbers
+  above are the crowd form's, kept as history.
+
 - **Verdict.** Light is neither bent nor delayed beside a mass in this
   law, exactly (0.000 pixel, 0.00 interval, the count and the phase rate
   the control's), at a crowd where nature would capture the beam, at
@@ -2888,6 +2993,16 @@ states "exactly" and means integer equality at every tick.
   Free families with a phase circle as the streams (`sa`, `sb`), one row
   per interval from a free measured event held in place, `pass` on every
   table for them; the face detectors.
+- **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**
+  The choosers' worlds under the record form read as the phase-form Bell
+  worlds above: on the tool's fixed-setting world every pair lands in
+  (-1, -1), E = 1 and both marginals 0 where the crowd form read the
+  triangle's 8, 24, 24, 8 with E = -1/2, and 3 of the tool's checks fail
+  (`tests/test_bell_choosers.py`); `bell_choosers` under the record form
+  is series L3's `bell_choosers` (the choosers on the GameBoard with the
+  record's pair, S = 156/64 on the registered quadruple). The numbers
+  above are the crowd form's, kept as history.
+
 - **Run.** `examples/events/bell/` (seven worlds by
   `make_chooser_worlds.py`, whose docstring derives the design from the
   engine's flight table and `by_clock` before the run; the dictionary in
@@ -3675,6 +3790,28 @@ branches). Not built: unification (3) (refused: three columns under three
 keys), Grover (six rotations beyond the register's ceiling), two
 sequential gates on an entangled record, the full register replay.
 
+**L, after (vii) (2026-09-20).** The one click landed at (vii-4)
+([MIGRATION](MIGRATION.md)): the record form is the only form, the key
+`amplitude` is deleted and every world with a lamp is a recorded world.
+Before it, u became the record's own field ((vii-2), the path phase
+phase - u read by every rule of the GameBoard) and a row's push its share
+amount^2 / m of the label with the rest on the books' `remainder` line
+((vii-3)). The K record worlds under u (record 114 of the log): the click
+centroid in y against the rows' over 400 intervals, control 25.871 /
+26.000, mass 24.301 / 24.458, heavy 21.854 / 21.852, near 19.101 / 19.400
+(the shifts against the control -1.570 / -4.017 / -6.770 for the clicks
+and -1.542 / -4.148 / -6.600 for the rows), no record row reaching the
+mass; unchanged by the share and by the one click. Every integer of L1 to
+L6 unchanged (S = 176/64, 2896/1024, 11584/4096; the worlds regenerated
+without the key). The gate set against main after the one click: the
+eight worlds without a lamp byte-identical, the seven with a lamp changed
+by the record form (the dated lines above). The host cost of a high-rate
+lamp under the record form (`w27_beam`: killed at 7.1 GB after 68
+minutes at interval 211 of 350; with the layer releasing gathered
+records' offers, 3.3 GB and interval 136 at 20 minutes) is an open item,
+with the design's items not built: unification (3), Grover, two
+sequential gates on an entangled record, the full register replay.
+
 ### N, the binding that costs content (2026-09-20)
 
 - **Confronts.** Whether one condition on one verb, the give at the
@@ -3733,7 +3870,10 @@ sequential gates on an entangled record, the full register replay.
   n -310 956 211 200 and -310 945 171 840; no step in 3000 intervals; held
   p (1834, 0, 1, 0), n (0, 1837, 1, 0), the mass read 3673. B2: no contact,
   no `bond` row or click, `held.bond` 2 at 3000; the set's 2993 gathers,
-  2961 of content 8 and 32 of content 7, I7's integers to the unit. B3:
+  2961 of content 8 and 32 of content 7, I7's integers to the unit (re-run
+  under the one click, stage (vii) step 4, the key `amplitude` deleted:
+  the same integers, 7 records open, the proton's held (1834, 0, 1, 2, 0,
+  0) and no step; the digests moved by the record's columns alone). B3:
   four gives at ticks 15 (p1, n2, n3) and 16 (p4), four border clicks at
   ticks 18 and 19, the escaped content 8: the ratio 2.0 to the deuteron
   against nature's 12.72, the law's failure as stated; the square disperses

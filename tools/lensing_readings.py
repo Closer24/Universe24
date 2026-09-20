@@ -319,6 +319,10 @@ def read_run(folder: Path, *, replay: bool = True, window_start: int = WINDOW_ST
             if '"screen_' not in line:
                 continue
             event = json.loads(line)
+            if "detector" not in event:
+                # The layer's lines (a gather names the chosen set) are not
+                # the crowd's clicks, passes and records.
+                continue
             detector_name = str(event["detector"])
             if not detector_name.startswith(SCREEN_PREFIX) or event["family"] != light:
                 continue

@@ -107,7 +107,8 @@ def worlds() -> dict[str, Json]:
         },
         {"position": list(counter), "family": "counter", "amount": 1, "fixed": True},
     ]
-    control["amplitude"] = True
+    # The lamp's rows are records (the one click of stage (vii): every lamp
+    # births records, the world key `amplitude` deleted, MIGRATION (vii-4)).
     control["detectors"] = [
         {"name": "bound_set", "positions": [list(counter)], "threshold": 1, "reading": "sum"}
     ]

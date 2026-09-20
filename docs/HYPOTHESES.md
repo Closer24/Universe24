@@ -952,13 +952,15 @@ couplings.
   rounding beyond 1/N at N = 4096 and the record's total over u are the
   law's own limits, recorded and not tuned; at large N the numbers are
   the paper's, not nature's exact ones.
-- **Open.** The one click (the design's section 6): the record form is
-  not the default, stage (vi) stopped at the gate set
-  ([MIGRATION](MIGRATION.md), (vi)); the K finding of the same day, u as
-  the record's own field beside the running phase and a row's push by its
-  share of the label (note 37 (ix)); the full register replay and the
-  coverage-measured gate set; Grover beyond the register's ceiling; two
-  sequential gates on an entangled record.
+- **Open.** The full register replay and the coverage-measured gate
+  set; Grover beyond the register's ceiling; two sequential gates on an
+  entangled record; the register's lamp worlds re-read under the one
+  click (their verdicts, EXPERIMENTS). Landed at stage (vii) of
+  2026-09-20 ([MIGRATION](MIGRATION.md), (vii-1) to (vii-4)): the one
+  click (the design's section 6, the record form the law, the key
+  deleted) and the K finding's two changes, u as the record's own field
+  beside the running phase and a row's push by its share of the label
+  (note 37 (ix) and (x)).
 - **Status.** Open; the design's acceptance tests pass on the branch
   `amplitude-impl` (the runs in the register), not merged at this
   writing.

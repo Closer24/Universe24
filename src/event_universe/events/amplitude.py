@@ -151,6 +151,37 @@ def lcm(a: int, b: int) -> int:
     return a * b // gcd(a, b) if a and b else max(a, b)
 
 
+def isqrt(value: int) -> int:
+    """The integer square root of a nonnegative Python integer (Newton on
+    the host's integers, exact)."""
+    if value < 2:
+        return value
+    x = 1 << ((value.bit_length() + 1) // 2)
+    while True:
+        y = (x + value // x) // 2
+        if y >= x:
+            return x
+        x = y
+
+
+def common_denominator(held: int, arriving: int) -> tuple[int, int, int]:
+    """Two multiplicities of one record at one offer (the design's 2.5;
+    stage (vii)): the offer's pointers are amplitudes over the square root
+    of its multiplicity, so rows of the multiplicities D and m add exactly
+    when D / m is the square of a rational, a / b in lowest terms with a
+    and b squares: the held pointers scaled by sqrt(b), the arriving row
+    by sqrt(a), the common denominator D x b = m x a. Returns (the scale
+    of the held pointers, the scale of the arriving row, the common
+    denominator); None where the ratio is not a square (the caller
+    refuses: the integer form has no cross term over sqrt(D m))."""
+    common = gcd(held, arriving)
+    a, b = held // common, arriving // common
+    root_a, root_b = isqrt(a), isqrt(b)
+    if root_a * root_a != a or root_b * root_b != b:
+        return (0, 0, 0)
+    return root_b, root_a, held * b
+
+
 def rungs(weights: list[tuple[int, int]], steps: int) -> tuple[list[int], tuple[int, int]]:
     """The ladder (the design's section 3.3): the cells' weights as pairs
     (numerator, multiplicity), the cumulative C_k over the common
@@ -204,7 +235,8 @@ class Offer:
     True, a which-path factor). `pointers` the accumulated pointer per
     (Node, label) (Python integers); `residuals` per channel the complex
     residual per (Node, label) after the set's reading; `multiplicity` the
-    rows' m at the set (the rows of one offer share it, refused otherwise);
+    rows' m at the set (the common denominator of the rows' multiplicities,
+    which differ by square factors or are refused, `common_denominator`);
     `rotated` whether the set rotated the labels (the channels + and -),
     else the channels are the labels; `setting` the rotation's (setting,
     turn); per Node the units, the content and the momentum the rows
@@ -298,6 +330,12 @@ class Layer:
         self.cosines = phase_cosines(phase_steps)
         self.sines = phase_sines(phase_steps)
         self.records: dict[int, LiveRecord] = {}
+        # The identities gathered (their table entries and offers released at
+        # the completion; `resolve` finds nothing, the lazy deletion of their
+        # rows) and the identities whose live count reached 0 since the last
+        # completion (the only records a completion visits).
+        self.gathered: set[int] = set()
+        self.zero: set[int] = set()
         self.aliases: dict[int, int] = {}
         self.gathers: list[dict[str, object]] = []
         self.born = 0
@@ -332,6 +370,8 @@ class Layer:
         found = LiveRecord(identity, family, u, tick, norm, dict(labels), arms, [norm] * arms, units)
         self.records[identity] = found
         self.born += 1
+        if units <= 0:
+            self.zero.add(identity)
         return found
 
     def split(self, identity: int, absorbed: int, born: int) -> None:
@@ -340,12 +380,16 @@ class Layer:
         found = self.resolve(identity)
         if found is not None:
             found.live += born - absorbed
+            if found.live <= 0:
+                self.zero.add(found.identity)
 
     def cancel(self, identity: int, amount: int) -> None:
         """The merge's cancel: the units removed end without an offer."""
         found = self.resolve(identity)
         if found is not None:
             found.live -= amount
+            if found.live <= 0:
+                self.zero.add(found.identity)
 
     def rotate(self, identity: int, bit: int) -> None:
         """A GameBoard rotation of a label bit: the record's label set doubles
@@ -384,6 +428,12 @@ class Layer:
         refused (its rows and offers elsewhere would keep their pre-join
         labels and drop out of the joint cells; the lazy relabelling of
         the design's section 10 is not built; the review of (v), B2)."""
+        for identity in (survivor, *others):
+            if identity in self.gathered:
+                raise ValueError(
+                    f"amplitude-v1: the record {identity} reaches a gate after its gather: a "
+                    "gathered record's rows are dropped at their next set, not joined"
+                )
         found = [self.records[survivor]] + [self.records[other] for other in others]
         if here is not None and others:
             for live in found:
@@ -447,6 +497,9 @@ class Layer:
                 head.offers[(set_index, arm + bits[k])] = offer
             self.aliases[live.identity] = survivor
             del self.records[live.identity]
+            self.zero.discard(live.identity)
+        if head.live <= 0:
+            self.zero.add(head.identity)
         return label_map, arm_offsets
 
     def end(
@@ -469,7 +522,8 @@ class Layer:
         there and went on (a which-path factor): the offer at (set, arm)
         accumulates their pointer and the residual per channel at their
         Node, with the content and the momentum they brought. A gathered
-        record's rows are dropped (the lazy deletion, section 9)."""
+        record's rows are dropped (the lazy deletion, section 9: the record
+        left the table at its completion and `resolve` finds nothing)."""
         found = self.resolve(identity)
         if found is None:
             return
@@ -477,8 +531,8 @@ class Layer:
             found.live -= amount
             found.ends += amount
             found.last_end = tick
-        if found.gathered:
-            return
+        if found.live <= 0:
+            self.zero.add(found.identity)
         arm, label = arm_of(branch), label_of(branch)
         offer = found.offer(set_index, arm, not absorbed)
         offer.last_tick = tick
@@ -487,14 +541,32 @@ class Layer:
             offer.residuals.setdefault(label, {})[(NO_NODE, label)] = (IDENTITY, 0)
             return
         at = NO_NODE if node is None else node
+        scale = 1
         if offer.multiplicity is None:
             offer.multiplicity = multiplicity
         elif offer.multiplicity != multiplicity:
-            raise ValueError(
-                f"amplitude-v1: the rows of the record {identity} at the set "
-                f"{self.names[set_index]} carry the multiplicities {offer.multiplicity} and "
-                f"{multiplicity}: one multiplicity per offer (the design's section 3.1)"
-            )
+            # Several multiplicities of one record at one offer (stage
+            # (vii)): the common denominator where the ratio is a square,
+            # the held pointers and residuals rescaled; refused otherwise.
+            held_scale, scale, common = common_denominator(offer.multiplicity, multiplicity)
+            if not common:
+                raise ValueError(
+                    f"amplitude-v1: the rows of the record {identity} at the set "
+                    f"{self.names[set_index]} carry the multiplicities {offer.multiplicity} and "
+                    f"{multiplicity}, whose ratio is not a square: two paths of one record add "
+                    "exactly at a set only when their multiplicities differ by a square factor "
+                    "(the integer form has no cross term over the square root of their "
+                    "product; the design's section 2.5)"
+                )
+            if held_scale != 1:
+                offer.pointers = {
+                    key: (x * held_scale, y * held_scale) for key, (x, y) in offer.pointers.items()
+                }
+                offer.residuals = {
+                    channel: {key: (x * held_scale, y * held_scale) for key, (x, y) in entries.items()}
+                    for channel, entries in offer.residuals.items()
+                }
+            offer.multiplicity = common
         offer.units += amount
         offer.units_at[at] = offer.units_at.get(at, 0) + amount
         offer.content[at] = offer.content.get(at, 0) + content
@@ -502,7 +574,7 @@ class Layer:
             held = offer.momentum.setdefault(at, [0] * len(momentum))
             for axis, value in enumerate(momentum):
                 held[axis] += value
-        weight = AMPLITUDE_SCALE * amount
+        weight = AMPLITUDE_SCALE * amount * scale
         pointer: Complex = (weight * self.cosines[phase], weight * self.sines[phase])
         key = (at, label)
         offer.pointers[key] = cadd(offer.pointers.get(key, (0, 0)), pointer)
@@ -602,11 +674,16 @@ class Layer:
         ladder over its cells, the cell of u, the Node tuple within it, the
         gather (the world's row); a record whose offers weigh nothing
         gathers nowhere (`chosen` None). Returns the records gathered this
-        call."""
+        call; each leaves the table (its offers are the gather's, the
+        identity kept in `gathered`), so the host holds a record's offers
+        until its completion and no longer."""
         written: list[LiveRecord] = []
-        for identity in sorted(self.records):
-            found = self.records[identity]
-            if found.gathered or found.live > 0 or not found.offers:
+        for identity in sorted(self.zero):
+            found = self.records.get(identity)
+            if found is None or found.live > 0:
+                self.zero.discard(identity)
+                continue
+            if not found.offers:
                 continue
             found.gathered = True
             self.completed += 1
@@ -684,6 +761,9 @@ class Layer:
             found.gather = gather
             self.gathers.append(gather)
             written.append(found)
+            del self.records[identity]
+            self.gathered.add(identity)
+            self.zero.discard(identity)
         return written
 
     def open_records(self) -> list[dict[str, object]]:
@@ -691,8 +771,6 @@ class Layer:
         found = []
         for identity in sorted(self.records):
             entry = self.records[identity]
-            if entry.gathered:
-                continue
             found.append(
                 {
                     "record": identity,
@@ -726,5 +804,5 @@ class Layer:
             "unit": UNIT,
             "born": self.born,
             "gathered": self.completed,
-            "open": len(self.records) - self.completed,
+            "open": len(self.records),
         }

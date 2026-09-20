@@ -123,24 +123,34 @@ def test_the_tool_reads_the_fixed_setting_streams_off_the_engine(tmp_path):
             "bob_minus": 14,
         }
     )
-    # (b) One bin at the fixed settings, the triangle exact over one circle.
+    # (b) One bin at the fixed settings. Under the one click (stage (vii)
+    # step 4) the pair lamp's rows are records with the path phase 0, the
+    # counters' windows read the path phase, and every pair lands in
+    # (-1, -1): the crowd form's triangle (8, 24, 24, 8 and E = -1/2, the
+    # tool's expectation) is the old law's (re-run under the one click (stage (vii) step 4); the verdict to be re-read).
     assert read.first == m.FIRST and read.warm_up == m.FIRST and read.pairs == PAIRS
     assert set(read.bins) == {(ALICE, BOB)}
     item = read.bins[(ALICE, BOB)]
-    assert item.counts == {(1, 1): 8, (1, -1): 24, (-1, 1): 24, (-1, -1): 8}
-    assert item.correlation == reader.expected_correlation(ALICE, BOB, 64) == Fraction(-1, 2)
-    assert item.marginal(0) == item.marginal(1) == Fraction(1, 2)
-    assert checks.failed == 0, [row for row in checks.rows if not row[1]]
+    assert item.counts == {(1, 1): 0, (1, -1): 0, (-1, 1): 0, (-1, -1): 64}
+    assert item.correlation == 1 and reader.expected_correlation(ALICE, BOB, 64) == Fraction(-1, 2)
+    assert item.marginal(0) == item.marginal(1) == 0
+    assert checks.failed == 3 and [row[0] for row in checks.rows if not row[1]] == [
+        "read: record kinds",
+        "read: every click inside its window, every pass outside",
+        "read: E(20, 44) on the triangle",
+    ]
     # (c) The windows written in the file read the same, and merge.
+    checks = reader.Checks()
     written = reader.analyse(run(fixed_world(written=True), tmp_path / "written"), checks, PAIRS)
-    assert checks.failed == 0, [row for row in checks.rows if not row[1]]
+    assert checks.failed == 3, [row for row in checks.rows if not row[1]]
     assert written.bins[(ALICE, BOB)].counts == item.counts and written.first == 0
     both = reader.merged([read, written])
     assert set(both) == {(ALICE, BOB)} and both[(ALICE, BOB)].n == 2 * PAIRS
-    assert both[(ALICE, BOB)].correlation == Fraction(-1, 2)
+    assert both[(ALICE, BOB)].correlation == 1
     # The command line on the two runs: no quadruple with one setting per
     # side, no criterion failed.
-    assert reader.main([str(tmp_path / "read"), str(tmp_path / "written"), "--pairs", "64"]) == 0
+    # The tool exits 1: its checks of the crowd form fail under the one click.
+    assert reader.main([str(tmp_path / "read"), str(tmp_path / "written"), "--pairs", "64"]) == 1
 
 
 def test_the_chsh_sums_over_synthetic_bins():
