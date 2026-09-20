@@ -102,6 +102,7 @@ from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
 from event_universe.events.measured import Ledger, Measured, PendingRow, count_component
+from event_universe.events.meeting import ArcTable, arc_table, meet
 from event_universe.events.world import (
     AGE_READS,
     BEAM_LAW,
@@ -436,7 +437,7 @@ def window_admits(
 ) -> np.ndarray | bool:
     """Whether a phase at the distance d = (phase - s) mod N from a
     window's setting s is inside the window of width w (`phase_width`; the
-    weak force, 2026-09-20, BEAM_LAW note 35): the w consecutive steps of
+    weak force, 2026-09-20, BEAM_LAW note 36): the w consecutive steps of
     the circle centred on the setting, [s - floor(w / 2), s - floor(w / 2)
     + w), that is (d + floor(w / 2)) mod N < w, the one floor of the window
     and its width (the mathematician's ONE_FORMULA row 11). At the default
@@ -653,15 +654,20 @@ class NatureBeamTables:
     collision: CollisionTable
     cosines: np.ndarray
     sines: np.ndarray
+    # The arc permutations of the direction table (the meeting, 2026-09-20;
+    # `meeting.ArcTable`): built per target on demand and cached.
+    arcs: ArcTable
 
 
 def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
     modulus = world.phase_steps
+    flight = flight_table(world.directions)
     return NatureBeamTables(
-        flight_table(world.directions),
+        flight,
         collision_table(),
         np.array(phase_cosines(modulus), dtype=np.int64),
         np.array(phase_sines(modulus), dtype=np.int64),
+        arc_table(flight.labels),
     )
 
 
@@ -1224,7 +1230,7 @@ def transform(
 ) -> None:
     """The one rule `become` (the weak force in the world's terms, the model
     owner's "go on everything", 2026-09-20; the physicist's design, WEAK.md
-    2.2; BEAM_LAW note 35 (iii)), called from its two triggers, the click
+    2.2; BEAM_LAW note 36 (iii)), called from its two triggers, the click
     (step 4: an arrival of the entry's family clicked as `measure` clicks
     it) and the clock (step 5: the self-creation whose age is at the key
     `at`, `ages_at_key`, the gate `crowd` open): the measured event becomes
@@ -1683,6 +1689,11 @@ def nature_beam(
                     f"{definition.name!r} of lifetime {definition.lifetime} on the GameBoard: the "
                     "click on the border `lifetime` has no inverse (as a face click has none)"
                 )
+        # The meeting's inverse first (the inverse order of the interval:
+        # the meeting, then the table, then the walk), read back from the
+        # untouched crowd (`meeting.meet`).
+        if world.meeting:
+            meet(stores, world, tables, occupied, ledger, inverse=True)
         for family, store in enumerate(stores):
             if store.size == 0:
                 continue
@@ -1812,6 +1823,12 @@ def nature_beam(
     # 3. The collision.
     for store in stores:
         collide(store, backward=False)
+    # Then the meeting (the model owner, 2026-09-20, "DECIDED: the meeting,
+    # M-R"; under the world key `meeting`): at every Node of free space every
+    # paid unit reads the free crowd of the other numbers and turns toward
+    # it by its phase register; the crowd untouched (`meeting.meet`).
+    if world.meeting:
+        meet(stores, world, tables, occupied, ledger)
 
     # 4. The measured events' tables and the detectors, the same rule at
     # every measured event taken in bulk by the host: the rows at measured

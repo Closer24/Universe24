@@ -1,5 +1,5 @@
 """The W world: the exchange form of the weak force at one Link (docs/BEAM_LAW.md,
-section 10 note 35 (iv); the model owner, 2026-09-20, "go on everything",
+section 10 note 36 (iv); the model owner, 2026-09-20, "go on everything",
 item (3): the W world after the transformation; the physicist's design,
 WEAK.md 1.1 and 4.5). The W is a paid family with a whole charge per unit
 of amount (D-1) and the family key `lifetime` 1, no column: a row born at
@@ -7,8 +7,8 @@ a self-creation makes its one step at the age 1 (m(1) = 1 on every
 direction), is read by the table of the measured event it arrives at, and
 is booked on the border `lifetime` at the end of that interval where no
 table took it; it exists on the neighbours of its emitter and nowhere
-else. Nothing is added to the law: the W world composes `become` (note 35
-(iii)), D-1 (note 35 (ii)) and the lifetime (note 31 (vii)); L = 0 is no family
+else. Nothing is added to the law: the W world composes `become` (note 36
+(iii)), D-1 (note 36 (ii)) and the lifetime (note 31 (vii)); L = 0 is no family
 at all (the parser refuses a lifetime of 0), the contact form being the
 `become` entry itself with its products released by the measured event
 (Fermi's form, series J1 and J3); no Z family (a neutral current is the

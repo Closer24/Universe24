@@ -239,7 +239,16 @@ collision would have turned and the Nodes shared with the crowd
 the deflection 0.000 pixel and the delay 0.00 interval at a crowd where
 nature would capture the beam, the derivation of the physicist's entry 2
 held: light is neither bent nor delayed in this law, a plain
-disagreement with nature, registered and not tuned.
+disagreement with nature, registered and not tuned. Since the meeting
+(2026-09-20, the world key `meeting`, [BEAM_LAW note 35](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+the folder also holds the four worlds under the key
+(`<name>_meeting.json`) and `lens_meeting.json`, two beams at +-b on a
+longer box; the register entry
+[K under the meeting (2026-09-20)](../../docs/EXPERIMENTS.md#k-under-the-meeting-2026-09-20):
+light bent toward the mass with the sign of gravity, the M / b form and
+the grain of the fan (-1.8 to -4.4 pixels; the lens crossing 71 Links
+past the mass), not delayed in time, the mass measuring the light turned
+into it; registered, 14 readings inside and 9 outside, not tuned.
 ## The weak-force series
 
 The folder [weak/](weak/README.md) holds the worlds of series J, the weak
@@ -260,7 +269,7 @@ the 127 behind it nothing (a filter, not an attenuation), the ladder
 exhausts the beam after 64 readers, the stride 2 gives 1 / 32 at the centre
 0 and nothing at the centre 1; 13 readings inside, 0 outside, registered
 and not tuned. J1, the free neutron's decay count against its clock (the
-transformation `become`, `weak-v1`, [BEAM_LAW note 35](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+transformation `become`, `weak-v1`, [BEAM_LAW note 36](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (iii)): 64 neutrons of the register's `n` on a lattice of pitch 4 in an
 open 41^3 GameBoard, each with `become` at 512 into `p` with the products
 `beta` and `nu`, a shell of readers at r = 18 declared as one `beam`

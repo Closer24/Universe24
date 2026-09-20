@@ -1,5 +1,5 @@
 """A paid family's charge per unit of amount, D-1 (docs/BEAM_LAW.md, section
-2 and section 10 note 35 (ii); the model owner, 2026-09-20, "go on
+2 and section 10 note 36 (ii); the model owner, 2026-09-20, "go on
 everything", item (2): a paid family may declare a whole charge per unit of
 amount, read on the charge line of the books only, the push untouched; the
 physicist's design, WEAK.md 1.5): the charge of a measured event is rho

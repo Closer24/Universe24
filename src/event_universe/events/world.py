@@ -73,7 +73,7 @@ the model owner, 2026-09-19):
   ray, M_A x (rho_A rho_B - 1) x V_B), for a paid family since the same
   day its `charge` as a whole charge per unit of amount (D-1, the
   physicist's design of the weak force and the owner's "go on
-  everything", item (2); BEAM_LAW note 35 (ii)): an integer c, a pair
+  everything", item (2); BEAM_LAW note 36 (ii)): an integer c, a pair
   with a denominator other than 1 refused, read on the charge line of the
   books only, so that the charge of a measured event is rho times its
   content for a free family and the declared whole charge times the
@@ -152,7 +152,7 @@ the model owner, 2026-09-19):
   on, the six headings by default, and optionally its `phase_window`); and,
   since 2026-09-20 (the weak force, `weak-v1`: the model owner's "go on
   everything", item (1), the transformation `become`; the physicist's
-  design, WEAK.md section 2; BEAM_LAW note 35 (iii)), its `become`, the
+  design, WEAK.md section 2; BEAM_LAW note 36 (iii)), its `become`, the
   clock trigger of the transformation: `{"at": a, "into": family,
   "products": [[family, amount, content per unit], ...], "crowd": c}`:
   at the self-creation whose clock reaches `at` (the event's own age
@@ -184,7 +184,7 @@ the model owner, 2026-09-19):
 - `phase_window`, the declared window of a detector and of an emitter: a
   setting `s`, an integer from 0 through N - 1, and since 2026-09-20 (the
   weak force, the neutrino first: the model owner's "go on everything";
-  BEAM_LAW note 35) its width `phase_width`, an integer w from 1 through N,
+  BEAM_LAW note 36) its width `phase_width`, an integer w from 1 through N,
   N / 2 by default: the w consecutive steps of the circle centred on the
   setting, [s - floor(w / 2), s - floor(w / 2) + w), a phase at the distance
   d = (phase - s) mod N inside when (d + floor(w / 2)) mod N < w
@@ -391,6 +391,7 @@ WORLD_KEYS = {
     "width",
     "age_bound",
     "action",
+    "meeting",
     "directions",
     "direction_bound",
     "families",
@@ -413,6 +414,12 @@ COLUMNS_RULE = "columns-v1"
 # record carries it when a measured event declares `become` or a table
 # entry's rule is `become`.
 WEAK_RULE = "weak-v1"
+# The identity of the meeting (the model owner, 2026-09-20, "DECIDED: the
+# meeting, M-R": an event in transit reads the crowd as a body does, a
+# report; `events/meeting.py`): the record carries it when the world
+# declares `meeting: true`; absent, no paid unit reads the crowd and every
+# world reads as it did, byte for byte.
+MEETING_RULE = "meeting-v1"
 # The two built-in columns of every family: the first, gravity, has the
 # value [1, 1] on every unit of content and the sign minus (like contents
 # pull together); the second, charge, the family's `charge` per unit of
@@ -772,6 +779,10 @@ class NatureBeamWorld:
     in_transit: tuple[TransitDefinition, ...]
     detectors: tuple[DetectorDefinition, ...]
     action: int | None = None
+    # The meeting (the world key `meeting`, false by default): a paid unit in
+    # transit reads the free crowd at every free-space Node after the
+    # collision and turns toward it by its phase register (`events/meeting.py`).
+    meeting: bool = False
 
     @property
     def phase_mask(self) -> int:
@@ -827,6 +838,8 @@ class NatureBeamWorld:
             found.append(COLUMNS_RULE)
         if self.transformations:
             found.append(WEAK_RULE)
+        if self.meeting:
+            found.append(MEETING_RULE)
         return found
 
     @property
@@ -2092,6 +2105,21 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     # (nothing turns by momentum), an integer from 1 when declared.
     action = None if "action" not in obj else _integer(obj["action"], "action", 1)
     families = _families(obj["families"], phase_steps, age_bound)
+    # The meeting: true or false (false by default); under it a paid family
+    # without a phase circle is refused, the phase being the register the
+    # meeting reads the crowd into (there is no other on the record).
+    meeting = obj.get("meeting", False)
+    if type(meeting) is not bool:
+        raise ValueError(f"{BEAM_LAW}: meeting must be true or false")
+    if meeting:
+        for family in families:
+            if not family.free and not family.phase:
+                raise ValueError(
+                    f"{BEAM_LAW}: meeting is refused with the paid family {family.name!r} without a "
+                    "phase circle: the meeting turns a unit in transit by its phase register (the "
+                    "crowd met is added to the phase, one grain step per wrap of the circle), and "
+                    "a phase-less family has no register to read the crowd into"
+                )
     measured = _measured(
         obj["measured"],
         shape,
@@ -2129,5 +2157,6 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         in_transit,
         detectors,
         action,
+        meeting=meeting,
     )
     return world

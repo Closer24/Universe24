@@ -41,6 +41,18 @@ law derives a deflection of exactly 0, a delay of exactly 0, the count of
 the control and the lamp's own phase rate, whatever M and b. Nature bends
 light toward the mass by 4 G M / (b c^2) and delays it (Shapiro).
 
+Since 2026-09-20 (the model owner's decision, "DECIDED: the meeting, M-R",
+docs/BEAM_LAW.md note 34) the same four worlds are written again under the
+world key `meeting: true` (`<name>_meeting.json`, the model ids
+`beam-lensing-<name>-meeting-v1`): every paid unit of the beam reads the
+mass's free crowd at every free-space Node it shares with it and turns
+toward it by its phase register, the crowd untouched. And a fifth world,
+`lens_meeting.json` (`beam-lensing-lens-meeting-v1`): two lamps at +-b about
+the mass's line on a box longer in x (LENS_SHAPE), the screen at LENS_SCREEN_X,
+so that the two beams, each turned toward the mass, converge past it and the
+crossing is read as a grain of the fan (the expectation from the offline
+flight: about 70 Links past the mass at b = 6, the steps 2.4 degrees each).
+
     python examples/events/lensing/make_worlds.py
 """
 
@@ -74,6 +86,12 @@ WORLDS: dict[str, dict[str, int | None]] = {
     "heavy": {"mass": 2 * SOURCE, "impact": 6},
     "near": {"mass": SOURCE, "impact": 3},
 }
+# The lens world under the meeting: two lamps at +-b, a box longer in x so
+# that the crossing of the two turned beams lies before the screen.
+LENS_SHAPE = (105, 41, 41)
+LENS_SCREEN_X = 102
+LENS_TICKS = 600
+LENS_IMPACT = 6
 HEADINGS = {(1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)}
 Json = dict[str, object]
 
@@ -96,14 +114,23 @@ FAN = fan(FAN_MANHATTAN)
 DECLARED = [v for v in FAN if tuple(v) not in HEADINGS] + [v for v in BEAM if tuple(v) not in HEADINGS]
 
 
-def world(name: str) -> Json:
-    keys = WORLDS[name]
+def world(
+    name: str,
+    *,
+    meeting: bool = False,
+    impacts: tuple[int, ...] | None = None,
+    shape: tuple[int, int, int] = SHAPE,
+    screen_x: int = SCREEN_X,
+    ticks: int = TICKS,
+) -> Json:
+    keys = WORLDS.get(name, {"mass": SOURCE, "impact": LENS_IMPACT})
     impact = keys["impact"]
     mass = keys["mass"]
     assert impact is not None
+    centre = (CENTRE[0], shape[1] // 2, shape[2] // 2)
     measured: list[Json] = [
         {
-            "position": [LAMP_X, CENTRE[1] + impact, CENTRE[2]],
+            "position": [LAMP_X, centre[1] + b, centre[2]],
             "family": "light",
             "amount": LAMP_CONTENT,
             "phase": 0,
@@ -111,11 +138,12 @@ def world(name: str) -> Json:
             "lamp": {"rate": [1, 1], "directions": BEAM},
             "table": {"m": "pass"},
         }
+        for b in (impacts if impacts is not None else (impact,))
     ]
     if mass is not None:
         measured.append(
             {
-                "position": list(CENTRE),
+                "position": list(centre),
                 "family": "m",
                 "amount": mass,
                 "phase": 0,
@@ -124,11 +152,11 @@ def world(name: str) -> Json:
             }
         )
     detectors: list[Json] = []
-    for y in range(SHAPE[1]):
-        for z in range(SHAPE[2]):
+    for y in range(shape[1]):
+        for z in range(shape[2]):
             measured.append(
                 {
-                    "position": [SCREEN_X, y, z],
+                    "position": [screen_x, y, z],
                     "family": "wall",
                     "amount": 1,
                     "fixed": True,
@@ -138,17 +166,17 @@ def world(name: str) -> Json:
             detectors.append(
                 {
                     "name": f"screen_{y}_{z}",
-                    "positions": [[SCREEN_X, y, z]],
+                    "positions": [[screen_x, y, z]],
                     "threshold": 1,
                     "reading": "wave",
                 }
             )
-    return {
+    document: Json = {
         "law": "beam",
-        "model_id": f"rays-lensing-{name}-space-v1",
-        "shape": list(SHAPE),
+        "model_id": f"beam-lensing-{name}-meeting-v1" if meeting else f"rays-lensing-{name}-space-v1",
+        "shape": list(shape),
         "boundary": "open",
-        "ticks": TICKS,
+        "ticks": ticks,
         "K": K,
         "N": N,
         "release": [1, SOURCE],
@@ -162,14 +190,34 @@ def world(name: str) -> Json:
         "measured": measured,
         "detectors": detectors,
     }
+    if meeting:
+        document["meeting"] = True
+    return document
+
+
+def lens_world() -> Json:
+    """Two beams at +-b past the mass under the meeting, on the longer box."""
+    return world(
+        "lens",
+        meeting=True,
+        impacts=(LENS_IMPACT, -LENS_IMPACT),
+        shape=LENS_SHAPE,
+        screen_x=LENS_SCREEN_X,
+        ticks=LENS_TICKS,
+    )
 
 
 def main() -> None:
     print(f"fan: {len(FAN)} directions; beam: {len(BEAM)}; declared: {len(DECLARED)}")
     for name in WORLDS:
-        path = HERE / f"{name}.json"
-        path.write_text(json.dumps(world(name), separators=(",", ":")) + "\n", encoding="utf-8")
-        print(path.relative_to(HERE.parents[2]))
+        for meeting in (False, True):
+            path = HERE / (f"{name}_meeting.json" if meeting else f"{name}.json")
+            document = world(name, meeting=meeting)
+            path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
+            print(path.relative_to(HERE.parents[2]))
+    path = HERE / "lens_meeting.json"
+    path.write_text(json.dumps(lens_world(), separators=(",", ":")) + "\n", encoding="utf-8")
+    print(path.relative_to(HERE.parents[2]))
 
 
 if __name__ == "__main__":

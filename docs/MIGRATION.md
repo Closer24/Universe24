@@ -10,7 +10,7 @@ python -m pip install -e '.[render,dev]'
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
 "DECIDED: go on everything", item (3): the W world after the
-transformation; [BEAM_LAW note 35](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (iv)).
+transformation; [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (iv)).
 No key, no refusal and no record line is added: the W is a paid family
 with a whole charge per unit of amount (D-1, (ii)) and the family key
 `lifetime` 1 ([the lifetime](#the-columns-of-the-one-coupling-the-lifetime-the-held-content-and-the-contact-through-the-table-on-2026-09-20-columns-and-lifetime-per-family-held-per-measured-event-columns-v1-the-contact-record)), thrown as
@@ -29,7 +29,7 @@ clicks per family), `tests/test_w_world.py` (a) to (d) and
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
 "DECIDED: go on everything", item (1): "the transformation `become` with
-the identity `weak-v1`", after the neutrino; [BEAM_LAW note 35](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+the identity `weak-v1`", after the neutrino; [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (iii)). Identities: no world file changes; no registered world declares a
 transformation, so every example world replays byte-identical in
 `events.jsonl`, and `state.json` and `run.json` equal but for the added
@@ -103,7 +103,7 @@ transformation, so every example world replays byte-identical in
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
 "DECIDED: go on everything", item (2): "D-1, a paid family may declare a
 whole charge per unit of amount, read on the charge line only, the push
-untouched"; [BEAM_LAW note 35](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+untouched"; [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (ii)). Identities: no world file changes; no registered world declares a
 charge on a paid family, so every example world replays byte-identical in
 `events.jsonl`, `state.json` and `run.json` (VALIDATION).
@@ -138,7 +138,7 @@ charge on a paid family, so every example world replays byte-identical in
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
 "DECIDED: go on everything; just make sure again that it is good and
 generic", item (1): the neutrino first with the table-entry key
-`phase_width` and no change of law; [BEAM_LAW note 35](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+`phase_width` and no change of law; [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (i)). Identities: no world file changes; every example world replays
 byte-identical in `events.jsonl`, and `state.json` and `run.json` equal
 but for the added `widths` (VALIDATION).
@@ -170,6 +170,50 @@ but for the added `widths` (VALIDATION).
 - **Series J2** under `examples/events/weak/` with `tools/weak_readings.py`
   and `tests/test_weak_readings.py`; `tests/test_window_width.py` (a) to
   (e) pins the rule.
+## The meeting, on 2026-09-20 (`meeting` per world; `meeting-v1`; the `turned` line of the books)
+
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"DECIDED: the meeting, M-R: an event in transit reads the crowd as a body
+does, a report, not a balance"; [BEAM_LAW section 3 step 3 and note 35](BEAM_LAW.md#3-the-nodes-interval-nature_beam);
+[expectations](TEST_EXPECTATIONS.md#the-meeting)). No world file changes:
+the key is absent by default, and every example world replays
+byte-identical in `events.jsonl` and `state.json`.
+
+- **Added, the world key `meeting`** (true or false; false by default):
+  under it every paid unit in transit reads the free crowd of the other
+  numbers at every free-space Node after the collision (the one reading
+  set, the vector moment V with the labels as weights, the column sum
+  kappa of its family against theirs) and turns toward t = kappa V by k
+  steps of the arc permutation of the direction table, k read off its
+  phase register (the crowd met in whole units of Q added to the phase,
+  one grain step per wrap of the circle). Refused, naming the register,
+  with a paid family without a phase circle; refused when not true or
+  false. The new module `src/event_universe/events/meeting.py`
+  (`ArcTable`, `arc_table`, `arc_shift`, `column_sum`, `register`,
+  `register_inverse`, `crowd_flow`, `meet`); `nature_beam` calls `meet`
+  once after the collision and once before the inverse collision;
+  `NatureBeamTables` gains the field `arcs` (built by `nature_beam_tables`;
+  a caller that builds the tables by hand passes `arc_table(flight.labels)`).
+- **Added, the identity `meeting-v1`** under `hypotheses` in `run.json`
+  when the key is true (`world.MEETING_RULE`; `NatureBeamWorld.meeting`,
+  `NatureBeamWorld.hypotheses`), and the key itself in `run.json`
+  (`meeting`, as declared).
+- **Added, the `turned` line of the books**: `Ledger.turned_momentum` per
+  family and `Ledger.turned_momentum_total()`; `books()` carries
+  `families[<name>].turned` and `momentum.turned` (so every audit line of
+  `run.json` gains them, zero without the key). Under the key the running
+  transit momentum line is moved by the same delta, so `books(recount=True)`
+  equals `books()` and the momentum book of a paid family reads
+  measured + transit + escaped - turned constant. Re-pinned with the new
+  line written first: `tests/test_lifetime.py` (b) and
+  `tests/test_nature_beam_flight.py` (the periodic axis and the open
+  face), whose exact momentum blocks gain `"turned": [0, 0, 0]`.
+- **The readings tool of series K** (`tools/lensing_readings.py`) reads the
+  meeting worlds too (the model ids `beam-lensing-<name>-meeting-v1`
+  beside `rays-lensing-<name>-space-v1`), the phase offset per pixel, the
+  `turned` line and, with two lamps, the centroid per lamp and the
+  crossing; `examples/events/lensing/make_worlds.py` writes the four
+  worlds under the key (`<name>_meeting.json`) and `lens_meeting.json`.
 ## A table entry's window read from a reading, on 2026-09-20 (`phase_window` as `{"reads": ..., "offset": ...}`; issue #363)
 
 An additive key of the world file ([BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
