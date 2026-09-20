@@ -27,6 +27,20 @@ from measured Detector observables to the board. Coordinate invariant/bound proo
 with the [mathematician](../mathematical-validation/SKILL.md); keep supplied
 reference laws, analytic checks and empirical agreement distinct.
 
+## Our laws are on the GameBoard; the detector sees other laws
+
+The model owner, 2026-09-20: "Our laws are on the GameBoard; in the detector
+one sees other laws." The rules under review are the GameBoard's: families
+with their keys (charge and other columns per unit of content, a lifetime,
+the phase per Link, the quantum), the tables from the keys, the flight and
+collision tables, the click. Nature's laws (Newton, Einstein, Bohr, Yukawa's
+range, Hubble, the electroweak scale) are laws of the detector's world: they
+are what detectors read, and the review never asks the GameBoard to carry
+their forms. A change is admissible when it is generic, local, bounded and
+formula-free on the GameBoard; whether nature's laws then appear is decided
+by detector readings under the [experimenter](../experimenter/SKILL.md),
+never by a formula placed on the board.
+
 ## Always start from event spacetime
 
 Ground every physical review in the modeled space of events and causal time:
