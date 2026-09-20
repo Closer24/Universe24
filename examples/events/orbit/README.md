@@ -165,6 +165,7 @@ short of it (p in label units; C on the first turn):
 | `s32_r12` | 32 | 12 | 576 | no: the return (-4, 0) (yes) | 289 (343) | 11.25 | -4, -2, +3, +5, -6, +9, -15 | 6.74 | 307 / 49121 | 1.32 | escaped through face:-y at tick 2891 |
 | `s32_r24` | 32 | 24 | 576 | no: the return (-13, 0) (yes) | 829 (687) | 28.27 | -13.00 | 1.46 | 77 / 8052 | 1.27 | escaped through face:-x at tick 1054 |
 
+(superseded for the pushed worlds by the re-read below, 2026-09-20)
 No orbit closes by the criterion (a return within one Link with the
 heading kept). The S = 1 probes outrun the field; the S = 8 probe at
 r = 12 makes one turn in 198 intervals (the derived 196) and leaves; the
