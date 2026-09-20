@@ -6,6 +6,28 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The binding that costs content, on 2026-09-20 (`binding-v1`, no key)
+
+binding-v1 (2026-09-20): at a contact under `measure` the refused body gives
+its held paid content to the flight on the reversed heading; `contact`
+records gain `given`; `run.json` carries `binding-v1` when a body holds a
+paid family; no registered world changes by a byte. The model owner's
+records 115 and 137 of [the log](LOG_2026-09-20.md), the physicist's design
+`docs/designs/binding_v1/DESIGN.md` (record 132),
+[BEAM_LAW note 40](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+`engine._give`, `world.BINDING_RULE` and `NatureBeamWorld.binding`,
+`tests/test_binding.py`; the worlds of series N under
+`examples/events/binding/` ([the register](EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20)).
+The `given` key is written on `contact` records from the moment the run
+holds the fact (`NatureBeamSimulation.binding`: at load when a body holds a
+paid family other than its own, the parser's `binding`; else from the first
+give on), and `run.json`'s `hypotheses` carries `binding-v1` from the same
+fact (`NatureBeamSimulation.hypotheses`): a body that takes paid content
+under the keys' `measure` gives it at its next contact, and the record and
+the identity follow that run-time fact. Every world in which no body holds
+or takes paid content is unchanged; a paid body's own content is never
+given.
+
 ## The hand, on 2026-09-20 (`hand-v1`)
 
 The model owner's decision of 2026-09-20 (record 128 of

@@ -59,11 +59,13 @@ from event_universe.events.nature_beam import (
     by_clock_rows,
     exact_column_sums,
     exact_sum,
+    momentum_labels,
     nature_beam,
     nature_beam_tables,
 )
 from event_universe.events.world import (
     BEAM_LAW,
+    BINDING_RULE,
     CONTACT_DEFAULT,
     DETECTOR_READINGS,
     FACE_NAMES,
@@ -142,6 +144,22 @@ class NatureBeamSimulation:
         count = len(world.families)
         self.tables: NatureBeamTables = nature_beam_tables(world)
         self.stores = [NatureBeamStore(world.shape) for _ in world.families]
+        # The six headings of the direction table by (axis, sign): the
+        # heading a refused body gives its carried paid content on is the
+        # one opposite to its refused step (`_give`; the table always holds
+        # the six, `world._direction_table`).
+        self.headings: dict[tuple[int, int], int] = {}
+        for index, vector in enumerate(world.directions):
+            if sum(abs(component) for component in vector) == 1:
+                axis = max(range(3), key=lambda a: abs(vector[a]))
+                self.headings[(axis, 1 if vector[axis] > 0 else -1)] = index
+        # The binding that costs content as a fact of the run: true at load
+        # when a body holds a paid family (`world.binding`), and raised at
+        # the first give otherwise (a body of a free family that took paid
+        # content under `measure` gives it at its next contact); from then
+        # on every `contact` record carries `given` and the run's record the
+        # identity `binding-v1` (`hypotheses`).
+        self.binding = world.binding
         self.open_faces = tuple(port for port in range(6) if not world.periodic[port >> 1])
         self.ledger = Ledger(count, self.open_faces)
         # The detectors at run time: the declared ones first, in their
@@ -613,7 +631,7 @@ class NatureBeamSimulation:
         found = {self.occupant(node) for node in nodes}
         occupants = sorted(number for number in found if number not in (None, entry.number))
         if occupants:
-            self._contact(entry, axis, origin, destination, occupants)
+            self._contact(entry, axis, sign, origin, destination, occupants)
             return
         self._place(entry, nodes)
         entry.position = destination
@@ -645,6 +663,7 @@ class NatureBeamSimulation:
         self,
         entry: Measured,
         axis: int,
+        step: int,
         origin: Address3,
         destination: Address3,
         occupants: list[int],
@@ -686,7 +705,22 @@ class NatureBeamSimulation:
         by the step already; the transfer crosses one Link in one
         interval, as a ray's step does), fixed work (one entry per
         occupant of the destination set), the steps the frame's, outside
-        the walk and the collision."""
+        the walk and the collision.
+
+        The binding that costs content (`binding-v1`, the model owner's
+        record 115 of 2026-09-20 and the physicist's design, BEAM_LAW note
+        40): at the first hand-over under `measure` of a contact the
+        refused body also GIVES the paid content it carries to the flight
+        (`_give`), once per contact, whole, on the heading opposite to the
+        refused step (`step`, the sign of the Link the drive fired on that
+        axis: under the signed drive of record 126 the momentum's sign can
+        differ from the step's at a reversal, and the heading is the step's);
+        a body that carries none gives nothing and the contact is the
+        hand-over alone, bit for bit. The `contact` record then carries
+        `given` (the content given at this hand-over, 0 on a later one)
+        from the moment the run holds the fact (`binding`: at load when a
+        body holds a paid family, else from the first give on); before it
+        the record is as it was."""
         component = entry.momentum[axis]
         magnitude = abs(component)
         if magnitude == 0:
@@ -695,6 +729,7 @@ class NatureBeamSimulation:
         contents = [self.measured[number].content for number in occupants]
         shares = apportion_whole(magnitude, contents, entry.age % len(occupants))
         family = self.families[entry.family].name
+        gave = False
         for number, share in zip(occupants, shares, strict=True):
             occupant = self.measured[number]
             rule = occupant.contact[entry.family]
@@ -709,22 +744,110 @@ class NatureBeamSimulation:
             occupant.momentum[axis] = bounded(occupant.momentum[axis] + handed, occupant, "momentum")
             entry.momentum[axis] = bounded(entry.momentum[axis] - handed, entry, "momentum")
             occupant.contacts[entry.family] += 1
+            given = 0
+            if rule == "measure" and not gave:
+                gave = True
+                given = self._give(entry, axis, step, origin)
             if self.record is not None:
-                self.record(
-                    {
-                        "event": "contact",
-                        "tick": self.tick,
-                        "number": entry.number,
-                        "node": list(origin),
-                        "to": list(destination),
-                        "occupant": number,
-                        "family": family,
-                        "rule": rule,
-                        "axis": axis,
-                        "component": handed,
-                        "momentum": list(entry.momentum),
-                    }
-                )
+                line: dict[str, object] = {
+                    "event": "contact",
+                    "tick": self.tick,
+                    "number": entry.number,
+                    "node": list(origin),
+                    "to": list(destination),
+                    "occupant": number,
+                    "family": family,
+                    "rule": rule,
+                    "axis": axis,
+                    "component": handed,
+                }
+                if self.binding:
+                    line["given"] = given
+                line["momentum"] = list(entry.momentum)
+                self.record(line)
+
+    def _give(self, entry: Measured, axis: int, step: int, origin: Address3) -> int:
+        """The give of the binding that costs content (`binding-v1`; the
+        model owner's record 115 of 2026-09-20, the physicist's design
+        docs/designs/binding_v1/DESIGN.md section 1, candidate A; BEAM_LAW
+        note 40): at a contact under `measure` the refused body gives to
+        the flight the content it carries of every paid family other than
+        its own (`held`; a lamp's own content is not carried), per such
+        family with the quantum h `held // h` units of content h as one row
+        (age 0, the body's phase and number, no record) at the body's Node
+        on the heading opposite to the refused step (`step`, the sign of
+        the Link the step fired on the axis), away from the occupant;
+        `held mod h` stays held. The body's held content of the
+        family falls by the content given, booked on the family's `spent`
+        line as a lamp's release is, and the row on the transit and content
+        lines (`released`) and on the transit momentum line; the body takes
+        the recoil, minus the row's label (Q x content per unit along the
+        heading, the one label of the law, checked before it is formed:
+        `momentum_labels`), toward the occupant. The rows then have the
+        law's fates by the tables and the border: the border `lifetime`
+        clicks them with their content (the released binding energy), a
+        body on their line takes them under the keys' `measure`. Returns
+        the content given, summed over the families (0 for a body that
+        carries none: nothing happens). Local (the giver's own held content
+        and the heading of its own refused step; the row crosses one Link
+        per interval), fixed work (one row per paid family carried), the
+        division by h exact with its remainder held, every intermediate
+        bounded."""
+        direction = self.headings[(axis, -step)]
+        given = 0
+        for family, definition in enumerate(self.families):
+            if definition.free or family == entry.family:
+                continue
+            units = entry.held[family] // definition.quantum
+            if units == 0:
+                continue
+            content = units * definition.quantum
+            store = self.stores[family]
+            direction_column = np.array([direction], dtype=np.int64)
+            amount_column = np.array([units], dtype=np.int64)
+            content_column = np.array([definition.quantum], dtype=np.int64)
+            labels = momentum_labels(
+                self.tables.flight.labels, direction_column, amount_column, content_column, False, origin
+            )
+            born = exact_column_sums(labels)
+            entry.momentum = [
+                bounded(a - b, entry, "momentum") for a, b in zip(entry.momentum, born, strict=True)
+            ]
+            entry.held[family] -= content
+            self.ledger.held_spent[family] += content
+            self.ledger.content_released[family] += content
+            self.ledger.transit_released[family] += units
+            self.ledger.transit_momentum = [
+                a + b for a, b in zip(self.ledger.transit_momentum, born, strict=True)
+            ]
+            store.append(
+                node=np.array([store.flat(origin)], dtype=np.int64),
+                direction=direction_column,
+                age=np.zeros(1, dtype=np.int64),
+                phase=np.array([entry.phase], dtype=np.int64),
+                number=np.array([entry.number], dtype=np.int64),
+                amount=amount_column,
+                content=content_column,
+                arrival=np.array([NO_ARRIVAL], dtype=np.int64),
+                record=np.array([NO_RECORD], dtype=np.int64),
+                branch=np.array([NO_BRANCH], dtype=np.int64),
+                multiplicity=np.array([ONE_PATH], dtype=np.int64),
+            )
+            given += content
+        if given:
+            self.binding = True
+        return given
+
+    @property
+    def hypotheses(self) -> list[str]:
+        """The identities of the physical hypotheses the run carries: the
+        world's at load (`NatureBeamWorld.hypotheses`) and `binding-v1` once
+        a body gave paid content it took during the run (`binding`, the
+        run-time fact; the parser knows only what is held at load)."""
+        found = list(self.world.hypotheses)
+        if self.binding and BINDING_RULE not in found:
+            found.append(BINDING_RULE)
+        return found
 
     # -- the books -------------------------------------------------------------
 

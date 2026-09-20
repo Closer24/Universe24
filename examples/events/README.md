@@ -178,6 +178,24 @@ the deuteron bound at one Link and free at three, two protons bound or
 repelled by the sign of Q^2 - G^2 - M^2, the square sheared apart and the
 line held, 29 readings inside and 1 outside, registered and not tuned.
 
+## The binding series
+
+The folder [binding/](binding/README.md) holds the three worlds of series
+N, the binding that costs content (`binding-v1`,
+[BEAM_LAW note 40](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+written by `binding/make_worlds.py` on series I's base: the nucleons carry
+the paid family `bond` (quantum 1, lifetime 3) held 2 each with their free
+totals kept (1837, 1840), and give it at their first contact under
+`measure` to the flight away from the occupant, the border `lifetime`
+clicking it two Links away: the deuteron with the bond (B1, the defect 4
+as two border clicks, the mass read 3673 of 3677), one proton alone beside
+the I7 lamp (B2, the control: no give, the lamp blind to the held content)
+and the square p n / n p with the bond (B3, 8 units, the ratio 2.0 to the
+deuteron against nature's 12.7, the law's failure stated before the run).
+The pins were written before the run and the readings beside them; the
+register entry is
+[N, the binding that costs content (2026-09-20)](../../docs/EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20).
+
 ## The orbit series
 
 The folder [orbit/](orbit/README.md) holds the six worlds of the orbit

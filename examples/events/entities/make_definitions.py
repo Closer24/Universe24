@@ -55,6 +55,12 @@ def families() -> dict[str, object]:
                 }
             ],
         ),
+        # The paid content a nucleon carries and gives at its first contact
+        # (`binding-v1`, series N; BEAM_LAW note 40): no column, no phase
+        # circle, the lifetime 3 as the strong family's.
+        family_definition(
+            "bond_family", [{"name": "bond", "quantum": 1, "lifetime": 3, "phase": False}]
+        ),
         family_definition("neutrino", [{"name": "nu", "quantum": 0}]),
         # The antineutrino of series P (`hand-v1`): a free family whose every
         # row is right-handed, born along a polarised parent's axis.

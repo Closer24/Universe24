@@ -1020,3 +1020,49 @@ couplings.
   run).
 - **Status.** Open; `hand-v1` built on 2026-09-20 with the three worlds
   of series P and the parity test (`tests/test_hand.py`).
+
+## 24. The binding energy is the paid content a body gives at its first contact, measurable as the border's clicks
+
+- **Statement (the model owner's records 115 and 137 of 2026-09-20; the
+  physicist's design `docs/designs/binding_v1/DESIGN.md`, record 132;
+  [BEAM_LAW note 40](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  `binding-v1`).** A nucleon carries paid content (a paid family with a
+  lifetime, held: content carried, never released) and gives it once, at
+  its first contact under `measure`, to the flight on the heading away from
+  its partner; the border `lifetime` clicks the rows two Links away with
+  their content. The binding energy of a nucleus is then the content its
+  bodies gave, read at the border as clicks (the gamma of n + p -> d +
+  gamma), and the mass a detector reads of the bound pair is the declared
+  content less what escaped, the books exact; after the formation the pair
+  is stable for ever (nothing left to give; the contact is the momentum
+  hand-over alone). The rule reads no family name, no partner and no shape.
+- **The expectations (series N, [EXPERIMENTS](EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20)).**
+  The deuteron with `bond` 2 per nucleon: two border clicks of content 2,
+  the escaped content 4 = 0.109 % of 3677 against nature's 4.353 m_e =
+  0.1185 % (the register's grain is 1 m_e: 4 is the nearest integer, 8 %
+  under); the mass read 3673. The alpha with the same one value: the give is
+  per body, so 8 units, 0.109 % of 7354, the ratio 2.0 in energy to the
+  deuteron where nature has 12.72: stated so that it fails, and it does. A
+  prediction: the register's pp threshold G = 7111 becomes 7112 once both
+  protons have given.
+- **What it depends on.** The size is an input, the held paid content per
+  nucleon (record 106: every content is an input; the law derives no
+  binding energy, the content dynamics being linear). No form of the rule
+  with one declared value gives the deuteron/alpha ratio; a second value
+  (a content per bond that grows with the crowd, or a per-shape declaration)
+  or a content-dependent rule would be needed for the alpha. "Every family
+  paid" (the design's section 7) does not give the defect and costs two
+  rules: recorded as a direction, not built.
+- **What would refute it.** A third `bond` click of the deuteron; a `given`
+  on a later contact; a step of either body after the formation; the books
+  off by one unit at any tick; a bond click or a bond row in the control
+  (one proton beside a lamp); a gather count of the control's lamp off
+  I7's 2993. Against nature: the alpha's 2.0 x is the law's limit,
+  registered and not tuned.
+- **Status.** Built on 2026-09-20 (`binding-v1`, the register byte-identical
+  where no body holds a paid family); series N run and registered: every
+  pin of the design's run table inside; the design's momentum identity
+  (measured + transit + escaped = 0) outside by +270 720 on x in the
+  deuteron, the third-law gap of record 126 made visible by held paid
+  content before the give (the review's finding, reported, not moved); the
+  pp threshold not run.
