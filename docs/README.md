@@ -38,6 +38,7 @@ Since 2026-09-19 there is one engine, the engine of the Beam Law
 | [Derivations of the known laws](DERIVATIONS.md) | The known laws derived on paper from one interval of the engine written as an operator on the GameBoard, rounds 1 to 8 (the law of the shadow in round 8, sections 51 to 56; the law of events and the Beam Law not yet derived) |
 | [Experiments register](EXPERIMENTS.md) | The research runs, one entry each with its design and criterion pinned before the run, and the records of the runs made; never test-suite tests |
 | [Hypotheses under test](HYPOTHESES.md) | The questions the framework raises, numbered, kept apart from measured results |
+| [The law's own predictions against nature](PREDICTIONS.md) | The register of what the Beam Law predicts by itself, each entry stated so that it can fail, with its detector reading and its status against what is observed; entries 1 to 23 the physicist's list of 2026-09-20 (in the weak session's scratchpad, cited by number, to be brought in unchanged), entries from 24 added after them; a disagreement is the law's limit, never tuned |
 | [Problem solving](PROBLEM_SOLVING.md) | How the project advanced: one line per problem, its solution and who solved it |
 | [Validation evidence](VALIDATION.md) | Dated, source-identified check results of the past; not timeless certification |
 
