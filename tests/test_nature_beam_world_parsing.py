@@ -1,12 +1,13 @@
-"""The world file of the law of the ray refuses by name (docs/RAY_LAW.md,
+"""The world file of the Beam Law refuses by name (docs/BEAM_LAW.md,
 sections 2 and 7) and the runner records a run; the integer bounds of the
 measured line (re-pinned from `test_event_worlds` (e) and
-`test_integer_bounds_of_measured_and_emission` (a) under the ray law). The
-expected results of docs/TEST_EXPECTATIONS.md ("The world file of the ray
-law"), written down first:
+`test_integer_bounds_of_measured_and_emission` (a) under the Beam Law). The
+expected results of docs/TEST_EXPECTATIONS.md ("The world file of the Beam
+Law"), written down first:
 
-(a) refused, naming the key: `"law": "events"` (naming the law of the ray
-    and MIGRATION), `dynamics`, `max_active_owners`, `headings` on a lamp,
+(a) refused, naming the key: `"law": "events"` (naming the Beam Law
+    and MIGRATION), `"law": "rays"` (the law's name before 2026-09-20,
+    naming the migration; a world without `law` names `"beam"`), `dynamics`, `max_active_owners`, `headings` on a lamp,
     `heading` on a ray, `port_map`, `groups` on a detector, a non-primitive
     direction (2, 2, 0), a component beyond P (65 at the default bound), a
     direction the world does not declare, a rest direction on a lamp, a
@@ -30,7 +31,7 @@ law"), written down first:
     a family `charge` -3 as (-3, 1) and [1, 2] as (1, 2), the measured
     event's `charge` then [-3 x 2^24, 1] and [2^23, 1] (rho x content,
     reduced), the books' `charge` the same pair;
-(c) the runner: a 4-interval world into `run.json` (`law` "rays-v1",
+(c) the runner: a 4-interval world into `run.json` (`law` "beam-v1",
     completed, four ticks, four books, conserved, the measured events, the
     six face detectors of the open GameBoard with their `record`, the
     directions table, `suspension` [1, 1]), `state.json` (the law, tick 4,
@@ -38,7 +39,7 @@ law"), written down first:
     used output directory refused;
 (d) the bounds (re-pinned on 2026-09-19 at 1/64 of their amounts, the
     label of a unit along a heading being 64 e_d since the label along the
-    unit vector, RAY_LAW section 2 and note 23): two measured events of
+    unit vector, BEAM_LAW section 2 and note 23): two measured events of
     content 1 one Link apart at `release` [1, 1] read each other's one ray
     from interval 2 on and are pushed by 1 x 64 x 1 = 64 toward each
     other; the second, declared with the momentum -(2^62 - 1) + 64 on x,
@@ -55,7 +56,7 @@ import json
 
 import pytest
 
-from event_universe.events import RAYS_LAW, NatureBeamSimulation, parse_nature_beam_world
+from event_universe.events import BEAM_LAW, NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.world import MOMENTUM_BOUND
 from event_universe.runner import run_initialization
 
@@ -64,7 +65,7 @@ CONTENT = 1 << 24
 
 def base(**keys: object) -> dict[str, object]:
     world: dict[str, object] = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-parsing-test",
         "shape": [11, 11, 11],
         "boundary": "open",
@@ -91,7 +92,12 @@ def test_the_world_refuses_by_name():
     light = {"name": "light", "quantum": 1}
     lamp = {"position": [1, 1, 1], "family": "light", "amount": 4, "fixed": True}
     refused({**world, "law": "events"}, '"law": "events" names the law of events.*MIGRATION')
-    refused({key: value for key, value in world.items() if key != "law"}, '"law": "rays"')
+    # The law's name before 2026-09-20 is refused naming the migration (rays-v1
+    # is beam-v1, the same law); the edge: no law at all names the one value.
+    refused(
+        {**world, "law": "rays"}, '"law": "rays" is the Beam Law.s name before 2026-09-20.*MIGRATION'
+    )
+    refused({key: value for key, value in world.items() if key != "law"}, '"law": "beam"')
     refused({**world, "dynamics": "reversible-detector-v1"}, "law of events' keys \\(dynamics\\)")
     refused({**world, "max_active_owners": 1}, "max_active_owners")
     refused(
@@ -311,7 +317,7 @@ def test_the_runner_records_a_run(tmp_path):
     path = tmp_path / "world.json"
     path.write_text(json.dumps(world), encoding="utf-8")
     record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
-    assert record["law"] == RAYS_LAW and record["status"] == "completed"
+    assert record["law"] == BEAM_LAW and record["status"] == "completed"
     assert record["completed_ticks"] == 4 and record["conserved_at_every_completed_tick"] is True
     assert len(record["audit"]) == 4 and record["measured"][0]["content"] == CONTENT
     assert [entry["name"] for entry in record["detectors"]] == [
@@ -326,7 +332,7 @@ def test_the_runner_records_a_run(tmp_path):
     assert record["suspension"] == [1, 1] and record["directions"][2] == [1, 0, 0]
     assert record["families"][0]["phase"] is False and record["families"][0]["phase_per_link"] == 0
     state = json.loads((tmp_path / "run" / "state.json").read_text(encoding="utf-8"))
-    assert state["law"] == RAYS_LAW and state["tick"] == 4 and state["nodes"] and "measured" in state
+    assert state["law"] == BEAM_LAW and state["tick"] == 4 and state["nodes"] and "measured" in state
     assert (tmp_path / "run" / "events.jsonl").exists()
     with pytest.raises(ValueError, match="ticks must be nonnegative"):
         run_initialization(path, tmp_path / "negative", ticks=-1)

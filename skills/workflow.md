@@ -289,7 +289,7 @@ not newly invented physical tests. The repository's existing submission and CI
 gate still applies. Ordinary runs and tests are headless; render only when the
 user explicitly requests visualization or visual checks. Diagnostics may reject
 a run but may not repair physical state. Consult
-[the law of the ray](../docs/RAY_LAW.md) and [the engine's bookkeeping](../docs/ENGINE.md)
+[the Beam Law](../docs/BEAM_LAW.md) and [the engine's bookkeeping](../docs/ENGINE.md)
 before applying old scalar/particle or disturbance assumptions to the primary
 API (`NatureBeamSimulation`).
 

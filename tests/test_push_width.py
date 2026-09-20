@@ -1,5 +1,5 @@
 """The width of the push (the model owner's D1, 2026-09-19, Highlights 5.4;
-docs/RAY_LAW.md, section 3, step 5 and implementation note 15): a free
+docs/BEAM_LAW.md, section 3, step 5 and implementation note 15): a free
 measured event of content M with the momentum component p on an axis steps
 one Link per (S x M + p) / p self-creations on that axis, `by_clock(age,
 |p|, S x M + |p|)`, S the world key `width` (an integer from 1; 1 by
@@ -9,7 +9,7 @@ integers of docs/TEST_EXPECTATIONS.md ("The width of the push"), written
 down first:
 
 Since 2026-09-19 the label of a unit along a heading is Q e_d with Q = 64
-(RAY_LAW section 2 and note 23), every declared `momentum` is in label
+(BEAM_LAW section 2 and note 23), every declared `momentum` is in label
 units, and the rule reads `by_clock(age, |p|, Q x S x M + |p|)`: the
 momenta below are the first pins times 64 and every position is unchanged
 (`by_clock(age, Q n, Q k) = by_clock(age, n, k)`).
@@ -58,7 +58,7 @@ REST = 0  # The first rest direction of the table ("here a").
 def bar(measured: list[dict[str, object]], **keys: object) -> dict[str, object]:
     """An open bar of 12 x 1 x 1 whose measured events release nothing."""
     world: dict[str, object] = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "push-width-test",
         "shape": [12, 1, 1],
         "boundary": "open",

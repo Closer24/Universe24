@@ -1,5 +1,5 @@
 """The readings of series G, the Hubble diagram behind the detector, under
-the law of the ray, in space.
+the Beam Law, in space.
 
 Reads the run folders of the worlds of `examples/events/hubble/` (the
 runner's `run.json`, `initialization.json` and `events.jsonl`, the folders

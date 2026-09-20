@@ -1,5 +1,5 @@
 """A body on a set of Nodes with one record, and the turn by momentum
-(docs/RAY_LAW.md, section 10, note 30; the model owner, 2026-09-20: the
+(docs/BEAM_LAW.md, section 10, note 30; the model owner, 2026-09-20: the
 electron of width 3, and "on Bohr, go, and put it as parameters outside
 the GameBoard like the age"). A measured event declares `span`, three odd
 extents centred on its position: its clock, its threshold and its push read
@@ -121,7 +121,7 @@ FAMILIES = [{"name": "m", "quantum": 0}, {"name": "light", "quantum": 1}]
 
 def world(**keys: object) -> dict[str, object]:
     base: dict[str, object] = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-body-test",
         "shape": [12, 3, 3],
         "boundary": "open",

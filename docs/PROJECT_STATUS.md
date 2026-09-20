@@ -2,14 +2,14 @@
 
 ## Where the project stands on 2026-09-19 (read this first)
 
-**One engine: the law of the ray.** This description is a snapshot of the
+**One engine: the Beam Law.** This description is a snapshot of the
 branch `claude/universe24-new-3ytqde` at the commits that implemented
-[the law of the ray](RAY_LAW.md) on the base `ce0b22af`. Read current Git and
+[the Beam Law](BEAM_LAW.md) on the base `ce0b22af`. Read current Git and
 the linked Issue/PR before treating it as live status.
 
-1. **The law of the ray** (Highlights 5.4, "DECIDED: the law of the ray",
+1. **The Beam Law** (Highlights 5.4, "DECIDED: the law of the ray",
    the model owner, 2026-09-19; the design published in
-   [RAY_LAW.md](RAY_LAW.md) before the engine changed): the Node holds no
+   [BEAM_LAW.md](BEAM_LAW.md) before the engine changed): the Node holds no
    wave; a unit is a ray with a record (`NatureBeam`: Node, direction, age,
    phase, number, amount, content) moving along the digital line of its
    momentum at one speed for every direction, 1 / sqrt 3 (the flight
@@ -20,8 +20,8 @@ the linked Issue/PR before treating it as live status.
    ray's law is one generic function, `nature_beam`, and every piece of
    logic exists once (one reading of the Node, `read_arrivals`, its
    components selected by the coupling's declared key). Its engine is the
-   one engine, `src/event_universe/events/` (`rays-v1`) on the substrate of
-   `core/`, a world selected by `"law": "rays"`, with the ten `tests/test_nature_beam_*.py`
+   one engine, `src/event_universe/events/` (`beam-v1`) on the substrate of
+   `core/`, a world selected by `"law": "beam"`, with the ten `tests/test_nature_beam_*.py`
    modules and the worlds under `examples/events/`
    ([the engine's bookkeeping](ENGINE.md), [coverage](HIGHLIGHTS_IMPLEMENTATION.md),
    [expectations](TEST_EXPECTATIONS.md)).
@@ -31,7 +31,7 @@ the linked Issue/PR before treating it as live status.
    the sides, the scatter, the suspension of a bundle and the
    `reversible-detector-v1` candidate) in the night; see the
    [migration notes](MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1).
-   Every rule the ray law keeps (the clock, the tables, the phase window,
+   Every rule the Beam Law keeps (the clock, the tables, the phase window,
    the release priced by the turn, the face detectors, the refused step,
    the one reading set, the count off the clock) is re-pinned in the new
    modules. Any state before a deletion can be checked out from git.
@@ -61,13 +61,13 @@ performance: 0.23 to 1.0 us per Node per interval on the registered worlds
   GameBoard ring's count); the orbit series D after the label along the
   unit vector (decided on 2026-09-19: the label of a unit is u_d, the
   integer vector nearest Q D / |D| at Q = 64, every momentum in label
-  units, [RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  units, [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
   note 23; re-run: no orbit closes by the criterion, the S = 32 probe at
   r = 12 bound for 2891 intervals and seven precessing turns, C 1.3 to
   1.5 against the ring mean's 1): whether to pre-fill the field, to
   widen the push further, to read the count off the clock as well, or to
   release the field continuously rather than in shells
-  ([D, the orbit](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19)).
+  ([D, the orbit](EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19)).
 - Derived and not solved: no inertia for a co-moving pair at first order in v
   (DERIVATIONS.md section 54); Bell at most 2; a single ray does not
   interfere with itself, interference being the record of many of one
@@ -83,7 +83,7 @@ python tools/check.py --base origin/main` locally and the affected-check selecto
 in CI under current CONTRIBUTING.md; merge
 commits, never a rebase; experiments registered in EXPERIMENTS.md with their
 digests; hypotheses numbered in HYPOTHESES.md; the law documented in
-RAY_LAW.md, its bookkeeping in ENGINE.md and its coverage in
+BEAM_LAW.md, its bookkeeping in ENGINE.md and its coverage in
 HIGHLIGHTS_IMPLEMENTATION.md; every deletion in MIGRATION.md.
 
 **Everything is in git.** The history is merge commits only; `git log
@@ -94,8 +94,8 @@ out, the engines before this one among them.
 
 | Scope | Implemented owner | Contract and limits |
 | --- | --- | --- |
-| The world file and its refusals | `src/event_universe/events/world.py` | [RAY_LAW.md](RAY_LAW.md), section 2; [ENGINE.md](ENGINE.md), "The world" |
-| The law: the record, the reading, the tables, the store, the interval | `src/event_universe/events/nature_beam.py` | [RAY_LAW.md](RAY_LAW.md), sections 3 to 5; [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) |
+| The world file and its refusals | `src/event_universe/events/world.py` | [BEAM_LAW.md](BEAM_LAW.md), section 2; [ENGINE.md](ENGINE.md), "The world" |
+| The law: the record, the reading, the tables, the store, the interval | `src/event_universe/events/nature_beam.py` | [BEAM_LAW.md](BEAM_LAW.md), sections 3 to 5; [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) |
 | The frame: the clocks, the steps, the books, the readings, the inverse | `src/event_universe/events/engine.py`, `measured.py` | [ENGINE.md](ENGINE.md), "The frame", "The books" |
 | The record of a run | `src/event_universe/events/run.py`, `snapshot_writer.py`, `runner.py` | [ENGINE.md](ENGINE.md), "The record" |
 | The substrate | `src/event_universe/core/` | Bounded integers (`by_clock`, `apportion_whole`, `integer_root`), the GameBoard's addresses and headings, the phase tables; the integer audit |

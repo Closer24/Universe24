@@ -16,7 +16,7 @@ the 23 redundancies with the one name recommended). A mechanical rename in
 three commits; no rule, integer, record key or artifact changed: the whole
 suite passes with the same test bodies. The ray is the record of an event in
 transit, `NatureBeam` in the code; on the GameBoard there are only events
-([the law of the ray](RAY_LAW.md)).
+([the law of the ray](BEAM_LAW.md)).
 
 - **NatureBeam, the law's things in code**: `RayWorld` -> `NatureBeamWorld`,
   `RaySimulation` -> `NatureBeamSimulation`, `RayStore` -> `NatureBeamStore`,
@@ -32,13 +32,39 @@ transit, `NatureBeam` in the code; on the GameBoard there are only events
   `fixed_rays` -> `fixed_beams`, `ray_speed` -> `beam_speed`; the prose
   "ray world" -> "NatureBeam world". Imports of `RaySimulation`,
   `RayWorld` and `parse_ray_world` from `event_universe` or
-  `event_universe.events` must use the new names. Unchanged: `"law":
-  "rays"` and `RAYS_LAW = "rays-v1"` in every world file and run record
-  (the register's fingerprints depend on them), [RAY_LAW.md](RAY_LAW.md)
-  and its title (one line added under it), the refusal tables that name
-  the deleted keys (`ray_interactions`, `ray_delay`, ...), the dated
-  records of deleted tests, and the word "ray" in prose (the owner's
-  reading rule: a ray is the record of an event in transit).
+  `event_universe.events` must use the new names. Unchanged: the refusal
+  tables that name the deleted keys (`ray_interactions`, `ray_delay`,
+  ...), the dated records of deleted tests, and the word "ray" in prose
+  (the owner's reading rule: a ray is the record of an event in transit).
+- **The Beam Law** (the model owner, 2026-09-20, the fourth step): the
+  law itself is renamed from "the law of the ray" to the Beam Law.
+  `docs/RAY_LAW.md` -> [`docs/BEAM_LAW.md`](BEAM_LAW.md) (git mv; its
+  title "The Beam Law"; its section headings and note numbers unchanged,
+  so every `BEAM_LAW.md#...` anchor is the old one; a short
+  `docs/RAY_LAW.md` redirect stays only for the link in Highlights, which
+  this rename does not edit); every link and mention "RAY_LAW", "the law
+  of the ray", "the ray law" -> "BEAM_LAW", "the Beam Law" across the
+  documents, skills, README, AGENTS, CONTRIBUTING, examples, tools, tests
+  and docstrings (the quoted record title "DECIDED: the law of the ray"
+  and the history sections of this file and of the changelog keep their
+  wording; the anchors of the retitled headings of TERMINOLOGY,
+  EXPERIMENTS and TEST_EXPECTATIONS follow their new titles). The law's
+  identity: `RAYS_LAW = "rays-v1"` -> `BEAM_LAW = "beam-v1"`
+  (`events.world`, re-exported by `event_universe` and
+  `event_universe.events`; `run.json` and `state.json` record `"law":
+  "beam-v1"`); the world key `"law": "rays"` -> `"law": "beam"`
+  (`LAW_VALUE`), every world file in the repository rewritten by
+  `tools/migrate_nature_beam_worlds.py` (extended: `rays` -> `beam`; the
+  old name, `world.OLD_LAW_VALUE`, is accepted by the tool alone), the
+  parser refusing `"law": "rays"` naming this section (no implicit
+  default; `tests/test_nature_beam_world_parsing.py` (a)), the
+  preflight's kind `rays` -> `beam` (`DOCUMENT_KINDS`, `--kind beam`,
+  `report.kind`); the run records of the registered runs stay as they
+  were: rays-v1 is beam-v1, the same law; the hypothesis identities
+  (`bohr-v1` and the ones in flight) are untouched. The prose word "ray"
+  for the law's event in transit stays allowed as the informal name; the
+  documents' first mentions say "beam (the record of an event in
+  transit)"; no mass replacement of "ray" in prose.
 - **GameBoard**: `src/event_universe/core/lattice.py` ->
   `src/event_universe/core/game_board.py` (imports of
   `event_universe.core.lattice` must become
@@ -130,7 +156,7 @@ transit, `NatureBeam` in the code; on the GameBoard there are only events
 
 The model owner's decision of 2026-09-20 ("On Bohr, go, and put it as
 parameters outside the board like the age"; [Highlights 5.4](HIGHLIGHTS.md#54-the-detector);
-[RAY_LAW note 30 (ii)](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[RAY_LAW note 30 (ii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 [expectations](TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum)).
 
 - **Added**: the world key `action` (h, an integer from 1, in the units
@@ -169,7 +195,7 @@ parameters outside the board like the age"; [Highlights 5.4](HIGHLIGHTS.md#54-th
 The model owner's decision of 2026-09-20 on Bohr ("go, and put it as
 parameters outside the board like the age"; the body on a set taken with
 it as the condition for a closed orbit, the physicist's proposal 1, "the
-electron of width 3"; [RAY_LAW note 30](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+electron of width 3"; [RAY_LAW note 30](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 [expectations](TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum)).
 
 - **Added**: the measured-event key `span`, three odd integers from 1
@@ -198,7 +224,7 @@ electron of width 3"; [RAY_LAW note 30](RAY_LAW.md#10-implementation-notes-2026-
 ## `wave` is the default reading of a detector, on 2026-09-20
 
 The model owner's decision of 2026-09-20 ("on the board a ray, in the world
-a wave"; [RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
+a wave"; [RAY_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
 and note 29): `world.DETECTOR_READINGS` is `("wave", "beam")`, so a
 detector without a `reading` key, and every measured event outside a
 declared detector, reads `wave` (the coherent pointer over the set, its
@@ -216,7 +242,7 @@ two-slit wall records the square of what it absorbs.
 
 The model owner's decision of 2026-09-20 (Highlights 5.4: charge is per
 unit of content of a family, and the push one product;
-[RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file),
+[RAY_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file),
 step 4 and note 28; [validation](VALIDATION.md)). What a user of the engine
 must know:
 
@@ -271,7 +297,7 @@ must know:
 ## The age of a ray kept whole and read by the measured event, on 2026-09-20
 
 The model owner's "go for it" of 2026-09-19 on the clock beside a mass
-([Highlights 5.4](HIGHLIGHTS.md#54-the-detector); [RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+([Highlights 5.4](HIGHLIGHTS.md#54-the-detector); [RAY_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 note 25; [validation](VALIDATION.md)): the clock's count may read the
 amount-weighted age of the rays at its Node, M / r in space, while the
 push keeps the flow, M / r^2.
@@ -311,7 +337,7 @@ push keeps the flow, M / r^2.
 
 The model owner's decision of 2026-09-19 (Highlights 5.4, "go for it") on
 the physics-rule reviewer's verdict on the magnitude of a fan ray's label
-([RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+([RAY_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
 and note 23; [validation](VALIDATION.md)): the momentum label of a unit is
 along the unit vector u_d of its direction at the flight table's scale,
 the integer vector nearest Q D / |D| with Q = 64 (`nature_beam.unit_label`,
@@ -369,7 +395,7 @@ integer direction D itself. What a user of the engine must know:
   [TEST_EXPECTATIONS](TEST_EXPECTATIONS.md) lists every re-pin.
 ## The detector as a set with one record, the reading key and the phase returned, on 2026-09-19
 
-The model owner's three decisions of 2026-09-19 ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
+The model owner's three decisions of 2026-09-19 ([RAY_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
 note 24; [changelog](../CHANGELOG.md)): a detector is a set of Nodes with
 ONE record; after a click the set's phase is returned to its measured
 events; a detector declares its `reading`, `beam` (the default) or `wave`.
@@ -415,7 +441,7 @@ The night's affordable amount refused `examples/events/two_contents.json`
 at its 20th interval (262144 units on `face:+y` in one interval, above
 261123), a world that had run 200 intervals before the bound; a report
 of the host is exact and is neither refused nor wrapped
-([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
+([RAY_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
 note 19; [validation](VALIDATION.md)).
 
 - **Deleted**: `nature_beam.RECORD_AMOUNT_BOUND`, `check_record_amount`,
@@ -439,7 +465,7 @@ note 19; [validation](VALIDATION.md)).
 
 The physics-rule review of the law of the ray (its findings F1, F2, F3, F7)
 and the model owner's proposal 2 ("2 with the physicist"), implemented on
-the branch `claude/universe24-new-3ytqde` ([RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+the branch `claude/universe24-new-3ytqde` ([RAY_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 notes 18 to 21). Nothing physical changes on the registered runs (the
 series C, series 7 and Bell records are identical byte for byte,
 [validation](VALIDATION.md)); what changes is where the momentum is read
@@ -499,7 +525,7 @@ the earlier name in its record of the day. Imports of
 
 The model owner's decisions of the night of 2026-09-19 (Highlights 5.4, on
 the mathematician's review of the table of the physical entities: "I
-approve 1 and 3"; [RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+approve 1 and 3"; [RAY_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 notes 15 and 16): generic replaces generic, nothing physical changes on the
 six headings.
 
@@ -559,7 +585,7 @@ six headings.
 ## The law of the ray, on 2026-09-19 (`rays-v1`)
 
 The model owner's decision of 2026-09-19 (Highlights 5.4, "DECIDED: the law
-of the ray"; the design [the law of the ray](RAY_LAW.md), published before
+of the ray"; the design [the law of the ray](BEAM_LAW.md), published before
 the engine changed): the Node holds no wave; a unit is a ray with a record
 on the digital line of its momentum at one speed, 1 / sqrt 3; rays that meet
 are permuted by the collision table; the interval is a bijection and the
@@ -663,7 +689,7 @@ corrections into `claude/universe24-new-3ytqde`); the last commit holding
   the ray record; the coupling tool's 1b merge criteria are the refusal,
   its far-field bounds are readings against RAY_LAW section 8, printed
   inside or outside the expectation and never a failure.
-- **Documents.** ENGINE.md is the bookkeeping around RAY_LAW.md;
+- **Documents.** ENGINE.md is the bookkeeping around BEAM_LAW.md;
   DETECTOR_REQUIREMENTS drops its implementation contract; the registered
   readings of `events-v1` (series C, Bell A2) keep their scope in
   EXPERIMENTS.md and VALIDATION.md and are re-registered under `rays-v1`

@@ -1,5 +1,5 @@
 """The push as ONE product per arriving free ray and the one momentum
-label under the law of the ray (docs/RAY_LAW.md, section 3 step 4, section
+label under the Beam Law (docs/BEAM_LAW.md, section 3 step 4, section
 5 and section 10 notes 18 to 20 and 28; the model owner's decisions of
 2026-09-19, "2 with the physicist", and of 2026-09-20, charge per unit of
 content, Highlights 5.4): a measured event A of content M_A (as the frame
@@ -39,7 +39,7 @@ charge [1, 5]; every pinned integer is unchanged.
     push -5 V + by_clock(age, 3 V, 4) with the label flow V = 4 x 64 =
     256 (since 2026-09-19 the label is along the unit vector u_d of the
     direction at the flight table's scale Q = 64, the model owner's
-    decision on the physics-rule reviewer's verdict, RAY_LAW section 2 and
+    decision on the physics-rule reviewer's verdict, BEAM_LAW section 2 and
     note 23: every integer of the six-heading fixtures below is the first
     pin times 64, the fan fixtures read u_(2, 1, 0) = (57, 29, 0), and the
     pins before the change are in git at the one-form commits) = -1280 +
@@ -179,7 +179,7 @@ def bar(
     probe_charge: Charge = 0,
 ) -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-push-test",
         "shape": shape or [12, 1, 1],
         "boundary": boundary or {"y": "periodic", "z": "periodic"},

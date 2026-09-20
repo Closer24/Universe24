@@ -1,4 +1,4 @@
-"""The readings of the redshift series E under the law of the ray, in
+"""The readings of the redshift series E under the Beam Law, in
 space, under the age reading.
 
 Reads the run folders of the worlds of `examples/events/redshift/` (the

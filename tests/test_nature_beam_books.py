@@ -1,5 +1,5 @@
-"""The books as running ledger lines under the law of the ray
-(docs/RAY_LAW.md, section 10, note 22; the optimizations of 2026-09-19):
+"""The books as running ledger lines under the Beam Law
+(docs/BEAM_LAW.md, section 10, note 22; the optimizations of 2026-09-19):
 `books()` reports the transit line, the content line and the transit
 momentum from the ledger (what was released less what left: escaped, home,
 absorbed), O(families) and no pass over the store, and `recount()` counts
@@ -39,7 +39,7 @@ TICKS = 40
 
 def world_of_every_way() -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-books-test",
         "shape": [12, 1, 3],
         "boundary": {"y": "periodic"},

@@ -1,4 +1,4 @@
-"""The detector under the law of the ray (docs/RAY_LAW.md, section 5): the
+"""The detector under the Beam Law (docs/BEAM_LAW.md, section 5): the
 wave is a reading of a crowd of rays at a detector and lives nowhere else.
 A detector is a SET of Nodes with ONE record (the model owner, 2026-09-19:
 "a detector measuring three Nodes sees one electron that can be on any of
@@ -30,7 +30,7 @@ detector's record"), written down first. K 2^20, `suspension` 0, `release`
     push, the rays going on whole; 3 rays are measured: 3 clicks, `held`
     [4, 3], the momentum (192, 0, 0) (three labels of 64 along +X: since
     2026-09-19 the label of a unit along a heading is Q e_d, Q = 64,
-    RAY_LAW section 2 and note 23), nothing left in the store, the report
+    BEAM_LAW section 2 and note 23), nothing left in the store, the report
     3 measured, 3 clicks, the record (3 x 32)^2 x 256^2 = 9 x 32^2 x 256^2
     (a row of three identical rays is one coherent amplitude);
 (c) a re-emitter at threshold 3 (from (b) there): 2 rays pass; 3 rays are
@@ -143,7 +143,7 @@ def world(
     positions: list[list[int]] | None = None,
 ) -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-detector-test",
         "shape": [9, 3, 3],
         "boundary": "open",

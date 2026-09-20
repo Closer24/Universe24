@@ -1,15 +1,15 @@
 # Detector definition examples
 
 These worlds place reusable apparatus from the separate definitions file
-`entities/detectors.json` into worlds of the law of the ray (`"law": "rays"`).
+`entities/detectors.json` into worlds of the Beam Law (`"law": "beam"`).
 The [entity loading contract](../../../docs/ENTITY_DEFINITIONS.md) keeps
 geometry, tables and detector settings in data; the world declares placement,
 GameBoard shape, topology and the incoming rays. The law that runs them is
-[the law of the ray](../../../docs/RAY_LAW.md): every measured event of the
+[the Beam Law](../../../docs/BEAM_LAW.md): every measured event of the
 apparatus measures the family `carrier`, and the detector that groups them
 reads the squared coherent record of what clicked at each of its Nodes. The
 `reversible-detector-v1` candidate these worlds selected until 2026-09-19 is
-absorbed into the ray law and deleted
+absorbed into the Beam Law and deleted
 ([migration](../../../docs/MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1)):
 the pointer is the record, the routing is the flight table.
 

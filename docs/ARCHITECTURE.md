@@ -1,6 +1,6 @@
 # Architecture and change boundaries
 
-The one engine is the engine of the law of the ray ([RAY_LAW.md](RAY_LAW.md),
+The one engine is the engine of the Beam Law ([BEAM_LAW.md](BEAM_LAW.md),
 its bookkeeping [ENGINE.md](ENGINE.md)):
 `src/event_universe/events/` on the substrate of `src/event_universe/core/`,
 with the host modules (the runner, the preflight, the workspace, retention,
@@ -138,7 +138,7 @@ table below defines code boundaries. Architecture owns this repository policy.
 | Information | Single owner | Update rule |
 | --- | --- | --- |
 | Executable code and law selection | [src/event_universe](../src/event_universe/) | Keep shared formulas generic; the world file selects them |
-| The world file, the interval's steps and the record | [The law of the ray](RAY_LAW.md) and [the engine's bookkeeping](ENGINE.md) | Keep the live contract in one document; the engines before it are in git |
+| The world file, the interval's steps and the record | [The Beam Law](BEAM_LAW.md) and [the engine's bookkeeping](ENGINE.md) | Keep the live contract in one document; the engines before it are in git |
 | Physical contracts | [POSTULATES.md](../POSTULATES.md), [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md) | Plain-language principles and exact contracts have distinct roles |
 | Test expectations | [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) | Link the responsible tests, inputs and outcomes without copying laws |
 | Installation and execution | [README.md](../README.md) | Reuse the package CLI and [tools/check.py](../tools/check.py) |
@@ -163,12 +163,12 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 
 | Module | Allowed dependencies |
 | --- | --- |
-| `core/integer` | Standard-library types; owns the working-register bound (`checked_work`) and the ray law's integer primitives (`bounded_gcd`, `integer_root`, `by_clock`, `apportion_whole`) |
+| `core/integer` | Standard-library types; owns the working-register bound (`checked_work`) and the Beam Law's integer primitives (`bounded_gcd`, `integer_root`, `by_clock`, `apportion_whole`) |
 | `core/game_board` | `core/integer` (`checked_work`); the GameBoard's addresses, the six Port headings in Port order (`PORT_HEADINGS`, `adjacent_node`) and the bound of a declared charge and quantum (`MAX_VALUE`) |
 | `core/phase` | `core/integer`; the phase circle's cosine and sine tables from fixed-point series, cached per N |
-| `events/world` | `core/integer`, `core/game_board`; the world file of the ray law, its keys, defaults, bounds and refusals (`parse_nature_beam_world`, `NatureBeamWorld`), the constants `Q`, `LABEL_SCALE`, `FACE_NAMES`; no execution |
+| `events/world` | `core/integer`, `core/game_board`; the world file of the Beam Law, its keys, defaults, bounds and refusals (`parse_nature_beam_world`, `NatureBeamWorld`), the constants `Q`, `LABEL_SCALE`, `FACE_NAMES`; no execution |
 | `events/measured` | `core/integer`, `core/game_board`, `events/world`; the records the engine keeps beside the rays (`Measured`, `DetectorSet`, `Ledger`, the reduced rational pairs); no law |
-| `events/nature_beam` | `core/integer`, `core/game_board`, `core/phase`, `events/measured`, `events/world` and numpy; the law of the ray, one function over the whole GameBoard (the flight table, the one reading, the collision table, the push, the detector's record, the releases, the store) |
+| `events/nature_beam` | `core/integer`, `core/game_board`, `core/phase`, `events/measured`, `events/world` and numpy; the Beam Law, one function over the whole GameBoard (the flight table, the one reading, the collision table, the push, the detector's record, the releases, the store) |
 | `events/engine` | `core/integer`, `core/game_board`, `events/measured`, `events/nature_beam`, `events/world` and numpy; the interval's frame, the clocks, the steps, the books and the snapshot (`NatureBeamSimulation`); no output or storage |
 | `events/run` | `events/engine`, `events/world`, the package version, `snapshot_writer` and the standard library; the artifacts of a run (the one physical module allowed to write files) |
 | `events/__init__` | `events/world`; `events/engine` lazily (`Measured`, `NatureBeamSimulation`), so importing the package loads no numpy |

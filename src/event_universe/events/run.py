@@ -1,4 +1,4 @@
-"""A run of the law of the ray: the artifacts the runner writes for it.
+"""A run of the Beam Law: the artifacts the runner writes for it.
 
 `execute_nature_beam_run` steps a parsed world and preserves the input
 (`initialization.json`), the events (`events.jsonl`: the measurements per
@@ -7,7 +7,7 @@ phase and content, the detectors' records per interval, the steps, the clicks
 on the open faces), the final state (`state.json`, the measured events, the
 detectors with the face detectors and every Node with rays, written Node by
 Node through `snapshot_writer`) and the record (`run.json`: the law's marker
-`rays-v1`, the world's keys, the books per completed tick with the
+`beam-v1`, the world's keys, the books per completed tick with the
 conservation flag, the per-tick lines of the measured content, the content in
 transit and the momentum, the measured events' final states, the detectors'
 measurements with their records and the face detectors', and the escapes).
@@ -26,7 +26,7 @@ from pathlib import Path
 
 from event_universe import __version__
 from event_universe.events.engine import NatureBeamSimulation
-from event_universe.events.world import BOHR_RULE, RAYS_LAW, NatureBeamWorld
+from event_universe.events.world import BEAM_LAW, BOHR_RULE, NatureBeamWorld
 from event_universe.snapshot_writer import write_snapshot
 
 
@@ -75,7 +75,7 @@ def execute_nature_beam_run(
                 )
                 momentum.append(dict(books["momentum"]))  # type: ignore[call-overload]
                 if not books["balanced"]:
-                    raise ValueError(f"{RAYS_LAW}: the books do not close at tick {simulation.tick}")
+                    raise ValueError(f"{BEAM_LAW}: the books do not close at tick {simulation.tick}")
                 completed += 1
         except Exception as error:  # noqa: BLE001 - recorded, then raised
             failure = error
@@ -86,7 +86,7 @@ def execute_nature_beam_run(
         "package_version": __version__,
         "source_sha256": fingerprint,
         "initialization_sha256": hashlib.sha256(source).hexdigest(),
-        "law": RAYS_LAW,
+        "law": BEAM_LAW,
         "model": world.model_id,
         "shape": list(world.shape),
         "boundary": world.boundary,

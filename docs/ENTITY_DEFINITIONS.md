@@ -5,7 +5,7 @@ settings are in an entity definitions file, not in the engine; make sure the
 workflow is in the appropriate skill." This is an authoring/loading contract,
 not a new physical model. It supersedes the earlier assumption that inline world
 data alone completed that request. The engine continues to receive the immutable
-ordinary measured events and detectors specified by [the law of the ray](RAY_LAW.md)
+ordinary measured events and detectors specified by [the Beam Law](BEAM_LAW.md)
 and [the engine](ENGINE.md). An external definition file is outside the
 engine; the instantiated detector is physically on the GameBoard.
 
@@ -80,7 +80,7 @@ The definitions document has exactly `format` and `entities`:
 The empty arrays above show the envelope only; an actual definition requires at
 least one measured Event. Each definition has exactly `name`, `measured` and
 `detectors`; names are nonempty and unique. Its measured entries use the world's
-measured schema of [the law of the ray](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+measured schema of [the Beam Law](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
 (`MEASURED_KEYS`: `position`, `family`, `amount`, `phase`, `momentum`, `fixed`,
 `directions`, `table`, `lamp`), including explicit `table` entries and a `lamp`
 when applicable; a declared `momentum` is in label units, the momentum label of

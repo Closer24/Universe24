@@ -1,8 +1,8 @@
 """Write the worlds of series H, "Bohr's lines behind the detector", under
-the law of the ray in space: a fixed proton, an electron that is a body on
+the Beam Law in space: a fixed proton, an electron that is a body on
 a set of three Nodes and turns its phase by its momentum at every Link it
 steps (the model owner's decision of 2026-09-20 on Bohr, "go, and put it as
-parameters outside the GameBoard like the age"; RAY_LAW section 10, note 30),
+parameters outside the GameBoard like the age"; BEAM_LAW section 10, note 30),
 and the open faces of the GameBoard as the `wave` detectors that receive what
 the electron releases.
 
@@ -233,7 +233,7 @@ def world(
     # world's table: the six headings (2 .. 7) and the declared rest.
     whole_fan = list(range(2, 8 + len(declared)))
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": f"rays-bohr-r{radius}-space-v1",
         "shape": [side, side, side],
         "boundary": "open",

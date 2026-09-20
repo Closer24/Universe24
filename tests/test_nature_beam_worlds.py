@@ -1,8 +1,8 @@
-"""The worlds of the law of the ray on minimal GameBoards (docs/RAY_LAW.md,
+"""The worlds of the Beam Law on minimal GameBoards (docs/BEAM_LAW.md,
 section 7; the model owner, 2026-09-19): the two slits as a world test with a
 pinned correlation, the Bell run A2 unchanged, and one content on an open
 GameBoard with the books closed. The expected results of
-docs/TEST_EXPECTATIONS.md ("The worlds of the ray law"), written down first:
+docs/TEST_EXPECTATIONS.md ("The worlds of the Beam Law"), written down first:
 
 (a) the two slits (the example world's design, 60 x 121 x 1, z periodic,
     500 intervals): a lamp at (2, 60) of turn 8 per self-creation (K 2^30,
@@ -23,7 +23,7 @@ docs/TEST_EXPECTATIONS.md ("The worlds of the ray law"), written down first:
     openings reach (the design pinned 0.9 for a fan of 203 directions; rays
     measured 0.893 with the 91 of this world), and the correlation at the
     periods 4 and 16 is below 0.5;
-(b) Bell (the ten A2 worlds under `"law": "rays"`, `tools/bell_chsh.py`):
+(b) Bell (the ten A2 worlds under `"law": "beam"`, `tools/bell_chsh.py`):
     S = 2 exactly, S' = 3/2 exactly, the controls +1, -1, 0, no-signalling
     exact, 0 criteria failed;
 (c) one content of 2^24 at the centre of an open 11^3 GameBoard at `release`
@@ -127,7 +127,7 @@ def slits(openings: tuple[int, ...]) -> dict[str, object]:
             }
         )
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": f"rays-test-slits-{len(openings)}",
         "shape": [60, 121, 1],
         "boundary": {"z": "periodic"},
@@ -220,7 +220,7 @@ def test_one_content_streams_outward_with_the_books_closed():
     """(c)."""
     content = 1 << 24
     world = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "rays-test-one",
         "shape": [11, 11, 11],
         "boundary": "open",
@@ -261,7 +261,7 @@ def test_one_content_streams_outward_with_the_books_closed():
 def test_the_example_worlds_parse_as_nature_beam_worlds(name):
     document = json.loads((ROOT / "examples" / "events" / name).read_text(encoding="utf-8"))
     world = parse_nature_beam_world(document)
-    assert document["law"] == "rays" and world.model_id.startswith("rays-")
+    assert document["law"] == "beam" and world.model_id.startswith("rays-")
 
 
 def test_two_contents_is_not_refused_and_its_face_records_are_exact():

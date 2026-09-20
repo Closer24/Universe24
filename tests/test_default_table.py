@@ -1,4 +1,4 @@
-"""The table generated from the keys (docs/RAY_LAW.md, section 2; the model
+"""The table generated from the keys (docs/BEAM_LAW.md, section 2; the model
 owner, 2026-09-19, Highlights 5.4, "I approve 1 and 3": the tables are
 generated from the keys and a world declares only what differs, `kind`
 derived from `quantum`): `world.default_table` gives every measured event
@@ -62,7 +62,7 @@ def world(families: list[dict[str, object]], table: object = None, **keys: objec
     if table is not None:
         measured["table"] = table
     document: dict[str, object] = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "default-table-test",
         "shape": [3, 3, 3],
         "boundary": "open",

@@ -17,7 +17,7 @@ world and inspects its outputs, and it is not a validator of the code: an
 experiment changes no law and no source file. Read
 [the shared workflow](../workflow.md) and its
 [physics comparison method](../workflow.md#physics-comparison-method),
-[the law of the ray](../../docs/RAY_LAW.md),
+[the Beam Law](../../docs/BEAM_LAW.md),
 [the engine's bookkeeping](../../docs/ENGINE.md),
 [the register's conventions](../../docs/EXPERIMENTS.md) and the records of
 the model owner in [Highlights 5.4](../../docs/HIGHLIGHTS.md#54-the-detector).

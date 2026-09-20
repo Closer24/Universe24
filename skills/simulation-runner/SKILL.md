@@ -6,7 +6,7 @@ description: Execute reproducible Universe24 runs and inspect outcomes and trace
 # Simulator execution
 
 > **One engine (2026-09-19).** The runner takes `--init`, `--output` and `--ticks`
-> only and runs a world of the law of the ray headless; `--visualize`,
+> only and runs a world of the Beam Law headless; `--visualize`,
 > `--frame-stride`, `--observer`, `--node-workers`, `--dense-field` and
 > `--standing-field` went with the old engine ([migration](../../docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
 > Where this Skill names them, read the history.
@@ -72,7 +72,7 @@ observable/expectation plan without retuning and retain quantitative discrepanci
 alongside the inspected HTML. A visual match is not physical acceptance.
 
 For primary runs, require the explicit world file and read its families,
-measured events, tables and detectors; see [the law of the ray](../../docs/RAY_LAW.md)
+measured events, tables and detectors; see [the Beam Law](../../docs/BEAM_LAW.md)
 and [the engine's bookkeeping](../../docs/ENGINE.md) (the generic disturbance
 contract, DISTURBANCES.md, was deleted on 2026-09-19). Missing input must not
 select an implicit historical universe.

@@ -1,5 +1,5 @@
-"""The re-emission and the face detectors under the law of the ray
-(docs/RAY_LAW.md, section 5): a `rerelease` Node re-emits each arriving
+"""The re-emission and the face detectors under the Beam Law
+(docs/BEAM_LAW.md, section 5): a `rerelease` Node re-emits each arriving
 record at its next self-creation on its declared directions, its amount
 apportioned whole over them, each part keeping the arriving phase and its
 content per unit, stamped with the re-emitter's number, age 0, the recoil
@@ -9,7 +9,7 @@ down first. K 2^20, `suspension` 0, `release` [0, 1], the families `m`
 (free) and `light` (paid):
 
 Since 2026-09-19 the label is along the unit vector u_d of the direction at
-the scale Q = 64 (RAY_LAW section 2 and note 23): u_(1, 0, 0) = (64, 0, 0),
+the scale Q = 64 (BEAM_LAW section 2 and note 23): u_(1, 0, 0) = (64, 0, 0),
 u_(1, 1, 0) = (45, 45, 0), u_(2, 1, 0) = (57, 29, 0), and every momentum
 below is in label units.
 
@@ -61,7 +61,7 @@ def bar(
     directions: list[list[int]] | None = None,
 ) -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-reemission-test",
         "shape": shape,
         "boundary": boundary,

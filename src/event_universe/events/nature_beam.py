@@ -1,6 +1,6 @@
-"""The law of the ray (rays-v1): the record `NatureBeam`, the store of records,
+"""The Beam Law (beam-v1): the record `NatureBeam`, the store of records,
 the two pure tables and the one function `nature_beam`, a Node's whole
-interval for the rays present (docs/RAY_LAW.md, the model owner's decision of
+interval for the rays present (docs/BEAM_LAW.md, the model owner's decision of
 2026-09-19, Highlights 5.4, "DECIDED: the law of the ray").
 
 The Node holds no coherent sum. A unit is a ray with a record and moves
@@ -76,7 +76,7 @@ for a free one, u_d the unit vector of the direction at the flight table's
 scale Q = 64: the integer vector nearest Q D / |D|, `unit_label`, one
 world constant per direction on the flight table, exactly Q e_d on a
 heading; the model owner's decision of 2026-09-19 on the physics-rule
-reviewer's verdict, RAY_LAW section 2 and note 23): the push's moment, the
+reviewer's verdict, BEAM_LAW section 2 and note 23): the push's moment, the
 click's momentum, the face click's, the recoil at a release or a
 re-emission and the transit line of the books; no momentum is read off a
 Port, and the reading's vector and tensor moments are taken on u_d as
@@ -102,11 +102,11 @@ from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events.measured import Ledger, Measured, count_component
 from event_universe.events.world import (
     AGE_READS,
+    BEAM_LAW,
     FACE_NAMES,
     FIXED_DIRECTIONS,
     HEADING_OFFSET,
     MOMENTUM_BOUND,
-    RAYS_LAW,
     REST_DIRECTIONS,
     NatureBeamWorld,
     Q,
@@ -148,7 +148,7 @@ LONGEST_PHASE_ENTRY = 257
 # Beyond it the pointer is summed in Python integers; the square X^2 + Y^2
 # and the record that accumulates it are Python integers always. The
 # record is a report of the host, not the law's local work: it is exact
-# and never refused (RAY_LAW, section 5 and note 19; the former affordable
+# and never refused (BEAM_LAW, section 5 and note 19; the former affordable
 # amount 261123 refused a lawful world).
 POINTER_AMOUNT_BOUND = MOMENTUM_BOUND // (AMPLITUDE_SCALE * LONGEST_PHASE_ENTRY)
 ZERO3 = (0, 0, 0)
@@ -265,13 +265,13 @@ class Moments:
             return self.tensor
         if key == AGE_READS:
             return self.age
-        raise ValueError(f"{RAYS_LAW}: no reading component {key!r}")
+        raise ValueError(f"{BEAM_LAW}: no reading component {key!r}")
 
 
 def reading_bound_error(rows: int, per_row: int) -> OverflowError:
     """The refusal of a reading whose moments could pass the bound."""
     return OverflowError(
-        f"{RAYS_LAW}: the moments of a reading of {rows} rows of up to {per_row} exceed the "
+        f"{BEAM_LAW}: the moments of a reading of {rows} rows of up to {per_row} exceed the "
         f"integer bound {MOMENTUM_BOUND} (lower the amounts or the direction bound)"
     )
 
@@ -356,7 +356,7 @@ def read_arrivals(
         sums = table.sum(axis=0)
     else:
         if size is None:
-            raise ValueError(f"{RAYS_LAW}: a keyed reading needs its size")
+            raise ValueError(f"{BEAM_LAW}: a keyed reading needs its size")
         sums = np.zeros((size, MOMENT_COLUMNS), dtype=np.int64)
         np.add.at(sums, bins, table)
     return reading_of(sums)
@@ -608,7 +608,7 @@ def label_bound_error(
     reach = max(abs(component) for component in unit)
     where = "" if node is None else f" at Node {list(node)}"
     return OverflowError(
-        f"{RAYS_LAW}: the momentum label of a row of amount {amount} and content {content}{where} "
+        f"{BEAM_LAW}: the momentum label of a row of amount {amount} and content {content}{where} "
         f"along {list(unit)}, its weight {weight} times the largest component {reach} = "
         f"{weight * reach}, exceeds the integer bound {MOMENTUM_BOUND}"
     )
@@ -870,7 +870,7 @@ class NatureBeamStore:
             merged = np.add.reduceat(self.amount.astype(object), starts)
             if max(int(v) for v in merged) > MOMENTUM_BOUND:
                 raise OverflowError(
-                    f"{RAYS_LAW}: the amount of a merged row exceeds the integer bound {MOMENTUM_BOUND}"
+                    f"{BEAM_LAW}: the amount of a merged row exceeds the integer bound {MOMENTUM_BOUND}"
                 )
             amount = merged.astype(np.int64)
         self.keep(~same)
@@ -928,7 +928,7 @@ def bounded(value: int, entry: Measured, quantity: str) -> int:
     measured event, its Node and the quantity."""
     if not -MOMENTUM_BOUND <= value <= MOMENTUM_BOUND:
         raise OverflowError(
-            f"{RAYS_LAW}: the {quantity} of measured event {entry.number} at "
+            f"{BEAM_LAW}: the {quantity} of measured event {entry.number} at "
             f"{list(entry.position)} exceeds the integer bound {MOMENTUM_BOUND}"
         )
     return value
@@ -1356,7 +1356,7 @@ def nature_beam(
     if inverse:
         if measured:
             raise ValueError(
-                f"{RAYS_LAW}: the inverse interval is defined on a GameBoard without measured events"
+                f"{BEAM_LAW}: the inverse interval is defined on a GameBoard without measured events"
             )
         for family, store in enumerate(stores):
             if store.size == 0:
@@ -1369,7 +1369,7 @@ def nature_beam(
             back = np.where(resting, store.age, store.age - 1)
             if (back < 0).any():
                 raise ValueError(
-                    f"{RAYS_LAW}: the inverse walk of a ray at age 0 (its birth has no inverse)"
+                    f"{BEAM_LAW}: the inverse walk of a ray at age 0 (its birth has no inverse)"
                 )
             step = flight.steps[store.direction, back % flight.period[store.direction]].astype(np.int64)
             moved = step.any(axis=1)
@@ -1380,7 +1380,7 @@ def nature_beam(
                     coordinates[:, axis] %= extents[axis]
                 elif ((coordinates[:, axis] < 0) | (coordinates[:, axis] >= extents[axis])).any():
                     raise ValueError(
-                        f"{RAYS_LAW}: the inverse walk crosses an open face (a click has no inverse)"
+                        f"{BEAM_LAW}: the inverse walk crosses an open face (a click has no inverse)"
                     )
             store.node = coordinates @ np.array(store.strides, dtype=np.int64)
             store.age = back
@@ -2187,7 +2187,7 @@ def nature_beam(
         store.merge()
         if store.size and int(store.age.max()) > world.age_bound:
             raise OverflowError(
-                f"{RAYS_LAW}: a ray carries the age {int(store.age.max())} beyond the world's "
+                f"{BEAM_LAW}: a ray carries the age {int(store.age.max())} beyond the world's "
                 f"age_bound {world.age_bound} (declare a larger age_bound or a smaller GameBoard)"
             )
     return readings

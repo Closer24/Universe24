@@ -1,4 +1,4 @@
-"""The age of a ray kept whole and read by a measured event (docs/RAY_LAW.md,
+"""The age of a ray kept whole and read by a measured event (docs/BEAM_LAW.md,
 section 2 the age and its bound, section 3 steps 2 and 5, section 10 note
 24; the model owner, 2026-09-19, Highlights 5.4, "the clock beside a mass
 ... go for it"): the age is the count of intervals since the measured event
@@ -106,7 +106,7 @@ def crowd() -> list[dict[str, object]]:
 
 def torus() -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-age-test",
         "shape": [8, 8, 4],
         "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"},
@@ -125,7 +125,7 @@ def torus() -> dict[str, object]:
 
 def bar(shape: list[int], **keys: object) -> dict[str, object]:
     world: dict[str, object] = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-age-test",
         "shape": shape,
         "boundary": "open",

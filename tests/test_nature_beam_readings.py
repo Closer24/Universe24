@@ -1,4 +1,4 @@
-"""The one reading of a Node under the law of the ray (docs/RAY_LAW.md; the
+"""The one reading of a Node under the Beam Law (docs/BEAM_LAW.md; the
 model owner, 2026-09-19: every piece of logic once, in generic code; "the one
 reading function is the amount-weighted moments of order 0, 1 and 2 of the
 direction vectors, valid for fans as for the six headings, here entering the
@@ -29,11 +29,11 @@ docs/TEST_EXPECTATIONS.md ("The one reading"), written down first:
     2^62 - 1 is refused with `OverflowError` before any product is formed;
 (b) the push reads the flow of every number but the reader's own (from
     `test_one_reading_set` (b) and `test_phaseless_family` (c), re-pinned
-    under the ray law): a free reader of content 4 met by 9 rays of number 1
+    under the Beam Law): a free reader of content 4 met by 9 rays of number 1
     arriving on +X and 9 of number 2 arriving on -X is pushed by
     -4 x (576, 0, 0) - 4 x (-576, 0, 0) = (0, 0, 0) and reads 18; by the 9
     of number 1 alone (-2304, 0, 0) (the label of a unit along a heading
-    is 64 e_d since 2026-09-19, RAY_LAW section 2 and note 23; the
+    is 64 e_d since 2026-09-19, BEAM_LAW section 2 and note 23; the
     reading's moments are taken on the unit vectors u_d at the scale
     Q = 64, its zeroth moment unchanged); with 5 of its own number arriving too the
     own add nothing (5 home, created again at the same interval's
@@ -181,7 +181,7 @@ def world(
     shape: list[int] | None = None,
 ) -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-readings-test",
         "shape": shape or [9, 3, 3],
         "boundary": "open",
@@ -367,7 +367,7 @@ def test_the_dense_readings_on_request_equal_the_arrivals_node_by_node():
 
 
 def test_a_fans_flow_reads_q_per_unit_direction_blind():
-    """(f) (added 2026-09-19 with the label along the unit vector, RAY_LAW
+    """(f) (added 2026-09-19 with the label along the unit vector, BEAM_LAW
     note 23): the reading's vector moment is taken on the unit vectors u_d
     at the scale Q = 64, so a ray of amount q on (7, 5, 0) enters the flow
     as q x (52, 37, 0), |flow| = 64 q within 1.35 %, as a ray on a heading

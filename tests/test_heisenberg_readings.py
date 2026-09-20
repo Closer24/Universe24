@@ -78,7 +78,7 @@ def opening_world() -> dict[str, object]:
         for y in range(HEIGHT)
     ]
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "rays-heisenberg-w1-wave-v1",
         "shape": [14, HEIGHT, 1],
         "boundary": {"z": "periodic"},

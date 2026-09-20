@@ -1,4 +1,4 @@
-"""The interval is a bijection on a GameBoard without a border (docs/RAY_LAW.md,
+"""The interval is a bijection on a GameBoard without a border (docs/BEAM_LAW.md,
 section 3; the model owner, 2026-09-19): the walk and the collision have
 inverses, and T forward intervals followed by T inverse intervals return
 the store bit-exact. The expected result of docs/TEST_EXPECTATIONS.md ("The
@@ -76,7 +76,7 @@ def fixed_beams() -> list[dict[str, object]]:
 
 
 WORLD = {
-    "law": "rays",
+    "law": "beam",
     "model_id": "ray-bijection-test",
     "shape": [8, 8, 4],
     "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"},

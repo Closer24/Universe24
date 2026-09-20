@@ -1,9 +1,9 @@
 # Event Universe — active modular 3D integer simulator
 
-## The law of the ray: RAYS-1 (2026-09-19)
+## The Beam Law: RAYS-1 (2026-09-19)
 
-A world selecting `"law": "rays"` runs the law of the ray
-([docs/RAY_LAW.md](docs/RAY_LAW.md)): a ray with a record on the digital line
+A world selecting `"law": "beam"` runs the Beam Law
+([docs/BEAM_LAW.md](docs/BEAM_LAW.md)): a ray with a record on the digital line
 of its momentum at one speed, the collision table a bijection inside its
 invariant classes, the detector's record the squared coherent sum of what it
 clicked, the click the one one-way border. Coverage (a detector's Nodes), the
@@ -28,10 +28,10 @@ belong to their dated models, not an implicit events-world default.
 ## Historical generic disturbance model (deleted on 2026-09-19)
 
 History marker (2026-09-19): the generic disturbance simulator this section
-describes was deleted on 2026-09-19 with the engines before the law of the ray
+describes was deleted on 2026-09-19 with the engines before the Beam Law
 ([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
 its schema document, docs/DISTURBANCES.md, is in git at any commit before that
-deletion. The active contract is [the law of the ray](docs/RAY_LAW.md) with
+deletion. The active contract is [the Beam Law](docs/BEAM_LAW.md) with
 [the engine's bookkeeping](docs/ENGINE.md). The text below is kept as written,
 the record of that model; it defines nothing in the engine.
 

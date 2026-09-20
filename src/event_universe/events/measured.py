@@ -1,5 +1,5 @@
 """The records the engine keeps beside the rays: a measured event and the
-ledger. Records only, no law: the law of the ray is `nature_beam`, the frame
+ledger. Records only, no law: the Beam Law is `nature_beam`, the frame
 around it (the clocks, the steps, the books' identities) is `engine.py`.
 """
 

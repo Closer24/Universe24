@@ -1,4 +1,4 @@
-"""Universe24: the engine of the law of the ray, defined by a world file.
+"""Universe24: the engine of the Beam Law, defined by a world file.
 
 The engine (numpy) loads on first use: importing the package imports the
 world parser and the generic physics only; `NatureBeamSimulation` is resolved when
@@ -8,14 +8,14 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from event_universe.events import RAYS_LAW, NatureBeamWorld, parse_nature_beam_world
+from event_universe.events import BEAM_LAW, NatureBeamWorld, parse_nature_beam_world
 
 if TYPE_CHECKING:
     from event_universe.events.engine import NatureBeamSimulation
 
 __version__ = "0.3.1"
 __all__ = [
-    "RAYS_LAW",
+    "BEAM_LAW",
     "NatureBeamSimulation",
     "NatureBeamWorld",
     "parse_nature_beam_world",

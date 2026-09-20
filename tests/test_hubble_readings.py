@@ -61,7 +61,7 @@ MOMENTUM = Q * WIDTH * CONTENT  # v = p / (Q S M + p) = 1 / 2
 
 def bar_world() -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "rays-hubble-coasting-scalar-space-v1",
         "shape": [61, 1, 1],
         "boundary": {"y": "periodic", "z": "periodic"},

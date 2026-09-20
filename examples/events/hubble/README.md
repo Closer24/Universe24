@@ -1,4 +1,4 @@
-# Series G: the Hubble diagram behind the detector, under the law of the ray, in space
+# Series G: the Hubble diagram behind the detector, under the Beam Law, in space
 
 Four worlds of one base, written by `make_worlds.py`; the register entry is
 [G, the Hubble diagram behind the detector (2026-09-20)](../../../docs/EXPERIMENTS.md#g-the-hubble-diagram-behind-the-detector-2026-09-20)
@@ -36,7 +36,7 @@ An open cube of 301^3 Nodes, the centre c = (150, 150, 150), `"law":
   faster the farther, so that no source overtakes another (a step onto an
   occupied Node is refused and its momentum is kept, [Highlights 5.4](../../../docs/HIGHLIGHTS.md#54-the-detector),
   the contact defect). A source of content M with the momentum p along its
-  axis steps one Link per (Q S M + p) / p self-creations ([RAY_LAW section 3](../../../docs/RAY_LAW.md#3-the-nodes-interval-nature_beam)
+  axis steps one Link per (Q S M + p) / p self-creations ([BEAM_LAW section 3](../../../docs/BEAM_LAW.md#3-the-nodes-interval-nature_beam)
   step 5, Q = 64): its speed is v = p / (Q S M + p) Links per interval.
   The speed ladder: v = c x V(axis) x (2 i - 1) / 7 with V = 0.6, 0.55,
   0.5, 0.45, 0.4, 0.35 on +x, -x, +y, -y, +z, -z, twenty-four speeds from
@@ -48,7 +48,7 @@ An open cube of 301^3 Nodes, the centre c = (150, 150, 150), `"law":
   M, 64)` = M / 64 per direction per self-creation): the carrier of the
   phase.
 - **The phase.** A free family's release stamps the clock's phase on every
-  ray born ([RAY_LAW section 3](../../../docs/RAY_LAW.md#3-the-nodes-interval-nature_beam)
+  ray born ([BEAM_LAW section 3](../../../docs/BEAM_LAW.md#3-the-nodes-interval-nature_beam)
   step 5), and with `phase_per_link` 0 the phase is not turned in flight:
   the ray carries the emitter's phase at birth to the detector, and the
   click record shows it (the choice: free families, matter; a paid family
@@ -84,7 +84,7 @@ An open cube of 301^3 Nodes, the centre c = (150, 150, 150), `"law":
 
 The push a passing row gives a reader is one own-label unit per unit of
 amount whatever the reader's content (kappa = -M_A, the equivalence
-principle: `Delta n = amount` in units of Q M_A, [RAY_LAW section 3](../../../docs/RAY_LAW.md#3-the-nodes-interval-nature_beam)
+principle: `Delta n = amount` in units of Q M_A, [BEAM_LAW section 3](../../../docs/BEAM_LAW.md#3-the-nodes-interval-nature_beam)
 step 4), and the speed changes by (1 - v)^2 x amount / S per row. What
 "light" and "heavy" mean here is therefore the number of rays a source
 releases, M / 64 per row, at the one width S = 2^20.
@@ -278,7 +278,7 @@ host cost, not the rays: about 6 000 rows in flight).
 
 - A throw off the axes is not straight: a measured event steps one axis
   per interval, x before y before z, and a step that coincides with an
-  earlier axis's step is lost ([RAY_LAW section 10](../../../docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  earlier axis's step is lost ([BEAM_LAW section 10](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
   note 17), so a diagonal momentum moves along x alone when its components
   are equal; the sources are thrown along the six axes only.
 - A crowd of point sources has no three-dimensional gravity to read: a

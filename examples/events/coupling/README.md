@@ -1,13 +1,13 @@
-# The coupling series C under the law of the ray, on the plane
+# The coupling series C under the Beam Law, on the plane
 
 Twenty-one worlds of one base, written by `make_worlds.py`; the register
 entry is
-[C, the couplings under the law of the ray, on the plane (2026-09-19)](../../../docs/EXPERIMENTS.md#c-the-couplings-under-the-law-of-the-ray-on-the-plane-2026-09-19)
+[C, the couplings under the Beam Law, on the plane (2026-09-19)](../../../docs/EXPERIMENTS.md#c-the-couplings-under-the-beam-law-on-the-plane-2026-09-19)
 and the evidence is in [validation](../../../docs/VALIDATION.md). The
 physics-rule reviewer pinned the design and its identities on 2026-09-19 for
 the law of events; the model owner moved the series to two-dimensional
-GameBoards the same day; the law of the ray of the same night re-registers it
-with the expectations of [RAY_LAW section 8](../../../docs/RAY_LAW.md#8-independent-expectations-for-the-re-registered-readings)
+GameBoards the same day; the Beam Law of the same night re-registers it
+with the expectations of [BEAM_LAW section 8](../../../docs/BEAM_LAW.md#8-independent-expectations-for-the-re-registered-readings)
 (count x r constant, flow x 2 pi r = 1, the clock's slowing ~ 1 / r on the
 plane, the third law exact on lone beams, the front from the flight table,
 the 1b merge criteria become the refusal). A research run, made once, never
@@ -20,7 +20,7 @@ in the register.
 A GameBoard of 121 x 121 x 1 Nodes with the z axis declared periodic
 (`"boundary": {"z": "periodic"}`, [the engine](../../../docs/ENGINE.md)): a
 true two-dimensional GameBoard, nothing leaks on z; the x and y faces are open.
-The centre c = (60, 60, 0), `"law": "rays"`, K 2^22, N 64, `release`
+The centre c = (60, 60, 0), `"law": "beam"`, K 2^22, N 64, `release`
 [1, 128], `suspension` 0 (1 in world 6 only), one free family `m`
 (`quantum` 0, the kind following from the quantum) of charge 0 (item 7
 declares two free families, `q` for the source and `p` for the probe, each
@@ -35,7 +35,7 @@ z rays land on the source's own Node at their first walk (the stub of
 extent 1) and are home, created again in six equal shares at the next
 self-creation, so at the fixed point the net emission into the plane is
 q = 6 x 2^17 = 786432 units per interval, exact, in four beams of 3 x 2^16
-per interval on the in-plane headings. Under the ray law a beam does not
+per interval on the in-plane headings. Under the Beam Law a beam does not
 spread: the ring's Nodes off the four in-plane axes are empty, a ring mean
 is the axial Nodes' reading over the ring's Node count, and the count on an
 axis is constant with r. A probe is a measured event of content 1 (m in
@@ -66,7 +66,7 @@ rays of 2^17.
 | `2` | 2, the third law | A = 2^22 at (56, 60, 0), B = 2^20 at (64, 60, 0) | 200 | `pushed` and the `read` pushes per 50-interval window: toward each other; the same reading ticks; per tick \|push_A + push_B\| / \|push_A\| below 1 % (the grain of the whole apportioning of 2^15 and 2^13 over six headings); cumulative \|P_A + P_B\| / \|P_A\| below 1e-4; zero over the first window |
 | `3`, `3a`, `3b` | 3, superposition | the item-2 pair with a probe of content 1 at (60, 68, 0); A alone with the probe; B alone with the probe | 200 | the probe's records by number in `3` equal those of `3a` and `3b` exactly, its total push the sum (identity); off both axes the probe reads nothing (the beams do not spread) |
 | `4` | 4, retardation | the source; probes of content 1 at r = 4 on -x, 6 on +y, 8 on -y, 12 on +x | 200 | the first `read` of each probe (tick, amount, push) against the flight table above; with `1a_m1`, `7_00` and the +x probes of `5p` and `6` |
-| `5` | 5, the far field | the source alone | 300 | replayed through the API over ticks 251-300: the ring means (the Nodes at \|d - r\| < 1/2) of the count, the presence and the flow at r = 4, 6, 8, 12, 16, 20, 24, 30, 40, the flux through the square at h = 4, 8, 12, 20, 40, the escape; the slopes; the readings against RAY_LAW section 8 |
+| `5` | 5, the far field | the source alone | 300 | replayed through the API over ticks 251-300: the ring means (the Nodes at \|d - r\| < 1/2) of the count, the presence and the flow at r = 4, 6, 8, 12, 16, 20, 24, 30, 40, the flux through the square at h = 4, 8, 12, 20, 40, the escape; the slopes; the readings against BEAM_LAW section 8 |
 | `5_long` | 5, supplementary | the source alone | 1000 | the same readings over ticks 951-1000; not pinned |
 | `5p` | 5, the axis pattern | the source; probes of content 1 at r = 4, 6, 8, 12, 16, 20, 24, 30, 40 on +x | 200 | per probe the axis push x 2 pi r / (m q), the count and the presence at its Node over ticks 151-200 (the beam's Nodes); the amount read equals the replay's count at every tick |
 | `6` | 6, the clock | the probes of `5p` with `suspension` 1 | 200 | age + waited = 200; (age, waited, owed) equal to the replay of the presence read (`by_clock(age, k, 1)` at each self-creation); the clock counts until the front's arrival and is then owed the beam's presence (2^17 or 2^18) for the rest of the run: the accepted price on the axis, registered |
@@ -98,13 +98,13 @@ through the API (`NatureBeamSimulation`, `step`, the count, presence and flow
 arrays, the flux through the square), prints a table per item, every
 criterion with its verdict (an identity, a book, a timing off the flight
 table: a failure exits nonzero) and every reading against the expectations
-of RAY_LAW section 8 with its verdict (inside or outside; registered, never
+of BEAM_LAW section 8 with its verdict (inside or outside; registered, never
 a failure). Identities are checked on integers and `fractions.Fraction`;
 floats appear only in the ring means, the slopes and the readings' bounds.
 
-## Result under the law of the ray (2026-09-19)
+## Result under the Beam Law (2026-09-19)
 
-Branch `claude/universe24-new-3ytqde`, the ray law's commits on the base
+Branch `claude/universe24-new-3ytqde`, the Beam Law's commits on the base
 `ce0b22af`, source fingerprint `703f9427d9f70e6c619218e457edca0b7647381a8cc7a20d140e4a3d9dd3f671`, Python 3.14, headless;
 every run completed with the books balanced at every tick, the measured
 content constant and age + waited = the intervals completed, 0.5 to 3.3 s
@@ -121,7 +121,7 @@ failed, exit 0; 19 readings inside the expectation, 9 outside, registered:
   of the push; per tick the difference at most 0.05 % (the grain of the
   whole apportioning); zero over the first window.
 - Item 3, identity held exactly (0 records: the probe at (60, 68, 0) sits
-  off both beams' axes, so under the ray law it reads nothing; the identity
+  off both beams' axes, so under the Beam Law it reads nothing; the identity
   holds trivially and is registered as such).
 - Item 4, the front at every probe as the flight table gives it: r = 4
   tick 8, 6 tick 11, 8 tick 14, 12 tick 21, 16 tick 28, 20 tick 35, 24 tick
@@ -170,7 +170,7 @@ failed, exit 0; 19 readings inside the expectation, 9 outside, registered:
 The label of a unit along a heading is 64 e_d since the model owner's
 decision of 2026-09-19 (the label along the unit vector u_d of the
 direction at the flight table's scale Q = 64,
-[RAY_LAW section 2](../../../docs/RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+[BEAM_LAW section 2](../../../docs/BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
 and note 23), so every push, momentum and momentum book line of these
 worlds' records is the registered one times 64 exactly (the series 7
 electric part included), while the counts, the presences, the clock and

@@ -1,8 +1,8 @@
-# The Bell run A2 under the law of the ray
+# The Bell run A2 under the Beam Law
 
 Ten worlds of one design, the settings the only difference between the files,
 written by `make_worlds.py`; the register entry is
-[A2, under the law of the ray (2026-09-19)](../../../docs/EXPERIMENTS.md#a2-under-the-law-of-the-ray-2026-09-19)
+[A2, under the Beam Law (2026-09-19)](../../../docs/EXPERIMENTS.md#a2-under-the-beam-law-2026-09-19)
 and the evidence is in [validation](../../../docs/VALIDATION.md). The model
 owner asked for "a Bell experiment with an emitter and two detectors, Alice
 and Bob, on a small GameBoard" ([Highlights 5.4](../../../docs/HIGHLIGHTS.md#54-the-detector)),
@@ -11,15 +11,15 @@ run under the law of events: with a deterministic local phase window each
 click is a function of the arriving phase and the local setting alone, so
 CHSH is at most 2 as an identity on the record, the correlation is the
 triangle 1 - 4 k / N, and the CHSH settings give S = 2 exactly, the model's
-limit. The design of [the law of the ray](../../../docs/RAY_LAW.md), section
-8, pinned the same verdict for `rays-v1` ("unchanged: S = 2 exactly"). The
+limit. The design of [the Beam Law](../../../docs/BEAM_LAW.md), section
+8, pinned the same verdict for `beam-v1` ("unchanged: S = 2 exactly"). The
 run is made and registered as that limit, never as a confrontation the model
 could pass. The registered run of the law of events (offsets 9 and 10, 138
 intervals, fingerprint `53a70962...`) keeps its scope below.
 
 ## The design
 
-One bar of 21 x 1 x 1 Nodes, open, `"law": "rays"`, K 2^20, N 64 (the
+One bar of 21 x 1 x 1 Nodes, open, `"law": "beam"`, K 2^20, N 64 (the
 phase tables read a single arrival's step exactly only up to N = 64),
 `release` [0, 1], `suspension` 0, the families `light` and `counter`, both
 paid (`quantum` 1; the kind follows from the quantum), every measured event
@@ -102,16 +102,16 @@ reproduced minimally and reported, never tuned away. `tests/test_nature_beam_wor
 (b) runs the ten worlds through the same tool as a check that the engine
 does what the law says.
 
-## Result under the law of the ray (2026-09-19)
+## Result under the Beam Law (2026-09-19)
 
-Branch `claude/universe24-new-3ytqde`, the ray law's commits on the base
+Branch `claude/universe24-new-3ytqde`, the Beam Law's commits on the base
 `ce0b22af`, source fingerprint `703f9427d9f70e6c619218e457edca0b7647381a8cc7a20d140e4a3d9dd3f671`, Python 3.14, headless,
 about 0.2 s per run. Every count as pinned above: E +1/2, -1/2, +1/2, +1/2
 at the CHSH settings, S = 2 exactly; the controls +1, -1, 0; E +1/4, +3/4,
 +1/2 on the non-saturating quadruple, S' = 3/2 exactly; the offsets plus 14,
 minus 16 in every run (the flight table's pace); no-signalling exact; 326
 criteria checked, 0 failed. The model's limit, outcome 1 of A2 against the
-2015 data, as the reviewers predicted and as RAY_LAW section 8 expected; not
+2015 data, as the reviewers predicted and as BEAM_LAW section 8 expected; not
 a law of nature. Limits: static settings declared in the world, no
 last-moment choice; single rays one per interval per direction, the trivial
 regime of the law (no collision between rays of one number on one line, no

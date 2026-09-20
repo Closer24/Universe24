@@ -1,5 +1,5 @@
 """The momentum label along the unit vector of the direction at the flight
-table's scale (docs/RAY_LAW.md, section 2 and section 10, note 23; the
+table's scale (docs/BEAM_LAW.md, section 2 and section 10, note 23; the
 model owner's decision of 2026-09-19 on the physics-rule reviewer's
 verdict, Highlights 5.4): the label of one unit of a ray on the direction
 D is u_d, the integer vector nearest Q D / |D| with Q = 64, computed once
@@ -178,7 +178,7 @@ def test_the_table_is_the_nearest_integer_vector_at_the_scale_q_without_ties():
 
 def world(measured: list[dict[str, object]], **keys: object) -> dict[str, object]:
     base: dict[str, object] = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-label-test",
         "shape": [31, 31, 31],
         "boundary": "open",

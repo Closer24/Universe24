@@ -1,6 +1,6 @@
-"""The frame around the law of the ray (rays-v1): the tick, the measured
+"""The frame around the Beam Law (beam-v1): the tick, the measured
 events' clocks, the books, the record and the snapshot. The law itself is
-the one function `nature_beam` (docs/RAY_LAW.md); this module schedules and
+the one function `nature_beam` (docs/BEAM_LAW.md); this module schedules and
 books, it computes no physics.
 
 The interval (`NatureBeamSimulation.step`): the engine sets every measured event's
@@ -56,11 +56,11 @@ from event_universe.events.nature_beam import (
     nature_beam_tables,
 )
 from event_universe.events.world import (
+    BEAM_LAW,
     DETECTOR_READINGS,
     FACE_NAMES,
     LABEL_SCALE,
     MOMENTUM_BOUND,
-    RAYS_LAW,
     MeasuredDefinition,
     NatureBeamWorld,
     body_nodes,
@@ -70,7 +70,7 @@ __all__ = ["TALLIES", "Measured", "NatureBeamSimulation", "count_owed", "step_ax
 
 
 def step_axis(age: int, momentum: int, content: int, width: int) -> int | None:
-    """The step rule of one axis (RAY_LAW section 3 step 5; `_move` calls
+    """The step rule of one axis (BEAM_LAW section 3 step 5; `_move` calls
     it): the sign of the Link a free measured event of content M = `content`
     steps this interval on an axis whose momentum component is p =
     `momentum`, with `age` its age after the frame's advance and `width`
@@ -99,7 +99,7 @@ def count_owed(age: int, counted: int, suspension: tuple[int, int]) -> int:
 
 
 class NatureBeamSimulation:
-    """One world of the law of the ray, stepped interval by interval."""
+    """One world of the Beam Law, stepped interval by interval."""
 
     def __init__(self, world: NatureBeamWorld, observer: Record | None = None) -> None:
         self.world = world
@@ -283,7 +283,7 @@ class NatureBeamSimulation:
 
     def _frame_all(self) -> None:
         """The clocks' frame, every measured event at once: its content is
-        read once into `frame_content` (M_A of the interval's push, RAY_LAW
+        read once into `frame_content` (M_A of the interval's push, BEAM_LAW
         step 4); one that owes a count pays it by one (no self-creation, no
         release, no turn; `waited` counts the interval); one that owes
         nothing self-creates: its age advances and its turn is read off its
@@ -323,7 +323,7 @@ class NatureBeamSimulation:
         for entry, turn in zip(phased, turns, strict=True):
             if 2 * turn >= self.world.phase_steps:
                 raise ValueError(
-                    f"{RAYS_LAW}: measured event {entry.number} turns its phase by half the circle "
+                    f"{BEAM_LAW}: measured event {entry.number} turns its phase by half the circle "
                     "or more per self-creation (its content has grown past K x N / 2)"
                 )
             entry.turn = turn
@@ -723,7 +723,7 @@ class NatureBeamSimulation:
     def snapshot_stream(self) -> Iterator[tuple[str, object]]:
         """The snapshot as (key, value) pairs, the Nodes with rays as an
         iterator over one entry at a time (`snapshot_writer`)."""
-        yield "law", RAYS_LAW
+        yield "law", BEAM_LAW
         yield "tick", self.tick
         yield "shape", list(self.shape)
         yield "boundary", self.world.boundary

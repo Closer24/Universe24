@@ -8,7 +8,7 @@ should come out by itself behind the detector; what is missing on the GameBoard
 by the laws?" The answer taken: the tie between a body's momentum and its
 phase, placed as parameters outside the GameBoard like the age ("On Bohr, go,
 and put it as parameters outside the GameBoard like the age"): the electron is
-a body on a set of three Nodes (`span`, [RAY_LAW note 30](../../../docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+a body on a set of three Nodes (`span`, [BEAM_LAW note 30](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (i)) and turns its phase by its momentum at every Link it steps
 (`phase_by_momentum` with the world's `action`, note 30 (ii)); the rays it
 releases carry that phase to the open faces of the GameBoard, the `wave`
@@ -25,7 +25,7 @@ orbit, the design: the host's view of the mechanism).
 ## The base
 
 An open cube of SIDE^3 Nodes, SIDE = 2 (r + 14) + 1 for the orbit of radius
-r (33 for r = 2 up to 61 for r = 16), the centre c, `"law": "rays"`, K 2^30
+r (33 for r = 2 up to 61 for r = 16), the centre c, `"law": "beam"`, K 2^30
 (the clock's own turn 0 within a run), N 64, `suspension` 0 (the push alone
 moves the electron), `width` 45120 (below). Two free families: `p`, the
 proton (content M_p = 1836, `charge` [1, 1], no phase circle), and `e`, the

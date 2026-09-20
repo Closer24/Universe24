@@ -1,4 +1,4 @@
-"""The readings of the Heisenberg run A10 under the law of the ray: the
+"""The readings of the Heisenberg run A10 under the Beam Law: the
 width of an opening and the spread behind it.
 
 Reads the run folders of the worlds of `examples/events/heisenberg/` (the
@@ -21,7 +21,7 @@ wavelength lambda = c x period (0.886 lambda for w >= lambda, the width of
 sinc^2; README.md there). The record checks (completed, the books balanced
 at every tick) fail the tool; the readings are registered inside or
 outside their expectation (docs/EXPERIMENTS.md, "A10, the width of an
-opening and the spread behind it, under the law of the ray") and never
+opening and the spread behind it, under the Beam Law") and never
 moved.
 
     PYTHONPATH=src python tools/heisenberg_readings.py artifacts/heisenberg
@@ -51,7 +51,7 @@ MODEL_PREFIX = "rays-heisenberg-"
 MODEL_SUFFIX = "-v1"
 SMOOTH = 5
 SINC_HALF = 1.39156  # the x at which (sin x / x)^2 = 1/2
-# The speed of the law's design, 1 / sqrt 3 Links per interval (RAY_LAW
+# The speed of the law's design, 1 / sqrt 3 Links per interval (BEAM_LAW
 # section 3): the wavelength of the derivation, lambda = c x period, is at
 # this nominal c; the flight table rounds T_d = isqrt(3 |v|^2 Q^2) to an
 # integer per direction, differently on each direction of the fan.

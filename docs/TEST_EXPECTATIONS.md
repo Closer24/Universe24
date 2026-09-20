@@ -11,13 +11,13 @@ research runs, made once and recorded with a fingerprint and a date in
 before that date describe the suite as it was and are brought under the rule
 when their tests change.
 
-## Suite inventory of 2026-09-19: one engine, the law of the ray
+## Suite inventory of 2026-09-19: one engine, the Beam Law
 
 Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
-"DECIDED: the law of the ray"; [the law of the ray](RAY_LAW.md)): one engine,
-`rays-v1`, the law of events of the same day deleted with its modules. The
+"DECIDED: the law of the ray"; [the Beam Law](BEAM_LAW.md)): one engine,
+`beam-v1`, the law of events of the same day deleted with its modules. The
 suite keeps one module per generic rule of the engine, on a minimal GameBoard,
-and the repository gates. Every rule the ray law kept from the law of events
+and the repository gates. Every rule the Beam Law kept from the law of events
 is re-pinned in a new module with the timing of the flight table; the
 deleted modules and their rules are named in the
 [migration notes](MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1).
@@ -35,13 +35,13 @@ kept, their pins the law of events').
 | `test_nature_beam_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact; the merge by one packed key and by the lexsort alike ([below](#the-bijection)) | new |
 | `test_nature_beam_detector.py` | The detector's record: two rays in phase and in antiphase; the threshold gating a receiver and a re-emitter over the set; a release reading no threshold; the record exact and never refused (the pointer in the register up to its bound, the square in Python integers); the detector a set of Nodes with one record (the record, the threshold and the window over the set); the phase returned to the set's events after a click; the `beam` reading (the pairing by opposite phase, the count) ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
 | `test_nature_beam_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
-| `test_nature_beam_clock.py` | The clock under the ray law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-ray-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
+| `test_nature_beam_clock.py` | The clock under the Beam Law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-beam-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder; the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
-| `test_nature_beam_window.py` | The phase window under the ray law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-ray-law)) | `test_phase_window` (a to c) |
-| `test_nature_beam_world_parsing.py` | The world file of the ray law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-ray-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
-| `test_nature_beam_worlds.py` | The worlds of the ray law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing, `two_contents` not refused with its face records exact ([below](#the-worlds-of-the-ray-law)) | `test_event_worlds` (a, d) |
+| `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
+| `test_nature_beam_world_parsing.py` | The world file of the Beam Law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-beam-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
+| `test_nature_beam_worlds.py` | The worlds of the Beam Law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing, `two_contents` not refused with its face records exact ([below](#the-worlds-of-the-beam-law)) | `test_event_worlds` (a, d) |
 | `test_nature_beam_books.py` | The books as running ledger lines: the transit, content and momentum lines of `books()` equal the recount over the store at every interval of a world that exercises every way a row comes or goes; an empty world ([below](#the-books)) | new (2026-09-19, the optimizations) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_entity_definitions.py`, `test_entity_loading_consumers.py` | The entity definitions loader and its consumers (the placement, the bundles, the refusals at runtime) |
@@ -56,7 +56,7 @@ kept, their pins the law of events').
 
 ## The one reading
 
-`tests/test_nature_beam_readings.py` (docs/RAY_LAW.md, section 3 step 2 and section
+`tests/test_nature_beam_readings.py` (docs/BEAM_LAW.md, section 3 step 2 and section
 10 note 16; the model owner, 2026-09-19: every piece of logic once; "the one
 reading function is the amount-weighted moments of order 0, 1 and 2 of the
 direction vectors, valid for fans as for the six headings, here entering the
@@ -89,7 +89,7 @@ its component by key.
   number 2 arriving on -X is pushed by (0, 0, 0) and reads 18; by the 9 of
   number 1 alone (-2304, 0, 0) (re-pinned from (-36, 0, 0) on 2026-09-19:
   the label of a unit along a heading is 64 e_d, the label along the unit
-  vector, [RAY_LAW note 23](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation));
+  vector, [BEAM_LAW note 23](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation));
   with 5 of its own number arriving too the own add nothing (5 home,
   created again at the same interval's self-creation on its first
   declared direction).
@@ -112,7 +112,7 @@ its component by key.
   (`pass`, `click`, `record` at phase 32).
 - (e) the dense readings of the GameBoard are decomposed on request from the
   rows of the walk, for the active Nodes only (added 2026-09-19 with the
-  optimizations of RAY_LAW section 10, note 22): on the open 9 x 3 x 3
+  optimizations of BEAM_LAW section 10, note 22): on the open 9 x 3 x 3
   GameBoard with no measured event, 9 units arriving at (4, 1, 1) on +X and 9
   on -X, 3 arriving at (2, 1, 1) on +Y and 2 at rest at (6, 1, 1): after
   one interval the count is 18, 3 and 0 at those Nodes (21 over the
@@ -134,7 +134,7 @@ its component by key.
 
 ## The table generated from the keys
 
-`tests/test_default_table.py` (docs/RAY_LAW.md, section 2 and section 10
+`tests/test_default_table.py` (docs/BEAM_LAW.md, section 2 and section 10
 note 15; the model owner, 2026-09-19, "I approve 1 and 3": the tables are
 generated from the keys and a world declares only what differs, `kind`
 derived from `quantum`).
@@ -169,7 +169,7 @@ derived from `quantum`).
 
 ## The flight
 
-`tests/test_nature_beam_flight.py` (docs/RAY_LAW.md, section 3): one speed for
+`tests/test_nature_beam_flight.py` (docs/BEAM_LAW.md, section 3): one speed for
 every direction, 1 / sqrt 3, on the digital line of the momentum, at most
 one Link per interval, the age modulo the direction's period.
 
@@ -199,7 +199,7 @@ one Link per interval, the age modulo the direction's period.
 
 ## The collision table
 
-`tests/test_nature_beam_collision.py` (docs/RAY_LAW.md, section 4): eight slots per
+`tests/test_nature_beam_collision.py` (docs/BEAM_LAW.md, section 4): eight slots per
 Node, the six headings in Port order and two rest slots; a slot empty,
 single or a crowd; the class of a state (the crowd mask, the number of
 singles, their headings' sum); inside a class the forward map is the cyclic
@@ -225,7 +225,7 @@ shift by +1 and the inverse by -1, generated from the rule.
   taker declared as a `beam` detector since 2026-09-20, the window then
   reading each ray's own phase; under the default `wave` the pair's
   pointer is zero, has no phase, and both rays pass) (the model owner's
-  decision of 2026-09-19 on the physics-rule reviewer's F1(c); RAY_LAW
+  decision of 2026-09-19 on the physics-rule reviewer's F1(c); BEAM_LAW
   section 3 step 3 and note 18): the head-on pair of (c) (one number,
   amount 1, phases 0 and 32) meeting at the Node of a measured event of `m`
   whose table passes `light` keeps its directions +x and -x (no rest ray),
@@ -239,7 +239,7 @@ shift by +1 and the inverse by -1, generated from the rule.
 
 ## The bijection
 
-`tests/test_nature_beam_bijection.py` (docs/RAY_LAW.md, section 3): a periodic
+`tests/test_nature_beam_bijection.py` (docs/BEAM_LAW.md, section 3): a periodic
 8 x 8 x 4 GameBoard (`age_bound` 128 declared, as a GameBoard periodic on every
 axis must since 2026-09-20), 300 records of fixed arrays (rays on every heading, both
 rest slots and two fan directions, head-on pairs among them, amounts 1 and
@@ -249,7 +249,7 @@ ages whole, up to 72 at the turning point); the
 state at the turning point differs from the start; the collision moved at
 least one ray on the way.
 
-The merge (step 6; added 2026-09-19 with the optimizations of RAY_LAW
+The merge (step 6; added 2026-09-19 with the optimizations of BEAM_LAW
 section 10, note 22): 82 fixed rows (60 distinct over 200 Nodes, 10
 directions, 23 ages, the circle, 3 numbers, 3 contents; 20 of them
 repeated; two extremes; since 2026-09-20 the identity is the six fields
@@ -263,7 +263,7 @@ sort likewise; the empty store merges to the empty store.
 
 ## The books
 
-`tests/test_nature_beam_books.py` (docs/RAY_LAW.md, section 10, note 22; added
+`tests/test_nature_beam_books.py` (docs/BEAM_LAW.md, section 10, note 22; added
 2026-09-19 with the optimizations): `books()` reports the transit line,
 the content line and the transit momentum as the running lines of the
 ledger (what was released less what left: escaped, home, absorbed;
@@ -288,7 +288,7 @@ on -z). An empty world counts zero both ways.
 
 ## The detector's record
 
-`tests/test_nature_beam_detector.py` (docs/RAY_LAW.md, section 5). K 2^20,
+`tests/test_nature_beam_detector.py` (docs/BEAM_LAW.md, section 5). K 2^20,
 `suspension` 0, `release` [0, 1], the families `m` (free) and `light`
 (paid), every measured event `fixed`; the detector `d` of (a) to (e)
 declares the reading `wave` (the default since 2026-09-20; from
@@ -320,7 +320,7 @@ declares the reading `wave` (the default since 2026-09-20; from
   unit per heading per interval, its content 18 then 12; a reader of `m`
   (content 4) at threshold 4 passes 3 rays and reads 4, pushed by
   -M x 64 c = (-1024, 0, 0) (re-pinned from (-16, 0, 0)).
-- (e) the record is exact and never refused (RAY_LAW section 5 and note
+- (e) the record is exact and never refused (BEAM_LAW section 5 and note
   19; the night's bound refused `two_contents`): every entry (C, S) of the
   1/256 tables is shorter than 257 for every N from 2 through 4096 (the
   largest C^2 + S^2 is 65897), so each component of the pointer is within
@@ -395,7 +395,7 @@ declares the reading `wave` (the default since 2026-09-20; from
 
 ## The push as one form
 
-`tests/test_nature_beam_push.py` (docs/RAY_LAW.md, section 3 step 4, section 5 and
+`tests/test_nature_beam_push.py` (docs/BEAM_LAW.md, section 3 step 4, section 5 and
 section 10 notes 18 to 20 and 28; the model owner's proposal 2 of
 2026-09-19 with the physics-rule reviewer's two corrections, and the
 decision of 2026-09-20 that charge is per unit of content of a family):
@@ -411,7 +411,7 @@ and `p` (the probe's, a second family since 2026-09-20: one charge per
 unit of content is one family, and the reviewer's world gives the source
 and the probe different ratios) and `light` paid, every measured event
 `fixed`, a 12 x 1 x 1 bar with y and z periodic unless said otherwise.
-Re-pinned on 2026-09-19 for the label along the unit vector ([RAY_LAW note 23](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+Re-pinned on 2026-09-19 for the label along the unit vector ([BEAM_LAW note 23](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
 every integer of the six-heading cases is the first pin times 64 (the
 label of a unit along a heading is 64 e_d), the fan cases read u_(2, 1, 0)
 = (57, 29, 0); the first pins are named in brackets. Re-pinned on
@@ -478,7 +478,7 @@ charge 1 the family `p` of charge [1, 5]) and every integer is unchanged.
   in the store: every push (-1088, 0, 0) and `pushed` (-21760, 0, 0) as in
   (a), the bystanders untouched.
 - (j) M_A is the content the frame read (the architect's B3, the
-  orchestrator's D1, 2026-09-20; [RAY_LAW note 27](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  orchestrator's D1, 2026-09-20; [BEAM_LAW note 27](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
   a 13 x 1 x 1 bar (y, z periodic), K 1024, `release` [1, 1], the
   families A (free, no phase circle) and B (paid, quantum 1); a source of
   A (content 3) at x = 0 releasing on +X, a reader P of A (content 5) at
@@ -493,7 +493,7 @@ charge 1 the family `p` of charge [1, 5]) and every integer is unchanged.
   pin]. No other pin moves: no registered world has a paid click and a
   free read at one reader in one interval.
 - (k) a re-emitted free ray is its family's ray (the architect's B2, the
-  orchestrator's D2, 2026-09-20; [RAY_LAW note 28](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  orchestrator's D2, 2026-09-20; [BEAM_LAW note 28](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
   a source of the free family B (content 4, charge [1, 4]) at x = 0
   releasing on +X, a mirror of the free family A (content 4, charge
   [1, 5], `table` {"B": "rerelease"}, `directions` [+X]) at x = 4, a
@@ -517,7 +517,7 @@ charge 1 the family `p` of charge [1, 5]) and every integer is unchanged.
 
 ## The re-emission
 
-`tests/test_nature_beam_reemission.py` (docs/RAY_LAW.md, section 5). K 2^20,
+`tests/test_nature_beam_reemission.py` (docs/BEAM_LAW.md, section 5). K 2^20,
 `suspension` 0, `release` [0, 1], the families `m` (free) and `light`
 (paid).
 
@@ -550,9 +550,9 @@ charge 1 the family `p` of charge [1, 5]) and every integer is unchanged.
   and leaves again on the lamp's one direction with phase 7 and content 1,
   the books closed.
 
-## The clock under the ray law
+## The clock under the Beam Law
 
-`tests/test_nature_beam_clock.py` (docs/RAY_LAW.md, section 3, step 5; re-pinned
+`tests/test_nature_beam_clock.py` (docs/BEAM_LAW.md, section 3, step 5; re-pinned
 from `test_event_clock`, `test_release_costs_by_phase_rate` and
 `test_border_and_clock_corrections` (a, c) with the flight table's timing).
 
@@ -594,13 +594,13 @@ from `test_event_clock`, `test_release_costs_by_phase_rate` and
 
 ## The width of the push
 
-`tests/test_push_width.py` (docs/RAY_LAW.md, section 3, step 5 and
+`tests/test_push_width.py` (docs/BEAM_LAW.md, section 3, step 5 and
 implementation note 15; the model owner's D1, 2026-09-19). One rule in
 isolation: an open bar of 12 x 1 x 1, K 1024, N 64, `release` [0, 1] (no
 push arrives), a free measured event of content M with the momentum p on
 +x; the step rule `by_clock(age, |p|, Q x S x M + |p|)` with S the
 world's `width` and Q = 64 the label's scale (since 2026-09-19, the label
-along the unit vector, [RAY_LAW note 23](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+along the unit vector, [BEAM_LAW note 23](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
 the declared momenta below are the first pins times 64 and every position
 is unchanged, `by_clock(age, Q n, Q k) = by_clock(age, n, k)`). The
 expected integers, written down before the first run:
@@ -634,7 +634,7 @@ expected integers, written down before the first run:
 
 ## The age
 
-`tests/test_nature_beam_age.py` (docs/RAY_LAW.md, section 2 the age and its bound,
+`tests/test_nature_beam_age.py` (docs/BEAM_LAW.md, section 2 the age and its bound,
 section 3 steps 2 and 5, section 10 note 25; the model owner, 2026-09-19,
 "the clock beside a mass ... go for it"): the age is the count of intervals
 since the measured event that created the ray, kept whole on the record;
@@ -703,7 +703,7 @@ of the presence; the GameBoard's step is unchanged by the whole age.
 
 ## A body on a set and the turn by momentum
 
-`tests/test_nature_beam_body.py` (docs/RAY_LAW.md, section 3 step 5 and section 10
+`tests/test_nature_beam_body.py` (docs/BEAM_LAW.md, section 3 step 5 and section 10
 note 30; the model owner, 2026-09-20, "On Bohr, go, and put it as
 parameters outside the GameBoard like the age"): a measured event that
 declares `span` is a body on the set of Nodes centred on its position,
@@ -834,7 +834,7 @@ expected integers, written down before the first run:
   key `action` None, `hypotheses` [], `span` [1, 1, 1] and
   `phase_by_momentum` false.
 
-## The phase window under the ray law
+## The phase window under the Beam Law
 
 `tests/test_nature_beam_window.py` (re-pinned from `test_phase_window` under the
 flight table: a ray released at tick t first walks at t + 1; 10 Links take
@@ -878,13 +878,13 @@ flight table: a ray released at tick t first walks at t + 1; 10 Links take
   `rule` takes the family's default rule (since the night of 2026-09-19: a
   window alone on a paid family measures in the window 8).
 
-## The world file of the ray law
+## The world file of the Beam Law
 
-`tests/test_nature_beam_world_parsing.py` (docs/RAY_LAW.md, sections 2 and 7;
+`tests/test_nature_beam_world_parsing.py` (docs/BEAM_LAW.md, sections 2 and 7;
 re-pinned from `test_event_worlds` (e) and
 `test_integer_bounds_of_measured_and_emission` (a)).
 
-- (a) refused, naming the key: `"law": "events"` (naming the law of the ray
+- (a) refused, naming the key: `"law": "events"` (naming the Beam Law
   and MIGRATION), `dynamics`, `max_active_owners`, `headings` on a lamp,
   `heading` on a ray, `port_map`, `groups` on a detector, a non-primitive
   direction (2, 2, 0), a component beyond P (65 at the default bound), a
@@ -907,7 +907,7 @@ re-pinned from `test_event_worlds` (e) and
   [[1, 1, 0]] is the two rest vectors, the six headings and (1, 1, 0); a
   measured event's `directions` by vector or by index; a ray at rest (index
   0); `suspension` 1 as (1, 1), [1, 4], [0, 4] as (0, 1); `reads` per entry.
-- (c) the runner: a 4-interval world into `run.json` (`law` "rays-v1",
+- (c) the runner: a 4-interval world into `run.json` (`law` "beam-v1",
   completed, four ticks, four books, conserved, the measured events, the six
   face detectors of the open GameBoard with their `record`, the directions
   table, `suspension` [1, 1]), `state.json` (the law, tick 4, the Nodes with
@@ -915,7 +915,7 @@ re-pinned from `test_event_worlds` (e) and
   directory refused.
 - (d) the bounds (re-pinned on 2026-09-19 at 1/64 of their amounts, the
   label of a unit along a heading being 64 e_d since the label along the
-  unit vector, [RAY_LAW note 23](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  unit vector, [BEAM_LAW note 23](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
   two measured events of content 1 (were 64) one Link apart at `release`
   [1, 1] read each other's one ray from interval 2 on and are pushed by
   1 x 64 x 1 = 64 (was 64 x 64 = 4096) toward each other; the second,
@@ -928,7 +928,7 @@ re-pinned from `test_event_worlds` (e) and
 
 ## The label along the unit vector
 
-`tests/test_nature_beam_label.py` (docs/RAY_LAW.md, section 2 and section 10, note
+`tests/test_nature_beam_label.py` (docs/BEAM_LAW.md, section 2 and section 10, note
 23; the model owner's decision of 2026-09-19 on the physics-rule
 reviewer's verdict, Highlights 5.4): the label of one unit on the
 direction D is u_d, the integer vector nearest Q D / |D| with Q = 64, by
@@ -1003,9 +1003,9 @@ with the sign restored (`nature_beam.unit_label`, the flight table's
   33554432 at Node [5, 5, 0] along [64, 1, 0], its weight
   72057594037927936 times the largest component 64 = 4611686018427387904".
 
-## The worlds of the ray law
+## The worlds of the Beam Law
 
-`tests/test_nature_beam_worlds.py` (docs/RAY_LAW.md, section 7): the worlds of
+`tests/test_nature_beam_worlds.py` (docs/BEAM_LAW.md, section 7): the worlds of
 `examples/events/` on minimal GameBoards, pinned as a check that the engine
 does what the law says and not as a result.
 
@@ -1027,7 +1027,7 @@ does what the law says and not as a result.
   (the design pinned 0.9 for a fan of 203 directions; measured 0.893 with
   the 91 of this world), and the correlation at the periods 4 and 16 is
   below 0.5.
-- (b) Bell (the ten A2 worlds under `"law": "rays"`, `tools/bell_chsh.py`):
+- (b) Bell (the ten A2 worlds under `"law": "beam"`, `tools/bell_chsh.py`):
   S = 2 exactly, S' = 3/2 exactly, the controls +1, -1, 0, no-signalling
   exact, 0 criteria failed.
 - (c) one content of 2^24 at the centre of an open 11^3 GameBoard at `release`
@@ -1041,7 +1041,7 @@ does what the law says and not as a result.
 - (d) every example world (`examples/events/*.json`, `bell/`, `coupling/`,
   `detector/` through the entity loader) parses as a NatureBeam world. The orbit
   worlds of series D are research runs registered in
-  [EXPERIMENTS](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19)
+  [EXPERIMENTS](EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19)
   and pinned by no test (the model owner's rule of 2026-09-17; the pin of
   the first registration, `test_orbit_world.py`, went with its numbers
   when the engine changed).
@@ -1136,7 +1136,7 @@ still requires review. No physical calculation changes as part of translation.
 ## Shared integer arithmetic
 
 `test_integer_arithmetic.py` pins the primitives of `core/integer.py` that the
-ray law uses: the working register (`checked_work` accepts +-(2^63 - 1),
+Beam Law uses: the working register (`checked_work` accepts +-(2^63 - 1),
 refuses one beyond and a boolean); the exact integer square root
 (`integer_root`: 0, 1, 2, 3, 4, 15, 16, 17, 2^62 and 2^63 - 1 give 0, 1, 1, 1,
 2, 3, 4, 4, 2^31 and 3037000499, each the floor with the next square above the

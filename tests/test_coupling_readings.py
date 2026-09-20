@@ -55,7 +55,7 @@ UNIT = 64
 
 def bar(shape: list[int], measured: list[dict[str, object]], **keys: object) -> dict[str, object]:
     world: dict[str, object] = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "coupling-readings-test",
         "shape": shape,
         "boundary": "open",

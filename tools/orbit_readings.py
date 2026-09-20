@@ -1,4 +1,4 @@
-"""The readings of the orbit series D under the law of the ray, on the
+"""The readings of the orbit series D under the Beam Law, on the
 plane, with the width of the push.
 
 Reads the run folders of the worlds of `examples/events/orbit/` (the
@@ -16,14 +16,14 @@ m x q x L / (2 pi r) (the constant C of the derivation; L the mean label
 magnitude of the source's fan in units of Q, the mean |u_d| / Q over its
 directions with u_d the unit vector of the direction at the scale Q,
 1.0000 for this fan within 1 %: since 2026-09-19 the push of a fan ray is
-its label along u_d, RAY_LAW section 2 and note 23; the momentum column p
+its label along u_d, BEAM_LAW section 2 and note 23; the momentum column p
 is in label units, 64 per unit of the probe's content), the
 least and greatest radius, the escape or the refused step if any; and, per
 width, the ratio T(24)^2 / T(12)^2 against (24 / 12)^2 = 4, the plane's
 1 / r force (T proportional to r, k = 2; Kepler's k = 3 would give 8). The
 record checks (completed, the books balanced at every tick) fail the tool;
 the orbit readings are registered inside or outside their expectation
-(docs/EXPERIMENTS.md, "D, the orbit under the law of the ray, on the plane
+(docs/EXPERIMENTS.md, "D, the orbit under the Beam Law, on the plane
 (2026-09-19)") and never moved.
 
     PYTHONPATH=src python tools/orbit_readings.py artifacts/orbit

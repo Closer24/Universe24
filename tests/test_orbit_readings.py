@@ -53,7 +53,7 @@ DIAGONAL = math.hypot(45, 45)
 
 def plane(measured: list[dict[str, object]], **keys: object) -> dict[str, object]:
     world: dict[str, object] = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "rays-orbit-s1-r3-plane-v1",
         "shape": [9, 9, 1],
         "boundary": {"z": "periodic"},

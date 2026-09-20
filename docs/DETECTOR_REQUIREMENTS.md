@@ -1,8 +1,8 @@
 # Universe24 detector requirements
 
-Date: 2026-09-19. Status: consolidated requirements; the implementation contract of the explicitly selected `reversible-detector-v1` candidate was deleted the same day, absorbed into [the law of the ray](RAY_LAW.md) (history marker in its section below). Code and physical validation are separate evidence. Tracked in [issue 342](https://github.com/Closer24/Universe24/issues/342).
+Date: 2026-09-19. Status: consolidated requirements; the implementation contract of the explicitly selected `reversible-detector-v1` candidate was deleted the same day, absorbed into [the Beam Law](BEAM_LAW.md) (history marker in its section below). Code and physical validation are separate evidence. Tracked in [issue 342](https://github.com/Closer24/Universe24/issues/342).
 
-Source baseline of the candidate: `events-v1`, commit `bfb463be6313ae226aa0a192d11036ead63dd0f1` (history: `events-v1` was deleted on 2026-09-19 with the candidate; the active engine is the law of the ray). This document owns the detector requirements and the record of the scoped candidate contract below. The default `events-v1` measurement and mixing rules remained as documented in ENGINE.md until that deletion. The candidate deliberately did not call their lossy transitions.
+Source baseline of the candidate: `events-v1`, commit `bfb463be6313ae226aa0a192d11036ead63dd0f1` (history: `events-v1` was deleted on 2026-09-19 with the candidate; the active engine is the Beam Law). This document owns the detector requirements and the record of the scoped candidate contract below. The default `events-v1` measurement and mixing rules remained as documented in ENGINE.md until that deletion. The candidate deliberately did not call their lossy transitions.
 
 ## Definition and adopted requirements
 
@@ -73,7 +73,7 @@ The preparation and microscopic interaction laws must produce the restriction. A
 
 ## Current implementation gap and ownership
 
-The baseline [engine contract](https://github.com/Closer24/Universe24/blob/bfb463be6313ae226aa0a192d11036ead63dd0f1/docs/ENGINE.md) of the law of events treated a click as a one-way boundary with the phase recorded externally; the law of the ray of 2026-09-19 keeps the click as the one one-way border and reads the phase on the GameBoard as the detector's coherent record ([the law of the ray](RAY_LAW.md), section 5). The ownership map below is the one under which the candidate was designed; the modules it names are `nature_beam.py` (the interval) and `engine.py` (the frame) since that day.
+The baseline [engine contract](https://github.com/Closer24/Universe24/blob/bfb463be6313ae226aa0a192d11036ead63dd0f1/docs/ENGINE.md) of the law of events treated a click as a one-way boundary with the phase recorded externally; the Beam Law of 2026-09-19 keeps the click as the one one-way border and reads the phase on the GameBoard as the detector's coherent record ([the Beam Law](BEAM_LAW.md), section 5). The ownership map below is the one under which the candidate was designed; the modules it names are `nature_beam.py` (the interval) and `engine.py` (the frame) since that day.
 
 | Existing owner | Required design work |
 | --- | --- |
@@ -92,24 +92,24 @@ This is an ownership map, not a new API. Before coding, publish the local operat
 - **A4 — Conservation:** verify the model's exact invariants across input, detector, supporting environment and output, with explicit edge handling.
 - **A5 — Quantum research:** freeze preparations, calibration, reference expectations and discrepancy criteria before uncertainty/Born/sequence comparisons. Record failures and finite-GameBoard limits. These are research runs, distinct from isolated generic-rule unit tests.
 
-The owner proposes that finite cell sensitivity together with information preservation on the GameBoard will produce the Heisenberg relation. This is the research hypothesis to investigate, not a rule inserted into the output. The reversible detector candidate of 2026-09-19 supplied a concrete reversible interaction for D5 on a declared domain; the law of the ray absorbed it the same day (below); whether any such mechanism supplies Q1 remains open.
+The owner proposes that finite cell sensitivity together with information preservation on the GameBoard will produce the Heisenberg relation. This is the research hypothesis to investigate, not a rule inserted into the output. The reversible detector candidate of 2026-09-19 supplied a concrete reversible interaction for D5 on a declared domain; the Beam Law absorbed it the same day (below); whether any such mechanism supplies Q1 remains open.
 
 ## Implementation contract: reversible-detector-v1
 
-Deleted on 2026-09-19 with the law of the ray (the model owner, Highlights
-5.4; [the law of the ray](RAY_LAW.md), section 1): the candidate's pointer is
+Deleted on 2026-09-19 with the Beam Law (the model owner, Highlights
+5.4; [the Beam Law](BEAM_LAW.md), section 1): the candidate's pointer is
 the detector's squared coherent record, its `transduce` and `port_map` are
 the re-emission on declared directions (`rerelease` with `directions`), its
 refusal of an open face is the face detector, and its `dynamics` key,
 schema, operator, inverse, capacity and readout are gone. The contract's
 text is in git at any commit before the deletion (`ce0b22af` the last);
 its two example runs keep their scope in [validation](VALIDATION.md). The
-requirements above stay; the reversibility they asked for is the ray law's
+requirements above stay; the reversibility they asked for is the Beam Law's
 bijection of the interval (`tests/test_nature_beam_bijection.py`).
 
 ## Remaining physical questions
 
-The ray law is classical, local and reversible on the GameBoard without a
+The Beam Law is classical, local and reversible on the GameBoard without a
 measured event; the click is its one one-way border. It demonstrates a
 concrete mechanism for a physical readout (the squared coherent record of a
 crowd of rays) and preserves the record of every ray in flight. It does not

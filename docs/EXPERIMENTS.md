@@ -946,20 +946,20 @@ states "exactly" and means integer equality at every tick.
   h >= 20 and the escape of item 5, the not-frozen bound of item 6 at three
   radii, convergence (a)'s equality with the flow).
 
-### A2, under the law of the ray (2026-09-19)
+### A2, under the Beam Law (2026-09-19)
 
 - **Confronts.** As A2 and as the entry above: the CHSH inequality in the
   phase form, the settings phases, the loophole-free experiments of 2015
   (Delft, S = 2.42 +- 0.20; the quantum maximum 2 sqrt 2). Re-registered
-  under `rays-v1` the night of 2026-09-19, when the law of the ray replaced
-  the law of events ([the law of the ray](RAY_LAW.md), section 8: "Bell A2
+  under `rays-v1` the night of 2026-09-19, when the Beam Law replaced
+  the law of events ([the Beam Law](BEAM_LAW.md), section 8: "Bell A2
   unchanged: S = 2 exactly, E(a, b) the triangle 1 - 4 k / N").
 - **Model prediction, pinned before the run (the physicist and the
-  mathematician, Highlights 5.4; RAY_LAW section 8).** Unchanged: with a
+  mathematician, Highlights 5.4; BEAM_LAW section 8).** Unchanged: with a
   deterministic local phase window each click is a function of the arriving
   phase and the local setting alone, so CHSH is at most 2 as an identity on
   the record; E(a, b) = 1 - 4 k / N; S = 2 exactly, S' = 3/2 exactly,
-  no-signalling exact. What the ray law changes is the timing only: a ray
+  no-signalling exact. What the Beam Law changes is the timing only: a ray
   flies at 1 / sqrt 3 by the flight table, so the eight Links to a plus Node
   take 13 walks after the ray's first walk and the ninth two more; the
   offsets are expected at plus 14 and minus 16 (the law of events: 9 and
@@ -978,7 +978,7 @@ states "exactly" and means integer equality at every tick.
   among the record kinds; the plus offset checked below the minus).
   `tests/test_nature_beam_worlds.py` (b) runs the ten worlds through the tool.
 - **Result (2026-09-19, measured).** Branch `claude/universe24-new-3ytqde`,
-  the ray law's commits on the base `ce0b22af`, source fingerprint
+  the Beam Law's commits on the base `ce0b22af`, source fingerprint
   `703f9427d9f70e6c619218e457edca0b7647381a8cc7a20d140e4a3d9dd3f671`, Python 3.14, headless, about 0.2 s per run. Every
   count as pinned: E +1/2 (96 / 32), -1/2 (32 / 96), +1/2, +1/2 at the CHSH
   settings, S = 2 exactly; the controls +1 (128 / 0), -1 (0 / 128), 0
@@ -991,8 +991,8 @@ states "exactly" and means integer equality at every tick.
   the entry above.
 - **Re-read under the label along the unit vector (2026-09-19; measured).**
   The ten worlds run again on the source whose momentum label is along the
-  unit vector u_d of the direction at the scale Q = 64 ([RAY_LAW section
-  10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  unit vector u_d of the direction at the scale Q = 64 ([BEAM_LAW section
+  10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
   note 23; source fingerprint `0eaa589ab51cdc0a12a863cd23e535e1e8ac052e8b4f3f8facf30ef05a323c5a`): every count, phase, offset and
   book as registered, S = 2 exactly, S' = 3/2, no-signalling exact, the
   lamp's momentum [0, 0, 0] (its recoils on +X and -X cancel in label
@@ -1000,18 +1000,18 @@ states "exactly" and means integer equality at every tick.
   the paid labels x 64 appear in the momentum lines of the clicks only.
   Measured = expected; the Bell setup reads no momentum.
 
-### C, the couplings under the law of the ray, on the plane (2026-09-19)
+### C, the couplings under the Beam Law, on the plane (2026-09-19)
 
 - **Confronts.** As the entry above (G, the clock at a potential, Gauss's
   law, the equivalence principle, the third law, superposition,
   retardation, Coulomb's law read in the same stream), re-registered under
   `rays-v1` the night of 2026-09-19 with the expectations of
-  [the law of the ray](RAY_LAW.md), section 8: the beams do not spread, so
+  [the Beam Law](BEAM_LAW.md), section 8: the beams do not spread, so
   the readings of a ballistic stream replace the readings of a diffusive
   field; the 1b merge criteria become the refusal; item 6's slowing
   changes power (the accepted price: on the axis the presence does not
   fall with r).
-- **Model prediction, pinned before the run (RAY_LAW section 8, the design
+- **Model prediction, pinned before the run (BEAM_LAW section 8, the design
   of 2026-09-19; the details by the executing agent before the rerun).**
   The base of the entry above with `"law": "rays"` and the source releasing
   on the six headings (`by_clock` 2^17 per heading per self-creation; the
@@ -1051,7 +1051,7 @@ states "exactly" and means integer equality at every tick.
   flux through the square summed in the tool, the readings printed inside
   or outside).
 - **Result (2026-09-19, measured against expected).** Branch
-  `claude/universe24-new-3ytqde`, the ray law's commits on the base
+  `claude/universe24-new-3ytqde`, the Beam Law's commits on the base
   `ce0b22af`, source fingerprint `703f9427d9f70e6c619218e457edca0b7647381a8cc7a20d140e4a3d9dd3f671`, Python 3.14, headless;
   every run completed with the books balanced at every tick, the measured
   content constant, age + waited = the intervals completed; 0.5 to 3.3 s per
@@ -1115,7 +1115,7 @@ states "exactly" and means integer equality at every tick.
 - **Re-read under the one push form (2026-09-19, the night; measured).**
   The twenty-one worlds run again on the source that reads the push as one
   bilinear form over the rays' labels with the emitter's factor on the
-  record ([RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  record ([BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
   notes 18 to 20; source fingerprint `cc7815756f50640ad10582af461cf58267c424eb8182177e580d0b5eedbd4769`): every `events.jsonl` is
   identical byte for byte to the run on the tip before it (fingerprint
   `70763568dc216a8b7a0ecdfac36654cdf1e1da80bb6b20d34eccfac2d8c62c8e`), the series 7 `read` records among them row by row (kappa 0
@@ -1127,7 +1127,7 @@ states "exactly" and means integer equality at every tick.
 - **Re-read under the label along the unit vector (2026-09-19; measured).**
   The twenty-one worlds run again on the source whose momentum label is
   along the unit vector u_d of the direction at the flight table's scale
-  Q = 64 ([RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+  Q = 64 ([BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
   and note 23; the model owner's decision on the physics-rule reviewer's
   verdict; source fingerprint `0eaa589ab51cdc0a12a863cd23e535e1e8ac052e8b4f3f8facf30ef05a323c5a`, Python 3.14, headless, four
   cores, 0.3 to 2.5 s per run). On the six headings the label of a unit is
@@ -1136,7 +1136,7 @@ states "exactly" and means integer equality at every tick.
   q_B / M_B is an integer on every series 7 world), while the counts, the
   presences, the clock and Gauss's flux off the Port crossings are
   unchanged; `tools/coupling_readings.py` divides the labels by Q where it
-  compares with the emission q or an amount, so the expectations of RAY_LAW
+  compares with the emission q or an amount, so the expectations of BEAM_LAW
   section 8 keep their meaning: 392 criteria passed, 0 failed, 19 readings
   inside and 9 outside, every reading equal to the registered one (count x
   r / q 0.125 .. 0.152, flow x 2 pi r / q 0.785 .. 0.952 at r = 4 to 40,
@@ -1151,7 +1151,7 @@ states "exactly" and means integer equality at every tick.
   in label units. Measured = registered on every line.
 - **Series 7 re-registered under the charge per unit of content
   (2026-09-20; measured).** The model owner's decision that charge is per
-  unit of content of a family ([RAY_LAW note 28](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  unit of content of a family ([BEAM_LAW note 28](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
   the six item 7 worlds declare two free families, `q` for the source
   (`charge` [1, 2] or [-1, 2]: 2^23 on 2^24) and `p` for the probe ([2, 1]
   or [-2, 1] on content 1; [1, 2] on the content-4 probe of `7_pp_m4`), no
@@ -1171,7 +1171,7 @@ states "exactly" and means integer equality at every tick.
   under `q`); `tools/coupling_readings.py` item 7 reads the declared
   charges (Q, q) off the families' pairs times the amounts (the tool's
   owner). No integer of the register moves.
-- **Verdict.** Every identity, book and timing of the ray law holds on the
+- **Verdict.** Every identity, book and timing of the Beam Law holds on the
   plane exactly; the far-field readings of a six-beam source follow the
   GameBoard ring's Node count and not r, so the design's ±10 % expectation for
   the ring means is not met by six beams (the design expected 0.15 to 0.19
@@ -1181,12 +1181,12 @@ states "exactly" and means integer equality at every tick.
   model owner's decision (PROJECT_STATUS, "What is open"); nothing was
   tuned.
 
-### D, the orbit under the law of the ray, on the plane (2026-09-19)
+### D, the orbit under the Beam Law, on the plane (2026-09-19)
 
 - **Confronts.** Whether a light free probe closes an orbit about a heavy
   fixed source under the measured push law with the width of the push (the
-  model owner's D1 of 2026-09-19, the world key `width`, [RAY_LAW section
-  3](RAY_LAW.md#3-the-nodes-interval-nature_beam) step 5 and note 15), and
+  model owner's D1 of 2026-09-19, the world key `width`, [BEAM_LAW section
+  3](BEAM_LAW.md#3-the-nodes-interval-nature_beam) step 5 and note 15), and
   how its period scales with the radius: on the plane a ballistic stream
   falls as 1 / r (series C, Gauss exact), so the expected law is a flat
   rotation curve, T proportional to r, T(24)^2 / T(12)^2 = (24 / 12)^2 = 4
@@ -1199,7 +1199,7 @@ states "exactly" and means integer equality at every tick.
   ([the derivation](../examples/events/orbit/README.md#the-derivation-of-p-before-the-runs);
   re-derived the night of 2026-09-19 for the label the law reads).** The
   push a free probe takes from an arriving fan ray is its label, -m x
-  amount x D[direction] ([RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)),
+  amount x D[direction] ([BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)),
   |D| units of momentum per unit of amount, so the push per interval on
   the probe of content m at r is m q L C / (2 pi r) toward the source, L
   the fan's mean label magnitude (the mean |D| over its 120 directions,
@@ -1306,18 +1306,18 @@ states "exactly" and means integer equality at every tick.
   finding for the model owner: **the magnitude of a fan ray's label grows
   with the integer length |D| of its direction**, equal amounts released
   on (1, 0, 0) and on (7, 5, 0) carrying the momenta 1 and sqrt 74; this
-  is the law as designed (RAY_LAW section 2, "momentum is content x amount
+  is the law as designed (BEAM_LAW section 2, "momentum is content x amount
   x D") and it makes a fan source push 5.19 times harder than six headings
   at equal amounts; the open question is whether the label should be
   along the unit vector of the direction at the flight table's scale Q =
   64 (the same table as the flight, one table), which this implementation
-  recommends the owner rule on (RAY_LAW section 10, note 21;
+  recommends the owner rule on (BEAM_LAW section 10, note 21;
   PROJECT_STATUS, "What is open"). Nothing was tuned; the widths and radii
   are the assignment's; the label's magnitude was not changed.
 - **Model prediction re-derived under the label along the unit vector
   (2026-09-19, pinned before the runs; [the derivation](../examples/events/orbit/README.md#the-derivation-of-p-before-the-runs)).**
   The model owner decided the label along u_d, the unit vector of the
-  direction at the flight table's scale Q = 64 ([RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+  direction at the flight table's scale Q = 64 ([BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
   and note 23), so the push a free probe takes from any arriving ray is
   Q per unit of amount within 1.35 %, along the ray's own line (radial
   from the source within 0.8 degrees: a central force to the fan's
@@ -1425,7 +1425,7 @@ states "exactly" and means integer equality at every tick.
   widths and radii are the assignment's; the readings are registered
   outside their expectations where they fall outside.
 
-### A10, the width of an opening and the spread behind it, under the law of the ray (2026-09-20)
+### A10, the width of an opening and the spread behind it, under the Beam Law (2026-09-20)
 
 - **Confronts.** The uncertainty relation in its diffraction form: a
   plane wave through one opening of width w spreads behind it by an
@@ -1435,7 +1435,7 @@ states "exactly" and means integer equality at every tick.
   5.4: a detector is a set of Nodes with one record; the declared width
   is the position's uncertainty; the reading, not the GameBoard, is what is
   uncertain), under both readings a detector may declare, `wave` and
-  `beam` ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
+  `beam` ([BEAM_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
 - **Model prediction, pinned before the runs
   ([the derivation](../examples/events/heisenberg/README.md#the-derivation-before-the-runs)).**
   lambda = c x period = 8 / sqrt 3 = 4.619 Links (the lamp's turn 8 of
@@ -1517,7 +1517,7 @@ states "exactly" and means integer equality at every tick.
   under the age reading while the presence, what the push reads, falls as
   M / r^2: Einstein's pair from two readings of the same rays (the model
   owner, 2026-09-19, Highlights 5.4, "the clock beside a mass ... Go for
-  it"; [RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  it"; [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
   note 25: the ray's age kept whole on the record, the age moment of the
   one reading, `reads: "age"` on the clock's table entry), and whether the
   ratio of two such clocks' rates is the redshift 1 / r law. The accepted
@@ -1774,7 +1774,7 @@ states "exactly" and means integer equality at every tick.
   tie between a body's momentum and its phase that E = h f gives a
   released ray; "DECIDED: On Bohr, go, and put it as parameters outside
   the GameBoard like the age"): an electron that is a body on a set of three
-  Nodes ([RAY_LAW note 30](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+  Nodes ([BEAM_LAW note 30](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
   (i), the physicist's proposal 1) and turns its phase by its momentum at
   every Link it steps (note 30 (ii), proposal 5, the world key `action`,
   the identity `bohr-v1`), about a fixed proton, releasing rays that carry

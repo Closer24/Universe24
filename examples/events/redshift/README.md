@@ -1,4 +1,4 @@
-# The redshift series E under the law of the ray, in space, under the age reading
+# The redshift series E under the Beam Law, in space, under the age reading
 
 Two worlds of one base, written by `make_worlds.py`; the register entry is
 [E, the clock's redshift in space under the age reading (2026-09-20)](../../../docs/EXPERIMENTS.md#e-the-clocks-redshift-in-space-under-the-age-reading-2026-09-20)
@@ -6,7 +6,7 @@ and the evidence is in [validation](../../../docs/VALIDATION.md). The
 question: with the ray's age kept whole on the record and read by the
 measured event as the age moment of the one reading (the model owner,
 2026-09-19, "the clock beside a mass must read M / r, not M / r^2, and the
-reading is in the detector"; [RAY_LAW section 10](../../../docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+reading is in the detector"; [BEAM_LAW section 10](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 note 24), does a clock beside a mass in space slow as M / r under
 `reads: "age"` while the presence, what the push reads, falls as M / r^2,
 Einstein's pair from two readings of the same rays? A research run, made
@@ -16,7 +16,7 @@ numbers, never moved.
 
 ## The base
 
-An open cube of 31^3 Nodes, the centre c = (15, 15, 15), `"law": "rays"`,
+An open cube of 31^3 Nodes, the centre c = (15, 15, 15), `"law": "beam"`,
 K 2^22, N 64, one free family `m` of charge 0 without a phase circle
 (`"phase": false`). The source is a fixed measured event of content
 M = 2^12 at c releasing on the full fan of primitive directions (a, b, c)

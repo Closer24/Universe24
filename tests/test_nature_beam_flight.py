@@ -1,4 +1,4 @@
-"""The flight of a ray under the law of the ray (docs/RAY_LAW.md, section 3):
+"""The flight of a ray under the Beam Law (docs/BEAM_LAW.md, section 3):
 one speed for every direction, 1 / sqrt 3, on the digital line of its
 momentum, at most one Link per interval, the age whole on the record and
 read modulo the direction's period by the flight; a lone unit is straight
@@ -91,7 +91,7 @@ def test_the_flight_table_steps_at_most_one_link_and_has_the_periods_of_the_desi
 
 def periodic_cube(directions: list[list[int]], per_link: int = 0) -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-flight-test",
         "shape": [61, 61, 61],
         "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"},
@@ -178,7 +178,7 @@ def bar(
     shape: list[int], boundary: object, in_transit: list[dict[str, object]], measured_at: list[int]
 ) -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-flight-test",
         "shape": shape,
         "boundary": boundary,
@@ -290,17 +290,17 @@ def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
     assert parsed.periodic == (False, False, True) and parsed.boundary == {"z": "periodic"}
     report = validate_configuration(json.dumps(STUB))
     assert report.valid and report.summary["boundary"] == {"x": "open", "y": "open", "z": "periodic"}
-    assert report.summary["law"] == "rays-v1" and report.kind == "rays"
+    assert report.summary["law"] == "beam-v1" and report.kind == "beam"
     output = tmp_path / "run"
     output.mkdir()
     record = json.loads(
         execute_nature_beam_run(parsed, json.dumps(STUB).encode(), output, "test", 3).read_text()
     )
     assert record["boundary"] == {"z": "periodic"} and record["status"] == "completed"
-    assert record["law"] == "rays-v1" and record["completed_ticks"] == 3
+    assert record["law"] == "beam-v1" and record["completed_ticks"] == 3
     assert record["escaped"][0]["amount"] == 0
     state = json.loads((output / "state.json").read_text(encoding="utf-8"))
-    assert state["law"] == "rays-v1" and state["boundary"] == {"z": "periodic"} and state["tick"] == 3
+    assert state["law"] == "beam-v1" and state["boundary"] == {"z": "periodic"} and state["tick"] == 3
     assert state["nodes"][0]["families"][0]["rays"][0]["direction"] == [0, 0, 1]
 
 

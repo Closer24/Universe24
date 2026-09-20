@@ -1,4 +1,4 @@
-"""The readings of the coupling series C under the law of the ray, on the
+"""The readings of the coupling series C under the Beam Law, on the
 plane.
 
 Reads the run folders of the worlds of `examples/events/coupling/` (the
@@ -6,24 +6,24 @@ runner's `run.json`, `initialization.json` and `events.jsonl`, the folders
 told apart by the `model` of their record, `rays-coupling-<name>-plane-v1`),
 replays world 5 (the source alone) through the engine's API for the ring
 means and for the counts and presences at the axis Nodes, and prints a table
-per item and every criterion of the entry "C, the couplings under the law of
-the ray, on the plane (2026-09-19)" in docs/EXPERIMENTS.md with its verdict;
+per item and every criterion of the entry "C, the couplings under the Beam
+Law, on the plane (2026-09-19)" in docs/EXPERIMENTS.md with its verdict;
 a failed criterion exits nonzero. Every identity is checked on integers and
 `fractions.Fraction`; floats appear only in the ring means and the bounds.
 
 The GameBoard is 121 x 121 x 1 with the z axis periodic: the two z headings'
 rays step onto their own Node through the stub and come home, so the source
 re-emits them over the six headings and the net emission into the plane is
-q = 6 x 2^17 per interval at the fixed point. Under the law of the ray
-(docs/RAY_LAW.md, section 8) a free source's rays are six beams on the six
+q = 6 x 2^17 per interval at the fixed point. Under the Beam Law
+(docs/BEAM_LAW.md, section 8) a free source's rays are six beams on the six
 headings, a ballistic stream at 1 / sqrt 3: the items read the identities of
 a stream of rays. Since 2026-09-19 the momentum label of a unit along a
 heading is Q e_d with Q = `LABEL_SCALE` = 64 (the label along the unit
-vector of the direction at the flight table's scale, RAY_LAW section 2 and
+vector of the direction at the flight table's scale, BEAM_LAW section 2 and
 note 23), so every push, momentum and flow of the record is in label units:
 where the tool compares a push or a flow with the emission q (a count of
 units) or with an amount it divides the label by Q, and the registered
-expectations of RAY_LAW section 8 keep their meaning (flow x 2 pi r / q
+expectations of BEAM_LAW section 8 keep their meaning (flow x 2 pi r / q
 = 1, the push -amount x m per unit); Gauss's flux is read off the Port
 crossings and is untouched. 1 the equivalence (the push of a probe of
 content m is m times the push of content 1, record by record; a free
@@ -61,7 +61,7 @@ from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import flight_table, unit_label
-from event_universe.events.world import HEADING_OFFSET, LABEL_SCALE, RAYS_LAW, NatureBeamWorld
+from event_universe.events.world import BEAM_LAW, HEADING_OFFSET, LABEL_SCALE, NatureBeamWorld
 from event_universe.events.world import Q as FLIGHT_SCALE
 from event_universe.json_documents import parse_json_document
 
@@ -197,7 +197,7 @@ def front(radius: int) -> tuple[int, int]:
 def label_push(heading: Vector, amount: int, content: int) -> Vector:
     """The push the engine takes on a free reader of content m from `amount`
     units of an uncharged free family's ray arriving on `heading`: minus m
-    times the label flow (RAY_LAW section 3, step 4), the label of one
+    times the label flow (BEAM_LAW section 3, step 4), the label of one
     unit being u_d, the unit vector of the direction at the scale Q
     (`unit_label`, exactly Q e_d on a heading): -amount x m x Q along it."""
     return scaled(unit_label(heading), -amount * content)
@@ -239,7 +239,7 @@ class Checks:
         self.rows.append((name, ok, detail))
 
     def reading(self, name: str, found: float, low: float, high: float) -> None:
-        """A reading against the expectation of docs/RAY_LAW.md, section 8: registered
+        """A reading against the expectation of docs/BEAM_LAW.md, section 8: registered
         as measured, inside or outside the expectation, never moved and never a failure."""
         self.readings.append(
             (
@@ -346,7 +346,7 @@ def common_checks(run: Run, checks: Checks) -> None:
     label = run.name
     record = run.record
     checks.equal(f"{label}: status", record["status"], "completed")
-    checks.equal(f"{label}: the law", record["law"], RAYS_LAW)
+    checks.equal(f"{label}: the law", record["law"], BEAM_LAW)
     checks.equal(f"{label}: completed ticks", record["completed_ticks"], run.ticks)
     checks.equal(
         f"{label}: the GameBoard 121 x 121 x 1 with z periodic", record["boundary"], {"z": "periodic"}
@@ -935,7 +935,7 @@ def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
     lines.append(
         "on the axis the presence is the beam's (2^17 per ray, one or two rays at the Node), the same at every r: "
         "the slowing on the axis does not fall with r; off the axis a Node reads no ray (the six-heading gas of "
-        "docs/RAY_LAW.md, section 8, item 6: granular, ~1 / r in the mean over a ring)"
+        "docs/BEAM_LAW.md, section 8, item 6: granular, ~1 / r in the mean over a ring)"
     )
     return lines
 

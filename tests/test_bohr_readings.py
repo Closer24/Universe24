@@ -87,7 +87,7 @@ def test_the_pointer_per_turn_is_the_engines_coherent_pointer():
 def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     """(c)."""
     document = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "rays-bohr-r3-space-v1",
         "shape": [11, 11, 3],
         "boundary": "open",

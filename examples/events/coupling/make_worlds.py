@@ -1,8 +1,8 @@
-"""Write the worlds of the coupling series C under the law of the ray, on
+"""Write the worlds of the coupling series C under the Beam Law, on
 the plane.
 
 One base world, the items' worlds from it (README.md here; the entry "C, the
-couplings under the law of the ray, on the plane (2026-09-19)" in
+couplings under the Beam Law, on the plane (2026-09-19)" in
 docs/EXPERIMENTS.md; the readings under the law of events stay registered
 as history). The series runs on a two-dimensional GameBoard by the
 model owner's decision of 2026-09-19 ("cancel the runs; let it run on
@@ -129,7 +129,7 @@ def world(
     families: list[Json] | None = None,
 ) -> Json:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": f"rays-coupling-{name.replace('_', '-')}-plane-v1",
         "shape": list(SHAPE),
         "boundary": dict(BOUNDARY),

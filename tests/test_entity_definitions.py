@@ -14,7 +14,7 @@ from event_universe.world_loading import BUNDLE_FORMAT, DocumentSyntaxError, loa
 
 def authored():
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "entity-placement-test",
         "shape": [9, 9, 1],
         "ticks": 1,

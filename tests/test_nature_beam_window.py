@@ -1,4 +1,4 @@
-"""The phase window under the law of the ray (docs/RAY_LAW.md, section 3,
+"""The phase window under the Beam Law (docs/BEAM_LAW.md, section 3,
 step 4; the model owner, 2026-09-19: "Approve the phase window as a declared
 width of a detector, and of the emitter too"): one generic key,
 `phase_window`, a setting s on the circle of N steps and the half circle
@@ -10,7 +10,7 @@ clock phase falls in it, the clock and the phase turning either way.
 Re-pinned from `test_phase_window` under the flight table (a ray released
 at tick t first walks at t + 1; 10 Links take 17 walks, 11 Links 19). The
 expected integers of docs/TEST_EXPECTATIONS.md ("The phase window under the
-ray law"), written down first. Bars of 1 x 1 in y and z, N 64, `suspension`
+Beam Law"), written down first. Bars of 1 x 1 in y and z, N 64, `suspension`
 0, `release` [0, 1], the families `light` (paid) and `counter` (paid), every
 measured event `fixed`:
 
@@ -21,7 +21,7 @@ measured event `fixed`:
     and 7 (the flight table's first arrivals at 1, 2, 3 and 4 Links). d = 15
     and d = 48 click (`click` records at ticks 1 and 7 with `phase` 35 and
     4, the push (64, 0, 0), `content` 1; since 2026-09-19 the label of a
-    unit along a heading is Q e_d, Q = 64, RAY_LAW section 2 and note 23);
+    unit along a heading is Q e_d, Q = 64, BEAM_LAW section 2 and note 23);
     d = 16 and d = 47 pass (`pass` records at ticks 3 and 5 with the phase
     and `window` 20), go on and click on `face:+x` at their next step
     (ticks 5 and 7). After 7 intervals `events` [2, 0], `held` [2, 1], the
@@ -80,7 +80,7 @@ def world(
     in_transit: list[dict[str, object]] | None = None,
 ) -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-window-test",
         "shape": shape,
         "boundary": "open",

@@ -14,7 +14,7 @@ from event_universe.world_loading import load_world
 
 def _authored_world(*, ticks=0, flight=False):
     document = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "entity-consumer-fixture",
         "shape": [2, 1, 1],
         "ticks": ticks,

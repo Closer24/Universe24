@@ -1,4 +1,4 @@
-"""The collision table under the law of the ray (docs/RAY_LAW.md, section
+"""The collision table under the Beam Law (docs/BEAM_LAW.md, section
 4): eight single-occupancy slots per Node, the six headings in Port order
 and two rest slots; a slot empty, single or a crowd; the class of a state
 (the crowd mask, the number of singles, their headings' sum); inside a class
@@ -36,7 +36,7 @@ docs/TEST_EXPECTATIONS.md ("The collision table"), written down first:
     pair's pointer is zero, has no phase, and both rays pass): the ray at phase
     32 clicks with its label (-64, 0, 0) (the event's momentum; since
     2026-09-19 the label of a unit along a heading is Q e_d, Q = 64,
-    RAY_LAW section 2 and note 23), the ray at phase 0 passes and goes on
+    BEAM_LAW section 2 and note 23), the ray at phase 0 passes and goes on
     to x = 5, the transit line is (64, 0, 0) and no ray is stranded at
     rest; the momentum book closes, measured + transit = (0, 0, 0), the
     labels' sum before the interval.
@@ -137,7 +137,7 @@ def test_the_twenty_orbits_and_the_named_rows():
 
 def bar(shape: list[int], boundary: object, beams: list[dict[str, object]]) -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-collision-test",
         "shape": shape,
         "boundary": boundary,

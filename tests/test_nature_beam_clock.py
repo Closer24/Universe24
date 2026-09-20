@@ -1,4 +1,4 @@
-"""The clock of a measured event under the law of the ray (docs/RAY_LAW.md,
+"""The clock of a measured event under the Beam Law (docs/BEAM_LAW.md,
 section 3, step 5, "unchanged in form"; the model owner, 2026-09-19: "every
 clock tick there is self-creation"): the age is the count of self-creations
 and every rate is read off it by whole division (`by_clock`), no remainder
@@ -6,8 +6,8 @@ anywhere; the lamp's release costs it by its phase rate (E = h f); the
 owed count is read off the clock from the presence; the step by the
 momentum; no merge. Re-pinned from `test_event_clock`,
 `test_release_costs_by_phase_rate` and `test_border_and_clock_corrections`
-(a, c) under the ray law. The expected integers of docs/TEST_EXPECTATIONS.md
-("The clock under the ray law"), written down first:
+(a, c) under the Beam Law. The expected integers of docs/TEST_EXPECTATIONS.md
+("The clock under the Beam Law"), written down first:
 
 (a) `by_clock`: at rate 3 / 10 the gains over ages 0 to 9 are 0, 0, 0, 1,
     0, 0, 1, 0, 0, 1; 70 over 30 ages at 7 / 3; `apportion_whole`: 7 over
@@ -27,7 +27,7 @@ momentum; no merge. Re-pinned from `test_event_clock`,
     at tick t first walks at t + 1 and 3 Links take 5 walks): 6 clicks, the
     counter's content 1 + 3 x 4 + 3 x 8 = 37, its momentum (-768, 0, 0)
     (the labels 4 x 64 and 8 x 64 along +X and -X: since 2026-09-19 the
-    label of a unit along a heading is Q e_d, Q = 64, RAY_LAW section 2
+    label of a unit along a heading is Q e_d, Q = 64, BEAM_LAW section 2
     and note 23; A's recoil (-2048, 0, 0), B's (4096, 0, 0)), each click
     record with `content` 4 or 8, 10 rays in flight carrying 60, the books
     balanced; a lamp of turn 0 releases nothing;
@@ -58,7 +58,7 @@ M, LIGHT = 0, 1
 
 def world(measured: list[dict[str, object]], **keys: object) -> dict[str, object]:
     base: dict[str, object] = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-clock-test",
         "shape": [41, 5, 5],
         "boundary": "open",
