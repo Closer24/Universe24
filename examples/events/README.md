@@ -3,7 +3,12 @@
 Four world files of the one engine (`beam-v1`, [the Beam Law](../../docs/BEAM_LAW.md),
 [the engine](../../docs/ENGINE.md); [Highlights 5.4](../../docs/HIGHLIGHTS.md#54-the-detector),
 "DECIDED: the law of the ray", the model owner, 2026-09-19). Each is a JSON
-object with `"law": "beam"`: the GameBoard, K and N, the release, the
+object with `"law": "beam"`: the GameBoard, K and N (`K` the clock's rate:
+an integer K, the content per phase step per self-creation, read as the
+pair `[1, K]`, or since 2026-09-20 a pair `[n, d]` of phase steps per unit
+of content per self-creation like `release`, the turn `by_clock(age,
+content x n, d)`; every world here declares the integer, and the record
+carries the key as declared), the release, the
 suspension, the declared directions, the families (each by its `quantum`:
 0 a free family, 1 or more a paid one; the kind is never declared), the
 measured events at the start (their tables generated from the families'

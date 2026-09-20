@@ -337,11 +337,15 @@ declares the reading `wave` (the default since 2026-09-20; from
   19; the night's bound refused `two_contents`): every entry (C, S) of the
   1/256 tables is shorter than 257 for every N from 2 through 4096 (the
   largest C^2 + S^2 is 65897), so each component of the pointer is within
-  32 x 257 x the clicked amount and the int64 register holds it up to the
-  amount (2^62 - 1) // (32 x 257) = 560759486676481
-  (`POINTER_AMOUNT_BOUND`, 2^48 inside, 2^49 beyond); beyond it the
-  pointer is summed in Python integers, and the square and the record are
-  Python integers always. Every case is compared with the Python-int
+  32 x 257 x the clicked amount; since the four unifications (2026-09-20,
+  (j)) the pointer is the first moment of the one reading over the
+  circle, taken in the int64 register where the reading's bound holds for
+  its table (`reading_fits`: 32 x amount x 256^2 x the rows of a group
+  within 2^62 - 1, so one row of an amount below 2^41 and 2^41 - 1 rows
+  of amount 1 fit, 2^41 do not; until then `POINTER_AMOUNT_BOUND` =
+  (2^62 - 1) // (32 x 257) = 560759486676481 on the clicked amount) and in
+  Python integers beyond it (`moment_table(exact=True)`); the square and
+  the record are Python integers always. Every case is compared with the Python-int
   computation X = sum 32 x amount x C[phase], Y = sum 32 x amount x
   S[phase] over the clicked rows of the record through the tables: a row
   of 261123 (the old bound) records 2139119616^2 with the pointer
@@ -420,6 +424,22 @@ declares the reading `wave` (the default since 2026-09-20; from
   two rays in phase at threshold 3 pass (the amount 2 < 3) where `wave`
   clicks them (4 >= 3); no memory between intervals: the two opposite
   rays passing at tick 1 do not add to the next tick's set.
+- (j) the pointer is the first moment of the one reading over the circle
+  (the four unifications, the model owner, 2026-09-20, (1); BEAM_LAW note
+  33; the integers written first): rows of amounts 3, 5, 2 at the phases
+  0, 16, 32 of N = 64 (the entries (256, 0), (0, 256), (-256, 0)) read the
+  pointer (8192, 40960) = 32 x (768 - 512, 1280), equal to
+  `read_arrivals` on the circle's unit vectors (C, S, 0) with the weights
+  32 x amount (its flow; its presence 320 = 32 x 10), the record 8192^2 +
+  40960^2 = 1744830464 = 26 units exactly ((3 - 2)^2 + 5^2), the set's
+  phase 14 (the nearest step to atan 5 = 78.69 degrees, 14 x 5.625 =
+  78.75); two groups (the rows 0 to 1 and 2) read (24576, 40960) and
+  (-16384, 0); one row of 2^42 at phase 5 is beyond the reading's
+  register bound (32 x 2^42 x 256^2 = 2^63), so `read_arrivals` refuses
+  it while the pointer reads 2^47 x (C[5], S[5]) = 2^47 x (226, 121)
+  exactly on its Python path; one row of 2^49 (beyond the former pointer
+  bound 2^48) reads (2^62, 0), one of 2^60 (whose amplitude would not fit
+  the register) (2^73, 0): the record is never refused.
 
 ## The push as one form
 
@@ -530,7 +550,10 @@ charge 1 the family `p` of charge [1, 5]) and every integer is unchanged.
   push -1280 + by_clock(age, |256 x 1 x 1 x 5|, 5 x 4) = -1280 + 64 =
   (-1216, 0, 0) (the ray's family's rho 1/4; the re-emitter's 1/5 would
   read 51 or 52), and the mirror's own free release of A under the
-  family A from tick 8 with -1280 + by_clock(age, 1280, 25); no error
+  family A from tick 8 with -1280 + by_clock(age, 1280, 25), the age
+  the reader's clock age, tick - 1 (re-pinned on 2026-09-20 for the four
+  unifications (4) from the age after the frame's advance, tick: the sum
+  over the 23 reads moves by -1); no error
   (until 2026-09-20 the re-emitted rows carried the re-emitter's held
   content of B, 0, and the charged reader divided by it); the mirror
   re-released 92 units and is pushed; the mirror's `charge` (4, 5), the
@@ -542,6 +565,21 @@ charge 1 the family `p` of charge [1, 5]) and every integer is unchanged.
   M, so every read pushes (-128 M, 0, 0), `pushed` (-2560, 0, 0),
   (-10240, 0, 0), (-40960, 0, 0) after 20 reads; the probe's `charge`
   (2 M, 1) and the books' `charge` [2 M + 1, 1].
+- (m) the columns are floored at the clock age like every other rate
+  (the four unifications, the model owner, 2026-09-20, (4); BEAM_LAW note
+  33, the one exception of note 20 removed; the integers written first):
+  the fan world of (g) with the source's `release` [1, 4] (one ray of
+  amount 1 per interval, the flow V = u_(2, 1, 0) = (57, 29, 0), odd on
+  both axes), the source's charge [1, 2] and the probe's [1, 1] (content
+  5): the probe reads at every tick t from 9 through 30 the push (-285 +
+  by_clock(t - 1, 285, 2), -145 + by_clock(t - 1, 145, 2), 0), that is
+  (-143, -73, 0) at an odd tick and (-142, -72, 0) at an even one (until
+  2026-09-20 the floor was read at the age after the frame's advance, t,
+  which put the extra unit on the other parity: every tick moves by
+  exactly one unit per axis), and `pushed` after the 22 reads (-3135,
+  -1595, 0), the same sum under both clocks (the floors telescope; the
+  mathematician's clock_checks 3); (e)'s pin does not move (1920 / 20 =
+  96 exactly) and (k)'s is re-pinned.
 
 ## The columns
 
@@ -580,17 +618,20 @@ mathematician's counterexample):
 - (b) the third column: the families `a` (charge [1, 2], strong [3, 2])
   and `b` (charge 2, strong 1) under `"strong": {"sign": -1}`; a reader
   of `a` of amount 1 (M 1, Q 1/2, G 3/2) met by one `b` ray of amount 1
-  on (1, 1, 0) (u = (45, 45, 0)) reads (-68, -68, 0) at the age 1 (the
-  ray at (2, 1, 0) with the age 1, arriving at tick 1) and (-67, -67, 0)
-  at the age 2 (the ray at (1, 1, 0) with the age 3, arriving at tick 2):
-  gravity -45, charge +45, strong -by_clock(age, 135, 2); a reader of `c`
+  on (1, 1, 0) (u = (45, 45, 0)) reads (-67, -67, 0) at tick 1 (the
+  reader's clock age 0; the ray at (2, 1, 0) with the age 1) and (-68,
+  -68, 0) at tick 2 (the clock age 1; the ray at (1, 1, 0) with the age
+  3): gravity -45, charge +45, strong -by_clock(clock age, 135, 2)
+  (re-pinned on 2026-09-20 for the four unifications (4), the columns
+  floored at the clock age like every other rate, from (-68, -68, 0) then
+  (-67, -67, 0) at the age after the frame's advance); a reader of `c`
   (charge 1, strong [4, 3]) of amount 6 (M 6, Q 6, G 8): a `b` ray of
   amount 1 on +x (-128, 0, 0), an `a` ray of amount 1 on +x (-960, 0, 0),
   an `a` ray of amount 3 on -x (2880, 0, 0); a reader of `d` (charge 0,
   no strong value) met by a `b` ray on +x (-64, 0, 0); with the sign +1
-  the same cases read (68, 68, 0), (67, 67, 0), (896, 0, 0), (576, 0, 0),
+  the same cases read (67, 67, 0), (68, 68, 0), (896, 0, 0), (576, 0, 0),
   (-1728, 0, 0); a third declared column `extra` (sign +1, the value 1 on
-  `a` and `b`) adds +45 per axis: (-23, -23, 0) and (-22, -22, 0); a
+  `a` and `b`) adds +45 per axis: (-22, -22, 0) and (-23, -23, 0); a
   reader of `q` (charge [1, 2]) of content 3 met by a `b` ray on the
   diagonal reads (0, 0, 0) at both ages (the landed parity case, -135 +
   135); the reader of `c` reports the charges gravity [6, 1], charge
@@ -633,7 +674,10 @@ mathematician's counterexample):
   -128 / 3 floored once -42, -43, -43, -42; on the engine (four `b` rays
   of amount 1 on +x, two at (1, 2, 0) with the ages 0 and 1, two at
   (0, 2, 0) with the ages 0 and 1, arriving one per tick) the reader's
-  ages 1 .. 4 read -43, -42, -43, -43.
+  clock ages 0 .. 3 (the ticks 1 .. 4) read -43, -43, -42, -43, the
+  per-column list itself (re-pinned on 2026-09-20 for the four
+  unifications (4) from -43, -42, -43, -43 at the ages after the frame's
+  advance, 1 .. 4).
 
 ## The lifetime and the held content
 
@@ -877,6 +921,31 @@ from `test_event_clock`, `test_release_costs_by_phase_rate` and
   intervals 1 to 20 is 1, 2, 3, 4, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 12, 13,
   14, 15, 16, 16; with k = 8 it owes 2 at every self-creation: 1, 2, 2, 2,
   3, 3, 3, 4, 4, 4.
+- (f) every age against a key is the one `by_clock` (the four
+  unifications, the model owner, 2026-09-20, (2); BEAM_LAW note 33; the
+  integers written first): the clock's rate `K` as a pair equal to its
+  integer: the world of (b) with `"K": [1, 2]` turns 1, 3, 4, 6 as with
+  `K` 2 and its snapshot after ten intervals is the same, the record
+  carrying `K` as declared (2, and [1, 2] as the pair); the pair [3, 8] on
+  the content 3 (the turn `by_clock(age, 9, 8)`) turns 1, 2, 3, 4, 5, 6,
+  7, 9 over eight intervals, `world.turn(7, 3)` = 2; the static bound at
+  the rate: the content 86 at [3, 8] is refused (2 x 86 x 3 = 516 >= 8 x
+  64), 85 is accepted (the turn 31); the frame's refusal at half the
+  circle kept: the content 63 at [1, 2] passes the parser (126 < 128) and
+  is refused at the second interval (the turn `by_clock(1, 63, 2)` = 32);
+  `K` 0, [0, 8], [3, 0], "8" and [1, 2, 3] are refused naming `K`;
+  `by_clock_rows` over the ages 0 to 9 at 3 / 10 is `by_clock`'s 0, 0, 0,
+  1, 0, 0, 1, 0, 0, 1, and with a numerator per row; `ages_at_key`
+  (`by_clock(age - 1, 1, key)` = 1 for a walked row): the ages 0, 1, 2, 3,
+  4, 6 against the key 3 read no, no, no, yes, no, yes, against 1 every
+  age from 1, against 4 the age 4 and not 3; on the GameBoard a family of
+  lifetime 3 with a row at rest (the direction index 0) at the age 2 and a
+  moving row at the age 0 (7^3, open, no measured event): the moving row
+  clicks on the border at the third interval at (3, 3, 3) with the age 3,
+  the rest row keeps the age 2 for twenty intervals and never clicks; a
+  family without a lifetime under `age_bound` 3: the fourth interval's
+  walk (the age 3 to 4) refuses the run naming the bound, the third does
+  not.
 
 ## The width of the push
 
@@ -1123,6 +1192,33 @@ expected integers, written down before the first run:
   the measured events' states and `state.json` the `span`; without the
   key `action` None, `hypotheses` [], `span` [1, 1, 1] and
   `phase_by_momentum` false.
+- (g) one set object shared by a body and a detector, and one moment table
+  over the set (the four unifications, the model owner, 2026-09-20, (3),
+  the data only; BEAM_LAW note 33; the integers written first): the body
+  of (b) is a set with one measured event, its `DetectorSet.nodes` the
+  map of its three Nodes to its number 1 and `Measured.nodes` the three in
+  the fixed order, the source outside every detector a set of one Node
+  mapped to 2, the engine's index mapping every Node to its set
+  (`occupant` 1 at (4, 0, 2), None at (5, 0, 0)), two sets in all; two
+  such bodies at (4, 0, 1) and (6, 0, 1) declared in one detector `d` are
+  one set of six Nodes mapped to 1 and 2, each body's `nodes` its own
+  three: three rays of `m` (number 3, phase 0) arriving at (4, 0, 0),
+  (6, 0, 1) and (6, 0, 2) read the threshold 3 over the set (the pointer
+  9 units) and click 1 at the first body and 2 at the second, the
+  presence 1 and 2, the pushes (-256, 0, 0) and (-512, 0, 0), one `record`
+  line naming `d` with the record 9 x 32^2 x 256^2 and no Node; the step
+  of the body of (b) moves its Nodes in the set's map and in the index
+  (x = 3 after two intervals, the three Nodes there), its escape empties
+  both; the presence over a body without arrivals 0; the one table with
+  the two masks: a reader of `m` (content 4) reading a row of 3 units of
+  a paid family of quantum 2 (content 2 per unit) on +x reads the flow 192
+  (3 x 64, the amount's weight) and the push (384, 0, 0) (3 x 2 x 64, the
+  label's weight), the content 6; under `beam` at threshold 1 and
+  `suspension` [1, 1] the rows of 3 (phase 0) and 2 (phase 32) at two
+  Nodes of the body pair 2 units and click 1: the presence and the count
+  5 (the units that go on are present), the owed count `by_clock(0, 5,
+  1)` = 5, the events [1, 0], the momentum (-256, 0, 0), the record 1, the
+  store's rows 2 and 2.
 
 ## The phase window under the Beam Law
 

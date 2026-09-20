@@ -265,6 +265,9 @@ def read_run(folder: Path) -> Run:
                 by_number[int(event["measured"])].left = int(event["tick"])
     centre = next(m for m in record["measured"] if m["number"] == 1)
     source_content = next(iter(sources.values())).content
+    # The clock's rate [n, d] off the engine's own parser (an integer K
+    # is [1, K]): rho is the content's phase steps per self-creation.
+    turn_rate = parse_nature_beam_world(document).turn_rate
     return Run(
         crowd=crowd,
         clock=clock,
@@ -274,7 +277,7 @@ def read_run(folder: Path) -> Run:
         elapsed=float(record["elapsed_seconds"]),
         c=c,
         modulus=int(record["N"]),
-        rho=source_content / int(record["K"]),
+        rho=source_content * turn_rate[0] / turn_rate[1],
         detector_rate=int(centre["age"]) / (int(centre["age"]) + int(centre["waited"])),
         sources=sources,
         document=document,

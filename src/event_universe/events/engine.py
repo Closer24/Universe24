@@ -6,7 +6,9 @@ books, it computes no physics.
 The interval (`NatureBeamSimulation.step`): the engine sets every measured event's
 clock frame (whether it owes a count and pays one, or self-creates: its age
 advances by one and its turn is read off its clock, s = `by_clock(age,
-content, K)` phase steps, refused at half the circle), calls `nature_beam`
+content x n, d)` phase steps at the clock's rate `K` = [n, d], an integer K
+being [1, K] (`NatureBeamWorld.turn`, the free release's own form; the four
+unifications (2), 2026-09-20), refused at half the circle), calls `nature_beam`
 once for the whole GameBoard (the walk, the readings, the collision, the tables
 and detectors, the releases, the merge), then turns the phase of every
 self-created measured event by its turn, reads the count it owes off its
@@ -50,6 +52,7 @@ from event_universe.events.nature_beam import (
     NatureBeamTables,
     Record,
     bounded,
+    by_clock_rows,
     exact_column_sums,
     exact_sum,
     nature_beam,
@@ -132,14 +135,14 @@ class NatureBeamSimulation:
             for index, detector in enumerate(world.detectors)
         ]
         self.measured: dict[int, Measured] = {}
-        self.at: dict[Address3, int] = {}
+        # The index of the GameBoard's occupied Nodes: every Node of every
+        # body to the set it belongs to (the set maps the Node to its
+        # measured event, `DetectorSet.nodes`; `occupant`): a step onto any
+        # of them is refused (the parser refused a shared Node).
+        self.at: dict[Address3, DetectorSet] = {}
         for index, definition in enumerate(world.measured):
             entry = self._measured(index + 1, definition)
             self.measured[entry.number] = entry
-            # Every Node of a body on a set holds its number (a step onto
-            # any of them is refused; the parser refused a shared Node).
-            for node in entry.nodes:
-                self.at[node] = entry.number
         self.held_initial = [sum(m.held[f] for m in self.measured.values()) for f in range(count)]
         self.transit_initial = [0] * count
         self.content_initial = [0] * count
@@ -213,9 +216,13 @@ class NatureBeamSimulation:
             detector_set = self.detector_sets[detector]
             detector_set.numbers.append(number)
         # The set of Nodes the measured event is a body on (the parser
-        # refused a body outside the GameBoard).
+        # refused a body outside the GameBoard): the set's map takes them in
+        # their fixed order, the engine's index the set.
         nodes = body_nodes(definition.position, definition.span, self.shape, self.world.periodic)
         assert nodes is not None
+        for node in nodes:
+            detector_set.nodes[node] = number
+            self.at[node] = detector_set
         return Measured(
             number,
             definition.position,
@@ -236,7 +243,6 @@ class NatureBeamSimulation:
             detector,
             detector_set,
             span=definition.span,
-            nodes=nodes,
             phase_by_momentum=definition.phase_by_momentum,
             column_names=tuple(name for name, _ in self.world.columns),
             family_values=tuple(family.values for family in self.families),
@@ -246,6 +252,24 @@ class NatureBeamSimulation:
             contact=tuple(definition.contact) + (CONTACT_DEFAULT,) * (count - len(definition.contact)),
             contacts=[0] * count,
         )
+
+    def occupant(self, node: Address3) -> int | None:
+        """The number of the measured event whose body holds the Node, None
+        for a Node of free space: the engine's index to the set, the set's
+        map to its event."""
+        detector_set = self.at.get(node)
+        return None if detector_set is None else detector_set.nodes[node]
+
+    def _place(self, entry: Measured, nodes: tuple[Address3, ...]) -> None:
+        """The body's Nodes moved to `nodes` (in their fixed order) in its
+        set's map and in the engine's index; an empty `nodes` removes it."""
+        detector_set = entry.detector_set
+        for node in entry.nodes:
+            del detector_set.nodes[node]
+            del self.at[node]
+        for node in nodes:
+            detector_set.nodes[node] = entry.number
+            self.at[node] = detector_set
 
     # -- the interval ----------------------------------------------------------
 
@@ -296,9 +320,10 @@ class NatureBeamSimulation:
         one that owes a count pays it by one (no self-creation, no
         release, no turn; `waited` counts the interval); one that owes
         nothing self-creates: its age advances and its turn is read off its
-        clock, `by_clock(age, content, K)`, the turns of the phased families
-        taken in one array where their products fit the register (row by
-        row otherwise), and refused at half the circle."""
+        clock, `by_clock(age, content x n, d)` at the clock's rate [n, d]
+        (`NatureBeamWorld.turn`; `by_clock_rows` over the phased events in
+        one array where their products fit the register, the scalar
+        `turn` row by row otherwise), and refused at half the circle."""
         phased: list[Measured] = []
         for entry in self.measured.values():
             entry.turn = 0
@@ -320,17 +345,17 @@ class NatureBeamSimulation:
                 phased.append(entry)
         if not phased:
             return
-        K = self.world.K
+        numerator, denominator = self.world.turn_rate
         ages = [entry.clock_age for entry in phased]
         contents = [entry.frame_content for entry in phased]
-        if (max(ages) + 1) * max(contents) <= MOMENTUM_BOUND:
-            age_column = np.array(ages, dtype=np.int64)
-            content_column = np.array(contents, dtype=np.int64)
-            turns = (
-                ((age_column + 1) * content_column) // K - (age_column * content_column) // K
+        if (max(ages) + 1) * max(contents) * numerator <= MOMENTUM_BOUND:
+            turns = by_clock_rows(
+                np.array(ages, dtype=np.int64),
+                np.array(contents, dtype=np.int64) * numerator,
+                denominator,
             ).tolist()
         else:
-            turns = [by_clock(age, content, K) for age, content in zip(ages, contents, strict=True)]
+            turns = [self.world.turn(age, content) for age, content in zip(ages, contents, strict=True)]
         for entry, turn in zip(phased, turns, strict=True):
             if 2 * turn >= self.world.phase_steps:
                 raise ValueError(
@@ -443,8 +468,7 @@ class NatureBeamSimulation:
                         self.ledger.face_momentum[port][entry.family], entry.momentum, strict=True
                     )
                 ]
-                for node in entry.nodes:
-                    del self.at[node]
+                self._place(entry, ())
                 del self.measured[entry.number]
                 if self.record is not None:
                     self.record(
@@ -468,18 +492,13 @@ class NatureBeamSimulation:
                         }
                     )
                 return
-            occupants = sorted(
-                {self.at[node] for node in nodes if self.at.get(node, entry.number) != entry.number}
-            )
+            found = {self.occupant(node) for node in nodes}
+            occupants = sorted(number for number in found if number not in (None, entry.number))
             if occupants:
                 self._contact(entry, axis, origin, destination, occupants)
                 return
-            for node in entry.nodes:
-                del self.at[node]
+            self._place(entry, nodes)
             entry.position = destination
-            entry.nodes = nodes
-            for node in nodes:
-                self.at[node] = entry.number
             if entry.phase_by_momentum and self.world.action is not None:
                 links = ((entry.age - 1) * magnitude) // (width + magnitude)
                 bounded((links + 1) * magnitude * self.world.phase_steps, entry, "turn by momentum")

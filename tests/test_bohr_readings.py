@@ -69,9 +69,7 @@ def test_the_pointer_per_turn_is_the_engines_coherent_pointer():
     """(b)."""
     cosines = np.array(phase_cosines(64), dtype=np.int64)
     sines = np.array(phase_sines(64), dtype=np.int64)
-    x, y = coherent_pointer(
-        np.array([2]), np.array([0]), np.zeros(1, dtype=np.int64), [2], cosines, sines
-    )
+    x, y = coherent_pointer(np.array([2]), np.array([0]), np.zeros(1, dtype=np.int64), cosines, sines)
     assert (x[0], y[0]) == (16384, 0)
     pointers = TOOL.pointer_by_turn([(1, 1, 0), (1, 1, 0), (2, 1, 32)], 2, 64)
     assert pointers == [(16384, 0), (-8192, 0)]

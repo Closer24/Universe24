@@ -6,6 +6,98 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The four unifications of the formulas, on 2026-09-20 (the pointer as the first moment; `by_clock` on every age against a key; one moment table over one set; the columns at the clock age)
+
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"DECIDED: the four unifications of the formulas"; [BEAM_LAW note 33](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+the places where the code spelled the one moment or the one `by_clock`
+twice are spelled once. Identities: no world file changes and every
+example world replays byte-identical in `events.jsonl` and `state.json`
+except where a section below says.
+
+- **(1) The pointer is the first moment of the one reading over the
+  circle.** `nature_beam.coherent_pointer(amount, phase, starts, cosines,
+  sines)` takes the moment table on the circle's unit vectors
+  `(C[phase], S[phase], 0)` (`nature_beam.circle_vectors`) with the
+  weights `32 x amount` and returns its first moment per contiguous
+  group; the `totals` argument (the exact clicked amount per group, the
+  former gate of the int64 path) is removed from the signature: the
+  callers `tools/buildup_readings.py`, `tools/bohr_readings.py` and
+  `tests/test_bohr_readings.py` drop it. `nature_beam.POINTER_AMOUNT_BOUND`
+  is deleted: the register path of the pointer is the reading's own
+  bound, `nature_beam.reading_fits(amounts, vectors, ages, widest)` (new;
+  the one test `read_arrivals` refuses by and `first_reading_overflow`
+  looks per group by), and beyond it the pointer is the same table in
+  Python integers, `nature_beam.moment_table(v, a, ages, exact=True)`
+  (new keyword; the dtype `object`). `nature_beam.read_groups(vectors,
+  weights, starts, ages, exact)` (new) is the one reading per contiguous
+  group of rows (the taken rows of step 4 and the pointer alike). A world
+  whose detector set clicks a row of an amount between 2^41 and 2^48 in
+  one interval now takes the Python path for that pointer where it took
+  the register (the same integer, slower); no registered world does.
+- **(2) Every age against a key is the one `by_clock`; the turn is the
+  release at the rate [1, K].** The world key `K` keeps its name and
+  accepts, beside the integer K (the content per phase step per
+  self-creation, read as the pair `[1, K]`: every example world, bit for
+  bit), a pair `[n, d]` of phase steps per unit of content per
+  self-creation like `release`; the turn is `by_clock(age, content x n,
+  d)` (`NatureBeamWorld.turn(age, content)`, new; `NatureBeamWorld.turn_rate`,
+  new, the pair), refused at half the circle as before, the parser's
+  static bound `2 x content x n < d x N`. `NatureBeamWorld.K` is the key
+  as declared (`int | tuple[int, int]`; `run.json` carries it as declared,
+  so an integer world's record is unchanged); the frame, the tools of the
+  readings (`tools/lensing_readings.py`, `tools/buildup_readings.py`,
+  `tools/heisenberg_readings.py`, `tools/hubble_readings.py`) and the
+  parser's own bounds read the rate through `turn` and `turn_rate`, not
+  `K`. `nature_beam.by_clock_rows(age, numerator, denominator)` (new) is
+  `by_clock` over rows (the frame's turns in one array; the inline floor
+  difference of `_frame_all` is deleted) and `nature_beam.ages_at_key(age,
+  key)` (new) the rows whose walk brought their age to the key,
+  `by_clock(age - 1, 1, key) = 1`: the lifetime's click (`store.age >=
+  lifetime` deleted) and the world's age bound (`store.age.max() >
+  age_bound` deleted; the key age_bound + 1) read it. Identities on every
+  reachable state (a row never lives past its key); no world file changes.
+- **(3) One set object shared by a body and a detector; one moment table
+  over the set.** The data: `DetectorSet.nodes` (new, `dict[Address3,
+  int]`) maps every Node of the set to the number of the measured event
+  there, a body one event, a declared detector several; `Measured.nodes`
+  is a property read from the body's set (the dataclass field and the
+  `nodes=` argument of `Measured(...)` are removed); the engine's index
+  `NatureBeamSimulation.at` is `dict[Address3, DetectorSet]` (until now
+  `dict[Address3, int]`, the number), with `NatureBeamSimulation.occupant(node)`
+  (new) the number of the measured event whose body holds the Node or
+  None, and `_place(entry, nodes)` (new) moving a body's Nodes in its
+  set's map and in the index (a test that read `simulation.at[node]` as
+  a number reads `simulation.occupant(node)`). A detector stays a
+  detector and a body a body: the rule unification (a detector as one
+  measured event) is not taken. The table: `family_plan` takes one
+  `moment_table` per family over the rows at the set with the two masks
+  (present, admitted); the presence and the age moment are its zeroth
+  and age moments over the present rows (the two `np.add.at` sums are
+  deleted), the record's component and the push's flow its moments over
+  the admitted rows, the flow with the label's weight (the separate
+  `labels = u x weight` product is deleted); `beam`'s pairing enters the
+  table as a split of the paired row into the units that go on (present)
+  and the units that click (admitted). `nature_beam.moments_of_groups(table,
+  starts)` (new) sums a moment table per contiguous group;
+  `read_groups` calls it. No world file changes; every example world
+  replays byte-identical.
+- **(4) The columns floored at the clock age like every other rate.**
+  `push_form` takes the reader's clock age (`Measured.clock_age`, the age
+  before the interval's self-creation) where it took `Measured.age` (the
+  age after the frame's advance), so the columns' `by_clock` is read at
+  the same age as the turn, the release, the owed count and the step
+  ([BEAM_LAW note 33](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+  (4); note 20's exception is closed). A world whose product `V x E_c x
+  n_c` is not a multiple of `D_c x d_c` reads the floor's extra unit on
+  other ticks than before, the sum over the ticks unchanged; no world
+  file changes and every example world replays byte-identical. Re-pinned
+  with the new integers written first: `tests/test_columns.py` (b) ((-67,
+  -67, 0) then (-68, -68, 0) at the ticks 1 and 2, and the sign and
+  `extra` cases with them) and (e) (-43, -43, -42, -43 at the ticks 1 to
+  4), `tests/test_nature_beam_push.py` (k) (`by_clock(tick - 1, 1280,
+  25)`); the new test (m).
+
 ## The `wave` threshold on the pointer's square and the escaped momentum per family, on 2026-09-20 (issues #359 step A, #360, #361)
 
 The model owner's decision of 2026-09-20 ([BEAM_LAW note 32](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);

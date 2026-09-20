@@ -118,7 +118,7 @@ class Reading:
     elapsed: float
     turn: int
     phase_steps: int
-    K: int
+    K: int | tuple[int, int]
     lamp: tuple[int, int, int]
     screen_x: int
     centre: tuple[int, int, int]
@@ -199,7 +199,7 @@ def read_run(folder: Path, *, replay: bool = True, window_start: int = WINDOW_ST
         completed=record["status"] == "completed",
         balanced=bool(record["conserved_at_every_completed_tick"]),
         elapsed=float(record["elapsed_seconds"]),
-        turn=by_clock(0, lamp.amount, world.K),
+        turn=world.turn(0, lamp.amount),
         phase_steps=world.phase_steps,
         K=world.K,
         lamp=lamp.position,

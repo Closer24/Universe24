@@ -134,14 +134,33 @@ charge [1, 5]; every pinned integer is unchanged.
     under the family A from tick 8 with the push -1280 + by_clock(age,
     1280, 25), so `pushed` is the sum of both; no error; the mirror is
     pushed too (-4 x 256 + by_clock(age, 1024, 20) per read) and the
-    books balance;
+    books balance (the age the reader's clock age, tick - 1, since the
+    four unifications (4) of 2026-09-20, (m): re-pinned from the age after
+    the frame's advance, tick, with the new integers written first; the
+    sum over the 23 reads moves by by_clock(7, 1280, 25) - by_clock(30,
+    1280, 25) = 51 - 52 = -1);
 (l) the equivalence principle for the electric push (the model owner,
     2026-09-20: the push proportional to the reader's content): the source
     of `m` (content 4, charge [1, 4]: charge 1) and a probe of `p` (charge
     [2, 1]) of content M = 1, 4, 16: the electric part by_clock(age, 256 x
     1 x 2 x M, 4) = 128 M exactly and the gravity -256 M, so every read
     pushes (-128 M, 0, 0), `pushed` (-2560, 0, 0), (-10240, 0, 0),
-    (-40960, 0, 0) after 20 reads, and the probe's `charge` [2 M, 1].
+    (-40960, 0, 0) after 20 reads, and the probe's `charge` [2 M, 1];
+(m) the columns are floored at the clock age like every other rate (the
+    four unifications, the model owner, 2026-09-20, (4); BEAM_LAW note 33,
+    the one exception of note 20 removed; the integers written first): the
+    fan world of (g) with the source's `release` [1, 4] (one ray of amount
+    1 per interval, the flow V = u_(2, 1, 0) = (57, 29, 0), odd on both
+    axes), the source's charge [1, 2] and the probe's [1, 1] (content 5):
+    the probe reads at every tick t from 9 through 30 the push (-285 +
+    by_clock(t - 1, 285, 2), -145 + by_clock(t - 1, 145, 2), 0), that is
+    (-143, -73, 0) at an odd tick and (-142, -72, 0) at an even one (until
+    2026-09-20 the floor was read at the age after the frame's advance,
+    t, which put the extra unit on the other parity: every tick moves by
+    exactly one unit per axis), and `pushed` after the 22 reads (-3135,
+    -1595, 0), the same sum under both clocks (the floors telescope; the
+    mathematician's clock_checks 3); (e)'s pin does not move (1920 / 20 =
+    96 exactly) and (k)'s is re-pinned.
 """
 
 from __future__ import annotations
@@ -495,11 +514,15 @@ def test_a_re_emitted_free_ray_pushes_by_its_familys_charge_per_unit_of_content(
     assert [tick for tick, _, _ in reads] == list(range(15, 31))
     assert all(amount == 4 and push == [-1216, 0, 0] for _, amount, push in reads)
     assert [tick for tick, _, _ in own] == list(range(8, 31))
+    # The electric part at the reader's clock age, tick - 1 (the four
+    # unifications (4), 2026-09-20; until then at the age after the frame's
+    # advance, tick).
     assert all(
-        amount == 4 and push == [-1280 + by_clock(tick, 1280, 25), 0, 0] for tick, amount, push in own
+        amount == 4 and push == [-1280 + by_clock(tick - 1, 1280, 25), 0, 0]
+        for tick, amount, push in own
     )
     assert simulation.measured[3].pushed == [
-        -19456 - 23 * 1280 + sum(by_clock(t, 1280, 25) for t in range(8, 31)),
+        -19456 - 23 * 1280 + sum(by_clock(t - 1, 1280, 25) for t in range(8, 31)),
         0,
         0,
     ]
@@ -519,3 +542,30 @@ def test_the_electric_push_is_proportional_to_the_readers_content():
         assert simulation.measured[2].pushed == [-2560 * content, 0, 0]
         assert simulation.measured[2].charge == (2 * content, 1)
         assert simulation.books()["charge"] == [2 * content + 1, 1]
+
+
+def test_the_columns_are_floored_at_the_clock_age():
+    """(m)."""
+    world = bar(
+        [source(release_on=FAN), probe(position=[4, 2, 0])],
+        release=[1, 4],
+        shape=[9, 5, 1],
+        boundary={"z": "periodic"},
+        directions=[FAN],
+        source_charge=[1, 2],
+        probe_charge=[1, 1],
+    )
+    simulation, records = run(world)
+    reads = reads_of(records, 2)
+    assert [tick for tick, _, _ in reads] == list(range(9, 31))
+    former_total = [0, 0, 0]
+    for tick, amount, push in reads:
+        assert amount == 1
+        assert push == [-285 + by_clock(tick - 1, 285, 2), -145 + by_clock(tick - 1, 145, 2), 0], tick
+        assert push == ([-143, -73, 0] if tick % 2 else [-142, -72, 0]), tick
+        # The floor at the age after the advance put the unit on the other
+        # parity: every tick moves by one unit per axis, the sum by none.
+        former = [-285 + by_clock(tick, 285, 2), -145 + by_clock(tick, 145, 2), 0]
+        assert [abs(a - b) for a, b in zip(push, former, strict=True)] == [1, 1, 0], tick
+        former_total = [a + b for a, b in zip(former_total, former, strict=True)]
+    assert simulation.measured[2].pushed == [-3135, -1595, 0] == former_total

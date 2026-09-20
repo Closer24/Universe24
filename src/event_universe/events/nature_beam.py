@@ -43,9 +43,11 @@ order, each a bijection on the GameBoard's state except the border:
    own, as one set (the threshold on the set), then each ray by its own
    phase (the window), then the rule: `read` (the push, the rays go on),
    `measure` (the click: the content joins, the border; the detector's
-   record is the squared scalar of the same moments taken over the clicked
-   rays with their amplitudes as weights, an exact integer: a report of
-   the host, never refused), `rerelease` (re-emitted at the next self-creation on the
+   record is the square of the first moment of the same reading taken over
+   the clicked rays on the circle's unit vectors (C[phase], S[phase], 0)
+   with their amplitudes as weights, the pointer, an exact integer: a
+   report of the host, never refused; `coherent_pointer`, the four
+   unifications of 2026-09-20), `rerelease` (re-emitted at the next self-creation on the
    declared directions), `pass`; own-number rays are home. The push is ONE
    product per arriving free ray (`push_form`, the model owner's decision
    of 2026-09-20: charge is per unit of content of a family, rho): with
@@ -140,18 +142,19 @@ AMPLITUDE_SCALE = 32
 # (`test_nature_beam_detector` (e) checks it), so one unit's amplitude at a phase
 # is a vector shorter than 32 x 257.
 LONGEST_PHASE_ENTRY = 257
-# The pointer's register bound: a detector's coherent pointer (X, Y) is a
-# sum of vectors of length at most 32 x 257 per unit (the triangle
-# inequality), so each component is within 32 x 257 x the clicked amount
-# and fits the register of the law (2^62 - 1) while the amount a detector
-# Node (or a face) clicks of one family in one interval is within
-# (2^62 - 1) // (32 x 257) = 560759486676481 (2^48 inside, 2^49 beyond).
-# Beyond it the pointer is summed in Python integers; the square X^2 + Y^2
-# and the record that accumulates it are Python integers always. The
-# record is a report of the host, not the law's local work: it is exact
-# and never refused (BEAM_LAW, section 5 and note 19; the former affordable
+# The pointer (X, Y) of a detector set is the first moment of the one
+# reading over the circle (`coherent_pointer`: the moment table on the
+# unit vectors (C[phase], S[phase], 0) with the amplitudes 32 x amount as
+# the weights; the four unifications, the model owner, 2026-09-20). It is
+# taken in the int64 register where the reading's own bound holds for that
+# table (`reading_fits`: the amplitude times 256^2 times the rows of a
+# group within 2^62 - 1, the second moment's bound, which the pointer does
+# not read but the one table forms) and in Python integers otherwise
+# (`moment_table(exact=True)`, the same table); the square X^2 + Y^2 and
+# the record that accumulates it are Python integers always. The record is
+# a report of the host, not the law's local work: it is exact and never
+# refused (BEAM_LAW, section 5 and notes 19 and 33; the former affordable
 # amount 261123 refused a lawful world).
-POINTER_AMOUNT_BOUND = MOMENTUM_BOUND // (AMPLITUDE_SCALE * LONGEST_PHASE_ENTRY)
 ZERO3 = (0, 0, 0)
 
 
@@ -277,12 +280,20 @@ def reading_bound_error(rows: int, per_row: int) -> OverflowError:
     )
 
 
-def moment_table(v: np.ndarray, a: np.ndarray, ages: np.ndarray | None = None) -> np.ndarray:
+def moment_table(
+    v: np.ndarray, a: np.ndarray, ages: np.ndarray | None = None, exact: bool = False
+) -> np.ndarray:
     """The per-row table of the moments of `read_arrivals`: the two counts
     (outside, here), the three components of amount x v, the six entries
     of amount x v v^T and the two age moments amount x age (outside, here;
-    zero without `ages`); the caller has checked the bound."""
-    table = np.empty((a.shape[0], MOMENT_COLUMNS), dtype=np.int64)
+    zero without `ages`); the caller has checked the bound. With `exact`
+    the table is Python integers (the dtype `object`; the one use is the
+    pointer of a detector set, a report of the host that is never refused,
+    where the register would not hold the table): the same table."""
+    dtype = object if exact else np.int64
+    if exact:
+        v, a = v.astype(dtype), a.astype(dtype)
+    table = np.empty((a.shape[0], MOMENT_COLUMNS), dtype=dtype)
     table[:, 0] = a * v.any(axis=1)
     table[:, 1] = a - table[:, 0]
     table[:, 2 : 2 + DIMENSIONS] = v * a[:, None]
@@ -290,7 +301,7 @@ def moment_table(v: np.ndarray, a: np.ndarray, ages: np.ndarray | None = None) -
     if ages is None:
         table[:, AGE_COLUMN:] = 0
     else:
-        weighted = a * np.asarray(ages, dtype=np.int64).reshape(-1)
+        weighted = a * np.asarray(ages).reshape(-1).astype(dtype)
         table[:, AGE_COLUMN] = weighted * v.any(axis=1)
         table[:, AGE_COLUMN + 1] = weighted - table[:, AGE_COLUMN]
     return table
@@ -316,6 +327,38 @@ def moment_bound(amounts: np.ndarray, vectors: np.ndarray, ages: np.ndarray | No
     if ages is not None:
         per_row = max(per_row, int(np.abs(np.asarray(ages)).max(initial=0)))
     return int(np.abs(amounts).max(initial=0)) * per_row
+
+
+def reading_fits(amounts: np.ndarray, vectors: np.ndarray, ages: np.ndarray | None, widest: int) -> bool:
+    """Whether the moment table of `widest` rows of these amounts, vectors
+    and ages fits the register: every entry at most `moment_bound` and
+    every sum over at most `widest` rows, the product tested in Python
+    integers before any product is formed. The one bound of the reading:
+    `read_arrivals` refuses where it fails, `first_reading_overflow` looks
+    per group where it fails, and the pointer takes its exact path there."""
+    return moment_bound(amounts, vectors, ages) * widest <= MOMENTUM_BOUND
+
+
+def read_groups(
+    vectors: np.ndarray,
+    weights: np.ndarray,
+    starts: np.ndarray,
+    ages: np.ndarray | None = None,
+    exact: bool = False,
+) -> Moments:
+    """The one reading per contiguous group of rows (`starts` the first row
+    of each group, the rows of a group adjacent): the moment table summed
+    per group, in the register, the caller having checked the bound
+    (`first_reading_overflow`), or, with `exact`, in Python integers (the
+    pointer of a detector set where the register would not hold its table:
+    a report of the host, never refused)."""
+    return moments_of_groups(moment_table(vectors, weights, ages, exact=exact), starts)
+
+
+def moments_of_groups(table: np.ndarray, starts: np.ndarray) -> Moments:
+    """The `Moments` of a moment table summed per contiguous group of its
+    rows (`starts` the first row of each group)."""
+    return reading_of(np.add.reduceat(table, starts, axis=0))
 
 
 def read_arrivals(
@@ -348,10 +391,9 @@ def read_arrivals(
     # Every entry of the table is at most amount x P^2 (or amount x age)
     # and every sum has at most the rows of one key: the bound is checked
     # before a product is formed, so the integers below never wrap.
-    per_row = moment_bound(a, v, ages)
     rows = a.shape[0] if bins is None else int(np.bincount(bins, minlength=1).max(initial=0))
-    if per_row * rows > MOMENTUM_BOUND:
-        raise reading_bound_error(rows, per_row)
+    if not reading_fits(a, v, ages, rows):
+        raise reading_bound_error(rows, moment_bound(a, v, ages))
     table = moment_table(v, a, ages)
     if bins is None:
         sums = table.sum(axis=0)
@@ -361,6 +403,37 @@ def read_arrivals(
         sums = np.zeros((size, MOMENT_COLUMNS), dtype=np.int64)
         np.add.at(sums, bins, table)
     return reading_of(sums)
+
+
+# -- the clock's primitive over rows ----------------------------------------------
+
+
+def by_clock_rows(age: np.ndarray, numerator: np.ndarray | int, denominator: int) -> np.ndarray:
+    """`core.integer.by_clock` over rows: what the whole part of age x
+    numerator / denominator gains at the self-creation that takes each
+    row's age from `age` to `age + 1`, the first difference of a floor,
+    exact on average with no remainder anywhere; the caller has bounded
+    (age + 1) x numerator to the register. The one primitive of every
+    rate of the law (the turn, the release, the lamp, the owed count, the
+    step, the columns) and, since the four unifications (2026-09-20,
+    BEAM_LAW note 33), of every age read against a key (`ages_at_key`)."""
+    if denominator < 1:
+        raise ValueError("positive denominator required")
+    result: np.ndarray = ((age + 1) * numerator) // denominator - (age * numerator) // denominator
+    return result
+
+
+def ages_at_key(age: np.ndarray, key: int) -> np.ndarray:
+    """The rows whose walk this interval brought their age to the key (a
+    family's lifetime L; the world's age bound as the key age_bound + 1):
+    `by_clock(age - 1, 1, key)` = 1, the one primitive read on the age
+    before the walk against the key, exactly as the clock reads a measured
+    event's turn off its age against K (the mathematician's clock_checks
+    4: first at the age L, then every L). A row at age 0 (born this
+    interval, or declared at rest at 0) has not walked and is never at
+    the key."""
+    result: np.ndarray = (age > 0) & (by_clock_rows(age - 1, 1, key) == 1)
+    return result
 
 
 # -- the flight table ------------------------------------------------------------
@@ -700,30 +773,46 @@ def momentum_labels(
     return result
 
 
+def circle_vectors(phase: np.ndarray, cosines: np.ndarray, sines: np.ndarray) -> np.ndarray:
+    """The unit vectors of the circle at the rows' phases, (rows, 3): the
+    table entries (C[phase], S[phase], 0) in 256ths, the vectors the one
+    reading takes the pointer on as it takes the flow on the directions'
+    unit vectors u_d."""
+    return np.stack([cosines[phase], sines[phase], np.zeros(phase.shape[0], dtype=np.int64)], axis=1)
+
+
 def coherent_pointer(
     amount: np.ndarray,
     phase: np.ndarray,
     starts: np.ndarray,
-    totals: list[int],
     cosines: np.ndarray,
     sines: np.ndarray,
 ) -> tuple[list[int], list[int]]:
-    """The coherent pointer (X, Y) of the clicked rows per contiguous group
-    (a detector Node's clicks of one family this interval; a face's):
-    X = sum 32 x amount x C[phase], Y = sum 32 x amount x S[phase], the
-    amplitudes at their phases summed by the 1/256 tables. Summed in the
-    int64 register when every group's clicked amount (`totals`, exact per
-    group) is within `POINTER_AMOUNT_BOUND` (each component is then within
-    32 x 257 x the amount, inside 2^62 - 1), in Python integers otherwise:
-    exact either way, a report never refused. Python integers out."""
-    if max(totals) <= POINTER_AMOUNT_BOUND:
-        amplitude = amount * AMPLITUDE_SCALE
-        x: list[int] = np.add.reduceat(amplitude * cosines[phase], starts).tolist()
-        y: list[int] = np.add.reduceat(amplitude * sines[phase], starts).tolist()
-        return x, y
-    wide = amount.astype(object) * AMPLITUDE_SCALE
-    x = np.add.reduceat(wide * cosines[phase].astype(object), starts).tolist()
-    y = np.add.reduceat(wide * sines[phase].astype(object), starts).tolist()
+    """The coherent pointer (X, Y) of rows per contiguous group (a detector
+    set's arrivals or its clicks of one family this interval; a face's or
+    the border's): the first moment of the one reading over the circle
+    (the four unifications, the model owner, 2026-09-20; BEAM_LAW note
+    33), `read_groups` on the circle's unit vectors (C[phase], S[phase],
+    0) with the amplitudes 32 x amount (`AMPLITUDE_SCALE`) as the weights,
+    so that X = sum 32 x amount x C[phase] and Y = sum 32 x amount x
+    S[phase] integer by integer; the record is |M_1|^2 and the set's phase
+    its nearest step (`pointer_phases`). Taken in the int64 register where
+    the reading's bound holds for the table (`reading_fits`) and in Python
+    integers where the reading would refuse (`exact`): exact either way, a
+    report never refused. Python integers out."""
+    vectors = circle_vectors(phase, cosines, sines)
+    widest = int(group_sizes(starts, amount.shape[0]).max(initial=0))
+    # The amplitude 32 x amount is formed in the register only where it
+    # fits (tested by division) and where the reading's bound then holds.
+    if int(np.abs(amount).max(initial=0)) <= MOMENTUM_BOUND // AMPLITUDE_SCALE:
+        weights = amount * AMPLITUDE_SCALE
+        exact = not reading_fits(weights, vectors, None, widest)
+    else:
+        weights = amount.astype(object) * AMPLITUDE_SCALE
+        exact = True
+    flow = read_groups(vectors, weights, starts, exact=exact).flow
+    x: list[int] = flow[:, 0].tolist()
+    y: list[int] = flow[:, 1].tolist()
     return x, y
 
 
@@ -1106,7 +1195,7 @@ def first_reading_overflow(
         return None
     a = np.abs(amounts)
     counts = np.bincount(group, minlength=groups)
-    if moment_bound(a, vectors, ages) * int(counts.max()) <= MOMENTUM_BOUND:
+    if reading_fits(a, vectors, ages, int(counts.max())):
         return None
     a_max = np.zeros(groups, dtype=np.int64)
     np.maximum.at(a_max, group, a)
@@ -1263,8 +1352,12 @@ def push_form(
     arriving family's value per unit of content in every column, the pairs
     (n_c, d_c) (gravity (1, 1), charge rho_B, a declared column's value or
     (0, 1)); `columns` the world's (name, sign) per column; `age` the
-    reader's age after the frame's advance. For a free family's rays, per
-    axis,
+    reader's clock age, the age before this interval's self-creation, at
+    which every rate of the law is read (the turn, the release, the owed
+    count, the step; the four unifications, the model owner, 2026-09-20,
+    (4), BEAM_LAW note 33: until then the columns alone were floored at
+    the age after the frame's advance, note 20). For a free family's rays,
+    per axis,
 
         push_A = sum over the columns c of
                  epsilon_c x sign(V E_c n_c) x by_clock(age_A, |V x E_c x n_c|, D_c x d_c),
@@ -1356,14 +1449,17 @@ def nature_beam(
     # meet the table there, not each other).
     entries = [measured[number] for number in sorted(measured)]
     events = len(entries)
-    # Every Node of a body on a set maps to its measured event: the rows at
-    # any of its Nodes are its arrivals, read as one set (the threshold,
-    # the presence, the push summed over the set), and no collision acts at
-    # any of them.
+    # Every Node of every set maps to its measured event (`DetectorSet.nodes`,
+    # the one set object of a body and a detector): the rows at any Node of
+    # a body are its arrivals, read as one set (the threshold over the
+    # detector set, the presence and the push over the body), and no
+    # collision acts at any of them.
     node_event = np.full(nodes, -1, dtype=np.int64)
     if events:
-        for which, entry in enumerate(entries):
-            node_event[[stores[0].flat(node) for node in entry.nodes]] = which
+        which_of = {entry.number: which for which, entry in enumerate(entries)}
+        for detector_set in {entry.detector_set.index: entry.detector_set for entry in entries}.values():
+            for member_node, number in detector_set.nodes.items():
+                node_event[stores[0].flat(member_node)] = which_of[number]
     occupied = node_event >= 0
 
     def collide(store: NatureBeamStore, backward: bool) -> None:
@@ -1494,7 +1590,7 @@ def nature_beam(
                 ledger.face_amount[face][family] += total
                 ledger.face_content[face][family] += int(exact_sum(amounts * store.content[through]))
                 face_x, face_y = coherent_pointer(
-                    amounts, store.phase[through], FIRST, [total], tables.cosines, tables.sines
+                    amounts, store.phase[through], FIRST, tables.cosines, tables.sines
                 )
                 ledger.face_record[face][family] += face_x[0] * face_x[0] + face_y[0] * face_y[0]
                 escaped_momentum = exact_column_sums(labels[on_face])
@@ -1622,19 +1718,21 @@ def nature_beam(
             own = number == ev_number[ev]
             arrived = arrival != NO_ARRIVAL
             plan = FamilyPlan()
-            # The presence for the clock: every ray at the Node of another
-            # number, rest and moving alike (the scalar of the one reading);
-            # and the age moment of the same set (sum amount x age), what
-            # the clock counts on a table entry that reads `age`.
+            # The rows of the one reading over the set: every row at the set
+            # of another number, rest and moving alike, on the unit vector of
+            # its arrival (a row that did not step on the zero vector; at a
+            # measured event's Node the arrival is the direction, no
+            # collision acting there), the amounts as the weights and the
+            # ages among them; the bound of the table checked in bulk here,
+            # the table itself taken once below with the admitted rows.
             others = np.flatnonzero(~own)
+            v_others = unit[arrival[others]]
             if others.shape[0]:
                 overflow = first_reading_overflow(
-                    ev[others], events, amount[others], unit[arrival[others]], age_at[others]
+                    ev[others], events, amount[others], v_others, age_at[others]
                 )
                 if overflow is not None:
                     failures[(overflow[0], family, 0, 0, 0)] = overflow[1]
-                np.add.at(presence[family], ev[others], amount[others])
-                np.add.at(age_moment[family], ev[others], amount[others] * age_at[others])
             # Home: the own number's arrivals, taken to be created again; a
             # paid family's labels join the momentum (the units are moved,
             # not copied: the recoil at the re-creation gives them back).
@@ -1675,131 +1773,172 @@ def nature_beam(
                 plan.h_content = content[home].tolist()
                 plan.h_phase = phase[home].tolist()
                 plan.events.update(h_events)
-            # Met: the arrivals of every other number at a table that is not
-            # `pass`, ordered by detector set (then measured event, then
-            # row): the threshold on the amount summed over the set.
-            rule = ev_rule[ev, family]
-            met = np.flatnonzero(~own & arrived & (rule != PASS_RULE))
-            if met.shape[0] == 0:
-                return plan
-            met = met[np.argsort(ev_set[ev[met]], kind="stable")]
-            ev_m = ev[met]
-            st_m = ev_set[ev_m]
-            s_starts = group_starts(st_m)
-            s_sizes = group_sizes(s_starts, met.shape[0])
-            total = grouped_sums(amount[met], s_starts, int(s_sizes.max()))
-            # The threshold: under `beam` on the amount summed over the set;
-            # under `wave` (since 2026-09-20, issue #359 step A) on the
-            # square of the coherent pointer of the set's arrivals in units
-            # of one ray (`pointer_units`), so that rays which cancel pass
-            # whether or not a window is declared. No memory between
-            # intervals: the pointer is this interval's arrivals.
-            set_threshold = st_threshold[st_m[s_starts]]
-            below_set = np.asarray(total < set_threshold, dtype=bool)
-            # The window: under `wave` it reads the set's phase, the nearest
-            # step of the coherent pointer of the arrivals the threshold
-            # admitted (a zero pointer has no phase and is outside every
-            # window); under `beam` each ray's own phase.
-            window = ev_window[ev_m, family]
-            read_phase = phase[met].copy()
-            wave_rows = st_wave[st_m]
-            if wave_rows.any():
-                px, py = coherent_pointer(
-                    amount[met], phase[met], s_starts, total.tolist(), tables.cosines, tables.sines
-                )
-                below_wave = np.array(
-                    [
-                        pointer_units(x, y) < t
-                        for x, y, t in zip(px, py, set_threshold.tolist(), strict=True)
-                    ],
-                    dtype=bool,
-                )
-                below_set = np.where(st_wave[st_m[s_starts]], below_wave, below_set)
-                steps = pointer_phases(px, py, tables.cosines, tables.sines)
-                set_step = np.array([-1 if s is None else s for s in steps], dtype=np.int64)
-                read_phase = np.where(wave_rows, np.repeat(set_step, s_sizes), read_phase)
-            below = np.repeat(below_set, s_sizes)
-            inside = (window < 0) | ((read_phase >= 0) & tables.window[(read_phase - window) % modulus])
-            passing = below | ~inside
-            p = np.flatnonzero(passing)
-            if p.shape[0]:
-                ev_p = ev_m[p]
-                p_starts = group_starts(ev_p)
-                p_ends = np.append(p_starts[1:], p.shape[0])
-                p_events = ev_p[p_starts].tolist()
-                p_lo, p_hi = p_starts.tolist(), p_ends.tolist()
-                for k, event in enumerate(p_events):
-                    plan.passes[event] = (p_lo[k], p_hi[k])
-                plan.p_number = number[met[p]].tolist()
-                plan.p_amount = amount[met[p]].tolist()
-                plan.p_phase = phase[met[p]].tolist()
-                plan.p_below = below[p].tolist()
-                plan.p_window = window[p].tolist()
-                plan.events.update(p_events)
-            taken = met[~passing]
-            if taken.shape[0] == 0:
-                return plan
-            # The taken rows grouped by (measured event, number), the rows
-            # of a group in row order.
-            taken = taken[np.lexsort((number[taken], ev[taken]))]
-            a_t = amount[taken].copy()
-            rule_t = ev_rule[ev[taken], family]
-            st_t = ev_set[ev[taken]]
-            # The `beam` reading (the model owner, 2026-09-19, "only
-            # events"): over a beam set, the rays that would click are
-            # paired by opposite phase, greedily in the order of the rows
-            # (measured event, number, row), a row pairing its units with
-            # the first later rows of the set whose phase is opposite (with
-            # a window on the row's Node, within the half circle centred
-            # on the opposite phase; without one, exactly opposite); a
-            # paired couple passes on whole, the rest of a row clicks.
-            cancelled = np.zeros(taken.shape[0], dtype=np.int64)
-            pairing = np.flatnonzero((rule_t == MEASURE_RULE) & ~st_wave[st_t])
-            if pairing.shape[0] >= 2:
-                sets_p = st_t[pairing]
-                for set_index in np.unique(sets_p).tolist():
-                    rows = pairing[sets_p == set_index]
-                    if rows.shape[0] < 2:
-                        continue
-                    phases = phase[taken[rows]].tolist()
-                    left = a_t[rows].tolist()
-                    arcs = ev_window[ev[taken[rows]], family].tolist()
-                    for i, phase_i in enumerate(phases):
-                        if left[i] == 0:
-                            continue
-                        for j in range(i + 1, len(phases)):
-                            if left[j] == 0:
-                                continue
-                            d = (phases[j] - phase_i - half) % modulus
-                            if not (d == 0 if arcs[i] < 0 else bool(tables.window[d])):
-                                continue
-                            part = min(left[i], left[j])
-                            left[i] -= part
-                            left[j] -= part
-                            cancelled[rows[i]] += part
-                            cancelled[rows[j]] += part
-                            if left[i] == 0:
-                                break
-                    a_t[rows] = left
-            if cancelled.any():
-                c_rows = np.flatnonzero(cancelled > 0)
-                for k in c_rows.tolist():
-                    plan.cancelled.setdefault(int(ev[taken[k]]), []).append(
-                        (int(number[taken[k]]), int(cancelled[k]), int(phase[taken[k]]))
+
+            def admit() -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray] | None:
+                """The rows the threshold, the window and the rule admit,
+                grouped by (measured event, number): the rows, the amounts
+                that click (after `beam`'s pairing), the units the pairing
+                keeps, the rules and the sets; None when nothing is met."""
+                # Met: the arrivals of every other number at a table that is
+                # not `pass`, ordered by detector set (then measured event,
+                # then row): the threshold on the amount summed over the set.
+                rule = ev_rule[ev, family]
+                met = np.flatnonzero(~own & arrived & (rule != PASS_RULE))
+                if met.shape[0] == 0:
+                    return None
+                met = met[np.argsort(ev_set[ev[met]], kind="stable")]
+                ev_m = ev[met]
+                st_m = ev_set[ev_m]
+                s_starts = group_starts(st_m)
+                s_sizes = group_sizes(s_starts, met.shape[0])
+                total = grouped_sums(amount[met], s_starts, int(s_sizes.max()))
+                # The threshold: under `beam` on the amount summed over the
+                # set; under `wave` (since 2026-09-20, issue #359 step A) on
+                # the square of the coherent pointer of the set's arrivals in
+                # units of one ray (`pointer_units`), so that rays which
+                # cancel pass whether or not a window is declared. No memory
+                # between intervals: the pointer is this interval's arrivals.
+                set_threshold = st_threshold[st_m[s_starts]]
+                below_set = np.asarray(total < set_threshold, dtype=bool)
+                # The window: under `wave` it reads the set's phase, the
+                # nearest step of the coherent pointer of the arrivals the
+                # threshold admitted (a zero pointer has no phase and is
+                # outside every window); under `beam` each ray's own phase.
+                window = ev_window[ev_m, family]
+                read_phase = phase[met].copy()
+                wave_rows = st_wave[st_m]
+                if wave_rows.any():
+                    px, py = coherent_pointer(
+                        amount[met], phase[met], s_starts, tables.cosines, tables.sines
                     )
-                # The paired units go on: the row keeps them and stays.
-                store.amount[at[taken[c_rows]]] = cancelled[c_rows]
-                plan.events.update(ev[taken[c_rows]].tolist())
-                survivors = a_t > 0
-                taken, a_t, rule_t, st_t = (
-                    taken[survivors],
-                    a_t[survivors],
-                    rule_t[survivors],
-                    st_t[survivors],
+                    below_wave = np.array(
+                        [
+                            pointer_units(x, y) < t
+                            for x, y, t in zip(px, py, set_threshold.tolist(), strict=True)
+                        ],
+                        dtype=bool,
+                    )
+                    below_set = np.where(st_wave[st_m[s_starts]], below_wave, below_set)
+                    steps = pointer_phases(px, py, tables.cosines, tables.sines)
+                    set_step = np.array([-1 if s is None else s for s in steps], dtype=np.int64)
+                    read_phase = np.where(wave_rows, np.repeat(set_step, s_sizes), read_phase)
+                below = np.repeat(below_set, s_sizes)
+                inside = (window < 0) | (
+                    (read_phase >= 0) & tables.window[(read_phase - window) % modulus]
                 )
-                cancelled = cancelled[survivors]
+                passing = below | ~inside
+                p = np.flatnonzero(passing)
+                if p.shape[0]:
+                    ev_p = ev_m[p]
+                    p_starts = group_starts(ev_p)
+                    p_ends = np.append(p_starts[1:], p.shape[0])
+                    p_events = ev_p[p_starts].tolist()
+                    p_lo, p_hi = p_starts.tolist(), p_ends.tolist()
+                    for k, event in enumerate(p_events):
+                        plan.passes[event] = (p_lo[k], p_hi[k])
+                    plan.p_number = number[met[p]].tolist()
+                    plan.p_amount = amount[met[p]].tolist()
+                    plan.p_phase = phase[met[p]].tolist()
+                    plan.p_below = below[p].tolist()
+                    plan.p_window = window[p].tolist()
+                    plan.events.update(p_events)
+                taken = met[~passing]
                 if taken.shape[0] == 0:
-                    return plan
+                    return None
+                # The taken rows grouped by (measured event, number), the
+                # rows of a group in row order.
+                taken = taken[np.lexsort((number[taken], ev[taken]))]
+                a_t = amount[taken].copy()
+                rule_t = ev_rule[ev[taken], family]
+                st_t = ev_set[ev[taken]]
+                # The `beam` reading (the model owner, 2026-09-19, "only
+                # events"): over a beam set, the rays that would click are
+                # paired by opposite phase, greedily in the order of the rows
+                # (measured event, number, row), a row pairing its units with
+                # the first later rows of the set whose phase is opposite
+                # (with a window on the row's Node, within the half circle
+                # centred on the opposite phase; without one, exactly
+                # opposite); a paired couple passes on whole, the rest of a
+                # row clicks.
+                cancelled = np.zeros(taken.shape[0], dtype=np.int64)
+                pairing = np.flatnonzero((rule_t == MEASURE_RULE) & ~st_wave[st_t])
+                if pairing.shape[0] >= 2:
+                    sets_p = st_t[pairing]
+                    for set_index in np.unique(sets_p).tolist():
+                        rows = pairing[sets_p == set_index]
+                        if rows.shape[0] < 2:
+                            continue
+                        phases = phase[taken[rows]].tolist()
+                        left = a_t[rows].tolist()
+                        arcs = ev_window[ev[taken[rows]], family].tolist()
+                        for i, phase_i in enumerate(phases):
+                            if left[i] == 0:
+                                continue
+                            for j in range(i + 1, len(phases)):
+                                if left[j] == 0:
+                                    continue
+                                d = (phases[j] - phase_i - half) % modulus
+                                if not (d == 0 if arcs[i] < 0 else bool(tables.window[d])):
+                                    continue
+                                part = min(left[i], left[j])
+                                left[i] -= part
+                                left[j] -= part
+                                cancelled[rows[i]] += part
+                                cancelled[rows[j]] += part
+                                if left[i] == 0:
+                                    break
+                        a_t[rows] = left
+                if cancelled.any():
+                    c_rows = np.flatnonzero(cancelled > 0)
+                    for k in c_rows.tolist():
+                        plan.cancelled.setdefault(int(ev[taken[k]]), []).append(
+                            (int(number[taken[k]]), int(cancelled[k]), int(phase[taken[k]]))
+                        )
+                    # The paired units go on: the row keeps them and stays.
+                    store.amount[at[taken[c_rows]]] = cancelled[c_rows]
+                    plan.events.update(ev[taken[c_rows]].tolist())
+                return taken, a_t, cancelled, rule_t, st_t
+
+            admitted = admit()
+            # The one reading over the set: ONE moment table with the two
+            # masks (the four unifications, the model owner, 2026-09-20, (3);
+            # note 33). The present rows: every row of another number at
+            # the set at its amount, the admitted rows at the amount that
+            # clicks (`beam`'s pairing having split a row into the units
+            # that go on, a row of their own in the table, present and not
+            # admitted, and the units that click). The presence and the age
+            # moment, what the clock counts, are the zeroth moment and the
+            # age moment over the present rows per measured event; the
+            # record's component and the flow the push reads are the
+            # moments over the admitted rows per (measured event, number).
+            position = np.full(at.shape[0], -1, dtype=np.int64)
+            position[others] = np.arange(others.shape[0], dtype=np.int64)
+            present_weight = amount[others].copy()
+            rows_v, rows_w, rows_age, rows_ev = v_others, present_weight, age_at[others], ev[others]
+            if admitted is not None:
+                taken_all, a_t_all, cancelled_all = admitted[0], admitted[1], admitted[2]
+                present_weight[position[taken_all]] = a_t_all
+                parts = np.flatnonzero(cancelled_all > 0)
+                if parts.shape[0]:
+                    split = taken_all[parts]
+                    rows_v = np.concatenate((v_others, unit[arrival[split]]))
+                    rows_w = np.concatenate((present_weight, cancelled_all[parts]))
+                    rows_age = np.concatenate((age_at[others], age_at[split]))
+                    rows_ev = np.concatenate((ev[others], ev[split]))
+            if rows_w.shape[0] == 0:
+                return plan
+            table = moment_table(rows_v, rows_w, rows_age)
+            np.add.at(presence[family], rows_ev, table[:, 0] + table[:, 1])
+            np.add.at(age_moment[family], rows_ev, table[:, AGE_COLUMN] + table[:, AGE_COLUMN + 1])
+            if admitted is None:
+                return plan
+            # The rows that click after the pairing (every taken row without
+            # a pairing), in their group order.
+            survivors = a_t_all > 0
+            if not survivors.any():
+                return plan
+            taken, a_t, cancelled = taken_all[survivors], a_t_all[survivors], cancelled_all[survivors]
+            rule_t, st_t = admitted[3][survivors], admitted[4][survivors]
             ev_t, num_t = ev[taken], number[taken]
             new = np.concatenate((NEW_RUN, (ev_t[1:] != ev_t[:-1]) | (num_t[1:] != num_t[:-1])))
             g_starts = np.flatnonzero(new)
@@ -1817,31 +1956,35 @@ def nature_beam(
             c_t, ph_t = content[taken], phase[taken]
             age_t = age_at[taken]
             v_arrival = unit[arrival[taken]]
-            v_direction = unit[direction[taken]]
-            # The reading's component on the record: the moments of the
-            # arrivals' unit vectors weighted by the amounts (no collision
-            # at this Node: the arrival is the direction), the age moment
-            # among them (the measured event reads the age whole).
+            # The admitted rows of the one table (their arrival's unit vector
+            # weighted by the amount that clicks, the age moment among them;
+            # the measured event reads the age whole), summed per group: the
+            # reading's component on the record.
             overflow = first_reading_overflow(of_row, groups, a_t, v_arrival, age_t)
             if overflow is not None:
                 fail(overflow[0], 2, overflow[1])
-            reading = reading_of(np.add.reduceat(moment_table(v_arrival, a_t, age_t), g_starts, axis=0))
+            admitted_rows = table[position[taken]]
+            reading = moments_of_groups(admitted_rows, g_starts)
             for key in {entries[e].reads[family] for e in set(g_ev.tolist())}:
                 plan.readings[key] = reading.component(key).tolist()
             # The push, ONE product per group of arriving rays (`push_form`):
-            # the label flow per group, the weights bounded before the
-            # product; the electric factor is the family's charge per unit
-            # of content, so no class of rows is kept.
+            # the label flow per group is the first moment of the same rows
+            # with the label's weight, the amount for a free family (the
+            # table's own flow) and content x amount for a paid one (the
+            # flow times the content per unit), the weights bounded before
+            # the product; the electric factor is the family's charge per
+            # unit of content, so no class of rows is kept.
             overflow = first_label_overflow(
-                of_row, a_t, c_t, free, v_direction, lambda i: entries[int(ev_t[i])].position
+                of_row, a_t, c_t, free, v_arrival, lambda i: entries[int(ev_t[i])].position
             )
             if overflow is not None:
                 fail(overflow[0], 3, overflow[1])
             weights = a_t if free else a_t * c_t
-            overflow = first_moment_overflow(of_row, groups, weights, v_direction)
+            overflow = first_moment_overflow(of_row, groups, weights, v_arrival)
             if overflow is not None:
                 fail(overflow[0], 4, overflow[1])
-            labels = v_direction * weights[:, None]
+            flow = admitted_rows[:, 2 : 2 + DIMENSIONS]
+            labels = flow if free else flow * c_t[:, None]
             plan.g_moment = np.add.reduceat(labels, g_starts, axis=0).tolist()
             carried_t = a_t * c_t
             plan.g_number = num_t[g_starts].tolist()
@@ -1881,7 +2024,7 @@ def nature_beam(
                 c_sizes = group_sizes(c_starts, clicked.shape[0])
                 totals_c = grouped_sums(a_t[clicked], c_starts, int(c_sizes.max())).tolist()
                 pointer_x, pointer_y = coherent_pointer(
-                    a_t[clicked], ph_t[clicked], c_starts, totals_c, tables.cosines, tables.sines
+                    a_t[clicked], ph_t[clicked], c_starts, tables.cosines, tables.sines
                 )
                 steps = pointer_phases(pointer_x, pointer_y, tables.cosines, tables.sines)
                 last_phase = ph_t[clicked][(c_starts + c_sizes - 1)].tolist()
@@ -2021,14 +2164,16 @@ def nature_beam(
                         # whatever the family order: a click of this interval
                         # joins `held` and is read by the next frame (the
                         # orchestrator's D1, 2026-09-20); the arriving side is
-                        # the family's value per column.
+                        # the family's value per column; the columns are
+                        # floored at the reader's clock age, as every rate of
+                        # the law is (the four unifications (4)).
                         push = push_form(
                             free,
                             plan.g_moment[gi],
                             entry.frame_charges,
                             values_of[family],
                             columns,
-                            entry.age,
+                            entry.clock_age,
                             entry,
                         )
                         entry.momentum = [
@@ -2270,14 +2415,16 @@ def nature_beam(
     # open face books an escape, one `click` record per row naming the
     # border, the border's record the square of the coherent pointer of
     # what clicked, per family; then the rows leave the store. Local (the
-    # row's own age against its family's key), fixed work (one comparison
-    # per row), no draw, no register; the one-way border of the interval
-    # beside the click.
+    # row's own age against its family's key, read by the one primitive:
+    # `ages_at_key`, `by_clock(age - 1, 1, L)` = 1 at the walk that brought
+    # the age to L, as the clock reads the turn; note 33), fixed work (one
+    # comparison per row), no draw, no register; the one-way border of the
+    # interval beside the click.
     for family, store in enumerate(stores):
         lifetime = families[family].lifetime
         if lifetime is None or store.size == 0:
             continue
-        gone = np.flatnonzero(store.age >= lifetime)
+        gone = np.flatnonzero(ages_at_key(store.age, lifetime))
         if gone.shape[0] == 0:
             continue
         definition = families[family]
@@ -2287,7 +2434,7 @@ def nature_beam(
         ledger.lifetime_amount[family] += total
         ledger.lifetime_content[family] += int(exact_sum(amounts * store.content[gone]))
         border_x, border_y = coherent_pointer(
-            amounts, store.phase[gone], FIRST, [total], tables.cosines, tables.sines
+            amounts, store.phase[gone], FIRST, tables.cosines, tables.sines
         )
         ledger.lifetime_record[family] += border_x[0] * border_x[0] + border_y[0] * border_y[0]
         left = exact_column_sums(labels)
@@ -2319,10 +2466,12 @@ def nature_beam(
 
     # Merge identical rows; sort by Node. A row whose age passed the
     # world's bound refuses the run: the store's promise of fixed storage
-    # is the bound, and the world must be small enough or declare it.
+    # is the bound, and the world must be small enough or declare it (the
+    # same primitive as the border: the age against the key age_bound + 1,
+    # `ages_at_key`; note 33).
     for store in stores:
         store.merge()
-        if store.size and int(store.age.max()) > world.age_bound:
+        if store.size and ages_at_key(store.age, world.age_bound + 1).any():
             raise OverflowError(
                 f"{BEAM_LAW}: a ray carries the age {int(store.age.max())} beyond the world's "
                 f"age_bound {world.age_bound} (declare a larger age_bound or a smaller GameBoard)"

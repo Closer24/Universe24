@@ -349,8 +349,10 @@ order with each step's inverse:
    selects its component by the key
    `reads` (the clock's count and the threshold the scalar, the push the
    vector, a detector may declare the tensor); the detector's record is the
-   same moments over the clicked rays with their amplitudes as weights, the
-   scalar squared. On the six headings the moments are the slot
+   square of the first moment of the same reading over the clicked rays,
+   taken on the circle's unit vectors (C[phase], S[phase], 0) with their
+   amplitudes as weights (the pointer; note 33, the four unifications).
+   On the six headings the moments are the slot
    decomposition of the first implementation exactly; on a fan they are
    the moments of the fan's vectors, no projection onto the Ports.
 3. **The collision.** At every Node of free space, a Node that holds no
@@ -376,7 +378,11 @@ order with each step's inverse:
    and the mathematician's verified form; note 31; `nature_beam.push_form`):
    for a group of a free family B's rays with the label flow `V_B`, per
    axis, `push_A = sum over the columns c of epsilon_c x sign(V E_c n_c) x
-   by_clock(age_A, |V x E_c x n_c|, D_c x d_c)`, with `(E_c, D_c)` the
+   by_clock(age_A, |V x E_c x n_c|, D_c x d_c)`, with `age_A` the
+   reader's clock age, the age before the interval's self-creation, at
+   which every rate of the law is read (since 2026-09-20, the four
+   unifications (4), note 33; until then the age after the frame's
+   advance, note 20), `(E_c, D_c)` the
    reader's charge in the column c as the frame read it (the exact
    rational sum over the families it holds of their value per unit of
    content times their content, `Measured.charges`), `(n_c, d_c)` the
@@ -585,9 +591,12 @@ model owner's decision, "on the GameBoard a ray, in the world a wave"; or
 - `wave`: with the rays the set clicks this interval (after the threshold
   and the window; `measure` only), `A_u = 32 x amount_u` (note 3) and the
   1/256 tables `C`, `S` of `core/phase.py`, the coherent pointer over the
-  whole set `(X, Y) = (sum A_u C[phase_u], sum A_u S[phase_u])` and the
-  record `X^2 + Y^2`, an integer added to the detector's one `record`
-  (per detector, cumulative, never per Node). The set's phase is the
+  whole set `(X, Y) = (sum A_u C[phase_u], sum A_u S[phase_u])`, since
+  2026-09-20 the first moment of the one reading taken on the circle's
+  unit vectors `(C[phase], S[phase], 0)` with the amplitudes as the
+  weights (`nature_beam.coherent_pointer` through `read_groups`; note 33),
+  and the record `X^2 + Y^2`, an integer added to the detector's one
+  `record` (per detector, cumulative, never per Node). The set's phase is the
   pointer's nearest step (`nature_beam.pointer_phases`: the step of the
   circle whose table entry is nearest in direction, the least
   `|X S[k] - Y C[k]|` among the k with `X C[k] + Y S[k] > 0`, exact
@@ -657,12 +666,17 @@ the contents, the labels, the pushes), and a report of the host has no
 bound. The amplitude of a row is `32 x amount` (note 3) and every entry
 (C, S) of the 1/256 tables is shorter than 257 for every N (the largest
 C^2 + S^2 is 65897), so each component of the pointer is within
-`32 x 257 x (the amount clicked)`: the pointer is summed in the int64
+`32 x 257 x (the amount clicked)`: the pointer was summed in the int64
 register while the amount a detector Node (or a face) clicks of one
-family in one interval is within `(2^62 - 1) // (32 x 257)` =
-**560759486676481** (`POINTER_AMOUNT_BOUND`, 2^48 inside, 2^49 beyond)
-and in Python integers beyond it (`coherent_pointer`: one comparison of
-the exact clicked amount per group, a few groups per interval); the
+family in one interval was within `(2^62 - 1) // (32 x 257)` =
+560759486676481 (`POINTER_AMOUNT_BOUND`, 2^48 inside, 2^49 beyond; the
+constant is deleted since note 33) and, since the four unifications
+(2026-09-20, note 33), it is the first moment of the one reading over
+the circle, taken in the register where the reading's own bound holds
+for its table (`reading_fits`: 32 x amount x 256^2 x the rows of the
+group within 2^62 - 1, the second moment's bound, which the pointer
+does not read but the one table forms) and in Python integers beyond
+it (`coherent_pointer`, `moment_table(exact=True)`: the same table); the
 square `X^2 + Y^2` and the record that accumulates it are Python
 integers always, per detector per family (`DetectorSet.record`) and
 per face per family (`Ledger.face_record`), held beside the arrays and
@@ -1061,7 +1075,9 @@ implementation's part of the contract. The design above is unchanged.
     -2^25 and -2 in `7_mp` and `7_pm`, -12582912 and -3 in `7_pp_m4`,
     -2^24 and -1 in `7_00`, row by row). The rounding subtlety of today
     survives unchanged and is stated: `age_A` is the reader's age after
-    the frame's advance, frozen while it is owed. The reviewer's F7 is
+    the frame's advance, frozen while it is owed (until 2026-09-20: since
+    the four unifications (4), note 33, the columns are floored at the
+    clock age like every other rate). The reviewer's F7 is
     closed: fixed local work (one product and one `by_clock` per axis per
     factor class met), fixed local storage (two more integers per row,
     functions of the number today, so the store's bound does not grow;
@@ -1778,3 +1794,129 @@ implementation's part of the contract. The design above is unchanged.
     their total; the books' escaped line is the total, unchanged. No
     registered integer changes except the per-family `escaped` lines of
     `run.json` in worlds of several families.
+33. **The four unifications of the formulas: every logic once, to the
+    letter** (the model owner, 2026-09-20, Highlights 5.4, "DECIDED: the
+    four unifications of the formulas, after the strong force lands", on
+    the mathematician's report of the same day, `ONE_FORMULA.md`: the law
+    is two formulas and one table composed, every reading a moment
+    `M_k = sum w u^(x)k` of the records at a set and every rate the whole
+    part off an age, `by_clock(a, n, d) = floor((a + 1) n / d) - floor(a n
+    / d)`; the four places where the code spelled one of the two
+    primitives twice are spelled once, each an identity, the full suite
+    and the replay of the register the proof that the law is the same).
+    **(1) The pointer is the first moment of the one reading over the
+    circle** (`tests/test_nature_beam_detector.py` (j)). The coherent
+    pointer `(X, Y)` of a detector set (the window's, the threshold's,
+    the record's and the phase returned: notes 24 and 32), of a face and
+    of the border `lifetime` is `M_1` of the same moment table that reads
+    space (`moment_table`, `read_groups`), taken on the circle's unit
+    vectors `(C[phase], S[phase], 0)` in 256ths (`circle_vectors`) with
+    the amplitudes `32 x amount` as the weights: `X = sum 32 amount
+    C[phase]`, `Y = sum 32 amount S[phase]` integer by integer (the
+    mathematician's moment_checks 1: bit-exact at N = 8, 64, 4096 on 900
+    random sets), the record `|M_1|^2`, the set's phase its nearest step
+    (`pointer_phases`), the `wave` threshold's `pointer_units` the same
+    `M_1`. One call site of the one reading (`coherent_pointer` through
+    `read_groups`); the separate pointer sum (`amplitude x C[phase]`
+    reduced per group) is deleted. The record is never refused: the
+    reading's own bound decides the register (`reading_fits`, the one
+    test `read_arrivals` refuses by and `first_reading_overflow` looks
+    per group by: 32 x amount x 256^2 x the rows of the group within
+    2^62 - 1, the second moment's bound, which the pointer does not read
+    but the one table forms, so one row of an amount below 2^41 fits
+    where the former `POINTER_AMOUNT_BOUND` = (2^62 - 1) // (32 x 257)
+    let 2^48 in), and beyond it the same table is taken in Python
+    integers (`moment_table(exact=True)`, the dtype `object`), exact: a
+    row of 2^42 that `read_arrivals` refuses reads its pointer, a row of
+    2^49 reads (2^62, 0), a row of 2^60 (2^73, 0). `POINTER_AMOUNT_BOUND`
+    is deleted (MIGRATION). Every world of the register replays
+    byte-identical in `events.jsonl` and `state.json` (VALIDATION).
+    **(2) Every age against a key is the one `by_clock`; the turn is the
+    release at the rate [1, K]** (`tests/test_nature_beam_clock.py` (f)).
+    The mathematician found that the turn `s = by_clock(a, M, K)` is the
+    free release `by_clock(a, H n_r, d_r)` at the rate [1, K] (clock_checks
+    8: the phase circle's turn is a release rate of phase per unit of
+    content, E = h f as a rate), and that the lifetime's click, `become
+    at` and the age bound are the same primitive read on an age against
+    a key: `by_clock(a, 1, key) = 1` exactly at the self-creation that
+    takes the age from key - 1 to key (clock_checks 4: first at the age
+    L, then every L). So: the world key `K` is the clock's rate, a pair
+    `[n, d]` of phase steps per unit of content per self-creation like
+    `release`, the integer K read as `[1, K]` (every world file valid and
+    bit-identical; the key keeps the name the owner uses; the record
+    carries it as declared), the turn `by_clock(age, content x n, d)`
+    (`NatureBeamWorld.turn`, `nature_beam.by_clock_rows` over the phased
+    events in one array where the products fit the register), the
+    refusal `2 s >= N` kept and the parser's static bound read at the
+    rate (`2 x content x n < d x N`); the lifetime's click and the
+    world's age bound are `nature_beam.ages_at_key(age, key)`,
+    `by_clock(age - 1, 1, key) = 1` on the age after the walk (the walk
+    that brought the age to the key; a row at age 0 has not walked and
+    is never at the key; a rest row keeps its age and, by the parser's
+    refusal of a declared age at or beyond L and the click at L, never
+    stands at a key), the bound the key `age_bound + 1`: `store.age >=
+    lifetime` and `store.age.max() > age_bound` are deleted, identities on
+    every reachable state. `become at` is not in the code (in flight,
+    WEAK.md) and will read the same call. No registered integer moves:
+    every world of the register replays byte-identical.
+    **(3) One moment table over one set object shared by a body and a
+    detector, the data only** (`tests/test_nature_beam_body.py` (g)). The
+    data: a body on a set of Nodes (note 30) and a detector set (note 24)
+    are one object, `DetectorSet`: its Nodes mapped to the measured event
+    at each (`DetectorSet.nodes`, a body one event, a declared detector
+    several), one record and one phase per family, the one reading summed
+    over the set in both; `Measured.nodes` reads a body's Nodes from its
+    set's map (in the fixed order x, then y, then z, the engine inserting
+    them so as a body steps or leaves, `NatureBeamSimulation._place`), and
+    the engine's index `NatureBeamSimulation.at` maps every occupied Node
+    to its set (`occupant` to the event's number; the reading's
+    `node_event` is built from the sets). A detector stays a detector
+    and a body a body: the rule unification (a detector as one measured
+    event, its content, momentum and re-emission joining one record) is
+    NOT taken, by the owner's decision, since it would re-register A10's
+    openings and the two-slit walls. The table: step 4 takes ONE moment
+    table per family over the rows at the set (`moment_table` on the
+    arrivals' unit vectors, a row that did not step on the zero vector,
+    the amounts as the weights and the ages among them) with the two
+    masks the mathematician named, present and admitted: the present
+    rows are every row of another number at the set, rest and moving,
+    and the presence (what the clock counts) is their zeroth moment per
+    measured event and the age moment their age moment (the two
+    `np.add.at` sums of `family_plan` are deleted); the admitted rows are
+    the rows the threshold, the window and the rule admit, and the
+    record's component and the push's flow are their moments per
+    (measured event, number), the flow with the label's weight (the
+    table's own flow for a free family, the flow times the content per
+    unit for a paid one; the separate `labels = u x weight` product is
+    deleted). The one case where the two masks are not nested: `beam`'s
+    pairing (note 24 (v)) splits a row into the units that go on and the
+    units that click; the table takes the units that go on as a row of
+    their own, present and not admitted, and the units that click as the
+    admitted row, so the presence counts the whole row (5 for the rows of
+    3 and 2 that pair 2 in test (g)) as it did and the push and the record
+    read the clicked units as they did. Bit-exact: every world of the
+    register replays byte-identical in `events.jsonl` and `state.json`.
+    **(4) The columns floored at the clock age like every other rate**
+    (`tests/test_nature_beam_push.py` (m); `tests/test_columns.py` (b), (e)
+    and `tests/test_nature_beam_push.py` (k) re-pinned). The one exception
+    of note 20: the columns' `by_clock` was read at `a_A`, the reader's
+    age after the frame's advance, while the turn, the release, the lamp,
+    the owed count and the step are read at the clock age `a_A - 1`, the
+    age before the interval's self-creation (the mathematician's row 8).
+    Now `push_form` takes `Measured.clock_age`: every rate of the law is
+    read at the clock age. What moves: nothing where the product `V x E_c
+    x n_c` is a multiple of `D_c x d_c` (`by_clock(a, n, d)` is then `n /
+    d` at every age: series 7's product 3 x 2^22 x [1, 2] is even, 0 of
+    200 ticks differ, the mathematician's clock_checks 3; `test_nature_beam_push`
+    (e)'s 1920 / 20 = 96 exactly); where it is not, the extra unit of
+    the floor lands on other ticks and the sum over the ticks is the same
+    (the floors telescope): with an odd flow on a fan direction, V =
+    u_(2, 1, 0) = (57, 29, 0), every tick moves by exactly one unit per
+    axis and the sum over 22 reads by none (test (m), the fractional pin
+    the owner accepted); the pins of `test_columns` (b) and (e) and of
+    `test_nature_beam_push` (k) are re-pinned with the new integers
+    written first (MIGRATION). The register: every world of the 85
+    replays byte-identical in `events.jsonl` and `state.json`, so no
+    registered series moves (C, 7, D, E, G, H, I, K, Bell, A10, the
+    catalog: every charged product of theirs is a multiple of its
+    denominators, or their reads never met a fractional floor).

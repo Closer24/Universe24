@@ -57,11 +57,13 @@ detector's record"), written down first. K 2^20, `suspension` 0, `release`
     bound refused `two_contents`): every entry (C, S) of the 1/256 tables
     is shorter than 257 for every N from 2 through 4096 (the largest
     C^2 + S^2 is 65897), so each component of the pointer is within
-    32 x 257 x the clicked amount and the int64 register holds it up to
-    the amount (2^62 - 1) // (32 x 257) = 560759486676481
-    (`POINTER_AMOUNT_BOUND`, 2^48 inside, 2^49 beyond); beyond it the
-    pointer is summed in Python integers, and the square and the record
-    are Python integers always. Every case is compared with the Python-int
+    32 x 257 x the clicked amount; since the four unifications
+    (2026-09-20, (j)) the pointer is the first moment of the one reading
+    over the circle, taken in the int64 register where the reading's
+    bound holds for its table (`reading_fits`: 32 x amount x 256^2 x the
+    rows of a group within 2^62 - 1, the second moment's bound) and in
+    Python integers beyond it (`moment_table(exact=True)`); the square
+    and the record are Python integers always. Every case is compared with the Python-int
     computation X = sum 32 x amount x C[phase], Y = sum 32 x amount x
     S[phase] over the clicked rows of the record (the `click` lines)
     through the tables: a row of 261123 (the old bound) records
@@ -136,18 +138,43 @@ detector's record"), written down first. K 2^20, `suspension` 0, `release`
     `beam` the threshold is the amount as before: two rays in phase at
     threshold 3 pass (the amount 2 < 3) where `wave` clicks them (4 >= 3);
     no memory between intervals: the two opposite rays passing at tick 1
-    do not add to the next tick's set.
+    do not add to the next tick's set;
+(j) the pointer is the first moment of the one reading over the circle
+    (the four unifications, the model owner, 2026-09-20, (1); BEAM_LAW
+    note 33; the integers written first): rows of amounts 3, 5, 2 at the
+    phases 0, 16, 32 of N = 64 (the entries (256, 0), (0, 256), (-256, 0))
+    read the pointer (8192, 40960) = 32 x (768 - 512, 1280), equal to
+    `read_arrivals` on the circle's unit vectors (C, S, 0) with the
+    weights 32 x amount (its flow, its presence 320 = 32 x 10), the record
+    8192^2 + 40960^2 = 1744830464 = 26 units exactly ((3 - 2)^2 + 5^2), the
+    set's phase 14 (the nearest step to atan 5 = 78.69 degrees, 14 x
+    5.625 = 78.75); two groups (the rows 0 to 1 and 2) read (24576, 40960)
+    and (-16384, 0); one row of 2^42 at phase 5 is beyond the reading's
+    register bound (32 x 2^42 x 256^2 = 2^63) so `read_arrivals` refuses
+    it while the pointer reads 2^47 x (C[5], S[5]) exactly on its Python
+    path; one row of 2^49 (beyond the former pointer bound 2^48) reads
+    (2^62, 0), one of 2^60 (whose amplitude would not fit the register)
+    (2^73, 0): the record is never refused.
 """
 
 from __future__ import annotations
 
 import json
 
+import numpy as np
 import pytest
 
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.nature_beam import POINTER_AMOUNT_BOUND, POINTER_UNIT, pointer_units
+from event_universe.events.nature_beam import (
+    POINTER_UNIT,
+    circle_vectors,
+    coherent_pointer,
+    pointer_phases,
+    pointer_units,
+    read_arrivals,
+    reading_fits,
+)
 from event_universe.events.world import MOMENTUM_BOUND
 
 M, LIGHT = 0, 1
@@ -415,8 +442,15 @@ def test_the_record_is_exact_and_never_refused():
     for k in range(1, 13):
         cosines, sines = phase_cosines(1 << k), phase_sines(1 << k)
         assert max(c * c + s * s for c, s in zip(cosines, sines, strict=True)) < 257 * 257
-    assert POINTER_AMOUNT_BOUND == MOMENTUM_BOUND // (32 * 257) == 560759486676481
-    assert (1 << 48) < POINTER_AMOUNT_BOUND < (1 << 49)
+    # The register path of the pointer is the reading's own bound on the
+    # circle's vectors: one row of amount a fits while 32 a x 256^2 is
+    # within 2^62 - 1, that is a within 2^41 - 1; 2^41 - 1 rows of amount
+    # 1 fit, 2^41 do not.
+    circle = circle_vectors(np.zeros(1, dtype=np.int64), np.array(cosines), np.array(sines))
+    assert reading_fits(np.array([32 * ((1 << 41) - 1)]), circle, None, 1)
+    assert not reading_fits(np.array([32 << 41]), circle, None, 1)
+    assert reading_fits(np.array([32]), circle, None, (1 << 41) - 1)
+    assert not reading_fits(np.array([32]), circle, None, 1 << 41)
     cosines, sines = phase_cosines(64), phase_sines(64)
 
     def expected(records: list[dict[str, object]], detector: str) -> tuple[int, int, int]:
@@ -802,3 +836,41 @@ def test_the_wave_threshold_reads_the_pointers_square():
             # it is read into the next interval's set.
             simulation.step()
             assert simulation.books()["balanced"] and entry.clicks == [0, 0], label
+
+
+def test_the_pointer_is_the_first_moment_of_the_one_reading_over_the_circle():
+    """(j)."""
+    cosines = np.array(phase_cosines(64), dtype=np.int64)
+    sines = np.array(phase_sines(64), dtype=np.int64)
+    amount = np.array([3, 5, 2], dtype=np.int64)
+    phase = np.array([0, 16, 32], dtype=np.int64)
+    assert cosines[[0, 16, 32]].tolist() == [256, 0, -256]
+    assert sines[[0, 16, 32]].tolist() == [0, 256, 0]
+    x, y = coherent_pointer(amount, phase, np.zeros(1, dtype=np.int64), cosines, sines)
+    assert (x, y) == ([8192], [40960])
+    circle = circle_vectors(phase, cosines, sines)
+    assert circle.tolist() == [[256, 0, 0], [0, 256, 0], [-256, 0, 0]]
+    moments = read_arrivals(circle, amount * 32)
+    assert moments.flow.tolist() == [8192, 40960, 0]
+    assert int(moments.presence) == 320 and int(moments.outside) == 320 and int(moments.here) == 0
+    assert x[0] * x[0] + y[0] * y[0] == 1744830464 == 26 * POINTER_UNIT
+    assert pointer_units(x[0], y[0]) == 26
+    assert pointer_phases(x, y, cosines, sines) == [14]
+    # Two contiguous groups: the rows 0 to 1 and the row 2.
+    x, y = coherent_pointer(amount, phase, np.array([0, 2]), cosines, sines)
+    assert (x, y) == ([24576, -16384], [40960, 0])
+    # Beyond the reading's register bound the pointer takes its exact path
+    # and is never refused, where `read_arrivals` refuses the same table.
+    one = np.zeros(1, dtype=np.int64)
+    big = np.array([1 << 42], dtype=np.int64)
+    at_five = np.array([5], dtype=np.int64)
+    assert not reading_fits(big * 32, circle_vectors(at_five, cosines, sines), None, 1)
+    with pytest.raises(OverflowError, match="exceed the integer bound"):
+        read_arrivals(circle_vectors(at_five, cosines, sines), big * 32)
+    x, y = coherent_pointer(big, at_five, one, cosines, sines)
+    assert (x, y) == ([(1 << 47) * int(cosines[5])], [(1 << 47) * int(sines[5])])
+    assert (int(cosines[5]), int(sines[5])) == (226, 121)
+    x, y = coherent_pointer(np.array([1 << 49]), np.array([0]), one, cosines, sines)
+    assert (x, y) == ([1 << 62], [0]) and (1 << 62) > MOMENTUM_BOUND
+    x, y = coherent_pointer(np.array([1 << 60]), np.array([0]), one, cosines, sines)
+    assert (x, y) == ([1 << 73], [0]) and type(x[0]) is int

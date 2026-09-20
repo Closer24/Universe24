@@ -11,6 +11,44 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The four unifications of the formulas: the 85 example worlds replayed after each commit - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` from its tip `e98453f7`
+(the strong force landed; source fingerprint
+`0b39130239c775492fe336818039801e572af6bb0128b9f8be41bcd031163228`, the
+fingerprint of the entry below), Python 3.14.0rc2, numpy 2.5.3, headless,
+four cores. Every world of `examples/events/` (85: the coupling
+twenty-one, the Bell ten, the orbit six, the Bohr seven, the nucleus
+eight, the lensing four, the Hubble four, the redshift two, the buildup
+three, the Heisenberg eight, the detector four, the catalog four,
+`one_content`, `two_contents`, `one_slit`, `two_slits`) was run with the
+runner at its declared `ticks` before the first change and after each of
+the four commits of the model owner's decision ([BEAM_LAW note 33](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+and `events.jsonl`, `state.json` and `run.json` (its volatile fields
+`elapsed_seconds`, `source_sha256` and `package_version` removed) compared
+by SHA-256, file by file.
+
+| After | Source fingerprint | `events.jsonl` | `state.json` | `run.json` (stable) |
+| --- | --- | --- | --- | --- |
+| (1) the pointer as the first moment of the one reading over the circle | `1e84ce8ef9df6e86ff84c64b04ffa5c8241e9a16d6ba1cb8566406b47679241d` | 85 identical, 0 changed | 85 identical | 85 identical |
+| (2) every age against a key as the one `by_clock`; `K` as the rate [n, d] | `59543c35c50110f5c40714f7f24895e1178d0ea4a68b18dcdff3c6cd1aeeca10` | 85 identical, 0 changed | 85 identical | 85 identical |
+| (3) one moment table over one set object shared by a body and a detector | `b2708413e219ca9136981c3d68936f96ad4a7317ae4ce61e0c9b0bd6f9631711` | 85 identical, 0 changed | 85 identical | 85 identical |
+| (4) the columns floored at the clock age | `da947becf3343b3e812d59ea88ba51650ba791cf19c7782f8d665763f2df0f49` | 85 identical, 0 changed | 85 identical | 85 identical |
+
+No registered series moves (C, 7, D, E, G, H, I, K, Bell, A10, the
+catalog): every reading of the register is the same integer under the
+four unifications. The elapsed seconds of the runs were taken under
+concurrent load (the checks ran beside the replays) and are not a
+measurement; the pointer's table (thirteen columns per row where two
+products were formed) and the one table over the set are host cost, not
+the model's local cost. The commands: `python -m event_universe --init
+<world> --output <dir>` per world, four at a time, the outputs digested
+and pruned (the disk of the session holds no five copies of the 4.4 GB
+of records); a differing world would have been re-run from the kept copy
+of the base tree. `python tools/check.py --base HEAD` green after each
+commit (246, 469, 221 and 222 tests selected), `python tools/check.py
+--full` green on the merge with the branch tip.
+
 ## The `wave` threshold on the pointer's square: the 66 example worlds compared, A10 and Bell re-read - 2026-09-20
 
 The worktree of `claude/universe24-new-3ytqde` on the commit of the `wave`
