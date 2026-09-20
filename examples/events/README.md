@@ -32,10 +32,8 @@ emitter by its phase rate (E = h f) and a click measures that content.
 | `one_slit.json` | The same with one opening | The control: the record without the two-source term |
 
 The four are written by `make_worlds.py` beside them; since 2026-09-20
-`one_content`, `two_contents` and `one_slit` take their families from
-`entities/families.json` (the world's `entity_definitions` and `entities`
-in place of `families`), `two_slits` inline until stage (vii) of
-`amplitude-v1` lands.
+they take their families from `entities/families.json` (the world's
+`entity_definitions` and `entities` in place of `families`).
 
 Run one:
 

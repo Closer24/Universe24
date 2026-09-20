@@ -174,7 +174,12 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
-from event_universe.world_loading import load_world  # noqa: E402
+from event_universe.world_loading import families_by_definition, load_world  # noqa: E402
+
+# The shipped definitions the world's families come from where they equal
+# them (the model owner's decision of 2026-09-20, record 113).
+FAMILY_DEFINITIONS = "../entities/families.json"
+DEFINITIONS_SOURCE = (HERE.parent / "entities" / "families.json").read_bytes()
 
 N = 64
 QUARTER = N // 4
@@ -1230,7 +1235,8 @@ def main() -> None:
         if name in UNSHIPPED:
             continue
         path = args.out / f"{name}.json"
-        path.write_text(json.dumps(world) + "\n", encoding="utf-8")
+        shipped = families_by_definition(world, FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
+        path.write_text(json.dumps(shipped) + "\n", encoding="utf-8")
         print(
             f"{path.relative_to(ROOT) if path.is_relative_to(ROOT) else path}: {world['ticks']} intervals"
         )

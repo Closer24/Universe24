@@ -43,9 +43,6 @@ from event_universe.world_loading import families_by_definition  # noqa: E402
 # them (the model owner's decision of 2026-09-20, record 113).
 FAMILY_DEFINITIONS = "../entities/families.json"
 DEFINITIONS_SOURCE = (HERE.parent / "entities" / "families.json").read_bytes()
-# Written inline until stage (vii) of `amplitude-v1` lands (it re-pins this
-# world): the scope of the migration of 2026-09-20.
-INLINE = ((3, "beam"),)
 
 K = 1 << 30
 N = 64
@@ -137,9 +134,9 @@ def main() -> None:
     for reading in READINGS:
         for width in WIDTHS:
             path = HERE / f"w{width}_{reading}.json"
-            document = world(width, reading)
-            if (width, reading) not in INLINE:
-                document = families_by_definition(document, FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
+            document = families_by_definition(
+                world(width, reading), FAMILY_DEFINITIONS, DEFINITIONS_SOURCE
+            )
             path.write_text(json.dumps(document) + "\n", encoding="utf-8")
             print(path.relative_to(HERE.parents[2]))
 
