@@ -36,7 +36,21 @@ at every tick) fail the tool; the readings are registered inside or
 outside their expectation (docs/EXPERIMENTS.md, "G, the Hubble diagram
 behind the detector (2026-09-20)") and never moved.
 
-    PYTHONPATH=src python tools/hubble_readings.py artifacts/hubble [--png DIR] [--no-replay]
+With `--from-one-point` (the physicist's review of the series, 2026-09-20;
+printed after the pinned readings, not a pinned reading) every window is
+fitted again with every source's light-travel time reduced by (r_0 / c) /
+(1 + z), r_0 the source's declared initial distance (a GameBoard quantity):
+a coasting source thrown from r_0 at the speed v is the source thrown from
+the centre at the time -r_0 / v, and at t_0 its light-travel time is tau -
+r_0 / (c + v) = tau - (r_0 / c) / (1 + z), so the correction is exact for
+the coasting throw and first order for the pushing one. The block also
+prints what the near fit itself does to an exact coasting form at the
+window's own taus (its H t_0 for z = H tau / (1 - H tau) with H = 1 / t_0):
+the near fit through the origin on z <= 0.2 reads the Milne curvature
+(z = H tau + (H tau)^2 + ...) as a larger H, so the far part of an exact
+coasting throw from one point lies below the coasting form at that H.
+
+    PYTHONPATH=src python tools/hubble_readings.py artifacts/hubble [--png DIR] [--no-replay] [--from-one-point]
 """
 
 from __future__ import annotations
@@ -157,6 +171,9 @@ class Point:
     momentum_ratio: float | None
     declared: float
     own_tau: float
+    # The source's declared initial distance r_0 in Links (a GameBoard
+    # quantity), for the throw from one point.
+    initial_distance: float = 0.0
 
     @property
     def predicted(self) -> float:
@@ -355,6 +372,7 @@ def window_point(run: Run, source: Source, window: tuple[int, int]) -> Point | N
         momentum_ratio=momentum_ratio,
         declared=source.declared_speed / run.c,
         own_tau=own_tau,
+        initial_distance=float(source.initial_distance),
     )
 
 
@@ -440,10 +458,68 @@ def doppler_part(fit: Fit) -> Fit:
             p.momentum_ratio,
             p.declared,
             p.own_tau,
+            p.initial_distance,
         )
         for p in fit.points
     ]
     return fit_points(points, fit.t0)
+
+
+def from_one_point(fit: Fit, c: float) -> Fit:
+    """The same fits with every source's light-travel time reduced by
+    (r_0 / c) / (1 + z): the throw from one point. A coasting source thrown
+    from r_0 at the speed v is the source thrown from the centre at the
+    time -r_0 / v; at t_0 it is read at tau = (r_0 + v t_0) / (c + v), the
+    source from the centre at v t_0 / (c + v), so the difference is r_0 /
+    (c + v) = (r_0 / c) / (1 + z) with z = v / c. Exact for the coasting
+    throw, first order for the pushing one; r_0 is the declared initial
+    distance (a GameBoard quantity). Printed after the runs, not pinned."""
+    points = [
+        Point(
+            p.name,
+            p.lines,
+            p.z,
+            p.k,
+            p.v_record,
+            p.tau - (p.initial_distance / c) / (1.0 + p.z),
+            p.d,
+            p.v_steps,
+            p.k_replay,
+            p.v_replay,
+            p.momentum_ratio,
+            p.declared,
+            p.own_tau,
+            0.0,
+        )
+        for p in fit.points
+    ]
+    return fit_points(points, fit.t0)
+
+
+def near_fit_of_the_coasting_form(fit: Fit) -> float:
+    """What the near fit reads off an exact coasting throw from one point
+    at this window's own taus: H t_0 of the linear law through the origin
+    on z <= NEAR for z = H tau / (1 - H tau) with H = 1 / t_0 (the Milne
+    curvature (H tau)^2 read as a larger H; 1 would be an unbiased fit)."""
+    exact = [
+        Point(
+            p.name,
+            p.lines,
+            milne(p.tau / fit.t0),
+            0.0,
+            0.0,
+            p.tau,
+            p.d,
+            None,
+            None,
+            None,
+            None,
+            0.0,
+            p.tau,
+        )
+        for p in fit.points
+    ]
+    return fit_points(exact, fit.t0).hubble * fit.t0
 
 
 def find_runs(root: Path) -> list[Run]:
@@ -575,6 +651,37 @@ def print_bends(runs: list[Run], window: tuple[int, int]) -> None:
         print()
 
 
+def print_from_one_point(run: Run, fit: Fit) -> None:
+    """The `--from-one-point` block of one window: the reading and its
+    Doppler part with every tau reduced by (r_0 / c) / (1 + z), and the
+    near fit's own reading of an exact coasting form at these taus."""
+    bias = near_fit_of_the_coasting_form(fit)
+    print(
+        f"{KIND_DETECTOR} `{run.name}`: the near fit's own reading of an exact coasting throw from one "
+        f"point at this window's taus (z = H tau / (1 - H tau), H = 1 / t_0): H t_0 = {bias:.4f} "
+        "(1 would be unbiased; the far part of that exact form lies below the coasting form at this H)"
+    )
+    for label, shifted in (
+        ("the throw from one point", from_one_point(fit, run.c)),
+        ("the Doppler part alone from one point", from_one_point(doppler_part(fit), run.c)),
+    ):
+        finite = {k: v for k, v in shifted.rms_far.items() if math.isfinite(v)}
+        nearest = min(finite, key=lambda k: finite[k]) if finite else "-"
+        best = min(shifted.best, key=lambda k: shifted.best[k][1])
+        print(
+            f"{KIND_DETECTOR} `{run.name}`: {label}, every tau reduced by (r_0 / c) / (1 + z) "
+            f"(r_0 the declared initial distance {KIND_BOARD}; printed after the runs, not a pinned "
+            f"reading): the near fit's H t_0 = {shifted.hubble * shifted.t0:.4f}; the far part's rms at "
+            "that H "
+            + ", ".join(f"{k} {fmt(v)}" for k, v in shifted.rms_far.items())
+            + f", the nearest {nearest}; the best-H rms "
+            + ", ".join(
+                f"{k} {fmt(r)} (H t_0 {h * shifted.t0:.3f})" for k, (h, r) in shifted.best.items()
+            )
+            + f", the best {best}; q_eff = {fmt(shifted.q_effective, 3)}"
+        )
+
+
 def write_png(runs: list[Run], directory: Path) -> None:
     """The diagrams with matplotlib, in the given directory (the repository
     gets the numbers, not the pictures)."""
@@ -611,6 +718,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("root", type=Path, help="the folder holding the run folders")
     parser.add_argument("--png", type=Path, help="write the diagrams with matplotlib into this folder")
     parser.add_argument("--no-replay", action="store_true", help="skip the replay (the check columns)")
+    parser.add_argument(
+        "--from-one-point",
+        action="store_true",
+        help="also fit every window with each tau reduced by (r_0 / c) / (1 + z), the throw from one point",
+    )
     args = parser.parse_args(argv)
     runs = find_runs(args.root)
     if not runs:
@@ -671,6 +783,8 @@ def main(argv: list[str] | None = None) -> int:
                 + ", ".join(f"{label} {fmt(value)}" for label, value in doppler.rms_far.items())
                 + f", the nearest {nearest}; q_eff = {fmt(doppler.q_effective, 3)}"
             )
+            if args.from_one_point:
+                print_from_one_point(run, fit)
             print()
         print_bends(runs, window)
     if args.png is not None:

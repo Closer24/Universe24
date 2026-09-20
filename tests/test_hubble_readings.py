@@ -150,3 +150,41 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     assert abs(point.z - 0.5 / run.c) < 0.05
     assert abs((1.0 + point.z) / (1.0 + point.predicted) - 1.0) <= TOOL.FORMULA_TOLERANCE
     assert point.declared == 0.5 / run.c
+    assert point.initial_distance == 5.0
+
+
+def test_from_one_point_collapses_a_coasting_throw_onto_the_milne_form():
+    """The throw from one point (`--from-one-point`): exact coasting sources
+    thrown from r_0 = 3, 5, 7, 9 at t_0 = 350 read z = v / c at tau = (r_0 +
+    v t_0) / (c + v); with every tau reduced by (r_0 / c) / (1 + z) they lie
+    on the Milne form z = H tau / (1 - H tau) with H = 1 / t_0 exactly (the
+    best-H rms of q = 0 zero, its H t_0 one), while as thrown they do not;
+    and the near fit through the origin on z <= 0.2 reads an exact coasting
+    throw from one point as H t_0 > 1 (the Milne curvature read as a larger
+    H), so the far part of that exact form lies below the coasting form at
+    the near fit's H (the accelerating form's signature from a coasting
+    throw). A property of the fits, no world's numbers."""
+    c = 32 / 55
+    t0 = 350.0
+    points = []
+    for rank, fraction in enumerate(
+        (0.05, 0.15, 0.25, 0.35, 0.45, 0.6, 0.086, 0.257, 0.429, 0.6), start=1
+    ):
+        r0 = 1 + 2 * (1 + (rank - 1) % 4)
+        v = fraction * c
+        tau = (r0 + v * t0) / (c + v)
+        points.append(
+            TOOL.Point(
+                f"s{rank}", 20, v / c, 0.0, v / c, tau, tau * c, None, None, None, None, v / c, tau, r0
+            )
+        )
+    fit = TOOL.fit_points(points, t0)
+    assert fit.best["q = 0"][1] > 0.003
+    shifted = TOOL.from_one_point(fit, c)
+    assert shifted.best["q = 0"][1] < 1e-9
+    assert abs(shifted.best["q = 0"][0] * t0 - 1.0) < 1e-6
+    for p in shifted.points:
+        assert abs(p.z - p.tau / (t0 - p.tau)) < 1e-12
+    bias = TOOL.near_fit_of_the_coasting_form(shifted)
+    assert bias > 1.0
+    assert shifted.rms_far["q = -0.55"] < shifted.rms_far["q = 0"] < shifted.rms_far["q = +0.5"]
