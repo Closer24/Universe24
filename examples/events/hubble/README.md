@@ -447,3 +447,17 @@ the three forms agree within 0.005 in z, so the shape at this precision
 does not tell q = +0.5 from 0 from -0.55. The age clock bends nothing
 beyond the grain. Nothing was tuned; the five findings for the law are the
 section above.
+
+## Re-read under the step drive (2026-09-20)
+
+Every source is a lamp whose recoil changes its momentum at every
+self-creation, so the four worlds move differently under the step drive
+(a body's count of Links is the whole part of the distance its momentum
+has driven), by little: the near fit's H t_0 in the three windows and the
+late one reads 0.877, 0.969, 1.017, 0.996 in the coasting worlds (0.875,
+0.949, 1.029, 0.985 registered), 1.144 to 1.305 in `pushing_scalar` and
+0.866 to 1.057 in `pushing_age`; q = -0.55 is the nearest of the three
+forms in 8 of the 12 windows (10 of 12), `pushing_age` reading q = 0 the
+nearest in its first two; 309 readings inside and 27 outside (310 and
+26). The verdict stands as read. The register entry has every number
+([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).

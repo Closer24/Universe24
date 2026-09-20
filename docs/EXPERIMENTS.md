@@ -1190,6 +1190,19 @@ states "exactly" and means integer equality at every tick.
   -1 186 507 968 where it was 1 073 741 824; the sum of the two and the
   reads unchanged. The other eighteen worlds are byte-identical
   ([validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+- **Re-read under the step drive (2026-09-20).** The free probes of
+  `1b_m1`, `1b_m4` and `1b_m16` make the same 11 steps to the Node beside
+  the source, each one interval later than registered (the ticks 22 to
+  32 in place of 21 to 31: the probe's drive begins at 0 when the first
+  rows arrive), and hand their x component over from tick 33 (168
+  `contact` records in place of 169 from tick 32, the first hand-over
+  larger, -157 823 232 for m = 1 in place of -146 316 992); the probe's
+  momentum 0 at the end and the source's -1 185 431 936 (m = 1),
+  -3 667 985 920 (m = 4), -13 598 201 856 (m = 16) where they were
+  -1 186 507 968, -2 598 548 224, -12 541 676 544; the reads and the sum
+  of the two momenta as before. The eighteen other worlds have no free
+  body and read the same (the record's new fields aside) ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### D, the orbit under the Beam Law, on the plane (2026-09-19)
 
@@ -1443,6 +1456,29 @@ states "exactly" and means integer equality at every tick.
   is gone), C 0.30 over the run, and the probe leaves through face:+x
   at tick 260 instead of 271. The five other worlds are byte-identical
   ([validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+- **Re-read under the step drive (2026-09-20; measured, nothing
+  pinned).** The S = 1 probes read the same (they take no push; the record's
+  new fields aside).
+  The four others move differently under the step drive (2026-09-20, BEAM_LAW note 17 as amended: a body's count of Links is the whole part of the distance its momentum has driven, on its own record; a body that receives a momentum begins its drive at 0 instead of stepping off its age): `s8_r12` closes one turn
+  by the criterion's angle (T 226 in place of the derived 196, the
+  return +7 Links, the mean radius 15.83, C 1.65), turns 1.93 times and
+  leaves through face:+x at tick 571 (registered: one turn in 198, no
+  closing, out at 260); `s8_r24` reverses its angle (-0.11 turns) and
+  leaves through face:+x at tick 495 (0.93 turns, out at 449); `s32_r12`
+  closes two turns (T 474, then 236; the returns +3, -7; the mean radii
+  16.63, 10.96; C 1.29, 1.85) and leaves through face:-y at tick 1568
+  (seven precessing turns, the first in 289, bound for 2891); `s32_r24`
+  closes by the criterion, the return (-1, +1) with the heading kept, T
+  623 against the derived 687, the mean radius 23.63 within 24 +- 1, C
+  1.37, then a second turn in 464 (the return (-14, +1), the mean radius
+  18.49) before leaving through face:+x at tick 1849 (one turn in 829,
+  then fell in, out at 1054); T(24)^2 / T(12)^2 = 1.73 against the
+  expected 4 (was 8.23). The record checks 0 failed. The verdict's clause
+  "no orbit closes by the criterion at any width or radius" no longer
+  holds: the S = 32 probe at r = 24 closes once; the rest of the verdict
+  (the field's burst and the fan's grain turning the circle into a
+  precessing polygon) stands as read ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### A10, the width of an opening and the spread behind it, under the Beam Law (2026-09-20)
 
@@ -1969,6 +2005,23 @@ states "exactly" and means integer equality at every tick.
   rms of 0.009 to 0.017 (the step rule's grain).
   The surprise is a limit of the reading and an artefact of the world, not
   a finding of the law; the register keeps the verdict above as read.
+- **Re-read under the step drive (2026-09-20; measured, nothing
+  pinned).** Every source is a lamp whose recoil changes its momentum at
+  every self-creation, so all four worlds move differently under the step drive (2026-09-20, BEAM_LAW note 17 as amended: a body's count of Links is the whole part of the distance its momentum has driven, on its own record; a body that receives a momentum begins its drive at 0 instead of stepping off its age),
+  by little: the near fit's H t_0 in the windows [100, 200), [200, 300),
+  [300, 400) and [200, 400) reads 0.877, 0.969, 1.017, 0.996 in both
+  coasting worlds (registered 0.875, 0.949, 1.029, 0.985), 1.144, 1.182,
+  1.305, 1.292 in `pushing_scalar` (1.079, 1.072, 1.292, 1.235) and
+  0.866, 0.932, 1.057, 1.036 in `pushing_age` (0.912, 1.017, 1.120,
+  1.060); the throw's own coasting form against the reading rms 0.0034
+  in z (0.0033) and 1.3 intervals in tau; the detector's own clock over
+  the run 0.8275, 0.9950, 0.2925, 0.9800 self-creations per interval
+  (0.8300, 1.0000, 0.3000, 0.9750). Of the three forms, q = -0.55 is the
+  nearest in 8 of the 12 windows (10 of 12 registered): `pushing_age`
+  now reads q = 0 the nearest in [100, 200) and [200, 300). 309 readings
+  inside and 27 outside (310 and 26); the reading's formula 288 of 288
+  inside 2 %. The verdict and the follow-up stand as read ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### H, Bohr's lines behind the detector (2026-09-20)
 
@@ -2117,6 +2170,38 @@ states "exactly" and means integer equality at every tick.
   of 540, its one closing the same. The verdict stands: no orbit closed
   well enough for the coherence reading. `r6`, `r8`, `r12`, `r15` and
   `r16` are byte-identical ([validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+- **Re-read under the step drive (2026-09-20; measured, nothing
+  pinned).** Every world changes under the step drive (2026-09-20, BEAM_LAW note 17 as amended: a body's count of Links is the whole part of the distance its momentum has driven, on its own record; a body that receives a momentum begins its drive at 0 instead of stepping off its age); the design, the widths and
+  the radii are the assignment's. `r2` closes once (T 262, the mean
+  radius 3.62), turns 1.64 times and leaves through face:-y at tick 410
+  (registered under the contact: two closings, C(2) = 0.60, out at 688);
+  `r4` closes twice (T 459 and 1074, the mean radii 5.21 and 11.62), one
+  return within 0.25 r, C(2) = 1.38 (inside the between radius's bound),
+  out through face:+y at 1871 (one closing, out at 600); `r6` closes
+  three times (597, 1088, 550), C(3) = 0.52, out through face:-y at 2682
+  (no closing, out at 1045); `r8`, the design's closing radius j = 2,
+  closes four times (T 944, 588, 1209, 1281; the mean radii 8.84, 6.50,
+  11.45, 13.15; three returns within 0.25 r) and is on the GameBoard at
+  the end of 4200 intervals, the phase's turn per orbit 0.828, 0.750,
+  0.797 of a circle beyond whole circles against the design's 0, C(4) =
+  1.01 against the expected T / 2 = 2.0 (outside; two closings, C(2) =
+  0.84, out at 1864); `r12` closes five times (1454, 1658, 1416, 1334,
+  1290; the mean radii 12.46, 13.68, 11.97, 11.66, 11.37; r from 9.4 to
+  15.7), every return within 0.25 r, on the GameBoard at the end of 7400,
+  the phase's turn 0.609, 0.250, 0.141, 0.078 against 0.555, C(5) = 0.49
+  (inside, bounded; 0.95 turns and out at 2097); `r15` closes once (T
+  2291) and leaves through face:-x at 3597 (two closings, out at 4683);
+  `r16` turns 0.48 and leaves through face:-x at 1851 (one closing, out
+  at 3568). The ladder takes no ratio (fewer than two closing radii with
+  two turns; was r = 8 / r = 2 = 4.00). 3 readings inside and 1 outside
+  (1 and 2). What changed in the finding: the orbit at r = 8 and r = 12
+  now holds for the run with returns within a quarter radius, so the
+  verdict's "what the law lacked here is a stable closed orbit under
+  whole kicks" is answered by the step rule, not by a smoother field; the
+  coherence reading at the closing radius stays outside (C(4) = 1.01
+  against 2.0, the phase's turn per orbit not 0), so Bohr's lines are
+  still not read behind the detector, neither for nor against ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### I, the nucleus (2026-09-20)
 
@@ -2235,6 +2320,31 @@ states "exactly" and means integer equality at every tick.
   model owner: the scratchpad's `nucleus/nucleus.html` with the frame
   player of `nucleus.gif` (the square dispersing, one frame per 5
   intervals), published by Boss.
+- **Re-read under the step drive (2026-09-20; measured, nothing
+  pinned).** Every world changes under the step drive (2026-09-20, BEAM_LAW note 17 as amended: a body's count of Links is the whole part of the distance its momentum has driven, on its own record; a body that receives a momentum begins its drive at 0 instead of stepping off its age), the DETECTOR pushes at
+  tick 20 the same wherever the bodies have not moved: `deuteron_1` 169
+  hand-overs on p from tick 16 and 158 on n from tick 17, the largest
+  4 664 509 209 600 (191 and 148, the largest 7 152 247 454 720), no step,
+  6 of 6 inside; `deuteron_3` the first steps at ticks 33 and 34, out
+  through face:-x at 346 and face:+x at 311 (34; 358 and 285), inside;
+  `deuteron_1_kick` the kick outweighed by tick 5, no step, 168 and 157
+  hand-overs from ticks 19 and 20 (190 from 13 and 147 from 138),
+  inside; `pp_1` no step, 119 hand-overs on p1 from tick 23 and 115 on
+  p2 from tick 24 (171 on p1, none on p2), inside; `pp_1_weak` the first
+  steps at tick 118, out at 364 and 345, 120 strong reads per body (167;
+  379 and 334; 169), inside; `pp_3` the first steps at tick 68 (66), the
+  one reading outside as before; `alpha_square` disperses sooner, p4
+  stepping +x at tick 15, n2 at 22, p1 and n3 at 31, out through face:-y
+  at 125, face:+y and face:+x at 133, face:+x at 177 (57, 63, 70, 84;
+  180 to 538), so at tick 20 the bodies are no longer the design's square
+  and its two readings at that tick (the push per body, the shear) fall
+  outside, the dispersal inside; `alpha_line` holds, no step, 230, 190,
+  140 and 230 hand-overs, the label 0 after each, the largest
+  7 380 392 774 624 (257, 247, 11, 251; 16 500 521 232 560, the toy's
+  number). 27 readings inside and 3 outside (29 and 1). The verdict
+  stands: bound at one Link, free at three, the line rigid and the square
+  sheared ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### K, light beside a mass (2026-09-20)
 
@@ -2834,6 +2944,24 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   dense enough stabilises a neutron, bound or not). Nothing was tuned; no
   law changed beyond the one rule added. The page for the model owner:
   the scratchpad's `weak_impl/weak.html`, published by Boss.
+- **Re-read under the step drive (2026-09-20; measured, nothing
+  pinned).** `j3_neutron_free` reads the same (no push; the record's new fields
+  aside). Under the step drive (2026-09-20, BEAM_LAW note 17 as amended: a body's count of Links is the whole part of the distance its momentum has driven, on its own record; a body that receives a momentum begins its drive at 0 instead of stepping off its age)
+  `j3_deuteron`'s neutron fires at tick 572 (577 registered; the pinned
+  574 or up to 3 before it: inside now), the count 128590 at the trigger,
+  the shell's one beta click at 583 with the content 3, the neutron's
+  clock 626 of 700 (620); but the pair does not hold: each body makes 3
+  steps of 33 and 27 attempted (24 and 30 hand-overs; registered 0 of 39
+  and 21, every attempt refused), the GAMEBOARD reading "the pair holds
+  after the transformation" outside. `j3_deuteron_crowd`: no
+  transformation and no beta click, inside, the bodies 2 steps each of
+  35 and 29 attempted. 9 readings inside and 1 outside (10 and 0). The
+  verdict stands on the detector's readings (a step decay, a line, the
+  bound neutron later than the free one); the deuteron's holding at one
+  Link under the drive is series I's question (its deuterons hold; this
+  one, with the neutron's `become` and the shell, does not for 3 steps)
+  ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 **The W world, the exchange form at one Link (no key added).**
 
@@ -2886,6 +3014,261 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   masses fixing it, the propagator's rise, V-A; registered as the law's
   limits, nothing tuned. The page for the model owner: the scratchpad's
   `weak_impl/weak.html`, published by Boss.
+
+### L, the amplitude law (2026-09-20)
+
+- **Confronts.** The model owner's decision of 2026-09-20 (Highlights 5.4,
+  "DECIDED: `amplitude-v1` is built, with the four recommendations and the
+  four unifications"; the ten principles, the corrected sentence "the
+  world is the list of clicks"): under the world key `amplitude` the
+  GameBoard computes every path of a record, locally and exactly, and the
+  world's list of clicks is read from it by the birth phase u on the
+  ladder of the record's offers, normalised by their sum with the rungs
+  at the nearest integer ([BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  the physicist's and the mathematician's design,
+  docs/designs/amplitude-v1/DESIGN.md, every integer from its check scripts).
+  The acceptance tests of the design, written before any run: the
+  Mach-Zehnder interferometer always at one port (test 1), Elitzur-Vaidman
+  (3), determinism (8), the two slits at a low rate (2), the register's
+  replay (10), and, in the second half, the pair with the choosers (4),
+  GHZ (5), the which-path world (6), no maintenance (9) and the gate. Not
+  claimed: that quantum mechanics is solved; claimed, once the runs pass:
+  that the engine's own tables give Born, interference, Bell with exact
+  marginals and S below Tsirelson at finite N, GHZ, which-path, CNOT and
+  Grover, with the named departures and the open items.
+
+**L1, the Mach-Zehnder interferometer and Elitzur-Vaidman (the design's
+section 3.4; the acceptance tests 1, 3 and 8).**
+
+- **Model prediction, pinned before the runs
+  ([the expectations](../examples/events/amplitude/README.md#l1-the-mach-zehnder-interferometer-and-elitzur-vaidman),
+  `examples/events/amplitude/expectations.json`, written by the
+  generator from the design's `mz.txt`).** A plane of 5 x 5, K 2^20, N 64,
+  75 intervals; the source at (0, 0) births one record per self-creation
+  on two arms (the birth phase u = t - 1 at tick t: 64 births span the
+  circle and complete by tick 75), mirrors at (3, 0) and (0, 3), the
+  splitter at (3, 3) with its split table selected by the arrival
+  ((20, 21): transmitted 20, reflected 21 with the quarter turn), D1 at
+  (4, 3) and D2 at (3, 4) reading `sum`. Expected over the 64 births
+  (DETECTOR, the gathers): `mz_equal` D1 64 and D2 0 (the offers
+  1681/1682 and 1/1682); `mz_half` 0 and 64; `mz_quarter` 32 and 32;
+  `mz_balanced` ((1, 1)) 64 and 0 with D2's rows cancelled on the GameBoard
+  (GAMEBOARD); `mz_345` ((3, 4)) 63 and 1, the same u = 63 falling in D2
+  where the rung moved; the unequal arms (arm 2 two intervals longer) at
+  `phase_per_link` 0: 64 and 0, at [8, 1]: 32 and 32, at [16, 1]: 0 and
+  64; Elitzur-Vaidman `ev_29` (arm 2 absorbed at (0, 3)): absorber 32,
+  D1 17, D2 15 (D2 the dark port of the unblocked device, 15/64 against
+  the ideal 16); `ev_169` ((119, 120)): 32, 16, 16; one gather per
+  completed record, the same list on a second run of the same world
+  (determinism), the record's `total` within 0.0019 of 1 on the (20, 21)
+  worlds (the tables' rounding).
+- **Features.** The world key `amplitude`, the split (`rerelease` with
+  `weights`, `turns` and `inputs`), the normal form's cancel, the pair
+  form of `phase_per_link`, the reading `sum`, the layer and its ladder;
+  `tests/test_amplitude_record.py`, `tests/test_amplitude_split.py`.
+- **Run (2026-09-20, the ten worlds of `examples/events/amplitude/`, 80
+  intervals each, `tools/run_series.py --jobs 3`, the source fingerprint
+  `ff5c382d672f` (the stage (v) source; `a7b924b3297a` at stage (iii),
+  the same integers), every run completed and conserved at every tick,
+  0.2 s each; the readings by `tools/amplitude_path.py --check`, whose
+  replay equals `run.json`'s `world` on every run; DETECTOR unless
+  said).** The
+  gathers over the 64 births of the ticks 1 .. 64 (the design's table
+  reproduced on every world):
+
+  | world | D1 | D2 | absorber | the design |
+  | --- | --- | --- | --- | --- |
+  | `mz_equal` | 64 | 0 | | 64, 0 |
+  | `mz_half` | 0 | 64 | | 0, 64 |
+  | `mz_quarter` | 32 | 32 | | 32, 32 |
+  | `mz_balanced` | 64 | 0 | | 64, 0 |
+  | `mz_345` | 63 | 1 | | 63, 1 |
+  | `mz_unequal_f0` | 64 | 0 | | 64, 0 |
+  | `mz_unequal_f8` | 32 | 32 | | 32, 32 |
+  | `mz_unequal_f16` | 0 | 64 | | 0, 64 |
+  | `ev_29` | 17 | 15 | 32 | 17, 15, 32 |
+  | `ev_169` | 16 | 16 | 32 | 16, 16, 32 |
+
+  One gather per birth, the last of the 64 at tick 75 (76 on
+  `mz_quarter`), the 11 records born after open at the end; the same list
+  on a second run (test 8). The record's `total` (GAMEBOARD, the sum of
+  the offers in the unit 2^58) is not the design's "1 within 0.0019" for
+  every u: over the 64 births it takes 8 values, 65448/65536 to
+  65773/65536 (within 237/65536 of 1), the same 8 on every one of the
+  ten worlds, the tables' rounding (C^2 + S^2 within 361 of 65536)
+  depending on u and the sum over the ports not seeing the split
+  (unitarity); pinned as measured beside the design's bound, marked
+  failing (`tests/test_amplitude_layer.py`). The split takes no click
+  gate (the decision on the review's B1): on `mz_quarter` the two arms
+  reach the splitter a half turn apart and both split, where the crowd's
+  pointer gate would have passed them (130 passes, a which-path device
+  reading 32/32 by coincidence); on `mz_unequal_f8` the rows of two
+  records reach it together and both split.
+
+**L2, the two slits at a low rate (the design's test 2).**
+
+- **Model prediction, pinned before the run
+  (`expectations.json` under `two_slits`, the generator's reading of one
+  birth by the design's `slits_read.py` on the reference world
+  `slits_one`, independent of the layer).** The shipped 60 x 121 world
+  under the key, the lamp at rate [1, 1] with the content K (u = t - 1
+  at the birth tick t), `phase_per_link` [8591334592, 2^30], the pixels
+  `sum`, the wall freed within 6 of each opening (every fan row leaves
+  the plane) and the lamp's three rows that miss the openings absorbed at
+  (7, 58), (7, 60), (7, 62) (a fan row and a lamp row at one set would
+  carry the multiplicities 455 and 5, refused). The reading, coherent
+  within one Node and incoherent across the Nodes of a set (the decision
+  of 2026-09-20 on the owner's point 5; a face of 24 Nodes hit is one
+  cell of the sum of its Nodes' squares): 80 sets with rows (3 wall Nodes,
+  75 pixels, the faces +y and -y), the total 847181/745472 = 1.136 of the
+  birth norm (the wall's rows 3/5, the fans 2/5, the cross terms of paths
+  meeting at one Node: 27 pixels receive two paths), the shares wall
+  0.528, screen 0.244, faces 0.228; the clicks over the 64 births by the
+  ladder: wall 34 (11, 12, 11), screen 15 (one each at y = 11, 29, 36, 43,
+  50, 56, 59, 60, 70, 77, 82, 90, 107 and two at 61), faces 15 (8, 7);
+  Pearson of the record's screen weights 0.744 with the incoherent sum,
+  0.368 with the Euclidean two-source cosine (the design's
+  shipped-geometry 0.753 and 0.381), the screen-alone histogram 0.931
+  with the weights (0.963). The design's "wall 3/5, screen 2/5" is not
+  this geometry's reading: the freed fans reach the open faces in y, a
+  third destination. (Before the per-Node decision the faces summed their
+  rows coherently, the total 1.258 and the shares 0.477 / 0.221 / 0.302,
+  the clicks 31 / 14 / 19: dated history of the same day.)
+- **Run (2026-09-20, `slits_low`, 230 intervals, 2.4 s, the fingerprint
+  `ff5c382d672f`, completed and conserved; `slits_one` 220 intervals
+  without the key, 0.7 s).** DETECTOR: 64 gathers of the 64 births by
+  tick 213 (the births go on: 230 records, 81 gathered, 149 open at the
+  end); the first record's cells are the reading's 80 sets with the
+  reading's rungs, its weight and total the reading's exactly, its click
+  at the wall Node (7, 58, 0) with the content 1; the clicks per set equal
+  the reading's on every one of the 80 sets (wall 34, screen 15, faces
+  15; a face's click at a Node of its edge); 3 distinct cell lists over
+  the 64 births, 32 with u = 0's (the tables' rounding by u, no rung
+  moved); the reading tool's replay equals `run.json`'s `world`.
+
+**L3, the pair with the choosers, the CHSH labels, the which-path world
+and no maintenance (the design's section 4; the acceptance tests 4, 6
+and 9).**
+
+- **Model prediction, pinned before the runs (`expectations.json` under
+  `pair`, the design's `bell.py` in the generator).** The registered A2
+  world under the key (the lamp's `arms` 2 and `branches` [[0, 1], [3,
+  1]], Alice's arm first; the four counters reading `sum`; at the CHSH
+  labels the chooser sources removed and the windows the integers). The
+  cells (oA, oB) over the 64 births: (0, 8) 27, 5, 5, 27 (E x 64 = 44);
+  (0, 24) 5, 27, 27, 5 (-44); (16, 8) and (16, 24) 27, 5, 5, 27 (44); S =
+  176/64 = 2.75 (2 sqrt 2 = 2.828; the discreteness: S = 2 sqrt 2 -
+  epsilon(N), the design's epsilon at most 4/N, not met at N = 64: 0.078
+  against 0.0625, as the design's own |E - cos| at this N, 0.0352 over
+  all pairs, is above 1/N); every marginal 32/64. The choosers'
+  15 setting pairs: E x 64 = 44, -60, 20, 60, -8, -48, -8, 60, -52, -64,
+  40, 20, -28, -36, 64 for a in (0, 12, 25, 38, 51) by b in (8, 29, 51);
+  on the registered quadruple (0, 25) x (8, 29) S = 156/64 = 2.4375 (2
+  exactly under A2's window gate). The which-path `read` on Alice's arm:
+  E x 64 = 44, -44, 0, 0, S = 88/64. Bob's counters 116 Links farther:
+  E(16, 24) x 64 = 44 (44 with the read: 0).
+- **Run (2026-09-20, `examples/events/amplitude/bell_*`, `path_*`, the
+  fingerprint `ff5c382d672f` (`ccb244fc112f` at stage (iv), the same
+  integers), every run completed and conserved, 0.2 s
+  each, `bell_choosers` 1000 intervals 3.3 s; the reading tool's replay
+  equals `run.json`'s `world` on every run; DETECTOR).** Every integer
+  above reproduced: the CHSH cells and E, S = 176/64, the marginals 32/64
+  exact (Alice + for u < 32), the 15 pairs' E and S = 156/64 on the
+  registered quadruple, the which-path E and S = 88/64, the far counters
+  E 44 and 0 with every record gathered at least 200 intervals after its
+  birth (`tests/test_amplitude_pair.py`). The tables' rounding does not
+  enter: both arms' rows carry the one phase u, whose factor is common
+  to every cell.
+
+**L4, GHZ (the design's 4.5; the acceptance test 5).**
+
+- **Model prediction, pinned before the run (`expectations.json` under
+  `ghz`).** Three arms on a plane of 7 x 7 (`branches` [[0, 1], [7, 1]]),
+  the counters' setting 16 with the turn 0 (X) or 16 (Y): XXX allows
+  +++, +--, -+-, --+ (16 births each, the product +1) and XYY, YXY, YYX
+  allow ++-, +-+, -++, --- (the product -1), the other four triples of
+  weight exactly 0 (39588699237876835586664300544 on the allowed, in
+  1/256^12); YYY allows all eight, 8 each.
+- **Run (2026-09-20, `ghz_xxx` .. `ghz_yyy`, 80 intervals, the
+  fingerprint `ff5c382d672f`, completed and conserved, 0.2 s each;
+  DETECTOR).** Every triple and count as pinned; the register's replay
+  equals `run.json`'s `world`.
+
+**L5, the gate between records (the design's section 10).**
+
+- **Model prediction, pinned before the runs (`expectations.json` under
+  `gate`, the design's `gate.py` on the host's joint state).** The
+  Hadamard on the GameBoard (a `rerelease` with `rotate` at the setting
+  N/4) turns |0> into {00: +, 10: -} (the amounts 181 of the 128 tables,
+  the phases u and u + 32, the multiplicity 65536); the CNOT at a gate
+  with the target's |0> gives {00: +, 11: -}, the pair; with Bob's window
+  at -b the CHSH labels give E x 64 = 44, -44, 44, 44, S = 176/64 (as
+  4.3); CNOT twice is the identity; GHZ by one gate of three parties
+  gives {000, 111} and the products -1 (XXX), +1 (XYY, YXY, YYX), this
+  convention's H; the register's ceiling: three label rotations on a
+  path (m = 2^48) fit, four (2^64) do not, Grover's six (2^96) are not a
+  world of the GameBoard, as the design's section 10 states (exact on the
+  host's integers, not on a Node); after n gates a record has at most
+  n x 2^n rows (the pair 4, GHZ 6).
+- **Run (2026-09-20, `cnot_pair_<a>_<b>`, `cnot_twice`, `cnot_ghz_*`,
+  `rotations_3`, the fingerprint `ff5c382d672f`, completed and
+  conserved, 0.3 s each; `rotations_4` refused at load).** Every integer
+  above reproduced on the GameBoard: the Hadamard's rows, the gate's rows
+  (the `gate` lines: the survivor, the joined record, the labels
+  [[0, 1], [3, 1]], 4 rows; GHZ [[0, 1], [7, 1]], 6 rows), S = 176/64,
+  CNOT twice's labels {0, 1} on both arms, GHZ's allowed triples and
+  products; the reading tool's replay equals `run.json`'s `world`
+  (`tests/test_amplitude_gate.py`). Departures: the gate joins records of
+  distinct lamps (one per lamp, the earliest born), the control the
+  record arriving on the entry's declared `control` direction, and acts
+  when rows of `parties` emitters are pending; a record that reaches a
+  gate with units elsewhere or an offer already made is refused (the
+  design's lazy relabelling of rows elsewhere is not built: two
+  sequential gates on an entangled record are one gate of three parties
+  here, or one gate per arm as in `cnot_twice`). Re-run after the review
+  of (v) (the gate's copies booked on the live count, the control
+  declared, the hold local): every integer above unchanged.
+
+**L6, the pair at N = 1024 and N = 4096 (the owner's paper numbers).**
+
+- **Model prediction, pinned before the runs (`expectations.json` under
+  `pair_n`).** The registered A2 board at the CHSH labels 0, N/8, N/4,
+  3N/8, one birth per u: S = 2896/1024 = 2.828125 at N = 1024 (the
+  design's), E x 1024 = 724, -724, 724, 724, |E - cos| <= 1/N on every
+  pair; S = 11584/4096 = 2.828125 at N = 4096, E x 4096 = 2900, -2900,
+  2892, 2892 against the cosine's 2896.3: the tables' entries in 1/256
+  round E by 0.0009, beyond 1/4096 = 0.00024, so the design's bound
+  |E - cos| <= 1/N holds at N = 1024 (0.00008 against 0.00098) and not
+  at 4096, nor at 64 (0.0196 against 0.0156), while S = 2 sqrt 2 -
+  epsilon with epsilon at most 4/N holds at 1024 and 4096 (0.0003) and
+  not at 64 (0.078 against 0.0625); S stays below 2 sqrt 2 = 2.828427
+  at every N. At N = 4096 the half-angle tables of 2N do
+  not exist: an even setting reads the 4096 table at s / 2.
+- **Run (2026-09-20, `bell_n1024_*` 1044 intervals 1.9 s each,
+  `bell_n4096_*` 4116 intervals 8.4 s each, the fingerprint
+  `ff5c382d672f`, completed and conserved; DETECTOR).** Every count the
+  reading's; S = 176/64, 2896/1024, 11584/4096 (2.75, 2.828125,
+  2.828125); the births counted by the record's ordinal (a lamp's clock
+  skips a step as the births spend its content: 4096 births take 4099
+  intervals); the reading tool's replay equals `run.json`'s `world`.
+
+**L, open items (2026-09-20, after (v)).** The one click (the design's
+section 6) is not landed: the record form as the default changes worlds
+outside the crowd-threshold series on the gate set
+([MIGRATION](MIGRATION.md), (vi)), so the key `amplitude` stays. The K
+finding under the record's click (the lensing worlds of `mass_meeting`
+under the key, the coordinator's record of 2026-09-20): the record's
+click beside the mass moved to smaller y against the control's in every
+world, -2.115, -5.208 and -4.432 pixels at the three (M, b) against the
+crowd's -2.021, -4.345 and -2.465, and the 464 records that reached the
+mass were absorbed whole by it; the two changes it asks for, u as the
+record's own field beside the running phase and a row's push by its share
+amount^2 / (m x norm) of the label, are the next item ([BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(ix)). The pushes are untouched by the columns: a branched row pushes
+matter by its amount as every row does (the owner's (c), the sum over the
+branches). Not built: unification (3) (refused: three columns under three
+keys), Grover (six rotations beyond the register's ceiling), two
+sequential gates on an entangled record, the full register replay.
 
 ### A3. Bell test in phase form, delayed geometry
 
@@ -4472,6 +4855,14 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   (design of 2026-09-17), with its finding that the Port-form corner and
   the Born table give no content ladder and that the ladder needs the
   ring's turn produced by its own field.
+  Closed by decision (the model owner, 2026-09-20, issue #369; Highlights
+  5.4 and the log's record 106): the masses and the charges are the
+  initialisation, the catalog's declared contents and charge per unit, not
+  derivable in the Beam Law (the standalone map of the paid exchange
+  reproduces the engine and selects no content); the rungs are inputs and
+  there is nothing to count. Kept as history; the number A10 also names the
+  Heisenberg run registered below under the Beam Law, a different
+  experiment.
 
 ### A11. The wide-phase run at the real N
 

@@ -15,6 +15,10 @@ from event_universe.events.world import (
     BEAM_LAW,
     CHARGE_INDEX,
     MOMENTUM_BOUND,
+    SUM_READING,
+    Gate,
+    Rotation,
+    Split,
     Transformation,
 )
 
@@ -54,6 +58,26 @@ class PendingRow(NamedTuple):
     phase: int
     first: int = 0
     thrown: bool = False
+    # The amplitude law's columns the row carries into its re-creation (the
+    # record, the branch and the multiplicity of the arriving row; 0, 0, 1
+    # for a row of no record) and `split`, whether the re-creation is the
+    # split by the entry's weights (a `rerelease` under the key) or the
+    # apportioning as it was (a home, a product, every row without the key).
+    record: int = 0
+    branch: int = 0
+    multiplicity: int = 1
+    split: bool = False
+    # The direction the row arrived on (the split's table selects its row
+    # of weights by it); `offered`, whether the row ended at this re-emitter
+    # with an offer (a `sum` re-emitter: the layer counted its units as
+    # ended, the split re-creates them); and `rebirth`, whether the row's
+    # record was gathered at this re-emitter, so that its re-creation is a
+    # new record. A row absorbed at a re-emitter that does not offer stays
+    # live in the layer until its re-emission: the record is not complete
+    # while units wait at a mirror.
+    arrival: int = 0
+    offered: bool = False
+    rebirth: bool = False
 
 
 Pending = PendingRow
@@ -148,7 +172,26 @@ class DetectorSet:
 
     @property
     def wave(self) -> bool:
-        return self.reading == "wave"
+        """The pointer's reading, at either scope: `wave` and, under the
+        amplitude law, `sum` (the set's phase as under `wave`)."""
+        return self.reading in ("wave", SUM_READING)
+
+    @property
+    def sum(self) -> bool:
+        """The pointer's reading at the record's scope (the amplitude law):
+        no pointer gate, the record the layer's per record."""
+        return self.reading == SUM_READING
+
+    @property
+    def scope(self) -> str | None:
+        """The one pointer's scope (the owner's unification (4), BEAM_LAW
+        note 37): `crowd` under `wave` (the interval's arrivals of every
+        number, the gate and the record per interval), `record` under `sum`
+        (one record's rows over its lifetime, the record at its completion);
+        None for the amount reading `beam`."""
+        if self.reading == SUM_READING:
+            return "record"
+        return "crowd" if self.reading == "wave" else None
 
 
 @dataclass
@@ -230,6 +273,13 @@ class Measured:
     waited: int = 0
     turned: int = 0
     steps: int = 0
+    # The step drive (2026-09-20; BEAM_LAW note 17 as amended, records 107 and 108):
+    # per axis the distance the momentum has driven since the last step, in
+    # label units, `drive_a < Q S M + |p_a|`, one bounded integer on the
+    # body's own record (as its age is) and nothing at a Node; and per axis
+    # the Links stepped, the k0 of the turn by momentum.
+    drive: list[int] = field(default_factory=lambda: [0, 0, 0])
+    axis_steps: list[int] = field(default_factory=lambda: [0, 0, 0])
     taken: list[dict[str, int]] = field(default_factory=list)
     clicks: list[int] = field(default_factory=list)
     pushed: list[int] = field(default_factory=lambda: [0, 0, 0])
@@ -245,6 +295,23 @@ class Measured:
     # the (family, offset) whose rows at the set give the entry's centre,
     # None where the centre is declared or absent (`windows`).
     window_reads: tuple[tuple[int, int] | None, ...] = ()
+    # The split (the amplitude law): per family the entry's `Split` (the
+    # weight rows over the event's directions by the arrival), None where
+    # none is declared; the lamp's `turns` per direction; `births` the
+    # records this event has born (the ordinal of the next record's
+    # identity, the event's number x 2^32 + the ordinal).
+    splits: list[Split | None] = field(default_factory=list)
+    lamp_turns: tuple[int, ...] = ()
+    # The lamp's joint labels with their weights and its arms (the pair).
+    lamp_branches: tuple[tuple[int, int], ...] = ((0, 1),)
+    lamp_arms: int = 1
+    births: int = 0
+    # The turn of each entry's rotation on a `sum` set (the label click's
+    # `turn` key, 0 by default), per family; the label rotation and the
+    # gate of a `rerelease` entry per family (`world.Rotation`, `world.Gate`).
+    label_turns: list[int] = field(default_factory=list)
+    rotations: list[Rotation | None] = field(default_factory=list)
+    gates: list[Gate | None] = field(default_factory=list)
     # The interval's frame, set by the engine: whether this interval is a
     # self-creation, the age before it, the turn read off the clock and the
     # content the frame read (`frame_content`, M_A of the push: taken once
@@ -366,6 +433,8 @@ class Measured:
             "waited": self.waited,
             "phase_steps": self.turned,
             "steps": self.steps,
+            "drive": list(self.drive),
+            "axis_steps": list(self.axis_steps),
             "measured": [dict(entry) for entry in self.taken],
             "events": list(self.clicks),
             "pushed": list(self.pushed),
@@ -430,6 +499,15 @@ class Ledger:
     # units in transit, weight x (u_d' - u_d) summed, a report as `pushed`
     # is; zero without the world key `meeting`.
     turned_momentum: list[list[int]] = field(default_factory=list)
+    # The `cancelled` lines (the amplitude law, 2026-09-20; BEAM_LAW note
+    # 37): per family the units the merge's cancel removed (two rows of one
+    # record in antiphase), the content they carried and their labels, so
+    # that the transit, content and momentum lines close under the key:
+    # initial + released = current + escaped + absorbed + cancelled. Zero
+    # without the key (no row carries a record).
+    cancelled_amount: list[int] = field(default_factory=list)
+    cancelled_content: list[int] = field(default_factory=list)
+    cancelled_momentum: list[list[int]] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         count = self.families
@@ -446,10 +524,13 @@ class Ledger:
             "lifetime_record",
             "units_escaped",
             "held_became",
+            "cancelled_amount",
+            "cancelled_content",
         ):
             setattr(self, name, [0] * count)
         self.lifetime_momentum = [[0, 0, 0] for _ in range(count)]
         self.turned_momentum = [[0, 0, 0] for _ in range(count)]
+        self.cancelled_momentum = [[0, 0, 0] for _ in range(count)]
         for port in self.open_faces:
             self.face_amount[port] = [0] * count
             self.face_content[port] = [0] * count
@@ -492,3 +573,8 @@ class Ledger:
         """The `turned` line summed over the families: what the meetings moved
         the transit momentum line by, in all."""
         return [sum(self.turned_momentum[f][axis] for f in range(self.families)) for axis in range(3)]
+
+    def cancelled_momentum_total(self) -> list[int]:
+        """The labels the merge's cancel removed, summed over the families
+        (the amplitude law)."""
+        return [sum(self.cancelled_momentum[f][axis] for f in range(self.families)) for axis in range(3)]

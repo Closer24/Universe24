@@ -38,6 +38,7 @@ event_universe = ["ui_assets/*.html", "ui_assets/*.css", "ui_assets/*.js"]
 ]
 
 "share/event-universe/examples/detector/entities" = ["examples/events/detector/entities/*.json"]
+"share/event-universe/examples/entities" = ["examples/events/entities/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
