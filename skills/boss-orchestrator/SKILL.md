@@ -35,6 +35,12 @@ GIF or the frames and carries the run's readings beside it: the world, the
 plane shown, the scale of each region, the intervals per frame. A bare GIF is
 never the deliverable. The page is in English, like every artefact.
 
+**Every experiment is made under the experimenter's skill (model owner,
+2026-09-20: "the GameBoard is not measurable by a human").** Boss gives every
+research run to an agent under [experimenter](../experimenter/SKILL.md),
+which measures only behind a detector or at an external thing and labels
+every number a detector reading or a GameBoard reading.
+
 **Every experiment ends in a results page (model owner, 2026-09-20).** Boss
 adds to every experiment's brief the page contract of the
 [simulation runner](../simulation-runner/SKILL.md): the GameBoard drawn with
@@ -167,6 +173,7 @@ and failure analysis to the test owner; Boss coordinates the returned results.
 | Physical-engine validation | [physics-rule-validation](../physics-rule-validation/SKILL.md) |
 | Focused tests | [test-runner](../test-runner/SKILL.md) |
 | Reproducible execution | [simulation-runner](../simulation-runner/SKILL.md) |
+| A real experiment, measured behind a detector or at an external thing | [experimenter](../experimenter/SKILL.md) |
 | Regression | [regression-check](../regression-check/SKILL.md) |
 | PR review/merge | [pr-review-and-merge](../pr-review-and-merge/SKILL.md) |
 

@@ -49,6 +49,7 @@ kept, their pins the law of events').
 | `test_integer_arithmetic.py` | The shared bounded integer primitives |
 | `test_retention.py` | Generated-output ownership, lifetime and cleanup |
 | `test_check_scope.py` | The affected-check's selection |
+| `test_coupling_readings.py`, `test_orbit_readings.py`, `test_heisenberg_readings.py` | The tools read the engine (the architecture review of 2026-09-20): each reading of `tools/coupling_readings.py`, `tools/orbit_readings.py` and `tools/heisenberg_readings.py` equals the engine's own function on a minimal board (the front off `manhattan_steps`, the step rule and the release off `by_clock`, the push off `unit_label`, the fan's labels off `flight_table`, the detector records off `DetectorSet`, the declared charge per unit of content); the expected integers are in each module's docstring |
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the integer audit of `core/`, and LOCALITY-1 documented without an exception |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 

@@ -56,6 +56,14 @@ what the law lacked, if anything. The page is written to the scratchpad (not
 the repository) and Boss publishes it as an artifact; the numbers stay in the
 register.
 
+**Two kinds of readings (model owner, 2026-09-20: "in reality there is no
+such thing").** Label every registered number: a detector reading (the record
+of a detector's set or of a measured event in the world; the only kind
+reality has) or a GameBoard reading (the host's view of the board: positions,
+counts per Node, shell means, the books; a picture or a bookkeeping check,
+never the measurement). A comparison with nature uses detector readings
+only; a readings tool prints which kind each line is.
+
 For authorized physics comparisons, apply the shared
 [physics comparison method](../workflow.md#physics-comparison-method).
 Its standing HTML requirement counts as an explicit visualization request for
