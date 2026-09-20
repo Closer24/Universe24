@@ -24,8 +24,9 @@ table generated from the keys"), written down first:
     (`FamilyDefinition.free`); the unit label is 1 for a free family and
     the quantum for a paid one; `kind` is refused naming the removal and
     MIGRATION whatever its value; a family without `quantum` is refused
-    naming the key; a negative quantum is refused; a charge on a paid family
-    is refused naming its quantum; a charge on a free family and a lamp on
+    naming the key; a negative quantum is refused; a fractional charge on a
+    paid family is refused (since 2026-09-20, D-1: whole per unit of amount;
+    until then any charge on a paid family was refused naming its quantum); a charge on a free family and a lamp on
     a paid family are accepted, and a lamp on a free family refused;
 (d) the example worlds: every world of `examples/events/` (the Bell and
     coupling worlds, the four top-level worlds, the four detector worlds
@@ -159,9 +160,12 @@ def test_the_kind_is_derived_from_the_quantum_and_never_declared():
     refused(world([{"name": "m"}]), "families\\[0\\] lacks keys: quantum")
     refused(world([{"name": "m", "quantum": -1}]), "families\\[0\\].quantum must be an integer from 0")
     refused(
-        world([{"name": "m", "quantum": 2, "charge": 1}]),
-        "a paid family \\(quantum 2\\) carries no charge \\(m\\)",
+        world([{"name": "m", "quantum": 2, "charge": [1, 2]}]),
+        "a paid family's charge is per unit of amount and whole",
     )
+    assert parse_nature_beam_world(world([{"name": "m", "quantum": 2, "charge": 1}])).families[
+        0
+    ].charge == (1, 1)
     charged = parse_nature_beam_world(world([{"name": "m", "quantum": 0, "charge": -3}]))
     assert charged.families[0].charge == (-3, 1) and not hasattr(charged.measured[0], "charge")
     halves = parse_nature_beam_world(world([{"name": "m", "quantum": 0, "charge": [1, 2]}]))

@@ -123,8 +123,11 @@ bound passed silently); the refusal names the Node and the amount.
 World-file keys added: `"law": "beam"`; per family `charge`, since
 2026-09-20 the charge per unit of content rho, an integer c (the pair
 `[c, 1]`) or a pair `[n, d]` with d from 1 (a measured event's charge is
-rho times its content, a report; refused on a paid family unless 0, and
-refused with a denominator of 0 or a part that is not an integer); the
+rho times its content, a report; on a paid family since 2026-09-20 the
+whole charge per unit of amount, an integer, read on the charge line of the
+books alone, D-1, note 34 (ii); refused with a denominator of 0 or a part
+that is not an integer, and on a paid family with a denominator other than
+1); the
 key `charge` on a measured event is refused naming MIGRATION; since
 2026-09-20 (note 31; the model owner, "one mechanism for all the laws on
 the GameBoard") per family `columns`, an object of column name to
@@ -950,10 +953,12 @@ implementation's part of the contract. The design above is unchanged.
     one function that gives every measured event its table (section 2);
     `FamilyDefinition.free` is `quantum == 0`; the constraints the parser
     kept are expressed through the quantum and not widened: a charge is
-    refused on a paid family (h >= 1), a lamp on a free one, a free unit
+    refused on a paid family (h >= 1; lifted on 2026-09-20 by D-1, note 34
+    (ii): a paid family's whole charge per unit of amount on the charge
+    line), a lamp on a free one, a free unit
     carries no content and its label is `amount x D` (the mathematician's
     note that "paid => q = 0 and free => h = 1 are decisions, not
-    necessities" is recorded, not acted on). `quantum` is required: a
+    necessities" is recorded; the first was acted on by D-1). `quantum` is required: a
     default would be an implicit kind. The record (`run.json`) carries
     `quantum` per family and no `kind`. Every example world parses to the
     same `NatureBeamWorld` as before the change (checked structure by structure
@@ -1968,3 +1973,43 @@ implementation's part of the contract. The design above is unchanged.
     survived one reader survives every identical reader behind it). No
     identity: no law changed; the neutrino is a free family with a phase
     circle, no charge and no content, gated by a reader's window.
+    **(ii) A paid family's charge per unit of amount, D-1** (the model
+    owner, 2026-09-20, "go on everything", item (2): "a paid family may
+    declare a whole charge per unit of amount, read on the charge line
+    only, the push untouched"; the physicist's design, WEAK.md 1.5, the
+    mathematician's note that "paid => q = 0" was a decision and not a
+    necessity; `tests/test_paid_charge.py` (a) to (e)). The wording of the
+    law: the charge of a measured event is rho times its content for a
+    free family and the declared whole charge times the amount for a paid
+    family. The family key `charge` on a paid family is an integer c (a
+    pair with a denominator other than 1 is refused: a charge per whole
+    unit is whole), the whole charge of one unit of amount, and it is read
+    in one place, the charge line of the books: per measured event the
+    free families' rho x content held (as before) plus the paid families'
+    c x the units it holds (`Measured.units`: the units it clicked and the
+    units waiting to be created again, at home, re-released or a product;
+    `Measured.charges` and the report `Measured.charge`), plus per paid
+    family c x the rows in transit (the transit line's running current) and
+    c x the units escaped (the rows through the faces and the border with
+    the units that stepped off with a body, `Ledger.units_escaped`): the
+    line is conserved exactly through the flight of a charged paid row,
+    its click, its home and re-creation, its escape and the escape of the
+    body that holds it (tests (a) to (d)), and it will be through a
+    transformation ((iii)). Nothing of the push changes: the paid family's
+    `charge` column value stays (0, 1) (`FamilyDefinition.column_charge`),
+    so the frame's `frame_charges` (`Measured.charges(for_push=True)`, the
+    reader's side of the push) leave the paid units out, a paid ray's push
+    stays its label, and a charged free reader reading a charged paid row
+    takes the label alone (test (a): (64, 0, 0) with the beta charge -1
+    and 0 alike). Refused naming the key: a fractional charge on a paid
+    family; a lamp on a measured event of a charged paid family (what the
+    implementation decided where the design was silent: a lamp's releases
+    would create charge from nothing, the lamp's own content being content
+    and not units; a charged paid family is born by a transformation or
+    declared in transit). The record: `run.json` carries the family's
+    `charge` as declared ([c, 1]) and its `charge` column value [0, 1];
+    the books' `charge` pair is the extended sum, the same pair as before
+    in every world without a charged paid family. No identity: a report of
+    the books. Checked on the 85 example worlds: byte-identical in
+    `events.jsonl`, `state.json` and `run.json` (VALIDATION.md; no
+    registered world declares a charge on a paid family).

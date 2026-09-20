@@ -33,6 +33,7 @@ integer).
 | After | Source fingerprint | `events.jsonl` | `state.json` raw / normalized | `run.json` (stable) raw / normalized | Keys added to the record |
 | --- | --- | --- | --- | --- | --- |
 | (i) the window's width `phase_width` (N / 2 by default) | `55f30af0309c2812646384a0caf4d16a956e5ae525df878a008c6bf075e90941` | 85 identical, 0 changed | 4 / 85 identical | 4 / 85 identical | `widths` per measured event (None where no width is declared) |
+| (ii) D-1, a paid family's whole charge per unit of amount on the charge line | `b28c5865ec143004b36203e8aad70a4bed65f80896cc6b5f526f6d71748732b6` | 85 identical, 0 changed | 4 / 85 identical (the `widths` of (i) alone) | 4 / 85 identical (the same) | none (no registered world declares a charge on a paid family) |
 
 No registered series moves (C, 7, D, E, G, H, I, K, Bell, A10, the
 catalog): every reading of the register is the same integer under the
@@ -43,7 +44,8 @@ nucleus worlds whose bodies all left the GameBoard, so their final states
 hold no measured event for the key to enter). The commands: `python -m
 event_universe --init <world> --output <dir>` per world, four at a time,
 the outputs digested and pruned; `python tools/check.py --base 6a596b34`
-green after the commit (487 tests selected).
+green after the commit (487 tests selected), `--base 2605f75f` green after
+(ii) (464 tests).
 
 **Series J2, the neutrino's passage through a filled bar** (the register
 entry [J, the weak force (2026-09-20)](EXPERIMENTS.md#j-the-weak-force-2026-09-20)):

@@ -67,10 +67,22 @@ the model owner, 2026-09-19):
   carries that content and the momentum quantum x s along its direction,
   and a click measures it, E = h f), for a free family its `charge`, the
   charge per unit of content, rho, an integer or a pair `[n, d]` (d from
-  1; an integer c is `[c, 1]`; 0 by default; refused on a paid family; the
-  model owner's decision of 2026-09-20, Highlights 5.4: a measured event's
-  charge is rho times its content, and the electric push is one product
-  per arriving free ray, M_A x (rho_A rho_B - 1) x V_B), and since the
+  1; an integer c is `[c, 1]`; 0 by default; the model owner's decision
+  of 2026-09-20, Highlights 5.4: a measured event's charge is rho times
+  its content, and the electric push is one product per arriving free
+  ray, M_A x (rho_A rho_B - 1) x V_B), for a paid family since the same
+  day its `charge` as a whole charge per unit of amount (D-1, the
+  physicist's design of the weak force and the owner's "go on
+  everything", item (2); BEAM_LAW note 34 (ii)): an integer c, a pair
+  with a denominator other than 1 refused, read on the charge line of the
+  books only, so that the charge of a measured event is rho times its
+  content for a free family and the declared whole charge times the
+  amount (the units it clicked) for a paid family; the push is untouched
+  (a paid ray pushes by its label, and the paid family's electric column
+  value stays 0), and a lamp on a measured event of a charged paid family
+  is refused (its releases would create charge from nothing: a charged
+  paid family is born by a transformation or declared in transit), and
+  since the
   same day the columns (the model owner, Highlights 5.4, "one mechanism
   for all the laws on the GameBoard"; the mathematician's verified form,
   the identity `columns-v1`): the push is a signed inner product over the
@@ -196,7 +208,9 @@ the model owner, 2026-09-19):
 Refused, naming the key: `kind` on a family (the quantum decides it),
 `charge` on a measured event (since 2026-09-20 the charge is the family's
 per unit of content, docs/MIGRATION.md), a family `charge` whose
-denominator is 0 or whose parts are not integers, a detector named as a
+denominator is 0 or whose parts are not integers, a paid family's `charge`
+with a denominator other than 1, a lamp on a measured event of a charged
+paid family, a detector named as a
 face detector is (`face:+x` and the five others), `headings` on a lamp
 (`directions` replaces it),
 `heading` on a ray in transit (`direction` replaces it), a column named
@@ -434,13 +448,16 @@ class FamilyDefinition:
     """One family of the world: its name, the content of one unit of it per
     phase step of its emitter's turn (`quantum`, h; 0 for a free family,
     1 or more for a paid one: the kind is derived, never declared), its
-    charge per unit of content (`charge`, rho, the pair (n, d) with d from
-    1: a measured event of the family of content M carries the charge
-    rho x M, and its rays push a charged reader by rho; (0, 1) for a paid
-    family, whose rays push by their content), its columns (`columns`:
-    gravity first, charge second, the declared columns after, aligned by
-    index across the families of the world; `charge` stays the value of
-    the second), whether it has a phase circle, the phase steps its rays
+    charge (`charge`: for a free family the charge per unit of content,
+    rho, the pair (n, d) with d from 1, a measured event of the family of
+    content M carrying rho x M and its rays pushing a charged reader by
+    rho; for a paid family, since 2026-09-20 (D-1), the whole charge per
+    unit of amount, the pair (c, 1), read on the charge line of the books
+    alone: its rays push by their label and its `charge` column value is
+    (0, 1)), its columns (`columns`: gravity first, charge second, the
+    declared columns after, aligned by index across the families of the
+    world; `charge` is the value of the second for a free family), whether
+    it has a phase circle, the phase steps its rays
     turn per Link crossed, and its `lifetime` (L, or None for ever: the
     age at which an event in transit of the family clicks on the border
     `lifetime` instead of making its next event, the range of the family's
@@ -456,9 +473,18 @@ class FamilyDefinition:
 
     def __post_init__(self) -> None:
         # A family made without its columns (the tests' bare definitions,
-        # the migration tool) carries the two built-in ones.
+        # the migration tool) carries the two built-in ones; a paid
+        # family's electric column is 0 (its charge is per unit of amount,
+        # read on the charge line, never by the push).
         if not self.columns:
-            object.__setattr__(self, "columns", built_in_columns(self.charge))
+            object.__setattr__(self, "columns", built_in_columns(self.column_charge))
+
+    @property
+    def column_charge(self) -> tuple[int, int]:
+        """The value of the family's `charge` column: rho for a free family,
+        (0, 1) for a paid one (D-1: a paid family's charge is per unit of
+        amount and is read on the charge line only)."""
+        return self.charge if self.free else NO_CHARGE
 
     @property
     def values(self) -> tuple[tuple[int, int], ...]:
@@ -1044,8 +1070,12 @@ def _families(
             if charge_value is not None
             else _signed_ratio(obj.get("charge", 0), f"families[{index}].charge")
         )
-        if quantum != FREE_QUANTUM and charge[0]:
-            raise ValueError(f"{BEAM_LAW}: a paid family (quantum {quantum}) carries no charge ({name})")
+        if quantum != FREE_QUANTUM and charge[1] != 1:
+            raise ValueError(
+                f"{BEAM_LAW}: families[{index}].charge: a paid family's charge is per unit of "
+                f"amount and whole (an integer; the pair {list(charge)} is refused on {name!r}; D-1, "
+                "2026-09-20)"
+            )
         for column, ((numerator, _), sign) in columns.items():
             if quantum != FREE_QUANTUM and numerator:
                 raise ValueError(
@@ -1090,7 +1120,7 @@ def _families(
             family.phase,
             family.phase_per_link,
             (
-                *built_in_columns(family.charge),
+                *built_in_columns(family.column_charge),
                 *(
                     Column(column, columns.get(column, (NO_CHARGE, 0))[0], signs[column][0])
                     for column in names
@@ -1390,6 +1420,12 @@ def _measured(
         if "lamp" in obj:
             if families[family].free:
                 raise ValueError(f"{BEAM_LAW}: {label}: a lamp is a measured event of a paid family")
+            if families[family].charge[0]:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}: a lamp of the charged paid family {family_name!r} is "
+                    "refused: its releases would create charge from nothing (a charged paid family "
+                    "is born by a transformation or declared in transit; D-1, 2026-09-20)"
+                )
             lamp = _lamp(
                 obj["lamp"],
                 f"{label}.lamp",

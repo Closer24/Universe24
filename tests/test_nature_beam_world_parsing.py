@@ -19,7 +19,7 @@ Law"), written down first:
     power of two, a detector on a Node without a measured event, a Node in
     two detectors, `kind` on a family (naming MIGRATION: the quantum decides
     the kind), a family without `quantum`, a negative quantum, a charge on a
-    paid family, `charge` on a measured event (naming MIGRATION: since
+    paid family (a fraction, since 2026-09-20, D-1: whole per unit of amount), `charge` on a measured event (naming MIGRATION: since
     2026-09-20 the charge is the family's per unit of content), a family
     charge with a denominator of 0 or a part that is not an integer, a
     detector named `face:+x` (a face detector's name), a `suspension`
@@ -229,8 +229,8 @@ def test_the_world_refuses_by_name():
     refused({**world, "families": [{"name": "m"}]}, "lacks keys: quantum")
     refused({**world, "families": [{"name": "m", "quantum": -1}]}, "quantum must be an integer from 0")
     refused(
-        {**world, "families": [{"name": "light", "quantum": 3, "charge": 1}]},
-        "a paid family \\(quantum 3\\) carries no charge",
+        {**world, "families": [{"name": "light", "quantum": 3, "charge": [1, 3]}]},
+        "a paid family's charge is per unit of amount and whole",
     )
     refused(
         {**world, "measured": [{**world["measured"][0], "charge": 2}]},

@@ -324,8 +324,13 @@ the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`
 (`name`, `quantum` (required; 0 a free family, 1 or more a paid one: the
-kind is derived, never declared), `charge` (a free family only: the
-charge per unit of content, an integer or `[n, d]`, since 2026-09-20),
+kind is derived, never declared), `charge` (a free family: the charge per
+unit of content, an integer or `[n, d]`, since 2026-09-20; a paid family,
+since the same day (D-1, [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(ii)): the whole charge per unit of amount, an integer, read on the
+charge line of the books only, the push untouched: the charge of a
+measured event is rho times its content for a free family and the
+declared whole charge times the amount for a paid family),
 `columns` (since 2026-09-20, [BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
 an object of column name to `{"value": n or [n, d], "sign": 1 or -1}`,
 the further columns of the one coupling; `gravity` built in with the
@@ -380,7 +385,9 @@ a family without a phase circle, a content at or past K x N / 2 of a family
 with a phase (2 x content x n at or past d x N at the rate [n, d]), a lamp
 on a free family, `kind` on a family (pointing to
 MIGRATION: the quantum decides the kind), a family without `quantum`, a
-negative quantum, a charge on a paid family, `charge` on a measured event
+negative quantum, a fractional charge on a paid family (whole per unit of
+amount, D-1), a lamp on a measured event of a charged paid family (its
+releases would create charge from nothing), `charge` on a measured event
 (pointing to MIGRATION: the charge is the family's per unit of content), a
 family `charge` with a denominator of 0 or a part that is not an integer, a
 column named `gravity`, `charge` declared both as the key and under
@@ -435,7 +442,12 @@ without either), `columns` (the
 world's, name and sign, in order: gravity, charge, the declared names)
 and per family `columns` (name, value, sign, aligned with the world's),
 the books per completed tick (`audit`, the `charge` line the
-exact rational sum of the measured events' charges as a reduced pair) with
+exact rational sum of the measured events' charges as a reduced pair: the
+free families' rho x content held and, since 2026-09-20 (D-1), the paid
+families' whole charge per unit of amount times the units each holds,
+plus per paid family the charge of its rows in transit and of its units
+escaped, a line conserved through a click, a home, an escape and a
+transformation) with
 `conserved_at_every_completed_tick`, the measured events' final states
 (`measured`: position, held per family, content, phase, charge (the pair
 rho x content, reduced), `charges` (the charge in every column by name,

@@ -177,6 +177,12 @@ class Measured:
     # None where none is declared: the half circle N / 2) and the lamp's.
     widths: list[int | None] = field(default_factory=list)
     lamp_width: int | None = None
+    # Every family's whole charge per unit of amount (D-1, 2026-09-20): the
+    # paid family's declared `charge`, (0, 1) for a free family, whose
+    # charge is per unit of content and enters the columns instead. Read by
+    # `charges` for the charge line of the books and the report, never by
+    # the push (`charges(for_push=True)` leaves it out).
+    unit_charges: tuple[Pair, ...] = ()
     age: int = 0
     owed: int = 0
     pending: list[list[Pending]] = field(default_factory=list)
@@ -222,14 +228,27 @@ class Measured:
         unifications (3))."""
         return tuple(node for node, number in self.detector_set.nodes.items() if number == self.number)
 
-    def charges(self) -> list[Pair]:
+    def units(self, family: int) -> int:
+        """The units of a paid family the event holds: the units it clicked
+        (`clicks`) and the units waiting to be created again (`pending`:
+        what came home, is re-released or is a product of a
+        transformation). Its charge in the `charge` column is their count
+        times the family's whole charge per unit of amount (D-1)."""
+        return self.clicks[family] + self.pending_amount(family)
+
+    def charges(self, for_push: bool = False) -> list[Pair]:
         """The event's charge in every column of the world, from what it
         holds (`column_charges`): the reduced pair (E, D) per column,
-        gravity first (the content, (M, 1)), charge second (rho x M, the
-        report of 2026-09-20), the declared columns after. The frame reads
-        it once per interval into `frame_charges`, the reader's side of
-        the push (`nature_beam.push_form`)."""
-        return column_charges(
+        gravity first (the content, (M, 1)), charge second (rho x M over
+        the free families held, the report of 2026-09-20, plus since
+        2026-09-20 the paid families' whole charge per unit of amount times
+        the units held, D-1), the declared columns after. The frame reads
+        it once per interval into `frame_charges` with `for_push`, the
+        reader's side of the push (`nature_beam.push_form`), which leaves
+        the paid units out: the charge of a measured event is rho times
+        its content for a free family and the declared whole charge times
+        the amount for a paid family, and the push reads only the former."""
+        charges = column_charges(
             [
                 (self.family_values[family], content)
                 for family, content in enumerate(self.held)
@@ -239,6 +258,16 @@ class Measured:
             self.number,
             self.position,
         )
+        if for_push or not self.unit_charges:
+            return charges
+        terms = [
+            (numerator * self.units(family), denominator)
+            for family, (numerator, denominator) in enumerate(self.unit_charges)
+            if numerator and self.units(family)
+        ]
+        if terms:
+            charges[CHARGE_INDEX] = rational_sum([charges[CHARGE_INDEX], *terms])
+        return charges
 
     @property
     def charge(self) -> Pair:
@@ -329,6 +358,10 @@ class Ledger:
     lifetime_content: list[int] = field(default_factory=list)
     lifetime_record: list[int] = field(default_factory=list)
     lifetime_momentum: list[list[int]] = field(default_factory=list)
+    # The units a measured event had clicked when it left the GameBoard
+    # through a face, per family (D-1, 2026-09-20): their charge stays on
+    # the charge line as escaped, with the rows that left.
+    units_escaped: list[int] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         count = self.families
@@ -343,6 +376,7 @@ class Ledger:
             "lifetime_amount",
             "lifetime_content",
             "lifetime_record",
+            "units_escaped",
         ):
             setattr(self, name, [0] * count)
         self.lifetime_momentum = [[0, 0, 0] for _ in range(count)]

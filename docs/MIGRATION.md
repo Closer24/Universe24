@@ -6,6 +6,41 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The weak force, on 2026-09-20, (ii): a paid family's charge per unit of amount (D-1)
+
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"DECIDED: go on everything", item (2): "D-1, a paid family may declare a
+whole charge per unit of amount, read on the charge line only, the push
+untouched"; [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(ii)). Identities: no world file changes; no registered world declares a
+charge on a paid family, so every example world replays byte-identical in
+`events.jsonl`, `state.json` and `run.json` (VALIDATION).
+
+- **The refusal lifted.** "A paid family (quantum h) carries no charge" is
+  gone: the family key `charge` on a paid family is accepted as an
+  integer, the whole charge per unit of amount, and refused as a pair
+  with a denominator other than 1 ("a paid family's charge is per unit of
+  amount and whole"). The wording of the law: the charge of a measured
+  event is rho times its content for a free family and the declared whole
+  charge times the amount for a paid family. `tests/test_default_table.py`
+  (c) and `tests/test_nature_beam_world_parsing.py` (a) re-pin the lifted
+  refusal as the fractional one.
+- **Where it is read.** `FamilyDefinition.column_charge` (new): the value
+  of the family's `charge` column, rho for a free family and (0, 1) for a
+  paid one, so `FamilyDefinition.values`, the push (`push_form`), the
+  parser's budget and the frame's `frame_charges` never see a paid charge.
+  `Measured.unit_charges` (new, per family), `Measured.units(family)`
+  (new: the units clicked plus the units pending) and
+  `Measured.charges(for_push=False)` (the keyword new: the report and the
+  books include the paid units' charge in the `charge` column; the frame
+  passes `for_push=True`). `Ledger.units_escaped` (new, per family): the
+  clicked units of a body that stepped off through a face. The books'
+  `charge` pair (`NatureBeamSimulation.books`) adds, per charged paid
+  family, c x the transit line's current and c x (the escaped amount plus
+  the units escaped).
+- **A new refusal.** A lamp on a measured event of a charged paid family
+  ("its releases would create charge from nothing").
+
 ## The weak force, on 2026-09-20, (i): the window's width `phase_width` (no change of law)
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),

@@ -44,6 +44,7 @@ kept, their pins the law of events').
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
+| `test_paid_charge.py` | A paid family's charge per unit of amount (D-1): the books' charge line conserved through the click of a charged paid row, its escape, its home and the escape of the body that holds it; the push untouched (the label alone, with the charge -1 and 0 alike); the refusals and the record ([below](#a-paid-familys-charge)) | new (2026-09-20, the model owner's "go on everything", item (2)) |
 | `test_window_width.py` | The width of a window, `phase_width`: the one floor `window_admits` equal to the half circle at the default width on every pair, the admitted fraction w / N against the source's stride (10, 20, 40, 320 of 640; the stride 2's coset), `beam`'s pairing arc, a lamp's width, the refusals ([below](#the-width-of-a-window)) | new (2026-09-20, the model owner's "go on everything", the neutrino first) |
 | `test_weak_readings.py` | The weak-force readings tool (series J) reads the runner's record and the flight table: on a short bar run through the runner, the first reader's 3 clicks of 192 arrivals, the far detector's 151, the first-arrival ages 13 and 51 ([below](#the-width-of-a-window)) | new (2026-09-20, series J2) |
 | `test_nature_beam_world_parsing.py` | The world file of the Beam Law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-beam-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
@@ -165,8 +166,10 @@ derived from `quantum`).
   is 1 for a free family and the quantum for a paid one; `kind` is refused
   naming the removal of 2026-09-19 and docs/MIGRATION.md for the values
   `free`, `paid` and `other`; a family without `quantum` is refused naming
-  the key; a negative quantum is refused; a charge on a paid family is
-  refused naming its quantum; a charge on a free family (-3 parsed as the
+  the key; a negative quantum is refused; a fractional charge on a paid
+  family is refused (since 2026-09-20, D-1: a paid family's charge is
+  whole per unit of amount; until then any charge on a paid family was
+  refused naming its quantum); a charge on a free family (-3 parsed as the
   pair (-3, 1), [1, 2] as (1, 2); since 2026-09-20 the charge per unit of
   content, no `charge` on the measured event) and a lamp on a paid family
   are accepted, and a lamp on a free family is refused.
@@ -1268,6 +1271,48 @@ flight table: a ray released at tick t first walks at t + 1; 10 Links take
   `rule` takes the family's default rule (since the night of 2026-09-19: a
   window alone on a paid family measures in the window 8).
 
+## A paid family's charge
+
+`tests/test_paid_charge.py` (docs/BEAM_LAW.md, section 2 and section 10
+note 34 (ii); the model owner, 2026-09-20, "go on everything", item (2),
+D-1: a paid family may declare a whole charge per unit of amount, read on
+the charge line only, the push untouched). Bars of 7 x 1 x 1, K 2^20,
+N 64, `release` [0, 1], `suspension` 0; `p` (free, charge [1, 5]: +1 on a
+content of 5), `beta` (paid, quantum 1, charge -1 per unit of amount), `w`
+(free, charge 0); a beta row of amount 1 declared at x = 1 on +x is at
+x = 2 at the ages 1, 2; 3 at 3, 4; 4 at 5, 6; 5 at 7; 6 at 8, 9; off the
+bar at 10 (m(tau) = (128 tau + 110) // 220). The expected integers,
+written down before the first run:
+
+- (a) `p` of content 5 fixed at x = 0 and the absorber `w` fixed at x = 4:
+  the books' charge line [0, 1] at every tick of 6 (p +1, the row -1;
+  then p +1, the absorber's unit -1); the click at tick 5: the absorber's
+  `held` [0, 1, 1], content 2, `clicks` [0, 1, 0], `units` of beta 1,
+  charge (-1, 1), `charges()` [(2, 1), (-1, 1)], `charges(for_push=True)`
+  [(2, 1), (0, 1)], momentum (64, 0, 0) (the label); with the beta charge
+  0 the same momentum and the line [1, 1]; a charged free reader (`p`
+  at x = 4 with `read` for beta) takes the label alone, the push
+  (64, 0, 0), its charge (1, 1).
+- (b) without the absorber the row leaves through `face:+x` at tick 10;
+  the line [0, 1] at every tick of 12; the escaped amount 1,
+  `units_escaped` [0, 0, 0].
+- (c) the absorber at x = 3 releasing on +x with the row of its own
+  number: `home` at tick 3, the row created again on +x in the same
+  interval, `face:+x` at tick 10; the line [-1, 1] at every tick of 12;
+  the absorber's momentum (0, 0, 0) and `units` 0 after; `transit_released`
+  [0, 1, 0].
+- (d) the absorber free: after the click (content 2, momentum (64, 0, 0))
+  it steps at the ticks 6, 9 and 12 (`by_clock(age - 1, 64, 192)`), to
+  x = 5, 6 and off the bar: the face click at tick 12 with `held`
+  [0, 1, 1]; `units_escaped` [0, 1, 0]; `held_escaped` [0, 1, 1]; the line
+  [0, 1] at every tick of 15.
+- (e) the refusals, naming the key: `charge` [-1, 2] on a paid family; a
+  lamp on a measured event of a charged paid family. The record: the
+  family's `charge` (-1, 1), its `charge` column value (0, 1), `values`
+  ((1, 1), (0, 1)), `hypotheses` []; `run.json`'s family `charge` [-1, 1]
+  and column value [0, 1], the audit's `charge` [0, 1] at every tick, the
+  absorber's `charge` and `charges.charge` [-1, 1].
+
 ## The width of a window
 
 `tests/test_window_width.py` (docs/BEAM_LAW.md, section 2 and section 10
@@ -1349,8 +1394,9 @@ re-pinned from `test_event_worlds` (e) and
   family, two measured events at one Node, an unknown table rule, N not a
   power of two, a detector on a Node without a measured event, a Node in
   two detectors, `kind` on a family (naming MIGRATION: the quantum decides
-  the kind), a family without `quantum`, a negative quantum, a charge on a
-  paid family, `charge` on a measured event (naming the removal of
+  the kind), a family without `quantum`, a negative quantum, a fractional
+  charge on a paid family (D-1, since 2026-09-20; until then any), `charge`
+  on a measured event (naming the removal of
   2026-09-20 and MIGRATION), a family `charge` of [1, 0] (the denominator
   from 1), [1.5, 2] (the numerator an integer), "1/2" and [1, 2, 3] (an
   integer or [numerator, denominator]), a detector named `face:+x` (the
