@@ -1,0 +1,9 @@
+clicks: 185; wall: lamp rows 3, fan rows 88; sets with rows: 68; faces: []
+total offered 5.100836 of the birth norm 1 (rounding of the tables and the cross terms of paths meeting at pixels); wall share 4.8540, screen share 0.2469, faces 0.0000
+64 births: wall 61, screen 3 at pixels [(40, 1), (60, 1), (81, 1)], faces 0
+screen-conditioned 64 births per pixel: 12:1 20:1 24:1 29:1 30:1 32:1 33:1 36:2 38:1 39:2 40:1 43:2 44:1 46:1 50:2 51:1 53:1 54:1 58:1 59:5 60:8 61:5 62:1 66:1 67:1 69:1 70:2 74:1 76:1 77:2 80:1 81:2 82:1 84:2 87:1 88:1 90:1 91:1 96:1 100:1 108:1
+pixels with rows: 61; pixels with two or more rows (paths meeting): 27
+Pearson(single-record weight, incoherent sum) = 0.753; Pearson(weight, crowd record of two_slits.json) = 0.992; Pearson(weight, Euclidean two-source cosine) = 0.381; Pearson(incoherent, cosine) = 0.226
+Pearson(64-birth screen-conditioned histogram, weight) = 0.963; Pearson(histogram, cosine) = 0.382; Pearson(13-click world histogram, weight) = 0.442
+pixels where two paths meet (y, rows, weight, incoherent): [(22, 2, '19193/14909440', '65529/14909440'), (29, 2, '2/455', '2/455'), (30, 2, '32761/7454720', '32761/7454720'), (36, 2, '32761/3727360', '32761/7454720'), (39, 2, '1721/229376', '65529/14909440'), (43, 2, '1721/229376', '65529/14909440'), (46, 2, '19193/14909440', '65529/14909440'), (48, 2, '19193/14909440', '65529/14909440'), (49, 2, '19193/14909440', '65529/14909440'), (50, 2, '1721/229376', '65529/14909440'), (51, 3, '71161/14909440', '98297/14909440'), (55, 2, '19193/14909440', '65529/14909440')]
+weight x 455 per pixel y=40..80: 40:0 41:0 42:0 43:3 44:1 45:1 46:0 47:0 48:0 49:0 50:3 51:2 52:0 53:1 54:1 55:0 56:1 57:0 58:1 59:9 60:13 61:9 62:1 63:0 64:1 65:0 66:1 67:1 68:0 69:2 70:3 71:0 72:0 73:0 74:0 75:1 76:1 77:3 78:0 79:0 80:0
