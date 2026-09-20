@@ -51,6 +51,7 @@ Since 2026-09-19 there is one engine, the engine of the Beam Law
 | [Problem solving](PROBLEM_SOLVING.md) | How the project advanced: one line per problem, its solution and who solved it |
 | [Validation evidence](VALIDATION.md) | Dated, source-identified check results of the past; not timeless certification |
 | [The architecture cleanup plan of 2026-09-20](designs/architecture_2026-09-20/PLAN.md) | The architect's read-only pass before the cleanup pull request: every module's responsibility, what the one click leaves dead, the duplicated logic against the design's unifications, the stale names, the measured profile of the gate set with its bit-exact optimizations, the schema's overlaps and the order of the commits; its evidence beside it, [the gate set's baseline digests and seconds](designs/architecture_2026-09-20/gate_base_summary.md) and the profile |
+| [The architecture cleanup, phase 2](designs/architecture_2026-09-20/PLAN_PHASE2.md) | The architect's read-only pass after the one click (stage (vii) step 4 of `amplitude-v1`, read on its branch): what the one click changed, what it leaves dead or duplicated with each site, the stale names, the order of the phase 2 commits bit-exact on the gate set, and the risk (the baseline taken on the merged main) |
 
 ## Operation and change procedure
 
