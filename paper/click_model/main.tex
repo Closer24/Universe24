@@ -1,0 +1,400 @@
+% Draft of the new sections of version 2 of paper 1 (the click model).
+% Written before the runs of amplitude-v1 are registered: every number marked
+% [design] comes from docs/designs/amplitude-v1/*.txt or from the checks in
+% paper/click_model/checks/ and is replaced by the register's entry before
+% submission; no number is a run of the engine until it says so. These
+% sections merge into paper/main.tex as version 2 (PLAN.md, section 2).
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{float}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\rung}{b}
+
+\title{A finite-integer causal-GameBoard testbed, version 2:\\
+a click that reads one record's sum gives Born, interference\\
+and Bell correlations without a configured law}
+\author{Alon Gonen\\
+\small Independent researcher\\
+\small \texttt{alon@defounder.ai} \quad ORCID 0009-0008-2701-4599}
+\date{September 2026 (draft of the new sections)}
+
+\begin{document}
+\maketitle
+
+\section*{The model in plain words}
+
+The GameBoard is a mail board. Cells (Nodes), each wired to six neighbours;
+a wire carries one packet one step per tick, and nothing travels farther
+or faster. A packet is four numbers: how much (the amount), where to (the
+direction), a rotating counter (the phase, advanced a fixed step at every
+wire it crosses) and a birth number. A cell has no memory: what is in it
+now is exactly the packets in it now. The rules are local and few.
+Transfer: a packet moves to the neighbour its direction names.
+Duplication at a splitter: a packet becomes several packets in several
+directions with declared shares, the birth number the same on all.
+Merging: identical packets add; identical packets with opposite counters
+cancel and leave nothing. Deflection beside a mass: a packet's direction
+is turned by a table, and the turn can be undone. The collector, the
+apparatus, keeps per birth number and per cell the running sum of the
+packets' arrows. When every packet of a birth has ended, the collector
+lays the cells on a ruler in proportion to the squared lengths of those
+sums; a secret number born with the birth, which no rule ever read, picks
+the point on the ruler; the whole birth is recorded at that cell, and the
+remaining packets of that birth are deleted wherever they are. That
+deletion is the only action at a distance in the model, and it only
+deletes. Births happen only at sources, on their own clocks; deaths only
+at clicks. Everything between a birth and its click can be run backwards.
+What follows says this in standard terms and proves what can be proved of
+it; the words wave, collapse and superposition appear first in
+Section~\ref{sec:lit}, each as another author's name for one of these.
+
+\section{The model}\label{sec:model}
+
+\paragraph{The GameBoard and the circle.} Nodes are the points of a box in
+$\Z^3$ (an axis may be periodic); each Node has six Links. Time is the
+interval $t \in \Z$. The circle is $\Z_N$ with $4 \mid N$. The tables are
+$C_N[p] = \mathrm{round}(256\cos(2\pi p/N))$ and $S_N[p] = C_N[p - N/4]$,
+so $C_N[p + N/2] = -C_N[p]$ and $S_N[p + N/4] = C_N[p]$ exactly; the norm
+$C_N^2 + S_N^2$ lies within $65536 \pm 315$ for every $N$
+\cite{design}. The half-angle tables are $C'_N = C_{2N}$, $S'_N = S_{2N}$.
+Directions $D$ are the six headings and declared primitive integer
+vectors; the flight table gives, per direction $d$ and age $\tau$, the
+Node offset $\mathrm{pos}_d(\tau)$ on the digital line of $d$, at most one
+Link per interval and Euclidean speed $1/\sqrt3$ for every $d$
+\cite{beamlaw}.
+
+\begin{definition}[Row and record]\label{def:row}
+A \emph{row} is $(x, d, \tau, p, e, h, r, \ell, w, m)$: Node, direction,
+age, phase $p \in \Z_N$, emitter, content per unit, record $r$, branch
+label $\ell$, amount $w \ge 1$, multiplicity $m \ge 1$. Its amplitude is
+\begin{equation}
+z = \frac{w}{\sqrt m}\,\frac{C_N[p] + i S_N[p]}{256}, \qquad |z|^2 = \frac{w^2}{m}\cdot\frac{C_N[p]^2 + S_N[p]^2}{65536}.
+\end{equation}
+Two rows equal in every field but $w$ are one row with the amounts added;
+two rows of one record and label equal in every field but a phase
+difference of $N/2$ are one row with the amounts subtracted (an equal pair
+is no row). The state of record $r$ is an element $\psi_r$ of the free
+$\Z$-module $M_r$ on the basis $(x, d, \tau, p \bmod N/2, e, h, \ell, m)$
+with $|p + N/2\rangle = -|p\rangle$, taken modulo the scaling
+$(w, m) \sim (kw, k^2 m)$; the GameBoard's state is one normal form per
+element of $\bigoplus_r M_r$. The norm is $\langle\psi,\psi\rangle =
+\sum_{\text{rows}} w^2/m$.
+\end{definition}
+
+The host, not any Node, keeps per live record the birth phase $u \in \Z_N$,
+the count of live rows, an accumulated pointer $(X, Y)$ per (set, label)
+and a gathered flag. This is the apparatus's layer; the lattice never
+reads it.
+
+\begin{definition}[The update rules of one interval]\label{def:rules}
+Applied in this order to every row.
+\begin{enumerate}
+\item[F] Flight: $(x, d, \tau, p) \mapsto (x + \mathrm{pos}_d(\tau+1) -
+\mathrm{pos}_d(\tau),\ d,\ \tau + 1,\ p + \varphi)$, $\varphi$ the family's
+phase per Link, added only when the step is a Link.
+\item[C] Collision and meeting: a permutation of the directions of the
+rows at a Node by a fixed table; $r, \ell, m$ unchanged.
+\item[S] Split, at a measured event with outputs $\{(d_i, a_i, t_i)\}$,
+$a_i \in \Z$: the row $(w, m, p)$ is absorbed and re-emitted as the rows
+$(w a_i,\ m A,\ p + t_i)$ on $d_i$ at age $0$, $A = \sum_i a_i^2$. The
+balanced splitter is $(1, 1)$, $A = 2$; the reflection's turn is $N/4$.
+\item[R] Rotation, at a set with setting $s$, on a label pair $(0,1)$:
+$U_s = \begin{pmatrix} C'[s] & S'[s] \\ -S'[s] & C'[s]\end{pmatrix}$, the
+rows of label $0$ becoming $(wC'[s], 65536m, p)$ on $0$ and
+$(wS'[s], 65536m, p + t)$ on $1$, the rows of label $1$ becoming
+$(wS'[s], 65536m, p + N/2)$ on $0$ and $(wC'[s], 65536m, p + t)$ on $1$.
+\item[M] Normal form: merge and cancel as in Definition~\ref{def:row}.
+\item[B] Birth: a lamp's self-creation at interval $t$ releases record $r$
+with $u = t \bmod N$ (the lamp's clock), rows of amount $1$ on its $k$
+directions with $m = k$, and, for a pair, the declared labels with integer
+weights on separate arms.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[The click]\label{def:click}
+At a set that reads the sum, the rows of record $r$ and label $\ell$ that
+arrive are absorbed and the layer accumulates
+\begin{equation}
+X \mathrel{+}= \sum 32\,w\,C_N[p + f(\tau, t)],\qquad Y \mathrel{+}= \sum 32\,w\,S_N[p + f(\tau, t)],
+\end{equation}
+with $f(\tau, t) = \lfloor t n/d\rfloor - \lfloor (t-\tau) n/d\rfloor$ the
+family's frequency $[n, d]$ read on the age. The offer of (set, $\ell$) is
+$W = (X^2 + Y^2)/m$, all rows at a set sharing $m$. When the record's live
+count reaches $0$, with $T = \sum W$ over its offers and the cumulative
+sums $C_1 \le \dots \le C_K = T$ in the declared order,
+\begin{equation}
+\rung_k = \left\lfloor \frac{2N C_k + T}{2T} \right\rfloor \quad (\rung_0 = 0,\ \rung_K = N),
+\qquad \text{the click is the } k \text{ with } \rung_{k-1} \le u < \rung_k,
+\label{eq:rung}
+\end{equation}
+and the world's list gains one row: the record, $u$, the chosen set and
+label, $W$, $T$, the count of combinations before and after. For a record
+with arms at two sets the first set in the order takes the coarse rung
+over its outcomes and the second the fine rung within the first's cell
+with the same $u$; the rows not chosen are deleted lazily, absorbed at
+their next set and offering nothing.
+\end{definition}
+
+The click is the only step that removes combinations and adds a row to
+the world's list; the birth is the only step that adds combinations.
+Over births with $u$ uniform on $\Z_N$ the count of clicks in channel $k$
+is $\rung_k - \rung_{k-1}$, the nearest integer to $N W_k/T$: Born with the
+resolution $1/N$.
+
+\section{Four theorems}\label{sec:theorems}
+
+\begin{theorem}[The interval is a bijection between clicks]\label{th:bijection}
+For an interval without a click, $M \circ R \circ S \circ C \circ F$ is an
+injective $\Z$-linear map on $\bigoplus_r M_r$; the GameBoard's state at
+any interval between two clicks determines its state at the birth.
+\end{theorem}
+\begin{proof}
+$F$ maps a basis element to a basis element and is injective because the
+age is kept whole: $(d, \tau) \mapsto (d, \tau+1)$ is injective and the
+Node offset is a function of $(d, \tau)$. $C$ is a permutation of the
+basis inside its invariant classes by construction of the table. $S$ and
+$R$ are injective isometries by Theorem~\ref{th:isometry}. $M$ replaces a
+representative by the normal form of the same element of $M_r$, the
+identity on the module. A composition of injective linear maps is
+injective. The engine's inverse interval is the witness on worlds without
+a measured event \cite{beamlaw}; with splitters the statement is the
+algebraic one.
+\end{proof}
+
+\begin{theorem}[The split is an isometry with the transposed inverse]\label{th:isometry}
+The split $(w, m) \mapsto ((wa_i)_i, mA)$ preserves $\sum w^2/m$ for every
+integer vector $(a_i)$, and the transposed table applied to its outputs,
+followed by the normal form, returns the input up to the scaling
+$(kw, k^2m)$ with $k = A$. The rotation satisfies $U_s^{\mathsf T} U_s =
+(C'[s]^2 + S'[s]^2)\,I$ exactly.
+\end{theorem}
+\begin{proof}
+$\sum_i (wa_i)^2/(mA) = w^2 \sum_i a_i^2/(mA) = w^2/m$. The transpose maps
+the outputs $(wa_i, mA)$ to $\sum_i a_i (w a_i) = wA$ on the input
+direction with multiplicity $mA \cdot A$, that is $(Aw, A^2 m) \sim (w, m)$;
+for two inputs at one splitter the cross terms carry phases differing by
+$N/2$ (the reflection's two quarter turns) and cancel in the normal form,
+which the check with the pairs $(20, 21)$, $(3, 4, 5)$ and $(119, 120,
+169)$ confirms integer by integer \cite{design}. For $U_s$ the diagonal
+of $U_s^{\mathsf T}U_s$ is $C'^2 + S'^2$ and the off-diagonal $C'S' - S'C' =
+0$ in integers.
+\end{proof}
+
+The tables' norm is not exactly $65536$, so a record's norm is conserved
+by $S$ and $R$ exactly and by the tables within $\pm 315/65536$ per row;
+the integer Mach-Zehnder's total over the arm phase reads $1.000000$,
+$1.001808$, $0.999893$ [design]. This is why \eqref{eq:rung} normalises by
+$T$ at completion and not by the birth norm.
+
+\begin{theorem}[Exact marginals; no-signalling]\label{th:marginals}
+For a pair with labels $\{0, 1\}$ of equal weight and settings $a, b$, let
+$J(o_A, o_B) = \sum_\ell U_a[o_A][\ell]\,U_b[o_B][\ell]$ and
+$W(o_A, o_B) = J^2$. Then the first party's outcome is $+$ exactly for
+$u < N/2$ and $-$ for $u \ge N/2$, for every $(a, b)$ and every $N$; and
+the second party's count of $+$ is exactly $N/2$ for every $(a, b)$ unless
+$2N W(+,+)/T$ is an odd integer (a tie of the rung), in which case it is
+$N/2 + 1$. No tie occurs for any setting pair at $N = 8, 16, 24, 32, 48,
+64, 96, 128, 192, 256, 512$ \cite{checks}.
+\end{theorem}
+\begin{proof}
+Write $n_a = C'[a]^2 + S'[a]^2$. Since the rows of $U_b$ are orthogonal on
+the integers, $\sum_{o_B} J(o_A, o_B)^2 = n_a n_b$ for each $o_A$, so
+$T = 2n_a n_b$ and the coarse cumulative after the first party's $+$ is
+$T/2$: $\rung = \lfloor (NT + T)/(2T)\rfloor = \lfloor (N+1)/2 \rfloor =
+N/2$. For the second party, $W(o_A, o_B) = W(-o_A, -o_B)$ (the rows of
+$U_s$ are each other's quarter turn), so with $x = N W(+,+)/T$ the counts
+are $c_{++} = \lfloor x + \tfrac12\rfloor$ and $c_{-+} = \rung_3 - N/2$ with
+$\rung_3 = \lfloor (2N(T - W(+,+)) + T)/(2T)\rfloor = N + \lfloor \tfrac12 -
+x\rfloor$. Hence $c_{++} + c_{-+} = N/2 + \lfloor y\rfloor + \lfloor 1 -
+y\rfloor$ with $y = x + \tfrac12$, which is $N/2$ when $y \notin \Z$ and
+$N/2 + 1$ when $y \in \Z$. The tie condition is $2x \in 2\Z + 1$, that
+is $2NW(+,+)/T$ odd. The absence of ties at the listed $N$ is the
+computation over every setting pair \cite{checks}.
+\end{proof}
+
+The strict-crossing rung $NC_k > uT$ gives the second party $33/64$ in
+$3944$ of the $4096$ setting pairs at $N = 64$, a signalling of $1/N$ made
+by the rounding [design]; the nearest rung of \eqref{eq:rung} is what
+Theorem~\ref{th:marginals} needs.
+
+\begin{theorem}[The finite-$N$ Bell value]\label{th:bell}
+With the counts of Theorem~\ref{th:marginals},
+$E_N(a, b) = 4c_{++}/N - 1$ and
+\begin{equation}
+\bigl|E_N(a, b) - \cos(2\pi(a-b)/N)\bigr| \le \frac{2}{N} + 4\arcsin\frac{\sqrt2}{512} < \frac{2}{N} + 0.0111,
+\label{eq:ebound}
+\end{equation}
+so at the labels $(0, N/8, N/4, 3N/8)$, $|S(N) - 2\sqrt2| \le 8/N + 0.0443$.
+$S(N)$ is an exact rational for each $N$; it lies above $2\sqrt2$ for
+$252$ of the $512$ multiples of $8$ up to $4096$ (among them $N = 16, 32$
+with $S = 3$ and $N = 128$ with $S = 23/8$) and equals $181/64 =
+2.828125$ at every power of two from $512$ through $4096$ \cite{checks}.
+\end{theorem}
+\begin{proof}
+$c_{++} = \lfloor x + \tfrac12\rfloor$ with $x = NW(+,+)/T$ gives
+$|c_{++} - x| \le \tfrac12$ and $E_N = 4c_{++}/N - 1$ from the mirror
+symmetry, so $|E_N - (4W(+,+)/T - 1)| \le 2/N$. The vector
+$(C'[s], S'[s])$ differs from $256(\cos\theta_s, \sin\theta_s)$,
+$\theta_s = \pi s/N$, by at most $\tfrac12$ per component, so its
+direction differs from $\theta_s$ by at most $\delta = \arcsin(\sqrt2/512)$;
+$J(+,+)/\sqrt{n_a n_b}$ is the cosine of the angle between the two
+directions, $\cos(\theta_a - \theta_b + \epsilon)$ with $|\epsilon| \le
+2\delta$, and $4W(+,+)/T - 1 = 2\cos^2(\cdot) - 1 = \cos(2(\theta_a -
+\theta_b) + 2\epsilon)$, within $4\delta$ of $\cos(2\pi(a-b)/N)$. The
+four settings add the bounds. The values of $S(N)$ are the computation
+from these formulas with the repository's tables \cite{checks}, which
+reproduces the design's $176/64$, $720/256$ and $2896/1024$ at $N = 64,
+256, 1024$.
+\end{proof}
+
+What Theorem~\ref{th:bell} does not say: that $S(N) \le 2\sqrt2$, which is
+false for about half the $N$; nor that the deficit is $O(1/N)$ from below,
+which holds at the three $N$ first checked and not in general. The
+tables' term in \eqref{eq:ebound} does not shrink with $N$; it is the
+resolution $1/256$ of the circle's tables.
+
+\section{The measurements}\label{sec:measure}
+
+[Every table of this section is filled from the experiments register
+after the runs of \texttt{amplitude-v1} are registered; the entries below
+are the design's expected integers, marked [design], and are replaced by
+the registered values with the run's fingerprint.]
+
+\begin{table}[H]\centering\small
+\begin{tabular}{llll}
+\toprule
+Reading & World (register entry) & Expected [design] & Registered\\
+\midrule
+Mach-Zehnder, equal arms & the acceptance world 1 & D1 64 / D2 0 & \\
+half turn on one arm & the same & 0 / 64 & \\
+quarter turn & the same & 32 / 32 & \\
+Elitzur-Vaidman & world 1 with an absorber & absorber 32, D1 17, D2 15 & \\
+Two slits, one birth at a time & world 2 & weights against the 64-birth histogram 0.963 & \\
+Bell, CHSH labels, $N = 64$ & the four worlds & cells 27, 5, 5, 27; $S = 176/64$ & \\
+Bell, $N = 1024$ and $4096$ & the same at $N$ & $S = 181/64$ & \\
+Marginals, every setting pair & the $N \times N$ sweep & $32/64$ in all 4096 & \\
+GHZ & world 5 & four allowed triples per basis, zeros exact & \\
+Which-path & world 6 & $S = 88/64$ & \\
+\bottomrule
+\end{tabular}
+\caption{The measurements of the click model. [design] values from \cite{design}; the registered column is filled from the register with the fingerprint of each run.}
+\end{table}
+
+\begin{figure}[H]\centering
+\fbox{\parbox{0.9\linewidth}{Figure 1 placeholder: the integer Mach-Zehnder, D1 and D2 counts over 64 births against the arm phase, from the acceptance world 1 at the arm phases $0, N/4, N/2$ and the unequal arms at frequency $0, 8, 16$; the world list's channel per birth.}}
+\end{figure}
+\begin{figure}[H]\centering
+\fbox{\parbox{0.9\linewidth}{Figure 2 placeholder: one quantum at a time, the single record's weights per pixel against the 64-birth histogram on the two-slit world with the openings' neighbours freed; the register's A10 at a low rate beside it as the amount reading's failure.}}
+\end{figure}
+\begin{figure}[H]\centering
+\fbox{\parbox{0.9\linewidth}{Figure 3 placeholder: the pair at $N = 64$, the cells and $E$ against $a - b$ over all 4096 setting pairs with the table cosine, the marginals $32/64$, and the triangle of the choosers' run (S = 2) in grey; from the four CHSH worlds and the choosers' world.}}
+\end{figure}
+\begin{figure}[H]\centering
+\fbox{\parbox{0.9\linewidth}{Figure 4 placeholder: $S(N)$ against $N$ from the exact table (a computation) with the run points at $N = 64$, $1024$ and $4096$, the band of \eqref{eq:ebound}, the band of Poh et al.\ and the excluded $N$ marked.}}
+\end{figure}
+
+\section{Literature and positioning}\label{sec:lit}
+
+The click is a non-local step, forced by Bell's theorem because the
+marginals are exact and $S > 2$ \cite{bell1964,chsh1969}; it is
+parameter-dependent at fixed $u$ in the sense of the causal anatomy of
+version 1 \cite{jarrett1984,shimony1986}; no-signalling is
+Theorem~\ref{th:marginals}, as it is a theorem of quantum mechanics
+\cite{grw1980}.
+
+'t Hooft's cellular automaton interpretation \cite{thooft2016} keeps
+determinism and meets Bell by superdeterminism; here the model is
+deterministic given $u$, the settings are GameBoard events measured not
+to correlate with the pair (version 1's choosers run), and the Bell value
+is met by an explicit non-local click. Wolfram's hypergraph rewriting and
+Gorard's multiway quantum mechanics \cite{wolfram2020,gorard2020} take
+the branches of a multiway system as the superposition and a completion
+as the collapse; here one lattice, one record with rows, one click with
+an exact integer rule and finite tables whose consequences are computed.
+Lattice gases \cite{hpp1976,fhp1986} are exact integer dynamics with the
+continuum law in the limit; the GameBoard is of that kind, with the
+click's reading of one record added. Quantum cellular automata and
+quantum lattice gases \cite{bialynicki1994,meyer1996,arrighi2019} are
+local unitary rules on complex amplitudes; here no complex number is on
+the lattice, the split is an exact integer isometry, and the tables'
+unitarity holds within $315/65536$ and is measured, not assumed. Bohm's
+theory and quantum equilibrium \cite{bohm1952,dgz1992} derive Born from a
+uniform distribution of the hidden variable over the ensemble; the ruler
+over $u$ is the same move, one integer per record with a table for the
+guidance, and, like Bohm's, non-local at the pair. Nelson's stochastic
+mechanics \cite{nelson1966} is stochastic where nothing here is, once
+$u$ is fixed. Objective collapse \cite{grw1986,bassi2013} has real
+discrete events with a free rate and length; the click is triggered by
+the record's completion at the apparatus and has neither, and nothing
+collapses spontaneously (a pair stays entangled without maintenance).
+In the classification of ontological models \cite{spekkens2007,hs2010}
+the rows' amplitudes and $u$ are ontic, so the model is $\psi$-ontic and,
+as such a model must be, non-local. On Tsirelson's bound
+\cite{tsirelson1980,pr1994} at finite precision
+\cite{bhz2005,meyer1999,kent1999}: Theorem~\ref{th:bell} puts the model's
+$S(N)$ on both sides of $2\sqrt2$ with the marginals exact, a
+no-signalling box of the Popescu--Rohrlich kind at finite $N$, of a size
+a Bell measurement of precision $0.0005$ already constrains: the
+photon-pair value $S = 2.82759 \pm 0.00051$ \cite{poh2015}, under fair
+sampling, excludes $N = 64$ and $N = 256$ and admits the powers of two
+from $512$; the loophole-free experiments \cite{hensen2015,giustina2015,shalm2015}
+constrain $N$ not at all at their precision. The single-quantum build-up
+of fringes \cite{tonomura1989,grangier1986}, GHZ \cite{ghsz1990,mermin1990,pan2000}
+and interaction-free measurement \cite{ev1993} are the experiments the
+measurements of Section~\ref{sec:measure} are named for. Nothing here
+derives a continuum limit, spin, statistics or Lorentz invariance.
+
+\begin{thebibliography}{99}
+\bibitem{beamlaw} A. Gonen, The Beam Law, \texttt{docs/BEAM\_LAW.md} of the archived code \cite{zenodo}.
+\bibitem{design} The design of \texttt{amplitude-v1} and its check outputs, \texttt{docs/designs/amplitude-v1/} of the archived code \cite{zenodo}.
+\bibitem{checks} \texttt{paper/click\_model/checks/s\_of\_n.py} and \texttt{which\_path\_window.py} with their outputs, in the archived code \cite{zenodo}.
+\bibitem{bell1964} J. S. Bell, Physics 1, 195 (1964).
+\bibitem{chsh1969} J. F. Clauser, M. A. Horne, A. Shimony and R. A. Holt, Phys. Rev. Lett. 23, 880 (1969).
+\bibitem{jarrett1984} J. P. Jarrett, No\^us 18, 569 (1984).
+\bibitem{shimony1986} A. Shimony, in Quantum Concepts in Space and Time, edited by R. Penrose and C. J. Isham (Oxford, 1986), p. 182.
+\bibitem{grw1980} G. C. Ghirardi, A. Rimini and T. Weber, Lett. Nuovo Cimento 27, 293 (1980).
+\bibitem{thooft2016} G. 't Hooft, The Cellular Automaton Interpretation of Quantum Mechanics (Springer, 2016).
+\bibitem{wolfram2020} S. Wolfram, Complex Systems 29, 107 (2020).
+\bibitem{gorard2020} J. Gorard, Complex Systems 29, 537 (2020).
+\bibitem{hpp1976} J. Hardy, O. de Pazzis and Y. Pomeau, Phys. Rev. A 13, 1949 (1976).
+\bibitem{fhp1986} U. Frisch, B. Hasslacher and Y. Pomeau, Phys. Rev. Lett. 56, 1505 (1986).
+\bibitem{bialynicki1994} I. Bialynicki-Birula, Phys. Rev. D 49, 6920 (1994).
+\bibitem{meyer1996} D. A. Meyer, J. Stat. Phys. 85, 551 (1996).
+\bibitem{arrighi2019} P. Arrighi, Natural Computing 18, 885 (2019).
+\bibitem{bohm1952} D. Bohm, Phys. Rev. 85, 166 and 180 (1952).
+\bibitem{dgz1992} D. D\"urr, S. Goldstein and N. Zangh\`{\i}, J. Stat. Phys. 67, 843 (1992).
+\bibitem{nelson1966} E. Nelson, Phys. Rev. 150, 1079 (1966).
+\bibitem{grw1986} G. C. Ghirardi, A. Rimini and T. Weber, Phys. Rev. D 34, 470 (1986).
+\bibitem{bassi2013} A. Bassi, K. Lochan, S. Satin, T. P. Singh and H. Ulbricht, Rev. Mod. Phys. 85, 471 (2013).
+\bibitem{spekkens2007} R. W. Spekkens, Phys. Rev. A 75, 032110 (2007).
+\bibitem{hs2010} N. Harrigan and R. W. Spekkens, Found. Phys. 40, 125 (2010).
+\bibitem{tsirelson1980} B. S. Cirel'son, Lett. Math. Phys. 4, 93 (1980).
+\bibitem{pr1994} S. Popescu and D. Rohrlich, Found. Phys. 24, 379 (1994).
+\bibitem{bhz2005} R. V. Buniy, S. D. H. Hsu and A. Zee, Phys. Lett. B 630, 68 (2005).
+\bibitem{meyer1999} D. A. Meyer, Phys. Rev. Lett. 83, 3751 (1999).
+\bibitem{kent1999} A. Kent, Phys. Rev. Lett. 83, 3755 (1999).
+\bibitem{poh2015} H. S. Poh, S. K. Joshi, A. Cer\`e, A. Cabello and C. Kurtsiefer, Phys. Rev. Lett. 115, 180408 (2015).
+\bibitem{hensen2015} B. Hensen et al., Nature 526, 682 (2015).
+\bibitem{giustina2015} M. Giustina et al., Phys. Rev. Lett. 115, 250401 (2015).
+\bibitem{shalm2015} L. K. Shalm et al., Phys. Rev. Lett. 115, 250402 (2015).
+\bibitem{tonomura1989} A. Tonomura, J. Endo, T. Matsuda, T. Kawasaki and H. Ezawa, Am. J. Phys. 57, 117 (1989).
+\bibitem{grangier1986} P. Grangier, G. Roger and A. Aspect, Europhys. Lett. 1, 173 (1986).
+\bibitem{ghsz1990} D. M. Greenberger, M. A. Horne, A. Shimony and A. Zeilinger, Am. J. Phys. 58, 1131 (1990).
+\bibitem{mermin1990} N. D. Mermin, Phys. Rev. Lett. 65, 1838 (1990).
+\bibitem{pan2000} J.-W. Pan, D. Bouwmeester, M. Daniell, H. Weinfurter and A. Zeilinger, Nature 403, 515 (2000).
+\bibitem{ev1993} A. C. Elitzur and L. Vaidman, Found. Phys. 23, 987 (1993).
+\bibitem{zenodo} A. Gonen, Universe24: a discrete simulator of local physical laws (Reality Theory), Zenodo (2026), doi:10.5281/zenodo.22738746 (concept DOI, resolving to the latest version).
+\end{thebibliography}
+
+\end{document}
