@@ -520,7 +520,7 @@ are answered the model predicts forms, 1/N² and 1/r², and not the values
 of G and α. (2026-09-18: the field family is retired, the ratio being the
 size of a family's shadow set; the lag register is retired with the word
 register; the Born table is computed from the phase width N, Highlights 5.4,
-point 17; what fixes G stays hypothesis 16's question.)
+point 17; what fixes G stays hypothesis 16's question.) (Superseded on 2026-09-20, the model owner on issue #369, Highlights 5.4 and the log's record 106: mass ratios are not derivable in this law; the masses and the charges are the initialisation, the catalog's declared contents and charge per unit; the ladder and A10's count are closed by decision; the strengths of the couplings stay inputs.)
 
 ## 10. Measurement and display are outside the physics
 

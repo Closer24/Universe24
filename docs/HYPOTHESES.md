@@ -541,6 +541,19 @@ content, has no ladder. A10 counts the loop-closing contents once feature
 14, binding as a loop, lands (after features 12, 8c, 2b and 8b), and the
 composite spectrum is the list of loops the declared tables close.
 
+Status (2026-09-20, the model owner on issue #369; Highlights 5.4, the log's
+record 106): the ladder half is closed by decision. The masses and the
+charges are the initialisation, the catalog's declared contents and charge
+per unit, and the Beam Law as it stands selects no content (every content is
+a declared amount, the paid exchange is linear and conserving, so every
+equal split is a fixed point; the charge per unit is any rational). The
+composite-spectrum half stays open and depends on physics the law does not
+have: a bound composite's content is today the exact sum of its parts (the
+deuteron 2.225 MeV and the alpha 28.3 MeV above nature), so a rule under
+which binding moves content off the bound bodies, exactly, into quanta a
+detector can click is the missing design (issue #369, three candidates, the
+owner's decision pending).
+
 ## 13. Confinement from the quark's field rays binding to each other
 
 Under the ray-event model ([Highlights](HIGHLIGHTS.md) 3.4, 3.5, 3.26) the
