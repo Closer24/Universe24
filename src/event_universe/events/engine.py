@@ -84,30 +84,33 @@ def step_axis(drive: int, momentum: int, content: int, width: int) -> tuple[int 
     amended on 2026-09-20, the step drive; `_move` calls it): the sign of
     the Link a free measured event of content M = `content` steps this
     self-creation on an axis whose momentum component is p = `momentum`,
-    and the drive after it. The drive is the distance the momentum has
-    driven since the last step, in label units, on the body's own record:
-    `drive + |p|` is compared with D = Q x S x M + |p|, S the world's
-    `width`; at or beyond D the body steps one Link and D is subtracted,
-    otherwise it waits. With a constant momentum the step fires exactly
-    when `floor(n |p| / D)` increments over the self-creations n, the rule
-    as it was (`by_clock(age - 1, |p|, D)`: the drive is the remainder of
-    that division); under a changing momentum the Links made follow the
-    momentum's history, never two in one self-creation (one D is
-    subtracted per self-creation; a residual earned at a larger momentum
-    fires at the following self-creations, one Link each). A momentum of 0
-    never steps and leaves the drive as it is. The count primitive is
-    `core.integer.by_drive` (the model owner's record 108: the whole part
-    of an accumulated rate on the reader's own record, `by_clock` where
-    the rate is constant); the one place the step rule lives, the
-    readings tools read it from here. The divisor D is `world.step_divisor`,
-    which the reading's weight at the relative speed reads too (note 38)."""
+    and the drive after it. The drive is the SIGNED distance the momentum
+    has driven since the last step, in label units, on the body's own
+    record: `drive + p` is compared with D = Q x S x M + |p|, S the
+    world's `width`; at or beyond +D the body steps one Link on the axis's
+    + side and D is subtracted, at or beyond -D one Link on the - side and
+    D is added, otherwise it waits (record 126 of 2026-09-20: the drive was
+    |p| with the direction from the sign at the fire until then, so a
+    momentum reversed by a hand-over discharged the distance driven toward
+    the partner as a Link away). With a momentum of one sign the step
+    fires exactly when `floor(n |p| / D)` increments over the
+    self-creations n, the rule as it was (`by_clock(age - 1, |p|, D)`: the
+    drive is the signed remainder of that division); under a changing
+    momentum the Links made follow the momentum's signed history, a
+    reversal first cancelling what was driven the other way, never two in
+    one self-creation (one D is subtracted per self-creation; a residual
+    earned at a larger momentum fires at the following self-creations,
+    one Link each). A momentum of 0 never steps and leaves the drive as it
+    is. The count primitive is `core.integer.by_drive` (the model owner's
+    record 108: the whole part of an accumulated rate on the reader's own
+    record, `by_clock` where the rate is constant); the one place the
+    step rule lives, the readings tools read it from here. The divisor D
+    is `world.step_divisor`, which the reading's weight at the relative
+    speed reads too (note 38)."""
     if momentum == 0:
         return None, drive
-    magnitude = abs(momentum)
-    fired, drive = by_drive(drive, magnitude, step_divisor(momentum, content, width))
-    if not fired:
-        return None, drive
-    return (1 if momentum > 0 else -1), drive
+    fired, drive = by_drive(drive, momentum, step_divisor(momentum, content, width))
+    return (fired or None), drive
 
 
 def count_owed(age: int, counted: int, suspension: tuple[int, int]) -> int:

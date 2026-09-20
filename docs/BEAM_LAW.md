@@ -525,12 +525,15 @@ order with each step's inverse:
    chooses how slow its slowest motion is; every step registered before
    the label's scale is the same step, `by_clock(age, Q n, Q k) =
    by_clock(age, n, k)`. Since 2026-09-20 (note 17 as amended, the step
-   drive) the count is the whole part of the distance the momentum has
-   driven, kept on the body's record as `drive` per axis (`drive += |p|`
-   at every self-creation in which it may step, one Link and `drive -=
-   Q x S x M + |p|` at or beyond it), the same integers at a constant
-   momentum as the whole part off the clock (implementation notes 15 and
-   17; `tests/test_push_width.py`, `tests/test_step_drive.py`).
+   drive) the count is the whole part of the SIGNED distance the momentum
+   has driven, kept on the body's record as `drive` per axis (`drive +=
+   p` at every self-creation in which it may step, one Link on the + side
+   and `drive -= Q x S x M + |p|` at or beyond +D, one Link on the - side
+   and `drive += Q x S x M + |p|` at or beyond -D; signed since record
+   126 of the same day, the first form's `|p|` being history), the same
+   integers at a momentum of one sign as the whole part off the clock
+   (implementation notes 15 and 17; `tests/test_push_width.py`,
+   `tests/test_step_drive.py`).
 6. **The border `lifetime`; then merge identical rows and sort by Node.**
    Since 2026-09-20 (note 31 (vii)) every row of a family with a
    `lifetime` whose whole age is at or beyond it after this interval's
@@ -1071,12 +1074,22 @@ implementation's part of the contract. The design above is unchanged.
     of the distance the momentum has driven: the body's own record
     carries per axis one bounded integer `drive_a` (0 at the start, as
     its age is on its record and nothing at a Node), and at every
-    self-creation in which it may step `drive_a += |p_a|`; when `drive_a
-    >= Q S M + |p_a|` it steps one Link on the axis and subtracts that.
-    With a constant momentum the step fires exactly when `floor(n |p| /
-    D)` increments (the drive is the remainder of that division): every
-    world whose bodies take no push replays byte-identical; under a push
-    the motion follows the momentum at every self-creation and never two
+    self-creation in which it may step `drive_a += p_a`, the SIGNED
+    component; when `drive_a >= Q S M + |p_a|` it steps one Link on the
+    axis's + side and subtracts that, when `drive_a <= -(Q S M + |p_a|)`
+    one Link on the - side and adds it (record 126 of 2026-09-20, the
+    signed drive: the first form accumulated |p_a| and took the direction
+    from the sign at the fire, so a deuteron's neutron, charged by
+    fourteen intervals toward the proton, stepped away after the contact
+    handed it the proton's component; "the distance the momentum has
+    driven" is the signed sum, and the |p| form equals it only while the
+    momentum keeps one sign). With a momentum of one sign the step fires
+    exactly when `floor(n |p| / D)` increments (the drive is the signed
+    remainder of that division): every world whose bodies take no push
+    replays byte-identical, and every world whose momenta keep their sign
+    on every axis steps as under the first form; under a push the motion
+    follows the momentum's signed history at every self-creation, a
+    reversal first cancelling what was driven the other way, and never two
     Links fall in one interval (one D is subtracted per self-creation; a
     residual earned at a larger momentum fires at the following
     self-creations, one Link each, the distance the momentum had driven).
@@ -1090,10 +1103,11 @@ implementation's part of the contract. The design above is unchanged.
     axis, `axis_steps` (a lost or refused step counted, as the whole part
     off the clock counted it), the same number at a constant momentum.
     The count primitive is `core.integer.by_drive(drive, rate, D)`, the
-    whole part of an accumulated rate on the reader's own record (the
-    model owner's record 108, "a generic solution if he can": one
-    primitive every count against a rate could use, equal to `by_clock`
-    wherever the rate is constant); the step reads it now, and the
+    whole part of an accumulated signed rate on the reader's own record,
+    the count -1, 0 or +1 (the model owner's record 108, "a generic
+    solution if he can": one primitive every count against a rate could
+    use, equal to `by_clock` wherever the rate is constant and of one
+    sign); the step reads it now, and the
     clock's turn, the owed count, the release and the lamp keep `by_clock`
     with their docstrings saying they are the same count where the rate
     is constant, so nothing registered outside the pushed-body worlds
