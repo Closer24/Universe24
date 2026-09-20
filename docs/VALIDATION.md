@@ -11,6 +11,53 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## A10 at a low rate, the single-click build-up: three runs - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` at the tip `9fc895a2` (the
+Beam Law, `beam-v1`; the engine unchanged by the run), source fingerprint
+`a1b2a949ccda2194537ecae4c6ff7380642f8f7d7877c01ab0e1649ba51c5d4b`,
+Python 3.14.0rc2, numpy 2.5.3, headless, four cores; the model owner's go
+of 2026-09-20 on the physicist's entry 5 of the law's own predictions and
+the owner's decision on issue #359 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector));
+the readings registered in
+[A10 at a low rate](EXPERIMENTS.md#a10-at-a-low-rate-the-single-click-build-up-2026-09-20)
+and the worlds' [README](../examples/events/buildup/README.md).
+
+| Check | Result |
+| --- | --- |
+| A10 at a low rate, `examples/events/buildup/` (three worlds, `tools/run_series.py --jobs 3`, 420, 1200 and 7780 intervals) | every run completed (55.4, 38.8, 91.8 s) with the books balanced at every tick; `tools/buildup_readings.py`: 0 record checks failed, 2 readings inside, 1 outside, none moved: the narrowing of the coherent record against the count 0.307 at the rate 47 (expected >= 0.2), 0.052 at 8 (reported), -0.017 at 1 (expected 0 +- 0.02); R / I at the record's peak at the rate 1 1.200 at y = 58 (expected 1 +- 0.02: outside; the centre pixel 0.843), the coincidences of the synchronized comb 6.6 % of the cells and 12.3 % of the clicks |
+| `tests/test_buildup_readings.py` | passed: on a 14 x 5 plane at the rates 2 and 1 the tool's pixels equal the engine's detector sets, R / I = 2 exactly with every cell a coincidence and 1 exactly with none, the wavelength (64 / 8) / sqrt 3 |
+| `python tools/check.py` (the scoped selection) | ruff lint and format, mypy and the selected tests green; the language, hygiene and navigation gates green |
+
+The runs establish what this engine's screen reads at a low rate (the
+lobe of the coherent record vanishes as the coincidences within one
+interval do); they establish no physical law. The physicist's entry 5 is
+registered as measured, a plain disagreement with nature (Merli,
+Tonomura) and, by the owner's decision on #359, the law's limit.
+
+## Series K, light beside a mass: four runs - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` at the tip `9fc895a2` (the
+Beam Law, `beam-v1`; the engine unchanged by the series), source
+fingerprint
+`a1b2a949ccda2194537ecae4c6ff7380642f8f7d7877c01ab0e1649ba51c5d4b`,
+Python 3.14.0rc2, numpy 2.5.3, headless, four cores; the model owner's go
+of 2026-09-20 on the physicist's entry 2 of the law's own predictions
+([Highlights 5.4](HIGHLIGHTS.md#54-the-detector)); the readings registered
+in [K](EXPERIMENTS.md#k-light-beside-a-mass-2026-09-20) and the worlds'
+[README](../examples/events/lensing/README.md).
+
+| Check | Result |
+| --- | --- |
+| Series K, `examples/events/lensing/` (four worlds, `tools/run_series.py --jobs 4`, 400 intervals) | every run completed (6.5, 9.1, 9.9, 9.1 s) with the books balanced at every tick; `tools/lensing_readings.py` (with the replay): 0 record checks failed, 16 readings inside, 0 outside, none moved: the deflection of the beam's centroid 0.000 pixel in y and z beside the mass at b = 6, twice the mass, and b = 3 (expected 0 +- 0.5; nature 46 to 91 radians or the capture), the delay 0.00 interval (0 +- 1), the count 1455 the control's (1 +- 1 %), the phase rate 8.000 the lamp's turn (8 +- 0.05); the replay: 447 rows in flight at most, none turned, 162 Nodes per interval shared with the crowd |
+| `tests/test_lensing_readings.py` | passed: the speed 32 / 55 and the dwell 55 / 32 off `flight_table`; on a 13 x 5 x 3 box the tool's pixels equal the engine's detector sets, the arrival at the age 17 (m(17) = 10), the centroid (3, 1), the phase rate 8.000, the crowd by series E's form, the replay's 17 rows and one meeting Node, 6 verdicts inside |
+| `python tools/check.py` (the scoped selection) | ruff lint and format, mypy and the selected tests green; the language, hygiene and navigation gates green |
+
+The runs establish what this engine's detectors read of a beam beside a
+mass (nothing of the mass: the flight is blind to the crowd); they
+establish no physical law. The physicist's entry 2 is registered as
+measured and as a plain disagreement with nature (Eddington, Shapiro).
+
 ## Series G, the Hubble diagram behind the detector: four runs - 2026-09-20
 
 The worktree of `claude/universe24-new-3ytqde` at the merge of the charge
