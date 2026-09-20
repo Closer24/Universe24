@@ -395,3 +395,29 @@ def test_the_measured_line_is_bounded_before_assignment():
         else:
             simulation.step()
             assert simulation.measured[2].momentum == [push, 0, 0]
+
+
+def test_the_phase_circle_reaches_65536_steps():
+    """(a) and (b), the bound of N raised on 2026-09-20 by the model owner
+    ("raise the bound"): a world declares N up to 65536, the tables' one
+    bound `core.phase.MAX_PHASE_STEPS`; above it the world is refused naming
+    N, and a non-power of two stays refused. The tables at 65536 steps have
+    65536 entries, the quarter turn exact (S[p + N/4] = C[p], read as
+    C[p - N/4]), the eighth turn 181 as at every N, and every entry within
+    256; the edge: 131072 is refused by the tables and by the world."""
+    from event_universe.core.phase import MAX_PHASE_STEPS, phase_cosines, phase_sines
+
+    assert MAX_PHASE_STEPS == 65536
+    steps = 65536
+    cosines, sines = phase_cosines(steps), phase_sines(steps)
+    assert len(cosines) == steps and len(sines) == steps
+    assert cosines[0] == 256 and cosines[steps // 2] == -256 and cosines[steps // 4] == 0
+    assert cosines[steps // 8] == 181 and sines[steps // 8] == 181
+    assert all(sines[(p + steps // 4) % steps] == cosines[p] for p in range(0, steps, 977))
+    assert max(max(map(abs, cosines)), max(map(abs, sines))) == 256
+    with pytest.raises(ValueError, match="between 2 and 65536"):
+        phase_cosines(2 * steps)
+    world = base(N=steps, families=[{"name": "m", "quantum": 0, "charge": 0}])
+    assert parse_nature_beam_world(world).phase_steps == steps
+    refused({**world, "N": 2 * steps}, "N")
+    refused({**world, "N": 3 * 4096}, "power of two")

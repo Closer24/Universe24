@@ -5,6 +5,15 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The phase circle's bound raised to 65536 steps (2026-09-20)
+
+- The model owner's instruction ("raise the bound"): the pair of
+  `amplitude-v1` rotates its labels through the half-angle tables at 2N, so
+  `core.phase.MAX_PHASE_STEPS` is 65536 (was 4096) and the world parser
+  imports the one bound; N = 65536 is accepted with its tables (0.2 s once,
+  every entry within 256), 131072 refused; the same change as commit
+  7c147e9f of the paper's branch, applied here by hand.
+
 ### The `wave` threshold on the pointer's square; the escaped momentum per family (2026-09-20)
 
 - The model owner's decision (issue #359 step A;

@@ -683,7 +683,10 @@ declares the reading `wave` (the default since 2026-09-20; from
   counter under `wave` pass (test (i)).
 - (e) the record is exact and never refused (BEAM_LAW section 5 and note
   19; the night's bound refused `two_contents`): every entry (C, S) of the
-  1/256 tables is shorter than 257 for every N from 2 through 4096 (the
+  1/256 tables is shorter than 257 for every N from 2 through 4096 (the tables'
+  bound is 65536 since 2026-09-20, the phase circle's test at the end of
+  `tests/test_nature_beam_world_parsing.py`: 65536 accepted, the eighth turn 181,
+  every entry within 256, 131072 refused; the
   largest C^2 + S^2 is 65897), so each component of the pointer is within
   32 x 257 x the clicked amount; since the four unifications (2026-09-20,
   (j)) the pointer is the first moment of the one reading over the

@@ -1,7 +1,9 @@
 """The phase circle: scaled cosine and sine of every step, in bounded integers.
 
 Every ray carries a phase that is a step of the world's one circle of N steps
-(N a power of two from 2 through 4096). The tables give cos and sin of every
+(N a power of two from 2 through 65536; the bound was 4096 until 2026-09-20,
+raised by the model owner so that a table at 2N exists for every N a world may
+declare up to 32768). The tables give cos and sin of every
 step scaled by PHASE_COSINE_SCALE = 256, rounded to the nearest integer, so that
 equal phases give exactly one and opposite phases of equal amounts exactly
 zero. They are immutable law data, computed once per N from fixed-point series;
@@ -14,7 +16,7 @@ from functools import lru_cache
 
 from event_universe.core.integer import checked_work
 
-MAX_PHASE_STEPS = 4096
+MAX_PHASE_STEPS = 65536
 PHASE_COSINE_SCALE = 256
 # pi in fixed point: integer arithmetic only, as every physical module requires.
 _PI_FIXED = 3141592654
@@ -74,7 +76,7 @@ def phase_cosines(phase_steps: int) -> tuple[int, ...]:
     values on that circle are 0, +-1/2 and +-1, so no entry is a half-integer.
     """
     if type(phase_steps) is not int or not 2 <= phase_steps <= MAX_PHASE_STEPS:
-        raise ValueError("phase_steps must be between 2 and 4096")
+        raise ValueError(f"phase_steps must be between 2 and {MAX_PHASE_STEPS}")
     entries = []
     for difference in range(phase_steps):
         reduced = min(difference, phase_steps - difference)
