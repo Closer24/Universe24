@@ -294,3 +294,24 @@ the tick alignment when read by the birth ordinal; the fraction-free
 unification re-pins the register's ticks once, so the paper's registered
 integers are to be re-checked against the register after it lands
 (`summarize_runs.py` on the re-run, every integer expected equal).
+
+## The owner's direction and the continuum limits (2026-09-20, night)
+
+The owner: focus on the transition between classical and quantum physics
+(the model's advantage); take the computation on the Nodes to infinity and
+the known formulas must return, Einstein's included, special and general,
+as Fourier returns pi. Done: `checks/limits.py` and the new section
+"Continuum limits" of the draft: Tsirelson's value as the limit of S(N, Q)
+(the bound's two terms vanish), the isotropic cone and the plane wave
+(omega = c k, L7), Young under the fan's discreteness (the true residual:
+27 of 75 pixels see both openings; 0.45 at 91 directions, 0.90 from 721;
+the flight's rounding alone 0.07, so the earlier diagnosis "the rounding
+at lambda = 8 is the killer" was wrong and is withdrawn), the continuity
+equation from the books. Not returned and said so: Lorentz invariance (the
+lattice is a rest frame) and the field equations (no mass in this model).
+The classical limit as one row per record, and the cost of a quantum as
+its rows (86 units per Mach-Zehnder record, 729 per GHZ-by-gate record, 3
+bits out), noted for Part II. Sent to the Boss for the mathematician: the
+click as the evaluation of Z[Z_N] at zeta_N, the accumulator's exact phase
+and exact u, and now the limit's symmetry (a moving body's c) and the
+field equation of the delay rule.

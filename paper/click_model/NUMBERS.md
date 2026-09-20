@@ -43,3 +43,8 @@ re-run in the register after the gate's fix with the same integers;
 | Poh et al. 2015 | S = 2.82759 +- 0.00051 | literature | Phys. Rev. Lett. 115, 180408 |
 | Hensen et al. 2015 | S = 2.42 +- 0.20 (2.38 +- 0.14 over both runs) | literature | Nature 526, 682; Sci. Rep. 6, 30289 |
 | Paper 1's local candidates and the choosers' run | S = 2 exactly; the registry 2.83 | register (A2, A2 with the choosers) and paper 1 | the "before" |
+| S(N, Q) at N = 64, 256, 1024 for Q = 256 .. 2^20; the bound 8/N + 16 arcsin(sqrt 2 / 2Q) | 2.75, 2.8125, 2.828125; 0.17, 0.075, 0.0078 at Q = 2^20 | computation | `checks/limits.txt` section 1 |
+| Young under the fan's discreteness: Pearson(W, cosine) at K = 91, 361, 721 directions; pixels with both openings | 0.45, 0.84, 0.90; all 121 from K = 721 | computation | `checks/limits.txt` section 2b |
+| Young under the flight's rounding alone at lambda = 8 intervals | Pearson 0.93 | computation | `checks/limits.txt` section 2 |
+| The plane wave: omega / k = 1 / sqrt 3 for every rate n / d | c | computation | `checks/limits.txt` section 3 |
+| L7, the cone: the age at both counters; the path phase under the integer and the pair form | 29 and 29; 51 and 8; 23 and 23 | register | L7, `cone_links`, `cone_intervals`; record 144 |
