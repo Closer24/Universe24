@@ -54,8 +54,21 @@ of a two-dimensional GameBoard with `{"z": "periodic"}`). A measured event's
 step by its momentum uses the same provider and wraps the same way; with
 an extent of 1 it lands on its own Node, no move, the step counted. A
 wrapped or plain target that holds another measured event refuses the step
-(no merge, the model owner, 2026-09-19: both remain, the mover where it was
-with its momentum, the step counted, no record).
+(no merge, the model owner, 2026-09-19: both remain, the mover where it was,
+the step counted) and, since 2026-09-20, the refused step is a **contact
+read through the occupant's table** (the model owner, on the physicist's
+design of the strong force; [BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(ix)): the occupant's table entry for the body's family decides as it
+decides for a ray, `measure` (the keys' rule for a paid arrival, the body's
+momentum its own label; the rule wherever the entry is the keys' own for
+the body's family, declared or not) handing the body's momentum component
+on that axis to the occupant (the body's 0, the occupant's raised by it,
+the sum unchanged), `rerelease` returning it (the body's component
+reversed, the occupant's raised by twice it), `pass` and a `read` declared
+against the keys (on a paid family) leaving the labels as they were (the
+rule as it was, no record). A body on a set whose destination set holds several
+occupants hands the component apportioned whole over them by their
+contents. Each hand-over is a `contact` record.
 
 **An open face is a detector** (the model owner, 2026-09-19). Every escape
 through an open face, a ray in the walk or a measured event's step, is a
@@ -65,6 +78,17 @@ click and counted in the run's detector record with the face's squared
 record of what left; the books' escaped lines are the faces' sums. Nothing
 physical changes at the face: the amount, the content and the momentum
 leave the GameBoard as before. A periodic axis has no faces.
+
+**The border `lifetime`** (the model owner, 2026-09-20, "the event whose
+age reaches L makes no next event but an escape click in the ledger, as at
+an open face"). A family that declares a `lifetime` L has a detector
+without Nodes named `lifetime`, listed after the faces: a ray of the family
+whose age reaches L at the end of its walk (after the reads of that
+interval, before the merge) is a `click` on it, recorded like a face click
+(the tick, the Node the ray was on, `measured` None, the family, the
+number, the amount, the phase, the momentum, the content), booked as an
+escape in the ledger's lifetime lines and summed into the escaped lines
+beside the faces. The inverse interval is refused on such a GameBoard.
 
 ### Diagnostic scope and acceptance
 
@@ -244,7 +268,11 @@ events, its record per family and its phase at the last click) and one
 per measured event outside every declared detector (a detector of one
 Node with the default reading); every measured event points to its set
 (`Measured.detector_set`; `Measured.threshold` is the set's). The
-threshold, the window under `wave`, the pointer, the record and the
+threshold (under `beam` on the amount summed over the set; under `wave`,
+since 2026-09-20, on the square of the coherent pointer of the set's
+arrivals in units of one ray, `nature_beam.pointer_units`, so that rays
+which cancel pass; [BEAM_LAW note 32](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+the window under `wave`, the pointer, the record and the
 pairing under `beam` are taken over the set by `nature_beam` step 4; the
 click's content, momentum and re-emission stay at the Node the ray
 reached ([BEAM_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
@@ -270,12 +298,29 @@ the six headings in Port order and these, in that order); `families`
 (`name`, `quantum` (required; 0 a free family, 1 or more a paid one: the
 kind is derived, never declared), `charge` (a free family only: the
 charge per unit of content, an integer or `[n, d]`, since 2026-09-20),
+`columns` (since 2026-09-20, [BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+an object of column name to `{"value": n or [n, d], "sign": 1 or -1}`,
+the further columns of the one coupling; `gravity` built in with the
+value [1, 1] and the sign minus, `charge` built in with the sign plus
+and the family key `charge` as its value; one sign per name across the
+world; [0, 1] where a family names no value; 0 on a paid family; at most
+8 columns in all; the record carries `columns-v1` when a column beyond
+`charge` is declared), `lifetime` (since 2026-09-20, an integer L from 1,
+one scalar; absent, forever: a ray of the family whose age reaches L at
+the end of its walk clicks on the border `lifetime`, booked as a face
+books an escape; refused beyond `age_bound`; the record carries
+`columns-v1` when a lifetime is declared),
 `phase` true by default, `phase_per_link` 0 .. N - 1); `measured`
 (`position`, `family`, `amount`, `phase`, `momentum`, `fixed`, `span`
 (three odd integers from 1, `[1, 1, 1]` by default: a body on the set of
 Nodes centred on `position`, one record on all of them),
 `phase_by_momentum` (true: the body turns its phase by its momentum label
 at every Link it steps, over the world's `action`; false by default),
+`held` (since 2026-09-20, an object of family name to content, an integer
+from 1 each: the content the event holds of families other than its own;
+its content the sum, its charge in every column the rational sum over
+what it holds, every free family held released at the world's rate
+beside its own),
 `directions` (the
 directions it releases and re-emits on, by vector or by index into D; the
 six headings by default), `table` family name to `read` | `measure` |
@@ -306,6 +351,18 @@ MIGRATION: the quantum decides the kind), a family without `quantum`, a
 negative quantum, a charge on a paid family, `charge` on a measured event
 (pointing to MIGRATION: the charge is the family's per unit of content), a
 family `charge` with a denominator of 0 or a part that is not an integer, a
+column named `gravity`, `charge` declared both as the key and under
+`columns`, a column's `sign` other than 1 or -1, a column value with a
+denominator of 0 or a part that is not an integer, a column object with
+other keys, one name with two signs, a nonzero column value on a paid
+family, more than 8 columns, a declared reader whose push over a column
+from the largest release of a family could pass 2^62 - 1 (the parser's
+static budget; [the columns](TEST_EXPECTATIONS.md#the-columns)), a
+`lifetime` that is not an integer from 1 or is a list, a lifetime beyond
+`age_bound`, a declared ray in transit at or beyond its family's
+lifetime, a detector named `lifetime`, `held` naming the event's own
+family or an unknown one, a held content that is not an integer from 1,
+`held` that is not an object ([the lifetime and the held content](TEST_EXPECTATIONS.md#the-lifetime-and-the-held-content)), a
 detector named as a face detector is, two measured events at one
 Node, an unknown table rule, N not
 a power of two, a detector on a Node without a measured event, a Node in
@@ -331,35 +388,50 @@ kind `rays`.
 **The record.** `run.json` carries `law` "beam-v1", the world's keys
 (`boundary` as declared; `suspension` as `[n, d]`; `width`; `age_bound`; `directions`, the table
 D beyond the rest vectors and the headings; per family its `quantum`,
-`charge` (the pair `[n, d]`), `phase` and `phase_per_link`, no `kind`),
+`charge` (the pair `[n, d]`), `phase`, `phase_per_link` and `lifetime`
+(None without one), no `kind`),
 `numbers` (per measured event its `position`, `family`, `span` and
 `phase_by_momentum`; the measured events' states carry `span` too, as
-`state.json` does), `action` (h, or None) and `hypotheses` (`["bohr-v1"]`
-when `action` is declared, the identity of the turn by momentum beside
-the law, else `[]`),
+`state.json` does), `action` (h, or None), `hypotheses` (`bohr-v1` when `action` is
+declared, the identity of the turn by momentum beside the law;
+`columns-v1` when a column beyond `charge` or a lifetime is declared,
+the identity of the one mechanism of the columns and their range; `[]`
+without either), `columns` (the
+world's, name and sign, in order: gravity, charge, the declared names)
+and per family `columns` (name, value, sign, aligned with the world's),
 the books per completed tick (`audit`, the `charge` line the
 exact rational sum of the measured events' charges as a reduced pair) with
 `conserved_at_every_completed_tick`, the measured events' final states
 (`measured`: position, held per family, content, phase, charge (the pair
-rho x content, reduced), momentum,
+rho x content, reduced), `charges` (the charge in every column by name,
+the exact rational sum over the families held, since 2026-09-20), momentum,
 windows, detector, age, owed, what waits to be created again (`home`,
 `home_content`), `waited`, phase steps, steps, what each met per family by
-rule, the clicks and the push taken; no record of its own since
+rule, the clicks and the push taken, and `contacts`, the hand-overs it
+took per family of the arriving body; no record of its own since
 2026-09-19, the record being the detector set's), the detectors
 (`detectors`: name, Nodes, threshold, `reading`, per family the amount
 measured, the clicks summed over its Nodes, the set's one cumulative
 `record` (the square under `wave`, the count under `beam`) and its
 `phase` at the last click; then the face detectors, one per open face in Port order, with what
 clicked there in transit, the `measured_content` of the measured events
-that stepped off, the `record` and the `momentum` that left) and the
-`escaped` per family (amount, content, momentum). `events.jsonl` holds one
+that stepped off, the `record` and the `momentum` that left, the last
+per family too since 2026-09-20; then, when a family declares a lifetime,
+the border `lifetime`, `nodes` 0, with the same fields) and the `escaped`
+per family (amount, content and, since 2026-09-20, the family's own
+momentum: the faces and the border summed; until then the world's total
+momentum was written into every family's line). `events.jsonl` holds one
 record per event: `home`, `read`, `click`, `rerelease` (per number and
 tick, with the amount, the phase, the push and the content), `pass` (a ray
 below the threshold, with `threshold`, or outside the window, with
 `window`, or paired under `beam`, with `cancelled` true), `step` (the
 measured event's number, its Node before and after, its momentum and,
 since 2026-09-20, its `phase` after the step: what the turn by momentum
-turned it to, the phase it had otherwise), and per
+turned it to, the phase it had otherwise), `contact` (since 2026-09-20:
+the body's `number`, its `node` and the destination `to`, the `occupant`,
+the body's `family`, the occupant's `rule` for it, the `axis` and the
+signed `component` the occupant gained, the body's `momentum` after; one
+per occupant that took a hand-over), and per
 interval per detector set and family a `record` line with the set's
 `record` (under `wave` the square with the `pointer` (X, Y); under `beam`
 the count), the set's `phase` and, for a set of one Node, its `node` and

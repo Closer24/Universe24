@@ -255,6 +255,7 @@ def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
         "content": 1,
         "record": 32 * 32 * (phase_cosines(64)[5] ** 2 + phase_sines(64)[5] ** 2),
         "measured_content": 0,
+        "momentum": [0, 0, 64],
     }
     world = bar(
         [1, 1, 4],

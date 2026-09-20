@@ -5,6 +5,94 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The `wave` threshold on the pointer's square; the escaped momentum per family (2026-09-20)
+
+- The model owner's decision (issue #359 step A;
+  [BEAM_LAW note 32](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  under `wave` a detector set's threshold reads the square of the
+  coherent pointer of its arrivals in units of one ray (the nearest
+  integer to (X^2 + Y^2) / 2^26; one unit at any phase 1, a rays in phase
+  a^2, rays that cancel 0), so a pair in antiphase passes whether or not
+  a window is declared; under `beam` the amount as before; no memory
+  between intervals. Of the 66 example worlds 65 are byte-identical (the
+  slits and the Bell ten among them, S = 2 exactly); A10's `w27_wave`
+  alone changes (2312 antiphase pairs passing a pixel and going on) and
+  is re-registered old against new. The escaped
+  momentum is booked and reported per family (issues #360 and #361 item
+  1): `run.json`'s `escaped` line per family carries the family's own
+  momentum where the world's total was written into every line
+  ([MIGRATION](docs/MIGRATION.md); `tests/test_nature_beam_detector.py`
+  (i), `tests/test_nature_beam_books.py`).
+
+### The columns of the one coupling, the lifetime, the held content and the contact through the table (2026-09-20)
+
+- The model owner's decision ("one mechanism for all the laws on the
+  GameBoard", [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); the
+  mathematician's verified form, "correct and working";
+  [BEAM_LAW note 31](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  the push a measured event takes from a free family's rays is a signed
+  inner product over the columns the families declare per unit of
+  content, every column the whole part off the reader's clock of V x
+  (the reader's charge in the column, read at the frame from what it
+  holds) x (the arriving family's value), floored on its own; `gravity`
+  the built-in first column of every family (the value [1, 1], the sign
+  minus), `charge` the built-in second (the sign plus, the family key
+  `charge` its value), and per family `columns` (`{"<name>": {"value":
+  n or [n, d], "sign": 1 or -1}}`) for any further column, one sign per
+  name across the world, [0, 1] where a family names none, 0 on a paid
+  family, 8 at most. The two built-in columns are the form landed the
+  same day integer by integer (the 66 example worlds' `events.jsonl`
+  byte-identical; the series 7 `read` records replayed). The products
+  are tested by division before they are formed and the partial sum is
+  bounded after every column; the parser refuses at load a reader whose
+  push over a column from the largest release of a family could pass the
+  bound. `run.json` carries the world's `columns`, every family's aligned
+  `columns` and `columns-v1` under `hypotheses` when a column beyond
+  `charge` is declared; the states carry `charges` by column. The strong
+  force is a column with the sign minus, no code of its own
+  ([MIGRATION](docs/MIGRATION.md); `tests/test_columns.py`).
+- The lifetime and the held content (the model owner, 2026-09-20, "the
+  strong force's range is a lifetime, L: the event whose age reaches L
+  makes no next event but an escape click in the ledger, as at an open
+  face"; the physicist's D-1;
+  [BEAM_LAW note 31](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+  (vii) and (viii)): per family `lifetime` (an integer L from 1, one
+  scalar; absent, forever): a ray whose age reaches L at the end of its
+  walk, after that interval's reads and before the merge, clicks on the
+  border `lifetime`, a detector without Nodes listed after the faces,
+  booked exactly as an open face books an escape (the ledger's lifetime
+  lines summed into the escaped lines, one `click` record per row naming
+  the border); refused beyond `age_bound`, a declared ray at or beyond it
+  refused, the inverse interval refused with such a family; the reach the
+  flight table's (L = 1 the six neighbours, 2 the face diagonals, 3 the
+  cube diagonals and two Links). Per measured event `held` (family name
+  to content): the content the sum, the charge in every column the
+  rational sum over what is held, every free family held released beside
+  the own. `run.json` carries `lifetime` per family, the border among the
+  `detectors` and `columns-v1` under `hypotheses` when a lifetime is
+  declared. No existing world changes ([MIGRATION](docs/MIGRATION.md);
+  `tests/test_lifetime.py`).
+- The contact through the table (the model owner, 2026-09-20, on the
+  physicist's design of the strong force, section 4.4;
+  [BEAM_LAW note 31](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+  (ix)): a body whose step on an axis is refused because the destination
+  holds another measured event has arrived at that occupant, and the
+  occupant's table entry for the body's family decides as it decides for
+  a ray: `measure` (the rule wherever the entry is the keys' own for the
+  body's family, declared or not: a paid arrival, the body's momentum its
+  own label) hands the body's momentum component on that axis to the
+  occupant, the sum unchanged; `rerelease` returns it; `pass` and a
+  `read` declared against the keys leave the labels as they were (the
+  rule until now, under which a bound pair's labels grew without bound); a
+  body on a set hands the component apportioned whole over the occupants
+  of its destination set by their contents; one `contact` record per
+  hand-over, `contacts` on the occupant's state. No key. Of the 66
+  example worlds 60 are byte-identical; the coupling `1b_*`, Bohr `r2`
+  and `r4` and the orbit `s8_r12` change from the first refused step of
+  a body and are registered old against new
+  ([VALIDATION](docs/VALIDATION.md); [MIGRATION](docs/MIGRATION.md);
+  `tests/test_contact.py`).
+
 ### The names NatureBeam and GameBoard and the glossary's single names (2026-09-20)
 
 - The model owner's names, a mechanical rename with no behaviour change

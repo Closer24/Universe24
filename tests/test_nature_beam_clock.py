@@ -35,7 +35,13 @@ momentum; no merge. Re-pinned from `test_event_clock`,
     flow in label units) on +x steps once per two self-creations (three
     after six intervals); with momentum 64 none after 16 and one after 17;
     the momentum untouched; a step onto a Node that holds a measured event
-    is refused, both remain, the step counted;
+    is refused and, since 2026-09-20, is a contact read through the
+    occupant's table (`measure` by the keys): on a bar of 3 x 1 x 1 the
+    mover's step of interval 2 onto the resident hands it the 1024 (one
+    `contact` record, the mover's momentum 0, its step counted), the
+    resident steps to x = 2 in the same interval with the 1024 and leaves
+    through face:+x at interval 4 (the escaped momentum (1024, 0, 0), the
+    measured line 16), the mover at x = 0 with one step for the rest;
 (e) the count off the clock: a source of `m` of content k at x = 0 of a
     2 x 1 x 1 bar releasing k rays per direction per self-creation at
     `release` [1, 1] and a probe of `light` (content 1, measuring `m`) at
@@ -213,12 +219,39 @@ def test_a_measured_event_steps_off_its_clock_and_a_step_onto_another_is_refused
         simulation.step()
         books = simulation.books()
         assert books["balanced"], tick
-        first, second = simulation.measured[1], simulation.measured[2]
-        assert first.position == (0, 0, 0) and second.position == (1, 0, 0), tick
-        assert first.momentum == [1024, 0, 0] and second.momentum == [0, 0, 0], tick
-        assert first.steps == tick // 2 and second.steps == 0, tick
-        assert books["families"]["m"]["measured"]["current"] == 32
-    assert records == []
+        first = simulation.measured[1]
+        assert first.position == (0, 0, 0) and first.momentum == [1024 if tick < 2 else 0, 0, 0], tick
+        assert first.steps == min(tick // 2, 1), tick
+        if tick < 4:
+            second = simulation.measured[2]
+            assert second.position == (1 if tick < 2 else 2, 0, 0), tick
+            assert second.momentum == [0 if tick < 2 else 1024, 0, 0] and second.steps == min(
+                tick // 2, 1
+            )
+            assert books["families"]["m"]["measured"]["current"] == 32
+            assert books["momentum"]["measured"] == [1024, 0, 0]
+        else:
+            assert 2 not in simulation.measured
+            assert books["families"]["m"]["measured"] == {
+                "initial": 32,
+                "measured": 0,
+                "current": 16,
+                "spent": 0,
+                "escaped": 16,
+                "balanced": True,
+            }
+            assert books["momentum"]["escaped"] == [1024, 0, 0]
+    assert [(r["event"], r["tick"], r["number"]) for r in records] == [
+        ("contact", 2, 1),
+        ("step", 2, 2),
+        ("click", 4, 2),
+    ]
+    assert (
+        records[0]["component"] == 1024
+        and records[0]["occupant"] == 2
+        and records[0]["rule"] == "measure"
+    )
+    assert records[1]["to"] == [2, 0, 0] and records[2]["detector"] == "face:+x"
 
 
 def ages_of_a_probe(presence: int, ticks: int) -> tuple[list[int], int, int]:

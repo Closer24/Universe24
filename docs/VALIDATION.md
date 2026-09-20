@@ -11,6 +11,95 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The `wave` threshold on the pointer's square: the 66 example worlds compared, A10 and Bell re-read - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` on the commit of the `wave`
+threshold on the pointer's square and the escaped momentum per family
+([BEAM_LAW note 32](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+issues #359 step A, #360, #361 item 1), source fingerprint
+`0b39130239c775492fe336818039801e572af6bb0128b9f8be41bcd031163228`,
+against the commit before it (`23a7e0fd2135e714bf072d09c5a0d4925ad0d3edb8b32adab0f84f1e9a010599`),
+Python 3.14.0rc2, numpy 2.5.3, headless, four cores. Every example world
+of `examples/events/` under the Beam Law but series I (66) was run under
+both with `tools/run_series.py` and the runs compared file by file.
+
+| Check | Result |
+| --- | --- |
+| The 66 worlds, `events.jsonl` before against after | 65 byte-identical: the coupling twenty-one, the Bell ten, the orbit six, the Bohr seven, the redshift, Hubble and detector worlds, `one_content`, `two_contents`, `two_slits`, `one_slit`, and `w1_wave`, `w3_wave`, `w9_wave` and the four `w*_beam` (no set of theirs ever read a pointer below its threshold with an amount at it); `w27_wave` differs |
+| `w27_wave` (A10, `tools/heisenberg_readings.py` on both) | 2312 `pass` records naming `threshold` (antiphase pairs at a pixel, the pointer 0) where the pairs clicked with the record 0; the pairs go on: face:+x 0 -> 408 clicks, face:+y and face:-y 12 833 -> 13 613 each, the escaped 25 666 -> 27 634, 38 of the 161 pixels' records differ, the sum of the screen's records 0.16 % higher; the count FWHM 0.761 -> 0.758, the count rms 0.325 -> 0.321, the record FWHM 0.185 and the product 4.99 unchanged, the record rms 0.224 -> 0.225, the clicks 150 187 -> 148 131; 0 record checks failed; the books balanced at every tick |
+| The Bell ten (`tools/bell_chsh.py` on both) | S = E(0, 8) - E(0, 24) + E(16, 8) + E(16, 24) = 2 exactly before and after, every run check passed |
+| `two_slits`, `one_slit` | byte-identical: their 27 220 and 13 610 screen clicks unchanged (no antiphase pair met a pixel in one interval) |
+| The escaped momentum per family (`run.json`'s `escaped` lines) | each family's own where the world's total was written into every line: `w27_wave` light (10 830 512, 0, 0) and wall (0, 0, 0) where both read the total; the faces' `families` carry `momentum` beside the face's total; the books' escaped line unchanged |
+| `tests/test_nature_beam_detector.py` (i), the re-pinned (a) to (d), `tests/test_nature_beam_readings.py` (d), `tests/test_nature_beam_body.py` (b), `tests/test_nature_beam_books.py`; `python tools/check.py` | ruff lint and format, mypy and 499 selected tests green |
+
+The runs establish what the threshold on the pointer's square does on the
+engine (rays that cancel pass and go on; the coherent record of a set they
+passed is unchanged; the record of what they reach later is not); they
+establish no physical law.
+
+## Series I, the nucleus: eight runs - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` on the commits of the one
+mechanism (the columns `de6c4968`, the lifetime and the held content
+`7a77fa0c`, the contact through the table `b2c164c2`) and the series I
+commit, source fingerprint
+`a86447318c757023605e4ba33ab1ef1a15726fef839b893d5d50b899750188f5`,
+Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
+
+| Check | Result |
+| --- | --- |
+| Series I, `examples/events/nucleus/` (eight worlds, `tools/run_series.py --jobs 3`, 3000 intervals each) | every run completed in 4 to 87 s with the books balanced at every tick; `tools/nucleus_readings.py`: 0 record checks failed, 29 readings inside, 1 outside (the first step of two protons at three Links at tick 66 against the steady toy's 30 .. 60), none moved; the table in [EXPERIMENTS, I](EXPERIMENTS.md#i-the-nucleus-2026-09-20) |
+| `tests/test_nucleus_readings.py` | the tool's reading of a run written by the runner pinned to the record: the design's pair on the six headings (the pushes (128, 0, 0) from -7936 and +8064, the hand-overs 256, 128, 640, the border's 12 clicks per interval from tick 4) |
+| `python tools/check.py` | ruff lint and format, mypy and the selected tests green |
+
+The runs establish what the one mechanism does on the engine (the
+designed pushes integer by integer, the deuteron bound at one Link and
+free at three, the binding threshold of two protons, the square sheared
+and the line held); they establish no physical law, for or against.
+
+## The columns, the lifetime, the held content and the contact through the table: the 66 example worlds compared - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` on the commits of the one
+mechanism ([BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+the columns (`de6c4968`, `columns-v1`), the lifetime and the held content
+(`7a77fa0c`) and the contact through the table (this commit), Python
+3.14.0rc2, numpy 2.5.3, headless, four cores. Every example world of
+`examples/events/` under the Beam Law (66; the entity worlds excluded) was
+run with `tools/run_series.py` under the engine before the columns
+(`ad20aa65`, source fingerprint
+`d29df4af8cfd79512d827d32df7b885948b2a90a4865cf1993b01bb74b76095c`), under
+the columns (`da74b0fff14e65e23f80154ba6528a3af0a328ea4a7565f071ee3de2f33ce84b`)
+and under the contact
+(`23a7e0fd2135e714bf072d09c5a0d4925ad0d3edb8b32adab0f84f1e9a010599`), and
+the runs compared file by file.
+
+| Check | Result |
+| --- | --- |
+| The columns: 66 worlds, before against after | `events.jsonl` byte-identical in every world; `state.json` equal but for the added `charges` per measured event; `run.json` equal but for the added `columns` keys and `hypotheses` (the two built-in columns are the landed form integer by integer) |
+| The lifetime and the held content: 66 worlds | unchanged: no example world declares a `lifetime` or `held` (the border and the held content are exercised by `tests/test_lifetime.py`) |
+| The contact through the table: 66 worlds, the columns against the contact | 60 worlds byte-identical in `events.jsonl` (no body of theirs ever stepped onto another); 6 worlds differ from the first refused step of a body on: the coupling `1b_m1`, `1b_m4`, `1b_m16` (tick 32), Bohr `r2` (tick 72) and `r4` (tick 454), the orbit `s8_r12` (tick 174); every run completed with the books balanced at every tick |
+| `python tools/check.py` after each commit (`tests/test_columns.py`, `tests/test_lifetime.py`, `tests/test_contact.py` among the selected) | ruff lint and format, mypy and the selected tests green |
+
+The six worlds under the contact, old (the refused step leaving the labels
+as they were) against new (the occupant's table reading the body,
+`measure` by the keys), `tools/bohr_readings.py` and
+`tools/orbit_readings.py` on the new runs:
+
+| World | Old | New |
+| --- | --- | --- |
+| coupling `1b_m1` | the free probe at x = 61 from tick 31, every further step refused, its momentum growing under every read to (-2 260 249 792, 0, 0) at tick 200, the source's (1 073 741 824, 0, 0) | the same 11 steps to x = 61; from tick 32 every refused step hands the probe's x component to the fixed source, 169 hand-overs (-146 316 992 at tick 32, then about -12.58 million per interval, one per interval), the probe's momentum (0, 0, 0) and the source's (-1 186 507 968, 0, 0) at tick 200; the sum of the two the same; the escaped line the same |
+| coupling `1b_m4`, `1b_m16` | the probe's momenta m times `1b_m1`'s: (-9 040 999 168, 0, 0) and (-36 163 996 672, 0, 0) | 169 hand-overs m times `1b_m1`'s (-585 267 968 and -2 341 071 872 at tick 32); the probe (0, 0, 0), the source (-2 598 548 224, 0, 0) and (-12 541 676 544, 0, 0) |
+| Bohr `r2` | 1.47 turns of the angle, one closing (T 79, return 1.0 Links, mean radius 1.74), r 1.0 .. 16.3, the electron out through face:-x at tick 254 after 33 steps, no coherence reading | 7 hand-overs to the fixed proton (ticks 72, 312, 389, 393, 404, 421, 425; 0.46 to 1.34 x 10^9 label units each, on x and on y), 2.07 turns, two closings (T 84 and 166, returns 0.0 and 1.4 Links, mean radii 1.74 and 2.66), r 1.0 .. 17.9, the phase's turn per orbit 0.688 (the design 0.946), C(2) = 0.60 and the slope 1.27 (outside C >= 1.0), out through face:+x at tick 688 after 76 steps; the proton's momentum (2 316 591 360, 3 929 525 040, 0) |
+| Bohr `r4` | 1.28 turns, one closing (T 138, return 2.0, mean radius 2.66), r 1.0 .. 18.4, out through face:+y at tick 540 after 68 steps | one hand-over at tick 454 (1 186 767 242 on y), 1.25 turns, the same one closing, r 1.0 .. 18.0, out through face:+y at tick 600 after 68 steps; no coherence reading either way |
+| orbit `s8_r12` | the angle reaching 2 pi at tick 198 with the return (+5, 0), mean radius 15.20, C 1.54 on the turn, out through face:+x at tick 271 after 144 steps | one hand-over at tick 174 (251 on y, the probe at the Node beside the source), the angle reaching 1.00 turn and no closing, r 1.0 .. 60.0, 17 reads of 3335 units, C 0.30 over the run, out through face:+x at tick 260 after 133 steps; the source's momentum (0, 251, 0) |
+
+The registered entries of series C, D and H keep the numbers of their date
+(a run is recorded once) and each carries a note pointing here; `r15`,
+`r16` and every other world with a body are unchanged, no step of theirs
+having been refused. The runs establish what the contact does on the
+engine (the hand-over as pinned, the books closed); they establish no
+physical law.
+
 ## A10 at a low rate, the single-click build-up: three runs - 2026-09-20
 
 The worktree of `claude/universe24-new-3ytqde` at the tip `9fc895a2` (the
@@ -28,6 +117,21 @@ and the worlds' [README](../examples/events/buildup/README.md).
 | A10 at a low rate, `examples/events/buildup/` (three worlds, `tools/run_series.py --jobs 3`, 420, 1200 and 7780 intervals) | every run completed (55.4, 38.8, 91.8 s) with the books balanced at every tick; `tools/buildup_readings.py`: 0 record checks failed, 2 readings inside, 1 outside, none moved: the narrowing of the coherent record against the count 0.307 at the rate 47 (expected >= 0.2), 0.052 at 8 (reported), -0.017 at 1 (expected 0 +- 0.02); R / I at the record's peak at the rate 1 1.200 at y = 58 (expected 1 +- 0.02: outside; the centre pixel 0.843), the coincidences of the synchronized comb 6.6 % of the cells and 12.3 % of the clicks |
 | `tests/test_buildup_readings.py` | passed: on a 14 x 5 plane at the rates 2 and 1 the tool's pixels equal the engine's detector sets, R / I = 2 exactly with every cell a coincidence and 1 exactly with none, the wavelength (64 / 8) / sqrt 3 |
 | `python tools/check.py` (the scoped selection) | ruff lint and format, mypy and the selected tests green; the language, hygiene and navigation gates green |
+
+Re-run under the `wave` threshold on the pointer's square after the
+merge of the strong force's commits (source fingerprint
+`0b39130239c775492fe336818039801e572af6bb0128b9f8be41bcd031163228`,
+[the entry above](#the-wave-threshold-on-the-pointers-square-the-66-example-worlds-compared-a10-and-bell-re-read---2026-09-20)):
+the three worlds change (an antiphase pair at a pixel passes where it
+clicked with the record 0 and goes on), the clicks in the window 172 753
+-> 169 855, 171 871 -> 158 878 and 171 742 -> 158 622, the cells with 2+
+rays 25 921 -> 25 277, 46 174 -> 39 263 and 10 560 -> 4000, the record's
+FWHM, the product and R / I at the peak unchanged, the narrowing 0.292,
+0.050 and -0.005 (were 0.307, 0.052, -0.017), every verdict the same (2
+inside, 1 outside), 0 record checks failed; the rows old against new are
+in [EXPERIMENTS, A10 at a low rate](EXPERIMENTS.md#a10-at-a-low-rate-the-single-click-build-up-2026-09-20).
+Series K's four worlds (`examples/events/lensing/`) are unchanged under
+it, reading by reading (16 inside, 0 outside).
 
 The runs establish what this engine's screen reads at a low rate (the
 lobe of the coherent record vanishes as the coincidences within one

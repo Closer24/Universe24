@@ -36,12 +36,15 @@ set and the turn by momentum"), written down first:
     push (-768, 0, 0) = -4 x 3 x 64), one `record` line naming `d` with
     the record (3 x 32)^2 x 256^2 = 9 x 67108864, the presence 3 and the
     count 3, the owed count `by_clock(0, 3, 1)` = 3; two rays at two of
-    the Nodes pass (`threshold` 3), no click, no push; the step: a free
+    the Nodes read the square 4 and click since 2026-09-20 (the `wave`
+    threshold on the pointer's square), one ray alone passes (`threshold`
+    3), no click, no push; the step: a free
     body of `m` (content 16, momentum [1024, 0, 0]) of span [1, 1, 3] at
     (2, 0, 1) of an open 6 x 1 x 3 bar steps at the ages 2, 4, 6 with all
     three Nodes (x per interval 2, 3, 3, 4, 4, 5, 5); with a fixed anchor
     at (5, 0, 0), a Node of the moved set at the age 6, the step is
-    refused and the body stays at (4, 0, 1) with 3 steps counted; without
+    refused and the body stays at (4, 0, 1) with 3 steps counted, its
+    momentum handed to the anchor (the contact of 2026-09-20); without
     it the step of the age 8 leaves the GameBoard and the whole body clicks
     on face:+x (one click, node (5, 0, 1), amount 16, the measured line's
     escaped 16, no measured event left); with x periodic it wraps to
@@ -210,21 +213,27 @@ def test_a_set_of_one_node_is_todays_measured_event():
     assert xs == [3] * 4 + [4] * 5 + [5] * 5 + [6] * 5 + [7] * 5 + [8] * 6
     body, counter = simulation.measured[1], simulation.measured[2]
     assert body.position == (8, 1, 1) and body.nodes == ((8, 1, 1),) and body.span == (1, 1, 1)
+    # The step of tick 30 onto the counter is refused and is a contact: the
+    # body's 256 handed to the counter (until 2026-09-20 the body kept it
+    # and the counter read -25344).
     assert (body.age, body.phase, body.momentum, body.steps, body.held) == (
         30,
         5,
-        [256, 0, 0],
+        [0, 0, 0],
         6,
         [16, 0],
     )
-    assert counter.held == [0, 4] and counter.clicks == [99, 0]
-    assert counter.momentum == [-25344, 0, 0]
+    assert counter.held == [0, 4] and counter.clicks == [99, 0] and counter.contacts == [1, 0]
+    assert counter.momentum == [-25344 + 256, 0, 0]
     assert counter.detector_set.record == [37348285440, 0] and counter.detector_set.phase == [5, None]
     kinds = {
         kind: sum(1 for r in records if r["event"] == kind)
-        for kind in ("click", "record", "step", "home")
+        for kind in ("click", "record", "step", "home", "contact")
     }
-    assert kinds == {"click": 152, "record": 20, "step": 5, "home": 5}
+    assert kinds == {"click": 152, "record": 20, "step": 5, "home": 5, "contact": 1}
+    assert [(r["tick"], r["component"], r["occupant"]) for r in records if r["event"] == "contact"] == [
+        (30, 256, 2)
+    ]
     by_detector = {}
     for r in records:
         if "detector" in r:
@@ -329,15 +338,16 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
     assert len(lines) == 1 and lines[0]["detector"] == "d" and lines[0]["record"] == 9 * UNIT_RECORD
     assert [r["node"] for r in records if r["event"] == "click"] == [[4, 0, 1]] * 3
     assert simulation.stores[M].size == 0
-    # A smaller set passes: the threshold reads the sum over the set.
+    # A smaller set passes: the threshold reads the pointer's square over
+    # the set (one ray, 1 < 3; two rays in phase would read 4 and click).
     records.clear()
-    simulation = NatureBeamSimulation(parse_nature_beam_world(set_world(three[:2])), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(set_world(three[:1])), records.append)
     simulation.step()
     assert simulation.books()["balanced"]
-    assert [(r["event"], r["threshold"]) for r in records] == [("pass", 3), ("pass", 3)]
+    assert [(r["event"], r["threshold"]) for r in records] == [("pass", 3)]
     body = simulation.measured[1]
     assert body.clicks == [0, 0] and body.momentum == [0, 0, 0] and body.detector_set.record == [0, 0]
-    assert simulation.stores[M].size == 2
+    assert simulation.stores[M].size == 1
     # The step moves the whole set; a Node of the moved set held by another
     # measured event refuses it.
     anchor = {"position": [5, 0, 0], "family": "m", "amount": 1, "fixed": True}
@@ -352,6 +362,9 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
         assert all(simulation.at[node] == 1 for node in body.nodes), tick
     assert xs == [2, 3, 3, 4, 4, 4] and body.steps == 3 and simulation.at[(5, 0, 0)] == 2
     assert len(simulation.at) == 4
+    # The refused step is a contact: the body's x component handed to the anchor.
+    assert body.momentum == [0, 0, 0] and simulation.measured[2].momentum == [1024, 0, 0]
+    assert simulation.measured[2].contacts == [1, 0]
     # Without the anchor the whole body clicks on the face at the age 8.
     records.clear()
     simulation = NatureBeamSimulation(parse_nature_beam_world(mover_world([])), records.append)

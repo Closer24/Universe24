@@ -116,6 +116,14 @@ root mean square of sin theta over the screen.
 | `w9_beam` | beam | 9 | 0.148 | 0.148 | 0.324 | 0.324 | 1.34 | 46999 | 3100 | 11146 |
 | `w27_beam` | beam | 27 | 0.486 | 0.486 | 0.330 | 0.330 | 13.11 | 98780 | 51407 | 74183 |
 
+Under the `wave` threshold on the pointer's square (2026-09-20, issue
+#359 step A) `w27_wave` alone changes: 2312 antiphase pairs pass a pixel
+where they clicked with the pointer 0 and go on to other pixels and the
+faces; its row reads the count FWHM 0.758, the count rms 0.321, the record
+rms 0.225, the clicks 148 131 and the escaped 27 634, the record FWHM and
+the product unchanged; the seven other worlds are byte-identical
+([validation](../../../docs/VALIDATION.md#the-wave-threshold-on-the-pointers-square-the-66-example-worlds-compared-a10-and-bell-re-read---2026-09-20)).
+
 What the runs read, line by line:
 
 - **The count never narrows** (measured = expected): the count-weighted

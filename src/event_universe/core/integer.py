@@ -39,6 +39,22 @@ def integer_root(value: int) -> int:
         estimate = better
 
 
+def reduced(numerator: int, denominator: int) -> tuple[int, int]:
+    """A rational as the pair (n, d) in lowest terms with d positive."""
+    common = bounded_gcd(abs(numerator), denominator) or 1
+    return numerator // common, denominator // common
+
+
+def rational_sum(terms: list[tuple[int, int]]) -> tuple[int, int]:
+    """The exact sum of rationals (n, d), reduced: a report of the books
+    and, since the columns of 2026-09-20, a measured event's charge in a
+    column over the families it holds."""
+    numerator, denominator = 0, 1
+    for n, d in terms:
+        numerator, denominator = reduced(numerator * d + n * denominator, denominator * d)
+    return numerator, denominator
+
+
 def by_clock(age: int, numerator: int, denominator: int) -> int:
     """What the whole part of age x numerator / denominator gains at the
     self-creation that takes the age from `age` to `age + 1`: a rate read

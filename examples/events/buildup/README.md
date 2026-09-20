@@ -143,6 +143,16 @@ outside, none moved.
 - Host cost: 55, 39 and 92 s for 420, 1200 and 7780 intervals; the
   events record 64, 73 and 125 MB (a click line per unit).
 
+Under the `wave` threshold on the pointer's square (2026-09-20, issue
+#359 step A, merged after these runs) the three worlds change: an
+antiphase pair at a pixel passes where it clicked with the record 0 and
+goes on; the clicks in the window read 169 855, 158 878 and 158 622, the
+narrowing 0.292, 0.050 and -0.005, the record's FWHM, the product and
+R / I at the peak unchanged, every verdict the same; the rows old against
+new are in the register entry
+([EXPERIMENTS](../../../docs/EXPERIMENTS.md#a10-at-a-low-rate-the-single-click-build-up-2026-09-20),
+[validation](../../../docs/VALIDATION.md#the-wave-threshold-on-the-pointers-square-the-66-example-worlds-compared-a10-and-bell-re-read---2026-09-20)).
+
 ## Verdict
 
 Fringes do not build up one click at a time in this law: the lobe of the

@@ -8,15 +8,63 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from event_universe.core.game_board import Address3
-from event_universe.core.integer import bounded_gcd
-from event_universe.events.world import AGE_READS
+from event_universe.core.integer import rational_sum, reduced
+from event_universe.events.world import AGE_READS, BEAM_LAW, CHARGE_INDEX, MOMENTUM_BOUND
 
+__all__ = [
+    "TALLIES",
+    "DetectorSet",
+    "Ledger",
+    "Measured",
+    "column_charges",
+    "count_component",
+    "rational_sum",
+    "reduced",
+]
 TALLIES = ("home", "read", "measure", "rerelease")
 # The component of the one reading a measured event's clock counts by
 # default: the presence, the scalar over every ray at its Node of another
 # number.
 PRESENCE_READS = "scalar"
 Pending = tuple[int, int, int]
+Pair = tuple[int, int]
+
+
+def column_charges(
+    held: list[tuple[tuple[Pair, ...], int]], columns: int, number: int, position: Address3
+) -> list[Pair]:
+    """A measured event's charge in every column from what it holds: per
+    column c the exact rational sum over the families f held of n_f^c x
+    M_f / d_f^c, the reduced pair (E, D) (`rational_sum`, the books' rule
+    for the charge line since 2026-09-20). `held` lists, per family with a
+    content, its aligned column values and its content M_f. The gravity
+    column ((1, 1) on every family) sums to the content, (M, 1); the
+    charge column is rho x M for a one-family event, the report it was.
+    Each product n_f^c x M_f is checked before it is formed and a charge
+    whose sum leaves the register refuses the run naming the measured
+    event and the column."""
+    charges: list[Pair] = []
+    for column in range(columns):
+        terms: list[Pair] = []
+        for values, content in held:
+            numerator, denominator = values[column]
+            if not numerator or not content:
+                continue
+            if abs(numerator) > MOMENTUM_BOUND // content:
+                raise OverflowError(
+                    f"{BEAM_LAW}: the charge of measured event {number} at {list(position)} in "
+                    f"column {column} ({numerator} per unit on the content {content}) exceeds the "
+                    f"integer bound {MOMENTUM_BOUND}"
+                )
+            terms.append((numerator * content, denominator))
+        try:
+            charges.append(rational_sum(terms))
+        except OverflowError as error:
+            raise OverflowError(
+                f"{BEAM_LAW}: the charge of measured event {number} at {list(position)} in column "
+                f"{column} (the sum over the families held) exceeds the work register"
+            ) from error
+    return charges
 
 
 def count_component(reads: str) -> str:
@@ -31,20 +79,6 @@ def count_component(reads: str) -> str:
     the GameBoard; the GameBoard's rules (the flight, the collision) never read the
     age whole."""
     return AGE_READS if reads == AGE_READS else PRESENCE_READS
-
-
-def reduced(numerator: int, denominator: int) -> tuple[int, int]:
-    """A rational as the pair (n, d) in lowest terms with d positive."""
-    common = bounded_gcd(abs(numerator), denominator) or 1
-    return numerator // common, denominator // common
-
-
-def rational_sum(terms: list[tuple[int, int]]) -> tuple[int, int]:
-    """The exact sum of rationals (n, d), reduced: a report of the books."""
-    numerator, denominator = 0, 1
-    for n, d in terms:
-        numerator, denominator = reduced(numerator * d + n * denominator, denominator * d)
-    return numerator, denominator
 
 
 @dataclass
@@ -98,9 +132,10 @@ class Measured:
     family: int
     held: list[int]
     phase: int
-    # The family's charge per unit of content, rho = (n, d): the event's
-    # charge is rho x its content (`charge`, a report), and the electric
-    # push reads rho and the content the frame read.
+    # The family's charge per unit of content, rho = (n, d), the value of
+    # its `charge` column; the event's charge in every column is read from
+    # what it holds (`charges`: the `charge` column's pair is `charge`, a
+    # report) and the push reads the charges the frame read.
     rho: tuple[int, int]
     momentum: list[int]
     fixed: bool
@@ -124,6 +159,11 @@ class Measured:
     span: tuple[int, int, int] = (1, 1, 1)
     nodes: tuple[Address3, ...] = ()
     phase_by_momentum: bool = False
+    # The world's columns (their names, gravity first, charge second) and
+    # every family's aligned values per unit of content, (n, d) per column:
+    # what the event's charges are read from (`charges`).
+    column_names: tuple[str, ...] = ()
+    family_values: tuple[tuple[Pair, ...], ...] = ()
     age: int = 0
     owed: int = 0
     pending: list[list[Pending]] = field(default_factory=list)
@@ -133,6 +173,14 @@ class Measured:
     taken: list[dict[str, int]] = field(default_factory=list)
     clicks: list[int] = field(default_factory=list)
     pushed: list[int] = field(default_factory=lambda: [0, 0, 0])
+    # The contact through the table (2026-09-20): per family the rule by
+    # which this event reads a body of that family whose step onto it is
+    # refused (`measure` hands the body's component on the axis of the
+    # step to this event, `rerelease` returns it, `pass` and a `read`
+    # declared against the keys leave the labels as they are), and per
+    # family the hand-overs taken.
+    contact: tuple[str, ...] = ()
+    contacts: list[int] = field(default_factory=list)
     # The interval's frame, set by the engine: whether this interval is a
     # self-creation, the age before it, the turn read off the clock and the
     # content the frame read (`frame_content`, M_A of the push: taken once
@@ -144,6 +192,7 @@ class Measured:
     clock_age: int = 0
     turn: int = 0
     frame_content: int = 0
+    frame_charges: list[Pair] = field(default_factory=list)
     presence: int = 0
     counted: int = 0
 
@@ -151,12 +200,30 @@ class Measured:
     def content(self) -> int:
         return sum(self.held)
 
+    def charges(self) -> list[Pair]:
+        """The event's charge in every column of the world, from what it
+        holds (`column_charges`): the reduced pair (E, D) per column,
+        gravity first (the content, (M, 1)), charge second (rho x M, the
+        report of 2026-09-20), the declared columns after. The frame reads
+        it once per interval into `frame_charges`, the reader's side of
+        the push (`nature_beam.push_form`)."""
+        return column_charges(
+            [
+                (self.family_values[family], content)
+                for family, content in enumerate(self.held)
+                if content
+            ],
+            len(self.column_names),
+            self.number,
+            self.position,
+        )
+
     @property
-    def charge(self) -> tuple[int, int]:
-        """The event's charge, rho x its content, as a reduced pair (n, d):
-        a report (the model owner, 2026-09-20: charge is per unit of
-        content of a family); the law reads rho and the content."""
-        return reduced(self.rho[0] * self.content, self.rho[1])
+    def charge(self) -> Pair:
+        """The event's charge in the `charge` column, rho x its content as
+        a reduced pair (n, d): a report (the model owner, 2026-09-20:
+        charge is per unit of content of a family)."""
+        return self.charges()[CHARGE_INDEX]
 
     @property
     def threshold(self) -> int:
@@ -170,6 +237,7 @@ class Measured:
         return sum(amount * content for amount, content, _ in self.pending[family])
 
     def state(self) -> dict[str, object]:
+        charges = self.charges()
         return {
             "number": self.number,
             "position": list(self.position),
@@ -177,7 +245,9 @@ class Measured:
             "held": list(self.held),
             "content": self.content,
             "phase": self.phase,
-            "charge": list(self.charge),
+            "charge": list(charges[CHARGE_INDEX]),
+            # The charge in every column by name (the columns of 2026-09-20).
+            "charges": {name: list(pair) for name, pair in zip(self.column_names, charges, strict=True)},
             "momentum": list(self.momentum),
             "fixed": self.fixed,
             "span": list(self.span),
@@ -193,6 +263,7 @@ class Measured:
             "measured": [dict(entry) for entry in self.taken],
             "events": list(self.clicks),
             "pushed": list(self.pushed),
+            "contacts": list(self.contacts),
         }
 
 
@@ -222,7 +293,19 @@ class Ledger:
     face_content: dict[int, list[int]] = field(default_factory=dict)
     face_measured_content: dict[int, list[int]] = field(default_factory=dict)
     face_record: dict[int, list[int]] = field(default_factory=dict)
-    face_momentum: dict[int, list[int]] = field(default_factory=dict)
+    # The momentum that left through each face, per family (since
+    # 2026-09-20, issue #360: the escaped line of the books is reported per
+    # family; until then one vector per face and the world's total written
+    # into every family's line).
+    face_momentum: dict[int, list[list[int]]] = field(default_factory=dict)
+    # The border `lifetime` (the model owner, 2026-09-20: an event in
+    # transit whose age reaches its family's lifetime makes no next event
+    # but a click on the border), booked as a face books an escape: per
+    # family the amount, the content, the record and the momentum.
+    lifetime_amount: list[int] = field(default_factory=list)
+    lifetime_content: list[int] = field(default_factory=list)
+    lifetime_record: list[int] = field(default_factory=list)
+    lifetime_momentum: list[list[int]] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         count = self.families
@@ -234,20 +317,46 @@ class Ledger:
             "transit_absorbed",
             "content_released",
             "content_absorbed",
+            "lifetime_amount",
+            "lifetime_content",
+            "lifetime_record",
         ):
             setattr(self, name, [0] * count)
+        self.lifetime_momentum = [[0, 0, 0] for _ in range(count)]
         for port in self.open_faces:
             self.face_amount[port] = [0] * count
             self.face_content[port] = [0] * count
             self.face_measured_content[port] = [0] * count
             self.face_record[port] = [0] * count
-            self.face_momentum[port] = [0, 0, 0]
+            self.face_momentum[port] = [[0, 0, 0] for _ in range(count)]
 
     def escaped_amount(self, family: int) -> int:
-        return sum(self.face_amount[port][family] for port in self.open_faces)
+        """What left the GameBoard: through the open faces and on the border
+        `lifetime`."""
+        faces = sum(self.face_amount[port][family] for port in self.open_faces)
+        return faces + self.lifetime_amount[family]
 
     def escaped_content(self, family: int) -> int:
-        return sum(self.face_content[port][family] for port in self.open_faces)
+        faces = sum(self.face_content[port][family] for port in self.open_faces)
+        return faces + self.lifetime_content[family]
 
-    def escaped_momentum(self) -> list[int]:
-        return [sum(self.face_momentum[port][axis] for port in self.open_faces) for axis in range(3)]
+    def escaped_momentum(self, family: int | None = None) -> list[int]:
+        """The momentum that left the GameBoard, through the open faces and
+        on the border `lifetime`: one family's (since 2026-09-20), or the
+        world's total over the families (None)."""
+        rows = range(self.families) if family is None else (family,)
+        return [
+            sum(self.face_momentum[port][f][axis] for port in self.open_faces for f in rows)
+            + sum(self.lifetime_momentum[f][axis] for f in rows)
+            for axis in range(3)
+        ]
+
+    def face_momentum_total(self, port: int) -> list[int]:
+        """The momentum that left through one face, summed over the families."""
+        return [
+            sum(self.face_momentum[port][f][axis] for f in range(self.families)) for axis in range(3)
+        ]
+
+    def lifetime_momentum_total(self) -> list[int]:
+        """The momentum that left on the border `lifetime`, summed over the families."""
+        return [sum(self.lifetime_momentum[f][axis] for f in range(self.families)) for axis in range(3)]

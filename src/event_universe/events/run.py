@@ -26,7 +26,7 @@ from pathlib import Path
 
 from event_universe import __version__
 from event_universe.events.engine import NatureBeamSimulation
-from event_universe.events.world import BEAM_LAW, BOHR_RULE, NatureBeamWorld
+from event_universe.events.world import BEAM_LAW, NatureBeamWorld
 from event_universe.snapshot_writer import write_snapshot
 
 
@@ -98,17 +98,29 @@ def execute_nature_beam_run(
         "age_bound": world.age_bound,
         # The turn by momentum (the model owner's decision of 2026-09-20 on
         # Bohr): h when the world declares it, and then the identity of the
-        # hypothesis beside the law, `bohr-v1`.
+        # hypothesis beside the law, `bohr-v1`; `columns-v1` when the
+        # world declares a column beyond `charge` or a lifetime
+        # (`NatureBeamWorld.hypotheses`).
         "action": world.action,
-        "hypotheses": [] if world.action is None else [BOHR_RULE],
+        "hypotheses": world.hypotheses,
+        # The world's columns in order, (name, sign): gravity, charge, the
+        # declared names; every family's `columns` below is aligned with it.
+        "columns": [{"name": name, "sign": sign} for name, sign in world.columns],
         "directions": [list(vector) for vector in world.directions],
         "families": [
             {
                 "name": family.name,
                 "quantum": family.quantum,
                 "charge": list(family.charge),
+                "columns": [
+                    {"name": column.name, "value": list(column.value), "sign": column.sign}
+                    for column in family.columns
+                ],
                 "phase": family.phase,
                 "phase_per_link": family.phase_per_link,
+                # The age at which the family's rays click on the border
+                # `lifetime` (None: the family lives forever).
+                "lifetime": family.lifetime,
             }
             for family in world.families
         ],
@@ -139,7 +151,9 @@ def execute_nature_beam_run(
                 "family": family.name,
                 "amount": simulation.ledger.escaped_amount(index),
                 "content": simulation.ledger.escaped_content(index),
-                "momentum": simulation.ledger.escaped_momentum(),
+                # The family's own escaped momentum (since 2026-09-20; until
+                # then the world's total was written into every line).
+                "momentum": simulation.ledger.escaped_momentum(index),
             }
             for index, family in enumerate(world.families)
         ],

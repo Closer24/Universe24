@@ -1181,6 +1181,16 @@ states "exactly" and means integer equality at every tick.
   model owner's decision (PROJECT_STATUS, "What is open"); nothing was
   tuned.
 
+- **Re-read under the contact through the table (2026-09-20).** The
+  free probes of `1b_m1`, `1b_m4` and `1b_m16` step to the Node beside
+  the source as registered (11 steps, the same records); from tick 32
+  every refused step hands the probe's x component to the fixed source
+  (169 `contact` records, m times `1b_m1`'s), the probe's momentum 0 at
+  the end where it was -2 260 249 792 (m = 1) and the source's
+  -1 186 507 968 where it was 1 073 741 824; the sum of the two and the
+  reads unchanged. The other eighteen worlds are byte-identical
+  ([validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+
 ### D, the orbit under the Beam Law, on the plane (2026-09-19)
 
 - **Confronts.** Whether a light free probe closes an orbit about a heavy
@@ -1425,6 +1435,15 @@ states "exactly" and means integer equality at every tick.
   widths and radii are the assignment's; the readings are registered
   outside their expectations where they fall outside.
 
+- **Re-read under the contact through the table (2026-09-20).** `s8_r12`
+  alone changes: at tick 174 the probe at the Node beside the source
+  hands 251 of its y momentum to the source (one `contact` record)
+  instead of keeping it, the angle then reaches 1.00 turn without
+  closing (the registered closing at tick 198 with the return (+5, 0)
+  is gone), C 0.30 over the run, and the probe leaves through face:+x
+  at tick 260 instead of 271. The five other worlds are byte-identical
+  ([validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+
 ### A10, the width of an opening and the spread behind it, under the Beam Law (2026-09-20)
 
 - **Confronts.** The uncertainty relation in its diffraction form: a
@@ -1510,6 +1529,22 @@ states "exactly" and means integer equality at every tick.
   constant is read at every width. The page of the run (four panels, the
   rays behind the opening and the screen's record, with the table) is in
   the session's scratchpad, not published.
+
+- **Re-read under the `wave` threshold on the pointer's square
+  (2026-09-20, issue #359 step A).** `w27_wave` alone changes: 2312 rays
+  that met a screen pixel in antiphase within one interval pass (the
+  pointer 0 below the threshold 1) where until now they clicked and added
+  0 to the record, and, going on, click at other pixels and on the faces
+  (face:+x 0 -> 408, face:+y and face:-y 12 833 -> 13 613 each; the
+  escaped 25 666 -> 27 634), so 38 of the 161 pixels' records differ (the
+  sum of the screen's records 0.16 % higher). The row old -> new: the
+  count FWHM 0.761 -> 0.758, the count rms 0.325 -> 0.321, the record FWHM
+  0.185, the record rms 0.224 -> 0.225 and the product 4.99 unchanged,
+  the clicks 150 187 -> 148 131. The finding stands: the count never
+  narrows and the record narrows under `wave`. The seven other worlds are
+  byte-identical (no pixel of theirs read a pointer below its threshold
+  with an amount at it), `two_slits` and `one_slit` alike
+  ([validation](VALIDATION.md#the-wave-threshold-on-the-pointers-square-the-66-example-worlds-compared-a10-and-bell-re-read---2026-09-20)).
 
 ### A10 at a low rate, the single-click build-up (2026-09-20)
 
@@ -1615,6 +1650,33 @@ states "exactly" and means integer equality at every tick.
   fans rotated Node by Node (breaking the comb's fixed coincidences) and
   a rate of one ray on the whole screen per interval. The page of the
   run is in the session's scratchpad, not published.
+
+- **Re-read under the `wave` threshold on the pointer's square
+  (2026-09-20, issue #359 step A; after the merge of the strong force's
+  commits).** All three worlds change: a pair of rays that meets a pixel
+  in antiphase within one interval passes (the pointer 0 below the
+  threshold 1) where it clicked with the record 0, and goes on; the
+  clicks in the window fall (172 753 -> 169 855, 171 871 -> 158 878,
+  171 742 -> 158 622), the cells with 2+ rays fall (the share 1.000,
+  0.433 -> 0.395, 0.066 -> 0.026), the record's FWHM, the product w x
+  FWHM and R / I at the peak are unchanged at every rate, and the count's
+  FWHM at the rates 8 and 1 reads 0.617 and 0.600 where it read 0.904
+  (the pairs that passed were the comb's own). Every verdict stands: the
+  narrowing 0.292 (was 0.307, >= 0.2: inside) at the rate 47, 0.050
+  (reported) at 8, -0.005 (was -0.017, 0 +- 0.02: inside) at 1, R / I at
+  the record's peak 1.200 at y = 58 (outside) at 1; 0 record checks
+  failed, 2 readings inside and 1 outside as before, none moved; source
+  fingerprint `0b39130239c775492fe336818039801e572af6bb0128b9f8be41bcd031163228`
+  ([validation](VALIDATION.md#the-wave-threshold-on-the-pointers-square-the-66-example-worlds-compared-a10-and-bell-re-read---2026-09-20)):
+
+  | World | clicks in the window | rays per pixel per interval | cells with a click | cells with 2+ rays (share) | clicks in such cells (share) | record FWHM (count FWHM) | w x record FWHM | record rms (count rms) | narrowing (expected) | R / I at the record's peak | R / I at y = 80 | R / I over the window |
+  | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+  | `w27_rate47` old | 172753 | 6.665 | 25921 | 25921 (1.000) | 172753 (1.000) | 0.184 (0.904) | 4.98 | 0.236 (0.341) | 0.307 (>= 0.2: inside) | 5.498 at y = 80 | 5.498 | 0.034 .. 5.498 |
+  | `w27_rate47` new | 169855 | 6.553 | 25277 | 25277 (1.000) | 169855 (1.000) | 0.184 (0.904) | 4.98 | 0.237 (0.335) | 0.292 (inside) | 5.498 at y = 80 | 5.498 | 0.073 .. 5.498 |
+  | `w27_rate8` old | 171871 | 1.134 | 106737 | 46174 (0.433) | 111308 (0.648) | 0.075 (0.904) | 2.02 | 0.324 (0.341) | 0.052 (reported) | 2.862 at y = 80 | 2.862 | 0.393 .. 2.862 |
+  | `w27_rate8` new | 158878 | 1.049 | 99446 | 39263 (0.395) | 98695 (0.621) | 0.075 (0.617) | 2.02 | 0.326 (0.343) | 0.050 (reported) | 2.862 at y = 80 | 2.862 | 0.616 .. 2.862 |
+  | `w27_rate1` old | 171742 | 0.142 | 161182 | 10560 (0.066) | 21120 (0.123) | 0.278 (0.904) | 7.51 | 0.347 (0.341) | -0.017 (0 +- 0.02: inside) | 1.200 at y = 58 (1 +- 0.02: outside) | 0.843 | 0.429 .. 1.200 |
+  | `w27_rate1` new | 158622 | 0.131 | 154622 | 4000 (0.026) | 8000 (0.050) | 0.278 (0.600) | 7.51 | 0.347 (0.345) | -0.005 (inside) | 1.200 at y = 58 (outside) | 0.843 | 0.764 .. 1.333 |
 
 ### E, the clock's redshift in space under the age reading (2026-09-20)
 
@@ -2043,6 +2105,129 @@ states "exactly" and means integer equality at every tick.
   a control without the atom, the fraction taken against the beam's phase
   rate), is registered as the next step with this design, not run.
   Nothing was tuned.
+
+- **Re-read under the contact through the table (2026-09-20).** `r2`
+  and `r4` change, the electron beside the proton handing its momentum
+  component to it instead of keeping it: `r2` takes 7 hand-overs (from
+  tick 72), turns 2.07 times with two closings (T 84 and 166, mean
+  radii 1.74 and 2.66), reads the phase's turn per orbit 0.688 against
+  the design's 0.946 and C(2) = 0.60 (outside), and leaves through
+  face:+x at tick 688 instead of face:-x at tick 254; `r4` takes one
+  hand-over at tick 454 and leaves through face:+y at tick 600 instead
+  of 540, its one closing the same. The verdict stands: no orbit closed
+  well enough for the coherence reading. `r6`, `r8`, `r12`, `r15` and
+  `r16` are byte-identical ([validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+
+### I, the nucleus (2026-09-20)
+
+- **Confronts.** Whether the one mechanism of the model owner's decisions
+  of 2026-09-20 (Highlights 5.4: "one mechanism for all the laws on the
+  GameBoard", the one coupling a signed inner product over the columns a
+  family declares per unit of content; "the strong force's range is a
+  lifetime, L"; the contact through the table, on the physicist's design
+  of the strong force) gives a nucleus: a deuteron bound at one Link and
+  free at three (the square well's depth and width), two protons bound or
+  repelled by the sign of `Q^2 - G^2 - M^2` (the binding condition `G^2 +
+  M^2 > Q^2`), Coulomb's repulsion less gravity beyond the reach, and
+  which four-nucleon shape holds, the square p n / n p or the line p n n
+  p (the alpha's shape). Read at the nucleons themselves, external things
+  whose `read` and `contact` records and steps are the readings; no
+  detector is declared on these GameBoards.
+- **Model prediction, pinned before the runs
+  ([the expectations](../examples/events/nucleus/README.md#the-expectations-pinned-before-the-runs-the-physicists-integers)).**
+  Three free families without a phase circle, `p` (charge 4), `n` and
+  `nuclear` (the column `strong` with the value G = 10000 and the sign
+  minus, `lifetime` 3); a proton 1836 of `p` holding one unit of `nuclear`
+  (M 1837, Q 7344, G 10000), a neutron 1839 of `n` holding one (1840, 0,
+  10000); every body a free body releasing one row of its held content per
+  direction of the 290 primitive directions with |a| + |b| + |c| <= 6 per
+  interval; an open 21^3 GameBoard, `suspension` 0, `width` 2^28, K 2^20,
+  N 64, 3000 intervals; the contact through the table. The push per
+  interval between two bodies at mirror Nodes within the reach is `(Q_A
+  Q_B - G_A G_B - M_A M_B) x U(r)` per unit per direction (U(1) = 3008 on
+  the axis, the sum of the x components of the 57 unit vectors whose
+  first step is along it). Expected (the physicist's integers): the
+  deuteron at one Link reads 310 967 280 640 per interval on each body
+  toward the other (the `n` rows 1837 x 1839 x 3008, the `nuclear` rows
+  (10^8 + 1837) x 3008) and never steps, the label 0 after every
+  hand-over and the largest hand-over about 7 x 10^12, the border
+  `lifetime` clicking 290 rows per body per interval from tick 4; at
+  three Links no strong ray is read, gravity alone 1 067 524 788, and the
+  pair kicked outward by 10^12 separates beyond 10 Links and never
+  returns (the same kick at one Link outweighed by tick 5); two protons at
+  one Link attract by 148 716 220 864 and hold, at G = 7000 repel by 4 691
+  779 136 and separate (the first step within 200 intervals), at three
+  Links repel by 15 977 466 864 from tick 6 and separate (the first step at
+  tick 30 .. 60, the design's steady toy); the square p n / n p reads the
+  designed push per body (p1 (355 957 892 670, 320 048 730 393, 0) and the
+  mirrors) and a shear of 49 090 283 970 per row per interval (the p-p
+  diagonal bond weaker than the n-n one by exactly Q^2 x U_d), a proton
+  steps within the first hundred intervals and the cluster disperses; the
+  line p n n p holds (the push on its first proton 403 332 137 616, no
+  step in 3000 intervals, the label 0 after every hand-over). A record
+  check (completed, the books balanced at every tick) fails the tool; the
+  readings are registered inside or outside their expectation and never
+  moved. Cut for the budget: I7 (the clock beside the nucleus, the
+  binding energy as a clock rate), I8 (the cube of 64, the drip of Z), I9
+  (the core family and He-5) and I10 (the lifetimes across three fans).
+- **Features.** The columns of the one coupling (`columns`, `columns-v1`),
+  the lifetime of a family and the border `lifetime`, the content a
+  measured event holds of several families (`held`), the contact through
+  the table (`contact` records); the free release on a declared fan in
+  space; the free body's step off its clock with the width of the push;
+  `suspension` 0.
+- **Run.** `examples/events/nucleus/` (eight worlds written by
+  `make_worlds.py`, the model ids `beam-nucleus-<name>-space-v1`),
+  `tools/run_series.py --jobs 3`, 3000 intervals each; the readings by
+  `tools/nucleus_readings.py` (every line labelled DETECTOR or GAMEBOARD).
+  The worktree of `claude/universe24-new-3ytqde` on the commits of the one
+  mechanism (the columns `de6c4968`, the lifetime and the held content
+  `7a77fa0c`, the contact `b2c164c2`), source fingerprint
+  `a86447318c757023605e4ba33ab1ef1a15726fef839b893d5d50b899750188f5`,
+  Python 3.14.0rc2, numpy 2.5.3, headless, four cores; every run completed
+  in 4 to 87 s with the books balanced at every tick; 0 record checks
+  failed; 29 readings inside, 1 outside, none moved.
+
+  | World | Expected (kind) | Measured | Verdict |
+  | --- | --- | --- | --- |
+  | `deuteron_1` | the push on p 310 967 280 640 toward n, the mirror on n (DETECTOR); no step; the label 0 after every hand-over, the largest 10^12 .. 10^13 (DETECTOR); 290 border clicks per body per interval from tick 4 (DETECTOR) | 310 967 280 640 (the `n` rows 10 161 754 944, the `nuclear` rows 300 805 525 696) and -310 967 280 640; no step in 3000; 191 hand-overs on p from tick 16 and 148 on n from tick 32, the label 0 after each, the largest 7 152 247 454 720; 580 clicks per interval from tick 4 | inside (6 of 6) |
+  | `deuteron_3` | no strong read; gravity 1 067 524 788 on p (DETECTOR); separates beyond 10 Links, never returns, both out (GAMEBOARD) | 0 strong reads; 1 067 524 788 (n reads -1 067 523 840); the first steps at tick 34 outward, 3 to 19 Links, n out through face:+x at 285, p through face:-x at 358 | inside (4 of 4) |
+  | `deuteron_1_kick` | the kick 10^12 outweighed by the pushes read by tick 5 (DETECTOR); no step; the first refused step toward the other | tick 5 on both; no step; 190 hand-overs on p from tick 13 (the largest 9 329 018 419 200), 147 on n from tick 138 | inside (3 of 3) |
+  | `pp_1` | the push 148 716 220 864 toward the other (DETECTOR); no step; the label 0 after every hand-over | 148 716 220 864 (the `nuclear` rows 300 805 525 696, the `p` rows -152 089 304 832) and the mirror; no step; 171 hand-overs on p1 from tick 16, 0 after each, the largest 7 138 378 601 472 | inside (3 of 3) |
+  | `pp_1_weak` (G 7000) | the push -4 691 779 136, repulsion (DETECTOR); separates, never returns; the first step within 200 intervals (GAMEBOARD) | -4 691 779 136 (the `nuclear` rows 147 397 525 696) and the mirror; the first steps at tick 167, 1 to 19 Links, out through face:+x at 334 and face:-x at 379; 169 strong reads per body before the reach was passed | inside (3 of 3) |
+  | `pp_3` | the push -15 977 466 864 from tick 6, no strong read (DETECTOR); the first step at tick 30 .. 60; separates, never returns (GAMEBOARD) | -15 977 466 864 and the mirror; 0 strong reads; the first steps at tick 66; 3 to 19 Links, out at 269 and 282 | 3 of 4 inside: the first step at tick 66, outside the steady toy's 30 .. 60 (the pushes begin at tick 6 and the fan's lines arrive over the next ticks, which the toy lacked) |
+  | `alpha_square` | the push per body at L = 3 as designed (DETECTOR); the shear 49 090 283 970 per row per interval (GAMEBOARD); a proton's step within 100 intervals; disperses beyond 3 Links (GAMEBOARD) | p1 (355 957 892 670, 320 048 730 393, 0), n2 (-405 048 176 640, 376 205 857 440, 0), n3 and p4 the mirrors; the rows' x pushes -49 090 283 970 and +49 090 283 970; p4 steps +y at tick 57, n3 at 63, n2 at 70, p1 at 84; n3 out through face:+x at 180, p4 face:+y at 236, p1 face:-y at 393, n2 face:-x at 538; the largest separation 23.6 at the end; 3, 11, 8 and 4 hand-overs, 0 after each | inside (4 of 4) |
+  | `alpha_line` | the push on p1 403 332 137 616 on x (DETECTOR); no step in 3000; the label 0 after every hand-over | 403 332 137 616 (n 13 702 153 608, nuclear 405 607 450 872, p -15 977 466 864), on n2 108 358 928 000; no step; 257, 247, 11 and 251 hand-overs, 0 after each, the largest 16 500 521 232 560 (the toy's number) | inside (3 of 3) |
+
+  The pushes, the hand-overs and the border's clicks are DETECTOR
+  readings (the bodies' own records); the steps, the separations and the
+  shear are GAMEBOARD readings (the bodies' `step` records, the sums over
+  a row).
+- **Verdict.** The one mechanism gives what the design said, integer by
+  integer: the deuteron is bound at one Link and free at three (a square
+  well of depth 3.1 x 10^11 per interval and width two Links: the strong
+  reading is the electric reading's own 1 / r^2 with the opposite sign and
+  a cut at the reach, no Yukawa tail); two protons bind or repel by the
+  sign of `Q^2 - G^2 - M^2` (a threshold at G = 7111); beyond the reach
+  Coulomb's repulsion less gravity remains; the contact through the table
+  gives a bound pair bounded books (the labels handed over and 0 after
+  each hand-over). The model's alpha is the line p n n p, not the square:
+  the square's rows are sheared apart by exactly Q^2 x U_d per interval, a
+  proton leaves at tick 57 and the four disperse by tick 538, while the
+  line holds for 3000 intervals with every hand-over cancelled by its
+  mirror. The engine's flight delays and the fan's lumps moved one number
+  outside the steady toy's bracket (the first step of two protons at three
+  Links) and none of the designed pushes. What the law lacked, as read
+  here: a bond that resists shear (the bonds are central pushes and the
+  contacts frictionless; nature's alpha is a tetrahedron), the exclusion
+  principle (a fifth nucleon binds by one bond wherever it is added; not
+  run), a binding energy in the content (no mass defect; the clock's count
+  under a suspension is the one reading that can carry it, I7, not run)
+  and a spread of decay times (I10, not run). None is a defect of the
+  column, the lifetime or the contact. Nothing was tuned. The page for the
+  model owner: the scratchpad's `nucleus/nucleus.html` with the frame
+  player of `nucleus.gif` (the square dispersing, one frame per 5
+  intervals), published by Boss.
 
 ### K, light beside a mass (2026-09-20)
 
