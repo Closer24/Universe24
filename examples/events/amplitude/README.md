@@ -151,3 +151,17 @@ N/4, 3N/8 on the A2 board, N + 20 intervals, one birth per u: S as the
 integer ratio at each N against the design's 2896/1024 and the bound
 |E - cos| <= 1/N (`expectations.json` under `pair_n`; the register's L6
 entry).
+
+## L7: the cone, which length a row's phase counts
+
+`cone_links` and `cone_intervals`: one geometry, two lamps of `light` (at
+(0, 0) on +x to a counter 17 Links away; at (0, 3) on the plane diagonal
+(1, 1, 0) to a counter at (12, 15), 24 Links on the staircase, the same
+Euclidean distance to one percent), N = 64, 96 intervals; the integer form
+of `phase_per_link` (3 per Link stepped) against the pair form [3, 1] (3
+per interval of age). The flight table puts both rows at their counters at
+the age 29; the path phase at the click is 51 and 8 under the integer form
+(the Links) and 23 and 23 under the pair form (the intervals)
+(`expectations.json` under `cone`; the register's L7 entry). The question
+of issue #376 (the paper session): the cone is Euclidean by the flight
+table; the phase's metric is the declared form's.

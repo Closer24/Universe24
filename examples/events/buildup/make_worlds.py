@@ -38,9 +38,19 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parents[2] / "src"))
+
+from event_universe.world_loading import families_by_definition  # noqa: E402
+
+# The shipped definitions the world's families come from where they equal
+# them (the model owner's decision of 2026-09-20, record 113).
+FAMILY_DEFINITIONS = "../entities/families.json"
+DEFINITIONS_SOURCE = (HERE.parent / "entities" / "families.json").read_bytes()
+
 SPEC = importlib.util.spec_from_file_location(
     "heisenberg_make_worlds", HERE.parent / "heisenberg" / "make_worlds.py"
 )
@@ -78,7 +88,8 @@ def world(rate: int) -> dict[str, object]:
 def main() -> None:
     for rate in RATES:
         path = HERE / f"w{WIDTH}_rate{rate}.json"
-        path.write_text(json.dumps(world(rate)) + "\n", encoding="utf-8")
+        document = families_by_definition(world(rate), FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
+        path.write_text(json.dumps(document) + "\n", encoding="utf-8")
         print(f"{path.relative_to(HERE.parents[2])}: {ticks(rate)} intervals")
 
 

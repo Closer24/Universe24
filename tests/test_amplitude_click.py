@@ -384,9 +384,10 @@ def k_record_world() -> dict[str, object]:
     """The registered `lensing/mass_meeting` under the key: every pixel
     reading `sum`, the lamp's `turns` 0 (scratchpad k_record's
     `make_record_worlds.py`, the K finding of 2026-09-20)."""
-    world = json.loads(
-        (ROOT / "examples" / "events" / "lensing" / "mass_meeting.json").read_text("utf-8")
-    )
+    # Through the loader: the shipped world takes its families from the
+    # definitions beside its series (2026-09-20).
+    path = ROOT / "examples" / "events" / "lensing" / "mass_meeting.json"
+    world = json.loads(load_world(path.read_bytes(), base_dir=path.parent).expanded_source)
     world["model_id"] = "beam-lensing-mass-meeting-record-test"
     world["ticks"] = 300
     for event in world["measured"]:
