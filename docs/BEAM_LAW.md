@@ -517,8 +517,13 @@ order with each step's inverse:
    proportional to the content (the equivalence principle) and the world
    chooses how slow its slowest motion is; every step registered before
    the label's scale is the same step, `by_clock(age, Q n, Q k) =
-   by_clock(age, n, k)`. No remainder is kept; the count is the whole
-   part off the clock (implementation note 15; `tests/test_push_width.py`).
+   by_clock(age, n, k)`. Since 2026-09-20 (note 17 as amended, the step
+   drive) the count is the whole part of the distance the momentum has
+   driven, kept on the body's record as `drive` per axis (`drive += |p|`
+   at every self-creation in which it may step, one Link and `drive -=
+   Q x S x M + |p|` at or beyond it), the same integers at a constant
+   momentum as the whole part off the clock (implementation notes 15 and
+   17; `tests/test_push_width.py`, `tests/test_step_drive.py`).
 6. **The border `lifetime`; then merge identical rows and sort by Node.**
    Since 2026-09-20 (note 31 (vii)) every row of a family with a
    `lifetime` whose whole age is at or beyond it after this interval's
@@ -1044,7 +1049,47 @@ implementation's part of the contract. The design above is unchanged.
     the count; the momentum is untouched by the step; `run.json` records
     `width`. The parser refuses 0, a negative width, a string and a
     fraction naming the key (`tests/test_push_width.py`; the experiment
-    that uses it is series D in EXPERIMENTS.md).
+    that uses it is series D in EXPERIMENTS.md). **Amended on 2026-09-20,
+    the step drive (superseded for the moving body only, record 107, the
+    Boss's record of the decision; the model owner on series G2's finding,
+    "1 and 2 are very important for a solution and a new run";
+    the physicist's design RULES.md section 1 (docs/designs/hubble_stars/ on branch `claude/series-g2-stars`); `tests/test_step_drive.py`).**
+    Read at the current momentum, the whole part `floor(age |p| / D)`
+    stalled a body for tens of intervals under a falling momentum and then
+    stepped it at every interval (series G2: a star at 0.019 Links per
+    interval stepping five Links in six intervals, faster than the ray;
+    the Links made equal to age x v_now). The count is now the whole part
+    of the distance the momentum has driven: the body's own record
+    carries per axis one bounded integer `drive_a` (0 at the start, as
+    its age is on its record and nothing at a Node), and at every
+    self-creation in which it may step `drive_a += |p_a|`; when `drive_a
+    >= Q S M + |p_a|` it steps one Link on the axis and subtracts that.
+    With a constant momentum the step fires exactly when `floor(n |p| /
+    D)` increments (the drive is the remainder of that division): every
+    world whose bodies take no push replays byte-identical; under a push
+    the motion follows the momentum at every self-creation and never two
+    Links fall in one interval (one D is subtracted per self-creation; a
+    residual earned at a larger momentum fires at the following
+    self-creations, one Link each, the distance the momentum had driven).
+    The drive of every axis advances at every such self-creation, and the
+    frame's order stands as before, x before y before z: a later axis
+    whose drive reaches its D in the interval of an earlier axis's step
+    (made, refused or an escape) loses that Link, its D subtracted,
+    nothing carried, so a body with momentum on two axes at a constant
+    momentum steps exactly where it did. The turn by momentum (note 30
+    (ii)) reads its k0 off the record's count of the rule's fires on the
+    axis, `axis_steps` (a lost or refused step counted, as the whole part
+    off the clock counted it), the same number at a constant momentum.
+    `run.json`, `state.json` and the `step` line carry `drive`; a declared
+    `drive` is refused as an unknown key. Re-registered under it, the old
+    integers kept as history in TEST_EXPECTATIONS.md: the bodies pushed or
+    handed a momentum in `tests/test_contact.py` (a), (d), (e),
+    `tests/test_nature_beam_clock.py` (d), `tests/test_paid_charge.py` (d)
+    and `tests/test_nucleus_readings.py`, each one self-creation later
+    than the count off the clock stepped it (a body that receives a
+    momentum begins its drive at 0 instead of stepping off its age). "No
+    remainder is kept" above stands for the clock, the release, the lamp
+    and the owed count, which read a rate against an age no push changes.
 18. **The one label; no collision at a measured event's Node** (the
     physics-rule reviewer's F1, blocking, and the model owner's decision on
     its case (c), the night of 2026-09-19; `tests/test_nature_beam_push.py` (h),

@@ -273,6 +273,13 @@ class Measured:
     waited: int = 0
     turned: int = 0
     steps: int = 0
+    # The step drive (2026-09-20; BEAM_LAW note 17 as amended, record 107):
+    # per axis the distance the momentum has driven since the last step, in
+    # label units, `drive_a < Q S M + |p_a|`, one bounded integer on the
+    # body's own record (as its age is) and nothing at a Node; and per axis
+    # the Links stepped, the k0 of the turn by momentum.
+    drive: list[int] = field(default_factory=lambda: [0, 0, 0])
+    axis_steps: list[int] = field(default_factory=lambda: [0, 0, 0])
     taken: list[dict[str, int]] = field(default_factory=list)
     clicks: list[int] = field(default_factory=list)
     pushed: list[int] = field(default_factory=lambda: [0, 0, 0])
@@ -426,6 +433,8 @@ class Measured:
             "waited": self.waited,
             "phase_steps": self.turned,
             "steps": self.steps,
+            "drive": list(self.drive),
+            "axis_steps": list(self.axis_steps),
             "measured": [dict(entry) for entry in self.taken],
             "events": list(self.clicks),
             "pushed": list(self.pushed),
