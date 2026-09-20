@@ -7,21 +7,21 @@ result are different claims. Revision-specific results are not a live status fee
 
 ## The engine
 
-Since 2026-09-19 there is one engine, the engine of the law of the ray
-(`rays-v1`; the model owner's decision, [Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+Since 2026-09-19 there is one engine, the engine of the Beam Law
+(`beam-v1`; the model owner's decision, [Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
 "DECIDED: the law of the ray"); the law of events of the same day is deleted.
 
 | Document | Responsibility |
 | --- | --- |
-| [The law of the ray](RAY_LAW.md) | The published design and implementation contract of `rays-v1` (the model owner, 2026-09-19): the ray's record `NatureBeam`, the one function `nature_beam`, the flight table at 1 / sqrt 3, the eight-slot collision table and its inverse, the detector's squared record, the re-emission, the deletions, the tests, the expectations, and the implementation notes of the same day |
-| [The engine](ENGINE.md) | The bookkeeping around the law as implemented: the board and its topology, the frame of an interval, the books, the world file's refusals, the record and the preflight |
+| [The Beam Law](BEAM_LAW.md) | The published design and implementation contract of `beam-v1` (the model owner, 2026-09-19): the ray's record `NatureBeam`, the one function `nature_beam`, the flight table at 1 / sqrt 3, the eight-slot collision table and its inverse, the detector's squared record, the re-emission, the deletions, the tests, the expectations, and the implementation notes of the same day |
+| [The engine](ENGINE.md) | The bookkeeping around the law as implemented: the GameBoard and its topology, the frame of an interval, the books, the world file's refusals, the record and the preflight |
 | [Entity definitions](ENTITY_DEFINITIONS.md) | Reusable external apparatus data, placement, canonical loading, portable inputs and provenance; the owner of the definitions layer |
 | [Entity catalog](ENTITY_CATALOG.md) | Every entity physics knows as one row of the law's keys (the model owner, 2026-09-20): the fundamental things, the composites, the external things (the sun, a planet, a neutron star, a lamp, a mirror, a wall, a slit, a screen, a clock, a probe) with the world that places each, the rows that wait for the changes in flight, and the honest gap list |
-| [Physical detector](DETECTOR_REQUIREMENTS.md) | Generic sensitivity requirements, the quantum goals and the unresolved scope; the reversible detector contract of 2026-09-19 absorbed into the ray law and deleted |
-| [The worlds](../examples/events/README.md) | One content, two contents, two slits with a detector and the one-slit control under the ray law; the Bell worlds, the coupling, orbit, redshift, Hubble and Bohr series and the detector definitions: what each reads |
-| [Canonical terminology](TERMINOLOGY.md) | Node, NodeState, Port, Link, Event and LocalRule vocabulary, the terms of the law of the ray (ray, direction, flight table, rest slot, collision, the one reading, record, re-emission), the terms kept from the law of events and the historical terms of the laws before it |
+| [Physical detector](DETECTOR_REQUIREMENTS.md) | Generic sensitivity requirements, the quantum goals and the unresolved scope; the reversible detector contract of 2026-09-19 absorbed into the Beam Law and deleted |
+| [The worlds](../examples/events/README.md) | One content, two contents, two slits with a detector and the one-slit control under the Beam Law; the Bell worlds, the coupling, orbit, redshift, Hubble and Bohr series and the detector definitions: what each reads |
+| [Canonical terminology](TERMINOLOGY.md) | Node, NodeState, Port, Link, Event and LocalRule vocabulary, the terms of the Beam Law (ray, direction, flight table, rest slot, collision, the one reading, record, re-emission), the terms kept from the law of events and the historical terms of the laws before it |
 | [Architecture](ARCHITECTURE.md) | Module ownership, the integer contract, the dependency direction and the gates |
-| [Migration](MIGRATION.md) | Every deletion and rename, dated; the law of the ray of 2026-09-19 first |
+| [Migration](MIGRATION.md) | Every deletion and rename, dated; the Beam Law of 2026-09-19 first |
 
 ## Specification, experiments and hypotheses
 
@@ -29,7 +29,7 @@ Since 2026-09-19 there is one engine, the engine of the law of the ray
 | --- | --- |
 | [Highlights specification](HIGHLIGHTS.md) | The Universe 24 Highlights specification, edited directly by the model owner since 2026-09-17; every decision dated, in the owner's words; nothing deleted |
 | [Highlights coverage](HIGHLIGHTS_IMPLEMENTATION.md) | What the repository implements of Highlights, section by section, with the tests; not evidence of a physical law |
-| [Derivations of the known laws](DERIVATIONS.md) | The known laws derived on paper from one interval of the engine written as an operator on the lattice, rounds 1 to 8 (the law of the shadow in round 8, sections 51 to 56; the law of events and the law of the ray not yet derived) |
+| [Derivations of the known laws](DERIVATIONS.md) | The known laws derived on paper from one interval of the engine written as an operator on the GameBoard, rounds 1 to 8 (the law of the shadow in round 8, sections 51 to 56; the law of events and the Beam Law not yet derived) |
 | [Experiments register](EXPERIMENTS.md) | The research runs, one entry each with its design and criterion pinned before the run, and the records of the runs made; never test-suite tests |
 | [Hypotheses under test](HYPOTHESES.md) | The questions the framework raises, numbered, kept apart from measured results |
 | [Problem solving](PROBLEM_SOLVING.md) | How the project advanced: one line per problem, its solution and who solved it |

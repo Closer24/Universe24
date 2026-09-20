@@ -51,21 +51,21 @@ acceleration.
 The worktree of `claude/universe24-new-3ytqde` on three commits after the
 tip `38c9b621` (the body on a set of Nodes with one record, `span`; the
 turn by momentum, `action` and `phase_by_momentum`, `bohr-v1`; series H),
-[RAY_LAW note 30](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+[BEAM_LAW note 30](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 source fingerprint `d29df4af8cfd79512d827d32df7b885948b2a90a4865cf1993b01bb74b76095c`.
 Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
 
 | Check | Result |
 | --- | --- |
-| `tests/test_ray_body.py` (a) to (f) | passed: a set of one Node equal to the measured event of the engine before the change record by record and row by row over 30 intervals with rays, collisions and clicks (the reference integers taken on that engine first: 152 clicks, 20 record lines, 5 steps, 5 homes, the record 37348285440); the set of three Nodes reading, clicking, owing and pushing as one, stepping as one, refused at an occupied Node, clicking on the face, wrapping; the books balanced with a set that releases (the shares 8, 4, 4 then 4, 8, 4); the turn's phases 11, 37 and 50, 32, 14, 59, 41 as derived by hand, composed over axes 14 and 18, today's phase without `action`; the rays' rows identical with and without the two keys on a colliding crowd of 324 rays over 40 intervals; every refusal by name and the record |
-| `tests/test_push_width.py` (a), `tests/test_ray_clock.py` (e) | `engine.step_axis` and `engine.count_owed` pinned to the step rule and the owed count, no integer changed |
+| `tests/test_nature_beam_body.py` (a) to (f) | passed: a set of one Node equal to the measured event of the engine before the change record by record and row by row over 30 intervals with rays, collisions and clicks (the reference integers taken on that engine first: 152 clicks, 20 record lines, 5 steps, 5 homes, the record 37348285440); the set of three Nodes reading, clicking, owing and pushing as one, stepping as one, refused at an occupied Node, clicking on the face, wrapping; the books balanced with a set that releases (the shares 8, 4, 4 then 4, 8, 4); the turn's phases 11, 37 and 50, 32, 14, 59, 41 as derived by hand, composed over axes 14 and 18, today's phase without `action`; the rays' rows identical with and without the two keys on a colliding crowd of 324 rays over 40 intervals; every refusal by name and the record |
+| `tests/test_push_width.py` (a), `tests/test_nature_beam_clock.py` (e) | `engine.step_axis` and `engine.count_owed` pinned to the step rule and the owed count, no integer changed |
 | `python tools/check.py --base 38c9b621` after each feature | ruff lint and format, mypy and 335 then 337 tests green |
 | Series H, `examples/events/bohr/` (seven worlds, `tools/run_series.py --jobs 4`, 3000 to 10300 intervals) | every run completed in 19 to 87 s with the books balanced at every tick; `tools/bohr_readings.py`: 0 record checks failed, 1 coherence reading inside and 1 outside, five worlds without a reading (fewer than two closed turns): no orbit closed within r / 4 at any radius; at r = 8 two turns of mean radius 8.11 and 7.95 with T 722 and 736 (838 derived), the returns 5 and 4 Links, the escape at the close pass of the third turn; the phase's turn per orbit 0.234 of a circle against 0 designed; C(2) = 0.84 against the expected 1.0 ([the register](EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20), [the README](../examples/events/bohr/README.md)) |
 | `tests/test_bohr_readings.py` (a) to (c) | the tool's flight time, pointer per turn, coherence and run reading pinned to the engine's `manhattan_steps`, `coherent_pointer` and the runner's record |
 | `python tools/check.py --full` | ruff lint and format, mypy and the whole suite green on the final commit |
 
 The runs establish that the body on a set and the turn by momentum do what
-the notes say on the engine (the turn as pinned, the board unchanged), and
+the notes say on the engine (the turn as pinned, the GameBoard unchanged), and
 that on this fan and this width no orbit of the electron closes well enough
 for Bohr's lines to be read behind the detector; they establish no physical
 law, for or against.
@@ -77,17 +77,17 @@ commits: the label's product checked per row before it is formed (the
 architect's B1), the push reading the content the frame read (B3, the
 orchestrator's D1), and the charge per unit of content with the push as one
 product and the record's two columns gone (the model owner's decision;
-[RAY_LAW notes 26 to 28](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[BEAM_LAW notes 26 to 28](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 [changelog](../CHANGELOG.md); [migration](MIGRATION.md#charge-per-unit-of-content-on-2026-09-20-the-familys-charge-a-pair-no-charge-on-a-measured-event-the-records-two-columns-gone)).
 Python 3.14, numpy, headless.
 
 | Check | Result |
 | --- | --- |
-| B1 (`tests/test_ray_label.py` (c), (d)) | a merged row of weight 2^56 on (1, 1, 0) accepted with the label 2^56 x (45, 45, 0), on (1, 0, 0) refused naming the Node [2, 2, 2], the amount and 2^56 x 64 = 2^62; the mirror's merged re-emission refused at the recount naming [5, 5, 0] |
-| B3 (`tests/test_ray_push.py` (j)) | the architect's probe world in both family orders: the same reads (-960, -1536, ... at ticks 11 to 16), `held` {5, 114}, `pushed` (-356544, 0, 0); before: [B, A] read -1536 at tick 11 and (-378432, 0, 0) |
-| Series 7, the six worlds through `RaySimulation` on the tip before and after the charge per unit of content | every `read` record equal (181 per world, 185 in `7_pp_m4`), `pushed` and momenta equal, 4635 and 4663 events, the books balanced with the recount; the worlds regenerated with the families `q` and `p` and their pairs |
-| The push's fixtures (`test_ray_push` (a) to (e), (i)) | re-fixtured on two free families with the pairs [3, 4], [1, 5], [-3, 4], [1, 2], [2, 1]: every integer unchanged (-1088, -1472, -1280, 0, -544 per read) |
-| `tools/migrate_ray_worlds.py --check` on every example world | unchanged (the series 7 worlds regenerated by the generator); the old `7_pp` refused naming both events and the family; the old `7_pp` with the probe's charge removed rewritten to the family charge [1, 2] |
+| B1 (`tests/test_nature_beam_label.py` (c), (d)) | a merged row of weight 2^56 on (1, 1, 0) accepted with the label 2^56 x (45, 45, 0), on (1, 0, 0) refused naming the Node [2, 2, 2], the amount and 2^56 x 64 = 2^62; the mirror's merged re-emission refused at the recount naming [5, 5, 0] |
+| B3 (`tests/test_nature_beam_push.py` (j)) | the architect's probe world in both family orders: the same reads (-960, -1536, ... at ticks 11 to 16), `held` {5, 114}, `pushed` (-356544, 0, 0); before: [B, A] read -1536 at tick 11 and (-378432, 0, 0) |
+| Series 7, the six worlds through `NatureBeamSimulation` on the tip before and after the charge per unit of content | every `read` record equal (181 per world, 185 in `7_pp_m4`), `pushed` and momenta equal, 4635 and 4663 events, the books balanced with the recount; the worlds regenerated with the families `q` and `p` and their pairs |
+| The push's fixtures (`test_nature_beam_push` (a) to (e), (i)) | re-fixtured on two free families with the pairs [3, 4], [1, 5], [-3, 4], [1, 2], [2, 1]: every integer unchanged (-1088, -1472, -1280, 0, -544 per read) |
+| `tools/migrate_nature_beam_worlds.py --check` on every example world | unchanged (the series 7 worlds regenerated by the generator); the old `7_pp` refused naming both events and the family; the old `7_pp` with the probe's charge removed rewritten to the family charge [1, 2] |
 | The ray suites, `python -m pytest tests/test_ray_*.py ...` | green (the label, push, parsing, bijection, detector, worlds and entity suites) |
 
 The runs establish that the charge per unit of content changes no integer
@@ -97,14 +97,14 @@ closed by pinned tests; they establish no physical law.
 ## The age whole and the clock's redshift in space: series E - 2026-09-20
 
 The worktree of `claude/universe24-new-3ytqde` on the age commit (the
-ray's age kept whole and read by the measured event, [RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+ray's age kept whole and read by the measured event, [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 note 25; [changelog](../CHANGELOG.md)), source fingerprint
 `cd90313373651164e7f1a1e5f2d0f5019356cd5fb4bc9d3f909511b4f783be52`.
 Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
 
 | Check | Result |
 | --- | --- |
-| `tests/test_ray_age.py` (a) to (e) | passed: the age 200 whole after 200 intervals (35 until the change); a head-on pair parked with the ages 60 kept and the class cycle ha hb -> +z-z -> +y-y observed (the first derivation had the pair leave on z without meeting again; the pin was corrected to the observed cycle before registration); the re-emission and the birth at 0; the age moment 41, 61 with here, fixed under the 48 symmetries; the clock's ages 1, 2, 3, 4, 5, 6, 6, 7, 7, 7, 7, 8, ... under `reads: "age"` equal to the hand derivation at every interval, the scalar reader unchanged; the bound's default 108 and 222, the refusals, the stub refused at its 13th interval; the board identical with the ages whole and reduced over 40 intervals of a colliding crowd |
+| `tests/test_nature_beam_age.py` (a) to (e) | passed: the age 200 whole after 200 intervals (35 until the change); a head-on pair parked with the ages 60 kept and the class cycle ha hb -> +z-z -> +y-y observed (the first derivation had the pair leave on z without meeting again; the pin was corrected to the observed cycle before registration); the re-emission and the birth at 0; the age moment 41, 61 with here, fixed under the 48 symmetries; the clock's ages 1, 2, 3, 4, 5, 6, 6, 7, 7, 7, 7, 8, ... under `reads: "age"` equal to the hand derivation at every interval, the scalar reader unchanged; the bound's default 108 and 222, the refusals, the stub refused at its 13th interval; the GameBoard identical with the ages whole and reduced over 40 intervals of a colliding crowd |
 | A sample of the registered worlds under the whole age (`one_content`, `two_contents`, `two_slits`, coupling `1b_m16` and `5_long`, orbit `s32_r12`, Bell `a0_b8`) | every run completed with the books balanced at every tick, no age past its default bound (the coupling plane 830, the orbit plane 830, the two slits 620, the cube 252); the `audit` of `run.json` unchanged (the clocks read the presence by default, integer by integer); `state.json` differs where a ray's age had passed its period |
 | `python tools/check.py` (the scoped selection of the age commit) | ruff lint and format, mypy and 300 tests green |
 | Series E, `examples/events/redshift/` (`scalar`, `age`; `tools/run_series.py --jobs 2`, 300 intervals each) | both completed, the books balanced at every tick, 16.0 s and 15.5 s; `tools/redshift_readings.py`: 0 record checks failed, 11 readings inside, 3 outside: k_s x r^2 = 39.0 to 44.8 (mean 41.5) and k_a x r = 33.1 to 39.2 (mean 36.1) over r = 6 to 14, their ratio 0.870 against sqrt 3 / 2; the redshift ratios of the age clocks 0.50, 0.57, 0.72, 0.82 at r = 6, 8, 10, 12 against the fitted 1 / r law 0.52, 0.65, 0.78, 0.90, outside the 15 %-of-shift criterion at r = 8, 10, 12 ([the register](EXPERIMENTS.md#e-the-clocks-redshift-in-space-under-the-age-reading-2026-09-20), [the README](../examples/events/redshift/README.md)) |
@@ -112,27 +112,27 @@ Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
 
 The runs establish that the age reading of a measured event reads M / r
 where the presence reads M / r^2 on this engine, and that the whole age
-changed no integer of the board's step; they establish no physical law.
+changed no integer of the GameBoard's step; they establish no physical law.
 ## The label along the unit vector of the direction: series C x 64 exactly, Bell unchanged, series D re-run - 2026-09-19
 
 The worktree of `claude/universe24-new-3ytqde` on the tip `5b3873f0` (the
 exact record merged), two commits: the momentum label along the unit
 vector u_d of the direction at the flight table's scale Q = 64, with the
 physics-rule reviewer's four corrections, and the re-registration
-([RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+([BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
 and note 23; [changelog](../CHANGELOG.md); [migration](MIGRATION.md#the-label-along-the-unit-vector-of-the-direction-on-2026-09-19-the-momentum-units-change-by-q--64)).
 Python 3.14.0rc2, numpy 2.5.3, headless, four cores; source fingerprint
 `0eaa589ab51cdc0a12a863cd23e535e1e8ac052e8b4f3f8facf30ef05a323c5a` on every run below.
 
 | Check | Result |
 | --- | --- |
-| The table u_d (`tests/test_ray_label.py` (a)) | the eight pinned vectors of the verdict; 63^2 < \|u_d\|^2 < 65^2, u_{-D} = -u_D, equivariance under the 48 on the table; over all 1780418 primitive directions with components in -64 .. 64 the integer rule equals the float rounding (0 mismatches), no component beyond 64, no exact tie, \|u_d\| within 1.35 % of 64 |
-| The books under the label (`test_ray_label` (b)) | a lamp of content 3 on the six headings and eight fan directions: every label 3 x u_d, the recoil -(the labels born) = (-1134, -723, -363) exactly, measured + transit + escaped = (0, 0, 0) at every one of 60 intervals through clicks at a screen (each click the ray's own label), a mirror on (7, 5, 0) (exactly 2 x 3 x (52, 37, 0) per ray reflected) and the open faces; the running transit line equal to the recount |
-| The bound (`test_ray_label` (c), `test_ray_world_parsing` (d)) | content x amount = 2^56 refused by the parser and by `label_weights` naming 64 x 2^56 = 2^62; 2^56 - 1 accepted; the bound-edge worlds at 1/64 of their amounts read the same integers (-(2^62 - 64), the bound reached exactly) |
-| The suite, `python -m pytest -n auto` | 391 passed in 10.6 s; every momentum pin x 64 (the fan fixtures on u_d), every position of `test_push_width` and `test_ray_clock` (d) unchanged with the declared momenta x 64 (`by_clock(age, 64 n, 64 k) = by_clock(age, n, k)`), `test_ray_push` (e) 96 per tick where 2, 1 alternated, `test_ray_detector` (e)'s beyond-register row 2^52 -> 2^49 |
+| The table u_d (`tests/test_nature_beam_label.py` (a)) | the eight pinned vectors of the verdict; 63^2 < \|u_d\|^2 < 65^2, u_{-D} = -u_D, equivariance under the 48 on the table; over all 1780418 primitive directions with components in -64 .. 64 the integer rule equals the float rounding (0 mismatches), no component beyond 64, no exact tie, \|u_d\| within 1.35 % of 64 |
+| The books under the label (`test_nature_beam_label` (b)) | a lamp of content 3 on the six headings and eight fan directions: every label 3 x u_d, the recoil -(the labels born) = (-1134, -723, -363) exactly, measured + transit + escaped = (0, 0, 0) at every one of 60 intervals through clicks at a screen (each click the ray's own label), a mirror on (7, 5, 0) (exactly 2 x 3 x (52, 37, 0) per ray reflected) and the open faces; the running transit line equal to the recount |
+| The bound (`test_nature_beam_label` (c), `test_nature_beam_world_parsing` (d)) | content x amount = 2^56 refused by the parser and by `label_weights` naming 64 x 2^56 = 2^62; 2^56 - 1 accepted; the bound-edge worlds at 1/64 of their amounts read the same integers (-(2^62 - 64), the bound reached exactly) |
+| The suite, `python -m pytest -n auto` | 391 passed in 10.6 s; every momentum pin x 64 (the fan fixtures on u_d), every position of `test_push_width` and `test_nature_beam_clock` (d) unchanged with the declared momenta x 64 (`by_clock(age, 64 n, 64 k) = by_clock(age, n, k)`), `test_nature_beam_push` (e) 96 per tick where 2, 1 alternated, `test_nature_beam_detector` (e)'s beyond-register row 2^52 -> 2^49 |
 | Series C, `tools/run_series.py --jobs 4` on the 21 coupling worlds, `tools/coupling_readings.py` | 392 criteria passed, 0 failed; 19 readings inside, 9 outside, every reading equal to the registered one (the tool divides the labels by Q where it compares with q or an amount); every push, momentum and momentum book line x 64 exactly against the registered run, the series 7 electric part included (item 7 unlike signs (-4517272576, 0, 0) = 64 x (-70582384, 0, 0)); the counts, presences, clocks and Gauss's flux unchanged; 0.3 to 2.5 s per run |
 | Bell, the ten A2 worlds, `tools/bell_chsh.py` | 326 criteria passed, 0 failed; S = 2 exactly, the lamp's momentum [0, 0, 0]; every printed line as registered |
-| Series D, the six orbit worlds regenerated by `make_worlds.py` (p = 192, 320, 576 label units), `tools/orbit_readings.py` | 12 record checks passed, 0 failed, 3.9 to 6.1 s per run; no orbit closed by the criterion; S = 32, r = 12 bound for 2891 intervals and 6.74 turns (the first closing of the angle at 289 against 343 expected, the mean radius 11.25, C 1.32; seven closings, every return 2 to 10 Links off), S = 32, r = 24 one turn in 829 (687 expected), S = 8, r = 12 one turn in 198 (196), S = 1 no read ([EXPERIMENTS](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19)) |
+| Series D, the six orbit worlds regenerated by `make_worlds.py` (p = 192, 320, 576 label units), `tools/orbit_readings.py` | 12 record checks passed, 0 failed, 3.9 to 6.1 s per run; no orbit closed by the criterion; S = 32, r = 12 bound for 2891 intervals and 6.74 turns (the first closing of the angle at 289 against 343 expected, the mean radius 11.25, C 1.32; seven closings, every return 2 to 10 Links off), S = 32, r = 24 one turn in 829 (687 expected), S = 8, r = 12 one turn in 198 (196), S = 1 no read ([EXPERIMENTS](EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19)) |
 | `python tools/check.py --full` | ruff lint and format, mypy and the whole suite green |
 
 The runs establish that the label's scale changed every momentum of the
@@ -149,7 +149,7 @@ commit (`dacbe0f3`), source fingerprint `f3fb33607190c86c...`, Python
 52.4 s under `wave`), every run completed with the books balanced at every
 tick; `tools/heisenberg_readings.py` 16 record checks passed, 0 failed;
 the readings registered in
-[A10](EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-law-of-the-ray-2026-09-20)
+[A10](EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-beam-law-2026-09-20)
 and the worlds' [README](../examples/events/heisenberg/README.md). The
 runs establish what this screen reads of the spread behind an opening
 under the two readings; they establish no physical law, and the reading
@@ -161,7 +161,7 @@ registered).
 The worktree of `claude/universe24-new-3ytqde` on the tip `382a17df` (the
 Highlights record of the owner's principle), one commit: the detector set
 (`DetectorSet`), the `reading` key (`beam` the default, `wave`) and the
-phase returned to the set's measured events ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
+phase returned to the set's measured events ([BEAM_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
 note 23; [changelog](../CHANGELOG.md)). Python 3.14.0rc2, numpy 2.5.3,
 headless, four cores. The 45 example worlds run through
 `tools/run_series.py --jobs 2` on the tip's source (extracted with `git
@@ -176,11 +176,11 @@ detectors and its status.
 | The `record` lines | the same number of lines in every world (one per detector set per family per interval, the sets being one Node each in every shipped world); their values differ where the default `beam` now counts (the Bell counters 1 per click instead of 32^2 x 256^2; the detector examples likewise) and are equal on the `wave` screens |
 | `two_slits`, `one_slit`: the screen's record per pixel | equal on all 121 pixels (the tip's one detector's per-Node `measured[].record` against the change's 121 one-Node `wave` detectors), 27220 and 13610 clicks alike |
 | `tools/bell_chsh.py` on the ten Bell runs, tip and change | 326 criteria passed, 0 failed on both; every printed line equal but the order Python prints a set in; S = 2, S' = 3/2, the offsets 14 and 16; the change's `run.json` carries the counters' `phase` as the last click's (15, 16, 18, 55 in `a0_b8`; 0 on the tip) and their detectors' record as the count (80, 65, 83, 64) with `reading` `beam` |
-| `tests/test_ray_detector.py` (f), (g), (h); `tests/test_ray_worlds.py` (a) | passed: the set of three Nodes records 32^2 x 256^2 whichever Node the ray reached, the threshold 2 over the set, the window on the set's phase 8; the phase returned 40 and the lamp's rays at the received phase; the beam pairing (2 in phase click, opposite cancel, the arc with a window, the greedy order, the split row); the two-slit correlation with the two-source cosine unchanged above 0.85 with the screen as 121 one-Node `wave` detectors |
+| `tests/test_nature_beam_detector.py` (f), (g), (h); `tests/test_nature_beam_worlds.py` (a) | passed: the set of three Nodes records 32^2 x 256^2 whichever Node the ray reached, the threshold 2 over the set, the window on the set's phase 8; the phase returned 40 and the lamp's rays at the received phase; the beam pairing (2 in phase click, opposite cancel, the arc with a window, the greedy order, the split row); the two-slit correlation with the two-source cosine unchanged above 0.85 with the screen as 121 one-Node `wave` detectors |
 | `python tools/check.py --full` | ruff lint and format, mypy and the whole suite (390 tests) green |
 
 The runs establish what the set changed in the record of the shipped
-worlds (the reading, not the board: no click, pass, push, step or book
+worlds (the reading, not the GameBoard: no click, pass, push, step or book
 moved) and that the Bell readings are unchanged under the default; they
 establish no physical law.
 
@@ -188,7 +188,7 @@ establish no physical law.
 
 The worktree of `claude/universe24-new-3ytqde` on the tip `3fb70572` (the
 batching merged), one commit: the record's bound and refusal replaced by
-the exact record ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
+the exact record ([BEAM_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
 note 19; [changelog](../CHANGELOG.md)). Python 3.14.0rc2, numpy 2.5.3,
 headless, four cores. The same byte-identity check as the batching's: the
 45 example worlds run through `tools/run_series.py --jobs 4` on the tip's
@@ -200,7 +200,7 @@ document without `elapsed_seconds` and `source_sha256`.
 | --- | --- |
 | The 45 worlds, tip against the change | 44 of 45 identical (`events.jsonl`, `state.json`, `run.json` with the per-tick `audit`); `two_contents` differs only by completing: on the tip it fails at tick 19 (`the amount 262144 clicked at face:+y in one interval exceeds the affordable amount ... 261123`), after the change it completes 200 intervals, and the tip's 19-interval `events.jsonl` (5158 bytes) is the byte prefix of the new one (498555 bytes) |
 | `two_contents`, 200 intervals | completed, the books balanced at every tick (`conserved_at_every_completed_tick` true), 0.2 s; the two pushes equal and opposite along x, toward each other, +/-411217348788224 = 2^24 x 187 x 2^17 (each content times the flow of the other's beam over the 187 intervals it arrived); `face:+y` clicks 47448064 units and holds the record 181 x 2^62 = 834715169335357210624 (70 bits; two beams of 2^17 in phase per interval since the 20th, 2^62 each interval, one past the law's bound 2^62 - 1), `face:+x` 713 x 2^60 = 822033032784681893888; the escaped momentum (0, 0, 0); `run.json` and `state.json` carry the records as exact integers beyond 2^63 |
-| `tests/test_ray_detector.py` (e), `tests/test_ray_worlds.py` (e) | passed: the pointer's register bound 560759486676481; 261123, 261124, 2^18, two rows a quarter turn apart and 2^52 recorded exactly against the Python-int computation through the tables (2^52 records 2^130 with the pointer (2^65, 0)); two intervals of 2^18 accumulate 2^63 and round-trip through JSON; the face click of 2^18 records 2^62; `two_contents` for 20 intervals not refused, every face's record equal to the Python-int square at every tick |
+| `tests/test_nature_beam_detector.py` (e), `tests/test_nature_beam_worlds.py` (e) | passed: the pointer's register bound 560759486676481; 261123, 261124, 2^18, two rows a quarter turn apart and 2^52 recorded exactly against the Python-int computation through the tables (2^52 records 2^130 with the pointer (2^65, 0)); two intervals of 2^18 accumulate 2^63 and round-trip through JSON; the face click of 2^18 records 2^62; `two_contents` for 20 intervals not refused, every face's record equal to the Python-int square at every tick |
 | `python tools/check.py --full` | ruff lint and format, mypy and the whole suite green |
 
 The runs establish that the exact record changed no integer of a world
@@ -210,8 +210,8 @@ completing; they establish no physical law.
 ## The host's batching: the runs unchanged byte for byte - 2026-09-19
 
 The worktree of `claude/universe24-new-3ytqde` on the base `b2830bf9` (the
-law of the ray with the one push form), five commits of optimizations
-([RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+Beam Law with the one push form), five commits of optimizations
+([BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 note 22; [changelog](../CHANGELOG.md)). Python 3.14.0rc2, numpy 2.5.3,
 headless, four cores. The byte-identity check: the 45 example worlds (the
 ten Bell worlds, the twenty-one coupling worlds, the four detector worlds,
@@ -237,20 +237,20 @@ they establish no physical law.
 The worktree of `claude/universe24-new-3ytqde` on the tip `c5eb5868` (the
 moments change, the NatureBeam rename, the width of the push and series
 D). The physics-rule review's F1 and F2 corrected, F3 and F7 dissolved,
-proposal 2 implemented ([RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+proposal 2 implemented ([BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 notes 18 to 21; [migration](MIGRATION.md#the-push-as-one-form-the-one-label-and-the-affordable-amount-on-2026-09-19-the-night)).
 Runtime source SHA-256 `cc7815756f50640ad10582af461cf58267c424eb8182177e580d0b5eedbd4769`; the tip's `70763568dc216a8b7a0ecdfac36654cdf1e1da80bb6b20d34eccfac2d8c62c8e`. Python 3.14.0rc2,
 headless, four cores.
 
 | Check | Result |
 | --- | --- |
-| `tests/test_ray_push.py` (new) | 5 passed: the reviewer's world (every push -5 V + by_clock(age, 3 V, 4), `pushed` (-340, 0, 0)), the sign, the uncharged probe, the cancellation q_A q_B = M_B (push 0 exactly), the fractional floor (-170, 0, 0), a paid emitter (the label sum, the lamp's momentum + transit + escaped = 0 at every tick), a fan emitter ((-40, -20, 0) per read), the one label at the click, the re-emission and the home |
-| `tests/test_ray_collision.py` (d), `tests/test_ray_detector.py` (e) | 4 and 5 passed: no collision at a measured event's Node (the head-on pair passes, the windowed click takes its label, nothing at rest); the affordable amount 261123 (a row at the bound records 2139119616^2, 261124, a sum of two rows, 2^52 and a face refused naming the sum) |
+| `tests/test_nature_beam_push.py` (new) | 5 passed: the reviewer's world (every push -5 V + by_clock(age, 3 V, 4), `pushed` (-340, 0, 0)), the sign, the uncharged probe, the cancellation q_A q_B = M_B (push 0 exactly), the fractional floor (-170, 0, 0), a paid emitter (the label sum, the lamp's momentum + transit + escaped = 0 at every tick), a fan emitter ((-40, -20, 0) per read), the one label at the click, the re-emission and the home |
+| `tests/test_nature_beam_collision.py` (d), `tests/test_nature_beam_detector.py` (e) | 4 and 5 passed: no collision at a measured event's Node (the head-on pair passes, the windowed click takes its label, nothing at rest); the affordable amount 261123 (a row at the bound records 2139119616^2, 261124, a sum of two rows, 2^52 and a face refused naming the sum) |
 | The ray suite and the consumers, `python tools/check.py --base HEAD` | ruff lint and format clean, mypy on the changed sources, every selected test passed |
 | Twenty-one coupling runs, `python tools/run_series.py --jobs 4`, on both sources | every `events.jsonl` identical byte for byte between the tip's source and the new one (the series 7 `read` records row by row: the one form equals the three-branch push integer by integer); `tools/coupling_readings.py`: 392 criteria passed, 0 failed, 19 inside, 9 outside on both, the printed readings equal line by line but the fingerprint; `state.json` differs on the coupling worlds by the two columns `charge`, `mass` of the free family's rows, on nothing else |
 | Ten Bell runs on both sources | `events.jsonl` and `state.json` identical on all ten; `tools/bell_chsh.py`: 326 criteria passed, 0 failed on both, every printed line equal but the fingerprint and the order Python prints a set in |
 | The affordable amount on the registered worlds | the coupling faces click 174762 units per interval (the 2^17 beam and the two z rays re-emitted in six shares), inside the bound; the first draft of the bound (2^17) refused them and was corrected to the derived value before the register was read |
-| Six orbit runs (series D re-registered), `python tools/run_series.py --jobs 4` | all completed in 5.7 to 6.5 s, the books balanced at every tick; `tools/orbit_readings.py`: 12 record checks passed, 0 failed, exit 0; no orbit closes at any width (S = 1 and 8 zero reads, S = 32 at r = 12 one eccentric turn in 229 intervals returning two Links off, S = 32 at r = 24 falls in); registered in [D, the orbit](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19) |
+| Six orbit runs (series D re-registered), `python tools/run_series.py --jobs 4` | all completed in 5.7 to 6.5 s, the books balanced at every tick; `tools/orbit_readings.py`: 12 record checks passed, 0 failed, exit 0; no orbit closes at any width (S = 1 and 8 zero reads, S = 32 at r = 12 one eccentric turn in 229 intervals returning two Links off, S = 32 at r = 24 falls in); registered in [D, the orbit](EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19) |
 | `python tools/check.py --full` | ruff lint and format on 115 files clean, mypy on 21 source files clean, 437 passed in 17 s on four workers |
 
 The runs establish that the one form is the earlier computation on every
@@ -260,10 +260,10 @@ not moved.
 
 ## The table from the keys and the moments: the runs unchanged - 2026-09-19 (the night)
 
-Base `636f391c` on `claude/universe24-new-3ytqde` (the law of the ray with
+Base `636f391c` on `claude/universe24-new-3ytqde` (the Beam Law with
 the owner's approval of the mathematician's proposals 1 and 3 recorded).
 The two generic replacements ([migration](MIGRATION.md#the-table-from-the-keys-and-the-moments-on-2026-09-19-the-night),
-[RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+[BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 notes 15 and 16) checked against the registered runs: the thirty-five example
 worlds (the ten Bell worlds, the twenty-one coupling worlds, `one_content`,
 `two_contents`, `two_slits`, `one_slit`) run through `tools/run_series.py`
@@ -273,11 +273,11 @@ Python 3.14, headless.
 
 | Check | Result |
 | --- | --- |
-| Every example world parsed on both sources | 39 worlds (the `detector/` worlds through the entity loader): the parsed `RayWorld`s equal structure by structure (tables, windows, `reads`, the families' free flags, every other field) |
+| Every example world parsed on both sources | 39 worlds (the `detector/` worlds through the entity loader): the parsed `NatureBeamWorld`s equal structure by structure (tables, windows, `reads`, the families' free flags, every other field) |
 | The Bell and coupling runs, `events.jsonl`, `state.json` and the `audit` per tick | identical SHA-256 digests on both sources for all 31 runs, and for `one_content` and `two_contents` (33 of 35) |
 | `tools/bell_chsh.py` on the ten new runs | 326 criteria passed, 0 failed; every printed line equal to the base run's but the source fingerprint (and the order Python prints a set in) |
 | `tools/coupling_readings.py` on the twenty-one new runs | 392 criteria passed, 0 failed; 19 readings inside, 9 outside, the printed readings equal to the base run's line by line |
-| `two_slits`, `one_slit` (fans) | the digests differ, as the decision says: a fan ray now pushes by its label `content x amount x D` and not by the unit Link of its last step; the world test's correlation still passes (`test_ray_worlds` (a)) |
+| `two_slits`, `one_slit` (fans) | the digests differ, as the decision says: a fan ray now pushes by its label `content x amount x D` and not by the unit Link of its last step; the world test's correlation still passes (`test_nature_beam_worlds` (a)) |
 | Host cost | `one_content` 0.24 s per 200 intervals (0.44 before), `1a_m1` 0.62 s (0.65), `5_long` 3.1 s (3.9), `two_slits` 5.8 s (4.6): the moments per Node cost about what the slots did |
 
 The runs are the register's evidence that the replacements are generic; they
@@ -285,8 +285,8 @@ establish no physical law.
 ## The width of the push and the orbit series D - 2026-09-19
 
 The worktree of `claude/universe24-new-3ytqde` on the base `0a33a202` (the
-law of the ray merged), the D1 commit (the world key `width`,
-[RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam) step 5 and
+Beam Law merged), the D1 commit (the world key `width`,
+[BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam) step 5 and
 note 15) and the orbit series on it. Runtime source SHA-256
 `587cbf4852a7fafddc07b2ab35a6a530ed27607ea1aaaec8b17d89933e66d788`,
 Python 3.14, headless, four cores.
@@ -295,28 +295,28 @@ Python 3.14, headless, four cores.
 | --- | --- |
 | `tests/test_push_width.py` | 4 passed: S = 1 as the rule was, S = 8 once per 9 self-creations at p = M, the step off the clock with no remainder under a count owed (the step on the paying interval), the key's default, record and refusals |
 | `python tools/check.py` on the D1 commit | ruff lint and format clean, mypy on 11 source files, 228 passed in 25 s on four workers |
-| Six orbit runs, `python tools/run_series.py --jobs 4` | all completed in 5.5 to 6.4 s each (1 ms per interval on 121 x 121 with a fan of 120 directions and about 1200 rows in flight), the books balanced at every tick; `python tools/orbit_readings.py`: 12 record checks passed, 0 failed, exit 0; one orbit closed by the criterion (S = 32, r = 12: 346 intervals against 343 derived, the return one Link off), an eccentric loop; no other closing; the mean push C 1.1 on the first turns; registered in [D, the orbit under the law of the ray, on the plane](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19) |
+| Six orbit runs, `python tools/run_series.py --jobs 4` | all completed in 5.5 to 6.4 s each (1 ms per interval on 121 x 121 with a fan of 120 directions and about 1200 rows in flight), the books balanced at every tick; `python tools/orbit_readings.py`: 12 record checks passed, 0 failed, exit 0; one orbit closed by the criterion (S = 32, r = 12: 346 intervals against 343 derived, the return one Link off), an eccentric loop; no other closing; the mean push C 1.1 on the first turns; registered in [D, the orbit under the Beam Law, on the plane](EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19) |
 | `tests/test_orbit_world.py` | 1 passed in 0.5 s: the probe of `s32_r12` at (71, 60, 0) after 346 intervals with its momentum's y component positive, the books balanced |
 
-## The law of the ray: the engine, the suite and the re-registered runs - 2026-09-19
+## The Beam Law: the engine, the suite and the re-registered runs - 2026-09-19
 
 Base `ce0b22af` on `claude/universe24-new-3ytqde` (the merge of the three
-reversible corrections). The engine of the law of the ray
-([RAY_LAW.md](RAY_LAW.md)) implemented in stages on that base (the engine,
+reversible corrections). The engine of the Beam Law
+([BEAM_LAW.md](BEAM_LAW.md)) implemented in stages on that base (the engine,
 then the tests, the examples and the tools, then the coupling tool, then the
 documents), `events-v1` deleted ([migration](MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1)).
 Runtime source SHA-256 `703f9427d9f70e6c619218e457edca0b7647381a8cc7a20d140e4a3d9dd3f671`, Python 3.14, headless.
 
 | Check | Result |
 | --- | --- |
-| `pytest -n auto` over the suite | 372 passed in 20 s on four workers (the ten `test_ray_*` modules, the consumers, retention and the gates); `tests/test_ray_worlds.py` runs the two slits three times on 60 x 121 x 1 for 500 intervals and the ten Bell worlds through `tools/bell_chsh.py` |
-| The collision table at load | 6561 states, 5440 classes, INV[FWD[s]] = s on every state, the amount and the heading sum conserved by every move (`test_ray_collision` (a)) |
-| The bijection | 50 intervals forward and 50 inverse on a periodic 8 x 8 x 4 board with 324 records return the store bit-exact (`test_ray_bijection`) |
-| The one reading | the seven basis vectors orthogonal, the slots recovered, the 48 board symmetries rotate the flow and fix the scalars (`test_ray_readings` (a)) |
+| `pytest -n auto` over the suite | 372 passed in 20 s on four workers (the ten `test_ray_*` modules, the consumers, retention and the gates); `tests/test_nature_beam_worlds.py` runs the two slits three times on 60 x 121 x 1 for 500 intervals and the ten Bell worlds through `tools/bell_chsh.py` |
+| The collision table at load | 6561 states, 5440 classes, INV[FWD[s]] = s on every state, the amount and the heading sum conserved by every move (`test_nature_beam_collision` (a)) |
+| The bijection | 50 intervals forward and 50 inverse on a periodic 8 x 8 x 4 GameBoard with 324 records return the store bit-exact (`test_nature_beam_bijection`) |
+| The one reading | the seven basis vectors orthogonal, the slots recovered, the 48 GameBoard symmetries rotate the flow and fix the scalars (`test_nature_beam_readings` (a)) |
 | The two slits (world test) | the record's interference term correlates with the two-source cosine at lambda = 8 / sqrt 3 at 0.893 (the design pinned 0.9 for a fan of 203 directions; this world's fan is 91), below 0.5 at the periods 4 and 16; the plain count additive to the unit |
-| Ten Bell runs of 160 ticks, `python -m event_universe --init examples/events/bell/<name>.json` | all completed, the books balanced, nothing escaped; E as pinned in every run; S = 2 exactly; S' = 3/2 exactly; the offsets plus 14, minus 16; no-signalling exact; `python tools/bell_chsh.py`: 326 criteria, 0 failed, exit 0 ([A2 under the law of the ray](EXPERIMENTS.md#a2-under-the-law-of-the-ray-2026-09-19)) |
-| Twenty-one coupling runs, `python tools/run_series.py --jobs 4` | all completed in 0.5 to 3.3 s each; the books balanced at every tick; the measured content constant; age + waited = the intervals completed; `PYTHONPATH=src python tools/coupling_readings.py`: 392 criteria passed, 0 failed, exit 0; 19 readings inside the expectation of RAY_LAW section 8 and 9 outside, registered in [C under the law of the ray](EXPERIMENTS.md#c-the-couplings-under-the-law-of-the-ray-on-the-plane-2026-09-19) (the ring means of six beams follow the lattice ring's Node count; the presence slope -0.76; the clock on the axis owed the beam's presence) |
-| Performance | 0.23 us per Node per interval on the coupling plane (121 x 121, one source), about 1.0 us on the two slits (about 5100 rows in flight, about 2.7 us per row), against the design's budget of 3.6 us; measured with `time.perf_counter` around `RaySimulation.step`, a host cost |
+| Ten Bell runs of 160 ticks, `python -m event_universe --init examples/events/bell/<name>.json` | all completed, the books balanced, nothing escaped; E as pinned in every run; S = 2 exactly; S' = 3/2 exactly; the offsets plus 14, minus 16; no-signalling exact; `python tools/bell_chsh.py`: 326 criteria, 0 failed, exit 0 ([A2 under the Beam Law](EXPERIMENTS.md#a2-under-the-beam-law-2026-09-19)) |
+| Twenty-one coupling runs, `python tools/run_series.py --jobs 4` | all completed in 0.5 to 3.3 s each; the books balanced at every tick; the measured content constant; age + waited = the intervals completed; `PYTHONPATH=src python tools/coupling_readings.py`: 392 criteria passed, 0 failed, exit 0; 19 readings inside the expectation of BEAM_LAW section 8 and 9 outside, registered in [C under the Beam Law](EXPERIMENTS.md#c-the-couplings-under-the-beam-law-on-the-plane-2026-09-19) (the ring means of six beams follow the GameBoard ring's Node count; the presence slope -0.76; the clock on the axis owed the beam's presence) |
+| Performance | 0.23 us per Node per interval on the coupling plane (121 x 121, one source), about 1.0 us on the two slits (about 5100 rows in flight, about 2.7 us per row), against the design's budget of 3.6 us; measured with `time.perf_counter` around `NatureBeamSimulation.step`, a host cost |
 | Gates | `ruff check`, `ruff format --check` and `mypy --strict` on `src`, `tests` and `tools` clean; `tests/test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` passed; `python tools/check.py --full`: ruff lint and format on 108 files, mypy on 21 source files, 372 passed |
 
 The register entries mark measured against expected line by line; a reading
@@ -377,7 +377,7 @@ The display is the x-y plane at z=0, uniformly one Link per grid spacing and
 one interval per frame; GIF playback is 850 ms/frame. First/last images were
 visually inspected. Actual viewer JavaScript passed phase selection and
 timeline checks, rendering 81 Nodes, total 2 and final contact count 3.
-Full-browser rendering was not verified. The earlier open-board report is
+Full-browser rendering was not verified. The earlier open-GameBoard report is
 unchanged. This compact periodic graph establishes no arbitrary 3D equivalence,
 speedup, energy law, absorption/reset, Heisenberg relation or entanglement.
 
@@ -401,7 +401,7 @@ threshold 1, capacity 31. Expectations below were fixed before execution.
 | Physical output at ticks 0 through 4 | 0, 0, 0, 0, 1; it changes only when the carrier reaches the output |
 | Complete live states, phase 0 versus phase 16 | Different at all five recorded times; the carrier retains its input phase |
 | Shared visible output, phase 0 versus phase 16 | Equal at all five recorded times |
-| Amount on the board | One transit unit plus three material units, total 4, at every recorded time |
+| Amount on the GameBoard | One transit unit plus three material units, total 4, at every recorded time |
 | Material-plus-transit momentum | (1,0,0) at every recorded time |
 | Escaped amount | 0 |
 
@@ -439,12 +439,12 @@ result. A shared count does not establish entanglement.
 
 Base: `ddb4470a` on `claude/universe24-new-3ytqde` (main after PR #345). No
 engine change: twenty-one worlds (`examples/events/coupling/`, written by
-`make_worlds.py`, a board of 121 x 121 x 1 with `"boundary": {"z":
+`make_worlds.py`, a GameBoard of 121 x 121 x 1 with `"boundary": {"z":
 "periodic"}`), the analysis `tools/coupling_readings.py` and the register
 entry [C, the couplings under the law of events, on the plane](EXPERIMENTS.md#c-the-couplings-under-the-law-of-events-on-the-plane-2026-09-19).
 The physics-rule reviewer's design of 2026-09-19, pinned for 61^3 and moved
 to the plane by the model owner's decision the same day ("cancel the runs;
-let it run on two-dimensional boards"). A research run, made once; not a
+let it run on two-dimensional GameBoards"). A research run, made once; not a
 test; a reading outside its bound reported, never moved.
 
 | Check | Result |
@@ -1693,7 +1693,7 @@ acceptance. Exact final check counts and submitted source identity are attached
 to the PR; the gate saves its commands in `artifacts/check-scope.json`.
 
 The explicit visual run uses `examples/local_field_rules.json` with the existing
-CLI and `--visualize`: a 9 by 9 by 9 lattice, eight transitions, and nine recorded
+CLI and `--visualize`: a 9 by 9 by 9 GameBoard, eight transitions, and nine recorded
 frames. Starting at `a=(3,4,0), b=(0,0,0)`, the configured rule applies
 `a'=b, b'=-a`; the combined squared amplitude is 25 in every recorded frame.
 All eight cycles contain component transformations, with no external sources
@@ -2228,7 +2228,7 @@ configured but was not executed on a remote repository in this task.
 | Current model | Exact field sample, source mapping, clipping and transverse response passed |
 | Public component replacement | Field/turning/activity injection, remainder-only evolution and invalid-result rejection passed |
 | Calculation boundaries | Absolute/relative imports and formula-free assembly checked, including forbidden-example tests |
-| Dedicated expectations | Lattice, movement, source/range/activity policies and all diagnostic projections passed |
+| Dedicated expectations | GameBoard, movement, source/range/activity policies and all diagnostic projections passed |
 | Test visualization | 41 engine/reference runs rendered through the shared GIF/HTML pipeline |
 | Full XYZ display | 48-tick contact run completed with total momentum preserved; shared GIF/HTML pipeline |
 | Display equivalence | Plane and volume runs produced identical physical events and final reports |
@@ -2283,7 +2283,7 @@ Known model assumptions and limits remain in `SIMULATOR_DEFINITIONS.md`.
   stationary-source regression initially exposed an owner-only directional
   artifact; the symmetric two-endpoint proposal protocol now passes it.
 - 46 engine/reference test runs were captured using the existing renderer.
-- The linked application completed 360 elementary ticks on a 32×24×12 lattice,
+- The linked application completed 360 elementary ticks on a 32×24×12 GameBoard,
   with two particles and base link length 10. Total momentum matched the initial
   value at every completed tick. All runtime state audits passed.
 - The final rendered frame was inspected: XY slice z=6 and tick=360 are visible.
@@ -2571,7 +2571,7 @@ rest; a ray field is absorbed or exchanged, never both.
 | Visualization | Not requested or generated |
 
 The source's stock rises by what it emits, and a radial fall through the
-lattice `r = 1` singularity escapes at the speed cap: both are properties of
+GameBoard `r = 1` singularity escapes at the speed cap: both are properties of
 this candidate, recorded rather than corrected.
 
 ## Kerengonen phased rays — 2026-09-14
@@ -2711,7 +2711,7 @@ carries the advance of the largest share it absorbed with the phase.
 | Visualization | Not requested or generated |
 
 The rule `|p| / D` is configured, not derived; what the measurement shows is
-that the lattice, the Huygens slits and the coherence gate carry it from the
+that the GameBoard, the Huygens slits and the coherence gate carry it from the
 source to the screen: wavelength inverse to momentum, three doublings in a
 row. The beam is a held source; a record in flight is not yet a matter ray.
 
@@ -2854,7 +2854,7 @@ emission must name a recoil field, and the emitter must absorb on the field.
 | Mirror probe | Lamp at x = -16, mirror at x = +16, 8 quanta each way per tick, 96 ticks: periods 16, 8 and 4 for advances 2, 4 and 8, all as predicted by `64 / (2 x advance)`, readings from 0 at the nodes to 15 at the antinodes; a flat 8 without the mirror; the mirror ends with momentum +1016 along x; quanta closed in every world |
 | Visualization | Not requested or generated |
 
-A mirror across a lattice axis only; an oblique or partial mirror needs a
+A mirror across a GameBoard axis only; an oblique or partial mirror needs a
 heading map beyond one sign flip.
 
 ## A thick screen behind the double slit — 2026-09-14
@@ -2911,7 +2911,7 @@ distance per tick.
 | Euclidean fringe | Two lamps four links apart, 29 headings to a screen twelve links away, 64 steps at advance 16, readings summed over the last eight of forty ticks: links metric darkest 0 at x = -1 and 1 and a flat 64 from x = 3 to 9 (Manhattan path difference saturates at four links, a full turn); Euclidean metric darkest 0 at x = -5 and 5 with 64 at the center and 96 at the edges, where the predicted half turn falls at x = -5, -4, 4, 5; the plain field on the Euclidean metric reads 64 to 128 as one or two rays of each lamp are resident per tick; all closed |
 | Visualization | Not requested or generated |
 
-The metric is a configured choice: the lattice's Manhattan fringe and the
+The metric is a configured choice: the GameBoard's Manhattan fringe and the
 Euclidean fringe are both exact consequences of where rays meet, and the
 Euclidean pace buys the round front with rays that are slower, never faster,
 than one link per tick.
@@ -3095,29 +3095,29 @@ postulate's derivation states.
 
 Base: `780a9c1` on `main` (after PR #123). No engine change. The Bell probe
 gains `--sweep` (fresh pairs for every setting pair, binomial standard
-errors, four replicas per level, the lattice compared with the registry alone
+errors, four replicas per level, the GameBoard compared with the registry alone
 outcome by outcome) and `--causal` (at fixed hidden variable, how often an
 outcome moves with the other end's setting). The postulates and the coupling
 document name the assumption of Bell's theorem each candidate breaks.
 
 | Check | Result |
 | --- | --- |
-| `--sweep`, 64 pairs per correlation, lattice, 4 replicas | S = 3.0938, 2.7188, 3.2188, 2.6875; mean 2.9297, predicted error of the mean 0.0791, spread 0.2668; expectation 2.828125; 1,024 of 1,024 lattice outcomes identical to the registry's; every run closed, no pair missing |
-| `--sweep`, 256 pairs per correlation, lattice, 4 replicas | S = 2.8828, 2.8984, 2.8047, 2.8203; mean 2.8516, predicted error of the mean 0.0432, spread 0.0460; expectation 2.828125; 4,096 of 4,096 lattice outcomes identical to the registry's; every run closed, no pair missing |
-| `--sweep`, 1,024 pairs per correlation, lattice, 4 replicas | S = 2.7383, 2.8672, 2.8887, 2.8887; mean 2.8457, predicted error of the mean 0.0228, spread 0.0723; expectation 2.828125; 16,384 of 16,384 lattice outcomes identical to the registry's; every run closed, no pair missing |
-| `--sweep`, 4,096 pairs per correlation, lattice, 4 replicas | S = 2.8774, 2.8052, 2.8325, 2.8325; mean 2.8369, predicted error of the mean 0.0109, spread 0.0299; expectation 2.828125; 65,536 of 65,536 lattice outcomes identical to the registry's; every run closed, no pair missing |
+| `--sweep`, 64 pairs per correlation, GameBoard, 4 replicas | S = 3.0938, 2.7188, 3.2188, 2.6875; mean 2.9297, predicted error of the mean 0.0791, spread 0.2668; expectation 2.828125; 1,024 of 1,024 GameBoard outcomes identical to the registry's; every run closed, no pair missing |
+| `--sweep`, 256 pairs per correlation, GameBoard, 4 replicas | S = 2.8828, 2.8984, 2.8047, 2.8203; mean 2.8516, predicted error of the mean 0.0432, spread 0.0460; expectation 2.828125; 4,096 of 4,096 GameBoard outcomes identical to the registry's; every run closed, no pair missing |
+| `--sweep`, 1,024 pairs per correlation, GameBoard, 4 replicas | S = 2.7383, 2.8672, 2.8887, 2.8887; mean 2.8457, predicted error of the mean 0.0228, spread 0.0723; expectation 2.828125; 16,384 of 16,384 GameBoard outcomes identical to the registry's; every run closed, no pair missing |
+| `--sweep`, 4,096 pairs per correlation, GameBoard, 4 replicas | S = 2.8774, 2.8052, 2.8325, 2.8325; mean 2.8369, predicted error of the mean 0.0109, spread 0.0299; expectation 2.828125; 65,536 of 65,536 GameBoard outcomes identical to the registry's; every run closed, no pair missing |
 | `--sweep`, 1,000 pairs per correlation, registry alone, 4 replicas | S = 2.8540, 2.8500, 2.8500, 2.8560; mean 2.8525, predicted error of the mean 0.0221, spread 0.0030; expectation 2.828125 |
 | `--sweep`, 10,000 pairs per correlation, registry alone, 4 replicas | S = 2.8522, 2.8412, 2.8544, 2.8216; mean 2.8424, predicted error of the mean 0.0070, spread 0.0150; expectation 2.828125 |
 | `--sweep`, 100,000 pairs per correlation, registry alone, 4 replicas | S = 2.8284, 2.8319, 2.8325, 2.8232; mean 2.8290, predicted error of the mean 0.0022, spread 0.0043; expectation 2.828125 |
 | `--sweep`, 1,000,000 pairs per correlation, registry alone, 4 replicas | S = 2.8263, 2.8257, 2.8300, 2.8256; mean 2.8269, predicted error of the mean 0.0007, spread 0.0021; expectation 2.828125 |
 | `--source agreement`, 16 seeds per slot, 1,024 pairs per correlation | E = -1, 1, -1, -1; S = 4.0, the Popescu-Rohrlich box; Alice's plus rate 0.49 at every pair, Bob's 0.51, 0.49, 0.51, 0.51; rate shifts 0.0 and 0.0156; every run closed: a bias in the agreement half moves no marginal and is not held to the quantum value |
 | `--causal`, 256 hidden variables per candidate | lottery and threshold: no outcome moves with the other end's setting at either end (0 of 256); bonded: Alice's coin never moves with Bob's setting, Bob's answer moves with Alice's setting for 184 of 256 hidden variables at b' (0.7188, the law's 362/512 = 0.7070) and 0 at b; every run closed |
-| `tests/test_ray_bell_chsh.py` | one seed of the agreement-biased source gives E = -1, 1, -1, -1, S = 4.0, even plus rates and rate shifts 0.0 and 0.0312; the registry's expectation is 181/64; 16 lattice pairs per setting pair equal the registry's 64 outcomes one by one; a hundred thousand registry pairs land within three standard errors of 2.828125; the lottery never moves an outcome with the other end's setting, the bonded pair moves Bob's answer with Alice's setting for 47 of 64 hidden variables at b' and never at b |
+| `tests/test_ray_bell_chsh.py` | one seed of the agreement-biased source gives E = -1, 1, -1, -1, S = 4.0, even plus rates and rate shifts 0.0 and 0.0312; the registry's expectation is 181/64; 16 GameBoard pairs per setting pair equal the registry's 64 outcomes one by one; a hundred thousand registry pairs land within three standard errors of 2.828125; the lottery never moves an outcome with the other end's setting, the bonded pair moves Bob's answer with Alice's setting for 47 of 64 hidden variables at b' and never at b |
 | Affected gate against `origin/main` | 2078 passed, 5 visual-only skipped, in 1216 seconds; ruff lint, format and strict mypy passed |
 
 Runtime source SHA-256 `0beb4d822bd98980e5947c8e8c20f76825e52dabe64aac8abf8346ecb67b467b`, Python 3.14.0rc2, headless.
-The lattice equals the registry pair by pair at every level: the Bell value
-lives in the registry's law and the lattice adds transport. The 2.889 of the
+The GameBoard equals the registry pair by pair at every level: the Bell value
+lives in the registry's law and the GameBoard adds transport. The 2.889 of the
 first run was sampling spread on correlated samples. In Bell's terms the
 bonded pair is deterministic, measurement-independent and
 parameter-dependent; its unmoved plus rates are no-signalling, not locality.
@@ -3220,7 +3220,7 @@ review of the second manuscript, read as a standalone paper.
 | Pantheon+ sample | 1,701 light curves of 1,550 supernovae; 1,580 Hubble-flow light curves kept |
 | Tolman | Lubin and Sandage's exponents are reduced under an assumed q0 = 1/2 geometry, so they are not model-independent; the manuscript now calls the comparison an indication, not a test of the model |
 | Clock | the stakes stated: a clock at r(t) cycles per tick reads (r_o / r_e)(k_o / k_e), and one that slowed as 1 / k would cancel the stretch |
-| Literature | the cosmic-refraction models (Chen and Kantowski 2008) named as the nearest continuum relatives, with what the lattice adds and does not add |
+| Literature | the cosmic-refraction models (Chen and Kantowski 2008) named as the nearest continuum relatives, with what the GameBoard adds and does not add |
 | Figures | the law figure's legend moved outside the axes; the residual figure gains the fitted power law |
 | Affected gate against `origin/main` | 161 passed, 2 visual-only skipped in 25 seconds; ruff lint and format passed (a first run reported four failures in `test_ray_integration_guards.py` whose assertion text was an older version of the file: stale pytest bytecode; the file passes directly and the gate passed after the caches were cleared) |
 

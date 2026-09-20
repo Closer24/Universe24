@@ -1,4 +1,4 @@
-"""The readings of the redshift series E under the law of the ray, in
+"""The readings of the redshift series E under the Beam Law, in
 space, under the age reading.
 
 Reads the run folders of the worlds of `examples/events/redshift/` (the
@@ -37,7 +37,7 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 
 MODEL_PREFIX = "rays-redshift-"
 MODEL_SUFFIX = "-space-v1"
@@ -103,7 +103,7 @@ class Reading:
     def single(self, label: str, radius: int) -> Probe | None:
         """The probe of the shell nearest to the direction's line: the
         shell's Node of the largest cosine to the direction (the axis Node
-        on the axis; on a diagonal the nearest lattice Node of the shell,
+        on the axis; on a diagonal the nearest GameBoard Node of the shell,
         which the diagonal's own line may miss)."""
         direction = DIAGONALS[label]
         shell = self.shells.get(radius)
@@ -151,7 +151,7 @@ def replay_window(document: dict[str, object], reading: Reading) -> None:
     """The world replayed through the API: every probe's (age, waited) at
     the two ends of the window, the difference being its count over the
     stationary fan."""
-    simulation = RaySimulation(parse_ray_world(document))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(document))
     start, end = WINDOW
     end = min(end, reading.ticks)
     at_start: dict[int, tuple[int, int]] = {}

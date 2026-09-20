@@ -110,7 +110,7 @@ runs the Basic/Exchange worlds or a package build for unrelated changes.
 
 Since 2026-09-17, by the model owner's decision in
 [Highlights 5.5](docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions), a
-test exercises one generic rule in isolation on a minimal board and nothing else:
+test exercises one generic rule in isolation on a minimal GameBoard and nothing else:
 one test module per rule, one per feature of the ray-event model, with the
 expected integers written down before the first run. No test pins the numbers of
 an example world, compares two worlds or reproduces a known experiment; those are

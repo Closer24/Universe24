@@ -1,12 +1,12 @@
-"""The CHSH reading of the Bell run A2 under the law of the ray.
+"""The CHSH reading of the Bell run A2 under the Beam Law.
 
 Reads the run folders of the ten worlds of `examples/events/bell/` (the
 runner's `run.json`, `initialization.json` and `events.jsonl`) and prints,
 per run, the four coincidence counts, the correlation E and its expected
 value, and, over the runs, the CHSH sum S of the settings (0, 8), (0, 24),
 (16, 8), (16, 24) and the sum S' of the non-saturating quadruple (0, 8),
-(0, 12), (4, 8), (4, 12); every criterion of the entry "A2, under the law
-of the ray (2026-09-19)" in docs/EXPERIMENTS.md is checked and a failed
+(0, 12), (4, 8), (4, 12); every criterion of the entry "A2, under the Beam
+Law (2026-09-19)" in docs/EXPERIMENTS.md is checked and a failed
 criterion exits nonzero. Every expectation is exact: the arithmetic is on
 integers and `fractions.Fraction`, no float anywhere in a criterion.
 
@@ -16,7 +16,7 @@ phase a mod N); A = +1 for a click at `alice_plus`, -1 at `alice_minus`,
 B likewise; the age of a click is its tick less the offset of its Node,
 read off the record itself (the earliest click at a Node is the smallest
 age its window admits, whose phase is that age, so the offset is that
-click's tick less its phase; under the ray law a ray flies at 1 / sqrt 3,
+click's tick less its phase; under the Beam Law a ray flies at 1 / sqrt 3,
 so a minus Node's offset exceeds its plus Node's by the flight table's
 ninth Link, two intervals); the first `PAIRS` ages are analysed and the
 later ones, still in flight when the run ends, are excluded. E is

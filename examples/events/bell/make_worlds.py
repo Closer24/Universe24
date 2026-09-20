@@ -1,8 +1,8 @@
-"""Write the ten worlds of the Bell run A2 under the law of the ray.
+"""Write the ten worlds of the Bell run A2 under the Beam Law.
 
 One base world, the settings the only difference between the files
-(README.md here; the entry "A2, under the law of the ray (2026-09-19)" in
-docs/EXPERIMENTS.md): a bar of 21 x 1 x 1, open, `"law": "rays"`, K 2^20,
+(README.md here; the entry "A2, under the Beam Law (2026-09-19)" in
+docs/EXPERIMENTS.md): a bar of 21 x 1 x 1, open, `"law": "beam"`, K 2^20,
 N 64, no release of a free family, no suspension, the families `light`
 and `counter`, both paid (`quantum` 1; the kind follows from the quantum).
 The lamp of `light` at x = 10, content K + 2 (so that the release of age a
@@ -16,7 +16,7 @@ table declares only the window) through a phase window:
 mod 64). The two windows of a side cover the circle exactly, so every ray
 clicks exactly once per side. A ray flies at 1 / sqrt 3: the eight Links to
 a plus Node take 13 intervals after the ray's first walk and the ninth Link
-two more (the flight table, docs/RAY_LAW.md), so 160 intervals hold the 128
+two more (the flight table, docs/BEAM_LAW.md), so 160 intervals hold the 128
 pairs analysed (the ages 0..127) and their last minus click.
 
     python examples/events/bell/make_worlds.py
@@ -53,7 +53,7 @@ def counter(x: int, window: int) -> dict[str, object]:
 
 def world(a: int, b: int) -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": f"rays-bell-a{a}-b{b}-v1",
         "shape": [2 * LAMP_X + 1, 1, 1],
         "boundary": "open",

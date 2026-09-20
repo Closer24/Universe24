@@ -1,10 +1,10 @@
 """The push as ONE product per arriving free ray and the one momentum
-label under the law of the ray (docs/RAY_LAW.md, section 3 step 4, section
+label under the Beam Law (docs/BEAM_LAW.md, section 3 step 4, section
 5 and section 10 notes 18 to 20 and 28; the model owner's decisions of
 2026-09-19, "2 with the physicist", and of 2026-09-20, charge per unit of
 content, Highlights 5.4): a measured event A of content M_A (as the frame
 read it) takes from a group of rays of a free family B arriving at its
-Node, with V_B their label moment (amount x u_d) and rho_A, rho_B the two
+Node, with V_B their label flow (amount x u_d) and rho_A, rho_B the two
 families' charges per unit of content declared as pairs [n, d],
 
     push_A = M_A x (rho_A rho_B - 1) x V_B
@@ -36,10 +36,10 @@ charge [1, 5]; every pinned integer is unchanged.
     flight table puts a ray born at tick t at x = 6 at tick t + 10 (m(10)
     = 6, m(9) = 5), so the probe reads one row of amount 4 at every tick
     from 11 through 30: 20 `read` records, each with the flow V = 4 and the
-    push -5 V + by_clock(age, 3 V, 4) with the label moment V = 4 x 64 =
+    push -5 V + by_clock(age, 3 V, 4) with the label flow V = 4 x 64 =
     256 (since 2026-09-19 the label is along the unit vector u_d of the
     direction at the flight table's scale Q = 64, the model owner's
-    decision on the physics-rule reviewer's verdict, RAY_LAW section 2 and
+    decision on the physics-rule reviewer's verdict, BEAM_LAW section 2 and
     note 23: every integer of the six-heading fixtures below is the first
     pin times 64, the fan fixtures read u_(2, 1, 0) = (57, 29, 0), and the
     pins before the change are in git at the one-form commits) = -1280 +
@@ -77,7 +77,7 @@ charge [1, 5]; every pinned integer is unchanged.
     goes on, a report of the push and not a transfer, so the book closes
     over the click, the re-emission and the home ((h)), not over a read;
 (g) a fan emitter: a source of content 4 (uncharged) at (0, 0, 0) of a
-    9 x 5 x 1 board (z periodic) releasing on (2, 1, 0) at `release` [1, 1],
+    9 x 5 x 1 GameBoard (z periodic) releasing on (2, 1, 0) at `release` [1, 1],
     the probe of content 5 at (4, 2, 0) on its digital line (the sixth
     Manhattan step; m(8) = 6, m(7) = 5, so the first read is at tick 9):
     every push -5 x 4 x (57, 29, 0) = (-1140, -580, 0), 22 reads (ticks 9
@@ -147,7 +147,7 @@ charge [1, 5]; every pinned integer is unchanged.
 from __future__ import annotations
 
 from event_universe.core.integer import by_clock
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import FIELDS
 
 M, P, LIGHT = 0, 1, 2
@@ -179,7 +179,7 @@ def bar(
     probe_charge: Charge = 0,
 ) -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-push-test",
         "shape": shape or [12, 1, 1],
         "boundary": boundary or {"y": "periodic", "z": "periodic"},
@@ -217,9 +217,9 @@ def reads_of(records: list[dict[str, object]], number: int) -> list[tuple[int, i
     ]
 
 
-def run(world: dict[str, object]) -> tuple[RaySimulation, list[dict[str, object]]]:
+def run(world: dict[str, object]) -> tuple[NatureBeamSimulation, list[dict[str, object]]]:
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(world), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
     for _ in range(int(world["ticks"])):
         simulation.step()
         assert simulation.books()["balanced"]
@@ -283,7 +283,7 @@ def test_a_paid_ray_pushes_by_its_label_and_the_paid_momentum_book_closes():
     reader = probe(table={"light": "read"})
     world = bar([lamp, reader], release=[0, 1])
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(world), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
     for _ in range(30):
         simulation.step()
         books = simulation.books()
@@ -319,7 +319,7 @@ def test_a_fan_rays_push_is_its_label():
 
 def test_the_click_the_re_emission_and_the_home_move_the_one_label():
     """(h)."""
-    ray = {
+    beam = {
         "position": [3, 2, 0],
         "family": "light",
         "number": 2,
@@ -347,12 +347,12 @@ def test_the_click_the_re_emission_and_the_home_move_the_one_label():
             shape=[9, 5, 1],
             boundary={"z": "periodic"},
             directions=[FAN],
-            in_transit=[ray],
+            in_transit=[beam],
             release=[0, 1],
             ticks=1,
         )
         records: list[dict[str, object]] = []
-        simulation = RaySimulation(parse_ray_world(world), records.append)
+        simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
         assert simulation.books()["momentum"]["transit"] == label
         simulation.step()
         books = simulation.books()
@@ -390,10 +390,10 @@ def test_the_click_the_re_emission_and_the_home_move_the_one_label():
         release=[0, 1],
         ticks=20,
     )
-    # No ray leaves a board periodic on every axis: the age bound is declared.
+    # No ray leaves a GameBoard periodic on every axis: the age bound is declared.
     world["age_bound"] = 64
     records = []
-    simulation = RaySimulation(parse_ray_world(world), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
     for _ in range(20):
         simulation.step()
         assert simulation.books()["balanced"]
@@ -504,7 +504,7 @@ def test_a_re_emitted_free_ray_pushes_by_its_familys_charge_per_unit_of_content(
         0,
     ]
     mirror = simulation.measured[2]
-    assert mirror.measured[1]["rerelease"] == 92 and mirror.pushed != [0, 0, 0]
+    assert mirror.taken[1]["rerelease"] == 92 and mirror.pushed != [0, 0, 0]
     assert simulation.measured[2].charge == (4, 5) and simulation.measured[3].charge == (1, 1)
 
 

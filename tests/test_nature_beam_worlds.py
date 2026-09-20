@@ -1,8 +1,8 @@
-"""The worlds of the law of the ray on minimal boards (docs/RAY_LAW.md,
+"""The worlds of the Beam Law on minimal GameBoards (docs/BEAM_LAW.md,
 section 7; the model owner, 2026-09-19): the two slits as a world test with a
 pinned correlation, the Bell run A2 unchanged, and one content on an open
-board with the books closed. The expected results of
-docs/TEST_EXPECTATIONS.md ("The worlds of the ray law"), written down first:
+GameBoard with the books closed. The expected results of
+docs/TEST_EXPECTATIONS.md ("The worlds of the Beam Law"), written down first:
 
 (a) the two slits (the example world's design, 60 x 121 x 1, z periodic,
     500 intervals): a lamp at (2, 60) of turn 8 per self-creation (K 2^30,
@@ -23,10 +23,10 @@ docs/TEST_EXPECTATIONS.md ("The worlds of the ray law"), written down first:
     openings reach (the design pinned 0.9 for a fan of 203 directions; rays
     measured 0.893 with the 91 of this world), and the correlation at the
     periods 4 and 16 is below 0.5;
-(b) Bell (the ten A2 worlds under `"law": "rays"`, `tools/bell_chsh.py`):
+(b) Bell (the ten A2 worlds under `"law": "beam"`, `tools/bell_chsh.py`):
     S = 2 exactly, S' = 3/2 exactly, the controls +1, -1, 0, no-signalling
     exact, 0 criteria failed;
-(c) one content of 2^24 at the centre of an open 11^3 board at `release`
+(c) one content of 2^24 at the centre of an open 11^3 GameBoard at `release`
     [1, 128], 40 intervals: the books close at every tick, the content is
     2^24 at every tick, the momentum on the measured events zero, the flux
     through the cube of half-width 2 equals the emission q = 6 x 2^17 at
@@ -37,8 +37,8 @@ docs/TEST_EXPECTATIONS.md ("The worlds of the ray law"), written down first:
     presence at r = 3 twice the count (the ages 5 and 6 sit at 3 Links: the
     flight table's first arrivals at 3 and 4 Links are the intervals 5 and
     7) and at r = 4 equal to it (the age 7 alone);
-(d) every example world parses as a ray world;
-(e) `two_contents` (the two contents 8 Links apart on the open 21^3 board)
+(d) every example world parses as a NatureBeam world;
+(e) `two_contents` (the two contents 8 Links apart on the open 21^3 GameBoard)
     for 20 intervals: not refused (the night's bound refused it at the 20th
     interval, when the two +y beams of 2^17 click face:+y together, 2^18 in
     one interval); the books close at every tick; every face's record grows
@@ -63,8 +63,8 @@ import numpy as np
 import pytest
 
 from event_universe.core.phase import phase_cosines, phase_sines
-from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.run import execute_ray_run
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
+from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import MOMENTUM_BOUND
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -127,7 +127,7 @@ def slits(openings: tuple[int, ...]) -> dict[str, object]:
             }
         )
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": f"rays-test-slits-{len(openings)}",
         "shape": [60, 121, 1],
         "boundary": {"z": "periodic"},
@@ -144,7 +144,7 @@ def slits(openings: tuple[int, ...]) -> dict[str, object]:
 
 
 def screen_readings(openings: tuple[int, ...]) -> tuple[np.ndarray, np.ndarray]:
-    simulation = RaySimulation(parse_ray_world(slits(openings)))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(slits(openings)))
     for tick in range(TICKS):
         simulation.step()
         if tick % 100 == 0:
@@ -155,7 +155,7 @@ def screen_readings(openings: tuple[int, ...]) -> tuple[np.ndarray, np.ndarray]:
     for entry in simulation.measured.values():
         if entry.detector is not None:
             record[entry.position[1]] = entry.detector_set.record[0]
-            count[entry.position[1]] = entry.events[0]
+            count[entry.position[1]] = entry.clicks[0]
     reports = simulation.detectors()[:121]
     assert [r["name"] for r in reports] == [f"screen_{y}" for y in range(121)]
     assert sum(r["families"]["light"]["clicks"] for r in reports) == int(count.sum()) > 0
@@ -198,7 +198,9 @@ def test_the_bell_worlds_read_the_triangle_and_the_chsh_bound(tmp_path):
         source = json.dumps(document).encode("utf-8")
         output = tmp_path / f"a{a}_b{b}"
         output.mkdir()
-        execute_ray_run(parse_ray_world(document), source, output, "test", int(document["ticks"]))
+        execute_nature_beam_run(
+            parse_nature_beam_world(document), source, output, "test", int(document["ticks"])
+        )
     assert bell.main([str(tmp_path)]) == 0
     checks = bell.Checks()
     runs = {
@@ -218,7 +220,7 @@ def test_one_content_streams_outward_with_the_books_closed():
     """(c)."""
     content = 1 << 24
     world = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "rays-test-one",
         "shape": [11, 11, 11],
         "boundary": "open",
@@ -230,7 +232,7 @@ def test_one_content_streams_outward_with_the_books_closed():
         "families": [{"name": "m", "quantum": 0, "charge": 0, "phase": False}],
         "measured": [{"position": [5, 5, 5], "family": "m", "amount": content, "fixed": True}],
     }
-    simulation = RaySimulation(parse_ray_world(world))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world))
     emission = 6 * (content // 128)
     centre = (5, 5, 5)
     for tick in range(1, 41):
@@ -245,18 +247,21 @@ def test_one_content_streams_outward_with_the_books_closed():
             three = simulation.shell_readings(0, centre, 3)
             four = simulation.shell_readings(0, centre, 4)
             assert (
-                three["count"] * three["nodes"] == emission and four["count"] * four["nodes"] == emission
+                three["arrived"] * three["nodes"] == emission
+                and four["arrived"] * four["nodes"] == emission
             )
-            assert three["presence"] == 2 * three["count"] and four["presence"] == four["count"], tick
+            assert three["presence"] == 2 * three["arrived"] and four["presence"] == four["arrived"], (
+                tick
+            )
 
 
 @pytest.mark.parametrize(
     "name", ["one_content.json", "two_contents.json", "two_slits.json", "one_slit.json"]
 )
-def test_the_example_worlds_parse_as_ray_worlds(name):
+def test_the_example_worlds_parse_as_nature_beam_worlds(name):
     document = json.loads((ROOT / "examples" / "events" / name).read_text(encoding="utf-8"))
-    world = parse_ray_world(document)
-    assert document["law"] == "rays" and world.model_id.startswith("rays-")
+    world = parse_nature_beam_world(document)
+    assert document["law"] == "beam" and world.model_id.startswith("rays-")
 
 
 def test_two_contents_is_not_refused_and_its_face_records_are_exact():
@@ -265,7 +270,7 @@ def test_two_contents_is_not_refused_and_its_face_records_are_exact():
         (ROOT / "examples" / "events" / "two_contents.json").read_text(encoding="utf-8")
     )
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(document), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
     cosines, sines = phase_cosines(document["N"]), phase_sines(document["N"])
     before: dict[str, int] = {}
     faces: dict[str, int] = {}

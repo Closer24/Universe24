@@ -2,17 +2,18 @@
 
 Universe24 implements **Reality Theory (Universe24)**: one discrete world of
 Nodes and Links, bounded integer arithmetic and local rules. Since 2026-09-19
-the model is the law of the ray ([Highlights](docs/HIGHLIGHTS.md) section
+the model is the Beam Law ([Highlights](docs/HIGHLIGHTS.md) section
 5.4, the model owner, "DECIDED: the law of the ray"; the design
-[docs/RAY_LAW.md](docs/RAY_LAW.md)): the Node holds no wave; a unit is a ray
-with a record moving along the digital line of its momentum at one speed for
+[docs/BEAM_LAW.md](docs/BEAM_LAW.md)): the Node holds no wave; a unit is a beam
+(the record of an event in transit, `NatureBeam`; "ray" is its informal name)
+moving along the digital line of its momentum at one speed for
 every direction; rays that meet at a Node are permuted by the collision
 table; the interval is a bijection and the click its only one-way border; a
 measured event is created here without end, its clock the count of its
 self-creations, and what is seen is measured events through detectors of a
-declared sensitivity, whose record is the squared coherent sum of the rays
+declared sensitivity, whose record is the squared pointer of the rays
 they clicked; nothing is kept at a Node, no register, no remainder, no draw.
-There is one engine, the engine of that law (`rays-v1`, the one function
+There is one engine, the engine of that law (`beam-v1`, the one function
 `nature_beam`); the engines before it, the law of events of the same day
 among them, are deleted and in git ([migration](docs/MIGRATION.md)).
 The name of the framework is Reality Theory; the simulator that realizes it is
@@ -26,12 +27,12 @@ English-only repository language rule. The active implementation lives in
 `src/event_universe/`; [Boss and specialist skills](skills/boss-orchestrator/SKILL.md)
 define coordinated work and independent checks.
 
-A run is a **world file**: a JSON object with `"law": "rays"`, the board's
+A run is a **world file**: a JSON object with `"law": "beam"`, the GameBoard's
 shape and boundary, the clock K and the phase width N, the release rate and
 the suspension, the declared directions, the families (free, matter; paid,
 light), the measured events at the start with their tables and directions
 and, where wanted, the detectors. The engine recognizes nothing by physical
-name. Read [the law of the ray](docs/RAY_LAW.md), [the engine](docs/ENGINE.md)
+name. Read [the Beam Law](docs/BEAM_LAW.md), [the engine](docs/ENGINE.md)
 and the worlds under [examples/events/](examples/events/README.md) before
 defining a run.
 
@@ -90,8 +91,8 @@ python -m event_universe.configuration_validation examples/events/one_content.js
 
 The world file is required. It supplies `ticks`; `--ticks` can override the
 duration. Missing input is an error, not a request to load a built-in universe.
-The board is open (`"boundary": "open"`): what leaves is booked as escaped, with
-the momentum it carried; a closed board is refused. An axis may be declared
+The GameBoard is open (`"boundary": "open"`): what leaves is booked as escaped, with
+the momentum it carried; a closed GameBoard is refused. An axis may be declared
 periodic (`"boundary": {"z": "periodic"}`): its departures wrap to the opposite
 face and nothing escapes on that axis. Run several worlds one
 process per core with `tools/run_series.py`.
@@ -157,12 +158,12 @@ active contracts, explicit experiments and revision-specific evidence.
 | Path | Responsibility |
 | --- | --- |
 | `src/event_universe/events/world.py` | The world file: its keys, their bounds and the refusals, named |
-| `src/event_universe/events/nature_beam.py` | The law of the ray (`rays-v1`): the record `NatureBeam`, the one reading `read_arrivals`, the flight table, the collision table, the store of records per family and the one function `nature_beam`, a Node's whole interval (the walk, the reading, the collision, the measured event's table, the detector's record, the self-creations, the merge) |
+| `src/event_universe/events/nature_beam.py` | The Beam Law (`beam-v1`): the record `NatureBeam`, the one reading `read_arrivals`, the flight table, the collision table, the store of records per family and the one function `nature_beam`, a Node's whole interval (the walk, the reading, the collision, the measured event's table, the detector's record, the self-creations, the merge) |
 | `src/event_universe/events/measured.py` | The measured event's record (`Measured`) and the ledger of an interval |
 | `src/event_universe/events/engine.py` | The frame around the law: the clocks, the owed count off the clock, the steps by the momentum, the books, the readings, the inverse interval, the snapshot; it computes no physics |
 | `src/event_universe/events/run.py` | The artifacts of a run: the input, the events, the state, the record |
 | `src/event_universe/core/integer.py` | Shared bounded integer primitives |
-| `src/event_universe/core/lattice.py` | The board's addresses, the six Port headings and the bound of a declared charge and quantum |
+| `src/event_universe/core/game_board.py` | The GameBoard's addresses, the six Port headings and the bound of a declared charge and quantum |
 | `src/event_universe/core/phase.py` | The phase circle's cosine and sine tables in bounded integers |
 | `src/event_universe/runner.py` | `python -m event_universe`: a world file to headless artifacts |
 | `src/event_universe/configuration_validation.py` | Read-only preflight of a world file |
@@ -171,13 +172,13 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/retention.py`, `docs/RETENTION.md` | Registered output ownership, active writer protection and 24-hour cleanup |
 | `src/event_universe/diagnostics/numeric_audit.py` | Static audit that `core/` holds integer arithmetic only |
 | `tools/run_series.py` | The worlds of a series run one process per core, each with its log and artifacts, a summary table at the end |
-| `tools/migrate_ray_worlds.py` | A ray world rewritten to the form of 2026-09-19: `quantum` in place of `kind`, only the table entries that differ from the default |
+| `tools/migrate_nature_beam_worlds.py` | A NatureBeam world rewritten to the form of 2026-09-19: `quantum` in place of `kind`, only the table entries that differ from the default |
 | `tools/check.py` | The affected-check: changed files and their consumers; `--full` for everything |
-| `examples/events/` | The worlds of the law of the ray: one content, two contents, two slits with a detector and the one-slit control; the Bell worlds, the coupling, orbit, redshift and Hubble series and the detector definitions |
-| `tests/` | One module per generic rule on a minimal board (the one reading, the flight, the collision table, the bijection, the detector's record, the re-emission, the clock, the phase window, the world file, the worlds, the preflight, the decoder, retention, the repository gates) |
+| `examples/events/` | The worlds of the Beam Law: one content, two contents, two slits with a detector and the one-slit control; the Bell worlds, the coupling, orbit, redshift and Hubble series and the detector definitions |
+| `tests/` | One module per generic rule on a minimal GameBoard (the one reading, the flight, the collision table, the bijection, the detector's record, the re-emission, the clock, the phase window, the world file, the worlds, the preflight, the decoder, retention, the repository gates) |
 | `docs/HIGHLIGHTS.md` | The specification, edited by the model owner |
-| `docs/RAY_LAW.md` | The law of the ray: the design, the implementation contract and the implementation notes |
-| `docs/ENGINE.md` | The bookkeeping around the law as implemented: the board, the frame of an interval, the books, the world file's refusals, the record, the preflight |
+| `docs/BEAM_LAW.md` | The Beam Law: the design, the implementation contract and the implementation notes |
+| `docs/ENGINE.md` | The bookkeeping around the law as implemented: the GameBoard, the frame of an interval, the books, the world file's refusals, the record, the preflight |
 | `docs/DERIVATIONS.md`, `docs/EXPERIMENTS.md` | The derivations of the known laws, and the research runs with their records |
 | `POSTULATES.md`, `SIMULATOR_DEFINITIONS.md` | Shared principles and scoped candidate requirements |
 | `docs/ARCHITECTURE.md` | Ownership and dependency boundaries |

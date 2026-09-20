@@ -1,7 +1,7 @@
 """A world or portable entity bundle -> the engine -> headless artifacts.
 
-The one engine is the engine of the law of the ray (`event_universe.events`,
-`rays-v1`; docs/RAY_LAW.md, Highlights 5.4). The host loader resolves literal entity data
+The one engine is the engine of the Beam Law (`event_universe.events`,
+`beam-v1`; docs/BEAM_LAW.md, Highlights 5.4). The host loader resolves literal entity data
 before preparing output or constructing the physical world. A run
 writes to an empty output directory the input as read (`initialization.json`),
 the events (`events.jsonl`), the final state (`state.json`) and the record
@@ -14,7 +14,7 @@ import argparse
 import hashlib
 from pathlib import Path
 
-from event_universe.events.run import execute_ray_run
+from event_universe.events.run import execute_nature_beam_run
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 from event_universe.world_loading import load_world
 
@@ -54,7 +54,7 @@ def run_initialization(initialization: Path, output: Path, *, ticks: int | None 
                     for dependency in loaded.dependencies
                 ],
             }
-        return execute_ray_run(
+        return execute_nature_beam_run(
             world,
             source,
             output,
@@ -76,7 +76,7 @@ def _prepare_output(initialization: Path, output: Path) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run a world of the law of the ray.")
+    parser = argparse.ArgumentParser(description="Run a world of the Beam Law.")
     parser.add_argument("--init", required=True, type=Path, help="The world file (JSON)")
     parser.add_argument("--output", type=Path, default=Path("artifacts/run"))
     parser.add_argument("--ticks", type=int, help="Override only the requested run duration")

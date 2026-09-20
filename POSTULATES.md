@@ -30,32 +30,32 @@ is definite; a common visible result is formed by local physical interactions.
 Information preservation is a separate requirement from determinism. The owner's
 hypothesis is that cell sensitivity together with on-board information retention
 can produce Heisenberg uncertainty; this remains a research target.
-Under the law of the ray (`rays-v1`, 2026-09-19) the interval is a bijection
-on a board without a measured event and the click is the one one-way border;
+Under the Beam Law (`beam-v1`, 2026-09-19) the interval is a bijection
+on a GameBoard without a measured event and the click is the one one-way border;
 the detector's record is the squared coherent sum of the rays it clicked,
-read on the board. This inserts no quantum bound and does not claim that a
+read on the GameBoard. This inserts no quantum bound and does not claim that a
 world with clicks is reversible. The law and its open limits are in
-[the law of the ray](docs/RAY_LAW.md) and
+[the Beam Law](docs/BEAM_LAW.md) and
 [the detector requirements](docs/DETECTOR_REQUIREMENTS.md), following
 [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector).
 
-## Events board topology (2026-09-19)
+## GameBoard topology (2026-09-19)
 
 The owner-approved run parameter selects open or periodic topology independently
 per axis; open is the default. The exact schema, one-interval Link transfer,
 extent-one return, unchanged carried momentum and mixed-axis refusal rules are
-in [the engine contract](docs/ENGINE.md#per-axis-board-topology-2026-09-19-implementation-amendment).
+in [the engine contract](docs/ENGINE.md#per-axis-gameboard-topology-2026-09-19-implementation-amendment).
 This choice does not change a local contact law or establish equivalence between
-a thin periodic board and full 3D matter. Earlier topology descriptions below
+a thin periodic GameBoard and full 3D matter. Earlier topology descriptions below
 belong to their dated models, not an implicit events-world default.
 
 
 ## Initialization-defined model (history: deleted on 2026-09-19)
 
 History marker (2026-09-19): the generic disturbance simulator this section
-describes was deleted on 2026-09-19 with the engines before the law of the ray
+describes was deleted on 2026-09-19 with the engines before the Beam Law
 ([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
-the active contract is [the law of the ray](docs/RAY_LAW.md) with
+the active contract is [the Beam Law](docs/BEAM_LAW.md) with
 [the engine's bookkeeping](docs/ENGINE.md). The text is kept as written.
 
 The canonical Detector-owned sampling contract
@@ -231,7 +231,7 @@ Global consistency emerges from consistent local updates. New information does
 not rewrite completed events; it becomes causal input to future events.
 
 **Contract of the generic disturbance simulator (history: deleted on
-2026-09-19; the active contract is [the law of the ray](docs/RAY_LAW.md)):**
+2026-09-19; the active contract is [the Beam Law](docs/BEAM_LAW.md)):**
 disturbance transfers cross one neighbor link after its fixed transit time;
 updates use already available local records. Extra node delay can make
 propagation slower. There is no global correction at the end of a tick.
@@ -253,7 +253,7 @@ Highlights 3.17; (4) stamp every output as a new event ray, with its
 event's Ports, shares and steps 0; (5) depart, each ray through its Port
 when that face's clock is ready. The two marks, the Detector and the
 external body, are the whole apparatus of a world: they are the only places
-where the board does something the tables do not say, and both are
+where the GameBoard does something the tables do not say, and both are
 declarations in the initial file, never physics. Since 2026-09-18 (section
 25): a node has no output clocks and no departure waits for one, the one
 wait being the tick a thing pays per whole quantum it reads; a mark draws
@@ -283,7 +283,7 @@ the same day, issue #164 buckets B.1 and B.5): the bound was split in two, as th
 matter and every message that a record can control move at most one Node per
 step, without exception. The joint outcome of a bonded pair, two rays emitted
 together, is the one thing that does not: each ray carries the Node and tick
-of its birth through the lattice at link speed, and when either end is
+of its birth through the GameBoard at link speed, and when either end is
 measured, the bond registry answers for both ends at once, at any distance (the
 bonded ray field).
 That answer carries no energy, no momentum and no message: each end alone sees
@@ -308,11 +308,11 @@ applies at all speeds; there are no separate low-speed and high-speed laws.
 
 A ray on the Euclidean pace waits at a Node for part of its journey so that
 every heading covers the same Euclidean distance per step. Waiting is slower,
-never faster: the bound holds for every heading, and the lattice metric is a
+never faster: the bound holds for every heading, and the GameBoard metric is a
 configured choice, not a derivation.
 
 Addition (model owner, 2026-09-17; Highlights 3.28, "speed is a clock
-slowing"): everything on the board moves at one Link per interval, and
+slowing"): everything on the GameBoard moves at one Link per interval, and
 there is no other speed in the engine. Matter is slower only because the
 output clock of its bound group delays its departures: a group that moves
 one Link every k intervals has speed 1/k in units of c, and light, with
@@ -401,7 +401,7 @@ no-self-field rule (2026-09-17): a traveling ray releases in the five
 headings other than its own, because at one Link per interval a forward
 field ray would share its packet at every step, so the forward field of a
 ray at the speed of light is the ray itself; resident content releases in
-all six. On the lattice the field spreads as a diamond at the scale of
+all six. On the GameBoard the field spreads as a diamond at the scale of
 Links and as a sphere at large scale, because the number of paths to a node
 after k steps is the multinomial count, which is rotationally symmetric to
 leading order; whether the bending of a passing ray is the same on an axis
@@ -409,7 +409,7 @@ and on a diagonal is a measurable prediction (experiment A6 of
 [docs/EXPERIMENTS.md](docs/EXPERIMENTS.md)), not an assumption. Superseded
 on 2026-09-18 (section 25; Highlights 5.4, "A thing does not emit"): a
 thing does not release shadows interval after interval; its shadows are
-given with the board and circulate, booked as initial content and never
+given with the GameBoard and circulate, booked as initial content and never
 sourced.
 
 Addition (model owner, 2026-09-17; Highlights 3.5, "light is the field, and
@@ -536,7 +536,7 @@ its displayed quantity and geometry. A slice does not change the underlying 3D w
 Addition (model owner, 2026-09-17; Highlights 5.2): inside the physics, the
 two marks of a world, the Detector and the external body (section 23,
 Highlights 3.19), are its whole apparatus: they are the only places where
-the board does something the tables do not say, and both are declarations
+the GameBoard does something the tables do not say, and both are declarations
 in the initial file, never physics. The Detector's draw is the one
 measurement that is an interaction; the diagnostics of this section stay
 outside the physics as before. Since 2026-09-18 nothing draws (section 25,
@@ -578,7 +578,7 @@ without a signal faster than the rays themselves, which postulate 4 forbids.
 Whole landing needs either inventory that a domain owns rather than rays
 carry, as the quantum layer keeps it, or matter rays slower than the causal
 speed with a retirement that travels at that speed. A mirror can reflect
-across a lattice axis or a lattice diagonal, and a fraction makes it partial;
+across a GameBoard axis or a GameBoard diagonal, and a fraction makes it partial;
 an arbitrary angle needs a heading map beyond a signed permutation. The
 fringe follows Manhattan path difference on the links metric and Euclidean
 path difference on the Euclidean pace: the metric is a configured choice
@@ -624,7 +624,7 @@ result is what a local model must give: S near the value the two independent
 lotteries predict, below the local bound 2, and far from the quantum 2 sqrt 2.
 The ray explains the shared origin, the no-signaling and the collapse's
 timing; it cannot explain the correlations beyond the bound, and no local
-rule on this lattice can. Replacing the lottery by deterministic hidden
+rule on this GameBoard can. Replacing the lottery by deterministic hidden
 variables (the `threshold` capture) raises S to exactly 2 and no further, as
 the theorem says. The excess is reached only by the bonded ray field, which
 takes the split of postulate 4: the pair's joint outcome is answered for both
@@ -642,7 +642,7 @@ is partial and cancels when the catch is complete, and a rotation curve from
 it would rise, not stay flat. The plain ray gravity stays inverse square. The
 gathered gravity probe (`examples/gathered-gravity/`, deleted on 2026-09-17
 with claim-gather) recorded it: the
-lattice has no focusing that mimics unseen mass.
+GameBoard has no focusing that mimics unseen mass.
 
 Until these requirements have been tested for the proposed laws, do not claim that
 the simulator solves quantum collapse or entanglement consistency.
@@ -731,7 +731,7 @@ A contact occurs once per encounter, without an extra position jump. Link transi
 particles can collide only after arrival. Fixed local flags distinguish a new
 encounter from particles still occupying the same node. The exact two-body law,
 multiparticle ordering, schema extension and limits are in the v13 section of
-SIMULATOR_DEFINITIONS.md. This classical lattice hypothesis does not establish
+SIMULATOR_DEFINITIONS.md. This classical GameBoard hypothesis does not establish
 relativistic physics or energy conservation of the existing field law.
 
 
@@ -744,7 +744,7 @@ instrument request can select a result; it retains the conditional joint state,
 including a no-event branch. No universal interaction-to-collapse trigger is claimed.
 
 A known event location does not supply a simultaneous sharp momentum. Position
-and lattice-momentum diagnostics use the same state. Exact host checkpoints may
+and GameBoard-momentum diagnostics use the same state. Exact host checkpoints may
 replace complete correlated histories without sampling. Unused branches remain
 available until an exact sufficient replacement is saved. These choices neither
 make host computation O(1) nor establish a Newtonian or continuum field limit.
@@ -905,7 +905,7 @@ the draw, and no owner answers at a distance (superseded on 2026-09-17 for
 rays that carry a bit: a Detector reads the bit, below). The information
 of the last event, its Ports and shares, stays on the ray as a hidden
 variable: no Detector and no ordinary coupling reads it, it comes from no
-ordinary physics, and nothing on the board feels it. The Detector's bit is
+ordinary physics, and nothing on the GameBoard feels it. The Detector's bit is
 different (model owner, 2026-09-17; Highlights 5.4, "the Detector's bit is
 a property of the ray"): it travels with the ray as a visible property
 like charge, seen by every meeting, by the record and by the rendering,
@@ -948,7 +948,7 @@ paths, combining by phase where paths meet; a marked Node that draws 1
 realizes one path of events, and its return cancels the others through
 their event. The picture of the world is the list of PASS clicks in the
 frame of the observer, and nothing else is ever seen: the rendering of the
-board is the record's view, which no observer inside the world has, and
+GameBoard is the record's view, which no observer inside the world has, and
 the same run drawn as clicks only is the physical picture.
 
 Every interaction whose outcome is not certain consumes exactly one bounded
@@ -1012,7 +1012,7 @@ that it names, and the features of the ray-event model's migration list
 record what is implemented.
 
 Addition (model owner, 2026-09-17; Highlights 3.6, "one ray, one
-catalog"): there is one kind of thing on the board, a ray, content in
+catalog"): there is one kind of thing on the GameBoard, a ray, content in
 whole quanta with an amount, a phase, a heading and a family, moving one
 Link per interval, and everything else is a name for a situation of rays:
 a family is a field, its free rays what physics calls the field and one
@@ -1110,7 +1110,7 @@ meet again, and the meeting gives the same amounts, the same phases modulo
 the circle and the same headings, so the pattern repeats forever; a
 pattern whose meeting does not close disperses. There is no binding rule:
 a bound group is a fixed point of the meeting table over a loop, and the
-only declared thing is the table. On the cubic lattice the smallest loop
+only declared thing is the table. On the cubic GameBoard the smallest loop
 is a unit square of four nodes with rays circulating both ways, each
 corner meeting every interval two rays that leave through each other's
 Ports; a group therefore lives on a ring of nodes, not at one node, its
@@ -1204,7 +1204,7 @@ binding interaction repeats at that node without releasing an event. The
 binding may be nothing more than a very large output-clock delay (Highlights
 3.28) that the bound rays create together, a large mass making the node very
 slow, so that the rays do not leave. It is unbound the same way anything
-else happens on the board: a ray arrives (a high-energy light ray, for
+else happens on the GameBoard: a ray arrives (a high-energy light ray, for
 instance; there is no photon, only a ray) and the coupling declared for the
 families present produces events that leave. Nothing else creates or
 destroys matter. The computation field obeys the one field rule above, with
@@ -1220,7 +1220,7 @@ which is drawn toward the ray. Gravity is this bending by delay; it is not
 inserted as a force, nothing is absorbed, and momentum is exact. Held source records remain an explicitly labeled interim
 device until the binding couplings exist. Superseded on 2026-09-18 (section
 25): the field of a thing is its shadow set, rays of its own family with bit
-0, given with the board and never released per interval; a shadow spreads
+0, given with the GameBoard and never released per interval; a shadow spreads
 by the node's mixing, pushes a thing by the thing's reading and turns back
 as a field with its momentum inverted; nothing delays a ray and there is no
 output clock; gravity is the push read times the content of what is pushed,
@@ -1235,7 +1235,7 @@ not change how a ray moves between events is therefore a family property in
 the catalog or a coupling table, read only at a meeting, exactly as charge
 is, and no new engine mechanism is added for it. Polarization is such a
 property: a transverse mode perpendicular to the heading, two states for
-light (the two lattice axes perpendicular to an axial heading) and two for
+light (the two GameBoard axes perpendicular to an axial heading) and two for
 the electron family (spin), read by the declared couplings at a meeting; a
 circular polarization is not defined and, if wanted, would be a transverse
 direction that turns with the phase plus one handedness bit, again a catalog
@@ -1331,7 +1331,7 @@ condition and any amount is allowed. It is feature 7b of the migration in
 docs/RAY_EVENT_MODEL.md,
 after feature 7, `external-body-v1`. Since 2026-09-18 (section 25, point 22
 and the settled rule (v)) the external body is a thing with declared
-tables: its shadows are given with the board, it radiates nothing per
+tables: its shadows are given with the GameBoard, it radiates nothing per
 interval, and nothing is sourced.
 
 Postulates 1 to 4 hold under this model without exception; the registry
@@ -1345,7 +1345,7 @@ Adopted as the target direction by the model owner on 2026-09-17, together
 with section 23, and restated by him the same day (Highlights 3.3, 3.20 and
 5.4); implementation pending.
 
-Everything on the board is a transfer of information. The model has exactly
+Everything on the GameBoard is a transfer of information. The model has exactly
 two definitions, event and ray: a ray carries information, an event is where
 that information splits, and a ray is what was split off from an event. An
 event is a splitting of information: the interaction splits what arrived
@@ -1435,7 +1435,7 @@ the check that nothing was added or lost when they split and when a share is
 returned. A Detector that returns a ray is therefore returning an event in
 time: the share walks its line backward and the event is undone by exactly
 the amount that share carried, and only that. Exact integer conservation on
-the lattice is what makes this undoing exact rather than approximate.
+the GameBoard is what makes this undoing exact rather than approximate.
 
 The design candidate in docs/RAY_EVENT_MODEL.md
 carries this section's consequences for ray state and for the acceptance
@@ -1469,7 +1469,7 @@ momentum: every push adds to it, and when its component on an axis reaches
 the thing's content the thing steps to that axis and the momentum drops by
 that content; momentum sets direction only, never speed. A thing has one
 path and only one; its bit never changes at a meeting, and only a mark
-takes it off the board. A shadow spreads by the node's mixing (point 24).
+takes it off the GameBoard. A shadow spreads by the node's mixing (point 24).
 
 **The node mixes the six (point 24).** At every node, the shadows of one
 owner that arrive in an interval are one coherent sum on the phase circle
@@ -1500,7 +1500,7 @@ a shadow pays nothing.
 **Meetings and events (points 4, 5, 13).** A thing meeting a thing is the
 declared table of Highlights 5.2; a shadow meeting a shadow is a sum of
 phases that decides the heading, never an amount; events happen only at
-nodes that hold a thing, and the board has two layers, the nodes that hold
+nodes that hold a thing, and the GameBoard has two layers, the nodes that hold
 a thing cycled in full and the nodes that hold shadows alone computed as
 one step.
 
@@ -1518,7 +1518,7 @@ draw. The only thing not known at a node is whether a 0 or a 1 comes next.
 
 **The books (points 7, 11, 22).** Things conserve amount, momentum and
 charge exactly among themselves, with no source line; shadows are free,
-given with the board as initial content and never sourced; a source is a
+given with the GameBoard as initial content and never sourced; a source is a
 thing that spends its content by an emission table; the books are kept per
 bit. A node is its six Ports and holds nothing else: the remainder is a
 shadow parked at the node, a mark's counter is a thing resident at the
@@ -1533,9 +1533,9 @@ has no clock and moves at the causal speed. A thing has one shadow set, of
 size proportional to its content, read twice, by content and by charge;
 the `mass_field` of the catalog is retired.
 
-**A thing does not emit.** Its shadows are given with the board and
+**A thing does not emit.** Its shadows are given with the GameBoard and
 circulate: a shadow that comes home leaves again from where the thing now
-is, nothing is created, and what escapes the board is the only loss.
+is, nothing is created, and what escapes the GameBoard is the only loss.
 
 **Lanes (point 25).** A Port is two lanes, in and out, twelve per node; in
 one interval a lane carries at most one real ray and one shadow per owner.

@@ -1,4 +1,4 @@
-"""The readings of the orbit series D under the law of the ray, on the
+"""The readings of the orbit series D under the Beam Law, on the
 plane, with the width of the push.
 
 Reads the run folders of the worlds of `examples/events/orbit/` (the
@@ -16,14 +16,14 @@ m x q x L / (2 pi r) (the constant C of the derivation; L the mean label
 magnitude of the source's fan in units of Q, the mean |u_d| / Q over its
 directions with u_d the unit vector of the direction at the scale Q,
 1.0000 for this fan within 1 %: since 2026-09-19 the push of a fan ray is
-its label along u_d, RAY_LAW section 2 and note 23; the momentum column p
+its label along u_d, BEAM_LAW section 2 and note 23; the momentum column p
 is in label units, 64 per unit of the probe's content), the
 least and greatest radius, the escape or the refused step if any; and, per
 width, the ratio T(24)^2 / T(12)^2 against (24 / 12)^2 = 4, the plane's
 1 / r force (T proportional to r, k = 2; Kepler's k = 3 would give 8). The
 record checks (completed, the books balanced at every tick) fail the tool;
 the orbit readings are registered inside or outside their expectation
-(docs/EXPERIMENTS.md, "D, the orbit under the law of the ray, on the plane
+(docs/EXPERIMENTS.md, "D, the orbit under the Beam Law, on the plane
 (2026-09-19)") and never moved.
 
     PYTHONPATH=src python tools/orbit_readings.py artifacts/orbit
@@ -40,9 +40,9 @@ from fractions import Fraction
 from pathlib import Path
 
 from event_universe.core.integer import by_clock
-from event_universe.events import parse_ray_world
+from event_universe.events import parse_nature_beam_world
 from event_universe.events.nature_beam import flight_table
-from event_universe.events.world import LABEL_SCALE, MeasuredDefinition, RayWorld
+from event_universe.events.world import LABEL_SCALE, MeasuredDefinition, NatureBeamWorld
 from event_universe.json_documents import parse_json_document
 
 # Every rule of the engine this tool needs is read off the engine's own
@@ -51,7 +51,7 @@ from event_universe.json_documents import parse_json_document
 # off the clock `core.integer.by_clock` (the primitive the engine's release
 # calls), the fan's labels off the flight table
 # `nature_beam.flight_table`, the scale `world.LABEL_SCALE`, the world's
-# keys and the source's Node through `parse_ray_world`.
+# keys and the source's Node through `parse_nature_beam_world`.
 MODEL_PREFIX = "rays-orbit-"
 MODEL_SUFFIX = "-plane-v1"
 # The numbers of the source and the probe in the world's declaration order.
@@ -60,7 +60,7 @@ PROBE = 2
 FULL_TURN = 2 * math.pi
 
 
-def fan_emission(world: RayWorld, source: MeasuredDefinition) -> float:
+def fan_emission(world: NatureBeamWorld, source: MeasuredDefinition) -> float:
     """The source's mean emission per interval over its fan: per declared
     direction the engine's release off the clock, `by_clock(age, content x
     n, d)` at `release` [n, d] (nature_beam, step 5; a free family's
@@ -75,7 +75,7 @@ def fan_emission(world: RayWorld, source: MeasuredDefinition) -> float:
     return float(len(source.directions) * per_direction)
 
 
-def fan_label(world: RayWorld, source: MeasuredDefinition) -> float:
+def fan_label(world: NatureBeamWorld, source: MeasuredDefinition) -> float:
     """The mean label magnitude of the source's fan in units of Q: the mean
     |u_d| / Q over its declared directions, u_d the label of one unit
     along d off the engine's flight table (`FlightTable.labels`, the unit
@@ -161,7 +161,7 @@ def read_run(folder: Path) -> Reading:
     width, radius = int(width_part[1:]), int(radius_part[1:])
     # The world as the engine parses it: the source (number 1) and the probe
     # (number 2), the source's Node the centre of the orbit.
-    world = parse_ray_world(parse_json_document((folder / "initialization.json").read_bytes()))
+    world = parse_nature_beam_world(parse_json_document((folder / "initialization.json").read_bytes()))
     source, probe = world.measured[SOURCE - 1], world.measured[PROBE - 1]
     centre = (source.position[0], source.position[1])
     ticks = int(record["completed_ticks"])
@@ -304,7 +304,7 @@ def print_table(readings: list[Reading]) -> None:
             f"| `{r.name}` | {r.width} | {r.radius} | {r.momentum} | {closed} | {period} | "
             f"{mean_radius} | {drift} | {r.turns:.2f} | {r.least_radius:.1f} .. "
             f"{r.greatest_radius:.1f} | {r.reads} | {r.units} | {constant:.2f} | "
-            f"{r.ended or 'on the board'} |"
+            f"{r.ended or 'on the GameBoard'} |"
         )
     print()
     for r in readings:

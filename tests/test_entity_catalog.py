@@ -32,7 +32,7 @@ from pathlib import Path
 
 import pytest
 
-from event_universe.events import RaySimulation
+from event_universe.events import NatureBeamSimulation
 from event_universe.events.world import LAW_VALUE
 from event_universe.world_loading import load_world
 
@@ -66,8 +66,8 @@ def test_the_shipped_worlds_are_the_generators():
 def test_every_catalog_world_declares_its_keys_and_parses(name):
     """(a)."""
     document = shipped(name)
-    # The law's value as `world.py` names it (the Beam Law rename in flight
-    # changes it and the migration tool rewrites the files).
+    # The law's value as `world.py` names it (`beam` since the Beam Law
+    # rename of 2026-09-20), never a literal.
     assert document["law"] == LAW_VALUE and "catalog" in document["model_id"]
     assert 20 <= document["ticks"] <= 50
     assert all("quantum" in family for family in document["families"])
@@ -83,7 +83,7 @@ def test_every_catalog_world_runs_with_the_books_balanced_and_its_readings_exist
     document = shipped(name)
     world = load_world(json.dumps(document).encode("utf-8")).world
     lines: list[dict[str, object]] = []
-    simulation = RaySimulation(world, lines.append)
+    simulation = NatureBeamSimulation(world, lines.append)
     ticks = int(document["ticks"])
     for tick in range(1, ticks + 1):
         simulation.step()

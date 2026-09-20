@@ -1,5 +1,5 @@
 {
-  "law": "rays",
+  "law": "beam",
   "model_id": "rays-catalog-clock-near-mass-v1",
   "shape": [21, 21, 21],
   "boundary": "open",

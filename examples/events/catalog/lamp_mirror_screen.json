@@ -1,5 +1,5 @@
 {
-  "law": "rays",
+  "law": "beam",
   "model_id": "rays-catalog-lamp-mirror-screen-v1",
   "shape": [21, 21, 1],
   "boundary": {

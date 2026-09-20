@@ -1,20 +1,20 @@
 """The orbit readings tool reads the engine's own functions (Highlights 5.4,
 the architecture review of 2026-09-20: `tools/orbit_readings.py` now reads
 the fan's labels off `nature_beam.flight_table`, the release off
-`engine.by_clock` and the world's keys through `parse_ray_world`). Each
-reading of the tool is checked against the engine on a minimal board; the
+`engine.by_clock` and the world's keys through `parse_nature_beam_world`). Each
+reading of the tool is checked against the engine on a minimal GameBoard; the
 expected values of docs/TEST_EXPECTATIONS.md ("The tools read the
 engine"), written down first:
 
 (a) the fan's label: on a world declaring the directions (1, 1, 0) and
     (3, 1, 0), a source releasing on (1, 0, 0), (1, 1, 0) and (3, 1, 0) has
     the mean |u_d| / Q of the engine's labels (64, 0, 0), (45, 45, 0) and
-    (61, 20, 0) (`test_ray_label` (a)): (64 + hypot(45, 45) + hypot(61,
+    (61, 20, 0) (`test_nature_beam_label` (a)): (64 + hypot(45, 45) + hypot(61,
     20)) / (3 x 64) = 0.99914;
 (b) the emission: at `release` [1, 10] a source of content 4 on those three
     directions emits 3 x 4 / 10 = 1.2 units per interval in the mean (the
     clock's gains over the ages 0 .. 9 are 0, 0, 1, 0, 1, 0, 0, 1, 0, 1 per
-    direction); on the board it has released 12 units after 10 intervals
+    direction); on the GameBoard it has released 12 units after 10 intervals
     (the books' transit line);
 (c) `read_run` on a run of a 9 x 9 x 1 plane (z periodic) written by the
     runner: a fixed source of content 16 at (4, 4, 0) on the four in-plane
@@ -36,8 +36,8 @@ import math
 import sys
 from pathlib import Path
 
-from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.run import execute_ray_run
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
+from event_universe.events.run import execute_nature_beam_run
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
@@ -53,7 +53,7 @@ DIAGONAL = math.hypot(45, 45)
 
 def plane(measured: list[dict[str, object]], **keys: object) -> dict[str, object]:
     world: dict[str, object] = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "rays-orbit-s1-r3-plane-v1",
         "shape": [9, 9, 1],
         "boundary": {"z": "periodic"},
@@ -80,7 +80,7 @@ def test_the_fans_label_is_the_engines_label_table():
         "fixed": True,
         "directions": [[1, 0, 0], [1, 1, 0], [3, 1, 0]],
     }
-    world = parse_ray_world(plane([source]))
+    world = parse_nature_beam_world(plane([source]))
     expected = (64 + DIAGONAL + math.hypot(61, 20)) / (3 * Q)
     assert math.isclose(TOOL.fan_label(world, world.measured[0]), expected, rel_tol=1e-12)
     assert round(expected, 5) == 0.99914
@@ -95,9 +95,9 @@ def test_the_emission_is_the_engines_release_off_the_clock():
         "fixed": True,
         "directions": [[1, 0, 0], [1, 1, 0], [3, 1, 0]],
     }
-    world = parse_ray_world(plane([source], release=[1, 10]))
+    world = parse_nature_beam_world(plane([source], release=[1, 10]))
     assert TOOL.fan_emission(world, world.measured[0]) == 1.2
-    simulation = RaySimulation(world)
+    simulation = NatureBeamSimulation(world)
     for _ in range(10):
         simulation.step()
         assert simulation.books()["balanced"]
@@ -126,7 +126,9 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     document = plane([source, probe])
     folder = tmp_path / "s1_r3"
     folder.mkdir()
-    execute_ray_run(parse_ray_world(document), json.dumps(document).encode("utf-8"), folder, "test", 12)
+    execute_nature_beam_run(
+        parse_nature_beam_world(document), json.dumps(document).encode("utf-8"), folder, "test", 12
+    )
     reading = TOOL.read_run(folder)
     assert (reading.name, reading.width, reading.radius, reading.momentum) == ("s1_r3", 1, 3, Q)
     assert reading.emission == 32.0

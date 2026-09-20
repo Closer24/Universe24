@@ -17,7 +17,7 @@ world and inspects its outputs, and it is not a validator of the code: an
 experiment changes no law and no source file. Read
 [the shared workflow](../workflow.md) and its
 [physics comparison method](../workflow.md#physics-comparison-method),
-[the law of the ray](../../docs/RAY_LAW.md),
+[the Beam Law](../../docs/BEAM_LAW.md),
 [the engine's bookkeeping](../../docs/ENGINE.md),
 [the register's conventions](../../docs/EXPERIMENTS.md) and the records of
 the model owner in [Highlights 5.4](../../docs/HIGHLIGHTS.md#54-the-detector).
@@ -49,10 +49,10 @@ Every number the experiment prints or registers is labelled one of two kinds
 | Kind | What it is | What it may be used for |
 | --- | --- | --- |
 | detector reading | a record of a detector's set or of a measured event in the world | the measurement; every comparison with nature |
-| GameBoard reading | the host's view of the deterministic board: a ray's position, the count or flow at a Node, a body's steps, shell means, the books | the mechanism's description, the bookkeeping checks, the picture |
+| GameBoard reading | the host's view of the deterministic GameBoard: a ray's position, the count or flow at a Node, a body's steps, shell means, the books | the mechanism's description, the bookkeeping checks, the picture |
 
 The readings tool of an experiment reads the engine's own functions
-(`RaySimulation`, `parse_ray_world`, `read_arrivals`, `unit_label`,
+(`NatureBeamSimulation`, `parse_nature_beam_world`, `read_arrivals`, `unit_label`,
 `flight_table`, `by_clock`, `DetectorSet`, `Measured.charge`); it never
 replays a rule of the engine, and it prints the kind of every line.
 
@@ -68,7 +68,7 @@ replays a rule of the engine, and it prints the kind of every line.
    shells where a field is read, since one Node reads its line's beam and
    the shell mean is the law's reading), the lamps, the stars. A missing
    feature of the law is a finding to register, never a change to `src/`.
-3. **The runs**: headless, through `RaySimulation(parse_ray_world(world),
+3. **The runs**: headless, through `NatureBeamSimulation(parse_nature_beam_world(world),
    record)` or the runner, the books balanced at every interval, the source
    fingerprint recorded, a few minutes per world at most.
 4. **The readings tool** under `tools/<series>_readings.py`, as above, with
@@ -100,7 +100,7 @@ replays a rule of the engine, and it prints the kind of every line.
 
 ## Hand back
 
-The commit hashes, the design choices (families, board, detectors, probes,
+The commit hashes, the design choices (families, GameBoard, detectors, probes,
 lamps), the table expected against measured with the kind of each reading,
 the verdict in plain words, the path of the page and its GIF, and what the
 law lacked.

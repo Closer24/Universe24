@@ -1,6 +1,6 @@
-"""The law of the ray (rays-v1): the record `NatureBeam`, the store of records,
+"""The Beam Law (beam-v1): the record `NatureBeam`, the store of records,
 the two pure tables and the one function `nature_beam`, a Node's whole
-interval for the rays present (docs/RAY_LAW.md, the model owner's decision of
+interval for the rays present (docs/BEAM_LAW.md, the model owner's decision of
 2026-09-19, Highlights 5.4, "DECIDED: the law of the ray").
 
 The Node holds no coherent sum. A unit is a ray with a record and moves
@@ -10,27 +10,27 @@ table, a bijection; the interference is the squared record a detector reads
 of a crowd of rays and lives nowhere else; the click is the only one-way
 border. The law is ONE generic
 function (the owner's name): `nature_beam` performs the interval's steps in
-order, each a bijection on the board's state except the border:
+order, each a bijection on the GameBoard's state except the border:
 
 1. the walk: every ray whose flight table steps this interval is created at
    the neighbour along its step (the wrap on a periodic axis; through an
    open face it clicks on the face detector), its age advanced by one (the
    age is the count of intervals since the measured event that created the
    ray, kept whole on the record since 2026-09-20; the flight reads it
-   modulo the direction's period and nothing else of the board reads it),
+   modulo the direction's period and nothing else of the GameBoard reads it),
    its phase turned by the family's `phase_per_link`;
 2. the readings: at every Node the amount-weighted moments of order 0, 1
    and 2 of the direction vectors of the arrivals, taken ONCE by
    `read_arrivals` over the one reading set (at the measured events in
-   step 4; the dense arrays of the whole board are the engine's
-   diagnostics, decomposed on request): the count (split outside /
+   step 4; the dense arrays of the whole GameBoard are the engine's
+   diagnostics, decomposed on request): the arrived amount (split outside /
    here, a ray that did not step this interval having the direction
    (0, 0, 0) and entering the zeroth moment alone), the net flow (the
    vector sum of amount x D[direction]), the traceless tensor (three
    times the sum of amount x D (x) D with its trace removed) and the age
    moment (the sum of amount x age, split the same way: a reading aid of
    the measured event, the external thing, that changes nothing on the
-   board); valid for a fan as for the six headings; every coupling reads
+   GameBoard); valid for a fan as for the six headings; every coupling reads
    its component by key;
 3. the collision: at every Node of free space (a Node that holds no
    measured event: rays meet the table there, not each other), per
@@ -49,7 +49,7 @@ order, each a bijection on the board's state except the border:
    declared directions), `pass`; own-number rays are home. The push is ONE
    product per arriving free ray (`push_form`, the model owner's decision
    of 2026-09-20: charge is per unit of content of a family, rho): with
-   `V_B` the label moment of the rays (the vector moment of
+   `V_B` the label flow of the rays (the vector moment of
    `read_arrivals` with the labels as weights), M_A the reader's content
    as the frame read it and rho_A, rho_B the families' charges per unit
    of content, `push_A = M_A x (rho_A rho_B - 1) x V_B` for a free
@@ -76,14 +76,14 @@ for a free one, u_d the unit vector of the direction at the flight table's
 scale Q = 64: the integer vector nearest Q D / |D|, `unit_label`, one
 world constant per direction on the flight table, exactly Q e_d on a
 heading; the model owner's decision of 2026-09-19 on the physics-rule
-reviewer's verdict, RAY_LAW section 2 and note 23): the push's moment, the
+reviewer's verdict, BEAM_LAW section 2 and note 23): the push's moment, the
 click's momentum, the face click's, the recoil at a release or a
 re-emission and the transit line of the books; no momentum is read off a
 Port, and the reading's vector and tensor moments are taken on u_d as
 well, so a fan's flow reads Q per unit of amount direction-blind. No other
 function holds a piece of the law: `flight_table`, `collision_table` and
 `read_arrivals` are the pure tables and the one reading it takes;
-`RayStore` is the structure of arrays it moves. Integers only. The engine
+`NatureBeamStore` is the structure of arrays it moves. Integers only. The engine
 (`engine.py`) schedules and books; it computes no physics.
 """
 
@@ -96,20 +96,20 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
+from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
-from event_universe.core.lattice import PORT_HEADINGS, Address3
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events.measured import Ledger, Measured, count_component
 from event_universe.events.world import (
     AGE_READS,
+    BEAM_LAW,
     FACE_NAMES,
     FIXED_DIRECTIONS,
     HEADING_OFFSET,
     MOMENTUM_BOUND,
-    RAYS_LAW,
     REST_DIRECTIONS,
+    NatureBeamWorld,
     Q,
-    RayWorld,
     Vector,
 )
 
@@ -122,7 +122,7 @@ Record = Callable[[dict[str, object]], None]
 # The arrival of a ray that did not step this interval: the first rest
 # direction, whose vector is (0, 0, 0), so "here" enters the zeroth moment
 # of the reading alone.
-HERE = 0
+NO_ARRIVAL = 0
 # The Ports of a Node, the Links a ray may cross into it (a walk diagnostic).
 PORTS = 6
 DIMENSIONS = 3
@@ -136,7 +136,7 @@ SLOT_STATES = 3
 AMPLITUDE_SCALE = 32
 # The cosine and sine tables are in 256ths; their rounding puts the length
 # of an entry (C, S) below 257 for every N from 2 through 4096
-# (`test_ray_detector` (e) checks it), so one unit's amplitude at a phase
+# (`test_nature_beam_detector` (e) checks it), so one unit's amplitude at a phase
 # is a vector shorter than 32 x 257.
 LONGEST_PHASE_ENTRY = 257
 # The pointer's register bound: a detector's coherent pointer (X, Y) is a
@@ -148,7 +148,7 @@ LONGEST_PHASE_ENTRY = 257
 # Beyond it the pointer is summed in Python integers; the square X^2 + Y^2
 # and the record that accumulates it are Python integers always. The
 # record is a report of the host, not the law's local work: it is exact
-# and never refused (RAY_LAW, section 5 and note 19; the former affordable
+# and never refused (BEAM_LAW, section 5 and note 19; the former affordable
 # amount 261123 refused a lawful world).
 POINTER_AMOUNT_BOUND = MOMENTUM_BOUND // (AMPLITUDE_SCALE * LONGEST_PHASE_ENTRY)
 ZERO3 = (0, 0, 0)
@@ -202,12 +202,12 @@ MOMENT_COLUMNS = AGE_COLUMN + 2
 
 
 @dataclass(frozen=True)
-class Reading:
+class Moments:
     """The moments of order 0, 1 and 2 of the direction vectors of one
     reading set, weighted by the amounts (the model owner, 2026-09-19): the
     zeroth moment split into `outside` (the rays that arrived, their
     direction nonzero) and `here` (the rays that did not step, their
-    direction zero), `vector` the first moment (the net flow, sum amount x
+    direction zero), `flow` the first moment (the net flow, sum amount x
     D) and `second` the six entries of the second moment (sum amount x
     D_i D_j for xx, yy, zz, xy, xz, yz), whose traceless part is `tensor`
     (3 x the second moment less its trace on the diagonal, a symmetric
@@ -215,22 +215,22 @@ class Reading:
     age moment (sum amount x age, a first moment in the age, split as the
     count is), whose whole is `age`. The age moment is a reading aid of the
     measured event, the external thing (the model owner, 2026-09-19, "it
-    must be checked in the detector and not on the board"): the age is
-    read whole only by a measured event; the board's rules (the flight,
+    must be checked in the detector and not on the GameBoard"): the age is
+    read whole only by a measured event; the GameBoard's rules (the flight,
     the collision) never read it whole; this component only helps the
-    detector's computation and changes nothing on the board. Every
+    detector's computation and changes nothing on the GameBoard. Every
     coupling selects its component by key. Keyed over Nodes the arrays
     carry a leading axis."""
 
     outside: np.ndarray
     here: np.ndarray
-    vector: np.ndarray
+    flow: np.ndarray
     second: np.ndarray
     age_outside: np.ndarray
     age_here: np.ndarray
 
     @property
-    def scalar(self) -> np.ndarray:
+    def presence(self) -> np.ndarray:
         """The presence: everything in the set, outside and here."""
         result: np.ndarray = self.outside + self.here
         return result
@@ -254,24 +254,24 @@ class Reading:
 
     def component(self, key: str) -> np.ndarray:
         if key == "scalar":
-            return self.scalar
+            return self.presence
         if key == "outside":
             return self.outside
         if key == "here":
             return self.here
         if key == "vector":
-            return self.vector
+            return self.flow
         if key == "tensor":
             return self.tensor
         if key == AGE_READS:
             return self.age
-        raise ValueError(f"{RAYS_LAW}: no reading component {key!r}")
+        raise ValueError(f"{BEAM_LAW}: no reading component {key!r}")
 
 
 def reading_bound_error(rows: int, per_row: int) -> OverflowError:
     """The refusal of a reading whose moments could pass the bound."""
     return OverflowError(
-        f"{RAYS_LAW}: the moments of a reading of {rows} rows of up to {per_row} exceed the "
+        f"{BEAM_LAW}: the moments of a reading of {rows} rows of up to {per_row} exceed the "
         f"integer bound {MOMENTUM_BOUND} (lower the amounts or the direction bound)"
     )
 
@@ -295,9 +295,9 @@ def moment_table(v: np.ndarray, a: np.ndarray, ages: np.ndarray | None = None) -
     return table
 
 
-def reading_of(sums: np.ndarray) -> Reading:
-    """The `Reading` of summed moment-table rows (a leading axis kept)."""
-    return Reading(
+def reading_of(sums: np.ndarray) -> Moments:
+    """The `Moments` of summed moment-table rows (a leading axis kept)."""
+    return Moments(
         sums[..., 0],
         sums[..., 1],
         sums[..., 2 : 2 + DIMENSIONS],
@@ -323,7 +323,7 @@ def read_arrivals(
     keys: np.ndarray | None = None,
     size: int | None = None,
     ages: np.ndarray | None = None,
-) -> Reading:
+) -> Moments:
     """The one reading of a set of rays: `vectors` (rows, 3) the direction
     vector of each ray's arrival (D[direction] for a ray that arrived this
     interval, (0, 0, 0) for one that did not step) and `amounts` (rows,)
@@ -335,9 +335,9 @@ def read_arrivals(
     age, split outside and here the same way (zero without it). The age
     moment is a reading aid of the measured event, the external thing: the
     age is read whole only by a measured event (its clock's count on a
-    table entry that reads `age`, its record); the board's rules (the
+    table entry that reads `age`, its record); the GameBoard's rules (the
     flight, the collision) never read it whole; this component only helps
-    the detector's computation and changes nothing on the board. With
+    the detector's computation and changes nothing on the GameBoard. With
     `keys` (rows,) and `size` the moments are taken per key (one reading
     per Node), the arrays gaining a leading axis of `size`. Valid for a fan
     as for the six headings: no projection onto the Ports."""
@@ -356,7 +356,7 @@ def read_arrivals(
         sums = table.sum(axis=0)
     else:
         if size is None:
-            raise ValueError(f"{RAYS_LAW}: a keyed reading needs its size")
+            raise ValueError(f"{BEAM_LAW}: a keyed reading needs its size")
         sums = np.zeros((size, MOMENT_COLUMNS), dtype=np.int64)
         np.add.at(sums, bins, table)
     return reading_of(sums)
@@ -378,7 +378,7 @@ class FlightTable:
 
     vectors: np.ndarray
     manhattan: np.ndarray
-    turns: np.ndarray
+    resolution: np.ndarray
     period: np.ndarray
     lines: np.ndarray
     steps: np.ndarray
@@ -387,7 +387,7 @@ class FlightTable:
     def manhattan_steps(self, direction: np.ndarray, age: np.ndarray) -> np.ndarray:
         """m(tau) = (2 tau S_1 Q + T_d) // (2 T_d): the Manhattan steps made
         by age tau."""
-        s1, t = self.manhattan[direction], self.turns[direction]
+        s1, t = self.manhattan[direction], self.resolution[direction]
         result: np.ndarray = (2 * age * s1 * Q + t) // (2 * t)
         return result
 
@@ -434,7 +434,7 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
     """The flight table of a direction set, computed once at load."""
     count = len(vectors)
     manhattan = np.zeros(count, dtype=np.int64)
-    turns = np.ones(count, dtype=np.int64)
+    resolution = np.ones(count, dtype=np.int64)
     period = np.ones(count, dtype=np.int64)
     lines_list: list[list[tuple[int, int, int]]] = []
     for index, vector in enumerate(vectors):
@@ -444,7 +444,7 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
             lines_list.append([])
             continue
         t = integer_root(3 * sum(c * c for c in vector) * Q * Q)
-        turns[index] = t
+        resolution[index] = t
         p = t // bounded_gcd(s1 * Q, t)
         per_period = s1 * Q * p // t
         period[index] = p * (s1 // bounded_gcd(per_period, s1))
@@ -459,7 +459,7 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
     table = FlightTable(
         np.array(vectors, dtype=np.int64).reshape(count, 3),
         manhattan,
-        turns,
+        resolution,
         period,
         lines,
         np.zeros(0),
@@ -478,7 +478,7 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
         m1 = table.manhattan_steps(direction, ages + 1)
         moved = m1 > m0
         steps[index, : len(ages)] = np.where(moved[:, None], lines[index, m0 % s1], 0)
-    return FlightTable(table.vectors, manhattan, turns, period, lines, steps, labels)
+    return FlightTable(table.vectors, manhattan, resolution, period, lines, steps, labels)
 
 
 # -- the collision table ---------------------------------------------------------
@@ -518,7 +518,7 @@ def collision_table() -> CollisionTable:
     members of a class sorted as 8-tuples, the forward map the cyclic shift
     by +1, the inverse by -1; a class of one is fixed. A constant of the
     law (the 3^8 states), generated once per process and shared read-only
-    by every `RaySimulation` (the arrays refuse a write)."""
+    by every `NatureBeamSimulation` (the arrays refuse a write)."""
     classes: dict[object, list[tuple[int, ...]]] = {}
     for state in itertools.product(range(SLOT_STATES), repeat=COLLISION_SLOTS):
         classes.setdefault(class_key(state), []).append(state)
@@ -544,7 +544,7 @@ def collision_table() -> CollisionTable:
 
 
 @dataclass(frozen=True)
-class RayTables:
+class NatureBeamTables:
     """The two pure tables of a world and the circle's tables: the flight
     table of its direction set, the collision table, the cosines and sines
     at 1/256 and the window table (whether a phase distance is inside the
@@ -557,11 +557,11 @@ class RayTables:
     window: np.ndarray
 
 
-def ray_tables(world: RayWorld) -> RayTables:
+def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
     modulus = world.phase_steps
     distance = np.arange(modulus, dtype=np.int64)
     window = (4 * distance < modulus) | (4 * distance >= 3 * modulus)
-    return RayTables(
+    return NatureBeamTables(
         flight_table(world.directions),
         collision_table(),
         np.array(phase_cosines(modulus), dtype=np.int64),
@@ -608,7 +608,7 @@ def label_bound_error(
     reach = max(abs(component) for component in unit)
     where = "" if node is None else f" at Node {list(node)}"
     return OverflowError(
-        f"{RAYS_LAW}: the momentum label of a row of amount {amount} and content {content}{where} "
+        f"{BEAM_LAW}: the momentum label of a row of amount {amount} and content {content}{where} "
         f"along {list(unit)}, its weight {weight} times the largest component {reach} = "
         f"{weight * reach}, exceeds the integer bound {MOMENTUM_BOUND}"
     )
@@ -739,7 +739,7 @@ def pointer_phases(
     one with the smallest |X S[k] - Y C[k]| among those with X C[k] + Y
     S[k] > 0 (the lowest k on a tie), exact integers; a pointer of one
     ray at phase p reads p wherever the 1/256 tables tell the steps apart
-    (`test_ray_detector` (g)); a zero pointer has no step (None). In the
+    (`test_nature_beam_detector` (g)); a zero pointer has no step (None). In the
     register while every component is within `POINTER_STEP_BOUND`, in
     Python integers beyond it."""
     if not x:
@@ -766,13 +766,13 @@ def pointer_phases(
     return found
 
 
-class RayStore:
+class NatureBeamStore:
     """The records of one family as a structure of arrays, one row per
     record: `node` the flat index, `direction`, `age` (whole: the intervals
     since the measured event that created the ray; rows of different ages
     are distinct rows, the host cost of the whole age), `phase`, `number`,
     `amount`, `content` (per unit) and `arrival`, the direction the ray arrived on this interval (its
-    direction at the walk; the reading is of the arrivals) or `HERE` for a
+    direction at the walk; the reading is of the arrivals) or `NO_ARRIVAL` for a
     ray that did not step. Rows sorted by `node` after every interval;
     identical rows merged."""
 
@@ -870,12 +870,12 @@ class RayStore:
             merged = np.add.reduceat(self.amount.astype(object), starts)
             if max(int(v) for v in merged) > MOMENTUM_BOUND:
                 raise OverflowError(
-                    f"{RAYS_LAW}: the amount of a merged row exceeds the integer bound {MOMENTUM_BOUND}"
+                    f"{BEAM_LAW}: the amount of a merged row exceeds the integer bound {MOMENTUM_BOUND}"
                 )
             amount = merged.astype(np.int64)
         self.keep(~same)
         self.amount = amount
-        self.arrival[:] = HERE
+        self.arrival[:] = NO_ARRIVAL
 
     def slice(self, flat: int) -> tuple[int, int]:
         """The contiguous rows of one Node in the sorted store."""
@@ -928,7 +928,7 @@ def bounded(value: int, entry: Measured, quantity: str) -> int:
     measured event, its Node and the quantity."""
     if not -MOMENTUM_BOUND <= value <= MOMENTUM_BOUND:
         raise OverflowError(
-            f"{RAYS_LAW}: the {quantity} of measured event {entry.number} at "
+            f"{BEAM_LAW}: the {quantity} of measured event {entry.number} at "
             f"{list(entry.position)} exceeds the integer bound {MOMENTUM_BOUND}"
         )
     return value
@@ -937,7 +937,7 @@ def bounded(value: int, entry: Measured, quantity: str) -> int:
 @dataclass(frozen=True)
 class ArrivalRows:
     """One family's rows as the walk left them, held for the readings on
-    request: the Node, the direction each row arrived on (`HERE` for a row
+    request: the Node, the direction each row arrived on (`NO_ARRIVAL` for a row
     that did not step), its amount, and the rows that crossed a Link this
     interval with their Port (the walk's diagnostic). Arrays the store
     does not write again (every later step replaces its columns)."""
@@ -955,8 +955,8 @@ class ArrivalRows:
         return cls(none, none, none, none, none, none)
 
 
-class Readings:
-    """The interval's readings per family, dense over the board, decomposed
+class GameBoardDiagnostics:
+    """The interval's readings per family, dense over the GameBoard, decomposed
     on request from the rows of the walk (diagnostics for the engine's
     shell means and flux; the law reads none of them, its own readings
     being taken at the measured events in step 4): the amount that arrived
@@ -984,7 +984,7 @@ class Readings:
 
     def _decompose(self) -> tuple[list[np.ndarray], list[np.ndarray], list[np.ndarray]]:
         if self._moments is None:
-            count: list[np.ndarray] = []
+            arrived: list[np.ndarray] = []
             flow: list[np.ndarray] = []
             presence: list[np.ndarray] = []
             for rows in self.rows:
@@ -997,16 +997,16 @@ class Readings:
                         self.vectors[rows.arrival], rows.amount, inverse, active.shape[0]
                     )
                     outside[active] = reading.outside
-                    vector[active] = reading.vector
-                    scalar[active] = reading.scalar
-                count.append(outside.reshape(self.shape))
+                    vector[active] = reading.flow
+                    scalar[active] = reading.presence
+                arrived.append(outside.reshape(self.shape))
                 flow.append(vector.reshape((*self.shape, DIMENSIONS)))
                 presence.append(scalar.reshape(self.shape))
-            self._moments = (count, flow, presence)
+            self._moments = (arrived, flow, presence)
         return self._moments
 
     @property
-    def count(self) -> list[np.ndarray]:
+    def arrived(self) -> list[np.ndarray]:
         return self._decompose()[0]
 
     @property
@@ -1135,7 +1135,7 @@ def first_label_overflow(
 def first_moment_overflow(
     group: np.ndarray, groups: int, weights: np.ndarray, unit: np.ndarray
 ) -> tuple[int, OverflowError] | None:
-    """The bound of a label moment taken per group in bulk: the sum of
+    """The bound of a label flow taken per group in bulk: the sum of
     weight x u_d over a group's rows, each component within the weight
     times the largest component of u_d (Q at most) per row, so the check
     is weight x |u| x rows against the bound (a first moment: no second
@@ -1225,7 +1225,7 @@ def push_form(
     """The push a measured event A takes from one group of arriving rays,
     ONE product per arriving free ray (the model owner's decision of
     2026-09-20, Highlights 5.4: charge is per unit of content of a
-    family): `moment` is V_B, the label moment of the group (Python
+    family): `moment` is V_B, the label flow of the group (Python
     integers, exact), `content` M_A the reader's content as the frame
     read it, `reader` rho_A = (n_A, d_A) and `emitter` rho_B = (n_B, d_B)
     the two families' charges per unit of content, `age` the reader's age
@@ -1260,19 +1260,19 @@ def push_form(
 
 
 def nature_beam(
-    stores: list[RayStore],
-    world: RayWorld,
-    tables: RayTables,
+    stores: list[NatureBeamStore],
+    world: NatureBeamWorld,
+    tables: NatureBeamTables,
     measured: dict[int, Measured],
     tick: int,
     record: Record | None,
     ledger: Ledger,
     inverse: bool = False,
-) -> Readings:
+) -> GameBoardDiagnostics:
     """A Node's whole interval for the rays present, at every Node (the
     module docstring, steps 1 to 6). With `inverse` the bijective steps are
     run in reverse order with their inverses (the collision, then the walk)
-    on a board without measured events; the border has no inverse."""
+    on a GameBoard without measured events; the border has no inverse."""
     families = world.families
     free_of = [definition.free for definition in families]
     rho_of = [definition.charge for definition in families]
@@ -1309,7 +1309,7 @@ def nature_beam(
             node_event[[stores[0].flat(node) for node in entry.nodes]] = which
     occupied = node_event >= 0
 
-    def collide(store: RayStore, backward: bool) -> None:
+    def collide(store: NatureBeamStore, backward: bool) -> None:
         """Step 3: at every Node of free space, per (number, content) class,
         the single units in the eight slots permuted by the table
         (`inverse` with `backward`); the same rule forward and back."""
@@ -1356,7 +1356,7 @@ def nature_beam(
     if inverse:
         if measured:
             raise ValueError(
-                f"{RAYS_LAW}: the inverse interval is defined on a board without measured events"
+                f"{BEAM_LAW}: the inverse interval is defined on a GameBoard without measured events"
             )
         for family, store in enumerate(stores):
             if store.size == 0:
@@ -1369,7 +1369,7 @@ def nature_beam(
             back = np.where(resting, store.age, store.age - 1)
             if (back < 0).any():
                 raise ValueError(
-                    f"{RAYS_LAW}: the inverse walk of a ray at age 0 (its birth has no inverse)"
+                    f"{BEAM_LAW}: the inverse walk of a ray at age 0 (its birth has no inverse)"
                 )
             step = flight.steps[store.direction, back % flight.period[store.direction]].astype(np.int64)
             moved = step.any(axis=1)
@@ -1380,14 +1380,14 @@ def nature_beam(
                     coordinates[:, axis] %= extents[axis]
                 elif ((coordinates[:, axis] < 0) | (coordinates[:, axis] >= extents[axis])).any():
                     raise ValueError(
-                        f"{RAYS_LAW}: the inverse walk crosses an open face (a click has no inverse)"
+                        f"{BEAM_LAW}: the inverse walk crosses an open face (a click has no inverse)"
                     )
             store.node = coordinates @ np.array(store.strides, dtype=np.int64)
             store.age = back
             store.phase = (store.phase - families[family].phase_per_link * moved) % modulus
-            store.arrival[:] = HERE
+            store.arrival[:] = NO_ARRIVAL
             store.merge()
-        return Readings(shape, unit, [])
+        return GameBoardDiagnostics(shape, unit, [])
 
     # 1. The walk: departures become arrivals; the escapes click on the faces.
     arrivals: list[ArrivalRows] = []
@@ -1412,7 +1412,7 @@ def nature_beam(
         # face a ray leaves through) and the direction the ray arrived on.
         port = np.full(store.size, -1, dtype=np.int64)
         port[moved] = heading_port(step[moved])
-        arrival = np.where(moved, store.direction, HERE)
+        arrival = np.where(moved, store.direction, NO_ARRIVAL)
         if escaped.any():
             gone = np.flatnonzero(escaped)
             labels = store.labels(gone, unit, definition.free)
@@ -1427,7 +1427,7 @@ def nature_beam(
                 # phases) and its square, exact Python integers (a report,
                 # never refused; the face's record is one sum per face).
                 total = int(exact_sum(amounts))
-                ledger.face_units[face][family] += total
+                ledger.face_amount[face][family] += total
                 ledger.face_content[face][family] += int(exact_sum(amounts * store.content[through]))
                 face_x, face_y = coherent_pointer(
                     amounts, store.phase[through], FIRST, [total], tables.cosines, tables.sines
@@ -1479,9 +1479,9 @@ def nature_beam(
 
     # 2. The readings: the moments of every Node's arrivals, taken once,
     # where they are read: at the measured events in step 4 (their own
-    # local sets) and, for the diagnostics of the whole board, on request
-    # from the rows of the walk (the active Nodes only; `Readings`).
-    readings = Readings(shape, unit, arrivals)
+    # local sets) and, for the diagnostics of the whole GameBoard, on request
+    # from the rows of the walk (the active Nodes only; `GameBoardDiagnostics`).
+    readings = GameBoardDiagnostics(shape, unit, arrivals)
 
     # 3. The collision.
     for store in stores:
@@ -1523,7 +1523,7 @@ def nature_beam(
         half = modulus // 2
         presence = np.zeros((count, events), dtype=np.int64)
         # The age moment over the same set, the measured event's reading of
-        # the whole age (a reading aid of the external thing; the board's
+        # the whole age (a reading aid of the external thing; the GameBoard's
         # rules never read the age whole), and per (family, measured event)
         # whether its table entry counts it in place of the presence.
         age_moment = np.zeros((count, events), dtype=np.int64)
@@ -1536,7 +1536,7 @@ def nature_beam(
         # rank, stage), and raised at that point below.
         failures: dict[tuple[int, int, int, int, int], OverflowError] = {}
 
-        def family_plan(family: int, store: RayStore) -> FamilyPlan | None:
+        def family_plan(family: int, store: NatureBeamStore) -> FamilyPlan | None:
             free = free_of[family]
             if store.size == 0:
                 return None
@@ -1555,7 +1555,7 @@ def nature_beam(
             arrival = store.arrival[at]
             age_at = store.age[at]
             own = number == ev_number[ev]
-            arrived = arrival != HERE
+            arrived = arrival != NO_ARRIVAL
             plan = FamilyPlan()
             # The presence for the clock: every ray at the Node of another
             # number, rest and moving alike (the scalar of the one reading);
@@ -1748,7 +1748,7 @@ def nature_beam(
             for key in {entries[e].reads[family] for e in set(g_ev.tolist())}:
                 plan.readings[key] = reading.component(key).tolist()
             # The push, ONE product per group of arriving rays (`push_form`):
-            # the label moment per group, the weights bounded before the
+            # the label flow per group, the weights bounded before the
             # product; the electric factor is the family's charge per unit
             # of content, so no class of rows is kept.
             overflow = first_label_overflow(
@@ -1865,7 +1865,7 @@ def nature_beam(
                     pending = entry.pending[family]
                     for k in range(k0, k1):
                         pending.append((plan.h_amount[k], plan.h_content[k], plan.h_phase[k]))
-                    entry.measured[family]["home"] += total
+                    entry.taken[family]["home"] += total
                     ledger.transit_absorbed[family] += total
                     ledger.content_absorbed[family] += carried
                     if failures:
@@ -1961,7 +1961,7 @@ def nature_beam(
                         group_total = plan.g_total[gi]
                         group_content = plan.g_content[gi]
                         reading_value = reading_values[gi]
-                        entry.measured[family][rule] += group_total
+                        entry.taken[family][rule] += group_total
                         if rule == "read":
                             if record is not None:
                                 record(
@@ -2008,7 +2008,7 @@ def nature_beam(
                         entry.held[family] = bounded(
                             entry.held[family] + group_content, entry, "content"
                         )
-                        entry.events[family] += group_total
+                        entry.clicks[family] += group_total
                         ledger.held_measured[family] += group_content
                         if record is not None:
                             for k in range(k0, k1):
@@ -2035,7 +2035,7 @@ def nature_beam(
                 # refused; a record may pass 2^63 and its readers parse it
                 # as an arbitrary-precision integer); and the set's phase,
                 # returned to every measured event of the set (the model
-                # owner: the detector returns to the board the information
+                # owner: the detector returns to the GameBoard the information
                 # it received), the frame's turn added after it.
                 set_index = detector_set.index
                 if last_active.get(set_index) == i and set_index in plan.set_phase:
@@ -2176,7 +2176,7 @@ def nature_beam(
                 number=np.full(count, entry.number, dtype=np.int64),
                 amount=amount_column,
                 content=content_column,
-                arrival=np.full(count, HERE, dtype=np.int64),
+                arrival=np.full(count, NO_ARRIVAL, dtype=np.int64),
             )
             ledger.transit_released[family] += int(exact_sum(amount_column))
 
@@ -2187,7 +2187,7 @@ def nature_beam(
         store.merge()
         if store.size and int(store.age.max()) > world.age_bound:
             raise OverflowError(
-                f"{RAYS_LAW}: a ray carries the age {int(store.age.max())} beyond the world's "
-                f"age_bound {world.age_bound} (declare a larger age_bound or a smaller board)"
+                f"{BEAM_LAW}: a ray carries the age {int(store.age.max())} beyond the world's "
+                f"age_bound {world.age_bound} (declare a larger age_bound or a smaller GameBoard)"
             )
     return readings

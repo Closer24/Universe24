@@ -1,5 +1,5 @@
 {
-  "law": "rays",
+  "law": "beam",
   "model_id": "rays-catalog-neutron-star-v1",
   "shape": [25, 25, 25],
   "boundary": "open",

@@ -11,19 +11,16 @@ with the world file that places it on the GameBoard, and the honest list of
 what the law cannot yet place. The definitions layer, how a reusable entity
 is authored in a file and placed by a world, is owned by
 [entity definitions](ENTITY_DEFINITIONS.md); the law whose keys the rows are
-written in is [the law of the ray](RAY_LAW.md) with
+written in is [the Beam Law](BEAM_LAW.md) (the owner's name of 2026-09-20
+for the law of the ray of 2026-09-19: the identity `beam-v1`, the world key
+`"law": "beam"`; the quotations of the day keep their wording) with
 [the engine's bookkeeping](ENGINE.md); the register that tests things on
 these placements is [the experiments register](EXPERIMENTS.md). Nothing here
 is a result: a row says what a thing is on the GameBoard and what a detector
-reads of it, never what a reading measured.
-
-The law is named the law of the ray here and linked as `RAY_LAW.md`, as the
-repository holds it on 2026-09-20; by the owner's decision of the same day
-it becomes the Beam Law (the rename in flight: `docs/BEAM_LAW.md`, the
-identity `beam-v1`, the world key `"law": "beam"`, every world file
-rewritten by the migration tool). This document and the catalog's worlds
-follow that rename when it lands; their generator and test read the law's
-value from `world.py` and not from a literal.
+reads of it, never what a reading measured. What a row calls a ray is the
+informal name of a beam, `NatureBeam`, the record of an event in transit;
+the catalog's generator and test read the law's value from `world.py` and
+not from a literal.
 
 The principles the rows follow, all of 2026-09-20 (Highlights 5.4): on the
 GameBoard an entity is a family, one row of keys, and the engine does not
@@ -41,7 +38,7 @@ The keys of a row are the keys of the world file as
 `src/event_universe/events/world.py` accepts them on 2026-09-20 (its
 `WORLD_KEYS`, `FAMILY_KEYS`, `MEASURED_KEYS`, `LAMP_KEYS`,
 `TABLE_ENTRY_KEYS`, `TRANSIT_KEYS` and `DETECTOR_KEYS`;
-[RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file);
+[BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file);
 the refusals in [the engine](ENGINE.md)):
 
 - a **family**: `name`; `quantum` (h, required: 0 a free family, matter,
@@ -247,7 +244,7 @@ catalog ([their page](../examples/events/catalog/README.md)):
    stop growing, and the world reads differently there, its books still
    balanced.
 6. **The width of a body is a width of its push.** A body on a set of w
-   Nodes reads about w times one Node's flux at the same content (RAY_LAW
+   Nodes reads about w times one Node's flux at the same content (BEAM_LAW
    note 30), so the planet's circular orbit on nine Nodes needs the
    world's `width` of the push large (512) to be slow; the generator
    derives the momentum from the engine's own flight lines and prints it

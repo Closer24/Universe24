@@ -1,13 +1,13 @@
 # The worlds of the entity catalog
 
 Four small worlds written by `make_worlds.py`, one per external thing the
-law of the ray can place on the GameBoard today, for the model owner's
+Beam Law can place on the GameBoard today, for the model owner's
 decision of 2026-09-20 ([Highlights 5.4](../../../docs/HIGHLIGHTS.md#54-the-detector),
 "DECIDED: the catalog of the entities": "that we can also support external
 ones such as the sun, a planet, a neutron star, so that they can be placed
 on the GameBoard and things tested"). The catalog they belong to is
 [the catalog of the entities](../../../docs/ENTITY_CATALOG.md); the law
-whose keys they declare is [the law of the ray](../../../docs/RAY_LAW.md)
+whose keys they declare is [the Beam Law](../../../docs/BEAM_LAW.md)
 with [the engine's bookkeeping](../../../docs/ENGINE.md).
 
 These are placements, not experiments. Each world parses through the
@@ -25,12 +25,11 @@ readings, the host's view of the mechanism.
 
 Every family declares its `quantum`, every detector its `reading`, and a
 measured event declares only the table entries that differ from the ones
-its families' keys give (`tools/migrate_ray_worlds.py` rewrites a world to
-this form if the form changes). The worlds declare `"law": "rays"` as
-`world.py` names the law on 2026-09-20; the generator and the test read
-that value from `world.py`, so the Beam Law rename in flight (`"law":
-"beam"`, `beam-v1`; Highlights 5.4) rewrites these files by the migration
-tool with every other world of the repository.
+its families' keys give (`tools/migrate_nature_beam_worlds.py` rewrites a
+world to this form if the form changes). The worlds declare `"law":
+"beam"`, the Beam Law (`beam-v1`, the owner's name of 2026-09-20); the
+generator and the test read that value from `world.py`, not from a
+literal.
 
 ## The worlds
 
