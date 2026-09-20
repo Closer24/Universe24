@@ -155,6 +155,29 @@ of (iii)); no change without the key:
   `bell_n4096_<a>_<b>`).
 - Nothing deleted.
 
+## The amplitude law, on 2026-09-20, (v-fix): the gate's copies booked, the control declared, the hold local, a record elsewhere refused
+
+The gate review of (iv) and (v) (three blocking findings, one should fix;
+no pinned integer of the 46 keyed worlds moves; the gate set byte-identical
+without the key):
+
+- A `rerelease` entry's `gate` declares `control`, the direction the
+  control record's rows arrive on: required for two parties or more,
+  refused for one; the shipped CNOT worlds carry it (the pair's [1, 0, 0],
+  GHZ's [0, 1, 0]). Until now the control was the earliest-declared lamp,
+  and the `measured` list reversed turned the pair into a product (S1).
+- The gate acts when rows of `parties` distinct emitters are pending at
+  the entry, read from the rows alone (the design's local hold); the
+  layer's live count is no longer read by the GameBoard (B3).
+- The units the gate's copies add are booked on the layer's live count
+  (the `gate` line's `added`; the reading tool books it too): every
+  gathered record of the CNOT worlds ends at live 0 where it ended at -1
+  (B1).
+- A record that reaches a gate with units elsewhere or with an offer
+  already made is refused naming the record, the units and the sets: the
+  lazy relabelling of the design's section 10 is not built (B2).
+- Nothing deleted.
+
 ## The amplitude law, on 2026-09-20, (vi): the one click, not landed; the key stays
 
 The design's section 6 (the record form the default, the key `amplitude`

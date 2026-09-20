@@ -2484,12 +2484,24 @@ implementation's part of the contract. The design above is unchanged.
     row on the bit cleared and set with the amounts w C' and w S' of the
     half-angle tables and the matrix's signs, m x 65536) and `gate`
     (`world.Gate`, the CNOT between the records of distinct lamps pending
-    at the entry, one record per emitter, the lowest identities, exactly
-    `parties`, held until every one has all its live units there; the
-    layer's `join`: the joint labels the product of the label sets
-    permuted from the control's bit 0, every row replicated over the other
-    records' labels, the identities aliased); the `gate` and `rotate`
-    lines. The register's ceiling: three label rotations on a path (m =
+    at the entry, one record per emitter, the earliest born, exactly
+    `parties`; the control the record whose rows arrive on the entry's
+    declared `control` direction, required for two parties or more, so
+    that the circuit does not change with the order of the `measured`
+    list (the review of (v), S1); with `hold` the entry holds the rows
+    pending until rows of `parties` distinct emitters are pending at it,
+    read from the rows alone, the design's local hold, the layer's live
+    count left to the completion (B3); the layer's `join`: the joint
+    labels the product of the label sets permuted from the control's bit
+    0, every row replicated over the other records' labels, the units the
+    copies add booked on the live count as a split books its rows (B1:
+    until this fix every gathered record of the CNOT worlds ended at live
+    -1), the identities aliased; a record that reaches a gate with units
+    elsewhere or with an offer already made is refused by the layer,
+    since its rows and offers elsewhere would keep their pre-join labels
+    and drop out of the joint cells (B2; the design's lazy relabelling is
+    not built); a gate of one party relabels the rows present and joins
+    nothing); the `gate` and `rotate` lines. The register's ceiling: three label rotations on a path (m =
     2^48) fit, four (2^64) are refused at load naming the Node, Grover's
     six (2^96) are not a world of the GameBoard, as the design states.
     **(vii) What the worlds gave** (series L, EXPERIMENTS; every integer

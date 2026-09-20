@@ -1666,31 +1666,41 @@ class FamilyPlan:
     left_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
 
 
-def gate_ready(layer: Layer, pending: list[PendingRow], gate: Gate) -> list[int] | None:
-    """The records a gate acts on: the distinct records (through the
-    layer's aliases) of the rows pending, at least `parties` of them, each
-    with all its live units pending here; None while the gate must wait."""
-    units: dict[int, int] = {}
+def gate_ready(
+    pending: list[PendingRow], gate: Gate, entry: Measured, vectors: np.ndarray
+) -> list[int] | None:
+    """The records a gate acts on, read from the rows pending at the entry
+    alone (the design's local hold, section 10; the review of (v), B3: the
+    GameBoard never reads the layer): one record per emitter (the lamp of
+    the identity's number; a row of a joined record already carries the
+    survivor's identity), the earliest born of each, at least `parties`
+    of them; the control the record whose rows arrive on the entry's
+    declared `control` direction (refused unless exactly one emitter's
+    record does), then the others in the order of their identities; None
+    while fewer than `parties` emitters have rows pending."""
+    by_emitter: dict[int, int] = {}
+    arrivals: dict[int, set[int]] = {}
     for row in pending:
         if row.record == NO_RECORD:
             continue
-        found = layer.resolve(row.record)
-        if found is None:
-            continue
-        units[found.identity] = units.get(found.identity, 0) + row.amount
-    if gate.hold:
-        units = {
-            identity: here for identity, here in units.items() if layer.records[identity].live == here
-        }
-    # One record per emitter (the lamp of its identity's number), the
-    # earliest born of each: a lamp's records never join each other, and
-    # the control is the record of the lowest identity.
-    by_emitter: dict[int, int] = {}
-    for identity in sorted(units):
-        by_emitter.setdefault(identity >> 32, identity)
+        emitter = row.record >> 32
+        by_emitter[emitter] = min(by_emitter.get(emitter, row.record), row.record)
+        arrivals.setdefault(row.record, set()).add(row.arrival)
     if len(by_emitter) < gate.parties:
         return None
-    return sorted(by_emitter.values())[: gate.parties]
+    identities = sorted(by_emitter.values())
+    if gate.control is None:
+        return identities[:1]
+    controls = [identity for identity in identities if gate.control in arrivals[identity]]
+    if len(controls) != 1:
+        raise ValueError(
+            f"{BEAM_LAW}: the gate of measured event {entry.number} at {list(entry.position)} "
+            f"finds {len(controls)} records arriving on its control direction "
+            f"{[int(v) for v in vectors[gate.control]]} among {len(identities)} pending: one "
+            "control record"
+        )
+    control = controls[0]
+    return [control] + [identity for identity in identities if identity != control][: gate.parties - 1]
 
 
 def apply_gate(
@@ -1703,19 +1713,24 @@ def apply_gate(
     record: Record | None,
 ) -> tuple[list[PendingRow], list[PendingRow]]:
     """The CNOT on the pending rows of the records: the layer joins them
-    into the lowest (the control), every row replicated over the other
+    into the first (the control), every row replicated over the other
     records' labels with its multiplicity times the copies, relabelled by
-    the joint label after the permutation, on the survivor's identity.
-    Returns the rows to re-emit and the rows of other records, kept."""
+    the joint label after the permutation, on the survivor's identity; the
+    units the copies add are booked on the layer's live count as a split
+    books its rows (the review of (v), B1). Returns the rows to re-emit and
+    the rows of other records, kept."""
     survivor, others = records[0], records[1:]
     present: dict[int, set[int]] = {}
+    here: dict[int, int] = {}
     for row in pending:
         live = layer.resolve(row.record) if row.record != NO_RECORD else None
         if live is not None and live.identity in records:
             present.setdefault(live.identity, set()).add(label_of(row.branch))
-    label_map, arm_offsets = layer.join(tick, survivor, others, present)
+            here[live.identity] = here.get(live.identity, 0) + row.amount
+    label_map, arm_offsets = layer.join(tick, survivor, others, present, here)
     found: list[PendingRow] = []
     kept: list[PendingRow] = []
+    added = 0
     for row in pending:
         live = layer.resolve(row.record) if row.record != NO_RECORD else None
         if live is None:
@@ -1742,6 +1757,9 @@ def apply_gate(
                     multiplicity=row.multiplicity * copies,
                 )
             )
+        if copies > 1:
+            layer.split(survivor, row.amount, row.amount * copies)
+            added += row.amount * (copies - 1)
     if record is not None:
         joined = layer.records[survivor]
         record(
@@ -1758,6 +1776,7 @@ def apply_gate(
                 "labels": [[label, weight] for label, weight in sorted(joined.labels.items())],
                 "arms": joined.arms,
                 "rows": len(found),
+                "added": added,
             }
         )
     return found, kept
@@ -3178,10 +3197,11 @@ def nature_beam(
                 gate = entry.gates[family] if entry.gates else None
                 if gate is not None and world.amplitude and layer is not None:
                     # The gate between records (the design's section 10):
-                    # act when the rows of `parties` records are pending
-                    # with all their live units; hold otherwise, or pass
-                    # them as a plain re-emission without `hold`.
-                    ready = gate_ready(layer, pending_rows, gate)
+                    # act when rows of `parties` distinct emitters are
+                    # pending here (read from the rows alone); hold
+                    # otherwise, or pass them as a plain re-emission
+                    # without `hold`.
+                    ready = gate_ready(pending_rows, gate, entry, flight.vectors)
                     if ready is None and gate.hold:
                         continue
                     if ready is not None:
