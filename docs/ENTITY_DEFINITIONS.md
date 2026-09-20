@@ -385,7 +385,7 @@ definition.
 `make_definitions.py` beside them; `tests/test_entity_definitions.py`
 (v2-f) checks the files against the generator and places every
 definition): `families.json`, one definition per family the registered
-worlds declare (the 47 names, each once, in the catalog's canonical form:
+worlds declare (the 48 names since `hand-v1` added the antineutrino `nubar`, each once, in the catalog's canonical form:
 the photon `light`, the electron `e`, the electron born by `become` `beta`,
 the proton `p` in the atom's units, the neutron `n`, the strong family
 `nuclear`, the neutrino `nu`, the W `w`, the seven inert materials, the

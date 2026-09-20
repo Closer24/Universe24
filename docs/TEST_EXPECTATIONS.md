@@ -2045,6 +2045,104 @@ criteria inside against the pinned integers (the kinds GAMEBOARD,
 DETECTOR, DETECTOR, DETECTOR, GAMEBOARD), the click tick pinned at 5
 outside.
 
+## The hand
+
+`tests/test_hand.py` (docs/BEAM_LAW.md, section 10 note 39; the model
+owner, 2026-09-20, record 128, "the hand's three choices confirmed"; the
+physicist's design hand/DESIGN.md with the mathematician's FORM.md). One
+column `hand` on the row (-1, 0, +1), one axial record `axis` on the
+measured event, the right-hand rule at the birth of a `become` product
+(a product of hand h on the directions with sign(A . u_d) = h, a
+left-handed product against the axis), the parity filter `hand` on a
+table entry. The expected integers, written down before the first run:
+
+- (a) the carriage: a transit row of `light` of hand -1 on +x from x = 1
+  into a mirror at x = 3 re-emitting on -x (a second measured event of
+  `d` at x = 6 so that the row is another number's arrival): one
+  `rerelease` line at tick 3 with `hand` -1, the one row of the store
+  hand -1, the books balanced; the amplitude generator's `cnot_pair_0_8`
+  with both lamps given `hand` -1 for 40 intervals: every row of `light`
+  hand -1 at every interval, `rotate`, `gate` and `split` lines written,
+  every click line `hand` -1; the meeting test's form (a paid unit of
+  phase 63 on +x circling a periodic line of four free units, the
+  declared directions (24, 1, 0) and (24, -1, 0), two intervals): the
+  unit turned to a declared direction with its phase advanced and its
+  hand -1, the `turned` line nonzero; two singles of one class at x = 3
+  on +x and -x, both -1, after one interval two rows of hand -1; the
+  merge of two rows equal in every field but the hand: two rows, and
+  with a third row of hand +1 the amounts 1 and 3; under the amplitude
+  key two rows of the record 5 at the phases 0 and 32 with opposite
+  hands: nothing cancelled, two rows;
+- (b) the giving: a free source of `nu` with the family `hand` -1 at
+  `release` [1, 4096] over 3 intervals: 3 rows, every hand -1; a lamp
+  with `hand` +1 (K 64 on 1024: the turn 16) over 3 intervals: 3 rows,
+  every hand +1; a transit row with `hand` -1: the row -1; on an open 5^3
+  GameBoard the neutron (1839) at the centre with `axis` [1, 0, 0], the six
+  headings and `become` at 3 into `p` (charge 4) with the products
+  `beta` (1, 3; charge -7344, hand -1) and `nubar` (1, 0; hand +1): the
+  `become` line at tick 3 with the products [["beta", 1, 3, [-1, 0, 0],
+  -1], ["nubar", 1, 0, [1, 0, 0], 1]], the recoil [128, 0, 0], the
+  event's momentum (128, 0, 0); the product `beta` (6, 3; charge -1214,
+  no hand) alone at the same parent: six rows of amount 1, one per
+  heading, stamped +1 on [1, 0, 0], -1 on [-1, 0, 0] and 0 on the four
+  others; the parent's `directions` [[1, 0, 0]] alone with the handed
+  products refused at load, "become.products[0] ('beta', hand -1) has no
+  direction"; the same handed products at a parent without an axis on
+  [[1, 0, 0]]: both born on [1, 0, 0] with the hands -1 and +1;
+- (c) the taking: a reader with `light: {rule measure, hand -1}` met in
+  one interval by three rows of hand -1, +1 and 0: one click with `hand`
+  -1, two `pass` lines with the hands 0 and +1 (`window` None, no
+  `threshold`), the books' `left` 1 and `right` 0, two rows left in the
+  store; a `beam` reader with the window 0 of width 1 and `hand` -1 met
+  by the rows (-1, phase 5), (+1, phase 0) and (-1, phase 0): one click
+  (hand -1, phase 0), the passes (-1, 5) and (+1, 0); the W world of
+  series P with the W family `hand` +1 (a phase circle), the neutron's
+  axis +x and the proton at x = 3 with `w: {rule become, phase_window 0,
+  phase_width 64, hand -1, into n, products [["positron", 1, 3]]}`: the
+  `become` line's product [["w", 1, 3, [1, 0, 0], 1]], one `pass` line
+  (tick 9, measured 3, hand +1), one border click (tick 9, at x = 3,
+  hand +1), the proton `became` 0 and still `p`, its clicks of `w` 0,
+  the books' `left` and `right` of `w` 0;
+- (d) the parity test on the worlds of series P (`nu_hand` at 60
+  intervals), the design's 1.3: every polar thing by g, the axis as an
+  axial vector det(g) g A, every hand verbatim, mapped back; under the
+  mirror in x (where the axial transform and a verbatim copy of the axis
+  coincide): `w_hand` different, the click (9, measured 3, x = 3, push [192,
+  0, 0], hand -1) against (9, measured 1, x = 1, push [-192, 0, 0], hand
+  -1), the `become` line's product [1, 0, 0] with the recoil (-192, 0,
+  0) against [-1, 0, 0] with (192, 0, 0), the charge line and the `w`
+  lines of the books equal; `w_two_sides` equal; `wu` different, the
+  beta's click (21, measured 1, x = 0, push [-192, 0, 0]) against (21,
+  measured 3, x = 16, push [192, 0, 0]), the antineutrino's face `face:+x`
+  against `face:-x`; `nu_hand` equal; over all 48 signed axis
+  permutations the parity image differs under exactly the 24 improper
+  elements and no proper one on `w_hand` and `wu` and under none on
+  `w_two_sides` and `nu_hand`, and the full transform (hands by det too)
+  is equal under all 48 on all four;
+- (e) `weak/w_exchange` for 16 intervals: no line carries `hand`, no
+  `left` in the books, no `hand-v1`, no `hand` on a family and no `axis`
+  on a number of `run.json`, no `hand` in `state.json`; the packed merge
+  key of three rows equal to the key over the identity fields without the
+  hand;
+- (f) the refusals, naming the key: `hand` 0 and 2 on a family; a lamp's
+  `hand` +1 against the family's -1; `axis` [1, 1, 0]; `hand` on a `pass`
+  entry; a transit `hand` +1 against the family's -1; branches naming
+  hands on a family with a hand; a hand on some labels only; the bit
+  value 1 given two hands ([[1, 1, 1], [3, 1, -1]]); both values one
+  hand ([[0, 1, 1], [3, 1, 1]]); and [[0, 1, 1], [3, 1, -1]] accepted with
+  the label hands (1, -1) and `hand-v1` last under `hypotheses`;
+- (g) the four CHSH worlds of series L3 with the lamp's `branches`
+  [[0, 1, 1], [3, 1, -1]]: E x 64 = 44, -44, 44, 44, S = 176/64, every
+  marginal 32/64, every row's `hand` column 0, every click line of
+  `light` carrying (1, -1)[the bit of its label on its arm]; the full
+  mirror of `bell_0_8`: the same outcome per u; the parity filter on the
+  label-hand family reads the label (`bell_0_8` with the rotations removed
+  and `hand` +1 on the two plus counters, 64 births): 32 records gathered
+  at (alice_plus, bob_plus) and 32 at (alice_minus, bob_minus), none
+  mixed, every click line at a plus counter `hand` +1 and every `pass`
+  line there `hand` -1; with the settings (0, 8) kept and the same
+  filters, 32 of 64 chosen at alice_plus and 32 at bob_plus.
+
 ## A paid family's charge
 
 `tests/test_paid_charge.py` (docs/BEAM_LAW.md, section 2 and section 10

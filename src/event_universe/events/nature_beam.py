@@ -101,7 +101,15 @@ import numpy as np
 from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
-from event_universe.events.amplitude import Layer, arm_of, branch_of, half_angle, label_of
+from event_universe.events.amplitude import (
+    LABEL_BITS,
+    LABEL_MASK,
+    Layer,
+    arm_of,
+    branch_of,
+    half_angle,
+    label_of,
+)
 from event_universe.events.measured import (
     DetectorSet,
     Ledger,
@@ -124,6 +132,7 @@ from event_universe.events.world import (
     HEADING_OFFSET,
     LIFETIME_NAME,
     MOMENTUM_BOUND,
+    NO_HAND,
     REST_DIRECTIONS,
     SPEED_GRAIN,
     FamilyDefinition,
@@ -133,6 +142,7 @@ from event_universe.events.world import (
     Rotation,
     Transformation,
     Vector,
+    axis_sign,
     default_reads,
     default_rule,
     default_width,
@@ -212,10 +222,21 @@ class NatureBeam:
     record: int = 0
     branch: int = 0
     multiplicity: int = 1
+    # The hand (`hand-v1`, 2026-09-20; BEAM_LAW note 39): the sense in which
+    # the row turns about its own direction, +1 right, -1 left, 0 none
+    # (every row of every world without a declaration): a pseudoscalar,
+    # kept by the 24 proper rotations of the cube and negated by the 24
+    # improper ones, carried unchanged through every re-creation and an
+    # identity field of the merge. The flight, the collision, the push and
+    # every moment never read it; a table entry's parity filter does.
+    hand: int = 0
 
-    def record_line(self, vectors: np.ndarray, amplitude: bool = False) -> dict[str, object]:
+    def record_line(
+        self, vectors: np.ndarray, amplitude: bool = False, handed: bool = False
+    ) -> dict[str, object]:
         """The row as `state.json` writes it, the direction as its vector;
-        under the amplitude key with its three columns."""
+        under the amplitude key with its three columns, in a world that
+        declares a hand with its `hand`."""
         line: dict[str, object] = {
             "direction": [int(v) for v in vectors[self.direction]],
             "age": self.age,
@@ -228,6 +249,8 @@ class NatureBeam:
             line["record"] = self.record
             line["branch"] = self.branch
             line["multiplicity"] = self.multiplicity
+        if handed:
+            line["hand"] = self.hand
         return line
 
 
@@ -718,11 +741,14 @@ FIELDS = (
     "record",
     "branch",
     "multiplicity",
+    "hand",
 )
 # The fields that make two rows identical (the amount is what the merge
 # adds); since `amplitude-v1` the record, the branch and the multiplicity
 # too (constant 0, 0, 1 without the key, so the packed key and the order of
-# the merge are what they were).
+# the merge are what they were), and since `hand-v1` the hand (constant 0
+# without a declaration, a width of 0 bits in the packed key: two rows of
+# opposite hands are two rows and never merge or cancel).
 IDENTITY_FIELDS = (
     "node",
     "direction",
@@ -733,12 +759,16 @@ IDENTITY_FIELDS = (
     "record",
     "branch",
     "multiplicity",
+    "hand",
 )
 # The three columns of the amplitude law as a row of no record carries them.
 NO_RECORD = 0
 NO_BRANCH = 0
 ONE_PATH = 1
 AMPLITUDE_DEFAULTS = {"record": NO_RECORD, "branch": NO_BRANCH, "multiplicity": ONE_PATH}
+# The columns a caller may leave out of `append`: the amplitude law's three
+# and the hand (a row without a declaration has none).
+COLUMN_DEFAULTS = {**AMPLITUDE_DEFAULTS, "hand": NO_HAND}
 # The place of `phase` in the identity fields: the merge under the key
 # reads it modulo the half circle with a sign (the cancel).
 PHASE_FIELD = IDENTITY_FIELDS.index("phase")
@@ -1033,6 +1063,7 @@ class NatureBeamStore:
         self.record: np.ndarray
         self.branch: np.ndarray
         self.multiplicity: np.ndarray
+        self.hand: np.ndarray
 
     @property
     def size(self) -> int:
@@ -1049,10 +1080,11 @@ class NatureBeamStore:
 
     def append(self, **columns: np.ndarray) -> None:
         """Rows appended column by column; the three columns of the
-        amplitude law default to a row of no record (0, 0, 1) when the
-        caller names none of them (a declared ray, the tests' bare rows)."""
+        amplitude law default to a row of no record (0, 0, 1) and the hand
+        to none (0) when the caller names none of them (a declared ray, the
+        tests' bare rows)."""
         count = columns["node"].shape[0]
-        for name, default in AMPLITUDE_DEFAULTS.items():
+        for name, default in COLUMN_DEFAULTS.items():
             if name not in columns:
                 columns[name] = np.full(count, default, dtype=np.int64)
         for name in FIELDS:
@@ -1221,6 +1253,7 @@ class NatureBeamStore:
                 int(self.record[i]),
                 int(self.branch[i]),
                 int(self.multiplicity[i]),
+                int(self.hand[i]),
             )
             for k, i in enumerate(range(lo, stop))
         ]
@@ -1438,7 +1471,11 @@ def transform(
     entry.family = rule.into
     entry.rho = entry.family_values[rule.into][CHARGE_INDEX]
     for k, (family, amount, content) in enumerate(rule.products):
-        entry.pending[family].append(PendingRow(amount, content, entry.phase, k, True))
+        # The product's hand is its family's (`hand-v1`); the right-hand
+        # rule reads it against the parent's axis at the birth (step 5).
+        entry.pending[family].append(
+            PendingRow(amount, content, entry.phase, k, True, hand=families[family].hand)
+        )
     entry.became += 1
     entry.transformed.append((trigger, tick, source, rule.into, entry.counted))
     entry.become = None
@@ -1469,8 +1506,8 @@ def transform(
 FIRST = np.zeros(1, dtype=np.int64)
 NEW_RUN = np.ones(1, dtype=bool)
 # A row born at a self-creation, before it is placed: (direction, amount,
-# content per unit, phase, thrown, record, branch, multiplicity).
-BornRow = tuple[int, int, int, int, bool, int, int, int]
+# content per unit, phase, thrown, record, branch, multiplicity, hand).
+BornRow = tuple[int, int, int, int, bool, int, int, int, int]
 # The record's identity (the amplitude law): the emitter's number x 2^32 +
 # the birth's ordinal at the emitter, below 2^62 (the number below 2^30 and
 # the ordinal below 2^32).
@@ -1633,6 +1670,11 @@ class FamilyPlan:
     t_multiplicity: list[int] = field(default_factory=list)
     t_age: list[int] = field(default_factory=list)
     t_arrival: list[int] = field(default_factory=list)
+    # The hand of the home rows, of the taken rows and of the rows that
+    # pass (`hand-v1`): carried into the re-creation and onto the lines.
+    h_hand: list[int] = field(default_factory=list)
+    t_hand: list[int] = field(default_factory=list)
+    p_hand: list[int] = field(default_factory=list)
     # The rows that pass a gate: per measured event (k0, k1).
     passes: dict[int, tuple[int, int]] = field(default_factory=dict)
     p_number: list[int] = field(default_factory=list)
@@ -1886,6 +1928,57 @@ def taken_rows(plan: FamilyPlan, k0: int, k1: int) -> list[list[int]]:
         ]
         for k in range(k0, k1)
     ]
+
+
+def row_hand(plan: FamilyPlan, k: int, measured: dict[int, Measured]) -> int:
+    """The hand a click line carries for a taken row (`hand-v1`): the
+    meaning of its label bit on its arm when the lamp of its record named
+    the hands of its labels (the hand as a label bit named, the amplitude
+    law's branched family), else the row's own `hand` column. A report of
+    the record; nothing of the law reads it."""
+    identity = plan.t_record[k]
+    if identity != NO_RECORD:
+        emitter = measured.get(identity >> RECORD_SHIFT)
+        if emitter is not None and emitter.lamp_label_hands is not None:
+            branch = plan.t_branch[k]
+            return emitter.lamp_label_hands[(label_of(branch) >> arm_of(branch)) & 1]
+    return plan.t_hand[k]
+
+
+def read_hands(
+    hand: np.ndarray, record: np.ndarray, branch: np.ndarray, entries: list[Measured]
+) -> np.ndarray:
+    """The hand a parity filter reads of each row (`hand-v1`, BEAM_LAW note
+    39): the row's `hand` column, or, for a row of a record whose lamp
+    named the hands of its labels, the hand its label bit means on its arm
+    (the reading `row_hand` makes for the click line), so that a filter on
+    a branched family is the which-path click on the label (the design's
+    section 4, FORM.md section 4: the rows of a hand are the rows of a
+    channel). The lamp is found by the record's identity, whose high bits
+    are the emitter's number: a world constant, nothing of the law."""
+    found = hand.copy()
+    recorded = record != NO_RECORD
+    if not recorded.any():
+        return found
+    emitter = record >> RECORD_SHIFT
+    for entry in entries:
+        if entry.lamp_label_hands is None:
+            continue
+        rows = np.flatnonzero(recorded & (emitter == entry.number))
+        if rows.shape[0] == 0:
+            continue
+        zero, one = entry.lamp_label_hands
+        arm = branch[rows] >> LABEL_BITS
+        bit = ((branch[rows] & LABEL_MASK) >> arm) & 1
+        found[rows] = np.where(bit == 0, zero, one)
+    return found
+
+
+def group_hand(plan: FamilyPlan, k0: int, k1: int) -> int | None:
+    """The hand of a group of taken rows for its `read` or `rerelease`
+    line: the one hand of its rows, None where they differ."""
+    hands = {plan.t_hand[k] for k in range(k0, k1)}
+    return hands.pop() if len(hands) == 1 else None
 
 
 # -- the push -------------------------------------------------------------------
@@ -2145,6 +2238,9 @@ def nature_beam(
     # and every vector or tensor moment of the reading is taken on.
     unit = flight.labels
     modulus = world.phase_steps
+    # Whether the world declares a hand anywhere (`hand-v1`): the lines of
+    # the record then carry `hand`, and only then.
+    handed = world.handed
     nodes = world.shape[0] * world.shape[1] * world.shape[2]
     shape = world.shape
     extents = np.array(shape, dtype=np.int64)
@@ -2359,6 +2455,8 @@ def nature_beam(
                         face_line["record"] = int(store.record[index])
                         face_line["branch"] = int(store.branch[index])
                         face_line["multiplicity"] = int(store.multiplicity[index])
+                    if handed:
+                        face_line["hand"] = int(store.hand[index])
                     record(face_line)
         store.node = coordinates @ np.array(store.strides, dtype=np.int64)
         crossed = moved & ~escaped
@@ -2433,6 +2531,9 @@ def nature_beam(
             [[default_width(modulus) if w is None else w for w in e.widths] for e in entries],
             dtype=np.int64,
         )
+        # The parity filter of every entry (`hand-v1`): the hand it admits,
+        # 0 where it admits every hand.
+        ev_hand = np.array([list(e.hands) for e in entries], dtype=np.int64).reshape(events, count)
         # The detector set of every measured event, its threshold and its
         # reading, indexed by the set's index.
         ev_set = np.array([e.detector_set.index for e in entries], dtype=np.int64)
@@ -2500,6 +2601,10 @@ def nature_beam(
             arrival = store.arrival[at]
             age_at = store.age[at]
             record_at = store.record[at]
+            hand_at = store.hand[at]
+            # The hand the parity filter reads: the column, or the label's
+            # meaning on a branched family whose lamp named its hands.
+            read_at = read_hands(hand_at, record_at, store.branch[at], entries)
             own = number == ev_number[ev]
             arrived = arrival != NO_ARRIVAL
             plan = FamilyPlan()
@@ -2560,6 +2665,7 @@ def nature_beam(
                 plan.h_record = store.record[at[home]].tolist()
                 plan.h_branch = store.branch[at[home]].tolist()
                 plan.h_multiplicity = store.multiplicity[at[home]].tolist()
+                plan.h_hand = hand_at[home].tolist()
                 plan.events.update(h_events)
 
             def admit() -> (
@@ -2666,6 +2772,14 @@ def nature_beam(
                         (rule[met] == RERELEASE_RULE) & (record_at[met] != NO_RECORD)
                     )
                 inside &= ~unset
+                # The parity filter (`hand-v1`, BEAM_LAW note 39): an entry
+                # with a hand admits the arrivals of that hand only; the
+                # other hand and hand 0 pass, as an arrival outside the
+                # window passes. Admitted = the threshold and the window
+                # and the hand, three comparisons of what the row carries
+                # with what the reader declares.
+                admits = ev_hand[ev_m, family]
+                inside &= (admits == NO_HAND) | (read_at[met] == admits)
                 passing = below | ~inside
                 p = np.flatnonzero(passing)
                 if p.shape[0]:
@@ -2681,6 +2795,7 @@ def nature_beam(
                     plan.p_phase = phase[met[p]].tolist()
                     plan.p_below = below[p].tolist()
                     plan.p_window = window[p].tolist()
+                    plan.p_hand = read_at[met[p]].tolist()
                     plan.events.update(p_events)
                 kept = np.flatnonzero(~passing)
                 if kept.shape[0] == 0:
@@ -2851,6 +2966,7 @@ def nature_beam(
             plan.t_record = store.record[at[taken]].tolist()
             plan.t_branch = store.branch[at[taken]].tolist()
             plan.t_multiplicity = store.multiplicity[at[taken]].tolist()
+            plan.t_hand = hand_at[taken].tolist()
             plan.t_age = age_t.tolist()
             plan.t_arrival = arrival[taken].tolist()
             e_ends = np.append(e_starts[1:], groups)
@@ -2959,6 +3075,7 @@ def nature_beam(
                                 record=plan.h_record[k],
                                 branch=plan.h_branch[k],
                                 multiplicity=plan.h_multiplicity[k],
+                                hand=plan.h_hand[k],
                             )
                         )
                     entry.taken[family]["home"] += total
@@ -3008,6 +3125,8 @@ def nature_beam(
                             line["window"] = None if centre < 0 else centre
                         if window_read is not None:
                             line["reads"] = families[window_read[0]].name
+                        if handed:
+                            line["hand"] = plan.p_hand[k]
                         record(line)
                 if record is not None:
                     for other, amount_c, phase_c in plan.cancelled.get(i, ()):
@@ -3114,6 +3233,8 @@ def nature_beam(
                                 }
                                 if world.amplitude:
                                     read_line["rows"] = taken_rows(plan, k0, k1)
+                                if handed:
+                                    read_line["hand"] = group_hand(plan, k0, k1)
                                 record(read_line)
                             continue
                         ledger.transit_absorbed[family] += group_total
@@ -3137,6 +3258,7 @@ def nature_beam(
                                         split=world.amplitude and plan.t_record[k] != NO_RECORD,
                                         arrival=plan.t_arrival[k],
                                         offered=detector_set.sum,
+                                        hand=plan.t_hand[k],
                                     )
                                 )
                             if layer is not None:
@@ -3187,6 +3309,8 @@ def nature_beam(
                                     if setting is not None:
                                         group_line["window"] = setting[0]
                                         group_line["turn"] = setting[1]
+                                if handed:
+                                    group_line["hand"] = group_hand(plan, k0, k1)
                                 record(group_line)
                             continue
                         # The click: the content joins, one click per unit.
@@ -3195,6 +3319,14 @@ def nature_beam(
                         )
                         entry.clicks[family] += group_total
                         ledger.held_measured[family] += group_content
+                        if handed:
+                            # The books' `left` and `right` lines: the units
+                            # clicked of each hand (a report).
+                            for k in range(k0, k1):
+                                if plan.t_hand[k] < 0:
+                                    ledger.taken_left[family] += plan.t_amount[k]
+                                elif plan.t_hand[k] > 0:
+                                    ledger.taken_right[family] += plan.t_amount[k]
                         if layer is not None:
                             for k in range(k0, k1):
                                 if plan.t_record[k] != NO_RECORD:
@@ -3242,6 +3374,8 @@ def nature_beam(
                                     if setting is not None:
                                         click_line["window"] = setting[0]
                                         click_line["turn"] = setting[1]
+                                if handed:
+                                    click_line["hand"] = row_hand(plan, k, measured)
                                 record(click_line)
                         # The click trigger of the transformation: the
                         # first click of a `become` entry in the interval
@@ -3347,7 +3481,17 @@ def nature_beam(
                 amount = by_clock(age, entry.held[family] * numerator, denominator_release)
                 if amount:
                     born.extend(
-                        (direction, amount, 0, entry.phase, False, NO_RECORD, NO_BRANCH, ONE_PATH)
+                        (
+                            direction,
+                            amount,
+                            0,
+                            entry.phase,
+                            False,
+                            NO_RECORD,
+                            NO_BRANCH,
+                            ONE_PATH,
+                            definition.hand,
+                        )
                         for direction in entry.directions
                     )
             if entry.pending[family]:
@@ -3441,6 +3585,7 @@ def nature_beam(
                                     row_record,
                                     row_branch,
                                     row_multiplicity * norm,
+                                    row.hand,
                                 )
                             )
                             ledger.content_released[family] += row.amount * weight * row.content
@@ -3474,8 +3619,39 @@ def nature_beam(
                                 }
                             )
                         continue
-                    shares = apportion_whole(row.amount, [1] * ways, (age + row.first) % ways)
-                    for direction, share in zip(entry.directions, shares, strict=True):
+                    # The right-hand rule (`hand-v1`, BEAM_LAW note 39): a
+                    # product born at a parent with an axis A leaves on the
+                    # parent's directions on its hand's side of the axis,
+                    # sign(A . u_d) = h (a left-handed product AGAINST the
+                    # axis, a right-handed one along it: Wu's electrons
+                    # leave against the nuclear spin; the physicist's choice
+                    # (i) of record 128); a product without a hand leaves on
+                    # every direction stamped sign(A . u_d), +1 along, -1
+                    # against, 0 on the equator. The apportioning is today's
+                    # over the admitted directions in declared order. A
+                    # home, a re-emission and every birth at a parent
+                    # without an axis keep the row's hand on every
+                    # direction, as today (the parser refused an empty set).
+                    admitted, hands_d = list(entry.directions), [row.hand] * ways
+                    if row.thrown and entry.axis is not None:
+                        signs = [
+                            axis_sign(flight.vectors[entry.axis], flight.vectors[d])
+                            for d in entry.directions
+                        ]
+                        if row.hand:
+                            admitted = [d for d, s in zip(admitted, signs, strict=True) if s == row.hand]
+                            hands_d = [row.hand] * len(admitted)
+                        else:
+                            hands_d = signs
+                    if not admitted:
+                        raise ValueError(
+                            f"{BEAM_LAW}: a product of hand {row.hand:+d} at measured event "
+                            f"{entry.number} at {list(entry.position)} has no direction on its side "
+                            f"of the axis {[int(v) for v in flight.vectors[entry.axis or 0]]}"
+                        )
+                    count_d = len(admitted)
+                    shares = apportion_whole(row.amount, [1] * count_d, (age + row.first) % count_d)
+                    for direction, share, hand_d in zip(admitted, shares, hands_d, strict=True):
                         if share:
                             born.append(
                                 (
@@ -3487,6 +3663,7 @@ def nature_beam(
                                     row.record,
                                     row.branch,
                                     row.multiplicity,
+                                    hand_d,
                                 )
                             )
                             ledger.content_released[family] += share * row.content
@@ -3583,6 +3760,7 @@ def nature_beam(
                                     record_id,
                                     branch_of(lamp_arm, joint),
                                     paths * norm,
+                                    entry.lamp_hand,
                                 )
                             )
                             content = cost * weight
@@ -3606,6 +3784,7 @@ def nature_beam(
                                     NO_RECORD,
                                     NO_BRANCH,
                                     ONE_PATH,
+                                    entry.lamp_hand,
                                 )
                             )
                             content = cost * amount
@@ -3669,8 +3848,17 @@ def nature_beam(
                         for a, b in zip(entry.momentum, thrown_momentum, strict=True)
                     ]
                 thrown_recoil = [a - b for a, b in zip(thrown_recoil, thrown_momentum, strict=True)]
+                # The `become` line's products: family, amount, content per
+                # unit, the direction born on and, in a world with a hand,
+                # the product's hand.
                 thrown_rows.extend(
-                    [definition.name, b[1], b[2], [int(v) for v in flight.vectors[b[0]]]]
+                    [
+                        definition.name,
+                        b[1],
+                        b[2],
+                        [int(v) for v in flight.vectors[b[0]]],
+                        *([b[8]] if handed else []),
+                    ]
                     for b in born
                     if b[4]
                 )
@@ -3689,6 +3877,7 @@ def nature_beam(
                 record=np.array([b[5] for b in born], dtype=np.int64),
                 branch=np.array([b[6] for b in born], dtype=np.int64),
                 multiplicity=np.array([b[7] for b in born], dtype=np.int64),
+                hand=np.array([b[8] for b in born], dtype=np.int64),
             )
             ledger.transit_released[family] += int(exact_sum(amount_column))
         # The `become` record, at the products' birth: the trigger and its
@@ -3786,6 +3975,8 @@ def nature_beam(
                     border_line["record"] = int(store.record[index])
                     border_line["branch"] = int(store.branch[index])
                     border_line["multiplicity"] = int(store.multiplicity[index])
+                if handed:
+                    border_line["hand"] = int(store.hand[index])
                 record(border_line)
         keep_alive = np.ones(store.size, dtype=bool)
         keep_alive[gone] = False
