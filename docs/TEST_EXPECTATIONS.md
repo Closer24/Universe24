@@ -37,7 +37,7 @@ kept, their pins the law of events').
 | `test_nature_beam_label.py` | The label along the unit vector of the direction at the flight table's scale: the table u_d by the exact integer rule (the pinned vectors, the length within 1.35 % of Q, antisymmetry, equivariance under the 48, no tie, the float agreement over every primitive direction within the bound), every label content x u_d with the recoil, the transit line and the books closing through clicks, a mirror and the open faces, the bound at Q x content x amount ([below](#the-label-along-the-unit-vector)) | new (2026-09-19, the model owner's decision on the physics-rule reviewer's verdict; every momentum pin of the suite re-pinned x 64, listed in its section) |
 | `test_nature_beam_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing; no collision at a Node that holds a measured event ([below](#the-collision-table)) | new |
 | `test_nature_beam_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact; the merge by one packed key and by the lexsort alike ([below](#the-bijection)) | new |
-| `test_nature_beam_detector.py` | The detector's record: two rays in phase and in antiphase; the threshold gating a receiver and a re-emitter over the set; a release reading no threshold; the record exact and never refused (the pointer in the register up to its bound, the square in Python integers); the detector a set of Nodes with one record (the record, the threshold and the window over the set); the phase returned to the set's events after a click; the `beam` reading (the pairing by opposite phase, the count) ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
+| `test_nature_beam_detector.py` | The detector's record: two rays in phase and in antiphase (the antiphase pair passing since 2026-09-20); the threshold gating a receiver and a re-emitter over the set (under `wave` on the pointer's square in units of one ray since 2026-09-20, (i)); a release reading no threshold; the record exact and never refused (the pointer in the register up to its bound, the square in Python integers); the detector a set of Nodes with one record (the record, the threshold and the window over the set); the phase returned to the set's events after a click; the `beam` reading (the pairing by opposite phase, the count) ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
 | `test_nature_beam_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_nature_beam_clock.py` | The clock under the Beam Law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-beam-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder; the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
@@ -105,8 +105,10 @@ its component by key.
 - (d) a detector's threshold reads the set of every number but its own and
   the window the set's phase by default (re-pinned on 2026-09-20, `wave`
   the default reading): a receiver at threshold 3 met by 2 rays of number
-  2 and 1 of number 3 clicks all three, the 2 alone pass with a `pass`
-  record each (`threshold` 3); at threshold 1 with the window 32, the 2
+  2 and 1 of number 3 clicks all three, one ray of number 2 alone passes
+  with a `pass` record (`threshold` 3; since 2026-09-20 the threshold
+  under `wave` reads the pointer's square, so two rays in phase would
+  read 4 and click); at threshold 1 with the window 32, the 2
   units at phase 0 and the 1 at phase 32 point to phase 0, outside the
   window, and all three pass (`pass` 2 at phase 0 and `pass` 3 at phase
   32, both `window` 32; nothing held, no `record` line) [under the
@@ -300,20 +302,24 @@ declares the reading `wave` (the default since 2026-09-20; from
 
 - (a) two rays of amount 1 arriving in one interval at a counter of
   threshold 1, in phase (0 and 0): the record 4 x 32^2 x 256^2 = 268435456,
-  the amount 2 and two clicks; in antiphase (0 and 32): the record 0, the
-  amount 2 and two clicks; one ray alone: 32^2 x 256^2 = 67108864; the
+  the amount 2 and two clicks; in antiphase (0 and 32): the pointer 0, so
+  since 2026-09-20 both pass with a `pass` record naming `threshold` 1
+  (until then both clicked and the record took 0), no click, the record
+  0, no `record` line; one ray alone: 32^2 x 256^2 = 67108864; the
   `record` line of `events.jsonl` carries the pointer (X, Y) and the
   square; the run's detector report carries the cumulative record.
 - (b) a receiver (a measured event of `m`, content 4, measuring light) at
-  threshold 3 (re-pinned from `test_detector_sensitivity` (a)): 2 rays of
-  another number pass with a `pass` record (`threshold` 3), no click, no
-  push, the rays going on whole; 3 rays are measured: 3 clicks, `held`
+  threshold 3 (re-pinned from `test_detector_sensitivity` (a); since
+  2026-09-20 the threshold under `wave` reads the pointer's square, so the
+  smaller set is one ray, 1 < 3, where two rays in phase read 4): 1 ray of
+  another number passes with a `pass` record (`threshold` 3), no click, no
+  push, the ray going on whole; 3 rays are measured: 3 clicks, `held`
   [4, 3], the momentum (192, 0, 0) (three labels of 64 along +X;
   re-pinned from (3, 0, 0) on 2026-09-19, the label along the unit
   vector), nothing left in the store, the report 3 measured, 3 clicks,
   the record 9 x 32^2 x 256^2 (a row of three identical rays is one
   coherent amplitude).
-- (c) a re-emitter at threshold 3: 2 rays pass; 3 rays are taken
+- (c) a re-emitter at threshold 3: 1 ray passes; 3 rays are taken
   (re-released 3, no click, the push (192, 0, 0), the recoil at the
   re-emission -(64, 64, 64) leaving the momentum (128, -64, -64); re-pinned
   from (3, 0, 0), -(1, 1, 1) and (2, -1, -1)) and created again at the
@@ -322,8 +328,10 @@ declares the reading `wave` (the default since 2026-09-20; from
 - (d) an emitter inside a detector reads no threshold: a lamp of light
   (content 24, K 24, rate [1, 1]) in a detector of threshold 5 releases one
   unit per heading per interval, its content 18 then 12; a reader of `m`
-  (content 4) at threshold 4 passes 3 rays and reads 4, pushed by
-  -M x 64 c = (-1024, 0, 0) (re-pinned from (-16, 0, 0)).
+  (content 4) at threshold 4 passes 1 ray (the square 1) and reads 2 (the
+  square 4), pushed by -M x 64 x 2 = (-512, 0, 0) (re-pinned on
+  2026-09-20 from 3 passed and 4 read, (-1024, 0, 0); before that from
+  (-16, 0, 0)).
 - (e) the record is exact and never refused (BEAM_LAW section 5 and note
   19; the night's bound refused `two_contents`): every entry (C, S) of the
   1/256 tables is shorter than 257 for every N from 2 through 4096 (the
@@ -396,6 +404,21 @@ declares the reading `wave` (the default since 2026-09-20; from
   two `cancelled` lines 2 and 2, the rows of 2 and 2 in the store); the
   books balanced in every case; `"reading": "field"` is refused naming
   the key.
+- (i) the threshold on the pointer's square under `wave` (the model owner,
+  2026-09-20, issue #359 step A; the integers written first): one unit at
+  any of the 64 phases reads 1 unit (`pointer_units`, the nearest integer
+  to (X^2 + Y^2) / 2^26), a rays in phase a^2 exactly through a = 11 (the
+  tables' C^2 + S^2 within 237 of 65536 at N = 64), two opposite 0, two a
+  quarter turn apart 2; on the engine one ray (phase 8) clicks at
+  threshold 1; two rays in phase (0 and 0) click at threshold 4 (the
+  square 4) and pass at 5; two opposite rays (0 and 32) pass at threshold
+  1 with `threshold` 1, whether or not the counter declares a window (the
+  window 0: still `threshold`, not `window`); three rays a third of a turn
+  apart (0, 21, 43) pass at threshold 1 (their pointer's square 200704,
+  0.003 of a unit); under `beam` the threshold is the amount as before:
+  two rays in phase at threshold 3 pass (the amount 2 < 3) where `wave`
+  clicks them (4 >= 3); no memory between intervals: the two opposite
+  rays passing at tick 1 do not add to the next tick's set.
 
 ## The push as one form
 
@@ -1010,9 +1033,11 @@ expected integers, written down before the first run:
   (-768, 0, 0) = -4 x 3 x 64, one `record` line naming `d` with the
   record (3 x 32)^2 x 256^2 = 9 x 67108864 and every click line's `node`
   the body's position (4, 0, 1), the presence 3, the count 3, the owed
-  count `by_clock(0, 3, 1)` = 3, the set's phase 0 returned; two rays at
-  two of the Nodes pass with `threshold` 3, no click, no push, the two
-  rows still in the store. The step: a free body of `m` (content 16,
+  count `by_clock(0, 3, 1)` = 3, the set's phase 0 returned; one ray at
+  one of the Nodes passes with `threshold` 3 (since 2026-09-20 the
+  threshold under `wave` reads the pointer's square: two rays in phase at
+  two Nodes would read 4 and click), no click, no push, the row still in
+  the store. The step: a free body of `m` (content 16,
   momentum [1024, 0, 0]) of span [1, 1, 3] at (2, 0, 1) of an open
   6 x 1 x 3 bar steps at the ages 2, 4, 6 with all three Nodes (x per
   interval 2, 3, 3, 4, 4, 5, 5; `at` holds its three Nodes and nothing

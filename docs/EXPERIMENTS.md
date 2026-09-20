@@ -1530,6 +1530,22 @@ states "exactly" and means integer equality at every tick.
   rays behind the opening and the screen's record, with the table) is in
   the session's scratchpad, not published.
 
+- **Re-read under the `wave` threshold on the pointer's square
+  (2026-09-20, issue #359 step A).** `w27_wave` alone changes: 2312 rays
+  that met a screen pixel in antiphase within one interval pass (the
+  pointer 0 below the threshold 1) where until now they clicked and added
+  0 to the record, and, going on, click at other pixels and on the faces
+  (face:+x 0 -> 408, face:+y and face:-y 12 833 -> 13 613 each; the
+  escaped 25 666 -> 27 634), so 38 of the 161 pixels' records differ (the
+  sum of the screen's records 0.16 % higher). The row old -> new: the
+  count FWHM 0.761 -> 0.758, the count rms 0.325 -> 0.321, the record FWHM
+  0.185, the record rms 0.224 -> 0.225 and the product 4.99 unchanged,
+  the clicks 150 187 -> 148 131. The finding stands: the count never
+  narrows and the record narrows under `wave`. The seven other worlds are
+  byte-identical (no pixel of theirs read a pointer below its threshold
+  with an amount at it), `two_slits` and `one_slit` alike
+  ([validation](VALIDATION.md#the-wave-threshold-on-the-pointers-square-the-66-example-worlds-compared-a10-and-bell-re-read---2026-09-20)).
+
 ### E, the clock's redshift in space under the age reading (2026-09-20)
 
 - **Confronts.** Whether a clock beside a mass in space slows as M / r

@@ -98,7 +98,7 @@ import numpy as np
 
 from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
-from event_universe.core.phase import phase_cosines, phase_sines
+from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
 from event_universe.events.measured import Ledger, Measured, count_component
 from event_universe.events.world import (
     AGE_READS,
@@ -725,6 +725,25 @@ def coherent_pointer(
     x = np.add.reduceat(wide * cosines[phase].astype(object), starts).tolist()
     y = np.add.reduceat(wide * sines[phase].astype(object), starts).tolist()
     return x, y
+
+
+# The square of the pointer of one unit at phase 0: (32 x 256)^2 = 2^26,
+# the unit in which a `wave` set's threshold reads the pointer's square
+# (`pointer_units`).
+POINTER_UNIT = (AMPLITUDE_SCALE * PHASE_COSINE_SCALE) ** 2
+
+
+def pointer_units(x: int, y: int) -> int:
+    """The square of the coherent pointer (X, Y) in units of one ray: the
+    nearest integer to (X^2 + Y^2) / 2^26, the square of one unit's pointer
+    at phase 0 (the model owner, 2026-09-20, issue #359: under `wave` a
+    detector's threshold reads the pointer's square, so that rays which
+    cancel do not click). One unit at any phase reads 1 for every N through
+    4096 (the tables' C^2 + S^2 is within 361 of 65536, section 5), a rays
+    in phase read a^2 (exactly through a = 11 at N = 64, the tables'
+    rounding entering beyond), two opposite rays 0, two a quarter turn apart
+    2. Python integers, exact, never refused."""
+    return (x * x + y * y + POINTER_UNIT // 2) // POINTER_UNIT
 
 
 # The pointer's components up to which the nearest step is read in the
@@ -1479,8 +1498,9 @@ def nature_beam(
                 )
                 ledger.face_record[face][family] += face_x[0] * face_x[0] + face_y[0] * face_y[0]
                 escaped_momentum = exact_column_sums(labels[on_face])
-                ledger.face_momentum[face] = [
-                    a + b for a, b in zip(ledger.face_momentum[face], escaped_momentum, strict=True)
+                ledger.face_momentum[face][family] = [
+                    a + b
+                    for a, b in zip(ledger.face_momentum[face][family], escaped_momentum, strict=True)
                 ]
                 ledger.transit_momentum = [
                     a - b for a, b in zip(ledger.transit_momentum, escaped_momentum, strict=True)
@@ -1668,7 +1688,14 @@ def nature_beam(
             s_starts = group_starts(st_m)
             s_sizes = group_sizes(s_starts, met.shape[0])
             total = grouped_sums(amount[met], s_starts, int(s_sizes.max()))
-            below = np.repeat(np.asarray(total < st_threshold[st_m[s_starts]], dtype=bool), s_sizes)
+            # The threshold: under `beam` on the amount summed over the set;
+            # under `wave` (since 2026-09-20, issue #359 step A) on the
+            # square of the coherent pointer of the set's arrivals in units
+            # of one ray (`pointer_units`), so that rays which cancel pass
+            # whether or not a window is declared. No memory between
+            # intervals: the pointer is this interval's arrivals.
+            set_threshold = st_threshold[st_m[s_starts]]
+            below_set = np.asarray(total < set_threshold, dtype=bool)
             # The window: under `wave` it reads the set's phase, the nearest
             # step of the coherent pointer of the arrivals the threshold
             # admitted (a zero pointer has no phase and is outside every
@@ -1680,9 +1707,18 @@ def nature_beam(
                 px, py = coherent_pointer(
                     amount[met], phase[met], s_starts, total.tolist(), tables.cosines, tables.sines
                 )
+                below_wave = np.array(
+                    [
+                        pointer_units(x, y) < t
+                        for x, y, t in zip(px, py, set_threshold.tolist(), strict=True)
+                    ],
+                    dtype=bool,
+                )
+                below_set = np.where(st_wave[st_m[s_starts]], below_wave, below_set)
                 steps = pointer_phases(px, py, tables.cosines, tables.sines)
                 set_step = np.array([-1 if s is None else s for s in steps], dtype=np.int64)
                 read_phase = np.where(wave_rows, np.repeat(set_step, s_sizes), read_phase)
+            below = np.repeat(below_set, s_sizes)
             inside = (window < 0) | ((read_phase >= 0) & tables.window[(read_phase - window) % modulus])
             passing = below | ~inside
             p = np.flatnonzero(passing)
@@ -2255,7 +2291,9 @@ def nature_beam(
         )
         ledger.lifetime_record[family] += border_x[0] * border_x[0] + border_y[0] * border_y[0]
         left = exact_column_sums(labels)
-        ledger.lifetime_momentum = [a + b for a, b in zip(ledger.lifetime_momentum, left, strict=True)]
+        ledger.lifetime_momentum[family] = [
+            a + b for a, b in zip(ledger.lifetime_momentum[family], left, strict=True)
+        ]
         ledger.transit_momentum = [a - b for a, b in zip(ledger.transit_momentum, left, strict=True)]
         if record is not None:
             x, y, z = store.coordinates(store.node[gone])

@@ -127,6 +127,17 @@ def test_the_running_lines_equal_the_recount_at_every_interval():
     assert ("click", "screen", "light") in kinds and ("click", None, "light") in kinds
     assert ("click", "face:+z", "m") in kinds and ("click", "face:+x", "m") in kinds
     assert ("click", "face:-x", "m") in kinds and ("click", "face:-z", "light") in kinds
+    # The escaped momentum per family (2026-09-20, issue #360): the families'
+    # lines sum to the world's, each family's own is not the total, and the
+    # faces report per family beside their total.
+    ledger = simulation.ledger
+    per_family = [ledger.escaped_momentum(f) for f in (LIGHT, M)]
+    assert [sum(v) for v in zip(*per_family, strict=True)] == ledger.escaped_momentum()
+    assert ledger.escaped_momentum() == books["momentum"]["escaped"]
+    assert per_family[LIGHT] != per_family[M] and all(any(v) for v in per_family)
+    for face in simulation.face_detectors():
+        parts = [fam["momentum"] for fam in face["families"].values()]
+        assert face["momentum"] == [sum(v) for v in zip(*parts, strict=True)]
 
 
 def test_an_empty_world_counts_zero_both_ways():

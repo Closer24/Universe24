@@ -11,6 +11,32 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The `wave` threshold on the pointer's square: the 66 example worlds compared, A10 and Bell re-read - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` on the commit of the `wave`
+threshold on the pointer's square and the escaped momentum per family
+([BEAM_LAW note 32](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+issues #359 step A, #360, #361 item 1), source fingerprint
+`0b39130239c775492fe336818039801e572af6bb0128b9f8be41bcd031163228`,
+against the commit before it (`23a7e0fd2135e714bf072d09c5a0d4925ad0d3edb8b32adab0f84f1e9a010599`),
+Python 3.14.0rc2, numpy 2.5.3, headless, four cores. Every example world
+of `examples/events/` under the Beam Law but series I (66) was run under
+both with `tools/run_series.py` and the runs compared file by file.
+
+| Check | Result |
+| --- | --- |
+| The 66 worlds, `events.jsonl` before against after | 65 byte-identical: the coupling twenty-one, the Bell ten, the orbit six, the Bohr seven, the redshift, Hubble and detector worlds, `one_content`, `two_contents`, `two_slits`, `one_slit`, and `w1_wave`, `w3_wave`, `w9_wave` and the four `w*_beam` (no set of theirs ever read a pointer below its threshold with an amount at it); `w27_wave` differs |
+| `w27_wave` (A10, `tools/heisenberg_readings.py` on both) | 2312 `pass` records naming `threshold` (antiphase pairs at a pixel, the pointer 0) where the pairs clicked with the record 0; the pairs go on: face:+x 0 -> 408 clicks, face:+y and face:-y 12 833 -> 13 613 each, the escaped 25 666 -> 27 634, 38 of the 161 pixels' records differ, the sum of the screen's records 0.16 % higher; the count FWHM 0.761 -> 0.758, the count rms 0.325 -> 0.321, the record FWHM 0.185 and the product 4.99 unchanged, the record rms 0.224 -> 0.225, the clicks 150 187 -> 148 131; 0 record checks failed; the books balanced at every tick |
+| The Bell ten (`tools/bell_chsh.py` on both) | S = E(0, 8) - E(0, 24) + E(16, 8) + E(16, 24) = 2 exactly before and after, every run check passed |
+| `two_slits`, `one_slit` | byte-identical: their 27 220 and 13 610 screen clicks unchanged (no antiphase pair met a pixel in one interval) |
+| The escaped momentum per family (`run.json`'s `escaped` lines) | each family's own where the world's total was written into every line: `w27_wave` light (10 830 512, 0, 0) and wall (0, 0, 0) where both read the total; the faces' `families` carry `momentum` beside the face's total; the books' escaped line unchanged |
+| `tests/test_nature_beam_detector.py` (i), the re-pinned (a) to (d), `tests/test_nature_beam_readings.py` (d), `tests/test_nature_beam_body.py` (b), `tests/test_nature_beam_books.py`; `python tools/check.py` | ruff lint and format, mypy and 499 selected tests green |
+
+The runs establish what the threshold on the pointer's square does on the
+engine (rays that cancel pass and go on; the coherent record of a set they
+passed is unchanged; the record of what they reach later is not); they
+establish no physical law.
+
 ## Series I, the nucleus: eight runs - 2026-09-20
 
 The worktree of `claude/universe24-new-3ytqde` on the commits of the one

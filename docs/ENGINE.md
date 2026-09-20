@@ -268,7 +268,11 @@ events, its record per family and its phase at the last click) and one
 per measured event outside every declared detector (a detector of one
 Node with the default reading); every measured event points to its set
 (`Measured.detector_set`; `Measured.threshold` is the set's). The
-threshold, the window under `wave`, the pointer, the record and the
+threshold (under `beam` on the amount summed over the set; under `wave`,
+since 2026-09-20, on the square of the coherent pointer of the set's
+arrivals in units of one ray, `nature_beam.pointer_units`, so that rays
+which cancel pass; [BEAM_LAW note 32](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+the window under `wave`, the pointer, the record and the
 pairing under `beam` are taken over the set by `nature_beam` step 4; the
 click's content, momentum and re-emission stay at the Node the ray
 reached ([BEAM_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
@@ -411,10 +415,12 @@ measured, the clicks summed over its Nodes, the set's one cumulative
 `record` (the square under `wave`, the count under `beam`) and its
 `phase` at the last click; then the face detectors, one per open face in Port order, with what
 clicked there in transit, the `measured_content` of the measured events
-that stepped off, the `record` and the `momentum` that left; then, when
-a family declares a lifetime, the border `lifetime`, `nodes` 0, with the
-same fields) and the `escaped` per family (amount, content, momentum: the
-faces and the border summed). `events.jsonl` holds one
+that stepped off, the `record` and the `momentum` that left, the last
+per family too since 2026-09-20; then, when a family declares a lifetime,
+the border `lifetime`, `nodes` 0, with the same fields) and the `escaped`
+per family (amount, content and, since 2026-09-20, the family's own
+momentum: the faces and the border summed; until then the world's total
+momentum was written into every family's line). `events.jsonl` holds one
 record per event: `home`, `read`, `click`, `rerelease` (per number and
 tick, with the amount, the phase, the push and the content), `pass` (a ray
 below the threshold, with `threshold`, or outside the window, with

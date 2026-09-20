@@ -151,7 +151,9 @@ def execute_nature_beam_run(
                 "family": family.name,
                 "amount": simulation.ledger.escaped_amount(index),
                 "content": simulation.ledger.escaped_content(index),
-                "momentum": simulation.ledger.escaped_momentum(),
+                # The family's own escaped momentum (since 2026-09-20; until
+                # then the world's total was written into every line).
+                "momentum": simulation.ledger.escaped_momentum(index),
             }
             for index, family in enumerate(world.families)
         ],

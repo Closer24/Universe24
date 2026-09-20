@@ -569,10 +569,16 @@ uncertainty, and the reading, not the GameBoard, is what is uncertain).
 Per interval and per family, a detector's set (its declared `positions`;
 a measured event outside every declared detector is a detector of one
 Node with the default reading) reads the arrivals of every number but
-each Node's own at all its Nodes as one set: the **threshold** on the
-amount summed over the whole set (a smaller set passes at every Node of
-it with a `pass` record naming `threshold`), then the **reading** the
-detector declares (`reading`: `wave` by default since 2026-09-20, the
+each Node's own at all its Nodes as one set: the **threshold**, under
+`beam` on the amount summed over the whole set and under `wave`, since
+2026-09-20 (note 32; issue #359 step A), on the square of the coherent
+pointer of the set's arrivals in units of one ray, the nearest integer to
+(X^2 + Y^2) / 2^26 (`nature_beam.pointer_units`, 2^26 the square of one
+unit's pointer at phase 0: one unit at any phase reads 1, a rays in phase
+a^2, rays that cancel 0, so a pair in antiphase passes whether or not a
+window is declared; no memory between intervals), a set below it passing
+at every Node of it with a `pass` record naming `threshold`; then the
+**reading** the detector declares (`reading`: `wave` by default since 2026-09-20, the
 model owner's decision, "on the GameBoard a ray, in the world a wave"; or
 `beam`, declared; section 10, notes 24 and 29):
 
@@ -696,7 +702,10 @@ content and is not the law).
 **The face detectors.** An open face is a detector (the other change): a ray
 whose step leaves the GameBoard clicks there, its amount, label and content
 booked as escaped, its phase on the click record; the face's record is the
-same square. A periodic axis has no face.
+same square; the momentum that left is booked per family since 2026-09-20
+(note 32; issue #360: until then one vector per face and the world's
+total written into every family's escaped line of `run.json`). A periodic
+axis has no face.
 
 **The border `lifetime`** (since 2026-09-20, note 31 (vii)). A family that
 declares a `lifetime` L makes the GameBoard a detector without Nodes named
@@ -1716,3 +1725,56 @@ implementation's part of the contract. The design above is unchanged.
     `r2` and `r4` (the electron beside the proton) and the orbit `s8_r12`
     (one hand-over at tick 174), registered old against new in
     VALIDATION.md.
+32. **The `wave` threshold on the pointer's square; the escaped momentum
+    per family** (the model owner, 2026-09-20; issue #359 step A and
+    issues #360 and #361 item 1; `tests/test_nature_beam_detector.py`
+    (i), `tests/test_nature_beam_books.py`). (i) Under `wave` a detector
+    set's threshold reads the square of the coherent pointer of the set's
+    arrivals this interval in units of one ray: with `(X, Y) = (sum 32 x
+    amount_u C[phase_u], sum 32 x amount_u S[phase_u])` over the arrivals
+    of every number but each Node's own (the pointer the window already
+    read), one unit at phase 0 has `X^2 + Y^2 = (32 x 256)^2 = 2^26`
+    (`POINTER_UNIT`), and the reading is the nearest integer,
+    `pointer_units(X, Y) = (X^2 + Y^2 + 2^25) // 2^26`, a Python integer,
+    exact and never refused; the set clicks when it is at least the
+    threshold, and passes otherwise with `pass` records naming
+    `threshold` as before, the window and the rule following unchanged.
+    Why the nearest integer: the tables' `C^2 + S^2` is 65536 within 361
+    for every N through 4096 (within 237 at N = 64), so one unit at any
+    phase reads 1 exactly, a rays in phase read a^2 within a^2 x
+    361 / 65536 (exactly through a = 11 at N = 64), two opposite rays 0,
+    two a quarter turn apart 2, three a third of a turn apart 0 (their
+    square 200704, 0.003 of a unit); a truncation would read 0 for one
+    unit at 45 degrees (1024 x 65522 < 2^26). Under `beam` the threshold
+    stays the amount summed over the set (the count is what a beam
+    detector reads). No memory between intervals: the pointer is this
+    interval's arrivals, and a pair that passed goes on as any passing
+    ray does. What changes in the registered worlds (the 66 example
+    worlds re-run and compared, VALIDATION): 65 are byte-identical in
+    `events.jsonl`, `two_slits`, `one_slit`, the Bell ten (S = 2 exactly)
+    and the three narrower A10 screens among them: no set of theirs ever
+    read a pointer below its threshold with an amount at it. `w27_wave`
+    alone changes: 2312 rays that met a screen pixel in antiphase pass
+    where they clicked with the pointer 0, and, going on, click at other
+    pixels and on the faces, so 38 of its 161 pixels' records differ (the
+    sum of the screen's records 0.16 % higher), the screen's clicks
+    150 187 -> 148 131, the count's FWHM 0.761 -> 0.758 and its rms 0.325
+    -> 0.321, the record's FWHM 0.185 and the product 4.99 unchanged,
+    the escaped 25 666 -> 27 634; re-registered old against new in
+    EXPERIMENTS A10. The threshold
+    keys of the tests that read the amount are re-pinned with the new
+    integers written first (the detector's (a) to (d), the readings' (d),
+    the body's (b): a smaller set is one ray, 1 < 3, where two in phase
+    read 4). (ii) The momentum that leaves the GameBoard is booked per
+    family: `Ledger.face_momentum[port][family]` and
+    `lifetime_momentum[family]` (until then one vector per face and one
+    for the border), `escaped_momentum(family)` the family's own and
+    `escaped_momentum()` the world's total, `face_momentum_total(port)`
+    and `lifetime_momentum_total()` the faces' and the border's sums; a
+    body's escape books its momentum under its own family. `run.json`'s
+    `escaped` line per family carries the family's own momentum (until
+    then the world's total was written into every line, issue #361 item
+    1); the face and border reports carry `momentum` per family beside
+    their total; the books' escaped line is the total, unchanged. No
+    registered integer changes except the per-family `escaped` lines of
+    `run.json` in worlds of several families.

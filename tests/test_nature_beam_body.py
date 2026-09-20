@@ -36,7 +36,9 @@ set and the turn by momentum"), written down first:
     push (-768, 0, 0) = -4 x 3 x 64), one `record` line naming `d` with
     the record (3 x 32)^2 x 256^2 = 9 x 67108864, the presence 3 and the
     count 3, the owed count `by_clock(0, 3, 1)` = 3; two rays at two of
-    the Nodes pass (`threshold` 3), no click, no push; the step: a free
+    the Nodes read the square 4 and click since 2026-09-20 (the `wave`
+    threshold on the pointer's square), one ray alone passes (`threshold`
+    3), no click, no push; the step: a free
     body of `m` (content 16, momentum [1024, 0, 0]) of span [1, 1, 3] at
     (2, 0, 1) of an open 6 x 1 x 3 bar steps at the ages 2, 4, 6 with all
     three Nodes (x per interval 2, 3, 3, 4, 4, 5, 5); with a fixed anchor
@@ -336,15 +338,16 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
     assert len(lines) == 1 and lines[0]["detector"] == "d" and lines[0]["record"] == 9 * UNIT_RECORD
     assert [r["node"] for r in records if r["event"] == "click"] == [[4, 0, 1]] * 3
     assert simulation.stores[M].size == 0
-    # A smaller set passes: the threshold reads the sum over the set.
+    # A smaller set passes: the threshold reads the pointer's square over
+    # the set (one ray, 1 < 3; two rays in phase would read 4 and click).
     records.clear()
-    simulation = NatureBeamSimulation(parse_nature_beam_world(set_world(three[:2])), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(set_world(three[:1])), records.append)
     simulation.step()
     assert simulation.books()["balanced"]
-    assert [(r["event"], r["threshold"]) for r in records] == [("pass", 3), ("pass", 3)]
+    assert [(r["event"], r["threshold"]) for r in records] == [("pass", 3)]
     body = simulation.measured[1]
     assert body.clicks == [0, 0] and body.momentum == [0, 0, 0] and body.detector_set.record == [0, 0]
-    assert simulation.stores[M].size == 2
+    assert simulation.stores[M].size == 1
     # The step moves the whole set; a Node of the moved set held by another
     # measured event refuses it.
     anchor = {"position": [5, 0, 0], "family": "m", "amount": 1, "fixed": True}

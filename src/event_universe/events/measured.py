@@ -293,15 +293,19 @@ class Ledger:
     face_content: dict[int, list[int]] = field(default_factory=dict)
     face_measured_content: dict[int, list[int]] = field(default_factory=dict)
     face_record: dict[int, list[int]] = field(default_factory=dict)
-    face_momentum: dict[int, list[int]] = field(default_factory=dict)
+    # The momentum that left through each face, per family (since
+    # 2026-09-20, issue #360: the escaped line of the books is reported per
+    # family; until then one vector per face and the world's total written
+    # into every family's line).
+    face_momentum: dict[int, list[list[int]]] = field(default_factory=dict)
     # The border `lifetime` (the model owner, 2026-09-20: an event in
     # transit whose age reaches its family's lifetime makes no next event
     # but a click on the border), booked as a face books an escape: per
-    # family the amount, the content and the record, and the momentum.
+    # family the amount, the content, the record and the momentum.
     lifetime_amount: list[int] = field(default_factory=list)
     lifetime_content: list[int] = field(default_factory=list)
     lifetime_record: list[int] = field(default_factory=list)
-    lifetime_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
+    lifetime_momentum: list[list[int]] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         count = self.families
@@ -318,12 +322,13 @@ class Ledger:
             "lifetime_record",
         ):
             setattr(self, name, [0] * count)
+        self.lifetime_momentum = [[0, 0, 0] for _ in range(count)]
         for port in self.open_faces:
             self.face_amount[port] = [0] * count
             self.face_content[port] = [0] * count
             self.face_measured_content[port] = [0] * count
             self.face_record[port] = [0] * count
-            self.face_momentum[port] = [0, 0, 0]
+            self.face_momentum[port] = [[0, 0, 0] for _ in range(count)]
 
     def escaped_amount(self, family: int) -> int:
         """What left the GameBoard: through the open faces and on the border
@@ -335,9 +340,23 @@ class Ledger:
         faces = sum(self.face_content[port][family] for port in self.open_faces)
         return faces + self.lifetime_content[family]
 
-    def escaped_momentum(self) -> list[int]:
+    def escaped_momentum(self, family: int | None = None) -> list[int]:
+        """The momentum that left the GameBoard, through the open faces and
+        on the border `lifetime`: one family's (since 2026-09-20), or the
+        world's total over the families (None)."""
+        rows = range(self.families) if family is None else (family,)
         return [
-            sum(self.face_momentum[port][axis] for port in self.open_faces)
-            + self.lifetime_momentum[axis]
+            sum(self.face_momentum[port][f][axis] for port in self.open_faces for f in rows)
+            + sum(self.lifetime_momentum[f][axis] for f in rows)
             for axis in range(3)
         ]
+
+    def face_momentum_total(self, port: int) -> list[int]:
+        """The momentum that left through one face, summed over the families."""
+        return [
+            sum(self.face_momentum[port][f][axis] for f in range(self.families)) for axis in range(3)
+        ]
+
+    def lifetime_momentum_total(self) -> list[int]:
+        """The momentum that left on the border `lifetime`, summed over the families."""
+        return [sum(self.lifetime_momentum[f][axis] for f in range(self.families)) for axis in range(3)]

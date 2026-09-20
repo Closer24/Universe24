@@ -149,7 +149,8 @@ def test_the_lifetime_click_books_the_escape_as_a_face_does(tmp_path):
     ]
     ledger = simulation.ledger
     assert ledger.lifetime_amount == [1, 0, 0] and ledger.lifetime_content == [0, 0, 0]
-    assert ledger.lifetime_momentum == [64, 0, 0] and ledger.lifetime_record == [UNIT_RECORD, 0, 0]
+    assert ledger.lifetime_momentum == [[64, 0, 0], [0, 0, 0], [0, 0, 0]]
+    assert ledger.lifetime_record == [UNIT_RECORD, 0, 0] and ledger.escaped_momentum(0) == [64, 0, 0]
     assert ledger.escaped_amount(0) == 1 and ledger.escaped_momentum() == [64, 0, 0]
     books = simulation.books()
     assert books["families"]["s"]["transit"] == {
@@ -169,6 +170,7 @@ def test_the_lifetime_click_books_the_escape_as_a_face_does(tmp_path):
         "content": 0,
         "record": UNIT_RECORD,
         "measured_content": 0,
+        "momentum": [64, 0, 0],
     }
     assert border["momentum"] == [64, 0, 0]
     assert [d["name"] for d in simulation.detectors()][-2:] == ["face:-z", LIFETIME_NAME]
@@ -186,6 +188,8 @@ def test_the_lifetime_click_books_the_escape_as_a_face_does(tmp_path):
     assert [d["name"] for d in record["detectors"]][-2:] == ["face:-z", LIFETIME_NAME]
     assert record["detectors"][-1]["families"]["s"]["record"] == UNIT_RECORD
     assert record["escaped"][0] == {"family": "s", "amount": 1, "content": 0, "momentum": [64, 0, 0]}
+    # Each family's own escaped momentum (2026-09-20): the others' 0.
+    assert [line["momentum"] for line in record["escaped"][1:]] == [[0, 0, 0], [0, 0, 0]]
     # A paid ray: its content escapes on the border.
     simulation, records = run(world(in_transit=[ray("light", amount=5)]), 3)
     assert simulation.stores[1].size == 0

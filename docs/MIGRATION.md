@@ -6,6 +6,54 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The `wave` threshold on the pointer's square and the escaped momentum per family, on 2026-09-20 (issues #359 step A, #360, #361)
+
+The model owner's decision of 2026-09-20 ([BEAM_LAW note 32](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[expectations](TEST_EXPECTATIONS.md#the-detectors-record)). No world file
+changes: the keys `threshold` and `reading` keep their spelling and their
+defaults (`threshold` 1, `reading` `wave`).
+
+- **Changed, the threshold under `wave`**: a `wave` detector set clicks in
+  an interval when the square of the coherent pointer of its arrivals
+  (every number but each Node's own), read in units of one ray, is at
+  least its `threshold`, and passes otherwise with `pass` records naming
+  `threshold`; the unit is the square of one unit's pointer at phase 0,
+  (32 x 256)^2 = 2^26, and the reading the nearest integer
+  (`nature_beam.pointer_units(X, Y) = (X^2 + Y^2 + 2^25) // 2^26`): one
+  unit at any phase reads 1, a rays in phase a^2 (exactly through a = 11
+  at N = 64), two opposite rays 0. Until now the threshold under both
+  readings was the amount summed over the set, so a pair in antiphase
+  clicked and added 0 to the record; now it passes (whether or not a
+  window is declared) and adds nothing. Under `beam` the threshold is the
+  amount as before. No memory between intervals.
+- **Which registered runs change**: of the 66 example worlds 65 are
+  byte-identical in `events.jsonl` (`two_slits`, `one_slit`, the Bell ten
+  with S = 2 exactly, and `w1_wave`, `w3_wave`, `w9_wave` among them: no
+  set of theirs ever read a pointer below its threshold with an amount
+  at it); `w27_wave` alone changes, 2312 rays passing a screen pixel in
+  antiphase where they clicked with the pointer 0 and going on to other
+  pixels and the faces (38 of 161 pixels' records differ, the screen's
+  clicks 150 187 -> 148 131), re-registered old against new in
+  [EXPERIMENTS A10](EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-beam-law-2026-09-20)
+  and [validation](VALIDATION.md#the-wave-threshold-on-the-pointers-square-the-66-example-worlds-compared-a10-and-bell-re-read---2026-09-20). A
+  world whose `wave` detector reads several rays of one phase at a
+  threshold above 1 reads their square (a^2) where it read their amount
+  (a): declare the threshold in units of the square (`threshold` 4 for
+  two rays in phase where 2 was meant).
+- **Changed, the escaped momentum per family**: `Ledger.face_momentum`
+  is `dict[port, list[list[int]]]` (per family) and `lifetime_momentum`
+  `list[list[int]]`; `Ledger.escaped_momentum(family)` is the family's
+  own and `escaped_momentum()` the world's total; `face_momentum_total`
+  and `lifetime_momentum_total` the sums. `run.json`'s `escaped` line per
+  family carries the family's own momentum (until now the world's total
+  was written into every line: a reader that summed the lines counted the
+  total once per family); the face and border reports (`detectors` in
+  `run.json`, `face_detectors()`) carry `momentum` per family beside
+  their total. The books' escaped line is the total, unchanged.
+- **The API**: `nature_beam.POINTER_UNIT`, `nature_beam.pointer_units`;
+  `Ledger.escaped_momentum(family=None)`, `face_momentum_total`,
+  `lifetime_momentum_total`.
+
 ## The columns of the one coupling, the lifetime, the held content and the contact through the table, on 2026-09-20 (`columns` and `lifetime` per family; `held` per measured event; `columns-v1`; the `contact` record)
 
 The model owner's decision of 2026-09-20 ("one mechanism for all the laws

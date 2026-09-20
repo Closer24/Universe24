@@ -45,6 +45,8 @@ docs/TEST_EXPECTATIONS.md ("The one reading"), written down first:
     with 8 of its own number among the arrivals still 20 (the own excluded);
 (d) a detector's threshold reads the set of every number but its own and
     the window each ray's own phase: a receiver at threshold 3 met by 2 rays
+    (since 2026-09-20 the threshold under `wave` reads the pointer's
+    square, so the smaller set is one ray, 1 < 3, where two in phase read 4)
     of number 2 and 1 of number 3 clicks all three (`events` 3), the 2 alone
     pass with a `pass` record each (`threshold` 3); at threshold 1 with the
     window 32, the two rays at phase 0 pass (`window` 32) and the ray at
@@ -294,17 +296,18 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_the_sets_phase_by_de
     assert [(r["event"], r["phase"]) for r in records if r["event"] != "click"] == [("record", 0)]
 
     records.clear()
+    alone = beam(NODE, "light", 2, PLUS_X, 1)
     simulation = NatureBeamSimulation(
-        parse_nature_beam_world(world(FAMILIES, [receiver, *sources], [two], 0, detector)),
+        parse_nature_beam_world(world(FAMILIES, [receiver, *sources], [alone], 0, detector)),
         records.append,
     )
     entry = simulation.measured[1]
     simulation.step()
     assert simulation.books()["balanced"]
     assert entry.clicks == [0, 0] and entry.held == [4, 0] and entry.momentum == [0, 0, 0]
-    assert simulation.stores[1].size == 1 and int(simulation.stores[1].amount.sum()) == 2
+    assert simulation.stores[1].size == 1 and int(simulation.stores[1].amount.sum()) == 1
     assert [(r["event"], r["amount"], r["threshold"], r["window"]) for r in records] == [
-        ("pass", 2, 3, None)
+        ("pass", 1, 3, None)
     ]
 
     gate = fixed(NODE, "m", 4, table={"light": {"rule": "measure", "phase_window": 32}})

@@ -437,9 +437,11 @@ class NatureBeamSimulation:
                     self.ledger.face_measured_content[port][index] += entry.held[index]
                     self.ledger.face_amount[port][index] += entry.pending_amount(index)
                     self.ledger.face_content[port][index] += entry.pending_content(index)
-                self.ledger.face_momentum[port] = [
+                self.ledger.face_momentum[port][entry.family] = [
                     int(a) + int(b)
-                    for a, b in zip(self.ledger.face_momentum[port], entry.momentum, strict=True)
+                    for a, b in zip(
+                        self.ledger.face_momentum[port][entry.family], entry.momentum, strict=True
+                    )
                 ]
                 for node in entry.nodes:
                     del self.at[node]
@@ -755,10 +757,11 @@ class NatureBeamSimulation:
                             "content": ledger.lifetime_content[f],
                             "record": ledger.lifetime_record[f],
                             "measured_content": 0,
+                            "momentum": list(ledger.lifetime_momentum[f]),
                         }
                         for f, family in enumerate(self.families)
                     },
-                    "momentum": list(ledger.lifetime_momentum),
+                    "momentum": ledger.lifetime_momentum_total(),
                 }
             )
         for port in self.open_faces:
@@ -780,10 +783,11 @@ class NatureBeamSimulation:
                             "content": ledger.face_content[port][f],
                             "record": ledger.face_record[port][f],
                             "measured_content": ledger.face_measured_content[port][f],
+                            "momentum": list(ledger.face_momentum[port][f]),
                         }
                         for f, family in enumerate(self.families)
                     },
-                    "momentum": list(ledger.face_momentum[port]),
+                    "momentum": ledger.face_momentum_total(port),
                 },
             )
         return found

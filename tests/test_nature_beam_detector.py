@@ -9,9 +9,13 @@ is X^2 + Y^2 of its scalar and the set's phase (the pointer's nearest step)
 is returned to every measured event of the set; under the reading `beam`
 (the default) the arriving rays are paired by opposite phase over the set,
 a paired couple passes on and the rest click, the record the plain count;
-the threshold gates every response of a detector over the amount summed
-over the set, a receiver's and a re-emitter's alike, a smaller set passing
-with a `pass` record; a release reads no threshold. What an arrival does
+the threshold gates every response of a detector, a receiver's and a
+re-emitter's alike, a smaller set passing with a `pass` record: under
+`beam` on the amount summed over the set, under `wave` (since 2026-09-20,
+issue #359 step A) on the square of the coherent pointer of the set's
+arrivals in units of one ray (`pointer_units`: the nearest integer to
+(X^2 + Y^2) / 2^26, one unit at any phase reading 1, a rays in phase a^2,
+rays that cancel 0); a release reads no threshold. What an arrival does
 stays at its Node (the content joins the measured event it reached, the
 push, the label). The expected integers of docs/TEST_EXPECTATIONS.md ("The
 detector's record"), written down first. K 2^20, `suspension` 0, `release`
@@ -20,20 +24,24 @@ detector's record"), written down first. K 2^20, `suspension` 0, `release`
 
 (a) two rays of amount 1 arriving in one interval at a counter of threshold
     1, in phase (0 and 0): the record 4 x 32^2 x 256^2 = 268435456, the
-    amount 2 and two clicks; in antiphase (0 and 32): the record 0, the
-    amount 2 and two clicks; one ray alone: 32^2 x 256^2 = 67108864; the
+    amount 2 and two clicks; in antiphase (0 and 32): the pointer 0, so
+    since 2026-09-20 both pass with a `pass` record naming `threshold` 1
+    (until then both clicked and the record took 0), no click, the record
+    0, no `record` line; one ray alone: 32^2 x 256^2 = 67108864; the
     `record` line of `events.jsonl` carries the pointer (X, Y) and the
     square; the run's detector report carries the cumulative record;
 (b) a receiver (a measured event of `m`, content 4, measuring light) at
-    threshold 3 (from `test_detector_sensitivity` (a), re-pinned): 2 rays of
-    another number pass with a `pass` record (`threshold` 3), no click, no
-    push, the rays going on whole; 3 rays are measured: 3 clicks, `held`
+    threshold 3 (from `test_detector_sensitivity` (a), re-pinned; since
+    2026-09-20 the threshold reads the pointer's square, so the smaller
+    set is one ray, 1 < 3, where two rays in phase read 4): 1 ray of
+    another number passes with a `pass` record (`threshold` 3), no click, no
+    push, the ray going on whole; 3 rays are measured: 3 clicks, `held`
     [4, 3], the momentum (192, 0, 0) (three labels of 64 along +X: since
     2026-09-19 the label of a unit along a heading is Q e_d, Q = 64,
     BEAM_LAW section 2 and note 23), nothing left in the store, the report
     3 measured, 3 clicks, the record (3 x 32)^2 x 256^2 = 9 x 32^2 x 256^2
     (a row of three identical rays is one coherent amplitude);
-(c) a re-emitter at threshold 3 (from (b) there): 2 rays pass; 3 rays are
+(c) a re-emitter at threshold 3 (from (b) there): 1 ray passes; 3 rays are
     taken (re-released 3, no click, the push (192, 0, 0), the recoil at
     the re-emission -(64, 64, 64) leaving the momentum (128, -64, -64))
     and created again at the same interval's self-creation, one per
@@ -42,8 +50,9 @@ detector's record"), written down first. K 2^20, `suspension` 0, `release`
 (d) an emitter inside a detector reads no threshold: a lamp of light
     (content 24, K 24, rate [1, 1]) in a detector of threshold 5 releases
     one unit per heading per interval, its content 18 then 12; a reader of
-    `m` (content 4) at threshold 4 passes 3 rays and reads 4, pushed by
-    -M x 64 c = (-1024, 0, 0);
+    `m` (content 4) at threshold 4 passes 1 ray (the square 1) and reads 2
+    (the square 4), pushed by -M x 64 x 2 = (-512, 0, 0) (until 2026-09-20
+    3 rays passed and 4 read, (-1024, 0, 0));
 (e) the record is exact and never refused (2026-09-19, after the night's
     bound refused `two_contents`): every entry (C, S) of the 1/256 tables
     is shorter than 257 for every N from 2 through 4096 (the largest
@@ -112,7 +121,22 @@ detector's record"), written down first. K 2^20, `suspension` 0, `release`
     rows of 3 (phase 0) and 2 (phase 32): 2 units pair and pass, 1 unit
     clicks (the click line's amount 1, the two `cancelled` lines 2 and 2,
     the rows of 2 and 2 in the store); the books balanced in every case;
-    the refusal of `"reading": "field"` names the key.
+    the refusal of `"reading": "field"` names the key;
+(i) the threshold on the pointer's square under `wave` (the model owner,
+    2026-09-20, issue #359 step A; the integers written first): one unit
+    at any of the 64 phases reads 1 unit (`pointer_units`), a rays in
+    phase a^2 exactly through a = 11 (the tables' C^2 + S^2 within 237 of
+    65536 at N = 64), two opposite 0, two a quarter turn apart 2; on the
+    engine one ray (phase 8) clicks at threshold 1; two rays in phase (0
+    and 0) click at threshold 4 (the square 4) and pass at 5; two opposite
+    rays (0 and 32) pass at threshold 1 with `threshold` 1, whether or not
+    the counter declares a window (the window 0: still `threshold`, not
+    `window`); three rays a third of a turn apart (0, 21, 43) pass at
+    threshold 1 (their pointer's square 200704, 0.003 of a unit); under
+    `beam` the threshold is the amount as before: two rays in phase at
+    threshold 3 pass (the amount 2 < 3) where `wave` clicks them (4 >= 3);
+    no memory between intervals: the two opposite rays passing at tick 1
+    do not add to the next tick's set.
 """
 
 from __future__ import annotations
@@ -123,7 +147,7 @@ import pytest
 
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.nature_beam import POINTER_AMOUNT_BOUND
+from event_universe.events.nature_beam import POINTER_AMOUNT_BOUND, POINTER_UNIT, pointer_units
 from event_universe.events.world import MOMENTUM_BOUND
 
 M, LIGHT = 0, 1
@@ -195,7 +219,11 @@ def test_two_rays_in_phase_record_four_units_and_in_antiphase_nothing():
         "table": {"light": "measure"},
     }
     other = {"position": [8, 1, 1], "family": "light", "amount": 4, "fixed": True}
-    for phases, expected in (((0, 0), 4 * UNIT_RECORD), ((0, 32), 0), ((0,), UNIT_RECORD)):
+    for phases, expected, clicked in (
+        ((0, 0), 4 * UNIT_RECORD, 2),
+        ((0, 32), 0, 0),
+        ((0,), UNIT_RECORD, 1),
+    ):
         beams = [arrival(1, number=2, phase=phases[0])]
         if len(phases) == 2:
             beams.append(arrival(1, number=3, phase=phases[1], direction=[-1, 0, 0]))
@@ -206,16 +234,25 @@ def test_two_rays_in_phase_record_four_units_and_in_antiphase_nothing():
         entry = simulation.measured[1]
         simulation.step()
         assert simulation.books()["balanced"]
-        assert entry.clicks == [0, len(phases)], phases
+        assert entry.clicks == [0, clicked], phases
         assert entry.detector_set.record == [0, expected], phases
         assert simulation.detectors()[0]["families"]["light"] == {
-            "measured": len(phases),
-            "clicks": len(phases),
+            "measured": clicked,
+            "clicks": clicked,
             "record": expected,
             "phase": None if expected == 0 else 0,
         }
         assert simulation.detectors()[0]["reading"] == "wave"
         lines = [r for r in records if r["event"] == "record"]
+        if clicked == 0:
+            # The antiphase pair: the pointer 0, below the threshold 1, both
+            # pass (since 2026-09-20) and nothing is recorded.
+            assert lines == [] and [(r["event"], r["threshold"]) for r in records] == [
+                ("pass", 1),
+                ("pass", 1),
+            ]
+            assert simulation.stores[LIGHT].size == 2
+            continue
         assert len(lines) == 1 and lines[0]["record"] == expected and lines[0]["detector"] == "d"
         pointer = lines[0]["pointer"]
         assert pointer[0] ** 2 + pointer[1] ** 2 == expected
@@ -233,7 +270,7 @@ def test_a_receiver_measures_only_a_set_at_its_threshold_and_a_smaller_one_passe
     }
     records: list[dict[str, object]] = []
     simulation = NatureBeamSimulation(
-        parse_nature_beam_world(world([receiver, SOURCE], [arrival(2)], 3)), records.append
+        parse_nature_beam_world(world([receiver, SOURCE], [arrival(1)], 3)), records.append
     )
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
     assert entry.detector == 0 and entry.threshold == 3
@@ -241,10 +278,10 @@ def test_a_receiver_measures_only_a_set_at_its_threshold_and_a_smaller_one_passe
     assert simulation.books()["balanced"]
     assert entry.clicks == [0, 0] and entry.held == [4, 0] and entry.momentum == [0, 0, 0]
     assert entry.taken[LIGHT] == NO_RESPONSE
-    assert light.size == 1 and int(light.amount[0]) == 2 and int(light.node[0]) == light.flat((4, 1, 1))
-    assert [(r["event"], r["amount"], r["threshold"]) for r in records] == [("pass", 2, 3)]
+    assert light.size == 1 and int(light.amount[0]) == 1 and int(light.node[0]) == light.flat((4, 1, 1))
+    assert [(r["event"], r["amount"], r["threshold"]) for r in records] == [("pass", 1, 3)]
     simulation.step()
-    assert simulation.books()["balanced"] and light.size == 1 and int(light.amount[0]) == 2
+    assert simulation.books()["balanced"] and light.size == 1 and int(light.amount[0]) == 1
 
     records.clear()
     simulation = NatureBeamSimulation(
@@ -277,7 +314,7 @@ def test_a_re_emitter_takes_only_a_set_at_its_threshold_and_creates_it_again_as_
         "table": {"light": "rerelease"},
     }
     simulation = NatureBeamSimulation(
-        parse_nature_beam_world(world([emitter, SOURCE], [arrival(2, phase=20)], 3))
+        parse_nature_beam_world(world([emitter, SOURCE], [arrival(1, phase=20)], 3))
     )
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
     simulation.step()
@@ -285,7 +322,7 @@ def test_a_re_emitter_takes_only_a_set_at_its_threshold_and_creates_it_again_as_
     assert (
         entry.taken[LIGHT] == NO_RESPONSE and entry.pending == [[], []] and entry.momentum == [0, 0, 0]
     )
-    assert light.size == 1 and int(light.amount[0]) == 2 and int(light.number[0]) == 2
+    assert light.size == 1 and int(light.amount[0]) == 1 and int(light.number[0]) == 2
 
     records: list[dict[str, object]] = []
     simulation = NatureBeamSimulation(
@@ -346,7 +383,7 @@ def test_a_release_reads_no_threshold_and_a_reading_is_gated_like_a_measurement(
 
     source = {"position": [0, 1, 1], "family": "m", "amount": 16, "fixed": True}
     reader = {"position": NODE, "family": "m", "amount": 4, "fixed": True, "table": {"m": "read"}}
-    for amount, push, read in ((3, [0, 0, 0], 0), (4, [-1024, 0, 0], 4)):
+    for amount, push, read in ((1, [0, 0, 0], 0), (2, [-512, 0, 0], 2)):
         simulation = NatureBeamSimulation(
             parse_nature_beam_world(world([source, reader], [arrival(amount, family="m", number=1)], 4))
         )
@@ -699,3 +736,69 @@ def test_the_beam_reading_pairs_opposite_rays_and_counts_the_rest():
     assert simulation.ledger.transit_absorbed[LIGHT] == 1
     with pytest.raises(ValueError, match="reading"):
         parse_nature_beam_world(world(measured, [], 1, reading="field"))
+
+
+def test_the_wave_threshold_reads_the_pointers_square():
+    """(i)."""
+    cosines, sines = phase_cosines(64), phase_sines(64)
+    assert POINTER_UNIT == (32 * 256) ** 2 == 1 << 26
+    assert {pointer_units(32 * cosines[k], 32 * sines[k]) for k in range(64)} == {1}
+    assert all(
+        pointer_units(32 * a * cosines[k], 32 * a * sines[k]) == a * a
+        for a in range(1, 12)
+        for k in range(64)
+    )
+    assert pointer_units(32 * (cosines[0] + cosines[32]), 32 * (sines[0] + sines[32])) == 0
+    assert pointer_units(32 * (cosines[0] + cosines[16]), 32 * (sines[0] + sines[16])) == 2
+    third = (32 * (cosines[0] + cosines[21] + cosines[43]), 32 * (sines[0] + sines[21] + sines[43]))
+    assert third[0] ** 2 + third[1] ** 2 == 200704 and pointer_units(*third) == 0
+    counter = {
+        "position": NODE,
+        "family": "m",
+        "amount": 4,
+        "fixed": True,
+        "table": {"light": "measure"},
+    }
+    gated = {**counter, "table": {"light": {"rule": "measure", "phase_window": 0}}}
+    other = {"position": [8, 1, 1], "family": "light", "amount": 4, "fixed": True}
+    third_source = {"position": [4, 0, 1], "family": "light", "amount": 4, "fixed": True}
+    in_phase = [arrival(1, number=2, phase=0), arrival(1, number=3, phase=0, direction=[-1, 0, 0])]
+    opposite = [arrival(1, number=2, phase=0), arrival(1, number=3, phase=32, direction=[-1, 0, 0])]
+    thirds = [
+        arrival(1, number=2, phase=0),
+        arrival(1, number=3, phase=21, direction=[-1, 0, 0]),
+        arrival(1, number=4, phase=43, direction=[0, 1, 0]),
+    ]
+    cases = (
+        ("one ray at 1", counter, [arrival(1, phase=8)], 1, "wave", 1),
+        ("two in phase at 4", counter, in_phase, 4, "wave", 2),
+        ("two in phase at 5", counter, in_phase, 5, "wave", 0),
+        ("two opposite at 1", counter, opposite, 1, "wave", 0),
+        ("two opposite at 1 with a window", gated, opposite, 1, "wave", 0),
+        ("three thirds apart at 1", counter, thirds, 1, "wave", 0),
+        ("beam: two in phase at 3", counter, in_phase, 3, "beam", 0),
+        ("wave: two in phase at 3", counter, in_phase, 3, "wave", 2),
+    )
+    for label, measured, beams, threshold, reading, clicked in cases:
+        records: list[dict[str, object]] = []
+        simulation = NatureBeamSimulation(
+            parse_nature_beam_world(
+                world([measured, SOURCE, other, third_source], beams, threshold, reading=reading)
+            ),
+            records.append,
+        )
+        entry = simulation.measured[1]
+        simulation.step()
+        assert simulation.books()["balanced"], label
+        assert entry.clicks == [0, clicked], label
+        passes = [r for r in records if r["event"] == "pass"]
+        assert len(passes) == len(beams) - clicked, label
+        assert all(r["threshold"] == threshold and r["window"] is None for r in passes), label
+        assert simulation.stores[LIGHT].size == len(beams) - clicked, label
+        if clicked:
+            assert simulation.detectors()[0]["families"]["light"]["clicks"] == clicked, label
+        if label == "two opposite at 1":
+            # No memory between intervals: the pair goes on and nothing of
+            # it is read into the next interval's set.
+            simulation.step()
+            assert simulation.books()["balanced"] and entry.clicks == [0, 0], label

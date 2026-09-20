@@ -5,6 +5,25 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The `wave` threshold on the pointer's square; the escaped momentum per family (2026-09-20)
+
+- The model owner's decision (issue #359 step A;
+  [BEAM_LAW note 32](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  under `wave` a detector set's threshold reads the square of the
+  coherent pointer of its arrivals in units of one ray (the nearest
+  integer to (X^2 + Y^2) / 2^26; one unit at any phase 1, a rays in phase
+  a^2, rays that cancel 0), so a pair in antiphase passes whether or not
+  a window is declared; under `beam` the amount as before; no memory
+  between intervals. Of the 66 example worlds 65 are byte-identical (the
+  slits and the Bell ten among them, S = 2 exactly); A10's `w27_wave`
+  alone changes (2312 antiphase pairs passing a pixel and going on) and
+  is re-registered old against new. The escaped
+  momentum is booked and reported per family (issues #360 and #361 item
+  1): `run.json`'s `escaped` line per family carries the family's own
+  momentum where the world's total was written into every line
+  ([MIGRATION](docs/MIGRATION.md); `tests/test_nature_beam_detector.py`
+  (i), `tests/test_nature_beam_books.py`).
+
 ### The columns of the one coupling, the lifetime, the held content and the contact through the table (2026-09-20)
 
 - The model owner's decision ("one mechanism for all the laws on the

@@ -184,6 +184,7 @@ def test_an_escape_through_an_open_face_is_a_click_on_the_face_detector():
         "content": 1,
         "record": 32 * 32 * (cosines[5] ** 2 + sines[5] ** 2),
         "measured_content": 0,
+        "momentum": [64, 0, 0],
     }
     assert faces[0]["momentum"] == [64, 0, 0]
     assert all(face["momentum"] == [0, 0, 0] for face in faces[1:])
