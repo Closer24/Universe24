@@ -2013,3 +2013,112 @@ implementation's part of the contract. The design above is unchanged.
     the books. Checked on the 85 example worlds: byte-identical in
     `events.jsonl`, `state.json` and `run.json` (VALIDATION.md; no
     registered world declares a charge on a paid family).
+    **(iii) The transformation `become`, the identity `weak-v1`** (the
+    model owner, 2026-09-20, "go on everything", item (1): "the
+    transformation `become` with the identity `weak-v1`", in the
+    recommended order after the neutrino; the physicist's design, WEAK.md
+    sections 2 and 4.3 with its integers in `weak_integers.out` 2 to 6;
+    `tests/test_become.py` (a) to (f)). One table rule on the one-way side
+    of the border, beside `read`, `measure`, `rerelease` and `pass`: a
+    measured event becomes an event of another family and releases the
+    rest as products. Two triggers, one function (`nature_beam.transform`).
+    The clock trigger is the measured-event key `become`, `{"at": a,
+    "into": family, "products": [[family, amount, content per unit], ...],
+    "crowd": c}`, fired in step 5 at the self-creation whose clock reaches
+    `at` (the event's own age against the key by the one `by_clock`,
+    `ages_at_key`, the lifetime's form: first at `at`, then at every
+    multiple of it) while the gate is open: `crowd`, optional, an integer
+    from 0, lets the transformation fire only at a self-creation at which
+    the count the clock read is below it (the law's form of the condition
+    that keeps a bound neutron stable; absent, no gate). The click trigger
+    is a table entry whose rule is `become`, `{"rule": "become",
+    "phase_window": s, "phase_width": w, "into": ..., "products": [...]}`:
+    an arrival that passes the threshold and the window is clicked in
+    step 4 exactly as `measure` clicks it (a free arrival's push on the
+    reader, a paid arrival's label and units) and then the same
+    transformation fires, its products born at the reader's next
+    self-creation; no `at` and no `crowd` on it (the window is the gate).
+    What fires: the products are paid from what the event holds of its own
+    family, R = the sum of amount x content per unit, at most its declared
+    `amount` (refused at load) and refused at run time naming the event if
+    it holds less at the trigger (a declared transformation that cannot be
+    paid is a defect of the world, loud, never silent); the family line
+    moves, held[into] += held[from] - R and held[from] = 0, the event's
+    family is `into` and its rho the new family's; everything else of the
+    event (its number, Node, set, momentum, age, clock, phase, owed count,
+    detector set and every other family held) is untouched: it is the same
+    measured event with another family's content, and its rays come home
+    as before. The products are born at that self-creation as every
+    re-release is (`PendingRow`: product k apportioned whole over the
+    event's directions with the leftover counted from (clock age + k) mod
+    n, so that two products of amount 1 leave on different directions; the
+    parent's phase at the trigger; the age 0), the recoil over all of them,
+    free and paid (a free product is a thing thrown, not the field; the
+    design's "the nu label joins" a free ray's click is not this: on a
+    click a free ray takes the columns' push and its label never joins),
+    and the event's `become` key and every `become` entry of its table are
+    consumed (the entries reset to the keys' own rule for their family
+    with no window, the contact under them the default; the other entries
+    stay as declared): the transformation is the event's one change of
+    family. Charge exact: the parser refuses a transformation whose
+    charges do not balance (rho_into x (amount - R) plus the paid
+    products' whole charges per unit of amount, D-1, against rho_from x
+    amount), so the books' charge line is the same pair before and after
+    (test (a): [0, 1] at every tick, +1 on `p`'s content 5 against -1 on
+    the beta unit in transit, clicked or escaped; test (e) through the
+    click of the product). One-way (a change of a measured event's
+    record, as a click and a release are; the walk and the collision read
+    nothing of it), local (the event's own record, the arrival at its
+    Node), fixed work (one comparison per self-creation at the clock
+    trigger, one apportioning per product at the birth), fixed storage
+    (the declaration), no draw, no register, no formula in a payload. The
+    parser's refusals, naming the key: `become` without `into` or
+    `products`, `into` an unknown family or the event's own, a product
+    naming an unknown family, an amount below 1, a free product's content
+    other than 0, a paid product's content below 1, a label beyond the
+    bound, `at` below 1 or absent, `at` or `crowd` on a table entry,
+    `crowd` negative or fractional, `into` or `products` on another rule,
+    the products' content above the `amount`, the charges unbalanced,
+    `become` on a family (test (f)). What the implementation decided where
+    the design was silent: the crowd gate is read at every pulse of the
+    key (the clock trigger is `ages_at_key`, so a gated event whose count
+    falls below the gate fires at the next age that is a multiple of `at`,
+    never between; the bound neutron's stability is a gate on a pulse, not
+    a reset of its clock: test (c), the gate 64 holding a count of 128
+    over 40 intervals, the gate 129 letting tick 4 fire); the entries are
+    consumed at the transformation and the contact under a `become` entry
+    is the keys' `measure` (a body arriving at a `become` reader is a paid
+    arrival); the record's `become` line is written at the products'
+    birth, when their directions and the recoil are known; the count the
+    clock reads slows the trigger (test (c): a crowd of 128 at the
+    suspension [1, 128] fires tick 4 against tick 3), no special case for
+    a bound event. The record: `hypotheses` carries `weak-v1` when a
+    measured event declares `become` or a table entry's rule is `become`
+    (after `bohr-v1` and `columns-v1`); `run.json`'s `numbers` per
+    measured event carry `become` (the declaration by names, None
+    without); the measured events' states carry `became` (the
+    transformations fired) and their `family` after; the books' measured
+    line per family gains `became` (negative out of the family left,
+    positive into the family become, the sum over the families minus the
+    products' content: initial + measured + became = current + spent +
+    escaped); `events.jsonl` gains one `become` line per transformation
+    at the products' birth (`tick`, `node`, `measured`, `trigger` "clock"
+    or "click", `triggered` the tick of the trigger, `from`, `into`,
+    `products` as [family, amount, content, direction] with the direction
+    each was born on, `recoil`, `counted` the count the clock read at the
+    trigger); the tally of a `become` entry's clicks under `measure`.
+    Checked on the 85 example worlds: byte-identical in `events.jsonl`;
+    `state.json` and `run.json` equal but for the added `became` and
+    `become` (VALIDATION.md; no registered world declares a
+    transformation). What the detector's world sees (series J1 and J3,
+    EXPERIMENTS): a population of 64 neutrons decays in a step (the
+    shell's clicks within 23 intervals, a width of 0.036 of the median
+    against nature's 3.17 for a memoryless decay), every beta carries the
+    one declared content (a line), a neutron beside a proton decays later
+    than a free one (577 against 512) or, under `crowd`, not within the
+    run: PREDICTIONS entries 10 and 18, the law's own limits against
+    nature's exponential survival, continuous spectrum and stable bound
+    neutron, stated and not tuned; the trigger ticks are the engine's
+    clock slowed by its count as every clock is, and the three readings
+    outside their pins are the estimator's (one tick's count for a whole
+    history), reported and not moved.

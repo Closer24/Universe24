@@ -6,16 +6,24 @@ around it (the clocks, the steps, the books' identities) is `engine.py`.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import NamedTuple
 
 from event_universe.core.game_board import Address3
 from event_universe.core.integer import rational_sum, reduced
-from event_universe.events.world import AGE_READS, BEAM_LAW, CHARGE_INDEX, MOMENTUM_BOUND
+from event_universe.events.world import (
+    AGE_READS,
+    BEAM_LAW,
+    CHARGE_INDEX,
+    MOMENTUM_BOUND,
+    Transformation,
+)
 
 __all__ = [
     "TALLIES",
     "DetectorSet",
     "Ledger",
     "Measured",
+    "PendingRow",
     "column_charges",
     "count_component",
     "rational_sum",
@@ -26,8 +34,29 @@ TALLIES = ("home", "read", "measure", "rerelease")
 # default: the presence, the scalar over every ray at its Node of another
 # number.
 PRESENCE_READS = "scalar"
-Pending = tuple[int, int, int]
 Pair = tuple[int, int]
+
+
+class PendingRow(NamedTuple):
+    """A row waiting at a measured event to be created again at its next
+    self-creation: what came home or is re-released (`amount`, the
+    `content` per unit, the arriving `phase`) and, since 2026-09-20 (the
+    transformation `become`), a product of a transformation: `first` the
+    offset added to the clock age in the tie rule of the apportioning over
+    the directions (product k leaves on the direction counted from (clock
+    age + k) mod n, so that two products of amount 1 leave on different
+    directions; 0 for a home or a re-release), `thrown` whether the row is
+    a product, a thing thrown that takes a recoil even of a free family (a
+    free release or re-release takes none: a free ray is the field)."""
+
+    amount: int
+    content: int
+    phase: int
+    first: int = 0
+    thrown: bool = False
+
+
+Pending = PendingRow
 
 
 def column_charges(
@@ -183,9 +212,21 @@ class Measured:
     # `charges` for the charge line of the books and the report, never by
     # the push (`charges(for_push=True)` leaves it out).
     unit_charges: tuple[Pair, ...] = ()
+    # The transformation `become` (the weak force, 2026-09-20): the clock
+    # trigger as declared (None without, and None once it fired), per
+    # family the click trigger of the entry whose rule is `become` (None
+    # elsewhere, and everywhere once one fired), the count of the
+    # transformations fired (`became`) and the ones whose products wait to
+    # be born, for the `become` record written at their birth: (trigger,
+    # the tick of the trigger, the family from, the family into, the count
+    # the clock read at the trigger).
+    become: Transformation | None = None
+    transforms: list[Transformation | None] = field(default_factory=list)
+    became: int = 0
+    transformed: list[tuple[str, int, int, int, int]] = field(default_factory=list)
     age: int = 0
     owed: int = 0
-    pending: list[list[Pending]] = field(default_factory=list)
+    pending: list[list[PendingRow]] = field(default_factory=list)
     waited: int = 0
     turned: int = 0
     steps: int = 0
@@ -282,10 +323,19 @@ class Measured:
         return self.detector_set.threshold
 
     def pending_amount(self, family: int) -> int:
-        return sum(amount for amount, _, _ in self.pending[family])
+        return sum(row.amount for row in self.pending[family])
 
     def pending_content(self, family: int) -> int:
-        return sum(amount * content for amount, content, _ in self.pending[family])
+        return sum(row.amount * row.content for row in self.pending[family])
+
+    def pending_thrown_amount(self, family: int) -> int:
+        """The units of the products of a transformation waiting to be
+        born (never absorbed: booked as released when they leave with a
+        body that steps off the GameBoard)."""
+        return sum(row.amount for row in self.pending[family] if row.thrown)
+
+    def pending_thrown_content(self, family: int) -> int:
+        return sum(row.amount * row.content for row in self.pending[family] if row.thrown)
 
     def state(self) -> dict[str, object]:
         charges = self.charges()
@@ -316,6 +366,8 @@ class Measured:
             "events": list(self.clicks),
             "pushed": list(self.pushed),
             "contacts": list(self.contacts),
+            # The transformations fired (the weak force, 2026-09-20).
+            "became": self.became,
         }
 
 
@@ -362,6 +414,13 @@ class Ledger:
     # through a face, per family (D-1, 2026-09-20): their charge stays on
     # the charge line as escaped, with the rows that left.
     units_escaped: list[int] = field(default_factory=list)
+    # The `became` line of the measured books (the transformation `become`,
+    # 2026-09-20): per family the content that entered its line by
+    # transformations, positive into the family become, negative out of
+    # the family left; initial + measured + became = current + spent +
+    # escaped, and the sum over the families of `became` is minus the
+    # content the products took (their `released` content).
+    held_became: list[int] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         count = self.families
@@ -377,6 +436,7 @@ class Ledger:
             "lifetime_content",
             "lifetime_record",
             "units_escaped",
+            "held_became",
         ):
             setattr(self, name, [0] * count)
         self.lifetime_momentum = [[0, 0, 0] for _ in range(count)]

@@ -131,7 +131,8 @@ between intervals but the rays present at it and the measured event there.
 The law of one interval at one Node is `nature_beam` ([BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam)):
 the walk by the flight table, the one reading, the collision by the table
 (at the Nodes of free space: none at a Node that holds a measured event),
-the measured event's table (`read`, `measure`, `rerelease`, `pass`, each
+the measured event's table (`read`, `measure`, `rerelease`, `pass` and,
+since 2026-09-20, `become`, the transformation, each
 gated by the detector's threshold and its window; the push one bilinear
 form over the arriving rays' labels, `push_form`: one product per
 arriving free ray, `M_A x (rho_A rho_B - 1) x V_B` with the families'
@@ -353,17 +354,29 @@ at every Link it steps, over the world's `action`; false by default),
 from 1 each: the content the event holds of families other than its own;
 its content the sum, its charge in every column the rational sum over
 what it holds, every free family held released at the world's rate
-beside its own),
+beside its own), `become` (since 2026-09-20, the transformation's clock
+trigger, [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(iii): `{"at": a, "into": family, "products": [[family, amount, content per
+unit], ...], "crowd": c}`, fired at the self-creation whose clock reaches
+`at` (the age against the key, first at `at`, then at every multiple of
+it) while the count the clock read is below `crowd` (optional, an integer
+from 0; absent, no gate): the event becomes an event of `into`, the
+products, paid from what it holds of its own family, are born as a
+re-release is with the recoil over all of them, and the key is consumed),
 `directions` (the
 directions it releases and re-emits on, by vector or by index into D; the
 six headings by default), `table` family name to `read` | `measure` |
-`rerelease` | `pass` or to `{"rule": ..., "phase_window": s, "phase_width":
+`rerelease` | `pass` | `become` or to `{"rule": ..., "phase_window": s, "phase_width":
 w, "reads": component}` (`phase_width` since 2026-09-20, [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (i): the width of the window in steps, 1 through N, N / 2 by default, the
 w consecutive steps centred on s by the one floor `nature_beam.window_admits`)
 with `reads` one of `scalar`, `outside`, `here`, `vector`,
 `tensor`, `age` (the age moment; the entry's clock then counts it in place
-of the presence), the table generated from the keys by `world.default_table` (a
+of the presence), and on a `become` entry (the click trigger of the
+transformation, since 2026-09-20, [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (iii)) its `into` and `products`: the
+arrival clicked as `measure` clicks it and the same transformation fired,
+its products born at the reader's next self-creation, the entry consumed;
+the table generated from the keys by `world.default_table` (a
 free family read, a paid one measured, no window) and the world declaring
 only the entries that differ, `rule` optional in the object form, an entry
 equal to the default accepted and changing nothing; `lamp` `{rate: [n, d],
@@ -387,7 +400,16 @@ on a free family, `kind` on a family (pointing to
 MIGRATION: the quantum decides the kind), a family without `quantum`, a
 negative quantum, a fractional charge on a paid family (whole per unit of
 amount, D-1), a lamp on a measured event of a charged paid family (its
-releases would create charge from nothing), `charge` on a measured event
+releases would create charge from nothing), a `become` without `into` or
+`products`, `into` naming an unknown family or the event's own, a product
+naming an unknown family, a product's amount below 1, a free product's
+content other than 0, a paid product's content below 1, a product's label
+beyond the bound, `at` below 1 or absent on the clock trigger, `at` or
+`crowd` on a table entry, `crowd` negative or not an integer, `into` or
+`products` on an entry whose rule is not `become`, a `become` whose
+products' content exceeds the event's `amount` or whose charges do not
+balance, `become` on a family, and at run time an event that holds less
+than its products need at the trigger ([the transformation](TEST_EXPECTATIONS.md#the-transformation)), `charge` on a measured event
 (pointing to MIGRATION: the charge is the family's per unit of content), a
 family `charge` with a denominator of 0 or a part that is not an integer, a
 column named `gravity`, `charge` declared both as the key and under
@@ -432,13 +454,16 @@ kind `rays`.
 D beyond the rest vectors and the headings; per family its `quantum`,
 `charge` (the pair `[n, d]`), `phase`, `phase_per_link` and `lifetime`
 (None without one), no `kind`),
-`numbers` (per measured event its `position`, `family`, `span` and
-`phase_by_momentum`; the measured events' states carry `span` too, as
+`numbers` (per measured event its `position`, `family`, `span`,
+`phase_by_momentum` and, since 2026-09-20, `become`, the clock trigger as
+declared, by names, or None; the measured events' states carry `span` too, as
 `state.json` does), `action` (h, or None), `hypotheses` (`bohr-v1` when `action` is
 declared, the identity of the turn by momentum beside the law;
 `columns-v1` when a column beyond `charge` or a lifetime is declared,
-the identity of the one mechanism of the columns and their range; `[]`
-without either), `columns` (the
+the identity of the one mechanism of the columns and their range;
+`weak-v1` when a measured event declares `become` or a table entry's rule
+is `become`, the identity of the transformation; `[]`
+without any), `columns` (the
 world's, name and sign, in order: gravity, charge, the declared names)
 and per family `columns` (name, value, sign, aligned with the world's),
 the books per completed tick (`audit`, the `charge` line the
@@ -453,7 +478,8 @@ transformation) with
 rho x content, reduced), `charges` (the charge in every column by name,
 the exact rational sum over the families held, since 2026-09-20), momentum,
 windows and, since 2026-09-20, `widths` (the width of each entry's window,
-None where none is declared), detector, age, owed, what waits to be created again (`home`,
+None where none is declared), `became` (the transformations fired, since
+2026-09-20, the `family` then the one become), detector, age, owed, what waits to be created again (`home`,
 `home_content`), `waited`, phase steps, steps, what each met per family by
 rule, the clicks and the push taken, and `contacts`, the hand-overs it
 took per family of the arriving body; no record of its own since
@@ -479,7 +505,12 @@ turned it to, the phase it had otherwise), `contact` (since 2026-09-20:
 the body's `number`, its `node` and the destination `to`, the `occupant`,
 the body's `family`, the occupant's `rule` for it, the `axis` and the
 signed `component` the occupant gained, the body's `momentum` after; one
-per occupant that took a hand-over), and per
+per occupant that took a hand-over), `become` (since 2026-09-20, one
+per transformation at its products' birth: the `tick`, `node` and
+`measured`, the `trigger` "clock" or "click" and `triggered` the tick of
+the trigger, `from` and `into` the families, `products` as [family,
+amount, content, direction], `recoil` and `counted` the count the clock
+read at the trigger), and per
 interval per detector set and family a `record` line with the set's
 `record` (under `wave` the square with the `pointer` (X, Y); under `beam`
 the count), the set's `phase` and, for a set of one Node, its `node` and

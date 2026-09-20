@@ -255,6 +255,8 @@ class NatureBeamSimulation:
             widths=list(definition.widths),
             lamp_width=None if definition.lamp is None else definition.lamp.width,
             unit_charges=tuple(NO_CHARGE if f.free else f.charge for f in self.families),
+            become=definition.become,
+            transforms=list(definition.transforms),
         )
 
     def occupant(self, node: Address3) -> int | None:
@@ -462,8 +464,16 @@ class NatureBeamSimulation:
                 for index in range(len(self.families)):
                     self.ledger.held_escaped[index] += entry.held[index]
                     self.ledger.units_escaped[index] += entry.clicks[index]
-                    self.ledger.transit_absorbed[index] -= entry.pending_amount(index)
-                    self.ledger.content_absorbed[index] -= entry.pending_content(index)
+                    # What waits to be created again leaves with the body:
+                    # the home and re-released rows off the absorbed line,
+                    # the products of a transformation (never absorbed) on
+                    # the released line, all of them on the face.
+                    thrown_amount = entry.pending_thrown_amount(index)
+                    thrown_content = entry.pending_thrown_content(index)
+                    self.ledger.transit_absorbed[index] -= entry.pending_amount(index) - thrown_amount
+                    self.ledger.transit_released[index] += thrown_amount
+                    self.ledger.content_absorbed[index] -= entry.pending_content(index) - thrown_content
+                    self.ledger.content_released[index] += thrown_content
                     self.ledger.face_measured_content[port][index] += entry.held[index]
                     self.ledger.face_amount[port][index] += entry.pending_amount(index)
                     self.ledger.face_content[port][index] += entry.pending_content(index)
@@ -669,11 +679,15 @@ class NatureBeamSimulation:
             measured = {
                 "initial": self.held_initial[index],
                 "measured": ledger.held_measured[index],
+                # The content that entered the family's line by
+                # transformations (the weak force, 2026-09-20): positive
+                # into the family become, negative out of the family left.
+                "became": ledger.held_became[index],
                 "current": held_current[index],
                 "spent": ledger.held_spent[index],
                 "escaped": ledger.held_escaped[index],
             }
-            measured["balanced"] = measured["initial"] + measured["measured"] == (
+            measured["balanced"] = measured["initial"] + measured["measured"] + measured["became"] == (
                 measured["current"] + measured["spent"] + measured["escaped"]
             )
             in_transit = {

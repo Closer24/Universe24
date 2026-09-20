@@ -98,3 +98,104 @@ detector 352; `j2_stride2`: 32 of 1024, the far detector 688;
 `j2_stride2_odd`: no click at any reader, the far detector 711. The
 detector's world sees a cross-section where the GameBoard has a stride: a
 deterministic fraction, no draw, a filter and not an attenuation.
+
+## J1 and J3: the neutron's decay against its clock
+
+**What was added on the law's side** ([BEAM_LAW note 34](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(iii)): the transformation `become`, the identity `weak-v1`, one table
+rule on the one-way side of the border: a measured event becomes an event
+of another family and releases the rest as products, born as a re-release
+is with the recoil over all of them; the clock trigger (the measured-event
+key `become`: `at`, `into`, `products`, `crowd`) fires at the
+self-creation whose clock reaches `at` while the count the clock read is
+below the gate `crowd`; the click trigger (a `become` table entry) on an
+arrival within a window. The charges balance at load, the key and the
+entries are consumed, the books' `became` line and the record's `become`
+line. The clock is slowed by the count it reads as every clock is
+(`by_clock` at the world's suspension): a neutron in a crowd fires later,
+a neutron alone at `at` exactly.
+
+**J1, the free neutron's decay count.** 64 neutrons of the register's `n`
+(content 1839, fixed, no strong unit held) on a lattice of pitch 4
+(4 x 4 x 4) about the centre of an open 41^3 GameBoard, K 2^20, N 64,
+`release` [1, 1], `suspension` [1, 2^20], each with `become` at 512 into
+`p` (the charge 4 per unit on 1836) with the products `beta` (1, 3; the
+charge -7344 per unit of amount, D-1) and `nu` (1, 0), each passing every
+family; a shell of the paid family `d` at r = 18 (4170 Nodes) as one
+`beam` detector set measuring `beta` with `reads` `age` (the flight time
+on the click) and passing everything else; 650 intervals. `j1_lattice`:
+the neutrons alone, each clock reading its line-mates' rows (the rows of
+the other neutrons on its three axis lines at 4, 8 and 12 Links, each
+dwelling one or two intervals at its Node: 12 rows at an inner neutron,
+13 at a face, 14 at an edge, 15 at a corner). `j1_source`: with a fixed
+source `s` of content 4096 at the centre releasing one row per direction
+of the 290 primitive directions with |a| + |b| + |c| <= 6 per interval (a
+crowd with a gradient). The design's 512 neutrons at `at` 2048 were cut
+to 64 at 512 for the record's budget (the law is linear in the key, the
+reading its ratio).
+
+**J3, the bound neutron.** The deuteron of series I (`p` 1836 and `n`
+1839 each holding one unit of `nuclear`, the strong column G = 10000 with
+the lifetime 3, the whole fan of 290 directions, the width of the push
+2^28, at one Link about the centre of an open 21^3 GameBoard) with
+`become` at 512 on the neutron, a shell of `d` at r = 8 (762 Nodes) as a
+`beam` set measuring `beta`. `j3_deuteron` (700 intervals),
+`j3_deuteron_crowd` (the same with `crowd` 65536) and `j3_neutron_free`
+(the neutron alone, 600 intervals).
+
+## The expectations of J1 and J3, pinned before the runs (`expectations.json`)
+
+The generator writes `expectations.json`: for every neutron the count its
+clock read at tick 100 of a warm run of the same world without its
+`become` keys (a GAMEBOARD reading of the engine's own presence) and the
+tick that count gives by the clock's rule, at + floor(at x c / 2^20)
+(a clock reading a constant count c owes `by_clock(a, c, 2^20)` after
+every self-creation and the owed counts telescope), the reading inside
+when the neutron fires at that tick or up to three intervals before it
+(the crowd's build-up), never after.
+
+| World | What | Expected |
+| --- | --- | --- |
+| `j1_lattice` | the neutrons alone | the trigger ticks 522 .. 524 (the warm counts 22068, 23907 and 25746: 12, 13 and 14 rows of 1839; GAMEBOARD); the shell's 64 beta clicks a step, the 10th-to-90th-percentile width of the click ticks over their median below 0.1 (nature's memoryless decay: ln 9 / ln 2 = 3.17); every click the content 3 (a line); the count 64 (DETECTOR) |
+| `j1_source` | the source's fan on the lattice | the trigger ticks 524 .. 529 (the warm counts 25746 .. 36195, the neutrons on the fan's lines counting more and firing later; GAMEBOARD); the step, the line and the count 64 (DETECTOR) |
+| `j3_deuteron` | the bound neutron | the transformation at 574 (the warm count 128590 at one Link from the proton; later than the free neutron's 512, not never; GAMEBOARD); the pair then two protons at one Link, holding (no step; GAMEBOARD); one beta click at the shell with the content 3 (DETECTOR) |
+| `j3_deuteron_crowd` | the gate | no transformation in 700 intervals, the count above the gate 65536 at every pulse of the key (GAMEBOARD); no beta click (DETECTOR) |
+| `j3_neutron_free` | the neutron alone | the transformation at 512 exactly, its clock counting nothing (GAMEBOARD); one beta click with the content 3 (DETECTOR) |
+
+Against nature (PREDICTIONS entries 10 and 18, the law's own predictions,
+registered as such): a step where the survival is exponential, a line
+where the beta spectrum is continuous, a bound neutron that decays later
+or is held by a gate on the count where nature's is stable by its binding
+energy. Nothing is tuned.
+
+Run them and read the records:
+
+```bash
+python examples/events/weak/make_worlds.py
+PYTHONPATH=src python tools/run_series.py --jobs 3 --out artifacts/weak examples/events/weak/j1_*.json examples/events/weak/j3_*.json
+PYTHONPATH=src python tools/weak_readings.py artifacts/weak
+```
+
+The J1 runs take about 4 minutes each, the J3 runs about one; their
+records are large (the fan's rows at the border).
+
+## What was measured in J1 and J3 (2026-09-20)
+
+`tools/weak_readings.py`: 0 record checks failed, 15 readings inside, 3
+outside, nothing moved (the numbers in the register entry). Inside: the
+shell's 64 clicks a step in both J1 worlds (from tick 541 to 563 in
+`j1_lattice`, the median 549, the width over the median 0.036; 541 to
+571 in `j1_source`, 0.038), every click the content 3, the count 64; the
+deuteron's neutron firing at 577 (65 intervals after the free neutron's
+512) with the pair holding after (0 steps of 39 and 21 attempted, every
+attempt a hand-over); the gated neutron never firing; the free neutron at
+512 exactly; every beta reaching its shell. Outside, the trigger tick
+against the pinned tick in three worlds: the 8 corners of `j1_lattice`
+fired at 524 against the pinned 522 (the warm run had read 12 rows at
+tick 100 where their steady count is 15 rows, 27585, a gap of their
+line-mates' rows at that tick; 15 rows give 525 by the clock's rule), 48
+of the 64 neutrons of `j1_source` and the deuteron's neutron fired 1 to
+3 intervals after their pinned ticks (the count a clock reads under a
+fan's dwells is not one number over its history; the count at the trigger
+was the warm count). The estimator was one tick's count; the lesson for
+the next series is a range from the count's history over a dwell period.

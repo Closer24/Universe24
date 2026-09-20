@@ -1,6 +1,7 @@
 """The readings of series J, "the weak force" (docs/EXPERIMENTS.md, "J, the
 weak force"; examples/events/weak/make_worlds.py; the model owner,
-2026-09-20, "go on everything": the neutrino first, series J2).
+2026-09-20, "go on everything": the neutrino first, series J2; the
+transformation `become`, series J1 and J3).
 
 Reads the run folders of the worlds (the runner's `run.json`,
 `initialization.json` and `events.jsonl`, told apart by the `model` of the
@@ -10,28 +11,43 @@ such thing" about the host's readings of the GameBoard):
 
 - DETECTOR readings, the only kind reality has: a reader's clicks and its
   passes (its own records: the `events` of its state, its `pass` lines),
-  the far detector's clicks;
+  the far detector's clicks (J2); the shell's beta clicks per interval
+  (the decay curve read behind the detector), their contents (the
+  spectrum) and their ages (the flight), the nucleons' own clocks (their
+  `age` and `waited`) and their `contact` records (J1, J3);
 - GAMEBOARD readings, the host's view of the mechanism: the expectation
   computed from the engine's flight table (the rays born early enough to
-  reach a distance within the run), the source's stride.
+  reach a distance within the run) or from the engine's own presence
+  reading before the run (`expectations.json`), the source's stride, each
+  measured event's `become` line (the tick its clock fired, the count it
+  read), the bodies' steps.
 
-J2, the neutrino's passage through a filled bar: the expectation, written
-before the runs (README.md, docs/EXPERIMENTS.md): a window of width 1 takes
-exactly 1 / 64 of a stride-1 source's arrivals and nothing behind it takes
-anything (a filter, not an attenuation); a ladder of centres exhausts the
-beam after 64 readers; the default width takes the half circle; a stride
-of 2 gives 1 / 32 at the centre 0 and nothing at the centre 1 (the coset
-missed). The record checks (completed, the books balanced at every tick)
-fail the tool; the readings are registered inside or outside their
-expectation and never moved.
+The expectations, written before the runs (README.md, docs/EXPERIMENTS.md):
+J2, a window of width 1 takes exactly 1 / 64 of a stride-1 source's
+arrivals and nothing behind it takes anything (a filter, not an
+attenuation); a ladder of centres exhausts the beam after 64 readers; the
+default width takes the half circle; a stride of 2 gives 1 / 32 at the
+centre 0 and nothing at the centre 1 (the coset missed). J1, every neutron
+fires at the tick its steady count gives, at + floor(at x c / 2^20), or up
+to three intervals before it (the crowd's build-up), never after; the
+survival curve at the shell is a step (its 10th-to-90th-percentile width
+over its median far below nature's ln 9 / ln 2 = 3.17 for a memoryless
+decay); every beta click carries the content 3 (a line, not nature's
+continuum). J3, the bound neutron fires at the tick its count at one Link
+from the proton gives (later, not never: the design's `at x (1 + k)`), the
+pair then two protons at one Link, bound (no step); with the `crowd` gate
+it never fires; the free neutron at its key `at` exactly. The record checks
+(completed, the books balanced at every tick) fail the tool; the readings
+are registered inside or outside their expectation and never moved.
 
-    PYTHONPATH=src python tools/weak_readings.py artifacts/weak
+    PYTHONPATH=src python tools/weak_readings.py artifacts/weak [--expectations FILE]
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from dataclasses import dataclass, field
 from fractions import Fraction
@@ -46,20 +62,48 @@ MODEL_SUFFIX = "-v1"
 Kind = str
 GAMEBOARD: Kind = "GAMEBOARD"
 DETECTOR: Kind = "DETECTOR"
-ORDER = ("j2_filter", "j2_ladder", "j2_default", "j2_stride2", "j2_stride2_odd")
+ORDER = (
+    "j2_filter",
+    "j2_ladder",
+    "j2_default",
+    "j2_stride2",
+    "j2_stride2_odd",
+    "j1_lattice",
+    "j1_source",
+    "j3_deuteron",
+    "j3_deuteron_crowd",
+    "j3_neutron_free",
+)
+ROOT = Path(__file__).resolve().parents[1]
+EXPECTATIONS = ROOT / "examples" / "events" / "weak" / "expectations.json"
+# Nature's memoryless decay: the 10th-to-90th-percentile width of an
+# exponential survival over its median, ln 9 / ln 2.
+NATURE_WIDTH_OVER_MEDIAN = math.log(9) / math.log(2)
+Criterion = tuple[str, bool, Kind]
 
 
 @dataclass
 class Thing:
     """A measured event of the world: its number, family, position and,
-    per family name, the units it clicked (its state's `events`) and the
-    rays that passed it (its `pass` lines)."""
+    per family name, the units it clicked (its state's `events`), the rays
+    that passed it (its `pass` lines), its clock (`age`, `waited`), its
+    steps (the record's `step` lines) and the steps it attempted (its
+    state's `steps`, a refused step counted too: the difference is what it
+    handed over), its hand-overs, the key `at` of its clock trigger as
+    declared (None without) and its `become` line if it transformed."""
 
     number: int
     family: str
     position: tuple[int, int, int]
     clicks: dict[str, int] = field(default_factory=dict)
     passes: dict[str, int] = field(default_factory=dict)
+    age: int = 0
+    waited: int = 0
+    steps: int = 0
+    attempts: int = 0
+    contacts: int = 0
+    at: int | None = None
+    become: dict[str, object] | None = None
 
     def arrivals(self, family: str) -> int:
         """The rays of a family that arrived at the thing over the run: what
@@ -78,9 +122,18 @@ class Reading:
     phase_steps: int
     stride: int
     things: list[Thing] = field(default_factory=list)
+    # The shell's beta clicks per tick, their contents and their ages (the
+    # click record's `reading` under `reads: "age"`, the age moment of one
+    # unit: its age).
+    shell_clicks: dict[int, int] = field(default_factory=dict)
+    shell_contents: dict[int, int] = field(default_factory=dict)
+    shell_ages: list[int] = field(default_factory=list)
 
     def of_family(self, family: str) -> list[Thing]:
         return [thing for thing in self.things if thing.family == family]
+
+    def transformed(self) -> list[Thing]:
+        return [thing for thing in self.things if thing.become is not None]
 
 
 def first_arrival_age(distance: int) -> int:
@@ -129,16 +182,41 @@ def read_run(folder: Path) -> Reading:
     for state in record["measured"]:
         thing = by_number[int(state["number"])]
         thing.clicks = {name: int(units) for name, units in zip(names, state["events"], strict=True)}
+        thing.age, thing.waited, thing.attempts = (
+            int(state["age"]),
+            int(state["waited"]),
+            int(state["steps"]),
+        )
+        thing.contacts = sum(int(v) for v in state["contacts"])
+        declared = record["numbers"][str(thing.number)].get("become")
+        if declared is not None:
+            thing.at = int(declared["at"])
+    shell = {str(d["name"]) for d in world.get("detectors", [])}
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for text in stream:
-            if '"pass"' not in text:
+            if (
+                '"pass"' not in text
+                and '"become"' not in text
+                and '"click"' not in text
+                and '"step"' not in text
+            ):
                 continue
             event = json.loads(text)
-            if event["event"] != "pass" or event.get("measured") is None:
-                continue
-            thing = by_number[int(event["measured"])]
-            family = str(event["family"])
-            thing.passes[family] = thing.passes.get(family, 0) + 1
+            kind = event["event"]
+            if kind == "pass" and event.get("measured") is not None:
+                thing = by_number[int(event["measured"])]
+                family = str(event["family"])
+                thing.passes[family] = thing.passes.get(family, 0) + 1
+            elif kind == "become":
+                by_number[int(event["measured"])].become = event
+            elif kind == "step":
+                by_number[int(event["measured"])].steps += 1
+            elif kind == "click" and event.get("detector") in shell and event["family"] == "beta":
+                tick = int(event["tick"])
+                reading.shell_clicks[tick] = reading.shell_clicks.get(tick, 0) + int(event["amount"])
+                content = int(event["content"])
+                reading.shell_contents[content] = reading.shell_contents.get(content, 0) + 1
+                reading.shell_ages.append(int(event["reading"]))
     return reading
 
 
@@ -152,15 +230,36 @@ def find_runs(root: Path) -> list[Reading]:
     return sorted(found, key=lambda r: (ORDER.index(r.name) if r.name in ORDER else len(ORDER), r.name))
 
 
-def expectations(reading: Reading) -> list[tuple[str, bool, Kind]]:
-    """The criteria of each world against its expectation, written before
-    the runs (README.md): (label, inside, the kind of the reading). The
-    expected far counts are the rays born at the ticks 1 .. ticks - a_far
-    (a_far the first-arrival age off the flight table) whose phase no
-    reader on the way admits (GAMEBOARD: the expectation's computation)."""
-    found: list[tuple[str, bool, Kind]] = []
-    if not reading.name.startswith("j2"):
-        return found
+def load_expectations(path: Path) -> dict[str, object]:
+    if not path.exists():
+        return {}
+    found: dict[str, object] = json.loads(path.read_text(encoding="utf-8"))
+    return found
+
+
+def percentile_tick(curve: dict[int, int], fraction: float) -> int:
+    """The tick by which the given fraction of the curve's clicks arrived."""
+    total = sum(curve.values())
+    running = 0
+    for tick in sorted(curve):
+        running += curve[tick]
+        if running >= fraction * total:
+            return tick
+    return max(curve) if curve else 0
+
+
+def curve_shape(curve: dict[int, int]) -> tuple[int, int, int, float]:
+    """The median tick, the 10th and the 90th percentile ticks of the
+    shell's click curve and the 10-to-90 width over the median (0 without
+    clicks)."""
+    if not curve:
+        return 0, 0, 0, 0.0
+    median = percentile_tick(curve, 0.5)
+    low, high = percentile_tick(curve, 0.1), percentile_tick(curve, 0.9)
+    return median, low, high, (high - low) / median
+
+
+def j2_expectations(reading: Reading) -> list[Criterion]:
     readers = [thing for thing in reading.of_family("d") if thing.position[0] < reading.shape[0] - 10]
     far = [thing for thing in reading.of_family("d") if thing.position[0] >= reading.shape[0] - 10][-1]
     first = readers[0]
@@ -172,6 +271,7 @@ def expectations(reading: Reading) -> list[tuple[str, bool, Kind]]:
     modulus = reading.phase_steps
     stride = reading.stride
     phases = [(stride * (t - 1)) % modulus for t in range(1, born_far + 1)]
+    found: list[Criterion] = []
     if reading.name == "j2_filter":
         found.append(
             (
@@ -242,16 +342,119 @@ def expectations(reading: Reading) -> list[tuple[str, bool, Kind]]:
     return found
 
 
-def print_world(reading: Reading) -> list[tuple[str, bool, Kind]]:
+def become_expectations(reading: Reading, expected: dict[str, object]) -> list[Criterion]:
+    """J1 and J3 against the expectations the generator pinned from the
+    engine's own presence reading: the trigger ticks, the shell's curve, the
+    spectrum, the pair's binding."""
+    found: list[Criterion] = []
+    neutrons = reading.of_family("n")
+    fired = {thing.number: thing.become for thing in neutrons if thing.become is not None}
+    if expected.get("never"):
+        found.append(
+            (
+                f"no transformation in {reading.ticks} intervals (the count above the gate {expected['gate']})",
+                not fired,
+                GAMEBOARD,
+            )
+        )
+        found.append(("no beta click at the shell", not reading.shell_clicks, DETECTOR))
+        return found
+    ticks = expected.get("ticks", {})
+    slack = int(str(expected.get("slack", 0)))
+    assert isinstance(ticks, dict)
+    inside = all(
+        number in fired
+        and int(str(ticks[str(number)])) - slack
+        <= int(str(fired[number]["triggered"]))
+        <= int(str(ticks[str(number)]))
+        for number in (thing.number for thing in neutrons)
+    )
+    found.append(
+        (
+            f"every neutron fires at its pinned tick or up to {slack} before it "
+            f"({min(ticks.values())} .. {max(ticks.values())} pinned)",
+            inside,
+            GAMEBOARD,
+        )
+    )
+    found.append(
+        (
+            "every beta click at the shell carries the content 3 (a line)",
+            set(reading.shell_contents) == {3} and bool(reading.shell_contents),
+            DETECTOR,
+        )
+    )
+    if reading.name.startswith("j1"):
+        found.append(
+            (
+                f"the shell's beta count is the neutrons' ({len(neutrons)})",
+                sum(reading.shell_clicks.values()) == len(neutrons),
+                DETECTOR,
+            )
+        )
+        median, low, high, ratio = curve_shape(reading.shell_clicks)
+        found.append(
+            (
+                f"the survival curve is a step: its 10-to-90 width over its median below 0.1 "
+                f"(nature's memoryless decay {NATURE_WIDTH_OVER_MEDIAN:.2f})",
+                bool(reading.shell_clicks) and ratio < 0.1,
+                DETECTOR,
+            )
+        )
+    if reading.name == "j3_deuteron":
+        bodies = [thing for thing in reading.things if thing.family in ("p", "n")]
+        found.append(
+            (
+                "the pair holds after the transformation (no step in the run; every "
+                "attempted step refused, a hand-over)",
+                all(b.steps == 0 for b in bodies),
+                GAMEBOARD,
+            )
+        )
+        found.append(("the beta reaches the shell", sum(reading.shell_clicks.values()) == 1, DETECTOR))
+    if reading.name == "j3_neutron_free":
+        keys = sorted({thing.at for thing in neutrons if thing.at is not None})
+        found.append(
+            (
+                f"the free neutron fires at its key {keys} exactly (its clock counts nothing)",
+                bool(keys) and [b["triggered"] for b in fired.values()] == keys,
+                GAMEBOARD,
+            )
+        )
+        found.append(("the beta reaches the shell", sum(reading.shell_clicks.values()) == 1, DETECTOR))
+    return found
+
+
+def expectations(reading: Reading, pinned: dict[str, object] | None = None) -> list[Criterion]:
+    """The criteria of each world against its expectation, written before
+    the runs (README.md): (label, inside, the kind of the reading). The
+    expected far counts of J2 are the rays born at the ticks 1 .. ticks -
+    a_far (a_far the first-arrival age off the flight table) whose phase no
+    reader on the way admits; the expected trigger ticks of J1 and J3 are
+    the generator's, from the engine's own presence reading."""
+    if reading.name.startswith("j2"):
+        return j2_expectations(reading)
+    pinned = pinned or {}
+    become = pinned.get("become", {})
+    assert isinstance(become, dict)
+    expected = become.get(reading.name)
+    if not isinstance(expected, dict):
+        return []
+    return become_expectations(reading, expected)
+
+
+def print_world(reading: Reading, pinned: dict[str, object]) -> list[Criterion]:
     """Print the readings of one world and return its criteria."""
     print(
-        f"[{GAMEBOARD}] world `{reading.name}`: the bar {reading.shape[0]} x {reading.shape[1]} x "
-        f"{reading.shape[2]}, N {reading.phase_steps}, the source's stride {reading.stride}; "
-        f"{reading.ticks} intervals in {reading.elapsed:.1f} s"
+        f"[{GAMEBOARD}] world `{reading.name}`: the GameBoard {reading.shape[0]} x {reading.shape[1]} x "
+        f"{reading.shape[2]}, N {reading.phase_steps}; {reading.ticks} intervals in {reading.elapsed:.1f} s"
     )
-    readers = [thing for thing in reading.of_family("d") if thing.position[0] < reading.shape[0] - 10]
-    far = [thing for thing in reading.of_family("d") if thing.position[0] >= reading.shape[0] - 10]
-    if readers:
+    if reading.name.startswith("j2"):
+        print(f"[{GAMEBOARD}]   the source's stride {reading.stride}")
+        readers = [
+            thing for thing in reading.of_family("d") if thing.position[0] < reading.shape[0] - 10
+        ]
+        far = [thing for thing in reading.of_family("d") if thing.position[0] >= reading.shape[0] - 10]
         first = readers[0]
         print(
             f"[{DETECTOR}]   the first reader (x = {first.position[0]}): {first.clicks.get('nu', 0)} clicks of "
@@ -265,14 +468,58 @@ def print_world(reading: Reading) -> list[tuple[str, bool, Kind]]:
         print(
             f"[{DETECTOR}]   readers that clicked: {len(taking)} of {len(readers)}; the first ten {taking[:10]}"
         )
-    for thing in far:
-        born = reading.ticks - first_arrival_age(thing.position[0])
+        for thing in far:
+            born = reading.ticks - first_arrival_age(thing.position[0])
+            print(
+                f"[{DETECTOR}]   the far detector (x = {thing.position[0]}): {thing.clicks.get('nu', 0)} clicks; "
+                f"[{GAMEBOARD}] {born} rays reach its distance within the run (the first-arrival age "
+                f"{first_arrival_age(thing.position[0])} off the flight table)"
+            )
+    else:
+        neutrons = reading.of_family("n")
+        fired = [thing for thing in neutrons if thing.become is not None]
+        triggered = sorted(int(str(thing.become["triggered"])) for thing in fired if thing.become)
+        counts = sorted(int(str(thing.become["counted"])) for thing in fired if thing.become)
         print(
-            f"[{DETECTOR}]   the far detector (x = {thing.position[0]}): {thing.clicks.get('nu', 0)} clicks; "
-            f"[{GAMEBOARD}] {born} rays reach its distance within the run (the first-arrival age "
-            f"{first_arrival_age(thing.position[0])} off the flight table)"
+            f"[{GAMEBOARD}]   {len(fired)} of {len(neutrons)} neutrons transformed"
+            + (
+                f"; the trigger ticks {triggered[0]} .. {triggered[-1]} ({len(set(triggered))} distinct), "
+                f"the counts read at the trigger {counts[0]} .. {counts[-1]}"
+                if fired
+                else ""
+            )
         )
-    criteria = expectations(reading)
+        for thing in neutrons[:2] if len(neutrons) > 2 else neutrons:
+            print(
+                f"[{DETECTOR}]   the clock of number {thing.number} at {thing.position}: age {thing.age}, "
+                f"waited {thing.waited} (the rate {thing.age / max(1, thing.age + thing.waited):.4f})"
+            )
+        bodies = [thing for thing in reading.things if thing.family in ("p", "n")]
+        for thing in bodies:
+            print(
+                f"[{GAMEBOARD}]   number {thing.number} ({thing.family}) at {thing.position}: {thing.steps} steps "
+                f"of {thing.attempts} attempted (the refused ones handed over); "
+                f"[{DETECTOR}] {thing.contacts} hand-overs taken"
+            )
+        total = sum(reading.shell_clicks.values())
+        median, low, high, ratio = curve_shape(reading.shell_clicks)
+        print(
+            f"[{DETECTOR}]   the shell's beta clicks: {total} in all"
+            + (
+                f", from tick {min(reading.shell_clicks)} to {max(reading.shell_clicks)}; the median tick {median}, "
+                f"the 10th and 90th percentiles {low} and {high}, the width over the median {ratio:.4f} "
+                f"(nature's memoryless decay {NATURE_WIDTH_OVER_MEDIAN:.2f})"
+                if total
+                else ""
+            )
+        )
+        if total:
+            ages = sorted(reading.shell_ages)
+            print(
+                f"[{DETECTOR}]   the clicks' contents {dict(sorted(reading.shell_contents.items()))} (the spectrum), "
+                f"their ages {ages[0]} .. {ages[-1]} (the flight to the shell)"
+            )
+    criteria = expectations(reading, pinned)
     for label, ok, kind in criteria:
         print(f"[{kind}]   {label}: {'inside' if ok else 'outside'}")
     print()
@@ -284,11 +531,15 @@ def main(argv: list[str] | None = None) -> int:
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument("root", type=Path, help="the folder holding the run folders")
+    parser.add_argument(
+        "--expectations", type=Path, default=EXPECTATIONS, help="the generator's pinned expectations"
+    )
     args = parser.parse_args(argv)
     readings = find_runs(args.root)
     if not readings:
         print(f"no weak-force run under {args.root}", file=sys.stderr)
         return 2
+    pinned = load_expectations(args.expectations)
     failed = 0
     for r in readings:
         for label, ok in (("completed", r.completed), ("balanced", r.balanced)):
@@ -297,13 +548,14 @@ def main(argv: list[str] | None = None) -> int:
     print()
     print(
         f"every line below is labelled [{GAMEBOARD}] (the host's view of the GameBoard: the expectation "
-        f"from the flight table, the stride; exists for us, not in reality) or [{DETECTOR}] (a measured "
-        "event's own records: the only kind reality has)"
+        f"from the engine's tables, the stride, the trigger ticks, the steps; exists for us, not in "
+        f"reality) or [{DETECTOR}] (a measured event's or a detector set's own records: the only kind "
+        "reality has)"
     )
     print()
-    criteria: list[tuple[str, bool, Kind]] = []
+    criteria: list[Criterion] = []
     for r in readings:
-        criteria += print_world(r)
+        criteria += print_world(r, pinned)
     inside = sum(1 for _, ok, _ in criteria if ok)
     print(
         f"{failed} record check(s) failed; {inside} reading(s) inside, {len(criteria) - inside} outside"

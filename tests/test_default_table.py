@@ -183,7 +183,10 @@ def example_worlds() -> list[Path]:
     return sorted(
         path
         for path in (ROOT / "examples" / "events").rglob("*.json")
-        if json.loads(path.read_text(encoding="utf-8")).get("format") != "event-entities-v1"
+        # A world declares `law` and never `format`: an entity definitions file
+        # (`event-entities-v1`) and a readings tool's expectations file
+        # (`weak-expectations-v1`) are not worlds.
+        if "format" not in json.loads(path.read_text(encoding="utf-8"))
     )
 
 

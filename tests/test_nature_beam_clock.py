@@ -262,9 +262,12 @@ def test_a_measured_event_steps_off_its_clock_and_a_step_onto_another_is_refused
             assert books["momentum"]["measured"] == [1024, 0, 0]
         else:
             assert 2 not in simulation.measured
+            # The measured line carries `became` since 2026-09-20 (the
+            # transformation `become`): 0 without one.
             assert books["families"]["m"]["measured"] == {
                 "initial": 32,
                 "measured": 0,
+                "became": 0,
                 "current": 16,
                 "spent": 0,
                 "escaped": 16,

@@ -101,19 +101,26 @@ import numpy as np
 from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
-from event_universe.events.measured import Ledger, Measured, count_component
+from event_universe.events.measured import Ledger, Measured, PendingRow, count_component
 from event_universe.events.world import (
     AGE_READS,
     BEAM_LAW,
+    BECOME_RULE,
+    CHARGE_INDEX,
+    CONTACT_DEFAULT,
     FACE_NAMES,
     FIXED_DIRECTIONS,
     HEADING_OFFSET,
     LIFETIME_NAME,
     MOMENTUM_BOUND,
     REST_DIRECTIONS,
+    FamilyDefinition,
     NatureBeamWorld,
     Q,
+    Transformation,
     Vector,
+    default_reads,
+    default_rule,
     default_width,
 )
 
@@ -1158,8 +1165,110 @@ class GameBoardDiagnostics:
 
 # The codes of a measured event's table entries, an array over (measured
 # event, family) for the bulk gates of step 4.
-RULE_CODES = {"pass": 0, "read": 1, "measure": 2, "rerelease": 3}
+RULE_CODES = {"pass": 0, "read": 1, "measure": 2, "rerelease": 3, BECOME_RULE: 4}
 PASS_RULE, READ_RULE, MEASURE_RULE = RULE_CODES["pass"], RULE_CODES["read"], RULE_CODES["measure"]
+TRANSFORM_RULE = RULE_CODES[BECOME_RULE]
+RULE_NAMES = {code: name for name, code in RULE_CODES.items()}
+MEASURE_RULE_NAME = "measure"
+
+
+# -- the transformation ------------------------------------------------------------
+
+
+def transform(
+    entry: Measured,
+    rule: Transformation,
+    trigger: str,
+    tick: int,
+    ledger: Ledger,
+    families: tuple[FamilyDefinition, ...],
+) -> None:
+    """The one rule `become` (the weak force in the world's terms, the model
+    owner's "go on everything", 2026-09-20; the physicist's design, WEAK.md
+    2.2; BEAM_LAW note 34 (iii)), called from its two triggers, the click
+    (step 4: an arrival of the entry's family clicked as `measure` clicks
+    it) and the clock (step 5: the self-creation whose age is at the key
+    `at`, `ages_at_key`, the gate `crowd` open): the measured event becomes
+    an event of the family `into` and releases the rest as products.
+
+    1. The products are paid from what the event holds of its own family:
+       R = the sum of amount x content; an event that holds less refuses
+       the run naming itself (a declared transformation that cannot be
+       paid is a defect of the world, loud, never silent).
+    2. The family line moves: held[into] += held[from] - R, held[from] = 0,
+       the event's family is `into`; every other family held (the strong
+       unit, absorbed content, clicked units) stays where it is; the
+       event's number, position, set, momentum, age, phase, owed count and
+       detector set are untouched (it is the same measured event with
+       another family's content; its rays come home as before). The books'
+       `became` line takes -held[from] on the family left and +(held[from]
+       - R) on the family become.
+    3. The products become pending rows (`PendingRow`): product k with its
+       amount, its content per unit, the parent's phase at the trigger,
+       the tie offset k (born in step 5 apportioned whole over the event's
+       directions with the leftover counted from (clock age + k) mod n, as
+       a re-release is, so that two products of amount 1 leave on
+       different directions) and `thrown` (the recoil over all the
+       products, free and paid: a free product is a thing thrown, not the
+       field).
+    4. The record: the `become` line is written at the products' birth
+       (step 5), when their directions and the recoil are known, with the
+       trigger and its tick.
+    5. The transformation is the event's one change of family: its clock
+       trigger and every `become` entry of its table are consumed, the
+       entries reset to the keys' own rule for their family with no
+       window (a `become` entry is the transformation's; the other entries
+       stay as declared), the contact under them the default.
+
+    One-way (a change of a measured event's record, as a click and a
+    release are; the walk and the collision read nothing of it), local
+    (the event's own record, the arrival at its Node), fixed work (one
+    comparison per self-creation at the trigger, one apportioning per
+    product at the birth), fixed storage (the declaration), no draw, no
+    register, no formula in a payload."""
+    source = entry.family
+    needed = rule.needed
+    held = entry.held[source]
+    if held < needed:
+        raise ValueError(
+            f"{BEAM_LAW}: measured event {entry.number} at {list(entry.position)} cannot pay its "
+            f"transformation into {families[rule.into].name!r} at tick {tick}: it holds {held} of "
+            f"{families[source].name!r} and the products need {needed}"
+        )
+    moved = held - needed
+    entry.held[rule.into] = bounded(entry.held[rule.into] + moved, entry, "content")
+    entry.held[source] = 0
+    ledger.held_became[source] -= held
+    ledger.held_became[rule.into] += moved
+    entry.family = rule.into
+    entry.rho = entry.family_values[rule.into][CHARGE_INDEX]
+    for k, (family, amount, content) in enumerate(rule.products):
+        entry.pending[family].append(PendingRow(amount, content, entry.phase, k, True))
+    entry.became += 1
+    entry.transformed.append((trigger, tick, source, rule.into, entry.counted))
+    entry.become = None
+    entry.transforms = [None] * len(entry.transforms)
+    rules: list[str] = []
+    windows: list[int | None] = []
+    reads: list[str] = []
+    widths: list[int | None] = []
+    contact: list[str] = []
+    for f, (rule_f, window, component, width, contact_f) in enumerate(
+        zip(entry.table, entry.windows, entry.reads, entry.widths, entry.contact, strict=True)
+    ):
+        if rule_f == BECOME_RULE:
+            rule_f = default_rule(families[f])
+            window, component, width, contact_f = None, default_reads(rule_f), None, CONTACT_DEFAULT
+        rules.append(rule_f)
+        windows.append(window)
+        reads.append(component)
+        widths.append(width)
+        contact.append(contact_f)
+    entry.table = tuple(rules)
+    entry.windows = windows
+    entry.reads = tuple(reads)
+    entry.widths = widths
+    entry.contact = tuple(contact)
 
 
 FIRST = np.zeros(1, dtype=np.int64)
@@ -1884,7 +1993,9 @@ def nature_beam(
                 # opposite); a paired couple passes on whole, the rest of a
                 # row clicks.
                 cancelled = np.zeros(taken.shape[0], dtype=np.int64)
-                pairing = np.flatnonzero((rule_t == MEASURE_RULE) & ~st_wave[st_t])
+                pairing = np.flatnonzero(
+                    ((rule_t == MEASURE_RULE) | (rule_t == TRANSFORM_RULE)) & ~st_wave[st_t]
+                )
                 if pairing.shape[0] >= 2:
                     sets_p = st_t[pairing]
                     for set_index in np.unique(sets_p).tolist():
@@ -2044,7 +2155,7 @@ def nature_beam(
                 a + b
                 for a, b in zip(plan.left_momentum, exact_column_sums(labels[absorbed]), strict=True)
             ]
-            clicked = np.flatnonzero(rule_t == MEASURE_RULE)
+            clicked = np.flatnonzero((rule_t == MEASURE_RULE) | (rule_t == TRANSFORM_RULE))
             if clicked.shape[0]:
                 clicked = clicked[np.argsort(st_t[clicked], kind="stable")]
                 st_c = st_t[clicked]
@@ -2110,13 +2221,16 @@ def nature_beam(
                     continue
                 name = families[family].name
                 free = free_of[family]
-                rule = entry.table[family]
+                # The rule as the interval's plan read it (a `become` entry
+                # consumed by a transformation of this interval is applied
+                # as the plan made it: the click).
+                rule = RULE_NAMES[int(ev_rule[i, family])]
                 home_plan = plan.home.get(i)
                 if home_plan is not None:
                     k0, k1, total, carried, taken_in = home_plan
                     pending = entry.pending[family]
                     for k in range(k0, k1):
-                        pending.append((plan.h_amount[k], plan.h_content[k], plan.h_phase[k]))
+                        pending.append(PendingRow(plan.h_amount[k], plan.h_content[k], plan.h_phase[k]))
                     entry.taken[family]["home"] += total
                     ledger.transit_absorbed[family] += total
                     ledger.content_absorbed[family] += carried
@@ -2215,7 +2329,12 @@ def nature_beam(
                         group_total = plan.g_total[gi]
                         group_content = plan.g_content[gi]
                         reading_value = reading_values[gi]
-                        entry.taken[family][rule] += group_total
+                        # A `become` entry's click is tallied as the
+                        # measure-click it is; the transformation is
+                        # counted on `became`.
+                        entry.taken[family][MEASURE_RULE_NAME if rule == BECOME_RULE else rule] += (
+                            group_total
+                        )
                         if rule == "read":
                             if record is not None:
                                 record(
@@ -2240,7 +2359,9 @@ def nature_beam(
                         if rule == "rerelease":
                             pending = entry.pending[family]
                             for k in range(k0, k1):
-                                pending.append((plan.t_amount[k], plan.t_content[k], plan.t_phase[k]))
+                                pending.append(
+                                    PendingRow(plan.t_amount[k], plan.t_content[k], plan.t_phase[k])
+                                )
                             if record is not None:
                                 record(
                                     {
@@ -2282,6 +2403,15 @@ def nature_beam(
                                         "reading": reading_value,
                                     }
                                 )
+                        # The click trigger of the transformation: the
+                        # first click of a `become` entry in the interval
+                        # fires it (the entry is consumed with it; the
+                        # groups of the same interval admitted in bulk
+                        # still click), the products born at the reader's
+                        # next self-creation.
+                        transformation = entry.transforms[family]
+                        if rule == BECOME_RULE and transformation is not None:
+                            transform(entry, transformation, "click", tick, ledger, families)
                 # The set's record, once per set per family per interval,
                 # after the set's last active measured event: under `wave`
                 # the pointer's square, under `beam` the count clicked,
@@ -2328,32 +2458,55 @@ def nature_beam(
     # 5. The self-creations: the releases into the store.
     numerator, denominator_release = world.release
     # Only a measured event that can release anything is visited (in number
-    # order): a lamp, a holder of a free family's content, or one with rows
-    # pending (home or re-released); any other would find nothing to create.
+    # order): a lamp, a holder of a free family's content, one with rows
+    # pending (home, re-released or a product) or one with a clock trigger
+    # of a transformation; any other would find nothing to create.
     for entry in entries:
         if not entry.creating or not (
             entry.lamp_rate is not None
             or any(free and held > 0 for free, held in zip(free_of, entry.held, strict=True))
             or any(entry.pending)
+            or entry.become is not None
         ):
             continue
         age, turn = entry.clock_age, entry.turn
+        # The clock trigger of the transformation, before this
+        # self-creation's releases: the event's own age against the key
+        # `at` by the one primitive (`ages_at_key`: the self-creation that
+        # takes the clock from at - 1 to at, then every `at`), the gate
+        # `crowd` open when the count the clock read this interval is
+        # below it; the products are born below with age 0.
+        clock_trigger = entry.become
+        if (
+            clock_trigger is not None
+            and clock_trigger.at is not None
+            and bool(ages_at_key(np.array([entry.age], dtype=np.int64), clock_trigger.at)[0])
+            and (clock_trigger.crowd is None or entry.counted < clock_trigger.crowd)
+        ):
+            transform(entry, clock_trigger, "clock", tick, ledger, families)
+        # The products born this self-creation (family, amount, content,
+        # direction) and their recoil, for the `become` record.
+        thrown_rows: list[list[object]] = []
+        thrown_recoil = [0, 0, 0]
         for family, store in enumerate(stores):
             definition = families[family]
             free = free_of[family]
-            born: list[tuple[int, int, int, int]] = []  # (direction, amount, content, phase)
+            # (direction, amount, content, phase, thrown)
+            born: list[tuple[int, int, int, int, bool]] = []
             if free and entry.held[family] > 0:
                 amount = by_clock(age, entry.held[family] * numerator, denominator_release)
                 if amount:
-                    born.extend((direction, amount, 0, entry.phase) for direction in entry.directions)
+                    born.extend(
+                        (direction, amount, 0, entry.phase, False) for direction in entry.directions
+                    )
             if entry.pending[family]:
                 ways = len(entry.directions)
-                for amount, content, phase in entry.pending[family]:
-                    shares = apportion_whole(amount, [1] * ways, age % ways)
+                for row in entry.pending[family]:
+                    shares = apportion_whole(row.amount, [1] * ways, (age + row.first) % ways)
                     for direction, share in zip(entry.directions, shares, strict=True):
                         if share:
-                            born.append((direction, share, content, phase))
-                            ledger.content_released[family] += share * content
+                            born.append((direction, share, row.content, row.phase, row.thrown))
+                            ledger.content_released[family] += share * row.content
                 entry.pending[family] = []
             if (
                 entry.lamp_rate is not None
@@ -2375,7 +2528,7 @@ def nature_beam(
                 for direction in entry.lamp_directions:
                     amount = min(by_clock(age, rate_n, rate_d), entry.held[family] // cost)
                     if amount:
-                        born.append((direction, amount, cost, entry.phase))
+                        born.append((direction, amount, cost, entry.phase, False))
                         content = cost * amount
                         entry.held[family] -= content
                         ledger.held_spent[family] += content
@@ -2396,11 +2549,12 @@ def nature_beam(
             body = entry.nodes
             if len(body) > 1:
                 ways = len(body)
-                split: list[tuple[int, int, int, int, int]] = []  # (node, direction, amount, ...)
-                for direction, amount, content, phase in born:
+                # (node, direction, amount, content, phase, thrown)
+                split: list[tuple[int, int, int, int, int, bool]] = []
+                for direction, amount, content, phase, thrown in born:
                     shares = apportion_whole(amount, [1] * ways, age % ways)
                     split.extend(
-                        (store.flat(node), direction, share, content, phase)
+                        (store.flat(node), direction, share, content, phase, thrown)
                         for node, share in zip(body, shares, strict=True)
                         if share
                     )
@@ -2412,10 +2566,14 @@ def nature_beam(
             direction_column = np.array([b[0] for b in born], dtype=np.int64)
             amount_column = np.array([b[1] for b in born], dtype=np.int64)
             content_column = np.array([b[2] for b in born], dtype=np.int64)
+            thrown_mask = np.array([b[4] for b in born], dtype=bool)
             # The labels of the born rows (the one label, its product checked
             # per row before it is formed, refused naming the Node and the
             # amount): a paid family's emitter takes their sum as its
-            # recoil, a lamp's release and a re-emission alike.
+            # recoil, a lamp's release and a re-emission alike; a free
+            # family's emitter takes the recoil of its products alone (the
+            # things thrown by a transformation; a free release is the
+            # field and takes none).
             labels = momentum_labels(
                 unit, direction_column, amount_column, content_column, free, entry.position
             )
@@ -2425,6 +2583,19 @@ def nature_beam(
                     bounded(a - b, entry, "momentum")
                     for a, b in zip(entry.momentum, born_momentum, strict=True)
                 ]
+            if thrown_mask.any():
+                thrown_momentum = exact_column_sums(labels[thrown_mask])
+                if free:
+                    entry.momentum = [
+                        bounded(a - b, entry, "momentum")
+                        for a, b in zip(entry.momentum, thrown_momentum, strict=True)
+                    ]
+                thrown_recoil = [a - b for a, b in zip(thrown_recoil, thrown_momentum, strict=True)]
+                thrown_rows.extend(
+                    [definition.name, b[1], b[2], [int(v) for v in flight.vectors[b[0]]]]
+                    for b in born
+                    if b[4]
+                )
             ledger.transit_momentum = [
                 a + b for a, b in zip(ledger.transit_momentum, born_momentum, strict=True)
             ]
@@ -2439,6 +2610,28 @@ def nature_beam(
                 arrival=np.full(count, NO_ARRIVAL, dtype=np.int64),
             )
             ledger.transit_released[family] += int(exact_sum(amount_column))
+        # The `become` record, at the products' birth: the trigger and its
+        # tick, the families, the products with their directions and the
+        # recoil over them, the count the clock read at the trigger.
+        if entry.transformed:
+            if record is not None:
+                for trigger, triggered, source, into, count_read in entry.transformed:
+                    record(
+                        {
+                            "event": "become",
+                            "tick": tick,
+                            "node": list(entry.position),
+                            "measured": entry.number,
+                            "trigger": trigger,
+                            "triggered": triggered,
+                            "from": families[source].name,
+                            "into": families[into].name,
+                            "products": thrown_rows,
+                            "recoil": thrown_recoil,
+                            "counted": count_read,
+                        }
+                    )
+            entry.transformed = []
 
     # 6. The border `lifetime` (the model owner, 2026-09-20: "the event
     # whose age reaches L makes no next event but an escape click in the

@@ -243,7 +243,20 @@ the first reader takes exactly 1 / 64 of a stride-1 source's arrivals and
 the 127 behind it nothing (a filter, not an attenuation), the ladder
 exhausts the beam after 64 readers, the stride 2 gives 1 / 32 at the centre
 0 and nothing at the centre 1; 13 readings inside, 0 outside, registered
-and not tuned.
+and not tuned. J1, the free neutron's decay count against its clock (the
+transformation `become`, `weak-v1`, [BEAM_LAW note 34](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(iii)): 64 neutrons of the register's `n` on a lattice of pitch 4 in an
+open 41^3 GameBoard, each with `become` at 512 into `p` with the products
+`beta` and `nu`, a shell of readers at r = 18 declared as one `beam`
+detector measuring `beta` with `reads` `age`; alone (`j1_lattice`) and
+with a fixed source at the centre (`j1_source`). J3, the bound neutron:
+the deuteron of series I with `become` at 512 on the neutron
+(`j3_deuteron`), the same with the gate `crowd` 65536
+(`j3_deuteron_crowd`) and the neutron alone (`j3_neutron_free`). The tool
+reads each neutron's `become` line (its tick and the count its clock read,
+GAMEBOARD) and the shell's clicks per interval with their contents and
+ages (DETECTOR) against the ticks computed before the runs from the
+clock's rule and the counts a warm run read (`expectations.json`).
 
 ## The entity catalog
 

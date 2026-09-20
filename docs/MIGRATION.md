@@ -6,6 +6,79 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The weak force, on 2026-09-20, (iii): the transformation `become`, the identity `weak-v1`
+
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"DECIDED: go on everything", item (1): "the transformation `become` with
+the identity `weak-v1`", after the neutrino; [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(iii)). Identities: no world file changes; no registered world declares a
+transformation, so every example world replays byte-identical in
+`events.jsonl`, and `state.json` and `run.json` equal but for the added
+`became` and `become` (VALIDATION).
+
+- **The keys.** The measured-event key `become` (the clock trigger),
+  `{"at": a, "into": family, "products": [[family, amount, content per
+  unit], ...], "crowd": c}`: at the self-creation whose clock reaches `at`
+  (the age against the key by the one `by_clock`, `nature_beam.ages_at_key`:
+  first at `at`, then at every multiple of it), while the count the clock
+  read is below `crowd` (optional, an integer from 0; absent, no gate), the
+  event becomes an event of `into`, the products are paid from what it
+  holds of its own family (R = the sum of amount x content per unit, at
+  most its `amount`), the rest moves to `into`, the products are born as a
+  re-release is (the parent's phase, product k on the direction counted
+  from (clock age + k) mod n) with the recoil over all of them, and the
+  key is consumed. The table rule `become` (the click trigger), the
+  fifth beside `read`, `measure`, `rerelease` and `pass`: an entry
+  `{"rule": "become", "phase_window": s, "phase_width": w, "into": ...,
+  "products": [...]}` clicks an arrival as `measure` does and fires the
+  same transformation, its products born at the reader's next
+  self-creation; the entry is consumed. A free product's content is 0, a
+  paid product's from 1; the charges must balance at load (rho_into x
+  (amount - R) plus the paid products' whole charges against rho_from x
+  amount).
+- **The refusals, naming the key.** `become` without `into` or
+  `products`; `into` naming an unknown family or the event's own; a
+  product naming an unknown family, an amount below 1, a free product's
+  content other than 0, a paid product's content below 1, a label beyond
+  the bound; `at` below 1 or absent on the clock trigger; `at` or `crowd`
+  on a table entry; `crowd` negative or not an integer; `into` or
+  `products` on an entry whose rule is not `become`; the products' content
+  above the `amount`; the charges unbalanced; `become` on a family. At run
+  time an event that holds less than its products need at the trigger
+  refuses the run naming itself.
+- **The definitions.** `world.Transformation` (new: `into`, `products`,
+  `at`, `crowd`, `needed`), `world.BECOME_RULE`, `world.WEAK_RULE`,
+  `world.TABLES` gains `become`; `world._table_entry` returns five values,
+  (rule, window, reads, width, transformation), and takes the families,
+  the event's family and amount, the direction table and its directions;
+  `MeasuredDefinition.become` and `.transforms` (new, the clock trigger
+  and per family the click trigger); `NatureBeamWorld.transformations`
+  (new); `hypotheses` gains `weak-v1`; the contact under a `become` entry
+  is the default `measure`. `measured.PendingRow` (new: amount, content,
+  phase, first, thrown), `Measured.become`, `.transforms`, `.became`,
+  `.transformed` (new), `Ledger.held_became` (new, the `became` line);
+  `nature_beam.transform` (new, the one function of the two triggers),
+  `nature_beam.TRANSFORM_RULE`, `RULE_NAMES`, `MEASURE_RULE_NAME`.
+- **The record.** `hypotheses` carries `weak-v1`; `run.json`'s `numbers`
+  per measured event carry `become` (the declaration by names or None);
+  the measured events' states carry `became` and their `family` after; the
+  books' measured line per family gains `became` (initial + measured +
+  became = current + spent + escaped); `events.jsonl` gains one `become`
+  line per transformation at the products' birth (`trigger`, `triggered`,
+  `from`, `into`, `products` with their directions, `recoil`, `counted`);
+  the tally of a `become` entry's clicks is under `measure`. A test or
+  tool that pins a measured event's `numbers` or the books' measured line
+  adds the keys (`tests/test_nature_beam_body.py` and
+  `tests/test_nature_beam_clock.py` do).
+- **Series J1 and J3** under `examples/events/weak/` (`j1_lattice`,
+  `j1_source`, `j3_deuteron`, `j3_deuteron_crowd`, `j3_neutron_free`, the
+  expectations in `expectations.json` written by `make_worlds.py` before
+  the runs, a file with the `format` `weak-expectations-v1` that the tests
+  reading every JSON under `examples/events/` as a world skip, as they
+  skip an entity definitions file: a world declares `law`, never
+  `format`), read by `tools/weak_readings.py`; `tests/test_become.py` (a)
+  to (f) pins the rule, `tests/test_weak_readings.py` (b) the tool.
+
 ## The weak force, on 2026-09-20, (ii): a paid family's charge per unit of amount (D-1)
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),

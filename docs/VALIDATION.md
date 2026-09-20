@@ -34,6 +34,7 @@ integer).
 | --- | --- | --- | --- | --- | --- |
 | (i) the window's width `phase_width` (N / 2 by default) | `55f30af0309c2812646384a0caf4d16a956e5ae525df878a008c6bf075e90941` | 85 identical, 0 changed | 4 / 85 identical | 4 / 85 identical | `widths` per measured event (None where no width is declared) |
 | (ii) D-1, a paid family's whole charge per unit of amount on the charge line | `b28c5865ec143004b36203e8aad70a4bed65f80896cc6b5f526f6d71748732b6` | 85 identical, 0 changed | 4 / 85 identical (the `widths` of (i) alone) | 4 / 85 identical (the same) | none (no registered world declares a charge on a paid family) |
+| (iii) the transformation `become`, the identity `weak-v1` | `071197bc5d0f08cbe52aa44dca0e0d7ad9adf99ef6bf6023231310b9bb8f211c` | 85 identical, 0 changed | 4 / 85 identical (the `widths` of (i) and the added `became` of the states) | 0 / 85 identical (the added `become` in `numbers` of every declared measured event, None everywhere) | `became` per measured event (the transformations fired) and its books' measured line; `become` per measured event in `numbers` (None where none is declared) |
 
 No registered series moves (C, 7, D, E, G, H, I, K, Bell, A10, the
 catalog): every reading of the register is the same integer under the
@@ -45,7 +46,34 @@ hold no measured event for the key to enter). The commands: `python -m
 event_universe --init <world> --output <dir>` per world, four at a time,
 the outputs digested and pruned; `python tools/check.py --base 6a596b34`
 green after the commit (487 tests selected), `--base 2605f75f` green after
-(ii) (464 tests).
+(ii) (464 tests), `--base af7ce995` green after (iii) (507 tests).
+
+**Series J1 and J3, the neutron's decay against its clock** (the register
+entry [J, the weak force (2026-09-20)](EXPERIMENTS.md#j-the-weak-force-2026-09-20)):
+the five worlds `j1_lattice`, `j1_source`, `j3_deuteron`,
+`j3_deuteron_crowd` and `j3_neutron_free` of `examples/events/weak/` run
+through `tools/run_series.py --jobs 3` at the fingerprint
+`071197bc5d0f08cbe52aa44dca0e0d7ad9adf99ef6bf6023231310b9bb8f211c`, 650, 650, 700, 700 and 600
+intervals, completed in 231, 238, 82, 70 and 53 s with the books balanced
+at every tick (the charge line the same pair through every
+transformation); `tools/weak_readings.py`: 0 record checks failed, 15
+readings inside, 3 outside, none moved. The expectations were written
+before the runs by `examples/events/weak/make_worlds.py` into
+`expectations.json` (each neutron's trigger tick from the count its
+clock read at tick 100 of a warm run without the `become` keys, at +
+floor(at x c / 2^20)). Inside: the shell's 64 beta clicks a step in both
+J1 worlds (the width over the median 0.036 and 0.038 against nature's
+3.17), every click the content 3, the count the neutrons'; the deuteron's
+pair holding after the transformation (0 steps of 39 and 21 attempted),
+the gated neutron never firing in 700 intervals, the free neutron firing
+at 512 exactly, every beta reaching its shell. Outside, the one GAMEBOARD
+criterion in three worlds: the corners of `j1_lattice` at 524 against the
+pinned 522 (the warm run's count at one tick, 12 rows of 1839, had caught
+a gap of their line-mates' rows; their count at the trigger 15 rows,
+27585), 48 neutrons of `j1_source` and the deuteron's neutron 1 to 3
+intervals after their pinned ticks (the count over a clock's history
+under a fan's dwells is not the one tick's count the estimator took); the
+numbers in the register, nothing moved.
 
 **Series J2, the neutrino's passage through a filled bar** (the register
 entry [J, the weak force (2026-09-20)](EXPERIMENTS.md#j-the-weak-force-2026-09-20)):
