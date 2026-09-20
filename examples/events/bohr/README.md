@@ -166,3 +166,18 @@ the phase's turn per orbit 0.75 to 0.83 against 0, outside, so Bohr's
 lines are still not read, while the verdict's "what the law lacked here
 is a stable closed orbit" is answered by the step rule. The register
 entry has every world's numbers ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under the signed drive (2026-09-20)
+
+Every world moves differently under the signed drive (record 126: the
+drive is the signed distance the momentum has driven; on an orbit each
+component turns through zero every turn, and the unsigned form's
+discharge of the accumulated |p| as a Link the other way was a kick
+toward the proton at every sign change): the stable orbits at r = 8 and
+r = 12 of the step-drive re-read do not appear; r = 8 closes the angle
+twice (T 1292, 2016; the phase's turn per orbit 0.969 against 0; C(2) =
+0.99 against 1.0, outside) and leaves at 3869, r = 12 leaves at 2059
+without closing, r = 15 closes once with the return within r / 4. Bohr's
+lines are still not read; the registered verdict's "what the law lacked
+is a stable closed orbit under whole kicks" stands again. The register
+entry has every world's numbers and the verdict re-read ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).

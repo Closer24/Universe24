@@ -41,7 +41,7 @@ kept, their pins the law of events').
 | `test_nature_beam_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_nature_beam_clock.py` | The clock under the Beam Law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-beam-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder (since the step drive of 2026-09-20 the same integers, the remainder now the drive on the body's record); the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
-| `test_step_drive.py` | The step drive (2026-09-20, BEAM_LAW note 17 as amended): the count of Links as the whole part of the distance the momentum has driven, one bounded integer per axis on the body's record: the identity at a constant momentum with `by_clock(n - 1, \|p\|, D)` over 4000 self-creations and twelve momenta; the identity on two axes (the coincident step lost as before); the integrated distance under a halving momentum (38 within 1, 37 to 39, where the rule as it was made 1); never two Links in one interval under a random momentum over 10 000 intervals with the drive in [0, 2 D - 1); the record (`drive`, `axis_steps`, the `step` line) and a declared `drive` refused; the turn by momentum unchanged ([below](#the-step-drive)) | new (2026-09-20, series G2's finding, record 107; the owner's decision, record 108) |
+| `test_step_drive.py` | The step drive (2026-09-20, BEAM_LAW note 17 as amended): the count of Links as the whole part of the distance the momentum has driven, one bounded integer per axis on the body's record: the identity at a constant momentum with `by_clock(n - 1, \|p\|, D)` over 4000 self-creations and twelve momenta; the identity on two axes (the coincident step lost as before); the integrated distance under a halving momentum (38 within 1, 37 to 39, where the rule as it was made 1); never two Links in one interval under a random momentum over 10 000 intervals with the drive in [0, 2 D - 1); the record (`drive`, `axis_steps`, the `step` line) and a declared `drive` refused; the turn by momentum unchanged; the signed drive under a reversal (no Link until the drive cancels and reaches -D) and the bound pair under a suspension holding for 3000 intervals ([below](#the-step-drive)) | new (2026-09-20, series G2's finding, record 107; the owner's decision, record 108); the drive signed the same day (record 126) |
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
@@ -1142,7 +1142,8 @@ DESIGN.md test (f) and section 4.4):
   `g` row as +8064 (gravity +320, strong +7744), the push +128 toward the
   other, (Q^2 - G^2 - M^2) x (-64); under the contact and the step drive
   (2026-09-20, [below](#the-step-drive): D = 320 + |p| on the content 5,
-  the drive gaining |p| at every self-creation) the momentum of p1 over
+  the drive gaining p at every self-creation, signed since record 126,
+  one sign here) the momentum of p1 over
   ticks 2 .. 8 reads 128, 256, 0, 0, 128, 0, 128 (the mirror on p2): p1's
   drive 128, 384, 768 >= 704 fires at tick 4 and hands 384; p2's drive
   128, 384, then nothing at tick 4 (its label 0 at its turn), 512 >= 448
@@ -1167,8 +1168,9 @@ DESIGN.md test (f) and section 4.4):
   -7936 is read at ticks 6 and 7 (at tick 6 the drive 7936 is below D =
   8256 and the body stands), and at tick 7 p1 steps to x 1 with (-15872,
   0, 0) and p2 to x 6 with (15872, 0, 0), the drive 23808 - 16192 = 7616
-  on the `step` line (the rule as it was stepped them at tick 6 with
-  7936): the pair separates, no contact.
+  on the `step` line with the momentum's sign, -7616 and +7616 (the
+  signed drive of record 126; the rule as it was stepped them at tick 6
+  with 7936): the pair separates, no contact.
 - (b) the isolated hand-over (`release` [0, 1], no rays): p1 of `p`,
   content 5, momentum (256, 0, 0) at (1, 2, 2) and p2 of `q`, content 5,
   fixed, at (2, 2, 2) on an open 5^3 GameBoard: the step rule fires at
@@ -1229,12 +1231,15 @@ DESIGN.md test (f) and section 4.4):
   at tick 4): a ends at (1, 1, 1) with (-128, 0, 0), b at (3, 1, 1) with
   0, two `contact` records at tick 2. Declared the other way round (b is
   1, a is 2): b steps onto a and hands -192 (b 0, a -128), one `contact`;
-  a then steps to (1, 1, 1) at tick 2 (its drive 64 + 128 >= 192) and to
-  (0, 1, 1) at tick 4, ending with (-128, 0, 0). The sum of the momenta
-  is (-128, 0, 0) and the books balanced in both; the holder and the
-  positions follow the declaration order. The rule as it was (the count
-  off the clock, kept as history): a's free step at tick 3 in the first
-  order, at ticks 2 and 3 in the second.
+  a's drive +64 from its own momentum is cancelled to -64 by the -128 it
+  now holds at tick 2 (the signed drive, record 126), reaches -192 = -D
+  at tick 3, when a steps to (1, 1, 1), and is -128 at tick 4: a ends at
+  (1, 1, 1) with (-128, 0, 0). The sum of the momenta is (-128, 0, 0)
+  and the books balanced in both; the holder and the positions follow
+  the declaration order. History: the unsigned drive (the first form of
+  2026-09-20) stepped a at ticks 2 and 4 in the second order, to (0, 1,
+  1); the rule as it was (the count off the clock) at tick 3 in the first
+  order and at ticks 2 and 3 in the second.
 
 ## The re-emission
 
@@ -1401,10 +1406,14 @@ the model owner on series G2's finding, "1 and 2 are very important for a
 solution and a new run"; record 107 the findings, record 108 the owner's
 decision).
 The count of Links a free measured event has made on an axis is the whole
-part of the distance its momentum has driven: one bounded integer per axis
-on its record, `drive += |p|` at every self-creation in which it may step,
-on every axis, a step and `drive -= D` when `drive >= D`, D = Q x S x M +
-|p|; at most one Link per interval, x before y before z, as before: a
+part of the SIGNED distance its momentum has driven: one bounded integer
+per axis on its record, `drive += p` at every self-creation in which it
+may step, on every axis, a step on the + side and `drive -= D` when
+`drive >= D`, a step on the - side and `drive += D` when `drive <= -D`,
+D = Q x S x M + |p| (the signed drive of record 126, 2026-09-20; the
+first form accumulated |p| and took the direction from the sign at the
+fire, a defect under a reversal); at most one Link per interval, x
+before y before z, as before: a
 later axis whose drive reaches its D in the interval of an earlier axis's
 step loses that Link (its D subtracted, nothing carried, the rule's count
 on the axis, `axis_steps`, raised as the count off the clock was). The
@@ -1415,11 +1424,13 @@ expected integers, written down before the first run:
   8) and p in {1, 5, 63, 64, 127} at content 1 and width 1, the drive
   fires exactly where `by_clock(n - 1, |p|, D)` is 1 and the drive after
   the n-th self-creation is n x |p| mod D; the negative momentum the same
-  with the sign -1; the count primitive `core.integer.by_drive` (record
-  108) the same identity over 400 self-creations, and at the rate 7
-  against 3 a count of 1 at every self-creation with the drive 30 x 4
-  after 30 (the primitive's count is 0 or 1; below the denominator it is
-  `by_clock`'s), a denominator of 0 and a negative rate refused;
+  with the sign -1 and the drive -(n x |p| mod D); the count primitive
+  `core.integer.by_drive` (record 108) the same identity over 400
+  self-creations, at the rate 7 against 3 a count of 1 at every
+  self-creation with the drive 30 x 4 after 30 and at -7 a count of -1
+  with the drive -120 (the primitive's count is -1, 0 or 1; below the
+  denominator it is `by_clock`'s with the sign), a denominator of 0
+  refused;
   `test_push_width` (a) to (c) unchanged. On two axes
   (the physics-rule review's counterexample): content 16, width 1,
   momentum (1024, 320, 0) from (4, 4, 0), D = (2048, 1344): x steps at
@@ -1439,13 +1450,13 @@ expected integers, written down before the first run:
   39, by the drives at the two ends), where the rule as it was made
   floor(400 x 32 / 8224) = 1; no stall longer than 257 intervals
   (ceil(8224 / 32)), the smallest momentum's own period; the drive within
-  [0, D) after every interval.
+  [0, D) after every interval (one sign: the signed drive never negative).
 - (c) never two Links in one interval: content 3, width 4, a 41^3
   periodic cube with `age_bound` 64, the momentum on every axis drawn at
   every interval from `random.Random(20260920)` in [-(D - 1), D - 1] with
   Q x 4 x 3 = 768; over 10 000 intervals every step moves the body by
-  exactly one Link on one axis, `steps` counts them (more than 1000), the
-  drive on every axis within [0, 2 x 768 - 1) after every interval (the
+  exactly one Link on one axis, `steps` counts them (more than 1000),
+  |drive| on every axis below 2 x 768 - 1 after every interval (the
   largest D of the draw: a residual earned at a larger momentum fires at
   the following self-creations, one Link each, never two in one).
 - (d) the record: content 16, width 8, momentum 1024, 27 intervals through
@@ -1458,6 +1469,30 @@ expected integers, written down before the first run:
   320, `action` 7, phase 5: the turns at the first five Links 2925, 2926,
   2926, 2925, 2926 (mod 64) as `test_nature_beam_body` (d) pins, and
   `axis_steps` [5, 0, 0] after 24 intervals.
+- (f) the signed drive under a reversal (record 126): content 16, width 8,
+  D = 9216, the momentum +1024 for eight self-creations (the drive 8192,
+  no Link) and -1024 from the ninth: the first form stepped -x at the
+  ninth (8192 + 1024 = 9216); the signed drive reads 8192 - 1024 k and
+  steps -x first at the twenty-fifth (8192 - 17 x 1024 = -9216), the body
+  at x = 4 until then, its drive 0 after the step and -5120 after 30
+  intervals, `steps` 1, `axis_steps` [1, 0, 0]; the primitive alone at
+  8192 with the rate -1024 counts 0; the same body under +1024 for eight
+  and 0 after keeps its drive 8192 and its Node.
+- (g) the bound pair under a suspension holds (the Boss's W1 of record
+  126): the register's `deuteron_1` under `amplitude` with `suspension`
+  [1, 134217728], a paid family `light` and a lamp of it (content
+  8388608, rate [1, 1], turns [8]) on +y beside the proton at (10, 11,
+  10) and a control lamp at (10, 10, 16), each read by a `sum` set of one
+  `counter` Node four Links up +y: over 3000 intervals no `step` record
+  (the nucleons at (10, 10, 10) and (11, 10, 10) throughout), every
+  attempted step a `contact` (their count the two bodies' `steps`), the
+  books balanced; under the first form the same world holds for 2092
+  intervals and the neutron steps to (12, 10, 10) at tick 2093 with a
+  positive momentum (the physics-rule reviewer's measurement on main:
+  the |p| accumulated toward the proton discharged away from it). The
+  hold is the rule's consequence given the pair's symmetry (mirror
+  pushes, a hand-over zeroing both, the neutron's signed drive never
+  above 0), not a theorem for every pair.
 
 ## The age
 

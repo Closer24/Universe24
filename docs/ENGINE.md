@@ -193,11 +193,13 @@ by their momentum (`_move`: on an axis whose momentum component is p in
 label units, one Link per (Q x S x M + p) / p self-creations, M the
 content, S the world's `width`, 1 by default, and Q = 64 the label's
 scale; since 2026-09-20 the step drive, [BEAM_LAW note 17](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
-as amended: the body's record carries per axis `drive`, the distance the
-momentum has driven since the last step, `drive += |p|` at every
-self-creation in which it may step and a step when `drive >= Q x S x M +
-|p|`, that much subtracted, so the count of Links is the whole part of
-the driven distance, bit-identical at a constant momentum to
+as amended: the body's record carries per axis `drive`, the signed
+distance the momentum has driven since the last step, `drive += p` at
+every self-creation in which it may step and a step on the + side when
+`drive >= Q x S x M + |p|` or on the - side when `drive <= -(Q x S x M +
+|p|)`, that much subtracted with the sign (record 126: signed, so a
+reversal first cancels what was driven the other way), so the count of
+Links is the whole part of the driven distance, bit-identical at a constant momentum to
 `by_clock(age, |p|, Q x S x M + |p|)` and never two Links in one
 interval, the count primitive `core.integer.by_drive` (record 108: the
 whole part of an accumulated rate on the reader's record; the clock's
