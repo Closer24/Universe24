@@ -135,6 +135,23 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_declare_a_fo
         m["family"] for m in generated["gravity_scalar"]["measured"] if "momentum" in m
     }
     assert set(expectations["crowds"]) == set(generator.CROWDS)
+    assert expectations["reading_rule"] == "acoustic"
+    # The record-click worlds (the key `amplitude`, on main since PR #370)
+    # and the expectations pinned for the second run under the step drive
+    # (the reading rule `source`, the burst of the step rule at most 1).
+    for name, document in generator.record_worlds().items():
+        assert json.loads((WORLDS / "record" / f"{name}.json").read_text(encoding="utf-8")) == document
+        assert document["amplitude"] is True
+        parse_nature_beam_world(document)
+    pinned = json.loads((WORLDS / "record" / "expectations.json").read_text(encoding="utf-8"))
+    assert pinned["format"] == generator.EXPECTATIONS_FORMAT and pinned["reading_rule"] == "source"
+    assert pinned["step_burst_max"] == 1
+    assert pinned["crowds"]["coasting"]["q_bracket"] == expectations["crowds"]["coasting"]["q_bracket"]
+    gravity = pinned["crowds"]["gravity"]
+    assert 0.85 < gravity["derived_fits"]["300-400"]["q_fit"] < 0.87
+    assert (
+        gravity["q_bracket"][0] > expectations["crowds"]["gravity"]["derived_fits"]["300-400"]["q_fit"]
+    )
 
 
 def test_read_run_reads_the_record_and_the_engines_world(tmp_path):

@@ -541,7 +541,88 @@ PYTHONPATH=src python tools/run_series.py --jobs 3 --out artifacts/hubble_stars_
 PYTHONPATH=src python tools/hubble_stars_readings.py artifacts/hubble_stars_drive --expectations examples/events/hubble_stars/record/expectations.json --png <dir> --json <file>
 ```
 
-### The readings (to be written after the run)
+### The readings (2026-09-20, measured against the pinned expectations)
+
+Main at `f3a41f28` merged into this branch (the step drive, `by_drive`;
+`amplitude-v1` on the record), Python 3.14.0rc2, numpy 2.5.3, headless,
+three cores; the five runs completed in 37 to 41 s each with the books
+balanced at every tick; the tool 20 s. Every number below is from the
+`gather` lines (the record click), the steps and momenta from the `step`
+lines (GameBoard).
+
+| World (the late window, t_0 = 350) | q of the free fit, t_0 = 150 / 250 / 350 | q pinned | H (t_0 + T_0) | H pinned | rms in z | the nearest / farthest form | the Doppler part alone, q | k, largest | \|p(end)\| / p(0) (GameBoard) | longest stall / burst (GameBoard) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `record/coasting_none` | -0.222 / -0.085 / **-0.108** inside | -0.25 .. +0.25 | 1.026 inside | 0.90 .. 1.10 | 0.0019 | q = 0 / q = +0.5 | -0.085 | 0 | 1.000 .. 1.000 | 30 / 1 |
+| `record/gravity_none` | +0.038 / +0.623 / **+0.922** inside | +0.43 .. +1.29 (derived +0.86) | 0.811 inside | 0.744 .. 0.910 (derived 0.827) | 0.0104 | q = +0.5 / q = -0.55 | +1.005 | 0 | 0.441 .. 0.846 | 35 / 1 |
+| `record/gravity_scalar` | -0.621 / +0.531 / **+0.749** inside | +0.43 .. +1.29 | 0.854 inside | 0.744 .. 0.910 | 0.0185 | q = +0.5 / q = -0.55 | +0.911 | 0.058 (outside 0.05) | 0.426 .. 0.829 | 55 / 1 |
+| `record/gravity_age` | +0.007 / +0.211 / **+0.461** inside | +0.43 .. +1.29 | 0.874 inside | 0.744 .. 0.910 | 0.0141 | q = +0.5 / q = -0.55 | +1.035 | 0.026 | 0.435 .. 0.831 | 51 / 1 |
+| `record/double_none` | +0.376 / +1.500 / **+1.500** inside (the fit's grid ends at 1.5) | +0.75 .. +2.25 | 0.674 inside | 0.633 .. 0.774 (derived 0.704) | 0.0263 | q = +0.5 / q = -0.55 | +1.500 | 0 | 0.0005 .. 0.692 (the x line's inner stars brought to rest) | 34 / 1 |
+
+- The reading's formula 1 + z = (1 + k)(1 + v / c): 360 of 360 inside 2 %.
+  The luminosity, the click rate times (1 + z): 360 of 360 inside 5 % (631
+  of 648 in the first registration: the bursts had spread the clicks).
+- Pinned readings: 759 inside and 1 outside (`gravity_scalar`'s k, 0.058
+  against 0.05, the scalar clock's bursty count as in the first
+  registration). The world-level ones: every q and every H (t_0 + T_0)
+  inside its bracket in all five worlds; the nearest form q = +0.5 and the
+  farthest q = -0.55 in the four pushing worlds, q = 0 the nearest in the
+  coasting control; q = -0.55 NOT the nearest in any world (the tool's
+  criterion now reads this pass by name; in the first registration its
+  label read the fact, and three worlds had q = -0.55 nearest, counted
+  outside in the text above); |p(end)| / p(0) inside in all five; the
+  longest burst 1 Link in every star of every world (the step drive's
+  pin); the ordering coasting < gravity < double under the clock-free
+  control inside, the gaps +1.03 and +0.58.
+- The step rule (GameBoard): no star of any world steps twice in
+  consecutive intervals; the longest stall is the slowest star's own
+  period (30 intervals in the coasting control, 1 / v for v = 0.033; 34
+  to 55 in the pushing worlds, the decelerated inner stars). The first
+  registration's stalls of 85 intervals and bursts of 12 Links are gone.
+- The coasting control reads exactly what it read in the first
+  registration (the same list of clicks: a star under `pass` takes no
+  push, its momentum is constant and the drive is the count off the
+  clock).
+- The gravity worlds: the detector now reads the deceleration. The
+  clock-free control's q = +0.92 against the derived +0.86, its H (t_0 +
+  T_0) = 0.811 against 0.827, the rms 0.010 in z (0.048 in the first
+  registration), and its q grows through the windows (+0.04, +0.62, +0.92)
+  as the derivation's does (+0.02, +0.39, +0.86): the light of a
+  decelerating star now carries the Doppler of a smooth motion. Every
+  momentum falls (|p(end)| / p(0) 0.44 to 0.85; derived 0.47 to 0.90),
+  the inner stars the most. The clocks still move q by a unit's fraction
+  (+0.75 scalar, +0.46 age against +0.92 clock-free) and scatter z by
+  0.014 to 0.019: inside the bracket now, the clocks' bursty counts being
+  the remaining artefact of the reading.
+- The double crowd: q at the fit's edge (+1.50) in the two late windows, H
+  (t_0 + T_0) = 0.674 against the derived 0.704; the x line's two inner
+  stars are brought to rest (`s_px1` z = 0.000, no step in the window;
+  `s_mx2` |p(end)| / p(0) = 0.0005) and the mz line's inner star has left
+  the window's count (23 stars): the doubled gravity of a line stops what
+  it throws.
+- The bend of the age clock (reported, no bracket): the pair `gravity`
+  reads q +0.749 (scalar) against +0.461 (age) in the late window; +0.531
+  against +0.211 in the middle, -0.621 against +0.007 in the first.
+
+**The pinned expectations against the readings, in one table.** The
+derivation with the emitter's Doppler alone, under the step drive, is the
+engine's within the brackets in every world: q +0.86 -> +0.92 read
+(`gravity_none`), H 0.827 -> 0.811, |p(end)| / p(0) 0.47 .. 0.90 -> 0.44 ..
+0.85; q >= 1.5 -> 1.5 (`double_none`), H 0.704 -> 0.674; q 0 -> -0.11
+(`coasting_none`), H 1 -> 1.026. Under the clocks the same brackets hold
+with q lower (+0.75, +0.46).
+
+**The conclusion, in one line.** Under the step drive the detector reads
+the model's own gravity as a deceleration, q = +0.92 with gravity and at
+or beyond +1.5 doubled, against q = -0.11 (0 to the grain) without it, and
+the accelerating form q = -0.55 is the farthest of the three in every
+gravitating world: the model has no term that gives q < 0, so to read
+what is observed today it would need something added (a push apart), and
+nothing in the law as it stands mimics dark energy once the step rule is
+the drive.
+
+The frame player and the diagrams of this run are on the page (the
+scratchpad's `page2/`), nothing registered; the drafted register entry
+below carries the second run as its result.
 
 ## Verdict
 
@@ -627,6 +708,19 @@ the 29 readings outside are registered as read.
   the branch `claude/amplitude-impl` at `62369cb8`, every number from the
   gather lines): the same list of clicks and the same readings to the last
   digit; the physicist's design `docs/designs/hubble_stars/DESIGN.md`.
+- **Second run (2026-09-20, under the step drive and the record click; main
+  at `f3a41f28`; the expectations re-derived by the emitter-only rule and
+  pinned first, `record/expectations.json`).** Five worlds, the three
+  crowds under the clock-free control and the gravity crowd under the two
+  clocks: q = -0.108 (coasting), +0.922 (gravity; derived +0.859), +1.500
+  (double; derived at the fit's edge), +0.749 and +0.461 (gravity under the
+  scalar and age clocks); H (t_0 + T_0) 1.026, 0.811, 0.674, 0.854, 0.874;
+  every q and H inside its bracket, the ordering inside, q = -0.55 the
+  farthest form in every gravitating world, the reading's formula 360 of
+  360, the luminosity 360 of 360, the longest burst 1 Link in every star
+  (759 readings inside, 1 outside: the scalar clock's k). The gravitational
+  deceleration is readable at the detector once the step rule is the
+  drive.
 - **Verdict.** The kinematics of the law give the coasting universe exactly
   from one point (Milne, q = 0 to the grain); the law's gravity decelerates
   every star's momentum and pushes none outward, so nothing in the law

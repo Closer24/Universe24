@@ -690,8 +690,12 @@ def judge_fit(
     farthest = crowd.get("farthest_form")
     if isinstance(farthest, str):
         criteria.append((f"{tag}: the farthest of the three forms {farthest}", fit.farthest == farthest))
+    # The expectation (README, "the criteria, pinned before the runs"): q =
+    # -0.55 NOT the nearest of the three forms in any world; inside when it
+    # is not (the label read the fact and not the pass until the second run
+    # of 2026-09-20; the first registration's README counted it as here).
     criteria.append(
-        (f"{tag}: what is observed today (q = -0.55) the nearest", fit.nearest == "q = -0.55")
+        (f"{tag}: what is observed today (q = -0.55) not the nearest", fit.nearest != "q = -0.55")
     )
     return criteria
 
