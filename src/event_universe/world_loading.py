@@ -138,11 +138,41 @@ def _utf8(source: bytes, label: str) -> str:
     return text
 
 
-def _reference(value: object) -> str:
+def _reference(value: object) -> tuple[str, int]:
+    """A relative POSIX path: descending components, climbing only by
+    leading `..` components (since 2026-09-20 the shipped worlds reference
+    `../entities/families.json`); returns the path and its climb, which
+    `load_world` bounds at resolution."""
     path = _name(value, "entity_definitions")
-    if "\\" in path or ":" in path or any(part in ("", ".", "..") for part in path.split("/")):
-        raise ValueError("entity_definitions must be a relative POSIX path without traversal")
-    return path
+    parts = path.split("/")
+    climb = 0
+    while climb < len(parts) and parts[climb] == "..":
+        climb += 1
+    descending = parts[climb:]
+    if (
+        "\\" in path
+        or ":" in path
+        or not descending
+        or any(part in ("", ".", "..") for part in descending)
+    ):
+        raise ValueError(
+            "entity_definitions must be a relative POSIX path, climbing only by leading '..' components"
+        )
+    return path, climb
+
+
+def _confinement(base: Path, climb: int, root: Path | None) -> tuple[Path, str]:
+    """The directory a reference must resolve within, and its name for the
+    refusal: `root` when the caller gives one; otherwise the world's
+    directory, or its parent for a reference climbing by one `..` (a series
+    beside `entities/`, the shipped layout); a longer climb needs a root."""
+    if root is not None:
+        return root.resolve(), "the root"
+    if climb == 0:
+        return base, "base_dir"
+    if climb == 1:
+        return base.parent, "the parent of base_dir"
+    raise ValueError("entity_definitions climbs above the parent of base_dir; a root is required")
 
 
 def _definition_families(value: object, label: str) -> list[dict[str, object]]:
@@ -371,8 +401,13 @@ def _expand(document: dict[str, object], definitions: dict[str, dict[str, object
     return expanded
 
 
-def load_world(source: str | bytes, *, base_dir: Path | None = None) -> LoadedWorld:
-    """Load one world with explicit file context or a self-contained bundle."""
+def load_world(
+    source: str | bytes, *, base_dir: Path | None = None, root: Path | None = None
+) -> LoadedWorld:
+    """Load one world with explicit file context or a self-contained bundle.
+    A file reference resolves relative to `base_dir` and must stay within
+    `root` when given, else within `base_dir`, or within its parent for a
+    reference climbing by one `..` (`_confinement`)."""
     decoded = _decode(source, "input")
     raw = source.encode("utf-8") if isinstance(source, str) else source
     document = _object(decoded, "input")
@@ -390,7 +425,7 @@ def load_world(source: str | bytes, *, base_dir: Path | None = None) -> LoadedWo
             raise ValueError("bundle.world must be an authored world, not a nested bundle")
     if not _AUTHOR_KEYS <= document.keys():
         raise ValueError("world requires entity_definitions and entities together")
-    reference = _reference(document["entity_definitions"])
+    reference, climb = _reference(document["entity_definitions"])
     if supplied is not None:
         if set(supplied) != {reference}:
             raise ValueError("bundle.definitions must contain exactly the referenced dependency")
@@ -402,9 +437,10 @@ def load_world(source: str | bytes, *, base_dir: Path | None = None) -> LoadedWo
         if base_dir is None:
             raise ValueError("entity_definitions requires an explicit base_dir or a portable bundle")
         base = base_dir.resolve()
+        confinement, name = _confinement(base, climb, root)
         path = (base / reference).resolve()
-        if not path.is_relative_to(base):
-            raise ValueError("entity_definitions resolves outside base_dir")
+        if not path.is_relative_to(confinement):
+            raise ValueError(f"entity_definitions resolves outside {name}")
         dependency = path.read_bytes()
     definitions = _definitions(dependency, reference)
     expanded_document = _expand(document, definitions)
@@ -421,6 +457,76 @@ def load_world(source: str | bytes, *, base_dir: Path | None = None) -> LoadedWo
         raise ValueError("portable bundle exceeds the 1 MiB source limit")
     definition_source = DefinitionSource(reference, dependency, hashlib.sha256(dependency).hexdigest())
     return LoadedWorld(world, portable, expanded, (definition_source,))
+
+
+def families_by_definition(
+    document: dict[str, object], reference: str, definitions_source: bytes
+) -> dict[str, object]:
+    """An authored world whose inline `families` come from a definitions
+    document where they can (the generators of the shipped worlds, the model
+    owner's decision of 2026-09-20, record 113): the longest tail of the
+    world's families that is tiled by the definitions' family lists, each
+    equal to a contiguous run of the world's, key by key, becomes one
+    instance per definition in the tail's order (named by the definition,
+    placed at the origin), and `entity_definitions` the reference; the
+    families before the tail stay inline, so that the expanded world is the
+    inline world, key by key and in order (the inline families first, then
+    the instances'). A world without such a tail is returned unchanged; one
+    that already places definitions is refused. Keys keep their order, the
+    authoring keys at the place of `families`."""
+    if _AUTHOR_KEYS & document.keys():
+        raise ValueError("the world already places entity definitions")
+    families = [
+        _object(raw, "world.families") for raw in _array(document.get("families"), "world.families")
+    ]
+    definitions = _definitions(definitions_source, reference)
+    by_first: dict[str, tuple[str, list[dict[str, object]]]] = {}
+    for name, definition in definitions.items():
+        carried = cast(list[dict[str, object]], definition.get("families", []))
+        if carried:
+            by_first[cast(str, carried[0]["name"])] = (name, carried)
+
+    def tiling(start: int) -> list[str] | None:
+        names: list[str] = []
+        index = start
+        while index < len(families):
+            found = by_first.get(cast(str, families[index].get("name")))
+            if found is None or families[index : index + len(found[1])] != found[1]:
+                return None
+            names.append(found[0])
+            index += len(found[1])
+        return names
+
+    instances: list[str] | None = None
+    for start in range(len(families)):
+        instances = tiling(start)
+        if instances is not None:
+            break
+    if not instances:
+        return dict(document)
+    result: dict[str, object] = {}
+    for key, value in document.items():
+        if key != "families":
+            result[key] = value
+            continue
+        if start:
+            result["families"] = families[:start]
+        result["entity_definitions"] = reference
+        result["entities"] = [
+            {"name": name, "definition": name, "position": [0, 0, 0]} for name in instances
+        ]
+    return result
+
+
+def world_of_run(run: Path) -> dict[str, object]:
+    """The world a run was made from, as the engine read it: the runner's
+    `resolved_initialization.json` when the run resolved entity definitions
+    (since 2026-09-20 the shipped worlds take their families from
+    `entities/families.json`), otherwise its `initialization.json`, the
+    authored world itself. The reading tools read a run's world through it."""
+    resolved = run / "resolved_initialization.json"
+    path = resolved if resolved.exists() else run / "initialization.json"
+    return _object(_decode(path.read_bytes(), path.name), path.name)
 
 
 def main(argv: list[str] | None = None) -> int:

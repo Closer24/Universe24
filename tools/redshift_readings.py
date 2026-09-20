@@ -38,6 +38,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
+from event_universe.world_loading import world_of_run
 
 MODEL_PREFIX = "rays-redshift-"
 MODEL_SUFFIX = "-space-v1"
@@ -123,7 +124,7 @@ def read_run(folder: Path) -> Reading:
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
     model = str(record["model"])
     kind = model[len(MODEL_PREFIX) : -len(MODEL_SUFFIX)]
-    document = json.loads((folder / "initialization.json").read_text(encoding="utf-8"))
+    document = world_of_run(folder)
     source = document["measured"][0]
     centre = (int(source["position"][0]), int(source["position"][1]), int(source["position"][2]))
     reading = Reading(
