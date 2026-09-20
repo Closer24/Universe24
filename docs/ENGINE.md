@@ -155,7 +155,11 @@ reading over the clicked rays, taken on the circle's unit vectors
 [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam),
 step 2, and section 10, notes 16 and 33).
 
-**The frame** (`NatureBeamSimulation.step`, `engine.py`): for every measured
+**The frame** (`NatureBeamSimulation.step`, `engine.py`; the bodies are
+moved one after another in number order, a declared tie: when two bodies
+step in one interval and one's destination is the other's Node, the lower
+number steps first, [BEAM_LAW note 31 (ix)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+for every measured
 event, its clock (its age, the turn `by_clock(age, content x n, d)` at the
 clock's rate `K` = [n, d], an integer K being [1, K] (`NatureBeamWorld.turn`;
 the four unifications (2), 2026-09-20: the turn is the free release's own
@@ -304,7 +308,7 @@ set before the frame adds the turn (`step`: the click sets the phase in
 the law, the frame turns it by `turn` after).
 
 **The world** (`events/world.py`; the keys of [BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)).
-`law` "rays"; `model_id`; `shape`; `boundary`; `ticks`; `K` (the clock's
+`law` "beam"; `model_id`; `shape`; `boundary`; `ticks`; `K` (the clock's
 rate: an integer K, the content per phase step per self-creation, read as
 the pair `[1, K]`, or since 2026-09-20 a pair `[n, d]` of phase steps per
 unit of content per self-creation like `release`, the turn `by_clock(age,
@@ -413,7 +417,7 @@ below 1 or not an integer, `phase_by_momentum` without `action`, on a
 turning body whose `ticks x |p| x N` exceeds 2^62 - 1 for its declared
 momentum ([a body on a set and the turn](TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum)).
 `event_universe.configuration_validation` reports a world of the law as
-kind `rays`.
+kind `beam`.
 
 **The record.** `run.json` carries `law` "beam-v1", the world's keys
 (`boundary` as declared; `suspension` as `[n, d]`; `width`; `age_bound`; `directions`, the table

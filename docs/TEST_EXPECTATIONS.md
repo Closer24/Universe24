@@ -846,6 +846,19 @@ DESIGN.md test (f) and section 4.4):
   read) the labels after 40 intervals 39 x 300 805 525 696 =
   11 731 415 502 144 on the proton and -39 x 300 805 534 720 =
   -11 731 415 854 080 on the neutron, no record.
+- (e) the frame's order, a declared tie (the closing gate's genericity
+  probe, 2026-09-20, G1): two phase-less free bodies of content 1 at
+  (2, 1, 1) with momentum (64, 0, 0) and at (3, 1, 1) with (-192, 0, 0),
+  `width` 1, `release` [0, 1], three intervals on an open 6 x 3 x 3
+  GameBoard. Declared in that order (a is 1, b is 2): at tick 2 a steps
+  onto b and hands 64 (a 0, b -128), then b steps onto a and hands -128
+  (b 0, a -128), and a steps to (1, 1, 1) at tick 3: a ends at (1, 1, 1)
+  with (-128, 0, 0), b at (3, 1, 1) with 0, two `contact` records at tick
+  2. Declared the other way round (b is 1, a is 2): b steps onto a and
+  hands -192 (b 0, a -128), one `contact`; a then steps to (1, 1, 1) at
+  tick 2 and (0, 1, 1) at tick 3, ending with (-128, 0, 0). The sum of
+  the momenta is (-128, 0, 0) and the books balanced in both; the holder
+  and the positions follow the declaration order.
 
 ## The re-emission
 

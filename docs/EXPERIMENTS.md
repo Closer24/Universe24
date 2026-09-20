@@ -2215,7 +2215,14 @@ states "exactly" and means integer equality at every tick.
   the square's rows are sheared apart by exactly Q^2 x U_d per interval, a
   proton leaves at tick 57 and the four disperse by tick 538, while the
   line holds for 3000 intervals with every hand-over cancelled by its
-  mirror. The engine's flight delays and the fan's lumps moved one number
+  mirror. The readings of the worlds with contacts (the deuterons, the
+  pairs, the square, the line) are readings of the declared order of the
+  bodies: the frame steps the bodies in number order, a declared tie
+  (BEAM_LAW note 31 (ix); the closing gate's finding G1, 2026-09-20), so
+  a permutation of the measured events moves the holder of a hand-over
+  and, in the square, which neutron leaves first; the sum of the momenta
+  and the verdicts (bound at one Link, free at three, the line rigid and
+  the square sheared) do not depend on it. The engine's flight delays and the fan's lumps moved one number
   outside the steady toy's bracket (the first step of two protons at three
   Links) and none of the designed pushes. What the law lacked, as read
   here: a bond that resists shear (the bonds are central pushes and the

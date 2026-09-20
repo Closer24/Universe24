@@ -27,7 +27,7 @@ checks, never the measurement).
 ## The throw
 
 An open cube of 301^3 Nodes, the centre c = (150, 150, 150), `"law":
-"rays"`, N 64, 400 intervals, `width` S = 2^20, `release` [1, 64].
+"beam"`, N 64, 400 intervals, `width` S = 2^20, `release` [1, 64].
 
 - **The sources.** Twenty-four free measured events, each a free family of
   its own (`px1` .. `mz4`: the axis and the rank), thrown from the centre

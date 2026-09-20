@@ -39,7 +39,7 @@ Highlights 5.4, and applies to nothing else.
 
 - **Model identity** `beam-v1`. A world selects it with `"law": "beam"`; the
   record (`run.json`) carries `"law": "beam-v1"`. `configuration_validation`
-  reports the kind `rays`.
+  reports the kind `beam`.
 - **`events-v1` is deleted** (the owner's rule, one engine). `"law": "events"`
   is refused naming the Beam Law and pointing to MIGRATION. The engine
   package `src/event_universe/events/` keeps its name (the GameBoard's things are
@@ -1742,7 +1742,18 @@ implementation's part of the contract. The design above is unchanged.
     (the free probe beside its source from tick 31, 169 hand-overs), Bohr
     `r2` and `r4` (the electron beside the proton) and the orbit `s8_r12`
     (one hand-over at tick 174), registered old against new in
-    VALIDATION.md.
+    VALIDATION.md. A TIE OF THE FRAME, declared (the closing gate's
+    genericity probe, 2026-09-20, finding G1; `tests/test_contact.py`
+    (e)): the frame moves the bodies one after another in number order,
+    so when two bodies step in one interval and one's destination is the
+    other's Node, the lower number steps first: it makes the contact if
+    the other has not yet moved, and the other, moving after, finds the
+    Node it vacated free or hands over to it in turn; the sum of the
+    momenta is the same either way, the holder and the positions are not.
+    The declaration order is therefore a tie of the same kind as the axis
+    order and `age mod n` (the mathematician's list), stated here and in
+    ENGINE "The frame"; a simultaneous step of one interval would be a
+    change of the law and is the owner's to decide.
 32. **The `wave` threshold on the pointer's square; the escaped momentum
     per family** (the model owner, 2026-09-20; issue #359 step A and
     issues #360 and #361 item 1; `tests/test_nature_beam_detector.py`
