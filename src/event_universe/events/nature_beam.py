@@ -536,6 +536,46 @@ def coherent_pointer(
     return x, y
 
 
+# The pointer's components up to which the nearest step is read in the
+# int64 register (a component times a table entry inside 2^62 - 1).
+POINTER_STEP_BOUND = MOMENTUM_BOUND // LONGEST_PHASE_ENTRY
+
+
+def pointer_phases(
+    x: list[int], y: list[int], cosines: np.ndarray, sines: np.ndarray
+) -> list[int | None]:
+    """The nearest step of the phase circle to each pointer (X, Y): the
+    step k whose table entry (C[k], S[k]) is nearest in direction, the
+    one with the smallest |X S[k] - Y C[k]| among those with X C[k] + Y
+    S[k] > 0 (the lowest k on a tie), exact integers; a pointer of one
+    ray at phase p reads p wherever the 1/256 tables tell the steps apart
+    (`test_ray_detector` (g)); a zero pointer has no step (None). In the
+    register while every component is within `POINTER_STEP_BOUND`, in
+    Python integers beyond it."""
+    if not x:
+        return []
+    if max(max(map(abs, x)), max(map(abs, y))) <= POINTER_STEP_BOUND:
+        px = np.array(x, dtype=np.int64)[:, None]
+        py = np.array(y, dtype=np.int64)[:, None]
+        cross = np.abs(px * sines[None, :] - py * cosines[None, :])
+        ahead = px * cosines[None, :] + py * sines[None, :] > 0
+        cross[~ahead] = np.iinfo(np.int64).max
+        steps = cross.argmin(axis=1).tolist()
+        return [None if not ahead[k].any() else int(steps[k]) for k in range(len(x))]
+    found: list[int | None] = []
+    for px_k, py_k in zip(x, y, strict=True):
+        best: int | None = None
+        least = 0
+        for k, (c, s) in enumerate(zip(cosines.tolist(), sines.tolist(), strict=True)):
+            if px_k * c + py_k * s <= 0:
+                continue
+            distance = abs(px_k * s - py_k * c)
+            if best is None or distance < least:
+                best, least = k, distance
+        found.append(best)
+    return found
+
+
 class RayStore:
     """The records of one family as a structure of arrays, one row per
     record: `node` the flat index, `direction`, `age`, `phase`, `number`,
@@ -921,8 +961,14 @@ class FamilyPlan:
     t_phase: list[int] = field(default_factory=list)
     t_carried: list[int] = field(default_factory=list)
     t_label: list[list[int]] = field(default_factory=list)
-    # The detector's coherent pointer per measured event: (X, Y), exact.
+    # The detector set's reading of what clicked, per set: under `wave` the
+    # coherent pointer (X, Y), exact; under `beam` the count clicked; and
+    # the set's phase (None for a zero pointer). The units a beam set
+    # paired and passed on, per measured event: (number, amount, phase).
     pointer: dict[int, tuple[int, int]] = field(default_factory=dict)
+    count: dict[int, int] = field(default_factory=dict)
+    set_phase: dict[int, int | None] = field(default_factory=dict)
+    cancelled: dict[int, list[tuple[int, int, int]]] = field(default_factory=dict)
     # The label sum of the rows that leave the store this interval (the
     # home rows and the rows a table absorbs): off the running transit line.
     left_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
@@ -1144,23 +1190,37 @@ def nature_beam(
     # 4. The measured events' tables and the detectors, the same rule at
     # every measured event taken in bulk by the host: the rows at measured
     # events found by one gather per family, the reading sets grouped by
-    # (measured event, number) with one segmented sum per moment, the
-    # threshold and the window as masks, every bound checked per group in
-    # bulk; then the records and the side effects applied per group in the
-    # order of the records (by number, family, other number, row), Python
-    # integers only, no reduction reordered.
+    # detector set (the threshold and, under `wave`, the window on the set's
+    # phase; the model owner, 2026-09-19: a detector is a set of Nodes with
+    # ONE record) and by (measured event, number) with one segmented sum per
+    # moment, every bound checked per group in bulk; then the records and
+    # the side effects applied per group in the order of the records (by
+    # number, family, other number, row), Python integers only, no
+    # reduction reordered. The physics of an arrival stays at its Node (the
+    # content joins, the push, the labels, the re-emission); only the
+    # reading is over the set.
     keep = [np.ones(store.size, dtype=bool) for store in stores]
     for entry in entries:
         entry.presence = 0
     if events:
         count = len(families)
         ev_number = np.array([e.number for e in entries], dtype=np.int64)
-        ev_threshold = np.array([e.threshold for e in entries], dtype=np.int64)
         ev_charge = np.array([e.charge for e in entries], dtype=np.int64)
         ev_rule = np.array([[RULE_CODES[r] for r in e.table] for e in entries], dtype=np.int64)
         ev_window = np.array(
             [[-1 if w is None else w for w in e.windows] for e in entries], dtype=np.int64
         )
+        # The detector set of every measured event, its threshold and its
+        # reading, indexed by the set's index.
+        ev_set = np.array([e.detector_set.index for e in entries], dtype=np.int64)
+        set_of = {e.detector_set.index: e.detector_set for e in entries}
+        set_count = int(ev_set.max()) + 1
+        st_threshold = np.ones(set_count, dtype=np.int64)
+        st_wave = np.zeros(set_count, dtype=bool)
+        for set_index, detector_set in set_of.items():
+            st_threshold[set_index] = detector_set.threshold
+            st_wave[set_index] = detector_set.wave
+        half = modulus // 2
         presence = np.zeros((count, events), dtype=np.int64)
         # The refusals found in bulk, keyed by the point at which the rule
         # taken per set raises them, (measured event, family, part, group
@@ -1233,18 +1293,34 @@ def nature_beam(
                 plan.h_phase = phase[home].tolist()
                 plan.events.update(h_events)
             # Met: the arrivals of every other number at a table that is not
-            # `pass`, the threshold on the set, then the window per ray.
+            # `pass`, ordered by detector set (then measured event, then
+            # row): the threshold on the amount summed over the set.
             rule = ev_rule[ev, family]
             met = np.flatnonzero(~own & arrived & (rule != PASS_RULE))
             if met.shape[0] == 0:
                 return plan
+            met = met[np.argsort(ev_set[ev[met]], kind="stable")]
             ev_m = ev[met]
-            starts = group_starts(ev_m)
-            sizes = group_sizes(starts, met.shape[0])
-            total = grouped_sums(amount[met], starts, int(sizes.max()))
-            below = np.repeat(np.asarray(total < ev_threshold[ev_m[starts]], dtype=bool), sizes)
+            st_m = ev_set[ev_m]
+            s_starts = group_starts(st_m)
+            s_sizes = group_sizes(s_starts, met.shape[0])
+            total = grouped_sums(amount[met], s_starts, int(s_sizes.max()))
+            below = np.repeat(np.asarray(total < st_threshold[st_m[s_starts]], dtype=bool), s_sizes)
+            # The window: under `wave` it reads the set's phase, the nearest
+            # step of the coherent pointer of the arrivals the threshold
+            # admitted (a zero pointer has no phase and is outside every
+            # window); under `beam` each ray's own phase.
             window = ev_window[ev_m, family]
-            inside = (window < 0) | tables.window[(phase[met] - window) % modulus]
+            read_phase = phase[met].copy()
+            wave_rows = st_wave[st_m]
+            if wave_rows.any():
+                px, py = coherent_pointer(
+                    amount[met], phase[met], s_starts, total.tolist(), tables.cosines, tables.sines
+                )
+                steps = pointer_phases(px, py, tables.cosines, tables.sines)
+                set_step = np.array([-1 if s is None else s for s in steps], dtype=np.int64)
+                read_phase = np.where(wave_rows, np.repeat(set_step, s_sizes), read_phase)
+            inside = (window < 0) | ((read_phase >= 0) & tables.window[(read_phase - window) % modulus])
             passing = below | ~inside
             p = np.flatnonzero(passing)
             if p.shape[0]:
@@ -1267,6 +1343,64 @@ def nature_beam(
             # The taken rows grouped by (measured event, number), the rows
             # of a group in row order.
             taken = taken[np.lexsort((number[taken], ev[taken]))]
+            a_t = amount[taken].copy()
+            rule_t = ev_rule[ev[taken], family]
+            st_t = ev_set[ev[taken]]
+            # The `beam` reading (the model owner, 2026-09-19, "only
+            # events"): over a beam set, the rays that would click are
+            # paired by opposite phase, greedily in the order of the rows
+            # (measured event, number, row), a row pairing its units with
+            # the first later rows of the set whose phase is opposite (with
+            # a window on the row's Node, within the half circle centred
+            # on the opposite phase; without one, exactly opposite); a
+            # paired couple passes on whole, the rest of a row clicks.
+            cancelled = np.zeros(taken.shape[0], dtype=np.int64)
+            pairing = np.flatnonzero((rule_t == MEASURE_RULE) & ~st_wave[st_t])
+            if pairing.shape[0] >= 2:
+                sets_p = st_t[pairing]
+                for set_index in np.unique(sets_p).tolist():
+                    rows = pairing[sets_p == set_index]
+                    if rows.shape[0] < 2:
+                        continue
+                    phases = phase[taken[rows]].tolist()
+                    left = a_t[rows].tolist()
+                    arcs = ev_window[ev[taken[rows]], family].tolist()
+                    for i, phase_i in enumerate(phases):
+                        if left[i] == 0:
+                            continue
+                        for j in range(i + 1, len(phases)):
+                            if left[j] == 0:
+                                continue
+                            d = (phases[j] - phase_i - half) % modulus
+                            if not (d == 0 if arcs[i] < 0 else bool(tables.window[d])):
+                                continue
+                            part = min(left[i], left[j])
+                            left[i] -= part
+                            left[j] -= part
+                            cancelled[rows[i]] += part
+                            cancelled[rows[j]] += part
+                            if left[i] == 0:
+                                break
+                    a_t[rows] = left
+            if cancelled.any():
+                c_rows = np.flatnonzero(cancelled > 0)
+                for k in c_rows.tolist():
+                    plan.cancelled.setdefault(int(ev[taken[k]]), []).append(
+                        (int(number[taken[k]]), int(cancelled[k]), int(phase[taken[k]]))
+                    )
+                # The paired units go on: the row keeps them and stays.
+                store.amount[at[taken[c_rows]]] = cancelled[c_rows]
+                plan.events.update(ev[taken[c_rows]].tolist())
+                survivors = a_t > 0
+                taken, a_t, rule_t, st_t = (
+                    taken[survivors],
+                    a_t[survivors],
+                    rule_t[survivors],
+                    st_t[survivors],
+                )
+                cancelled = cancelled[survivors]
+                if taken.shape[0] == 0:
+                    return plan
             ev_t, num_t = ev[taken], number[taken]
             new = np.concatenate((NEW_RUN, (ev_t[1:] != ev_t[:-1]) | (num_t[1:] != num_t[:-1])))
             g_starts = np.flatnonzero(new)
@@ -1281,7 +1415,7 @@ def nature_beam(
                 first = int(e_starts[int(np.searchsorted(e_starts, group, side="right")) - 1])
                 failures[(int(g_ev[group]), family, 1, group - first, stage)] = error
 
-            a_t, c_t, ph_t = amount[taken], content[taken], phase[taken]
+            c_t, ph_t = content[taken], phase[taken]
             v_arrival = vectors[arrival[taken]]
             v_direction = vectors[direction[taken]]
             # The reading's component on the record: the moments of the
@@ -1347,28 +1481,38 @@ def nature_beam(
             for k, event in enumerate(g_events):
                 plan.groups[event] = (e_lo[k], e_hi[k])
             plan.events.update(g_events)
-            # The rows a table absorbs leave the store. The detector's
-            # pointer: the clicked amount summed exactly per measured event,
-            # then the coherent pointer of the clicked rows (the amplitudes
-            # at their phases), exact and never refused.
-            rule_t = ev_rule[ev_t, family]
+            # The rows a table absorbs leave the store (a row that kept
+            # paired units stays with them). The set's reading of what
+            # clicked: under `wave` the clicked amount summed exactly per
+            # set, then the coherent pointer of the clicked rows (the
+            # amplitudes at their phases), exact and never refused, and its
+            # nearest step; under `beam` the count clicked and the phase of
+            # the last clicked row of the set.
             absorbed = rule_t != READ_RULE
-            keep[family][at[taken[absorbed]]] = False
+            keep[family][at[taken[absorbed & (cancelled == 0)]]] = False
             plan.left_momentum = [
                 a + b
                 for a, b in zip(plan.left_momentum, exact_column_sums(labels[absorbed]), strict=True)
             ]
             clicked = np.flatnonzero(rule_t == MEASURE_RULE)
             if clicked.shape[0]:
-                ev_c = ev_t[clicked]
-                c_starts = group_starts(ev_c)
+                clicked = clicked[np.argsort(st_t[clicked], kind="stable")]
+                st_c = st_t[clicked]
+                c_starts = group_starts(st_c)
                 c_sizes = group_sizes(c_starts, clicked.shape[0])
                 totals_c = grouped_sums(a_t[clicked], c_starts, int(c_sizes.max())).tolist()
                 pointer_x, pointer_y = coherent_pointer(
                     a_t[clicked], ph_t[clicked], c_starts, totals_c, tables.cosines, tables.sines
                 )
-                for k, event in enumerate(ev_c[c_starts].tolist()):
-                    plan.pointer[event] = (pointer_x[k], pointer_y[k])
+                steps = pointer_phases(pointer_x, pointer_y, tables.cosines, tables.sines)
+                last_phase = ph_t[clicked][(c_starts + c_sizes - 1)].tolist()
+                for k, set_index in enumerate(st_c[c_starts].tolist()):
+                    if st_wave[set_index]:
+                        plan.pointer[set_index] = (pointer_x[k], pointer_y[k])
+                        plan.set_phase[set_index] = steps[k]
+                    else:
+                        plan.count[set_index] = totals_c[k]
+                        plan.set_phase[set_index] = last_phase[k]
             return plan
 
         plans = [family_plan(family, store) for family, store in enumerate(stores)]
@@ -1385,6 +1529,11 @@ def nature_beam(
         for plan in plans:
             if plan is not None:
                 active |= plan.events
+        # The set's record line and the phase it returns follow the last
+        # active measured event of the set, after every click of the set.
+        last_active: dict[int, int] = {}
+        for i in sorted(active):
+            last_active[int(ev_set[i])] = i
 
         def refuse(key: tuple[int, int, int, int, int]) -> None:
             error = failures.get(key)
@@ -1397,7 +1546,8 @@ def nature_beam(
         for i in sorted(active):
             entry = entries[i]
             node = list(entry.position)
-            detector = None if entry.detector is None else world.detectors[entry.detector].name
+            detector_set = entry.detector_set
+            detector = detector_set.name
             for family, plan in enumerate(plans):
                 if failures:
                     refuse((i, family, 0, 0, 0))
@@ -1457,130 +1607,167 @@ def nature_beam(
                         else:
                             line["window"] = plan.p_window[k]
                         record(line)
-                span = plan.groups.get(i)
-                if span is None:
-                    continue
-                reading_values = plan.readings[entry.reads[family]]
-                for gi in range(span[0], span[1]):
-                    if failures:
-                        for stage in (2, 3, 4):
-                            refuse((i, family, 1, gi - span[0], stage))
-                    other = plan.g_number[gi]
-                    moment = plan.g_moment[gi]
-                    if free:
-                        push = [
-                            bounded(-moment[axis] * entry.content, entry, "push") for axis in range(3)
-                        ]
-                        if entry.charge:
-                            for charge, mass, part in plan.classes.get(gi, ()):
-                                for axis in range(3):
-                                    total = bounded(
-                                        part[axis] * entry.charge * charge, entry, "electric push"
-                                    )
-                                    whole = by_clock(entry.age, abs(total), mass)
-                                    push[axis] = bounded(
-                                        push[axis] + (-whole if total < 0 else whole), entry, "push"
-                                    )
-                    else:
-                        push = [bounded(moment[axis], entry, "push") for axis in range(3)]
-                    entry.momentum = [
-                        bounded(a + b, entry, "momentum")
-                        for a, b in zip(entry.momentum, push, strict=True)
-                    ]
-                    entry.pushed = [
-                        bounded(a + b, entry, "push taken")
-                        for a, b in zip(entry.pushed, push, strict=True)
-                    ]
-                    group_total = plan.g_total[gi]
-                    group_content = plan.g_content[gi]
-                    reading_value = reading_values[gi]
-                    entry.measured[family][rule] += group_total
-                    if rule == "read":
-                        if record is not None:
-                            record(
-                                {
-                                    "event": "read",
-                                    "tick": tick,
-                                    "node": node,
-                                    "measured": entry.number,
-                                    "detector": detector,
-                                    "family": name,
-                                    "number": other,
-                                    "amount": group_total,
-                                    "push": push,
-                                    "content": group_content,
-                                    "reading": reading_value,
-                                }
-                            )
-                        continue
-                    ledger.transit_absorbed[family] += group_total
-                    ledger.content_absorbed[family] += group_content
-                    k0, k1 = plan.g_start[gi], plan.g_end[gi]
-                    if rule == "rerelease":
-                        pending = entry.pending[family]
-                        for k in range(k0, k1):
-                            pending.append((plan.t_amount[k], plan.t_content[k], plan.t_phase[k]))
-                        if record is not None:
-                            record(
-                                {
-                                    "event": "rerelease",
-                                    "tick": tick,
-                                    "node": node,
-                                    "measured": entry.number,
-                                    "detector": detector,
-                                    "family": name,
-                                    "number": other,
-                                    "amount": group_total,
-                                    "push": push,
-                                    "content": group_content,
-                                    "reading": reading_value,
-                                }
-                            )
-                        continue
-                    # The click: the content joins, one click per unit.
-                    entry.held[family] = bounded(entry.held[family] + group_content, entry, "content")
-                    entry.events[family] += group_total
-                    ledger.held_measured[family] += group_content
-                    if record is not None:
-                        for k in range(k0, k1):
-                            record(
-                                {
-                                    "event": "click",
-                                    "tick": tick,
-                                    "node": node,
-                                    "measured": entry.number,
-                                    "detector": detector,
-                                    "family": name,
-                                    "number": other,
-                                    "amount": plan.t_amount[k],
-                                    "push": plan.t_label[k],
-                                    "phase": plan.t_phase[k],
-                                    "content": plan.t_carried[k],
-                                    "reading": reading_value,
-                                }
-                            )
-                if rule == "measure":
-                    # The record: the pointer's square and its accumulation,
-                    # exact Python integers (a report of the host, never
-                    # refused; a record may pass 2^63 and its readers parse
-                    # it as an arbitrary-precision integer).
-                    pointer_x, pointer_y = plan.pointer[i]
-                    square = pointer_x * pointer_x + pointer_y * pointer_y
-                    entry.record[family] += square
-                    if record is not None:
+                if record is not None:
+                    for other, amount_c, phase_c in plan.cancelled.get(i, ()):
                         record(
                             {
-                                "event": "record",
+                                "event": "pass",
                                 "tick": tick,
                                 "node": node,
                                 "measured": entry.number,
                                 "detector": detector,
                                 "family": name,
-                                "number": 0,
-                                "record": square,
-                                "pointer": [pointer_x, pointer_y],
+                                "number": other,
+                                "amount": amount_c,
+                                "phase": phase_c,
+                                "cancelled": True,
                             }
                         )
+                span = plan.groups.get(i)
+                if span is not None:
+                    reading_values = plan.readings[entry.reads[family]]
+                    for gi in range(span[0], span[1]):
+                        if failures:
+                            for stage in (2, 3, 4):
+                                refuse((i, family, 1, gi - span[0], stage))
+                        other = plan.g_number[gi]
+                        moment = plan.g_moment[gi]
+                        if free:
+                            push = [
+                                bounded(-moment[axis] * entry.content, entry, "push")
+                                for axis in range(3)
+                            ]
+                            if entry.charge:
+                                for charge, mass, part in plan.classes.get(gi, ()):
+                                    for axis in range(3):
+                                        total = bounded(
+                                            part[axis] * entry.charge * charge, entry, "electric push"
+                                        )
+                                        whole = by_clock(entry.age, abs(total), mass)
+                                        push[axis] = bounded(
+                                            push[axis] + (-whole if total < 0 else whole),
+                                            entry,
+                                            "push",
+                                        )
+                        else:
+                            push = [bounded(moment[axis], entry, "push") for axis in range(3)]
+                        entry.momentum = [
+                            bounded(a + b, entry, "momentum")
+                            for a, b in zip(entry.momentum, push, strict=True)
+                        ]
+                        entry.pushed = [
+                            bounded(a + b, entry, "push taken")
+                            for a, b in zip(entry.pushed, push, strict=True)
+                        ]
+                        group_total = plan.g_total[gi]
+                        group_content = plan.g_content[gi]
+                        reading_value = reading_values[gi]
+                        entry.measured[family][rule] += group_total
+                        if rule == "read":
+                            if record is not None:
+                                record(
+                                    {
+                                        "event": "read",
+                                        "tick": tick,
+                                        "node": node,
+                                        "measured": entry.number,
+                                        "detector": detector,
+                                        "family": name,
+                                        "number": other,
+                                        "amount": group_total,
+                                        "push": push,
+                                        "content": group_content,
+                                        "reading": reading_value,
+                                    }
+                                )
+                            continue
+                        ledger.transit_absorbed[family] += group_total
+                        ledger.content_absorbed[family] += group_content
+                        k0, k1 = plan.g_start[gi], plan.g_end[gi]
+                        if rule == "rerelease":
+                            pending = entry.pending[family]
+                            for k in range(k0, k1):
+                                pending.append((plan.t_amount[k], plan.t_content[k], plan.t_phase[k]))
+                            if record is not None:
+                                record(
+                                    {
+                                        "event": "rerelease",
+                                        "tick": tick,
+                                        "node": node,
+                                        "measured": entry.number,
+                                        "detector": detector,
+                                        "family": name,
+                                        "number": other,
+                                        "amount": group_total,
+                                        "push": push,
+                                        "content": group_content,
+                                        "reading": reading_value,
+                                    }
+                                )
+                            continue
+                        # The click: the content joins, one click per unit.
+                        entry.held[family] = bounded(
+                            entry.held[family] + group_content, entry, "content"
+                        )
+                        entry.events[family] += group_total
+                        ledger.held_measured[family] += group_content
+                        if record is not None:
+                            for k in range(k0, k1):
+                                record(
+                                    {
+                                        "event": "click",
+                                        "tick": tick,
+                                        "node": node,
+                                        "measured": entry.number,
+                                        "detector": detector,
+                                        "family": name,
+                                        "number": other,
+                                        "amount": plan.t_amount[k],
+                                        "push": plan.t_label[k],
+                                        "phase": plan.t_phase[k],
+                                        "content": plan.t_carried[k],
+                                        "reading": reading_value,
+                                    }
+                                )
+                # The set's record, once per set per family per interval,
+                # after the set's last active measured event: under `wave`
+                # the pointer's square, under `beam` the count clicked,
+                # exact Python integers (a report of the host, never
+                # refused; a record may pass 2^63 and its readers parse it
+                # as an arbitrary-precision integer); and the set's phase,
+                # returned to every measured event of the set (the model
+                # owner: the detector returns to the board the information
+                # it received), the frame's turn added after it.
+                set_index = detector_set.index
+                if last_active.get(set_index) == i and set_index in plan.set_phase:
+                    set_phase = plan.set_phase[set_index]
+                    if detector_set.wave:
+                        pointer_x, pointer_y = plan.pointer[set_index]
+                        value = pointer_x * pointer_x + pointer_y * pointer_y
+                    else:
+                        value = plan.count[set_index]
+                    detector_set.record[family] += value
+                    if set_phase is not None:
+                        detector_set.phase[family] = set_phase
+                        for member in detector_set.numbers:
+                            if member in measured:
+                                measured[member].phase = set_phase
+                    if record is not None:
+                        one = len(detector_set.numbers) == 1
+                        line = {
+                            "event": "record",
+                            "tick": tick,
+                            "node": node if one else None,
+                            "measured": entry.number if one else None,
+                            "detector": detector,
+                            "family": name,
+                            "number": 0,
+                            "record": value,
+                        }
+                        if detector_set.wave:
+                            line["pointer"] = [pointer_x, pointer_y]
+                        line["phase"] = set_phase
+                        record(line)
     for family, store in enumerate(stores):
         if not keep[family].all():
             store.keep(keep[family])

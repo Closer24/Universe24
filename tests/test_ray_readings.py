@@ -284,7 +284,7 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_each_rays_own_phase(
         (2, 2, [2, 0, 0], 2, 0),
         (3, 1, [-1, 0, 0], 1, 0),
     ]
-    assert [record["event"] for record in records if record["event"] != "click"] == ["record"]
+    assert [(r["event"], r["phase"]) for r in records if r["event"] != "click"] == [("record", 0)]
 
     records.clear()
     simulation = RaySimulation(
@@ -311,7 +311,7 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_each_rays_own_phase(
     assert simulation.books()["balanced"]
     assert entry.events == [0, 1] and entry.held == [4, 1]
     kinds = [(r["event"], r["number"], r.get("phase"), r.get("window")) for r in records]
-    assert kinds == [("pass", 2, 0, 32), ("click", 3, 32, None), ("record", 0, None, None)]
+    assert kinds == [("pass", 2, 0, 32), ("click", 3, 32, None), ("record", 0, 32, None)]
 
 
 def test_the_dense_readings_on_request_equal_the_arrivals_node_by_node():

@@ -22,7 +22,7 @@ emitter by its phase rate (E = h f) and a click measures that content.
 | --- | --- | --- |
 | `one_content.json` | One measured event of the free family `m` (`quantum` 0; `"phase": false`: its rays carry phase 0 and it never turns), content 2^24, held in place at the centre of an open 25^3 board; K 2^22, N 64, release 1/128 per heading per unit per self-creation on the six headings, `suspension` 1; 200 intervals | The books close at every tick and the content stays constant (what comes home is created again); six ballistic beams of 2^17 per interval, Gauss's flux through every cube equal to the emission once the front has passed; the count on the axes constant with r (a beam does not spread) |
 | `two_contents.json` | Two such measured events of `m` 8 Links apart on the x axis of an open 21^3 board, no suspension; 200 intervals | Equal and opposite pushes along the line, toward each other, each the content times the flow of the other's beam at its Node: the third law read on lone beams (read on 2026-09-19: the books close at every tick, the pushes +/-411217348788224 = 2^24 x 187 x 2^17 along x after 200 intervals; its faces click two beams of 2^17 in one interval and their records pass 2^63, exact, [validation](../../docs/VALIDATION.md)) |
-| `two_slits.json` | A lamp of the paid family `light` (`quantum` 1; K 2^30, turn 8, 64 rays per self-creation on five directions toward the wall), a wall at x = 8 of the paid family `wall` measuring light (the rule the keys give; no table declared) with two openings at y = 55 and 65 that declare `rerelease` on a fan of 91 primitive directions, a screen at x = 52 of measured events declared as the detector `screen`; 60 x 121 x 1 with z periodic, no suspension; 500 intervals | The screen's plain count is additive to the unit (no interference in the count); its squared record fringes at lambda = period / sqrt 3, the interference term correlating with the two-source cosine above 0.85 (`tests/test_ray_worlds.py` (a)) |
+| `two_slits.json` | A lamp of the paid family `light` (`quantum` 1; K 2^30, turn 8, 64 rays per self-creation on five directions toward the wall), a wall at x = 8 of the paid family `wall` measuring light (the rule the keys give; no table declared) with two openings at y = 55 and 65 that declare `rerelease` on a fan of 91 primitive directions, a screen at x = 52 of measured events declared as 121 one-Node detectors `screen_<y>` (the screen's pixels) under the reading `wave` (since 2026-09-19 a detector is a set with one record: one detector of 121 Nodes would read one record with no resolution in y); 60 x 121 x 1 with z periodic, no suspension; 500 intervals | The screen's plain count is additive to the unit (no interference in the count); its squared record fringes at lambda = period / sqrt 3, the interference term correlating with the two-source cosine above 0.85 (`tests/test_ray_worlds.py` (a)) |
 | `one_slit.json` | The same with one opening | The control: the record without the two-source term |
 
 Run one:
@@ -77,6 +77,22 @@ entry is
 [D, the orbit under the law of the ray, on the plane (2026-09-19)](../../docs/EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19):
 one orbit closes by the criterion (S = 32, r = 12, an eccentric loop), the
 mean push reads as derived, the grain of the push breaks the rest.
+
+## The Heisenberg run
+
+The folder [heisenberg/](heisenberg/README.md) holds the eight worlds of
+the run A10, written by `heisenberg/make_worlds.py`: the plane stretched
+to 120 x 161, a plane wave from a row of lamps on one heading, a wall
+with ONE opening of width w (1, 3, 9, 27 Nodes) declared as one detector
+that re-emits on a forward fan of 47 directions, and a screen 108 Links
+behind it read as 161 one-Node detectors, every detector under the
+world's `reading` (`wave` or `beam`). `tools/heisenberg_readings.py` reads
+the spread of the screen's record and of its count against the
+wavelength lambda = 8 / sqrt 3; the register entry is
+[A10, the width of an opening and the spread behind it](../../docs/EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-law-of-the-ray-2026-09-20):
+the `wave` record narrows with w and the count does not; the product
+w x FWHM reaches 0.886 lambda within 22 % at w = 27 and is not read at
+the smaller widths on the sparse fan.
 
 ## The detector definitions
 

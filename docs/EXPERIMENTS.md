@@ -1240,6 +1240,92 @@ states "exactly" and means integer equality at every tick.
   PROJECT_STATUS, "What is open"). Nothing was tuned; the widths and radii
   are the assignment's; the label's magnitude was not changed.
 
+### A10, the width of an opening and the spread behind it, under the law of the ray (2026-09-20)
+
+- **Confronts.** The uncertainty relation in its diffraction form: a
+  plane wave through one opening of width w spreads behind it by an
+  angle whose sine is about lambda / w, so that w x Delta(sin theta) is
+  bounded below by a constant of the law. Asked for by the model owner
+  on 2026-09-19 as the test of the detector's sensitivity (Highlights
+  5.4: a detector is a set of Nodes with one record; the declared width
+  is the position's uncertainty; the reading, not the board, is what is
+  uncertain), under both readings a detector may declare, `wave` and
+  `beam` ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
+- **Model prediction, pinned before the runs
+  ([the derivation](../examples/events/heisenberg/README.md#the-derivation-before-the-runs)).**
+  lambda = c x period = 8 / sqrt 3 = 4.619 Links (the lamp's turn 8 of
+  64 per interval, the flight at 1 / sqrt 3). Under `wave` the record
+  of w emitters one Link apart is the array factor [sin(pi w s / lambda)
+  / (w sin(pi s / lambda))]^2 in s = sin theta times the fan's profile:
+  below lambda a fan (w = 1: the declared fan; w = 3: FWHM 1.434 in s,
+  beyond the screen), above it a beam of FWHM 0.457 (w = 9) and 0.152
+  (w = 27) in s, the product w x FWHM 0.886 lambda = 4.09 for w >=
+  lambda. The count (the plain clicks per pixel) is the fan's profile at
+  every w and never narrows (the control). Under `beam` no expectation
+  for the spread; two coherent beams click n1 + n2 at phase difference
+  0 and |n1 - n2| at N / 2. Named as what can break the reading: the
+  Fresnel number w^2 / (lambda L) = 1.46 at w = 27 (the border of the far
+  field), the discrete fan (47 directions over 161 pixels: a pixel
+  receives about 0.3 w of the w emitters per interval), the phases
+  quantized to 45 degrees by the integer flight times.
+- **Features.** The detector set (`opening` declared as one detector of
+  w Nodes; the screen as 161 one-Node detectors), the two readings, the
+  re-emission on a fan, the plane wave from a row of lamps releasing on
+  one heading, the face detectors (the escapes), no suspension.
+- **Run.** `examples/events/heisenberg/` (eight worlds by
+  `make_worlds.py`, `w<w>_<reading>`, 120 x 161 x 1 with z periodic, 350
+  intervals, the model ids `rays-heisenberg-w<w>-<reading>-v1`);
+  `tools/run_series.py --jobs 4`; `tools/heisenberg_readings.py` (the
+  FWHM of the record over sin theta after a five-pixel moving mean, the
+  count's FWHM, the weighted rms of sin theta, the product).
+- **Result (2026-09-20, measured against expected).** The worktree of
+  `claude/universe24-new-3ytqde` after the detector-set commit, source
+  fingerprint `f3fb33607190c86c...`, Python 3.14, headless, four cores;
+  every run completed with the books balanced at every tick (2.1 to 52.7
+  s); 16 record checks passed, 0 failed.
+
+  | World | w | record FWHM in sin theta (expected) | count FWHM (the fan) | record rms | count rms | w x record FWHM (expected) | clicks | cancelled |
+  | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+  | `w1_wave` | 1 | 0.057 (the fan) | 0.057 | 0.319 | 0.319 | 0.06 (the fan) | 5497 | - |
+  | `w3_wave` | 3 | 0.049 (1.434) | 0.063 | 0.290 | 0.324 | 0.15 (4.30) | 16703 | - |
+  | `w9_wave` | 9 | 0.072 (0.457) | 0.168 | 0.222 | 0.324 | 0.64 (4.11) | 50099 | - |
+  | `w27_wave` | 27 | 0.185 (0.152) | 0.761 | 0.224 | 0.325 | 4.99 (4.09) | 150187 | - |
+  | `w1_beam` | 1 | 0.057 | 0.057 | 0.319 | 0.319 | 0.06 | 5497 | 0 |
+  | `w3_beam` | 3 | 0.063 | 0.063 | 0.324 | 0.324 | 0.19 | 16703 | 0 |
+  | `w9_beam` | 9 | 0.148 | 0.148 | 0.324 | 0.324 | 1.34 | 46999 | 3100 |
+  | `w27_beam` | 27 | 0.486 | 0.486 | 0.330 | 0.330 | 13.11 | 98780 | 51407 |
+
+  - The count never narrows (measured = expected): its rms 0.32 at every
+    w under both readings, the fan's own spread.
+  - The record narrows under `wave` (the rms 0.319, 0.290, 0.222, 0.224
+    for w = 1, 3, 9, 27; measured as expected in direction, the floor of
+    single-emitter spikes and the screen's edges keeping it from falling
+    further at w = 27) and not under `beam` (0.32 to 0.33).
+  - The FWHM meets the expectation at w = 27 only: 0.185 against 0.152
+    (+22 %, the Fresnel number 1.46 there), the product 4.99 against
+    4.09; at w = 3 and 9 the measured widths (0.049, 0.072) are the
+    width of the central spike of the few converging lines and not the
+    lobe (1.43, 0.46), the products 0.15 and 0.64 below the constant:
+    the discrete fan leaves a pixel one to three emitters per interval
+    and the lobe is not formed (finding (ii), measured).
+  - Under `beam` the pairing cancels 0, 0, 3100 and 51407 clicks (0, 0,
+    6 and 34 %), the cancelled rays escaping; the surviving count keeps
+    the fan's spread, the product growing as w: no bound. The triangle
+    the owner expects between the extremes is not resolved by one to
+    four rays per pixel per interval.
+- **Verdict.** The `wave` record narrows with the width of the opening
+  and the count does not, as the law says; the product w x FWHM reaches
+  0.886 lambda within 22 % at the one width where the sparse fan lets
+  the lobe form (w = 27) and is not read at the smaller widths, a limit
+  of the reading (the fan's 47 directions over 161 pixels) and not a
+  verdict on the law; `beam` gives no bound. Nothing was tuned. For the
+  model owner: a fan dense enough that every emitter reaches every pixel
+  of the lobe (about L directions per radian) or pixels declared as sets
+  of several Nodes, and a screen beyond L = 160 for w = 27, before the
+  constant is read at every width. The page of the run (four panels, the
+  rays behind the opening and the screen's record, with the table) is in
+  the session's scratchpad, not published.
+
 ### A3. Bell test in phase form, delayed geometry
 
 - **Confronts.** The same CHSH data as A2 and the quantum value at the

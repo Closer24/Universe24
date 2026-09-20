@@ -185,13 +185,27 @@ the run with `OverflowError` naming the measured event, its Node and the
 quantity ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-ray-law));
 the detector's record is not a quantity of the law but a report of the
 host and is never refused: the coherent pointer (X, Y) is summed in the
-int64 register while the amount a detector Node or a face clicks of one
+int64 register while the amount a detector set or a face clicks of one
 family in one interval is within `nature_beam.POINTER_AMOUNT_BOUND`
 ((2^62 - 1) // (32 x 257) = 560759486676481) and in Python integers
 beyond it (`nature_beam.coherent_pointer`); the square and the cumulative
-record (`Measured.record`, `Ledger.face_record`) are exact Python
+record (`DetectorSet.record`, `Ledger.face_record`) are exact Python
 integers that can exceed 2^63 in `run.json` and `state.json`, parsed as
 arbitrary-precision integers ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
+**The detector is a set of Nodes with one record** (the model owner,
+2026-09-19): `RaySimulation.detector_sets` holds one `DetectorSet` per
+declared detector (its name, its `reading`, its threshold, its measured
+events, its record per family and its phase at the last click) and one
+per measured event outside every declared detector (a detector of one
+Node with the default reading); every measured event points to its set
+(`Measured.detector_set`; `Measured.threshold` is the set's). The
+threshold, the window under `wave`, the pointer, the record and the
+pairing under `beam` are taken over the set by `nature_beam` step 4; the
+click's content, momentum and re-emission stay at the Node the ray
+reached ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
+After a click the set's phase is written on every measured event of the
+set before the frame adds the turn (`step`: the click sets the phase in
+the law, the frame turns it by `turn` after).
 
 **The world** (`events/world.py`; the keys of [RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)).
 `law` "rays"; `model_id`; `shape`; `boundary`; `ticks`; `K`; `N` (64 by
@@ -219,7 +233,7 @@ directions, phase_window}` on a measured event of a paid family);
 `in_transit` (`position`, `family`, `number`,
 `direction` (a vector of D, or a rest index 0 or 1), `amount`, `phase`,
 optional `age`); `detectors` (`name`, `positions`, `threshold` 1 by
-default). Refused, naming the key and the law: `"law": "events"` (pointing
+default, `reading` `beam` by default or `wave`). Refused, naming the key and the law: `"law": "events"` (pointing
 to MIGRATION), `dynamics`, `max_active_owners`, `port_map`, `output`,
 `capacity`, `groups`, `reference_phase`, `headings` on a lamp, `heading` on
 a ray, the earlier engines' keys (`contents`, `initial_shadows`,
@@ -237,7 +251,7 @@ a power of two, a detector on a Node without a measured event, a Node in
 two detectors, a `phase_window` outside 0 .. N - 1 or on `pass` or for a
 family without a phase circle, a table entry object with an unknown key (one
 without `rule` takes the family's default rule), a `reads` outside the
-reading's components, a `suspension`
+reading's components, a detector `reading` outside `beam` and `wave`, a `suspension`
 denominator of 0 ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-ray-law)),
 a `width` below 1 or not an integer ([the width of the push](TEST_EXPECTATIONS.md#the-width-of-the-push)).
 `event_universe.configuration_validation` reports a world of the law as
@@ -252,20 +266,25 @@ per completed tick (`audit`) with
 (`measured`: position, held per family, content, phase, charge, momentum,
 windows, detector, age, owed, what waits to be created again (`home`,
 `home_content`), `waited`, phase steps, steps, what each met per family by
-rule, the clicks, the push taken and the detector's cumulative `record`),
-the detectors (`detectors`: name, Nodes, threshold, per family the amount
-measured, the clicks, the content and the cumulative squared `record`;
-then the face detectors, one per open face in Port order, with what
+rule, the clicks and the push taken; no record of its own since
+2026-09-19, the record being the detector set's), the detectors
+(`detectors`: name, Nodes, threshold, `reading`, per family the amount
+measured, the clicks summed over its Nodes, the set's one cumulative
+`record` (the square under `wave`, the count under `beam`) and its
+`phase` at the last click; then the face detectors, one per open face in Port order, with what
 clicked there in transit, the `measured_content` of the measured events
 that stepped off, the `record` and the `momentum` that left) and the
 `escaped` per family (amount, content, momentum). `events.jsonl` holds one
 record per event: `home`, `read`, `click`, `rerelease` (per number and
 tick, with the amount, the phase, the push and the content), `pass` (a ray
 below the threshold, with `threshold`, or outside the window, with
-`window`), `step`, and per interval per detector Node and family a `record`
-line with the pointer (X, Y) and its square; a `click` on a face detector
-names the face, `measured` None for a ray or the number of the measured
-event that stepped off. `state.json`, through
+`window`, or paired under `beam`, with `cancelled` true), `step`, and per
+interval per detector set and family a `record` line with the set's
+`record` (under `wave` the square with the `pointer` (X, Y); under `beam`
+the count), the set's `phase` and, for a set of one Node, its `node` and
+`measured` (None for a set of several Nodes: the click says "here, in one
+of these"); a `click` on a face detector names the face, `measured` None
+for a ray or the number of the measured event that stepped off. `state.json`, through
 `snapshot_writer.write_snapshot`, carries `"law": "rays-v1"`, the
 `boundary`, the measured events, the detectors and every Node with rays
 (its rows: direction, age, phase, number, amount, content per family, and

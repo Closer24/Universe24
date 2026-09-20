@@ -9,7 +9,12 @@ docs/TEST_EXPECTATIONS.md ("The worlds of the ray law"), written down first:
     content 8 K + 1 400 000, 64 rays per self-creation on five directions),
     a wall at x = 8 measuring light with the openings at y = 55 and 65
     re-emitting on the fan of the 91 primitive directions (a, b, 0) with
-    a >= 1 and a + |b| <= 12, a screen at x = 52 as the detector `screen`.
+    a >= 1 and a + |b| <= 12, a screen at x = 52 read as 121 one-Node
+    detectors `screen_<y>` (the screen's pixels) under the reading `wave`
+    (the model owner, 2026-09-19: a detector is a set of Nodes with one
+    record, so a screen declared as one detector of 121 Nodes would read
+    one record with no resolution in y; a pixel one Node wide reads what
+    the Node read before, so the record is unchanged).
     Three runs, both openings and each alone: the plain count is additive
     to the unit (count_both = count_55 + count_65 at every screen Node) and
     the interference term V(y) = (I_both - I_55 - I_65) / (2 sqrt(I_55
@@ -113,7 +118,14 @@ def slits(openings: tuple[int, ...]) -> dict[str, object]:
     screen = []
     for y in range(121):
         measured.append({"position": [SCREEN_X, y, 0], "family": "wall", "amount": 1, "fixed": True})
-        screen.append([SCREEN_X, y, 0])
+        screen.append(
+            {
+                "name": f"screen_{y}",
+                "positions": [[SCREEN_X, y, 0]],
+                "threshold": 1,
+                "reading": "wave",
+            }
+        )
     return {
         "law": "rays",
         "model_id": f"rays-test-slits-{len(openings)}",
@@ -127,7 +139,7 @@ def slits(openings: tuple[int, ...]) -> dict[str, object]:
         "directions": FAN,
         "families": [{"name": "light", "quantum": 1}, {"name": "wall", "quantum": 1}],
         "measured": measured,
-        "detectors": [{"name": "screen", "positions": screen, "threshold": 1}],
+        "detectors": screen,
     }
 
 
@@ -141,10 +153,12 @@ def screen_readings(openings: tuple[int, ...]) -> tuple[np.ndarray, np.ndarray]:
     record = np.zeros(121, dtype=np.int64)
     count = np.zeros(121, dtype=np.int64)
     for entry in simulation.measured.values():
-        if entry.detector == 0:
-            record[entry.position[1]] = entry.record[0]
+        if entry.detector is not None:
+            record[entry.position[1]] = entry.detector_set.record[0]
             count[entry.position[1]] = entry.events[0]
-    assert simulation.detectors()[0]["families"]["light"]["clicks"] == int(count.sum()) > 0
+    reports = simulation.detectors()[:121]
+    assert [r["name"] for r in reports] == [f"screen_{y}" for y in range(121)]
+    assert sum(r["families"]["light"]["clicks"] for r in reports) == int(count.sum()) > 0
     return record, count
 
 

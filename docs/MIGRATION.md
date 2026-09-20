@@ -6,6 +6,48 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The detector as a set with one record, the reading key and the phase returned, on 2026-09-19
+
+The model owner's three decisions of 2026-09-19 ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
+note 23; [changelog](../CHANGELOG.md)): a detector is a set of Nodes with
+ONE record; after a click the set's phase is returned to its measured
+events; a detector declares its `reading`, `beam` (the default) or `wave`.
+
+- **Removed**: `Measured.record` (the record per Node) and the `record`
+  key of a measured event's state in `run.json` (`measured[]`) and
+  `state.json`; the per-Node threshold field of `Measured` (`threshold`
+  is now a property of the set's).
+- **Added**: `events.measured.DetectorSet` (index, name, reading,
+  threshold, numbers, record per family, phase per family) and
+  `RaySimulation.detector_sets` (the declared detectors first, then a
+  detector of one Node per measured event outside them);
+  `Measured.detector_set`; `DetectorDefinition.reading` and the world key
+  `detectors[].reading` (`world.DETECTOR_READINGS`, refused outside
+  `beam` and `wave`); `nature_beam.pointer_phases` and
+  `POINTER_STEP_BOUND`; `FamilyPlan.count`, `set_phase`, `cancelled`
+  (`pointer` now keyed by the set).
+- **The record's form**: the run's `detectors[]` carry `reading` and per
+  family `phase` beside the one `record`; the `record` line of
+  `events.jsonl` is one per detector set per family per interval, its
+  `node` and `measured` None for a set of several Nodes, with `phase`
+  (the set's) and, under `wave` only, `pointer`; a `pass` line of a
+  paired ray under `beam` carries `cancelled` true and neither `window`
+  nor `threshold`; the `click` line keeps the ray's own `phase`.
+- **Worlds**: a detector that relied on the squared record must declare
+  `"reading": "wave"` (the default `beam` counts and pairs); the
+  two-slit worlds declare their screen as 121 one-Node `wave` detectors
+  `screen_<y>` (one detector of 121 Nodes would read one record with no
+  resolution in y). The Bell worlds need no change: one ray per interval
+  per detector reads the same under `beam`, the `record` lines carrying
+  the count instead of the square. The detector definitions of
+  `examples/events/detector/` read `beam` by default (their registered
+  runs of the square are history). A measured event outside every
+  detector counts (the two-slit wall).
+- **Tests**: `test_ray_detector` (a), (b), (e) declare `wave`; (f), (g),
+  (h) are new; `test_ray_readings` (d) reads the `record` line's phase;
+  `test_ray_worlds` (a) reads the record per pixel from the detector
+  sets.
+
 ## The detector's record exact, never refused, on 2026-09-19 (after the batching)
 
 The night's affordable amount refused `examples/events/two_contents.json`
