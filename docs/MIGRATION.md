@@ -3729,3 +3729,36 @@ The original initialization retains its 100-tick default and is copied unchanged
 into the output. Actual execution length is recorded separately. The reference
 wrapper preserves its 120-tick numerical checks; physical coefficients, budgets
 and laws are unchanged.
+
+## The dated Highlights logs and the gate set, on 2026-09-20 (documentation and tools only)
+
+The model owner's decision of 2026-09-20 ([Highlights 5.4, record 87](LOG_2026-09-20.md#87-decided-the-trimming-pull-request-after-amplitude-v1-lands)).
+No law, no key, no integer, no run and no test expectation changes. This
+entry is appended at the end of this file, apart from the newest-first order
+above, so that the register split of the same decision lands beside it
+without a merge. Moved, verbatim, one canonical copy each: the 153 records of
+Highlights 5.4 (30 of 2026-09-17 and 2026-09-18, 29 of 2026-09-19, 94 of
+2026-09-20) to `docs/LOG_2026-09-18.md`, `docs/LOG_2026-09-19.md` and
+`docs/LOG_2026-09-20.md`, each under a numbered `###` heading (`NN. <the
+record's title>`; a number is never reused or moved; a record is never
+edited), 5.4 keeping its introduction, one line per decision with a link to
+its record, and the sentence that stands where two records of a day
+conflict. A reference to "Highlights 5.4" that names a record links to the
+record's anchor in its log (`docs/LOG_<date>.md#NN-<title>`: the coverage
+table's 5.4 cells, the documentation index, the Boss skill and the workflow);
+a reference to the section as the law's home is unchanged, since the heading
+`HIGHLIGHTS.md#54-the-detector` still exists. The four rows repeated in the
+coverage table are removed, and its row on the detector as a set with one
+record says `wave` is the default reading since 2026-09-20. Added:
+`examples/events/gate_set.json`, the gate set of fifteen worlds chosen by
+measured coverage (record 91 of the same log), replayed at every commit of an
+integration through `tools/run_series.py --list examples/events/gate_set.json`
+(`--fast` runs each world to the interval by which its coverage is complete;
+`--compare SUMMARY.json` gives the verdict per world on the state, the ledger
+and the events, whose digest the summary now carries as `events_sha256`); the
+whole register replays only under `--full` or on demand. The contributor
+rule: a record goes to the day's log, a decision to 5.4 as one line linked to
+its record, nothing written twice (AGENTS.md, CONTRIBUTING.md item 8,
+`skills/workflow.md`, the Boss skill). The register's split per series, item
+(2) of the decision, and the references to 5.4 in the documents the
+`amplitude-v1` landing edits are not in this change.
