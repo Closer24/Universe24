@@ -55,20 +55,27 @@ age 13, at 9 Links at 15.
     interval with `hand` +1, the proton untransformed (`became` 0, its
     family `p`);
 (d) the parity test on the worlds of series P (`examples/events/hand/`,
-    `w_hand`, `w_two_sides`, `wu` and `nu_hand` at 60 intervals): T2, the
-    mirror in x of every polar thing (positions, directions, momenta) with
-    every `hand` and `axis` copied verbatim, the record mapped back by the
-    Node map: `w_hand` DIFFERENT by exactly the click moving from measured
-    3 to measured 1, the product's direction [1, 0, 0] against the
-    mapped-back [-1, 0, 0], the recoil [-192, 0, 0] against [192, 0, 0]
-    and the push [192, 0, 0] against [-192, 0, 0], the tick 9, the amounts,
-    the contents, the charge line and the border equal; `w_two_sides`
-    EQUAL; `wu` DIFFERENT, the beta's click at x = 16 against x = 0 and the
-    antineutrino's face -x against +x; `nu_hand` EQUAL; and the full mirror
-    T2* (every hand negated, every axis sent to det(M) M A) and the proper
-    rotation x -> y, y -> -x, z -> z EQUAL on all four (the law covariant
-    under the 48 when its data transform as a pseudoscalar and an axial
-    vector);
+    `w_hand`, `w_two_sides`, `wu` and `nu_hand` at 60 intervals), the
+    design's 1.3: under a signed axis permutation g every polar thing
+    (positions, directions, momenta) goes by g, the `axis` as an axial
+    vector, det(g) g A, and every `hand` is copied verbatim (the law's
+    data: the catalog's families and the readers' filters), the record
+    mapped back by the Node map. Under the mirror in x (where an axis
+    along the normal is its own image, so the axial transform and a
+    verbatim copy coincide): `w_hand` DIFFERENT by exactly the click moving
+    from measured 3 to measured 1, the product's direction [1, 0, 0]
+    against the mapped-back [-1, 0, 0], the recoil [-192, 0, 0] against
+    [192, 0, 0] and the push [192, 0, 0] against [-192, 0, 0], the tick 9,
+    the amounts, the contents, the charge line and the border equal;
+    `w_two_sides` EQUAL; `wu` DIFFERENT, the beta's click at x = 16 against
+    x = 0 and the antineutrino's face -x against +x; `nu_hand` EQUAL. Over
+    ALL 48 signed axis permutations: the parity image differs under
+    exactly the 24 improper elements (det -1) and under none of the 24
+    proper ones on `w_hand` and `wu`, and is equal under all 48 on
+    `w_two_sides` and `nu_hand`; and the full transform (every hand by
+    det(g) too) is equal under all 48 on all four (the law covariant under
+    the 48 when its data transform as a pseudoscalar and an axial vector,
+    FORM.md tests (a) and (b));
 (e) the byte-identity of a world without a declaration: `weak/w_exchange`
     run 16 intervals writes no `hand` on any line, no `hand-v1` under
     `hypotheses`, no `hand` on a family and no `axis` on a number of
@@ -86,13 +93,24 @@ age 13, at 9 Links at 15.
     -1]]: S = 176/64 and every marginal 32/64 unchanged, every click line
     at a counter carrying the hand its label bit means on its arm (+1 for
     the bit 0, -1 for the bit 1), the row column 0 on every row; and the
-    full mirror equal on `bell_0_8` (the gathers' outcomes per u the same).
+    full mirror equal on `bell_0_8` (the gathers' outcomes per u the same);
+
+    and the parity filter on the label-hand family reads the label (the
+    design's section 4: a `hand` filter alone on the lamp is the which-path
+    click on the label): `bell_0_8` with the rotations removed and `hand`
+    +1 on the two plus counters, 64 births: 32 records gathered at
+    (alice_plus, bob_plus) and 32 at (alice_minus, bob_minus), none mixed,
+    every plus counter's click line `hand` +1 and every `pass` line at a
+    plus counter `hand` -1; with the settings (0, 8) kept and the same
+    filters, every marginal 32/64 (the filter passes half of each rotated
+    row's split to the minus counter, the label read after the rotation).
 """
 
 from __future__ import annotations
 
 import copy
 import importlib.util
+import itertools
 import json
 import sys
 from collections import Counter
@@ -520,10 +538,20 @@ def inverse(g: Symmetry) -> Symmetry:
     return (back[0], back[1], back[2]), (back_signs[0], back_signs[1], back_signs[2])
 
 
+def all_48() -> list[Symmetry]:
+    """The 48 signed axis permutations of the cube, 24 of each determinant."""
+    return [
+        (perm, signs)
+        for perm in itertools.permutations(range(3))
+        for signs in itertools.product((1, -1), repeat=3)
+    ]
+
+
 def transformed(document: Json, g: Symmetry, *, full: bool) -> Json:
-    """The world under g: every polar thing transformed; under `full` every
-    hand by det(g) and every axis as an axial vector, det(g) g A; otherwise
-    (the parity test) every hand and axis copied verbatim."""
+    """The world under g (the design's 1.3): every polar thing by g, every
+    axis as an axial vector, det(g) g A; under `full` every hand by det(g)
+    too (the law's data mirrored with the state), otherwise (the parity
+    test) every hand copied verbatim."""
     d = copy.deepcopy(document)
     shape = list(d["shape"])  # type: ignore[call-overload]
     s = determinant(g) if full else 1
@@ -539,8 +567,8 @@ def transformed(document: Json, g: Symmetry, *, full: bool) -> Json:
             entry["directions"] = [vector(g, v) for v in entry["directions"]]
         if "momentum" in entry:
             entry["momentum"] = vector(g, entry["momentum"])
-        if "axis" in entry and full:
-            entry["axis"] = [s * c for c in vector(g, entry["axis"])]
+        if "axis" in entry:
+            entry["axis"] = [determinant(g) * c for c in vector(g, entry["axis"])]
         if "lamp" in entry:
             entry["lamp"]["directions"] = [vector(g, v) for v in entry["lamp"]["directions"]]
             if "hand" in entry["lamp"]:
@@ -619,6 +647,13 @@ def probe(
     return base, image, base_books, books[-1]
 
 
+def image_of(document: Json, g: Symmetry, *, full: bool, ticks: int | None) -> list[str]:
+    """The record of the world's image under g, mapped back."""
+    _, records, _ = run(transformed(document, g, full=full), ticks)
+    shape = list(document["shape"])  # type: ignore[call-overload]
+    return sorted(json.dumps(mapped_back(r, g, shape, full=full), sort_keys=True) for r in records)
+
+
 def clicks_of(record: list[str]) -> list[tuple[object, ...]]:
     found = []
     for text in record:
@@ -676,9 +711,14 @@ def test_the_parity_test_and_the_covariance_of_the_law(name: str):
         assert [c[2] for c in clicks_of(image) if c[3] == "nubar"] == ["face:-x"]
     else:
         assert base == image
-    for g in (MIRROR_X, ROTATE_Z):
-        full_base, full_image, _, _ = probe(document, g, full=True, ticks=ticks)
-        assert full_base == full_image, (name, g)
+    # All 48: the parity image differs exactly under the improper elements
+    # where a birth has an axis and a handed product; the full transform
+    # never.
+    breaks = name in ("w_hand", "wu")
+    differing = [g for g in all_48() if image_of(document, g, full=False, ticks=ticks) != base]
+    assert sorted(differing) == sorted(g for g in all_48() if breaks and determinant(g) < 0), name
+    assert len(differing) == (24 if breaks else 0)
+    assert all(image_of(document, g, full=True, ticks=ticks) == base for g in all_48()), name
 
 
 # -- (e) ---------------------------------------------------------------------------
@@ -819,3 +859,66 @@ def test_the_bell_pair_with_the_hand_as_the_labels_meaning():
         return sorted((int(g["u"]), outcome(g)) for g in simulation.layer.gathers)  # type: ignore[call-overload]
 
     assert outcomes(world) == outcomes(transformed(world, MIRROR_X, full=True))
+
+
+def plus_nodes(world: Json) -> set[tuple[int, ...]]:
+    return {
+        tuple(p)
+        for d in world["detectors"]  # type: ignore[union-attr]
+        if d["name"] in ("alice_plus", "bob_plus")
+        for p in d["positions"]
+    }
+
+
+def filtered_pair(rotations: bool) -> Json:
+    """`bell_0_8` with the label hands and `hand` +1 on the two plus
+    counters, the rotations kept or removed."""
+    world = labelled("bell_filter", 0, 8)
+    plus = plus_nodes(world)
+    for entry in world["measured"]:  # type: ignore[union-attr]
+        if entry["family"] != "counter":
+            continue
+        table = dict(entry["table"]["light"]) if rotations else {}
+        if tuple(entry["position"]) in plus:
+            table["hand"] = 1
+        entry["table"]["light"] = table
+    return world
+
+
+def chosen_sets(simulation: NatureBeamSimulation) -> list[tuple[str, ...]]:
+    assert simulation.layer is not None
+    gathers = [g for g in simulation.layer.gathers if 1 <= int(g["born"]) <= 64]  # type: ignore[call-overload]
+    assert len(gathers) == 64
+    return [tuple(str(item[0]) for item in g["chosen"]) for g in gathers]  # type: ignore[union-attr]
+
+
+def test_the_parity_filter_on_a_label_hand_family_reads_the_label():
+    """(g), the which-path click on the label."""
+    world = filtered_pair(rotations=False)
+    records: list[Json] = []
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
+    for _ in range(int(world["ticks"])):  # type: ignore[call-overload]
+        simulation.step()
+        assert simulation.books()["balanced"]
+    assert Counter(chosen_sets(simulation)) == {
+        ("alice_plus", "bob_plus"): 32,
+        ("alice_minus", "bob_minus"): 32,
+    }
+    plus = plus_nodes(world)
+    at_plus = [
+        r
+        for r in records
+        if r["event"] in ("click", "pass") and r["family"] == "light" and tuple(r["node"]) in plus
+    ]
+    assert {r["event"] for r in at_plus} == {"click", "pass"}
+    assert all(r["hand"] == 1 for r in at_plus if r["event"] == "click")
+    assert all(r["hand"] == -1 for r in at_plus if r["event"] == "pass")
+    # With the rotations: the label read after the rotation, half of each
+    # split passed on to the minus counter, the marginals exact.
+    rotated = filtered_pair(rotations=True)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(rotated))
+    for _ in range(int(rotated["ticks"])):  # type: ignore[call-overload]
+        simulation.step()
+    names = chosen_sets(simulation)
+    assert sum(1 for chosen in names if chosen[0] == "alice_plus") == 32
+    assert sum(1 for chosen in names if chosen[1] == "bob_plus") == 32

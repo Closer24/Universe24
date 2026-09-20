@@ -25,7 +25,9 @@ integer form, record 120; [BEAM_LAW note 39](BEAM_LAW.md#10-implementation-notes
   is), on a lamp (circular light), on a transit row and on a table entry
   (the parity filter, refused on `pass`), a third entry per branch of a
   lamp's `branches` (the hand as a label bit's meaning, one or the other
-  per family) and `axis` on a measured event (one of the six headings as
+  per family; on such a family the parity filter reads the label's hand,
+  `nature_beam.read_hands`, the which-path click on the label) and
+  `axis` on a measured event (one of the six headings as
   a vector). `FamilyDefinition.hand`, `LampDefinition.hand` and
   `label_hands`, `TransitDefinition.hand`, `MeasuredDefinition.axis` and
   `hands`, `Measured.axis`, `hands`, `lamp_hand`, `lamp_label_hands`.

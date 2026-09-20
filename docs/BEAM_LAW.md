@@ -2910,7 +2910,8 @@ implementation's part of the contract. The design above is unchanged.
     differ), the face and border `click` lines carry it, the `become`
     line's products gain a fifth entry, the product's hand; the books'
     measured line per family gains `left` and `right`, the units clicked
-    of each hand (a report, `Ledger.taken_left`, `taken_right`); `run.json`
+    of each hand as the row's column carries it (a report,
+    `Ledger.taken_left`, `taken_right`); `run.json`
     carries each family's `hand` and each number's `axis` as declared and
     `hand-v1` under `hypotheses` (after `amplitude-v1`); `state.json`
     writes the row's `hand`. Without a declaration no line, no key and no
@@ -2925,7 +2926,18 @@ implementation's part of the contract. The design above is unchanged.
     values of a bit the two hands (`LampDefinition.label_hands`); the
     click line then carries the hand the row's label bit means on its arm
     (`nature_beam.row_hand`), the row column stays 0, and a family
-    declares one or the other, never both (refused at load). With it the
+    declares one or the other, never both (refused at load); the parity
+    filter reads the same hand of such a row, the label's meaning on its
+    arm (`nature_beam.read_hands`, the physics-rule review's finding 1.1:
+    the filter on a branched family is then the which-path click on the
+    label, FORM.md section 4, and not a filter that admits nothing): on
+    the pair with the rotations removed and `hand` +1 on the two plus
+    counters, 32 of the 64 records gather at the plus counters and 32 at
+    the minus ones, none mixed, and with the rotations kept the label is
+    read after the rotation and every marginal stays 32/64 (test (g)). The
+    books' `left` and `right` lines count the row's COLUMN alone (on such
+    a family they stay 0 while the click lines name the label's hand: a
+    report of two readings, stated). With it the
     pair's integers are unchanged: S = 176/64 at the CHSH labels, every
     marginal 32/64 (test (g)); an improper symmetry negates the bit, which
     sends |00> - |11> to itself up to a global sign, so the Bell worlds
@@ -2933,13 +2945,18 @@ implementation's part of the contract. The design above is unchanged.
     linear polarisation is the two-label record with a relative phase, the
     polariser its `rotate` and the label click; a hand filter alone on
     circular light is 1 or 0, no angle. **The parity test** (the design's
-    3.2, test (d)): the genericity probe's T2 as coded, every polar thing
-    reflected in x (positions, directions, momenta, the detectors) and
-    every `hand` and `axis` copied VERBATIM (the law's data: the catalog's
-    families and the readers' filters; and an axis along the mirror's
-    normal is its own mirror image, det(M) M e_x = e_x, so on these worlds
-    the verbatim copy and the axial transform coincide), the readings
-    mapped back by the Node map: every registered world equal (no hand);
+    1.3 and 3.2, test (d)): under a signed axis permutation g of the cube
+    every polar thing goes by g (positions, directions, momenta, the
+    detectors), the `axis` as an axial vector, det(g) g A, and every
+    `hand` is copied VERBATIM (the law's data: the catalog's families and
+    the readers' filters, as Wu mirrored her apparatus and not the
+    neutrino), the readings mapped back by the Node map. Under the mirror
+    in x, the genericity probe's T2 as coded, an axis along the mirror's
+    normal is its own mirror image, det(M) M e_x = e_x, so on the worlds
+    of series P the axial transform and a verbatim copy of the axis
+    coincide (under a y- or z-mirror they do not: an axis in the mirror's
+    plane goes to its opposite heading, and a verbatim copy would be a
+    different apparatus); the pins under that mirror: every registered world equal (no hand);
     `w_hand` DIFFERENT by exactly the click moving from the proton at x =
     3 to the proton at x = 1, the product's direction, the recoil and the
     push with the other sign, everything else equal; the control
@@ -2947,9 +2964,13 @@ implementation's part of the contract. The design above is unchanged.
     click at x = 16 against x = 0 and the antineutrino's face -x against
     +x; `nu_hand` equal (a hand without an axis is a datum a mirror cannot
     see; Goldhaber's reading needs the axis, as nature needed the
-    polarised Eu-152). The full mirror (every hand by det(g), every axis
-    by det(g) g A) and a proper rotation are equal on every world: the
-    law is covariant under the 48 when its data transform as a
+    polarised Eu-152). Over all 48 signed axis permutations (test (d); the
+    physics-rule review's own probe read the same): the parity image
+    differs under exactly the 24 improper elements and under none of the
+    24 proper ones on `w_hand` and `wu`, and under none of the 48 on
+    `w_two_sides` and `nu_hand`; and the full transform (every hand by
+    det(g) too, every axis by det(g) g A) is equal under all 48 on every
+    world: the law is covariant under the 48 when its data transform as a
     pseudoscalar and an axial vector, and parity violation on the
     GameBoard is one statement, the catalog's one-handed families (no
     `nubar` of hand -1 and no `nu` of hand +1 is declared anywhere; a

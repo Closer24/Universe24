@@ -101,7 +101,15 @@ import numpy as np
 from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
-from event_universe.events.amplitude import Layer, arm_of, branch_of, half_angle, label_of
+from event_universe.events.amplitude import (
+    LABEL_BITS,
+    LABEL_MASK,
+    Layer,
+    arm_of,
+    branch_of,
+    half_angle,
+    label_of,
+)
 from event_universe.events.measured import (
     DetectorSet,
     Ledger,
@@ -1937,6 +1945,35 @@ def row_hand(plan: FamilyPlan, k: int, measured: dict[int, Measured]) -> int:
     return plan.t_hand[k]
 
 
+def read_hands(
+    hand: np.ndarray, record: np.ndarray, branch: np.ndarray, entries: list[Measured]
+) -> np.ndarray:
+    """The hand a parity filter reads of each row (`hand-v1`, BEAM_LAW note
+    39): the row's `hand` column, or, for a row of a record whose lamp
+    named the hands of its labels, the hand its label bit means on its arm
+    (the reading `row_hand` makes for the click line), so that a filter on
+    a branched family is the which-path click on the label (the design's
+    section 4, FORM.md section 4: the rows of a hand are the rows of a
+    channel). The lamp is found by the record's identity, whose high bits
+    are the emitter's number: a world constant, nothing of the law."""
+    found = hand.copy()
+    recorded = record != NO_RECORD
+    if not recorded.any():
+        return found
+    emitter = record >> RECORD_SHIFT
+    for entry in entries:
+        if entry.lamp_label_hands is None:
+            continue
+        rows = np.flatnonzero(recorded & (emitter == entry.number))
+        if rows.shape[0] == 0:
+            continue
+        zero, one = entry.lamp_label_hands
+        arm = branch[rows] >> LABEL_BITS
+        bit = ((branch[rows] & LABEL_MASK) >> arm) & 1
+        found[rows] = np.where(bit == 0, zero, one)
+    return found
+
+
 def group_hand(plan: FamilyPlan, k0: int, k1: int) -> int | None:
     """The hand of a group of taken rows for its `read` or `rerelease`
     line: the one hand of its rows, None where they differ."""
@@ -2565,6 +2602,9 @@ def nature_beam(
             age_at = store.age[at]
             record_at = store.record[at]
             hand_at = store.hand[at]
+            # The hand the parity filter reads: the column, or the label's
+            # meaning on a branched family whose lamp named its hands.
+            read_at = read_hands(hand_at, record_at, store.branch[at], entries)
             own = number == ev_number[ev]
             arrived = arrival != NO_ARRIVAL
             plan = FamilyPlan()
@@ -2739,7 +2779,7 @@ def nature_beam(
                 # and the hand, three comparisons of what the row carries
                 # with what the reader declares.
                 admits = ev_hand[ev_m, family]
-                inside &= (admits == NO_HAND) | (hand_at[met] == admits)
+                inside &= (admits == NO_HAND) | (read_at[met] == admits)
                 passing = below | ~inside
                 p = np.flatnonzero(passing)
                 if p.shape[0]:
@@ -2755,7 +2795,7 @@ def nature_beam(
                     plan.p_phase = phase[met[p]].tolist()
                     plan.p_below = below[p].tolist()
                     plan.p_window = window[p].tolist()
-                    plan.p_hand = hand_at[met[p]].tolist()
+                    plan.p_hand = read_at[met[p]].tolist()
                     plan.events.update(p_events)
                 kept = np.flatnonzero(~passing)
                 if kept.shape[0] == 0:

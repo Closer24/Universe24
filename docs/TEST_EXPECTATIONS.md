@@ -2101,16 +2101,21 @@ table entry. The expected integers, written down before the first run:
   hand +1), the proton `became` 0 and still `p`, its clicks of `w` 0,
   the books' `left` and `right` of `w` 0;
 - (d) the parity test on the worlds of series P (`nu_hand` at 60
-  intervals): the mirror in x with every hand and axis verbatim, mapped
-  back: `w_hand` different, the click (9, measured 3, x = 3, push [192,
+  intervals), the design's 1.3: every polar thing by g, the axis as an
+  axial vector det(g) g A, every hand verbatim, mapped back; under the
+  mirror in x (where the axial transform and a verbatim copy of the axis
+  coincide): `w_hand` different, the click (9, measured 3, x = 3, push [192,
   0, 0], hand -1) against (9, measured 1, x = 1, push [-192, 0, 0], hand
   -1), the `become` line's product [1, 0, 0] with the recoil (-192, 0,
   0) against [-1, 0, 0] with (192, 0, 0), the charge line and the `w`
   lines of the books equal; `w_two_sides` equal; `wu` different, the
   beta's click (21, measured 1, x = 0, push [-192, 0, 0]) against (21,
   measured 3, x = 16, push [192, 0, 0]), the antineutrino's face `face:+x`
-  against `face:-x`; `nu_hand` equal; the full mirror (hands by det,
-  axes axial) and the rotation x -> y, y -> -x equal on all four;
+  against `face:-x`; `nu_hand` equal; over all 48 signed axis
+  permutations the parity image differs under exactly the 24 improper
+  elements and no proper one on `w_hand` and `wu` and under none on
+  `w_two_sides` and `nu_hand`, and the full transform (hands by det too)
+  is equal under all 48 on all four;
 - (e) `weak/w_exchange` for 16 intervals: no line carries `hand`, no
   `left` in the books, no `hand-v1`, no `hand` on a family and no `axis`
   on a number of `run.json`, no `hand` in `state.json`; the packed merge
@@ -2127,7 +2132,13 @@ table entry. The expected integers, written down before the first run:
   [[0, 1, 1], [3, 1, -1]]: E x 64 = 44, -44, 44, 44, S = 176/64, every
   marginal 32/64, every row's `hand` column 0, every click line of
   `light` carrying (1, -1)[the bit of its label on its arm]; the full
-  mirror of `bell_0_8`: the same outcome per u.
+  mirror of `bell_0_8`: the same outcome per u; the parity filter on the
+  label-hand family reads the label (`bell_0_8` with the rotations removed
+  and `hand` +1 on the two plus counters, 64 births): 32 records gathered
+  at (alice_plus, bob_plus) and 32 at (alice_minus, bob_minus), none
+  mixed, every click line at a plus counter `hand` +1 and every `pass`
+  line there `hand` -1; with the settings (0, 8) kept and the same
+  filters, 32 of 64 chosen at alice_plus and 32 at bob_plus.
 
 ## A paid family's charge
 

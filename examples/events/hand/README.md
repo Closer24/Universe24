@@ -64,11 +64,13 @@ being at - 1). The first-arrival ages off the flight table on a heading
 | `nu_hand` | the far detector at x = 190 (DETECTOR) | 0 |
 | `nu_hand` | the books | `nu`: `left` 1022, `right` 0; `hypotheses` `["hand-v1"]` |
 
-**The parity test** (the design's 3.2; `tests/test_hand.py` (d)): the
-probe's mirror in x (positions x -> shape_x - 1 - x, every polar vector
-negated in x: the directions, the momenta; every `hand` and every `axis`
-copied verbatim, the law's data), the readings mapped back by the Node map.
-Pinned before the run: `w_hand` DIFFERENT, by exactly the click moving from
+**The parity test** (the design's 1.3 and 3.2; `tests/test_hand.py` (d)):
+under a signed axis permutation g every polar thing goes by g (positions,
+directions, momenta), the `axis` as an axial vector det(g) g A, and every
+`hand` is copied verbatim (the law's data); the readings mapped back by the
+Node map. Under the probe's mirror in x (positions x -> shape_x - 1 - x,
+every polar vector negated in x; an axis along x its own image, so its
+axial transform is a verbatim copy on these worlds). Pinned before the run: `w_hand` DIFFERENT, by exactly the click moving from
 measured 3 (x = 3) to measured 1 (x = 1), the product's direction
 `[1, 0, 0]` against the mapped-back `[-1, 0, 0]`, the recoil `[-192, 0, 0]`
 against `[192, 0, 0]` and the push `[192, 0, 0]` against `[-192, 0, 0]`; the
@@ -76,12 +78,14 @@ tick 9, the amounts, the contents, the charge line and the border equal.
 `w_two_sides` EQUAL (its tie is on the declared list order, which the
 mirror keeps). `wu` DIFFERENT: the beta's click at x = 16 against x = 0,
 the antineutrino's face `-x` against `+x`. `nu_hand` EQUAL (a hand without
-an axis is a datum a mirror cannot see). And two further probes, both
-EQUAL on every one of the four: the full mirror (every hand negated, every
-axis sent to det(M) M A: the law covariant when its data are mirrored with
-the state) and the proper rotation x -> y, y -> -x, z -> z (det +1: the bar
-turned, every hand and axis kept). A world in which either differs is a
-defect of the build, not a parity reading.
+an axis is a datum a mirror cannot see). Over all 48 signed axis
+permutations: the parity image differs under exactly the 24 improper
+elements (det -1) and under none of the 24 proper ones on `w_hand` and
+`wu`, and under none of the 48 on `w_two_sides` and `nu_hand`; and the
+full transform (every hand by det(g) too: the law's data mirrored with the
+state) is EQUAL under all 48 on every one of the four. A world in which the
+full transform differs, or the parity image differs under a proper
+rotation, is a defect of the build, not a parity reading.
 
 ## What was measured (2026-09-20)
 

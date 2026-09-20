@@ -45,9 +45,11 @@ the sha256):
 | `1b_m16` | `dc1054aa43c44a9c` | `391d4cbdc763ec76` |
 | `w1_beam` | `1e08efda9aabbd33` | `d843680c8246c097` |
 | `sun_planet` | `4b793a913b22fe50` | `f7043252f62a9b78` |
+| `wu` (the sixteenth, this change's) | `d4d927fb55cdfa9a` | `023c13135cc76634` |
 
 `hand/wu.json` is added to the gate set as the first world declaring the
-keys (`ticks` 40, `cap` 23: the antineutrino's face click). The worlds of
+keys (`ticks` 40, `cap` 23: the antineutrino's face click); its row above
+is from its one run on this source, the base row of the next replay. The worlds of
 series P were run once and read against their pins
 ([the hand series](../examples/events/hand/README.md); [EXPERIMENTS](EXPERIMENTS.md),
 "P, the hand").
