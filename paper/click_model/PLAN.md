@@ -681,6 +681,45 @@ verdict's own words and links each row to its entry.
 | Dark matter is a closed dimension; G = hbar c / (N m_0)^2; one mass ladder; confinement from the quark's field rays; the lottery as the only door | not run | forms, not values; the hypotheses page | HYPOTHESES 6, 12, 13, 14, 1 |
 | The 23 predictions of the law's own list | mixed: 1, 2, 5, 7, 8, 10, 18 registered; the rest not run | the five strongest quoted in Highlights 5.4 (the retarded field's aberration, the Nordtvedt-like flux, no radiation from accelerated charges, bodies outrunning light, no mass defect) | PREDICTIONS.md |
 
+**Part II framed as consequences (the owner's question, 2026-09-20: "can
+everything be put as hypotheses that follow from this?").** Yes, with one
+condition a referee will enforce: "follows from" is written only where a
+derivation from the model's rules exists and is given in one sentence;
+everything else is "conjectured within the same program", never
+"follows". So Part II has two groups, and every row of the table above
+is placed in one of them and keeps its status.
+
+- **Consequences of the click model** (each with the rule it follows
+  from): the classical limit as click density (a body is a record split
+  and clicked densely; where clicks are dense the past is fixed row by
+  row: principle 8, test 11, not run); the ceiling of principle 9 (from
+  n x 2^n rows and the register's exact depth: derived, section 14);
+  entanglement without maintenance and its end at any intermediate click
+  (from "nothing between the birth and the click removes a combination":
+  acceptance test 9); delayed choice and the quantum eraser (from the
+  ladder being read at the record's completion: design departure 3, not
+  run); Hong-Ou-Mandel (from the merge and cancel of identical rows of two
+  records at one Node: design 2.3, not run, needs the gate's meeting);
+  the single-quantum build-up of fringes (from the sum over one record:
+  design test 2, to be registered); the finite-N departure from Tsirelson
+  with exact marginals (from the nearest rungs: T3, T4, computed); the
+  quantum computer in principle and its two ceilings (from the gate and
+  the store: design section 10); Born as ignorance of u (T3's
+  construction, proved); the wave as the form of the list of clicks
+  (definition, not a hypothesis).
+- **Conjectured within the same GameBoard, not consequences of the
+  click**: the forces as columns of one coupling, the nucleus, the weak
+  force, the meeting and the bending of light, the clock's redshift, the
+  Hubble diagram, Bohr, the redshift from delay growth, dark matter as a
+  closed dimension, G and the mass ladder, the moving clock. They share
+  the lattice, the tables and the one-way click, and nothing in the click
+  model's rules implies any of them; each is stated as the register
+  states it, with its verdict where one exists.
+
+The introduction says the same in one sentence: what follows from the
+result is listed as its consequences with their status, and what the
+program conjectures beside it is listed apart and claimed nowhere.
+
 Two rules for Part II. A hypothesis that a registered run contradicts is
 written as the model's limit in the register's words, never softened;
 a hypothesis without a run is written in one sentence with no number.
