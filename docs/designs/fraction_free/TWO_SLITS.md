@@ -242,3 +242,116 @@ the exact phase at the click as the reading of the fraction-free row's two
 accumulators; the screen's fan as the two-slit world's declaration (a
 world, not a law); the pins that move, once, in one batch with the
 fraction-free re-registration. Nothing here is built or registered.
+
+## 7. The fan by angle: the integer form, and the run of `slits_huygens` on main
+
+**The rule (Huygens on the lattice).** A re-emitter's fan is the full
+primitive fan within a width P of the law, every (a, b, c) with a >= 1
+and |a| + |b| + |c| <= P coprime (in the plane, a + |b| <= P), and each
+direction carries as its split weight THE ANGLE IT COVERS: half the gap
+to each of its two neighbours in the fan's angular order. In the plane
+consecutive directions of that order are Farey neighbours, `|a b' - a' b|
+= 1` (checked on all 1422 consecutive pairs at P = 48), so the angle
+between them is exactly `sin^-1 (1 / (|D| |D'|))`, and in the flight
+table's own integers, with `T_D = isqrt(3 |D|^2 Q^2)` the law's resolution
+of |D|,
+
+    gap(D, D') = 3 Q^2 / (T_D T_D'),      a_D = floor(G x (gap(D^-, D) + gap(D, D^+)) / 2)
+
+with G the weights' grain (the exact 1 / (|D| |D'|) within 1 / T_D, below
+0.8 percent on a heading and less elsewhere); a fan's edge direction
+takes its one gap twice. The rows re-emitted are `(w a_D, m A, p)` by the
+split as built, `A = sum a_D^2`. Equal weights per direction are not
+this rule and give a comb: the number of Farey directions landing on a
+pixel is arithmetic, not uniform (section 5 of `TWO_SLITS.md`'s follow-up
+map: Pearson 0.65 with the cosine at P = 64 with equal weights, 0.90
+with the angle weights). Bounds at P = 48: 1423 directions in the
+plane, within the direction table's 4096 and its components within 64;
+at G = 2^18 the weights run 123 to 5619, A = 714 364 777 (2^29.4), the
+multiplicity 5 A within 2^32; the load-time ceiling multiplies every
+re-emitter's A on the world (two openings: A^2), so G = 2^18 is the
+largest power of two that keeps A^2 within 2^62; the rounding of the
+smallest weight at that grain is below 0.5 percent. The registered
+fan of 91 is this rule's P = 12 without the weights.
+
+**The world** `examples/events/amplitude/slits_huygens.json` (written by
+`make_worlds.py`, `two_slits_huygens`): `slits_low`'s geometry, lamp and
+frequency, each opening's fan the Farey fan of width 48 restricted to
+|b| <= 13 a by the freed band of 6 (the 96 steeper directions would walk
+into the wall at x = 8 or through the other opening: 1327 directions,
+3.5 percent of the angle lost at the edges), the integer angle weights
+at G = 2^18 as the split's `weights`, 420 intervals; no src change. The
+expectation was pinned in the series' README before the run from
+`two_slits_map.py`'s walk with these weights (the built phase, the click
+as built).
+
+**The run** (2026-09-20, main f89884f9 merged into `claude/series-m-masses`,
+the outputs in the session's scratchpad; 420 intervals in 76.3 s, 0.18 s
+per interval, 2659 rows per record, completed and conserved at every
+tick; 271 records gathered, 149 open at the end; the page
+<https://claude.ai/artifact/6pyy8C62muHshZ7iMDCUx9>). Every pinned
+number reproduced:
+
+| reading | pinned | measured |
+| --- | --- | --- |
+| the first record's total of the birth norm; shares wall / screen / faces | 2.677; 0.224 / 0.410 / 0.366 | 2.6771; 0.224 / 0.410 / 0.366 |
+| the screen WEIGHTS: Pearson with the Euclidean cosine; visibility (bright y = 35 to 38, 59 to 61, 82 to 85 against dark 13 to 20, 48 to 50, 70 to 72, 100 to 107) | 0.895; 0.954 | 0.895; 0.954 |
+| the peak pixel and its share of the total (the rung 1 / 2N = 0.0078) | y = 59, 0.012 | y = 59, 0.01204 |
+| the CLICKS of the first 64 births: wall, screen on pixels, faces | 14, 27 on 27, 23 | 14, 27 on the pinned 27, 23 |
+| clicks at the dark pixels | none | none in 271 |
+| distinct cells | 32 over 64 births, the same after | 32 in the first 64, 32 in all 271; every u clicked its one cell at every birth |
+| the click histogram's Pearson with the cosine | 0.499 at 64 births | 0.493 at 271 (the bright pixels 4 0 4 0 4 4 4 0 4 0 4) |
+
+So the GameBoard's reading separates the two: **the fringes are in the
+record's weights** (Young's pattern at the Euclidean spacing, visibility
+0.95, from the fan by angle alone, under the built phase and no src
+change), **and the clicks cannot show them** (27 screen cells of 121,
+fixed for the whole run, because u repeats with the period 64; the
+cumulative rungs do fall where the weights are, none at a dark pixel).
+Refutation line: none of its four conditions occurred. The wheel of
+section 3 (or section 8's golden rate) is what turns the weights into
+counts.
+
+## 8. The birth wheel under "one mechanism": the golden rate against the bit reversal
+
+On the Boss's item B (2026-09-20, after the owner's rule of the day, "no
+registers at Nodes, no tables", one mechanism for every count): the bit
+reversal of section 3 is a permutation of the ordinal's bits, a rule of
+its own beside the counts' mechanism `acc += r; e = [acc >= d]; acc -= e d`.
+The alternative that IS the mechanism: `u_W = (ordinal x r) mod W`, a
+count on the lamp's record at the rate r / W with r / W near the golden
+ratio's conjugate (W = 4096, r = 2531 = the nearest odd integer to 0.618 W,
+coprime to W), the Weyl sequence, whose every prefix is equidistributed
+by the three-distance theorem; the rungs `(2 W C_j + T) // (2 T)` as in
+section 3, the rows' birth phase the lamp's clock (ordinal mod 64) on
+both wheels. Every integer is from `wheel_map.py` beside this file
+(`wheel_map.out`; the three cases of section 4 at 256 and 4096 births).
+
+| case, wheel | 256 births: screen on pixels, bright, dark | 4096 births: bright, dark, Pearson, visibility | empty cells (with weight) at 64 / 256 / 1024 / 4096 | worst prefix discrepancy at 4096 |
+| --- | --- | --- | --- | --- |
+| the registered fan, bit-reversed | 62 on 43; 0 2 0 1 4 7 5 0 0 2 0; at most 2 | 0 32 0 8 71 109 71 8 0 32 0; 0 to 27; 0.367; 0.693 | 60 / 32 / 0 / 0 | 1.08 |
+| the registered fan, golden | 62 on 45; 0 2 0 1 5 6 4 1 0 1 0; at most 1 | 0 32 0 8 72 108 71 8 0 32 0; 0 to 27; 0.368; 0.695 | 61 / 30 / 0 / 0 | 1.14 |
+| the screen's fan, the wheel alone, bit-reversed | 91 on 71; 1 to 2; at most 1 | 24 to 29; 0 to 4; 0.905; 0.924 | 77 / 28 / 0 / 0 | 0.76 |
+| the screen's fan, the wheel alone, golden | 91 on 69; 1 to 3; at most 1 | 25 to 29; 0 to 4; 0.904; 0.924 | 76 / 30 / 1 / 0 | 0.76 |
+| the screen's fan, the wheel and the exact phase, bit-reversed | 90 on 70; 1 to 2; at most 1 | 28 to 29; 0 to 3; 0.963; 0.954 | 97 / 49 / 22 / 12 | 0.94 |
+| the screen's fan, the wheel and the exact phase, golden | 90 on 68; 1 to 3; at most 1 | 28 to 29; 0 to 3; 0.963; 0.954 | 96 / 51 / 22 / 12 | 0.94 |
+
+(The 12 cells still empty at 4096 births under the exact phase are the
+cells of weight below 1 / 2W, the dark pixels' own; the same 12 on both
+wheels.) At 4096 births the two wheels give the same counts on every
+pixel within one click, the same Pearson and visibility to three places,
+and a worst prefix discrepancy within 1.14 clicks of B x weight / total
+on both; at 256 births the golden wheel is slightly less even (bright
+pixels 1 to 3 against 1 to 2), the Weyl sequence's discrepancy being
+larger by a constant than van der Corput's at small prefixes, and it
+fills the cells at the same prefixes (the registered fan: 30 empty at
+256 against 32, 0 at 1024 on both).
+
+**Verdict, one line:** the golden rate is the generic wheel, since it is
+the counts' one mechanism with the accumulator itself as u (one row of
+the counts table, rate 2531 / 4096, no cap, nothing else), and it loses
+nothing the bit reversal has that a run can read: the same counts at
+4096, the same cells filled by 1024, a prefix discrepancy within one
+click; the bit reversal's one advantage, an exactly stratified prefix at
+every power of two, is a property no click reads. The words for the
+owner: u is the lamp's count on the wheel W at the golden rate.
