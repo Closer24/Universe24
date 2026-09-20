@@ -24,7 +24,12 @@ the model owner in [Highlights 5.4](../../docs/HIGHLIGHTS.md#54-the-detector).
 
 ## The one rule of measurement
 
-A human measures nothing on the GameBoard. The only readings reality has are
+A human measures nothing on the GameBoard, and puts nothing on it during a
+run: the API of the GameBoard is an emitter in and a detector out (the model
+owner, 2026-09-20: "when you intervene in the GameBoard it requires a
+detector on the GameBoard or an emitter; that is the API"); an experiment
+intervenes only by declaring emitters in the world file and reads only
+through detectors. The only readings reality has are
 the records of the things in the world:
 
 - a **detector**, a set of Nodes with one record (`DetectorSet`; the keys

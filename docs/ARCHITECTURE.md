@@ -11,6 +11,25 @@ gate enforces, and how a physical feature is added. The boundaries of the
 engines before it, deleted on 2026-09-19, are in git
 ([migration](MIGRATION.md)).
 
+## The API of the GameBoard: an emitter in, a detector out
+
+The model owner, 2026-09-20: "when you intervene in the GameBoard it requires
+a detector on the GameBoard or an emitter; that is the API." Every way the
+world touches the GameBoard is one of its external things, both of them
+measured events with declared widths ([the entity catalog](ENTITY_CATALOG.md)):
+input goes in through an emitter, a measured event that releases events by
+its clock and its table (a lamp, a source, a star, a mirror that re-releases);
+output comes out through a detector, a set of Nodes with one record whose
+clicks are the only reading reality has. The world file's declarations are
+the state at interval 0. Nothing else writes to or reads from the GameBoard
+as physics: a host reading of the dense arrays (`GameBoardDiagnostics`, the
+shell means, the books) is a diagnostic or a picture, labelled a GameBoard
+reading and never registered as a measurement
+([the two kinds of readings](EXPERIMENTS.md)), and no tool, test or agent
+sets an event at a Node during a run. A rule that acts on an event in transit
+(the collision, the generalized collision in design) is a meeting of events
+on the GameBoard, not an intervention.
+
 ## Entity authoring boundary
 
 [Reusable entity definitions](ENTITY_DEFINITIONS.md) owns separate definitions,
