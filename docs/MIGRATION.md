@@ -6,6 +6,79 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## `wave` is the default reading of a detector, on 2026-09-20
+
+The model owner's decision of 2026-09-20 ("on the board a ray, in the world
+a wave"; [RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
+and note 29): `world.DETECTOR_READINGS` is `("wave", "beam")`, so a
+detector without a `reading` key, and every measured event outside a
+declared detector, reads `wave` (the coherent pointer over the set, its
+square the record, the window reading the set's phase); a world that wants
+the pairing rule declares `"reading": "beam"`. A world whose detector
+declared no reading and was met by rays of different phases in one
+interval (a windowed counter, a wall) reads differently: `tests/
+test_ray_readings.py` (d) is re-pinned, `tests/test_ray_collision.py` (d)
+declares `beam`. The Bell worlds are unchanged (one ray per interval per
+counter: S = 2, 326 criteria), the two-slit screens and the Heisenberg
+worlds declare their reading, series C and D have no detector; the
+two-slit wall records the square of what it absorbs.
+
+## Charge per unit of content, on 2026-09-20 (the family's `charge` a pair; no `charge` on a measured event; the record's two columns gone)
+
+The model owner's decision of 2026-09-20 (Highlights 5.4: charge is per
+unit of content of a family, and the push one product;
+[RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file),
+step 4 and note 28; [validation](VALIDATION.md)). What a user of the engine
+must know:
+
+- **The family key `charge` is the charge per unit of content**, rho, an
+  integer c (the pair `[c, 1]`) or a pair `[n, d]` with d from 1, as
+  `suspension` is declared; a denominator of 0 or a part that is not an
+  integer is refused naming the key. A measured event's charge is rho
+  times its content. **The key `charge` on a measured event is refused**
+  naming this entry: a world that gave two events of one family different
+  whole charges on different contents (the series 7 worlds: 2^23 on 2^24
+  and 2 on 1) must split them into two families, one charge per unit of
+  content per family (`examples/events/coupling/make_worlds.py`: `q` the
+  source with `charge` [1, 2], `p` the probe with [2, 1]; [1, 2] on the
+  content-4 probe of `7_pp_m4`). `tools/migrate_ray_worlds.py` moves a
+  per-event `charge` to its family as the reduced pair and refuses a
+  family whose events imply two pairs, naming both events.
+- **The push is one product per arriving free ray**, `push_A = M_A x (rho_A
+  rho_B - 1) x V_B` (`nature_beam.push_form`), the electric part off the
+  reader's clock by the declared pairs, `sign x by_clock(age_A, |V n_A n_B
+  M_A|, d_A d_B)`: equal integer by integer to the earlier `sign x
+  by_clock(age_A, |V q_A q_B|, M_B)` wherever q_A = rho_A M_A and q_B =
+  rho_B M_B were integers, so every registered reading is unchanged
+  (series 7's 181 or 185 `read` records per world, `pushed` and the
+  momenta equal on all six worlds). M_A is the content the frame read at
+  the start of the interval (`Measured.frame_content`; the architect's
+  B3): a click of the interval pushes from the next interval on.
+- **The record's columns**: `NatureBeam`, the store and `state.json` lose
+  `charge` and `mass` (the emitter's charge and content at birth of the
+  night of 2026-09-19); a row of `state.json` is `direction`, `age`,
+  `phase`, `number`, `amount`, `content`; `RayStore.append` takes the
+  seven columns with `arrival`; the merge's identity is the six fields
+  node, direction, age, phase, number, content. A re-emitted free ray
+  keeps its family and takes the re-emitter's number (the orchestrator's
+  D2), so it pushes by its family's rho; the architect's B2 (a division
+  by the re-emitter's held content of another family, 0) cannot arise.
+- **The records**: `run.json`'s `families[].charge` is the pair `[n, d]`;
+  `measured[].charge` in `run.json` and `state.json` is the pair rho x
+  content, reduced (was an integer); the books' `charge` line is the
+  exact rational sum of the measured events' charges as a reduced pair
+  `[n, d]` (was an integer). `Measured.charge` is a property (the pair);
+  `Measured.rho` the family's pair; `MeasuredDefinition` has no `charge`.
+- **Names**: `FACE_NAMES` lives in `events/world.py` (the schema refuses a
+  detector named as a face is); `engine.by_clock` and `engine.FACE_NAMES`
+  re-exports are gone: import `by_clock` from `core.integer` and
+  `FACE_NAMES` from `events.world`.
+- **Tests**: `test_ray_push` (a) to (e), (i) re-fixtured on two free
+  families with the same integers; (k) the re-emitted ray, (l) the
+  equivalence principle for the electric push; `test_ray_world_parsing`
+  (a) the refusals; `test_default_table` (c); `test_ray_bijection` (the
+  rows of seven fields).
+
 ## The age of a ray kept whole and read by the measured event, on 2026-09-20
 
 The model owner's "go for it" of 2026-09-19 on the clock beside a mass

@@ -5,6 +5,78 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### `wave` is the default reading of a detector (2026-09-20)
+
+- The model owner's decision ("on the board a ray, in the world a
+  wave"): `world.DETECTOR_READINGS` = ("wave", "beam"); a detector
+  without a `reading` and every measured event outside a declared
+  detector read `wave`, `beam` is declared ([RAY_LAW section 5](docs/RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
+  and note 29; [migration](docs/MIGRATION.md#wave-is-the-default-reading-of-a-detector-on-2026-09-20)).
+  Re-pinned: `test_ray_readings` (d) (the window reads the set's phase:
+  2 units at phase 0 and 1 at 32 all pass the window 32; the `beam`
+  variant kept beside it), `test_ray_collision` (d) declares `beam` on
+  its windowed taker. Unchanged: the Bell worlds (S = 2, 326 criteria
+  through `tools/bell_chsh.py`), the two-slit and Heisenberg worlds
+  (declared), series C and D.
+
+### Charge per unit of content; the push one product; the record's two columns gone (2026-09-20)
+
+- The model owner's decision (Highlights 5.4): the family key `charge` is
+  the charge per unit of content, rho, an integer or a pair `[n, d]`; a
+  measured event's charge is rho x its content (a report, the pair) and
+  the per-event `charge` is refused naming MIGRATION. The push is ONE
+  product per arriving free ray, `push_A = M_A x (rho_A rho_B - 1) x V_B`
+  (`nature_beam.push_form`, the function five documents named), the
+  electric part off the reader's clock by the declared pairs, equal
+  integer by integer to the earlier `q_A q_B / M_B` form on every series
+  7 world (the six worlds' `read` records, `pushed` and momenta equal;
+  [validation](docs/VALIDATION.md)); the record loses `charge` and `mass`
+  (the family suffices), and the architect's B2 (a re-emitted free ray
+  of another family stamped with a mass of 0, a charged reader dividing
+  by it) cannot arise: a re-emitted ray is its family's ray with the
+  re-emitter's number (the orchestrator's D2). The series 7 worlds
+  declare two free families with their pairs (`q` [±1, 2] on the source,
+  `p` [±2, 1] on the probe, [1, 2] on the content-4 probe);
+  `tools/migrate_ray_worlds.py` converts a per-event charge to the pair
+  and refuses a family whose events imply two. A detector named as a
+  face detector is (`face:+x` and the five others) is refused;
+  `FACE_NAMES` moves to `events/world.py`; the re-exports
+  `engine.by_clock` and `engine.FACE_NAMES` are gone (A11); one
+  materialization of a ray's record, `RayStore.rows` and
+  `NatureBeam.record`, writes `state.json` (A3) ([RAY_LAW section 2](docs/RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file),
+  step 4 and note 28; [migration](docs/MIGRATION.md#charge-per-unit-of-content-on-2026-09-20-the-familys-charge-a-pair-no-charge-on-a-measured-event-the-records-two-columns-gone);
+  [expectations](docs/TEST_EXPECTATIONS.md#the-push-as-one-form): (a) to
+  (e), (i) re-fixtured with the same integers, (k) and (l) added).
+
+### The push reads the content the frame read (2026-09-20)
+
+- The architect's B3 (blocking): the gravity push read the reader's
+  content inside step 4's per-family loop, after earlier families' clicks
+  had joined it, so the world file's family order changed the integers.
+  The orchestrator's D1: M_A is the content the frame read at the start
+  of the interval (`Measured.frame_content`, set once in `_frame_all`
+  beside the clock's age and turn) and the push reads it for every
+  family's rays ([RAY_LAW step 4](docs/RAY_LAW.md#3-the-nodes-interval-nature_beam)
+  and note 27; [ENGINE](docs/ENGINE.md)). Test: `test_ray_push` (j), the
+  architect's probe world in both family orders reads the same integers;
+  no registered pin moves ([expectations](docs/TEST_EXPECTATIONS.md#the-push-as-one-form)).
+
+### The label's product checked before it is formed (2026-09-20)
+
+- The architect's B1 (blocking): the born labels' product was formed in
+  int64 and checked after, so a wrap inside the bound passed silently
+  with the books balanced at the wrong integer. Now every label the law
+  forms is checked per row before the product, the weight times the
+  largest component of the row's u_d within 2^62 - 1
+  (`nature_beam.label_overflow_rows`, inside `momentum_labels` and, in
+  bulk, `first_label_overflow`), the post-check at the births is deleted
+  and the refusal names the Node and the amount ([RAY_LAW section 2](docs/RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+  and note 26). The check is exact per direction: a merged row of weight
+  2^56 on (1, 1, 0) is accepted (45 x 2^56 fits) where a heading's is
+  refused. Re-pinned: `test_ray_label` (c) (`label_weights` no longer
+  bounds by Q; the label does); added (d), the probe's world through a
+  merge and through a mirror ([expectations](docs/TEST_EXPECTATIONS.md#the-label-along-the-unit-vector)).
+
 ### The age of a ray kept whole and read by the measured event (2026-09-20)
 
 - The model owner's "go for it" on the clock beside a mass (2026-09-19,

@@ -35,6 +35,14 @@ GIF or the frames and carries the run's readings beside it: the world, the
 plane shown, the scale of each region, the intervals per frame. A bare GIF is
 never the deliverable. The page is in English, like every artefact.
 
+**Every experiment ends in a results page (model owner, 2026-09-20).** Boss
+adds to every experiment's brief the page contract of the
+[simulation runner](../simulation-runner/SKILL.md): the GameBoard drawn with
+an icon for the detector, the star or source, the lamps and the walls so that
+the reader sees exactly what is tested, then "why it was tested" and "the
+conclusion", with the readings between them. Boss publishes the page as an
+artifact and gives the owner its link with the verdict.
+
 - Dispatch an already-authorized task without asking again merely to delegate it.
   Apply the current user/project scope and chosen execution lane to the handoff;
   delegation adds no authority to edit, publish, contact people or merge.

@@ -39,9 +39,9 @@ from collections.abc import Iterator
 
 import numpy as np
 
-from event_universe.core.integer import by_clock as _by_clock
+from event_universe.core.integer import by_clock
 from event_universe.core.lattice import Address3, adjacent_node
-from event_universe.events.measured import FACE_NAMES, RULES, DetectorSet, Ledger, Measured
+from event_universe.events.measured import RULES, DetectorSet, Ledger, Measured, rational_sum
 from event_universe.events.nature_beam import (
     HERE,
     ArrivalRows,
@@ -56,6 +56,7 @@ from event_universe.events.nature_beam import (
 )
 from event_universe.events.world import (
     DETECTOR_READINGS,
+    FACE_NAMES,
     LABEL_SCALE,
     MOMENTUM_BOUND,
     RAYS_LAW,
@@ -63,14 +64,7 @@ from event_universe.events.world import (
     RayWorld,
 )
 
-__all__ = ["FACE_NAMES", "RULES", "Measured", "RaySimulation", "by_clock"]
-
-
-def by_clock(age: int, numerator: int, denominator: int) -> int:
-    """The clock's rate (`core.integer.by_clock`): what the whole part of
-    age x numerator / denominator gains at the self-creation from `age` to
-    `age + 1`, no remainder kept anywhere."""
-    return _by_clock(age, numerator, denominator)
+__all__ = ["RULES", "Measured", "RaySimulation"]
 
 
 class RaySimulation:
@@ -116,15 +110,10 @@ class RaySimulation:
         for item in world.in_transit:
             store = self.stores[item.family]
             # One phase step of content per unit for a paid family; a free
-            # family's quantum is 0 and its rays carry none. A free family's
-            # declared ray carries its emitter's factor from the world file
-            # (the charge and the declared content of the measured event its
-            # number names; 0 and 0 without one).
+            # family's quantum is 0 and its rays carry none (its family's
+            # charge per unit of content is the factor of the electric push;
+            # the record carries nothing of its emitter but its number).
             content = self.families[item.family].quantum
-            charge, mass = 0, 0
-            if self.families[item.family].free and item.number <= len(world.measured):
-                emitter = world.measured[item.number - 1]
-                charge, mass = emitter.charge, emitter.amount
             store.append(
                 node=np.array([store.flat(item.position)]),
                 direction=np.array([item.direction]),
@@ -135,8 +124,6 @@ class RaySimulation:
                 number=np.array([item.number]),
                 amount=np.array([item.amount]),
                 content=np.array([content]),
-                charge=np.array([charge]),
-                mass=np.array([mass]),
                 arrival=np.array([HERE]),
             )
             self.transit_initial[item.family] += item.amount
@@ -194,7 +181,7 @@ class RaySimulation:
             definition.family,
             held,
             definition.phase,
-            definition.charge,
+            self.families[definition.family].charge,
             list(definition.momentum),
             definition.fixed,
             definition.directions,
@@ -254,16 +241,21 @@ class RaySimulation:
         )
 
     def _frame_all(self) -> None:
-        """The clocks' frame, every measured event at once: one that owes a
-        count pays it by one (no self-creation, no release, no turn;
-        `waited` counts the interval); one that owes nothing self-creates:
-        its age advances and its turn is read off its clock, `by_clock(age,
-        content, K)`, the turns of the phased families taken in one array
-        where their products fit the register (row by row otherwise), and
-        refused at half the circle."""
+        """The clocks' frame, every measured event at once: its content is
+        read once into `frame_content` (M_A of the interval's push, RAY_LAW
+        step 4); one that owes a count pays it by one (no self-creation, no
+        release, no turn; `waited` counts the interval); one that owes
+        nothing self-creates: its age advances and its turn is read off its
+        clock, `by_clock(age, content, K)`, the turns of the phased families
+        taken in one array where their products fit the register (row by
+        row otherwise), and refused at half the circle."""
         phased: list[Measured] = []
         for entry in self.measured.values():
             entry.turn = 0
+            # The content the frame reads, once, for the turn and for the
+            # push of this interval (M_A at the frame: the clicks of the
+            # interval join `held` after it).
+            entry.frame_content = entry.content
             if entry.owed > 0:
                 entry.owed -= 1
                 entry.waited += 1
@@ -278,7 +270,7 @@ class RaySimulation:
             return
         clock = self.world.clock
         ages = [entry.clock_age for entry in phased]
-        contents = [entry.content for entry in phased]
+        contents = [entry.frame_content for entry in phased]
         if (max(ages) + 1) * max(contents) <= MOMENTUM_BOUND:
             age_column = np.array(ages, dtype=np.int64)
             content_column = np.array(contents, dtype=np.int64)
@@ -437,15 +429,16 @@ class RaySimulation:
         balanced = True
         ledger = self.ledger
         # One pass over the measured events: what they hold per family,
-        # their momentum and their charge.
+        # their momentum and their charge (rho x content each, the sum an
+        # exact rational reported as the reduced pair [n, d]).
         held_current = [0] * len(self.families)
         held_momentum = [0, 0, 0]
-        charge = 0
+        charges: list[tuple[int, int]] = []
         for entry in self.measured.values():
             for index, held in enumerate(entry.held):
                 held_current[index] += held
             held_momentum = [a + b for a, b in zip(held_momentum, entry.momentum, strict=True)]
-            charge += entry.charge
+            charges.append(entry.charge)
         for index, family in enumerate(self.families):
             measured = {
                 "initial": self.held_initial[index],
@@ -506,7 +499,7 @@ class RaySimulation:
                 "transit": counted["momentum"] if counted is not None else self.transit_momentum(),
                 "escaped": ledger.escaped_momentum(),
             },
-            "charge": charge,
+            "charge": list(rational_sum(charges)),
             "balanced": balanced,
         }
 
@@ -663,6 +656,9 @@ class RaySimulation:
         }
 
     def _node_entries(self) -> Iterator[dict[str, object]]:
+        """The Nodes with rays, each with its rows per family: the one
+        materialization of a ray's record (`RayStore.rows`, `NatureBeam`),
+        written as `NatureBeam.record` says."""
         nodes = sorted({int(node) for store in self.stores for node in np.unique(store.node)})
         vectors = self.tables.flight.vectors
         for flat in nodes:
@@ -674,22 +670,6 @@ class RaySimulation:
                 lo, hi = store.slice(flat)
                 if hi == lo:
                     continue
-                rays = [
-                    {
-                        "direction": [int(v) for v in vectors[store.direction[i]]],
-                        "age": int(store.age[i]),
-                        "phase": int(store.phase[i]),
-                        "number": int(store.number[i]),
-                        "amount": int(store.amount[i]),
-                        "content": int(store.content[i]),
-                        # The emitter's factor a free family's ray carries.
-                        **(
-                            {"charge": int(store.charge[i]), "mass": int(store.mass[i])}
-                            if family.free
-                            else {}
-                        ),
-                    }
-                    for i in range(lo, hi)
-                ]
+                rays = [ray.record(vectors) for ray in store.rows(lo, hi)]
                 families.append({"family": family.name, "rays": rays})
             yield entry
