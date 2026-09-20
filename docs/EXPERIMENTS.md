@@ -2938,12 +2938,79 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   `weights`, `turns` and `inputs`), the normal form's cancel, the pair
   form of `phase_per_link`, the reading `sum`, the layer and its ladder;
   `tests/test_amplitude_record.py`, `tests/test_amplitude_split.py`.
-- **Run.** Planned: `examples/events/amplitude/` (the ten `mz_*` and
-  `ev_*` worlds written by `make_worlds.py`, the model ids
-  `beam-amplitude-<name>-v1`), `tools/run_series.py --jobs 3`, 75
-  intervals each; the readings by `tools/amplitude_path.py` (every line
-  labelled DETECTOR or GAMEBOARD), recorded here with the fingerprint
-  when the layer lands.
+- **Run (2026-09-20, the ten worlds of `examples/events/amplitude/`, 80
+  intervals each, `tools/run_series.py --jobs 3`, the source fingerprint
+  `a7b924b3297a`, every run completed and conserved at every tick, 0.2 s
+  each; the readings by `tools/amplitude_path.py --check`, whose replay
+  equals `run.json`'s `world` on every run; DETECTOR unless said).** The
+  gathers over the 64 births of the ticks 1 .. 64 (the design's table
+  reproduced on every world):
+
+  | world | D1 | D2 | absorber | the design |
+  | --- | --- | --- | --- | --- |
+  | `mz_equal` | 64 | 0 | | 64, 0 |
+  | `mz_half` | 0 | 64 | | 0, 64 |
+  | `mz_quarter` | 32 | 32 | | 32, 32 |
+  | `mz_balanced` | 64 | 0 | | 64, 0 |
+  | `mz_345` | 63 | 1 | | 63, 1 |
+  | `mz_unequal_f0` | 64 | 0 | | 64, 0 |
+  | `mz_unequal_f8` | 32 | 32 | | 32, 32 |
+  | `mz_unequal_f16` | 0 | 64 | | 0, 64 |
+  | `ev_29` | 17 | 15 | 32 | 17, 15, 32 |
+  | `ev_169` | 16 | 16 | 32 | 16, 16, 32 |
+
+  One gather per birth, the last of the 64 at tick 75 (76 on
+  `mz_quarter`), the 11 records born after open at the end; the same list
+  on a second run (test 8). The record's `total` (GAMEBOARD, the sum of
+  the offers in the unit 2^58) is not the design's "1 within 0.0019" for
+  every u: over the 64 births it takes 8 values, 65448/65536 to
+  65773/65536 (within 237/65536 of 1), the same 8 on every one of the
+  ten worlds, the tables' rounding (C^2 + S^2 within 361 of 65536)
+  depending on u and the sum over the ports not seeing the split
+  (unitarity); pinned as measured beside the design's bound, marked
+  failing (`tests/test_amplitude_layer.py`). The split takes no click
+  gate (the decision on the review's B1): on `mz_quarter` the two arms
+  reach the splitter a half turn apart and both split, where the crowd's
+  pointer gate would have passed them (130 passes, a which-path device
+  reading 32/32 by coincidence); on `mz_unequal_f8` the rows of two
+  records reach it together and both split.
+
+**L2, the two slits at a low rate (the design's test 2).**
+
+- **Model prediction, pinned before the run
+  (`expectations.json` under `two_slits`, the generator's reading of one
+  birth by the design's `slits_read.py` on the reference world
+  `slits_one`, independent of the layer).** The shipped 60 x 121 world
+  under the key, the lamp at rate [1, 1] with the content K (u = t - 1
+  at the birth tick t), `phase_per_link` [8591334592, 2^30], the pixels
+  `sum`, the wall freed within 6 of each opening (every fan row leaves
+  the plane) and the lamp's three rows that miss the openings absorbed at
+  (7, 58), (7, 60), (7, 62) (a fan row and a lamp row at one set would
+  carry the multiplicities 455 and 5, refused). The reading: 80 sets with
+  rows (3 wall Nodes, 75 pixels, the faces +y and -y), the total
+  4689423/3727360 = 1.258 of the birth norm (the cross terms of paths
+  meeting: 27 pixels receive two paths; the faces, one set each, add
+  their 37 rows coherently), the shares wall 0.477, screen 0.221, faces
+  0.302; the clicks over the 64 births by the ladder: wall 31 (10, 10,
+  11), screen 14 (one each at y = 19, 33, 39, 46, 54, 59, 60, 61, 64,
+  71, 80, 86, 98, 119), faces 19 (9, 10); Pearson of the record's screen
+  weights 0.744 with the incoherent sum, 0.368 with the Euclidean
+  two-source cosine (the design's shipped-geometry 0.753 and 0.381), the
+  screen-alone histogram 0.931 with the weights (0.963). The design's
+  "wall 3/5, screen 2/5" does not hold in this geometry: the freed fans
+  reach the open faces in y, a third destination, and each face as one
+  set sums its rows coherently.
+- **Run (2026-09-20, `slits_low`, 230 intervals, 2.8 s, the fingerprint
+  `a7b924b3297a`, completed and conserved; `slits_one` 220 intervals
+  without the key, 0.7 s).** DETECTOR: 64 gathers of the 64 births by
+  tick 213 (the births go on: 230 records, 81 gathered, 149 open at the
+  end); the first record's cells are the reading's 80 sets with the
+  reading's rungs, its weight and total the reading's exactly; the
+  clicks per set equal the reading's on 78 of 80 sets (wall 31, faces
+  19, screen 14) and the click of screen_98 lands on screen_100: the
+  weights depend on u through the tables' rounding (7 distinct cell
+  lists over the 64 births, 36 with u = 0's), moving that rung by one;
+  the reading tool's replay equals `run.json`'s `world`.
 
 ### A3. Bell test in phase form, delayed geometry
 

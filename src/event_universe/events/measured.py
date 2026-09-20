@@ -66,8 +66,16 @@ class PendingRow(NamedTuple):
     multiplicity: int = 1
     split: bool = False
     # The direction the row arrived on (the split's table selects its row
-    # of weights by it).
+    # of weights by it); `offered`, whether the row ended at this re-emitter
+    # with an offer (a `sum` re-emitter: the layer counted its units as
+    # ended, the split re-creates them); and `rebirth`, whether the row's
+    # record was gathered at this re-emitter, so that its re-creation is a
+    # new record. A row absorbed at a re-emitter that does not offer stays
+    # live in the layer until its re-emission: the record is not complete
+    # while units wait at a mirror.
     arrival: int = 0
+    offered: bool = False
+    rebirth: bool = False
 
 
 Pending = PendingRow
@@ -162,14 +170,26 @@ class DetectorSet:
 
     @property
     def wave(self) -> bool:
-        """The pointer's readings: `wave` and, under the amplitude law,
-        `sum` (the crowd's pointer gate and the set's phase as under
-        `wave`; the record the layer's, `sum`)."""
+        """The pointer's reading, at either scope: `wave` and, under the
+        amplitude law, `sum` (the set's phase as under `wave`)."""
         return self.reading in ("wave", SUM_READING)
 
     @property
     def sum(self) -> bool:
+        """The pointer's reading at the record's scope (the amplitude law):
+        no pointer gate, the record the layer's per record."""
         return self.reading == SUM_READING
+
+    @property
+    def scope(self) -> str | None:
+        """The one pointer's scope (the owner's unification (4), BEAM_LAW
+        note 37): `crowd` under `wave` (the interval's arrivals of every
+        number, the gate and the record per interval), `record` under `sum`
+        (one record's rows over its lifetime, the record at its completion);
+        None for the amount reading `beam`."""
+        if self.reading == SUM_READING:
+            return "record"
+        return "crowd" if self.reading == "wave" else None
 
 
 @dataclass
@@ -274,6 +294,9 @@ class Measured:
     splits: list[Split | None] = field(default_factory=list)
     lamp_turns: tuple[int, ...] = ()
     births: int = 0
+    # The turn of each entry's rotation on a `sum` set (the label click's
+    # `turn` key, 0 by default), per family.
+    label_turns: list[int] = field(default_factory=list)
     # The interval's frame, set by the engine: whether this interval is a
     # self-creation, the age before it, the turn read off the clock and the
     # content the frame read (`frame_content`, M_A of the push: taken once

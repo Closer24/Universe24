@@ -67,6 +67,7 @@ kept, their pins the law of events').
 | `test_meeting.py` | The meeting: the arc permutation of the direction table (a permutation for 1034 targets on K's table, the rest fixed, the chain from +x, the k-fold shift), the phase register (61, 62, 63, 0, 1, 2 with the turn at the fourth; the inverse), the sign of the turn and the `turned` line, the crowd and the record untouched, the bijection with the meeting (50 forward, 50 inverse) and the refusals ([below](#the-meeting)) | new (2026-09-20, the model owner's "DECIDED: the meeting, M-R"; the physicist's and the mathematician's design) |
 | `test_amplitude_record.py` | The amplitude law's key and the record on the row (`amplitude-v1`): the world key `amplitude`, its default, its identity and its refusals; the three columns `record`, `branch` and `multiplicity` at their defaults on every row without the key and the merge's packed key unchanged by them; the merge's normal form under the key, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
 | `test_amplitude_split.py` | The split, the birth of a record and the phase per interval of age: a lamp's birth of one record of k rows with the multiplicity k and the identity number x 2^32 + ordinal; the (20, 21) splitter's rows (41 in phase toward D1, 1 in antiphase toward D2, the multiplicity 1682) and the balanced split's cancel on the lattice with the `cancelled` lines; the pair form of `phase_per_link` (40 at [8, 1], 26 at [16, 3], 24 at the integer 8 after 5 intervals; the inverse bit-exact); the refusals ([below](#the-amplitude-law-the-split)) | new (2026-09-20; the design's sections 2.1, 2.3, 3.1 and 3.4; the owner's unifications (1) and (2)) |
+| `test_amplitude_layer.py` | The layer: the reading `sum` at the record's scope, the offers, the ladder at completion and the gathers, on series L: the ten Mach-Zehnder and Elitzur-Vaidman worlds click as the design's table over the 64 births (tests 1, 3), the same list twice and the moved rung (8), a split takes no click gate (the review's B1), the two slits at a low rate against the generator's reading of one birth (2: 78 of 80 sets exact, one rung moved by the tables' rounding), the gate set parses without the key (7), the reading tool's replay equals `run.json`'s `world` (10), the pair form bounded at the parse (S1), the cancel booked per content (S3), a lamp short of one quantum per direction refused (S4), the `record` line's scope ([below](#the-amplitude-law-the-layer)) | new (2026-09-20; the design's sections 3, 5 and 7; the decision on the split's gate) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -285,10 +286,11 @@ sort likewise; the empty store merges to the empty store.
 `tests/test_amplitude_record.py` (docs/BEAM_LAW.md note 37; the model
 owner, 2026-09-20, Highlights 5.4, "DECIDED: `amplitude-v1` is built"; the
 design, scratchpad/amplitude/DESIGN.md, sections 1 and 2.3). A 5 x 5
-plane, K 1, N 64, `release` [0, 1], `suspension` 0, a lamp of `light` of
-content 8 releasing one row per self-creation on +x and +y at the turn 1,
-and a detector of one Node. The expected integers, written down before the
-first run:
+plane, K 16, N 64, `release` [0, 1], `suspension` 0, a lamp of `light` of
+content 16 releasing one row per self-creation on +x and +y at the turn 1
+(eight births of two quanta; since the review's S4 a lamp must pay one
+quantum per direction at a birth), and a detector of one Node. The
+expected integers, written down before the first run:
 
 - (a) the key: absent it is false, `hypotheses` is empty and `run.json`
   carries `amplitude` false; declared true, `hypotheses` is
@@ -311,8 +313,8 @@ first run:
   record at one phase with the multiplicities 2 and 4; two of one record
   at one phase merge to amount 2; without the key (modulus 0) the
   antiphase pair stays; the units cancelled are returned per (record,
-  direction) with the content carried, {(7, 2): (4, 4), (8, 2): (2, 2),
-  (9, 2): (2, 2)}.
+  direction, content per unit), {(7, 2, 1): 4, (8, 2, 1): 2, (9, 2, 1): 2}
+  (the review's S3: the content carried is units x content, no division).
 
 ## The amplitude law: the split
 
@@ -352,6 +354,61 @@ integers, written down before the first run:
   N - 1, `inputs` naming an undeclared direction, a lamp's `turns` without
   the key; a pending row of multiplicity 2^61 split by (20, 21) (A = 841)
   refuses the run naming the Node (3, 3).
+
+## The amplitude law: the layer
+
+`tests/test_amplitude_layer.py` (docs/BEAM_LAW.md note 37; the design,
+sections 3, 5 and 7; the decision of 2026-09-20 that a split is not a
+click), on the worlds of series L (`examples/events/amplitude/make_worlds.py`,
+`expectations.json` written by the generator before the runs). The
+expected integers, written down before the first run:
+
+- (a) tests 1 and 3: over the 64 births of the ticks 1 .. 64 the gathers
+  per port are the design's table (`mz_equal` D1 64, D2 0; `mz_half` 0,
+  64; `mz_quarter` 32, 32; `mz_balanced` 64, 0; `mz_345` 63, 1;
+  `mz_unequal_f0` 64, 0; `mz_unequal_f8` 32, 32; `mz_unequal_f16` 0, 64;
+  `ev_29` absorber 32, D1 17, D2 15; `ev_169` 32, 16, 16), one gather per
+  birth, all complete by tick 76; the record's `total` in the unit 2^58
+  takes 8 values between 65448/65536 and 65773/65536 on every world (the
+  tables' rounding depends on u; unitarity: the sum over the ports does
+  not see the split), so the design's bound 0.0019 holds for u = 0 alone
+  and is pinned marked failing beside the measured bound 237/65536; the
+  first gather of `mz_equal` names `light`, the record 2^32 + 1, u 0, D1
+  on arm 0 channel "0", the weight 1681/1682 of the total, the cells D1,
+  D2 with the rungs 64, 64;
+- (b) test 8: the same world twice gives the same list; on `mz_345`
+  u = 63 falls in D2 (the rungs 63, 64) where `mz_equal` sends it to D1;
+- (c) B1: on `mz_quarter` at tick 11 one record's two arms reach the
+  splitter a half turn apart (the crowd's pointer 0) and both split (two
+  `split` lines of absorbed 1, born 41); on `mz_unequal_f8` at tick 11 the
+  rows of two records both split; no `pass` line at the splitter or at a
+  `sum` port on any of the ten worlds;
+- (d) test 2 on `slits_low`: the first record's cells are the reading's 80
+  sets in the layer's order with the reading's rungs, its chosen cell
+  (`measured:223`) has the reading's weight and its `total` the reading's
+  4689423/3727360; the 64 births gather by tick 213; the clicks per set
+  equal the reading's on 78 of 80 sets (the wall 10, 10, 11; the faces 9,
+  10; twelve pixels one each) and the click of screen_98 lands on
+  screen_100 (7 distinct cell lists, 36 records with u = 0's: the tables'
+  rounding moves one rung for one u; the reading's u-invariance pinned
+  marked failing);
+- (e) test 7: the seventeen worlds of the gate set parse without the key,
+  `amplitude` false and no `amplitude-v1` identity;
+- (f) test 10: `tools/amplitude_path.replay` on 30-interval runs of
+  `mz_equal` and `ev_29` returns `run.json`'s `world`, at least 18
+  gathers, the open count of `run.json`'s `layer`;
+- (g) S1: `phase_per_link` [2^61, 5] on the bar of age_bound 100 is
+  refused at the parse naming (age_bound + 1) x n; the largest admitted
+  numerator (2^62 - 1) // 101 reads n mod 64 after 5 intervals;
+- (h) S3: two antiphase pairs of one record at two Nodes with the contents
+  1 and 3 return {(7, 2, 1): 2, (7, 2, 3): 4} and leave (5, amount 2,
+  content 1);
+- (i) S4: a lamp of content 1 at K 2 on two directions refuses its birth at
+  tick 2 naming the lamp; content 2 births the record 2^32 + 1 of two rows;
+- (j) the `record` line of a `sum` set at a gather carries `scope`
+  `record`, `of` the record, the pointer whose square is the record and
+  the multiplicity 1682; `DetectorSet.scope` is `record` for D1 and
+  `crowd` for the splitter's set.
 
 ## The meeting
 

@@ -8,11 +8,11 @@ the design's, from its check scripts `mz.py` and `slits_read.py`).
 L1, the Mach-Zehnder interferometer and Elitzur-Vaidman (the design's
 section 3.4, the acceptance tests 1, 3 and 8). A plane of 5 x 5 with z
 periodic, K 2^20, N 64, `release` [0, 1], `suspension` 0, `amplitude`
-true, 75 intervals. The source at (0, 0), a lamp of `light` of content
+true, 80 intervals. The source at (0, 0), a lamp of `light` of content
 2^20 (its turn 1 phase step per self-creation for far more births than
 the run holds, so the birth phase u of the record born at tick t is
 t - 1: the 64 births of the ticks 1 .. 64 span the circle once and
-complete by tick 75, the 11 born after are open at the end) releasing
+complete by tick 76, the records born after are open at the end) releasing
 one record per self-creation on +x (arm 1) and +y (arm 2, the
 reflection's quarter turn 16 on the row: the source's own splitter),
 two rows of amount 1 with the multiplicity 2 (one quantum on two paths).
@@ -52,13 +52,60 @@ unification (1)). The absorber of Elitzur-Vaidman is a measured event of
 `light` at (0, 3) in place of mirror 2 (the keys' rule measures the paid
 arrival; a detector of one Node named `absorber`).
 
+L2, the two slits at a low rate (the design's acceptance test 2): the
+shipped world `examples/events/two_slits.json` (60 x 121, K 2^30, N 64, a
+lamp at (2, 60) on five directions, the wall at x = 8 with the openings at
+y = 55 and 65 re-emitting on 91 directions, the screen at x = 52 of 121
+one-Node pixels) under the key, the lamp's rate [1, 1] and its content K
+(one phase step per interval: the birth at tick t has u = t mod 64, the
+64 births of the ticks 1 .. 64 span the circle once), the family's
+`phase_per_link` the pair [8591334592, 2^30] (the shipped lamp's turn per
+interval, 8 + 1400000 / 2^30, the design's frequency), the pixels reading
+`sum`, and the geometry the design asks for: the wall's Nodes within 6 of
+each opening freed, so that every row of the openings' fans leaves the
+wall's plane (a steep direction walks along y inside the plane x = 8
+before its first step in x; with the shipped wall 88 of the 182 fan rows
+step into the wall beside the openings in phase and offer 4.85 of the
+birth's norm 1, the design's finding), and the lamp's three rows that miss
+the openings absorbed by three wall Nodes at x = 7 on their paths ((7, 58),
+(7, 60), (7, 62)), since the wall Nodes they hit at x = 8 are within the
+freed band and a fan row and a lamp row at one set would carry the
+multiplicities 455 and 5 (refused, the design's 3.1). The wall's share of
+the record is then the lamp's three rows, 3/5, and the fans' 2/5 goes to
+the screen and the open faces in y, as the design states.
+
+The expectations of L2 (`expectations.json` under `two_slits`) are the
+design's own reading (`slits_read.py`) of ONE birth through the same
+geometry, made by this generator before the run of the 64-birth world and
+independently of the engine's layer: the reference world `slits_one` (no
+key; the lamp's five rows as declared rays of amount 91, so that each
+opening's re-emission on its 91 directions is one row per direction, the
+rows of one birth at m = 5 x 91 = 455 and the lamp's own at m = 5; the
+screen's entries reading the age) is run in-process, every click read as a
+row (amount, m, phase + f x age with f the frequency, the age of a lamp
+row its flight and of a fan row its flight to the opening and the intervals
+since its re-emission, as the lattice turns it under the key; a face click
+is the row as it stepped out, before that interval's turn), the
+weight of a set |sum 32 v(p)|^2 / m in the unit (32 x 256)^2, the ladder
+over the sets in the layer's order with the rungs at the nearest integer,
+and the clicks per set over the 64 births u = 0 .. 63 read off the ladder
+(every u falls in one cell); beside them the pixels with rows, the pixels
+where two paths meet and the Pearson correlations the design registered
+for the shipped geometry (0.753 with the incoherent sum, 0.38 with the
+Euclidean two-source cosine, 0.963 of the 64-birth histogram with the
+weights) recomputed for this geometry.
+
     python examples/events/amplitude/make_worlds.py [--out DIR]
 """
 
 from __future__ import annotations
 
 import argparse
+import copy
 import json
+import math
+from collections import OrderedDict
+from fractions import Fraction
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -70,9 +117,24 @@ HALF = N // 2
 # self-creation (content / K) for the first several hundred births.
 SOURCE_CONTENT = 1 << 20
 CLOCK = 1 << 20
-# The last birth of the circle, tick 64, completes at tick 75 (the ports
-# click 11 intervals after a birth on the flight table).
-MZ_TICKS = 75
+# The last birth of the circle, tick 64, completes by tick 76 (the ports
+# click 11 or 12 intervals after a birth on the flight table).
+MZ_TICKS = 80
+# L2: the shipped two-slit world, its openings, the freed band of the wall
+# around each opening, the wall Nodes at x = 7 that absorb the lamp's
+# three rows missing the openings, the frequency (the shipped lamp's turn
+# per interval) and the durations.
+TWO_SLITS_SOURCE = ROOT / "examples" / "events" / "two_slits.json"
+OPENINGS = (55, 65)
+WALL_X = 8
+FREED_HALF_WIDTH = 6
+LAMP_WALL_NODES = ((7, 58), (7, 60), (7, 62))
+FREQUENCY = [8591334592, 1 << 30]
+SLITS_TICKS = 230
+SLITS_ONE_TICKS = 220
+LAMP_ROWS = 5
+FAN_WAYS = 91
+DESIGN_UNIT = (32 * 256) ** 2
 PLUS_X = [1, 0, 0]
 PLUS_Y = [0, 1, 0]
 PYTHAGOREAN_29 = (20, 21)
@@ -220,11 +282,244 @@ MACH_ZEHNDER_EXPECTATIONS: dict[str, dict[str, object]] = {
 }
 
 
+def freed_wall() -> set[tuple[int, int]]:
+    """The wall Nodes (x, y) within the freed band of each opening."""
+    freed = {
+        (WALL_X, y)
+        for opening in OPENINGS
+        for y in range(opening - FREED_HALF_WIDTH, opening + FREED_HALF_WIDTH + 1)
+    }
+    return freed - {(WALL_X, y) for y in OPENINGS}
+
+
+def two_slits_geometry() -> dict[str, object]:
+    """The shipped two-slit world with the freed band and the lamp's wall
+    Nodes at x = 7 (the key and the lamp untouched)."""
+    world = json.loads(TWO_SLITS_SOURCE.read_text(encoding="utf-8"))
+    world = copy.deepcopy(world)
+    freed = freed_wall()
+    world["measured"] = [
+        m for m in world["measured"] if (m["position"][0], m["position"][1]) not in freed
+    ]
+    world["measured"].extend(
+        {"position": [x, y, 0], "family": "wall", "amount": 1, "fixed": True} for x, y in LAMP_WALL_NODES
+    )
+    return world
+
+
+def two_slits_low() -> dict[str, object]:
+    """L2's world: 64 births at a low rate under the key."""
+    world = two_slits_geometry()
+    world["model_id"] = "beam-amplitude-slits_low-v1"
+    world["ticks"] = SLITS_TICKS
+    world["amplitude"] = True
+    lamp = world["measured"][0]
+    lamp["amount"] = world["K"]
+    lamp["lamp"]["rate"] = [1, 1]
+    for family in world["families"]:
+        if family["name"] == "light":
+            family["phase_per_link"] = FREQUENCY
+    for detector in world["detectors"]:
+        detector["reading"] = "sum"
+    return world
+
+
+def two_slits_one() -> dict[str, object]:
+    """The design's reference: one birth through L2's geometry without the
+    key, the lamp's five rows declared as rays of amount 91."""
+    world = two_slits_geometry()
+    world["model_id"] = "beam-amplitude-slits_one-v1"
+    world["ticks"] = SLITS_ONE_TICKS
+    lamp = world["measured"][0]
+    directions = lamp["lamp"]["directions"]
+    del lamp["lamp"]
+    lamp["amount"] = 1
+    world["in_transit"] = [
+        {
+            "position": list(lamp["position"]),
+            "family": "light",
+            "number": 1,
+            "direction": list(direction),
+            "amount": FAN_WAYS,
+            "phase": 0,
+        }
+        for direction in directions
+    ]
+    screen_x = world["detectors"][0]["positions"][0][0]
+    for m in world["measured"]:
+        if m["position"][0] == screen_x:
+            m["table"] = {"light": {"reads": "age"}}
+    return world
+
+
+def pearson(a: list[float], b: list[float]) -> float:
+    n = len(a)
+    ma, mb = sum(a) / n, sum(b) / n
+    sa = math.sqrt(sum((x - ma) ** 2 for x in a))
+    sb = math.sqrt(sum((y - mb) ** 2 for y in b))
+    if not sa or not sb:
+        return float("nan")
+    return sum((x - ma) * (y - mb) for x, y in zip(a, b, strict=True)) / (sa * sb)
+
+
+def ladder(weights: dict[str, Fraction], order: list[str]) -> dict[str, int]:
+    """The clicks per set over u = 0 .. N - 1: the rungs
+    b_k = (2 N C_k + Total) // (2 Total) at the nearest integer over the
+    sets in the layer's order, each set's count the rungs' difference."""
+    total = sum(weights[k] for k in order)
+    cumulative = Fraction(0)
+    previous = 0
+    counts: dict[str, int] = {}
+    for name in order:
+        cumulative += weights[name]
+        rung = int((2 * N * cumulative + total) // (2 * total))
+        if rung > previous:
+            counts[name] = rung - previous
+        previous = rung
+    assert previous == N
+    return counts
+
+
+def two_slits_reading() -> dict[str, object]:
+    """The design's reading of one birth (`slits_read.py`), on the
+    reference world run in-process: the weights per set, the ladder's
+    clicks over the 64 births, the shares, the pixels and the Pearson
+    correlations; written before the run of `slits_low`."""
+    from event_universe.core.phase import phase_cosines, phase_sines
+    from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
+
+    reference = two_slits_one()
+    lines: list[dict[str, object]] = []
+    simulation = NatureBeamSimulation(parse_nature_beam_world(reference), observer=lines.append)
+    for _ in range(int(reference["ticks"])):
+        simulation.step()
+    assert all(store.size == 0 for store in simulation.stores), "a row of the birth is still in flight"
+    order = list(NatureBeamSimulation(parse_nature_beam_world(two_slits_low())).layer.names)
+    cosines, sines = phase_cosines(N), phase_sines(N)
+    numerator, denominator = FREQUENCY
+
+    def turn(age: int, tick: int) -> int:
+        return (tick * numerator) // denominator - ((tick - age) * numerator) // denominator
+
+    re_emitted = {
+        int(line["measured"]): int(line["tick"]) for line in lines if line.get("event") == "rerelease"
+    }
+    rows: dict[str, list[tuple[int, int, int]]] = OrderedDict()
+    for line in lines:
+        if line.get("event") != "click":
+            continue
+        detector = line["detector"]
+        name = str(detector) if detector is not None else f"measured:{line['measured']}"
+        tick, phase = int(line["tick"]), int(line["phase"])
+        if int(line["number"]) == 1:
+            # A lamp row: the amount 91 stands for one unit at m = 5, its
+            # age its flight from the birth at tick 0.
+            rows.setdefault(name, []).append((1, LAMP_ROWS, (phase + turn(tick, tick)) % N))
+        else:
+            # A fan row: its flight is the lamp row's to the opening (the
+            # re-emission tick, from the birth at tick 0) and its own since.
+            opened = re_emitted[int(line["number"])]
+            age = tick - opened
+            if name.startswith("face:"):
+                # A face click records the row as it stepped out, before the
+                # turn of that interval (the engine's walk: the escaped rows
+                # leave, the rows that stay turn).
+                age, tick = age - 1, tick - 1
+            rows.setdefault(name, []).append(
+                (1, LAMP_ROWS * FAN_WAYS, (phase + turn(opened, opened) + turn(age, tick)) % N)
+            )
+    weights: dict[str, Fraction] = {}
+    incoherent: dict[str, Fraction] = {}
+    for name, found in rows.items():
+        multiplicities = {m for _, m, _ in found}
+        assert len(multiplicities) == 1, (name, multiplicities)
+        m = multiplicities.pop()
+        x = sum(32 * w * cosines[p] for w, _, p in found)
+        y = sum(32 * w * sines[p] for w, _, p in found)
+        weights[name] = Fraction(x * x + y * y, m * DESIGN_UNIT)
+        incoherent[name] = Fraction(
+            sum((32 * w) ** 2 * (cosines[p] ** 2 + sines[p] ** 2) for w, _, p in found),
+            m * DESIGN_UNIT,
+        )
+    cells = [name for name in order if name in weights]
+    assert set(cells) == set(weights), set(weights) - set(cells)
+    clicks = ladder(weights, cells)
+    total = sum(weights.values())
+    screen = [name for name in cells if name.startswith("screen_")]
+    pixels = [int(name.split("_")[1]) for name in screen]
+
+    def share(prefix: str) -> Fraction:
+        return sum((v for k, v in weights.items() if k.startswith(prefix)), Fraction(0)) / total
+
+    lam = (N / 8) / math.sqrt(3)
+    openings_x = WALL_X
+    screen_x = int(reference["detectors"][0]["positions"][0][0])
+
+    def cosine(y: int) -> float:
+        r1 = math.hypot(screen_x - openings_x, y - OPENINGS[0])
+        r2 = math.hypot(screen_x - openings_x, y - OPENINGS[1])
+        return 1 + math.cos(2 * math.pi * (r1 - r2) / lam)
+
+    height = int(reference["shape"][1])
+    weight_line = [float(weights.get(f"screen_{y}", 0)) for y in range(height)]
+    incoherent_line = [float(incoherent.get(f"screen_{y}", 0)) for y in range(height)]
+    cosine_line = [cosine(y) for y in range(height)]
+    histogram = [clicks.get(f"screen_{y}", 0) for y in range(height)]
+    screen_alone = ladder(weights, screen)
+    conditioned = [screen_alone.get(f"screen_{y}", 0) for y in range(height)]
+    return {
+        "reference": "slits_one",
+        "unit": "(32 x 256)^2, the square of one row of amount 1 at multiplicity 1",
+        "sets": len(cells),
+        "weights": {name: str(weights[name]) for name in cells},
+        "total": str(total),
+        "shares": {
+            "wall": str(share("measured:")),
+            "screen": str(share("screen_")),
+            "faces": str(share("face:")),
+        },
+        "clicks": clicks,
+        "clicks_by_kind": {
+            "wall": sum(v for k, v in clicks.items() if k.startswith("measured:")),
+            "screen": sum(v for k, v in clicks.items() if k.startswith("screen_")),
+            "faces": sum(v for k, v in clicks.items() if k.startswith("face:")),
+        },
+        "screen_alone": screen_alone,
+        "pixels_with_rows": len(pixels),
+        "two_path_pixels": sum(1 for name in screen if len(rows[name]) >= 2),
+        "pearson": {
+            "weight_incoherent": round(pearson(weight_line, incoherent_line), 3),
+            "weight_cosine": round(pearson(weight_line, cosine_line), 3),
+            "histogram_weight": round(pearson([float(h) for h in histogram], weight_line), 3),
+            "screen_alone_weight": round(pearson([float(h) for h in conditioned], weight_line), 3),
+        },
+        "design_shipped_geometry": {
+            "weight_crowd_record": 0.992,
+            "weight_incoherent": 0.753,
+            "weight_cosine": 0.381,
+            "histogram_weight": 0.963,
+            "pixels_with_rows": 61,
+            "two_path_pixels": 27,
+        },
+    }
+
+
+def two_slits_worlds() -> dict[str, dict[str, object]]:
+    return {"slits_low": two_slits_low(), "slits_one": two_slits_one()}
+
+
+def worlds() -> dict[str, dict[str, object]]:
+    found = mach_zehnder_worlds()
+    found.update(two_slits_worlds())
+    return found
+
+
 def expectations() -> dict[str, object]:
     return {
         "format": "amplitude-expectations-v1",
         "births": N,
         "mach_zehnder": MACH_ZEHNDER_EXPECTATIONS,
+        "two_slits": two_slits_reading(),
     }
 
 
@@ -233,7 +528,7 @@ def main() -> None:
     parser.add_argument("--out", type=Path, default=HERE)
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
-    for name, world in mach_zehnder_worlds().items():
+    for name, world in worlds().items():
         path = args.out / f"{name}.json"
         path.write_text(json.dumps(world) + "\n", encoding="utf-8")
         print(

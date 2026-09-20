@@ -31,8 +31,8 @@ before the first run:
     of amount 2 (the merge as it was); rows of one record at the same
     phase with multiplicities 2 and 4 stay two rows; without the key
     (modulus 0) nothing cancels and the antiphase pair stays two rows; the
-    merge returns the units cancelled per (record, direction), {(7, 2):
-    (4, 4), (8, 2): (2, 2), (9, 2): (2, 2)} with the content carried.
+    merge returns the units cancelled per (record, direction, content per
+    unit), {(7, 2, 1): 4, (8, 2, 1): 2, (9, 2, 1): 2}.
 """
 
 from __future__ import annotations
@@ -53,14 +53,15 @@ N = 64
 
 def lamp_world(**overrides: object) -> dict[str, object]:
     """A 5 x 5 plane with one lamp of `light` releasing one row per
-    self-creation on +x and +y at the turn 1 (K 1), and a detector."""
+    self-creation on +x and +y at the turn 1 (K 16, the content 16: eight
+    births of two quanta), and a detector."""
     world: dict[str, object] = {
         "law": "beam",
         "model_id": "amplitude-record-test",
         "shape": [5, 5, 1],
         "boundary": {"z": "periodic"},
         "ticks": 5,
-        "K": 1,
+        "K": 16,
         "N": N,
         "release": [0, 1],
         "suspension": 0,
@@ -69,7 +70,7 @@ def lamp_world(**overrides: object) -> dict[str, object]:
             {
                 "position": [0, 0, 0],
                 "family": "light",
-                "amount": 8,
+                "amount": 16,
                 "fixed": True,
                 "lamp": {"rate": [1, 1], "directions": [[1, 0, 0], [0, 1, 0]]},
             },
@@ -186,7 +187,7 @@ def test_the_normal_form_cancels_antiphase_rows_of_one_record():
         ]
     )
     removed = store.merge(N)
-    assert removed == {(7, 2): (4, 4), (8, 2): (2, 2), (9, 2): (2, 2)}
+    assert removed == {(7, 2, 1): 4, (8, 2, 1): 2, (9, 2, 1): 2}
     assert rows_of(store) == [
         (3, 2, 11, 1),
         (5, 1, 7, 2),

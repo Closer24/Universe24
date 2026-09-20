@@ -41,7 +41,7 @@ amplitude law: the split"), written down before the first run:
     N - 1, `inputs` naming a direction the world does not declare, a
     lamp's `turns` without the key, a rate other than [1, 1] under it;
     a split whose multiplicity would pass 2^62 - 1 refuses the run naming
-    the Node (a pending row of multiplicity 2^61 split by (2, 1)).
+    the Node (a pending row of multiplicity 2^61 split by (20, 21), A = 841).
 """
 
 from __future__ import annotations

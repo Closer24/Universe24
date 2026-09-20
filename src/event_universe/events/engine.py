@@ -43,6 +43,7 @@ import numpy as np
 
 from event_universe.core.game_board import Address3, adjacent_node
 from event_universe.core.integer import apportion_whole, by_clock
+from event_universe.events.amplitude import Layer
 from event_universe.events.measured import TALLIES, DetectorSet, Ledger, Measured, rational_sum
 from event_universe.events.nature_beam import (
     NO_ARRIVAL,
@@ -181,6 +182,34 @@ class NatureBeamSimulation:
         # The running transit line of the momentum starts from the declared
         # rows, counted once.
         self.ledger.transit_momentum = self.recount()["momentum"]
+        # The apparatus's layer (the amplitude law): the sets in the
+        # design's order, the measured events outside every declared
+        # detector by number, the declared detectors, the faces in Port
+        # order and the border.
+        self.layer: Layer | None = None
+        if world.amplitude:
+            keys: list[tuple[str, int]] = []
+            names: list[str] = []
+            declared = len(world.detectors)
+            for detector_set in self.detector_sets[declared:]:
+                keys.append(("set", detector_set.index))
+                names.append(f"measured:{detector_set.numbers[0]}")
+            for detector_set in self.detector_sets[:declared]:
+                keys.append(("set", detector_set.index))
+                names.append(str(detector_set.name))
+            for port in self.open_faces:
+                keys.append(("face", port))
+                names.append(FACE_NAMES[port])
+            if world.lifetimes:
+                keys.append(("border", 0))
+                names.append(LIFETIME_NAME)
+            self.layer = Layer(
+                names,
+                keys,
+                self.detector_sets,
+                [family.name for family in world.families],
+                world.phase_steps,
+            )
         # The readings of the last interval (diagnostics, decomposed on
         # request): per family the arrivals per Node, their net flow, the
         # Links crossed per Port and the presence.
@@ -269,6 +298,7 @@ class NatureBeamSimulation:
             + (None,) * (count - len(definition.window_reads)),
             splits=list(definition.splits) + [None] * (count - len(definition.splits)),
             lamp_turns=() if definition.lamp is None else definition.lamp.turns,
+            label_turns=[0] * count,
         )
 
     def occupant(self, node: Address3) -> int | None:
@@ -304,6 +334,7 @@ class NatureBeamSimulation:
             self.tick,
             self.record,
             self.ledger,
+            layer=self.layer,
         )
         for number in sorted(self.measured):
             entry = self.measured[number]

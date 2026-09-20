@@ -34,7 +34,7 @@ the artifacts of a run) on `src/event_universe/core/` (`integer.py`,
 `tests/test_nature_beam_world_parsing.py`,
 `tests/test_nature_beam_worlds.py`, `tests/test_nature_beam_push.py`, `tests/test_nature_beam_age.py`,
 `tests/test_meeting.py`, `tests/test_amplitude_record.py`,
-`tests/test_amplitude_split.py`
+`tests/test_amplitude_split.py`, `tests/test_amplitude_layer.py`
 ([expectations](TEST_EXPECTATIONS.md)). The
 worlds: [examples/events/](../examples/events/README.md).
 
@@ -456,7 +456,14 @@ re-emitted as the rows (w a_i, m x A, p + t_i) on the directions, A = sum
 a_i^2, every weight 1 where none is declared (the equal split; without
 the key the apportioning as it was), the multiplicity bounded before it
 is formed and refused naming the Node; refused without the key, on a rule
-other than `rerelease` and on a free family's entry); `lamp` `{rate: [n, d],
+other than `rerelease` and on a free family's entry; a split is not a
+click: under the key a `rerelease` entry takes every arriving row of its
+family on its own, with no pointer gate and no window, the amount gate
+alone, whose default 1 admits every row (the decision of 2026-09-20 on
+the design's 2.1 and 3.1); the units it absorbs stay live in the layer
+until it re-creates them, and a `rerelease` entry on a `sum` set ends
+them there with an offer, the re-creation a new record when the record
+chose that set); `lamp` `{rate: [n, d],
 directions, phase_window, phase_width}` on a measured event of a paid
 family, its window a number; under `amplitude` also `turns`, a phase step
 per direction the born row carries beyond the clock's phase, and the rate
@@ -468,8 +475,13 @@ the lamp, `nature_beam.record_identity`);
 `direction` (a vector of D, or a rest index 0 or 1), `amount`, `phase`,
 optional `age`); `detectors` (`name`, `positions`, `threshold` 1 by
 default, `reading` `wave` by default (since 2026-09-20) or `beam`, or
-under `amplitude` `sum`, the reading of one record's rows, refused
-without the key). Refused, naming the key and the law: `"law": "events"` (pointing
+under `amplitude` `sum`, the one pointer's reading at the record's scope
+(the owner's unification (4), `DetectorSet.scope`: `crowd` under `wave`,
+the interval's arrivals of every number with the pointer gate and the
+record per interval; `record` under `sum`, one record's rows over its
+lifetime, no pointer gate, a window the rotation's setting and not a
+gate, the record the square of the record's pointer per label added at
+the record's completion), refused without the key). Refused, naming the key and the law: `"law": "events"` (pointing
 to MIGRATION), `dynamics`, `max_active_owners`, `port_map`, `output`,
 `capacity`, `groups`, `reference_phase`, `headings` on a lamp, `heading` on
 a ray, the earlier engines' keys (`contents`, `initial_shadows`,
@@ -630,7 +642,24 @@ cancel removed on the transit line, the content carried on the content
 line and their labels beside the `turned` line, and the world's total
 under `momentum.cancelled`): initial + released = current + escaped +
 absorbed + cancelled, the identity as it was where nothing cancels.
-`tools/run_series.py` runs these worlds as any.
+Under the key the record gains the lines of the layer
+(`events/amplitude.py`, the design's sections 3 and 5): `birth` (a lamp's
+record: `record`, `u`, `labels`, `arms`, `units`, `multiplicity`), the
+`click`, `read` and `rerelease` lines carry the rows' `record`, `branch`,
+`multiplicity` and `age` (`rows` on a group line; `window` and `turn` at
+a rotated `sum` set), `split` (per re-created row: `absorbed`, `born`,
+`multiplicity`, `rebirth`, the entry's phase `u`), `cancel` (per record,
+direction and content per unit: `amount`, `content`), the `record` line
+of a `sum` set at a gather (`scope` `record`, `of` the record, `arm`,
+`label`, `pointer`, the square `record`, `multiplicity`) and `gather`
+(the world's row: `tick`, `arrived`, `family`, `record`, `u`, `born`,
+`chosen` [set, arm, channel], `weight` and `total` as pairs in the unit
+2^58 (`unit`), `T`, `before`, `after`, `cells` with the rungs); `run.json`
+gains `world` (the gathers), `open` (the records not gathered, with their
+offers) and `layer` (the sets in order, the unit, the counts). A gather
+is taken after step 4 (before the self-creations) and after the merge.
+`tools/amplitude_path.py` replays a run's register through the layer and
+checks it against `world`. `tools/run_series.py` runs these worlds as any.
 
 ## The law of events (`events-v1`)
 

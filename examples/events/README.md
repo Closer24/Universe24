@@ -299,7 +299,9 @@ self-creation on two arms, two mirrors, a splitter whose split table is
 selected by the arrival, the ports D1 and D2 reading `sum`) with equal
 arms, a half and a quarter turn on one arm, the balanced (1, 1) split, the
 (3, 4) split, arms unequal by two intervals at three phases per interval,
-and Elitzur-Vaidman's absorber on one arm. The register entry is
+and Elitzur-Vaidman's absorber on one arm; L2, the two slits at a low
+rate (the shipped two-slit world under the key with the wall freed beside
+the openings, and its one-birth reference). The register entry is
 [L, the amplitude law (2026-09-20)](../../docs/EXPERIMENTS.md#l-the-amplitude-law-2026-09-20).
 
 ## The entity catalog

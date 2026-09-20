@@ -64,6 +64,43 @@ The second commit of `amplitude-v1` (the design's sections 2.1, 2.3 and
 - The reading `sum` is accepted on a detector under the key (its record
   the layer's, the next commit).
 - Nothing deleted. The gate set replays byte-identical without the key.
+  (Commit (i) alone was not runnable on a record alone: its merge kept the
+  signed sum where nothing cancelled, a lone far-half row reading a
+  negative amount; (ii) takes the magnitude on every group.)
+
+## The amplitude law, on 2026-09-20, (iii): the layer, the reading `sum` and the ladder
+
+The third commit of `amplitude-v1` (the design's sections 3, 5 and 7;
+the owner's decisions (a) the ladder normalised by the total with the
+rungs at the nearest integer and (c) a branched row pushes matter by its
+amount; the review of (i) and (ii)); no change without the key:
+
+- `events/amplitude.py`, the layer: a host register beside the lattice
+  that reads every record's ends (the clicks at the sets, the faces and
+  the border, the reads and re-emissions at `sum` sets), accumulates the
+  pointer per (set, arm, label), and at the record's completion (its live
+  units 0) takes the ladder over its cells, `b_k = (2 N C_k + Total) //
+  (2 Total)`, the cell of the birth phase u and the `gather` line (the
+  world's row); `run.json` gains `world`, `open` and `layer`;
+  `tools/amplitude_path.py` replays the register through it.
+- A split is not a click (the decision on the review's B1): under the
+  key a `rerelease` entry takes no pointer gate and no window, and a
+  `sum` set no pointer gate; the amount gate stays. Without the key the
+  gate is what it was. `PendingRow.offered`: the units a `sum`
+  re-emitter absorbed ended there; every other re-emitter's stay live
+  until the split re-creates them.
+- The reading `sum` is the pointer's reading at the record's scope
+  (`DetectorSet.scope`, the owner's unification (4)); its `record` line
+  is written at the gather with the scope.
+- `NatureBeamStore.merge` returns the units cancelled per (record,
+  direction, content per unit), no division in the booking (S3); the
+  pair form of `phase_per_link` is bounded at the parse by (age_bound +
+  1) x n <= 2^62 - 1 (S1); a lamp short of one quantum per direction
+  refuses the birth (S4); the `split` line carries the entry's phase
+  `u`; a rotated `sum` re-emitter's line carries `window` and `turn`.
+- Series L gains `slits_low` and its reference `slits_one`
+  (`examples/events/amplitude/`), the two slits at a low rate.
+- Nothing deleted.
 
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 

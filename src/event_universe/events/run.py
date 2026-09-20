@@ -182,6 +182,12 @@ def execute_nature_beam_run(
         ],
         "display": "none",
     }
+    if simulation.layer is not None:
+        # The amplitude law's world: the list of gathers (the clicks of the
+        # world), the records open at the end and the layer's line.
+        metadata["world"] = list(simulation.layer.gathers)
+        metadata["open"] = simulation.layer.open_records()
+        metadata["layer"] = simulation.layer.report()
     if initialization_metadata is not None:
         metadata["initialization_resolution"] = initialization_metadata
     path = output / "run.json"

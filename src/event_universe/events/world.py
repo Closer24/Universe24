@@ -1330,6 +1330,13 @@ def _families(
                     "per Link crossed)"
                 )
             per_age = _ratio(declared_turn, turn_key, zero=True)
+            # The walk forms (age + 1) x n whole (`by_clock_rows`): bounded
+            # here, before it is formed, by the world's largest age.
+            if per_age[0] > AMOUNT_BOUND // (age_bound + 1):
+                raise ValueError(
+                    f"{BEAM_LAW}: {turn_key} [{per_age[0]}, {per_age[1]}]: (age_bound + 1) x n "
+                    f"= {age_bound + 1} x {per_age[0]} exceeds the integer bound {AMOUNT_BOUND}"
+                )
             per_link = 0
         else:
             per_link = _integer(declared_turn, turn_key, 0, phase_steps - 1)

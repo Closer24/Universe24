@@ -101,11 +101,19 @@ import numpy as np
 from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
-from event_universe.events.measured import Ledger, Measured, PendingRow, count_component
+from event_universe.events.amplitude import Layer
+from event_universe.events.measured import (
+    DetectorSet,
+    Ledger,
+    Measured,
+    PendingRow,
+    count_component,
+)
 from event_universe.events.meeting import ArcTable, arc_table, meet
 from event_universe.events.world import (
     AGE_READS,
     AMOUNT_BOUND,
+    AMPLITUDE_KEY,
     BEAM_LAW,
     BECOME_RULE,
     CHARGE_INDEX,
@@ -1097,7 +1105,7 @@ class NatureBeamStore:
             key = (key << width) + (column - low)
         return key
 
-    def merge(self, modulus: int = 0) -> dict[tuple[int, int], tuple[int, int]]:
+    def merge(self, modulus: int = 0) -> dict[tuple[int, int, int], int]:
         """Identical rows (equal in every field but the amount) merged, the
         amounts added, the rows in the total order of the identity fields,
         the Node first (so no second sort by Node is needed). A bijection: a
@@ -1114,11 +1122,12 @@ class NatureBeamStore:
         dark fringe the sum is zero). Rows with any other phase difference
         stay two rows; a row of no record never cancels, so without the key
         (every record 0) nothing cancels and the merge is what it was.
-        Returns what the cancel removed, {(record, direction): (amount,
-        content carried)} summed over the groups, so that the caller books
-        the units and the labels that left (the ledger's `cancelled` lines
-        and the layer's live count); empty without the key."""
-        removed: dict[tuple[int, int], tuple[int, int]] = {}
+        Returns what the cancel removed, {(record, direction, content per
+        unit): units} summed over the groups, so that the caller books the
+        units, the content (units x content, exact by the key) and the
+        labels that left (the ledger's `cancelled` lines and the layer's
+        live count); empty without the key."""
+        removed: dict[tuple[int, int, int], int] = {}
         if self.size == 0:
             return removed
         columns, sign = self.identity_columns(modulus)
@@ -1167,12 +1176,8 @@ class NatureBeamStore:
             half = modulus // 2
             cancelled = whole - np.abs(amount)
             for k in np.flatnonzero(cancelled > 0).tolist():
-                slot = (int(self.record[k]), int(self.direction[k]))
-                found = removed.get(slot, (0, 0))
-                removed[slot] = (
-                    found[0] + int(cancelled[k]),
-                    found[1] + int(cancelled[k]) * int(self.content[k]),
-                )
+                slot = (int(self.record[k]), int(self.direction[k]), int(self.content[k]))
+                removed[slot] = removed.get(slot, 0) + int(cancelled[k])
             recorded = self.record != NO_RECORD
             base = np.where(recorded, self.phase % half, self.phase)
             self.phase = np.where(recorded & (amount < 0), base + half, base)
@@ -1349,6 +1354,7 @@ class GameBoardDiagnostics:
 # event, family) for the bulk gates of step 4.
 RULE_CODES = {"pass": 0, "read": 1, "measure": 2, "rerelease": 3, BECOME_RULE: 4}
 PASS_RULE, READ_RULE, MEASURE_RULE = RULE_CODES["pass"], RULE_CODES["read"], RULE_CODES["measure"]
+RERELEASE_RULE = RULE_CODES["rerelease"]
 TRANSFORM_RULE = RULE_CODES[BECOME_RULE]
 RULE_NAMES = {code: name for name, code in RULE_CODES.items()}
 MEASURE_RULE_NAME = "measure"
@@ -1658,6 +1664,36 @@ class FamilyPlan:
     left_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
 
 
+def entry_rotation(
+    plan: FamilyPlan, detector_set: DetectorSet, turn: int, k: int
+) -> tuple[int, int] | None:
+    """The rotation a `sum` set's entry applies to a taken row (the
+    amplitude law): its window's setting (declared, or read from a reading)
+    and the entry's turn; None without a window or on another reading."""
+    if not detector_set.sum or not plan.t_window:
+        return None
+    setting = plan.t_window[k]
+    if setting < 0:
+        return None
+    return setting, turn
+
+
+def taken_rows(plan: FamilyPlan, k0: int, k1: int) -> list[list[int]]:
+    """The taken rows' record, branch, multiplicity, amount, phase and
+    arrival, for the group lines under the amplitude key."""
+    return [
+        [
+            plan.t_record[k],
+            plan.t_branch[k],
+            plan.t_multiplicity[k],
+            plan.t_amount[k],
+            plan.t_phase[k],
+            plan.t_arrival[k],
+        ]
+        for k in range(k0, k1)
+    ]
+
+
 # -- the push -------------------------------------------------------------------
 
 
@@ -1753,11 +1789,17 @@ def nature_beam(
     record: Record | None,
     ledger: Ledger,
     inverse: bool = False,
+    layer: Layer | None = None,
 ) -> GameBoardDiagnostics:
     """A Node's whole interval for the rays present, at every Node (the
     module docstring, steps 1 to 6). With `inverse` the bijective steps are
     run in reverse order with their inverses (the collision, then the walk)
-    on a GameBoard without measured events; the border has no inverse."""
+    on a GameBoard without measured events; the border has no inverse.
+    Under the amplitude law `layer` is the apparatus's layer
+    (`amplitude.Layer`): it is told of every end of a row of a record (a
+    click, a face, the border), of every birth and split, and of the
+    merge's cancels, and its completions are read after step 4 and after
+    the merge; steps 1 to 3 never read it."""
     families = world.families
     free_of = [definition.free for definition in families]
     # The columns of the world, (name, sign), and every family's value per
@@ -1949,23 +1991,38 @@ def nature_beam(
                 ledger.transit_momentum = [
                     a - b for a, b in zip(ledger.transit_momentum, escaped_momentum, strict=True)
                 ]
+            if layer is not None:
+                for row_index in gone.tolist():
+                    if store.record[row_index] != NO_RECORD:
+                        layer.end(
+                            tick,
+                            layer.face_index[int(port[row_index])],
+                            int(store.record[row_index]),
+                            int(store.branch[row_index]),
+                            int(store.multiplicity[row_index]),
+                            int(store.amount[row_index]),
+                            int(store.phase[row_index]),
+                        )
             if record is not None:
                 for k, index in enumerate(gone):
-                    record(
-                        {
-                            "event": "click",
-                            "tick": tick,
-                            "node": [int(x[index]), int(y[index]), int(z[index])],
-                            "measured": None,
-                            "detector": FACE_NAMES[int(port[index])],
-                            "family": definition.name,
-                            "number": int(store.number[index]),
-                            "amount": int(store.amount[index]),
-                            "phase": int(store.phase[index]),
-                            "momentum": [int(v) for v in labels[k]],
-                            "content": int(store.amount[index] * store.content[index]),
-                        }
-                    )
+                    face_line: dict[str, object] = {
+                        "event": "click",
+                        "tick": tick,
+                        "node": [int(x[index]), int(y[index]), int(z[index])],
+                        "measured": None,
+                        "detector": FACE_NAMES[int(port[index])],
+                        "family": definition.name,
+                        "number": int(store.number[index]),
+                        "amount": int(store.amount[index]),
+                        "phase": int(store.phase[index]),
+                        "momentum": [int(v) for v in labels[k]],
+                        "content": int(store.amount[index] * store.content[index]),
+                    }
+                    if world.amplitude:
+                        face_line["record"] = int(store.record[index])
+                        face_line["branch"] = int(store.branch[index])
+                        face_line["multiplicity"] = int(store.multiplicity[index])
+                    record(face_line)
         store.node = coordinates @ np.array(store.strides, dtype=np.int64)
         crossed = moved & ~escaped
         crossed_node, crossed_port = store.node[crossed], port[crossed]
@@ -2046,9 +2103,11 @@ def nature_beam(
         set_count = int(ev_set.max()) + 1
         st_threshold = np.ones(set_count, dtype=np.int64)
         st_wave = np.zeros(set_count, dtype=bool)
+        st_sum = np.zeros(set_count, dtype=bool)
         for set_index, detector_set in set_of.items():
             st_threshold[set_index] = detector_set.threshold
             st_wave[set_index] = detector_set.wave
+            st_sum[set_index] = detector_set.sum
         # The windows read from a reading (issue #363, 2026-09-20): per
         # (measured event, family) the family whose rows at the set give the
         # centre (-1 for a declared or absent centre) and the offset; the
@@ -2226,7 +2285,18 @@ def nature_beam(
                     read_phase = np.where(wave_rows, np.repeat(set_step, s_sizes), read_phase)
                 below = np.repeat(below_set, s_sizes)
                 if wave_rows.any():
-                    below = np.where(wave_rows & absorbs, np.repeat(below_wave, s_sizes), below)
+                    gated = wave_rows & absorbs
+                    if world.amplitude:
+                        # A split is not a click (the decision of 2026-09-20
+                        # on the design's 2.1 and 3.1, BEAM_LAW note 37):
+                        # under the key a `rerelease` entry takes every
+                        # arriving row of its family on its own, with no
+                        # pointer gate, and a `sum` set takes none either
+                        # (the offer and the ladder are per record, never
+                        # the crowd's pointer); the amount gate stays, its
+                        # default 1 admitting every row.
+                        gated &= (rule[met] != RERELEASE_RULE) & ~st_sum[st_m]
+                    below = np.where(gated, np.repeat(below_wave, s_sizes), below)
                 # A window read from a reading: the centre is the setting of
                 # the row's set off the named family plus the offset; a set
                 # without a setting (-2 on the row) admits nothing, and the
@@ -2246,6 +2316,12 @@ def nature_beam(
                 inside = (window < 0) | (
                     (read_phase >= 0) & window_admits((read_phase - window) % modulus, width_m, modulus)
                 )
+                # Under `sum` (the amplitude law) a window is the rotation's
+                # setting and gates nothing: every row is admitted, the
+                # setting carried on the row (`t_window`); a split takes no
+                # window either (a split is not a click).
+                if world.amplitude:
+                    inside |= st_sum[st_m] | (rule[met] == RERELEASE_RULE)
                 inside &= ~unset
                 passing = below | ~inside
                 p = np.flatnonzero(passing)
@@ -2369,7 +2445,7 @@ def nature_beam(
                 return plan
             taken, a_t, cancelled = taken_all[survivors], a_t_all[survivors], cancelled_all[survivors]
             rule_t, st_t = admitted[3][survivors], admitted[4][survivors]
-            if (ev_read_family[:, family] >= 0).any():
+            if world.amplitude or (ev_read_family[:, family] >= 0).any():
                 plan.t_window = admitted[5][survivors].tolist()
             ev_t, num_t = ev[taken], number[taken]
             new = np.concatenate((NEW_RUN, (ev_t[1:] != ev_t[:-1]) | (num_t[1:] != num_t[:-1])))
@@ -2607,6 +2683,7 @@ def nature_beam(
                             }
                         )
                 span = plan.groups.get(i)
+
                 if span is not None:
                     reading_values = plan.readings[entry.reads[family]]
                     for gi in range(span[0], span[1]):
@@ -2650,22 +2727,37 @@ def nature_beam(
                             group_total
                         )
                         if rule == "read":
+                            k0, k1 = plan.g_start[gi], plan.g_end[gi]
+                            if layer is not None and detector_set.sum:
+                                for k in range(k0, k1):
+                                    if plan.t_record[k] != NO_RECORD:
+                                        layer.end(
+                                            tick,
+                                            layer.set_index[detector_set.index],
+                                            plan.t_record[k],
+                                            plan.t_branch[k],
+                                            plan.t_multiplicity[k],
+                                            plan.t_amount[k],
+                                            plan.t_phase[k],
+                                            absorbed=False,
+                                        )
                             if record is not None:
-                                record(
-                                    {
-                                        "event": "read",
-                                        "tick": tick,
-                                        "node": node,
-                                        "measured": entry.number,
-                                        "detector": detector,
-                                        "family": name,
-                                        "number": other,
-                                        "amount": group_total,
-                                        "push": push,
-                                        "content": group_content,
-                                        "reading": reading_value,
-                                    }
-                                )
+                                read_line: dict[str, object] = {
+                                    "event": "read",
+                                    "tick": tick,
+                                    "node": node,
+                                    "measured": entry.number,
+                                    "detector": detector,
+                                    "family": name,
+                                    "number": other,
+                                    "amount": group_total,
+                                    "push": push,
+                                    "content": group_content,
+                                    "reading": reading_value,
+                                }
+                                if world.amplitude:
+                                    read_line["rows"] = taken_rows(plan, k0, k1)
+                                record(read_line)
                             continue
                         ledger.transit_absorbed[family] += group_total
                         ledger.content_absorbed[family] += group_content
@@ -2687,24 +2779,55 @@ def nature_beam(
                                         multiplicity=plan.t_multiplicity[k],
                                         split=world.amplitude,
                                         arrival=plan.t_arrival[k],
+                                        offered=detector_set.sum,
                                     )
                                 )
+                            if layer is not None:
+                                # A re-emitter that reads `sum` is a set that
+                                # can be chosen: its rows offer there and are
+                                # split again (the design's section 6). At
+                                # any other re-emitter the units stay live
+                                # until the split re-creates them.
+                                for k in range(k0, k1):
+                                    if plan.t_record[k] != NO_RECORD and detector_set.sum:
+                                        layer.end(
+                                            tick,
+                                            layer.set_index[detector_set.index],
+                                            plan.t_record[k],
+                                            plan.t_branch[k],
+                                            plan.t_multiplicity[k],
+                                            plan.t_amount[k],
+                                            plan.t_phase[k],
+                                            rotation=entry_rotation(
+                                                plan, detector_set, entry.label_turns[family], k
+                                            ),
+                                        )
                             if record is not None:
-                                record(
-                                    {
-                                        "event": "rerelease",
-                                        "tick": tick,
-                                        "node": node,
-                                        "measured": entry.number,
-                                        "detector": detector,
-                                        "family": name,
-                                        "number": other,
-                                        "amount": group_total,
-                                        "push": push,
-                                        "content": group_content,
-                                        "reading": reading_value,
-                                    }
-                                )
+                                group_line: dict[str, object] = {
+                                    "event": "rerelease",
+                                    "tick": tick,
+                                    "node": node,
+                                    "measured": entry.number,
+                                    "detector": detector,
+                                    "family": name,
+                                    "number": other,
+                                    "amount": group_total,
+                                    "push": push,
+                                    "content": group_content,
+                                    "reading": reading_value,
+                                }
+                                if world.amplitude:
+                                    group_line["rows"] = taken_rows(plan, k0, k1)
+                                    # A rotated `sum` re-emitter: the setting
+                                    # and the turn of its rows (one per group:
+                                    # the set's setting), as on a click.
+                                    setting = entry_rotation(
+                                        plan, detector_set, entry.label_turns[family], k0
+                                    )
+                                    if setting is not None:
+                                        group_line["window"] = setting[0]
+                                        group_line["turn"] = setting[1]
+                                record(group_line)
                             continue
                         # The click: the content joins, one click per unit.
                         entry.held[family] = bounded(
@@ -2712,6 +2835,21 @@ def nature_beam(
                         )
                         entry.clicks[family] += group_total
                         ledger.held_measured[family] += group_content
+                        if layer is not None:
+                            for k in range(k0, k1):
+                                if plan.t_record[k] != NO_RECORD:
+                                    layer.end(
+                                        tick,
+                                        layer.set_index[detector_set.index],
+                                        plan.t_record[k],
+                                        plan.t_branch[k],
+                                        plan.t_multiplicity[k],
+                                        plan.t_amount[k],
+                                        plan.t_phase[k],
+                                        rotation=entry_rotation(
+                                            plan, detector_set, entry.label_turns[family], k
+                                        ),
+                                    )
                         if record is not None:
                             for k in range(k0, k1):
                                 click_line: dict[str, object] = {
@@ -2730,6 +2868,17 @@ def nature_beam(
                                 }
                                 if window_read is not None:
                                     click_line["window"] = plan.t_window[k]
+                                if world.amplitude:
+                                    click_line["record"] = plan.t_record[k]
+                                    click_line["branch"] = plan.t_branch[k]
+                                    click_line["multiplicity"] = plan.t_multiplicity[k]
+                                    click_line["age"] = plan.t_age[k]
+                                    setting = entry_rotation(
+                                        plan, detector_set, entry.label_turns[family], k
+                                    )
+                                    if setting is not None:
+                                        click_line["window"] = setting[0]
+                                        click_line["turn"] = setting[1]
                                 record(click_line)
                         # The click trigger of the transformation: the
                         # first click of a `become` entry in the interval
@@ -2757,13 +2906,17 @@ def nature_beam(
                         value = pointer_x * pointer_x + pointer_y * pointer_y
                     else:
                         value = plan.count[set_index]
-                    detector_set.record[family] += value
+                    # Under `sum` the set's record is the layer's (one
+                    # record's rows squared at its completion, below); the
+                    # crowd's pointer still returns the set's phase.
+                    if not detector_set.sum:
+                        detector_set.record[family] += value
                     if set_phase is not None:
                         detector_set.phase[family] = set_phase
                         for member in detector_set.numbers:
                             if member in measured:
                                 measured[member].phase = set_phase
-                    if record is not None:
+                    if record is not None and not detector_set.sum:
                         one = len(detector_set.numbers) == 1
                         line = {
                             "event": "record",
@@ -2782,6 +2935,8 @@ def nature_beam(
     for family, store in enumerate(stores):
         if not keep[family].all():
             store.keep(keep[family])
+    if layer is not None:
+        gather_records(layer, tick, entries, measured, families, record)
 
     # 5. The self-creations: the releases into the store.
     numerator, denominator_release = world.release
@@ -2831,6 +2986,7 @@ def nature_beam(
                     )
             if entry.pending[family]:
                 ways = len(entry.directions)
+                reborn = NO_RECORD
                 for row in entry.pending[family]:
                     if row.split:
                         # The split (the amplitude law, BEAM_LAW note 37): the
@@ -2838,7 +2994,21 @@ def nature_beam(
                         # sum a_i^2, the norm w^2 / m exact for any integer
                         # weights; every weight 1 where none is declared;
                         # the multiplicity bounded before it is formed and
-                        # refused naming the Node.
+                        # refused naming the Node. A row of a record gathered
+                        # at this re-emitter is born again as a new record
+                        # of this emitter (`rebirth`: a new u from its own
+                        # clock, its own number and ordinal, the multiplicity
+                        # the split's norm; the design's section 6).
+                        row_record, row_branch, row_multiplicity = (
+                            row.record,
+                            row.branch,
+                            row.multiplicity,
+                        )
+                        if row.rebirth:
+                            if reborn == NO_RECORD:
+                                entry.births += 1
+                                reborn = record_identity(entry.number, entry.births)
+                            row_record, row_branch, row_multiplicity = reborn, NO_BRANCH, 1
                         table_split = entry.splits[family]
                         if table_split is None:
                             weights, turns = (1,) * ways, (0,) * ways
@@ -2877,12 +3047,35 @@ def nature_beam(
                                     row.content,
                                     (row.phase + turn_i) % modulus,
                                     False,
-                                    row.record,
-                                    row.branch,
-                                    row.multiplicity * norm,
+                                    row_record,
+                                    row_branch,
+                                    row_multiplicity * norm,
                                 )
                             )
                             ledger.content_released[family] += row.amount * weight * row.content
+                        born_units = row.amount * sum(weights)
+                        if layer is not None and row_record != NO_RECORD:
+                            if row.rebirth:
+                                layer.birth(tick, row_record, family, entry.phase, {0: 1}, 1, born_units)
+                            else:
+                                layer.split(row_record, 0 if row.offered else row.amount, born_units)
+                        if record is not None and world.amplitude:
+                            record(
+                                {
+                                    "event": "split",
+                                    "tick": tick,
+                                    "node": list(entry.position),
+                                    "measured": entry.number,
+                                    "family": definition.name,
+                                    "record": row_record,
+                                    "branch": row_branch,
+                                    "absorbed": row.amount,
+                                    "born": born_units,
+                                    "multiplicity": row_multiplicity * norm,
+                                    "rebirth": row.rebirth,
+                                    "u": entry.phase,
+                                }
+                            )
                         continue
                     shares = apportion_whole(row.amount, [1] * ways, (age + row.first) % ways)
                     for direction, share in zip(entry.directions, shares, strict=True):
@@ -2926,8 +3119,36 @@ def nature_beam(
                 record_id = NO_RECORD
                 ways = len(entry.lamp_directions)
                 if world.amplitude and entry.held[family] // cost >= 1:
+                    if entry.held[family] // cost < ways:
+                        # The birth is k rows of amount 1 with m = k: a lamp
+                        # that cannot pay one quantum per direction would
+                        # birth a record of norm below 1, refused.
+                        raise ValueError(
+                            f"{BEAM_LAW}: the lamp of measured event {entry.number} at "
+                            f"{list(entry.position)} holds {entry.held[family]} of "
+                            f"{definition.name}, short of one quantum ({cost}) on each of its "
+                            f"{ways} directions for the birth of a record under {AMPLITUDE_KEY}"
+                        )
                     entry.births += 1
                     record_id = record_identity(entry.number, entry.births)
+                    if layer is not None:
+                        layer.birth(tick, record_id, family, entry.phase, {0: 1}, 1, ways)
+                    if record is not None:
+                        record(
+                            {
+                                "event": "birth",
+                                "tick": tick,
+                                "node": list(entry.position),
+                                "measured": entry.number,
+                                "family": definition.name,
+                                "record": record_id,
+                                "u": entry.phase,
+                                "labels": [[0, 1]],
+                                "arms": 1,
+                                "units": ways,
+                                "multiplicity": ways,
+                            }
+                        )
                 lamp_turns = entry.lamp_turns or (0,) * ways
                 for direction, lamp_turn in zip(entry.lamp_directions, lamp_turns, strict=True):
                     amount = min(by_clock(age, rate_n, rate_d), entry.held[family] // cost)
@@ -3086,24 +3307,39 @@ def nature_beam(
             a + b for a, b in zip(ledger.lifetime_momentum[family], left, strict=True)
         ]
         ledger.transit_momentum = [a - b for a, b in zip(ledger.transit_momentum, left, strict=True)]
+        if layer is not None:
+            for row_index in gone.tolist():
+                if store.record[row_index] != NO_RECORD:
+                    layer.end(
+                        tick,
+                        layer.border_index,
+                        int(store.record[row_index]),
+                        int(store.branch[row_index]),
+                        int(store.multiplicity[row_index]),
+                        int(store.amount[row_index]),
+                        int(store.phase[row_index]),
+                    )
         if record is not None:
             x, y, z = store.coordinates(store.node[gone])
             for k, index in enumerate(gone):
-                record(
-                    {
-                        "event": "click",
-                        "tick": tick,
-                        "node": [int(x[k]), int(y[k]), int(z[k])],
-                        "measured": None,
-                        "detector": LIFETIME_NAME,
-                        "family": definition.name,
-                        "number": int(store.number[index]),
-                        "amount": int(store.amount[index]),
-                        "phase": int(store.phase[index]),
-                        "momentum": [int(v) for v in labels[k]],
-                        "content": int(store.amount[index] * store.content[index]),
-                    }
-                )
+                border_line: dict[str, object] = {
+                    "event": "click",
+                    "tick": tick,
+                    "node": [int(x[k]), int(y[k]), int(z[k])],
+                    "measured": None,
+                    "detector": LIFETIME_NAME,
+                    "family": definition.name,
+                    "number": int(store.number[index]),
+                    "amount": int(store.amount[index]),
+                    "phase": int(store.phase[index]),
+                    "momentum": [int(v) for v in labels[k]],
+                    "content": int(store.amount[index] * store.content[index]),
+                }
+                if world.amplitude:
+                    border_line["record"] = int(store.record[index])
+                    border_line["branch"] = int(store.branch[index])
+                    border_line["multiplicity"] = int(store.multiplicity[index])
+                record(border_line)
         keep_alive = np.ones(store.size, dtype=bool)
         keep_alive[gone] = False
         store.keep(keep_alive)
@@ -3121,10 +3357,27 @@ def nature_beam(
         removed = store.merge(modulus if world.amplitude else 0)
         if removed:
             free = free_of[family]
-            for (_, direction), (amount, carried) in removed.items():
+            for (cancelled_record, direction, per_unit), amount in removed.items():
+                # The units removed per (record, direction, content): the
+                # content carried is amount x content, exact by the key
+                # (no division).
+                carried = amount * per_unit
+                if layer is not None:
+                    layer.cancel(cancelled_record, amount)
+                if record is not None:
+                    record(
+                        {
+                            "event": "cancel",
+                            "tick": tick,
+                            "family": families[family].name,
+                            "record": cancelled_record,
+                            "direction": [int(v) for v in flight.vectors[direction]],
+                            "amount": amount,
+                            "content": carried,
+                        }
+                    )
                 ledger.cancelled_amount[family] += amount
                 ledger.cancelled_content[family] += carried
-                per_unit = carried // amount
                 label = momentum_labels(
                     unit,
                     np.array([direction], dtype=np.int64),
@@ -3143,4 +3396,70 @@ def nature_beam(
                 f"{BEAM_LAW}: a ray carries the age {int(store.age.max())} beyond the world's "
                 f"age_bound {world.age_bound} (declare a larger age_bound or a smaller GameBoard)"
             )
+    if layer is not None:
+        gather_records(layer, tick, entries, measured, families, record)
     return readings
+
+
+def gather_records(
+    layer: Layer,
+    tick: int,
+    entries: list[Measured],
+    measured: dict[int, Measured],
+    families: tuple[FamilyDefinition, ...],
+    record: Record | None,
+) -> None:
+    """The layer's completions (the ladder, the world's row): every record
+    whose units all ended; the `gather` line, per `sum` set with an offer
+    of the record the set's record (the square of the record's pointer per
+    label, accumulated) with a `record` line, and the pending rows of the
+    record at a chosen re-emitter marked for their rebirth as a new
+    record."""
+    for live in layer.complete(tick):
+        identity, family = live.identity, live.family
+        gather = live.gather
+        assert gather is not None
+        for (set_index, arm), offer in sorted(live.offers.items()):
+            key = layer.keys[set_index]
+            if key[0] != "set" or offer.read:
+                continue
+            detector_set = layer.sets[key[1]]
+            if not detector_set.sum:
+                continue
+            for label, (x, y) in sorted(offer.pointers.items()):
+                square = x * x + y * y
+                detector_set.record[family] += square
+                if record is not None:
+                    record(
+                        {
+                            "event": "record",
+                            "tick": tick,
+                            "detector": layer.names[set_index],
+                            "family": families[family].name,
+                            "reading": "sum",
+                            "scope": detector_set.scope,
+                            "of": identity,
+                            "arm": arm,
+                            "label": label,
+                            "pointer": [x, y],
+                            "record": square,
+                            "multiplicity": offer.multiplicity,
+                        }
+                    )
+        chosen = gather["chosen"]
+        if isinstance(chosen, list):
+            for name, _, _ in chosen:
+                set_index = layer.names.index(str(name))
+                key = layer.keys[set_index]
+                if key[0] != "set":
+                    continue
+                for number in layer.sets[key[1]].numbers:
+                    holder = measured.get(number)
+                    if holder is None:
+                        continue
+                    for pending in holder.pending:
+                        for k, row in enumerate(pending):
+                            if row.record == identity and row.split:
+                                pending[k] = row._replace(rebirth=True)
+        if record is not None:
+            record(dict(gather))

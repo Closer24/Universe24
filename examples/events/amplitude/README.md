@@ -22,13 +22,13 @@ cancel).
 ## L1: the Mach-Zehnder interferometer and Elitzur-Vaidman
 
 **The world** (the design's section 3.4): a plane of 5 x 5 with z periodic,
-K 2^20, N 64, `release` [0, 1], `suspension` 0, `amplitude` true, 75
+K 2^20, N 64, `release` [0, 1], `suspension` 0, `amplitude` true, 80
 intervals. The source at (0, 0), a lamp of `light` of content 2^20 whose
 turn is one phase step per self-creation for far more births than the run
 holds, so the record born at tick t has the birth phase u = t - 1: the 64
-births of the ticks 1 .. 64 span the circle once and complete by tick 75
-(the ports click eleven intervals after a birth on the flight table); the
-11 born after are open at the end. Each birth is one record of two rows of
+births of the ticks 1 .. 64 span the circle once and complete by tick 76
+(the ports click eleven or twelve intervals after a birth on the flight
+table); the 11 born after are open at the end. Each birth is one record of two rows of
 amount 1 with the multiplicity 2: +x (arm 1) and +y (arm 2, the
 reflection's quarter turn 16 on the row: the source's own splitter).
 Mirror 1 at (3, 0) re-emits +x arrivals on +y and mirror 2 at (0, 3)
@@ -71,4 +71,28 @@ the rows toward D2 cancel entirely. **What the world reads** (DETECTOR):
 the clicks per port over the 64 births in the table above, the ladder at
 each record's completion normalised by the sum of its offers with the
 rungs at the nearest integer, `b_k = (2 N C_k + Total) // (2 Total)`
-(`expectations.json` under `mach_zehnder`).
+(`expectations.json` under `mach_zehnder`). The runs and their readings
+are in the register's L1 entry.
+
+## L2: the two slits at a low rate
+
+**The world** `slits_low` (the design's test 2): the shipped
+`examples/events/two_slits.json` under the key, the lamp's rate [1, 1] and
+content K (one phase step per interval: the birth at tick t has u = t - 1,
+64 births span the circle), the family's `phase_per_link` the pair
+[8591334592, 2^30] (the shipped lamp's turn per interval), the 121 pixels
+reading `sum`, the wall freed within 6 of each opening (a steep direction
+walks along y inside the wall's plane before its first step in x, so the
+shipped wall absorbs 88 of the 182 fan rows beside the openings; freed,
+every fan row leaves the plane) and the lamp's three rows that miss the
+openings absorbed by wall Nodes at (7, 58), (7, 60), (7, 62) on their
+paths (a lamp row and a fan row at one set would carry the multiplicities
+5 and 455, refused). 230 intervals. **The reference** `slits_one`: one
+birth through the same geometry without the key, the lamp's five rows
+declared as rays of amount 91 (one row per direction at each opening's
+re-emission, m = 5 x 91 = 455), the screen reading the age; the generator
+runs it in-process and reads it by the design's `slits_read.py` into
+`expectations.json` under `two_slits` before the run of `slits_low`: the
+weights per set, the ladder's clicks over the 64 births, the shares, the
+pixels and the correlations (the register's L2 entry has the numbers and
+the run).
