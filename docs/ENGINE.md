@@ -33,7 +33,7 @@ the artifacts of a run) on `src/event_universe/core/` (`integer.py`,
 `tests/test_nature_beam_window.py`, `tests/test_window_width.py`, `tests/test_nature_beam_window_reads.py`,
 `tests/test_nature_beam_world_parsing.py`,
 `tests/test_nature_beam_worlds.py`, `tests/test_nature_beam_push.py`, `tests/test_nature_beam_age.py`,
-`tests/test_meeting.py`
+`tests/test_meeting.py`, `tests/test_amplitude_record.py`
 ([expectations](TEST_EXPECTATIONS.md)). The
 worlds: [examples/events/](../examples/events/README.md).
 
@@ -346,7 +346,19 @@ free-space Node after the collision and turns toward it by its phase
 register, [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam)
 step 3 and note 35; refused with a paid family without a phase circle,
 and refused when it is not true or false; the record carries it and the
-identity `meeting-v1` under `hypotheses` when it is true); `directions` (the declared primitive vectors beyond
+identity `meeting-v1` under `hypotheses` when it is true); `amplitude`
+(since 2026-09-20, true or false, false by default: the amplitude law
+`amplitude-v1`, [BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+under it every row of the store carries a `record`, a `branch` and a
+`multiplicity` (0, 0 and 1 on a row of no record, which every row is
+without the key), the merge is the normal form that cancels antiphase rows
+of one record (`NatureBeamStore.merge` with the circle's N; what it removed
+on the ledger's `cancelled` lines), and the further keys of the law are
+accepted; refused with N below 4 (the quarter turn of a reflection), with
+a lamp's `rate` other than [1, 1] and when it is not true or false; the
+record carries it and the identity `amplitude-v1` under `hypotheses` when
+it is true; absent, no row carries a record and every world reads as it
+did, byte for byte); `directions` (the declared primitive vectors beyond
 the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`
@@ -506,13 +518,15 @@ D beyond the rest vectors and the headings; per family its `quantum`,
 `phase_by_momentum` and, since 2026-09-20, `become`, the clock trigger as
 declared, by names, or None; the measured events' states carry `span` too, as
 `state.json` does), `action` (h, or None), `meeting` (the key as declared,
-false by default), `hypotheses` (`bohr-v1` when `action` is
+false by default), `amplitude` (the key as declared, false by default;
+since 2026-09-20), `hypotheses` (`bohr-v1` when `action` is
 declared, the identity of the turn by momentum beside the law;
 `columns-v1` when a column beyond `charge` or a lifetime is declared,
 the identity of the one mechanism of the columns and their range;
 `weak-v1` when a measured event declares `become` or a table entry's rule
 is `become`, the identity of the transformation; `meeting-v1` when
-`meeting` is true, after it; `[]`
+`meeting` is true, after it; `amplitude-v1` when `amplitude` is true,
+last; `[]`
 without any), `columns` (the
 world's, name and sign, in order: gravity, charge, the declared names)
 and per family `columns` (name, value, sign, aligned with the world's),
@@ -579,7 +593,13 @@ nothing of the emitter but the number: the columns `charge` and `mass` of
 the night of 2026-09-19 are gone since 2026-09-20, the factor of the
 electric push being the family's charge per unit of content,
 [BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
-and note 28).
+and note 28; under the world key `amplitude` also the row's `record`,
+`branch` and `multiplicity`, written only under the key). Under the key
+the books gain the `cancelled` lines (per family the units the merge's
+cancel removed on the transit line, the content carried on the content
+line and their labels beside the `turned` line, and the world's total
+under `momentum.cancelled`): initial + released = current + escaped +
+absorbed + cancelled, the identity as it was where nothing cancels.
 `tools/run_series.py` runs these worlds as any.
 
 ## The law of events (`events-v1`)

@@ -430,6 +430,15 @@ class Ledger:
     # units in transit, weight x (u_d' - u_d) summed, a report as `pushed`
     # is; zero without the world key `meeting`.
     turned_momentum: list[list[int]] = field(default_factory=list)
+    # The `cancelled` lines (the amplitude law, 2026-09-20; BEAM_LAW note
+    # 37): per family the units the merge's cancel removed (two rows of one
+    # record in antiphase), the content they carried and their labels, so
+    # that the transit, content and momentum lines close under the key:
+    # initial + released = current + escaped + absorbed + cancelled. Zero
+    # without the key (no row carries a record).
+    cancelled_amount: list[int] = field(default_factory=list)
+    cancelled_content: list[int] = field(default_factory=list)
+    cancelled_momentum: list[list[int]] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         count = self.families
@@ -446,10 +455,13 @@ class Ledger:
             "lifetime_record",
             "units_escaped",
             "held_became",
+            "cancelled_amount",
+            "cancelled_content",
         ):
             setattr(self, name, [0] * count)
         self.lifetime_momentum = [[0, 0, 0] for _ in range(count)]
         self.turned_momentum = [[0, 0, 0] for _ in range(count)]
+        self.cancelled_momentum = [[0, 0, 0] for _ in range(count)]
         for port in self.open_faces:
             self.face_amount[port] = [0] * count
             self.face_content[port] = [0] * count
@@ -492,3 +504,8 @@ class Ledger:
         """The `turned` line summed over the families: what the meetings moved
         the transit momentum line by, in all."""
         return [sum(self.turned_momentum[f][axis] for f in range(self.families)) for axis in range(3)]
+
+    def cancelled_momentum_total(self) -> list[int]:
+        """The labels the merge's cancel removed, summed over the families
+        (the amplitude law)."""
+        return [sum(self.cancelled_momentum[f][axis] for f in range(self.families)) for axis in range(3)]

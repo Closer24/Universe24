@@ -392,6 +392,7 @@ WORLD_KEYS = {
     "age_bound",
     "action",
     "meeting",
+    "amplitude",
     "directions",
     "direction_bound",
     "families",
@@ -399,6 +400,25 @@ WORLD_KEYS = {
     "in_transit",
     "detectors",
 }
+# The identity of the amplitude law (`amplitude-v1`; the model owner,
+# 2026-09-20, Highlights 5.4, "DECIDED: `amplitude-v1` is built"; the
+# physicist's and the mathematician's design, scratchpad/amplitude/DESIGN.md;
+# docs/BEAM_LAW.md note 37): under the world key `amplitude` an event in
+# transit is a record with rows (the store's columns `record`, `branch` and
+# `multiplicity`), a re-emission may split a row by integer weights, rows of
+# one record in antiphase cancel at the merge, and the click's reading `sum`
+# accumulates one record's rows at a set for the ladder of the apparatus's
+# layer. Absent (false by default), no row carries a record and every world
+# reads as it did, byte for byte.
+AMPLITUDE_RULE = "amplitude-v1"
+AMPLITUDE_KEY = "amplitude"
+# The circle must hold the quarter turn of a reflection under the key
+# (`phase` + N / 4 exact on the tables): N below 4 is refused with it.
+AMPLITUDE_LEAST_STEPS = 4
+# The one lamp rate the key admits in this version: one record per
+# self-creation (a rate of r units per direction would make r identical
+# paths with one birth phase; the design, section 2.1).
+AMPLITUDE_LAMP_RATE = (1, 1)
 # The identity of the turn by momentum, a physical hypothesis beside the
 # law (the model owner's decision of 2026-09-20 on Bohr): the record carries
 # it when the world declares `action`.
@@ -783,6 +803,12 @@ class NatureBeamWorld:
     # transit reads the free crowd at every free-space Node after the
     # collision and turns toward it by its phase register (`events/meeting.py`).
     meeting: bool = False
+    # The amplitude law (the world key `amplitude`, false by default): the
+    # rows carry a record, a branch and a multiplicity, a re-emission may
+    # split by integer weights, antiphase rows of one record cancel at the
+    # merge, and the apparatus's layer reads the records' offers
+    # (`events/amplitude.py`; `AMPLITUDE_RULE`).
+    amplitude: bool = False
 
     @property
     def phase_mask(self) -> int:
@@ -840,6 +866,8 @@ class NatureBeamWorld:
             found.append(WEAK_RULE)
         if self.meeting:
             found.append(MEETING_RULE)
+        if self.amplitude:
+            found.append(AMPLITUDE_RULE)
         return found
 
     @property
@@ -1342,9 +1370,16 @@ def _lamp(
     quantum: int,
     amount: int,
     turn_rate: tuple[int, int],
+    amplitude: bool = False,
 ) -> LampDefinition:
     obj = _object(value, label, LAMP_KEYS, {"rate"})
     rate = _ratio(obj["rate"], f"{label}.rate", zero=True)
+    if amplitude and rate != AMPLITUDE_LAMP_RATE:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.rate {list(rate)} is refused under {AMPLITUDE_KEY}: a lamp "
+            f"births one record per self-creation, the rate {list(AMPLITUDE_LAMP_RATE)} (r units "
+            "per direction would be r identical paths with one birth phase)"
+        )
     directions = _directions(
         obj.get("directions", list(range(HEADING_OFFSET, FIXED_DIRECTIONS))),
         f"{label}.directions",
@@ -1583,6 +1618,7 @@ def _measured(
     table: tuple[Vector, ...],
     ticks: int,
     action: int | None,
+    amplitude: bool = False,
 ) -> tuple[MeasuredDefinition, ...]:
     if not isinstance(value, list):
         raise ValueError(f"{BEAM_LAW}: measured must be a list")
@@ -1792,6 +1828,7 @@ def _measured(
                 families[family].quantum,
                 amount,
                 turn_rate,
+                amplitude,
             )
         found.append(
             MeasuredDefinition(
@@ -2120,6 +2157,16 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
                     "crowd met is added to the phase, one grain step per wrap of the circle), and "
                     "a phase-less family has no register to read the crowd into"
                 )
+    # The amplitude law: true or false (false by default); under it the
+    # circle must hold the quarter turn of a reflection.
+    amplitude = obj.get(AMPLITUDE_KEY, False)
+    if type(amplitude) is not bool:
+        raise ValueError(f"{BEAM_LAW}: {AMPLITUDE_KEY} must be true or false")
+    if amplitude and phase_steps < AMPLITUDE_LEAST_STEPS:
+        raise ValueError(
+            f"{BEAM_LAW}: {AMPLITUDE_KEY} is refused with N {phase_steps}: the quarter turn of a "
+            f"reflection needs a circle of at least {AMPLITUDE_LEAST_STEPS} steps"
+        )
     measured = _measured(
         obj["measured"],
         shape,
@@ -2131,6 +2178,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         table,
         ticks,
         action,
+        amplitude,
     )
     _column_budget(families, measured, release)
     in_transit = _in_transit(
@@ -2158,5 +2206,6 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         detectors,
         action,
         meeting=meeting,
+        amplitude=amplitude,
     )
     return world

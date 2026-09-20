@@ -65,6 +65,7 @@ kept, their pins the law of events').
 | `test_bohr_readings.py` | The series H tool reads the engine (the experimenter's rule, 2026-09-20): the flight time from the centre's plane to a face off `FlightTable.manhattan_steps` (5 Links at the age 8, 6 at 10, 1 at 1), the pointer per turn and the coherence ratio off `nature_beam.coherent_pointer` with the circle's tables ((16384, 0) and (-8192, 0) for two units at phase 0 and one at 32, C = 0.2; 1.8 with the third at 0; the slope of [1, 4, 9] is 2), and `read_run` on a run written by the runner (a proton of `p` at (5, 5, 1) of an 11 x 11 x 3 GameBoard on the four in-plane headings, an electron of `e` of span [1, 1, 3] at (8, 5, 1) with the momentum [0, 320, 0], `pass` for `p`, `action` 65536, 20 intervals: the radius 3, j = 0.05859375, the flights 8, the clicks per face equal to the record's, no read, the steps' phases 5, 5, 5, 6 at the ticks 5, 9, 13, 17, the first -x click at tick 16); the expected integers are in the module's docstring |
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the integer audit of `core/`, and LOCALITY-1 documented without an exception |
 | `test_meeting.py` | The meeting: the arc permutation of the direction table (a permutation for 1034 targets on K's table, the rest fixed, the chain from +x, the k-fold shift), the phase register (61, 62, 63, 0, 1, 2 with the turn at the fourth; the inverse), the sign of the turn and the `turned` line, the crowd and the record untouched, the bijection with the meeting (50 forward, 50 inverse) and the refusals ([below](#the-meeting)) | new (2026-09-20, the model owner's "DECIDED: the meeting, M-R"; the physicist's and the mathematician's design) |
+| `test_amplitude_record.py` | The amplitude law's key and the record on the row (`amplitude-v1`): the world key `amplitude`, its default, its identity and its refusals; the three columns `record`, `branch` and `multiplicity` at their defaults on every row without the key and the merge's packed key unchanged by them; the merge's normal form under the key, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -277,6 +278,40 @@ added, 62 rows, every arrival reset to here; the same rows with every
 other content raised by 2^61 (the key does not fit the register,
 `merge_key` is None) merged by the lexsort fallback equal their Python
 sort likewise; the empty store merges to the empty store.
+
+## The amplitude law: the record
+
+`tests/test_amplitude_record.py` (docs/BEAM_LAW.md note 37; the model
+owner, 2026-09-20, Highlights 5.4, "DECIDED: `amplitude-v1` is built"; the
+design, scratchpad/amplitude/DESIGN.md, sections 1 and 2.3). A 5 x 5
+plane, K 1, N 64, `release` [0, 1], `suspension` 0, a lamp of `light` of
+content 8 releasing one row per self-creation on +x and +y at the turn 1,
+and a detector of one Node. The expected integers, written down before the
+first run:
+
+- (a) the key: absent it is false, `hypotheses` is empty and `run.json`
+  carries `amplitude` false; declared true, `hypotheses` is
+  ["amplitude-v1"]; refused naming the key: a value that is not true or
+  false, N below 4 under the key (the quarter turn of a reflection), a
+  lamp's `rate` other than [1, 1] under the key; N 4 with a lamp of
+  content 1 at [1, 1] is accepted;
+- (b) the columns: after 5 intervals every row of the store carries record
+  0, branch 0 and multiplicity 1; `state.json`'s rows carry none of the
+  three keys without the world key and all three under it; the packed
+  merge key of a store whose three columns are at their defaults equals
+  the key packed from the six fields of the law as it was (the three add 0
+  bits), so the merge's order is unchanged;
+- (c) the normal form (`NatureBeamStore.merge` with N = 64): rows of one
+  record and multiplicity equal in every field but a phase difference of
+  exactly 32 cancel: 3 at 5 and 2 at 37 leave 1 at 5 (4 units cancelled),
+  1 at 9 and 1 at 41 leave nothing (2), 1 at 40 and 2 at 8 leave 1 at 8
+  (2, the larger side's phase); rows of no record at 9 and 41 stay two
+  rows, as do two rows of one record a quarter turn apart and two of one
+  record at one phase with the multiplicities 2 and 4; two of one record
+  at one phase merge to amount 2; without the key (modulus 0) the
+  antiphase pair stays; the units cancelled are returned per (record,
+  direction) with the content carried, {(7, 2): (4, 4), (8, 2): (2, 2),
+  (9, 2): (2, 2)}.
 
 ## The meeting
 

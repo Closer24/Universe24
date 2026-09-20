@@ -265,7 +265,22 @@ def test_the_form_on_the_reviewers_world_its_sign_and_the_uncharged_probe():
                 assert push[0] == -1280 + sign * by_clock(tick, 256 * 3 * 1 * 5, 4 * 5)
         assert simulation.measured[2].pushed == [pushed, 0, 0]
         store = simulation.stores[M]
-        assert FIELDS == ("node", "direction", "age", "phase", "number", "amount", "content", "arrival")
+        # Nothing of the emitter on the record but the number: since the
+        # amplitude law (2026-09-20) the three columns `record`, `branch`
+        # and `multiplicity` name the row's record, not its emitter's factor.
+        assert FIELDS == (
+            "node",
+            "direction",
+            "age",
+            "phase",
+            "number",
+            "amount",
+            "content",
+            "arrival",
+            "record",
+            "branch",
+            "multiplicity",
+        )
         assert not hasattr(store, "charge") and not hasattr(store, "mass")
         assert simulation.measured[1].charge == (3, 1) if source_charge[0] > 0 else (-3, 1)
         assert simulation.measured[2].charge == ((1, 1) if probe_charge else (0, 1))

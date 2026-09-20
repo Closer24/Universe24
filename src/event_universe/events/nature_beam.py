@@ -187,10 +187,22 @@ class NatureBeam:
     number: int
     amount: int
     content: int
+    # The amplitude law's three columns (`amplitude-v1`, 2026-09-20; BEAM_LAW
+    # note 37): the record the row belongs to (the birth's identity, the
+    # emitter's number x 2^32 + the birth's ordinal at the emitter; 0 for a
+    # row of no record, every row without the key), the row's branch (the
+    # joint label of the row within its record, with the arm it flies on in
+    # the high bits; 0 without) and its multiplicity m (the product of the
+    # norms of the splits the row's path passed; 1 without). The flight and
+    # the collision never read them; the merge reads them as identity.
+    record: int = 0
+    branch: int = 0
+    multiplicity: int = 1
 
-    def record(self, vectors: np.ndarray) -> dict[str, object]:
-        """The row as `state.json` writes it, the direction as its vector."""
-        return {
+    def record_line(self, vectors: np.ndarray, amplitude: bool = False) -> dict[str, object]:
+        """The row as `state.json` writes it, the direction as its vector;
+        under the amplitude key with its three columns."""
+        line: dict[str, object] = {
             "direction": [int(v) for v in vectors[self.direction]],
             "age": self.age,
             "phase": self.phase,
@@ -198,6 +210,11 @@ class NatureBeam:
             "amount": self.amount,
             "content": self.content,
         }
+        if amplitude:
+            line["record"] = self.record
+            line["branch"] = self.branch
+            line["multiplicity"] = self.multiplicity
+        return line
 
 
 # -- the one reading: the moments ------------------------------------------------
@@ -673,9 +690,42 @@ def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
 
 # -- the store -------------------------------------------------------------------
 
-FIELDS = ("node", "direction", "age", "phase", "number", "amount", "content", "arrival")
-# The fields that make two rows identical (the amount is what the merge adds).
-IDENTITY_FIELDS = ("node", "direction", "age", "phase", "number", "content")
+FIELDS = (
+    "node",
+    "direction",
+    "age",
+    "phase",
+    "number",
+    "amount",
+    "content",
+    "arrival",
+    "record",
+    "branch",
+    "multiplicity",
+)
+# The fields that make two rows identical (the amount is what the merge
+# adds); since `amplitude-v1` the record, the branch and the multiplicity
+# too (constant 0, 0, 1 without the key, so the packed key and the order of
+# the merge are what they were).
+IDENTITY_FIELDS = (
+    "node",
+    "direction",
+    "age",
+    "phase",
+    "number",
+    "content",
+    "record",
+    "branch",
+    "multiplicity",
+)
+# The three columns of the amplitude law as a row of no record carries them.
+NO_RECORD = 0
+NO_BRANCH = 0
+ONE_PATH = 1
+AMPLITUDE_DEFAULTS = {"record": NO_RECORD, "branch": NO_BRANCH, "multiplicity": ONE_PATH}
+# The place of `phase` in the identity fields: the merge under the key
+# reads it modulo the half circle with a sign (the cancel).
+PHASE_FIELD = IDENTITY_FIELDS.index("phase")
 
 
 def exact_sum(values: np.ndarray) -> int:
@@ -964,6 +1014,9 @@ class NatureBeamStore:
         self.amount: np.ndarray
         self.content: np.ndarray
         self.arrival: np.ndarray
+        self.record: np.ndarray
+        self.branch: np.ndarray
+        self.multiplicity: np.ndarray
 
     @property
     def size(self) -> int:
@@ -979,6 +1032,13 @@ class NatureBeamStore:
         return x, y, rest - y * self.strides[1]
 
     def append(self, **columns: np.ndarray) -> None:
+        """Rows appended column by column; the three columns of the
+        amplitude law default to a row of no record (0, 0, 1) when the
+        caller names none of them (a declared ray, the tests' bare rows)."""
+        count = columns["node"].shape[0]
+        for name, default in AMPLITUDE_DEFAULTS.items():
+            if name not in columns:
+                columns[name] = np.full(count, default, dtype=np.int64)
         for name in FIELDS:
             setattr(self, name, np.concatenate([getattr(self, name), columns[name].astype(np.int64)]))
 
@@ -993,14 +1053,38 @@ class NatureBeamStore:
     def sort(self) -> None:
         self.take(np.argsort(self.node, kind="stable"))
 
-    def merge_key(self) -> np.ndarray | None:
+    def identity_columns(self, modulus: int = 0) -> tuple[list[np.ndarray], np.ndarray]:
+        """The identity fields as columns in the order of `IDENTITY_FIELDS`
+        and the sign of every row's amount in the merge's sum. Without the
+        amplitude key (`modulus` 0) the columns are the fields and every
+        sign is +1. Under the key (`modulus` the circle's N) a row of a
+        record reads its phase modulo the half circle with the sign -1 on
+        the far half: two rows of one record, label and multiplicity equal
+        in every other field and opposite in phase are then one group whose
+        signed sum is their difference (the cancel, the design's normal
+        form, section 2.3); a row of no record keeps its phase whole."""
+        columns = [getattr(self, name) for name in IDENTITY_FIELDS]
+        sign = np.ones(self.size, dtype=np.int64)
+        if modulus:
+            recorded = self.record != NO_RECORD
+            if recorded.any():
+                half = modulus // 2
+                far = recorded & (self.phase >= half)
+                columns[PHASE_FIELD] = np.where(recorded, self.phase % half, self.phase)
+                sign = np.where(far, -1, 1)
+        return columns, sign
+
+    def merge_key(self, columns: list[np.ndarray] | None = None) -> np.ndarray | None:
         """The identity fields packed into one integer key per row, in the
         order of `IDENTITY_FIELDS` (the Node first) with every field offset
         to its least value, so that the keys order the rows exactly as the
         lexsort of the fields does and equal keys are identical rows; None
         when the fields' ranges do not fit the register (62 bits), the
-        lexsort then taking the same total order."""
-        columns = [getattr(self, name) for name in IDENTITY_FIELDS]
+        lexsort then taking the same total order. The three columns of the
+        amplitude law are constant without the key (a width of 0 bits each)
+        and leave the key and the order what they were."""
+        if columns is None:
+            columns = [getattr(self, name) for name in IDENTITY_FIELDS]
         lows = [int(column.min()) for column in columns]
         widths = [
             (int(column.max()) - low).bit_length() for column, low in zip(columns, lows, strict=True)
@@ -1012,45 +1096,94 @@ class NatureBeamStore:
             key = (key << width) + (column - low)
         return key
 
-    def merge(self) -> None:
+    def merge(self, modulus: int = 0) -> dict[tuple[int, int], tuple[int, int]]:
         """Identical rows (equal in every field but the amount) merged, the
         amounts added, the rows in the total order of the identity fields,
         the Node first (so no second sort by Node is needed). A bijection: a
         permutation of rows and a sum of interchangeable units. The order
         is taken by the one packed key (`merge_key`) where the fields fit
         the register, by the lexsort of the fields otherwise: the same
-        total order either way."""
+        total order either way.
+
+        Under the amplitude key (`modulus` the circle's N; BEAM_LAW note 37)
+        the merge is the design's normal form: two rows of one record equal
+        in every identity field but a phase difference of exactly N / 2
+        cancel, the amounts subtract, the difference stays at the larger's
+        phase and an equal pair leaves nothing (the row disappears: in a
+        dark fringe the sum is zero). Rows with any other phase difference
+        stay two rows; a row of no record never cancels, so without the key
+        (every record 0) nothing cancels and the merge is what it was.
+        Returns what the cancel removed, {(record, direction): (amount,
+        content carried)} summed over the groups, so that the caller books
+        the units and the labels that left (the ledger's `cancelled` lines
+        and the layer's live count); empty without the key."""
+        removed: dict[tuple[int, int], tuple[int, int]] = {}
         if self.size == 0:
-            return
-        key = self.merge_key()
+            return removed
+        columns, sign = self.identity_columns(modulus)
+        key = self.merge_key(columns)
         same = np.zeros(self.size, dtype=bool)
         if key is None:
-            order = np.lexsort(tuple(getattr(self, name) for name in reversed(IDENTITY_FIELDS)))
+            order = np.lexsort(tuple(reversed(columns)))
             self.take(order)
+            columns = [column[order] for column in columns]
+            sign = sign[order]
             same[1:] = True
-            for name in IDENTITY_FIELDS:
-                column = getattr(self, name)
+            for column in columns:
                 same[1:] &= column[1:] == column[:-1]
         else:
             order = np.argsort(key, kind="stable")
             self.take(order)
+            sign = sign[order]
             key = key[order]
             same[1:] = key[1:] == key[:-1]
         starts = np.flatnonzero(~same)
         # The merged amounts are exact: in the register when no group's sum
         # can leave it, in Python integers otherwise, and bounded.
+        signed = self.amount if not modulus else self.amount * sign
         if int(self.amount.max()) * self.size <= MOMENTUM_BOUND:
-            amount = np.add.reduceat(self.amount, starts)
+            amount = np.add.reduceat(signed, starts)
+            whole = np.add.reduceat(self.amount, starts) if modulus else amount
         else:
-            merged = np.add.reduceat(self.amount.astype(object), starts)
-            if max(int(v) for v in merged) > MOMENTUM_BOUND:
+            merged = np.add.reduceat(signed.astype(object), starts)
+            if max(abs(int(v)) for v in merged) > MOMENTUM_BOUND:
                 raise OverflowError(
                     f"{BEAM_LAW}: the amount of a merged row exceeds the integer bound {MOMENTUM_BOUND}"
                 )
             amount = merged.astype(np.int64)
+            whole = (
+                np.add.reduceat(self.amount.astype(object), starts).astype(np.int64)
+                if modulus
+                else amount
+            )
         self.keep(~same)
+        if modulus:
+            # The cancel: the signed sum's magnitude stays, at the phase of
+            # the larger side (the half-circle phase of the group, plus the
+            # half circle when the far side was larger); an empty group
+            # leaves, its units booked per (record, direction).
+            cancelled = whole - np.abs(amount)
+            if cancelled.any():
+                half = modulus // 2
+                for k in np.flatnonzero(cancelled > 0).tolist():
+                    slot = (int(self.record[k]), int(self.direction[k]))
+                    found = removed.get(slot, (0, 0))
+                    removed[slot] = (
+                        found[0] + int(cancelled[k]),
+                        found[1] + int(cancelled[k]) * int(self.content[k]),
+                    )
+                recorded = self.record != NO_RECORD
+                base = np.where(recorded, self.phase % half, self.phase)
+                self.phase = np.where(recorded & (amount < 0), base + half, base)
+                self.amount = np.abs(amount)
+                self.arrival[:] = NO_ARRIVAL
+                alive = self.amount > 0
+                if not alive.all():
+                    self.keep(alive)
+                return removed
         self.amount = amount
         self.arrival[:] = NO_ARRIVAL
+        return removed
 
     def slice(self, flat: int) -> tuple[int, int]:
         """The contiguous rows of one Node in the sorted store."""
@@ -1072,6 +1205,9 @@ class NatureBeamStore:
                 int(self.number[i]),
                 int(self.amount[i]),
                 int(self.content[i]),
+                int(self.record[i]),
+                int(self.branch[i]),
+                int(self.multiplicity[i]),
             )
             for k, i in enumerate(range(lo, stop))
         ]
@@ -2726,6 +2862,9 @@ def nature_beam(
                 amount=amount_column,
                 content=content_column,
                 arrival=np.full(count, NO_ARRIVAL, dtype=np.int64),
+                record=np.full(count, NO_RECORD, dtype=np.int64),
+                branch=np.full(count, NO_BRANCH, dtype=np.int64),
+                multiplicity=np.full(count, ONE_PATH, dtype=np.int64),
             )
             ledger.transit_released[family] += int(exact_sum(amount_column))
         # The `become` record, at the products' birth: the trigger and its
@@ -2814,8 +2953,31 @@ def nature_beam(
     # is the bound, and the world must be small enough or declare it (the
     # same primitive as the border: the age against the key age_bound + 1,
     # `ages_at_key`; note 33).
-    for store in stores:
-        store.merge()
+    for family, store in enumerate(stores):
+        # Under the amplitude key the merge is the normal form with the
+        # cancel (BEAM_LAW note 37): what it removed leaves the transit
+        # lines on the ledger's `cancelled` lines (the units, the content
+        # carried and the labels of the units removed, per family).
+        removed = store.merge(modulus if world.amplitude else 0)
+        if removed:
+            free = free_of[family]
+            for (_, direction), (amount, carried) in removed.items():
+                ledger.cancelled_amount[family] += amount
+                ledger.cancelled_content[family] += carried
+                per_unit = carried // amount
+                label = momentum_labels(
+                    unit,
+                    np.array([direction], dtype=np.int64),
+                    np.array([amount], dtype=np.int64),
+                    np.array([per_unit], dtype=np.int64),
+                    free,
+                )[0].tolist()
+                ledger.cancelled_momentum[family] = [
+                    a + b for a, b in zip(ledger.cancelled_momentum[family], label, strict=True)
+                ]
+                ledger.transit_momentum = [
+                    a - b for a, b in zip(ledger.transit_momentum, label, strict=True)
+                ]
         if store.size and ages_at_key(store.age, world.age_bound + 1).any():
             raise OverflowError(
                 f"{BEAM_LAW}: a ray carries the age {int(store.age.max())} beyond the world's "

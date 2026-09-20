@@ -6,6 +6,33 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The amplitude law, on 2026-09-20, (i): the world key `amplitude`, the record on the row and the normal form (`amplitude-v1`)
+
+The model owner's decision of 2026-09-20 (Highlights 5.4, "DECIDED:
+`amplitude-v1` is built, with the four recommendations and the four
+unifications"), on the physicist's and the mathematician's design
+(scratchpad/amplitude/DESIGN.md); [BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
+The first commit, no behaviour change without the key:
+
+- The world key `amplitude` (true or false, false by default; the identity
+  `amplitude-v1` under `hypotheses` and the key in `run.json` when true;
+  refused with N below 4 and with a lamp's `rate` other than [1, 1]).
+- The store gains the three int64 columns `record`, `branch` and
+  `multiplicity` (`nature_beam.FIELDS`, `IDENTITY_FIELDS`; `NatureBeam`
+  carries them with the defaults 0, 0, 1; `NatureBeam.record` is renamed
+  `record_line`, since `record` is now the row's field, and `state.json`
+  writes the three only under the key). A row of no record (every row
+  without the key, a declared ray in transit under it) carries 0, 0, 1,
+  which add no bit to the packed merge key.
+- `NatureBeamStore.merge(modulus)`: under the key the normal form with the
+  cancel (antiphase rows of one record subtract; what it removed returned
+  per (record, direction)); `Ledger.cancelled_amount`, `cancelled_content`
+  and `cancelled_momentum`, the books' `cancelled` lines and
+  `momentum.cancelled`, written under the key only.
+- Nothing deleted. Every example world replays byte-identical in
+  `events.jsonl` and `state.json` without the key; `run.json` gains
+  `amplitude` false ([validation](VALIDATION.md)).
+
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
