@@ -37,7 +37,12 @@ docs/TEST_EXPECTATIONS.md ("The worlds of the Beam Law"), written down first:
     presence at r = 3 twice the count (the ages 5 and 6 sit at 3 Links: the
     flight table's first arrivals at 3 and 4 Links are the intervals 5 and
     7) and at r = 4 equal to it (the age 7 alone);
-(d) every example world parses as a NatureBeam world;
+(d) every example world parses as a NatureBeam world, and every path of the
+    gate set (`examples/events/gate_set.json`, the worlds replayed at every
+    commit of an integration; the model owner, 2026-09-20) exists, parses as
+    one, is listed once, at its declared `ticks`, with a `cap` no longer than
+    them and a line saying what it covers (a structural check, no pinned
+    number);
 (e) `two_contents` (the two contents 8 Links apart on the open 21^3 GameBoard)
     for 20 intervals: not refused (the night's bound refused it at the 20th
     interval, when the two +y beams of 2^17 click face:+y together, 2^18 in
@@ -66,6 +71,7 @@ from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import MOMENTUM_BOUND
+from event_universe.world_loading import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -262,6 +268,26 @@ def test_the_example_worlds_parse_as_nature_beam_worlds(name):
     document = json.loads((ROOT / "examples" / "events" / name).read_text(encoding="utf-8"))
     world = parse_nature_beam_world(document)
     assert document["law"] == "beam" and world.model_id.startswith("rays-")
+
+
+def test_every_gate_set_world_exists_and_parses_as_a_nature_beam_world():
+    """(d): the gate set."""
+    gate = ROOT / "examples" / "events" / "gate_set.json"
+    document = json.loads(gate.read_text(encoding="utf-8"))
+    assert document["format"] == "gate-set-v1" and document["worlds"]
+    names = []
+    for entry in document["worlds"]:
+        assert set(entry) == {"path", "ticks", "cap", "covers"}, entry
+        path = gate.parent / entry["path"]
+        assert path.is_file(), entry["path"]
+        source = json.loads(path.read_text(encoding="utf-8"))
+        loaded = load_world(path.read_bytes(), base_dir=path.parent)
+        assert source["law"] == "beam" and loaded.world.model_id == source["model_id"]
+        assert entry["ticks"] == source["ticks"], entry["path"]
+        assert 1 <= entry["cap"] <= entry["ticks"], entry["path"]
+        assert isinstance(entry["covers"], str) and entry["covers"].strip()
+        names.append(path.stem)
+    assert len(set(names)) == len(names), "two gate worlds of one name"
 
 
 def test_two_contents_is_not_refused_and_its_face_records_are_exact():

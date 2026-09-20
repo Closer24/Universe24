@@ -17,6 +17,11 @@ Since 2026-09-17 the Highlights specification is `docs/HIGHLIGHTS.md`, edited
 directly; the Google Doc is not edited or resynced, and the documents that
 restate a Highlights rule are synchronized from that file after each change
 ([Boss project reference](boss-orchestrator/SKILL.md#project-reference)).
+Since 2026-09-20, by the model owner's decision of that day
+([record 87](../docs/LOG_2026-09-20.md#87-decided-the-trimming-pull-request-after-amplitude-v1-lands)),
+Highlights 5.4 holds the decisions only, one line each; every record of a day is
+appended to `docs/LOG_<date>.md` with the next number, and a decision line links to
+its record. A record is written once and linked from everywhere else.
 
 Keep durable procedures in Skills and architectural decisions in their responsible
 documents. Put temporary task state, assignments, blocked checks and next actions
@@ -292,6 +297,47 @@ a run but may not repair physical state. Consult
 [the Beam Law](../docs/BEAM_LAW.md) and [the engine's bookkeeping](../docs/ENGINE.md)
 before applying old scalar/particle or disturbance assumptions to the primary
 API (`NatureBeamSimulation`).
+
+## The cost of an integration, kept short (the model owner, 2026-09-20)
+
+The weak force's integration took two and a quarter hours, a third of it
+documentation, a third re-checking, and a merge of eleven conflicting files
+because three agents wrote the same documents at once. The owner's rules from
+that day ("we said without 85 worlds"; "put it in the skill"):
+
+- **Replay the gate set, not the register.** Byte-identity of the lattice
+  under a new key is proved on a gate set of about fifteen example worlds,
+  one per table rule, key and family kind, so that every engine code path is
+  replayed once; the whole register (109 worlds on 2026-09-20) is replayed
+  only under `--full` or on demand. The gate set is listed with what each
+  world covers. The gate set is `examples/events/gate_set.json` (section 4 of
+  the trimming plan chose it by measured coverage on 2026-09-20);
+  `tools/run_series.py --list` replays it; a new key or rule adds the world
+  that first uses it to the list, with the line it covers.
+- **Check once at each stage, fully once at the end.** `python tools/check.py`
+  scoped per stage; `--full` and the gate-set replay after the first
+  behaviour-free commit and at the end, not after every commit.
+- **One writer per document, and agents apart.** A code agent and a
+  documentation agent may run in parallel only with a written split of the
+  files; two implementation agents never run on the same sources or the same
+  register at once, since each then pays the merge.
+- **Small worlds.** An acceptance world is seconds: the Mach-Zehnder is
+  5 x 5. A long reading is a research run, made once.
+- **Pages apart.** The HTML pages with the frame player are made by a
+  separate agent from the runs, in parallel with the reviews, never by the
+  implementation agent.
+- **Report at the half.** An implementation of several stages sends its
+  measured integers after the first half, so the physics-rule review and the
+  genericity probe of that half run in parallel with the second half.
+- **Brief with the exact files.** An agent starts cold; the brief names the
+  documents, the design and the commit to start from, and the design's
+  evidence is committed under `docs/designs/<key>/` so every session can read
+  it.
+- **Write the record once.** The day's findings, readings and the owner's
+  words go to `docs/LOG_<date>.md` as they happen, one record each with the
+  next number; a decision of the owner is one line in Highlights 5.4 linked
+  to its record; a run's entry is written beside its worlds. Nothing is
+  restated in a second document; the reader follows the link.
 
 ## Performance work
 

@@ -8,10 +8,10 @@ once (the machine's cores by default), each with its own log (`OUT/<name>/
 log.txt`, the child's stdout and stderr) and its own artifacts directory, and
 a summary table at the end (`OUT/summary.md`, `OUT/summary.json`, printed):
 the status, the ticks, the runner's seconds, the child's wall seconds, its
-peak RSS, the digests of `state.json` and of the ledger (`audit` of
-`run.json`), and the conservation flag. The engine is untouched: a run is the
-runner's, deterministic, and its files are byte for byte those of the same
-world run alone.
+peak RSS, the digests of `state.json`, of the ledger (`audit` of `run.json`)
+and of `events.jsonl`, and the conservation flag. The engine is untouched: a
+run is the runner's, deterministic, and its files are byte for byte those of
+the same world run alone.
 
 Run with PYTHONPATH set to the checkout's src (the children run the package
 this process imports):
@@ -19,9 +19,24 @@ this process imports):
     PYTHONPATH=src python tools/run_series.py --jobs 4 --out runs/events \\
         examples/events/one_content.json examples/events/two_contents.json
 
-`--ticks` overrides every world's duration, `--python` names the interpreter of the children (this one by default). A world's name is its
-file stem; two worlds of one name are refused. The output directory of a
-run must be empty or absent, as the runner requires.
+`--ticks` overrides every world's duration, `--python` names the interpreter
+of the children (this one by default). A world's name is its file stem; two
+worlds of one name are refused. The output directory of a run must be empty
+or absent, as the runner requires.
+
+`--list FILE` reads a JSON list of worlds (`examples/events/gate_set.json`,
+the gate set replayed at every commit of an integration: `{"worlds":
+[{"path": ..., "ticks": ..., "cap": ...}, ...]}`), resolves each `path`
+relative to the file and runs those worlds, each at its listed `ticks`
+(`--fast`: at its `cap`, the interval by which the world's coverage is
+complete); `--ticks` still overrides every world's duration. `--compare
+SUMMARY.json` reads an earlier run's summary and prints, per world, whether
+`state.json`, the ledger and `events.jsonl` are identical or changed, and
+exits 1 on a change or on a world missing on either side: the replay's
+verdict in one command.
+
+    PYTHONPATH=src python tools/run_series.py --list examples/events/gate_set.json \\
+        --jobs 4 --out runs/gate/head --compare runs/gate/base/summary.json
 """
 
 from __future__ import annotations
@@ -46,8 +61,12 @@ COLUMNS = (
     "state_sha256",
     "state_bytes",
     "audit_sha256",
+    "events_sha256",
     "conserved",
 )
+
+# The digests `--compare` reads, in the order they are reported.
+DIGESTS = ("state_sha256", "audit_sha256", "events_sha256")
 
 
 def _digest(data: bytes) -> str:
@@ -89,6 +108,7 @@ def run_one(
         "state_sha256": None,
         "state_bytes": None,
         "audit_sha256": None,
+        "events_sha256": None,
         "conserved": None,
     }
     record = run_dir / "run.json"
@@ -106,7 +126,59 @@ def run_one(
         data = state.read_bytes()
         row["state_sha256"] = _digest(data)
         row["state_bytes"] = len(data)
+    events = run_dir / "events.jsonl"
+    if events.exists():
+        row["events_sha256"] = _digest(events.read_bytes())
     return row
+
+
+def read_list(path: Path, *, fast: bool = False) -> tuple[list[Path], dict[Path, int]]:
+    """The worlds of a list file (`{"worlds": [{"path", "ticks", "cap"}, ...]}`),
+    each path resolved relative to the file, and the duration each runs at: its
+    listed `ticks`, or its `cap` under `fast` (its `ticks` when it has none)."""
+    document = json.loads(path.read_text(encoding="utf-8"))
+    entries = document.get("worlds") if isinstance(document, dict) else None
+    if not isinstance(entries, list) or not entries:
+        raise ValueError(f"the list names no worlds: {path}")
+    worlds: list[Path] = []
+    durations: dict[Path, int] = {}
+    for entry in entries:
+        if not isinstance(entry, dict) or not isinstance(entry.get("path"), str):
+            raise ValueError(f"an entry of the list names no path: {path}")
+        world = (path.parent / entry["path"]).resolve()
+        duration = entry.get("cap", entry.get("ticks")) if fast else entry.get("ticks")
+        if duration is not None:
+            durations[world] = int(duration)
+        worlds.append(world)
+    return worlds, durations
+
+
+def compare(rows: list[dict[str, object]], earlier: list[dict[str, object]]) -> list[tuple[str, str]]:
+    """The verdict per world against an earlier summary's rows, in the order
+    of `rows` then the earlier worlds missing here: `identical` when the run
+    completed and every digest the earlier row recorded is the same, otherwise
+    what differs (the digests that changed, a failed run, a world missing on
+    one side, an earlier row without digests)."""
+    before = {str(row["world"]): row for row in earlier}
+    after = {str(row["world"]): row for row in rows}
+    verdicts: list[tuple[str, str]] = []
+    for name in [*after, *(name for name in before if name not in after)]:
+        if name not in before:
+            verdicts.append((name, "missing from the earlier summary"))
+        elif name not in after:
+            verdicts.append((name, "missing from this run"))
+        elif after[name].get("status") != "completed":
+            verdicts.append((name, f"{after[name].get('status')} in this run"))
+        elif not any(digest in before[name] for digest in DIGESTS):
+            verdicts.append((name, "no digests in the earlier summary"))
+        else:
+            differing = [
+                digest
+                for digest in DIGESTS
+                if digest in before[name] and before[name][digest] != after[name].get(digest)
+            ]
+            verdicts.append((name, "identical" if not differing else "changed: " + ", ".join(differing)))
+    return verdicts
 
 
 def run_series(
@@ -116,9 +188,12 @@ def run_series(
     jobs: int | None = None,
     ticks: int | None = None,
     python: str | None = None,
+    durations: dict[Path, int] | None = None,
 ) -> list[dict[str, object]]:
     """Every world in its own process, at most `jobs` at once; the rows of the
-    summary in the order of `worlds`, written beside the runs."""
+    summary in the order of `worlds`, written beside the runs. `ticks` overrides
+    every world's duration; otherwise a world listed in `durations` runs for
+    that many intervals and the others for their declared `ticks`."""
     names = [world.stem for world in worlds]
     if len(set(names)) != len(names):
         raise ValueError("two worlds of a series must not share a name")
@@ -144,7 +219,7 @@ def run_series(
                 lambda world: run_one(
                     world,
                     out / world.stem,
-                    ticks=ticks,
+                    ticks=ticks if ticks is not None else (durations or {}).get(world),
                     python=interpreter,
                     environment=environment,
                 ),
@@ -174,24 +249,55 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    parser.add_argument("worlds", nargs="+", type=Path, help="World files of the series")
+    parser.add_argument("worlds", nargs="*", type=Path, help="World files of the series")
     parser.add_argument("--out", type=Path, required=True, help="Directory of the runs and the summary")
     parser.add_argument("--jobs", type=int, help="Runs at once (default: the machine's cores)")
     parser.add_argument("--ticks", type=int, help="Override every world's duration")
     parser.add_argument("--python", help="Interpreter of the children (default: this one)")
+    parser.add_argument(
+        "--list",
+        type=Path,
+        help="A JSON list of worlds (examples/events/gate_set.json): paths relative to the file, each run at its listed ticks",
+    )
+    parser.add_argument(
+        "--fast",
+        action="store_true",
+        help="With --list: run each world to its listed cap, the interval by which its coverage is complete",
+    )
+    parser.add_argument(
+        "--compare",
+        type=Path,
+        help="An earlier run's summary.json: print identical or changed per world, exit 1 on a change",
+    )
     args = parser.parse_args()
+    if args.fast and args.list is None:
+        parser.error("--fast needs --list")
     try:
+        worlds: list[Path] = list(args.worlds)
+        durations: dict[Path, int] = {}
+        if args.list is not None:
+            listed, durations = read_list(args.list, fast=args.fast)
+            worlds = listed + worlds
+        if not worlds:
+            raise ValueError("no worlds: name world files or pass --list FILE")
         rows = run_series(
-            args.worlds,
+            worlds,
             args.out,
             jobs=args.jobs,
             ticks=args.ticks,
             python=args.python,
+            durations=durations,
         )
     except ValueError as error:
         parser.exit(1, f"Series refused: {error}\n")
     print(table(rows), end="")
-    if any(row["status"] != "completed" for row in rows):
+    failed = any(row["status"] != "completed" for row in rows)
+    if args.compare is not None:
+        verdicts = compare(rows, json.loads(args.compare.read_text(encoding="utf-8")))
+        for world, verdict in verdicts:
+            print(f"{world}: {verdict}")
+        failed = failed or any(verdict != "identical" for _, verdict in verdicts)
+    if failed:
         sys.exit(1)
 
 

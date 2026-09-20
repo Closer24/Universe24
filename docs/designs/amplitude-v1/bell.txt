@@ -1,0 +1,22 @@
+N=64 settings (0,8): weights ++ 15810167966860836864 +- 2703285676329140224 -+ 2703285676329140224 -- 15810167966860836864 (total 37026907286379954176); counts over 64 u: {'++': 27, '+-': 5, '-+': 5, '--': 27}; E = 44/64 = +0.68750; marginal A+ = 32/64, B+ = 32/64
+N=64 settings (0,24): weights ++ 2703285676329140224 +- 15810167966860836864 -+ 15810167966860836864 -- 2703285676329140224 (total 37026907286379954176); counts over 64 u: {'++': 5, '+-': 27, '-+': 27, '--': 5}; E = -44/64 = -0.68750; marginal A+ = 32/64, B+ = 32/64
+N=64 settings (16,8): weights ++ 15790890611743129600 +- 2718608131071410176 -+ 2718608131071410176 -- 15790890611743129600 (total 37018997485629079552); counts over 64 u: {'++': 27, '+-': 5, '-+': 5, '--': 27}; E = 44/64 = +0.68750; marginal A+ = 32/64, B+ = 32/64
+N=64 settings (16,24): weights ++ 15790890611743129600 +- 2718608131071410176 -+ 2718608131071410176 -- 15790890611743129600 (total 37018997485629079552); counts over 64 u: {'++': 27, '+-': 5, '-+': 5, '--': 27}; E = 44/64 = +0.68750; marginal A+ = 32/64, B+ = 32/64
+N=64: E = ['44/64', '-44/64', '44/64', '44/64']; S = 176/64 = 2.75000 (tables); with the exact cosine's cells 176/64 = 2.75000; 2 sqrt 2 = 2.82843; at or below Tsirelson
+N=256: E = ['180/256', '-180/256', '180/256', '180/256']; S = 720/256 = 2.81250 (tables); with the exact cosine's cells 720/256 = 2.81250; 2 sqrt 2 = 2.82843; at or below Tsirelson
+N=1024: E = ['724/1024', '-724/1024', '724/1024', '724/1024']; S = 2896/1024 = 2.82812 (tables); with the exact cosine's cells 2896/1024 = 2.82812; 2 sqrt 2 = 2.82843; at or below Tsirelson
+N=64, all 4096 setting pairs: marginals != 1/2: 0 pairs []; |E - C_64[a-b]/256| at most 0.03516 (the cell rounding, < 2/64)
+choosers' settings E x 64: E(0,8)=44, E(0,29)=-60, E(0,51)=20, E(12,8)=60, E(12,29)=-8, E(12,51)=-48, E(25,8)=-8, E(25,29)=60, E(25,51)=-52, E(38,8)=-64, E(38,29)=40, E(38,51)=20, E(51,8)=-28, E(51,29)=-36, E(51,51)=64
+largest S over the ordered quadruples of the choosers' settings: 172/64 = 2.68750 on (12,0) x (8,51); the registered triangle's largest was 2
+S on the registered quadruple (0,25)x(8,29): 156/64 = 2.43750 (was 2 exactly under the window gate)
+which-path on arm A (a `measure` with label channels before Alice's counter): the joint is a product:
+  E x 64 = [44, -44, 0, 0]; S = 88/64 = 1.3750 (Bell's bound 2 not exceeded; the product of the two cosines)
+GHZ (labels 000, 111; X = setting N/4 with no turn, Y = setting N/4 with the quarter turn on label 1):
+  XXX: nonzero outcomes {'+++': 39588699237876835586664300544, '+--': 39588699237876835586664300544, '-+-': 39588699237876835586664300544, '--+': 39588699237876835586664300544}; product of outcomes over them: [1]
+  XYY: nonzero outcomes {'++-': 39588699237876835586664300544, '+-+': 39588699237876835586664300544, '-++': 39588699237876835586664300544, '---': 39588699237876835586664300544}; product of outcomes over them: [-1]
+  YXY: nonzero outcomes {'++-': 39588699237876835586664300544, '+-+': 39588699237876835586664300544, '-++': 39588699237876835586664300544, '---': 39588699237876835586664300544}; product of outcomes over them: [-1]
+  YYX: nonzero outcomes {'++-': 39588699237876835586664300544, '+-+': 39588699237876835586664300544, '-++': 39588699237876835586664300544, '---': 39588699237876835586664300544}; product of outcomes over them: [-1]
+  YYY: nonzero outcomes {'+++': 19794349618938417793332150272, '++-': 19794349618938417793332150272, '+-+': 19794349618938417793332150272, '+--': 19794349618938417793332150272, '-++': 19794349618938417793332150272, '-+-': 19794349618938417793332150272, '--+': 19794349618938417793332150272, '---': 19794349618938417793332150272}; product of outcomes over them: [-1, 1]
+form B (2L click rows per click carrying |U| and its sign; the unit multiplies and sums over the labels): the same integers as form A on 21 x 13 setting pairs: True
+the table per detector pair: 16384 integers (64 x 64 x 4), largest 18609229902062288896 < 2^65
+A's outcome is + exactly for u < 32 and - for u >= 32, for every (a, b): True (the factorisation sum_oB J^2 = n_a n_b)

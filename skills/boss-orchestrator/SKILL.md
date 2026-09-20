@@ -74,7 +74,7 @@ artifact and gives the owner its link with the verdict.
 
 Treat **Universe 24 Highlights** as the high-level specification and use [the implementation map](../../docs/HIGHLIGHTS_IMPLEMENTATION.md) to distinguish implemented behavior, hypotheses and gaps. The active model contract is initialization-defined disturbances. Technical workflow belongs in the repository, not in Highlights.
 
-Since 2026-09-17, by the model owner's decision, the Highlights text is [docs/HIGHLIGHTS.md](../../docs/HIGHLIGHTS.md) and that file is the only copy to edit. The Google Doc is its historical source up to the revision of 2026-09-16 and is neither edited nor resynced; do not propose text for it or keep "proposed revision" paragraphs waiting for it. Boss records each decision of the model owner in `docs/HIGHLIGHTS.md` first, in the section it changes, then dispatches one synchronization specialist per change to carry it into [POSTULATES.md](../../POSTULATES.md), the ray-event model and every other document that restates the changed rule, and to report the resulting diff. At any published revision, Highlights and those documents must not disagree; when they do, Highlights is the text to follow and the others are corrected.
+Since 2026-09-17, by the model owner's decision, the Highlights text is [docs/HIGHLIGHTS.md](../../docs/HIGHLIGHTS.md) and that file is the only copy to edit. The Google Doc is its historical source up to the revision of 2026-09-16 and is neither edited nor resynced; do not propose text for it or keep "proposed revision" paragraphs waiting for it. Boss appends each record of the day (the owner's words, the readings, the findings, the proposals) to `docs/LOG_<date>.md` under the next number as it happens, and records each decision of the model owner as one line in `docs/HIGHLIGHTS.md`, in the section it changes (5.4 for the Detector's law), linked to its record; then dispatches one synchronization specialist per change to carry it into [POSTULATES.md](../../POSTULATES.md), the ray-event model and every other document that restates the changed rule, and to report the resulting diff. At any published revision, Highlights and those documents must not disagree; when they do, Highlights is the text to follow and the others are corrected.
 
 Since 2026-09-17, by the model owner's decision, an implementation specialist does not run the full test suite locally: it runs the documentation gates, its own test module and the test modules that import the files it changed, then pushes; the full suite runs once in CI (`tools/check.py`, in parallel with `pytest -n auto`) and a CI failure comes back to the same specialist to fix. Boss opens the pull request and merges when CI is green.
 
@@ -82,6 +82,7 @@ Since 2026-09-17, by the model owner's decision, an implementation specialist do
 
 **Merging one at a time (2026-09-17).** Two green pull requests merged back to back broke `main` (#204, then #205): the second's pins were made against the base before the first merged, and CI never ran on the combined tree. The rule: merge one pull request at a time, and before merging the next bring `main` into its branch (a merge, never a rebase) and let CI run on that merged head, or run its affected selection locally on the merge result; `git merge-tree` shows textual conflicts only, never semantic ones. A pin made on an older base is a semantic conflict, and a green check on the old base is no evidence about the tree that merging produces.
 
+The record of a day is never copied into a second document; 5.4, the register's index, MIGRATION and the READMEs link to it.
 
 For durable integration, reconcile relevant specification changes, current main, open work and affected contracts. Do not treat a dated status snapshot as live evidence. Preserve user-defined physical names as data and do not dispatch laws by entity names.
 
@@ -187,6 +188,7 @@ One agent may use several skills. Exploration normally uses one owner unless par
 4. In exploration, run the minimal probe and stop when the question is answered with adequate evidence. Do not drift into PR/reviewer/CI work.
 5. In candidate work, test the focused acceptance target and counterexamples; stop if falsified.
 6. In integration, coordinate the required rule review, tests, simulator run, regression and documentation, then reconcile on current main.
+   Keep the integration short per [the cost of an integration](../workflow.md#the-cost-of-an-integration-kept-short-the-model-owner-2026-09-20): the gate set of worlds and not the register, one full check at the end, one writer per document, agents on different sources, the pages and the reviews in parallel with the second half.
 7. Apply the PR skill only to integration, or when the user explicitly requests a PR for a candidate.
 
 ## Persistence and self-improvement
