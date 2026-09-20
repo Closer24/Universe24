@@ -12,7 +12,11 @@ pair"), written down before the first run:
     (10, 0, 0), the labels 0 and 3 on arm 0 (-x, Alice) and on arm 1
     (+x, Bob), the branch arm x 2^32 + label; the `birth` line carries the
     labels [[0, 1], [3, 1]], 2 arms, 4 units, the multiplicity 2;
-(b) the design's test 4 at the CHSH labels: over the 64 births the cells
+(b) the design's test 4 at the CHSH labels: over the lamp's first 64
+    records (by birth ordinal, the record's identity: born in the ticks
+    1 .. 65 since the fraction-free law of 2026-09-20, the exact clock of
+    the paid lamp stalling once at tick 3; a tick window is not a count
+    of births, and S does not depend on the alignment) the cells
     (oA, oB) of `bell_0_8` count 27, 5, 5, 27 (E x 64 = 44), `bell_0_24`
     5, 27, 27, 5 (-44), `bell_16_8` and `bell_16_24` 27, 5, 5, 27 (44),
     S = 176/64; Alice's outcome is + for u < 32 and - for u >= 32 on every
@@ -20,9 +24,12 @@ pair"), written down before the first run:
     settings of its two clicks (`windows` [alice_plus, a, 0], [bob_plus,
     b, 0]); the counters alice_minus and bob_minus receive nothing;
 (c) the design's test 4 with the choosers (`bell_choosers`, the 960
-    births from tick 8, when the choosers' rows have reached both
-    counters; the 7 born before click at alice_minus, the first counter
-    the chooser's rows reach): the gathers grouped by the settings give the 15
+    records from the 7th, born at tick 8, when the choosers' rows have
+    reached both counters; the 6 born before (the ticks 1, 2, 4, 5, 6, 7:
+    the exact clock's one stall at tick 3) click at alice_minus, the first
+    counter the chooser's rows reach; the bins are read by record, and
+    each holds every u once whatever the alignment of the births with the
+    streams): the gathers grouped by the settings give the 15
     pairs (0, 12, 25, 38, 51) x (8, 29, 51), 64 records each with every
     u, the counts per pair the reading's and E x 64 = 44, -60, 20, 60, -8,
     -48, -8, 60, -52, -64, 40, 20, -28, -36, 64 in that order; every
@@ -90,13 +97,20 @@ def run(world: dict[str, object]) -> tuple[NatureBeamSimulation, list[dict[str, 
 def gathers_of(
     simulation: NatureBeamSimulation, births: int = N, first: int = 1
 ) -> list[dict[str, object]]:
-    """The gathers of the records born in the ticks first .. first + births - 1."""
+    """The gathers of the lamp's records of the birth ordinals first ..
+    first + births - 1 (the record's identity, number 1's 2^32 + ordinal;
+    since the fraction-free law of 2026-09-20 a paid lamp's exact clock
+    stalls, so a tick window is not a count of births), in their order."""
     assert simulation.layer is not None
-    found = [
-        g
-        for g in simulation.layer.gathers
-        if first <= int(g["born"]) < first + births  # type: ignore[call-overload]
-    ]
+    base = 1 << 32
+    found = sorted(
+        (
+            g
+            for g in simulation.layer.gathers
+            if base + first <= int(g["record"]) < base + first + births  # type: ignore[call-overload]
+        ),
+        key=lambda g: int(g["record"]),  # type: ignore[call-overload]
+    )
     assert len(found) == births
     return found
 
@@ -174,10 +188,17 @@ def test_the_pair_at_the_chsh_labels():
 def test_the_pair_with_the_choosers_reads_the_registered_quadruple():
     """(c)."""
     simulation, _ = run(WORLDS["bell_choosers"])
-    gathers = gathers_of(simulation, GENERATOR.CHOOSERS_BIRTHS, GENERATOR.CHOOSERS_FIRST)
     assert simulation.layer is not None
+    # The records born before tick CHOOSERS_FIRST meet no setting at
+    # Alice's plus counter and click at alice_minus: 6 records (the
+    # lamp's exact clock stalls once, at tick 3, so the 7th record is born
+    # at tick 8; 7 records in 7 ticks until the fraction-free law of
+    # 2026-09-20); the 960 records from the next one, by ordinal, are
+    # analysed.
     early = [g for g in simulation.layer.gathers if int(g["born"]) < GENERATOR.CHOOSERS_FIRST]  # type: ignore[call-overload]
-    assert len(early) == 7 and all(g["chosen"][0][0] == "alice_minus" for g in early)  # type: ignore[index]
+    assert len(early) == 6 and all(g["chosen"][0][0] == "alice_minus" for g in early)  # type: ignore[index]
+    assert sorted(int(g["born"]) for g in early) == [1, 2, 4, 5, 6, 7]  # type: ignore[call-overload]
+    gathers = gathers_of(simulation, GENERATOR.CHOOSERS_BIRTHS, len(early) + 1)
     by_settings: dict[tuple[int, int], list[dict[str, object]]] = defaultdict(list)
     for gather in gathers:
         by_settings[settings_of(gather)].append(gather)

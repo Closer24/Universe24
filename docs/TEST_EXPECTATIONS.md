@@ -42,6 +42,7 @@ kept, their pins the law of events').
 | `test_nature_beam_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_nature_beam_clock.py` | The clock under the Beam Law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-beam-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder (since the step drive of 2026-09-20 the same integers, the remainder now the drive on the body's record); the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
+| `test_fraction_free.py` | The fraction-free counts (2026-09-20, BEAM_LAW note 41): every count of a body an accumulator on its record, `by_drive`'s count; the identity at a constant rate on every count over 10^4 intervals, the accumulators carried in `state.json` and a resumed run identical, the bound below the denominator at every tick ([below](#the-fraction-free-counts)) | new (2026-09-20, the mathematician's FORM.md, the physics-rule reviewer's REVIEW_COUNTS.md, records 147 and 148) |
 | `test_step_drive.py` | The step drive (2026-09-20, BEAM_LAW note 17 as amended): the count of Links as the whole part of the distance the momentum has driven, one bounded integer per axis on the body's record: the identity at a constant momentum with `by_clock(n - 1, \|p\|, D)` over 4000 self-creations and twelve momenta; the identity on two axes (the coincident step lost as before); the integrated distance under a halving momentum (38 within 1, 37 to 39, where the rule as it was made 1); never two Links in one interval under a random momentum over 10 000 intervals with the drive in [0, 2 D - 1); the record (`drive`, `axis_steps`, the `step` line) and a declared `drive` refused; the turn by momentum unchanged; the signed drive under a reversal (no Link until the drive cancels and reaches -D) and the bound pair under a suspension holding for 3000 intervals ([below](#the-step-drive)) | new (2026-09-20, series G2's finding, record 107; the owner's decision, record 108); the drive signed the same day (record 126) |
 | `test_doppler.py` | The reading's weight at the relative speed (`doppler-v1`, 2026-09-20, BEAM_LAW note 38; the flux at the grain G = 2^12): a fixed body and a free body at rest reading byte-identically with and without the key over 200 intervals (the same records, the same books); the bar of the finding (a fixed source's steady beam, a free body of content 2^20 at an exact speed, the push the weighted flow in label units) reading 200 rows in every case and taking 12800 at rest, 6204 receding at 0.30, 2901 receding at 0.45, 19395 approaching at 0.30, 0 co-moving at c, 3700 outrunning at 0.75 (the map's rates 96.9, 45.3, 303.1, 0, 57.8 rows to the label unit); the bar with rows of 64 running; the third law on two fixed bodies unchanged; the refusals, the weighted flow's R1 and the budget's factor; the grain, the pair on the headings and the fan (0.5938, 0.7771, 0.8666) and the record; the fan over three intervals (5130 of 8640 on the face diagonal at 1/3; 4326, 8504 on (1, 2, 0) and 2828, 8485, 5656 on (1, 3, 2) at the star's speed; the heading 5249 of 12288; the transverse exact) and the fan reader at rest byte-identical; a body on a set reading two groups from the one frame snapshot; a registered G2 star world running 20 intervals under the key ([below](#the-readings-weight-at-the-relative-speed)) | new (2026-09-20, the model owner's record 119; the mathematician's form, record 110, and GRAIN.md after the physics-rule review) |
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
@@ -1658,6 +1659,97 @@ expected integers, written down before the first run:
   hold is the rule's consequence given the pair's symmetry (mirror
   pushes, a hand-over zeroing both, the neutron's signed drive never
   above 0), not a theorem for every pair.
+
+## The fraction-free counts
+
+`tests/test_fraction_free.py` (docs/BEAM_LAW.md note 41; the mathematician's
+`docs/designs/fraction_free/FORM.md`; the physics-rule reviewer's
+`docs/designs/fraction_free/REVIEW_COUNTS.md`, records 147 and 148 of
+2026-09-20): every count of a body is `core.integer.by_drive` on one
+accumulator of the body's own record, the remainder's owner, below the
+count's denominator after every self-creation, nothing at a Node; `by_clock`
+off the age is its constant-rate identity (`test_integer_arithmetic`, the
+primitive). The integers, written first:
+
+- (a) every count on its own body at a constant rate over 10^4 intervals,
+  the count off the clock: a fixed source of content 3 at `release` [1, 10]
+  on +X (`acc_release` = 3 x age mod 10, 3000 units released), a fixed body
+  of content 3 at K = [3, 8] (`acc_turn` = 9 x age mod 8, `turned` 11250),
+  a free body of content 16 at momentum 1 and `width` 8 (D = 8193: one Link
+  at the self-creation 8193, the drive 1807 after 10^4), a fixed probe of
+  `light` measuring one unit per interval at `suspension` [1, 4]
+  (`acc_owed` = age mod 4, the age 8000 and 2000 intervals waited), a lamp
+  at rate [1, 3] (`acc_lamp` = age mod 3, 3333 births);
+- (c) the accumulators in `state.json` and `run.json` under `acc` by name
+  (`owed`, `release` per family, `lamp`, `turn`) beside `drive`: on a bar of
+  a source of `m` (content 3, 3 units per self-creation on +X), a probe of
+  `light` (content 1) measuring them at `suspension` [1, 4], a turning body
+  of `light` (content 3, K = [3, 8]) and a mover of `light` (content 16,
+  momentum 1000, `width` 8), after 20 intervals the probe's `acc` {owed 1,
+  turn 4} (eleven self-creations reading 3: 33 = 8 x 4 + 1; eight intervals
+  waited, the age 12; 3 x 12 mod 8), the turner's {turn 4} (9 x 20 mod 8),
+  the mover's {turn 0} (48 x 20 mod 8) with the drive 1616 (20 x 1000 mod
+  9192) and 2 Links; a run resumed from that `state.json` (a test-level
+  resume of the records and the rows; the runner has none) identical to
+  the unbroken one at every one of the ticks 21 to 40 in every state and
+  record; resumed with the accumulators emptied it differs; a declared
+  `acc` refused as an unknown key;
+- (e) the bound at every one of 2000 ticks on the worlds of (a): `acc_owed`
+  below 4, `acc_release` below 10, `acc_lamp` below 3, `acc_turn` below 8,
+  the drive below D; `count_owed` on 10^4 random presences keeps its
+  accumulator in [0, d); the step's drive under a momentum reversing at
+  random stays within D.
+
+Re-pinned under the exact count, the old integers kept as history in each
+module's docstring (the whole part off the clock at the current rate
+credited every earlier self-creation at today's rate: a lamp pays at every
+birth, so its turn's rate falls; a crowd changes at every interval):
+`test_nature_beam_clock` (c) (the lamp of content 100 at K 82 releases 24
+of content in 9 intervals, 10 phase steps; 18 and 9), (e) (the probe at
+presence 1 owes at the ages 4, 8, 12, 16; 3, 7, 11, 15);
+`test_nature_beam_age` (c) (the age reader's ages 1 .. 6, 6, 7, 7, 7, 7, 8,
+8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11; the 2 one self-creation earlier);
+`test_nature_beam_body` (c) (the lamp on a set releases at the ages 0 and
+2, the content 22); `test_nature_beam_push` (f) (the lamp of 2^23 at K 2^20
+turns 7 at its second self-creation: `pushed` 10176, the lamp's momentum
+-15296), (j) (`held` [5, 115], `pushed` (-356608, 0, 0)); `test_become`
+(c) (the crowded trigger fires at tick 3); `test_amplitude_click` (a) (the
+second three births at tick 3), (d) (the digests with `acc`; `j3_deuteron`
+moved: 69 intervals waited of 700 in place of 80); `test_amplitude_split`
+(a) (the second record at tick 3); `test_window_width` (d) (31 releases in
+64 without the width, the stall at tick 6); `test_nature_beam_detector` (d)
+(the lamp of 24 at K 24 releases at the ticks 1, 3, 4), (g) (the phase 41
+at tick 2, 42 at tick 3); `test_nature_beam_window` (b) (the lamp of K + 2
+stalls at tick 6, the run 84 intervals for the 64th record's click, the
+lamp at 83 turns; 83 intervals and 83 turns), (c) (31 releases in 64 and
+48 in 81, the phase 63 and 16; 32 and 49, 0 and 17); `test_nature_beam_label`
+(b) (the lamp of 3K paying 42 per birth turns 2 at tick 2, and the 14 rows
+born there carry the content 2, the turn at their birth: the labels 2 x
+the unit vector, the screen's pushes (128, 0, 0) and (128, 12, 0) with the
+share (9, 0, 0), the mirror's second reflection at the share (7, 5, 0);
+the turn 3 and the content 3 on every row until then).
+
+**The Bell and amplitude readings by record (the alignment).** A paid
+lamp's exact clock stalls where its content has fallen below K (the Bell
+lamps of content K + 2, once at tick 4; the L worlds' at tick 3), so the
+tick of a birth is not the age of the lamp's clock. The readers pair a
+row by its RECORD, the birth ordinal (the click and pass lines carry
+`record` and `u`; `tools/bell_chsh.py`, `tools/bell_choosers.py`), and
+the tests take a lamp's first 64 records by ordinal, not a window of
+ticks (`test_amplitude_pair` `gathers_of`, `test_amplitude_layer` `births`,
+`test_hand` `chosen_sets`). The correlations do not depend on the
+alignment: S = 176/64 on the CHSH labels, the cells 27, 5, 5, 27 and 5,
+27, 27, 5, the choosers' fifteen E and S = 156/64, the Mach-Zehnder ports
+and the GHZ triples are the same integers read by ordinal on both counts
+(the physics-rule reviewer's `pair_by_ordinal.py`, record 148), because
+a click is a function of the record's u and the settings alone. What
+moved is the timing: the 64th record of an L world is born at tick 65
+(`slits_low` gathers by 214, 213 before), `bell_choosers` has six records
+before tick 8 in place of seven, the chooser test's warm-up is 6 by
+record (the design's 7 by tick), the CHSH tool's criteria are 350 with 115
+failing under the one click (340 and 118 read by tick), and the tools
+report the tick offsets as the smallest tick - age at each Node, the
+flight's (14 and 16 on A2's bar; 6, 11, 13, 14 on the choosers' bar).
 
 ## The reading's weight at the relative speed
 

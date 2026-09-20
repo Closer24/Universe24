@@ -25,7 +25,9 @@ vector"), written down first:
     passes Q, no tie occurs, and |u_d| is within 1.35 % of Q;
 (b) the labels on the GameBoard: a world of the six headings and the eight
     fan directions above with their negatives; a lamp of `light` (quantum
-    1, content 3 x 2^18 at K 2^18: the turn 3 at every age of the run,
+    1, content 3 x 2^18 at K 2^18: the turn 3 at every age of the run but
+    tick 2, where the exact clock turns 2, the lamp paying 42 per birth
+    (the fraction-free law of 2026-09-20; 3 at every tick until then),
     content c = 3 per unit) releasing one unit per interval on the six
     headings and the eight fan directions (14 rows per release, amount 1,
     content 3): every row's label 3 x u_d (`NatureBeamStore.labels`), |label|^2
@@ -239,12 +241,19 @@ def test_every_label_is_content_times_the_unit_vector_and_the_books_close():
     assert simulation.books()["momentum"]["remainder"] == [-1057, -675, -339]
     u_mirror = np.array(PINNED[(7, 5, 0)], dtype=np.int64)
     share = [int(np.sign(v)) * (CONTENT * abs(int(v)) // 14) for v in u_mirror]
-    assert share == [11, 7, 0]
+    share_2 = [int(np.sign(v)) * (2 * abs(int(v)) // 14) for v in u_mirror]
+    assert share == [11, 7, 0] and share_2 == [7, 5, 0]
     for tick in range(2, TICKS + 1):
         simulation.step()
         books = simulation.books(recount=True)
         assert books["balanced"], tick
-        assert lamp_entry.turn == CONTENT, tick
+        # The turn is the count of the lamp's accumulator (the fraction-
+        # free law, 2026-09-20): the lamp pays 42 per birth, so at tick 2
+        # its content 3K - 42 turns 2 and the remainder K - 42 carries; the
+        # whole part of 3t - 21 t (t - 1) / K is 3t - 1 for every t of the
+        # run (3 at every tick until then, the whole part off the clock at
+        # the current content).
+        assert lamp_entry.turn == (2 if tick == 2 else CONTENT), tick
         momentum = books["momentum"]
         assert [
             a + b + c + d
@@ -259,18 +268,37 @@ def test_every_label_is_content_times_the_unit_vector_and_the_books_close():
         assert books["momentum"]["transit"] == simulation.books()["momentum"]["transit"], tick
         reflected = mirror_entry.taken[LIGHT]["rerelease"]
         # The mirror takes each row's share and recoils by the re-created
-        # row's: twice the share per reflection.
-        assert mirror_entry.momentum == [2 * s * reflected for s in share], tick
+        # row's: twice the share per reflection; the second row reflected,
+        # born at tick 2 with the content 2, has the share 2 x |u| // 14 =
+        # (7, 5, 0) in place of (11, 7, 0).
+        second = 1 if reflected >= 2 else 0
+        assert mirror_entry.momentum == [
+            2 * (s * reflected - (s - t) * second) for s, t in zip(share, share_2, strict=True)
+        ], tick
         if store.size:
+            # Every label is the row's content times its unit vector; the
+            # content of a release is the lamp's turn at its birth (the
+            # free release's form, BEAM_LAW note 33), 3 on every row but the
+            # 14 born at tick 2 with the content 2 (the fraction-free law,
+            # 2026-09-20; 3 on every row until then).
             labels = store.labels(np.arange(store.size), unit, False)
-            assert (labels == CONTENT * unit[store.direction]).all(), tick
+            assert (labels == store.content[:, None] * unit[store.direction]).all(), tick
+            assert set(store.content.tolist()) <= {2, CONTENT}, tick
     clicks = [r for r in records if r["event"] == "click"]
     at_screen = [r for r in clicks if r["measured"] == 2]
     # The +X rays and the (11, 1, 0) rays, whose line passes the screen's
     # Node too, each click with the label of their own direction.
     assert at_screen and all(r["amount"] == 1 for r in at_screen)
-    assert {tuple(r["push"]) for r in at_screen} == {(192, 0, 0), (192, 18, 0)}
-    assert {tuple(r["share"]) for r in at_screen} == {(13, 0, 0), (13, 1, 0)}
+    # The two rays born at tick 2 carry the content 2: the labels (128, 0,
+    # 0) and (128, 12, 0), the shares (9, 0, 0) twice.
+    assert {tuple(r["push"]) for r in at_screen} == {
+        (192, 0, 0),
+        (192, 18, 0),
+        (128, 0, 0),
+        (128, 12, 0),
+    }
+    assert {tuple(r["share"]) for r in at_screen} == {(13, 0, 0), (13, 1, 0), (9, 0, 0)}
+    assert sum(1 for r in at_screen if r["content"] == 2) == 2
     assert screen_entry.momentum == np.array([r["share"] for r in at_screen]).sum(axis=0).tolist()
     assert mirror_entry.taken[LIGHT]["rerelease"] >= 2
     escaped = [r for r in clicks if r["measured"] is None]

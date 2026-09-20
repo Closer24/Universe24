@@ -58,48 +58,50 @@ def rational_sum(terms: list[tuple[int, int]]) -> tuple[int, int]:
 def by_clock(age: int, numerator: int, denominator: int) -> int:
     """What the whole part of age x numerator / denominator gains at the
     self-creation that takes the age from `age` to `age + 1`: a rate read
-    off a clock, the first difference of a floor, exact on average, with no
-    remainder kept anywhere. The clock's turn, the release, the lamp, the
-    owed count and the columns read this form; the step reads `by_drive`
-    (below), the accumulator on the reader's record, of which this is the
-    constant-rate identity: from an empty accumulator at age 0, `by_drive`
-    gains `by_clock(k - 1, n, d)` at the k-th self-creation and holds
-    `(k n) mod d` after it while the rate is constant
-    (`tests/test_integer_arithmetic.py`, the fraction-free primitive)."""
+    off a clock, the first difference of a floor, with no remainder kept
+    anywhere. Since the fraction-free law (2026-09-20, BEAM_LAW note 41)
+    every count of a body is `by_drive` on an accumulator of the body's
+    record, and this is its constant-rate identity: from an empty
+    accumulator at age 0, `by_drive` gains `by_clock(k - 1, n, d)` at the
+    k-th self-creation and holds `(k n) mod d` after it while the rate is
+    constant (`tests/test_fraction_free.py` (a)); a row's phase per
+    interval of age (a count on a row, not on a body: `by_clock_rows`)
+    and the turn by momentum (a count against the record's own count of
+    Links) keep this form, and the readings tools derive the constant-rate
+    counts by it."""
     if denominator < 1:
         raise ValueError("positive denominator required")
     return ((age + 1) * numerator) // denominator - (age * numerator) // denominator
 
 
 def by_drive(drive: int, rate: int, denominator: int, at_most: int = 0) -> tuple[int, int]:
-    """The count primitive on an accumulator of the reader's own record
-    (the model owner's record 108 of 2026-09-20, "a generic solution if he
-    can": one primitive every count against a rate could use; the step
-    drive of the same day, signed since record 126; its whole-part form
-    the fraction-free primitive of the mathematician's
-    docs/designs/fraction_free/FORM.md, the same day): the accumulator
-    `drive` gains `rate` at this self-creation, the count is the whole
-    part the accumulator then holds in units of `denominator`, that much
-    is subtracted, and the remainder stays in the accumulator, bounded
-    below the denominator, its one owner. Returns (the count gained, the
-    accumulator after). A signed rate (the step: `rate` the momentum
-    component) counts with its sign, -1 when the accumulator reaches
-    -denominator: the accumulator is then the signed sum of the rates
-    since the last count, so a rate that reverses first cancels what it
-    had accumulated the other way and counts nothing until the sum reaches
-    the denominator on the new side; an unsigned rate keeps the
-    accumulator in [0, denominator). `at_most`, when positive, caps the
-    count gained at one self-creation and keeps the rest in the
-    accumulator: the step's rule (`engine.step_axis` passes 1: one Link
-    per interval, a drive earned at a larger momentum fires one at each
-    following self-creation until it is spent); 0, the default, takes the
-    whole part. With a constant rate of one sign from an empty accumulator
-    the count fires exactly where `by_clock(n - 1, |rate|, denominator)`
-    does over the self-creations n, with the rate's sign, and the
-    accumulator is `sign x (n x |rate| mod denominator)`, the remainder
-    `by_clock` keeps nowhere; where the rate changes the count is the
-    whole part of the sum of the rates, exact over any period, which
-    `by_clock` at the current rate is not (FORM.md section 1)."""
+    """The one count primitive of the Beam Law (the model owner's record
+    108 of 2026-09-20, "a generic solution if he can"; the step drive of
+    the same day, and since the fraction-free law of that day, BEAM_LAW
+    note 41, every count of a body): an accumulator on the reader's own
+    record gains `rate` at this self-creation, the count is the whole part
+    the accumulator then holds in units of `denominator`, that much is
+    subtracted, and the remainder stays in the accumulator, bounded below
+    the denominator, its one owner. Returns (the count gained, the
+    accumulator after). A signed rate (the step drive: `rate` the momentum
+    component, signed since record 126) counts with its sign, -1 when the
+    accumulator reaches -denominator: the accumulator is then the signed
+    sum of the rates since the last count, so a rate that reverses first
+    cancels what it had accumulated the other way and counts nothing until
+    the sum reaches the denominator on the new side; an unsigned rate
+    (every other count: the owed count, the release, the lamp, the turn,
+    the push per column, the doppler weight) keeps the accumulator in
+    [0, denominator). `at_most`, when positive, caps the count gained at
+    one self-creation and keeps the rest in the accumulator, the step's
+    rule (one Link per interval: a drive earned at a larger momentum fires
+    one at each following self-creation until it is spent); 0, the
+    default, takes the whole part. With a constant rate of one sign from
+    an empty accumulator the count fires exactly where `by_clock(n - 1,
+    |rate|, denominator)` does over the self-creations n, with the rate's
+    sign, and the accumulator is `sign x (n x |rate| mod denominator)`,
+    the remainder `by_clock` keeps nowhere; where the rate changes the
+    count is the whole part of the sum of the rates, exact over any
+    period, which `by_clock` at the current rate is not."""
     if denominator < 1:
         raise ValueError("positive denominator required")
     drive += rate

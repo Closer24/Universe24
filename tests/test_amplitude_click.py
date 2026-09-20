@@ -132,9 +132,15 @@ def completions(layer: Layer) -> list[LiveRecord]:
 
 
 def test_a_lamp_births_as_many_records_as_its_rate_says():
-    """(a)."""
+    """(a). The lamp's content 2^20 at K 2^20: the turn is the count of
+    its turn accumulator (the fraction-free law, 2026-09-20), 1 at the
+    first self-creation (the three records cost 6), 0 at the second (2^20
+    - 6 below K: no birth at tick 2) and 1 at the third (2^21 - 12 over
+    2^20), so the six births fall at the ticks 1 and 3; until then the
+    whole part off the clock at the current content, `by_clock(1, 2^20 -
+    6, 2^20)` = 1, put the second three at tick 2."""
     world = base_world(measured=[lamp([[1, 0, 0], [0, 1, 0]], [3, 1])])
-    simulation, lines = run(world, 2)
+    simulation, lines = run(world, 3)
     assert simulation.layer is not None
     births = [line for line in lines if line.get("event") == "birth"]
     assert [
@@ -143,10 +149,11 @@ def test_a_lamp_births_as_many_records_as_its_rate_says():
         (1, 1, 0, 2, 2),
         (1, 2, 1, 2, 2),
         (1, 3, 2, 2, 2),
-        (2, 4, 3, 2, 2),
-        (2, 5, 4, 2, 2),
-        (2, 6, 5, 2, 2),
+        (3, 4, 3, 2, 2),
+        (3, 5, 4, 2, 2),
+        (3, 6, 5, 2, 2),
     ]
+    assert simulation.measured[1].acc_turn == (1 << 20) - 12
     assert [simulation.layer.records[FIRST - 1 + k].u for k in range(1, 7)] == [0, 1, 2, 3, 4, 5]
     assert sorted((r.record - (1 << 32), r.birth) for r in simulation.stores[0].rows()) == sorted(
         [(k, k - 1) for k in range(1, 7) for _ in range(2)]
@@ -260,59 +267,66 @@ def test_the_columns_are_written_only_where_a_record_is(tmp_path: Path):
 # law's one click (main at d768f831, after the signed drive, and hand/wu at
 # 4f94a86f, hand-v1; the fast pass,
 # `tools/run_series.py --list --fast`, 2026-09-20): the design's test 7 as
-# a pin, since the key that switched the law off is deleted.
+# a pin, since the key that switched the law off is deleted. Under the
+# fraction-free law (2026-09-20, BEAM_LAW note 41) every `state.json`
+# carries the accumulators (`acc`), so every state digest is that law's
+# (the state without the key byte-identical on eight worlds); the books and
+# the events of eight worlds are the base tree's, and `j3_deuteron`'s
+# moved (its owed counts under a changing crowd at `suspension` [1,
+# 2^20]: the proton and the neutron waited 69 intervals of 700 in place of
+# 80, their steps 31 in place of 29), re-registered by its dated line.
 PINNED_DIGESTS: dict[str, tuple[int, str, str, str]] = {
     "weak/j3_deuteron.json": (
         700,
-        "d4485137fd018bba9ec01ce2e7a0552d45ecf963f9a5b81fe93da023657e0e6c",
-        "431cc87afa9f51cadc83d9780dc8f54cfa3e2fe4bb1d780fcd78f55aec25efbd",
-        "23196889fbed5e62a0a371153640e2338bafbadee22dc691b02b59c771ec6215",
+        "4220ccf009b461c1fa244095000919979ff223ce4a12c635cad46e3eaddfeacc",
+        "9f286fe9bb10790e0522237cf5384d5824e9ab75da4c0d81ee57fbdddca4d5d1",
+        "4638b98e16b8274a759e13634f8ec84b1566a5e519d1f26e48256689de1eda26",
     ),
     "bohr/r2.json": (
         689,
-        "4984c753c907ae8e5fbf4a9021863a7c043f58807e3e5500364d0ef0813f2a05",
+        "b7250701b6ae1d591f45cf603c8dcf536359e3f802345db8766eb6bdc16e59c0",
         "d830bd8e0e27193fc91810374e8e55298673007da97e3d717d05044c866cd05d",
         "35f5c6c3503e315de6885dfe4a1c5618d57069a1c43c0de11e19a8c54d4ed812",
     ),
     "detector/grouped_12_nodes.json": (
         2,
-        "f0bd36b6bb380cf4bf95f8c43d91f21c30a783e7c7de7c1877cec82b1bf09c2e",
+        "2e563ecde4f8cbc8e55ef5d616b2055fd1c064b49d4e397c3dc39ef305021d74",
         "975863cdb72c13719aa21397c178434501fd81de11cda2ab6037ea959e9cc9f8",
         "4b4994530f291bb5dbe986b532ffd3c9f8e8bcd585ca986ee4369e768ff749f9",
     ),
     "weak/j2_ladder.json": (
         1,
-        "2febe400885e5f179d0ff725953888f50b04388a35f423ab19c9dbd07c267f80",
+        "d52b7ab2b20be61842f30bacf5446ec91fe43e6f2764c5f17d6a7fd54364e998",
         "9f16ab276ee061317098eaef3abe18df5a4979b173596e750a63bf46883f3137",
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     ),
     "weak/j3_deuteron_crowd.json": (
         1,
-        "2e640b0c80fece7d840062a7612b7b7d353eba9528785113dd79dad99d17f952",
+        "40121e1e1c4feb37ae8bd106725de0c82b0162d1d950c2382a35c10483d6565b",
         "9a55af2c075019704c10922fd5dce8397b1d77fe63ce7ab3e570c2f8a9b6b72e",
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     ),
     "nucleus/alpha_square.json": (
         180,
-        "3ce19b7007280c3402a8e19b842102792cf064e6549184f98be739c26a90d632",
+        "71a5c1c313b6eaddf1de22a27f96e9244cd90e94a612b8a55673e8c5f04bf397",
         "15fceb127a2f1cb60a8d618d81536e752a38ea3e8d42bb1497c999b2bc3a7eac",
         "ea432ba27eaca89281ccbd8a86ed7b679ffa621116c18369bc2e128ec14c0f4b",
     ),
     "hubble/pushing_age.json": (
         1,
-        "a546fae445725d72bbf00eb0ed42a0cb9cdc400630ac4f54161c64ee40a1281d",
+        "bd75becb091f745a2f5f5ff4871fc9e5b65a326c0e61fba3ec22d11bbaf1ff25",
         "7e219a1d03c8caddc617ccf2a69b34543912c3e09646cec7ae7a8d1fc454dc71",
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     ),
     "hand/wu.json": (
         23,
-        "7a56bab5aafc2a661f556da30da2f0a5bbda23dc753b3c43b62e732e4805ceb2",
+        "174d1b4765790d2aa434bf4100a230b6772fbcd2f17c98148b52e2097fcc451e",
         "4d746dbe6084c30c6cd034c175f0efb1931d9fa2aa2c608783f928d611db645e",
         "d4d927fb55cdfa9a1330eea3818edb6275d14c1c460ea6e0d3e34a12c0f38988",
     ),
     "coupling/1b_m16.json": (
         25,
-        "c93d7d7fb73e5e287f9a8a384936ee70b1f6fd421658f7f65826624d100d1d98",
+        "4482ea87fc5e4e31185eca0d51edb0a58b3ec9a75d74a1fde4310aee12d87671",
         "8830f84aef5dcd112c58e0aa304b174c8734b493a3ff9f09f7951098b05b0493",
         "20aa2b23913e97ffa3aa13205a7d606962f4f4d8db313f5ebf72180c3fe9498a",
     ),

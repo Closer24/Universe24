@@ -65,12 +65,19 @@ charge [1, 5]; every pinned integer is unchanged.
     96 exactly on labels of length 64), the gravity -640 per read:
     `pushed` (20 x (-640 + 96), 0, 0) = (-10880, 0, 0);
 (f) a paid emitter: a lamp of `light` (content 2^23 at K 2^20: the turn
-    by_clock(age, held, 2^20) = 8 at every age below 362, `rate` [1, 1] on
-    +X, quantum 1) releases one unit of content 8 per interval from tick 1,
-    its recoil (-512, 0, 0) per release (the label 8 x 64); the probe
+    the count of the turn's accumulator, 8 at the age 0, 7 at the age 1
+    (2^23 - 8 held after the first release: the exact whole part of 2^24
+    - 8 over 2^20 is 15, 8 given), 8 at every later age below 362 (the
+    remainder 2^20 - 8 carries the ninth 2^20); until the fraction-free
+    law of 2026-09-20 `by_clock(age, held, 2^20)` = 8 at every age; `rate`
+    [1, 1] on +X, quantum 1) releases one unit of content 8, 7, 8, 8, ...
+    per interval from tick 1, its recoil (-512, 0, 0) per release (the
+    label 8 x 64; (-448, 0, 0) at tick 2); the probe
     (content 5, `table` {"light": "read"}, `release` [0, 1]) reads one
     unit at every tick 11 through 30 with the push (512, 0, 0) (kappa 1:
-    the label h s x amount x u_d), `pushed` (10240, 0, 0); the lamp's
+    the label h s x amount x u_d; (448, 0, 0) at tick 12, the unit of
+    content 7), `pushed` (10176, 0, 0) (10240 until the fraction-free
+    law); the lamp's
     momentum (-512 x its releases) plus the transit line plus the escaped
     line is (0, 0, 0) at every tick (the recoil is the label of what
     left); the reader's `read` takes the label as a push while the ray
@@ -112,9 +119,16 @@ charge [1, 5]; every pinned integer is unchanged.
     (-1536, 0, 0), (-2304, 0, 0), (-3072, 0, 0), (-3840, 0, 0), (-4608,
     0, 0) (V = 3 x 64 = 192 per read, M_P = 5 at tick 11, then 8, 12, 16,
     20, 24: the clicks of the intervals before, never the click of the
-    same interval), `held` [5, 114] and `pushed` (-356544, 0, 0) after 40
-    intervals; until this pin the order [B, A] read M_P after the same
-    interval's click ((-1536, 0, 0) at tick 11, `pushed` (-378432, 0, 0));
+    same interval), `held` [5, 115] and `pushed` (-356608, 0, 0) after 40
+    intervals (the lamp's turn is the count of its turn accumulator since
+    the fraction-free law of 2026-09-20: over the thirty units clicked the
+    turns 3, 4, 4, 4, 4, 4, 4, 4, 4, 3, ... carry 115 in all, the whole
+    part off the clock at the current content gave 3, 4, 4, 4, 4, 4, 4, 4,
+    3, 4, ... and 114; the A reads' sum -192 x 1819 is the same under
+    both, the B clicks' labels -64 x 115 one unit more: `held` [5, 114]
+    and `pushed` (-356544, 0, 0) until then); until this pin the order
+    [B, A] read M_P after the same interval's click ((-1536, 0, 0) at
+    tick 11, `pushed` (-378432, 0, 0));
 (k) a re-emitted free ray is its family's ray (the architect's B2, the
     orchestrator's D2, 2026-09-20; before the charge per unit of content
     the re-emitted rows were stamped with the re-emitter's charge and its
@@ -328,16 +342,17 @@ def test_a_paid_ray_pushes_by_its_label_and_the_paid_momentum_book_closes():
         assert books["balanced"]
         momentum = books["momentum"]
         lamp_momentum = simulation.measured[1].momentum
-        assert lamp_momentum == [-512 * simulation.tick, 0, 0]
+        assert lamp_momentum == [-512 * simulation.tick + (64 if simulation.tick > 1 else 0), 0, 0]
         assert [
             a + b + c
             for a, b, c in zip(lamp_momentum, momentum["transit"], momentum["escaped"], strict=True)
         ] == [0, 0, 0], simulation.tick
     reads = reads_of(records, 2)
     assert [tick for tick, _, _ in reads] == list(range(11, 31))
-    assert all(amount == 1 and push == [512, 0, 0] for _, amount, push in reads)
-    assert simulation.measured[2].pushed == [10240, 0, 0]
-    assert simulation.measured[1].momentum == [-15360, 0, 0]
+    assert all(amount == 1 for _, amount, _ in reads)
+    assert [push[0] for _, _, push in reads] == [512, 448] + [512] * 18
+    assert simulation.measured[2].pushed == [10176, 0, 0]
+    assert simulation.measured[1].momentum == [-15296, 0, 0]
 
 
 def test_a_fan_rays_push_is_its_label():
@@ -493,7 +508,7 @@ def test_the_push_reads_the_content_the_frame_read_whatever_the_family_order():
         reads = reads_of(records, 2)
         assert reads[:6] == expected, [f["name"] for f in order]
         probe = simulation.measured[2]
-        assert sorted(probe.held) == [5, 114] and probe.pushed == [-356544, 0, 0], order
+        assert sorted(probe.held) == [5, 115] and probe.pushed == [-356608, 0, 0], order
         assert probe.momentum == probe.pushed
 
 

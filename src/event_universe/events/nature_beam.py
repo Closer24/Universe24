@@ -99,7 +99,13 @@ from dataclasses import dataclass, field
 import numpy as np
 
 from event_universe.core.game_board import PORT_HEADINGS, Address3
-from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
+from event_universe.core.integer import (
+    apportion_whole,
+    bounded_gcd,
+    by_clock,
+    by_drive,
+    integer_root,
+)
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
 from event_universe.events.amplitude import (
     LABEL_BITS,
@@ -479,13 +485,15 @@ def read_arrivals(
 
 def by_clock_rows(age: np.ndarray, numerator: np.ndarray | int, denominator: int) -> np.ndarray:
     """`core.integer.by_clock` over rows: what the whole part of age x
-    numerator / denominator gains at the self-creation that takes each
-    row's age from `age` to `age + 1`, the first difference of a floor,
-    exact on average with no remainder anywhere; the caller has bounded
-    (age + 1) x numerator to the register. The one primitive of every
-    rate of the law (the turn, the release, the lamp, the owed count, the
-    step, the columns) and, since the four unifications (2026-09-20,
-    BEAM_LAW note 33), of every age read against a key (`ages_at_key`)."""
+    numerator / denominator gains at the walk that takes each row's age
+    from `age` to `age + 1`, the first difference of a floor, exact on
+    average with no remainder anywhere; the caller has bounded (age + 1)
+    x numerator to the register. The rows' phase per interval of age
+    (`phase_per_age`, a count on a row of the store, whose age is its
+    record) reads it; every count of a BODY is `core.integer.by_drive` on
+    an accumulator of the body's record since the fraction-free law
+    (2026-09-20, BEAM_LAW note 41), of which this is the constant-rate
+    identity from age 0."""
     if denominator < 1:
         raise ValueError("positive denominator required")
     result: np.ndarray = ((age + 1) * numerator) // denominator - (age * numerator) // denominator
@@ -514,11 +522,9 @@ def ages_at_key(age: np.ndarray, key: int) -> np.ndarray:
     `by_clock(age - 1, 1, key)` = 1, the one primitive read on the age
     before the walk against the key, exactly as the clock reads a measured
     event's turn off its age against K (the mathematician's clock_checks
-    4: first at the age L, then every L); since the fraction-free
-    primitive (2026-09-20, the mathematician's
-    docs/designs/fraction_free/FORM.md section 4: the age against a key
-    is a comparison, no rate and no accumulator) spelled as the
-    comparison it is, `age mod key = 0`, the same rows (`by_clock(age -
+    4: first at the age L, then every L); since the fraction-free law
+    (2026-09-20, BEAM_LAW note 41) spelled as the comparison it is, `age
+    mod key = 0`, the same rows (no rate, no accumulator: `by_clock(age -
     1, 1, key)` is 1 exactly when the key divides the age). A row at age 0
     (born this interval, or declared at rest at 0) has not walked and is
     never at the key."""
@@ -1720,6 +1726,10 @@ class FamilyPlan:
     p_amount: list[int] = field(default_factory=list)
     p_phase: list[int] = field(default_factory=list)
     p_below: list[bool] = field(default_factory=list)
+    # The record and the birth phase of the rows that pass (the pass line
+    # carries them as the click line does, BEAM_LAW note 41).
+    p_record: list[int] = field(default_factory=list)
+    p_birth: list[int] = field(default_factory=list)
     p_window: list[int] = field(default_factory=list)
     # The groups of taken rows by (measured event, number): per measured
     # event (g0, g1) into the group lists; per group its rows (t_*).
@@ -2845,6 +2855,8 @@ def nature_beam(
                     plan.p_below = below[p].tolist()
                     plan.p_window = window[p].tolist()
                     plan.p_hand = read_at[met[p]].tolist()
+                    plan.p_record = record_at[met[p]].tolist()
+                    plan.p_birth = store.birth[at][met[p]].tolist()
                     plan.events.update(p_events)
                 kept = np.flatnonzero(~passing)
                 if kept.shape[0] == 0:
@@ -3201,6 +3213,13 @@ def nature_beam(
                             line["window"] = None if centre < 0 else centre
                         if window_read is not None:
                             line["reads"] = families[window_read[0]].name
+                        if plan.p_record[k] != NO_RECORD:
+                            # The record and its birth phase on the pass line
+                            # as on the click line (since the fraction-free law,
+                            # 2026-09-20, BEAM_LAW note 41: the Bell readers
+                            # pair a row by its record, not by its tick).
+                            line["record"] = plan.p_record[k]
+                            line["u"] = plan.p_birth[k]
                         if handed:
                             line["hand"] = plan.p_hand[k]
                         record(line)
@@ -3556,6 +3575,14 @@ def nature_beam(
             and (clock_trigger.crowd is None or entry.counted < clock_trigger.crowd)
         ):
             transform(entry, clock_trigger, "clock", tick, ledger, families)
+        # The lamp's count at this self-creation: its rate [n, d] on its
+        # accumulator, advanced at every self-creation of the lamp whether
+        # or not it releases (the fraction-free law, BEAM_LAW note 41: the
+        # count a self-creation of turn 0 or outside the window cannot
+        # release is discarded, as the count off the clock was unread).
+        lamp_count = 0
+        if entry.lamp_rate is not None:
+            lamp_count, entry.acc_lamp = by_drive(entry.acc_lamp, entry.lamp_rate[0], entry.lamp_rate[1])
         # The products born this self-creation (family, amount, content,
         # direction) and their recoil, for the `become` record.
         thrown_rows: list[list[object]] = []
@@ -3567,10 +3594,15 @@ def nature_beam(
             # multiplicity)
             born: list[BornRow] = []
             if free and entry.held[family] > 0:
-                # The release's rate is the held content, unchanged by a
-                # push: the count off the clock, the same as `by_drive`
-                # where the rate is constant (record 108).
-                amount = by_clock(age, entry.held[family] * numerator, denominator_release)
+                # The release's rate is the held content: the count the
+                # family's release accumulator gains (the fraction-free
+                # law, BEAM_LAW note 41; the remainder below d on the
+                # body's record, exact over any period of a changing
+                # content; the count off the clock, `by_clock(age, held x
+                # n, d)`, at a constant content from age 0).
+                amount, entry.acc_release[family] = by_drive(
+                    entry.acc_release[family], entry.held[family] * numerator, denominator_release
+                )
                 if amount:
                     born.extend(
                         (
@@ -3781,12 +3813,11 @@ def nature_beam(
                     )
                 )
             ):
-                rate_n, rate_d = entry.lamp_rate
                 cost = definition.quantum * turn
                 # Under the amplitude law a lamp's release is the birth of
                 # records: per self-creation as many records as the rate
-                # says units per direction (`by_clock(age, n, d)`, the
-                # crowd form's count), each k rows of amount 1 on its k
+                # says units per direction (`lamp_count`, the count the
+                # lamp's accumulator gained above), each k rows of amount 1 on its k
                 # directions with the multiplicity k, the record's identity
                 # the lamp's number x 2^32 + the birth's ordinal at the
                 # lamp, the birth phase of the j-th record of a
@@ -3808,7 +3839,7 @@ def nature_beam(
                     norm = sum(weight * weight for _, weight in branches)
                     per_direction = sum(weight for _, weight in branches)
                     quanta = ways * per_direction
-                    count = by_clock(age, rate_n, rate_d)
+                    count = lamp_count
                     if count and entry.held[family] // cost < quanta:
                         # The birth is every label's weight on every
                         # direction: a lamp that cannot pay it would birth a

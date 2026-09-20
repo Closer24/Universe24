@@ -60,6 +60,7 @@ import numpy as np
 from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
+from event_universe.events.engine import count_owed
 from event_universe.events.engine import step_axis as rule_step
 from event_universe.events.nature_beam import flight_table, unit_label
 from event_universe.events.world import BEAM_LAW, HEADING_OFFSET, LABEL_SCALE, NatureBeamWorld
@@ -878,7 +879,7 @@ def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
     lines += [
         "",
         f"the source: age {int(source['age'])}, waited {int(source['waited'])} (its own number's returns through the stub are home, not read)",
-        "the clock: age(200) replayed from the presence read (k_t = the rays of the source's number at the probe's Node at each self-creation, owed = by_clock(age, k_t, 1))",
+        "the clock: age(200) replayed from the presence read (k_t = the rays of the source's number at the probe's Node at each self-creation, owed = count_owed(acc, k_t, [1, 1]), the accumulator of the fraction-free law)",
         "",
     ]
     lines.append(
@@ -892,17 +893,20 @@ def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
         assert probe is not None
         # The clock's frame as the engine keeps it (`NatureBeamSimulation._frame_all`
         # and `_suspend`, ENGINE.md): an interval owed is paid by one, else
-        # the event self-creates, its age advances and it owes the engine's
-        # clock `by_clock(age, presence x n, d)` on the presence the replay
-        # read at its Node.
-        age, waited, owed = 0, 0, 0
+        # the event self-creates, its age advances and it owes the count
+        # its owed accumulator gains, `count_owed(acc, presence, [n, d])`
+        # (the fraction-free law, BEAM_LAW note 41), on the presence the
+        # replay read at its Node.
+        age, waited, owed, accumulator = 0, 0, 0, 0
         age_60 = 0
         for tick in range(1, run.ticks + 1):
             if owed > 0:
                 owed -= 1
                 waited += 1
             else:
-                owed = by_clock(age, replay.presence_at[r][tick - 1] * numerator, denominator)
+                owed, accumulator = count_owed(
+                    accumulator, replay.presence_at[r][tick - 1], (numerator, denominator)
+                )
                 age += 1
             if tick == 60:
                 age_60 = age

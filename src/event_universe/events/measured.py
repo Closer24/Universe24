@@ -289,6 +289,22 @@ class Measured:
     # the Links stepped, the k0 of the turn by momentum.
     drive: list[int] = field(default_factory=lambda: [0, 0, 0])
     axis_steps: list[int] = field(default_factory=lambda: [0, 0, 0])
+    # The accumulators of the fraction-free law (2026-09-20; BEAM_LAW note
+    # 41, the mathematician's docs/designs/fraction_free/FORM.md): every
+    # count of the body is `core.integer.by_drive` on one bounded integer of
+    # its own record, the remainder's owner, below the count's denominator
+    # after every self-creation and nothing at a Node: `acc_owed` the owed
+    # count (the world's `suspension` [n, d]: the rate `counted x n`, below
+    # d), `acc_release` per family the free release (the rate `held x n` at
+    # `release` [n, d], below d), `acc_lamp` the lamp's rate [n, d] (below
+    # d), `acc_turn` the turn (the rate `content x n` at the clock's rate K
+    # = [n, d], below d). The drive above is the step's, signed. Every one
+    # starts at 0 with the age (a declared accumulator is refused with the
+    # key), and `state.json` and `run.json` carry them under `acc` by name.
+    acc_owed: int = 0
+    acc_release: list[int] = field(default_factory=list)
+    acc_lamp: int = 0
+    acc_turn: int = 0
     taken: list[dict[str, int]] = field(default_factory=list)
     clicks: list[int] = field(default_factory=list)
     pushed: list[int] = field(default_factory=lambda: [0, 0, 0])
@@ -434,6 +450,17 @@ class Measured:
     def pending_thrown_content(self, family: int) -> int:
         return sum(row.amount * row.content for row in self.pending[family] if row.thrown)
 
+    def accumulators(self) -> dict[str, object]:
+        """The accumulators of the fraction-free law by the count's name
+        (BEAM_LAW note 41): what `state.json` and `run.json` carry under
+        `acc`, beside `drive`; a resumed run continues from them."""
+        return {
+            "owed": self.acc_owed,
+            "release": list(self.acc_release),
+            "lamp": self.acc_lamp,
+            "turn": self.acc_turn,
+        }
+
     def state(self) -> dict[str, object]:
         charges = self.charges()
         return {
@@ -461,6 +488,7 @@ class Measured:
             "steps": self.steps,
             "drive": list(self.drive),
             "axis_steps": list(self.axis_steps),
+            "acc": self.accumulators(),
             "measured": [dict(entry) for entry in self.taken],
             "events": list(self.clicks),
             "pushed": list(self.pushed),

@@ -34,21 +34,29 @@ measured event `fixed`:
     x = 0, whose release of age a carries the phase a mod 64; a counter at
     x = 10 measuring through the window 40 and its complement at x = 11
     through the window 8. The release of age a (tick a + 1) reaches x = 10
-    at tick a + 18 and x = 11 at tick a + 20: after 83 intervals (the age
-    63 at x = 11) the two counters clicked 32 times each, x = 10 the phases
+    at tick a + 18 and x = 11 at tick a + 20: after 84 intervals (the 64th
+    record, born at tick 65, at x = 11; since the fraction-free law of
+    2026-09-20 the lamp's exact clock stalls once, at tick 6, so the
+    record of ordinal n >= 6 is born at tick n + 1; 83 intervals until
+    then) the two counters clicked 32 times each, x = 10 the phases
     24..55, x = 11 the phases 0..23 and 56..63, every one of the first 64
     releases exactly once; 34 `pass` records at x = 10 (the 32 outside its
     window and the ages 64 and 65, phases 0 and 1, still on their way to
-    x = 11) and none at x = 11, nothing escaped; the lamp at age 83, phase
-    19, content K + 2 - 83, momentum (-5312, 0, 0) (83 labels of 64);
+    x = 11) and none at x = 11, nothing escaped; the lamp at age 84, phase
+    19, 83 turns, content K + 2 - 83, momentum (-5312, 0, 0) (83 labels
+    of 64);
 (c) a lamp with a window: the lamp of (b) with `phase_window` 8 and a plain
-    counter at x = 10: at each of the first 64 intervals t its age is t, its
-    phase t mod 64, and it released one ray at phase t - 1 when t - 1 is in
-    the window (the ages 0..23 and 56..63) and none otherwise: after 64
-    intervals 32 released, content K + 2 - 32, momentum (-2048, 0, 0), phase
-    0; after 81 (the age 63 at x = 10) the counter clicked 32 times, once at
-    each of those phases, and the lamp released 17 more (the ages 64..80,
-    the phases 0..16, all in the window), 49 in all. The
+    counter at x = 10: at each of the first 64 intervals t its age is t and
+    its clock has turned t times until the stall of tick 6 and t - 1 times
+    from it (the phase that count mod 64; the fraction-free law of
+    2026-09-20: t and t mod 64 at every tick until then), and it released
+    one ray at the phase before its turn when that phase is in the window
+    (the phases 0..23 and 56..62 within 64 intervals) and none otherwise:
+    after 64 intervals 31 released (32 until then), content K + 2 - 31,
+    momentum (-1984, 0, 0), phase 63; after 81 (the age 63 at x = 10) the
+    counter clicked 31 times, once at each of those phases, and the lamp
+    released 17 more (the phases 63 and 0..15, all in the window), 48 in
+    all, its phase 16 and 80 turns. The
     refusals, naming the key: a window of 64 at N = 64, a window on `pass`,
     an object entry with an unknown key, a lamp window of -1, a `reads` key
     outside the reading's components; an object entry without `rule` takes
@@ -178,9 +186,19 @@ def test_a_window_and_its_complement_cover_the_circle_exactly():
         parse_nature_beam_world(world([12, 1, 1], [lamp(), gate, complement], K_B)), records.append
     )
     source, near, far = simulation.measured[1], simulation.measured[2], simulation.measured[3]
-    for _ in range(83):
+    # The lamp (content K + 2, paying 1 per release) turns by its exact
+    # clock (the fraction-free law, 2026-09-20): once, at tick 6, its
+    # accumulator is short of K and it stalls, so the record of birth
+    # ordinal n >= 6 is born at tick n + 1 and 84 intervals hold the 64th
+    # record's click at x = 11 (83 until then, the whole part off the
+    # clock at the current content never stalling).
+    stalls = []
+    for _ in range(84):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
+        if source.turn == 0:
+            stalls.append(simulation.tick)
+    assert stalls == [6]
     # Under the one click (stage (vii) step 4) a lamp's rows are records
     # born at u, the count of births, with the path phase 0, and a window
     # reads the path phase: every row is outside the window at 40 and
@@ -189,7 +207,7 @@ def test_a_window_and_its_complement_cover_the_circle_exactly():
     # split the circle 32 / 32.
     assert near.clicks == [0, 0] and far.clicks == [64, 0]
     assert near.held == [0, 1] and far.held == [64, 1] and simulation.ledger.escaped_amount(LIGHT) == 0
-    assert source.age == 83 and source.phase == 19 and source.turned == 83
+    assert source.age == 84 and source.phase == 19 and source.turned == 83
     assert source.held == [K_B + 2 - 83, 0] and source.momentum == [-5312, 0, 0]
     clicks = [r for r in records if r["event"] == "click"]
     passes = [r for r in records if r["event"] == "pass"]
@@ -200,7 +218,8 @@ def test_a_window_and_its_complement_cover_the_circle_exactly():
     assert len(passes) == 66 and sorted(r["phase"] for r in passes) == sorted([*range(64), 0, 1])
     assert all(r["node"] == [10, 0, 0] and r["window"] == 40 for r in passes)
     for record in clicks:
-        assert record["tick"] == record["phase"] + ELEVEN + 1, record
+        stalled = 1 if record["phase"] >= 5 else 0
+        assert record["tick"] == record["phase"] + ELEVEN + 1 + stalled, record
 
 
 def test_a_lamp_with_a_window_releases_in_it_and_its_clock_turns_regardless():
@@ -217,9 +236,16 @@ def test_a_lamp_with_a_window_releases_in_it_and_its_clock_turns_regardless():
     for tick in range(1, 65):
         simulation.step()
         assert simulation.books()["balanced"], tick
-        assert source.age == tick and source.phase == tick % 64 and source.turned == tick, tick
+        # The lamp's exact clock (the fraction-free law, 2026-09-20) stalls
+        # once, at tick 6 (its content K - 3 after five releases, the
+        # accumulator short of K): from then on its phase is tick - 1 mod
+        # 64 and it has turned tick - 1 times (tick mod 64 and tick until
+        # then, the whole part off the clock never stalling).
+        turned = tick if tick < 6 else tick - 1
+        assert source.age == tick and source.phase == turned % 64 and source.turned == turned, tick
+        assert source.turn == (0 if tick == 6 else 1), tick
         fresh = light.age == 0
-        released = (tick - 1) in IN_WINDOW_8
+        released = tick != 6 and (turned - 1) in IN_WINDOW_8
         assert int(fresh.sum()) == int(released), tick
         if released:
             # The window gates the release by the clock's phase; the row born
@@ -227,18 +253,18 @@ def test_a_lamp_with_a_window_releases_in_it_and_its_clock_turns_regardless():
             # (vii) step 4 the row carried the clock's phase).
             births += 1
             assert int(light.phase[fresh][0]) == births - 1 and int(light.direction[fresh][0]) == 2
-    assert simulation.ledger.transit_released[LIGHT] == 32 and simulation.ledger.held_spent[LIGHT] == 32
-    assert source.held == [K_B + 2 - 32, 0] and source.momentum == [-2048, 0, 0] and source.phase == 0
+    assert simulation.ledger.transit_released[LIGHT] == 31 and simulation.ledger.held_spent[LIGHT] == 31
+    assert source.held == [K_B + 2 - 31, 0] and source.momentum == [-1984, 0, 0] and source.phase == 63
     for _ in range(17):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
     assert (
-        gate.clicks == [32, 0] and gate.held == [32, 1] and simulation.ledger.escaped_amount(LIGHT) == 0
+        gate.clicks == [31, 0] and gate.held == [31, 1] and simulation.ledger.escaped_amount(LIGHT) == 0
     )
     clicks = [record for record in records if record["event"] == "click"]
-    assert len(clicks) == 32 and sorted(record["phase"] for record in clicks) == list(range(32))
-    assert simulation.ledger.transit_released[LIGHT] == 49 and source.held == [K_B + 2 - 49, 0]
-    assert source.age == 81 and source.phase == 17
+    assert len(clicks) == 31 and sorted(record["phase"] for record in clicks) == list(range(31))
+    assert simulation.ledger.transit_released[LIGHT] == 48 and source.held == [K_B + 2 - 48, 0]
+    assert source.age == 81 and source.phase == 16 and source.turned == 80
 
     base = world([12, 1, 1], [lamp(), counter(10, {"light": "measure"})], K_B)
     with pytest.raises(

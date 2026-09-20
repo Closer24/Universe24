@@ -1018,10 +1018,14 @@ class NatureBeamWorld:
 
     def turn(self, age: int, content: int) -> int:
         """The turn of a measured event's phase at the self-creation from
-        `age`: `by_clock(age, content x n, d)` phase steps at the clock's
-        rate `turn_rate` = (n, d), the free release's own form at the rate
-        [1, K] (the four unifications (2), BEAM_LAW note 33); the frame
-        refuses a turn of half the circle or more."""
+        `age` at a CONSTANT content from age 0: `by_clock(age, content x
+        n, d)` phase steps at the clock's rate `turn_rate` = (n, d), the
+        free release's own form at the rate [1, K] (the four unifications
+        (2), BEAM_LAW note 33). The frame reads the turn as the count the
+        body's turn accumulator gains, `by_drive(acc_turn, content x n,
+        d)` (the fraction-free law, note 41), of which this is the
+        constant-rate identity; the readings tools derive a lamp's turn by
+        it. The frame refuses a turn of half the circle or more."""
         numerator, denominator = self.turn_rate
         return by_clock(age, content * numerator, denominator)
 
