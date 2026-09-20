@@ -1414,7 +1414,12 @@ expected integers, written down before the first run:
   8) and p in {1, 5, 63, 64, 127} at content 1 and width 1, the drive
   fires exactly where `by_clock(n - 1, |p|, D)` is 1 and the drive after
   the n-th self-creation is n x |p| mod D; the negative momentum the same
-  with the sign -1; `test_push_width` (a) to (c) unchanged. On two axes
+  with the sign -1; the count primitive `core.integer.by_drive` (record
+  108) the same identity over 400 self-creations, and at the rate 7
+  against 3 a count of 1 at every self-creation with the drive 30 x 4
+  after 30 (the primitive's count is 0 or 1; below the denominator it is
+  `by_clock`'s), a denominator of 0 and a negative rate refused;
+  `test_push_width` (a) to (c) unchanged. On two axes
   (the physics-rule review's counterexample): content 16, width 1,
   momentum (1024, 320, 0) from (4, 4, 0), D = (2048, 1344): x steps at
   the even self-creations, y at 5, 9, 13, 17, 21 (y's drive after n

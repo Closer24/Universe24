@@ -42,7 +42,7 @@ from collections.abc import Iterator
 import numpy as np
 
 from event_universe.core.game_board import Address3, adjacent_node
-from event_universe.core.integer import apportion_whole, by_clock
+from event_universe.core.integer import apportion_whole, by_clock, by_drive
 from event_universe.events.amplitude import Layer
 from event_universe.events.measured import TALLIES, DetectorSet, Ledger, Measured, rational_sum
 from event_universe.events.nature_beam import (
@@ -95,16 +95,18 @@ def step_axis(drive: int, momentum: int, content: int, width: int) -> tuple[int 
     momentum's history, never two in one self-creation (one D is
     subtracted per self-creation; a residual earned at a larger momentum
     fires at the following self-creations, one Link each). A momentum of 0
-    never steps and leaves the drive as it is. The one place the rule
-    lives; the readings tools read it from here."""
+    never steps and leaves the drive as it is. The count primitive is
+    `core.integer.by_drive` (the model owner's record 108: the whole part
+    of an accumulated rate on the reader's own record, `by_clock` where
+    the rate is constant); the one place the step rule lives, the
+    readings tools read it from here."""
     if momentum == 0:
         return None, drive
     magnitude = abs(momentum)
-    reach = LABEL_SCALE * width * content + magnitude
-    drive += magnitude
-    if drive < reach:
+    fired, drive = by_drive(drive, magnitude, LABEL_SCALE * width * content + magnitude)
+    if not fired:
         return None, drive
-    return (1 if momentum > 0 else -1), drive - reach
+    return (1 if momentum > 0 else -1), drive
 
 
 def count_owed(age: int, counted: int, suspension: tuple[int, int]) -> int:
@@ -112,7 +114,10 @@ def count_owed(age: int, counted: int, suspension: tuple[int, int]) -> int:
     the frame; `_suspend` calls it): what its clock counted (`counted`, the
     presence or the age moment) times the width n / d of the world's
     `suspension`, off its clock, `by_clock(age, counted x n, d)` with `age`
-    the age before the self-creation; 0 when the width is 0."""
+    the age before the self-creation; 0 when the width is 0. The same
+    count as `by_drive` where the rate is constant (record 108): the owed
+    count reads a rate no push changes and keeps the clock's form, as the
+    release and the lamp do."""
     numerator, denominator = suspension
     if not numerator:
         return 0

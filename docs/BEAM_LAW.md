@@ -1080,8 +1080,16 @@ implementation's part of the contract. The design above is unchanged.
     (ii)) reads its k0 off the record's count of the rule's fires on the
     axis, `axis_steps` (a lost or refused step counted, as the whole part
     off the clock counted it), the same number at a constant momentum.
-    `run.json`, `state.json` and the `step` line carry `drive`; a declared
-    `drive` is refused as an unknown key. Re-registered under it, the old
+    The count primitive is `core.integer.by_drive(drive, rate, D)`, the
+    whole part of an accumulated rate on the reader's own record (the
+    model owner's record 108, "a generic solution if he can": one
+    primitive every count against a rate could use, equal to `by_clock`
+    wherever the rate is constant); the step reads it now, and the
+    clock's turn, the owed count, the release and the lamp keep `by_clock`
+    with their docstrings saying they are the same count where the rate
+    is constant, so nothing registered outside the pushed-body worlds
+    moves. `run.json`, `state.json` and the `step` line carry `drive`; a
+    declared `drive` is refused as an unknown key. Re-registered under it, the old
     integers kept as history in TEST_EXPECTATIONS.md: the bodies pushed or
     handed a momentum in `tests/test_contact.py` (a), (d), (e),
     `tests/test_nature_beam_clock.py` (d), `tests/test_paid_charge.py` (d)

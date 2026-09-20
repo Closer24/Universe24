@@ -15,10 +15,15 @@ record of the decision; the physicist's design RULES.md section 1 (docs/designs/
 as amended). The identity `beam-v1` is kept: the rule is the same count
 where the momentum is constant and a repair of it where it changes.
 
-- `engine.step_axis(drive, momentum, content, width)` returns the sign of
-  the Link stepped (or None) and the drive after it, in place of
-  `step_axis(age, momentum, content, width)` returning the sign: the rule
-  reads the body's record, not its age. A readings tool that replayed the
+- `core.integer.by_drive(drive, rate, denominator)`, the count primitive
+  (record 108): the whole part of an accumulated rate on the reader's own
+  record, (the count gained, the drive after), `by_clock` where the rate
+  is constant. `engine.step_axis(drive, momentum, content, width)` reads
+  it and returns the sign of the Link stepped (or None) and the drive
+  after it, in place of `step_axis(age, momentum, content, width)`
+  returning the sign: the rule reads the body's record, not its age. The
+  clock's turn, the owed count, the release and the lamp keep `by_clock`
+  (their rate is one no push changes). A readings tool that replayed the
   rule off the clock (`tools/coupling_readings.py`, `steps_by_rule`) calls
   the engine's function with a drive.
 - `Measured.drive` and `Measured.axis_steps` (three integers each);

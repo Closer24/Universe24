@@ -9,7 +9,10 @@ self-creation in which the body may step, `drive += |p|`, and when `drive
 The expected integers of docs/TEST_EXPECTATIONS.md ("The step drive"),
 written down before the first run:
 
-(a) the identity at a constant momentum: on a bar of 4000 self-creations,
+(a) the identity at a constant momentum (the count primitive
+    `core.integer.by_drive`, record 108, the whole part of an accumulated
+    rate on the reader's record, `by_clock` where the rate is constant;
+    the step rule reads it): on a bar of 4000 self-creations,
     for every |p| / D on the grid p in {1, 7, 64, 1000, 1024, 4095, 9215}
     with D = 9216 (content 16, width 8) and for content 1 with width 1 at
     p in {1, 5, 63, 64, 127}, the self-creations at which the drive fires
@@ -60,7 +63,7 @@ import random
 
 import pytest
 
-from event_universe.core.integer import by_clock
+from event_universe.core.integer import by_clock, by_drive
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.engine import step_axis
 from event_universe.events.world import LABEL_SCALE
@@ -110,6 +113,22 @@ def test_the_identity_at_a_constant_momentum(momentum, content, width):
     for n in range(1, 4001):
         sign, drive = step_axis(drive, -momentum, content, width)
         assert (sign == -1) == bool(by_clock(n - 1, momentum, reach)), n
+    # The count primitive itself (record 108): the same identity, and at a
+    # rate beyond the denominator (7 against 3) 2 or 3 per self-creation as
+    # by_clock gains them, the drive the remainder.
+    drive = 0
+    for n in range(1, 401):
+        fired, drive = by_drive(drive, momentum, reach)
+        assert fired == by_clock(n - 1, momentum, reach) and drive == (n * momentum) % reach, n
+    drive, gained = 0, []
+    for _ in range(30):
+        fired, drive = by_drive(drive, 7, 3)
+        gained.append(fired)
+    assert set(gained) == {1} and drive == 30 * 7 - 30 * 3
+    with pytest.raises(ValueError, match="positive denominator"):
+        by_drive(0, 1, 0)
+    with pytest.raises(ValueError, match="non-negative rate"):
+        by_drive(0, -1, 3)
 
 
 def test_the_identity_on_two_axes():

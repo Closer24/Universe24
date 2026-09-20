@@ -199,7 +199,10 @@ self-creation in which it may step and a step when `drive >= Q x S x M +
 |p|`, that much subtracted, so the count of Links is the whole part of
 the driven distance, bit-identical at a constant momentum to
 `by_clock(age, |p|, Q x S x M + |p|)` and never two Links in one
-interval; the drive of every axis advances at every such self-creation,
+interval, the count primitive `core.integer.by_drive` (record 108: the
+whole part of an accumulated rate on the reader's record; the clock's
+turn, the owed count, the release and the lamp keep `by_clock`, the same
+count where the rate is constant); the drive of every axis advances at every such self-creation,
 and a later axis whose drive reaches its D in the interval of an earlier
 axis's step loses that Link, its D subtracted, as the frame lost it
 before; the model owner's D1 of 2026-09-19 and the label along the unit
