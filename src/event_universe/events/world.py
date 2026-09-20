@@ -498,6 +498,15 @@ WEAK_RULE = "weak-v1"
 # declares `meeting: true`; absent, no paid unit reads the crowd and every
 # world reads as it did, byte for byte.
 MEETING_RULE = "meeting-v1"
+# The identity of the binding that costs content (`binding-v1`, the model
+# owner's record 115 of 2026-09-20, the physicist's design
+# docs/designs/binding_v1/DESIGN.md; BEAM_LAW note 40): at a contact under
+# `measure` the refused body gives the paid content it carries (`held` of a
+# paid family other than its own) to the flight on the heading opposite to
+# the refused step (`engine._give`). The record carries it when a measured
+# event holds a paid family at load; no registered world does, and every
+# world without one reads as it did, byte for byte.
+BINDING_RULE = "binding-v1"
 # The two built-in columns of every family: the first, gravity, has the
 # value [1, 1] on every unit of content and the sign minus (like contents
 # pull together); the second, charge, the family's `charge` per unit of
@@ -996,7 +1005,8 @@ class NatureBeamWorld:
         column beyond `charge`, or a lifetime: a force of nature in this
         law is a column with a sign and a range), `weak-v1` for the
         transformation `become` (the weak force in the world's terms),
-        `meeting-v1`, `amplitude-v1` and `doppler-v1` for their keys."""
+        `meeting-v1`, `amplitude-v1` and `doppler-v1` for their keys,
+        `binding-v1` when a measured event holds a paid family (`binding`)."""
         found = []
         if self.action is not None:
             found.append(BOHR_RULE)
@@ -1010,7 +1020,22 @@ class NatureBeamWorld:
             found.append(AMPLITUDE_RULE)
         if self.doppler:
             found.append(DOPPLER_RULE)
+        if self.binding:
+            found.append(BINDING_RULE)
         return found
+
+    @property
+    def binding(self) -> bool:
+        """Whether a measured event holds content of a paid family other
+        than its own at the start (`held`): the content a body carries,
+        which the binding that costs content (`binding-v1`) gives to the
+        flight at the body's contact under `measure`. A lamp's own paid
+        content is not carried content and never counts."""
+        return any(
+            content > 0 and not self.families[family].free and family != entry.family
+            for entry in self.measured
+            for family, content in enumerate(entry.held)
+        )
 
     @property
     def boundary_per_axis(self) -> dict[str, str]:
