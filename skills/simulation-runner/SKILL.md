@@ -42,7 +42,11 @@ skeleton, a `<title>`, colour tokens with dark mode, phone width) that carries,
 in this order: (1) a drawing of the GameBoard of the world with an icon for
 each thing on it: the detector (its set of Nodes), the star or source (a
 measured event, its content), the lamps, the walls, the probes, each with its
-name from the world file and a legend; (2) "Why it was tested", the question
+name from the world file and a legend (the owner, the same day: "to show atoms
+I do not need a detector": an atom is drawn as its proton and its electron's
+set on the GameBoard; a detector appears only where the world declares one,
+receiving what comes out of the thing, or a lamp that shoots a beam at it as
+physicists do); (2) "Why it was tested", the question
 in the owner's words and the expectation written before the run; (3) the
 moving picture of the run when there is one (the GIF inside the page, never
 alone) with the plane shown, the scale of each region and the intervals per
