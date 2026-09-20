@@ -852,3 +852,109 @@ the law today:
   until 7.4 (1) lands, and the tool `tools/amplitude_path.py` replays the
   received list from `events.jsonl`. No gap: nothing the transmission
   world needs waits on a law change.
+
+---
+
+## 8. Is the engine generic, and does it apply no formula? (the owner, 2026-09-20: "make sure the engine is fully generic and applies no formulas at all")
+
+### 8.1 The dynamic proof: the rename probe (`rename_probe.py`, `rename_probe.txt`)
+
+Twenty-two worlds of thirteen series (the gate set's kinds, the catalog,
+the W world, seven amplitude worlds), every family, detector and column
+renamed to keyword-like tokens (`measure`, `__proto__`, `rule`, `wave`,
+`sum`, `0`, `face:+x `, `read`, `constructor`, `pass`, `rerelease`, `beam`,
+`K`, `lamp`, `gate`, `mass`, `gravity`, ...), run, and compared with the
+names mapped back: `events.jsonl`, `state.json` and `run.json` identical on
+all twenty-two (912,000 record lines in all). A name reaches the engine
+only as a key into the world's own tables; nothing reads it. This repeats
+records 73, 90 and 96 (311, 70 and 100 comparisons with permutations as
+well) on the union tree.
+
+### 8.2 The static proof: what the engine compares and what it holds
+
+- **Branches on strings** (`grep` over `events/*.py`): the rules
+  (`read`, `measure`, `rerelease`, `pass`, `become`), the reading
+  components (`scalar`, `outside`, `here`, `vector`, `tensor`, `age`), the
+  readings (`wave`, `beam`, `sum`), the layer's kinds (`set`, `face`,
+  `border`), the law value and the refused old keys. All are schema words
+  of the world file, none a physical name. The two physical nouns in the
+  source are the names of the two built-in columns, `gravity` and
+  `charge` (`world.py` 448 and 449): names of columns, never compared
+  against a family.
+- **No formula of nature.** No field law, no 1 / r or 1 / r^2, no
+  Coulomb constant, no mass formula, no cosine of a setting at run time
+  (the tables are read), no floating point in the physical path. The
+  push is one signed inner product of a moment of arrivals with the
+  reader's declared columns (`push_form`); the clock, the release, the
+  count, the step, the columns and the lifetime are all one primitive,
+  `by_clock` (the whole part off an age); the flight and the collision
+  are tables generated once from the direction set; the click's reading
+  is a moment on the circle's tables; the gather is a ladder of integer
+  rungs. Every physical selection (which family is matter, which is
+  light, who reads whom and how, the charges, the columns, the ranges,
+  the windows, the branches) is data of the world file.
+
+### 8.3 The rules the engine does hold, each with its fixed form
+
+"No formula at all" is not literally true and cannot be: the law itself
+is arithmetic. What the engine holds is the Beam Law's own rules, each
+decided by the owner and recorded, with fixed constants a world cannot
+change. The honest list, with where each lives and what fixes it:
+
+| Rule | Where | Fixed form | Fixed by | A world can |
+| --- | --- | --- | --- | --- |
+| the speed and the label scale | `flight_table`, `unit_label`, `Q = 64` | `T_d = isqrt(3 |v|^2 Q^2)`, u_d the nearest integer vector to `Q v / |v|` | BEAM_LAW 2 and 3 | choose the directions; not Q |
+| the digital line and its period | `_bresenham`, `flight_table` | the axis furthest behind, lowest first | BEAM_LAW 3 | nothing |
+| the collision | `collision_table`, `collide` | the cyclic shift within a class of the 3^8 slot states | BEAM_LAW 4, note 18 | nothing (acts at every free Node) |
+| every rate off a clock | `by_clock`, `by_clock_rows`, `ages_at_key` | `((age + 1) n) // d - (age n) // d` | record 64 (2) | the pairs n / d |
+| the turn and the cost of a release | `_frame_all`, step 5 | `s = by_clock(age, M n, d)`; a unit costs `h s` (E = h f) | records 10 and 64 | K, the quantum h |
+| the release and the suspension | step 5, `count_owed` | `by_clock(age, M n, d)`, `by_clock(age, k n, d)` | BEAM_LAW 3 | the pairs |
+| the step of a body | `step_axis`, `_move` | one Link per `(Q S M + p) / p` self-creations | D1 (record 19 of 09-19) | `width` S, the momentum |
+| the push | `push_form` | `sum_c eps_c sign(V E_c n_c) by_clock(age, |V E_c n_c|, D_c d_c)`; a paid ray pushes by its label (kappa = 1) | records 27 and 35 | the columns' values and signs; not gravity's `(1, 1)`, sign -1, nor the charge column's sign +1, nor kappa = 1 for light |
+| the default table | `default_rule`, `default_reads` | a free family `read`, a paid one `measure`; `vector` on `read`, `scalar` otherwise | record 18 (09-19) | override any entry |
+| the contact | `_contact` | `measure` hands the axis component, `rerelease` returns twice it | record 34 and 73 | the occupant's rule |
+| the window | `window_admits`, `default_width` | `(d + w // 2) mod N < w`, w = N / 2 by default | record 04 (09-19), note 36 | s and w |
+| the pointer and its square | `coherent_pointer`, `pointer_units`, `AMPLITUDE_SCALE = 32`, the 1/256 tables | `X = sum 32 a C[p]`; the unit `2^26`; the nearest step | records 64 (1) and 40 | N |
+| the meeting | `meeting.py` | `adv = (|t| + Q/2) // Q`, `k = (phase + adv) // N`; the arc sectors about `t = sum kappa V` | record 67, note 35 | the key `meeting`; the columns (kappa) |
+| the turn by momentum | `engine._move` | `by_clock(k, |p| N, h)`, k the Links stepped | record 09-20 on Bohr (`bohr-v1`) | `action` h, `phase_by_momentum` |
+| the transformation | `transform` | R = sum amount x content paid from the own family; charges balanced at load | `weak-v1`, note 36 | `become`'s keys |
+| the split and its norm | step 5 | `(w a_i, m A, p + t_i)`, `A = sum a_i^2` | design 2.1 | the weights, the turns |
+| the label rotation | `rotate_rows`, `Layer.rotation`, `half_angle` | `U_s = [[C', S' v(t)], [-S', C' v(t)]]` on the tables of 2N | design 2.2 | s, t, the bit |
+| the gate | `apply_gate`, `Layer.join` | the CNOT permutation `(l_c, l_t) -> (l_c, l_t xor l_c)`, the only kind (`GATE_KINDS = ("cnot",)`) | design 10 | `hold`, `parties`; not the permutation |
+| the merge's cancel | `NatureBeamStore.merge` | rows of one record at phases N / 2 apart subtract | design 2.3 | nothing |
+| the ladder | `rungs`, `choose`, `node_choice` | `b_k = (2 N C_k + Total) // (2 Total)` | record 86 (a) | N |
+| the record's identity | `record_identity` | `number x 2^32 + ordinal` | (i) | nothing |
+
+### 8.4 The verdict, and the three places where a fixed rule could be data
+
+The engine is generic in the sense the owner asked for on 2026-09-19 and
+2026-09-20 ("no scenario-name conditions in a general law", "the engine
+does not know which family is which"): no physical name is read, no law
+of nature is written in it, every physical choice is a key. It is not
+formula-free: it is the Beam Law's twenty-one rules of integer arithmetic
+above, every one recorded as the owner's decision or the design's, with
+the constants Q = 64, 32, 1/256 and N.
+
+Three of the fixed forms are choices that could become keys of the world
+without any other change of the law, and are the ones to decide on:
+
+1. **Gravity is built in.** Every family carries the column `(1, 1)` with
+   the sign minus and cannot decline it (`built_in_columns`); the charge
+   column's sign +1 is fixed too, and a paid ray's push is its label with
+   no column. A world cannot place a family that gravitates otherwise or
+   not at all. The owner's decision of record 27 ("gravity the column
+   every family has") is the reason; if the owner wants it as data,
+   `gravity` becomes a declarable column with a default, one commit, and
+   every registered world byte-identical by the default.
+2. **The gate is one permutation.** `cnot` is the one `kind`; a declared
+   permutation table of joint labels (`{"kind": "table", "map": [[from,
+   to], ...]}`) would make the gate data as the split's weights are.
+3. **The turn by momentum is a formula in the frame.** `floor(k |p| N /
+   h)` lives in `engine._move`, selected by `action`; it is a hypothesis
+   (`bohr-v1`) beside the law, and the one rule not spelled through a
+   table or the push. It stays a formula unless the owner moves it to a
+   table entry of the body.
+
+Everything else that is fixed is the law's identity (the speed, the
+line, the collision, the clock, the window, the pointer, the ladder), and
+making it data would be a change of the law, not of the engine.
