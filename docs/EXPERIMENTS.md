@@ -2536,6 +2536,58 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   law changed beyond the one rule added. The page for the model owner:
   the scratchpad's `weak_impl/weak.html`, published by Boss.
 
+**The W world, the exchange form at one Link (no key added).**
+
+- **Model prediction, pinned before the run
+  ([the expectations](../examples/events/weak/README.md#the-w-world-the-exchange-at-one-link),
+  `expectations.json` under `w`).** The W is a paid family with a whole
+  charge per unit of amount and the lifetime 1 (BEAM_LAW note 34 (iv)):
+  a row born at a self-creation is at one Link at the age 1 (m(1) = 1)
+  and is measured there by the keys' rule for a paid arrival, its units
+  clicked and its label the push, or booked on the border `lifetime` at
+  the end of that interval where no table took it. A bar of 7 x 1 x 1,
+  K 2^20, N 64, `release` [1, 2^20], `suspension` 0; `n` (1839, charge
+  0), `p` (charge 4 per unit of content), `w` (paid, charge -7344 per
+  unit of amount, `lifetime` 1, no column); the neutron fixed at x = 2
+  with `become` at 8 into `p` with the one product `[["w", 1, 3]]` on
+  `directions` `[[1, 0, 0]]` (the charges 4 x 1836 - 7344 = 0), the
+  proton of 1836 fixed at x = 3; 16 intervals. Expected: the neutron's
+  `become` at tick 8 with the W on +x (GAMEBOARD); the proton's click of
+  `w` at tick 9, one Link and one interval later (DETECTOR); the proton's
+  charge 0 and content 1839 after, a neutron's in the detector's terms
+  (DETECTOR); no W on the border `lifetime` (DETECTOR); the momentum
+  exchanged, -192 on the neutron become proton and +192 on the proton
+  (GAMEBOARD: the label 64 x 1 x 3). The contact form (L = 0, no
+  carrier) is series J1 and J3's `become` itself; no Z family.
+- **Features.** `become` (note 34 (iii)), D-1 (note 34 (ii)), the
+  lifetime (note 31 (vii)); `tests/test_w_world.py`.
+- **Run.** `examples/events/weak/w_exchange.json` (the model id
+  `beam-weak-w_exchange-v1`, written by `make_worlds.py`),
+  `tools/run_series.py`; the worktree of `claude/universe24-new-3ytqde`
+  from its tip `6a596b34` on the commit of the W world, source
+  fingerprint `071197bc5d0f08cbe52aa44dca0e0d7ad9adf99ef6bf6023231310b9bb8f211c` (the transformation's, no source
+  changed), Python 3.14.0rc2, numpy 2.5.3, headless; 0.1 s, the books
+  balanced at every tick; 0 record checks failed; 5 readings inside, 0
+  outside.
+
+  | World | Expected (kind) | Measured | Verdict |
+  | --- | --- | --- | --- |
+  | `w_exchange` | the neutron's `become` at tick 8 into `p` with [["w", 1, 3]] on +x (GAMEBOARD); the proton's click of `w` at tick 9 (DETECTOR); the proton's charge [0, 1] and content 1839 after (DETECTOR); the border `lifetime` 0 for `w` (DETECTOR); the momentum -192 and +192 (GAMEBOARD) | `become` at tick 8, the products [["w", 1, 3, [1, 0, 0]]], the recoil [-192, 0, 0]; the click at tick 9, the clicks {w: 1}; the charge [0, 1], the content 1839 (the neutron become proton: [7344, 1] and 1836); the border {n: 0, p: 0, w: 0}; the momenta [-192, 0, 0] and [192, 0, 0] | inside (5 of 5) |
+
+- **Verdict (the W world).** The exchange is complete at the click: the
+  W carries the charge -7344 and the momentum 192 over one Link and one
+  interval and is held by the proton, which then has a neutron's charge
+  and content with no rule of its own fired; the family name it keeps is
+  the GameBoard's label, not a reading. The design's sketch of a
+  `become` entry on the proton (`into n` with a beta) is refused by the
+  law's balance (the W unit held keeps its charge), and balances only
+  with a positive product (a positron, `tests/test_w_world.py` (c)),
+  which the register does not use. What nature's W has and this does not
+  (the physicist's WEAK.md 5.3): the electroweak scale, the W and Z
+  masses fixing it, the propagator's rise, V-A; registered as the law's
+  limits, nothing tuned. The page for the model owner: the scratchpad's
+  `weak_impl/weak.html`, published by Boss.
+
 ### A3. Bell test in phase form, delayed geometry
 
 - **Confronts.** The same CHSH data as A2 and the quantum value at the

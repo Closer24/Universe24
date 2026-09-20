@@ -36,7 +36,11 @@ decay); every beta click carries the content 3 (a line, not nature's
 continuum). J3, the bound neutron fires at the tick its count at one Link
 from the proton gives (later, not never: the design's `at x (1 + k)`), the
 pair then two protons at one Link, bound (no step); with the `crowd` gate
-it never fires; the free neutron at its key `at` exactly. The record checks
+it never fires; the free neutron at its key `at` exactly. The W world, the
+neutron throws one W unit (a paid family of lifetime 1) at its key and the
+proton one Link away measures it one interval later, holding it: its
+content a neutron's and its charge 0, nothing on the border, the momentum
+exchanged. The record checks
 (completed, the books balanced at every tick) fail the tool; the readings
 are registered inside or outside their expectation and never moved.
 
@@ -73,6 +77,7 @@ ORDER = (
     "j3_deuteron",
     "j3_deuteron_crowd",
     "j3_neutron_free",
+    "w_exchange",
 )
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTATIONS = ROOT / "examples" / "events" / "weak" / "expectations.json"
@@ -104,6 +109,12 @@ class Thing:
     contacts: int = 0
     at: int | None = None
     become: dict[str, object] | None = None
+    # Its state at the end: the content it holds, its charge as a pair and
+    # its momentum; the ticks of its clicks per family (its `click` lines).
+    content: int = 0
+    charge: tuple[int, int] = (0, 1)
+    momentum: tuple[int, int, int] = (0, 0, 0)
+    click_ticks: dict[str, list[int]] = field(default_factory=dict)
 
     def arrivals(self, family: str) -> int:
         """The rays of a family that arrived at the thing over the run: what
@@ -128,6 +139,8 @@ class Reading:
     shell_clicks: dict[int, int] = field(default_factory=dict)
     shell_contents: dict[int, int] = field(default_factory=dict)
     shell_ages: list[int] = field(default_factory=list)
+    # The border `lifetime`'s clicks per family (the record's detector).
+    border_clicks: dict[str, int] = field(default_factory=dict)
 
     def of_family(self, family: str) -> list[Thing]:
         return [thing for thing in self.things if thing.family == family]
@@ -191,6 +204,15 @@ def read_run(folder: Path) -> Reading:
         declared = record["numbers"][str(thing.number)].get("become")
         if declared is not None:
             thing.at = int(declared["at"])
+        thing.content = int(state["content"])
+        thing.charge = (int(state["charge"][0]), int(state["charge"][1]))
+        momentum = [int(v) for v in state["momentum"]]
+        thing.momentum = (momentum[0], momentum[1], momentum[2])
+    for detector in record["detectors"]:
+        if detector["name"] == "lifetime":
+            reading.border_clicks = {
+                str(name): int(found["clicks"]) for name, found in detector["families"].items()
+            }
     shell = {str(d["name"]) for d in world.get("detectors", [])}
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for text in stream:
@@ -211,12 +233,16 @@ def read_run(folder: Path) -> Reading:
                 by_number[int(event["measured"])].become = event
             elif kind == "step":
                 by_number[int(event["measured"])].steps += 1
-            elif kind == "click" and event.get("detector") in shell and event["family"] == "beta":
-                tick = int(event["tick"])
-                reading.shell_clicks[tick] = reading.shell_clicks.get(tick, 0) + int(event["amount"])
-                content = int(event["content"])
-                reading.shell_contents[content] = reading.shell_contents.get(content, 0) + 1
-                reading.shell_ages.append(int(event["reading"]))
+            elif kind == "click":
+                if event.get("measured") is not None:
+                    thing = by_number[int(event["measured"])]
+                    thing.click_ticks.setdefault(str(event["family"]), []).append(int(event["tick"]))
+                if event.get("detector") in shell and event["family"] == "beta":
+                    tick = int(event["tick"])
+                    reading.shell_clicks[tick] = reading.shell_clicks.get(tick, 0) + int(event["amount"])
+                    content = int(event["content"])
+                    reading.shell_contents[content] = reading.shell_contents.get(content, 0) + 1
+                    reading.shell_ages.append(int(event["reading"]))
     return reading
 
 
@@ -425,6 +451,47 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
     return found
 
 
+def w_expectations(reading: Reading, expected: dict[str, object]) -> list[Criterion]:
+    """The W world against the generator's integers: the neutron's `become`
+    at its key with one W unit on +x, the proton's click one Link and one
+    interval later, its charge and content after (a neutron's in the
+    detector's terms), nothing on the border, the momentum exchanged."""
+    at = int(str(expected["at"]))
+    click_tick = int(str(expected["click_tick"]))
+    label = int(str(expected["label"]))
+    content = int(str(expected["content"]))
+    charge = expected["charge"]
+    assert isinstance(charge, list)
+    pair = (int(str(charge[0])), int(str(charge[1])))
+    neutron, proton = reading.things[0], reading.things[1]
+    become = neutron.become
+    return [
+        (
+            f"the neutron becomes a proton at its key {at} and throws one W unit of content 3 on +x",
+            become is not None
+            and int(str(become["triggered"])) == at
+            and become["products"] == [["w", 1, 3, [1, 0, 0]]],
+            GAMEBOARD,
+        ),
+        (
+            f"the proton takes the W at tick {click_tick} (one Link, the lifetime 1, one interval)",
+            proton.click_ticks.get("w") == [click_tick] and proton.clicks.get("w") == 1,
+            DETECTOR,
+        ),
+        (
+            f"the proton's charge {list(pair)} and content {content} after: a neutron's",
+            proton.charge == pair and proton.content == content,
+            DETECTOR,
+        ),
+        ("no W on the border lifetime", reading.border_clicks.get("w", 0) == 0, DETECTOR),
+        (
+            f"the momentum exchanged: -{label} on the neutron become proton, +{label} on the proton",
+            neutron.momentum == (-label, 0, 0) and proton.momentum == (label, 0, 0),
+            GAMEBOARD,
+        ),
+    ]
+
+
 def expectations(reading: Reading, pinned: dict[str, object] | None = None) -> list[Criterion]:
     """The criteria of each world against its expectation, written before
     the runs (README.md): (label, inside, the kind of the reading). The
@@ -435,6 +502,11 @@ def expectations(reading: Reading, pinned: dict[str, object] | None = None) -> l
     if reading.name.startswith("j2"):
         return j2_expectations(reading)
     pinned = pinned or {}
+    if reading.name.startswith("w_"):
+        w_pinned = pinned.get("w", {})
+        assert isinstance(w_pinned, dict)
+        w_expected = w_pinned.get(reading.name)
+        return w_expectations(reading, w_expected) if isinstance(w_expected, dict) else []
     become = pinned.get("become", {})
     assert isinstance(become, dict)
     expected = become.get(reading.name)
@@ -475,6 +547,24 @@ def print_world(reading: Reading, pinned: dict[str, object]) -> list[Criterion]:
                 f"[{GAMEBOARD}] {born} rays reach its distance within the run (the first-arrival age "
                 f"{first_arrival_age(thing.position[0])} off the flight table)"
             )
+    elif reading.name.startswith("w_"):
+        for thing in reading.things:
+            become = thing.become
+            print(
+                f"[{GAMEBOARD}]   number {thing.number} ({thing.family} as declared) at {thing.position}: "
+                + (
+                    f"`become` at tick {become['triggered']} into {become['into']} with the products "
+                    f"{become['products']}, the recoil {become['recoil']}; "
+                    if become is not None
+                    else "no transformation; "
+                )
+                + f"the momentum {list(thing.momentum)}"
+            )
+            print(
+                f"[{DETECTOR}]   number {thing.number}: the clicks {thing.clicks} at the ticks "
+                f"{thing.click_ticks}; the content {thing.content}, the charge {list(thing.charge)}"
+            )
+        print(f"[{DETECTOR}]   the border lifetime's clicks {reading.border_clicks}")
     else:
         neutrons = reading.of_family("n")
         fired = [thing for thing in neutrons if thing.become is not None]

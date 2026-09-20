@@ -39,6 +39,18 @@ Two fast cases pin the tool to the engine's record:
     (one click: the width 0 over the median 6); the clock's age 12 and
     waited 0, no step and no attempted step (the event is fixed), the key
     `at` 3 read off the record.
+(c) the W world: the bar of `tests/test_w_world.py` (a) (the neutron of
+    1839 at x = 2 with `become` at 3 into `p` with the one product
+    `[["w", 1, 3]]` on +x, the proton of 1836 at x = 3, the W of charge
+    -7344 per unit and lifetime 1), 8 intervals, the model
+    `beam-weak-w_exchange-v1`: the neutron's `become` line at tick 3 with
+    the products [["w", 1, 3, [1, 0, 0]]], its momentum (-192, 0, 0); the
+    proton's click of `w` at tick 4, its clicks {"w": 1}, its content
+    1839, its charge (0, 1), its momentum (192, 0, 0); the border
+    `lifetime` 0 for `w`; against the pinned integers (at 3, the click
+    tick 4, the label 192, the content 1839, the charge [0, 1]) the five
+    criteria inside, the kinds GAMEBOARD, DETECTOR, DETECTOR, DETECTOR,
+    GAMEBOARD; with the click tick pinned at 5 the second outside.
 """
 
 from __future__ import annotations
@@ -189,3 +201,61 @@ def test_read_run_reads_a_transformation_and_the_shells_curve(tmp_path):
     assert (
         TOOL.expectations(reading, {"become": {"j1_lattice": {"never": True, "gate": 1}}})[0][1] is False
     )
+
+
+def test_read_run_reads_the_w_world(tmp_path):
+    """(c)."""
+    document = {
+        "law": "beam",
+        "model_id": "beam-weak-w_exchange-v1",
+        "shape": [7, 1, 1],
+        "boundary": "open",
+        "ticks": 8,
+        "K": 1 << 20,
+        "N": 64,
+        "release": [1, 1 << 20],
+        "suspension": 0,
+        "families": [
+            {"name": "n", "quantum": 0, "phase": False},
+            {"name": "p", "quantum": 0, "phase": False, "charge": 4},
+            {"name": "w", "quantum": 1, "charge": -7344, "lifetime": 1, "phase": False},
+        ],
+        "measured": [
+            {
+                "position": [2, 0, 0],
+                "family": "n",
+                "amount": 1839,
+                "fixed": True,
+                "directions": [[1, 0, 0]],
+                "become": {"at": 3, "into": "p", "products": [["w", 1, 3]]},
+            },
+            {"position": [3, 0, 0], "family": "p", "amount": 1836, "fixed": True},
+        ],
+    }
+    folder = tmp_path / "exchange"
+    folder.mkdir()
+    execute_nature_beam_run(
+        parse_nature_beam_world(document), json.dumps(document).encode("utf-8"), folder, "test", 8
+    )
+    reading = TOOL.read_run(folder)
+    assert reading.name == "w_exchange" and reading.completed and reading.balanced
+    neutron, proton = reading.things
+    assert neutron.become is not None and neutron.become["triggered"] == 3
+    assert neutron.become["products"] == [["w", 1, 3, [1, 0, 0]]] and neutron.momentum == (-192, 0, 0)
+    assert proton.click_ticks == {"w": [4]} and proton.clicks == {"n": 0, "p": 0, "w": 1}
+    assert (proton.content, proton.charge, proton.momentum) == (1839, (0, 1), (192, 0, 0))
+    assert reading.border_clicks["w"] == 0
+    pinned = {
+        "w": {"w_exchange": {"at": 3, "click_tick": 4, "label": 192, "content": 1839, "charge": [0, 1]}}
+    }
+    criteria = TOOL.expectations(reading, pinned)
+    assert [ok for _, ok, _ in criteria] == [True] * 5
+    assert [kind for _, _, kind in criteria] == [
+        TOOL.GAMEBOARD,
+        TOOL.DETECTOR,
+        TOOL.DETECTOR,
+        TOOL.DETECTOR,
+        TOOL.GAMEBOARD,
+    ]
+    late = {"w": {"w_exchange": {**pinned["w"]["w_exchange"], "click_tick": 5}}}
+    assert [ok for _, ok, _ in TOOL.expectations(reading, late)] == [True, False, True, True, True]

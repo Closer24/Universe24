@@ -329,5 +329,17 @@
    "latest": 512,
    "slack": 3
   }
+ },
+ "w": {
+  "w_exchange": {
+   "at": 8,
+   "click_tick": 9,
+   "label": 192,
+   "content": 1839,
+   "charge": [
+    0,
+    1
+   ]
+  }
  }
 }

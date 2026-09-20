@@ -35,6 +35,7 @@ integer).
 | (i) the window's width `phase_width` (N / 2 by default) | `55f30af0309c2812646384a0caf4d16a956e5ae525df878a008c6bf075e90941` | 85 identical, 0 changed | 4 / 85 identical | 4 / 85 identical | `widths` per measured event (None where no width is declared) |
 | (ii) D-1, a paid family's whole charge per unit of amount on the charge line | `b28c5865ec143004b36203e8aad70a4bed65f80896cc6b5f526f6d71748732b6` | 85 identical, 0 changed | 4 / 85 identical (the `widths` of (i) alone) | 4 / 85 identical (the same) | none (no registered world declares a charge on a paid family) |
 | (iii) the transformation `become`, the identity `weak-v1` | `071197bc5d0f08cbe52aa44dca0e0d7ad9adf99ef6bf6023231310b9bb8f211c` | 85 identical, 0 changed | 4 / 85 identical (the `widths` of (i) and the added `became` of the states) | 0 / 85 identical (the added `become` in `numbers` of every declared measured event, None everywhere) | `became` per measured event (the transformations fired) and its books' measured line; `become` per measured event in `numbers` (None where none is declared) |
+| (iv) the W world (no key added; the source byte-identical to (iii)'s) | `071197bc5d0f08cbe52aa44dca0e0d7ad9adf99ef6bf6023231310b9bb8f211c` | as (iii): 85 identical, 0 changed | as (iii) | as (iii) | none |
 
 No registered series moves (C, 7, D, E, G, H, I, K, Bell, A10, the
 catalog): every reading of the register is the same integer under the
@@ -74,6 +75,17 @@ a gap of their line-mates' rows; their count at the trigger 15 rows,
 intervals after their pinned ticks (the count over a clock's history
 under a fan's dwells is not the one tick's count the estimator took); the
 numbers in the register, nothing moved.
+
+**The W world, the exchange at one Link** (the register entry
+[J, the weak force (2026-09-20)](EXPERIMENTS.md#j-the-weak-force-2026-09-20)):
+`examples/events/weak/w_exchange.json` run through `tools/run_series.py`
+at the fingerprint `071197bc5d0f08cbe52aa44dca0e0d7ad9adf99ef6bf6023231310b9bb8f211c` (the
+transformation's: the W world changes no source), 16 intervals, 0.1 s,
+the books balanced at every tick; `tools/weak_readings.py`: 0 record
+checks failed, 5 readings inside, 0 outside: the neutron's `become` at
+tick 8 with the W on +x, the proton's click at tick 9, its charge [0, 1]
+and content 1839 after, the border `lifetime` 0, the momenta -192 and
++192.
 
 **Series J2, the neutrino's passage through a filled bar** (the register
 entry [J, the weak force (2026-09-20)](EXPERIMENTS.md#j-the-weak-force-2026-09-20)):

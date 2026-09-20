@@ -256,7 +256,11 @@ the deuteron of series I with `become` at 512 on the neutron
 reads each neutron's `become` line (its tick and the count its clock read,
 GAMEBOARD) and the shell's clicks per interval with their contents and
 ages (DETECTOR) against the ticks computed before the runs from the
-clock's rule and the counts a warm run read (`expectations.json`).
+clock's rule and the counts a warm run read (`expectations.json`). The W
+world (`w_exchange`, no key added): the W a paid family with a whole
+charge per unit of amount and `lifetime` 1, thrown by a neutron's
+`become` and measured by the proton one Link away one interval later,
+which then has a neutron's charge and content.
 
 ## The entity catalog
 

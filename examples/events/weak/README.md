@@ -199,3 +199,40 @@ of the 64 neutrons of `j1_source` and the deuteron's neutron fired 1 to
 fan's dwells is not one number over its history; the count at the trigger
 was the warm count). The estimator was one tick's count; the lesson for
 the next series is a range from the count's history over a dwell period.
+
+## The W world: the exchange at one Link
+
+**What was added on the law's side** ([BEAM_LAW note 34](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(iv)): nothing. The W is a paid family with a whole charge per unit of
+amount (D-1) and the family key `lifetime` 1, no column: a row born at a
+self-creation is at one Link at the age 1 and is measured there by the
+keys' rule for a paid arrival (its units clicked, its label the push), or
+booked on the border `lifetime` where no table took it. L = 0 is no
+family at all: the contact form of the weak force is the `become` entry
+itself (series J1 and J3); no Z family.
+
+**The world.** A bar of 7 x 1 x 1, K 2^20, N 64, `release` [1, 2^20] (no
+free release of 1839 before the age 570), `suspension` 0; `n` (1839,
+charge 0), `p` (charge 4 per unit of content: 7344 on 1836), `w` (paid,
+charge -7344 per unit of amount, `lifetime` 1); the neutron fixed at
+x = 2 with `become` at 8 into `p` with the one product `[["w", 1, 3]]`
+(the charges 4 x 1836 - 7344 = 0) on `directions` `[[1, 0, 0]]`, the
+proton of 1836 fixed at x = 3; 16 intervals.
+
+| World | What | Expected |
+| --- | --- | --- |
+| `w_exchange` | the exchange at one Link | the neutron's `become` at tick 8 with the W on +x, the recoil -192 (GAMEBOARD); the proton's click of `w` at tick 9, one Link and one interval later (DETECTOR); the proton's charge 0 and content 1839 after, a neutron's in the detector's terms (DETECTOR); no W on the border `lifetime` (DETECTOR); the momentum exchanged, -192 and +192 (GAMEBOARD) |
+
+```bash
+PYTHONPATH=src python tools/run_series.py --out artifacts/weak examples/events/weak/w_exchange.json
+PYTHONPATH=src python tools/weak_readings.py artifacts/weak
+```
+
+**What was measured (2026-09-20).** 5 readings inside, 0 outside: the
+`become` at tick 8 with [["w", 1, 3, [1, 0, 0]]] and the recoil [-192, 0,
+0]; the click at tick 9; the charge [0, 1] and the content 1839; the
+border {n: 0, p: 0, w: 0}; the momenta [-192, 0, 0] and [192, 0, 0]. The
+exchange is complete at the click. The design's sketch of a `become`
+entry on the proton (`into n` with a beta product) is refused by the
+law's balance and balances only with a positive product
+(`tests/test_w_world.py` (c)); the register does not use it.

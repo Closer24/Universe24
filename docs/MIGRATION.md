@@ -6,6 +6,25 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The weak force, on 2026-09-20, (iv): the W world (no key added)
+
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"DECIDED: go on everything", item (3): the W world after the
+transformation; [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (iv)).
+No key, no refusal and no record line is added: the W is a paid family
+with a whole charge per unit of amount (D-1, (ii)) and the family key
+`lifetime` 1 ([the lifetime](#the-columns-of-the-one-coupling-the-lifetime-the-held-content-and-the-contact-through-the-table-on-2026-09-20-columns-and-lifetime-per-family-held-per-measured-event-columns-v1-the-contact-record)), thrown as
+a product of a `become` ((iii)) and measured by the keys' rule one Link
+away; L = 0 is no family at all (a lifetime of 0 is refused, as before),
+the contact form being the `become` entry itself. The source is
+byte-identical to (iii)'s, so every example world replays as under (iii)
+(VALIDATION). `examples/events/weak/w_exchange.json` (written by
+`make_worlds.py`, its integers under `w` in `expectations.json`),
+`tools/weak_readings.py` reads it (the things' `content`, `charge`,
+`momentum` and `click_ticks` off the record, the border `lifetime`'s
+clicks per family), `tests/test_w_world.py` (a) to (d) and
+`tests/test_weak_readings.py` (c).
+
 ## The weak force, on 2026-09-20, (iii): the transformation `become`, the identity `weak-v1`
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),

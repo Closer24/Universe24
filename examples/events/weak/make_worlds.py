@@ -1,8 +1,9 @@
 """Write the worlds of series J, "the weak force", under the Beam Law (the
 model owner, 2026-09-20, "go on everything": the neutrino first with the
 table-entry key `phase_width` and no change of law, series J2; then the
-transformation `become` with the identity `weak-v1`, series J1 and J3; the
-physicist's design, WEAK.md sections 1, 2 and 4.5).
+transformation `become` with the identity `weak-v1`, series J1 and J3;
+then the W world, the exchange form at one Link; the physicist's design,
+WEAK.md sections 1, 2 and 4.5).
 
 Every expectation printed here is written before the run and is a GameBoard
 computation from the engine's own functions, never a rule replayed: the
@@ -82,6 +83,22 @@ second pulse of the key at the age 1024 lies beyond the run); (c)
 `j3_neutron_free`: the neutron alone at the centre fires at tick 512
 exactly (its clock counts nothing).
 
+The W world, the exchange form at one Link (WEAK.md 1.1; no key added to
+the law: `become`, D-1 and the lifetime composed): a bar of 7 x 1 x 1,
+K 2^20, N 64, `release` [1, 2^20] (no free release of 1839 before the age
+570), `suspension` 0; `w` a paid family (quantum 1) with the charge -7344
+per unit of amount and the `lifetime` 1, no column; the neutron `n` of
+content 1839 fixed at x = 2 with `become` at 8 into `p` with the one
+product `[["w", 1, 3]]` (the charges: 4 x 1836 on the proton left against
+-7344 on the W unit) and `directions` `[[1, 0, 0]]`, the proton `p` of
+content 1836 fixed at x = 3, 16 intervals. `w_exchange`: expected the W
+row born at tick 8 (the recoil -192 on the neutron become proton), at one
+Link at tick 9 (its age 1, m(1) = 1) and measured there by the keys' rule
+for a paid arrival (the push +192): the proton then holds the W unit, its
+content 1839 and its charge 0, a neutron's in the detector's terms; no W
+on the border `lifetime`. The contact form (L = 0, no carrier) is series
+J1 and J3's `become` itself; no Z family.
+
     python examples/events/weak/make_worlds.py [--out DIR] [--no-expect]
 """
 
@@ -144,6 +161,11 @@ J3_TICKS = 700
 J3_FREE_TICKS = 600
 # The intervals run without `become` to read the steady crowd of each clock.
 WARM_TICKS = 100
+# The W world: the W's content per unit, the neutron's key and the run.
+W_CONTENT = 3
+W_AT = 8
+W_TICKS = 16
+W_LABEL = 64 * W_CONTENT
 EXPECTATIONS_FORMAT = "weak-expectations-v1"
 
 
@@ -431,6 +453,63 @@ def j3_worlds() -> dict[str, Json]:
     }
 
 
+# -- The W world -------------------------------------------------------------------
+
+
+def w_families() -> list[Json]:
+    return [
+        {"name": "n", "quantum": 0, "phase": False},
+        {"name": "p", "quantum": 0, "charge": CHARGE, "phase": False},
+        {"name": "w", "quantum": 1, "charge": BETA_CHARGE, "lifetime": 1, "phase": False},
+    ]
+
+
+def w_world() -> Json:
+    """The exchange at one Link: the neutron throws one W unit on +x at its
+    key and the proton beside it measures it by the keys' rule."""
+    return {
+        "law": "beam",
+        "model_id": "beam-weak-w_exchange-v1",
+        "shape": [7, 1, 1],
+        "boundary": "open",
+        "ticks": W_TICKS,
+        "K": K,
+        "N": N,
+        "release": [1, 1 << 20],
+        "suspension": 0,
+        "families": w_families(),
+        "measured": [
+            {
+                "position": [2, 0, 0],
+                "family": "n",
+                "amount": NEUTRON,
+                "fixed": True,
+                "directions": [[1, 0, 0]],
+                "become": {"at": W_AT, "into": "p", "products": [["w", 1, W_CONTENT]]},
+            },
+            {"position": [3, 0, 0], "family": "p", "amount": PROTON, "fixed": True},
+        ],
+    }
+
+
+def w_worlds() -> dict[str, Json]:
+    return {"w_exchange": w_world()}
+
+
+def w_expectations() -> dict[str, dict[str, object]]:
+    """The W world's integers (GAMEBOARD, from the rule: a row of lifetime 1
+    is at one Link at the age 1, the label 64 x amount x content)."""
+    return {
+        "w_exchange": {
+            "at": W_AT,
+            "click_tick": W_AT + 1,
+            "label": W_LABEL,
+            "content": PROTON + W_CONTENT,
+            "charge": [0, 1],
+        }
+    }
+
+
 def steady_counts(document: Json) -> dict[int, int]:
     """The count each `n` clock reads at its Node once the crowd is steady
     (a GameBoard reading of the engine itself): the world run without its
@@ -490,9 +569,9 @@ def main() -> None:
     # never `format`): the tests that read every JSON under examples/events
     # as a world skip it, as they skip an entity definitions file.
     expectations: dict[str, object] = {"format": EXPECTATIONS_FORMAT, "j2": j2_expectations()}
-    for name, expected in j2_expectations().items():
-        print(f"  {name}: expected (GAMEBOARD, from the flight table) {expected}")
-    worlds = {**j2_worlds(), **j1_worlds(), **j3_worlds()}
+    for name, j2_expected in j2_expectations().items():
+        print(f"  {name}: expected (GAMEBOARD, from the flight table) {j2_expected}")
+    worlds = {**j2_worlds(), **j1_worlds(), **j3_worlds(), **w_worlds()}
     for name, document in worlds.items():
         path = args.out / f"{name}.json"
         path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
@@ -512,6 +591,9 @@ def main() -> None:
                 f"({len(values)} distinct), the trigger ticks {expected['earliest']} .. {expected['latest']} "
                 f"(each up to {expected['slack']} earlier by the build-up)"
             )
+    expectations["w"] = w_expectations()
+    for name, w_expected in w_expectations().items():
+        print(f"  {name}: expected (GAMEBOARD, from the rule) {w_expected}")
     (args.out / "expectations.json").write_text(
         json.dumps(expectations, indent=1) + "\n", encoding="utf-8"
     )

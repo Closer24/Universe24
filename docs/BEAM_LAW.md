@@ -2122,3 +2122,53 @@ implementation's part of the contract. The design above is unchanged.
     clock slowed by its count as every clock is, and the three readings
     outside their pins are the estimator's (one tick's count for a whole
     history), reported and not moved.
+    **(iv) The W world: the exchange form at one Link, no key added** (the
+    model owner, 2026-09-20, "go on everything", item (3): the W world
+    after the transformation; the physicist's design, WEAK.md 1.1 and
+    4.5; `tests/test_w_world.py` (a) to (d)). The W is a paid family
+    (`quantum` 1) with a whole charge per unit of amount (D-1, (ii)) and
+    the family key `lifetime` 1 (note 31 (vii)), no column: a row born at
+    a self-creation makes its one step at the age 1 (m(1) = 1 on every
+    direction), is read by the table of the measured event it arrives at
+    (a paid arrival is measured by the keys' rule: its units clicked, its
+    label the push) and is booked on the border `lifetime` at the end of
+    that interval where no table took it; it exists on the neighbours of
+    its emitter and nowhere else. Nothing is added to the law: the W
+    world composes `become` ((iii)), D-1 and the lifetime. L = 0 is no
+    family at all (the parser refuses a lifetime of 0): the contact form
+    of the weak force is the `become` entry itself, its products released
+    by the measured event with no carrier on the GameBoard (Fermi's form;
+    series J1 and J3 are the contact form). No Z family: a neutral
+    current is the neutrino's own row met by a `rerelease` within a
+    window. The exchange: a neutron (1839 of `n`) with `become` at its
+    key into `p` and the one product `[["w", 1, 3]]` (the charges: 4 x
+    1836 on the proton left against -7344 on the W unit, 0 the neutron's)
+    throws the W on +x; one interval later the proton one Link away
+    measures it and holds it: its content 1836 + 3 = 1839 and its charge
+    7344 - 7344 = 0, a neutron's content and a neutron's charge in the
+    detector's terms, with no `become` entry on the proton at all (test
+    (a): the click at tick 4 for the key 3, the push (192, 0, 0), the
+    recoil (-192, 0, 0), the charge line [7344, 1] at every tick, the
+    store empty, the border 0). What the implementation decided where the
+    design was silent: the design's sketch of the proton's entry, `w:
+    {rule become, into n, products [["beta", ...]]}`, does not balance
+    under the law (the W unit clicked stays held with its own -7344, the
+    proton's line loses +7344 to `n`'s 0 and the beta carries another
+    -7344), so the parser refuses it (test (c)); a `become` entry on the
+    proton balances only with a positive paid product (a positron of
+    +7344: p + W -> n + e+, the W unit held), which the test pins and the
+    register does not use: the exchange is complete at the click, and the
+    family name `p` on the proton holding the W is the GameBoard's label,
+    not the detector's reading. The record: nothing new (`hypotheses`
+    carries `columns-v1` for the lifetime and `weak-v1` for the
+    transformation). Checked on the 85 example worlds: the source is
+    byte-identical to (iii)'s (the same fingerprint), so every replay is
+    (iii)'s (VALIDATION.md). What the detector's world sees (the
+    register's `w_exchange`, EXPERIMENTS): the W born at the key and
+    taken one Link and one interval later, the proton's charge 0 and
+    content 1839 after, nothing on the border, the momentum exchanged
+    (+192 and -192): 5 readings inside, 0 outside. What nature's W has and
+    this does not (the physicist's 5.3, registered as limits): the
+    electroweak scale and its broken symmetry, the W and Z masses fixing
+    the scale, the propagator's rise and V-A; the law's W is a carrier of
+    charge and momentum over one Link and nothing else.

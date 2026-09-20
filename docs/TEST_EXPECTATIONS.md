@@ -48,6 +48,7 @@ kept, their pins the law of events').
 | `test_window_width.py` | The width of a window, `phase_width`: the one floor `window_admits` equal to the half circle at the default width on every pair, the admitted fraction w / N against the source's stride (10, 20, 40, 320 of 640; the stride 2's coset), `beam`'s pairing arc, a lamp's width, the refusals ([below](#the-width-of-a-window)) | new (2026-09-20, the model owner's "go on everything", the neutrino first) |
 | `test_weak_readings.py` | The weak-force readings tool (series J) reads the runner's record and the flight table: on a short bar run through the runner, the first reader's 3 clicks of 192 arrivals, the far detector's 151, the first-arrival ages 13 and 51; on the toy of the transformation with a shell of 62 readers, the `become` line and the shell's one click ([below](#the-width-of-a-window), [the transformation](#the-transformation)) | new (2026-09-20, series J2; (b) with series J1) |
 | `test_become.py` | The transformation `become`, `weak-v1`: the clock trigger at the self-creation whose clock reaches `at`, the products born as a re-release is with the recoil over all of them, the `became` line and the charge line exact; the click trigger within a window and the entry consumed; the crowd slowing the trigger and the gate holding it; the charge line through the click of the product; the refusals and the run refused when the event cannot pay ([below](#the-transformation)) | new (2026-09-20, the model owner's "go on everything", item (1)) |
+| `test_w_world.py` | The W world, the exchange at one Link: the W (paid, charge -7344 per unit, lifetime 1) thrown at the neutron's key and measured by the proton one interval later, its content and charge a neutron's; the W into empty space on the border; the click trigger on the proton refused with the design's sketch and balanced with a positive product; the refusals ([below](#the-w-world)) | new (2026-09-20, the model owner's "go on everything", item (3)) |
 | `test_nature_beam_world_parsing.py` | The world file of the Beam Law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-beam-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
 | `test_nature_beam_worlds.py` | The worlds of the Beam Law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing, `two_contents` not refused with its face records exact ([below](#the-worlds-of-the-beam-law)) | `test_event_worlds` (a, d) |
 | `test_nature_beam_books.py` | The books as running ledger lines: the transit, content and momentum lines of `books()` equal the recount over the store at every interval of a world that exercises every way a row comes or goes; an empty world ([below](#the-books)) | new (2026-09-19, the optimizations) |
@@ -1368,6 +1369,61 @@ on +y at (4, 6, 4) at tick 6 (the age 3, m(3) = 2), the shell's clicks
 shell; the tool's criteria against the pinned tick 3 all inside (the
 tick, the content, the count 1 of 1, the step: one click), a `never`
 expectation outside.
+
+## The W world
+
+`tests/test_w_world.py` (docs/BEAM_LAW.md, section 10 note 34 (iv); the
+model owner, 2026-09-20, "go on everything", item (3): the W world after
+the transformation; the physicist's design, WEAK.md 1.1 and 4.5). A bar
+of 7 x 1 x 1, K 2^20, N 64, `release` [1, 2^20] (no free release of 1839
+before the age 570), `suspension` 0; `n` (free, content 1839, charge 0),
+`p` (free, charge 4 per unit of content: 7344 on 1836), `w` (paid,
+quantum 1, a phase circle, charge -7344 per unit of amount, `lifetime` 1),
+`beta` (paid, charge -7344) and `positron` (paid, charge +7344); the
+neutron of 1839 fixed at x = 2 with `become` at 3 into `p` with the one
+product `[["w", 1, 3]]` on `directions` `[[1, 0, 0]]`, the proton of 1836
+fixed at x = 3; the W row's label 64 x 1 x 3 = 192. The expected
+integers, written down before the first run:
+
+- (a) the exchange: at tick 3 the neutron becomes `p` (`held` [0, 1836,
+  0, 0, 0], charge (7344, 1)) and throws the W on +x (the `become` record
+  with [["w", 1, 3, [1, 0, 0]]], the recoil [-192, 0, 0]); at tick 4 the
+  W (age 1) at x = 3 is measured by the keys' rule (a `click` naming the
+  measured event 2, `w`, amount 1, content 3, the push (192, 0, 0)): the
+  proton's `held` [0, 1836, 3, 0, 0], content 1839, clicks [0, 0, 1, 0,
+  0], charge (0, 1), momentum (192, 0, 0); the store empty after tick 4,
+  no click on the border; the charge line [7344, 1] at every tick of 8;
+  the `w` lines released 1, measured 3 (the content), current 0, the
+  lifetime line 0; the run's `hypotheses` ["columns-v1", "weak-v1"]; the
+  record's states and the border `lifetime` with 0 clicks of `w`.
+- (b) the W into empty space (`directions` `[[-1, 0, 0]]`): at tick 4
+  the W at x = 1 is booked on the border `lifetime` (a `click` naming
+  the detector `lifetime`, amount 1, content 3, momentum [-192, 0, 0]);
+  the proton untouched; the escaped amount of `w` 1; the charge line
+  [7344, 1] at every tick.
+- (c) the click trigger on the proton: the design's sketch `w: {rule
+  become, phase_window 0, phase_width 64, into n, products [["beta", 1,
+  3]]}` refused at load ("charges do not balance"); with the product
+  `[["positron", 1, 3]]` accepted: at tick 4 the W clicks and the proton
+  becomes `n`, the positron born on -y (the clock age 3), label (0,
+  -192, 0), the recoil (0, 192, 0), the momentum (192, 192, 0); the
+  `become` record at tick 4 with the trigger "click", triggered 4, the
+  products [["positron", 1, 3, [0, -1, 0]]], counted 1; `held` [1833, 0,
+  3, 0, 0], content 1836, charge (-7344, 1); the positron through
+  `face:-y` at tick 5; the charge line [7344, 1] at every tick; the
+  `became` lines `p` 0 and `n` -6, the `w` line measured 3, the
+  `positron` line released 1; the entry consumed.
+- (d) the refusals, naming the key: `lifetime` 0 on `w`; the W's charge
+  [-7344, 2].
+
+`tests/test_weak_readings.py` (c), the tool on the W world: the bar of
+(a) run through the runner with the model `beam-weak-w_exchange-v1`: the
+neutron's `become` line at tick 3 with [["w", 1, 3, [1, 0, 0]]], its
+momentum (-192, 0, 0); the proton's click of `w` at tick 4, its content
+1839, charge (0, 1), momentum (192, 0, 0); the border 0; the five
+criteria inside against the pinned integers (the kinds GAMEBOARD,
+DETECTOR, DETECTOR, DETECTOR, GAMEBOARD), the click tick pinned at 5
+outside.
 
 ## A paid family's charge
 
