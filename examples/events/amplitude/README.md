@@ -131,7 +131,8 @@ expectations under `ghz`.
 `cnot_pair_<a>_<b>` (a plane of 16 x 11: the control's lamp at (2, 5)
 through the Hadamard at (4, 5), a `rerelease` whose `rotate` turns the
 label bit 0 by N/4, into the gate at (8, 5), a `rerelease` with `gate`
-{cnot, hold, 2 parties} sending the control on +y to Alice at (8, 8) and
+{cnot, hold, 2 parties, control [1, 0, 0]: the direction the control's
+rows arrive on} sending the control on +y to Alice at (8, 8) and
 the target, born at (14, 5), on -y to Bob at (8, 2), his window -b);
 `cnot_twice` (the gate's outputs into one gate per arm, the identity);
 `cnot_ghz_<basis>` (three lamps into one gate of three parties on a board

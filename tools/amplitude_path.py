@@ -193,6 +193,8 @@ def replay(run: Path, quiet: bool = True) -> tuple[Layer, list[dict[str, Any]]]:
                         for identity, labels in line["present"]
                     },
                 )
+                # The units the copies added, booked on the live count.
+                layer.split(int(line["survivor"]), 0, int(line.get("added", 0)))
             elif event == "rotate":
                 # The rotation's amounts: w becomes w C' + w S' per row, the
                 # live count following.

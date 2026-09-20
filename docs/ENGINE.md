@@ -505,16 +505,23 @@ rows on the bit cleared and set, the amounts w C'[s] and w S'[s] of the
 half-angle tables, the multiplicity m x 65536, the phases as the matrix's
 signs say (from a clear bit the set bit takes a half turn; from a set bit
 both take the turn t), not a click; a `rerelease` entry's `gate` `{kind:
-"cnot", hold, parties}` (under `amplitude`, the design's section 10): the
-rows of `parties` records of distinct lamps pending at the entry (with
-`hold`, true by default, held until every one of them has all its live
-units there; without it the rows present) join into the record of the
-lowest identity, the joint labels the product of their label sets (the
-control's bits first, one bit per arm) permuted by the CNOT from the
-control's bit 0 to the bit of every other arm, every row replicated over
-the other records' labels with its multiplicity times the copies, the
-others' identities aliased in the layer and their rows elsewhere read as
-the survivor's; the `gate` and `rotate` record lines; the multiplicity a
+"cnot", hold, parties, control}` (under `amplitude`, the design's section
+10): the rows of `parties` records of distinct lamps pending at the entry
+(one per emitter, the earliest born; with `hold`, true by default, held
+until rows of `parties` distinct emitters are pending, read from the
+rows alone; without it the rows present) join into the record of the
+control, the record whose rows arrive on the `control` direction (a
+vector of the table, required for two parties or more, refused for one;
+refused at the gate unless exactly one record arrives on it), the joint
+labels the product of their label sets (the control's bits first, one
+bit per arm) permuted by the CNOT from the control's bit 0 to the bit of
+every other arm, every row replicated over the other records' labels
+with its multiplicity times the copies (the units added booked on the
+layer's live count; the `gate` line's `added`), the others' identities
+aliased in the layer; a record that reaches a gate with units elsewhere
+or with an offer already made is refused (the lazy relabelling of the
+design is not built); a gate of one party relabels the rows present and
+joins nothing; the `gate` and `rotate` record lines; the multiplicity a
 row can reach through every re-emitter of the world (the splits' norms,
 65536 per rotation, 2^parties per gate) is bounded at load by 2^62 - 1
 (the register's ceiling: three label rotations on a path fit, Grover's
