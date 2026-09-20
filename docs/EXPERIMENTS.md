@@ -23,6 +23,19 @@ they run, what each one pins, and what an outcome means for the model. A
 specialist may propose an entry or a criterion; the register changes only by
 the model owner's decision, dated.
 
+**Two kinds of readings (the model owner, 2026-09-20: "in reality there is
+no such thing").** Every number an entry registers is labelled one of two:
+a **detector reading**, the record of a detector's set or of a measured event
+in the world (a probe's `read`, a click, a pointer, an owed count), which is
+the only kind of reading reality has; or a **GameBoard reading**, the host's
+view of the deterministic board (a ray's position, the count or flow at a
+Node, a body's steps, the shell means, the books), which exists for us and
+not in reality. A comparison with nature (section A) uses detector readings
+only; a GameBoard reading describes the mechanism, checks the books or
+draws the picture. Where an entry of the past registered a GameBoard reading
+as the measurement, it says so from this date, and the detector form is
+added when the entry is re-run.
+
 **The rule of every entry.** Before its run, an entry names the features it
 needs (numbers 1 to 12 below), the board, the families, the Detector marks
 with their settings, the return mode and the phase width, what is recorded,
