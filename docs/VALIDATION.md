@@ -11,6 +11,74 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The meeting: the 85 example worlds replayed with the key absent, the ten registered worlds replayed with it, and series K old against new - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` from its tip `329c5660`
+(the record of the decision on the meeting) with the meeting's commits
+(the engine and its tests, `41971d27`; the worlds, the tool and the
+register after it), source fingerprint
+`dc1cce964db367167732b1727d9dc8d2fcf73a27bf13e33a1822cc5a84fff1a3`,
+Python 3.14.0rc2, numpy 2.5.3, headless, four cores
+([BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+the model owner's decision, "DECIDED: the meeting, M-R").
+
+**The key absent: every world byte-identical.** Every world of
+`examples/events/` as it stood at the tip (85: the coupling twenty-one,
+the Bell ten, the orbit six, the Bohr seven, the nucleus eight, the
+lensing four, the Hubble four, the redshift two, the buildup three, the
+Heisenberg eight, the detector four, the catalog four, `one_content`,
+`two_contents`, `one_slit`, `two_slits`) was run with the runner at its
+declared `ticks` on the tip's tree (the base, `git archive 329c5660`) and
+on the meeting's tree, and `events.jsonl`, `state.json` and `run.json`
+(its volatile fields `elapsed_seconds`, `source_sha256` and
+`package_version` removed) compared by SHA-256, file by file:
+
+| Tree | `events.jsonl` | `state.json` | `run.json` (stable) |
+| --- | --- | --- | --- |
+| the meeting's, the key absent | 85 identical, 0 changed | 85 identical | 0 identical, 85 changed: the record's new key `meeting` (false) and the `turned` lines (zero) in every audit line's `families[<name>]` and `momentum` and in the per-tick `momentum` list, and nothing else (`7_00` and `control` re-run on both trees and their records compared key by key with the added keys removed: no other difference) |
+
+**The key declared: the ten registered worlds byte-identical.** The six
+worlds of series 7 (`7_00`, `7_mm`, `7_mp`, `7_pm`, `7_pp`, `7_pp_m4`),
+`2` (series C), `s8_r12` (series D), `r4` (series H) and `coasting_age`
+(series G) were copied with `"meeting": true` added and run on the
+meeting's tree at their declared `ticks` (200, 200, 4000, 3000 and 400):
+every one completed, and its `events.jsonl` and `state.json` are
+identical to the same world's replay without the key on both trees (no
+paid row in transit meets a free row in any of them, as the design
+counted). `control_meeting`, the control of series K under the key, is
+byte-identical in `events.jsonl` to `control` (the sha256
+`22ec156b13a2aa21...`).
+
+**Series K old against new.** The four worlds of K under the key
+(`<name>_meeting.json`) and the lens world, `tools/run_series.py --jobs 2`
+under the load of the replay, `tools/lensing_readings.py` (0 record
+checks failed, 14 readings inside, 9 outside, none moved; the entry
+[K under the meeting](EXPERIMENTS.md#k-under-the-meeting-2026-09-20)):
+
+| World | K without the key (registered): centroid shift y, mean age, count, faces, the mass's clicks of light | K under the key: the same | expected under the key |
+| --- | --- | --- | --- |
+| `control` | 0, 89.40, 1455, 0, 0 | 0, 89.40, 1455, 0, 0 | unchanged |
+| `mass` | 0.000, 89.40, 1455, 0, 0 | -1.790, 89.90, 1350, 0, 122 | -3.0 +- 0.5, 90.43, 0.996 of the control, 0 |
+| `heavy` | 0.000, 89.40, 1455, 0, 0 | -4.359, 90.64, 1242, 210, 1 | -4.3 +- 0.5, 90.64, 0.858, 209 |
+| `near` | 0.000, 89.40, 1455, 0, 0 | -2.301, 89.71, 1237, 77, 169 | -2.6 +- 0.5, 89.72, 0.901, 136 |
+| `lens` | - | the crossing 71.0 Links past the mass, 394 taken by the mass | about 70 |
+
+The meeting's cost, host time on an idle machine: `mass` stepped
+in-process for 400 intervals 19.9 ms per interval without the key and
+24.5 ms with it, the meeting 4.6 ms per interval, 67 permutations built
+in the run at 0.58 ms each.
+
+The commands: `python replay.py --src <tree>/src --out <dir> --jobs 3`
+(the base) and `--jobs 2` (the meeting's tree; the scratchpad's replay
+script of the four unifications: `python -m event_universe --init <world>
+--output <dir>` per world, the outputs digested and pruned to keep the
+disk), `compare.py <before> <after>`; the keyed copies run the same way
+from a tree holding them beside a copy of the meeting's `src`. `python
+tools/check.py --base HEAD^` green on the engine's commit alone (450
+tests selected, ruff, mypy strict) and `--base HEAD` green on the working
+tree with the register (487 tests); `python tools/check.py --full` green
+on the merge with the branch tip (the entry of the merge below the
+commits).
 ## The choosers on the GameBoard: the key replayed, and the run - 2026-09-20
 
 The worktree of `claude/universe24-new-3ytqde` from its tip `9379b01c`

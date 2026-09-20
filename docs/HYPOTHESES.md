@@ -766,4 +766,78 @@ couplings.
   X/√(b² + X²), and the arrival of the crest against 2GM · 2asinh(X/b) in light's
   Links of travel; a per-family w declared instead (point 16) gives the same
   numbers and is the alternative if the lane rule is struck.
-- **Status.** Open; the model owner's.
+- **Status.** Open; the model owner's. (2026-09-20: the Beam Law has no
+  wait per lane and no index; light in flight is bent under the meeting,
+  section 20, and not delayed in time.)
+
+## 20. Light beside a mass under the meeting: bent as a report, with the sign, the M / b form and the grain; an interferometric Shapiro phase; no delay in time, no horizon
+
+- **Statement (the law's own prediction 2, updated on 2026-09-20 by the
+  model owner's decision on the meeting, M-R: "an event in transit reads
+  the crowd as a body does, a report, not a balance";
+  [BEAM_LAW note 35](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  the identity `meeting-v1` under the world key `meeting`).** Until that
+  day the law predicted that light is neither bent nor delayed by a mass,
+  and series K measured it (0.000 pixel, 0.00 interval). Under the meeting
+  a paid unit in transit reads the free crowd of a mass at every free-space
+  Node it shares with it and turns toward the crowd's source by one grain
+  step of the direction table per N crowd units met, the sign the gravity
+  column's (kappa = -1, the target -V), the count kept on its phase
+  register. The prediction: (i) the sign: light is bent toward a mass, the
+  centroid of a beam at a screen moving toward the mass's line, never away;
+  (ii) the form: the deflection grows with the crowd met along the path,
+  M / b within the finite path (doubling M doubles the crowd met, halving b
+  raises it by less than two on a digital line), the same form as nature's
+  4 G M / (b c^2) and not its value, since the grain is the fan's step (2.4
+  degrees on series K's table, 3 at the finest fan the law allows), 10^4
+  times nature's angle at the Sun's limb: a grain is the smallest
+  deflection there is, so the beam does not shift as one but as a mix of
+  0, 1, 2, 3 steps whose mean the centroid reads; (iii) the interferometric
+  Shapiro phase: the light's phase at a detector is shifted by the crowd
+  met along its path modulo N, so an interferometer reading two paths past
+  a mass reads a fringe shift proportional to M / b, while the phase rate
+  at a pixel stays the lamp's turn and no redshift of the light in flight
+  appears; (iv) no delay in time: the flight table is one speed for every
+  direction and the meeting turns a direction, never a pace, so the mean
+  age of the arrivals moves only by the extra Links of the bent digital
+  lines (about one interval at series K's b = 6), against nature's Shapiro
+  delay in time; (v) no horizon: a dense crowd wraps the light back (the
+  arc permutation's debt state, the direction nearest the source flung to
+  the farthest), it does not hold it; light aimed within a grain of the
+  source is reversed, not captured on a circle; (vi) what the meeting does
+  not give: the aberration of gravity (prediction 3, the push along the
+  arriving u_d) and the Nordtvedt-like effect (prediction 4) stay as they
+  are, the mass defect stays absent, and two masses' crowds never turn each
+  other (only paid units read).
+- **What would refute it, stated so that it can fail.** At a screen behind
+  a mass under `meeting: true`: a centroid moved away from the mass, or one
+  that does not grow with M at fixed b, or a deflection below the grain of
+  the fan (a continuous small angle), or a mean age moved by more than the
+  bent path's extra Links (a delay in time), or a pixel's phase rate moved
+  off the lamp's turn (a redshift in flight), or a phase offset at a pixel
+  that does not follow the crowd met along that pixel's path; in an
+  interferometer of two paths past a mass, a fringe shift that does not
+  grow with M / b.
+- **Read on series K under the key (2026-09-20, [EXPERIMENTS](EXPERIMENTS.md#k-under-the-meeting-2026-09-20)).**
+  The sign held in every world (the centroid -1.8, -4.4 and -2.3 pixels
+  toward the mass at (M, b) = (2^12, 6), (2^13, 6), (2^12, 3); 0.000 in z);
+  the form held at twice the mass (-4.36 against the offline flight's
+  -4.29; 210 rays wrapped to the faces against 209) and at half the impact
+  distance (-2.30 against -2.59); at (2^12, 6) the centroid read -1.79
+  where the offline flight said -3.0, because the mass, a measured event,
+  measures the light that reaches it (122 rays of the beam clicked on the
+  mass, the most turned ones, which the offline flight let pass through
+  its Node); the mean age moved by 0.5 to 1.2 intervals (the bent path,
+  no delay in time); the phase offset is sharp per pixel (the resultant
+  0.9 to 1.0 at the lit pixels of `mass` and `near`) and differs from
+  pixel to pixel by tens of steps, so the screen-wide offset is not one
+  number (the expectation "about 55 steps" was the mean crowd met over
+  the rays, not a reading any one pixel gives); the phase rate estimator
+  of the tool (the unwrapped slope of a pixel's record phases) is not
+  clean under the meeting (the pointer at a pixel mixes rays of different
+  offsets), so the "no redshift" part is read off the per-click offsets
+  and not off the rate; the lens world's two beams crossed 71 Links past
+  the mass at b = 6, a grain of the fan. Nothing was tuned.
+- **Status.** Landed as `meeting-v1` (2026-09-20); the register's K entry
+  under the key is the reading; the value of nature's angle stays out of
+  reach by the grain, and the Shapiro delay in time is not in the law.

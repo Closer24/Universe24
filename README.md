@@ -159,6 +159,7 @@ active contracts, explicit experiments and revision-specific evidence.
 | --- | --- |
 | `src/event_universe/events/world.py` | The world file: its keys, their bounds and the refusals, named |
 | `src/event_universe/events/nature_beam.py` | The Beam Law (`beam-v1`): the record `NatureBeam`, the one reading `read_arrivals`, the flight table, the collision table, the store of records per family and the one function `nature_beam`, a Node's whole interval (the walk, the reading, the collision, the measured event's table, the detector's record, the self-creations, the merge) |
+| `src/event_universe/events/meeting.py` | The meeting (`meeting-v1`, the world key `meeting`): the arc permutation of the direction table, a paid unit's reading of the free crowd at a free-space Node, its turn by its phase register and the inverse |
 | `src/event_universe/events/measured.py` | The measured event's record (`Measured`) and the ledger of an interval |
 | `src/event_universe/events/engine.py` | The frame around the law: the clocks, the owed count off the clock, the steps by the momentum, the books, the readings, the inverse interval, the snapshot; it computes no physics |
 | `src/event_universe/events/run.py` | The artifacts of a run: the input, the events, the state, the record |

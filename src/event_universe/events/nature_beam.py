@@ -102,6 +102,7 @@ from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
 from event_universe.events.measured import Ledger, Measured, count_component
+from event_universe.events.meeting import ArcTable, arc_table, meet
 from event_universe.events.world import (
     AGE_READS,
     BEAM_LAW,
@@ -629,18 +630,23 @@ class NatureBeamTables:
     cosines: np.ndarray
     sines: np.ndarray
     window: np.ndarray
+    # The arc permutations of the direction table (the meeting, 2026-09-20;
+    # `meeting.ArcTable`): built per target on demand and cached.
+    arcs: ArcTable
 
 
 def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
     modulus = world.phase_steps
     distance = np.arange(modulus, dtype=np.int64)
     window = (4 * distance < modulus) | (4 * distance >= 3 * modulus)
+    flight = flight_table(world.directions)
     return NatureBeamTables(
-        flight_table(world.directions),
+        flight,
         collision_table(),
         np.array(phase_cosines(modulus), dtype=np.int64),
         np.array(phase_sines(modulus), dtype=np.int64),
         window,
+        arc_table(flight.labels),
     )
 
 
@@ -1560,6 +1566,11 @@ def nature_beam(
                     f"{definition.name!r} of lifetime {definition.lifetime} on the GameBoard: the "
                     "click on the border `lifetime` has no inverse (as a face click has none)"
                 )
+        # The meeting's inverse first (the inverse order of the interval:
+        # the meeting, then the table, then the walk), read back from the
+        # untouched crowd (`meeting.meet`).
+        if world.meeting:
+            meet(stores, world, tables, occupied, ledger, inverse=True)
         for family, store in enumerate(stores):
             if store.size == 0:
                 continue
@@ -1689,6 +1700,12 @@ def nature_beam(
     # 3. The collision.
     for store in stores:
         collide(store, backward=False)
+    # Then the meeting (the model owner, 2026-09-20, "DECIDED: the meeting,
+    # M-R"; under the world key `meeting`): at every Node of free space every
+    # paid unit reads the free crowd of the other numbers and turns toward
+    # it by its phase register; the crowd untouched (`meeting.meet`).
+    if world.meeting:
+        meet(stores, world, tables, occupied, ledger)
 
     # 4. The measured events' tables and the detectors, the same rule at
     # every measured event taken in bulk by the host: the rows at measured

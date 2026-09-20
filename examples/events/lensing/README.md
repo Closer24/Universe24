@@ -226,13 +226,83 @@ family and number only, so the crowd of a mass cannot reach a ray of
 light through it either. Giving a ray a reading is the model owner's
 decision, not a parameter.
 
+## The same worlds under the meeting (2026-09-20)
+
+The model owner's decision of the same day ([Highlights 5.4](../../../docs/HIGHLIGHTS.md#54-the-detector),
+"DECIDED: the meeting, M-R: an event in transit reads the crowd as a body
+does, a report, not a balance"; [BEAM_LAW section 3 step 3 and note 35](../../../docs/BEAM_LAW.md#3-the-nodes-interval-nature_beam);
+the identity `meeting-v1`) gives a paid unit in transit a reading: at
+every Node of free space, after the collision, it reads the free units of
+every number but its own (the one reading set, the vector moment V with
+the labels as weights), the column sum of its family against theirs
+(gravity: -1) and turns toward t = -V by one grain step of the direction
+table per 64 crowd units met, the count kept on its phase register; the
+crowd is untouched. `make_worlds.py` writes the four worlds again under
+the key (`control_meeting.json`, `mass_meeting.json`, `heavy_meeting.json`,
+`near_meeting.json`, the model ids `beam-lensing-<name>-meeting-v1`) and
+a fifth, `lens_meeting.json`: two lamps at y = 26 and y = 14 (+-b = 6)
+on a box of 105 x 41 x 41 with the mass at x = 28 and the screen at x =
+102, 600 intervals, so that the two beams, each turned toward the mass,
+cross past it. The register entry is
+[K under the meeting (2026-09-20)](../../../docs/EXPERIMENTS.md#k-under-the-meeting-2026-09-20).
+
+**The expectation, written before the runs** (the design's offline
+flight of the beam beside the replayed crowd, `scratchpad/meeting/k_deflection.py`;
+the brackets fixed in `tools/lensing_readings.py`): `mass` the centroid
+-3.0 +- 0.5 pixels toward the mass, 0 +- 0.5 in z, the width about 6.0,
+the mean age about 90.4 (+- 1), the count ratio 0.996 (+- 0.05), no ray
+on the faces; `heavy` -4.3 with 209 rays on the faces (+- a quarter);
+`near` -2.6 with 136; the phase offset of the arrivals (the click's phase
+less the lamp's phase at the ray's birth, the crowd met modulo 64) about
+55 steps in `mass` and `near` and 24 in `heavy` (+- 8); the phase rate 8
+(+- 0.05); the control unchanged byte for byte; the lens world's crossing
+about 70 Links past the mass, a grain of the fan, no bracket.
+
+**The readings (2026-09-20, measured against expected).** Source
+fingerprint `dc1cce964db367167732b1727d9dc8d2fcf73a27bf13e33a1822cc5a84fff1a3`
+(the worktree of `claude/universe24-new-3ytqde` from the tip `329c5660`
+with the meeting's commits), Python 3.14.0rc2, numpy 2.5.3, headless,
+`tools/run_series.py --jobs 2` under the load of the register's replay;
+every run completed with the books balanced at every tick; 0 record
+checks failed, 14 readings inside, 9 outside, none moved.
+
+| World | M | b | clicks | centroid y shift (expected) | z | width rms y | mean age (expected) | count ratio (expected) | light on the faces (expected) | light the mass took | phase offset (expected), resultant | phase rate | verdicts |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `control` | - | 6 | 1455 | 26.000 (0) | 20.000 | 2.828 | 89.40 (89.40) | - | 0 (0) | 0 | 0.0 (0), 1.00 | 8.000 | inside |
+| `mass` | 2^12 | 6 | 1350 | -1.790 (-3.0) | 0.000 | 3.907 | 89.90 (90.43) | 0.928 (0.996) | 0 (0) | 122 | 19.7 (55), 0.09 | 8.191 | centroid y, count, offset, rate outside; z, delay, faces inside |
+| `heavy` | 2^13 | 6 | 1242 | -4.359 (-4.3) | 0.000 | 5.277 | 90.64 (90.64) | 0.854 (0.858) | 210 (209) | 1 | 34.3 (24), 0.21 | 7.101 | centroid y, z, delay, count, faces inside; offset, rate outside |
+| `near` | 2^12 | 3 | 1237 | -2.301 (-2.6) | 0.000 | 4.470 | 89.71 (89.72) | 0.850 (0.901) | 77 (136) | 169 | 62.3 (55), 0.31 | 11.273 | centroid y, z, delay, offset inside; count, faces, rate outside |
+| `lens` | 2^12 | +-6 | 3958 | -6.255 and +6.255 per lamp; the crossing 71.0 Links (about 70) | - | - | 173.89 | - | 2 | 394 | 56.3, 0.58 | 6.364 | a grain, no bracket |
+
+The sign toward the mass in every world; the form reproduced at twice
+the mass almost integer by integer (-4.36, 210 on the faces, the age
+90.64) and at half the impact distance within the bracket; the ages the
+bent path's, no delay in time; the phase offset sharp per pixel (the
+resultant 0.9 to 1.0 at the lit pixels of `mass` and `near`) and tens of
+steps apart between pixels, so the screen-wide mean is not one number
+(the expectation was the mean over rays); the phase rate's three readings
+outside are the estimator's (a pixel's pointer mixes rays of different
+offsets), not a redshift. What the offline flight lacked: the mass is a
+measured event that measures the light reaching it, so the most turned
+rays click on it (122 in `mass`, 169 in `near`, 1 in `heavy`) and the
+centroid at (2^12, 6) reads -1.79 where -3.0 was expected. GAMEBOARD: the
+meetings 165, 191, 167 and 414 Nodes per interval; the books' `turned`
+line of `light` (-8016, -85088, 0), (-142936, -215752, 0), (-102000,
+-112152, 0) and (-32448, 0, 0); the lens world's mean lines closest 58
+Links past the mass. `control_meeting`'s `events.jsonl` is byte-identical
+to the control's.
+
 Run the worlds:
 
 ```bash
 python examples/events/lensing/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/lensing examples/events/lensing/control.json examples/events/lensing/mass.json examples/events/lensing/heavy.json examples/events/lensing/near.json
 PYTHONPATH=src python tools/lensing_readings.py artifacts/lensing
+PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/lensing_meeting examples/events/lensing/control_meeting.json examples/events/lensing/mass_meeting.json examples/events/lensing/heavy_meeting.json examples/events/lensing/near_meeting.json examples/events/lensing/lens_meeting.json
+PYTHONPATH=src python tools/lensing_readings.py artifacts/lensing_meeting
 ```
 
-`tools/lensing_readings.py` prints the record checks, the DETECTOR table
-above and the GAMEBOARD replay of every world (`--no-replay` skips it).
+`tools/lensing_readings.py` prints the record checks, the DETECTOR tables
+above (the worlds without the key against the derivation, the worlds
+under the key against the offline flight) and the GAMEBOARD replay of
+every world (`--no-replay` skips it).

@@ -59,6 +59,7 @@ kept, their pins the law of events').
 | `test_coupling_readings.py`, `test_orbit_readings.py`, `test_heisenberg_readings.py`, `test_hubble_readings.py` | The tools read the engine (the architecture review of 2026-09-20; the experimenter skill): each reading of `tools/coupling_readings.py`, `tools/orbit_readings.py`, `tools/heisenberg_readings.py` and `tools/hubble_readings.py` equals the engine's own function on a minimal GameBoard (the front off `manhattan_steps`, the step rule and the release off `by_clock`, the push off `unit_label`, the fan's labels off `flight_table`, the detector records off `DetectorSet`, the declared charge per unit of content; the Hubble tool's c = 32 / 55 and m(age) off `flight_table`, its `record` lines and click ages off the run of a bar of 61 x 1 x 1, its z within the digital step's grain of 1 + v / c); the expected integers are in each module's docstring |
 | `test_bohr_readings.py` | The series H tool reads the engine (the experimenter's rule, 2026-09-20): the flight time from the centre's plane to a face off `FlightTable.manhattan_steps` (5 Links at the age 8, 6 at 10, 1 at 1), the pointer per turn and the coherence ratio off `nature_beam.coherent_pointer` with the circle's tables ((16384, 0) and (-8192, 0) for two units at phase 0 and one at 32, C = 0.2; 1.8 with the third at 0; the slope of [1, 4, 9] is 2), and `read_run` on a run written by the runner (a proton of `p` at (5, 5, 1) of an 11 x 11 x 3 GameBoard on the four in-plane headings, an electron of `e` of span [1, 1, 3] at (8, 5, 1) with the momentum [0, 320, 0], `pass` for `p`, `action` 65536, 20 intervals: the radius 3, j = 0.05859375, the flights 8, the clicks per face equal to the record's, no read, the steps' phases 5, 5, 5, 6 at the ticks 5, 9, 13, 17, the first -x click at tick 16); the expected integers are in the module's docstring |
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the integer audit of `core/`, and LOCALITY-1 documented without an exception |
+| `test_meeting.py` | The meeting: the arc permutation of the direction table (a permutation for 1034 targets on K's table, the rest fixed, the chain from +x, the k-fold shift), the phase register (61, 62, 63, 0, 1, 2 with the turn at the fourth; the inverse), the sign of the turn and the `turned` line, the crowd and the record untouched, the bijection with the meeting (50 forward, 50 inverse) and the refusals ([below](#the-meeting)) | new (2026-09-20, the model owner's "DECIDED: the meeting, M-R"; the physicist's and the mathematician's design) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -269,6 +270,91 @@ added, 62 rows, every arrival reset to here; the same rows with every
 other content raised by 2^61 (the key does not fit the register,
 `merge_key` is None) merged by the lexsort fallback equal their Python
 sort likewise; the empty store merges to the empty store.
+
+## The meeting
+
+`tests/test_meeting.py` (docs/BEAM_LAW.md, section 3 step 3 and section 10
+note 35; the model owner, 2026-09-20, "DECIDED: the meeting, M-R: an event
+in transit reads the crowd as a body does, a report, not a balance"; the
+physicist's and the mathematician's design of the same day, section 6
+item 3; `events/meeting.py`). K 2^20, N 64, `suspension` 0, `release`
+[0, 1]. The expected integers, written down before the first run:
+
+- (a) the arc permutation on the 296-entry direction table of series K
+  (the two rest vectors, the six headings, the 288 primitive directions
+  with |a| + |b| + |c| <= 6 beyond them and the lamp's (24, +-1, 0),
+  (12, +-1, 0)): for 1034 fixed targets (the 342 integer vectors in
+  [-3, 3]^3 but 0, the 294 unit labels of the moving directions and the
+  first 398 nonzero sums of the label pairs (i, (37 i + 11) mod 294) for
+  i from 0) pi_t is a permutation, the two rest directions are fixed, the
+  cached inverse returns the identity and pi_t^3 = pi_t o pi_t o pi_t;
+  (1, 0, 0) under t = (0, -1, 0) goes (24, -1, 0), (12, -1, 0), (5, -1, 0),
+  (4, -1, 0), and under t = (0, -64, 0) (one crowd unit's flow) the same
+  four, one cache entry per target (the sector boundary |u . e1| = |u . e2|
+  lies at the angle 1 / |t| off the e1 axis, so the sectors depend on |t|:
+  the design's rule as flown offline); on the six headings alone +x under
+  t = (0, -1, 0) is fixed (a sector of one) and the on-line pair +y, -y
+  swaps ([0, 1, 2, 3, 5, 4, 6, 7]).
+- (b) the register: a unit of phase 60 meeting one crowd unit (|t| = 64)
+  per interval reads the phases 61, 62, 63, 0, 1, 2 with k = 1 at the
+  fourth alone; meeting two units (|t| = 128, adv 2) it wraps at the second
+  (62, then 0 with k = 1); the inverse (adv - phase' + 63) // 64 gives the
+  same k and the phase before for every case; |t| = 31 advances by 0 and
+  |t| = 32 by 1 (the nearest whole unit of Q); no crowd leaves the phase
+  alone; on the GameBoard (the world of (c) with the phase 60) the same six
+  phases and the turn at the fourth interval.
+- (c) the sign: a paid unit of `light` on +x at phase 63 on the line
+  y = 0, z = 0 of a 4 x 1 x 2 GameBoard (x and y periodic, z open; the two
+  measured events the numbers name parked on the plane z = 1, which
+  nothing visits, releasing nothing) with one free unit of `m` of another
+  number on +y at every Node of the line (V = (0, 64, 0), kappa = -1,
+  t = (0, -64, 0)) turns to (24, -1, 0) in the first interval on K's
+  table, its label (64, 0, 0) -> (64, -3, 0), the `turned` line (0, -3, 0)
+  (the family's and the world's), the transit momentum line (64, 253, 0)
+  (its label and the four crowd units' (0, 256, 0)), the running line
+  equal to the recount; on the plane fan of the primitive (a, b, 0) with
+  a >= 1 and a + |b| <= 13 (whose finest step off +x is (12, +-1, 0); the
+  shipped two-slit fan stops at a + |b| <= 12, whose first step would be
+  (11, -1, 0)) it turns to (12, -1, 0), the `turned` line (0, -5, 0);
+  kappa of a paid family whose columns beyond gravity are 0 against a
+  charged free family is (-1, 1), a reader whose charge column reads 2
+  against a crowd of charge 1 has kappa (1, 1) and its +x turns toward
+  t = +V = (0, 64, 0) to (24, +1, 0), and the pair (1, 2) against (1, 3)
+  reads (-5, 6); the world's `hypotheses` ["meeting-v1"], `run.json`
+  carrying `meeting` true and the `turned` line in its audit; without the
+  key nothing turns, the phase stays 63 and the `turned` line is zero.
+- (d) untouched: the free rows of the world of (c) are equal at every one
+  of six intervals to the free rows of the same world without the key
+  (Node, direction, age, phase, number, amount, content); the paid unit's
+  age 6, number 1, amount 1 and content 1 after the six intervals; two
+  paid units of two families (`light` of content 1 and `photon` of content
+  2) at one Node with the crowd both turn to (24, -1, 0) (the same V; the
+  `turned` line (0, -9, 0), the photon's (0, -6, 0)), and at a Node without
+  a free unit neither turns nor advances its phase (they never read each
+  other); a free unit of the paid unit's own number on +y is not read (no
+  turn, the phase 63 kept).
+- (e) the bijection: the periodic 8 x 8 x 4 world of the bijection test
+  (`age_bound` 128) with its 300 fixed records split into 240 of the free
+  family `m` (given the number 2 on the record before the first interval:
+  the GameBoard of rays alone names no emitter, and what the meeting reads
+  is the number on the record) and 60 of the paid family `light` (every
+  fifth record, the number 1, `phase_per_link` 5), `meeting: true`; the
+  stores hold 259 and 65 rows after the merge; 50 forward then 50 inverse
+  intervals: the sorted stores of both families bit-exact, the paid store
+  at the turning point differing, the `turned` line of `light` nonzero at
+  the turning point (at least one turn on the way) and `m`'s zero, both
+  zero again at the end, the running transit momentum line equal to the
+  recount at every interval both ways; the refusals, naming the key: a
+  phase-less paid family under the key (naming the register), `meeting`
+  that is not true or false.
+- (f) the bit-identity of the register is a replay, not a test:
+  [validation](VALIDATION.md), every example world without the key
+  byte-identical in `events.jsonl` and `state.json`, and the ten
+  registered worlds the design names byte-identical with the key declared.
+
+Re-pinned with the new line written first: `tests/test_lifetime.py` (b)
+and `tests/test_nature_beam_flight.py` (the periodic axis and the open
+face), the books' momentum block gaining `"turned": [0, 0, 0]`.
 
 ## The books
 
