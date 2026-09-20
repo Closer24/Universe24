@@ -2,7 +2,7 @@
 
 Since 2026-09-17, by the model owner's decision in
 [Highlights 5.5](HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions), a test
-exercises one generic rule in isolation on a minimal board and nothing else: one
+exercises one generic rule in isolation on a minimal GameBoard and nothing else: one
 test module per rule, one per feature of the ray-event model, with the expected
 integers written down here before the first run. No test pins the numbers of an
 example world, compares two worlds or reproduces a known experiment; those are
@@ -16,7 +16,7 @@ when their tests change.
 Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
 "DECIDED: the law of the ray"; [the law of the ray](RAY_LAW.md)): one engine,
 `rays-v1`, the law of events of the same day deleted with its modules. The
-suite keeps one module per generic rule of the engine, on a minimal board,
+suite keeps one module per generic rule of the engine, on a minimal GameBoard,
 and the repository gates. Every rule the ray law kept from the law of events
 is re-pinned in a new module with the timing of the flight table; the
 deleted modules and their rules are named in the
@@ -26,7 +26,7 @@ kept, their pins the law of events').
 
 | Module | Rule isolated | Re-pins |
 | --- | --- | --- |
-| `test_nature_beam_readings.py` | The one reading: the moments of order 0, 1 and 2 of the arrivals' direction vectors, taken once; equal to the slot decomposition on the six headings, the moments of the fan on a fan, covariant under the 48 board symmetries, bounded; the push by the flow of every number but the reader's own; the presence over rest and moving rays; the threshold over the set and the window per ray; the dense readings of the board decomposed on request for the active Nodes ([below](#the-one-reading)) | `test_one_reading_set` (a to d), `test_phaseless_family` (c), `test_detector_sensitivity` (b), `test_event_suspension` (e) |
+| `test_nature_beam_readings.py` | The one reading: the moments of order 0, 1 and 2 of the arrivals' direction vectors, taken once; equal to the slot decomposition on the six headings, the moments of the fan on a fan, covariant under the 48 GameBoard symmetries, bounded; the push by the flow of every number but the reader's own; the presence over rest and moving rays; the threshold over the set and the window per ray; the dense readings of the GameBoard decomposed on request for the active Nodes ([below](#the-one-reading)) | `test_one_reading_set` (a to d), `test_phaseless_family` (c), `test_detector_sensitivity` (b), `test_event_suspension` (e) |
 | `test_default_table.py` | The table generated from the keys: a free family read, a paid one measured, no window; explicit defaults change nothing; what differs is kept; the kind derived from the quantum and `kind` refused; every example world equal to itself with the defaults written back ([below](#the-table-generated-from-the-keys)) | new |
 | `test_nature_beam_flight.py` | The flight: the table at 1 / sqrt 3 with its periods, a lone unit straight and unchanged, the isotropy, the periodic axis and the stub, the open face's click, `adjacent_node` ([below](#the-flight)) | `test_event_transit` (a), `test_periodic_axis` (a to c), `test_event_boundaries` |
 | `test_nature_beam_push.py` | The push as one bilinear form over the arriving rays' labels, the emitter's factor on the record, and the one momentum label the click, the re-emission, the home and the transit line move ([below](#the-push-as-one-form)) | new (2026-09-19, the night: the physics-rule review's F1 and the model owner's proposal 2) |
@@ -37,8 +37,8 @@ kept, their pins the law of events').
 | `test_nature_beam_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_nature_beam_clock.py` | The clock under the ray law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-ray-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder; the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
-| `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the board unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
-| `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the board unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the board like the age") |
+| `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
+| `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
 | `test_nature_beam_window.py` | The phase window under the ray law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-ray-law)) | `test_phase_window` (a to c) |
 | `test_nature_beam_world_parsing.py` | The world file of the ray law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-ray-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
 | `test_nature_beam_worlds.py` | The worlds of the ray law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing, `two_contents` not refused with its face records exact ([below](#the-worlds-of-the-ray-law)) | `test_event_worlds` (a, d) |
@@ -49,8 +49,8 @@ kept, their pins the law of events').
 | `test_integer_arithmetic.py` | The shared bounded integer primitives |
 | `test_retention.py` | Generated-output ownership, lifetime and cleanup |
 | `test_check_scope.py` | The affected-check's selection |
-| `test_coupling_readings.py`, `test_orbit_readings.py`, `test_heisenberg_readings.py`, `test_hubble_readings.py` | The tools read the engine (the architecture review of 2026-09-20; the experimenter skill): each reading of `tools/coupling_readings.py`, `tools/orbit_readings.py`, `tools/heisenberg_readings.py` and `tools/hubble_readings.py` equals the engine's own function on a minimal board (the front off `manhattan_steps`, the step rule and the release off `by_clock`, the push off `unit_label`, the fan's labels off `flight_table`, the detector records off `DetectorSet`, the declared charge per unit of content; the Hubble tool's c = 32 / 55 and m(age) off `flight_table`, its `record` lines and click ages off the run of a bar of 61 x 1 x 1, its z within the digital step's grain of 1 + v / c); the expected integers are in each module's docstring |
-| `test_bohr_readings.py` | The series H tool reads the engine (the experimenter's rule, 2026-09-20): the flight time from the centre's plane to a face off `FlightTable.manhattan_steps` (5 Links at the age 8, 6 at 10, 1 at 1), the pointer per turn and the coherence ratio off `nature_beam.coherent_pointer` with the circle's tables ((16384, 0) and (-8192, 0) for two units at phase 0 and one at 32, C = 0.2; 1.8 with the third at 0; the slope of [1, 4, 9] is 2), and `read_run` on a run written by the runner (a proton of `p` at (5, 5, 1) of an 11 x 11 x 3 board on the four in-plane headings, an electron of `e` of span [1, 1, 3] at (8, 5, 1) with the momentum [0, 320, 0], `pass` for `p`, `action` 65536, 20 intervals: the radius 3, j = 0.05859375, the flights 8, the clicks per face equal to the record's, no read, the steps' phases 5, 5, 5, 6 at the ticks 5, 9, 13, 17, the first -x click at tick 16); the expected integers are in the module's docstring |
+| `test_coupling_readings.py`, `test_orbit_readings.py`, `test_heisenberg_readings.py`, `test_hubble_readings.py` | The tools read the engine (the architecture review of 2026-09-20; the experimenter skill): each reading of `tools/coupling_readings.py`, `tools/orbit_readings.py`, `tools/heisenberg_readings.py` and `tools/hubble_readings.py` equals the engine's own function on a minimal GameBoard (the front off `manhattan_steps`, the step rule and the release off `by_clock`, the push off `unit_label`, the fan's labels off `flight_table`, the detector records off `DetectorSet`, the declared charge per unit of content; the Hubble tool's c = 32 / 55 and m(age) off `flight_table`, its `record` lines and click ages off the run of a bar of 61 x 1 x 1, its z within the digital step's grain of 1 + v / c); the expected integers are in each module's docstring |
+| `test_bohr_readings.py` | The series H tool reads the engine (the experimenter's rule, 2026-09-20): the flight time from the centre's plane to a face off `FlightTable.manhattan_steps` (5 Links at the age 8, 6 at 10, 1 at 1), the pointer per turn and the coherence ratio off `nature_beam.coherent_pointer` with the circle's tables ((16384, 0) and (-8192, 0) for two units at phase 0 and one at 32, C = 0.2; 1.8 with the third at 0; the slope of [1, 4, 9] is 2), and `read_run` on a run written by the runner (a proton of `p` at (5, 5, 1) of an 11 x 11 x 3 GameBoard on the four in-plane headings, an electron of `e` of span [1, 1, 3] at (8, 5, 1) with the momentum [0, 320, 0], `pass` for `p`, `action` 65536, 20 intervals: the radius 3, j = 0.05859375, the flights 8, the clicks per face equal to the record's, no read, the steps' phases 5, 5, 5, 6 at the ticks 5, 9, 13, 17, the first -x click at tick 16); the expected integers are in the module's docstring |
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the integer audit of `core/`, and LOCALITY-1 documented without an exception |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
@@ -77,7 +77,7 @@ its component by key.
   (15, 0, 2) and the tensor [[44, -3, 18], [-3, -19, 6], [18, 6, -25]]
   (3 x the second moment [[27, -1, 6], [-1, 6, 2], [6, 2, 4]] less its
   trace 37), traceless; under each of the 48 signed axis permutations R of
-  the board the scalars are fixed, the flow is R x flow and the tensor
+  the GameBoard the scalars are fixed, the flow is R x flow and the tensor
   R T R^T, on the fan as on the headings; the shortest reading, one unit on
   one heading e, reads outside 1, here 0, the flow e and the tensor
   3 e e^T - I; the keyed form over Nodes equals the readings Node by Node; a
@@ -110,17 +110,17 @@ its component by key.
   32 clicked]; the same gate declared as a `beam` detector reads each
   ray's own phase: the two at phase 0 pass and the ray at phase 32 clicks
   (`pass`, `click`, `record` at phase 32).
-- (e) the dense readings of the board are decomposed on request from the
+- (e) the dense readings of the GameBoard are decomposed on request from the
   rows of the walk, for the active Nodes only (added 2026-09-19 with the
   optimizations of RAY_LAW section 10, note 22): on the open 9 x 3 x 3
-  board with no measured event, 9 units arriving at (4, 1, 1) on +X and 9
+  GameBoard with no measured event, 9 units arriving at (4, 1, 1) on +X and 9
   on -X, 3 arriving at (2, 1, 1) on +Y and 2 at rest at (6, 1, 1): after
   one interval the count is 18, 3 and 0 at those Nodes (21 over the
-  board), the flow (0, 0, 0), (0, 192, 0) (3 x 64 on the unit vector of
+  GameBoard), the flow (0, 0, 0), (0, 192, 0) (3 x 64 on the unit vector of
   +Y; re-pinned from (0, 3, 0) on 2026-09-19) and (0, 0, 0), the presence
-  18, 3 and 2 (23 over the board), the Links crossed per Port (9, 9, 0,
+  18, 3 and 2 (23 over the GameBoard), the Links crossed per Port (9, 9, 0,
   0, 0, 0) at (4, 1, 1) and (0, 0, 3, 0, 0, 0) at (2, 1, 1) (21 over the
-  board); before the first interval, and on an empty board, every array
+  GameBoard); before the first interval, and on an empty GameBoard, every array
   is zero with its shape.
 - (f) a fan's flow reads Q per unit direction-blind (added 2026-09-19 with
   the label along the unit vector): a free reader of content 1 met by 5
@@ -179,7 +179,7 @@ one Link per interval, the age modulo the direction's period.
   moves; the first arrival of a heading ray at m Links, m = 1..11, in the
   intervals 1, 3, 5, 7, 8, 10, 12, 13, 15, 17, 19.
 - (b) the lone unit: every heading and every declared direction of the
-  two-slit example, 150 intervals on a periodic 61^3 board: the ray's
+  two-slit example, 150 intervals on a periodic 61^3 GameBoard: the ray's
   position is the table's digital line, its direction and phase unchanged
   (`phase_per_link` 0), one row at every interval, at most one Link per
   interval; with `phase_per_link` 3 the phase turns 3 per Link crossed.
@@ -213,7 +213,7 @@ shift by +1 and the inverse by -1, generated from the rule.
   signed axis permutations, with the sizes 1, 6, 3, 12, 12, 3, 8, 12, 6, 1
   (here 0) and the same with here 1; a lone unit is fixed; the head-on pair
   +x -x parks in the two rest slots, and ha hb becomes +z -z.
-- (c) on the board: two rays of amount 1 meeting head-on at the middle Node
+- (c) on the GameBoard: two rays of amount 1 meeting head-on at the middle Node
   of a 5 x 1 x 1 bar (x and z periodic) become the two rest rays at that
   Node in the interval they meet, and stay; two rays of amount 2 (a crowd)
   pass each other; over the six orientations of a head-on pair on a periodic
@@ -240,7 +240,7 @@ shift by +1 and the inverse by -1, generated from the rule.
 ## The bijection
 
 `tests/test_nature_beam_bijection.py` (docs/RAY_LAW.md, section 3): a periodic
-8 x 8 x 4 board (`age_bound` 128 declared, as a board periodic on every
+8 x 8 x 4 GameBoard (`age_bound` 128 declared, as a GameBoard periodic on every
 axis must since 2026-09-20), 300 records of fixed arrays (rays on every heading, both
 rest slots and two fan directions, head-on pairs among them, amounts 1 and
 2, phases over the circle), 50 forward then 50 inverse intervals with no
@@ -268,7 +268,7 @@ sort likewise; the empty store merges to the empty store.
 the content line and the transit momentum as the running lines of the
 ledger (what was released less what left: escaped, home, absorbed;
 O(families), no pass over the store) and `recount()` counts the same
-three lines from the rows of the store. On a 12 x 1 x 3 board with y
+three lines from the rows of the store. On a 12 x 1 x 3 GameBoard with y
 periodic and every other face open (K 2^20, N 64, `release` [1, 4], the
 fan direction (2, 1, 0)): a lamp of `light` (content 2^23) at (1, 0, 1)
 releasing 3 units per self-creation on +X, (2, 1, 0) and +Y (the +Y unit
@@ -456,7 +456,7 @@ charge 1 the family `p` of charge [1, 5]) and every integer is unchanged.
   30) plus the transit line plus the escaped line is (0, 0, 0) at every
   tick.
 - (g) a fan emitter: a source of content 4 at (0, 0, 0) of a 9 x 5 x 1
-  board releasing on (2, 1, 0) at `release` [1, 1], the probe of content 5
+  GameBoard releasing on (2, 1, 0) at `release` [1, 1], the probe of content 5
   at (4, 2, 0) on its line (the sixth Manhattan step; the first read at
   tick 9): every push -5 x 4 x (57, 29, 0) = (-1140, -580, 0) [was
   (-40, -20, 0)], 22 reads, `pushed` (-25080, -12760, 0) [was (-880,
@@ -535,7 +535,7 @@ charge 1 the family `p` of charge [1, 5]) and every integer is unchanged.
   (26, -74, 0).
 - (b) the face click (re-pinned from `test_border_and_clock_corrections`
   (b)): a ray of amount 1, phase 5, content 1 at (2, 0, 0) on +X of a
-  3 x 1 x 1 bar steps off the board at the first interval: one `click` on
+  3 x 1 x 1 bar steps off the GameBoard at the first interval: one `click` on
   `face:+x` (tick 1, Node (2, 0, 0), `measured` None, number 1, amount 1,
   phase 5, momentum (64, 0, 0) [was (1, 0, 0)], content 1), the escaped
   amount 1, the face's record 32^2 x (C[5]^2 + S[5]^2), the books' escaped
@@ -641,7 +641,7 @@ since the measured event that created the ray, kept whole on the record;
 the flight reads it modulo the direction's period and the collision never
 reads it; a measured event, the external thing, reads it whole as the age
 moment of the one reading (`reads: "age"`), which its clock counts in place
-of the presence; the board's step is unchanged by the whole age.
+of the presence; the GameBoard's step is unchanged by the whole age.
 
 - (a) the age whole: a ray on +x from x = 0 of an open 301 x 1 x 1 bar
   carries the age 200 after 200 intervals (200 mod 55 = 35 until
@@ -680,20 +680,20 @@ of the presence; the board's step is unchanged by the whole age.
   2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 10, 11, 12, 12, 13, 14, 14, 15, 16, 16,
   17, 18, 18 (unchanged by the change), counted equal to the presence at
   every self-creation, its `read` records carrying the flow [1, 0, 0].
-- (d) the parsing: `flight_bound` of an open 11^3 board over the six
+- (d) the parsing: `flight_bound` of an open 11^3 GameBoard over the six
   headings is 54 (D_M = 31 Links, ceil(31 x 110 / 64)) and 111 with the
   direction (1, 0, 64) declared (T 7095, one period, ceil(7095 / 64));
   `age_bound` defaults to twice it (108; 222 with that direction) and
   parses as declared (100); 0, -1, "8" and 1.5 are refused naming
-  `age_bound`; a board periodic on every axis without it is refused
+  `age_bound`; a GameBoard periodic on every axis without it is refused
   naming `age_bound`, and accepted with 7; a declared ray's age 109 on the
-  11^3 board is refused ("from 0 through 108") and 108 accepted; the
+  11^3 GameBoard is refused ("from 0 through 108") and 108 accepted; the
   runner's record carries `age_bound` 108; a ray on +z of an open
   3 x 1 x 1 bar with z periodic (the stub; default 12) carries the age 12
   after 12 intervals and its 13th interval is refused with `OverflowError`
   naming `age_bound 12`.
-- (e) the board is unchanged by the whole age: 324 fixed rays on the
-  periodic 8 x 8 x 4 board (`age_bound` 128; every heading, both rest
+- (e) the GameBoard is unchanged by the whole age: 324 fixed rays on the
+  periodic 8 x 8 x 4 GameBoard (`age_bound` 128; every heading, both rest
   slots, two fan directions, head-on pairs, ages up to 22, `phase_per_link`
   5) run 40 intervals with the ages whole, and again with every moving
   ray's age reduced modulo its direction's period after each interval from
@@ -705,7 +705,7 @@ of the presence; the board's step is unchanged by the whole age.
 
 `tests/test_nature_beam_body.py` (docs/RAY_LAW.md, section 3 step 5 and section 10
 note 30; the model owner, 2026-09-20, "On Bohr, go, and put it as
-parameters outside the board like the age"): a measured event that
+parameters outside the GameBoard like the age"): a measured event that
 declares `span` is a body on the set of Nodes centred on its position,
 one record on all of them; its threshold, its clock's count and its push
 read the one reading set summed over its Nodes, its releases are
@@ -721,7 +721,7 @@ expected integers, written down before the first run:
 
 - (a) a set of one Node is the measured event as it was, bit for bit: a
   free body of `m` (content 16, momentum [256, 0, 0], phase 5) at
-  (3, 1, 1) of an open 12 x 3 x 3 board at `release` [1, 4] (4 rays per
+  (3, 1, 1) of an open 12 x 3 x 3 GameBoard at `release` [1, 4] (4 rays per
   heading per self-creation), a fixed counter of `light` at (9, 1, 1)
   measuring `m` in the `wave` detector `d`, a head-on pair of number 2
   on +-y at x = 6 (the phases 3 and 40) that parks at (6, 1, 1) at the
@@ -757,7 +757,7 @@ expected integers, written down before the first run:
   else); with a fixed anchor at (5, 0, 0), a Node of the moved set at
   the age 6, the step is refused: x per interval 2, 3, 3, 4, 4, 4, three
   steps counted, `at` of four Nodes; without it the step of the age 8
-  leaves the board and the whole body clicks on face:+x (three `step`
+  leaves the GameBoard and the whole body clicks on face:+x (three `step`
   lines with the phase 0 before it, one click line with node (5, 0, 1),
   measured 1, amount 16; no measured event and no Node in `at` after;
   the measured line's escaped 16); with x periodic the body wraps to
@@ -766,7 +766,7 @@ expected integers, written down before the first run:
   ((2, 0, 2), (2, 0, 0), (2, 0, 1)) in that order, None with z open, and
   ((2, 0, 1),) for the span (1, 1, 1).
 - (c) the books balance with a set that releases: a free body of `m`
-  (content 16) of span [1, 1, 3] at (3, 1, 2) of an open 7 x 3 x 5 board
+  (content 16) of span [1, 1, 3] at (3, 1, 2) of an open 7 x 3 x 5 GameBoard
   at `release` [1, 4] on the four headings +-X, +-Y (no ray of its own
   enters its set): 4 units per heading per self-creation apportioned
   whole over the three Nodes, [2, 1, 1] at the age 0 (the leftover to
@@ -776,7 +776,7 @@ expected integers, written down before the first run:
   (32 released); the books balance at every one of 20 intervals and
   equal their recount; the body's momentum stays 0 (a free release takes
   no recoil). A lamp of `light` (content 24, K 24, rate [1, 1]) on +Y of
-  span [3, 1, 1] at (1, 0, 0) of a 3 x 6 x 1 board releases its one unit
+  span [3, 1, 1] at (1, 0, 0) of a 3 x 6 x 1 GameBoard releases its one unit
   per self-creation at the Nodes x = 0, 1, 2 in turn (the ages 0, 1, 2):
   after 3 intervals the rows (0, 1, 0) age 2 phase 0, (1, 1, 0) age 1
   phase 1, (2, 0, 0) age 0 phase 2 (content 1 each), held [0, 21], the
@@ -797,14 +797,14 @@ expected integers, written down before the first run:
   4, 5, 9, 13, 17, 21, 24 is 5, 50, 32, 14, 59, 41, 41 (the floors 2925,
   5851, 8777, 11702, 14628 of k x 20480 / 7 added to 5, mod 64);
   composed over axes, the momentum [1024, 320, 0] with `action` 65536
-  from (4, 4, 0) on a 40 x 40 x 1 board (the x steps at the even ages,
+  from (4, 4, 0) on a 40 x 40 x 1 GameBoard (the x steps at the even ages,
   the y steps at 5, 9, 13, 17, 21, no step lost, the body at (16, 9, 0)
   after 24): the y turns floor(0.3125 k) - floor(0.3125 (k - 1)) = 0, 0,
   0, 1, 0, so the phase after 17 intervals is 5 + 8 + 1 = 14 and after
   24 it is 5 + 12 + 1 = 18; the same worlds without `action` keep the
   phase 5 at every interval.
-- (e) the board is unchanged by the two keys: the 324 fixed rays of
-  `light` of `test_nature_beam_age` (e) on the periodic 8 x 8 x 4 board (number
+- (e) the GameBoard is unchanged by the two keys: the 324 fixed rays of
+  `light` of `test_nature_beam_age` (e) on the periodic 8 x 8 x 4 GameBoard (number
   1, an anchor of `light` at (7, 7, 3) their home) with a free body of
   `m` (content 16, phase 5, momentum [1024, 320, 0], span [1, 1, 3] at
   (0, 0, 0), `pass` for `light`, no release) run 40 intervals with
@@ -820,7 +820,7 @@ expected integers, written down before the first run:
   a phase circle"), 1 ("must be true or false"); `span` "3" and [2, 1, 1]
   ("three odd integers"), [0, 1, 1] ("from 1 through 12"), [1, 5, 1] on
   an axis of 3 ("from 1 through 3"), a body of span [3, 1, 1] at x = 0 of
-  an open axis ("leaves the board"), two bodies of span [3, 1, 1] at
+  an open axis ("leaves the GameBoard"), two bodies of span [3, 1, 1] at
   x = 4 and 6 ("share the Node [5, 1, 1]"), a detector naming (5, 1, 1)
   of a fixed body of span [3, 1, 1] at (4, 1, 1) ("a Node of a body on a
   set ... not its position"); the turn's bound: `ticks` 2^40 with the
@@ -892,7 +892,7 @@ re-pinned from `test_event_worlds` (e) and
   repeated direction, a momentum label beyond 2^62 - 1 on a declared ray
   and on a lamp's release, `phase_per_link` outside 0 .. N - 1 or on a
   family without a phase circle, the earlier engines' keys, `phase_turn`, a
-  closed board, an unknown key, a content at K x N / 2, a lamp on a free
+  closed GameBoard, an unknown key, a content at K x N / 2, a lamp on a free
   family, two measured events at one Node, an unknown table rule, N not a
   power of two, a detector on a Node without a measured event, a Node in
   two detectors, `kind` on a family (naming MIGRATION: the quantum decides
@@ -909,7 +909,7 @@ re-pinned from `test_event_worlds` (e) and
   0); `suspension` 1 as (1, 1), [1, 4], [0, 4] as (0, 1); `reads` per entry.
 - (c) the runner: a 4-interval world into `run.json` (`law` "rays-v1",
   completed, four ticks, four books, conserved, the measured events, the six
-  face detectors of the open board with their `record`, the directions
+  face detectors of the open GameBoard with their `record`, the directions
   table, `suspension` [1, 1]), `state.json` (the law, tick 4, the Nodes with
   rays) and `events.jsonl`; a negative tick count and a used output
   directory refused.
@@ -948,7 +948,7 @@ with the sign restored (`nature_beam.unit_label`, the flight table's
   of Q |a| / |D|, no component passes Q, no exact tie occurs (a tie needs
   (2 m + 1)^2 |D|^2 = (4 Q |a|)^2, impossible below |D| = 256) and |u_d|
   is within sqrt 3 / (2 Q) = 1.35 % of Q.
-- (b) the labels on the board: a 31^3 open board with the six headings and
+- (b) the labels on the GameBoard: a 31^3 open GameBoard with the six headings and
   the eight fan directions above and their negatives; a lamp of `light`
   (quantum 1, content 3 x 2^18 at K 2^18: the turn 3 at every age of the
   run, so the content per unit is 3) at (15, 15, 15) releasing one unit
@@ -994,7 +994,7 @@ with the sign restored (`nature_beam.unit_label`, the flight table's
   72057594037927936 and content 1 at Node [2, 2, 2] along [64, 0, 0], its
   weight 72057594037927936 times the largest component 64 =
   4611686018427387904"; a mirror of `wall` at (5, 5, 0) on a 12 x 12 x 1
-  board re-emitting on (64, 1, 0) what two rays of `light` (quantum 2^25)
+  GameBoard re-emitting on (64, 1, 0) what two rays of `light` (quantum 2^25)
   of amount 2^30 and of the numbers 2 and 3 bring it in one interval (from
   (4, 5, 0) on +X and (5, 4, 0) on +Y): two `rerelease` records of 2^30
   with the pushes (2^61, 0, 0) and (0, 2^61, 0), two born rows of weight
@@ -1006,7 +1006,7 @@ with the sign restored (`nature_beam.unit_label`, the flight table's
 ## The worlds of the ray law
 
 `tests/test_nature_beam_worlds.py` (docs/RAY_LAW.md, section 7): the worlds of
-`examples/events/` on minimal boards, pinned as a check that the engine
+`examples/events/` on minimal GameBoards, pinned as a check that the engine
 does what the law says and not as a result.
 
 - (a) the two slits (the example world's design, 60 x 121 x 1, z periodic,
@@ -1030,7 +1030,7 @@ does what the law says and not as a result.
 - (b) Bell (the ten A2 worlds under `"law": "rays"`, `tools/bell_chsh.py`):
   S = 2 exactly, S' = 3/2 exactly, the controls +1, -1, 0, no-signalling
   exact, 0 criteria failed.
-- (c) one content of 2^24 at the centre of an open 11^3 board at `release`
+- (c) one content of 2^24 at the centre of an open 11^3 GameBoard at `release`
   [1, 128], 40 intervals: the books close at every tick, the content is
   2^24 at every tick, the momentum on the measured events zero, the flux
   through the cube of half-width 2 equals the emission q = 6 x 2^17 at
@@ -1046,7 +1046,7 @@ does what the law says and not as a result.
   the first registration, `test_orbit_world.py`, went with its numbers
   when the engine changed).
 - (e) `two_contents` (the example world: two contents of 2^24 eight Links
-  apart on the open 21^3 board, `release` [1, 128], no suspension) for 20
+  apart on the open 21^3 GameBoard, `release` [1, 128], no suspension) for 20
   intervals: not refused (the night's bound refused it at the 20th
   interval, when the two +y beams of 2^17 click `face:+y` together, 2^18
   in one interval); the books close at every tick; every face's record
@@ -1235,15 +1235,15 @@ direction, by its momentum, and does not turn. Written down first:
 ## A periodic axis
 
 `tests/test_periodic_axis.py` isolates the declared exception to the open
-board (the model owner, 2026-09-19: an axis may be declared periodic as a run
+GameBoard (the model owner, 2026-09-19: an axis may be declared periodic as a run
 parameter of the world file, `boundary` `{"z": "periodic"}`; open stays the
 default and "closed" and every other word stay refused): on a periodic axis
-the departures that would leave the board through one face are created at
+the departures that would leave the GameBoard through one face are created at
 the first Node of the opposite face (`Transit.walk`), nothing escapes on that
-axis, the momentum they carry stays on the board, and with an extent of 1 the
+axis, the momentum they carry stays on the GameBoard, and with an extent of 1 the
 two departures on that axis return to the same Node in the next interval as
 its arrivals through those Ports (a four-Port node with a one-interval stub).
-One rule for the board (the model owner, 2026-09-19): a measured event's step
+One rule for the GameBoard (the model owner, 2026-09-19): a measured event's step
 by its momentum (`_move`, step 6) wraps on a periodic axis as the departures
 do, escapes through an open face as before, and with an extent of 1 lands on
 its own Node, no move; `steps` counts every step made off the clock,
@@ -1258,7 +1258,7 @@ family `m` and one measured event of it that steps. Written down first:
 | --- | --- | --- |
 | (a) the stub of extent 1 | a bar of 5 x 1 x 1 with `{"z": "periodic"}`; one unit in transit at (2, 0, 0) on +Z at phase 5, momentum (0, 0, 1); six intervals | after interval 1 the unit is a departure at (2, 0, 0) on +Z, and the next walk creates it at the same Node as its arrival in the +Z slot, phase 5 and momentum (0, 0, 1) unchanged, nothing else in the slots, nothing in flight, escaped 0; after each of intervals 1 to 6 the only departure is at (2, 0, 0) on +Z, amount 1, phase 5, momentum (0, 0, 1), escaped 0 with momentum (0, 0, 0), the books balanced, the momentum in flight (0, 0, 1); the edge case, the same world with `"boundary": "open"`: after interval 1 the same departure, after interval 2 nothing in flight, escaped 1 with momentum (0, 0, 1), the books balanced |
 | (b) the wrap and the open faces | a bar of 1 x 1 x 4 with `{"z": "periodic"}`; units at z = 3 on +Z (phase 5), at z = 0 on -Z (phase 6) and at z = 2 on +X (phase 7) | after interval 1 the departures (0, 0, 0) -Z, (0, 0, 2) +X, (0, 0, 3) +Z, escaped 0; after interval 2 the departures (0, 0, 0) +Z with (0, 0, 1) at phase 5 and (0, 0, 3) -Z with (0, 0, -1) at phase 6, escaped 1 with momentum (1, 0, 0), 2 in flight of the initial 3, the momentum in flight (0, 0, 0), the books balanced |
-| (c) the refusals and the record | `"closed"`, `{"z": "closed"}`, `{"w": "periodic"}`, `{"z": 1}`, `"periodic"`; `{"z": "periodic"}`; no key; the bar of (a) run 3 intervals through `execute_event_run` | each of the five refused by `parse_event_world` naming the closed board and by `validate_configuration` (valid false, code `validation`); `periodic` (False, False, True), `boundary` `{"z": "periodic"}`, the preflight's summary `{"x": "open", "y": "open", "z": "periodic"}`; without the key `"open"` and (False, False, False); `run.json` with `boundary` `{"z": "periodic"}`, 3 completed ticks, conserved, escaped `[{"family": "light", "amount": 0, "momentum": [0, 0, 0]}]`, `state.json` with the same boundary at tick 3 |
+| (c) the refusals and the record | `"closed"`, `{"z": "closed"}`, `{"w": "periodic"}`, `{"z": 1}`, `"periodic"`; `{"z": "periodic"}`; no key; the bar of (a) run 3 intervals through `execute_event_run` | each of the five refused by `parse_event_world` naming the closed GameBoard and by `validate_configuration` (valid false, code `validation`); `periodic` (False, False, True), `boundary` `{"z": "periodic"}`, the preflight's summary `{"x": "open", "y": "open", "z": "periodic"}`; without the key `"open"` and (False, False, False); `run.json` with `boundary` `{"z": "periodic"}`, 3 completed ticks, conserved, escaped `[{"family": "light", "amount": 0, "momentum": [0, 0, 0]}]`, `state.json` with the same boundary at tick 3 |
 | (d) a measured event's step wraps | a bar of 1 x 1 x 4 with `{"z": "periodic"}`; a measured event of `m`, content 16, momentum (0, 0, 16), at z = 3 (one step per (M + p) / p = 2 self-creations, as `test_event_clock` (d) derives); six intervals; the same bar with `"boundary": "open"`; a bar of 3 x 1 x 1 with `{"z": "periodic"}` (extent 1) and the same measured event at (1, 0, 0) | after intervals 1 to 6 at z = 3, 0, 0, 1, 1, 2, `steps` 1, 2, 3 after intervals 2, 4, 6, the momentum (0, 0, 16) untouched and (0, 0, 16) on the measured events, escaped 0 with momentum (0, 0, 0), the books balanced at every interval; the open bar: at z = 3 after interval 1, escaped after interval 2 (the measured line's escaped 16, the momentum escaped (0, 0, 16), no measured event left, the books balanced); the extent of 1: at (1, 0, 0) through six intervals, the one measured event still (not escaped), content 16, momentum (0, 0, 16), `steps` 3 (the steps made off the clock, each landing on its own Node), the books balanced |
 
 ## The suspension
@@ -1294,7 +1294,7 @@ added the same day):
 | --- | --- | --- |
 | (a) an event in transit | a bar of 9 x 3 x 3, `suspension` [1, 4]; at x = 4 a unit of light and 16 units of a free family both in transit on +X; a second unit of light at x = 3 on +X | the light at x = 4 reads the presence 16 and carries 16 x 1 // 4 = 4: held for intervals 1 to 4, its count after each interval 3, 2, 1, 0; the second unit arrives in interval 2 and waits with it; in interval 5 the two leave together on +X, amount 2, nothing left in the arrivals |
 | (b) a measured event | a measured event of light (content 1, measuring the free family) at x = 4 where the 16 units arrive in interval 1 | interval 1: nothing owed, a self-creation (age 1), then the read of the presence 16, 16 x 1 // 4 = 4 owed; intervals 2 to 5 pay them (3, 2, 1, 0 left), no self-creation; interval 6 a self-creation (age 2) reading an empty Node; its age after intervals 1 to 6: 1, 1, 1, 1, 1, 2; intervals waited 4, nothing owed, phase 0; age + waited = 6 |
-| (c) a steady field | a bar of 2 x 1 x 1, `suspension` [1, 4], `release` [1, 128]; a content of 2048 of the free family at the corner x = 0 (five of its six exits off the open board), a measured event of light (content 1, measuring the free family) at x = 1; 30 intervals | the source is created again every interval (age 30; nothing of another number reaches it) and 16 units reach the probe every interval from the second on (464 taken after 30; since 2026-09-19 a free family's units carry no content, so the probe's content stays [0, 1] where it read [464, 1] before), the presence 16, k = 16 x 1 // 4 = 4; the probe's age after intervals 1 to 7: 1, 2, 2, 2, 2, 2, 3 (a self-creation in interval 2 owing 4, paid in 3 to 6, the next in 7), then once every 5 intervals (12, 17, 22, 27): after 10, 20 and 30 the ages 3, 5, 7, waited 23, 1 owed; age + waited = the interval at every interval; the age after 30 exceeds the age after 10 (slowed by 1 / 5, not frozen) |
+| (c) a steady field | a bar of 2 x 1 x 1, `suspension` [1, 4], `release` [1, 128]; a content of 2048 of the free family at the corner x = 0 (five of its six exits off the open GameBoard), a measured event of light (content 1, measuring the free family) at x = 1; 30 intervals | the source is created again every interval (age 30; nothing of another number reaches it) and 16 units reach the probe every interval from the second on (464 taken after 30; since 2026-09-19 a free family's units carry no content, so the probe's content stays [0, 1] where it read [464, 1] before), the presence 16, k = 16 x 1 // 4 = 4; the probe's age after intervals 1 to 7: 1, 2, 2, 2, 2, 2, 3 (a self-creation in interval 2 owing 4, paid in 3 to 6, the next in 7), then once every 5 intervals (12, 17, 22, 27): after 10, 20 and 30 the ages 3, 5, 7, waited 23, 1 owed; age + waited = the interval at every interval; the age after 30 exceeds the age after 10 (slowed by 1 / 5, not frozen) |
 | (d) light on light | the bar with two measured events of light (numbers 1 and 2); at x = 4 in transit on +X 16 units of light of number 1 and one unit of light of number 2; `suspension` [1, 4], then [1, 4096] | at [1, 4] the unit reads the crowd's 16 (another number of the same family) and carries 16 x 1 // 4 = 4: its count after intervals 1 to 5 is 3, 2, 1, 0, 0, no departure of it before interval 5 and one unit on +X after it; the crowd reads 1, 1 x 1 // 4 = 0, and leaves whole in interval 1 (16 departures); at [1, 4096] the unit reads 16 x 1 // 4096 = 0, its counts 0, 0, 0, 0, 0, and it leaves on +X in interval 1 with the crowd |
 | (e) one presence, two readers | a measured event of light (content 1, number 2, measuring the free family and passing light) at x = 4; 16 units of the free family (number 1) and one unit of light of a third measured event (number 3) in transit there on +X; one interval at `suspension` [1, 4], then at [1, 16] | the unit reads every number but its own, 16 + 1 = 17 (the 16 units and the measured event's content, here; until the one reading set of 2026-09-19 it read 16, the content unread) and carries 17 x 1 // 4 = 4 (3 after interval 1 pays one); the measured event, after its self-creation (age 1), reads every number but its own, 16 + 1 = 17, and owes 17 x 1 // 4 = 4: the same count from the same presence; at [1, 16] the unit's count 1 (0 after the payment) and the measured event's 1; the counts are those pinned before (16 // 4 = 17 // 4 and 16 // 16 = 17 // 16) |
 
@@ -1447,7 +1447,7 @@ are assigned (`engine.bounded`); a free measured event's release per Port
 per self-creation, amount x n // d, times 3 must not exceed the mixing's
 cell bound 2^30 - 1 (`world.EMISSION_CELL_BOUND`, `EMISSION_MARGIN`),
 refused at parsing; and the mixing's refusals name the quantity that
-exceeded, not the retired engine. Bars of 2 x 1 x 1 and a 3^3 board,
+exceeded, not the retired engine. Bars of 2 x 1 x 1 and a 3^3 GameBoard,
 `suspension` 0, every measured event `fixed`. Written down first:
 
 | Case | Input | Expected |
@@ -1492,7 +1492,7 @@ escaped) are unchanged (326 criteria of `tools/bell_chsh.py`).
 ## The worlds of the law of events
 
 `tests/test_event_worlds.py` runs the worlds of `examples/events/` as data on
-minimal boards (Highlights 5.5, "The engine of the law of events: what the
+minimal GameBoards (Highlights 5.5, "The engine of the law of events: what the
 tests show"), pinned here on 2026-09-19 from the engine's first readings as a
 check that it does what the law says and not as a result, and re-pinned the
 same day when the free family lost its phase, the suspension read presence
@@ -1519,7 +1519,7 @@ designs, are given in brackets as (old ...).
   is 0.74 of the emission, within 0.04 (0.736 measured; old 0.995), and
   over ticks 201 to 300 through the cubes of half-width 4, 8 and 12 it is
   0.86, 0.46 and 0.17, each within 0.05 and falling with the half-width as
-  the field fills the board (0.861, 0.463, 0.174 measured; old 0.995,
+  the field fills the GameBoard (0.861, 0.463, 0.174 measured; old 0.995,
   0.990, 0.985); the escape per interval is 0.13 of the emission, within
   0.03 (0.131 measured; old 0.983).
 - (b) the shell means over ticks 201 to 300 at r = 4, 6, 8, 10 and 12
@@ -1578,7 +1578,7 @@ designs, are given in brackets as (old ...).
   unchanged).
 - (e) the refusals, naming the law: `contents`, `initial_shadows`,
   `wait_per_quantum`, `schema_version` and `dense_field` (the earlier
-  engines' keys), `phase_turn` as an unknown family key, a closed board, a
+  engines' keys), `phase_turn` as an unknown family key, a closed GameBoard, a
   world without `"law": "events"`, an unknown key, a content at or past
   K x N / 2 of a family with a phase (the same content of the phase-less
   `m` parses: K does not apply), a lamp on a free family, two measured
@@ -1594,7 +1594,7 @@ designs, are given in brackets as (old ...).
   The runner runs a 4-interval world of (a) into `run.json` (`law`
   "events-v1", completed, four ticks, four books, conserved, the measured
   events and the detectors (none declared: the six face detectors of the
-  open board, `face:+x` ... `face:-z`, since 2026-09-19), `suspension`
+  open GameBoard, `face:+x` ... `face:-z`, since 2026-09-19), `suspension`
   [1, 1], the family's `phase`
   false), `state.json` (the law,
   tick 4, the measured events, Nodes with events) and `events.jsonl`, keeps

@@ -3,7 +3,7 @@ rule, 2026-09-20: a readings tool never replays a rule of the engine;
 `tools/bohr_readings.py` reads the flight time off `FlightTable.manhattan_steps`,
 the coherent pointer off `nature_beam.coherent_pointer` with the circle's
 tables of `core/phase.py`, and the run off the runner's record). Each reading
-is checked against the engine on a minimal board; the expected integers,
+is checked against the engine on a minimal GameBoard; the expected integers,
 written down first:
 
 (a) the flight time from the centre's plane to a face: on a heading a ray
@@ -16,7 +16,7 @@ written down first:
     C = 8192^2 / (16384^2 + 8192^2) = 0.2; the second unit at phase 0
     instead gives (8192, 0), 24576^2 and C = 1.8; a turn without clicks has
     the pointer (0, 0); the log-log slope of [1, 4, 9] is 2;
-(c) `read_run` on a run written by the runner: an open 11 x 11 x 3 board,
+(c) `read_run` on a run written by the runner: an open 11 x 11 x 3 GameBoard,
     a fixed proton of `p` (content 4, charge [1, 1]) at (5, 5, 1) on the
     four in-plane headings at `release` [1, 4], an electron of `e` (content
     16, charge -15, phase 5) at (8, 5, 1) of span [1, 1, 3] with the

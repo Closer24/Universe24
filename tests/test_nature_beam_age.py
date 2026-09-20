@@ -6,7 +6,7 @@ that created the ray (a birth or a re-emission; a collision keeps it), kept
 whole on the record; the flight reads it modulo the direction's period and
 the collision never reads it; a measured event, the external thing, reads
 it whole as the age moment of the one reading (sum amount x age, `reads:
-"age"`), which its clock counts in place of the presence. The board's step
+"age"`), which its clock counts in place of the presence. The GameBoard's step
 is unchanged by the whole age. The expected integers of
 docs/TEST_EXPECTATIONS.md ("The age"), written down first:
 
@@ -43,18 +43,18 @@ docs/TEST_EXPECTATIONS.md ("The age"), written down first:
     `by_clock(age, 2, 4)`: 1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 10, 11, 12,
     12, 13, 14, 14, 15, 16, 16, 17, 18, 18 (unchanged); the `read` records
     of the age reader carry the reading 5 (the arrival's age moment);
-(d) the parsing: `flight_bound` of an open 11^3 board over the six
+(d) the parsing: `flight_bound` of an open 11^3 GameBoard over the six
     headings is 54 (D = 31 Links, ceil(31 x 110 / 64)) and 111 with the
     direction (1, 0, 64) declared (T 7095, one period, ceil(7095 / 64));
     `age_bound` defaults to twice it (108, 222) and parses as declared
     (100); 0, -1, a string and a fraction are refused naming `age_bound`;
-    a board periodic on every axis without it is refused naming
+    a GameBoard periodic on every axis without it is refused naming
     `age_bound`, and accepted with it; a declared ray's age beyond it is
     refused; the runner's record carries it; a ray on the z stub of an
     open 3 x 1 x 1 bar with z periodic (default 12) is refused with
     `OverflowError` naming `age_bound` at its 13th interval, not before;
-(e) the board is unchanged by the whole age: 324 fixed rays on the
-    periodic 8 x 8 x 4 board (head-on pairs among them) run 40 intervals with the
+(e) the GameBoard is unchanged by the whole age: 324 fixed rays on the
+    periodic 8 x 8 x 4 GameBoard (head-on pairs among them) run 40 intervals with the
     ages whole, and again with every moving ray's age reduced modulo its
     direction's period after each interval from outside the law: the
     Nodes, directions, phases, amounts and contents are identical at every
@@ -69,7 +69,7 @@ import json
 import numpy as np
 import pytest
 
-from event_universe.core.lattice import PORT_HEADINGS
+from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.engine import by_clock
 from event_universe.events.measured import count_component
@@ -83,7 +83,7 @@ DIRECTIONS = [*[list(h) for h in PORT_HEADINGS], 0, 1, [1, 1, 0], [2, -1, 1]]
 
 
 def crowd() -> list[dict[str, object]]:
-    """324 fixed rays on the periodic 8 x 8 x 4 board: every heading, both
+    """324 fixed rays on the periodic 8 x 8 x 4 GameBoard: every heading, both
     rest slots, two fan directions, amounts 1 and 2, ages up to 22, and
     twelve head-on pairs that meet at the Node between them."""
     beams: list[dict[str, object]] = [
@@ -321,7 +321,7 @@ def test_the_age_bound_is_derived_declared_or_required(tmp_path):
         with pytest.raises(ValueError, match="age_bound"):
             parse_nature_beam_world({**cube, "age_bound": bad})
     everywhere = {"x": "periodic", "y": "periodic", "z": "periodic"}
-    with pytest.raises(ValueError, match="age_bound is required on a board periodic on every axis"):
+    with pytest.raises(ValueError, match="age_bound is required on a GameBoard periodic on every axis"):
         parse_nature_beam_world({**cube, "boundary": everywhere})
     assert parse_nature_beam_world({**cube, "boundary": everywhere, "age_bound": 7}).age_bound == 7
     with pytest.raises(ValueError, match=r"in_transit\[0\].age must be an integer from 0 through 108"):
@@ -333,7 +333,7 @@ def test_the_age_bound_is_derived_declared_or_required(tmp_path):
     record = json.loads((tmp_path / "run" / "run.json").read_text(encoding="utf-8"))
     assert record["age_bound"] == 108 and record["status"] == "completed"
     # The stub: a ray on +z of a z-periodic bar never leaves; at the bound
-    # the run is refused, nothing on the board changed.
+    # the run is refused, nothing on the GameBoard changed.
     stub = bar([3, 1, 1], boundary={"z": "periodic"}, in_transit=[light([1, 0, 0], [0, 0, 1])])
     world = parse_nature_beam_world(stub)
     assert world.age_bound == 12
@@ -345,13 +345,13 @@ def test_the_age_bound_is_derived_declared_or_required(tmp_path):
         simulation.step()
 
 
-def board(simulation: NatureBeamSimulation) -> np.ndarray:
+def game_board(simulation: NatureBeamSimulation) -> np.ndarray:
     store = simulation.stores[0]
     rows = np.stack([store.node, store.direction, store.phase, store.amount, store.content], axis=1)
     return rows[np.lexsort(rows.T[::-1])]
 
 
-def test_the_board_is_unchanged_by_the_whole_age():
+def test_the_game_board_is_unchanged_by_the_whole_age():
     """(e)."""
     whole = NatureBeamSimulation(parse_nature_beam_world(torus()))
     reduced = NatureBeamSimulation(parse_nature_beam_world(torus()))
@@ -366,7 +366,7 @@ def test_the_board_is_unchanged_by_the_whole_age():
         moving = store.direction >= 2
         store.age = np.where(moving, store.age % period[store.direction], store.age)
         store.merge()
-        assert np.array_equal(board(whole), board(reduced))
+        assert np.array_equal(game_board(whole), game_board(reduced))
         collided = collided or before.shape != whole.stores[0].direction.shape
         collided = collided or (before != whole.stores[0].direction).any()
         ages_differed = ages_differed or int(whole.stores[0].age.sum()) != int(store.age.sum())

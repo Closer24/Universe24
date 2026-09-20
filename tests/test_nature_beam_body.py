@@ -1,7 +1,7 @@
 """A body on a set of Nodes with one record, and the turn by momentum
 (docs/RAY_LAW.md, section 10, note 30; the model owner, 2026-09-20: the
 electron of width 3, and "on Bohr, go, and put it as parameters outside
-the board like the age"). A measured event declares `span`, three odd
+the GameBoard like the age"). A measured event declares `span`, three odd
 extents centred on its position: its clock, its threshold and its push read
 the one reading set summed over its Nodes, its releases are apportioned
 whole over them, the step moves the whole set, no collision acts at any of
@@ -15,7 +15,7 @@ set and the turn by momentum"), written down first:
 
 (a) a set of one Node is today's measured event bit for bit: a free body
     of `m` (content 16, momentum [256, 0, 0], phase 5) at (3, 1, 1) of an
-    open 12 x 3 x 3 board at `release` [1, 4] (4 rays per heading per
+    open 12 x 3 x 3 GameBoard at `release` [1, 4] (4 rays per heading per
     self-creation), a fixed counter of `light` at (9, 1, 1) measuring `m`
     in the `wave` detector `d`, a head-on pair of number 2 on +-y at x = 6
     that parks at (6, 1, 1) at the first interval and leaves on +-z; 30
@@ -42,7 +42,7 @@ set and the turn by momentum"), written down first:
     three Nodes (x per interval 2, 3, 3, 4, 4, 5, 5); with a fixed anchor
     at (5, 0, 0), a Node of the moved set at the age 6, the step is
     refused and the body stays at (4, 0, 1) with 3 steps counted; without
-    it the step of the age 8 leaves the board and the whole body clicks
+    it the step of the age 8 leaves the GameBoard and the whole body clicks
     on face:+x (one click, node (5, 0, 1), amount 16, the measured line's
     escaped 16, no measured event left); with x periodic it wraps to
     (0, 0, 1) with the Nodes (0, 0, 0), (0, 0, 1), (0, 0, 2); on a bar
@@ -50,7 +50,7 @@ set and the turn by momentum"), written down first:
     (2, 0, 0), (2, 0, 1) in that order;
 (c) the books balance with a set that releases: a free body of `m`
     (content 16) of span [1, 1, 3] at (3, 1, 2) of an open 7 x 3 x 5
-    board at `release` [1, 4] on the four headings +-X, +-Y (so that no
+    GameBoard at `release` [1, 4] on the four headings +-X, +-Y (so that no
     ray of its own enters its set): 4 units per heading per self-creation
     apportioned whole over the three Nodes, [2, 1, 1] at the age 0
     (the leftover to the Node `age mod 3`), [1, 2, 1] at the age 1,
@@ -58,7 +58,7 @@ set and the turn by momentum"), written down first:
     8, 4, 4 units at (3, 1, 1), (3, 1, 2), (3, 1, 3), 16 in all, at the
     second 4, 8, 4; the books balance at every one of 20 intervals and
     equal their recount; a lamp of `light` (content 24, K 24, rate
-    [1, 1]) on +Y of span [3, 1, 1] at (1, 0, 0) of a 3 x 6 x 1 board
+    [1, 1]) on +Y of span [3, 1, 1] at (1, 0, 0) of a 3 x 6 x 1 GameBoard
     releases its one unit per self-creation at the Nodes x = 0, 1, 2 in
     turn (the ages 0, 1, 2): after 3 intervals the rows (0, 1, 0) age 2
     phase 0, (1, 1, 0) age 1 phase 1, (2, 0, 0) age 0 phase 2, held
@@ -74,14 +74,14 @@ set and the turn by momentum"), written down first:
     the steps at the intervals 5, 9, 13, 17, 21, the floors of k x 20480
     / 7 = 2925, 5851, 8777, 11702, 14628) the phase after the intervals
     5, 9, 13, 17, 21, 24 is 50, 32, 14, 59, 41, 41; composed over axes,
-    momentum [1024, 320, 0] with `action` 65536 on a 40 x 40 x 1 board
+    momentum [1024, 320, 0] with `action` 65536 on a 40 x 40 x 1 GameBoard
     (the x steps at the even ages, the y steps at 5, 9, 13, 17, 21: no
     step lost): the y turns floor(0.3125 k) - floor(0.3125 (k - 1)) = 0,
     0, 0, 1, 0, so the phase after 17 intervals is 5 + 8 + 1 = 14 and
     after 24 it is 5 + 12 + 1 = 18; the same worlds without `action` keep
     the phase 5 throughout;
-(e) the board is unchanged by the two keys: 324 fixed rays of `light` on
-    the periodic 8 x 8 x 4 board of `test_nature_beam_age` (e) (number 1, an
+(e) the GameBoard is unchanged by the two keys: 324 fixed rays of `light` on
+    the periodic 8 x 8 x 4 GameBoard of `test_nature_beam_age` (e) (number 1, an
     anchor of `light` at (7, 7, 3) their home) with a free body of `m`
     (content 16, momentum [1024, 320, 0], span [1, 1, 3], `pass` for
     `light`, no release) run 40 intervals with `action` 7 and
@@ -92,7 +92,7 @@ set and the turn by momentum"), written down first:
 (f) the refusals, naming the key: `action` 0, -1, "8", 1.5;
     `phase_by_momentum` without `action`, on a fixed measured event, on a
     family without a phase circle, not a boolean; `span` "3", [2, 1, 1],
-    [0, 1, 1], [5, 1, 1] on an axis of 3, a body leaving the board on an
+    [0, 1, 1], [5, 1, 1] on an axis of 3, a body leaving the GameBoard on an
     open axis, two bodies sharing a Node, a detector naming a Node of a
     body that is not its position; the turn's bound: `ticks` 2^40 with
     the momentum 2^20 and N 64; accepted: `span` [3, 1, 1] at x = 0 of a
@@ -546,13 +546,13 @@ def torus(turning: bool) -> dict[str, object]:
     return document
 
 
-def board(simulation: NatureBeamSimulation) -> np.ndarray:
+def game_board(simulation: NatureBeamSimulation) -> np.ndarray:
     store = simulation.stores[LIGHT]
     found = np.stack([store.node, store.direction, store.phase, store.amount, store.content], axis=1)
     return found[np.lexsort(found.T[::-1])]
 
 
-def test_the_board_is_unchanged_by_the_two_keys():
+def test_the_game_board_is_unchanged_by_the_two_keys():
     """(e)."""
     with_keys = NatureBeamSimulation(parse_nature_beam_world(torus(True)))
     without = NatureBeamSimulation(parse_nature_beam_world(torus(False)))
@@ -563,7 +563,7 @@ def test_the_board_is_unchanged_by_the_two_keys():
         before = with_keys.stores[LIGHT].direction.copy()
         with_keys.step()
         without.step()
-        assert np.array_equal(board(with_keys), board(without))
+        assert np.array_equal(game_board(with_keys), game_board(without))
         turning, plain = with_keys.measured[2], without.measured[2]
         assert turning.nodes == plain.nodes and turning.steps == plain.steps
         collided = collided or before.shape != with_keys.stores[LIGHT].direction.shape
@@ -611,7 +611,9 @@ def test_the_refusals_and_the_record(tmp_path):
     )
     refused(world(measured=[{**mover, "span": [0, 1, 1]}]), "from 1 through 12")
     refused(world(measured=[{**mover, "span": [1, 5, 1]}]), "from 1 through 3")
-    refused(world(measured=[{**mover, "position": [0, 1, 1], "span": [3, 1, 1]}]), "leaves the board")
+    refused(
+        world(measured=[{**mover, "position": [0, 1, 1], "span": [3, 1, 1]}]), "leaves the GameBoard"
+    )
     refused(
         world(
             measured=[{**mover, "span": [3, 1, 1]}, {**mover, "position": [6, 1, 1], "span": [3, 1, 1]}]

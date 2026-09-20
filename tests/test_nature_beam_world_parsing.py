@@ -13,7 +13,7 @@ law"), written down first:
     repeated direction, a momentum label beyond 2^62 - 1 on a declared ray
     and on a lamp's release, `phase_per_link` outside 0 .. N - 1 or on a
     family without a phase circle, the earlier engines' keys, `phase_turn`,
-    a closed board, an unknown key, a content at K x N / 2, a lamp on a free
+    a closed GameBoard, an unknown key, a content at K x N / 2, a lamp on a free
     family, two measured events at one Node, an unknown table rule, N not a
     power of two, a detector on a Node without a measured event, a Node in
     two detectors, `kind` on a family (naming MIGRATION: the quantum decides
@@ -32,7 +32,7 @@ law"), written down first:
     reduced), the books' `charge` the same pair;
 (c) the runner: a 4-interval world into `run.json` (`law` "rays-v1",
     completed, four ticks, four books, conserved, the measured events, the
-    six face detectors of the open board with their `record`, the
+    six face detectors of the open GameBoard with their `record`, the
     directions table, `suspension` [1, 1]), `state.json` (the law, tick 4,
     the Nodes with rays) and `events.jsonl`; a negative tick count and a
     used output directory refused;
@@ -174,7 +174,7 @@ def test_the_world_refuses_by_name():
         {**world, "families": [{"name": "m", "quantum": 0, "phase_turn": "none"}]},
         "unknown keys: phase_turn",
     )
-    refused({**world, "boundary": "periodic"}, "closed board is refused")
+    refused({**world, "boundary": "periodic"}, "closed GameBoard is refused")
     refused({**world, "prefill": 3}, "unknown keys: prefill")
     phased = {**world, "families": [{"name": "m", "quantum": 0, "charge": 0}]}
     refused(

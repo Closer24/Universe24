@@ -4,14 +4,14 @@ Seven worlds of one base, written by `make_worlds.py`; the register entry is
 [H, Bohr's lines behind the detector (2026-09-20)](../../../docs/EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20)
 and the evidence is in [validation](../../../docs/VALIDATION.md). The
 question, in the model owner's words (Highlights 5.4, 2026-09-20): "Bohr
-should come out by itself behind the detector; what is missing on the board
+should come out by itself behind the detector; what is missing on the GameBoard
 by the laws?" The answer taken: the tie between a body's momentum and its
-phase, placed as parameters outside the board like the age ("On Bohr, go,
-and put it as parameters outside the board like the age"): the electron is
+phase, placed as parameters outside the GameBoard like the age ("On Bohr, go,
+and put it as parameters outside the GameBoard like the age"): the electron is
 a body on a set of three Nodes (`span`, [RAY_LAW note 30](../../../docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (i)) and turns its phase by its momentum at every Link it steps
 (`phase_by_momentum` with the world's `action`, note 30 (ii)); the rays it
-releases carry that phase to the open faces of the board, the `wave`
+releases carry that phase to the open faces of the GameBoard, the `wave`
 detectors that receive what comes out of the atom (the owner: "to show
 atoms I do not need a detector; a detector receives their radiation, maybe,
 if it comes out"). A research run, made once, never a test; the derivation
@@ -54,7 +54,7 @@ per unit of content cancelling). Its rays carry its phase and no content
 the four side faces, whose face detectors record the square of the
 coherent pointer of what leaves each interval and whose `click` lines
 carry every ray's phase, Node and tick: the far-face `wave` detector, no
-measured event added to the board.
+measured event added to the GameBoard.
 
 ## The derivation, before the runs (GAMEBOARD readings of the design)
 
@@ -71,21 +71,21 @@ p v / r = F, so with n = p / M_e and A = 16 Q E_body(r) r / 10
 S = 45120 makes v = 0.06 on the reference orbit r = 8 (the physicist's
 speed of series F). The turn by momentum turns the phase by |p_axis| N / h
 per Link stepped on an axis, so over one orbit of a circle of radius r
-stepped on the lattice the phase turns by (N / h) x sum over the Links of
+stepped on the GameBoard the phase turns by (N / h) x sum over the Links of
 |p_axis| = (N / h) x 4 p r (the Manhattan weighting of the path, 4 r
 against the circle's 2 pi r), and closes on itself when
 
     4 p(r) r = j h,  j whole:
 
-de Broglie's condition in the lattice's metric. With p proportional to
+de Broglie's condition in the GameBoard's metric. With p proportional to
 1 / sqrt(r) under a 1 / r^2 push the closing radii are proportional to
 j^2, Bohr's ladder. The action is fixed so that j = 2 exactly on the
 reference orbit: h = 16 p(8) = 5414584320. The fan's ring flux falls as
 about r^-1.83 between r = 8 and 18 and is not smooth at r >= 13 (the
-lines of a finite fan), so j = 3 falls between the lattice radii 15 and
+lines of a finite fan), so j = 3 falls between the GameBoard radii 15 and
 16; both are run.
 
-| r | E_body (entries per shell) | p (label units) | v | T | lumps per orbit (degrees each) | j = 4 p r / h | kind | board | intervals |
+| r | E_body (entries per shell) | p (label units) | v | T | lumps per orbit (degrees each) | j = 4 p r / h | kind | GameBoard | intervals |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 2 | 183.33 | 640000560 | 0.1077 | 117 | 12 (30.9) | 0.946 | closing (j = 1 within 0.1) | 33^3 | 3000 |
 | 4 | 56.25 | 495197450 | 0.0854 | 294 | 29 (12.2) | 1.463 | between | 37^3 | 3000 |

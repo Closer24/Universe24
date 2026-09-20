@@ -14,7 +14,7 @@ docs/TEST_EXPECTATIONS.md ("The collision table"), written down first:
     signed axis permutations, with the sizes 1, 6, 3, 12, 12, 3, 8, 12, 6,
     1 (here 0) and the same with here 1; a lone unit is fixed; the head-on
     pair +x -x parks in the two rest slots, and ha hb becomes +z -z;
-(c) on the board: two rays of amount 1 meeting head-on at the middle Node
+(c) on the GameBoard: two rays of amount 1 meeting head-on at the middle Node
     of a 5 x 1 x 1 bar (x and z periodic so that nothing escapes) become
     the two rest rays (directions 0 and 1) at that Node in the interval
     they meet, and stay; two rays of amount 2 (a crowd) pass each other;
@@ -48,7 +48,7 @@ import itertools
 
 import numpy as np
 
-from event_universe.core.lattice import PORT_HEADINGS
+from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import class_key, collision_table, slot_heading, state_code
 
@@ -146,8 +146,8 @@ def bar(shape: list[int], boundary: object, beams: list[dict[str, object]]) -> d
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
-        # The age bound a board periodic on every axis must declare (the
-        # cube of the six orientations); accepted on any board.
+        # The age bound a GameBoard periodic on every axis must declare (the
+        # cube of the six orientations); accepted on any GameBoard.
         "age_bound": 64,
         "families": [{"name": "light", "quantum": 1}],
         "measured": [

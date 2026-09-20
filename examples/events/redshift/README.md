@@ -21,7 +21,7 @@ K 2^22, N 64, one free family `m` of charge 0 without a phase circle
 (`"phase": false`). The source is a fixed measured event of content
 M = 2^12 at c releasing on the full fan of primitive directions (a, b, c)
 with 0 < |a| + |b| + |c| <= 6: 290 directions (284 declared beyond the six
-headings), every direction of the lattice within that bound. At `release`
+headings), every direction of the GameBoard within that bound. At `release`
 [1, M] its clock gives `by_clock(age, M, M)` = 1 ray per direction per
 self-creation: q = 290 units per interval, one shell of the fan every
 interval, exact. The probes are fixed measured events of content 1 at every

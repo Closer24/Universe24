@@ -13,7 +13,7 @@ expectation is reported with its numbers, never moved.
 
 ## The base
 
-The plane of the coupling series: a board of 121 x 121 x 1 Nodes with the
+The plane of the coupling series: a GameBoard of 121 x 121 x 1 Nodes with the
 z axis periodic (`"boundary": {"z": "periodic"}`), the centre c = (60, 60,
 0), `"law": "rays"`, K 2^22, N 64, one free family `m` of charge 0 without
 a phase circle (`"phase": false`), `suspension` 0 (the clock's count is not
@@ -21,7 +21,7 @@ read: the push law alone moves the probe), `width` S in 1, 8, 32. The
 source is a fixed measured event of content M = 2^10 at c releasing on a
 ballistic fan: every primitive in-plane direction (a, b, 0) with 0 < a^2 +
 b^2 <= 8^2, 120 directions (116 declared in the world's table beyond the
-four in-plane headings), uniform in angle to the grain of the lattice (the
+four in-plane headings), uniform in angle to the grain of the GameBoard (the
 primitive vectors of a square are twice as dense on the diagonals as on the
 axes, a disk's are not). At `release` [1, 2^10 x 10] the source's clock
 gives `by_clock(age, 2^10, 2^10 x 10)` = 1 ray per direction at the ages
@@ -175,7 +175,7 @@ the second registration escaped after one turn at tick 470; the S = 32
 probe at r = 24 turns once in 829 (687 derived) and falls in. The kick
 per ray is now 64 label units along the ray's own line, radial within
 0.8 degrees; what remains is the field's burst (one shell per 10
-intervals) and the lattice granularity of the fan's lines. The two
+intervals) and the GameBoard granularity of the fan's lines. The two
 earlier registrations (p = 3, 5, 9 under the D1 engine; p = 11, 15, 23
 under the label along D) are history in the register entry and in git.
 

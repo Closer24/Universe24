@@ -4,7 +4,7 @@ These worlds place reusable apparatus from the separate definitions file
 `entities/detectors.json` into worlds of the law of the ray (`"law": "rays"`).
 The [entity loading contract](../../../docs/ENTITY_DEFINITIONS.md) keeps
 geometry, tables and detector settings in data; the world declares placement,
-board shape, topology and the incoming rays. The law that runs them is
+GameBoard shape, topology and the incoming rays. The law that runs them is
 [the law of the ray](../../../docs/RAY_LAW.md): every measured event of the
 apparatus measures the family `carrier`, and the detector that groups them
 reads the squared coherent record of what clicked at each of its Nodes. The
@@ -15,10 +15,10 @@ the pointer is the record, the routing is the flight table.
 
 | World | Apparatus | Incoming rays | Intervals |
 | --- | --- | --- | --- |
-| `shared_3_nodes.json` | `three_node_detector`: three Nodes in a row on a 9-by-9-by-1 board, one detector `apparatus` of threshold 1 | one ray of amount 1, phase 16, on +X from `(2,4,0)` | 4 |
-| `shared_100_nodes.json` | `serpentine_100_detector`: a 100-Node serpentine chain on a 12-by-12-by-1 board, one detector of threshold 1 | one ray of amount 1, phase 16, on +X from `(0,1,0)` | 101 |
-| `grouped_12_nodes.json` | `grouped_12_detector`: four disjoint chains of three Nodes on a 9-by-9-by-1 board, four detectors `group_0` to `group_3` of threshold 2 | one ray of amount 2 per chain at the phases 0, 8, 16 and 24 | 4 |
-| `periodic_z_node.json` | `single_node_detector`: one Node at `(4,4,0)` on a 9-by-9-by-1 board with z periodic, its entry `{"rule": "measure", "reads": "tensor"}` | one ray of amount 1, phase 16, on +Z at the Node itself (the stub of extent 1) | 3 |
+| `shared_3_nodes.json` | `three_node_detector`: three Nodes in a row on a 9-by-9-by-1 GameBoard, one detector `apparatus` of threshold 1 | one ray of amount 1, phase 16, on +X from `(2,4,0)` | 4 |
+| `shared_100_nodes.json` | `serpentine_100_detector`: a 100-Node serpentine chain on a 12-by-12-by-1 GameBoard, one detector of threshold 1 | one ray of amount 1, phase 16, on +X from `(0,1,0)` | 101 |
+| `grouped_12_nodes.json` | `grouped_12_detector`: four disjoint chains of three Nodes on a 9-by-9-by-1 GameBoard, four detectors `group_0` to `group_3` of threshold 2 | one ray of amount 2 per chain at the phases 0, 8, 16 and 24 | 4 |
+| `periodic_z_node.json` | `single_node_detector`: one Node at `(4,4,0)` on a 9-by-9-by-1 GameBoard with z periodic, its entry `{"rule": "measure", "reads": "tensor"}` | one ray of amount 1, phase 16, on +Z at the Node itself (the stub of extent 1) | 3 |
 
 All four use `N=32`, `K=1024`, fixed material content 1 and the paid family
 `carrier` of `quantum` 1 (the kind follows from the quantum; the apparatus

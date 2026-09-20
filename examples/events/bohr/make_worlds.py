@@ -2,8 +2,8 @@
 the law of the ray in space: a fixed proton, an electron that is a body on
 a set of three Nodes and turns its phase by its momentum at every Link it
 steps (the model owner's decision of 2026-09-20 on Bohr, "go, and put it as
-parameters outside the board like the age"; RAY_LAW section 10, note 30),
-and the open faces of the board as the `wave` detectors that receive what
+parameters outside the GameBoard like the age"; RAY_LAW section 10, note 30),
+and the open faces of the GameBoard as the `wave` detectors that receive what
 the electron releases.
 
 The atom (README.md here; the physicist's series F design of 2026-09-20 with
@@ -30,7 +30,7 @@ release costs nothing: the orbit does not decay) and leave through the
 four side faces, whose face detectors record the square of the coherent
 pointer of what leaves each interval and whose `click` lines carry every
 ray's phase, Node and tick: the far-face `wave` detector of the owner's
-design, with no measured event added to the board. `suspension` 0 (the
+design, with no measured event added to the GameBoard. `suspension` 0 (the
 clock's count is not read; the push alone moves the electron), K 2^30 (the
 clock's own turn 0 within a run), N 64.
 
@@ -48,13 +48,13 @@ so with n = p / M_e and A = (1 + RATIO) Q E_body(r) r / SHELL
 The width S is chosen so that v = SPEED on the orbit of REFERENCE_RADIUS.
 The turn by momentum turns the phase by |p_axis| N / h per Link stepped
 on an axis, so over one orbit of a circle of radius r stepped on the
-lattice the phase turns by (N / h) x sum over the Links of |p_axis| = (N /
+GameBoard the phase turns by (N / h) x sum over the Links of |p_axis| = (N /
 h) x 4 p r (the Manhattan weighting of the path: 4 r against the circle's
 2 pi r), and closes on itself when
 
     4 p(r) r = j h,  j whole:
 
-de Broglie's condition in the lattice's metric. With p proportional to
+de Broglie's condition in the GameBoard's metric. With p proportional to
 1 / sqrt(r) under a 1 / r^2 push the closing radii are proportional to
 j^2, Bohr's ladder. The action is fixed so that j = 2 exactly on the
 reference orbit, h = 16 p(REFERENCE_RADIUS) (4 p r / j with r = 8, j = 2),
@@ -98,7 +98,7 @@ SPAN = (1, 1, 3)
 # The radii of the electron's orbits, the reference among them: j = 2 at
 # the reference radius fixes the action. The fan's flux on the ring is not
 # smooth at r >= 13 (the lines of a finite fan), so j = 3 falls between
-# the lattice radii 15 and 16 (2.87 and 3.25 derived): both are run.
+# the GameBoard radii 15 and 16 (2.87 and 3.25 derived): both are run.
 RADII = (2, 4, 6, 8, 12, 15, 16)
 REFERENCE_RADIUS = 8
 REFERENCE_J = 2
@@ -107,7 +107,7 @@ SPEED = 0.06
 # The turns of the orbit a run covers, and the least run.
 TURNS = 5
 LEAST_TICKS = 3000
-# The board per radius: the orbit plus a margin for its eccentricity.
+# The GameBoard per radius: the orbit plus a margin for its eccentricity.
 MARGIN = 14
 HEADINGS = ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
 IN_PLANE = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0]]
@@ -291,7 +291,7 @@ def main() -> None:
             f"(n {reading['n']:.1f}), v = {reading['speed']:.4f}, T = {reading['period']:.0f}, "
             f"{reading['lumps_per_orbit']:.0f} lumps per orbit of {reading['degrees_per_lump']:.1f} degrees, "
             f"j = 4 p r / h = {reading['j']:.3f} ({'closing' if abs(reading['j'] - round(reading['j'])) < 0.1 else 'between'}), "
-            f"board {side_for(radius)}^3, {reading['ticks']} intervals"
+            f"GameBoard {side_for(radius)}^3, {reading['ticks']} intervals"
         )
     for radius in RADII:
         path = args.out / f"r{radius}.json"

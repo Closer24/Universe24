@@ -11,7 +11,7 @@ the ray, on the plane (2026-09-19)" in docs/EXPERIMENTS.md with its verdict;
 a failed criterion exits nonzero. Every identity is checked on integers and
 `fractions.Fraction`; floats appear only in the ring means and the bounds.
 
-The board is 121 x 121 x 1 with the z axis periodic: the two z headings'
+The GameBoard is 121 x 121 x 1 with the z axis periodic: the two z headings'
 rays step onto their own Node through the stub and come home, so the source
 re-emits them over the six headings and the net emission into the plane is
 q = 6 x 2^17 per interval at the fixed point. Under the law of the ray
@@ -57,8 +57,8 @@ from typing import Any
 
 import numpy as np
 
+from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.core.integer import by_clock
-from event_universe.core.lattice import PORT_HEADINGS
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import flight_table, unit_label
 from event_universe.events.world import HEADING_OFFSET, LABEL_SCALE, RAYS_LAW, NatureBeamWorld
@@ -349,7 +349,7 @@ def common_checks(run: Run, checks: Checks) -> None:
     checks.equal(f"{label}: the law", record["law"], RAYS_LAW)
     checks.equal(f"{label}: completed ticks", record["completed_ticks"], run.ticks)
     checks.equal(
-        f"{label}: the board 121 x 121 x 1 with z periodic", record["boundary"], {"z": "periodic"}
+        f"{label}: the GameBoard 121 x 121 x 1 with z periodic", record["boundary"], {"z": "periodic"}
     )
     checks.equal(f"{label}: the shape", record["shape"], [121, 121, 1])
     checks.equal(

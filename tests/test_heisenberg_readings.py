@@ -2,7 +2,7 @@
 5.4, the architecture review of 2026-09-20: `tools/heisenberg_readings.py`
 now reads the lamp's turn off `engine.by_clock` and the world's keys through
 `parse_nature_beam_world`; the records are the run's `DetectorSet` records). The
-tool's reading of a run is checked against the engine on a minimal board;
+tool's reading of a run is checked against the engine on a minimal GameBoard;
 the expected values of docs/TEST_EXPECTATIONS.md ("The tools read the
 engine"), written down first:
 

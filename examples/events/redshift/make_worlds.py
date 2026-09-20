@@ -6,7 +6,7 @@ in space under the age reading (2026-09-20)" in docs/EXPERIMENTS.md): an
 open cube of SIDE^3 Nodes, a fixed phase-less free source of content M at
 the centre releasing one ray per self-creation on every primitive direction
 (a, b, c) with 0 < |a| + |b| + |c| <= FAN_MANHATTAN (the full fan of the
-first Manhattan shells, so that every direction of the lattice within that
+first Manhattan shells, so that every direction of the GameBoard within that
 bound is covered; `release` [1, M] gives `by_clock(age, M, M)` = 1 per
 direction per self-creation, q = len(FAN) units per interval), and clock
 probes: fixed measured events of content 1 that `pass` the rays (no push,

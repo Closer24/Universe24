@@ -4,7 +4,7 @@ plane, with the width of the push.
 Six worlds of one base (README.md here; the entry "D, the orbit under the
 law of the ray, on the plane (2026-09-19)" in docs/EXPERIMENTS.md): a heavy
 fixed source of a phase-less free family at the centre of a 121 x 121 x 1
-board with the z axis periodic (the coupling series' plane), releasing a
+GameBoard with the z axis periodic (the coupling series' plane), releasing a
 ballistic fan of rays on every primitive in-plane direction (a, b, 0) with
 0 < a^2 + b^2 <= P^2 (P = 8: the fan is uniform in angle, unlike the
 primitive vectors of a square), one shell of `directions` rays every

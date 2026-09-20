@@ -23,7 +23,7 @@ vector"), written down first:
     primitive direction with components in -64 .. 64 the integer rule
     equals the float rounding (0 mismatches over 1780418), no component
     passes Q, no tie occurs, and |u_d| is within 1.35 % of Q;
-(b) the labels on the board: a world of the six headings and the eight
+(b) the labels on the GameBoard: a world of the six headings and the eight
     fan directions above with their negatives; a lamp of `light` (quantum
     1, content 3 x 2^18 at K 2^18: the turn 3 at every age of the run,
     content c = 3 per unit) releasing one unit per interval on the six
@@ -83,7 +83,7 @@ import itertools
 import numpy as np
 import pytest
 
-from event_universe.core.lattice import PORT_HEADINGS
+from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import (
     Q,

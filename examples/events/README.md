@@ -3,7 +3,7 @@
 Four world files of the one engine (`rays-v1`, [the law of the ray](../../docs/RAY_LAW.md),
 [the engine](../../docs/ENGINE.md); [Highlights 5.4](../../docs/HIGHLIGHTS.md#54-the-detector),
 "DECIDED: the law of the ray", the model owner, 2026-09-19). Each is a JSON
-object with `"law": "rays"`: the board, K and N, the release, the
+object with `"law": "rays"`: the GameBoard, K and N, the release, the
 suspension, the declared directions, the families (each by its `quantum`:
 0 a free family, 1 or more a paid one; the kind is never declared), the
 measured events at the start (their tables generated from the families'
@@ -11,7 +11,7 @@ keys, a free family read and a paid one measured; a world declares only
 the entries that differ, `tools/migrate_nature_beam_worlds.py` having rewritten
 these) and, where wanted, the detectors. The engine recognizes nothing by
 physical name; a run is headless and its readings are made from the record
-(`run.json`, `events.jsonl`, `state.json`). The board is open on every face
+(`run.json`, `events.jsonl`, `state.json`). The GameBoard is open on every face
 unless the world declares an axis periodic (`"boundary": {"z": "periodic"}`).
 A ray flies at 1 / sqrt 3 on the digital line of its direction (the flight
 table: at most one Link per interval); rays of one number and content that
@@ -20,8 +20,8 @@ emitter by its phase rate (E = h f) and a click measures that content.
 
 | World | What it declares | What its record reads |
 | --- | --- | --- |
-| `one_content.json` | One measured event of the free family `m` (`quantum` 0; `"phase": false`: its rays carry phase 0 and it never turns), content 2^24, held in place at the centre of an open 25^3 board; K 2^22, N 64, release 1/128 per heading per unit per self-creation on the six headings, `suspension` 1; 200 intervals | The books close at every tick and the content stays constant (what comes home is created again); six ballistic beams of 2^17 per interval, Gauss's flux through every cube equal to the emission once the front has passed; the count on the axes constant with r (a beam does not spread) |
-| `two_contents.json` | Two such measured events of `m` 8 Links apart on the x axis of an open 21^3 board, no suspension; 200 intervals | Equal and opposite pushes along the line, toward each other, each the content times the flow of the other's beam at its Node: the third law read on lone beams (read on 2026-09-19: the books close at every tick, the pushes +/-411217348788224 = 2^24 x 187 x 2^17 along x after 200 intervals; its faces click two beams of 2^17 in one interval and their records pass 2^63, exact, [validation](../../docs/VALIDATION.md)) |
+| `one_content.json` | One measured event of the free family `m` (`quantum` 0; `"phase": false`: its rays carry phase 0 and it never turns), content 2^24, held in place at the centre of an open 25^3 GameBoard; K 2^22, N 64, release 1/128 per heading per unit per self-creation on the six headings, `suspension` 1; 200 intervals | The books close at every tick and the content stays constant (what comes home is created again); six ballistic beams of 2^17 per interval, Gauss's flux through every cube equal to the emission once the front has passed; the count on the axes constant with r (a beam does not spread) |
+| `two_contents.json` | Two such measured events of `m` 8 Links apart on the x axis of an open 21^3 GameBoard, no suspension; 200 intervals | Equal and opposite pushes along the line, toward each other, each the content times the flow of the other's beam at its Node: the third law read on lone beams (read on 2026-09-19: the books close at every tick, the pushes +/-411217348788224 = 2^24 x 187 x 2^17 along x after 200 intervals; its faces click two beams of 2^17 in one interval and their records pass 2^63, exact, [validation](../../docs/VALIDATION.md)) |
 | `two_slits.json` | A lamp of the paid family `light` (`quantum` 1; K 2^30, turn 8, 64 rays per self-creation on five directions toward the wall), a wall at x = 8 of the paid family `wall` measuring light (the rule the keys give; no table declared) with two openings at y = 55 and 65 that declare `rerelease` on a fan of 91 primitive directions, a screen at x = 52 of measured events declared as 121 one-Node detectors `screen_<y>` (the screen's pixels) under the reading `wave` (since 2026-09-19 a detector is a set with one record: one detector of 121 Nodes would read one record with no resolution in y); 60 x 121 x 1 with z periodic, no suspension; 500 intervals | The screen's plain count is additive to the unit (no interference in the count); its squared record fringes at lambda = period / sqrt 3, the interference term correlating with the two-source cosine above 0.85 (`tests/test_nature_beam_worlds.py` (a)) |
 | `one_slit.json` | The same with one opening | The control: the record without the two-source term |
 
@@ -47,7 +47,7 @@ S = 2 exactly, the model's limit, unchanged from the law of events.
 
 The folder [coupling/](coupling/README.md) holds the twenty-one worlds of
 the coupling series C under the law of the ray, written by
-`coupling/make_worlds.py` from one base: a board of 121 x 121 x 1 with the z
+`coupling/make_worlds.py` from one base: a GameBoard of 121 x 121 x 1 with the z
 axis periodic, a source of content 2^24 at the centre releasing six beams on
 the six headings, and probes of content 1 that read (the push taken, the
 rays go on). The items: the equivalence, the third law with unequal contents
@@ -170,5 +170,5 @@ one of them reading the tensor component of the one reading.
 
 The isolated tests of the engine are the ten `tests/test_nature_beam_*.py` modules
 ([expectations](../../docs/TEST_EXPECTATIONS.md)); `tests/test_nature_beam_worlds.py`
-runs these worlds' designs on smaller boards and pins their readings as a
+runs these worlds' designs on smaller GameBoards and pins their readings as a
 check that the engine does what the law says, not as a result.

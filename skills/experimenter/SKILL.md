@@ -49,7 +49,7 @@ Every number the experiment prints or registers is labelled one of two kinds
 | Kind | What it is | What it may be used for |
 | --- | --- | --- |
 | detector reading | a record of a detector's set or of a measured event in the world | the measurement; every comparison with nature |
-| GameBoard reading | the host's view of the deterministic board: a ray's position, the count or flow at a Node, a body's steps, shell means, the books | the mechanism's description, the bookkeeping checks, the picture |
+| GameBoard reading | the host's view of the deterministic GameBoard: a ray's position, the count or flow at a Node, a body's steps, shell means, the books | the mechanism's description, the bookkeeping checks, the picture |
 
 The readings tool of an experiment reads the engine's own functions
 (`NatureBeamSimulation`, `parse_nature_beam_world`, `read_arrivals`, `unit_label`,
@@ -98,7 +98,7 @@ replays a rule of the engine, and it prints the kind of every line.
 
 ## Hand back
 
-The commit hashes, the design choices (families, board, detectors, probes,
+The commit hashes, the design choices (families, GameBoard, detectors, probes,
 lamps), the table expected against measured with the kind of each reading,
 the verdict in plain words, the path of the page and its GIF, and what the
 law lacked.

@@ -5,7 +5,7 @@ written by `make_worlds.py`; the register entry is
 [A2, under the law of the ray (2026-09-19)](../../../docs/EXPERIMENTS.md#a2-under-the-law-of-the-ray-2026-09-19)
 and the evidence is in [validation](../../../docs/VALIDATION.md). The model
 owner asked for "a Bell experiment with an emitter and two detectors, Alice
-and Bob, on a small board" ([Highlights 5.4](../../../docs/HIGHLIGHTS.md#54-the-detector)),
+and Bob, on a small GameBoard" ([Highlights 5.4](../../../docs/HIGHLIGHTS.md#54-the-detector)),
 and the physicist and the mathematician pinned the verdict before the first
 run under the law of events: with a deterministic local phase window each
 click is a function of the arriving phase and the local setting alone, so

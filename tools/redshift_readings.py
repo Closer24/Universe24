@@ -103,7 +103,7 @@ class Reading:
     def single(self, label: str, radius: int) -> Probe | None:
         """The probe of the shell nearest to the direction's line: the
         shell's Node of the largest cosine to the direction (the axis Node
-        on the axis; on a diagonal the nearest lattice Node of the shell,
+        on the axis; on a diagonal the nearest GameBoard Node of the shell,
         which the diagonal's own line may miss)."""
         direction = DIAGONALS[label]
         shell = self.shells.get(radius)

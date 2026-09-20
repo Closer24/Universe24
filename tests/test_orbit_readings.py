@@ -2,7 +2,7 @@
 the architecture review of 2026-09-20: `tools/orbit_readings.py` now reads
 the fan's labels off `nature_beam.flight_table`, the release off
 `engine.by_clock` and the world's keys through `parse_nature_beam_world`). Each
-reading of the tool is checked against the engine on a minimal board; the
+reading of the tool is checked against the engine on a minimal GameBoard; the
 expected values of docs/TEST_EXPECTATIONS.md ("The tools read the
 engine"), written down first:
 
@@ -14,7 +14,7 @@ engine"), written down first:
 (b) the emission: at `release` [1, 10] a source of content 4 on those three
     directions emits 3 x 4 / 10 = 1.2 units per interval in the mean (the
     clock's gains over the ages 0 .. 9 are 0, 0, 1, 0, 1, 0, 0, 1, 0, 1 per
-    direction); on the board it has released 12 units after 10 intervals
+    direction); on the GameBoard it has released 12 units after 10 intervals
     (the books' transit line);
 (c) `read_run` on a run of a 9 x 9 x 1 plane (z periodic) written by the
     runner: a fixed source of content 16 at (4, 4, 0) on the four in-plane

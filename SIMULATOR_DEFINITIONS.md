@@ -8,20 +8,20 @@ of its momentum at one speed, the collision table a bijection inside its
 invariant classes, the detector's record the squared coherent sum of what it
 clicked, the click the one one-way border. Coverage (a detector's Nodes), the
 threshold and the `reads` component are independent data. No audit record or
-whole-board sum supplies memory, routing or a physical result; the readings
+whole-GameBoard sum supplies memory, routing or a physical result; the readings
 of the engine (`shell_readings`, `cube_flux`) are read-only. The
 `reversible-detector-v1` candidate of the same day is absorbed and deleted
 ([migration](docs/MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1));
 quantum uncertainty and Born behavior remain separate unproved goals.
 
-## Events board topology (2026-09-19)
+## GameBoard topology (2026-09-19)
 
 The owner-approved run parameter selects open or periodic topology independently
 per axis; open is the default. The exact schema, one-interval Link transfer,
 extent-one return, unchanged carried momentum and mixed-axis refusal rules are
-in [the engine contract](docs/ENGINE.md#per-axis-board-topology-2026-09-19-implementation-amendment).
+in [the engine contract](docs/ENGINE.md#per-axis-gameboard-topology-2026-09-19-implementation-amendment).
 This choice does not change a local contact law or establish equivalence between
-a thin periodic board and full 3D matter. Earlier topology descriptions below
+a thin periodic GameBoard and full 3D matter. Earlier topology descriptions below
 belong to their dated models, not an implicit events-world default.
 
 
@@ -108,7 +108,7 @@ Maxwell, Lorentz or quantum law, and does not alter schema 2 finite decay.
 
 A scalar spatial field may instead select `"transport": "ray"`
 (`isotropic-ray-field-v1`): rays carry an integer heading and accumulators and
-move one link per tick along their own lattice line, with a per-Node slot
+move one link per tick along their own GameBoard line, with a per-Node slot
 capacity. Such a field may add `kerengonen` (`kerengonen-ray-field-v1`): rays
 carry a phase that advances per link, and the coherence of the rays meeting at
 a Node gates what is absorbed and sampled there while every amount stays whole.
@@ -338,7 +338,7 @@ The current turning law removes the gradient along the dominant momentum axis.
 Ties prefer x, then y, then z. The digital hop sequence also orders axes. Full
 rotational invariance, arbitrary diagonal self-force cancellation and energy
 conservation are not established. Coordinate-plane regressions do not prove all
-lattice symmetries. Field-momentum storage is the existing local exchange model;
+GameBoard symmetries. Field-momentum storage is the existing local exchange model;
 there is no new field-momentum transport or quantum dynamics in this refactor.
 
 The scalar field is synchronous; particle movement is sequential. Occupancy
@@ -519,7 +519,7 @@ this is the departure budget rate, not a measurement of displacement per tick.
 
 A cyan ↻ marks a shorter displacement through the periodic boundary, using the
 captured world dimensions. A red X marks a shortest displacement of at least
-two cardinal grid steps between displayed frames. A multi-node jump across a
+two cardinal GameBoard steps between displayed frames. A multi-node jump across a
 boundary shows both markers; a periodic symbol must not hide that jump.
 Trails break at coordinate discontinuities. Sparse sampling is ambiguous, so
 a marker alone is not proof of faster-than-c motion; inspect consecutive ticks.
@@ -529,7 +529,7 @@ A square-root display mapping lifts weak values; color is not a linear field
 measurement. Wide soft halos improve visibility without changing physical
 field range. There is no invented per-particle attribution of a shared field.
 The floor and two walls have twice as many visual grid subdivisions; this does
-not change the physical lattice or simulation resolution.
+not change the GameBoard or the simulation resolution.
 
 The exported GIF stops at the final frame instead of resetting time through
 automatic replay. Reloading its HTML replays it from the start. This playback
@@ -675,7 +675,7 @@ host costs. There are no per-source maps, growing local histories, external
 queries or quantum exceptions in this law.
 
 Point contacts do not detect crossing between sampled addresses, overlapping
-finite-radius surfaces or meeting midway along a link. The lattice's capped L1
+finite-radius surfaces or meeting midway along a link. The GameBoard's capped L1
 speed and field law are not relativistic mechanics. Exact classical pair energy
 conservation therefore does not establish relativistic energy conservation or
 energy conservation for the entire field-coupled simulator.

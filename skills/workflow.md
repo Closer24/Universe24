@@ -75,9 +75,9 @@ sourced experimental data.
    configuration identity, quantitative discrepancy, uncertainty and failure
    cases. Preserve contrary evidence and omitted interactions. Several matching
    cases do not prove the theory; discreteness alone supplies no prediction.
-5. Assess finite-size, boundary, lattice-direction and encoding effects relevant
+5. Assess finite-size, boundary, GameBoard-direction and encoding effects relevant
    to the claim. Sensitivity/convergence controls must represent the same physical
-   case with fixed hypotheses. Do not assume that shrinking a fundamental lattice
+   case with fixed hypotheses. Do not assume that shrinking the GameBoard's Link
    or tick is a harmless numerical refinement; it may change the physical model.
    Input representation error is distinct from forbidden loss of core remainders.
 6. For these user-requested research comparisons, produce and inspect the
@@ -238,7 +238,7 @@ cross-chat notifications, automatic checkout updates or a background service.
 
 **Tests are short and run in parallel (model owner, 2026-09-19: "For every
 test, run on a strong machine with several cores; they should be short, with
-fixed arrays").** A test uses a fixed small board and fixed arrays, pins its
+fixed arrays").** A test uses a fixed small GameBoard and fixed arrays, pins its
 integers before the first run and finishes in seconds; the suite runs with
 `pytest -n auto` on every core of the machine, never serially on one; a long
 reading is a research run (section 6 of the experiments), not a test.
@@ -270,7 +270,7 @@ repair another model's failure or establish a real-world law.
 
 Since 2026-09-17, by the model owner's decision in
 [Highlights 5.5](../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions),
-a test exercises one generic rule in isolation on a minimal board and nothing
+a test exercises one generic rule in isolation on a minimal GameBoard and nothing
 else: one test module per rule, one per feature of the ray-event model, with the
 expected integers written down before the first run. No test pins the numbers of
 an example world, compares two worlds or reproduces a known experiment; those are

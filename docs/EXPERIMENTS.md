@@ -28,7 +28,7 @@ no such thing").** Every number an entry registers is labelled one of two:
 a **detector reading**, the record of a detector's set or of a measured event
 in the world (a probe's `read`, a click, a pointer, an owed count), which is
 the only kind of reading reality has; or a **GameBoard reading**, the host's
-view of the deterministic board (a ray's position, the count or flow at a
+view of the deterministic GameBoard (a ray's position, the count or flow at a
 Node, a body's steps, the shell means, the books), which exists for us and
 not in reality. A comparison with nature (section A) uses detector readings
 only; a GameBoard reading describes the mechanism, checks the books or
@@ -37,7 +37,7 @@ as the measurement, it says so from this date, and the detector form is
 added when the entry is re-run.
 
 **The rule of every entry.** Before its run, an entry names the features it
-needs (numbers 1 to 12 below), the board, the families, the Detector marks
+needs (numbers 1 to 12 below), the GameBoard, the families, the Detector marks
 with their settings, the return mode and the phase width, what is recorded,
 and its pass or fail criterion as an exact statement. The families and
 couplings it names are entries of the catalog of nature
@@ -87,7 +87,7 @@ under the law of events on the plane, `measured` on 2026-09-19 with its
 verdict per item; section E holds the dated demonstration runs, which
 confront nothing and are `measured` as made.
 
-**Conventions.** The board is the cubic Node lattice of Highlights 3.1 with
+**Conventions.** The GameBoard is the cubic Node GameBoard of Highlights 3.1 with
 its boundary stated per entry; c is one Link per interval; a Detector setting
 is the declared ratio n/d of its draw, the `setting` `[n, d]` of the mark
 (1 = every arrival passes, 0 = every arrival returned); N is the
@@ -165,7 +165,7 @@ states "exactly" and means integer equality at every tick.
     16d part 1 merged) under the law of the bit (Highlights 5.4): one source
     of things, a lamp of the light family with a clock, behind a wall with
     two slits of separation d, a screen of marks at L; the lamp's shadow set
-    given with the board (`initial_field`), N = 64, one K for the world,
+    given with the GameBoard (`initial_field`), N = 64, one K for the world,
     `wait_per_quantum` 1, the dense mode, no `spread`, `steering`,
     `mass_field` or `seed`; recorded the counts per mark over enough
     emissions to see a pattern, the pushed amount at the screen's Nodes for
@@ -184,7 +184,7 @@ states "exactly" and means integer equality at every tick.
     (`node-mixing-v1`), 16d part 1 (`return-field-v1`), 17
     (`node-is-ports-v1`), 18 (`lanes-v1`), on 1, 2, 2c, 5, 9, 10.
   - **Run.** `examples/nature/a1_law/` (`make_worlds.py`), the law's form
-    throughout. Board 45 x 65 x 17, open. The lamp: a type holding `light`
+    throughout. GameBoard 45 x 65 x 17, open. The lamp: a type holding `light`
     2^22 and the world's momentum at (4, 32, 8), emitting one light thing of
     amount 4 along +X every interval at `kerengonen_phase` 0, paid from its
     stock; `light` declares `clock` true and the world K = 1, so a thing of
@@ -209,18 +209,18 @@ states "exactly" and means integer equality at every tick.
     shadow that comes home is re-released with its own phase
     (`rerelease_shadow`), so the clock enters none of the shadows. The
     series (the model owner's decisions of 2026-09-18, Highlights 5.4: the
-    board of a run is closed, PR #311, and only closed worlds are tested, PR
-    #314, so a series carries no open-board control): one pair on the
-    closed board, `two_slits_periodic` and its control `one_slit_periodic`
+    GameBoard of a run is closed, PR #311, and only closed worlds are tested, PR
+    #314, so a series carries no open-GameBoard control): one pair on the
+    closed GameBoard, `two_slits_periodic` and its control `one_slit_periodic`
     with the column y = 16 closed, the lamp of stock 2^26 on a periodic
-    board 45 x 49 x 9, the lamp at (4, 24, 4), the slits at y = 16 and 32,
+    GameBoard 45 x 49 x 9, the lamp at (4, 24, 4), the slits at y = 16 and 32,
     the screen row x = 40 over every y at z = 4, and a second wall of marks
     at x = 44 closing the wrap in x, without which the shell leaving the
     lamp toward -X would reach the screen from behind; the wrap in z makes
     the slit columns infinite and the wrap in y puts images of the lamp 49
     Links apart; 200 ticks each, run once through `tools/run_series.py
     --jobs 2`, the dense mode on, 282 s each, peak 0.71 GB. Measured first,
-    earlier the same day and before the decisions, on the open board (the
+    earlier the same day and before the decisions, on the open GameBoard (the
     geometry above; recorded below, not in the series, the worlds no longer
     shipped): `two_slits` and `one_slit` with the column y = 24 closed (the
     stock 2^22; 566 s and 553 s, peak 1.66 GB each) and `two_slits_big` and
@@ -234,8 +234,8 @@ states "exactly" and means integer equality at every tick.
     against the run's events and fingerprint), and read by `analyze.py`
     (`record.json`). Recorded per world: `run.json`, `events.jsonl`,
     `screen.json`; the ray viewer's GIF of `two_slits` from the runner's
-    record (no sidecar: a per-tick snapshot of this board is too large).
-  - **Result, measured first on the open board (recorded, not in the
+    record (no sidecar: a per-tick snapshot of this GameBoard is too large).
+  - **Result, measured first on the open GameBoard (recorded, not in the
     series).** The first pair (`two_slits` 566 s, `one_slit` 553 s, peak
     1.66 GB each): 200 emissions of amount 4, 189 clicks at the wall's mark
     on the axis (16, 32, 8) from tick 12 (756 quanta absorbed, the marks'
@@ -262,7 +262,7 @@ states "exactly" and means integer equality at every tick.
     home; momentum (-756, 0, 0) current against (756, 0, 0) on the marks'
     line; every line balanced, `conserved_at_every_completed_tick` and
     `real_conserved` true.
-  - **Result, the open board's second pair (recorded, not in the
+  - **Result, the open GameBoard's second pair (recorded, not in the
     series).** `two_slits_big` (828 s)
     and `one_slit_big` (806 s), peak 1.65 GB: 3,217,240,686 quanta of
     shadows at the start beside the lamp's 67,108,864 of things; 189 clicks
@@ -293,14 +293,14 @@ states "exactly" and means integer equality at every tick.
     10 sign changes along y (the push's from
     -549 to 1,116, 12
     sign changes); the totals 218,618 against 183,202.
-    A first reading, to be completed on the closed board: the two-slit
+    A first reading, to be completed on the closed GameBoard: the two-slit
     profile is modulated at full depth about the axis where the one-slit
     profile is flat, but at a spacing of 5 to 11 Links of a phase-0 shell
     (a broadband pulse, phases 0 and 32 only), not the optical 13.9 of a
     wave of lambda_w 9.24; the run holds no wave of that wavelength.
-  - **Result, the series: the closed board (2026-09-18).**
+  - **Result, the series: the closed GameBoard (2026-09-18).**
     `two_slits_periodic` (282 s) and `one_slit_periodic` (282 s), peak
-    0.71 GB, on the periodic board 45 x 49 x 9: 3,221,225,472 quanta of
+    0.71 GB, on the periodic GameBoard 45 x 49 x 9: 3,221,225,472 quanta of
     shadows at the start beside the lamp's 67,108,864 of things, nothing
     escaped (0 on every line at every tick), the shadow line 3,221,225,472
     at tick 200 in both worlds; 189 clicks at the wall's mark on the axis
@@ -321,7 +321,7 @@ states "exactly" and means integer equality at every tick.
     at tick 128 behind the open slit, 31,809 behind the closed one and
     7,287 at (39, 24, 4)); in the region beyond the wall 38,897,522 quanta
     at tick 195 and 38,472,586 at the end (20,574,235 and 20,405,905 in the
-    control): on the closed board the field behind the wall grows through
+    control): on the closed GameBoard the field behind the wall grows through
     the run and does not pass, the shell coming around and back off the
     walls. The returned amount summed over the run along the screen, two
     slits: maxima at y = 8, 12, 24, 36, 40 (319,615 at the axis, 254,709
@@ -349,23 +349,23 @@ states "exactly" and means integer equality at every tick.
     axis, since a thing is steered only by the pushes of shadows of another
     owner and the lamp's shadows are home to its own photons (points 3 and
     10 as the engine reads them: the emitted thing carries the lamp's
-    `thing` id, `spatial_plan.py`). The push, on the closed board (the run
+    `thing` id, `spatial_plan.py`). The push, on the closed GameBoard (the run
     the model owner's decision asks for, nothing escaping): the amount the
     screen returns and the push at its Nodes are modulated about the axis
     where the one-slit control is nearly flat (depth 0.62 against 0.09 in
     the returned amount), the maxima nearest the axis 12 Links apart, near
     the optical 13.9 of a wave of lambda_w = 9.24, but the push's own
     maxima 3.8 Links apart and everything that arrived at phases 0 and 32
-    only: the run holds a phase-0 shell circulating on the closed board and
+    only: the run holds a phase-0 shell circulating on the closed GameBoard and
     reflected by its walls, not the monochromatic wave of DERIVATIONS.md
     section 29, and a spacing near the optical one out of a broadband
     shell is a reading to be repeated with a wave in the shadows before it
-    is called a fringe. On the open board: with the shell of 2^22 per
+    is called a fringe. On the open GameBoard: with the shell of 2^22 per
     heading not one whole quantum reached the screen at L = 24 (the open
     faces took 97 % of the shell); with 2^26, modulation at depth 0.73 at
     a mean spacing of 5.1 Links, the control flat. The integer rule of
     section 30 (256 quanta per Node) is not what limits the reading on the
-    closed board: behind the slits the amount per Node reaches 2.6 x 10^5
+    closed GameBoard: behind the slits the amount per Node reaches 2.6 x 10^5
     and the screen's marks return up to 22,107 quanta in a tick. The clock
     declared on the lamp's family enters none of its shadows (the prefill
     at phase 0, the re-release with the shadow's own phase), so the wave of
@@ -389,19 +389,19 @@ states "exactly" and means integer equality at every tick.
     `one_slit_periodic`
     `fbda80979d1ef91e691f14e785b09f79ec30a000471798f1a6f3b95310458206`
     (the digests of the runs' `initialization.json`, written with the
-    family's `phase_bits` 6 and `ray_slots` 24; the shipped closed-board
+    family's `phase_bits` 6 and `ray_slots` 24; the shipped closed-GameBoard
     worlds carry the world's `N` and no ray slot budget since the cleanup
     of 2026-09-18, parts 1 and 2, merged after the runs, and are
     `bit_law_migration.migrate` of the runs' worlds, the same worlds in the
-    law's one form; the open-board worlds are no longer shipped);
-    `record.json` beside the worlds holds the closed board's readings; the
+    law's one form; the open-GameBoard worlds are no longer shipped);
+    `record.json` beside the worlds holds the closed GameBoard's readings; the
     records stay outside the tree.
-  - **Status.** measured, 2026-09-18, on the closed board (only closed
+  - **Status.** measured, 2026-09-18, on the closed GameBoard (only closed
     worlds are tested, the model owner, 2026-09-18); outcome: no fringes
     in counts (no thing reached the screen); the push modulated at depth
     0.62 in the returned amount with the maxima about the axis 12 Links
     apart against the optical 13.9 and the control at 0.09, out of a
-    phase-0 shell (no wave of lambda_w in the run). The open board,
+    phase-0 shell (no wave of lambda_w in the run). The open GameBoard,
     measured first and recorded: depth 0.73 at 5.1 Links (2^26) and nothing
     at the screen (2^22).
 
@@ -423,7 +423,7 @@ states "exactly" and means integer equality at every tick.
   passed pairs are a fair sample because the draw reads nothing.
 - **Features.** 1, 2, 3, 4, 5, 6, 7b, 9, 10, 12. No polarization (feature 11)
   is needed: the settings are phases.
-- **Run.** A board of 161 × 17 × 17 Nodes, open boundary; the pair source at
+- **Run.** A GameBoard of 161 × 17 × 17 Nodes, open boundary; the pair source at
   the center, a marked Node with setting 1, emitting one pair per 8 intervals
   as two light rays of one birth event on opposite headings ±x carrying the
   source clock's phase. Each arm at 64 Links: a splitter with two outputs
@@ -491,7 +491,7 @@ states "exactly" and means integer equality at every tick.
   the model owner's request of 2026-09-19 (Highlights 5.4: "Can we do a
   Bell experiment with an emitter and two detectors, Alice and Bob? An
   executing agent does it after the mathematician and the physicist
-  approved. A small board."), after the two reviewers pinned the verdict
+  approved. A small GameBoard."), after the two reviewers pinned the verdict
   below and the owner said "Yes to both": the run is made and registered
   as the model's limit, never as a confrontation the model could pass.
 - **Model prediction, pinned before the run (the physicist and the
@@ -629,17 +629,17 @@ states "exactly" and means integer equality at every tick.
   electric push of a charge Q on a charge q along the same units, its sign
   by the product of the charges, its ratio to the gravity push -Qq / (M m)).
   The physics-rule reviewer pinned the design and its identities on
-  2026-09-19 for an open board of 61^3; the model owner cancelled that
+  2026-09-19 for an open GameBoard of 61^3; the model owner cancelled that
   version the same day ("cancel the runs; let it run on two-dimensional
-  boards"), so the series runs on the plane: the same seven items and
+  GameBoards"), so the series runs on the plane: the same seven items and
   identities, the plane's exponents, the 3-D readings of the review as the
   prior, the plane's readings registered as the plane's.
 - **Model prediction, pinned before the run (the physics-rule review of
   2026-09-19, credited to the reviewer; the plane's constants and exponents
-  by the executing agent before the run).** Constants: a board of
+  by the executing agent before the run).** Constants: a GameBoard of
   121 x 121 x 1 with `"boundary": {"z": "periodic"}` (with an extent of 1
   the two z Ports of every Node return to the same Node at the next
-  interval: a true two-dimensional board, nothing leaks on z; the x and y
+  interval: a true two-dimensional GameBoard, nothing leaks on z; the x and y
   faces open), the centre c = (60, 60, 0), K 2^22, N 64, `release`
   [1, 128], the free family `m` (charge 0 unless stated), the source a
   fixed measured event of content 2^24 at c (`by_clock` gives 2^17 per Port
@@ -910,11 +910,11 @@ states "exactly" and means integer equality at every tick.
   derived at every derived Node; the +x pattern past the front registered.
   Item 5, the exponents within their bounds (count -0.99, flow -1.05,
   carried -1.01, size -0.48: Gauss on a circle) and the flow about 1;
-  outside the bound: the carried momentum (1.45, a lattice reading of what
+  outside the bound: the carried momentum (1.45, a GameBoard reading of what
   the departures carry, not an engine bug: the books balance and the
   replay equals the audit) and the flux at h >= 20 with the escape 0.89 at
-  300 and 0.948 at 1000 (a lattice limit: on the plane the back-scattered
-  population fills the board slowly and the fixed point is approached, not
+  300 and 0.948 at 1000 (a GameBoard limit: on the plane the back-scattered
+  population fills the GameBoard slowly and the fixed point is approached, not
   reached, in 1000 intervals). Item 6, identity held; the bound age(200) >
   age(60) outside at three radii (a design limit of the 200-interval
   window against k + 1 above 100 on the plane, not a frozen clock). Item
@@ -922,9 +922,9 @@ states "exactly" and means integer equality at every tick.
   trend read, the limit stated; (c) within the bounds; (d) exact.
 - **Limits.** No Newtonian regime: the far field on the plane is Gauss's
   1 / r, the push on a probe is the stream's carried momentum, and no G in
-  the units of physics is read (G_push is a lattice constant, 1.45 over
+  the units of physics is read (G_push is a GameBoard constant, 1.45 over
   the six Ports and 1.20 over the in-plane Ports, in units of q / (2 pi
-  r)). The axis pattern: the readings on the source's own lattice line are
+  r)). The axis pattern: the readings on the source's own GameBoard line are
   strongly modulated (push x 2 pi r / (m q) 1.71 at r = 4 falling to 1.25
   at r = 40) and are not the law; no exponent through axis Nodes. sqrt(M):
   the suspension reads an amplitude, so the clock's slowing scales as
@@ -936,7 +936,7 @@ states "exactly" and means integer equality at every tick.
   cross-sections and the pushes ripple with the whole units. The plane
   against space: the stub returns 2 / 9 of every mixing to the same Node,
   so the count and the carried momentum at a Node are not those of a
-  three-dimensional board, and the fixed point is approached slowly (the
+  three-dimensional GameBoard, and the fixed point is approached slowly (the
   escape 0.948 q at 1000 intervals). Every reading is one run at one
   fingerprint; nothing is a law of nature.
 - **Status.** measured, 2026-09-19: identities held (items 1, 3, 6, 7, the
@@ -1081,7 +1081,7 @@ states "exactly" and means integer equality at every tick.
     0.150, 0.167, 0.176, 0.143, 0.179, 0.167, 0.150, 0.152 at r = 4, 6, 8,
     12, 16, 20, 24, 30, 40 (the ripple over r >= 8 0.25, outside; r = 16
     0.143, outside; the others inside: a ring mean of six beams is
-    r / Nodes(r) x the axial count / q, and the lattice rings at r = 16 and
+    r / Nodes(r) x the axial count / q, and the GameBoard rings at r = 16 and
     r = 20 both hold 112 Nodes); presence x r / q twice the count at r >= 6
     (the presence / count 2.000: two rays of the beam at a Node in the mean,
     against 1 / c = 1.73); flow x 2 pi r / q 0.785, 0.942, 1.047, 1.109,
@@ -1173,7 +1173,7 @@ states "exactly" and means integer equality at every tick.
   owner). No integer of the register moves.
 - **Verdict.** Every identity, book and timing of the ray law holds on the
   plane exactly; the far-field readings of a six-beam source follow the
-  lattice ring's Node count and not r, so the design's ±10 % expectation for
+  GameBoard ring's Node count and not r, so the design's ±10 % expectation for
   the ring means is not met by six beams (the design expected 0.15 to 0.19
   on the six headings and 0.31 to 0.33 on a fan); the clock on a beam's axis
   is owed the beam's presence and does not slow as 1 / r. Whether the series
@@ -1269,7 +1269,7 @@ states "exactly" and means integer equality at every tick.
 
   - S = 1 and S = 8 (expected no closed orbit: the derived speed exceeds
     the rays'): measured no push read at all in the four worlds, the probe
-    off the board through +y at tick 67 (S = 1, 60 Links at 0.917 per
+    off the GameBoard through +y at tick 67 (S = 1, 60 Links at 0.917 per
     interval) and 94 (S = 8, at 0.652); the first shell leaves the source
     at age 10 and reaches r = 12 near tick 31, when the probe is 18 to 27
     Links up the y axis and on no line of the fan at the moment a ray
@@ -1335,7 +1335,7 @@ states "exactly" and means integer equality at every tick.
   expected closed at both radii within the grain, the ratio 4. The
   criteria as first pinned (closed, T +- 15 %, the mean radius r +- 1,
   |drift| <= 1, the ratio 4 +- 15 %, C 1.00 +- 0.15); the field's burst
-  (one shell per 10 intervals) and its lattice granularity (Nodes on no
+  (one shell per 10 intervals) and its GameBoard granularity (Nodes on no
   line from r of about 16) unchanged and the named risks.
 - **Result (2026-09-19, the label along the unit vector; measured against
   expected).** The worktree of `claude/universe24-new-3ytqde` on the
@@ -1356,7 +1356,7 @@ states "exactly" and means integer equality at every tick.
   | `s32_r24` | 32 | 24 | 576; 9 | no: the return (-13, 0), heading kept (yes) | 829 (687) | 28.27 | -13.00 | 1.46 | 5.0 .. 62.1 | 77 / 8052 | 1.27 (the first turn: 62 reads, 5954 units) | escaped through face:-x at tick 1054 |
 
   - S = 1 (expected no closed orbit: the derived speed 0.750 exceeds the
-    rays'): measured no push read at all, the probe off the board through
+    rays'): measured no push read at all, the probe off the GameBoard through
     +y at tick 82 (60 Links at 0.750 per interval; the first shell reaches
     r = 12 near tick 31 when the probe is 23 Links up the y axis). Measured
     = expected.
@@ -1418,7 +1418,7 @@ states "exactly" and means integer equality at every tick.
   units on 23 (2.5 to 20 degrees) along the integer direction, and the
   probe stays bound six times longer; what remains, named before the run:
   the field's burst (one shell per 10 intervals, several rays per read:
-  the mean read 160 label units, 2.5 rays) and the lattice granularity
+  the mean read 160 label units, 2.5 rays) and the GameBoard granularity
   of the fan's lines, which together make the push read 1.3 to 1.5 times
   the ring mean and turn the circle into a precessing polygon; the
   start-up transient (31 intervals without field). Nothing was tuned; the
@@ -1433,7 +1433,7 @@ states "exactly" and means integer equality at every tick.
   bounded below by a constant of the law. Asked for by the model owner
   on 2026-09-19 as the test of the detector's sensitivity (Highlights
   5.4: a detector is a set of Nodes with one record; the declared width
-  is the position's uncertainty; the reading, not the board, is what is
+  is the position's uncertainty; the reading, not the GameBoard, is what is
   uncertain), under both readings a detector may declare, `wave` and
   `beam` ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
 - **Model prediction, pinned before the runs
@@ -1742,7 +1742,7 @@ states "exactly" and means integer equality at every tick.
     the coasting first window): outside the expectation in every run but
     that one.
   - Host cost: 36 to 37 s per run of 400 intervals (about 6 000 rows in
-    flight, 31 measured events, the 301^3 board's per-interval arrays);
+    flight, 31 measured events, the 301^3 GameBoard's per-interval arrays);
     the tool with the replay 3 minutes.
 - **Verdict.** The detector reads the linear Hubble law by itself, z =
   v / c to 0.003 and H t_0 = 1.03 at t_0 = 350 in the coasting throw, the
@@ -1770,15 +1770,15 @@ states "exactly" and means integer equality at every tick.
 - **Confronts.** Whether Bohr's lines come out by themselves behind the
   detector once a body's phase is tied to its momentum (the model owner,
   2026-09-20, Highlights 5.4: "Bohr should come out by itself behind the
-  detector; what is missing on the board by the laws?"; the answer: the
+  detector; what is missing on the GameBoard by the laws?"; the answer: the
   tie between a body's momentum and its phase that E = h f gives a
   released ray; "DECIDED: On Bohr, go, and put it as parameters outside
-  the board like the age"): an electron that is a body on a set of three
+  the GameBoard like the age"): an electron that is a body on a set of three
   Nodes ([RAY_LAW note 30](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
   (i), the physicist's proposal 1) and turns its phase by its momentum at
   every Link it steps (note 30 (ii), proposal 5, the world key `action`,
   the identity `bohr-v1`), about a fixed proton, releasing rays that carry
-  its phase to the open faces of the board, the `wave` detectors that
+  its phase to the open faces of the GameBoard, the `wave` detectors that
   receive what comes out of the atom (proposal 6: the coherent record of
   those rays over many turns adds in line only for an orbit whose phase
   closes). The owner's rule of the page: to show atoms no detector is
@@ -1797,10 +1797,10 @@ states "exactly" and means integer equality at every tick.
   lines (the entries per shell the body's three Nodes receive, E_body(r)):
   the orbit's p, v, T per radius; the closure 4 p(r) r = j h (the turn by
   momentum sums |p_axis| over the Links stepped, 4 p r on a circle of the
-  lattice against the circle's 2 pi p r) with h = 16 p(8) so that j = 2 at
+  GameBoard against the circle's 2 pi p r) with h = 16 p(8) so that j = 2 at
   r = 8: j = 0.946 (r = 2), 1.463 (4), 1.725 (6), 2.000 (8), 2.555 (12),
   2.873 (15), 3.248 (16); the fan's ring flux falls as about r^-1.83 and
-  is not smooth at r >= 13, so j = 3 falls between the lattice radii 15
+  is not smooth at r >= 13, so j = 3 falls between the GameBoard radii 15
   and 16. Expected: an orbit closed (the return within r / 4 at the
   closing of the angle, T within 15 %), the phase's turn per orbit whole
   at a closing radius; the coherence ratio of the faces' records (the
@@ -1867,7 +1867,7 @@ states "exactly" and means integer equality at every tick.
     The other radii fell inward (r = 2, 4, 15: to the Node beside the
     proton at r = 2 and 15) or swung outward (r = 6, 12, 16) within the
     first turn or two and escaped. The electron's own reads (DETECTOR):
-    the mean inward push per interval on the board at r = 8 was 40 600 in
+    the mean inward push per interval on the GameBoard at r = 8 was 40 600 in
     units of Q per unit of content against the derivation's 39 660 (1.02):
     the mean flux the body reads is the derived one; the orbit is broken
     by the lumps (84 per orbit of 4.3 degrees at r = 8) and the close
@@ -1890,7 +1890,7 @@ states "exactly" and means integer equality at every tick.
   `tests/test_nature_beam_body.py` (d)) but a stable closed orbit under whole
   kicks: the next step, for the model owner, is a smoother field (a shell
   every interval at the same emission, or a larger `width` for more lumps
-  per orbit), the orbit tilted out of the lattice plane (the physicist's
+  per orbit), the orbit tilted out of the GameBoard plane (the physicist's
   1.6 bound turns at one Node), or a body of 27 Nodes (`span` [3, 3, 3]);
   and the second reading of the owner's page contract, a lamp shooting a
   beam at the atom (absorption: a paid family's rays aimed at the
@@ -1918,7 +1918,7 @@ states "exactly" and means integer equality at every tick.
   and its exact
   expectation on the 256-step circle is computed independently before the
   run.
-- **Run.** The board of A2 with one change: Bob's ray is held by an
+- **Run.** The GameBoard of A2 with one change: Bob's ray is held by an
   output-clock delay k_out = 160 intervals at the Node before his analyzer,
   longer than the 128 intervals of the round trip through Alice's Detector,
   so that a value returned by Alice, which reaches that Node 128 intervals
@@ -1964,7 +1964,7 @@ states "exactly" and means integer equality at every tick.
   its declared setting, not an assumed 50/50; the click is the record of 1
   only; replay never redraws.
 - **Features.** 1, 2, 3, 4, 9, 10.
-- **Run.** A board of 17 × 17 × 17 Nodes, open boundary; one source (marked,
+- **Run.** A GameBoard of 17 × 17 × 17 Nodes, open boundary; one source (marked,
   setting 1) emitting one ray per interval toward a marked Node 8 Links away,
   `return_mode` annul so that a returned ray leaves the world into the
   accounted sink at its event Node. Settings 1/8, 1/2 and 7/8; three
@@ -2019,7 +2019,7 @@ states "exactly" and means integer equality at every tick.
   something a traveling ray pays nothing; momentum is exact (3.14, 3.16).
   Charge is a family property read at the meeting (3.26).
 - **Features.** 1, 2, 5, 6, 7, 9, 10.
-- **Run.** A board of 49 × 49 × 49 Nodes, open boundary, N = 2^12. Two
+- **Run.** A GameBoard of 49 × 49 × 49 Nodes, open boundary, N = 2^12. Two
   electron rays (charge −1, rate r_e, equal content) from two marked sources
   at setting 1, on antiparallel lines along x with impact parameter b = 4,
   6, 8, 12 and 16 Links, one run per b; the same with an electron and a
@@ -2048,7 +2048,7 @@ states "exactly" and means integer equality at every tick.
   worlds written by `make_worlds.py`, the records read by `analyze.py`, its
   integers in `record.json`, the dictionary in the
   README.
-  The world: board 97 × 49 × 49, open, N = 2^12; ray a of amount 64 from
+  The world: GameBoard 97 × 49 × 49, open, N = 2^12; ray a of amount 64 from
   (0, 24 − b/2, 24) heading +X and ray b of amount 64 from (96, 24 + b/2, 24)
   heading −X, closest approach at x = 48 at tick 48, the read-off at tick
   48 + 3b; each ray's field `light` declared `field_of` it with `release`
@@ -2056,7 +2056,7 @@ states "exactly" and means integer equality at every tick.
   `source_sign`; `electron_field_turn` as the momentum table of
   ray-momentum-turn-v1, sign +1 in the electron-electron worlds and −1 in the
   electron-positron worlds. Deviations from the run planned above, each
-  stated: (i) the x extent is 97, not 49, so that both rays are on the board
+  stated: (i) the x extent is 97, not 49, so that both rays are on the GameBoard
   3b past closest approach at b = 16 (the transverse extents are 49); (ii)
   the two rays are two families of identical properties, `electron_a` and
   `electron_b` (charge −3, rest rate 1; +3 for the positron; 0 for the
@@ -2075,7 +2075,7 @@ states "exactly" and means integer equality at every tick.
   arriving at a Node together with content of its own light family
   (`spatial_received`); (vi) the runs continue 8 ticks past the read-off
   for b ≤ 12 to see whether the transfer is complete, and end at the
-  read-off for b = 16 (ray a is then at the board's last Node); (vii) the
+  read-off for b = 16 (ray a is then at the GameBoard's last Node); (vii) the
   neutral control (`nn_b4.json`, b = 4) keeps the released field, so it
   differs from `ee_b4.json` by the charge and the coupling alone; (viii)
   a check without `spread` at b = 4 and 16 (`ee_b{4,16}_nospread.json`),
@@ -2144,7 +2144,7 @@ states "exactly" and means integer equality at every tick.
   where the clause asks for one; (6) pass: the
   control's rays go straight, no push, register unchanged; (7) fail for a
   turned ray: six co-arrivals with its own field per b = 4 world after the
-  turn, by the lattice geometry of the turn (the release skips the
+  turn, by the GameBoard geometry of the turn (the release skips the
   dominant-axis line only), none for a straight ray. The result is the
   model's stated limit under this table and this amount; nothing was
   retuned. The model owner may want to read (3) and (7) against Highlights
@@ -2197,7 +2197,7 @@ states "exactly" and means integer equality at every tick.
   fills space; its density falls as 1/r and the net momentum its rays carry
   through a Node, which is what a met ray feels, falls as 1/r² because the
   same flux crosses every shell (Gauss), exact on average once the Node
-  owns the remainder (feature 12b); the lattice's anisotropy is of higher
+  owns the remainder (feature 12b); the GameBoard's anisotropy is of higher
   order, and its residue is measured, not assumed. A5 (measured today, PR
   #239) could not test this: a free ray at one Link per interval outruns
   its own field, so its field is a short wake behind it that never reaches
@@ -2224,10 +2224,10 @@ states "exactly" and means integer equality at every tick.
   axis for r = 4, 6, 8, 12 and 16, one world per r for each of the two
   charge signs (`pp_r{r}`, `pe_r{r}`); a diagonal series in the plane, B
   at (d, d, 0) from A for d = 3, 4, 6 and 8 (Euclidean 4.24, 5.66, 8.49,
-  11.31), like charges only, for the lattice's anisotropy (`pp_d{d}`); a
+  11.31), like charges only, for the GameBoard's anisotropy (`pp_d{d}`); a
   control, one body alone at the same settings (`p_alone`), its table
   naming its own light, whose register must stay (0, 0, 0) by symmetry
-  (its own backward-spread light returns to it from all sides). Board:
+  (its own backward-spread light returns to it from all sides). GameBoard:
   open boundary, a margin of 5 empty Nodes beyond each body on every side
   (the far field escapes; the margin is a stated deviation, below), N =
   2^3 (the phase is read nowhere in these worlds). Ticks: 2r + 32 for the
@@ -2259,12 +2259,12 @@ states "exactly" and means integer equality at every tick.
   of (4) evaluated at the same d, the ratio reported per point, no
   pass/fail (A6's anisotropy), and the direction of the push, along the
   diagonal (F_x = F_y, F_z = 0), exact by symmetry. Fail: any of (1) to
-  (5), stated as which and why (the table, the remainder rule, the lattice,
+  (5), stated as which and why (the table, the remainder rule, the GameBoard,
   the box or the transient).
 - **Planning, before the run (not the measurement).** The engine's cost was
-  measured first, on the r = 4 world of the plan (board 21 × 17 × 17, the
+  measured first, on the r = 4 world of the plan (GameBoard 21 × 17 × 17, the
   margin of 8) for 16 ticks: 85 s, then 56 s at N = 2^3, that is 2.3 ms
-  per Node cycle, and every Node of the board cycles once the field has
+  per Node cycle, and every Node of the GameBoard cycles once the field has
   filled it (a Node holding a remainder register is active until it
   empties, and under a steady source none does), so a world's cost is its
   volume times its ticks: the plan's r = 16 world (33 × 17 × 17, 96
@@ -2405,7 +2405,7 @@ states "exactly" and means integer equality at every tick.
 - **Computed after the run (2026-09-17;
   `examples/nature/a5_static/mean_field_gauss.py`, a computation, not an
   engine run).** Method: the table's mean field, per-heading amounts on the
-  cubic lattice in floating point (the split is exact on average under the
+  cubic GameBoard in floating point (the split is exact on average under the
   remainder rule, so this is the expectation of the engine's integers), the
   source releasing 4096 on each heading every interval and absorbing what
   returns to it, a sink absorbing everything that arrives and booking amount
@@ -2413,7 +2413,7 @@ states "exactly" and means integer equality at every tick.
   points of the linear map (BiCGSTAB, residual 10^−10) and the transients
   stepped; the source alone in an octant of the cube of half-width 96
   (193³, the boundary 2r beyond r = 48), the simple walk [1, 1, 1, 1, 1, 1]
-  in the same box for the lattice Laplacian's Green's function, and the
+  in the same box for the GameBoard Laplacian's Green's function, and the
   sink at r = 4, 6, 8, 12, 16, 24 and 32 with the boundary 2r from both
   bodies (3r and 4r checked at r = 8, 12, 16). Verdict: the table gives
   Gauss's law, exactly for the Link current through every closed surface
@@ -2422,7 +2422,7 @@ states "exactly" and means integer equality at every tick.
   at no box size and no duration. What it gives, in order. (1) Free space:
   the effective source S = 20132 per interval (24576 released, 4444
   returning to the source's sink); the outflow through the cube of
-  half-width r equals S to 10^−7 at r = 2 to 64, Gauss exact on the lattice
+  half-width r equals S to 10^−7 at r = 2 to 64, Gauss exact on the GameBoard
   by conservation. The net momentum arriving at a Node, J (amount × heading
   of the arrivals, what a sink absorbs and a met ray feels), is exactly 11/8
   of the mean Link current through it, Φ, at every Node: on any axis the two
@@ -2434,7 +2434,7 @@ states "exactly" and means integer equality at every tick.
   1.41, 1.41); on the (1, 1, 0) diagonal Φ is 1.01, 0.99, 0.99 of Gauss at
   r = 11.3, 22.6, 33.9 and on the (1, 1, 1) diagonal 0.93, 0.97, 0.98 at r =
   13.9, 20.8, 27.7: the current is isotropic to 5 % from r ≈ 24 and to 3 %
-  from r ≈ 30. The density is the lattice Laplacian's Green's function
+  from r ≈ 30. The density is the GameBoard Laplacian's Green's function
   scaled by D_simple / D = 3/8, within 1.5 % from r = 20 and 1 % from r =
   31 (D = 4/9 Link² per interval). The beam 4096 (6/11)^(r−1) is 0.95,
   0.78, 0.59, 0.22, 0.045 and 0.0009 of J at r = 4, 6, 8, 12, 16, 24 and the
@@ -2490,11 +2490,11 @@ states "exactly" and means integer equality at every tick.
   worker), and run one at a time, smallest first (r = 12; r = 16 like,
   opposite, the control; r = 20; r = 24 last and only if the machine has
   8 GB available when its turn comes). Memory, measured before the run on
-  the r = 12 board: the dense arrays and their temporaries cost about 6
+  the r = 12 GameBoard: the dense arrays and their temporaries cost about 6
   KB per Node (the 16-tick run peaks at 1.0 GB) and the runner's final
   snapshot, `state.json`, every filled Node read back as Node state and
   written as text, about 16 KB per filled Node (an 80-tick run with
-  62 k of the 146 k Nodes filled peaks at 1.9 GB), so a full board peaks
+  62 k of the 146 k Nodes filled peaks at 1.9 GB), so a full GameBoard peaks
   at about 22 KB per Node: 3.3 GB at r = 12, 7.8 at r = 16, 3.1 for the
   control, 15 at r = 20 and 26 at r = 24, against 16 GB on the machine;
   the series script runs a world only if the available memory covers its
@@ -2507,7 +2507,7 @@ states "exactly" and means integer equality at every tick.
   the same ledger, totals and body registers (B's register (29, 0, 0)
   after tick 16, the first push at tick 12), in 63 s against 76 s (at 16
   ticks the field covers about 7 k of the 146 k Nodes; the engine alone
-  would cost about 5 minutes per tick once the board is full). Predictions,
+  would cost about 5 minutes per tick once the GameBoard is full). Predictions,
   written before the run by `predict_dense.py` into `predictions.json`
   beside the worlds (the mean field of `mean_field_gauss.py` at exactly
   these boxes and ticks, the push averaged over the last 32 ticks as
@@ -2615,12 +2615,12 @@ states "exactly" and means integer equality at every tick.
   round 4 of
   [DERIVATIONS](DERIVATIONS.md#31-round-4-coulomb-and-newton-under-the-mixed-field)
   (section 31: the product law k_C q_A q_B / r^2 with k_C = G, a fixed
-  lattice anisotropy (15/8) omega^2 K_4, the retardation sqrt 3 r, a clock
+  GameBoard anisotropy (15/8) omega^2 K_4, the retardation sqrt 3 r, a clock
   required on the source and 256 quanta per Node at the receiver; section
   32: the third law exact through the field, the recoil arriving at the
   owner; section 30: the wave alive above about 256 quanta per Node), on the
-  closed board the model owner decided the confrontation runs are made on,
-  with only closed worlds tested (Highlights 5.4, "The board of a run is
+  closed GameBoard the model owner decided the confrontation runs are made on,
+  with only closed worlds tested (Highlights 5.4, "The GameBoard of a run is
   closed", PRs #311 and #314): the push per interval on each of two bodies
   at rest once the field has settled, its scaling with the distance d, the
   product law over three pairs of contents, and the recoil arriving through
@@ -2639,12 +2639,12 @@ states "exactly" and means integer equality at every tick.
   image of B across the boundary 25 Links from A on the axis, 18.4 and 22.5
   Links off it). Two external bodies of the `proton` family, A of 2^28
   (whole charge 3 x 2^28) at (12, 12, 12) and B at A + (d, 0, 0) for d = 4,
-  6, 8, 12 (`pp_d{d}_closed`, the boards [d + 25, 25, 25]), at A + (8, 8, 0)
+  6, 8, 12 (`pp_d{d}_closed`, the GameBoards [d + 25, 25, 25]), at A + (8, 8, 0)
   and A + (8, 8, 8) (`pp_d8_110_closed`, `pp_d8_111_closed`, r = 11.31 and
   13.86), and at d = 8 the pairs of contents (2^28, 2^27) and (2^27, 2^27)
   (`pq_d8_closed`, `qq_d8_closed`; 2^26 was the first choice and is refused
   by the prefill at fill 12, a third phase on one Port of a source). Each
-  body's shadow set is given with the board by `initial_field` `{"fill": 12}`
+  body's shadow set is given with the GameBoard by `initial_field` `{"fill": 12}`
   with `release` [1, 512]: 37748736 quanta for 2^28 and 18874368 for 2^27,
   both sets in one family told apart by their owner. Each body's
   `momentum_table` `{"proton": 1}` is read by charge (point 16: sign x
@@ -2675,18 +2675,18 @@ states "exactly" and means integer equality at every tick.
   limit at four at a time beside the replays and were run again two at a
   time), the `run.json` of every world kept gzipped in `records/` beside the worlds,
   the readings in `record.json` and `tables.md`, the page in `a5s_law.html`.
-  The open-board form of the eight worlds, written first as the control, was
+  The open-GameBoard form of the eight worlds, written first as the control, was
   dropped before it ran by the model owner's decision of the same hour that
   only closed worlds are tested (PR #314). Stated before the run: E11
-  repeated above shows that on the closed board the prefilled field of a
-  thing at rest is a train that circles the periodic board at about 1 /
+  repeated above shows that on the closed GameBoard the prefilled field of a
+  thing at rest is a train that circles the periodic GameBoard at about 1 /
   sqrt 3 Link per interval and reconverges at its owner once per round trip
   of 57 intervals, without a fixed point or a cycle within 120 ticks; so
   "once the field has settled" is read as the last window of twenty, with
   its time course beside it.
 - **Result (partial: seven of the eight worlds recorded, one replayed).**
   The series stopped on the model owner's word before it was complete:
-  `pp_d8_111_closed` (the 33^3 board, 5.0 GB at peak) was killed twice by
+  `pp_d8_111_closed` (the 33^3 GameBoard, 5.0 GB at peak) was killed twice by
   the machine's memory limit beside the other jobs and its third run, alone,
   was stopped; the other seven worlds completed, and `pq_d8_closed` alone
   was replayed for the momentum in flight. Per prediction, whether the
@@ -2705,7 +2705,7 @@ states "exactly" and means integer equality at every tick.
   rest in flight on the shadows. *The standing set:* not reached, as in E11
   repeated: no fixed point and no cycle within 120 ticks in any world (the
   residual at the last comparison 92.4 to 93.4 M quanta moved per interval
-  out of 75.5 M on the board for the like pairs, 70.2 M of 56.6 M and 47.1
+  out of 75.5 M on the GameBoard for the like pairs, 70.2 M of 56.6 M and 47.1
   M of 37.7 M for the others); the push never settled (no two consecutive
   windows of twenty within 10 %). *The push once settled and its scaling
   with d:* not given. The push per interval on B along the line from A,
@@ -2716,7 +2716,7 @@ states "exactly" and means integer equality at every tick.
   windows of twenty at d = 4 read -765, -3846, -42680, -6783 and -13059 +-
   8185 (ticks 101 to 120), at d = 6 +5964, -2078, -12285, -6432, +14940 +-
   10704, at d = 8 +2689, +4541, +14681, -8918, -19126 +- 9765, at d = 12
-  +925, +5609, -9163, -10615, -4784 +- 4263: on the periodic board A's
+  +925, +5609, -9163, -10615, -4784 +- 4263: on the periodic GameBoard A's
   train comes around from the far side (A's image 25 Links beyond B on the
   axis) and pushes B toward A, B's train pushes A likewise, and the two
   bodies of every pair are pushed toward each other over most of the run
@@ -2747,9 +2747,9 @@ states "exactly" and means integer equality at every tick.
   913 and 738 s for the (110) pair and d = 12 at two at a time (3.7 and 3.2
   GB); the inventory replay of `pq_d8_closed` 120 ticks at about 10 s per
   tick.
-- **Reading.** On the closed board two things at rest do not push each
+- **Reading.** On the closed GameBoard two things at rest do not push each
   other by a settled force: each reads the other's train as it passes and,
-  after one round trip of the periodic board, as it comes around from the
+  after one round trip of the periodic GameBoard, as it comes around from the
   far side, so the push alternates and turns toward the other body, with no
   scaling law in d and no settled value within 120 ticks; the books per bit
   close at every interval and the third law holds exactly through the
@@ -2757,9 +2757,9 @@ states "exactly" and means integer equality at every tick.
   the engine's charge reading gives each body a push proportional to the
   other's shadow set alone, a sum law, which the amended point 16 does not
   intend. The same evening the model owner reversed the rule the series was
-  made under: a thing emits, nothing is given with the board, the board of
+  made under: a thing emits, nothing is given with the GameBoard, the GameBoard of
   a run is open (Highlights 5.4, "A thing emits; nothing is given with the
-  board", PR #319), and the series is repeated after feature 19 with the
+  GameBoard", PR #319), and the series is repeated after feature 19 with the
   emitted field and its fixed point.
 - **Fingerprint.** Source
   `051d716825c4785baffba01e46ea7348698fdfe82ca9ddc70eafab9871a49be5` (the
@@ -2773,7 +2773,7 @@ states "exactly" and means integer equality at every tick.
 - **Status.** partial, measured on 2026-09-18 for seven of eight closed
   worlds at the fingerprint above, one replayed for the momentum in flight;
   recorded here; superseded the same evening by the model owner's decision
-  that a thing emits and the board is open (PR #319): to be repeated after
+  that a thing emits and the GameBoard is open (PR #319): to be repeated after
   feature 19. Nothing is registered as a law.
 
 ### A6. Light bending by a bound group and G_eff N² over N = 2^8 to 2^16
@@ -2792,11 +2792,11 @@ states "exactly" and means integer equality at every tick.
   [hypothesis 12](HYPOTHESES.md#12-one-mass-ladder-and-the-composite-spectrum-from-binding),
   m₀ = h/(N δt c²), the model owner's statement of 2026-09-17 is
   G = ħc/(N m₀)², N m₀ the Planck mass, so that the coupling measured in
-  lattice units scales as 1/N²: G_eff · N² is constant across the phase
+  GameBoard units scales as 1/N²: G_eff · N² is constant across the phase
   width. This statement is not yet in Highlights or on the hypotheses page;
   the run pins it as stated.
 - **Features.** 1, 2, 5, 6, 7, 7b, 8, 9, 10, 12.
-- **Run.** A board of 65 × 65 × 9 Nodes, open boundary. The star at the
+- **Run.** A GameBoard of 65 × 65 × 9 Nodes, open boundary. The star at the
   center: an external body (feature 7b, `external-body-v1`, Highlights 3.19)
   of declared family and amount M, no charge, at rest (`initial_momentum`
   zero), at its default coupling, absorption into its explicitly accounted
@@ -2813,7 +2813,7 @@ states "exactly" and means integer equality at every tick.
   (marked, setting 1) launching one light ray on a line parallel to x at
   impact parameter b = 4, 6, 8, 12 and 16, one ray per run, on both sides
   of the group, and the same passes on lines parallel to the (1,1,0)
-  diagonal at equal Euclidean b rounded to the lattice (Highlights 3.5,
+  diagonal at equal Euclidean b rounded to the GameBoard (Highlights 3.5,
   2026-09-17: the field is a diamond at the scale of Links and a sphere at
   large scale by path counting, and the axis-versus-diagonal bending is a
   measurable prediction, not an assumption); a slow massive ray (rate r,
@@ -2838,7 +2838,7 @@ states "exactly" and means integer equality at every tick.
   −1.0 ± 0.1; α at 2M is 2α at M within 1/16 relative; G_eff(N) · N² is
   constant over the five N within 1/16 relative of its value at N = 2^12;
   the diagonal α at equal Euclidean b is within 1/8 relative of the axial α
-  (a lattice effect larger than that is measured and recorded under
+  (a GameBoard effect larger than that is measured and recorded under
   Highlights 3.23, not hidden).
   Reported and not pinned: the ratio of the light ray's α to the slow ray's
   α at equal b and M against the value 2 of general relativity. Fail: momentum
@@ -2846,7 +2846,7 @@ states "exactly" and means integer equality at every tick.
   outside its band (the delay table as declared against nature); G_eff · N
   constant instead of G_eff · N², or neither (the identification of m₀ or of
   the unit of action in the derivation, not the engine); a diagonal α
-  outside its band (the lattice, Highlights 3.5, recorded under 3.23), each
+  outside its band (the GameBoard, Highlights 3.5, recorded under 3.23), each
   stated as which.
 - **Status.** measured on 2026-09-18 on the engine of `main` at `9cc830f`
   (no engine change on the branch; source
@@ -2864,7 +2864,7 @@ states "exactly" and means integer equality at every tick.
   a meeting with outputs takes one field ray per interval (`participant_groups`
   selects one group and the light's slot is used; the rays at a Node are
   ordered by heading, so the ray met is the ±X one whenever field arrives
-  from ahead or behind, every interval on a filled board), and its output is
+  from ahead or behind, every interval on a filled GameBoard), and its output is
   a fresh ray whose lag is that meeting's delay alone (`_output`), so nothing
   accumulates. The pre-registered form therefore predicts no bending at any
   b, N or M, and the series was run in both forms: `delay_*`, the catalog's
@@ -2897,7 +2897,7 @@ states "exactly" and means integer equality at every tick.
   the b series and 2^8, 2^10, 2^14, 2^16 at b = 8; the slow ray an electron
   of rest rate 1 (every ray moves one Link per interval; slow is a nonzero
   rate); the momentum field bound to the light by the lamp's `recoil_field`
-  and to the mass field by an unseeded lamp; the board the entry's 65 × 65
+  and to the mass field by an unseeded lamp; the GameBoard the entry's 65 × 65
   × 9 (the smallest with the boundary 2b beyond the farthest pass in z as
   well, 65 deep, is 275 k Nodes and 6 GB, outside the machine and the
   budget), so the (0, 1, 1) diagonal passes, which leave a slab 9 deep, ran
@@ -2909,13 +2909,13 @@ states "exactly" and means integer equality at every tick.
   `mean_field_gauss.py`) on exactly these boxes and schedule predicted,
   before the run, the transverse push on the light 3417.70, 1660.36, 862.41,
   269.84 and 94.32 quanta at b = 4, 6, 8, 12, 16 (α = 0.0130367, 0.0063337,
-  0.0032898, 0.0010294, 0.0003598), the exponent −2.59 ± 0.21 on this board
+  0.0032898, 0.0010294, 0.0003598), the exponent −2.59 ± 0.21 on this GameBoard
   (a slab 9 deep drains the field through z; the same pass at the steady
-  state on boards 17 and 33 deep −1.95 and −1.59, in free space −1.38 ± 0.03
+  state on GameBoards 17 and 33 deep −1.95 and −1.59, in free space −1.38 ± 0.03
   over b = 4 to 16 and −1.20 over 8 to 32, the local exponent −1.11 to −1.13
   between 16 and 32: the model's own law approaches −1 from below, the
   unscattered beam 8192 (6/11)^(b−1), 39 % of the push at b = 4 and 1 % at
-  16, and the lattice's short-range anisotropy steepening it at these b),
+  16, and the GameBoard's short-range anisotropy steepening it at these b),
   the linearity exact, the N scan flat (a register has no modulus), the
   light's α equal to the slow ray's, and the diagonal 0.49, 0.59 and 0.71 of
   the cube's axis fit at b = 4.24, 5.66, 8.49 (the axis fed by the beam).
@@ -2929,8 +2929,8 @@ states "exactly" and means integer equality at every tick.
   spread); (2) pass, the control straight (the register (262144, 0, 0), no
   push, the escape at (64, 40, 4) at tick 258); (3) pass, the ray bends
   toward the star on both sides (p_y < 0 above, > 0 below, p_z = 0 at every
-  b); (4) fail, the exponent −2.595 ± 0.210 against −1.0 ± 0.1, the lattice and the
-  board (the mean field's −2.59 on this slab, reproduced within 0.4 % (the fit of the prediction on these boxes −2.586 ± 0.207);
+  b); (4) fail, the exponent −2.595 ± 0.210 against −1.0 ± 0.1, the GameBoard and the
+  GameBoard (the mean field's −2.59 on this slab, reproduced within 0.4 % (the fit of the prediction on these boxes −2.586 ± 0.207);
   the model's free-space law −1.38 at these b, Highlights 3.5 and 3.23, the
   beam and the slab recorded, not hidden); (5) pass, α at 2M is 2.0035 α at
   M (1727 against 862 quanta); (6) fail, G_eff N² grows as N² (the register
@@ -2945,7 +2945,7 @@ states "exactly" and means integer equality at every tick.
   1/(2πN) there, G_eff N constant, while the 1/N² of the model owner's
   statement holds only if m₀ is ħ/(δt c²), one radian per interval rather
   than one step; (7) fail, the diagonal 0.486, 0.587, 0.711 of the cube's axis fit at
-  b = 4.24, 5.66, 8.49 against 1 ± 1/8, the lattice (Highlights 3.5, 3.23,
+  b = 4.24, 5.66, 8.49 against 1 ± 1/8, the GameBoard (Highlights 3.5, 3.23,
   recorded: the mean field's 0.49, 0.59, 0.71 reproduced), the axis pass fed
   by the unscattered beam at short range; the ratio light/slow 1.0000
   exactly (the same push on the same content, the register the same to the
@@ -3002,7 +3002,7 @@ states "exactly" and means integer equality at every tick.
   prefilled field through the API, `make_page.py` writes the page
   `a6_law.html`; the README row in
   examples/nature).
-  A closed board (`boundary` `periodic`, the model owner's decision of
+  A closed GameBoard (`boundary` `periodic`, the model owner's decision of
   2026-09-18) of 33 × 33 × 33 Nodes with the mass at its centre (16, 16,
   16), so that the field wraps around 16 Links from the mass on every axis,
   beyond the farthest clock (r = 10, its outer mirror at 11), the farthest
@@ -3019,7 +3019,7 @@ states "exactly" and means integer equality at every tick.
   the residual. The mass an external body of the family `star` (amount
   2^20) with `release` [1, 2^20/X], X quanta per heading per interval of the
   prefill `initial_field` `{"fill": 14}` (the longest fill the prefill
-  admits on this board: 20 is refused, "the prefill cannot hold a third
+  admits on this GameBoard: 20 is refused, "the prefill cannot hold a third
   phase on one Port of a source"), absorbing things, returning shadows and
   radiating nothing during the run; the flux S = 6X, the derivation's
   GM = S/(2π): `m256` (X = 256, S = 1536, GM = 244.5, w_GR = 87.29 as
@@ -3062,10 +3062,10 @@ states "exactly" and means integer equality at every tick.
   light thing), the world; the records stay outside the tree, the
   analyzer's `record.json` beside the worlds. No world of the series is
   open: "only closed worlds are tested" (the model owner, 2026-09-18,
-  Highlights 5.4 "The board of a run is closed", PR #314); the two open
+  Highlights 5.4 "The GameBoard of a run is closed", PR #314); the two open
   controls first written were withdrawn before they ran.
 - **The field the runs read** (the probe, before the series, on the 41³
-  board): the whole quanta of the prefilled field are a transient that parks as
+  GameBoard): the whole quanta of the prefilled field are a transient that parks as
   ninths within about 100 intervals (X = 16: 855 quanta arriving per
   interval at tick 1, 182 at tick 40, 1159 of 1440 parked; X = 256: 18 631
   at tick 1, 10 936 at tick 40, 10 566 of 21 504 parked), reaching r = 4 at
@@ -3082,9 +3082,9 @@ states "exactly" and means integer equality at every tick.
   per reading, 300 ticks; the rate is the intervals moved over the intervals
   the thing stayed between its mirrors, the deficit 1 − rate; the standing
   set was not reached in 300 intervals in any of the four runs, the field of
-  the closed board circulating at the end with a residual of 15 947 to
+  the closed GameBoard circulating at the end with a residual of 15 947 to
   17 224 array cells and 25 741 to 27 910 quanta between consecutive states,
-  20 837 quanta of shadow on the board throughout; every ledger line
+  20 837 quanta of shadow on the GameBoard throughout; every ledger line
   balanced). Under `amount`: r = 3 (Euclidean 3.16) rate 0.0067, 298 waits,
   1339 quanta read in 271 push ticks, never left; r = 4 (4.12) 0.0067, 298
   waits, 629 quanta; r = 5 (5.10, −Y) 0.0133, 296 waits, 391 quanta; r = 5
@@ -3149,7 +3149,7 @@ states "exactly" and means integer equality at every tick.
   derivation, 6 to 8 measured); at b = 8 it passes straight five times in
   six and is captured once. Against GR's 4GM/b = 326, 244, 163, 122 rad at
   b = 3, 4, 6, 8 (GM = 244.5, in the derivation's unit: every b of this
-  board is inside the capture radius b_c = GM), Newton's 2GM/b and the
+  GameBoard is inside the capture radius b_c = GM), Newton's 2GM/b and the
   derivation's GM/b = 82, 61, 41, 31: a mass this heavy captures, and the
   register reads no angle. The Shapiro delay: 0 ticks on the ten lines
   that arrived (b = 8), against GR's 2GM ln(4x_Ax_B/b²) = 1354 ticks,
@@ -3181,12 +3181,12 @@ states "exactly" and means integer equality at every tick.
   6's 0.045 and round 5's 0.45 at w = 1.
 - **The controls.** Without the star every clock runs at 1.000 in both
   batches (no wait, no push, the thing bouncing between its mirrors for 300
-  intervals), the standing set of the empty board reached after 66
+  intervals), the standing set of the empty GameBoard reached after 66
   intervals with the period 64 (the clocks' bounce on the phase circle of
   64) and replayed for 234; every bending line arrives at tick 32 with no
   push, the standing set reached after 34 intervals with the period 1.
 - **Result (5), the separating run, M with S = 42** (150 ticks; the source
-  A at X = 1024, 86 604 quanta of shadow on the board; every ledger line
+  A at X = 1024, 86 604 quanta of shadow on the GameBoard; every ledger line
   balanced; the standing set not reached, the residual 121 620 to 121 646
   cells). The receiver's momentum never moves, under `shadow_wait` absent,
   `thing` and `field` alike and without M: no whole quantum of A's field
@@ -3196,7 +3196,7 @@ states "exactly" and means integer equality at every tick.
   Links from A (Manhattan 30), receives no whole quantum of A's field
   either, so the front never crosses M's field in whole quanta. The
   observable of section 37 (ix), the tick B's register first moves, is not
-  reached on this board at this flux: the front of a field in whole quanta
+  reached on this GameBoard at this flux: the front of a field in whole quanta
   ends where its quanta park (about r = 8 at X = 256, and short of 17 at
   X = 1024), and a receiver near enough to A to read its quanta would not
   have M's field between them.
@@ -3230,27 +3230,27 @@ states "exactly" and means integer equality at every tick.
   region found no fixed point and no cycle within the run (the window 1024
   deliveries): the residual between consecutive states at the last tick
   was 15 947 to 17 519 array cells and 25 741 to 28 775 quanta for `m256`
-  (300 ticks, 20 837 to 21 341 quanta of shadow on the board throughout),
+  (300 ticks, 20 837 to 21 341 quanta of shadow on the GameBoard throughout),
   25 760 to 27 507 cells for the bending worlds (100 ticks), 121 620 to
   121 646 cells for the separating worlds (86 016 to 86 604 quanta), and 1
   to 152 cells and 0 to 272 quanta for `m64` (5235 to 5376 quanta): the
   weak field parks almost entirely within 300 intervals, the strong one
   keeps circulating. The content per shell over time is the probe's (the
-  41³ board, X = 256, the +Y axis, the mean over ticks 1 to 10, 11 to 20,
+  41³ GameBoard, X = 256, the +Y axis, the mean over ticks 1 to 10, 11 to 20,
   21 to 30, 31 to 40): r = 1: 41.4, 5.3, 6.8, 6.1; r = 2: 24.4, 21.9, 16.6,
   18.1; r = 3: 16.9, 15.8, 12.7, 8.2; r = 4: 10.1, 15.4, 14.9, 14.2; r = 5:
   7.0, 8.6, 9.3, 9.0; r = 6: 0.9, 2.7, 2.5, 2.4; r = 7: 0.1, 0.6, 0.7, 1.2;
-  r = 8: 0, 0, 0.2, 0.3; nothing beyond; the arrivals over the board
+  r = 8: 0, 0, 0.2, 0.3; nothing beyond; the arrivals over the GameBoard
   17 619, 14 860, 12 562, 11 335 per interval while the parked ninths grow
   3791, 6635, 8934, 10 163. The sign of the radial push per shell over
   time was not read (the region publishes no per-Node events, and the
   probe read counts, not headings); the frozen things at r < 7 were pushed
   in every direction and in both senses (the bending lines above: toward
   the star 16 to 98 quanta, away 5 to 54, per line), which is the same
-  fact at the things. Without the star the empty board's standing set is
-  found after 34 (bending) and 66 (clocks) intervals. So the closed board
+  fact at the things. Without the star the empty GameBoard's standing set is
+  found after 34 (bending) and 66 (clocks) intervals. So the closed GameBoard
   with one body holds no static field under point 7 as it stood, which
-  the E11 lane found on its board the same afternoon, and every reading
+  the E11 lane found on its GameBoard the same afternoon, and every reading
   above is a reading on a field that does not settle.
 - **Reading.** Registered as what came out, on the engine of `main` at
   `3b4a31c` (features 15 to 18, 16e, 16f with PR #312), and not as a law:
@@ -3264,9 +3264,9 @@ states "exactly" and means integer equality at every tick.
   never reaches the receiver. Two readings of the wait differ by a third of
   the waits at the one clock that read tens of quanta over hundreds of
   intervals (m64, r = 3: 238 against 165). The field these numbers were
-  read on does not settle on the closed board (above); the model owner
+  read on does not settle on the closed GameBoard (above); the model owner
   reversed point 7 the same evening (a thing emits; nothing is given with
-  the board; Highlights, PR #319), and the series is repeated after
+  the GameBoard; Highlights, PR #319), and the series is repeated after
   DERIVATIONS.md round 7 and feature 19 (emission and the sink).
 - **Not read.** The bending and the Shapiro delay of `m64` at b = 4 and 8
   and of `m16` at every b, the bending at the GR w, and the separating run
@@ -3301,9 +3301,9 @@ states "exactly" and means integer equality at every tick.
   external body's motion is caused by fields only, model owner, 2026-09-17),
   each is met by the other's field, so each is drawn toward the other,
   retarded by the field's transit, with the field's content falling by the
-  outward dilution of the lattice, 1/r² by exact shell counts.
+  outward dilution of the GameBoard, 1/r² by exact shell counts.
 - **Features.** 1, 5, 6, 7, 7b, 8, 9, 10.
-- **Run.** A board of 97 × 33 × 33 Nodes, open boundary, N = 2^10. Two
+- **Run.** A GameBoard of 97 × 33 × 33 Nodes, open boundary, N = 2^10. Two
   bodies of amount M₁ and M₂, in two series: two ordinary bound groups of
   retained content M₁ and M₂ (feature 8), and two external bodies (feature
   7b, `external-body-v1`) of declared family and amount M₁ and M₂, each at
@@ -3313,7 +3313,7 @@ states "exactly" and means integer equality at every tick.
   accumulator that steps one Link when a full amount has accumulated on an
   axis; at separations r = 6, 8, 12, 16, 24 and 32 along x, one run per r,
   and the same separations along the (1,1,0) diagonal at equal Euclidean
-  length rounded to the lattice; M₁ doubled once at r = 12; 4r intervals
+  length rounded to the GameBoard; M₁ doubled once at r = 12; 4r intervals
   after the first meeting. Recorded per tick: each body's momentum (the sum
   over its bound rays for a group; the audit's bodies' momentum line and
   the accumulator for an external body), every field ray in flight, the
@@ -3324,10 +3324,10 @@ states "exactly" and means integer equality at every tick.
   the other; the
   log-log exponent of dp/dt over the six axial r is −2.0 ± 0.1; dp/dt at
   2M₁ is twice its value at M₁ within 1/16 relative; the diagonal value at
-  equal Euclidean r is within 1/8 relative of the axial value (a lattice
+  equal Euclidean r is within 1/8 relative of the axial value (a GameBoard
   effect larger than that is measured and recorded under Highlights 3.23,
   not hidden). Fail: any one, stated as engine (inexact momentum), table
-  (exponent) or lattice (direction).
+  (exponent) or GameBoard (direction).
 - **Status.** planned.
 
 ### A8. Hydrogen-like binding and the Balmer ratio
@@ -3347,7 +3347,7 @@ states "exactly" and means integer equality at every tick.
   retained energies, and which clock an emitted light ray carries, the
   group's rest rate or the orbit's, is what the run decides.
 - **Features.** 1, 2, 5, 6, 7, 7b, 8, 9, 10.
-- **Run.** A board of 33 × 33 × 33 Nodes, open boundary, N = 2^12. The fixed
+- **Run.** A GameBoard of 33 × 33 × 33 Nodes, open boundary, N = 2^12. The fixed
   proton at the center: an external body (feature 7b, `external-body-v1`,
   Highlights 3.19) of the proton family, charge +1, amount M_p, at rest
   (`initial_momentum` zero), at its default coupling, absorption into its
@@ -3409,7 +3409,7 @@ states "exactly" and means integer equality at every tick.
   interval to read it in intervals (four on the eight-ray unit square, two
   on the four-ray one).
 - **Features.** 1, 2, 5, 6, 8, 9, 10.
-- **Run.** A board of 65 × 65 × 65 Nodes, periodic, N = 2^10. 4096 neutron
+- **Run.** A GameBoard of 65 × 65 × 65 Nodes, periodic, N = 2^10. 4096 neutron
   groups (the binding coupling of feature 8, catalog masses in keV: neutron
   939 565, proton 938 272, electron 511), each at its own Node 4 Links from
   any other so that products never meet, each marked with setting n/d =
@@ -3465,7 +3465,7 @@ states "exactly" and means integer equality at every tick.
   the corner first and every content disperses at tick 3 under the turn
   first, and the ladder at this ring stays the corner table's.
 - **Features.** 9 (and, for the real N, A11).
-- **Run.** A catalog fit, no board: at N = 2^12 (the engine's circle today)
+- **Run.** A catalog fit, no GameBoard: at N = 2^12 (the engine's circle today)
   and at the N of A11, find the smallest integer k (the electron's rung,
   r_e = k) such that k · 206.768 28, k · 3477.23 and k · 1836.152 67 are
   each within their measured relative uncertainty of an integer, and the
@@ -3500,7 +3500,7 @@ states "exactly" and means integer equality at every tick.
 - **Model prediction today.** Highlights 3.11 and 3.17: bounded integers,
   overflow rejecting before mutation; hypothesis 12 for m₀; the statement of
   A6 for G. At the real N a clock of rate 1 advances one step per interval,
-  so over any board of feasible size the phase difference between two rays
+  so over any GameBoard of feasible size the phase difference between two rays
   of one emitter is below 2^-50 of a turn, the steering table sends all
   shared content to the first Port, and the bending of A6 at G_eff = C/N² is
   below one heading step; the charge coupling reads charge and content, not
@@ -3542,12 +3542,12 @@ states "exactly" and means integer equality at every tick.
   unpolarized intensity (1/4 of the polarized).
 - **Model prediction today.** Highlights 3.26: polarization is a family
   property, a transverse mode perpendicular to the heading with two states
-  for light (the two lattice axes perpendicular to an axial heading), read by
+  for light (the two GameBoard axes perpendicular to an axial heading), read by
   the declared couplings at a meeting; a polarizer is then a coupling table.
   Whether a two-state property carries the intermediate polarizer's angle
   through the chain is what the run decides; Highlights states no more.
 - **Features.** 1, 2, 5, 6, 7b, 9, 10, 11.
-- **Run.** A board of 65 × 9 × 9 Nodes, open boundary, N = 2^8. A source
+- **Run.** A GameBoard of 65 × 9 × 9 Nodes, open boundary, N = 2^8. A source
   (marked, setting 1) of light rays polarized along y; a polarizer as an
   external body (feature 7b, `external-body-v1`, Highlights 3.19) with the
   polarizer coupling, a polarization read once feature 11 exists, splitting
@@ -3572,7 +3572,7 @@ states "exactly" and means integer equality at every tick.
   (`ray-polarization-v1`, polarization)
   gives every light ray an integer step of a circle of 2^`polarization_bits`
   steps per half turn, the phase width by default, whose steps 0 and half
-  the circle are the two lattice axes of Highlights 3.26 and whose other
+  the circle are the two GameBoard axes of Highlights 3.26 and whose other
   steps are the direction the circular case would turn, without its
   handedness bit; a polarizer sets the passed ray's polarization to its own
   angle, so the question the entry asks, whether the intermediate angle is
@@ -3668,7 +3668,7 @@ states "exactly" and means integer equality at every tick.
   geometry (line 2); polarization changes the settings' form, not the
   mechanism (3.26).
 - **Features.** 1, 2, 3, 4, 5, 6, 7b, 9, 10, 11.
-- **Run.** The board and counts of A2 with each analyzer a polarizer of A12
+- **Run.** The GameBoard and counts of A2 with each analyzer a polarizer of A12
   at the setting, its pass Port and sink Port each leading to a marked
   Detector at setting 1/2, the pair source emitting two light rays of one
   birth event carrying the same polarization record; the settings from a
@@ -3685,7 +3685,7 @@ states "exactly" and means integer equality at every tick.
 ### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
 
 - **Confronts:** the single-graviton detector proposed by Tobar, Manikandan, Beitel and Pikovski (Nature Communications 15, 7229, 2024; construction begun in 2026): a massive acoustic resonator cooled to its ground state, weakly monitored, whose single quantum jump to its first level during a passing gravitational wave is one graviton absorbed, a gravito-phononic photoelectric effect; the key is to read individual transitions, since the mean energy is always consistent with a classical wave.
-- **Under the law of events:** quantum gravity is not a property of the board but what a declared detector reads at a point (the model owner, 2026-09-19: "quantum gravity is behind a detector; we need a detector for it"). The detector is a measured event with the table `measure` for the family read and `threshold` 1: one click per whole unit, its record carrying the emitter's number, the momentum entered and the phase read. The board is whole by construction, so such a detector always reads whole units; what is measured is the count per interval against the distance and the time, and the size of one click against the detector's declared width.
+- **Under the law of events:** quantum gravity is not a property of the GameBoard but what a declared detector reads at a point (the model owner, 2026-09-19: "quantum gravity is behind a detector; we need a detector for it"). The detector is a measured event with the table `measure` for the family read and `threshold` 1: one click per whole unit, its record carrying the emitter's number, the momentum entered and the phase read. The GameBoard is whole by construction, so such a detector always reads whole units; what is measured is the count per interval against the distance and the time, and the size of one click against the detector's declared width.
 - **What is missing before the run:** the units of the free family (the field of matter) carry no energy and no recoil, so they are not the graviton of nature, which is a quantum of a gravitational WAVE, emitted by accelerating masses and carrying energy. The run needs a paid family of gravitational waves (released at a measured event's acceleration, with recoil, with a phase circle and two polarizations as a second circle if wanted), not yet declared; the free family's suspension reads presence, not clicks.
 - **Reading planned:** a lamp of the wave family and a detector at threshold 1 far from it: clicks per interval, their record, and the digital slowing of a clock at the detector's Node; the negative control a threshold above the bundle (no click).
 - **Status:** planned; a catalog entry, no engine change until the wave family is declared by the owner.
@@ -3719,7 +3719,7 @@ states "exactly" and means integer equality at every tick.
   committed Detector decision returns the same result without another draw,
   emission or inventory charge."
 - **Features.** 1, 2, 10.
-- **Run.** A board of 33 × 33 × 33 Nodes, one marked Node with setting 1/2
+- **Run.** A GameBoard of 33 × 33 × 33 Nodes, one marked Node with setting 1/2
   and 2^10 unmarked Nodes crossed by rays, 2^10 intervals; the audit counts
   tickets consumed per tick against arrivals at marked Nodes; a replay with
   the same seed; a second run with a different seed.
@@ -3737,7 +3737,7 @@ states "exactly" and means integer equality at every tick.
   steps it has made since its event"; 3.20: "A return is the inverse split"
   and "Return modes": siblings, straight, annul.
 - **Features.** 1, 2, 3, 4, 10.
-- **Run.** A board of 65 × 65 × 65 Nodes; one event at the center with six
+- **Run.** A GameBoard of 65 × 65 × 65 Nodes; one event at the center with six
   outputs; a marked Node at distance d = 16 on the +x line with setting 0
   (every arrival returned); one run per mode. In the siblings run one sibling
   share is held by an output-clock delay on its line so that the transmission
@@ -3774,7 +3774,7 @@ states "exactly" and means integer equality at every tick.
   conversion at an event with its declared invariants (charge, energy,
   momentum)."
 - **Features.** 1, 5, 6, 9, 10.
-- **Run.** Five meetings on a small board in catalog keV units: 1 to 3
+- **Run.** Five meetings on a small GameBoard in catalog keV units: 1 to 3
   (neutron to proton, electron, antineutrino), 2 to 2 (a Compton-like
   exchange), 2 to 3 (electron-positron to three light rays), 4 to 2 (a joint
   conversion), and a declared 1 to 7 that must be refused before commit.
@@ -3791,7 +3791,7 @@ states "exactly" and means integer equality at every tick.
   that released it, which recoils when the return arrives, at finite speed";
   "Until its field meets something, a traveling ray pays nothing for it."
 - **Features.** 1, 5, 6, 7, 9, 10.
-- **Run.** A board of 33 × 33 × 33 Nodes; one charged ray on a straight
+- **Run.** A GameBoard of 33 × 33 × 33 Nodes; one charged ray on a straight
   line, 2^6 intervals, its field rays counted per shell per tick; a second
   world with a target ray of a responding family at distance 8.
 - **Shows.** The shell of field rays at successive ticks in three orthogonal
@@ -3824,7 +3824,7 @@ states "exactly" and means integer equality at every tick.
 - **Claim.** Highlights 3.4: "Binding is the interaction whose result is zero
   events: the rays stay at the Node and interact again every interval"; "The
   binding may be nothing more than a very large output-clock delay"; "It is
-  unbound the same way anything else happens on the board: a ray arrives."
+  unbound the same way anything else happens on the GameBoard: a ray arrives."
 - **Features.** 1, 5, 6, 7, 8, 9, 10.
 - **Run.** Two rays of declared families meeting at a Node under the binding
   coupling, held for 2^12 intervals; then a light ray of content E arriving,
@@ -3892,7 +3892,7 @@ states "exactly" and means integer equality at every tick.
   entanglement"; 5.4: "the value was carried through the birth event in event
   spacetime, one Link per interval."
 - **Features.** 1, 2, 3, 4, 10.
-- **Run.** The pair board of A2 without analyzers: the source at the center,
+- **Run.** The pair GameBoard of A2 without analyzers: the source at the center,
   Alice's Detector at 32 Links with setting 0 (every arrival returned), Bob's
   at 96 Links with setting 1, `return_mode` siblings; 2^8 pairs.
 - **Shows.** A spacetime diagram of one pair: Alice's return at tick 32, the
@@ -3907,8 +3907,8 @@ states "exactly" and means integer equality at every tick.
 - **Confronts:** the Lorentz factor, clock rate √(1 − v²) (the muon lifetime in flight, 2.2 µs at rest, longer by γ in flight; Rossi–Hall 1941 and every accelerator since).
 - **Model's prediction today:** hypothesis 15: everything moves at c, matter is slow only by its output clock, and a bound group's tick fires only while it is resident, so a group moving one Link every k intervals ticks at (k − 1)/k = 1 − v to first order; the per-face clocks of Highlights 3.28 may change the curve.
 - **Features required:** 8 (binding, `ray_delay`), 9 (rest rate as the tick's phase advance).
-- **Run design:** one bound group of a declared massive family at rest, and the same group given an initial motion of v = 1/2, 1/3, 1/4, 1/8 Links per interval along an axis and along a diagonal (DDA line), on a board long enough for 64 intervals with an open boundary; record the number of ticks (binding-rule firings) and the phase advanced in 64 intervals for each v and direction; totals exact.
-- **Criterion:** the tick ratio moving/rest is compared with 1 − v and with √(1 − v²) at each v; the model's curve is the one it matches within the remainder tolerance of Highlights 3.17; a direction dependence beyond that tolerance is a lattice anisotropy and is reported as such. Pass for the paper is a clean curve; the confrontation is then the curve against nature's.
+- **Run design:** one bound group of a declared massive family at rest, and the same group given an initial motion of v = 1/2, 1/3, 1/4, 1/8 Links per interval along an axis and along a diagonal (DDA line), on a GameBoard long enough for 64 intervals with an open boundary; record the number of ticks (binding-rule firings) and the phase advanced in 64 intervals for each v and direction; totals exact.
+- **Criterion:** the tick ratio moving/rest is compared with 1 − v and with √(1 − v²) at each v; the model's curve is the one it matches within the remainder tolerance of Highlights 3.17; a direction dependence beyond that tolerance is a GameBoard anisotropy and is reported as such. Pass for the paper is a clean curve; the confrontation is then the curve against nature's.
 - **Status:** planned (after feature 8; after feature 14, binding as a loop,
   Highlights 3.4, 2026-09-17, the moving group's motion being its corners
   shifting and its clock the period of its loop).
@@ -3989,7 +3989,7 @@ sign rule, and its other couplings are catalog entries.
   photon joins the loop and the group's content is 8 + 3 (3.28, mass as
   content).
 - **Features.** 1, 5, 6, 9, 10, 14.
-- **Run.** `examples/nature/absorption.json`: board 12 x 12 x 11, open,
+- **Run.** `examples/nature/absorption.json`: GameBoard 12 x 12 x 11, open,
   N = 8, no Detector, 24 ticks; the unit-square ring of E5 at the catalog's
   rest rate 1 (eight `electron` rays of amount 1, charge -3, one of each
   sense at every corner of P0 = (5,5,5), P1 = (6,5,5), P2 = (6,6,5),
@@ -4034,7 +4034,7 @@ sign rule, and its other couplings are catalog entries.
 ### E2. Photofission of a two-body nucleus, with the control below threshold
 
 - **Claim.** Highlights 3.4 (a bound group "is unbound the same way anything
-  else happens on the board: a ray arrives (a high-energy light ray, for
+  else happens on the GameBoard: a ray arrives (a high-energy light ray, for
   instance)") and 3.26 (the threshold is a table entry read at the meeting):
   the outputs rule fires only when the light's amount is at least 4, its
   guard `gt(amount of the light, 3)`, and a photon below that crosses; under
@@ -4042,7 +4042,7 @@ sign rule, and its other couplings are catalog entries.
   the pair flies apart on its own headings, momentum exact by heading, and
   the ring, its partners gone, disperses.
 - **Features.** 1, 5, 6, 9, 10, 14.
-- **Run.** `examples/nature/photofission.json`: board 26 x 26 x 11, open,
+- **Run.** `examples/nature/photofission.json`: GameBoard 26 x 26 x 11, open,
   N = 8, no Detector, 32 ticks; the four-ray ring of the design (two rays per
   sense at opposite corners), a proton ray (amount 6, charge +3, rest rate 1)
   circulating one way from P0 = (20,20,5) and P2 = (21,21,5) and a neutron
@@ -4095,7 +4095,7 @@ sign rule, and its other couplings are catalog entries.
   again when the ring's clock reaches a declared phase, on a new heading and
   with the group's phase at emission, and the ground ring continues.
 - **Features.** 1, 5, 6, 9, 10, 14.
-- **Run.** `examples/nature/absorption_emission.json`: the board and ring
+- **Run.** `examples/nature/absorption_emission.json`: the GameBoard and ring
   of E1, 32 ticks; a light ray of amount 4 from (5,5,1) heading +Z, at P0
   after tick 4; `emit`, declared first, a corner table over
   `[electron, electron, light]` with the guard `eq(phase of the electron,
@@ -4150,7 +4150,7 @@ sign rule, and its other couplings are catalog entries.
   nucleus releases. The model owner asked (2026-09-17) to see the He+ ion
   and to compute the orbit and the frequency a stable, closed orbit needs.
 - **Features.** 1, 5, 6, 7, 7b, 9, 10.
-- **Run.** `examples/nature/helium_ion.json`: board 41^3, open, N = 256, no
+- **Run.** `examples/nature/helium_ion.json`: GameBoard 41^3, open, N = 256, no
   Detector, 128 ticks (two computed periods). The nucleus: an external body
   of the `proton` family at (20, 20, 20), charge +6 (two protons), amount
   2^20, radiating light, the field of its charge (Highlights 3.5; the family
@@ -4231,7 +4231,7 @@ sign rule, and its other couplings are catalog entries.
 - **Claim.** Highlights 3.4 (model owner, 2026-09-17): "Binding is a
   periodic orbit of the meeting rule": a ray never stops, a bound group is
   a set of rays whose meetings, under the ordinary coupling table, reproduce
-  the rays that entered them, the smallest loop on the cubic lattice is a
+  the rays that entered them, the smallest loop on the cubic GameBoard is a
   unit square of four Nodes with rays circulating both ways, each corner
   meeting every interval two rays that leave through each other's Ports,
   and a pattern whose meeting does not close disperses; 3.28: the group's
@@ -4239,7 +4239,7 @@ sign rule, and its other couplings are catalog entries.
 - **Features.** 1, 5, 6, 9, 10 for the meetings; 14 (`loop-binding-v1`,
   landed 2026-09-17 after 8b: the removal of the held form, the record's
   reading of a group).
-- **Run.** `examples/nature/ring.json`: board 12 x 12 x 11, open, N = 8,
+- **Run.** `examples/nature/ring.json`: GameBoard 12 x 12 x 11, open, N = 8,
   no Detector, 16 ticks; eight `electron` rays of amount 1 (charge -3, rest
   rate 2) from eight lamps at the corners P0 = (5,5,5), P1 = (6,5,5),
   P2 = (6,6,5), P3 = (5,6,5), four circulating each way, one of each sense
@@ -4273,7 +4273,7 @@ sign rule, and its other couplings are catalog entries.
   ray viewer's extractor: one group, ring P0, P1, P2, P3, content 8, period
   4, clock 2 on the 8-step circle, from tick 1. `ring_open.json`: after
   tick 2 one ray of amount 2 at each corner, walking +Y or -Y off the
-  square, the board empty from tick 8, 8 escaped, every line balanced, no
+  square, the GameBoard empty from tick 8, 8 escaped, every line balanced, no
   group read. The integers are pinned in
   test expectations beside the
   rate-1, four-ray and quadrature cases. A check run on `main` at
@@ -4301,7 +4301,7 @@ sign rule, and its other couplings are catalog entries.
 - **Features.** 1, 2, 7, 8, 9, 10 for the first record; 12
   (`field-spreading-v1`) for the second; 12b (`field-remainder-v1`) for the
   third.
-- **Run.** `examples/nature/screen.json`: board 12 × 11 × 11, open, N = 8
+- **Run.** `examples/nature/screen.json`: GameBoard 12 × 11 × 11, open, N = 8
   (`phase_bits` 3), 24 ticks; the electron at rest is the bound group of the
   dictionary, two `electron` lamps of amount 4 meeting at (1, 5, 5) at tick
   1 and held by `bind` (`delay` 1, `ray_delay` 1), content 8; `light` is its
@@ -4399,7 +4399,7 @@ sign rule, and its other couplings are catalog entries.
   answered in the rule's own dynamics before the run and confronted with the
   record.
 - **Features.** 1, 5, 6, 7, 7b, 8b, 9, 10, 12, 12b.
-- **Run.** `examples/nature/helium_orbit.json`: board 15^3, open, N = 256, no
+- **Run.** `examples/nature/helium_orbit.json`: GameBoard 15^3, open, N = 256, no
   Detector, 152 ticks. The nucleus: an external body of the `proton` family
   at (7, 7, 7), charge +6, amount 2^20, radiating `light_of_nucleus`
   (`field_of` `proton`, `release` [1, 749]: A = 1399 per heading per
@@ -4408,7 +4408,7 @@ sign rule, and its other couplings are catalog entries.
   (`momentum_table` -1). The electron: one `electron` ray of amount 256 (rest
   rate 1, charge -3) from a lamp at (13, 5, 7) heading +Y, held forty
   intervals by a launcher body at (13, 6, 7) (the coupling `launch`, an output
-  `delay` under the guard `eq(phase, 1)`) so that the field fills the board
+  `delay` under the guard `eq(phase, 1)`) so that the field fills the GameBoard
   before it moves, released at tick 42 through the tangent point (13, 7, 7)
   of the circle of radius 6. Couplings: `nucleus_turn` over `[electron,
   light_of_nucleus]` with `momentum_table` `{"light_of_nucleus": -1}`, the
@@ -4417,10 +4417,10 @@ sign rule, and its other couplings are catalog entries.
   `launch`; `phase_plate`. No field of the electron is declared (a turning
   ray's transverse Links carry its own releases with it). The catalog is
   unchanged. `examples/nature/helium_orbit_axes.json`: the same without
-  `spread`, the control. The board is 15^3 and the radius 6 rather than E4's
-  41^3 and 8 because a spreading field keeps every Node of the board active
+  `spread`, the control. The GameBoard is 15^3 and the radius 6 rather than E4's
+  41^3 and 8 because a spreading field keeps every Node of the GameBoard active
   at about 2.5 ms per Node and interval (the parallel backend is slower), so
-  the smallest board around the orbit took about an hour for 152 ticks; the
+  the smallest GameBoard around the orbit took about an hour for 152 ticks; the
   dictionary, the computation and the readings are in the
   README,
   and `examples/nature/helium_orbit_table.py` prints the record tick by tick
@@ -4430,11 +4430,11 @@ sign rule, and its other couplings are catalog entries.
   exists at every radius, register P = k / r and period 8 r in the L1 metric
   (frequency 1 / (8 r)), and is a neutral equilibrium: a radial displacement
   grows as t^2 / (2 r^2) with nothing to restore it, since the speed is the
-  one speed of the board and the curvature k / (r^2 P) falls faster than 1 / r
+  one speed of the GameBoard and the curvature k / (r^2 P) falls faster than 1 / r
   as the electron drifts out (Kepler's stability comes from the speed falling
   as the body climbs). So no stable closed orbit exists at any radius; the
   push per interval that keeps the circle of radius 6 is m tan(pi / 24) = 34
-  for m = 256, T = 48. The exact mean field of the split table on this lattice
+  for m = 256, T = 48. The exact mean field of the split table on this GameBoard
   (a linear map the Node-owned remainders realize on average): the nucleus's
   sink takes back 1.014 A of the 6 A released per interval; the mean inward
   push on the 48 Nodes of the digital circle is 0.0241 A per interval, 2.2
@@ -4448,7 +4448,7 @@ sign rule, and its other couplings are catalog entries.
   content pushes it inward by 0.0177 A = 25 (computed after the control's
   record and before the orbit's). Expected before the run: circulation for a
   fraction of a period, then a fall or an escape, the fall the likelier sign.
-- **Shows.** Ticks 1 to 41: the field fills the board, a spread at 1757 of
+- **Shows.** Ticks 1 to 41: the field fills the GameBoard, a spread at 1757 of
   the 3375 Nodes by tick 12 and at every Node but the bodies' by tick 40,
   the sink's rate rising toward one sixth of the release as computed; the
   electron waits at the launcher.
@@ -4479,13 +4479,13 @@ sign rule, and its other couplings are catalog entries.
   no Link to show on and the path is axis runs with whole quarter turns; (ii)
   the transverse impulse a straight half-line gathers from the 1/r^2 flux is
   k / R, 214 here by the mean field against the register's 256, so the axis
-  never flips and the electron passes straight, on a board of any size; (iii)
+  never flips and the electron passes straight, on a GameBoard of any size; (iii)
   the neutral equilibrium of the computation. The engine on `main` gives the
   helium ion no circulating electron: a straight pass (this record) or an
   axis fall into E4's cage (the control). The mean field of the split table
   agrees with the record push by push (94 against 91, 35 against 34). The
   request of the model owner is answered as computed: a closed orbit at every
-  radius at register k / r, none stable, and on the lattice none while every
+  radius at register k / r, none stable, and on the GameBoard none while every
   interval carries a push; what to decide is stated in the README's limits
   (the accumulators kept through a push; the speed of a heavy register).
 - **Status.** measured on 2026-09-17, commit `6f357052b6c18ab186e67d0113a0c82ff8b5a99d`
@@ -4510,7 +4510,7 @@ sign rule, and its other couplings are catalog entries.
   (5, 13), (3, 12) to (0, 10), 23 pushed Links, distance 5.0 to 8.06 (L1 6
   to 11), the register (0, 256, 0) to (-174, -119, 0), and leaves through
   the x = 0 face at tick 64 with the far side of its path one Node outside
-  the board, so the record ends at the board's edge; the ledger exact at
+  the GameBoard, so the record ends at the GameBoard's edge; the ledger exact at
   every tick. And `helium_orbit_21.json`, the same world on 21 x 21 x 21
   with the nucleus at (10, 10, 10), the launch at (16, 10, 10) and 200
   ticks, initialization
@@ -4523,7 +4523,7 @@ sign rule, and its other couplings are catalog entries.
   the field delivers on the far side (about 50 over ten Links at distance
   7 to 11) far below the 256 a turn needs, as (ii) computed; so under v2
   the electron curves where the field is strong and goes straight where it
-  is weak, and no board size closes the orbit at this m, R and A.
+  is weak, and no GameBoard size closes the orbit at this m, R and A.
 
 ### E9. The screen with a loop source: the ring radiating on seven marks
 
@@ -4539,7 +4539,7 @@ sign rule, and its other couplings are catalog entries.
   ring of content 8 releases nothing at `[1, 4]`; this entry is the radiating
   ring E6's retirement asked for, written and pinned anew.
 - **Features.** 1, 2, 5, 6, 7, 9, 10, 12, 12b, 14.
-- **Run.** `examples/nature/screen_loop.json`: E6's board 12 x 11 x 11,
+- **Run.** `examples/nature/screen_loop.json`: E6's GameBoard 12 x 11 x 11,
   open, N = 8 (`phase_bits` 3), 240 ticks in the file (E6's registered
   length, no override); E6's seven marks at (7, 2, 5) through (7, 8, 5),
   setting [1, 1] (every arrival passes), at distance 6 along +X from the
@@ -4701,7 +4701,7 @@ sign rule, and its other couplings are catalog entries.
   whole quanta of 1), and the 378 passes, which the computation did not
   consider and which end the clicking at tick 72. The isolated test
   (`tests/test_screen_loop.py`, 32 ticks) pins the first seven clicks, the
-  light line and the group reading from the first run of its board
+  light line and the group reading from the first run of its GameBoard
   (expectations). The
   record stays outside the tree; nothing was tuned after the run.
 - **Repeated under `detector-absorb-v1` (2026-09-18).** Status: repeated on
@@ -4784,11 +4784,11 @@ sign rule, and its other couplings are catalog entries.
     (`node-is-ports-v1`), 18 (`lanes-v1`), on 1, 2, 5, 6, 9, 10, 14.
   - **Run.** `examples/nature/e9_law/` (`make_worlds.py`): E9's
     `screen_loop.json` migrated by `bit_law_migration.migrate` and declared
-    on the law: board 12 x 11 x 11, periodic (the model owner's decisions of
-    2026-09-18, Highlights 5.4: the board of a run is closed, PR #311, and
+    on the law: GameBoard 12 x 11 x 11, periodic (the model owner's decisions of
+    2026-09-18, Highlights 5.4: the GameBoard of a run is closed, PR #311, and
     only closed worlds are tested, PR #314, so the series carries no
-    open-board world), with a wall of marks over the plane x = 11 closing
-    the wrap in x, as A1's closed board has, so that the shadows leaving the
+    open-GameBoard world), with a wall of marks over the plane x = 11 closing
+    the wrap in x, as A1's closed GameBoard has, so that the shadows leaving the
     ring toward -X do not reach the screen from behind through the wrap
     (121 marks beside the screen's seven; what passes beside the screen's
     marks is returned by that wall toward -X, so the screen is reached from
@@ -4826,8 +4826,8 @@ sign rule, and its other couplings are catalog entries.
     `scan_fill.py` reads which fills the engine admits (`scan.json`);
     `analyze.py` reads the records (`record.json`). Measured first, earlier
     the same day, on the engine at `ffa4a56` (recorded below, not in the
-    series): the same three worlds on the open board and then on this
-    closed board, both refused by the ray slot budget.
+    series): the same three worlds on the open GameBoard and then on this
+    closed GameBoard, both refused by the ray slot budget.
   - **Result.** The three worlds complete their 240 ticks. The fills
     (`scan_fill.py`, 40 ticks asked of each, the clocked ring): 1 to 8 and
     16 all admitted and completed, 1,835,008 shadows at the start of the
@@ -4844,7 +4844,7 @@ sign rule, and its other couplings are catalog entries.
     The counts: 0 at every mark in every world over 240 ticks (no thing
     leaves the ring: the real line 262,144 at every tick, nothing
     converted, escaped or absorbed). The books, all three: nothing escaped
-    (the board is closed), nothing absorbed at home, nothing absorbed by
+    (the GameBoard is closed), nothing absorbed at home, nothing absorbed by
     the marks, the momentum line 0 throughout, every ledger line balanced,
     `conserved_at_every_completed_tick` and `real_conserved` true; the
     shadow line 7,864,320 (1,572,864 under the fill of 1) at the start and
@@ -4885,19 +4885,19 @@ sign rule, and its other couplings are catalog entries.
 
     Measured first, on the engine at `ffa4a56` (recorded, not in the
     series): the ray slot budget of a coupled layer (32 rays) refused the
-    ring with its shadow set, on the open board and on this closed board
+    ring with its shadow set, on the open GameBoard and on this closed GameBoard
     alike, row for row: fills 1 to 5 admitted and failed at a corner ("ray
     slot budget exceeded") at tick 5 under the fill of 1, tick 2 under 2
     and tick 1 from 3 on (at 24 slots tick 3, 1 and refused at the
     prefill), fill 6 refused by the prefill on the same budget, fills 7, 8
     and 16 refused as "the prefill cannot hold a third phase on one Port of
     a source"; the three worlds failed at 0, 0 and 4 completed ticks (2.8
-    to 2.9 s on the open board, 7.4 to 7.8 s on the closed one), 7,963,692
+    to 2.9 s on the open GameBoard, 7.4 to 7.8 s on the closed one), 7,963,692
     (open) and 8,126,464 (closed) quanta at the start of the fill-5 worlds;
-    the fill-1 record's four ticks: on the open board the shadow line
+    the fill-1 record's four ticks: on the open GameBoard the shadow line
     1,435,300 at tick 4 with 137,564 escaped through the open faces and 8
     quanta returned by (7, 5, 5) at tick 4 at phase 0 with the push
-    (8, 0, 0); on the closed board nothing escaped and nothing whole
+    (8, 0, 0); on the closed GameBoard nothing escaped and nothing whole
     returned before the failure; the counts 0 in every case.
   - **Reading.** What the engine gave, against the predictions. The counts:
     0 at every mark over 240 ticks in all three worlds, the settled rule
@@ -4915,16 +4915,16 @@ sign rule, and its other couplings are catalog entries.
     `rerelease_shadow`), and what arrived is at phases 0 and 32 only, the
     two phases the mixing makes of a phase-0 set (the half turn being the
     minus of point 24): the alternation is that of a real-valued shell
-    mixed on the lattice and reflected by the screen and the back wall, not
+    mixed on the GameBoard and reflected by the screen and the back wall, not
     the standing wave of a monochromatic field, which this engine cannot
     build by a fill. The fringes of the derivation (sections 29 and 30):
     not given, for that reason; the integer rule is not what limits it (the
     axis Node holds 10^4 to 10^5 quanta per tick). The effect of the clock:
     none, as read from the code before the runs. The books hold on the
-    closed board: nothing escapes, the field of the ring at rest circulates
-    (Highlights 5.4, "The board of a run is closed"). Nothing is registered
+    closed GameBoard: nothing escapes, the field of the ring at rest circulates
+    (Highlights 5.4, "The GameBoard of a run is closed"). Nothing is registered
     as a law.
-  - **Fingerprint.** The series (the closed board, the engine with the
+  - **Fingerprint.** The series (the closed GameBoard, the engine with the
     lanes): source
     `67808df765d4bdfce1103fef3152d82149bc013070534a8459acc3ffaca5a828`,
     the engine of `origin/main` at `204a513` merged into the lane;
@@ -4937,21 +4937,21 @@ sign rule, and its other couplings are catalog entries.
     `record.json` and `scan.json` beside the worlds hold the readings; the
     ray viewer's GIF of `ring_screen`. Measured first, at `ffa4a56` (source
     `6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc`):
-    the open board `ring_screen`
+    the open GameBoard `ring_screen`
     `09d27693188e5d8222f55f771c7481d0ffa93c96fb65bee06d4c64de0a5461c7`,
     `ring_screen_clock`
     `31c8ef78e33d4c5b5cca4c547b9008392c3193ae42832d980819141e8f4e730c`,
     `ring_screen_clock_fill1`
     `6d6f60fa05c0d5a245c154d0cd482bb54659b1db4105e4425aac14c61bb3b794`
     (those worlds declared the width as the family's `phase_bits` 6); the
-    closed board at `1a88785` (source
+    closed GameBoard at `1a88785` (source
     `051d716825c4785baffba01e46ea7348698fdfe82ca9ddc70eafab9871a49be5`)
     `4351f0ff34987b678d7cf6a1c4eed1d27effe88959e6b404ddd4ce56c0040df5`,
     `64c940104b8b69277bf07161f7e49fd28a9341aacfb9c3e77eeaad8409973918`,
     `545ce3c1314ec874427f02eb4687a68bb5458c87e2f1e5387739ec04372b789a`
     (those worlds carried `ray_slots` 32). The records stay outside the
     tree.
-  - **Status.** measured, 2026-09-18, on the closed board (only closed
+  - **Status.** measured, 2026-09-18, on the closed GameBoard (only closed
     worlds are tested, the model owner, 2026-09-18), on the engine with the
     lanes; outcome: the counts 0 at every mark over 240 ticks; the push
     read, the returned amount largest on the axis and J_x alternating in
@@ -4981,7 +4981,7 @@ sign rule, and its other couplings are catalog entries.
   z = 5, eight `electron` lamps, one of each sense at every corner, the Port
   form of the corner table) with E9's rays (amount 4, 8 or 16 per ray,
   content 32, 64 or 128, the catalog's rest rate 1, N = 8) on a
-  12 x 12 x 12 open board, no Detector, 96 ticks (twelve periods of the
+  12 x 12 x 12 open GameBoard, no Detector, 96 ticks (twelve periods of the
   rate-1 ring); `light` declared as in `screen_loop.json` (`field_of`
   electron, `release` [1, 4], `spread` [6, 1, 1, 1, 1, 1], rest rate 0,
   charge 0, 24 ray slots, its `source_sign` set by the engine), so a ray of
@@ -5207,7 +5207,7 @@ sign rule, and its other couplings are catalog entries.
   the dictionary and the tables in the
   README).
   (b) `point_source.json`: one external body of family `proton` (amount
-  2^20, charge +3) at (24, 24, 24) of a 49 × 49 × 49 open board, its
+  2^20, charge +3) at (24, 24, 24) of a 49 × 49 × 49 open GameBoard, its
   `light` `field_of` `proton` with `release` [1, 256], 4096 quanta per
   heading per interval, `spread` [6, 1, 1, 1, 1, 1], the source sign from
   the body's charge, `dense_field` true, no mark, no second body, no
@@ -5233,7 +5233,7 @@ sign rule, and its other couplings are catalog entries.
   expectation of the engine's integers) in the same box at the same tick
   and at the box's steady state. Ticks: the plan says 600 or until every
   shell's total stops changing to 1 % over 32 ticks; the dense engine costs
-  1.45 s per tick on this board (12 µs per Node and tick, the whole arrays
+  1.45 s per tick on this GameBoard (12 µs per Node and tick, the whole arrays
   every tick, measured before the run), so the budget of five minutes per
   world on the shared machine allows 192 ticks, six windows of 32, and the
   run is fixed at 192 with the criterion evaluated per shell and reported
@@ -5248,7 +5248,7 @@ sign rule, and its other couplings are catalog entries.
   totals from the region's arrays, checked against the inventory at the
   end (a Recorder, Highlights 3.29). (a) `books.json`: a body A of family
   `proton` (amount 2^20, charge +3) at (10, 10, 10) of a 21 × 21 × 21 open
-  board, its light with `release` [1, 4096], 256 per heading per interval,
+  GameBoard, its light with `release` [1, 4096], 256 per heading per interval,
   `spread` declared, `dense_field` true; one free `electron` ray of amount
   64 (charge −3, rest rate 1, no field of its own: nothing declares
   `field_of` `electron`) emitted by a lamp at (0, 14, 10) along +X, the
@@ -5318,11 +5318,11 @@ sign rule, and its other couplings are catalog entries.
   through (66, −55, 0) at tick 11 to (−126, −128, 0) at tick 17, and the
   electron swings round A (below) instead of passing it; 36 ticks were planned
   for a passing electron and are kept. (iv) The profile: Gauss on the
-  lattice is exact for the flux through every closed surface at the steady
+  GameBoard is exact for the flux through every closed surface at the steady
   state (A5s, computed after the run: the outflow through every cube equals
   S to 10^−7), so at the box's steady state the flux column must be the same
   number at every k inside the box and the transient's flux must fall with
-  k, the field still filling; the content per Node falls like the lattice
+  k, the field still filling; the content per Node falls like the GameBoard
   Laplacian's Green's function scaled by 3/8 far from the source and like
   the beam 4096 (6/11)^(k−1) near it; the radial momentum per Node, the
   net momentum of the arrivals J, is 11/8 of the Link current, so at the
@@ -5377,7 +5377,7 @@ sign rule, and its other couplings are catalog entries.
   8, 19446 / 18867 at 12, 17304 / 17405 at 16, 13788 / 14418 at 22, the
   release less the sink's take 20286 about the body; the mean field's steady
   flux is 20206.7 through every one of the 22 shells, L1 and Euclidean
-  alike, to one part in 10^8 (Gauss on the lattice), and the engine's
+  alike, to one part in 10^8 (Gauss on the GameBoard), and the engine's
   transient flux is within 0.3 % of S through k = 7, 96 % at k = 12, 86 %
   at k = 16, 68 % at k = 22, the integer crossings of one interval
   scattering by a few per cent about the mean field's from k ≈ 12 on. The
@@ -5526,15 +5526,15 @@ sign rule, and its other couplings are catalog entries.
   18, 16d, 16e, 16f and the cleanup on `main` at `1a88785`) with round 4 of
   [DERIVATIONS](DERIVATIONS.md#26-round-4-the-node-mixes-the-six-as-an-operator)
   (sections 26 to 33) and round 6 (section 39), on one thing at rest and its
-  field: the field is a standing set given with the board (points 11, 13, "A
+  field: the field is a standing set given with the GameBoard (points 11, 13, "A
   thing does not emit"), a shadow spreads by the Node's mixing (point 24),
   the return is a field (point 3), a thing reads the shadows' message by its
   content or its charge (point 16), there is one shadow set per thing and no
   field family (points 12, 18), a thing's clock is its content (point 19) and
   it pays a tick per whole quantum read (point 23). By the model owner's
-  decisions of the same day the board of a run is closed and only closed
-  worlds are tested (Highlights 5.4, "The board of a run is closed", PRs #311
-  and #314): the series is made on a periodic board, where every shadow
+  decisions of the same day the GameBoard of a run is closed and only closed
+  worlds are tested (Highlights 5.4, "The GameBoard of a run is closed", PRs #311
+  and #314): the series is made on a periodic GameBoard, where every shadow
   comes around and the field of a thing at rest is meant to be a steady
   circulation, read once settled. The predictions confronted, each answered
   below with its number: (i) no tubes, 89 % of a release off the coordinate
@@ -5548,12 +5548,12 @@ sign rule, and its other couplings are catalog entries.
   books per bit balanced at every interval (point 7); and, new, (vii) the
   amplitude a thing reads, 0.5373 sqrt(G M) / r, the potential's 1/r
   (section 39). Nothing is registered as a law; what came out is recorded.
-  The same evening, on this measurement (no fixed point on the closed board,
-  the push without a law) and on the A6 lane's escape on the open board, the
+  The same evening, on this measurement (no fixed point on the closed GameBoard,
+  the push without a law) and on the A6 lane's escape on the open GameBoard, the
   model owner reversed the rule the series was made under: a thing emits and
-  nothing is given with the board, a shadow is never made to disappear, and
-  the board of a run is open (Highlights 5.4, "A thing emits; nothing is
-  given with the board", PR #319, superseding "A thing does not emit" and
+  nothing is given with the GameBoard, a shadow is never made to disappear, and
+  the GameBoard of a run is open (Highlights 5.4, "A thing emits; nothing is
+  given with the GameBoard", PR #319, superseding "A thing does not emit" and
   "only closed worlds are tested" of the same day); the series is repeated
   after feature 19, which implements the emission. What is recorded here is
   the engine under the rule of the afternoon, as run.
@@ -5571,7 +5571,7 @@ sign rule, and its other couplings are catalog entries.
   `wait_per_quantum` 1, the dense mode, no `spread`, `steering`,
   `mass_field`, `seed` or `field_of` key. The thing at rest is an external
   body of the catalog's `proton` family, amount 2^28, whole charge 3 x 2^28,
-  at the centre of a 33^3 board; its shadow set is given with the board by
+  at the centre of a 33^3 GameBoard; its shadow set is given with the GameBoard by
   `initial_field` `{"fill": 12}` with `release` [1, 512]: 2^19 per Port
   heading per interval of the fill, 6 x 2^19 x 12 = 37748736 quanta (the
   fill is 12 because the prefill admits no longer one: at 13 a third phase
@@ -5583,7 +5583,7 @@ sign rule, and its other couplings are catalog entries.
   the residual at the last comparison): `standing_closed.json`, the body
   alone, the field read shell by shell per tick by `analyze.py` in-process
   (the dense layer publishes no per-Node event; the replay is checked
-  against the record tick by tick, the shadows on the board, the escapes,
+  against the record tick by tick, the shadows on the GameBoard, the escapes,
   the body's momentum and the books; on a probe world the replay also reads
   the momentum on the shadows from the layer's momentum cells and the
   engine's Nodes, since the runner's ledger line of the momentum field does
@@ -5629,7 +5629,7 @@ sign rule, and its other couplings are catalog entries.
   the fill's train start with slightly fewer shadows (37733842 at r = 4,
   37716989 at (110) m = 3, 37514574 at (111) m = 2, 37748734 at r = 8, the
   full 37748736 elsewhere); the books open with the counted content. Before
-  the decision that only closed worlds are tested, eight open-board worlds
+  the decision that only closed worlds are tested, eight open-GameBoard worlds
   of 40 ticks (`pulse`, one release of 2^19 per heading on 41^3; `standing`;
   the three axis and the three (110) probes) were recorded on `main` at
   `ffa4a56` (features 15 to 18 and 16d part 1); they stand outside the
@@ -5649,14 +5649,14 @@ sign rule, and its other couplings are catalog entries.
   *The standing set:* not reached. The runner's
   search found no fixed point and no cycle within 120 ticks in any of the
   ten worlds (the residual at the last comparison 46.6 to 47.0 M quanta
-  moved over 622 k to 953 k array cells, out of 37.7 M on the board): the
-  field of the thing at rest on the closed board is not a steady
-  circulation within 120 ticks but a train that circles the board. In
+  moved over 622 k to 953 k array cells, out of 37.7 M on the GameBoard): the
+  field of the thing at rest on the closed GameBoard is not a steady
+  circulation within 120 ticks but a train that circles the GameBoard. In
   `standing_closed` the train leaves the body (the L1 shell k = 4: 40312
   quanta per Node at t = 1, 9140 at t = 10, 1684 at t = 20, 294 at t = 40),
-  the board fills to a near-uniform haze by t = 40 to 60 (220 to 350 per
+  the GameBoard fills to a near-uniform haze by t = 40 to 60 (220 to 350 per
   Node at k = 4 to 16, 0.94 to 0.96 of the content off the coordinate
-  planes, 0.3 % parked), and the train comes around the periodic board and
+  planes, 0.3 % parked), and the train comes around the periodic GameBoard and
   reconverges at the body: the body's Node holds 395 quanta at t = 40,
   16429 at t = 80, 40922 at t = 84, 72786 at t = 92 and 44238 at t = 104,
   the k = 4 shell rises to 4390 per Node at t = 88, and the train leaves
@@ -5669,9 +5669,9 @@ sign rule, and its other couplings are catalog entries.
   0.87 at t = 20, 0.91 at t = 30, 0.94 at t = 40, 0.955 to 0.958 at t = 50
   to 60, 0.80 to 0.89 during the reconvergence (mean of the last twenty
   0.86), on the axes below 1 % from t = 5; the release measured earlier on
-  the open board (`pulse`) had 0.891 off the planes at t = 30 against the
+  the open GameBoard (`pulse`) had 0.891 off the planes at t = 30 against the
   derivation's 0.890. *(ii) The front at sqrt 3 r:* given, read on the open
-  board earlier (on the closed board the first passage is the same until the
+  GameBoard earlier (on the closed GameBoard the first passage is the same until the
   train reaches the boundary at about t = 28): the pulse's content at the
   read Nodes peaks at ticks 7, 16, 22 on (111) (sqrt 3 r = 6.0, 15.0, 21.0),
   9, 19, 29 on (110) (7.3, 14.7, 22.0) and 9, 29, 37 on the axis (6.9, 13.9,
@@ -5696,7 +5696,7 @@ sign rule, and its other couplings are catalog entries.
   that a clockless source has no far field is not contradicted, and its
   1/r^2 for a clocked source was not put to the test (no world of the series
   has a clocked source). *(iv) The wave above 256 quanta per Node:* given
-  where read. The wave came around the board and reconverged at the body
+  where read. The wave came around the GameBoard and reconverged at the body
   (above) with 220 to 3000 quanta per Node on the way, and the wave fraction
   |sum A|^2 / (3 n) at the free read Nodes is 0.77 to 1.67 over the last
   twenty ticks (a pure wave 1, standing content 0) and 0.9 to 2.8 at the
@@ -5729,7 +5729,7 @@ sign rule, and its other couplings are catalog entries.
   source's far field) was not put to the test. *Cost.* 479 s (`standing_closed`)
   and 550 to 1016 s per probe world, four at a time, 2.5 GB peak each; the
   replays 182 to 569 s.
-- **Result (the open board, measured earlier, outside the series).** Eight
+- **Result (the open GameBoard, measured earlier, outside the series).** Eight
   worlds on `main` at `ffa4a56`, 40 ticks: the books balanced at every tick;
   the set falls from 37748736 to 19372497 by tick 40 (18376239 escaped); the
   cumulative radial push at tick 40 on the axis 115328, 17204, 6572 (slope
@@ -5739,9 +5739,9 @@ sign rule, and its other couplings are catalog entries.
   (111)) and the axis reads 0.10 of (111) at r = 8; the recoil home by tick
   40: 1.4 % at r = 4, 3.5 % and 0.8 % at (110) r = 4.24 and 8.49, nothing at
   r >= 8 on the axis; the (111) probes were never run.
-- **Reading.** On the closed board the engine gives, within 120 ticks, no
+- **Reading.** On the closed GameBoard the engine gives, within 120 ticks, no
   standing set and no steady circulation: the prefilled field of a thing at
-  rest is a wave train that circles the periodic board at about 1 / sqrt 3
+  rest is a wave train that circles the periodic GameBoard at about 1 / sqrt 3
   Link per interval, thins to a haze and reconverges at its owner once per
   round trip, and the search for a fixed point or a cycle finds none. What a
   test thing at rest reads is that train, outward and then inward, with the
@@ -5768,7 +5768,7 @@ sign rule, and its other couplings are catalog entries.
   worlds the files beside them at this commit less the family key
   `ray_slots`, which `main` retired with the lanes after the runs (PR #315)
   and the engine now refuses: the shipped worlds drop it, their textual
-  fingerprint changing and their physics not. The open board, earlier:
+  fingerprint changing and their physics not. The open GameBoard, earlier:
   source `6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc`
   (`main` at `ffa4a56`), `records/{pulse,standing,probe_axis_*,probe_110_*}.json.gz`,
   whose worlds carried the per-family `phase_bits` 6 that the migration to
@@ -5776,7 +5776,7 @@ sign rule, and its other couplings are catalog entries.
 - **Status.** measured on 2026-09-18 for the ten closed worlds at the
   fingerprint above (and, earlier the same day, for eight open worlds at
   theirs); recorded here; superseded the same evening by the model owner's
-  decision that a thing emits and the board is open (PR #319): to be
+  decision that a thing emits and the GameBoard is open (PR #319): to be
   repeated after feature 19. Nothing is registered as a law.
 
 ### E12. The screen without a draw: a counter against a drawn mark, and interference in counts
@@ -5806,7 +5806,7 @@ sign rule, and its other couplings are catalog entries.
   of E5 with rays of amount 4, content 32, at the catalog's rate 1 on the
   unit square P0 = (1,5,5), P1 = (2,5,5), P2 = (2,5,6), P3 = (1,5,6) in the
   plane y = 5, `light` `field_of` electron with `release` [1, 4] and `spread`
-  [6, 1, 1, 1, 1, 1], N = 8, seven marks at (7, 2, 5) to (7, 8, 5), board
+  [6, 1, 1, 1, 1, 1], N = 8, seven marks at (7, 2, 5) to (7, 8, 5), GameBoard
   12 x 11 x 11 open, 240 ticks) with the marks at setting [1, 1]
   (`screen_d1`, a counter), [1, 2] (`screen_d2`) and [1, 4] (`screen_d4`, a
   draw per arrival, the refused quanta returned on their lines), and the
@@ -5819,7 +5819,7 @@ sign rule, and its other couplings are catalog entries.
   `light` family (`field_of` proton, `release` [1, 4]: 64 quanta per heading
   per interval each, `spread` [6, 1, 1, 1, 1, 1], N = 8, `source_sign` +1
   set by the engine from the charge), on a line of fifteen counters at
-  (12, y, 4), y = 1 to 15, board 16 x 17 x 9 open (the plan's y = 0 to 14
+  (12, y, 4), y = 1 to 15, GameBoard 16 x 17 x 9 open (the plan's y = 0 to 14
   shifted by one, so that the world is symmetric under y -> 16 - y and no
   mark lies on a face); `two_inphase` (both bodies at phase 0) and
   `two_antiphase` (the second at phase 4, half the circle), 240 ticks in the
@@ -5832,7 +5832,7 @@ sign rule, and its other couplings are catalog entries.
   `[light, light]` (the table [8, 7, 4, 1, 0, 1, 4, 7] between +Y and -Y),
   96 ticks in the engine, since the dense mode does not admit a coupling on
   field rays and the engine costs about 1.3 s per tick once the field fills
-  this board (62 s for a 48-tick probe made before the runs), read against
+  this GameBoard (62 s for a 48-tick probe made before the runs), read against
   the plain worlds' first 96 ticks. Recorded per world: `run.json`,
   `events.jsonl`; for `screen_d1`, `screen_d1_rerun`, `screen_d2`,
   `screen_d4`, the two `_e96` worlds and the two steering worlds the
@@ -5846,7 +5846,7 @@ sign rule, and its other couplings are catalog entries.
 - **Computed (before the run).** (i) The mean field, `mean_field.py`: the
   split table as the linear map it is on average (A5s Run 2 measured the
   engine's integers against it to a part in a thousand at 4096 per heading),
-  stepped on E9's open board with the ring's four corners releasing per
+  stepped on E9's open GameBoard with the ring's four corners releasing per
   interval from the cycle of tick 1 what E9's README computes (P1 sends 2 on
   +X along the axis, 1 on -X and +Z along the edges, 2 on the other three;
   the corners ordinary Nodes for light, spreading what reaches them), the
@@ -5918,7 +5918,7 @@ sign rule, and its other couplings are catalog entries.
   infinite, and the only phase difference on the screen is the declared
   one, 0 in phase and 4 in antiphase, at every mark; the path differences
   are in `predictions.json` for the record (Euclidean 0 at y = 8 to 4.16
-  Links at the ends, lattice 0 to 8), and no alternation of the counts
+  Links at the ends, GameBoard 0 to 8), and no alternation of the counts
   along y can come from the geometry in either world. Under the coupling:
   the layers become `[["light"], ["proton"]]` with a rule in light's layer
   (the body's family has no rays and no rule), so the sources' own light
@@ -6133,7 +6133,7 @@ sign rule, and its other couplings are catalog entries.
   the couplings `quark_binding` and `gluon_gluon_binding` as declared tables
   (catalog work after feature 10, hypothesis 13).
 - **Run.** Two quark rays of declared colours at a declared separation on a
-  small open board, their gluon field released and spreading by its family's
+  small open GameBoard, their gluon field released and spreading by its family's
   table, the field-to-field table declared before the run; the content held
   between them read against the separation d = 2, 4, 8 and 16 Links; the
   pull, one quark stepped away one Link per k intervals until the held
@@ -6153,7 +6153,7 @@ sign rule, and its other couplings are catalog entries.
 ### E13. A shared physical detector retains incoming phase
 
 - **Scope and authority.** The model owner's detector implementation and small
-  board request, 2026-09-19; issue #342. The opt-in
+  GameBoard request, 2026-09-19; issue #342. The opt-in
   [reversible-detector-v1 contract](DETECTOR_REQUIREMENTS.md) supplies the
   local contact and finite physical pointer. This is a demonstration of that
   candidate, separate from the historical ray-event catalog features above.
@@ -6181,7 +6181,7 @@ sign rule, and its other couplings are catalog entries.
 
 - **Scope and authority.** The model owner's approved periodic axes and
   separate entity definitions, 2026-09-19. The published
-  [topology](ENGINE.md#per-axis-board-topology-2026-09-19-implementation-amendment)
+  [topology](ENGINE.md#per-axis-gameboard-topology-2026-09-19-implementation-amendment)
   and [loading contract](ENTITY_DEFINITIONS.md) compose the existing detector
   candidate; they do not introduce an absorption or energy law.
 - **Frozen setup.** `examples/events/detector/periodic_z_node.json` loads

@@ -21,7 +21,7 @@ docs/TEST_EXPECTATIONS.md ("The one reading"), written down first:
     (15, 0, 2) and the tensor [[44, -3, 18], [-3, -19, 6], [18, 6, -25]]
     (3 x the second moment [[27, -1, 6], [-1, 6, 2], [6, 2, 4]] less its
     trace 37), traceless; under each of the 48 signed axis permutations R of
-    the board the scalars are fixed, the flow is R x flow and the tensor
+    the GameBoard the scalars are fixed, the flow is R x flow and the tensor
     R T R^T (the moments are covariant, on the fan as on the headings); the
     shortest reading, one unit on one heading e, reads outside 1, here 0,
     the flow e and the tensor 3 e e^T - I; the keyed form over Nodes equals
@@ -49,17 +49,17 @@ docs/TEST_EXPECTATIONS.md ("The one reading"), written down first:
     pass with a `pass` record each (`threshold` 3); at threshold 1 with the
     window 32, the two rays at phase 0 pass (`window` 32) and the ray at
     phase 32 clicks: the window reads the record, ray by ray;
-(e) the dense readings of the board, decomposed on request from the rows
+(e) the dense readings of the GameBoard, decomposed on request from the rows
     of the walk for the active Nodes only (added 2026-09-19): on the open
-    9 x 3 x 3 board with no measured event, 9 units arriving at (4, 1, 1)
+    9 x 3 x 3 GameBoard with no measured event, 9 units arriving at (4, 1, 1)
     on +X and 9 on -X, 3 arriving at (2, 1, 1) on +Y and 2 at rest at
     (6, 1, 1), after one interval the count is 18, 3 and 0 at those Nodes
-    (21 over the board), the flow (0, 0, 0), (0, 192, 0) (3 x 64 on the
+    (21 over the GameBoard), the flow (0, 0, 0), (0, 192, 0) (3 x 64 on the
     unit vector of +Y) and (0, 0, 0), the presence 18, 3 and 2 (23 over
-    the board), the Links crossed per Port
+    the GameBoard), the Links crossed per Port
     (9, 9, 0, 0, 0, 0) at (4, 1, 1) and (0, 0, 3, 0, 0, 0) at (2, 1, 1)
-    (21 over the board); before the first interval, and on an empty
-    board, every array is zero with its shape.
+    (21 over the GameBoard); before the first interval, and on an empty
+    GameBoard, every array is zero with its shape.
 """
 
 from __future__ import annotations
@@ -69,8 +69,8 @@ import itertools
 import numpy as np
 import pytest
 
+from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.core.integer import by_clock
-from event_universe.core.lattice import PORT_HEADINGS
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import read_arrivals
 from event_universe.events.world import MOMENTUM_BOUND
@@ -125,7 +125,7 @@ def assert_slot_decomposition(slots: np.ndarray) -> None:
     assert not (tensor - np.diag(np.diag(tensor))).any()
 
 
-def test_the_moments_equal_the_slot_decomposition_and_respect_the_board_symmetries():
+def test_the_moments_equal_the_slot_decomposition_and_respect_the_game_board_symmetries():
     """(a)."""
     slots = np.array([3, 1, 4, 1, 5, 9, 2], dtype=np.int64)
     reading = read_arrivals(SLOT_VECTORS, slots)

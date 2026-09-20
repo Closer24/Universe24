@@ -1,7 +1,7 @@
 """The Hubble readings tool reads the engine's own functions (the
 experimenter skill: a readings tool reads the engine, never replays a rule
 of it). Each reading of `tools/hubble_readings.py` is checked against the
-engine on a minimal board; the expected values of docs/TEST_EXPECTATIONS.md
+engine on a minimal GameBoard; the expected values of docs/TEST_EXPECTATIONS.md
 ("The tools read the engine"), written down first:
 
 (a) the ray's speed and the distance off the flight table: on a heading
@@ -38,8 +38,8 @@ from pathlib import Path
 
 import numpy as np
 
+from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.core.integer import by_clock
-from event_universe.core.lattice import PORT_HEADINGS
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import flight_table
 from event_universe.events.run import execute_nature_beam_run

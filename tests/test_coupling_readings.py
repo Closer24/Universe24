@@ -3,7 +3,7 @@
 of the engine, a second owner; `tools/coupling_readings.py` now reads
 `engine.by_clock`, `nature_beam.flight_table` with its `manhattan_steps`,
 `nature_beam.unit_label`, `world.LABEL_SCALE` and the parsed world). Each
-reading of the tool is checked against the engine on a minimal board; the
+reading of the tool is checked against the engine on a minimal GameBoard; the
 expected integers of docs/TEST_EXPECTATIONS.md ("The tools read the
 engine"), written down first:
 
@@ -16,7 +16,7 @@ engine"), written down first:
     unit's label) steps by the tool's rule at the ticks 2, 4, 6, 8, 10 on x
     at width 1 and at 4, 8 at width 3; pushed by (64, 64, 0) at the ticks
     2, 4, 6, 8, 10 on x alone (x before y, at most one Link per interval);
-    on the board a free measured event of content 1 with that declared
+    on the GameBoard a free measured event of content 1 with that declared
     momentum makes the same `step` records (tick, axis), width by width;
 (c) the release: `RELEASE_PER_HEADING` = by_clock(0, 2^24, 128) = 131072
     and q = 6 x 131072 = 786432; a source of 2^24 on the six headings at
@@ -89,7 +89,7 @@ def test_the_front_is_the_flight_tables_first_arrival_as_the_engine_walks_it():
 
 def engine_steps(momentum: list[int], width: int) -> list[tuple[int, int]]:
     """The (tick, axis) of the `step` records of a free measured event of
-    content 1 at (2, 1, 0) of an open 20 x 3 x 1 board with the declared
+    content 1 at (2, 1, 0) of an open 20 x 3 x 1 GameBoard with the declared
     momentum, over ten intervals at the world's `width`."""
     records: list[dict[str, object]] = []
     probe = {"position": [2, 1, 0], "family": "m", "amount": 1, "momentum": momentum}

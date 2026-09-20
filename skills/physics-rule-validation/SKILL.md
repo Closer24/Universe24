@@ -23,7 +23,7 @@ means incomplete or blocked; do not fill the gap with an assumed pass.
 For physics comparisons, follow the shared
 [physics comparison method](../workflow.md#physics-comparison-method).
 Own the primary physical reference, its regime and uncertainty, and the mapping
-from measured Detector observables to the board. Coordinate invariant/bound proofs
+from measured Detector observables to the GameBoard. Coordinate invariant/bound proofs
 with the [mathematician](../mathematical-validation/SKILL.md); keep supplied
 reference laws, analytic checks and empirical agreement distinct.
 
@@ -39,7 +39,7 @@ are what detectors read, and the review never asks the GameBoard to carry
 their forms. A change is admissible when it is generic, local, bounded and
 formula-free on the GameBoard; whether nature's laws then appear is decided
 by detector readings under the [experimenter](../experimenter/SKILL.md),
-never by a formula placed on the board.
+never by a formula placed on the GameBoard.
 
 ## Always start from event spacetime
 

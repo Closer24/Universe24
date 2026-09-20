@@ -174,7 +174,7 @@ def test_missing_context_io_and_symlink_escape_are_distinct(tmp_path):
         (lambda world: world.pop("entities"), "together"),
         (lambda world: world.update(entities=[]), "at least one placement"),
         (lambda world: world["entities"][0].update(position=[True, 0, 0]), "three-integer"),
-        (lambda world: world["entities"][0].update(position=[7, 4, 0]), "outside the board"),
+        (lambda world: world["entities"][0].update(position=[7, 4, 0]), "outside the GameBoard"),
         (lambda world: world["entities"][0].update(definition="missing"), "unknown definition"),
         (lambda world: world["entities"].append(deepcopy(world["entities"][0])), "duplicate instance"),
         (

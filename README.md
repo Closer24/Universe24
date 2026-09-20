@@ -26,7 +26,7 @@ English-only repository language rule. The active implementation lives in
 `src/event_universe/`; [Boss and specialist skills](skills/boss-orchestrator/SKILL.md)
 define coordinated work and independent checks.
 
-A run is a **world file**: a JSON object with `"law": "rays"`, the board's
+A run is a **world file**: a JSON object with `"law": "rays"`, the GameBoard's
 shape and boundary, the clock K and the phase width N, the release rate and
 the suspension, the declared directions, the families (free, matter; paid,
 light), the measured events at the start with their tables and directions
@@ -90,8 +90,8 @@ python -m event_universe.configuration_validation examples/events/one_content.js
 
 The world file is required. It supplies `ticks`; `--ticks` can override the
 duration. Missing input is an error, not a request to load a built-in universe.
-The board is open (`"boundary": "open"`): what leaves is booked as escaped, with
-the momentum it carried; a closed board is refused. An axis may be declared
+The GameBoard is open (`"boundary": "open"`): what leaves is booked as escaped, with
+the momentum it carried; a closed GameBoard is refused. An axis may be declared
 periodic (`"boundary": {"z": "periodic"}`): its departures wrap to the opposite
 face and nothing escapes on that axis. Run several worlds one
 process per core with `tools/run_series.py`.
@@ -162,7 +162,7 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/events/engine.py` | The frame around the law: the clocks, the owed count off the clock, the steps by the momentum, the books, the readings, the inverse interval, the snapshot; it computes no physics |
 | `src/event_universe/events/run.py` | The artifacts of a run: the input, the events, the state, the record |
 | `src/event_universe/core/integer.py` | Shared bounded integer primitives |
-| `src/event_universe/core/lattice.py` | The board's addresses, the six Port headings and the bound of a declared charge and quantum |
+| `src/event_universe/core/game_board.py` | The GameBoard's addresses, the six Port headings and the bound of a declared charge and quantum |
 | `src/event_universe/core/phase.py` | The phase circle's cosine and sine tables in bounded integers |
 | `src/event_universe/runner.py` | `python -m event_universe`: a world file to headless artifacts |
 | `src/event_universe/configuration_validation.py` | Read-only preflight of a world file |
@@ -174,10 +174,10 @@ active contracts, explicit experiments and revision-specific evidence.
 | `tools/migrate_nature_beam_worlds.py` | A NatureBeam world rewritten to the form of 2026-09-19: `quantum` in place of `kind`, only the table entries that differ from the default |
 | `tools/check.py` | The affected-check: changed files and their consumers; `--full` for everything |
 | `examples/events/` | The worlds of the law of the ray: one content, two contents, two slits with a detector and the one-slit control; the Bell worlds, the coupling, orbit, redshift and Hubble series and the detector definitions |
-| `tests/` | One module per generic rule on a minimal board (the one reading, the flight, the collision table, the bijection, the detector's record, the re-emission, the clock, the phase window, the world file, the worlds, the preflight, the decoder, retention, the repository gates) |
+| `tests/` | One module per generic rule on a minimal GameBoard (the one reading, the flight, the collision table, the bijection, the detector's record, the re-emission, the clock, the phase window, the world file, the worlds, the preflight, the decoder, retention, the repository gates) |
 | `docs/HIGHLIGHTS.md` | The specification, edited by the model owner |
 | `docs/RAY_LAW.md` | The law of the ray: the design, the implementation contract and the implementation notes |
-| `docs/ENGINE.md` | The bookkeeping around the law as implemented: the board, the frame of an interval, the books, the world file's refusals, the record, the preflight |
+| `docs/ENGINE.md` | The bookkeeping around the law as implemented: the GameBoard, the frame of an interval, the books, the world file's refusals, the record, the preflight |
 | `docs/DERIVATIONS.md`, `docs/EXPERIMENTS.md` | The derivations of the known laws, and the research runs with their records |
 | `POSTULATES.md`, `SIMULATOR_DEFINITIONS.md` | Shared principles and scoped candidate requirements |
 | `docs/ARCHITECTURE.md` | Ownership and dependency boundaries |

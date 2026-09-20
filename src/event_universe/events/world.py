@@ -28,15 +28,15 @@ the model owner, 2026-09-19):
   negative width is refused; `age_bound`, the largest age a ray may carry
   (an integer from 1; the age is the count of intervals since the measured
   event that created the ray, kept whole on the record since 2026-09-20 so
-  that a measured event may read it; RAY_LAW section 2): on a board with an
+  that a measured event may read it; RAY_LAW section 2): on a GameBoard with an
   open axis it is by default twice the flight bound, the age at which every
-  straight ray has left a board of that diameter (`flight_bound`); on a
-  board periodic on every axis, which no ray leaves, it is required and
+  straight ray has left a GameBoard of that diameter (`flight_bound`); on a
+  GameBoard periodic on every axis, which no ray leaves, it is required and
   refused if absent; a declared ray's `age` must not exceed it, and a run
-  in which a ray on the board carries an age beyond it is refused;
+  in which a ray on the GameBoard carries an age beyond it is refused;
   `action`, optional: h, the quantum of action of the turn by momentum (an
   integer from 1, in label units times Links; the model owner's decision
-  of 2026-09-20 on Bohr, "put it as parameters outside the board like the
+  of 2026-09-20 on Bohr, "put it as parameters outside the GameBoard like the
   age"; RAY_LAW section 10, note 30): a measured event that declares
   `phase_by_momentum` turns its phase, at every Link it steps on an axis
   whose momentum component is p, so that after k Links stepped on that
@@ -86,7 +86,7 @@ the model owner, 2026-09-19):
   face the whole body clicks on the face detector, on a periodic axis it
   wraps, no collision acts at any of its Nodes, its releases are
   apportioned whole over its Nodes; a span must fit the axis and the body
-  must lie inside the board on an open axis), `phase_by_momentum` (true:
+  must lie inside the GameBoard on an open axis), `phase_by_momentum` (true:
   the body turns its phase by its momentum label at every Link it steps,
   over the world's `action`; false by default; refused without `action`,
   on a `fixed` measured event, which never steps, and on a family without
@@ -115,9 +115,9 @@ the model owner, 2026-09-19):
   the response's record carries, `scalar` (the presence), `outside`, `here`,
   `vector` (the net flow), `tensor` (the traceless part) or `age` (the age
   moment, sum amount x age over the set: a reading aid of the measured
-  event, the external thing, since 2026-09-20; the board's rules never read
+  event, the external thing, since 2026-09-20; the GameBoard's rules never read
   the age whole); `vector` by default on `read`, `scalar` otherwise. No
-  rule of the board changes with it: every coupling reads the one reading,
+  rule of the GameBoard changes with it: every coupling reads the one reading,
   the moments of the arrivals (`nature_beam.read_arrivals`); the one thing
   the key selects beside the record is what the clock counts
   (`measured.count_component`): the age moment on an entry that reads
@@ -126,7 +126,7 @@ the model owner, 2026-09-19):
   `family`, `number` (the measured event whose continuation it is),
   `direction` (a vector of the world's table or its index), `amount`,
   `phase` and optionally `age` (0 through `age_bound`), booked as initial
-  content of the transit line; the default is an empty board that the
+  content of the transit line; the default is an empty GameBoard that the
   releases fill;
 - `detectors`, optional: named sets of measured events, each with a `name`,
   its `positions` (the `position` of a measured event each, a body on a
@@ -135,7 +135,7 @@ the model owner, 2026-09-19):
   at the detector's Nodes in one interval, summed over the whole set and
   over every number but each Node's own; a smaller set passes; and its
   `reading`, `"wave"` (the default since 2026-09-20; the model owner: "on
-  the board a ray, in the world a wave") or `"beam"` (the model owner,
+  the GameBoard a ray, in the world a wave") or `"beam"` (the model owner,
   2026-09-19): a detector is a set of Nodes with ONE record (a click says
   "here, in one of these" and not which; the declared width is the
   position's uncertainty). Under `wave` the record is the square of the
@@ -162,10 +162,10 @@ model owner's decision of 2026-09-19 on the physics-rule reviewer's
 verdict, [RAY_LAW section 2](../../../docs/RAY_LAW.md), so every declared
 `momentum` and every momentum of the record is in label units, Q per unit
 of amount along a heading), `phase_per_link` outside 0 .. N - 1, `age_bound`
-below 1 or absent on a board periodic on every axis, a declared `age`
+below 1 or absent on a GameBoard periodic on every axis, a declared `age`
 beyond it, `action` below 1 or not an integer, a `span` that is not three
 odd integers from 1 or larger than its axis, a body whose Nodes leave the
-board on an open axis, two measured events sharing a Node, a detector
+GameBoard on an open axis, two measured events sharing a Node, a detector
 naming a Node of a body that is not its `position`, `phase_by_momentum`
 without `action`, on a `fixed` measured event or on a family without a
 phase circle, and a turning body whose product `ticks x |p| x N` (the
@@ -177,8 +177,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from event_universe.core.game_board import MAX_VALUE, PORT_HEADINGS, Address3
 from event_universe.core.integer import bounded_gcd, integer_root
-from event_universe.core.lattice import MAX_VALUE, PORT_HEADINGS, Address3
 
 RAYS_LAW = "rays-v1"
 LAW_VALUE = "rays"
@@ -297,16 +297,16 @@ TABLE_ENTRY_KEYS = {"rule", "phase_window", "reads"}
 TRANSIT_KEYS = {"position", "family", "number", "direction", "amount", "phase", "age"}
 DETECTOR_KEYS = {"name", "positions", "threshold", "reading"}
 # The readings a detector may declare; the first is the default: `wave`
-# since 2026-09-20 (the model owner: "on the board a ray, in the world a
+# since 2026-09-20 (the model owner: "on the GameBoard a ray, in the world a
 # wave"; `beam` was the default from 2026-09-19 to 2026-09-20).
 DETECTOR_READINGS = ("wave", "beam")
 # The keys of the deleted `reversible-detector-v1`, refused by name.
 REVERSIBLE_KEYS = ("port_map", "output", "capacity", "groups", "reference_phase")
-# The face detectors, one per open face of the board, named by the face in
+# The face detectors, one per open face of the GameBoard, named by the face in
 # Port order (an open face is a detector, the model owner, 2026-09-19); a
 # declared detector may not take one of these names.
 FACE_NAMES = ("face:+x", "face:-x", "face:+y", "face:-y", "face:+z", "face:-z")
-# The board's faces per axis: open (the default) or periodic (the wrap).
+# The GameBoard's faces per axis: open (the default) or periodic (the wrap).
 AXES = ("x", "y", "z")
 BOUNDARIES = ("open", "periodic")
 
@@ -468,7 +468,7 @@ class NatureBeamWorld:
 
     @property
     def boundary_per_axis(self) -> dict[str, str]:
-        """The board's faces per axis, `x`, `y`, `z` to `open` or `periodic`."""
+        """The GameBoard's faces per axis, `x`, `y`, `z` to `open` or `periodic`."""
         return {
             axis: BOUNDARIES[1] if wraps else BOUNDARIES[0]
             for axis, wraps in zip(AXES, self.periodic, strict=True)
@@ -626,8 +626,8 @@ def _directions(value: object, label: str, table: tuple[Vector, ...]) -> tuple[i
 
 
 def flight_bound(shape: Address3, table: tuple[Vector, ...]) -> int:
-    """The age at which every straight ray has left an open board of this
-    shape: the longest Manhattan flight on the board is D = X + Y + Z - 2
+    """The age at which every straight ray has left an open GameBoard of this
+    shape: the longest Manhattan flight on the GameBoard is D = X + Y + Z - 2
     Links (inside and out), a ray of direction v makes S_1 = |a| + |b| + |c|
     steps per period of its line and the least tau with m(tau) >= M steps
     is at most ceil(M x T_d / (S_1 Q)) (RAY_LAW section 3), so the exiting
@@ -658,7 +658,7 @@ def body_nodes(
     the offsets -(s - 1) / 2 .. (s - 1) / 2 per axis), in the fixed order
     of the offsets (x, then y, then z, ascending; the order the releases
     are apportioned in). On a periodic axis an offset wraps; on an open
-    axis a Node beyond the face means the body has left the board and the
+    axis a Node beyond the face means the body has left the GameBoard and the
     result is None (the whole body clicks on the face detector). A span
     of (1, 1, 1) is the one Node `position`."""
     axes: list[list[int]] = []
@@ -694,14 +694,14 @@ def _age_bound(
     value: object, shape: Address3, periodic: tuple[bool, bool, bool], table: tuple[Vector, ...]
 ) -> int:
     """The largest age a ray may carry: declared, or twice the flight bound
-    on a board with an open axis (the slack of one collision or one wrap of
-    a periodic axis), required on a board periodic on every axis, which no
+    on a GameBoard with an open axis (the slack of one collision or one wrap of
+    a periodic axis), required on a GameBoard periodic on every axis, which no
     ray leaves."""
     if value is not None:
         return _integer(value, "age_bound", 1)
     if all(periodic):
         raise ValueError(
-            f"{RAYS_LAW}: age_bound is required on a board periodic on every axis: no ray "
+            f"{RAYS_LAW}: age_bound is required on a GameBoard periodic on every axis: no ray "
             "leaves it, so the largest age a ray may carry (the bound of the store) must be "
             "declared"
         )
@@ -709,10 +709,10 @@ def _age_bound(
 
 
 def _boundary(value: object) -> tuple[str | dict[str, str], tuple[bool, bool, bool]]:
-    """The board's faces: `"open"` on every face, or an object with any of
+    """The GameBoard's faces: `"open"` on every face, or an object with any of
     the keys `x`, `y`, `z`, each `"open"` or `"periodic"`, the missing axes
     open. Returns the value as declared (what the record carries) and, per
-    axis, whether the walk wraps. A closed board and every other word are
+    axis, whether the walk wraps. A closed GameBoard and every other word are
     refused."""
     if value == BOUNDARIES[0]:
         return BOUNDARIES[0], (False, False, False)
@@ -725,9 +725,9 @@ def _boundary(value: object) -> tuple[str | dict[str, str], tuple[bool, bool, bo
         wraps = tuple(declared.get(axis, BOUNDARIES[0]) == BOUNDARIES[1] for axis in AXES)
         return declared, (wraps[0], wraps[1], wraps[2])
     raise ValueError(
-        f"{RAYS_LAW}: the board is open (its edge is infinity) unless an axis is declared "
+        f"{RAYS_LAW}: the GameBoard is open (its edge is infinity) unless an axis is declared "
         'periodic (boundary "open" or an object of "x", "y", "z" to "open" or "periodic"); '
-        "a closed board is refused"
+        "a closed GameBoard is refused"
     )
 
 
@@ -893,7 +893,7 @@ def _measured(
         if nodes is None:
             raise ValueError(
                 f"{RAYS_LAW}: {label}: a body of span {list(span)} centred on {list(position)} "
-                "leaves the board through an open face"
+                "leaves the GameBoard through an open face"
             )
         shared = [node for node in nodes if node in occupied]
         if shared:
@@ -1084,7 +1084,7 @@ def _detectors(
         if name in FACE_NAMES:
             raise ValueError(
                 f"{RAYS_LAW}: {label}.name {name!r} is the name of a face detector (an open face "
-                "of the board is a detector of that name; declare another)"
+                "of the GameBoard is a detector of that name; declare another)"
             )
         positions_value = obj["positions"]
         if not isinstance(positions_value, list) or not positions_value:

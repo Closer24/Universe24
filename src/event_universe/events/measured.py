@@ -7,8 +7,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from event_universe.core.game_board import Address3
 from event_universe.core.integer import bounded_gcd
-from event_universe.core.lattice import Address3
 from event_universe.events.world import AGE_READS
 
 RULES = ("home", "read", "measure", "rerelease")
@@ -26,9 +26,9 @@ def count_component(reads: str) -> str:
     on an entry that reads `age`, the presence (`scalar`) on every other
     entry, whose key names only what its record carries. A reading aid of
     the measured event, the external thing (the model owner, 2026-09-19,
-    "it must be checked in the detector and not on the board"): it only
+    "it must be checked in the detector and not on the GameBoard"): it only
     helps the detector's computation of its count and changes nothing of
-    the board; the board's rules (the flight, the collision) never read the
+    the GameBoard; the GameBoard's rules (the flight, the collision) never read the
     age whole."""
     return AGE_READS if reads == AGE_READS else PRESENCE_READS
 

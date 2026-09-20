@@ -24,7 +24,7 @@ below is in label units.
     to the direction `age mod 3` = 0, the first), the push (256, 0, 0), the
     recoil (-230, -74, 0), the momentum (26, -74, 0);
 (b) the face click: a ray of amount 1, phase 5, content 1 at (2, 0, 0) on
-    +X of a 3 x 1 x 1 bar steps off the board at the first interval: one
+    +X of a 3 x 1 x 1 bar steps off the GameBoard at the first interval: one
     `click` on `face:+x` (tick 1, Node (2, 0, 0), `measured` None, number
     1, amount 1, phase 5, momentum (64, 0, 0), content 1), the escaped
     amount 1, the face's record 32^2 x (C[5]^2 + S[5]^2), the books'

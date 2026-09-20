@@ -10,19 +10,19 @@ table, a bijection; the interference is the squared record a detector reads
 of a crowd of rays and lives nowhere else; the click is the only one-way
 border. The law is ONE generic
 function (the owner's name): `nature_beam` performs the interval's steps in
-order, each a bijection on the board's state except the border:
+order, each a bijection on the GameBoard's state except the border:
 
 1. the walk: every ray whose flight table steps this interval is created at
    the neighbour along its step (the wrap on a periodic axis; through an
    open face it clicks on the face detector), its age advanced by one (the
    age is the count of intervals since the measured event that created the
    ray, kept whole on the record since 2026-09-20; the flight reads it
-   modulo the direction's period and nothing else of the board reads it),
+   modulo the direction's period and nothing else of the GameBoard reads it),
    its phase turned by the family's `phase_per_link`;
 2. the readings: at every Node the amount-weighted moments of order 0, 1
    and 2 of the direction vectors of the arrivals, taken ONCE by
    `read_arrivals` over the one reading set (at the measured events in
-   step 4; the dense arrays of the whole board are the engine's
+   step 4; the dense arrays of the whole GameBoard are the engine's
    diagnostics, decomposed on request): the count (split outside /
    here, a ray that did not step this interval having the direction
    (0, 0, 0) and entering the zeroth moment alone), the net flow (the
@@ -30,7 +30,7 @@ order, each a bijection on the board's state except the border:
    times the sum of amount x D (x) D with its trace removed) and the age
    moment (the sum of amount x age, split the same way: a reading aid of
    the measured event, the external thing, that changes nothing on the
-   board); valid for a fan as for the six headings; every coupling reads
+   GameBoard); valid for a fan as for the six headings; every coupling reads
    its component by key;
 3. the collision: at every Node of free space (a Node that holds no
    measured event: rays meet the table there, not each other), per
@@ -96,8 +96,8 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
+from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
-from event_universe.core.lattice import PORT_HEADINGS, Address3
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events.measured import Ledger, Measured, count_component
 from event_universe.events.world import (
@@ -215,10 +215,10 @@ class Reading:
     age moment (sum amount x age, a first moment in the age, split as the
     count is), whose whole is `age`. The age moment is a reading aid of the
     measured event, the external thing (the model owner, 2026-09-19, "it
-    must be checked in the detector and not on the board"): the age is
-    read whole only by a measured event; the board's rules (the flight,
+    must be checked in the detector and not on the GameBoard"): the age is
+    read whole only by a measured event; the GameBoard's rules (the flight,
     the collision) never read it whole; this component only helps the
-    detector's computation and changes nothing on the board. Every
+    detector's computation and changes nothing on the GameBoard. Every
     coupling selects its component by key. Keyed over Nodes the arrays
     carry a leading axis."""
 
@@ -335,9 +335,9 @@ def read_arrivals(
     age, split outside and here the same way (zero without it). The age
     moment is a reading aid of the measured event, the external thing: the
     age is read whole only by a measured event (its clock's count on a
-    table entry that reads `age`, its record); the board's rules (the
+    table entry that reads `age`, its record); the GameBoard's rules (the
     flight, the collision) never read it whole; this component only helps
-    the detector's computation and changes nothing on the board. With
+    the detector's computation and changes nothing on the GameBoard. With
     `keys` (rows,) and `size` the moments are taken per key (one reading
     per Node), the arrays gaining a leading axis of `size`. Valid for a fan
     as for the six headings: no projection onto the Ports."""
@@ -956,7 +956,7 @@ class ArrivalRows:
 
 
 class Readings:
-    """The interval's readings per family, dense over the board, decomposed
+    """The interval's readings per family, dense over the GameBoard, decomposed
     on request from the rows of the walk (diagnostics for the engine's
     shell means and flux; the law reads none of them, its own readings
     being taken at the measured events in step 4): the amount that arrived
@@ -1272,7 +1272,7 @@ def nature_beam(
     """A Node's whole interval for the rays present, at every Node (the
     module docstring, steps 1 to 6). With `inverse` the bijective steps are
     run in reverse order with their inverses (the collision, then the walk)
-    on a board without measured events; the border has no inverse."""
+    on a GameBoard without measured events; the border has no inverse."""
     families = world.families
     free_of = [definition.free for definition in families]
     rho_of = [definition.charge for definition in families]
@@ -1356,7 +1356,7 @@ def nature_beam(
     if inverse:
         if measured:
             raise ValueError(
-                f"{RAYS_LAW}: the inverse interval is defined on a board without measured events"
+                f"{RAYS_LAW}: the inverse interval is defined on a GameBoard without measured events"
             )
         for family, store in enumerate(stores):
             if store.size == 0:
@@ -1479,7 +1479,7 @@ def nature_beam(
 
     # 2. The readings: the moments of every Node's arrivals, taken once,
     # where they are read: at the measured events in step 4 (their own
-    # local sets) and, for the diagnostics of the whole board, on request
+    # local sets) and, for the diagnostics of the whole GameBoard, on request
     # from the rows of the walk (the active Nodes only; `Readings`).
     readings = Readings(shape, unit, arrivals)
 
@@ -1523,7 +1523,7 @@ def nature_beam(
         half = modulus // 2
         presence = np.zeros((count, events), dtype=np.int64)
         # The age moment over the same set, the measured event's reading of
-        # the whole age (a reading aid of the external thing; the board's
+        # the whole age (a reading aid of the external thing; the GameBoard's
         # rules never read the age whole), and per (family, measured event)
         # whether its table entry counts it in place of the presence.
         age_moment = np.zeros((count, events), dtype=np.int64)
@@ -2035,7 +2035,7 @@ def nature_beam(
                 # refused; a record may pass 2^63 and its readers parse it
                 # as an arbitrary-precision integer); and the set's phase,
                 # returned to every measured event of the set (the model
-                # owner: the detector returns to the board the information
+                # owner: the detector returns to the GameBoard the information
                 # it received), the frame's turn added after it.
                 set_index = detector_set.index
                 if last_active.get(set_index) == i and set_index in plan.set_phase:
@@ -2188,6 +2188,6 @@ def nature_beam(
         if store.size and int(store.age.max()) > world.age_bound:
             raise OverflowError(
                 f"{RAYS_LAW}: a ray carries the age {int(store.age.max())} beyond the world's "
-                f"age_bound {world.age_bound} (declare a larger age_bound or a smaller board)"
+                f"age_bound {world.age_bound} (declare a larger age_bound or a smaller GameBoard)"
             )
     return readings

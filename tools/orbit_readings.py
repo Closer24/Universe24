@@ -304,7 +304,7 @@ def print_table(readings: list[Reading]) -> None:
             f"| `{r.name}` | {r.width} | {r.radius} | {r.momentum} | {closed} | {period} | "
             f"{mean_radius} | {drift} | {r.turns:.2f} | {r.least_radius:.1f} .. "
             f"{r.greatest_radius:.1f} | {r.reads} | {r.units} | {constant:.2f} | "
-            f"{r.ended or 'on the board'} |"
+            f"{r.ended or 'on the GameBoard'} |"
         )
     print()
     for r in readings:

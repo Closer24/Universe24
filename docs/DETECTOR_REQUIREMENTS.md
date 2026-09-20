@@ -6,18 +6,18 @@ Source baseline of the candidate: `events-v1`, commit `bfb463be6313ae226aa0a192d
 
 ## Definition and adopted requirements
 
-**A detector is a physical arrangement of ordinary Nodes and Events within the event board. Its interactions produce a physical output record. An observer can read that record with a declared resolution; the complete underlying physical state remains definite.**
+**A detector is a physical arrangement of ordinary Nodes and Events on the GameBoard. Its interactions produce a physical output record. An observer can read that record with a declared resolution; the complete underlying physical state remains definite.**
 
 | ID | Requirement |
 | --- | --- |
-| D1 — Definite state | The complete board, apparatus, environment and settings have definite bounded-integer states. Repeating the identical complete initial state and settings produces the identical outcome. This is a model postulate, not an established description of nature. |
-| D2 — Ordinary physics | Detector behavior uses the same generic LocalRules as other matter, without branches on a physical entity's name. Physical memory consists of Events on Nodes, including measured Events; no special detector register, unbounded history or off-board hidden state is introduced. |
+| D1 — Definite state | The complete GameBoard, apparatus, environment and settings have definite bounded-integer states. Repeating the identical complete initial state and settings produces the identical outcome. This is a model postulate, not an established description of nature. |
+| D2 — Ordinary physics | Detector behavior uses the same generic LocalRules as other matter, without branches on a physical entity's name. Physical memory consists of Events on Nodes, including measured Events; no special detector register, unbounded history or hidden state outside the GameBoard is introduced. |
 | D3 — Causal locality | Every physical input arrives through the six neighboring Links, with the declared transit time. Work and storage per local update remain bounded for fixed declared capacities. A large detector combines signals through local interactions; its size does not grant instantaneous access to all its Nodes. |
-| D4 — Physical result | A shared result must exist as an output state produced within the detector. A diagnostic sum over the board does not create that result. The observer reads an existing record; observer callbacks, rendering and audit totals cannot determine an outcome or modify physical state. |
+| D4 — Physical result | A shared result must exist as an output state produced within the detector. A diagnostic sum over the GameBoard does not create that result. The observer reads an existing record; observer callbacks, rendering and audit totals cannot determine an outcome or modify physical state. |
 | D5 — Preserve information | Different permitted complete physical inputs, including the previous apparatus state, must remain distinguishable in the complete physical output: detector, environment and outgoing Events together. The local transition must have an explicit inverse on its allowed domain, or equivalent injectivity evidence. A many-to-one visible result is allowed; a many-to-one complete physical transition is not. |
 | D6 — Exact accounting | Every interaction preserves the quantities declared invariant by its model, with their units and owners explicit. Include recoil, outgoing content and supporting apparatus where relevant. Do not silently identify information, Event count, photon number and energy as the same invariant. |
 
-For a closed physical system with state `S`, the information requirement is `F(S1) = F(S2) => S1 = S2`. Its visible readout `R(S)` may map several states to the same result. Audit records are not a substitute for `S`. Current boards have open edges: a closed-region claim requires a trial with no escapes; a wider-system claim must include the full escaping physical state, not only escaped totals.
+For a closed physical system with state `S`, the information requirement is `F(S1) = F(S2) => S1 = S2`. Its visible readout `R(S)` may map several states to the same result. Audit records are not a substitute for `S`. Current GameBoards have open edges: a closed-region claim requires a trial with no escapes; a wider-system claim must include the full escaping physical state, not only escaped totals.
 
 ## Generic sensitivity and distinguishable results
 
@@ -61,7 +61,7 @@ An incoming phase record is distinct from the detector's own clock phase. Mandat
 \sigma_x\sigma_p \geq \hbar/2.
 \]
 
-For the finite discrete board, first define the appropriate observables and valid discrete counterpart or continuum regime. Fix length, time, momentum and action scales independently of the validation results. Device resolution, state preparation spread, measurement error and disturbance are different quantities; a universal measurement-error-times-disturbance bound is not assumed. [Ozawa's distinction](https://arxiv.org/abs/quant-ph/0207121)
+For the finite discrete GameBoard, first define the appropriate observables and valid discrete counterpart or continuum regime. Fix length, time, momentum and action scales independently of the validation results. Device resolution, state preparation spread, measurement error and disturbance are different quantities; a universal measurement-error-times-disturbance bound is not assumed. [Ozawa's distinction](https://arxiv.org/abs/quant-ph/0207121)
 
 Operationally identical preparation may admit a declared ensemble of different complete microstates; identical complete microstates remain deterministic. Compare independently calibrated position and momentum measurements on separate ensembles prepared by the same procedure. The relation is a lower bound: it does not say that every decrease of actual position spread must increase actual momentum spread.
 
@@ -69,11 +69,11 @@ The preparation and microscopic interaction laws must produce the restriction. A
 
 **Q2 — Other quantum behavior.** Born statistics, backaction and measurement-sequence behavior are separate research targets, with independent expected results. A supplied probability or response table must be labeled as an assumed law, not a derived prediction.
 
-**Q3 — Bell limitation.** A local deterministic board, including the source and both detectors, with measurement choices independent of its shared state remains subject to Bell constraints, including `|CHSH| <= 2` for the standard complete-trial setting. This architecture does not establish quantum entanglement or a Bell violation. Postselection, setting-dependent omission of events, or later communication between detectors cannot be presented as a loophole-free violation. [Shalm et al.'s experimental benchmark](https://arxiv.org/abs/1511.03189)
+**Q3 — Bell limitation.** A local deterministic GameBoard, including the source and both detectors, with measurement choices independent of its shared state remains subject to Bell constraints, including `|CHSH| <= 2` for the standard complete-trial setting. This architecture does not establish quantum entanglement or a Bell violation. Postselection, setting-dependent omission of events, or later communication between detectors cannot be presented as a loophole-free violation. [Shalm et al.'s experimental benchmark](https://arxiv.org/abs/1511.03189)
 
 ## Current implementation gap and ownership
 
-The baseline [engine contract](https://github.com/Closer24/Universe24/blob/bfb463be6313ae226aa0a192d11036ead63dd0f1/docs/ENGINE.md) of the law of events treated a click as a one-way boundary with the phase recorded externally; the law of the ray of 2026-09-19 keeps the click as the one one-way border and reads the phase on the board as the detector's coherent record ([the law of the ray](RAY_LAW.md), section 5). The ownership map below is the one under which the candidate was designed; the modules it names are `nature_beam.py` (the interval) and `engine.py` (the frame) since that day.
+The baseline [engine contract](https://github.com/Closer24/Universe24/blob/bfb463be6313ae226aa0a192d11036ead63dd0f1/docs/ENGINE.md) of the law of events treated a click as a one-way boundary with the phase recorded externally; the law of the ray of 2026-09-19 keeps the click as the one one-way border and reads the phase on the GameBoard as the detector's coherent record ([the law of the ray](RAY_LAW.md), section 5). The ownership map below is the one under which the candidate was designed; the modules it names are `nature_beam.py` (the interval) and `engine.py` (the frame) since that day.
 
 | Existing owner | Required design work |
 | --- | --- |
@@ -82,7 +82,7 @@ The baseline [engine contract](https://github.com/Closer24/Universe24/blob/bfb46
 | `events/nature_beam.py` (the walk and the collision, since 2026-09-19) | Carry all required physical information through local propagation; the flight and the collision are bijections and lose no distinction. |
 | `events/engine.py`: `detectors()`, `_event` | Keep diagnostic aggregation and exported records separate from the physical result they describe. Neither supplies missing physical memory. |
 
-This is an ownership map, not a new API. Before coding, publish the local operator, its input/output domain, Event encoding and capacities, timing, saturation/reset behavior, invariant accounting, allowed preparations and observable/unit mapping. Missing physics must remain an open design decision. Full-board information preservation also requires examining other merges and mixing operations.
+This is an ownership map, not a new API. Before coding, publish the local operator, its input/output domain, Event encoding and capacities, timing, saturation/reset behavior, invariant accounting, allowed preparations and observable/unit mapping. Missing physics must remain an open design decision. Full-GameBoard information preservation also requires examining other merges and mixing operations.
 
 ## Acceptance checklist for later work
 
@@ -90,9 +90,9 @@ This is an ownership map, not a new API. Before coding, publish the local operat
 - **A2 — Information:** test incoming phase 0 versus 16, distinct prior detector states and full-capacity/reset cases. Their complete physical states remain distinguishable and reconstructable without history logs. This witness alone is not a proof for all states or all rules.
 - **A3 — Generic grouping:** cover one Node and several configured sizes, including three and a larger group, and separate shared from individually distinguishable outputs. Under a one-quantum trigger, arrival at any covered Node can give the contracted common spatial category while retaining distinct complete physical states. Vary the trigger independently of group size; reject unsupported bounds. Output cannot depend on information that has not yet arrived.
 - **A4 — Conservation:** verify the model's exact invariants across input, detector, supporting environment and output, with explicit edge handling.
-- **A5 — Quantum research:** freeze preparations, calibration, reference expectations and discrepancy criteria before uncertainty/Born/sequence comparisons. Record failures and finite-board limits. These are research runs, distinct from isolated generic-rule unit tests.
+- **A5 — Quantum research:** freeze preparations, calibration, reference expectations and discrepancy criteria before uncertainty/Born/sequence comparisons. Record failures and finite-GameBoard limits. These are research runs, distinct from isolated generic-rule unit tests.
 
-The owner proposes that finite cell sensitivity together with information preservation on the board will produce the Heisenberg relation. This is the research hypothesis to investigate, not a rule inserted into the output. The reversible detector candidate of 2026-09-19 supplied a concrete reversible interaction for D5 on a declared domain; the law of the ray absorbed it the same day (below); whether any such mechanism supplies Q1 remains open.
+The owner proposes that finite cell sensitivity together with information preservation on the GameBoard will produce the Heisenberg relation. This is the research hypothesis to investigate, not a rule inserted into the output. The reversible detector candidate of 2026-09-19 supplied a concrete reversible interaction for D5 on a declared domain; the law of the ray absorbed it the same day (below); whether any such mechanism supplies Q1 remains open.
 
 ## Implementation contract: reversible-detector-v1
 
@@ -109,7 +109,7 @@ bijection of the interval (`tests/test_nature_beam_bijection.py`).
 
 ## Remaining physical questions
 
-The ray law is classical, local and reversible on the board without a
+The ray law is classical, local and reversible on the GameBoard without a
 measured event; the click is its one one-way border. It demonstrates a
 concrete mechanism for a physical readout (the squared coherent record of a
 crowd of rays) and preserves the record of every ray in flight. It does not

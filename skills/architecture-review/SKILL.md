@@ -90,6 +90,6 @@ For external entity definitions, trace [the canonical loading boundary](../../do
 from reusable data and placement to the immutable expanded world. Verify that all
 entry points use that provider, portable inputs retain exact dependencies after
 relocation, and names affect labels rather than physical rules. File ownership
-outside the engine never supplies off-board physical memory. Review both source
+outside the engine never supplies physical memory from outside the GameBoard. Review both source
 and installed example paths and keep authoring limits distinct from physical
 capacities.

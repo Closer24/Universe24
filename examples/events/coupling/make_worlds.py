@@ -4,9 +4,9 @@ the plane.
 One base world, the items' worlds from it (README.md here; the entry "C, the
 couplings under the law of the ray, on the plane (2026-09-19)" in
 docs/EXPERIMENTS.md; the readings under the law of events stay registered
-as history). The series runs on a two-dimensional board by the
+as history). The series runs on a two-dimensional GameBoard by the
 model owner's decision of 2026-09-19 ("cancel the runs; let it run on
-two-dimensional boards"): a board of 121 x 121 x 1 with the z axis declared
+two-dimensional GameBoards"): a GameBoard of 121 x 121 x 1 with the z axis declared
 periodic (`"boundary": {"z": "periodic"}`), so that the two z Ports of every
 Node return to the same Node at the next interval and nothing leaks; the
 centre c = (60, 60, 0), K 2^22, N 64, `release` [1, 128], `suspension` 0

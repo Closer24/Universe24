@@ -77,7 +77,7 @@ charge [1, 5]; every pinned integer is unchanged.
     goes on, a report of the push and not a transfer, so the book closes
     over the click, the re-emission and the home ((h)), not over a read;
 (g) a fan emitter: a source of content 4 (uncharged) at (0, 0, 0) of a
-    9 x 5 x 1 board (z periodic) releasing on (2, 1, 0) at `release` [1, 1],
+    9 x 5 x 1 GameBoard (z periodic) releasing on (2, 1, 0) at `release` [1, 1],
     the probe of content 5 at (4, 2, 0) on its digital line (the sixth
     Manhattan step; m(8) = 6, m(7) = 5, so the first read is at tick 9):
     every push -5 x 4 x (57, 29, 0) = (-1140, -580, 0), 22 reads (ticks 9
@@ -390,7 +390,7 @@ def test_the_click_the_re_emission_and_the_home_move_the_one_label():
         release=[0, 1],
         ticks=20,
     )
-    # No ray leaves a board periodic on every axis: the age bound is declared.
+    # No ray leaves a GameBoard periodic on every axis: the age bound is declared.
     world["age_bound"] = 64
     records = []
     simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)

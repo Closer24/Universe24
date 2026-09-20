@@ -45,7 +45,7 @@ has passed; the two slits fringing in the record at lambda = period / sqrt 3
 Bell S = 2 and S' = 3/2 exactly with no-signalling exact; the equivalence and
 the superposition identities exact, the third law to the grain of the whole
 apportioning (5.9e-6), the front at the flight table's tick with the whole
-amount; the far-field ring means following the lattice ring's Node count
+amount; the far-field ring means following the GameBoard ring's Node count
 (registered outside the design's ±10 % expectation) and the clock on a
 beam's axis frozen after the front (the design's accepted price). The
 performance: 0.23 to 1.0 us per Node per interval on the registered worlds
@@ -58,7 +58,7 @@ performance: 0.23 to 1.0 us per Node per interval on the registered worlds
   as worlds and tables; whether the six-heading source of the coupling
   series should release on a fan of directions (the design's section 8
   expects the ring means of a fan, 0.31 to 0.33, and the six beams give the
-  lattice ring's count); the orbit series D after the label along the
+  GameBoard ring's count); the orbit series D after the label along the
   unit vector (decided on 2026-09-19: the label of a unit is u_d, the
   integer vector nearest Q D / |D| at Q = 64, every momentum in label
   units, [RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
@@ -98,7 +98,7 @@ out, the engines before this one among them.
 | The law: the record, the reading, the tables, the store, the interval | `src/event_universe/events/nature_beam.py` | [RAY_LAW.md](RAY_LAW.md), sections 3 to 5; [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) |
 | The frame: the clocks, the steps, the books, the readings, the inverse | `src/event_universe/events/engine.py`, `measured.py` | [ENGINE.md](ENGINE.md), "The frame", "The books" |
 | The record of a run | `src/event_universe/events/run.py`, `snapshot_writer.py`, `runner.py` | [ENGINE.md](ENGINE.md), "The record" |
-| The substrate | `src/event_universe/core/` | Bounded integers (`by_clock`, `apportion_whole`, `integer_root`), the board's addresses and headings, the phase tables; the integer audit |
+| The substrate | `src/event_universe/core/` | Bounded integers (`by_clock`, `apportion_whole`, `integer_root`), the GameBoard's addresses and headings, the phase tables; the integer audit |
 | The preflight and the workspace | `configuration_validation.py`, `ui.py` | [ENGINE.md](ENGINE.md), "Preflight"; [WORKSPACE.md](WORKSPACE.md) |
 | The entity definitions | `world_loading.py` | [ENTITY_DEFINITIONS.md](ENTITY_DEFINITIONS.md) |
 | Generated output | `retention.py` | [RETENTION.md](RETENTION.md) |
@@ -115,7 +115,7 @@ edited nor resynced. What the repository implements of it is in
 [Highlights coverage](HIGHLIGHTS_IMPLEMENTATION.md), section by section with
 the tests; what is open is at the end of that table and in Highlights 5.4 and
 5.5. A passing test establishes that the code does what the law says on a
-minimal board, not that the law holds in nature; that is the work of the
+minimal GameBoard, not that the law holds in nature; that is the work of the
 research runs registered in [EXPERIMENTS.md](EXPERIMENTS.md).
 
 ## Resume without a conversation

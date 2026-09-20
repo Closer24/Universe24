@@ -85,7 +85,7 @@ detector's record"), written down first. K 2^20, `suspension` 0, `release`
     outside) while with the window 56 both pass with `window` 56 (the
     phase 0 alone would be inside);
 (g) the phase returned (the model owner, 2026-09-19: the detector returns
-    to the board the information it received): a click of one ray of
+    to the GameBoard the information it received): a click of one ray of
     phase 40 at a one-Node `wave` detector whose counter is at phase 0
     leaves the counter at phase 40 (the report's `phase` 40, the `record`
     line's `phase` 40), the turn of K 2^20 being 0; a lamp of light

@@ -65,7 +65,7 @@ Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
 | `python tools/check.py --full` | ruff lint and format, mypy and the whole suite green on the final commit |
 
 The runs establish that the body on a set and the turn by momentum do what
-the notes say on the engine (the turn as pinned, the board unchanged), and
+the notes say on the engine (the turn as pinned, the GameBoard unchanged), and
 that on this fan and this width no orbit of the electron closes well enough
 for Bohr's lines to be read behind the detector; they establish no physical
 law, for or against.
@@ -104,7 +104,7 @@ Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
 
 | Check | Result |
 | --- | --- |
-| `tests/test_nature_beam_age.py` (a) to (e) | passed: the age 200 whole after 200 intervals (35 until the change); a head-on pair parked with the ages 60 kept and the class cycle ha hb -> +z-z -> +y-y observed (the first derivation had the pair leave on z without meeting again; the pin was corrected to the observed cycle before registration); the re-emission and the birth at 0; the age moment 41, 61 with here, fixed under the 48 symmetries; the clock's ages 1, 2, 3, 4, 5, 6, 6, 7, 7, 7, 7, 8, ... under `reads: "age"` equal to the hand derivation at every interval, the scalar reader unchanged; the bound's default 108 and 222, the refusals, the stub refused at its 13th interval; the board identical with the ages whole and reduced over 40 intervals of a colliding crowd |
+| `tests/test_nature_beam_age.py` (a) to (e) | passed: the age 200 whole after 200 intervals (35 until the change); a head-on pair parked with the ages 60 kept and the class cycle ha hb -> +z-z -> +y-y observed (the first derivation had the pair leave on z without meeting again; the pin was corrected to the observed cycle before registration); the re-emission and the birth at 0; the age moment 41, 61 with here, fixed under the 48 symmetries; the clock's ages 1, 2, 3, 4, 5, 6, 6, 7, 7, 7, 7, 8, ... under `reads: "age"` equal to the hand derivation at every interval, the scalar reader unchanged; the bound's default 108 and 222, the refusals, the stub refused at its 13th interval; the GameBoard identical with the ages whole and reduced over 40 intervals of a colliding crowd |
 | A sample of the registered worlds under the whole age (`one_content`, `two_contents`, `two_slits`, coupling `1b_m16` and `5_long`, orbit `s32_r12`, Bell `a0_b8`) | every run completed with the books balanced at every tick, no age past its default bound (the coupling plane 830, the orbit plane 830, the two slits 620, the cube 252); the `audit` of `run.json` unchanged (the clocks read the presence by default, integer by integer); `state.json` differs where a ray's age had passed its period |
 | `python tools/check.py` (the scoped selection of the age commit) | ruff lint and format, mypy and 300 tests green |
 | Series E, `examples/events/redshift/` (`scalar`, `age`; `tools/run_series.py --jobs 2`, 300 intervals each) | both completed, the books balanced at every tick, 16.0 s and 15.5 s; `tools/redshift_readings.py`: 0 record checks failed, 11 readings inside, 3 outside: k_s x r^2 = 39.0 to 44.8 (mean 41.5) and k_a x r = 33.1 to 39.2 (mean 36.1) over r = 6 to 14, their ratio 0.870 against sqrt 3 / 2; the redshift ratios of the age clocks 0.50, 0.57, 0.72, 0.82 at r = 6, 8, 10, 12 against the fitted 1 / r law 0.52, 0.65, 0.78, 0.90, outside the 15 %-of-shift criterion at r = 8, 10, 12 ([the register](EXPERIMENTS.md#e-the-clocks-redshift-in-space-under-the-age-reading-2026-09-20), [the README](../examples/events/redshift/README.md)) |
@@ -112,7 +112,7 @@ Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
 
 The runs establish that the age reading of a measured event reads M / r
 where the presence reads M / r^2 on this engine, and that the whole age
-changed no integer of the board's step; they establish no physical law.
+changed no integer of the GameBoard's step; they establish no physical law.
 ## The label along the unit vector of the direction: series C x 64 exactly, Bell unchanged, series D re-run - 2026-09-19
 
 The worktree of `claude/universe24-new-3ytqde` on the tip `5b3873f0` (the
@@ -180,7 +180,7 @@ detectors and its status.
 | `python tools/check.py --full` | ruff lint and format, mypy and the whole suite (390 tests) green |
 
 The runs establish what the set changed in the record of the shipped
-worlds (the reading, not the board: no click, pass, push, step or book
+worlds (the reading, not the GameBoard: no click, pass, push, step or book
 moved) and that the Bell readings are unchanged under the default; they
 establish no physical law.
 
@@ -311,11 +311,11 @@ Runtime source SHA-256 `703f9427d9f70e6c619218e457edca0b7647381a8cc7a20d140e4a3d
 | --- | --- |
 | `pytest -n auto` over the suite | 372 passed in 20 s on four workers (the ten `test_ray_*` modules, the consumers, retention and the gates); `tests/test_nature_beam_worlds.py` runs the two slits three times on 60 x 121 x 1 for 500 intervals and the ten Bell worlds through `tools/bell_chsh.py` |
 | The collision table at load | 6561 states, 5440 classes, INV[FWD[s]] = s on every state, the amount and the heading sum conserved by every move (`test_nature_beam_collision` (a)) |
-| The bijection | 50 intervals forward and 50 inverse on a periodic 8 x 8 x 4 board with 324 records return the store bit-exact (`test_nature_beam_bijection`) |
-| The one reading | the seven basis vectors orthogonal, the slots recovered, the 48 board symmetries rotate the flow and fix the scalars (`test_nature_beam_readings` (a)) |
+| The bijection | 50 intervals forward and 50 inverse on a periodic 8 x 8 x 4 GameBoard with 324 records return the store bit-exact (`test_nature_beam_bijection`) |
+| The one reading | the seven basis vectors orthogonal, the slots recovered, the 48 GameBoard symmetries rotate the flow and fix the scalars (`test_nature_beam_readings` (a)) |
 | The two slits (world test) | the record's interference term correlates with the two-source cosine at lambda = 8 / sqrt 3 at 0.893 (the design pinned 0.9 for a fan of 203 directions; this world's fan is 91), below 0.5 at the periods 4 and 16; the plain count additive to the unit |
 | Ten Bell runs of 160 ticks, `python -m event_universe --init examples/events/bell/<name>.json` | all completed, the books balanced, nothing escaped; E as pinned in every run; S = 2 exactly; S' = 3/2 exactly; the offsets plus 14, minus 16; no-signalling exact; `python tools/bell_chsh.py`: 326 criteria, 0 failed, exit 0 ([A2 under the law of the ray](EXPERIMENTS.md#a2-under-the-law-of-the-ray-2026-09-19)) |
-| Twenty-one coupling runs, `python tools/run_series.py --jobs 4` | all completed in 0.5 to 3.3 s each; the books balanced at every tick; the measured content constant; age + waited = the intervals completed; `PYTHONPATH=src python tools/coupling_readings.py`: 392 criteria passed, 0 failed, exit 0; 19 readings inside the expectation of RAY_LAW section 8 and 9 outside, registered in [C under the law of the ray](EXPERIMENTS.md#c-the-couplings-under-the-law-of-the-ray-on-the-plane-2026-09-19) (the ring means of six beams follow the lattice ring's Node count; the presence slope -0.76; the clock on the axis owed the beam's presence) |
+| Twenty-one coupling runs, `python tools/run_series.py --jobs 4` | all completed in 0.5 to 3.3 s each; the books balanced at every tick; the measured content constant; age + waited = the intervals completed; `PYTHONPATH=src python tools/coupling_readings.py`: 392 criteria passed, 0 failed, exit 0; 19 readings inside the expectation of RAY_LAW section 8 and 9 outside, registered in [C under the law of the ray](EXPERIMENTS.md#c-the-couplings-under-the-law-of-the-ray-on-the-plane-2026-09-19) (the ring means of six beams follow the GameBoard ring's Node count; the presence slope -0.76; the clock on the axis owed the beam's presence) |
 | Performance | 0.23 us per Node per interval on the coupling plane (121 x 121, one source), about 1.0 us on the two slits (about 5100 rows in flight, about 2.7 us per row), against the design's budget of 3.6 us; measured with `time.perf_counter` around `NatureBeamSimulation.step`, a host cost |
 | Gates | `ruff check`, `ruff format --check` and `mypy --strict` on `src`, `tests` and `tools` clean; `tests/test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` passed; `python tools/check.py --full`: ruff lint and format on 108 files, mypy on 21 source files, 372 passed |
 
@@ -377,7 +377,7 @@ The display is the x-y plane at z=0, uniformly one Link per grid spacing and
 one interval per frame; GIF playback is 850 ms/frame. First/last images were
 visually inspected. Actual viewer JavaScript passed phase selection and
 timeline checks, rendering 81 Nodes, total 2 and final contact count 3.
-Full-browser rendering was not verified. The earlier open-board report is
+Full-browser rendering was not verified. The earlier open-GameBoard report is
 unchanged. This compact periodic graph establishes no arbitrary 3D equivalence,
 speedup, energy law, absorption/reset, Heisenberg relation or entanglement.
 
@@ -401,7 +401,7 @@ threshold 1, capacity 31. Expectations below were fixed before execution.
 | Physical output at ticks 0 through 4 | 0, 0, 0, 0, 1; it changes only when the carrier reaches the output |
 | Complete live states, phase 0 versus phase 16 | Different at all five recorded times; the carrier retains its input phase |
 | Shared visible output, phase 0 versus phase 16 | Equal at all five recorded times |
-| Amount on the board | One transit unit plus three material units, total 4, at every recorded time |
+| Amount on the GameBoard | One transit unit plus three material units, total 4, at every recorded time |
 | Material-plus-transit momentum | (1,0,0) at every recorded time |
 | Escaped amount | 0 |
 
@@ -439,12 +439,12 @@ result. A shared count does not establish entanglement.
 
 Base: `ddb4470a` on `claude/universe24-new-3ytqde` (main after PR #345). No
 engine change: twenty-one worlds (`examples/events/coupling/`, written by
-`make_worlds.py`, a board of 121 x 121 x 1 with `"boundary": {"z":
+`make_worlds.py`, a GameBoard of 121 x 121 x 1 with `"boundary": {"z":
 "periodic"}`), the analysis `tools/coupling_readings.py` and the register
 entry [C, the couplings under the law of events, on the plane](EXPERIMENTS.md#c-the-couplings-under-the-law-of-events-on-the-plane-2026-09-19).
 The physics-rule reviewer's design of 2026-09-19, pinned for 61^3 and moved
 to the plane by the model owner's decision the same day ("cancel the runs;
-let it run on two-dimensional boards"). A research run, made once; not a
+let it run on two-dimensional GameBoards"). A research run, made once; not a
 test; a reading outside its bound reported, never moved.
 
 | Check | Result |
@@ -1693,7 +1693,7 @@ acceptance. Exact final check counts and submitted source identity are attached
 to the PR; the gate saves its commands in `artifacts/check-scope.json`.
 
 The explicit visual run uses `examples/local_field_rules.json` with the existing
-CLI and `--visualize`: a 9 by 9 by 9 lattice, eight transitions, and nine recorded
+CLI and `--visualize`: a 9 by 9 by 9 GameBoard, eight transitions, and nine recorded
 frames. Starting at `a=(3,4,0), b=(0,0,0)`, the configured rule applies
 `a'=b, b'=-a`; the combined squared amplitude is 25 in every recorded frame.
 All eight cycles contain component transformations, with no external sources
@@ -2228,7 +2228,7 @@ configured but was not executed on a remote repository in this task.
 | Current model | Exact field sample, source mapping, clipping and transverse response passed |
 | Public component replacement | Field/turning/activity injection, remainder-only evolution and invalid-result rejection passed |
 | Calculation boundaries | Absolute/relative imports and formula-free assembly checked, including forbidden-example tests |
-| Dedicated expectations | Lattice, movement, source/range/activity policies and all diagnostic projections passed |
+| Dedicated expectations | GameBoard, movement, source/range/activity policies and all diagnostic projections passed |
 | Test visualization | 41 engine/reference runs rendered through the shared GIF/HTML pipeline |
 | Full XYZ display | 48-tick contact run completed with total momentum preserved; shared GIF/HTML pipeline |
 | Display equivalence | Plane and volume runs produced identical physical events and final reports |
@@ -2283,7 +2283,7 @@ Known model assumptions and limits remain in `SIMULATOR_DEFINITIONS.md`.
   stationary-source regression initially exposed an owner-only directional
   artifact; the symmetric two-endpoint proposal protocol now passes it.
 - 46 engine/reference test runs were captured using the existing renderer.
-- The linked application completed 360 elementary ticks on a 32×24×12 lattice,
+- The linked application completed 360 elementary ticks on a 32×24×12 GameBoard,
   with two particles and base link length 10. Total momentum matched the initial
   value at every completed tick. All runtime state audits passed.
 - The final rendered frame was inspected: XY slice z=6 and tick=360 are visible.
@@ -2571,7 +2571,7 @@ rest; a ray field is absorbed or exchanged, never both.
 | Visualization | Not requested or generated |
 
 The source's stock rises by what it emits, and a radial fall through the
-lattice `r = 1` singularity escapes at the speed cap: both are properties of
+GameBoard `r = 1` singularity escapes at the speed cap: both are properties of
 this candidate, recorded rather than corrected.
 
 ## Kerengonen phased rays — 2026-09-14
@@ -2711,7 +2711,7 @@ carries the advance of the largest share it absorbed with the phase.
 | Visualization | Not requested or generated |
 
 The rule `|p| / D` is configured, not derived; what the measurement shows is
-that the lattice, the Huygens slits and the coherence gate carry it from the
+that the GameBoard, the Huygens slits and the coherence gate carry it from the
 source to the screen: wavelength inverse to momentum, three doublings in a
 row. The beam is a held source; a record in flight is not yet a matter ray.
 
@@ -2854,7 +2854,7 @@ emission must name a recoil field, and the emitter must absorb on the field.
 | Mirror probe | Lamp at x = -16, mirror at x = +16, 8 quanta each way per tick, 96 ticks: periods 16, 8 and 4 for advances 2, 4 and 8, all as predicted by `64 / (2 x advance)`, readings from 0 at the nodes to 15 at the antinodes; a flat 8 without the mirror; the mirror ends with momentum +1016 along x; quanta closed in every world |
 | Visualization | Not requested or generated |
 
-A mirror across a lattice axis only; an oblique or partial mirror needs a
+A mirror across a GameBoard axis only; an oblique or partial mirror needs a
 heading map beyond one sign flip.
 
 ## A thick screen behind the double slit — 2026-09-14
@@ -2911,7 +2911,7 @@ distance per tick.
 | Euclidean fringe | Two lamps four links apart, 29 headings to a screen twelve links away, 64 steps at advance 16, readings summed over the last eight of forty ticks: links metric darkest 0 at x = -1 and 1 and a flat 64 from x = 3 to 9 (Manhattan path difference saturates at four links, a full turn); Euclidean metric darkest 0 at x = -5 and 5 with 64 at the center and 96 at the edges, where the predicted half turn falls at x = -5, -4, 4, 5; the plain field on the Euclidean metric reads 64 to 128 as one or two rays of each lamp are resident per tick; all closed |
 | Visualization | Not requested or generated |
 
-The metric is a configured choice: the lattice's Manhattan fringe and the
+The metric is a configured choice: the GameBoard's Manhattan fringe and the
 Euclidean fringe are both exact consequences of where rays meet, and the
 Euclidean pace buys the round front with rays that are slower, never faster,
 than one link per tick.
@@ -3095,29 +3095,29 @@ postulate's derivation states.
 
 Base: `780a9c1` on `main` (after PR #123). No engine change. The Bell probe
 gains `--sweep` (fresh pairs for every setting pair, binomial standard
-errors, four replicas per level, the lattice compared with the registry alone
+errors, four replicas per level, the GameBoard compared with the registry alone
 outcome by outcome) and `--causal` (at fixed hidden variable, how often an
 outcome moves with the other end's setting). The postulates and the coupling
 document name the assumption of Bell's theorem each candidate breaks.
 
 | Check | Result |
 | --- | --- |
-| `--sweep`, 64 pairs per correlation, lattice, 4 replicas | S = 3.0938, 2.7188, 3.2188, 2.6875; mean 2.9297, predicted error of the mean 0.0791, spread 0.2668; expectation 2.828125; 1,024 of 1,024 lattice outcomes identical to the registry's; every run closed, no pair missing |
-| `--sweep`, 256 pairs per correlation, lattice, 4 replicas | S = 2.8828, 2.8984, 2.8047, 2.8203; mean 2.8516, predicted error of the mean 0.0432, spread 0.0460; expectation 2.828125; 4,096 of 4,096 lattice outcomes identical to the registry's; every run closed, no pair missing |
-| `--sweep`, 1,024 pairs per correlation, lattice, 4 replicas | S = 2.7383, 2.8672, 2.8887, 2.8887; mean 2.8457, predicted error of the mean 0.0228, spread 0.0723; expectation 2.828125; 16,384 of 16,384 lattice outcomes identical to the registry's; every run closed, no pair missing |
-| `--sweep`, 4,096 pairs per correlation, lattice, 4 replicas | S = 2.8774, 2.8052, 2.8325, 2.8325; mean 2.8369, predicted error of the mean 0.0109, spread 0.0299; expectation 2.828125; 65,536 of 65,536 lattice outcomes identical to the registry's; every run closed, no pair missing |
+| `--sweep`, 64 pairs per correlation, GameBoard, 4 replicas | S = 3.0938, 2.7188, 3.2188, 2.6875; mean 2.9297, predicted error of the mean 0.0791, spread 0.2668; expectation 2.828125; 1,024 of 1,024 GameBoard outcomes identical to the registry's; every run closed, no pair missing |
+| `--sweep`, 256 pairs per correlation, GameBoard, 4 replicas | S = 2.8828, 2.8984, 2.8047, 2.8203; mean 2.8516, predicted error of the mean 0.0432, spread 0.0460; expectation 2.828125; 4,096 of 4,096 GameBoard outcomes identical to the registry's; every run closed, no pair missing |
+| `--sweep`, 1,024 pairs per correlation, GameBoard, 4 replicas | S = 2.7383, 2.8672, 2.8887, 2.8887; mean 2.8457, predicted error of the mean 0.0228, spread 0.0723; expectation 2.828125; 16,384 of 16,384 GameBoard outcomes identical to the registry's; every run closed, no pair missing |
+| `--sweep`, 4,096 pairs per correlation, GameBoard, 4 replicas | S = 2.8774, 2.8052, 2.8325, 2.8325; mean 2.8369, predicted error of the mean 0.0109, spread 0.0299; expectation 2.828125; 65,536 of 65,536 GameBoard outcomes identical to the registry's; every run closed, no pair missing |
 | `--sweep`, 1,000 pairs per correlation, registry alone, 4 replicas | S = 2.8540, 2.8500, 2.8500, 2.8560; mean 2.8525, predicted error of the mean 0.0221, spread 0.0030; expectation 2.828125 |
 | `--sweep`, 10,000 pairs per correlation, registry alone, 4 replicas | S = 2.8522, 2.8412, 2.8544, 2.8216; mean 2.8424, predicted error of the mean 0.0070, spread 0.0150; expectation 2.828125 |
 | `--sweep`, 100,000 pairs per correlation, registry alone, 4 replicas | S = 2.8284, 2.8319, 2.8325, 2.8232; mean 2.8290, predicted error of the mean 0.0022, spread 0.0043; expectation 2.828125 |
 | `--sweep`, 1,000,000 pairs per correlation, registry alone, 4 replicas | S = 2.8263, 2.8257, 2.8300, 2.8256; mean 2.8269, predicted error of the mean 0.0007, spread 0.0021; expectation 2.828125 |
 | `--source agreement`, 16 seeds per slot, 1,024 pairs per correlation | E = -1, 1, -1, -1; S = 4.0, the Popescu-Rohrlich box; Alice's plus rate 0.49 at every pair, Bob's 0.51, 0.49, 0.51, 0.51; rate shifts 0.0 and 0.0156; every run closed: a bias in the agreement half moves no marginal and is not held to the quantum value |
 | `--causal`, 256 hidden variables per candidate | lottery and threshold: no outcome moves with the other end's setting at either end (0 of 256); bonded: Alice's coin never moves with Bob's setting, Bob's answer moves with Alice's setting for 184 of 256 hidden variables at b' (0.7188, the law's 362/512 = 0.7070) and 0 at b; every run closed |
-| `tests/test_ray_bell_chsh.py` | one seed of the agreement-biased source gives E = -1, 1, -1, -1, S = 4.0, even plus rates and rate shifts 0.0 and 0.0312; the registry's expectation is 181/64; 16 lattice pairs per setting pair equal the registry's 64 outcomes one by one; a hundred thousand registry pairs land within three standard errors of 2.828125; the lottery never moves an outcome with the other end's setting, the bonded pair moves Bob's answer with Alice's setting for 47 of 64 hidden variables at b' and never at b |
+| `tests/test_ray_bell_chsh.py` | one seed of the agreement-biased source gives E = -1, 1, -1, -1, S = 4.0, even plus rates and rate shifts 0.0 and 0.0312; the registry's expectation is 181/64; 16 GameBoard pairs per setting pair equal the registry's 64 outcomes one by one; a hundred thousand registry pairs land within three standard errors of 2.828125; the lottery never moves an outcome with the other end's setting, the bonded pair moves Bob's answer with Alice's setting for 47 of 64 hidden variables at b' and never at b |
 | Affected gate against `origin/main` | 2078 passed, 5 visual-only skipped, in 1216 seconds; ruff lint, format and strict mypy passed |
 
 Runtime source SHA-256 `0beb4d822bd98980e5947c8e8c20f76825e52dabe64aac8abf8346ecb67b467b`, Python 3.14.0rc2, headless.
-The lattice equals the registry pair by pair at every level: the Bell value
-lives in the registry's law and the lattice adds transport. The 2.889 of the
+The GameBoard equals the registry pair by pair at every level: the Bell value
+lives in the registry's law and the GameBoard adds transport. The 2.889 of the
 first run was sampling spread on correlated samples. In Bell's terms the
 bonded pair is deterministic, measurement-independent and
 parameter-dependent; its unmoved plus rates are no-signalling, not locality.
@@ -3220,7 +3220,7 @@ review of the second manuscript, read as a standalone paper.
 | Pantheon+ sample | 1,701 light curves of 1,550 supernovae; 1,580 Hubble-flow light curves kept |
 | Tolman | Lubin and Sandage's exponents are reduced under an assumed q0 = 1/2 geometry, so they are not model-independent; the manuscript now calls the comparison an indication, not a test of the model |
 | Clock | the stakes stated: a clock at r(t) cycles per tick reads (r_o / r_e)(k_o / k_e), and one that slowed as 1 / k would cancel the stretch |
-| Literature | the cosmic-refraction models (Chen and Kantowski 2008) named as the nearest continuum relatives, with what the lattice adds and does not add |
+| Literature | the cosmic-refraction models (Chen and Kantowski 2008) named as the nearest continuum relatives, with what the GameBoard adds and does not add |
 | Figures | the law figure's legend moved outside the axes; the residual figure gains the fitted power law |
 | Affected gate against `origin/main` | 161 passed, 2 visual-only skipped in 25 seconds; ruff lint and format passed (a first run reported four failures in `test_ray_integration_guards.py` whose assertion text was an older version of the file: stale pytest bytecode; the file passes directly and the gate passed after the caches were cleared) |
 

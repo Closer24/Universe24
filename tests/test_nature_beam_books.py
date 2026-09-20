@@ -9,7 +9,7 @@ that exercises every way a row comes or goes, the running lines equal the
 recount at every one of 40 intervals, `books(recount=True)` equals
 `books()`, and the books balance; on an empty world both are zero.
 
-The world: a 12 x 1 x 3 board with y periodic (the stub: a ray on +-y lands
+The world: a 12 x 1 x 3 GameBoard with y periodic (the stub: a ray on +-y lands
 on its own Node and is home) and every other face open, K 2^20, N 64,
 `release` [1, 4], a fan direction (2, 1, 0) declared; a lamp of the paid
 family `light` (content 2^23, the turn 8) at (1, 0, 1) releasing 3 units

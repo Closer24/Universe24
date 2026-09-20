@@ -95,7 +95,7 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[2] / "src"))
 
-from event_universe.core.lattice import PORT_HEADINGS  # noqa: E402
+from event_universe.core.game_board import PORT_HEADINGS  # noqa: E402
 from event_universe.events.nature_beam import flight_table  # noqa: E402
 from event_universe.events.world import HEADING_OFFSET, Q  # noqa: E402
 

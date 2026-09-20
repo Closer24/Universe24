@@ -6,7 +6,7 @@ entry is
 and the evidence is in [validation](../../../docs/VALIDATION.md). The
 physics-rule reviewer pinned the design and its identities on 2026-09-19 for
 the law of events; the model owner moved the series to two-dimensional
-boards the same day; the law of the ray of the same night re-registers it
+GameBoards the same day; the law of the ray of the same night re-registers it
 with the expectations of [RAY_LAW section 8](../../../docs/RAY_LAW.md#8-independent-expectations-for-the-re-registered-readings)
 (count x r constant, flow x 2 pi r = 1, the clock's slowing ~ 1 / r on the
 plane, the third law exact on lone beams, the front from the flight table,
@@ -17,9 +17,9 @@ in the register.
 
 ## The base
 
-A board of 121 x 121 x 1 Nodes with the z axis declared periodic
+A GameBoard of 121 x 121 x 1 Nodes with the z axis declared periodic
 (`"boundary": {"z": "periodic"}`, [the engine](../../../docs/ENGINE.md)): a
-true two-dimensional board, nothing leaks on z; the x and y faces are open.
+true two-dimensional GameBoard, nothing leaks on z; the x and y faces are open.
 The centre c = (60, 60, 0), `"law": "rays"`, K 2^22, N 64, `release`
 [1, 128], `suspension` 0 (1 in world 6 only), one free family `m`
 (`quantum` 0, the kind following from the quantum) of charge 0 (item 7
@@ -42,7 +42,7 @@ axis is constant with r. A probe is a measured event of content 1 (m in
 item 1) with the table the keys give (`read` for a free family: the push
 taken, the rays go on; no table declared), so a probe is transparent to the
 beam it reads. A probe
-releases six lone rays at age 128 / m along its six lattice lines; the tool
+releases six lone rays at age 128 / m along its six GameBoard lines; the tool
 filters records by `number`.
 
 ## The front from the flight table (item 4)
@@ -136,7 +136,7 @@ failed, exit 0; 19 readings inside the expectation, 9 outside, registered:
   exact, a ballistic stream). Outside the expectation: the ripple of
   count x r / q over r >= 8 is 0.25 (bound 0.10) and count x r / q at
   r = 16 is 0.143 (bound 0.15 to 0.19): the rings at r = 16 and r = 20 both
-  have 112 Nodes, so the six-beam ring mean follows the lattice ring's
+  have 112 Nodes, so the six-beam ring mean follows the GameBoard ring's
   Node count and not r; flow x 2 pi r / q at r = 12, 16, 20 (1.109, 0.898,
   1.122) outside 0.90 to 1.10 for the same reason; the presence slope
   -0.760 outside -1.00 +- 0.10 (the presence at r = 4 is one ray, at

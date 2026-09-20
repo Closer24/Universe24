@@ -20,7 +20,7 @@ never a test; the design, the derivation and the expectations below were
 written before the runs; a reading outside its expectation is reported with
 its numbers, never moved. Every number is labelled a **detector reading**
 (the record of the detector's set or of a measured event: the only kind
-reality has) or a **GameBoard reading** (the host's view of the board: a
+reality has) or a **GameBoard reading** (the host's view of the GameBoard: a
 source's position, its steps, its momentum, the books; the picture and the
 checks, never the measurement).
 
@@ -152,7 +152,7 @@ intervals, so the reading
 
 k the clock's owed count per self-creation (the emitter's rate 1 / (1 + k))
 and v the source's speed at emission: the acoustic Doppler of a source
-receding through the board at v from a detector at rest in it, times the
+receding through the GameBoard at v from a detector at rest in it, times the
 emitter's clock. There is no time dilation in the law (a clock's rate does
 not depend on its motion) and no cosmological stretch (a ray's phase per
 Link is fixed): the redshift is the Doppler of the throw and the clocks'
@@ -271,7 +271,7 @@ and the Doppler part of the reading alone (the emitter's clock removed),
 both printed after the runs and not pinned; `--png DIR` writes the
 diagrams with matplotlib (the repository gets the numbers).
 `tests/test_hubble_readings.py` pins the tool to the engine on a bar of
-61 Nodes. The runs take about 40 s each (the 301^3 board's per-interval
+61 Nodes. The runs take about 40 s each (the 301^3 GameBoard's per-interval
 host cost, not the rays: about 6 000 rows in flight).
 
 ## What the law lacks for this experiment (found while designing it)
@@ -421,7 +421,7 @@ nothing: k = 0 at every source). The fits per window (detector readings):
   throw by the throw's initial distances and in the pushing throw by the
   crowd's clocks, while on the GameBoard nothing accelerates.
 - Host cost: 36 to 37 s per run of 400 intervals (about 6 000 rows in
-  flight, 31 measured events; the 301^3 board's per-interval arrays); the
+  flight, 31 measured events; the 301^3 GameBoard's per-interval arrays); the
   tool with the replay 3 minutes.
 
 ## Verdict

@@ -2,7 +2,7 @@
 one speed for every direction, 1 / sqrt 3, on the digital line of its
 momentum, at most one Link per interval, the age whole on the record and
 read modulo the direction's period by the flight; a lone unit is straight
-and unchanged; the board's faces open or
+and unchanged; the GameBoard's faces open or
 periodic (the wrap, the stub of extent 1). The expected integers of
 docs/TEST_EXPECTATIONS.md ("The flight"), written down first:
 
@@ -12,7 +12,7 @@ docs/TEST_EXPECTATIONS.md ("The flight"), written down first:
     never moves; the first arrival of a heading ray at m Links, m = 1..11,
     in the intervals 1, 3, 5, 7, 8, 10, 12, 13, 15, 17, 19;
 (b) the lone unit: every heading and every declared direction of the
-    two-slit example, 150 intervals on a periodic 61^3 board: the ray's
+    two-slit example, 150 intervals on a periodic 61^3 GameBoard: the ray's
     position is the table's digital line, its direction and phase unchanged
     (`phase_per_link` 0), one row at every interval, at most one Link per
     interval; with `phase_per_link` 3 the phase turns 3 per Link crossed;
@@ -39,7 +39,7 @@ import numpy as np
 import pytest
 
 from event_universe.configuration_validation import validate_configuration
-from event_universe.core.lattice import PORT_HEADINGS, adjacent_node
+from event_universe.core.game_board import PORT_HEADINGS, adjacent_node
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import Q, flight_table
@@ -100,7 +100,7 @@ def periodic_cube(directions: list[list[int]], per_link: int = 0) -> dict[str, o
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
-        # The age bound a board periodic on every axis must declare.
+        # The age bound a GameBoard periodic on every axis must declare.
         "age_bound": 256,
         "directions": directions,
         "families": [{"name": "light", "quantum": 1, "phase_per_link": per_link}],
@@ -282,7 +282,7 @@ def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
         "balanced": True,
     }
     for refused in ("closed", {"z": "closed"}, {"w": "periodic"}, {"z": 1}, "periodic"):
-        with pytest.raises(ValueError, match="closed board is refused"):
+        with pytest.raises(ValueError, match="closed GameBoard is refused"):
             parse_nature_beam_world({**STUB, "boundary": refused})
         report = validate_configuration(json.dumps({**STUB, "boundary": refused}))
         assert not report.valid and report.issues[0].code == "validation"

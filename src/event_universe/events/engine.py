@@ -7,7 +7,7 @@ The interval (`NatureBeamSimulation.step`): the engine sets every measured event
 clock frame (whether it owes a count and pays one, or self-creates: its age
 advances by one and its turn is read off its clock, s = `by_clock(age,
 content, K)` phase steps, refused at half the circle), calls `nature_beam`
-once for the whole board (the walk, the readings, the collision, the tables
+once for the whole GameBoard (the walk, the readings, the collision, the tables
 and detectors, the releases, the merge), then turns the phase of every
 self-created measured event by its turn, reads the count it owes off its
 clock from what the law read back for the clock (`by_clock(age, k x n, d)`
@@ -39,8 +39,8 @@ from collections.abc import Iterator
 
 import numpy as np
 
+from event_universe.core.game_board import Address3, adjacent_node
 from event_universe.core.integer import by_clock
-from event_universe.core.lattice import Address3, adjacent_node
 from event_universe.events.measured import RULES, DetectorSet, Ledger, Measured, rational_sum
 from event_universe.events.nature_beam import (
     HERE,
@@ -210,7 +210,7 @@ class NatureBeamSimulation:
             detector_set = self.detector_sets[detector]
             detector_set.numbers.append(number)
         # The set of Nodes the measured event is a body on (the parser
-        # refused a body outside the board).
+        # refused a body outside the GameBoard).
         nodes = body_nodes(definition.position, definition.span, self.shape, self.world.periodic)
         assert nodes is not None
         return Measured(
@@ -267,7 +267,7 @@ class NatureBeamSimulation:
                 self._move(self.measured[number])
 
     def inverse_step(self) -> None:
-        """The inverse interval on a board without measured events: the
+        """The inverse interval on a GameBoard without measured events: the
         bijective steps in reverse order with their inverses."""
         self.tick -= 1
         nature_beam(
@@ -359,12 +359,12 @@ class NatureBeamSimulation:
         steps as one: its centre moves one Link and its set with it, the
         step refused when any Node of the moved set holds another measured
         event, the whole body clicking on the face detector when any of
-        its Nodes would leave the board through an open face, every Node
+        its Nodes would leave the GameBoard through an open face, every Node
         wrapping on a periodic axis.
 
         The turn by momentum (`phase_by_momentum` with the world's
         `action`, h; the model owner's decision of 2026-09-20 on Bohr, "put
-        it as parameters outside the board like the age"): a rule of the
+        it as parameters outside the GameBoard like the age"): a rule of the
         measured event, the external thing, read from its own record. At
         the Link the body steps on an axis whose momentum component is p,
         its phase turns by the difference of two floors,
@@ -411,7 +411,7 @@ class NatureBeamSimulation:
             if destination == origin:
                 return
             # The moved set: None when the centre or any Node of the body
-            # would leave the board through an open face (the escape).
+            # would leave the GameBoard through an open face (the escape).
             nodes = (
                 None
                 if destination is None
@@ -605,7 +605,7 @@ class NatureBeamSimulation:
         (summed over its Nodes), the set's one `record` (the square of its
         coherent pointer accumulated under `wave`, the count clicked under
         `beam`) and the set's `phase` at its last click; then the face
-        detectors, one per open face of the board (`face_detectors`)."""
+        detectors, one per open face of the GameBoard (`face_detectors`)."""
         found = []
         for index, detector in enumerate(self.world.detectors):
             detector_set = self.detector_sets[index]
@@ -673,11 +673,11 @@ class NatureBeamSimulation:
         the scale Q projected on the radial unit vector, summed per Node: Q
         per unit of amount moving radially) and the mean presence (every
         ray at the Node)."""
-        grid = np.indices(self.shape).reshape(3, -1).T - np.array(centre)
-        distance = np.sqrt((grid * grid).sum(axis=1))
+        node_offsets = np.indices(self.shape).reshape(3, -1).T - np.array(centre)
+        distance = np.sqrt((node_offsets * node_offsets).sum(axis=1))
         chosen = np.abs(distance - radius) < 0.5
         chosen &= distance > 0
-        positions = grid[chosen]
+        positions = node_offsets[chosen]
         radial = positions / distance[chosen][:, None]
         cells = tuple((positions + np.array(centre)).T)
         count = self.readings.count[family][cells]
@@ -698,7 +698,7 @@ class NatureBeamSimulation:
         face's Node through its outer Port (moving inward), Gauss's flux, read
         off the Links crossed (`per_port`, a diagnostic of the walk)."""
         if any(self.world.periodic):
-            raise ValueError("cube_flux supports only the all-open board")
+            raise ValueError("cube_flux supports only the all-open GameBoard")
         per_port = self.readings.per_port[family]
         total = 0
         for axis in range(3):

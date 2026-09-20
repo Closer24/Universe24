@@ -1,7 +1,7 @@
-"""The worlds of the law of the ray on minimal boards (docs/RAY_LAW.md,
+"""The worlds of the law of the ray on minimal GameBoards (docs/RAY_LAW.md,
 section 7; the model owner, 2026-09-19): the two slits as a world test with a
 pinned correlation, the Bell run A2 unchanged, and one content on an open
-board with the books closed. The expected results of
+GameBoard with the books closed. The expected results of
 docs/TEST_EXPECTATIONS.md ("The worlds of the ray law"), written down first:
 
 (a) the two slits (the example world's design, 60 x 121 x 1, z periodic,
@@ -26,7 +26,7 @@ docs/TEST_EXPECTATIONS.md ("The worlds of the ray law"), written down first:
 (b) Bell (the ten A2 worlds under `"law": "rays"`, `tools/bell_chsh.py`):
     S = 2 exactly, S' = 3/2 exactly, the controls +1, -1, 0, no-signalling
     exact, 0 criteria failed;
-(c) one content of 2^24 at the centre of an open 11^3 board at `release`
+(c) one content of 2^24 at the centre of an open 11^3 GameBoard at `release`
     [1, 128], 40 intervals: the books close at every tick, the content is
     2^24 at every tick, the momentum on the measured events zero, the flux
     through the cube of half-width 2 equals the emission q = 6 x 2^17 at
@@ -38,7 +38,7 @@ docs/TEST_EXPECTATIONS.md ("The worlds of the ray law"), written down first:
     flight table's first arrivals at 3 and 4 Links are the intervals 5 and
     7) and at r = 4 equal to it (the age 7 alone);
 (d) every example world parses as a NatureBeam world;
-(e) `two_contents` (the two contents 8 Links apart on the open 21^3 board)
+(e) `two_contents` (the two contents 8 Links apart on the open 21^3 GameBoard)
     for 20 intervals: not refused (the night's bound refused it at the 20th
     interval, when the two +y beams of 2^17 click face:+y together, 2^18 in
     one interval); the books close at every tick; every face's record grows

@@ -233,7 +233,7 @@ def _placements(
             raise ValueError(f"{label}: unknown definition {definition_name!r}")
         origin = _triple(instance["position"], f"{label}.position")
         if any(not 0 <= value < extent for value, extent in zip(origin, shape, strict=True)):
-            raise ValueError(f"{label}.position is outside the board")
+            raise ValueError(f"{label}.position is outside the GameBoard")
         result.append((name, origin, definitions[definition_name]))
     return result
 
@@ -244,7 +244,7 @@ def _translated(
     relative = _relative(value, label)
     result = [a + b for a, b in zip(relative, origin, strict=True)]
     if any(not 0 <= value < extent for value, extent in zip(result, shape, strict=True)):
-        raise ValueError(f"instance {label}: translated position {result} is outside the board")
+        raise ValueError(f"instance {label}: translated position {result} is outside the GameBoard")
     return result
 
 

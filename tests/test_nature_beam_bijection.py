@@ -1,8 +1,8 @@
-"""The interval is a bijection on a board without a border (docs/RAY_LAW.md,
+"""The interval is a bijection on a GameBoard without a border (docs/RAY_LAW.md,
 section 3; the model owner, 2026-09-19): the walk and the collision have
 inverses, and T forward intervals followed by T inverse intervals return
 the store bit-exact. The expected result of docs/TEST_EXPECTATIONS.md ("The
-bijection"), written down first: a periodic 8 x 8 x 4 board, 300 records of
+bijection"), written down first: a periodic 8 x 8 x 4 GameBoard, 300 records of
 fixed arrays (rays on every heading, both rest slots and two fan directions,
 head-on pairs among them, amounts 1 and 2, phases over the circle), 50
 forward then 50 inverse intervals with no measured event: the sorted store
@@ -85,7 +85,7 @@ WORLD = {
     "N": 64,
     "release": [0, 1],
     "suspension": 0,
-    # No ray leaves a board periodic on every axis: the age a ray may carry
+    # No ray leaves a GameBoard periodic on every axis: the age a ray may carry
     # (whole since 2026-09-20) is declared; 50 intervals on ages up to 22.
     "age_bound": 128,
     "directions": [[1, 1, 0], [2, -1, 1]],
