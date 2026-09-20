@@ -173,7 +173,7 @@ active contracts, explicit experiments and revision-specific evidence.
 | `tools/run_series.py` | The worlds of a series run one process per core, each with its log and artifacts, a summary table at the end |
 | `tools/migrate_ray_worlds.py` | A ray world rewritten to the form of 2026-09-19: `quantum` in place of `kind`, only the table entries that differ from the default |
 | `tools/check.py` | The affected-check: changed files and their consumers; `--full` for everything |
-| `examples/events/` | The worlds of the law of the ray: one content, two contents, two slits with a detector and the one-slit control; the Bell worlds, the coupling, orbit and redshift series and the detector definitions |
+| `examples/events/` | The worlds of the law of the ray: one content, two contents, two slits with a detector and the one-slit control; the Bell worlds, the coupling, orbit, redshift and Hubble series and the detector definitions |
 | `tests/` | One module per generic rule on a minimal board (the one reading, the flight, the collision table, the bijection, the detector's record, the re-emission, the clock, the phase window, the world file, the worlds, the preflight, the decoder, retention, the repository gates) |
 | `docs/HIGHLIGHTS.md` | The specification, edited by the model owner |
 | `docs/RAY_LAW.md` | The law of the ray: the design, the implementation contract and the implementation notes |
