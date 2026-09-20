@@ -691,14 +691,40 @@ with the sign restored (`nature_beam.unit_label`, the flight table's
   transit + escaped = (0, 0, 0) at every interval, the books balanced, the
   running transit line equal to the recount, every label in the store 3 x
   u_d at every interval.
-- (c) the bound: a declared ray of `light` (quantum 1) of amount 2^56 is
-  refused by the parser naming "64 x 1 x 72057594037927936 =
-  4611686018427387904" and the bound; amount 2^56 - 1 is accepted; a free
-  family's declared ray likewise; `label_weights` refuses a paid row of
-  content 2^28 and amount 2^28 and a free row of amount 2^56 naming
-  "64 x content x amount up to 4611686018427387904" and accepts the paid
-  row of content 2^28 - 1 and amount 2^28 + 1 (2^56 - 1) and the free row
-  of 2^56 - 1; MOMENTUM_BOUND // 64 = 2^56 - 1.
+- (c) the bound (re-pinned on 2026-09-20, the architect's B1: the
+  product is checked per row before it is formed, the weight times the
+  largest component of the row's u_d): a declared ray of `light` (quantum
+  1) of amount 2^56 is refused by the parser naming "64 x 1 x
+  72057594037927936 = 4611686018427387904" and the bound; amount 2^56 - 1
+  is accepted; a free family's declared ray likewise; `momentum_labels`
+  refuses a paid row of content 2^28 and amount 2^28 on a heading, and a
+  free row of amount 2^56, naming "amount 268435456 and content 268435456
+  at Node [2, 2, 2] ... 72057594037927936 times the largest component 64 =
+  4611686018427387904" (the free row "amount 72057594037927936 and content
+  0"), and accepts the same rows on (1, 1, 0) with the label 2^56 x (45,
+  45, 0) [was: `label_weights` refusing at 64 x 2^56 for every direction];
+  `label_weights` refuses a row whose content x amount cannot be formed
+  (amount 2^32, content 2^31) naming the amount and accepts the paid row
+  of content 2^28 - 1 and amount 2^28 + 1 (2^56 - 1), the free row of
+  2^56 - 1 and the free row of 2^56 (the weight fits; the label decides);
+  MOMENTUM_BOUND // 64 = 2^56 - 1.
+- (d) the wrap that passed (B1): two declared rays of `light` of amount
+  2^55 at (2, 2, 2) on (1, 1, 0) merge at construction into one row of
+  2^56, accepted: the transit line 2^56 x (45, 45, 0) counted and running
+  alike, the books balanced and the running line equal to the recount
+  through three intervals; the same two rays on (1, 0, 0) are refused at
+  construction (the recount forms the label) naming "amount
+  72057594037927936 and content 1 at Node [2, 2, 2] along [64, 0, 0], its
+  weight 72057594037927936 times the largest component 64 =
+  4611686018427387904"; a mirror of `wall` at (5, 5, 0) on a 12 x 12 x 1
+  board re-emitting on (64, 1, 0) what two rays of `light` (quantum 2^25)
+  of amount 2^30 and of the numbers 2 and 3 bring it in one interval (from
+  (4, 5, 0) on +X and (5, 4, 0) on +Y): two `rerelease` records of 2^30
+  with the pushes (2^61, 0, 0) and (0, 2^61, 0), two born rows of weight
+  2^55 within the bound, merged into one row of amount 2^31 and content
+  2^25, and the recount refused naming "amount 2147483648 and content
+  33554432 at Node [5, 5, 0] along [64, 1, 0], its weight
+  72057594037927936 times the largest component 64 = 4611686018427387904".
 
 ## The worlds of the ray law
 

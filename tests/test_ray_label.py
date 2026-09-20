@@ -44,11 +44,36 @@ vector"), written down first:
 (c) the bound: a declared ray of `light` (quantum 1) of amount 2^56 is
     refused by the parser naming 64 x 1 x 2^56 and the bound; amount
     2^56 - 1 is accepted; a free family's declared ray of amount 2^56 is
-    refused and 2^56 - 1 accepted likewise; `label_weights` refuses a row
-    of content x amount = 2^56 (a paid row of content 2^28 and amount
-    2^28; a free row of amount 2^56) naming the number and accepts
-    2^56 - 1 (the paid row of content 2^28 - 1 and amount 2^28 + 1, whose
-    product is 2^56 - 1).
+    refused and 2^56 - 1 accepted likewise; `momentum_labels` checks the
+    product BEFORE it is formed, per row, the weight times the largest
+    component of the row's unit vector (re-pinned on 2026-09-20, the
+    architect's B1): a paid row of content 2^28 and amount 2^28 on a
+    heading (64 e_d) is refused naming the amount, the Node and the
+    product 2^56 x 64 = 2^62, and a free row of amount 2^56 likewise; the
+    same rows on (1, 1, 0), u = (45, 45, 0), are accepted with the label
+    2^56 x (45, 45, 0) (45 x 2^56 fits); `label_weights` refuses a row
+    whose content x amount cannot be formed (content 2^31, amount 2^32)
+    naming the amount and accepts 2^56 - 1 (the paid row of content
+    2^28 - 1 and amount 2^28 + 1) and the free row of 2^56 - 1;
+(d) the wrap that passed (the architect's B1, 2026-09-20; the probe: a
+    row of 2^58 on (64, 1, 0) read a label of 0 for 2^64 with the books
+    balanced): two declared rays of `light` of amount 2^55 at one Node on
+    (1, 1, 0) merge at construction into one row of 2^56 and are
+    accepted, the transit line 2^56 x (45, 45, 0) counted and running
+    alike, the books balanced through three intervals; the same two rays
+    on (1, 0, 0) are refused at construction (the recount forms the
+    label) naming the Node [2, 2, 2], the amount 2^56 and the product
+    2^56 x 64 = 2^62; a mirror of `wall` at (5, 5, 0) re-emitting on
+    (64, 1, 0) what two rays of `light` (quantum 2^25: content 2^25 per
+    unit) of amount 2^30 and of two other numbers bring it in one
+    interval (from (4, 5, 0) on +X and from (5, 4, 0) on +Y; each group's
+    label 2^55 x 64 = 2^61 within the reading's bound) is born as two
+    rows of amount 2^30 (the weight 2^55, within the bound at its
+    birth), merged into one row of amount 2^31 and weight 2^56 by the
+    interval's merge, and the next label formed of that row (the
+    recount) is refused naming the mirror's Node [5, 5, 0], the amount
+    2^31, the content 2^25 and the product 2^56 x 64 = 2^62: no product
+    of the law wraps, every refusal names the Node.
 """
 
 from __future__ import annotations
@@ -60,7 +85,13 @@ import pytest
 
 from event_universe.core.lattice import PORT_HEADINGS
 from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.nature_beam import Q, flight_table, label_weights, unit_label
+from event_universe.events.nature_beam import (
+    Q,
+    flight_table,
+    label_weights,
+    momentum_labels,
+    unit_label,
+)
 from event_universe.events.world import LABEL_SCALE, MOMENTUM_BOUND
 
 LIGHT, M = 0, 1
@@ -251,10 +282,112 @@ def test_the_bound_refuses_a_label_of_two_to_the_fifty_six_and_accepts_one_less(
         parsed = parse_ray_world(world([lamp, holder], in_transit=[transit(family, (1 << 56) - 1)]))
         assert parsed.in_transit[0].amount == (1 << 56) - 1
     assert MOMENTUM_BOUND // Q == (1 << 56) - 1
-    with pytest.raises(OverflowError, match=rf"64 x content x amount up to {64 << 56}"):
-        label_weights(np.array([1 << 28]), np.array([1 << 28]), False)
-    with pytest.raises(OverflowError, match=rf"up to {64 << 56}"):
-        label_weights(np.array([1 << 56]), np.array([0]), True)
+    labels = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS, (1, 1, 0))).labels
+    heading, diagonal = 2, 8
+    node = np.array([[2, 2, 2]], dtype=np.int64)
+    for amount, content, free in ((1 << 28, 1 << 28, False), (1 << 56, 0, True)):
+        with pytest.raises(
+            OverflowError,
+            match=rf"amount {amount} and content {content} at Node \[2, 2, 2\] .* {1 << 56} times "
+            rf"the largest component 64 = {64 << 56}, exceeds",
+        ):
+            momentum_labels(
+                labels, np.array([heading]), np.array([amount]), np.array([content]), free, node
+            )
+        wide = momentum_labels(
+            labels, np.array([diagonal]), np.array([amount]), np.array([content]), free, node
+        )
+        assert wide.tolist() == [[45 << 56, 45 << 56, 0]]
+    with pytest.raises(OverflowError, match=rf"amount {1 << 32} and content {1 << 31}"):
+        label_weights(np.array([1 << 32]), np.array([1 << 31]), False)
     accepted = label_weights(np.array([(1 << 28) + 1]), np.array([(1 << 28) - 1]), False)
     assert accepted.tolist() == [(1 << 56) - 1]
     assert label_weights(np.array([(1 << 56) - 1]), np.array([0]), True).tolist() == [(1 << 56) - 1]
+    assert label_weights(np.array([1 << 56]), np.array([0]), True).tolist() == [1 << 56]
+
+
+def test_a_merged_row_beyond_the_bound_is_refused_before_the_product_naming_the_node():
+    """(d)."""
+    holder = {"position": [1, 1, 1], "family": "m", "amount": 4, "fixed": True}
+
+    def pair(direction: list[int]) -> list[dict[str, object]]:
+        return [
+            {
+                "position": [2, 2, 2],
+                "family": "light",
+                "number": 1,
+                "direction": direction,
+                "amount": 1 << 55,
+                "phase": 0,
+            }
+            for _ in range(2)
+        ]
+
+    lamp = {"position": CENTRE, "family": "light", "amount": 4, "fixed": True}
+    simulation = RaySimulation(parse_ray_world(world([lamp, holder], in_transit=pair([1, 1, 0]))))
+    store = simulation.stores[LIGHT]
+    assert store.size == 1 and store.amount.tolist() == [1 << 56]
+    books = simulation.books(recount=True)
+    assert books["momentum"]["transit"] == [45 << 56, 45 << 56, 0] == simulation.transit_momentum()
+    for _ in range(3):
+        simulation.step()
+        assert simulation.books(recount=True)["balanced"]
+        assert simulation.transit_momentum() == simulation.recount()["momentum"]
+    with pytest.raises(
+        OverflowError,
+        match=rf"amount {1 << 56} and content 1 at Node \[2, 2, 2\] along \[64, 0, 0\], its weight "
+        rf"{1 << 56} times the largest component 64 = {64 << 56}, exceeds",
+    ):
+        RaySimulation(parse_ray_world(world([lamp, holder], in_transit=pair([1, 0, 0]))))
+
+    mirror = {
+        "position": [5, 5, 0],
+        "family": "wall",
+        "amount": 1,
+        "fixed": True,
+        "table": {"light": "rerelease"},
+        "directions": [[64, 1, 0]],
+    }
+    others = [{"position": [10, y, 0], "family": "wall", "amount": 1, "fixed": True} for y in (9, 10)]
+    arriving = [
+        {
+            "position": [4, 5, 0],
+            "family": "light",
+            "number": 2,
+            "direction": [1, 0, 0],
+            "amount": 1 << 30,
+        },
+        {
+            "position": [5, 4, 0],
+            "family": "light",
+            "number": 3,
+            "direction": [0, 1, 0],
+            "amount": 1 << 30,
+        },
+    ]
+    document = world(
+        [mirror, *others],
+        shape=[12, 12, 1],
+        boundary={"z": "periodic"},
+        directions=[[64, 1, 0]],
+        families=[{"name": "light", "quantum": 1 << 25}, {"name": "wall", "quantum": 1}],
+        in_transit=arriving,
+        ticks=2,
+    )
+    records: list[dict[str, object]] = []
+    simulation = RaySimulation(parse_ray_world(document), records.append)
+    simulation.step()
+    re_emitted = [r for r in records if r["event"] == "rerelease"]
+    assert [(r["number"], r["amount"], r["push"]) for r in re_emitted] == [
+        (2, 1 << 30, [1 << 61, 0, 0]),
+        (3, 1 << 30, [0, 1 << 61, 0]),
+    ]
+    store = simulation.stores[LIGHT]
+    assert store.size == 1 and store.amount.tolist() == [1 << 31]
+    assert store.node.tolist() == [store.flat((5, 5, 0))] and store.content.tolist() == [1 << 25]
+    with pytest.raises(
+        OverflowError,
+        match=rf"amount {1 << 31} and content {1 << 25} at Node \[5, 5, 0\] along \[64, 1, 0\], "
+        rf"its weight {1 << 56} times the largest component 64 = {64 << 56}, exceeds",
+    ):
+        simulation.books(recount=True)

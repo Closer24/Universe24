@@ -99,10 +99,15 @@ and gives back, what the transit line of the books sums; no momentum is
 read off a Port anywhere.
 The bound check `MOMENTUM_BOUND` (2^62 - 1) applies to every component, so
 `Q x content x amount` must fit (content x amount below 2^56 per row); the
-parser refuses a world whose declared `in_transit`, lamp rate or
-re-emission could exceed it, naming the numbers (risk, section 9), and the
-label's weight is checked again before every product the law forms
-(`label_weights`, the same bound).
+parser refuses a world whose declared `in_transit`, lamp rate or free
+release could exceed it, naming the numbers (risk, section 9), and every
+label the law forms (a birth, a re-emission, a home, a face click, the
+recount) is checked per row BEFORE the product is formed, the weight times
+the largest component of the row's `u_d` within the bound
+(`momentum_labels`, `label_overflow_rows`; since 2026-09-20, note 25: a
+merged row can outgrow the parser's bound, and until then the born
+labels' product was checked after it was formed, so a wrap inside the
+bound passed silently); the refusal names the Node and the amount.
 
 World-file keys added: `"law": "rays"`; `directions` (optional, at the world:
 a list of integer vectors beyond the six headings that any lamp or re-emitter
@@ -1070,3 +1075,22 @@ implementation's part of the contract. The design above is unchanged.
     phase, `run.json` carries no `measured[].record` and its counters'
     `phase` is the last click's (VALIDATION.md). `Measured.record` and
     the per-Node threshold are gone (`DetectorSet`, MIGRATION.md).
+25. **The label's product checked before it is formed** (the architect's
+    B1, blocking, 2026-09-20; `tests/test_ray_label.py` (c), (d)). Until
+    this note `momentum_labels` bounded the weight at `Q x weight` and
+    the births' labels were checked after the int64 product; the
+    architect's probe (a heading row of amount 2^58 re-emitted on
+    (64, 1, 0), before the label along `u_d`) read a label of 0 where the
+    exact is 2^64, the books balanced at the wrong integer. Now the one
+    pre-check `label_overflow_rows` (the weight times the largest
+    component of the row's unit vector within 2^62 - 1, both products
+    tested by division, nothing formed) runs per row inside
+    `momentum_labels` and, in bulk with the same rule, before the home
+    and the taken rows' labels of step 4 (`first_label_overflow`); the
+    post-check at the births is deleted; the refusal names the Node, the
+    amount, the content, the unit vector and the product. The check is
+    exact per direction: a row of weight 2^56 on (1, 1, 0) (u = (45, 45,
+    0)) is accepted where the heading's 64 x 2^56 = 2^62 is refused. The
+    parser's bound (Q x content x amount on a declared ray, a lamp's or
+    a free release) is unchanged and conservative; what it does not
+    reach, a merged row, is refused at the next label formed of it.

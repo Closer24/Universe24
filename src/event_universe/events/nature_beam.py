@@ -523,49 +523,104 @@ def exact_column_sums(values: np.ndarray) -> list[int]:
     return [int(v) for v in values.sum(axis=0, dtype=object)]
 
 
-def label_bound_error(largest: int) -> OverflowError:
-    """The refusal of a row whose label could pass the bound: its weight
-    (content x amount, the amount for a free family) times Q."""
+def label_bound_error(
+    amount: int, content: int, free: bool, unit: Vector, node: Address3 | None
+) -> OverflowError:
+    """The refusal of a row whose momentum label could pass the bound,
+    naming the Node, the amount, the content, the unit vector of the
+    direction and the product that would leave the register."""
+    weight = amount if free else amount * content
+    reach = max(abs(component) for component in unit)
+    where = "" if node is None else f" at Node {list(node)}"
     return OverflowError(
-        f"{RAYS_LAW}: the momentum label of a row, {Q} x content x amount up to {Q * largest}, "
-        f"exceeds the integer bound {MOMENTUM_BOUND} (content x amount at most {MOMENTUM_BOUND // Q})"
+        f"{RAYS_LAW}: the momentum label of a row of amount {amount} and content {content}{where} "
+        f"along {list(unit)}, its weight {weight} times the largest component {reach} = "
+        f"{weight * reach}, exceeds the integer bound {MOMENTUM_BOUND}"
     )
 
 
-def largest_label_weight(amount: np.ndarray, content: np.ndarray, free: bool) -> int:
-    """The largest label weight among rows: the largest amount for a free
-    family, the largest amount times the largest content for a paid one."""
-    largest = int(np.abs(amount).max(initial=0))
-    if not free:
-        largest *= int(np.abs(content).max(initial=0))
-    return largest
+def label_overflow_rows(
+    amount: np.ndarray, content: np.ndarray, free: bool, unit: np.ndarray
+) -> np.ndarray:
+    """The pre-check of the one label, per row and BEFORE any product is
+    formed (ARCHITECTURE: never wrap): a row overflows when its weight
+    (the amount for a free family, content x amount for a paid one) cannot
+    be formed in the register, or when the weight times the largest
+    component of its unit vector `unit` (rows, 3) exceeds the bound. Both
+    products are tested by division, so nothing wraps in the test itself.
+    Returns the mask of the overflowing rows."""
+    a = np.abs(np.asarray(amount, dtype=np.int64))
+    if free:
+        fits = np.ones(a.shape, dtype=bool)
+        weight = a
+    else:
+        c = np.abs(np.asarray(content, dtype=np.int64))
+        fits = a <= MOMENTUM_BOUND // np.maximum(c, 1)
+        weight = a * np.where(fits, c, 0)
+    reach = np.abs(np.asarray(unit, dtype=np.int64)).max(axis=1)
+    result: np.ndarray = ~fits | ((reach > 0) & (weight > MOMENTUM_BOUND // np.maximum(reach, 1)))
+    return result
 
 
 def label_weights(amount: np.ndarray, content: np.ndarray, free: bool) -> np.ndarray:
     """The weight of a row's momentum label: the amount for a free family
     (its unit carries no content; its label is the unit), content x amount
-    for a paid one, bounded before the product is formed: a row whose
-    label, Q times its weight, could pass the integer bound is refused
-    loudly with the number (content x amount below 2^56)."""
+    for a paid one. The product is bounded before it is formed: a row
+    whose content x amount could leave the register is refused. The label
+    itself, the weight along the unit vector, is bounded per direction by
+    `momentum_labels`, the one place a label is formed."""
     weight = np.asarray(amount, dtype=np.int64)
-    largest = largest_label_weight(weight, content, free)
-    if Q * largest > MOMENTUM_BOUND:
-        raise label_bound_error(largest)
     if free:
         return weight
-    result: np.ndarray = weight * np.asarray(content, dtype=np.int64)
+    c = np.asarray(content, dtype=np.int64)
+    over = np.flatnonzero(np.abs(weight) > MOMENTUM_BOUND // np.maximum(np.abs(c), 1))
+    if over.shape[0]:
+        i = int(over[0])
+        raise label_bound_error(int(weight[i]), int(c[i]), free, ZERO3, None)
+    result: np.ndarray = weight * c
     return result
 
 
 def momentum_labels(
-    labels: np.ndarray, direction: np.ndarray, amount: np.ndarray, content: np.ndarray, free: bool
+    labels: np.ndarray,
+    direction: np.ndarray,
+    amount: np.ndarray,
+    content: np.ndarray,
+    free: bool,
+    node: np.ndarray | Address3 | None = None,
 ) -> np.ndarray:
     """The one momentum label of rows of rays, (rows, 3): the label weight
     (`label_weights`) along the unit vector of the direction at the scale
     Q (`labels`, the flight table's `labels`), content x amount x u_d for
-    a paid family, amount x u_d for a free one."""
+    a paid family, amount x u_d for a free one. The product is checked
+    BEFORE it is formed, per row, weight x max|u_d| within 2^62 - 1
+    (`label_overflow_rows`); the first row beyond it is refused loudly
+    naming its Node (`node`: the coordinates per row, (rows, 3), or the
+    one Node of every row) and its amount. Every place a label is formed
+    (a birth, a re-emission, a home, a face click, the transit line's
+    recount) comes through here or through the same per-row rule taken
+    in bulk (`first_label_overflow`)."""
+    d = np.asarray(direction, dtype=np.int64)
+    unit = labels[d]
+    over = np.flatnonzero(label_overflow_rows(amount, content, free, unit))
+    if over.shape[0]:
+        i = int(over[0])
+        where: Address3 | None
+        if node is None:
+            where = None
+        elif isinstance(node, np.ndarray):
+            where = (int(node[i, 0]), int(node[i, 1]), int(node[i, 2]))
+        else:
+            where = node
+        raise label_bound_error(
+            int(amount[i]),
+            int(content[i]),
+            free,
+            (int(unit[i, 0]), int(unit[i, 1]), int(unit[i, 2])),
+            where,
+        )
     weight = label_weights(amount, content, free)
-    result: np.ndarray = labels[np.asarray(direction, dtype=np.int64)] * weight[:, None]
+    result: np.ndarray = unit * weight[:, None]
     return result
 
 
@@ -777,7 +832,14 @@ class RayStore:
         """The momentum labels of the given rows (`momentum_labels`, the one
         label of the law) along the unit vectors `unit` (the flight table's
         `labels`)."""
-        return momentum_labels(unit, self.direction[rows], self.amount[rows], self.content[rows], free)
+        return momentum_labels(
+            unit,
+            self.direction[rows],
+            self.amount[rows],
+            self.content[rows],
+            free,
+            np.stack(self.coordinates(self.node[rows]), axis=1),
+        )
 
 
 def segment_sums(keys: np.ndarray, values: np.ndarray, size: int) -> np.ndarray:
@@ -962,26 +1024,34 @@ def first_reading_overflow(
 
 
 def first_label_overflow(
-    group: np.ndarray, groups: int, amount: np.ndarray, content: np.ndarray, free: bool
+    group: np.ndarray,
+    amount: np.ndarray,
+    content: np.ndarray,
+    free: bool,
+    unit: np.ndarray,
+    node_of: Callable[[int], Address3],
 ) -> tuple[int, OverflowError] | None:
-    """The bound of `label_weights` taken per group in bulk (Q times the
-    weight within the bound): None when every group passes, else the first
-    failing group in group order with the error `label_weights` raises."""
+    """The pre-check of `momentum_labels` taken per group in bulk, the same
+    per-row rule (`label_overflow_rows`: the weight times the largest
+    component of the row's unit vector `unit` within the bound, tested
+    before any product): None when every row passes, else the lowest
+    failing group with the error the per-row check raises, naming the
+    Node of its first failing row (`node_of` maps a row index to its
+    Node) and the row's amount."""
     if amount.shape[0] == 0:
         return None
-    a = np.abs(amount)
-    c = np.ones_like(a) if free else np.abs(content)
-    if Q * int(a.max()) * int(c.max()) <= MOMENTUM_BOUND:
+    over = np.flatnonzero(label_overflow_rows(amount, content, free, unit))
+    if over.shape[0] == 0:
         return None
-    a_max = np.zeros(groups, dtype=np.int64)
-    np.maximum.at(a_max, group, a)
-    c_max = np.zeros(groups, dtype=np.int64)
-    np.maximum.at(c_max, group, c)
-    for g in range(groups):
-        largest = int(a_max[g]) * int(c_max[g])
-        if Q * largest > MOMENTUM_BOUND:
-            return g, label_bound_error(largest)
-    return None
+    g = int(group[over].min())
+    i = int(over[group[over] == g][0])
+    return g, label_bound_error(
+        int(amount[i]),
+        int(content[i]),
+        free,
+        (int(unit[i, 0]), int(unit[i, 1]), int(unit[i, 2])),
+        node_of(i),
+    )
 
 
 def first_moment_overflow(
@@ -1360,11 +1430,19 @@ def nature_beam(
                 total = grouped_sums(amount[home], starts, widest)
                 carried = grouped_sums(amount[home] * content[home], starts, widest)
                 taken_in = np.zeros((starts.shape[0], DIMENSIONS), dtype=np.int64)
-                overflow = first_label_overflow(ev_h, events, amount[home], content[home], free)
+                home_unit = unit[direction[home]]
+                overflow = first_label_overflow(
+                    ev_h,
+                    amount[home],
+                    content[home],
+                    free,
+                    home_unit,
+                    lambda i: entries[int(ev_h[i])].position,
+                )
                 if overflow is not None:
                     failures[(overflow[0], family, 0, 0, 1)] = overflow[1]
                 weights = amount[home] if free else amount[home] * content[home]
-                home_labels = unit[direction[home]] * weights[:, None]
+                home_labels = home_unit * weights[:, None]
                 if not free:
                     taken_in = grouped_sums(home_labels, starts, widest)
                 # The home rows leave the store: their labels leave the
@@ -1526,7 +1604,9 @@ def nature_beam(
             # (charge, mass) class of the charged rows a charged reader met,
             # in the order of first appearance, the part the electric push
             # reads off the clock.
-            overflow = first_label_overflow(of_row, groups, a_t, c_t, free)
+            overflow = first_label_overflow(
+                of_row, a_t, c_t, free, v_direction, lambda i: entries[int(ev_t[i])].position
+            )
             if overflow is not None:
                 fail(overflow[0], 3, overflow[1])
             weights = a_t if free else a_t * c_t
@@ -1916,15 +1996,13 @@ def nature_beam(
             direction_column = np.array([b[0] for b in born], dtype=np.int64)
             amount_column = np.array([b[1] for b in born], dtype=np.int64)
             content_column = np.array([b[2] for b in born], dtype=np.int64)
-            # The labels of the born rows (the one label; bounded before the
-            # product): a paid family's emitter takes their sum as its
+            # The labels of the born rows (the one label, its product checked
+            # per row before it is formed, refused naming the Node and the
+            # amount): a paid family's emitter takes their sum as its
             # recoil, a lamp's release and a re-emission alike.
-            labels = momentum_labels(unit, direction_column, amount_column, content_column, free)
-            if int(np.abs(labels).max(initial=0)) > MOMENTUM_BOUND:
-                raise OverflowError(
-                    f"{RAYS_LAW}: the momentum label of a release of measured event {entry.number} at "
-                    f"{list(entry.position)} exceeds the integer bound {MOMENTUM_BOUND}"
-                )
+            labels = momentum_labels(
+                unit, direction_column, amount_column, content_column, free, entry.position
+            )
             born_momentum = exact_column_sums(labels)
             if not free:
                 entry.momentum = [
