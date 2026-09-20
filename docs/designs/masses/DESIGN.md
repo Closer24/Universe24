@@ -10,7 +10,9 @@ beside it: `ladder.py` with its output `ladder.out` (standalone integer
 arithmetic; the one thing imported from the engine is the collision
 table's own class function), `cavity_read.py` with `cavity.out` (the
 readings of two engine runs, the worlds in
-[`examples/events/masses/`](../../../examples/events/masses/README.md)).
+[`examples/events/masses/`](../../../examples/events/masses/README.md)),
+`cavity_click_read.py` with `cavity_click.out` (the same two worlds under
+the record click of `amplitude-v1`, the worlds in `worlds/` beside this file, run on the work branch's source; a source without the key refuses them).
 Every integer below is from those outputs unless marked "stated". The law
 read is [BEAM_LAW](../../BEAM_LAW.md) with its notes 30 to 36, the engine's
 `nature_beam.py`, `engine.py`, `measured.py`, `world.py` and
@@ -31,6 +33,48 @@ the smallest rule that would make a ladder and shows, with the numbers,
 that the ladder it makes disagrees with nature.
 
 ---
+
+## 0. The detector reading of every observable, under the record click
+
+The model owner's instruction of the day (relayed by the Boss session):
+the mathematician and the physicist use the click and the quantum in their
+checks, because they are behind a detector. So before any computation,
+each observable this design speaks of is stated as a DETECTOR reading
+under the record click of `amplitude-v1` (the work branch
+`claude/amplitude-impl` at `62369cb8`: the world key `amplitude`, one
+record per birth of a lamp, the world the list of gathers, each gather
+carrying the `content` and the `momentum` the chosen rows brought), and
+every GameBoard count below appears as a labelled control only.
+
+| Observable | Its DETECTOR reading under the record click | The GameBoard control (never compared with nature) |
+| --- | --- | --- |
+| the content M of a lamp (its mass) | the `content` of the gathers of a `sum` set that receives its light: one click per birth, each carrying h x s with s = `by_clock(age, M, K)` the emitter's turn at that birth, so a run of clicks reads M / K (E = h f, the quantum's content) and its variance the floor of the clock; `cavity_click.out` | `state.json`'s `held` of the lamp |
+| a fixed point of content | a set's clicks carrying the same content from birth to birth for as long as the run lasts, at both ends of an exchange; a content that drifts is a run of clicks whose content moves (8 falling to 5, 2 rising to 5 in `cavity_unequal_click`) | the lamps' `held` over the ticks and the books' lines |
+| a ladder of contents (had the law one) | the set of contents per click that a cavity's clicks settle on when the lamp's content is declared off the ladder: the click content would stop at a rung; under the law as it stands the clicks settle on the equal split of any total (section 2), so there is no rung to read | the exchange map of `ladder.py` C |
+| the mass of a free body (matter: the proton, the electron) | a free family births no record (its rays carry no content and no amplitude, BEAM_LAW note 37: "a free family's rows (no record) keep the unkeyed apportioning"); its mass is read only through the light it exchanges (a lamp it holds, or a paid quantum it absorbs and the recoil the next click carries in `momentum`), or through its clock's rate under a suspension read as the content of the quanta it releases; there is no click of the body's own | the declared `amount`; the pushes' `read` lines (series I) |
+| a charge (rho x M) | the deflection of a body's light: the gathers' `node` at a screen after the body has moved under another's field, the same reading that series K makes of a bent beam; or the recoil `momentum` of a click of a quantum absorbed by a charged body in a field; a charge per unit of content is never read alone, only rho_A rho_B x M_A through the push, so a click reads the product of two charges and one content | the push's `read` records, the `contact` lines |
+| a binding energy (the mass defect) | the content of the quanta a bound lamp emits against a free one's (the bound clock slower under a suspension gives smaller turns, so smaller contents per click: the redshift of series E read as E = h f) | the clock's `waited` against `age` |
+| the harmonic ladder of section 6 (the smallest rule, NOT the law) | the contents of a cavity's clicks stopping at the upper edge of a band: a click content that no longer falls; the rung spacing K N / tau read as the difference between two such stopping contents | the map of `ladder.py` E |
+
+What the record click adds to the readings of section 2, measured
+(`cavity_click.out`, the same two worlds under the key, each lamp a
+one-Node `sum` set, the branch's source): every birth is one record of
+one row (one direction), one offer, T = 1, so the cell is certain and the
+click lands at the partner every time; the world's list has 11 976
+gathers over 6000 intervals in `cavity_unequal_click` (5988 per set, from
+tick 13) and 1176 over 600 in `cavity_equal_click`; the content per click
+at the set of lamp B reads 8, 7, 5, 6, 5 at the ticks 13, 1510, 3007,
+4504, 6000 and at the set of lamp A 2, 3, 4, 5, 5 (the floor of the clock
+makes 4, 5, 6 alternate around M / K), 5 at every click of the equal
+world; the sum of the contents clicked is 23 749 into A and 35 650 into
+B (A released 35 711 = B's 35 650 plus the 61 still in flight toward
+it), the lamps' 20806 and 20035 at the end with 119 in transit and the
+initial 40960: the books balanced at every tick, `amplitude-v1` in
+the record, `cancelled` 0 (one row per record, nothing to cancel). The
+lattice's contents under the key are those without it integer by integer
+((20806, 20035) and (20420, 20420)): the record click changes what is
+read, not what the lamps hold, as it should (the key changes no row's
+flight).
 
 ## 1. What "a loop closes" means in the Beam Law
 
@@ -111,11 +155,12 @@ integer by integer at 600 intervals ((29634, 11209) both):
 
 So the set of fixed points of the exchange is a **continuum**: one per
 total, and the total is a declared number. There is no rung. The detector
-reading of the same fact (`cavity.out`): the content per click at each
-reader is the partner's turn at the unit's birth (E = h f read at the
+reading of the same fact, without the key (`cavity.out`) and under the
+record click (`cavity_click.out`, section 0): the content per click at
+each reader is the partner's turn at the unit's birth (E = h f read at the
 receiver), 8 and 2 at the start of the unequal world, 5 and 5 at its end,
-5 throughout the equal one; nothing in the record singles out 5, or any
-other turn.
+5 throughout the equal one; nothing in the list of clicks singles out 5,
+or any other turn.
 
 ## 3. Does the law select contents? The bounds, and what is not a rung
 
@@ -334,6 +379,11 @@ PYTHONPATH=src python docs/designs/masses/ladder.py            # < 1 s; the outp
 PYTHONPATH=src python -m event_universe --init examples/events/masses/cavity_unequal.json --output runs/masses/cavity_unequal
 PYTHONPATH=src python -m event_universe --init examples/events/masses/cavity_equal.json --output runs/masses/cavity_equal
 PYTHONPATH=src python docs/designs/masses/cavity_read.py runs/masses      # the output is cavity.out
+# under the record click, on the work branch claude/amplitude-impl (62369cb8) checked out at AMP:
+# (the _click worlds live beside this design, docs/designs/masses/worlds/: a source without the key refuses them)
+PYTHONPATH=AMP/src python -m event_universe --init docs/designs/masses/worlds/cavity_unequal_click.json --output runs/masses_click/cavity_unequal
+PYTHONPATH=AMP/src python -m event_universe --init docs/designs/masses/worlds/cavity_equal_click.json --output runs/masses_click/cavity_equal
+PYTHONPATH=AMP/src python docs/designs/masses/cavity_click_read.py runs/masses_click   # the output is cavity_click.out
 ```
 
 Environment of 2026-09-20: Python 3.14.7, numpy 2.5.3, headless; the two

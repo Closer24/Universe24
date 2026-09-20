@@ -23,6 +23,7 @@ content s toward the other, and the other measures it by the keys' rule
 | --- | --- | --- |
 | `cavity_unequal.json` | 32768 and 8192 (turns 8 and 2), 6000 intervals | whether the contents move, and toward what |
 | `cavity_equal.json` | 20480 and 20480 (turns 5 and 5), 600 intervals | whether an equal split is a fixed point |
+| [`docs/designs/masses/worlds/cavity_unequal_click.json`, `cavity_equal_click.json`](../../../docs/designs/masses/worlds/) | the same two worlds under the record click (`amplitude` true, each lamp a one-Node detector reading `sum`); they run on the work branch `claude/amplitude-impl` (62369cb8) and are refused by a source without the key, so they live beside the design until the one click lands on main | the same, as the world's list of clicks: the content of each gather is the partner's turn at the birth (E = h f) |
 
 ## The expectation, written before the runs (the mathematician's integers)
 
@@ -44,7 +45,13 @@ PYTHONPATH=src python -m event_universe --init examples/events/masses/cavity_equ
 PYTHONPATH=src python docs/designs/masses/cavity_read.py runs/masses
 ```
 
-Each run takes seconds. The readings of 2026-09-20 are in
+Each run takes seconds. The `_click` worlds (beside the design) are run the
+same way with the amplitude branch's `src` on `PYTHONPATH` and read by
+`docs/designs/masses/cavity_click_read.py` (`cavity_click.out`: 11 976
+gathers over 6000 intervals, the content per click 8 and 2 at the start
+and 5 and 5 at the end of the unequal world, 5 throughout the equal one;
+the lamps' contents the same as without the key, integer by integer). The
+readings of 2026-09-20 without the key are in
 `docs/designs/masses/cavity.out` (every line labelled DETECTOR or
 GAMEBOARD): `cavity_unequal` (20806, 20035) at 6000, `cavity_equal`
 (20420, 20420) at 600, the books balanced at every tick, the content per
