@@ -136,8 +136,12 @@ arrive are absorbed and the layer accumulates
 X \mathrel{+}= \sum 32\,w\,C_N[p + f(\tau, t)],\qquad Y \mathrel{+}= \sum 32\,w\,S_N[p + f(\tau, t)],
 \end{equation}
 with $f(\tau, t) = \lfloor t n/d\rfloor - \lfloor (t-\tau) n/d\rfloor$ the
-family's frequency $[n, d]$ read on the age. The offer of (set, $\ell$) is
-$W = (X^2 + Y^2)/m$, all rows at a set sharing $m$. When the record's live
+family's frequency $[n, d]$ read on the age. The pointer is kept per Node:
+interference is coherent within one Node only, and the offer of a set of
+Nodes (a detector, a face) and label $\ell$ is the sum over its Nodes of
+$(X_x^2 + Y_x^2)/m$, one cell of the ladder, the click landing at the Node
+within the set that $u$ selects by the same rungs; all rows at a set share
+$m$. When the record's live
 count reaches $0$, with $T = \sum W$ over its offers and the cumulative
 sums $C_1 \le \dots \le C_K = T$ in the declared order,
 \begin{equation}
@@ -319,7 +323,12 @@ resolution $1/256$ of the circle's tables.
 [Every table of this section is filled from the experiments register
 after the runs of \texttt{amplitude-v1} are registered; the entries below
 are the design's expected integers, marked [design], and are replaced by
-the registered values with the run's fingerprint.]
+the registered values with the run's fingerprint. The implementation's
+own report of its third stage (the dated log of 2026-09-20, record 94)
+gives the same Mach-Zehnder and Elitzur-Vaidman integers on the engine
+and two measured departures on the two slits (the tables' rounding moves
+one rung by one, and the acceptance world's geometry changed); nothing of
+it is cited until it is in the register.]
 
 \begin{table}[H]\centering\small
 \begin{tabular}{llll}

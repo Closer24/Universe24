@@ -179,3 +179,41 @@ Seven pages read cold. Each point, with what the draft now does:
 Not done, and not attempted: an independent derivation of the square.
 The paper claims the model, its theorems and its computed departures,
 which is the claim the reader said can be supported.
+
+## The Highlights read on 2026-09-20 (records 89 to 100 of the dated log), and the sharpest claim
+
+What changed for the paper: **record 96** decides that interference is
+coherent within one Node only (a set of Nodes is one cell whose weight is
+the sum over its Nodes of the per-Node squared pointer); Definition 3 of
+the draft says so now. **Record 94** reports the single quantum on the
+engine (the Mach-Zehnder and Elitzur-Vaidman integers as designed; the two
+slits with two measured departures: the tables' rounding makes the
+weights depend on u by parts in a thousand and moves one rung, and the
+acceptance world's geometry changed); cited only once registered.
+**Record 97** proposes, the owner's decision pending, that u is the
+record's own field unread by the lattice and that a row pushes matter
+with its share of the record's label; the draft already says no rule
+reads u, and the meeting's reading of the path phase enters Definition 2
+when decided. **Records 89 and 93** carry the statement this plan's
+computation refuted ("S = 2 sqrt 2 - epsilon(N), epsilon <= 4/N, never
+above Tsirelson; N >= about 4000; 12 bits"): the Highlights' owner should
+mark them superseded by the computation (`checks/s_of_n.txt`: 252 of 512
+N above 2 sqrt 2; the bound 8/N + 0.044 two-sided; the set of admissible N
+from Poh et al. starting at 184); the bits-per-click bound of record 93
+(at most log2 N per click) stands on its own and does not need the Bell
+bound. **Record 95** asked for the formal part now: done.
+
+The sharpest claim, in the Highlights' own words and the draft's terms:
+"The world is the list of clicks" made exact. One measurement rule, the
+click that reads one record's squared sum and lets the birth phase choose
+on nearest-integer rungs, put in once; from it and the lattice's
+invertible rules, four theorems (injective between clicks given the
+apparatus's record; the split an exact isometry; the marginals exactly
+1/2, no-signalling; the finite-N Bell value within 8/N + 0.044 of
+2 sqrt 2, two-sided) and one table of exact rationals S(N); and the
+measurements of the finished engine (the Mach-Zehnder 64/0, 0/64, 32/32;
+Elitzur-Vaidman 32/17/15; the pair's cells 27/5/5/27 at N = 64 and 181/64
+at 1024 and 4096; GHZ's zeros). Everything else is a hypothesis with its
+status. What makes it sharp is what it refuses: no derivation of the
+square, no fixed N, no claim below Tsirelson, no number before the
+register.
