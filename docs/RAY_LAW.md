@@ -290,7 +290,11 @@ order with each step's inverse:
    the labels as weights (`amount x u_d` for a free family, `content x
    amount x u_d` for a paid one, the unit vectors of section 2), and
    `kappa(A, B)` =
-   `-M_A` for a free family's ray (gravity, M_A the reader's content), `+
+   `-M_A` for a free family's ray (gravity, M_A the reader's content as
+   the frame read it at the start of the interval, `frame_content`, the
+   same for every family's rays whatever the family order: a click of
+   the interval joins the content the next frame reads; the
+   orchestrator's D1 on the architect's B3, 2026-09-20, note 26), `+
    q_A x q_B / M_B` for a charged free family's ray (electricity, taken as
    the whole part off the reader's clock, `sign x by_clock(age_A, |V q_A
    q_B|, M_B)`, per emitter factor (q_B, M_B) carried on the rows), `+ 1`
@@ -1094,3 +1098,19 @@ implementation's part of the contract. The design above is unchanged.
     parser's bound (Q x content x amount on a declared ray, a lamp's or
     a free release) is unchanged and conservative; what it does not
     reach, a merged row, is refused at the next label formed of it.
+26. **M_A is the content the frame read** (the architect's B3, blocking;
+    the orchestrator's D1, 2026-09-20; `tests/test_ray_push.py` (j)).
+    Until this note the push read `Measured.content` inside the
+    per-family loop of step 4, after the clicks of the families before
+    it in family order had joined `held`, so the world file's family
+    order changed the integers (the architect's probe: `[A, B]` pushed
+    (-356544, 0, 0) against `[B, A]` (-378432, 0, 0), the first read
+    -960 against -1536). Now the frame reads every measured event's
+    content once into `frame_content` before the law runs (`_frame_all`,
+    beside `clock_age` and `turn`; the turn is read off the same
+    content) and the push, gravity and electricity alike, reads that:
+    order-independent, and the click of an interval pushes from the next
+    interval on. No registered run has a paid click and a free read at
+    one reader in one interval, so every pin and every registered
+    reading is unchanged; the step rule (`_move`) reads the live content
+    after the interval as before.

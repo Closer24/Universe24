@@ -253,16 +253,21 @@ class RaySimulation:
         )
 
     def _frame_all(self) -> None:
-        """The clocks' frame, every measured event at once: one that owes a
-        count pays it by one (no self-creation, no release, no turn;
-        `waited` counts the interval); one that owes nothing self-creates:
-        its age advances and its turn is read off its clock, `by_clock(age,
-        content, K)`, the turns of the phased families taken in one array
-        where their products fit the register (row by row otherwise), and
-        refused at half the circle."""
+        """The clocks' frame, every measured event at once: its content is
+        read once into `frame_content` (M_A of the interval's push, RAY_LAW
+        step 4); one that owes a count pays it by one (no self-creation, no
+        release, no turn; `waited` counts the interval); one that owes
+        nothing self-creates: its age advances and its turn is read off its
+        clock, `by_clock(age, content, K)`, the turns of the phased families
+        taken in one array where their products fit the register (row by
+        row otherwise), and refused at half the circle."""
         phased: list[Measured] = []
         for entry in self.measured.values():
             entry.turn = 0
+            # The content the frame reads, once, for the turn and for the
+            # push of this interval (M_A at the frame: the clicks of the
+            # interval join `held` after it).
+            entry.frame_content = entry.content
             if entry.owed > 0:
                 entry.owed -= 1
                 entry.waited += 1
@@ -277,7 +282,7 @@ class RaySimulation:
             return
         clock = self.world.clock
         ages = [entry.clock_age for entry in phased]
-        contents = [entry.content for entry in phased]
+        contents = [entry.frame_content for entry in phased]
         if (max(ages) + 1) * max(contents) <= MOMENTUM_BOUND:
             age_column = np.array(ages, dtype=np.int64)
             content_column = np.array(contents, dtype=np.int64)

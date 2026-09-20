@@ -123,8 +123,11 @@ step 2, and section 10, note 16).
 
 **The frame** (`RaySimulation.step`, `engine.py`): for every measured
 event, its clock (its age, the turn `by_clock(age, content, K)`, its
-release rate, its lamp's rate and window, its owed count) is read and
-handed to `nature_beam` with the stores; `nature_beam` returns the readings
+release rate, its lamp's rate and window, its owed count) and its content
+(`frame_content`, read once before the law: M_A of the interval's push,
+the same whatever the order in which the families' clicks join `held`
+within the interval; [RAY_LAW note 26](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+are read and handed to `nature_beam` with the stores; `nature_beam` returns the readings
 (the count, the flow and the presence per Node, dense arrays read-only, and
 `per_port`, the amount that crossed into each Node through each Port this
 interval, a diagnostic of the walk for Gauss's flux); the frame turns the
@@ -144,7 +147,9 @@ an interval where nothing is owed) and books the interval.
 inverse collision and the inverse walk on a board without a measured event
 (the bijection of [RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam);
 with a measured event on the board it refuses: the click is the one-way
-border). The frame computes no physics.
+border). The frame computes no physics of the ray; the measured event's
+clock rules (the turn, the owed count, the step rule with the width) are
+its own, placed in the frame by design ([RAY_LAW section 9](RAY_LAW.md#9-implementation-plan-one-pr-one-agent-and-risks)).
 
 ### A release costs the emitter by its phase rate
 

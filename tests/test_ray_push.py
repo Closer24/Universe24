@@ -85,7 +85,22 @@ event `fixed`; a 12 x 1 x 1 bar with y and z periodic (the stub: a ray on
     bystander rays of the probe's number (charge 1, mass 5 on their record)
     parked on the stub of the y axis at x = 2 and 3, rows before the probe's
     in the store: every push (-1088, 0, 0) and `pushed` (-21760, 0, 0) as
-    in (a), the bystanders untouched.
+    in (a), the bystanders untouched;
+(j) M_A is the content the frame read (the architect's B3, the
+    orchestrator's D1, 2026-09-20): a 13 x 1 x 1 bar (y, z periodic), K
+    1024, `release` [1, 1], `suspension` 0, the families A (free, no
+    phase circle) and B (paid, quantum 1); a source of A (content 3) at
+    x = 0 releasing on +X, a reader P of A (content 5) at x = 6 that also
+    measures B, and a lamp of B (content 4000, `rate` [1, 1] on -X) at
+    x = 12: in one interval a B click (its content joins P) and an A read
+    (the push -M_P x V) land at P. With the families declared [A, B] and
+    [B, A] alike, P's first six reads (ticks 11 to 16) push (-960, 0, 0),
+    (-1536, 0, 0), (-2304, 0, 0), (-3072, 0, 0), (-3840, 0, 0), (-4608,
+    0, 0) (V = 3 x 64 = 192 per read, M_P = 5 at tick 11, then 8, 12, 16,
+    20, 24: the clicks of the intervals before, never the click of the
+    same interval), `held` [5, 114] and `pushed` (-356544, 0, 0) after 40
+    intervals; until this pin the order [B, A] read M_P after the same
+    interval's click ((-1536, 0, 0) at tick 11, `pushed` (-378432, 0, 0)).
 """
 
 from __future__ import annotations
@@ -357,3 +372,35 @@ def test_the_factor_is_read_off_the_rows_met_among_other_rows():
     vectors = simulation.tables.flight.vectors
     parked = (vectors[store.direction] == [0, 1, 0]).all(axis=1) & (store.node < 6)
     assert sorted(store.node[parked].tolist()) == [2, 3] and (store.amount[parked] == 1).all()
+
+
+def test_the_push_reads_the_content_the_frame_read_whatever_the_family_order():
+    """(j)."""
+    families = [{"name": "A", "quantum": 0, "phase": False}, {"name": "B", "quantum": 1}]
+    measured = [
+        {"position": [0, 0, 0], "family": "A", "amount": 3, "fixed": True, "directions": [PLUS_X]},
+        {"position": [6, 0, 0], "family": "A", "amount": 5, "fixed": True},
+        {
+            "position": [12, 0, 0],
+            "family": "B",
+            "amount": 4000,
+            "fixed": True,
+            "lamp": {"rate": [1, 1], "directions": [[-1, 0, 0]]},
+        },
+    ]
+    expected = [
+        (tick, 3, [-192 * m, 0, 0])
+        for tick, m in zip(range(11, 17), (5, 8, 12, 16, 20, 24), strict=True)
+    ]
+    for order in (families, list(reversed(families))):
+        world = {
+            **bar(measured, ticks=40, shape=[13, 1, 1]),
+            "K": 1024,
+            "families": order,
+        }
+        simulation, records = run(world)
+        reads = reads_of(records, 2)
+        assert reads[:6] == expected, [f["name"] for f in order]
+        probe = simulation.measured[2]
+        assert sorted(probe.held) == [5, 114] and probe.pushed == [-356544, 0, 0], order
+        assert probe.momentum == probe.pushed

@@ -443,6 +443,21 @@ label of a unit along a heading is 64 e_d), the fan cases read u_(2, 1, 0)
   x = 2 and 3, rows before the probe's in the store: every push
   (-1088, 0, 0) and `pushed` (-21760, 0, 0) as in (a), the bystanders
   untouched.
+- (j) M_A is the content the frame read (the architect's B3, the
+  orchestrator's D1, 2026-09-20; [RAY_LAW note 26](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  a 13 x 1 x 1 bar (y, z periodic), K 1024, `release` [1, 1], the
+  families A (free, no phase circle) and B (paid, quantum 1); a source of
+  A (content 3) at x = 0 releasing on +X, a reader P of A (content 5) at
+  x = 6 measuring B by default, a lamp of B (content 4000, `rate` [1, 1]
+  on -X) at x = 12: a B click and an A read land at P in one interval.
+  With the families declared [A, B] and [B, A] alike: P's reads at the
+  ticks 11 to 16 push (-960, 0, 0), (-1536, 0, 0), (-2304, 0, 0),
+  (-3072, 0, 0), (-3840, 0, 0), (-4608, 0, 0) (V = 192; M_P = 5, 8, 12,
+  16, 20, 24, the clicks of the intervals before), `held` {5, 114} and
+  `pushed` = momentum = (-356544, 0, 0) after 40 intervals [the order
+  [B, A] read (-1536, 0, 0) at tick 11 and (-378432, 0, 0) before the
+  pin]. No other pin moves: no registered world has a paid click and a
+  free read at one reader in one interval.
 
 ## The re-emission
 

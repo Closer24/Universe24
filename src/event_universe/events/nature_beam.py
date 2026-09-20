@@ -1798,8 +1798,13 @@ def nature_beam(
                         other = plan.g_number[gi]
                         moment = plan.g_moment[gi]
                         if free:
+                            # M_A is the content the frame read at the start of
+                            # the interval (`frame_content`), the same for every
+                            # family's rays whatever the family order: a click
+                            # of this interval joins `held` and is read by the
+                            # next frame (the orchestrator's D1, 2026-09-20).
                             push = [
-                                bounded(-moment[axis] * entry.content, entry, "push")
+                                bounded(-moment[axis] * entry.frame_content, entry, "push")
                                 for axis in range(3)
                             ]
                             if entry.charge:

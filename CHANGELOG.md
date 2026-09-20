@@ -5,6 +5,19 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The push reads the content the frame read (2026-09-20)
+
+- The architect's B3 (blocking): the gravity push read the reader's
+  content inside step 4's per-family loop, after earlier families' clicks
+  had joined it, so the world file's family order changed the integers.
+  The orchestrator's D1: M_A is the content the frame read at the start
+  of the interval (`Measured.frame_content`, set once in `_frame_all`
+  beside the clock's age and turn) and the push reads it for every
+  family's rays ([RAY_LAW step 4](docs/RAY_LAW.md#3-the-nodes-interval-nature_beam)
+  and note 26; [ENGINE](docs/ENGINE.md)). Test: `test_ray_push` (j), the
+  architect's probe world in both family orders reads the same integers;
+  no registered pin moves ([expectations](docs/TEST_EXPECTATIONS.md#the-push-as-one-form)).
+
 ### The label's product checked before it is formed (2026-09-20)
 
 - The architect's B1 (blocking): the born labels' product was formed in

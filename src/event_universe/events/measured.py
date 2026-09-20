@@ -88,11 +88,16 @@ class Measured:
     events: list[int] = field(default_factory=list)
     pushed: list[int] = field(default_factory=lambda: [0, 0, 0])
     # The interval's frame, set by the engine: whether this interval is a
-    # self-creation, the age before it and the turn read off the clock; and
-    # what the law read back: the presence at the Node of every other number.
+    # self-creation, the age before it, the turn read off the clock and the
+    # content the frame read (`frame_content`, M_A of the push: taken once
+    # before the law's step 4, so the push of an interval is independent of
+    # the order in which the families' clicks join `held` within it; the
+    # orchestrator's D1 on the architect's B3, 2026-09-20); and what the
+    # law read back: the presence at the Node of every other number.
     creating: bool = False
     clock_age: int = 0
     turn: int = 0
+    frame_content: int = 0
     presence: int = 0
 
     @property
