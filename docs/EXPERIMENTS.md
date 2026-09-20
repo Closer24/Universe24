@@ -1546,6 +1546,111 @@ states "exactly" and means integer equality at every tick.
   with an amount at it), `two_slits` and `one_slit` alike
   ([validation](VALIDATION.md#the-wave-threshold-on-the-pointers-square-the-66-example-worlds-compared-a10-and-bell-re-read---2026-09-20)).
 
+### A10 at a low rate, the single-click build-up (2026-09-20)
+
+- **Confronts.** The build-up of fringes one particle at a time (Merli
+  1976, Tonomura 1989, Grangier 1986: the contrast independent of the
+  intensity), against the physicist's entry 5 of the law's own
+  predictions (2026-09-20, Highlights 5.4: "the wave only in the
+  detector: fringes need two rays of one number in one interval, so a
+  screen counting single clicks shows the fan's spots, against the
+  single-particle build-up of fringes (Tonomura), the test being fringe
+  contrast against source rate") under the model owner's go of the same
+  day ("the two runs on the law's own predictions, ... the single-click
+  build-up of fringes (A10 at a low rate)") and the owner's decision on
+  issue #359 (step A yes, step B no: no memory in the detector; "if A10
+  at a low rate shows no build-up one click at a time, that is registered
+  as the law's limit (the wave in the crowd, not in the single event)").
+  A run under the [experimenter skill](../skills/experimenter/SKILL.md);
+  every number a detector reading (the screen's pixels).
+- **Model prediction, pinned before the runs
+  ([the derivation](../examples/events/buildup/README.md#the-derivation-and-the-expectation-before-the-runs)).**
+  The registered A10 world at w = 27 under `wave`
+  ([A10](#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-beam-law-2026-09-20))
+  with the lamps' `rate` 47 (the registered rate), 8 and 1 units per
+  interval, the opening's Nodes re-emitting n units on n consecutive
+  directions of the 47-fan per interval (`apportion_whole`), so the
+  screen receives about 6, 1 and 0.14 rays per pixel per interval; the
+  runs 420, 1200 and 7780 intervals so that the window from tick 260 (every
+  pixel has clicked by 235) holds the same 172 000 clicks. Derived: the
+  record of a `wave` pixel is the square of the pointer of the rays it
+  clicks in one interval, so the cross terms live only in the (pixel,
+  interval) cells with two or more rays: at the rate 47 every cell,
+  the lobe of A10 (the narrowing 1 - rms_R / rms_C of sin theta about
+  0.3); at the rate 1 almost none, R = I (the sum of every unit's own
+  square, through `coherent_pointer`), no lobe. Pinned: the narrowing at
+  least 0.2 at the rate 47; at the rate 1 the narrowing 0 +- 0.02 and
+  R / I at the record's peak pixel 1 +- 0.02; the rate 8 reported. Nature:
+  the narrowing 0.3 at every rate. Read beside: the FWHM of the record
+  and of the count (A10's reading), w x FWHM, the cells with two or more
+  rays and their share of the cells and of the clicks. Criteria
+  (completed, the books balanced) fail the tool; the readings are
+  registered inside or outside and never moved.
+- **Features.** The registered A10 world (the detector set, the
+  re-emission on a fan, the plane wave from a row of lamps, one-Node
+  `wave` pixels) at three lamp rates; the per-interval `record` and
+  `click` lines of `events.jsonl`.
+- **Run.** `examples/events/buildup/` (three worlds by `make_worlds.py`,
+  which calls the A10 generator and changes the rate, the ticks and the
+  model id, `w27_rate47`, `w27_rate8`, `w27_rate1`, the model ids
+  `rays-buildup-w27-rate<n>-v1`); `tools/run_series.py --jobs 3`;
+  `tools/buildup_readings.py` (the window sums per pixel, the incoherent
+  sum off `coherent_pointer`, the spread off `tools/heisenberg_readings.py`;
+  `tests/test_buildup_readings.py` pins it to the engine on a 14 x 5
+  plane at the rates 2 and 1: R / I = 2 and 1 exactly).
+- **Result (2026-09-20, measured against expected).** The worktree of
+  `claude/universe24-new-3ytqde` at the tip `9fc895a2` (the Beam Law,
+  `beam-v1`), source fingerprint
+  `a1b2a949ccda2194537ecae4c6ff7380642f8f7d7877c01ab0e1649ba51c5d4b`,
+  Python 3.14.0rc2, numpy 2.5.3, headless, four cores; every run
+  completed (55, 39, 92 s) with the books balanced at every tick; 0
+  record checks failed, 2 readings inside, 1 outside, none moved. All
+  DETECTOR:
+
+  | World | rate | clicks | rays per pixel per interval | cells with 2+ rays (share of the cells, of the clicks) | record FWHM (count) | w x FWHM | record rms (count) | narrowing | R / I at the peak (at the centre y = 80) | R / I least .. greatest | Expected |
+  | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+  | `w27_rate47` | 47 | 172753 | 6.67 | 25921 (1.000, 1.000) | 0.184 (0.904) | 4.98 | 0.236 (0.341) | 0.307 | 5.50 at y = 80 (5.50) | 0.03 .. 5.50 | narrowing >= 0.2: inside |
+  | `w27_rate8` | 8 | 171871 | 1.13 | 46174 (0.433, 0.648) | 0.075 (0.904) | 2.02 | 0.324 (0.341) | 0.052 | 2.86 at y = 80 (2.86) | 0.39 .. 2.86 | reported |
+  | `w27_rate1` | 1 | 171742 | 0.14 | 10560 (0.066, 0.123) | 0.278 (0.904) | 7.51 | 0.347 (0.341) | -0.017 | 1.20 at y = 58 (0.84) | 0.43 .. 1.20 | narrowing 0 +- 0.02: inside; R / I 1 +- 0.02: outside |
+
+  - The narrowing (the law 0.3 then 0; nature 0.3 at both): 0.307, 0.052,
+    -0.017 at the rates 47, 8, 1: inside at both ends; nature's 0.3 at
+    the lowest rate outside by 0.3. At the rate 1 the record's spread is
+    the count's: no lobe.
+  - R / I at the record's peak at the rate 1: 1.200 at y = 58, outside
+    1 +- 0.02. The peak is not the lobe's centre (y = 80 reads 0.843) but
+    the pixel of the most constructive coincidence of the synchronized
+    comb: the lamps are in step, the 27 opening Nodes re-emit in the same
+    interval on the same direction, and two directions released in
+    different intervals coincide at a pixel when their flight times differ
+    by the same amount, which the fan's 47-interval cycle produces for
+    some pairs (6.6 % of the cells, 12.3 % of the clicks); the cross terms
+    are in phase at some pixels and in antiphase at others (R / I from
+    0.43 to 1.20), their sum over the screen negative, a fixed pattern and
+    not a lobe. Registered outside as pinned.
+  - The count's FWHM 0.904 at every rate (the shadow, the control); the
+    record's 0.184 at the rate 47 (A10's 0.185, w x FWHM 4.98 against the
+    law's 4.09) and 0.278 at the rate 1, the half width of the comb's
+    spikes.
+- **Verdict.** Fringes do not build up one click at a time in this law:
+  the lobe (the narrowing 0.31) exists at six rays per pixel per interval,
+  is a sixth of itself at about one, and is gone at 0.14, where nature
+  builds the same lobe click by click. The law's prediction held in its
+  substance (the wave is a reading of the crowd in one interval) and
+  missed one letter (the record at the lowest rate is the count plus the
+  rare coincidences of the synchronized comb, not the count exactly:
+  spikes, no lobe). The physicist's entry 5 is registered as measured, a
+  plain disagreement with nature and, by the owner's decision on #359,
+  the law's limit: the wave is in the crowd, not in the single event.
+  Nothing was tuned. What the law lacked: a single ray that carries
+  something of the wave (a spread at the Node, deleted on 2026-09-19) or
+  a memory between intervals in the detector (refused on 2026-09-20);
+  nature's single particle interferes with itself, this law's single
+  event does not. A follow-up without a change of law: the opening's
+  fans rotated Node by Node (breaking the comb's fixed coincidences) and
+  a rate of one ray on the whole screen per interval. The page of the
+  run is in the session's scratchpad, not published.
+
 ### E, the clock's redshift in space under the age reading (2026-09-20)
 
 - **Confronts.** Whether a clock beside a mass in space slows as M / r
@@ -2058,6 +2163,117 @@ states "exactly" and means integer equality at every tick.
   model owner: the scratchpad's `nucleus/nucleus.html` with the frame
   player of `nucleus.gif` (the square dispersing, one frame per 5
   intervals), published by Boss.
+
+### K, light beside a mass (2026-09-20)
+
+- **Confronts.** The bending and the delay of light by a mass (Eddington
+  1919: 1.75 arcseconds at the Sun's limb, 4 G M / (b c^2); the Shapiro
+  delay, Cassini 2003; lensing), against the physicist's entry 2 of the
+  law's own predictions (2026-09-20, Highlights 5.4, "the physicist's
+  design of the weak force and the list of the law's own predictions":
+  "light is neither bent nor delayed by a mass, since no rule lets a ray
+  in transit read the crowd, a plain disagreement") under the model
+  owner's go of the same day ("go on everything; just make sure again
+  that it is good and generic": "the two runs on the law's own
+  predictions, light beside a mass (series K) ..."). The derivation says
+  the law disagrees with nature; the run decides, and the derivation may
+  be wrong. A run under the
+  [experimenter skill](../skills/experimenter/SKILL.md): every number
+  labelled a detector reading or a GameBoard reading; the comparison with
+  nature uses detector readings only.
+- **Model prediction, pinned before the runs
+  ([the derivation](../examples/events/lensing/README.md#the-derivation-before-the-runs)).**
+  An open 57 x 41 x 41 box, a lamp of the paid family `light` at
+  (2, 20 + b, 20) (the turn 8, lambda = 4.65 Links) releasing one unit
+  per interval on each of five directions within 5 degrees of (1, 0, 0),
+  a fixed mass of the free phase-less family `m` at the centre releasing
+  on series E's fan of 290 directions (one ray per direction per interval
+  at M = 2^12, two at 2^13), a screen of 1681 one-Node `wave` pixels at
+  x = 54 with `reads: "age"` for `light` and `pass` for `m`, `suspension`
+  0 (no clock slowed: the flight alone is read); a control without the
+  mass, the mass at b = 6, twice the mass at b = 6, the mass at b = 3.
+  Derived: the collision acts per family's store and per (number,
+  content) class (`nature_beam.collide`), so a ray of the beam and a ray
+  of the mass never enter one slot state and the table's mean deflection
+  of a beam ray meeting a radial ray is exactly 0 (the rule does not act;
+  were they one class, "+x +y" is fixed and only a head-on pair moves,
+  which the geometry never forms); no other rule reads the crowd for a
+  ray's step. Expected at every M and b: the deflection of the arrival's
+  centroid off the beam's axis 0 within 0.5 pixel (y and z), the mean age
+  of the arrivals the control's within 1 interval (the flight table's 89
+  and 90 intervals), the count the control's within 1 % (the beam clears
+  the mass in every world), the phase rate the lamp's turn 8 within 0.05.
+  Nature scaled to the world: the law's equivalent of G M / (b c^2) is the
+  age moment a clock reads at b (series E's form, q x dwell / (4 pi b^2)
+  x b / c): 11.4 at b = 6 (22.7 for 2 M or b = 3), so nature's 4 G M /
+  (b c^2) is 46 to 91 radians and 2 G M / c^2 is 137 to 273 Links, beyond
+  b: nature would capture the beam; the dense crowd is kept as the
+  sharper test of a coupling (the beam's Nodes hold about one ray of the
+  crowd per interval). Criteria (completed, the books balanced) fail the
+  tool; the readings are registered inside or outside and never moved.
+- **Features.** A lamp of a paid family on a declared fan of five
+  directions; a free phase-less mass on a fan in space (series E's form);
+  one-Node `wave` detectors with the age moment on the click record
+  (`reads: "age"`); `pass` on the screen and the lamp for the mass's rays;
+  the face detectors; `suspension` 0.
+- **Two kinds of readings.** DETECTOR: the screen's clicks per pixel over
+  the window [110, 400] (the centroid, the width, the mean age, the first
+  click, the count), the pixels' `record` lines (the phase rate), the
+  faces' clicks of light, the mass's clicks of light. GAMEBOARD: the
+  world replayed through `NatureBeamSimulation`: the beam's rows in
+  flight, the rows at rest or off the lamp's directions (a ray a
+  collision would have turned) and the Nodes holding a ray of the beam
+  and a ray of the crowd in one interval (the meetings).
+- **Run.** `examples/events/lensing/` (four worlds by `make_worlds.py`,
+  `control`, `mass`, `heavy`, `near`, 400 intervals, the model ids
+  `rays-lensing-<name>-space-v1`); `tools/run_series.py --jobs 4`;
+  `tools/lensing_readings.py` (the window sums off `events.jsonl`, the
+  turn and the mass's rays per direction off `by_clock`, the speed and
+  the dwell off `flight_table`, the replay; `tests/test_lensing_readings.py`
+  pins it to the engine on a 13 x 5 x 3 box).
+- **Result (2026-09-20, measured against expected).** The worktree of
+  `claude/universe24-new-3ytqde` at the tip `9fc895a2` (the Beam Law,
+  `beam-v1`), source fingerprint
+  `a1b2a949ccda2194537ecae4c6ff7380642f8f7d7877c01ab0e1649ba51c5d4b`,
+  Python 3.14.0rc2, numpy 2.5.3, headless, four cores; every run
+  completed in 6.5 to 9.9 s with the books balanced at every tick; 0
+  record checks failed, 16 readings inside, 0 outside, none moved.
+
+  | World | M | b | crowd at b: presence, age moment | clicks | deflection y, z (pixels) | width rms y | mean age (delta) | first click | count ratio | phase rate | light on the faces, taken by the mass | Expected |
+  | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+  | `control` | - | 6 | 0, 0 | 1455 | - | 2.828 | 89.40 | 90 | - | 8.000 | 0, 0 | the turn 8: inside |
+  | `mass` | 2^12 | 6 | 1.10, 11.4 | 1455 | 0.000, 0.000 | 2.828 | 89.40 (0.00) | 90 | 1.0000 | 8.000 | 0, 0 | 0 +- 0.5, 0 +- 1, 1 +- 1 %, 8 +- 0.05: inside, inside, inside, inside, inside |
+  | `heavy` | 2^13 | 6 | 2.20, 22.7 | 1455 | 0.000, 0.000 | 2.828 | 89.40 (0.00) | 90 | 1.0000 | 8.000 | 0, 0 | all inside |
+  | `near` | 2^12 | 3 | 4.41, 22.7 | 1455 | 0.000, 0.000 | 2.828 | 89.40 (0.00) | 90 | 1.0000 | 8.000 | 0, 0 | all inside |
+
+  - The deflection (DETECTOR; expected 0, nature 46 to 91 radians or the
+    capture): 0.000 pixel in y and z in every world, the centroid on the
+    beam's axis to the last digit; nature's value outside.
+  - The delay (DETECTOR; expected 0, nature hundreds of intervals): the
+    mean age 89.40 in every world, the delta 0.00, the first click at 90.
+  - The count and the phase rate (DETECTOR): 1455 clicks in every world,
+    the ratio 1.0000, nothing on the faces, nothing taken by the mass;
+    8.000 steps per interval, no redshift of the light in flight.
+  - The replay (GAMEBOARD): 447 rows of the beam in flight at most, none
+    at rest, none off the lamp's directions in any world; the crowd's
+    rows 13618 at most; 162 Nodes per interval (156 in `near`) holding a
+    ray of the beam and a ray of the crowd: the beam crossed the crowd at
+    a third of its Nodes every interval and met it nowhere, as derived.
+- **Verdict.** Light is neither bent nor delayed beside a mass in this
+  law, exactly (0.000 pixel, 0.00 interval, the count and the phase rate
+  the control's), at a crowd where nature would capture the beam, at
+  twice that crowd and at half the impact distance. The derivation held;
+  the physicist's entry 2 is registered as measured, a plain disagreement
+  with nature. Nothing was tuned. What the law lacked: a rule by which a
+  ray in transit reads the crowd at the Node it enters (a wait per whole
+  unit of presence, or a turn of its direction by the flow), removed on
+  2026-09-19 to keep the flight a bijection blind to the crowd; the
+  collision, the one rule that turns a ray, acts within one family and
+  number only. Giving a ray a reading is the model owner's decision, not
+  a parameter. The page of the run (the GameBoard as a drawing with the
+  world-file names, the moving picture with a time control, the
+  readings, the conclusion) is in the session's scratchpad, not
+  published.
 
 ### A3. Bell test in phase form, delayed geometry
 

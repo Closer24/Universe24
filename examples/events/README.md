@@ -181,6 +181,65 @@ the `wave` record narrows with w and the count does not; the product
 w x FWHM reaches 0.886 lambda within 22 % at w = 27 and is not read at
 the smaller widths on the sparse fan.
 
+## The A10 low-rate run
+
+The folder [buildup/](buildup/README.md) holds the three worlds of A10 at
+a low rate, written by `buildup/make_worlds.py` from the A10 generator:
+the registered `w27_wave` world with the lamps' `rate` 47, 8 and 1 units
+per interval (about 6, 1 and 0.14 rays per pixel per interval at the
+screen) and the runs lengthened so that the late window holds the same
+172 000 clicks. `tools/buildup_readings.py` reads, per pixel over the
+window, the plain count, the coherent record and the incoherent sum of
+every unit's own square (the cross term between them), the narrowing of
+the record's spread against the count's, and the (pixel, interval) cells
+that held two or more rays; the register entry is
+[A10 at a low rate, the single-click build-up (2026-09-20)](../../docs/EXPERIMENTS.md#a10-at-a-low-rate-the-single-click-build-up-2026-09-20):
+the lobe of the coherent record (the narrowing 0.31 at six rays per
+pixel per interval) is a sixth of itself at about one ray and gone at
+0.14, where nature builds the same fringes one click at a time; the
+law's limit, registered and not tuned.
+
+## The light-beside-a-mass series
+
+The folder [lensing/](lensing/README.md) holds the four worlds of series
+K, written by `lensing/make_worlds.py`: an open 57 x 41 x 41 box, a lamp
+of the paid family `light` sending a narrow beam (five directions within
+5 degrees of the heading) past a fixed mass of the free phase-less
+family `m` at the centre (series E's fan of 290 directions, one or two
+rays per direction per interval) at the impact distance b = 6 or 3,
+toward a screen of 1681 one-Node `wave` pixels with the age moment on the
+click record, and a control without the mass. `tools/lensing_readings.py`
+reads the deflection of the arrival's centroid, its width, the mean age
+of the arrivals (the delay), the count and the phase rate against the
+control (DETECTOR) and replays the world for the beam's rows, the rays a
+collision would have turned and the Nodes shared with the crowd
+(GAMEBOARD); the register entry is
+[K, light beside a mass (2026-09-20)](../../docs/EXPERIMENTS.md#k-light-beside-a-mass-2026-09-20):
+the deflection 0.000 pixel and the delay 0.00 interval at a crowd where
+nature would capture the beam, the derivation of the physicist's entry 2
+held: light is neither bent nor delayed in this law, a plain
+disagreement with nature, registered and not tuned.
+## The entity catalog
+
+The folder [catalog/](catalog/README.md) holds the four worlds of
+[the catalog of the entities](../../docs/ENTITY_CATALOG.md) (the model
+owner, 2026-09-20: "that we can also support external ones such as the
+sun, a planet, a neutron star, so that they can be placed on the GameBoard
+and things tested"), written by `catalog/make_worlds.py`: `sun_planet.json`
+(a star as a mass and a lamp at adjacent Nodes, each on a set of three
+Nodes, a planet as a free body on a set of nine Nodes with the tangential
+momentum of a circular orbit that reflects the star's light, and a screen
+that is one `wave` detector set),
+`neutron_star.json` (eight neutrons of content 2^26 bound at one Link by
+the gravity column alone, six probes on the axes counting the presence and
+one the age moment), `lamp_mirror_screen.json` (a laser with a phase
+window, a mirror that re-releases on one direction, a wall with a slit and
+a screen read as pixels) and `clock_near_mass.json` (a mass on a fan of
+122 directions and two clocks, bodies on sets, at two radii). Placements,
+not experiments: each parses and runs its intervals with the books
+balanced, `tests/test_entity_catalog.py` pins no number, and the register
+tests things on them later.
+
 ## The detector definitions
 
 The folder [detector/](detector/README.md) holds four worlds that place
