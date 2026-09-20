@@ -55,6 +55,12 @@ def families() -> dict[str, object]:
                 }
             ],
         ),
+        # The paid content a nucleon carries and gives at its first contact
+        # (`binding-v1`, series N; BEAM_LAW note 40): no column, no phase
+        # circle, the lifetime 3 as the strong family's.
+        family_definition(
+            "bond_family", [{"name": "bond", "quantum": 1, "lifetime": 3, "phase": False}]
+        ),
         family_definition("neutrino", [{"name": "nu", "quantum": 0}]),
         family_definition(
             "w_boson", [{"name": "w", "quantum": 1, "charge": -7344, "lifetime": 1, "phase": False}]

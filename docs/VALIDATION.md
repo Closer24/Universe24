@@ -11,6 +11,32 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series N, the binding that costs content: three runs and the gate set replayed - 2026-09-20
+
+The worktree `binding-v1` on `b8620d8f` (current main) with the give at the
+contact (`binding-v1`, [BEAM_LAW note 40](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+the sources' fingerprint
+`22935341b7400e13b850aefe86b65528ff595cc0647f78a5a7b3fe543ac09941`
+(the runner's `source_sha256`
+`4a1db891b7d392b3f4be77effc77e4102c37c9637459a903e9456c6082f05cc6`),
+Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
+
+| Check | Result |
+| --- | --- |
+| Series N, `examples/events/binding/` (three worlds, `tools/run_series.py --jobs 2 --wall-seconds 1200`, 3000 intervals each) | every run completed in 13 to 53 s with the books balanced at every tick; the digests (state, audit, events): `deuteron_bond` `b66833650869` / `ae9319ed637a` / `c05fb3c3a433`, `proton_bond_lamp` `67b598ee4d37` / `65de22cd56dd` / `45fd5c0c63a2`, `alpha_square_bond` `35e1ce3c9cf2` / `247cd70da903` / `51c4fba7ca0d`; every reading inside its pin (B3's dispersal inside in kind, at other ticks than series I's), the table in [the worlds' README](../examples/events/binding/README.md#what-was-measured-2026-09-20) and the entry in [EXPERIMENTS, N](EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20) |
+| The gate set, `examples/events/gate_set.json` (15 worlds at their listed ticks), main `b8620d8f` against the branch, `tools/run_series.py --list ... --compare` | every world identical in `state.json`, the ledger and `events.jsonl`: a0_b0 `dc4cba74e3a5` / `90cab346067c` / `dfa00b9ef9b6`, j3_deuteron `d4485137fd01` / `431cc87afa9f` / `23196889fbed`, r2 `e8e3e137bd61` / `fe50819ae70d` / `ea52bf20dda2`, lamp_mirror_screen `9de7f52ec260` / `9041dac91aae` / `e6ca788d38ca`, heavy_meeting `395040805a4d` / `18c5eb4625ac` / `188ced16170a`, grouped_12_nodes `f0b869e4d566` / `cc8eb7346911` / `a4b2d2b35cfc`, fixed `d078ace3e8d8` / `6466e974280d` / `77ca1b3b3bc9`, j2_ladder `380fbbf27895` / `48335f1672dc` / `911390d0f64b`, j3_deuteron_crowd `9bdcf69e2620` / `677af7000b26` / `094a32eb6c0f`, w27_beam `73d4980059d3` / `b5c15a82715e` / `439252c03ee8`, alpha_square `26799da3d3b2` / `9102a8f9fd11` / `600166fb5bdd`, pushing_age `5e40e4bea36a` / `ae00571de265` / `4d89f6b6182b`, 1b_m16 `391d4cbdc763` / `baee1e32e96a` / `dc1054aa43c4`, w1_beam `d843680c8246` / `61bc435a99ff` / `1e08efda9aab`, sun_planet `f7043252f62a` / `583a5e8e5163` / `4b793a913b22` (r2, 1b_m16 and alpha_square write `contact` records: without a body that holds a paid family the record carries no `given` and the contact is the hand-over alone) |
+| `tests/test_binding.py` (a) to (d) | the give at the first hand-over, the remainder, the take on the line, a body that carries nothing: the integers of [TEST_EXPECTATIONS](TEST_EXPECTATIONS.md#the-binding-that-costs-content) |
+| `python tools/check.py` | ruff lint and format, mypy and the selected tests green; `--full` before the push |
+
+The first build gave on the heading opposite to the momentum's sign; the
+reading of B1 showed the neutron's row given toward the proton (its
+momentum +270 720 after the proton's hand-over, its step -x) and taken
+back at tick 31; the rule is the step's sign, as the design states, and
+the runs above are of the corrected engine. The runs establish what the
+rule does on the engine (the give once, the border's clicks with the
+content, the pair stable, the books exact, the alpha at 2.0 x); they
+establish no physical law, for or against.
+
 ## The amplitude law: the gate set of seventeen worlds replayed without the key after commit (i) and at stage (v) - 2026-09-20
 
 `amplitude-v1` (the branch `amplitude-impl`, commits (i) `ca2e5fad`, (ii)

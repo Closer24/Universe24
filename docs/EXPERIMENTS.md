@@ -3555,6 +3555,77 @@ branches). Not built: unification (3) (refused: three columns under three
 keys), Grover (six rotations beyond the register's ceiling), two
 sequential gates on an entangled record, the full register replay.
 
+### N, the binding that costs content (2026-09-20)
+
+- **Confronts.** Whether one condition on one verb, the give at the
+  contact (the model owner's records 115 and 137 of 2026-09-20; the
+  physicist's design `docs/designs/binding_v1/DESIGN.md`, record 132;
+  [BEAM_LAW note 40](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  `binding-v1`), gives a binding that costs content: a nucleon carries a
+  paid family `bond` (quantum 1, lifetime 3) held 2 and gives it once, at
+  its first contact under `measure`, to the flight away from its partner;
+  the border `lifetime` clicks the rows two Links away with their content,
+  the released binding energy read as clicks; the pair stable after; the
+  mass a detector reads the declared content less what escaped, the books
+  exact; the alpha's give per body, 8 units, the ratio 2.0 to the deuteron
+  against nature's 12.72, stated to fail. Read at the bodies (their
+  `contact` records with `given`, their `read` lines) and at the border
+  (the `bond` clicks); a control with a lamp beside a lone proton (I7's
+  lamp, record 123) reads the crowd blind to the held content.
+- **Model prediction, pinned before the run
+  ([the expectations](../examples/events/binding/README.md#the-expectations-pinned-before-the-run-design-section-4)).**
+  Series I's base with the paid family `bond` (h 1, L 3, no column, no
+  phase circle) held 2 per nucleon, the free totals kept (p 1834 `p` + 1
+  `nuclear` + 2 `bond` = 1837, n 1837 + 1 + 2 = 1840, the sum 3677). B1
+  `deuteron_bond`: two `bond` clicks on the border `lifetime`, amount 2 and
+  content 2 each, at (8, 10, 10) and (13, 10, 10), the first about tick 19
+  (the first contact about tick 16); escaped content 4 = 0.109 % of 3677
+  (nature 4.353 m_e, 0.1185 %); `given` 2 on each body's first contact and
+  0 after; the push on p 310 956 229 248 per interval before the give and
+  310 945 171 840 after (n 310 956 211 200 before, 310 945 171 840 after
+  both gave); the recoil +128 on p and -128 on n; no step in 3000
+  intervals; `held` p (1834, 0, 1, 0), n (0, 1837, 1, 0), the mass read
+  3673 of 3677; the books exact. B2 `proton_bond_lamp` (the control): no
+  contact, no `bond` row, no `bond` click, `held.bond` 2 at 3000, the
+  lamp's set gathers 2993 with content 8 per click as I7's free lamp. B3
+  `alpha_square_bond`: 4 border clicks of `bond`, escaped content 8 =
+  0.109 % of 7354, the ratio 2.0 in energy to the deuteron where nature
+  has 12.72 (the law's failure, stated before the run and not tuned); the
+  dispersal as series I registered (p4 +y first, the cluster out through
+  the faces).
+- **Criterion.** Every run completed with the books balanced at every tick
+  (a record check); every reading above registered inside or outside its
+  pin and never moved; the register's gate set byte-identical (VALIDATION).
+- **Run (2026-09-20, `tools/run_series.py --jobs 2 --wall-seconds 1200`,
+  3000 intervals each, 13 to 53 s, the books balanced at every tick; the
+  digests and the gate set's byte-identity in
+  [VALIDATION](VALIDATION.md#series-n-the-binding-that-costs-content-three-runs-and-the-gate-set-replayed---2026-09-20);
+  the readings beside the pins in
+  [the worlds' README](../examples/events/binding/README.md#what-was-measured-2026-09-20)).**
+  Every reading inside its pin. B1: the first contact of both bodies at
+  tick 16 with `given` 2 each and 0 on the 346 later contacts; two `bond`
+  clicks on the border at tick 19, at (8, 10, 10) with momentum
+  (-128, 0, 0) and (13, 10, 10) with (128, 0, 0), amount 2 and content 2
+  each, none after; the escaped content 4 (0.109 % of 3677); the push on p
+  310 956 229 248 at tick 10 and 310 945 171 840 at tick 20 and at 3000, on
+  n -310 956 211 200 and -310 945 171 840; no step in 3000 intervals; held
+  p (1834, 0, 1, 0), n (0, 1837, 1, 0), the mass read 3673. B2: no contact,
+  no `bond` row or click, `held.bond` 2 at 3000; the set's 2993 gathers,
+  2961 of content 8 and 32 of content 7, I7's integers to the unit. B3:
+  four gives at ticks 15 (p1, n2, n3) and 16 (p4), four border clicks at
+  ticks 18 and 19, the escaped content 8: the ratio 2.0 to the deuteron
+  against nature's 12.72, the law's failure as stated; the square disperses
+  as in series I in kind (p4 +y first at tick 81, then n2 89, p1 95, n3
+  111; out through the faces at 308 to 344) at other ticks than series I's
+  (the gives and the contents after them move the pushes and the drive).
+  One correction before the registration: the first build gave on the
+  heading opposite to the momentum's sign; the reading of B1 showed n's
+  row given toward p (its momentum +270 720 after p's hand-over, its step
+  -x) and taken back; the rule is the step's sign, as the design says
+  ("opposite to the refused step"), and the runs above are of the
+  corrected engine. The runs establish what the rule does on the engine;
+  they establish no physical law, for or against.
+
 ### A3. Bell test in phase form, delayed geometry
 
 - **Confronts.** The same CHSH data as A2 and the quantum value at the

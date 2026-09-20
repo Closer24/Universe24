@@ -85,6 +85,19 @@
    "detectors": []
   },
   {
+   "name": "bond_family",
+   "families": [
+    {
+     "name": "bond",
+     "quantum": 1,
+     "lifetime": 3,
+     "phase": false
+    }
+   ],
+   "measured": [],
+   "detectors": []
+  },
+  {
    "name": "neutrino",
    "families": [
     {
