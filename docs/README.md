@@ -13,7 +13,7 @@ Since 2026-09-19 there is one engine, the engine of the Beam Law
 
 | Document | Responsibility |
 | --- | --- |
-| [The Beam Law](BEAM_LAW.md) | The published design and implementation contract of `beam-v1` (the model owner, 2026-09-19): the ray's record `NatureBeam`, the one function `nature_beam`, the flight table at 1 / sqrt 3, the eight-slot collision table and its inverse, the detector's squared record, the re-emission, the deletions, the tests, the expectations, and the implementation notes of the same day |
+| [The Beam Law](BEAM_LAW.md) | The published design and implementation contract of `beam-v1` (the model owner, 2026-09-19): the ray's record `NatureBeam`, the one function `nature_beam`, the flight table at 1 / sqrt 3, the eight-slot collision table and its inverse, the detector's squared record, the re-emission, the deletions, the tests, the expectations, and the implementation notes of the same day, note 37 the amplitude law `amplitude-v1` of 2026-09-20 |
 | [The engine](ENGINE.md) | The bookkeeping around the law as implemented: the GameBoard and its topology, the frame of an interval, the books, the world file's refusals, the record and the preflight |
 | [Entity definitions](ENTITY_DEFINITIONS.md) | Reusable external apparatus data, placement, canonical loading, portable inputs and provenance; the owner of the definitions layer |
 | [Entity catalog](ENTITY_CATALOG.md) | Every entity physics knows as one row of the law's keys (the model owner, 2026-09-20): the fundamental things, the composites, the external things (the sun, a planet, a neutron star, a lamp, a mirror, a wall, a slit, a screen, a clock, a probe) with the world that places each, the rows that wait for the changes in flight, and the honest gap list |

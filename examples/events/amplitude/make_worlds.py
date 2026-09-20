@@ -33,7 +33,7 @@ balanced) and 2 for the balanced (1, 1) split the owner admitted. D1 at
 | `mz_equal` | (20, 21) | equal | 0 | D1 64, D2 0 (the offers 1681/1682, 1/1682) |
 | `mz_half` | (20, 21) | a half turn 32 on the row | 0 | D1 0, D2 64 |
 | `mz_quarter` | (20, 21) | a quarter turn 16 on the row | 0 | D1 32, D2 32 |
-| `mz_balanced` | (1, 1) | equal | 0 | D1 64, D2 0 (D2's rows cancel on the lattice) |
+| `mz_balanced` | (1, 1) | equal | 0 | D1 64, D2 0 (D2's rows cancel on the GameBoard) |
 | `mz_345` | (3, 4) | equal | 0 | D1 63, D2 1 (the rung moved: u = 63 falls in D2) |
 | `mz_unequal_f0` | (20, 21) | longer by two intervals | 0 | D1 64, D2 0 (the rows accumulate in phase) |
 | `mz_unequal_f8` | (20, 21) | longer by two intervals | [8, 1] | D1 32, D2 32 (a delay of two intervals at 8 steps per interval is a quarter turn) |
@@ -84,7 +84,7 @@ rows of one birth at m = 5 x 91 = 455 and the lamp's own at m = 5; the
 screen's entries reading the age) is run in-process, every click read as a
 row (amount, m, phase + f x age with f the frequency, the age of a lamp
 row its flight and of a fan row its flight to the opening and the intervals
-since its re-emission, as the lattice turns it under the key; a face click
+since its re-emission, as the GameBoard turns it under the key; a face click
 is the row as it stepped out, before that interval's turn), the
 weight of a set |sum 32 v(p)|^2 / m in the unit (32 x 256)^2, the ladder
 over the sets in the layer's order with the rungs at the nearest integer,
@@ -146,7 +146,7 @@ three, then four, label rotations in series: the multiplicity 65536 per
 rotation, the fourth beyond 2^62 - 1, the register's ceiling). The
 expectations (`expectations.json` under `gate`) are the design's `gate.py`
 on the host's joint state. Grover's six rotations exceed the register on
-the lattice (m = 2^96), as the design's section 10 states: not a world.
+the GameBoard (m = 2^96), as the design's section 10 states: not a world.
 L6, the pair at N = 1024 and N = 4096 (`bell_n1024_<a>_<b>`,
 `bell_n4096_<a>_<b>` at the CHSH labels 0, N/8, N/4, 3N/8; N + 20
 intervals, one birth per u): S as the integer ratio at each N against the

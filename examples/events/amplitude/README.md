@@ -6,7 +6,7 @@ The decision, in the model owner's words (Highlights 5.4, 2026-09-20):
 "go for it with the four recommendations and the unifications"; the design
 is the physicist's and the mathematician's `docs/designs/amplitude-v1/DESIGN.md`,
 every integer below from its check scripts (`mz.py`, `mz.txt`), written
-before any run. Under the world key `amplitude` the lattice is unchanged
+before any run. Under the world key `amplitude` the GameBoard is unchanged
 (the flight, the collision, the meeting, the books over every row), the
 rows carry a record, a branch and a multiplicity, a re-emission may split a
 row by integer weights, antiphase rows of one record cancel at the merge,
@@ -46,7 +46,7 @@ reading `sum`.
 | `mz_equal` | (20, 21) | equal | 0 | D1 64, D2 0 (the offers 1681/1682, 1/1682) |
 | `mz_half` | (20, 21) | a half turn 32 on the row | 0 | D1 0, D2 64 |
 | `mz_quarter` | (20, 21) | a quarter turn 16 on the row | 0 | D1 32, D2 32 |
-| `mz_balanced` | (1, 1) | equal | 0 | D1 64, D2 0 (D2's rows cancel on the lattice) |
+| `mz_balanced` | (1, 1) | equal | 0 | D1 64, D2 0 (D2's rows cancel on the GameBoard) |
 | `mz_345` | (3, 4) | equal | 0 | D1 63, D2 1 (the rung moved: u = 63 falls in D2) |
 | `mz_unequal_f0` | (20, 21) | longer by two intervals | 0 | D1 64, D2 0 (the rows accumulate in phase) |
 | `mz_unequal_f8` | (20, 21) | longer by two intervals | [8, 1] | D1 32, D2 32 (two intervals at 8 steps per interval: a quarter turn) |
@@ -64,7 +64,7 @@ design's f x 2. The absorber of Elitzur-Vaidman is a measured event of
 `light` at (0, 3) in place of mirror 2, declared as the detector `absorber`
 reading `sum`.
 
-**What the lattice does** (GAMEBOARD, `tests/test_amplitude_split.py`): on
+**What the GameBoard does** (GAMEBOARD, `tests/test_amplitude_split.py`): on
 `mz_equal` the two rows toward D1 merge in phase (amount 41, multiplicity
 1682) and the two toward D2 cancel to 1 in antiphase; on `mz_balanced`
 the rows toward D2 cancel entirely. **What the world reads** (DETECTOR):
@@ -136,7 +136,9 @@ the target, born at (14, 5), on -y to Bob at (8, 2), his window -b);
 `cnot_twice` (the gate's outputs into one gate per arm, the identity);
 `cnot_ghz_<basis>` (three lamps into one gate of three parties on a board
 of 11 x 11 x 3); `rotations_3` and `rotations_4` (three, then four, label
-rotations in series: the register's ceiling, the fourth refused at load).
+rotations in series: the register's ceiling, the fourth refused at load;
+`rotations_4` is built by the generator for the test and not shipped as
+a file, a refused world being no run).
 The expectations under `gate` are the design's `gate.py`; the register's
 L5 entry has the numbers and the runs.
 

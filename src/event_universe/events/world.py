@@ -1710,7 +1710,7 @@ class Split:
 
 @dataclass(frozen=True)
 class Rotation:
-    """A `rerelease` entry's rotation of one label bit on the lattice (the
+    """A `rerelease` entry's rotation of one label bit on the GameBoard (the
     design's 2.2, a single-label gate): the rows of every record at the
     entry, per label, become two rows on the label's bit `bit` cleared and
     set, `(w C'[s], m 65536, p)` and `(w S'[s], m 65536, p + t)` from a

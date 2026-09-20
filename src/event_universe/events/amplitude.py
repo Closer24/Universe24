@@ -4,7 +4,7 @@ ten principles, (4) and (5); the physicist's and the mathematician's
 design, docs/designs/amplitude-v1/DESIGN.md, sections 1.2, 3, 4, 5 and 10;
 docs/BEAM_LAW.md note 37).
 
-The world is the list of clicks. The lattice computes every path of a
+The world is the list of clicks. The GameBoard computes every path of a
 record (`nature_beam`: the flight, the collision, the split, the label
 rotation, the gate, the merge with its cancel), and the layer, host state
 owned by the apparatus, reads the record's OFFERS where its rows end (a
@@ -18,8 +18,8 @@ rungs at the nearest integer (the owner's decision (a)):
     b_k = (2 N C_k + Total) // (2 Total),   b_0 = 0, b_K = N,
 
 the click the cell k with b_{k-1} <= u < b_k. No draw at the detector: the
-randomness is the clock of the birth; over births, Born. The lattice never
-reads the layer, and the layer reads the lattice only through the
+randomness is the clock of the birth; over births, Born. The GameBoard never
+reads the layer, and the layer reads the GameBoard only through the
 apparatus's events (principle 5: the only non-local operation, at the
 one-way border, owned by the apparatus).
 
@@ -55,7 +55,7 @@ weights can pass 2^64).
 
 The record's labels are a set of joint labels (the bit k of a label its
 value on arm k), the rows carrying the amplitudes: a birth's `branches`
-weights are the rows' amounts, a lattice rotation of a label bit
+weights are the rows' amounts, a GameBoard rotation of a label bit
 (`rotate`) doubles the set on that bit, and a gate joins records into the
 product of their sets with the CNOT's permutation (`join`).
 """
@@ -347,7 +347,7 @@ class Layer:
             found.live -= amount
 
     def rotate(self, identity: int, bit: int) -> None:
-        """A lattice rotation of a label bit: the record's label set doubles
+        """A GameBoard rotation of a label bit: the record's label set doubles
         on that bit (the rows carry the amplitudes)."""
         found = self.resolve(identity)
         if found is None:

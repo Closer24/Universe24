@@ -80,6 +80,22 @@ are the register's ([EXPERIMENTS](EXPERIMENTS.md), "L, the amplitude
 law"); `tests/test_amplitude_layer.py` (e) checks that every gate-set
 world parses without the key.
 
+Stage (vi) (the design's section 6 as the model owner's half-hour
+version: the key forced true and the crowd's pointer gate off, the
+working tree not committed, the scratchpad `replay_vi`) replayed the same
+seventeen worlds against the stage-(v) digests: `two_slits`,
+`lamp_mirror_screen` and `w3_beam` are refused at load (the lamp's rate
+other than [1, 1]), `sun_planet` fails in the run (two multiplicities of
+one record at one set), and of the thirteen that ran twelve change
+`events.jsonl` (`read`, `a0_b8` and `mass_meeting` in their clicks;
+`7_pp`, `age`, `coasting_age`, `j2_filter`, `one_content` and
+`w_exchange` by the columns `record`, `branch` and `multiplicity` written
+on every line with no value differing; `deuteron_1`, `j3_neutron_free`
+and `r2` by their digests) and thirteen change `state.json`
+(`periodic_z_node` by its rows' columns alone). Worlds outside the
+crowd-threshold series change, so stage (vi) stopped and the key stays
+([MIGRATION](MIGRATION.md), (vi)); the branch's engine is stage (v)'s.
+
 ## The weak force in the world's terms: the 85 example worlds replayed after each commit, series J - 2026-09-20
 
 The worktree of `claude/universe24-new-3ytqde` from its tip `6a596b34`

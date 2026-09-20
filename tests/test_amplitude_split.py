@@ -114,7 +114,7 @@ def test_the_birth_of_a_record_by_a_lamp():
     ]
 
 
-def test_the_split_at_the_splitter_and_the_cancel_on_the_lattice(tmp_path: Path):
+def test_the_split_at_the_splitter_and_the_cancel_on_the_game_board(tmp_path: Path):
     """(b)."""
     world = GENERATOR.mach_zehnder("mz_equal", ticks=11)
     simulation = NatureBeamSimulation(parse_nature_beam_world(world))

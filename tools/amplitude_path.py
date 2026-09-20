@@ -2,7 +2,7 @@
 Port events of `events.jsonl` (the births, the clicks, the reads and the
 re-emissions at the sets, the splits, the cancels) through the layer
 (`event_universe.events.amplitude.Layer`) and print the world's list of
-clicks, the gathers, labelled DETECTOR, with the lattice's lines (the
+clicks, the gathers, labelled DETECTOR, with the GameBoard's lines (the
 splits and the cancels) labelled GAMEBOARD; with `--check` the replayed
 list is compared with `run.json`'s `world` (the design's acceptance test 10:
 the register's replay equals the run's world), the clicks per set are
@@ -180,7 +180,7 @@ def replay(run: Path, quiet: bool = True) -> tuple[Layer, list[dict[str, Any]]]:
                     layer.split(record, absorbed, int(line["born"]))
             elif event == "gate":
                 # The gate's join: the records named join the survivor (the
-                # rows' relabelling is the lattice's; the layer's labels,
+                # rows' relabelling is the GameBoard's; the layer's labels,
                 # arms and live count follow).
                 if not quiet:
                     print(GAMEBOARD, json.dumps(line))

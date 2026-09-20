@@ -75,7 +75,7 @@ the owner's decisions (a) the ladder normalised by the total with the
 rungs at the nearest integer and (c) a branched row pushes matter by its
 amount; the review of (i) and (ii)); no change without the key:
 
-- `events/amplitude.py`, the layer: a host register beside the lattice
+- `events/amplitude.py`, the layer: a host register beside the GameBoard
   that reads every record's ends (the clicks at the sets, the faces and
   the border, the reads and re-emissions at `sum` sets), accumulates the
   pointer per (set, arm, label), and at the record's completion (its live
@@ -130,7 +130,7 @@ The fifth commit of `amplitude-v1` (the design's section 10; the review
 of (iii)); no change without the key:
 
 - A `rerelease` entry declares `rotate` (the rotation of one label bit on
-  the lattice, `world.Rotation`) and `gate` (the CNOT between the records
+  the GameBoard, `world.Rotation`) and `gate` (the CNOT between the records
   of distinct lamps pending at the entry, `world.Gate`; the layer's
   `join`, the identities aliased); the `gate` and `rotate` lines. The
   register's ceiling is checked at load: the multiplicity through every
@@ -154,6 +154,43 @@ of (iii)); no change without the key:
   `rotations_3`, `rotations_4`) and L6 (`bell_n1024_<a>_<b>`,
   `bell_n4096_<a>_<b>`).
 - Nothing deleted.
+
+## The amplitude law, on 2026-09-20, (vi): the one click, not landed; the key stays
+
+The design's section 6 (the record form the default, the key `amplitude`
+and its parsing deleted, the crowd-threshold path of the `wave` reading
+deleted) was tried after (v) as the model owner's half-hour version on
+the gate set of seventeen worlds ([validation](VALIDATION.md)): the key
+forced true and the `wave` pointer gate off, the replay compared with
+stage (v)'s digests. Worlds outside the crowd-threshold series change, so
+by the owner's rule the stage stopped there and nothing of it is
+committed:
+
+- Refused at load: `two_slits` (the lamp's rate [64, 1]),
+  `catalog/lamp_mirror_screen` ([4, 1]) and `heisenberg/w3_beam`
+  ([47, 1]): under the record form a lamp births one record per
+  self-creation and the rate [1, 1] alone is accepted.
+- Failed in the run: `catalog/sun_planet` (the record 8589934593 at the
+  set `screen` with the multiplicities 9 and 36: one multiplicity per
+  offer).
+- Changed clicks: `bell/read`, `bell/a0_b8` (the old A2, in the series)
+  and `lensing/mass_meeting` (outside it): their lamps at [1, 1] birth
+  records, read by the ladder in place of the crowd's threshold.
+- Changed bytes with no value changed: `coupling/7_pp`, `one_content`,
+  `redshift/age`, `hubble/coasting_age`, `weak/j2_filter`,
+  `weak/w_exchange` and `detector/periodic_z_node` (the columns `record`,
+  `branch` and `multiplicity` written on every click line, `rows` on the
+  read lines and the rows of `state.json`); `nucleus/deuteron_1`,
+  `weak/j3_neutron_free` and `bohr/r2` changed by their digests, their
+  lines not kept (no lamp in any of them).
+
+What the one click needs before it can be the default: the lamp's rate
+under the record form (r units per direction as r paths of one birth or
+as r births), a set's offer of several multiplicities of one record, the
+columns written only where a record is, and the design's test 7 restated
+as identity on the worlds without a lamp. Until then the key `amplitude`
+stays as (i) declared it, false by default, and the crowd's `wave`
+threshold stays; nothing deleted, nothing added.
 
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 

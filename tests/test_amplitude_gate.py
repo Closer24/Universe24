@@ -7,7 +7,7 @@ docs/designs/amplitude-v1/DESIGN.md section 10 and its `gate.py`, section 4.3 an
 expected integers of docs/TEST_EXPECTATIONS.md ("The amplitude law: the
 gate"), written down before the first run:
 
-(a) the Hadamard and the CNOT on the lattice (`cnot_pair_0_8`): the
+(a) the Hadamard and the CNOT on the GameBoard (`cnot_pair_0_8`): the
     Hadamard re-emitter turns the control's row into two rows on the label
     bit 0, amounts 181 (C'[16] of the 128 tables) at the phases u and
     u + 32, the multiplicity 65536 (the `rotate` line); at the gate the
@@ -32,7 +32,7 @@ gate"), written down before the first run:
     2^48 at the absorber, 64 gathers) and `rotations_4` is refused at load,
     the multiplicity through its re-emitters 2^64 beyond 2^62 - 1, naming
     the fourth rotation's Node (8, 0, 0) (the review's S6):
-    Grover's six rotations are not a world of the lattice, as the design's
+    Grover's six rotations are not a world of the GameBoard, as the design's
     section 10 states;
 (f) the refusals: `rotate` and `gate` without the key and on `measure`; a
     gate kind other than cnot; `hold` not a boolean; `parties` 0; a
@@ -133,7 +133,7 @@ def rows_of(simulation: NatureBeamSimulation, record: int) -> list[tuple[object,
     )
 
 
-def test_the_hadamard_and_the_cnot_on_the_lattice():
+def test_the_hadamard_and_the_cnot_on_the_game_board():
     """(a)."""
     world = GENERATOR.cnot_pair("probe", 0, 8)
     lines: list[dict[str, object]] = []

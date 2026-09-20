@@ -891,3 +891,61 @@ couplings.
 - **Status.** Open; the model owner's (2026-09-20: the engine stands, the
   terminology corrected, nature's gamma a limit of the law). Series J4 is
   the reading to make.
+
+## 22. The amplitude law: the world's clicks read from the GameBoard's paths, Born, interference and Bell below Tsirelson at finite N, stated so that it can fail
+
+- **Statement (the model owner's decision of 2026-09-20, Highlights 5.4,
+  "DECIDED: `amplitude-v1` is built"; the design
+  `docs/designs/amplitude-v1/DESIGN.md`; [BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  Under the world key `amplitude` a lamp births one record per
+  self-creation; the GameBoard carries the record's rows, each with its
+  record, branch and multiplicity, through the splits, the turns, the
+  rotations and the gates of the world's tables, locally and exactly,
+  cancelling antiphase rows of one record at the merge; the record's
+  click is read from its offers at the `sum` sets by its birth phase u on
+  the ladder of its cells, the rungs at the nearest integer of N. The
+  claim: the engine's own tables then give Born's rule as a count over
+  the circle (the cells' weights the squares of the coherent sums, one
+  Node at a time), interference (the Mach-Zehnder at one port,
+  Elitzur-Vaidman), the pair's correlation with exact marginals and
+  S = 2 sqrt 2 - epsilon(N) at or below Tsirelson at every N, GHZ, the
+  which-path world and the CNOT, with no draw and no signal: the outcome
+  of a pair is the one u of the one record. Not claimed: that quantum
+  mechanics is solved; the circle's N, the tables' 1/256 grain and the
+  ladder's rounding are the law's own and give the departures below.
+- **The reading (series L, run on 2026-09-20, the fingerprint
+  `ff5c382d672f`; [EXPERIMENTS](EXPERIMENTS.md), "L, the amplitude
+  law").** Every acceptance integer of the design reproduced: the
+  Mach-Zehnder 64/0, 0/64, 32/32, 64/0, 63/1 and the unequal arms 64/0,
+  32/32, 0/64; Elitzur-Vaidman 32/17/15 and 32/16/16; the two slits at a
+  low rate wall 34, screen 15, faces 15 of 64; the pair S = 176/64 with
+  every marginal 32/64, the registered quadruple 156/64, the which-path
+  world 88/64, no maintenance at 116 Links; GHZ's triples and products;
+  the CNOT pair 176/64, CNOT twice the identity, GHZ by one gate;
+  S = 2896/1024 and S = 11584/4096. The departures: the record's total
+  over u takes eight values (65448 to 65773 of 65536) where the design
+  read 0.0019 at u = 0; the two-slit shares are this geometry's under the
+  per-Node rule, not the design's 3/5 and 2/5; the design's bound
+  |E - cos| <= 1/N holds at N = 1024 only (at 64 the count's grain, at
+  4096 the tables' 1/256 entries), and epsilon <= 4/N holds at 1024 and
+  4096 and not at 64.
+- **What would refute it.** A registered world under the key whose
+  gathers differ from the reading tool's replay of its own record (the
+  ladder is then not what this entry says); a Mach-Zehnder gather at the
+  dark port with equal arms; a marginal of the pair other than 32/64; S
+  above 2 sqrt 2 at any N with the rungs at the nearest integer; a GHZ
+  triple outside the allowed four; a world where the crowd's `wave` or
+  `beam` reading changes under the key. Against nature: the tables'
+  rounding beyond 1/N at N = 4096 and the record's total over u are the
+  law's own limits, recorded and not tuned; at large N the numbers are
+  the paper's, not nature's exact ones.
+- **Open.** The one click (the design's section 6): the record form is
+  not the default, stage (vi) stopped at the gate set
+  ([MIGRATION](MIGRATION.md), (vi)); the K finding of the same day, u as
+  the record's own field beside the running phase and a row's push by its
+  share of the label (note 37 (ix)); the full register replay and the
+  coverage-measured gate set; Grover beyond the register's ceiling; two
+  sequential gates on an entangled record.
+- **Status.** Open; the design's acceptance tests pass on the branch
+  `amplitude-impl` (the runs in the register), not merged at this
+  writing.

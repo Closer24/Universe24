@@ -360,7 +360,9 @@ accepted; refused with N below 4 (the quarter turn of a reflection), with
 a lamp's `rate` other than [1, 1] and when it is not true or false; the
 record carries it and the identity `amplitude-v1` under `hypotheses` when
 it is true; absent, no row carries a record and every world reads as it
-did, byte for byte); `directions` (the declared primitive vectors beyond
+did, byte for byte; the key stays and the record form is not the
+default: the design's section 6 stopped at the gate set, MIGRATION
+(vi)); `directions` (the declared primitive vectors beyond
 the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`
@@ -389,7 +391,12 @@ a pair `[n, d]`, the phase per interval of age (the design's frequency,
 the owner's unification (1): a row of the family turns `by_clock(age, n,
 d)` at every walk that advances its age, carried through a re-emission,
 so that two paths of one record read their difference in intervals at the
-click; the integer form turns per Link crossed as it did, and on the
+click (the row's own floor per segment from its age 0 at its birth or
+re-emission, sum_j floor(A_j n / d) over a path's segments, the design's
+one floor at the click when d = 1 and within one step per segment
+otherwise; the default stays the integer 0, not the lamp's own turn: a
+family that turns in transit declares it); the integer form turns per
+Link crossed as it did, and on the
 flight table the two are not the same number: a heading crosses 32 Links
 in 55 intervals; refused without the key and on a family without a phase
 circle; the record carries the key as declared)); `measured`
@@ -464,7 +471,9 @@ alone, whose default 1 admits every row (the decision of 2026-09-20 on
 the design's 2.1 and 3.1); the units it absorbs stay live in the layer
 until it re-creates them, and a `rerelease` entry on a `sum` set ends
 them there with an offer, the re-creation a new record when the record
-chose that set); `lamp` `{rate: [n, d],
+chose that set; a row of a record taken home is re-created with its
+columns and its multiplicity kept, apportioned whole as a row of no
+record is, no split at the home); `lamp` `{rate: [n, d],
 directions, phase_window, phase_width}` on a measured event of a paid
 family, its window a number; under `amplitude` also `turns`, a phase step
 per direction the born row carries beyond the clock's phase, and the rate
@@ -489,7 +498,7 @@ v(t)]]` on the half-angle tables of 2N (the channels + and -; the design's
 tables of 2N do not exist and an even setting reads the 4096 table at
 s / 2, an odd one refused); a `rerelease` entry's `rotate` `{setting,
 bit, turn}` (under `amplitude`), the rotation of one label bit on the
-lattice (the design's 2.2): every row of a record at the entry becomes two
+GameBoard (the design's 2.2): every row of a record at the entry becomes two
 rows on the bit cleared and set, the amounts w C'[s] and w S'[s] of the
 half-angle tables, the multiplicity m x 65536, the phases as the matrix's
 signs say (from a clear bit the set bit takes a half turn; from a set bit
@@ -689,7 +698,9 @@ the books gain the `cancelled` lines (per family the units the merge's
 cancel removed on the transit line, the content carried on the content
 line and their labels beside the `turned` line, and the world's total
 under `momentum.cancelled`): initial + released = current + escaped +
-absorbed + cancelled, the identity as it was where nothing cancels.
+absorbed + cancelled, the identity as it was where nothing cancels; the
+units a split creates, sum (a_i - 1) w per row, enter `released` as every
+re-creation does (the design's `split` line is not a line of the books).
 Under the key the record gains the lines of the layer
 (`events/amplitude.py`, the design's sections 3 and 5): `birth` (a lamp's
 record: `record`, `u`, `labels`, `arms`, `units`, `multiplicity`), the

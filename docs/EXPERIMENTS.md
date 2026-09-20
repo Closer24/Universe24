@@ -2893,7 +2893,7 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   "DECIDED: `amplitude-v1` is built, with the four recommendations and the
   four unifications"; the ten principles, the corrected sentence "the
   world is the list of clicks"): under the world key `amplitude` the
-  lattice computes every path of a record, locally and exactly, and the
+  GameBoard computes every path of a record, locally and exactly, and the
   world's list of clicks is read from it by the birth phase u on the
   ladder of the record's offers, normalised by their sum with the rungs
   at the nearest integer ([BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
@@ -2924,7 +2924,7 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   (4, 3) and D2 at (3, 4) reading `sum`. Expected over the 64 births
   (DETECTOR, the gathers): `mz_equal` D1 64 and D2 0 (the offers
   1681/1682 and 1/1682); `mz_half` 0 and 64; `mz_quarter` 32 and 32;
-  `mz_balanced` ((1, 1)) 64 and 0 with D2's rows cancelled on the lattice
+  `mz_balanced` ((1, 1)) 64 and 0 with D2's rows cancelled on the GameBoard
   (GAMEBOARD); `mz_345` ((3, 4)) 63 and 1, the same u = 63 falling in D2
   where the rung moved; the unequal arms (arm 2 two intervals longer) at
   `phase_per_link` 0: 64 and 0, at [8, 1]: 32 and 32, at [16, 1]: 0 and
@@ -3030,7 +3030,9 @@ and 9).**
   cells (oA, oB) over the 64 births: (0, 8) 27, 5, 5, 27 (E x 64 = 44);
   (0, 24) 5, 27, 27, 5 (-44); (16, 8) and (16, 24) 27, 5, 5, 27 (44); S =
   176/64 = 2.75 (2 sqrt 2 = 2.828; the discreteness: S = 2 sqrt 2 -
-  epsilon(N), epsilon at most 4/N); every marginal 32/64. The choosers'
+  epsilon(N), the design's epsilon at most 4/N, not met at N = 64: 0.078
+  against 0.0625, as the design's own |E - cos| at this N, 0.0352 over
+  all pairs, is above 1/N); every marginal 32/64. The choosers'
   15 setting pairs: E x 64 = 44, -60, 20, 60, -8, -48, -8, 60, -52, -64,
   40, 20, -28, -36, 64 for a in (0, 12, 25, 38, 51) by b in (8, 29, 51);
   on the registered quadruple (0, 25) x (8, 29) S = 156/64 = 2.4375 (2
@@ -3068,7 +3070,7 @@ and 9).**
 
 - **Model prediction, pinned before the runs (`expectations.json` under
   `gate`, the design's `gate.py` on the host's joint state).** The
-  Hadamard on the lattice (a `rerelease` with `rotate` at the setting
+  Hadamard on the GameBoard (a `rerelease` with `rotate` at the setting
   N/4) turns |0> into {00: +, 10: -} (the amounts 181 of the 128 tables,
   the phases u and u + 32, the multiplicity 65536); the CNOT at a gate
   with the target's |0> gives {00: +, 11: -}, the pair; with Bob's window
@@ -3077,13 +3079,13 @@ and 9).**
   gives {000, 111} and the products -1 (XXX), +1 (XYY, YXY, YYX), this
   convention's H; the register's ceiling: three label rotations on a
   path (m = 2^48) fit, four (2^64) do not, Grover's six (2^96) are not a
-  world of the lattice, as the design's section 10 states (exact on the
+  world of the GameBoard, as the design's section 10 states (exact on the
   host's integers, not on a Node); after n gates a record has at most
   n x 2^n rows (the pair 4, GHZ 6).
 - **Run (2026-09-20, `cnot_pair_<a>_<b>`, `cnot_twice`, `cnot_ghz_*`,
   `rotations_3`, the fingerprint `ff5c382d672f`, completed and
   conserved, 0.3 s each; `rotations_4` refused at load).** Every integer
-  above reproduced on the lattice: the Hadamard's rows, the gate's rows
+  above reproduced on the GameBoard: the Hadamard's rows, the gate's rows
   (the `gate` lines: the survivor, the joined record, the labels
   [[0, 1], [3, 1]], 4 rows; GHZ [[0, 1], [7, 1]], 6 rows), S = 176/64,
   CNOT twice's labels {0, 1} on both arms, GHZ's allowed triples and
@@ -3104,8 +3106,11 @@ and 9).**
   pair; S = 11584/4096 = 2.828125 at N = 4096, E x 4096 = 2900, -2900,
   2892, 2892 against the cosine's 2896.3: the tables' entries in 1/256
   round E by 0.0009, beyond 1/4096 = 0.00024, so the design's bound
-  |E - cos| <= 1/N holds at N = 64 and 1024 and fails at 4096 (S stays
-  below 2 sqrt 2 = 2.828427). At N = 4096 the half-angle tables of 2N do
+  |E - cos| <= 1/N holds at N = 1024 (0.00008 against 0.00098) and not
+  at 4096, nor at 64 (0.0196 against 0.0156), while S = 2 sqrt 2 -
+  epsilon with epsilon at most 4/N holds at 1024 and 4096 (0.0003) and
+  not at 64 (0.078 against 0.0625); S stays below 2 sqrt 2 = 2.828427
+  at every N. At N = 4096 the half-angle tables of 2N do
   not exist: an even setting reads the 4096 table at s / 2.
 - **Run (2026-09-20, `bell_n1024_*` 1044 intervals 1.9 s each,
   `bell_n4096_*` 4116 intervals 8.4 s each, the fingerprint
@@ -3114,6 +3119,24 @@ and 9).**
   2.828125); the births counted by the record's ordinal (a lamp's clock
   skips a step as the births spend its content: 4096 births take 4099
   intervals); the reading tool's replay equals `run.json`'s `world`.
+
+**L, open items (2026-09-20, after (v)).** The one click (the design's
+section 6) is not landed: the record form as the default changes worlds
+outside the crowd-threshold series on the gate set
+([MIGRATION](MIGRATION.md), (vi)), so the key `amplitude` stays. The K
+finding under the record's click (the lensing worlds of `mass_meeting`
+under the key, the coordinator's record of 2026-09-20): the record's
+click beside the mass moved to smaller y against the control's in every
+world, -2.115, -5.208 and -4.432 pixels at the three (M, b) against the
+crowd's -2.021, -4.345 and -2.465, and the 464 records that reached the
+mass were absorbed whole by it; the two changes it asks for, u as the
+record's own field beside the running phase and a row's push by its share
+amount^2 / (m x norm) of the label, are the next item ([BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(ix)). The pushes are untouched by the columns: a branched row pushes
+matter by its amount as every row does (the owner's (c), the sum over the
+branches). Not built: unification (3) (refused: three columns under three
+keys), Grover (six rotations beyond the register's ceiling), two
+sequential gates on an entangled record, the full register replay.
 
 ### A3. Bell test in phase form, delayed geometry
 
