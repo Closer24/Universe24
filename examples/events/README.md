@@ -146,9 +146,11 @@ open faces, the `wave` detectors of what comes out of the atom.
 coherent record per turn and cumulatively (DETECTOR), every line
 labelled by its kind; the register entry is
 [H, Bohr's lines behind the detector (2026-09-20)](../../docs/EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20):
-no orbit closed well enough for the coherence reading (the reference
-orbit held its mean radius for two eccentric turns and was thrown out at
-a close pass), registered as the finding and not tuned.
+under the step drive (2026-09-20) the reference orbit closes four times
+and stays on the GameBoard for the run, the coherence at the closing
+radius outside (C(4) = 1.01 against 2.0, the phase's turn per orbit 0.75
+to 0.83 against 0): the orbit closes and Bohr's condition is not met,
+registered as the finding and not tuned.
 
 ## The nucleus series
 

@@ -54,8 +54,9 @@ physicist's DESIGN.md, test (f), and the integers of its section 4.4); K
     it at the age 3), the `p` row's -7936 is read at ticks 6 and 7 (at
     tick 6 the drive 7936 is below D = 8256 and the body stands), and at
     tick 7 p1 steps to x 1 with (-15872, 0, 0) and p2 to x 6 with (15872,
-    0, 0), the drive 23808 - 16192 = 7616 (the rule as it was stepped them
-    at tick 6 with 7936): the pair separates, no contact;
+    0, 0), the drive -7616 and +7616 (the signed drive of record 126:
+    23808 - 16192 with the momentum's sign; the rule as it was stepped
+    them at tick 6 with 7936): the pair separates, no contact;
 (b) the isolated hand-over (`release` [0, 1], no rays): p1 of `p`, content
     5, momentum (256, 0, 0) at (1, 2, 2) and p2 of `q`, content 5, fixed,
     at (2, 2, 2) on an open 5^3 GameBoard: the step rule fires at tick 3
@@ -260,7 +261,7 @@ def test_the_pair_on_the_six_headings():
         if r["event"] == "step"
     ]
     assert steps == [
-        (7, 1, [1, 4, 4], [-15872, 0, 0], [7616, 0, 0]),
+        (7, 1, [1, 4, 4], [-15872, 0, 0], [-7616, 0, 0]),
         (7, 2, [6, 4, 4], [15872, 0, 0], [7616, 0, 0]),
     ]
     assert not contacts(records)
@@ -514,7 +515,11 @@ def test_the_frames_order_is_a_declared_tie():
     (its drive 128 of D = 192 at tick 3, 256 at tick 4; the step drive of
     2026-09-20; the rule as it was, the count off the clock, stepped it at
     tick 3); with b declared first, b hands -192 in one contact at tick 2
-    and a steps free at ticks 2 and 4 (twice by tick 3 as the rule was).
+    and a steps free at tick 3 alone (the signed drive of record 126: a's
+    drive +64 from its own momentum is cancelled to -64 by the -128 it now
+    holds at tick 2, -192 = -D at tick 3, -128 at tick 4; the unsigned
+    drive stepped it at ticks 2 and 4, the count off the clock twice by
+    tick 3).
     The sum of the momenta and the books are the same either way; the
     holder and the positions are not. Edge case: a body alone (no
     occupant) steps one Link in three intervals and makes no contact."""
@@ -540,12 +545,12 @@ def test_the_frames_order_is_a_declared_tie():
         [(4, True, (1, 1, 1))],
     )
     assert outcomes[False] == (
-        (0, 1, 1),
+        (1, 1, 1),
         [-128, 0, 0],
         (3, 1, 1),
         [0, 0, 0],
         [(2, False, -192)],
-        [(2, True, (1, 1, 1)), (4, True, (0, 1, 1))],
+        [(3, True, (1, 1, 1))],
     )
     alone = order_world(True)
     alone["measured"] = [alone["measured"][0]]
