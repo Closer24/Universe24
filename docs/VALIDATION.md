@@ -11,6 +11,41 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series G, the Hubble diagram behind the detector: four runs - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` at the merge of the charge
+per unit of content (`b9a0e6c6`) with the worlds and the tool of the series
+(the engine unchanged by the later tip), source fingerprint
+`5a93868357b564b3c0448e04db424eaf3acb1617e1ab1a448a42989e88481776`, Python
+3.14.0rc2, numpy 2.5.3, headless, four cores: the four worlds of
+`examples/events/hubble/` through `tools/run_series.py --jobs 4` (36.6,
+37.3, 35.8, 36.6 s for `coasting_scalar`, `coasting_age`, `pushing_scalar`,
+`pushing_age`, 400 intervals each), every run completed with the books
+balanced at every tick; `tools/hubble_readings.py` (with the replay, 3
+minutes): 0 record checks failed, the reading's formula 288 of 288 inside
+2 %, 22 pinned readings inside and 26 outside, none moved; the readings
+registered in
+[G](EXPERIMENTS.md#g-the-hubble-diagram-behind-the-detector-2026-09-20)
+and the worlds' [README](../examples/events/hubble/README.md).
+
+| Check | Result |
+| --- | --- |
+| The reading's formula, 1 + z against (1 + k)(1 + v / c) from the record (detector readings) | 288 of 288 inside 2 % over the three windows; the coasting worlds z = v / c declared to 0.003 rms and tau to 1.3 intervals of the throw's own coasting form |
+| The linear law, H t_0 (the coasting worlds) | 0.875, 0.949, 1.029 at t_0 = 150, 250, 350: outside, inside, inside |
+| The coasting form q = 0 the nearest at the near H, rms below 0.02 | inside at t_0 = 150 (rms 0.026, outside), outside at 250 and 350 (q = -0.55 the nearest by the initial distances r_0 / c); the best-H rms of the three forms within 0.005 |
+| The decelerating form (the pushing worlds): H t_0 < 1, q_eff > 0, q = -0.55 the farthest | H t_0 > 1 in 5 of 6 windows, q_eff > 0 in 5 of 6, q = -0.55 the nearest in 6 of 6; on the GameBoard p(400) / p(0) = 0.68 to 0.96, every source decelerated; the Doppler part alone H t_0 = 0.80 to 0.99 |
+| What is observed today, q = -0.55 the nearest | in 10 of 12 windows (expected outside in every run) |
+| The bend of the age clock | reported: zero in the coasting crowd, -0.089 to +0.081 per source in the pushing crowd, no monotone bend |
+| `tests/test_hubble_readings.py` | passed: c = 32 / 55 and m(17) = 10, m(34) = 20 off the flight table; on a bar of 61 the tool's `record` lines, click ages and steps equal the engine's, k = 0, z within 0.05 of 1 + v / c at v = 1 / 2 |
+| `python tools/check.py` (the scoped selection) | ruff lint and format, mypy and the selected tests green |
+
+The runs establish what this detector reads of a throw on this engine (the
+Doppler of the throw times the emitters' clocks, and the shape of the curve
+against three forms); they establish no physical law, and the resemblance
+to the accelerating form is registered with its two causes on the GameBoard
+(the throw's initial distances and the emitters' clocks), not as an
+acceleration.
+
 ## A body on a set, the turn by momentum and series H, Bohr's lines behind the detector - 2026-09-20
 
 The worktree of `claude/universe24-new-3ytqde` on three commits after the

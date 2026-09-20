@@ -17,7 +17,7 @@ Since 2026-09-19 there is one engine, the engine of the law of the ray
 | [The engine](ENGINE.md) | The bookkeeping around the law as implemented: the board and its topology, the frame of an interval, the books, the world file's refusals, the record and the preflight |
 | [Entity definitions](ENTITY_DEFINITIONS.md) | Reusable external apparatus data, placement, canonical loading, portable inputs and provenance |
 | [Physical detector](DETECTOR_REQUIREMENTS.md) | Generic sensitivity requirements, the quantum goals and the unresolved scope; the reversible detector contract of 2026-09-19 absorbed into the ray law and deleted |
-| [The worlds](../examples/events/README.md) | One content, two contents, two slits with a detector and the one-slit control under the ray law; the Bell worlds, the coupling, orbit, redshift and Bohr series and the detector definitions: what each reads |
+| [The worlds](../examples/events/README.md) | One content, two contents, two slits with a detector and the one-slit control under the ray law; the Bell worlds, the coupling, orbit, redshift, Hubble and Bohr series and the detector definitions: what each reads |
 | [Canonical terminology](TERMINOLOGY.md) | Node, NodeState, Port, Link, Event and LocalRule vocabulary, the terms of the law of the ray (ray, direction, flight table, rest slot, collision, the one reading, record, re-emission), the terms kept from the law of events and the historical terms of the laws before it |
 | [Architecture](ARCHITECTURE.md) | Module ownership, the integer contract, the dependency direction and the gates |
 | [Migration](MIGRATION.md) | Every deletion and rename, dated; the law of the ray of 2026-09-19 first |

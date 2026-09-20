@@ -5,6 +5,22 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### Series G, the Hubble diagram behind the detector (2026-09-20)
+
+- The four worlds of `examples/events/hubble/` (`make_worlds.py`: a
+  301^3 cube, twenty-four thrown sources at 0.05 c to 0.6 c, a `wave`
+  detector at the centre reading the age, six masses inside; a coasting
+  and a pushing crowd, each with `scalar` and `age` clocks), the readings
+  tool `tools/hubble_readings.py` (the redshift from the pointer's turn,
+  the distance from the arrivals' ages, the fits against the coasting,
+  decelerating and accelerating forms, every line labelled a detector or
+  a GameBoard reading) and its test `tests/test_hubble_readings.py`; the
+  register entry G in [EXPERIMENTS.md](docs/EXPERIMENTS.md) and the
+  evidence in [VALIDATION.md](docs/VALIDATION.md). No law changed; the
+  findings for the law (a diagonal throw is not straight, a beam's push
+  does not dilute, a source stepping into its own row takes it home) are
+  registered there.
+
 ### Series H, Bohr's lines behind the detector (2026-09-20)
 
 - The run of the model owner's decision on Bohr ([EXPERIMENTS.md](docs/EXPERIMENTS.md),
