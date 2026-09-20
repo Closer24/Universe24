@@ -57,21 +57,36 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.integer import by_clock
+from event_universe.core.lattice import PORT_HEADINGS
 from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.nature_beam import flight_table
-from event_universe.events.world import LABEL_SCALE
+from event_universe.events.engine import by_clock
+from event_universe.events.nature_beam import flight_table, unit_label
+from event_universe.events.world import HEADING_OFFSET, LABEL_SCALE, RAYS_LAW, RayWorld
+from event_universe.events.world import Q as FLIGHT_SCALE
 from event_universe.json_documents import parse_json_document
 
+# Every rule of the engine this tool needs is read off the engine's own
+# functions (the architecture review of 2026-09-20, Highlights 5.4: a tool
+# is a reader of the record, never a second owner of a rule): the clock
+# `engine.by_clock`, the flight table `nature_beam.flight_table` and its
+# `manhattan_steps`, the label `nature_beam.unit_label`, the scale
+# `world.LABEL_SCALE`, the world's keys through `parse_ray_world`.
 MODEL_PREFIX = "rays-coupling-"
 MODEL_SUFFIX = "-plane-v1"
 CENTRE = (60, 60, 0)
 SOURCE = 1 << 24
 RELEASE = (1, 128)
-# The net emission into the plane per interval at the fixed point: 2^17 per
-# heading on six headings, the two z headings' rays coming home and created
-# again over the six.
-Q = 6 * (SOURCE * RELEASE[0] // RELEASE[1])
+# The source's release per heading at a self-creation: the engine's clock,
+# `by_clock(age, content x n, d)` at `release` [n, d] (nature_beam, step 5),
+# read at age 0; the same at every age since 128 divides 2^24.
+RELEASE_PER_HEADING = by_clock(0, SOURCE * RELEASE[0], RELEASE[1])
+# The net emission into the plane per interval at the fixed point: the
+# release on the six headings (2^17 each), the two z headings' rays coming
+# home and created again over the six.
+Q = len(PORT_HEADINGS) * RELEASE_PER_HEADING
+# The flight table of the six headings (the two rest slots first, as the
+# world's table has them): the front and the mean stay are read off it.
+HEADING_TABLE = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
 FAR_RADII = (4, 6, 8, 12, 16, 20, 24, 30, 40)
 FAR_FIELD = tuple(r for r in FAR_RADII if r >= 8)
 FAR_WINDOW = 50
@@ -82,7 +97,14 @@ PROBE_X = (CENTRE[0] + PROBE_RADIUS, CENTRE[1], CENTRE[2])
 WINDOW = 50
 CHARGE = 1 << 23
 PROBE_CHARGE = 2
-SPEED = 1 / math.sqrt(3)
+# The mean stay of a heading ray at a Node over the flight table's period,
+# T_d / (S_1 Q) intervals per Link (the table's mean speed S_1 Q / T_d with
+# T_d = isqrt(3 |v|^2 Q^2): the design's 1 / sqrt 3 rounded to the table's
+# integers, 110 / 64 on a heading; until 2026-09-20 the tool printed the
+# unrounded 1 / (1 / sqrt 3)).
+STAY = int(HEADING_TABLE.turns[HEADING_OFFSET]) / (
+    int(HEADING_TABLE.manhattan[HEADING_OFFSET]) * FLIGHT_SCALE
+)
 AXES = {
     "+x": (1, 0, 0),
     "-x": (-1, 0, 0),
@@ -122,13 +144,16 @@ def step_axis(event: Record) -> int:
     return next(axis for axis in range(3) if origin[axis] != target[axis])
 
 
-def steps_by_rule(reads: Reads, m: int, first: int, last: int) -> list[tuple[int, int]]:
-    """The (tick, axis) at which a free probe of content m steps by the rule
-    of the engine's step on the record: its momentum is the cumulative push
-    of its reads (born at rest), at tick t after that tick's read the first
-    axis with by_clock(t - 1, |p|, Q x m + |p|) = 1 steps (the momentum in
-    label units, `width` 1); at most one per interval, wherever it lands (a
-    refused step counts)."""
+def steps_by_rule(reads: Reads, m: int, first: int, last: int, width: int = 1) -> list[tuple[int, int]]:
+    """The (tick, axis) at which a free probe of content m steps by the
+    engine's step rule on the record (`RaySimulation._move`, ENGINE.md: one
+    Link per (Q x S x M + p) / p self-creations on an axis whose momentum
+    component is p, off the clock): its momentum is the cumulative push of
+    its reads (born at rest), at tick t after that tick's read the first
+    axis with the engine's clock `by_clock(t - 1, |p|, Q x S x m + |p|)`
+    = 1 steps (the momentum in label units, Q = `LABEL_SCALE`, S the
+    world's `width`); at most one per interval, x before y before z,
+    wherever it lands (a refused step counts)."""
     momentum = [0, 0, 0]
     fired: list[tuple[int, int]] = []
     for tick in range(first, last + 1):
@@ -136,7 +161,7 @@ def steps_by_rule(reads: Reads, m: int, first: int, last: int) -> list[tuple[int
             momentum = list(added((momentum[0], momentum[1], momentum[2]), reads[tick][1]))
         for axis in range(3):
             magnitude = abs(momentum[axis])
-            if magnitude and by_clock(tick - 1, magnitude, LABEL_SCALE * m + magnitude):
+            if magnitude and by_clock(tick - 1, magnitude, LABEL_SCALE * width * m + magnitude):
                 fired.append((tick, axis))
                 break
     return fired
@@ -144,13 +169,16 @@ def steps_by_rule(reads: Reads, m: int, first: int, last: int) -> list[tuple[int
 
 def first_arrivals(links: int) -> dict[int, int]:
     """The flight table's first arrival at m Links of a heading ray, by m:
-    the interval counted from the ray's first walk."""
-    table = flight_table(((0, 0, 0), (0, 0, 0), (1, 0, 0)))
-    position = 0
+    the least age at which the table's Manhattan steps m(tau) reach m
+    (`FlightTable.manhattan_steps`, the function the step table is built
+    from), counted from the ray's first walk (a ray at age 0 walks at its
+    first interval)."""
+    ages = np.arange(1, 4 * links + 1, dtype=np.int64)
+    heading = np.full(ages.shape, HEADING_OFFSET, dtype=np.int64)
+    reached = HEADING_TABLE.manhattan_steps(heading, ages)
     found: dict[int, int] = {}
-    for tau in range(4 * links):
-        position += int(table.steps[2, tau % int(table.period[2])][0])
-        found.setdefault(position, tau + 1)
+    for age, steps in zip(ages.tolist(), reached.tolist(), strict=True):
+        found.setdefault(int(steps), int(age))
     return found
 
 
@@ -161,7 +189,34 @@ def front(radius: int) -> tuple[int, int]:
     """The first read (tick, amount) of a probe at `radius` on an axis: the
     source's first release at tick 1 walks from tick 2, so the front of 2^17
     whole arrives at tick 1 + the flight table's first arrival at r Links."""
-    return (1 + ARRIVALS[radius], SOURCE * RELEASE[0] // RELEASE[1])
+    return (1 + ARRIVALS[radius], RELEASE_PER_HEADING)
+
+
+def label_push(heading: Vector, amount: int, content: int) -> Vector:
+    """The push the engine takes on a free reader of content m from `amount`
+    units of an uncharged free family's ray arriving on `heading`: minus m
+    times the label moment (RAY_LAW section 3, step 4), the label of one
+    unit being u_d, the unit vector of the direction at the scale Q
+    (`unit_label`, exactly Q e_d on a heading): -amount x m x Q along it."""
+    return scaled(unit_label(heading), -amount * content)
+
+
+def declared_charge(world: Record, index: int) -> int:
+    """The whole charge of the measured event `world["measured"][index]` as
+    the world declares it: the per-event key where the world still declares
+    one (the form until 2026-09-20), else the family's charge per unit of
+    content, an integer n as [n, 1] or a pair [n, d], times the event's
+    content: n x amount // d (0 without a charge)."""
+    entry = world["measured"][index]
+    if "charge" in entry:
+        return int(entry["charge"])
+    family = next(f for f in world["families"] if f["name"] == entry["family"])
+    charge = family.get("charge", 0)
+    if isinstance(charge, list):
+        numerator, denominator = int(charge[0]), int(charge[1])
+    else:
+        numerator, denominator = int(charge), 1
+    return numerator * int(entry["amount"]) // denominator
 
 
 def slope(radii: tuple[int, ...], values: list[float]) -> float:
@@ -213,15 +268,20 @@ class Checks:
 
 @dataclass
 class Run:
+    """One run folder: its record (`run.json`), its world as declared
+    (`initialization.json`, the JSON object) and as the engine parses it
+    (`parsed`, the world's keys with their defaults), and its events."""
+
     name: str
     folder: Path
     record: Record
     world: Record
+    parsed: RayWorld
     events: list[Record]
 
     @property
     def ticks(self) -> int:
-        return int(self.world["ticks"])
+        return self.parsed.ticks
 
     def measured(self, number: int) -> Record | None:
         for entry in self.record["measured"]:
@@ -257,14 +317,16 @@ class Run:
 
 def load(folder: Path) -> Run:
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
-    world = json.loads((folder / "initialization.json").read_text(encoding="utf-8"))
+    source = (folder / "initialization.json").read_bytes()
+    world = json.loads(source.decode("utf-8"))
+    parsed = parse_ray_world(parse_json_document(source))
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         events = [json.loads(line) for line in stream if line.strip()]
     model = str(record["model"])
     if not (model.startswith(MODEL_PREFIX) and model.endswith(MODEL_SUFFIX)):
         raise ValueError(f"{folder}: not a world of the coupling series on the plane ({model})")
     name = model[len(MODEL_PREFIX) : -len(MODEL_SUFFIX)].replace("-", "_")
-    return Run(name, folder, record, world, events)
+    return Run(name, folder, record, world, parsed, events)
 
 
 def find_runs(root: Path) -> list[Path]:
@@ -286,7 +348,7 @@ def common_checks(run: Run, checks: Checks) -> None:
     label = run.name
     record = run.record
     checks.equal(f"{label}: status", record["status"], "completed")
-    checks.equal(f"{label}: the law", record["law"], "rays-v1")
+    checks.equal(f"{label}: the law", record["law"], RAYS_LAW)
     checks.equal(f"{label}: completed ticks", record["completed_ticks"], run.ticks)
     checks.equal(
         f"{label}: the board 121 x 121 x 1 with z periodic", record["boundary"], {"z": "periodic"}
@@ -333,7 +395,7 @@ def item_1(runs: dict[str, Run], checks: Checks) -> list[str]:
         checks.equal(
             f"1a_m{m}: the first read is (tick, amount, -amount x m x Q on +x) with 1a_m1's tick and amount",
             first,
-            (base_tick, base[base_tick][0], (-base[base_tick][0] * m * LABEL_SCALE, 0, 0)),
+            (base_tick, base[base_tick][0], label_push(AXES["+x"], base[base_tick][0], m)),
         )
         checks.equal(
             f"1a_m{m}: the same ticks and amounts as 1a_m1",
@@ -348,7 +410,7 @@ def item_1(runs: dict[str, Run], checks: Checks) -> list[str]:
         base_probe = runs["1a_m1"].measured(2)
         assert base_probe is not None
         checks.equal(f"1a_m{m}: pushed = m x pushed_1", pushed, scaled(vector(base_probe["pushed"]), m))
-        axial = sum(1 for a, p in reads.values() if p == (-a * m * LABEL_SCALE, 0, 0))
+        axial = sum(1 for a, p in reads.values() if p == label_push(AXES["+x"], a, m))
         lines.append(
             f"1a_m{m} | {m} | {len(reads)} | {first} | {pushed} | {'yes' if identity else 'NO'} "
             f"(push = (-amount x m x Q, 0, 0) exactly at {axial} of {len(reads)} records)"
@@ -378,7 +440,7 @@ def item_1(runs: dict[str, Run], checks: Checks) -> list[str]:
             ((CENTRE[0] + 1, CENTRE[1], CENTRE[2]), [1, 2]),
         )
         walked = [(int(e["tick"]), step_axis(e)) for e in steps]
-        by_rule = steps_by_rule(reads, m, min(reads), run.ticks)
+        by_rule = steps_by_rule(reads, m, min(reads), run.ticks, run.parsed.width)
         checks.equal(
             f"1b_m{m}: the steps walked are the first {len(walked)} steps of the rule off the clock on the reads' cumulative push",
             walked,
@@ -563,7 +625,7 @@ def item_4(runs: dict[str, Run], checks: Checks) -> list[str]:
         checks.equal(
             f"{name}: the first read of the probe at r = {r} on {axis} pushes -amount x m x Q along the axis",
             found[2],
-            scaled(heading, -found[1] * int(probe["content"]) * LABEL_SCALE),
+            label_push(heading, found[1], int(probe["content"])),
         )
         checks.equal(
             f"{name}: the first read of the probe at r = {r} on {axis} is the flight table's front, whole",
@@ -622,20 +684,13 @@ def square_flux(simulation: RaySimulation, half: int) -> int:
 
 
 def replay_world_5(run: Run, window: int) -> Replay:
-    world = parse_ray_world(parse_json_document((run.folder / "initialization.json").read_bytes()))
+    world = run.parsed
     simulation = RaySimulation(world)
     ticks = world.ticks
     first = ticks - window + 1
-    grid = np.indices(world.shape).reshape(3, -1).T - np.array(CENTRE)
-    distance = np.sqrt((grid * grid).sum(axis=1))
-    rings: dict[int, tuple[Any, Any]] = {}
-    nodes: dict[int, int] = {}
-    for r in FAR_RADII:
-        chosen = (np.abs(distance - r) < 0.5) & (distance > 0)
-        positions = grid[chosen]
-        radial = positions / distance[chosen][:, None]
-        rings[r] = (tuple((positions + np.array(CENTRE)).T), radial)
-        nodes[r] = int(chosen.sum())
+    # The ring's Nodes are the engine's shell (`shell_readings`: the Nodes at
+    # Euclidean distance within a half Link of r from the centre).
+    nodes = {r: int(simulation.shell_readings(0, CENTRE, r)["nodes"]) for r in FAR_RADII}
     count_at: dict[int, list[int]] = {r: [] for r in FAR_RADII}
     presence_at: dict[int, list[int]] = {r: [] for r in FAR_RADII}
     keys = ("count", "flow", "presence")
@@ -718,7 +773,7 @@ def item_5(
     lines.append(
         "the six beams: the ring's Nodes off the four in-plane axes are empty, so a ring mean is the axial Node's "
         f"reading over the ring (count x r / q = r / Nodes, about 1 / (2 pi) = {1 / (2 * math.pi):.4f}); presence / count "
-        f"is the mean stay of a ray at a Node, 1 / c = {1 / SPEED:.4f} over the flight table's period"
+        f"is the mean stay of a ray at a Node, 1 / c = {STAY:.4f} over the flight table's period"
     )
     if pinned:
         for key, name in (("count", "count x r / q"), ("presence", "presence x r / q")):
@@ -808,8 +863,10 @@ def axis_probes(run: Run, replay: Replay, checks: Checks, label: str) -> list[st
 
 def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
     run = runs["6"]
-    width = int(run.world["suspension"])
-    checks.equal("6: suspension 1", width, 1)
+    # The width of the clock's count as the engine parses it, `suspension`
+    # [n, d] (an integer w accepted as [w, 1]).
+    numerator, denominator = run.parsed.suspension
+    checks.equal("6: suspension 1", Fraction(numerator, denominator), 1)
     source = run.measured(1)
     assert source is not None
     lines = axis_probes(run, replay, checks, "6")
@@ -828,6 +885,11 @@ def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
         reader = k_index + 2
         probe = run.measured(reader)
         assert probe is not None
+        # The clock's frame as the engine keeps it (`RaySimulation._frame_all`
+        # and `_suspend`, ENGINE.md): an interval owed is paid by one, else
+        # the event self-creates, its age advances and it owes the engine's
+        # clock `by_clock(age, presence x n, d)` on the presence the replay
+        # read at its Node.
         age, waited, owed = 0, 0, 0
         age_60 = 0
         for tick in range(1, run.ticks + 1):
@@ -835,7 +897,7 @@ def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
                 owed -= 1
                 waited += 1
             else:
-                owed = by_clock(age, replay.presence_at[r][tick - 1] * width, 1)
+                owed = by_clock(age, replay.presence_at[r][tick - 1] * numerator, denominator)
                 age += 1
             if tick == 60:
                 age_60 = age
@@ -860,7 +922,7 @@ def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
             expected_k / (expected_k + 1),
         )
         first, last = run.ticks - FAR_WINDOW + 1, run.ticks
-        k_mean = sum(replay.presence_at[r][first - 1 : last]) / FAR_WINDOW * width
+        k_mean = sum(replay.presence_at[r][first - 1 : last]) / FAR_WINDOW * numerator / denominator
         lost = 1 - found[0] / run.ticks
         lost_by_r.append(lost)
         lines.append(
@@ -906,10 +968,7 @@ def item_7(runs: dict[str, Run], checks: Checks) -> list[str]:
         small = signs[name[3]] * PROBE_CHARGE
         checks.equal(
             f"{name}: the declared charges (Q, q)",
-            (
-                int(run.world["measured"][0].get("charge", 0)),
-                int(run.world["measured"][1].get("charge", 0)),
-            ),
+            (declared_charge(run.world, 0), declared_charge(run.world, 1)),
             (big, small),
         )
         reads = run.reads(2, 1)
@@ -972,7 +1031,7 @@ def convergence(values: dict[str, float], checks: Checks) -> list[str]:
     lines.append(
         f"(a) the flow x 2 pi r / q over r >= 5: mean {values['flow_mean']:.4f} (min {values['flow_min']:.4f}, max "
         f"{values['flow_max']:.4f}): Gauss's constant of a ballistic stream; the mean stay of a ray at a Node "
-        f"(presence / count) {values['stay_mean']:.4f} against 1 / c = {1 / SPEED:.4f}"
+        f"(presence / count) {values['stay_mean']:.4f} against 1 / c = {STAY:.4f}"
     )
     checks.reading(
         "(a) flow x 2 pi r / q flat within 10 % over r >= 5",

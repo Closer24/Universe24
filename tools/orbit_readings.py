@@ -36,16 +36,53 @@ import json
 import math
 import sys
 from dataclasses import dataclass, field
+from fractions import Fraction
 from pathlib import Path
 
-from event_universe.events.nature_beam import unit_label
-from event_universe.events.world import LABEL_SCALE
+from event_universe.events import parse_ray_world
+from event_universe.events.engine import by_clock
+from event_universe.events.nature_beam import flight_table
+from event_universe.events.world import LABEL_SCALE, MeasuredDefinition, RayWorld
+from event_universe.json_documents import parse_json_document
 
+# Every rule of the engine this tool needs is read off the engine's own
+# functions (the architecture review of 2026-09-20, Highlights 5.4: a tool
+# is a reader of the record, never a second owner of a rule): the release
+# off the clock `engine.by_clock`, the fan's labels off the flight table
+# `nature_beam.flight_table`, the scale `world.LABEL_SCALE`, the world's
+# keys and the source's Node through `parse_ray_world`.
 MODEL_PREFIX = "rays-orbit-"
 MODEL_SUFFIX = "-plane-v1"
-CENTRE = (60, 60)
+# The numbers of the source and the probe in the world's declaration order.
+SOURCE = 1
 PROBE = 2
 FULL_TURN = 2 * math.pi
+
+
+def fan_emission(world: RayWorld, source: MeasuredDefinition) -> float:
+    """The source's mean emission per interval over its fan: per declared
+    direction the engine's release off the clock, `by_clock(age, content x
+    n, d)` at `release` [n, d] (nature_beam, step 5; a free family's
+    release costs nothing, so the content is constant), averaged over one
+    period of d ages, which is content x n / d exactly, times the number of
+    directions."""
+    numerator, denominator = world.release
+    per_direction = Fraction(
+        sum(by_clock(age, source.amount * numerator, denominator) for age in range(denominator)),
+        denominator,
+    )
+    return float(len(source.directions) * per_direction)
+
+
+def fan_label(world: RayWorld, source: MeasuredDefinition) -> float:
+    """The mean label magnitude of the source's fan in units of Q: the mean
+    |u_d| / Q over its declared directions, u_d the label of one unit
+    along d off the engine's flight table (`FlightTable.labels`, the unit
+    vector of the direction at the scale Q)."""
+    labels = flight_table(world.directions).labels
+    return sum(
+        math.hypot(*(int(v) for v in labels[direction])) / LABEL_SCALE for direction in source.directions
+    ) / len(source.directions)
 
 
 @dataclass
@@ -121,21 +158,19 @@ def read_run(folder: Path) -> Reading:
     name = model[len(MODEL_PREFIX) : -len(MODEL_SUFFIX)]
     width_part, radius_part = name.split("-")
     width, radius = int(width_part[1:]), int(radius_part[1:])
-    world = json.loads((folder / "initialization.json").read_text(encoding="utf-8"))
-    source, probe = world["measured"]
-    emission = len(source["directions"]) * int(source["amount"]) / int(world["release"][1])
-    label = sum(
-        math.hypot(*unit_label((int(v[0]), int(v[1]), int(v[2])))) / LABEL_SCALE
-        for v in source["directions"]
-    ) / len(source["directions"])
+    # The world as the engine parses it: the source (number 1) and the probe
+    # (number 2), the source's Node the centre of the orbit.
+    world = parse_ray_world(parse_json_document((folder / "initialization.json").read_bytes()))
+    source, probe = world.measured[SOURCE - 1], world.measured[PROBE - 1]
+    centre = (source.position[0], source.position[1])
     ticks = int(record["completed_ticks"])
     reading = Reading(
         name=name.replace("-", "_"),
         width=width,
         radius=radius,
-        momentum=int(probe["momentum"][1]),
-        emission=emission,
-        label=label,
+        momentum=probe.momentum[1],
+        emission=fan_emission(world, source),
+        label=fan_label(world, source),
         ticks=ticks,
         completed=record["status"] == "completed",
         balanced=bool(record["conserved_at_every_completed_tick"]),
@@ -157,9 +192,9 @@ def read_run(folder: Path) -> Reading:
                 pushes.append((int(event["tick"]), [int(v) for v in event["push"]]))
             elif event["event"] == "click" and event.get("measured") == PROBE:
                 reading.ended = f"escaped through {event['detector']} at tick {event['tick']}"
-    start = (int(probe["position"][0]), int(probe["position"][1]))
+    start = (probe.position[0], probe.position[1])
     position = start
-    momentum = [int(v) for v in probe["momentum"]]
+    momentum = list(probe.momentum)
     positions: list[tuple[int, int]] = [start]
     momenta: list[list[int]] = [momentum]
     for tick in range(1, ticks + 1):
@@ -169,12 +204,12 @@ def read_run(folder: Path) -> Reading:
         positions.append(position)
         momenta.append(momentum)
     # The angle about the source, unwrapped, and the radius per tick.
-    radii = [math.hypot(x - CENTRE[0], y - CENTRE[1]) for x, y in positions]
+    radii = [math.hypot(x - centre[0], y - centre[1]) for x, y in positions]
     angles = []
     unwrapped = 0.0
-    previous = math.atan2(positions[0][1] - CENTRE[1], positions[0][0] - CENTRE[0])
+    previous = math.atan2(positions[0][1] - centre[1], positions[0][0] - centre[0])
     for x, y in positions:
-        angle = math.atan2(y - CENTRE[1], x - CENTRE[0])
+        angle = math.atan2(y - centre[1], x - centre[0])
         delta = angle - previous
         if delta > math.pi:
             delta -= FULL_TURN
@@ -214,7 +249,7 @@ def read_run(folder: Path) -> Reading:
     closings = [orbit.tick for orbit in reading.orbits]
     for tick, push in pushes:
         x, y = positions[tick - 1]
-        dx, dy = CENTRE[0] - x, CENTRE[1] - y
+        dx, dy = centre[0] - x, centre[1] - y
         norm = math.hypot(dx, dy)
         inward = 0.0 if not norm else (push[0] * dx + push[1] * dy) / norm
         units = abs(push[0]) + abs(push[1])

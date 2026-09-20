@@ -36,10 +36,25 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from event_universe.events import parse_ray_world
+from event_universe.events.engine import by_clock
+from event_universe.json_documents import parse_json_document
+
+# Every rule of the engine this tool needs is read off the engine's own
+# functions (the architecture review of 2026-09-20, Highlights 5.4: a tool
+# is a reader of the record, never a second owner of a rule): the lamp's
+# turn off the clock `engine.by_clock`, the world's keys through
+# `parse_ray_world`; the records are the run's (`run.json`, the
+# `DetectorSet` record per screen pixel).
 MODEL_PREFIX = "rays-heisenberg-"
 MODEL_SUFFIX = "-v1"
 SMOOTH = 5
 SINC_HALF = 1.39156  # the x at which (sin x / x)^2 = 1/2
+# The speed of the law's design, 1 / sqrt 3 Links per interval (RAY_LAW
+# section 3): the wavelength of the derivation, lambda = c x period, is at
+# this nominal c; the flight table rounds T_d = isqrt(3 |v|^2 Q^2) to an
+# integer per direction, differently on each direction of the fan.
+SPEED_DIVISOR = math.sqrt(3)
 
 
 @dataclass
@@ -145,20 +160,25 @@ def read_run(folder: Path) -> Reading:
     model = str(record["model"])
     name = model[len(MODEL_PREFIX) : -len(MODEL_SUFFIX)]
     width_part, reading = name.split("-")
-    world = json.loads((folder / "initialization.json").read_text(encoding="utf-8"))
-    lamp = next(m for m in world["measured"] if "lamp" in m)
-    turn = int(lamp["amount"]) // int(world["K"])
-    wavelength = (int(world["N"]) / turn) / math.sqrt(3)
-    opening = next(d for d in record["detectors"] if d["name"] == "opening")
-    (wall_x, _, _) = opening["nodes"], 0, 0
-    wall_x = next(m["position"][0] for m in world["measured"] if m.get("table"))
+    # The world as the engine parses it (the keys with their defaults).
+    world = parse_ray_world(parse_json_document((folder / "initialization.json").read_bytes()))
+    lamp = next(m for m in world.measured if m.lamp is not None)
+    # The lamp's turn per self-creation off the engine's clock, `by_clock(age,
+    # content, K)` (the frame, ENGINE.md), at its first self-creation: the
+    # lamps' content is 8 K + 1 400 000 and what a run spends never reaches
+    # the next step of the clock, so the turn is the same at every age.
+    turn = by_clock(0, lamp.amount, world.clock)
+    wavelength = (world.phase_steps / turn) / SPEED_DIVISOR
+    # The wall is the row of measured events that re-emit (the opening), the
+    # screen the other row of the family `wall`.
+    wall_x = next(m.position[0] for m in world.measured if "rerelease" in m.table)
     screen = sorted(
         (int(d["name"].split("_")[1]), d) for d in record["detectors"] if d["name"].startswith("screen_")
     )
     screen_x = next(
-        m["position"][0]
-        for m in world["measured"]
-        if m["position"][0] != wall_x and m["family"] == "wall"
+        m.position[0]
+        for m in world.measured
+        if m.position[0] != wall_x and world.families[m.family].name == "wall"
     )
     height = len(screen)
     reading_ = Reading(
