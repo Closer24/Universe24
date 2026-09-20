@@ -3269,6 +3269,9 @@ def nature_beam(
             # multiplicity)
             born: list[BornRow] = []
             if free and entry.held[family] > 0:
+                # The release's rate is the held content, unchanged by a
+                # push: the count off the clock, the same as `by_drive`
+                # where the rate is constant (record 108).
                 amount = by_clock(age, entry.held[family] * numerator, denominator_release)
                 if amount:
                     born.extend(

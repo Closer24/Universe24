@@ -239,57 +239,57 @@ def test_the_columns_are_written_only_where_a_record_is(tmp_path: Path):
 # The gate set's worlds without a lamp at their caps: the digests (sha256)
 # of `state.json`, of the books (`audit` of `run.json` as `json.dumps`
 # writes it) and of `events.jsonl` on the base tree before the amplitude
-# law's one click (the trimming's fast pass, `tools/run_series.py --list
-# --fast`, 2026-09-20): the design's test 7 as a pin, since the key that
-# switched the law off is deleted.
+# law's one click (main at f3a41f28, after the step drive; the fast pass,
+# `tools/run_series.py --list --fast`, 2026-09-20): the design's test 7 as
+# a pin, since the key that switched the law off is deleted.
 PINNED_DIGESTS: dict[str, tuple[int, str, str, str]] = {
     "weak/j3_deuteron.json": (
         700,
-        "b9e0613b21af1d6f42f0f71232260df7e33848bdab8f12cc04663bd4ab9c779b",
-        "431cc87afa9f51cadc83d9780dc8f54cfa3e2fe4bb1d780fcd78f55aec25efbd",
-        "15450ef9d5d01cca58f534db8a8fc6dd04f198ef76818f2bb909dc743d422d86",
+        "79b4e955647191454088fa44fd1f116a7ee9ed9a8a4096c73c939a17540befb6",
+        "2ad78c13e1ede96ced625cc15c72afbd9813b44e47a3a9bb3d86635f77c5ad05",
+        "4e6e27f945f26d4965ad4031dbbe32cd8a53c540a598bcf36cc8859bb5750226",
     ),
     "bohr/r2.json": (
         689,
-        "3d6b27e299af838e88cf412a03d9eadee011e0faca9e5596340e6b02f2509e9f",
-        "51c74ad753d82819bccc8ea827af99e6c4b6413b6f9acfb14bc6b3f2692b3633",
-        "f5dfd739878ed8062e4ec135605220cdb2331c27243d571cc9045611adfafbbc",
+        "52937bc183e2e6e02cee72cb414824d41eef6051c2492524ba3a78fd60e50c11",
+        "2b86684288cd408176d3221e8f6cb4402ee49f0529a49c3ff450e94f0cecf90f",
+        "a9563aac3bc72d238299f583e8b28f287d665fea92abb589182dddf7772e1696",
     ),
     "detector/grouped_12_nodes.json": (
         2,
-        "9ec38452fa1649afd1f2d23191132d74081783b7460cc7828fb9d3b563f6c6a8",
+        "f0bd36b6bb380cf4bf95f8c43d91f21c30a783e7c7de7c1877cec82b1bf09c2e",
         "975863cdb72c13719aa21397c178434501fd81de11cda2ab6037ea959e9cc9f8",
         "4b4994530f291bb5dbe986b532ffd3c9f8e8bcd585ca986ee4369e768ff749f9",
     ),
     "weak/j2_ladder.json": (
         1,
-        "b3b414d22b76af4884afb998762dbfee23f3c08e8a22eec1ccf4c9f60cc14e86",
+        "2febe400885e5f179d0ff725953888f50b04388a35f423ab19c9dbd07c267f80",
         "9f16ab276ee061317098eaef3abe18df5a4979b173596e750a63bf46883f3137",
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     ),
     "weak/j3_deuteron_crowd.json": (
         1,
-        "ea8c90547d0427a7bd85f8e8a87b13854d1f5aae44e716b2cccbe80f90c44fb3",
+        "2e640b0c80fece7d840062a7612b7b7d353eba9528785113dd79dad99d17f952",
         "9a55af2c075019704c10922fd5dce8397b1d77fe63ce7ab3e570c2f8a9b6b72e",
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     ),
     "nucleus/alpha_square.json": (
         180,
-        "04cc376523187d529f7046d16ece4a0c0304e9f9222b79b1b8d7ba2d9e172531",
-        "4522791a6a86620a5d218fbbf2006566958040a4b9ceb35cd15b3a5bbe4b2c56",
-        "6e075ef3a8c8975fb9fe1dabfe812028f2e15c736df0954687d3e7e8cd9e6c05",
+        "6d04e7517fe49cb982a05e8b8fe7570cd29e3a2a4bf04277f15ebd570c046e92",
+        "c90bd2fb227e2b6880ca6b1f987016fda8b44e07fe6a88fcd33d2e31b129cb75",
+        "076bf515f38e9ccabe619822e08c189c958ecdbe6b14f9f7318b2c96e04ce42c",
     ),
     "hubble/pushing_age.json": (
         1,
-        "acd5488d08a941575421416d7d69d85af4d7437498720b89e32d33d163863f7d",
+        "e34318a94dced4b41466bb8a5a75d6e95be063c92ef25ca5d4f01e16416afcb1",
         "7e219a1d03c8caddc617ccf2a69b34543912c3e09646cec7ae7a8d1fc454dc71",
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     ),
     "coupling/1b_m16.json": (
         25,
-        "8c4d5bae1803c67da1ef2c2407a8f5a9ed6326d42248b06ccc0cf3d9aa457e5d",
-        "ce2fa6a3edd9dfd615c9ea9f455803640cb34daca4f740f1eb8fd386371838c8",
-        "c6279fb0594940bac041ae565e34879a0a6095c593394eb7ec003750ad2eb1af",
+        "f313b83859f2333bbff0e7504927ea392d4346bd1c92bbf41c900aff1f868941",
+        "8830f84aef5dcd112c58e0aa304b174c8734b493a3ff9f09f7951098b05b0493",
+        "0afe7c1e3df4ebb5349c0f40ba8572bfa3866960b06aca48f299a7fb39744189",
     ),
 }
 

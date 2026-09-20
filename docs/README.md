@@ -33,11 +33,13 @@ Since 2026-09-19 there is one engine, the engine of the Beam Law
 | [Highlights log, 2026-09-20](LOG_2026-09-20.md) | The records of 2026-09-20 (the four forces, the detector, the experiments, the amplitude), moved verbatim from Highlights 5.4; the decisions stand in 5.4 |
 | [Highlights coverage](HIGHLIGHTS_IMPLEMENTATION.md) | What the repository implements of Highlights, section by section, with the tests; not evidence of a physical law |
 | [The design of amplitude-v1](designs/amplitude-v1/DESIGN.md) | The read-only design of 2026-09-20 under the owner's ten principles, every integer from its check outputs beside it (tables, the Mach-Zehnder, Bell at N = 64, 256, 1024, the gate, the two slits); the law itself lives in BEAM_LAW once implemented, this file is the design's evidence |
+| [The physics-rule review of the step drive](designs/hubble_stars/REVIEW_STEP_DRIVE.md) | The read-only review of 2026-09-20 of the step drive (BEAM_LAW note 17 as amended) before its pull request: blocked on the later axes' drives, corrected in place with the re-registered tests; the review's findings and their disposition at its end |
 | [Derivations of the known laws](DERIVATIONS.md) | The known laws derived on paper from one interval of the engine written as an operator on the GameBoard, rounds 1 to 8 (the law of the shadow in round 8, sections 51 to 56; the law of events and the Beam Law not yet derived) |
 | [Experiments register](EXPERIMENTS.md) | The research runs, one entry each with its design and criterion pinned before the run, and the records of the runs made; never test-suite tests |
 | [Hypotheses under test](HYPOTHESES.md) | The questions the framework raises, numbered, kept apart from measured results |
 | [Problem solving](PROBLEM_SOLVING.md) | How the project advanced: one line per problem, its solution and who solved it |
 | [Validation evidence](VALIDATION.md) | Dated, source-identified check results of the past; not timeless certification |
+| [The architecture cleanup plan of 2026-09-20](designs/architecture_2026-09-20/PLAN.md) | The architect's read-only pass before the cleanup pull request: every module's responsibility, what the one click leaves dead, the duplicated logic against the design's unifications, the stale names, the measured profile of the gate set with its bit-exact optimizations, the schema's overlaps and the order of the commits; its evidence beside it, [the gate set's baseline digests and seconds](designs/architecture_2026-09-20/gate_base_summary.md) and the profile |
 
 ## Operation and change procedure
 

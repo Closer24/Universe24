@@ -180,7 +180,9 @@ def read_run(folder: Path, *, window_start: int = DEFAULT_WINDOW_START) -> Readi
             if '"screen_' not in line:
                 continue
             event = json.loads(line)
-            if event["family"] != light:
+            if event["event"] not in ("click", "record") or event["family"] != light:
+                # The layer's lines (a gather names the chosen set) are not
+                # the crowd's clicks and records.
                 continue
             tick = int(event["tick"])
             if not lo <= tick < hi:

@@ -6,6 +6,91 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## Families in entity definitions, on 2026-09-20 (`event-entities-v2`; host only, no law change)
+
+The model owner's decision of 2026-09-20 (record 113 of
+[the log](LOG_2026-09-20.md): one canonical definition per family,
+referenced by the worlds instead of copying `families`; the architect's
+proposal in [entity definitions](ENTITY_DEFINITIONS.md#families-in-definitions-event-entities-v2-2026-09-20)):
+
+- A definitions document may declare `"format": "event-entities-v2"`; a
+  definition of that format may carry `families`, a list in the world's
+  family schema (`FAMILY_KEYS`), merged into the expanded world by name:
+  the inline families first, then each instance's in declaration order; a
+  name already present is kept when every key agrees and refused when one
+  differs, naming the family and the key. A definition of a family alone
+  (an empty `measured`) is admitted in the second format.
+- `event-entities-v1` is unchanged: `families` on a definition is refused
+  as an unsupported key, `measured` must hold an Event, and a world placing
+  a first-format definition expands to the same bytes as before (the gate
+  set replayed byte-identical, [validation](VALIDATION.md)).
+- Shipped: `examples/events/entities/families.json` (every family the
+  registered worlds declare, once, in the catalog's canonical form) and
+  `examples/events/entities/apparatus.json` (the external things and the
+  sources of `amplitude-v1` with the material family each is made of),
+  written by `make_definitions.py` beside them. No world references them
+  yet: the migration of the worlds per series follows stage (vii) of
+  `amplitude-v1` (the owner's order in record 113).
+- The loader's structural check of a definition's table entry no longer
+  requires `rule` in an object entry: the world parser has taken a window
+  alone (`{"phase_window": ...}`) since `amplitude-v1`, the rule being the
+  family's default, and a definition may now say what a world says (the
+  chooser's counter of `apparatus.json`). Both formats.
+- Nothing deleted.
+
+## The step drive, on 2026-09-20: the count of Links as the whole part of the driven distance
+
+The model owner's decision of 2026-09-20 on series G2's finding ("1 and 2
+are very important for a solution and a new run"; record 107 the findings,
+record 108 the owner's decision, "yes; let him give a generic solution if
+he can"; change 2 not built as proposed, record 110; the physicist's design RULES.md section 1 (docs/designs/hubble_stars/ on branch `claude/series-g2-stars`);
+[BEAM_LAW note 17](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+as amended). The identity `beam-v1` is kept: the rule is the same count
+where the momentum is constant and a repair of it where it changes.
+
+- `core.integer.by_drive(drive, rate, denominator)`, the count primitive
+  (record 108): the whole part of an accumulated rate on the reader's own
+  record, (the count gained, the drive after), `by_clock` where the rate
+  is constant. `engine.step_axis(drive, momentum, content, width)` reads
+  it and returns the sign of the Link stepped (or None) and the drive
+  after it, in place of `step_axis(age, momentum, content, width)`
+  returning the sign: the rule reads the body's record, not its age. The
+  clock's turn, the owed count, the release and the lamp keep `by_clock`
+  (their rate is one no push changes). A readings tool that replayed the
+  rule off the clock (`tools/coupling_readings.py`, `steps_by_rule`) calls
+  the engine's function with a drive.
+- `Measured.drive` and `Measured.axis_steps` (three integers each);
+  `run.json` and `state.json` carry them per measured event; the `step`
+  line carries `drive`. A declared `drive` on a measured event is refused
+  as an unknown key. The turn by momentum reads its k0 off `axis_steps`,
+  the count of the rule's fires on the axis (a lost or refused step
+  counted, as the count off the clock counted it).
+- The drive of every axis advances at every self-creation in which the
+  body may step; the frame's order stands (one Link per interval, x
+  before y before z, a later axis's coincident Link lost), so a body with
+  momentum on two axes steps where it did.
+- Every world whose bodies take no push replays byte-identical in
+  `events.jsonl` (the `step` line's new field aside) and in the positions,
+  momenta and books of `state.json`; the gate set's compare names the
+  worlds that change (the coupling `1b_m16`, Bohr `r2`, the nucleus
+  `alpha_square`, the weak `j3_deuteron`: bodies under a push or a
+  hand-over, each stepping one self-creation later than the count off
+  the clock stepped it). Of the 33 example worlds with a free body, 30
+  change at their registered length (every body under a push, a
+  hand-over or a lamp's recoil): the coupling `1b_m1`, `1b_m4`, `1b_m16`;
+  the orbit `s8_r12`, `s8_r24`, `s32_r12`, `s32_r24`; the Hubble
+  `coasting_scalar`, `coasting_age`, `pushing_scalar`, `pushing_age`;
+  Bohr `r2` to `r16`; the nucleus's eight; the weak `j3_deuteron`,
+  `j3_deuteron_crowd`; the catalog's `sun_planet` and `neutron_star` (no
+  number registered there); `s1_r12`, `s1_r24` and `j3_neutron_free` read
+  the same modulo those fields. Each registered entry (C, D, G, H, I, J in
+  EXPERIMENTS.md and the series READMEs) carries a dated "Re-read under
+  the step drive" line with the new numbers, the old kept as history.
+- Re-registered tests, the old integers kept as history in
+  TEST_EXPECTATIONS.md: `test_contact` (a), (d), (e),
+  `test_nature_beam_clock` (d), `test_paid_charge` (d),
+  `test_nucleus_readings` (bodies pushed or handed a momentum).
+
 ## The amplitude law, on 2026-09-20, (i): the world key `amplitude`, the record on the row and the normal form (`amplitude-v1`)
 
 The model owner's decision of 2026-09-20 (Highlights 5.4, "DECIDED:
@@ -336,45 +421,25 @@ the only form. Deleted, each with its consequence:
   by `examples/events/amplitude/make_worlds.py`, the expectations
   unchanged).
 
-## The amplitude law, on 2026-09-20, (vii-4): the one click, the record form the law
-
-Stage (vii), step 4 (the design's section 6; the model owner's order
-after the landing, under the stop rule of stage (vi)): the record form is
-the only form. Deleted, each with its consequence:
-
-- The world key `amplitude` and its parsing: a world that declares it
-  (true or false) is refused naming this entry; remove the key. The
-  parser's refusals "needs the world key `amplitude`" of the pair form of
-  `phase_per_link`, a lamp's `turns`, `arms` and `branches`, a table
-  entry's `turn`, `rotate`, `gate`, `weights`, `turns` and `inputs`, and
-  the reading `sum`: every one of them is accepted on any world.
-- The crowd form of a lamp (its rate's units per direction as rows of no
-  record): every lamp births records (the rate's count of records per
-  self-creation, (vii-1)), so every world with a lamp is a recorded world
-  (`NatureBeamWorld.recorded`), its rows read by the ladder, the identity
-  `amplitude-v1` under `hypotheses` (`run.json`'s key `amplitude` is
-  gone). A lamp is refused with N below 4 (a record's circle holds the
-  quarter turn of a reflection); the refusal of the key with N below 4
-  is gone with the key.
-- The crowd's `wave` threshold on the square of the coherent pointer
-  (issue #359 step A, BEAM_LAW note 32): the threshold is the amount
-  summed over the set under both readings; the crowd's pointer gives the
-  set's phase (the window under `wave`) and its record, not a gate. Rays
-  that cancel at a `wave` set no longer pass by the gate; a record's rows
-  in antiphase cancel at the merge before any set reads them.
-- The load-time ceiling of the multiplicity (the review's S6) multiplies
-  the declared `weights`, `rotate` and `gate` factors alone; a plain
-  `rerelease` (the equal split by the directions' count) is bounded by
-  the split's own check when the multiplicity is formed, since a path's
-  count of re-emissions is not known at load (the check now runs on
-  every world with a lamp).
-- The apparatus's layer exists on every world (`NatureBeamSimulation.layer`),
-  the merge is always the normal form, `tools/amplitude_path.py` replays
-  any run with a lamp; the design's test 7 is the pinned digests of the
-  gate set's lamp-free worlds (`tests/test_amplitude_click.py` (d)).
-- The 46 shipped worlds of series L no longer carry the key (regenerated
-  by `examples/events/amplitude/make_worlds.py`, the expectations
-  unchanged).
+What follows for every world with a lamp (the changed worlds of the gate
+set, re-run and marked "re-run under the one click; the verdict to be
+re-read", the old numbers kept as dated history): a lamp's rows are
+records born at u, the lamp's count of births, with the direction's turn
+as their path phase, so the phase returned to a lamp by a click no longer
+enters its births and a lamp's `phase_window` gates the release by the
+clock's phase but the row born carries u; a window on a table entry reads
+the path phase of a record's row, so the crowd form's phase correlations
+(the Bell worlds of series A2 in phase form, the choosers) read E = 1
+with every pair in (-1, -1) and their tools' checks fail: the pair is the
+record's (`branches`, `arms`, the reading `sum`, series L3 and L5); a
+lamp's birth recoils by its rows' shares and a re-emitter by the shares
+in and out, the rest on the `remainder` line; the crowd's clicks are the
+records' rows (k rows per record at k directions), so the clicked amounts
+of a lamp's crowd multiply by the directions' count and the click's
+momentum is the row's share. A high-rate lamp is a host cost: the records
+of `heisenberg/w27_beam` (47 per interval on 27 opening Nodes) run at
+seconds per interval where the crowd form ran in milliseconds, the
+layer's offers being kept per record until its completion.
 
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 

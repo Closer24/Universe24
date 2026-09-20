@@ -215,3 +215,15 @@ open question ([BEAM_LAW section 10](../../../docs/BEAM_LAW.md#10-implementation
 note 21). The first registration (p = 3, 5, 9 under the engine of the D1
 commit, fingerprint `587cbf48...`, one eccentric closing at S = 32, r =
 12) is kept as history in the register entry.
+
+## Re-read under the step drive (2026-09-20)
+
+The S = 1 probes read the same (no push); the four others move differently
+under the step drive (a body's count of Links is the whole part of the
+distance its momentum has driven): `s8_r12` closes one turn (T 226,
+return +7, C 1.65) and leaves at tick 571; `s8_r24` reverses and leaves
+at 495; `s32_r12` closes two turns (T 474, 236) and leaves at 1568;
+`s32_r24` closes by the criterion (the return (-1, +1), heading kept, T
+623 against the derived 687, the mean radius 23.63) and again in 464
+before leaving at 1849; T(24)^2 / T(12)^2 = 1.73 against 4. The register
+entry has every number ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).

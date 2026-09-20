@@ -2559,8 +2559,10 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     # The quantum of action of the turn by momentum, h: absent by default
     # (nothing turns by momentum), an integer from 1 when declared.
     action = None if "action" not in obj else _integer(obj["action"], "action", 1)
+    declared = obj.get("measured", [])
     if phase_steps < AMPLITUDE_LEAST_STEPS and any(
-        isinstance(entry, dict) and "lamp" in entry for entry in obj.get("measured", [])
+        isinstance(entry, dict) and "lamp" in entry
+        for entry in (declared if isinstance(declared, list) else [])
     ):
         # A record's circle holds the quarter turn of a reflection (the
         # amplitude law; every lamp births records).
