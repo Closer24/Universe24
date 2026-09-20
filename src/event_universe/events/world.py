@@ -302,8 +302,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from event_universe.core.game_board import MAX_VALUE, PORT_HEADINGS, Address3
-from event_universe.core.phase import MAX_PHASE_STEPS
 from event_universe.core.integer import bounded_gcd, by_clock, integer_root, rational_sum
+from event_universe.core.phase import MAX_PHASE_STEPS
 
 BEAM_LAW = "beam-v1"
 LAW_VALUE = "beam"
