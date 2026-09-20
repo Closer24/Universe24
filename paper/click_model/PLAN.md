@@ -706,7 +706,30 @@ is placed in one of them and keeps its status.
   quantum computer in principle and its two ceilings (from the gate and
   the store: design section 10); Born as ignorance of u (T3's
   construction, proved); the wave as the form of the list of clicks
-  (definition, not a hypothesis).
+  (definition, not a hypothesis); **the boundary between classical and
+  quantum** (the owner, 2026-09-20: "there is a boundary"): in the model
+  the boundary is the click, sharp per record and continuous only over
+  births. Per record a click that distinguishes labels removes every
+  other combination at once (S from 176/64 to 88/64 in the design's
+  which-path check; the two-slit weights become the incoherent sum), and
+  there is no partial click: a window admits a record's row or passes it
+  whole, by u. So over births, with a which-path detector that clicks a
+  fraction f of the records, the fringe visibility is 1 - f and the
+  path distinguishability f, a linear duality V + D = 1, where quantum
+  mechanics gives V^2 + D^2 <= 1 for a partial which-way detector
+  (Englert, Phys. Rev. Lett. 77, 2154 (1996); measured by Duerr, Nonn and
+  Rempe, Nature 395, 33 (1998)). This is the coordinator's reading of
+  the design's rules, to be checked against the design and then, after
+  the merge, by one run (a which-path window admitting half the phases
+  on one arm; expected: half the births with no fringe and half with the
+  full one, the crowd's visibility 1/2 and no intermediate contrast per
+  birth), and stated in the paper as a prediction that can fail, with
+  the density of clicks as the one parameter that carries a body from
+  the quantum side to the classical side (principle 8). Whether nature's
+  partial which-way detectors, which give V^2 + D^2 = 1 on pure states,
+  refute the linear relation directly or need the model's detector to be
+  built in the same terms is the first question the physics-rule reviewer
+  is asked in step 4.
 - **Conjectured within the same GameBoard, not consequences of the
   click**: the forces as columns of one coupling, the nucleus, the weak
   force, the meeting and the bending of light, the clock's redshift, the
