@@ -43,9 +43,13 @@ import numpy as np
 
 from event_universe.core.game_board import Address3, adjacent_node
 from event_universe.core.integer import apportion_whole, by_clock
+from event_universe.events.amplitude import Layer
 from event_universe.events.measured import TALLIES, DetectorSet, Ledger, Measured, rational_sum
 from event_universe.events.nature_beam import (
     NO_ARRIVAL,
+    NO_BRANCH,
+    NO_RECORD,
+    ONE_PATH,
     ArrivalRows,
     GameBoardDiagnostics,
     NatureBeamStore,
@@ -165,6 +169,11 @@ class NatureBeamSimulation:
                 amount=np.array([item.amount]),
                 content=np.array([content]),
                 arrival=np.array([NO_ARRIVAL]),
+                # A declared ray is a row of no record: it ends without an
+                # offer under the amplitude key (a record is born by a lamp).
+                record=np.array([NO_RECORD]),
+                branch=np.array([NO_BRANCH]),
+                multiplicity=np.array([ONE_PATH]),
             )
             self.transit_initial[item.family] += item.amount
             self.content_initial[item.family] += content * item.amount
@@ -173,6 +182,34 @@ class NatureBeamSimulation:
         # The running transit line of the momentum starts from the declared
         # rows, counted once.
         self.ledger.transit_momentum = self.recount()["momentum"]
+        # The apparatus's layer (the amplitude law): the sets in the
+        # design's order, the measured events outside every declared
+        # detector by number, the declared detectors, the faces in Port
+        # order and the border.
+        self.layer: Layer | None = None
+        if world.amplitude:
+            keys: list[tuple[str, int]] = []
+            names: list[str] = []
+            declared = len(world.detectors)
+            for detector_set in self.detector_sets[declared:]:
+                keys.append(("set", detector_set.index))
+                names.append(f"measured:{detector_set.numbers[0]}")
+            for detector_set in self.detector_sets[:declared]:
+                keys.append(("set", detector_set.index))
+                names.append(str(detector_set.name))
+            for port in self.open_faces:
+                keys.append(("face", port))
+                names.append(FACE_NAMES[port])
+            if world.lifetimes:
+                keys.append(("border", 0))
+                names.append(LIFETIME_NAME)
+            self.layer = Layer(
+                names,
+                keys,
+                self.detector_sets,
+                [family.name for family in world.families],
+                world.phase_steps,
+            )
         # The readings of the last interval (diagnostics, decomposed on
         # request): per family the arrivals per Node, their net flow, the
         # Links crossed per Port and the presence.
@@ -259,6 +296,13 @@ class NatureBeamSimulation:
             transforms=list(definition.transforms),
             window_reads=tuple(definition.window_reads)
             + (None,) * (count - len(definition.window_reads)),
+            splits=list(definition.splits) + [None] * (count - len(definition.splits)),
+            lamp_turns=() if definition.lamp is None else definition.lamp.turns,
+            lamp_branches=((0, 1),) if definition.lamp is None else definition.lamp.branches,
+            lamp_arms=1 if definition.lamp is None else definition.lamp.arms,
+            label_turns=list(definition.label_turns) + [0] * (count - len(definition.label_turns)),
+            rotations=list(definition.rotations) + [None] * (count - len(definition.rotations)),
+            gates=list(definition.gates) + [None] * (count - len(definition.gates)),
         )
 
     def occupant(self, node: Address3) -> int | None:
@@ -294,6 +338,7 @@ class NatureBeamSimulation:
             self.tick,
             self.record,
             self.ledger,
+            layer=self.layer,
         )
         for number in sorted(self.measured):
             entry = self.measured[number]
@@ -660,6 +705,7 @@ class NatureBeamSimulation:
         families: dict[str, object] = {}
         balanced = True
         ledger = self.ledger
+        amplitude = self.world.amplitude
         # One pass over the measured events: what they hold per family,
         # their momentum and their charge (rho x content of the free
         # families and, since 2026-09-20 (D-1), the paid families' whole
@@ -702,12 +748,21 @@ class NatureBeamSimulation:
                     + ledger.transit_released[index]
                     - ledger.escaped_amount(index)
                     - ledger.transit_absorbed[index]
+                    - ledger.cancelled_amount[index]
                 ),
                 "escaped": ledger.escaped_amount(index),
                 "absorbed": ledger.transit_absorbed[index],
             }
+            # The `cancelled` line (the amplitude law): what the merge's
+            # cancel removed, on the transit and content lines under the key
+            # only (zero without it, the lines as they were).
+            if amplitude:
+                in_transit["cancelled"] = ledger.cancelled_amount[index]
             in_transit["balanced"] = in_transit["initial"] + in_transit["released"] == (
-                in_transit["current"] + in_transit["escaped"] + in_transit["absorbed"]
+                in_transit["current"]
+                + in_transit["escaped"]
+                + in_transit["absorbed"]
+                + ledger.cancelled_amount[index]
             )
             if not family.free and family.charge[0]:
                 charges.append((family.charge[0] * int(in_transit["current"]), 1))
@@ -724,12 +779,18 @@ class NatureBeamSimulation:
                     + ledger.content_released[index]
                     - ledger.escaped_content(index)
                     - ledger.content_absorbed[index]
+                    - ledger.cancelled_content[index]
                 ),
                 "escaped": ledger.escaped_content(index),
                 "absorbed": ledger.content_absorbed[index],
             }
+            if amplitude:
+                content["cancelled"] = ledger.cancelled_content[index]
             content["balanced"] = content["initial"] + content["released"] == (
-                content["current"] + content["escaped"] + content["absorbed"]
+                content["current"]
+                + content["escaped"]
+                + content["absorbed"]
+                + ledger.cancelled_content[index]
             )
             balanced = (
                 balanced
@@ -737,7 +798,7 @@ class NatureBeamSimulation:
                 and bool(in_transit["balanced"])
                 and bool(content["balanced"])
             )
-            families[family.name] = {
+            lines: dict[str, object] = {
                 "measured": measured,
                 "transit": in_transit,
                 "content": content,
@@ -746,15 +807,22 @@ class NatureBeamSimulation:
                 # line by, a report as `pushed` is; zero without `meeting`.
                 "turned": list(ledger.turned_momentum[index]),
             }
+            if amplitude:
+                # The labels the cancel removed from the transit momentum line.
+                lines["cancelled"] = list(ledger.cancelled_momentum[index])
+            families[family.name] = lines
+        momentum: dict[str, object] = {
+            "measured": held_momentum,
+            "transit": counted["momentum"] if counted is not None else self.transit_momentum(),
+            "escaped": ledger.escaped_momentum(),
+            "turned": ledger.turned_momentum_total(),
+        }
+        if amplitude:
+            momentum["cancelled"] = ledger.cancelled_momentum_total()
         return {
             "tick": self.tick,
             "families": families,
-            "momentum": {
-                "measured": held_momentum,
-                "transit": counted["momentum"] if counted is not None else self.transit_momentum(),
-                "escaped": ledger.escaped_momentum(),
-                "turned": ledger.turned_momentum_total(),
-            },
+            "momentum": momentum,
             "charge": list(rational_sum(charges)),
             "balanced": balanced,
         }
@@ -950,6 +1018,6 @@ class NatureBeamSimulation:
                 lo, hi = store.slice(flat)
                 if hi == lo:
                     continue
-                beams = [beam.record(vectors) for beam in store.rows(lo, hi)]
+                beams = [beam.record_line(vectors, self.world.amplitude) for beam in store.rows(lo, hi)]
                 families.append({"family": family.name, "rays": beams})
             yield entry

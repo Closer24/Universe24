@@ -287,6 +287,27 @@ charge per unit of amount and `lifetime` 1, thrown by a neutron's
 `become` and measured by the proton one Link away one interval later,
 which then has a neutron's charge and content.
 
+## The amplitude series
+
+The folder [amplitude/](amplitude/README.md) holds the worlds of series L,
+the amplitude law (`amplitude-v1`, the world key `amplitude`,
+[BEAM_LAW note 37](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+written by `amplitude/make_worlds.py` with `expectations.json` pinned
+before the runs: L1, the Mach-Zehnder interferometer of the design's
+section 3.4 (a 5 x 5 plane, a source releasing one record per
+self-creation on two arms, two mirrors, a splitter whose split table is
+selected by the arrival, the ports D1 and D2 reading `sum`) with equal
+arms, a half and a quarter turn on one arm, the balanced (1, 1) split, the
+(3, 4) split, arms unequal by two intervals at three phases per interval,
+and Elitzur-Vaidman's absorber on one arm; L2, the two slits at a low
+rate (the shipped two-slit world under the key with the wall freed beside
+the openings, and its one-birth reference); L3, the pair on the A2 world
+with the choosers, at the CHSH labels, with a which-path read and with
+Bob's counters far; L4, GHZ; L5, the gate between records (the CNOT
+pair, CNOT twice, GHZ by one gate, the register's ceiling); L6, the pair
+at N = 1024 and 4096. The register entry is
+[L, the amplitude law (2026-09-20)](../../docs/EXPERIMENTS.md#l-the-amplitude-law-2026-09-20).
+
 ## The entity catalog
 
 The folder [catalog/](catalog/README.md) holds the four worlds of
