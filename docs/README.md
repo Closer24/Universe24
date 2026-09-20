@@ -13,7 +13,6 @@ Since 2026-09-19 there is one engine, the engine of the Beam Law
 
 | Document | Responsibility |
 | --- | --- |
-| [The law of the ray, renamed](RAY_LAW.md) | The redirect to the Beam Law, kept for the links of records that are not rewritten (Highlights) |
 | [The Beam Law](BEAM_LAW.md) | The published design and implementation contract of `beam-v1` (the model owner, 2026-09-19): the ray's record `NatureBeam`, the one function `nature_beam`, the flight table at 1 / sqrt 3, the eight-slot collision table and its inverse, the detector's squared record, the re-emission, the deletions, the tests, the expectations, and the implementation notes of the same day |
 | [The engine](ENGINE.md) | The bookkeeping around the law as implemented: the GameBoard and its topology, the frame of an interval, the books, the world file's refusals, the record and the preflight |
 | [Entity definitions](ENTITY_DEFINITIONS.md) | Reusable external apparatus data, placement, canonical loading, portable inputs and provenance |

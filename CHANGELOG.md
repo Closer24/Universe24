@@ -26,8 +26,8 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   the tests pass with the same bodies.
 - The Beam Law (the model owner, 2026-09-20): the law itself is renamed
   from "the law of the ray". `docs/RAY_LAW.md` -> [`docs/BEAM_LAW.md`](docs/BEAM_LAW.md)
-  (the anchors unchanged; a redirect stub stays for the link in
-  Highlights); "the law of the ray" -> "the Beam Law" in every live
+  (the anchors unchanged; nothing stays at the old path); "the law of
+  the ray" -> "the Beam Law" in every live
   document, skill, README, example, tool, test and docstring; the
   identity `RAYS_LAW = "rays-v1"` -> `BEAM_LAW = "beam-v1"` and the world
   key `"law": "rays"` -> `"law": "beam"`, every world file rewritten by

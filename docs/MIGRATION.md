@@ -40,9 +40,9 @@ transit, `NatureBeam` in the code; on the GameBoard there are only events
   law itself is renamed from "the law of the ray" to the Beam Law.
   `docs/RAY_LAW.md` -> [`docs/BEAM_LAW.md`](BEAM_LAW.md) (git mv; its
   title "The Beam Law"; its section headings and note numbers unchanged,
-  so every `BEAM_LAW.md#...` anchor is the old one; a short
-  `docs/RAY_LAW.md` redirect stays only for the link in Highlights, which
-  this rename does not edit); every link and mention "RAY_LAW", "the law
+  so every `BEAM_LAW.md#...` anchor is the old one; nothing stays at the
+  old path: Highlights, which this rename does not edit, names it in prose
+  and links nothing there); every link and mention "RAY_LAW", "the law
   of the ray", "the ray law" -> "BEAM_LAW", "the Beam Law" across the
   documents, skills, README, AGENTS, CONTRIBUTING, examples, tools, tests
   and docstrings (the quoted record title "DECIDED: the law of the ray"
