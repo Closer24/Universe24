@@ -197,7 +197,8 @@ parameters outside the GameBoard like the age"; the record carries the
 identity `bohr-v1` under `hypotheses` when `action` is declared).
 Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
 `suspension`, `families`, `measured` (`table` with `read`, `measure`,
-`rerelease`, `pass` and `phase_window`), `in_transit` (gains `direction`,
+`rerelease`, `pass` and `phase_window`, since 2026-09-20 with its width
+`phase_width`, note 34 (i)), `in_transit` (gains `direction`,
 a vector, in place of `heading`; the six headings accepted as vectors),
 `detectors` (`threshold`).
 
@@ -370,7 +371,9 @@ order with each step's inverse:
    other than its own, as today: the threshold on the arrivals (section 5),
    then the `phase_window` on each ray's own phase (no coherent sum: the
    window reads the record; a bundle is now the rays of one number arriving
-   in one interval), then the rule: `read` (the push taken; the rays go
+   in one interval; since 2026-09-20 the window has a width, `phase_width`,
+   the w consecutive steps centred on the setting, N / 2 by default, note
+   34 (i)), then the rule: `read` (the push taken; the rays go
    on), `measure` (the click: the amount, its content and its label join;
    the border), `rerelease` (the re-emission, section 5), `pass`. **The
    push is ONE signed inner product over the columns** (since 2026-09-20,
@@ -1920,3 +1923,48 @@ implementation's part of the contract. The design above is unchanged.
     registered series moves (C, 7, D, E, G, H, I, K, Bell, A10, the
     catalog: every charged product of theirs is a multiple of its
     denominators, or their reads never met a fractional floor).
+34. **The weak force in the world's terms: (i) the window's width** (the
+    model owner, 2026-09-20, Highlights 5.4, "DECIDED: go on everything;
+    just make sure again that it is good and generic", item (1): the weak
+    force in the recommended order, the neutrino first with the table-entry
+    key `phase_width` and no change of law; the physicist's design,
+    scratchpad/weak/WEAK.md 1.2, with its check `weak_integers.py` 1.1 and
+    1.2 and the engine's baseline `window_engine.py`, 320 of 640 arrivals
+    clicking under the half circle; `tests/test_window_width.py` (a) to
+    (e)). A window is its setting s and its width w: the w consecutive
+    steps of the circle [s - floor(w / 2), s - floor(w / 2) + w), a phase
+    at the distance d = (phase - s) mod N inside when (d + floor(w / 2))
+    mod N < w, the one floor of the window and its width
+    (`nature_beam.window_admits`; the mathematician's ONE_FORMULA row 11),
+    read as before under `beam` on each ray's own phase, under `wave` on
+    the set's pointer and on a lamp on its clock's phase. The key
+    `phase_width` on a table entry (any rule but `pass`) and on a lamp, an
+    integer from 1 through N, N / 2 by default (`world.default_width`): the
+    half circle as it was, d < N / 4 or d >= 3 N / 4, identical on every
+    (phase, setting) pair of every N from 2 through 4096 (test (a)), so
+    every registered world is bit-identical; the window table of
+    `NatureBeamTables` is deleted, the one floor its only spelling, and
+    `beam`'s pairing arc is the entry's width (test (c)). The admitted
+    fraction of a source's rays whose clock turns s steps per
+    self-creation (the stride s over the circle) is exactly w / N when
+    gcd(s, N) = 1 and g x (the residues of the coset inside the arc) / N
+    when gcd(s, N) = g (test (b): 10, 20, 40 and 320 of 640 arrivals at
+    w = 1, 2, 4, 32; the stride 2 at w = 1 centred on 0 admits 20, centred
+    on 1 none). Refused naming the key: a width outside 1 .. N, on `pass`,
+    on a family without a phase circle, and without its window's setting
+    (what the implementation decided where the design was silent: a width
+    is the width of a window, and never centres itself on 0 by default);
+    a lamp's width the same. The record: the measured events' states and
+    `state.json` carry `widths` (per family, None where none is declared)
+    beside `windows`; nothing else changes. Checked on the 85 example
+    worlds: `events.jsonl` byte-identical before and after, `state.json`
+    and `run.json` equal but for the added `widths` (VALIDATION.md). What
+    the detector's world sees (series J2, EXPERIMENTS): a cross-section
+    where the GameBoard has a stride, w / N per arrival, deterministic, no
+    draw, flat in the emitter's rate (the window reads the phase alone and
+    a free ray carries no content: PREDICTIONS entry 7, the law's own
+    limit against nature's rise with the neutrino's energy, stated and not
+    tuned), and a filter rather than an attenuation (entry 8: a beam that
+    survived one reader survives every identical reader behind it). No
+    identity: no law changed; the neutrino is a free family with a phase
+    circle, no charge and no content, gated by a reader's window.

@@ -6,6 +6,44 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The weak force, on 2026-09-20, (i): the window's width `phase_width` (no change of law)
+
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"DECIDED: go on everything; just make sure again that it is good and
+generic", item (1): the neutrino first with the table-entry key
+`phase_width` and no change of law; [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(i)). Identities: no world file changes; every example world replays
+byte-identical in `events.jsonl`, and `state.json` and `run.json` equal
+but for the added `widths` (VALIDATION).
+
+- **The key.** A table entry's object form and a lamp accept
+  `phase_width`, an integer w from 1 through N: the window is the w
+  consecutive steps of the circle centred on its setting,
+  [s - floor(w / 2), s - floor(w / 2) + w), inside when
+  (d + floor(w / 2)) mod N < w with d = (phase - s) mod N
+  (`nature_beam.window_admits(distance, width, modulus)`, new: the one floor
+  of the window and its width, rows or one value). Without the key the
+  width is N / 2 (`world.default_width(N)`, new): the half circle as it
+  was on every (phase, setting) pair, so every registered world is
+  bit-identical. Refused naming the key: a width outside 1 .. N, on `pass`,
+  on a family without a phase circle, and without a `phase_window` (a width
+  is the width of a window); a lamp's the same.
+- **The window table is deleted.** `NatureBeamTables.window` (the boolean
+  table over the distances of the half circle) is gone; `nature_beam_tables`
+  no longer builds it. A test or tool that read `tables.window[d]` reads
+  `window_admits(d, default_width(N), N)` (`tests/test_nature_beam_window.py`
+  (a) does). `beam`'s pairing by opposite phase reads the row's entry width
+  as its arc.
+- **The definitions and the record.** `world._table_entry` returns four
+  values, (rule, window, reads, width); `MeasuredDefinition.widths` (new,
+  per family, None where none is declared) and `LampDefinition.width`
+  (new, None by default); `Measured.widths` and `Measured.lamp_width`
+  (new); the measured events' states and `state.json` carry `widths`
+  beside `windows`. `run.json` is otherwise unchanged.
+- **Series J2** under `examples/events/weak/` with `tools/weak_readings.py`
+  and `tests/test_weak_readings.py`; `tests/test_window_width.py` (a) to
+  (e) pins the rule.
+
 ## The four unifications of the formulas, on 2026-09-20 (the pointer as the first moment; `by_clock` on every age against a key; one moment table over one set; the columns at the clock age)
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),

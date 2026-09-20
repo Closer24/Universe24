@@ -141,12 +141,23 @@ the model owner, 2026-09-19):
   every measured event is given its number at parsing, 1, 2, ... in
   declaration order;
 - `phase_window`, the declared window of a detector and of an emitter: a
-  setting `s`, an integer from 0 through N - 1, and the half circle centred
-  on it (with d = (phase - s) mod N, d < N / 4 or d >= 3 N / 4: exactly
-  N / 2 steps; for N = 2 the one step d = 0). On a table entry (any rule but
-  `pass`) the response is made only to a ray whose own phase falls in the
-  window; a ray outside it passes. On a lamp, a release only at the
-  self-creations whose clock phase falls in the window;
+  setting `s`, an integer from 0 through N - 1, and since 2026-09-20 (the
+  weak force, the neutrino first: the model owner's "go on everything";
+  BEAM_LAW note 34) its width `phase_width`, an integer w from 1 through N,
+  N / 2 by default: the w consecutive steps of the circle centred on the
+  setting, [s - floor(w / 2), s - floor(w / 2) + w), a phase at the distance
+  d = (phase - s) mod N inside when (d + floor(w / 2)) mod N < w
+  (`nature_beam.window_admits`, the one floor of the window and its width;
+  at the default N / 2 it is the half circle as it was, d < N / 4 or
+  d >= 3 N / 4, exactly N / 2 steps, for N = 2 the one step d = 0). On a
+  table entry (any rule but `pass`) the response is made only to a ray
+  whose own phase falls in the window; a ray outside it passes. On a lamp,
+  a release only at the self-creations whose clock phase falls in the
+  window. A width is refused where a window is (on `pass`, on a family
+  without a phase circle), without its window's setting, at 0 and beyond
+  N; the admitted fraction of a source's rays is w / N exactly when the
+  source's stride over the circle is coprime to N (the register's series
+  J2);
 - `reads` on a table entry: the component of the Node's one reading that
   the response's record carries, `scalar` (the presence), `outside`, `here`,
   `vector` (the net flow), `tensor` (the traceless part) or `age` (the age
@@ -216,7 +227,8 @@ phase circle, a turning body whose product `ticks x |p| x N` (the
 count of Links stepped within the run is at most `ticks`) exceeds
 2^62 - 1 for a declared momentum component p, a `lifetime` that is not
 one integer from 1 (a list or a per-axis value, 0, a negative number, a
-fraction) or beyond `age_bound`, a declared ray of a family with a
+fraction) or beyond `age_bound`, a `phase_width` outside 1 .. N, on `pass`,
+on a family without a phase circle or without a `phase_window`, a declared ray of a family with a
 lifetime at an age at or beyond it, a detector named `lifetime` (the
 border's name), and `held` naming the event's own family, an unknown
 family or a content that is not a positive integer.
@@ -374,10 +386,10 @@ MEASURED_KEYS = {
     "table",
     "lamp",
 }
-LAMP_KEYS = {"rate", "directions", "phase_window"}
-# A table entry's object form: the rule, a window on any rule but `pass`,
-# and the reading's component the record carries.
-TABLE_ENTRY_KEYS = {"rule", "phase_window", "reads"}
+LAMP_KEYS = {"rate", "directions", "phase_window", "phase_width"}
+# A table entry's object form: the rule, a window on any rule but `pass`
+# with its width, and the reading's component the record carries.
+TABLE_ENTRY_KEYS = {"rule", "phase_window", "phase_width", "reads"}
 TRANSIT_KEYS = {"position", "family", "number", "direction", "amount", "phase", "age"}
 DETECTOR_KEYS = {"name", "positions", "threshold", "reading"}
 # The readings a detector may declare; the first is the default: `wave`
@@ -504,6 +516,9 @@ class LampDefinition:
     rate: tuple[int, int]
     directions: tuple[int, ...]
     window: int | None
+    # The window's width in steps (`phase_width`), None for the default
+    # N / 2, the half circle.
+    width: int | None = None
 
 
 @dataclass(frozen=True)
@@ -545,14 +560,20 @@ class MeasuredDefinition:
     phase_by_momentum: bool = False
     held: tuple[int, ...] = ()
     contact: tuple[str, ...] = ()
+    # The width of each entry's window (`phase_width`, in family order):
+    # None where none is declared, the half circle N / 2.
+    widths: tuple[int | None, ...] = ()
 
     def __post_init__(self) -> None:
         # A definition made without `held` (the tests' bare definitions)
-        # holds its amount under its own family alone.
+        # holds its amount under its own family alone, and without
+        # `widths` declares no width.
         if not self.held:
             found = [0] * (self.family + 1)
             found[self.family] = self.amount
             object.__setattr__(self, "held", tuple(found))
+        if not self.widths:
+            object.__setattr__(self, "widths", (None,) * len(self.table))
 
 
 @dataclass(frozen=True)
@@ -1086,6 +1107,39 @@ def _window(value: object, label: str, phase_steps: int) -> int:
     return _integer(value, label, 0, phase_steps - 1)
 
 
+def default_width(phase_steps: int) -> int:
+    """The width of a window that declares none: the half circle, N / 2
+    steps (for N = 2 the one step), the window as it was until 2026-09-20."""
+    return phase_steps // 2
+
+
+def _width(obj: dict[str, object], label: str, phase_steps: int, phased: bool, rule: str) -> int | None:
+    """A window's width (`phase_width`): an integer w from 1 through N, the
+    w consecutive steps centred on the window's setting; None where none is
+    declared (the half circle). Refused where a window is (on `pass`, which
+    responds to nothing, and for a family without a phase circle, whose rays
+    carry no phase) and without a `phase_window` (a width is the width of a
+    window, and the window's setting says where it is centred)."""
+    if "phase_width" not in obj:
+        return None
+    if rule == "pass":
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.phase_width is refused on pass: a width is a width of a "
+            "response, and pass responds to nothing"
+        )
+    if not phased:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.phase_width is refused for a family without a phase circle: "
+            "its rays carry no phase to read"
+        )
+    if "phase_window" not in obj:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.phase_width needs the window's setting `phase_window` (a "
+            "width is the width of a window centred on its setting)"
+        )
+    return _integer(obj["phase_width"], f"{label}.phase_width", 1, phase_steps)
+
+
 def _label_bound(
     amount: int, content: int, table: tuple[Vector, ...], directions: tuple[int, ...], label: str
 ) -> None:
@@ -1127,24 +1181,28 @@ def _lamp(
                 "phase circle (a window is a width on the circle, and the family has none)"
             )
         window = _window(obj["phase_window"], f"{label}.phase_window", phase_steps)
+    width = _width(obj, label, phase_steps, phased, "measure")
     # The largest label a release can carry: the rate's numerator units at
     # the largest turn the content allows (the whole part of amount x n / d
     # at the clock's rate [n, d]).
     largest_turn = max(1, amount * turn_rate[0] // turn_rate[1])
     _label_bound(max(1, rate[0]), quantum * largest_turn, table, directions, f"{label} (the release)")
-    return LampDefinition(rate, directions, window)
+    return LampDefinition(rate, directions, window, width)
 
 
 def _table_entry(
     value: object, label: str, phase_steps: int, phased: bool, default: str
-) -> tuple[str, int | None, str]:
+) -> tuple[str, int | None, str, int | None]:
     """One table entry: a rule string, or `{"rule": ..., "phase_window": s,
-    "reads": key}` (the rule the family's default when the object omits it,
-    so a window alone is a lawful entry; a window refused on `pass`, which
-    responds to nothing, and for a family without a phase circle, whose
-    rays carry no phase; the reading's component `vector` by default on
-    `read`, `scalar` otherwise)."""
+    "phase_width": w, "reads": key}` (the rule the family's default when the
+    object omits it, so a window alone is a lawful entry; a window and its
+    width refused on `pass`, which responds to nothing, and for a family
+    without a phase circle, whose rays carry no phase; the width refused
+    without the window's setting; the reading's component `vector` by
+    default on `read`, `scalar` otherwise). Returns the rule, the window's
+    setting, the component and the window's width (None: N / 2)."""
     reads: object = None
+    obj: dict[str, object] = {}
     if isinstance(value, dict):
         obj = _object(value, label, TABLE_ENTRY_KEYS, set())
         rule = obj.get("rule", default)
@@ -1166,11 +1224,12 @@ def _table_entry(
             f"{BEAM_LAW}: {label}.phase_window is refused for a family without a phase circle: "
             "its rays carry no phase to read"
         )
+    width = _width(obj, label, phase_steps, phased, str(rule))
     if reads is None:
         reads = default_reads(str(rule))
     if reads not in READS:
         raise ValueError(f"{BEAM_LAW}: {label}.reads must be one of {READS}")
-    return str(rule), window, str(reads)
+    return str(rule), window, str(reads), width
 
 
 def _measured(
@@ -1294,22 +1353,25 @@ def _measured(
         rules: list[str] = []
         windows: list[int | None] = []
         reads: list[str] = []
+        widths: list[int | None] = []
         for rule, window, component in default_table(families):
             rules.append(rule)
             windows.append(window)
             reads.append(component)
+            widths.append(None)
         declared = obj.get("table", {})
         if not isinstance(declared, dict):
             raise ValueError(f"{BEAM_LAW}: {label}.table must map family names to rules")
         for key, entry_value in declared.items():
             if key not in names:
                 raise ValueError(f"{BEAM_LAW}: {label}.table names an unknown family {key!r}")
-            rules[names[key]], windows[names[key]], reads[names[key]] = _table_entry(
+            at = names[key]
+            rules[at], windows[at], reads[at], widths[at] = _table_entry(
                 entry_value,
                 f"{label}.table[{key!r}]",
                 phase_steps,
-                families[names[key]].phase,
-                rules[names[key]],
+                families[at].phase,
+                rules[at],
             )
         # The rule of a contact per family: the entry's rule where it
         # differs from the keys' own rule for the family, `measure` (the
@@ -1355,6 +1417,7 @@ def _measured(
                 turning,
                 tuple(held),
                 tuple(contact),
+                tuple(widths),
             )
         )
     return tuple(found)

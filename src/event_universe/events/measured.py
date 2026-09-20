@@ -173,6 +173,10 @@ class Measured:
     # what the event's charges are read from (`charges`).
     column_names: tuple[str, ...] = ()
     family_values: tuple[tuple[Pair, ...], ...] = ()
+    # The width of each entry's window in steps (`phase_width`, per family;
+    # None where none is declared: the half circle N / 2) and the lamp's.
+    widths: list[int | None] = field(default_factory=list)
+    lamp_width: int | None = None
     age: int = 0
     owed: int = 0
     pending: list[list[Pending]] = field(default_factory=list)
@@ -270,6 +274,7 @@ class Measured:
             "fixed": self.fixed,
             "span": list(self.span),
             "windows": list(self.windows),
+            "widths": list(self.widths),
             "detector": self.detector,
             "age": self.age,
             "owed": self.owed,

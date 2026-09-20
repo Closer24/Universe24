@@ -224,6 +224,27 @@ the deflection 0.000 pixel and the delay 0.00 interval at a crowd where
 nature would capture the beam, the derivation of the physicist's entry 2
 held: light is neither bent nor delayed in this law, a plain
 disagreement with nature, registered and not tuned.
+## The weak-force series
+
+The folder [weak/](weak/README.md) holds the worlds of series J, the weak
+force, written by `weak/make_worlds.py`: J2, the neutrino's passage through
+a filled bar (the neutrino first, no change of law: a bar of 200 x 1 x 1, a
+fixed source of the free family `nu` releasing one ray per self-creation
+with the stride 1 or 2 over the circle, 128 fixed readers of a paid family
+measuring `nu` under a window of `phase_width` 1 or the default half
+circle, their centres all 0, all 1 or a ladder x mod 64, and a far
+detector counting every ray that reaches it). `tools/weak_readings.py`
+reads the readers' clicks and passes and the far detector's clicks
+(DETECTOR) against the counts computed before the run from the engine's
+flight table (GAMEBOARD), every line labelled by its kind; the register
+entry is
+[J, the weak force (2026-09-20)](../../docs/EXPERIMENTS.md#j-the-weak-force-2026-09-20):
+the first reader takes exactly 1 / 64 of a stride-1 source's arrivals and
+the 127 behind it nothing (a filter, not an attenuation), the ladder
+exhausts the beam after 64 readers, the stride 2 gives 1 / 32 at the centre
+0 and nothing at the centre 1; 13 readings inside, 0 outside, registered
+and not tuned.
+
 ## The entity catalog
 
 The folder [catalog/](catalog/README.md) holds the four worlds of

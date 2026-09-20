@@ -2340,6 +2340,89 @@ states "exactly" and means integer equality at every tick.
   readings, the conclusion) is in the session's scratchpad, not
   published.
 
+### J, the weak force (2026-09-20)
+
+- **Confronts.** The model owner's decision of 2026-09-20 (Highlights 5.4,
+  "Arrange the weak force according to our world, and check whether we
+  predict more things"; "DECIDED: go on everything; just make sure again
+  that it is good and generic"): the weak force in the world's terms, in
+  the recommended order of the physicist's design (scratchpad/weak/WEAK.md):
+  the neutrino first with the table-entry key `phase_width` and no change
+  of law (J2), then the transformation `become` with the identity
+  `weak-v1` (J1, J3), then the W world. Under the owner's standing
+  principle, "our laws are on the GameBoard; in the detector one sees
+  other laws": the GameBoard gets the generic mechanism only, and the laws
+  of nature (the cross-section's rise with energy, the half-life law) are
+  compared with detector readings only, never with a rule of the
+  GameBoard.
+
+**J2, the neutrino's passage through a filled bar (the neutrino first, no
+change of law).**
+
+- **Model prediction, pinned before the runs
+  ([the expectations](../examples/events/weak/README.md#the-expectations-pinned-before-the-runs-the-physicists-integers)).**
+  A window admits the w consecutive steps of the circle about its setting
+  whatever the ray's amount, content or emitter's rate, so the fraction
+  admitted of a source of stride s coprime to N is exactly w / N (WEAK.md
+  1.2; `weak_integers.out` 1.2: 10 of 640 at w = 1, N = 64), and a reader
+  behind an identical reader finds no ray of its residue left. A bar of
+  200 x 1 x 1, K 4096, N 64, `release` [1, 4096], `suspension` 0, 1037
+  intervals; a fixed source of the free family `nu` (a phase circle, no
+  charge, no content on its rays) of content 4096 at x = 0 releasing one
+  ray per self-creation on +x with the stride 1 (the turn 4096 / 4096) or
+  2 (K 2048); 128 fixed readers of the paid family `d` at x = 8 .. 135
+  measuring `nu` under a window; a far detector at x = 190 measuring
+  without a window. The first reader's arrivals over the run are exactly
+  1024 (the rays born at the ticks 1 .. 1024; the first-arrival age at 8
+  Links is 13 off the flight table); 711 rays reach 190 Links within the
+  run (the age 326). Expected: `j2_filter` (every centre 0, width 1) the
+  first reader 16 of 1024 exactly, the 127 behind it 0, the far detector
+  699 (63 / 64); `j2_ladder` (the centre x mod 64, width 1) the readers at
+  x = 8 .. 71 16 each and the rest 0, the far detector 0; `j2_default`
+  (the half circle) 512 of 1024 at the first reader, the far detector
+  352; `j2_stride2` (K 2048, width 1) 32 of 1024, the far detector 688
+  (31 / 32); `j2_stride2_odd` (the centre 1) no click at any reader, the
+  far detector 711. Against nature (PREDICTIONS entries 7 and 8, the
+  law's own): a fraction flat in the emitter's rate where nature's
+  cross-section rises linearly with the neutrino's energy, and a filter
+  where nature attenuates exponentially in the depth; both registered as
+  the law's limits, nothing tuned.
+- **Features.** The window's width `phase_width` (BEAM_LAW note 34 (i);
+  `tests/test_window_width.py`); the free release at the world's rate; the
+  clock's turn as the stride.
+- **Run.** `examples/events/weak/` (the five `j2_*.json` worlds written by
+  `make_worlds.py`, the model ids `beam-weak-j2_<name>-v1`),
+  `tools/run_series.py --jobs 4`, 1037 intervals each; the readings by
+  `tools/weak_readings.py` (every line labelled DETECTOR or GAMEBOARD).
+  The worktree of `claude/universe24-new-3ytqde` from its tip `6a596b34`
+  on the commit of the window's width, source fingerprint
+  `55f30af0309c2812646384a0caf4d16a956e5ae525df878a008c6bf075e90941`,
+  Python 3.14.0rc2, numpy 2.5.3, headless, four cores; every run
+  completed in about 3 s with the books balanced at every tick; 0 record
+  checks failed; 13 readings inside, 0 outside, none moved.
+
+  | World | Expected (kind) | Measured | Verdict |
+  | --- | --- | --- | --- |
+  | `j2_filter` | the first reader 16 of 1024, exactly 1 / 64 (DETECTOR); the 127 behind it 0 (DETECTOR); the far detector 699 of the 711 that reach it (DETECTOR; the 711 GAMEBOARD, off the flight table) | 16 of 1024; 0 at every reader behind; 699 | inside (3 of 3) |
+  | `j2_ladder` | the readers at x = 8 .. 71 take their residue, 16 each, the readers at 72 .. 135 nothing (DETECTOR); the far detector 0 (DETECTOR) | 64 readers clicked, x = 8 .. 71, 16 each; the far detector 0 | inside (2 of 2) |
+  | `j2_default` | the first reader 512 of 1024, the half circle (DETECTOR); nothing behind (DETECTOR); the far detector 352 (DETECTOR) | 512 of 1024; 0 behind; 352 | inside (3 of 3) |
+  | `j2_stride2` | the first reader 32 of 1024, 1 / 32 (DETECTOR); nothing behind (DETECTOR); the far detector 688 (DETECTOR) | 32 of 1024; 0 behind; 688 | inside (3 of 3) |
+  | `j2_stride2_odd` | no reader clicks (DETECTOR); the far detector 711 (DETECTOR) | 0 at every reader; 711 | inside (2 of 2) |
+
+- **Verdict (J2).** The detector's world sees a cross-section where the
+  GameBoard has a stride: the admitted fraction is w / N exactly, a
+  deterministic residue and not a lottery, the same at every rate of the
+  emitter (the window reads the phase alone; a free ray carries no
+  content), and a slab of identical readers is a filter set by the spread
+  of its centres, not an attenuation set by its depth (the ladder of 64
+  centres exhausts the beam; 64 more readers behind it read nothing). Both
+  are the law's own predictions against nature (entries 7 and 8): the
+  flat cross-section a plain disagreement with the linear rise, the
+  filter a difference that nature could test with two identical detectors
+  behind a source of one clock. Nothing was tuned; no law changed. The
+  page for the model owner: the scratchpad's `weak_impl/weak.html`,
+  published by Boss.
+
 ### A3. Bell test in phase form, delayed geometry
 
 - **Confronts.** The same CHSH data as A2 and the quantum value at the

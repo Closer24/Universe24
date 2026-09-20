@@ -114,6 +114,7 @@ from event_universe.events.world import (
     NatureBeamWorld,
     Q,
     Vector,
+    default_width,
 )
 
 Record = Callable[[dict[str, object]], None]
@@ -423,6 +424,22 @@ def by_clock_rows(age: np.ndarray, numerator: np.ndarray | int, denominator: int
     return result
 
 
+def window_admits(
+    distance: np.ndarray | int, width: np.ndarray | int, modulus: int
+) -> np.ndarray | bool:
+    """Whether a phase at the distance d = (phase - s) mod N from a
+    window's setting s is inside the window of width w (`phase_width`; the
+    weak force, 2026-09-20, BEAM_LAW note 34): the w consecutive steps of
+    the circle centred on the setting, [s - floor(w / 2), s - floor(w / 2)
+    + w), that is (d + floor(w / 2)) mod N < w, the one floor of the window
+    and its width (the mathematician's ONE_FORMULA row 11). At the default
+    width N / 2 (`world.default_width`) it is the half circle as it was,
+    d < N / 4 or d >= 3 N / 4, on every pair (phase, setting) of every N
+    (`tests/test_window_width.py` (a)). Rows or one value alike."""
+    result: np.ndarray | bool = ((distance + width // 2) % modulus) < width
+    return result
+
+
 def ages_at_key(age: np.ndarray, key: int) -> np.ndarray:
     """The rows whose walk this interval brought their age to the key (a
     family's lifetime L; the world's age bound as the key age_bound + 1):
@@ -620,27 +637,24 @@ def collision_table() -> CollisionTable:
 @dataclass(frozen=True)
 class NatureBeamTables:
     """The two pure tables of a world and the circle's tables: the flight
-    table of its direction set, the collision table, the cosines and sines
-    at 1/256 and the window table (whether a phase distance is inside the
-    half circle centred on the setting)."""
+    table of its direction set, the collision table and the cosines and
+    sines at 1/256. The window is not a table but the one floor
+    `window_admits` of a distance against a width (since 2026-09-20; until
+    then a table over the distances of the half circle)."""
 
     flight: FlightTable
     collision: CollisionTable
     cosines: np.ndarray
     sines: np.ndarray
-    window: np.ndarray
 
 
 def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
     modulus = world.phase_steps
-    distance = np.arange(modulus, dtype=np.int64)
-    window = (4 * distance < modulus) | (4 * distance >= 3 * modulus)
     return NatureBeamTables(
         flight_table(world.directions),
         collision_table(),
         np.array(phase_cosines(modulus), dtype=np.int64),
         np.array(phase_sines(modulus), dtype=np.int64),
-        window,
     )
 
 
@@ -1671,6 +1685,12 @@ def nature_beam(
         ev_window = np.array(
             [[-1 if w is None else w for w in e.windows] for e in entries], dtype=np.int64
         )
+        # The width of every entry's window: the declared `phase_width`, the
+        # half circle where none is declared.
+        ev_width = np.array(
+            [[default_width(modulus) if w is None else w for w in e.widths] for e in entries],
+            dtype=np.int64,
+        )
         # The detector set of every measured event, its threshold and its
         # reading, indexed by the set's index.
         ev_set = np.array([e.detector_set.index for e in entries], dtype=np.int64)
@@ -1804,7 +1824,10 @@ def nature_beam(
                 # nearest step of the coherent pointer of the arrivals the
                 # threshold admitted (a zero pointer has no phase and is
                 # outside every window); under `beam` each ray's own phase.
+                # Its width is the entry's (`phase_width`, the half circle
+                # by default): the one floor `window_admits`.
                 window = ev_window[ev_m, family]
+                width_m = ev_width[ev_m, family]
                 read_phase = phase[met].copy()
                 wave_rows = st_wave[st_m]
                 if wave_rows.any():
@@ -1824,7 +1847,7 @@ def nature_beam(
                     read_phase = np.where(wave_rows, np.repeat(set_step, s_sizes), read_phase)
                 below = np.repeat(below_set, s_sizes)
                 inside = (window < 0) | (
-                    (read_phase >= 0) & tables.window[(read_phase - window) % modulus]
+                    (read_phase >= 0) & window_admits((read_phase - window) % modulus, width_m, modulus)
                 )
                 passing = below | ~inside
                 p = np.flatnonzero(passing)
@@ -1871,6 +1894,7 @@ def nature_beam(
                         phases = phase[taken[rows]].tolist()
                         left = a_t[rows].tolist()
                         arcs = ev_window[ev[taken[rows]], family].tolist()
+                        arc_widths = ev_width[ev[taken[rows]], family].tolist()
                         for i, phase_i in enumerate(phases):
                             if left[i] == 0:
                                 continue
@@ -1878,7 +1902,11 @@ def nature_beam(
                                 if left[j] == 0:
                                     continue
                                 d = (phases[j] - phase_i - half) % modulus
-                                if not (d == 0 if arcs[i] < 0 else bool(tables.window[d])):
+                                if not (
+                                    d == 0
+                                    if arcs[i] < 0
+                                    else bool(window_admits(d, arc_widths[i], modulus))
+                                ):
                                     continue
                                 part = min(left[i], left[j])
                                 left[i] -= part
@@ -2333,7 +2361,13 @@ def nature_beam(
                 and turn > 0
                 and (
                     entry.lamp_window is None
-                    or bool(tables.window[(entry.phase - entry.lamp_window) % modulus])
+                    or bool(
+                        window_admits(
+                            (entry.phase - entry.lamp_window) % modulus,
+                            default_width(modulus) if entry.lamp_width is None else entry.lamp_width,
+                            modulus,
+                        )
+                    )
                 )
             ):
                 rate_n, rate_d = entry.lamp_rate

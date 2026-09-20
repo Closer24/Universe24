@@ -26,7 +26,8 @@ the artifacts of a run) on `src/event_universe/core/` (`integer.py`,
 `tests/test_nature_beam_flight.py`, `tests/test_nature_beam_collision.py`,
 `tests/test_nature_beam_bijection.py`, `tests/test_nature_beam_detector.py`,
 `tests/test_nature_beam_reemission.py`, `tests/test_nature_beam_clock.py`,
-`tests/test_nature_beam_window.py`, `tests/test_nature_beam_world_parsing.py`,
+`tests/test_nature_beam_window.py`, `tests/test_window_width.py`,
+`tests/test_nature_beam_world_parsing.py`,
 `tests/test_nature_beam_worlds.py`, `tests/test_nature_beam_push.py`, `tests/test_nature_beam_age.py`
 ([expectations](TEST_EXPECTATIONS.md)). The
 worlds: [examples/events/](../examples/events/README.md).
@@ -351,14 +352,17 @@ beside its own),
 `directions` (the
 directions it releases and re-emits on, by vector or by index into D; the
 six headings by default), `table` family name to `read` | `measure` |
-`rerelease` | `pass` or to `{"rule": ..., "phase_window": s, "reads":
-component}` with `reads` one of `scalar`, `outside`, `here`, `vector`,
+`rerelease` | `pass` or to `{"rule": ..., "phase_window": s, "phase_width":
+w, "reads": component}` (`phase_width` since 2026-09-20, [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(i): the width of the window in steps, 1 through N, N / 2 by default, the
+w consecutive steps centred on s by the one floor `nature_beam.window_admits`)
+with `reads` one of `scalar`, `outside`, `here`, `vector`,
 `tensor`, `age` (the age moment; the entry's clock then counts it in place
 of the presence), the table generated from the keys by `world.default_table` (a
 free family read, a paid one measured, no window) and the world declaring
 only the entries that differ, `rule` optional in the object form, an entry
 equal to the default accepted and changing nothing; `lamp` `{rate: [n, d],
-directions, phase_window}` on a measured event of a paid family);
+directions, phase_window, phase_width}` on a measured event of a paid family);
 `in_transit` (`position`, `family`, `number`,
 `direction` (a vector of D, or a rest index 0 or 1), `amount`, `phase`,
 optional `age`); `detectors` (`name`, `positions`, `threshold` 1 by
@@ -395,7 +399,10 @@ detector named as a face detector is, two measured events at one
 Node, an unknown table rule, N not
 a power of two, a detector on a Node without a measured event, a Node in
 two detectors, a `phase_window` outside 0 .. N - 1 or on `pass` or for a
-family without a phase circle, a table entry object with an unknown key (one
+family without a phase circle, a `phase_width` outside 1 .. N, on `pass`,
+for a family without a phase circle or without a `phase_window` (on a
+table entry and on a lamp alike; [the width of a window](TEST_EXPECTATIONS.md#the-width-of-a-window)),
+a table entry object with an unknown key (one
 without `rule` takes the family's default rule), a `reads` outside the
 reading's components, a detector `reading` outside `beam` and `wave`, a `suspension`
 denominator of 0 ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-beam-law)),
@@ -433,7 +440,8 @@ exact rational sum of the measured events' charges as a reduced pair) with
 (`measured`: position, held per family, content, phase, charge (the pair
 rho x content, reduced), `charges` (the charge in every column by name,
 the exact rational sum over the families held, since 2026-09-20), momentum,
-windows, detector, age, owed, what waits to be created again (`home`,
+windows and, since 2026-09-20, `widths` (the width of each entry's window,
+None where none is declared), detector, age, owed, what waits to be created again (`home`,
 `home_content`), `waited`, phase steps, steps, what each met per family by
 rule, the clicks and the push taken, and `contacts`, the hand-overs it
 took per family of the arriving body; no record of its own since

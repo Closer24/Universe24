@@ -44,6 +44,8 @@ kept, their pins the law of events').
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
+| `test_window_width.py` | The width of a window, `phase_width`: the one floor `window_admits` equal to the half circle at the default width on every pair, the admitted fraction w / N against the source's stride (10, 20, 40, 320 of 640; the stride 2's coset), `beam`'s pairing arc, a lamp's width, the refusals ([below](#the-width-of-a-window)) | new (2026-09-20, the model owner's "go on everything", the neutrino first) |
+| `test_weak_readings.py` | The weak-force readings tool (series J) reads the runner's record and the flight table: on a short bar run through the runner, the first reader's 3 clicks of 192 arrivals, the far detector's 151, the first-arrival ages 13 and 51 ([below](#the-width-of-a-window)) | new (2026-09-20, series J2) |
 | `test_nature_beam_world_parsing.py` | The world file of the Beam Law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-beam-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
 | `test_nature_beam_worlds.py` | The worlds of the Beam Law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing, `two_contents` not refused with its face records exact ([below](#the-worlds-of-the-beam-law)) | `test_event_worlds` (a, d) |
 | `test_nature_beam_books.py` | The books as running ledger lines: the transit, content and momentum lines of `books()` equal the recount over the store at every interval of a world that exercises every way a row comes or goes; an empty world ([below](#the-books)) | new (2026-09-19, the optimizations) |
@@ -1240,7 +1242,9 @@ flight table: a ray released at tick t first walks at t + 1; 10 Links take
   the momentum (128, 0, 0) (was (2, 0, 0)), 2 escaped, nothing in the
   store, the books balanced;
   `in_window` at N = 64 admits d in [0, 16) and [48, 64), at N = 2 the step
-  0, at N = 4 the steps 0 and 3.
+  0, at N = 4 the steps 0 and 3 (since 2026-09-20 read off the one floor
+  `window_admits` at the default width N / 2, the window table being
+  deleted; the same steps).
 - (b) the complement covers the circle exactly: a bar of 12 x 1 x 1,
   K 2^14, a lamp of `light` (content K + 2, phase 0, rate [1, 1] on +X
   only) at x = 0; a counter at x = 10 measuring through the window 40 and
@@ -1263,6 +1267,69 @@ flight table: a ray released at tick t first walks at t + 1; 10 Links take
   `reads` key outside the reading's components; an object entry without
   `rule` takes the family's default rule (since the night of 2026-09-19: a
   window alone on a paid family measures in the window 8).
+
+## The width of a window
+
+`tests/test_window_width.py` (docs/BEAM_LAW.md, section 2 and section 10
+note 34 (i); the model owner, 2026-09-20, "go on everything": the neutrino
+first with the table-entry key `phase_width` and no change of law; the
+physicist's design, WEAK.md 1.2). The expected integers, written down
+before the first run:
+
+- (a) the one floor `window_admits` at the default width N / 2 is the half
+  circle on every (phase, setting) pair, d < N / 4 or d >= 3 N / 4, at
+  N = 2, 4, 64 and 4096 (for N = 2 the one step d = 0); at N = 64 the
+  width 1 centred on s admits {s}, 2 admits {s - 1, s}, 3 admits {s - 1,
+  s, s + 1}, 4 admits {s - 2, s - 1, s, s + 1} (the arc starts at
+  s - floor(w / 2)), the width 64 every step.
+- (b) the admitted fraction w / N against the source's stride: a bar of
+  9 x 1 x 1, K 4096, N 64, `release` [1, 4096], `suspension` 0; a fixed
+  source of the free family `nu` of content 4096 at x = 0 releasing one
+  ray per self-creation on +x (the turn 1: the stride 1), the ray born at
+  tick t carrying the phase (t - 1) mod 64 and arriving at the fixed
+  reader `r` (free, no phase circle, content 1) at x = 5 at tick t + 8
+  (m(8) = 5); over 648 intervals 640 arrivals (the ticks 9 .. 648). The
+  reader's entry `nu: {measure, phase_window 0}`: with the width absent
+  320 click and 320 pass (the phases 0 .. 15 and 48 .. 63); with
+  `phase_width` 1: 10 clicks at the phase 0 alone, at the ticks 9 + 64 k;
+  2: 20 (the phases 63, 0); 4: 40 (62, 63, 0, 1); 32: 320 with the `click`
+  and `pass` records identical line by line to the width absent. With
+  K 2048 (the turn 2, the stride 2) the width 1 centred on 0 admits 20 of
+  640 (the even coset) and centred on 1 admits 0 (640 passes). The reader
+  declared as a `beam` detector reads the same counts. Each click of a
+  free ray takes the columns' push, gravity -M_A V = -64 on the reader of
+  content 1 (a free ray's label never joins), so the momentum after c
+  clicks is (-64 c, 0, 0). The reader's state carries `widths` [w, None];
+  a world without the key has every width None.
+- (c) `beam`'s pairing arc is the entry's width: two rays of `light` at
+  x = 5 with the phases 0 and 30 (and 0 and 10) arriving together at a
+  `beam` counter at x = 6 whose entry has the window 16: with the width
+  40 the pair (0, 30) is paired (d = 62, (62 + 20) mod 64 = 18 < 40: two
+  `pass` records with `cancelled`, no click) and the pair (0, 10) clicks
+  twice ((42 + 20) mod 64 = 62 < 40 false); with the width 64 every pair
+  is paired; with the default width (0, 30) pairs and (0, 10) clicks, as
+  until 2026-09-20.
+- (d) a lamp's window has the same width: the lamp of the window test (c)
+  (K 2^14, content K + 2, one ray per self-creation on +x) with
+  `phase_window` 8 and `phase_width` 4 releases at the self-creations
+  whose clock phase falls in [6, 10): over 64 intervals 4 rays at the
+  phases 6, 7, 8, 9, the content K + 2 - 4, the momentum (-256, 0, 0);
+  32 with the width absent.
+- (e) the refusals, naming the key: `phase_width` 0, 65 at N = 64, 1.5 and
+  "4"; on `pass`; for a family without a phase circle; without
+  `phase_window`; on a lamp without its window and at 0; `phase_width`
+  beside `phase_window` alone on a paid family takes the default rule
+  `measure`.
+
+`tests/test_weak_readings.py` (series J2's tool, `tools/weak_readings.py`,
+reads the runner's record and the flight table): a bar of 40 x 1 x 1 with
+the source of (b), three readers of `d` at x = 8, 9, 10 in the window 0
+of width 1 and a far detector at x = 30 without a window, 205 intervals,
+run through the runner: the first-arrival ages 13 at 8 Links and 51 at 30
+off `flight_table`; the first reader 192 arrivals, 3 clicks (the phases 0
+of the rays born at the ticks 1, 65, 129), 189 passes; the readers at 9
+and 10 no click; the far detector 151 clicks (154 rays reach it, less the
+three of phase 0); the stride 1; the three criteria of `j2_filter` inside.
 
 ## The world file of the Beam Law
 
