@@ -26,7 +26,8 @@ the artifacts of a run) on `src/event_universe/core/` (`integer.py`,
 `tests/test_nature_beam_flight.py`, `tests/test_nature_beam_collision.py`,
 `tests/test_nature_beam_bijection.py`, `tests/test_nature_beam_detector.py`,
 `tests/test_nature_beam_reemission.py`, `tests/test_nature_beam_clock.py`,
-`tests/test_nature_beam_window.py`, `tests/test_nature_beam_world_parsing.py`,
+`tests/test_nature_beam_window.py`, `tests/test_nature_beam_window_reads.py`,
+`tests/test_nature_beam_world_parsing.py`,
 `tests/test_nature_beam_worlds.py`, `tests/test_nature_beam_push.py`, `tests/test_nature_beam_age.py`
 ([expectations](TEST_EXPECTATIONS.md)). The
 worlds: [examples/events/](../examples/events/README.md).
@@ -357,8 +358,24 @@ component}` with `reads` one of `scalar`, `outside`, `here`, `vector`,
 of the presence), the table generated from the keys by `world.default_table` (a
 free family read, a paid one measured, no window) and the world declaring
 only the entries that differ, `rule` optional in the object form, an entry
-equal to the default accepted and changing nothing; `lamp` `{rate: [n, d],
-directions, phase_window}` on a measured event of a paid family);
+equal to the default accepted and changing nothing; since 2026-09-20
+(issue #363, [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+the entry's `phase_window` may be an object `{"reads": "<family>",
+"offset": s}` in place of the number: the centre of the window is then the
+phase of the coherent pointer (`nature_beam.coherent_pointer`, the first
+moment over the circle, its nearest step `pointer_phases`) of the named
+family's rows present at the set in the interval, every row at the set but
+the reader's own number, rest and moving alike, as the presence counts
+them (`nature_beam.setting_steps`, read once per named family from the
+rows after the walk and the collision, before any table acts), plus the
+offset in phase steps (0 by default), the width the law's half circle;
+with no such row at the set, or a zero pointer, the entry passes with a
+`pass` record naming `window` None and `reads`; every `click` of such an
+entry carries the `window` used (`MeasuredDefinition.window_reads`,
+`Measured.window_reads`: per family the (family, offset) read, None for a
+number or none); `lamp` `{rate: [n, d],
+directions, phase_window}` on a measured event of a paid family, its
+window a number);
 `in_transit` (`position`, `family`, `number`,
 `direction` (a vector of D, or a rest index 0 or 1), `amount`, `phase`,
 optional `age`); `detectors` (`name`, `positions`, `threshold` 1 by
@@ -395,7 +412,12 @@ detector named as a face detector is, two measured events at one
 Node, an unknown table rule, N not
 a power of two, a detector on a Node without a measured event, a Node in
 two detectors, a `phase_window` outside 0 .. N - 1 or on `pass` or for a
-family without a phase circle, a table entry object with an unknown key (one
+family without a phase circle, a `phase_window` read from a reading that
+names an unknown family, a family without a phase circle or the entry's
+own family, whose `offset` is outside 0 .. N - 1, whose object has an
+unknown key or lacks `reads`, or that is declared on a lamp
+([a window read from a reading](TEST_EXPECTATIONS.md#a-window-read-from-a-reading)),
+a table entry object with an unknown key (one
 without `rule` takes the family's default rule), a `reads` outside the
 reading's components, a detector `reading` outside `beam` and `wave`, a `suspension`
 denominator of 0 ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-beam-law)),
@@ -450,9 +472,13 @@ per family (amount, content and, since 2026-09-20, the family's own
 momentum: the faces and the border summed; until then the world's total
 momentum was written into every family's line). `events.jsonl` holds one
 record per event: `home`, `read`, `click`, `rerelease` (per number and
-tick, with the amount, the phase, the push and the content), `pass` (a ray
+tick, with the amount, the phase, the push and the content; a `click` of
+an entry whose window is read from a reading carries the `window` used),
+`pass` (a ray
 below the threshold, with `threshold`, or outside the window, with
-`window`, or paired under `beam`, with `cancelled` true), `step` (the
+`window`, or paired under `beam`, with `cancelled` true; on an entry whose
+window is read from a reading also `reads`, the family read, and `window`
+None where no setting row was present), `step` (the
 measured event's number, its Node before and after, its momentum and,
 since 2026-09-20, its `phase` after the step: what the turn by momentum
 turned it to, the phase it had otherwise), `contact` (since 2026-09-20:

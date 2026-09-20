@@ -1920,3 +1920,48 @@ implementation's part of the contract. The design above is unchanged.
     registered series moves (C, 7, D, E, G, H, I, K, Bell, A10, the
     catalog: every charged product of theirs is a multiple of its
     denominators, or their reads never met a fractional floor).
+34. **A table entry's window read from a reading** (issue #363, the model
+    owner's go of 2026-09-20: "Alice and Bob are part of the GameBoard,
+    no?"; a measurement, not a change of law; `tests/test_nature_beam_window_reads.py`
+    (a) to (c); [ENGINE, the world](ENGINE.md#the-beam-law-beam-v1)). One
+    additive key: on a measured event's table entry, `phase_window` may be
+    the object `{"reads": "<family>", "offset": s}` in place of the number.
+    The centre of the window is then the phase of the coherent pointer of
+    the named family's rows present at the set in the interval, every row
+    at the set but the reader's own number, rest and moving alike, as the
+    presence counts them (the same first moment over the circle as the
+    detector's record, `coherent_pointer`, its nearest step
+    `pointer_phases`; `nature_beam.setting_steps`, read once per named
+    family from the rows after the walk and the collision, before any table
+    acts, so the order of the families changes nothing), plus the offset s
+    in phase steps (0 by default); the width stays the law's half circle
+    (`phase_width`, once it exists, applies to it as to a number). With no
+    row of the named family at the set, or a zero pointer (an antiphase
+    pair), the entry has no centre and passes, the `pass` record naming
+    `window` None and `reads`; every `click` of such an entry carries the
+    `window` used, so a reader bins by the setting off the record. What the
+    implementation decided: (i) the setting is read over the SET (the
+    detector set the reader belongs to), as the threshold and the window
+    are, so a counter of one Node reads the rows at its Node and a declared
+    set reads the rows at all of its Nodes; (ii) the rows read are the rows
+    present (the presence), not the arrivals alone: a stream of one row per
+    interval at a heading dwells one or two intervals at a Node (the flight
+    table's 32 Links per 55 intervals), and the window must exist at every
+    interval the stream is there; (iii) the setting rows meet the reader's
+    table by their own entry (`pass` in the Bell worlds: no push, no
+    record, the rays go on), the reading of their pointer being a reading
+    aid of the measured event and no rule of the GameBoard; (iv) refused
+    naming the key: an unknown family, a family without a phase circle (no
+    phase to read), the entry's own family (the window gates those rows),
+    the form on `pass` (as any window on `pass`) and on a lamp (a lamp's
+    window is a number); the `offset` outside 0 .. N - 1 and an object with
+    other keys or without `reads`. Every world without the key is the same
+    integer by integer: 21 example worlds (the Bell ten, `one_content`,
+    `two_contents`, `two_slits`, `one_slit`, the four of the catalog,
+    `w1_wave` and two detector worlds) replayed byte-identical in
+    `events.jsonl`, `state.json` and `run.json` before and after
+    ([validation](VALIDATION.md)). The run that uses it is
+    [A2 with the choosers on the GameBoard](EXPERIMENTS.md#a2-with-the-choosers-on-the-gameboard-2026-09-20):
+    the settings of a Bell run decided by GameBoard events, S = 2 exactly
+    with every E on the triangle, the law found not to correlate what
+    never met.
