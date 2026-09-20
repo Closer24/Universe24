@@ -54,6 +54,7 @@ from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import flight_table
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import HEADING_OFFSET, Q
+from event_universe.world_loading import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
 WORLDS = ROOT / "examples" / "events" / "hubble_stars"
@@ -117,6 +118,15 @@ def bar_world() -> dict[str, object]:
     }
 
 
+def expand(name: str) -> dict:
+    """A shipped world as the loader expands it (its families from the
+    definitions it references, `examples/events/entities/families.json`)."""
+    path = WORLDS / f"{name}.json"
+    return json.loads(
+        load_world(path.read_bytes(), base_dir=path.parent, root=WORLDS.parent).expanded_source
+    )
+
+
 def test_the_shipped_worlds_are_the_generators_and_the_expectations_declare_a_format():
     """(a)."""
     generator = load("hubble_stars_make_worlds", WORLDS / "make_worlds.py")
@@ -128,7 +138,17 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_declare_a_fo
     }
     for name, document in generated.items():
         assert json.loads((WORLDS / f"{name}.json").read_text(encoding="utf-8")) == document, name
-        parse_nature_beam_world(document)
+        # The stars are one instance of the definition `hubble_stars`
+        # (record 113); the loader expands the world to its inline form.
+        assert [e["definition"] for e in document["entities"]] == [
+            "detector_material",
+            "mass",
+            "hubble_stars",
+        ]
+        expanded = expand(name)
+        assert [f["name"] for f in expanded["families"]][:2] == ["detector", "mass"]
+        assert len(expanded["families"]) == 26
+        parse_nature_beam_world(expanded)
     expectations = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
     assert expectations["format"] == generator.EXPECTATIONS_FORMAT
     assert expectations["throw_age"] == generator.THROW_AGE
@@ -143,6 +163,9 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_declare_a_fo
     for name, document in generator.record_worlds().items():
         assert json.loads((WORLDS / "record" / f"{name}.json").read_text(encoding="utf-8")) == document
         assert document["amplitude"] is True
+        # Inline (a reference climbs one level only; the worlds under the
+        # key `amplitude` are deferred, record 113).
+        assert "entity_definitions" not in document
         parse_nature_beam_world(document)
     pinned = json.loads((WORLDS / "record" / "expectations.json").read_text(encoding="utf-8"))
     assert pinned["format"] == generator.EXPECTATIONS_FORMAT and pinned["reading_rule"] == "source"

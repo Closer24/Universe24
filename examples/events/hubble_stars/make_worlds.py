@@ -95,6 +95,14 @@ sys.path.insert(0, str(ROOT / "src"))
 from event_universe.core.game_board import PORT_HEADINGS  # noqa: E402
 from event_universe.events.nature_beam import flight_table  # noqa: E402
 from event_universe.events.world import HEADING_OFFSET, LAW_VALUE, Q  # noqa: E402
+from event_universe.world_loading import families_by_definition  # noqa: E402
+
+# The shipped definitions the worlds' families come from where they equal
+# them (the model owner's decision of 2026-09-20, record 113): the
+# twenty-four stars are one instance of `hubble_stars`; `detector` and
+# `mass` (with `charge` 0) stay inline.
+FAMILY_DEFINITIONS = "../entities/families.json"
+DEFINITIONS_SOURCE = (HERE.parent / "entities" / "families.json").read_bytes()
 
 SIDE = 301
 SHAPE = [SIDE, SIDE, SIDE]
@@ -236,7 +244,12 @@ def world(crowd: str, clock: str, record: bool = False, doppler: bool = False) -
         }
     ]
     for star in thrown:
-        table: Json = {"mass": entry(mass_rule, clock == "age")}
+        # A world declares only what differs from the generated table
+        # (BEAM_LAW section 2): `read` is a free family's default, so the
+        # mass entry is written only for `pass` or with `reads: "age"`.
+        table: Json = {}
+        if mass_rule != "read" or clock == "age":
+            table["mass"] = entry(mass_rule, clock == "age")
         for other in names:
             if other != star["name"]:
                 table[other] = entry("pass", clock == "age")
@@ -285,8 +298,18 @@ def world(crowd: str, clock: str, record: bool = False, doppler: bool = False) -
     return document
 
 
+def referenced(document: Json) -> Json:
+    """The world as shipped: its families instances of the definitions of
+    `entities/families.json` (`detector_material`, `mass` and the stars as
+    one instance of `hubble_stars`; the loader expands it to the inline
+    world, key by key). The worlds of `record/` and `doppler/` stay inline:
+    a reference climbs one level only, and every world under the key
+    `amplitude` is deferred to the third pull request of record 113."""
+    return families_by_definition(document, FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
+
+
 def worlds() -> dict[str, Json]:
-    return {f"{crowd}_{clock}": world(crowd, clock) for crowd in CROWDS for clock in CLOCKS}
+    return {f"{crowd}_{clock}": referenced(world(crowd, clock)) for crowd in CROWDS for clock in CLOCKS}
 
 
 def record_worlds() -> dict[str, Json]:
