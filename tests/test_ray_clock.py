@@ -51,6 +51,7 @@ from __future__ import annotations
 
 from event_universe.core.integer import apportion_whole, by_clock
 from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events.engine import count_owed
 
 M, LIGHT = 0, 1
 
@@ -245,6 +246,9 @@ def ages_of_a_probe(presence: int, ticks: int) -> tuple[list[int], int, int]:
 def test_the_count_a_measured_event_owes_is_read_off_its_clock():
     """(e)."""
     assert [by_clock(age, 1, 4) for age in range(8)] == [0, 0, 0, 1, 0, 0, 0, 1]
+    # The owed count, the one place it lives (`engine.count_owed`).
+    assert [count_owed(age, 1, (1, 4)) for age in range(8)] == [0, 0, 0, 1, 0, 0, 0, 1]
+    assert count_owed(2, 8, (1, 4)) == 2 and count_owed(5, 9, (0, 1)) == 0
     ages, waited, owed = ages_of_a_probe(1, 20)
     assert ages == [1, 2, 3, 4, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 12, 13, 14, 15, 16, 16]
     assert waited == 4 and owed == 0

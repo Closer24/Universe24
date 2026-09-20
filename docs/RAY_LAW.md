@@ -145,7 +145,19 @@ age at which every straight ray has left a board of that diameter,
 ray leaves; a declared ray's `age` is refused beyond it and a run in which
 a ray on the board carries an age beyond it is refused), and the value
 `age` of a table entry's `reads` (the age moment; the clock of that entry
-counts it in place of the presence). Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
+counts it in place of the presence). Added on 2026-09-20 (note 30): per
+measured event `span` (three odd integers from 1, `[1, 1, 1]` by default:
+the measured event is a body on the set of span_x x span_y x span_z Nodes
+centred on its `position`, one record on all of them; the model owner's
+principle of the detector as a set applied to the electron, "the electron
+of width 3"); at the world `action` (h, an integer from 1, in label units
+times Links, absent by default: the quantum of action of the turn by
+momentum) and per measured event `phase_by_momentum` (true: the body
+turns its phase by its momentum label at every Link it steps, over h;
+false by default; the model owner's decision on Bohr, "put it as
+parameters outside the board like the age"; the record carries the
+identity `bohr-v1` under `hypotheses` when `action` is declared).
+Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
 `suspension`, `families`, `measured` (`table` with `read`, `measure`,
 `rerelease`, `pass` and `phase_window`), `in_transit` (gains `direction`,
 a vector, in place of `heading`; the six headings accepted as vectors),
@@ -363,8 +375,16 @@ order with each step's inverse:
    the presence, or on a table entry that reads `age` the age moment
    `sum amount x age` of that family (note 25: the clock beside a mass
    then reads M / r in space, the push keeping M / r^2). Every new ray:
-   `age` 0, the emitter's phase, its number. The step of a measured event by its momentum: as the
-   other change leaves it (no merge; refused onto an occupied Node), with
+   `age` 0, the emitter's phase, its number. A measured event on a set of
+   Nodes (`span`, note 30) releases at every Node of its set with whole
+   units only: each row born is apportioned whole over the set in its
+   fixed order, the leftover to the Nodes counted from `age mod w`, so
+   the total released is the content's whatever the width. The step of a measured event by its momentum: as the
+   other change leaves it (no merge; refused onto an occupied Node; a
+   body on a set steps as one, note 30; a body that declares
+   `phase_by_momentum` in a world with `action` turns its phase at the
+   Link it steps by the difference of two floors of k x |p| x N / h, k the
+   count of Links the step rule gives at its age, note 30 (ii)), with
    the width of the push since 2026-09-19 (the model owner's D1) and
    the label's scale since the same day (note 23): on an axis whose
    momentum component is p (in label units), a free measured event of
@@ -1295,3 +1315,135 @@ implementation's part of the contract. The design above is unchanged.
     ray at phase p reads p, every click and pass identical, S = 2 exactly,
     `tools/bell_chsh.py` 326 criteria passed), the two-slit screens and
     the Heisenberg worlds (declared), series C and D (no detector).
+30. **A body on a set of Nodes with one record, and the turn by momentum:
+    Bohr as parameters outside the board** (the model owner, 2026-09-20,
+    Highlights 5.4: the physicist's report on hydrogen, the seven
+    proposals, and "DECIDED (the owner): On Bohr, go, and put it as
+    parameters outside the board like the age"; the placement rule: the
+    turn is a declared parameter of the measured event, the external
+    thing, read by it from its own record with no memory at a Node; the
+    rays' flight and collision are untouched; a world without the keys
+    reads the same integer by integer; `tests/test_ray_body.py` (a) to
+    (f)). Two features on the measured-event side, nothing on the board.
+    **(i) The body on a set** (proposal 1, "the electron of width 3"; the
+    physicist measured 0 to 8 rays per shell around a mean of 4 at one
+    Node of a 2616-direction fan, the grain that broke the orbit). A
+    measured event declares `span`, three odd integers from 1 (`[1, 1,
+    1]` by default): it is a body on the block of span_x x span_y x
+    span_z Nodes centred on its `position` (`world.body_nodes`, the
+    offsets ascending x, then y, then z: the fixed order of the set), ONE
+    record on all of them (age, phase, momentum, content, amount, owed
+    count) exactly as a detector is a set with one record (note 24). The
+    form chosen: a centre with a span, not a list of positions, so that
+    `position` keeps its meaning (the reported place, what a detector
+    names, what the step moves) and the set is one key of three
+    integers; a list would have needed a second reference Node and would
+    have allowed shapes no orbit needs. What the set does: every Node of
+    the body maps to it (`node_event` in step 4), so the rows at any of
+    its Nodes are its arrivals and the one reading set of RAY_LAW is
+    summed over its Nodes, per Node ("everything at the Node but the
+    reader's own number, including here"): the threshold reads the
+    amount arriving over the whole set, the clock's count the presence
+    (or the age moment) over the set, the push the label moment over the
+    set (a ray crossing w Nodes of the body along its line is read w
+    times, once at each Node it enters: the body's reading is the sum of
+    its Nodes' readings, so its push is about w times one Node's at the
+    same content, a declared width like the detector's, which the orbit
+    derivation of series H takes into account); the click's content and
+    momentum join the one record; the `click`, `read`, `pass` and
+    `record` lines name the body's `position` as their `node` ("here, in
+    one of these"); no collision acts at any Node of the set (note 18
+    applies to every Node); own-number rays arriving at any Node of the
+    set are home. The release: each row born at a self-creation (a free
+    release, a lamp's, what came home or is re-released) is apportioned
+    whole over the body's Nodes in their fixed order with equal weights,
+    the leftover units to the Nodes counted from `age mod w`
+    (`apportion_whole`, the tie rule of the re-emission over the
+    directions): the total released is the content's release whatever
+    the width (the flux of a body of content M is M's, the equivalence
+    kept), no Node is favoured over w self-creations, and the books
+    balance (the shares sum to the amount, every share keeps the row's
+    content per unit and phase, the labels' sum is the same recoil); the
+    rule chosen over "the full amount at every Node", which would have
+    made a body of w Nodes emit w times its content's flux. The step
+    (`_move`): the centre steps one Link by the step rule and the set
+    moves with it, refused when any Node of the moved set holds another
+    measured event (the body's own Nodes overlap the moved set and do
+    not refuse it), the whole body clicking on the face detector when
+    any of its Nodes would leave the board through an open face, every
+    Node wrapping on a periodic axis; the inverse interval is refused
+    with a measured event on the board as before (note 6). Parsing: a
+    span must be odd (a centred body), at most its axis's extent, the
+    body inside the board on an open axis at the start, two measured
+    events never share a Node, and a detector names a body by its
+    `position` (a Node of the body that is not its centre is refused by
+    name). A set of one Node is bit-identical to the measured event of
+    2026-09-19: the same rows, records and books on the world of test (a)
+    with the key absent and with `[1, 1, 1]` declared. `run.json` carries
+    `span` per measured event under `numbers` and in the measured
+    events' states, `state.json` the same key.
+    **(ii) The turn by momentum** (proposal 5, the owner's placement
+    rule; the physicist's "Bohr's radii would need the body's phase to
+    turn by its momentum label per Link stepped"; the orchestrator's
+    answer, flagged: a measured event's phase turns only by its own
+    clock, content over K per self-creation, by time alone, so its rays
+    carry to the detector how long and not how far; what is missing is
+    the tie between a body's momentum and its phase that E = h f gives a
+    released ray). The world key `action`, h (an integer from 1, in the
+    units of the momentum label times Links; absent by default), and the
+    measured-event key `phase_by_momentum` (true; false by default;
+    refused without `action`, on a `fixed` measured event, which never
+    steps, and on a family without a phase circle). With them, in
+    `_move` where the step already happens, at the Link a body steps on
+    an axis whose momentum component is p its phase turns by
+
+        floor(k1 x |p| x N / h) - floor(k0 x |p| x N / h),
+
+    with k0 = floor((age - 1) x |p| / (Q S M + |p|)) the count of Links
+    the step rule gives on that axis at the age before the self-creation
+    and k1 = k0 + 1 the count after it, that is `by_clock(k0, |p| x N,
+    h)`: the count is derived from the age by the step rule exactly as
+    the owed count is read off the clock, so nothing is kept at a Node
+    and no remainder register exists; with a constant momentum k1 is the
+    Links stepped on the axis and after k Links the phase has turned
+    floor(k x |p| x N / h) mod N in all (test (d): 1 and 16 steps per
+    Link, and 20480 k / 7 with a remainder each step, the floors 2925,
+    5851, 8777, 11702, 14628). The axes compose: the steps are x before
+    y before z, the phase's turn is the sum of the three components'
+    turns at the Links stepped on each, and a step lost to an earlier
+    axis's step in the same interval turns nothing (no Link was crossed;
+    the count of the lost axis, derived from the age, still advances,
+    as the step rule's count does). Where the momentum changes along
+    the path (a push between two steps) the count k0 is the rule's
+    count at the current age and momentum, not a history: the
+    placement rule reads the record, not the past. Placed, as the owner
+    said, outside the board like the age: a rule of the measured event,
+    the external thing, read from its own record (its momentum label,
+    its age); it changes nothing of the rays' flight or collision (test
+    (e): the rays' rows identical with and without the two keys on a
+    colliding crowd, the body's phase alone differing); the rays the
+    body releases carry its phase as before (the clock's turn by content
+    over K at the self-creation, this turn at the step after it, the
+    release of the interval carrying the phase before both); without
+    `action` there is no turn and every world reads as before. The bound
+    derived: a body steps at most one Link per interval, so within the
+    run k <= `ticks` on an axis and the parser refuses a turning body
+    whose `ticks x |p| x N` exceeds 2^62 - 1 for its declared momentum
+    (`age_bound`, the bound of a ray's age, does not bound a body's
+    Links: a body lives the whole run); at run time the product
+    (k0 + 1) x |p| x N is bounded before it is formed (`bounded`,
+    `OverflowError` naming the body and "turn by momentum"), which covers
+    a momentum grown by the pushes and a run longer than declared. The
+    identity: the turn is a new physical hypothesis beside the law, not
+    a rule of the board, so the law keeps `rays-v1` and `run.json`
+    carries `action` and, when it is declared, `"hypotheses":
+    ["bohr-v1"]` (`world.BOHR_RULE`); the `step` line of `events.jsonl`
+    gains the body's `phase` after the step (the readings tool of series
+    H reads it). What the closure means in the law's terms: the turn per
+    orbit is (N / h) x the sum over the Links stepped of |p_axis|, which
+    for a circle of radius r stepped on the lattice is 4 p r (the
+    Manhattan weighting of the path: 4 r against the circle's 2 pi r),
+    so the phase closes when 4 p r = j h, j whole, and with p
+    proportional to 1 / sqrt(r) under a 1 / r^2 push the closing radii
+    are proportional to j^2, Bohr's ladder in the lattice's metric
+    (series H, EXPERIMENTS.md).

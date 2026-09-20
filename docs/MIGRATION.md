@@ -6,6 +6,75 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The turn by momentum, Bohr as parameters outside the board, on 2026-09-20 (`action`, `phase_by_momentum`; `bohr-v1`)
+
+The model owner's decision of 2026-09-20 ("On Bohr, go, and put it as
+parameters outside the board like the age"; [Highlights 5.4](HIGHLIGHTS.md#54-the-detector);
+[RAY_LAW note 30 (ii)](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[expectations](TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum)).
+
+- **Added**: the world key `action` (h, an integer from 1, in the units
+  of the momentum label times Links; absent by default) and the
+  measured-event key `phase_by_momentum` (true; false by default): at the
+  Link a body steps on an axis whose momentum component is p its phase
+  turns by `by_clock(k0, |p| x N, h)`, k0 the count of Links the step
+  rule gives on that axis at its age before the self-creation (the
+  difference of two floors of k x |p| x N / h; no register, no
+  remainder); the axes compose. A rule of the measured event, the
+  external thing (`RaySimulation._move`); the rays' flight and collision
+  are untouched; without `action` nothing turns and every world reads
+  the same integer by integer (`tests/test_ray_body.py` (e)).
+- **Refused, naming the key**: `action` below 1 or not an integer;
+  `phase_by_momentum` without `action`, on a `fixed` measured event, on
+  a family without a phase circle, or not a boolean; a turning body whose
+  `ticks x |p| x N` exceeds 2^62 - 1 for its declared momentum (the
+  count of Links within the run is at most `ticks`); at run time the
+  product (k0 + 1) x |p| x N beyond the bound (`OverflowError` naming the
+  body and "turn by momentum").
+- **The record**: `run.json` carries `action` (h, or None) and
+  `hypotheses` (`["bohr-v1"]` when `action` is declared, the identity of
+  the turn by momentum as a physical hypothesis beside the law, whose
+  identity stays `rays-v1`; `[]` otherwise) and per measured event under
+  `numbers` its `phase_by_momentum`; the `step` line of `events.jsonl`
+  gains `phase`, the measured event's phase after the step (a reader that
+  compared step lines whole sees one more key on every stepping world;
+  the integers are unchanged).
+- **The tools**: `tools/bohr_readings.py` reads series H (the orbit from
+  the step lines, the phase per turn, the coherent record of the face
+  detectors from the click lines through the engine's own
+  `coherent_pointer`); the worlds are `examples/events/bohr/`.
+
+## A body on a set of Nodes with one record, on 2026-09-20 (`span`)
+
+The model owner's decision of 2026-09-20 on Bohr ("go, and put it as
+parameters outside the board like the age"; the body on a set taken with
+it as the condition for a closed orbit, the physicist's proposal 1, "the
+electron of width 3"; [RAY_LAW note 30](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[expectations](TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum)).
+
+- **Added**: the measured-event key `span`, three odd integers from 1
+  (`[1, 1, 1]` by default): the measured event is a body on the block of
+  Nodes centred on its `position`, one record on all of them; its
+  threshold, its clock's count and its push read the one reading set
+  summed over its Nodes; its releases are apportioned whole over its
+  Nodes; the step moves the whole set as one; no collision acts at any of
+  its Nodes; a detector names it by its `position`. `world.body_nodes`,
+  `Measured.span`, `Measured.nodes`, `RaySimulation.at` over every Node of
+  every body; `engine.step_axis` and `engine.count_owed`, the step rule of
+  one axis and the owed count as public functions the methods call (the
+  readings tools read them; no integer changes).
+- **Refused, naming the key**: a `span` that is not three odd integers
+  from 1 or larger than its axis; a body whose Nodes leave the board on an
+  open axis at the start; two measured events sharing a Node; a detector
+  naming a Node of a body that is not its `position`.
+- **The record**: `run.json` carries `span` per measured event under
+  `numbers` and in the measured events' states, `state.json` the same key
+  (a reader of the state sees one more key per measured event, `[1, 1,
+  1]` on every world that declares none). Every world without the key
+  reads the same integer by integer (`tests/test_ray_body.py` (a): every
+  record, row and state equal with the key absent and with `[1, 1, 1]`
+  declared).
+
 ## `wave` is the default reading of a detector, on 2026-09-20
 
 The model owner's decision of 2026-09-20 ("on the board a ray, in the world
