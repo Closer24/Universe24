@@ -248,3 +248,14 @@ of 33 and 27 attempted (registered 0, every attempt refused), the
 GAMEBOARD reading "the pair holds" outside; `j3_deuteron_crowd` still
 never fires, its bodies 2 steps each. 9 readings inside and 1 outside (10
 and 0). The register entry has the numbers ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under the signed drive (2026-09-20)
+
+Under the signed drive (record 126) the deuteron holds again:
+`j3_deuteron`'s nucleons make 0 steps of 33 and 29 attempted, the neutron
+fires at 577 and its beta clicks the shell at 590 with the content 3 (the
+first registration's numbers to the digit; the 3 steps under the unsigned
+drive were the reversal defect's, the case that found it), and
+`j3_deuteron_crowd` never fires with 0 steps; 9 readings inside and 1
+outside (the trigger tick, as registered). The register entry has the
+numbers ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).

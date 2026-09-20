@@ -49,9 +49,28 @@ as amended). The identity `beam-v1` is kept: the rule is the same count
 where the momentum is constant and a repair of it where it changes.
 
 - `core.integer.by_drive(drive, rate, denominator)`, the count primitive
-  (record 108): the whole part of an accumulated rate on the reader's own
-  record, (the count gained, the drive after), `by_clock` where the rate
-  is constant. `engine.step_axis(drive, momentum, content, width)` reads
+  (record 108): the whole part of an accumulated SIGNED rate on the
+  reader's own record, (the count gained, -1, 0 or +1, and the drive
+  after), `by_clock` where the rate is constant and of one sign. Signed
+  since record 126 of the same day: the first form took |p| and the
+  direction from the momentum's sign at the fire, so a momentum reversed
+  by a hand-over discharged the distance driven toward the partner as a
+  Link away (the deuteron under a suspension); `drive` on the record now
+  carries the sign of the momentum that drove it (a body under a
+  negative momentum reads a negative drive; its steps are the same).
+  Every world whose momenta keep one sign on every axis steps as before;
+  a world whose momentum reverses on an axis (an orbit, a turning body, a
+  pair under a hand-over) changes: of the 33 example worlds with a free
+  body, run at their registered length under the unsigned and the signed
+  drive and compared, 16 change (the orbit `s8_r12`, `s8_r24`,
+  `s32_r12`, `s32_r24`; Bohr `r2` to `r16`; the nucleus `alpha_line`,
+  `alpha_square`, `deuteron_1_kick`; the weak `j3_deuteron`,
+  `j3_deuteron_crowd`) and 17 read the same (the coupling `1b_*`, the
+  Hubble four, `deuteron_1`, `deuteron_3`, `pp_1`, `pp_1_weak`, `pp_3`,
+  `neutron_star`, `sun_planet`, `s1_*`, `j3_neutron_free`). The changed
+  registered entries (D, H, I, J) carry a dated line "Re-read under the
+  signed drive (2026-09-20)", D and H with their verdicts re-read once
+  more in the same form; the old numbers kept as history. `engine.step_axis(drive, momentum, content, width)` reads
   it and returns the sign of the Link stepped (or None) and the drive
   after it, in place of `step_axis(age, momentum, content, width)`
   returning the sign: the rule reads the body's record, not its age. The
