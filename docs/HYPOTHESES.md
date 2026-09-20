@@ -446,8 +446,12 @@ somewhere, to be understood before anything else). A2 runs after features
 
 The verdict in one sentence (2026-09-20, the audit of issues #359 and #361
 on the Beam Law, A2 registered): the model predicts S = 2; the loophole-free
-experiments measured 2.4 to 2.7; the model fails here, by choice, for
-locality. A narrow phase window with `pass` reaches S = 4 on the counted
+experiments measured 2.4 to 2.7; the model fails here, by choice. The choice
+stated exactly: the model keeps the local determination of every outcome by
+the arriving event and the setting, which nature does not keep (that
+assumption, not no-signalling, is what Bell's theorem says S > 2 refutes);
+no-signalling, which nature does keep, the model keeps as well, measured
+exact in A2. A narrow phase window with `pass` reaches S = 4 on the counted
 coincidences at 72 % single-side efficiency while S over all pairs stays
 below 2, which reproduces the experiments before 2015 and is refuted by the
 loophole-free ones: the detection loophole, measured, not a reproduction of
