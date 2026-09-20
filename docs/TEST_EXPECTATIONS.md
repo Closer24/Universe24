@@ -1503,10 +1503,14 @@ expected integers, written down before the first run:
   first at tick 1044) and the neutron once (tick 1045); the sum of the x
   momenta, 0 while both read, is -P = -310 967 280 640 at tick 1044 (the
   proton's read missing), 0 at 1045 (the neutron's read missing), -P from
-  1046 (the neutron's missing release arriving at the proton) and -P or
-  -2 P after every tick to the end, -P at 3000: the third-law gap
-  narrowed to the coincidence of a wait with the partner's missing
-  release, not closed.
+  1046 (the neutron's missing release arriving at the proton), -2 P in
+  the one interval of the proton's second wait (tick 2087; its read
+  missing) and -P again from 2088 to 3000 (the neutron missing the
+  proton's release at 2088): the third-law gap narrowed to the case of
+  adjacent waits, the ordinary case for a pair of near-equal content
+  (their clocks fire within a few intervals of each other), not closed;
+  record 128's criterion "balanced to the integer over 3000 intervals" is
+  not met, for the owner.
 
 ## The age
 

@@ -38,7 +38,9 @@ order, each a bijection on the GameBoard's state except the border:
    headings, two rest slots) permuted by the collision table, the forward
    map a cyclic shift inside the class; the age is never read here and a
    moved unit keeps it;
-4. the measured events' tables and the detectors: a measured event meets
+4. the measured events' tables and the detectors: a measured event that
+   self-creates this interval (one whose clock owes nothing; a waiting one
+   neither releases nor reads, rule (a) of the suspension, record 128) meets
    the rays that arrived this interval at its Node, of every number but its
    own, as one set (the threshold on the set), then each ray by its own
    phase (the window), then the rule: `read` (the push, the rays go on),

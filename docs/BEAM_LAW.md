@@ -1150,8 +1150,19 @@ implementation's part of the contract. The design above is unchanged.
     not when the partner waits at the interval the missing release would
     have arrived (`tests/test_step_drive.py` (g): the register's deuteron
     under a suspension, the proton waiting twice and the neutron once, the
-    sum -P at the end); the gap is narrowed to that coincidence, not
-    closed, and is recorded for the owner.
+    sum -P at the end); the gap is narrowed to the case of adjacent waits,
+    which for a pair of near-equal content is the ordinary case (two
+    clocks of near-equal count fire within a few intervals of each other:
+    the proton's first wait at tick 1044 and the neutron's at 1045), so a
+    bound pair gains one push net per pair of adjacent waits, in the sign
+    of the body that waits first; not closed. Record 128's own criterion
+    for the rule ("the pair's momenta balanced to the integer over 3000
+    intervals") is NOT met by this run, and that is recorded for the
+    owner's decision. Momentum is conserved globally (the rows nobody read
+    leave through the faces; the books balance at every interval). A
+    waiting body's own returning rays (home, note 4) are still taken and
+    re-created at its next self-creation: the rule is on what it reads of
+    other numbers and on what it releases.
 18. **The one label; no collision at a measured event's Node** (the
     physics-rule reviewer's F1, blocking, and the model owner's decision on
     its case (c), the night of 2026-09-19; `tests/test_nature_beam_push.py` (h),

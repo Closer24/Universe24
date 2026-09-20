@@ -224,3 +224,194 @@ Interpreter `/home/user/Universe24/.venv/bin/python`, `PYTHONPATH=/home/user/sig
 - Finding 6: record 126 is the Boss's, on the Boss's branch; the pull
   request names it and lands after it.
 - Finding 7: noted; no change.
+
+# Physics-rule review, second pass: rule (a) of the suspension (record 128)
+
+Reviewer: the physics-rule reviewer (read-only). Date: 2026-09-20.
+Reviewed: the commit of rule (a) (`2dfb91a` on `claude/step-drive-signed`,
+the same change as `2451e89` on `claude/suspension-rule-a`, PR #383):
+`nature_beam` step 4's rule matrix reading `pass` for every family of an
+entry that waits this interval; the re-registered tests; the law text.
+
+**Verdict: the rule as decided ("a measured event whose clock owes an
+interval neither releases nor reads in it") is implemented faithfully,
+generically and locally: one condition on the rule matrix, no family named,
+the pass-through exact, nothing held at a Node, byte-identical under
+`suspension` 0 by construction. The three re-registered expectations are
+correct derivations (checked from the code and by trace). Not blocking on
+the code. Two things are for the model owner before or at merge: the
+record's own acceptance criterion ("the pair's momenta balanced to the
+integer over 3000 intervals") is not met (the sum ends at -P), which the
+commit reports honestly but calls a "coincidence" when for a mirror pair it
+is the arithmetic of near-equal counts; and a pre-existing gap in the same
+spirit: a body steps (and hands over) in the last interval of its wait.**
+
+## Findings
+
+### 1. "Coincidence" understates the third-law remainder (not blocking; wording)
+
+- Rule: a physical hypothesis's expectation must be independent and stated
+  as measured (AGENTS.md; the review skill).
+- Evidence: trace of test (g)'s world: the proton's count 128 800 and the
+  neutron's 128 590 against 2^27 give first waits at ages 1042 and 1043
+  (2^27 / 128 800 = 1042.06, 2^27 / 128 590 = 1043.8), i.e. ticks 1044 and
+  1045, adjacent by arithmetic; the sum reads -P at 1044 (the proton's read
+  missing), 0 at 1045 (the neutron's read of rows the proton never
+  released), -P from 1046 (the neutron's release missing at the proton),
+  -2P at 2087 (the proton's second wait), -P from 2088 to 3000. For any
+  bound pair of near-equal content the two clocks fire within a few
+  intervals of each other, so the remainder is generic for pairs, not a
+  coincidence; `j3_deuteron`'s 7-Link drift in the weak re-read is the same
+  effect. The -P is the rule's consequence, not an implementation defect: a
+  wait deletes one read (of the partner's rows released one flight earlier)
+  and one release (read by the partner one flight later); when the
+  partner's wait falls on the interval that missing release would have
+  arrived, its own deletion of a read removes nothing, so only one of the
+  two deletions is compensated. Momentum is conserved globally (the un-read
+  rows leave through the face; books balanced at every tick).
+- Correction: in BEAM_LAW note 17, TEST_EXPECTATIONS (g) and the test
+  docstring replace "narrowed to that coincidence" by "narrowed to the case
+  of adjacent waits, which for a pair of near-equal content is the ordinary
+  case, so a bound pair gains one push net per pair of adjacent waits, in
+  the sign of the body that waits first"; and state explicitly that record
+  128's stated test ("balanced to the integer over 3000 intervals") is not
+  met, for the owner's decision.
+
+### 2. A body steps and hands over in the last interval of its wait (not blocking; for the owner; pre-existing)
+
+- Rule: the owner's reason for rule (a), "to wait is not to communicate in
+  either direction"; BEAM_LAW note 17 "at every self-creation in which it
+  may step drive_a += p_a".
+- Evidence: `engine.py` `_frame_all` decrements `owed` to 0 and sets
+  `creating = False`; `_move` guards on `entry.owed > 0`, which is already
+  0, so with `owed` 1 every waiting interval is a stepping interval: in the
+  (g) run at tick 2087 the proton waits (creating False) and makes a
+  `contact` (a hand-over to the neutron) in the same interval. Not
+  introduced by this commit (the guard predates it) and the (g) integers
+  include it (contacts == steps holds).
+- Correction: an owner's decision whether `_move` should be guarded by
+  `creating` (a physical change, its own record and re-reads); not this
+  PR's.
+
+### 3. The test's reason for -2P is wrong (not blocking; docs)
+
+- Evidence: `tests/test_step_drive.py` (g) comment "-2 P within a
+  hand-over's interval"; a hand-over never changes the pair's sum
+  (`_contact` moves a component from one body to the other). The -2P at
+  tick 2087 is the proton's second wait (its read missing for one
+  interval; the neutron misses the proton's release at 2088 and the sum
+  returns to -P).
+- Correction: "-2P in the interval of the proton's second wait (tick
+  2087), -P again at 2088"; pin 2087 in TEST_EXPECTATIONS (g) beside 1044.
+
+### 4. The clock counts rows the body did not read (not blocking; for the owner)
+
+- Evidence: `nature_beam.py` adds every row of another number at the Node
+  (arrived or resting) to `presence`; `met` excludes non-arrived rows and
+  PASS entries, so passed rows that rest at the Node by their flight
+  rhythm (a heading ray moves at age 0 -> 1, rests 1 -> 2: trace of the
+  k = 8 probe, rows (node 1, age 1) and (node 1, age 2) both present at
+  tick 5) are counted once, never read. This is a reading of state only
+  (no consumption, no register: the rows are the store's, unchanged) and
+  matches what a `pass` body always counted. Its physical reading is a
+  feedback: a waiting body counts more and waits more (the k = 8 probe
+  owes 4 instead of 2; Hubble `pushing_scalar`'s detector reads 0.21
+  self-creations per interval instead of 0.29 and sees one interval in
+  five). Record 128 decides only "neither releases nor reads"; the count is
+  the implementer's reading, registered.
+- Correction: none in code; the owner should confirm that the owed count is
+  of the presence including unread rows, and that a detector under a
+  suspension exposes at its own clock's rate.
+
+### 5. Two step-4 phrasings without the rule (not blocking; docs)
+
+- Evidence: `nature_beam.py` module docstring ("a measured event meets the
+  rays that arrived this interval at its Node") and `engine.py`
+  `_frame_all` docstring ("no self-creation, no release, no turn"; add "no
+  read"). ENGINE.md does not restate step 4 and needs no change; the law
+  text (BEAM_LAW step 4 and note 17), MIGRATION and TEST_EXPECTATIONS agree
+  with the code; no contradiction of the kind of the first review's
+  finding 1.
+
+### 6. Home rows are still taken while waiting (not blocking; observation)
+
+- Evidence: `home = own & arrived` has no rule, so a waiting body's own
+  returning rays join `pending` and are re-created at its next
+  self-creation. Consistent with the rule's letter ("reads" are of other
+  numbers) and with note 4 (home keeps phase and content); no world in the
+  change exercises it.
+- Correction: one clause in note 17.
+
+## Verified
+
+- Locality and books (item 1): PASS rows are neither in `met` nor `taken`,
+  `keep` stays True, no ledger line moves; the row's flight is untouched
+  (the walk in step 1 precedes the tables and reads nothing of the
+  entries), so the bijection holds and nothing is kept at the Node; the (g)
+  run's books balanced at every 250th tick and at 3000, the probe world's
+  at every tick.
+- Byte-identity under `suspension` 0 (item 2): `_suspend` returns before
+  writing when `suspension[0]` is 0; `owed` defaults to 0 and is not a
+  parseable key; `_frame_all` then sets `creating = True` for every entry
+  at every interval, so `ev_rule` equals the declared matrix; `nature_beam`
+  is called only after the frame (`step`) or without measured events
+  (`inverse_step`). Exact from the code; `test_nature_beam_worlds.py`
+  passes unchanged.
+- The re-registered tests (item 3) are derivations, not descriptions: clock
+  (e) k = 8: counted 8 at tick 2 -> owed by_clock(1, 8, 4) = 2; waits at 3,
+  4; at tick 5 the arrival of 8 plus the 8 passed at tick 4 resting by the
+  heading's rhythm = 16 -> owed by_clock(2, 16, 4) = 4; ages 1, 2, 2, 2, 3,
+  3, 3, 3, 3, 4, waited 6, owed 4 (trace matches tick by tick); k = 1:
+  presence 2 at tick 6, by_clock(4, 2, 4) = 0, ages unchanged. Age (c):
+  self-creations at ticks 1-6, 8, 12, 16, 19, 23; the arrival first reaches
+  the reader at tick 6, so reads at 6, 8, 12, 16, 19, 23 = six (nineteen
+  were the ticks 6-24), ages and counts unchanged because `read` consumes
+  nothing. Step drive (g): waited (2, 1); sums 0 to tick 1043, -P at 1044,
+  0 at 1045, -P from 1046, -2P at 2087 only, -P at the end; no `step`,
+  contacts == steps (the trace above).
+- Item 4: the right reading, with the qualification of finding 1; not an
+  implementation defect.
+- Item 5: no contradiction between law text and code found.
+
+## Tests run
+
+Interpreter `/home/user/Universe24/.venv/bin/python`, `PYTHONPATH` the
+branch's `src`: `test_nature_beam_clock`, `test_nature_beam_age`,
+`test_step_drive`, `test_nature_beam_worlds`, `test_contact`,
+`test_hubble_readings`, `test_weak_readings`, `test_coupling_readings`: 55
+passed in 74 s; `test_repository_language` 14 passed; ruff check and format
+clean on `nature_beam.py` and the three test files. Scratch traces (not in
+the repository): the (g) world for 3000 intervals with creating, owed,
+counted, waited, the momentum sum and the read/contact records per tick;
+the k = 1 and k = 8 probe worlds for 10 intervals with the store's rows
+(node, age, arrival) per tick.
+
+Not verified: the re-read numbers in EXPERIMENTS.md and the READMEs (the
+Hubble clock rates and mx1 counts, j3_deuteron's 7 steps and fire at 572,
+coupling item 6's 131 072) were not re-run; `tools/check.py` was not run
+for this commit by the reviewer (the log records 737 passed for the
+branch); record 128 is cited from the LOG on this branch.
+
+## Disposition, 2026-09-20 (the implementer, after the second review)
+
+- Finding 1: BEAM_LAW note 17, TEST_EXPECTATIONS (g) and the test's
+  comment now say "adjacent waits, the ordinary case for a pair of
+  near-equal content, one push net per pair of adjacent waits in the sign
+  of the body that waits first", and state that record 128's criterion
+  ("balanced to the integer over 3000 intervals") is not met on this pair,
+  for the owner. The pull request's body says the same.
+- Finding 2: not this PR's; carried to the owner in the report (a step in
+  the last interval of a wait: whether `_move` should be guarded by
+  `creating`).
+- Finding 3: the comment corrected (the -2P is the proton's second wait at
+  tick 2087, -P again at 2088); tick 2087 pinned in the test (the one
+  interval reading -2P) and in TEST_EXPECTATIONS (g).
+- Finding 4: no code change; the reading (the owed count of the presence
+  including unread rows; a detector under a suspension exposing at its
+  clock's rate) is stated in note 17 and carried to the owner for
+  confirmation.
+- Finding 5: both docstrings amended (the module's step 4; `_frame_all`'s
+  "no read").
+- Finding 6: one clause in note 17 (home rows taken while waiting).
+- `python tools/check.py` on the branch after these edits: see the pull
+  request.

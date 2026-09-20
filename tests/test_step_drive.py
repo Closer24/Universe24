@@ -409,16 +409,21 @@ def test_the_bound_pair_under_a_suspension_holds():
     assert not [r for r in records if r["event"] == "step"]
     assert len([r for r in records if r["event"] == "contact"]) == proton.steps + neutron.steps > 0
     # Rule (a) of the suspension (record 128): a waiting nucleon neither
-    # releases nor reads. The proton waits twice (tick 1044 and one more)
-    # and the neutron once (tick 1045); the sum of the x momenta, 0 while
-    # both read (the pushes exact mirrors, a hand-over zeroing both),
-    # changes by one push at a wait (the waiter's read missing) and by one
-    # push again when the partner waited at the interval the waiter's
-    # missing release would have arrived: -P from tick 1044, 0 at 1045, -P
-    # from 1046 on, -2 P within a hand-over's interval, -P at the end. The
-    # third-law gap of record 126 is narrowed to that coincidence, not
-    # closed, by rule (a) as read on this pair.
+    # releases nor reads. The proton waits at ticks 1044 and 2087 (its
+    # count 128 800 against 2^27) and the neutron once, at 1045 (128 590):
+    # adjacent waits, the ordinary case for a pair of near-equal content.
+    # The sum of the x momenta, 0 while both read (the pushes exact
+    # mirrors, a hand-over zeroing both), changes by one push at a wait
+    # (the waiter's read missing) and by one push again when the partner
+    # waited at the interval the waiter's missing release would have
+    # arrived: -P at tick 1044, 0 at 1045 (the neutron's read missing), -P
+    # from 1046 (the neutron's missing release at the proton), -2 P in the
+    # one interval of the proton's second wait (2087), -P from 2088 to the
+    # end. The third-law gap of record 126 is narrowed to adjacent waits,
+    # not closed; record 128's "balanced to the integer over 3000
+    # intervals" is not met on this pair (for the owner).
     push = 310_967_280_640
     assert (proton.waited, neutron.waited) == (2, 1)
     assert sums[:1043] == [0] * 1043 and sums[1043] == -push and sums[1044] == 0
+    assert [tick for tick, total in enumerate(sums, start=1) if total == -2 * push] == [2087]
     assert set(sums[1045:]) <= {-push, -2 * push} and sums[-1] == -push

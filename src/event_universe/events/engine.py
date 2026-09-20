@@ -389,7 +389,8 @@ class NatureBeamSimulation:
         step 4) and its charge in every column into `frame_charges` (the
         reader's side of the push over the columns, gravity's the content);
         one that owes a count pays it by one (no self-creation, no
-        release, no turn; `waited` counts the interval); one that owes
+        release, no turn, no read: rule (a) of the suspension, record 128,
+        `nature_beam` step 4; `waited` counts the interval); one that owes
         nothing self-creates: its age advances and its turn is read off its
         clock, `by_clock(age, content x n, d)` at the clock's rate [n, d]
         (`NatureBeamWorld.turn`; `by_clock_rows` over the phased events in
