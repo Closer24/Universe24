@@ -152,7 +152,12 @@ charge [1, 5]; every pinned integer is unchanged.
     four unifications (4) of 2026-09-20, (m): re-pinned from the age after
     the frame's advance, tick, with the new integers written first; the
     sum over the 23 reads moves by by_clock(7, 1280, 25) - by_clock(30,
-    1280, 25) = 51 - 52 = -1);
+    1280, 25) = 51 - 52 = -1; since the fraction-free law of the same day
+    the electric part is the count of the reader's charge accumulator,
+    empty at its first read: by_clock(tick - 8, 1280, 25) per read and
+    1177 = floor(23 x 1280 / 25) over the 23 reads, 1178 off the clock
+    from the age 7, the accumulator 23 x 1280 x 16 mod 400 below Lambda^2
+    = 400 at the end);
 (l) the equivalence principle for the electric push (the model owner,
     2026-09-20: the push proportional to the reader's content): the source
     of `m` (content 4, charge [1, 4]: charge 1) and a probe of `p` (charge
@@ -548,18 +553,28 @@ def test_a_re_emitted_free_ray_pushes_by_its_familys_charge_per_unit_of_content(
     assert [tick for tick, _, _ in reads] == list(range(15, 31))
     assert all(amount == 4 and push == [-1216, 0, 0] for _, amount, push in reads)
     assert [tick for tick, _, _ in own] == list(range(8, 31))
-    # The electric part at the reader's clock age, tick - 1 (the four
-    # unifications (4), 2026-09-20; until then at the age after the frame's
-    # advance, tick).
+    # The electric part is the count of the reader's charge accumulator
+    # (the fraction-free law, 2026-09-20; BEAM_LAW note 41), empty at its
+    # first read at tick 8, so the k-th read gains by_clock(k - 1, 1280,
+    # 25) (the same rate, 1280 / 25 per read, from age 0; until then the
+    # whole part off the reader's clock age, tick - 1, which had credited
+    # the seven intervals before the first read: the four unifications
+    # (4)); the family B's reads are whole (25600 / 400) and leave it.
     assert all(
-        amount == 4 and push == [-1280 + by_clock(tick - 1, 1280, 25), 0, 0]
+        amount == 4 and push == [-1280 + by_clock(tick - 8, 1280, 25), 0, 0]
         for tick, amount, push in own
     )
     assert simulation.measured[3].pushed == [
-        -19456 - 23 * 1280 + sum(by_clock(t - 1, 1280, 25) for t in range(8, 31)),
+        -19456 - 23 * 1280 + sum(by_clock(t - 8, 1280, 25) for t in range(8, 31)),
         0,
         0,
     ]
+    assert sum(by_clock(t - 8, 1280, 25) for t in range(8, 31)) == 23 * 1280 // 25 == 1177
+    # Lambda of the charge column is lcm(5, 4) = 20: the reader's
+    # accumulator holds 23 x 1280 x 16 mod 400 below 400 (the rate lifted
+    # to the one denominator 20^2), the other columns' 0.
+    assert simulation.measured[3].acc_push == [[0, 0, 0], [23 * 1280 * 16 % 400, 0, 0]]
+    assert simulation.world.column_scales == (1, 20)
     mirror = simulation.measured[2]
     assert mirror.taken[1]["rerelease"] == 92 and mirror.pushed != [0, 0, 0]
     assert simulation.measured[2].charge == (4, 5) and simulation.measured[3].charge == (1, 1)

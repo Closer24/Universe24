@@ -334,6 +334,8 @@ class NatureBeamSimulation:
             family_values=tuple(family.values for family in self.families),
             pending=[[] for _ in range(count)],
             acc_release=[0] * count,
+            acc_push=[[0, 0, 0] for _ in self.world.columns],
+            acc_flow=[[0, 0, 0] for _ in self.world.directions] if self.world.doppler else [],
             taken=[dict.fromkeys(TALLIES, 0) for _ in range(count)],
             clicks=[0] * count,
             contact=tuple(definition.contact) + (CONTACT_DEFAULT,) * (count - len(definition.contact)),

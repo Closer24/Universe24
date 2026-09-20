@@ -305,6 +305,18 @@ class Measured:
     acc_release: list[int] = field(default_factory=list)
     acc_lamp: int = 0
     acc_turn: int = 0
+    # The push's (stage 2 of the same law, FORM.md section 2): per column
+    # and axis the remainder of the push's rate the body has taken,
+    # `acc_push[c][axis]` signed and below Lambda_c^2 in magnitude
+    # (`world.column_scales`; `nature_beam.push_form`), and under the world
+    # key `doppler` per direction of the table and axis the remainder of
+    # the weighted flow, `acc_flow[d][axis]` signed and below G Q |v_d|^2
+    # (`nature_beam.weighted_flow`; empty without the key); `by_drive` on
+    # both, as the drive is (a reversed flow first cancels what it had
+    # accumulated). `state.json` and `run.json` carry them under `acc` as
+    # `push` by the column's name and `flow` under the key alone.
+    acc_push: list[list[int]] = field(default_factory=list)
+    acc_flow: list[list[int]] = field(default_factory=list)
     taken: list[dict[str, int]] = field(default_factory=list)
     clicks: list[int] = field(default_factory=list)
     pushed: list[int] = field(default_factory=lambda: [0, 0, 0])
@@ -452,14 +464,24 @@ class Measured:
 
     def accumulators(self) -> dict[str, object]:
         """The accumulators of the fraction-free law by the count's name
-        (BEAM_LAW note 41): what `state.json` and `run.json` carry under
-        `acc`, beside `drive`; a resumed run continues from them."""
-        return {
+        (BEAM_LAW note 41): `owed`, `release` per family, `lamp`, `turn`,
+        `push` per column by its name (the three axes' remainders) and,
+        under `doppler`, `flow` per direction of the world's table (aligned
+        with the record's `directions`) and axis; what `state.json` and
+        `run.json` carry under `acc`, beside `drive`; a resumed run
+        continues from them."""
+        found: dict[str, object] = {
             "owed": self.acc_owed,
             "release": list(self.acc_release),
             "lamp": self.acc_lamp,
             "turn": self.acc_turn,
+            "push": {
+                name: list(axes) for name, axes in zip(self.column_names, self.acc_push, strict=True)
+            },
         }
+        if self.acc_flow:
+            found["flow"] = [list(axes) for axes in self.acc_flow]
+        return found
 
     def state(self) -> dict[str, object]:
         charges = self.charges()

@@ -102,7 +102,6 @@ from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import (
     apportion_whole,
     bounded_gcd,
-    by_clock,
     by_drive,
     integer_root,
 )
@@ -2126,27 +2125,43 @@ def weighted_flow(
     labels: list[list[int]],
     entry: Measured,
     width: int,
-    age: int,
+    accumulators: list[list[int]],
 ) -> list[int]:
-    """One group's label flow under `doppler` (BEAM_LAW note 38): the
-    rows' labels summed per direction present (`arrivals` the direction
-    of each taken row, `labels` its label), each direction's flow V_d
-    weighted by its `flux_pair` off the reader's clock per component,
+    """One group's label flow under `doppler` (BEAM_LAW note 38; since the
+    fraction-free push of 2026-09-20, note 41, on the body's flow
+    accumulators): the rows' labels summed per direction present
+    (`arrivals` the direction of each taken row, `labels` its label), each
+    direction's flow V_d weighted by its `flux_pair` on the body's
+    accumulator of that direction and component,
 
-        V'_d = sign(V_d) x by_clock(age_A, |V_d| x num_d, G Q |v_d|^2),
+        V'_d,a = the count `by_drive(acc_flow[d][a], V_d,a x num_d, G Q |v_d|^2)` gains,
 
-    and summed over the directions: the flow the columns then read as
-    today (`push_form`, untouched). The body's speed is `quantised_speed`
-    of the momentum and content the frame read (`frame_momentum`,
-    `frame_content`: one speed for every group of the interval whatever
-    the family order), S the world's `width`; the speed's intermediate G
-    x |p_a| is tested by division before it is formed and refused naming
-    the body, its Node and the axis. |V_d| x num_d is tested by
-    division before it is formed and refused naming the body and the
-    direction (R1); a numerator of 0 (a body moving with the rows at
-    their own speed) forms nothing; the sum is bounded per component
-    (R2). At w = 0 on every axis the pair is (G Q |v|^2, G Q |v|^2) and
-    by_clock gives |V_d| exactly: the flow as today, bit for bit."""
+    the whole part the accumulator then holds with the flow's sign (the
+    drive's rule), the remainder kept on the body's record below G Q
+    |v_d|^2 in magnitude, and summed over the directions: the flow the
+    columns then read (`push_form`). Per direction the weighted flow is
+    exact over any period (the sum of the counts within one label unit of
+    the sum of the fluxes at every interval; until then `sign(V_d) x
+    by_clock(age_A, |V_d| x num_d, G Q |v_d|^2)`, a floor off the clock
+    whose remainder was discarded); the accumulators are per direction
+    because the directions' denominators G Q |v_d|^2 have no common
+    multiple within the register on a fan table (the least common
+    multiple of |v|^2 over a fan of a few hundred directions passes
+    2^63), so the split over the directions stays a sum of whole parts,
+    each exact on its own record, and one bounded integer per moving
+    direction and axis is the body's storage under the key, a world
+    constant. The body's speed is `quantised_speed` of the momentum and
+    content the frame read (`frame_momentum`, `frame_content`: one speed
+    for every group of the interval whatever the family order), S the
+    world's `width`; the speed's intermediate G x |p_a| is tested by
+    division before it is formed and refused naming the body, its Node
+    and the axis. |V_d| x num_d is tested by division before it is formed
+    and refused naming the body and the direction (R1); a numerator of 0
+    (a body moving with the rows at their own speed) forms nothing; the
+    sum is bounded per component (R2). At w = 0 on every axis the pair is
+    (G Q |v|^2, G Q |v|^2) and the count is V_d exactly, the accumulator
+    untouched: the flow as without the key, bit for bit, on a fan as on a
+    heading."""
     for axis, momentum in enumerate(entry.frame_momentum):
         if abs(momentum) > MOMENTUM_BOUND // SPEED_GRAIN:
             raise speed_bound_error(entry, axis, momentum)
@@ -2166,14 +2181,15 @@ def weighted_flow(
         numerator, denominator = flux_pair(vector, int(flight.resolution[direction]), speeds)
         if numerator == 0:
             continue
+        accumulator = accumulators[direction]
         for axis in range(3):
             v = moments[direction][axis]
             if not v:
                 continue
             if abs(v) > MOMENTUM_BOUND // numerator:
                 raise flux_bound_error(entry, direction, v, numerator)
-            whole = by_clock(age, abs(v) * numerator, denominator)
-            flow[axis] = bounded(flow[axis] + (-whole if v < 0 else whole), entry, "weighted flow")
+            whole, accumulator[axis] = by_drive(accumulator[axis], v * numerator, denominator)
+            flow[axis] = bounded(flow[axis] + whole, entry, "weighted flow")
     return flow
 
 
@@ -2183,74 +2199,93 @@ def push_form(
     charges: list[tuple[int, int]],
     values: tuple[tuple[int, int], ...],
     columns: tuple[tuple[str, int], ...],
-    age: int,
+    scales: tuple[int, ...],
+    accumulators: list[list[int]],
     entry: Measured,
 ) -> list[int]:
     """The push a measured event A takes from one group of arriving rays:
     ONE signed inner product over the columns (the model owner's decision
     of 2026-09-20, "one mechanism for all the laws on the GameBoard"; the
-    mathematician's verified form). `moment` is V_B, the label flow of
-    the group (Python integers, exact); `charges` the reader's charge in
-    every column as the frame read it, the pairs (E_c, D_c) (gravity: its
-    content M_A over 1; charge: rho_A M_A; a declared column: its value
-    times the content, summed over the families it holds); `values` the
-    arriving family's value per unit of content in every column, the pairs
-    (n_c, d_c) (gravity (1, 1), charge rho_B, a declared column's value or
-    (0, 1)); `columns` the world's (name, sign) per column; `age` the
-    reader's clock age, the age before this interval's self-creation, at
-    which every rate of the law is read (the turn, the release, the owed
-    count, the step; the four unifications, the model owner, 2026-09-20,
-    (4), BEAM_LAW note 33: until then the columns alone were floored at
-    the age after the frame's advance, note 20). For a free family's rays,
-    per axis,
+    mathematician's verified form), since the fraction-free push of the
+    same day (BEAM_LAW note 41) on the reader's own accumulators. `moment`
+    is V_B, the label flow of the group (Python integers, exact);
+    `charges` the reader's charge in every column as the frame read it,
+    the pairs (E_c, D_c) (gravity: its content M_A over 1; charge: rho_A
+    M_A; a declared column: its value times the content, summed over the
+    families it holds); `values` the arriving family's value per unit of
+    content in every column, the pairs (n_c, d_c) (gravity (1, 1), charge
+    rho_B, a declared column's value or (0, 1)); `columns` the world's
+    (name, sign) per column; `scales` the columns' common denominators
+    Lambda_c (`world.column_scales`: every D_c and every d_c divides its
+    column's); `accumulators` the reader's `acc_push`, per column and axis
+    one bounded integer. For a free family's rays, per axis and column,
 
-        push_A = sum over the columns c of
-                 epsilon_c x sign(V E_c n_c) x by_clock(age_A, |V x E_c x n_c|, D_c x d_c),
+        X = V x E_c x n_c x (Lambda_c / D_c) x (Lambda_c / d_c),
+        push_A += epsilon_c x the count `by_drive(acc_push[c][a], X, Lambda_c^2)` gains,
 
-    every column's rational part the whole part off the reader's clock by
-    its own denominators, floored on its own and never summed before the
-    floor (the mathematician's section 4: the sum of the columns' whole
-    parts is today's integer, a whole part of the sum is not); a column
-    with E_c n_c = 0 adds nothing. The gravity column, (1, 1) on every
-    family with the sign minus, is `by_clock(age, |V M_A|, 1) = |V M_A|`
-    exactly, the law's -M_A V_B; the charge column is the electric part as
-    landed, `sign(V n_A n_B) x by_clock(age_A, |V n_A n_B M_A|, d_A d_B)`
-    (the same rational at the same clock), so a world without a declared
-    column reads the two-column form M_A (rho_A rho_B - 1) x V_B integer by
-    integer, and the strong force is a third column with the sign minus,
-    not a term of this function. For a paid family's rays the push is V_B
-    itself (kappa = 1, the label carries h s). The bounds (the
-    mathematician's R1 to R3): each column's product |V| x |E_c n_c| is
+    the whole part the accumulator then holds with the sign of the sum
+    (the drive's rule: a reversed flow first cancels what it had
+    accumulated the other way), the remainder kept on the record below
+    Lambda_c^2 in magnitude; every column on its own accumulator, never
+    summed before the count (the mathematician's section 4). At a flow of
+    one sign the count is the same integer as the whole part off the
+    reader's clock, `sign(V E_c n_c) x by_clock(age_A, |V E_c n_c|, D_c
+    d_c)`, from an empty accumulator at the first read, and differs from
+    it by at most one unit per column, axis and interval as the flow
+    varies or the read begins at a later age, the sum over any period
+    exact (FORM.md section 2; until then the floor off the clock at the
+    reader's age, its remainder discarded). A column with E_c n_c = 0
+    adds nothing. The gravity column, (1, 1) on every family with the sign
+    minus, has Lambda = 1 and the count is |V M_A| exactly, the law's -M_A
+    V_B; the charge column is the electric part as landed, exact wherever
+    the charges are whole (Lambda = 1, the register's every world but the
+    series 7 pair), so a world without a declared column reads the
+    two-column form M_A (rho_A rho_B - 1) x V_B integer by integer, and the
+    strong force is a third column with the sign minus, not a term of this
+    function. For a paid family's rays the push is V_B itself (kappa = 1,
+    the label carries h s). The bounds (the mathematician's R1 to R3):
+    each column's product |V| x |E_c n_c| x Lambda_c^2 / (D_c d_c) is
     tested by division BEFORE it is formed and refused naming the column;
     the partial sum is bounded after every column (`bounded`); the caller
     bounds the momentum it joins.
 
     Under the world key `doppler` (`doppler-v1`, BEAM_LAW note 38) the
-    caller weights the group's flow per direction by the flux of its rows
-    through the reader before this function (`weighted_flow`: the moment
-    it passes is the weighted flow); nothing here changes, and the clock's
-    count, the size and the threshold readings, the emitter's side and a
-    paid family's click are untouched."""
+    caller weights the group's flow by the flux of its rows through the
+    reader before this function (`weighted_flow`: the moment it passes is
+    the weighted flow); nothing here changes, and the clock's count, the
+    size and the threshold readings, the emitter's side and a paid
+    family's click are untouched."""
     if not free:
         return [bounded(moment[axis], entry, "push") for axis in range(3)]
     push = [0, 0, 0]
-    for (name, sign), (numerator, denominator), (n, d) in zip(columns, charges, values, strict=True):
+    for column, ((name, sign), (numerator, denominator), (n, d)) in enumerate(
+        zip(columns, charges, values, strict=True)
+    ):
         if not numerator or not n:
             continue
-        divisor = denominator * d
+        scale = scales[column]
+        # |V| x |E n| x (Lambda / D) x (Lambda / d) tested by division
+        # before any product is formed.
+        if abs(numerator) > MOMENTUM_BOUND // abs(n):
+            raise column_bound_error(entry, name, moment[0], abs(numerator) * abs(n))
+        factor = numerator * n
+        lift = (scale // denominator) * (scale // d)
+        if abs(factor) > MOMENTUM_BOUND // lift:
+            raise column_bound_error(entry, name, moment[0], abs(factor) * lift)
+        factor *= lift
+        divisor = scale * scale
         for axis in range(3):
             v = moment[axis]
             if not v:
                 continue
-            # |V| x |E n| tested by division before either product is formed.
-            if abs(numerator) > MOMENTUM_BOUND // abs(n):
-                raise column_bound_error(entry, name, v, abs(numerator) * abs(n))
-            factor = numerator * n
             if abs(v) > MOMENTUM_BOUND // abs(factor):
                 raise column_bound_error(entry, name, v, abs(factor))
             total = v * factor
-            whole = abs(total) if divisor == 1 else by_clock(age, abs(total), divisor)
-            push[axis] = bounded(push[axis] + sign * (-whole if total < 0 else whole), entry, "push")
+            if divisor == 1:
+                whole = total
+            else:
+                whole, accumulators[column][axis] = by_drive(accumulators[column][axis], total, divisor)
+            push[axis] = bounded(push[axis] + sign * whole, entry, "push")
     return push
 
 
@@ -2284,6 +2319,8 @@ def nature_beam(
     # charges the frame read).
     columns = world.columns
     values_of = [definition.values for definition in families]
+    # The columns' common denominators, the accumulators' (`push_form`).
+    scales = world.column_scales
     flight, collision = tables.flight, tables.collision
     # The unit vectors of the directions at the scale Q: what every label
     # and every vector or tensor moment of the reading is taken on.
@@ -3254,9 +3291,10 @@ def nature_beam(
                         # whatever the family order: a click of this interval
                         # joins `held` and is read by the next frame (the
                         # orchestrator's D1, 2026-09-20); the arriving side is
-                        # the family's value per column; the columns are
-                        # floored at the reader's clock age, as every rate of
-                        # the law is (the four unifications (4)).
+                        # the family's value per column; every column's count is
+                        # its accumulator's on the reader's record (the
+                        # fraction-free push, note 41; until then floored at
+                        # the reader's clock age).
                         k0, k1 = plan.g_start[gi], plan.g_end[gi]
                         # Under `doppler` a free body reads the group's
                         # flow per direction at the flux of its rows
@@ -3273,7 +3311,7 @@ def nature_beam(
                                 plan.t_share[k0:k1],
                                 entry,
                                 world.width,
-                                entry.clock_age,
+                                entry.acc_flow,
                             )
                         push = push_form(
                             free,
@@ -3281,7 +3319,8 @@ def nature_beam(
                             entry.frame_charges,
                             values_of[family],
                             columns,
-                            entry.clock_age,
+                            scales,
+                            entry.acc_push,
                             entry,
                         )
                         entry.momentum = [

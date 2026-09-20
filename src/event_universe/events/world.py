@@ -1041,6 +1041,26 @@ class NatureBeamWorld:
         return tuple(name for name, _ in self.columns[CHARGE_INDEX + 1 :])
 
     @property
+    def column_scales(self) -> tuple[int, ...]:
+        """Per column the common denominator of its values over the
+        families, Lambda_c = lcm of the d_f^c (the fraction-free push,
+        2026-09-20, BEAM_LAW note 41): every reader's charge in the
+        column, the reduced sum of n_f^c M_f / d_f^c over what it holds,
+        has a denominator dividing it, and so has every arriving value,
+        so the push's rate V x E_c n_c / (D_c d_c) is a whole numerator
+        over the one denominator Lambda_c^2 of the column's accumulator
+        (`nature_beam.push_form`). 1 on gravity and on every column whose
+        values are whole, where the push was exact already."""
+        found = []
+        for column in range(len(self.families[0].columns)):
+            scale = 1
+            for family in self.families:
+                denominator = family.columns[column].value[1]
+                scale = scale * denominator // bounded_gcd(scale, denominator)
+            found.append(scale)
+        return tuple(found)
+
+    @property
     def lifetimes(self) -> bool:
         """Whether any family declares a lifetime (the border `lifetime` is
         then a detector of the record, and the inverse interval is refused)."""

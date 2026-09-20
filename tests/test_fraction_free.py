@@ -23,9 +23,18 @@ fraction-free counts"), written down first:
     waited after 10^4; the probe a paid body of `light`, so it releases
     nothing back at the lamp) and a lamp's rate [1, 3] (`acc_lamp` = age
     mod 3, one unit born at every third self-creation, 3333 after 10^4);
+(b) the sum over a period equal to the whole part of the sum of the
+    numerators on a varying flow (stage 2, the push): `tests/test_doppler.py`
+    (b), the bar as posed with rows of 64 (396672 exactly over 200 reads,
+    the remainder on the body's flow accumulator below G Q at every tick;
+    396673 off the clock), and `tests/test_nature_beam_push.py` (k), the
+    charge accumulator at Lambda = 20 (1177 = floor(23 x 1280 / 25) over
+    the 23 reads, 1178 off the clock from the age 7);
 (c) the accumulators carried in `state.json` (and `run.json`) under `acc`
-    by name, `owed`, `release` (per family), `lamp`, `turn`, beside
-    `drive`: on a bar of a source of `m` (content 3, 3 units per
+    by name, `owed`, `release` (per family), `lamp`, `turn`, `push` per
+    column (the three axes, 0 on the built-in columns of whole charges),
+    beside `drive`, `flow` per direction under `doppler` alone: on a bar
+    of a source of `m` (content 3, 3 units per
     self-creation on +X), a probe of `light` (content 1) measuring them
     at `suspension` [1, 4], a turning body of `light` (content 3, K = [3,
     8]) and a mover of `light` (content 16, momentum 1000, `width` 8),
@@ -40,11 +49,19 @@ fraction-free counts"), written down first:
     the phase of every count at the age is the accumulator); the runner
     writes `acc` in both files; a declared `acc` on a measured event is
     refused as an unknown key;
+(d) the per-direction split equal to the whole on a fan at rest:
+    `tests/test_doppler.py` (f), the fan reader at rest under the key
+    reads the same records as without it and its flow accumulators stay
+    0; at w_y = 1 the third read's count is each direction's whole part
+    from the empty accumulator (9787 on y; 9788 off the clock at age 2);
 (e) the bound: on the worlds of (a), at every tick, `acc_owed` below 4,
     `acc_release` below 10, `acc_lamp` below 3, `acc_turn` below 8 and the
-    drive's magnitude below D = Q x S x M + |p|; the primitive on 10^4
-    random rates below the denominator keeps an unsigned accumulator in
-    [0, d) and a signed one in (-d, d), with `at_most` 1 and without.
+    drive's magnitude below D = Q x S x M + |p|; the push's accumulators
+    below Lambda_c^2 and the flow's below G Q |v_d|^2 at every tick
+    (`test_doppler` (b) and (f), `test_nature_beam_push` (k)); the
+    primitive on 10^4 random rates below the denominator keeps an unsigned
+    accumulator in [0, d) and a signed one in (-d, d), with `at_most` 1
+    and without.
 """
 
 from __future__ import annotations
@@ -321,11 +338,12 @@ def test_the_accumulators_are_carried_in_the_state_and_a_resumed_run_is_the_unbr
     state = state_of(halfway)
     entries = state["measured"]
     assert isinstance(entries, list)
+    push = {"gravity": [0, 0, 0], "charge": [0, 0, 0]}
     assert [line["acc"] for line in entries] == [
-        {"owed": 0, "release": [0, 0], "lamp": 0, "turn": 0},
-        {"owed": 3 * 11 % 4, "release": [0, 0], "lamp": 0, "turn": 3 * 12 % 8},
-        {"owed": 0, "release": [0, 0], "lamp": 0, "turn": 9 * 20 % 8},
-        {"owed": 0, "release": [0, 0], "lamp": 0, "turn": 48 * 20 % 8},
+        {"owed": 0, "release": [0, 0], "lamp": 0, "turn": 0, "push": push},
+        {"owed": 3 * 11 % 4, "release": [0, 0], "lamp": 0, "turn": 3 * 12 % 8, "push": push},
+        {"owed": 0, "release": [0, 0], "lamp": 0, "turn": 9 * 20 % 8, "push": push},
+        {"owed": 0, "release": [0, 0], "lamp": 0, "turn": 48 * 20 % 8, "push": push},
     ]
     assert entries[1]["age"] == 12 and entries[1]["waited"] == 8
     assert entries[3]["drive"] == [20 * 1000 % (Q * 8 * 16 + 1000), 0, 0] and entries[3]["steps"] == 2
