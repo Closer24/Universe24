@@ -11,10 +11,13 @@ momentum's y component of the initial sign), its period T (that tick), the
 mean radius over the orbit, the drift per orbit (the radius at the closing
 tick less the radius at the previous one), the second and later orbits the
 same way, the mean inward push per interval from the probe's `read`
-records against m x q x L / (2 pi r) (the constant C of the derivation; L
-the mean label magnitude of the source's fan, the mean |D| over its
-directions, since the push of a fan ray is its label, amount x D: RAY_LAW
-section 2 and section 10, note 21; L = 1 on the six headings), the
+records, in label units divided by Q = `LABEL_SCALE` = 64, against
+m x q x L / (2 pi r) (the constant C of the derivation; L the mean label
+magnitude of the source's fan in units of Q, the mean |u_d| / Q over its
+directions with u_d the unit vector of the direction at the scale Q,
+1.0000 for this fan within 1 %: since 2026-09-19 the push of a fan ray is
+its label along u_d, RAY_LAW section 2 and note 23; the momentum column p
+is in label units, 64 per unit of the probe's content), the
 least and greatest radius, the escape or the refused step if any; and, per
 width, the ratio T(24)^2 / T(12)^2 against (24 / 12)^2 = 4, the plane's
 1 / r force (T proportional to r, k = 2; Kepler's k = 3 would give 8). The
@@ -34,6 +37,9 @@ import math
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
+
+from event_universe.events.nature_beam import unit_label
+from event_universe.events.world import LABEL_SCALE
 
 MODEL_PREFIX = "rays-orbit-"
 MODEL_SUFFIX = "-plane-v1"
@@ -76,7 +82,8 @@ class Reading:
     radius: int
     momentum: int
     emission: float
-    # The mean label magnitude of the source's fan (the mean |D|).
+    # The mean label magnitude of the source's fan in units of Q (the mean
+    # |u_d| / Q over its directions).
     label: float
     ticks: int
     completed: bool
@@ -98,12 +105,14 @@ class Reading:
 
     @property
     def push_constant(self) -> float:
-        """The mean inward push per interval over the run divided by
-        m q / (2 pi r_mean): the constant C measured."""
+        """The mean inward push per interval over the run (in units of Q)
+        divided by m q L / (2 pi r_mean): the constant C measured."""
         mean_radius = self.orbits[0].mean_radius if self.orbits else self.final_radius
         if not mean_radius or not self.ticks:
             return 0.0
-        return (self.inward_push / self.ticks) / (self.emission * self.label / (FULL_TURN * mean_radius))
+        return (self.inward_push / LABEL_SCALE / self.ticks) / (
+            self.emission * self.label / (FULL_TURN * mean_radius)
+        )
 
 
 def read_run(folder: Path) -> Reading:
@@ -115,7 +124,10 @@ def read_run(folder: Path) -> Reading:
     world = json.loads((folder / "initialization.json").read_text(encoding="utf-8"))
     source, probe = world["measured"]
     emission = len(source["directions"]) * int(source["amount"]) / int(world["release"][1])
-    label = sum(math.hypot(*vector[:2]) for vector in source["directions"]) / len(source["directions"])
+    label = sum(
+        math.hypot(*unit_label((int(v[0]), int(v[1]), int(v[2])))) / LABEL_SCALE
+        for v in source["directions"]
+    ) / len(source["directions"])
     ticks = int(record["completed_ticks"])
     reading = Reading(
         name=name.replace("-", "_"),
@@ -218,7 +230,7 @@ def read_run(folder: Path) -> Reading:
     for orbit in reading.orbits:
         expected = reading.emission * reading.label / (FULL_TURN * orbit.mean_radius)
         if expected and orbit.intervals:
-            orbit.constant = (orbit.inward_push / orbit.intervals) / expected
+            orbit.constant = (orbit.inward_push / LABEL_SCALE / orbit.intervals) / expected
     if not reading.ended and reading.least_radius <= 1.0:
         reading.ended = "reached the Node beside the source"
     return reading
@@ -236,8 +248,8 @@ def find_runs(root: Path) -> list[Reading]:
 
 def print_table(readings: list[Reading]) -> None:
     print(
-        "| World | S | r | p | closed | T | mean radius | drift per orbit | turns | "
-        "r min .. max | reads | units | C measured | end |"
+        "| World | S | r | p (label units) | closed | T | mean radius | drift per orbit | turns | "
+        "r min .. max | reads | units (label units) | C measured | end |"
     )
     print("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |")
     for r in readings:

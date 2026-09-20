@@ -1234,7 +1234,7 @@
       "fixed": false,
       "momentum": [
         0,
-        15,
+        320,
         0
       ]
     }
