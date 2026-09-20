@@ -29,8 +29,8 @@ import math
 import sys
 from pathlib import Path
 
+from event_universe.core.integer import by_clock
 from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.engine import by_clock
 from event_universe.events.run import execute_ray_run
 
 ROOT = Path(__file__).resolve().parents[1]

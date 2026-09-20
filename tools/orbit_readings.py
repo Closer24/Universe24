@@ -39,8 +39,8 @@ from dataclasses import dataclass, field
 from fractions import Fraction
 from pathlib import Path
 
+from event_universe.core.integer import by_clock
 from event_universe.events import parse_ray_world
-from event_universe.events.engine import by_clock
 from event_universe.events.nature_beam import flight_table
 from event_universe.events.world import LABEL_SCALE, MeasuredDefinition, RayWorld
 from event_universe.json_documents import parse_json_document
@@ -48,7 +48,8 @@ from event_universe.json_documents import parse_json_document
 # Every rule of the engine this tool needs is read off the engine's own
 # functions (the architecture review of 2026-09-20, Highlights 5.4: a tool
 # is a reader of the record, never a second owner of a rule): the release
-# off the clock `engine.by_clock`, the fan's labels off the flight table
+# off the clock `core.integer.by_clock` (the primitive the engine's release
+# calls), the fan's labels off the flight table
 # `nature_beam.flight_table`, the scale `world.LABEL_SCALE`, the world's
 # keys and the source's Node through `parse_ray_world`.
 MODEL_PREFIX = "rays-orbit-"

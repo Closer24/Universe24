@@ -57,9 +57,9 @@ from typing import Any
 
 import numpy as np
 
+from event_universe.core.integer import by_clock
 from event_universe.core.lattice import PORT_HEADINGS
 from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.engine import by_clock
 from event_universe.events.nature_beam import flight_table, unit_label
 from event_universe.events.world import HEADING_OFFSET, LABEL_SCALE, RAYS_LAW, RayWorld
 from event_universe.events.world import Q as FLIGHT_SCALE
@@ -68,9 +68,11 @@ from event_universe.json_documents import parse_json_document
 # Every rule of the engine this tool needs is read off the engine's own
 # functions (the architecture review of 2026-09-20, Highlights 5.4: a tool
 # is a reader of the record, never a second owner of a rule): the clock
-# `engine.by_clock`, the flight table `nature_beam.flight_table` and its
+# `core.integer.by_clock` (the primitive the engine's frame, release and
+# step call), the flight table `nature_beam.flight_table` and its
 # `manhattan_steps`, the label `nature_beam.unit_label`, the scale
-# `world.LABEL_SCALE`, the world's keys through `parse_ray_world`.
+# `world.LABEL_SCALE`, the world's keys through `parse_ray_world` and a
+# measured event's charge through `Measured.charge`.
 MODEL_PREFIX = "rays-coupling-"
 MODEL_SUFFIX = "-plane-v1"
 CENTRE = (60, 60, 0)
@@ -201,22 +203,18 @@ def label_push(heading: Vector, amount: int, content: int) -> Vector:
     return scaled(unit_label(heading), -amount * content)
 
 
-def declared_charge(world: Record, index: int) -> int:
-    """The whole charge of the measured event `world["measured"][index]` as
-    the world declares it: the per-event key where the world still declares
-    one (the form until 2026-09-20), else the family's charge per unit of
-    content, an integer n as [n, 1] or a pair [n, d], times the event's
-    content: n x amount // d (0 without a charge)."""
-    entry = world["measured"][index]
-    if "charge" in entry:
-        return int(entry["charge"])
-    family = next(f for f in world["families"] if f["name"] == entry["family"])
-    charge = family.get("charge", 0)
-    if isinstance(charge, list):
-        numerator, denominator = int(charge[0]), int(charge[1])
-    else:
-        numerator, denominator = int(charge), 1
-    return numerator * int(entry["amount"]) // denominator
+def declared_charges(world: RayWorld) -> list[int | Fraction]:
+    """The charge of every measured event of the parsed world in declaration
+    order, as the engine computes it (`Measured.charge`: the family's charge
+    per unit of content, rho = [n, d], times the event's content, a reduced
+    pair; the model owner, 2026-09-20): an integer where the pair is whole,
+    a `Fraction` otherwise."""
+    simulation = RaySimulation(world)
+    found: list[int | Fraction] = []
+    for number in sorted(simulation.measured):
+        numerator, denominator = simulation.measured[number].charge
+        found.append(numerator if denominator == 1 else Fraction(numerator, denominator))
+    return found
 
 
 def slope(radii: tuple[int, ...], values: list[float]) -> float:
@@ -966,11 +964,8 @@ def item_7(runs: dict[str, Run], checks: Checks) -> list[str]:
         m = int(probe["content"])
         big = signs[name[2]] * CHARGE
         small = signs[name[3]] * PROBE_CHARGE
-        checks.equal(
-            f"{name}: the declared charges (Q, q)",
-            (declared_charge(run.world, 0), declared_charge(run.world, 1)),
-            (big, small),
-        )
+        source_charge, probe_charge = declared_charges(run.parsed)
+        checks.equal(f"{name}: the declared charges (Q, q)", (source_charge, probe_charge), (big, small))
         reads = run.reads(2, 1)
         checks.equal(
             f"{name}: the same ticks and amounts as 7_00",

@@ -25,17 +25,18 @@ engine"), written down first:
 (d) the push: `label_push((1, 0, 0), 5, 3)` = (-960, 0, 0); a fixed reader
     of content 3 met by 5 units of another number arriving on +x is pushed
     (-960, 0, 0), and its `read` record says so;
-(e) the declared charge: the per-event key 7 reads 7, what the parser of
-    the form until 2026-09-20 reads; without it the family's charge per
-    unit of content [1, 2] on content 2^24 reads 2^23, [2, 1] on 1 reads
-    2, [1, 2] on 4 reads 2, an integer -3 (as [-3, 1]) on 5 reads -15 and
-    no charge reads 0.
+(e) the declared charges: the engine's `Measured.charge`, the family's
+    charge per unit of content times the content as a reduced pair, read
+    as an integer where whole: [1, 2] on content 2^24 reads 2^23, [2, 1] on
+    1 reads 2, [1, 2] on 4 reads 2, an integer -3 (as [-3, 1]) on 5 reads
+    -15, no charge reads 0 and [1, 3] on 2 reads the fraction 2/3.
 """
 
 from __future__ import annotations
 
 import importlib.util
 import sys
+from fractions import Fraction
 from pathlib import Path
 
 from event_universe.events import RaySimulation, parse_ray_world
@@ -140,29 +141,29 @@ def test_the_expected_push_is_the_engines_label_moment():
     assert [TOOL.vector(e["push"]) for e in reads] == [TOOL.label_push((1, 0, 0), 5, 3)]
 
 
-def test_the_declared_charge_reads_the_event_or_the_familys_pair():
+def test_the_declared_charges_are_the_engines_charge_per_unit_of_content():
     """(e)."""
-    old_form = {
-        "families": [{"name": "q", "quantum": 0, "charge": 0}],
-        "measured": [{"position": [0, 0, 0], "family": "q", "amount": 2, "charge": 7}],
-    }
-    assert TOOL.declared_charge(old_form, 0) == 7
-    parsed = parse_ray_world(bar([3, 1, 1], old_form["measured"], families=old_form["families"]))
-    assert parsed.measured[0].charge == TOOL.declared_charge(old_form, 0)
-    pairs = {
-        "families": [
-            {"name": "q", "quantum": 0, "charge": [1, 2]},
-            {"name": "p", "quantum": 0, "charge": [2, 1]},
-            {"name": "h", "quantum": 0, "charge": [1, 2]},
-            {"name": "n", "quantum": 0, "charge": -3},
-            {"name": "z", "quantum": 0},
-        ],
-        "measured": [
-            {"position": [0, 0, 0], "family": "q", "amount": 1 << 24},
-            {"position": [1, 0, 0], "family": "p", "amount": 1},
-            {"position": [2, 0, 0], "family": "h", "amount": 4},
-            {"position": [3, 0, 0], "family": "n", "amount": 5},
-            {"position": [4, 0, 0], "family": "z", "amount": 9},
-        ],
-    }
-    assert [TOOL.declared_charge(pairs, i) for i in range(5)] == [1 << 23, 2, 2, -15, 0]
+    families = [
+        {"name": "q", "quantum": 0, "charge": [1, 2], "phase": False},
+        {"name": "p", "quantum": 0, "charge": [2, 1], "phase": False},
+        {"name": "h", "quantum": 0, "charge": [1, 2], "phase": False},
+        {"name": "n", "quantum": 0, "charge": -3, "phase": False},
+        {"name": "z", "quantum": 0, "phase": False},
+        {"name": "t", "quantum": 0, "charge": [1, 3], "phase": False},
+    ]
+    measured = [
+        {"position": [0, 0, 0], "family": "q", "amount": 1 << 24, "fixed": True},
+        {"position": [1, 0, 0], "family": "p", "amount": 1, "fixed": True},
+        {"position": [2, 0, 0], "family": "h", "amount": 4, "fixed": True},
+        {"position": [3, 0, 0], "family": "n", "amount": 5, "fixed": True},
+        {"position": [4, 0, 0], "family": "z", "amount": 9, "fixed": True},
+        {"position": [5, 0, 0], "family": "t", "amount": 2, "fixed": True},
+    ]
+    world = parse_ray_world(bar([6, 1, 1], measured, families=families))
+    charges = TOOL.declared_charges(world)
+    assert charges == [1 << 23, 2, 2, -15, 0, Fraction(2, 3)]
+    assert [type(charge) for charge in charges[:5]] == [int] * 5
+    assert charges == [
+        entry.charge[0] if entry.charge[1] == 1 else Fraction(*entry.charge)
+        for entry in RaySimulation(world).measured.values()
+    ]

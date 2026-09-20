@@ -36,14 +36,15 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from event_universe.core.integer import by_clock
 from event_universe.events import parse_ray_world
-from event_universe.events.engine import by_clock
 from event_universe.json_documents import parse_json_document
 
 # Every rule of the engine this tool needs is read off the engine's own
 # functions (the architecture review of 2026-09-20, Highlights 5.4: a tool
 # is a reader of the record, never a second owner of a rule): the lamp's
-# turn off the clock `engine.by_clock`, the world's keys through
+# turn off the clock `core.integer.by_clock` (the primitive the engine's
+# frame calls), the world's keys through
 # `parse_ray_world`; the records are the run's (`run.json`, the
 # `DetectorSet` record per screen pixel).
 MODEL_PREFIX = "rays-heisenberg-"
