@@ -3348,6 +3348,26 @@ branches). Not built: unification (3) (refused: three columns under three
 keys), Grover (six rotations beyond the register's ceiling), two
 sequential gates on an entangled record, the full register replay.
 
+**L, after (vii) (2026-09-20).** The one click landed at (vii-4)
+([MIGRATION](MIGRATION.md)): the record form is the only form, the key
+`amplitude` is deleted and every world with a lamp is a recorded world.
+Before it, u became the record's own field ((vii-2), the path phase
+phase - u read by every rule of the GameBoard) and a row's push its share
+amount^2 / m of the label with the rest on the books' `remainder` line
+((vii-3)). The K record worlds under u (record 114 of the log): the click
+centroid in y against the rows' over 400 intervals, control 25.871 /
+26.000, mass 24.301 / 24.458, heavy 21.854 / 21.852, near 19.101 / 19.400
+(the shifts against the control -1.570 / -4.017 / -6.770 for the clicks
+and -1.542 / -4.148 / -6.600 for the rows), no record row reaching the
+mass; unchanged by the share and by the one click. Every integer of L1 to
+L6 unchanged (S = 176/64, 2896/1024, 11584/4096; the worlds regenerated
+without the key). The gate set against main after the one click: the
+eight worlds without a lamp byte-identical, the seven with a lamp changed
+by the record form (the dated lines above). The host cost of a high-rate
+lamp under the record form (`w27_beam`, seconds per interval) is an open
+item, with the design's items not built: unification (3), Grover, two
+sequential gates on an entangled record, the full register replay.
+
 ### A3. Bell test in phase form, delayed geometry
 
 - **Confronts.** The same CHSH data as A2 and the quantum value at the
