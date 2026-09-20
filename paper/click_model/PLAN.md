@@ -32,16 +32,20 @@ repository's tables and not runs of the engine.
 2. **The claim** ("the amplitude runs, because they unify everything"): on
    a local integer GameBoard whose only one-way step is a click that reads
    the accumulated sum of one record's rows and chooses by the birth phase
-   u on nearest-integer rungs, the world's list of clicks reads Born,
-   single-quantum interference, Bell pairs with marginals exactly 1/2 at
-   every setting and every N (no-signalling proved), GHZ's exact zeros,
-   and a CHSH value S(N) that is an exact rational of N, two-sided within
-   8/N + 0.044 of 2 sqrt 2 and above Tsirelson's bound for about half the
-   N; the photon-pair value 2.82759 +- 0.00051 (Poh et al. 2015) excludes
-   N = 64 and 256 and admits the powers of two from 512. The click is
-   non-local, the apparatus's, forced by Bell's theorem; the lattice is a
-   bijection between clicks. Not claimed: a continuum limit, spin,
-   statistics, Lorentz, the exact norm on the lattice.
+   u on nearest-integer rungs (the Born rule as the one measurement rule,
+   put in, not derived), the world's list of clicks reads single-quantum
+   interference, Bell pairs with marginals exactly 1/2 at every setting
+   and every N (no-signalling proved for the equal-weight pair), GHZ's
+   exact zeros, and a CHSH value S(N) that is an exact rational of N,
+   two-sided within 8/N + 0.044 of 2 sqrt 2 and above Tsirelson's bound
+   for about half the N; the photon-pair value 2.82759 +- 0.00051 (Poh et
+   al. 2015) constrains N under stated assumptions (64 and 256 out, the
+   powers of two from 512 in) and validates nothing. The click is
+   non-local (the second click reads the first's setting and outcome, then
+   deletes), the apparatus's, forced by Bell's theorem; the lattice is
+   injective between clicks given the apparatus's record. Not claimed: a
+   derivation of the square, a continuum limit, spin, statistics, Lorentz,
+   exact unitarity on the lattice.
 3. **The structure**: Part I the result (the one claim, its definition,
    theorems, measurements, comparison); Part II every other statement of
    the program as a hypothesis with its status (registered run, design
@@ -141,3 +145,37 @@ check scripts and manuscript drafts were produced with AI coding agents
 under the author's direction and review, every number verified against the
 archived runs, no AI system an author; the tool's name is inserted by the
 owner at submission.
+
+## Referee round 0: the owner's reading of the compiled draft (2026-09-20)
+
+Seven pages read cold. Each point, with what the draft now does:
+
+1. Born is inside the click's definition, not derived; u uniform is an
+   assumption. Accepted: the title no longer says "without a configured
+   law"; a paragraph after Definition 3 names the three inputs (the
+   square, u uniform from a lamp at N consecutive intervals and
+   independent of the settings, the tables) and what is derived from them.
+2. The non-locality is more than deletion: B's rung is computed from
+   W(o_A, o_B) with A's setting and outcome. Accepted: stated in
+   Definition 3, in the plain description ("the second click reads what
+   the first wrote") and after Theorem 3.
+3. The tables' norm: not +-315; 65897 at N = 4096, p = 503. Confirmed by
+   computation: the range is -351 to +361 for every power of two through
+   65536; the draft says so. The rotation is not an isometry: confirmed
+   (65705/65536 at N = 64, s = 1); Theorem 2 and Theorem 1's proof say
+   "injective, an isometry only up to the tables' rounding".
+4. Reversibility: the split resets the age. Accepted: Theorem 1 is
+   restated as injective given the apparatus's record of absorbed rows,
+   and says the split forgets the age without it. No-signalling's scope
+   (equal weights, two labels, the rung tie) is stated; unequal weights
+   are open. One click per record and the click's timing: a lemma.
+5. The results are placeholders. Yes, by design: filled from the register
+   after the runs (step 2).
+6. The departures from quantum mechanics: N is not fixed by the model, so
+   the comparison with Poh et al. constrains N under stated assumptions
+   and validates nothing; the draft says so, with noise and inefficiency
+   named as not modelled.
+
+Not done, and not attempted: an independent derivation of the square.
+The paper claims the model, its theorems and its computed departures,
+which is the claim the reader said can be supported.
