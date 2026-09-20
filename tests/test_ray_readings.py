@@ -264,7 +264,7 @@ def test_the_presence_counts_rest_and_moving_rays_of_other_numbers_and_never_the
         assert entry.age == 1 and entry.held == [1]
 
 
-def test_a_detectors_threshold_reads_the_set_and_its_window_each_rays_own_phase():
+def test_a_detectors_threshold_reads_the_set_and_its_window_the_sets_phase_by_default():
     """(d)."""
     sources = [fixed([0, 1, 1], "light", 4), fixed([8, 1, 1], "light", 4)]
     detector = [{"name": "d", "positions": [NODE], "threshold": 3}]
@@ -305,12 +305,28 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_each_rays_own_phase(
 
     gate = fixed(NODE, "m", 4, table={"light": {"rule": "measure", "phase_window": 32}})
     late = ray(NODE, "light", 3, MINUS_X, 1, phase=32)
+    # Under the default reading `wave` (since 2026-09-20) the window reads
+    # the set's phase, the pointer of the arrivals: 2 units at phase 0 and
+    # 1 at phase 32 point to phase 0, outside the window 32, so all pass.
     records.clear()
     simulation = RaySimulation(
         parse_ray_world(world(FAMILIES, [gate, *sources], [two, late])), records.append
     )
     entry = simulation.measured[1]
     assert entry.threshold == 1 and entry.windows == [None, 32]
+    simulation.step()
+    assert simulation.books()["balanced"]
+    assert entry.events == [0, 0] and entry.held == [4, 0]
+    kinds = [(r["event"], r["number"], r.get("phase"), r.get("window")) for r in records]
+    assert kinds == [("pass", 2, 0, 32), ("pass", 3, 32, 32)]
+    # Declared `beam`, the window reads each ray's own phase: the ray at
+    # phase 32 clicks, the two at phase 0 pass.
+    records.clear()
+    beam = [{"name": "gate", "positions": [NODE], "reading": "beam"}]
+    simulation = RaySimulation(
+        parse_ray_world(world(FAMILIES, [gate, *sources], [two, late], 0, beam)), records.append
+    )
+    entry = simulation.measured[1]
     simulation.step()
     assert simulation.books()["balanced"]
     assert entry.events == [0, 1] and entry.held == [4, 1]

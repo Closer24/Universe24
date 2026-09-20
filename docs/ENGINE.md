@@ -252,7 +252,7 @@ directions, phase_window}` on a measured event of a paid family);
 `in_transit` (`position`, `family`, `number`,
 `direction` (a vector of D, or a rest index 0 or 1), `amount`, `phase`,
 optional `age`); `detectors` (`name`, `positions`, `threshold` 1 by
-default, `reading` `beam` by default or `wave`). Refused, naming the key and the law: `"law": "events"` (pointing
+default, `reading` `wave` by default (since 2026-09-20) or `beam`). Refused, naming the key and the law: `"law": "events"` (pointing
 to MIGRATION), `dynamics`, `max_active_owners`, `port_map`, `output`,
 `capacity`, `groups`, `reference_phase`, `headings` on a lamp, `heading` on
 a ray, the earlier engines' keys (`contents`, `initial_shadows`,

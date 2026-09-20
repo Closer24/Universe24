@@ -95,11 +95,17 @@ its component by key.
   owes `by_clock(0, 80, 4)` = 20 after its first self-creation; with 8 of
   its own number among the arrivals still 20.
 - (d) a detector's threshold reads the set of every number but its own and
-  the window each ray's own phase: a receiver at threshold 3 met by 2 rays
-  of number 2 and 1 of number 3 clicks all three, the 2 alone pass with a
-  `pass` record each (`threshold` 3); at threshold 1 with the window 32,
-  the two rays at phase 0 pass (`window` 32) and the ray at phase 32
-  clicks.
+  the window the set's phase by default (re-pinned on 2026-09-20, `wave`
+  the default reading): a receiver at threshold 3 met by 2 rays of number
+  2 and 1 of number 3 clicks all three, the 2 alone pass with a `pass`
+  record each (`threshold` 3); at threshold 1 with the window 32, the 2
+  units at phase 0 and the 1 at phase 32 point to phase 0, outside the
+  window, and all three pass (`pass` 2 at phase 0 and `pass` 3 at phase
+  32, both `window` 32; nothing held, no `record` line) [under the
+  default `beam` of 2026-09-19 the two at phase 0 passed and the one at
+  32 clicked]; the same gate declared as a `beam` detector reads each
+  ray's own phase: the two at phase 0 pass and the ray at phase 32 clicks
+  (`pass`, `click`, `record` at phase 32).
 - (e) the dense readings of the board are decomposed on request from the
   rows of the walk, for the active Nodes only (added 2026-09-19 with the
   optimizations of RAY_LAW section 10, note 22): on the open 9 x 3 x 3
@@ -211,7 +217,10 @@ shift by +1 and the inverse by -1, generated from the rule.
   and after the second collision the rest pair leaves on z, the x pair
   parks and the y pair turns onto x: the one cycle of the class, the tie by
   Port order.
-- (d) no collision at a Node that holds a measured event (the model owner's
+- (d) no collision at a Node that holds a measured event (the windowed
+  taker declared as a `beam` detector since 2026-09-20, the window then
+  reading each ray's own phase; under the default `wave` the pair's
+  pointer is zero, has no phase, and both rays pass) (the model owner's
   decision of 2026-09-19 on the physics-rule reviewer's F1(c); RAY_LAW
   section 3 step 3 and note 18): the head-on pair of (c) (one number,
   amount 1, phases 0 and 32) meeting at the Node of a measured event of `m`
@@ -276,7 +285,8 @@ on -z). An empty world counts zero both ways.
 `tests/test_ray_detector.py` (docs/RAY_LAW.md, section 5). K 2^20,
 `suspension` 0, `release` [0, 1], the families `m` (free) and `light`
 (paid), every measured event `fixed`; the detector `d` of (a) to (e)
-declares the reading `wave` (since 2026-09-19 the default is `beam`).
+declares the reading `wave` (the default since 2026-09-20; from
+2026-09-19 to 2026-09-20 the default was `beam`).
 
 - (a) two rays of amount 1 arriving in one interval at a counter of
   threshold 1, in phase (0 and 0): the record 4 x 32^2 x 256^2 = 268435456,
@@ -361,7 +371,7 @@ declares the reading `wave` (since 2026-09-19 the default is `beam`).
   Nodes of (f) with the rays at 0 and 16 puts all three counters at phase
   8; a ray below the threshold leaves the counter at phase 0, and a
   `read` of `m` (a ray of phase 40) leaves the reader at phase 0.
-- (h) the reading `beam` (the default): at a one-Node beam detector, two
+- (h) the reading `beam` (declared; the default until 2026-09-20): at a one-Node beam detector, two
   rays of amount 1 in phase (0 and 0, +X and -X) both click, the record
   (the count) 2, the `record` line without a pointer and with `phase` 0;
   opposite (0 and 32) both pass with `cancelled` true, no click, the two

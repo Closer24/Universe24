@@ -6,6 +6,23 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## `wave` is the default reading of a detector, on 2026-09-20
+
+The model owner's decision of 2026-09-20 ("on the board a ray, in the world
+a wave"; [RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
+and note 28): `world.DETECTOR_READINGS` is `("wave", "beam")`, so a
+detector without a `reading` key, and every measured event outside a
+declared detector, reads `wave` (the coherent pointer over the set, its
+square the record, the window reading the set's phase); a world that wants
+the pairing rule declares `"reading": "beam"`. A world whose detector
+declared no reading and was met by rays of different phases in one
+interval (a windowed counter, a wall) reads differently: `tests/
+test_ray_readings.py` (d) is re-pinned, `tests/test_ray_collision.py` (d)
+declares `beam`. The Bell worlds are unchanged (one ray per interval per
+counter: S = 2, 326 criteria), the two-slit screens and the Heisenberg
+worlds declare their reading, series C and D have no detector; the
+two-slit wall records the square of what it absorbs.
+
 ## Charge per unit of content, on 2026-09-20 (the family's `charge` a pair; no `charge` on a measured event; the record's two columns gone)
 
 The model owner's decision of 2026-09-20 (Highlights 5.4: charge is per

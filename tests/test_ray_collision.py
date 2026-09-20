@@ -30,7 +30,10 @@ docs/TEST_EXPECTATIONS.md ("The collision table"), written down first:
     `light` keeps its directions +x and -x (no rest ray), dwells the two
     intervals of its line at that Node and parts at the third interval
     (x = 5 and x = 3 on a 9 x 1 x 1 bar); the same pair at a measured
-    event whose table measures `light` in the window 32: the ray at phase
+    event whose table measures `light` in the window 32, the event
+    declared as a `beam` detector so that the window reads each ray's own
+    phase (since 2026-09-20 the default reading is `wave`, under which the
+    pair's pointer is zero, has no phase, and both rays pass): the ray at phase
     32 clicks with its label (-64, 0, 0) (the event's momentum; since
     2026-09-19 the label of a unit along a heading is Q e_d, Q = 64,
     RAY_LAW section 2 and note 23), the ray at phase 0 passes and goes on
@@ -234,6 +237,12 @@ def test_no_collision_at_a_node_that_holds_a_measured_event():
         world = bar([9, 1, 1], {"y": "periodic", "z": "periodic"}, pair)
         world["families"] = families
         world["measured"] = [lamp, taker]
+        # The window reads each ray's own phase under `beam` (declared;
+        # the default `wave` reads the set's pointer, zero for this pair).
+        world["detectors"] = [{"name": "taker", "positions": [[4, 0, 0]], "reading": "beam"}]
+        # The window reads each ray's own phase under `beam` (declared;
+        # the default `wave` reads the set's pointer, zero for this pair).
+        world["detectors"] = [{"name": "taker", "positions": [[4, 0, 0]], "reading": "beam"}]
         simulation = RaySimulation(parse_ray_world(world))
         light = simulation.stores[1]
         assert simulation.books()["momentum"]["transit"] == [0, 0, 0]

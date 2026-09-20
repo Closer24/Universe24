@@ -5,6 +5,20 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### `wave` is the default reading of a detector (2026-09-20)
+
+- The model owner's decision ("on the board a ray, in the world a
+  wave"): `world.DETECTOR_READINGS` = ("wave", "beam"); a detector
+  without a `reading` and every measured event outside a declared
+  detector read `wave`, `beam` is declared ([RAY_LAW section 5](docs/RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
+  and note 28; [migration](docs/MIGRATION.md#wave-is-the-default-reading-of-a-detector-on-2026-09-20)).
+  Re-pinned: `test_ray_readings` (d) (the window reads the set's phase:
+  2 units at phase 0 and 1 at 32 all pass the window 32; the `beam`
+  variant kept beside it), `test_ray_collision` (d) declares `beam` on
+  its windowed taker. Unchanged: the Bell worlds (S = 2, 326 criteria
+  through `tools/bell_chsh.py`), the two-slit and Heisenberg worlds
+  (declared), series C and D.
+
 ### Charge per unit of content; the push one product; the record's two columns gone (2026-09-20)
 
 - The model owner's decision (Highlights 5.4): the family key `charge` is

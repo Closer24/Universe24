@@ -446,8 +446,9 @@ Node with the default reading) reads the arrivals of every number but
 each Node's own at all its Nodes as one set: the **threshold** on the
 amount summed over the whole set (a smaller set passes at every Node of
 it with a `pass` record naming `threshold`), then the **reading** the
-detector declares (`reading`: `beam` by default, or `wave`; section 10,
-note 23):
+detector declares (`reading`: `wave` by default since 2026-09-20, the
+model owner's decision, "on the board a ray, in the world a wave"; or
+`beam`, declared; section 10, notes 24 and 28):
 
 - `wave`: with the rays the set clicks this interval (after the threshold
   and the window; `measure` only), `A_u = 32 x amount_u` (note 3) and the
@@ -474,8 +475,11 @@ note 23):
   summed amplitudes, kept as an option a world declares. Two rays of
   equal amount in phase record 4 A^2 x 256^2, in antiphase 0, each alone
   A^2 x 256^2: the wave is this reading and nothing else (the plain count
-  never fringes; rays, section 3).
-- `beam` (the default; the model owner's "only events"): a rule on whole
+  never fringes; rays, section 3). It is the default: a detector that
+  declares no `reading`, and a measured event outside every declared
+  detector, reads `wave`.
+- `beam` (declared; the model owner's "only events"; the default from
+  2026-09-19 to 2026-09-20): a rule on whole
   rays with no amplitude and no square. Over the set, in one interval,
   the rays that would click (after the threshold and the window, which
   here reads each ray's own phase) are paired by opposite phase, greedily
@@ -1167,3 +1171,23 @@ implementation's part of the contract. The design above is unchanged.
     arise: (k)). The electric push is proportional to the reader's
     content as the gravity is, the equivalence principle for the electric
     push, pinned in (l).
+28. **`wave` is the default reading** (the model owner's decision of
+    2026-09-20, Highlights 5.4, "on the board a ray, in the world a
+    wave"; `world.DETECTOR_READINGS` = ("wave", "beam")). A detector that
+    declares no `reading`, and a measured event outside every declared
+    detector (a detector of one Node), reads `wave`: the coherent pointer
+    over the set, its square the record, its nearest step the phase the
+    window reads and the phase returned; `beam` is a declared option
+    (note 24 (v) and (vi) describe it as the default of 2026-09-19).
+    What moves: a windowed detector met by rays of different phases in
+    one interval reads the pointer's phase, not each ray's own
+    (`tests/test_ray_readings.py` (d): 2 units at phase 0 and 1 at phase
+    32 point to 0, outside the window 32, and all pass, where `beam`
+    clicked the one at 32; `tests/test_ray_collision.py` (d) declares
+    `beam` on its windowed taker to keep the case of note 18, a zero
+    pointer having no phase); the wall of the two-slit worlds records the
+    square of what it absorbs (its record is read by nothing). Unchanged:
+    the Bell worlds (one ray per interval per counter: the pointer of one
+    ray at phase p reads p, every click and pass identical, S = 2 exactly,
+    `tools/bell_chsh.py` 326 criteria passed), the two-slit screens and
+    the Heisenberg worlds (declared), series C and D (no detector).

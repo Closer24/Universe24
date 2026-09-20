@@ -93,7 +93,8 @@ the model owner, 2026-09-19):
   its `threshold` (1 by default): the smallest amount of a family arriving
   at the detector's Nodes in one interval, summed over the whole set and
   over every number but each Node's own; a smaller set passes; and its
-  `reading`, `"beam"` (the default) or `"wave"` (the model owner,
+  `reading`, `"wave"` (the default since 2026-09-20; the model owner: "on
+  the board a ray, in the world a wave") or `"beam"` (the model owner,
   2026-09-19): a detector is a set of Nodes with ONE record (a click says
   "here, in one of these" and not which; the declared width is the
   position's uncertainty). Under `wave` the record is the square of the
@@ -227,8 +228,10 @@ LAMP_KEYS = {"rate", "directions", "phase_window"}
 TABLE_ENTRY_KEYS = {"rule", "phase_window", "reads"}
 TRANSIT_KEYS = {"position", "family", "number", "direction", "amount", "phase", "age"}
 DETECTOR_KEYS = {"name", "positions", "threshold", "reading"}
-# The readings a detector may declare; the first is the default.
-DETECTOR_READINGS = ("beam", "wave")
+# The readings a detector may declare; the first is the default: `wave`
+# since 2026-09-20 (the model owner: "on the board a ray, in the world a
+# wave"; `beam` was the default from 2026-09-19 to 2026-09-20).
+DETECTOR_READINGS = ("wave", "beam")
 # The keys of the deleted `reversible-detector-v1`, refused by name.
 REVERSIBLE_KEYS = ("port_map", "output", "capacity", "groups", "reference_phase")
 # The face detectors, one per open face of the board, named by the face in
