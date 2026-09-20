@@ -2279,7 +2279,22 @@ def nature_beam(
     if events:
         count = len(families)
         ev_number = np.array([e.number for e in entries], dtype=np.int64)
-        ev_rule = np.array([[RULE_CODES[r] for r in e.table] for e in entries], dtype=np.int64)
+        # Rule (a) of the suspension (the model owner, 2026-09-20, record
+        # 128; BEAM_LAW step 5 and note 17 as amended): a measured event
+        # whose clock owes this interval neither releases nor READS. A
+        # message enters a body only at its self-creation; to wait is not to
+        # communicate in either direction. So a waiting body's table reads
+        # `pass` for every family this interval: the rows that arrive at its
+        # Node are not consumed (no push, no click, no re-emission, no
+        # transformation by a click) and go on as at a Node without a
+        # measured event, the books exact and the walk a bijection; its
+        # clock still counts the presence at its Node (the count is a
+        # reading of what is there, not a consumption). Under `suspension`
+        # 0 nothing waits and every world is byte-identical.
+        ev_rule = np.array(
+            [[RULE_CODES[r] if e.creating else PASS_RULE for r in e.table] for e in entries],
+            dtype=np.int64,
+        )
         ev_window = np.array(
             [[-1 if w is None else w for w in e.windows] for e in entries], dtype=np.int64
         )

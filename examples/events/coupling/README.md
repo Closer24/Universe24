@@ -215,3 +215,12 @@ ticks 22 to 32 in place of 21 to 31) and hand their x component over from
 tick 33 (168 `contact` records in place of 169 from tick 32); the reads
 are the same; the eighteen other worlds have no free body and read the same (the
 record's new fields aside). The register entry has the momenta ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under rule (a) (2026-09-20)
+
+Under rule (a) of the suspension (record 128: a waiting body neither
+releases nor reads) item 6 alone changes, in what is not registered: the
+probes' clocks count as registered (age 8 to 69 at r = 4 to 40 after 200
+intervals), and each probe reads the beam's presence once (`read` total
+131 072) instead of at every waiting interval; the other worlds declare no
+suspension ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).

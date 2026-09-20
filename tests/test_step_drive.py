@@ -396,13 +396,29 @@ def test_the_bound_pair_under_a_suspension_holds():
         parse_nature_beam_world(deuteron_under_a_suspension()), records.append
     )
     proton, neutron = simulation.measured[1], simulation.measured[2]
+    sums: list[int] = []
     for tick in range(1, 3001):
         simulation.step()
         if tick % 250 == 0:
             assert simulation.books()["balanced"], tick
         assert proton.position == (10, 10, 10) and neutron.position == (11, 10, 10), tick
+        sums.append(proton.momentum[0] + neutron.momentum[0])
     assert simulation.books()["balanced"]
     # No Link made: every attempted step a hand-over (`steps` counts the
     # rule's fires, the `step` records the Links).
     assert not [r for r in records if r["event"] == "step"]
     assert len([r for r in records if r["event"] == "contact"]) == proton.steps + neutron.steps > 0
+    # Rule (a) of the suspension (record 128): a waiting nucleon neither
+    # releases nor reads. The proton waits twice (tick 1044 and one more)
+    # and the neutron once (tick 1045); the sum of the x momenta, 0 while
+    # both read (the pushes exact mirrors, a hand-over zeroing both),
+    # changes by one push at a wait (the waiter's read missing) and by one
+    # push again when the partner waited at the interval the waiter's
+    # missing release would have arrived: -P from tick 1044, 0 at 1045, -P
+    # from 1046 on, -2 P within a hand-over's interval, -P at the end. The
+    # third-law gap of record 126 is narrowed to that coincidence, not
+    # closed, by rule (a) as read on this pair.
+    push = 310_967_280_640
+    assert (proton.waited, neutron.waited) == (2, 1)
+    assert sums[:1043] == [0] * 1043 and sums[1043] == -push and sums[1044] == 0
+    assert set(sums[1045:]) <= {-push, -2 * push} and sums[-1] == -push

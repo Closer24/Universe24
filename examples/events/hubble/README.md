@@ -461,3 +461,14 @@ forms in 8 of the 12 windows (10 of 12), `pushing_age` reading q = 0 the
 nearest in its first two; 309 readings inside and 27 outside (310 and
 26). The verdict stands as read. The register entry has every number
 ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under rule (a) (2026-09-20)
+
+The detector at the centre has a clock under the world's `suspension`, and
+under rule (a) (record 128: a waiting body neither releases nor reads) it
+does not click the light arriving while it waits: `coasting_scalar` loses
+a fifth of its clicks (`mx1` 368 -> 297), `pushing_scalar` four fifths
+(5648 -> 1152), the age-clock worlds a few; the near fit's H t_0 in the
+late window 1.033, 1.018, 1.513, 1.049 (1.017, 1.017, 1.305, 1.057); 281
+readings inside and 29 outside of 310 (309, 27 of 336). The verdict stands;
+a detector under a suspension sees at its clock's rate ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).

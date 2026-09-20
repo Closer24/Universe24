@@ -259,3 +259,14 @@ drive were the reversal defect's, the case that found it), and
 `j3_deuteron_crowd` never fires with 0 steps; 9 readings inside and 1
 outside (the trigger tick, as registered). The register entry has the
 numbers ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under rule (a) (2026-09-20)
+
+Under rule (a) (record 128: a waiting body neither releases nor reads) the
+J1 worlds and the free neutron read the same; the deuteron pair drifts as
+one (7 steps each, from x = 10, 11 to x = 3, 4, still at one Link: the
+rule's third-law remainder, one push net when a nucleon waits at the
+interval the other's missing release would have arrived), its neutron
+fires at 572 with the count 40 413 at the trigger, and `j3_deuteron_crowd`
+fires too (the count below the gate), its two readings outside. The
+register entry has the numbers ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).

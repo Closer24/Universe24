@@ -42,7 +42,11 @@ docs/TEST_EXPECTATIONS.md ("The age"), written down first:
     moment 5); a reader without the key counts the presence 2 and owes
     `by_clock(age, 2, 4)`: 1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 10, 11, 12,
     12, 13, 14, 14, 15, 16, 16, 17, 18, 18 (unchanged); the `read` records
-    of the age reader carry the reading 5 (the arrival's age moment);
+    of the age reader carry the reading 5 (the arrival's age moment), six
+    of them under rule (a) of the suspension (2026-09-20, record 128: a
+    waiting body reads nothing, so the reader reads at its six
+    self-creations from tick 6; nineteen until the rule), its ages and
+    counts unchanged since a `read` entry consumes nothing;
 (d) the parsing: `flight_bound` of an open 11^3 GameBoard over the six
     headings is 54 (D = 31 Links, ceil(31 x 110 / 64)) and 111 with the
     direction (1, 0, 64) declared (T 7095, one period, ceil(7095 / 64));
@@ -300,7 +304,12 @@ def test_the_clock_counts_the_age_moment_on_an_entry_that_reads_age():
     assert ages == expected
     assert readings[5] == (6, 1, 5) and readings[6] == (8, 2, 11)
     assert all((presence, counted) == (2, 11) for tick, presence, counted in readings if tick >= 7)
-    assert read == [5] * 19
+    # Under rule (a) of the suspension (2026-09-20, record 128) the reader
+    # reads only at its six self-creations from tick 6 (the ages 6 to 11),
+    # not at the eighteen intervals it waits: 6 `read` records (19 until
+    # the rule); its ages and counts are unchanged (a `read` entry consumes
+    # nothing, so the presence and the age moment at its Node are the same).
+    assert read == [5] * 6
     ages, readings, read = ages_of_the_reader(clock_world({"m": "read"}))
     assert ages == [1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 10, 11, 12, 12, 13, 14, 14, 15, 16, 16, 17, 18, 18]
     assert all(presence == counted for _, presence, counted in readings)

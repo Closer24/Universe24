@@ -70,7 +70,27 @@ where the momentum is constant and a repair of it where it changes.
   `neutron_star`, `sun_planet`, `s1_*`, `j3_neutron_free`). The changed
   registered entries (D, H, I, J) carry a dated line "Re-read under the
   signed drive (2026-09-20)", D and H with their verdicts re-read once
-  more in the same form; the old numbers kept as history. `engine.step_axis(drive, momentum, content, width)` reads
+  more in the same form; the old numbers kept as history.
+- Rule (a) of the suspension (record 128, the same day, the same pull
+  request): a measured event whose clock owes this interval neither
+  releases nor reads; its table reads `pass` for every family that
+  interval and the arrivals go on as at a Node without a measured event
+  (`nature_beam`, the rule matrix of step 4 read off `Measured.creating`).
+  Byte-identical for every world with `suspension` 0; the worlds with a
+  suspension change where a body waits while rows arrive: of the fifteen
+  example worlds that declare one, run with and without the rule, eight
+  change (the coupling `6`; the Hubble `coasting_scalar`, `coasting_age`,
+  `pushing_scalar`, `pushing_age`, whose detector waits and misses the
+  light; the weak `j3_deuteron`, `j3_deuteron_crowd`, whose pair drifts
+  as one; the catalog's `neutron_star`, no number registered) and seven
+  read the same (`redshift/age`, `redshift/scalar`, `clock_near_mass`,
+  `one_content`, `j1_lattice`, `j1_source`, `j3_neutron_free`); the
+  changed registered entries (C item 6, G, J) carry a dated line "Re-read
+  under rule (a) (2026-09-20)" and their READMEs a section, the old
+  numbers kept. The gate set at its caps: 14 of 15 identical,
+  `j3_deuteron` changed. A measuring body that waits counts the rows it did not consume
+  while they dwell at its Node (`tests/test_nature_beam_clock.py` (e)
+  re-registered). `engine.step_axis(drive, momentum, content, width)` reads
   it and returns the sign of the Link stepped (or None) and the drive
   after it, in place of `step_axis(age, momentum, content, width)`
   returning the sign: the rule reads the body's record, not its age. The

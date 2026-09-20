@@ -1326,8 +1326,14 @@ from `test_event_clock`, `test_release_costs_by_phase_rate` and
   interval from the second on, and with k = 1 owes `by_clock(age, 1, 4)`,
   1 at the self-creations from the ages 3, 7, 11, 15: its age after
   intervals 1 to 20 is 1, 2, 3, 4, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 12, 13,
-  14, 15, 16, 16; with k = 8 it owes 2 at every self-creation: 1, 2, 2, 2,
-  3, 3, 3, 4, 4, 4.
+  14, 15, 16, 16 (unchanged under rule (a) of the suspension, 2026-09-20,
+  record 128: the ray that arrived while the probe waited passes and
+  dwells one interval, the presence after a wait 2, the count 2 at an age
+  whose `by_clock(age, 2, 4)` is 0); with k = 8 it owed 2 at every
+  self-creation until rule (a), 1, 2, 2, 2, 3, 3, 3, 4, 4, 4 (waited 6,
+  owed 0), and under it counts 16 after a wait (the eight passed rays
+  dwelling beside the eight arriving) and owes 4: 1, 2, 2, 2, 3, 3, 3, 3,
+  3, 4, waited 6, owed 4 at the end.
 - (f) every age against a key is the one `by_clock` (the four
   unifications, the model owner, 2026-09-20, (2); BEAM_LAW note 33; the
   integers written first): the clock's rate `K` as a pair equal to its
@@ -1492,7 +1498,15 @@ expected integers, written down before the first run:
   the |p| accumulated toward the proton discharged away from it). The
   hold is the rule's consequence given the pair's symmetry (mirror
   pushes, a hand-over zeroing both, the neutron's signed drive never
-  above 0), not a theorem for every pair.
+  above 0), not a theorem for every pair. Under rule (a) of the
+  suspension (record 128; the same run): the proton waits twice (the
+  first at tick 1044) and the neutron once (tick 1045); the sum of the x
+  momenta, 0 while both read, is -P = -310 967 280 640 at tick 1044 (the
+  proton's read missing), 0 at 1045 (the neutron's read missing), -P from
+  1046 (the neutron's missing release arriving at the proton) and -P or
+  -2 P after every tick to the end, -P at 3000: the third-law gap
+  narrowed to the coincidence of a wait with the partner's missing
+  release, not closed.
 
 ## The age
 
@@ -1536,8 +1550,12 @@ of the presence; the GameBoard's step is unchanged by the whole age.
   the age 5): its age after the intervals 1 to 24 is 1, 2, 3, 4, 5, 6, 6,
   7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 11, 11, its
   self-creations at the ticks 1 to 6, 8, 12, 16, 19, 23 with (presence,
-  counted) = (1, 5) at tick 6 and (2, 11) from tick 8; its 19 `read`
-  records carry the reading 5 (the arrival's age moment); the same reader
+  counted) = (1, 5) at tick 6 and (2, 11) from tick 8; its `read`
+  records carry the reading 5 (the arrival's age moment), six of them
+  under rule (a) of the suspension (2026-09-20, record 128: the reader
+  reads at its six self-creations from tick 6 and not at the eighteen
+  intervals it waits; nineteen until the rule; its ages and counts
+  unchanged, a `read` entry consuming nothing); the same reader
   without the key counts the presence and owes `by_clock(age, 2, 4)`: 1,
   2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 10, 11, 12, 12, 13, 14, 14, 15, 16, 16,
   17, 18, 18 (unchanged by the change), counted equal to the presence at

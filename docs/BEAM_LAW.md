@@ -416,7 +416,12 @@ order with each step's inverse:
    is byte-identical.
 4. **The measured events' tables and the detectors.** A measured event meets
    the rays that arrived this interval at its Node, per family and number
-   other than its own, as today: the threshold on the arrivals (section 5),
+   other than its own, as today (since 2026-09-20, rule (a) of the
+   suspension, the model owner's record 128: only in an interval in which
+   its clock owes nothing; a measured event that waits neither releases
+   nor reads, its table reading `pass` for every family that interval, the
+   arrivals going on as at a Node without a measured event, note 17): the
+   threshold on the arrivals (section 5),
    then the `phase_window` on each ray's own phase (no coherent sum: the
    window reads the record; a bundle is now the rays of one number arriving
    in one interval; since 2026-09-20 the window has a width, `phase_width`,
@@ -1114,6 +1119,39 @@ implementation's part of the contract. The design above is unchanged.
     momentum begins its drive at 0 instead of stepping off its age). "No
     remainder is kept" above stands for the clock, the release, the lamp
     and the owed count, which read a rate against an age no push changes.
+    **Rule (a) of the suspension (2026-09-20, the model owner's decision
+    on the third-law gap of record 126, record 128: "a measured event
+    whose clock owes an interval in that interval neither releases nor
+    reads: a message enters a body only at its self-creation; to wait is
+    not to communicate in either direction").** Until this rule a waiting
+    body released nothing and read everything: it took the push of every
+    row arriving at its Node while its partner, receiving none of its rows,
+    took none, so a bound pair gained one push net per wait. Under the
+    rule the table of a body that owes this interval reads `pass` for every
+    family (`nature_beam`, the rule matrix of step 4 read off the frame's
+    `creating`): no push, no click, no re-emission and no transformation
+    by a click; the rows that arrive at its Node are not consumed and go on
+    as at a Node without a measured event, so the books stay exact and the
+    walk a bijection; a deferral of the click to the next self-creation
+    would need a register at the Node and is not this law. Its clock still
+    counts the presence at its Node, a reading of what is there and not a
+    consumption: a body that measures (`measure`) and waits therefore
+    counts, at the self-creation after its wait, the rows it did not
+    consume while they dwell at its Node beside the new arrivals
+    (`tests/test_nature_beam_clock.py` (e): the probe of k = 8 counts 16
+    after a wait and owes 4 where it owed 2), the consequence of not
+    consuming them, registered as read. Under `suspension` 0 nothing waits
+    and every world is byte-identical; the worlds with a suspension (the
+    clock worlds of series E, G and J, the catalog's clock and neutron
+    star, the coupling's item 6) are re-read with dated lines. On the
+    third law: a wait now removes one read and one release, and the pair's
+    momentum sum is unchanged by an isolated wait (the waiter misses one
+    push, the partner misses the waiter's release one flight later) but
+    not when the partner waits at the interval the missing release would
+    have arrived (`tests/test_step_drive.py` (g): the register's deuteron
+    under a suspension, the proton waiting twice and the neutron once, the
+    sum -P at the end); the gap is narrowed to that coincidence, not
+    closed, and is recorded for the owner.
 18. **The one label; no collision at a measured event's Node** (the
     physics-rule reviewer's F1, blocking, and the model owner's decision on
     its case (c), the night of 2026-09-19; `tests/test_nature_beam_push.py` (h),

@@ -52,8 +52,14 @@ momentum; no merge. Re-pinned from `test_event_clock`,
     interval from the second on (a ray steps at its first interval), and
     with k = 1 owes `by_clock(age, 1, 4)`, 1 at the self-creations from the
     ages 3, 7, 11, 15: its age after intervals 1 to 20 is 1, 2, 3, 4, 4, 5,
-    6, 7, 8, 8, 9, 10, 11, 12, 12, 13, 14, 15, 16, 16; with k = 8 it owes 2
-    at every self-creation: 1, 2, 2, 2, 3, 3, 3, 4, 4, 4;
+    6, 7, 8, 8, 9, 10, 11, 12, 12, 13, 14, 15, 16, 16 (unchanged under
+    rule (a) of the suspension, 2026-09-20, record 128: the ray that
+    arrived while the probe waited passes and dwells one interval, so the
+    presence after a wait is 2 and the count 2 at an age whose `by_clock(
+    age, 2, 4)` is 0); with k = 8 it owed 2 at every self-creation until
+    rule (a), 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, and under it counts 16 after
+    a wait (the eight passed rows dwelling beside the eight arriving) and
+    owes 4: 1, 2, 2, 2, 3, 3, 3, 3, 3, 4, waited 6, owed 4 at the end;
 (f) every age against a key is the one `by_clock` (the four unifications,
     the model owner, 2026-09-20, (2); BEAM_LAW note 33; the integers written
     first): the clock's rate `K` as a pair equal to its integer: the world
@@ -306,14 +312,22 @@ def ages_of_a_probe(presence: int, ticks: int) -> tuple[list[int], int, int]:
     )
     entry = simulation.measured[2]
     ages = []
+    presences: list[int] = []
     for tick in range(1, ticks + 1):
         simulation.step()
         assert simulation.books()["balanced"], tick
         assert entry.age + entry.waited == tick
         assert simulation.measured[1].age == tick
         if tick > 1 and entry.creating:
-            assert entry.presence == presence, tick
+            # Rule (a) of the suspension (2026-09-20, record 128): the rows
+            # that arrived while the probe waited were not consumed and
+            # dwell at its Node, so the presence read at the self-creation
+            # after a wait is the crowd's plus the dwelling rows (2 k at
+            # most on this bar, a row dwelling one interval before it walks
+            # off the open face).
+            assert entry.presence in (presence, 2 * presence), tick
         ages.append(entry.age)
+        presences.append(entry.presence)
     return ages, entry.waited, entry.owed
 
 
@@ -326,9 +340,14 @@ def test_the_count_a_measured_event_owes_is_read_off_its_clock():
     ages, waited, owed = ages_of_a_probe(1, 20)
     assert ages == [1, 2, 3, 4, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 12, 13, 14, 15, 16, 16]
     assert waited == 4 and owed == 0
+    # Under rule (a) (record 128) the probe of k = 8 counts the sixteen rows
+    # at its Node after a wait (the eight that arrived while it waited
+    # dwell beside the eight arriving) and owes 4 at its next
+    # self-creation where it owed 2: the ages 1, 2, 2, 2, 3, 3, 3, 3, 3, 4
+    # (until rule (a): 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, waited 6, owed 0).
     ages, waited, owed = ages_of_a_probe(8, 10)
-    assert ages == [1, 2, 2, 2, 3, 3, 3, 4, 4, 4]
-    assert waited == 6 and owed == 0
+    assert ages == [1, 2, 2, 2, 3, 3, 3, 3, 3, 4]
+    assert waited == 6 and owed == 4
 
 
 def test_every_age_against_a_key_is_the_one_by_clock():

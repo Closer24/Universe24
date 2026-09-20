@@ -1203,6 +1203,15 @@ states "exactly" and means integer equality at every tick.
   of the two momenta as before. The eighteen other worlds have no free
   body and read the same (the record's new fields aside) ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
 
+- **Re-read under rule (a) (2026-09-20).** Under rule (a) of the suspension (2026-09-20, the model owner's record 128; BEAM_LAW step 4 and note 17 as amended: a measured event whose clock owes an interval neither releases nor reads in it, its table reading `pass` and the arrivals going on; a message enters a body only at its self-creation) item 6 alone
+  changes, and only in what is not registered: the nine probes' clocks
+  count as registered (age 8, 11, 14, 21, 28, 35, 42, 52, 69 at r = 4 to
+  40 after 200 intervals, waited 192 to 131, the same integers), and each
+  probe, waiting every interval but its self-creations, now reads the
+  beam's presence 2^17 once (its `read` total 131 072 in place of 37.8 to
+  31.2 million) and takes no push while it waits; the twenty other worlds
+  declare no suspension and read the same ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### D, the orbit under the Beam Law, on the plane (2026-09-19)
 
@@ -2140,6 +2149,25 @@ states "exactly" and means integer equality at every tick.
   now reads q = 0 the nearest in [100, 200) and [200, 300). 309 readings
   inside and 27 outside (310 and 26); the reading's formula 288 of 288
   inside 2 %. The verdict and the follow-up stand as read ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+- **Re-read under rule (a) (2026-09-20; measured, nothing pinned).**
+  The detector at the centre is a measured event with a clock under the
+  world's `suspension`, and under rule (a) of the suspension (2026-09-20, the model owner's record 128; BEAM_LAW step 4 and note 17 as amended: a measured event whose clock owes an interval neither releases nor reads in it, its table reading `pass` and the arrivals going on; a message enters a body only at its self-creation) it does not click the light that
+  arrives while it waits: those rows go on through its Node and leave
+  through the far face. Its own clock over the run reads 0.8175, 0.9950,
+  0.2100 and 0.9750 self-creations per interval in `coasting_scalar`,
+  `coasting_age`, `pushing_scalar` and `pushing_age` (0.8275, 0.9950,
+  0.2925, 0.9800 under the signed drive without the rule), and its record
+  loses the clicks of the waiting intervals (`coasting_scalar`'s `mx1`
+  368 -> 297; `pushing_scalar`'s `mx1` 5648 -> 1152: a detector waiting
+  four intervals in five sees one in five). The near fit's H t_0 in the
+  late window reads 1.033, 1.018, 1.513, 1.049 (1.017, 1.017, 1.305,
+  1.057); the reading's formula 262 of 262 inside 2 % on the lines that
+  remain (288 before); 281 readings inside and 29 outside of 310 (309 and
+  27 of 336, the lost lines the difference). The verdict and the
+  follow-up stand as read; what changes is the detector's exposure, which
+  is now its clock's, the physical reading of the rule: a detector under
+  a suspension sees at its own rate ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
 
 
 ### H, Bohr's lines behind the detector (2026-09-20)
@@ -3246,6 +3274,29 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   the clause "the pair does not hold" of the re-read above is superseded
   and the registered verdict's "the pair holds after the
   transformation" stands ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+- **Re-read under rule (a) (2026-09-20; measured, nothing pinned).**
+  `j3_neutron_free`, `j1_lattice` and `j1_source` read the same (their
+  neutrons take no push and their clocks count as before; the lattice's
+  and the source's trigger ticks and shell clicks unchanged). Under rule (a) of the suspension (2026-09-20, the model owner's record 128; BEAM_LAW step 4 and note 17 as amended: a measured event whose clock owes an interval neither releases nor reads in it, its table reading `pass` and the arrivals going on; a message enters a body only at its self-creation)
+  the deuteron pair drifts: the proton and the neutron of `j3_deuteron`
+  make 7 steps each, together, from (10, 10, 10) and (11, 10, 10) to (3,
+  10, 10) and (4, 10, 10), still at one Link, every attempted step
+  toward the partner a hand-over (26 and 20 taken) and the seven Links
+  the pair's own motion: a wait removes one read and one release, and when
+  one nucleon waits at the interval the other's missing release would
+  have arrived the pair keeps one push net (`tests/test_step_drive.py`
+  (g), the third-law gap narrowed and not closed), so the bound pair
+  gains a momentum along its axis and moves as one. Its neutron fires at
+  572 (inside the pin 574) with the count 40 413 at the trigger (128 590
+  registered: the pair had moved toward the face), the beta click at 586;
+  and `j3_deuteron_crowd`, whose gate 65 536 the count no longer exceeds,
+  fires too (572, the click 586), its two readings "no transformation"
+  and "no beta click" outside. 10 readings inside and 4 outside (9 and 1
+  under the signed drive). The verdict's "a neutron beside a proton decays
+  later than a free one or, under the gate, not within the run" holds in
+  its first half and not in its second under this rule; the pair's drift
+  is the rule's third-law remainder, recorded for the owner ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
 
 
 **The W world, the exchange form at one Link (no key added).**
