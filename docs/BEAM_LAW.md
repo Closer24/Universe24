@@ -2805,3 +2805,92 @@ implementation's part of the contract. The design above is unchanged.
     worlds once a body holds momentum); the second G2 run (record 119
     (6)) is the G2 session's, with the acoustic expectations re-derived
     on this form first, registered with dated lines then, never here.
+40. **The binding that costs content, `binding-v1`: the give at the
+    contact** (the model owner's records 115 and 137 of 2026-09-20; the
+    physicist's read-only design `docs/designs/binding_v1/DESIGN.md`,
+    sections 1 to 6, candidate A, record 132; numbered 40 because 39 is
+    the one click's, landing in parallel; `engine._give`, `engine._contact`,
+    `world.BINDING_RULE`, `NatureBeamWorld.binding`;
+    `tests/test_binding.py` (a) to (d); series N,
+    `examples/events/binding/`). A hypothesis beside the law with its own
+    identity and no new key. **The rule, one condition on the verb GIVE:**
+    at a contact under `measure` (the momentum hand-over of note 31 (ix),
+    the first hand-over of a contact) the refused body GIVES to the flight
+    the paid content it carries: for every paid family other than its own
+    that it holds (`held`; a lamp's own paid content is not carried and
+    never given) with the quantum h, `held // h` units of content h as one
+    row (age 0, the body's phase and number, no record) at the body's Node
+    on the heading opposite to the refused step, away from the occupant
+    (the step's sign, the Link the drive fired on the axis, not the
+    momentum's: under the signed drive of record 126 the two differ at a
+    reversal, as the register's neutron shows at its first contact, its
+    momentum +270 720 after the proton's hand-over and its step -x);
+    `held mod h` stays held; the body takes the recoil, minus the row's
+    label (Q x content per unit along the heading, the one label of note
+    23, checked before it is formed), toward the occupant. A body that
+    carries nothing gives nothing: the contact is the hand-over alone, bit
+    for bit. Why the give is at the contact: it is the one moment the law
+    already treats a body as a paid arrival at another body (note 31 (ix));
+    what a click of a paid arrival takes is the amount, its content and its
+    label (step 4), and the contact takes the label's component alone,
+    since taking the content would merge the bodies; binding-v1 lets the
+    content the body carries LEAVE at that moment, a TAKE turned into a
+    GIVE so that two bodies stay two. Why away from the occupant: a row
+    given toward it is taken by its entry for the family (`measure` by the
+    keys), a swap with no defect; given away, the content leaves the pair
+    whole and the picture is nature's, n + p -> d + gamma, the gamma
+    leaving, the pair recoiling inward. **The fates**, all existing rules:
+    on a heading a row makes its first Link at age 1 and its second at age
+    3 (the flight table, T = 110), so with the family's `lifetime` L = 3 it
+    clicks on the border `lifetime` two Links from its birth with its
+    content, the released binding energy, measurable as clicks (note 31
+    (vii)); a body on its line reads it by its entry, `measure` (the keys'
+    rule for a paid arrival) TAKES it (the content joins the body's held,
+    booked `measured`), `rerelease` re-creates it on that body's fan, `pass`
+    and `read` let it go on to the border. After the give the body carries
+    nothing and every later contact is the hand-over alone: the pair is
+    stable for ever; the closed loop of record 115 (re-created by the
+    partner for ever) is not reachable without a second rule (a re-creation
+    on the reversed arriving direction, a retro-mirror on PASS) and is not
+    built. **The books:** the family's measured line, initial + measured =
+    current + spent + escaped, with the give on `spent` as a lamp's release
+    books it; the row on the transit and content lines (`released`) until
+    the border books it on `lifetime` (summed into `escaped`) or a body
+    absorbs it; the momentum: the recoil on the giver's label, the row's
+    label on the transit line, the border's `lifetime_momentum` at the
+    click; no remainder (`held mod h` stays held, nothing is rounded). The
+    `contact` record gains `given` beside `component` (the content given at
+    that hand-over, 0 on a later one), written only in a world where a
+    body holds a paid family; `run.json` carries `binding-v1` under
+    `hypotheses` when a measured event holds a paid family other than its
+    own at load (the parser knows it). **The identity:** every world
+    without a body that holds a paid family reads as it did, byte for byte
+    (no registered world holds one: the gate set replays identical,
+    VALIDATION); `beam-v1` is unchanged without such a body. **Locality
+    and integers:** the contact reads the destination Node's occupant as
+    the step already does (one Link); the give reads the giver's own held
+    content and the heading of its own refused step; the row crosses one
+    Link per interval; no partner content, no memory of partners, no host
+    total; fixed work, one row per paid family carried per contact; the
+    division by h exact with its remainder held; the label's product and
+    the recoil bounded before they are assigned. **What it gives** (the
+    design's section 2, series N): the register's deuteron with `bond`
+    (h 1, L 3) held 2 per nucleon gives 2 units per body at its first
+    contact, two border clicks of amount 2 and content 2 at (8, 10, 10)
+    and (13, 10, 10), the escaped content 4 = 0.109 % of 3677 (nature
+    4.353 m_e, 0.1185 %; the register's grain is 1 m_e), the mass a
+    detector reads 3673, the push on p 310 956 229 248 before and
+    310 945 171 840 after (the reader's gravity charge 1835); the size is
+    one declared width (record 106: every content is an input). The give
+    is per body, so the alpha gives 8 units, the ratio 2.0 in energy to
+    the deuteron where nature has 12.72: no form of the rule with one
+    declared value gives nature's alpha, stated so that it fails, and not
+    tuned. What it does not give: the deuteron/alpha ratio without a
+    second value; "every family paid" (the design's section 7) does not
+    give the defect and costs two rules, recorded as a direction. The
+    register's pp threshold G = 7111 becomes 7112 once both protons have
+    given (a prediction, marginal and exact). Not checked on the engine
+    before the run: the exact tick of the first contact (about 16 from
+    the drive's arithmetic), the alpha line's inner gives; the give over
+    several occupants of a body's set is whole, on the one heading (the
+    momentum share rule untouched).

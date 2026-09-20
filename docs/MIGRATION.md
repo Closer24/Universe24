@@ -6,6 +6,23 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The binding that costs content, on 2026-09-20 (`binding-v1`, no key)
+
+binding-v1 (2026-09-20): at a contact under `measure` the refused body gives
+its held paid content to the flight on the reversed heading; `contact`
+records gain `given`; `run.json` carries `binding-v1` when a body holds a
+paid family; no registered world changes by a byte. The model owner's
+records 115 and 137 of [the log](LOG_2026-09-20.md), the physicist's design
+`docs/designs/binding_v1/DESIGN.md` (record 132),
+[BEAM_LAW note 40](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+`engine._give`, `world.BINDING_RULE` and `NatureBeamWorld.binding`,
+`tests/test_binding.py`; the worlds of series N under
+`examples/events/binding/` ([the register](EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20)).
+The `given` key is written on `contact` records only in a world where a
+body holds a paid family other than its own (the parser's `binding`), so
+every other world's `events.jsonl` is unchanged; a paid body's own content
+is never given.
+
 ## The reading's weight at the relative speed, on 2026-09-20 (`doppler-v1`, a world key, absent by default)
 
 The model owner's decision of 2026-09-20 (record 119 of

@@ -76,7 +76,20 @@ reversed, the occupant's raised by twice it), `pass` and a `read` declared
 against the keys (on a paid family) leaving the labels as they were (the
 rule as it was, no record). A body on a set whose destination set holds several
 occupants hands the component apportioned whole over them by their
-contents. Each hand-over is a `contact` record.
+contents. Each hand-over is a `contact` record. **The contact's give**
+(since 2026-09-20, `binding-v1`,
+[BEAM_LAW note 40](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+`engine._give`): at the first hand-over under `measure` of a contact the
+refused body also gives the paid content it carries (`held` of a paid
+family other than its own; a lamp's own content is not carried) to the
+flight, per such family with the quantum h `held // h` units of content h
+as one row at its Node on the heading opposite to the refused step (the
+step's sign, not the momentum's), the recoil (minus the row's label) on
+the body, `held mod h` kept, the content
+booked on the family's `spent` line and the row on its transit and content
+lines as a lamp's release is; the rows then have the law's fates by the
+tables and the border. A body that carries nothing gives nothing, and the
+contact is the hand-over alone, bit for bit.
 
 **An open face is a detector** (the model owner, 2026-09-19). Every escape
 through an open face, a ray in the walk or a measured event's step, is a
@@ -412,7 +425,12 @@ true or false; the static budget of the columns takes the weight's
 largest factor on the table under it (no other load-time bound: the
 registered G2 star worlds fit as registered); the record carries it and
 the identity `doppler-v1` under `hypotheses` when it is true; absent, and
-for every body at rest or held in place, every world reads as it did, byte for byte); `directions` (the declared primitive vectors beyond
+for every body at rest or held in place, every world reads as it did, byte for byte); the binding that costs content, `binding-v1`
+(since 2026-09-20, [BEAM_LAW note 40](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+has no key: the record carries its identity under `hypotheses` when a
+measured event holds a paid family other than its own (`held`), the
+content a body carries and gives at its contact; without such a body every
+world reads as it did, byte for byte; `directions` (the declared primitive vectors beyond
 the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`
@@ -729,8 +747,10 @@ since 2026-09-20, its `phase` after the step: what the turn by momentum
 turned it to, the phase it had otherwise), `contact` (since 2026-09-20:
 the body's `number`, its `node` and the destination `to`, the `occupant`,
 the body's `family`, the occupant's `rule` for it, the `axis` and the
-signed `component` the occupant gained, the body's `momentum` after; one
-per occupant that took a hand-over), `become` (since 2026-09-20, one
+signed `component` the occupant gained, since 2026-09-20 in a world where a
+body holds a paid family `given`, the content the body gave to the flight
+at this hand-over (`binding-v1`; 0 on a later hand-over), and the body's
+`momentum` after; one per occupant that took a hand-over), `become` (since 2026-09-20, one
 per transformation at its products' birth: the `tick`, `node` and
 `measured`, the `trigger` "clock" or "click" and `triggered` the tick of
 the trigger, `from` and `into` the families, `products` as [family,
