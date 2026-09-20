@@ -1,0 +1,96 @@
+{
+ "format": "gate-set-v1",
+ "description": "The gate set (the model owner's decision of 2026-09-20, Highlights 5.4, record 87 of docs/LOG_2026-09-20.md; chosen by measured coverage on 2026-09-20, the trimming plan, record 91): the worlds replayed at every commit of an integration through tools/run_series.py --list. Together they declare every key, table rule and family kind of the register, write every record kind, and execute every engine line any registered world reaches. The whole register replays only under --full or on demand. A new key or rule adds the first world that declares it, with the line it covers. ticks is the world's declared duration; cap is the interval by which the world's coverage is complete (the fast pass, --list --fast).",
+ "worlds": [
+  {
+   "path": "bell/a0_b0.json",
+   "ticks": 160,
+   "cap": 160,
+   "covers": "the common path: lamp, walk, flight table, collision, phase window, beam pairing, the books"
+  },
+  {
+   "path": "weak/j3_deuteron.json",
+   "ticks": 700,
+   "cap": 700,
+   "covers": "become by the clock (weak-v1), held, lifetime, columns with a sign, a paid family's charge"
+  },
+  {
+   "path": "bohr/r2.json",
+   "ticks": 3000,
+   "cap": 689,
+   "covers": "action (bohr-v1), phase_by_momentum, charge as a pair, span"
+  },
+  {
+   "path": "catalog/lamp_mirror_screen.json",
+   "ticks": 50,
+   "cap": 14,
+   "covers": "a lamp's phase_window, rerelease on declared directions, a wave screen"
+  },
+  {
+   "path": "lensing/heavy_meeting.json",
+   "ticks": 400,
+   "cap": 111,
+   "covers": "meeting (meeting-v1), the turned line"
+  },
+  {
+   "path": "detector/grouped_12_nodes.json",
+   "ticks": 4,
+   "cap": 2,
+   "covers": "entity definitions, in_transit, a detector set with a threshold"
+  },
+  {
+   "path": "bell/fixed.json",
+   "ticks": 148,
+   "cap": 13,
+   "covers": "phase_window read from a family (#363)"
+  },
+  {
+   "path": "weak/j2_ladder.json",
+   "ticks": 1037,
+   "cap": 1,
+   "covers": "phase_width on a table entry"
+  },
+  {
+   "path": "weak/j3_deuteron_crowd.json",
+   "ticks": 700,
+   "cap": 1,
+   "covers": "become by the crowd"
+  },
+  {
+   "path": "heisenberg/w27_beam.json",
+   "ticks": 350,
+   "cap": 200,
+   "covers": "beam pairing over a large re-emitting set"
+  },
+  {
+   "path": "nucleus/alpha_square.json",
+   "ticks": 3000,
+   "cap": 180,
+   "covers": "the lifetime's escape of a crowd, the contact of bound bodies"
+  },
+  {
+   "path": "hubble/pushing_age.json",
+   "ticks": 400,
+   "cap": 1,
+   "covers": "suspension as a pair, the age moment, a body owing intervals while pushed"
+  },
+  {
+   "path": "coupling/1b_m16.json",
+   "ticks": 200,
+   "cap": 25,
+   "covers": "a phase-less family's push on the plane"
+  },
+  {
+   "path": "heisenberg/w1_beam.json",
+   "ticks": 350,
+   "cap": 1,
+   "covers": "a one-Node re-emitting opening under beam"
+  },
+  {
+   "path": "catalog/sun_planet.json",
+   "ticks": 50,
+   "cap": 12,
+   "covers": "a body stepping under width with a declared momentum"
+  }
+ ]
+}
