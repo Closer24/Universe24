@@ -275,6 +275,39 @@ light bent toward the mass with the sign of gravity, the M / b form and
 the grain of the fan (-1.8 to -4.4 pixels; the lens crossing 71 Links
 past the mass), not delayed in time, the mass measuring the light turned
 into it; registered, 14 readings inside and 9 outside, not tuned.
+## The Hubble series with stars
+
+The folder [hubble_stars/](hubble_stars/README.md) holds the nine worlds of
+series G2, the Hubble diagram with stars behind the detector, written by
+`hubble_stars/make_worlds.py` with their expectations
+(`hubble_stars/expectations.json`, written before the runs) for the model
+owner's question of 2026-09-20, whether dark energy is needed: twenty-four
+stars of the catalog's kind, each ONE measured event that holds a mass
+(`held`, the universal gravity column) and is a lamp (its light released on
+its clock at the cost E = h f), thrown from the centre of an open 301^3
+cube along the six axes with a Hubble-flow initial condition (the speed
+proportional to the distance, as if from one point 90 intervals before the
+run), the model's own gravity between them (the mass rows on the axes, the
+push through the detector to the opposite chain), a detector of one Node at
+the centre reading `wave` with `reads: "age"`; three crowds (the coupling
+off, on, doubled) and three clocks (none, the presence, the age moment).
+`tools/hubble_stars_readings.py` reads, per star, the redshift from the
+pointer's turn, the distance from the arrivals' ages and the luminosity from
+the click rate, fits the deceleration q with H free (the power-law family
+and the three exact forms), validates the criterion on the exact coasting
+form first, and labels every line a detector or a GameBoard reading; the
+register entry is drafted in the folder's README and not registered until
+the model owner says so: the clock-free coasting control reads the Milne
+form to the grain (q = -0.11, H (t_0 + T_0) = 1.03), every star's momentum
+decelerates under the law's gravity and none accelerates, and the detector
+cannot read that deceleration as a q because the step rule stalls and
+bursts under a changing momentum (the README's findings for the law, among
+them that a body's own motion does not Doppler what it reads). The
+physicist's design is `docs/designs/hubble_stars/DESIGN.md`; the same
+worlds under the record click (`make_worlds.py --record`, the key
+`amplitude`, the branch `claude/amplitude-impl`) read the same list of
+clicks and the same numbers to the last digit.
+
 ## The weak-force series
 
 The folder [weak/](weak/README.md) holds the worlds of series J, the weak
@@ -312,6 +345,24 @@ world (`w_exchange`, no key added): the W a paid family with a whole
 charge per unit of amount and `lifetime` 1, thrown by a neutron's
 `become` and measured by the proton one Link away one interval later,
 which then has a neutron's charge and content.
+
+## The hand series
+
+The folder [hand/](hand/README.md) holds the worlds of series P, the hand
+(`hand-v1`, the model owner's decision of 2026-09-20, record 128 of the
+log; [BEAM_LAW note 39](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+written by `hand/make_worlds.py`: `w_hand`, the W world with a second
+proton, the W family left-handed and the neutron given an axis (the W
+leaves against the axis to the proton on one side; the mirror image of the
+world sends it to the other: the parity test); `w_two_sides`, the control
+without a hand or an axis (mirror-equal); `wu`, Wu's experiment on a bar of
+17 (the left-handed beta against the nuclear axis to the reader at x = 0,
+the right-handed antineutrino along it out of the face); and `nu_hand`,
+J2's bar with the neutrino left-handed and two readers admitting one hand
+each (0 and 1022 clicks; mirror-equal, a hand without an axis being a
+datum a mirror cannot see). The register entry is
+[P, the hand (2026-09-20)](../../docs/EXPERIMENTS.md#p-the-hand-2026-09-20);
+the parity test itself is `tests/test_hand.py` (d).
 
 ## The amplitude series
 

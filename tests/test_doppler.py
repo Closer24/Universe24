@@ -92,14 +92,14 @@ the relative speed"), written down before the first run:
     snapshot, each pushing -27 (by_clock(0, 64 x 111994, 262144); the
     live momentum after the first group, 5, would give 56), the momentum
     after the interval -22; without the key -64 each;
-(h) a registered star world of series G2 (`tests/data/g2_gravity_scalar.
-    json`, the reviewer's copy of `hubble_stars/gravity_scalar.json`: 24
-    stars of content 2^22 + 4096 at width 2^20, rows of amount 64) parses
-    under the key with the identity and runs 20 intervals without a
-    refusal, its books balanced: the stars fit as registered. Its table
-    is the eight headings, where the flux equals the heading pair; the
-    fan's integers rest on (f). The copy is temporary: series G2's merge
-    replaces it by the example's path (one canonical copy).
+(h) a registered star world of series G2 (`examples/events/hubble_stars/
+    gravity_scalar.json`, the example's own path since series G2's merge
+    of doppler-v1 replaced the reviewer's temporary copy: 24 stars of
+    content 2^22 + 4096 at width 2^20, rows of amount 64) parses under the
+    key with the identity and runs 20 intervals without a refusal, its
+    books balanced: the stars fit as registered. Its table is the eight
+    headings, where the flux equals the heading pair; the fan's integers
+    rest on (f).
 """
 
 from __future__ import annotations
@@ -443,9 +443,11 @@ def test_the_grain_the_pair_and_the_record(tmp_path: Path):
     record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
     assert record["doppler"] is True and record["hypotheses"] == [COLUMNS_RULE, DOPPLER_RULE]
     assert record["status"] == "completed"
-    # The gate set declares the key nowhere: every shipped world reads as it did.
+    # The gate set declares the key nowhere: every shipped world reads as it
+    # did (fifteen worlds at this change; `hand-v1` added `hand/wu.json`
+    # the same day, the sixteenth, which declares no `doppler` either).
     listing = json.loads((ROOT / "examples/events/gate_set.json").read_text(encoding="utf-8"))
-    assert len(listing["worlds"]) == 15
+    assert len(listing["worlds"]) == 16
     for item in listing["worlds"]:
         path = ROOT / "examples/events" / item["path"]
         parsed = load_world(path.read_bytes(), base_dir=path.parent).world
@@ -670,7 +672,12 @@ def test_a_body_on_a_set_reads_every_group_from_the_one_frame_snapshot():
 
 def test_a_registered_star_world_of_series_g2_runs_under_the_key():
     """(h)."""
-    document = json.loads((ROOT / "tests/data/g2_gravity_scalar.json").read_text(encoding="utf-8"))
+    path = ROOT / "examples/events/hubble_stars/gravity_scalar.json"
+    # The shipped world references the definition `hubble_stars` (record
+    # 113); the loader expands it to its inline form.
+    document = json.loads(
+        load_world(path.read_bytes(), base_dir=path.parent, root=path.parents[1]).expanded_source
+    )
     assert document["width"] == 1 << 20 and "doppler" not in document
     world = parse_nature_beam_world({**document, "doppler": True, "ticks": 20})
     assert world.doppler is True and DOPPLER_RULE in world.hypotheses

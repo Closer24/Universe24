@@ -62,6 +62,9 @@ def families() -> dict[str, object]:
             "bond_family", [{"name": "bond", "quantum": 1, "lifetime": 3, "phase": False}]
         ),
         family_definition("neutrino", [{"name": "nu", "quantum": 0}]),
+        # The antineutrino of series P (`hand-v1`): a free family whose every
+        # row is right-handed, born along a polarised parent's axis.
+        family_definition("antineutrino", [{"name": "nubar", "quantum": 0, "hand": 1}]),
         family_definition(
             "w_boson", [{"name": "w", "quantum": 1, "charge": -7344, "lifetime": 1, "phase": False}]
         ),
@@ -89,6 +92,18 @@ def families() -> dict[str, object]:
                 for axis in ("x", "y", "z")
                 for kind in ("p", "m")
                 for index in (1, 2, 3, 4)
+            ],
+        ),
+        family_definition(
+            "hubble_stars",
+            # In the order the series G2 worlds declare them (one instance of
+            # this definition is the tail of their `families`): the stars
+            # dealt round-robin over the six axes in Port order, rank by
+            # rank; each a paid light family of its own (quantum 1).
+            [
+                {"name": f"s_{axis}{rank}", "quantum": 1}
+                for rank in (1, 2, 3, 4)
+                for axis in ("px", "mx", "py", "my", "pz", "mz")
             ],
         ),
     ]

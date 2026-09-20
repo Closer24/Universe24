@@ -425,7 +425,22 @@ true or false; the static budget of the columns takes the weight's
 largest factor on the table under it (no other load-time bound: the
 registered G2 star worlds fit as registered); the record carries it and
 the identity `doppler-v1` under `hypotheses` when it is true; absent, and
-for every body at rest or held in place, every world reads as it did, byte for byte); the binding that costs content, `binding-v1`
+for every body at rest or held in place, every world reads as it did, byte for byte); the keys of the hand (since 2026-09-20, `hand-v1`,
+[BEAM_LAW note 39](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+`hand`, -1 or +1, on a family (every row born of it carries it), on a
+lamp (a circularly polarised lamp of a family without a hand; a chiral
+family's lamp may repeat the family's value only), on a transit row (a
+row of a family without one) and on a table entry (the parity filter:
+the entry's rule applies to arrivals of that hand only, the rest passed
+as outside a window; refused on `pass`), a third entry per branch of a
+lamp's `branches` (the hand the label means; a family carries its hand as
+the row's column or as a label bit's meaning, never both) and `axis` on
+a measured event (one of the six headings as a vector, the axial record
+the right-hand rule reads at the birth of every product of its
+`become`: a product of hand h leaves only on the event's directions with
+sign(A . u_d) = h, a left-handed product against the axis; an empty set
+refused at load); absent everywhere, no row carries a hand and every
+world reads as it did, byte for byte); the binding that costs content, `binding-v1`
 (since 2026-09-20, [BEAM_LAW note 40](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
 has no key: the record carries its identity under `hypotheses` when a
 measured event holds a paid family other than its own at load (`held`) or
@@ -701,9 +716,10 @@ declared, the identity of the turn by momentum beside the law;
 the identity of the one mechanism of the columns and their range;
 `weak-v1` when a measured event declares `become` or a table entry's rule
 is `become`, the identity of the transformation; `meeting-v1` when
-`meeting` is true, after it; `amplitude-v1` when `amplitude` is true,
-last; `[]`
-without any), `columns` (the
+`meeting` is true, after it; `amplitude-v1` when `amplitude` is true;
+`hand-v1` when a hand or an axis is declared anywhere, last; `[]`
+without any; in a world with a hand every family carries its `hand` and
+every number its `axis`, the heading's vector or None), `columns` (the
 world's, name and sign, in order: gravity, charge, the declared names)
 and per family `columns` (name, value, sign, aligned with the world's),
 the books per completed tick (`audit`, the `charge` line the
@@ -773,7 +789,12 @@ the night of 2026-09-19 are gone since 2026-09-20, the factor of the
 electric push being the family's charge per unit of content,
 [BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
 and note 28; under the world key `amplitude` also the row's `record`,
-`branch` and `multiplicity`, written only under the key). Under the key
+`branch` and `multiplicity`, written only under the key; in a world that
+declares a hand or an axis (`hand-v1`) also the row's `hand`, written
+only then, and the `click`, `pass`, `read`, `rerelease` and face lines
+carry `hand`, the `become` line's products a fifth entry, the product's
+hand, and the books' measured line per family `left` and `right`, the
+units clicked of each hand). Under the key
 the books gain the `cancelled` lines (per family the units the merge's
 cancel removed on the transit line, the content carried on the content
 line and their labels beside the `turned` line, and the world's total

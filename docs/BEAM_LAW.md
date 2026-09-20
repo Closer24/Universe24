@@ -2805,11 +2805,207 @@ implementation's part of the contract. The design above is unchanged.
     worlds once a body holds momentum); the second G2 run (record 119
     (6)) is the G2 session's, with the acoustic expectations re-derived
     on this form first, registered with dated lines then, never here.
+
+39. **The hand, `hand-v1`** (the model owner, 2026-09-20, record 128 of
+    [the log](LOG_2026-09-20.md), "the hand's three choices confirmed";
+    the physicist's design hand/DESIGN.md, record 122, read against the
+    mathematician's integer form FORM.md, record 120; `tests/test_hand.py`
+    (a) to (g); the worlds of series P, `examples/events/hand/`). The one
+    thing the record did not carry: its sense of turning about its own
+    direction. **The row** gains one column `hand` in {-1, 0, +1}: +1 a
+    right-handed screw along u_d, -1 a left-handed one, 0 none (every row
+    of every world without a declaration), the helicity, `sign(S . p)`,
+    which on the GameBoard, where every row moves at the one speed of the
+    flight table, is the chirality the weak force reads. A pseudoscalar:
+    under a signed axis permutation g of the cube a hand goes to det(g) h,
+    kept by the 24 proper rotations and negated by the 24 improper ones
+    (a reflection composed with a rotation), with no arithmetic; a bit
+    relative to the direction, so every rule that changes a row's
+    direction leaves it untouched, and a column of constant 0 has a width
+    of 0 bits in the packed merge key (`merge_key`), so every world
+    without a hand keeps the same key, the same order and the same bytes.
+    It is an identity field of the merge (`IDENTITY_FIELDS`): two rows
+    equal in every field but the hand are two rows and never merge, and
+    under the amplitude key two rows of one record in antiphase with
+    opposite hands never cancel (opposite helicities are orthogonal).
+    Carried unchanged through every re-creation: the walk (a column of the
+    row), the collision (the permutation moves the direction, the columns
+    go with it; the class key (number, content) is untouched, so the
+    table, the twenty orbits and the bijection are what they were), the
+    meeting (a slow turn conserves helicity), a re-release at a mirror, a
+    wall or a re-emitter (`PendingRow.hand`), a split by `weights` (every
+    output row), a `rotate` (the label turns, the hand does not), a `cnot`
+    gate (`_replace` keeps it), a home and the inverse interval ((direction,
+    age, hand) to (direction, age + 1, hand) is injective). **The measured
+    event** gains the axial record `axis`: one of the six headings in
+    Port order declared as its vector, `[1, 0, 0]` .. `[0, 0, -1]`
+    (refused otherwise), or none; an axial vector, a -> det(g) g a under
+    the 48; a declaration fixed like `fixed` (no angular-momentum ledger:
+    a click on the event does not turn it, the products' spins are not
+    subtracted from it). Wu's polarised nucleus is an axis; a neutrino in
+    flight is a bit. **GIVING.** The family key `hand` (-1 or +1; the
+    catalog's definition, as `charge` is: the neutrino is left-handed
+    once, not per world): every row born of the family (a lamp's, a free
+    release's, a product's, a home's, a declared transit row's) carries
+    it. The lamp key `hand`: a circularly polarised lamp of a family
+    without a hand (light of one hand); a lamp of a chiral family may
+    repeat the family's value only. The transit key `hand`: a row of a
+    family without one; a chiral family's row takes the family's. **The
+    right-hand rule** at the birth of a `become` product (step 5, the
+    apportioning of the pending row over the parent's directions): at a
+    parent with the axis A, a product of a family with the hand h is born
+    only on the parent's declared directions d with `sign(A . u_d) = h`,
+    one integer sign per direction (`world.axis_sign`: A is a heading, so
+    A . u_d is one component with a sign, in {-64, 0, 64}), the whole
+    apportioning of today (`apportion_whole` with the leftover counted
+    from (clock age + k) mod n) over the admitted subset in declared
+    order; a product of a family without a hand is born on every declared
+    direction stamped `h = sign(A . u_d)`, +1 along the axis, -1 against
+    it, 0 on the equator; at a parent without an axis every product on
+    every declared direction as today, its family's hand carried (an
+    unpolarised parent is lawful and the general case: nature's free
+    neutron emits handed antineutrinos isotropically; J1's neutrons and
+    J3's deuteron declare no axis). The three choices, taken by the model
+    owner as physics over convention against FORM.md's (record 128): (i)
+    a left-handed product leaves AGAINST the axis (`sign(A . u_d) = h`,
+    not -h: in Wu's experiment the electrons leave opposite to the
+    nuclear spin, and the left-handed beta's spin then points along the
+    parent's axis, the product carrying the parent's sense; both forms are
+    covariant and give the same parity difference, the sign decides which
+    reading is Wu's and `hand/wu.json` pins Wu's side); (ii) the strict
+    hemisphere only, the equator not admitted (a heading perpendicular to
+    the axis has no sign against it; on the six headings one direction is
+    admitted, not five); (iii) the hand's home on the family, not on the
+    product (a hand cannot then be declared inconsistently between two
+    worlds or two products), with a lamp's and a transit row's hand for
+    families without one. An empty admitted set is refused at load naming
+    the rule, the product and the axis (`world._handed_products`; a
+    declared transformation that cannot leave is a defect of the world,
+    loud). Nothing else gives a hand; the engine branches on no name (an
+    integer of the event, an integer of the family, the direction table).
+    **TAKING.** The table-entry key `hand` (-1 or +1; refused on `pass`),
+    the parity filter: the entry's rule (`read`, `measure`, `rerelease`,
+    `become`) applies to arrivals of that hand only; an arrival of the
+    other hand or of hand 0 is passed exactly as an arrival outside the
+    entry's window is (a `pass` line naming its `hand`; J2's form: the
+    rows a reader does not take go on to the reader behind it). Admitted
+    = the threshold AND the window AND the hand, three comparisons of an
+    integer the row carries at the Node with a declaration of the reader,
+    applied after the window (and after the amplitude law's exemptions of
+    a `sum` set and a split from the window: a filter at a `sum` set
+    passes the other hand). The weak force on one hand is then the
+    `become` entry's `hand` -1 and nothing else: a right-handed W arriving
+    at it is passed, dies on the border `lifetime` one interval later and
+    transforms nothing (test (c)); the same key on a `measure` entry is
+    Goldhaber's helicity filter and on a `rerelease` a hand-selective
+    mirror. **A hand is not a column**: no push, no moment, no pointer and
+    no clock reads it (the one-reading-set principle holds; the meeting's
+    target and every moment are blind to it). **PASSING.** The meeting,
+    the collision, a `pass` entry and every re-creation keep it, no
+    arithmetic; a `read` entry with a hand filter reads the push of one
+    hand and passes the other. **The record.** Only in a world that
+    declares a hand or an axis anywhere (`NatureBeamWorld.handed`): the
+    `click`, `pass`, `read` and `rerelease` lines carry `hand` (a click
+    per row; a group line the one hand of its rows, None where they
+    differ), the face and border `click` lines carry it, the `become`
+    line's products gain a fifth entry, the product's hand; the books'
+    measured line per family gains `left` and `right`, the units clicked
+    of each hand as the row's column carries it (a report,
+    `Ledger.taken_left`, `taken_right`); `run.json`
+    carries each family's `hand` and each number's `axis` as declared and
+    `hand-v1` under `hypotheses` (after `amplitude-v1`); `state.json`
+    writes the row's `hand`. Without a declaration no line, no key and no
+    byte changes: the gate set replayed identical ([VALIDATION](VALIDATION.md)).
+    **The hand as a label bit named** (FORM.md section 5, the design's
+    section 4): on a branched family of the amplitude law the hand is the
+    meaning of a label bit and NOT the row column (a rotation makes two
+    rows on the bit cleared and set, and a hand carried as a column would
+    then disagree with the label on one of them): a lamp's `branches` may
+    carry a third entry per branch, the hand of the label, every branch or
+    none, the bit k of a label the hand of the row on arm k, the two
+    values of a bit the two hands (`LampDefinition.label_hands`); the
+    click line then carries the hand the row's label bit means on its arm
+    (`nature_beam.row_hand`), the row column stays 0, and a family
+    declares one or the other, never both (refused at load); the parity
+    filter reads the same hand of such a row, the label's meaning on its
+    arm (`nature_beam.read_hands`, the physics-rule review's finding 1.1:
+    the filter on a branched family is then the which-path click on the
+    label, FORM.md section 4, and not a filter that admits nothing): on
+    the pair with the rotations removed and `hand` +1 on the two plus
+    counters, 32 of the 64 records gather at the plus counters and 32 at
+    the minus ones, none mixed, and with the rotations kept the label is
+    read after the rotation and every marginal stays 32/64 (test (g)). The
+    books' `left` and `right` lines count the row's COLUMN alone (on such
+    a family they stay 0 while the click lines name the label's hand: a
+    report of two readings, stated). With it the
+    pair's integers are unchanged: S = 176/64 at the CHSH labels, every
+    marginal 32/64 (test (g)); an improper symmetry negates the bit, which
+    sends |00> - |11> to itself up to a global sign, so the Bell worlds
+    stay mirror-equal. Malus's law is the label's, not the hand's: a
+    linear polarisation is the two-label record with a relative phase, the
+    polariser its `rotate` and the label click; a hand filter alone on
+    circular light is 1 or 0, no angle. **The parity test** (the design's
+    1.3 and 3.2, test (d)): under a signed axis permutation g of the cube
+    every polar thing goes by g (positions, directions, momenta, the
+    detectors), the `axis` as an axial vector, det(g) g A, and every
+    `hand` is copied VERBATIM (the law's data: the catalog's families and
+    the readers' filters, as Wu mirrored her apparatus and not the
+    neutrino), the readings mapped back by the Node map. Under the mirror
+    in x, the genericity probe's T2 as coded, an axis along the mirror's
+    normal is its own mirror image, det(M) M e_x = e_x, so on the worlds
+    of series P the axial transform and a verbatim copy of the axis
+    coincide (under a y- or z-mirror they do not: an axis in the mirror's
+    plane goes to its opposite heading, and a verbatim copy would be a
+    different apparatus); the pins under that mirror: every registered world equal (no hand);
+    `w_hand` DIFFERENT by exactly the click moving from the proton at x =
+    3 to the proton at x = 1, the product's direction, the recoil and the
+    push with the other sign, everything else equal; the control
+    `w_two_sides` (no axis, no hand) equal; `wu` different, the beta's
+    click at x = 16 against x = 0 and the antineutrino's face -x against
+    +x; `nu_hand` equal (a hand without an axis is a datum a mirror cannot
+    see; Goldhaber's reading needs the axis, as nature needed the
+    polarised Eu-152). Over all 48 signed axis permutations (test (d); the
+    physics-rule review's own probe read the same): the parity image
+    differs under exactly the 24 improper elements and under none of the
+    24 proper ones on `w_hand` and `wu`, and under none of the 48 on
+    `w_two_sides` and `nu_hand`; and the full transform (every hand by
+    det(g) too, every axis by det(g) g A) is equal under all 48 on every
+    world: the law is covariant under the 48 when its data transform as a
+    pseudoscalar and an axial vector, and parity violation on the
+    GameBoard is one statement, the catalog's one-handed families (no
+    `nubar` of hand -1 and no `nu` of hand +1 is declared anywhere; a
+    right-handed neutrino declared in a transit row would be passed by
+    every `hand` -1 entry and clicked by none: a sterile row, the law's
+    own prediction). **Cost and locality.** One int8 per row (two bits in
+    the merge key where it varies, none where it does not), one index per
+    event, one sign per product per direction at a birth (at most the
+    declared directions), one comparison per arrival group at a filter;
+    no product, no division, no remainder, no draw; the birth reads the
+    parent's own axis and directions at its Node, the filter the arriving
+    row's hand at the reader's Node and the reader's declaration, every
+    re-creation copies a field of the row it holds (LOCALITY-1); the
+    store's row bound gains a factor 3 at most and only where a hand is
+    declared. **What the implementation decided where the design was
+    silent:** a `pass` rule writes no line, as it never did, so the
+    antineutrino's passage at Wu's far reader shows in the face click one
+    interval later and not in a `pass` line (the design's 3.4 expected
+    one; the record form of `pass` entries, not the rule); the label hand
+    on a click line is read from the lamp of the row's record (a report of
+    the host by the record's identity, nothing of the law); a group line
+    of mixed hands names None. **Limits, stated and not built:** no
+    angular-momentum ledger and no spin dynamics (one bit for every
+    family; no precession, no spin-1/2 against spin-1); nature's helicity
+    reversal of circular light at a metallic mirror at normal incidence
+    (the axis-keeping form h' = sign(h u_in . u_out), one more inner
+    product, recorded in the design's section 6: the owner's frame says a
+    re-creation keeps what the message carries); V-A's energy dependence;
+    CP (with a hand and the columns' signs the law has a mirror and a
+    charge conjugate but no phase that distinguishes them). The identity
+    `hand-v1` is a hypothesis of its own, HYPOTHESES entry 23.
 40. **The binding that costs content, `binding-v1`: the give at the
     contact** (the model owner's records 115 and 137 of 2026-09-20; the
     physicist's read-only design `docs/designs/binding_v1/DESIGN.md`,
-    sections 1 to 6, candidate A, record 132; numbered 40 because 39 is
-    the one click's, landing in parallel; `engine._give`, `engine._contact`,
+    sections 1 to 6, candidate A, record 132; `engine._give`, `engine._contact`,
     `world.BINDING_RULE`, `NatureBeamWorld.binding`;
     `tests/test_binding.py` (a) to (d); series N,
     `examples/events/binding/`). A hypothesis beside the law with its own

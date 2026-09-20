@@ -37,6 +37,65 @@ rule does on the engine (the give once, the border's clicks with the
 content, the pair stable, the books exact, the alpha at 2.0 x); they
 establish no physical law, for or against.
 
+## The hand: the gate set of fifteen worlds replayed without a declaration - 2026-09-20
+
+`hand-v1` ([BEAM_LAW note 39](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[MIGRATION](MIGRATION.md), "The hand") adds the row's column `hand`, the
+measured event's `axis`, the keys `hand` on a family, a lamp, a transit row
+and a table entry, the right-hand rule in `become` and the parity filter;
+every world without a declaration must read as it did, byte for byte (the
+column is 0 everywhere, its width in the packed merge key 0, no line of the
+record gains a key). The gate set (`examples/events/gate_set.json` as on
+`origin/main` at `56a258f8`, fifteen worlds, `doppler-v1` merged) replayed
+with `tools/run_series.py --list ... --compare` against the base tree's
+summary (the base `56a258f8`, the head this change rebased onto it): 15 of
+15 identical in `events.jsonl`, `state.json` and the ledger (`audit`), exit
+0 (the same verdict, 15 of 15, was read first against the base `d768f831`
+before `doppler-v1` landed). The digests (the first 16 hexadecimal digits of
+the sha256):
+
+| world | events.jsonl | state.json |
+| --- | --- | --- |
+| `a0_b0` | `dfa00b9ef9b652ac` | `dc4cba74e3a5966f` |
+| `j3_deuteron` | `23196889fbed5e62` | `d4485137fd018bba` |
+| `r2` | `ea52bf20dda2d125` | `e8e3e137bd611658` |
+| `lamp_mirror_screen` | `e6ca788d38ca28b9` | `9de7f52ec26093ac` |
+| `heavy_meeting` | `188ced16170ac007` | `395040805a4d05ee` |
+| `grouped_12_nodes` | `a4b2d2b35cfc84ea` | `f0b869e4d5663db6` |
+| `fixed` | `77ca1b3b3bc9558d` | `d078ace3e8d8f865` |
+| `j2_ladder` | `911390d0f64b2f3e` | `380fbbf27895583b` |
+| `j3_deuteron_crowd` | `094a32eb6c0f9a3f` | `9bdcf69e26201653` |
+| `w27_beam` | `439252c03ee8eef1` | `73d4980059d3e116` |
+| `alpha_square` | `600166fb5bdd434b` | `26799da3d3b2f850` |
+| `pushing_age` | `4d89f6b6182b92a2` | `5e40e4bea36aa902` |
+| `1b_m16` | `dc1054aa43c44a9c` | `391d4cbdc763ec76` |
+| `w1_beam` | `1e08efda9aabbd33` | `d843680c8246c097` |
+| `sun_planet` | `4b793a913b22fe50` | `f7043252f62a9b78` |
+| `wu` (the sixteenth, this change's) | `d4d927fb55cdfa9a` | `023c13135cc76634` |
+
+`hand/wu.json` is added to the gate set as the first world declaring the
+keys (`ticks` 40, `cap` 23: the antineutrino's face click); its row above
+is from its one run on this source, the base row of the next replay. The worlds of
+series P were run once and read against their pins
+([the hand series](../examples/events/hand/README.md); [EXPERIMENTS](EXPERIMENTS.md),
+"P, the hand").
+
+## Series G2, the Hubble diagram with stars behind the detector: three runs - 2026-09-20
+
+The branch `claude/series-g2-stars`, headless, three jobs, Python 3.14.0rc2,
+numpy 2.5.3; the worlds of `examples/events/hubble_stars/` through
+`tools/run_series.py --jobs 3` and the readings through
+`tools/hubble_stars_readings.py`, every run of 400 intervals completed with
+the books balanced at every interval; the readings registered in
+[G2](EXPERIMENTS.md#g2-the-hubble-diagram-with-stars-behind-the-detector-2026-09-20)
+and the worlds' [README](../examples/events/hubble_stars/README.md).
+
+| Run | Engine and fingerprint | Worlds | Result |
+| --- | --- | --- | --- |
+| The first registration | the branch's law before the key `amplitude`, source fingerprint `b4d074f2b762e58d15037a46b614e89609a48bcee2211eaf471af16e3d4923d1` | the nine worlds `<crowd>_<clock>`, 36 to 39 s each | the reading's formula 648 of 648 inside 2 %, the luminosity 631 of 648 inside 5 %, 34 pinned readings inside and 29 outside, none moved; re-run under the record click on `claude/amplitude-impl` at `62369cb8`: the same clicks and readings to the last digit |
+| The second run | main `f3a41f28` merged (the step drive, PR #373; the record click), source fingerprint `8ede1e0ff40e69ed05a71d7fd09cca21bad5e37f0c715018f3e77a504f518afb` | `record/coasting_none`, `gravity_none`, `gravity_scalar`, `gravity_age`, `double_none`, 37 to 41 s each | the expectations pinned first by the emitter-only rule; the reading's formula 360 of 360, the luminosity 360 of 360, the longest burst 1 Link, 759 readings inside and 1 outside (the scalar clock's k) |
+| The third run | main `56a258f` merged (doppler-v1, PR #379; the signed drive, PR #377), source fingerprint `39672332ebd7d87ee17f29c927df6ed0fc9b66e2c926c202e021646454b38b9e`, the identities `amplitude-v1` and `doppler-v1` | `doppler/coasting_none`, `gravity_none`, `gravity_scalar`, `gravity_age`, `double_none`, 37 to 41 s each | the expectations pinned first by the flux rule at the grain (`docs/designs/hubble_stars/EXPECTATION_2.md`); the reading's formula 120 of 120, the luminosity 120 of 120, the longest burst 1 Link, 35 readings inside and 5 outside (the scalar clock's q and its forms; the double crowd's q); the coasting world's gather and click lines identical to the second run's |
+
 ## The amplitude law: the gate set of seventeen worlds replayed without the key after commit (i) and at stage (v) - 2026-09-20
 
 `amplitude-v1` (the branch `amplitude-impl`, commits (i) `ca2e5fad`, (ii)
