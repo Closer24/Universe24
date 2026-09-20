@@ -73,8 +73,8 @@ not dilute), so the presence is nearly uniform over the stars and the age
 moment grows with the star's distance from the others.
 
     python examples/events/hubble_stars/make_worlds.py            # the worlds and expectations.json
-    python examples/events/hubble_stars/make_worlds.py --record   # also record/<world>.json under the key `amplitude` and record/expectations.json (the source rule)
-    python examples/events/hubble_stars/make_worlds.py --doppler  # also doppler/<world>.json under the keys `amplitude` and `doppler` and doppler/expectations.json (the flux rule)
+    python examples/events/hubble_stars/make_worlds.py --record   # also record/<world>.json reading `sum` (the record click) and record/expectations.json (the source rule)
+    python examples/events/hubble_stars/make_worlds.py --doppler  # also doppler/<world>.json under the key `doppler`, reading `sum`, and doppler/expectations.json (the flux rule)
     python examples/events/hubble_stars/make_worlds.py --after    # derivation_after_the_runs.json only
 """
 
@@ -211,13 +211,16 @@ def stars(mass: int) -> list[Json]:
 
 
 def world(crowd: str, clock: str, record: bool = False, doppler: bool = False) -> Json:
-    """One world; with `record` the same world under the key `amplitude`
+    """One world; with `record` the same world reading `sum` at the centre
     (the record click of amplitude-v1, docs/designs/hubble_stars/DESIGN.md
-    section 2.4): every unit of a star's light is born as one record of
-    one row, the detector reads `sum` (the record's scope) and every
-    reading is taken from the gather lines, one click per record. With
-    `doppler` (which implies `record`) the same world under the key
-    `doppler` as well (doppler-v1, BEAM_LAW note 38): every star reads the
+    section 2.4; since the one click of stage (vii) every lamp births
+    records and the key `amplitude` is deleted, MIGRATION (vii-4), so the
+    `record` worlds differ from the base worlds by the detector's reading
+    alone): every unit of a star's light is born as one record of one row,
+    the detector reads `sum` (the record's scope) and every reading is
+    taken from the gather lines, one click per record. With `doppler`
+    (which implies `record`) the same world under the key `doppler` as
+    well (doppler-v1, BEAM_LAW note 38): every star reads the
     mass rows arriving at its Node at the flux of their stream through it,
     the grain flux form at G = 2^12; the light and the detector unchanged."""
     record = record or doppler
@@ -291,8 +294,6 @@ def world(crowd: str, clock: str, record: bool = False, doppler: bool = False) -
             }
         ],
     }
-    if record:
-        document["amplitude"] = True
     if doppler:
         document["doppler"] = True
     return document
@@ -303,8 +304,8 @@ def referenced(document: Json) -> Json:
     `entities/families.json` (`detector_material`, `mass` and the stars as
     one instance of `hubble_stars`; the loader expands it to the inline
     world, key by key). The worlds of `record/` and `doppler/` stay inline:
-    a reference climbs one level only, and every world under the key
-    `amplitude` is deferred to the third pull request of record 113."""
+    a reference climbs one level only, and every world of the record click
+    is deferred to the third pull request of record 113."""
     return families_by_definition(document, FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
 
 
@@ -670,9 +671,8 @@ def main() -> None:
         path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
         print(path.relative_to(ROOT))
     if "--record" in sys.argv[1:]:
-        # The record-click worlds (the key `amplitude`) are written on
-        # request and not shipped until the key lands on main: the base
-        # engine refuses the key, and every shipped world must parse there.
+        # The record-click worlds (reading `sum`; without the deleted key
+        # `amplitude` since the one click) are written on request.
         (HERE / "record").mkdir(exist_ok=True)
         for name, document in record_worlds().items():
             path = HERE / "record" / f"{name}.json"
@@ -695,7 +695,7 @@ def main() -> None:
                 f"{entry['momentum_ratio_bracket'][0]:.3f} .. {entry['momentum_ratio_bracket'][1]:.3f}"
             )
     if "--doppler" in sys.argv[1:]:
-        # The worlds under the key `doppler` (with `amplitude`): written on
+        # The worlds under the key `doppler` (reading `sum`): written on
         # request; the base engine before doppler-v1 refuses the key.
         (HERE / "doppler").mkdir(exist_ok=True)
         for name, document in doppler_worlds().items():

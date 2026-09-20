@@ -79,6 +79,9 @@ class PendingRow(NamedTuple):
     arrival: int = 0
     offered: bool = False
     rebirth: bool = False
+    # The birth phase u of the row's record (stage (vii)), carried into
+    # its re-creation; 0 for a row of no record.
+    birth: int = 0
     # The row's hand (`hand-v1`, 2026-09-20; BEAM_LAW note 39): carried
     # unchanged into every re-creation (a home, a re-emission, a split, a
     # rotation, a gate); a product's is its family's, read against the
@@ -531,6 +534,14 @@ class Ledger:
     cancelled_amount: list[int] = field(default_factory=list)
     cancelled_content: list[int] = field(default_factory=list)
     cancelled_momentum: list[list[int]] = field(default_factory=list)
+    # The `remainder` line (stage (vii) step 3, the push by share): per
+    # family the labels of a record's rows beyond the shares matter took,
+    # added at an absorption or a home (the label less the share) and
+    # taken at a re-creation (the born labels less the recoil's shares),
+    # so that measured + transit + escaped + cancelled + remainder moves
+    # only by the pushes, the turns and the escapes' whole labels. Zero
+    # without a record.
+    remainder_momentum: list[list[int]] = field(default_factory=list)
     # The `left` and `right` lines (`hand-v1`, 2026-09-20; BEAM_LAW note
     # 39): per family the units a table clicked of each hand (the rows'
     # `hand` column; a report, the sum over the hands within the measured
@@ -562,6 +573,7 @@ class Ledger:
         self.lifetime_momentum = [[0, 0, 0] for _ in range(count)]
         self.turned_momentum = [[0, 0, 0] for _ in range(count)]
         self.cancelled_momentum = [[0, 0, 0] for _ in range(count)]
+        self.remainder_momentum = [[0, 0, 0] for _ in range(count)]
         for port in self.open_faces:
             self.face_amount[port] = [0] * count
             self.face_content[port] = [0] * count
@@ -604,6 +616,12 @@ class Ledger:
         """The `turned` line summed over the families: what the meetings moved
         the transit momentum line by, in all."""
         return [sum(self.turned_momentum[f][axis] for f in range(self.families)) for axis in range(3)]
+
+    def remainder_momentum_total(self) -> list[int]:
+        total = [0, 0, 0]
+        for vector in self.remainder_momentum:
+            total = [a + b for a, b in zip(total, vector, strict=True)]
+        return total
 
     def cancelled_momentum_total(self) -> list[int]:
         """The labels the merge's cancel removed, summed over the families

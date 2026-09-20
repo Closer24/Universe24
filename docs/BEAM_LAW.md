@@ -2636,7 +2636,17 @@ implementation's part of the contract. The design above is unchanged.
     click needs the lamp's rate under the record form, a set's offer of
     several multiplicities of one record, the columns written only where
     a record is, and the design's test 7 restated as identity on the
-    worlds without a lamp; none is a half hour, none is done here.
+    worlds without a lamp; none is a half hour, none was done at (vi).
+    Stage (vii), step 1 (MIGRATION (vii-1); `tests/test_amplitude_click.py`)
+    builds the four under the key: a lamp's rate births as many records
+    as it says units per direction, each with its own ordinal and the
+    birth phase advanced by the clock's stride; two multiplicities of one
+    record at one offer add at the common denominator where their ratio
+    is a square (the held pointers rescaled by its root) and are refused
+    otherwise (the integer form has no cross term over the square root of
+    their product: a limit of the law, recorded); the columns and the
+    `cancelled` lines are written only where a record is; the gate set's
+    lamp-free worlds read the same with the key and without it.
     **(ix) What is not done, and next.** Unification (3), one permutation
     component for the collision, the meeting and the gate, is refused with
     the reason: the collision permutes directions by the six-heading table,
@@ -2648,19 +2658,37 @@ implementation's part of the contract. The design above is unchanged.
     beside a mass moved to smaller y against the control's in every world,
     -2.115, -5.208 and -4.432 pixels at the three (M, b) against the
     crowd's -2.021, -4.345 and -2.465, and the 464 records that reached
-    the mass were absorbed whole by it; two changes are the next item, not
-    landed here (more than an hour together): u as the record's own field
-    on the row beside the running phase (u = the lamp's clock count mod N,
-    the GameBoard's rules reading the path phase, phase - u, the click
-    reading u; the test: the K record world's click centroid equals its
-    offers' expectation under uniform u within one rung) and a record's
-    row pushing matter with its share amount^2 / (m x norm) of the label,
-    the remainder booked on a ledger line (the test: the mass's momentum
-    per record equals the label times the sum of the shares). Also open:
+    the mass were absorbed whole by it; two changes: u as the record's
+    own field on the row beside the running phase (u = the lamp's count of
+    births mod N, the GameBoard's rules reading the path phase, phase - u,
+    the click reading u; built at stage (vii) step 2, MIGRATION (vii-2):
+    the K record world's clicks per set within one rung of its offers'
+    expectation under uniform u and the click centroid within 0.25 pixels
+    of it, `tests/test_amplitude_click.py` (f)) and a record's row pushing
+    matter with its share amount^2 / m of the quantum's label (the
+    record's norm in m), the integer form label x amount // m, the
+    remainder booked on the books' `remainder` line (built at stage (vii)
+    step 3, MIGRATION (vii-3): the mass's momentum is the sum of the
+    shares of the rows it absorbed, `tests/test_amplitude_click.py` (g);
+    N10's "matter feels every branch" is closed: matter feels each branch
+    by its share). Also open:
     the full register replay and the coverage-measured gate set (the
     trimming pull request), the design's Grover (a world beyond the
     register's ceiling), the design's `split` line of the books, and the
     design's bounds at N = 64 and 4096 as stated above.
+    **(x) The one click, landed** (stage (vii) step 4, MIGRATION (vii-4);
+    the design's section 6). The record form is the law: the world key
+    `amplitude` is deleted (a world that declares it is refused), every
+    lamp births records, the crowd's `wave` threshold on the pointer's
+    square is deleted (the amount summed over the set under both
+    readings; the pointer gives the set's phase and its record), the
+    layer is on every world and the identity `amplitude-v1` is under
+    `hypotheses` when a lamp is declared. A world without a lamp reads as
+    it did before the law (the gate set's lamp-free worlds pinned by their
+    digests); every world with a lamp is re-read: its rows are records,
+    read by the ladder, and its clicks are the records' (the register's
+    re-run worlds, EXPERIMENTS, marked "re-run under the one click; the
+    verdict to be re-read", the old numbers kept as dated history).
 
 38. **The reading's weight at the relative speed, `doppler-v1`: the flux
     at the grain** (the model owner, 2026-09-20, record 119: "a body TAKES

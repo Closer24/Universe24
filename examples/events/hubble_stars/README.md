@@ -422,9 +422,10 @@ The physicist's design, written after the first registration above and
 before this re-run, is
 [docs/designs/hubble_stars/DESIGN.md](../../../docs/designs/hubble_stars/DESIGN.md)
 (its section 2.4 binds the reading). The nine worlds were written again by
-`make_worlds.py --record` under the world key `amplitude` (`record/<world>.json`,
-the detector reading `sum`, the model ids `rays-hubble-stars-record-<crowd>-<clock>-space-v1`;
-not shipped until the key lands on main, since the base engine refuses it)
+`make_worlds.py --record` (`record/<world>.json`, the detector reading `sum`,
+the model ids `rays-hubble-stars-record-<crowd>-<clock>-space-v1`; written
+under the world key `amplitude` and carried without it since the one click
+of stage (vii) deleted the key, every lamp birthing records, MIGRATION (vii-4))
 and run on the branch `claude/amplitude-impl` at commit `62369cb8` with its
 `src` on `PYTHONPATH`:
 

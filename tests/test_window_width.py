@@ -299,7 +299,9 @@ def test_a_lamps_window_has_the_same_width():
         fresh = light.age == 0
         if fresh.any():
             released.append(int(light.phase[fresh][0]))
-    assert released == [6, 7, 8, 9] and simulation.ledger.transit_released == [4, 0]
+    # The four releases at the clock's phases 6 .. 9 are records born at
+    # u = 0 .. 3 (re-run under the one click (stage (vii) step 4); the verdict to be re-read; until stage (vii) step 4 the rows carried 6 .. 9).
+    assert released == [0, 1, 2, 3] and simulation.ledger.transit_released == [4, 0]
     assert source.held == [K_B + 2 - 4, 0] and source.momentum == [-256, 0, 0]
     wide = NatureBeamSimulation(parse_nature_beam_world(lamp_world({"phase_window": 8})))
     for _ in range(64):

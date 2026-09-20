@@ -327,7 +327,6 @@ def mach_zehnder(
         "N": N,
         "release": [0, 1],
         "suspension": 0,
-        "amplitude": True,
         "families": [family],
         "measured": measured,
         "detectors": detectors,
@@ -427,7 +426,6 @@ def two_slits_low() -> dict[str, object]:
     world = two_slits_geometry()
     world["model_id"] = "beam-amplitude-slits_low-v1"
     world["ticks"] = SLITS_TICKS
-    world["amplitude"] = True
     lamp = world["measured"][0]
     lamp["amount"] = world["K"]
     lamp["lamp"]["rate"] = [1, 1]
@@ -647,7 +645,6 @@ def bell(
     world = shipped_world(BELL_SOURCE)
     world = copy.deepcopy(world)
     world["model_id"] = f"beam-amplitude-{name}-v1"
-    world["amplitude"] = True
     world["ticks"] = CHOOSERS_TICKS if settings is None else BELL_TICKS
     lamp = world["measured"][0]
     lamp["lamp"]["directions"] = [MINUS_X, PLUS_X]
@@ -732,7 +729,6 @@ def ghz(name: str, basis: str) -> dict[str, object]:
         "N": N,
         "release": [0, 1],
         "suspension": 0,
-        "amplitude": True,
         "families": [{"name": "light", "quantum": 1}, {"name": "counter", "quantum": 1}],
         "measured": measured,
         "detectors": detectors,
@@ -829,7 +825,6 @@ def gate_world(
         "N": N,
         "release": [0, 1],
         "suspension": 0,
-        "amplitude": True,
         "families": [{"name": "light", "quantum": 1}, {"name": "counter", "quantum": 1}],
         "measured": measured,
         "detectors": detectors,

@@ -69,11 +69,12 @@ kept, their pins the law of events').
 | `test_bohr_readings.py` | The series H tool reads the engine (the experimenter's rule, 2026-09-20): the flight time from the centre's plane to a face off `FlightTable.manhattan_steps` (5 Links at the age 8, 6 at 10, 1 at 1), the pointer per turn and the coherence ratio off `nature_beam.coherent_pointer` with the circle's tables ((16384, 0) and (-8192, 0) for two units at phase 0 and one at 32, C = 0.2; 1.8 with the third at 0; the slope of [1, 4, 9] is 2), and `read_run` on a run written by the runner (a proton of `p` at (5, 5, 1) of an 11 x 11 x 3 GameBoard on the four in-plane headings, an electron of `e` of span [1, 1, 3] at (8, 5, 1) with the momentum [0, 320, 0], `pass` for `p`, `action` 65536, 20 intervals: the radius 3, j = 0.05859375, the flights 8, the clicks per face equal to the record's, no read, the steps' phases 5, 5, 5, 6 at the ticks 5, 9, 13, 17, the first -x click at tick 16); the expected integers are in the module's docstring |
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the integer audit of `core/`, and LOCALITY-1 documented without an exception |
 | `test_meeting.py` | The meeting: the arc permutation of the direction table (a permutation for 1034 targets on K's table, the rest fixed, the chain from +x, the k-fold shift), the phase register (61, 62, 63, 0, 1, 2 with the turn at the fourth; the inverse), the sign of the turn and the `turned` line, the crowd and the record untouched, the bijection with the meeting (50 forward, 50 inverse) and the refusals ([below](#the-meeting)) | new (2026-09-20, the model owner's "DECIDED: the meeting, M-R"; the physicist's and the mathematician's design) |
-| `test_amplitude_record.py` | The amplitude law's key and the record on the row (`amplitude-v1`): the world key `amplitude`, its default, its identity and its refusals; the three columns `record`, `branch` and `multiplicity` at their defaults on every row without the key and the merge's packed key unchanged by them; the merge's normal form under the key, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
+| `test_amplitude_record.py` | The record on the row (`amplitude-v1`): the world key `amplitude` deleted and refused, the identity `amplitude-v1` on a world with a lamp alone; the four columns `record`, `branch`, `multiplicity` and `birth` at their defaults on every row of no record and the merge's packed key unchanged by them; the merge's normal form, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
 | `test_amplitude_split.py` | The split, the birth of a record and the phase per interval of age: a lamp's birth of one record of k rows with the multiplicity k and the identity number x 2^32 + ordinal; the (20, 21) splitter's rows (41 in phase toward D1, 1 in antiphase toward D2, the multiplicity 1682) and the balanced split's cancel on the GameBoard with the `cancelled` lines; the pair form of `phase_per_link` (40 at [8, 1], 26 at [16, 3], 24 at the integer 8 after 5 intervals; the inverse bit-exact); the refusals ([below](#the-amplitude-law-the-split)) | new (2026-09-20; the design's sections 2.1, 2.3, 3.1 and 3.4; the owner's unifications (1) and (2)) |
 | `test_amplitude_layer.py` | The layer: the reading `sum` at the record's scope, the offers, the ladder at completion and the gathers, on series L: the ten Mach-Zehnder and Elitzur-Vaidman worlds click as the design's table over the 64 births (tests 1, 3), the same list twice and the moved rung (8), a split takes no click gate (the review's B1), the two slits at a low rate against the generator's reading of one birth (2: 78 of 80 sets exact, one rung moved by the tables' rounding), the gate set parses without the key (7), the reading tool's replay equals `run.json`'s `world` (10), the pair form bounded at the parse (S1), the cancel booked per content (S3), a lamp short of one quantum per direction refused (S4), the `record` line's scope ([below](#the-amplitude-law-the-layer)) | new (2026-09-20; the design's sections 3, 5 and 7; the decision on the split's gate) |
 | `test_amplitude_pair.py` | The pair, the which-path world, no maintenance and GHZ: a lamp's `branches` and `arms` (the birth of four rows on two arms with the labels 0 and 3), the CHSH labels (E x 64 = 44, -44, 44, 44; S = 176/64; the marginals 32/64), the choosers (the 15 setting pairs' E; S = 156/64 on the registered quadruple), the which-path `read` (E = 44, -44, 0, 0; S = 88/64), Bob's counters 116 Links farther (E unchanged), GHZ's allowed triples and products, the refusals ([below](#the-amplitude-law-the-pair)) | new (2026-09-20; the design's section 4 and its `bell.py`) |
 | `test_amplitude_gate.py` | The gate between records and the pair at N = 1024 and 4096: the Hadamard and the CNOT on the GameBoard (|00> - |11>), the pair by the gate at the CHSH labels (S = 176/64), CNOT twice the identity, GHZ by one gate of three parties, the register's ceiling (three rotations run, four refused at load), the refusals, S = 2896/1024 with |E - cos| <= 1/N, S = 11584/4096 with the bound failing at the tables' rounding; the review of (v): the gate's copies booked on the live count (every gathered record at live 0), a record with an offer or units elsewhere refused at the gate, the control by its declared arrival direction (the `measured` list reversed gives the same outcomes), the control's refusals ([below](#the-amplitude-law-the-gate)) | new (2026-09-20; the design's section 10 and its `gate.py`; the owner's paper numbers; the review of (v)) |
+| `test_amplitude_click.py` | The one click (stage (vii)): a lamp's rate births as many records as it says with the ordinals and the birth phases in order, two multiplicities of one record at one offer take the common denominator or are refused, the columns are written only where a record is, and every gate-set world without a lamp reads as it did before the law at its cap (its pinned digests); step 2: u the record's own field (a narrow window admits every record's row, the K record world's clicks within one rung of its offers); step 3: the push by share (the mass's momentum the sum of the shares, the remainder line, the unkeyed bar as it was) ([below](#the-amplitude-law-the-one-click)) | new (2026-09-20; the design's sections 2.1, 2.5 and 6; the K finding) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -298,12 +299,13 @@ content 16 releasing one row per self-creation on +x and +y at the turn 1
 quantum per direction at a birth), and a detector of one Node. The
 expected integers, written down before the first run:
 
-- (a) the key: absent it is false, `hypotheses` is empty and `run.json`
-  carries `amplitude` false; declared true, `hypotheses` is
-  ["amplitude-v1"]; refused naming the key: a value that is not true or
-  false, N below 4 under the key (the quarter turn of a reflection), a
-  lamp's `rate` other than [1, 1] under the key; N 4 with a lamp of
-  content 1 at [1, 1] is accepted;
+- (a) the key is deleted (stage (vii) step 4): a world with a lamp is
+  recorded and `hypotheses` is ["amplitude-v1"], `run.json` carries no
+  `amplitude`; the same world without its lamp is not recorded and
+  `hypotheses` is empty; `amplitude` declared true or false is refused
+  naming MIGRATION; a lamp with N 2 is refused (a record's circle holds
+  the quarter turn), the world without the lamp at N 2 parses; N 4 with a
+  lamp of content 1 at [1, 1] is accepted; a lamp's rate [2, 1] parses;
 - (b) the columns: after 5 intervals every row of the store carries record
   0, branch 0 and multiplicity 1; `state.json`'s rows carry none of the
   three keys without the world key and all three under it; the packed
@@ -317,8 +319,8 @@ expected integers, written down before the first run:
   (2, the larger side's phase); rows of no record at 9 and 41 stay two
   rows, as do two rows of one record a quarter turn apart and two of one
   record at one phase with the multiplicities 2 and 4; two of one record
-  at one phase merge to amount 2; without the key (modulus 0) the
-  antiphase pair stays; the units cancelled are returned per (record,
+  at one phase merge to amount 2; with the modulus 0 (a store of no
+  record) the antiphase pair stays; the units cancelled are returned per (record,
   direction, content per unit), {(7, 2, 1): 4, (8, 2, 1): 2, (9, 2, 1): 2}
   (the review's S3: the content carried is units x content, no division).
 
@@ -337,8 +339,7 @@ integers, written down before the first run:
 - (a) the birth: at tick 1 the record 2^32 + 1 of two rows at (0, 0),
   (+x, age 0, phase 0, amount 1, content 1, branch 0, multiplicity 2) and
   (+y, phase 16); at tick 2 the record 2^32 + 2 with the phases 1 and 17;
-  the lamp's `births` 2; without the key (the lamp's `turns` dropped) rows
-  of record 0, multiplicity 1 and phase 0 on both directions;
+  the lamp's `births` 2;
 - (b) the split on the (20, 21) splitter: at tick 11 the record's rows at
   (3, 3) are (+x, age 0, phase 16, amount 41, multiplicity 1682) and (+y,
   phase 32, amount 1, 1682): the reflected 21 and the transmitted 20 merge
@@ -354,11 +355,10 @@ integers, written down before the first run:
   pair per interval of age; not one number on the flight table); a rest
   row turns nothing; `run.json` carries the pair; 5 forward and 5 inverse
   intervals on a periodic bar return the row bit-exact; the pair refused
-  without the key and on a family without a phase circle;
-- (d) the refusals of the split: `weights` without the key, on `measure`,
+  on a family without a phase circle;
+- (d) the refusals of the split: `weights` on `measure`,
   on a free family's entry, of a wrong length, all zero, a turn beyond
-  N - 1, `inputs` naming an undeclared direction, a lamp's `turns` without
-  the key; a pending row of multiplicity 2^61 split by (20, 21) (A = 841)
+  N - 1, `inputs` naming an undeclared direction; a pending row of multiplicity 2^61 split by (20, 21) (A = 841)
   refuses the run naming the Node (3, 3).
 
 ## The amplitude law: the layer
@@ -399,8 +399,8 @@ expected integers, written down before the first run:
   pixels (15, screen_61 twice), the faces 8, 7 (15, each click at a Node
   of the face's edge); 3 distinct cell lists, 32 records with u = 0's (the
   tables' rounding by u, no rung moved);
-- (e) test 7: the seventeen worlds of the gate set parse without the key,
-  `amplitude` false and no `amplitude-v1` identity;
+- (e) test 7: the seventeen worlds of the gate set parse with the key
+  deleted, the identity `amplitude-v1` on the lamp worlds alone;
 - (f) test 10: `tools/amplitude_path.replay` on 30-interval runs of
   `mz_equal` and `ev_29` returns `run.json`'s `world`, at least 18
   gathers, the open count of `run.json`'s `layer`;
@@ -420,12 +420,15 @@ expected integers, written down before the first run:
   (`gate`) and two absorbers a, b: every record gathers at the re-emitter
   (its one offer) and what it re-creates is one new record of two rows
   (one `split` line with `rebirth`, born 2; one birth in the layer) that
-  gathers once with the cells a, b and the rungs 32, 64, chosen a (u 0);
+  gathers once with the cells a, b and the rungs 32, 64, chosen a for
+  u below 32 and b above (the rebirth's u the re-emitter's count of
+  births, 0 .. 63 over the first 64 rebirths: a 32, b 32; until stage
+  (vii) step 2 every rebirth had the re-emitter's phase 0 and went to a);
 - (l) the review's B2: a free family's source of amount 3 into a
   `rerelease` on two directions comes out 1 + 2 with the key as without
   it, the rows and the `rerelease` lines the same;
 - (m) the review's S3 and S5: a `phase_window` on a `rerelease` entry
-  whose Node reads no `sum` set is refused at load under the key ("dead"),
+  whose Node reads no `sum` set is refused at load ("dead"),
   as is a detector named `measured:3` (reserved);
 - (n) the record's total re-pinned at the tables (the reviewer): on
   `mz_equal` the total of the record u is (1681 q[u + 16] + q[u + 32]) /
@@ -433,6 +436,66 @@ expected integers, written down before the first run:
   values within 237/65536 of 1; the design's 0.0019 held for u = 0
   alone); its first gather carries the content 41, the momentum [2624,
   0, 0] and the Node (4, 3, 0) of its click.
+
+## The amplitude law: the one click
+
+`tests/test_amplitude_click.py` (docs/BEAM_LAW.md note 37; the design,
+sections 2.1, 2.5 and 6; MIGRATION (vii-1)). The expected integers,
+written down before the first run:
+
+- (a) a lamp at the rate [3, 1] on two directions (K 2^20, content 2^20:
+  the stride 1) births three records per self-creation: the ordinals 1,
+  2, 3 at tick 1 and 4, 5, 6 at tick 2 with u = 0 .. 5 (the ordinal less
+  one, the rows' column `birth`), each two rows of amount 1 with the
+  multiplicity 2, six births counted at the lamp;
+- (b) `common_denominator(2, 8)` = (2, 1, 8), (8, 2) = (1, 2, 8), (9, 36)
+  = (2, 1, 36), (1682, 1682 x 25) = (5, 1, 1682 x 25), and (2, 4) none;
+  two paths of one record, one through a re-emitter of weight [1] (m 2,
+  amount 1) and one through a re-emitter of weight [2] (m 8, amount 2),
+  both five Links, meet in phase at one `sum` set: the offer's
+  multiplicity 8, its units 3, the record's one cell the set with the
+  rung 64, its total and weight 2 x 2^58 (the two paths add: a re-meeting
+  is not unitary, the design's 2.5); with the second re-emitter of
+  weights [1, 1] on two directions (m 4 against 2) the run is refused:
+  "record 4294967297 at the set end carry the multiplicities 2 and 4";
+- (c) a keyed bar of 6 Nodes with a lamp on +x, a declared row of light
+  of no record at x = 3 and a counter at x = 5: after one interval
+  `state.json` holds one row with the three columns and one without;
+  over 16 intervals the counter's `click` lines carry `record`, `branch`,
+  `multiplicity` and `age` all together or not at all, and both kinds
+  occur;
+- (d) every world of `examples/events/gate_set.json` without a lamp
+  (`weak/j3_deuteron`, `bohr/r2`, `detector/grouped_12_nodes`,
+  `weak/j2_ladder`, `weak/j3_deuteron_crowd`, `nucleus/alpha_square`,
+  `hubble/pushing_age`, `coupling/1b_m16`), run at its `cap` with the key
+  and without it: `events.jsonl` and `state.json` equal byte for byte,
+  the books (`audit`) equal, `run.json`'s `amplitude` false and true
+  (step 1); since step 4 (the key deleted) the run at the cap gives the
+  base tree's `state.json`, books and `events.jsonl`, pinned by their
+  sha256 (the trimming's fast pass of 2026-09-20: `weak/j3_deuteron`
+  b9e0613b21af..., 431cc87afa9f..., 15450ef9d5d0...; `bohr/r2`
+  3d6b27e299af..., 51c74ad753d8..., f5dfd739878e...; the six others in
+  the module);
+- (e) step 2: a bar of 12 Nodes with a lamp at the stride 1 and a counter
+  whose `measure` entry has the window 0 of width 8: no `pass` line at
+  the counter over 80 intervals and at least 60 clicks, every click's `u`
+  its record's ordinal less one and its `phase` equal to `u` (the path
+  phase 0), the rows' `birth` the same;
+- (f) step 2, the K record world (`lensing/mass_meeting` with
+  every pixel `sum`, the lamp's `turns` 0, 300 intervals): the 64
+  records of the ordinals 129 .. 192 carry u = 0 .. 63 once each; per
+  set their clicks are within one rung of the sum of their cells' widths
+  over N; the click centroid in y is within 0.25 pixels of the
+  expectation's; the light's `turned` line is not zero;
+- (g) step 3, the push by share: a plane of 9 x 3 with a lamp on +x at
+  (0, 1), a splitter of the weights [1, 1] on +x and +y at (3, 1) and a
+  mass (a free family of content 4096) at (7, 1), 60 intervals: at least
+  20 clicks at the mass and 20 re-releases at the splitter; every click
+  at the mass carries `push` [64, 0, 0] and `share` [32, 0, 0] (amount 1,
+  m 2); the mass's momentum [32 x clicks, 0, 0]; the splitter's
+  [64 x re-releases - 32 x splits, -32 x splits, 0]; the books balanced,
+  the `remainder` line [32 x clicks - 32 x splits, -32 x splits, 0] for
+  the world and for the light.
 
 ## The amplitude law: the gate
 
@@ -467,7 +530,7 @@ The expected integers, written down before the first run:
   `rotations_4` is refused at load, the multiplicity through its
   re-emitters 2^64 beyond 2^62 - 1, naming the fourth rotation's Node
   (8, 0, 0); Grover's six rotations are not a world of the GameBoard;
-- (f) the refusals: `rotate` and `gate` without the key and on `measure`;
+- (f) the refusals: `rotate` and `gate` on `measure`;
   a gate kind other than `cnot`; `hold` not a boolean; `parties` 0; a
   rotation's bit beyond 31; `half_angle(1, 4096)` refused, `half_angle(512,
   4096)` the 4096 table's entry at 256, `half_angle(16, 64)` (181, 181);
@@ -532,7 +595,7 @@ The expected integers, written down before the first run:
   product +1) and XYY, YXY, YYX allow ++-, +-+, -++, --- (the product
   -1), 16 births each, eight cells per record; YYY allows all eight, 8
   each;
-- (g) the refusals: `branches`, `arms` and `turn` without the key; `arms`
+- (g) the refusals: `arms`
   beyond the directions or not dividing them; a label at or above 2^arms;
   a label twice; a weight 0; `turn` on `pass` and beyond N - 1; a `turn`
   of 16 parsed into `label_turns`.
@@ -657,10 +720,11 @@ declares the reading `wave` (the default since 2026-09-20; from
 
 - (a) two rays of amount 1 arriving in one interval at a counter of
   threshold 1, in phase (0 and 0): the record 4 x 32^2 x 256^2 = 268435456,
-  the amount 2 and two clicks; in antiphase (0 and 32): the pointer 0, so
-  since 2026-09-20 both pass with a `pass` record naming `threshold` 1
-  (until then both clicked and the record took 0), no click, the record
-  0, no `record` line; one ray alone: 32^2 x 256^2 = 67108864; the
+  the amount 2 and two clicks; in antiphase (0 and 32): the pointer 0,
+  both click and the record is 0 (the threshold is the amount since stage
+  (vii) step 4, the one click; from 2026-09-20 to that step the pointer's
+  square gated the set and both passed naming `threshold` 1; re-run under the one click (stage (vii) step 4); the verdict to be re-read); one
+  ray alone: 32^2 x 256^2 = 67108864; the
   `record` line of `events.jsonl` carries the pointer (X, Y) and the
   square; the run's detector report carries the cumulative record.
 - (b) a receiver (a measured event of `m`, content 4, measuring light) at
@@ -755,9 +819,11 @@ declares the reading `wave` (the default since 2026-09-20; from
   leaves the counter at phase 40 (the report's and the `record` line's
   `phase` 40), the turn of K 2^20 being 0; a lamp of light (content 24,
   K 24, rate [1, 1]) in a `wave` detector that clicks a ray of phase 40
-  at tick 1 releases its six rays of that tick at the received phase 40
-  and is at phase 41 after the interval (the frame's turn 1 added after
-  the click), at 42 after the next with its rays at 41; the set of three
+  at tick 1 is at phase 41 after the interval (the frame's turn 1 added
+  after the click) and at 42 after the next, and its births are records
+  born at u = 0 then 1 with the direction's turn 0 (the returned phase
+  no longer enters a lamp's rows since stage (vii) step 4; until then the
+  six rays of tick 1 carried 40 and the next 41; re-run under the one click (stage (vii) step 4); the verdict to be re-read); the set of three
   Nodes of (f) with the rays at 0 and 16 puts all three counters at phase
   8; a ray below the threshold leaves the counter at phase 0, and a
   `read` of `m` (a ray of phase 40) leaves the reader at phase 0.
@@ -1955,20 +2021,27 @@ flight table: a ray released at tick t first walks at t + 1; 10 Links take
   K 2^14, a lamp of `light` (content K + 2, phase 0, rate [1, 1] on +X
   only) at x = 0; a counter at x = 10 measuring through the window 40 and
   its complement at x = 11 through the window 8. The release of age a
-  (tick a + 1) reaches x = 10 at tick a + 18 and x = 11 at tick a + 20:
-  after 83 intervals the two counters clicked 32 times each, x = 10 the
-  phases 24..55, x = 11 the phases 0..23 and 56..63, every one of the first
-  64 releases exactly once; 34 `pass` records at x = 10 and none at x = 11,
+  (tick a + 1) reaches x = 10 at tick a + 18 and x = 11 at tick a + 20.
+  Since stage (vii) step 4 (the one click) every release is a record born
+  at u = a with the path phase 0, and a window reads the path phase: after
+  83 intervals x = 10 clicked none and x = 11 all 64 (the running phases
+  0 .. 63, `u` on every click line), 66 `pass` records at x = 10 (the 64
+  and two more at ticks 82 and 83) with the window 40 and none at x = 11,
   nothing escaped; the lamp at age 83, phase 19, content K + 2 - 83,
-  momentum (-5312, 0, 0) (83 labels of 64; was (-83, 0, 0)).
+  momentum (-5312, 0, 0) (re-run under the one click (stage (vii) step 4); the verdict to be re-read). Until that step the rows carried the
+  clock's phase and the two counters clicked 32 times each, x = 10 the
+  phases 24..55 and x = 11 the phases 0..23 and 56..63, 34 `pass` records
+  at x = 10 (83 labels of 64; was (-83, 0, 0) before the label).
 - (c) a lamp with a window: the lamp of (b) with `phase_window` 8 and a
   plain counter at x = 10: at each of the first 64 intervals t its age is
-  t, its phase t mod 64, and it released one ray at phase t - 1 when t - 1
-  is in the window (the ages 0..23 and 56..63) and none otherwise: after 64
+  t, its phase t mod 64, and it released one ray when t - 1 is in the
+  window (the ages 0..23 and 56..63) and none otherwise, the ray a record
+  born at u = its count of births less one (0 .. 31; until stage (vii)
+  step 4 the ray carried the clock's phase t - 1; re-run under the one click (stage (vii) step 4); the verdict to be re-read): after 64
   intervals 32 released, content K + 2 - 32, momentum (-2048, 0, 0) (was
   (-32, 0, 0)), phase 0;
-  after 81 the counter clicked 32 times and the lamp released 17 more, 49
-  in all. The refusals, naming the key: a window of 64 at N = 64, a window
+  after 81 the counter clicked 32 times (the phases 0 .. 31) and the lamp
+  released 17 more, 49 in all. The refusals, naming the key: a window of 64 at N = 64, a window
   on `pass`, an object entry with an unknown key, a lamp window of -1, a
   `reads` key outside the reading's components; an object entry without
   `rule` takes the family's default rule (since the night of 2026-09-19: a
@@ -2312,9 +2385,10 @@ before the first run:
 - (d) a lamp's window has the same width: the lamp of the window test (c)
   (K 2^14, content K + 2, one ray per self-creation on +x) with
   `phase_window` 8 and `phase_width` 4 releases at the self-creations
-  whose clock phase falls in [6, 10): over 64 intervals 4 rays at the
-  phases 6, 7, 8, 9, the content K + 2 - 4, the momentum (-256, 0, 0);
-  32 with the width absent.
+  whose clock phase falls in [6, 10): over 64 intervals 4 rays, records
+  born at u = 0, 1, 2, 3 (their phases; until stage (vii) step 4 the
+  clock's 6, 7, 8, 9; re-run under the one click (stage (vii) step 4); the verdict to be re-read), the content K + 2 - 4, the momentum
+  (-256, 0, 0); 32 with the width absent.
 - (e) the refusals, naming the key: `phase_width` 0, 65 at N = 64, 1.5 and
   "4"; on `pass`; for a family without a phase circle; without
   `phase_window`; on a lamp without its window and at 0; `phase_width`
@@ -2376,11 +2450,17 @@ every `sb` row 44; the offsets 0 and 32) run through the runner for the
 warm-up 7 plus 64 pairs: (a) the offsets read off the record (tick - phase
 mod N, one value per counter) equal 1 + the flight age at which the pair
 ray reaches each counter off `FlightTable.manhattan_steps`, 6, 11, 13, 14;
-(b) one bin (20, 44) of 64 pairs, the counts 8, 24, 24, 8, E = -1/2 the
-triangle's 1 - 4 x 24 / 64, both marginals 1/2, 0 criteria failed; (c)
-the windows written in the file (20, 52, 44, 12) read the same bin and
-counts, the two runs merged one bin of 128 with E -1/2, the command line
-on both exit 0; (d) on synthetic bins whose E are the triangle's for 0/25
+(b) one bin (20, 44) of 64 pairs: since stage (vii) step 4 (the one
+click) the pair lamp's rows are records with the path phase 0 and the
+counters' windows read the path phase, so every pair lands in (-1, -1),
+the counts 0, 0, 0, 64, E = 1, both marginals 0 and 3 of the tool's
+criteria failed (the record kinds, every click inside its window, E on
+the triangle), the tool's expectation -1/2 being the crowd form's (re-run under the one click (stage (vii) step 4); the verdict to be re-read;
+until that step the counts were 8, 24, 24, 8, E = -1/2 the triangle's
+1 - 4 x 24 / 64, both marginals 1/2, 0 criteria failed); (c) the windows
+written in the file (20, 52, 44, 12) read the same bin and counts, the
+two runs merged one bin of 128 with E 1, the command line on both exit 1
+(its checks fail; was exit 0); (d) on synthetic bins whose E are the triangle's for 0/25
 and 8/29, `chsh_sum` 2 (None with a bin missing), `best_quadruple` 2 on
 that quadruple with the triangle 2, `signed_sums` the minus sign on each
 term in turn, `in_window` the engine's half circle.
@@ -2462,9 +2542,17 @@ with the sign restored (`nature_beam.unit_label`, the flight table's
   run, so the content per unit is 3) at (15, 15, 15) releasing one unit
   per interval on the six headings and the eight fan directions (14 rows
   per release, amount 1, content 3): every row's label 3 x u_d, |label|^2
-  within (63 x 3)^2 .. (65 x 3)^2; the lamp's recoil after the first
-  release exactly -(the labels born) = -3 x (378, 241, 121) = (-1134,
-  -723, -363) (the six headings cancel), the transit line their sum;
+  within (63 x 3)^2 .. (65 x 3)^2; the release is one record of 14 rows
+  (m 14) since stage (vii) step 4, so the lamp's recoil after the first
+  release is the rows' shares, label // 14 each, (-77, -48, -24), the
+  transit line the whole labels' sum 3 x (378, 241, 121) = (1134, 723,
+  363) and the books' `remainder` line (-1057, -675, -339), measured +
+  transit + escaped + remainder = 0 at every interval; the mirror takes
+  each row's share and recoils by the re-created row's, (22, 14, 0) per
+  reflection; the screen's momentum the sum of the shares (13, 0, 0) and
+  (13, 1, 0) of its clicks (re-run under the one click (stage (vii) step 4); the verdict to be re-read; until stage (vii) step 3 the recoil
+  was the whole labels, (-1134, -723, -363), and the screen's momentum
+  the sum of the pushes);
   through 60 intervals with a screen of `m` at (21, 15, 15) measuring
   `light` (each click moves the ray's label 3 x u_d: the +X rays
   (192, 0, 0), the (11, 1, 0) rays, whose line passes the screen's Node

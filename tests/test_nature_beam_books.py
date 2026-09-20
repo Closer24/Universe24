@@ -121,7 +121,7 @@ def test_the_running_lines_equal_the_recount_at_every_interval():
             at_rest = light.direction < 2
             assert int(at_rest.sum()) == 2 and (light.node[at_rest] == light.flat((4, 0, 0))).all()
     assert moved
-    kinds = {(str(r["event"]), r["detector"], str(r["family"])) for r in records}
+    kinds = {(str(r["event"]), r.get("detector"), str(r.get("family"))) for r in records}
     assert ("home", None, "light") in kinds and ("home", None, "m") in kinds
     assert ("rerelease", None, "light") in kinds and ("read", None, "m") in kinds
     assert ("click", "screen", "light") in kinds and ("click", None, "light") in kinds

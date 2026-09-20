@@ -255,8 +255,14 @@ def test_the_copies_of_the_gate_are_booked_on_the_live_count():
     """(i)."""
     simulation, lines = run(GENERATOR.gate_worlds()["cnot_pair_0_8"])
     assert simulation.layer is not None
-    gathered = [live for live in simulation.layer.records.values() if live.gathered]
-    assert len(gathered) >= N and all(live.live == 0 for live in gathered)
+    layer = simulation.layer
+    # The gathered records left the table (their offers with them) at the
+    # live count 0: the copies were booked, so no record with offers sits
+    # open at a live count of 0 or below, and every open record is in flight.
+    assert len(layer.gathered) == layer.completed >= N
+    assert layer.report()["open"] == len(layer.records)
+    assert all(live.live > 0 for live in layer.records.values())
+    assert all(int(gather["record"]) in layer.gathered for gather in layer.gathers)  # type: ignore[call-overload]
     gates = [line for line in lines if line.get("event") == "gate"]
     assert gates and all(line["added"] == 1 for line in gates)
 
@@ -342,14 +348,6 @@ def test_the_refusals_of_the_gate_keys():
         measured[1]["table"]["light"] = {"rule": "rerelease", **keys}
         return world
 
-    plain = entry(rotate={"setting": 16})
-    plain["amplitude"] = False
-    with pytest.raises(ValueError, match=r"\.rotate is the amplitude law's rotation"):
-        parse_nature_beam_world(plain)
-    plain = entry(gate={"kind": "cnot"})
-    plain["amplitude"] = False
-    with pytest.raises(ValueError, match=r"\.gate is the amplitude law's gate"):
-        parse_nature_beam_world(plain)
     with pytest.raises(ValueError, match=r"\.rotate belongs to a `rerelease` entry, not to measure"):
         parse_nature_beam_world(entry(rule="measure", rotate={"setting": 16}))
     with pytest.raises(ValueError, match=r"\.gate belongs to a `rerelease` entry, not to measure"):

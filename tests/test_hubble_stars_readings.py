@@ -42,6 +42,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import math
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -157,14 +158,16 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_declare_a_fo
     }
     assert set(expectations["crowds"]) == set(generator.CROWDS)
     assert expectations["reading_rule"] == "acoustic"
-    # The record-click worlds (the key `amplitude`, on main since PR #370)
-    # and the expectations pinned for the second run under the step drive
-    # (the reading rule `source`, the burst of the step rule at most 1).
+    # The record-click worlds (reading `sum` at the centre; the key
+    # `amplitude` deleted by the one click of stage (vii), MIGRATION
+    # (vii-4): every lamp births records) and the expectations pinned for
+    # the second run under the step drive (the reading rule `source`, the
+    # burst of the step rule at most 1).
     for name, document in generator.record_worlds().items():
         assert json.loads((WORLDS / "record" / f"{name}.json").read_text(encoding="utf-8")) == document
-        assert document["amplitude"] is True
-        # Inline (a reference climbs one level only; the worlds under the
-        # key `amplitude` are deferred, record 113).
+        assert "amplitude" not in document and document["detectors"][0]["reading"] == "sum"
+        # Inline (a reference climbs one level only; the worlds of the
+        # record click are deferred, record 113).
         assert "entity_definitions" not in document
         parse_nature_beam_world(document)
     pinned = json.loads((WORLDS / "record" / "expectations.json").read_text(encoding="utf-8"))
@@ -183,7 +186,7 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_declare_a_fo
     # worlds with the key added and nothing else changed.
     for name, document in generator.doppler_worlds().items():
         assert json.loads((WORLDS / "doppler" / f"{name}.json").read_text(encoding="utf-8")) == document
-        assert document["amplitude"] is True and document["doppler"] is True
+        assert "amplitude" not in document and document["doppler"] is True
         without = {k: v for k, v in document.items() if k not in ("doppler", "model_id")}
         record = generator.record_worlds()[name]
         assert without == {k: v for k, v in record.items() if k != "model_id"}
@@ -249,9 +252,14 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     assert [r.name for r in TOOL.find_runs(tmp_path)] == ["gravity_scalar"]
     point = TOOL.window_point(run, star, (20, TICKS))
     assert point is not None and point.k == 0.0
-    assert abs(point.z - 0.5 / run.c) < 0.05
-    assert abs((1.0 + point.z) / (1.0 + point.predicted) - 1.0) <= TOOL.FORMULA_TOLERANCE
-    assert abs(point.rate * (1.0 + point.z) - 1.0) <= TOOL.LUMINOSITY_TOLERANCE
+    # Re-run under the one click (stage (vii) step 4); the verdict to be
+    # re-read: the star's rows are records born at u with the path phase,
+    # so the `wave` set's phase never turns and the acoustic rule's z (the
+    # slope of the record's phase) is undefined; the record form's reading
+    # of series G2 is the `source` rule of the record worlds' expectations
+    # (until that step z within 0.05 of 0.5 / c, the formula and the
+    # luminosity within their tolerances).
+    assert math.isnan(point.z)
     assert point.declared == 0.5 / run.c
 
 

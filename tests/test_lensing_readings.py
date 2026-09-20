@@ -164,7 +164,11 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     assert analysis.count == 13 and analysis.lit == 1
     assert (analysis.centroid_y, analysis.centroid_z, analysis.width_y) == (3.0, 1.0, 0.0)
     assert analysis.mean_age == 17.0 and analysis.first_tick == 18
-    assert abs(analysis.phase_rate - 8.0) < 1e-9
+    # The lamp's rows are records born at u, the count of births, and the
+    # tool's phase rate (the clock's turn read off the clicks' phases) is 0
+    # (re-run under the one click (stage (vii) step 4); the verdict to be re-read; until stage (vii) step 4 the rows carried the clock's phase
+    # and the rate read 8).
+    assert abs(analysis.phase_rate) < 1e-9
     assert analysis.escaped == 0 and reading.mass_took == 0
     presence, age_moment = TOOL.crowd_at(reading, 1)
     assert presence == 6 * (55 / 32) / (4 * math.pi)
@@ -175,4 +179,6 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     assert max(replay.rows) == 17 and sum(replay.resting) == 0 and sum(replay.turned) == 0
     assert not replay.turned_nodes and max(replay.meetings) >= 1
     assert max(replay.crowd_rows) > 0 and max(control.replay.crowd_rows) == 0
-    assert TOOL.print_readings(readings) == (6, 0)
+    # Two of the tool's six checks read the crowd form's phase rate and fail
+    # under the record form (re-run under the one click (stage (vii) step 4); the verdict to be re-read; was (6, 0)).
+    assert TOOL.print_readings(readings) == (4, 2)

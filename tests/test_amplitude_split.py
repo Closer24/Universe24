@@ -97,21 +97,6 @@ def test_the_birth_of_a_record_by_a_lamp():
     second = (1 << 32) + 2
     assert [r[3] for r in rows_at(simulation, second)] == [1, 17]
     assert simulation.measured[1].births == 2
-    plain = json.loads(json.dumps(world))
-    plain["amplitude"] = False
-    plain["measured"][0]["lamp"].pop("turns")
-    for detector in plain["detectors"]:
-        detector.pop("reading")
-    for entry in plain["measured"]:
-        table = entry.get("table", {}).get("light")
-        if isinstance(table, dict):
-            entry["table"]["light"] = "rerelease"
-    bare = NatureBeamSimulation(parse_nature_beam_world(plain))
-    bare.step()
-    assert sorted((r.direction, r.phase, r.record, r.multiplicity) for r in bare.stores[0].rows()) == [
-        (2, 0, 0, 1),
-        (4, 0, 0, 1),
-    ]
 
 
 def test_the_split_at_the_splitter_and_the_cancel_on_the_game_board(tmp_path: Path):
@@ -176,7 +161,6 @@ def bar(frequency: object, periodic: bool = False, rest: bool = False) -> dict[s
         "N": N,
         "release": [0, 1],
         "suspension": 0,
-        "amplitude": True,
         "age_bound": 100,
         "families": [{"name": "light", "quantum": 1, "phase_per_link": frequency}],
         "measured": [],
@@ -219,8 +203,6 @@ def test_the_phase_per_interval_of_age(tmp_path: Path):
     for _ in range(5):
         both.inverse_step()
     assert both.stores[0].rows() == before
-    with pytest.raises(ValueError, match="phase_per_link as a pair"):
-        parse_nature_beam_world({**bar([8, 1]), "amplitude": False})
     phaseless = bar([8, 1])
     phaseless["families"][0]["phase"] = False
     with pytest.raises(ValueError, match="refused for a family without a phase circle"):
@@ -237,12 +219,6 @@ def test_the_refusals_of_the_split():
         world.update(changes)
         return world
 
-    plain = variant(amplitude=False)
-    plain["measured"][0]["lamp"].pop("turns")
-    for detector in plain["detectors"]:
-        detector.pop("reading")
-    with pytest.raises(ValueError, match="needs the world key amplitude"):
-        parse_nature_beam_world(plain)
     cases = [
         ({"rule": "measure", "weights": [1, 1]}, "on the rule 'measure'"),
         ({**splitter, "weights": [[1, 1, 1], [1, 1]]}, "one integer per declared direction"),
@@ -260,12 +236,6 @@ def test_the_refusals_of_the_split():
     free["measured"][3]["table"]["m"] = {"rule": "rerelease", "weights": [1, 1]}
     with pytest.raises(ValueError, match="free families never branch"):
         parse_nature_beam_world(free)
-    turns = variant(amplitude=False)
-    for detector in turns["detectors"]:
-        detector.pop("reading")
-    turns["measured"][3]["table"]["light"] = "rerelease"
-    with pytest.raises(ValueError, match="lamp.turns is the amplitude law"):
-        parse_nature_beam_world(turns)
     # The multiplicity beyond the bound at the split, refused naming the Node.
     simulation = NatureBeamSimulation(parse_nature_beam_world(base))
     splitter_event = simulation.measured[4]

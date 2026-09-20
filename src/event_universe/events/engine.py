@@ -228,29 +228,28 @@ class NatureBeamSimulation:
         # detector by number, the declared detectors, the faces in Port
         # order and the border.
         self.layer: Layer | None = None
-        if world.amplitude:
-            keys: list[tuple[str, int]] = []
-            names: list[str] = []
-            declared = len(world.detectors)
-            for detector_set in self.detector_sets[declared:]:
-                keys.append(("set", detector_set.index))
-                names.append(f"measured:{detector_set.numbers[0]}")
-            for detector_set in self.detector_sets[:declared]:
-                keys.append(("set", detector_set.index))
-                names.append(str(detector_set.name))
-            for port in self.open_faces:
-                keys.append(("face", port))
-                names.append(FACE_NAMES[port])
-            if world.lifetimes:
-                keys.append(("border", 0))
-                names.append(LIFETIME_NAME)
-            self.layer = Layer(
-                names,
-                keys,
-                self.detector_sets,
-                [family.name for family in world.families],
-                world.phase_steps,
-            )
+        keys: list[tuple[str, int]] = []
+        names: list[str] = []
+        declared = len(world.detectors)
+        for detector_set in self.detector_sets[declared:]:
+            keys.append(("set", detector_set.index))
+            names.append(f"measured:{detector_set.numbers[0]}")
+        for detector_set in self.detector_sets[:declared]:
+            keys.append(("set", detector_set.index))
+            names.append(str(detector_set.name))
+        for port in self.open_faces:
+            keys.append(("face", port))
+            names.append(FACE_NAMES[port])
+        if world.lifetimes:
+            keys.append(("border", 0))
+            names.append(LIFETIME_NAME)
+        self.layer = Layer(
+            names,
+            keys,
+            self.detector_sets,
+            [family.name for family in world.families],
+            world.phase_steps,
+        )
         # The readings of the last interval (diagnostics, decomposed on
         # request): per family the arrivals per Node, their net flow, the
         # Links crossed per Port and the presence.
@@ -890,7 +889,10 @@ class NatureBeamSimulation:
         families: dict[str, object] = {}
         balanced = True
         ledger = self.ledger
-        amplitude = self.world.amplitude
+        # The `cancelled` and `remainder` lines are written in a recorded
+        # world alone (a lamp declared): a world without a lamp has no
+        # record and no line.
+        amplitude = self.world.recorded
         handed = self.world.handed
         # One pass over the measured events: what they hold per family,
         # their momentum and their charge (rho x content of the free
@@ -1002,6 +1004,9 @@ class NatureBeamSimulation:
             if amplitude:
                 # The labels the cancel removed from the transit momentum line.
                 lines["cancelled"] = list(ledger.cancelled_momentum[index])
+                # The labels of a record's rows beyond the shares matter took
+                # (the push by share, stage (vii) step 3).
+                lines["remainder"] = list(ledger.remainder_momentum[index])
             families[family.name] = lines
         momentum: dict[str, object] = {
             "measured": held_momentum,
@@ -1011,6 +1016,7 @@ class NatureBeamSimulation:
         }
         if amplitude:
             momentum["cancelled"] = ledger.cancelled_momentum_total()
+            momentum["remainder"] = ledger.remainder_momentum_total()
         return {
             "tick": self.tick,
             "families": families,
@@ -1210,9 +1216,6 @@ class NatureBeamSimulation:
                 lo, hi = store.slice(flat)
                 if hi == lo:
                     continue
-                beams = [
-                    beam.record_line(vectors, self.world.amplitude, self.world.handed)
-                    for beam in store.rows(lo, hi)
-                ]
+                beams = [beam.record_line(vectors, self.world.handed) for beam in store.rows(lo, hi)]
                 families.append({"family": family.name, "rays": beams})
             yield entry
