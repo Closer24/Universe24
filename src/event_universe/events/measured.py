@@ -324,6 +324,11 @@ class Measured:
     turn: int = 0
     frame_content: int = 0
     frame_charges: list[Pair] = field(default_factory=list)
+    # The momentum the frame read (the p_a of the reading's weight at the
+    # relative speed under the world key `doppler`, BEAM_LAW note 38): the
+    # body's own record at the start of the interval, so the weight of an
+    # interval's every group is read at one speed, as the charges are.
+    frame_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
     presence: int = 0
     counted: int = 0
 

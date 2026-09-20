@@ -108,6 +108,10 @@ def execute_nature_beam_run(
         # The amplitude law (2026-09-20): the world key as declared, false by
         # default; `amplitude-v1` under `hypotheses` when it is true.
         "amplitude": world.amplitude,
+        # The reading's weight at the relative speed (2026-09-20): the world
+        # key as declared, false by default; `doppler-v1` under `hypotheses`
+        # when it is true.
+        "doppler": world.doppler,
         "hypotheses": world.hypotheses,
         # The world's columns in order, (name, sign): gravity, charge, the
         # declared names; every family's `columns` below is aligned with it.

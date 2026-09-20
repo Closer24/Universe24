@@ -443,7 +443,13 @@ order with each step's inverse:
    value 1, the sign minus: its term is `-M_A V_B` exactly), the second
    `charge` (rho, the sign plus: its term is the electric part below), and
    a declared column (the strong force, the sign minus) is a third term of
-   the same sum, not a term of the code. On the two built-in columns this
+   the same sum, not a term of the code. Under the world key `doppler`
+   (`doppler-v1`, since 2026-09-20, absent by default, note 38) a free
+   reader in motion on an axis counts each arriving row of direction d on
+   that axis at the relative speed of the row and itself, the weight
+   `(N_d D_a - T_d s p_a) / (N_d D_a)` per (direction, column) inside the
+   same floor; at rest the weight is 1 and the line above is unchanged.
+   On the two built-in columns this
    is the form landed the same day, integer by integer (the mathematician:
    11 945 pushes of the registered worlds, 0 unequal): **ONE bilinear
    form** over the arriving rays (the model owner's proposal 2, admissible
@@ -2640,3 +2646,99 @@ implementation's part of the contract. The design above is unchanged.
     trimming pull request), the design's Grover (a world beyond the
     register's ceiling), the design's `split` line of the books, and the
     design's bounds at N = 64 and 4096 as stated above.
+
+38. **The reading's weight at the relative speed, `doppler-v1`** (the
+    model owner, 2026-09-20, record 119: "a body TAKES a message at the
+    rate at which it and the message meet"; the mathematician's admissible
+    form, `docs/designs/push_relative_speed/FORM.md` section 6 on the
+    branch `claude/series-m-masses`, record 110, on series G2's finding,
+    RULES.md section 2 and record 107: a body reads exactly 1.000 row per
+    interval from a fixed beam at rest, receding at 0.30 and 0.45 and
+    approaching at 0.30, so its own motion never Dopplers what it reads,
+    since step 4 counts the rows that stepped into its Node and a dwelling
+    row is re-read after a leapfrog while a head-on row whose Node the body
+    steps onto is missed; the PRESENCE form of RULES.md was refused, record
+    110: the dwell of the Node moves the rest reading by x 0.582 or
+    x 1.164). **The rule.** Under the world key `doppler` (true or false,
+    false by default; the record carries it and the identity `doppler-v1`
+    under `hypotheses`), when a free measured event reads the rows that
+    ARRIVED at its Node this interval for the push of step 4, each
+    arriving row of direction d counts, on every axis a along which its
+    direction has a component and the reader's own momentum p_a is
+    nonzero, with the weight
+
+        w_{d,a} = (N_d D_a - T_d s p_a) / (N_d D_a),
+
+    (N_d, T_d) the direction's pace along the axis, the Links it makes
+    per interval N_d / T_d, one world constant per direction read from the
+    flight table (`FlightTable.pace`, `world.axis_pace`: the pair
+    (|v_a| Q, T_d) reduced, (32, 55) on a heading, (16, 39) on (1, 1, 0),
+    (128, 247) and (64, 247) on (2, 1, 0)), s the sign of u_{d,a}, p_a the
+    reader's momentum on its own record as the frame read it
+    (`frame_momentum`, the same for every group of the interval whatever
+    the family order, as the charges are) and D_a = Q S M + |p_a| the
+    step rule's divisor (`world.step_divisor`, the one function the step
+    and the weight read), so that |p_a| / D_a is the body's speed and the
+    weight is the relative speed of the row and the body over the row's
+    own: 1 at rest, (c - v) / c receding, (c + v) / c approaching, 0 for
+    a body moving with the row at its own speed and negative for one
+    outrunning it (the row hits it from behind: the sign of the push
+    flips). **The integer form** (`nature_beam.relative_speed_pair`,
+    `doppler_terms`, `column_term`, `push_form`): per column c and per
+    direction d present in the group,
+
+        push_A += epsilon_c x sign(V_d E_c n_c w) x by_clock(age_A, |V_d E_c n_c| x |N_d D_a - T_d s p_a|, D_c d_c x N_d D_a),
+
+    V_d the label flow of the group's rows of direction d (the sum of
+    their labels, `amount x u_d`), one floor per (direction, column) off
+    the reader's clock and never summed before the floor (the
+    mathematician's (ii), as record 35 fixed for the columns); |V_d| x
+    |E_c n_c| and then its product with the numerator are tested by
+    division before they are formed and refused naming the body, the
+    column and the direction (R1), the partial sum bounded after every
+    term (R2); the pair's numerator, at most (N_d + T_d) x D_a, must fit
+    the register: refused at load for every free body of the world
+    against every direction of the table on the declared content and
+    momentum (`_doppler_load_checks`, naming the axis, the direction, the
+    pace and the largest D_a the pair admits, (2^62 - 1) // 87 on a
+    heading), and at the push on the record's D_a by the same bound
+    (`relative_speed_bound`). The quantised speed of FORM.md section 1
+    (a grain 1 / (T_d Q)) is not taken: the pair is exact and the bound is
+    declared. **What is bit-identical.** On an axis where p_a = 0 every
+    weight is 1 and the group is read as one product per column, exactly
+    the line of step 4 (the per-direction floors are taken only where a
+    weight differs from 1, so that a body at rest reads the same integers
+    with and without the key on a fan as on a heading); a fixed body has
+    no speed and reads at the weight 1 whatever momentum its record books
+    (its momentum is the push it took, not a motion): every registered
+    push of a fixed body (series C's identities, record 35's 11 945
+    pushes, the third law, item 7) is bit-identical under the key, and
+    every world without the key is byte-identical (the gate set's fifteen
+    worlds replayed identical on 2026-09-20). The weight is on the push's
+    read of the arrivals alone: the clock's count is not weighted (it
+    counts the presence at the Node, a number of rows there, not a flux
+    through the body), the size and the threshold readings, the meeting,
+    the emitter's side and the Node are untouched; a paid family's ray
+    pushes by its label at the click as before. **What it gives** (the
+    bar of the finding on the engine, `tests/test_doppler.py` (b): a
+    fixed source releasing one row per interval on +x, a free body of
+    content 2^20 whose width and momentum make its speed exact, the push
+    normalised to one unit per row read): over 200 intervals the body
+    reads 200 rows in every case and takes, under the key, 200 at rest,
+    96 receding at 0.30, 45 receding at 0.45, 303 approaching at 0.30, 0
+    co-moving at c and -57 outrunning at 0.75, against the map's 200, 97,
+    45, 303, 0, 58 (FORM.md section 4): the crossing rate (c - v) / c the
+    finding asked for, to the floor's grain. Not given: an exact crossing
+    count (the leapfrog and the miss stay, only their mean is corrected),
+    and nothing for a body on a set beyond the sum over its Nodes. The
+    bar as the finding posed it, rows of amount 64 on the body of content
+    2^20, refuses at the first weighted push under the key: the gravity
+    column's product 2^32 x 155 x 2^26 leaves the register (the bound
+    problem of FORM.md section 1, here on the body's own content). **What
+    re-registers.** Nothing: the key is absent in every shipped world.
+    A moving pushed body under the key reads differently from its first
+    step on (the orbit series D, Bohr's H, the planet, series G and G2's
+    stars, the contact worlds once a body holds momentum); those worlds
+    are re-run under the key only by the G2 session, with the acoustic
+    expectations re-derived on the arrivals form first (record 119 (6)),
+    and registered with dated lines then, never here.

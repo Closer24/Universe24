@@ -393,7 +393,20 @@ record carries it and the identity `amplitude-v1` under `hypotheses` when
 it is true; absent, no row carries a record and every world reads as it
 did, byte for byte; the key stays and the record form is not the
 default: the design's section 6 stopped at the gate set, MIGRATION
-(vi)); `directions` (the declared primitive vectors beyond
+(vi)); `doppler` (since 2026-09-20, true or false, false by default: the
+reading's weight at the relative speed `doppler-v1`,
+[BEAM_LAW note 38](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+under it a free measured event in motion on an axis reads the rows that
+arrived at its Node for the push with each direction's flow weighted by
+the relative speed of the row and itself over the row's pace, the pair
+(N_d D_a - T_d s p_a, N_d D_a) from the flight table's pace and its own
+record, one floor per (direction, column); refused when it is not true or
+false and, at load, when the pair of a free body cannot fit the register
+against a direction of the table on the declared content and momentum,
+naming the axis, the direction, the pace and the largest D admitted; the
+record carries it and the identity `doppler-v1` under `hypotheses` when
+it is true; absent, and for every body at rest or held in place, every
+world reads as it did, byte for byte); `directions` (the declared primitive vectors beyond
 the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`

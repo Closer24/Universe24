@@ -118,6 +118,7 @@ from event_universe.events.world import (
     BECOME_RULE,
     CHARGE_INDEX,
     CONTACT_DEFAULT,
+    DOPPLER_KEY,
     FACE_NAMES,
     FIXED_DIRECTIONS,
     HEADING_OFFSET,
@@ -131,9 +132,12 @@ from event_universe.events.world import (
     Rotation,
     Transformation,
     Vector,
+    axis_pace,
     default_reads,
     default_rule,
     default_width,
+    relative_speed_bound,
+    step_divisor,
 )
 
 Record = Callable[[dict[str, object]], None]
@@ -501,7 +505,12 @@ class FlightTable:
     `labels`, the unit vector u_d of each direction at the scale Q
     (`unit_label`; (0, 0, 0) for a rest direction): the momentum label of
     one unit of amount along d, the same length within sqrt 3 / (2 Q) for
-    every direction and exactly Q e_d on a heading."""
+    every direction and exactly Q e_d on a heading; and `pace`, per
+    direction and axis the pair (N, T) of the Links the direction makes
+    along the axis per interval, N / T (`world.axis_pace`: (32, 55) on a
+    heading, (0, 1) where the direction has no component), the one world
+    constant the reading's weight at the relative speed reads (BEAM_LAW
+    note 38)."""
 
     vectors: np.ndarray
     manhattan: np.ndarray
@@ -510,6 +519,7 @@ class FlightTable:
     lines: np.ndarray
     steps: np.ndarray
     labels: np.ndarray
+    pace: np.ndarray
 
     def manhattan_steps(self, direction: np.ndarray, age: np.ndarray) -> np.ndarray:
         """m(tau) = (2 tau S_1 Q + T_d) // (2 T_d): the Manhattan steps made
@@ -583,6 +593,7 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
             lines[index, j] = step
     # The label table: the unit vector of every direction at the scale Q.
     labels = np.array([unit_label(vector) for vector in vectors], dtype=np.int64).reshape(count, 3)
+    pace = np.array([axis_pace(vector) for vector in vectors], dtype=np.int64).reshape(count, 3, 2)
     table = FlightTable(
         np.array(vectors, dtype=np.int64).reshape(count, 3),
         manhattan,
@@ -591,6 +602,7 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
         lines,
         np.zeros(0),
         labels,
+        pace,
     )
     longest_period = int(period.max(initial=1))
     # The step table is small integers (a heading or zero): one byte each.
@@ -605,7 +617,7 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
         m1 = table.manhattan_steps(direction, ages + 1)
         moved = m1 > m0
         steps[index, : len(ages)] = np.where(moved[:, None], lines[index, m0 % s1], 0)
-    return FlightTable(table.vectors, manhattan, resolution, period, lines, steps, labels)
+    return FlightTable(table.vectors, manhattan, resolution, period, lines, steps, labels, pace)
 
 
 # -- the collision table ---------------------------------------------------------
@@ -1896,6 +1908,129 @@ def column_bound_error(entry: Measured, name: str, moment: int, factor: int) -> 
     )
 
 
+def weight_bound_error(
+    entry: Measured, name: str, direction: int, moment: int, factor: int
+) -> OverflowError:
+    """The refusal of a weighted product |V E n| x |N D - T s p| that would
+    leave the register, naming the measured event, its Node, the column
+    and the direction (the mathematician's R1 on the reading's weight)."""
+    return OverflowError(
+        f"{BEAM_LAW}: the push of measured event {entry.number} at {list(entry.position)} exceeds "
+        f"the integer bound {MOMENTUM_BOUND} in the column {name!r} against the direction "
+        f"{direction} under {DOPPLER_KEY}: |V E n| x |N D - T s p| = {abs(moment)} x {factor}"
+    )
+
+
+def relative_speed_pair(
+    pace: tuple[int, int], sign: int, momentum: int, divisor: int, entry: Measured, direction: int
+) -> tuple[int, int]:
+    """The weight of a row of direction d on one axis a under `doppler`
+    (BEAM_LAW note 38; FORM.md section 6): the relative speed of the row's
+    flight and the body along the axis over the row's own pace, the pair
+    (N_d D_a - T_d s p_a, N_d D_a), N_d / T_d the direction's Links per
+    interval along the axis (`FlightTable.pace`), s the sign of u_{d,a},
+    p_a the reader's momentum on its record and D_a = Q S M + |p_a| the
+    step rule's divisor (`world.step_divisor`), so that |p_a| / D_a is the
+    body's speed: the pair is 1 at p_a = 0, less than 1 for a body moving
+    with the row, more for one moving against it, 0 for a body moving with
+    the row at its own speed and negative for one outrunning it (the row
+    hits it from behind: the numerator's sign flips the push). The
+    numerator is bounded by (N_d + T_d) x D_a, tested before it is formed
+    (`relative_speed_bound`; the same bound at load) and refused naming
+    the body, the direction and the largest D_a the pair admits."""
+    reach = relative_speed_bound(pace, divisor)
+    if reach is not None:
+        raise OverflowError(
+            f"{BEAM_LAW}: the relative-speed pair of measured event {entry.number} at "
+            f"{list(entry.position)} against the direction {direction} of pace {list(pace)} needs "
+            f"(N + T) x D = {pace[0] + pace[1]} x {divisor} beyond the integer bound "
+            f"{MOMENTUM_BOUND}: D = Q x width x content + |p| must be at most {reach}"
+        )
+    return pace[0] * divisor - pace[1] * sign * momentum, pace[0] * divisor
+
+
+@dataclass(frozen=True)
+class DopplerTerms:
+    """One group's arrivals read per direction for the weighted push under
+    `doppler`: `moving` per axis whether the reader's momentum on the axis
+    is nonzero (on an axis where it is not, every weight is 1 and the group
+    is read as one product per column, as without the key: the same
+    integers byte for byte), and per direction present in the group, in
+    the table's order, the direction's index, its label flow V_d (the sum
+    of the rows' labels) and the pair (numerator, denominator) of
+    `relative_speed_pair` per axis."""
+
+    moving: tuple[bool, bool, bool]
+    terms: tuple[tuple[int, tuple[int, int, int], tuple[tuple[int, int], ...]], ...]
+
+
+def doppler_terms(
+    flight: FlightTable, arrivals: list[int], labels: list[list[int]], entry: Measured, width: int
+) -> DopplerTerms:
+    """The `DopplerTerms` of one group: `arrivals` the direction of each
+    taken row, `labels` its label, the reader's momentum and content those
+    the frame read (`frame_momentum`, `frame_content`), S the world's
+    `width`. A direction without a component along an axis has the pair
+    (0, 1) there and a label component of 0: it adds nothing on that axis."""
+    momentum = entry.frame_momentum
+    moving = (momentum[0] != 0, momentum[1] != 0, momentum[2] != 0)
+    divisors = [step_divisor(momentum[axis], entry.frame_content, width) for axis in range(3)]
+    moments: dict[int, list[int]] = {}
+    for direction, label in zip(arrivals, labels, strict=True):
+        found = moments.setdefault(direction, [0, 0, 0])
+        for axis in range(3):
+            found[axis] += label[axis]
+    terms = []
+    for direction in sorted(moments):
+        pairs: list[tuple[int, int]] = []
+        for axis in range(3):
+            pace = (int(flight.pace[direction, axis, 0]), int(flight.pace[direction, axis, 1]))
+            if not moving[axis] or not pace[0]:
+                pairs.append((1, 1) if not moving[axis] else (0, 1))
+                continue
+            sign = 1 if int(flight.vectors[direction, axis]) > 0 else -1
+            pairs.append(
+                relative_speed_pair(pace, sign, momentum[axis], divisors[axis], entry, direction)
+            )
+        v = moments[direction]
+        terms.append((direction, (v[0], v[1], v[2]), tuple(pairs)))
+    return DopplerTerms(moving, tuple(terms))
+
+
+def column_term(
+    v: int,
+    numerator: int,
+    n: int,
+    divisor: int,
+    age: int,
+    name: str,
+    entry: Measured,
+    weight: tuple[int, int] = (1, 1),
+    direction: int | None = None,
+) -> int:
+    """One signed whole part of the push: a label flow component V times
+    the reader's charge E and the family's value n in a column, weighted
+    by the pair `weight` (1 without `doppler`), the whole part off the
+    reader's clock, `by_clock(age, |V E n num|, D_c d_c den)`, with the
+    sign of V E n num; |V| x |E n| and then its product with |num| are
+    tested by division BEFORE they are formed and refused naming the
+    column (and the direction under the weight)."""
+    if abs(numerator) > MOMENTUM_BOUND // abs(n):
+        raise column_bound_error(entry, name, v, abs(numerator) * abs(n))
+    factor = numerator * n
+    if abs(v) > MOMENTUM_BOUND // abs(factor):
+        raise column_bound_error(entry, name, v, abs(factor))
+    total = v * factor
+    num, den = weight
+    if direction is not None:
+        if abs(total) > MOMENTUM_BOUND // abs(num):
+            raise weight_bound_error(entry, name, direction, total, abs(num))
+        total *= num
+        divisor *= den
+    whole = abs(total) if divisor == 1 else by_clock(age, abs(total), divisor)
+    return -whole if total < 0 else whole
+
+
 def push_form(
     free: bool,
     moment: list[int],
@@ -1904,6 +2039,7 @@ def push_form(
     columns: tuple[tuple[str, int], ...],
     age: int,
     entry: Measured,
+    doppler: DopplerTerms | None = None,
 ) -> list[int]:
     """The push a measured event A takes from one group of arriving rays:
     ONE signed inner product over the columns (the model owner's decision
@@ -1942,7 +2078,32 @@ def push_form(
     mathematician's R1 to R3): each column's product |V| x |E_c n_c| is
     tested by division BEFORE it is formed and refused naming the column;
     the partial sum is bounded after every column (`bounded`); the caller
-    bounds the momentum it joins."""
+    bounds the momentum it joins.
+
+    Under the world key `doppler` (`doppler-v1`, BEAM_LAW note 38; the
+    model owner's record 119, "a body TAKES a message at the rate at which
+    it and the message meet"; the mathematician's admissible form, FORM.md
+    section 6) `doppler` carries the group's arrivals per direction
+    (`DopplerTerms`) and, on every axis a where the reader's momentum is
+    nonzero, each direction d's flow V_d counts with the weight
+    (N_d D_a - T_d s p_a) / (N_d D_a) of `relative_speed_pair`, the
+    relative speed of the row and the body over the row's pace:
+
+        push_A = sum over the columns c and the directions d of
+                 epsilon_c x sign(V_d E_c n_c w_d) x by_clock(age_A, |V_d E_c n_c| x |N_d D_a - T_d s p_a|, D_c d_c x N_d D_a),
+
+    every (direction, column) floored on its own off the reader's clock
+    and never summed before the floor (the mathematician's (ii)), the
+    products tested by division before they are formed (R1), the partial
+    sum bounded after every term (R2). On an axis where p_a = 0 every
+    weight is 1 and the group is read as one product per column, the
+    line above: a fixed body, and a free one at rest, read byte for byte
+    what they read without the key. The weight is on the push's read of
+    the ARRIVALS alone: the clock's count is not weighted (it counts the
+    presence at the Node, not a flux through the body), the size and the
+    threshold readings are untouched, and nothing changes on the emitter's
+    side or at a Node; a paid family's ray pushes by its label at the
+    click as before."""
     if not free:
         return [bounded(moment[axis], entry, "push") for axis in range(3)]
     push = [0, 0, 0]
@@ -1951,18 +2112,21 @@ def push_form(
             continue
         divisor = denominator * d
         for axis in range(3):
-            v = moment[axis]
-            if not v:
+            if doppler is None or not doppler.moving[axis]:
+                v = moment[axis]
+                if not v:
+                    continue
+                term = column_term(v, numerator, n, divisor, age, name, entry)
+                push[axis] = bounded(push[axis] + sign * term, entry, "push")
                 continue
-            # |V| x |E n| tested by division before either product is formed.
-            if abs(numerator) > MOMENTUM_BOUND // abs(n):
-                raise column_bound_error(entry, name, v, abs(numerator) * abs(n))
-            factor = numerator * n
-            if abs(v) > MOMENTUM_BOUND // abs(factor):
-                raise column_bound_error(entry, name, v, abs(factor))
-            total = v * factor
-            whole = abs(total) if divisor == 1 else by_clock(age, abs(total), divisor)
-            push[axis] = bounded(push[axis] + sign * (-whole if total < 0 else whole), entry, "push")
+            # The reader moves on this axis: per direction, its flow at
+            # the relative speed, one floor per (direction, column).
+            for direction, flow, pairs in doppler.terms:
+                v = flow[axis]
+                if not v or not pairs[axis][0]:
+                    continue
+                term = column_term(v, numerator, n, divisor, age, name, entry, pairs[axis], direction)
+                push[axis] = bounded(push[axis] + sign * term, entry, "push")
     return push
 
 
@@ -2899,6 +3063,19 @@ def nature_beam(
                         # the family's value per column; the columns are
                         # floored at the reader's clock age, as every rate of
                         # the law is (the four unifications (4)).
+                        k0, k1 = plan.g_start[gi], plan.g_end[gi]
+                        # Under `doppler` a free body reads the group per
+                        # direction at the relative speed (`DopplerTerms`;
+                        # a fixed body has no speed: the weight 1).
+                        weighted = None
+                        if world.doppler and free and not entry.fixed:
+                            weighted = doppler_terms(
+                                flight,
+                                plan.t_arrival[k0:k1],
+                                plan.t_label[k0:k1],
+                                entry,
+                                world.width,
+                            )
                         push = push_form(
                             free,
                             plan.g_moment[gi],
@@ -2907,6 +3084,7 @@ def nature_beam(
                             columns,
                             entry.clock_age,
                             entry,
+                            weighted,
                         )
                         entry.momentum = [
                             bounded(a + b, entry, "momentum")
@@ -2926,7 +3104,6 @@ def nature_beam(
                             group_total
                         )
                         if rule == "read":
-                            k0, k1 = plan.g_start[gi], plan.g_end[gi]
                             if layer is not None and detector_set.sum:
                                 for k in range(k0, k1):
                                     if plan.t_record[k] != NO_RECORD:

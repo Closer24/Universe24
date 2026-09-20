@@ -6,6 +6,43 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The reading's weight at the relative speed, on 2026-09-20 (`doppler-v1`, a world key, absent by default)
+
+The model owner's decision of 2026-09-20 (record 119 of
+[the log](LOG_2026-09-20.md): "a body TAKES a message at the rate at which
+it and the message meet"; the mathematician's admissible form, FORM.md
+section 6 of `docs/designs/push_relative_speed/` on the branch
+`claude/series-m-masses`, record 110; series G2's finding, record 107;
+[BEAM_LAW note 38](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).
+A hypothesis beside the law with its own identity: `beam-v1` is unchanged
+without the key.
+
+- The world key `doppler`, true or false, false by default, refused on any
+  other value; `run.json` carries it and the identity `doppler-v1` under
+  `hypotheses` when it is true. Under it a free measured event reads the
+  rows that arrived at its Node for the push (step 4) with each direction's
+  flow weighted by the pair `(N_d D_a - T_d s p_a, N_d D_a)` on every axis
+  where its momentum is nonzero, one floor per (direction, column)
+  (`nature_beam.push_form` with `DopplerTerms`; `relative_speed_pair`,
+  `doppler_terms`, `column_term`). Refused at load when the pair of a free
+  body cannot fit the register against a direction of the table
+  (`world._doppler_load_checks`, `relative_speed_bound`), and at a push
+  whose product would leave it, naming the body, the column and the
+  direction.
+- `world.step_divisor(momentum, content, width)`, D = Q x S x M + |p|, is
+  the one function of the step rule's divisor: `engine.step_axis` reads it
+  and the weight reads it. `world.axis_pace(vector)` gives a direction's
+  pace per axis, (N, T) reduced, and `FlightTable.pace` carries it per
+  direction (a new field of the table; a consumer that builds a
+  `FlightTable` by position passes it).
+- `Measured.frame_momentum`: the momentum the frame read at the start of
+  the interval, beside `frame_content` and `frame_charges` (not in the
+  record: a snapshot of the record's own momentum for the interval's
+  weight).
+- Nothing re-registers: the key is absent in every shipped world, and the
+  gate set's fifteen worlds replay byte-identical. The moving-body worlds
+  are re-run under the key by the G2 session only, later. Nothing deleted.
+
 ## Families in entity definitions, on 2026-09-20 (`event-entities-v2`; host only, no law change)
 
 The model owner's decision of 2026-09-20 (record 113 of

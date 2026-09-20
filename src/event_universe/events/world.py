@@ -393,6 +393,7 @@ WORLD_KEYS = {
     "action",
     "meeting",
     "amplitude",
+    "doppler",
     "directions",
     "direction_bound",
     "families",
@@ -419,6 +420,68 @@ AMPLITUDE_LEAST_STEPS = 4
 # self-creation (a rate of r units per direction would make r identical
 # paths with one birth phase; the design, section 2.1).
 AMPLITUDE_LAMP_RATE = (1, 1)
+# The identity of the reading's weight at the relative speed (`doppler-v1`;
+# the model owner, 2026-09-20, record 119: "a body TAKES a message at the
+# rate at which it and the message meet"; the mathematician's admissible
+# form, docs/designs/push_relative_speed/FORM.md section 6, record 110;
+# docs/BEAM_LAW.md note 38): under the world key `doppler` a free measured
+# event reads the rows that ARRIVED at its Node for the push with each
+# row's contribution weighted by the relative speed of the row's flight and
+# the body along the axis, the pair (|N_d D_a - T_d s p_a|, N_d D_a) per
+# (direction, axis), floored per (direction, column) off the reader's
+# clock. Absent (false by default), and for every body at rest (p = 0, or
+# fixed), the weight is 1 and every world reads as it did, byte for byte.
+DOPPLER_RULE = "doppler-v1"
+DOPPLER_KEY = "doppler"
+
+
+def step_divisor(momentum: int, content: int, width: int) -> int:
+    """D_a = Q x S x M + |p_a|, the divisor of the step rule on one axis
+    (BEAM_LAW section 3 step 5 and note 17: one Link per D_a / |p_a|
+    self-creations; `engine.step_axis` reads it) and the denominator of
+    the body's speed |p_a| / D_a in Links per interval, which the reading's
+    weight at the relative speed reads through the same function (note
+    38): M the content, S the world's `width`, Q the label's scale."""
+    return LABEL_SCALE * width * content + abs(momentum)
+
+
+def axis_pace(vector: Vector) -> tuple[tuple[int, int], tuple[int, int], tuple[int, int]]:
+    """The pace of a direction along each axis, (N, T), one world constant
+    per direction of the flight table: a ray of direction v = (a, b, c)
+    makes S_1 Q / T_d Manhattan steps per interval, T_d = isqrt(3 |v|^2
+    Q^2), and its line takes |a| of every S_1 of them on x, so it makes
+    |a| Q / T_d Links per interval along x; the pair (|a| Q, T_d) reduced
+    by its gcd ((32, 55) on a heading, the period's Links over the period),
+    (0, 1) on a rest direction and on an axis the direction has no
+    component along."""
+    manhattan = sum(abs(component) for component in vector)
+    if manhattan == 0:
+        return ((0, 1), (0, 1), (0, 1))
+    resolution = integer_root(3 * sum(component * component for component in vector) * Q * Q)
+    found = []
+    for component in vector:
+        if component == 0:
+            found.append((0, 1))
+            continue
+        links = abs(component) * Q
+        divisor = bounded_gcd(links, resolution)
+        found.append((links // divisor, resolution // divisor))
+    return (found[0], found[1], found[2])
+
+
+def relative_speed_bound(pace: tuple[int, int], divisor: int) -> int | None:
+    """The bound of the relative-speed pair on one (direction, axis): the
+    numerator |N D_a - T s p_a| is at most (N + T) x D_a, which must fit
+    the integer bound of the law before it is formed (the mathematician's
+    section 1: on a heading 87 D_a, so D_a < 2^62 / 87); returns the
+    largest D_a the pair admits when `divisor` exceeds it, None when the
+    pair fits. The same test at load (`_doppler_load_checks`, on the
+    declared momentum and content) and at every push (`nature_beam.
+    relative_speed_pair`, on the record's)."""
+    reach = MOMENTUM_BOUND // (pace[0] + pace[1])
+    return reach if divisor > reach else None
+
+
 # The identity of the turn by momentum, a physical hypothesis beside the
 # law (the model owner's decision of 2026-09-20 on Bohr): the record carries
 # it when the world declares `action`.
@@ -885,6 +948,11 @@ class NatureBeamWorld:
     # merge, and the apparatus's layer reads the records' offers
     # (`events/amplitude.py`; `AMPLITUDE_RULE`).
     amplitude: bool = False
+    # The reading's weight at the relative speed (the world key `doppler`,
+    # false by default): a free measured event reads the arrivals for the
+    # push weighted by the relative speed of each row's flight and its own
+    # motion (`nature_beam.push_form`; `DOPPLER_RULE`).
+    doppler: bool = False
 
     @property
     def phase_mask(self) -> int:
@@ -932,7 +1000,8 @@ class NatureBeamWorld:
         (`action`), `columns-v1` for the one mechanism of the columns (a
         column beyond `charge`, or a lifetime: a force of nature in this
         law is a column with a sign and a range), `weak-v1` for the
-        transformation `become` (the weak force in the world's terms)."""
+        transformation `become` (the weak force in the world's terms),
+        `meeting-v1`, `amplitude-v1` and `doppler-v1` for their keys."""
         found = []
         if self.action is not None:
             found.append(BOHR_RULE)
@@ -944,6 +1013,8 @@ class NatureBeamWorld:
             found.append(MEETING_RULE)
         if self.amplitude:
             found.append(AMPLITUDE_RULE)
+        if self.doppler:
+            found.append(DOPPLER_RULE)
         return found
 
     @property
@@ -2619,6 +2690,12 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             f"{BEAM_LAW}: {AMPLITUDE_KEY} is refused with N {phase_steps}: the quarter turn of a "
             f"reflection needs a circle of at least {AMPLITUDE_LEAST_STEPS} steps"
         )
+    # The reading's weight at the relative speed: true or false (false by
+    # default); under it the relative-speed pair of every free body must
+    # fit the register on every direction of the table.
+    doppler = obj.get(DOPPLER_KEY, False)
+    if type(doppler) is not bool:
+        raise ValueError(f"{BEAM_LAW}: {DOPPLER_KEY} must be true or false")
     families = _families(obj["families"], phase_steps, age_bound, amplitude)
     # The meeting: true or false (false by default); under it a paid family
     # without a phase circle is refused, the phase being the register the
@@ -2675,7 +2752,45 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         action,
         meeting=meeting,
         amplitude=amplitude,
+        doppler=doppler,
     )
     if amplitude:
         _amplitude_load_checks(measured, detectors, families, phase_steps)
+    if doppler:
+        _doppler_load_checks(measured, families, width, table)
     return world
+
+
+def _doppler_load_checks(
+    measured: tuple[MeasuredDefinition, ...],
+    families: tuple[FamilyDefinition, ...],
+    width: int,
+    table: tuple[Vector, ...],
+) -> None:
+    """The bound of the reading's weight at the relative speed at load
+    (`relative_speed_bound`): for every free measured event (a fixed one
+    reads at the weight 1), on every axis, against every direction of the
+    table with a component along it, (N_d + T_d) x D_a must fit the
+    integer bound with D_a = Q x S x M + |p_a| read from the declared
+    content and momentum (the static budget; a push or a click that takes
+    D_a past it is refused at that push naming the same bound)."""
+    for index, entry in enumerate(measured):
+        if entry.fixed:
+            continue
+        content = sum(held for family, held in _held_of(entry).items() if families[family].free)
+        for axis, name in enumerate(AXES):
+            divisor = step_divisor(entry.momentum[axis], content, width)
+            for vector in table:
+                pace = axis_pace(vector)[axis]
+                if not pace[0]:
+                    continue
+                reach = relative_speed_bound(pace, divisor)
+                if reach is not None:
+                    raise ValueError(
+                        f"{BEAM_LAW}: {DOPPLER_KEY} is refused: measured[{index}] on the axis "
+                        f"{name} against the direction {list(vector)} of pace {list(pace)} needs "
+                        f"the relative-speed pair (N + T) x D = {pace[0] + pace[1]} x {divisor} "
+                        f"beyond the integer bound {MOMENTUM_BOUND}: D = {LABEL_SCALE} x {width} "
+                        f"x {content} + {abs(entry.momentum[axis])} (Q x width x content + |p|) "
+                        f"must be at most {reach}"
+                    )

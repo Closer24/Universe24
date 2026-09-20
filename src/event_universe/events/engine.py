@@ -67,13 +67,13 @@ from event_universe.events.world import (
     CONTACT_DEFAULT,
     DETECTOR_READINGS,
     FACE_NAMES,
-    LABEL_SCALE,
     LIFETIME_NAME,
     MOMENTUM_BOUND,
     NO_CHARGE,
     MeasuredDefinition,
     NatureBeamWorld,
     body_nodes,
+    step_divisor,
 )
 
 __all__ = ["TALLIES", "Measured", "NatureBeamSimulation", "count_owed", "step_axis"]
@@ -99,11 +99,12 @@ def step_axis(drive: int, momentum: int, content: int, width: int) -> tuple[int 
     `core.integer.by_drive` (the model owner's record 108: the whole part
     of an accumulated rate on the reader's own record, `by_clock` where
     the rate is constant); the one place the step rule lives, the
-    readings tools read it from here."""
+    readings tools read it from here. The divisor D is `world.step_divisor`,
+    which the reading's weight at the relative speed reads too (note 38)."""
     if momentum == 0:
         return None, drive
     magnitude = abs(momentum)
-    fired, drive = by_drive(drive, magnitude, LABEL_SCALE * width * content + magnitude)
+    fired, drive = by_drive(drive, magnitude, step_divisor(momentum, content, width))
     if not fired:
         return None, drive
     return (1 if momentum > 0 else -1), drive
@@ -384,8 +385,12 @@ class NatureBeamSimulation:
     def _frame_all(self) -> None:
         """The clocks' frame, every measured event at once: its content is
         read once into `frame_content` (M_A of the interval's push, BEAM_LAW
-        step 4) and its charge in every column into `frame_charges` (the
-        reader's side of the push over the columns, gravity's the content);
+        step 4), its charge in every column into `frame_charges` (the
+        reader's side of the push over the columns, gravity's the content)
+        and its momentum into `frame_momentum` (the p_a of the reading's
+        weight at the relative speed under `doppler`, note 38: the speed
+        the body had over this interval, the same for every group of rays
+        whatever the family order, as the charges are);
         one that owes a count pays it by one (no self-creation, no
         release, no turn; `waited` counts the interval); one that owes
         nothing self-creates: its age advances and its turn is read off its
@@ -402,6 +407,7 @@ class NatureBeamSimulation:
             # after it).
             entry.frame_content = entry.content
             entry.frame_charges = entry.charges(for_push=True)
+            entry.frame_momentum = list(entry.momentum)
             if entry.owed > 0:
                 entry.owed -= 1
                 entry.waited += 1
