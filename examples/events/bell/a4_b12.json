@@ -15,14 +15,25 @@
     1
   ],
   "suspension": 0,
-  "families": [
+  "entity_definitions": "../entities/families.json",
+  "entities": [
     {
-      "name": "light",
-      "quantum": 1
+      "name": "photon",
+      "definition": "photon",
+      "position": [
+        0,
+        0,
+        0
+      ]
     },
     {
-      "name": "counter",
-      "quantum": 1
+      "name": "counter_material",
+      "definition": "counter_material",
+      "position": [
+        0,
+        0,
+        0
+      ]
     }
   ],
   "measured": [

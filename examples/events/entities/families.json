@@ -285,54 +285,6 @@
    "name": "thrown_sources",
    "families": [
     {
-     "name": "mx1",
-     "quantum": 0
-    },
-    {
-     "name": "mx2",
-     "quantum": 0
-    },
-    {
-     "name": "mx3",
-     "quantum": 0
-    },
-    {
-     "name": "mx4",
-     "quantum": 0
-    },
-    {
-     "name": "my1",
-     "quantum": 0
-    },
-    {
-     "name": "my2",
-     "quantum": 0
-    },
-    {
-     "name": "my3",
-     "quantum": 0
-    },
-    {
-     "name": "my4",
-     "quantum": 0
-    },
-    {
-     "name": "mz1",
-     "quantum": 0
-    },
-    {
-     "name": "mz2",
-     "quantum": 0
-    },
-    {
-     "name": "mz3",
-     "quantum": 0
-    },
-    {
-     "name": "mz4",
-     "quantum": 0
-    },
-    {
      "name": "px1",
      "quantum": 0
     },
@@ -346,6 +298,22 @@
     },
     {
      "name": "px4",
+     "quantum": 0
+    },
+    {
+     "name": "mx1",
+     "quantum": 0
+    },
+    {
+     "name": "mx2",
+     "quantum": 0
+    },
+    {
+     "name": "mx3",
+     "quantum": 0
+    },
+    {
+     "name": "mx4",
      "quantum": 0
     },
     {
@@ -365,6 +333,22 @@
      "quantum": 0
     },
     {
+     "name": "my1",
+     "quantum": 0
+    },
+    {
+     "name": "my2",
+     "quantum": 0
+    },
+    {
+     "name": "my3",
+     "quantum": 0
+    },
+    {
+     "name": "my4",
+     "quantum": 0
+    },
+    {
      "name": "pz1",
      "quantum": 0
     },
@@ -378,6 +362,22 @@
     },
     {
      "name": "pz4",
+     "quantum": 0
+    },
+    {
+     "name": "mz1",
+     "quantum": 0
+    },
+    {
+     "name": "mz2",
+     "quantum": 0
+    },
+    {
+     "name": "mz3",
+     "quantum": 0
+    },
+    {
+     "name": "mz4",
      "quantum": 0
     }
    ],

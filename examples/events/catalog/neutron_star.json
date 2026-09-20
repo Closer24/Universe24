@@ -8,18 +8,17 @@
   "N": 64,
   "release": [1, 256],
   "suspension": [1, 4194304],
-  "families": [
+  "entity_definitions": "../entities/families.json",
+  "entities": [
     {
-      "name": "neutron",
-      "quantum": 0,
-      "charge": 0,
-      "phase": false
+      "name": "neutron_star_material",
+      "definition": "neutron_star_material",
+      "position": [0, 0, 0]
     },
     {
-      "name": "probe",
-      "quantum": 0,
-      "charge": 0,
-      "phase": false
+      "name": "probe_material",
+      "definition": "probe_material",
+      "position": [0, 0, 0]
     }
   ],
   "measured": [

@@ -600,12 +600,16 @@
       0
     ]
   ],
-  "families": [
+  "entity_definitions": "../entities/families.json",
+  "entities": [
     {
-      "name": "m",
-      "quantum": 0,
-      "charge": 0,
-      "phase": false
+      "name": "mass_m",
+      "definition": "mass_m",
+      "position": [
+        0,
+        0,
+        0
+      ]
     }
   ],
   "measured": [
