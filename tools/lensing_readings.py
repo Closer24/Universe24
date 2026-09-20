@@ -92,7 +92,7 @@ from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import flight_table
 from event_universe.events.world import HEADING_OFFSET, REST_DIRECTIONS
-from event_universe.json_documents import parse_json_document
+from event_universe.world_loading import world_of_run
 
 MODEL_PREFIX = "rays-lensing-"
 MODEL_SUFFIX = "-space-v1"
@@ -244,11 +244,11 @@ def world_name(model: str) -> tuple[str, bool] | None:
 
 def read_run(folder: Path, *, replay: bool = True, window_start: int = WINDOW_START) -> Reading:
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
-    document = json.loads((folder / "initialization.json").read_text(encoding="utf-8"))
+    document = world_of_run(folder)
     named = world_name(str(record["model"]))
     assert named is not None
     name, meeting = named
-    world = parse_nature_beam_world(parse_json_document((folder / "initialization.json").read_bytes()))
+    world = parse_nature_beam_world(document)
     lamps = [(i + 1, m) for i, m in enumerate(world.measured) if m.lamp is not None]
     number, lamp = lamps[0]
     assert lamp.lamp is not None
@@ -319,6 +319,10 @@ def read_run(folder: Path, *, replay: bool = True, window_start: int = WINDOW_ST
             if '"screen_' not in line:
                 continue
             event = json.loads(line)
+            if "detector" not in event:
+                # The layer's lines (a gather names the chosen set) are not
+                # the crowd's clicks, passes and records.
+                continue
             detector_name = str(event["detector"])
             if not detector_name.startswith(SCREEN_PREFIX) or event["family"] != light:
                 continue

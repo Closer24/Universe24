@@ -37,6 +37,11 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from event_universe.world_loading import world_of_run  # noqa: E402
+
 N = 64
 PAIRS = 128
 LIGHT = "light"
@@ -101,7 +106,7 @@ class Run:
 
 def load(folder: Path) -> tuple[dict[str, Any], dict[str, Any], list[dict[str, Any]]]:
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
-    world = json.loads((folder / "initialization.json").read_text(encoding="utf-8"))
+    world = world_of_run(folder)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         events = [json.loads(line) for line in stream if line.strip()]
     return record, world, events
@@ -162,9 +167,14 @@ def analyse(folder: Path, checks: Checks) -> Run:
     # window admits, and that age is its phase.
     offsets: dict[str, int] = {}
     for node in sorted(NODES):
-        first = min(
-            (event for event in clicks if event["detector"] == node), key=lambda e: int(e["tick"])
-        )
+        at_node = [event for event in clicks if event["detector"] == node]
+        checks.add(f"{label}: clicks at {node}", bool(at_node), f"{len(at_node)} clicks")
+        if not at_node:
+            # A Node without a click (the record form of the lamp, stage
+            # (vii) step 4): no offset to read, the check above fails.
+            offsets[node] = 0
+            continue
+        first = min(at_node, key=lambda e: int(e["tick"]))
         offsets[node] = int(first["tick"]) - int(first["phase"])
     checks.equal(f"{label}: the plus offsets agree", offsets["alice_plus"], offsets["bob_plus"])
     checks.equal(f"{label}: the minus offsets agree", offsets["alice_minus"], offsets["bob_minus"])

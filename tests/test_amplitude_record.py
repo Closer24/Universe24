@@ -10,9 +10,10 @@ before the first run:
 (a) the key: absent it is false, `hypotheses` is empty and `run.json`
     carries `amplitude` false; declared true it is true and `hypotheses` is
     ["amplitude-v1"]; refused naming the key: a value that is not true or
-    false, N below 4 under the key (the quarter turn of a reflection), a
-    lamp's `rate` other than [1, 1] under the key (one record per
-    self-creation); a world with N 4 and a lamp at [1, 1] is accepted;
+    false, N below 4 under the key (the quarter turn of a reflection); a
+    world with N 4 and a lamp at [1, 1] is accepted, and since stage (vii)
+    a lamp's `rate` other than [1, 1] too (as many records per
+    self-creation as the rate says; `tests/test_amplitude_click.py`);
 (b) the columns: every row of a world without the key carries record 0,
     branch 0 and multiplicity 1 (the store's columns after 5 intervals of a
     lamp of the design's Mach-Zehnder kind), `state.json`'s rows carry no
@@ -82,57 +83,77 @@ def lamp_world(**overrides: object) -> dict[str, object]:
     return world
 
 
-def test_the_key_its_default_its_identity_and_its_refusals(tmp_path: Path):
+def test_the_key_is_deleted_and_the_identity_follows_a_lamp(tmp_path: Path):
     """(a)."""
-    plain = parse_nature_beam_world(lamp_world())
-    assert plain.amplitude is False and plain.hypotheses == []
-    keyed = parse_nature_beam_world(lamp_world(amplitude=True))
-    assert keyed.amplitude is True and keyed.hypotheses == [AMPLITUDE_RULE]
-    for world, expected in ((plain, False), (keyed, True)):
-        out = tmp_path / ("keyed" if expected else "plain")
+    recorded = parse_nature_beam_world(lamp_world())
+    assert recorded.recorded is True and recorded.hypotheses == [AMPLITUDE_RULE]
+    bare = lamp_world()
+    measured = bare["measured"]
+    assert isinstance(measured, list)
+    bare["measured"] = [measured[1]]
+    plain = parse_nature_beam_world(bare)
+    assert plain.recorded is False and plain.hypotheses == []
+    for world, expected in ((plain, False), (recorded, True)):
+        out = tmp_path / ("recorded" if expected else "plain")
         out.mkdir()
         execute_nature_beam_run(world, b"{}", out, "test", 2)
         record = json.loads((out / "run.json").read_text())
-        assert record["amplitude"] is expected
+        assert "amplitude" not in record
         assert record["hypotheses"] == ([AMPLITUDE_RULE] if expected else [])
-    with pytest.raises(ValueError, match="amplitude must be true or false"):
-        parse_nature_beam_world(lamp_world(amplitude=1))
-    with pytest.raises(ValueError, match="amplitude is refused with N 2"):
-        parse_nature_beam_world(lamp_world(amplitude=True, N=2))
-    rate_world = lamp_world(amplitude=True)
+    with pytest.raises(ValueError, match="the world key 'amplitude' is deleted"):
+        parse_nature_beam_world(lamp_world(amplitude=True))
+    with pytest.raises(ValueError, match="the world key 'amplitude' is deleted"):
+        parse_nature_beam_world(lamp_world(amplitude=False))
+    with pytest.raises(ValueError, match="a lamp is refused with N 2"):
+        parse_nature_beam_world(lamp_world(N=2))
+    assert parse_nature_beam_world({**bare, "N": 2}).recorded is False
+    rate_world = lamp_world()
     measured = rate_world["measured"]
     assert isinstance(measured, list)
     measured[0] = {**measured[0], "lamp": {"rate": [2, 1], "directions": [[1, 0, 0]]}}
-    with pytest.raises(ValueError, match=r"rate \[2, 1\] is refused under amplitude"):
-        parse_nature_beam_world(rate_world)
-    small = lamp_world(amplitude=True, N=4)
+    rated = parse_nature_beam_world(rate_world).measured[0].lamp
+    assert rated is not None and rated.rate == (2, 1)
+    small = lamp_world(N=4)
     measured = small["measured"]
     assert isinstance(measured, list)
     measured[0] = {**measured[0], "amount": 1}
     assert parse_nature_beam_world(small).phase_steps == 4
 
 
-def test_the_three_columns_default_to_no_record_and_leave_the_merge_key(tmp_path: Path):
+def test_the_columns_default_to_no_record_and_leave_the_merge_key(tmp_path: Path):
     """(b)."""
-    simulation = NatureBeamSimulation(parse_nature_beam_world(lamp_world()))
-    for _ in range(5):
+    plain = lamp_world()
+    measured = plain["measured"]
+    assert isinstance(measured, list)
+    plain["measured"] = [measured[1]]
+    plain["in_transit"] = [
+        {
+            "position": [x, 0, 0],
+            "family": "light",
+            "number": 1,
+            "direction": [1, 0, 0],
+            "amount": 1,
+            "phase": 0,
+        }
+        for x in (0, 1)
+    ]
+    simulation = NatureBeamSimulation(parse_nature_beam_world(plain))
+    for _ in range(2):
         simulation.step()
     store = simulation.stores[0]
     assert store.size > 0
     assert (store.record == 0).all() and (store.branch == 0).all()
-    assert (store.multiplicity == 1).all()
+    assert (store.multiplicity == 1).all() and (store.birth == 0).all()
     assert all(beam.record == 0 and beam.multiplicity == 1 for beam in store.rows())
-    for keyed in (False, True):
-        out = tmp_path / ("keyed" if keyed else "plain")
+    for recorded, world in ((False, plain), (True, lamp_world())):
+        out = tmp_path / ("recorded" if recorded else "plain")
         out.mkdir()
-        execute_nature_beam_run(
-            parse_nature_beam_world(lamp_world(amplitude=keyed)), b"{}", out, "test", 5
-        )
+        execute_nature_beam_run(parse_nature_beam_world(world), b"{}", out, "test", 2)
         state = json.loads((out / "state.json").read_text())
         rows = [ray for node in state["nodes"] for f in node["families"] for ray in f["rays"]]
         assert rows
-        assert all(("record" in ray) is keyed for ray in rows)
-        assert all(("multiplicity" in ray) is keyed for ray in rows)
+        assert all(("record" in ray) is recorded for ray in rows)
+        assert all(("multiplicity" in ray) is recorded and ("u" in ray) is recorded for ray in rows)
     # The packed key with the three default columns equals the six-field key.
     columns, sign = store.identity_columns()
     assert (sign == 1).all()

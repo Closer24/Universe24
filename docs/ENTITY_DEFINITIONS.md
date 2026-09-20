@@ -69,7 +69,9 @@ supported and precede instance content. `in_transit` remains world preparation
 data, with its ordinary `number` convention (the measured event whose
 continuation a ray is); placement generates no ray and renumbers nothing.
 
-The definitions document has exactly `format` and `entities`:
+The definitions document has exactly `format` and `entities` (the first
+format below; the second format, `event-entities-v2`, adds `families` to a
+definition, [the section below](#families-in-definitions-event-entities-v2-2026-09-20)):
 
 ```json
 {
@@ -125,7 +127,8 @@ or tables. Unsupported fields, executable extensions and duplicate relative
 measured positions are refused. The host accepts the world parser's measured,
 lamp, table-entry and detector keys (`MEASURED_KEYS`, `LAMP_KEYS`,
 `TABLE_ENTRY_KEYS`, `DETECTOR_KEYS`); the world parser supplies their actual
-domain, required-field and rule-combination checks.
+domain, required-field and rule-combination checks. A table entry given as an
+object may omit `rule`, as in a world: the family's default rule applies.
 
 Expansion order is inline measured entries, then instances in declaration order,
 then each definition's measured declaration order. This fixes the ordinary
@@ -147,10 +150,16 @@ remain binding.
 ## Resolution, public API and portable input
 
 A file reference is a nonempty relative POSIX path with no absolute prefix,
-backslash, colon, empty component, `.` or `..`. Resolution requires an explicit
-`base_dir`; no current-working-directory or repository search is allowed. The
-resolved file must remain within the resolved base directory, including through
-symlinks. Read the dependency once, keep its bytes for validation and fingerprints,
+backslash, colon, empty component or `.`; it may climb, by leading `..`
+components only (since 2026-09-20: the shipped worlds reference
+`../entities/families.json`). Resolution requires an explicit `base_dir`, the
+world's directory; no current-working-directory or repository search is
+allowed. The resolved file must remain within the confinement root, including
+through symlinks: `root` when the caller gives one (the workspace passes its
+configurations directory); otherwise the world's directory, or its parent
+for a reference climbing by one `..` (the shipped layout, a series beside
+`entities/`), a longer climb refused without a root. Read the
+dependency once, keep its bytes for validation and fingerprints,
 and never reopen it while running. Entity authoring, definitions and bundle
 documents are UTF-8 without a byte-order mark; the existing plain-world decoder
 retains its prior behavior.
@@ -172,8 +181,18 @@ class LoadedWorld:
     expanded_source: bytes
     dependencies: tuple[DefinitionSource, ...]
 
-load_world(source: str | bytes, *, base_dir: Path | None = None) -> LoadedWorld
+load_world(source: str | bytes, *, base_dir: Path | None = None, root: Path | None = None) -> LoadedWorld
+families_by_definition(document: dict, reference: str, definitions_source: bytes) -> dict
 ```
+
+`families_by_definition` is the authoring helper of the generators: given a
+world with inline `families`, the reference and the definitions file's bytes,
+it returns the world with the longest tail of its families that the
+definitions tile (each definition's family list equal to a contiguous run,
+key by key) replaced by one instance per definition, named by the definition
+and placed at the origin, the families before the tail kept inline, so that
+the loader's expansion is the inline world in order; a world without such a
+tail comes back unchanged, one that already places definitions is refused.
 
 `expanded_source` is deterministic JSON for the plain engine world after removing
 the two authoring keys and adding the placed arrays. Serialize generated JSON as
@@ -309,3 +328,121 @@ Architecture owns this contract and the skill/documentation links. The independe
 test owner reviews and verifies file/bundle equivalence and portability after
 both provider and consumer commits. Publish this contract's exact commit before
 handing behavior implementation to either developer.
+
+## Families in definitions (`event-entities-v2`, 2026-09-20)
+
+The model owner, 2026-09-20 ([record 103](LOG_2026-09-20.md#103-the-owners-next-two-the-transmission-experiment-after-the-landing-and-every-known-family-as-an-entity-with-its-defining-keys)):
+"make sure all the known families are in entities with what is needed to
+define them", and the decision of the same day (record 113): one canonical
+definition per family, referenced by the worlds, the loader first and the
+worlds' migration after stage (vii) of `amplitude-v1`. The architect's audit
+([the catalog's family-name table](ENTITY_CATALOG.md#the-family-names-of-the-register))
+found that a definition of the first format carries `measured` and
+`detectors` only, so no family was defined in a definitions file and the
+158 registered worlds declared their families inline, written by their
+series' `make_worlds.py`.
+
+**The second format.** A definitions document of
+`"format": "event-entities-v2"` keeps everything of the first and lets a
+definition carry `families`, the world's family schema verbatim
+(`FAMILY_KEYS`: `name`, `quantum`, `charge`, `columns`, `lifetime`, `phase`,
+`phase_per_link`), the names distinct within the definition:
+
+```json
+{
+  "format": "event-entities-v2",
+  "entities": [
+    {
+      "name": "photon",
+      "families": [{"name": "light", "quantum": 1}],
+      "measured": [],
+      "detectors": []
+    }
+  ]
+}
+```
+
+A world that places an instance of the definition gets its families merged
+into the expanded world's `families` by name: the inline families first,
+then each instance's in declaration order, then each definition's families
+in order; a name already present is kept when every key agrees and refused
+when one differs, naming the family and the key (one owner of a value, no
+silent override, as an inline detector name colliding with an instance's is
+refused). Two instances of one definition carry the family once. A
+definition of a family alone (an empty `measured`, no detector) is admitted
+in the second format, so that `families.json` holds the catalog's rows with
+no apparatus; a world whose families all come from definitions omits
+`families`. When no placed definition carries a family, the world's own
+list is untouched and the expansion is what the first format gives, byte
+for byte. The engine's parser is untouched: it receives the expanded world
+as before, and every physical domain check of a family (the charge's pair,
+the columns, the lifetime against `age_bound`, the pair form of
+`phase_per_link` under `amplitude`) stays its own. The first format refuses
+`families` as an unsupported key and still requires an Event per
+definition.
+
+**The shipped definitions** (`examples/events/entities/`, written by
+`make_definitions.py` beside them; `tests/test_entity_definitions.py`
+(v2-f) checks the files against the generator and places every
+definition): `families.json`, one definition per family the registered
+worlds declare (the 48 names since `hand-v1` added the antineutrino `nubar`, each once, in the catalog's canonical form:
+the photon `light`, the electron `e`, the electron born by `become` `beta`,
+the proton `p` in the atom's units, the neutron `n`, the strong family
+`nuclear`, the neutrino `nu`, the W `w`, the seven inert materials, the
+five free masses, the test charge `q`, the choosers `sa` and `sb`, the 24
+thrown sources of series G in one definition); and `apparatus.json`, the
+external things and the sources of `amplitude-v1` (the lamp, the laser, the
+mirror, the wall, the slit, the screen as a set and as a pixel, the probe,
+the clock, the pair source, the GHZ source, the splitter, the label
+rotation, the CNOT gate, the counter pair, the chooser), each with the
+material family it is made of and its table entries naming `light`, the
+world's or a source's. The sources' amounts are for a world of `K` 4096 (a
+turn of 1 per self-creation on a content of 4096); a world with another
+`K` writes its own source. A family named by two series with different
+keys (the proton's charge `4` in the nucleus and the weak series against
+`[1, 1]` in the atom's; the coupling series' test charges named `p` and
+`q`; `m` with a phase circle in the coupling series; `mass` without its
+`charge` key in the Hubble series; `nuclear` at `strong` 7000; `light`
+with `phase_per_link` as a pair in the amplitude series) is defined here in
+the catalog's form, and a world whose family differs keeps it inline until
+the owner decides its rename.
+
+**The migration of the worlds** (2026-09-20, the second pull request of
+record 113, begun in parallel with stage (vii) on the owner's word): per
+series, its `make_worlds.py` passes every document through
+`families_by_definition` at its write step, so the shipped world references
+`../entities/families.json` and places one instance per definition in place
+of the families the definitions define, and the four worlds at the root of
+`examples/events/` are written by a `make_worlds.py` beside them (added for
+this, reproducing them byte for byte first). The loader's contract makes the
+expanded world the inline one, key by key and in order, so `events.jsonl`,
+`state.json` and the books of every migrated world are identical to the
+inline world's (`tools/run_series.py --compare` on every world in scope, and
+the gate set) and `run.json` differs only by `initialization_resolution`
+(the bundle's provenance). Migrated: the root worlds `one_content`,
+`two_contents` and `one_slit`; the Bell run and its choosers; Bohr; the
+catalog's `neutron_star` and `clock_near_mass`; Heisenberg but `w3_beam`;
+Hubble (the 24 thrown sources as one instance); the nucleus; the orbit; the
+redshift; the weak series. A world whose families the definitions do not
+all match keeps the head of its list inline and takes the tail from the
+definitions (the nucleus and the weak series: `p` at charge 4 inline, `n`
+and `nuclear` from the definitions; Hubble: `detector` and `mass` inline);
+a world whose tail no definition matches stays inline whole (the coupling
+series: `m` with a phase circle, the test charges `p` and `q`; in `7_00`
+the `q` that equals its definition precedes the `p` that does not;
+`nucleus/pp_1_weak`: `nuclear` at 7000 last). Deferred to the third pull
+request, after stage (vii) of `amplitude-v1` lands (it re-pins or touches
+them): the amplitude series, the lensing series, the build-up series,
+`catalog/sun_planet`, `catalog/lamp_mirror_screen`, `two_slits`,
+`heisenberg/w3_beam`, and every world under the key `amplitude`. The
+detector series keeps its own definitions file (`entities/detectors.json`):
+a world references one file. The check selector names `families.json` as a
+runtime dependency of every test that loads a shipped world
+(`RESOURCE_CONSUMERS` in `tools/check.py`); the wheel ships the definitions
+under `share/event-universe/examples/entities`.
+
+**What it does not do.** It does not define the content of a thing (a
+measured event's `amount` stays the world's), it does not add a key to the
+law, and it does not give a family whose defining key the law lacks
+(colour, oscillation, a hand) a definition: those stay on
+[the gap list](ENTITY_CATALOG.md#the-gap-list).

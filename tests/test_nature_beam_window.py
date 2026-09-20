@@ -181,22 +181,26 @@ def test_a_window_and_its_complement_cover_the_circle_exactly():
     for _ in range(83):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-    assert near.clicks == [32, 0] and far.clicks == [32, 0]
-    assert near.held == [32, 1] and far.held == [32, 1] and simulation.ledger.escaped_amount(LIGHT) == 0
+    # Under the one click (stage (vii) step 4) a lamp's rows are records
+    # born at u, the count of births, with the path phase 0, and a window
+    # reads the path phase: every row is outside the window at 40 and
+    # inside the complement at 8, so the far counter takes all 64 (re-run under the one click (stage (vii) step 4); the verdict to be re-read).
+    # Until then the rows carried the clock's phase and the two windows
+    # split the circle 32 / 32.
+    assert near.clicks == [0, 0] and far.clicks == [64, 0]
+    assert near.held == [0, 1] and far.held == [64, 1] and simulation.ledger.escaped_amount(LIGHT) == 0
     assert source.age == 83 and source.phase == 19 and source.turned == 83
     assert source.held == [K_B + 2 - 83, 0] and source.momentum == [-5312, 0, 0]
     clicks = [r for r in records if r["event"] == "click"]
     passes = [r for r in records if r["event"] == "pass"]
     assert len(clicks) == 64
     assert sorted(r["phase"] for r in clicks) == list(range(64))
-    assert sorted(r["phase"] for r in clicks if r["node"] == [10, 0, 0]) == OUT_OF_WINDOW_8
-    assert sorted(r["phase"] for r in clicks if r["node"] == [11, 0, 0]) == IN_WINDOW_8
+    assert all(r["node"] == [11, 0, 0] and r["u"] == r["phase"] for r in clicks)
     assert all(r["amount"] == 1 and r["push"] == [64, 0, 0] and r["content"] == 1 for r in clicks)
-    assert sorted(r["phase"] for r in passes) == sorted([*IN_WINDOW_8, 0, 1])
+    assert len(passes) == 66 and sorted(r["phase"] for r in passes) == sorted([*range(64), 0, 1])
     assert all(r["node"] == [10, 0, 0] and r["window"] == 40 for r in passes)
     for record in clicks:
-        offset = TEN + 1 if record["node"] == [10, 0, 0] else ELEVEN + 1
-        assert record["tick"] == record["phase"] + offset, record
+        assert record["tick"] == record["phase"] + ELEVEN + 1, record
 
 
 def test_a_lamp_with_a_window_releases_in_it_and_its_clock_turns_regardless():
@@ -209,6 +213,7 @@ def test_a_lamp_with_a_window_releases_in_it_and_its_clock_turns_regardless():
     simulation = NatureBeamSimulation(parsed, records.append)
     source, gate, light = simulation.measured[1], simulation.measured[2], simulation.stores[LIGHT]
     assert source.lamp_window == 8
+    births = 0
     for tick in range(1, 65):
         simulation.step()
         assert simulation.books()["balanced"], tick
@@ -217,7 +222,11 @@ def test_a_lamp_with_a_window_releases_in_it_and_its_clock_turns_regardless():
         released = (tick - 1) in IN_WINDOW_8
         assert int(fresh.sum()) == int(released), tick
         if released:
-            assert int(light.phase[fresh][0]) == tick - 1 and int(light.direction[fresh][0]) == 2
+            # The window gates the release by the clock's phase; the row born
+            # is a record at u, the count of births (re-run under the one click (stage (vii) step 4); the verdict to be re-read; until stage
+            # (vii) step 4 the row carried the clock's phase).
+            births += 1
+            assert int(light.phase[fresh][0]) == births - 1 and int(light.direction[fresh][0]) == 2
     assert simulation.ledger.transit_released[LIGHT] == 32 and simulation.ledger.held_spent[LIGHT] == 32
     assert source.held == [K_B + 2 - 32, 0] and source.momentum == [-2048, 0, 0] and source.phase == 0
     for _ in range(17):
@@ -227,7 +236,7 @@ def test_a_lamp_with_a_window_releases_in_it_and_its_clock_turns_regardless():
         gate.clicks == [32, 0] and gate.held == [32, 1] and simulation.ledger.escaped_amount(LIGHT) == 0
     )
     clicks = [record for record in records if record["event"] == "click"]
-    assert len(clicks) == 32 and sorted(record["phase"] for record in clicks) == IN_WINDOW_8
+    assert len(clicks) == 32 and sorted(record["phase"] for record in clicks) == list(range(32))
     assert simulation.ledger.transit_released[LIGHT] == 49 and source.held == [K_B + 2 - 49, 0]
     assert source.age == 81 and source.phase == 17
 

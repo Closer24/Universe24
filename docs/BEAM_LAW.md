@@ -443,7 +443,14 @@ order with each step's inverse:
    value 1, the sign minus: its term is `-M_A V_B` exactly), the second
    `charge` (rho, the sign plus: its term is the electric part below), and
    a declared column (the strong force, the sign minus) is a third term of
-   the same sum, not a term of the code. On the two built-in columns this
+   the same sum, not a term of the code. Under the world key `doppler`
+   (`doppler-v1`, since 2026-09-20, absent by default, note 38) a free
+   reader in motion takes each direction's flow at the rate at which it
+   and the rows meet, the flux `1 - (v_body . c_d) / |c_d|^2` of the
+   rows through it at its speed quantised to the grain G = 2^12, off its
+   clock before the columns (`weighted_flow`); at rest the weight is 1
+   by an exact division and the line above is unchanged.
+   On the two built-in columns this
    is the form landed the same day, integer by integer (the mathematician:
    11 945 pushes of the registered worlds, 0 unequal): **ONE bilinear
    form** over the arriving rays (the model owner's proposal 2, admissible
@@ -517,8 +524,16 @@ order with each step's inverse:
    proportional to the content (the equivalence principle) and the world
    chooses how slow its slowest motion is; every step registered before
    the label's scale is the same step, `by_clock(age, Q n, Q k) =
-   by_clock(age, n, k)`. No remainder is kept; the count is the whole
-   part off the clock (implementation note 15; `tests/test_push_width.py`).
+   by_clock(age, n, k)`. Since 2026-09-20 (note 17 as amended, the step
+   drive) the count is the whole part of the SIGNED distance the momentum
+   has driven, kept on the body's record as `drive` per axis (`drive +=
+   p` at every self-creation in which it may step, one Link on the + side
+   and `drive -= Q x S x M + |p|` at or beyond +D, one Link on the - side
+   and `drive += Q x S x M + |p|` at or beyond -D; signed since record
+   126 of the same day, the first form's `|p|` being history), the same
+   integers at a momentum of one sign as the whole part off the clock
+   (implementation notes 15 and 17; `tests/test_push_width.py`,
+   `tests/test_step_drive.py`).
 6. **The border `lifetime`; then merge identical rows and sort by Node.**
    Since 2026-09-20 (note 31 (vii)) every row of a family with a
    `lifetime` whose whole age is at or beyond it after this interval's
@@ -1044,7 +1059,68 @@ implementation's part of the contract. The design above is unchanged.
     the count; the momentum is untouched by the step; `run.json` records
     `width`. The parser refuses 0, a negative width, a string and a
     fraction naming the key (`tests/test_push_width.py`; the experiment
-    that uses it is series D in EXPERIMENTS.md).
+    that uses it is series D in EXPERIMENTS.md). **Amended on 2026-09-20,
+    the step drive (superseded for the moving body only: record 107, the
+    findings, and record 108, the model owner's decision, "yes; let him
+    give a generic solution if he can"; the owner on series G2's finding,
+    "1 and 2 are very important for a solution and a new run"; change 2,
+    the push at the relative speed, not built as proposed, record 110;
+    the physicist's design RULES.md section 1 (docs/designs/hubble_stars/ on branch `claude/series-g2-stars`); `tests/test_step_drive.py`).**
+    Read at the current momentum, the whole part `floor(age |p| / D)`
+    stalled a body for tens of intervals under a falling momentum and then
+    stepped it at every interval (series G2: a star at 0.019 Links per
+    interval stepping five Links in six intervals, faster than the ray;
+    the Links made equal to age x v_now). The count is now the whole part
+    of the distance the momentum has driven: the body's own record
+    carries per axis one bounded integer `drive_a` (0 at the start, as
+    its age is on its record and nothing at a Node), and at every
+    self-creation in which it may step `drive_a += p_a`, the SIGNED
+    component; when `drive_a >= Q S M + |p_a|` it steps one Link on the
+    axis's + side and subtracts that, when `drive_a <= -(Q S M + |p_a|)`
+    one Link on the - side and adds it (record 126 of 2026-09-20, the
+    signed drive: the first form accumulated |p_a| and took the direction
+    from the sign at the fire, so a deuteron's neutron, charged by
+    fourteen intervals toward the proton, stepped away after the contact
+    handed it the proton's component; "the distance the momentum has
+    driven" is the signed sum, and the |p| form equals it only while the
+    momentum keeps one sign). With a momentum of one sign the step fires
+    exactly when `floor(n |p| / D)` increments (the drive is the signed
+    remainder of that division): every world whose bodies take no push
+    replays byte-identical, and every world whose momenta keep their sign
+    on every axis steps as under the first form; under a push the motion
+    follows the momentum's signed history at every self-creation, a
+    reversal first cancelling what was driven the other way, and never two
+    Links fall in one interval (one D is subtracted per self-creation; a
+    residual earned at a larger momentum fires at the following
+    self-creations, one Link each, the distance the momentum had driven).
+    The drive of every axis advances at every such self-creation, and the
+    frame's order stands as before, x before y before z: a later axis
+    whose drive reaches its D in the interval of an earlier axis's step
+    (made, refused or an escape) loses that Link, its D subtracted,
+    nothing carried, so a body with momentum on two axes at a constant
+    momentum steps exactly where it did. The turn by momentum (note 30
+    (ii)) reads its k0 off the record's count of the rule's fires on the
+    axis, `axis_steps` (a lost or refused step counted, as the whole part
+    off the clock counted it), the same number at a constant momentum.
+    The count primitive is `core.integer.by_drive(drive, rate, D)`, the
+    whole part of an accumulated signed rate on the reader's own record,
+    the count -1, 0 or +1 (the model owner's record 108, "a generic
+    solution if he can": one primitive every count against a rate could
+    use, equal to `by_clock` wherever the rate is constant and of one
+    sign); the step reads it now, and the
+    clock's turn, the owed count, the release and the lamp keep `by_clock`
+    with their docstrings saying they are the same count where the rate
+    is constant, so nothing registered outside the pushed-body worlds
+    moves. `run.json`, `state.json` and the `step` line carry `drive`; a
+    declared `drive` is refused as an unknown key. Re-registered under it, the old
+    integers kept as history in TEST_EXPECTATIONS.md: the bodies pushed or
+    handed a momentum in `tests/test_contact.py` (a), (d), (e),
+    `tests/test_nature_beam_clock.py` (d), `tests/test_paid_charge.py` (d)
+    and `tests/test_nucleus_readings.py`, each one self-creation later
+    than the count off the clock stepped it (a body that receives a
+    momentum begins its drive at 0 instead of stepping off its age). "No
+    remainder is kept" above stands for the clock, the release, the lamp
+    and the owed count, which read a rate against an age no push changes.
 18. **The one label; no collision at a measured event's Node** (the
     physics-rule reviewer's F1, blocking, and the model owner's decision on
     its case (c), the night of 2026-09-19; `tests/test_nature_beam_push.py` (h),
@@ -2560,7 +2636,17 @@ implementation's part of the contract. The design above is unchanged.
     click needs the lamp's rate under the record form, a set's offer of
     several multiplicities of one record, the columns written only where
     a record is, and the design's test 7 restated as identity on the
-    worlds without a lamp; none is a half hour, none is done here.
+    worlds without a lamp; none is a half hour, none was done at (vi).
+    Stage (vii), step 1 (MIGRATION (vii-1); `tests/test_amplitude_click.py`)
+    builds the four under the key: a lamp's rate births as many records
+    as it says units per direction, each with its own ordinal and the
+    birth phase advanced by the clock's stride; two multiplicities of one
+    record at one offer add at the common denominator where their ratio
+    is a square (the held pointers rescaled by its root) and are refused
+    otherwise (the integer form has no cross term over the square root of
+    their product: a limit of the law, recorded); the columns and the
+    `cancelled` lines are written only where a record is; the gate set's
+    lamp-free worlds read the same with the key and without it.
     **(ix) What is not done, and next.** Unification (3), one permutation
     component for the collision, the meeting and the gate, is refused with
     the reason: the collision permutes directions by the six-heading table,
@@ -2572,16 +2658,491 @@ implementation's part of the contract. The design above is unchanged.
     beside a mass moved to smaller y against the control's in every world,
     -2.115, -5.208 and -4.432 pixels at the three (M, b) against the
     crowd's -2.021, -4.345 and -2.465, and the 464 records that reached
-    the mass were absorbed whole by it; two changes are the next item, not
-    landed here (more than an hour together): u as the record's own field
-    on the row beside the running phase (u = the lamp's clock count mod N,
-    the GameBoard's rules reading the path phase, phase - u, the click
-    reading u; the test: the K record world's click centroid equals its
-    offers' expectation under uniform u within one rung) and a record's
-    row pushing matter with its share amount^2 / (m x norm) of the label,
-    the remainder booked on a ledger line (the test: the mass's momentum
-    per record equals the label times the sum of the shares). Also open:
+    the mass were absorbed whole by it; two changes: u as the record's
+    own field on the row beside the running phase (u = the lamp's count of
+    births mod N, the GameBoard's rules reading the path phase, phase - u,
+    the click reading u; built at stage (vii) step 2, MIGRATION (vii-2):
+    the K record world's clicks per set within one rung of its offers'
+    expectation under uniform u and the click centroid within 0.25 pixels
+    of it, `tests/test_amplitude_click.py` (f)) and a record's row pushing
+    matter with its share amount^2 / m of the quantum's label (the
+    record's norm in m), the integer form label x amount // m, the
+    remainder booked on the books' `remainder` line (built at stage (vii)
+    step 3, MIGRATION (vii-3): the mass's momentum is the sum of the
+    shares of the rows it absorbed, `tests/test_amplitude_click.py` (g);
+    N10's "matter feels every branch" is closed: matter feels each branch
+    by its share). Also open:
     the full register replay and the coverage-measured gate set (the
     trimming pull request), the design's Grover (a world beyond the
     register's ceiling), the design's `split` line of the books, and the
     design's bounds at N = 64 and 4096 as stated above.
+    **(x) The one click, landed** (stage (vii) step 4, MIGRATION (vii-4);
+    the design's section 6). The record form is the law: the world key
+    `amplitude` is deleted (a world that declares it is refused), every
+    lamp births records, the crowd's `wave` threshold on the pointer's
+    square is deleted (the amount summed over the set under both
+    readings; the pointer gives the set's phase and its record), the
+    layer is on every world and the identity `amplitude-v1` is under
+    `hypotheses` when a lamp is declared. A world without a lamp reads as
+    it did before the law (the gate set's lamp-free worlds pinned by their
+    digests); every world with a lamp is re-read: its rows are records,
+    read by the ladder, and its clicks are the records' (the register's
+    re-run worlds, EXPERIMENTS, marked "re-run under the one click; the
+    verdict to be re-read", the old numbers kept as dated history).
+
+38. **The reading's weight at the relative speed, `doppler-v1`: the flux
+    at the grain** (the model owner, 2026-09-20, record 119: "a body TAKES
+    a message at the rate at which it and the message meet"; the
+    mathematician's admissible form, `docs/designs/push_relative_speed/
+    FORM.md` section 6 on the branch `claude/series-m-masses`, record 110,
+    and after the physics-rule review of the first build (`e916e115`) its
+    grain and flux form, `GRAIN.md` sections 1 and 2 beside it with
+    `grain_map.py` the integers; on series G2's finding, RULES.md section
+    2 and record 107: a body reads exactly 1.000 row per interval from a
+    fixed beam at rest, receding at 0.30 and 0.45 and approaching at
+    0.30, so its own motion never Dopplers what it reads, since step 4
+    counts the rows that stepped into its Node and a dwelling row is
+    re-read after a leapfrog while a head-on row whose Node the body
+    steps onto is missed; the PRESENCE form of RULES.md was refused,
+    record 110: the dwell of the Node moves the rest reading by x 0.582
+    or x 1.164). **The rule, in the owner's frame.** A body takes a
+    message at the rate at which it and the message meet: the flux of the
+    message's stream through the body along the message's direction,
+    `1 - (v_body . c_d) / |c_d|^2` of the stream's own rate, a transverse
+    motion changing nothing (the body leaves one line of the fan and
+    enters another), a co-moving one taking less, a head-on one more.
+    Under the world key `doppler` (true or false, false by default; the
+    record carries it and the identity `doppler-v1` under `hypotheses`),
+    when a free measured event reads the rows that ARRIVED at its Node
+    this interval for the push of step 4, each direction's label flow
+    counts with that flux, one scalar per (direction, body), and the
+    columns then read the weighted flow exactly as they read the flow
+    today. **G, the grain.** `SPEED_GRAIN` G = 2^12 is a constant of the
+    law beside Q = 64, not a key: the body's speed on an axis is read
+    once per interval from its own record as `w_a = G x |p_a| // D_a`,
+    `s_a = sign(p_a)`, with D_a = Q S M + |p_a| the step rule's divisor
+    (`world.step_divisor`, the one function the step and the weight read;
+    `nature_beam.quantised_speed` on the momentum and content the frame
+    read, `frame_momentum` and `frame_content`, one speed for every group
+    of the interval whatever the family order); the speed's remainder
+    `(G |p_a|) mod D_a` is discarded each interval, a declared grain of
+    1 / G Links per interval like S and Q, nothing accumulating: the
+    quantised speed is below |p_a| / D_a by less than 1 / G = 2.4 x 10^-4
+    Links per interval, so the weight is biased toward 1 by less than
+    T_d / (G N_d) = 4.2 x 10^-4 of the rate on a heading (a receding body
+    reads at most that much too much, an approaching one too little; on
+    the G2 stars 7 x 10^-5 to 1.9 x 10^-4 in v, `grain_map.out` 1), and a
+    body slower than 1 / G Links per interval on an axis reads there as
+    at rest. **The integer form** (`nature_beam.flux_pair`,
+    `weighted_flow`; `push_form` untouched): with v = (a, b, c) the
+    direction's vector, T_d its resolution from the flight table (its
+    velocity is (Q / T_d) v per axis, the Bresenham line's pace) and |v|^2
+    its squared length, per direction d present in the group,
+
+        f_d  = (|G Q |v|^2 - T_d x sum_a s_a w_a v_a|, G Q |v|^2),
+        V'_d = sign(V_d) x by_clock(age_A, |V_d| x num_d, G Q |v|^2)   per component,
+        push_A = the columns of step 4 on sum_d V'_d,
+
+    V_d the label flow of the group's rows of direction d (the sum of
+    their labels, `amount x u_d`); the numerator in absolute value since
+    the take is a count, never negative: 1 at rest (w = 0, the division
+    exact), (c - v) / c receding, (c + v) / c approaching, exactly 1 for
+    a transverse motion (the sum is 0; a zero component contributes no
+    term), 0 for a body moving with the rows at their own speed, and
+    |c - v| / c for one outrunning them (a reader faster than the message
+    takes it from behind at |c - v|, and the push keeps the sign of the
+    flow: the message still points from its source). On a heading it is
+    `(|G Q - T_d s w|, G Q)`, FORM.md section 6's pair at the quantised
+    speed, the same integers where G p_a / D_a is whole. The per-axis
+    pair of the first build, `(|N_d D_a - T_d s p_a|, N_d D_a)` per
+    (direction, axis), was exact on a heading and wrong on every fan
+    direction (GRAIN.md section 2: it overstated the Doppler term by
+    |v|^2 / a^2 per axis term, x 2 on a face diagonal, x 3 on a cube
+    diagonal, x 5 on (1, 2, 0), and went negative on the slanted
+    directions at the stars' own speed, -0.11 on (1, 2, 0) and -0.87 on
+    (1, 3, 2) at v = 0.289 where the flux reads 0.78 and 0.87), and its
+    "per-direction floors only on an axis where the reader moves" rule is
+    deleted with it: the flux form needs none. Two remainders, both
+    stated: the speed's above, and the flow's floor `(|V_d| x num_d) mod
+    (G Q |v|^2)`, read off the reader's clock by `by_clock`, exact on
+    average and below one label unit per direction and component per
+    interval, the same kind as every column's. **The bounds.** The
+    speed's intermediate G x |p_a| is tested by division before it is
+    formed and refused naming the body, its Node and the axis (|p_a| at
+    most 2^50, the register's bound over G); |V_d| x num_d is tested by
+    division before it is formed and refused naming the body and the
+    direction (R1; a numerator of 0 forms nothing); the product of the
+    clock age with |V_d| x num_d inside `by_clock` is the host's, the
+    columns' convention for every count off the clock; the weighted flow
+    is bounded per component (R2) and then the columns' own tests run as
+    today. The numerator is at most G (Q |v|^2 + T_d
+    S_1), 2^33.6 on the widest direction of a table, so |V_d| x num_d
+    fits the register for an amount up to 2^22 per direction per
+    interval; no load-time bound is new: the weighted flow is at most
+    (Q |v|^2 + T_d S_1) / (Q |v|^2) times the flow, 2.72 on a heading, 4
+    on a cube diagonal, and the parser's static budget of the columns
+    (`_column_budget`) takes the largest release flow times the ceiling
+    of that factor over the table under the key (`weighted_flow_factor`);
+    the first build's pair budget `(N + T) x D_a` at load is gone with the
+    pair. **The stars fit as registered.** On a G2 star (content 2^22 +
+    4096 at width 2^20, D_a = 2^48, one mass row of amount 64 on a
+    heading) the weighted flow's product is 2^29 and today's push on it
+    2^34, against the pair's 2^87 (`grain_map.out` 1); a registered star
+    world parses under the key and runs (`tests/test_doppler.py` (h), a
+    headings-only table: the stars' fit, not the fan's integers), and the
+    review's B1 is moot. **What is bit-identical.** A fixed body
+    has no speed and reads at the weight 1 whatever momentum its record
+    books (its momentum is the push it took, not a motion); a free body
+    at rest has w = 0 on every axis, the pair `(G Q |v|^2, G Q |v|^2)`
+    and by_clock gives |V_d| exactly, on a fan as on a heading: every
+    registered push of a fixed body (series C's identities, record 35's
+    11 945 pushes, the third law, item 7) and every free body at rest
+    read the same integers with and without the key, and every world
+    without the key is byte-identical (the gate set's fifteen worlds
+    replayed identical on 2026-09-20). The weight is on the push's read
+    of the arrivals alone: the clock's count is not weighted (it counts
+    the presence at the Node, a number of rows there, not a flux through
+    the body), the size and the threshold readings, the meeting, the
+    emitter's side and the Node are untouched; a paid family's ray pushes
+    by its label at the click as before. **What it gives** (the bar of
+    the finding on the engine, `tests/test_doppler.py` (b): a fixed
+    source releasing one row per interval on +x, a free body of content
+    2^20 whose width and momentum make its speed exact, the push the
+    weighted flow itself in label units, 64 per row): over 200 intervals
+    the body reads 200 rows in every case and takes, under the key, 12800
+    at rest (200 rows), 6204 receding at 0.30 (96.94), 2901 receding at
+    0.45 (45.33), 19395 approaching at 0.30 (303.05), 0 co-moving at c
+    and 3700 outrunning at 0.75 (57.81), against the map's 200, 97, 45,
+    303, 0, 58 and its exact rates 96.9, 45.3, 303.1, 0, 57.8 (FORM.md
+    section 4): the flux times the arrivals to the label unit, the
+    crossing rate (c - v) / c the finding asked for. On a fan (`(f)`, one
+    row of amount 64 per interval over three intervals, the reader's
+    clock ages 0 to 2): the face diagonal (1, 1, 0) at v = 1 / 3 reads
+    5130 of 8640 on each component (0.594, the flux; the per-axis form
+    read 0.19), (1, 2, 0) at the star's speed 0.289 reads 4326 of 5568
+    and 8504 of 10944 (0.777), (1, 3, 2) 2828, 8485, 5656 of 3264, 9792,
+    6528 (0.866), the heading 5249 of 12288 (0.427) and the transverse
+    heading exactly 12288 of 12288. Not given: an exact crossing count
+    (the leapfrog and the miss stay, only their mean is corrected), and
+    nothing for a body on a set beyond the sum over its Nodes, each of
+    its groups weighted from the one frame snapshot (`(g)`). **What
+    re-registers.** Nothing: the key is absent in every shipped world and
+    nothing is re-run under the key in this change. A moving pushed body
+    under the key reads differently from its first step on (the orbit
+    series D, Bohr's H, the planet, series G and G2's stars, the contact
+    worlds once a body holds momentum); the second G2 run (record 119
+    (6)) is the G2 session's, with the acoustic expectations re-derived
+    on this form first, registered with dated lines then, never here.
+
+39. **The hand, `hand-v1`** (the model owner, 2026-09-20, record 128 of
+    [the log](LOG_2026-09-20.md), "the hand's three choices confirmed";
+    the physicist's design hand/DESIGN.md, record 122, read against the
+    mathematician's integer form FORM.md, record 120; `tests/test_hand.py`
+    (a) to (g); the worlds of series P, `examples/events/hand/`). The one
+    thing the record did not carry: its sense of turning about its own
+    direction. **The row** gains one column `hand` in {-1, 0, +1}: +1 a
+    right-handed screw along u_d, -1 a left-handed one, 0 none (every row
+    of every world without a declaration), the helicity, `sign(S . p)`,
+    which on the GameBoard, where every row moves at the one speed of the
+    flight table, is the chirality the weak force reads. A pseudoscalar:
+    under a signed axis permutation g of the cube a hand goes to det(g) h,
+    kept by the 24 proper rotations and negated by the 24 improper ones
+    (a reflection composed with a rotation), with no arithmetic; a bit
+    relative to the direction, so every rule that changes a row's
+    direction leaves it untouched, and a column of constant 0 has a width
+    of 0 bits in the packed merge key (`merge_key`), so every world
+    without a hand keeps the same key, the same order and the same bytes.
+    It is an identity field of the merge (`IDENTITY_FIELDS`): two rows
+    equal in every field but the hand are two rows and never merge, and
+    under the amplitude key two rows of one record in antiphase with
+    opposite hands never cancel (opposite helicities are orthogonal).
+    Carried unchanged through every re-creation: the walk (a column of the
+    row), the collision (the permutation moves the direction, the columns
+    go with it; the class key (number, content) is untouched, so the
+    table, the twenty orbits and the bijection are what they were), the
+    meeting (a slow turn conserves helicity), a re-release at a mirror, a
+    wall or a re-emitter (`PendingRow.hand`), a split by `weights` (every
+    output row), a `rotate` (the label turns, the hand does not), a `cnot`
+    gate (`_replace` keeps it), a home and the inverse interval ((direction,
+    age, hand) to (direction, age + 1, hand) is injective). **The measured
+    event** gains the axial record `axis`: one of the six headings in
+    Port order declared as its vector, `[1, 0, 0]` .. `[0, 0, -1]`
+    (refused otherwise), or none; an axial vector, a -> det(g) g a under
+    the 48; a declaration fixed like `fixed` (no angular-momentum ledger:
+    a click on the event does not turn it, the products' spins are not
+    subtracted from it). Wu's polarised nucleus is an axis; a neutrino in
+    flight is a bit. **GIVING.** The family key `hand` (-1 or +1; the
+    catalog's definition, as `charge` is: the neutrino is left-handed
+    once, not per world): every row born of the family (a lamp's, a free
+    release's, a product's, a home's, a declared transit row's) carries
+    it. The lamp key `hand`: a circularly polarised lamp of a family
+    without a hand (light of one hand); a lamp of a chiral family may
+    repeat the family's value only. The transit key `hand`: a row of a
+    family without one; a chiral family's row takes the family's. **The
+    right-hand rule** at the birth of a `become` product (step 5, the
+    apportioning of the pending row over the parent's directions): at a
+    parent with the axis A, a product of a family with the hand h is born
+    only on the parent's declared directions d with `sign(A . u_d) = h`,
+    one integer sign per direction (`world.axis_sign`: A is a heading, so
+    A . u_d is one component with a sign, in {-64, 0, 64}), the whole
+    apportioning of today (`apportion_whole` with the leftover counted
+    from (clock age + k) mod n) over the admitted subset in declared
+    order; a product of a family without a hand is born on every declared
+    direction stamped `h = sign(A . u_d)`, +1 along the axis, -1 against
+    it, 0 on the equator; at a parent without an axis every product on
+    every declared direction as today, its family's hand carried (an
+    unpolarised parent is lawful and the general case: nature's free
+    neutron emits handed antineutrinos isotropically; J1's neutrons and
+    J3's deuteron declare no axis). The three choices, taken by the model
+    owner as physics over convention against FORM.md's (record 128): (i)
+    a left-handed product leaves AGAINST the axis (`sign(A . u_d) = h`,
+    not -h: in Wu's experiment the electrons leave opposite to the
+    nuclear spin, and the left-handed beta's spin then points along the
+    parent's axis, the product carrying the parent's sense; both forms are
+    covariant and give the same parity difference, the sign decides which
+    reading is Wu's and `hand/wu.json` pins Wu's side); (ii) the strict
+    hemisphere only, the equator not admitted (a heading perpendicular to
+    the axis has no sign against it; on the six headings one direction is
+    admitted, not five); (iii) the hand's home on the family, not on the
+    product (a hand cannot then be declared inconsistently between two
+    worlds or two products), with a lamp's and a transit row's hand for
+    families without one. An empty admitted set is refused at load naming
+    the rule, the product and the axis (`world._handed_products`; a
+    declared transformation that cannot leave is a defect of the world,
+    loud). Nothing else gives a hand; the engine branches on no name (an
+    integer of the event, an integer of the family, the direction table).
+    **TAKING.** The table-entry key `hand` (-1 or +1; refused on `pass`),
+    the parity filter: the entry's rule (`read`, `measure`, `rerelease`,
+    `become`) applies to arrivals of that hand only; an arrival of the
+    other hand or of hand 0 is passed exactly as an arrival outside the
+    entry's window is (a `pass` line naming its `hand`; J2's form: the
+    rows a reader does not take go on to the reader behind it). Admitted
+    = the threshold AND the window AND the hand, three comparisons of an
+    integer the row carries at the Node with a declaration of the reader,
+    applied after the window (and after the amplitude law's exemptions of
+    a `sum` set and a split from the window: a filter at a `sum` set
+    passes the other hand). The weak force on one hand is then the
+    `become` entry's `hand` -1 and nothing else: a right-handed W arriving
+    at it is passed, dies on the border `lifetime` one interval later and
+    transforms nothing (test (c)); the same key on a `measure` entry is
+    Goldhaber's helicity filter and on a `rerelease` a hand-selective
+    mirror. **A hand is not a column**: no push, no moment, no pointer and
+    no clock reads it (the one-reading-set principle holds; the meeting's
+    target and every moment are blind to it). **PASSING.** The meeting,
+    the collision, a `pass` entry and every re-creation keep it, no
+    arithmetic; a `read` entry with a hand filter reads the push of one
+    hand and passes the other. **The record.** Only in a world that
+    declares a hand or an axis anywhere (`NatureBeamWorld.handed`): the
+    `click`, `pass`, `read` and `rerelease` lines carry `hand` (a click
+    per row; a group line the one hand of its rows, None where they
+    differ), the face and border `click` lines carry it, the `become`
+    line's products gain a fifth entry, the product's hand; the books'
+    measured line per family gains `left` and `right`, the units clicked
+    of each hand as the row's column carries it (a report,
+    `Ledger.taken_left`, `taken_right`); `run.json`
+    carries each family's `hand` and each number's `axis` as declared and
+    `hand-v1` under `hypotheses` (after `amplitude-v1`); `state.json`
+    writes the row's `hand`. Without a declaration no line, no key and no
+    byte changes: the gate set replayed identical ([VALIDATION](VALIDATION.md)).
+    **The hand as a label bit named** (FORM.md section 5, the design's
+    section 4): on a branched family of the amplitude law the hand is the
+    meaning of a label bit and NOT the row column (a rotation makes two
+    rows on the bit cleared and set, and a hand carried as a column would
+    then disagree with the label on one of them): a lamp's `branches` may
+    carry a third entry per branch, the hand of the label, every branch or
+    none, the bit k of a label the hand of the row on arm k, the two
+    values of a bit the two hands (`LampDefinition.label_hands`); the
+    click line then carries the hand the row's label bit means on its arm
+    (`nature_beam.row_hand`), the row column stays 0, and a family
+    declares one or the other, never both (refused at load); the parity
+    filter reads the same hand of such a row, the label's meaning on its
+    arm (`nature_beam.read_hands`, the physics-rule review's finding 1.1:
+    the filter on a branched family is then the which-path click on the
+    label, FORM.md section 4, and not a filter that admits nothing): on
+    the pair with the rotations removed and `hand` +1 on the two plus
+    counters, 32 of the 64 records gather at the plus counters and 32 at
+    the minus ones, none mixed, and with the rotations kept the label is
+    read after the rotation and every marginal stays 32/64 (test (g)). The
+    books' `left` and `right` lines count the row's COLUMN alone (on such
+    a family they stay 0 while the click lines name the label's hand: a
+    report of two readings, stated). With it the
+    pair's integers are unchanged: S = 176/64 at the CHSH labels, every
+    marginal 32/64 (test (g)); an improper symmetry negates the bit, which
+    sends |00> - |11> to itself up to a global sign, so the Bell worlds
+    stay mirror-equal. Malus's law is the label's, not the hand's: a
+    linear polarisation is the two-label record with a relative phase, the
+    polariser its `rotate` and the label click; a hand filter alone on
+    circular light is 1 or 0, no angle. **The parity test** (the design's
+    1.3 and 3.2, test (d)): under a signed axis permutation g of the cube
+    every polar thing goes by g (positions, directions, momenta, the
+    detectors), the `axis` as an axial vector, det(g) g A, and every
+    `hand` is copied VERBATIM (the law's data: the catalog's families and
+    the readers' filters, as Wu mirrored her apparatus and not the
+    neutrino), the readings mapped back by the Node map. Under the mirror
+    in x, the genericity probe's T2 as coded, an axis along the mirror's
+    normal is its own mirror image, det(M) M e_x = e_x, so on the worlds
+    of series P the axial transform and a verbatim copy of the axis
+    coincide (under a y- or z-mirror they do not: an axis in the mirror's
+    plane goes to its opposite heading, and a verbatim copy would be a
+    different apparatus); the pins under that mirror: every registered world equal (no hand);
+    `w_hand` DIFFERENT by exactly the click moving from the proton at x =
+    3 to the proton at x = 1, the product's direction, the recoil and the
+    push with the other sign, everything else equal; the control
+    `w_two_sides` (no axis, no hand) equal; `wu` different, the beta's
+    click at x = 16 against x = 0 and the antineutrino's face -x against
+    +x; `nu_hand` equal (a hand without an axis is a datum a mirror cannot
+    see; Goldhaber's reading needs the axis, as nature needed the
+    polarised Eu-152). Over all 48 signed axis permutations (test (d); the
+    physics-rule review's own probe read the same): the parity image
+    differs under exactly the 24 improper elements and under none of the
+    24 proper ones on `w_hand` and `wu`, and under none of the 48 on
+    `w_two_sides` and `nu_hand`; and the full transform (every hand by
+    det(g) too, every axis by det(g) g A) is equal under all 48 on every
+    world: the law is covariant under the 48 when its data transform as a
+    pseudoscalar and an axial vector, and parity violation on the
+    GameBoard is one statement, the catalog's one-handed families (no
+    `nubar` of hand -1 and no `nu` of hand +1 is declared anywhere; a
+    right-handed neutrino declared in a transit row would be passed by
+    every `hand` -1 entry and clicked by none: a sterile row, the law's
+    own prediction). **Cost and locality.** One int8 per row (two bits in
+    the merge key where it varies, none where it does not), one index per
+    event, one sign per product per direction at a birth (at most the
+    declared directions), one comparison per arrival group at a filter;
+    no product, no division, no remainder, no draw; the birth reads the
+    parent's own axis and directions at its Node, the filter the arriving
+    row's hand at the reader's Node and the reader's declaration, every
+    re-creation copies a field of the row it holds (LOCALITY-1); the
+    store's row bound gains a factor 3 at most and only where a hand is
+    declared. **What the implementation decided where the design was
+    silent:** a `pass` rule writes no line, as it never did, so the
+    antineutrino's passage at Wu's far reader shows in the face click one
+    interval later and not in a `pass` line (the design's 3.4 expected
+    one; the record form of `pass` entries, not the rule); the label hand
+    on a click line is read from the lamp of the row's record (a report of
+    the host by the record's identity, nothing of the law); a group line
+    of mixed hands names None. **Limits, stated and not built:** no
+    angular-momentum ledger and no spin dynamics (one bit for every
+    family; no precession, no spin-1/2 against spin-1); nature's helicity
+    reversal of circular light at a metallic mirror at normal incidence
+    (the axis-keeping form h' = sign(h u_in . u_out), one more inner
+    product, recorded in the design's section 6: the owner's frame says a
+    re-creation keeps what the message carries); V-A's energy dependence;
+    CP (with a hand and the columns' signs the law has a mirror and a
+    charge conjugate but no phase that distinguishes them). The identity
+    `hand-v1` is a hypothesis of its own, HYPOTHESES entry 23.
+40. **The binding that costs content, `binding-v1`: the give at the
+    contact** (the model owner's records 115 and 137 of 2026-09-20; the
+    physicist's read-only design `docs/designs/binding_v1/DESIGN.md`,
+    sections 1 to 6, candidate A, record 132; `engine._give`, `engine._contact`,
+    `world.BINDING_RULE`, `NatureBeamWorld.binding`;
+    `tests/test_binding.py` (a) to (d); series N,
+    `examples/events/binding/`). A hypothesis beside the law with its own
+    identity and no new key. **The rule, one condition on the verb GIVE:**
+    at a contact under `measure` (the momentum hand-over of note 31 (ix),
+    the first hand-over of a contact) the refused body GIVES to the flight
+    the paid content it carries: for every paid family other than its own
+    that it holds (`held`; a lamp's own paid content is not carried and
+    never given) with the quantum h, `held // h` units of content h as one
+    row (age 0, the body's phase and number, no record) at the body's Node
+    on the heading opposite to the refused step, away from the occupant
+    (the step's sign, the Link the drive fired on the axis, not the
+    momentum's: under the signed drive of record 126 the two differ at a
+    reversal, as the register's neutron shows at its first contact, its
+    momentum +270 720 after the proton's hand-over and its step -x);
+    `held mod h` stays held; the body takes the recoil, minus the row's
+    label (Q x content per unit along the heading, the one label of note
+    23, checked before it is formed), toward the occupant. A body that
+    carries nothing gives nothing: the contact is the hand-over alone, bit
+    for bit. Why the give is at the contact: it is the one moment the law
+    already treats a body as a paid arrival at another body (note 31 (ix));
+    what a click of a paid arrival takes is the amount, its content and its
+    label (step 4), and the contact takes the label's component alone,
+    since taking the content would merge the bodies; binding-v1 lets the
+    content the body carries LEAVE at that moment, a TAKE turned into a
+    GIVE so that two bodies stay two. Why away from the occupant: a row
+    given toward it is taken by its entry for the family (`measure` by the
+    keys), a swap with no defect; given away, the content leaves the pair
+    whole and the picture is nature's, n + p -> d + gamma, the gamma
+    leaving, the pair recoiling inward. **The fates**, all existing rules:
+    on a heading a row makes its first Link at age 1 and its second at age
+    3 (the flight table, T = 110), so with the family's `lifetime` L = 3 it
+    clicks on the border `lifetime` two Links from its birth with its
+    content, the released binding energy, measurable as clicks (note 31
+    (vii)); a body on its line reads it by its entry, `measure` (the keys'
+    rule for a paid arrival) TAKES it (the content joins the body's held,
+    booked `measured`), `rerelease` re-creates it on that body's fan, `pass`
+    and `read` let it go on to the border. After the give the body carries
+    nothing and every later contact is the hand-over alone: the pair is
+    stable for ever; the closed loop of record 115 (re-created by the
+    partner for ever) is not reachable without a second rule (a re-creation
+    on the reversed arriving direction, a retro-mirror on PASS) and is not
+    built. **The books:** the family's measured line, initial + measured =
+    current + spent + escaped, with the give on `spent` as a lamp's release
+    books it; the row on the transit and content lines (`released`) until
+    the border books it on `lifetime` (summed into `escaped`) or a body
+    absorbs it; the momentum: the recoil on the giver's label, the row's
+    label on the transit line, the border's `lifetime_momentum` at the
+    click; no remainder (`held mod h` stays held, nothing is rounded). The
+    `contact` record gains `given` beside `component` (the content given at
+    that hand-over, summed over the paid families the body carried, 0 on
+    a later one; the books keep the split per family, and a world that
+    holds two paid families would want it per family: none does), written
+    from the moment the run holds the fact; `run.json` carries `binding-v1`
+    under `hypotheses` from the same fact. **The fact of the run** (the
+    physics-rule review's should-fix, 2026-09-20): the parser knows what is
+    held at load (`NatureBeamWorld.binding`: a measured event holds a paid
+    family other than its own), but the rule fires on the run-time `held`:
+    a body of a free family that TAKES a paid row under the keys' `measure`
+    (fate (c)) carries it from then on and gives it at its next contact. So
+    the engine holds the fact (`NatureBeamSimulation.binding`), true at
+    load when a body holds a paid family and raised at the first give
+    otherwise; from then on every `contact` record carries `given` and the
+    run's record the identity (`NatureBeamSimulation.hypotheses`, what
+    `run.json` writes); `tests/test_binding.py` (f): a declared `bond` row
+    taken at tick 1 by a body that held none, given at its contact at tick
+    3, the record with `given` 2, the border click at tick 6, `binding-v1`
+    in `run.json`. Two more readings of the design, stated: a body on a set
+    of Nodes gives its row at its centre Node, whole, on the one heading
+    (not apportioned over its Nodes as a lamp's release is; the momentum
+    share rule over several occupants untouched); an occupant whose share
+    of the component is 0 takes no hand-over and triggers no give. **The
+    identity:** every world without a body that holds a paid family at
+    load or takes one during the run reads as it did, byte for byte (no
+    registered world does either: the gate set replays identical,
+    VALIDATION); `beam-v1` is unchanged without such a body. **Locality
+    and integers:** the contact reads the destination Node's occupant as
+    the step already does (one Link); the give reads the giver's own held
+    content and the heading of its own refused step; the row crosses one
+    Link per interval; no partner content, no memory of partners, no host
+    total; fixed work, one row per paid family carried per contact; the
+    division by h exact with its remainder held; the label's product and
+    the recoil bounded before they are assigned. **What it gives** (the
+    design's section 2, series N): the register's deuteron with `bond`
+    (h 1, L 3) held 2 per nucleon gives 2 units per body at its first
+    contact, two border clicks of amount 2 and content 2 at (8, 10, 10)
+    and (13, 10, 10), the escaped content 4 = 0.109 % of 3677 (nature
+    4.353 m_e, 0.1185 %; the register's grain is 1 m_e), the mass a
+    detector reads 3673, the push on p 310 956 229 248 before and
+    310 945 171 840 after (the reader's gravity charge 1835); the size is
+    one declared width (record 106: every content is an input). The give
+    is per body, so the alpha gives 8 units, the ratio 2.0 in energy to
+    the deuteron where nature has 12.72: no form of the rule with one
+    declared value gives nature's alpha, stated so that it fails, and not
+    tuned. What it does not give: the deuteron/alpha ratio without a
+    second value; "every family paid" (the design's section 7) does not
+    give the defect and costs two rules, recorded as a direction. The
+    register's pp threshold G = 7111 becomes 7112 once both protons have
+    given (a prediction, marginal and exact; not run in series N, unread).
+    **One design pin read outside** (series N, the review's finding): the
+    design's "momentum: measured + transit + escaped = 0" (DESIGN section
+    2) reads +270 720 on x in B1 from tick 16 on, and nonzero in B3 from
+    tick 16. The cause is not the give: before it, p reads n's 1838 free
+    units with its gravity charge 1837 while n reads p's 1835 with 1840, a
+    gap of 6 x 3008 = 18 048 per interval over the 15 pushes of ticks 2 to
+    16 = 270 720 exactly, the third-law gap of record 126 made visible by a
+    held paid family that counts in M_A (note 31 (viii)) but is never
+    released; after both gave the two pushes are equal (310 945 171 840)
+    and the gap stops. A property of held paid content that predates the
+    give; the give removes it. Not checked on the engine before the run:
+    the exact tick of the first contact (about 16 from the drive's
+    arithmetic, met exactly), the alpha line's inner gives.

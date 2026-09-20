@@ -229,9 +229,17 @@ def test_every_label_is_content_times_the_unit_vector_and_the_books_close():
     for i in range(store.size):
         assert labels[i].tolist() == (CONTENT * unit[store.direction[i]]).tolist()
         assert (63 * CONTENT) ** 2 < int(labels[i] @ labels[i]) < (65 * CONTENT) ** 2
-    assert lamp_entry.momentum == (-CONTENT * born).tolist() == [-1134, -723, -363]
+    # The lamp's birth is one record of 14 rows (m 14): its recoil is the
+    # rows' shares, label // 14 each, and the rest of the labels is on the
+    # books' `remainder` line; the transit line carries the whole labels
+    # (re-run under the one click (stage (vii) step 4); the verdict to be re-read; until stage (vii) step 3 the recoil was the whole labels,
+    # [-1134, -723, -363] = -CONTENT x born).
+    assert lamp_entry.momentum == [-77, -48, -24]
     assert simulation.books()["momentum"]["transit"] == (CONTENT * born).tolist()
+    assert simulation.books()["momentum"]["remainder"] == [-1057, -675, -339]
     u_mirror = np.array(PINNED[(7, 5, 0)], dtype=np.int64)
+    share = [int(np.sign(v)) * (CONTENT * abs(int(v)) // 14) for v in u_mirror]
+    assert share == [11, 7, 0]
     for tick in range(2, TICKS + 1):
         simulation.step()
         books = simulation.books(recount=True)
@@ -239,14 +247,20 @@ def test_every_label_is_content_times_the_unit_vector_and_the_books_close():
         assert lamp_entry.turn == CONTENT, tick
         momentum = books["momentum"]
         assert [
-            a + b + c
-            for a, b, c in zip(
-                momentum["measured"], momentum["transit"], momentum["escaped"], strict=True
+            a + b + c + d
+            for a, b, c, d in zip(
+                momentum["measured"],
+                momentum["transit"],
+                momentum["escaped"],
+                momentum["remainder"],
+                strict=True,
             )
         ] == [0, 0, 0], tick
         assert books["momentum"]["transit"] == simulation.books()["momentum"]["transit"], tick
         reflected = mirror_entry.taken[LIGHT]["rerelease"]
-        assert mirror_entry.momentum == (2 * CONTENT * reflected * u_mirror).tolist(), tick
+        # The mirror takes each row's share and recoils by the re-created
+        # row's: twice the share per reflection.
+        assert mirror_entry.momentum == [2 * s * reflected for s in share], tick
         if store.size:
             labels = store.labels(np.arange(store.size), unit, False)
             assert (labels == CONTENT * unit[store.direction]).all(), tick
@@ -256,7 +270,8 @@ def test_every_label_is_content_times_the_unit_vector_and_the_books_close():
     # Node too, each click with the label of their own direction.
     assert at_screen and all(r["amount"] == 1 for r in at_screen)
     assert {tuple(r["push"]) for r in at_screen} == {(192, 0, 0), (192, 18, 0)}
-    assert screen_entry.momentum == np.array([r["push"] for r in at_screen]).sum(axis=0).tolist()
+    assert {tuple(r["share"]) for r in at_screen} == {(13, 0, 0), (13, 1, 0)}
+    assert screen_entry.momentum == np.array([r["share"] for r in at_screen]).sum(axis=0).tolist()
     assert mirror_entry.taken[LIGHT]["rerelease"] >= 2
     escaped = [r for r in clicks if r["measured"] is None]
     assert escaped

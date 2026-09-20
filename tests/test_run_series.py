@@ -46,6 +46,9 @@ def write_list(
     if not folder.exists():
         folder.mkdir()
         shutil.copy(WORLDS / ONE, folder / ONE)
+        # The root world takes its families from `entities/families.json`
+        # beside it (2026-09-20).
+        shutil.copytree(WORLDS / "entities", folder / "entities")
         (folder / "detector").mkdir()
         shutil.copy(WORLDS / DETECTOR, folder / DETECTOR)
         shutil.copytree(WORLDS / "detector" / "entities", folder / "detector" / "entities")

@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from event_universe.events import parse_nature_beam_world
 from event_universe.json_documents import parse_json_document
+from event_universe.world_loading import load_world
 
 WORLDS = Path(__file__).resolve().parents[1] / "examples" / "events"
 
@@ -66,8 +66,11 @@ def test_shipped_worlds_decode_to_their_independent_values(name):
     source = (WORLDS / name).read_bytes()
     independent_document = json.loads(source)
     assert parse_json_document(source) == independent_document
-    assert parse_nature_beam_world(parse_json_document(source)) == parse_nature_beam_world(
-        independent_document
+    # A shipped world may reference the family definitions beside it
+    # (2026-09-20): the loader resolves them with the world's directory.
+    assert (
+        load_world(source, base_dir=WORLDS).world
+        == load_world(json.dumps(independent_document), base_dir=WORLDS).world
     )
 
 

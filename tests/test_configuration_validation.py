@@ -32,12 +32,17 @@ def test_every_shipped_world_is_valid_and_summarized(path):
 
 
 def test_the_refusal_names_the_key_and_creates_nothing(tmp_path):
-    world = json.loads((ROOT / "examples" / "events" / "one_content.json").read_text(encoding="utf-8"))
+    path = ROOT / "examples" / "events" / "one_content.json"
+    world = json.loads(path.read_text(encoding="utf-8"))
+    # The shipped world references the family definitions beside it
+    # (2026-09-20): its directory is the file context.
     for key in ("schema_version", "fields", "dense_field"):
-        report = validate_configuration(json.dumps({**world, key: 1}))
+        report = validate_configuration(json.dumps({**world, key: 1}), base_dir=path.parent)
         assert not report.valid and key in report.issues[0].message
         assert report.issues[0].code == "validation"
-    report = validate_configuration(json.dumps({k: v for k, v in world.items() if k != "law"}))
+    report = validate_configuration(
+        json.dumps({k: v for k, v in world.items() if k != "law"}), base_dir=path.parent
+    )
     assert not report.valid and '"law": "beam"' in report.issues[0].message
     report = validate_configuration('{"law": "beam", "law": "beam"}')
     assert report.issues[0].code == "syntax" and "duplicate JSON key" in report.issues[0].message

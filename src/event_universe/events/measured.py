@@ -15,6 +15,7 @@ from event_universe.events.world import (
     BEAM_LAW,
     CHARGE_INDEX,
     MOMENTUM_BOUND,
+    NO_HAND,
     SUM_READING,
     Gate,
     Rotation,
@@ -78,6 +79,14 @@ class PendingRow(NamedTuple):
     arrival: int = 0
     offered: bool = False
     rebirth: bool = False
+    # The birth phase u of the row's record (stage (vii)), carried into
+    # its re-creation; 0 for a row of no record.
+    birth: int = 0
+    # The row's hand (`hand-v1`, 2026-09-20; BEAM_LAW note 39): carried
+    # unchanged into every re-creation (a home, a re-emission, a split, a
+    # rotation, a gate); a product's is its family's, read against the
+    # parent's axis at its birth.
+    hand: int = NO_HAND
 
 
 Pending = PendingRow
@@ -273,6 +282,13 @@ class Measured:
     waited: int = 0
     turned: int = 0
     steps: int = 0
+    # The step drive (2026-09-20; BEAM_LAW note 17 as amended, records 107 and 108):
+    # per axis the distance the momentum has driven since the last step, in
+    # label units, signed, `|drive_a| < Q S M + |p_a|`, one bounded integer on the
+    # body's own record (as its age is) and nothing at a Node; and per axis
+    # the Links stepped, the k0 of the turn by momentum.
+    drive: list[int] = field(default_factory=lambda: [0, 0, 0])
+    axis_steps: list[int] = field(default_factory=lambda: [0, 0, 0])
     taken: list[dict[str, int]] = field(default_factory=list)
     clicks: list[int] = field(default_factory=list)
     pushed: list[int] = field(default_factory=lambda: [0, 0, 0])
@@ -305,6 +321,18 @@ class Measured:
     label_turns: list[int] = field(default_factory=list)
     rotations: list[Rotation | None] = field(default_factory=list)
     gates: list[Gate | None] = field(default_factory=list)
+    # The hand (`hand-v1`, 2026-09-20; BEAM_LAW note 39): `axis` the axial
+    # record, the index in the world's table of the heading the right-hand
+    # rule reads at the birth of every product (None: an isotropic parent);
+    # `hands` per family the parity filter of the table entry (-1 or +1
+    # admits that hand only, 0 every hand); `lamp_hand` the hand of the
+    # lamp's rows (the lamp's or the family's, 0 for none); and
+    # `lamp_label_hands`, the hands of the two values of a label bit when
+    # the lamp's branches name them (the hand as a label bit named).
+    axis: int | None = None
+    hands: tuple[int, ...] = ()
+    lamp_hand: int = NO_HAND
+    lamp_label_hands: tuple[int, int] | None = None
     # The interval's frame, set by the engine: whether this interval is a
     # self-creation, the age before it, the turn read off the clock and the
     # content the frame read (`frame_content`, M_A of the push: taken once
@@ -317,6 +345,11 @@ class Measured:
     turn: int = 0
     frame_content: int = 0
     frame_charges: list[Pair] = field(default_factory=list)
+    # The momentum the frame read (the p_a of the reading's weight at the
+    # relative speed under the world key `doppler`, BEAM_LAW note 38): the
+    # body's own record at the start of the interval, so the weight of an
+    # interval's every group is read at one speed, as the charges are.
+    frame_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
     presence: int = 0
     counted: int = 0
 
@@ -426,6 +459,8 @@ class Measured:
             "waited": self.waited,
             "phase_steps": self.turned,
             "steps": self.steps,
+            "drive": list(self.drive),
+            "axis_steps": list(self.axis_steps),
             "measured": [dict(entry) for entry in self.taken],
             "events": list(self.clicks),
             "pushed": list(self.pushed),
@@ -499,6 +534,20 @@ class Ledger:
     cancelled_amount: list[int] = field(default_factory=list)
     cancelled_content: list[int] = field(default_factory=list)
     cancelled_momentum: list[list[int]] = field(default_factory=list)
+    # The `remainder` line (stage (vii) step 3, the push by share): per
+    # family the labels of a record's rows beyond the shares matter took,
+    # added at an absorption or a home (the label less the share) and
+    # taken at a re-creation (the born labels less the recoil's shares),
+    # so that measured + transit + escaped + cancelled + remainder moves
+    # only by the pushes, the turns and the escapes' whole labels. Zero
+    # without a record.
+    remainder_momentum: list[list[int]] = field(default_factory=list)
+    # The `left` and `right` lines (`hand-v1`, 2026-09-20; BEAM_LAW note
+    # 39): per family the units a table clicked of each hand (the rows'
+    # `hand` column; a report, the sum over the hands within the measured
+    # line's units); zero without a declared hand.
+    taken_left: list[int] = field(default_factory=list)
+    taken_right: list[int] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         count = self.families
@@ -517,11 +566,14 @@ class Ledger:
             "held_became",
             "cancelled_amount",
             "cancelled_content",
+            "taken_left",
+            "taken_right",
         ):
             setattr(self, name, [0] * count)
         self.lifetime_momentum = [[0, 0, 0] for _ in range(count)]
         self.turned_momentum = [[0, 0, 0] for _ in range(count)]
         self.cancelled_momentum = [[0, 0, 0] for _ in range(count)]
+        self.remainder_momentum = [[0, 0, 0] for _ in range(count)]
         for port in self.open_faces:
             self.face_amount[port] = [0] * count
             self.face_content[port] = [0] * count
@@ -564,6 +616,12 @@ class Ledger:
         """The `turned` line summed over the families: what the meetings moved
         the transit momentum line by, in all."""
         return [sum(self.turned_momentum[f][axis] for f in range(self.families)) for axis in range(3)]
+
+    def remainder_momentum_total(self) -> list[int]:
+        total = [0, 0, 0]
+        for vector in self.remainder_momentum:
+            total = [a + b for a, b in zip(total, vector, strict=True)]
+        return total
 
     def cancelled_momentum_total(self) -> list[int]:
         """The labels the merge's cancel removed, summed over the families

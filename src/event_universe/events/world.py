@@ -342,6 +342,14 @@ MOMENTUM_BOUND = (1 << 62) - 1
 # row, and the parser's bound is that product (the model owner's decision of
 # 2026-09-19, the physics-rule reviewer's correction 3).
 LABEL_SCALE = Q
+# The grain of a body's speed, G = 2^12: a constant of the law beside Q
+# (the reading's weight at the relative speed, `doppler-v1`, BEAM_LAW note
+# 38; the mathematician's GRAIN.md section 1). Under the world key `doppler`
+# a free reader's speed on an axis is read once per interval from its own
+# record as w_a = G x |p_a| // D_a, a whole number below G, the remainder
+# (G |p_a|) mod D_a discarded: a declared grain of 1 / G Links per
+# interval, like S and Q, nothing accumulating.
+SPEED_GRAIN = 1 << 12
 # The direction table: two rest vectors, the six headings, the declared rest.
 REST_DIRECTIONS = 2
 HEADING_OFFSET = REST_DIRECTIONS
@@ -393,7 +401,7 @@ WORLD_KEYS = {
     "age_bound",
     "action",
     "meeting",
-    "amplitude",
+    "doppler",
     "directions",
     "direction_bound",
     "families",
@@ -412,14 +420,62 @@ WORLD_KEYS = {
 # layer. Absent (false by default), no row carries a record and every world
 # reads as it did, byte for byte.
 AMPLITUDE_RULE = "amplitude-v1"
-AMPLITUDE_KEY = "amplitude"
+# The world key `amplitude` of stages (i) to (vii-3), deleted at stage
+# (vii) step 4 (the one click): the record form is the law; a world that
+# declares it is refused naming MIGRATION.
+DELETED_AMPLITUDE_KEY = "amplitude"
 # The circle must hold the quarter turn of a reflection under the key
 # (`phase` + N / 4 exact on the tables): N below 4 is refused with it.
 AMPLITUDE_LEAST_STEPS = 4
-# The one lamp rate the key admits in this version: one record per
-# self-creation (a rate of r units per direction would make r identical
-# paths with one birth phase; the design, section 2.1).
-AMPLITUDE_LAMP_RATE = (1, 1)
+# The identity of the reading's weight at the relative speed (`doppler-v1`;
+# the model owner, 2026-09-20, record 119: "a body TAKES a message at the
+# rate at which it and the message meet"; the mathematician's admissible
+# form, docs/designs/push_relative_speed/FORM.md section 6, record 110;
+# docs/BEAM_LAW.md note 38; the grain and the flux, the mathematician's
+# GRAIN.md): under the world key `doppler` a free measured event reads the
+# rows that ARRIVED at its Node for the push with each direction's label
+# flow weighted by the flux of the rows through the body, the rate at
+# which it and the message meet, the pair (|G Q |D|^2 - T_d sum_a s_a w_a
+# D_a|, G Q |D|^2) per (direction, body) with the body's speed quantised
+# to the grain G (`nature_beam.weighted_flow`), off the reader's clock,
+# before the columns. Absent (false by default), and for every body at
+# rest (p = 0, or fixed), the weight is 1 by an exact division and every
+# world reads as it did, byte for byte.
+DOPPLER_RULE = "doppler-v1"
+DOPPLER_KEY = "doppler"
+
+
+def step_divisor(momentum: int, content: int, width: int) -> int:
+    """D_a = Q x S x M + |p_a|, the divisor of the step rule on one axis
+    (BEAM_LAW section 3 step 5 and note 17: one Link per D_a / |p_a|
+    self-creations; `engine.step_axis` reads it) and the denominator of
+    the body's speed |p_a| / D_a in Links per interval, which the reading's
+    weight at the relative speed quantises through the same function
+    (`nature_beam.quantised_speed`, note 38): M the content, S the world's
+    `width`, Q the label's scale."""
+    return LABEL_SCALE * width * content + abs(momentum)
+
+
+def weighted_flow_factor(table: tuple[Vector, ...]) -> int:
+    """The largest factor the reading's weight at the relative speed can
+    put on a direction's label flow (`nature_beam.weighted_flow`): the
+    flux pair's numerator is at most G (Q |D|^2 + T_d S_1) against the
+    denominator G Q |D|^2, so the weighted flow is at most (Q |D|^2 + T_d
+    S_1) / (Q |D|^2) times the flow, 2.72 on a heading; the ceiling of the
+    largest over the table's moving directions, 1 on a table of none
+    (the parser's static budget of the columns takes the largest release
+    flow times it under `doppler`)."""
+    factor = 1
+    for vector in table:
+        manhattan = sum(abs(component) for component in vector)
+        if manhattan == 0:
+            continue
+        length = sum(component * component for component in vector)
+        resolution = integer_root(3 * length * Q * Q)
+        factor = max(factor, -(-(Q * length + resolution * manhattan) // (Q * length)))
+    return factor
+
+
 # The identity of the turn by momentum, a physical hypothesis beside the
 # law (the model owner's decision of 2026-09-20 on Bohr): the record carries
 # it when the world declares `action`.
@@ -441,6 +497,29 @@ WEAK_RULE = "weak-v1"
 # declares `meeting: true`; absent, no paid unit reads the crowd and every
 # world reads as it did, byte for byte.
 MEETING_RULE = "meeting-v1"
+# The identity of the hand (`hand-v1`; the model owner, 2026-09-20, record
+# 128 of docs/LOG_2026-09-20.md, "the hand's three choices confirmed"; the
+# physicist's design hand/DESIGN.md with the mathematician's FORM.md; BEAM_LAW
+# note 39): the record carries it when a family, a lamp, a transit row or a
+# table entry declares `hand`, a lamp's `branches` name the hands of their
+# labels, or a measured event declares an `axis`. Absent, no row carries a
+# hand and every world reads as it did, byte for byte.
+HAND_RULE = "hand-v1"
+# The two hands of a row, its helicity relative to its own direction: +1 a
+# right-handed screw along u_d, -1 a left-handed one; 0 no hand, every row
+# of every world without a declaration.
+HANDS = (-1, 1)
+NO_HAND = 0
+# The identity of the binding that costs content (`binding-v1`, the model
+# owner's record 115 of 2026-09-20, the physicist's design
+# docs/designs/binding_v1/DESIGN.md; BEAM_LAW note 40): at a contact under
+# `measure` the refused body gives the paid content it carries (`held` of a
+# paid family other than its own) to the flight on the heading opposite to
+# the refused step (`engine._give`). The record carries it when a measured
+# event holds a paid family at load, or from the first give of a run (the
+# engine's fact); no registered world does either, and every world without
+# one reads as it did, byte for byte.
+BINDING_RULE = "binding-v1"
 # The two built-in columns of every family: the first, gravity, has the
 # value [1, 1] on every unit of content and the sign minus (like contents
 # pull together); the second, charge, the family's `charge` per unit of
@@ -458,7 +537,7 @@ COLUMN_KEYS = {"value", "sign"}
 COLUMN_LIMIT = 8
 # The span of a measured event on one Node (the default): a body of one.
 ONE_NODE: tuple[int, int, int] = (1, 1, 1)
-FAMILY_KEYS = {"name", "quantum", "charge", "columns", "lifetime", "phase", "phase_per_link"}
+FAMILY_KEYS = {"name", "quantum", "charge", "columns", "lifetime", "phase", "phase_per_link", "hand"}
 # The border every event in transit of a family with a lifetime clicks on
 # when its age reaches the lifetime: named like a face detector in the
 # records, the books' escaped lines summing it with the faces'; a declared
@@ -485,11 +564,16 @@ MEASURED_KEYS = {
     "table",
     "lamp",
     "become",
+    # The axial record (`hand-v1`): one of the six headings, the axis the
+    # right-hand rule reads at every product of the event's `become`.
+    "axis",
 }
-LAMP_KEYS = {"rate", "directions", "phase_window", "phase_width", "turns", "branches", "arms"}
+LAMP_KEYS = {"rate", "directions", "phase_window", "phase_width", "turns", "branches", "arms", "hand"}
 # A table entry's object form: the rule, a window on any rule but `pass`
-# with its width, the reading's component the record carries and, on a
-# `become` entry, the transformation's `into` and `products`.
+# with its width, the reading's component the record carries, on a
+# `become` entry the transformation's `into` and `products`, and the parity
+# filter `hand` (`hand-v1`: the entry's rule applies to arrivals of that
+# hand only; refused on `pass`).
 TABLE_ENTRY_KEYS = {
     "rule",
     "phase_window",
@@ -503,6 +587,7 @@ TABLE_ENTRY_KEYS = {
     "rotate",
     "gate",
     "turns",
+    "hand",
 }
 # The split (the amplitude law, 2026-09-20, the owner's unification (2):
 # the split is `rerelease` with a vector of integer weights and the
@@ -524,7 +609,7 @@ CLOCK_ONLY_KEYS = ("at", "crowd")
 # A window read from a reading (issue #363, 2026-09-20): the family whose
 # rows at the set give the centre, and the offset added to it.
 WINDOW_READING_KEYS = {"reads", "offset"}
-TRANSIT_KEYS = {"position", "family", "number", "direction", "amount", "phase", "age"}
+TRANSIT_KEYS = {"position", "family", "number", "direction", "amount", "phase", "age", "hand"}
 DETECTOR_KEYS = {"name", "positions", "threshold", "reading"}
 # The readings a detector may declare; the first is the default: `wave`
 # since 2026-09-20 (the model owner: "on the GameBoard a ray, in the world a
@@ -607,6 +692,14 @@ class FamilyDefinition:
     # that advances its age, carried through a re-emission; None without.
     # The integer form turns per Link crossed, as it did.
     phase_per_age: tuple[int, int] | None = None
+    # The hand of the family (`hand-v1`, 2026-09-20; BEAM_LAW note 39): -1
+    # or +1 for a chiral family, whose every row (a lamp's, a free
+    # release's, a product's, a home's, a declared transit row's) carries
+    # it, the helicity relative to the row's direction (the neutrino -1);
+    # 0 for a family without one, every family until then. Declared on the
+    # family as `charge` is: the neutrino is left-handed once, not per
+    # world.
+    hand: int = NO_HAND
 
     @property
     def declared_phase_per_link(self) -> int | list[int]:
@@ -720,6 +813,16 @@ class LampDefinition:
     # arms, in order).
     branches: tuple[tuple[int, int], ...] = ((0, 1),)
     arms: int = 1
+    # The hand of the lamp's rows (`hand-v1`): a circularly polarised lamp
+    # of a family without a hand, -1 or +1; a lamp of a chiral family may
+    # repeat the family's value only; 0 means the family's (none, or its
+    # own). `label_hands`, the meaning of a label bit on a branched family
+    # (the third entry of each branch): the hand of the bit value 0 and of
+    # the bit value 1, opposite; None where the branches name none. A row of
+    # such a record carries its hand in its label, not in the `hand`
+    # column, and its family may declare one or the other, never both.
+    hand: int = NO_HAND
+    label_hands: tuple[int, int] | None = None
 
 
 @dataclass(frozen=True)
@@ -796,8 +899,18 @@ class MeasuredDefinition:
     # (`Rotation`, `Gate`; None where none is declared).
     rotations: tuple[Rotation | None, ...] = ()
     gates: tuple[Gate | None, ...] = ()
+    # The axial record (`hand-v1`, 2026-09-20; BEAM_LAW note 39): the index
+    # in the world's table of one of the six headings, the body's axis,
+    # read by the right-hand rule at every product of its `become` (None
+    # without: an isotropic parent); and per family the parity filter of
+    # the entry (`hand`: -1 or +1 admits that hand only, 0 admits every
+    # hand as before).
+    axis: int | None = None
+    hands: tuple[int, ...] = ()
 
     def __post_init__(self) -> None:
+        if not self.hands:
+            object.__setattr__(self, "hands", (NO_HAND,) * len(self.table))
         if not self.splits:
             object.__setattr__(self, "splits", (None,) * len(self.table))
         if not self.label_turns:
@@ -835,6 +948,9 @@ class TransitDefinition:
     amount: int
     phase: int
     age: int
+    # The row's hand (`hand-v1`): the family's, or the one declared on a
+    # row of a family without one.
+    hand: int = NO_HAND
 
 
 @dataclass(frozen=True)
@@ -880,12 +996,22 @@ class NatureBeamWorld:
     # transit reads the free crowd at every free-space Node after the
     # collision and turns toward it by its phase register (`events/meeting.py`).
     meeting: bool = False
-    # The amplitude law (the world key `amplitude`, false by default): the
-    # rows carry a record, a branch and a multiplicity, a re-emission may
-    # split by integer weights, antiphase rows of one record cancel at the
-    # merge, and the apparatus's layer reads the records' offers
-    # (`events/amplitude.py`; `AMPLITUDE_RULE`).
-    amplitude: bool = False
+
+    @property
+    def recorded(self) -> bool:
+        """Whether a row of this world can carry a record: a lamp is
+        declared (a record is born by a lamp, a rebirth follows a lamp's
+        record; the amplitude law, the one click of stage (vii)). The
+        record's columns, the books' `cancelled` and `remainder` lines and
+        the identity `amplitude-v1` belong to a recorded world alone, so
+        that a world without a lamp reads as it did before the law."""
+        return any(entry.lamp is not None for entry in self.measured)
+
+    # The reading's weight at the relative speed (the world key `doppler`,
+    # false by default): a free measured event reads the arrivals for the
+    # push with each direction's flow weighted by the flux of the rows
+    # through it (`nature_beam.weighted_flow`; `DOPPLER_RULE`).
+    doppler: bool = False
 
     @property
     def phase_mask(self) -> int:
@@ -927,13 +1053,36 @@ class NatureBeamWorld:
         )
 
     @property
+    def handed(self) -> bool:
+        """Whether the world declares a hand anywhere (`hand-v1`): a
+        family's, a lamp's or a transit row's `hand`, a table entry's
+        parity filter, a lamp's label hands, or a measured event's `axis`.
+        Without one no row carries a hand, no line of the record names one
+        and every world reads as it did, byte for byte."""
+        return (
+            any(family.hand for family in self.families)
+            or any(item.hand for item in self.in_transit)
+            or any(
+                entry.axis is not None
+                or any(entry.hands)
+                or (entry.lamp is not None and (entry.lamp.hand or entry.lamp.label_hands is not None))
+                for entry in self.measured
+            )
+        )
+
+    @property
     def hypotheses(self) -> list[str]:
         """The identities of the physical hypotheses the world declares
         beside the law, in a fixed order: `bohr-v1` for the turn by momentum
         (`action`), `columns-v1` for the one mechanism of the columns (a
         column beyond `charge`, or a lifetime: a force of nature in this
         law is a column with a sign and a range), `weak-v1` for the
-        transformation `become` (the weak force in the world's terms)."""
+        transformation `become` (the weak force in the world's terms),
+        `meeting-v1`, `amplitude-v1` and `doppler-v1` for their keys,
+        `hand-v1` when the world declares a hand or an axis and, last,
+        `binding-v1` when a measured event holds a paid family (`binding`;
+        the engine appends it at the same place from the first give of a
+        run, `NatureBeamSimulation.hypotheses`)."""
         found = []
         if self.action is not None:
             found.append(BOHR_RULE)
@@ -943,9 +1092,31 @@ class NatureBeamWorld:
             found.append(WEAK_RULE)
         if self.meeting:
             found.append(MEETING_RULE)
-        if self.amplitude:
+        if self.recorded:
             found.append(AMPLITUDE_RULE)
+        if self.doppler:
+            found.append(DOPPLER_RULE)
+        if self.handed:
+            found.append(HAND_RULE)
+        if self.binding:
+            found.append(BINDING_RULE)
         return found
+
+    @property
+    def binding(self) -> bool:
+        """Whether a measured event holds content of a paid family other
+        than its own at the start (`held`): the content a body carries,
+        which the binding that costs content (`binding-v1`) gives to the
+        flight at the body's contact under `measure`. A lamp's own paid
+        content is not carried content and never counts. What is held at
+        load only: a body that takes paid content during the run gives it
+        at its next contact, and the engine raises the fact then
+        (`NatureBeamSimulation.binding`, `hypotheses`)."""
+        return any(
+            content > 0 and not self.families[family].free and family != entry.family
+            for entry in self.measured
+            for family, content in enumerate(entry.held)
+        )
 
     @property
     def boundary_per_axis(self) -> dict[str, str]:
@@ -1283,7 +1454,7 @@ def _lifetime(value: object, label: str, age_bound: int) -> int | None:
 
 
 def _families(
-    value: object, phase_steps: int, age_bound: int = AMOUNT_BOUND, amplitude: bool = False
+    value: object, phase_steps: int, age_bound: int = AMOUNT_BOUND
 ) -> tuple[FamilyDefinition, ...]:
     if not isinstance(value, list) or not value:
         raise ValueError(f"{BEAM_LAW}: families must be a nonempty list")
@@ -1351,13 +1522,7 @@ def _families(
         per_age: tuple[int, int] | None = None
         if isinstance(declared_turn, list):
             # The pair form: the phase per interval of age (the amplitude
-            # law's frequency), refused without the key.
-            if not amplitude:
-                raise ValueError(
-                    f"{BEAM_LAW}: {turn_key} as a pair [n, d] is the phase per interval of age of "
-                    f"the amplitude law and needs the world key {AMPLITUDE_KEY} (an integer turns "
-                    "per Link crossed)"
-                )
+            # law's frequency; an integer turns per Link crossed).
             per_age = _ratio(declared_turn, turn_key, zero=True)
             # The walk forms (age + 1) x n whole (`by_clock_rows`): bounded
             # here, before it is formed, by the world's largest age.
@@ -1372,9 +1537,17 @@ def _families(
         if (per_link or per_age is not None) and not phase:
             raise ValueError(f"{BEAM_LAW}: {turn_key} is refused for a family without a phase circle")
         lifetime = _lifetime(obj.get("lifetime"), f"families[{index}].lifetime", age_bound)
+        hand = _hand(obj["hand"], f"families[{index}].hand") if "hand" in obj else NO_HAND
         found.append(
             FamilyDefinition(
-                name, quantum, charge, phase, per_link, lifetime=lifetime, phase_per_age=per_age
+                name,
+                quantum,
+                charge,
+                phase,
+                per_link,
+                lifetime=lifetime,
+                phase_per_age=per_age,
+                hand=hand,
             )
         )
         declared.append(columns)
@@ -1401,6 +1574,7 @@ def _families(
             ),
             family.lifetime,
             family.phase_per_age,
+            family.hand,
         )
         for family, columns in zip(found, declared, strict=True)
     )
@@ -1409,6 +1583,72 @@ def _families(
 def _window(value: object, label: str, phase_steps: int) -> int:
     """A phase window's setting: a step of the circle, 0 through N - 1."""
     return _integer(value, label, 0, phase_steps - 1)
+
+
+def _hand(value: object, label: str) -> int:
+    """A declared hand: -1 (left) or +1 (right), nothing else (0 is no
+    hand and is not declared; a hand is one of the two)."""
+    if type(value) is not int or value not in HANDS:
+        raise ValueError(f"{BEAM_LAW}: {label} must be -1 or 1 (the two hands; a row without one has 0)")
+    return value
+
+
+def _axis(value: object, label: str) -> int:
+    """The axial record of a measured event: one of the six headings in
+    Port order, declared as its vector ([1, 0, 0] .. [0, 0, -1]); the
+    index of the heading in the world's direction table."""
+    if not isinstance(value, list) or len(value) != 3 or any(type(v) is not int for v in value):
+        raise ValueError(
+            f"{BEAM_LAW}: {label} must be one of the six headings as a vector, [1, 0, 0] .. [0, 0, -1]"
+        )
+    vector = (value[0], value[1], value[2])
+    if vector not in PORT_HEADINGS:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} {list(vector)} is not one of the six headings (an axis is a "
+            "heading in Port order, [1, 0, 0] .. [0, 0, -1])"
+        )
+    return HEADING_OFFSET + PORT_HEADINGS.index(vector)
+
+
+def axis_sign(axis: Vector, direction: Vector) -> int:
+    """The sign of the inner product of an axis (a heading) with a direction
+    vector, in {-1, 0, +1}: the right-hand rule's one integer (BEAM_LAW
+    note 39). An axis is a heading, so the product is one component of the
+    direction with a sign, within P; the sign is the same on the direction's
+    unit label u_d, whose components carry the direction's signs."""
+    product = sum(int(a) * int(d) for a, d in zip(axis, direction, strict=True))
+    return (product > 0) - (product < 0)
+
+
+def _handed_products(
+    rules: list[tuple[str, Transformation]],
+    families: tuple[FamilyDefinition, ...],
+    axis: int | None,
+    directions: tuple[int, ...],
+    table: tuple[Vector, ...],
+) -> None:
+    """The right-hand rule's refusal at load: on a parent with an `axis` a
+    product of a family with a hand h is born only on the parent's
+    directions d with sign(A . u_d) = h (a left-handed product leaves
+    against the axis), so a product with none such has nowhere to leave:
+    refused naming the event's rule, the product and the axis (a declared
+    transformation that cannot leave is a defect of the world, loud)."""
+    if axis is None:
+        return
+    heading = table[axis]
+    for label, rule in rules:
+        for k, (family, _, _) in enumerate(rule.products):
+            hand = families[family].hand
+            if not hand:
+                continue
+            if not any(axis_sign(heading, table[d]) == hand for d in directions):
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.products[{k}] ({families[family].name!r}, hand {hand:+d}) "
+                    f"has no direction to leave on: none of the event's directions "
+                    f"{[list(table[d]) for d in directions]} has sign(A . u_d) = {hand:+d} against "
+                    f"the axis {list(heading)} (a left-handed product leaves against the axis, a "
+                    "right-handed one along it)"
+                )
 
 
 def default_width(phase_steps: int) -> int:
@@ -1469,16 +1709,10 @@ def _lamp(
     quantum: int,
     amount: int,
     turn_rate: tuple[int, int],
-    amplitude: bool = False,
+    family_hand: int = NO_HAND,
 ) -> LampDefinition:
     obj = _object(value, label, LAMP_KEYS, {"rate"})
     rate = _ratio(obj["rate"], f"{label}.rate", zero=True)
-    if amplitude and rate != AMPLITUDE_LAMP_RATE:
-        raise ValueError(
-            f"{BEAM_LAW}: {label}.rate {list(rate)} is refused under {AMPLITUDE_KEY}: a lamp "
-            f"births one record per self-creation, the rate {list(AMPLITUDE_LAMP_RATE)} (r units "
-            "per direction would be r identical paths with one birth phase)"
-        )
     directions = _directions(
         obj.get("directions", list(range(HEADING_OFFSET, FIXED_DIRECTIONS))),
         f"{label}.directions",
@@ -1495,19 +1729,9 @@ def _lamp(
     width = _width(obj, label, phase_steps, phased, "measure")
     turns = (0,) * len(directions)
     if "turns" in obj:
-        if not amplitude:
-            raise ValueError(
-                f"{BEAM_LAW}: {label}.turns is the amplitude law's phase step per direction of a "
-                f"birth and needs the world key {AMPLITUDE_KEY}"
-            )
         turns = _split_rows(obj["turns"], f"{label}.turns", len(directions), None, 0, phase_steps - 1)[0]
     arms = 1
     if "arms" in obj:
-        if not amplitude:
-            raise ValueError(
-                f"{BEAM_LAW}: {label}.arms is the amplitude law's count of separate quanta of a "
-                f"birth and needs the world key {AMPLITUDE_KEY}"
-            )
         arms = _integer(obj["arms"], f"{label}.arms", 1, len(directions))
         if len(directions) % arms:
             raise ValueError(
@@ -1515,13 +1739,28 @@ def _lamp(
                 "(every arm takes the same number of directions, in order)"
             )
     branches: tuple[tuple[int, int], ...] = ((0, 1),)
+    label_hands: tuple[int, int] | None = None
     if "branches" in obj:
-        if not amplitude:
+        branches, label_hands = _branches(obj["branches"], f"{label}.branches", arms)
+    # The lamp's hand (`hand-v1`): declared on a lamp of a family without a
+    # hand, or the family's own value repeated; a lamp of a branched family
+    # whose labels carry the hands declares neither, and a family with a
+    # hand cannot birth a record whose labels name hands (one or the other
+    # per family, so that a row's hand is defined once).
+    hand = NO_HAND
+    if "hand" in obj:
+        hand = _hand(obj["hand"], f"{label}.hand")
+        if family_hand and hand != family_hand:
             raise ValueError(
-                f"{BEAM_LAW}: {label}.branches is the amplitude law's joint labels of a birth "
-                f"and needs the world key {AMPLITUDE_KEY}"
+                f"{BEAM_LAW}: {label}.hand {hand:+d} differs from the family's hand {family_hand:+d}: "
+                "a lamp of a chiral family releases the family's hand"
             )
-        branches = _branches(obj["branches"], f"{label}.branches", arms)
+    if label_hands is not None and (hand or family_hand):
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.branches name the hands of their labels and the "
+            f"{'lamp' if hand else 'family'} declares a hand: a family carries its hand as the "
+            "row's column or as the meaning of a label bit, never both"
+        )
     # The largest label a release can carry: the rate's numerator units at
     # the largest turn the content allows (the whole part of amount x n / d
     # at the clock's rate [n, d]); under the key the largest weight of a
@@ -1535,41 +1774,73 @@ def _lamp(
         directions,
         f"{label} (the release)",
     )
-    return LampDefinition(rate, directions, window, width, turns, branches, arms)
+    return LampDefinition(
+        rate, directions, window, width, turns, branches, arms, hand=hand, label_hands=label_hands
+    )
 
 
-def _branches(value: object, label: str, arms: int) -> tuple[tuple[int, int], ...]:
+def _branches(
+    value: object, label: str, arms: int
+) -> tuple[tuple[tuple[int, int], ...], tuple[int, int] | None]:
     """The joint labels of a birth: [[label, weight], ...], the labels
     distinct integers below 2^arms (the bit k of a label is its value on
-    arm k), the weights integers from 1."""
+    arm k), the weights integers from 1; since `hand-v1` each may carry a
+    third entry, the hand of the label (-1 or +1), every branch or none:
+    the hand is what a label bit means, the bit k of a label the hand of
+    the row on arm k, so the branches must give each value of a bit one
+    hand and the two values opposite hands (the hand of the other value
+    follows when only one is named). Returns the branches and the hands of
+    the bit values 0 and 1, or None where none is named."""
     if not isinstance(value, list) or not value:
         raise ValueError(f"{BEAM_LAW}: {label} must be a list of [label, weight] pairs")
     found: list[tuple[int, int]] = []
+    hands: list[int | None] = []
     for index, item in enumerate(value):
-        if not isinstance(item, list) or len(item) != 2:
-            raise ValueError(f"{BEAM_LAW}: {label}[{index}] must be a [label, weight] pair")
+        if not isinstance(item, list) or len(item) not in (2, 3):
+            raise ValueError(
+                f"{BEAM_LAW}: {label}[{index}] must be a [label, weight] pair, or [label, weight, hand]"
+            )
         joint = _integer(item[0], f"{label}[{index}].label", 0, (1 << arms) - 1)
         weight = _integer(item[1], f"{label}[{index}].weight", 1, AMOUNT_BOUND)
         if any(joint == other for other, _ in found):
             raise ValueError(f"{BEAM_LAW}: {label} names the label {joint} twice")
         found.append((joint, weight))
+        hands.append(_hand(item[2], f"{label}[{index}].hand") if len(item) == 3 else None)
     norm = sum(weight * weight for _, weight in found)
     if norm > MOMENTUM_BOUND:
         raise ValueError(f"{BEAM_LAW}: {label}: the norm {norm} exceeds the integer bound")
-    return tuple(found)
+    if all(hand is None for hand in hands):
+        return tuple(found), None
+    if any(hand is None for hand in hands):
+        raise ValueError(f"{BEAM_LAW}: {label} names a hand on some labels and not on others")
+    meaning: list[int | None] = [None, None]
+    for (joint, _), hand in zip(found, hands, strict=True):
+        assert hand is not None
+        for arm in range(arms):
+            bit = (joint >> arm) & 1
+            if meaning[bit] is None:
+                meaning[bit] = hand
+            elif meaning[bit] != hand:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label} gives the bit value {bit} two hands: a hand is a label "
+                    "bit named, one hand per value of the bit"
+                )
+    if meaning[0] is not None and meaning[1] is not None and meaning[0] == meaning[1]:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} gives both values of a label bit the hand {meaning[0]:+d}: the two "
+            "values of a bit are the two hands"
+        )
+    zero = meaning[0] if meaning[0] is not None else -int(meaning[1] or 0)
+    one = meaning[1] if meaning[1] is not None else -zero
+    return tuple(found), (zero, one)
 
 
-def _label_turn(value: object, label: str, rule: str, phase_steps: int, amplitude: bool) -> int:
+def _label_turn(value: object, label: str, rule: str, phase_steps: int) -> int:
     """The entry's `turn` (the amplitude law's rotation at a `sum` set: the
     phase step on label 1 of the setting's rotation, 0 by default), refused
-    without the key and on `pass`."""
+    on `pass`."""
     if not isinstance(value, dict) or "turn" not in value:
         return 0
-    if not amplitude:
-        raise ValueError(
-            f"{BEAM_LAW}: {label}.turn is the amplitude law's turn of the rotation at a set and "
-            f"needs the world key {AMPLITUDE_KEY}"
-        )
     if rule == "pass":
         raise ValueError(f"{BEAM_LAW}: {label}.turn is refused on pass, which reads nothing")
     return _integer(value["turn"], f"{label}.turn", 0, phase_steps - 1)
@@ -1756,18 +2027,11 @@ GATE_KINDS = ("cnot",)
 LABEL_BITS_BOUND = 32
 
 
-def _rotation(
-    value: object, label: str, rule: str, phase_steps: int, amplitude: bool
-) -> Rotation | None:
-    """The entry's `rotate` (`Rotation`): refused without the key and on a
-    rule other than `rerelease`; None where none is declared."""
+def _rotation(value: object, label: str, rule: str, phase_steps: int) -> Rotation | None:
+    """The entry's `rotate` (`Rotation`): refused on a rule other than
+    `rerelease`; None where none is declared."""
     if not isinstance(value, dict) or "rotate" not in value:
         return None
-    if not amplitude:
-        raise ValueError(
-            f"{BEAM_LAW}: {label}.rotate is the amplitude law's rotation of a label bit and "
-            f"needs the world key {AMPLITUDE_KEY}"
-        )
     if rule != "rerelease":
         raise ValueError(f"{BEAM_LAW}: {label}.rotate belongs to a `rerelease` entry, not to {rule}")
     obj = _object(value["rotate"], f"{label}.rotate", {"setting", "bit", "turn"}, {"setting"})
@@ -1778,20 +2042,13 @@ def _rotation(
     )
 
 
-def _gate(
-    value: object, label: str, rule: str, amplitude: bool, table: tuple[Vector, ...]
-) -> Gate | None:
-    """The entry's `gate` (`Gate`): refused without the key and on a rule
-    other than `rerelease`; None where none is declared. `control`, the
-    direction the control's rows arrive on, is required for two parties
-    or more and refused for one (the review of (v), S1)."""
+def _gate(value: object, label: str, rule: str, table: tuple[Vector, ...]) -> Gate | None:
+    """The entry's `gate` (`Gate`): refused on a rule other than
+    `rerelease`; None where none is declared. `control`, the direction the
+    control's rows arrive on, is required for two parties or more and
+    refused for one (the review of (v), S1)."""
     if not isinstance(value, dict) or "gate" not in value:
         return None
-    if not amplitude:
-        raise ValueError(
-            f"{BEAM_LAW}: {label}.gate is the amplitude law's gate between records and needs "
-            f"the world key {AMPLITUDE_KEY}"
-        )
     if rule != "rerelease":
         raise ValueError(f"{BEAM_LAW}: {label}.gate belongs to a `rerelease` entry, not to {rule}")
     obj = _object(value["gate"], f"{label}.gate", {"kind", "hold", "parties", "control"}, {"kind"})
@@ -1844,20 +2101,14 @@ def _split(
     ways: int,
     phase_steps: int,
     free: bool,
-    amplitude: bool,
     table: tuple[Vector, ...],
 ) -> Split | None:
-    """The split of a table entry (`Split`): refused without the key, on a
-    rule other than `rerelease` and on a free family's entry; None where
-    the entry declares none of its keys."""
+    """The split of a table entry (`Split`): refused on a rule other than
+    `rerelease` and on a free family's entry; None where the entry
+    declares none of its keys."""
     if not isinstance(value, dict) or not any(key in value for key in SPLIT_KEYS):
         return None
     named = ", ".join(key for key in SPLIT_KEYS if key in value)
-    if not amplitude:
-        raise ValueError(
-            f"{BEAM_LAW}: {label} declares {named}, the split of the amplitude law, which needs "
-            f"the world key {AMPLITUDE_KEY}"
-        )
     if rule != "rerelease":
         raise ValueError(
             f"{BEAM_LAW}: {label} declares {named} on the rule {rule!r}: the split is a "
@@ -1910,7 +2161,7 @@ def _table_entry(
     amount: int,
     table: tuple[Vector, ...],
     directions: tuple[int, ...],
-) -> tuple[str, int | WindowReading | None, str, int | None, Transformation | None]:
+) -> tuple[str, int | WindowReading | None, str, int | None, Transformation | None, int]:
     """One table entry: a rule string, or `{"rule": ..., "phase_window": s,
     "phase_width": w, "reads": key}` (the rule the family's default when the
     object omits it, so a window alone is a lawful entry; a window and its
@@ -1919,11 +2170,14 @@ def _table_entry(
     without the window's setting; the reading's component `vector` by
     default on `read`, `scalar` otherwise), or a `become` entry, the click
     trigger of the transformation, with its `into` and `products` (refused
-    on any other rule; `at` and `crowd` refused: the window is the gate).
+    on any other rule; `at` and `crowd` refused: the window is the gate);
+    and since `hand-v1` the parity filter `hand` (-1 or +1: the entry's
+    rule applies to arrivals of that hand only, the rest passed as an
+    arrival outside a window is; refused on `pass`).
     Returns the rule, the window's setting (a number, or a `WindowReading`
     where the entry reads its centre from a reading, issue #363), the
-    component, the window's width (None: N / 2) and the transformation
-    (None but on `become`)."""
+    component, the window's width (None: N / 2), the transformation
+    (None but on `become`) and the hand the entry admits (0: every hand)."""
     reads: object = None
     obj: dict[str, object] = {}
     if isinstance(value, dict):
@@ -1983,7 +2237,15 @@ def _table_entry(
         reads = default_reads(str(rule))
     if reads not in READS:
         raise ValueError(f"{BEAM_LAW}: {label}.reads must be one of {READS}")
-    return str(rule), window, str(reads), width, transformation
+    hand = NO_HAND
+    if "hand" in obj:
+        if rule == "pass":
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.hand is refused on pass: a hand filter admits arrivals of one "
+                "hand to a rule, and pass responds to nothing"
+            )
+        hand = _hand(obj["hand"], f"{label}.hand")
+    return str(rule), window, str(reads), width, transformation, hand
 
 
 def _measured(
@@ -1997,7 +2259,6 @@ def _measured(
     table: tuple[Vector, ...],
     ticks: int,
     action: int | None,
-    amplitude: bool = False,
 ) -> tuple[MeasuredDefinition, ...]:
     if not isinstance(value, list):
         raise ValueError(f"{BEAM_LAW}: measured must be a list")
@@ -2110,6 +2371,7 @@ def _measured(
         reads: list[str] = []
         widths: list[int | None] = []
         transforms: list[Transformation | None] = []
+        hands: list[int] = [NO_HAND] * len(families)
         window_reads: list[tuple[int, int] | None] = [None] * len(families)
         splits: list[Split | None] = [None] * len(families)
         label_turns: list[int] = [0] * len(families)
@@ -2129,7 +2391,7 @@ def _measured(
                 raise ValueError(f"{BEAM_LAW}: {label}.table names an unknown family {key!r}")
             at = names[key]
             entry_label = f"{label}.table[{key!r}]"
-            rule, entry_window, component, widths[at], transforms[at] = _table_entry(
+            rule, entry_window, component, widths[at], transforms[at], hands[at] = _table_entry(
                 entry_value,
                 entry_label,
                 phase_steps,
@@ -2148,12 +2410,11 @@ def _measured(
                 len(directions),
                 phase_steps,
                 families[at].free,
-                amplitude,
                 table,
             )
-            label_turns[at] = _label_turn(entry_value, entry_label, rule, phase_steps, amplitude)
-            rotations[at] = _rotation(entry_value, entry_label, rule, phase_steps, amplitude)
-            gates[at] = _gate(entry_value, entry_label, rule, amplitude, table)
+            label_turns[at] = _label_turn(entry_value, entry_label, rule, phase_steps)
+            rotations[at] = _rotation(entry_value, entry_label, rule, phase_steps)
+            gates[at] = _gate(entry_value, entry_label, rule, table)
             if isinstance(entry_window, WindowReading):
                 # The window read from a reading (issue #363): the named
                 # family must exist, carry a phase circle and differ from
@@ -2190,6 +2451,24 @@ def _measured(
                 directions,
                 clock=True,
             )
+        # The axial record (`hand-v1`): one of the six headings, or none;
+        # a handed product of the event's transformations must have a
+        # direction on its side of it.
+        axis = _axis(obj["axis"], f"{label}.axis") if "axis" in obj else None
+        _handed_products(
+            [
+                *([(f"{label}.become", become)] if become is not None else []),
+                *(
+                    (f"{label}.table[{families[f].name!r}]", t)
+                    for f, t in enumerate(transforms)
+                    if t is not None
+                ),
+            ],
+            families,
+            axis,
+            directions,
+            table,
+        )
         # The rule of a contact per family: the entry's rule where it
         # differs from the keys' own rule for the family, `measure` (the
         # keys' rule for a paid arrival, the body's momentum its own label)
@@ -2224,7 +2503,7 @@ def _measured(
                 families[family].quantum,
                 amount,
                 turn_rate,
-                amplitude,
+                family_hand=families[family].hand,
             )
         found.append(
             MeasuredDefinition(
@@ -2251,6 +2530,8 @@ def _measured(
                 tuple(label_turns),
                 tuple(rotations),
                 tuple(gates),
+                axis=axis,
+                hands=tuple(hands),
             )
         )
     return tuple(found)
@@ -2288,15 +2569,18 @@ def _amplitude_load_checks(
             if window_declared and entry.position not in sum_nodes:
                 raise ValueError(
                     f"{BEAM_LAW}: measured[{index}].table[{families[at].name!r}].phase_window is "
-                    f"dead under {AMPLITUDE_KEY}: a split takes no gate, and the Node "
+                    f"dead: a split takes no gate, and the Node "
                     f"{list(entry.position)} reads no `sum` set whose window would be the "
                     "rotation's setting"
                 )
             split = entry.splits[at] if entry.splits else None
             if split is not None:
                 product *= max(sum(a * a for a in row) for row in split.weights)
-            elif families[at].quantum:
-                product *= max(1, len(entry.directions))
+            # A plain `rerelease` (the equal split by the directions' count)
+            # is not in the product: a path's count of re-emissions is not
+            # known at load, and the split's own check refuses the
+            # multiplicity beyond the bound when it is formed (stage (vii)
+            # step 4: the check runs on every world with a lamp).
             if entry.rotations and entry.rotations[at] is not None:
                 product *= 256 * 256
             gate = entry.gates[at] if entry.gates else None
@@ -2333,6 +2617,7 @@ def _column_budget(
     families: tuple[FamilyDefinition, ...],
     measured: tuple[MeasuredDefinition, ...],
     release: tuple[int, int],
+    factor: int = 1,
 ) -> None:
     """The parser's static budget of the push over the columns (the
     mathematician's rule P3 of 2026-09-20 in the form the physicist's
@@ -2371,7 +2656,9 @@ def _column_budget(
             largest = max((r for k, r in enumerate(releases[family]) if k != index), default=0)
             if not families[family].free or not largest:
                 continue
-            moment = LABEL_SCALE * width * largest
+            # Under `doppler` the flow a reader meets is weighted by at most
+            # `factor` (`weighted_flow_factor`), the static budget's margin.
+            moment = LABEL_SCALE * width * largest * factor
             total = 0
             for c, (column, (charge, charge_denominator)) in enumerate(
                 zip(columns, charges, strict=True)
@@ -2387,9 +2674,10 @@ def _column_budget(
                         f"from the rays of the family {families[family].name!r} could reach "
                         f"|E n| x V = |{charge} x {value}| x {moment} beyond the integer bound "
                         f"{MOMENTUM_BOUND} (E/D the reader's charge in the column, n/d the family's "
-                        f"value per unit of content, V = {LABEL_SCALE} x {width} x {largest} the "
-                        "largest label flow of one self-creation's release read over the "
-                        "reader's Nodes)"
+                        f"value per unit of content, V = {LABEL_SCALE} x {width} x {largest}"
+                        f"{' x ' + str(factor) if factor > 1 else ''} the largest label flow of one "
+                        "self-creation's release read over the reader's Nodes"
+                        f"{', times the largest weight of doppler' if factor > 1 else ''})"
                     )
                 total += (
                     abs(charge) * abs(value) * moment // (charge_denominator * value_denominator) + 1
@@ -2444,6 +2732,17 @@ def _in_transit(
         # per unit, quantum x 1 (no emitter declared its turn); a free one
         # carries none and its label is the amount along the direction.
         _label_bound(amount, families[family].unit_label, table, (direction,), label)
+        # The row's hand (`hand-v1`): the family's, or declared on a row of
+        # a family without one; a chiral family's row takes the family's.
+        hand = families[family].hand
+        if "hand" in obj:
+            declared_hand = _hand(obj["hand"], f"{label}.hand")
+            if hand and declared_hand != hand:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.hand {declared_hand:+d} differs from the hand {hand:+d} of "
+                    f"the family {family_name!r}: a chiral family's row carries the family's hand"
+                )
+            hand = declared_hand
         found.append(
             TransitDefinition(
                 _address(obj["position"], f"{label}.position", shape),
@@ -2453,6 +2752,7 @@ def _in_transit(
                 amount,
                 _integer(obj.get("phase", 0), f"{label}.phase", 0, top),
                 age,
+                hand=hand,
             )
         )
     return tuple(found)
@@ -2463,7 +2763,6 @@ def _detectors(
     shape: Address3,
     periodic: tuple[bool, bool, bool],
     measured: tuple[MeasuredDefinition, ...],
-    amplitude: bool = False,
 ) -> tuple[DetectorDefinition, ...]:
     if not isinstance(value, list):
         raise ValueError(f"{BEAM_LAW}: detectors must be a list")
@@ -2520,16 +2819,10 @@ def _detectors(
                 "the border by their own names"
             )
         reading = obj.get("reading", DETECTOR_READINGS[0])
-        if reading == SUM_READING and not amplitude:
-            raise ValueError(
-                f"{BEAM_LAW}: {label}.reading {SUM_READING!r} is the amplitude law's reading of one "
-                f"record's rows and needs the world key {AMPLITUDE_KEY}"
-            )
         if reading not in DETECTOR_READINGS and reading != SUM_READING:
             raise ValueError(
-                f"{BEAM_LAW}: {label}.reading must be one of {list(DETECTOR_READINGS)}"
-                f"{' or ' + repr(SUM_READING) + ' under ' + AMPLITUDE_KEY if amplitude else ''}, "
-                f"not {reading!r}"
+                f"{BEAM_LAW}: {label}.reading must be one of "
+                f"{[*DETECTOR_READINGS, SUM_READING]}, not {reading!r}"
             )
         found.append(DetectorDefinition(name, tuple(positions), threshold, str(reading)))
     return tuple(found)
@@ -2564,6 +2857,14 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         raise ValueError(
             f"{BEAM_LAW}: a world of the Beam Law declares none of the law of events' keys "
             f"({', '.join(events)}); see docs/MIGRATION.md"
+        )
+    if DELETED_AMPLITUDE_KEY in document:
+        # The world key `amplitude` is deleted (stage (vii) step 4, the one
+        # click): the record form is the law.
+        raise ValueError(
+            f"{BEAM_LAW}: the world key {DELETED_AMPLITUDE_KEY!r} is deleted: the record form is "
+            "the law and every lamp births records; remove the key (docs/MIGRATION.md, the "
+            "amplitude law (vii-4))"
         )
     obj = _object(
         document,
@@ -2610,17 +2911,24 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     # The quantum of action of the turn by momentum, h: absent by default
     # (nothing turns by momentum), an integer from 1 when declared.
     action = None if "action" not in obj else _integer(obj["action"], "action", 1)
-    # The amplitude law: true or false (false by default); under it the
-    # circle must hold the quarter turn of a reflection.
-    amplitude = obj.get(AMPLITUDE_KEY, False)
-    if type(amplitude) is not bool:
-        raise ValueError(f"{BEAM_LAW}: {AMPLITUDE_KEY} must be true or false")
-    if amplitude and phase_steps < AMPLITUDE_LEAST_STEPS:
+    declared = obj.get("measured", [])
+    if phase_steps < AMPLITUDE_LEAST_STEPS and any(
+        isinstance(entry, dict) and "lamp" in entry
+        for entry in (declared if isinstance(declared, list) else [])
+    ):
+        # A record's circle holds the quarter turn of a reflection (the
+        # amplitude law; every lamp births records).
         raise ValueError(
-            f"{BEAM_LAW}: {AMPLITUDE_KEY} is refused with N {phase_steps}: the quarter turn of a "
-            f"reflection needs a circle of at least {AMPLITUDE_LEAST_STEPS} steps"
+            f"{BEAM_LAW}: a lamp is refused with N {phase_steps}: a record's circle holds the "
+            f"quarter turn of a reflection, at least {AMPLITUDE_LEAST_STEPS} steps"
         )
-    families = _families(obj["families"], phase_steps, age_bound, amplitude)
+    # The reading's weight at the relative speed: true or false (false by
+    # default); under it the static budget of the columns takes the
+    # weight's largest factor on the table (`weighted_flow_factor`).
+    doppler = obj.get(DOPPLER_KEY, False)
+    if type(doppler) is not bool:
+        raise ValueError(f"{BEAM_LAW}: {DOPPLER_KEY} must be true or false")
+    families = _families(obj["families"], phase_steps, age_bound)
     # The meeting: true or false (false by default); under it a paid family
     # without a phase circle is refused, the phase being the register the
     # meeting reads the crowd into (there is no other on the record).
@@ -2647,13 +2955,12 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         table,
         ticks,
         action,
-        amplitude,
     )
-    _column_budget(families, measured, release)
+    _column_budget(families, measured, release, weighted_flow_factor(table) if doppler else 1)
     in_transit = _in_transit(
         obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
     )
-    detectors = _detectors(obj.get("detectors", []), shape, periodic, measured, amplitude)
+    detectors = _detectors(obj.get("detectors", []), shape, periodic, measured)
     world = NatureBeamWorld(
         model_id,
         shape,
@@ -2675,8 +2982,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         detectors,
         action,
         meeting=meeting,
-        amplitude=amplitude,
+        doppler=doppler,
     )
-    if amplitude:
-        _amplitude_load_checks(measured, detectors, families, phase_steps)
+    _amplitude_load_checks(measured, detectors, families, phase_steps)
     return world

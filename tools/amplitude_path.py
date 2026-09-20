@@ -41,6 +41,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world  # noqa: E402
 from event_universe.events.amplitude import Layer  # noqa: E402
 from event_universe.events.world import FACE_NAMES, LIFETIME_NAME  # noqa: E402
+from event_universe.world_loading import world_of_run  # noqa: E402
 
 DETECTOR, GAMEBOARD = "DETECTOR", "GAMEBOARD"
 
@@ -78,9 +79,7 @@ def is_sum(layer: Layer, set_index: int) -> bool:
 def replay(run: Path, quiet: bool = True) -> tuple[Layer, list[dict[str, Any]]]:
     """Replay the run's register through a fresh layer; returns the layer
     and the gathers it wrote."""
-    world = parse_nature_beam_world(json.loads((run / "initialization.json").read_text("utf-8")))
-    if not world.amplitude:
-        raise SystemExit(f"{run}: the world does not declare the key `amplitude`")
+    world = parse_nature_beam_world(world_of_run(run))
     simulation = NatureBeamSimulation(world)
     layer = simulation.layer
     assert layer is not None

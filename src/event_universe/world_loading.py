@@ -17,6 +17,7 @@ from typing import cast
 
 from event_universe.events.world import (
     DETECTOR_KEYS,
+    FAMILY_KEYS,
     LAMP_KEYS,
     MEASURED_KEYS,
     TABLE_ENTRY_KEYS,
@@ -26,6 +27,13 @@ from event_universe.events.world import (
 from event_universe.json_documents import parse_json_document
 
 ENTITIES_FORMAT = "event-entities-v1"
+# The second format (2026-09-20, the model owner's decision on one canonical
+# definition per family, record 113): a definition may carry `families`, the
+# world's family schema verbatim, merged into the expanded world by name; a
+# definition of a family alone (no measured Event) is admitted.
+ENTITIES_FORMAT_V2 = "event-entities-v2"
+ENTITIES_FORMATS = (ENTITIES_FORMAT, ENTITIES_FORMAT_V2)
+_DEFINITION_KEYS = {"name", "measured", "detectors"}
 BUNDLE_FORMAT = "event-world-bundle-v1"
 SOURCE_LIMIT = 1 << 20
 EXPANDED_LIMIT = 16 << 20
@@ -130,16 +138,67 @@ def _utf8(source: bytes, label: str) -> str:
     return text
 
 
-def _reference(value: object) -> str:
+def _reference(value: object) -> tuple[str, int]:
+    """A relative POSIX path: descending components, climbing only by
+    leading `..` components (since 2026-09-20 the shipped worlds reference
+    `../entities/families.json`); returns the path and its climb, which
+    `load_world` bounds at resolution."""
     path = _name(value, "entity_definitions")
-    if "\\" in path or ":" in path or any(part in ("", ".", "..") for part in path.split("/")):
-        raise ValueError("entity_definitions must be a relative POSIX path without traversal")
-    return path
+    parts = path.split("/")
+    climb = 0
+    while climb < len(parts) and parts[climb] == "..":
+        climb += 1
+    descending = parts[climb:]
+    if (
+        "\\" in path
+        or ":" in path
+        or not descending
+        or any(part in ("", ".", "..") for part in descending)
+    ):
+        raise ValueError(
+            "entity_definitions must be a relative POSIX path, climbing only by leading '..' components"
+        )
+    return path, climb
 
 
-def _definition_geometry(definition: dict[str, object], label: str) -> None:
+def _confinement(base: Path, climb: int, root: Path | None) -> tuple[Path, str]:
+    """The directory a reference must resolve within, and its name for the
+    refusal: `root` when the caller gives one; otherwise the world's
+    directory, or its parent for a reference climbing by one `..` (a series
+    beside `entities/`, the shipped layout); a longer climb needs a root."""
+    if root is not None:
+        return root.resolve(), "the root"
+    if climb == 0:
+        return base, "base_dir"
+    if climb == 1:
+        return base.parent, "the parent of base_dir"
+    raise ValueError("entity_definitions climbs above the parent of base_dir; a root is required")
+
+
+def _definition_families(value: object, label: str) -> list[dict[str, object]]:
+    """The families a definition carries (the second format): each an object of
+    the world's family schema (`FAMILY_KEYS`, `name` and `quantum` required),
+    the names distinct within the definition; the physical domain of every
+    key stays the world parser's, read once the family is in a world."""
+    result: list[dict[str, object]] = []
+    names: set[str] = set()
+    for index, raw in enumerate(_array(value, f"{label}.families")):
+        family_label = f"{label}.families[{index}]"
+        family = _object(raw, family_label)
+        _keys(family, FAMILY_KEYS, {"name", "quantum"}, family_label)
+        name = _name(family["name"], f"{family_label}.name")
+        if name in names:
+            raise ValueError(f"{family_label}: duplicate family name {name!r}")
+        names.add(name)
+        if "columns" in family:
+            _object(family["columns"], f"{family_label}.columns")
+        result.append(family)
+    return result
+
+
+def _definition_geometry(definition: dict[str, object], label: str, families: bool = False) -> None:
     measured = _array(definition["measured"], f"{label}.measured")
-    if not measured:
+    if not measured and not families:
         raise ValueError(f"{label}.measured must contain at least one Event")
     geometry: set[tuple[int, int, int]] = set()
     for index, raw in enumerate(measured):
@@ -167,8 +226,11 @@ def _definition_geometry(definition: dict[str, object], label: str) -> None:
             for family, rule in table.items():
                 _name(family, f"{entry_label}.table family")
                 if isinstance(rule, dict):
-                    _keys(rule, TABLE_ENTRY_KEYS, {"rule"}, f"{entry_label}.table.{family}")
-                    _name(rule["rule"], f"{entry_label}.table.{family}.rule")
+                    # The rule is the family's default when the object omits
+                    # it, as in the world parser: a window alone is lawful.
+                    _keys(rule, TABLE_ENTRY_KEYS, set(), f"{entry_label}.table.{family}")
+                    if "rule" in rule:
+                        _name(rule["rule"], f"{entry_label}.table.{family}.rule")
                 else:
                     _name(rule, f"{entry_label}.table.{family}")
     names: set[str] = set()
@@ -196,17 +258,20 @@ def _definitions(source: bytes, path: str) -> dict[str, dict[str, object]]:
     text = _utf8(source, path)
     document = _object(_decode(text, path), path)
     _keys(document, {"format", "entities"}, {"format", "entities"}, path)
-    if document["format"] != ENTITIES_FORMAT:
-        raise ValueError(f"{path}.format must be {ENTITIES_FORMAT!r}")
+    if document["format"] not in ENTITIES_FORMATS:
+        raise ValueError(f"{path}.format must be {ENTITIES_FORMAT!r} or {ENTITIES_FORMAT_V2!r}")
+    versioned = document["format"] == ENTITIES_FORMAT_V2
     result: dict[str, dict[str, object]] = {}
     for index, raw in enumerate(_array(document["entities"], f"{path}.entities")):
         label = f"{path}.entities[{index}]"
         definition = _object(raw, label)
-        _keys(definition, {"name", "measured", "detectors"}, {"name", "measured", "detectors"}, label)
+        allowed = _DEFINITION_KEYS | ({"families"} if versioned else set())
+        _keys(definition, allowed, _DEFINITION_KEYS, label)
         name = _name(definition["name"], f"{label}.name")
         if name in result:
             raise ValueError(f"{label}: duplicate definition name {name!r}")
-        _definition_geometry(definition, label)
+        families = _definition_families(definition.get("families", []), label) if versioned else []
+        _definition_geometry(definition, label, families=bool(families))
         result[name] = definition
     return result
 
@@ -273,9 +338,56 @@ def _entries(
             yield entry
 
 
+def _same_family(
+    earlier: dict[str, object], later: dict[str, object], name: str, where_earlier: str, where_later: str
+) -> None:
+    """Two declarations of one family name must agree key by key: a key one
+    of them lacks, or a value that differs, is refused naming the family and
+    the key (one owner of a value; no silent override, as an instance's
+    detector name colliding with an inline one is refused)."""
+    for key in sorted(set(earlier) | set(later)):
+        if key not in earlier or key not in later or earlier[key] != later[key]:
+            raise ValueError(
+                f"family {name!r} is declared twice with a different key {key!r}: by "
+                f"{where_earlier} and by {where_later}"
+            )
+
+
+def _merged_families(
+    document: dict[str, object],
+    placements: list[tuple[str, tuple[int, int, int], dict[str, object]]],
+) -> list[object] | None:
+    """The expanded world's `families`: the inline ones first, then each
+    instance's definition's families in declaration order, a name already
+    present kept when its keys agree and refused when one differs. None when
+    no placed definition carries a family (the world's own list untouched)."""
+    inline = document.get("families")
+    found: list[object] = [] if inline is None else list(_array(inline, "world.families"))
+    owners: dict[str, tuple[dict[str, object], str]] = {}
+    for raw in found:
+        if isinstance(raw, dict) and isinstance(raw.get("name"), str):
+            owners[raw["name"]] = (cast(dict[str, object], raw), "world.families")
+    declared = False
+    for name, _, definition in placements:
+        for family in cast(list[dict[str, object]], definition.get("families", [])):
+            declared = True
+            where = f"instance {name!r} ({definition['name']!r})"
+            family_name = cast(str, family["name"])
+            earlier = owners.get(family_name)
+            if earlier is None:
+                found.append(copy.deepcopy(family))
+                owners[family_name] = (family, where)
+            else:
+                _same_family(earlier[0], family, family_name, earlier[1], where)
+    return found if declared else None
+
+
 def _expand(document: dict[str, object], definitions: dict[str, dict[str, object]]) -> dict[str, object]:
     placements = _placements(document, definitions)
     expanded = {key: value for key, value in document.items() if key not in _AUTHOR_KEYS}
+    families = _merged_families(document, placements)
+    if families is not None:
+        expanded["families"] = families
     expanded.update(measured=[], detectors=[])
     # Count exactly, one translated entry at a time, before allocating multiplied arrays.
     size = len(_encode(expanded))
@@ -289,8 +401,13 @@ def _expand(document: dict[str, object], definitions: dict[str, dict[str, object
     return expanded
 
 
-def load_world(source: str | bytes, *, base_dir: Path | None = None) -> LoadedWorld:
-    """Load one world with explicit file context or a self-contained bundle."""
+def load_world(
+    source: str | bytes, *, base_dir: Path | None = None, root: Path | None = None
+) -> LoadedWorld:
+    """Load one world with explicit file context or a self-contained bundle.
+    A file reference resolves relative to `base_dir` and must stay within
+    `root` when given, else within `base_dir`, or within its parent for a
+    reference climbing by one `..` (`_confinement`)."""
     decoded = _decode(source, "input")
     raw = source.encode("utf-8") if isinstance(source, str) else source
     document = _object(decoded, "input")
@@ -308,7 +425,7 @@ def load_world(source: str | bytes, *, base_dir: Path | None = None) -> LoadedWo
             raise ValueError("bundle.world must be an authored world, not a nested bundle")
     if not _AUTHOR_KEYS <= document.keys():
         raise ValueError("world requires entity_definitions and entities together")
-    reference = _reference(document["entity_definitions"])
+    reference, climb = _reference(document["entity_definitions"])
     if supplied is not None:
         if set(supplied) != {reference}:
             raise ValueError("bundle.definitions must contain exactly the referenced dependency")
@@ -320,9 +437,10 @@ def load_world(source: str | bytes, *, base_dir: Path | None = None) -> LoadedWo
         if base_dir is None:
             raise ValueError("entity_definitions requires an explicit base_dir or a portable bundle")
         base = base_dir.resolve()
+        confinement, name = _confinement(base, climb, root)
         path = (base / reference).resolve()
-        if not path.is_relative_to(base):
-            raise ValueError("entity_definitions resolves outside base_dir")
+        if not path.is_relative_to(confinement):
+            raise ValueError(f"entity_definitions resolves outside {name}")
         dependency = path.read_bytes()
     definitions = _definitions(dependency, reference)
     expanded_document = _expand(document, definitions)
@@ -339,6 +457,76 @@ def load_world(source: str | bytes, *, base_dir: Path | None = None) -> LoadedWo
         raise ValueError("portable bundle exceeds the 1 MiB source limit")
     definition_source = DefinitionSource(reference, dependency, hashlib.sha256(dependency).hexdigest())
     return LoadedWorld(world, portable, expanded, (definition_source,))
+
+
+def families_by_definition(
+    document: dict[str, object], reference: str, definitions_source: bytes
+) -> dict[str, object]:
+    """An authored world whose inline `families` come from a definitions
+    document where they can (the generators of the shipped worlds, the model
+    owner's decision of 2026-09-20, record 113): the longest tail of the
+    world's families that is tiled by the definitions' family lists, each
+    equal to a contiguous run of the world's, key by key, becomes one
+    instance per definition in the tail's order (named by the definition,
+    placed at the origin), and `entity_definitions` the reference; the
+    families before the tail stay inline, so that the expanded world is the
+    inline world, key by key and in order (the inline families first, then
+    the instances'). A world without such a tail is returned unchanged; one
+    that already places definitions is refused. Keys keep their order, the
+    authoring keys at the place of `families`."""
+    if _AUTHOR_KEYS & document.keys():
+        raise ValueError("the world already places entity definitions")
+    families = [
+        _object(raw, "world.families") for raw in _array(document.get("families"), "world.families")
+    ]
+    definitions = _definitions(definitions_source, reference)
+    by_first: dict[str, tuple[str, list[dict[str, object]]]] = {}
+    for name, definition in definitions.items():
+        carried = cast(list[dict[str, object]], definition.get("families", []))
+        if carried:
+            by_first[cast(str, carried[0]["name"])] = (name, carried)
+
+    def tiling(start: int) -> list[str] | None:
+        names: list[str] = []
+        index = start
+        while index < len(families):
+            found = by_first.get(cast(str, families[index].get("name")))
+            if found is None or families[index : index + len(found[1])] != found[1]:
+                return None
+            names.append(found[0])
+            index += len(found[1])
+        return names
+
+    instances: list[str] | None = None
+    for start in range(len(families)):
+        instances = tiling(start)
+        if instances is not None:
+            break
+    if not instances:
+        return dict(document)
+    result: dict[str, object] = {}
+    for key, value in document.items():
+        if key != "families":
+            result[key] = value
+            continue
+        if start:
+            result["families"] = families[:start]
+        result["entity_definitions"] = reference
+        result["entities"] = [
+            {"name": name, "definition": name, "position": [0, 0, 0]} for name in instances
+        ]
+    return result
+
+
+def world_of_run(run: Path) -> dict[str, object]:
+    """The world a run was made from, as the engine read it: the runner's
+    `resolved_initialization.json` when the run resolved entity definitions
+    (since 2026-09-20 the shipped worlds take their families from
+    `entities/families.json`), otherwise its `initialization.json`, the
+    authored world itself. The reading tools read a run's world through it."""
+    resolved = run / "resolved_initialization.json"
+    path = resolved if resolved.exists() else run / "initialization.json"
+    return _object(_decode(path.read_bytes(), path.name), path.name)
 
 
 def main(argv: list[str] | None = None) -> int:

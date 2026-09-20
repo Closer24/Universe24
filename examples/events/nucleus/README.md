@@ -118,3 +118,27 @@ line p n n p holds: no step in 3000 intervals, 257, 247, 11 and 251
 hand-overs, the label 0 after each, the largest 16 500 521 232 560 (the
 toy's number exactly). The model's alpha is the line, not the square, as
 the design expected. Nothing was tuned.
+
+## Re-read under the step drive (2026-09-20)
+
+Every world changes under the step drive (a body's count of Links is the
+whole part of the distance its momentum has driven; a body that receives
+a momentum begins its drive at 0): the deuteron and the pair at one Link
+still hold with no step and the label 0 after every hand-over (169 and
+158 hand-overs on the deuteron, the largest 4 664 509 209 600), the pairs
+at three Links still separate (the first steps at ticks 33, 34 and 68),
+the line still holds (230, 190, 140, 230 hand-overs, the largest
+7 380 392 774 624) and the square disperses sooner (p4 steps at tick 15,
+the last body out at 177), so its two readings at tick 20 fall outside
+(the bodies have moved); 27 readings inside and 3 outside (29 and 1). The
+verdict stands. The register entry has every number ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under the signed drive (2026-09-20)
+
+Three worlds change under the signed drive (record 126), the others read
+as under the step drive: the square reads the design at tick 20 again
+(the pushes per body and the shear 49 090 283 970 inside; its bodies now
+step first at ticks 81 to 110 and leave between 275 and 339), the line
+holds with 230, 184, 133, 230 hand-overs, the kicked deuteron holds with
+167 and 155; 29 readings inside and 1 outside (`pp_3`'s first step). The
+verdict stands. The register entry has the numbers ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).

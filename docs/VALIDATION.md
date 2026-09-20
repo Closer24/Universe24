@@ -11,6 +11,137 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The one click: the gate set of sixteen worlds replayed against main 45c0eb48 - 2026-09-20
+
+The branch `amplitude-impl` (the one click of `amplitude-v1`, stage (vii)
+step 4: the record form the law, the world key `amplitude` deleted, the
+layer releasing a gathered record's offers; MIGRATION (vii-4)) with main
+`45c0eb48` (binding-v1, hand-v1, doppler-v1, the signed drive, the family
+definitions, series G2 and N) merged, against main's own tree at the same
+commit: `examples/events/gate_set.json` (sixteen worlds at their listed
+ticks; `hand/wu` added by main; the binding worlds are not in it),
+`tools/run_series.py --list --jobs 2 --wall-seconds 1200 --memory-mb 4096`
+on both trees, Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
+
+| World | Lamp | Verdict | Branch `state` / ledger / `events` | Run |
+| --- | --- | --- | --- | --- |
+| `1b_m16` | no | identical | `391d4cbdc763` / `baee1e32e96a` / `dc1054aa43c4` | completed, 200 ticks, 1 s, 203 MB |
+| `a0_b0` | yes | changed (state, audit, events) | `9b451889cd06` / `91a5a13fd355` / `3d1d052d21b8` | completed, 160 ticks, 1 s, 44 MB |
+| `alpha_square` | no | identical | `26799da3d3b2` / `9102a8f9fd11` / `600166fb5bdd` | completed, 3000 ticks, 15 s, 188 MB |
+| `fixed` | yes | changed (state, audit, events) | `3ea73ba982e3` / `1b0055d6e563` / `212d4902f832` | completed, 148 ticks, 1 s, 182 MB |
+| `grouped_12_nodes` | no | identical | `f0b869e4d566` / `cc8eb7346911` / `a4b2d2b35cfc` | completed, 4 ticks, 0 s, 182 MB |
+| `heavy_meeting` | yes | changed (state, audit, events) | `3a96b17ac66e` / `e47e934e892c` / `362156ce8cde` | completed, 400 ticks, 26 s, 182 MB |
+| `j2_ladder` | no | identical | `380fbbf27895` / `48335f1672dc` / `911390d0f64b` | completed, 1037 ticks, 3 s, 182 MB |
+| `j3_deuteron` | no | identical | `d4485137fd01` / `431cc87afa9f` / `23196889fbed` | completed, 700 ticks, 24 s, 77 MB |
+| `j3_deuteron_crowd` | no | identical | `9bdcf69e2620` / `677af7000b26` / `094a32eb6c0f` | completed, 700 ticks, 37 s, 182 MB |
+| `lamp_mirror_screen` | yes | changed (state, audit, events) | `7617e6dc7d0b` / `2c4c5c44bbc2` / `4423c47250ed` | completed, 50 ticks, 0 s, 182 MB |
+| `pushing_age` | no | identical | `5e40e4bea36a` / `ae00571de265` / `4d89f6b6182b` | completed, 400 ticks, 48 s, 292 MB |
+| `r2` | no | identical | `e8e3e137bd61` / `fe50819ae70d` / `ea52bf20dda2` | completed, 3000 ticks, 20 s, 105 MB |
+| `sun_planet` | yes | changed (state, audit, events) | `1757e809a645` / `04edc2d85c46` / `846544571a4b` | completed, 50 ticks, 1 s, 629 MB |
+| `w1_beam` | yes | changed (state, audit, events) | `16ea674e1446` / `c645e89fb22d` / `5a74c8894578` | completed, 350 ticks, 116 s, 898 MB |
+| `w27_beam` | yes | not completed on the branch | - | not completed: wall 1200 s, None ticks, 1200 s, 3502 MB |
+| `wu` | no | identical | `023c13135cc7` / `d9cd4631d45f` / `d4d927fb55cd` | completed, 40 ticks, 0 s, 629 MB |
+
+The verdict: every world without a lamp is byte-identical to main in
+`state.json`, the ledger and `events.jsonl` (nine of nine, `hand/wu` among
+them), every world with a lamp changed (six of seven completed), and
+`w27_beam` (a lamp at the rate [47, 1] over 27 opening Nodes) did not
+complete on the branch within the wall guard (1200 s, 3.5 GB; main
+completed its 350 intervals in 83 s, `73d4980059d3` / `b5c15a82715e` /
+`439252c03ee8`): the host cost of the record form on a crowd world, the
+GameBoard's rows of distinct records not merging (the register's A10 line;
+MIGRATION (vii-4)). The changed set is exactly the lamp worlds: the record
+form itself (every lamp births records born at u with the path phase, one
+click per record by the ladder, the push by share), no defect and no
+refusal; each re-registers by its dated line in the register (the owner's
+decision, record 137). The fast pass at the caps (`--fast`) pins the nine
+lamp-free worlds to main's digests in `tests/test_amplitude_click.py` (d).
+
+## Series N, the binding that costs content: three runs and the gate set replayed - 2026-09-20
+
+The worktree `binding-v1` on `b8620d8f` (current main) with the give at the
+contact (`binding-v1`, [BEAM_LAW note 40](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+the sources' fingerprint
+`22935341b7400e13b850aefe86b65528ff595cc0647f78a5a7b3fe543ac09941`
+(the runner's `source_sha256`
+`4a1db891b7d392b3f4be77effc77e4102c37c9637459a903e9456c6082f05cc6`),
+Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
+
+| Check | Result |
+| --- | --- |
+| Series N, `examples/events/binding/` (three worlds, `tools/run_series.py --jobs 2 --wall-seconds 1200`, 3000 intervals each) | every run completed in 13 to 53 s with the books balanced at every tick; the digests (state, audit, events): `deuteron_bond` `b66833650869` / `ae9319ed637a` / `c05fb3c3a433`, `proton_bond_lamp` `67b598ee4d37` / `65de22cd56dd` / `45fd5c0c63a2` (under the one click of `amplitude-v1`, the key deleted and the world regenerated without it: `cf524330f3e6` / `5f20f826d21f` / `660ac30e7957`, the same 2993 gathers of 2961 x 8 and 32 x 7, 7 open, no contact, `held.bond` 2; B1 and B3 not re-run: no lamp, no key), `alpha_square_bond` `35e1ce3c9cf2` / `247cd70da903` / `51c4fba7ca0d`; every reading inside its pin (B3's dispersal inside in kind, at other ticks than series I's), the table in [the worlds' README](../examples/events/binding/README.md#what-was-measured-2026-09-20) and the entry in [EXPERIMENTS, N](EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20) |
+| The gate set, `examples/events/gate_set.json` (15 worlds at their listed ticks), main `b8620d8f` against the branch, `tools/run_series.py --list ... --compare` | every world identical in `state.json`, the ledger and `events.jsonl`: a0_b0 `dc4cba74e3a5` / `90cab346067c` / `dfa00b9ef9b6`, j3_deuteron `d4485137fd01` / `431cc87afa9f` / `23196889fbed`, r2 `e8e3e137bd61` / `fe50819ae70d` / `ea52bf20dda2`, lamp_mirror_screen `9de7f52ec260` / `9041dac91aae` / `e6ca788d38ca`, heavy_meeting `395040805a4d` / `18c5eb4625ac` / `188ced16170a`, grouped_12_nodes `f0b869e4d566` / `cc8eb7346911` / `a4b2d2b35cfc`, fixed `d078ace3e8d8` / `6466e974280d` / `77ca1b3b3bc9`, j2_ladder `380fbbf27895` / `48335f1672dc` / `911390d0f64b`, j3_deuteron_crowd `9bdcf69e2620` / `677af7000b26` / `094a32eb6c0f`, w27_beam `73d4980059d3` / `b5c15a82715e` / `439252c03ee8`, alpha_square `26799da3d3b2` / `9102a8f9fd11` / `600166fb5bdd`, pushing_age `5e40e4bea36a` / `ae00571de265` / `4d89f6b6182b`, 1b_m16 `391d4cbdc763` / `baee1e32e96a` / `dc1054aa43c4`, w1_beam `d843680c8246` / `61bc435a99ff` / `1e08efda9aab`, sun_planet `f7043252f62a` / `583a5e8e5163` / `4b793a913b22` (r2, 1b_m16 and alpha_square write `contact` records: without a body that holds a paid family the record carries no `given` and the contact is the hand-over alone) |
+| `tests/test_binding.py` (a) to (d) | the give at the first hand-over, the remainder, the take on the line, a body that carries nothing: the integers of [TEST_EXPECTATIONS](TEST_EXPECTATIONS.md#the-binding-that-costs-content) |
+| `python tools/check.py` | ruff lint and format, mypy and the selected tests green; `--full` before the push |
+
+The first build gave on the heading opposite to the momentum's sign; the
+reading of B1 showed the neutron's row given toward the proton (its
+momentum +270 720 after the proton's hand-over, its step -x) and taken
+back at tick 31; the rule is the step's sign, as the design states, and
+the runs above are of the corrected engine. The runs establish what the
+rule does on the engine (the give once, the border's clicks with the
+content, the pair stable, the books exact, the alpha at 2.0 x); they
+establish no physical law, for or against.
+
+## The hand: the gate set of fifteen worlds replayed without a declaration - 2026-09-20
+
+`hand-v1` ([BEAM_LAW note 39](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[MIGRATION](MIGRATION.md), "The hand") adds the row's column `hand`, the
+measured event's `axis`, the keys `hand` on a family, a lamp, a transit row
+and a table entry, the right-hand rule in `become` and the parity filter;
+every world without a declaration must read as it did, byte for byte (the
+column is 0 everywhere, its width in the packed merge key 0, no line of the
+record gains a key). The gate set (`examples/events/gate_set.json` as on
+`origin/main` at `56a258f8`, fifteen worlds, `doppler-v1` merged) replayed
+with `tools/run_series.py --list ... --compare` against the base tree's
+summary (the base `56a258f8`, the head this change rebased onto it): 15 of
+15 identical in `events.jsonl`, `state.json` and the ledger (`audit`), exit
+0 (the same verdict, 15 of 15, was read first against the base `d768f831`
+before `doppler-v1` landed). The digests (the first 16 hexadecimal digits of
+the sha256):
+
+| world | events.jsonl | state.json |
+| --- | --- | --- |
+| `a0_b0` | `dfa00b9ef9b652ac` | `dc4cba74e3a5966f` |
+| `j3_deuteron` | `23196889fbed5e62` | `d4485137fd018bba` |
+| `r2` | `ea52bf20dda2d125` | `e8e3e137bd611658` |
+| `lamp_mirror_screen` | `e6ca788d38ca28b9` | `9de7f52ec26093ac` |
+| `heavy_meeting` | `188ced16170ac007` | `395040805a4d05ee` |
+| `grouped_12_nodes` | `a4b2d2b35cfc84ea` | `f0b869e4d5663db6` |
+| `fixed` | `77ca1b3b3bc9558d` | `d078ace3e8d8f865` |
+| `j2_ladder` | `911390d0f64b2f3e` | `380fbbf27895583b` |
+| `j3_deuteron_crowd` | `094a32eb6c0f9a3f` | `9bdcf69e26201653` |
+| `w27_beam` | `439252c03ee8eef1` | `73d4980059d3e116` |
+| `alpha_square` | `600166fb5bdd434b` | `26799da3d3b2f850` |
+| `pushing_age` | `4d89f6b6182b92a2` | `5e40e4bea36aa902` |
+| `1b_m16` | `dc1054aa43c44a9c` | `391d4cbdc763ec76` |
+| `w1_beam` | `1e08efda9aabbd33` | `d843680c8246c097` |
+| `sun_planet` | `4b793a913b22fe50` | `f7043252f62a9b78` |
+| `wu` (the sixteenth, this change's) | `d4d927fb55cdfa9a` | `023c13135cc76634` |
+
+`hand/wu.json` is added to the gate set as the first world declaring the
+keys (`ticks` 40, `cap` 23: the antineutrino's face click); its row above
+is from its one run on this source, the base row of the next replay. The worlds of
+series P were run once and read against their pins
+([the hand series](../examples/events/hand/README.md); [EXPERIMENTS](EXPERIMENTS.md),
+"P, the hand").
+
+## Series G2, the Hubble diagram with stars behind the detector: three runs - 2026-09-20
+
+The branch `claude/series-g2-stars`, headless, three jobs, Python 3.14.0rc2,
+numpy 2.5.3; the worlds of `examples/events/hubble_stars/` through
+`tools/run_series.py --jobs 3` and the readings through
+`tools/hubble_stars_readings.py`, every run of 400 intervals completed with
+the books balanced at every interval; the readings registered in
+[G2](EXPERIMENTS.md#g2-the-hubble-diagram-with-stars-behind-the-detector-2026-09-20)
+and the worlds' [README](../examples/events/hubble_stars/README.md).
+
+| Run | Engine and fingerprint | Worlds | Result |
+| --- | --- | --- | --- |
+| The first registration | the branch's law before the key `amplitude`, source fingerprint `b4d074f2b762e58d15037a46b614e89609a48bcee2211eaf471af16e3d4923d1` | the nine worlds `<crowd>_<clock>`, 36 to 39 s each | the reading's formula 648 of 648 inside 2 %, the luminosity 631 of 648 inside 5 %, 34 pinned readings inside and 29 outside, none moved; re-run under the record click on `claude/amplitude-impl` at `62369cb8`: the same clicks and readings to the last digit |
+| The second run | main `f3a41f28` merged (the step drive, PR #373; the record click), source fingerprint `8ede1e0ff40e69ed05a71d7fd09cca21bad5e37f0c715018f3e77a504f518afb` | `record/coasting_none`, `gravity_none`, `gravity_scalar`, `gravity_age`, `double_none`, 37 to 41 s each | the expectations pinned first by the emitter-only rule; the reading's formula 360 of 360, the luminosity 360 of 360, the longest burst 1 Link, 759 readings inside and 1 outside (the scalar clock's k) |
+| The third run | main `56a258f` merged (doppler-v1, PR #379; the signed drive, PR #377), source fingerprint `39672332ebd7d87ee17f29c927df6ed0fc9b66e2c926c202e021646454b38b9e`, the identities `amplitude-v1` and `doppler-v1` | `doppler/coasting_none`, `gravity_none`, `gravity_scalar`, `gravity_age`, `double_none`, 37 to 41 s each | the expectations pinned first by the flux rule at the grain (`docs/designs/hubble_stars/EXPECTATION_2.md`); the reading's formula 120 of 120, the luminosity 120 of 120, the longest burst 1 Link, 35 readings inside and 5 outside (the scalar clock's q and its forms; the double crowd's q); the coasting world's gather and click lines identical to the second run's |
+
 ## The amplitude law: the gate set of seventeen worlds replayed without the key after commit (i) and at stage (v) - 2026-09-20
 
 `amplitude-v1` (the branch `amplitude-impl`, commits (i) `ca2e5fad`, (ii)

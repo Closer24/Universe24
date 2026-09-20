@@ -952,13 +952,117 @@ couplings.
   rounding beyond 1/N at N = 4096 and the record's total over u are the
   law's own limits, recorded and not tuned; at large N the numbers are
   the paper's, not nature's exact ones.
-- **Open.** The one click (the design's section 6): the record form is
-  not the default, stage (vi) stopped at the gate set
-  ([MIGRATION](MIGRATION.md), (vi)); the K finding of the same day, u as
-  the record's own field beside the running phase and a row's push by its
-  share of the label (note 37 (ix)); the full register replay and the
-  coverage-measured gate set; Grover beyond the register's ceiling; two
-  sequential gates on an entangled record.
+- **Open.** The full register replay and the coverage-measured gate
+  set; Grover beyond the register's ceiling; two sequential gates on an
+  entangled record; the register's lamp worlds re-read under the one
+  click (their verdicts, EXPERIMENTS). Landed at stage (vii) of
+  2026-09-20 ([MIGRATION](MIGRATION.md), (vii-1) to (vii-4)): the one
+  click (the design's section 6, the record form the law, the key
+  deleted) and the K finding's two changes, u as the record's own field
+  beside the running phase and a row's push by its share of the label
+  (note 37 (ix) and (x)).
 - **Status.** Open; the design's acceptance tests pass on the branch
   `amplitude-impl` (the runs in the register), not merged at this
   writing.
+
+## 23. The hand: a left-handed product leaves against the parent's axis, the mirror world's click lands on the other side, stated so that it can fail
+
+- **Statement (the model owner's decision of 2026-09-20, record 128 of
+  [the log](LOG_2026-09-20.md), "the hand's three choices confirmed";
+  the physicist's design hand/DESIGN.md, record 122; the mathematician's
+  integer form, record 120; [BEAM_LAW note 39](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  Under `hand-v1` a row carries a hand, the sense in which it turns about
+  its own direction (one column, -1, 0, +1, a pseudoscalar under the 48
+  symmetries of the cube), a body an axis (one of the six headings, an
+  axial vector), and a `become` at a body with an axis sends a product of
+  hand h on the body's directions d with sign(A . u_d) = h only: a
+  left-handed product AGAINST the axis, a right-handed one along it. A
+  table entry admits one hand (the parity filter); nothing else of the
+  law reads the hand. The claim: on the GameBoard parity is exact for
+  every world without an axis and a handed product, and it is broken
+  exactly and only where a birth has both, as in nature (Wu, Goldhaber):
+  the mirror image of the apparatus with the same left-handed catalog
+  gives different counts, the click on the other side; the full mirror
+  (the catalog mirrored too) gives the same counts; and the violation is
+  the catalog's one-handed families, data of the law and not of the
+  state. Not claimed: spin dynamics, an angular-momentum ledger, V-A's
+  energy dependence, CP.
+- **The reading (series P, run on 2026-09-20; [EXPERIMENTS](EXPERIMENTS.md),
+  "P, the hand"; [the worlds](../examples/events/hand/README.md)).**
+  `w_hand`: the W born at the neutron's key with the hand -1 on +x
+  against the axis -x, clicked at the proton at x = 3 at tick 9 with the
+  push (192, 0, 0); under the mirror in x with the hands and the axis
+  kept, at the proton at x = 1 with the push (-192, 0, 0), the tick, the
+  amounts, the contents and the charge line equal. `wu`: the beta on -x
+  against the axis +x, clicked at the reader at x = 0 at tick 21, the
+  antineutrino on +x out of the face at tick 23; under the mirror the
+  click at x = 16 and the face -x. `nu_hand`: the reader of the right
+  hand 0 clicks, the reader of the left hand 1022, the far detector 0,
+  mirror-equal. The control `w_two_sides` and the full mirror and a
+  proper rotation on all four: equal.
+- **What would refute it.** A world without an axis or without a handed
+  product whose polar mirror differs (a parity difference where the law
+  says none); a world with both whose full mirror differs (the law not
+  covariant); a handed product born on a direction of the other sign
+  against the axis, or on the equator; a hand read by a push, a moment,
+  a pointer or a clock; a `pass` entry admitting one hand; a merge of
+  two rows of opposite hands. Against nature: the beta's asymmetry here
+  is complete (one direction admitted among the six, a bar's one side),
+  where nature's is a cosine of the angle to the spin with the
+  electron's speed as its size; the limits above are the law's own,
+  recorded and not tuned.
+- **Open.** A fan of directions under an axis (the admitted hemisphere of
+  a fan, the mathematician's count); a hand filter on a `read` entry as a
+  neutral current of one hand (the Z with no family); circular light
+  through a hand-selective mirror; the label rotation's composition with
+  a label hand (the linear polariser as `rotate` plus the label click,
+  Malus's 64 / 32 / 0 at s = 0, 16, 32 on the design's rung rule, not
+  run).
+- **Status.** Open; `hand-v1` built on 2026-09-20 with the three worlds
+  of series P and the parity test (`tests/test_hand.py`).
+
+## 24. The binding energy is the paid content a body gives at its first contact, measurable as the border's clicks
+
+- **Statement (the model owner's records 115 and 137 of 2026-09-20; the
+  physicist's design `docs/designs/binding_v1/DESIGN.md`, record 132;
+  [BEAM_LAW note 40](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  `binding-v1`).** A nucleon carries paid content (a paid family with a
+  lifetime, held: content carried, never released) and gives it once, at
+  its first contact under `measure`, to the flight on the heading away from
+  its partner; the border `lifetime` clicks the rows two Links away with
+  their content. The binding energy of a nucleus is then the content its
+  bodies gave, read at the border as clicks (the gamma of n + p -> d +
+  gamma), and the mass a detector reads of the bound pair is the declared
+  content less what escaped, the books exact; after the formation the pair
+  is stable for ever (nothing left to give; the contact is the momentum
+  hand-over alone). The rule reads no family name, no partner and no shape.
+- **The expectations (series N, [EXPERIMENTS](EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20)).**
+  The deuteron with `bond` 2 per nucleon: two border clicks of content 2,
+  the escaped content 4 = 0.109 % of 3677 against nature's 4.353 m_e =
+  0.1185 % (the register's grain is 1 m_e: 4 is the nearest integer, 8 %
+  under); the mass read 3673. The alpha with the same one value: the give is
+  per body, so 8 units, 0.109 % of 7354, the ratio 2.0 in energy to the
+  deuteron where nature has 12.72: stated so that it fails, and it does. A
+  prediction: the register's pp threshold G = 7111 becomes 7112 once both
+  protons have given.
+- **What it depends on.** The size is an input, the held paid content per
+  nucleon (record 106: every content is an input; the law derives no
+  binding energy, the content dynamics being linear). No form of the rule
+  with one declared value gives the deuteron/alpha ratio; a second value
+  (a content per bond that grows with the crowd, or a per-shape declaration)
+  or a content-dependent rule would be needed for the alpha. "Every family
+  paid" (the design's section 7) does not give the defect and costs two
+  rules: recorded as a direction, not built.
+- **What would refute it.** A third `bond` click of the deuteron; a `given`
+  on a later contact; a step of either body after the formation; the books
+  off by one unit at any tick; a bond click or a bond row in the control
+  (one proton beside a lamp); a gather count of the control's lamp off
+  I7's 2993. Against nature: the alpha's 2.0 x is the law's limit,
+  registered and not tuned.
+- **Status.** Built on 2026-09-20 (`binding-v1`, the register byte-identical
+  where no body holds a paid family); series N run and registered: every
+  pin of the design's run table inside; the design's momentum identity
+  (measured + transit + escaped = 0) outside by +270 720 on x in the
+  deuteron, the third-law gap of record 126 made visible by held paid
+  content before the give (the review's finding, reported, not moved); the
+  pp threshold not run.
