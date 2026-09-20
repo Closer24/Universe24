@@ -15,6 +15,7 @@ from event_universe.events.world import (
     BEAM_LAW,
     CHARGE_INDEX,
     MOMENTUM_BOUND,
+    NO_HAND,
     SUM_READING,
     Gate,
     Rotation,
@@ -81,6 +82,11 @@ class PendingRow(NamedTuple):
     # The birth phase u of the row's record (stage (vii)), carried into
     # its re-creation; 0 for a row of no record.
     birth: int = 0
+    # The row's hand (`hand-v1`, 2026-09-20; BEAM_LAW note 39): carried
+    # unchanged into every re-creation (a home, a re-emission, a split, a
+    # rotation, a gate); a product's is its family's, read against the
+    # parent's axis at its birth.
+    hand: int = NO_HAND
 
 
 Pending = PendingRow
@@ -315,6 +321,18 @@ class Measured:
     label_turns: list[int] = field(default_factory=list)
     rotations: list[Rotation | None] = field(default_factory=list)
     gates: list[Gate | None] = field(default_factory=list)
+    # The hand (`hand-v1`, 2026-09-20; BEAM_LAW note 39): `axis` the axial
+    # record, the index in the world's table of the heading the right-hand
+    # rule reads at the birth of every product (None: an isotropic parent);
+    # `hands` per family the parity filter of the table entry (-1 or +1
+    # admits that hand only, 0 every hand); `lamp_hand` the hand of the
+    # lamp's rows (the lamp's or the family's, 0 for none); and
+    # `lamp_label_hands`, the hands of the two values of a label bit when
+    # the lamp's branches name them (the hand as a label bit named).
+    axis: int | None = None
+    hands: tuple[int, ...] = ()
+    lamp_hand: int = NO_HAND
+    lamp_label_hands: tuple[int, int] | None = None
     # The interval's frame, set by the engine: whether this interval is a
     # self-creation, the age before it, the turn read off the clock and the
     # content the frame read (`frame_content`, M_A of the push: taken once
@@ -327,6 +345,11 @@ class Measured:
     turn: int = 0
     frame_content: int = 0
     frame_charges: list[Pair] = field(default_factory=list)
+    # The momentum the frame read (the p_a of the reading's weight at the
+    # relative speed under the world key `doppler`, BEAM_LAW note 38): the
+    # body's own record at the start of the interval, so the weight of an
+    # interval's every group is read at one speed, as the charges are.
+    frame_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
     presence: int = 0
     counted: int = 0
 
@@ -519,6 +542,12 @@ class Ledger:
     # only by the pushes, the turns and the escapes' whole labels. Zero
     # without a record.
     remainder_momentum: list[list[int]] = field(default_factory=list)
+    # The `left` and `right` lines (`hand-v1`, 2026-09-20; BEAM_LAW note
+    # 39): per family the units a table clicked of each hand (the rows'
+    # `hand` column; a report, the sum over the hands within the measured
+    # line's units); zero without a declared hand.
+    taken_left: list[int] = field(default_factory=list)
+    taken_right: list[int] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         count = self.families
@@ -537,6 +566,8 @@ class Ledger:
             "held_became",
             "cancelled_amount",
             "cancelled_content",
+            "taken_left",
+            "taken_right",
         ):
             setattr(self, name, [0] * count)
         self.lifetime_momentum = [[0, 0, 0] for _ in range(count)]

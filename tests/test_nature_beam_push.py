@@ -268,7 +268,8 @@ def test_the_form_on_the_reviewers_world_its_sign_and_the_uncharged_probe():
         # Nothing of the emitter on the record but the number: since the
         # amplitude law (2026-09-20) the four columns `record`, `branch`,
         # `multiplicity` and `birth` name the row's record, not its
-        # emitter's factor.
+        # emitter's factor, and since `hand-v1` (the same day) `hand` names
+        # the row's own helicity, which no push reads.
         assert FIELDS == (
             "node",
             "direction",
@@ -282,6 +283,7 @@ def test_the_form_on_the_reviewers_world_its_sign_and_the_uncharged_probe():
             "branch",
             "multiplicity",
             "birth",
+            "hand",
         )
         assert not hasattr(store, "charge") and not hasattr(store, "mass")
         assert simulation.measured[1].charge == (3, 1) if source_charge[0] > 0 else (-3, 1)

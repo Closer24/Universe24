@@ -64,6 +64,12 @@ sys.path.insert(0, str(HERE.parents[2] / "src"))
 
 from event_universe.events.nature_beam import flight_table  # noqa: E402
 from event_universe.events.world import LABEL_SCALE, LAW_VALUE  # noqa: E402
+from event_universe.world_loading import families_by_definition  # noqa: E402
+
+# The shipped definitions the world's families come from where they equal
+# them (the model owner's decision of 2026-09-20, record 113).
+FAMILY_DEFINITIONS = "../entities/families.json"
+DEFINITIONS_SOURCE = (HERE.parent / "entities" / "families.json").read_bytes()
 
 K = 1 << 22
 N = 64
@@ -466,12 +472,19 @@ def clock_near_mass() -> Json:
 
 
 def worlds() -> dict[str, Json]:
+    """The four documents by name, as written: `neutron_star` and
+    `clock_near_mass` take their families from the shipped definitions;
+    `sun_planet` and `lamp_mirror_screen` are written inline until stage
+    (vii) of `amplitude-v1` lands (it re-pins them): the scope of the
+    migration of 2026-09-20."""
     sun, _ = sun_planet()
     return {
         "sun_planet": sun,
-        "neutron_star": neutron_star(),
+        "neutron_star": families_by_definition(neutron_star(), FAMILY_DEFINITIONS, DEFINITIONS_SOURCE),
         "lamp_mirror_screen": lamp_mirror_screen(),
-        "clock_near_mass": clock_near_mass(),
+        "clock_near_mass": families_by_definition(
+            clock_near_mass(), FAMILY_DEFINITIONS, DEFINITIONS_SOURCE
+        ),
     }
 
 

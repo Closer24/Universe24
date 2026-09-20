@@ -49,6 +49,11 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from event_universe.world_loading import world_of_run  # noqa: E402
+
 MODEL_PREFIX = "beam-nucleus-"
 MODEL_SUFFIX = "-space-v1"
 # The tick at which the push per interval is read: every line of the fan
@@ -149,7 +154,7 @@ def add(a: Vector, b: list[int] | Vector) -> Vector:
 def read_run(folder: Path) -> Reading:
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
     model = str(record["model"])
-    world = json.loads((folder / "initialization.json").read_text(encoding="utf-8"))
+    world = world_of_run(folder)
     families = {str(f["name"]): f for f in world["families"]}
     strong_family = next(
         (name for name, f in families.items() if "columns" in f and "strong" in f["columns"]), ""

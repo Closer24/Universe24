@@ -257,7 +257,8 @@ def test_the_columns_are_written_only_where_a_record_is(tmp_path: Path):
 # The gate set's worlds without a lamp at their caps: the digests (sha256)
 # of `state.json`, of the books (`audit` of `run.json` as `json.dumps`
 # writes it) and of `events.jsonl` on the base tree before the amplitude
-# law's one click (main at d768f831, after the signed drive; the fast pass,
+# law's one click (main at d768f831, after the signed drive, and hand/wu at
+# 4f94a86f, hand-v1; the fast pass,
 # `tools/run_series.py --list --fast`, 2026-09-20): the design's test 7 as
 # a pin, since the key that switched the law off is deleted.
 PINNED_DIGESTS: dict[str, tuple[int, str, str, str]] = {
@@ -302,6 +303,12 @@ PINNED_DIGESTS: dict[str, tuple[int, str, str, str]] = {
         "a546fae445725d72bbf00eb0ed42a0cb9cdc400630ac4f54161c64ee40a1281d",
         "7e219a1d03c8caddc617ccf2a69b34543912c3e09646cec7ae7a8d1fc454dc71",
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ),
+    "hand/wu.json": (
+        23,
+        "7a56bab5aafc2a661f556da30da2f0a5bbda23dc753b3c43b62e732e4805ceb2",
+        "4d746dbe6084c30c6cd034c175f0efb1931d9fa2aa2c608783f928d611db645e",
+        "d4d927fb55cdfa9a1330eea3818edb6275d14c1c460ea6e0d3e34a12c0f38988",
     ),
     "coupling/1b_m16.json": (
         25,

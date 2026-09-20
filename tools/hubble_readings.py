@@ -69,6 +69,7 @@ from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import flight_table
 from event_universe.events.world import HEADING_OFFSET, Q
+from event_universe.world_loading import world_of_run
 
 MODEL_PREFIX = "rays-hubble-"
 MODEL_SUFFIX = "-space-v1"
@@ -221,7 +222,7 @@ class Run:
 
 def read_run(folder: Path) -> Run:
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
-    document = json.loads((folder / "initialization.json").read_text(encoding="utf-8"))
+    document = world_of_run(folder)
     model = str(record["model"])
     crowd, clock = model[len(MODEL_PREFIX) : -len(MODEL_SUFFIX)].split("-")
     table = flight_table(tuple(tuple(v) for v in record["directions"]))

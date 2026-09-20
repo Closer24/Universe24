@@ -59,7 +59,7 @@ from event_universe.core.integer import by_clock
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import parse_nature_beam_world
 from event_universe.events.nature_beam import FIRST, coherent_pointer
-from event_universe.json_documents import parse_json_document
+from event_universe.world_loading import world_of_run
 
 # The spread readings of A10 (the moving mean, the half width, the rms)
 # are the sibling tool's, read from it and not copied.
@@ -128,7 +128,7 @@ def read_run(folder: Path, *, window_start: int = DEFAULT_WINDOW_START) -> Readi
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
     model = str(record["model"])
     width_part, rate_part = model[len(MODEL_PREFIX) : -len(MODEL_SUFFIX)].split("-")
-    world = parse_nature_beam_world(parse_json_document((folder / "initialization.json").read_bytes()))
+    world = parse_nature_beam_world(world_of_run(folder))
     lamp = next(m for m in world.measured if m.lamp is not None)
     assert lamp.lamp is not None
     # The lamp's turn per self-creation off the engine's clock, and its rate

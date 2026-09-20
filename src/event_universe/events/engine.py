@@ -67,13 +67,14 @@ from event_universe.events.world import (
     CONTACT_DEFAULT,
     DETECTOR_READINGS,
     FACE_NAMES,
-    LABEL_SCALE,
     LIFETIME_NAME,
     MOMENTUM_BOUND,
     NO_CHARGE,
+    NO_HAND,
     MeasuredDefinition,
     NatureBeamWorld,
     body_nodes,
+    step_divisor,
 )
 
 __all__ = ["TALLIES", "Measured", "NatureBeamSimulation", "count_owed", "step_axis"]
@@ -104,10 +105,12 @@ def step_axis(drive: int, momentum: int, content: int, width: int) -> tuple[int 
     is. The count primitive is `core.integer.by_drive` (the model owner's
     record 108: the whole part of an accumulated rate on the reader's own
     record, `by_clock` where the rate is constant); the one place the
-    step rule lives, the readings tools read it from here."""
+    step rule lives, the readings tools read it from here. The divisor D
+    is `world.step_divisor`, which the reading's weight at the relative
+    speed reads too (note 38)."""
     if momentum == 0:
         return None, drive
-    fired, drive = by_drive(drive, momentum, LABEL_SCALE * width * content + abs(momentum))
+    fired, drive = by_drive(drive, momentum, step_divisor(momentum, content, width))
     return (fired or None), drive
 
 
@@ -192,6 +195,8 @@ class NatureBeamSimulation:
                 record=np.array([NO_RECORD]),
                 branch=np.array([NO_BRANCH]),
                 multiplicity=np.array([ONE_PATH]),
+                # The row's hand as declared, or its family's (`hand-v1`).
+                hand=np.array([item.hand]),
             )
             self.transit_initial[item.family] += item.amount
             self.content_initial[item.family] += content * item.amount
@@ -320,6 +325,17 @@ class NatureBeamSimulation:
             label_turns=list(definition.label_turns) + [0] * (count - len(definition.label_turns)),
             rotations=list(definition.rotations) + [None] * (count - len(definition.rotations)),
             gates=list(definition.gates) + [None] * (count - len(definition.gates)),
+            # The hand (`hand-v1`): the axis, the entries' parity filters,
+            # the lamp's hand (its own, or its family's) and the hands of
+            # its labels.
+            axis=definition.axis,
+            hands=tuple(definition.hands) + (NO_HAND,) * (count - len(definition.hands)),
+            lamp_hand=(
+                NO_HAND
+                if definition.lamp is None
+                else (definition.lamp.hand or self.families[definition.family].hand)
+            ),
+            lamp_label_hands=None if definition.lamp is None else definition.lamp.label_hands,
         )
 
     def occupant(self, node: Address3) -> int | None:
@@ -385,8 +401,12 @@ class NatureBeamSimulation:
     def _frame_all(self) -> None:
         """The clocks' frame, every measured event at once: its content is
         read once into `frame_content` (M_A of the interval's push, BEAM_LAW
-        step 4) and its charge in every column into `frame_charges` (the
-        reader's side of the push over the columns, gravity's the content);
+        step 4), its charge in every column into `frame_charges` (the
+        reader's side of the push over the columns, gravity's the content)
+        and its momentum into `frame_momentum` (the p_a of the reading's
+        weight at the relative speed under `doppler`, note 38: the speed
+        the body had over this interval, the same for every group of rays
+        whatever the family order, as the charges are);
         one that owes a count pays it by one (no self-creation, no
         release, no turn; `waited` counts the interval); one that owes
         nothing self-creates: its age advances and its turn is read off its
@@ -403,6 +423,7 @@ class NatureBeamSimulation:
             # after it).
             entry.frame_content = entry.content
             entry.frame_charges = entry.charges(for_push=True)
+            entry.frame_momentum = list(entry.momentum)
             if entry.owed > 0:
                 entry.owed -= 1
                 entry.waited += 1
@@ -749,6 +770,7 @@ class NatureBeamSimulation:
         # world alone (a lamp declared): a world without a lamp has no
         # record and no line.
         amplitude = self.world.recorded
+        handed = self.world.handed
         # One pass over the measured events: what they hold per family,
         # their momentum and their charge (rho x content of the free
         # families and, since 2026-09-20 (D-1), the paid families' whole
@@ -781,6 +803,12 @@ class NatureBeamSimulation:
             measured["balanced"] = measured["initial"] + measured["measured"] + measured["became"] == (
                 measured["current"] + measured["spent"] + measured["escaped"]
             )
+            if handed:
+                # The `left` and `right` lines (`hand-v1`): the units the
+                # tables clicked of each hand, a report; only where a hand
+                # is declared, as the amplitude columns are.
+                measured["left"] = ledger.taken_left[index]
+                measured["right"] = ledger.taken_right[index]
             in_transit = {
                 "initial": self.transit_initial[index],
                 "released": ledger.transit_released[index],
@@ -1065,6 +1093,6 @@ class NatureBeamSimulation:
                 lo, hi = store.slice(flat)
                 if hi == lo:
                     continue
-                beams = [beam.record_line(vectors) for beam in store.rows(lo, hi)]
+                beams = [beam.record_line(vectors, self.world.handed) for beam in store.rows(lo, hi)]
                 families.append({"family": family.name, "rays": beams})
             yield entry

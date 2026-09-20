@@ -102,18 +102,17 @@
     [3, 0, 1],
     [3, 1, 0]
   ],
-  "families": [
+  "entity_definitions": "../entities/families.json",
+  "entities": [
     {
       "name": "mass",
-      "quantum": 0,
-      "charge": 0,
-      "phase": false
+      "definition": "mass",
+      "position": [0, 0, 0]
     },
     {
-      "name": "probe",
-      "quantum": 0,
-      "charge": 0,
-      "phase": false
+      "name": "probe_material",
+      "definition": "probe_material",
+      "position": [0, 0, 0]
     }
   ],
   "measured": [

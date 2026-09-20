@@ -12,7 +12,15 @@ import pytest
 from event_universe.configuration_validation import validate_configuration
 from event_universe.events import NatureBeamSimulation
 from event_universe.events.world import parse_nature_beam_world
-from event_universe.world_loading import BUNDLE_FORMAT, DocumentSyntaxError, load_world, main
+from event_universe.runner import run_initialization
+from event_universe.world_loading import (
+    BUNDLE_FORMAT,
+    DocumentSyntaxError,
+    families_by_definition,
+    load_world,
+    main,
+    world_of_run,
+)
 
 
 def authored():
@@ -146,7 +154,7 @@ def test_plain_world_keeps_decoder_behavior_and_exact_source(encoding):
 
 
 @pytest.mark.parametrize(
-    "reference", ["/absolute.json", "../escape.json", "a/../b", "a//b", "./a", "a\\b", "https:x", ""]
+    "reference", ["/absolute.json", "../../escape.json", "a/../b", "a//b", "./a", "a\\b", "https:x", ""]
 )
 def test_reference_paths_are_confined(reference, tmp_path):
     world = authored()
@@ -486,16 +494,21 @@ def shipped_definitions(name: str) -> dict[str, object]:
 
 
 def register_family_names() -> set[str]:
+    """The family names of every shipped world as the loader expands it
+    (inline, or from the definitions it references since 2026-09-20)."""
     names: set[str] = set()
     for path in sorted(EXAMPLES.rglob("*.json")):
         document = json.loads(path.read_text(encoding="utf-8"))
-        if isinstance(document, dict) and isinstance(document.get("families"), list):
-            names.update(str(family["name"]) for family in document["families"])
+        if isinstance(document, dict) and "format" not in document:
+            loaded = load_world(path.read_bytes(), base_dir=path.parent, root=EXAMPLES)
+            names.update(
+                str(family["name"]) for family in json.loads(loaded.expanded_source)["families"]
+            )
     return names
 
 
 def test_the_shipped_definitions_are_the_generators_and_define_every_family_once():
-    """(v2-f): the files equal `make_definitions.py`'s documents; the 47 names once."""
+    """(v2-f): the files equal `make_definitions.py`'s documents; the 48 names once."""
     path = ENTITIES / "make_definitions.py"
     spec = importlib.util.spec_from_file_location("entities_make_definitions", path)
     module = importlib.util.module_from_spec(spec)
@@ -544,3 +557,171 @@ def test_every_shipped_definition_places_parses_and_runs(reference):
         for _ in range(3):
             simulation.step()
             assert simulation.books()["balanced"], entity["name"]
+
+
+# The worlds' migration (2026-09-20, the second pull request of record 113):
+# (v2-g) a reference may climb by leading `..` components, confined to the
+# root the caller gives, refused without one; (v2-h) `families_by_definition`
+# turns the tail of a world's inline families that the definitions tile into
+# instances, the head kept inline, the expansion the inline document; (v2-i)
+# a host command's root is the working directory when the world lies within
+# it; (v2-j) every shipped world that references the definitions loads.
+
+
+def climbing_layout(tmp_path):
+    """`base/series/world.json` referencing `../entities/apparatus.json`."""
+    (tmp_path / "base" / "series").mkdir(parents=True)
+    (tmp_path / "base" / "entities").mkdir()
+    (tmp_path / "base" / "entities" / "apparatus.json").write_text(json.dumps(definitions()))
+    world = authored()
+    world["entity_definitions"] = "../entities/apparatus.json"
+    return tmp_path / "base", tmp_path / "base" / "series", world
+
+
+def test_a_climbing_reference_is_confined_to_the_root(tmp_path):
+    """(v2-g): within the root the caller gives; refused outside it."""
+    root, series, world = climbing_layout(tmp_path)
+    source = json.dumps(world)
+    loaded = load_world(source, base_dir=series, root=root)
+    assert (
+        len(loaded.world.measured) == 3 and loaded.dependencies[0].path == "../entities/apparatus.json"
+    )
+    assert load_world(loaded.portable_source).world == loaded.world
+    with pytest.raises(ValueError, match="outside the root"):
+        load_world(source, base_dir=series, root=series)
+    world["entity_definitions"] = "../../outside.json"
+    (tmp_path / "outside.json").write_text(json.dumps(definitions()))
+    with pytest.raises(ValueError, match="outside the root"):
+        load_world(json.dumps(world), base_dir=series, root=root)
+    assert load_world(json.dumps(world), base_dir=series, root=tmp_path).world == loaded.world
+    for reference in ("a/../b.json", "../", "..", "../../..//x.json", ".././/x.json", "../a/./b.json"):
+        world["entity_definitions"] = reference
+        with pytest.raises(ValueError, match="entity_definitions"):
+            load_world(json.dumps(world), base_dir=series, root=root)
+
+
+def test_without_a_root_a_reference_climbs_one_level_only(tmp_path):
+    """(v2-i): the world's directory, or its parent for one `..` (the
+    shipped layout, a series beside `entities/`); a longer climb needs a root."""
+    root, series, world = climbing_layout(tmp_path)
+    loaded = load_world(json.dumps(world), base_dir=series)
+    assert len(loaded.world.measured) == 3
+    report = validate_configuration(json.dumps(world), base_dir=series)
+    assert report.valid and report.summary["measured"] == 3
+    world["entity_definitions"] = "../../outside.json"
+    (tmp_path / "outside.json").write_text(json.dumps(definitions()))
+    with pytest.raises(ValueError, match="climbs above the parent of base_dir"):
+        load_world(json.dumps(world), base_dir=series)
+    # A symlink under the parent that leaves it is refused as before.
+    (root / "entities" / "escape.json").symlink_to(tmp_path / "outside.json")
+    world["entity_definitions"] = "../entities/escape.json"
+    with pytest.raises(ValueError, match="outside the parent of base_dir"):
+        load_world(json.dumps(world), base_dir=series)
+
+
+def test_families_by_definition_keeps_the_head_inline_and_tiles_the_tail():
+    """(v2-h): the longest tail the definitions tile, in order; the expansion the inline document."""
+    carrier, dust, pair = (
+        {"name": "carrier", "quantum": 1},
+        {"name": "dust", "quantum": 0, "phase": False},
+        [{"name": "sa", "quantum": 0}, {"name": "sb", "quantum": 0}],
+    )
+    entities = {
+        "format": "event-entities-v2",
+        "entities": [
+            {"name": "carrier_material", "families": [carrier], "measured": [], "detectors": []},
+            {"name": "dust_material", "families": [dust], "measured": [], "detectors": []},
+            {"name": "choosers", "families": pair, "measured": [], "detectors": []},
+        ],
+    }
+    source = json.dumps(entities).encode("utf-8")
+    world = authored()
+    del world["entity_definitions"], world["entities"]
+    world["families"] = [{"name": "other", "quantum": 1}, dust, carrier, *pair]
+    world["measured"] = [
+        {
+            "position": [1, 1, 0],
+            "family": "carrier",
+            "amount": 1,
+            "fixed": True,
+            "table": {"carrier": "measure"},
+        }
+    ]
+    declared = families_by_definition(world, "../entities/families.json", source)
+    before = list(world)[: list(world).index("families")]
+    assert list(declared) == [*before, "families", "entity_definitions", "entities", "measured"]
+    assert declared["families"] == [{"name": "other", "quantum": 1}]
+    assert declared["entities"] == [
+        {"name": name, "definition": name, "position": [0, 0, 0]}
+        for name in ("dust_material", "carrier_material", "choosers")
+    ]
+    bundle_text = json.dumps(
+        {
+            "format": BUNDLE_FORMAT,
+            "world": declared,
+            "definitions": {"../entities/families.json": source.decode()},
+        }
+    )
+    loaded = load_world(bundle_text)
+    assert json.loads(loaded.expanded_source) == {**world, "detectors": []}
+    assert loaded.world == parse_nature_beam_world(world)
+    # A tail broken by a family no definition equals stays inline whole: the
+    # world is returned as it is (its keys and order kept).
+    world["families"] = [dust, {"name": "carrier", "quantum": 2}]
+    assert families_by_definition(world, "../entities/families.json", source) == world
+    # The pair must be whole and in the definition's order.
+    world["families"] = [carrier, pair[1], pair[0]]
+    assert families_by_definition(world, "../entities/families.json", source) == world
+    world["families"] = [carrier, pair[0]]
+    assert families_by_definition(world, "../entities/families.json", source) == world
+    with pytest.raises(ValueError, match="already places"):
+        families_by_definition(authored(), "../entities/families.json", source)
+
+
+def shipped_worlds() -> list[Path]:
+    return sorted(
+        path
+        for path in EXAMPLES.rglob("*.json")
+        if "format" not in json.loads(path.read_text(encoding="utf-8"))
+    )
+
+
+def test_every_shipped_world_that_references_the_definitions_loads_from_them():
+    """(v2-j): the migrated worlds (the generators' output) reference
+    `entities/families.json` by a confined climb and carry no inline copy of
+    a family the definitions define; every other world has no reference."""
+    referenced = 0
+    for path in shipped_worlds():
+        document = json.loads(path.read_text(encoding="utf-8"))
+        if "entity_definitions" not in document:
+            continue
+        if document["entity_definitions"].endswith("entities/families.json"):
+            referenced += 1
+            loaded = load_world(path.read_bytes(), base_dir=path.parent, root=EXAMPLES)
+            expanded = json.loads(loaded.expanded_source)
+            inline = [family["name"] for family in document.get("families", [])]
+            from_definitions = [family["name"] for family in expanded["families"]][len(inline) :]
+            assert from_definitions, path
+            assert [family["name"] for family in expanded["families"]] == inline + from_definitions
+            assert (
+                loaded.dependencies[0].sha256
+                == hashlib.sha256((ENTITIES / "families.json").read_bytes()).hexdigest()
+            )
+    assert referenced >= 60
+
+
+def test_the_world_of_a_run_is_the_resolved_one_when_definitions_were_resolved(tmp_path):
+    """(v2-k): `world_of_run` reads the run's resolved world when the runner
+    wrote one, else the authored world itself."""
+    root, series, world = climbing_layout(tmp_path)
+    world["ticks"] = 1
+    path = series / "world.json"
+    path.write_text(json.dumps(world), encoding="utf-8")
+    run_initialization(path, tmp_path / "run_defined")
+    resolved = world_of_run(tmp_path / "run_defined")
+    assert "entity_definitions" not in resolved and len(resolved["measured"]) == 3
+    assert [family["name"] for family in resolved["families"]] == ["carrier"]
+    plain = json.loads(load_world(json.dumps(world), base_dir=series).expanded_source)
+    (series / "plain.json").write_text(json.dumps(plain), encoding="utf-8")
+    run_initialization(series / "plain.json", tmp_path / "run_plain")
+    assert world_of_run(tmp_path / "run_plain") == plain

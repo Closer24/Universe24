@@ -6,6 +6,139 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The hand, on 2026-09-20 (`hand-v1`)
+
+The model owner's decision of 2026-09-20 (record 128 of
+[the log](LOG_2026-09-20.md), "the hand's three choices confirmed"; the
+physicist's design hand/DESIGN.md, record 122, with the mathematician's
+integer form, record 120; [BEAM_LAW note 39](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+`tests/test_hand.py`; the worlds of series P, `examples/events/hand/`):
+
+- The row's column `hand` (-1, 0, +1; 0 everywhere without a declaration),
+  the helicity relative to the row's direction, a pseudoscalar under the
+  48 symmetries, carried unchanged through every re-creation (a mirror, a
+  split, a rotation, a gate, a meeting, a collision, a home, the inverse
+  interval) and an identity field of the merge (opposite hands never merge
+  or cancel). `NatureBeam.hand`, `PendingRow.hand`, the store's field
+  `hand`, `BornRow`'s ninth entry.
+- The keys `hand` on a family (the catalog's home of the hand, as `charge`
+  is), on a lamp (circular light), on a transit row and on a table entry
+  (the parity filter, refused on `pass`), a third entry per branch of a
+  lamp's `branches` (the hand as a label bit's meaning, one or the other
+  per family; on such a family the parity filter reads the label's hand,
+  `nature_beam.read_hands`, the which-path click on the label) and
+  `axis` on a measured event (one of the six headings as
+  a vector). `FamilyDefinition.hand`, `LampDefinition.hand` and
+  `label_hands`, `TransitDefinition.hand`, `MeasuredDefinition.axis` and
+  `hands`, `Measured.axis`, `hands`, `lamp_hand`, `lamp_label_hands`.
+- The right-hand rule in `become` (`nature_beam`, step 5; `world.axis_sign`):
+  a product's hand is its family's; at a parent with an axis a handed
+  product leaves only on the directions with sign(A . u_d) = h (a
+  left-handed product against the axis), an unhanded product is stamped
+  the sign of its direction; an empty set refused at load
+  (`world._handed_products`).
+- The record: `hand` on the `click`, `pass`, `read`, `rerelease`, face and
+  border lines, a fifth entry on the `become` line's products, `left` and
+  `right` per family in the books (`Ledger.taken_left`, `taken_right`),
+  `hand` per family and `axis` per number in `run.json`, `hand` on the
+  rows of `state.json`, all only in a world that declares a hand or an
+  axis (`NatureBeamWorld.handed`); the identity `hand-v1` under
+  `hypotheses`, last.
+- `_table_entry` returns a sixth value, the hand the entry admits;
+  `_branches` returns the branches and the label hands; `_lamp` takes
+  `family_hand`; `NatureBeam.record_line` takes `handed`.
+- Every world without a hand byte-identical: the gate set replayed
+  identical ([VALIDATION](VALIDATION.md)); `hand/wu.json` added to the
+  gate set as the first world declaring the keys. Nothing deleted.
+
+## The reading's weight at the relative speed, on 2026-09-20 (`doppler-v1`, a world key, absent by default)
+
+The model owner's decision of 2026-09-20 (record 119 of
+[the log](LOG_2026-09-20.md): "a body TAKES a message at the rate at which
+it and the message meet"; the mathematician's admissible form, FORM.md
+section 6 of `docs/designs/push_relative_speed/` on the branch
+`claude/series-m-masses`, record 110, and its grain and flux form, GRAIN.md
+beside it, after the physics-rule review of the first build; series G2's
+finding, record 107;
+[BEAM_LAW note 38](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).
+A hypothesis beside the law with its own identity: `beam-v1` is unchanged
+without the key.
+
+- The world key `doppler`, true or false, false by default, refused on any
+  other value; `run.json` carries it and the identity `doppler-v1` under
+  `hypotheses` when it is true. Under it a free measured event reads the
+  rows that arrived at its Node for the push (step 4) with each direction's
+  label flow weighted by the flux of its rows through the body, one scalar
+  per (direction, body), the pair `(|G Q |v|^2 - T_d sum_a s_a w_a v_a|,
+  G Q |v|^2)` at the body's speed quantised to the grain, off the reader's
+  clock per component, before the columns (`nature_beam.weighted_flow`,
+  `flux_pair`, `quantised_speed`; `push_form` untouched). The product
+  |V_d| x num_d is tested by division before it is formed and refused
+  naming the body and the direction.
+- `world.SPEED_GRAIN`, G = 2^12, a constant of the law beside Q: the grain
+  of a body's speed, `w_a = G x |p_a| // D_a`, the remainder discarded each
+  interval (a declared grain, nothing accumulating; note 38 states the bias
+  below 1 / G in v). `world.step_divisor(momentum, content, width)`, D = Q
+  x S x M + |p|, is the one function of the step rule's divisor:
+  `engine.step_axis` reads it and the quantised speed reads it.
+- `Measured.frame_momentum`: the momentum the frame read at the start of
+  the interval, beside `frame_content` and `frame_charges` (not in the
+  record: a snapshot of the record's own momentum for the interval's
+  weight, one speed for every group of the interval).
+- No load-time bound is new: the parser's static budget of the columns
+  (`_column_budget`) takes the largest release flow times the weight's
+  largest factor on the table under the key (`weighted_flow_factor`, 3
+  on the headings). The registered G2 star worlds fit as registered (the
+  weighted flow's product 2^29, today's push 2^34) and one of them runs
+  under the key in `tests/test_doppler.py` (h) from
+  `examples/events/hubble_stars/gravity_scalar.json` (the example's own
+  path). Deleted on the series G2 branch when it merged doppler-v1
+  (2026-09-20): `tests/data/g2_gravity_scalar.json`, the reviewer's
+  temporary copy of that world, byte-identical to it; the hygiene gate
+  keeps one canonical copy of every nonempty file, and the test reads the
+  example. The first build's per-axis
+  pair, its load check of the pair (`_doppler_load_checks`,
+  `relative_speed_bound`, `axis_pace`, `FlightTable.pace`) and its
+  "per-direction floors only on an axis where the reader moves" rule
+  never reached main and are gone: the per-axis weight was wrong on every
+  fan direction (GRAIN.md section 2).
+- The pair is taken in absolute value (a body outrunning its source's rows
+  takes them from behind at |c - v|, the push keeping the flow's sign); a
+  fixed body reads at the weight 1; a free body at rest reads today's
+  integers by an exact division, on a fan as on a heading.
+- Nothing re-registers: the key is absent in every shipped world, the
+  gate set's fifteen worlds replay byte-identical, and nothing is re-run
+  under the key in this change. Nothing deleted.
+## The worlds reference the family definitions, on 2026-09-20 (host only, no law change)
+
+The second pull request of the model owner's decision of 2026-09-20
+(record 113 of [the log](LOG_2026-09-20.md); the built form in
+[entity definitions](ENTITY_DEFINITIONS.md#families-in-definitions-event-entities-v2-2026-09-20)):
+
+- `entity_definitions` may climb by leading `..` components; the loader
+  confines the resolved file to `root` when the caller gives one
+  (`load_world(source, base_dir=, root=)`; the workspace passes its
+  configurations directory), else to `base_dir` as before, or to its parent
+  for a reference climbing by one `..`; a longer climb is refused without a
+  root. A world in its own directory, without a climb, loads as before;
+  the runner and the validator are untouched.
+- `families_by_definition(document, reference, definitions_source)`, the
+  authoring helper of the generators: the tail of a world's inline families
+  that the definitions tile becomes instances, the head stays inline, the
+  expansion is the inline world in order.
+- The shipped worlds of every series but the ones stage (vii) of
+  `amplitude-v1` re-pins reference `../entities/families.json` (the list in
+  the entity definitions document); `examples/events/make_worlds.py` writes
+  the four root worlds; `hubble/make_worlds.py` writes its files as shipped
+  (the default separators); `families.json` lists the 24 thrown sources in
+  the Hubble worlds' order. Every migrated world's `events.jsonl`,
+  `state.json` and books are identical to the inline world's; `run.json`
+  gains `initialization_resolution`.
+- The catalog's rows name the definition of each entity; the register's
+  family names are read from the loaded worlds
+  (`tests/test_entity_catalog.py`, `tests/test_entity_definitions.py`).
+- Nothing deleted.
+
 ## Families in entity definitions, on 2026-09-20 (`event-entities-v2`; host only, no law change)
 
 The model owner's decision of 2026-09-20 (record 113 of
@@ -468,7 +601,13 @@ alone; every reading byte-identical on the gate set at its caps and on
 the K worlds): the layer holds no offer open on this world and the cost
 is the GameBoard's rows, which do not merge across records (1457 records
 born per interval, 1.8 million rows and 2.75 s per interval at interval
-40; 3.3 GB at 20 minutes, interval 136).
+40; 3.3 GB at 20 minutes, interval 136). Series G2 (`examples/events/hubble_stars/`,
+registered after the gate set) is a lamp series too: its 18 worlds of
+`record/` and `doppler/` are carried without the key (their diff the key
+alone), its base worlds' stars birth records, and the acoustic reading
+rule (the slope of a `wave` set's phase) reads no turn under the record
+form; the record worlds' `source` rule is the record form's reading, the
+verdict to be re-read.
 
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 

@@ -73,9 +73,12 @@ def test_every_catalog_world_declares_its_keys_and_parses(name):
     # rename of 2026-09-20), never a literal.
     assert document["law"] == LAW_VALUE and "catalog" in document["model_id"]
     assert 20 <= document["ticks"] <= 50
-    assert all("quantum" in family for family in document["families"])
     assert all("reading" in detector for detector in document.get("detectors", []))
-    loaded = load_world((CATALOG / f"{name}.json").read_bytes(), base_dir=CATALOG)
+    # Its families inline or, since 2026-09-20, from the definitions it
+    # references (a climb to `entities/`, confined to `examples/events`).
+    loaded = load_world((CATALOG / f"{name}.json").read_bytes(), base_dir=CATALOG, root=CATALOG.parent)
+    expanded = json.loads(loaded.expanded_source)
+    assert all("quantum" in family for family in expanded["families"])
     assert loaded.world.model_id == document["model_id"]
     assert len(loaded.world.measured) == len(document["measured"])
 
@@ -84,7 +87,7 @@ def test_every_catalog_world_declares_its_keys_and_parses(name):
 def test_every_catalog_world_runs_with_the_books_balanced_and_its_readings_exist(name):
     """(b) and (c)."""
     document = shipped(name)
-    world = load_world(json.dumps(document).encode("utf-8")).world
+    world = load_world(json.dumps(document).encode("utf-8"), base_dir=CATALOG, root=CATALOG.parent).world
     lines: list[dict[str, object]] = []
     simulation = NatureBeamSimulation(world, lines.append)
     ticks = int(document["ticks"])
@@ -138,12 +141,15 @@ VALUES = {"true", "false"}
 
 
 def register_worlds() -> list[dict[str, object]]:
-    """Every world under `examples/events` (a document with `families`)."""
+    """Every world under `examples/events` (a document declaring `law`, never
+    `format`), as the loader expands it: its families inline or, since
+    2026-09-20, from the definitions it references."""
     found = []
     for path in sorted(EXAMPLES.rglob("*.json")):
         document = json.loads(path.read_text(encoding="utf-8"))
-        if isinstance(document, dict) and isinstance(document.get("families"), list):
-            found.append(document)
+        if isinstance(document, dict) and "format" not in document:
+            loaded = load_world(path.read_bytes(), base_dir=path.parent, root=EXAMPLES)
+            found.append(json.loads(loaded.expanded_source))
     return found
 
 
@@ -247,4 +253,17 @@ def test_every_family_of_the_register_has_a_catalog_row():
     families, _ = register_names()
     assert len(families) >= 20
     missing = sorted(name for name in families if f"`{name}`" not in text)
+    assert not missing, missing
+
+
+def test_every_shipped_definition_is_named_by_a_catalog_row():
+    """(f): the rows reference the definitions of `examples/events/entities/`
+    (the worlds' migration of 2026-09-20), each by its name."""
+    text = CATALOG_DOCUMENT.read_text(encoding="utf-8")
+    names = []
+    for file in ("families.json", "apparatus.json"):
+        document = json.loads((EXAMPLES / "entities" / file).read_text(encoding="utf-8"))
+        names.extend(str(entity["name"]) for entity in document["entities"])
+    assert len(names) >= 30
+    missing = sorted(name for name in names if f"`{name}`" not in text)
     assert not missing, missing

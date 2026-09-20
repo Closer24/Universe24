@@ -105,6 +105,10 @@ def execute_nature_beam_run(
         # The meeting (2026-09-20): the world key as declared, false by
         # default; `meeting-v1` under `hypotheses` when it is true.
         "meeting": world.meeting,
+        # The reading's weight at the relative speed (2026-09-20): the world
+        # key as declared, false by default; `doppler-v1` under `hypotheses`
+        # when it is true.
+        "doppler": world.doppler,
         "hypotheses": world.hypotheses,
         # The world's columns in order, (name, sign): gravity, charge, the
         # declared names; every family's `columns` below is aligned with it.
@@ -126,6 +130,10 @@ def execute_nature_beam_run(
                 # The age at which the family's rays click on the border
                 # `lifetime` (None: the family lives forever).
                 "lifetime": family.lifetime,
+                # The family's hand (`hand-v1`), written only in a world
+                # that declares a hand or an axis somewhere (every other
+                # record byte-identical).
+                **({"hand": family.hand} if world.handed else {}),
             }
             for family in world.families
         ],
@@ -149,6 +157,19 @@ def execute_nature_beam_run(
                         ],
                         "crowd": entry.become.crowd,
                     }
+                ),
+                # The axial record (`hand-v1`) as declared, the heading's
+                # vector or None; written only in a world with a hand.
+                **(
+                    {
+                        "axis": (
+                            None
+                            if entry.axis is None
+                            else [int(v) for v in world.directions[entry.axis]]
+                        )
+                    }
+                    if world.handed
+                    else {}
                 ),
             }
             for index, entry in enumerate(world.measured)

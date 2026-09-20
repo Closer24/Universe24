@@ -2219,6 +2219,139 @@ states "exactly" and means integer equality at every tick.
   inside 2 %. The verdict and the follow-up stand as read ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
 
 
+### G2, the Hubble diagram with stars behind the detector (2026-09-20)
+
+- **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**
+  Every G2 world is a lamp world (the stars shine as lamps), so under the
+  record form (every lamp births records, the key `amplitude` deleted,
+  MIGRATION (vii-4)) its digests change and the acoustic reading rule
+  reads no turn: a star's rows are records born at u with the path phase,
+  the `wave` set's phase never turns and the redshift z the tool takes as
+  the slope of the record's phase is undefined (`tests/test_hubble_stars_readings.py`
+  (b) on the tool's bar world; until that step z within 0.05 of 0.5 / c).
+  The 18 worlds of `record/` and `doppler/` are carried without the key,
+  their diff the key alone; the record form's reading of the series is the
+  `source` rule of `record/expectations.json`. The registered worlds are
+  not re-run here (301^3 Nodes over 400 intervals); the numbers below are
+  the crowd form's, kept as history.
+- **Confronts.** The model owner's question (2026-09-20): "Can you run on
+  a separate machine a test of whether dark energy is needed? What comes
+  out of an experiment in our model? A star has to be placed there."
+  Twenty-four stars of the catalog's kind (one measured event holding a
+  mass and shining as a lamp, E = h f) thrown from a centre with a
+  Hubble-flow initial condition, the model's own gravity between them (the
+  universal column, the rows on the axes), a detector of one Node at the
+  centre reading `wave` with `reads: "age"`; per star the redshift from the
+  pointer's turn, the distance from the arrivals' ages, the luminosity from
+  the click rate; the deceleration q by a two-parameter fit (H and q free)
+  and the three exact forms with H free; three crowds (the coupling off,
+  on, doubled) and three clocks (none, scalar, age). Series G's lesson
+  applied: one point, H free, the criterion validated on the exact form and
+  the grain's effect on q measured before the brackets were set.
+- **Model prediction, pinned before the runs
+  ([the derivation](../examples/events/hubble_stars/README.md#the-derivation-before-the-runs),
+  `examples/events/hubble_stars/expectations.json`).** The coasting crowd the exact Milne form, q within
+  +- 0.25 and H (t_0 + T_0) = 1 within 10 %; the gravity crowd q = +0.25
+  (+0.04 .. +0.44) and the double crowd q = +0.59 (+0.30 .. +0.89) by the
+  continuum derivation with the acoustic Doppler on the emitter and the
+  reader, |p(end)| / p(0) 0.67 .. 1.11 and 0.28 .. 1.27; the reading's
+  formula within 2 %; the luminosity 1 / (1 + z) within 5 %; k within 0 ..
+  0.05; the ordering coasting < gravity < double; q = -0.55 not the nearest
+  in any world.
+- **Features.** The held content (a lamp holding a free family, the first
+  world to place the catalog's star as one event); the lamp's release with
+  its clock phase and its cost; the push of the mass rows on the stars
+  through the detector; `pass` for the other stars' light; `wave` on a set
+  of one Node with the age moment on the click record; the clocks (the
+  presence, the age moment, none).
+- **Run.** `examples/events/hubble_stars/` (nine worlds by `make_worlds.py`,
+  `<crowd>_<clock>`, the model ids `rays-hubble-stars-<crowd>-<clock>-space-v1`);
+  `tools/run_series.py --jobs 3`; `tools/hubble_stars_readings.py`;
+  `tests/test_hubble_stars_readings.py`.
+- **Result (2026-09-20, measured against expected).** Fingerprint
+  `b4d074f2b762e58d15037a46b614e89609a48bcee2211eaf471af16e3d4923d1`,
+  Python 3.14.0rc2, numpy 2.5.3, headless; every run completed in 36 to
+  39 s with the books balanced at every tick; the reading's formula 648 of
+  648 inside, the luminosity 631 of 648 inside, 34 pinned readings inside
+  and 29 outside, none moved (the table above). The coasting crowd: q =
+  -0.11, H (t_0 + T_0) = 1.026, rms 0.0019 under the clock-free control
+  (inside), inside under the scalar and age clocks with k scattering 0 to
+  0.068 per window (outside its bracket). The gravity crowd: every momentum
+  down by 14 to 58 % on the GameBoard, the detector's q -0.76, -0.22, +1.19
+  under the three clocks (outside), rms 0.03 to 0.05; the double crowd:
+  momenta down by 27 to 99 %, q +1.50, +0.54, -0.11 (one inside); the
+  ordering outside under every clock; q = -0.55 the nearest of the three
+  in three worlds (outside). Re-run under the record click (`amplitude-v1`,
+  the branch `claude/amplitude-impl` at `62369cb8`, every number from the
+  gather lines): the same list of clicks and the same readings to the last
+  digit; the physicist's design [docs/designs/hubble_stars/DESIGN.md](designs/hubble_stars/DESIGN.md).
+- **Second run (2026-09-20, under the step drive and the record click; main
+  at `f3a41f28`; the expectations re-derived by the emitter-only rule and
+  pinned first, `examples/events/hubble_stars/record/expectations.json`).** Five worlds, the three
+  crowds under the clock-free control and the gravity crowd under the two
+  clocks: q = -0.108 (coasting), +0.922 (gravity; derived +0.859), +1.500
+  (double; derived at the fit's edge), +0.749 and +0.461 (gravity under the
+  scalar and age clocks); H (t_0 + T_0) 1.026, 0.811, 0.674, 0.854, 0.874;
+  every q and H inside its bracket, the ordering inside, q = -0.55 the
+  farthest form in every gravitating world, the reading's formula 360 of
+  360, the luminosity 360 of 360, the longest burst 1 Link in every star
+  (759 readings inside, 1 outside: the scalar clock's k). The gravitational
+  deceleration is readable at the detector once the step rule is the
+  drive.
+- **Third run (2026-09-20, under the reading's weight at the relative
+  speed `doppler-v1` and the signed drive; main at `56a258f`; the
+  expectations re-derived by the flux rule at the grain and pinned first,
+  [EXPECTATION_2.md](designs/hubble_stars/EXPECTATION_2.md) and
+  `examples/events/hubble_stars/doppler/expectations.json`).** Five worlds, the record-click worlds
+  with the key `doppler`: q = -0.108 (coasting, its clicks identical to
+  the second run's), +0.345 (gravity; derived +0.245, inside), +1.190
+  (double; derived +0.596, outside), -0.158 and +0.093 (gravity under the
+  scalar and age clocks; the scalar outside, q = -0.55 its nearest form
+  with the Doppler part alone +0.327); H (t_0 + T_0) 1.026, 0.916, 0.774,
+  1.008, 0.958, every H inside; every star's z higher than under the
+  source rule (+0.013 to +0.033, pinned +0.010 to +0.028) and every
+  momentum ratio inside; the reading's formula 120 of 120, the luminosity
+  120 of 120, the longest burst 1 Link; 35 readings inside, 5 outside. The
+  flux weight takes two thirds of the read deceleration away, as pinned,
+  and leaves it a deceleration.
+- **Verdict (the first registration, 2026-09-20, as read).** The kinematics of the law give the coasting universe exactly
+  from one point (Milne, q = 0 to the grain); the law's gravity decelerates
+  every star's momentum and pushes none outward, so nothing in the law
+  gives q < 0; but the deceleration is not readable at the detector,
+  because the step rule stalls and bursts under a changing momentum and the
+  light carries the Doppler of that jerky motion. Nothing here removes dark
+  energy and nothing mimics it once the reading's artefacts are named. What
+  the law lacked, registered: a body's own motion does not Doppler what it
+  reads (measured on a bar: 1.000 row per interval at rest, receding at
+  0.45 or approaching at 0.30); the step rule's count `floor(age |p| / D)`
+  read at the current momentum (stalls of up to 85 intervals, bursts of up
+  to 12 Links on consecutive intervals); the clocks' bursty counts; the
+  outward rows taken home; the gravity of a line; no luminosity distance.
+  Nothing was tuned.
+- **Verdict re-read after the second and third runs (2026-09-20; records 124
+  and 128; the step drive of PR #373 and #377, the reading's weight
+  `doppler-v1` of PR #379).** The step rule's stalls and bursts were the
+  artefact that made the deceleration unreadable, and under the step drive
+  the detector reads the model's own gravity as a deceleration (q = +0.92
+  with gravity, at or beyond +1.5 doubled, -0.11 without, the emitter-only
+  reading); under the reader's flux as well the deceleration is smaller and
+  still a deceleration (q = +0.35 with gravity, pinned +0.25; +1.19
+  doubled; every star's z higher and its momentum spared by about what the
+  flux said). The accelerating form observed today, q = -0.55, is the
+  farthest of the three in every clock-free gravitating world and the
+  nearest only where a star's clock scatters the diagram (the gravity crowd
+  under the presence clock in the third run, its Doppler part alone
+  +0.33). The law has no term that gives q < 0: nothing here removes dark
+  energy and nothing mimics it. Not decided by this series: the luminosity
+  distance (a beam does not dilute), the three-dimensional gravity of a
+  crowd (three lines), the clocks' bursty counts; and the one-dimensional
+  derivation understates the heavy crowd's read q (+1.19 against +0.60)
+  while its momenta match. Registered on the owner's decision of record
+  128 ("series G2 registered after its second run"); the runs and the
+  pages in the worlds'
+  [README](../examples/events/hubble_stars/README.md).
+
+
 ### H, Bohr's lines behind the detector (2026-09-20)
 
 - **Confronts.** Whether Bohr's lines come out by themselves behind the
@@ -5467,6 +5600,80 @@ sequential gates on an entangled record, the full register replay.
   the symmetric geometry, is to be re-derived under that rule by hypothesis
   11 and this entry before it is quoted again; the prediction above stands
   as recorded until then.
+
+### P, the hand (2026-09-20)
+
+- **Confronts.** The model owner's decision of 2026-09-20 (record 128 of
+  [the log](LOG_2026-09-20.md), "the hand's three choices confirmed"):
+  `hand-v1`, the hand on the message, built with the physicist's three
+  choices (hand/DESIGN.md, record 122; the mathematician's integer form,
+  record 120) taken as physics over convention: a left-handed product
+  leaves against the parent's axis (Wu's side), the strict hemisphere,
+  the hand's home on the family. Under the owner's standing principle the
+  GameBoard gets the generic mechanism only ([BEAM_LAW note 39](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+  one column on the row, one axial record on the body, one sign of an
+  inner product at a birth, one filter on a table entry) and parity
+  violation is compared with detector readings only: the mirror image of
+  the apparatus with the same left-handed catalog.
+- **Model prediction, pinned before the runs
+  ([the expectations](../examples/events/hand/README.md#the-expectations-pinned-before-the-runs)).**
+  `w_hand` (the W world with a second proton, the W family `hand` -1, the
+  neutron's `axis` -x, both protons filtering `hand` -1): the W born at
+  tick 8 on +x against the axis (the product `[["w", 1, 3, [1, 0, 0],
+  -1]]`, the recoil (-192, 0, 0)), clicked at the proton at x = 3 at tick
+  9 with the push (192, 0, 0) and `hand` -1, the proton at x = 1 taking
+  nothing, the border 0, the charge line [14688, 1] (two protons; the
+  design's table wrote 7344, one proton's), the books `left` 1, `right`
+  0; `w_two_sides` (the control, no axis, no hand): the one W unit sent by
+  the tie of the apportioning at the clock age 7 to the second declared
+  direction, -x, the click at x = 1 (the design read the clock age as 8
+  and pinned x = 3; the engine's documented tie, at - 1, was read before
+  the run); `wu` (Wu's bar of 17, the neutron at x = 8 with the axis +x,
+  `beta` left-handed and `nubar` right-handed): the beta on -x against
+  the axis, clicked at the reader at x = 0 at tick 21 (`hand` -1), the
+  antineutrino on +x out of `face:+x` at tick 23 (`hand` +1), the recoil
+  (128, 0, 0), the reader at x = 16 taking nothing; `nu_hand` (J2's bar
+  with `nu` left-handed, readers admitting the right hand at x = 8 and
+  the left at x = 9): 0 / 1022 / 0 clicks, `left` 1022. The parity test:
+  `w_hand` different by the click's side alone, `w_two_sides` equal, `wu`
+  different (the click at x = 16, the face -x), `nu_hand` equal; the
+  full mirror and a proper rotation equal on all four.
+- **Run.** `examples/events/hand/` (the four worlds written by
+  `make_worlds.py`, the model ids `beam-hand-<name>-v1`), 2026-09-20,
+  through `tools/run_series.py`; the parity test as `tests/test_hand.py`
+  (d), two runs of one world compared, no number of the world pinned.
+- **Result.** Every reading inside its pin: `w_hand` the `become` line
+  `[["w", 1, 3, [1, 0, 0], -1]]` with the recoil [-192, 0, 0], the click
+  at tick 9 at measured 3 with the push [192, 0, 0] and `hand` -1, the
+  proton at x = 1 nothing, the border 0, the charge line [14688, 1] at
+  every tick, `left` 1, `right` 0; `w_two_sides` the click at measured 1
+  at tick 9 with the push [-192, 0, 0], no `hand` on any line; `wu` the
+  beta's click at x = 0 at tick 21 with `hand` -1 and the push [-192, 0,
+  0], the antineutrino through `face:+x` at tick 23 with `hand` +1, the
+  recoil [128, 0, 0], the charge line [0, 1]; `nu_hand` 0 clicks and 1024
+  passes (`hand` -1) at x = 8, 1022 clicks at x = 9, 0 at the far
+  detector, `left` 1022. One reading outside its written form and inside
+  its physics: the antineutrino's passage at Wu's far reader writes no
+  `pass` line (a `pass` rule never writes one, in every registered world
+  too; the design's 3.4 expected a line), the passage shown by the face
+  click at tick 23 as pinned. The parity test as pinned on all four, the
+  full mirror and the rotation equal on all four (`tests/test_hand.py`).
+
+  | World | Reading | Expected | Measured | Verdict |
+  | --- | --- | --- | --- | --- |
+  | `w_hand` | the W's click | measured 3, tick 9, push (192, 0, 0), hand -1; measured 1 nothing; border 0 (DETECTOR) | as expected | inside |
+  | `w_hand` | the `become` line | [["w", 1, 3, [1, 0, 0], -1]], recoil (-192, 0, 0) (GAMEBOARD) | as expected | inside |
+  | `w_hand` | under the mirror | the click at measured 1, push (-192, 0, 0); the rest equal | as expected | inside (different, as pinned) |
+  | `w_two_sides` | the W's click; under the mirror | measured 1, tick 9 (the tie at the clock age 7); equal | as expected | inside |
+  | `wu` | the beta's click; the antineutrino | x = 0, tick 21, hand -1; `face:+x` at tick 23, hand +1 (DETECTOR); the recoil (128, 0, 0) (GAMEBOARD) | as expected; no `pass` line at x = 16 (the rule's record form) | inside (the line's form outside) |
+  | `wu` | under the mirror | the click at x = 16, the face -x | as expected | inside (different, as pinned) |
+  | `nu_hand` | the three readers; under the mirror | 0 / 1022 / 0, `left` 1022; equal | as expected | inside |
+- **Registered as the law's own predictions (against nature):** the
+  asymmetry is complete (one direction admitted among the six; nature's
+  is a cosine of the angle to the spin, sized by the electron's speed);
+  no spin dynamics and no angular-momentum ledger (the axis fixed); the
+  helicity of circular light kept at a mirror (nature reverses it at
+  normal incidence); no V-A energy dependence; no CP.
 
 ### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
 

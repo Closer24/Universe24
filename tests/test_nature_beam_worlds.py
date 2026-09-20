@@ -280,8 +280,11 @@ def test_one_content_streams_outward_with_the_books_closed():
     "name", ["one_content.json", "two_contents.json", "two_slits.json", "one_slit.json"]
 )
 def test_the_example_worlds_parse_as_nature_beam_worlds(name):
-    document = json.loads((ROOT / "examples" / "events" / name).read_text(encoding="utf-8"))
-    world = parse_nature_beam_world(document)
+    path = ROOT / "examples" / "events" / name
+    document = json.loads(path.read_text(encoding="utf-8"))
+    # Through the loader: a shipped world may reference the family
+    # definitions beside it (2026-09-20).
+    world = load_world(path.read_bytes(), base_dir=path.parent).world
     assert document["law"] == "beam" and world.model_id.startswith("rays-")
 
 
@@ -307,9 +310,8 @@ def test_every_gate_set_world_exists_and_parses_as_a_nature_beam_world():
 
 def test_two_contents_is_not_refused_and_its_face_records_are_exact():
     """(e)."""
-    document = json.loads(
-        (ROOT / "examples" / "events" / "two_contents.json").read_text(encoding="utf-8")
-    )
+    path = ROOT / "examples" / "events" / "two_contents.json"
+    document = json.loads(load_world(path.read_bytes(), base_dir=path.parent).expanded_source)
     records: list[dict[str, object]] = []
     simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
     cosines, sines = phase_cosines(document["N"]), phase_sines(document["N"])
@@ -340,3 +342,14 @@ def test_two_contents_is_not_refused_and_its_face_records_are_exact():
     first, second = simulation.measured[1], simulation.measured[2]
     assert first.pushed[0] > 0 and first.pushed == [-second.pushed[0], 0, 0]
     assert second.pushed[1:] == [0, 0] and first.momentum == first.pushed
+
+
+def test_the_root_worlds_are_the_generators():
+    """The four world files at the root of `examples/events/` equal the
+    documents of `make_worlds.py` beside them (2026-09-20)."""
+    generator = load_script("root_make_worlds", ROOT / "examples" / "events" / "make_worlds.py")
+    documents = generator.worlds()
+    assert set(documents) == {"one_content", "two_contents", "one_slit", "two_slits"}
+    for name, document in documents.items():
+        shipped = (ROOT / "examples" / "events" / f"{name}.json").read_bytes()
+        assert shipped == (json.dumps(document) + "\n").encode("utf-8"), name

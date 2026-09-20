@@ -264,8 +264,11 @@ inline families first, then the instances' in declaration order, a
 differing key refused naming the family and the key); the parser sees one
 ordinary `families` list and applies every rule above to it. The shipped
 definitions are `examples/events/entities/families.json` and
-`apparatus.json`; no registered world references them until the migration
-after stage (vii) of `amplitude-v1`.
+`apparatus.json`; since 2026-09-20 the registered worlds of every series
+but the ones stage (vii) of `amplitude-v1` re-pins reference
+`families.json` (`../entities/families.json`, a climb of one level the
+loader admits), their generators writing the reference in place of the
+families it defines.
 
 ### A release costs the emitter by its phase rate
 
@@ -410,7 +413,36 @@ declares a lamp (`NatureBeamWorld.recorded`); a lamp is refused with N
 below 4 (a record's circle holds the quarter turn of a reflection); a
 world without a lamp reads as it did before the law, byte for byte
 (`tests/test_amplitude_click.py` (d): the gate set's lamp-free worlds at
-their caps against their pinned digests); `directions` (the declared primitive vectors beyond
+their caps against their pinned digests); `doppler` (since 2026-09-20, true or false, false by default: the
+reading's weight at the relative speed `doppler-v1`,
+[BEAM_LAW note 38](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+under it a free measured event reads the rows that arrived at its Node
+for the push with each direction's label flow weighted by the flux of
+its rows through the body, the rate at which it and the message meet,
+one scalar per (direction, body), (|G Q |v|^2 - T_d sum_a s_a w_a v_a|,
+G Q |v|^2) with the body's speed quantised to the grain G = 2^12
+(`SPEED_GRAIN`, a constant of the law) from its own record, off the
+reader's clock per component, before the columns; refused when it is not
+true or false; the static budget of the columns takes the weight's
+largest factor on the table under it (no other load-time bound: the
+registered G2 star worlds fit as registered); the record carries it and
+the identity `doppler-v1` under `hypotheses` when it is true; absent, and
+for every body at rest or held in place, every world reads as it did, byte for byte); the keys of the hand (since 2026-09-20, `hand-v1`,
+[BEAM_LAW note 39](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+`hand`, -1 or +1, on a family (every row born of it carries it), on a
+lamp (a circularly polarised lamp of a family without a hand; a chiral
+family's lamp may repeat the family's value only), on a transit row (a
+row of a family without one) and on a table entry (the parity filter:
+the entry's rule applies to arrivals of that hand only, the rest passed
+as outside a window; refused on `pass`), a third entry per branch of a
+lamp's `branches` (the hand the label means; a family carries its hand as
+the row's column or as a label bit's meaning, never both) and `axis` on
+a measured event (one of the six headings as a vector, the axial record
+the right-hand rule reads at the birth of every product of its
+`become`: a product of hand h leaves only on the event's directions with
+sign(A . u_d) = h, a left-handed product against the axis; an empty set
+refused at load); absent everywhere, no row carries a hand and every
+world reads as it did, byte for byte); `directions` (the declared primitive vectors beyond
 the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`
@@ -695,8 +727,10 @@ the identity of the one mechanism of the columns and their range;
 `weak-v1` when a measured event declares `become` or a table entry's rule
 is `become`, the identity of the transformation; `meeting-v1` when
 `meeting` is true, after it; `amplitude-v1` when a lamp is declared (a
-recorded world), last; `[]`
-without any), `columns` (the
+recorded world); `hand-v1` when a hand or an axis is declared anywhere,
+last; `[]` without any; in a world with a hand every family carries
+its `hand` and every number its `axis`, the heading's vector or None),
+`columns` (the
 world's, name and sign, in order: gravity, charge, the declared names)
 and per family `columns` (name, value, sign, aligned with the world's),
 the books per completed tick (`audit`, the `charge` line the
@@ -764,7 +798,12 @@ electric push being the family's charge per unit of content,
 [BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
 and note 28; a row of a record also its `record`, `branch`,
 `multiplicity` and `u`, written on the rows of a record alone: a row of
-no record carries none). The birth phase u
+no record carries none; in a world that
+declares a hand or an axis (`hand-v1`) also the row's `hand`, written
+only then, and the `click`, `pass`, `read`, `rerelease` and face lines
+carry `hand`, the `become` line's products a fifth entry, the product's
+hand, and the books' measured line per family `left` and `right`, the
+units clicked of each hand). The birth phase u
 is the record's own field beside the running phase (the K finding of
 2026-09-20; stage (vii) step 2): every rule of the GameBoard that reads
 a record row's phase reads the path phase, phase - u (the meeting's
