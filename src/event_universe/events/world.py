@@ -41,8 +41,12 @@ the model owner, 2026-09-19):
   only by a lamp that spends its content: a release costs the emitter
   quantum x s per unit at a self-creation whose turn is s steps, the unit
   carries that content and the momentum quantum x s along its direction,
-  and a click measures it, E = h f), for a free family the whole `charge`
-  of a measured event of it (0 by default; refused on a paid family),
+  and a click measures it, E = h f), for a free family its `charge`, the
+  charge per unit of content, rho, an integer or a pair `[n, d]` (d from
+  1; an integer c is `[c, 1]`; 0 by default; refused on a paid family; the
+  model owner's decision of 2026-09-20, Highlights 5.4: a measured event's
+  charge is rho times its content, and the electric push is one product
+  per arriving free ray, M_A x (rho_A rho_B - 1) x V_B),
   `phase` (true by default; false: the family has no phase circle, its rays
   carry phase 0 and never turn, its measured events never turn, no
   `phase_window` is accepted for it) and `phase_per_link` (an integer
@@ -52,8 +56,7 @@ the model owner, 2026-09-19):
 - `measured`: the measured events at the start, one per Node, each with a
   `position`, its `family`, its `amount` (a positive whole number of units,
   below K x N / 2 for a family with a phase circle), and optionally its
-  `phase`, its whole `charge` (the family's by default), its `momentum`
-  (three integers), `fixed` (true: an apparatus held in place, it takes
+  `phase`, its `momentum` (three integers), `fixed` (true: an apparatus held in place, it takes
   pushes into its momentum and never steps), its `directions` (the
   directions it releases on and re-emits on, as vectors or indices of the
   world's table; the six headings by default), its `table` (family name to
@@ -102,7 +105,11 @@ the model owner, 2026-09-19):
   detector of one Node with the default reading.
 
 Refused, naming the key: `kind` on a family (the quantum decides it),
-`headings` on a lamp (`directions` replaces it),
+`charge` on a measured event (since 2026-09-20 the charge is the family's
+per unit of content, docs/MIGRATION.md), a family `charge` whose
+denominator is 0 or whose parts are not integers, a detector named as a
+face detector is (`face:+x` and the five others), `headings` on a lamp
+(`directions` replaces it),
 `heading` on a ray in transit (`direction` replaces it), `dynamics`,
 `max_active_owners`, `port_map`, `output`, `capacity`, `groups`, a direction
 that is not primitive, a component beyond P, a direction the world does not
@@ -198,12 +205,16 @@ WORLD_KEYS = {
 FAMILY_KEYS = {"name", "quantum", "charge", "phase", "phase_per_link"}
 # The key of the first ray worlds that named the kind; the quantum decides it.
 KIND_KEY = "kind"
+# The key of the ray worlds before 2026-09-20 that gave a measured event its
+# own whole charge; the charge is the family's per unit of content.
+CHARGE_KEY = "charge"
+# The charge per unit of content of a family with none: 0 as the pair [0, 1].
+NO_CHARGE = (0, 1)
 MEASURED_KEYS = {
     "position",
     "family",
     "amount",
     "phase",
-    "charge",
     "momentum",
     "fixed",
     "directions",
@@ -220,6 +231,10 @@ DETECTOR_KEYS = {"name", "positions", "threshold", "reading"}
 DETECTOR_READINGS = ("beam", "wave")
 # The keys of the deleted `reversible-detector-v1`, refused by name.
 REVERSIBLE_KEYS = ("port_map", "output", "capacity", "groups", "reference_phase")
+# The face detectors, one per open face of the board, named by the face in
+# Port order (an open face is a detector, the model owner, 2026-09-19); a
+# declared detector may not take one of these names.
+FACE_NAMES = ("face:+x", "face:-x", "face:+y", "face:-y", "face:+z", "face:-z")
 # The board's faces per axis: open (the default) or periodic (the wrap).
 AXES = ("x", "y", "z")
 BOUNDARIES = ("open", "periodic")
@@ -229,13 +244,16 @@ BOUNDARIES = ("open", "periodic")
 class FamilyDefinition:
     """One family of the world: its name, the content of one unit of it per
     phase step of its emitter's turn (`quantum`, h; 0 for a free family,
-    1 or more for a paid one: the kind is derived, never declared), the
-    whole charge of a measured event of it, whether it has a phase circle
-    and the phase steps its rays turn per Link crossed."""
+    1 or more for a paid one: the kind is derived, never declared), its
+    charge per unit of content (`charge`, rho, the pair (n, d) with d from
+    1: a measured event of the family of content M carries the charge
+    rho x M, and its rays push a charged reader by rho; (0, 1) for a paid
+    family, whose rays push by their content), whether it has a phase
+    circle and the phase steps its rays turn per Link crossed."""
 
     name: str
     quantum: int
-    charge: int = 0
+    charge: tuple[int, int] = NO_CHARGE
     phase: bool = True
     phase_per_link: int = 0
 
@@ -295,16 +313,16 @@ class LampDefinition:
 @dataclass(frozen=True)
 class MeasuredDefinition:
     """One measured event as declared: its Node, its family, its amount, its
-    phase, its whole charge, its momentum, whether it is held in place, the
-    directions it releases and re-emits on, its table per family (in family
-    order) with the phase window and the reading key of each entry, and its
-    lamp."""
+    phase, its momentum, whether it is held in place, the directions it
+    releases and re-emits on, its table per family (in family order) with
+    the phase window and the reading key of each entry, and its lamp. Its
+    charge is its family's charge per unit of content times its content
+    and is not declared."""
 
     position: Address3
     family: int
     amount: int
     phase: int
-    charge: int
     momentum: Vector
     fixed: bool
     directions: tuple[int, ...]
@@ -444,6 +462,23 @@ def _ratio(value: object, label: str, zero: bool) -> tuple[int, int]:
     return numerator, denominator
 
 
+def _signed_ratio(value: object, label: str) -> tuple[int, int]:
+    """A charge per unit of content n / d as an integer c (the pair (c, 1))
+    or as `[n, d]`, n an integer of either sign and d an integer from 1,
+    each within the bound of a declared charge; a denominator of 0 and a
+    part that is not an integer are refused naming the key."""
+    if type(value) is int:
+        return _integer(value, label, -MAX_VALUE, MAX_VALUE), 1
+    if not isinstance(value, list) or len(value) != 2:
+        raise ValueError(
+            f"{RAYS_LAW}: {label} must be an integer or [numerator, denominator], the charge "
+            "per unit of content"
+        )
+    numerator = _integer(value[0], f"{label} numerator", -MAX_VALUE, MAX_VALUE)
+    denominator = _integer(value[1], f"{label} denominator", 1, MAX_VALUE)
+    return numerator, denominator
+
+
 def _address(value: object, label: str, shape: Address3) -> Address3:
     if not isinstance(value, list) or len(value) != 3:
         raise ValueError(f"{RAYS_LAW}: {label} must be three integers")
@@ -552,8 +587,8 @@ def _families(value: object, phase_steps: int) -> tuple[FamilyDefinition, ...]:
         if any(item.name == name for item in found):
             raise ValueError(f"{RAYS_LAW}: two families named {name!r}")
         quantum = _integer(obj["quantum"], f"families[{index}].quantum", FREE_QUANTUM, MAX_VALUE)
-        charge = _integer(obj.get("charge", 0), f"families[{index}].charge", -MAX_VALUE, MAX_VALUE)
-        if quantum != FREE_QUANTUM and charge:
+        charge = _signed_ratio(obj.get("charge", 0), f"families[{index}].charge")
+        if quantum != FREE_QUANTUM and charge[0]:
             raise ValueError(f"{RAYS_LAW}: a paid family (quantum {quantum}) carries no charge ({name})")
         phase = obj.get("phase", True)
         if type(phase) is not bool:
@@ -676,6 +711,12 @@ def _measured(
     found: list[MeasuredDefinition] = []
     for index, entry in enumerate(value):
         label = f"measured[{index}]"
+        if isinstance(entry, dict) and CHARGE_KEY in entry:
+            raise ValueError(
+                f"{RAYS_LAW}: {label} declares {CHARGE_KEY}, a key removed on 2026-09-20: the "
+                "charge of a measured event is its family's charge per unit of content times "
+                "its content (the family's `charge`, an integer or [n, d]); see docs/MIGRATION.md"
+            )
         obj = _object(entry, label, MEASURED_KEYS, {"position", "family", "amount"})
         position = _address(obj["position"], f"{label}.position", shape)
         if any(item.position == position for item in found):
@@ -693,11 +734,6 @@ def _measured(
             )
         # A measured event of a family without a phase circle has phase 0.
         phase = _integer(obj.get("phase", 0), f"{label}.phase", 0, phase_steps - 1 if phased else 0)
-        charge = _integer(
-            obj.get("charge", families[family].charge), f"{label}.charge", -MAX_VALUE, MAX_VALUE
-        )
-        if not families[family].free and charge:
-            raise ValueError(f"{RAYS_LAW}: {label}: a measured event of a paid family carries no charge")
         momentum_value = obj.get("momentum", [0, 0, 0])
         if not isinstance(momentum_value, list) or len(momentum_value) != 3:
             raise ValueError(f"{RAYS_LAW}: {label}.momentum must be three integers")
@@ -754,7 +790,6 @@ def _measured(
                 family,
                 amount,
                 phase,
-                charge,
                 (momentum[0], momentum[1], momentum[2]),
                 fixed,
                 directions,
@@ -825,6 +860,11 @@ def _detectors(
             raise ValueError(f"{RAYS_LAW}: {label}.name must be a nonempty string")
         if any(item.name == name for item in found):
             raise ValueError(f"{RAYS_LAW}: two detectors named {name!r}")
+        if name in FACE_NAMES:
+            raise ValueError(
+                f"{RAYS_LAW}: {label}.name {name!r} is the name of a face detector (an open face "
+                "of the board is a detector of that name; declare another)"
+            )
         positions_value = obj["positions"]
         if not isinstance(positions_value, list) or not positions_value:
             raise ValueError(f"{RAYS_LAW}: {label}.positions must be a nonempty list of Nodes")

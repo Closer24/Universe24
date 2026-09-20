@@ -49,9 +49,8 @@ momentum; no merge. Re-pinned from `test_event_clock`,
 
 from __future__ import annotations
 
-from event_universe.core.integer import apportion_whole
+from event_universe.core.integer import apportion_whole, by_clock
 from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.engine import by_clock
 
 M, LIGHT = 0, 1
 

@@ -45,7 +45,7 @@ from __future__ import annotations
 
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.engine import FACE_NAMES
+from event_universe.events.world import FACE_NAMES
 
 M, LIGHT = 0, 1
 FAMILIES = [{"name": "m", "quantum": 0}, {"name": "light", "quantum": 1}]

@@ -40,17 +40,21 @@ order, each a bijection on the board's state except the border:
    rays with their amplitudes as weights, an exact integer: a report of
    the host, never refused), `rerelease` (re-emitted at the next self-creation on the
    declared directions), `pass`; own-number rays are home. The push is ONE
-   bilinear form over the arriving rays, `push_A = sum kappa(A, B) . V_B`
-   with `V_B` the label moment of the rays (the vector moment of
-   `read_arrivals` with the labels as weights) and `kappa` = -M_A for a
-   free family's ray (gravity), + q_A x q_B / M_B for a charged one
-   (electricity, the whole part off the reader's clock), + 1 for a paid
-   ray (its label already carries h s); the emitter's factor (q_B, M_B)
-   travels on the ray's record, nothing is looked up by number;
+   product per arriving free ray (`push_form`, the model owner's decision
+   of 2026-09-20: charge is per unit of content of a family, rho): with
+   `V_B` the label moment of the rays (the vector moment of
+   `read_arrivals` with the labels as weights), M_A the reader's content
+   as the frame read it and rho_A, rho_B the families' charges per unit
+   of content, `push_A = M_A x (rho_A rho_B - 1) x V_B` for a free
+   family's rays (gravity -M_A V_B and electricity rho_A rho_B M_A V_B,
+   the latter the whole part off the reader's clock by the declared
+   pairs, `sign x by_clock(age_A, |V n_A n_B M_A|, d_A d_B)`), and
+   `push_A = V_B` for a paid family's rays (their label already carries
+   h s); every input is the reader's or the arriving family's key,
+   nothing is looked up by number and the record carries no factor;
 5. the self-creations: the free release, what came home or is re-released
    apportioned whole over the declared directions, the lamp's release at
-   its rate, every new ray at age 0 with its emitter's number and, for a
-   free family, its emitter's charge and content at birth;
+   its rate, every new ray at age 0 with its emitter's number;
 6. merge identical rows and sort by Node.
 
 Every momentum the law reads or moves is the one label of the rows,
@@ -82,8 +86,9 @@ import numpy as np
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
 from event_universe.core.lattice import PORT_HEADINGS, Address3
 from event_universe.core.phase import phase_cosines, phase_sines
-from event_universe.events.measured import FACE_NAMES, Ledger, Measured
+from event_universe.events.measured import Ledger, Measured
 from event_universe.events.world import (
+    FACE_NAMES,
     FIXED_DIRECTIONS,
     HEADING_OFFSET,
     LABEL_SCALE,
@@ -139,10 +144,11 @@ class NatureBeam:
     """The record of a ray: its Node, its direction (an index of the world's
     table), its age (the flight phase, modulo the direction's period), its
     phase (a step of the circle), its number (the last emitter), its amount
-    (whole units), the content one unit carries and, for a free family's
-    ray, its emitter's charge and content at birth (`charge`, `mass`: the
-    emitter's factor of the electric push, carried on the record; 0 and 0
-    on a paid family's ray, whose factor is its content)."""
+    (whole units) and the content one unit carries. Nothing else: the
+    family (the store it is in) suffices for the electric push, whose
+    factor is the family's charge per unit of content (the model owner,
+    2026-09-20; until then a free family's ray carried its emitter's charge
+    and content at birth)."""
 
     node: Address3
     direction: int
@@ -151,8 +157,17 @@ class NatureBeam:
     number: int
     amount: int
     content: int
-    charge: int = 0
-    mass: int = 0
+
+    def record(self, vectors: np.ndarray) -> dict[str, object]:
+        """The row as `state.json` writes it, the direction as its vector."""
+        return {
+            "direction": [int(v) for v in vectors[self.direction]],
+            "age": self.age,
+            "phase": self.phase,
+            "number": self.number,
+            "amount": self.amount,
+            "content": self.content,
+        }
 
 
 # -- the one reading: the moments ------------------------------------------------
@@ -486,20 +501,9 @@ def ray_tables(world: RayWorld) -> RayTables:
 
 # -- the store -------------------------------------------------------------------
 
-FIELDS = (
-    "node",
-    "direction",
-    "age",
-    "phase",
-    "number",
-    "amount",
-    "content",
-    "charge",
-    "mass",
-    "arrival",
-)
+FIELDS = ("node", "direction", "age", "phase", "number", "amount", "content", "arrival")
 # The fields that make two rows identical (the amount is what the merge adds).
-IDENTITY_FIELDS = ("node", "direction", "age", "phase", "number", "content", "charge", "mass")
+IDENTITY_FIELDS = ("node", "direction", "age", "phase", "number", "content")
 
 
 def exact_sum(values: np.ndarray) -> int:
@@ -694,13 +698,10 @@ def pointer_phases(
 class RayStore:
     """The records of one family as a structure of arrays, one row per
     record: `node` the flat index, `direction`, `age`, `phase`, `number`,
-    `amount`, `content` (per unit), `charge` and `mass` (the emitter's
-    charge and content at the ray's birth for a free family, the factor of
-    the electric push carried on the record; 0 and 0 for a paid family) and
-    `arrival`, the direction the ray arrived on this interval (its
-    direction at the walk; the reading is of the arrivals) or `HERE` for a
-    ray that did not step. Rows sorted by `node` after every interval;
-    identical rows merged."""
+    `amount`, `content` (per unit) and `arrival`, the direction the ray
+    arrived on this interval (its direction at the walk; the reading is of
+    the arrivals) or `HERE` for a ray that did not step. Rows sorted by
+    `node` after every interval; identical rows merged."""
 
     def __init__(self, shape: Address3) -> None:
         self.shape = shape
@@ -714,8 +715,6 @@ class RayStore:
         self.number: np.ndarray
         self.amount: np.ndarray
         self.content: np.ndarray
-        self.charge: np.ndarray
-        self.mass: np.ndarray
         self.arrival: np.ndarray
 
     @property
@@ -811,21 +810,22 @@ class RayStore:
         hi = int(np.searchsorted(self.node, flat, side="right"))
         return lo, hi
 
-    def rows(self) -> list[NatureBeam]:
-        x, y, z = self.coordinates(self.node)
+    def rows(self, lo: int = 0, hi: int | None = None) -> list[NatureBeam]:
+        """The records of the rows `lo` to `hi` (every row by default): the
+        one materialization of a ray's record (`NatureBeam`)."""
+        stop = self.size if hi is None else hi
+        x, y, z = self.coordinates(self.node[lo:stop])
         return [
             NatureBeam(
-                (int(x[i]), int(y[i]), int(z[i])),
+                (int(x[k]), int(y[k]), int(z[k])),
                 int(self.direction[i]),
                 int(self.age[i]),
                 int(self.phase[i]),
                 int(self.number[i]),
                 int(self.amount[i]),
                 int(self.content[i]),
-                int(self.charge[i]),
-                int(self.mass[i]),
             )
-            for i in range(self.size)
+            for k, i in enumerate(range(lo, stop))
         ]
 
     def labels(self, rows: np.ndarray, unit: np.ndarray, free: bool) -> np.ndarray:
@@ -1114,7 +1114,6 @@ class FamilyPlan:
     g_content: list[int] = field(default_factory=list)
     g_moment: list[list[int]] = field(default_factory=list)
     readings: dict[str, list[object]] = field(default_factory=dict)
-    classes: dict[int, list[tuple[int, int, list[int]]]] = field(default_factory=dict)
     t_amount: list[int] = field(default_factory=list)
     t_content: list[int] = field(default_factory=list)
     t_phase: list[int] = field(default_factory=list)
@@ -1131,6 +1130,52 @@ class FamilyPlan:
     # The label sum of the rows that leave the store this interval (the
     # home rows and the rows a table absorbs): off the running transit line.
     left_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
+
+
+# -- the push -------------------------------------------------------------------
+
+
+def push_form(
+    free: bool,
+    moment: list[int],
+    content: int,
+    reader: tuple[int, int],
+    emitter: tuple[int, int],
+    age: int,
+    entry: Measured,
+) -> list[int]:
+    """The push a measured event A takes from one group of arriving rays,
+    ONE product per arriving free ray (the model owner's decision of
+    2026-09-20, Highlights 5.4: charge is per unit of content of a
+    family): `moment` is V_B, the label moment of the group (Python
+    integers, exact), `content` M_A the reader's content as the frame
+    read it, `reader` rho_A = (n_A, d_A) and `emitter` rho_B = (n_B, d_B)
+    the two families' charges per unit of content, `age` the reader's age
+    after the frame's advance. For a free family's rays
+
+        push_A = M_A x (rho_A rho_B - 1) x V_B,
+
+    formed in integers as the gravity -M_A V_B plus the electric part
+    taken as the whole part off the reader's clock by the declared pairs,
+    per axis `sign(V n_A n_B) x by_clock(age_A, |V x n_A n_B x M_A|,
+    d_A d_B)`, which equals the earlier `sign x by_clock(age_A, |V q_A
+    q_B|, M_B)` integer by integer wherever q_A = rho_A M_A and q_B =
+    rho_B M_B were integers (the same rational, floored at the same
+    clock); no zero divisor can arise (d_A d_B >= 1). For a paid family's
+    rays the push is V_B itself (kappa = 1, the label carries h s). Every
+    quantity is bounded before it is assigned (`bounded`)."""
+    if not free:
+        return [bounded(moment[axis], entry, "push") for axis in range(3)]
+    push = [bounded(-moment[axis] * content, entry, "push") for axis in range(3)]
+    n_a, d_a = reader
+    n_b, d_b = emitter
+    if n_a and n_b:
+        denominator = d_a * d_b
+        for axis in range(3):
+            total = bounded(moment[axis] * n_a * n_b * content, entry, "electric push")
+            whole = by_clock(age, abs(total), denominator)
+            push[axis] = bounded(push[axis] + (-whole if total < 0 else whole), entry, "push")
+    return push
 
 
 # -- the law ---------------------------------------------------------------------
@@ -1152,6 +1197,7 @@ def nature_beam(
     on a board without measured events; the border has no inverse."""
     families = world.families
     free_of = [definition.free for definition in families]
+    rho_of = [definition.charge for definition in families]
     flight, collision = tables.flight, tables.collision
     # The unit vectors of the directions at the scale Q: what every label
     # and every vector or tensor moment of the reading is taken on.
@@ -1366,7 +1412,6 @@ def nature_beam(
     if events:
         count = len(families)
         ev_number = np.array([e.number for e in entries], dtype=np.int64)
-        ev_charge = np.array([e.charge for e in entries], dtype=np.int64)
         ev_rule = np.array([[RULE_CODES[r] for r in e.table] for e in entries], dtype=np.int64)
         ev_window = np.array(
             [[-1 if w is None else w for w in e.windows] for e in entries], dtype=np.int64
@@ -1599,11 +1644,10 @@ def nature_beam(
             )
             for key in {entries[e].reads[family] for e in set(g_ev.tolist())}:
                 plan.readings[key] = reading.component(key).tolist()
-            # The push, ONE bilinear form over the rows: the label moment per
-            # group (the weights bounded before the product), and per
-            # (charge, mass) class of the charged rows a charged reader met,
-            # in the order of first appearance, the part the electric push
-            # reads off the clock.
+            # The push, ONE product per group of arriving rays (`push_form`):
+            # the label moment per group, the weights bounded before the
+            # product; the electric factor is the family's charge per unit
+            # of content, so no class of rows is kept.
             overflow = first_label_overflow(
                 of_row, a_t, c_t, free, v_direction, lambda i: entries[int(ev_t[i])].position
             )
@@ -1615,20 +1659,6 @@ def nature_beam(
                 fail(overflow[0], 4, overflow[1])
             labels = v_direction * weights[:, None]
             plan.g_moment = np.add.reduceat(labels, g_starts, axis=0).tolist()
-            if free:
-                charge_t, mass_t = store.charge[at[taken]], store.mass[at[taken]]
-                electric = np.flatnonzero((charge_t != 0) & (ev_charge[ev_t] != 0))
-                if electric.shape[0]:
-                    keys = np.stack([of_row[electric], charge_t[electric], mass_t[electric]], axis=1)
-                    unique, first, inverse = np.unique(
-                        keys, axis=0, return_index=True, return_inverse=True
-                    )
-                    parts = np.zeros((unique.shape[0], DIMENSIONS), dtype=np.int64)
-                    np.add.at(parts, inverse.reshape(-1), labels[electric])
-                    unique_list, parts_list = unique.tolist(), parts.tolist()
-                    for c in np.lexsort((first, unique[:, 0])).tolist():
-                        group, charge, mass = unique_list[c]
-                        plan.classes.setdefault(group, []).append((charge, mass, parts_list[c]))
             carried_t = a_t * c_t
             plan.g_number = num_t[g_starts].tolist()
             plan.g_start = g_starts.tolist()
@@ -1796,31 +1826,22 @@ def nature_beam(
                             for stage in (2, 3, 4):
                                 refuse((i, family, 1, gi - span[0], stage))
                         other = plan.g_number[gi]
-                        moment = plan.g_moment[gi]
-                        if free:
-                            # M_A is the content the frame read at the start of
-                            # the interval (`frame_content`), the same for every
-                            # family's rays whatever the family order: a click
-                            # of this interval joins `held` and is read by the
-                            # next frame (the orchestrator's D1, 2026-09-20).
-                            push = [
-                                bounded(-moment[axis] * entry.frame_content, entry, "push")
-                                for axis in range(3)
-                            ]
-                            if entry.charge:
-                                for charge, mass, part in plan.classes.get(gi, ()):
-                                    for axis in range(3):
-                                        total = bounded(
-                                            part[axis] * entry.charge * charge, entry, "electric push"
-                                        )
-                                        whole = by_clock(entry.age, abs(total), mass)
-                                        push[axis] = bounded(
-                                            push[axis] + (-whole if total < 0 else whole),
-                                            entry,
-                                            "push",
-                                        )
-                        else:
-                            push = [bounded(moment[axis], entry, "push") for axis in range(3)]
+                        # M_A is the content the frame read at the start of the
+                        # interval (`frame_content`), the same for every family's
+                        # rays whatever the family order: a click of this
+                        # interval joins `held` and is read by the next frame
+                        # (the orchestrator's D1, 2026-09-20); rho_A the reader's
+                        # family's charge per unit of content, rho_B the
+                        # arriving family's.
+                        push = push_form(
+                            free,
+                            plan.g_moment[gi],
+                            entry.frame_content,
+                            entry.rho,
+                            rho_of[family],
+                            entry.age,
+                            entry,
+                        )
                         entry.momentum = [
                             bounded(a + b, entry, "momentum")
                             for a, b in zip(entry.momentum, push, strict=True)
@@ -1959,10 +1980,6 @@ def nature_beam(
             definition = families[family]
             free = free_of[family]
             born: list[tuple[int, int, int, int]] = []  # (direction, amount, content, phase)
-            # The emitter's factor a free family's ray carries from birth:
-            # its charge and the content the release rate reads (its held
-            # content of the family at this self-creation).
-            charge, mass = (entry.charge, entry.held[family]) if free else (0, 0)
             if free and entry.held[family] > 0:
                 amount = by_clock(age, entry.held[family] * numerator, denominator_release)
                 if amount:
@@ -2025,8 +2042,6 @@ def nature_beam(
                 number=np.full(count, entry.number, dtype=np.int64),
                 amount=amount_column,
                 content=content_column,
-                charge=np.full(count, charge, dtype=np.int64),
-                mass=np.full(count, mass, dtype=np.int64),
                 arrival=np.full(count, HERE, dtype=np.int64),
             )
             ledger.transit_released[family] += int(exact_sum(amount_column))

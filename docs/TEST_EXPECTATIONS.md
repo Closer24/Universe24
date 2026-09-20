@@ -147,8 +147,10 @@ derived from `quantum`).
   naming the removal of 2026-09-19 and docs/MIGRATION.md for the values
   `free`, `paid` and `other`; a family without `quantum` is refused naming
   the key; a negative quantum is refused; a charge on a paid family is
-  refused naming its quantum; a charge on a free family and a lamp on a
-  paid family are accepted, and a lamp on a free family is refused.
+  refused naming its quantum; a charge on a free family (-3 parsed as the
+  pair (-3, 1), [1, 2] as (1, 2); since 2026-09-20 the charge per unit of
+  content, no `charge` on the measured event) and a lamp on a paid family
+  are accepted, and a lamp on a free family is refused.
 - (d) the example worlds: every world of `examples/events/` (the ten Bell
   and twenty-one coupling worlds, the four top-level worlds, the four
   detector worlds through the entity loader) parses equal, field by field,
@@ -234,13 +236,15 @@ least one ray on the way.
 
 The merge (step 6; added 2026-09-19 with the optimizations of RAY_LAW
 section 10, note 22): 82 fixed rows (60 distinct over 200 Nodes, 10
-directions, 23 ages, the circle, 3 numbers, 3 contents, charges 0 and -1,
-5 masses; 20 of them repeated; two extremes) merged by the packed key of
-the identity fields equal the Python sort of the identity tuples with the
-amounts of equal tuples added, 62 rows, every arrival reset to here; the
-same rows with every other mass raised by 2^61 (the key does not fit the
-register, `merge_key` is None) merged by the lexsort fallback equal their
-Python sort likewise; the empty store merges to the empty store.
+directions, 23 ages, the circle, 3 numbers, 3 contents; 20 of them
+repeated; two extremes; since 2026-09-20 the identity is the six fields
+node, direction, age, phase, number, content, the columns `charge` and
+`mass` being gone) merged by the packed key of the identity fields equal
+the Python sort of the identity tuples with the amounts of equal tuples
+added, 62 rows, every arrival reset to here; the same rows with every
+other content raised by 2^61 (the key does not fit the register,
+`merge_key` is None) merged by the lexsort fallback equal their Python
+sort likewise; the empty store merges to the empty store.
 
 ## The books
 
@@ -376,38 +380,53 @@ declares the reading `wave` (since 2026-09-19 the default is `beam`).
 ## The push as one form
 
 `tests/test_ray_push.py` (docs/RAY_LAW.md, section 3 step 4, section 5 and
-section 10 notes 18 to 20; the model owner's proposal 2 of 2026-09-19 with
-the physics-rule reviewer's two corrections): push_A = sum kappa(A, B) . V_B
-with V_B the label moment of the arriving rays and kappa = -M_A (a free
-family's ray), + q_A x q_B / M_B (a charged one, the whole part off the
-reader's clock, sign x by_clock(age_A, |V q_A q_B|, M_B)), + 1 (a paid
-ray); the emitter's factor (q_B, M_B) on the record from birth; every
-momentum the law reads or moves the one label. K 2^20, N 64, `suspension`
-0, `m` free and `light` paid, every measured event `fixed`, a 12 x 1 x 1 bar
-with y and z periodic unless said otherwise. Re-pinned on 2026-09-19 for
-the label along the unit vector ([RAY_LAW note 23](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+section 10 notes 18 to 20 and 27; the model owner's proposal 2 of
+2026-09-19 with the physics-rule reviewer's two corrections, and the
+decision of 2026-09-20 that charge is per unit of content of a family):
+for a free family's rays ONE product, push_A = M_A x (rho_A rho_B - 1) x
+V_B, with V_B the label moment of the arriving rays, M_A the reader's
+content as the frame read it and rho_A, rho_B the families' charges per
+unit of content as the pairs [n, d] (the gravity -M_A V_B plus the
+electric part off the reader's clock, sign x by_clock(age_A, |V n_A n_B
+M_A|, d_A d_B)); for a paid family's rays V_B itself; nothing on the
+record but the number; every momentum the law reads or moves the one
+label. K 2^20, N 64, `suspension` 0, the free families `m` (the source's)
+and `p` (the probe's, a second family since 2026-09-20: one charge per
+unit of content is one family, and the reviewer's world gives the source
+and the probe different ratios) and `light` paid, every measured event
+`fixed`, a 12 x 1 x 1 bar with y and z periodic unless said otherwise.
+Re-pinned on 2026-09-19 for the label along the unit vector ([RAY_LAW note 23](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
 every integer of the six-heading cases is the first pin times 64 (the
 label of a unit along a heading is 64 e_d), the fan cases read u_(2, 1, 0)
-= (57, 29, 0); the first pins are named in brackets.
+= (57, 29, 0); the first pins are named in brackets. Re-pinned on
+2026-09-20 for the charge per unit of content: the whole charges of the
+fixtures become the same numbers as pairs (a source of content 4 and
+charge 3 is the family `m` of charge [3, 4]; a probe of content 5 and
+charge 1 the family `p` of charge [1, 5]) and every integer is unchanged.
 
-- (a) the reviewer's isolated world: a source of content 4 and charge 3 at
-  x = 0 releasing on +X at `release` [1, 1] (4 rays per interval, one row of
-  amount 4), a probe of content 5 and charge 1 at x = 6; on (1, 0, 0) a ray
-  born at tick t is at x = 6 at tick t + 10, so the probe reads one row of
-  amount 4 at every tick 11 through 30: 20 `read` records, each the label
-  moment V = 4 x 64 = 256 and the push -5 V + by_clock(age, 3 V, 4) =
-  -1280 + 192 = (-1088, 0, 0) [was (-17, 0, 0)], `pushed` (-21760, 0, 0)
-  [was (-340, 0, 0)] (64 x 80 x (-5 + 3/4) exactly); the record's `mass`
-  4 and `charge` 3.
-- (b) the sign (the source's charge -3): every push (-1472, 0, 0) [was
-  (-23, 0, 0)], `pushed` (-29440, 0, 0) [was (-460, 0, 0)]. (c) An
-  uncharged probe: every push (-1280, 0, 0) [was (-20, 0, 0)], `pushed`
-  (-25600, 0, 0) [was (-400, 0, 0)].
-- (d) q_A q_B = M_B with M_A = 1 (the series 7 cancellation): the probe of
-  content 1 and charge 2, the source of charge 2 and content 4: every push
-  -256 + by_clock(age, 1024, 4) = 0 exactly, `pushed` (0, 0, 0).
+- (a) the reviewer's isolated world: a source of content 4 and charge 3
+  (`m`, [3, 4]) at x = 0 releasing on +X at `release` [1, 1] (4 rays per
+  interval, one row of amount 4), a probe of content 5 and charge 1 (`p`,
+  [1, 5]) at x = 6; on (1, 0, 0) a ray born at tick t is at x = 6 at tick
+  t + 10, so the probe reads one row of amount 4 at every tick 11 through
+  30: 20 `read` records, each the label moment V = 4 x 64 = 256 and the
+  push -5 V + by_clock(age, 3 V, 4) = -1280 + 192 = (-1088, 0, 0) [was
+  (-17, 0, 0)], the same integer as by_clock(age, |256 x 3 x 1 x 5|, 4 x
+  5) = by_clock(age, 3840, 20), `pushed` (-21760, 0, 0) [was (-340, 0, 0)]
+  (64 x 80 x (-5 + 3/4) exactly); the store's columns are the seven of
+  the record (no `charge`, no `mass`); the source's `charge` reads (3, 1)
+  and the probe's (1, 1).
+- (b) the sign (the source's charge -3, [-3, 4]): every push (-1472, 0, 0)
+  [was (-23, 0, 0)], `pushed` (-29440, 0, 0) [was (-460, 0, 0)]. (c) An
+  uncharged probe (charge 0): every push (-1280, 0, 0) [was (-20, 0, 0)],
+  `pushed` (-25600, 0, 0) [was (-400, 0, 0)].
+- (d) rho_A rho_B = 1 (the series 7 cancellation): the probe of content 1
+  and charge 2 ([2, 1]), the source of charge 2 and content 4 ([1, 2]):
+  every push -256 + by_clock(age, 256 x 2 x 1 x 1, 2) = 0 exactly,
+  `pushed` (0, 0, 0).
 - (e) the fractional floor (the reviewer's F6): `release` [1, 2] gives
-  V = 128, |V q_A q_B| = 384, and by_clock(t, 384, 4) is 96 at every tick
+  V = 128, |V n_A n_B M_A| = 1920 over d_A d_B = 20 (3 V / 4 = 96 as
+  before), and by_clock(t, 1920, 20) = by_clock(t, 384, 4) is 96 at every tick
   t (the floor resolves 1 / Q per unit; on labels of length 1 it was 2 at
   odd t and 1 at even t, 30 over the twenty ticks); over the ticks 11
   through 30 the electric part sums to 1920 and the gravity to -12800:
@@ -437,12 +456,11 @@ label of a unit along a heading is 64 e_d), the fan cases read u_(2, 1, 0)
   before and after; a paid ray coming home on a periodic 4 x 1 x 1 bar:
   the `home` record's `push` is its label (64, 0, 0) [was (1, 0, 0)] and
   the emitter's momentum (0, 0, 0) after the re-creation.
-- (i) the factor is read off the rows met (added 2026-09-19 with the bulk
-  step 4): the world of (a) with two bystander rays of the probe's number
-  (charge 1, mass 5 on their record) parked on the stub of the y axis at
-  x = 2 and 3, rows before the probe's in the store: every push
-  (-1088, 0, 0) and `pushed` (-21760, 0, 0) as in (a), the bystanders
-  untouched.
+- (i) the rows met decide (added 2026-09-19 with the bulk step 4): the
+  world of (a) with two bystander rays of the probe's number and family
+  parked on the stub of the y axis at x = 2 and 3, rows before the probe's
+  in the store: every push (-1088, 0, 0) and `pushed` (-21760, 0, 0) as in
+  (a), the bystanders untouched.
 - (j) M_A is the content the frame read (the architect's B3, the
   orchestrator's D1, 2026-09-20; [RAY_LAW note 26](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
   a 13 x 1 x 1 bar (y, z periodic), K 1024, `release` [1, 1], the
@@ -458,6 +476,28 @@ label of a unit along a heading is 64 e_d), the fan cases read u_(2, 1, 0)
   [B, A] read (-1536, 0, 0) at tick 11 and (-378432, 0, 0) before the
   pin]. No other pin moves: no registered world has a paid click and a
   free read at one reader in one interval.
+- (k) a re-emitted free ray is its family's ray (the architect's B2, the
+  orchestrator's D2, 2026-09-20; [RAY_LAW note 27](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  a source of the free family B (content 4, charge [1, 4]) at x = 0
+  releasing on +X, a mirror of the free family A (content 4, charge
+  [1, 5], `table` {"B": "rerelease"}, `directions` [+X]) at x = 4, a
+  reader of A (content 5) at x = 8: the reader reads number 2's rays of
+  the family B at every tick 15 through 30 (16 reads, amount 4) with the
+  push -1280 + by_clock(age, |256 x 1 x 1 x 5|, 5 x 4) = -1280 + 64 =
+  (-1216, 0, 0) (the ray's family's rho 1/4; the re-emitter's 1/5 would
+  read 51 or 52), and the mirror's own free release of A under the
+  family A from tick 8 with -1280 + by_clock(age, 1280, 25); no error
+  (until 2026-09-20 the re-emitted rows carried the re-emitter's held
+  content of B, 0, and the charged reader divided by it); the mirror
+  re-released 92 units and is pushed; the mirror's `charge` (4, 5), the
+  reader's (1, 1).
+- (l) the equivalence principle for the electric push (the model owner,
+  2026-09-20): the source of `m` (content 4, charge [1, 4]) and a probe of
+  `p` (charge [2, 1]) of content M = 1, 4, 16: the electric part
+  by_clock(age, 256 x 1 x 2 x M, 4) = 128 M exactly and the gravity -256
+  M, so every read pushes (-128 M, 0, 0), `pushed` (-2560, 0, 0),
+  (-10240, 0, 0), (-40960, 0, 0) after 20 reads; the probe's `charge`
+  (2 M, 1) and the books' `charge` [2 M + 1, 1].
 
 ## The re-emission
 
@@ -639,8 +679,12 @@ re-pinned from `test_event_worlds` (e) and
   power of two, a detector on a Node without a measured event, a Node in
   two detectors, `kind` on a family (naming MIGRATION: the quantum decides
   the kind), a family without `quantum`, a negative quantum, a charge on a
-  paid family, a `suspension` denominator of 0, a window for a family
-  without a phase circle.
+  paid family, `charge` on a measured event (naming the removal of
+  2026-09-20 and MIGRATION), a family `charge` of [1, 0] (the denominator
+  from 1), [1.5, 2] (the numerator an integer), "1/2" and [1, 2, 3] (an
+  integer or [numerator, denominator]), a detector named `face:+x` (the
+  name of a face detector), a `suspension` denominator of 0, a window for
+  a family without a phase circle.
 - (b) accepted: the direction table of a world with `directions`
   [[1, 1, 0]] is the two rest vectors, the six headings and (1, 1, 0); a
   measured event's `directions` by vector or by index; a ray at rest (index

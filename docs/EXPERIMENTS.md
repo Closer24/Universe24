@@ -1136,6 +1136,28 @@ states "exactly" and means integer equality at every tick.
   exactly; the free probes' steps (ticks 21 to 31) identical, the rule off
   the clock now `by_clock(t - 1, |p|, 64 m + |p|)` on the cumulative push
   in label units. Measured = registered on every line.
+- **Series 7 re-registered under the charge per unit of content
+  (2026-09-20; measured).** The model owner's decision that charge is per
+  unit of content of a family ([RAY_LAW note 27](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  the six item 7 worlds declare two free families, `q` for the source
+  (`charge` [1, 2] or [-1, 2]: 2^23 on 2^24) and `p` for the probe ([2, 1]
+  or [-2, 1] on content 1; [1, 2] on the content-4 probe of `7_pp_m4`), no
+  `charge` on a measured event, and the push is one product `M_A x (rho_A
+  rho_B - 1) x V_B` with the electric part `sign x by_clock(age_A, |V n_A
+  n_B M_A|, d_A d_B)`. Run headlessly through `RaySimulation` on the tip
+  before the change (the per-event charges, `q_A q_B / M_B`) and after it:
+  the `read` records of every world equal tick by tick, number by number
+  and integer by integer (181 records in `7_00`, `7_pp`, `7_pm`, `7_mp`,
+  `7_mm`, 185 in `7_pp_m4`), the events counted equal (4635; 4663), every
+  `pushed` and momentum equal (the probe's (-2258636288, 0, 0) in `7_00`,
+  (0, 0, 0) in `7_pp` and `7_mm`, (-4517272576, 0, 0) in `7_pm` and
+  `7_mp`, (-6775908864, 0, 0) in `7_pp_m4`; the source's (1073741824,
+  0, 0), 0, (2147483648, 0, 0), (4026531840, 0, 0)), the books balanced
+  with the recount. The probe's `read` records now carry the family `p`
+  (the source reads the probe's rays under `p`, the probe the source's
+  under `q`); `tools/coupling_readings.py` item 7 reads the declared
+  charges (Q, q) off the families' pairs times the amounts (the tool's
+  owner). No integer of the register moves.
 - **Verdict.** Every identity, book and timing of the ray law holds on the
   plane exactly; the far-field readings of a six-beam source follow the
   lattice ring's Node count and not r, so the design's ±10 % expectation for

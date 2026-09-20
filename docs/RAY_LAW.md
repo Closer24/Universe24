@@ -66,9 +66,14 @@ is a bijection since identical units are interchangeable):
 | `number` | the last emitter (a measured event's number) | as today |
 | `amount` | whole units | 1 .. 2^62 - 1 (`AMOUNT_BOUND`) |
 | `content` | the content one unit carries (`quantum` x s at birth for a paid family, 0 for a free one) | 0 .. 2^62 - 1 |
-| `charge` | on a free family's ray, the charge q_B of its emitter at birth: the emitter's factor of the electric push, carried on the record from birth (section 10, note 20); 0 on a paid family's ray | a charge |
-| `mass` | on a free family's ray, the content M_B of its emitter at birth: the held content of the family that the release rate read at that self-creation (equal to the declared amount on every registered world, whose free measured events hold what they declared); 0 on a paid family's ray, whose factor is its `content` | 0 .. 2^62 - 1 |
 | `family` | the family index (one store per family, so implicit in the store) | |
+
+Nothing else is on the record: since 2026-09-20 (the model owner, Highlights
+5.4: charge is per unit of content of a family; section 10, note 27) the
+factor of the electric push is the family's `charge`, the charge per unit
+of content rho declared as an integer or a pair `[n, d]`, and the two
+columns `charge` and `mass` of note 20 (the emitter's charge and content at
+birth) are deleted from `NatureBeam`, the store and `state.json`.
 
 The momentum vector of a ray is not stored: it is its **label**,
 `content x u_d` per unit for a paid family and `amount x u_d` for a free
@@ -109,7 +114,12 @@ merged row can outgrow the parser's bound, and until then the born
 labels' product was checked after it was formed, so a wrap inside the
 bound passed silently); the refusal names the Node and the amount.
 
-World-file keys added: `"law": "rays"`; `directions` (optional, at the world:
+World-file keys added: `"law": "rays"`; per family `charge`, since
+2026-09-20 the charge per unit of content rho, an integer c (the pair
+`[c, 1]`) or a pair `[n, d]` with d from 1 (a measured event's charge is
+rho times its content, a report; refused on a paid family unless 0, and
+refused with a denominator of 0 or a part that is not an integer); the
+key `charge` on a measured event is refused naming MIGRATION; `directions` (optional, at the world:
 a list of integer vectors beyond the six headings that any lamp or re-emitter
 may name; the table `D` is the two rest vectors, the six headings and these,
 in that order; each primitive with components in -P .. P, P = `direction_bound`,
@@ -290,17 +300,25 @@ order with each step's inverse:
    the labels as weights (`amount x u_d` for a free family, `content x
    amount x u_d` for a paid one, the unit vectors of section 2), and
    `kappa(A, B)` =
-   `-M_A` for a free family's ray (gravity, M_A the reader's content as
-   the frame read it at the start of the interval, `frame_content`, the
-   same for every family's rays whatever the family order: a click of
-   the interval joins the content the next frame reads; the
-   orchestrator's D1 on the architect's B3, 2026-09-20, note 26), `+
-   q_A x q_B / M_B` for a charged free family's ray (electricity, taken as
-   the whole part off the reader's clock, `sign x by_clock(age_A, |V q_A
-   q_B|, M_B)`, per emitter factor (q_B, M_B) carried on the rows), `+ 1`
-   for a paid ray (its label already carries h s). Every input is on the
-   reader's record or on the arriving rows; nothing is looked up by
-   number. A detector Node's record (section 5) is written from the
+   `M_A x (rho_A rho_B - 1)` for a free family's rays, ONE product per
+   arriving free ray (the model owner's decision of 2026-09-20: charge is
+   per unit of content of a family, note 27; `nature_beam.push_form`):
+   M_A the reader's content as the frame read it at the start of the
+   interval (`frame_content`, the same for every family's rays whatever
+   the family order: a click of the interval joins the content the next
+   frame reads; the orchestrator's D1 on the architect's B3, 2026-09-20,
+   note 26), rho_A and rho_B the reader's and the arriving family's
+   charges per unit of content, the pairs (n_A, d_A) and (n_B, d_B) as
+   declared; formed in integers as the gravity `-M_A V_B` plus the
+   electric part taken as the whole part off the reader's clock by the
+   declared pairs, `sign(V n_A n_B) x by_clock(age_A, |V x n_A n_B x
+   M_A|, d_A d_B)` per axis, which equals the earlier `sign x
+   by_clock(age_A, |V q_A q_B|, M_B)` integer by integer wherever q_A =
+   rho_A M_A and q_B = rho_B M_B were integers (the same rational floored
+   at the same clock; no divisor can be 0); and `+ 1` for a paid ray (its
+   label already carries h s). Every input is the reader's or the
+   arriving family's key; nothing is on the record but the ray's number
+   and nothing is looked up by number. A detector Node's record (section 5) is written from the
    clicked rays. Own-number rays are home: taken to be created again on
    the measured event's `directions` at its next self-creation (as today),
    which is bijective given the record of what came home; a paid family's
@@ -871,7 +889,8 @@ implementation's part of the contract. The design above is unchanged.
 20. **The push as one bilinear form; the emitter's factor on the record**
     (the model owner's proposal 2, "2 with the physicist"; the reviewer's
     verdict "admissible with two corrections"; `tests/test_ray_push.py` (a)
-    to (g)). `push_form` computes `push_A = sum kappa(A, B) . V_B` (step
+    to (g)). (The two columns of this note are deleted since 2026-09-20,
+    the factor being the family's charge per unit of content: note 27.) `push_form` computes `push_A = sum kappa(A, B) . V_B` (step
     4) in one place; the three-branch `push_of` and the lookup of the
     emitter by number (`world.measured[number - 1]`, the one LOCALITY-1
     deviation, with the lcm denominator `content_lcm`) are deleted. The
@@ -1114,3 +1133,37 @@ implementation's part of the contract. The design above is unchanged.
     one reader in one interval, so every pin and every registered
     reading is unchanged; the step rule (`_move`) reads the live content
     after the interval as before.
+27. **Charge per unit of content; the push one product; the record's two
+    columns deleted** (the model owner's decision of 2026-09-20,
+    Highlights 5.4; it resolves the architect's B2 by dissolving its
+    divisor; `tests/test_ray_push.py` (a) to (e), (i), (k), (l),
+    `tests/test_ray_world_parsing.py`). The family key `charge` is the
+    charge per unit of content, rho, declared as an integer or a pair
+    `[n, d]` as `suspension` is (an integer c is `[c, 1]`; d = 0 and a
+    part that is not an integer are refused; a paid family's rho must be
+    0); a measured event's charge is rho x its content, a report
+    (`Measured.charge`, the reduced pair; `state.json` and the books'
+    `charge` line carry the pair), and the per-event key `charge` is
+    refused naming MIGRATION. The ray's record loses `charge` and `mass`:
+    the family suffices, so `NatureBeam`, the store (seven columns and
+    `arrival`), the merge's identity (six fields) and `state.json` carry
+    nothing of the emitter but the number. The push is ONE product per
+    arriving free ray (`push_form`): `push_A = M_A x (rho_A rho_B - 1) x
+    V_B`, the gravity -M_A V_B plus the electric part off the reader's
+    clock by the declared pairs, `sign x by_clock(age_A, |V n_A n_B M_A|,
+    d_A d_B)` per axis; on every series 7 world it equals the earlier
+    `q_A q_B / M_B` form integer by integer (the same rational floored at
+    the same clock; the six worlds' 181 or 185 `read` records, `pushed`
+    and momenta equal, VALIDATION). The six series 7 worlds now declare
+    two free families with their pairs (`q` the source, `p` the probe:
+    2^23 on 2^24 is [1, 2], 2 on 1 is [2, 1], 2 on 4 is [1, 2];
+    `examples/events/coupling/make_worlds.py`), since one charge per unit
+    of content is one family; `tools/migrate_ray_worlds.py` moves a
+    per-event charge to its family as the reduced pair and refuses a
+    family whose events imply two. A re-emitted free ray is its family's
+    ray (the orchestrator's D2: it takes the re-emitter's number and
+    keeps its family, so it pushes by its family's rho; the re-emitter
+    of another family gives it nothing, and B2's zero divisor cannot
+    arise: (k)). The electric push is proportional to the reader's
+    content as the gravity is, the equivalence principle for the electric
+    push, pinned in (l).

@@ -5,6 +5,35 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### Charge per unit of content; the push one product; the record's two columns gone (2026-09-20)
+
+- The model owner's decision (Highlights 5.4): the family key `charge` is
+  the charge per unit of content, rho, an integer or a pair `[n, d]`; a
+  measured event's charge is rho x its content (a report, the pair) and
+  the per-event `charge` is refused naming MIGRATION. The push is ONE
+  product per arriving free ray, `push_A = M_A x (rho_A rho_B - 1) x V_B`
+  (`nature_beam.push_form`, the function five documents named), the
+  electric part off the reader's clock by the declared pairs, equal
+  integer by integer to the earlier `q_A q_B / M_B` form on every series
+  7 world (the six worlds' `read` records, `pushed` and momenta equal;
+  [validation](docs/VALIDATION.md)); the record loses `charge` and `mass`
+  (the family suffices), and the architect's B2 (a re-emitted free ray
+  of another family stamped with a mass of 0, a charged reader dividing
+  by it) cannot arise: a re-emitted ray is its family's ray with the
+  re-emitter's number (the orchestrator's D2). The series 7 worlds
+  declare two free families with their pairs (`q` [±1, 2] on the source,
+  `p` [±2, 1] on the probe, [1, 2] on the content-4 probe);
+  `tools/migrate_ray_worlds.py` converts a per-event charge to the pair
+  and refuses a family whose events imply two. A detector named as a
+  face detector is (`face:+x` and the five others) is refused;
+  `FACE_NAMES` moves to `events/world.py`; the re-exports
+  `engine.by_clock` and `engine.FACE_NAMES` are gone (A11); one
+  materialization of a ray's record, `RayStore.rows` and
+  `NatureBeam.record`, writes `state.json` (A3) ([RAY_LAW section 2](docs/RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file),
+  step 4 and note 27; [migration](docs/MIGRATION.md#charge-per-unit-of-content-on-2026-09-20-the-familys-charge-a-pair-no-charge-on-a-measured-event-the-records-two-columns-gone);
+  [expectations](docs/TEST_EXPECTATIONS.md#the-push-as-one-form): (a) to
+  (e), (i) re-fixtured with the same integers, (k) and (l) added).
+
 ### The push reads the content the frame read (2026-09-20)
 
 - The architect's B3 (blocking): the gravity push read the reader's

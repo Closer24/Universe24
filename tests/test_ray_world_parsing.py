@@ -18,12 +18,18 @@ law"), written down first:
     power of two, a detector on a Node without a measured event, a Node in
     two detectors, `kind` on a family (naming MIGRATION: the quantum decides
     the kind), a family without `quantum`, a negative quantum, a charge on a
-    paid family, a `suspension` denominator of 0, a window for a family
-    without a phase circle;
+    paid family, `charge` on a measured event (naming MIGRATION: since
+    2026-09-20 the charge is the family's per unit of content), a family
+    charge with a denominator of 0 or a part that is not an integer, a
+    detector named `face:+x` (a face detector's name), a `suspension`
+    denominator of 0, a window for a family without a phase circle;
 (b) accepted: the direction table of a world with `directions` [[1, 1, 0]]
     is the two rest vectors, the six headings and (1, 1, 0); a measured
     event's `directions` by vector or by index; a ray at rest (index 0);
     `suspension` 1 as (1, 1), [1, 4], [0, 4] as (0, 1); `reads` per entry;
+    a family `charge` -3 as (-3, 1) and [1, 2] as (1, 2), the measured
+    event's `charge` then [-3 x 2^24, 1] and [2^23, 1] (rho x content,
+    reduced), the books' `charge` the same pair;
 (c) the runner: a 4-interval world into `run.json` (`law` "rays-v1",
     completed, four ticks, four books, conserved, the measured events, the
     six face detectors of the open board with their `record`, the
@@ -217,6 +223,21 @@ def test_the_world_refuses_by_name():
     refused(
         {**world, "families": [{"name": "light", "quantum": 3, "charge": 1}]},
         "a paid family \\(quantum 3\\) carries no charge",
+    )
+    refused(
+        {**world, "measured": [{**world["measured"][0], "charge": 2}]},
+        "measured\\[0\\] declares charge, a key removed on 2026-09-20.*docs/MIGRATION.md",
+    )
+    for value, text in (
+        ([1, 0], "families\\[0\\].charge denominator must be an integer from 1"),
+        ([1.5, 2], "families\\[0\\].charge numerator must be an integer"),
+        ("1/2", "families\\[0\\].charge must be an integer or \\[numerator, denominator\\]"),
+        ([1, 2, 3], "families\\[0\\].charge must be an integer or \\[numerator, denominator\\]"),
+    ):
+        refused({**world, "families": [{"name": "m", "quantum": 0, "charge": value}]}, text)
+    refused(
+        {**world, "detectors": [{"name": "face:+x", "positions": [[5, 5, 5]]}]},
+        "detectors\\[0\\].name 'face:\\+x' is the name of a face detector",
     )
     refused({**world, "suspension": [1, 0]}, "suspension denominator")
     refused(

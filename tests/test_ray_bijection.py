@@ -122,18 +122,18 @@ def test_fifty_intervals_forward_and_back_return_the_store_bit_exact():
 
 def merge_by_hand(rows: list[tuple[int, ...]]) -> list[tuple[int, ...]]:
     """The expected store: the rows sorted as tuples of the identity fields
-    (node, direction, age, phase, number, content, charge, mass), the
-    amounts of equal tuples added."""
+    (node, direction, age, phase, number, content), the amounts of equal
+    tuples added."""
     merged: dict[tuple[int, ...], int] = {}
-    for node, direction, age, phase, number, amount, content, charge, mass in rows:
-        key = (node, direction, age, phase, number, content, charge, mass)
+    for node, direction, age, phase, number, amount, content in rows:
+        key = (node, direction, age, phase, number, content)
         merged[key] = merged.get(key, 0) + amount
     return [(*key, amount) for key, amount in sorted(merged.items())]
 
 
 def store_of(rows: list[tuple[int, ...]]) -> RayStore:
     store = RayStore((8, 8, 4))
-    columns = np.array(rows, dtype=np.int64).reshape(-1, 9)
+    columns = np.array(rows, dtype=np.int64).reshape(-1, 7)
     store.append(
         node=columns[:, 0],
         direction=columns[:, 1],
@@ -142,8 +142,6 @@ def store_of(rows: list[tuple[int, ...]]) -> RayStore:
         number=columns[:, 4],
         amount=columns[:, 5],
         content=columns[:, 6],
-        charge=columns[:, 7],
-        mass=columns[:, 8],
         arrival=np.full(columns.shape[0], 3, dtype=np.int64),
     )
     return store
@@ -160,8 +158,6 @@ def rows_of(store: RayStore) -> list[tuple[int, ...]]:
                 store.phase,
                 store.number,
                 store.content,
-                store.charge,
-                store.mass,
                 store.amount,
             ],
             axis=1,
@@ -182,21 +178,19 @@ def test_the_merge_orders_the_rows_by_one_key_or_by_the_lexsort_alike():
             1 + k % 3,
             1 + k % 4,
             k % 3,
-            -(k % 2),
-            k % 5,
         )
         for k in range(60)
     ]
     rows += rows[:20]  # duplicates: merged
-    rows += [(199, 9, 22, 63, 3, 5, 2, -1, 4), (0, 1, 0, 0, 1, 1, 0, 0, 0)]
+    rows += [(199, 9, 22, 63, 3, 5, 2), (0, 1, 0, 0, 1, 1, 0)]
     expected = merge_by_hand(rows)
     assert len(expected) == 62
     packed = store_of(rows)
     assert packed.merge_key() is not None
     packed.merge()
     assert rows_of(packed) == expected and (packed.arrival == 0).all()
-    # The masses spread over 2^61 (every other row): the key does not fit.
-    wide = [(*row[:8], row[8] + (k % 2) * (1 << 61)) for k, row in enumerate(rows)]
+    # The contents spread over 2^61 (every other row): the key does not fit.
+    wide = [(*row[:6], row[6] + (k % 2) * (1 << 61)) for k, row in enumerate(rows)]
     fallback = store_of(wide)
     assert fallback.merge_key() is None
     fallback.merge()

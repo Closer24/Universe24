@@ -7,13 +7,25 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from event_universe.core.integer import bounded_gcd
 from event_universe.core.lattice import Address3
 
 RULES = ("home", "read", "measure", "rerelease")
-# The face detectors, one per open face of the board, named by the face in
-# Port order (an open face is a detector, the model owner, 2026-09-19).
-FACE_NAMES = ("face:+x", "face:-x", "face:+y", "face:-y", "face:+z", "face:-z")
 Pending = tuple[int, int, int]
+
+
+def reduced(numerator: int, denominator: int) -> tuple[int, int]:
+    """A rational as the pair (n, d) in lowest terms with d positive."""
+    common = bounded_gcd(abs(numerator), denominator) or 1
+    return numerator // common, denominator // common
+
+
+def rational_sum(terms: list[tuple[int, int]]) -> tuple[int, int]:
+    """The exact sum of rationals (n, d), reduced: a report of the books."""
+    numerator, denominator = 0, 1
+    for n, d in terms:
+        numerator, denominator = reduced(numerator * d + n * denominator, denominator * d)
+    return numerator, denominator
 
 
 @dataclass
@@ -65,7 +77,10 @@ class Measured:
     family: int
     held: list[int]
     phase: int
-    charge: int
+    # The family's charge per unit of content, rho = (n, d): the event's
+    # charge is rho x its content (`charge`, a report), and the electric
+    # push reads rho and the content the frame read.
+    rho: tuple[int, int]
     momentum: list[int]
     fixed: bool
     directions: tuple[int, ...]
@@ -105,6 +120,13 @@ class Measured:
         return sum(self.held)
 
     @property
+    def charge(self) -> tuple[int, int]:
+        """The event's charge, rho x its content, as a reduced pair (n, d):
+        a report (the model owner, 2026-09-20: charge is per unit of
+        content of a family); the law reads rho and the content."""
+        return reduced(self.rho[0] * self.content, self.rho[1])
+
+    @property
     def threshold(self) -> int:
         """The threshold of the detector the event belongs to."""
         return self.detector_set.threshold
@@ -123,7 +145,7 @@ class Measured:
             "held": list(self.held),
             "content": self.content,
             "phase": self.phase,
-            "charge": self.charge,
+            "charge": list(self.charge),
             "momentum": list(self.momentum),
             "fixed": self.fixed,
             "windows": list(self.windows),

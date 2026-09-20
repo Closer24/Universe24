@@ -22,8 +22,12 @@ A board of 121 x 121 x 1 Nodes with the z axis declared periodic
 true two-dimensional board, nothing leaks on z; the x and y faces are open.
 The centre c = (60, 60, 0), `"law": "rays"`, K 2^22, N 64, `release`
 [1, 128], `suspension` 0 (1 in world 6 only), one free family `m`
-(`quantum` 0, the kind following from the quantum) of charge 0 (the family
-`q` in item 7, where the measured events carry the charges),
+(`quantum` 0, the kind following from the quantum) of charge 0 (item 7
+declares two free families, `q` for the source and `p` for the probe, each
+with its charge per unit of content as a pair `[n, d]`: since 2026-09-20 a
+charge is per unit of content of a family and a measured event's charge is
+that times its content, so the source's charge 2^23 on 2^24 is the family
+charge [1, 2] and the probe's 2 on content 1 is [2, 1]),
 every measured event `fixed` unless the item says otherwise, `phase` 0. The
 source is a measured event of content 2^24 at c releasing on the six
 headings: `by_clock` gives 2^17 per heading at every self-creation; the two
@@ -66,8 +70,8 @@ rays of 2^17.
 | `5_long` | 5, supplementary | the source alone | 1000 | the same readings over ticks 951-1000; not pinned |
 | `5p` | 5, the axis pattern | the source; probes of content 1 at r = 4, 6, 8, 12, 16, 20, 24, 30, 40 on +x | 200 | per probe the axis push x 2 pi r / (m q), the count and the presence at its Node over ticks 151-200 (the beam's Nodes); the amount read equals the replay's count at every tick |
 | `6` | 6, the clock | the probes of `5p` with `suspension` 1 | 200 | age + waited = 200; (age, waited, owed) equal to the replay of the presence read (`by_clock(age, k, 1)` at each self-creation); the clock counts until the front's arrival and is then owed the beam's presence (2^17 or 2^18) for the rest of the run: the accepted price on the axis, registered |
-| `7_00`, `7_pp`, `7_pm`, `7_mp`, `7_mm` | 7, the electric reading | the source with `charge` Q in 0, +2^23, -2^23; a probe of content 1 at (72, 60, 0) with `charge` q in 0, +2, -2, the family `q` | 200 | every push (m - sign(Qq)) times the uncharged world's, `pushed` [0, 0, 0] for like signs and twice the (0, 0) world's for unlike (identity); electric / gravity = -Qq / (M m) per record |
-| `7_pp_m4` | 7, the electric reading | the (+, +) pair with a probe of content 4 at the same Node | 200 | the electric part equal to the content-1 twin's at every record, the gravity part four times |
+| `7_00`, `7_pp`, `7_pm`, `7_mp`, `7_mm` | 7, the electric reading | the source (the family `q`, `charge` [0, 1], [1, 2], [-1, 2] per unit of content: Q = 0, +2^23, -2^23 on its content 2^24); a probe of content 1 at (72, 60, 0) (the family `p`, `charge` [0, 1], [2, 1], [-2, 1]: q = 0, +2, -2) | 200 | every push (m - sign(Qq)) times the uncharged world's, `pushed` [0, 0, 0] for like signs and twice the (0, 0) world's for unlike (identity); electric / gravity = -Qq / (M m) per record |
+| `7_pp_m4` | 7, the electric reading | the (+, +) pair with a probe of content 4 at the same Node (the family `p` of `charge` [1, 2]: q = 2 on content 4) | 200 | the electric part equal to the content-1 twin's at every record, the gravity part four times |
 
 Why one replay serves worlds 5, 5P and 6: a probe reads (the push taken,
 the rays go on) and nothing in the flight or the collision depends on a
