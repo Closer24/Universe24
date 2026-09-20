@@ -10,7 +10,7 @@ layer"), written down before the first run:
 (a) the design's tests 1 and 3: over the lamp's first 64 records (by birth
     ordinal, the record's identity; born in the ticks 1 .. 65 since the
     fraction-free law of 2026-09-20, the exact clock stalling once at
-    tick 3) the gathers per port equal the design's table (`mz_equal` D1 64, D2 0;
+    tick 2) the gathers per port equal the design's table (`mz_equal` D1 64, D2 0;
     `mz_half` 0, 64; `mz_quarter` 32, 32; `mz_balanced` 64, 0; `mz_345` 63,
     1; `mz_unequal_f0` 64, 0; `mz_unequal_f8` 32, 32; `mz_unequal_f16` 0,
     64; `ev_29` absorber 32, D1 17, D2 15; `ev_169` 32, 16, 16), one gather
@@ -182,7 +182,7 @@ def births(simulation: NatureBeamSimulation) -> list[dict[str, object]]:
     """The gathers of the lamp's first 64 records, by birth ordinal (the
     record's identity, number 1's records 2^32 + 1 .. 2^32 + 64): since the
     fraction-free law of 2026-09-20 a paid lamp's exact clock stalls (on
-    these worlds once, at tick 3), so the 64 births span the ticks 1 .. 65
+    these worlds once, at tick 2), so the 64 births span the ticks 1 .. 65
     and a tick window is not a count of births."""
     assert simulation.layer is not None
     first = (1 << 32) + 1

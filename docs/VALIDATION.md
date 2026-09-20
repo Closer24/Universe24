@@ -11,6 +11,160 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The fraction-free law: the register replayed once on the branch against the base a2120413 - 2026-09-20
+
+The branch `fraction-free` ([BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[MIGRATION](MIGRATION.md#the-fraction-free-law-on-2026-09-20-every-count-an-accumulator-on-the-bodys-record))
+at its head after stage 2 with main `e62291a8` merged, against the base
+`a2120413`'s tree: every world of the register run on both trees at its
+registered length under the guards (`--wall-seconds 1200 --memory-mb
+4096`; the scratchpad driver runs one world per worker at a time, keeps
+each run's digests and counts and deletes the run; the series whose
+readers were re-read kept their runs through `tools/run_series.py` with
+the same guards), `events.jsonl` and `state.json` digested, the books
+(`audit` of `run.json`) digested. Every `state.json` moves for the new
+field `acc`; a world "moved" below moved in its events or its books.
+Not compared: `heisenberg/w27_beam` (skipped as ordered); `heisenberg/w27_wave`, `buildup/w27_rate1`, `buildup/w27_rate47` and `buildup/w27_rate8` (beyond the wall of 1200 s on the base tree under the guards, not run on the head); `heisenberg/w9_beam` and `heisenberg/w9_wave` (beyond the address-space guard of 4096 MB on both trees, about 750 s in); every other world of the register completed on both trees with the books balanced at every tick. 82 worlds identical in events and books; 103 moved.
+
+**The gate set on the head** (the seventeen worlds of
+`examples/events/gate_set.json`; the first 16 hexadecimal digits of the
+sha256): the lamp worlds and the crowd worlds moved in their events, the
+others in `state.json` alone.
+
+| world | events.jsonl | state.json | moved |
+| --- | --- | --- | --- |
+| `two_slits` | `66dc28e5d78c2b52` | `9ee8ab4bc36d5916` | `state.json` alone |
+| `read` | `78ecef7035ed4f3f` | `d235b7058770dedd` | events and books |
+| `a0_b8` | `f62fe63bd87d2eb6` | `20fd7737901c78e0` | events and books |
+| `j2_filter` | `1c92c9c3817755e7` | `83d753e01dde2f07` | `state.json` alone |
+| `w_exchange` | `80ebe74909824bad` | `3ef35eb1990eba21` | `state.json` alone |
+| `j3_neutron_free` | `ca857e2846aa5b86` | `63bb34fa06e762da` | `state.json` alone |
+| `deuteron_1` | `6234c00fd3e478ac` | `4d9800a8f3fadc04` | `state.json` alone |
+| `mass_meeting` | `3b2084d4f019e9e2` | `66167ad24afcb871` | `state.json` alone |
+| `r2` | `ea52bf20dda2d125` | `b7174c3573d53eaa` | `state.json` alone |
+| `coasting_age` | `b61079d07448b763` | `34e8635179f3d166` | `state.json` alone |
+| `7_pp` | `da177386799d3861` | `b0578cb7ecac70f3` | `state.json` alone |
+| `lamp_mirror_screen` | `0369ed2673eed0f1` | `dc6d12ef9f8ad2d4` | events and books |
+| `sun_planet` | `8b76ebc4e170ec5f` | `e509ed3b4092515a` | events and books |
+| `w3_beam` | `3154f2153b355fb7` | `9a5ce7f26e476104` | `state.json` alone |
+| `one_content` | `a8b1f8191dd478a4` | `39b9a32b10d31c5f` | `state.json` alone |
+| `age` | `39a304861b12c02b` | `c812d006e0083eb7` | `state.json` alone |
+| `periodic_z_node` | `ec81debeb25e6df5` | `2e9421257caaed60` | `state.json` alone |
+
+**What moved and by how much** (births the `birth` lines, waits the sum of
+`waited` over the measured events, steps the sum of `steps`, clicks the
+`click` lines, ages the measured events whose age at the end moved; the
+dated lines of the register entries carry the readers' numbers):
+
+| world | what moved | births | waits | steps | clicks | ages |
+| --- | --- | --- | --- | --- | --- | --- |
+| `amplitude/bell_0_24.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/bell_0_8.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/bell_16_24.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/bell_16_24_far.json` | events, books | 300 -> 299 | 0 | 0 | 768 -> 764 | same |
+| `amplitude/bell_16_8.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/bell_choosers.json` | events, books | 1000 -> 999 | 0 | 0 | 5894 -> 5890 | same |
+| `amplitude/bell_n1024_0_128.json` | events, books | 1044 -> 1043 | 0 | 0 | 4142 -> 4138 | same |
+| `amplitude/bell_n1024_0_384.json` | events, books | 1044 -> 1043 | 0 | 0 | 4142 -> 4138 | same |
+| `amplitude/bell_n1024_256_128.json` | events, books | 1044 -> 1043 | 0 | 0 | 4142 -> 4138 | same |
+| `amplitude/bell_n1024_256_384.json` | events, books | 1044 -> 1043 | 0 | 0 | 4142 -> 4138 | same |
+| `amplitude/bell_n4096_0_1536.json` | events, books | 4113 | 0 | 0 | 16418 | same |
+| `amplitude/bell_n4096_0_512.json` | events, books | 4113 | 0 | 0 | 16418 | same |
+| `amplitude/bell_n4096_1024_1536.json` | events, books | 4113 | 0 | 0 | 16418 | same |
+| `amplitude/bell_n4096_1024_512.json` | events, books | 4113 | 0 | 0 | 16418 | same |
+| `amplitude/cnot_ghz_xxx.json` | events, books | 270 -> 267 | 0 | 0 | 484 -> 478 | same |
+| `amplitude/cnot_ghz_xyy.json` | events, books | 270 -> 267 | 0 | 0 | 484 -> 478 | same |
+| `amplitude/cnot_ghz_yxy.json` | events, books | 270 -> 267 | 0 | 0 | 484 -> 478 | same |
+| `amplitude/cnot_ghz_yyx.json` | events, books | 270 -> 267 | 0 | 0 | 484 -> 478 | same |
+| `amplitude/cnot_pair_0_24.json` | events, books | 180 -> 178 | 0 | 0 | 300 -> 296 | same |
+| `amplitude/cnot_pair_0_8.json` | events, books | 180 -> 178 | 0 | 0 | 300 -> 296 | same |
+| `amplitude/cnot_pair_16_24.json` | events, books | 180 -> 178 | 0 | 0 | 300 -> 296 | same |
+| `amplitude/cnot_pair_16_8.json` | events, books | 180 -> 178 | 0 | 0 | 300 -> 296 | same |
+| `amplitude/cnot_twice.json` | events, books | 180 -> 178 | 0 | 0 | 284 -> 280 | same |
+| `amplitude/cone_intervals.json` | events, books | 192 -> 190 | 0 | 0 | 134 -> 132 | same |
+| `amplitude/cone_links.json` | events, books | 192 -> 190 | 0 | 0 | 134 -> 132 | same |
+| `amplitude/ev_169.json` | events, books | 80 -> 79 | 0 | 0 | 213 -> 210 | same |
+| `amplitude/ev_29.json` | events, books | 80 -> 79 | 0 | 0 | 213 -> 210 | same |
+| `amplitude/ghz_xxx.json` | events, books | 80 -> 79 | 0 | 0 | 450 -> 444 | same |
+| `amplitude/ghz_xyy.json` | events, books | 80 -> 79 | 0 | 0 | 450 -> 444 | same |
+| `amplitude/ghz_yxy.json` | events, books | 80 -> 79 | 0 | 0 | 450 -> 444 | same |
+| `amplitude/ghz_yyx.json` | events, books | 80 -> 79 | 0 | 0 | 450 -> 444 | same |
+| `amplitude/ghz_yyy.json` | events, books | 80 -> 79 | 0 | 0 | 450 -> 444 | same |
+| `amplitude/mz_345.json` | events, books | 80 -> 79 | 0 | 0 | 138 -> 136 | same |
+| `amplitude/mz_balanced.json` | events, books | 80 -> 79 | 0 | 0 | 69 -> 68 | same |
+| `amplitude/mz_equal.json` | events, books | 80 -> 79 | 0 | 0 | 138 -> 136 | same |
+| `amplitude/mz_half.json` | events, books | 80 -> 79 | 0 | 0 | 138 -> 136 | same |
+| `amplitude/mz_quarter.json` | events, books | 80 -> 79 | 0 | 0 | 276 -> 272 | same |
+| `amplitude/mz_unequal_f0.json` | events, books | 80 -> 79 | 0 | 0 | 280 -> 276 | same |
+| `amplitude/mz_unequal_f16.json` | events, books | 80 -> 79 | 0 | 0 | 280 -> 276 | same |
+| `amplitude/mz_unequal_f8.json` | events, books | 80 -> 79 | 0 | 0 | 280 -> 276 | same |
+| `amplitude/path_0_24.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/path_0_8.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/path_16_24.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/path_16_24_far.json` | events, books | 300 -> 299 | 0 | 0 | 768 -> 764 | same |
+| `amplitude/path_16_8.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/rotations_3.json` | events, books | 110 -> 109 | 0 | 0 | 196 -> 194 | same |
+| `amplitude/slits_low.json` | events, books | 230 -> 229 | 0 | 0 | 22302 -> 22117 | same |
+| `bell/a0_b0.json` | events, books | 160 -> 159 | 0 | 0 | 294 -> 292 | same |
+| `bell/a0_b12.json` | events, books | 160 -> 159 | 0 | 0 | 294 -> 292 | same |
+| `bell/a0_b16.json` | events, books | 160 -> 159 | 0 | 0 | 294 -> 292 | same |
+| `bell/a0_b24.json` | events, books | 160 -> 159 | 0 | 0 | 292 -> 290 | same |
+| `bell/a0_b32.json` | events, books | 160 -> 159 | 0 | 0 | 292 -> 290 | same |
+| `bell/a0_b8.json` | events, books | 160 -> 159 | 0 | 0 | 294 -> 292 | same |
+| `bell/a16_b24.json` | events, books | 160 -> 159 | 0 | 0 | 292 -> 290 | same |
+| `bell/a16_b8.json` | events, books | 160 -> 159 | 0 | 0 | 294 -> 292 | same |
+| `bell/a4_b12.json` | events, books | 160 -> 159 | 0 | 0 | 294 -> 292 | same |
+| `bell/a4_b8.json` | events, books | 160 -> 159 | 0 | 0 | 294 -> 292 | same |
+| `bell/fixed.json` | events, books | 148 -> 147 | 0 | 0 | 503 -> 501 | same |
+| `bell/one_clock.json` | events, books | 1940 -> 1939 | 0 | 0 | 7671 -> 7669 | same |
+| `bell/read.json` | events, books | 1940 -> 1939 | 0 | 0 | 7669 -> 7667 | same |
+| `bell/written_a0_b29.json` | events, books | 141 -> 140 | 0 | 0 | 474 -> 472 | same |
+| `bell/written_a0_b8.json` | events, books | 141 -> 140 | 0 | 0 | 475 -> 473 | same |
+| `bell/written_a25_b29.json` | events, books | 141 -> 140 | 0 | 0 | 469 -> 467 | same |
+| `bell/written_a25_b8.json` | events, books | 141 -> 140 | 0 | 0 | 470 -> 468 | same |
+| `binding/proton_bond_lamp.json` | events, books | 3000 | 0 | 0 | 1735769 | same |
+| `catalog/lamp_mirror_screen.json` | events, books | 104 | 0 | 0 | 636 -> 668 | same |
+| `catalog/neutron_star.json` | events, books | 0 | 109 -> 97 | 176 -> 186 | 684 -> 708 | 14 of 14 bodies, by -1 to 1 |
+| `catalog/sun_planet.json` | events, books | 50 | 0 | 10 | 209 | same |
+| `hubble/pushing_age.json` | events, books | 0 | 145 -> 146 | 1429 -> 1426 | 8351 -> 8358 | 25 of 31 bodies, by -3 to 3 |
+| `hubble/pushing_scalar.json` | events, books | 0 | 639 -> 617 | 1408 -> 1411 | 8200 -> 8204 | 24 of 31 bodies, by -4 to 8 |
+| `hubble_stars/coasting_age.json` | events, books | 9538 -> 9521 | 62 -> 55 | 1521 -> 1525 | 15389 -> 15405 | 18 of 25 bodies, by -2 to 4 |
+| `hubble_stars/coasting_none.json` | events, books | 9600 -> 9576 | 0 | 1536 | 15483 -> 15459 | same |
+| `hubble_stars/coasting_scalar.json` | events, books | 9517 -> 9504 | 97 -> 90 | 1524 -> 1523 | 15355 | 22 of 25 bodies, by -4 to 6 |
+| `hubble_stars/doppler/coasting_age.json` | events, books | 9538 -> 9521 | 62 -> 55 | 1521 -> 1525 | 15389 -> 15405 | 18 of 25 bodies, by -2 to 4 |
+| `hubble_stars/doppler/coasting_none.json` | events, books | 9600 -> 9576 | 0 | 1536 | 15483 -> 15459 | same |
+| `hubble_stars/doppler/coasting_scalar.json` | events, books | 9517 -> 9504 | 97 -> 90 | 1524 -> 1523 | 15355 | 22 of 25 bodies, by -4 to 6 |
+| `hubble_stars/doppler/double_age.json` | events, books | 9485 -> 9464 | 115 -> 112 | 1281 -> 1277 | 15248 | 17 of 25 bodies, by -3 to 5 |
+| `hubble_stars/doppler/double_none.json` | events, books | 9600 -> 9576 | 0 | 1296 | 15388 -> 15364 | same |
+| `hubble_stars/doppler/double_scalar.json` | events, books | 9435 -> 9410 | 200 -> 195 | 1281 | 15141 -> 15138 | 19 of 25 bodies, by -4 to 7 |
+| `hubble_stars/doppler/gravity_age.json` | events, books | 9558 -> 9523 | 42 -> 53 | 1420 -> 1418 | 15377 -> 15347 | 19 of 25 bodies, by -2 to 3 |
+| `hubble_stars/doppler/gravity_none.json` | events, books | 9600 -> 9576 | 0 | 1426 | 15419 -> 15395 | same |
+| `hubble_stars/doppler/gravity_scalar.json` | events, books | 9526 -> 9504 | 94 -> 90 | 1415 | 15316 -> 15303 | 20 of 25 bodies, by -3 to 2 |
+| `hubble_stars/double_age.json` | events, books | 9474 -> 9469 | 126 -> 107 | 1070 -> 1069 | 15276 -> 15256 | 18 of 25 bodies, by -3 to 6 |
+| `hubble_stars/double_none.json` | events, books | 9600 -> 9576 | 0 | 1082 | 15387 -> 15362 | same |
+| `hubble_stars/double_scalar.json` | events, books | 9449 -> 9408 | 179 -> 197 | 1072 -> 1070 | 15156 -> 15144 | 18 of 25 bodies, by -3 to 3 |
+| `hubble_stars/gravity_age.json` | events, books | 9534 -> 9525 | 66 -> 51 | 1310 -> 1314 | 15345 -> 15339 | 15 of 25 bodies, by -2 to 5 |
+| `hubble_stars/gravity_none.json` | events, books | 9600 -> 9576 | 0 | 1319 | 15403 -> 15379 | same |
+| `hubble_stars/gravity_scalar.json` | events, books | 9512 -> 9504 | 107 -> 90 | 1311 -> 1312 | 15295 -> 15284 | 22 of 25 bodies, by -1 to 4 |
+| `hubble_stars/record/coasting_age.json` | events, books | 9538 -> 9521 | 62 -> 55 | 1521 -> 1525 | 15389 -> 15405 | 18 of 25 bodies, by -2 to 4 |
+| `hubble_stars/record/coasting_none.json` | events, books | 9600 -> 9576 | 0 | 1536 | 15483 -> 15459 | same |
+| `hubble_stars/record/coasting_scalar.json` | events, books | 9517 -> 9504 | 97 -> 90 | 1524 -> 1523 | 15355 | 22 of 25 bodies, by -4 to 6 |
+| `hubble_stars/record/double_age.json` | events, books | 9474 -> 9469 | 126 -> 107 | 1070 -> 1069 | 15276 -> 15256 | 18 of 25 bodies, by -3 to 6 |
+| `hubble_stars/record/double_none.json` | events, books | 9600 -> 9576 | 0 | 1082 | 15387 -> 15362 | same |
+| `hubble_stars/record/double_scalar.json` | events, books | 9449 -> 9408 | 179 -> 197 | 1072 -> 1070 | 15156 -> 15144 | 18 of 25 bodies, by -3 to 3 |
+| `hubble_stars/record/gravity_age.json` | events, books | 9534 -> 9525 | 66 -> 51 | 1310 -> 1314 | 15345 -> 15339 | 15 of 25 bodies, by -2 to 5 |
+| `hubble_stars/record/gravity_none.json` | events, books | 9600 -> 9576 | 0 | 1319 | 15403 -> 15379 | same |
+| `hubble_stars/record/gravity_scalar.json` | events, books | 9512 -> 9504 | 107 -> 90 | 1311 -> 1312 | 15295 -> 15284 | 22 of 25 bodies, by -1 to 4 |
+| `masses/cavity_equal.json` | events, books | 1200 | 0 | 0 | 1176 | same |
+| `masses/cavity_unequal.json` | events, books | 12000 | 0 | 0 | 11976 | same |
+| `weak/j1_lattice.json` | events, books | 0 | 1592 -> 1536 | 0 | 231224 -> 231008 | 56 of 4234 bodies, by 1 to 1 |
+| `weak/j1_source.json` | events, books | 0 | 2848 -> 2708 | 0 | 405620 -> 406292 | 220 of 4235 bodies, by -2 to 4 |
+| `weak/j3_deuteron.json` | events, books | 0 | 1110 -> 1149 | 62 -> 64 | 707078 -> 718743 | 115 of 764 bodies, by -2 to 11 |
+| `weak/j3_deuteron_crowd.json` | events, books | 0 | 1111 -> 1149 | 66 -> 69 | 705380 -> 718741 | 115 of 764 bodies, by -2 to 12 |
+
+**Identical in events and books** (the lamp-free, crowd-free worlds: the
+push's accumulators stay 0 at Lambda 1, the drive is as built): `amplitude/slits_one.json`, `binding/alpha_square_bond.json`, `binding/deuteron_bond.json`, `bohr/r12.json`, `bohr/r15.json`, `bohr/r16.json`, `bohr/r2.json`, `bohr/r4.json`, `bohr/r6.json`, `bohr/r8.json`, `catalog/clock_near_mass.json`, `coupling/1a_m1.json`, `coupling/1a_m16.json`, `coupling/1a_m4.json`, `coupling/1b_m1.json`, `coupling/1b_m16.json`, `coupling/1b_m4.json`, `coupling/2.json`, `coupling/3.json`, `coupling/3a.json`, `coupling/3b.json`, `coupling/4.json`, `coupling/5.json`, `coupling/5_long.json`, `coupling/5p.json`, `coupling/6.json`, `coupling/7_00.json`, `coupling/7_mm.json`, `coupling/7_mp.json`, `coupling/7_pm.json`, `coupling/7_pp.json`, `coupling/7_pp_m4.json`, `detector/grouped_12_nodes.json`, `detector/periodic_z_node.json`, `detector/shared_100_nodes.json`, `detector/shared_3_nodes.json`, `hand/nu_hand.json`, `hand/w_hand.json`, `hand/w_two_sides.json`, `hand/wu.json`, `heisenberg/w1_beam.json`, `heisenberg/w1_wave.json`, `heisenberg/w3_beam.json`, `heisenberg/w3_wave.json`, `hubble/coasting_age.json`, `hubble/coasting_scalar.json`, `lensing/control.json`, `lensing/control_meeting.json`, `lensing/heavy.json`, `lensing/heavy_meeting.json`, `lensing/lens_meeting.json`, `lensing/mass.json`, `lensing/mass_meeting.json`, `lensing/near.json`, `lensing/near_meeting.json`, `nucleus/alpha_line.json`, `nucleus/alpha_square.json`, `nucleus/deuteron_1.json`, `nucleus/deuteron_1_kick.json`, `nucleus/deuteron_3.json`, `nucleus/pp_1.json`, `nucleus/pp_1_weak.json`, `nucleus/pp_3.json`, `one_content.json`, `one_slit.json`, `orbit/s1_r12.json`, `orbit/s1_r24.json`, `orbit/s32_r12.json`, `orbit/s32_r24.json`, `orbit/s8_r12.json`, `orbit/s8_r24.json`, `redshift/age.json`, `redshift/scalar.json`, `two_contents.json`, `two_slits.json`, `weak/j2_default.json`, `weak/j2_filter.json`, `weak/j2_ladder.json`, `weak/j2_stride2.json`, `weak/j2_stride2_odd.json`, `weak/j3_neutron_free.json`, `weak/w_exchange.json`.
+
 ## The one click: the gate set of sixteen worlds replayed against main 45c0eb48 - 2026-09-20
 
 The branch `amplitude-impl` (the one click of `amplitude-v1`, stage (vii)

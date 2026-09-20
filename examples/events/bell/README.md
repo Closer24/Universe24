@@ -25,9 +25,14 @@ phase tables read a single arrival's step exactly only up to N = 64),
 paid (`quantum` 1; the kind follows from the quantum), every measured event
 `fixed`.
 
-- The lamp of `light` at x = 10: content K + 2 = 1048578 (so that the
-  release of age a is stamped with the phase a mod 64 exactly for every age
-  of the run), `phase` 0, one ray per self-creation on +X and on -X
+- The lamp of `light` at x = 10: content K + 2 = 1048578 (the smallest
+  content that turned once per self-creation over the run under the count
+  off the clock; since the fraction-free law of 2026-09-20, BEAM_LAW note
+  41, a paid lamp keeps one birth per interval over T intervals with the
+  content K + 2 (T - 1) or more, K + 318 here, and this lamp's exact
+  clock, paying 2 per birth, stalls once, at tick 4: 159 births in 160
+  intervals, the age of a pair its birth ordinal read off the record),
+  `phase` 0, one ray per self-creation on +X and on -X
   (`lamp.directions`), no window: the source cycles the whole circle. Its
   two recoils cancel at each self-creation, so its momentum stays [0, 0, 0].
 - Four counters of content 1, each its own detector of threshold 1, the
@@ -42,12 +47,17 @@ paid (`quantum` 1; the kind follows from the quantum), every measured event
   later, where the complement takes it. The two windows of a side cover the
   circle exactly, so every ray clicks exactly once per side and nothing
   escapes.
-- A pair is the two releases of one age of the lamp, both stamped with the
-  same phase. A = +1 for a click at `alice_plus`, -1 at `alice_minus`; B
-  likewise. The age of a click is its tick less its Node's offset, read off
-  the record itself: the earliest click at a Node is the smallest age its
-  window admits, whose phase is that age, so the offset is that click's
-  tick less its phase (found: plus tick = age + 14, minus tick = age + 16).
+- A pair is the two rows of one record of the lamp (one birth: the
+  record's identity the lamp's number x 2^32 + the birth's ordinal,
+  carried on every click and pass line). A = +1 for a click at
+  `alice_plus`, -1 at `alice_minus`; B likewise. The age of a pair is its
+  birth ordinal less one, read off the record on the line, and its phase
+  is that age mod 64 (the record's u); the tick of a birth is not the age
+  of the lamp's clock once the lamp pays (the stall at tick 4), so the
+  reader never pairs by a tick offset. The tick offsets are reported as
+  the flight's smallest tick - age at each Node (until the fraction-free
+  law: the age read as the tick less the Node's offset, found plus tick =
+  age + 14, minus tick = age + 16, one value per Node).
 - 128 pairs analysed, the ages 0..127 (two full circles: E is exact for any
   multiple of N / 2); `ticks` 160, so that the last minus click of age 127
   (tick 143) is on the record; the ages 128 and after, still in flight or

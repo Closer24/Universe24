@@ -1764,7 +1764,8 @@ the turn 3 and the content 3 on every row until then).
 
 **The Bell and amplitude readings by record (the alignment).** A paid
 lamp's exact clock stalls where its content has fallen below K (the Bell
-lamps of content K + 2, once at tick 4; the L worlds' at tick 3), so the
+lamps of content K + 2, once at tick 4; the L worlds' lamps of 2^20 at
+tick 2 and its pair lamps at tick 3), so the
 tick of a birth is not the age of the lamp's clock. The readers pair a
 row by its RECORD, the birth ordinal (the click and pass lines carry
 `record` and `u`; `tools/bell_chsh.py`, `tools/bell_choosers.py`), and

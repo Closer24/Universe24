@@ -3264,7 +3264,8 @@ implementation's part of the contract. The design above is unchanged.
     of content K + c (T - 1) or more keeps one birth per interval over T
     intervals; below that its exact clock stalls where its content has
     fallen below K (the Bell lamps of content K + 2, paying 2 per birth,
-    once at tick 4; the L worlds' at tick 3), so the tick of a birth is
+    once at tick 4; the L worlds' lamps of 2^20 at tick 2 and its pair
+    lamps at tick 3), so the tick of a birth is
     not the age of the lamp's clock, and a pair is read by its record
     (the birth ordinal, `record` and `u` on every click and pass line),
     never by a tick window or a tick offset. S = 176/64 on the CHSH
