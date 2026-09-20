@@ -7,17 +7,12 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ### The phase circle's bound raised to 65536 steps (2026-09-20)
 
-- The model owner's instruction ("raise the bound", for the paper's Bell
-  runs at N = 4096 and beyond under `amplitude-v1`, whose pair rotation
-  reads the half-angle tables at 2N): `core.phase.MAX_PHASE_STEPS` is
-  65536 (was 4096), the one canonical bound, imported by the world parser
-  in place of its own copy; a world's `N` is a power of two from 2 through
-  65536; the tables at 65536 steps take 0.2 s once and every entry stays
-  within 256, so `pointer_phases` and the reading's bound are unchanged
-  ([ENGINE, the world](docs/ENGINE.md#the-beam-law-beam-v1);
-  `tests/test_nature_beam_world_parsing.py`, the phase circle's test). No
-  registered world declares an N above 64, so nothing else changes by a
-  byte.
+- The model owner's instruction ("raise the bound"): the pair of
+  `amplitude-v1` rotates its labels through the half-angle tables at 2N, so
+  `core.phase.MAX_PHASE_STEPS` is 65536 (was 4096) and the world parser
+  imports the one bound; N = 65536 is accepted with its tables (0.2 s once,
+  every entry within 256), 131072 refused; the same change as commit
+  7c147e9f of the paper's branch, applied here by hand.
 
 ### The `wave` threshold on the pointer's square; the escaped momentum per family (2026-09-20)
 

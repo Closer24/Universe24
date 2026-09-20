@@ -47,7 +47,8 @@ module and function names; the model owner, 2026-09-20).
 | Scope | Authoritative source |
 | --- | --- |
 | Canonical names and state vocabulary | [docs/TERMINOLOGY.md](docs/TERMINOLOGY.md) |
-| Any physical behavior or hypothesis | [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) section 5.4 (the law), [POSTULATES.md](POSTULATES.md) and [SIMULATOR_DEFINITIONS.md](SIMULATOR_DEFINITIONS.md) |
+| Any physical behavior or hypothesis | [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) section 5.4 (the law and the owner's decisions, one line each) and the dated logs `docs/LOG_<date>.md` (the records), [POSTULATES.md](POSTULATES.md) and [SIMULATOR_DEFINITIONS.md](SIMULATOR_DEFINITIONS.md) |
+| A record of a day's work (a reading, a finding, a run, a proposal, a question) | The day's log, `docs/LOG_<date>.md`, appended with the next number; only a decision of the model owner is added to Highlights 5.4, as one line with a link to its record |
 | The world file, the engine's steps and its record | [docs/ENGINE.md](docs/ENGINE.md) and [examples/events/README.md](examples/events/README.md) |
 | State, interfaces, dependencies or repository layout | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
 | Any edit, validation, publishing or merge | [CONTRIBUTING.md](CONTRIBUTING.md) |
@@ -69,6 +70,8 @@ or a matching specialist directly. Every role follows the
 always-running agents. Use bounded assignments and one writer per shared interface.
 Review Boss and affected Skills for useful durable lessons; record either the
 authorized update or why none is needed. Keep temporary task state in Issues/PRs.
+A durable record of the day goes to the day's log, a decision to Highlights 5.4;
+neither is written twice.
 
 ## Repository language: English
 

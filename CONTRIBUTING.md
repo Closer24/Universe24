@@ -64,7 +64,13 @@ branch `main`. ZIP files are backups after the project has been uploaded. For ea
    GitHub Actions artifacts.
 7. Open a pull request to `main` explaining the problem, change, expected behavior,
    validation, limitations and compatibility impact. State which tests were not run.
-8. If `main` advances, integrate its changes and recheck the resulting risks.
+8. Record where the record belongs: a decision of the model owner is one line in
+   `docs/HIGHLIGHTS.md` section 5.4 with a link to its record; the record itself (what
+   was read, found, run, proposed or asked, in the owner's words where he gave them)
+   is appended to the day's log, `docs/LOG_<date>.md`, under the next number; a run's
+   entry goes beside its worlds in `examples/events/<series>/README.md` with its row
+   in `docs/EXPERIMENTS.md`. Do not copy a record into a second document; link to it.
+9. If `main` advances, integrate its changes and recheck the resulting risks.
    Merge only after successful CI and within the user's authorization; never bypass
    a failing check.
 
