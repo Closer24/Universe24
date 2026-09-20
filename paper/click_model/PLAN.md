@@ -263,3 +263,20 @@ no Young fringes; the register's Pearson 0.368 with the cosine). The
 sharpest open item is the metric: which length a row's phase counts, and how
 the L1 count becomes Euclidean at scale. Sent to the Boss as issue #376; the
 half-page for Part I waits on the Boss's answer to its questions 1 and 2.
+
+## The Boss's answers and the cone test, L7 (2026-09-20)
+
+The Boss answered on issue #376: the phase counts the Links stepped (the
+integer form); the proposition is acceptable with the layer the
+apparatus's and every lamp's rows records; Landauer out of Part II; the
+isotropy question to the physicist as record 140. The approved one-world
+test became two worlds of one geometry (`cone_links`, `cone_intervals`,
+series L7, prepared on a local worktree from the one click's head, no src
+change): the flight table moves every direction at 1 / sqrt 3, so both
+rows click at the age 29; the integer form of `phase_per_link` gives the
+path phases 51 and 8 (17 and 24 Links), the pair form 23 and 23 (29
+intervals). Every pin met. The report's rows 1, 2 and 9 corrected (the
+octahedral front was wrong; the phase's metric is the declared form's).
+The registration (the register's L7 item, the README, a test, the
+changelog) waits on the owner's word for a branch and a pull request, and
+on PR #395's landing for the run on main.

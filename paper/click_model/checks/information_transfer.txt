@@ -1,11 +1,12 @@
 
-== 1. The causal cone: one Link per interval, an L1 front
-  two dimensions,  0 degrees off an axis: front speed 1.0000 Links per interval
-  two dimensions, 15 degrees off an axis: front speed 0.8165 Links per interval
-  two dimensions, 30 degrees off an axis: front speed 0.7321 Links per interval
-  two dimensions, 45 degrees off an axis: front speed 0.7071 Links per interval
-  three dimensions, the body diagonal: 0.5774; the slowest direction of the front
-  reading: c = a / tau along an axis; the front is an octahedron, not a sphere (an anisotropy of 42 percent)
+== 1. The causal cone: the flight table, 1 / sqrt 3 in every direction
+  (1, 0, 0):  349 Links in 600 intervals, Euclidean distance  349.00 = 0.5817 per interval (1 / sqrt 3 = 0.5774); Links per Euclidean Link 1.0000
+  (1, 1, 0):  492 Links in 600 intervals, Euclidean distance  347.90 = 0.5798 per interval (1 / sqrt 3 = 0.5774); Links per Euclidean Link 1.4142
+  (1, 1, 1):  600 Links in 600 intervals, Euclidean distance  346.41 = 0.5774 per interval (1 / sqrt 3 = 0.5774); Links per Euclidean Link 1.7321
+  (3, 1, 0):  439 Links in 600 intervals, Euclidean distance  347.06 = 0.5784 per interval (1 / sqrt 3 = 0.5774); Links per Euclidean Link 1.2649
+  (5, 2, 1):  506 Links in 600 intervals, Euclidean distance  346.43 = 0.5774 per interval (1 / sqrt 3 = 0.5774); Links per Euclidean Link 1.4606
+  reading: c = a / (tau sqrt 3), isotropic; the L1 count is in the Links stepped, not in the time
+  measured (L7): 17 Links on +x and 24 on (1, 1, 0) both reached at the age 29
 
 == 2. Wavelength and the Link: lambda = N d / n Links; lambda >= 2 Links
   N =    64, rate 8/1 steps per interval: lambda = 8.0000 Links
@@ -56,18 +57,24 @@
   N = 4096, the pair     :  56.3 bits erased; at     1 K Q >= 5.39e-22 J = 0.003 eV
   reading: a detector's least dissipation per click; only a lower bound, far below any real detector's
 
-== 7. Two slits: the L1 path difference against the Euclidean one (s = 6, D = 44, lambda = 8 Links)
-   y   L1 diff  Euclid diff   I_L1   I_Euclid
-   0     0.00      0.000    4.00    4.00
-   4    -6.00     -0.542    2.00    3.82
-   8    -6.00     -1.071    2.00    3.33
-  12    -6.00     -1.576    2.00    2.65
-  16    -6.00     -2.047    2.00    1.93
-  20    -6.00     -2.479    2.00    1.27
-  24    -6.00     -2.869    2.00    0.74
+== 7. Two slits: the integer form (L1 Links) against the pair form (Euclidean intervals); s = 6, D = 44, lambda = 8
+   y   L1 diff  Euclid diff   I_links   I_intervals
+   0     0.00      0.000    4.00      4.00
+   4    -6.00     -0.542    2.00      3.82
+   8    -6.00     -1.071    2.00      3.33
+  12    -6.00     -1.576    2.00      2.65
+  16    -6.00     -2.047    2.00      1.93
+  20    -6.00     -2.479    2.00      1.27
+  24    -6.00     -2.869    2.00      0.74
   Euclidean fringe spacing lambda D / s = 58.7 Links; the L1 pattern has none beyond |y| = s / 2
-  the register's two-slit run: Pearson 0.368 with the cosine pattern, 0.744 with the incoherent sum (expectations.json)
+  the register's two-slit world declares the pair form; its Pearson 0.368 with the cosine (L2) is not the L1 effect
 
 == 8. The correlation does not depend on the distance: the far worlds
   bell_16_24: cells {'++': 27, '+-': 5, '-+': 5, '--': 27}, E = 11/16; Bob 116 Links farther: cells {'++': 27, '+-': 5, '-+': 5, '--': 27}, E = 11/16
   the joint distribution is fixed at the birth (u with the record); the click adds nothing that travels
+
+== 9. The cone test, L7: the pins and the readings
+  age             axis / diagonal: pin (29, 29), read (29, 29), equal
+  cone_links      axis / diagonal: pin (51, 8), read (51, 8), equal
+  cone_intervals  axis / diagonal: pin (23, 23), read (23, 23), equal
+  67 records per lamp, 134 gathers per world, one cell each

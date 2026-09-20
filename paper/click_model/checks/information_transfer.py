@@ -33,24 +33,38 @@ def section(title: str) -> None:
     print(f"\n== {title}")
 
 
+def flight_links(direction: tuple[int, int, int], age: int) -> int:
+    """The flight table of BEAM_LAW section 3: the Links stepped on
+    `direction` by `age`, m(age) = (2 age S_1 Q + T_d) // (2 T_d) with
+    T_d = isqrt(3 |v|^2 Q^2), Q = 64."""
+    scale = 64
+    s1 = sum(abs(c) for c in direction)
+    t_d = math.isqrt(3 * sum(c * c for c in direction) * scale * scale)
+    return (2 * age * s1 * scale + t_d) // (2 * t_d)
+
+
 def causal_cone() -> None:
-    """One Link per interval: the front of any information is the L1 ball.
-    The Euclidean speed of the front in the direction (cos, sin) is
-    1 / (|cos| + |sin|) in two dimensions and 1 / (|x| + |y| + |z|) on the
-    unit sphere in three."""
-    section("1. The causal cone: one Link per interval, an L1 front")
-    for degrees in (0, 15, 30, 45):
-        angle = math.radians(degrees)
-        speed = 1 / (abs(math.cos(angle)) + abs(math.sin(angle)))
+    """One Link per interval on a digital line whose pace the flight table
+    sets per direction: the Euclidean speed is 1 / sqrt 3 in every
+    direction to the line's rounding, so the front is a sphere; the Links
+    stepped per unit of Euclidean length are S_1 / |v| (1 on an axis,
+    sqrt 2 on the plane diagonal, sqrt 3 on the body diagonal)."""
+    section("1. The causal cone: the flight table, 1 / sqrt 3 in every direction")
+    age = 600
+    for direction in ((1, 0, 0), (1, 1, 0), (1, 1, 1), (3, 1, 0), (5, 2, 1)):
+        s1 = sum(abs(c) for c in direction)
+        length = math.sqrt(sum(c * c for c in direction))
+        links = flight_links(direction, age)
+        euclid = links * length / s1
         print(
-            f"  two dimensions, {degrees:2d} degrees off an axis: front speed {speed:.4f} Links per interval"
+            f"  {direction}: {links:4d} Links in {age} intervals, Euclidean distance {euclid:7.2f}"
+            f" = {euclid / age:.4f} per interval (1 / sqrt 3 = {1 / math.sqrt(3):.4f});"
+            f" Links per Euclidean Link {s1 / length:.4f}"
         )
     print(
-        f"  three dimensions, the body diagonal: {1 / math.sqrt(3):.4f}; the slowest direction of the front"
+        "  reading: c = a / (tau sqrt 3), isotropic; the L1 count is in the Links stepped, not in the time"
     )
-    print(
-        "  reading: c = a / tau along an axis; the front is an octahedron, not a sphere (an anisotropy of 42 percent)"
-    )
+    print("  measured (L7): 17 Links on +x and 24 on (1, 1, 0) both reached at the age 29")
 
 
 def wavelengths() -> None:
@@ -157,28 +171,51 @@ def landauer() -> None:
 
 
 def young_fringes() -> None:
-    """Two slits at (0, +-s/2), a screen at distance D. If the phase counts
-    Links crossed on a staircase path, the path difference is the L1 one,
-    |y - s/2| - |y + s/2|, constant (= -s) beyond |y| >= s/2: no periodic
-    fringes. If it counts Euclidean length, the difference is ~ y s / D and
-    the fringes are spaced lambda D / s."""
+    """Two slits at (0, +-s/2), a screen at distance D. Under the integer
+    form of `phase_per_link` the phase counts Links on a staircase path,
+    so the path difference is the L1 one, |y - s/2| - |y + s/2|, constant
+    (= -s) beyond |y| >= s/2: no periodic fringes. Under the pair form the
+    phase counts intervals, the flight is Euclidean, and the difference
+    is ~ y s / D with fringes spaced lambda D / s."""
     section(
-        "7. Two slits: the L1 path difference against the Euclidean one (s = 6, D = 44, lambda = 8 Links)"
+        "7. Two slits: the integer form (L1 Links) against the pair form (Euclidean intervals); s = 6, D = 44, lambda = 8"
     )
     s, distance, wavelength = 6, 44, 8.0
-    print("   y   L1 diff  Euclid diff   I_L1   I_Euclid")
+    print("   y   L1 diff  Euclid diff   I_links   I_intervals")
     for y in range(0, 25, 4):
         l1 = abs(y - s / 2) - abs(y + s / 2)
         euclid = math.hypot(distance, y - s / 2) - math.hypot(distance, y + s / 2)
         i_l1 = 2 + 2 * math.cos(2 * math.pi * l1 / wavelength)
         i_eu = 2 + 2 * math.cos(2 * math.pi * euclid / wavelength)
-        print(f"  {y:2d}   {l1:6.2f}   {euclid:8.3f}   {i_l1:5.2f}   {i_eu:5.2f}")
+        print(f"  {y:2d}   {l1:6.2f}   {euclid:8.3f}   {i_l1:5.2f}     {i_eu:5.2f}")
     print(
         f"  Euclidean fringe spacing lambda D / s = {wavelength * distance / s:.1f} Links; the L1 pattern has none beyond |y| = s / 2"
     )
     print(
-        "  the register's two-slit run: Pearson 0.368 with the cosine pattern, 0.744 with the incoherent sum (expectations.json)"
+        "  the register's two-slit world declares the pair form; its Pearson 0.368 with the cosine (L2) is not the L1 effect"
     )
+
+
+def cone_readings() -> None:
+    """Series L7 (the register): the pins from the flight table and the
+    readings of the two worlds on the one click's head 725d811f
+    (fingerprint 4bf55a62e6fd), every record alike."""
+    section("9. The cone test, L7: the pins and the readings")
+    axis_age = next(age for age in range(1, 200) if flight_links((1, 0, 0), age) >= 17)
+    diagonal_age = next(age for age in range(1, 200) if flight_links((1, 1, 0), age) >= 24)
+    step, n_steps = 3, 64
+    pins = {
+        "age": (axis_age, diagonal_age),
+        "cone_links": (step * 17 % n_steps, step * 24 % n_steps),
+        "cone_intervals": (step * axis_age % n_steps, step * diagonal_age % n_steps),
+    }
+    readings = {"age": (29, 29), "cone_links": (51, 8), "cone_intervals": (23, 23)}
+    for key, pin in pins.items():
+        read = readings[key]
+        print(
+            f"  {key:15s} axis / diagonal: pin {pin}, read {read}, {'equal' if pin == read else 'DIFFER'}"
+        )
+    print("  67 records per lamp, 134 gathers per world, one cell each")
 
 
 def distance(summary: dict) -> None:
@@ -203,6 +240,7 @@ def main() -> None:
     landauer()
     young_fringes()
     distance(summary)
+    cone_readings()
 
 
 if __name__ == "__main__":
