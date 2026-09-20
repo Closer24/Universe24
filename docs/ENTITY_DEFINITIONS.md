@@ -309,3 +309,82 @@ Architecture owns this contract and the skill/documentation links. The independe
 test owner reviews and verifies file/bundle equivalence and portability after
 both provider and consumer commits. Publish this contract's exact commit before
 handing behavior implementation to either developer.
+
+## Proposed, not built: one canonical definition per family (2026-09-20)
+
+The model owner, 2026-09-20 ([record 103](LOG_2026-09-20.md#103-the-owners-next-two-the-transmission-experiment-after-the-landing-and-every-known-family-as-an-entity-with-its-defining-keys)):
+"make sure all the known families are in entities with what is needed to
+define them." The architect's audit of the same day ([the catalog's
+family-name table](ENTITY_CATALOG.md#the-family-names-of-the-register);
+the cleanup plan, section 7): a definition of `event-entities-v1` carries
+`measured` and `detectors` only, so no family is defined in a definitions
+file today; the 158 registered worlds declare their families inline,
+written by their series' `make_worlds.py`, and a family used by two series
+is two literals (`light` in four spellings, `p` in six charges, seven names
+for the inert paid material). This section is the proposal for the owner's
+decision; nothing of it is built.
+
+**The change.** A definitions document gains an optional `families` list
+per definition, the world's family schema verbatim (`FAMILY_KEYS`: `name`,
+`quantum`, `charge`, `columns`, `lifetime`, `phase`, `phase_per_link`):
+
+```json
+{
+  "format": "event-entities-v2",
+  "entities": [
+    {
+      "name": "photon",
+      "families": [{"name": "light", "quantum": 1}],
+      "measured": [],
+      "detectors": []
+    }
+  ]
+}
+```
+
+A world that places an instance of the definition gets its families
+merged into the expanded world's `families` by name, in the order of the
+instances then of the definition; a family the world already declares is
+kept when every key agrees and refused when one differs (one owner of a
+value, no silent override, as an inline detector name colliding with an
+instance's is refused today). A definition of a family alone (an empty
+`measured`) is admitted, so that `families.json` can hold the catalog's
+rows with no apparatus. The engine's parser is untouched: it receives the
+expanded world as it does now. The physics is untouched: a family's keys
+are the same keys with the same bounds.
+
+**The cost.** One host module, `world_loading.py` (the format's version,
+the `families` key, the merge by name, about 60 lines and their tests in
+`tests/test_entity_definitions.py`: a family placed, a family agreeing, a
+family differing, a definition of a family alone, the portable bundle
+carrying it); one contract section here; one file
+`examples/events/entities/families.json` with the catalog's rows in the
+atom's units (`light`, `e`, `p`, `n`, `nuclear`, `nu`, `w`, `beta`,
+`apparatus`, `mass`, `probe`; the muon and the tau with `become`) and one
+`examples/events/entities/apparatus.json` with the external things and
+the sources of `amplitude-v1` (the lamp, the laser, the mirror, the wall,
+the slit, the screen, the probe, the clock, the pair source, the GHZ
+source, the splitter, the label rotation, the gate, the counter pair, the
+chooser); the check selector's `RESOURCE_CONSUMERS` gains the two files.
+
+**The migration.** Per series, its `make_worlds.py` writes
+`entity_definitions` and `entities` in place of the inline `families` and
+the inline apparatus it places, and the shipped worlds are written again;
+the loader's contract makes the expanded world byte-identical to the inline
+one where the definition equals the literal, so `events.jsonl` and
+`state.json` of every registered world stay identical and `run.json`
+differs only by `initialization_resolution` (the bundle's provenance),
+checked by the gate set replayed with `tools/run_series.py --list
+--compare`. The series whose families differ from the catalog's row by a
+unit convention (the proton's charge `4` in the nucleus and the weak
+series against `[1, 1]` in the atom's; the coupling series' test charges
+named `p` and `q`) keep their inline families and say so in their README,
+or rename their test charges, the owner's call: a family name is a record
+key on every line of `events.jsonl`, so a rename moves the digests. Order:
+the loader and its tests first (one pull request, host only), then the two
+definition files, then one series per commit with its replay.
+
+**What it does not do.** It does not define the content of a thing (a
+measured event's `amount` stays the world's), it does not add a key to the
+law, and it does not give a family whose defining key the law lacks (colour,
+oscillation, a hand) a definition: those stay on [the gap list](ENTITY_CATALOG.md#the-gap-list).
