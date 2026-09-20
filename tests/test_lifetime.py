@@ -161,7 +161,14 @@ def test_the_lifetime_click_books_the_escape_as_a_face_does(tmp_path):
         "absorbed": 0,
         "balanced": True,
     }
-    assert books["momentum"] == {"measured": [0, 0, 0], "transit": [0, 0, 0], "escaped": [64, 0, 0]}
+    # The momentum block gained the `turned` line with the meeting (2026-09-20),
+    # zero without the world key `meeting`.
+    assert books["momentum"] == {
+        "measured": [0, 0, 0],
+        "transit": [0, 0, 0],
+        "escaped": [64, 0, 0],
+        "turned": [0, 0, 0],
+    }
     border = simulation.face_detectors()[-1]
     assert border["name"] == LIFETIME_NAME and border["nodes"] == 0
     assert border["families"]["s"] == {

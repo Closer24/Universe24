@@ -19,15 +19,21 @@ The code: `src/event_universe/events/` (`world.py` the world file and its
 refusals, `measured.py` the measured event's record and the ledger,
 `nature_beam.py` the law (the record, the one reading `read_arrivals`, the
 flight table, the collision table, the store of records per family and the
-function `nature_beam`), `engine.py` the frame (`NatureBeamSimulation`: the clocks,
+function `nature_beam`), `meeting.py` the meeting (since 2026-09-20: the arc
+permutation of the direction table, the reading of the free crowd by a paid
+unit in transit, the turn by its phase register and the inverse, under the
+world key `meeting`; [BEAM_LAW section 3 step 3 and note 35](BEAM_LAW.md#3-the-nodes-interval-nature_beam)),
+`engine.py` the frame (`NatureBeamSimulation`: the clocks,
 the owed count, the steps, the books, the readings, the snapshot), `run.py`
 the artifacts of a run) on `src/event_universe/core/` (`integer.py`,
 `game_board.py`, `phase.py`). The tests: `tests/test_nature_beam_readings.py`,
 `tests/test_nature_beam_flight.py`, `tests/test_nature_beam_collision.py`,
 `tests/test_nature_beam_bijection.py`, `tests/test_nature_beam_detector.py`,
 `tests/test_nature_beam_reemission.py`, `tests/test_nature_beam_clock.py`,
-`tests/test_nature_beam_window.py`, `tests/test_nature_beam_world_parsing.py`,
-`tests/test_nature_beam_worlds.py`, `tests/test_nature_beam_push.py`, `tests/test_nature_beam_age.py`
+`tests/test_nature_beam_window.py`, `tests/test_nature_beam_window_reads.py`,
+`tests/test_nature_beam_world_parsing.py`,
+`tests/test_nature_beam_worlds.py`, `tests/test_nature_beam_push.py`, `tests/test_nature_beam_age.py`,
+`tests/test_meeting.py`
 ([expectations](TEST_EXPECTATIONS.md)). The
 worlds: [examples/events/](../examples/events/README.md).
 
@@ -260,10 +266,18 @@ the transit line the sum over the store of the one label of every row
 (`nature_beam.momentum_labels`: amount x content x u_d for a paid family,
 amount x u_d for a free family, whose unit carries no content; u_d the
 unit vector of the direction at the scale Q, the flight table's
-`labels`), the escaped line the faces' sums, every line in label units. For a paid family the three
-lines close over the click, the re-emission and the home (measured +
-transit + escaped constant; a `read` of a paid ray is a report of its
-label, the ray going on); for a free family the push is the form of
+`labels`), the escaped line the faces' sums, every line in label units, and, since
+2026-09-20, the `turned` line (`Ledger.turned_momentum`, per family under
+`families[<name>].turned` and the world's total under `momentum.turned`):
+what the meetings of the family's units in transit moved the transit
+momentum line by, `weight x (u_d' - u_d)` summed over the turns
+([BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam) step 3,
+the meeting under the world key `meeting`; zero without it). For a paid
+family the three lines close over the click, the re-emission and the
+home (measured + transit + escaped constant; a `read` of a paid ray is a
+report of its label, the ray going on), and under the meeting the transit
+line moves by the `turned` line, a report as the free push on a body is
+(measured + transit + escaped - turned constant); for a free family the push is the form of
 [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam) step 4
 (gravity and electricity) and its release takes no recoil, so its lines
 are a report and not a balance. Every escaped line is the sum over the
@@ -324,7 +338,14 @@ action of the turn by momentum, an integer from 1; absent by default:
 nothing turns by momentum); `age_bound` (the largest age a
 ray may carry, an integer from 1; twice the flight bound by default on a
 GameBoard with an open axis, required on a GameBoard periodic on every axis; a run
-in which a ray on the GameBoard carries an age beyond it is refused); `directions` (the declared primitive vectors beyond
+in which a ray on the GameBoard carries an age beyond it is refused); `meeting`
+(since 2026-09-20, true or false, false by default: under it every paid
+unit in transit reads the free crowd of the other numbers at every
+free-space Node after the collision and turns toward it by its phase
+register, [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam)
+step 3 and note 35; refused with a paid family without a phase circle,
+and refused when it is not true or false; the record carries it and the
+identity `meeting-v1` under `hypotheses` when it is true); `directions` (the declared primitive vectors beyond
 the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`
@@ -363,8 +384,24 @@ component}` with `reads` one of `scalar`, `outside`, `here`, `vector`,
 of the presence), the table generated from the keys by `world.default_table` (a
 free family read, a paid one measured, no window) and the world declaring
 only the entries that differ, `rule` optional in the object form, an entry
-equal to the default accepted and changing nothing; `lamp` `{rate: [n, d],
-directions, phase_window}` on a measured event of a paid family);
+equal to the default accepted and changing nothing; since 2026-09-20
+(issue #363, [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+the entry's `phase_window` may be an object `{"reads": "<family>",
+"offset": s}` in place of the number: the centre of the window is then the
+phase of the coherent pointer (`nature_beam.coherent_pointer`, the first
+moment over the circle, its nearest step `pointer_phases`) of the named
+family's rows present at the set in the interval, every row at the set but
+the reader's own number, rest and moving alike, as the presence counts
+them (`nature_beam.setting_steps`, read once per named family from the
+rows after the walk and the collision, before any table acts), plus the
+offset in phase steps (0 by default), the width the law's half circle;
+with no such row at the set, or a zero pointer, the entry passes with a
+`pass` record naming `window` None and `reads`; every `click` of such an
+entry carries the `window` used (`MeasuredDefinition.window_reads`,
+`Measured.window_reads`: per family the (family, offset) read, None for a
+number or none); `lamp` `{rate: [n, d],
+directions, phase_window}` on a measured event of a paid family, its
+window a number);
 `in_transit` (`position`, `family`, `number`,
 `direction` (a vector of D, or a rest index 0 or 1), `amount`, `phase`,
 optional `age`); `detectors` (`name`, `positions`, `threshold` 1 by
@@ -401,7 +438,12 @@ detector named as a face detector is, two measured events at one
 Node, an unknown table rule, N not
 a power of two, a detector on a Node without a measured event, a Node in
 two detectors, a `phase_window` outside 0 .. N - 1 or on `pass` or for a
-family without a phase circle, a table entry object with an unknown key (one
+family without a phase circle, a `phase_window` read from a reading that
+names an unknown family, a family without a phase circle or the entry's
+own family, whose `offset` is outside 0 .. N - 1, whose object has an
+unknown key or lacks `reads`, or that is declared on a lamp
+([a window read from a reading](TEST_EXPECTATIONS.md#a-window-read-from-a-reading)),
+a table entry object with an unknown key (one
 without `rule` takes the family's default rule), a `reads` outside the
 reading's components, a detector `reading` outside `beam` and `wave`, a `suspension`
 denominator of 0 ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-beam-law)),
@@ -426,15 +468,19 @@ D beyond the rest vectors and the headings; per family its `quantum`,
 (None without one), no `kind`),
 `numbers` (per measured event its `position`, `family`, `span` and
 `phase_by_momentum`; the measured events' states carry `span` too, as
-`state.json` does), `action` (h, or None), `hypotheses` (`bohr-v1` when `action` is
+`state.json` does), `action` (h, or None), `meeting` (the key as declared,
+false by default), `hypotheses` (`bohr-v1` when `action` is
 declared, the identity of the turn by momentum beside the law;
 `columns-v1` when a column beyond `charge` or a lifetime is declared,
-the identity of the one mechanism of the columns and their range; `[]`
-without either), `columns` (the
+the identity of the one mechanism of the columns and their range;
+`meeting-v1` when `meeting` is true; `[]`
+without any), `columns` (the
 world's, name and sign, in order: gravity, charge, the declared names)
 and per family `columns` (name, value, sign, aligned with the world's),
 the books per completed tick (`audit`, the `charge` line the
-exact rational sum of the measured events' charges as a reduced pair) with
+exact rational sum of the measured events' charges as a reduced pair, and
+since 2026-09-20 the `turned` line per family and in the momentum block)
+with
 `conserved_at_every_completed_tick`, the measured events' final states
 (`measured`: position, held per family, content, phase, charge (the pair
 rho x content, reduced), `charges` (the charge in every column by name,
@@ -456,9 +502,13 @@ per family (amount, content and, since 2026-09-20, the family's own
 momentum: the faces and the border summed; until then the world's total
 momentum was written into every family's line). `events.jsonl` holds one
 record per event: `home`, `read`, `click`, `rerelease` (per number and
-tick, with the amount, the phase, the push and the content), `pass` (a ray
+tick, with the amount, the phase, the push and the content; a `click` of
+an entry whose window is read from a reading carries the `window` used),
+`pass` (a ray
 below the threshold, with `threshold`, or outside the window, with
-`window`, or paired under `beam`, with `cancelled` true), `step` (the
+`window`, or paired under `beam`, with `cancelled` true; on an entry whose
+window is read from a reading also `reads`, the family read, and `window`
+None where no setting row was present), `step` (the
 measured event's number, its Node before and after, its momentum and,
 since 2026-09-20, its `phase` after the step: what the turn by momentum
 turned it to, the phase it had otherwise), `contact` (since 2026-09-20:

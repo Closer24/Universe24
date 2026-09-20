@@ -102,6 +102,7 @@ from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
 from event_universe.events.measured import Ledger, Measured, count_component
+from event_universe.events.meeting import ArcTable, arc_table, meet
 from event_universe.events.world import (
     AGE_READS,
     BEAM_LAW,
@@ -629,18 +630,23 @@ class NatureBeamTables:
     cosines: np.ndarray
     sines: np.ndarray
     window: np.ndarray
+    # The arc permutations of the direction table (the meeting, 2026-09-20;
+    # `meeting.ArcTable`): built per target on demand and cached.
+    arcs: ArcTable
 
 
 def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
     modulus = world.phase_steps
     distance = np.arange(modulus, dtype=np.int64)
     window = (4 * distance < modulus) | (4 * distance >= 3 * modulus)
+    flight = flight_table(world.directions)
     return NatureBeamTables(
-        flight_table(world.directions),
+        flight,
         collision_table(),
         np.array(phase_cosines(modulus), dtype=np.int64),
         np.array(phase_sines(modulus), dtype=np.int64),
         window,
+        arc_table(flight.labels),
     )
 
 
@@ -873,6 +879,45 @@ def pointer_phases(
                 best, least = k, distance
         found.append(best)
     return found
+
+
+def setting_steps(
+    store: NatureBeamStore,
+    node_event: np.ndarray,
+    ev_number: np.ndarray,
+    ev_set: np.ndarray,
+    set_count: int,
+    cosines: np.ndarray,
+    sines: np.ndarray,
+) -> list[int | None]:
+    """The setting a detector set reads off one family's rows present at
+    it this interval (a window read from a reading, `phase_window`
+    `{"reads": ..., "offset": ...}`; issue #363, 2026-09-20): per set the
+    nearest step of the coherent pointer of the store's rows at the set's
+    Nodes of every number but the Node's own (the one reading set, rest and
+    moving alike, as the presence counts them), None where no such row is
+    present or the pointer is zero. The same first moment over the circle
+    as the detector's record (`coherent_pointer`, `pointer_phases`), read
+    once per named family from the rows after the walk and the collision,
+    before any table acts."""
+    steps: list[int | None] = [None] * set_count
+    found = node_event[store.node]
+    at = np.flatnonzero(found >= 0)
+    if at.shape[0] == 0:
+        return steps
+    ev = found[at]
+    others = store.number[at] != ev_number[ev]
+    at, ev = at[others], ev[others]
+    if at.shape[0] == 0:
+        return steps
+    sets = ev_set[ev]
+    order = np.argsort(sets, kind="stable")
+    at, sets = at[order], sets[order]
+    starts = group_starts(sets)
+    x, y = coherent_pointer(store.amount[at], store.phase[at], starts, cosines, sines)
+    for set_index, step in zip(sets[starts].tolist(), pointer_phases(x, y, cosines, sines), strict=True):
+        steps[set_index] = step
+    return steps
 
 
 class NatureBeamStore:
@@ -1306,6 +1351,9 @@ class FamilyPlan:
     t_phase: list[int] = field(default_factory=list)
     t_carried: list[int] = field(default_factory=list)
     t_label: list[list[int]] = field(default_factory=list)
+    # The window used per taken row, for the entries whose window is read
+    # from a reading (issue #363; empty for a family without one).
+    t_window: list[int] = field(default_factory=list)
     # The detector set's reading of what clicked, per set: under `wave` the
     # coherent pointer (X, Y), exact; under `beam` the count clicked; and
     # the set's phase (None for a zero pointer). The units a beam set
@@ -1518,6 +1566,11 @@ def nature_beam(
                     f"{definition.name!r} of lifetime {definition.lifetime} on the GameBoard: the "
                     "click on the border `lifetime` has no inverse (as a face click has none)"
                 )
+        # The meeting's inverse first (the inverse order of the interval:
+        # the meeting, then the table, then the walk), read back from the
+        # untouched crowd (`meeting.meet`).
+        if world.meeting:
+            meet(stores, world, tables, occupied, ledger, inverse=True)
         for family, store in enumerate(stores):
             if store.size == 0:
                 continue
@@ -1647,6 +1700,12 @@ def nature_beam(
     # 3. The collision.
     for store in stores:
         collide(store, backward=False)
+    # Then the meeting (the model owner, 2026-09-20, "DECIDED: the meeting,
+    # M-R"; under the world key `meeting`): at every Node of free space every
+    # paid unit reads the free crowd of the other numbers and turns toward
+    # it by its phase register; the crowd untouched (`meeting.meet`).
+    if world.meeting:
+        meet(stores, world, tables, occupied, ledger)
 
     # 4. The measured events' tables and the detectors, the same rule at
     # every measured event taken in bulk by the host: the rows at measured
@@ -1681,6 +1740,26 @@ def nature_beam(
         for set_index, detector_set in set_of.items():
             st_threshold[set_index] = detector_set.threshold
             st_wave[set_index] = detector_set.wave
+        # The windows read from a reading (issue #363, 2026-09-20): per
+        # (measured event, family) the family whose rows at the set give the
+        # centre (-1 for a declared or absent centre) and the offset; the
+        # settings per set, read once per named family from the rows
+        # present after the walk and the collision, before any table acts
+        # (-1 where the set holds no such row or the pointer is zero).
+        ev_read_family = np.array(
+            [[-1 if w is None else w[0] for w in e.window_reads] for e in entries], dtype=np.int64
+        ).reshape(events, count)
+        ev_read_offset = np.array(
+            [[0 if w is None else w[1] for w in e.window_reads] for e in entries], dtype=np.int64
+        ).reshape(events, count)
+        settings = np.full((count, set_count), -1, dtype=np.int64)
+        for named in np.unique(ev_read_family[ev_read_family >= 0]).tolist():
+            steps_of = setting_steps(
+                stores[named], node_event, ev_number, ev_set, set_count, tables.cosines, tables.sines
+            )
+            for set_index, step in enumerate(steps_of):
+                if step is not None:
+                    settings[named, set_index] = step
         half = modulus // 2
         presence = np.zeros((count, events), dtype=np.int64)
         # The age moment over the same set, the measured event's reading of
@@ -1774,11 +1853,14 @@ def nature_beam(
                 plan.h_phase = phase[home].tolist()
                 plan.events.update(h_events)
 
-            def admit() -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray] | None:
+            def admit() -> (
+                tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray] | None
+            ):
                 """The rows the threshold, the window and the rule admit,
                 grouped by (measured event, number): the rows, the amounts
                 that click (after `beam`'s pairing), the units the pairing
-                keeps, the rules and the sets; None when nothing is met."""
+                keeps, the rules, the sets and the windows used; None when
+                nothing is met."""
                 # Met: the arrivals of every other number at a table that is
                 # not `pass`, ordered by detector set (then measured event,
                 # then row): the threshold on the amount summed over the set.
@@ -1830,9 +1912,26 @@ def nature_beam(
                 below = np.repeat(below_set, s_sizes)
                 if wave_rows.any():
                     below = np.where(wave_rows & absorbs, np.repeat(below_wave, s_sizes), below)
+                # A window read from a reading: the centre is the setting of
+                # the row's set off the named family plus the offset; a set
+                # without a setting (-2 on the row) admits nothing, and the
+                # row passes naming `window` None.
+                read_family = ev_read_family[ev_m, family]
+                reading_window = read_family >= 0
+                unset = np.zeros(window.shape[0], dtype=bool)
+                if reading_window.any():
+                    centre = settings[read_family[reading_window], st_m[reading_window]]
+                    unset[reading_window] = centre < 0
+                    window = window.copy()
+                    window[reading_window] = np.where(
+                        centre < 0,
+                        -2,
+                        (centre + ev_read_offset[ev_m, family][reading_window]) % modulus,
+                    )
                 inside = (window < 0) | (
                     (read_phase >= 0) & tables.window[(read_phase - window) % modulus]
                 )
+                inside &= ~unset
                 passing = below | ~inside
                 p = np.flatnonzero(passing)
                 if p.shape[0]:
@@ -1849,12 +1948,14 @@ def nature_beam(
                     plan.p_below = below[p].tolist()
                     plan.p_window = window[p].tolist()
                     plan.events.update(p_events)
-                taken = met[~passing]
-                if taken.shape[0] == 0:
+                kept = np.flatnonzero(~passing)
+                if kept.shape[0] == 0:
                     return None
                 # The taken rows grouped by (measured event, number), the
                 # rows of a group in row order.
-                taken = taken[np.lexsort((number[taken], ev[taken]))]
+                kept = kept[np.lexsort((number[met[kept]], ev[met[kept]]))]
+                taken = met[kept]
+                window_t = window[kept]
                 a_t = amount[taken].copy()
                 rule_t = ev_rule[ev[taken], family]
                 st_t = ev_set[ev[taken]]
@@ -1904,7 +2005,7 @@ def nature_beam(
                     # The paired units go on: the row keeps them and stays.
                     store.amount[at[taken[c_rows]]] = cancelled[c_rows]
                     plan.events.update(ev[taken[c_rows]].tolist())
-                return taken, a_t, cancelled, rule_t, st_t
+                return taken, a_t, cancelled, rule_t, st_t, window_t
 
             admitted = admit()
             # The one reading over the set: ONE moment table with the two
@@ -1946,6 +2047,8 @@ def nature_beam(
                 return plan
             taken, a_t, cancelled = taken_all[survivors], a_t_all[survivors], cancelled_all[survivors]
             rule_t, st_t = admitted[3][survivors], admitted[4][survivors]
+            if (ev_read_family[:, family] >= 0).any():
+                plan.t_window = admitted[5][survivors].tolist()
             ev_t, num_t = ev[taken], number[taken]
             new = np.concatenate((NEW_RUN, (ev_t[1:] != ev_t[:-1]) | (num_t[1:] != num_t[:-1])))
             g_starts = np.flatnonzero(new)
@@ -2090,6 +2193,10 @@ def nature_beam(
                 name = families[family].name
                 free = free_of[family]
                 rule = entry.table[family]
+                # The entry's window read from a reading, if any: its
+                # `pass` and `click` lines name the family read and the
+                # centre used (issue #363).
+                window_read = entry.window_reads[family]
                 home_plan = plan.home.get(i)
                 if home_plan is not None:
                     k0, k1, total, carried, taken_in = home_plan
@@ -2139,7 +2246,10 @@ def nature_beam(
                             line["window"] = None
                             line["threshold"] = entry.threshold
                         else:
-                            line["window"] = plan.p_window[k]
+                            centre = plan.p_window[k]
+                            line["window"] = None if centre < 0 else centre
+                        if window_read is not None:
+                            line["reads"] = families[window_read[0]].name
                         record(line)
                 if record is not None:
                     for other, amount_c, phase_c in plan.cancelled.get(i, ()):
@@ -2245,22 +2355,23 @@ def nature_beam(
                         ledger.held_measured[family] += group_content
                         if record is not None:
                             for k in range(k0, k1):
-                                record(
-                                    {
-                                        "event": "click",
-                                        "tick": tick,
-                                        "node": node,
-                                        "measured": entry.number,
-                                        "detector": detector,
-                                        "family": name,
-                                        "number": other,
-                                        "amount": plan.t_amount[k],
-                                        "push": plan.t_label[k],
-                                        "phase": plan.t_phase[k],
-                                        "content": plan.t_carried[k],
-                                        "reading": reading_value,
-                                    }
-                                )
+                                click_line: dict[str, object] = {
+                                    "event": "click",
+                                    "tick": tick,
+                                    "node": node,
+                                    "measured": entry.number,
+                                    "detector": detector,
+                                    "family": name,
+                                    "number": other,
+                                    "amount": plan.t_amount[k],
+                                    "push": plan.t_label[k],
+                                    "phase": plan.t_phase[k],
+                                    "content": plan.t_carried[k],
+                                    "reading": reading_value,
+                                }
+                                if window_read is not None:
+                                    click_line["window"] = plan.t_window[k]
+                                record(click_line)
                 # The set's record, once per set per family per interval,
                 # after the set's last active measured event: under `wave`
                 # the pointer's square, under `beam` the count clicked,

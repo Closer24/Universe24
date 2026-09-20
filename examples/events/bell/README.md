@@ -126,3 +126,130 @@ interval): the same counts, S = 2 and S' = 3/2 exactly, 326 criteria, 0
 failed. The engine of that run is deleted
 ([migration](../../../docs/MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1));
 the reading keeps its scope.
+
+## The choosers on the GameBoard (issue #363, 2026-09-20)
+
+Seven more worlds of one design, written by `make_chooser_worlds.py` (its
+docstring is the derivation); the register entry is
+[A2 with the choosers on the GameBoard (2026-09-20)](../../../docs/EXPERIMENTS.md#a2-with-the-choosers-on-the-gameboard-2026-09-20).
+The model owner's question ("Alice and Bob are part of the GameBoard, no?"):
+in A2 the settings are numbers in the file, a hand from outside the
+universe, so its S = 2 is established only given a free choice from
+outside, and a deterministic model is suspect of superdeterminism (the
+settings and the pairs correlated through a common past). Here each
+counter's window is read from the phase of a ray arriving from a third
+source (Alice's) and a fourth (Bob's), the key `phase_window` `{"reads":
+"<family>", "offset": s}` ([ENGINE](../../../docs/ENGINE.md#the-beam-law-beam-v1),
+[BEAM_LAW note 34](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+the settings are events of the GameBoard with a past of their own, and
+the question is whether the law carries a correlation from the initial
+state to things that never met. The prediction, written before the run:
+S = 2 exactly with every E on the triangle, the marginals 1/2.
+
+### The design
+
+The bar of 21 x 1 x 1 and the pair lamp of `light` at x = 10 as in A2
+(content K + 2, the phase a mod 64 on the release of age a), K = 15 x 2^20
+(divisible by 15, and large enough that the pair lamp's turn stays exactly
+1 over 1940 intervals), N 64, `suspension` 0, `release` [1, 2^26], the
+families `light` and `counter` (paid) and `sa` and `sb` (free, a phase
+circle each; different families never collide). Two setting lamps, free
+measured events held in place: `sa` at x = 0 (content 64 K / 5, phase 7,
+one row of 3 units per interval toward +X: its clock turns 12, 13, 13, 13,
+13 steps per interval, the phases 7, 19, 32, 45, 58 and again, the period
+5) and `sb` at x = 20 (content 64 K / 3, phase 40, one row of 5 units per
+interval toward -X: the turns 21, 21, 22, the period 3). A free release
+costs nothing, so the turns stay exactly periodic; a paid lamp's content
+falls and its turn drifts. The three lamps share nothing: different
+strides (1, 12.8, 21.3), different starting phases (0, 7, 40), and no
+suspension (no clock reads another's rays). Four counters of content 1,
+each its own `wave` detector of threshold 1, passing `sa` and `sb`
+(`pass`: no push, no record, the rays go on to the faces) and measuring
+`light` through a window read from the stream of their side:
+
+| Counter | x | Links from its lamp | `sa` / `sb` rows at its Node | `light` entry | Reads |
+| --- | --- | --- | --- | --- | --- |
+| `alice_plus` | 7 | 7 | 1 (the flight age 12) | `{"reads": "sa", "offset": 57}` | the ray's phase + 57 |
+| `alice_minus` | 4 | 4 | 1 (the age 7) | `{"reads": "sa", "offset": 25}` | the same + 32 |
+| `bob_plus` | 17 | 3 | 2 (the ages 5, 6) | `{"reads": "sb", "offset": 0}` | the pointer of two consecutive releases |
+| `bob_minus` | 18 | 2 | 2 (the ages 3, 4) | `{"reads": "sb", "offset": 32}` | the same + 32 |
+
+Why these Nodes and periods: a ray of a heading dwells one or two
+intervals at a Node (32 Links per 55 intervals), so a stream of one row
+per interval holds a constant one or two rows at each Node; the plus and
+minus counters of a side must read the SAME setting for one pair, or the
+minus window is not the complement of the plus window and pairs are lost,
+so the stream's phase must be periodic in the releases with a period that
+divides the shift between the two readings (10 releases for Alice, 3 for
+Bob); and the periods must be odd, coprime to each other and to the
+circle of 64, so that every (a, b) combination meets every phase of the
+pair lamp equally (the joint period 15, the pair's 64: over 960 pairs each
+of the 15 combinations sees each phase once). A two-valued setting from
+one clock (0 / 16) has a period that divides 64 and would share a residue
+of the interval with the pair's phase: a correlation built by the file.
+The offsets put Alice's settings at 0, 12, 25, 38, 51 and Bob's at 8, 29,
+51 (the bisectors of 40/61, 61/18 and 18/40, read with the engine's
+tables); the quadruple read is Alice's 0 and 25 with Bob's 8 and 29
+(0 < 8 < 25 < 29, within a half circle: the triangle gives S = 2 on it).
+The pair ray of age a reaches x = 7 at tick a + 6, x = 4 at a + 11, x = 17
+at a + 13 and x = 18 at a + 14; the first `sa` ray reaches x = 7 at tick
+13, so the pairs 0..6 are the warm-up (no setting at Alice's plus counter)
+and the ages 7..1926, 1920 pairs (128 per combination), are analysed;
+1940 intervals.
+
+| World | What differs | Reads |
+| --- | --- | --- |
+| `read.json` | the run | every E, S, the largest S over the 5 x 3 settings' quadruples, the marginals |
+| `written_a0_b8.json`, `written_a0_b29.json`, `written_a25_b8.json`, `written_a25_b29.json` | control 1: the streams present, the windows written in the file (A2's form), 128 pairs each | S = 2 over the four |
+| `fixed.json` | control 2: the streams released with the settings fixed (the lamps' contents 3 and 5 at `release` [1, 1], the turn 0; Alice's phase 0, Bob's 8) | E(0, 8) = 1/2, A2's |
+| `one_clock.json` | control 3: the three lamps fed from one clock (the setting lamps with the pair lamp's stride 1 and phase 0, content K at `release` [1, K]) | a correlation built in on purpose, seen |
+
+### Run and analyse
+
+```bash
+python examples/events/bell/make_chooser_worlds.py   # rewrites the seven worlds, unchanged
+for w in read written_a0_b8 written_a0_b29 written_a25_b8 written_a25_b29 fixed one_clock; do
+  python -m event_universe --init examples/events/bell/$w.json --output artifacts/bell363/$w
+done
+python tools/bell_choosers.py artifacts/bell363/read --replay 20
+python tools/bell_choosers.py artifacts/bell363/written_a0_b8 artifacts/bell363/written_a0_b29 \
+    artifacts/bell363/written_a25_b8 artifacts/bell363/written_a25_b29
+python tools/bell_choosers.py artifacts/bell363/fixed
+python tools/bell_choosers.py artifacts/bell363/one_clock
+```
+
+`tools/bell_choosers.py` (standard library and the engine's own functions
+for the replay; `fractions.Fraction`, no float in a criterion) reads the
+offsets off the record (tick - phase mod 64, one value per counter), bins
+the pairs by the window carried on the plus counters' click and pass
+lines, checks that every minus window is the plus window's complement,
+that every analysed age has exactly one outcome per side, that every
+click is inside its window and every pass outside, and prints per bin the
+counts, E, the triangle and the marginals, S on the quadruple, the largest
+S over every quadruple that occurred (the four placements of the minus
+sign) against the triangle's own, and no-signalling (each side's marginal
+per own setting, equal across the other side's settings), every line
+labelled DETECTOR or GAMEBOARD (`--replay`: the rows of the streams at the
+counters' Nodes per interval). `tests/test_bell_choosers.py` pins the tool
+to the engine on a minimal case; no test pins these worlds' numbers.
+
+### Result (2026-09-20)
+
+The worktree of `claude/universe24-new-3ytqde` from its tip `9379b01c`
+with the key added, source fingerprint
+`38792132301970e7c276cfee4184534dcd2223fe3a4d906c78be3714afd5c142`,
+Python 3.14.0rc2, numpy 2.5.3, headless, about 5 s for 1940 intervals.
+`read`: the offsets 6, 11, 13, 14; the warm-up 7; 1920 pairs in 15 bins of
+128; every E the triangle exactly (E(0, 8) = 1/2 with 48 / 16 / 16 / 48,
+E(0, 29) = -13/16, E(25, 8) = -1/16, E(25, 29) = 3/4, E(51, 51) = 1, and
+the ten others); S = 2 exactly on (0, 25) x (8, 29); the largest S over
+the 5 x 3 settings' quadruples 2, on (0, 12) x (8, 29), the triangle's
+own; every marginal 1/2 exactly; 46 criteria, 0 failed. The controls: the
+four written worlds S = 2 exactly, 91 criteria, 0 failed; `fixed`
+E(0, 8) = 1/2 (48 / 16 / 16 / 48), 24 criteria, 0 failed; `one_clock` 64
+bins of one phase each, E = 1 in every bin (both plus counters click every
+pair, the minus counters never), no quadruple of settings occurs, 68 of
+214 criteria failed: the correlation built by the file is seen. The
+verdict: the law does not correlate what never met; Bell's assumption is
+a measurement here, not an assumption; S = 2 stands with the choosers on
+the GameBoard, the model's limit as before.

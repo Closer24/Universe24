@@ -49,6 +49,22 @@ prints the counts, E, S and every criterion; the register entry is
 [A2, under the Beam Law (2026-09-19)](../../docs/EXPERIMENTS.md#a2-under-the-beam-law-2026-09-19):
 S = 2 exactly, the model's limit, unchanged from the law of events.
 
+The same folder holds the seven worlds of the run with the choosers on the
+GameBoard (issue #363), written by `bell/make_chooser_worlds.py`: the same
+bar and pair lamp, and four counters whose windows are not written in the
+file but read from the phase of a stream arriving from a third lamp
+(`sa`, at x = 0, Alice's) and a fourth (`sb`, at x = 20, Bob's), the key
+`phase_window` `{"reads": "<family>", "offset": s}`; the streams have odd
+periods (5 and 3) coprime to each other and to the circle, so every
+combination of settings meets every phase of the pair; `read.json` is the
+run, `written_a<a>_b<b>.json`, `fixed.json` and `one_clock.json` its
+three controls. `tools/bell_choosers.py` bins the clicks by the window
+they carry and prints every E, S on the quadruple, the largest S over
+every quadruple that occurred and the marginals; the register entry is
+[A2 with the choosers on the GameBoard (2026-09-20)](../../docs/EXPERIMENTS.md#a2-with-the-choosers-on-the-gameboard-2026-09-20):
+S = 2 exactly with every E on the triangle, the law found not to
+correlate what never met.
+
 ## The coupling series
 
 The folder [coupling/](coupling/README.md) holds the twenty-one worlds of
@@ -223,7 +239,16 @@ collision would have turned and the Nodes shared with the crowd
 the deflection 0.000 pixel and the delay 0.00 interval at a crowd where
 nature would capture the beam, the derivation of the physicist's entry 2
 held: light is neither bent nor delayed in this law, a plain
-disagreement with nature, registered and not tuned.
+disagreement with nature, registered and not tuned. Since the meeting
+(2026-09-20, the world key `meeting`, [BEAM_LAW note 35](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+the folder also holds the four worlds under the key
+(`<name>_meeting.json`) and `lens_meeting.json`, two beams at +-b on a
+longer box; the register entry
+[K under the meeting (2026-09-20)](../../docs/EXPERIMENTS.md#k-under-the-meeting-2026-09-20):
+light bent toward the mass with the sign of gravity, the M / b form and
+the grain of the fan (-1.8 to -4.4 pixels; the lens crossing 71 Links
+past the mass), not delayed in time, the mass measuring the light turned
+into it; registered, 14 readings inside and 9 outside, not tuned.
 ## The entity catalog
 
 The folder [catalog/](catalog/README.md) holds the four worlds of

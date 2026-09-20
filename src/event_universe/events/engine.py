@@ -251,6 +251,8 @@ class NatureBeamSimulation:
             clicks=[0] * count,
             contact=tuple(definition.contact) + (CONTACT_DEFAULT,) * (count - len(definition.contact)),
             contacts=[0] * count,
+            window_reads=tuple(definition.window_reads)
+            + (None,) * (count - len(definition.window_reads)),
         )
 
     def occupant(self, node: Address3) -> int | None:
@@ -705,7 +707,15 @@ class NatureBeamSimulation:
                 and bool(in_transit["balanced"])
                 and bool(content["balanced"])
             )
-            families[family.name] = {"measured": measured, "transit": in_transit, "content": content}
+            families[family.name] = {
+                "measured": measured,
+                "transit": in_transit,
+                "content": content,
+                # The `turned` line (the meeting, 2026-09-20): what the turns
+                # of the family's units in transit moved the transit momentum
+                # line by, a report as `pushed` is; zero without `meeting`.
+                "turned": list(ledger.turned_momentum[index]),
+            }
         return {
             "tick": self.tick,
             "families": families,
@@ -713,6 +723,7 @@ class NatureBeamSimulation:
                 "measured": held_momentum,
                 "transit": counted["momentum"] if counted is not None else self.transit_momentum(),
                 "escaped": ledger.escaped_momentum(),
+                "turned": ledger.turned_momentum_total(),
             },
             "charge": list(rational_sum(charges)),
             "balanced": balanced,
