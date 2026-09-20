@@ -63,6 +63,7 @@ product of their sets with the CNOT's permutation (`join`).
 from __future__ import annotations
 
 import itertools
+import math
 from dataclasses import dataclass, field
 
 from event_universe.core.phase import (
@@ -85,8 +86,9 @@ NO_NODE: Node = (-1, -1, -1)
 AMPLITUDE_SCALE = 32
 # The identity entry of a plain set's residual: the rotation's entries are
 # in 1/256^2, so a set that rotates nothing scales by 256^2, and every
-# arm's factors are in one unit.
-IDENTITY = PHASE_COSINE_SCALE * PHASE_COSINE_SCALE
+# arm's factors are in one unit (named for the rotation; `nature_beam`'s
+# `IDENTITY` is the 3 x 3 identity of the headings).
+ROTATION_IDENTITY = PHASE_COSINE_SCALE * PHASE_COSINE_SCALE
 # The joint label of a row is its `branch` column: the label in the low
 # 32 bits, the arm it flies on above them.
 LABEL_BITS = 32
@@ -95,7 +97,7 @@ LABEL_MASK = (1 << LABEL_BITS) - 1
 # the identity rotation, (32 x 256 x 256^2)^2 = 2^58; a record's `total`
 # over this unit is its norm as offered (1 up to the tables' rounding and
 # the cross terms of paths meeting at one Node).
-UNIT = (AMPLITUDE_SCALE * PHASE_COSINE_SCALE * IDENTITY) ** 2
+UNIT = (AMPLITUDE_SCALE * PHASE_COSINE_SCALE * ROTATION_IDENTITY) ** 2
 PLUS, MINUS = 0, 1
 CHANNEL_NAMES = {PLUS: "+", MINUS: "-"}
 
@@ -151,19 +153,6 @@ def lcm(a: int, b: int) -> int:
     return a * b // gcd(a, b) if a and b else max(a, b)
 
 
-def isqrt(value: int) -> int:
-    """The integer square root of a nonnegative Python integer (Newton on
-    the host's integers, exact)."""
-    if value < 2:
-        return value
-    x = 1 << ((value.bit_length() + 1) // 2)
-    while True:
-        y = (x + value // x) // 2
-        if y >= x:
-            return x
-        x = y
-
-
 def common_denominator(held: int, arriving: int) -> tuple[int, int, int]:
     """Two multiplicities of one record at one offer (the design's 2.5;
     stage (vii)): the offer's pointers are amplitudes over the square root
@@ -176,7 +165,7 @@ def common_denominator(held: int, arriving: int) -> tuple[int, int, int]:
     refuses: the integer form has no cross term over sqrt(D m))."""
     common = gcd(held, arriving)
     a, b = held // common, arriving // common
-    root_a, root_b = isqrt(a), isqrt(b)
+    root_a, root_b = math.isqrt(a), math.isqrt(b)
     if root_a * root_a != a or root_b * root_b != b:
         return (0, 0, 0)
     return root_b, root_a, held * b
@@ -348,10 +337,6 @@ class Layer:
         while identity in self.aliases:
             identity = self.aliases[identity]
         return self.records.get(identity)
-
-    def origin(self, identity: int) -> int:
-        """The identity a row was born to, as the gate's label map keys it."""
-        return identity
 
     def birth(
         self,
@@ -538,7 +523,7 @@ class Layer:
         offer.last_tick = tick
         if not absorbed:
             # A read: the factor selects the label, once per label present.
-            offer.residuals.setdefault(label, {})[(NO_NODE, label)] = (IDENTITY, 0)
+            offer.residuals.setdefault(label, {})[(NO_NODE, label)] = (ROTATION_IDENTITY, 0)
             return
         at = NO_NODE if node is None else node
         scale = 1
@@ -580,7 +565,7 @@ class Layer:
         offer.pointers[key] = cadd(offer.pointers.get(key, (0, 0)), pointer)
         if rotation is None:
             channel = offer.residuals.setdefault(label, {})
-            channel[key] = cadd(channel.get(key, (0, 0)), cmul((IDENTITY, 0), pointer))
+            channel[key] = cadd(channel.get(key, (0, 0)), cmul((ROTATION_IDENTITY, 0), pointer))
         else:
             offer.rotated = True
             if offer.setting is None:

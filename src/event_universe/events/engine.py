@@ -209,7 +209,7 @@ class NatureBeamSimulation:
                 content=np.array([content]),
                 arrival=np.array([NO_ARRIVAL]),
                 # A declared ray is a row of no record: it ends without an
-                # offer under the amplitude key (a record is born by a lamp).
+                # offer in a recorded world (a record is born by a lamp).
                 record=np.array([NO_RECORD]),
                 branch=np.array([NO_BRANCH]),
                 multiplicity=np.array([ONE_PATH]),
@@ -227,7 +227,6 @@ class NatureBeamSimulation:
         # design's order, the measured events outside every declared
         # detector by number, the declared detectors, the faces in Port
         # order and the border.
-        self.layer: Layer | None = None
         keys: list[tuple[str, int]] = []
         names: list[str] = []
         declared = len(world.detectors)
@@ -243,7 +242,7 @@ class NatureBeamSimulation:
         if world.lifetimes:
             keys.append(("border", 0))
             names.append(LIFETIME_NAME)
-        self.layer = Layer(
+        self.layer: Layer = Layer(
             names,
             keys,
             self.detector_sets,
@@ -892,7 +891,7 @@ class NatureBeamSimulation:
         # The `cancelled` and `remainder` lines are written in a recorded
         # world alone (a lamp declared): a world without a lamp has no
         # record and no line.
-        amplitude = self.world.recorded
+        recorded = self.world.recorded
         handed = self.world.handed
         # One pass over the measured events: what they hold per family,
         # their momentum and their charge (rho x content of the free
@@ -948,9 +947,9 @@ class NatureBeamSimulation:
                 "absorbed": ledger.transit_absorbed[index],
             }
             # The `cancelled` line (the amplitude law): what the merge's
-            # cancel removed, on the transit and content lines under the key
+            # cancel removed, on the transit and content lines of a recorded world
             # only (zero without it, the lines as they were).
-            if amplitude:
+            if recorded:
                 in_transit["cancelled"] = ledger.cancelled_amount[index]
             in_transit["balanced"] = in_transit["initial"] + in_transit["released"] == (
                 in_transit["current"]
@@ -978,7 +977,7 @@ class NatureBeamSimulation:
                 "escaped": ledger.escaped_content(index),
                 "absorbed": ledger.content_absorbed[index],
             }
-            if amplitude:
+            if recorded:
                 content["cancelled"] = ledger.cancelled_content[index]
             content["balanced"] = content["initial"] + content["released"] == (
                 content["current"]
@@ -1001,7 +1000,7 @@ class NatureBeamSimulation:
                 # line by, a report as `pushed` is; zero without `meeting`.
                 "turned": list(ledger.turned_momentum[index]),
             }
-            if amplitude:
+            if recorded:
                 # The labels the cancel removed from the transit momentum line.
                 lines["cancelled"] = list(ledger.cancelled_momentum[index])
                 # The labels of a record's rows beyond the shares matter took
@@ -1014,7 +1013,7 @@ class NatureBeamSimulation:
             "escaped": ledger.escaped_momentum(),
             "turned": ledger.turned_momentum_total(),
         }
-        if amplitude:
+        if recorded:
             momentum["cancelled"] = ledger.cancelled_momentum_total()
             momentum["remainder"] = ledger.remainder_momentum_total()
         return {

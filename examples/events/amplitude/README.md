@@ -6,7 +6,8 @@ The decision, in the model owner's words (Highlights 5.4, 2026-09-20):
 "go for it with the four recommendations and the unifications"; the design
 is the physicist's and the mathematician's `docs/designs/amplitude-v1/DESIGN.md`,
 every integer below from its check scripts (`mz.py`, `mz.txt`), written
-before any run. Under the world key `amplitude` the GameBoard is unchanged
+before any run. In a recorded world (a lamp declared; the key `amplitude` of
+the law's first stages is deleted since the one click) the GameBoard is unchanged
 (the flight, the collision, the meeting, the books over every row), the
 rows carry a record, a branch and a multiplicity, a re-emission may split a
 row by integer weights, antiphase rows of one record cancel at the merge,

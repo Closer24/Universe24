@@ -102,6 +102,7 @@ from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
 from event_universe.events.amplitude import (
+    AMPLITUDE_SCALE,
     LABEL_BITS,
     LABEL_MASK,
     Layer,
@@ -164,11 +165,11 @@ DIMENSIONS = 3
 # The collision's slots: the six headings in Port order and the two rest slots.
 COLLISION_SLOTS = 8
 SLOT_STATES = 3
-# The amplitude of one unit in 32nds: a row of `amount` identical rays (one
-# phase) is the coherent sum of its units, A = 32 x amount, so that the
-# merge of identical rows (a bookkeeping bijection) leaves the reading
-# unchanged; two rows in phase add their amplitudes.
-AMPLITUDE_SCALE = 32
+# The amplitude of one unit in 32nds (`AMPLITUDE_SCALE`, defined once in the
+# layer's module): a row of `amount` identical rays (one phase) is the
+# coherent sum of its units, A = 32 x amount, so that the merge of identical
+# rows (a bookkeeping bijection) leaves the reading unchanged; two rows in
+# phase add their amplitudes.
 # The cosine and sine tables are in 256ths; their rounding puts the length
 # of an entry (C, S) below 257 for every N from 2 through 4096
 # (`test_nature_beam_detector` (e) checks it), so one unit's amplitude at a phase
@@ -213,7 +214,7 @@ class NatureBeam:
     # The amplitude law's three columns (`amplitude-v1`, 2026-09-20; BEAM_LAW
     # note 37): the record the row belongs to (the birth's identity, the
     # emitter's number x 2^32 + the birth's ordinal at the emitter; 0 for a
-    # row of no record, every row without the key), the row's branch (the
+    # row of no record), the row's branch (the
     # joint label of the row within its record, with the arm it flies on in
     # the high bits; 0 without) and its multiplicity m (the product of the
     # norms of the splits the row's path passed; 1 without). The flight and
@@ -752,7 +753,7 @@ FIELDS = (
 )
 # The fields that make two rows identical (the amount is what the merge
 # adds); since `amplitude-v1` the record, the branch and the multiplicity
-# too (constant 0, 0, 1 without the key, so the packed key and the order of
+# too (constant 0, 0, 1 on a row of no record, so the packed key and the order of
 # the merge are what they were), and since `hand-v1` the hand (constant 0
 # without a declaration, a width of 0 bits in the packed key: two rows of
 # opposite hands are two rows and never merge or cancel).
@@ -772,11 +773,11 @@ IDENTITY_FIELDS = (
 NO_RECORD = 0
 NO_BRANCH = 0
 ONE_PATH = 1
-AMPLITUDE_DEFAULTS = {"record": NO_RECORD, "branch": NO_BRANCH, "multiplicity": ONE_PATH, "birth": 0}
+NO_RECORD_COLUMNS = {"record": NO_RECORD, "branch": NO_BRANCH, "multiplicity": ONE_PATH, "birth": 0}
 # The columns a caller may leave out of `append`: the record's four and
 # the hand (a row without a declaration has none).
-COLUMN_DEFAULTS = {**AMPLITUDE_DEFAULTS, "hand": NO_HAND}
-# The place of `phase` in the identity fields: the merge under the key
+COLUMN_DEFAULTS = {**NO_RECORD_COLUMNS, "hand": NO_HAND}
+# The place of `phase` in the identity fields: the merge of a record's rows
 # reads it modulo the half circle with a sign (the cancel).
 PHASE_FIELD = IDENTITY_FIELDS.index("phase")
 
@@ -958,25 +959,6 @@ def coherent_pointer(
     return x, y
 
 
-# The square of the pointer of one unit at phase 0: (32 x 256)^2 = 2^26,
-# the unit in which a `wave` set's threshold reads the pointer's square
-# (`pointer_units`).
-POINTER_UNIT = (AMPLITUDE_SCALE * PHASE_COSINE_SCALE) ** 2
-
-
-def pointer_units(x: int, y: int) -> int:
-    """The square of the coherent pointer (X, Y) in units of one ray: the
-    nearest integer to (X^2 + Y^2) / 2^26, the square of one unit's pointer
-    at phase 0 (the model owner, 2026-09-20, issue #359: under `wave` a
-    detector's threshold reads the pointer's square, so that rays which
-    cancel do not click). One unit at any phase reads 1 for every N through
-    4096 (the tables' C^2 + S^2 is within 361 of 65536, section 5), a rays
-    in phase read a^2 (exactly through a = 11 at N = 64, the tables'
-    rounding entering beyond), two opposite rays 0, two a quarter turn apart
-    2. Python integers, exact, never refused."""
-    return (x * x + y * y + POINTER_UNIT // 2) // POINTER_UNIT
-
-
 # The pointer's components up to which the nearest step is read in the
 # int64 register (a component times a table entry inside 2^62 - 1).
 POINTER_STEP_BOUND = MOMENTUM_BOUND // LONGEST_PHASE_ENTRY
@@ -1153,7 +1135,7 @@ class NatureBeamStore:
         lexsort of the fields does and equal keys are identical rows; None
         when the fields' ranges do not fit the register (62 bits), the
         lexsort then taking the same total order. The three columns of the
-        amplitude law are constant without the key (a width of 0 bits each)
+        amplitude law are constant on rows of no record (a width of 0 bits each)
         and leave the key and the order what they were."""
         if columns is None:
             columns = [getattr(self, name) for name in IDENTITY_FIELDS]
@@ -1183,13 +1165,13 @@ class NatureBeamStore:
         cancel, the amounts subtract, the difference stays at the larger's
         phase and an equal pair leaves nothing (the row disappears: in a
         dark fringe the sum is zero). Rows with any other phase difference
-        stay two rows; a row of no record never cancels, so without the key
+        stay two rows; a row of no record never cancels, so without a lamp
         (every record 0) nothing cancels and the merge is what it was.
         Returns what the cancel removed, {(record, direction, content per
         unit): units} summed over the groups, so that the caller books the
-        units, the content (units x content, exact by the key) and the
+        units, the content (units x content, exact by the packed key) and the
         labels that left (the ledger's `cancelled` lines and the layer's
-        live count); empty without the key."""
+        live count); empty without a record."""
         removed: dict[tuple[int, int, int], int] = {}
         if self.size == 0:
             return removed
@@ -1686,7 +1668,7 @@ class FamilyPlan:
     h_content: list[int] = field(default_factory=list)
     h_phase: list[int] = field(default_factory=list)
     # The amplitude law's columns of the home rows and of the taken rows,
-    # carried into their re-creation and onto the click lines under the key.
+    # carried into their re-creation and onto the click lines of a record.
     h_record: list[int] = field(default_factory=list)
     h_branch: list[int] = field(default_factory=list)
     h_multiplicity: list[int] = field(default_factory=list)
@@ -1820,7 +1802,7 @@ def apply_gate(
         if live.identity != survivor:
             kept.append(row)
             continue
-        origin = layer.origin(row.record)
+        origin = row.record
         joints = label_map[(origin, label_of(row.branch))]
         copies = len(joints)
         if row.multiplicity > MOMENTUM_BOUND // copies:
@@ -2581,11 +2563,11 @@ def nature_beam(
         set_of = {e.detector_set.index: e.detector_set for e in entries}
         set_count = int(ev_set.max()) + 1
         st_threshold = np.ones(set_count, dtype=np.int64)
-        st_wave = np.zeros(set_count, dtype=bool)
+        st_pointer = np.zeros(set_count, dtype=bool)
         st_sum = np.zeros(set_count, dtype=bool)
         for set_index, detector_set in set_of.items():
             st_threshold[set_index] = detector_set.threshold
-            st_wave[set_index] = detector_set.wave
+            st_pointer[set_index] = detector_set.pointer
             st_sum[set_index] = detector_set.sum
         # The windows read from a reading (issue #363, 2026-09-20): per
         # (measured event, family) the family whose rows at the set give the
@@ -2782,14 +2764,14 @@ def nature_beam(
                 window = ev_window[ev_m, family]
                 width_m = ev_width[ev_m, family]
                 read_phase = path[met].copy()
-                wave_rows = st_wave[st_m]
-                if wave_rows.any():
+                pointer_rows = st_pointer[st_m]
+                if pointer_rows.any():
                     px, py = coherent_pointer(
                         amount[met], path[met], s_starts, tables.cosines, tables.sines
                     )
                     steps = pointer_phases(px, py, tables.cosines, tables.sines)
                     set_step = np.array([-1 if s is None else s for s in steps], dtype=np.int64)
-                    read_phase = np.where(wave_rows, np.repeat(set_step, s_sizes), read_phase)
+                    read_phase = np.where(pointer_rows, np.repeat(set_step, s_sizes), read_phase)
                 below = np.repeat(below_set, s_sizes)
                 # A window read from a reading: the centre is the setting of
                 # the row's set off the named family plus the offset; a set
@@ -2863,7 +2845,7 @@ def nature_beam(
                 # row clicks.
                 cancelled = np.zeros(taken.shape[0], dtype=np.int64)
                 pairing = np.flatnonzero(
-                    ((rule_t == MEASURE_RULE) | (rule_t == TRANSFORM_RULE)) & ~st_wave[st_t]
+                    ((rule_t == MEASURE_RULE) | (rule_t == TRANSFORM_RULE)) & ~st_pointer[st_t]
                 )
                 if pairing.shape[0] >= 2:
                     sets_p = st_t[pairing]
@@ -3063,7 +3045,7 @@ def nature_beam(
                 steps = pointer_phases(pointer_x, pointer_y, tables.cosines, tables.sines)
                 last_phase = path_t[clicked][(c_starts + c_sizes - 1)].tolist()
                 for k, set_index in enumerate(st_c[c_starts].tolist()):
-                    if st_wave[set_index]:
+                    if st_pointer[set_index]:
                         plan.pointer[set_index] = (pointer_x[k], pointer_y[k])
                         plan.set_phase[set_index] = steps[k]
                     else:
@@ -3485,7 +3467,7 @@ def nature_beam(
                 set_index = detector_set.index
                 if last_active.get(set_index) == i and set_index in plan.set_phase:
                     set_phase = plan.set_phase[set_index]
-                    if detector_set.wave:
+                    if detector_set.pointer:
                         pointer_x, pointer_y = plan.pointer[set_index]
                         value = pointer_x * pointer_x + pointer_y * pointer_y
                     else:
@@ -3512,7 +3494,7 @@ def nature_beam(
                             "number": 0,
                             "record": value,
                         }
-                        if detector_set.wave:
+                        if detector_set.pointer:
                             line["pointer"] = [pointer_x, pointer_y]
                         line["phase"] = set_phase
                         record(line)
@@ -4093,7 +4075,7 @@ def nature_beam(
             free = free_of[family]
             for (cancelled_record, direction, per_unit), amount in removed.items():
                 # The units removed per (record, direction, content): the
-                # content carried is amount x content, exact by the key
+                # content carried is amount x content, exact by the packed key
                 # (no division).
                 carried = amount * per_unit
                 if layer is not None:
