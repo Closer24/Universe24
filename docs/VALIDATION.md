@@ -11,6 +11,23 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## A10, the width of an opening and the spread behind it: eight runs - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` after the detector-set
+commit (`dacbe0f3`), source fingerprint `f3fb33607190c86c...`, Python
+3.14.0rc2, numpy 2.5.3, headless, four cores: the eight worlds of
+`examples/events/heisenberg/` through `tools/run_series.py --jobs 4`
+(2.1, 4.5, 12.5, 52.7 s for w = 1, 3, 9, 27 under `beam`; 2.2, 5.0, 12.7,
+52.4 s under `wave`), every run completed with the books balanced at every
+tick; `tools/heisenberg_readings.py` 16 record checks passed, 0 failed;
+the readings registered in
+[A10](EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-law-of-the-ray-2026-09-20)
+and the worlds' [README](../examples/events/heisenberg/README.md). The
+runs establish what this screen reads of the spread behind an opening
+under the two readings; they establish no physical law, and the reading
+of the lobe fails at w <= 9 on the sparse fan (a limit of the reading,
+registered).
+
 ## The detector as a set with one record, the two readings and the phase returned: the runs compared - 2026-09-19
 
 The worktree of `claude/universe24-new-3ytqde` on the tip `382a17df` (the

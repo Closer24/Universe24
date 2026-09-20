@@ -78,6 +78,22 @@ entry is
 one orbit closes by the criterion (S = 32, r = 12, an eccentric loop), the
 mean push reads as derived, the grain of the push breaks the rest.
 
+## The Heisenberg run
+
+The folder [heisenberg/](heisenberg/README.md) holds the eight worlds of
+the run A10, written by `heisenberg/make_worlds.py`: the plane stretched
+to 120 x 161, a plane wave from a row of lamps on one heading, a wall
+with ONE opening of width w (1, 3, 9, 27 Nodes) declared as one detector
+that re-emits on a forward fan of 47 directions, and a screen 108 Links
+behind it read as 161 one-Node detectors, every detector under the
+world's `reading` (`wave` or `beam`). `tools/heisenberg_readings.py` reads
+the spread of the screen's record and of its count against the
+wavelength lambda = 8 / sqrt 3; the register entry is
+[A10, the width of an opening and the spread behind it](../../docs/EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-law-of-the-ray-2026-09-20):
+the `wave` record narrows with w and the count does not; the product
+w x FWHM reaches 0.886 lambda within 22 % at w = 27 and is not read at
+the smaller widths on the sparse fan.
+
 ## The detector definitions
 
 The folder [detector/](detector/README.md) holds four worlds that place

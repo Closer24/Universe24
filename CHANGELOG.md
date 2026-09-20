@@ -5,6 +5,19 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The Heisenberg run A10 registered (2026-09-20)
+
+- `examples/events/heisenberg/` (eight worlds by `make_worlds.py`: one
+  opening of width 1, 3, 9 or 27 Nodes declared as one detector, a plane
+  wave on it, a screen of one-Node pixels 108 Links behind it, under the
+  readings `wave` and `beam`), `tools/heisenberg_readings.py` and the
+  register entry
+  [A10](docs/EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-law-of-the-ray-2026-09-20):
+  the `wave` record narrows with the width and the count does not; the
+  product w x FWHM reaches 0.886 lambda within 22 % at w = 27 and is not
+  read at the smaller widths on the sparse fan; `beam` gives no bound
+  ([validation](docs/VALIDATION.md)). A research run, pinned by no test.
+
 ### The detector as a set with one record, its two readings and the phase returned (2026-09-19)
 
 - The model owner's principle of the detector's sensitivity ("a detector
