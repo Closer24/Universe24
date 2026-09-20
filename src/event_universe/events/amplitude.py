@@ -122,9 +122,10 @@ def branch_of(arm: int, label: int) -> int:
 
 def half_angle(setting: int, steps: int) -> tuple[int, int]:
     """C'[s] and S'[s] of the half-angle tables of 2N at the setting s: the
-    tables of 2N where they exist (N through 2048), else the tables of
-    4096 at s / 2 (the same rounding of the same angle), an odd setting at
-    N = 4096 refused (no table carries it)."""
+    tables of 2N where they exist (N through MAX_PHASE_STEPS / 2, 32768 since
+    the bound was raised to 65536 on 2026-09-20), else the tables of
+    MAX_PHASE_STEPS at s / 2 (the same rounding of the same angle), an odd
+    setting at N = MAX_PHASE_STEPS refused (no table carries it)."""
     size = min(2 * steps, MAX_PHASE_STEPS)
     factor = 2 * steps // size
     index = setting % (2 * steps)

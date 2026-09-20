@@ -267,9 +267,11 @@ def test_the_refusals_of_the_gate_keys():
     assert parse_nature_beam_world(entry(rotate={"setting": 16, "bit": 1, "turn": 3})).measured[
         1
     ].rotations[0] == GENERATOR_ROTATION(16, 1, 3)
-    with pytest.raises(ValueError, match=r"setting 1 has no half-angle entry at N = 4096"):
-        half_angle(1, 4096)
-    assert half_angle(512, 4096) == (phase_cosines(4096)[256], phase_sines(4096)[256])
+    with pytest.raises(ValueError, match=r"setting 1 has no half-angle entry at N = 65536"):
+        half_angle(1, 65536)
+    assert half_angle(1, 4096) == (phase_cosines(8192)[1], phase_sines(8192)[1])
+    assert half_angle(512, 4096) == (phase_cosines(8192)[512], phase_sines(8192)[512])
+    assert half_angle(1024, 65536) == (phase_cosines(65536)[512], phase_sines(65536)[512])
     assert half_angle(16, N) == (181, 181)
 
 
