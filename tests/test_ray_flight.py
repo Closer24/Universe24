@@ -215,7 +215,7 @@ def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
         assert books["balanced"], tick
         assert store.size == 1 and int(store.node[0]) == store.flat((2, 0, 0))
         assert int(store.phase[0]) == 5 and int(store.direction[0]) == 6
-        assert books["momentum"] == {"measured": [0, 0, 0], "transit": [0, 0, 1], "escaped": [0, 0, 0]}
+        assert books["momentum"] == {"measured": [0, 0, 0], "transit": [0, 0, 64], "escaped": [0, 0, 0]}
     assert records == [] and simulation.face_detectors()[0]["name"] == "face:+x"
     assert [face["name"] for face in simulation.face_detectors()] == [
         "face:+x",
@@ -238,12 +238,12 @@ def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
             "number": 1,
             "amount": 1,
             "phase": 5,
-            "momentum": [0, 0, 1],
+            "momentum": [0, 0, 64],
             "content": 1,
         }
     ]
     books = simulation.books()
-    assert books["balanced"] and books["momentum"]["escaped"] == [0, 0, 1]
+    assert books["balanced"] and books["momentum"]["escaped"] == [0, 0, 64]
     assert simulation.face_detectors()[4]["families"]["light"] == {
         "measured": 1,
         "clicks": 1,
@@ -267,7 +267,7 @@ def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
     assert rows == [(0, 6, 5), (3, 7, 6)]
     assert [record["detector"] for record in records] == ["face:+x"]
     books = simulation.books()
-    assert books["balanced"] and books["momentum"]["escaped"] == [1, 0, 0]
+    assert books["balanced"] and books["momentum"]["escaped"] == [64, 0, 0]
     assert books["families"]["light"]["transit"] == {
         "initial": 3,
         "released": 0,

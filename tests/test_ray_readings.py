@@ -31,8 +31,11 @@ docs/TEST_EXPECTATIONS.md ("The one reading"), written down first:
     `test_one_reading_set` (b) and `test_phaseless_family` (c), re-pinned
     under the ray law): a free reader of content 4 met by 9 rays of number 1
     arriving on +X and 9 of number 2 arriving on -X is pushed by
-    -4 x (9, 0, 0) - 4 x (-9, 0, 0) = (0, 0, 0) and reads 18; by the 9 of
-    number 1 alone (-36, 0, 0); with 5 of its own number arriving too the
+    -4 x (576, 0, 0) - 4 x (-576, 0, 0) = (0, 0, 0) and reads 18; by the 9
+    of number 1 alone (-2304, 0, 0) (the label of a unit along a heading
+    is 64 e_d since 2026-09-19, RAY_LAW section 2 and note 23; the
+    reading's moments are taken on the unit vectors u_d at the scale
+    Q = 64, its zeroth moment unchanged); with 5 of its own number arriving too the
     own add nothing (5 home, created again at the same interval's
     self-creation on its first declared direction, age 0 mod 1);
 (c) the presence counts every ray at the Node of another number, rest and
@@ -51,8 +54,9 @@ docs/TEST_EXPECTATIONS.md ("The one reading"), written down first:
     9 x 3 x 3 board with no measured event, 9 units arriving at (4, 1, 1)
     on +X and 9 on -X, 3 arriving at (2, 1, 1) on +Y and 2 at rest at
     (6, 1, 1), after one interval the count is 18, 3 and 0 at those Nodes
-    (21 over the board), the flow (0, 0, 0), (0, 3, 0) and (0, 0, 0), the
-    presence 18, 3 and 2 (23 over the board), the Links crossed per Port
+    (21 over the board), the flow (0, 0, 0), (0, 192, 0) (3 x 64 on the
+    unit vector of +Y) and (0, 0, 0), the presence 18, 3 and 2 (23 over
+    the board), the Links crossed per Port
     (9, 9, 0, 0, 0, 0) at (4, 1, 1) and (0, 0, 3, 0, 0, 0) at (2, 1, 1)
     (21 over the board); before the first interval, and on an empty
     board, every array is zero with its shape.
@@ -226,8 +230,8 @@ def test_the_push_reads_the_flow_of_every_number_but_the_readers_own():
     own = ray(NODE, "m", 3, PLUS_X, 5)
     for in_transit, push, read, home in (
         ([first, second, own], [0, 0, 0], 18, 5),
-        ([first], [-36, 0, 0], 9, 0),
-        ([first, own], [-36, 0, 0], 9, 5),
+        ([first], [-2304, 0, 0], 9, 0),
+        ([first, own], [-2304, 0, 0], 9, 5),
     ):
         simulation = RaySimulation(parse_ray_world(world(families, measured, in_transit)))
         reader, store = simulation.measured[3], simulation.stores[0]
@@ -276,13 +280,13 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_each_rays_own_phase(
     simulation.step()
     assert simulation.books()["balanced"]
     assert entry.events == [0, 3] and entry.held == [4, 3]
-    assert entry.momentum == [1, 0, 0] and entry.pushed == [1, 0, 0]
+    assert entry.momentum == [64, 0, 0] and entry.pushed == [64, 0, 0]
     assert simulation.detectors()[0]["families"]["light"]["clicks"] == 3
     assert simulation.stores[1].size == 0
     clicks = [record for record in records if record["event"] == "click"]
     assert [(c["number"], c["amount"], c["push"], c["content"], c["phase"]) for c in clicks] == [
-        (2, 2, [2, 0, 0], 2, 0),
-        (3, 1, [-1, 0, 0], 1, 0),
+        (2, 2, [128, 0, 0], 2, 0),
+        (3, 1, [-64, 0, 0], 1, 0),
     ]
     assert [record["event"] for record in records if record["event"] != "click"] == ["record"]
 
@@ -330,12 +334,44 @@ def test_the_dense_readings_on_request_equal_the_arrivals_node_by_node():
     count, flow = simulation.count[0], simulation.flow[0]
     presence, per_port = simulation.presence[0], simulation.per_port[0]
     assert count[4, 1, 1] == 18 and flow[4, 1, 1].tolist() == [0, 0, 0] and presence[4, 1, 1] == 18
-    assert count[2, 1, 1] == 3 and flow[2, 1, 1].tolist() == [0, 3, 0] and presence[2, 1, 1] == 3
+    assert count[2, 1, 1] == 3 and flow[2, 1, 1].tolist() == [0, 192, 0] and presence[2, 1, 1] == 3
     assert count[6, 1, 1] == 0 and presence[6, 1, 1] == 2
     assert int(count.sum()) == 21 and int(presence.sum()) == 23
-    assert flow.sum(axis=(0, 1, 2)).tolist() == [0, 3, 0]
+    assert flow.sum(axis=(0, 1, 2)).tolist() == [0, 192, 0]
     assert per_port[4, 1, 1].tolist() == [9, 9, 0, 0, 0, 0]
     assert per_port[2, 1, 1].tolist() == [0, 0, 3, 0, 0, 0] and int(per_port.sum()) == 21
     empty = RaySimulation(parse_ray_world(world([FAMILIES[0]], [], [])))
     empty.step()
     assert int(empty.count[0].sum()) == 0 and int(empty.per_port[0].sum()) == 0
+
+
+def test_a_fans_flow_reads_q_per_unit_direction_blind():
+    """(f) (added 2026-09-19 with the label along the unit vector, RAY_LAW
+    note 23): the reading's vector moment is taken on the unit vectors u_d
+    at the scale Q = 64, so a ray of amount q on (7, 5, 0) enters the flow
+    as q x (52, 37, 0), |flow| = 64 q within 1.35 %, as a ray on a heading
+    enters as q x 64 e_d, and not as q x (7, 5, 0) (8.6 q): a free reader
+    of content 1 met by 5 units on (7, 5, 0) (arriving on the first step of
+    its line, +X) and 5 on +X is pushed by -(5 x (52, 37, 0) + 5 x (64, 0,
+    0)) = (-580, -185, 0) and reads 10, the dense flow at its Node (580,
+    185, 0); by the 5 on (7, 5, 0) and 5 on (-7, -5, 0) (arriving on -X)
+    the push is (0, 0, 0) exactly (u_{-D} = -u_D) and the reading 10."""
+    reader = fixed(NODE, "m", 1)
+    sources = [fixed([0, 1, 1], "m", 16), fixed([8, 1, 1], "m", 16)]
+    fan_ray = {"position": [3, 1, 1], "family": "m", "number": 2, "direction": [7, 5, 0], "amount": 5}
+    back_ray = {"position": [5, 1, 1], "family": "m", "number": 3, "direction": [-7, -5, 0], "amount": 5}
+    for in_transit, push in (
+        ([fan_ray, ray(NODE, "m", 3, PLUS_X, 5)], [-580, -185, 0]),
+        ([fan_ray, back_ray], [0, 0, 0]),
+    ):
+        document = world([FAMILIES[0]], [reader, *sources], in_transit)
+        document["directions"] = [[7, 5, 0], [-7, -5, 0]]
+        simulation = RaySimulation(parse_ray_world(document))
+        entry = simulation.measured[1]
+        simulation.step()
+        assert simulation.books()["balanced"]
+        assert entry.pushed == push and entry.measured[0]["read"] == 10, in_transit
+        assert simulation.flow[0][4, 1, 1].tolist() == [-p for p in push]
+        assert simulation.count[0][4, 1, 1] == 10
+    fan_label = 5 * np.array([52, 37, 0], dtype=np.int64)
+    assert (63 * 5) ** 2 < int(fan_label @ fan_label) < (65 * 5) ** 2

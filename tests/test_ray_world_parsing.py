@@ -30,14 +30,17 @@ law"), written down first:
     directions table, `suspension` [1, 1]), `state.json` (the law, tick 4,
     the Nodes with rays) and `events.jsonl`; a negative tick count and a
     used output directory refused;
-(d) the bounds: two measured events of content 64 one Link apart at
-    `release` [1, 1] read each other's 64 rays from interval 2 on and are
-    pushed by 64 x 64 = 4096 toward each other; the second, declared with
-    the momentum -(2^62 - 1) + 4096 on x, reaches the bound exactly and is
-    accepted; one unit nearer it is refused with `OverflowError` naming the
-    measured event, its Node and the momentum; a reader of content
-    2^56 - 1 met by 64 rays takes the push -(2^62 - 64), and at 2^56 the
-    push -2^62 is refused naming the push.
+(d) the bounds (re-pinned on 2026-09-19 at 1/64 of their amounts, the
+    label of a unit along a heading being 64 e_d since the label along the
+    unit vector, RAY_LAW section 2 and note 23): two measured events of
+    content 1 one Link apart at `release` [1, 1] read each other's one ray
+    from interval 2 on and are pushed by 1 x 64 x 1 = 64 toward each
+    other; the second, declared with the momentum -(2^62 - 1) + 64 on x,
+    reaches the bound exactly and is accepted; one unit nearer it is
+    refused with `OverflowError` naming the measured event, its Node and
+    the momentum; a reader of content 2^56 - 1 met by one ray takes the
+    push -(2^56 - 1) x 64 = -(2^62 - 64), and at 2^56 the push -2^62 is
+    refused naming the push.
 """
 
 from __future__ import annotations
@@ -315,11 +318,11 @@ def pair(momentum: int) -> dict[str, object]:
         suspension=0,
         families=[{"name": "m", "quantum": 0}],
         measured=[
-            {"position": [0, 0, 0], "family": "m", "amount": 64, "fixed": True},
+            {"position": [0, 0, 0], "family": "m", "amount": 1, "fixed": True},
             {
                 "position": [1, 0, 0],
                 "family": "m",
-                "amount": 64,
+                "amount": 1,
                 "fixed": True,
                 "momentum": [momentum, 0, 0],
             },
@@ -329,17 +332,13 @@ def pair(momentum: int) -> dict[str, object]:
 
 def test_the_measured_line_is_bounded_before_assignment():
     """(d)."""
-    simulation = RaySimulation(parse_ray_world(pair(-MOMENTUM_BOUND + 4096)))
+    simulation = RaySimulation(parse_ray_world(pair(-MOMENTUM_BOUND + 64)))
     simulation.step()
     simulation.step()
     assert simulation.books()["balanced"]
     assert simulation.measured[2].momentum == [-MOMENTUM_BOUND, 0, 0]
-    assert simulation.measured[2].pushed == [-4096, 0, 0] and simulation.measured[1].pushed == [
-        4096,
-        0,
-        0,
-    ]
-    simulation = RaySimulation(parse_ray_world(pair(-MOMENTUM_BOUND + 4095)))
+    assert simulation.measured[2].pushed == [-64, 0, 0] and simulation.measured[1].pushed == [64, 0, 0]
+    simulation = RaySimulation(parse_ray_world(pair(-MOMENTUM_BOUND + 63)))
     simulation.step()
     with pytest.raises(OverflowError, match=r"the momentum of measured event 2 at \[1, 0, 0\]"):
         simulation.step()
@@ -355,7 +354,7 @@ def test_the_measured_line_is_bounded_before_assignment():
                 {"position": [1, 0, 0], "family": "m", "amount": content, "fixed": True},
             ],
             in_transit=[
-                {"position": [0, 0, 0], "family": "m", "number": 1, "direction": [1, 0, 0], "amount": 64}
+                {"position": [0, 0, 0], "family": "m", "number": 1, "direction": [1, 0, 0], "amount": 1}
             ],
         )
         simulation = RaySimulation(parse_ray_world(world))

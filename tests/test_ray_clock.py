@@ -25,13 +25,17 @@ momentum; no merge. Re-pinned from `test_event_clock`,
     bar): after 8 intervals A spent 8 x 4 = 32 and B 8 x 8 = 64, the
     releases of intervals 1 to 3 clicked in intervals 6 to 8 (a ray created
     at tick t first walks at t + 1 and 3 Links take 5 walks): 6 clicks, the
-    counter's content 1 + 3 x 4 + 3 x 8 = 37, its momentum (-12, 0, 0), each
-    click record with `content` 4 or 8, 10 rays in flight carrying 60, the
-    books balanced; a lamp of turn 0 releases nothing;
-(d) the step: content 16 with momentum 16 on +x steps once per two
-    self-creations (three after six intervals); with momentum 1 none after
-    16 and one after 17; the momentum untouched; a step onto a Node that
-    holds a measured event is refused, both remain, the step counted;
+    counter's content 1 + 3 x 4 + 3 x 8 = 37, its momentum (-768, 0, 0)
+    (the labels 4 x 64 and 8 x 64 along +X and -X: since 2026-09-19 the
+    label of a unit along a heading is Q e_d, Q = 64, RAY_LAW section 2
+    and note 23; A's recoil (-2048, 0, 0), B's (4096, 0, 0)), each click
+    record with `content` 4 or 8, 10 rays in flight carrying 60, the books
+    balanced; a lamp of turn 0 releases nothing;
+(d) the step: content 16 with momentum 1024 (16 x 64, one unit of net
+    flow in label units) on +x steps once per two self-creations (three
+    after six intervals); with momentum 64 none after 16 and one after 17;
+    the momentum untouched; a step onto a Node that holds a measured event
+    is refused, both remain, the step counted;
 (e) the count off the clock: a source of `m` of content k at x = 0 of a
     2 x 1 x 1 bar releasing k rays per direction per self-creation at
     `release` [1, 1] and a probe of `light` (content 1, measuring `m`) at
@@ -163,11 +167,11 @@ def test_a_lamp_releases_off_its_clock_at_the_cost_of_its_turn_and_takes_the_rec
         and fast.held == [0, 8 * clock]
     )
     assert slow.phase_steps == 32 and fast.phase_steps == 64
-    assert slow.momentum == [-32, 0, 0] and fast.momentum == [64, 0, 0]
+    assert slow.momentum == [-2048, 0, 0] and fast.momentum == [4096, 0, 0]
     clicks = [r for r in records if r["event"] == "click"]
     assert [r["tick"] for r in clicks] == [6, 6, 7, 7, 8, 8]
     assert sorted(r["content"] for r in clicks) == [4, 4, 4, 8, 8, 8]
-    assert gate.held == [1, 3 * 4 + 3 * 8] and gate.events == [0, 6] and gate.momentum == [-12, 0, 0]
+    assert gate.held == [1, 3 * 4 + 3 * 8] and gate.events == [0, 6] and gate.momentum == [-768, 0, 0]
     light = simulation.stores[LIGHT]
     assert int(light.amount.sum()) == 10 and int((light.amount * light.content).sum()) == 5 * 4 + 5 * 8
     # A turn of 0 releases nothing.
@@ -181,7 +185,7 @@ def test_a_lamp_releases_off_its_clock_at_the_cost_of_its_turn_and_takes_the_rec
 
 def test_a_measured_event_steps_off_its_clock_and_a_step_onto_another_is_refused():
     """(d)."""
-    for momentum, ticks, expected_x in ((16, 6, 4 + 3), (1, 16, 4), (1, 17, 5)):
+    for momentum, ticks, expected_x in ((1024, 6, 4 + 3), (64, 16, 4), (64, 17, 5)):
         simulation = RaySimulation(
             parse_ray_world(
                 world(
@@ -196,7 +200,7 @@ def test_a_measured_event_steps_off_its_clock_and_a_step_onto_another_is_refused
         entry = simulation.measured[1]
         assert entry.position == (expected_x, 2, 2), (momentum, ticks, entry.position)
         assert entry.momentum == [momentum, 0, 0] and entry.steps == expected_x - 4
-    mover = {"position": [0, 0, 0], "family": "m", "amount": 16, "momentum": [16, 0, 0]}
+    mover = {"position": [0, 0, 0], "family": "m", "amount": 16, "momentum": [1024, 0, 0]}
     resident = {"position": [1, 0, 0], "family": "m", "amount": 16}
     records: list[dict[str, object]] = []
     simulation = RaySimulation(
@@ -208,7 +212,7 @@ def test_a_measured_event_steps_off_its_clock_and_a_step_onto_another_is_refused
         assert books["balanced"], tick
         first, second = simulation.measured[1], simulation.measured[2]
         assert first.position == (0, 0, 0) and second.position == (1, 0, 0), tick
-        assert first.momentum == [16, 0, 0] and second.momentum == [0, 0, 0], tick
+        assert first.momentum == [1024, 0, 0] and second.momentum == [0, 0, 0], tick
         assert first.steps == tick // 2 and second.steps == 0, tick
         assert books["families"]["m"]["measured"]["current"] == 32
     assert records == []

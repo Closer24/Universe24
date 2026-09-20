@@ -30,6 +30,7 @@ kept, their pins the law of events').
 | `test_default_table.py` | The table generated from the keys: a free family read, a paid one measured, no window; explicit defaults change nothing; what differs is kept; the kind derived from the quantum and `kind` refused; every example world equal to itself with the defaults written back ([below](#the-table-generated-from-the-keys)) | new |
 | `test_ray_flight.py` | The flight: the table at 1 / sqrt 3 with its periods, a lone unit straight and unchanged, the isotropy, the periodic axis and the stub, the open face's click, `adjacent_node` ([below](#the-flight)) | `test_event_transit` (a), `test_periodic_axis` (a to c), `test_event_boundaries` |
 | `test_ray_push.py` | The push as one bilinear form over the arriving rays' labels, the emitter's factor on the record, and the one momentum label the click, the re-emission, the home and the transit line move ([below](#the-push-as-one-form)) | new (2026-09-19, the night: the physics-rule review's F1 and the model owner's proposal 2) |
+| `test_ray_label.py` | The label along the unit vector of the direction at the flight table's scale: the table u_d by the exact integer rule (the pinned vectors, the length within 1.35 % of Q, antisymmetry, equivariance under the 48, no tie, the float agreement over every primitive direction within the bound), every label content x u_d with the recoil, the transit line and the books closing through clicks, a mirror and the open faces, the bound at Q x content x amount ([below](#the-label-along-the-unit-vector)) | new (2026-09-19, the model owner's decision on the physics-rule reviewer's verdict; every momentum pin of the suite re-pinned x 64, listed in its section) |
 | `test_ray_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing; no collision at a Node that holds a measured event ([below](#the-collision-table)) | new |
 | `test_ray_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact; the merge by one packed key and by the lexsort alike ([below](#the-bijection)) | new |
 | `test_ray_detector.py` | The detector's record: two rays in phase and in antiphase; the threshold gating a receiver and a re-emitter over the set; a release reading no threshold; the record exact and never refused (the pointer in the register up to its bound, the square in Python integers) ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
@@ -82,9 +83,12 @@ its component by key.
 - (b) the push reads the flow of every number but the reader's own: a free
   reader of content 4 met by 9 rays of number 1 arriving on +X and 9 of
   number 2 arriving on -X is pushed by (0, 0, 0) and reads 18; by the 9 of
-  number 1 alone (-36, 0, 0); with 5 of its own number arriving too the own
-  add nothing (5 home, created again at the same interval's self-creation
-  on its first declared direction).
+  number 1 alone (-2304, 0, 0) (re-pinned from (-36, 0, 0) on 2026-09-19:
+  the label of a unit along a heading is 64 e_d, the label along the unit
+  vector, [RAY_LAW note 23](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation));
+  with 5 of its own number arriving too the own add nothing (5 home,
+  created again at the same interval's self-creation on its first
+  declared direction).
 - (c) the presence counts every ray at the Node of another number, rest and
   moving alike, and never the own: a measured event at `suspension` [1, 4]
   beside 64 rays of number 2 that arrived and 16 rays of number 3 at rest
@@ -102,11 +106,21 @@ its component by key.
   board with no measured event, 9 units arriving at (4, 1, 1) on +X and 9
   on -X, 3 arriving at (2, 1, 1) on +Y and 2 at rest at (6, 1, 1): after
   one interval the count is 18, 3 and 0 at those Nodes (21 over the
-  board), the flow (0, 0, 0), (0, 3, 0) and (0, 0, 0), the presence 18, 3
-  and 2 (23 over the board), the Links crossed per Port (9, 9, 0, 0, 0, 0)
-  at (4, 1, 1) and (0, 0, 3, 0, 0, 0) at (2, 1, 1) (21 over the board);
-  before the first interval, and on an empty board, every array is zero
-  with its shape.
+  board), the flow (0, 0, 0), (0, 192, 0) (3 x 64 on the unit vector of
+  +Y; re-pinned from (0, 3, 0) on 2026-09-19) and (0, 0, 0), the presence
+  18, 3 and 2 (23 over the board), the Links crossed per Port (9, 9, 0,
+  0, 0, 0) at (4, 1, 1) and (0, 0, 3, 0, 0, 0) at (2, 1, 1) (21 over the
+  board); before the first interval, and on an empty board, every array
+  is zero with its shape.
+- (f) a fan's flow reads Q per unit direction-blind (added 2026-09-19 with
+  the label along the unit vector): a free reader of content 1 met by 5
+  units on (7, 5, 0) (declared one Link before its Node with age 0, so
+  they arrive on the first step of their line, +X) and 5 on +X is pushed
+  by -(5 x (52, 37, 0) + 5 x (64, 0, 0)) = (-580, -185, 0) and reads 10,
+  the dense flow at its Node (580, 185, 0), |5 x (52, 37, 0)|^2 within
+  (63 x 5)^2 .. (65 x 5)^2; by the 5 on (7, 5, 0) and 5 on (-7, -5, 0)
+  (arriving on -X) the push is (0, 0, 0) exactly (u_{-D} = -u_D) and the
+  reading 10.
 
 ## The table generated from the keys
 
@@ -203,9 +217,10 @@ shift by +1 and the inverse by -1, generated from the rule.
   dwells the two intervals of its line there and parts at the third (x = 5
   and x = 3 on a 9 x 1 x 1 bar); at a measured event whose table measures
   `light` in the window 32 the ray at phase 32 clicks with its label
-  (-1, 0, 0), the ray at phase 0 passes and goes on to x = 5, the transit
-  line is (1, 0, 0) and no ray is stranded at rest; measured + transit =
-  (0, 0, 0), the labels' sum before the interval.
+  (-64, 0, 0) (re-pinned from (-1, 0, 0) on 2026-09-19, the label along
+  the unit vector), the ray at phase 0 passes and goes on to x = 5, the
+  transit line is (64, 0, 0) and no ray is stranded at rest; measured +
+  transit = (0, 0, 0), the labels' sum before the interval.
 
 ## The bijection
 
@@ -268,20 +283,22 @@ on -z). An empty world counts zero both ways.
   threshold 3 (re-pinned from `test_detector_sensitivity` (a)): 2 rays of
   another number pass with a `pass` record (`threshold` 3), no click, no
   push, the rays going on whole; 3 rays are measured: 3 clicks, `held`
-  [4, 3], the momentum (3, 0, 0), nothing left in the store, the report 3
-  measured, 3 clicks, the record 9 x 32^2 x 256^2 (a row of three identical
-  rays is one coherent amplitude).
+  [4, 3], the momentum (192, 0, 0) (three labels of 64 along +X;
+  re-pinned from (3, 0, 0) on 2026-09-19, the label along the unit
+  vector), nothing left in the store, the report 3 measured, 3 clicks,
+  the record 9 x 32^2 x 256^2 (a row of three identical rays is one
+  coherent amplitude).
 - (c) a re-emitter at threshold 3: 2 rays pass; 3 rays are taken
-  (re-released 3, no click, the push (3, 0, 0), the recoil at the
-  re-emission -(1, 1, 1) leaving the momentum (2, -1, -1)) and created again
-  at the same interval's self-creation, one per declared direction (+X, +Y,
-  +Z), with the re-emitter's number, the arriving phase 20, content 1,
-  age 0.
+  (re-released 3, no click, the push (192, 0, 0), the recoil at the
+  re-emission -(64, 64, 64) leaving the momentum (128, -64, -64); re-pinned
+  from (3, 0, 0), -(1, 1, 1) and (2, -1, -1)) and created again at the
+  same interval's self-creation, one per declared direction (+X, +Y, +Z),
+  with the re-emitter's number, the arriving phase 20, content 1, age 0.
 - (d) an emitter inside a detector reads no threshold: a lamp of light
   (content 24, K 24, rate [1, 1]) in a detector of threshold 5 releases one
   unit per heading per interval, its content 18 then 12; a reader of `m`
-  (content 4) at threshold 4 passes 3 rays and reads 4, pushed by -M c =
-  (-16, 0, 0).
+  (content 4) at threshold 4 passes 3 rays and reads 4, pushed by
+  -M x 64 c = (-1024, 0, 0) (re-pinned from (-16, 0, 0)).
 - (e) the record is exact and never refused (RAY_LAW section 5 and note
   19; the night's bound refused `two_contents`): every entry (C, S) of the
   1/256 tables is shorter than 257 for every N from 2 through 4096 (the
@@ -298,9 +315,13 @@ on -z). An empty world counts zero both ways.
   2139127808^2; a row of 2^18 (what `two_contents` sends to a face)
   records 2^62 exactly, one past the law's bound 2^62 - 1; two rows of
   130561 and 130563 (two numbers, +X and -X, a quarter turn apart) record
-  (2^13 x 130561)^2 + (2^13 x 130563)^2; a row of 2^52 (the reviewer's
-  silent int64 wrap, once refused) records 2^130 with the pointer
-  (2^65, 0); two rows of 2^18 clicking in the intervals 1 and 3 accumulate
+  (2^13 x 130561)^2 + (2^13 x 130563)^2; a row of 2^49 (beyond the
+  pointer's register bound, as the reviewer's silent int64 wrap at 2^52
+  was; re-pinned from 2^52 on 2026-09-19, when the reading's second-moment
+  bound on the unit vectors, amount x 64^2 x rows, began to refuse a row
+  above 2^50 at a measured event's Node before any record) records 2^124
+  with the pointer (2^62, 0); two rows of 2^18 clicking in the intervals 1
+  and 3 accumulate
   2^63, beyond int64, in the measured event's record, its state and the
   report, round-tripped through JSON; a ray of 2^18 stepping off the open
   face +x records 2^62 on `face:+x`.
@@ -316,54 +337,65 @@ reader's clock, sign x by_clock(age_A, |V q_A q_B|, M_B)), + 1 (a paid
 ray); the emitter's factor (q_B, M_B) on the record from birth; every
 momentum the law reads or moves the one label. K 2^20, N 64, `suspension`
 0, `m` free and `light` paid, every measured event `fixed`, a 12 x 1 x 1 bar
-with y and z periodic unless said otherwise.
+with y and z periodic unless said otherwise. Re-pinned on 2026-09-19 for
+the label along the unit vector ([RAY_LAW note 23](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+every integer of the six-heading cases is the first pin times 64 (the
+label of a unit along a heading is 64 e_d), the fan cases read u_(2, 1, 0)
+= (57, 29, 0); the first pins are named in brackets.
 
 - (a) the reviewer's isolated world: a source of content 4 and charge 3 at
   x = 0 releasing on +X at `release` [1, 1] (4 rays per interval, one row of
   amount 4), a probe of content 5 and charge 1 at x = 6; on (1, 0, 0) a ray
   born at tick t is at x = 6 at tick t + 10, so the probe reads one row of
-  amount 4 at every tick 11 through 30: 20 `read` records, each the flow
-  V = 4 and the push -5 V + by_clock(age, 3 V, 4) = (-17, 0, 0), `pushed`
-  (-340, 0, 0) (80 x (-5 + 3/4) exactly); the record's `mass` 4 and
-  `charge` 3.
-- (b) the sign (the source's charge -3): every push (-23, 0, 0), `pushed`
-  (-460, 0, 0). (c) An uncharged probe: every push (-20, 0, 0), `pushed`
-  (-400, 0, 0).
+  amount 4 at every tick 11 through 30: 20 `read` records, each the label
+  moment V = 4 x 64 = 256 and the push -5 V + by_clock(age, 3 V, 4) =
+  -1280 + 192 = (-1088, 0, 0) [was (-17, 0, 0)], `pushed` (-21760, 0, 0)
+  [was (-340, 0, 0)] (64 x 80 x (-5 + 3/4) exactly); the record's `mass`
+  4 and `charge` 3.
+- (b) the sign (the source's charge -3): every push (-1472, 0, 0) [was
+  (-23, 0, 0)], `pushed` (-29440, 0, 0) [was (-460, 0, 0)]. (c) An
+  uncharged probe: every push (-1280, 0, 0) [was (-20, 0, 0)], `pushed`
+  (-25600, 0, 0) [was (-400, 0, 0)].
 - (d) q_A q_B = M_B with M_A = 1 (the series 7 cancellation): the probe of
   content 1 and charge 2, the source of charge 2 and content 4: every push
-  0 exactly, `pushed` (0, 0, 0).
+  -256 + by_clock(age, 1024, 4) = 0 exactly, `pushed` (0, 0, 0).
 - (e) the fractional floor (the reviewer's F6): `release` [1, 2] gives
-  V = 2, |V q_A q_B| = 6, and by_clock(t, 6, 4) is 2 at odd t and 1 at
-  even t from t = 11; over the ticks 11 through 30 the electric part sums
-  to 30 and the gravity to -200: `pushed` (-170, 0, 0).
+  V = 128, |V q_A q_B| = 384, and by_clock(t, 384, 4) is 96 at every tick
+  t (the floor resolves 1 / Q per unit; on labels of length 1 it was 2 at
+  odd t and 1 at even t, 30 over the twenty ticks); over the ticks 11
+  through 30 the electric part sums to 1920 and the gravity to -12800:
+  `pushed` (-10880, 0, 0) [was (-170, 0, 0)].
 - (f) a paid emitter: a lamp of `light` (content 2^23 at K 2^20, the turn
   8 at every age below 362, `rate` [1, 1] on +X) releases one unit of
-  content 8 per interval with the recoil (-8, 0, 0); the probe (content 5,
-  `table` {"light": "read"}, `release` [0, 1]) reads (8, 0, 0) at every
-  tick 11 through 30, `pushed` (160, 0, 0); the lamp's momentum (-8 x its
-  releases) plus the transit line plus the escaped line is (0, 0, 0) at
-  every tick.
+  content 8 per interval with the recoil (-512, 0, 0) [was (-8, 0, 0)];
+  the probe (content 5, `table` {"light": "read"}, `release` [0, 1]) reads
+  (512, 0, 0) at every tick 11 through 30, `pushed` (10240, 0, 0) [was
+  (160, 0, 0)]; the lamp's momentum (-512 x its releases, -15360 after
+  30) plus the transit line plus the escaped line is (0, 0, 0) at every
+  tick.
 - (g) a fan emitter: a source of content 4 at (0, 0, 0) of a 9 x 5 x 1
   board releasing on (2, 1, 0) at `release` [1, 1], the probe of content 5
   at (4, 2, 0) on its line (the sixth Manhattan step; the first read at
-  tick 9): every push -5 x 4 x (2, 1, 0) = (-40, -20, 0), 22 reads,
-  `pushed` (-880, -440, 0): the push of a fan ray is its label, |D| =
-  sqrt 5 per unit.
+  tick 9): every push -5 x 4 x (57, 29, 0) = (-1140, -580, 0) [was
+  (-40, -20, 0)], 22 reads, `pushed` (-25080, -12760, 0) [was (-880,
+  -440, 0)]: the push of a fan ray is its label along u_d, of length 64
+  within 1.35 % (sqrt 4090 = 63.95), not |D| = sqrt 5 per unit.
 - (h) the one label moves: a ray of `light` of amount 3 on (2, 1, 0)
   (content 1; at (3, 2, 0) with age 7, one Link before (4, 2, 0)) clicking
-  at a `measure` event at (4, 2, 0): the click's `push` (6, 3, 0), the
-  event's momentum (6, 3, 0), the transit line (6, 3, 0) before and
-  (0, 0, 0) after; the same ray at a `rerelease` event whose one direction
-  is (2, 1, 0): the momentum (0, 0, 0) after the interval (in (6, 3, 0),
-  out the same), the transit line (6, 3, 0) before and after; a paid ray
-  coming home on a periodic 4 x 1 x 1 bar: the `home` record's `push` is
-  its label (1, 0, 0) and the emitter's momentum (0, 0, 0) after the
-  re-creation.
+  at a `measure` event at (4, 2, 0): the click's `push` (171, 87, 0) [was
+  (6, 3, 0)], the event's momentum (171, 87, 0), the transit line
+  (171, 87, 0) before and (0, 0, 0) after; the same ray at a `rerelease`
+  event whose one direction is (2, 1, 0): the momentum (0, 0, 0) after the
+  interval (in (171, 87, 0), out the same), the transit line (171, 87, 0)
+  before and after; a paid ray coming home on a periodic 4 x 1 x 1 bar:
+  the `home` record's `push` is its label (64, 0, 0) [was (1, 0, 0)] and
+  the emitter's momentum (0, 0, 0) after the re-creation.
 - (i) the factor is read off the rows met (added 2026-09-19 with the bulk
   step 4): the world of (a) with two bystander rays of the probe's number
   (charge 1, mass 5 on their record) parked on the stub of the y axis at
-  x = 2 and 3, rows before the probe's in the store: every push (-17, 0, 0)
-  and `pushed` (-340, 0, 0) as in (a), the bystanders untouched.
+  x = 2 and 3, rows before the probe's in the store: every push
+  (-1088, 0, 0) and `pushed` (-21760, 0, 0) as in (a), the bystanders
+  untouched.
 
 ## The re-emission
 
@@ -375,22 +407,26 @@ with y and z periodic unless said otherwise.
   Node of `m` (content 4) with the three directions +X, (1, 1, 0) and
   (2, 1, 0): three rays of amount 1 at the Node after the interval, one per
   direction, phase 20, age 0, the re-emitter's number 1, content 1; the
-  push (3, 0, 0) taken, the recoil -(1 x (1, 0, 0) + 1 x (1, 1, 0) + 1 x
-  (2, 1, 0)) = (-4, -2, 0), the momentum (-1, -2, 0); the books closed
-  (absorbed 3, released 3; the content line absorbed 3, released 3); a ray
-  of amount 4 on the same Node: 2, 1, 1 (the leftover to the direction
-  `age mod 3` = 0, the first).
+  push (192, 0, 0) taken, the recoil -(1 x (64, 0, 0) + 1 x (45, 45, 0) +
+  1 x (57, 29, 0)) = (-166, -74, 0), the momentum (26, -74, 0) (re-pinned
+  on 2026-09-19 for the label along the unit vector from (3, 0, 0),
+  (-4, -2, 0) and (-1, -2, 0)); the books closed (absorbed 3, released 3;
+  the content line absorbed 3, released 3); a ray of amount 4 on the same
+  Node: 2, 1, 1 (the leftover to the direction `age mod 3` = 0, the
+  first), the push (256, 0, 0), the recoil (-230, -74, 0), the momentum
+  (26, -74, 0).
 - (b) the face click (re-pinned from `test_border_and_clock_corrections`
   (b)): a ray of amount 1, phase 5, content 1 at (2, 0, 0) on +X of a
   3 x 1 x 1 bar steps off the board at the first interval: one `click` on
   `face:+x` (tick 1, Node (2, 0, 0), `measured` None, number 1, amount 1,
-  phase 5, momentum (1, 0, 0), content 1), the escaped amount 1, the face's
-  record 32^2 x (C[5]^2 + S[5]^2), the books' escaped lines the faces'
-  sums; the same bar with {"x": "periodic"}: no click, the ray at x = 0; a
-  measured event of `m` (content 16, momentum (16, 0, 0)) at x = 2 steps
-  off at interval 2: one `click` on `face:+x` with `measured` 1, amount 16,
-  phase 2 (K 16), momentum (16, 0, 0), `held` [16, 0], `home` [0, 0], the
-  measured line's escaped 16.
+  phase 5, momentum (64, 0, 0) [was (1, 0, 0)], content 1), the escaped
+  amount 1, the face's record 32^2 x (C[5]^2 + S[5]^2), the books' escaped
+  lines the faces' sums; the same bar with {"x": "periodic"}: no click,
+  the ray at x = 0; a measured event of `m` (content 16, momentum
+  (1024, 0, 0) [was (16, 0, 0)]: one unit of net flow in label units) at
+  x = 2 steps off at interval 2: one `click` on `face:+x` with `measured`
+  1, amount 16, phase 2 (K 16), momentum (1024, 0, 0), `held` [16, 0],
+  `home` [0, 0], the measured line's escaped 16.
 - (c) home: a lamp's ray (content 1, phase 7) returning to its lamp on a
   periodic 4 x 1 x 1 bar is home after 4 Links (the intervals 7, 14, ...)
   and leaves again on the lamp's one direction with phase 7 and content 1,
@@ -417,12 +453,16 @@ from `test_event_clock`, `test_release_costs_by_phase_rate` and
   7 x 1 x 1 bar): after 8 intervals A spent 32 and B 64, the releases of
   intervals 1 to 3 clicked in intervals 6 to 8 (a ray created at tick t
   first walks at t + 1 and 3 Links take 5 walks): 6 clicks, the counter's
-  content 37, its momentum (-12, 0, 0), each click record with `content` 4
-  or 8, 10 rays in flight carrying 60, the books balanced; a lamp of turn 0
+  content 37, its momentum (-768, 0, 0) (the labels 4 x 64 and 8 x 64
+  along +X and -X; re-pinned on 2026-09-19 for the label along the unit
+  vector from (-12, 0, 0); A's recoil (-2048, 0, 0) and B's (4096, 0, 0),
+  from (-32, 0, 0) and (64, 0, 0)), each click record with `content` 4 or
+  8, 10 rays in flight carrying 60, the books balanced; a lamp of turn 0
   releases nothing.
-- (d) the step: content 16 with momentum 16 on +x steps once per two
-  self-creations (three after six intervals); with momentum 1 none after 16
-  and one after 17; the momentum untouched; a step onto a Node that holds a
+- (d) the step: content 16 with momentum 1024 (16 x 64, one unit of net
+  flow in label units; was 16) on +x steps once per two self-creations
+  (three after six intervals); with momentum 64 (was 1) none after 16 and
+  one after 17; the momentum untouched; a step onto a Node that holds a
   measured event is refused, both remain, the step counted.
 - (e) the count off the clock: a source of `m` of content k at x = 0 of a
   2 x 1 x 1 bar releasing k rays per direction per self-creation at
@@ -440,18 +480,23 @@ from `test_event_clock`, `test_release_costs_by_phase_rate` and
 implementation note 15; the model owner's D1, 2026-09-19). One rule in
 isolation: an open bar of 12 x 1 x 1, K 1024, N 64, `release` [0, 1] (no
 push arrives), a free measured event of content M with the momentum p on
-+x; the step rule `by_clock(age, |p|, S x M + |p|)` with S the world's
-`width`. The expected integers, written down before the first run:
++x; the step rule `by_clock(age, |p|, Q x S x M + |p|)` with S the
+world's `width` and Q = 64 the label's scale (since 2026-09-19, the label
+along the unit vector, [RAY_LAW note 23](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+the declared momenta below are the first pins times 64 and every position
+is unchanged, `by_clock(age, Q n, Q k) = by_clock(age, n, k)`). The
+expected integers, written down before the first run:
 
-- (a) S = 1 reads exactly as the rule was: content 16 with momentum 16 from
-  x = 4 steps at the ages 2, 4, 6 (x after intervals 1 to 6: 4, 5, 5, 6,
-  6, 7; `steps` 0, 1, 1, 2, 2, 3), with `width` 1 declared and with the key
-  absent alike; with momentum 1 none after 16 intervals and one after 17.
-- (b) S = 8 with p = M: content 16 with momentum 16 steps once per 9
+- (a) S = 1 reads exactly as the rule was: content 16 with momentum 1024
+  (was 16) from x = 4 steps at the ages 2, 4, 6 (x after intervals 1 to 6:
+  4, 5, 5, 6, 6, 7; `steps` 0, 1, 1, 2, 2, 3), with `width` 1 declared and
+  with the key absent alike; with momentum 64 (was 1) none after 16
+  intervals and one after 17.
+- (b) S = 8 with p = Q M: content 16 with momentum 1024 steps once per 9
   self-creations, at the ages 9, 18, 27 (x 4 through interval 8, 5 from 9,
-  6 from 18, 7 at 27; `steps` 0, 1, 2, 3); content 3 with momentum 3 steps
-  at the same ages (the speed a unit of flow gives, 1 / (S + 1), is the
-  same for every content).
+  6 from 18, 7 at 27; `steps` 0, 1, 2, 3); content 3 with momentum 192
+  (was 3) steps at the same ages (the speed a unit of flow gives,
+  1 / (S + 1), is the same for every content).
 - (c) off the clock, no remainder: the probe of (b) at x = 3 with
   `suspension` [1, 4] and a crowd of 4 rays of another number (a fixed
   anchor of content 1 at x = 11) at rest on x = 3 to 7 owes one interval
@@ -460,8 +505,9 @@ push arrives), a free measured event of content M with the momentum p on
   pays the count (a measured event steps only in an interval where it owes
   nothing), the intervals 18, 36, 54: x after intervals 17, 18, 35, 36,
   53, 54, 60 is 3, 4, 4, 5, 5, 6, 6; age 30, waited 30, `steps` 3 after
-  60; after every paying interval `steps` = age x 16 // 144 and after every
-  self-creation (age - 1) x 16 // 144; the momentum untouched; the books
+  60; after every paying interval `steps` = age x 1024 // 9216 (= age x 16
+  // 144) and after every self-creation (age - 1) x 16 // 144; the momentum
+  (1024, 0, 0) untouched; the books
   balanced at every interval. (The first run corrected the interval of the
   step from 17 to 18: the order of the frame, not the rule.)
 - (d) a world without `width` parses to 1; `width` 8 parses to 8 and the
@@ -480,11 +526,13 @@ flight table: a ray released at tick t first walks at t + 1; 10 Links take
   number 1 on +X at x = 5 with phase 35 (d = 15), x = 4 with 36 (d = 16),
   x = 3 with 3 (d = 47) and x = 2 with 4 (d = 48), reaching x = 6 in
   intervals 1, 3, 5 and 7. d = 15 and d = 48 click (`click` records at
-  ticks 1 and 7 with `phase` 35 and 4, the push (1, 0, 0), `content` 1);
-  d = 16 and d = 47 pass (`pass` records at ticks 3 and 5 with the phase
-  and `window` 20), go on and click on `face:+x` at their next step (ticks
-  5 and 7). After 7 intervals `events` [2, 0], `held` [2, 1], the momentum
-  (2, 0, 0), 2 escaped, nothing in the store, the books balanced;
+  ticks 1 and 7 with `phase` 35 and 4, the push (64, 0, 0), `content` 1;
+  re-pinned on 2026-09-19 for the label along the unit vector from
+  (1, 0, 0)); d = 16 and d = 47 pass (`pass` records at ticks 3 and 5 with
+  the phase and `window` 20), go on and click on `face:+x` at their next
+  step (ticks 5 and 7). After 7 intervals `events` [2, 0], `held` [2, 1],
+  the momentum (128, 0, 0) (was (2, 0, 0)), 2 escaped, nothing in the
+  store, the books balanced;
   `in_window` at N = 64 admits d in [0, 16) and [48, 64), at N = 2 the step
   0, at N = 4 the steps 0 and 3.
 - (b) the complement covers the circle exactly: a bar of 12 x 1 x 1,
@@ -496,12 +544,13 @@ flight table: a ray released at tick t first walks at t + 1; 10 Links take
   phases 24..55, x = 11 the phases 0..23 and 56..63, every one of the first
   64 releases exactly once; 34 `pass` records at x = 10 and none at x = 11,
   nothing escaped; the lamp at age 83, phase 19, content K + 2 - 83,
-  momentum (-83, 0, 0).
+  momentum (-5312, 0, 0) (83 labels of 64; was (-83, 0, 0)).
 - (c) a lamp with a window: the lamp of (b) with `phase_window` 8 and a
   plain counter at x = 10: at each of the first 64 intervals t its age is
   t, its phase t mod 64, and it released one ray at phase t - 1 when t - 1
   is in the window (the ages 0..23 and 56..63) and none otherwise: after 64
-  intervals 32 released, content K + 2 - 32, momentum (-32, 0, 0), phase 0;
+  intervals 32 released, content K + 2 - 32, momentum (-2048, 0, 0) (was
+  (-32, 0, 0)), phase 0;
   after 81 the counter clicked 32 times and the lamp released 17 more, 49
   in all. The refusals, naming the key: a window of 64 at N = 64, a window
   on `pass`, an object entry with an unknown key, a lamp window of -1, a
@@ -540,14 +589,69 @@ re-pinned from `test_event_worlds` (e) and
   table, `suspension` [1, 1]), `state.json` (the law, tick 4, the Nodes with
   rays) and `events.jsonl`; a negative tick count and a used output
   directory refused.
-- (d) the bounds: two measured events of content 64 one Link apart at
-  `release` [1, 1] read each other's 64 rays from interval 2 on and are
-  pushed by 64 x 64 = 4096 toward each other; the second, declared with the
-  momentum -(2^62 - 1) + 4096 on x, reaches the bound exactly and is
-  accepted; one unit nearer it is refused with `OverflowError` naming the
-  measured event, its Node and the momentum; a reader of content 2^56 - 1
-  met by 64 rays takes the push -(2^62 - 64), and at 2^56 the push -2^62 is
-  refused naming the push.
+- (d) the bounds (re-pinned on 2026-09-19 at 1/64 of their amounts, the
+  label of a unit along a heading being 64 e_d since the label along the
+  unit vector, [RAY_LAW note 23](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  two measured events of content 1 (were 64) one Link apart at `release`
+  [1, 1] read each other's one ray from interval 2 on and are pushed by
+  1 x 64 x 1 = 64 (was 64 x 64 = 4096) toward each other; the second,
+  declared with the momentum -(2^62 - 1) + 64 on x, reaches the bound
+  exactly and is accepted; one unit nearer it is refused with
+  `OverflowError` naming the measured event, its Node and the momentum; a
+  reader of content 2^56 - 1 met by one ray (was 64) takes the push
+  -(2^56 - 1) x 64 = -(2^62 - 64), the same number, and at 2^56 the push
+  -2^62 is refused naming the push.
+
+## The label along the unit vector
+
+`tests/test_ray_label.py` (docs/RAY_LAW.md, section 2 and section 10, note
+23; the model owner's decision of 2026-09-19 on the physics-rule
+reviewer's verdict, Highlights 5.4): the label of one unit on the
+direction D is u_d, the integer vector nearest Q D / |D| with Q = 64, by
+the exact integer rule k(|a|) = (isqrt((2 Q |a|)^2 // |D|^2) + 1) // 2
+with the sign restored (`nature_beam.unit_label`, the flight table's
+`labels`); a row's label is content x amount x u_d (paid) or amount x u_d
+(free). The expected integers, written down before the first run:
+
+- (a) the table: u_(1, 1, 0) = (45, 45, 0), u_(1, 1, 1) = (37, 37, 37),
+  u_(2, 1, 0) = (57, 29, 0), u_(3, 1, 0) = (61, 20, 0), u_(7, 5, 0) =
+  (52, 37, 0), u_(11, 1, 0) = (64, 6, 0), u_(1, 2, 3) = (17, 34, 51),
+  u_(63, 46, 46) = (45, 33, 33); the six headings exactly 64 e_d; the rest
+  vectors (0, 0, 0); 63^2 < |u_d|^2 < 65^2 for every direction of the
+  table; u_{-D} = -u_D exactly; u_{gD} = g u_D for the 48 signed axis
+  permutations; over every primitive direction with components in -64 ..
+  64 (1780418 of them, at once) the integer rule equals the float rounding
+  of Q |a| / |D|, no component passes Q, no exact tie occurs (a tie needs
+  (2 m + 1)^2 |D|^2 = (4 Q |a|)^2, impossible below |D| = 256) and |u_d|
+  is within sqrt 3 / (2 Q) = 1.35 % of Q.
+- (b) the labels on the board: a 31^3 open board with the six headings and
+  the eight fan directions above and their negatives; a lamp of `light`
+  (quantum 1, content 3 x 2^18 at K 2^18: the turn 3 at every age of the
+  run, so the content per unit is 3) at (15, 15, 15) releasing one unit
+  per interval on the six headings and the eight fan directions (14 rows
+  per release, amount 1, content 3): every row's label 3 x u_d, |label|^2
+  within (63 x 3)^2 .. (65 x 3)^2; the lamp's recoil after the first
+  release exactly -(the labels born) = -3 x (378, 241, 121) = (-1134,
+  -723, -363) (the six headings cancel), the transit line their sum;
+  through 60 intervals with a screen of `m` at (21, 15, 15) measuring
+  `light` (each click moves the ray's label 3 x u_d: the +X rays
+  (192, 0, 0), the (11, 1, 0) rays, whose line passes the screen's Node
+  too, (192, 18, 0); the screen's momentum their sum), a mirror at
+  (22, 20, 15) on the line of (7, 5, 0) re-emitting on (-7, -5, 0) (its
+  momentum exactly 2 x 3 x (52, 37, 0) = (312, 222, 0) times the rays it
+  reflected, the label out being minus the label in) and the open faces
+  (the escaped line the sum of the face clicks' momenta): measured +
+  transit + escaped = (0, 0, 0) at every interval, the books balanced, the
+  running transit line equal to the recount, every label in the store 3 x
+  u_d at every interval.
+- (c) the bound: a declared ray of `light` (quantum 1) of amount 2^56 is
+  refused by the parser naming "64 x 1 x 72057594037927936 =
+  4611686018427387904" and the bound; amount 2^56 - 1 is accepted; a free
+  family's declared ray likewise; `label_weights` refuses a paid row of
+  content 2^28 and amount 2^28 and a free row of amount 2^56 naming
+  "64 x content x amount up to 4611686018427387904" and accepts the paid
+  row of content 2^28 - 1 and amount 2^28 + 1 (2^56 - 1) and the free row
+  of 2^56 - 1; MOMENTUM_BOUND // 64 = 2^56 - 1.
 
 ## The worlds of the ray law
 

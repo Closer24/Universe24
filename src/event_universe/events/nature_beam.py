@@ -54,10 +54,16 @@ order, each a bijection on the board's state except the border:
 6. merge identical rows and sort by Node.
 
 Every momentum the law reads or moves is the one label of the rows,
-`momentum_labels` (content x amount x D[direction] for a paid family,
-amount x D[direction] for a free one): the push's moment, the click's
-momentum, the face click's, the recoil at a release or a re-emission and
-the transit line of the books; no momentum is read off a Port. No other
+`momentum_labels` (content x amount x u_d for a paid family, amount x u_d
+for a free one, u_d the unit vector of the direction at the flight table's
+scale Q = 64: the integer vector nearest Q D / |D|, `unit_label`, one
+world constant per direction on the flight table, exactly Q e_d on a
+heading; the model owner's decision of 2026-09-19 on the physics-rule
+reviewer's verdict, RAY_LAW section 2 and note 23): the push's moment, the
+click's momentum, the face click's, the recoil at a release or a
+re-emission and the transit line of the books; no momentum is read off a
+Port, and the reading's vector and tensor moments are taken on u_d as
+well, so a fan's flow reads Q per unit of amount direction-blind. No other
 function holds a piece of the law: `flight_table`, `collision_table` and
 `read_arrivals` are the pure tables and the one reading it takes;
 `RayStore` is the structure of arrays it moves. Integers only. The engine
@@ -80,15 +86,19 @@ from event_universe.events.measured import FACE_NAMES, Ledger, Measured
 from event_universe.events.world import (
     FIXED_DIRECTIONS,
     HEADING_OFFSET,
+    LABEL_SCALE,
     MOMENTUM_BOUND,
     RAYS_LAW,
     REST_DIRECTIONS,
     RayWorld,
+    Vector,
 )
 
 Record = Callable[[dict[str, object]], None]
-# The time resolution of the flight table: T_d = isqrt(3 |v|^2 Q^2).
-Q = 64
+# The one scale of the law: the time resolution of the flight table, T_d =
+# isqrt(3 |v|^2 Q^2), and the length of a unit's momentum label, u_d the
+# integer vector nearest Q D / |D| (`world.LABEL_SCALE`).
+Q = LABEL_SCALE
 # The arrival of a ray that did not step this interval: the first rest
 # direction, whose vector is (0, 0, 0), so "here" enters the zeroth moment
 # of the reading alone.
@@ -273,8 +283,12 @@ def read_arrivals(
 class FlightTable:
     """One world constant per direction: v, S_1 = |a| + |b| + |c|,
     T_d = isqrt(3 |v|^2 Q^2), the Bresenham line of v (S_1 unit steps), the
-    least period L_d of the flight phase, and the step table: the Link a ray
-    of direction d crosses at age tau (a heading, or zero for no move)."""
+    least period L_d of the flight phase, the step table (the Link a ray of
+    direction d crosses at age tau: a heading, or zero for no move) and
+    `labels`, the unit vector u_d of each direction at the scale Q
+    (`unit_label`; (0, 0, 0) for a rest direction): the momentum label of
+    one unit of amount along d, the same length within sqrt 3 / (2 Q) for
+    every direction and exactly Q e_d on a heading."""
 
     vectors: np.ndarray
     manhattan: np.ndarray
@@ -282,6 +296,7 @@ class FlightTable:
     period: np.ndarray
     lines: np.ndarray
     steps: np.ndarray
+    labels: np.ndarray
 
     def manhattan_steps(self, direction: np.ndarray, age: np.ndarray) -> np.ndarray:
         """m(tau) = (2 tau S_1 Q + T_d) // (2 T_d): the Manhattan steps made
@@ -289,6 +304,29 @@ class FlightTable:
         s1, t = self.manhattan[direction], self.turns[direction]
         result: np.ndarray = (2 * age * s1 * Q + t) // (2 * t)
         return result
+
+
+def unit_label(vector: Vector) -> Vector:
+    """The unit vector of a direction at the scale Q: the integer vector
+    nearest Q D / |D|, in integers only (the physics-rule reviewer's exact
+    rule, 2026-09-19): with n = |D|^2, each component |a| is rounded as
+    k(|a|) = (isqrt((2 Q |a|)^2 // n) + 1) // 2 and the sign restored, so
+    that u_{-D} = -u_D exactly and u_{gD} = g u_D for the 48 signed axis
+    permutations (k depends on |a| and n alone). Equal to the float
+    rounding of Q |a| / |D| on every primitive direction with components
+    in -64 .. 64 (0 mismatches over 1780418) and free of ties for any
+    direction bound below 147 (a half-integer needs |D| a multiple of
+    256). The six headings give exactly Q e_d; the zero vector gives the
+    zero vector. Every component is within Q."""
+    n = sum(c * c for c in vector)
+    if n == 0:
+        return ZERO3
+    found = []
+    for a in vector:
+        t = 2 * Q * abs(a)
+        k = (integer_root(t * t // n) + 1) // 2
+        found.append(k if a >= 0 else -k)
+    return found[0], found[1], found[2]
 
 
 def _bresenham(vector: tuple[int, int, int]) -> list[tuple[int, int, int]]:
@@ -330,7 +368,17 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
     for index, line in enumerate(lines_list):
         for j, step in enumerate(line):
             lines[index, j] = step
-    table = FlightTable(np.array(vectors, dtype=np.int64), manhattan, turns, period, lines, np.zeros(0))
+    # The label table: the unit vector of every direction at the scale Q.
+    labels = np.array([unit_label(vector) for vector in vectors], dtype=np.int64).reshape(count, 3)
+    table = FlightTable(
+        np.array(vectors, dtype=np.int64).reshape(count, 3),
+        manhattan,
+        turns,
+        period,
+        lines,
+        np.zeros(0),
+        labels,
+    )
     longest_period = int(period.max(initial=1))
     # The step table is small integers (a heading or zero): one byte each.
     steps = np.zeros((count, longest_period, 3), dtype=np.int8)
@@ -344,7 +392,7 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
         m1 = table.manhattan_steps(direction, ages + 1)
         moved = m1 > m0
         steps[index, : len(ages)] = np.where(moved[:, None], lines[index, m0 % s1], 0)
-    return FlightTable(table.vectors, manhattan, turns, period, lines, steps)
+    return FlightTable(table.vectors, manhattan, turns, period, lines, steps, labels)
 
 
 # -- the collision table ---------------------------------------------------------
@@ -476,36 +524,48 @@ def exact_column_sums(values: np.ndarray) -> list[int]:
 
 
 def label_bound_error(largest: int) -> OverflowError:
-    """The refusal of a row whose label weight could pass the bound."""
+    """The refusal of a row whose label could pass the bound: its weight
+    (content x amount, the amount for a free family) times Q."""
     return OverflowError(
-        f"{RAYS_LAW}: the momentum label of a row, content x amount up to {largest}, "
-        f"exceeds the integer bound {MOMENTUM_BOUND}"
+        f"{RAYS_LAW}: the momentum label of a row, {Q} x content x amount up to {Q * largest}, "
+        f"exceeds the integer bound {MOMENTUM_BOUND} (content x amount at most {MOMENTUM_BOUND // Q})"
     )
+
+
+def largest_label_weight(amount: np.ndarray, content: np.ndarray, free: bool) -> int:
+    """The largest label weight among rows: the largest amount for a free
+    family, the largest amount times the largest content for a paid one."""
+    largest = int(np.abs(amount).max(initial=0))
+    if not free:
+        largest *= int(np.abs(content).max(initial=0))
+    return largest
 
 
 def label_weights(amount: np.ndarray, content: np.ndarray, free: bool) -> np.ndarray:
     """The weight of a row's momentum label: the amount for a free family
     (its unit carries no content; its label is the unit), content x amount
-    for a paid one, bounded before the product is formed (a row whose
-    weight could pass the integer bound is refused)."""
+    for a paid one, bounded before the product is formed: a row whose
+    label, Q times its weight, could pass the integer bound is refused
+    loudly with the number (content x amount below 2^56)."""
     weight = np.asarray(amount, dtype=np.int64)
+    largest = largest_label_weight(weight, content, free)
+    if Q * largest > MOMENTUM_BOUND:
+        raise label_bound_error(largest)
     if free:
         return weight
-    largest = int(np.abs(weight).max(initial=0)) * int(np.abs(content).max(initial=0))
-    if largest > MOMENTUM_BOUND:
-        raise label_bound_error(largest)
     result: np.ndarray = weight * np.asarray(content, dtype=np.int64)
     return result
 
 
 def momentum_labels(
-    vectors: np.ndarray, direction: np.ndarray, amount: np.ndarray, content: np.ndarray, free: bool
+    labels: np.ndarray, direction: np.ndarray, amount: np.ndarray, content: np.ndarray, free: bool
 ) -> np.ndarray:
     """The one momentum label of rows of rays, (rows, 3): the label weight
-    (`label_weights`) along D[direction], content x amount x D[direction]
-    for a paid family, amount x D[direction] for a free one."""
+    (`label_weights`) along the unit vector of the direction at the scale
+    Q (`labels`, the flight table's `labels`), content x amount x u_d for
+    a paid family, amount x u_d for a free one."""
     weight = label_weights(amount, content, free)
-    result: np.ndarray = vectors[np.asarray(direction, dtype=np.int64)] * weight[:, None]
+    result: np.ndarray = labels[np.asarray(direction, dtype=np.int64)] * weight[:, None]
     return result
 
 
@@ -673,12 +733,11 @@ class RayStore:
             for i in range(self.size)
         ]
 
-    def labels(self, rows: np.ndarray, vectors: np.ndarray, free: bool) -> np.ndarray:
+    def labels(self, rows: np.ndarray, unit: np.ndarray, free: bool) -> np.ndarray:
         """The momentum labels of the given rows (`momentum_labels`, the one
-        label of the law)."""
-        return momentum_labels(
-            vectors, self.direction[rows], self.amount[rows], self.content[rows], free
-        )
+        label of the law) along the unit vectors `unit` (the flight table's
+        `labels`)."""
+        return momentum_labels(unit, self.direction[rows], self.amount[rows], self.content[rows], free)
 
 
 def segment_sums(keys: np.ndarray, values: np.ndarray, size: int) -> np.ndarray:
@@ -726,16 +785,19 @@ class Readings:
     on request from the rows of the walk (diagnostics for the engine's
     shell means and flux; the law reads none of them, its own readings
     being taken at the measured events in step 4): the amount that arrived
-    per Node (the zeroth moment outside), its net flow (the first moment),
-    the presence of every ray (the zeroth moment whole) and, a diagnostic
-    of the walk and not of the reading, the amount that crossed into each
-    Node through each of its six Ports this interval (`per_port`, the
-    Links crossed, for Gauss's flux). Only the active Nodes (the Nodes with
-    rows) are decomposed, by the one keyed `read_arrivals` with its bound;
-    every other Node is zero."""
+    per Node (the zeroth moment outside), its net flow (the first moment,
+    on the unit vectors u_d at the scale Q: Q per unit of amount along a
+    heading, the same length for a fan direction), the presence of every
+    ray (the zeroth moment whole) and, a diagnostic of the walk and not of
+    the reading, the amount that crossed into each Node through each of
+    its six Ports this interval (`per_port`, the Links crossed, for
+    Gauss's flux, in units of amount). Only the active Nodes (the Nodes
+    with rows) are decomposed, by the one keyed `read_arrivals` with its
+    bound; every other Node is zero."""
 
     def __init__(self, shape: Address3, vectors: np.ndarray, rows: list[ArrivalRows]) -> None:
         self.shape = shape
+        # The unit vectors of the directions (the flight table's `labels`).
         self.vectors = vectors
         self.rows = rows
         self._moments: tuple[list[np.ndarray], list[np.ndarray], list[np.ndarray]] | None = None
@@ -860,16 +922,16 @@ def first_reading_overflow(
 
 
 def first_label_overflow(
-    group: np.ndarray, groups: int, amount: np.ndarray, content: np.ndarray
+    group: np.ndarray, groups: int, amount: np.ndarray, content: np.ndarray, free: bool
 ) -> tuple[int, OverflowError] | None:
-    """The bound of `label_weights` of a paid family taken per group in
-    bulk: None when every group passes, else the first failing group in
-    group order with the error `label_weights` raises."""
+    """The bound of `label_weights` taken per group in bulk (Q times the
+    weight within the bound): None when every group passes, else the first
+    failing group in group order with the error `label_weights` raises."""
     if amount.shape[0] == 0:
         return None
     a = np.abs(amount)
-    c = np.abs(content)
-    if int(a.max()) * int(c.max()) <= MOMENTUM_BOUND:
+    c = np.ones_like(a) if free else np.abs(content)
+    if Q * int(a.max()) * int(c.max()) <= MOMENTUM_BOUND:
         return None
     a_max = np.zeros(groups, dtype=np.int64)
     np.maximum.at(a_max, group, a)
@@ -877,8 +939,35 @@ def first_label_overflow(
     np.maximum.at(c_max, group, c)
     for g in range(groups):
         largest = int(a_max[g]) * int(c_max[g])
-        if largest > MOMENTUM_BOUND:
+        if Q * largest > MOMENTUM_BOUND:
             return g, label_bound_error(largest)
+    return None
+
+
+def first_moment_overflow(
+    group: np.ndarray, groups: int, weights: np.ndarray, unit: np.ndarray
+) -> tuple[int, OverflowError] | None:
+    """The bound of a label moment taken per group in bulk: the sum of
+    weight x u_d over a group's rows, each component within the weight
+    times the largest component of u_d (Q at most) per row, so the check
+    is weight x |u| x rows against the bound (a first moment: no second
+    moment is formed). None when every group passes, else the first
+    failing group in group order with the reading's error."""
+    if weights.shape[0] == 0:
+        return None
+    w = np.abs(weights)
+    v = np.abs(unit).max(axis=1)
+    counts = np.bincount(group, minlength=groups)
+    if int(w.max()) * max(1, int(v.max())) * int(counts.max()) <= MOMENTUM_BOUND:
+        return None
+    w_max = np.zeros(groups, dtype=np.int64)
+    np.maximum.at(w_max, group, w)
+    v_max = np.zeros(groups, dtype=np.int64)
+    np.maximum.at(v_max, group, v)
+    for g in range(groups):
+        per_row = int(w_max[g]) * max(1, int(v_max[g]))
+        if per_row * int(counts[g]) > MOMENTUM_BOUND:
+            return g, reading_bound_error(int(counts[g]), per_row)
     return None
 
 
@@ -948,7 +1037,9 @@ def nature_beam(
     families = world.families
     free_of = [definition.free for definition in families]
     flight, collision = tables.flight, tables.collision
-    vectors = flight.vectors
+    # The unit vectors of the directions at the scale Q: what every label
+    # and every vector or tensor moment of the reading is taken on.
+    unit = flight.labels
     modulus = world.phase_steps
     nodes = world.shape[0] * world.shape[1] * world.shape[2]
     shape = world.shape
@@ -1044,7 +1135,7 @@ def nature_beam(
             store.phase = (store.phase - families[family].phase_per_link * moved) % modulus
             store.arrival[:] = HERE
             store.merge()
-        return Readings(shape, vectors, [])
+        return Readings(shape, unit, [])
 
     # 1. The walk: departures become arrivals; the escapes click on the faces.
     arrivals: list[ArrivalRows] = []
@@ -1070,7 +1161,7 @@ def nature_beam(
         arrival = np.where(moved, store.direction, HERE)
         if escaped.any():
             gone = np.flatnonzero(escaped)
-            labels = store.labels(gone, vectors, definition.free)
+            labels = store.labels(gone, unit, definition.free)
             for face in ledger.open_faces:
                 on_face = port[gone] == face
                 through = gone[on_face]
@@ -1135,7 +1226,7 @@ def nature_beam(
     # where they are read: at the measured events in step 4 (their own
     # local sets) and, for the diagnostics of the whole board, on request
     # from the rows of the walk (the active Nodes only; `Readings`).
-    readings = Readings(shape, vectors, arrivals)
+    readings = Readings(shape, unit, arrivals)
 
     # 3. The collision.
     for store in stores:
@@ -1192,7 +1283,7 @@ def nature_beam(
             others = np.flatnonzero(~own)
             if others.shape[0]:
                 overflow = first_reading_overflow(
-                    ev[others], events, amount[others], vectors[arrival[others]]
+                    ev[others], events, amount[others], unit[arrival[others]]
                 )
                 if overflow is not None:
                     failures[(overflow[0], family, 0, 0, 0)] = overflow[1]
@@ -1209,14 +1300,11 @@ def nature_beam(
                 total = grouped_sums(amount[home], starts, widest)
                 carried = grouped_sums(amount[home] * content[home], starts, widest)
                 taken_in = np.zeros((starts.shape[0], DIMENSIONS), dtype=np.int64)
-                if free:
-                    weights = amount[home]
-                else:
-                    overflow = first_label_overflow(ev_h, events, amount[home], content[home])
-                    if overflow is not None:
-                        failures[(overflow[0], family, 0, 0, 1)] = overflow[1]
-                    weights = amount[home] * content[home]
-                home_labels = vectors[direction[home]] * weights[:, None]
+                overflow = first_label_overflow(ev_h, events, amount[home], content[home], free)
+                if overflow is not None:
+                    failures[(overflow[0], family, 0, 0, 1)] = overflow[1]
+                weights = amount[home] if free else amount[home] * content[home]
+                home_labels = unit[direction[home]] * weights[:, None]
                 if not free:
                     taken_in = grouped_sums(home_labels, starts, widest)
                 # The home rows leave the store: their labels leave the
@@ -1282,11 +1370,11 @@ def nature_beam(
                 failures[(int(g_ev[group]), family, 1, group - first, stage)] = error
 
             a_t, c_t, ph_t = amount[taken], content[taken], phase[taken]
-            v_arrival = vectors[arrival[taken]]
-            v_direction = vectors[direction[taken]]
+            v_arrival = unit[arrival[taken]]
+            v_direction = unit[direction[taken]]
             # The reading's component on the record: the moments of the
-            # arrivals' vectors weighted by the amounts (no collision at
-            # this Node: the arrival is the direction).
+            # arrivals' unit vectors weighted by the amounts (no collision
+            # at this Node: the arrival is the direction).
             overflow = first_reading_overflow(of_row, groups, a_t, v_arrival)
             if overflow is not None:
                 fail(overflow[0], 2, overflow[1])
@@ -1304,14 +1392,11 @@ def nature_beam(
             # (charge, mass) class of the charged rows a charged reader met,
             # in the order of first appearance, the part the electric push
             # reads off the clock.
-            if free:
-                weights = a_t
-            else:
-                overflow = first_label_overflow(of_row, groups, a_t, c_t)
-                if overflow is not None:
-                    fail(overflow[0], 3, overflow[1])
-                weights = a_t * c_t
-            overflow = first_reading_overflow(of_row, groups, weights, v_direction)
+            overflow = first_label_overflow(of_row, groups, a_t, c_t, free)
+            if overflow is not None:
+                fail(overflow[0], 3, overflow[1])
+            weights = a_t if free else a_t * c_t
+            overflow = first_moment_overflow(of_row, groups, weights, v_direction)
             if overflow is not None:
                 fail(overflow[0], 4, overflow[1])
             labels = v_direction * weights[:, None]
@@ -1415,9 +1500,9 @@ def nature_beam(
                     entry.measured[family]["home"] += total
                     ledger.transit_absorbed[family] += total
                     ledger.content_absorbed[family] += carried
+                    if failures:
+                        refuse((i, family, 0, 0, 1))
                     if not free:
-                        if failures:
-                            refuse((i, family, 0, 0, 1))
                         entry.momentum = [
                             bounded(a + b, entry, "momentum")
                             for a, b in zip(entry.momentum, taken_in, strict=True)
@@ -1647,7 +1732,7 @@ def nature_beam(
             # The labels of the born rows (the one label; bounded before the
             # product): a paid family's emitter takes their sum as its
             # recoil, a lamp's release and a re-emission alike.
-            labels = momentum_labels(vectors, direction_column, amount_column, content_column, free)
+            labels = momentum_labels(unit, direction_column, amount_column, content_column, free)
             if int(np.abs(labels).max(initial=0)) > MOMENTUM_BOUND:
                 raise OverflowError(
                     f"{RAYS_LAW}: the momentum label of a release of measured event {entry.number} at "

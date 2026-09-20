@@ -12,19 +12,22 @@ and detectors, the releases, the merge), then turns the phase of every
 self-created measured event by its turn, reads the count it owes off its
 clock from the presence the law read back (`by_clock(age, k x n, d)` at the
 world's `suspension` `[n, d]`), and steps the free measured events by their
-momentum off the clock (one Link per (S x M + p) / p self-creations on an
-axis whose momentum component is p, M the content and S the world's
-`width`, `by_clock(age, |p|, S x M + |p|)`, 1 by default; at most one Link
-per interval, x before y before z; a step onto a Node that holds a measured
-event is refused; through an open face the step is a click on the face
-detector; on a periodic axis it wraps). The books (`books`): per family the
-measured line, in content,
+momentum off the clock (one Link per (Q x S x M + p) / p self-creations on
+an axis whose momentum component is p in label units, M the content, S the
+world's `width` and Q = 64 the label's scale, `by_clock(age, |p|, Q x S x M
++ |p|)`: one unit of net flow, the label Q x M, gives the speed 1 / (S + 1)
+for every content, as it did when the label of a heading was the unit; at
+most one Link per interval, x before y before z; a step onto a Node that
+holds a measured event is refused; through an open face the step is a
+click on the face detector; on a periodic axis it wraps). The books
+(`books`): per family the measured line, in content,
 initial + measured = current + spent + escaped; the transit line, in units,
 initial + released = current + escaped + absorbed; the content line, the
 content carried, initial + released = current + escaped + absorbed; the
 momentum reported on the measured events, in transit (the one label of
-every row, content x amount x D[direction] per ray of a paid family, amount
-x D of a free one) and escaped; every escaped line the sum of the face
+every row, content x amount x u_d per ray of a paid family, amount x u_d of
+a free one, u_d the unit vector of the direction at the scale Q) and
+escaped, all in label units; every escaped line the sum of the face
 detectors' clicks; every sum exact (`exact_sum`), never a wrapped register.
 """
 
@@ -51,6 +54,7 @@ from event_universe.events.nature_beam import (
 )
 from event_universe.events.world import (
     HEADING_OFFSET,
+    LABEL_SCALE,
     MOMENTUM_BOUND,
     RAYS_LAW,
     MeasuredDefinition,
@@ -128,7 +132,7 @@ class RaySimulation:
         # request): per family the arrivals per Node, their net flow, the
         # Links crossed per Port and the presence.
         self.readings = Readings(
-            world.shape, self.tables.flight.vectors, [ArrivalRows.empty() for _ in range(count)]
+            world.shape, self.tables.flight.labels, [ArrivalRows.empty() for _ in range(count)]
         )
 
     @property
@@ -273,27 +277,30 @@ class RaySimulation:
 
     def _move(self, entry: Measured) -> None:
         """The step by the momentum off the clock, at most one per interval,
-        when nothing is owed: on an axis whose momentum component is p, one
-        Link per (S x M + p) / p self-creations, `by_clock(age, |p|, S x M +
-        |p|)` with M the content and S the world's `width` (the model owner's
-        D1 of 2026-09-19; S = 1 is the rule as it was, one Link per (M + p) /
-        p; one unit of net flow gives p = M, so the speed it gives is
-        1 / (S + 1) for every content); no remainder is kept, the count is
-        the whole part off the clock. A step
-        onto a measured event is refused; an escape is a click on the face; a
-        periodic axis wraps."""
+        when nothing is owed: on an axis whose momentum component is p (in
+        label units), one Link per (Q x S x M + p) / p self-creations,
+        `by_clock(age, |p|, Q x S x M + |p|)` with M the content, S the
+        world's `width` (the model owner's D1 of 2026-09-19) and Q = 64 the
+        label's scale (the physics-rule reviewer's correction 2 of the
+        label along the unit vector, 2026-09-19: the width in units of one
+        free unit's label, Q x M, so that one unit of net flow gives the
+        speed 1 / (S + 1) for every content and every step registered
+        before the change is the same, `by_clock(age, Q n, Q k) =
+        by_clock(age, n, k)`); no remainder is kept, the count is the whole
+        part off the clock. A step onto a measured event is refused; an
+        escape is a click on the face; a periodic axis wraps."""
         if entry.fixed or entry.owed > 0:
             return
         content = entry.content
         if content <= 0:
             return
-        width = self.world.width
+        width = LABEL_SCALE * self.world.width * content
         for axis in range(3):
             momentum = entry.momentum[axis]
             if momentum == 0:
                 continue
             magnitude = abs(momentum)
-            if not by_clock(entry.age - 1, magnitude, width * content + magnitude):
+            if not by_clock(entry.age - 1, magnitude, width + magnitude):
                 continue
             sign = 1 if momentum > 0 else -1
             entry.steps += 1
@@ -362,10 +369,10 @@ class RaySimulation:
         """The current lines counted from the store, a pass over every row:
         the units and the content in transit per family and the momentum in
         transit (the one label of every row, `momentum_labels`: content x
-        amount x D[direction] per ray of a paid family, amount x D of a
-        free one), every sum exact. The check of the running lines of the
-        ledger, on request (`books(recount=True)`; the tests assert it
-        equal at every tick)."""
+        amount x u_d per ray of a paid family, amount x u_d of a free one,
+        u_d the unit vector of the direction at the scale Q), every sum
+        exact. The check of the running lines of the ledger, on request
+        (`books(recount=True)`; the tests assert it equal at every tick)."""
         units: list[int] = []
         content: list[int] = []
         momentum = [0, 0, 0]
@@ -374,7 +381,7 @@ class RaySimulation:
             content.append(int(exact_sum(store.amount * store.content)))
             if store.size:
                 definition = self.families[family]
-                labels = store.labels(np.arange(store.size), self.tables.flight.vectors, definition.free)
+                labels = store.labels(np.arange(store.size), self.tables.flight.labels, definition.free)
                 momentum = [a + b for a, b in zip(momentum, exact_column_sums(labels), strict=True)]
         return {"transit": units, "content": content, "momentum": momentum}
 
@@ -537,8 +544,9 @@ class RaySimulation:
         """The shell means at one radius of the last interval's readings: the
         Nodes at Euclidean distance within a half Link of `radius` from the
         centre, their number, the mean count (the amount that arrived per
-        Node), the mean radial flow (amount x arrival heading projected on
-        the radial unit vector, summed per Node) and the mean presence (every
+        Node), the mean radial flow (amount x the arrival's unit vector at
+        the scale Q projected on the radial unit vector, summed per Node: Q
+        per unit of amount moving radially) and the mean presence (every
         ray at the Node)."""
         grid = np.indices(self.shape).reshape(3, -1).T - np.array(centre)
         distance = np.sqrt((grid * grid).sum(axis=1))

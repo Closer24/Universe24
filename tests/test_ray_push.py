@@ -24,58 +24,68 @@ event `fixed`; a 12 x 1 x 1 bar with y and z periodic (the stub: a ray on
     flight table puts a ray born at tick t at x = 6 at tick t + 10 (m(10)
     = 6, m(9) = 5), so the probe reads one row of amount 4 at every tick
     from 11 through 30: 20 `read` records, each with the flow V = 4 and the
-    push -5 V + by_clock(age, 3 V, 4) = -20 + 3 = (-17, 0, 0) (age the
-    probe's, equal to the tick), `pushed` (-340, 0, 0) (the exact sum
-    80 x (-5 + 3/4)); the record's `mass` column 4 (the content the
-    release rate read at birth) and `charge` 3;
+    push -5 V + by_clock(age, 3 V, 4) with the label moment V = 4 x 64 =
+    256 (since 2026-09-19 the label is along the unit vector u_d of the
+    direction at the flight table's scale Q = 64, the model owner's
+    decision on the physics-rule reviewer's verdict, RAY_LAW section 2 and
+    note 23: every integer of the six-heading fixtures below is the first
+    pin times 64, the fan fixtures read u_(2, 1, 0) = (57, 29, 0), and the
+    pins before the change are in git at the one-form commits) = -1280 +
+    192 = (-1088, 0, 0) (age the probe's, equal to the tick), `pushed`
+    (-21760, 0, 0) (the exact sum 64 x 80 x (-5 + 3/4)); the record's
+    `mass` column 4 (the content the release rate read at birth) and
+    `charge` 3;
 (b) the sign: the source's charge -3: every push -5 V - by_clock(age, 3 V,
-    4) = (-23, 0, 0), `pushed` (-460, 0, 0);
-(c) an uncharged probe: every push -5 V = (-20, 0, 0), `pushed` (-400, 0, 0);
+    4) = (-1472, 0, 0), `pushed` (-29440, 0, 0);
+(c) an uncharged probe: every push -5 V = (-1280, 0, 0), `pushed`
+    (-25600, 0, 0);
 (d) q_A q_B = M_B with M_A = 1 (the series 7 cancellation): the probe of
     content 1 and charge 2, the source of charge 2 and content 4: every
-    push -1 x 4 + by_clock(age, 16, 4) = -4 + 4 = 0 exactly, `pushed`
-    (0, 0, 0) after 20 reads;
+    push -1 x 256 + by_clock(age, 1024, 4) = -256 + 256 = 0 exactly,
+    `pushed` (0, 0, 0) after 20 reads;
 (e) the fractional floor (the reviewer's F6): the source at `release`
-    [1, 2] gives 2 rays per interval, so V = 2, |V q_A q_B| = 6 and the
-    electric part by_clock(t, 6, 4) at the tick t is 2 at odd t and 1 at
-    even t from t = 11 (floor(6 (t + 1) / 4) - floor(6 t / 4)); over the
-    ticks 11 through 30 ten of each, 30 in all, the gravity -10 per read:
-    `pushed` (-200 + 30, 0, 0) = (-170, 0, 0);
+    [1, 2] gives 2 rays per interval, so V = 128, |V q_A q_B| = 384 and
+    the electric part by_clock(t, 384, 4) is 96 at every tick t (the floor
+    resolves 1 / Q per unit: what alternated 2, 1 on labels of length 1 is
+    96 exactly on labels of length 64), the gravity -640 per read:
+    `pushed` (20 x (-640 + 96), 0, 0) = (-10880, 0, 0);
 (f) a paid emitter: a lamp of `light` (content 2^23 at K 2^20: the turn
     by_clock(age, held, 2^20) = 8 at every age below 362, `rate` [1, 1] on
     +X, quantum 1) releases one unit of content 8 per interval from tick 1,
-    its recoil (-8, 0, 0) per release; the probe (content 5, `table`
-    {"light": "read"}, `release` [0, 1]) reads one unit at every tick 11
-    through 30 with the push (8, 0, 0) (kappa 1: the label h s x amount x
-    D), `pushed` (160, 0, 0); the lamp's momentum (-8 x its releases) plus
-    the transit line plus the escaped line is (0, 0, 0) at every tick (the
-    recoil is the label of what left); the reader's `read` takes the label
-    as a push while the ray goes on, a report of the push and not a
-    transfer, so the book closes over the click, the re-emission and the
-    home ((h)), not over a read;
+    its recoil (-512, 0, 0) per release (the label 8 x 64); the probe
+    (content 5, `table` {"light": "read"}, `release` [0, 1]) reads one
+    unit at every tick 11 through 30 with the push (512, 0, 0) (kappa 1:
+    the label h s x amount x u_d), `pushed` (10240, 0, 0); the lamp's
+    momentum (-512 x its releases) plus the transit line plus the escaped
+    line is (0, 0, 0) at every tick (the recoil is the label of what
+    left); the reader's `read` takes the label as a push while the ray
+    goes on, a report of the push and not a transfer, so the book closes
+    over the click, the re-emission and the home ((h)), not over a read;
 (g) a fan emitter: a source of content 4 (uncharged) at (0, 0, 0) of a
     9 x 5 x 1 board (z periodic) releasing on (2, 1, 0) at `release` [1, 1],
     the probe of content 5 at (4, 2, 0) on its digital line (the sixth
     Manhattan step; m(8) = 6, m(7) = 5, so the first read is at tick 9):
-    every push -5 x 4 x (2, 1, 0) = (-40, -20, 0), 22 reads (ticks 9
-    through 30), `pushed` (-880, -440, 0): the push of a fan ray is its
-    label, |D| = sqrt 5 times the amount, not the unit Link of its step;
+    every push -5 x 4 x (57, 29, 0) = (-1140, -580, 0), 22 reads (ticks 9
+    through 30), `pushed` (-25080, -12760, 0): the push of a fan ray is
+    its label along u_d, |u_d| = 64 within 1.35 % for every direction
+    (here sqrt 4090 = 63.95), not the unit Link of its step and not the
+    integer length of its direction;
 (h) the one label moves: a ray of `light` of amount 3 on (2, 1, 0) (content
     1; at (3, 2, 0) with age 7, one Link before (4, 2, 0) on its digital
     line x, y, x: m(7) = 5, m(8) = 6) clicking at a `measure` event at
-    (4, 2, 0): the click's `push` (6, 3, 0), the
-    event's momentum (6, 3, 0), the transit line (6, 3, 0) before and
-    (0, 0, 0) after; the same ray at a `rerelease` event whose one direction
-    is (2, 1, 0): the momentum (0, 0, 0) after the interval (the label in
-    (6, 3, 0), the label out the same), the transit line (6, 3, 0) before
-    and after; a paid ray coming home: the `home` record's `push` is its
-    label (1, 0, 0) and the emitter's momentum is (0, 0, 0) after the
-    re-creation (in at the home, out at the release);
+    (4, 2, 0): the click's `push` (171, 87, 0), the event's momentum
+    (171, 87, 0), the transit line (171, 87, 0) before and (0, 0, 0)
+    after; the same ray at a `rerelease` event whose one direction is
+    (2, 1, 0): the momentum (0, 0, 0) after the interval (the label in
+    (171, 87, 0), the label out the same), the transit line (171, 87, 0)
+    before and after; a paid ray coming home: the `home` record's `push`
+    is its label (64, 0, 0) and the emitter's momentum is (0, 0, 0) after
+    the re-creation (in at the home, out at the release);
 (i) the factor is read off the rows met: the world of (a) with two
     bystander rays of the probe's number (charge 1, mass 5 on their record)
     parked on the stub of the y axis at x = 2 and 3, rows before the probe's
-    in the store: every push (-17, 0, 0) and `pushed` (-340, 0, 0) as in
-    (a), the bystanders untouched.
+    in the store: every push (-1088, 0, 0) and `pushed` (-21760, 0, 0) as
+    in (a), the bystanders untouched.
 """
 
 from __future__ import annotations
@@ -160,19 +170,19 @@ def run(world: dict[str, object]) -> tuple[RaySimulation, list[dict[str, object]
 def test_the_form_on_the_reviewers_world_its_sign_and_the_uncharged_probe():
     """(a), (b), (c)."""
     for source_charge, probe_charge, electric, pushed in (
-        (3, 1, 3, -340),
-        (-3, 1, -3, -460),
-        (3, 0, 0, -400),
+        (3, 1, 192, -21760),
+        (-3, 1, -192, -29440),
+        (3, 0, 0, -25600),
     ):
         simulation, records = run(bar([source(source_charge), probe(probe_charge)]))
         reads = reads_of(records, 2)
         assert [tick for tick, _, _ in reads] == list(range(11, 31))
         for tick, amount, push in reads:
             assert amount == 4
-            assert push == [-20 + electric, 0, 0], (source_charge, probe_charge, tick)
+            assert push == [-1280 + electric, 0, 0], (source_charge, probe_charge, tick)
             if electric:
                 sign = 1 if source_charge * probe_charge > 0 else -1
-                assert push[0] == -20 + sign * by_clock(tick, 12, 4)
+                assert push[0] == -1280 + sign * by_clock(tick, 768, 4)
         assert simulation.measured[2].pushed == [pushed, 0, 0]
         store = simulation.stores[M]
         of_source = store.number == 1
@@ -191,9 +201,9 @@ def test_the_cancellation_and_the_fractional_floor():
     assert [tick for tick, _, _ in reads] == list(range(11, 31))
     for tick, amount, push in reads:
         assert amount == 2
-        assert push == [-10 + by_clock(tick, 6, 4), 0, 0], tick
-        assert push[0] == (-8 if tick % 2 else -9)
-    assert simulation.measured[2].pushed == [-170, 0, 0]
+        assert push == [-640 + by_clock(tick, 384, 4), 0, 0], tick
+        assert push[0] == -544
+    assert simulation.measured[2].pushed == [-10880, 0, 0]
 
 
 def test_a_paid_ray_pushes_by_its_label_and_the_paid_momentum_book_closes():
@@ -215,16 +225,16 @@ def test_a_paid_ray_pushes_by_its_label_and_the_paid_momentum_book_closes():
         assert books["balanced"]
         momentum = books["momentum"]
         lamp_momentum = simulation.measured[1].momentum
-        assert lamp_momentum == [-8 * simulation.tick, 0, 0]
+        assert lamp_momentum == [-512 * simulation.tick, 0, 0]
         assert [
             a + b + c
             for a, b, c in zip(lamp_momentum, momentum["transit"], momentum["escaped"], strict=True)
         ] == [0, 0, 0], simulation.tick
     reads = reads_of(records, 2)
     assert [tick for tick, _, _ in reads] == list(range(11, 31))
-    assert all(amount == 1 and push == [8, 0, 0] for _, amount, push in reads)
-    assert simulation.measured[2].pushed == [160, 0, 0]
-    assert simulation.measured[1].momentum == [-240, 0, 0]
+    assert all(amount == 1 and push == [512, 0, 0] for _, amount, push in reads)
+    assert simulation.measured[2].pushed == [10240, 0, 0]
+    assert simulation.measured[1].momentum == [-15360, 0, 0]
 
 
 def test_a_fan_rays_push_is_its_label():
@@ -238,8 +248,8 @@ def test_a_fan_rays_push_is_its_label():
     simulation, records = run(world)
     reads = reads_of(records, 2)
     assert [tick for tick, _, _ in reads] == list(range(9, 31))
-    assert all(amount == 4 and push == [-40, -20, 0] for _, amount, push in reads)
-    assert simulation.measured[2].pushed == [-880, -440, 0]
+    assert all(amount == 4 and push == [-1140, -580, 0] for _, amount, push in reads)
+    assert simulation.measured[2].pushed == [-25080, -12760, 0]
 
 
 def test_the_click_the_re_emission_and_the_home_move_the_one_label():
@@ -254,9 +264,10 @@ def test_the_click_the_re_emission_and_the_home_move_the_one_label():
         "age": 7,
     }
     lamp = {"position": [0, 3, 0], "family": "light", "amount": 4, "fixed": True}
+    label = [171, 87, 0]  # 3 units along u_(2, 1, 0) = (57, 29, 0)
     for rule, momentum_after, transit_after in (
-        ("measure", [6, 3, 0], [0, 0, 0]),
-        ("rerelease", [0, 0, 0], [6, 3, 0]),
+        ("measure", label, [0, 0, 0]),
+        ("rerelease", [0, 0, 0], label),
     ):
         taker = {
             "position": [4, 2, 0],
@@ -277,7 +288,7 @@ def test_the_click_the_re_emission_and_the_home_move_the_one_label():
         )
         records: list[dict[str, object]] = []
         simulation = RaySimulation(parse_ray_world(world), records.append)
-        assert simulation.books()["momentum"]["transit"] == [6, 3, 0]
+        assert simulation.books()["momentum"]["transit"] == label
         simulation.step()
         books = simulation.books()
         assert books["balanced"]
@@ -286,11 +297,9 @@ def test_the_click_the_re_emission_and_the_home_move_the_one_label():
         assert books["momentum"]["measured"] == momentum_after, rule
         clicks = [r for r in records if r["event"] == "click"]
         if rule == "measure":
-            assert [(c["amount"], c["push"]) for c in clicks] == [(3, [6, 3, 0])]
+            assert [(c["amount"], c["push"]) for c in clicks] == [(3, label)]
         else:
-            assert clicks == [] and [r["push"] for r in records if r["event"] == "rerelease"] == [
-                [6, 3, 0]
-            ]
+            assert clicks == [] and [r["push"] for r in records if r["event"] == "rerelease"] == [label]
 
     home_lamp = {
         "position": [0, 0, 0],
@@ -323,7 +332,7 @@ def test_the_click_the_re_emission_and_the_home_move_the_one_label():
         assert simulation.books()["balanced"]
         assert simulation.measured[1].momentum == [0, 0, 0]
     homes = [r for r in records if r["event"] == "home"]
-    assert len(homes) >= 2 and all(r["push"] == [1, 0, 0] and r["amount"] == 1 for r in homes)
+    assert len(homes) >= 2 and all(r["push"] == [64, 0, 0] and r["amount"] == 1 for r in homes)
 
 
 def test_the_factor_is_read_off_the_rows_met_among_other_rows():
@@ -342,8 +351,8 @@ def test_the_factor_is_read_off_the_rows_met_among_other_rows():
     simulation, records = run(bar([source(3), probe(1)], in_transit=bystanders))
     reads = reads_of(records, 2)
     assert [tick for tick, _, _ in reads] == list(range(11, 31))
-    assert all(push == [-17, 0, 0] for _, _, push in reads)
-    assert simulation.measured[2].pushed == [-340, 0, 0]
+    assert all(push == [-1088, 0, 0] for _, _, push in reads)
+    assert simulation.measured[2].pushed == [-21760, 0, 0]
     store = simulation.stores[M]
     vectors = simulation.tables.flight.vectors
     parked = (vectors[store.direction] == [0, 1, 0]).all(axis=1) & (store.node < 6)

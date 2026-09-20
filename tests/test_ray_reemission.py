@@ -8,25 +8,32 @@ expected integers of docs/TEST_EXPECTATIONS.md ("The re-emission"), written
 down first. K 2^20, `suspension` 0, `release` [0, 1], the families `m`
 (free) and `light` (paid):
 
+Since 2026-09-19 the label is along the unit vector u_d of the direction at
+the scale Q = 64 (RAY_LAW section 2 and note 23): u_(1, 0, 0) = (64, 0, 0),
+u_(1, 1, 0) = (45, 45, 0), u_(2, 1, 0) = (57, 29, 0), and every momentum
+below is in label units.
+
 (a) one ray of amount 3 (content 1 per unit, phase 20) into a `rerelease`
     Node of `m` (content 4) with the three directions +X, (1, 1, 0) and
     (2, 1, 0): three rays of amount 1 at the Node after the interval, one
     per direction, phase 20, age 0, the re-emitter's number 1, content 1;
-    the push (3, 0, 0) taken, the recoil -(1 x (1, 0, 0) + 1 x (1, 1, 0)
-    + 1 x (2, 1, 0)) = (-4, -2, 0), the momentum (-1, -2, 0); the books
-    closed (absorbed 3, released 3; the content line absorbed 3, released
-    3); a ray of amount 4 on the same Node: 2, 1, 1 (the leftover to the
-    direction `age mod 3` = 0, the first);
+    the push (192, 0, 0) taken, the recoil -(1 x (64, 0, 0) + 1 x (45, 45,
+    0) + 1 x (57, 29, 0)) = (-166, -74, 0), the momentum (26, -74, 0); the
+    books closed (absorbed 3, released 3; the content line absorbed 3,
+    released 3); a ray of amount 4 on the same Node: 2, 1, 1 (the leftover
+    to the direction `age mod 3` = 0, the first), the push (256, 0, 0), the
+    recoil (-230, -74, 0), the momentum (26, -74, 0);
 (b) the face click: a ray of amount 1, phase 5, content 1 at (2, 0, 0) on
     +X of a 3 x 1 x 1 bar steps off the board at the first interval: one
     `click` on `face:+x` (tick 1, Node (2, 0, 0), `measured` None, number
-    1, amount 1, phase 5, momentum (1, 0, 0), content 1), the escaped
+    1, amount 1, phase 5, momentum (64, 0, 0), content 1), the escaped
     amount 1, the face's record 32^2 x (C[5]^2 + S[5]^2), the books'
     escaped lines the faces' sums; the same bar with {"x": "periodic"}: no
     click, the ray at x = 0; a measured event of `m` (content 16, momentum
-    (16, 0, 0)) at x = 2 steps off at interval 2: one `click` on `face:+x`
-    with `measured` 1, amount 16, phase 2 (K 16), momentum (16, 0, 0),
-    `held` [16, 0], `home` [0, 0], the measured line's escaped 16;
+    (1024, 0, 0), one unit of net flow in label units) at x = 2 steps off
+    at interval 2: one `click` on `face:+x` with `measured` 1, amount 16,
+    phase 2 (K 16), momentum (1024, 0, 0), `held` [16, 0], `home` [0, 0],
+    the measured line's escaped 16;
 (c) home: the own number's arrivals are taken and created again at the next
     self-creation on the declared directions with the arriving phase and
     content: a lamp's ray (content 1, phase 7) returning to its lamp on a
@@ -113,9 +120,9 @@ def test_a_rerelease_node_re_emits_on_its_directions_keeping_phase_and_content()
             (8, shares[1], 20, 0, 1, 1),
             (9, shares[2], 20, 0, 1, 1),
         ]
-        assert entry.pushed == [amount, 0, 0]
-        recoil = [shares[0] + shares[1] + 2 * shares[2], shares[1] + shares[2], 0]
-        assert entry.momentum == [amount - recoil[0], -recoil[1], 0]
+        assert entry.pushed == [64 * amount, 0, 0]
+        recoil = [64 * shares[0] + 45 * shares[1] + 57 * shares[2], 45 * shares[1] + 29 * shares[2], 0]
+        assert entry.momentum == [64 * amount - recoil[0], -recoil[1], 0]
         line = books["families"]["light"]
         assert line["transit"] == {
             "initial": amount,
@@ -164,7 +171,7 @@ def test_an_escape_through_an_open_face_is_a_click_on_the_face_detector():
             "number": 1,
             "amount": 1,
             "phase": 5,
-            "momentum": [1, 0, 0],
+            "momentum": [64, 0, 0],
             "content": 1,
         }
     ]
@@ -178,13 +185,13 @@ def test_an_escape_through_an_open_face_is_a_click_on_the_face_detector():
         "record": 32 * 32 * (cosines[5] ** 2 + sines[5] ** 2),
         "measured_content": 0,
     }
-    assert faces[0]["momentum"] == [1, 0, 0]
+    assert faces[0]["momentum"] == [64, 0, 0]
     assert all(face["momentum"] == [0, 0, 0] for face in faces[1:])
     assert simulation.detectors() == faces
     books = simulation.books()
     assert books["families"]["light"]["transit"]["escaped"] == 1
     assert books["families"]["light"]["content"]["escaped"] == 1
-    assert books["momentum"]["escaped"] == [1, 0, 0]
+    assert books["momentum"]["escaped"] == [64, 0, 0]
     records.clear()
     simulation = RaySimulation(
         parse_ray_world(bar([3, 1, 1], [owner], in_transit=[unit], boundary={"x": "periodic"})),
@@ -194,7 +201,7 @@ def test_an_escape_through_an_open_face_is_a_click_on_the_face_detector():
     light = simulation.stores[LIGHT]
     assert records == [] and light.size == 1 and int(light.node[0]) == light.flat((0, 0, 0))
     assert [face["name"] for face in simulation.face_detectors()] == list(FACE_NAMES[2:])
-    mover = {"position": [2, 0, 0], "family": "m", "amount": 16, "momentum": [16, 0, 0]}
+    mover = {"position": [2, 0, 0], "family": "m", "amount": 16, "momentum": [1024, 0, 0]}
     records.clear()
     simulation = RaySimulation(parse_ray_world(bar([3, 1, 1], [mover], clock=16)), records.append)
     simulation.step()
@@ -212,7 +219,7 @@ def test_an_escape_through_an_open_face_is_a_click_on_the_face_detector():
             "number": 1,
             "amount": 16,
             "phase": 2,
-            "momentum": [16, 0, 0],
+            "momentum": [1024, 0, 0],
             "content": 16,
             "held": [16, 0],
             "home": [0, 0],
@@ -221,9 +228,9 @@ def test_an_escape_through_an_open_face_is_a_click_on_the_face_detector():
     ]
     books = simulation.books()
     assert books["balanced"] and books["families"]["m"]["measured"]["escaped"] == 16
-    assert books["momentum"]["escaped"] == [16, 0, 0]
+    assert books["momentum"]["escaped"] == [1024, 0, 0]
     face = simulation.face_detectors()[0]
-    assert face["families"]["m"]["measured_content"] == 16 and face["momentum"] == [16, 0, 0]
+    assert face["families"]["m"]["measured_content"] == 16 and face["momentum"] == [1024, 0, 0]
 
 
 def test_what_comes_home_is_created_again_with_its_phase_and_content():
