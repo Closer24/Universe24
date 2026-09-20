@@ -20,7 +20,8 @@ the model owner, 2026-09-19):
   (`NatureBeamWorld.turn`), refused at half the circle; the record carries
   the key as declared; `N`,
   the steps of the phase circle (64 by default, a power of two from 2 through
-  4096); `release` `[n, d]`, the rays a measured event of a free family
+  65536, the tables' bound `core.phase.MAX_PHASE_STEPS`; 4096 until
+  2026-09-20); `release` `[n, d]`, the rays a measured event of a free family
   releases per self-creation per declared direction per unit of content,
   read off its clock; `suspension` `[n, d]`, the rate of the
   clock's count: a measured event owes `by_clock(age, presence x n, d)`
@@ -303,6 +304,7 @@ from dataclasses import dataclass
 
 from event_universe.core.game_board import MAX_VALUE, PORT_HEADINGS, Address3
 from event_universe.core.integer import bounded_gcd, by_clock, integer_root, rational_sum
+from event_universe.core.phase import MAX_PHASE_STEPS
 
 BEAM_LAW = "beam-v1"
 LAW_VALUE = "beam"
@@ -330,7 +332,6 @@ READS = ("scalar", "outside", "here", "vector", "tensor", AGE_READS)
 # Q^2) and a ray makes S_1 Manhattan steps per T_d / Q intervals in the mean,
 # and the length of the momentum label, `LABEL_SCALE` below.
 Q = 64
-MAX_PHASE_STEPS = 4096
 # The bound of an amount, a content, a clock and a momentum component of this
 # law: the 64-bit work register with a bit to spare for one more sum.
 AMOUNT_BOUND = (1 << 62) - 1

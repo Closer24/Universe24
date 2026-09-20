@@ -56,15 +56,17 @@ N = 64, 256, 1024 (S = 176/64, 720/256, 2896/1024) and wrote "at or below
 Tsirelson at every N". `checks/s_of_n.py` reproduces those three values
 and the cells (27, 5, 5, 27) and the exact marginals at N = 64 integer by
 integer, then computes S(N) at the CHSH labels (0, N/8, N/4, 3N/8) for
-every N with 8 | N up to 2048 (the pair's rotation uses the half-angle
-tables at 2N, and `phase_cosines` is bounded at 4096 steps, so N = 4096
-is not reachable by the design as written; the "Bell at N = 4096" of the
-schedule needs that bound raised or is N = 2048). The result: 126 of the
-256 values of N give S(N) above 2 sqrt 2 (N = 16 and 32 give 3, N = 128
-gives 23/8 = 2.875, N = 96, 192, 384 and 768 give 17/6 = 2.8333); the
-powers of two from 512 give exactly 181/64 = 2.828125, the tables'
-cosine of the eighth turn; between them S(N) scatters on both sides
-(2.82443 to 2.83212 for N >= 1024). The deficit bound epsilon <= 4/N is
+every N with 8 | N up to 4096 (the pair's rotation uses the half-angle
+tables at 2N; `phase_cosines` was bounded at 4096 steps, which put
+N = 4096 out of the design's reach, and on the owner's instruction of
+2026-09-20, "raise the bound", this branch raises `MAX_PHASE_STEPS` to
+65536 with its test, to be carried into the engine's branch before the
+Bell run at N = 4096). The result: 252 of the 512 values of N give S(N)
+above 2 sqrt 2 (N = 16 and 32 give 3, N = 128 gives 23/8 = 2.875,
+N = 96, 192, 384 and 768 give 17/6 = 2.8333); the powers of two from 512
+through 4096 give exactly 181/64 = 2.828125, the tables' cosine of the
+eighth turn; between them S(N) scatters on both sides (2.82443 to
+2.83212 for N >= 1024). The deficit bound epsilon <= 4/N is
 false: N x |S(N) - 2 sqrt 2| reaches 7.76 (at N = 48). What holds, and is
 the theorem to prove (section 4, T4): the four E's are nearest-integer
 counts, so each is within 2/N of the tables' cosine plus the tables'
@@ -82,9 +84,10 @@ tests it.
 **(c) The bound on N.** Since S(N) is not monotone, a measurement selects
 a set of N, not a half-line. Against Poh et al.: N = 64 is excluded at
 152 standard deviations and N = 256 at 30; the smallest N within three
-standard deviations is 184; 94 of the 256 values up to 2048 are within
-three, 116 are excluded at five, the largest excluded being 2032; the
-powers of two from 512 sit one standard deviation above the measurement.
+standard deviations is 184; 276 of the 512 values up to 4096 are within
+three, 136 are excluded at five, the largest excluded being 3016; the
+powers of two from 512 through 4096 sit one standard deviation above the
+measurement.
 "N >= about 4000" does not follow from anything; "N = 64 is excluded" does
 follow, given the experiment and given that nature's pairs are this
 model's pairs at some N. The paper states the set.
@@ -139,7 +142,13 @@ the "before" inside it, and Part II holding every other statement of the
 program as a hypothesis with its status (section 12). The unification the
 owner names is the paper's spine: one record with rows, one click, one
 reading, and the same integers giving Born, interference, the pair, GHZ,
-which-path and the gate.
+which-path and the gate. The owner's second instruction of the day,
+"raise the bound": the phase circle's bound is 65536 on this branch
+(`core.phase.MAX_PHASE_STEPS`, the world parser importing it, the test in
+`tests/test_nature_beam_world_parsing.py`, CHANGELOG), so that the pair's
+half-angle tables exist at N = 4096 and the paper's run points are
+N = 64, 1024 and 4096; the engine's branch carries the same change before
+those runs.
 
 ### 1.4 The candidate claims ranked by safety and by ease (the owner's request of 2026-09-20, relayed by the Boss session)
 
@@ -439,7 +448,7 @@ recorded in `paper/README.md`.
 | 1 The integer Mach-Zehnder | acceptance test 1's world at the arm phases 0, N/4, N/2 and the unequal arms at frequency 0, 8, 16 | 64 births, u = 0 .. 63 | the world list's channel per birth | D1/D2 counts 64/0, 0/64, 32/32 against the offers; one gather per birth; Total within +- 0.0019 |
 | 2 One quantum at a time | test 2's two-slit world with the openings' neighbours freed, 64 births | u = 0 .. 63 | per-pixel weights and the click histogram | the single record's weights against the 64-birth histogram (design: correlation 0.963) and against the incoherent sum; the register's A10 at a low rate beside it as the amount reading's failure |
 | 3 The pair at N = 64 | test 4's four CHSH worlds and the choosers' world | u = 0 .. 63 per setting pair | the world list binned by setting | the cells 27, 5, 5, 27; E against a - b over all 4096 pairs with the table cosine; the marginals 32/64 everywhere; #363's triangle (S = 2) in grey |
-| 4 S(N) | the exact table (`checks/s_of_n.txt`, a computation) with the run points at N = 64, 1024 and 2048 | all u | the tool at each N | S(N) against N on both sides of 2 sqrt 2, the 8/N + 4 c_T band, Poh et al.'s band, the excluded N marked |
+| 4 S(N) | the exact table (`checks/s_of_n.txt`, a computation) with the run points at N = 64, 1024 and 4096 | all u | the tool at each N | S(N) against N on both sides of 2 sqrt 2, the 8/N + 4 c_T band, Poh et al.'s band, the excluded N marked |
 | 5 GHZ | test 5's world at XXX, XYY, YXY, YYX | all u | the world list | the four allowed triples per basis and the exact zeros; a table if a figure adds nothing |
 | 6 Which-path | test 6's world | all u | the world list | S = 88/64 and the product form; the two-slit world with a measure at one opening: the incoherent weights |
 

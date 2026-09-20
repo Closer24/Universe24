@@ -1711,7 +1711,11 @@ re-pinned from `test_event_worlds` (e) and
   family without a phase circle, the earlier engines' keys, `phase_turn`, a
   closed GameBoard, an unknown key, a content at K x N / 2, a lamp on a free
   family, two measured events at one Node, an unknown table rule, N not a
-  power of two, a detector on a Node without a measured event, a Node in
+  power of two, N above the tables' bound (131072; since 2026-09-20 the
+  bound is 65536, the model owner's "raise the bound", and N = 65536 is
+  accepted with its tables of 65536 entries, the quarter turn exact, the
+  eighth turn 181 and every entry within 256, the phase circle's test at
+  the end of the module), a detector on a Node without a measured event, a Node in
   two detectors, `kind` on a family (naming MIGRATION: the quantum decides
   the kind), a family without `quantum`, a negative quantum, a fractional
   charge on a paid family (D-1, since 2026-09-20; until then any), `charge`

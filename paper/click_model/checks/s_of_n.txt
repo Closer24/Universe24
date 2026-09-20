@@ -43,11 +43,13 @@ N, S(N), S(N) - 2 sqrt 2, (S(N) - S_Poh) / sigma
    1024        181/64  2.82812  -0.00030      +1.0
    1536        181/64  2.82812  -0.00030      +1.0
    2048        181/64  2.82812  -0.00030      +1.0
+   3072        181/64  2.82812  -0.00030      +1.0
+   4096        181/64  2.82812  -0.00030      +1.0
 
-N (8 | N, N <= 2048 (the 2N tables are bounded at 4096 steps)) with S(N) > 2 sqrt 2: 126 of 256; the first twenty: [16, 32, 56, 72, 88, 96, 112, 128, 152, 168, 192, 208, 224, 248, 264, 280, 288, 304, 328, 344]
+N (8 | N, N <= 4096 (the tables bound raised to 65536 on 2026-09-20)) with S(N) > 2 sqrt 2: 252 of 512; the first twenty: [16, 32, 56, 72, 88, 96, 112, 128, 152, 168, 192, 208, 224, 248, 264, 280, 288, 304, 328, 344]
 largest S(N): 3.00000 at N = 16
 smallest N with |S(N) - S_Poh| <= 3 sigma: 184
-N excluded at 5 sigma by Poh et al.: 116 of 256; largest excluded N: 2032
-N allowed within 3 sigma: 94 of 256; the smallest ten: [184, 232, 280, 368, 416, 464, 512, 552, 560, 600]
+N excluded at 5 sigma by Poh et al.: 136 of 512; largest excluded N: 3016
+N allowed within 3 sigma: 276 of 512; the smallest ten: [184, 232, 280, 368, 416, 464, 512, 552, 560, 600]
 N >= 1024: S(N) from 2.82443 to 2.83212
 largest N x |S(N) - 2 sqrt 2| over all N: 7.76 at N = 48 (the claim epsilon <= 4/N needs this <= 4)

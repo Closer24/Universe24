@@ -115,7 +115,7 @@ def main() -> None:
     excluded_5 = []
     allowed_3 = []
     rows = []
-    for n in range(8, 2049, 8):
+    for n in range(8, 4097, 8):
         s, _, _ = chsh(n)
         sf = float(s)
         z = (sf - POH_S) / POH_SIGMA
@@ -127,11 +127,11 @@ def main() -> None:
         elif abs(z) <= 3:
             allowed_3.append(n)
     for n, s, sf, z in rows:
-        if n <= 128 or n in (192, 256, 384, 512, 768, 1024, 1536, 2048):
+        if n <= 128 or n in (192, 256, 384, 512, 768, 1024, 1536, 2048, 3072, 4096):
             print(f"  {n:5d}  {str(s):>12}  {sf:.5f}  {sf - TSIRELSON:+.5f}  {z:+8.1f}")
     print()
     print(
-        f"N (8 | N, N <= 2048 (the 2N tables are bounded at 4096 steps)) with S(N) > 2 sqrt 2: {len(above)} of {len(rows)}; the first twenty: {above[:20]}"
+        f"N (8 | N, N <= 4096 (the tables bound raised to 65536 on 2026-09-20)) with S(N) > 2 sqrt 2: {len(above)} of {len(rows)}; the first twenty: {above[:20]}"
     )
     print(
         f"largest S(N): {max(rows, key=lambda r: r[2])[2]:.5f} at N = {max(rows, key=lambda r: r[2])[0]}"

@@ -330,7 +330,9 @@ unit of content per self-creation like `release`, the turn `by_clock(age,
 content x n, d)`, refused at half the circle, `NatureBeamWorld.turn_rate`;
 the record carries the key as declared; every example world declares the
 integer); `N` (64 by
-default, a power of two from 2 through 4096); `release` `[n, d]` per
+default, a power of two from 2 through 65536, the tables' one bound
+`core.phase.MAX_PHASE_STEPS`, raised from 4096 on 2026-09-20 by the model
+owner so that a table at 2N exists for every N up to 32768); `release` `[n, d]` per
 direction per self-creation per unit of content of a free family;
 `suspension` `[n, d]` (an integer w as `[w, 1]`; 0 or `[0, d]` for none,
 recorded as `[0, 1]`); `width` (S, the width of the push, an integer from
