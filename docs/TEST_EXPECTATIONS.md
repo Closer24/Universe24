@@ -1069,10 +1069,12 @@ rule of 2026-09-17) and checks that each world is what its page says it
 is, the expectations written down first:
 
 - (a) the shipped files equal the documents `make_worlds.worlds()` writes,
-  world by world; each parses through the canonical loader as a ray world
-  whose `model_id` starts with `rays-catalog-`, declares `ticks` from 20
-  through 50, `quantum` on every family and `reading` on every declared
-  detector, and its parsed measured events are as many as declared;
+  world by world; each parses through the canonical loader as a world of
+  the law (its `law` the value `world.LAW_VALUE` names, so that the Beam
+  Law rename in flight changes the pin with the code; its `model_id`
+  naming the catalog), declares `ticks` from 20 through 50, `quantum` on
+  every family and `reading` on every declared detector, and its parsed
+  measured events are as many as declared;
 - (b) each runs its declared intervals headless with the books balanced
   at every interval and the tick at the end equal to the intervals;
 - (c) the readings the catalog names exist: every declared detector is in

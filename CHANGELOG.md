@@ -16,8 +16,9 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   physics knows as one row of the law's keys as `world.py` accepts them
   today (the fundamental things, the composites, the external things),
   each with the world file that places it, the rows that wait for the
-  changes in flight marked by name (the strong column sigma, the lifetime
-  L, the transformation entry, a hand), the gap list (colour and
+  changes in flight marked by the names their designs give them (the
+  strong column, `lifetime`, the held content, the contact, `become`,
+  `phase_width`, D-1, a hand), the gap list (colour and
   confinement, the Higgs, a black hole as the integer bound or as a body
   whose clock the crowd stops, antimatter, spin, molecules, dark matter and
   dark energy, light in a field) and the architect's judgements on what

@@ -13,8 +13,10 @@ the table entries that differ from the ones its families' keys give.
 
 - `sun_planet.json`: a star, a planet and a screen on the plane. The star
   is a composite of two measured events at adjacent Nodes, since a measured
-  event has one family: its mass (a free family, content 2^16, fixed,
-  releasing one shell of a 120-direction in-plane fan every SHELL
+  event has one family, each a body on a set of three Nodes along y
+  (`span` [1, 3, 1]: an emitter on a set, its releases apportioned whole
+  over its Nodes by its age): its mass (a free family, content 2^16,
+  fixed, releasing one shell of a 120-direction in-plane fan every SHELL
   intervals: gravity, read as a push) and its lamp (a paid family,
   releasing light on a fan of nine directions toward the screen). The
   planet is a free body of content 2^10 on a set of 3 x 3 Nodes (`span`)
@@ -61,7 +63,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[2] / "src"))
 
 from event_universe.events.nature_beam import flight_table  # noqa: E402
-from event_universe.events.world import LABEL_SCALE  # noqa: E402
+from event_universe.events.world import LABEL_SCALE, LAW_VALUE  # noqa: E402
 
 K = 1 << 22
 N = 64
@@ -81,6 +83,12 @@ FAN_RADIUS = 8
 PLANET_RADIUS = 8
 PLANET = 1 << 10
 PLANET_SPAN = (3, 3, 1)
+# The star's two events are each a body on a set of three Nodes along y
+# (the model owner, 2026-09-20: an emitter on a set carries its width on
+# the world's side as a detector does; its releases are apportioned whole
+# over its Nodes by its age, and which Node released is not information
+# the world has).
+STAR_SPAN = (1, 3, 1)
 # The width S of the push (the world key `width`): a body on nine Nodes
 # reads about nine times one Node's flux at the same content, so a large
 # width keeps the derived orbit slow enough for a visible arc in TICKS_SUN
@@ -244,6 +252,7 @@ def sun_planet() -> tuple[Json, dict[str, float]]:
             "family": "mass",
             "amount": STAR,
             "fixed": True,
+            "span": list(STAR_SPAN),
             "directions": [list(v) for v in fan],
         },
         {
@@ -252,6 +261,7 @@ def sun_planet() -> tuple[Json, dict[str, float]]:
             "amount": LAMP,
             "phase": 0,
             "fixed": True,
+            "span": list(STAR_SPAN),
             "lamp": {"rate": [1, 1], "directions": LAMP_FAN},
         },
         {
@@ -268,7 +278,7 @@ def sun_planet() -> tuple[Json, dict[str, float]]:
     for y in screen_rows:
         measured.append({"position": [SCREEN_X, y, cz], "family": "screen", "amount": 1, "fixed": True})
     world: Json = {
-        "law": "rays",
+        "law": LAW_VALUE,
         "model_id": "rays-catalog-sun-planet-v1",
         "shape": [PLANE_SIDE, PLANE_SIDE, 1],
         "boundary": {"z": "periodic"},
@@ -329,7 +339,7 @@ def neutron_star() -> Json:
             probe["table"] = {"neutron": {"rule": "pass", "reads": "age"}}
         measured.append(probe)
     return {
-        "law": "rays",
+        "law": LAW_VALUE,
         "model_id": "rays-catalog-neutron-star-v1",
         "shape": [CUBE_SIDE, CUBE_SIDE, CUBE_SIDE],
         "boundary": "open",
@@ -397,7 +407,7 @@ def lamp_mirror_screen() -> Json:
             }
         )
     return {
-        "law": "rays",
+        "law": LAW_VALUE,
         "model_id": "rays-catalog-lamp-mirror-screen-v1",
         "shape": [BENCH_SIDE, BENCH_SIDE, 1],
         "boundary": {"z": "periodic"},
@@ -437,7 +447,7 @@ def clock_near_mass() -> Json:
             }
         )
     return {
-        "law": "rays",
+        "law": LAW_VALUE,
         "model_id": "rays-catalog-clock-near-mass-v1",
         "shape": [CLOCK_SIDE, CLOCK_SIDE, CLOCK_SIDE],
         "boundary": "open",

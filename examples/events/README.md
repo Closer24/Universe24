@@ -167,9 +167,10 @@ The folder [catalog/](catalog/README.md) holds the four worlds of
 owner, 2026-09-20: "that we can also support external ones such as the
 sun, a planet, a neutron star, so that they can be placed on the GameBoard
 and things tested"), written by `catalog/make_worlds.py`: `sun_planet.json`
-(a star as a mass and a lamp at adjacent Nodes, a planet as a free body on
-a set of nine Nodes with the tangential momentum of a circular orbit that
-reflects the star's light, and a screen that is one `wave` detector set),
+(a star as a mass and a lamp at adjacent Nodes, each on a set of three
+Nodes, a planet as a free body on a set of nine Nodes with the tangential
+momentum of a circular orbit that reflects the star's light, and a screen
+that is one `wave` detector set),
 `neutron_star.json` (eight neutrons of content 2^26 bound at one Link by
 the gravity column alone, six probes on the axes counting the presence and
 one the age moment), `lamp_mirror_screen.json` (a laser with a phase

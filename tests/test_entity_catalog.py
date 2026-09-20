@@ -9,9 +9,10 @@ so this module pins no number of any world (the model owner's rule of
 
 (a) every catalog world is the one its generator writes (the shipped file
     equals `make_worlds.worlds()` document for document), parses through
-    the canonical loader as a ray world, declares `quantum` on every
-    family and `reading` on every declared detector, and runs 20 to 50
-    intervals;
+    the canonical loader as a world of the law (its `law` the value
+    `world.py` names, its `model_id` naming the catalog), declares
+    `quantum` on every family and `reading` on every declared detector,
+    and runs 20 to 50 intervals;
 (b) each runs its declared intervals headless with the books balanced at
     every interval;
 (c) the readings the catalog names exist: every declared detector appears
@@ -32,6 +33,7 @@ from pathlib import Path
 import pytest
 
 from event_universe.events import RaySimulation
+from event_universe.events.world import LAW_VALUE
 from event_universe.world_loading import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -64,7 +66,9 @@ def test_the_shipped_worlds_are_the_generators():
 def test_every_catalog_world_declares_its_keys_and_parses(name):
     """(a)."""
     document = shipped(name)
-    assert document["law"] == "rays" and document["model_id"].startswith("rays-catalog-")
+    # The law's value as `world.py` names it (the Beam Law rename in flight
+    # changes it and the migration tool rewrites the files).
+    assert document["law"] == LAW_VALUE and "catalog" in document["model_id"]
     assert 20 <= document["ticks"] <= 50
     assert all("quantum" in family for family in document["families"])
     assert all("reading" in detector for detector in document.get("detectors", []))
