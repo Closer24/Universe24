@@ -235,6 +235,8 @@ class RaySimulation:
             span=definition.span,
             nodes=nodes,
             phase_by_momentum=definition.phase_by_momentum,
+            column_names=tuple(name for name, _ in self.world.columns),
+            family_values=tuple(family.values for family in self.families),
             pending=[[] for _ in range(count)],
             measured=[dict.fromkeys(RULES, 0) for _ in range(count)],
             events=[0] * count,
@@ -284,7 +286,9 @@ class RaySimulation:
     def _frame_all(self) -> None:
         """The clocks' frame, every measured event at once: its content is
         read once into `frame_content` (M_A of the interval's push, RAY_LAW
-        step 4); one that owes a count pays it by one (no self-creation, no
+        step 4) and its charge in every column into `frame_charges` (the
+        reader's side of the push over the columns, gravity's the content);
+        one that owes a count pays it by one (no self-creation, no
         release, no turn; `waited` counts the interval); one that owes
         nothing self-creates: its age advances and its turn is read off its
         clock, `by_clock(age, content, K)`, the turns of the phased families
@@ -293,10 +297,12 @@ class RaySimulation:
         phased: list[Measured] = []
         for entry in self.measured.values():
             entry.turn = 0
-            # The content the frame reads, once, for the turn and for the
-            # push of this interval (M_A at the frame: the clicks of the
-            # interval join `held` after it).
+            # The content and the charges the frame reads, once, for the
+            # turn and for the push of this interval (M_A and the columns'
+            # E_c at the frame: the clicks of the interval join `held`
+            # after it).
             entry.frame_content = entry.content
+            entry.frame_charges = entry.charges()
             if entry.owed > 0:
                 entry.owed -= 1
                 entry.waited += 1

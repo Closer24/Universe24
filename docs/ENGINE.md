@@ -269,6 +269,14 @@ the six headings in Port order and these, in that order); `families`
 (`name`, `quantum` (required; 0 a free family, 1 or more a paid one: the
 kind is derived, never declared), `charge` (a free family only: the
 charge per unit of content, an integer or `[n, d]`, since 2026-09-20),
+`columns` (since 2026-09-20, [RAY_LAW note 31](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+an object of column name to `{"value": n or [n, d], "sign": 1 or -1}`,
+the further columns of the one coupling; `gravity` built in with the
+value [1, 1] and the sign minus, `charge` built in with the sign plus
+and the family key `charge` as its value; one sign per name across the
+world; [0, 1] where a family names no value; 0 on a paid family; at most
+8 columns in all; the record carries `columns-v1` when a column beyond
+`charge` is declared),
 `phase` true by default, `phase_per_link` 0 .. N - 1); `measured`
 (`position`, `family`, `amount`, `phase`, `momentum`, `fixed`, `span`
 (three odd integers from 1, `[1, 1, 1]` by default: a body on the set of
@@ -305,6 +313,13 @@ MIGRATION: the quantum decides the kind), a family without `quantum`, a
 negative quantum, a charge on a paid family, `charge` on a measured event
 (pointing to MIGRATION: the charge is the family's per unit of content), a
 family `charge` with a denominator of 0 or a part that is not an integer, a
+column named `gravity`, `charge` declared both as the key and under
+`columns`, a column's `sign` other than 1 or -1, a column value with a
+denominator of 0 or a part that is not an integer, a column object with
+other keys, one name with two signs, a nonzero column value on a paid
+family, more than 8 columns, a declared reader whose push over a column
+from the largest release of a family could pass 2^62 - 1 (the parser's
+static budget; [the columns](TEST_EXPECTATIONS.md#the-columns)), a
 detector named as a face detector is, two measured events at one
 Node, an unknown table rule, N not
 a power of two, a detector on a Node without a measured event, a Node in
@@ -333,14 +348,18 @@ D beyond the rest vectors and the headings; per family its `quantum`,
 `charge` (the pair `[n, d]`), `phase` and `phase_per_link`, no `kind`),
 `numbers` (per measured event its `position`, `family`, `span` and
 `phase_by_momentum`; the measured events' states carry `span` too, as
-`state.json` does), `action` (h, or None) and `hypotheses` (`["bohr-v1"]`
-when `action` is declared, the identity of the turn by momentum beside
-the law, else `[]`),
+`state.json` does), `action` (h, or None), `hypotheses` (`bohr-v1` when `action` is
+declared, the identity of the turn by momentum beside the law;
+`columns-v1` when a column beyond `charge` is declared, the identity of
+the one mechanism of the columns; `[]` without either), `columns` (the
+world's, name and sign, in order: gravity, charge, the declared names)
+and per family `columns` (name, value, sign, aligned with the world's),
 the books per completed tick (`audit`, the `charge` line the
 exact rational sum of the measured events' charges as a reduced pair) with
 `conserved_at_every_completed_tick`, the measured events' final states
 (`measured`: position, held per family, content, phase, charge (the pair
-rho x content, reduced), momentum,
+rho x content, reduced), `charges` (the charge in every column by name,
+the exact rational sum over the families held, since 2026-09-20), momentum,
 windows, detector, age, owed, what waits to be created again (`home`,
 `home_content`), `waited`, phase steps, steps, what each met per family by
 rule, the clicks and the push taken; no record of its own since

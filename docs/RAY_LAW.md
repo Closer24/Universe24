@@ -119,7 +119,21 @@ World-file keys added: `"law": "rays"`; per family `charge`, since
 `[c, 1]`) or a pair `[n, d]` with d from 1 (a measured event's charge is
 rho times its content, a report; refused on a paid family unless 0, and
 refused with a denominator of 0 or a part that is not an integer); the
-key `charge` on a measured event is refused naming MIGRATION; `directions` (optional, at the world:
+key `charge` on a measured event is refused naming MIGRATION; since
+2026-09-20 (note 31; the model owner, "one mechanism for all the laws on
+the GameBoard") per family `columns`, an object of column name to
+`{"value": n or [n, d], "sign": 1 or -1}`, the further columns of the one
+coupling per unit of content: `gravity` is the built-in first column of
+every family (the value [1, 1], the sign minus; a declared `gravity` is
+refused), `charge` the built-in second (the sign plus; the family key
+`charge` is its value's shorthand, and `columns.charge` may replace it
+but not join it), a declared name's sign is the column's (one per name
+across the world, two signs refused), a family that does not name a
+column carries [0, 1] there, a paid family's values must be 0, at most
+`COLUMN_LIMIT` = 8 columns in all, and the world's column order is
+gravity, charge, then the names in the order of their first declaration;
+the record carries `columns-v1` under `hypotheses` when a column beyond
+`charge` is declared; `directions` (optional, at the world:
 a list of integer vectors beyond the six headings that any lamp or re-emitter
 may name; the table `D` is the two rest vectors, the six headings and these,
 in that order; each primitive with components in -P .. P, P = `direction_bound`,
@@ -331,9 +345,27 @@ order with each step's inverse:
    in one interval), then the rule: `read` (the push taken; the rays go
    on), `measure` (the click: the amount, its content and its label join;
    the border), `rerelease` (the re-emission, section 5), `pass`. **The
-   push is ONE bilinear form** over the arriving rays (the model owner's
-   proposal 2, admissible with the reviewer's two corrections; section 10,
-   note 20): `push_A = sum over the rays of kappa(A, B) . V_B`, with `V_B`
+   push is ONE signed inner product over the columns** (since 2026-09-20,
+   the model owner's "one mechanism for all the laws on the GameBoard"
+   and the mathematician's verified form; note 31; `nature_beam.push_form`):
+   for a group of a free family B's rays with the label moment `V_B`, per
+   axis, `push_A = sum over the columns c of epsilon_c x sign(V E_c n_c) x
+   by_clock(age_A, |V x E_c x n_c|, D_c x d_c)`, with `(E_c, D_c)` the
+   reader's charge in the column c as the frame read it (the exact
+   rational sum over the families it holds of their value per unit of
+   content times their content, `Measured.charges`), `(n_c, d_c)` the
+   arriving family's value in the column, `epsilon_c` the column's sign,
+   every column floored on its own off the reader's clock and never summed
+   before the floor; the first column of every family is `gravity` (the
+   value 1, the sign minus: its term is `-M_A V_B` exactly), the second
+   `charge` (rho, the sign plus: its term is the electric part below), and
+   a declared column (the strong force, the sign minus) is a third term of
+   the same sum, not a term of the code. On the two built-in columns this
+   is the form landed the same day, integer by integer (the mathematician:
+   11 945 pushes of the registered worlds, 0 unequal): **ONE bilinear
+   form** over the arriving rays (the model owner's proposal 2, admissible
+   with the reviewer's two corrections; section 10, note 20): `push_A =
+   sum over the rays of kappa(A, B) . V_B`, with `V_B`
    the label moment of the rays, the vector moment of `read_arrivals` with
    the labels as weights (`amount x u_d` for a free family, `content x
    amount x u_d` for a paid one, the unit vectors of section 2), and
@@ -1447,3 +1479,73 @@ implementation's part of the contract. The design above is unchanged.
     proportional to 1 / sqrt(r) under a 1 / r^2 push the closing radii
     are proportional to j^2, Bohr's ladder in the lattice's metric
     (series H, EXPERIMENTS.md).
+
+31. **The columns: the one coupling as a signed inner product** (the model
+    owner, 2026-09-20, Highlights 5.4, "one mechanism for all the laws on
+    the GameBoard", after the physicist's design of the strong force
+    (scratchpad/strong/DESIGN.md) and the mathematician's verification of
+    the form (scratchpad/columns/COLUMNS.md, "correct and working": the
+    generic two-column form is the landed `push_form` integer by integer,
+    411 600 + 200 000 cases, and reproduces every push of the registered
+    worlds, 11 945 of 11 945); `tests/test_columns.py` (a) to (e)). The
+    push a measured event takes from a group of a free family's rays is,
+    per axis, `sum over the columns c of epsilon_c x sign(V E_c n_c) x
+    by_clock(age_A, |V E_c n_c|, D_c d_c)` (step 4): every column is a
+    value per unit of content declared per family with one sign per
+    column, `gravity` the built-in first column of every family (the
+    value [1, 1], the sign minus: `by_clock(age, |V M_A|, 1) = |V M_A|`,
+    the law's -M_A V_B, not a term written in the code), `charge` the
+    built-in second (rho, the sign plus: the electric part as landed,
+    the same rational floored at the same clock), and a declared column
+    (`"columns": {"<name>": {"value": n or [n, d], "sign": 1 or -1}}` on
+    the family, the world-file form the mathematician's, which parsed
+    all 66 example worlds unchanged) a further term of the same sum; the
+    strong force is the column `strong` with the sign minus and a
+    lifetime on its family, no code of its own. What the implementation
+    decided where the design was silent: (i) the reader's side is its
+    charge in every column read at the frame from what it holds
+    (`Measured.charges`, `frame_charges`: the exact rational sum over the
+    families held of their value times their content, the reduced pair,
+    the physicist's D-1; for a one-family event rho x M, the report it
+    was; gravity's the content), the arriving side the family's aligned
+    values (`FamilyDefinition.values`), so the products `n_A n_B` and
+    `d_A d_B` of the mathematician's form are formed per group at the
+    push from the reader's charge and the family's value (one product
+    and one `by_clock` per column per axis, fixed work) rather than once
+    per family pair at load, because a reader's charge is a property of
+    what it holds and not of one family; (ii) every column is floored on
+    its own and never summed before the floor (the mathematician's
+    section 4: the counterexample V = 64, rho_A = [1, 3], rho_B = [1, 1]
+    reads -43, -43, -42, -43 at the ages 0 to 3 per column and -42, -43,
+    -43, -42 summed then floored; the per-column form is the landed
+    integer); (iii) the bounds: each column's product |V| x |E n| is
+    tested by division before it is formed and refused naming the
+    measured event and the column, the partial sum bounded after every
+    column (`bounded`, the mathematician's R1 and R2), and at load the
+    parser's static budget (`world._column_budget`, the mathematician's
+    P3 in the form the physicist's design states): for every declared
+    reader, every free family and every column, |E n| times the largest
+    label moment one self-creation's release of the family can put at
+    the reader (Q x the reader's Nodes x the largest release over the
+    other events' directions) within 2^62 - 1, and the sum over the
+    columns of the whole parts within it; a declared ray in transit, a
+    merged or re-emitted row and a content grown by clicks are beyond
+    the static rule and are refused at the push they would overflow
+    (the mathematician's "what it does not reach the run-time rule
+    refuses"); (iv) a reader's charge in a column beyond 2^62 - 1 (rho x
+    M itself, which the landed form never formed alone) is refused at
+    the frame naming the event and the column; the charge column's
+    product is tested on the reduced pair, so a run the landed form
+    refused at |V n_A n_B M_A| may be accepted where the reduced |V E n|
+    is within the bound, the same integers where both accept; (v) the
+    identity: the two built-in columns are the law as it was, so a world
+    without a declared column carries no new identity, and a world that
+    declares a column beyond `charge` carries `columns-v1` under
+    `hypotheses` in `run.json` (as `bohr-v1` for `action`), the identity
+    of the one mechanism; (vi) the record: `run.json` carries `columns`
+    (the world's, name and sign, in order) and per family `columns`
+    (name, value, sign, aligned), `state.json` and the measured events'
+    states carry `charges` (the charge in every column by name). Checked
+    on the 66 example worlds: `events.jsonl` byte-identical before and
+    after, `state.json` equal but for the added `charges`, `run.json`
+    equal but for the added keys (VALIDATION.md).

@@ -30,6 +30,7 @@ kept, their pins the law of events').
 | `test_default_table.py` | The table generated from the keys: a free family read, a paid one measured, no window; explicit defaults change nothing; what differs is kept; the kind derived from the quantum and `kind` refused; every example world equal to itself with the defaults written back ([below](#the-table-generated-from-the-keys)) | new |
 | `test_ray_flight.py` | The flight: the table at 1 / sqrt 3 with its periods, a lone unit straight and unchanged, the isotropy, the periodic axis and the stub, the open face's click, `adjacent_node` ([below](#the-flight)) | `test_event_transit` (a), `test_periodic_axis` (a to c), `test_event_boundaries` |
 | `test_ray_push.py` | The push as one bilinear form over the arriving rays' labels, the emitter's factor on the record, and the one momentum label the click, the re-emission, the home and the transit line move ([below](#the-push-as-one-form)) | new (2026-09-19, the night: the physics-rule review's F1 and the model owner's proposal 2) |
+| `test_columns.py` | The one coupling as a signed inner product over the columns: the two built-in columns equal to the landed form integer by integer and refusal by refusal on a grid, at the register's scale and on the replay of the series 7 worlds' `read` records; a third column with the sign minus giving the design's integers and the sign as a key; the refusals and the alignment; the bounds at parsing and at the push; every column floored on its own ([below](#the-columns)) | new (2026-09-20, the model owner's "one mechanism for all the laws on the GameBoard"; the mathematician's verified form) |
 | `test_ray_label.py` | The label along the unit vector of the direction at the flight table's scale: the table u_d by the exact integer rule (the pinned vectors, the length within 1.35 % of Q, antisymmetry, equivariance under the 48, no tie, the float agreement over every primitive direction within the bound), every label content x u_d with the recoil, the transit line and the books closing through clicks, a mirror and the open faces, the bound at Q x content x amount ([below](#the-label-along-the-unit-vector)) | new (2026-09-19, the model owner's decision on the physics-rule reviewer's verdict; every momentum pin of the suite re-pinned x 64, listed in its section) |
 | `test_ray_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing; no collision at a Node that holds a measured event ([below](#the-collision-table)) | new |
 | `test_ray_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact; the merge by one packed key and by the lexsort alike ([below](#the-bijection)) | new |
@@ -514,6 +515,98 @@ charge 1 the family `p` of charge [1, 5]) and every integer is unchanged.
   M, so every read pushes (-128 M, 0, 0), `pushed` (-2560, 0, 0),
   (-10240, 0, 0), (-40960, 0, 0) after 20 reads; the probe's `charge`
   (2 M, 1) and the books' `charge` [2 M + 1, 1].
+
+## The columns
+
+`tests/test_columns.py` (docs/RAY_LAW.md, section 3 step 4 and section 10
+note 31; the model owner, 2026-09-20, "one mechanism for all the laws on
+the GameBoard"; the mathematician's verified form, scratchpad/columns/
+COLUMNS.md): the push a measured event A takes from a group of a free
+family B's rays with the label moment V is, per axis, the sum over the
+columns c of epsilon_c x sign(V E_c n_c) x by_clock(age_A, |V E_c n_c|,
+D_c d_c), (E_c, D_c) the reader's charge in the column (the rational sum
+over what it holds of the value times the content), (n_c, d_c) the arriving
+family's value, every column floored on its own; `gravity` the built-in
+first column (the value [1, 1], the sign minus), `charge` the second (rho,
+the sign plus), a declared column (`"columns": {"<name>": {"value": n or
+[n, d], "sign": 1 or -1}}`) a further term. K 2^20, N 64, `suspension` 0,
+`release` [0, 1] (the rays declared in transit), an open 5 x 5 x 1 board
+with z periodic unless said. The expected integers, written down before
+the first run (the physicist's DESIGN.md, test (a), and the
+mathematician's counterexample):
+
+- (a) bit-exactness: the two built-in columns equal the push form as
+  landed on 2026-09-20 (`M_A x (rho_A rho_B - 1) x V_B`, the electric
+  part `sign x by_clock(age, |V n_A n_B M_A|, d_A d_B)`) integer by
+  integer and refusal by refusal on the grid V in -5 .. 5 (three axes
+  with different signs), M_A 0 .. 3, n_A and n_B in -2 .. 2, d_A and d_B
+  in 1 .. 3, the age 0 .. 4 (49 500 cases, on the reduced and on the
+  unreduced pair alike) and on 3 000 random cases at the register's
+  scale (V to 2^62, M_A to 2^40, n and d to 2^30 - 1, the age to 2^31:
+  the unreduced pair refuses with the landed form; the frame's reduced
+  pair refuses a charge rho_A M_A beyond the register on its own and
+  otherwise at most where the landed form refused, the same integers
+  where both accept); and the replay of the six series 7 worlds: every
+  `read` record's push equals the landed form recomputed from the record
+  alone (its `reading` is V, the fixed reader's declared amount M_A, the
+  tick its age), every record compared and none unequal.
+- (b) the third column: the families `a` (charge [1, 2], strong [3, 2])
+  and `b` (charge 2, strong 1) under `"strong": {"sign": -1}`; a reader
+  of `a` of amount 1 (M 1, Q 1/2, G 3/2) met by one `b` ray of amount 1
+  on (1, 1, 0) (u = (45, 45, 0)) reads (-68, -68, 0) at the age 1 (the
+  ray at (2, 1, 0) with the age 1, arriving at tick 1) and (-67, -67, 0)
+  at the age 2 (the ray at (1, 1, 0) with the age 3, arriving at tick 2):
+  gravity -45, charge +45, strong -by_clock(age, 135, 2); a reader of `c`
+  (charge 1, strong [4, 3]) of amount 6 (M 6, Q 6, G 8): a `b` ray of
+  amount 1 on +x (-128, 0, 0), an `a` ray of amount 1 on +x (-960, 0, 0),
+  an `a` ray of amount 3 on -x (2880, 0, 0); a reader of `d` (charge 0,
+  no strong value) met by a `b` ray on +x (-64, 0, 0); with the sign +1
+  the same cases read (68, 68, 0), (67, 67, 0), (896, 0, 0), (576, 0, 0),
+  (-1728, 0, 0); a third declared column `extra` (sign +1, the value 1 on
+  `a` and `b`) adds +45 per axis: (-23, -23, 0) and (-22, -22, 0); a
+  reader of `q` (charge [1, 2]) of content 3 met by a `b` ray on the
+  diagonal reads (0, 0, 0) at both ages (the landed parity case, -135 +
+  135); the reader of `c` reports the charges gravity [6, 1], charge
+  [6, 1], strong [8, 1]; two fixed bodies at mirror Nodes of a bar of 4,
+  `p` (content 3) at x = 0 and `q` (content 5) at x = 3, both families
+  with the charge [1, 3] and the strong value [2, 3], releasing at
+  `release` [1, 1] toward each other, read from tick 6 (three Links at
+  the age 5) equal and opposite pushes at every tick, on `p` 960 -
+  by_clock(tick, 320, 3) + by_clock(tick, 1280, 3), and `pushed` equal
+  and opposite after 12 intervals; `run.json` carries `hypotheses`
+  ["columns-v1"], `columns` [gravity -1, charge 1, strong -1], per family
+  the aligned columns and per measured event `charges`; without a
+  declared column `hypotheses` [] and two columns; with `action` 64 the
+  identities are ["bohr-v1", "columns-v1"].
+- (c) the refusals, naming the key: a `sign` 0, 2, "-1" or true; a
+  column named `gravity`; `charge` declared as the key and under
+  `columns`; `columns.charge` with the sign -1 (with the sign 1 accepted
+  as the family's charge [3, 4]); a nonzero value on a paid family (0
+  accepted, the values ((1, 1), (0, 1), (0, 1))); one name with two signs
+  on two families; a value [1, 0], 1.5 or "1/2"; a column object with
+  the key `range` or without `sign`; `columns` a list; seven declared
+  columns (nine in all); accepted: a family without a declared column
+  carries [0, 1] there (`Column("s", (0, 1), -1)`), the world's order is
+  gravity, charge, then the names as first declared (`s`, then `t`).
+- (d) the bounds: at parsing a reader of content 2^40 met by a family
+  with the strong value 2^20 on both (|E n| = 2^80) is refused naming
+  `measured[0]`, the column `strong` and the family `b`; a reader of
+  content 2^30 with the strong value 1 met by a family of content 2^25
+  released on one heading at `release` [1, 1] (gravity 2^30 x 2^31 = 2^61,
+  strong the same, the sum 2^62 + 2) is refused naming the sum
+  4611686018427387906 and accepted without the family's strong value;
+  at the push `push_form` refuses |V| x |E n| = 64 x 2^56 in the column
+  `strong` naming the measured event and the column, accepts the gravity
+  product 64 x (2^56 - 2) = 2^62 - 128 as the push -(2^62 - 128), and
+  refuses two such columns whose partial sum passes the bound naming the
+  push.
+- (e) the order of flooring: a reader of content 1 met by one free unit
+  on a heading (V = 64), rho_A = [1, 3], rho_B = [1, 1]: per column -64 +
+  by_clock(age, 64, 3) = -43, -43, -42, -43 at the ages 0 .. 3, the sum
+  -128 / 3 floored once -42, -43, -43, -42; on the engine (four `b` rays
+  of amount 1 on +x, two at (1, 2, 0) with the ages 0 and 1, two at
+  (0, 2, 0) with the ages 0 and 1, arriving one per tick) the reader's
+  ages 1 .. 4 read -43, -42, -43, -43.
 
 ## The re-emission
 

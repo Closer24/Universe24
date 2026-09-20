@@ -5,6 +5,34 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The columns of the one coupling (2026-09-20)
+
+- The model owner's decision ("one mechanism for all the laws on the
+  GameBoard", [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); the
+  mathematician's verified form, "correct and working";
+  [RAY_LAW note 31](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  the push a measured event takes from a free family's rays is a signed
+  inner product over the columns the families declare per unit of
+  content, every column the whole part off the reader's clock of V x
+  (the reader's charge in the column, read at the frame from what it
+  holds) x (the arriving family's value), floored on its own; `gravity`
+  the built-in first column of every family (the value [1, 1], the sign
+  minus), `charge` the built-in second (the sign plus, the family key
+  `charge` its value), and per family `columns` (`{"<name>": {"value":
+  n or [n, d], "sign": 1 or -1}}`) for any further column, one sign per
+  name across the world, [0, 1] where a family names none, 0 on a paid
+  family, 8 at most. The two built-in columns are the form landed the
+  same day integer by integer (the 66 example worlds' `events.jsonl`
+  byte-identical; the series 7 `read` records replayed). The products
+  are tested by division before they are formed and the partial sum is
+  bounded after every column; the parser refuses at load a reader whose
+  push over a column from the largest release of a family could pass the
+  bound. `run.json` carries the world's `columns`, every family's aligned
+  `columns` and `columns-v1` under `hypotheses` when a column beyond
+  `charge` is declared; the states carry `charges` by column. The strong
+  force is a column with the sign minus, no code of its own
+  ([MIGRATION](docs/MIGRATION.md); `tests/test_columns.py`).
+
 ### Series G, the Hubble diagram behind the detector (2026-09-20)
 
 - The four worlds of `examples/events/hubble/` (`make_worlds.py`: a

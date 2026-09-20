@@ -26,7 +26,7 @@ from pathlib import Path
 
 from event_universe import __version__
 from event_universe.events.engine import RaySimulation
-from event_universe.events.world import BOHR_RULE, RAYS_LAW, RayWorld
+from event_universe.events.world import RAYS_LAW, RayWorld
 from event_universe.snapshot_writer import write_snapshot
 
 
@@ -98,15 +98,23 @@ def execute_ray_run(
         "age_bound": world.age_bound,
         # The turn by momentum (the model owner's decision of 2026-09-20 on
         # Bohr): h when the world declares it, and then the identity of the
-        # hypothesis beside the law, `bohr-v1`.
+        # hypothesis beside the law, `bohr-v1`; `columns-v1` when the
+        # world declares a column beyond `charge` (`RayWorld.hypotheses`).
         "action": world.action,
-        "hypotheses": [] if world.action is None else [BOHR_RULE],
+        "hypotheses": world.hypotheses,
+        # The world's columns in order, (name, sign): gravity, charge, the
+        # declared names; every family's `columns` below is aligned with it.
+        "columns": [{"name": name, "sign": sign} for name, sign in world.columns],
         "directions": [list(vector) for vector in world.directions],
         "families": [
             {
                 "name": family.name,
                 "quantum": family.quantum,
                 "charge": list(family.charge),
+                "columns": [
+                    {"name": column.name, "value": list(column.value), "sign": column.sign}
+                    for column in family.columns
+                ],
                 "phase": family.phase,
                 "phase_per_link": family.phase_per_link,
             }

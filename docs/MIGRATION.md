@@ -6,6 +6,78 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The columns of the one coupling, on 2026-09-20 (`columns` per family; `columns-v1`)
+
+The model owner's decision of 2026-09-20 ("one mechanism for all the laws
+on the GameBoard", [Highlights 5.4](HIGHLIGHTS.md#54-the-detector); the
+physicist's design of the strong force and the mathematician's verified
+form, "correct and working"; [RAY_LAW note 31](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[expectations](TEST_EXPECTATIONS.md#the-columns)). No existing world needs
+rewriting: every world of the repository parses to the two built-in
+columns and runs the same integer by integer (the 66 example worlds:
+`events.jsonl` byte-identical, [validation](VALIDATION.md)).
+
+- **Added, per family**: `columns`, an object of column name to
+  `{"value": n or [n, d], "sign": 1 or -1}`. The push is the signed inner
+  product over the columns: per column the whole part off the reader's
+  clock of V x (the reader's charge in the column) x (the arriving
+  family's value), floored on its own. `gravity` is the built-in first
+  column of every family (the value [1, 1], the sign minus: the law's
+  -M_A V_B) and `charge` the built-in second (the sign plus): the family
+  key `charge` stays as the shorthand for the value of the column
+  `charge`, and `"columns": {"charge": {"value": v, "sign": 1}}` is an
+  optional equivalent spelling (the migration tool does not rewrite it).
+  A name's sign is the column's, one per name across the world; a family
+  that does not name a column carries [0, 1] there; a paid family's
+  values must be 0; at most 8 columns in all; the world's column order is
+  gravity, charge, then the names in the order of their first
+  declaration.
+- **Refused, naming the key**: a column named `gravity`; `charge` declared
+  both as the key and under `columns`; `columns.charge` with the sign
+  -1; a `sign` other than 1 or -1 (a boolean included); a value with a
+  denominator of 0 or a part that is not an integer; a column object with
+  other keys or without `sign` or `value`; `columns` that is not an
+  object; one name with two signs on two families; a nonzero value on a
+  paid family; more than 8 columns; and the parser's static budget: a
+  declared reader whose push over a column from the largest release of
+  one self-creation of a free family (over the other events' directions,
+  read over the reader's Nodes) could pass 2^62 - 1, per column and as
+  the sum over the columns. At run time every column's product |V| x
+  |E n| is tested by division before it is formed and refused naming the
+  measured event and the column ("the push of measured event N at [...]
+  exceeds the integer bound ... in the column '...'"), the partial sum
+  after every column naming the push; a reader's charge in a column
+  beyond 2^62 - 1 (rho x M itself) is refused at the frame naming the
+  event and the column (the landed form never formed rho x M alone; a
+  world of such a charge was accepted with gravity alone). The charge
+  column's product is tested on the reduced pair, so a run the landed
+  form refused at |V n_A n_B M_A| may be accepted where the reduced
+  |V E n| is within the bound; every accepted integer is the same.
+- **The record**: `run.json` carries `columns` (the world's, name and
+  sign, in order), per family `columns` (name, value, sign, aligned with
+  the world's) beside `charge`, and `columns-v1` under `hypotheses` when
+  a column beyond `charge` is declared (after `bohr-v1` when both);
+  `state.json` and the measured events' states carry `charges`, the
+  charge in every column by name (a reader of the state sees one more
+  key per measured event). A measured event's `charge` is the `charge`
+  column's pair, the exact rational sum over the families it holds of
+  their charge per unit of content times their content (the physicist's
+  D-1): for an event of one family rho x its content, as it was; for a
+  charged free event that absorbed paid content it is rho times its own
+  family's content, where it read rho times the total (no registered
+  world has such an event).
+- **The API**: `world.Column` (name, value, sign), `FamilyDefinition.columns`
+  and `.values`, `world.built_in_columns`, `RayWorld.columns`,
+  `.declared_columns` and `.hypotheses`, `world.COLUMNS_RULE`,
+  `world.COLUMN_LIMIT`, `world.event_charges`; `measured.column_charges`,
+  `Measured.charges()`, `.column_names`, `.family_values` and
+  `.frame_charges`; `nature_beam.push_form(free, moment, charges,
+  values, columns, age, entry)` takes the reader's charges per column
+  and the arriving family's values in place of the two pairs and the
+  content (`push_form(free, moment, content, reader, emitter, age,
+  entry)` is gone); `core.integer.reduced` and `rational_sum` (the
+  `measured` module re-exports them).
+
 ## The turn by momentum, Bohr as parameters outside the board, on 2026-09-20 (`action`, `phase_by_momentum`; `bohr-v1`)
 
 The model owner's decision of 2026-09-20 ("On Bohr, go, and put it as

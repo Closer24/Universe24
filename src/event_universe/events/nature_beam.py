@@ -1213,46 +1213,79 @@ class FamilyPlan:
 # -- the push -------------------------------------------------------------------
 
 
+def column_bound_error(entry: Measured, name: str, moment: int, factor: int) -> OverflowError:
+    """The refusal of a column's product |V| x |E n| that would leave the
+    register, naming the measured event, its Node and the column."""
+    return OverflowError(
+        f"{RAYS_LAW}: the push of measured event {entry.number} at {list(entry.position)} exceeds "
+        f"the integer bound {MOMENTUM_BOUND} in the column {name!r}: |V| x |E n| = {abs(moment)} x "
+        f"{factor}"
+    )
+
+
 def push_form(
     free: bool,
     moment: list[int],
-    content: int,
-    reader: tuple[int, int],
-    emitter: tuple[int, int],
+    charges: list[tuple[int, int]],
+    values: tuple[tuple[int, int], ...],
+    columns: tuple[tuple[str, int], ...],
     age: int,
     entry: Measured,
 ) -> list[int]:
-    """The push a measured event A takes from one group of arriving rays,
-    ONE product per arriving free ray (the model owner's decision of
-    2026-09-20, Highlights 5.4: charge is per unit of content of a
-    family): `moment` is V_B, the label moment of the group (Python
-    integers, exact), `content` M_A the reader's content as the frame
-    read it, `reader` rho_A = (n_A, d_A) and `emitter` rho_B = (n_B, d_B)
-    the two families' charges per unit of content, `age` the reader's age
-    after the frame's advance. For a free family's rays
+    """The push a measured event A takes from one group of arriving rays:
+    ONE signed inner product over the columns (the model owner's decision
+    of 2026-09-20, "one mechanism for all the laws on the GameBoard"; the
+    mathematician's verified form). `moment` is V_B, the label moment of
+    the group (Python integers, exact); `charges` the reader's charge in
+    every column as the frame read it, the pairs (E_c, D_c) (gravity: its
+    content M_A over 1; charge: rho_A M_A; a declared column: its value
+    times the content, summed over the families it holds); `values` the
+    arriving family's value per unit of content in every column, the pairs
+    (n_c, d_c) (gravity (1, 1), charge rho_B, a declared column's value or
+    (0, 1)); `columns` the world's (name, sign) per column; `age` the
+    reader's age after the frame's advance. For a free family's rays, per
+    axis,
 
-        push_A = M_A x (rho_A rho_B - 1) x V_B,
+        push_A = sum over the columns c of
+                 epsilon_c x sign(V E_c n_c) x by_clock(age_A, |V x E_c x n_c|, D_c x d_c),
 
-    formed in integers as the gravity -M_A V_B plus the electric part
-    taken as the whole part off the reader's clock by the declared pairs,
-    per axis `sign(V n_A n_B) x by_clock(age_A, |V x n_A n_B x M_A|,
-    d_A d_B)`, which equals the earlier `sign x by_clock(age_A, |V q_A
-    q_B|, M_B)` integer by integer wherever q_A = rho_A M_A and q_B =
-    rho_B M_B were integers (the same rational, floored at the same
-    clock); no zero divisor can arise (d_A d_B >= 1). For a paid family's
-    rays the push is V_B itself (kappa = 1, the label carries h s). Every
-    quantity is bounded before it is assigned (`bounded`)."""
+    every column's rational part the whole part off the reader's clock by
+    its own denominators, floored on its own and never summed before the
+    floor (the mathematician's section 4: the sum of the columns' whole
+    parts is today's integer, a whole part of the sum is not); a column
+    with E_c n_c = 0 adds nothing. The gravity column, (1, 1) on every
+    family with the sign minus, is `by_clock(age, |V M_A|, 1) = |V M_A|`
+    exactly, the law's -M_A V_B; the charge column is the electric part as
+    landed, `sign(V n_A n_B) x by_clock(age_A, |V n_A n_B M_A|, d_A d_B)`
+    (the same rational at the same clock), so a world without a declared
+    column reads the two-column form M_A (rho_A rho_B - 1) x V_B integer by
+    integer, and the strong force is a third column with the sign minus,
+    not a term of this function. For a paid family's rays the push is V_B
+    itself (kappa = 1, the label carries h s). The bounds (the
+    mathematician's R1 to R3): each column's product |V| x |E_c n_c| is
+    tested by division BEFORE it is formed and refused naming the column;
+    the partial sum is bounded after every column (`bounded`); the caller
+    bounds the momentum it joins."""
     if not free:
         return [bounded(moment[axis], entry, "push") for axis in range(3)]
-    push = [bounded(-moment[axis] * content, entry, "push") for axis in range(3)]
-    n_a, d_a = reader
-    n_b, d_b = emitter
-    if n_a and n_b:
-        denominator = d_a * d_b
+    push = [0, 0, 0]
+    for (name, sign), (numerator, denominator), (n, d) in zip(columns, charges, values, strict=True):
+        if not numerator or not n:
+            continue
+        divisor = denominator * d
         for axis in range(3):
-            total = bounded(moment[axis] * n_a * n_b * content, entry, "electric push")
-            whole = by_clock(age, abs(total), denominator)
-            push[axis] = bounded(push[axis] + (-whole if total < 0 else whole), entry, "push")
+            v = moment[axis]
+            if not v:
+                continue
+            # |V| x |E n| tested by division before either product is formed.
+            if abs(numerator) > MOMENTUM_BOUND // abs(n):
+                raise column_bound_error(entry, name, v, abs(numerator) * abs(n))
+            factor = numerator * n
+            if abs(v) > MOMENTUM_BOUND // abs(factor):
+                raise column_bound_error(entry, name, v, abs(factor))
+            total = v * factor
+            whole = abs(total) if divisor == 1 else by_clock(age, abs(total), divisor)
+            push[axis] = bounded(push[axis] + sign * (-whole if total < 0 else whole), entry, "push")
     return push
 
 
@@ -1275,7 +1308,11 @@ def nature_beam(
     on a board without measured events; the border has no inverse."""
     families = world.families
     free_of = [definition.free for definition in families]
-    rho_of = [definition.charge for definition in families]
+    # The columns of the world, (name, sign), and every family's value per
+    # column: the arriving side of the push (the reader's side is the
+    # charges the frame read).
+    columns = world.columns
+    values_of = [definition.values for definition in families]
     flight, collision = tables.flight, tables.collision
     # The unit vectors of the directions at the scale Q: what every label
     # and every vector or tensor moment of the reading is taken on.
@@ -1934,19 +1971,19 @@ def nature_beam(
                             for stage in (2, 3, 4):
                                 refuse((i, family, 1, gi - span[0], stage))
                         other = plan.g_number[gi]
-                        # M_A is the content the frame read at the start of the
-                        # interval (`frame_content`), the same for every family's
-                        # rays whatever the family order: a click of this
-                        # interval joins `held` and is read by the next frame
-                        # (the orchestrator's D1, 2026-09-20); rho_A the reader's
-                        # family's charge per unit of content, rho_B the
-                        # arriving family's.
+                        # The reader's charges are what the frame read at the
+                        # start of the interval (`frame_charges`, gravity's the
+                        # content M_A), the same for every family's rays
+                        # whatever the family order: a click of this interval
+                        # joins `held` and is read by the next frame (the
+                        # orchestrator's D1, 2026-09-20); the arriving side is
+                        # the family's value per column.
                         push = push_form(
                             free,
                             plan.g_moment[gi],
-                            entry.frame_content,
-                            entry.rho,
-                            rho_of[family],
+                            entry.frame_charges,
+                            values_of[family],
+                            columns,
                             entry.age,
                             entry,
                         )

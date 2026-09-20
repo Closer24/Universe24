@@ -7,16 +7,64 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from event_universe.core.integer import bounded_gcd
+from event_universe.core.integer import rational_sum, reduced
 from event_universe.core.lattice import Address3
-from event_universe.events.world import AGE_READS
+from event_universe.events.world import AGE_READS, CHARGE_INDEX, MOMENTUM_BOUND, RAYS_LAW
 
+__all__ = [
+    "RULES",
+    "DetectorSet",
+    "Ledger",
+    "Measured",
+    "column_charges",
+    "count_component",
+    "rational_sum",
+    "reduced",
+]
 RULES = ("home", "read", "measure", "rerelease")
 # The component of the one reading a measured event's clock counts by
 # default: the presence, the scalar over every ray at its Node of another
 # number.
 PRESENCE_READS = "scalar"
 Pending = tuple[int, int, int]
+Pair = tuple[int, int]
+
+
+def column_charges(
+    held: list[tuple[tuple[Pair, ...], int]], columns: int, number: int, position: Address3
+) -> list[Pair]:
+    """A measured event's charge in every column from what it holds: per
+    column c the exact rational sum over the families f held of n_f^c x
+    M_f / d_f^c, the reduced pair (E, D) (`rational_sum`, the books' rule
+    for the charge line since 2026-09-20). `held` lists, per family with a
+    content, its aligned column values and its content M_f. The gravity
+    column ((1, 1) on every family) sums to the content, (M, 1); the
+    charge column is rho x M for a one-family event, the report it was.
+    Each product n_f^c x M_f is checked before it is formed and a charge
+    whose sum leaves the register refuses the run naming the measured
+    event and the column."""
+    charges: list[Pair] = []
+    for column in range(columns):
+        terms: list[Pair] = []
+        for values, content in held:
+            numerator, denominator = values[column]
+            if not numerator or not content:
+                continue
+            if abs(numerator) > MOMENTUM_BOUND // content:
+                raise OverflowError(
+                    f"{RAYS_LAW}: the charge of measured event {number} at {list(position)} in "
+                    f"column {column} ({numerator} per unit on the content {content}) exceeds the "
+                    f"integer bound {MOMENTUM_BOUND}"
+                )
+            terms.append((numerator * content, denominator))
+        try:
+            charges.append(rational_sum(terms))
+        except OverflowError as error:
+            raise OverflowError(
+                f"{RAYS_LAW}: the charge of measured event {number} at {list(position)} in column "
+                f"{column} (the sum over the families held) exceeds the work register"
+            ) from error
+    return charges
 
 
 def count_component(reads: str) -> str:
@@ -31,20 +79,6 @@ def count_component(reads: str) -> str:
     the board; the board's rules (the flight, the collision) never read the
     age whole."""
     return AGE_READS if reads == AGE_READS else PRESENCE_READS
-
-
-def reduced(numerator: int, denominator: int) -> tuple[int, int]:
-    """A rational as the pair (n, d) in lowest terms with d positive."""
-    common = bounded_gcd(abs(numerator), denominator) or 1
-    return numerator // common, denominator // common
-
-
-def rational_sum(terms: list[tuple[int, int]]) -> tuple[int, int]:
-    """The exact sum of rationals (n, d), reduced: a report of the books."""
-    numerator, denominator = 0, 1
-    for n, d in terms:
-        numerator, denominator = reduced(numerator * d + n * denominator, denominator * d)
-    return numerator, denominator
 
 
 @dataclass
@@ -98,9 +132,10 @@ class Measured:
     family: int
     held: list[int]
     phase: int
-    # The family's charge per unit of content, rho = (n, d): the event's
-    # charge is rho x its content (`charge`, a report), and the electric
-    # push reads rho and the content the frame read.
+    # The family's charge per unit of content, rho = (n, d), the value of
+    # its `charge` column; the event's charge in every column is read from
+    # what it holds (`charges`: the `charge` column's pair is `charge`, a
+    # report) and the push reads the charges the frame read.
     rho: tuple[int, int]
     momentum: list[int]
     fixed: bool
@@ -124,6 +159,11 @@ class Measured:
     span: tuple[int, int, int] = (1, 1, 1)
     nodes: tuple[Address3, ...] = ()
     phase_by_momentum: bool = False
+    # The world's columns (their names, gravity first, charge second) and
+    # every family's aligned values per unit of content, (n, d) per column:
+    # what the event's charges are read from (`charges`).
+    column_names: tuple[str, ...] = ()
+    family_values: tuple[tuple[Pair, ...], ...] = ()
     age: int = 0
     owed: int = 0
     pending: list[list[Pending]] = field(default_factory=list)
@@ -144,6 +184,7 @@ class Measured:
     clock_age: int = 0
     turn: int = 0
     frame_content: int = 0
+    frame_charges: list[Pair] = field(default_factory=list)
     presence: int = 0
     counted: int = 0
 
@@ -151,12 +192,30 @@ class Measured:
     def content(self) -> int:
         return sum(self.held)
 
+    def charges(self) -> list[Pair]:
+        """The event's charge in every column of the world, from what it
+        holds (`column_charges`): the reduced pair (E, D) per column,
+        gravity first (the content, (M, 1)), charge second (rho x M, the
+        report of 2026-09-20), the declared columns after. The frame reads
+        it once per interval into `frame_charges`, the reader's side of
+        the push (`nature_beam.push_form`)."""
+        return column_charges(
+            [
+                (self.family_values[family], content)
+                for family, content in enumerate(self.held)
+                if content
+            ],
+            len(self.column_names),
+            self.number,
+            self.position,
+        )
+
     @property
-    def charge(self) -> tuple[int, int]:
-        """The event's charge, rho x its content, as a reduced pair (n, d):
-        a report (the model owner, 2026-09-20: charge is per unit of
-        content of a family); the law reads rho and the content."""
-        return reduced(self.rho[0] * self.content, self.rho[1])
+    def charge(self) -> Pair:
+        """The event's charge in the `charge` column, rho x its content as
+        a reduced pair (n, d): a report (the model owner, 2026-09-20:
+        charge is per unit of content of a family)."""
+        return self.charges()[CHARGE_INDEX]
 
     @property
     def threshold(self) -> int:
@@ -170,6 +229,7 @@ class Measured:
         return sum(amount * content for amount, content, _ in self.pending[family])
 
     def state(self) -> dict[str, object]:
+        charges = self.charges()
         return {
             "number": self.number,
             "position": list(self.position),
@@ -177,7 +237,9 @@ class Measured:
             "held": list(self.held),
             "content": self.content,
             "phase": self.phase,
-            "charge": list(self.charge),
+            "charge": list(charges[CHARGE_INDEX]),
+            # The charge in every column by name (the columns of 2026-09-20).
+            "charges": {name: list(pair) for name, pair in zip(self.column_names, charges, strict=True)},
             "momentum": list(self.momentum),
             "fixed": self.fixed,
             "span": list(self.span),
