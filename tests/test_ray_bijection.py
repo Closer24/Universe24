@@ -85,6 +85,9 @@ WORLD = {
     "N": 64,
     "release": [0, 1],
     "suspension": 0,
+    # No ray leaves a board periodic on every axis: the age a ray may carry
+    # (whole since 2026-09-20) is declared; 50 intervals on ages up to 22.
+    "age_bound": 128,
     "directions": [[1, 1, 0], [2, -1, 1]],
     "families": [{"name": "light", "quantum": 1, "phase_per_link": 5}],
     "measured": [],

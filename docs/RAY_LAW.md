@@ -61,7 +61,7 @@ is a bijection since identical units are interchangeable):
 | --- | --- | --- |
 | `node` | the Node (three integers, in `shape`) | 0 .. 4095 per axis |
 | `direction` | index into the world's direction table `D`; entries 0 and 1 are the two rest vectors (0, 0, 0) ("here a", "here b"), 2 .. 7 the six headings in Port order, 8 .. the declared further directions, each a primitive integer vector with every component in -P .. P | 0 .. len(D) - 1 |
-| `age` | the flight phase, the remainder's owner of the digital line, reduced modulo the direction's period `L_d` (section 3); `age` 0 at birth | 0 .. L_d - 1 |
+| `age` | the count of intervals since the measured event that created the ray, a birth or a re-emission (a collision keeps it), kept **whole** on the record since 2026-09-20 (note 25; until then reduced modulo the direction's period `L_d`): the flight reads it modulo `L_d`, its place on the digital line (section 3), and a measured event, the external thing, reads it whole as the age moment of the one reading (step 2); `age` 0 at birth | 0 .. `age_bound` |
 | `phase` | a step of the circle of N, stamped by the emitter's clock at birth, turned by the family's `phase_per_link` steps at every Link crossed | 0 .. N - 1 |
 | `number` | the last emitter (a measured event's number) | as today |
 | `amount` | whole units | 1 .. 2^62 - 1 (`AMOUNT_BOUND`) |
@@ -69,7 +69,7 @@ is a bijection since identical units are interchangeable):
 | `family` | the family index (one store per family, so implicit in the store) | |
 
 Nothing else is on the record: since 2026-09-20 (the model owner, Highlights
-5.4: charge is per unit of content of a family; section 10, note 27) the
+5.4: charge is per unit of content of a family; section 10, note 28) the
 factor of the electric push is the family's `charge`, the charge per unit
 of content rho declared as an integer or a pair `[n, d]`, and the two
 columns `charge` and `mass` of note 20 (the emitter's charge and content at
@@ -109,7 +109,7 @@ release could exceed it, naming the numbers (risk, section 9), and every
 label the law forms (a birth, a re-emission, a home, a face click, the
 recount) is checked per row BEFORE the product is formed, the weight times
 the largest component of the row's `u_d` within the bound
-(`momentum_labels`, `label_overflow_rows`; since 2026-09-20, note 25: a
+(`momentum_labels`, `label_overflow_rows`; since 2026-09-20, note 26: a
 merged row can outgrow the parser's bound, and until then the born
 labels' product was checked after it was formed, so a wrap inside the
 bound passed silently); the refusal names the Node and the amount.
@@ -137,7 +137,15 @@ what differs, `kind` derived from `quantum`"; section 10, note 15), `kind`
 on a family: a family declares its `quantum` (required), h = 0 a free
 family, h >= 1 a paid one, and the refusal names the derivation and
 MIGRATION. Added on 2026-09-19 after the implementation: `width` (S, an integer from 1, 1 by default: the width of the push, the
-step rule of section 3 step 5). Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
+step rule of section 3 step 5). Added on 2026-09-20 (note 25): `age_bound`
+(an integer from 1: the largest age a ray may carry, the bound of the
+store; on a board with an open axis twice the flight bound by default, the
+age at which every straight ray has left a board of that diameter,
+`world.flight_bound`; required on a board periodic on every axis, which no
+ray leaves; a declared ray's `age` is refused beyond it and a run in which
+a ray on the board carries an age beyond it is refused), and the value
+`age` of a table entry's `reads` (the age moment; the clock of that entry
+counts it in place of the presence). Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
 `suspension`, `families`, `measured` (`table` with `read`, `measure`,
 `rerelease`, `pass` and `phase_window`), `in_transit` (gains `direction`,
 a vector, in place of `heading`; the six headings accepted as vectors),
@@ -205,9 +213,12 @@ are one contiguous slice and every per-Node step is a segmented reduction
 (`np.add.reduceat`, `bincount` on the segment ids). Identical rows (equal in
 every field but `amount`, `content`) are merged after every interval by a
 lexsort and a segmented sum. **Fixed local storage**: the distinct records at
-one Node are bounded by `sum_d L_d x N x numbers x contents`, a constant of
-the world (for the six headings with `phase_per_link` 0 and one content per
-number: 6 x 55 x N x numbers); a crowd of identical units is one row. Fixed
+one Node are bounded by `len(D) x age_bound x N x numbers x contents`, a
+constant of the world (until 2026-09-20 `sum_d L_d x N x numbers x
+contents`, the age reduced modulo the period; since then the age is whole,
+rows of different ages are distinct rows and the bound is the world's
+`age_bound`, note 25: the host cost of the whole age); a crowd of
+identical units is one row. Fixed
 local work: every per-Node step below is a bounded loop over that Node's
 rows. The host cost is the total rows times about 0.1 to 1 us (section 9).
 
@@ -229,12 +240,15 @@ space ever crosses two Links in one interval ((1, 1, 1) is the bound), and a
 plane world (extent 1 on z) uses the same table, so a wavelength is `period x
 c` on every board. The step of the interval is `step_d(tau) = line_d[m(tau)
 mod S_1]` if `m(tau + 1) > m(tau)`, else no move; the inverse is `tau - 1`
-then the same step subtracted: bit-exact. The age is reduced modulo `L_d`,
-the least period of the pair `(tau mod T_d / gcd(S_1 Q, T_d), m(tau) mod
-S_1)`, so `(direction, age) -> (direction, age + 1 mod L_d)` is a bijection
-and the store's bound above is finite (the heading (1, 0, 0): T 110, L 55;
-(1, 1, 0): T 156, L 39; (1, 1, 1): T 192, L 3; (3, 1, 0): T 350, L 175). A
-rest direction has S_1 = 0 and never moves.
+then the same step subtracted: bit-exact. The flight reads the age modulo
+`L_d`, the least period of the pair `(tau mod T_d / gcd(S_1 Q, T_d), m(tau)
+mod S_1)`, so the step of an age is a function of `age mod L_d` (the
+heading (1, 0, 0): T 110, L 55; (1, 1, 0): T 156, L 39; (1, 1, 1): T 192,
+L 3; (3, 1, 0): T 350, L 175). Since 2026-09-20 the age itself is kept
+whole on the record (`(direction, age) -> (direction, age + 1)` is
+injective, a bijection onto its image; the store's bound is the world's
+`age_bound`, note 25); until then it was reduced modulo `L_d`. A rest
+direction has S_1 = 0 and never moves.
 
 **The interval**, in this order, each step a bijection on the board's state
 except where marked as the border; the inverse runs the steps in reverse
@@ -247,7 +261,9 @@ order with each step's inverse:
    at its Node (its age still advances: the age is the flight phase, not a
    self-creation). A ray whose step leaves through an open face reaches the
    face detector (step 4). Inverse: age back one, the same step subtracted,
-   the phase turned back. Rest rays (direction 0, 1) stay.
+   the phase turned back (a ray at age 0 is at its birth, which has no
+   inverse: refused). Rest rays (direction 0, 1) stay. The age is advanced
+   whole; the flight table is read at `age mod L_d`.
 2. **The readings** (one reading set): presence per number per Node = the
    amount of every ray at the Node, rest and moving alike, and the measured
    content; flow per number = `sum amount x u_d` (since 2026-09-19 on the
@@ -265,6 +281,16 @@ order with each step's inverse:
    the net flow `sum amount x u_d`; order 2 the traceless tensor `3 x sum
    amount x u (x) u - tr(sum amount x u (x) u) I`, exact integers (the raw
    second moment with its trace removed, times the number of dimensions;
+   |D| is not normalised); and, since 2026-09-20 (note 25), the **age
+   moment**, `sum amount x age` over the set, split outside and here the
+   same way: a first moment in the age, the reading aid of the measured
+   event, the external thing, which alone reads the age whole (the board's
+   rules, the flight and the collision, never read it whole; the component
+   changes nothing on the board). Every coupling selects its component by
+   the key `reads` (the threshold the scalar, the push the vector, a
+   detector may declare the tensor; the clock's count the scalar, or on a
+   table entry that reads `age` the age moment, `measured.count_component`);
+   the detector's record is the
    every `u_d` has the length Q within 1.35 %, so a fan's flow reads Q per
    unit of amount direction-blind, and on the six headings the moments
    are Q times, Q^2 times, what they were on D; note 23). Every coupling
@@ -302,12 +328,12 @@ order with each step's inverse:
    `kappa(A, B)` =
    `M_A x (rho_A rho_B - 1)` for a free family's rays, ONE product per
    arriving free ray (the model owner's decision of 2026-09-20: charge is
-   per unit of content of a family, note 27; `nature_beam.push_form`):
+   per unit of content of a family, note 28; `nature_beam.push_form`):
    M_A the reader's content as the frame read it at the start of the
    interval (`frame_content`, the same for every family's rays whatever
    the family order: a click of the interval joins the content the next
    frame reads; the orchestrator's D1 on the architect's B3, 2026-09-20,
-   note 26), rho_A and rho_B the reader's and the arriving family's
+   note 27), rho_A and rho_B the reader's and the arriving family's
    charges per unit of content, the pairs (n_A, d_A) and (n_B, d_B) as
    declared; formed in integers as the gravity `-M_A V_B` plus the
    electric part taken as the whole part off the reader's clock by the
@@ -332,8 +358,12 @@ order with each step's inverse:
    `quantum x s` per unit along `u_d`, the recoil `-label`), what
    came home or is re-released apportioned whole over the `directions`
    (`apportion_whole`, ties in table order from `age mod len(directions)`),
-   the owed count read off the clock. Every new ray: `age` 0, the emitter's
-   phase, its number. The step of a measured event by its momentum: as the
+   the owed count read off the clock from what the clock counted over
+   every ray of another number at its Node, `by_clock(age_A, k n, d)`: k
+   the presence, or on a table entry that reads `age` the age moment
+   `sum amount x age` of that family (note 25: the clock beside a mass
+   then reads M / r in space, the push keeping M / r^2). Every new ray:
+   `age` 0, the emitter's phase, its number. The step of a measured event by its momentum: as the
    other change leaves it (no merge; refused onto an occupied Node), with
    the width of the push since 2026-09-19 (the model owner's D1) and
    the label's scale since the same day (note 23): on an axis whose
@@ -448,7 +478,7 @@ amount summed over the whole set (a smaller set passes at every Node of
 it with a `pass` record naming `threshold`), then the **reading** the
 detector declares (`reading`: `wave` by default since 2026-09-20, the
 model owner's decision, "on the board a ray, in the world a wave"; or
-`beam`, declared; section 10, notes 24 and 28):
+`beam`, declared; section 10, notes 24 and 29):
 
 - `wave`: with the rays the set clicks this interval (after the threshold
   and the window; `measure` only), `A_u = 32 x amount_u` (note 3) and the
@@ -894,7 +924,7 @@ implementation's part of the contract. The design above is unchanged.
     (the model owner's proposal 2, "2 with the physicist"; the reviewer's
     verdict "admissible with two corrections"; `tests/test_ray_push.py` (a)
     to (g)). (The two columns of this note are deleted since 2026-09-20,
-    the factor being the family's charge per unit of content: note 27.) `push_form` computes `push_A = sum kappa(A, B) . V_B` (step
+    the factor being the family's charge per unit of content: note 28.) `push_form` computes `push_A = sum kappa(A, B) . V_B` (step
     4) in one place; the three-branch `push_of` and the lookup of the
     emitter by number (`world.measured[number - 1]`, the one LOCALITY-1
     deviation, with the lcm denominator `content_lcm`) are deleted. The
@@ -989,6 +1019,7 @@ implementation's part of the contract. The design above is unchanged.
     and the measured events met, not of the Nodes, the store's promise of
     section 3 (the plane's 14641 Nodes cost 0.11 us each, the two slits'
     5100 rows 0.69 us each).
+
 23. **The label along the unit vector of the direction at the flight
     table's scale** (the model owner's decision of 2026-09-19, Highlights
     5.4, "go for it", on the physics-rule reviewer's verdict on note 21:
@@ -1102,7 +1133,80 @@ implementation's part of the contract. The design above is unchanged.
     phase, `run.json` carries no `measured[].record` and its counters'
     `phase` is the last click's (VALIDATION.md). `Measured.record` and
     the per-Node threshold are gone (`DetectorSet`, MIGRATION.md).
-25. **The label's product checked before it is formed** (the architect's
+
+25. **The age whole, read by the measured event; the clock beside a mass**
+    (the model owner, 2026-09-19, Highlights 5.4, "the clock beside a mass
+    ... Go for it", implemented 2026-09-20; `tests/test_ray_age.py` (a) to
+    (e); the placement by the owner's instruction: "the age reading must
+    live in an external place in the code, outside the board's law"). The
+    accepted price of section 8 (the clock's count reads the presence, M /
+    r^2 in space, not Einstein's M / r) is paid by a reading, not by a rule
+    of the board: the ray's age, the count of intervals since the measured
+    event that created it (a birth or a re-emission; a collision is a
+    permutation and cannot reset it), is on the record and travels with
+    it, so a clock reading the amount-weighted age of its arrivals reads
+    (M / r^2) x r = M / r while the push keeps reading the flow, M / r^2:
+    Einstein's pair from two readings of the same rays, no estimator,
+    fixed work, additive over sources. What changed: (i) the store keeps
+    the age WHOLE (`RayStore.age`, the walk advances it by one; a rest ray
+    keeps it; a re-emission and a birth start at 0); the flight reads it
+    modulo the direction's period, `flight.steps[direction, age mod L_d]`,
+    and the collision never reads it, so the board's step is unchanged by
+    the whole age (test (e): the same run with the ages reduced from
+    outside the law after every interval gives the same Nodes, directions,
+    phases, amounts and contents at every interval; the bijection echo of
+    `test_ray_bijection` passes as before, its all-periodic world
+    declaring `age_bound`). The host cost: rows of different ages no
+    longer merge, so the store's bound is `len(D) x age_bound x N x
+    numbers x contents` in place of `sum_d L_d x ...` (section 3); on the
+    registered worlds the row counts are unchanged in practice (a beam
+    holds at most two rays per Node, of different ages either way) and
+    `state.json` now records the whole age. (ii) The one reading
+    `read_arrivals` gains the age moment (`Reading.age_outside`,
+    `age_here`, `age`; the `ages` argument, zero without it; the bound
+    check covers `amount x age`), the value `age` of `reads`, and the
+    record of a `read`, `click` or `rerelease` on such an entry carries
+    it. The age is read whole only by a measured event, the external
+    thing; this component is a reading aid of the detector and changes
+    nothing on the board. (iii) What the clock counts is selected on the
+    measured-event side, `measured.count_component(reads)`: the age moment
+    on an entry that reads `age`, the presence on every other entry (the
+    default: every world without the key reads the same, integer by
+    integer); step 4 reads both over every ray of another number at the
+    Node (rest and moving alike, as the presence) into `Measured.presence`
+    and `Measured.counted`, and the frame's `_suspend` owes
+    `by_clock(age_A, counted x n, d)`. (iv) The bound of the age, the
+    world key `age_bound`, and the rule at the bound. Three rules were
+    weighed: saturation (many-to-one, not a bijection: rejected); a click
+    at the bound (a one-way gate like the face click: admissible, but a
+    detector without a Node and a new escaped line of the books, in the
+    detector's area being changed concurrently); and the refusal, chosen:
+    a row whose age passes `age_bound` refuses the run at the end of the
+    interval with `OverflowError` naming the key, as every other bound of
+    the law does, nothing on the board changed, so the bijection holds
+    exactly up to the refusal and the world must be small enough or
+    declare its bound. The default on a board with an open axis is twice
+    the flight bound, `world.flight_bound(shape, D)` = the largest over the
+    moving directions of `ceil(ceil(D_M / S_1) x T_d / Q)` with `D_M = X +
+    Y + Z - 2` the longest Manhattan flight on the board (inside and out;
+    the least tau with m(tau) >= M is at most ceil(M T_d / (S_1 Q))): the
+    age at which every straight ray has left the board, doubled as the
+    slack of one collision or one wrap of a periodic axis (a head-on pair
+    parked at rest keeps its age and flies again; a ray along a periodic
+    axis never leaves). On a board periodic on every axis no ray leaves,
+    so the key is required and refused if absent (the bijection, flight,
+    collision and push tests' periodic cubes declare it). The parser
+    refuses a declared `age` beyond the bound; `run.json` records the key.
+    (v) The clock's count with the age moment on a bar (test (c)): a
+    reader three Links from a source whose rays dwell two intervals at its
+    Node counts 5 + 6 = 11 over a presence of 2 and owes `by_clock(age,
+    11, 4)` in place of `by_clock(age, 2, 4)`. The registered readings of
+    section 8 are unchanged (the scalar is the default); the experiment
+    that reads the pair in space is series E in EXPERIMENTS.md (the
+    redshift of two clocks under the age reading). Recorded as an idea of
+    the owner, not implemented: a ray sent back toward its source could
+    count its age down and be measured where it reaches zero.
+26. **The label's product checked before it is formed** (the architect's
     B1, blocking, 2026-09-20; `tests/test_ray_label.py` (c), (d)). Until
     this note `momentum_labels` bounded the weight at `Q x weight` and
     the births' labels were checked after the int64 product; the
@@ -1121,7 +1225,7 @@ implementation's part of the contract. The design above is unchanged.
     parser's bound (Q x content x amount on a declared ray, a lamp's or
     a free release) is unchanged and conservative; what it does not
     reach, a merged row, is refused at the next label formed of it.
-26. **M_A is the content the frame read** (the architect's B3, blocking;
+27. **M_A is the content the frame read** (the architect's B3, blocking;
     the orchestrator's D1, 2026-09-20; `tests/test_ray_push.py` (j)).
     Until this note the push read `Measured.content` inside the
     per-family loop of step 4, after the clicks of the families before
@@ -1137,7 +1241,7 @@ implementation's part of the contract. The design above is unchanged.
     one reader in one interval, so every pin and every registered
     reading is unchanged; the step rule (`_move`) reads the live content
     after the interval as before.
-27. **Charge per unit of content; the push one product; the record's two
+28. **Charge per unit of content; the push one product; the record's two
     columns deleted** (the model owner's decision of 2026-09-20,
     Highlights 5.4; it resolves the architect's B2 by dissolving its
     divisor; `tests/test_ray_push.py` (a) to (e), (i), (k), (l),
@@ -1171,7 +1275,7 @@ implementation's part of the contract. The design above is unchanged.
     arise: (k)). The electric push is proportional to the reader's
     content as the gravity is, the equivalence principle for the electric
     push, pinned in (l).
-28. **`wave` is the default reading** (the model owner's decision of
+29. **`wave` is the default reading** (the model owner's decision of
     2026-09-20, Highlights 5.4, "on the board a ray, in the world a
     wave"; `world.DETECTOR_READINGS` = ("wave", "beam")). A detector that
     declares no `reading`, and a measured event outside every declared

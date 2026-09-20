@@ -14,8 +14,11 @@ order, each a bijection on the board's state except the border:
 
 1. the walk: every ray whose flight table steps this interval is created at
    the neighbour along its step (the wrap on a periodic axis; through an
-   open face it clicks on the face detector), its age advanced modulo its
-   direction's period, its phase turned by the family's `phase_per_link`;
+   open face it clicks on the face detector), its age advanced by one (the
+   age is the count of intervals since the measured event that created the
+   ray, kept whole on the record since 2026-09-20; the flight reads it
+   modulo the direction's period and nothing else of the board reads it),
+   its phase turned by the family's `phase_per_link`;
 2. the readings: at every Node the amount-weighted moments of order 0, 1
    and 2 of the direction vectors of the arrivals, taken ONCE by
    `read_arrivals` over the one reading set (at the measured events in
@@ -23,14 +26,18 @@ order, each a bijection on the board's state except the border:
    diagnostics, decomposed on request): the count (split outside /
    here, a ray that did not step this interval having the direction
    (0, 0, 0) and entering the zeroth moment alone), the net flow (the
-   vector sum of amount x D[direction]) and the traceless tensor (three
-   times the sum of amount x D (x) D with its trace removed); valid for a
-   fan as for the six headings; every coupling reads its component by key;
+   vector sum of amount x D[direction]), the traceless tensor (three
+   times the sum of amount x D (x) D with its trace removed) and the age
+   moment (the sum of amount x age, split the same way: a reading aid of
+   the measured event, the external thing, that changes nothing on the
+   board); valid for a fan as for the six headings; every coupling reads
+   its component by key;
 3. the collision: at every Node of free space (a Node that holds no
    measured event: rays meet the table there, not each other), per
    (number, content) class, the single units in the eight slots (six
    headings, two rest slots) permuted by the collision table, the forward
-   map a cyclic shift inside the class;
+   map a cyclic shift inside the class; the age is never read here and a
+   moved unit keeps it;
 4. the measured events' tables and the detectors: a measured event meets
    the rays that arrived this interval at its Node, of every number but its
    own, as one set (the threshold on the set), then each ray by its own
@@ -51,11 +58,17 @@ order, each a bijection on the board's state except the border:
    pairs, `sign x by_clock(age_A, |V n_A n_B M_A|, d_A d_B)`), and
    `push_A = V_B` for a paid family's rays (their label already carries
    h s); every input is the reader's or the arriving family's key,
-   nothing is looked up by number and the record carries no factor;
+   nothing is looked up by number and the record carries no factor. What
+   the clock counts is read here too, over every ray of another number at
+   the Node: the presence, or on a table entry that reads `age` the age
+   moment (`measured.count_component`), the measured event's reading of
+   the whole age;
 5. the self-creations: the free release, what came home or is re-released
    apportioned whole over the declared directions, the lamp's release at
    its rate, every new ray at age 0 with its emitter's number;
-6. merge identical rows and sort by Node.
+6. merge identical rows and sort by Node; a row whose age passed the
+   world's `age_bound` refuses the run (the store's bound; the world must
+   be small enough or declare its bound).
 
 Every momentum the law reads or moves is the one label of the rows,
 `momentum_labels` (content x amount x u_d for a paid family, amount x u_d
@@ -86,24 +99,26 @@ import numpy as np
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
 from event_universe.core.lattice import PORT_HEADINGS, Address3
 from event_universe.core.phase import phase_cosines, phase_sines
-from event_universe.events.measured import Ledger, Measured
+from event_universe.events.measured import Ledger, Measured, count_component
 from event_universe.events.world import (
+    AGE_READS,
     FACE_NAMES,
     FIXED_DIRECTIONS,
     HEADING_OFFSET,
-    LABEL_SCALE,
     MOMENTUM_BOUND,
     RAYS_LAW,
     REST_DIRECTIONS,
+    Q,
     RayWorld,
     Vector,
 )
 
 Record = Callable[[dict[str, object]], None]
-# The one scale of the law: the time resolution of the flight table, T_d =
-# isqrt(3 |v|^2 Q^2), and the length of a unit's momentum label, u_d the
-# integer vector nearest Q D / |D| (`world.LABEL_SCALE`).
-Q = LABEL_SCALE
+# The one scale of the law is the world's constant `world.Q`: the time
+# resolution of the flight table, T_d = isqrt(3 |v|^2 Q^2), and the length of
+# a unit's momentum label, u_d the integer vector nearest Q D / |D|
+# (`world.LABEL_SCALE` is the same number); the parser derives the age bound
+# from it.
 # The arrival of a ray that did not step this interval: the first rest
 # direction, whose vector is (0, 0, 0), so "here" enters the zeroth moment
 # of the reading alone.
@@ -142,7 +157,9 @@ ZERO3 = (0, 0, 0)
 @dataclass(frozen=True)
 class NatureBeam:
     """The record of a ray: its Node, its direction (an index of the world's
-    table), its age (the flight phase, modulo the direction's period), its
+    table), its age (the count of intervals since the measured event that
+    created it, whole; the flight reads it modulo the direction's period,
+    a measured event may read it whole), its
     phase (a step of the circle), its number (the last emitter), its amount
     (whole units) and the content one unit carries. Nothing else: the
     family (the store it is in) suffices for the electric push, whose
@@ -178,8 +195,10 @@ PAIR_I = np.array([0, 1, 2, 0, 0, 1], dtype=np.int64)
 PAIR_J = np.array([0, 1, 2, 1, 2, 2], dtype=np.int64)
 IDENTITY = np.eye(DIMENSIONS, dtype=np.int64)
 # The columns of the per-row moment table: the two counts (outside, here),
-# the three components of amount x D and the six entries of amount x D_i D_j.
-MOMENT_COLUMNS = 2 + DIMENSIONS + PAIR_I.shape[0]
+# the three components of amount x D, the six entries of amount x D_i D_j
+# and the two age moments (amount x age, outside and here).
+AGE_COLUMN = 2 + DIMENSIONS + PAIR_I.shape[0]
+MOMENT_COLUMNS = AGE_COLUMN + 2
 
 
 @dataclass(frozen=True)
@@ -192,18 +211,34 @@ class Reading:
     D) and `second` the six entries of the second moment (sum amount x
     D_i D_j for xx, yy, zz, xy, xz, yz), whose traceless part is `tensor`
     (3 x the second moment less its trace on the diagonal, a symmetric
-    3 x 3 integer matrix of trace zero). Every coupling selects its
-    component by key. Keyed over Nodes the arrays carry a leading axis."""
+    3 x 3 integer matrix of trace zero), and `age_outside`, `age_here` the
+    age moment (sum amount x age, a first moment in the age, split as the
+    count is), whose whole is `age`. The age moment is a reading aid of the
+    measured event, the external thing (the model owner, 2026-09-19, "it
+    must be checked in the detector and not on the board"): the age is
+    read whole only by a measured event; the board's rules (the flight,
+    the collision) never read it whole; this component only helps the
+    detector's computation and changes nothing on the board. Every
+    coupling selects its component by key. Keyed over Nodes the arrays
+    carry a leading axis."""
 
     outside: np.ndarray
     here: np.ndarray
     vector: np.ndarray
     second: np.ndarray
+    age_outside: np.ndarray
+    age_here: np.ndarray
 
     @property
     def scalar(self) -> np.ndarray:
         """The presence: everything in the set, outside and here."""
         result: np.ndarray = self.outside + self.here
+        return result
+
+    @property
+    def age(self) -> np.ndarray:
+        """The age moment of the set, sum amount x age, outside and here."""
+        result: np.ndarray = self.age_outside + self.age_here
         return result
 
     @property
@@ -228,6 +263,8 @@ class Reading:
             return self.vector
         if key == "tensor":
             return self.tensor
+        if key == AGE_READS:
+            return self.age
         raise ValueError(f"{RAYS_LAW}: no reading component {key!r}")
 
 
@@ -239,16 +276,45 @@ def reading_bound_error(rows: int, per_row: int) -> OverflowError:
     )
 
 
-def moment_table(v: np.ndarray, a: np.ndarray) -> np.ndarray:
+def moment_table(v: np.ndarray, a: np.ndarray, ages: np.ndarray | None = None) -> np.ndarray:
     """The per-row table of the moments of `read_arrivals`: the two counts
-    (outside, here), the three components of amount x v and the six entries
-    of amount x v v^T; the caller has checked the bound."""
+    (outside, here), the three components of amount x v, the six entries
+    of amount x v v^T and the two age moments amount x age (outside, here;
+    zero without `ages`); the caller has checked the bound."""
     table = np.empty((a.shape[0], MOMENT_COLUMNS), dtype=np.int64)
     table[:, 0] = a * v.any(axis=1)
     table[:, 1] = a - table[:, 0]
     table[:, 2 : 2 + DIMENSIONS] = v * a[:, None]
-    table[:, 2 + DIMENSIONS :] = a[:, None] * v[:, PAIR_I] * v[:, PAIR_J]
+    table[:, 2 + DIMENSIONS : AGE_COLUMN] = a[:, None] * v[:, PAIR_I] * v[:, PAIR_J]
+    if ages is None:
+        table[:, AGE_COLUMN:] = 0
+    else:
+        weighted = a * np.asarray(ages, dtype=np.int64).reshape(-1)
+        table[:, AGE_COLUMN] = weighted * v.any(axis=1)
+        table[:, AGE_COLUMN + 1] = weighted - table[:, AGE_COLUMN]
     return table
+
+
+def reading_of(sums: np.ndarray) -> Reading:
+    """The `Reading` of summed moment-table rows (a leading axis kept)."""
+    return Reading(
+        sums[..., 0],
+        sums[..., 1],
+        sums[..., 2 : 2 + DIMENSIONS],
+        sums[..., 2 + DIMENSIONS : AGE_COLUMN],
+        sums[..., AGE_COLUMN],
+        sums[..., AGE_COLUMN + 1],
+    )
+
+
+def moment_bound(amounts: np.ndarray, vectors: np.ndarray, ages: np.ndarray | None) -> int:
+    """The largest entry a row of the moment table can hold: the amount
+    times the larger of P^2 (the second moment) and the age (the age
+    moment), so that one bound check covers every column."""
+    per_row = max(1, int(np.abs(vectors).max(initial=0))) ** 2
+    if ages is not None:
+        per_row = max(per_row, int(np.abs(np.asarray(ages)).max(initial=0)))
+    return int(np.abs(amounts).max(initial=0)) * per_row
 
 
 def read_arrivals(
@@ -256,6 +322,7 @@ def read_arrivals(
     amounts: np.ndarray,
     keys: np.ndarray | None = None,
     size: int | None = None,
+    ages: np.ndarray | None = None,
 ) -> Reading:
     """The one reading of a set of rays: `vectors` (rows, 3) the direction
     vector of each ray's arrival (D[direction] for a ray that arrived this
@@ -264,21 +331,27 @@ def read_arrivals(
     moments of order 0, 1 and 2, exact integers: outside = the amounts on
     a nonzero vector, here = the amounts on the zero vector, the vector sum
     of amount x v, and the second moment sum amount x v v^T (its traceless
-    part the tensor). With `keys` (rows,) and `size` the moments are taken
-    per key (one reading per Node), the arrays gaining a leading axis of
-    `size`. Valid for a fan as for the six headings: no projection onto
-    the Ports."""
+    part the tensor); with `ages` (rows,) also the age moment, sum amount x
+    age, split outside and here the same way (zero without it). The age
+    moment is a reading aid of the measured event, the external thing: the
+    age is read whole only by a measured event (its clock's count on a
+    table entry that reads `age`, its record); the board's rules (the
+    flight, the collision) never read it whole; this component only helps
+    the detector's computation and changes nothing on the board. With
+    `keys` (rows,) and `size` the moments are taken per key (one reading
+    per Node), the arrays gaining a leading axis of `size`. Valid for a fan
+    as for the six headings: no projection onto the Ports."""
     v = np.asarray(vectors, dtype=np.int64).reshape(-1, DIMENSIONS)
     a = np.asarray(amounts, dtype=np.int64).reshape(-1)
     bins = None if keys is None else np.asarray(keys, dtype=np.int64).reshape(-1)
-    # Every entry of the table is at most amount x P^2 and every sum has at
-    # most the rows of one key: the bound is checked before a product is
-    # formed, so the integers below never wrap.
-    per_row = int(np.abs(a).max(initial=0)) * max(1, int(np.abs(v).max(initial=0))) ** 2
+    # Every entry of the table is at most amount x P^2 (or amount x age)
+    # and every sum has at most the rows of one key: the bound is checked
+    # before a product is formed, so the integers below never wrap.
+    per_row = moment_bound(a, v, ages)
     rows = a.shape[0] if bins is None else int(np.bincount(bins, minlength=1).max(initial=0))
     if per_row * rows > MOMENTUM_BOUND:
         raise reading_bound_error(rows, per_row)
-    table = moment_table(v, a)
+    table = moment_table(v, a, ages)
     if bins is None:
         sums = table.sum(axis=0)
     else:
@@ -286,9 +359,7 @@ def read_arrivals(
             raise ValueError(f"{RAYS_LAW}: a keyed reading needs its size")
         sums = np.zeros((size, MOMENT_COLUMNS), dtype=np.int64)
         np.add.at(sums, bins, table)
-    return Reading(
-        sums[..., 0], sums[..., 1], sums[..., 2 : 2 + DIMENSIONS], sums[..., 2 + DIMENSIONS :]
-    )
+    return reading_of(sums)
 
 
 # -- the flight table ------------------------------------------------------------
@@ -697,11 +768,13 @@ def pointer_phases(
 
 class RayStore:
     """The records of one family as a structure of arrays, one row per
-    record: `node` the flat index, `direction`, `age`, `phase`, `number`,
-    `amount`, `content` (per unit) and `arrival`, the direction the ray
-    arrived on this interval (its direction at the walk; the reading is of
-    the arrivals) or `HERE` for a ray that did not step. Rows sorted by
-    `node` after every interval; identical rows merged."""
+    record: `node` the flat index, `direction`, `age` (whole: the intervals
+    since the measured event that created the ray; rows of different ages
+    are distinct rows, the host cost of the whole age), `phase`, `number`,
+    `amount`, `content` (per unit) and `arrival`, the direction the ray arrived on this interval (its
+    direction at the walk; the reading is of the arrivals) or `HERE` for a
+    ray that did not step. Rows sorted by `node` after every interval;
+    identical rows merged."""
 
     def __init__(self, shape: Address3) -> None:
         self.shape = shape
@@ -998,7 +1071,11 @@ def grouped_sums(values: np.ndarray, starts: np.ndarray, widest: int) -> np.ndar
 
 
 def first_reading_overflow(
-    group: np.ndarray, groups: int, amounts: np.ndarray, vectors: np.ndarray
+    group: np.ndarray,
+    groups: int,
+    amounts: np.ndarray,
+    vectors: np.ndarray,
+    ages: np.ndarray | None = None,
 ) -> tuple[int, OverflowError] | None:
     """The bound of `read_arrivals` taken per group in bulk, the same
     condition per group as the per-set reading: None when every group
@@ -1008,16 +1085,17 @@ def first_reading_overflow(
     if amounts.shape[0] == 0:
         return None
     a = np.abs(amounts)
-    v = np.abs(vectors).max(axis=1)
     counts = np.bincount(group, minlength=groups)
-    if int(a.max()) * max(1, int(v.max())) ** 2 * int(counts.max()) <= MOMENTUM_BOUND:
+    if moment_bound(a, vectors, ages) * int(counts.max()) <= MOMENTUM_BOUND:
         return None
     a_max = np.zeros(groups, dtype=np.int64)
     np.maximum.at(a_max, group, a)
-    v_max = np.zeros(groups, dtype=np.int64)
-    np.maximum.at(v_max, group, v)
+    per_max = np.zeros(groups, dtype=np.int64)
+    np.maximum.at(per_max, group, np.abs(vectors).max(axis=1) ** 2)
+    if ages is not None:
+        np.maximum.at(per_max, group, np.abs(ages))
     for g in range(groups):
-        per_row = int(a_max[g]) * max(1, int(v_max[g])) ** 2
+        per_row = int(a_max[g]) * max(1, int(per_max[g]))
         if per_row * int(counts[g]) > MOMENTUM_BOUND:
             return g, reading_bound_error(int(counts[g]), per_row)
     return None
@@ -1280,8 +1358,15 @@ def nature_beam(
                 continue
             collide(store, backward=True)
             resting = store.direction < REST_DIRECTIONS
-            back = np.where(resting, store.age, (store.age - 1) % flight.period[store.direction])
-            step = flight.steps[store.direction, back].astype(np.int64)
+            # The age back by one (whole; a rest ray keeps its age); the
+            # flight table is read modulo the period. A ray at age 0 is at
+            # its birth, which has no inverse.
+            back = np.where(resting, store.age, store.age - 1)
+            if (back < 0).any():
+                raise ValueError(
+                    f"{RAYS_LAW}: the inverse walk of a ray at age 0 (its birth has no inverse)"
+                )
+            step = flight.steps[store.direction, back % flight.period[store.direction]].astype(np.int64)
             moved = step.any(axis=1)
             x, y, z = store.coordinates(store.node)
             coordinates = np.stack([x, y, z], axis=1) - step
@@ -1306,7 +1391,9 @@ def nature_beam(
         if store.size == 0:
             arrivals.append(ArrivalRows.empty())
             continue
-        step = flight.steps[store.direction, store.age].astype(np.int64)
+        # The flight reads the age modulo the direction's period, its
+        # place on the digital line; the age itself is kept whole.
+        step = flight.steps[store.direction, store.age % flight.period[store.direction]].astype(np.int64)
         moved = step.any(axis=1)
         x, y, z = store.coordinates(store.node)
         coordinates = np.stack([x, y, z], axis=1) + step
@@ -1370,9 +1457,10 @@ def nature_beam(
         crossed_node, crossed_port = store.node[crossed], port[crossed]
         crossed_amount = store.amount[crossed]
         # A rest ray keeps its age (the rest slots belong to the six-heading
-        # alphabet, whose period it resumes when a collision moves it).
+        # alphabet, whose line it resumes when a collision moves it); a
+        # moving ray's age advances by one, whole.
         resting = store.direction < REST_DIRECTIONS
-        store.age = np.where(resting, store.age, (store.age + 1) % flight.period[store.direction])
+        store.age = np.where(resting, store.age, store.age + 1)
         store.phase = (store.phase + definition.phase_per_link * moved) % modulus
         store.arrival = arrival
         if escaped.any():
@@ -1409,6 +1497,7 @@ def nature_beam(
     keep = [np.ones(store.size, dtype=bool) for store in stores]
     for entry in entries:
         entry.presence = 0
+        entry.counted = 0
     if events:
         count = len(families)
         ev_number = np.array([e.number for e in entries], dtype=np.int64)
@@ -1428,6 +1517,15 @@ def nature_beam(
             st_wave[set_index] = detector_set.wave
         half = modulus // 2
         presence = np.zeros((count, events), dtype=np.int64)
+        # The age moment over the same set, the measured event's reading of
+        # the whole age (a reading aid of the external thing; the board's
+        # rules never read the age whole), and per (family, measured event)
+        # whether its table entry counts it in place of the presence.
+        age_moment = np.zeros((count, events), dtype=np.int64)
+        counts_age = np.array(
+            [[count_component(reads) == AGE_READS for reads in e.reads] for e in entries],
+            dtype=bool,
+        ).T.reshape(count, events)
         # The refusals found in bulk, keyed by the point at which the rule
         # taken per set raises them, (measured event, family, part, group
         # rank, stage), and raised at that point below.
@@ -1450,19 +1548,23 @@ def nature_beam(
             phase = store.phase[at]
             direction = store.direction[at]
             arrival = store.arrival[at]
+            age_at = store.age[at]
             own = number == ev_number[ev]
             arrived = arrival != HERE
             plan = FamilyPlan()
             # The presence for the clock: every ray at the Node of another
-            # number, rest and moving alike (the scalar of the one reading).
+            # number, rest and moving alike (the scalar of the one reading);
+            # and the age moment of the same set (sum amount x age), what
+            # the clock counts on a table entry that reads `age`.
             others = np.flatnonzero(~own)
             if others.shape[0]:
                 overflow = first_reading_overflow(
-                    ev[others], events, amount[others], unit[arrival[others]]
+                    ev[others], events, amount[others], unit[arrival[others]], age_at[others]
                 )
                 if overflow is not None:
                     failures[(overflow[0], family, 0, 0, 0)] = overflow[1]
                 np.add.at(presence[family], ev[others], amount[others])
+                np.add.at(age_moment[family], ev[others], amount[others] * age_at[others])
             # Home: the own number's arrivals, taken to be created again; a
             # paid family's labels join the momentum (the units are moved,
             # not copied: the recoil at the re-creation gives them back).
@@ -1627,21 +1729,17 @@ def nature_beam(
                 failures[(int(g_ev[group]), family, 1, group - first, stage)] = error
 
             c_t, ph_t = content[taken], phase[taken]
+            age_t = age_at[taken]
             v_arrival = unit[arrival[taken]]
             v_direction = unit[direction[taken]]
             # The reading's component on the record: the moments of the
             # arrivals' unit vectors weighted by the amounts (no collision
-            # at this Node: the arrival is the direction).
-            overflow = first_reading_overflow(of_row, groups, a_t, v_arrival)
+            # at this Node: the arrival is the direction), the age moment
+            # among them (the measured event reads the age whole).
+            overflow = first_reading_overflow(of_row, groups, a_t, v_arrival, age_t)
             if overflow is not None:
                 fail(overflow[0], 2, overflow[1])
-            moments = np.add.reduceat(moment_table(v_arrival, a_t), g_starts, axis=0)
-            reading = Reading(
-                moments[:, 0],
-                moments[:, 1],
-                moments[:, 2 : 2 + DIMENSIONS],
-                moments[:, 2 + DIMENSIONS :],
-            )
+            reading = reading_of(np.add.reduceat(moment_table(v_arrival, a_t, age_t), g_starts, axis=0))
             for key in {entries[e].reads[family] for e in set(g_ev.tolist())}:
                 plan.readings[key] = reading.component(key).tolist()
             # The push, ONE product per group of arriving rays (`push_form`):
@@ -1716,10 +1814,15 @@ def nature_beam(
                 ledger.transit_momentum = [
                     a - b for a, b in zip(ledger.transit_momentum, plan.left_momentum, strict=True)
                 ]
-        # The presence read back (the clock's count), exact over the families.
+        # The presence read back, and what the clock counts (the presence,
+        # or the age moment where the table entry reads `age`), exact over
+        # the families.
         totals = presence[0].tolist() if count == 1 else [sum(c) for c in presence.T.tolist()]
+        counted = np.where(counts_age, age_moment, presence)
+        counted_totals = counted[0].tolist() if count == 1 else [sum(c) for c in counted.T.tolist()]
         for i, entry in enumerate(entries):
             entry.presence = totals[i]
+            entry.counted = counted_totals[i]
         active: set[int] = {key[0] for key in failures}
         for plan in plans:
             if plan is not None:
@@ -2046,7 +2149,14 @@ def nature_beam(
             )
             ledger.transit_released[family] += int(exact_sum(amount_column))
 
-    # 6. Merge identical rows; sort by Node.
+    # 6. Merge identical rows; sort by Node. A row whose age passed the
+    # world's bound refuses the run: the store's promise of fixed storage
+    # is the bound, and the world must be small enough or declare it.
     for store in stores:
         store.merge()
+        if store.size and int(store.age.max()) > world.age_bound:
+            raise OverflowError(
+                f"{RAYS_LAW}: a ray carries the age {int(store.age.max())} beyond the world's "
+                f"age_bound {world.age_bound} (declare a larger age_bound or a smaller board)"
+            )
     return readings

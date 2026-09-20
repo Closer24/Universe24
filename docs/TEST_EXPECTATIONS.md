@@ -37,6 +37,7 @@ kept, their pins the law of events').
 | `test_ray_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_ray_clock.py` | The clock under the ray law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-ray-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder; the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
+| `test_ray_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the board unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_ray_window.py` | The phase window under the ray law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-ray-law)) | `test_phase_window` (a to c) |
 | `test_ray_world_parsing.py` | The world file of the ray law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-ray-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
 | `test_ray_worlds.py` | The worlds of the ray law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing, `two_contents` not refused with its face records exact ([below](#the-worlds-of-the-ray-law)) | `test_event_worlds` (a, d) |
@@ -236,10 +237,12 @@ shift by +1 and the inverse by -1, generated from the rule.
 ## The bijection
 
 `tests/test_ray_bijection.py` (docs/RAY_LAW.md, section 3): a periodic
-8 x 8 x 4 board, 300 records of fixed arrays (rays on every heading, both
+8 x 8 x 4 board (`age_bound` 128 declared, as a board periodic on every
+axis must since 2026-09-20), 300 records of fixed arrays (rays on every heading, both
 rest slots and two fan directions, head-on pairs among them, amounts 1 and
 2, phases over the circle), 50 forward then 50 inverse intervals with no
-measured event: the sorted store equal to the start in every field; the
+measured event: the sorted store equal to the start in every field (the
+ages whole, up to 72 at the turning point); the
 state at the turning point differs from the start; the collision moved at
 least one ray on the way.
 
@@ -390,7 +393,7 @@ declares the reading `wave` (the default since 2026-09-20; from
 ## The push as one form
 
 `tests/test_ray_push.py` (docs/RAY_LAW.md, section 3 step 4, section 5 and
-section 10 notes 18 to 20 and 27; the model owner's proposal 2 of
+section 10 notes 18 to 20 and 28; the model owner's proposal 2 of
 2026-09-19 with the physics-rule reviewer's two corrections, and the
 decision of 2026-09-20 that charge is per unit of content of a family):
 for a free family's rays ONE product, push_A = M_A x (rho_A rho_B - 1) x
@@ -472,7 +475,7 @@ charge 1 the family `p` of charge [1, 5]) and every integer is unchanged.
   in the store: every push (-1088, 0, 0) and `pushed` (-21760, 0, 0) as in
   (a), the bystanders untouched.
 - (j) M_A is the content the frame read (the architect's B3, the
-  orchestrator's D1, 2026-09-20; [RAY_LAW note 26](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  orchestrator's D1, 2026-09-20; [RAY_LAW note 27](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
   a 13 x 1 x 1 bar (y, z periodic), K 1024, `release` [1, 1], the
   families A (free, no phase circle) and B (paid, quantum 1); a source of
   A (content 3) at x = 0 releasing on +X, a reader P of A (content 5) at
@@ -487,7 +490,7 @@ charge 1 the family `p` of charge [1, 5]) and every integer is unchanged.
   pin]. No other pin moves: no registered world has a paid click and a
   free read at one reader in one interval.
 - (k) a re-emitted free ray is its family's ray (the architect's B2, the
-  orchestrator's D2, 2026-09-20; [RAY_LAW note 27](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  orchestrator's D2, 2026-09-20; [RAY_LAW note 28](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
   a source of the free family B (content 4, charge [1, 4]) at x = 0
   releasing on +X, a mirror of the free family A (content 4, charge
   [1, 5], `table` {"B": "rerelease"}, `directions` [+X]) at x = 4, a
@@ -625,6 +628,75 @@ expected integers, written down before the first run:
 - (d) a world without `width` parses to 1; `width` 8 parses to 8 and the
   runner's `run.json` carries `width` 8; 0, -1, `"8"` and 1.5 are refused
   with "width must be an integer from 1".
+
+## The age
+
+`tests/test_ray_age.py` (docs/RAY_LAW.md, section 2 the age and its bound,
+section 3 steps 2 and 5, section 10 note 25; the model owner, 2026-09-19,
+"the clock beside a mass ... go for it"): the age is the count of intervals
+since the measured event that created the ray, kept whole on the record;
+the flight reads it modulo the direction's period and the collision never
+reads it; a measured event, the external thing, reads it whole as the age
+moment of the one reading (`reads: "age"`), which its clock counts in place
+of the presence; the board's step is unchanged by the whole age.
+
+- (a) the age whole: a ray on +x from x = 0 of an open 301 x 1 x 1 bar
+  carries the age 200 after 200 intervals (200 mod 55 = 35 until
+  2026-09-20) at x = m(200) = 116; a head-on pair at the ages 59 on an open
+  9 x 1 x 1 bar (`age_bound` 128; x = 3 on +x, x = 5 on -x) meets at x = 4
+  at the first interval with the ages 60, parks in the rest slots with the
+  ages kept (60, 60), turns onto +z and -z at the second interval still at
+  60, ages to 61 at the third without a step (m(61) = m(60) = 35) and,
+  still meeting, turns onto +y and -y (the class cycle +z-z -> +y-y), then
+  steps at the fourth (m(62) = 36) and clicks on the y faces; a ray of age
+  59 met by a `rerelease` Node is created again at age 0 with the arriving
+  phase 20 and the re-emitter's number 2; a release is born at age 0 (six
+  rays).
+- (b) the age moment: three rays of amounts 1, 2, 4 at the ages 3, 5, 7 on
+  (1, 0, 0), (2, -1, 0), (1, 1, 1) read the age moment 3 + 10 + 28 = 41
+  and the scalar 7; with a ray that did not step (amount 2, age 10) the
+  here part is 20 and the whole 61; each of the 48 signed axis permutations
+  leaves it 41 while rotating the flow; the keyed form over two Nodes reads
+  82 and 41; without ages the moment is 0; an amount 2^40 at the age 2^23
+  is refused with `OverflowError` before any product is formed and at
+  2^22 - 1 accepted; `count_component` selects `age` for `age` and
+  `scalar` for the five other keys.
+- (c) the clock: a source of `m` (content 1) at x = 0 of an open 5 x 1 x 1
+  bar at `release` [1, 1] and a fixed reader of `light` (content 1) at
+  x = 3 whose entry for `m` reads `age`, `suspension` [1, 4]: a ray born at
+  tick b is at x = 3 at the ages 5 and 6 (ticks b + 5 and b + 6), so from
+  tick 7 the reader counts the age moment 5 + 6 = 11 over a presence of 2
+  (at tick 6: 5 over 1) and owes `by_clock(age, 11, 4)` = 3, 3, 2, 3, 3 at
+  the self-creations of the ages 6 through 10 (`by_clock(5, 5, 4)` = 1 at
+  the age 5): its age after the intervals 1 to 24 is 1, 2, 3, 4, 5, 6, 6,
+  7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 11, 11, its
+  self-creations at the ticks 1 to 6, 8, 12, 16, 19, 23 with (presence,
+  counted) = (1, 5) at tick 6 and (2, 11) from tick 8; its 19 `read`
+  records carry the reading 5 (the arrival's age moment); the same reader
+  without the key counts the presence and owes `by_clock(age, 2, 4)`: 1,
+  2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 10, 11, 12, 12, 13, 14, 14, 15, 16, 16,
+  17, 18, 18 (unchanged by the change), counted equal to the presence at
+  every self-creation, its `read` records carrying the flow [1, 0, 0].
+- (d) the parsing: `flight_bound` of an open 11^3 board over the six
+  headings is 54 (D_M = 31 Links, ceil(31 x 110 / 64)) and 111 with the
+  direction (1, 0, 64) declared (T 7095, one period, ceil(7095 / 64));
+  `age_bound` defaults to twice it (108; 222 with that direction) and
+  parses as declared (100); 0, -1, "8" and 1.5 are refused naming
+  `age_bound`; a board periodic on every axis without it is refused
+  naming `age_bound`, and accepted with 7; a declared ray's age 109 on the
+  11^3 board is refused ("from 0 through 108") and 108 accepted; the
+  runner's record carries `age_bound` 108; a ray on +z of an open
+  3 x 1 x 1 bar with z periodic (the stub; default 12) carries the age 12
+  after 12 intervals and its 13th interval is refused with `OverflowError`
+  naming `age_bound 12`.
+- (e) the board is unchanged by the whole age: 324 fixed rays on the
+  periodic 8 x 8 x 4 board (`age_bound` 128; every heading, both rest
+  slots, two fan directions, head-on pairs, ages up to 22, `phase_per_link`
+  5) run 40 intervals with the ages whole, and again with every moving
+  ray's age reduced modulo its direction's period after each interval from
+  outside the law: the sorted (Node, direction, phase, amount, content)
+  rows are identical at every interval, the ages' sums differ, and the
+  collision moved rays on the way.
 
 ## The phase window under the ray law
 

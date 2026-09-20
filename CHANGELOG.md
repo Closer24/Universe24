@@ -11,7 +11,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   wave"): `world.DETECTOR_READINGS` = ("wave", "beam"); a detector
   without a `reading` and every measured event outside a declared
   detector read `wave`, `beam` is declared ([RAY_LAW section 5](docs/RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
-  and note 28; [migration](docs/MIGRATION.md#wave-is-the-default-reading-of-a-detector-on-2026-09-20)).
+  and note 29; [migration](docs/MIGRATION.md#wave-is-the-default-reading-of-a-detector-on-2026-09-20)).
   Re-pinned: `test_ray_readings` (d) (the window reads the set's phase:
   2 units at phase 0 and 1 at 32 all pass the window 32; the `beam`
   variant kept beside it), `test_ray_collision` (d) declares `beam` on
@@ -44,7 +44,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   `engine.by_clock` and `engine.FACE_NAMES` are gone (A11); one
   materialization of a ray's record, `RayStore.rows` and
   `NatureBeam.record`, writes `state.json` (A3) ([RAY_LAW section 2](docs/RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file),
-  step 4 and note 27; [migration](docs/MIGRATION.md#charge-per-unit-of-content-on-2026-09-20-the-familys-charge-a-pair-no-charge-on-a-measured-event-the-records-two-columns-gone);
+  step 4 and note 28; [migration](docs/MIGRATION.md#charge-per-unit-of-content-on-2026-09-20-the-familys-charge-a-pair-no-charge-on-a-measured-event-the-records-two-columns-gone);
   [expectations](docs/TEST_EXPECTATIONS.md#the-push-as-one-form): (a) to
   (e), (i) re-fixtured with the same integers, (k) and (l) added).
 
@@ -57,7 +57,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   of the interval (`Measured.frame_content`, set once in `_frame_all`
   beside the clock's age and turn) and the push reads it for every
   family's rays ([RAY_LAW step 4](docs/RAY_LAW.md#3-the-nodes-interval-nature_beam)
-  and note 26; [ENGINE](docs/ENGINE.md)). Test: `test_ray_push` (j), the
+  and note 27; [ENGINE](docs/ENGINE.md)). Test: `test_ray_push` (j), the
   architect's probe world in both family orders reads the same integers;
   no registered pin moves ([expectations](docs/TEST_EXPECTATIONS.md#the-push-as-one-form)).
 
@@ -71,12 +71,34 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   (`nature_beam.label_overflow_rows`, inside `momentum_labels` and, in
   bulk, `first_label_overflow`), the post-check at the births is deleted
   and the refusal names the Node and the amount ([RAY_LAW section 2](docs/RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
-  and note 25). The check is exact per direction: a merged row of weight
+  and note 26). The check is exact per direction: a merged row of weight
   2^56 on (1, 1, 0) is accepted (45 x 2^56 fits) where a heading's is
   refused. Re-pinned: `test_ray_label` (c) (`label_weights` no longer
   bounds by Q; the label does); added (d), the probe's world through a
   merge and through a mirror ([expectations](docs/TEST_EXPECTATIONS.md#the-label-along-the-unit-vector)).
 
+### The age of a ray kept whole and read by the measured event (2026-09-20)
+
+- The model owner's "go for it" on the clock beside a mass (2026-09-19,
+  [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); [RAY_LAW section 10](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  note 25): the ray's age, the count of intervals since the measured event
+  that created it, is kept whole on the record (the flight reads it modulo
+  the direction's period, the collision never; the board's step is
+  unchanged, `tests/test_ray_age.py` (e)); the one reading gains the age
+  moment `sum amount x age` (`Reading.age`, `reads: "age"`), a reading aid
+  of the measured event, the external thing; the clock of a table entry
+  that reads `age` counts it in place of the presence
+  (`measured.count_component`, `Measured.counted`), so a clock beside a
+  mass reads (M / r^2) x r = M / r in space while the push keeps reading
+  the flow, M / r^2 (Einstein's pair from two readings of the same rays);
+  the world key `age_bound` bounds the age (twice the flight bound by
+  default on a board with an open axis, required on a board periodic on
+  every axis; a ray beyond it refuses the run, nothing on the board
+  changed). Every world without the key reads the same integer by integer;
+  the all-periodic test worlds declare the key. Tests: `test_ray_age` (a)
+  to (e) ([expectations](docs/TEST_EXPECTATIONS.md#the-age),
+  [migration](docs/MIGRATION.md#the-age-of-a-ray-kept-whole-and-read-by-the-measured-event-on-2026-09-20)).
+  The experiment in space is series E ([EXPERIMENTS.md](docs/EXPERIMENTS.md)).
 ### The label along the unit vector of the direction (2026-09-19)
 
 - The momentum label of a ray is along the unit vector u_d of its

@@ -62,6 +62,23 @@ prints every criterion and every reading against the expectations of
 the register entry is
 [C, the couplings under the law of the ray, on the plane (2026-09-19)](../../docs/EXPERIMENTS.md#c-the-couplings-under-the-law-of-the-ray-on-the-plane-2026-09-19).
 
+## The redshift series
+
+The folder [redshift/](redshift/README.md) holds the two worlds of the
+redshift series E, written by `redshift/make_worlds.py`: an open 31^3 cube,
+a fixed source of content 2^12 at the centre releasing one ray per
+self-creation on the 290 primitive directions with |a| + |b| + |c| <= 6,
+and probes of content 1 at every Node of the shells r = 4 to 14 that
+`pass` the rays and count, in the `scalar` world the presence and in the
+`age` world the age moment (`reads: "age"`, the ray's age kept whole on
+the record since 2026-09-20). `tools/redshift_readings.py` reads the shell
+means of the owed count per self-creation, k x r^2 and k x r, the single
+probes on the axis and the diagonals and the redshift ratios of the age
+clocks; the register entry is
+[E, the clock's redshift in space under the age reading (2026-09-20)](../../docs/EXPERIMENTS.md#e-the-clocks-redshift-in-space-under-the-age-reading-2026-09-20):
+the presence falls as M / r^2 and the age moment as M / r from the same
+rays, their ratio the flight's sqrt 3 / 2.
+
 ## The orbit series
 
 The folder [orbit/](orbit/README.md) holds the six worlds of the orbit

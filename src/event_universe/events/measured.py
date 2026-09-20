@@ -9,9 +9,28 @@ from dataclasses import dataclass, field
 
 from event_universe.core.integer import bounded_gcd
 from event_universe.core.lattice import Address3
+from event_universe.events.world import AGE_READS
 
 RULES = ("home", "read", "measure", "rerelease")
+# The component of the one reading a measured event's clock counts by
+# default: the presence, the scalar over every ray at its Node of another
+# number.
+PRESENCE_READS = "scalar"
 Pending = tuple[int, int, int]
+
+
+def count_component(reads: str) -> str:
+    """The component of the one reading a measured event's clock counts for
+    a family, selected by its table entry's `reads` key: the age moment
+    (`age`, sum amount x age over every ray of another number at its Node)
+    on an entry that reads `age`, the presence (`scalar`) on every other
+    entry, whose key names only what its record carries. A reading aid of
+    the measured event, the external thing (the model owner, 2026-09-19,
+    "it must be checked in the detector and not on the board"): it only
+    helps the detector's computation of its count and changes nothing of
+    the board; the board's rules (the flight, the collision) never read the
+    age whole."""
+    return AGE_READS if reads == AGE_READS else PRESENCE_READS
 
 
 def reduced(numerator: int, denominator: int) -> tuple[int, int]:
@@ -69,8 +88,10 @@ class Measured:
     to (a declared one, or itself as a detector of one Node): the threshold
     and the record are the set's, not the Node's. The engine
     sets `creating`, `clock_age` and
-    `turn` before every interval (the clock's frame) and reads `presence`
-    after it (the clock's count)."""
+    `turn` before every interval (the clock's frame) and reads `counted`
+    after it (the clock's count: per family the component its table entry
+    selects, `count_component`, the presence or the age moment, summed
+    over the families; `presence` is the presence alone, reported)."""
 
     number: int
     position: Address3
@@ -114,6 +135,7 @@ class Measured:
     turn: int = 0
     frame_content: int = 0
     presence: int = 0
+    counted: int = 0
 
     @property
     def content(self) -> int:

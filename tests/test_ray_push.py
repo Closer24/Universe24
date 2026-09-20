@@ -1,6 +1,6 @@
 """The push as ONE product per arriving free ray and the one momentum
 label under the law of the ray (docs/RAY_LAW.md, section 3 step 4, section
-5 and section 10 notes 18 to 20 and 27; the model owner's decisions of
+5 and section 10 notes 18 to 20 and 28; the model owner's decisions of
 2026-09-19, "2 with the physicist", and of 2026-09-20, charge per unit of
 content, Highlights 5.4): a measured event A of content M_A (as the frame
 read it) takes from a group of rays of a free family B arriving at its
@@ -390,6 +390,8 @@ def test_the_click_the_re_emission_and_the_home_move_the_one_label():
         release=[0, 1],
         ticks=20,
     )
+    # No ray leaves a board periodic on every axis: the age bound is declared.
+    world["age_bound"] = 64
     records = []
     simulation = RaySimulation(parse_ray_world(world), records.append)
     for _ in range(20):

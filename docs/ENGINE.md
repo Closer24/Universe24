@@ -26,7 +26,7 @@ the artifacts of a run) on `src/event_universe/core/` (`integer.py`,
 `tests/test_ray_bijection.py`, `tests/test_ray_detector.py`,
 `tests/test_ray_reemission.py`, `tests/test_ray_clock.py`,
 `tests/test_ray_window.py`, `tests/test_ray_world_parsing.py`,
-`tests/test_ray_worlds.py`, `tests/test_ray_push.py`
+`tests/test_ray_worlds.py`, `tests/test_ray_push.py`, `tests/test_ray_age.py`
 ([expectations](TEST_EXPECTATIONS.md)). The
 worlds: [examples/events/](../examples/events/README.md).
 
@@ -86,8 +86,10 @@ and (e)).
 ## The law of the ray (`rays-v1`)
 
 **One thing.** A ray, with a place (a Node) and a record: a direction (an
-index into the world's direction table D), an age (the flight phase, modulo
-the direction's period), a phase (a step of the circle of N), a number (the
+index into the world's direction table D), an age (the count of intervals
+since the measured event that created it, whole since 2026-09-20; the
+flight reads it modulo the direction's period, a measured event reads it
+whole), a phase (a step of the circle of N), a number (the
 last emitter), an amount (whole units) and a content per unit; its momentum
 is not stored, it is amount x content x u_d for a paid family and
 amount x u_d for a free one (its unit carries no content), u_d the unit
@@ -128,14 +130,18 @@ event, its clock (its age, the turn `by_clock(age, content, K)`, its
 release rate, its lamp's rate and window, its owed count) and its content
 (`frame_content`, read once before the law: M_A of the interval's push,
 the same whatever the order in which the families' clicks join `held`
-within the interval; [RAY_LAW note 26](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+within the interval; [RAY_LAW note 27](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
 are read and handed to `nature_beam` with the stores; `nature_beam` returns the readings
 (the count, the flow and the presence per Node, dense arrays read-only, and
 `per_port`, the amount that crossed into each Node through each Port this
 interval, a diagnostic of the walk for Gauss's flux); the frame turns the
 phases of the measured events that
-self-created, reads the owed count off the clock from the presence
-(`_suspend`, `by_clock(age, presence x n, d)`), moves the measured events
+self-created, reads the owed count off the clock from what the clock
+counted (`_suspend`, `by_clock(age, k x n, d)`, k the presence, or for a
+family whose table entry reads `age` the age moment `sum amount x age`
+over the same set, `measured.count_component`, `Measured.counted`;
+[RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+note 25), moves the measured events
 by their momentum (`_move`: on an axis whose momentum component is p in
 label units, one Link per (Q x S x M + p) / p self-creations,
 `by_clock(age, |p|, Q x S x M + |p|)`, M the content, S the world's
@@ -231,7 +237,10 @@ default, a power of two from 2 through 4096); `release` `[n, d]` per
 direction per self-creation per unit of content of a free family;
 `suspension` `[n, d]` (an integer w as `[w, 1]`; 0 or `[0, d]` for none,
 recorded as `[0, 1]`); `width` (S, the width of the push, an integer from
-1; 1 by default, the step rule as it was); `directions` (the declared primitive vectors beyond
+1; 1 by default, the step rule as it was); `age_bound` (the largest age a
+ray may carry, an integer from 1; twice the flight bound by default on a
+board with an open axis, required on a board periodic on every axis; a run
+in which a ray on the board carries an age beyond it is refused); `directions` (the declared primitive vectors beyond
 the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`
@@ -244,7 +253,8 @@ directions it releases and re-emits on, by vector or by index into D; the
 six headings by default), `table` family name to `read` | `measure` |
 `rerelease` | `pass` or to `{"rule": ..., "phase_window": s, "reads":
 component}` with `reads` one of `scalar`, `outside`, `here`, `vector`,
-`tensor`, the table generated from the keys by `world.default_table` (a
+`tensor`, `age` (the age moment; the entry's clock then counts it in place
+of the presence), the table generated from the keys by `world.default_table` (a
 free family read, a paid one measured, no window) and the world declaring
 only the entries that differ, `rule` optional in the object form, an entry
 equal to the default accepted and changing nothing; `lamp` `{rate: [n, d],
@@ -276,12 +286,15 @@ family without a phase circle, a table entry object with an unknown key (one
 without `rule` takes the family's default rule), a `reads` outside the
 reading's components, a detector `reading` outside `beam` and `wave`, a `suspension`
 denominator of 0 ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-ray-law)),
-a `width` below 1 or not an integer ([the width of the push](TEST_EXPECTATIONS.md#the-width-of-the-push)).
+a `width` below 1 or not an integer ([the width of the push](TEST_EXPECTATIONS.md#the-width-of-the-push)),
+an `age_bound` below 1 or absent on a board periodic on every axis, a
+declared ray's `age` beyond it, and at run time a ray on the board whose
+age passes it ([the age](TEST_EXPECTATIONS.md#the-age)).
 `event_universe.configuration_validation` reports a world of the law as
 kind `rays`.
 
 **The record.** `run.json` carries `law` "rays-v1", the world's keys
-(`boundary` as declared; `suspension` as `[n, d]`; `width`; `directions`, the table
+(`boundary` as declared; `suspension` as `[n, d]`; `width`; `age_bound`; `directions`, the table
 D beyond the rest vectors and the headings; per family its `quantum`,
 `charge` (the pair `[n, d]`), `phase` and `phase_per_link`, no `kind`),
 `numbers`, the books per completed tick (`audit`, the `charge` line the
@@ -317,7 +330,7 @@ nothing of the emitter but the number: the columns `charge` and `mass` of
 the night of 2026-09-19 are gone since 2026-09-20, the factor of the
 electric push being the family's charge per unit of content,
 [RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
-and note 27).
+and note 28).
 `tools/run_series.py` runs these worlds as any.
 
 ## The law of events (`events-v1`)
