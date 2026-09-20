@@ -261,5 +261,5 @@ between clicks with a Landauer reading as a conjecture, and the two-slit
 path difference under the L1 count (constant beyond the slit separation,
 no Young fringes; the register's Pearson 0.368 with the cosine). The
 sharpest open item is the metric: which length a row's phase counts, and how
-the L1 count becomes Euclidean at scale. Sent to the Boss as an issue; the
+the L1 count becomes Euclidean at scale. Sent to the Boss as issue #376; the
 half-page for Part I waits on the Boss's answer to its questions 1 and 2.
