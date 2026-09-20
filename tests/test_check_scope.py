@@ -39,6 +39,23 @@ def test_tool_changes_select_the_scope_test(name):
     assert not typed
 
 
+@pytest.mark.parametrize("name", ["coupling_readings.py", "orbit_readings.py", "heisenberg_readings.py"])
+def test_tool_changes_select_the_test_that_loads_the_tool_by_its_path(name):
+    """A readings tool is loaded by its path, never imported: the test that
+    names the file is its consumer, the tests that do not are not."""
+    sources = {
+        "tests/test_names_it.py": f'TOOL = ROOT / "tools" / "{name}"',
+        "tests/test_other.py": "def test_other(): pass",
+    }
+    tests, typed = CHECK.select(["tools/" + name], sources)
+    assert "tests/test_names_it.py" in tests and "tests/test_other.py" not in tests
+    assert "tests/test_check_scope.py" in tests
+    assert not typed
+    root = Path(__file__).resolve().parents[1]
+    consumer = "tests/test_" + name
+    assert (root / consumer).exists() and name in (root / consumer).read_text(encoding="utf-8")
+
+
 def test_transitive_imports_and_relative_helpers_retain_only_related_tests():
     sources = {
         "src/domain/math.py": "def calculate(): pass",
