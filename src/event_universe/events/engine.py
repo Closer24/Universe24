@@ -66,6 +66,7 @@ from event_universe.events.world import (
     LABEL_SCALE,
     LIFETIME_NAME,
     MOMENTUM_BOUND,
+    NO_CHARGE,
     MeasuredDefinition,
     NatureBeamWorld,
     body_nodes,
@@ -251,6 +252,11 @@ class NatureBeamSimulation:
             clicks=[0] * count,
             contact=tuple(definition.contact) + (CONTACT_DEFAULT,) * (count - len(definition.contact)),
             contacts=[0] * count,
+            widths=list(definition.widths),
+            lamp_width=None if definition.lamp is None else definition.lamp.width,
+            unit_charges=tuple(NO_CHARGE if f.free else f.charge for f in self.families),
+            become=definition.become,
+            transforms=list(definition.transforms),
             window_reads=tuple(definition.window_reads)
             + (None,) * (count - len(definition.window_reads)),
         )
@@ -334,7 +340,7 @@ class NatureBeamSimulation:
             # E_c at the frame: the clicks of the interval join `held`
             # after it).
             entry.frame_content = entry.content
-            entry.frame_charges = entry.charges()
+            entry.frame_charges = entry.charges(for_push=True)
             if entry.owed > 0:
                 entry.owed -= 1
                 entry.waited += 1
@@ -459,8 +465,17 @@ class NatureBeamSimulation:
             if destination is None or nodes is None:
                 for index in range(len(self.families)):
                     self.ledger.held_escaped[index] += entry.held[index]
-                    self.ledger.transit_absorbed[index] -= entry.pending_amount(index)
-                    self.ledger.content_absorbed[index] -= entry.pending_content(index)
+                    self.ledger.units_escaped[index] += entry.clicks[index]
+                    # What waits to be created again leaves with the body:
+                    # the home and re-released rows off the absorbed line,
+                    # the products of a transformation (never absorbed) on
+                    # the released line, all of them on the face.
+                    thrown_amount = entry.pending_thrown_amount(index)
+                    thrown_content = entry.pending_thrown_content(index)
+                    self.ledger.transit_absorbed[index] -= entry.pending_amount(index) - thrown_amount
+                    self.ledger.transit_released[index] += thrown_amount
+                    self.ledger.content_absorbed[index] -= entry.pending_content(index) - thrown_content
+                    self.ledger.content_released[index] += thrown_content
                     self.ledger.face_measured_content[port][index] += entry.held[index]
                     self.ledger.face_amount[port][index] += entry.pending_amount(index)
                     self.ledger.face_content[port][index] += entry.pending_content(index)
@@ -646,8 +661,14 @@ class NatureBeamSimulation:
         balanced = True
         ledger = self.ledger
         # One pass over the measured events: what they hold per family,
-        # their momentum and their charge (rho x content each, the sum an
-        # exact rational reported as the reduced pair [n, d]).
+        # their momentum and their charge (rho x content of the free
+        # families and, since 2026-09-20 (D-1), the paid families' whole
+        # charge per unit of amount times the units held; the sum an exact
+        # rational reported as the reduced pair [n, d]). The charge line
+        # adds the paid rows in transit and the paid units escaped, so that
+        # it is conserved through a click, a home, an escape and a
+        # transformation; a world without a charged paid family reads the
+        # same pair as before.
         held_current = [0] * len(self.families)
         held_momentum = [0, 0, 0]
         charges: list[tuple[int, int]] = []
@@ -660,11 +681,15 @@ class NatureBeamSimulation:
             measured = {
                 "initial": self.held_initial[index],
                 "measured": ledger.held_measured[index],
+                # The content that entered the family's line by
+                # transformations (the weak force, 2026-09-20): positive
+                # into the family become, negative out of the family left.
+                "became": ledger.held_became[index],
                 "current": held_current[index],
                 "spent": ledger.held_spent[index],
                 "escaped": ledger.held_escaped[index],
             }
-            measured["balanced"] = measured["initial"] + measured["measured"] == (
+            measured["balanced"] = measured["initial"] + measured["measured"] + measured["became"] == (
                 measured["current"] + measured["spent"] + measured["escaped"]
             )
             in_transit = {
@@ -684,6 +709,11 @@ class NatureBeamSimulation:
             in_transit["balanced"] = in_transit["initial"] + in_transit["released"] == (
                 in_transit["current"] + in_transit["escaped"] + in_transit["absorbed"]
             )
+            if not family.free and family.charge[0]:
+                charges.append((family.charge[0] * int(in_transit["current"]), 1))
+                charges.append(
+                    (family.charge[0] * (ledger.escaped_amount(index) + ledger.units_escaped[index]), 1)
+                )
             content = {
                 "initial": self.content_initial[index],
                 "released": ledger.content_released[index],

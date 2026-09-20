@@ -6,6 +6,170 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The weak force, on 2026-09-20, (iv): the W world (no key added)
+
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"DECIDED: go on everything", item (3): the W world after the
+transformation; [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (iv)).
+No key, no refusal and no record line is added: the W is a paid family
+with a whole charge per unit of amount (D-1, (ii)) and the family key
+`lifetime` 1 ([the lifetime](#the-columns-of-the-one-coupling-the-lifetime-the-held-content-and-the-contact-through-the-table-on-2026-09-20-columns-and-lifetime-per-family-held-per-measured-event-columns-v1-the-contact-record)), thrown as
+a product of a `become` ((iii)) and measured by the keys' rule one Link
+away; L = 0 is no family at all (a lifetime of 0 is refused, as before),
+the contact form being the `become` entry itself. The source is
+byte-identical to (iii)'s, so every example world replays as under (iii)
+(VALIDATION). `examples/events/weak/w_exchange.json` (written by
+`make_worlds.py`, its integers under `w` in `expectations.json`),
+`tools/weak_readings.py` reads it (the things' `content`, `charge`,
+`momentum` and `click_ticks` off the record, the border `lifetime`'s
+clicks per family), `tests/test_w_world.py` (a) to (d) and
+`tests/test_weak_readings.py` (c).
+
+## The weak force, on 2026-09-20, (iii): the transformation `become`, the identity `weak-v1`
+
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"DECIDED: go on everything", item (1): "the transformation `become` with
+the identity `weak-v1`", after the neutrino; [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(iii)). Identities: no world file changes; no registered world declares a
+transformation, so every example world replays byte-identical in
+`events.jsonl`, and `state.json` and `run.json` equal but for the added
+`became` and `become` (VALIDATION).
+
+- **The keys.** The measured-event key `become` (the clock trigger),
+  `{"at": a, "into": family, "products": [[family, amount, content per
+  unit], ...], "crowd": c}`: at the self-creation whose clock reaches `at`
+  (the age against the key by the one `by_clock`, `nature_beam.ages_at_key`:
+  first at `at`, then at every multiple of it), while the count the clock
+  read is below `crowd` (optional, an integer from 0; absent, no gate), the
+  event becomes an event of `into`, the products are paid from what it
+  holds of its own family (R = the sum of amount x content per unit, at
+  most its `amount`), the rest moves to `into`, the products are born as a
+  re-release is (the parent's phase, product k on the direction counted
+  from (clock age + k) mod n) with the recoil over all of them, and the
+  key is consumed. The table rule `become` (the click trigger), the
+  fifth beside `read`, `measure`, `rerelease` and `pass`: an entry
+  `{"rule": "become", "phase_window": s, "phase_width": w, "into": ...,
+  "products": [...]}` clicks an arrival as `measure` does and fires the
+  same transformation, its products born at the reader's next
+  self-creation; the entry is consumed. A free product's content is 0, a
+  paid product's from 1; the charges must balance at load (rho_into x
+  (amount - R) plus the paid products' whole charges against rho_from x
+  amount).
+- **The refusals, naming the key.** `become` without `into` or
+  `products`; `into` naming an unknown family or the event's own; a
+  product naming an unknown family, an amount below 1, a free product's
+  content other than 0, a paid product's content below 1, a label beyond
+  the bound; `at` below 1 or absent on the clock trigger; `at` or `crowd`
+  on a table entry; `crowd` negative or not an integer; `into` or
+  `products` on an entry whose rule is not `become`; the products' content
+  above the `amount`; the charges unbalanced; `become` on a family. At run
+  time an event that holds less than its products need at the trigger
+  refuses the run naming itself.
+- **The definitions.** `world.Transformation` (new: `into`, `products`,
+  `at`, `crowd`, `needed`), `world.BECOME_RULE`, `world.WEAK_RULE`,
+  `world.TABLES` gains `become`; `world._table_entry` returns five values,
+  (rule, window, reads, width, transformation), and takes the families,
+  the event's family and amount, the direction table and its directions;
+  `MeasuredDefinition.become` and `.transforms` (new, the clock trigger
+  and per family the click trigger); `NatureBeamWorld.transformations`
+  (new); `hypotheses` gains `weak-v1`; the contact under a `become` entry
+  is the default `measure`. `measured.PendingRow` (new: amount, content,
+  phase, first, thrown), `Measured.become`, `.transforms`, `.became`,
+  `.transformed` (new), `Ledger.held_became` (new, the `became` line);
+  `nature_beam.transform` (new, the one function of the two triggers),
+  `nature_beam.TRANSFORM_RULE`, `RULE_NAMES`, `MEASURE_RULE_NAME`.
+- **The record.** `hypotheses` carries `weak-v1`; `run.json`'s `numbers`
+  per measured event carry `become` (the declaration by names or None);
+  the measured events' states carry `became` and their `family` after; the
+  books' measured line per family gains `became` (initial + measured +
+  became = current + spent + escaped); `events.jsonl` gains one `become`
+  line per transformation at the products' birth (`trigger`, `triggered`,
+  `from`, `into`, `products` with their directions, `recoil`, `counted`);
+  the tally of a `become` entry's clicks is under `measure`. A test or
+  tool that pins a measured event's `numbers` or the books' measured line
+  adds the keys (`tests/test_nature_beam_body.py` and
+  `tests/test_nature_beam_clock.py` do).
+- **Series J1 and J3** under `examples/events/weak/` (`j1_lattice`,
+  `j1_source`, `j3_deuteron`, `j3_deuteron_crowd`, `j3_neutron_free`, the
+  expectations in `expectations.json` written by `make_worlds.py` before
+  the runs, a file with the `format` `weak-expectations-v1` that the tests
+  reading every JSON under `examples/events/` as a world skip, as they
+  skip an entity definitions file: a world declares `law`, never
+  `format`), read by `tools/weak_readings.py`; `tests/test_become.py` (a)
+  to (f) pins the rule, `tests/test_weak_readings.py` (b) the tool.
+
+## The weak force, on 2026-09-20, (ii): a paid family's charge per unit of amount (D-1)
+
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"DECIDED: go on everything", item (2): "D-1, a paid family may declare a
+whole charge per unit of amount, read on the charge line only, the push
+untouched"; [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(ii)). Identities: no world file changes; no registered world declares a
+charge on a paid family, so every example world replays byte-identical in
+`events.jsonl`, `state.json` and `run.json` (VALIDATION).
+
+- **The refusal lifted.** "A paid family (quantum h) carries no charge" is
+  gone: the family key `charge` on a paid family is accepted as an
+  integer, the whole charge per unit of amount, and refused as a pair
+  with a denominator other than 1 ("a paid family's charge is per unit of
+  amount and whole"). The wording of the law: the charge of a measured
+  event is rho times its content for a free family and the declared whole
+  charge times the amount for a paid family. `tests/test_default_table.py`
+  (c) and `tests/test_nature_beam_world_parsing.py` (a) re-pin the lifted
+  refusal as the fractional one.
+- **Where it is read.** `FamilyDefinition.column_charge` (new): the value
+  of the family's `charge` column, rho for a free family and (0, 1) for a
+  paid one, so `FamilyDefinition.values`, the push (`push_form`), the
+  parser's budget and the frame's `frame_charges` never see a paid charge.
+  `Measured.unit_charges` (new, per family), `Measured.units(family)`
+  (new: the units clicked plus the units pending) and
+  `Measured.charges(for_push=False)` (the keyword new: the report and the
+  books include the paid units' charge in the `charge` column; the frame
+  passes `for_push=True`). `Ledger.units_escaped` (new, per family): the
+  clicked units of a body that stepped off through a face. The books'
+  `charge` pair (`NatureBeamSimulation.books`) adds, per charged paid
+  family, c x the transit line's current and c x (the escaped amount plus
+  the units escaped).
+- **A new refusal.** A lamp on a measured event of a charged paid family
+  ("its releases would create charge from nothing").
+
+## The weak force, on 2026-09-20, (i): the window's width `phase_width` (no change of law)
+
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"DECIDED: go on everything; just make sure again that it is good and
+generic", item (1): the neutrino first with the table-entry key
+`phase_width` and no change of law; [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(i)). Identities: no world file changes; every example world replays
+byte-identical in `events.jsonl`, and `state.json` and `run.json` equal
+but for the added `widths` (VALIDATION).
+
+- **The key.** A table entry's object form and a lamp accept
+  `phase_width`, an integer w from 1 through N: the window is the w
+  consecutive steps of the circle centred on its setting,
+  [s - floor(w / 2), s - floor(w / 2) + w), inside when
+  (d + floor(w / 2)) mod N < w with d = (phase - s) mod N
+  (`nature_beam.window_admits(distance, width, modulus)`, new: the one floor
+  of the window and its width, rows or one value). Without the key the
+  width is N / 2 (`world.default_width(N)`, new): the half circle as it
+  was on every (phase, setting) pair, so every registered world is
+  bit-identical. Refused naming the key: a width outside 1 .. N, on `pass`,
+  on a family without a phase circle, and without a `phase_window` (a width
+  is the width of a window); a lamp's the same.
+- **The window table is deleted.** `NatureBeamTables.window` (the boolean
+  table over the distances of the half circle) is gone; `nature_beam_tables`
+  no longer builds it. A test or tool that read `tables.window[d]` reads
+  `window_admits(d, default_width(N), N)` (`tests/test_nature_beam_window.py`
+  (a) does). `beam`'s pairing by opposite phase reads the row's entry width
+  as its arc.
+- **The definitions and the record.** `world._table_entry` returns four
+  values, (rule, window, reads, width); `MeasuredDefinition.widths` (new,
+  per family, None where none is declared) and `LampDefinition.width`
+  (new, None by default); `Measured.widths` and `Measured.lamp_width`
+  (new); the measured events' states and `state.json` carry `widths`
+  beside `windows`. `run.json` is otherwise unchanged.
+- **Series J2** under `examples/events/weak/` with `tools/weak_readings.py`
+  and `tests/test_weak_readings.py`; `tests/test_window_width.py` (a) to
+  (e) pins the rule.
 ## The meeting, on 2026-09-20 (`meeting` per world; `meeting-v1`; the `turned` line of the books)
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),

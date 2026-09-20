@@ -2639,6 +2639,253 @@ states "exactly" and means integer equality at every tick.
   drawing, the moving picture of `mass_meeting` against the control with
   a time control, the readings, the conclusion) is in the session's
   scratchpad, not published.
+### J, the weak force (2026-09-20)
+
+- **Confronts.** The model owner's decision of 2026-09-20 (Highlights 5.4,
+  "Arrange the weak force according to our world, and check whether we
+  predict more things"; "DECIDED: go on everything; just make sure again
+  that it is good and generic"): the weak force in the world's terms, in
+  the recommended order of the physicist's design (scratchpad/weak/WEAK.md):
+  the neutrino first with the table-entry key `phase_width` and no change
+  of law (J2), then the transformation `become` with the identity
+  `weak-v1` (J1, J3), then the W world. Under the owner's standing
+  principle, "our laws are on the GameBoard; in the detector one sees
+  other laws": the GameBoard gets the generic mechanism only, and the laws
+  of nature (the cross-section's rise with energy, the half-life law) are
+  compared with detector readings only, never with a rule of the
+  GameBoard.
+
+**J2, the neutrino's passage through a filled bar (the neutrino first, no
+change of law).**
+
+- **Model prediction, pinned before the runs
+  ([the expectations](../examples/events/weak/README.md#the-expectations-pinned-before-the-runs-the-physicists-integers)).**
+  A window admits the w consecutive steps of the circle about its setting
+  whatever the ray's amount, content or emitter's rate, so the fraction
+  admitted of a source of stride s coprime to N is exactly w / N (WEAK.md
+  1.2; `weak_integers.out` 1.2: 10 of 640 at w = 1, N = 64), and a reader
+  behind an identical reader finds no ray of its residue left. A bar of
+  200 x 1 x 1, K 4096, N 64, `release` [1, 4096], `suspension` 0, 1037
+  intervals; a fixed source of the free family `nu` (a phase circle, no
+  charge, no content on its rays) of content 4096 at x = 0 releasing one
+  ray per self-creation on +x with the stride 1 (the turn 4096 / 4096) or
+  2 (K 2048); 128 fixed readers of the paid family `d` at x = 8 .. 135
+  measuring `nu` under a window; a far detector at x = 190 measuring
+  without a window. The first reader's arrivals over the run are exactly
+  1024 (the rays born at the ticks 1 .. 1024; the first-arrival age at 8
+  Links is 13 off the flight table); 711 rays reach 190 Links within the
+  run (the age 326). Expected: `j2_filter` (every centre 0, width 1) the
+  first reader 16 of 1024 exactly, the 127 behind it 0, the far detector
+  699 (63 / 64); `j2_ladder` (the centre x mod 64, width 1) the readers at
+  x = 8 .. 71 16 each and the rest 0, the far detector 0; `j2_default`
+  (the half circle) 512 of 1024 at the first reader, the far detector
+  352; `j2_stride2` (K 2048, width 1) 32 of 1024, the far detector 688
+  (31 / 32); `j2_stride2_odd` (the centre 1) no click at any reader, the
+  far detector 711. Against nature (PREDICTIONS entries 7 and 8, the
+  law's own): a fraction flat in the emitter's rate where nature's
+  cross-section rises linearly with the neutrino's energy, and a filter
+  where nature attenuates exponentially in the depth; both registered as
+  the law's limits, nothing tuned.
+- **Features.** The window's width `phase_width` (BEAM_LAW note 36 (i);
+  `tests/test_window_width.py`); the free release at the world's rate; the
+  clock's turn as the stride.
+- **Run.** `examples/events/weak/` (the five `j2_*.json` worlds written by
+  `make_worlds.py`, the model ids `beam-weak-j2_<name>-v1`),
+  `tools/run_series.py --jobs 4`, 1037 intervals each; the readings by
+  `tools/weak_readings.py` (every line labelled DETECTOR or GAMEBOARD).
+  The worktree of `claude/universe24-new-3ytqde` from its tip `6a596b34`
+  on the commit of the window's width, source fingerprint
+  `55f30af0309c2812646384a0caf4d16a956e5ae525df878a008c6bf075e90941`,
+  Python 3.14.0rc2, numpy 2.5.3, headless, four cores; every run
+  completed in about 3 s with the books balanced at every tick; 0 record
+  checks failed; 13 readings inside, 0 outside, none moved.
+
+  | World | Expected (kind) | Measured | Verdict |
+  | --- | --- | --- | --- |
+  | `j2_filter` | the first reader 16 of 1024, exactly 1 / 64 (DETECTOR); the 127 behind it 0 (DETECTOR); the far detector 699 of the 711 that reach it (DETECTOR; the 711 GAMEBOARD, off the flight table) | 16 of 1024; 0 at every reader behind; 699 | inside (3 of 3) |
+  | `j2_ladder` | the readers at x = 8 .. 71 take their residue, 16 each, the readers at 72 .. 135 nothing (DETECTOR); the far detector 0 (DETECTOR) | 64 readers clicked, x = 8 .. 71, 16 each; the far detector 0 | inside (2 of 2) |
+  | `j2_default` | the first reader 512 of 1024, the half circle (DETECTOR); nothing behind (DETECTOR); the far detector 352 (DETECTOR) | 512 of 1024; 0 behind; 352 | inside (3 of 3) |
+  | `j2_stride2` | the first reader 32 of 1024, 1 / 32 (DETECTOR); nothing behind (DETECTOR); the far detector 688 (DETECTOR) | 32 of 1024; 0 behind; 688 | inside (3 of 3) |
+  | `j2_stride2_odd` | no reader clicks (DETECTOR); the far detector 711 (DETECTOR) | 0 at every reader; 711 | inside (2 of 2) |
+
+- **Verdict (J2).** The detector's world sees a cross-section where the
+  GameBoard has a stride: the admitted fraction is w / N exactly, a
+  deterministic residue and not a lottery, the same at every rate of the
+  emitter (the window reads the phase alone; a free ray carries no
+  content), and a slab of identical readers is a filter set by the spread
+  of its centres, not an attenuation set by its depth (the ladder of 64
+  centres exhausts the beam; 64 more readers behind it read nothing). Both
+  are the law's own predictions against nature (entries 7 and 8): the
+  flat cross-section a plain disagreement with the linear rise, the
+  filter a difference that nature could test with two identical detectors
+  behind a source of one clock. Nothing was tuned; no law changed. The
+  page for the model owner: the scratchpad's `weak_impl/weak.html`,
+  published by Boss.
+
+**J1, the free neutron's decay count against its clock, and J3, the bound
+neutron (the transformation `become`, the identity `weak-v1`).**
+
+- **Model prediction, pinned before the runs
+  ([the expectations](../examples/events/weak/README.md#j1-and-j3-the-neutrons-decay-against-its-clock),
+  `examples/events/weak/expectations.json`, written by the generator).**
+  The clock trigger fires at the self-creation whose clock reaches `at`
+  (BEAM_LAW note 36 (iii)); at the suspension [1, 2^20] a clock that
+  reads a constant count c at every self-creation owes `by_clock(a, c,
+  2^20)` after each, and the sum over the ages 0 .. at - 1 telescopes to
+  floor(at x c / 2^20), so the self-creation that takes the age to `at`
+  is the tick at + floor(at x c / 2^20) (WEAK.md 2.4, `weak_integers.out`
+  7.1); a neutron alone counts nothing and fires at `at` exactly. The
+  generator pinned each neutron's tick from the count its clock read at
+  tick 100 of a warm run of the same world without its `become` keys (a
+  GAMEBOARD reading of the engine's own presence), the reading inside
+  when the neutron fires at that tick or up to three intervals before it
+  (the crowd's build-up), never after. J1: 64 neutrons of the register's
+  `n` (content 1839, fixed, no strong unit held) on a lattice of pitch 4
+  (4 x 4 x 4) about the centre of an open 41^3 GameBoard, K 2^20, N 64,
+  `release` [1, 1], `suspension` [1, 2^20], each with `become` at 512
+  into `p` (the charge 4 per unit on the content 1836) with the products
+  `beta` (1, 3; the charge -7344 per unit of amount against `p`'s 4 x
+  1836: the register's scale of series I) and `nu` (1, 0), each passing
+  every family; a shell of the paid family `d` at r = 18 (the 4170 Nodes
+  within a half Link of 18) as one `beam` detector set measuring `beta`
+  with `reads` `age` and passing everything else; 650 intervals (the
+  design's 512 neutrons at `at` 2048 cut to 64 at 512 for the record's
+  budget: the law is linear in the key, the reading its ratio). Expected:
+  `j1_lattice` (the neutrons alone, each clock reading its line-mates'
+  rows on its three axis lines: the warm counts 22068, 23907 and 25746,
+  12, 13 and 14 rows of 1839) the ticks 522 .. 524; `j1_source` (a fixed
+  source `s` of content 4096 at the centre releasing one row per
+  direction of the 290 primitive directions with |a| + |b| + |c| <= 6 per
+  interval, a crowd with a gradient: the warm counts 25746 .. 36195) the
+  ticks 524 .. 529; the shell's 64 beta clicks a step (the
+  10th-to-90th-percentile width of the click ticks over their median
+  below 0.1, against ln 9 / ln 2 = 3.17 for nature's memoryless decay),
+  every click the content 3 (a line, against nature's continuous
+  spectrum), the shell's count the neutrons' (64). J3: the deuteron of
+  series I (`p` 1836 and `n` 1839 each holding one unit of `nuclear`, the
+  strong column G = 10000 with the lifetime 3, the whole fan of 290
+  directions, the width of the push 2^28, at one Link about the centre of
+  an open 21^3 GameBoard) with `become` at 512 on the neutron, a shell of
+  `d` at r = 8 (762 Nodes), 700 intervals: `j3_deuteron` fires at 574
+  (the warm count 128590 at one Link from the proton: later than the
+  free neutron's 512, not never, PREDICTIONS entry 18), then two protons
+  at one Link holding (no step: every attempted step refused as a
+  hand-over, series I's binding; the design's "two protons repelling" is
+  corrected by series I's registered result), the beta reaching the
+  shell; `j3_deuteron_crowd` (`crowd` 65536) never fires in 700
+  intervals (the count above the gate at every pulse of the key, the
+  second pulse at the age 1024 beyond the run); `j3_neutron_free` (the
+  neutron alone, 600 intervals) fires at 512 exactly. Against nature
+  (PREDICTIONS entries 10 and 18, the law's own): a step where nature's
+  survival is exponential, a line where nature's beta spectrum is
+  continuous, a bound neutron that decays later (or is held by a gate on
+  the count) where nature's is stable by its binding energy; nothing
+  tuned.
+- **Features.** The transformation `become` with its clock trigger `at`
+  and gate `crowd` (BEAM_LAW note 36 (iii); `tests/test_become.py`), D-1
+  for the beta's charge (note 36 (ii)), the strong column and the
+  lifetime (series I), the `beam` detector set with `reads` `age`.
+- **Run.** `examples/events/weak/` (`j1_lattice`, `j1_source`,
+  `j3_deuteron`, `j3_deuteron_crowd`, `j3_neutron_free`, the model ids
+  `beam-weak-<name>-v1`, written by `make_worlds.py` with
+  `expectations.json`), `tools/run_series.py --jobs 3`; the worktree of
+  `claude/universe24-new-3ytqde` from its tip `6a596b34` on the commit of
+  the transformation, source fingerprint `071197bc5d0f08cbe52aa44dca0e0d7ad9adf99ef6bf6023231310b9bb8f211c`,
+  Python 3.14.0rc2, numpy 2.5.3, headless, four cores; the runs completed
+  in 231, 238, 82, 70 and 53 s with the books balanced at every tick; 0
+  record checks failed; 15 readings inside, 3 outside, none moved.
+
+  | World | Expected (kind) | Measured | Verdict |
+  | --- | --- | --- | --- |
+  | `j1_lattice` | every neutron fires at its pinned tick or up to 3 before it: 522 for the 8 inner and the 8 corners, 523 for the 24 faces, 524 for the 24 edges (GAMEBOARD, the warm counts 12, 12, 13 and 14 rows of 1839) | the inner 8 at 522 with the count 22068 (12 rows), the faces 24 at 522 with 23907 (13), the edges 24 at 523 with 25746 (14): 56 inside; the corners 8 at 524 with the count 27585 at the trigger, 15 rows (their three line-mates at 4, 8 and 12 Links on each of three axes: one row dwelling one interval at 4 Links, m(7) = 4, two at 8 and two at 12), where the warm run read 12 rows at tick 100 (a gap: the corners' mates at 4 Links, the edges, one class with one clock, had skipped the self-creation whose row would have been there), the constant-count tick of 15 rows 525: outside by 2 against the pinned 522, the estimator's error and not the clock's | outside (56 of 64 neutrons inside) |
+  | | the shell's 64 beta clicks a step: the width over the median below 0.1 (DETECTOR) | 64 clicks from tick 541 to 563, the median 549, the 10th and 90th percentiles 542 and 562, the width over the median 0.036 (nature's 3.17) | inside |
+  | | every click the content 3, a line (DETECTOR); the count the neutrons' (DETECTOR) | {3: 64}; 64 of 64 (the beta of every neutron on -x, the flight ages 17 .. 41) | inside; inside |
+  | `j1_source` | every neutron fires at its pinned tick or up to 3 before it: 524 .. 529 by its warm count 25746 .. 36195 (GAMEBOARD) | 8 at 522 (the count 25746, pinned 524) and 8 at 527 (36195, pinned 529) inside; 16 at 525 (25746, pinned 524), 8 at 527 (26164, pinned 524), 8 at 528 (31681, pinned 527) and 16 at 530 (32096, pinned 527) one to three intervals after their pinned tick: the count read at the trigger is the warm count, the counts read over the clock's history under the fan's dwells at times higher than the one tick's count the estimator took | outside (16 of 64 neutrons inside; every neutron within 3 intervals of its pinned tick) |
+  | | the shell's 64 clicks a step (DETECTOR); every click the content 3 (DETECTOR); the count the neutrons' (DETECTOR) | 64 clicks from 541 to 571, the median 555, the percentiles 544 and 565, the width over the median 0.038; {3: 64}; 64 of 64 | inside; inside; inside |
+  | `j3_deuteron` | the neutron fires at 574 or up to 3 before it (GAMEBOARD, the warm count 128590 at one Link from the proton); the pair holds after (GAMEBOARD: no step, every attempted step a hand-over); the beta reaches the shell with the content 3 (DETECTOR) | fired at 577 with the count 128590 at the trigger (65 intervals after the free neutron's 512: later, not never; 3 after the constant-count tick, the counts over the history under the proton's fan at times higher than the one tick's); 0 steps of 39 and 21 attempted, 21 and 39 hand-overs taken, the two protons at one Link at the end; one click at tick 590 with the content 3 (the age 13 on the fan direction (1, 3, -2)) | outside (by 3); inside; inside |
+  | `j3_deuteron_crowd` | no transformation in 700 intervals, the count 128590 above the gate 65536 at every pulse (GAMEBOARD); no beta click (DETECTOR) | none (0 of 1 transformed; the pair holding, 0 steps of 40 and 22 attempted); 0 clicks | inside; inside |
+  | `j3_neutron_free` | the neutron fires at 512 exactly (GAMEBOARD); the beta reaches the shell with the content 3 (DETECTOR) | 512 with the count 0; one click at tick 526 with the content 3 (the age 14 on the fan direction (1, 3, -2)) | inside; inside |
+
+- **Verdict (J1, J3).** What the detector's world sees is the law's own:
+  a population of neutrons decays in a step (the shell's 64 clicks within
+  23 intervals about the tick 549, a width of 0.036 of the median
+  against nature's 3.17 for a memoryless decay), every beta carries the
+  one declared content (a line, not a spectrum), and a neutron beside a
+  proton decays later than a free one (577 against 512) or, under the
+  gate, not within the run: PREDICTIONS entries 10 and 18, plain
+  disagreements with nature's exponential survival, continuous spectrum
+  and stable bound neutron, registered as the law's limits and not tuned
+  (the exponential would need the declared bath of WEAK.md 2.4, J1b, not
+  built: not one key of one rule). The three readings outside are the
+  one GAMEBOARD criterion, the trigger tick against the count the warm
+  run read at a single tick: the corners of `j1_lattice` fired 2
+  intervals after their pinned tick because the estimator's tick had
+  caught a gap in their line-mates' rows (their count at the trigger, 15
+  rows, gives 525 by the law's own sum, and they fired at 524), and 48
+  neutrons of `j1_source` and the deuteron's neutron fired 1 to 3
+  intervals after theirs because the count a clock reads under a fan's
+  dwells is not one number over its history; the ticks are the engine's
+  (the clock slowed by its count as every clock is, `by_clock` at the
+  world's suspension) and the pins were the estimator's; nothing was
+  moved, and the lesson for the next series is to pin a range from the
+  count's history over a dwell period, not one tick's count. The bound
+  neutron's stability under `crowd` is a gate on the count at its Node, a
+  difference from nature that is itself a prediction (entry 18: any crowd
+  dense enough stabilises a neutron, bound or not). Nothing was tuned; no
+  law changed beyond the one rule added. The page for the model owner:
+  the scratchpad's `weak_impl/weak.html`, published by Boss.
+
+**The W world, the exchange form at one Link (no key added).**
+
+- **Model prediction, pinned before the run
+  ([the expectations](../examples/events/weak/README.md#the-w-world-the-exchange-at-one-link),
+  `expectations.json` under `w`).** The W is a paid family with a whole
+  charge per unit of amount and the lifetime 1 (BEAM_LAW note 36 (iv)):
+  a row born at a self-creation is at one Link at the age 1 (m(1) = 1)
+  and is measured there by the keys' rule for a paid arrival, its units
+  clicked and its label the push, or booked on the border `lifetime` at
+  the end of that interval where no table took it. A bar of 7 x 1 x 1,
+  K 2^20, N 64, `release` [1, 2^20], `suspension` 0; `n` (1839, charge
+  0), `p` (charge 4 per unit of content), `w` (paid, charge -7344 per
+  unit of amount, `lifetime` 1, no column); the neutron fixed at x = 2
+  with `become` at 8 into `p` with the one product `[["w", 1, 3]]` on
+  `directions` `[[1, 0, 0]]` (the charges 4 x 1836 - 7344 = 0), the
+  proton of 1836 fixed at x = 3; 16 intervals. Expected: the neutron's
+  `become` at tick 8 with the W on +x (GAMEBOARD); the proton's click of
+  `w` at tick 9, one Link and one interval later (DETECTOR); the proton's
+  charge 0 and content 1839 after, a neutron's in the detector's terms
+  (DETECTOR); no W on the border `lifetime` (DETECTOR); the momentum
+  exchanged, -192 on the neutron become proton and +192 on the proton
+  (GAMEBOARD: the label 64 x 1 x 3). The contact form (L = 0, no
+  carrier) is series J1 and J3's `become` itself; no Z family.
+- **Features.** `become` (note 36 (iii)), D-1 (note 36 (ii)), the
+  lifetime (note 31 (vii)); `tests/test_w_world.py`.
+- **Run.** `examples/events/weak/w_exchange.json` (the model id
+  `beam-weak-w_exchange-v1`, written by `make_worlds.py`),
+  `tools/run_series.py`; the worktree of `claude/universe24-new-3ytqde`
+  from its tip `6a596b34` on the commit of the W world, source
+  fingerprint `071197bc5d0f08cbe52aa44dca0e0d7ad9adf99ef6bf6023231310b9bb8f211c` (the transformation's, no source
+  changed), Python 3.14.0rc2, numpy 2.5.3, headless; 0.1 s, the books
+  balanced at every tick; 0 record checks failed; 5 readings inside, 0
+  outside.
+
+  | World | Expected (kind) | Measured | Verdict |
+  | --- | --- | --- | --- |
+  | `w_exchange` | the neutron's `become` at tick 8 into `p` with [["w", 1, 3]] on +x (GAMEBOARD); the proton's click of `w` at tick 9 (DETECTOR); the proton's charge [0, 1] and content 1839 after (DETECTOR); the border `lifetime` 0 for `w` (DETECTOR); the momentum -192 and +192 (GAMEBOARD) | `become` at tick 8, the products [["w", 1, 3, [1, 0, 0]]], the recoil [-192, 0, 0]; the click at tick 9, the clicks {w: 1}; the charge [0, 1], the content 1839 (the neutron become proton: [7344, 1] and 1836); the border {n: 0, p: 0, w: 0}; the momenta [-192, 0, 0] and [192, 0, 0] | inside (5 of 5) |
+
+- **Verdict (the W world).** The exchange is complete at the click: the
+  W carries the charge -7344 and the momentum 192 over one Link and one
+  interval and is held by the proton, which then has a neutron's charge
+  and content with no rule of its own fired; the family name it keeps is
+  the GameBoard's label, not a reading. The design's sketch of a
+  `become` entry on the proton (`into n` with a beta) is refused by the
+  law's balance (the W unit held keeps its charge), and balances only
+  with a positive product (a positron, `tests/test_w_world.py` (c)),
+  which the register does not use. What nature's W has and this does not
+  (the physicist's WEAK.md 5.3): the electroweak scale, the W and Z
+  masses fixing it, the propagator's rise, V-A; registered as the law's
+  limits, nothing tuned. The page for the model owner: the scratchpad's
+  `weak_impl/weak.html`, published by Boss.
 
 ### A3. Bell test in phase form, delayed geometry
 
