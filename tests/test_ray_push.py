@@ -325,6 +325,8 @@ def test_the_click_the_re_emission_and_the_home_move_the_one_label():
         release=[0, 1],
         ticks=20,
     )
+    # No ray leaves a board periodic on every axis: the age bound is declared.
+    world["age_bound"] = 64
     records = []
     simulation = RaySimulation(parse_ray_world(world), records.append)
     for _ in range(20):

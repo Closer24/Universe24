@@ -6,6 +6,45 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The age of a ray kept whole and read by the measured event, on 2026-09-20
+
+The model owner's "go for it" of 2026-09-19 on the clock beside a mass
+([Highlights 5.4](HIGHLIGHTS.md#54-the-detector); [RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+note 25; [validation](VALIDATION.md)): the clock's count may read the
+amount-weighted age of the rays at its Node, M / r in space, while the
+push keeps the flow, M / r^2.
+
+- **The age is no longer reduced modulo the direction's period.**
+  `RayStore.age` and the `age` of every row in `state.json` are the whole
+  count of intervals since the ray's birth or re-emission; the flight
+  reads `age mod L_d` (`flight.steps[direction, age % period[direction]]`)
+  and the board's step is unchanged. A reader of `state.json` that
+  compared ages modulo the period must compare them whole. The seeding of
+  a declared ray no longer reduces its `age`.
+- **The store's rows.** Rows of different ages no longer merge: the
+  store's bound is `len(D) x age_bound x N x numbers x contents` in place
+  of `sum_d L_d x N x numbers x contents` (the host cost); on the
+  registered worlds the row counts are unchanged in practice.
+- **Added**: the world key `age_bound` (an integer from 1; by default
+  twice `world.flight_bound(shape, D)` on a board with an open axis;
+  required on a board periodic on every axis, refused if absent), recorded
+  in `run.json`; a declared `in_transit[].age` beyond it is refused; a row
+  whose age passes it refuses the run with `OverflowError` naming the key
+  (the world must be small enough or declare its bound). **Worlds periodic
+  on every axis must now declare `age_bound`** (the test worlds of the
+  bijection, the flight, the collision and the push do); every other
+  registered world parses and runs as before.
+- **Added**: the value `age` of a table entry's `reads`; `Reading.age`,
+  `Reading.age_outside`, `Reading.age_here` and the `ages` argument of
+  `read_arrivals` (zero without it; `moment_table`, `reading_of`,
+  `moment_bound`); `measured.count_component`; `Measured.counted` (what
+  the clock counts; `Measured.presence` stays the presence); the constant
+  `Q` of the flight table now lives in `world.py` (`nature_beam.Q` is the
+  same object).
+- **Changed**: `RaySimulation._suspend` owes `by_clock(age, counted x n,
+  d)`; with no entry reading `age` this is the presence, integer by
+  integer, so every world without the key reads the same. The inverse walk
+  of a ray at age 0 is refused (its birth has no inverse).
 ## The label along the unit vector of the direction, on 2026-09-19 (the momentum units change by Q = 64)
 
 The model owner's decision of 2026-09-19 (Highlights 5.4, "go for it") on

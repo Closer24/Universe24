@@ -10,8 +10,10 @@ content, K)` phase steps, refused at half the circle), calls `nature_beam`
 once for the whole board (the walk, the readings, the collision, the tables
 and detectors, the releases, the merge), then turns the phase of every
 self-created measured event by its turn, reads the count it owes off its
-clock from the presence the law read back (`by_clock(age, k x n, d)` at the
-world's `suspension` `[n, d]`), and steps the free measured events by their
+clock from what the law read back for the clock (`by_clock(age, k x n, d)`
+at the world's `suspension` `[n, d]`, k the presence, or the age moment for
+a family whose table entry reads `age`: `measured.count_component`), and
+steps the free measured events by their
 momentum off the clock (one Link per (Q x S x M + p) / p self-creations on
 an axis whose momentum component is p in label units, M the content, S the
 world's `width` and Q = 64 the label's scale, `by_clock(age, |p|, Q x S x M
@@ -54,7 +56,6 @@ from event_universe.events.nature_beam import (
 )
 from event_universe.events.world import (
     DETECTOR_READINGS,
-    HEADING_OFFSET,
     LABEL_SCALE,
     MOMENTUM_BOUND,
     RAYS_LAW,
@@ -127,9 +128,9 @@ class RaySimulation:
             store.append(
                 node=np.array([store.flat(item.position)]),
                 direction=np.array([item.direction]),
-                age=np.array(
-                    [item.age % int(self.tables.flight.period[max(item.direction, HEADING_OFFSET)])]
-                ),
+                # The age is kept whole on the record (the parser bounds it
+                # by `age_bound`); the flight reads it modulo the period.
+                age=np.array([item.age]),
                 phase=np.array([item.phase]),
                 number=np.array([item.number]),
                 amount=np.array([item.amount]),
@@ -295,14 +296,17 @@ class RaySimulation:
             entry.turn = turn
 
     def _suspend(self, entry: Measured) -> None:
-        """The count a measured event owes after its self-creation: the
-        presence k at its Node of every number but its own, read back by the
-        law, times the width n / d, off its clock, `by_clock(age, k x n, d)`,
-        written once and paid one per interval before the next."""
+        """The count a measured event owes after its self-creation: what
+        its clock counted at its Node over every number but its own, read
+        back by the law (`Measured.counted`: the presence k, or for a family
+        whose table entry reads `age` the age moment, sum amount x age; the
+        selection is `measured.count_component`), times the width n / d, off
+        its clock, `by_clock(age, k x n, d)`, written once and paid one per
+        interval before the next."""
         numerator, denominator = self.world.suspension
         if not numerator:
             return
-        entry.owed = by_clock(entry.clock_age, entry.presence * numerator, denominator)
+        entry.owed = by_clock(entry.clock_age, entry.counted * numerator, denominator)
 
     def _move(self, entry: Measured) -> None:
         """The step by the momentum off the clock, at most one per interval,

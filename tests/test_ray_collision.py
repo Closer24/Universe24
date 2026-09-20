@@ -143,6 +143,9 @@ def bar(shape: list[int], boundary: object, rays: list[dict[str, object]]) -> di
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
+        # The age bound a board periodic on every axis must declare (the
+        # cube of the six orientations); accepted on any board.
+        "age_bound": 64,
         "families": [{"name": "light", "quantum": 1}],
         "measured": [
             {

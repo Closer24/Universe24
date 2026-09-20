@@ -11,6 +11,25 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The age whole and the clock's redshift in space: series E - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` on the age commit (the
+ray's age kept whole and read by the measured event, [RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+note 25; [changelog](../CHANGELOG.md)), source fingerprint
+`cd90313373651164e7f1a1e5f2d0f5019356cd5fb4bc9d3f909511b4f783be52`.
+Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
+
+| Check | Result |
+| --- | --- |
+| `tests/test_ray_age.py` (a) to (e) | passed: the age 200 whole after 200 intervals (35 until the change); a head-on pair parked with the ages 60 kept and the class cycle ha hb -> +z-z -> +y-y observed (the first derivation had the pair leave on z without meeting again; the pin was corrected to the observed cycle before registration); the re-emission and the birth at 0; the age moment 41, 61 with here, fixed under the 48 symmetries; the clock's ages 1, 2, 3, 4, 5, 6, 6, 7, 7, 7, 7, 8, ... under `reads: "age"` equal to the hand derivation at every interval, the scalar reader unchanged; the bound's default 108 and 222, the refusals, the stub refused at its 13th interval; the board identical with the ages whole and reduced over 40 intervals of a colliding crowd |
+| A sample of the registered worlds under the whole age (`one_content`, `two_contents`, `two_slits`, coupling `1b_m16` and `5_long`, orbit `s32_r12`, Bell `a0_b8`) | every run completed with the books balanced at every tick, no age past its default bound (the coupling plane 830, the orbit plane 830, the two slits 620, the cube 252); the `audit` of `run.json` unchanged (the clocks read the presence by default, integer by integer); `state.json` differs where a ray's age had passed its period |
+| `python tools/check.py` (the scoped selection of the age commit) | ruff lint and format, mypy and 300 tests green |
+| Series E, `examples/events/redshift/` (`scalar`, `age`; `tools/run_series.py --jobs 2`, 300 intervals each) | both completed, the books balanced at every tick, 16.0 s and 15.5 s; `tools/redshift_readings.py`: 0 record checks failed, 11 readings inside, 3 outside: k_s x r^2 = 39.0 to 44.8 (mean 41.5) and k_a x r = 33.1 to 39.2 (mean 36.1) over r = 6 to 14, their ratio 0.870 against sqrt 3 / 2; the redshift ratios of the age clocks 0.50, 0.57, 0.72, 0.82 at r = 6, 8, 10, 12 against the fitted 1 / r law 0.52, 0.65, 0.78, 0.90, outside the 15 %-of-shift criterion at r = 8, 10, 12 ([the register](EXPERIMENTS.md#e-the-clocks-redshift-in-space-under-the-age-reading-2026-09-20), [the README](../examples/events/redshift/README.md)) |
+| `python tools/check.py --full` | ruff lint and format, mypy and the whole suite green on the final commit |
+
+The runs establish that the age reading of a measured event reads M / r
+where the presence reads M / r^2 on this engine, and that the whole age
+changed no integer of the board's step; they establish no physical law.
 ## The label along the unit vector of the direction: series C x 64 exactly, Bell unchanged, series D re-run - 2026-09-19
 
 The worktree of `claude/universe24-new-3ytqde` on the tip `5b3873f0` (the

@@ -1476,6 +1476,107 @@ states "exactly" and means integer equality at every tick.
   rays behind the opening and the screen's record, with the table) is in
   the session's scratchpad, not published.
 
+### E, the clock's redshift in space under the age reading (2026-09-20)
+
+- **Confronts.** Whether a clock beside a mass in space slows as M / r
+  under the age reading while the presence, what the push reads, falls as
+  M / r^2: Einstein's pair from two readings of the same rays (the model
+  owner, 2026-09-19, Highlights 5.4, "the clock beside a mass ... Go for
+  it"; [RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  note 25: the ray's age kept whole on the record, the age moment of the
+  one reading, `reads: "age"` on the clock's table entry), and whether the
+  ratio of two such clocks' rates is the redshift 1 / r law. The accepted
+  price of series C item 6 (the clock reads the presence, M / r^2) is
+  confronted in space, where the fan dilutes as 4 pi r^2 and not as a ring.
+- **Model prediction, pinned before the runs
+  ([the derivation](../examples/events/redshift/README.md#the-derivation-before-the-runs)).**
+  An open 31^3 cube, a fixed source of content 2^12 at the centre
+  releasing one ray per self-creation on the 290 primitive directions with
+  |a| + |b| + |c| <= 6 (q = 290 per interval), probes of content 1 that
+  `pass` at every Node of the shells r = 4, 6, 8, 10, 12, 14 (6984
+  probes), the `scalar` world counting the presence at `suspension` [1, 1]
+  and the `age` world the age moment at [1, 2]. Expected: the shell mean
+  of the presence q x dwell / (4 pi r^2), so k_s x r^2 constant (40 with
+  the heading's dwell) within +- 15 % of its mean over r >= 6; the age of a
+  ray at r about r sqrt 3, so k_a x r constant within +- 15 %, the ratio of
+  the constants sqrt 3 / 2; the ratio of the age clocks' rates (1 +
+  k_a(14)) / (1 + k_a(r)) against the 1 / r law fitted at r = 14 within
+  15 % of the law's shift; the first-order line 1 - C (1 / r1 - 1 / r2)
+  printed and expected to fail (k of 2 to 9, not a weak field); the single
+  probes on the axis and the diagonals reading their line's beam (the
+  presence about 2 whatever r), the laws living in the shell means; the
+  fraction of a shell's probes counting anything falling to about 0.2 at
+  r = 14. Criteria (completed, the books balanced) fail the tool; the
+  readings are registered inside or outside their expectation and never
+  moved.
+- **Features.** The age whole on the record and read modulo the period by
+  the flight; the age moment of the one reading and `reads: "age"` on a
+  table entry; the clock's count off the clock from what it counted
+  (`Measured.counted`, `measured.count_component`); `pass` probes (no push,
+  no record, the count read); the free release on a declared fan in space;
+  the face detectors; the world key `age_bound` at its default (the flight
+  bound of the 31^3 cube doubled).
+- **Run.** `examples/events/redshift/` (two worlds by `make_worlds.py`,
+  `scalar` and `age`, 300 intervals each), the model ids
+  `rays-redshift-<kind>-space-v1`; `tools/run_series.py --jobs 2`;
+  `tools/redshift_readings.py` (the shell means over the window 100 to 300
+  by a replay of the world through the API, the single probes, the
+  redshift ratios).
+- **Result (2026-09-20, measured against expected).** The worktree of
+  `claude/universe24-new-3ytqde` on the age commit, source fingerprint
+  `cd90313373651164e7f1a1e5f2d0f5019356cd5fb4bc9d3f909511b4f783be52`,
+  Python 3.14.0rc2, numpy 2.5.3, headless, four cores; both runs completed
+  in 16 s with the books balanced at every tick; 0 record checks failed,
+  11 readings inside, 3 outside, registered, none moved.
+
+  | r | direction | k scalar | k age | k scalar x r^2 | k age x r | expected |
+  | --- | --- | --- | --- | --- | --- | --- |
+  | 4 | shell (210 Nodes) | 2.521 | 8.748 | 40.34 | 34.99 | reported (many lines per Node) |
+  | 6 | shell (450) | 1.092 | 5.711 | 39.30 | 34.27 | 41.5 +- 15 % and 36.1 +- 15 %: inside, inside |
+  | 8 | shell (762) | 0.700 | 4.904 | 44.82 | 39.23 | inside, inside |
+  | 10 | shell (1250) | 0.416 | 3.657 | 41.56 | 36.57 | inside, inside |
+  | 12 | shell (1814) | 0.297 | 3.097 | 42.74 | 37.17 | inside, inside |
+  | 14 | shell (2498) | 0.199 | 2.366 | 38.99 | 33.12 | inside, inside |
+  | 4 | +x, (1, 1, 0), (1, 1, 1) | 1.000 | 3.545 | 16.0 | 14.2 | the line's beam (the grain) |
+  | 6 | +x / (1, 1, 0) / (1, 1, 1) | 2.030 / 1.000 / 0 | 10.77 / 4.88 / 0 | 73.1 / 36.0 / 0 | 64.6 / 29.3 / 0 | the beam; the diagonal Node off every line |
+  | 8 | +x / (1, 1, 0) / (1, 1, 1) | 2.030 / 1.000 / 0 | 13.29 / 7.33 / 0 | 129.9 / 64.0 / 0 | 106.3 / 58.7 / 0 | the beam; off every line |
+  | 10 | +x / (1, 1, 0) / (1, 1, 1) | 1.985 / 1.000 / 1.000 | 17.18 / 8.52 / 9.00 | 198.5 / 100.0 / 100.0 | 171.8 / 85.2 / 90.0 | the beam |
+  | 12 | +x / (1, 1, 0) / (1, 1, 1) | 1.985 / 0 / 1.000 | 21.22 / 0 / 10.11 | 285.9 / 0 / 144.0 | 254.7 / 0 / 121.3 | the beam; the (1, 1, 0) Node off every line |
+  | 14 | +x, (1, 1, 0), (1, 1, 1) | 1.000 | 11.50 | 196.0 | 161.0 | the beam (one interval's dwell at that Link) |
+
+  - k_s x r^2 (expected constant): 39.0 to 44.8 over r = 6 to 14, the mean
+    41.5, the ripple +- 7 %: inside at every r >= 6. Measured = expected:
+    the fan dilutes as the shell's Nodes in space.
+  - k_a x r (expected constant): 33.1 to 39.2, the mean 36.1, the ripple
+    +- 9 %: inside at every r >= 6; the ratio of the constants 0.870
+    against sqrt 3 / 2 = 0.866. Measured = expected: the clock beside the
+    mass reads M / r from the same rays whose presence reads M / r^2.
+  - The redshift (expected the 1 / r law within 15 % of its shift): the
+    measured ratios rate(r) / rate(14) = 0.3453, 0.5015, 0.5701, 0.7227,
+    0.8215 at r = 4 to 12 against the law 0.3627, 0.5162, 0.6548, 0.7805,
+    0.8951 (C = 33.12 fitted at r = 14; 0.3570, 0.5101, 0.6492, 0.7763,
+    0.8928 with C the shell mean 36.07): inside at r = 6, outside at
+    r = 8, 10, 12 (the deviations 0.085, 0.058, 0.074 on shifts of 0.345,
+    0.220, 0.105), the ripple of k_a x r entering the ratio (1 + k_ref) /
+    (1 + k_r) whole while the shift shrinks as 1 / r - 1 / 14; the form is
+    the 1 / r law's (the nearer clock slower). The first-order line fails
+    as expected (-4.9 to 0.6 at r = 4 to 12: k of 2 to 9 is not a weak
+    field).
+  - The grain (expected the beam on a line, a Node off every line reading
+    0, the counting fraction about 0.2 at r = 14): measured as the table;
+    the fractions 1.00, 0.63, 0.42, 0.32, 0.20, 0.17. No radius up to 14
+    leaves a shell reading nothing.
+  - Host cost: 16.0 s (`scalar`) and 15.5 s (`age`) per run of 300
+    intervals with 6985 measured events: the age reading costs nothing
+    measurable.
+- **Verdict.** In space the pair holds by two readings of the same rays:
+  the presence M / r^2 and the age moment M / r, their ratio the flight's
+  sqrt 3 / 2. The clocks' ratio has the 1 / r law's form and misses the
+  pinned 15 %-of-shift criterion at three radii by the ripple of the shell
+  means; a weak-field confrontation (k << 1: a larger `suspension`
+  denominator or a smaller q) is the follow-up for the model owner.
+  Nothing was tuned.
+
 ### A3. Bell test in phase form, delayed geometry
 
 - **Confronts.** The same CHSH data as A2 and the quantum value at the
