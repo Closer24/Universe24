@@ -395,7 +395,21 @@ record carries it and the identity `amplitude-v1` under `hypotheses` when
 it is true; absent, no row carries a record and every world reads as it
 did, byte for byte; the key stays and the record form is not the
 default: the design's section 6 stopped at the gate set, MIGRATION
-(vi)); `directions` (the declared primitive vectors beyond
+(vi)); `doppler` (since 2026-09-20, true or false, false by default: the
+reading's weight at the relative speed `doppler-v1`,
+[BEAM_LAW note 38](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+under it a free measured event reads the rows that arrived at its Node
+for the push with each direction's label flow weighted by the flux of
+its rows through the body, the rate at which it and the message meet,
+one scalar per (direction, body), (|G Q |v|^2 - T_d sum_a s_a w_a v_a|,
+G Q |v|^2) with the body's speed quantised to the grain G = 2^12
+(`SPEED_GRAIN`, a constant of the law) from its own record, off the
+reader's clock per component, before the columns; refused when it is not
+true or false; the static budget of the columns takes the weight's
+largest factor on the table under it (no other load-time bound: the
+registered G2 star worlds fit as registered); the record carries it and
+the identity `doppler-v1` under `hypotheses` when it is true; absent, and
+for every body at rest or held in place, every world reads as it did, byte for byte); `directions` (the declared primitive vectors beyond
 the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`
