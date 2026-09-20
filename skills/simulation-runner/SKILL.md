@@ -31,6 +31,27 @@ the GIF or the frames next to the run's readings (the world, the plane shown,
 the scale of each region, the intervals per frame); a GIF is never delivered
 on its own (model owner, 2026-09-19: "Always put a GIF inside HTML").
 
+**Every experiment delivers its results page (model owner, 2026-09-20).** The
+owner's words: "Add to every experiment that is made that it shows results in
+HTML: the GameBoard with the detector as an icon and the star as an icon on
+the board, so that one understands exactly what is tested; and it states why
+it was tested and what the conclusion is." So every research run (a series or
+a numbered run in [EXPERIMENTS](../../docs/EXPERIMENTS.md)) delivers, beside
+the register entry, one HTML page in the owner's page style (no document
+skeleton, a `<title>`, colour tokens with dark mode, phone width) that carries,
+in this order: (1) a drawing of the GameBoard of the world with an icon for
+each thing on it: the detector (its set of Nodes), the star or source (a
+measured event, its content), the lamps, the walls, the probes, each with its
+name from the world file and a legend; (2) "Why it was tested", the question
+in the owner's words and the expectation written before the run; (3) the
+moving picture of the run when there is one (the GIF inside the page, never
+alone) with the plane shown, the scale of each region and the intervals per
+frame; (4) the readings, measured against expected, inside or outside the
+brackets, nothing moved; (5) "The conclusion", the verdict in plain words and
+what the law lacked, if anything. The page is written to the scratchpad (not
+the repository) and Boss publishes it as an artifact; the numbers stay in the
+register.
+
 For authorized physics comparisons, apply the shared
 [physics comparison method](../workflow.md#physics-comparison-method).
 Its standing HTML requirement counts as an explicit visualization request for
