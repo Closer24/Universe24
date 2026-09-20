@@ -293,6 +293,9 @@ class Measured:
     # identity, the event's number x 2^32 + the ordinal).
     splits: list[Split | None] = field(default_factory=list)
     lamp_turns: tuple[int, ...] = ()
+    # The lamp's joint labels with their weights and its arms (the pair).
+    lamp_branches: tuple[tuple[int, int], ...] = ((0, 1),)
+    lamp_arms: int = 1
     births: int = 0
     # The turn of each entry's rotation on a `sum` set (the label click's
     # `turn` key, 0 by default), per family.

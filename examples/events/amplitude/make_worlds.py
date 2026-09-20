@@ -95,6 +95,39 @@ for the shipped geometry (0.753 with the incoherent sum, 0.38 with the
 Euclidean two-source cosine, 0.963 of the 64-birth histogram with the
 weights) recomputed for this geometry.
 
+L3, the pair with the choosers, the CHSH labels, the which-path world and
+no maintenance (the design's section 4, the acceptance tests 4, 6 and 9):
+the registered A2 world `examples/events/bell/read.json` (a bar of 21, the
+lamp at x = 10, Alice's counters at 7 and 4 whose windows read the chooser
+`sa`, Bob's at 17 and 18 reading `sb`) under the key with `arms: 2` and
+`branches` [[0, 1], [3, 1]] on the lamp (the pair: the joint labels 00 and
+11, the bit k of a label the value on arm k; the directions ordered so
+that Alice's arm is arm 0) and the four counters reading `sum`
+(`bell_choosers`, 1000 intervals: the 960 births from tick 8, when the
+choosers' rows have reached both counters, see every one of the choosers'
+15 setting pairs with every u); the four worlds at the CHSH labels
+(`bell_0_8`, `bell_0_24`, `bell_16_8`, `bell_16_24`: the chooser sources
+removed, every counter's window the integer setting, 80 intervals); the
+which-path worlds (`path_*`: a `read` entry of the counter family at x = 9
+on Alice's arm, the detector `path` reading `sum`, before her counter);
+and no maintenance (`bell_16_24_long`, `path_16_24_long`: Bob's counters
+116 Links farther, about 200 intervals more of flight, 300 intervals).
+L4, GHZ (the design's 4.5): a plane of 7 x 7, the lamp at (3, 3) on
+three arms (+x, -x, +y; `branches` [[0, 1], [7, 1]]), a counter on each
+arm at (6, 3), (0, 3), (3, 6) with the setting 16 and the turn 0 (X) or
+16 (Y), the bases XXX, XYY, YXY, YYX and YYY (`ghz_*`, 80 intervals).
+
+The expectations of L3 and L4 (`expectations.json` under `pair` and
+`ghz`) are the design's own reading (`bell.py`): the counter with the
+setting s rotates the two labels by the half-angle tables of 2N,
+U_s = [[C'[s], S'[s] v(t)], [-S'[s], C'[s] v(t)]] with v(t) the circle
+vector of the turn; the joint amplitude of the outcomes is the sum over
+the joint labels of the products of the arms' entries, its weight the
+square; the cells in the order of the arms (++, +-, -+, --), the rungs at
+the nearest integer, the counts over the 64 births; a `read` on an arm
+makes the labels its channels, the joint a product per label. Nothing of
+the engine's layer enters the reading.
+
     python examples/events/amplitude/make_worlds.py [--out DIR]
 """
 
@@ -102,6 +135,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import itertools
 import json
 import math
 from collections import OrderedDict
@@ -135,6 +169,26 @@ SLITS_ONE_TICKS = 220
 LAMP_ROWS = 5
 FAN_WAYS = 91
 DESIGN_UNIT = (32 * 256) ** 2
+# L3 and L4: the registered A2 world, the pair's labels, the CHSH labels,
+# the registered quadruple of the choosers' settings, the durations.
+BELL_SOURCE = ROOT / "examples" / "events" / "bell" / "read.json"
+MINUS_X = [-1, 0, 0]
+BELL_PAIR = [[0, 1], [3, 1]]
+GHZ_TRIPLE = [[0, 1], [7, 1]]
+CHSH = ((0, 8), (0, 24), (16, 8), (16, 24))
+CHOOSER_SETTINGS = ((0, 12, 25, 38, 51), (8, 29, 51))
+REGISTERED_QUADRUPLE = ((0, 25), (8, 29))
+BELL_TICKS = 80
+# The choosers' rows reach Alice's counter at tick 8: the 960 births from
+# tick 8 on see every one of the 15 setting pairs with every u.
+CHOOSERS_FIRST = 8
+CHOOSERS_BIRTHS = 960
+CHOOSERS_TICKS = 1000
+LONG_BOB = 116
+LONG_TICKS = 300
+PATH_NODE = 9
+GHZ_SETTING = QUARTER
+GHZ_BASES = ("XXX", "XYY", "YXY", "YYX", "YYY")
 PLUS_X = [1, 0, 0]
 PLUS_Y = [0, 1, 0]
 PYTHAGOREAN_29 = (20, 21)
@@ -508,9 +562,255 @@ def two_slits_worlds() -> dict[str, dict[str, object]]:
     return {"slits_low": two_slits_low(), "slits_one": two_slits_one()}
 
 
+def bell(
+    name: str,
+    settings: tuple[int, int] | None = None,
+    read: bool = False,
+    far: bool = False,
+) -> dict[str, object]:
+    """The pair on the registered A2 world: the choosers' settings
+    (`settings` None) or the fixed labels (a, b); with `read` a which-path
+    `read` on Alice's arm before her counter; with `far` Bob's counters
+    116 Links farther."""
+    world = json.loads(BELL_SOURCE.read_text(encoding="utf-8"))
+    world = copy.deepcopy(world)
+    world["model_id"] = f"beam-amplitude-{name}-v1"
+    world["amplitude"] = True
+    world["ticks"] = CHOOSERS_TICKS if settings is None else BELL_TICKS
+    lamp = world["measured"][0]
+    lamp["lamp"]["directions"] = [MINUS_X, PLUS_X]
+    lamp["lamp"]["arms"] = 2
+    lamp["lamp"]["branches"] = BELL_PAIR
+    for detector in world["detectors"]:
+        detector["reading"] = "sum"
+    if settings is not None:
+        a, b = settings
+        world["measured"] = [m for m in world["measured"] if m["family"] not in ("sa", "sb")]
+        for m in world["measured"]:
+            if m["family"] == "counter":
+                m["table"]["light"] = {"phase_window": a if m["position"][0] < 10 else b}
+    if far:
+        world["shape"][0] += LONG_BOB
+        world["ticks"] = LONG_TICKS
+        for m in world["measured"]:
+            if m["position"][0] > 10:
+                m["position"][0] += LONG_BOB
+        for detector in world["detectors"]:
+            for position in detector["positions"]:
+                if position[0] > 10:
+                    position[0] += LONG_BOB
+    if read:
+        world["measured"].append(
+            {
+                "position": [PATH_NODE, 0, 0],
+                "family": "counter",
+                "amount": 1,
+                "fixed": True,
+                "table": {"light": {"rule": "read"}, "sa": "pass", "sb": "pass"},
+            }
+        )
+        world["detectors"].append(
+            {"name": "path", "positions": [[PATH_NODE, 0, 0]], "threshold": 1, "reading": "sum"}
+        )
+    return world
+
+
+def ghz(name: str, basis: str) -> dict[str, object]:
+    """GHZ: three arms, the counters' settings X (16, turn 0) or Y (16,
+    turn 16) per letter of the basis."""
+    arms = [([6, 3, 0], PLUS_X), ([0, 3, 0], MINUS_X), ([3, 6, 0], PLUS_Y)]
+    measured: list[dict[str, object]] = [
+        {
+            "position": [3, 3, 0],
+            "family": "light",
+            "amount": SOURCE_CONTENT,
+            "fixed": True,
+            "lamp": {
+                "rate": [1, 1],
+                "directions": [direction for _, direction in arms],
+                "arms": 3,
+                "branches": GHZ_TRIPLE,
+            },
+        }
+    ]
+    detectors: list[dict[str, object]] = []
+    for (position, _), letter, label in zip(arms, basis, "abc", strict=True):
+        measured.append(
+            {
+                "position": position,
+                "family": "counter",
+                "amount": 1,
+                "fixed": True,
+                "table": {
+                    "light": {
+                        "phase_window": GHZ_SETTING,
+                        "turn": QUARTER if letter == "Y" else 0,
+                    }
+                },
+            }
+        )
+        detectors.append({"name": label, "positions": [position], "reading": "sum"})
+    return {
+        "law": "beam",
+        "model_id": f"beam-amplitude-{name}-v1",
+        "shape": [7, 7, 1],
+        "boundary": {"z": "periodic"},
+        "ticks": BELL_TICKS,
+        "K": CLOCK,
+        "N": N,
+        "release": [0, 1],
+        "suspension": 0,
+        "amplitude": True,
+        "families": [{"name": "light", "quantum": 1}, {"name": "counter", "quantum": 1}],
+        "measured": measured,
+        "detectors": detectors,
+    }
+
+
+def pair_worlds() -> dict[str, dict[str, object]]:
+    found = {"bell_choosers": bell("bell_choosers")}
+    for a, b in CHSH:
+        found[f"bell_{a}_{b}"] = bell(f"bell_{a}_{b}", (a, b))
+        found[f"path_{a}_{b}"] = bell(f"path_{a}_{b}", (a, b), read=True)
+    found["bell_16_24_far"] = bell("bell_16_24_far", (16, 24), far=True)
+    found["path_16_24_far"] = bell("path_16_24_far", (16, 24), read=True, far=True)
+    for basis in GHZ_BASES:
+        found[f"ghz_{basis.lower()}"] = ghz(f"ghz_{basis.lower()}", basis)
+    return found
+
+
 def worlds() -> dict[str, dict[str, object]]:
     found = mach_zehnder_worlds()
     found.update(two_slits_worlds())
+    found.update(pair_worlds())
+    return found
+
+
+# The design's reading of the pair (`bell.py`), in its integers.
+Complex = tuple[int, int]
+
+
+def cmul(a: Complex, b: Complex) -> Complex:
+    return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
+
+
+def rotation(setting: int, turn: int = 0) -> dict[tuple[str, int], Complex]:
+    """U_s on the half-angle tables of 2N: the entry per (channel, label
+    bit), complex integers in 1/256^2, the turn on the label 1 column."""
+    from event_universe.core.phase import phase_cosines, phase_sines
+
+    c = phase_cosines(2 * N)[setting % (2 * N)]
+    s = phase_sines(2 * N)[setting % (2 * N)]
+    circle: Complex = (phase_cosines(N)[turn % N], phase_sines(N)[turn % N])
+    return {
+        ("+", 0): (c * 256, 0),
+        ("+", 1): cmul((s, 0), circle),
+        ("-", 0): (-s * 256, 0),
+        ("-", 1): cmul((c, 0), circle),
+    }
+
+
+def joint(settings: list[tuple[int, int]], labels: list[tuple[int, int]]) -> dict[tuple[str, ...], int]:
+    """The weight per outcome tuple: the square of the sum over the joint
+    labels (with their weights) of the products of the arms' entries."""
+    tables = [rotation(s, t) for s, t in settings]
+    found: dict[tuple[str, ...], int] = {}
+    for outcome in itertools.product("+-", repeat=len(settings)):
+        total: Complex = (0, 0)
+        for label, weight in labels:
+            product: Complex = (weight, 0)
+            for k, channel in enumerate(outcome):
+                product = cmul(product, tables[k][(channel, (label >> k) & 1)])
+            total = (total[0] + product[0], total[1] + product[1])
+        found[outcome] = total[0] * total[0] + total[1] * total[1]
+    return found
+
+
+def counts_of(weights: dict[tuple[str, ...], int], order: list[tuple[str, ...]]) -> dict[str, int]:
+    """The clicks per outcome over u = 0 .. N - 1 by the ladder."""
+    fractions = {"".join(k): Fraction(v) for k, v in weights.items()}
+    return ladder(fractions, ["".join(k) for k in order])
+
+
+def outcomes(arms: int) -> list[tuple[str, ...]]:
+    return list(itertools.product("+-", repeat=arms))
+
+
+def pair_counts(a: int, b: int) -> dict[str, int]:
+    return counts_of(joint([(a, 0), (b, 0)], [(0, 1), (3, 1)]), outcomes(2))
+
+
+def correlation(counts: dict[str, int]) -> int:
+    """E x N from the counts over (oA, oB): same signs less different."""
+    return sum(v if k[-2] == k[-1] else -v for k, v in counts.items())
+
+
+def product_counts(a: int, b: int) -> dict[str, int]:
+    """The which-path world: a `read` on Alice's arm makes the labels its
+    channels, the joint a product per label, the cells (label, oA, oB)."""
+    weights: dict[tuple[str, ...], int] = {}
+    order: list[tuple[str, ...]] = []
+    for label in (0, 3):
+        ua, ub = rotation(a), rotation(b)
+        for oa in "+-":
+            for ob in "+-":
+                key = (str(label), oa, ob)
+                weights[key] = (ua[(oa, label & 1)][0] ** 2) * (ub[(ob, (label >> 1) & 1)][0] ** 2)
+                order.append(key)
+    return counts_of(weights, order)
+
+
+def chsh(correlations: dict[tuple[int, int], int]) -> int:
+    """S x N on the CHSH labels: E(0, 8) - E(0, 24) + E(16, 8) + E(16, 24)."""
+    (a1, a2), (b1, b2) = (0, 16), (8, 24)
+    return (
+        correlations[(a1, b1)] - correlations[(a1, b2)] + correlations[(a2, b1)] + correlations[(a2, b2)]
+    )
+
+
+def pair_expectations() -> dict[str, object]:
+    fixed = {f"{a}_{b}": pair_counts(a, b) for a, b in CHSH}
+    paths = {f"{a}_{b}": product_counts(a, b) for a, b in CHSH}
+    chooser_pairs = {(a, b): pair_counts(a, b) for a in CHOOSER_SETTINGS[0] for b in CHOOSER_SETTINGS[1]}
+    chooser_e = {key: correlation(counts) for key, counts in chooser_pairs.items()}
+    (a1, a2), (b1, b2) = REGISTERED_QUADRUPLE
+    registered = chooser_e[(a1, b1)] - chooser_e[(a1, b2)] + chooser_e[(a2, b1)] + chooser_e[(a2, b2)]
+    return {
+        "reference": "the design's bell.py",
+        "labels": BELL_PAIR,
+        "chsh": {key: {"counts": counts, "E": correlation(counts)} for key, counts in fixed.items()},
+        "chsh_S": chsh({(a, b): correlation(fixed[f"{a}_{b}"]) for a, b in CHSH}),
+        "which_path": {
+            key: {"counts": counts, "E": correlation(counts)} for key, counts in paths.items()
+        },
+        "which_path_S": chsh({(a, b): correlation(paths[f"{a}_{b}"]) for a, b in CHSH}),
+        "choosers": {
+            f"{a}_{b}": {"counts": counts, "E": chooser_e[(a, b)]}
+            for (a, b), counts in chooser_pairs.items()
+        },
+        "choosers_first": CHOOSERS_FIRST,
+        "choosers_births": CHOOSERS_BIRTHS,
+        "registered_quadruple": [list(pair) for pair in REGISTERED_QUADRUPLE],
+        "registered_S": registered,
+        "marginal": N // 2,
+        "far": {"bell_16_24": correlation(fixed["16_24"]), "path_16_24": correlation(paths["16_24"])},
+    }
+
+
+def ghz_expectations() -> dict[str, object]:
+    found: dict[str, object] = {}
+    for basis in GHZ_BASES:
+        settings = [(GHZ_SETTING, QUARTER if letter == "Y" else 0) for letter in basis]
+        weights = joint(settings, [(0, 1), (7, 1)])
+        counts = counts_of(weights, outcomes(3))
+        allowed = sorted("".join(k) for k, v in weights.items() if v)
+        products = sorted({1 if k.count("-") % 2 == 0 else -1 for k in allowed})
+        found[basis.lower()] = {
+            "allowed": allowed,
+            "weight": max(weights.values()),
+            "counts": {k: v for k, v in counts.items() if v},
+            "products": products,
+        }
     return found
 
 
@@ -520,6 +820,8 @@ def expectations() -> dict[str, object]:
         "births": N,
         "mach_zehnder": MACH_ZEHNDER_EXPECTATIONS,
         "two_slits": two_slits_reading(),
+        "pair": pair_expectations(),
+        "ghz": ghz_expectations(),
     }
 
 

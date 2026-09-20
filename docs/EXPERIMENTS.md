@@ -3012,6 +3012,51 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   lists over the 64 births, 36 with u = 0's), moving that rung by one;
   the reading tool's replay equals `run.json`'s `world`.
 
+**L3, the pair with the choosers, the CHSH labels, the which-path world
+and no maintenance (the design's section 4; the acceptance tests 4, 6
+and 9).**
+
+- **Model prediction, pinned before the runs (`expectations.json` under
+  `pair`, the design's `bell.py` in the generator).** The registered A2
+  world under the key (the lamp's `arms` 2 and `branches` [[0, 1], [3,
+  1]], Alice's arm first; the four counters reading `sum`; at the CHSH
+  labels the chooser sources removed and the windows the integers). The
+  cells (oA, oB) over the 64 births: (0, 8) 27, 5, 5, 27 (E x 64 = 44);
+  (0, 24) 5, 27, 27, 5 (-44); (16, 8) and (16, 24) 27, 5, 5, 27 (44); S =
+  176/64 = 2.75 (2 sqrt 2 = 2.828; the discreteness: S = 2 sqrt 2 -
+  epsilon(N), epsilon at most 4/N); every marginal 32/64. The choosers'
+  15 setting pairs: E x 64 = 44, -60, 20, 60, -8, -48, -8, 60, -52, -64,
+  40, 20, -28, -36, 64 for a in (0, 12, 25, 38, 51) by b in (8, 29, 51);
+  on the registered quadruple (0, 25) x (8, 29) S = 156/64 = 2.4375 (2
+  exactly under A2's window gate). The which-path `read` on Alice's arm:
+  E x 64 = 44, -44, 0, 0, S = 88/64. Bob's counters 116 Links farther:
+  E(16, 24) x 64 = 44 (44 with the read: 0).
+- **Run (2026-09-20, `examples/events/amplitude/bell_*`, `path_*`, the
+  fingerprint `ccb244fc112f`, every run completed and conserved, 0.2 s
+  each, `bell_choosers` 1000 intervals 3.3 s; the reading tool's replay
+  equals `run.json`'s `world` on every run; DETECTOR).** Every integer
+  above reproduced: the CHSH cells and E, S = 176/64, the marginals 32/64
+  exact (Alice + for u < 32), the 15 pairs' E and S = 156/64 on the
+  registered quadruple, the which-path E and S = 88/64, the far counters
+  E 44 and 0 with every record gathered at least 200 intervals after its
+  birth (`tests/test_amplitude_pair.py`). The tables' rounding does not
+  enter: both arms' rows carry the one phase u, whose factor is common
+  to every cell.
+
+**L4, GHZ (the design's 4.5; the acceptance test 5).**
+
+- **Model prediction, pinned before the run (`expectations.json` under
+  `ghz`).** Three arms on a plane of 7 x 7 (`branches` [[0, 1], [7, 1]]),
+  the counters' setting 16 with the turn 0 (X) or 16 (Y): XXX allows
+  +++, +--, -+-, --+ (16 births each, the product +1) and XYY, YXY, YYX
+  allow ++-, +-+, -++, --- (the product -1), the other four triples of
+  weight exactly 0 (39588699237876835586664300544 on the allowed, in
+  1/256^12); YYY allows all eight, 8 each.
+- **Run (2026-09-20, `ghz_xxx` .. `ghz_yyy`, 80 intervals, the
+  fingerprint `ccb244fc112f`, completed and conserved, 0.2 s each;
+  DETECTOR).** Every triple and count as pinned; the register's replay
+  equals `run.json`'s `world`.
+
 ### A3. Bell test in phase form, delayed geometry
 
 - **Confronts.** The same CHSH data as A2 and the quantum value at the

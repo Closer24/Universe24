@@ -485,7 +485,7 @@ MEASURED_KEYS = {
     "lamp",
     "become",
 }
-LAMP_KEYS = {"rate", "directions", "phase_window", "phase_width", "turns"}
+LAMP_KEYS = {"rate", "directions", "phase_window", "phase_width", "turns", "branches", "arms"}
 # A table entry's object form: the rule, a window on any rule but `pass`
 # with its width, the reading's component the record carries and, on a
 # `become` entry, the transformation's `into` and `products`.
@@ -498,6 +498,7 @@ TABLE_ENTRY_KEYS = {
     "products",
     "inputs",
     "weights",
+    "turn",
     "turns",
 }
 # The split (the amplitude law, 2026-09-20, the owner's unification (2):
@@ -704,6 +705,14 @@ class LampDefinition:
     # phase (`turns`, the amplitude law: the reflection's quarter turn at
     # the source's splitter), 0 each by default.
     turns: tuple[int, ...] = ()
+    # The joint labels of a birth with their integer weights (`branches`,
+    # the amplitude law's pair: [[0, 1], [3, 1]] the Bell pair on two
+    # arms, the bit k of a label the label on arm k) and `arms`, the count
+    # of directions that are separate quanta (1 by default: the directions
+    # are paths of one quantum; the directions are shared equally by the
+    # arms, in order).
+    branches: tuple[tuple[int, int], ...] = ((0, 1),)
+    arms: int = 1
 
 
 @dataclass(frozen=True)
@@ -773,10 +782,15 @@ class MeasuredDefinition:
     # entry declares none (an equal split under the key, the apportioning
     # without it).
     splits: tuple[Split | None, ...] = ()
+    # The turn of each entry's rotation on a `sum` set (`turn`, the label
+    # click; 0 where none is declared), per family.
+    label_turns: tuple[int, ...] = ()
 
     def __post_init__(self) -> None:
         if not self.splits:
             object.__setattr__(self, "splits", (None,) * len(self.table))
+        if not self.label_turns:
+            object.__setattr__(self, "label_turns", (0,) * len(self.table))
         # A definition made without `held` (the tests' bare definitions)
         # holds its amount under its own family alone, and without
         # `widths` or `transforms` declares none.
@@ -1472,12 +1486,78 @@ def _lamp(
                 f"birth and needs the world key {AMPLITUDE_KEY}"
             )
         turns = _split_rows(obj["turns"], f"{label}.turns", len(directions), None, 0, phase_steps - 1)[0]
+    arms = 1
+    if "arms" in obj:
+        if not amplitude:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.arms is the amplitude law's count of separate quanta of a "
+                f"birth and needs the world key {AMPLITUDE_KEY}"
+            )
+        arms = _integer(obj["arms"], f"{label}.arms", 1, len(directions))
+        if len(directions) % arms:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.arms {arms} does not divide the {len(directions)} directions "
+                "(every arm takes the same number of directions, in order)"
+            )
+    branches: tuple[tuple[int, int], ...] = ((0, 1),)
+    if "branches" in obj:
+        if not amplitude:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.branches is the amplitude law's joint labels of a birth "
+                f"and needs the world key {AMPLITUDE_KEY}"
+            )
+        branches = _branches(obj["branches"], f"{label}.branches", arms)
     # The largest label a release can carry: the rate's numerator units at
     # the largest turn the content allows (the whole part of amount x n / d
-    # at the clock's rate [n, d]).
+    # at the clock's rate [n, d]); under the key the largest weight of a
+    # branch is the amount of a row.
     largest_turn = max(1, amount * turn_rate[0] // turn_rate[1])
-    _label_bound(max(1, rate[0]), quantum * largest_turn, table, directions, f"{label} (the release)")
-    return LampDefinition(rate, directions, window, width, turns)
+    largest_weight = max(weight for _, weight in branches)
+    _label_bound(
+        max(1, rate[0], largest_weight),
+        quantum * largest_turn,
+        table,
+        directions,
+        f"{label} (the release)",
+    )
+    return LampDefinition(rate, directions, window, width, turns, branches, arms)
+
+
+def _branches(value: object, label: str, arms: int) -> tuple[tuple[int, int], ...]:
+    """The joint labels of a birth: [[label, weight], ...], the labels
+    distinct integers below 2^arms (the bit k of a label is its value on
+    arm k), the weights integers from 1."""
+    if not isinstance(value, list) or not value:
+        raise ValueError(f"{BEAM_LAW}: {label} must be a list of [label, weight] pairs")
+    found: list[tuple[int, int]] = []
+    for index, item in enumerate(value):
+        if not isinstance(item, list) or len(item) != 2:
+            raise ValueError(f"{BEAM_LAW}: {label}[{index}] must be a [label, weight] pair")
+        joint = _integer(item[0], f"{label}[{index}].label", 0, (1 << arms) - 1)
+        weight = _integer(item[1], f"{label}[{index}].weight", 1, AMOUNT_BOUND)
+        if any(joint == other for other, _ in found):
+            raise ValueError(f"{BEAM_LAW}: {label} names the label {joint} twice")
+        found.append((joint, weight))
+    norm = sum(weight * weight for _, weight in found)
+    if norm > MOMENTUM_BOUND:
+        raise ValueError(f"{BEAM_LAW}: {label}: the norm {norm} exceeds the integer bound")
+    return tuple(found)
+
+
+def _label_turn(value: object, label: str, rule: str, phase_steps: int, amplitude: bool) -> int:
+    """The entry's `turn` (the amplitude law's rotation at a `sum` set: the
+    phase step on label 1 of the setting's rotation, 0 by default), refused
+    without the key and on `pass`."""
+    if not isinstance(value, dict) or "turn" not in value:
+        return 0
+    if not amplitude:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.turn is the amplitude law's turn of the rotation at a set and "
+            f"needs the world key {AMPLITUDE_KEY}"
+        )
+    if rule == "pass":
+        raise ValueError(f"{BEAM_LAW}: {label}.turn is refused on pass, which reads nothing")
+    return _integer(value["turn"], f"{label}.turn", 0, phase_steps - 1)
 
 
 def _products(
@@ -1910,6 +1990,7 @@ def _measured(
         transforms: list[Transformation | None] = []
         window_reads: list[tuple[int, int] | None] = [None] * len(families)
         splits: list[Split | None] = [None] * len(families)
+        label_turns: list[int] = [0] * len(families)
         for rule, window, component in default_table(families):
             rules.append(rule)
             windows.append(window)
@@ -1946,6 +2027,7 @@ def _measured(
                 amplitude,
                 table,
             )
+            label_turns[at] = _label_turn(entry_value, entry_label, rule, phase_steps, amplitude)
             if isinstance(entry_window, WindowReading):
                 # The window read from a reading (issue #363): the named
                 # family must exist, carry a phase circle and differ from
@@ -2040,6 +2122,7 @@ def _measured(
                 tuple(transforms),
                 tuple(window_reads),
                 tuple(splits),
+                tuple(label_turns),
             )
         )
     return tuple(found)

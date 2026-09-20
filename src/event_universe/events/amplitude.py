@@ -156,6 +156,9 @@ class Offer:
     arm: int
     read: bool = False
     rotated: bool = False
+    # The rotation's (setting, turn) of a rotated offer (the first end's;
+    # the set's setting is one per group).
+    setting: tuple[int, int] | None = None
     multiplicity: int | None = None
     pointers: dict[int, Complex] = field(default_factory=dict)
     residuals: dict[int, dict[int, Complex]] = field(default_factory=dict)
@@ -320,6 +323,8 @@ class Layer:
                 channel[label] = cadd(channel.get(label, (0, 0)), cmul((IDENTITY, 0), pointer))
             else:
                 offer.rotated = True
+                if offer.setting is None:
+                    offer.setting = rotation
                 for channel_index, entry in enumerate(self.rotation(rotation, (label >> arm) & 1)):
                     channel = offer.residuals.setdefault(channel_index, {})
                     channel[label] = cadd(channel.get(label, (0, 0)), cmul(entry, pointer))
@@ -423,6 +428,17 @@ class Layer:
                 "u": found.u,
                 "born": found.born,
                 "chosen": chosen,
+                # The rotation's setting and turn of every rotated offer
+                # among the chosen factors (the settings of a pair's clicks).
+                "windows": (
+                    None
+                    if k is None
+                    else [
+                        [self.names[offer.set_index], offer.setting[0], offer.setting[1]]
+                        for offer, _ in cells[k][0]
+                        if offer.setting is not None
+                    ]
+                ),
                 "weight": weight,
                 "total": list(total),
                 "unit": UNIT,

@@ -68,6 +68,7 @@ kept, their pins the law of events').
 | `test_amplitude_record.py` | The amplitude law's key and the record on the row (`amplitude-v1`): the world key `amplitude`, its default, its identity and its refusals; the three columns `record`, `branch` and `multiplicity` at their defaults on every row without the key and the merge's packed key unchanged by them; the merge's normal form under the key, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
 | `test_amplitude_split.py` | The split, the birth of a record and the phase per interval of age: a lamp's birth of one record of k rows with the multiplicity k and the identity number x 2^32 + ordinal; the (20, 21) splitter's rows (41 in phase toward D1, 1 in antiphase toward D2, the multiplicity 1682) and the balanced split's cancel on the lattice with the `cancelled` lines; the pair form of `phase_per_link` (40 at [8, 1], 26 at [16, 3], 24 at the integer 8 after 5 intervals; the inverse bit-exact); the refusals ([below](#the-amplitude-law-the-split)) | new (2026-09-20; the design's sections 2.1, 2.3, 3.1 and 3.4; the owner's unifications (1) and (2)) |
 | `test_amplitude_layer.py` | The layer: the reading `sum` at the record's scope, the offers, the ladder at completion and the gathers, on series L: the ten Mach-Zehnder and Elitzur-Vaidman worlds click as the design's table over the 64 births (tests 1, 3), the same list twice and the moved rung (8), a split takes no click gate (the review's B1), the two slits at a low rate against the generator's reading of one birth (2: 78 of 80 sets exact, one rung moved by the tables' rounding), the gate set parses without the key (7), the reading tool's replay equals `run.json`'s `world` (10), the pair form bounded at the parse (S1), the cancel booked per content (S3), a lamp short of one quantum per direction refused (S4), the `record` line's scope ([below](#the-amplitude-law-the-layer)) | new (2026-09-20; the design's sections 3, 5 and 7; the decision on the split's gate) |
+| `test_amplitude_pair.py` | The pair, the which-path world, no maintenance and GHZ: a lamp's `branches` and `arms` (the birth of four rows on two arms with the labels 0 and 3), the CHSH labels (E x 64 = 44, -44, 44, 44; S = 176/64; the marginals 32/64), the choosers (the 15 setting pairs' E; S = 156/64 on the registered quadruple), the which-path `read` (E = 44, -44, 0, 0; S = 88/64), Bob's counters 116 Links farther (E unchanged), GHZ's allowed triples and products, the refusals ([below](#the-amplitude-law-the-pair)) | new (2026-09-20; the design's section 4 and its `bell.py`) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -409,6 +410,50 @@ expected integers, written down before the first run:
   `record`, `of` the record, the pointer whose square is the record and
   the multiplicity 1682; `DetectorSet.scope` is `record` for D1 and
   `crowd` for the splitter's set.
+
+## The amplitude law: the pair
+
+`tests/test_amplitude_pair.py` (docs/BEAM_LAW.md note 37; the design,
+section 4 and `bell.py`), on the worlds of series L3 and L4
+(`examples/events/amplitude/make_worlds.py`, `expectations.json` under
+`pair` and `ghz`, the design's reading written by the generator before the
+runs: the rotation on the half-angle tables of 2N, the joint amplitude the
+sum over the labels of the products of the arms' entries, its square the
+weight, the cells in the arms' order, the rungs at the nearest integer).
+The expected integers, written down before the first run:
+
+- (a) the birth of a pair on `bell_0_8`: at tick 1 the record 2^32 + 1 of
+  four rows of amount 1 and multiplicity 2 at (10, 0, 0), the labels 0
+  and 3 on arm 0 (-x, Alice) and arm 1 (+x, Bob), the branch arm x 2^32 +
+  label; the `birth` line: labels [[0, 1], [3, 1]], 2 arms, 4 units,
+  multiplicity 2;
+- (b) the CHSH labels (the design's test 4): over the 64 births the cells
+  (oA, oB) count 27, 5, 5, 27 on `bell_0_8` (E x 64 = 44), 5, 27, 27, 5
+  on `bell_0_24` (-44), 27, 5, 5, 27 on `bell_16_8` and `bell_16_24`
+  (44); S = 176/64; Alice's outcome + for u < 32 and - for u >= 32 on
+  every world, both marginals 32/64; every gather's `windows` are
+  [alice_plus, a, 0], [bob_plus, b, 0]; alice_minus and bob_minus click
+  nothing;
+- (c) the choosers (`bell_choosers`, the 960 births from tick 8; the 7
+  born before click at alice_minus): the gathers grouped by the settings
+  give the 15 pairs (0, 12, 25, 38, 51) x (8, 29, 51), 64 records each
+  with every u, the counts per pair the reading's and E x 64 = 44, -60,
+  20, 60, -8, -48, -8, 60, -52, -64, 40, 20, -28, -36, 64 in that order,
+  every marginal 32/64, S on (0, 25) x (8, 29) 156/64 (2 under the
+  register's window gate);
+- (d) the which-path worlds (`path_*`, the design's test 6): eight cells
+  (label, oA, oB) per record, E x 64 = 44, -44, 0, 0, S = 88/64;
+- (e) no maintenance (`bell_16_24_far`, `path_16_24_far`; the design's
+  test 9): E x 64 = 44 and 0 as at the labels, every record gathering at
+  least 200 intervals after its birth;
+- (f) GHZ (the design's test 5): XXX allows +++, +--, -+-, --+ (the
+  product +1) and XYY, YXY, YYX allow ++-, +-+, -++, --- (the product
+  -1), 16 births each, eight cells per record; YYY allows all eight, 8
+  each;
+- (g) the refusals: `branches`, `arms` and `turn` without the key; `arms`
+  beyond the directions or not dividing them; a label at or above 2^arms;
+  a label twice; a weight 0; `turn` on `pass` and beyond N - 1; a `turn`
+  of 16 parsed into `label_turns`.
 
 ## The meeting
 

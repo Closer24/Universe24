@@ -102,6 +102,28 @@ amount; the review of (i) and (ii)); no change without the key:
   (`examples/events/amplitude/`), the two slits at a low rate.
 - Nothing deleted.
 
+## The amplitude law, on 2026-09-20, (iv): the pair, the rotation at the window and the label click
+
+The fourth commit of `amplitude-v1` (the design's section 4); no change
+without the key:
+
+- A lamp under the key declares `branches` (the joint labels of a birth
+  with their weights) and `arms` (the directions that are separate
+  quanta); the birth is one row per label per direction, the branch
+  packing the arm and the label (`amplitude.branch_of`), the
+  multiplicity the paths per arm times the norm.
+- A table entry declares `turn` under the key: the rotation a `sum` set
+  reads at its window's setting turns the label-1 column by it
+  (`MeasuredDefinition.label_turns`, `Measured.label_turns`). The window
+  of a `sum` set is the rotation's setting, declared or read from a
+  reading (the choosers' form), never a gate; the layer's `Offer.setting`
+  and the gather's `windows` carry it.
+- A `read` entry on a `sum` set is a which-path factor: the labels are
+  its channels, the joint a product per label (`Offer.read`).
+- Series L gains L3 (`bell_choosers`, `bell_<a>_<b>`, `path_<a>_<b>`,
+  `bell_16_24_far`, `path_16_24_far`) and L4 (`ghz_<basis>`).
+- Nothing deleted.
+
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),

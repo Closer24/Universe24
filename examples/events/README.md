@@ -301,7 +301,9 @@ arms, a half and a quarter turn on one arm, the balanced (1, 1) split, the
 (3, 4) split, arms unequal by two intervals at three phases per interval,
 and Elitzur-Vaidman's absorber on one arm; L2, the two slits at a low
 rate (the shipped two-slit world under the key with the wall freed beside
-the openings, and its one-birth reference). The register entry is
+the openings, and its one-birth reference); L3, the pair on the A2 world
+with the choosers, at the CHSH labels, with a which-path read and with
+Bob's counters far; L4, GHZ. The register entry is
 [L, the amplitude law (2026-09-20)](../../docs/EXPERIMENTS.md#l-the-amplitude-law-2026-09-20).
 
 ## The entity catalog

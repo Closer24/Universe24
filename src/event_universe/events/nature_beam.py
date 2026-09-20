@@ -101,7 +101,7 @@ import numpy as np
 from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
-from event_universe.events.amplitude import Layer
+from event_universe.events.amplitude import Layer, branch_of
 from event_universe.events.measured import (
     DetectorSet,
     Ledger,
@@ -3118,21 +3118,43 @@ def nature_beam(
                 # the rate [1, 1] alone under the key).
                 record_id = NO_RECORD
                 ways = len(entry.lamp_directions)
+                lamp_turns = entry.lamp_turns or (0,) * ways
                 if world.amplitude and entry.held[family] // cost >= 1:
-                    if entry.held[family] // cost < ways:
-                        # The birth is k rows of amount 1 with m = k: a lamp
-                        # that cannot pay one quantum per direction would
-                        # birth a record of norm below 1, refused.
+                    # The pair (the design's section 4): the joint labels
+                    # with their weights (`branches`, [[0, 1]] by default)
+                    # on `arms` separate quanta, the directions shared
+                    # equally by the arms; per direction one row per label
+                    # of amount the label's weight, the multiplicity the
+                    # paths per arm times the norm (the sum of the squared
+                    # weights); the row's branch packs its arm and label.
+                    branches = entry.lamp_branches
+                    arms = entry.lamp_arms
+                    paths = ways // arms
+                    norm = sum(weight * weight for _, weight in branches)
+                    per_direction = sum(weight for _, weight in branches)
+                    if entry.held[family] // cost < ways * per_direction:
+                        # The birth is every label's weight on every
+                        # direction: a lamp that cannot pay it would birth a
+                        # record of a norm below its own, refused.
                         raise ValueError(
                             f"{BEAM_LAW}: the lamp of measured event {entry.number} at "
                             f"{list(entry.position)} holds {entry.held[family]} of "
-                            f"{definition.name}, short of one quantum ({cost}) on each of its "
-                            f"{ways} directions for the birth of a record under {AMPLITUDE_KEY}"
+                            f"{definition.name}, short of {per_direction} quanta ({cost} each) on "
+                            f"each of its {ways} directions for the birth of a record under "
+                            f"{AMPLITUDE_KEY}"
                         )
                     entry.births += 1
                     record_id = record_identity(entry.number, entry.births)
                     if layer is not None:
-                        layer.birth(tick, record_id, family, entry.phase, {0: 1}, 1, ways)
+                        layer.birth(
+                            tick,
+                            record_id,
+                            family,
+                            entry.phase,
+                            dict(branches),
+                            arms,
+                            ways * per_direction,
+                        )
                     if record is not None:
                         record(
                             {
@@ -3143,32 +3165,53 @@ def nature_beam(
                                 "family": definition.name,
                                 "record": record_id,
                                 "u": entry.phase,
-                                "labels": [[0, 1]],
-                                "arms": 1,
-                                "units": ways,
-                                "multiplicity": ways,
+                                "labels": [list(pair) for pair in branches],
+                                "arms": arms,
+                                "units": ways * per_direction,
+                                "multiplicity": paths * norm,
                             }
                         )
-                lamp_turns = entry.lamp_turns or (0,) * ways
-                for direction, lamp_turn in zip(entry.lamp_directions, lamp_turns, strict=True):
-                    amount = min(by_clock(age, rate_n, rate_d), entry.held[family] // cost)
-                    if amount:
-                        born.append(
-                            (
-                                direction,
-                                amount,
-                                cost,
-                                (entry.phase + lamp_turn) % modulus,
-                                False,
-                                record_id,
-                                NO_BRANCH,
-                                ways if record_id else ONE_PATH,
+                    for way, (direction, lamp_turn) in enumerate(
+                        zip(entry.lamp_directions, lamp_turns, strict=True)
+                    ):
+                        lamp_arm = way // paths
+                        for joint, weight in branches:
+                            born.append(
+                                (
+                                    direction,
+                                    weight,
+                                    cost,
+                                    (entry.phase + lamp_turn) % modulus,
+                                    False,
+                                    record_id,
+                                    branch_of(lamp_arm, joint),
+                                    paths * norm,
+                                )
                             )
-                        )
-                        content = cost * amount
-                        entry.held[family] -= content
-                        ledger.held_spent[family] += content
-                        ledger.content_released[family] += content
+                            content = cost * weight
+                            entry.held[family] -= content
+                            ledger.held_spent[family] += content
+                            ledger.content_released[family] += content
+                else:
+                    for direction, lamp_turn in zip(entry.lamp_directions, lamp_turns, strict=True):
+                        amount = min(by_clock(age, rate_n, rate_d), entry.held[family] // cost)
+                        if amount:
+                            born.append(
+                                (
+                                    direction,
+                                    amount,
+                                    cost,
+                                    (entry.phase + lamp_turn) % modulus,
+                                    False,
+                                    NO_RECORD,
+                                    NO_BRANCH,
+                                    ONE_PATH,
+                                )
+                            )
+                            content = cost * amount
+                            entry.held[family] -= content
+                            ledger.held_spent[family] += content
+                            ledger.content_released[family] += content
             if not born:
                 continue
             # A body on a set of Nodes releases at every Node of the set

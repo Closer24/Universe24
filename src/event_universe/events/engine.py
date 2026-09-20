@@ -298,7 +298,9 @@ class NatureBeamSimulation:
             + (None,) * (count - len(definition.window_reads)),
             splits=list(definition.splits) + [None] * (count - len(definition.splits)),
             lamp_turns=() if definition.lamp is None else definition.lamp.turns,
-            label_turns=[0] * count,
+            lamp_branches=((0, 1),) if definition.lamp is None else definition.lamp.branches,
+            lamp_arms=1 if definition.lamp is None else definition.lamp.arms,
+            label_turns=list(definition.label_turns) + [0] * (count - len(definition.label_turns)),
         )
 
     def occupant(self, node: Address3) -> int | None:

@@ -96,3 +96,31 @@ runs it in-process and reads it by the design's `slits_read.py` into
 weights per set, the ladder's clicks over the 64 births, the shares, the
 pixels and the correlations (the register's L2 entry has the numbers and
 the run).
+
+## L3: the pair, the which-path world and no maintenance
+
+The registered A2 world `examples/events/bell/read.json` (a bar of 21, the
+lamp at x = 10, Alice's counters at 7 and 4 reading the chooser `sa`,
+Bob's at 17 and 18 reading `sb`) under the key: the lamp's `arms` 2 and
+`branches` [[0, 1], [3, 1]] (the pair, the joint labels 00 and 11; the
+directions ordered so that Alice's arm is arm 0) and the four counters
+reading `sum`, whose windows are the rotation's settings. `bell_choosers`
+(1000 intervals: the 960 births from tick 8 see the choosers' 15 setting
+pairs with every u); `bell_0_8`, `bell_0_24`, `bell_16_8`, `bell_16_24`
+(the chooser sources removed, the windows the integers, 80 intervals);
+`path_<a>_<b>` (a `read` entry of the counter family at x = 9 on Alice's
+arm, the detector `path` reading `sum`: the which-path world);
+`bell_16_24_far` and `path_16_24_far` (Bob's counters 116 Links farther,
+300 intervals: no maintenance). The expectations (`expectations.json`
+under `pair`) are the design's `bell.py` in the generator: the rotation
+on the half-angle tables of 2N, the joint amplitude the sum over the
+labels of the products of the arms' entries, the cells (oA, oB) over the
+64 births; the register's L3 entry has the numbers and the runs.
+
+## L4: GHZ
+
+A plane of 7 x 7, the lamp at (3, 3) on three arms (+x, -x, +y;
+`branches` [[0, 1], [7, 1]]), a counter on each arm at (6, 3), (0, 3),
+(3, 6) with the setting 16 and the turn 0 (X) or 16 (Y): `ghz_xxx`,
+`ghz_xyy`, `ghz_yxy`, `ghz_yyx`, `ghz_yyy`, 80 intervals; the
+expectations under `ghz`.

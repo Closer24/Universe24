@@ -34,7 +34,8 @@ the artifacts of a run) on `src/event_universe/core/` (`integer.py`,
 `tests/test_nature_beam_world_parsing.py`,
 `tests/test_nature_beam_worlds.py`, `tests/test_nature_beam_push.py`, `tests/test_nature_beam_age.py`,
 `tests/test_meeting.py`, `tests/test_amplitude_record.py`,
-`tests/test_amplitude_split.py`, `tests/test_amplitude_layer.py`
+`tests/test_amplitude_split.py`, `tests/test_amplitude_layer.py`,
+`tests/test_amplitude_pair.py`
 ([expectations](TEST_EXPECTATIONS.md)). The
 worlds: [examples/events/](../examples/events/README.md).
 
@@ -470,7 +471,21 @@ per direction the born row carries beyond the clock's phase, and the rate
 [1, 1] alone: a self-creation with a release births one record of one row
 of amount 1 per direction with the multiplicity the directions' count,
 the record's identity the lamp's number x 2^32 + the birth's ordinal at
-the lamp, `nature_beam.record_identity`);
+the lamp, `nature_beam.record_identity`; and `branches`, the joint labels
+of the birth with their integer weights (`[[label, weight], ...]`, the
+labels distinct and below 2^arms, the bit k of a label its value on arm
+k; [[0, 1]] by default) and `arms`, the count of directions that are
+separate quanta (1 by default, dividing the directions, which the arms
+share in order): per direction one row per label of amount the label's
+weight, the multiplicity the paths per arm times the norm (the sum of
+the squared weights), the row's `branch` its arm x 2^32 + its label; a
+lamp that cannot pay every label's weight on every direction refuses the
+birth naming the lamp; refused without the key); a table entry's `turn`
+(under `amplitude`, 0 by default, 0 .. N - 1, refused on `pass`): the
+phase step on the label-1 column of the rotation a `sum` set reads at
+its window's setting s, `U_s = [[C'[s], S'[s] v(t)], [-S'[s], C'[s]
+v(t)]]` on the half-angle tables of 2N (the channels + and -; the design's
+2.2 and 4.1), the setting declared or read from a reading;
 `in_transit` (`position`, `family`, `number`,
 `direction` (a vector of D, or a rest index 0 or 1), `amount`, `phase`,
 optional `age`); `detectors` (`name`, `positions`, `threshold` 1 by
@@ -653,7 +668,8 @@ direction and content per unit: `amount`, `content`), the `record` line
 of a `sum` set at a gather (`scope` `record`, `of` the record, `arm`,
 `label`, `pointer`, the square `record`, `multiplicity`) and `gather`
 (the world's row: `tick`, `arrived`, `family`, `record`, `u`, `born`,
-`chosen` [set, arm, channel], `weight` and `total` as pairs in the unit
+`chosen` [set, arm, channel], `windows` [set, setting, turn] of the
+rotated sets among the chosen, `weight` and `total` as pairs in the unit
 2^58 (`unit`), `T`, `before`, `after`, `cells` with the rungs); `run.json`
 gains `world` (the gathers), `open` (the records not gathered, with their
 offers) and `layer` (the sets in order, the unit, the counts). A gather
