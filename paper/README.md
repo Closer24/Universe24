@@ -32,3 +32,17 @@ characters) and category choices for both manuscripts, and
 are kept here so that a submission can be rebuilt from the repository
 alone. The packages to upload are `main.tex` with `figures/` and
 `redshift/main.tex` with `redshift/figures/`.
+
+`click_model/` is the third manuscript's directory, coordinated by a separate
+session by the model owner's decision of 2026-09-20
+([Highlights 5.4](../docs/HIGHLIGHTS.md#54-the-detector), "DECIDED: the paper
+is coordinated by a separate agent"): `click_model/PLAN.md` holds the plan
+(the one claim as recommended and as the evidence supports it, paper 3 against
+a revision of paper 1, the formal definition, the four theorems, the
+literature, the figures, reproducibility, the disclosure of AI assistance and
+the venue), and `click_model/checks/` the plan's own computations from the
+[amplitude-v1 design](../docs/designs/amplitude-v1/DESIGN.md) with the
+repository's tables (`s_of_n.py`, its output `s_of_n.txt`: the design's Bell
+value at every N), computations and not runs. The draft `click_model/main.tex`
+is written only after `amplitude-v1` and its Bell runs are on `main` and in
+the [experiments register](../docs/EXPERIMENTS.md); it cites nothing else.
