@@ -55,7 +55,7 @@ import json
 
 import pytest
 
-from event_universe.events import RAYS_LAW, RaySimulation, parse_ray_world
+from event_universe.events import RAYS_LAW, NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.world import MOMENTUM_BOUND
 from event_universe.runner import run_initialization
 
@@ -82,7 +82,7 @@ def base(**keys: object) -> dict[str, object]:
 
 def refused(document: dict[str, object], text: str) -> None:
     with pytest.raises(ValueError, match=text):
-        parse_ray_world(document)
+        parse_nature_beam_world(document)
 
 
 def test_the_world_refuses_by_name():
@@ -181,7 +181,9 @@ def test_the_world_refuses_by_name():
         {**phased, "measured": [{"position": [1, 1, 1], "family": "m", "amount": 1 << 28}]},
         "below K x N",
     )
-    parse_ray_world({**world, "measured": [{"position": [1, 1, 1], "family": "m", "amount": 1 << 28}]})
+    parse_nature_beam_world(
+        {**world, "measured": [{"position": [1, 1, 1], "family": "m", "amount": 1 << 28}]}
+    )
     refused(
         {
             **world,
@@ -259,7 +261,7 @@ def test_the_world_refuses_by_name():
 def test_the_world_accepts_the_direction_table_and_the_keys():
     """(b)."""
     world = base(directions=[[1, 1, 0]])
-    parsed = parse_ray_world(world)
+    parsed = parse_nature_beam_world(world)
     assert parsed.directions == (
         (0, 0, 0),
         (0, 0, 0),
@@ -271,12 +273,14 @@ def test_the_world_accepts_the_direction_table_and_the_keys():
         (0, 0, -1),
         (1, 1, 0),
     )
-    by_vector = parse_ray_world(
+    by_vector = parse_nature_beam_world(
         {**world, "measured": [{**world["measured"][0], "directions": [[1, 1, 0], [0, 0, 1]]}]}
     )  # type: ignore[index]
-    by_index = parse_ray_world({**world, "measured": [{**world["measured"][0], "directions": [8, 6]}]})  # type: ignore[index]
+    by_index = parse_nature_beam_world(
+        {**world, "measured": [{**world["measured"][0], "directions": [8, 6]}]}
+    )  # type: ignore[index]
     assert by_vector.measured[0].directions == by_index.measured[0].directions == (8, 6)
-    rest = parse_ray_world(
+    rest = parse_nature_beam_world(
         {
             **world,
             "in_transit": [
@@ -286,16 +290,16 @@ def test_the_world_accepts_the_direction_table_and_the_keys():
     )
     assert rest.in_transit[0].direction == 0 and rest.in_transit[0].age == 0
     assert parsed.suspension == (1, 1) and parsed.release == (1, 128) and parsed.owners(0) == (1,)
-    assert parse_ray_world({**world, "suspension": [1, 4]}).suspension == (1, 4)
-    assert parse_ray_world({**world, "suspension": [0, 4]}).suspension == (0, 1)
-    reads = parse_ray_world(
+    assert parse_nature_beam_world({**world, "suspension": [1, 4]}).suspension == (1, 4)
+    assert parse_nature_beam_world({**world, "suspension": [0, 4]}).suspension == (0, 1)
+    reads = parse_nature_beam_world(
         {
             **world,
             "measured": [{**world["measured"][0], "table": {"m": {"rule": "read", "reads": "tensor"}}}],
         }
     )  # type: ignore[index]
     assert reads.measured[0].reads == ("tensor",) and parsed.measured[0].reads == ("vector",)
-    detector = parse_ray_world(
+    detector = parse_nature_beam_world(
         {**world, "detectors": [{"name": "d", "positions": [[5, 5, 5]], "threshold": 3}]}
     )
     assert detector.detector_of((5, 5, 5)) == 0 and detector.detectors[0].threshold == 3
@@ -353,13 +357,13 @@ def pair(momentum: int) -> dict[str, object]:
 
 def test_the_measured_line_is_bounded_before_assignment():
     """(d)."""
-    simulation = RaySimulation(parse_ray_world(pair(-MOMENTUM_BOUND + 64)))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(pair(-MOMENTUM_BOUND + 64)))
     simulation.step()
     simulation.step()
     assert simulation.books()["balanced"]
     assert simulation.measured[2].momentum == [-MOMENTUM_BOUND, 0, 0]
     assert simulation.measured[2].pushed == [-64, 0, 0] and simulation.measured[1].pushed == [64, 0, 0]
-    simulation = RaySimulation(parse_ray_world(pair(-MOMENTUM_BOUND + 63)))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(pair(-MOMENTUM_BOUND + 63)))
     simulation.step()
     with pytest.raises(OverflowError, match=r"the momentum of measured event 2 at \[1, 0, 0\]"):
         simulation.step()
@@ -378,7 +382,7 @@ def test_the_measured_line_is_bounded_before_assignment():
                 {"position": [0, 0, 0], "family": "m", "number": 1, "direction": [1, 0, 0], "amount": 1}
             ],
         )
-        simulation = RaySimulation(parse_ray_world(world))
+        simulation = NatureBeamSimulation(parse_nature_beam_world(world))
         if push is None:
             with pytest.raises(OverflowError, match=r"the push of measured event 2 at \[1, 0, 0\]"):
                 simulation.step()

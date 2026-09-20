@@ -69,7 +69,7 @@ the model owner, 2026-09-19):
   carry phase 0 and never turn, its measured events never turn, no
   `phase_window` is accepted for it) and `phase_per_link` (an integer
   0 .. N - 1, 0 by default: the phase steps a ray of the family turns at
-  every Link crossed). The key `kind` of the first ray worlds is refused
+  every Link crossed). The key `kind` of the first NatureBeam worlds is refused
   naming this derivation and docs/MIGRATION.md (one canonical form);
 - `measured`: the measured events at the start, one per Node, each with a
   `position`, its `family`, its `amount` (a positive whole number of units,
@@ -270,9 +270,9 @@ BOHR_RULE = "bohr-v1"
 # The span of a measured event on one Node (the default): a body of one.
 ONE_NODE: tuple[int, int, int] = (1, 1, 1)
 FAMILY_KEYS = {"name", "quantum", "charge", "phase", "phase_per_link"}
-# The key of the first ray worlds that named the kind; the quantum decides it.
+# The key of the first NatureBeam worlds that named the kind; the quantum decides it.
 KIND_KEY = "kind"
-# The key of the ray worlds before 2026-09-20 that gave a measured event its
+# The key of the NatureBeam worlds before 2026-09-20 that gave a measured event its
 # own whole charge; the charge is the family's per unit of content.
 CHARGE_KEY = "charge"
 # The charge per unit of content of a family with none: 0 as the pair [0, 1].
@@ -435,7 +435,7 @@ class DetectorDefinition:
 
 
 @dataclass(frozen=True)
-class RayWorld:
+class NatureBeamWorld:
     """A parsed world of the law of the ray. `boundary` is the declared value
     as the record carries it (the string `"open"` or the object per axis);
     `periodic` says per axis (x, y, z) whether the walk wraps; `directions`
@@ -500,7 +500,7 @@ class RayWorld:
         return None
 
 
-def is_ray_world(document: object) -> bool:
+def is_nature_beam_world(document: object) -> bool:
     """Whether a document declares the law of the ray (`"law": "rays"`)."""
     return isinstance(document, dict) and document.get("law") == LAW_VALUE
 
@@ -1116,7 +1116,7 @@ def _detectors(
     return tuple(found)
 
 
-def parse_ray_world(document: object) -> RayWorld:
+def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     """Reject anything but a lawful world of the law of the ray."""
     if not isinstance(document, dict):
         raise ValueError(f"{RAYS_LAW}: a world is a JSON object")
@@ -1190,7 +1190,7 @@ def parse_ray_world(document: object) -> RayWorld:
         obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
     )
     detectors = _detectors(obj.get("detectors", []), shape, periodic, measured)
-    world = RayWorld(
+    world = NatureBeamWorld(
         model_id,
         shape,
         boundary,

@@ -232,17 +232,17 @@ def test_metadata_copy_cannot_be_changed_during_execution(tmp_path, monkeypatch)
     loaded = load_world(path.read_bytes(), base_dir=path.parent)
     initialization_record = {"sources": [{"path": "fixed.json", "sha256": "original"}]}
     expected = copy.deepcopy(initialization_record)
-    original_simulation = run.RaySimulation
+    original_simulation = run.NatureBeamSimulation
 
     def construct(world, observer=None):
         initialization_record["sources"][0]["sha256"] = "changed"
         return original_simulation(world, observer)
 
-    monkeypatch.setattr(run, "RaySimulation", construct)
+    monkeypatch.setattr(run, "NatureBeamSimulation", construct)
     output = tmp_path / "run"
     output.mkdir()
     record = json.loads(
-        run.execute_ray_run(
+        run.execute_nature_beam_run(
             loaded.world,
             path.read_bytes(),
             output,

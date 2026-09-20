@@ -49,7 +49,7 @@ import itertools
 import numpy as np
 
 from event_universe.core.lattice import PORT_HEADINGS
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import class_key, collision_table, slot_heading, state_code
 
 STATES = list(itertools.product(range(3), repeat=8))
@@ -135,7 +135,7 @@ def test_the_twenty_orbits_and_the_named_rows():
     assert forward((2, 1, 0, 0, 0, 0, 0, 0)) == (2, 1, 0, 0, 0, 0, 0, 0)
 
 
-def bar(shape: list[int], boundary: object, rays: list[dict[str, object]]) -> dict[str, object]:
+def bar(shape: list[int], boundary: object, beams: list[dict[str, object]]) -> dict[str, object]:
     return {
         "law": "rays",
         "model_id": "ray-collision-test",
@@ -159,11 +159,13 @@ def bar(shape: list[int], boundary: object, rays: list[dict[str, object]]) -> di
                 "table": {"light": "pass"},
             }
         ],
-        "in_transit": rays,
+        "in_transit": beams,
     }
 
 
-def ray(position: list[int], direction: list[int], amount: int = 1, phase: int = 0) -> dict[str, object]:
+def beam(
+    position: list[int], direction: list[int], amount: int = 1, phase: int = 0
+) -> dict[str, object]:
     return {
         "position": position,
         "family": "light",
@@ -177,8 +179,10 @@ def ray(position: list[int], direction: list[int], amount: int = 1, phase: int =
 def test_a_head_on_pair_parks_and_a_crowd_passes():
     """(c)."""
     everywhere = {"x": "periodic", "y": "periodic", "z": "periodic"}
-    world = bar([5, 1, 1], everywhere, [ray([1, 0, 0], [1, 0, 0]), ray([3, 0, 0], [-1, 0, 0], phase=9)])
-    simulation = RaySimulation(parse_ray_world(world))
+    world = bar(
+        [5, 1, 1], everywhere, [beam([1, 0, 0], [1, 0, 0]), beam([3, 0, 0], [-1, 0, 0], phase=9)]
+    )
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world))
     store = simulation.stores[0]
     simulation.step()
     rows = sorted(
@@ -193,8 +197,8 @@ def test_a_head_on_pair_parks_and_a_crowd_passes():
         assert simulation.books()["balanced"]
         cycle.append(sorted(store.direction.tolist()))
     assert cycle == [[6, 7], [4, 5], [2, 3]] and set(store.node.tolist()) == {2}
-    crowd = bar([5, 1, 1], everywhere, [ray([1, 0, 0], [1, 0, 0], 2), ray([3, 0, 0], [-1, 0, 0], 2)])
-    simulation = RaySimulation(parse_ray_world(crowd))
+    crowd = bar([5, 1, 1], everywhere, [beam([1, 0, 0], [1, 0, 0], 2), beam([3, 0, 0], [-1, 0, 0], 2)])
+    simulation = NatureBeamSimulation(parse_nature_beam_world(crowd))
     store = simulation.stores[0]
     simulation.step()
     assert sorted(store.direction.tolist()) == [2, 3] and set(store.node.tolist()) == {2}
@@ -214,9 +218,9 @@ def test_a_head_on_pair_parks_and_a_crowd_passes():
         pair = bar(
             [5, 5, 5],
             {"x": "periodic", "y": "periodic", "z": "periodic"},
-            [ray(start_a, heading), ray(start_b, opposite, phase=9)],
+            [beam(start_a, heading), beam(start_b, opposite, phase=9)],
         )
-        simulation = RaySimulation(parse_ray_world(pair))
+        simulation = NatureBeamSimulation(parse_nature_beam_world(pair))
         store = simulation.stores[0]
         simulation.step()
         assert sorted(store.direction.tolist()) == after_one[port], port
@@ -229,7 +233,7 @@ def test_a_head_on_pair_parks_and_a_crowd_passes():
 def test_no_collision_at_a_node_that_holds_a_measured_event():
     """(d)."""
     lamp = {"position": [0, 0, 0], "family": "light", "amount": 4, "fixed": True}
-    pair = [ray([3, 0, 0], [1, 0, 0]), ray([5, 0, 0], [-1, 0, 0], phase=32)]
+    pair = [beam([3, 0, 0], [1, 0, 0]), beam([5, 0, 0], [-1, 0, 0], phase=32)]
     families = [{"name": "m", "quantum": 0}, {"name": "light", "quantum": 1}]
     window = {"rule": "measure", "phase_window": 32}
     for table, momentum, transit, rows_after in (
@@ -246,7 +250,7 @@ def test_no_collision_at_a_node_that_holds_a_measured_event():
         # The window reads each ray's own phase under `beam` (declared;
         # the default `wave` reads the set's pointer, zero for this pair).
         world["detectors"] = [{"name": "taker", "positions": [[4, 0, 0]], "reading": "beam"}]
-        simulation = RaySimulation(parse_ray_world(world))
+        simulation = NatureBeamSimulation(parse_nature_beam_world(world))
         light = simulation.stores[1]
         assert simulation.books()["momentum"]["transit"] == [0, 0, 0]
         simulation.step()

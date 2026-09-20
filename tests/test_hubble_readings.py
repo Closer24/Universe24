@@ -7,7 +7,7 @@ engine on a minimal board; the expected values of docs/TEST_EXPECTATIONS.md
 (a) the ray's speed and the distance off the flight table: on a heading
     the period is 55 intervals and m(55) = 32 Links, so c = 32 / 55 =
     0.58182 per interval; m(17) = 10 and m(34) = 20 Links (the least ages
-    with 10 and 20 Links are 17 and 34: `test_ray_flight`'s table);
+    with 10 and 20 Links are 17 and 34: `test_nature_beam_flight`'s table);
 (b) `read_run` on a run of a bar of 61 x 1 x 1 (y and z periodic) written
     by the runner, 60 intervals, K 64, N 64, `release` [1, 64], `width`
     2^20, no suspension: a fixed measured event of the paid family
@@ -40,9 +40,9 @@ import numpy as np
 
 from event_universe.core.integer import by_clock
 from event_universe.core.lattice import PORT_HEADINGS
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import flight_table
-from event_universe.events.run import execute_ray_run
+from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import HEADING_OFFSET, Q
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -105,10 +105,10 @@ def test_the_speed_and_the_distance_are_the_flight_tables():
 
 def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     document = bar_world()
-    world = parse_ray_world(document)
+    world = parse_nature_beam_world(document)
     folder = tmp_path / "coasting_scalar"
     folder.mkdir()
-    execute_ray_run(world, json.dumps(document).encode("utf-8"), folder, "test", TICKS)
+    execute_nature_beam_run(world, json.dumps(document).encode("utf-8"), folder, "test", TICKS)
     run = TOOL.read_run(folder)
     assert (run.crowd, run.clock, run.rho, run.modulus) == ("coasting", "scalar", 1.0, 64)
     assert run.c == 32 / 55
@@ -119,7 +119,7 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     assert source.declared_speed == 0.5 and source.initial_distance == 5
     assert by_clock(0, MOMENTUM, Q * WIDTH * CONTENT + MOMENTUM) == 0
     assert by_clock(1, MOMENTUM, Q * WIDTH * CONTENT + MOMENTUM) == 1
-    simulation = RaySimulation(world)
+    simulation = NatureBeamSimulation(world)
     steps: list[int] = []
     turns: list[tuple[int, int]] = []
     ages: dict[int, int] = {}

@@ -166,19 +166,19 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 | `core/integer` | Standard-library types; owns the working-register bound (`checked_work`) and the ray law's integer primitives (`bounded_gcd`, `integer_root`, `by_clock`, `apportion_whole`) |
 | `core/lattice` | `core/integer` (`checked_work`); the board's addresses, the six Port headings in Port order (`PORT_HEADINGS`, `adjacent_node`) and the bound of a declared charge and quantum (`MAX_VALUE`) |
 | `core/phase` | `core/integer`; the phase circle's cosine and sine tables from fixed-point series, cached per N |
-| `events/world` | `core/integer`, `core/lattice`; the world file of the ray law, its keys, defaults, bounds and refusals (`parse_ray_world`, `RayWorld`), the constants `Q`, `LABEL_SCALE`, `FACE_NAMES`; no execution |
+| `events/world` | `core/integer`, `core/lattice`; the world file of the ray law, its keys, defaults, bounds and refusals (`parse_nature_beam_world`, `NatureBeamWorld`), the constants `Q`, `LABEL_SCALE`, `FACE_NAMES`; no execution |
 | `events/measured` | `core/integer`, `core/lattice`, `events/world`; the records the engine keeps beside the rays (`Measured`, `DetectorSet`, `Ledger`, the reduced rational pairs); no law |
 | `events/nature_beam` | `core/integer`, `core/lattice`, `core/phase`, `events/measured`, `events/world` and numpy; the law of the ray, one function over the whole board (the flight table, the one reading, the collision table, the push, the detector's record, the releases, the store) |
-| `events/engine` | `core/integer`, `core/lattice`, `events/measured`, `events/nature_beam`, `events/world` and numpy; the interval's frame, the clocks, the steps, the books and the snapshot (`RaySimulation`); no output or storage |
+| `events/engine` | `core/integer`, `core/lattice`, `events/measured`, `events/nature_beam`, `events/world` and numpy; the interval's frame, the clocks, the steps, the books and the snapshot (`NatureBeamSimulation`); no output or storage |
 | `events/run` | `events/engine`, `events/world`, the package version, `snapshot_writer` and the standard library; the artifacts of a run (the one physical module allowed to write files) |
-| `events/__init__` | `events/world`; `events/engine` lazily (`Measured`, `RaySimulation`), so importing the package loads no numpy |
+| `events/__init__` | `events/world`; `events/engine` lazily (`Measured`, `NatureBeamSimulation`), so importing the package loads no numpy |
 | `json_documents`, `snapshot_writer`, `retention` | Standard library; host modules with no physics |
 | `world_loading` | `events/world`, `json_documents`; the entity definitions loader and the portable bundle |
 | `configuration_validation` | `events/world`, `world_loading`; read-only |
 | `runner` | `events/run`, `retention`, `world_loading` |
 | `ui` | `configuration_validation`, `json_documents`, `retention`, `world_loading`; local HTTP and isolated CLI process ownership |
 | `diagnostics/numeric_audit` | Standard library; the static integer audit of `core/` |
-| `tools/` | Readers of the record, loaded by their path and never imported by the package (the architecture review of 2026-09-20: a tool calls the engine's functions, it owns no rule): `coupling_readings` imports `core/integer`, `core/lattice`, `events`, `events/nature_beam`, `events/world`, `json_documents` and numpy; `orbit_readings` `core/integer`, `events`, `events/nature_beam`, `events/world`, `json_documents`; `heisenberg_readings` `core/integer`, `events`, `json_documents`; `redshift_readings` `events`; `migrate_ray_worlds` `events/world`; `bell_chsh`, `run_series` and `check` the standard library; the `derivations_round*` scripts numpy |
+| `tools/` | Readers of the record, loaded by their path and never imported by the package (the architecture review of 2026-09-20: a tool calls the engine's functions, it owns no rule): `coupling_readings` imports `core/integer`, `core/lattice`, `events`, `events/nature_beam`, `events/world`, `json_documents` and numpy; `orbit_readings` `core/integer`, `events`, `events/nature_beam`, `events/world`, `json_documents`; `heisenberg_readings` `core/integer`, `events`, `json_documents`; `redshift_readings` `events`; `migrate_nature_beam_worlds` `events/world`; `bell_chsh`, `run_series` and `check` the standard library; the `derivations_round*` scripts numpy |
 | `tests/` | The package's modules under test, the tools by their path (`importlib`), the gates (`tests/architecture_rules.py`, the repository scanners) the standard library; `tools/check.py` selects a test by its imports and by the files it names |
 
 The gate (`tests/architecture_rules.py`, `tests/test_architecture.py`): `core`

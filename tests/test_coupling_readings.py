@@ -9,7 +9,7 @@ engine"), written down first:
 
 (a) the front: the tool's first arrivals of a heading ray at m = 1 .. 11
     Links are the intervals 1, 3, 5, 7, 8, 10, 12, 13, 15, 17, 19
-    (`test_ray_flight` (a)) and equal, at every m, the first interval at
+    (`test_nature_beam_flight` (a)) and equal, at every m, the first interval at
     which one unit declared on +x at (0, 0, 0) of an open 14 x 1 x 1 bar
     stands m Links out;
 (b) the step rule: a free probe of content 1 pushed once by (64, 0, 0) (one
@@ -39,7 +39,7 @@ import sys
 from fractions import Fraction
 from pathlib import Path
 
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
@@ -75,8 +75,8 @@ def test_the_front_is_the_flight_tables_first_arrival_as_the_engine_walks_it():
     """(a)."""
     arrivals = TOOL.first_arrivals(5)
     assert [arrivals[m] for m in range(1, 12)] == FIRST_ARRIVALS
-    ray = {"position": [0, 0, 0], "family": "m", "number": 1, "direction": [1, 0, 0], "amount": 1}
-    simulation = RaySimulation(parse_ray_world(bar([14, 1, 1], [], in_transit=[ray])))
+    beam = {"position": [0, 0, 0], "family": "m", "number": 1, "direction": [1, 0, 0], "amount": 1}
+    simulation = NatureBeamSimulation(parse_nature_beam_world(bar([14, 1, 1], [], in_transit=[beam])))
     store = simulation.stores[0]
     walked: dict[int, int] = {}
     for tick in range(1, 21):
@@ -93,7 +93,9 @@ def engine_steps(momentum: list[int], width: int) -> list[tuple[int, int]]:
     momentum, over ten intervals at the world's `width`."""
     records: list[dict[str, object]] = []
     probe = {"position": [2, 1, 0], "family": "m", "amount": 1, "momentum": momentum}
-    simulation = RaySimulation(parse_ray_world(bar([20, 3, 1], [probe], width=width)), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(bar([20, 3, 1], [probe], width=width)), records.append
+    )
     for _ in range(10):
         simulation.step()
         assert simulation.books()["balanced"]
@@ -118,7 +120,9 @@ def test_the_release_per_heading_is_the_engines_clock():
     """(c)."""
     assert TOOL.RELEASE_PER_HEADING == 131072 and TOOL.Q == 6 * 131072
     source = {"position": [2, 2, 2], "family": "m", "amount": 1 << 24, "fixed": True}
-    simulation = RaySimulation(parse_ray_world(bar([5, 5, 5], [source], release=[1, 128])))
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(bar([5, 5, 5], [source], release=[1, 128]))
+    )
     simulation.step()
     assert simulation.ledger.transit_released[0] == TOOL.Q
     assert simulation.books()["balanced"]
@@ -130,10 +134,10 @@ def test_the_expected_push_is_the_engines_label_moment():
     assert TOOL.label_push((0, -1, 0), 2, 1) == (0, 128, 0)
     reader = {"position": [2, 0, 0], "family": "m", "amount": 3, "fixed": True}
     other = {"position": [6, 0, 0], "family": "m", "amount": 1, "fixed": True}
-    ray = {"position": [1, 0, 0], "family": "m", "number": 2, "direction": [1, 0, 0], "amount": 5}
+    beam = {"position": [1, 0, 0], "family": "m", "number": 2, "direction": [1, 0, 0], "amount": 5}
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(
-        parse_ray_world(bar([8, 1, 1], [reader, other], in_transit=[ray])), records.append
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(bar([8, 1, 1], [reader, other], in_transit=[beam])), records.append
     )
     simulation.step()
     assert simulation.measured[1].pushed == list(TOOL.label_push((1, 0, 0), 5, 3))
@@ -159,11 +163,11 @@ def test_the_declared_charges_are_the_engines_charge_per_unit_of_content():
         {"position": [4, 0, 0], "family": "z", "amount": 9, "fixed": True},
         {"position": [5, 0, 0], "family": "t", "amount": 2, "fixed": True},
     ]
-    world = parse_ray_world(bar([6, 1, 1], measured, families=families))
+    world = parse_nature_beam_world(bar([6, 1, 1], measured, families=families))
     charges = TOOL.declared_charges(world)
     assert charges == [1 << 23, 2, 2, -15, 0, Fraction(2, 3)]
     assert [type(charge) for charge in charges[:5]] == [int] * 5
     assert charges == [
         entry.charge[0] if entry.charge[1] == 1 else Fraction(*entry.charge)
-        for entry in RaySimulation(world).measured.values()
+        for entry in NatureBeamSimulation(world).measured.values()
     ]

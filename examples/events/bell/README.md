@@ -98,7 +98,7 @@ criterion) reads each run's `run.json`, `initialization.json` and
 S, S', the offsets and the fingerprint, and every criterion with its
 verdict; a failed criterion exits nonzero. Every expectation is exact: a
 deviation is a defect of the engine, the width or the bookkeeping, to be
-reproduced minimally and reported, never tuned away. `tests/test_ray_worlds.py`
+reproduced minimally and reported, never tuned away. `tests/test_nature_beam_worlds.py`
 (b) runs the ten worlds through the same tool as a check that the engine
 does what the law says.
 

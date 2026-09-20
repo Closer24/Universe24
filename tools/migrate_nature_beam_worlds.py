@@ -1,4 +1,4 @@
-"""Rewrite ray worlds to the form of 2026-09-20: the kind of a family derived
+"""Rewrite NatureBeam worlds to the form of 2026-09-20: the kind of a family derived
 from its quantum, only the table entries that differ from the default, and
 the charge per unit of content on the family.
 
@@ -32,7 +32,7 @@ An entity definitions file (`format` `event-entities-v1`) declares no
 families and is left as it is: its tables are the apparatus's, read against
 the families of the world that places it.
 
-    PYTHONPATH=src python tools/migrate_ray_worlds.py examples/events/*.json
+    PYTHONPATH=src python tools/migrate_nature_beam_worlds.py examples/events/*.json
 """
 
 from __future__ import annotations

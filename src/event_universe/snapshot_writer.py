@@ -19,7 +19,7 @@ INDENT = 2
 
 class SnapshotSource(Protocol):
     """A world whose snapshot streams as (key, value) pairs
-    (`RaySimulation.snapshot_stream`)."""
+    (`NatureBeamSimulation.snapshot_stream`)."""
 
     def snapshot_stream(self) -> Iterator[tuple[str, object]]: ...
 

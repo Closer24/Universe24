@@ -18,15 +18,15 @@ The code: `src/event_universe/events/` (`world.py` the world file and its
 refusals, `measured.py` the measured event's record and the ledger,
 `nature_beam.py` the law (the record, the one reading `read_arrivals`, the
 flight table, the collision table, the store of records per family and the
-function `nature_beam`), `engine.py` the frame (`RaySimulation`: the clocks,
+function `nature_beam`), `engine.py` the frame (`NatureBeamSimulation`: the clocks,
 the owed count, the steps, the books, the readings, the snapshot), `run.py`
 the artifacts of a run) on `src/event_universe/core/` (`integer.py`,
-`lattice.py`, `phase.py`). The tests: `tests/test_ray_readings.py`,
-`tests/test_ray_flight.py`, `tests/test_ray_collision.py`,
-`tests/test_ray_bijection.py`, `tests/test_ray_detector.py`,
-`tests/test_ray_reemission.py`, `tests/test_ray_clock.py`,
-`tests/test_ray_window.py`, `tests/test_ray_world_parsing.py`,
-`tests/test_ray_worlds.py`, `tests/test_ray_push.py`, `tests/test_ray_age.py`
+`lattice.py`, `phase.py`). The tests: `tests/test_nature_beam_readings.py`,
+`tests/test_nature_beam_flight.py`, `tests/test_nature_beam_collision.py`,
+`tests/test_nature_beam_bijection.py`, `tests/test_nature_beam_detector.py`,
+`tests/test_nature_beam_reemission.py`, `tests/test_nature_beam_clock.py`,
+`tests/test_nature_beam_window.py`, `tests/test_nature_beam_world_parsing.py`,
+`tests/test_nature_beam_worlds.py`, `tests/test_nature_beam_push.py`, `tests/test_nature_beam_age.py`
 ([expectations](TEST_EXPECTATIONS.md)). The
 worlds: [examples/events/](../examples/events/README.md).
 
@@ -80,7 +80,7 @@ plane. A thin periodic board is a
 compact graph with return Links; it establishes no equivalence with
 unbounded three-dimensional space and requires its own experiment
 configuration. The independent expectations of the topology are pinned in
-[test expectations](TEST_EXPECTATIONS.md#the-flight) (`test_ray_flight` (d)
+[test expectations](TEST_EXPECTATIONS.md#the-flight) (`test_nature_beam_flight` (d)
 and (e)).
 
 ## The law of the ray (`rays-v1`)
@@ -125,7 +125,7 @@ their amplitudes as weights (32 x amount at cos and sin over 256), the
 scalar squared ([RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam),
 step 2, and section 10, note 16).
 
-**The frame** (`RaySimulation.step`, `engine.py`): for every measured
+**The frame** (`NatureBeamSimulation.step`, `engine.py`): for every measured
 event, its clock (its age, the turn `by_clock(age, content, K)`, its
 release rate, its lamp's rate and window, its owed count) and its content
 (`frame_content`, read once before the law: M_A of the interval's push,
@@ -155,7 +155,7 @@ an interval where nothing is owed; the rule of one axis is
 its rule lives and what the readings tools read) and books the interval.
 A measured event on a set of Nodes (`span`, [RAY_LAW note 30](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 `Measured.span`, `Measured.nodes`, `world.body_nodes`) is one record on
-all of them: `RaySimulation.at` holds every Node of every body, the step
+all of them: `NatureBeamSimulation.at` holds every Node of every body, the step
 moves the whole set as one (refused when a Node of the moved set holds
 another measured event; the whole body clicks on the face when any of its
 Nodes would leave; every Node wraps on a periodic axis), and `nature_beam`
@@ -196,7 +196,7 @@ the arriving phase and content, apportioned whole (`apportion_whole`, the
 leftover to the direction `age mod n` on); a `rerelease` entry does the
 same with another number's rays, stamped with the re-emitter's number.
 
-**The books** (`RaySimulation.books`, the runner's `audit` per tick), exact
+**The books** (`NatureBeamSimulation.books`, the runner's `audit` per tick), exact
 at every interval: per family the measured line, in content, initial +
 measured (the clicks' content) = current + spent (the lamps' cost) +
 escaped (measured events off the board); the transit line, in amount,
@@ -237,7 +237,7 @@ record (`DetectorSet.record`, `Ledger.face_record`) are exact Python
 integers that can exceed 2^63 in `run.json` and `state.json`, parsed as
 arbitrary-precision integers ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
 **The detector is a set of Nodes with one record** (the model owner,
-2026-09-19): `RaySimulation.detector_sets` holds one `DetectorSet` per
+2026-09-19): `NatureBeamSimulation.detector_sets` holds one `DetectorSet` per
 declared detector (its name, its `reading`, its threshold, its measured
 events, its record per family and its phase at the last click) and one
 per measured event outside every declared detector (a detector of one

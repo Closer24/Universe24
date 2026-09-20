@@ -14,7 +14,7 @@ engine; the instantiated detector is physically on the board.
 `event_universe.world_loading` is the single host owner of strict document
 resolution, entity placement and portable input assembly. It uses
 `json_documents.parse_json_document` for every JSON document, then
-`events.world.parse_ray_world` for the fully expanded world. That engine parser
+`events.world.parse_nature_beam_world` for the fully expanded world. That engine parser
 remains the one owner of physical schema and domain validation. Physical modules
 never open entity files, consult a catalog, branch on an entity name or retain
 instance definitions as evolving memory. The loader executes no Python,
@@ -153,7 +153,7 @@ class DefinitionSource:
 
 @dataclass(frozen=True)
 class LoadedWorld:
-    world: RayWorld
+    world: NatureBeamWorld
     portable_source: bytes
     expanded_source: bytes
     dependencies: tuple[DefinitionSource, ...]
@@ -232,7 +232,7 @@ before preparing the output directory. For dependency-bearing inputs it writes:
 * `resolved_initialization.json`: the exact expanded engine document.
 
 The existing `initialization_sha256` still hashes the original input.
-`execute_ray_run` (until 2026-09-19 `execute_event_run`) gains the optional keyword-only
+`execute_nature_beam_run` (until 2026-09-19 `execute_event_run`) gains the optional keyword-only
 `initialization_record: dict[str, object] | None = None`, used only to copy
 metadata under `run.json.initialization_resolution`. The runner supplies exactly
 `format: "event-world-bundle-v1"`, `bundle_sha256`, `expanded_sha256`, and
@@ -275,7 +275,7 @@ Before code, the expected host results are fixed:
 | Definition positions `(0,0,0)`, `(1,0,0)`, `(2,0,0)` placed at `(3,4,0)` on a 9-by-9-by-1 board | Physical positions `(3,4,0)`, `(4,4,0)`, `(5,4,0)`; relative output `(2,0,0)` becomes `(5,4,0)` |
 | A second placement at `(3,6,0)`, no inline material | Six measured Events numbered 1..6 in the stated order; two separate detector labels and original thresholds |
 | Rename instance `alice` to `a/b~c` | Same physical payload/routing, detector prefix changes from `/alice/` to `/a~1b~0c/` |
-| Separate files, their portable bundle, and the bundle copied to another directory | Equal RayWorld and expanded SHA-256; same raw definitions SHA-256; no dependency read for a bundle |
+| Separate files, their portable bundle, and the bundle copied to another directory | Equal NatureBeamWorld and expanded SHA-256; same raw definitions SHA-256; no dependency read for a bundle |
 | File edited after a template was prepared | Already prepared bundle/export/Start retains its earlier state; a newly loaded template reflects the new bytes |
 | Missing context/file/name, duplicate keys/names, unexpected dependency, traversal/symlink escape, overlaps or translated coordinate 9 on extent 9 | Concrete refusal before run/output creation; no clipping, fallback or silent redefinition |
 | Plain legacy world | Same parsed world, original portable bytes, no dependency metadata/artifacts |

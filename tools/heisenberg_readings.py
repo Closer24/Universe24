@@ -37,7 +37,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from event_universe.core.integer import by_clock
-from event_universe.events import parse_ray_world
+from event_universe.events import parse_nature_beam_world
 from event_universe.json_documents import parse_json_document
 
 # Every rule of the engine this tool needs is read off the engine's own
@@ -45,7 +45,7 @@ from event_universe.json_documents import parse_json_document
 # is a reader of the record, never a second owner of a rule): the lamp's
 # turn off the clock `core.integer.by_clock` (the primitive the engine's
 # frame calls), the world's keys through
-# `parse_ray_world`; the records are the run's (`run.json`, the
+# `parse_nature_beam_world`; the records are the run's (`run.json`, the
 # `DetectorSet` record per screen pixel).
 MODEL_PREFIX = "rays-heisenberg-"
 MODEL_SUFFIX = "-v1"
@@ -162,7 +162,7 @@ def read_run(folder: Path) -> Reading:
     name = model[len(MODEL_PREFIX) : -len(MODEL_SUFFIX)]
     width_part, reading = name.split("-")
     # The world as the engine parses it (the keys with their defaults).
-    world = parse_ray_world(parse_json_document((folder / "initialization.json").read_bytes()))
+    world = parse_nature_beam_world(parse_json_document((folder / "initialization.json").read_bytes()))
     lamp = next(m for m in world.measured if m.lamp is not None)
     # The lamp's turn per self-creation off the engine's clock, `by_clock(age,
     # content, K)` (the frame, ENGINE.md), at its first self-creation: the

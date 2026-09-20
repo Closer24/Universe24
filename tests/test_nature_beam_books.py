@@ -31,7 +31,7 @@ labels +1 and -1 conserved; the table moves the pair on later).
 
 from __future__ import annotations
 
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 
 LIGHT, M = 0, 1
 TICKS = 40
@@ -105,7 +105,7 @@ def current_lines(books: dict[str, object]) -> dict[str, list[int]]:
 
 def test_the_running_lines_equal_the_recount_at_every_interval():
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(world_of_every_way()), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world_of_every_way()), records.append)
     assert current_lines(simulation.books()) == simulation.recount()
     moved = False
     for tick in range(1, TICKS + 1):
@@ -132,7 +132,7 @@ def test_the_running_lines_equal_the_recount_at_every_interval():
 def test_an_empty_world_counts_zero_both_ways():
     world = world_of_every_way()
     world["measured"], world["in_transit"], world["detectors"] = [], [], []
-    simulation = RaySimulation(parse_ray_world(world))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world))
     simulation.step()
     zero = {"transit": [0, 0], "content": [0, 0], "momentum": [0, 0, 0]}
     assert simulation.recount() == zero == current_lines(simulation.books())

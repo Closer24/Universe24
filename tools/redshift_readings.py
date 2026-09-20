@@ -37,7 +37,7 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 
 MODEL_PREFIX = "rays-redshift-"
 MODEL_SUFFIX = "-space-v1"
@@ -151,7 +151,7 @@ def replay_window(document: dict[str, object], reading: Reading) -> None:
     """The world replayed through the API: every probe's (age, waited) at
     the two ends of the window, the difference being its count over the
     stationary fan."""
-    simulation = RaySimulation(parse_ray_world(document))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(document))
     start, end = WINDOW
     end = min(end, reading.ticks)
     at_start: dict[int, tuple[int, int]] = {}

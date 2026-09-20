@@ -59,9 +59,9 @@ import numpy as np
 
 from event_universe.core.integer import by_clock
 from event_universe.core.lattice import PORT_HEADINGS
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import flight_table, unit_label
-from event_universe.events.world import HEADING_OFFSET, LABEL_SCALE, RAYS_LAW, RayWorld
+from event_universe.events.world import HEADING_OFFSET, LABEL_SCALE, RAYS_LAW, NatureBeamWorld
 from event_universe.events.world import Q as FLIGHT_SCALE
 from event_universe.json_documents import parse_json_document
 
@@ -71,7 +71,7 @@ from event_universe.json_documents import parse_json_document
 # `core.integer.by_clock` (the primitive the engine's frame, release and
 # step call), the flight table `nature_beam.flight_table` and its
 # `manhattan_steps`, the label `nature_beam.unit_label`, the scale
-# `world.LABEL_SCALE`, the world's keys through `parse_ray_world` and a
+# `world.LABEL_SCALE`, the world's keys through `parse_nature_beam_world` and a
 # measured event's charge through `Measured.charge`.
 MODEL_PREFIX = "rays-coupling-"
 MODEL_SUFFIX = "-plane-v1"
@@ -148,7 +148,7 @@ def step_axis(event: Record) -> int:
 
 def steps_by_rule(reads: Reads, m: int, first: int, last: int, width: int = 1) -> list[tuple[int, int]]:
     """The (tick, axis) at which a free probe of content m steps by the
-    engine's step rule on the record (`RaySimulation._move`, ENGINE.md: one
+    engine's step rule on the record (`NatureBeamSimulation._move`, ENGINE.md: one
     Link per (Q x S x M + p) / p self-creations on an axis whose momentum
     component is p, off the clock): its momentum is the cumulative push of
     its reads (born at rest), at tick t after that tick's read the first
@@ -203,13 +203,13 @@ def label_push(heading: Vector, amount: int, content: int) -> Vector:
     return scaled(unit_label(heading), -amount * content)
 
 
-def declared_charges(world: RayWorld) -> list[int | Fraction]:
+def declared_charges(world: NatureBeamWorld) -> list[int | Fraction]:
     """The charge of every measured event of the parsed world in declaration
     order, as the engine computes it (`Measured.charge`: the family's charge
     per unit of content, rho = [n, d], times the event's content, a reduced
     pair; the model owner, 2026-09-20): an integer where the pair is whole,
     a `Fraction` otherwise."""
-    simulation = RaySimulation(world)
+    simulation = NatureBeamSimulation(world)
     found: list[int | Fraction] = []
     for number in sorted(simulation.measured):
         numerator, denominator = simulation.measured[number].charge
@@ -274,7 +274,7 @@ class Run:
     folder: Path
     record: Record
     world: Record
-    parsed: RayWorld
+    parsed: NatureBeamWorld
     events: list[Record]
 
     @property
@@ -317,7 +317,7 @@ def load(folder: Path) -> Run:
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
     source = (folder / "initialization.json").read_bytes()
     world = json.loads(source.decode("utf-8"))
-    parsed = parse_ray_world(parse_json_document(source))
+    parsed = parse_nature_beam_world(parse_json_document(source))
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         events = [json.loads(line) for line in stream if line.strip()]
     model = str(record["model"])
@@ -658,7 +658,7 @@ class Replay:
     audit_matches: bool
 
 
-def square_flux(simulation: RaySimulation, half: int) -> int:
+def square_flux(simulation: NatureBeamSimulation, half: int) -> int:
     """Gauss's flux through the square of half-width `half` about the centre
     on the plane: the arrivals just outside each in-plane face moving
     outward less the arrivals on the face moving inward (the engine's
@@ -683,7 +683,7 @@ def square_flux(simulation: RaySimulation, half: int) -> int:
 
 def replay_world_5(run: Run, window: int) -> Replay:
     world = run.parsed
-    simulation = RaySimulation(world)
+    simulation = NatureBeamSimulation(world)
     ticks = world.ticks
     first = ticks - window + 1
     # The ring's Nodes are the engine's shell (`shell_readings`: the Nodes at
@@ -883,7 +883,7 @@ def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
         reader = k_index + 2
         probe = run.measured(reader)
         assert probe is not None
-        # The clock's frame as the engine keeps it (`RaySimulation._frame_all`
+        # The clock's frame as the engine keeps it (`NatureBeamSimulation._frame_all`
         # and `_suspend`, ENGINE.md): an interval owed is paid by one, else
         # the event self-creates, its age advances and it owes the engine's
         # clock `by_clock(age, presence x n, d)` on the presence the replay

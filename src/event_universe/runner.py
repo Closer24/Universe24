@@ -14,7 +14,7 @@ import argparse
 import hashlib
 from pathlib import Path
 
-from event_universe.events.run import execute_ray_run
+from event_universe.events.run import execute_nature_beam_run
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 from event_universe.world_loading import load_world
 
@@ -54,7 +54,7 @@ def run_initialization(initialization: Path, output: Path, *, ticks: int | None 
                     for dependency in loaded.dependencies
                 ],
             }
-        return execute_ray_run(
+        return execute_nature_beam_run(
             world,
             source,
             output,

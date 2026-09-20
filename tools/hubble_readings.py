@@ -52,7 +52,7 @@ from pathlib import Path
 import numpy as np
 
 from event_universe.core.lattice import PORT_HEADINGS
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import flight_table
 from event_universe.events.world import HEADING_OFFSET, Q
 
@@ -268,7 +268,7 @@ def replay(run: Run) -> None:
     """The world replayed through the API: every measured event's (age,
     waited, position, momentum) at every window edge, the host's view of
     the clocks' counts and the steps (GameBoard readings, the check)."""
-    simulation = RaySimulation(parse_ray_world(run.document))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(run.document))
     edges = sorted({edge for window in WINDOWS for edge in window})
     for tick in range(1, min(max(edges), run.ticks) + 1):
         simulation.step()

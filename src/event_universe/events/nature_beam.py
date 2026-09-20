@@ -83,7 +83,7 @@ Port, and the reading's vector and tensor moments are taken on u_d as
 well, so a fan's flow reads Q per unit of amount direction-blind. No other
 function holds a piece of the law: `flight_table`, `collision_table` and
 `read_arrivals` are the pure tables and the one reading it takes;
-`RayStore` is the structure of arrays it moves. Integers only. The engine
+`NatureBeamStore` is the structure of arrays it moves. Integers only. The engine
 (`engine.py`) schedules and books; it computes no physics.
 """
 
@@ -108,8 +108,8 @@ from event_universe.events.world import (
     MOMENTUM_BOUND,
     RAYS_LAW,
     REST_DIRECTIONS,
+    NatureBeamWorld,
     Q,
-    RayWorld,
     Vector,
 )
 
@@ -136,7 +136,7 @@ SLOT_STATES = 3
 AMPLITUDE_SCALE = 32
 # The cosine and sine tables are in 256ths; their rounding puts the length
 # of an entry (C, S) below 257 for every N from 2 through 4096
-# (`test_ray_detector` (e) checks it), so one unit's amplitude at a phase
+# (`test_nature_beam_detector` (e) checks it), so one unit's amplitude at a phase
 # is a vector shorter than 32 x 257.
 LONGEST_PHASE_ENTRY = 257
 # The pointer's register bound: a detector's coherent pointer (X, Y) is a
@@ -518,7 +518,7 @@ def collision_table() -> CollisionTable:
     members of a class sorted as 8-tuples, the forward map the cyclic shift
     by +1, the inverse by -1; a class of one is fixed. A constant of the
     law (the 3^8 states), generated once per process and shared read-only
-    by every `RaySimulation` (the arrays refuse a write)."""
+    by every `NatureBeamSimulation` (the arrays refuse a write)."""
     classes: dict[object, list[tuple[int, ...]]] = {}
     for state in itertools.product(range(SLOT_STATES), repeat=COLLISION_SLOTS):
         classes.setdefault(class_key(state), []).append(state)
@@ -544,7 +544,7 @@ def collision_table() -> CollisionTable:
 
 
 @dataclass(frozen=True)
-class RayTables:
+class NatureBeamTables:
     """The two pure tables of a world and the circle's tables: the flight
     table of its direction set, the collision table, the cosines and sines
     at 1/256 and the window table (whether a phase distance is inside the
@@ -557,11 +557,11 @@ class RayTables:
     window: np.ndarray
 
 
-def ray_tables(world: RayWorld) -> RayTables:
+def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
     modulus = world.phase_steps
     distance = np.arange(modulus, dtype=np.int64)
     window = (4 * distance < modulus) | (4 * distance >= 3 * modulus)
-    return RayTables(
+    return NatureBeamTables(
         flight_table(world.directions),
         collision_table(),
         np.array(phase_cosines(modulus), dtype=np.int64),
@@ -739,7 +739,7 @@ def pointer_phases(
     one with the smallest |X S[k] - Y C[k]| among those with X C[k] + Y
     S[k] > 0 (the lowest k on a tie), exact integers; a pointer of one
     ray at phase p reads p wherever the 1/256 tables tell the steps apart
-    (`test_ray_detector` (g)); a zero pointer has no step (None). In the
+    (`test_nature_beam_detector` (g)); a zero pointer has no step (None). In the
     register while every component is within `POINTER_STEP_BOUND`, in
     Python integers beyond it."""
     if not x:
@@ -766,7 +766,7 @@ def pointer_phases(
     return found
 
 
-class RayStore:
+class NatureBeamStore:
     """The records of one family as a structure of arrays, one row per
     record: `node` the flat index, `direction`, `age` (whole: the intervals
     since the measured event that created the ray; rows of different ages
@@ -1260,9 +1260,9 @@ def push_form(
 
 
 def nature_beam(
-    stores: list[RayStore],
-    world: RayWorld,
-    tables: RayTables,
+    stores: list[NatureBeamStore],
+    world: NatureBeamWorld,
+    tables: NatureBeamTables,
     measured: dict[int, Measured],
     tick: int,
     record: Record | None,
@@ -1309,7 +1309,7 @@ def nature_beam(
             node_event[[stores[0].flat(node) for node in entry.nodes]] = which
     occupied = node_event >= 0
 
-    def collide(store: RayStore, backward: bool) -> None:
+    def collide(store: NatureBeamStore, backward: bool) -> None:
         """Step 3: at every Node of free space, per (number, content) class,
         the single units in the eight slots permuted by the table
         (`inverse` with `backward`); the same rule forward and back."""
@@ -1536,7 +1536,7 @@ def nature_beam(
         # rank, stage), and raised at that point below.
         failures: dict[tuple[int, int, int, int, int], OverflowError] = {}
 
-        def family_plan(family: int, store: RayStore) -> FamilyPlan | None:
+        def family_plan(family: int, store: NatureBeamStore) -> FamilyPlan | None:
             free = free_of[family]
             if store.size == 0:
                 return None

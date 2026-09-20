@@ -45,9 +45,9 @@ from pathlib import Path
 import numpy as np
 
 from event_universe.core.phase import phase_cosines, phase_sines
-from event_universe.events import parse_ray_world
+from event_universe.events import parse_nature_beam_world
 from event_universe.events.nature_beam import coherent_pointer
-from event_universe.events.run import execute_ray_run
+from event_universe.events.run import execute_nature_beam_run
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("bohr_readings_tool", ROOT / "tools" / "bohr_readings.py")
@@ -118,7 +118,9 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     }
     folder = tmp_path / "r3"
     folder.mkdir()
-    execute_ray_run(parse_ray_world(document), json.dumps(document).encode("utf-8"), folder, "test", 20)
+    execute_nature_beam_run(
+        parse_nature_beam_world(document), json.dumps(document).encode("utf-8"), folder, "test", 20
+    )
     reading = TOOL.read_run(folder)
     assert (reading.name, reading.radius, reading.action) == ("r3", 3, 65536)
     assert reading.derived_j == 4 * 320 * 3 / 65536 == 0.05859375

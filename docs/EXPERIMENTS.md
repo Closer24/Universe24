@@ -966,7 +966,7 @@ states "exactly" and means integer equality at every tick.
   10) and the run needs 160 intervals for the 128 pairs.
 - **Features.** The one engine (`rays-v1`): a lamp of a paid family releasing
   one ray per self-creation on +X and on -X (`lamp.directions`), detectors
-  of threshold 1 and the phase window (`tests/test_ray_window.py`); the
+  of threshold 1 and the phase window (`tests/test_nature_beam_window.py`); the
   window reads each ray's own phase. Nothing else: one ray per interval per
   direction, no collision on the bar (rays of one number on one line never
   meet head-on), no suspension.
@@ -976,7 +976,7 @@ states "exactly" and means integer equality at every tick.
   `rays-bell-a{a}-b{b}-v1`; the same ten settings; the analysis
   `tools/bell_chsh.py` unchanged in its criteria (the `record` line admitted
   among the record kinds; the plus offset checked below the minus).
-  `tests/test_ray_worlds.py` (b) runs the ten worlds through the tool.
+  `tests/test_nature_beam_worlds.py` (b) runs the ten worlds through the tool.
 - **Result (2026-09-19, measured).** Branch `claude/universe24-new-3ytqde`,
   the ray law's commits on the base `ce0b22af`, source fingerprint
   `703f9427d9f70e6c619218e457edca0b7647381a8cc7a20d140e4a3d9dd3f671`, Python 3.14, headless, about 0.2 s per run. Every
@@ -1157,7 +1157,7 @@ states "exactly" and means integer equality at every tick.
   or [-2, 1] on content 1; [1, 2] on the content-4 probe of `7_pp_m4`), no
   `charge` on a measured event, and the push is one product `M_A x (rho_A
   rho_B - 1) x V_B` with the electric part `sign x by_clock(age_A, |V n_A
-  n_B M_A|, d_A d_B)`. Run headlessly through `RaySimulation` on the tip
+  n_B M_A|, d_A d_B)`. Run headlessly through `NatureBeamSimulation` on the tip
   before the change (the per-event charges, `q_A q_B / M_B`) and after it:
   the `read` records of every world equal tick by tick, number by number
   and integer by integer (181 records in `7_00`, `7_pp`, `7_pm`, `7_mp`,
@@ -1887,7 +1887,7 @@ states "exactly" and means integer equality at every tick.
   well enough for the coherence reading, so Bohr's lines were not read
   behind the detector in this series, neither for nor against. What the
   law lacked here is not the turn (it turned as pinned in
-  `tests/test_ray_body.py` (d)) but a stable closed orbit under whole
+  `tests/test_nature_beam_body.py` (d)) but a stable closed orbit under whole
   kicks: the next step, for the model owner, is a smoother field (a shell
   every interval at the same emission, or a larger `width` for more lumps
   per orbit), the orbit tilted out of the lattice plane (the physicist's

@@ -19,12 +19,12 @@ from __future__ import annotations
 
 import numpy as np
 
-from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.nature_beam import RayStore
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
+from event_universe.events.nature_beam import NatureBeamStore
 
 
-def fixed_rays() -> list[dict[str, object]]:
-    rays = []
+def fixed_beams() -> list[dict[str, object]]:
+    beams = []
     directions = [
         [1, 0, 0],
         [-1, 0, 0],
@@ -39,7 +39,7 @@ def fixed_rays() -> list[dict[str, object]]:
     ]
     for k in range(300):
         direction = directions[(k * 7) % len(directions)]
-        rays.append(
+        beams.append(
             {
                 "position": [(k * 5) % 8, (k * 3) % 8, (k * 11) % 4],
                 "family": "light",
@@ -52,7 +52,7 @@ def fixed_rays() -> list[dict[str, object]]:
         )
     # Head-on pairs at the same age meet at the Node between them.
     for k in range(12):
-        rays.append(
+        beams.append(
             {
                 "position": [1, k % 8, k % 4],
                 "family": "light",
@@ -62,7 +62,7 @@ def fixed_rays() -> list[dict[str, object]]:
                 "phase": k,
             }
         )
-        rays.append(
+        beams.append(
             {
                 "position": [3, k % 8, k % 4],
                 "family": "light",
@@ -72,7 +72,7 @@ def fixed_rays() -> list[dict[str, object]]:
                 "phase": 32 + k,
             }
         )
-    return rays
+    return beams
 
 
 WORLD = {
@@ -91,11 +91,11 @@ WORLD = {
     "directions": [[1, 1, 0], [2, -1, 1]],
     "families": [{"name": "light", "quantum": 1, "phase_per_link": 5}],
     "measured": [],
-    "in_transit": fixed_rays(),
+    "in_transit": fixed_beams(),
 }
 
 
-def snapshot(simulation: RaySimulation) -> np.ndarray:
+def snapshot(simulation: NatureBeamSimulation) -> np.ndarray:
     store = simulation.stores[0]
     rows = np.stack(
         [store.node, store.direction, store.age, store.phase, store.number, store.amount, store.content],
@@ -105,7 +105,7 @@ def snapshot(simulation: RaySimulation) -> np.ndarray:
 
 
 def test_fifty_intervals_forward_and_back_return_the_store_bit_exact():
-    simulation = RaySimulation(parse_ray_world(WORLD))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(WORLD))
     start = snapshot(simulation)
     directions_before = simulation.stores[0].direction.copy()
     collided = False
@@ -134,8 +134,8 @@ def merge_by_hand(rows: list[tuple[int, ...]]) -> list[tuple[int, ...]]:
     return [(*key, amount) for key, amount in sorted(merged.items())]
 
 
-def store_of(rows: list[tuple[int, ...]]) -> RayStore:
-    store = RayStore((8, 8, 4))
+def store_of(rows: list[tuple[int, ...]]) -> NatureBeamStore:
+    store = NatureBeamStore((8, 8, 4))
     columns = np.array(rows, dtype=np.int64).reshape(-1, 7)
     store.append(
         node=columns[:, 0],
@@ -150,7 +150,7 @@ def store_of(rows: list[tuple[int, ...]]) -> RayStore:
     return store
 
 
-def rows_of(store: RayStore) -> list[tuple[int, ...]]:
+def rows_of(store: NatureBeamStore) -> list[tuple[int, ...]]:
     return [
         tuple(int(v) for v in row)
         for row in np.stack(

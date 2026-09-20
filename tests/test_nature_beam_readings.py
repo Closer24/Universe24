@@ -13,7 +13,7 @@ docs/TEST_EXPECTATIONS.md ("The one reading"), written down first:
 (a) the moments: on the six headings the amounts [3, 1, 4, 1, 5, 9] and 2
     here read outside 23, here 2, the flow (2, 3, -4) and the tensor
     diag(-11, -8, 19) (3 x diag(4, 5, 14) - 23 I), which is the slot
-    decomposition of the first ray worlds exactly (its (p_x + p_y - 2 p_z,
+    decomposition of the first NatureBeam worlds exactly (its (p_x + p_y - 2 p_z,
     p_x - p_y) = (-19, -1) being -T_zz and (T_xx - T_yy) / 3); for 64 fixed
     random integer amounts on the seven slots the moments equal that slot
     decomposition through the same relations; on a fan (2 on (1, 1, 0), 3
@@ -71,7 +71,7 @@ import pytest
 
 from event_universe.core.integer import by_clock
 from event_universe.core.lattice import PORT_HEADINGS
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import read_arrivals
 from event_universe.events.world import MOMENTUM_BOUND
 
@@ -80,7 +80,7 @@ PLUS_X, MINUS_X = [1, 0, 0], [-1, 0, 0]
 NO_RESPONSE = {"home": 0, "read": 0, "measure": 0, "rerelease": 0}
 FAMILIES = [{"name": "m", "quantum": 0}, {"name": "light", "quantum": 1}]
 HEADINGS = np.array(PORT_HEADINGS, dtype=np.int64)
-# The seven slot vectors of the first ray worlds: the six headings and here.
+# The seven slot vectors of the first NatureBeam worlds: the six headings and here.
 SLOT_VECTORS = np.concatenate([HEADINGS, np.zeros((1, 3), dtype=np.int64)])
 # The slot decomposition the moments replace (the reference of this test):
 # outside, here, the flow, and (p_x + p_y - 2 p_z, p_x - p_y) with p the sum
@@ -201,7 +201,7 @@ def fixed(position: list[int], family: str, amount: int, **keys: object) -> dict
     return {"position": position, "family": family, "amount": amount, "fixed": True, **keys}
 
 
-def ray(
+def beam(
     position: list[int], family: str, number: int, direction: list[int], amount: int, phase: int = 0
 ) -> dict[str, object]:
     """A ray one Link before `position` on `direction`, arriving there in
@@ -225,15 +225,15 @@ def test_the_push_reads_the_flow_of_every_number_but_the_readers_own():
         fixed([8, 1, 1], "m", 16),
         fixed(NODE, "m", 4, directions=[PLUS_X]),
     ]
-    first = ray(NODE, "m", 1, PLUS_X, 9)
-    second = ray(NODE, "m", 2, MINUS_X, 9)
-    own = ray(NODE, "m", 3, PLUS_X, 5)
+    first = beam(NODE, "m", 1, PLUS_X, 9)
+    second = beam(NODE, "m", 2, MINUS_X, 9)
+    own = beam(NODE, "m", 3, PLUS_X, 5)
     for in_transit, push, read, home in (
         ([first, second, own], [0, 0, 0], 18, 5),
         ([first], [-2304, 0, 0], 9, 0),
         ([first, own], [-2304, 0, 0], 9, 5),
     ):
-        simulation = RaySimulation(parse_ray_world(world(families, measured, in_transit)))
+        simulation = NatureBeamSimulation(parse_nature_beam_world(world(families, measured, in_transit)))
         reader, store = simulation.measured[3], simulation.stores[0]
         simulation.step()
         assert simulation.books()["balanced"], in_transit
@@ -251,11 +251,13 @@ def test_the_presence_counts_rest_and_moving_rays_of_other_numbers_and_never_the
     """(c)."""
     lamps = [fixed([8, 0, 0], "light", 1), fixed([7, 0, 0], "light", 1)]
     probe = fixed([4, 0, 0], "light", 1, table={"light": "pass"})
-    moving = ray([4, 0, 0], "light", 2, PLUS_X, 64)
+    moving = beam([4, 0, 0], "light", 2, PLUS_X, 64)
     rest = {"position": [4, 0, 0], "family": "light", "number": 3, "direction": 0, "amount": 16}
-    for in_transit in ([moving, rest], [moving, rest, ray([4, 0, 0], "light", 1, MINUS_X, 8)]):
-        simulation = RaySimulation(
-            parse_ray_world(world([FAMILIES[1]], [probe, *lamps], in_transit, [1, 4], shape=[9, 1, 1]))
+    for in_transit in ([moving, rest], [moving, rest, beam([4, 0, 0], "light", 1, MINUS_X, 8)]):
+        simulation = NatureBeamSimulation(
+            parse_nature_beam_world(
+                world([FAMILIES[1]], [probe, *lamps], in_transit, [1, 4], shape=[9, 1, 1])
+            )
         )
         simulation.step()
         assert simulation.books()["balanced"]
@@ -268,12 +270,13 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_the_sets_phase_by_de
     """(d)."""
     sources = [fixed([0, 1, 1], "light", 4), fixed([8, 1, 1], "light", 4)]
     detector = [{"name": "d", "positions": [NODE], "threshold": 3}]
-    two = ray(NODE, "light", 2, PLUS_X, 2)
-    one = ray(NODE, "light", 3, MINUS_X, 1)
+    two = beam(NODE, "light", 2, PLUS_X, 2)
+    one = beam(NODE, "light", 3, MINUS_X, 1)
     receiver = fixed(NODE, "m", 4, table={"light": "measure"})
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(
-        parse_ray_world(world(FAMILIES, [receiver, *sources], [two, one], 0, detector)), records.append
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world(FAMILIES, [receiver, *sources], [two, one], 0, detector)),
+        records.append,
     )
     entry = simulation.measured[1]
     assert entry.threshold == 3
@@ -291,8 +294,9 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_the_sets_phase_by_de
     assert [(r["event"], r["phase"]) for r in records if r["event"] != "click"] == [("record", 0)]
 
     records.clear()
-    simulation = RaySimulation(
-        parse_ray_world(world(FAMILIES, [receiver, *sources], [two], 0, detector)), records.append
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world(FAMILIES, [receiver, *sources], [two], 0, detector)),
+        records.append,
     )
     entry = simulation.measured[1]
     simulation.step()
@@ -304,13 +308,13 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_the_sets_phase_by_de
     ]
 
     gate = fixed(NODE, "m", 4, table={"light": {"rule": "measure", "phase_window": 32}})
-    late = ray(NODE, "light", 3, MINUS_X, 1, phase=32)
+    late = beam(NODE, "light", 3, MINUS_X, 1, phase=32)
     # Under the default reading `wave` (since 2026-09-20) the window reads
     # the set's phase, the pointer of the arrivals: 2 units at phase 0 and
     # 1 at phase 32 point to phase 0, outside the window 32, so all pass.
     records.clear()
-    simulation = RaySimulation(
-        parse_ray_world(world(FAMILIES, [gate, *sources], [two, late])), records.append
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world(FAMILIES, [gate, *sources], [two, late])), records.append
     )
     entry = simulation.measured[1]
     assert entry.threshold == 1 and entry.windows == [None, 32]
@@ -322,9 +326,10 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_the_sets_phase_by_de
     # Declared `beam`, the window reads each ray's own phase: the ray at
     # phase 32 clicks, the two at phase 0 pass.
     records.clear()
-    beam = [{"name": "gate", "positions": [NODE], "reading": "beam"}]
-    simulation = RaySimulation(
-        parse_ray_world(world(FAMILIES, [gate, *sources], [two, late], 0, beam)), records.append
+    gate_detectors = [{"name": "gate", "positions": [NODE], "reading": "beam"}]
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world(FAMILIES, [gate, *sources], [two, late], 0, gate_detectors)),
+        records.append,
     )
     entry = simulation.measured[1]
     simulation.step()
@@ -336,13 +341,13 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_the_sets_phase_by_de
 
 def test_the_dense_readings_on_request_equal_the_arrivals_node_by_node():
     """(e)."""
-    rays = [
-        ray(NODE, "m", 1, PLUS_X, 9),
-        ray(NODE, "m", 1, MINUS_X, 9),
-        ray([2, 1, 1], "m", 1, [0, 1, 0], 3),
+    beams = [
+        beam(NODE, "m", 1, PLUS_X, 9),
+        beam(NODE, "m", 1, MINUS_X, 9),
+        beam([2, 1, 1], "m", 1, [0, 1, 0], 3),
         {"position": [6, 1, 1], "family": "m", "number": 1, "direction": 0, "amount": 2, "phase": 0},
     ]
-    simulation = RaySimulation(parse_ray_world(world([FAMILIES[0]], [], rays)))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world([FAMILIES[0]], [], beams)))
     zero = simulation.count[0], simulation.flow[0], simulation.presence[0], simulation.per_port[0]
     assert [a.shape for a in zero] == [(9, 3, 3), (9, 3, 3, 3), (9, 3, 3), (9, 3, 3, 6)]
     assert all(int(np.abs(a).sum()) == 0 for a in zero)
@@ -356,7 +361,7 @@ def test_the_dense_readings_on_request_equal_the_arrivals_node_by_node():
     assert flow.sum(axis=(0, 1, 2)).tolist() == [0, 192, 0]
     assert per_port[4, 1, 1].tolist() == [9, 9, 0, 0, 0, 0]
     assert per_port[2, 1, 1].tolist() == [0, 0, 3, 0, 0, 0] and int(per_port.sum()) == 21
-    empty = RaySimulation(parse_ray_world(world([FAMILIES[0]], [], [])))
+    empty = NatureBeamSimulation(parse_nature_beam_world(world([FAMILIES[0]], [], [])))
     empty.step()
     assert int(empty.count[0].sum()) == 0 and int(empty.per_port[0].sum()) == 0
 
@@ -374,15 +379,21 @@ def test_a_fans_flow_reads_q_per_unit_direction_blind():
     the push is (0, 0, 0) exactly (u_{-D} = -u_D) and the reading 10."""
     reader = fixed(NODE, "m", 1)
     sources = [fixed([0, 1, 1], "m", 16), fixed([8, 1, 1], "m", 16)]
-    fan_ray = {"position": [3, 1, 1], "family": "m", "number": 2, "direction": [7, 5, 0], "amount": 5}
-    back_ray = {"position": [5, 1, 1], "family": "m", "number": 3, "direction": [-7, -5, 0], "amount": 5}
+    fan_beam = {"position": [3, 1, 1], "family": "m", "number": 2, "direction": [7, 5, 0], "amount": 5}
+    back_beam = {
+        "position": [5, 1, 1],
+        "family": "m",
+        "number": 3,
+        "direction": [-7, -5, 0],
+        "amount": 5,
+    }
     for in_transit, push in (
-        ([fan_ray, ray(NODE, "m", 3, PLUS_X, 5)], [-580, -185, 0]),
-        ([fan_ray, back_ray], [0, 0, 0]),
+        ([fan_beam, beam(NODE, "m", 3, PLUS_X, 5)], [-580, -185, 0]),
+        ([fan_beam, back_beam], [0, 0, 0]),
     ):
         document = world([FAMILIES[0]], [reader, *sources], in_transit)
         document["directions"] = [[7, 5, 0], [-7, -5, 0]]
-        simulation = RaySimulation(parse_ray_world(document))
+        simulation = NatureBeamSimulation(parse_nature_beam_world(document))
         entry = simulation.measured[1]
         simulation.step()
         assert simulation.books()["balanced"]

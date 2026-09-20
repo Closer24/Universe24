@@ -59,7 +59,7 @@ def test_architecture_gate_rejects_upward_and_output_imports(module, source):
         ("events.nature_beam", "from event_universe.core.lattice import Address3"),
         ("events.engine", "from event_universe.events.nature_beam import nature_beam"),
         ("events.run", "import json\nfrom event_universe.snapshot_writer import write_snapshot"),
-        ("runner", "from event_universe.events.run import execute_ray_run"),
+        ("runner", "from event_universe.events.run import execute_nature_beam_run"),
     ],
 )
 def test_architecture_gate_allows_the_dependency_direction(module, source):

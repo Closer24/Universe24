@@ -131,7 +131,7 @@ CROWDS = {"coasting": 1, "pushing": FACTOR}
 Json = dict[str, object]
 
 
-def ray_speed() -> float:
+def beam_speed() -> float:
     """The ray's speed on a heading, read off the flight table: the Links
     made in one period of the heading's digital line over the period."""
     table = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
@@ -140,7 +140,7 @@ def ray_speed() -> float:
     return int(table.manhattan_steps(heading, np.array([period]))[0]) / period
 
 
-C = ray_speed()
+C = beam_speed()
 
 
 def momentum(fraction: float, content: int) -> int:

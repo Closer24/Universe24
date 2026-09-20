@@ -48,7 +48,7 @@ import json
 
 import pytest
 
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.engine import step_axis
 from event_universe.runner import run_initialization
 
@@ -81,7 +81,7 @@ def mover(content: int, momentum: int, x: int = 4) -> dict[str, object]:
 def positions(world: dict[str, object], ticks: int) -> tuple[list[int], list[int]]:
     """The mover's x and its `steps` after each of `ticks` intervals, the
     books balanced at every one."""
-    simulation = RaySimulation(parse_ray_world(world))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world))
     entry = simulation.measured[1]
     xs, steps = [], []
     for tick in range(1, ticks + 1):
@@ -125,7 +125,7 @@ def test_the_step_is_counted_off_the_clock_with_no_remainder():
         for x in range(3, 8)
     ]
     world = bar([mover(16, 1024, x=3), anchor], width=8, suspension=[1, 4], in_transit=crowds, ticks=60)
-    simulation = RaySimulation(parse_ray_world(world))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world))
     entry = simulation.measured[1]
     xs = {}
     for tick in range(1, 61):
@@ -143,11 +143,11 @@ def test_the_step_is_counted_off_the_clock_with_no_remainder():
 def test_the_key_parses_with_its_default_and_its_refusals(tmp_path):
     """(d)."""
     world = bar([mover(16, 1024)])
-    assert parse_ray_world(world).width == 1
-    assert parse_ray_world({**world, "width": 8}).width == 8
+    assert parse_nature_beam_world(world).width == 1
+    assert parse_nature_beam_world({**world, "width": 8}).width == 8
     for bad in (0, -1, "8", 1.5):
         with pytest.raises(ValueError, match="width must be an integer from 1"):
-            parse_ray_world({**world, "width": bad})
+            parse_nature_beam_world({**world, "width": bad})
     path = tmp_path / "world.json"
     path.write_text(json.dumps({**world, "width": 8, "ticks": 2}), encoding="utf-8")
     record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))

@@ -21,7 +21,7 @@ the linked Issue/PR before treating it as live status.
    logic exists once (one reading of the Node, `read_arrivals`, its
    components selected by the coupling's declared key). Its engine is the
    one engine, `src/event_universe/events/` (`rays-v1`) on the substrate of
-   `core/`, a world selected by `"law": "rays"`, with the ten `tests/test_ray_*.py`
+   `core/`, a world selected by `"law": "rays"`, with the ten `tests/test_nature_beam_*.py`
    modules and the worlds under `examples/events/`
    ([the engine's bookkeeping](ENGINE.md), [coverage](HIGHLIGHTS_IMPLEMENTATION.md),
    [expectations](TEST_EXPECTATIONS.md)).
@@ -36,7 +36,7 @@ the linked Issue/PR before treating it as live status.
    the one reading set, the count off the clock) is re-pinned in the new
    modules. Any state before a deletion can be checked out from git.
 
-**What the engine gave on its first worlds** (`test_ray_worlds`, and the
+**What the engine gave on its first worlds** (`test_nature_beam_worlds`, and the
 re-registered runs in [EXPERIMENTS.md](EXPERIMENTS.md)): the content of a
 measured event at rest constant at every tick; six ballistic beams with
 Gauss's flux through every cube equal to the emission exactly once the front

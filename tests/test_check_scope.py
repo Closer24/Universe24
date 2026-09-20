@@ -20,7 +20,7 @@ SPEC.loader.exec_module(CHECK)
 
 def test_the_worlds_readme_selects_the_engine_test():
     selected, _ = CHECK.select(["examples/events/README.md"], {})
-    assert "tests/test_ray_worlds.py" in selected
+    assert "tests/test_nature_beam_worlds.py" in selected
     assert "tests/test_retention.py" not in selected
 
 
@@ -300,4 +300,4 @@ def test_detector_definitions_select_their_explicit_loading_consumers():
         "tests/test_configuration_validation.py",
         "tests/test_entity_loading_consumers.py",
     } <= set(tests)
-    assert "tests/test_ray_flight.py" not in tests
+    assert "tests/test_nature_beam_flight.py" not in tests

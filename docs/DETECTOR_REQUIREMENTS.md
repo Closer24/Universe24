@@ -105,7 +105,7 @@ schema, operator, inverse, capacity and readout are gone. The contract's
 text is in git at any commit before the deletion (`ce0b22af` the last);
 its two example runs keep their scope in [validation](VALIDATION.md). The
 requirements above stay; the reversibility they asked for is the ray law's
-bijection of the interval (`tests/test_ray_bijection.py`).
+bijection of the interval (`tests/test_nature_beam_bijection.py`).
 
 ## Remaining physical questions
 

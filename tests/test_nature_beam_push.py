@@ -147,7 +147,7 @@ charge [1, 5]; every pinned integer is unchanged.
 from __future__ import annotations
 
 from event_universe.core.integer import by_clock
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import FIELDS
 
 M, P, LIGHT = 0, 1, 2
@@ -217,9 +217,9 @@ def reads_of(records: list[dict[str, object]], number: int) -> list[tuple[int, i
     ]
 
 
-def run(world: dict[str, object]) -> tuple[RaySimulation, list[dict[str, object]]]:
+def run(world: dict[str, object]) -> tuple[NatureBeamSimulation, list[dict[str, object]]]:
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(world), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
     for _ in range(int(world["ticks"])):
         simulation.step()
         assert simulation.books()["balanced"]
@@ -283,7 +283,7 @@ def test_a_paid_ray_pushes_by_its_label_and_the_paid_momentum_book_closes():
     reader = probe(table={"light": "read"})
     world = bar([lamp, reader], release=[0, 1])
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(world), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
     for _ in range(30):
         simulation.step()
         books = simulation.books()
@@ -319,7 +319,7 @@ def test_a_fan_rays_push_is_its_label():
 
 def test_the_click_the_re_emission_and_the_home_move_the_one_label():
     """(h)."""
-    ray = {
+    beam = {
         "position": [3, 2, 0],
         "family": "light",
         "number": 2,
@@ -347,12 +347,12 @@ def test_the_click_the_re_emission_and_the_home_move_the_one_label():
             shape=[9, 5, 1],
             boundary={"z": "periodic"},
             directions=[FAN],
-            in_transit=[ray],
+            in_transit=[beam],
             release=[0, 1],
             ticks=1,
         )
         records: list[dict[str, object]] = []
-        simulation = RaySimulation(parse_ray_world(world), records.append)
+        simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
         assert simulation.books()["momentum"]["transit"] == label
         simulation.step()
         books = simulation.books()
@@ -393,7 +393,7 @@ def test_the_click_the_re_emission_and_the_home_move_the_one_label():
     # No ray leaves a board periodic on every axis: the age bound is declared.
     world["age_bound"] = 64
     records = []
-    simulation = RaySimulation(parse_ray_world(world), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
     for _ in range(20):
         simulation.step()
         assert simulation.books()["balanced"]

@@ -20,8 +20,8 @@ from event_universe.events.world import (
     LAMP_KEYS,
     MEASURED_KEYS,
     TABLE_ENTRY_KEYS,
-    RayWorld,
-    parse_ray_world,
+    NatureBeamWorld,
+    parse_nature_beam_world,
 )
 from event_universe.json_documents import parse_json_document
 
@@ -41,7 +41,7 @@ class DefinitionSource:
 
 @dataclass(frozen=True)
 class LoadedWorld:
-    world: RayWorld
+    world: NatureBeamWorld
     portable_source: bytes
     expanded_source: bytes
     dependencies: tuple[DefinitionSource, ...]
@@ -296,7 +296,7 @@ def load_world(source: str | bytes, *, base_dir: Path | None = None) -> LoadedWo
     document = _object(decoded, "input")
     bundled = document.get("format") == BUNDLE_FORMAT
     if not bundled and not (_AUTHOR_KEYS & document.keys()):
-        world = parse_ray_world(document)
+        world = parse_nature_beam_world(document)
         return LoadedWorld(world, raw, _encode(document), ())
     _utf8(raw, "input")
     supplied: dict[str, object] | None = None
@@ -326,7 +326,7 @@ def load_world(source: str | bytes, *, base_dir: Path | None = None) -> LoadedWo
         dependency = path.read_bytes()
     definitions = _definitions(dependency, reference)
     expanded_document = _expand(document, definitions)
-    world = parse_ray_world(expanded_document)
+    world = parse_nature_beam_world(expanded_document)
     expanded = _encode(expanded_document)
     portable = _encode(
         {

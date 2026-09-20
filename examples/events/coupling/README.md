@@ -49,7 +49,7 @@ filters records by `number`.
 
 A ray released at tick t first walks at t + 1; the flight table of the
 heading (1, 0, 0) (T 110, L 55) reaches m Links at the walks 1, 3, 5, 7, 8,
-10, 12, 13, 15, 17, 19, ... (`tests/test_ray_flight.py` (a)), so the front
+10, 12, 13, 15, 17, 19, ... (`tests/test_nature_beam_flight.py` (a)), so the front
 of a beam reaches r at tick 1 + (the first arrival at r Links), whole:
 2^17 at every r (a ray does not spread; no chain). r = 4: tick 8; 6: 11;
 8: 14; 12: 21; 16: 28; 20: 35; 24: 42; 30: 52; 40: 69. Two rays of the beam
@@ -94,7 +94,7 @@ PYTHONPATH=src python tools/coupling_readings.py artifacts/coupling
 
 `tools/coupling_readings.py` reads each run's `run.json`,
 `initialization.json` and `events.jsonl`, replays worlds 5 and 5_long
-through the API (`RaySimulation`, `step`, the count, presence and flow
+through the API (`NatureBeamSimulation`, `step`, the count, presence and flow
 arrays, the flux through the square), prints a table per item, every
 criterion with its verdict (an identity, a book, a timing off the flight
 table: a failure exits nonzero) and every reading against the expectations

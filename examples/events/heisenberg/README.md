@@ -50,7 +50,7 @@ pixel in the same interval from emitters at the path lengths L1 and L2
 were released 8 (L1 - L2) sqrt 3 / 8 ... more precisely at ticks that
 differ by the difference of their integer flight times, so their phases
 differ by 8 x (that difference) mod 64: the two-slit fringes of
-`test_ray_worlds` (a) at this lambda.
+`test_nature_beam_worlds` (a) at this lambda.
 
 **The coherent record of w emitters one Link apart** (the `wave` reading):
 at the angle theta the w rays that reach one pixel in one interval carry

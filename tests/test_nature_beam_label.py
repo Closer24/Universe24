@@ -28,7 +28,7 @@ vector"), written down first:
     1, content 3 x 2^18 at K 2^18: the turn 3 at every age of the run,
     content c = 3 per unit) releasing one unit per interval on the six
     headings and the eight fan directions (14 rows per release, amount 1,
-    content 3): every row's label 3 x u_d (`RayStore.labels`), |label|^2
+    content 3): every row's label 3 x u_d (`NatureBeamStore.labels`), |label|^2
     within (63 x 3)^2 .. (65 x 3)^2; the lamp's recoil after the first
     release exactly -(the labels born) = -3 x (378, 241, 121) = (-1134,
     -723, -363) (the six headings cancel), the transit line their sum;
@@ -84,7 +84,7 @@ import numpy as np
 import pytest
 
 from event_universe.core.lattice import PORT_HEADINGS
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import (
     Q,
     flight_table,
@@ -214,7 +214,9 @@ def test_every_label_is_content_times_the_unit_vector_and_the_books_close():
         "table": {"light": "rerelease"},
     }
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(world([lamp, screen, mirror])), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world([lamp, screen, mirror])), records.append
+    )
     lamp_entry, screen_entry, mirror_entry = (simulation.measured[n] for n in (1, 2, 3))
     store = simulation.stores[LIGHT]
     unit = simulation.tables.flight.labels
@@ -278,8 +280,10 @@ def test_the_bound_refuses_a_label_of_two_to_the_fifty_six_and_accepts_one_less(
 
     for family in ("light", "m"):
         with pytest.raises(ValueError, match=rf"64 x 1 x {1 << 56} = {64 << 56} .* exceeds"):
-            parse_ray_world(world([lamp, holder], in_transit=[transit(family, 1 << 56)]))
-        parsed = parse_ray_world(world([lamp, holder], in_transit=[transit(family, (1 << 56) - 1)]))
+            parse_nature_beam_world(world([lamp, holder], in_transit=[transit(family, 1 << 56)]))
+        parsed = parse_nature_beam_world(
+            world([lamp, holder], in_transit=[transit(family, (1 << 56) - 1)])
+        )
         assert parsed.in_transit[0].amount == (1 << 56) - 1
     assert MOMENTUM_BOUND // Q == (1 << 56) - 1
     labels = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS, (1, 1, 0))).labels
@@ -324,7 +328,9 @@ def test_a_merged_row_beyond_the_bound_is_refused_before_the_product_naming_the_
         ]
 
     lamp = {"position": CENTRE, "family": "light", "amount": 4, "fixed": True}
-    simulation = RaySimulation(parse_ray_world(world([lamp, holder], in_transit=pair([1, 1, 0]))))
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world([lamp, holder], in_transit=pair([1, 1, 0])))
+    )
     store = simulation.stores[LIGHT]
     assert store.size == 1 and store.amount.tolist() == [1 << 56]
     books = simulation.books(recount=True)
@@ -338,7 +344,7 @@ def test_a_merged_row_beyond_the_bound_is_refused_before_the_product_naming_the_
         match=rf"amount {1 << 56} and content 1 at Node \[2, 2, 2\] along \[64, 0, 0\], its weight "
         rf"{1 << 56} times the largest component 64 = {64 << 56}, exceeds",
     ):
-        RaySimulation(parse_ray_world(world([lamp, holder], in_transit=pair([1, 0, 0]))))
+        NatureBeamSimulation(parse_nature_beam_world(world([lamp, holder], in_transit=pair([1, 0, 0]))))
 
     mirror = {
         "position": [5, 5, 0],
@@ -375,7 +381,7 @@ def test_a_merged_row_beyond_the_bound_is_refused_before_the_product_naming_the_
         ticks=2,
     )
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(document), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
     simulation.step()
     re_emitted = [r for r in records if r["event"] == "rerelease"]
     assert [(r["number"], r["amount"], r["push"]) for r in re_emitted] == [

@@ -70,7 +70,7 @@ import numpy as np
 import pytest
 
 from event_universe.core.lattice import PORT_HEADINGS
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.engine import by_clock
 from event_universe.events.measured import count_component
 from event_universe.events.nature_beam import Q, read_arrivals
@@ -86,7 +86,7 @@ def crowd() -> list[dict[str, object]]:
     """324 fixed rays on the periodic 8 x 8 x 4 board: every heading, both
     rest slots, two fan directions, amounts 1 and 2, ages up to 22, and
     twelve head-on pairs that meet at the Node between them."""
-    rays: list[dict[str, object]] = [
+    beams: list[dict[str, object]] = [
         {
             "position": [(k * 5) % 8, (k * 3) % 8, (k * 11) % 4],
             "family": "light",
@@ -99,9 +99,9 @@ def crowd() -> list[dict[str, object]]:
         for k in range(300)
     ]
     for k in range(12):
-        rays.append({**light([1, k % 8, k % 4], PLUS_X, phase=k), "age": 0})
-        rays.append({**light([3, k % 8, k % 4], MINUS_X, phase=32 + k), "age": 0})
-    return rays
+        beams.append({**light([1, k % 8, k % 4], PLUS_X, phase=k), "age": 0})
+        beams.append({**light([3, k % 8, k % 4], MINUS_X, phase=32 + k), "age": 0})
+    return beams
 
 
 def torus() -> dict[str, object]:
@@ -153,7 +153,7 @@ def light(position: list[int], direction: list[int], age: int = 0, phase: int = 
     }
 
 
-def rows_of(simulation: RaySimulation, family: int) -> list[tuple[int, int, int]]:
+def rows_of(simulation: NatureBeamSimulation, family: int) -> list[tuple[int, int, int]]:
     store = simulation.stores[family]
     return sorted(
         (int(store.node[i]), int(store.direction[i]), int(store.age[i])) for i in range(store.size)
@@ -162,7 +162,9 @@ def rows_of(simulation: RaySimulation, family: int) -> list[tuple[int, int, int]
 
 def test_the_age_is_kept_whole_and_a_collision_keeps_it():
     """(a)."""
-    simulation = RaySimulation(parse_ray_world(bar([301, 1, 1], in_transit=[light([0, 0, 0], PLUS_X)])))
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(bar([301, 1, 1], in_transit=[light([0, 0, 0], PLUS_X)]))
+    )
     for _ in range(200):
         simulation.step()
     store = simulation.stores[1]
@@ -171,8 +173,8 @@ def test_the_age_is_kept_whole_and_a_collision_keeps_it():
     # A head-on pair: the collision parks the pair and keeps the ages.
     pair = [light([3, 0, 0], PLUS_X, age=59), light([5, 0, 0], MINUS_X, age=59, phase=9)]
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(
-        parse_ray_world(bar([9, 1, 1], in_transit=pair, age_bound=128)), records.append
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(bar([9, 1, 1], in_transit=pair, age_bound=128)), records.append
     )
     store = simulation.stores[1]
     node = store.flat((4, 0, 0))
@@ -197,8 +199,8 @@ def test_the_age_is_kept_whole_and_a_collision_keeps_it():
         "directions": [PLUS_X],
     }
     old = light([3, 0, 0], PLUS_X, age=59, phase=20)
-    simulation = RaySimulation(
-        parse_ray_world(bar([9, 1, 1], measured=[lamp, mirror], in_transit=[old], age_bound=128))
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(bar([9, 1, 1], measured=[lamp, mirror], in_transit=[old], age_bound=128))
     )
     store = simulation.stores[1]
     simulation.step()
@@ -206,7 +208,9 @@ def test_the_age_is_kept_whole_and_a_collision_keeps_it():
     assert int(store.phase[0]) == 20 and int(store.number[0]) == 2
     # A release is born at age 0.
     source = {"position": [4, 0, 0], "family": "m", "amount": 1, "fixed": True}
-    simulation = RaySimulation(parse_ray_world(bar([9, 1, 1], measured=[source], release=[1, 1])))
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(bar([9, 1, 1], measured=[source], release=[1, 1]))
+    )
     simulation.step()
     store = simulation.stores[0]
     assert store.size == 6 and (store.age == 0).all()
@@ -274,7 +278,7 @@ def ages_of_the_reader(
     world: dict[str, object],
 ) -> tuple[list[int], list[tuple[int, int, int]], list[object]]:
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(world), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
     reader = simulation.measured[2]
     ages, readings = [], []
     for tick in range(1, 25):
@@ -310,19 +314,19 @@ def test_the_age_bound_is_derived_declared_or_required(tmp_path):
     assert flight_bound((11, 11, 11), headings) == 54
     assert flight_bound((11, 11, 11), (*headings, (1, 0, 64))) == 111
     cube = bar([11, 11, 11])
-    assert parse_ray_world(cube).age_bound == 108
-    assert parse_ray_world({**cube, "directions": [[1, 0, 64]]}).age_bound == 222
-    assert parse_ray_world({**cube, "age_bound": 100}).age_bound == 100
+    assert parse_nature_beam_world(cube).age_bound == 108
+    assert parse_nature_beam_world({**cube, "directions": [[1, 0, 64]]}).age_bound == 222
+    assert parse_nature_beam_world({**cube, "age_bound": 100}).age_bound == 100
     for bad in (0, -1, "8", 1.5):
         with pytest.raises(ValueError, match="age_bound"):
-            parse_ray_world({**cube, "age_bound": bad})
+            parse_nature_beam_world({**cube, "age_bound": bad})
     everywhere = {"x": "periodic", "y": "periodic", "z": "periodic"}
     with pytest.raises(ValueError, match="age_bound is required on a board periodic on every axis"):
-        parse_ray_world({**cube, "boundary": everywhere})
-    assert parse_ray_world({**cube, "boundary": everywhere, "age_bound": 7}).age_bound == 7
+        parse_nature_beam_world({**cube, "boundary": everywhere})
+    assert parse_nature_beam_world({**cube, "boundary": everywhere, "age_bound": 7}).age_bound == 7
     with pytest.raises(ValueError, match=r"in_transit\[0\].age must be an integer from 0 through 108"):
-        parse_ray_world({**cube, "in_transit": [light([5, 5, 5], PLUS_X, age=109)]})
-    parse_ray_world({**cube, "in_transit": [light([5, 5, 5], PLUS_X, age=108)]})
+        parse_nature_beam_world({**cube, "in_transit": [light([5, 5, 5], PLUS_X, age=109)]})
+    parse_nature_beam_world({**cube, "in_transit": [light([5, 5, 5], PLUS_X, age=108)]})
     world_file = tmp_path / "world.json"
     world_file.write_text(json.dumps({**cube, "ticks": 2}), encoding="utf-8")
     run_initialization(world_file, tmp_path / "run")
@@ -331,9 +335,9 @@ def test_the_age_bound_is_derived_declared_or_required(tmp_path):
     # The stub: a ray on +z of a z-periodic bar never leaves; at the bound
     # the run is refused, nothing on the board changed.
     stub = bar([3, 1, 1], boundary={"z": "periodic"}, in_transit=[light([1, 0, 0], [0, 0, 1])])
-    world = parse_ray_world(stub)
+    world = parse_nature_beam_world(stub)
     assert world.age_bound == 12
-    simulation = RaySimulation(world)
+    simulation = NatureBeamSimulation(world)
     for _ in range(12):
         simulation.step()
     assert int(simulation.stores[1].age[0]) == 12
@@ -341,7 +345,7 @@ def test_the_age_bound_is_derived_declared_or_required(tmp_path):
         simulation.step()
 
 
-def board(simulation: RaySimulation) -> np.ndarray:
+def board(simulation: NatureBeamSimulation) -> np.ndarray:
     store = simulation.stores[0]
     rows = np.stack([store.node, store.direction, store.phase, store.amount, store.content], axis=1)
     return rows[np.lexsort(rows.T[::-1])]
@@ -349,8 +353,8 @@ def board(simulation: RaySimulation) -> np.ndarray:
 
 def test_the_board_is_unchanged_by_the_whole_age():
     """(e)."""
-    whole = RaySimulation(parse_ray_world(torus()))
-    reduced = RaySimulation(parse_ray_world(torus()))
+    whole = NatureBeamSimulation(parse_nature_beam_world(torus()))
+    reduced = NatureBeamSimulation(parse_nature_beam_world(torus()))
     period = reduced.tables.flight.period
     collided = False
     ages_differed = False

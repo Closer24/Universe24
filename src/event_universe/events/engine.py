@@ -3,7 +3,7 @@ events' clocks, the books, the record and the snapshot. The law itself is
 the one function `nature_beam` (docs/RAY_LAW.md); this module schedules and
 books, it computes no physics.
 
-The interval (`RaySimulation.step`): the engine sets every measured event's
+The interval (`NatureBeamSimulation.step`): the engine sets every measured event's
 clock frame (whether it owes a count and pays one, or self-creates: its age
 advances by one and its turn is read off its clock, s = `by_clock(age,
 content, K)` phase steps, refused at half the circle), calls `nature_beam`
@@ -45,15 +45,15 @@ from event_universe.events.measured import RULES, DetectorSet, Ledger, Measured,
 from event_universe.events.nature_beam import (
     HERE,
     ArrivalRows,
-    RayStore,
-    RayTables,
+    NatureBeamStore,
+    NatureBeamTables,
     Readings,
     Record,
     bounded,
     exact_column_sums,
     exact_sum,
     nature_beam,
-    ray_tables,
+    nature_beam_tables,
 )
 from event_universe.events.world import (
     DETECTOR_READINGS,
@@ -62,11 +62,11 @@ from event_universe.events.world import (
     MOMENTUM_BOUND,
     RAYS_LAW,
     MeasuredDefinition,
-    RayWorld,
+    NatureBeamWorld,
     body_nodes,
 )
 
-__all__ = ["RULES", "Measured", "RaySimulation", "count_owed", "step_axis"]
+__all__ = ["RULES", "Measured", "NatureBeamSimulation", "count_owed", "step_axis"]
 
 
 def step_axis(age: int, momentum: int, content: int, width: int) -> int | None:
@@ -98,10 +98,10 @@ def count_owed(age: int, counted: int, suspension: tuple[int, int]) -> int:
     return by_clock(age, counted * numerator, denominator)
 
 
-class RaySimulation:
+class NatureBeamSimulation:
     """One world of the law of the ray, stepped interval by interval."""
 
-    def __init__(self, world: RayWorld, observer: Record | None = None) -> None:
+    def __init__(self, world: NatureBeamWorld, observer: Record | None = None) -> None:
         self.world = world
         self.record = observer
         self.tick = 0
@@ -109,8 +109,8 @@ class RaySimulation:
         self.families = world.families
         self._phased = [family.phase for family in world.families]
         count = len(world.families)
-        self.tables: RayTables = ray_tables(world)
-        self.stores = [RayStore(world.shape) for _ in world.families]
+        self.tables: NatureBeamTables = nature_beam_tables(world)
+        self.stores = [NatureBeamStore(world.shape) for _ in world.families]
         self.open_faces = tuple(port for port in range(6) if not world.periodic[port >> 1])
         self.ledger = Ledger(count, self.open_faces)
         # The detectors at run time: the declared ones first, in their
@@ -750,7 +750,7 @@ class RaySimulation:
 
     def _node_entries(self) -> Iterator[dict[str, object]]:
         """The Nodes with rays, each with its rows per family: the one
-        materialization of a ray's record (`RayStore.rows`, `NatureBeam`),
+        materialization of a ray's record (`NatureBeamStore.rows`, `NatureBeam`),
         written as `NatureBeam.record` says."""
         nodes = sorted({int(node) for store in self.stores for node in np.unique(store.node)})
         vectors = self.tables.flight.vectors
@@ -763,6 +763,6 @@ class RaySimulation:
                 lo, hi = store.slice(flat)
                 if hi == lo:
                     continue
-                rays = [ray.record(vectors) for ray in store.rows(lo, hi)]
-                families.append({"family": family.name, "rays": rays})
+                beams = [beam.record(vectors) for beam in store.rows(lo, hi)]
+                families.append({"family": family.name, "rays": beams})
             yield entry

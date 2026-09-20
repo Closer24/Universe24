@@ -41,9 +41,9 @@ import pytest
 from event_universe.configuration_validation import validate_configuration
 from event_universe.core.lattice import PORT_HEADINGS, adjacent_node
 from event_universe.core.phase import phase_cosines, phase_sines
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import Q, flight_table
-from event_universe.events.run import execute_ray_run
+from event_universe.events.run import execute_nature_beam_run
 
 SLIT_DIRECTIONS = [[1, 1, 0], [1, -1, 0], [2, 1, 0], [2, -1, 0], [3, 1, 0], [3, -1, 0]]
 TABLE = (
@@ -112,7 +112,7 @@ def periodic_cube(directions: list[list[int]], per_link: int = 0) -> dict[str, o
 def test_a_lone_unit_is_straight_on_its_digital_line_and_unchanged():
     """(b)."""
     world = periodic_cube(SLIT_DIRECTIONS)
-    table = flight_table(parse_ray_world(world).directions)
+    table = flight_table(parse_nature_beam_world(world).directions)
     vectors = [list(v) for v in PORT_HEADINGS] + SLIT_DIRECTIONS
     for vector in vectors:
         seeded = {
@@ -128,7 +128,7 @@ def test_a_lone_unit_is_straight_on_its_digital_line_and_unchanged():
                 }
             ],
         }
-        simulation = RaySimulation(parse_ray_world(seeded))
+        simulation = NatureBeamSimulation(parse_nature_beam_world(seeded))
         store = simulation.stores[0]
         index = table.vectors.tolist().index(vector)
         expected = np.array([30, 30, 30])
@@ -153,7 +153,7 @@ def test_a_lone_unit_is_straight_on_its_digital_line_and_unchanged():
             }
         ],
     }
-    simulation = RaySimulation(parse_ray_world(turned))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(turned))
     for _ in range(150):
         simulation.step()
     store = simulation.stores[0]
@@ -210,7 +210,7 @@ STUB = bar([5, 1, 1], {"z": "periodic"}, [unit([2, 0, 0], [0, 0, 1], 5)], [0, 0,
 def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
     """(d) and the refusals."""
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(STUB), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(STUB), records.append)
     store = simulation.stores[0]
     for tick in range(1, 7):
         simulation.step()
@@ -227,7 +227,9 @@ def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
         "face:-y",
     ]
     records.clear()
-    simulation = RaySimulation(parse_ray_world({**STUB, "boundary": "open"}), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world({**STUB, "boundary": "open"}), records.append
+    )
     simulation.step()
     assert simulation.stores[0].size == 0
     assert records == [
@@ -261,7 +263,7 @@ def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
         [0, 0, 1],
     )
     records.clear()
-    simulation = RaySimulation(parse_ray_world(world), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
     simulation.step()
     store = simulation.stores[0]
     rows = sorted(
@@ -281,10 +283,10 @@ def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
     }
     for refused in ("closed", {"z": "closed"}, {"w": "periodic"}, {"z": 1}, "periodic"):
         with pytest.raises(ValueError, match="closed board is refused"):
-            parse_ray_world({**STUB, "boundary": refused})
+            parse_nature_beam_world({**STUB, "boundary": refused})
         report = validate_configuration(json.dumps({**STUB, "boundary": refused}))
         assert not report.valid and report.issues[0].code == "validation"
-    parsed = parse_ray_world(STUB)
+    parsed = parse_nature_beam_world(STUB)
     assert parsed.periodic == (False, False, True) and parsed.boundary == {"z": "periodic"}
     report = validate_configuration(json.dumps(STUB))
     assert report.valid and report.summary["boundary"] == {"x": "open", "y": "open", "z": "periodic"}
@@ -292,7 +294,7 @@ def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
     output = tmp_path / "run"
     output.mkdir()
     record = json.loads(
-        execute_ray_run(parsed, json.dumps(STUB).encode(), output, "test", 3).read_text()
+        execute_nature_beam_run(parsed, json.dumps(STUB).encode(), output, "test", 3).read_text()
     )
     assert record["boundary"] == {"z": "periodic"} and record["status"] == "completed"
     assert record["law"] == "rays-v1" and record["completed_ticks"] == 3

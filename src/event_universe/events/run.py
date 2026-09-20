@@ -1,6 +1,6 @@
 """A run of the law of the ray: the artifacts the runner writes for it.
 
-`execute_ray_run` steps a parsed world and preserves the input
+`execute_nature_beam_run` steps a parsed world and preserves the input
 (`initialization.json`), the events (`events.jsonl`: the measurements per
 measured event, family and number with the push taken, the clicks with their
 phase and content, the detectors' records per interval, the steps, the clicks
@@ -25,13 +25,13 @@ import time
 from pathlib import Path
 
 from event_universe import __version__
-from event_universe.events.engine import RaySimulation
-from event_universe.events.world import BOHR_RULE, RAYS_LAW, RayWorld
+from event_universe.events.engine import NatureBeamSimulation
+from event_universe.events.world import BOHR_RULE, RAYS_LAW, NatureBeamWorld
 from event_universe.snapshot_writer import write_snapshot
 
 
-def execute_ray_run(
-    world: RayWorld,
+def execute_nature_beam_run(
+    world: NatureBeamWorld,
     source: bytes,
     output: Path,
     fingerprint: str,
@@ -59,7 +59,7 @@ def execute_ray_run(
         def record(event: dict[str, object]) -> None:
             stream.write(json.dumps(event) + "\n")
 
-        simulation = RaySimulation(world, observer=record)
+        simulation = NatureBeamSimulation(world, observer=record)
         try:
             for _ in range(count):
                 simulation.step()

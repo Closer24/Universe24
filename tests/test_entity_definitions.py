@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 
 from event_universe.configuration_validation import validate_configuration
-from event_universe.events.world import parse_ray_world
+from event_universe.events.world import parse_nature_beam_world
 from event_universe.world_loading import BUNDLE_FORMAT, DocumentSyntaxError, load_world, main
 
 
@@ -80,7 +80,7 @@ def test_positions_order_outputs_and_names_are_literal():
     assert [detector.threshold for detector in loaded.world.detectors] == [2, 2]
     expanded = json.loads(loaded.expanded_source)
     assert "entities" not in expanded and "entity_definitions" not in expanded
-    assert loaded.world == parse_ray_world(expanded)
+    assert loaded.world == parse_nature_beam_world(expanded)
 
 
 @pytest.mark.parametrize(
@@ -138,7 +138,7 @@ def test_plain_world_keeps_decoder_behavior_and_exact_source(encoding):
     plain = json.loads(load_world(bundle()).expanded_source)
     raw = json.dumps(plain, indent=2).encode(encoding)
     loaded = load_world(raw)
-    assert loaded.world == parse_ray_world(plain)
+    assert loaded.world == parse_nature_beam_world(plain)
     assert loaded.portable_source == raw and loaded.dependencies == ()
 
 
@@ -304,5 +304,5 @@ def test_plain_escaped_surrogate_names_keep_the_existing_parser_domain():
     source = json.dumps(plain).encode("ascii")
     loaded = load_world(source)
     assert loaded.portable_source == source
-    assert loaded.world == parse_ray_world(plain)
+    assert loaded.world == parse_nature_beam_world(plain)
     assert json.loads(loaded.expanded_source)["model_id"] == chr(0xD800)
