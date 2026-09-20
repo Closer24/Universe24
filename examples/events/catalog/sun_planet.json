@@ -129,20 +129,22 @@
     [6, -1, 0],
     [7, -1, 0]
   ],
-  "families": [
+  "entity_definitions": "../entities/families.json",
+  "entities": [
     {
       "name": "mass",
-      "quantum": 0,
-      "charge": 0,
-      "phase": false
+      "definition": "mass",
+      "position": [0, 0, 0]
     },
     {
-      "name": "light",
-      "quantum": 1
+      "name": "photon",
+      "definition": "photon",
+      "position": [0, 0, 0]
     },
     {
-      "name": "screen",
-      "quantum": 1
+      "name": "screen_material",
+      "definition": "screen_material",
+      "position": [0, 0, 0]
     }
   ],
   "measured": [

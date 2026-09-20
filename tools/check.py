@@ -28,6 +28,8 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
         "tests/test_nature_beam_worlds.py",
         "tests/test_bell_choosers.py",
         "tests/test_entity_loading_consumers.py",
+        "tests/test_amplitude_layer.py",
+        "tests/test_amplitude_click.py",
     ),
     "examples/events/entities/apparatus.json": ("tests/test_entity_definitions.py",),
 }

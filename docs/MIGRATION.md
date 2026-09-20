@@ -6,6 +6,31 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The series the one click re-pinned reference the family definitions, on 2026-09-20 (host only, no law change)
+
+The third pull request of the model owner's decision of 2026-09-20
+(record 113; the built form in
+[entity definitions](ENTITY_DEFINITIONS.md#families-in-definitions-event-entities-v2-2026-09-20)),
+after the one click of `amplitude-v1` landed (PR #395):
+
+- The amplitude series (44 of 47 worlds), the lensing series (9), the
+  build-up series (3), `catalog/sun_planet`, `catalog/lamp_mirror_screen`,
+  `two_slits` and `heisenberg/w3_beam` reference
+  `../entities/families.json` (the root world `entities/families.json`),
+  written by their generators through `families_by_definition`; the two
+  inline exceptions of the root and Heisenberg generators are gone.
+  `amplitude/slits_low` keeps `light` inline (its `phase_per_link` a pair,
+  the definition's an integer), `amplitude/mz_unequal_f8` and
+  `mz_unequal_f16` stay inline whole for the same reason.
+- Every migrated world's expanded document equals its former inline
+  document and its `events.jsonl`, `state.json` and books are identical
+  (the 62 worlds in scope replayed on `main` at e4b649a0 and on the branch,
+  the long ones capped at 200 intervals, `two_slits`, the build-up and the
+  N = 4096 Bell worlds at 40).
+- No world of the register declares `families` for a family the
+  definitions define; the catalog's rows are unchanged.
+- Nothing deleted.
+
 ## The binding that costs content, on 2026-09-20 (`binding-v1`, no key)
 
 binding-v1 (2026-09-20): at a contact under `measure` the refused body gives

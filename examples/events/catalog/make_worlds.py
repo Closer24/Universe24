@@ -472,16 +472,16 @@ def clock_near_mass() -> Json:
 
 
 def worlds() -> dict[str, Json]:
-    """The four documents by name, as written: `neutron_star` and
-    `clock_near_mass` take their families from the shipped definitions;
-    `sun_planet` and `lamp_mirror_screen` are written inline until stage
-    (vii) of `amplitude-v1` lands (it re-pins them): the scope of the
-    migration of 2026-09-20."""
+    """The four documents by name, as written: each takes its families from
+    the shipped definitions (the migration of 2026-09-20; `sun_planet` and
+    `lamp_mirror_screen` since the one click of `amplitude-v1` landed)."""
     sun, _ = sun_planet()
     return {
-        "sun_planet": sun,
+        "sun_planet": families_by_definition(sun, FAMILY_DEFINITIONS, DEFINITIONS_SOURCE),
         "neutron_star": families_by_definition(neutron_star(), FAMILY_DEFINITIONS, DEFINITIONS_SOURCE),
-        "lamp_mirror_screen": lamp_mirror_screen(),
+        "lamp_mirror_screen": families_by_definition(
+            lamp_mirror_screen(), FAMILY_DEFINITIONS, DEFINITIONS_SOURCE
+        ),
         "clock_near_mass": families_by_definition(
             clock_near_mass(), FAMILY_DEFINITIONS, DEFINITIONS_SOURCE
         ),
