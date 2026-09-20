@@ -2757,27 +2757,30 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     if amplitude:
         _amplitude_load_checks(measured, detectors, families, phase_steps)
     if doppler:
-        _doppler_load_checks(measured, families, width, table)
+        _doppler_load_checks(measured, width, table)
     return world
 
 
 def _doppler_load_checks(
-    measured: tuple[MeasuredDefinition, ...],
-    families: tuple[FamilyDefinition, ...],
-    width: int,
-    table: tuple[Vector, ...],
+    measured: tuple[MeasuredDefinition, ...], width: int, table: tuple[Vector, ...]
 ) -> None:
     """The bound of the reading's weight at the relative speed at load
     (`relative_speed_bound`): for every free measured event (a fixed one
     reads at the weight 1), on every axis, against every direction of the
     table with a component along it, (N_d + T_d) x D_a must fit the
     integer bound with D_a = Q x S x M + |p_a| read from the declared
-    content and momentum (the static budget; a push or a click that takes
-    D_a past it is refused at that push naming the same bound)."""
+    content (the sum over every family held, what `Measured.content`
+    reads) and momentum (the static budget; a push or a click that takes
+    D_a past it is refused at that push naming the same bound). A budget
+    of the pair alone: the products |V E n| x |num| and D_c d_c x N D are
+    tested at the push (`column_term`), where a body of large content
+    refuses loudly and named (note 38)."""
     for index, entry in enumerate(measured):
         if entry.fixed:
             continue
-        content = sum(held for family, held in _held_of(entry).items() if families[family].free)
+        # The content the push reads, `Measured.content` = sum(held) over
+        # every family, paid included (the frame's M_A and the step's D).
+        content = sum(_held_of(entry).values())
         for axis, name in enumerate(AXES):
             divisor = step_divisor(entry.momentum[axis], content, width)
             for vector in table:

@@ -399,14 +399,20 @@ reading's weight at the relative speed `doppler-v1`,
 under it a free measured event in motion on an axis reads the rows that
 arrived at its Node for the push with each direction's flow weighted by
 the relative speed of the row and itself over the row's pace, the pair
-(N_d D_a - T_d s p_a, N_d D_a) from the flight table's pace and its own
-record, one floor per (direction, column); refused when it is not true or
-false and, at load, when the pair of a free body cannot fit the register
-against a direction of the table on the declared content and momentum,
-naming the axis, the direction, the pace and the largest D admitted; the
-record carries it and the identity `doppler-v1` under `hypotheses` when
-it is true; absent, and for every body at rest or held in place, every
-world reads as it did, byte for byte); `directions` (the declared primitive vectors beyond
+(|N_d D_a - T_d s p_a|, N_d D_a) from the flight table's pace and its
+own record, one floor per (direction, column) on an axis where its
+momentum is nonzero; refused when it is not true or false and, at load,
+when the pair of a free body cannot fit the register against a direction
+of the table on the declared content and momentum, naming the axis, the
+direction, the pace and the largest D admitted (a budget of the pair
+only: the products are tested at the push, where a registered
+moving-body world of large content, every G2 star world among them,
+refuses at its first weighted push, loudly and named; nothing is re-run
+under the key in this change, and a run of such a world needs the grain
+form of FORM.md section 1 as an owner-declared width or a re-scaled
+world); the record carries it and the identity `doppler-v1` under
+`hypotheses` when it is true; absent, and for every body at rest or held
+in place, every world reads as it did, byte for byte); `directions` (the declared primitive vectors beyond
 the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`

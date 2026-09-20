@@ -42,7 +42,7 @@ kept, their pins the law of events').
 | `test_nature_beam_clock.py` | The clock under the Beam Law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-beam-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder (since the step drive of 2026-09-20 the same integers, the remainder now the drive on the body's record); the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
 | `test_step_drive.py` | The step drive (2026-09-20, BEAM_LAW note 17 as amended): the count of Links as the whole part of the distance the momentum has driven, one bounded integer per axis on the body's record: the identity at a constant momentum with `by_clock(n - 1, \|p\|, D)` over 4000 self-creations and twelve momenta; the identity on two axes (the coincident step lost as before); the integrated distance under a halving momentum (38 within 1, 37 to 39, where the rule as it was made 1); never two Links in one interval under a random momentum over 10 000 intervals with the drive in [0, 2 D - 1); the record (`drive`, `axis_steps`, the `step` line) and a declared `drive` refused; the turn by momentum unchanged ([below](#the-step-drive)) | new (2026-09-20, series G2's finding, record 107; the owner's decision, record 108) |
-| `test_doppler.py` | The reading's weight at the relative speed (`doppler-v1`, 2026-09-20, BEAM_LAW note 38): a fixed body and a free body at rest reading byte-identically with and without the key over 200 intervals (the same records, the same books); the bar of the finding (a fixed source's steady beam, a free body of content 2^20 at an exact speed, the push normalised to one unit per row) reading 200 rows in every case and taking 200 at rest, 96 receding at 0.30, 45 receding at 0.45, 303 approaching at 0.30, 0 co-moving at c, -57 outrunning at 0.75 (the map's 200, 97, 45, 303, 0, 58 to the floor's grain); the bar as posed with rows of 64 refused at the first weighted push naming the column and the direction; the third law on two fixed bodies unchanged; the refusals at load naming the axis, the direction, the pace and the largest D; the pace table, the pair, a fan read per direction and the record ([below](#the-readings-weight-at-the-relative-speed)) | new (2026-09-20, the model owner's record 119; the mathematician's form, record 110) |
+| `test_doppler.py` | The reading's weight at the relative speed (`doppler-v1`, 2026-09-20, BEAM_LAW note 38): a fixed body and a free body at rest reading byte-identically with and without the key over 200 intervals (the same records, the same books); the bar of the finding (a fixed source's steady beam, a free body of content 2^20 at an exact speed, the push normalised to one unit per row) reading 200 rows in every case and taking 200 at rest, 96 receding at 0.30, 45 receding at 0.45, 303 approaching at 0.30, 0 co-moving at c, 57 outrunning at 0.75 (the map's 200, 97, 45, 303, 0, 58 to the floor's grain); the bar as posed with rows of 64 refused at the first weighted push naming the column and the direction; the third law on two fixed bodies unchanged; the refusals at load naming the axis, the direction, the pace and the largest D; the pace table, the pair, a fan read per direction, the column term's refusals and the record; the implementer's rule on a fan with a column denominator above 1 (at rest byte-identical, moving read per direction); a body on a set reading two groups from the one frame snapshot ([below](#the-readings-weight-at-the-relative-speed)) | new (2026-09-20, the model owner's record 119; the mathematician's form, record 110) |
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
@@ -1491,7 +1491,8 @@ clock. The expected integers, written down before the first run:
   receding at 0.45 (S 11, p 9 x 2^26, D 20 x 2^26) 45; approaching at 0.30
   (S 7, p -3 x 2^26, from x = 200) 303; co-moving at c = 32 / 55 (S 23, p
   2^31, D 55 x 2^26) 0; outrunning at 0.75 (S 1, p 3 x 2^26, D 4 x 2^26)
-  -57, the sign flipped; FORM.md's map (its section 4, the alternative)
+  57, taken from behind at |c - v| (the pair's absolute value, the push
+  keeping the flow's sign); FORM.md's map (its section 4, the alternative)
   200, 97, 45, 303, 0, 58: the exact values 96.875 and 57.8 floored with
   the engine's clock ages from 0 against the map's from 1, the floor's
   grain; without the key 200 in every case. The bar as posed, rows of
@@ -1518,8 +1519,12 @@ clock. The expected integers, written down before the first run:
   (16, 39), (0, 1)) on (1, 1, 0), ((128, 247), (64, 247), (0, 1)) on
   (2, 1, 0); `FlightTable.pace` of shape (count, 3, 2) carrying them;
   `relative_speed_pair` (3072, 3072) at p = 0 with D = 96, (0, 1760) at
-  p / D = 32 / 55, a negative numerator beyond it, (1760 + 2200, 1760)
-  against the axis, and the bound refused at D = (2^62 - 1) // 87 + 1.
+  p / D = 32 / 55, (2200 - 1760, 1760) beyond it (the absolute value),
+  (1760 + 2200, 1760) against the axis, and the bound refused at D =
+  (2^62 - 1) // 87 + 1. `column_term` under a weight: 64 x 1 x 1 at the
+  pair (1312, 3072) gives 27 (-27 for -64), a numerator of 0 gives 0, the
+  denominator 2^30 x 2^40 is refused by division before it is formed
+  naming the column and the direction, as is the product 2^32 x 2^31.
   The fan: a free reader of content 1 with the momentum (32, 0, 0) (D =
   96) on a 5 x 5 x 1 board met at tick 1 by one row on +x from (1, 2, 0)
   and one on (1, 1, 0) from (2, 1, 0) at age 1, gravity alone: the read of
@@ -1529,6 +1534,24 @@ clock. The expected integers, written down before the first run:
   the reader held in place (-109, -45, 0). The record: `run.json` carries
   `doppler` true and `hypotheses` ["doppler-v1"]. The gate set's fifteen
   worlds parse with `doppler` false and without the identity.
+- (f) the implementer's rule on a fan with a column denominator above 1:
+  the reader `a` (charge [1, 3], content 1) met at tick 1 by a `b` row
+  (charge 1) on +x from (1, 2, 0) and one on (1, 1, 0) from (2, 1, 0) at
+  age 1; free at rest it reads (-73, -30, 0) (gravity -(109, 45), charge
+  by_clock(0, 109, 3) = 36 and by_clock(0, 45, 3) = 15) with the same
+  records with and without the key, and `push_form` given the terms at
+  rest equals `push_form` given none on that push; with the momentum
+  (1, 0, 0) (D = 65; the pairs (2025, 2080) on the heading, (1001, 1040)
+  on the diagonal) it reads x per direction, gravity -(62 + 43), charge
+  20 + 14, the push (-71, -30, 0), y at rest -30 as before; without the
+  key (-73, -30, 0).
+- (g) a body on a set: `span` [1, 1, 3] at (4, 0, 1) of an 8 x 1 x 3
+  periodic bar, content 1, the momentum (32, 0, 0) (D = 96), met at tick
+  1 by one +x row of amount 1 at (4, 0, 0) from number 2 and one at
+  (4, 0, 2) from number 3: two `read` lines, each pushing (-27, 0, 0)
+  (by_clock(0, 64 x 1312, 3072); the live momentum after the first
+  group, 5, would give 56), the momentum after the interval -22, the set
+  (4, 0, 0), (4, 0, 1), (4, 0, 2); without the key -64 each.
 
 ## The age
 

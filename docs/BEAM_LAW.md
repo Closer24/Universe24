@@ -2681,21 +2681,26 @@ implementation's part of the contract. The design above is unchanged.
     and the weight read), so that |p_a| / D_a is the body's speed and the
     weight is the relative speed of the row and the body over the row's
     own: 1 at rest, (c - v) / c receding, (c + v) / c approaching, 0 for
-    a body moving with the row at its own speed and negative for one
-    outrunning it (the row hits it from behind: the sign of the push
-    flips). **The integer form** (`nature_beam.relative_speed_pair`,
-    `doppler_terms`, `column_term`, `push_form`): per column c and per
-    direction d present in the group,
+    a body moving with the row at its own speed and |c - v| / c for one
+    outrunning it: the absolute value, FORM.md section 6's pair as
+    written, since the owner's frame is a TAKE at the rate at which the
+    two meet, a count, never negative; a reader faster than the message
+    takes it from behind at |c - v| and the push keeps the sign of the
+    flow (the message still points from its source; a body outrunning
+    its source's rows is not repelled by them). **The integer form**
+    (`nature_beam.relative_speed_pair`, `doppler_terms`, `column_term`,
+    `push_form`): per column c and per direction d present in the group,
 
-        push_A += epsilon_c x sign(V_d E_c n_c w) x by_clock(age_A, |V_d E_c n_c| x |N_d D_a - T_d s p_a|, D_c d_c x N_d D_a),
+        push_A += epsilon_c x sign(V_d E_c n_c) x by_clock(age_A, |V_d E_c n_c| x |N_d D_a - T_d s p_a|, D_c d_c x N_d D_a),
 
     V_d the label flow of the group's rows of direction d (the sum of
     their labels, `amount x u_d`), one floor per (direction, column) off
     the reader's clock and never summed before the floor (the
     mathematician's (ii), as record 35 fixed for the columns); |V_d| x
-    |E_c n_c| and then its product with the numerator are tested by
-    division before they are formed and refused naming the body, the
-    column and the direction (R1), the partial sum bounded after every
+    |E_c n_c|, then its product with the numerator, then the denominator
+    D_c d_c x N_d D_a are each tested by division before they are formed
+    and refused naming the body, the column and the direction (R1; a
+    numerator of 0 forms nothing), the partial sum bounded after every
     term (R2); the pair's numerator, at most (N_d + T_d) x D_a, must fit
     the register: refused at load for every free body of the world
     against every direction of the table on the declared content and
@@ -2704,11 +2709,20 @@ implementation's part of the contract. The design above is unchanged.
     heading), and at the push on the record's D_a by the same bound
     (`relative_speed_bound`). The quantised speed of FORM.md section 1
     (a grain 1 / (T_d Q)) is not taken: the pair is exact and the bound is
-    declared. **What is bit-identical.** On an axis where p_a = 0 every
-    weight is 1 and the group is read as one product per column, exactly
-    the line of step 4 (the per-direction floors are taken only where a
-    weight differs from 1, so that a body at rest reads the same integers
-    with and without the key on a fan as on a heading); a fixed body has
+    declared. **What is bit-identical, and the implementer's one rule
+    beyond section 6.** On an axis where p_a = 0 every weight is 1 and
+    the group is read as one product per column, exactly the line of
+    step 4: the per-direction floors are taken only on an axis where the
+    reader's momentum is nonzero. Section 6 writes the floor per
+    (direction, column) always and claims bit-identity at p = 0 in
+    general; that claim holds on a heading and wherever the column's
+    divisor is 1, and fails on a fan with a column denominator above 1 (a
+    sum of floors is not the floor of the sum: a free body at rest on the
+    deuteron's fan or Bohr's would move under the key). This rule keeps
+    the claim exact on every fan (`tests/test_doppler.py` (f)); its
+    price is a discontinuity at p_a -> 0 of at most the directions
+    present less one unit per column per interval (the push at p_a = 1
+    differs from the push at p_a = 0 by more than the weight); a fixed body has
     no speed and reads at the weight 1 whatever momentum its record books
     (its momentum is the push it took, not a motion): every registered
     push of a fixed body (series C's identities, record 35's 11 945
@@ -2726,7 +2740,7 @@ implementation's part of the contract. The design above is unchanged.
     normalised to one unit per row read): over 200 intervals the body
     reads 200 rows in every case and takes, under the key, 200 at rest,
     96 receding at 0.30, 45 receding at 0.45, 303 approaching at 0.30, 0
-    co-moving at c and -57 outrunning at 0.75, against the map's 200, 97,
+    co-moving at c and 57 outrunning at 0.75, against the map's 200, 97,
     45, 303, 0, 58 (FORM.md section 4): the crossing rate (c - v) / c the
     finding asked for, to the floor's grain. Not given: an exact crossing
     count (the leapfrog and the miss stay, only their mean is corrected),
@@ -2734,11 +2748,29 @@ implementation's part of the contract. The design above is unchanged.
     bar as the finding posed it, rows of amount 64 on the body of content
     2^20, refuses at the first weighted push under the key: the gravity
     column's product 2^32 x 155 x 2^26 leaves the register (the bound
-    problem of FORM.md section 1, here on the body's own content). **What
-    re-registers.** Nothing: the key is absent in every shipped world.
-    A moving pushed body under the key reads differently from its first
-    step on (the orbit series D, Bohr's H, the planet, series G and G2's
-    stars, the contact worlds once a body holds momentum); those worlds
-    are re-run under the key only by the G2 session, with the acoustic
-    expectations re-derived on the arrivals form first (record 119 (6)),
-    and registered with dated lines then, never here.
+    problem of FORM.md section 1, here on the body's own content). **The
+    bound as built, and what it refuses** (the physics-rule review of
+    `e916e115`, B1). The load check is a budget of the pair only, (N_d +
+    T_d) x D_a on the declared content and momentum; the products |V E n|
+    x |N D - T s p| and D_c d_c x N D are tested at the push. A registered
+    moving-body world of large content therefore passes the load check
+    and refuses at its first weighted push, loudly and named: every G2
+    star world (`hubble_stars/` on `claude/series-g2-stars`, D_a about
+    2^48) passes and refuses when a star of content 2^22 reads one mass
+    row of amount 64 on a heading, |V E n| x |32 D - 55 s p| = 2^87 to
+    2^88 against 2^62, 26 bits out; even at S = 1 and rows of amount 1
+    the star's product is 2^61.0, so no G2 world fits at any width (the
+    content enters twice, in E and in D); the deuteron by FORM.md
+    section 1. The grain form of FORM.md section 1, the body's speed
+    quantised to 1 / (T_d Q) as a declared width (|num| at most 5568 on a
+    heading), would fit at 2^46.4 with room; it is not built here, being
+    a new width of the world with a declared bias, the owner's. **What
+    re-registers.** Nothing: the key is absent in every shipped world and
+    nothing is re-run under the key in this change. A moving pushed body
+    under the key reads differently from its first step on (the orbit
+    series D, Bohr's H, the planet, series G and G2's stars, the contact
+    worlds once a body holds momentum); the second G2 run (record 119
+    (6)) needs either the grain form as an owner-declared width or a
+    world re-scaled to a content of about 2^20, rows of amount 1 and a
+    small S, and is the G2 session's, registered with dated lines then,
+    never here.

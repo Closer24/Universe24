@@ -39,9 +39,23 @@ without the key.
   the interval, beside `frame_content` and `frame_charges` (not in the
   record: a snapshot of the record's own momentum for the interval's
   weight).
-- Nothing re-registers: the key is absent in every shipped world, and the
-  gate set's fifteen worlds replay byte-identical. The moving-body worlds
-  are re-run under the key by the G2 session only, later. Nothing deleted.
+- The bound: the load check budgets the pair only, (N + T) x D on the
+  declared content (the sum over every family held, what the push reads)
+  and momentum; the products are tested at the push. A registered
+  moving-body world of large content passes the load check and refuses at
+  its first weighted push, loudly and named (every G2 star world: a star
+  of content 2^22 reading one mass row of amount 64 needs 2^87 to 2^88
+  against 2^62, and no G2 world fits at any width; the deuteron by FORM.md
+  section 1). The second G2 run needs the grain form of FORM.md section 1
+  (the speed quantised to 1 / (T_d Q)) as an owner-declared width, or a
+  world re-scaled to a content of about 2^20, rows of amount 1 and a
+  small S. The pair is taken in absolute value (a body outrunning its
+  source's rows takes them from behind at |c - v|, the push keeping the
+  flow's sign); the per-direction floors are taken only on an axis where
+  the reader's momentum is nonzero (note 38, the implementer's rule).
+- Nothing re-registers: the key is absent in every shipped world, the
+  gate set's fifteen worlds replay byte-identical, and nothing is re-run
+  under the key in this change. Nothing deleted.
 
 ## Families in entity definitions, on 2026-09-20 (`event-entities-v2`; host only, no law change)
 

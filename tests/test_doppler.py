@@ -29,9 +29,10 @@ written down before the first run:
     at rest 200, receding at 0.30 (S 7, p 3 x 2^26, D 10 x 2^26) 96,
     receding at 0.45 (S 11, p 9 x 2^26, D 20 x 2^26) 45, approaching at
     0.30 (S 7, p -3 x 2^26) 303, co-moving at c = 32 / 55 (S 23, p 2^31,
-    D 55 x 2^26) 0, outrunning at 0.75 (S 1, p 3 x 2^26, D 4 x 2^26) -57
-    (the sign flipped: hit from behind), against FORM.md's map 200, 97,
-    45, 303, 0, 58: the two that differ do so by the floor's grain (the
+    D 55 x 2^26) 0, outrunning at 0.75 (S 1, p 3 x 2^26, D 4 x 2^26) 57
+    (taken from behind at |c - v|, the absolute value of the pair, the
+    push keeping the flow's sign), against FORM.md's map 200, 97, 45,
+    303, 0, 58: the two that differ do so by the floor's grain (the
     exact values 96.875 and 57.8, the map's clock ages from 1 and the
     engine's from 0); without the key 200 in every case. The bar as the
     finding posed it, rows of amount 64 on the body of content 2^20, runs
@@ -58,7 +59,25 @@ written down before the first run:
     by_clock(0, 45 x 288, 1536), one floor per direction), the y push -45
     (the reader at rest on y: the group's product as today); the record
     (`run.json` carrying `doppler` and the identity under `hypotheses`);
-    every world of the gate set parsing without the key.
+    every world of the gate set parsing without the key; `column_term`
+    refusing the denominator D_c d_c x N D by division before it is formed
+    and giving 0 at a weight of numerator 0;
+(f) the implementer's rule on a fan with a column denominator above 1
+    (the reader `a` of charge [1, 3] met by a `b` row of charge 1 on +x
+    and one on (1, 1, 0)): a free reader at rest reads (-73, -30, 0)
+    (gravity -(109, 45), charge by_clock(0, 109, 3) = 36 and by_clock(0,
+    45, 3) = 15) byte-identically with and without the key, the same
+    records, and `push_form` with the terms at rest equals `push_form`
+    without them on that nonzero push; the same reader with the momentum
+    (1, 0, 0) (D = 65, the pairs (2025, 2080) on the heading and (1001,
+    1040) on the diagonal) reads x per direction, gravity -(62 + 43) and
+    charge 20 + 14, the push (-71, -30, 0), y at rest as before;
+(g) a body on a set (`span` [1, 1, 3], content 1, the momentum (32, 0,
+    0), D = 96) met in one interval by one +x row at two of its Nodes
+    from two numbers: two groups, each weighted from the one frame
+    snapshot p = 32, each pushing -27 (by_clock(0, 64 x 1312, 3072); the
+    live momentum after the first group, 5, would give 56), the momentum
+    after the interval -22; without the key -64 each.
 """
 
 from __future__ import annotations
@@ -71,7 +90,13 @@ import pytest
 
 from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.nature_beam import flight_table, relative_speed_pair
+from event_universe.events.nature_beam import (
+    DopplerTerms,
+    column_term,
+    flight_table,
+    push_form,
+    relative_speed_pair,
+)
 from event_universe.events.world import (
     COLUMNS_RULE,
     DOPPLER_RULE,
@@ -205,7 +230,7 @@ BAR = {
     "receding at 0.45": (9 << 26, 11, 40, 45),
     "approaching at 0.30": (-(3 << 26), 7, 200, 303),
     "co-moving at c": (1 << 31, 23, 40, 0),
-    "outrunning at 0.75": (3 << 26, 1, 40, -57),
+    "outrunning at 0.75": (3 << 26, 1, 40, 57),
 }
 
 
@@ -215,9 +240,9 @@ def test_the_bar_of_the_finding(case):
     momentum, width, start, expected = BAR[case]
     divisor = step_divisor(momentum, 1 << 20, width)
     assert divisor == Q * width * (1 << 20) + abs(momentum)
-    # The pair on the heading: 1 at rest, 0 co-moving, negative outrunning.
+    # The pair on the heading: 1 at rest, 0 co-moving, |c - v| / c outrunning.
     numerator, denominator = relative_speed_pair((32, 55), 1, momentum, divisor, _entry(), 2)
-    assert denominator == 32 * divisor and numerator == 32 * divisor - 55 * momentum
+    assert denominator == 32 * divisor and numerator == abs(32 * divisor - 55 * momentum)
     simulation, records = run(bar(momentum, width, start, doppler=True))
     reads = reads_of(records, 2)
     assert len(reads) == 200 and sum(int(str(r["amount"])) for r in reads) == 200, case
@@ -360,10 +385,20 @@ def test_the_pace_table_the_pair_the_fan_and_the_record(tmp_path: Path):
     # The pair: 1 at rest, 0 at the direction's own speed, negative beyond.
     assert relative_speed_pair((32, 55), 1, 0, 96, _entry(), 2) == (3072, 3072)
     assert relative_speed_pair((32, 55), 1, 32, 55, _entry(), 2) == (0, 32 * 55)
-    assert relative_speed_pair((32, 55), 1, 40, 55, _entry(), 2)[0] < 0
+    assert relative_speed_pair((32, 55), 1, 40, 55, _entry(), 2) == (55 * 40 - 32 * 55, 32 * 55)
     assert relative_speed_pair((32, 55), -1, 40, 55, _entry(), 2) == (32 * 55 + 55 * 40, 32 * 55)
     with pytest.raises(OverflowError, match=r"\(N \+ T\) x D = 87 x"):
         relative_speed_pair((32, 55), 1, 0, MOMENTUM_BOUND // 87 + 1, _entry(), 2)
+    # The column term under a weight: the denominator tested by division
+    # before it is formed, the product with the numerator likewise, a
+    # numerator of 0 forming nothing.
+    assert column_term(64, 1, 1, 1, 0, "gravity", _entry(), (1312, 3072), 2) == 27
+    assert column_term(-64, 1, 1, 1, 0, "gravity", _entry(), (1312, 3072), 2) == -27
+    assert column_term(64, 1, 1, 3, 0, "charge", _entry(), (0, 3072), 2) == 0
+    with pytest.raises(OverflowError, match=r"the denominator D_c d_c x N D = 1073741824 x"):
+        column_term(1, 1, 1, 1 << 30, 0, "charge", _entry(), (1, 1 << 40), 2)
+    with pytest.raises(OverflowError, match=r"\|V E n\| x \|N D - T s p\| = 4294967296 x"):
+        column_term(1 << 32, 1, 1, 1, 0, "gravity", _entry(), (1 << 31, 1 << 31), 2)
     # The fan: one row on +x and one on (1, 1, 0) at the free reader of
     # content 1 with the momentum (32, 0, 0), D = 96, gravity alone.
     fan = {
@@ -431,3 +466,147 @@ def test_the_pace_table_the_pair_the_fan_and_the_record(tmp_path: Path):
         path = ROOT / "examples/events" / item["path"]
         world = load_world(path.read_bytes(), base_dir=path.parent).world
         assert world.doppler is False and DOPPLER_RULE not in world.hypotheses, item["path"]
+
+
+# -- (f) ---------------------------------------------------------------------------
+
+
+def charged_fan(momentum: list[int], doppler: bool) -> dict[str, object]:
+    return {
+        "law": "beam",
+        "model_id": "doppler-charged-fan-test",
+        "shape": [5, 5, 1],
+        "boundary": {"z": "periodic"},
+        "ticks": 1,
+        "K": 1 << 20,
+        "N": 64,
+        "release": [0, 1],
+        "suspension": 0,
+        "doppler": doppler,
+        "directions": [DIAGONAL],
+        "families": [
+            {"name": "a", "quantum": 0, "phase": False, "charge": [1, 3]},
+            {"name": "b", "quantum": 0, "phase": False, "charge": 1},
+        ],
+        "measured": [
+            {"position": [2, 2, 0], "family": "a", "amount": 1, "momentum": momentum},
+            {"position": [0, 4, 0], "family": "b", "amount": 1, "fixed": True},
+        ],
+        "in_transit": [
+            {
+                "position": [1, 2, 0],
+                "family": "b",
+                "number": 2,
+                "direction": PLUS_X,
+                "amount": 1,
+                "phase": 0,
+                "age": 0,
+            },
+            {
+                "position": [2, 1, 0],
+                "family": "b",
+                "number": 2,
+                "direction": DIAGONAL,
+                "amount": 1,
+                "phase": 0,
+                "age": 1,
+            },
+        ],
+    }
+
+
+def test_the_rule_on_a_fan_with_a_column_denominator_above_one():
+    """(f)."""
+    at_rest = (-(109 - by_clock(0, 109, 3)), -(45 - by_clock(0, 45, 3)), 0)
+    assert at_rest == (-73, -30, 0)
+    under, records = run(charged_fan([0, 0, 0], True))
+    plain, plain_records = run(charged_fan([0, 0, 0], False))
+    assert records == plain_records and reads_of(records, 1)[0]["push"] == list(at_rest)
+    assert under.measured[1].momentum == plain.measured[1].momentum == list(at_rest)
+    columns = (("gravity", -1), ("charge", 1))
+    charges = [(1, 1), (1, 3)]
+    values = ((1, 1), (1, 1))
+    terms = DopplerTerms(
+        (False, False, False),
+        ((2, (64, 0, 0), ((1, 1), (1, 1), (1, 1))), (8, (45, 45, 0), ((1, 1), (1, 1), (1, 1)))),
+    )
+    assert push_form(True, [109, 45, 0], charges, values, columns, 0, _entry(), terms) == list(at_rest)  # type: ignore[arg-type]
+    assert push_form(True, [109, 45, 0], charges, values, columns, 0, _entry(), None) == list(at_rest)  # type: ignore[arg-type]
+    # Moving on x at p = 1: D = 65, one floor per (direction, column) on x.
+    heading, diagonal = (abs(32 * 65 - 55), 32 * 65), (abs(16 * 65 - 39), 16 * 65)
+    assert (heading, diagonal) == ((2025, 2080), (1001, 1040))
+    gravity = by_clock(0, 64 * 2025, 2080) + by_clock(0, 45 * 1001, 1040)
+    charge = by_clock(0, 64 * 2025, 3 * 2080) + by_clock(0, 45 * 1001, 3 * 1040)
+    assert (gravity, charge) == (62 + 43, 20 + 14)
+    moving, records = run(charged_fan([1, 0, 0], True))
+    assert reads_of(records, 1)[0]["push"] == [-gravity + charge, -30, 0] == [-71, -30, 0]
+    plain, records = run(charged_fan([1, 0, 0], False))
+    assert reads_of(records, 1)[0]["push"] == [-73, -30, 0]
+
+
+# -- (g) ---------------------------------------------------------------------------
+
+
+def test_a_body_on_a_set_reads_every_group_from_the_one_frame_snapshot():
+    """(g)."""
+
+    def world(doppler: bool) -> dict[str, object]:
+        return {
+            "law": "beam",
+            "model_id": "doppler-set-body-test",
+            "shape": [8, 1, 3],
+            "boundary": {"y": "periodic", "z": "periodic"},
+            "ticks": 1,
+            "K": 1 << 20,
+            "N": 64,
+            "release": [0, 1],
+            "suspension": 0,
+            "doppler": doppler,
+            "families": [
+                {"name": "a", "quantum": 0, "phase": False},
+                {"name": "b", "quantum": 0, "phase": False},
+            ],
+            "measured": [
+                {
+                    "position": [4, 0, 1],
+                    "family": "a",
+                    "amount": 1,
+                    "momentum": [32, 0, 0],
+                    "span": [1, 1, 3],
+                },
+                {"position": [0, 0, 0], "family": "b", "amount": 1, "fixed": True},
+                {"position": [0, 0, 2], "family": "b", "amount": 1, "fixed": True},
+            ],
+            "in_transit": [
+                {
+                    "position": [3, 0, 0],
+                    "family": "b",
+                    "number": 2,
+                    "direction": PLUS_X,
+                    "amount": 1,
+                    "phase": 0,
+                    "age": 0,
+                },
+                {
+                    "position": [3, 0, 2],
+                    "family": "b",
+                    "number": 3,
+                    "direction": PLUS_X,
+                    "amount": 1,
+                    "phase": 0,
+                    "age": 0,
+                },
+            ],
+        }
+
+    simulation, records = run(world(True))
+    reads = reads_of(records, 1)
+    assert [(r["number"], r["push"]) for r in reads] == [(2, [-27, 0, 0]), (3, [-27, 0, 0])]
+    assert by_clock(0, 64 * abs(32 * 96 - 55 * 32), 32 * 96) == 27
+    # The live momentum after the first group, 5, would have weighted the
+    # second at (32 x 69 - 55 x 5, 32 x 69): 56, not 27.
+    assert by_clock(0, 64 * abs(32 * 69 - 55 * 5), 32 * 69) == 56
+    assert simulation.measured[1].momentum == [32 - 54, 0, 0]
+    assert simulation.measured[1].nodes == ((4, 0, 0), (4, 0, 1), (4, 0, 2))
+    plain, records = run(world(False))
+    assert [r["push"] for r in reads_of(records, 1)] == [[-64, 0, 0], [-64, 0, 0]]

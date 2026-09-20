@@ -1921,6 +1921,19 @@ def weight_bound_error(
     )
 
 
+def denominator_bound_error(
+    entry: Measured, name: str, direction: int, divisor: int, den: int
+) -> OverflowError:
+    """The refusal of a weighted column's denominator D_c d_c x N_d D_a that
+    would leave the register, naming the measured event, its Node, the
+    column and the direction (R1 on the denominator, the review's S3)."""
+    return OverflowError(
+        f"{BEAM_LAW}: the push of measured event {entry.number} at {list(entry.position)} exceeds "
+        f"the integer bound {MOMENTUM_BOUND} in the column {name!r} against the direction "
+        f"{direction} under {DOPPLER_KEY}: the denominator D_c d_c x N D = {divisor} x {den}"
+    )
+
+
 def relative_speed_pair(
     pace: tuple[int, int], sign: int, momentum: int, divisor: int, entry: Measured, direction: int
 ) -> tuple[int, int]:
@@ -1933,8 +1946,11 @@ def relative_speed_pair(
     step rule's divisor (`world.step_divisor`), so that |p_a| / D_a is the
     body's speed: the pair is 1 at p_a = 0, less than 1 for a body moving
     with the row, more for one moving against it, 0 for a body moving with
-    the row at its own speed and negative for one outrunning it (the row
-    hits it from behind: the numerator's sign flips the push). The
+    the row at its own speed, and |c - v| / c for one outrunning it (the
+    absolute value, FORM.md section 6's pair: the body TAKES the message
+    at the rate at which the two meet, a count, never negative; a reader
+    faster than the message takes it from behind and the push keeps the
+    sign of the flow, the message still points from its source). The
     numerator is bounded by (N_d + T_d) x D_a, tested before it is formed
     (`relative_speed_bound`; the same bound at load) and refused naming
     the body, the direction and the largest D_a the pair admits."""
@@ -1946,7 +1962,7 @@ def relative_speed_pair(
             f"(N + T) x D = {pace[0] + pace[1]} x {divisor} beyond the integer bound "
             f"{MOMENTUM_BOUND}: D = Q x width x content + |p| must be at most {reach}"
         )
-    return pace[0] * divisor - pace[1] * sign * momentum, pace[0] * divisor
+    return abs(pace[0] * divisor - pace[1] * sign * momentum), pace[0] * divisor
 
 
 @dataclass(frozen=True)
@@ -2010,11 +2026,14 @@ def column_term(
 ) -> int:
     """One signed whole part of the push: a label flow component V times
     the reader's charge E and the family's value n in a column, weighted
-    by the pair `weight` (1 without `doppler`), the whole part off the
-    reader's clock, `by_clock(age, |V E n num|, D_c d_c den)`, with the
-    sign of V E n num; |V| x |E n| and then its product with |num| are
-    tested by division BEFORE they are formed and refused naming the
-    column (and the direction under the weight)."""
+    by the pair `weight` (1 without `doppler`; the numerator never
+    negative, `relative_speed_pair`), the whole part off the reader's
+    clock, `by_clock(age, |V E n| num, D_c d_c den)`, with the sign of
+    V E n; |V| x |E n|, then its product with num, then the denominator
+    D_c d_c x den are each tested by division BEFORE they are formed and
+    refused naming the column (and the direction under the weight). A
+    weight of numerator 0 (a body moving with the row at its own speed:
+    nothing meets) is 0 and forms nothing."""
     if abs(numerator) > MOMENTUM_BOUND // abs(n):
         raise column_bound_error(entry, name, v, abs(numerator) * abs(n))
     factor = numerator * n
@@ -2023,8 +2042,12 @@ def column_term(
     total = v * factor
     num, den = weight
     if direction is not None:
-        if abs(total) > MOMENTUM_BOUND // abs(num):
-            raise weight_bound_error(entry, name, direction, total, abs(num))
+        if num == 0:
+            return 0
+        if abs(total) > MOMENTUM_BOUND // num:
+            raise weight_bound_error(entry, name, direction, total, num)
+        if divisor > MOMENTUM_BOUND // den:
+            raise denominator_bound_error(entry, name, direction, divisor, den)
         total *= num
         divisor *= den
     whole = abs(total) if divisor == 1 else by_clock(age, abs(total), divisor)
@@ -2086,19 +2109,25 @@ def push_form(
     section 6) `doppler` carries the group's arrivals per direction
     (`DopplerTerms`) and, on every axis a where the reader's momentum is
     nonzero, each direction d's flow V_d counts with the weight
-    (N_d D_a - T_d s p_a) / (N_d D_a) of `relative_speed_pair`, the
+    |N_d D_a - T_d s p_a| / (N_d D_a) of `relative_speed_pair`, the
     relative speed of the row and the body over the row's pace:
 
         push_A = sum over the columns c and the directions d of
-                 epsilon_c x sign(V_d E_c n_c w_d) x by_clock(age_A, |V_d E_c n_c| x |N_d D_a - T_d s p_a|, D_c d_c x N_d D_a),
+                 epsilon_c x sign(V_d E_c n_c) x by_clock(age_A, |V_d E_c n_c| x |N_d D_a - T_d s p_a|, D_c d_c x N_d D_a),
 
     every (direction, column) floored on its own off the reader's clock
     and never summed before the floor (the mathematician's (ii)), the
-    products tested by division before they are formed (R1), the partial
-    sum bounded after every term (R2). On an axis where p_a = 0 every
-    weight is 1 and the group is read as one product per column, the
-    line above: a fixed body, and a free one at rest, read byte for byte
-    what they read without the key. The weight is on the push's read of
+    products and the denominator tested by division before they are
+    formed (R1), the partial sum bounded after every term (R2). On an
+    axis where p_a = 0 every weight is 1 and the group is read as one
+    product per column, the line above (the implementer's rule, note 38:
+    the per-direction floors are taken only where a weight differs from
+    1, so that a free body at rest on a fan with a column denominator
+    above 1 reads what it reads without the key; its price a
+    discontinuity at p_a -> 0 of at most the directions present less one
+    unit per column per interval): a fixed body, and a free one at rest,
+    read byte for byte what they read without the key. The weight is on
+    the push's read of
     the ARRIVALS alone: the clock's count is not weighted (it counts the
     presence at the Node, not a flux through the body), the size and the
     threshold readings are untouched, and nothing changes on the emitter's
