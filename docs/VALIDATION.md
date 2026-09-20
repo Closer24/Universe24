@@ -54,6 +54,22 @@ series P were run once and read against their pins
 ([the hand series](../examples/events/hand/README.md); [EXPERIMENTS](EXPERIMENTS.md),
 "P, the hand").
 
+## Series G2, the Hubble diagram with stars behind the detector: three runs - 2026-09-20
+
+The branch `claude/series-g2-stars`, headless, three jobs, Python 3.14.0rc2,
+numpy 2.5.3; the worlds of `examples/events/hubble_stars/` through
+`tools/run_series.py --jobs 3` and the readings through
+`tools/hubble_stars_readings.py`, every run of 400 intervals completed with
+the books balanced at every interval; the readings registered in
+[G2](EXPERIMENTS.md#g2-the-hubble-diagram-with-stars-behind-the-detector-2026-09-20)
+and the worlds' [README](../examples/events/hubble_stars/README.md).
+
+| Run | Engine and fingerprint | Worlds | Result |
+| --- | --- | --- | --- |
+| The first registration | the branch's law before the key `amplitude`, source fingerprint `b4d074f2b762e58d15037a46b614e89609a48bcee2211eaf471af16e3d4923d1` | the nine worlds `<crowd>_<clock>`, 36 to 39 s each | the reading's formula 648 of 648 inside 2 %, the luminosity 631 of 648 inside 5 %, 34 pinned readings inside and 29 outside, none moved; re-run under the record click on `claude/amplitude-impl` at `62369cb8`: the same clicks and readings to the last digit |
+| The second run | main `f3a41f28` merged (the step drive, PR #373; the record click), source fingerprint `8ede1e0ff40e69ed05a71d7fd09cca21bad5e37f0c715018f3e77a504f518afb` | `record/coasting_none`, `gravity_none`, `gravity_scalar`, `gravity_age`, `double_none`, 37 to 41 s each | the expectations pinned first by the emitter-only rule; the reading's formula 360 of 360, the luminosity 360 of 360, the longest burst 1 Link, 759 readings inside and 1 outside (the scalar clock's k) |
+| The third run | main `56a258f` merged (doppler-v1, PR #379; the signed drive, PR #377), source fingerprint `39672332ebd7d87ee17f29c927df6ed0fc9b66e2c926c202e021646454b38b9e`, the identities `amplitude-v1` and `doppler-v1` | `doppler/coasting_none`, `gravity_none`, `gravity_scalar`, `gravity_age`, `double_none`, 37 to 41 s each | the expectations pinned first by the flux rule at the grain (`docs/designs/hubble_stars/EXPECTATION_2.md`); the reading's formula 120 of 120, the luminosity 120 of 120, the longest burst 1 Link, 35 readings inside and 5 outside (the scalar clock's q and its forms; the double crowd's q); the coasting world's gather and click lines identical to the second run's |
+
 ## The amplitude law: the gate set of seventeen worlds replayed without the key after commit (i) and at stage (v) - 2026-09-20
 
 `amplitude-v1` (the branch `amplitude-impl`, commits (i) `ca2e5fad`, (ii)

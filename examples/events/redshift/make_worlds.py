@@ -40,9 +40,19 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parents[2] / "src"))
+
+from event_universe.world_loading import families_by_definition  # noqa: E402
+
+# The shipped definitions the world's families come from where they equal
+# them (the model owner's decision of 2026-09-20, record 113).
+FAMILY_DEFINITIONS = "../entities/families.json"
+DEFINITIONS_SOURCE = (HERE.parent / "entities" / "families.json").read_bytes()
+
 SIDE = 31
 SHAPE = [SIDE, SIDE, SIDE]
 CENTRE = (SIDE // 2, SIDE // 2, SIDE // 2)
@@ -144,7 +154,8 @@ def main() -> None:
         print(f"shell r = {radius}: {len(shell(radius))} Nodes")
     for name in WORLDS:
         path = HERE / f"{name}.json"
-        path.write_text(json.dumps(world(name), separators=(",", ":")) + "\n", encoding="utf-8")
+        document = families_by_definition(world(name), FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
+        path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
         print(path.relative_to(HERE.parents[2]))
 
 

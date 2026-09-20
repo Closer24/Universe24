@@ -69,6 +69,7 @@ import numpy as np
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events.nature_beam import coherent_pointer, flight_table
 from event_universe.events.world import FACE_NAMES
+from event_universe.world_loading import world_of_run
 
 MODEL_PREFIX = "rays-bohr-"
 MODEL_SUFFIX = "-space-v1"
@@ -148,7 +149,7 @@ def read_run(folder: Path) -> Reading:
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
     model = str(record["model"])
     radius = int(model[len(MODEL_PREFIX) + 1 : -len(MODEL_SUFFIX)])
-    world = json.loads((folder / "initialization.json").read_text(encoding="utf-8"))
+    world = world_of_run(folder)
     proton, electron = world["measured"]
     centre = tuple(int(v) for v in proton["position"])
     side = int(world["shape"][0])

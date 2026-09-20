@@ -124,6 +124,7 @@ from event_universe.events.amplitude import arm_of, label_of
 from event_universe.events.nature_beam import IDENTITY_FIELDS, NatureBeamStore
 from event_universe.events.world import FACE_NAMES, HAND_RULE, WEAK_RULE
 from event_universe.runner import run_initialization
+from event_universe.world_loading import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
 PLUS_X, MINUS_X = [1, 0, 0], [-1, 0, 0]
@@ -727,10 +728,17 @@ def test_the_parity_test_and_the_covariance_of_the_law(name: str):
 def test_a_world_without_a_declaration_reads_as_it_did(tmp_path):
     """(e)."""
     path = ROOT / "examples" / "events" / "weak" / "w_exchange.json"
-    document = json.loads(path.read_text(encoding="utf-8"))
-    parsed = parse_nature_beam_world(document)
+    # Through the loader: the shipped world references the family
+    # definitions beside it (2026-09-20).
+    parsed = load_world(path.read_bytes(), base_dir=path.parent).world
     assert not parsed.handed and HAND_RULE not in parsed.hypotheses
-    _, records, books = run(document)
+    records: list[Json] = []
+    simulation = NatureBeamSimulation(parsed, records.append)
+    books: list[Json] = []
+    for _ in range(16):
+        simulation.step()
+        books.append(simulation.books())
+        assert books[-1]["balanced"]
     assert all("hand" not in r for r in records)
     assert all("left" not in measured_line(b, "w") for b in books)
     record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))

@@ -43,7 +43,7 @@ from event_universe.core.integer import by_clock
 from event_universe.events import parse_nature_beam_world
 from event_universe.events.nature_beam import flight_table
 from event_universe.events.world import LABEL_SCALE, MeasuredDefinition, NatureBeamWorld
-from event_universe.json_documents import parse_json_document
+from event_universe.world_loading import world_of_run
 
 # Every rule of the engine this tool needs is read off the engine's own
 # functions (the architecture review of 2026-09-20, Highlights 5.4: a tool
@@ -161,7 +161,7 @@ def read_run(folder: Path) -> Reading:
     width, radius = int(width_part[1:]), int(radius_part[1:])
     # The world as the engine parses it: the source (number 1) and the probe
     # (number 2), the source's Node the centre of the orbit.
-    world = parse_nature_beam_world(parse_json_document((folder / "initialization.json").read_bytes()))
+    world = parse_nature_beam_world(world_of_run(folder))
     source, probe = world.measured[SOURCE - 1], world.measured[PROBE - 1]
     centre = (source.position[0], source.position[1])
     ticks = int(record["completed_ticks"])

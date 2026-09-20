@@ -104,6 +104,12 @@ from event_universe.events.nature_beam import (  # noqa: E402
     pointer_phases,
 )
 from event_universe.events.world import parse_nature_beam_world  # noqa: E402
+from event_universe.world_loading import families_by_definition  # noqa: E402
+
+# The shipped definitions the world's families come from where they equal
+# them (the model owner's decision of 2026-09-20, record 113).
+FAMILY_DEFINITIONS = "../entities/families.json"
+DEFINITIONS_SOURCE = (HERE.parent / "entities" / "families.json").read_bytes()
 
 N = 64
 # K divisible by 15 so that 64 K / 5 and 64 K / 3 are whole contents, and
@@ -359,6 +365,7 @@ def main() -> None:
     print(f"CHSH quadruple: {chsh_quadruple()}")
     for name, document in worlds().items():
         path = HERE / f"{name}.json"
+        document = families_by_definition(document, FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
         path.write_text(json.dumps(document, indent=2) + "\n", encoding="utf-8")
         print(path.relative_to(HERE.parents[2]))
 
