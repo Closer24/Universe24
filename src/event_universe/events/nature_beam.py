@@ -106,6 +106,7 @@ from event_universe.events.world import (
     FACE_NAMES,
     FIXED_DIRECTIONS,
     HEADING_OFFSET,
+    LIFETIME_NAME,
     MOMENTUM_BOUND,
     REST_DIRECTIONS,
     NatureBeamWorld,
@@ -1395,6 +1396,13 @@ def nature_beam(
             raise ValueError(
                 f"{BEAM_LAW}: the inverse interval is defined on a GameBoard without measured events"
             )
+        for definition in families:
+            if definition.lifetime is not None:
+                raise ValueError(
+                    f"{BEAM_LAW}: the inverse interval is refused with the family "
+                    f"{definition.name!r} of lifetime {definition.lifetime} on the GameBoard: the "
+                    "click on the border `lifetime` has no inverse (as a face click has none)"
+                )
         for family, store in enumerate(stores):
             if store.size == 0:
                 continue
@@ -2217,7 +2225,61 @@ def nature_beam(
             )
             ledger.transit_released[family] += int(exact_sum(amount_column))
 
-    # 6. Merge identical rows; sort by Node. A row whose age passed the
+    # 6. The border `lifetime` (the model owner, 2026-09-20: "the event
+    # whose age reaches L makes no next event but an escape click in the
+    # ledger, as at an open face"): every row of a family with a lifetime
+    # whose age reached it in this interval's walk (read by a table in
+    # step 4 where it arrived at a measured event; unread in free space)
+    # clicks on the border, its amount, content and label booked as an
+    # open face books an escape, one `click` record per row naming the
+    # border, the border's record the square of the coherent pointer of
+    # what clicked, per family; then the rows leave the store. Local (the
+    # row's own age against its family's key), fixed work (one comparison
+    # per row), no draw, no register; the one-way border of the interval
+    # beside the click.
+    for family, store in enumerate(stores):
+        lifetime = families[family].lifetime
+        if lifetime is None or store.size == 0:
+            continue
+        gone = np.flatnonzero(store.age >= lifetime)
+        if gone.shape[0] == 0:
+            continue
+        definition = families[family]
+        labels = store.labels(gone, unit, definition.free)
+        amounts = store.amount[gone]
+        total = int(exact_sum(amounts))
+        ledger.lifetime_amount[family] += total
+        ledger.lifetime_content[family] += int(exact_sum(amounts * store.content[gone]))
+        border_x, border_y = coherent_pointer(
+            amounts, store.phase[gone], FIRST, [total], tables.cosines, tables.sines
+        )
+        ledger.lifetime_record[family] += border_x[0] * border_x[0] + border_y[0] * border_y[0]
+        left = exact_column_sums(labels)
+        ledger.lifetime_momentum = [a + b for a, b in zip(ledger.lifetime_momentum, left, strict=True)]
+        ledger.transit_momentum = [a - b for a, b in zip(ledger.transit_momentum, left, strict=True)]
+        if record is not None:
+            x, y, z = store.coordinates(store.node[gone])
+            for k, index in enumerate(gone):
+                record(
+                    {
+                        "event": "click",
+                        "tick": tick,
+                        "node": [int(x[k]), int(y[k]), int(z[k])],
+                        "measured": None,
+                        "detector": LIFETIME_NAME,
+                        "family": definition.name,
+                        "number": int(store.number[index]),
+                        "amount": int(store.amount[index]),
+                        "phase": int(store.phase[index]),
+                        "momentum": [int(v) for v in labels[k]],
+                        "content": int(store.amount[index] * store.content[index]),
+                    }
+                )
+        keep_alive = np.ones(store.size, dtype=bool)
+        keep_alive[gone] = False
+        store.keep(keep_alive)
+
+    # Merge identical rows; sort by Node. A row whose age passed the
     # world's bound refuses the run: the store's promise of fixed storage
     # is the bound, and the world must be small enough or declare it.
     for store in stores:

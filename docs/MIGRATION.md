@@ -6,7 +6,7 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
-## The columns of the one coupling, on 2026-09-20 (`columns` per family; `columns-v1`)
+## The columns of the one coupling, the lifetime and the held content, on 2026-09-20 (`columns` and `lifetime` per family; `held` per measured event; `columns-v1`)
 
 The model owner's decision of 2026-09-20 ("one mechanism for all the laws
 on the GameBoard", [Highlights 5.4](HIGHLIGHTS.md#54-the-detector); the
@@ -77,6 +77,57 @@ columns and runs the same integer by integer (the 66 example worlds:
   content (`push_form(free, moment, content, reader, emitter, age,
   entry)` is gone); `core.integer.reduced` and `rational_sum` (the
   `measured` module re-exports them).
+- **Added, per family: `lifetime`** (the model owner, 2026-09-20, "the
+  strong force's range is a lifetime, L: the event whose age reaches L
+  makes no next event but an escape click in the ledger, as at an open
+  face"; [BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+  (vii); [expectations](TEST_EXPECTATIONS.md#the-lifetime-and-the-held-content)):
+  an integer L from 1, one scalar; absent, the family lives forever, as
+  every family did. A ray of the family whose whole age is at or beyond L
+  at the end of the interval's walk (after that interval's reads, before
+  the merge) clicks on the border `lifetime`, a detector without Nodes
+  listed after the faces: its amount, content and label are booked as an
+  open face books an escape and summed into the escaped lines, one
+  `click` record per row naming the border (`"detector": "lifetime"`,
+  `measured` None, the Node the ray was on). The reach is the flight
+  table's: L = 1 the six neighbours, 2 the face diagonals too, 3 the cube
+  diagonals and the second Link of a heading.
+- **Added, per measured event: `held`** (the physicist's D-1; note 31
+  (viii)): an object of family name to content, an integer from 1 each,
+  the content the event holds of families other than its own beside its
+  `amount`. Its content is the sum, its charge in every column the exact
+  rational sum over what it holds, every free family it holds is
+  released at the world's rate beside its own, and it counts under the
+  owners of every family it holds. The register's proton is
+  `{"family": "p", "amount": 1836, "held": {"nuclear": 1}}`.
+- **Refused, naming the key**: a `lifetime` that is not an integer from 1
+  (0, -1, 1.5, "3"), a list (one integer, a scalar), a lifetime beyond
+  the world's `age_bound`; a declared ray in transit whose `age` is at or
+  beyond its family's lifetime; a detector named `lifetime` (the border's
+  name, as a face's); `held` naming the event's own family or an unknown
+  one, a held content that is not an integer from 1, `held` that is not
+  an object; and the inverse interval on a GameBoard with a family of a
+  lifetime (the border has no inverse, as a face has none), naming the
+  family and its lifetime.
+- **The record**: `run.json`'s `detectors` carry the border after the
+  faces when a family declares a lifetime (`name` "lifetime", `nodes` 0,
+  `threshold` 1, per family `measured`, `clicks`, `content`, `record`,
+  `measured_content` 0, and `momentum`), the `escaped` lines sum the
+  faces and the border, every family carries its `lifetime` (None
+  without one), and `hypotheses` carries `columns-v1` when a lifetime is
+  declared (the range of a column shares the columns' identity; no third
+  identity). `events.jsonl` gains `click` records with `"detector":
+  "lifetime"`. The books gain nothing: the border's lines are inside the
+  escaped lines (`Ledger.escaped_amount`, `escaped_content`,
+  `escaped_momentum` sum the faces and the border; `lifetime_amount`,
+  `lifetime_content`, `lifetime_record`, `lifetime_momentum` are the
+  border's own). No existing world declares a lifetime or `held`: every
+  registered run is unchanged.
+- **The API**: `FamilyDefinition.lifetime`, `NatureBeamWorld.lifetimes`,
+  `world.LIFETIME_NAME`; `MeasuredDefinition.held` (aligned with the
+  families, the own amount under the own family); `NatureBeamSimulation.face_detectors()`
+  ends with the border when a family declares a lifetime.
+
 ## The names NatureBeam and GameBoard and the glossary's single names, on 2026-09-20
 
 The model owner's decisions of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector):

@@ -285,6 +285,14 @@ class Ledger:
     face_measured_content: dict[int, list[int]] = field(default_factory=dict)
     face_record: dict[int, list[int]] = field(default_factory=dict)
     face_momentum: dict[int, list[int]] = field(default_factory=dict)
+    # The border `lifetime` (the model owner, 2026-09-20: an event in
+    # transit whose age reaches its family's lifetime makes no next event
+    # but a click on the border), booked as a face books an escape: per
+    # family the amount, the content and the record, and the momentum.
+    lifetime_amount: list[int] = field(default_factory=list)
+    lifetime_content: list[int] = field(default_factory=list)
+    lifetime_record: list[int] = field(default_factory=list)
+    lifetime_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
 
     def __post_init__(self) -> None:
         count = self.families
@@ -296,6 +304,9 @@ class Ledger:
             "transit_absorbed",
             "content_released",
             "content_absorbed",
+            "lifetime_amount",
+            "lifetime_content",
+            "lifetime_record",
         ):
             setattr(self, name, [0] * count)
         for port in self.open_faces:
@@ -306,10 +317,18 @@ class Ledger:
             self.face_momentum[port] = [0, 0, 0]
 
     def escaped_amount(self, family: int) -> int:
-        return sum(self.face_amount[port][family] for port in self.open_faces)
+        """What left the GameBoard: through the open faces and on the border
+        `lifetime`."""
+        faces = sum(self.face_amount[port][family] for port in self.open_faces)
+        return faces + self.lifetime_amount[family]
 
     def escaped_content(self, family: int) -> int:
-        return sum(self.face_content[port][family] for port in self.open_faces)
+        faces = sum(self.face_content[port][family] for port in self.open_faces)
+        return faces + self.lifetime_content[family]
 
     def escaped_momentum(self) -> list[int]:
-        return [sum(self.face_momentum[port][axis] for port in self.open_faces) for axis in range(3)]
+        return [
+            sum(self.face_momentum[port][axis] for port in self.open_faces)
+            + self.lifetime_momentum[axis]
+            for axis in range(3)
+        ]

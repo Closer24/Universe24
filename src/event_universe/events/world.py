@@ -78,6 +78,14 @@ the model owner, 2026-09-19):
   carries [0, 1] there; a paid family's values must be 0; at most
   `COLUMN_LIMIT` columns in all; the world's column order is gravity,
   charge, then the names in the order of their first declaration),
+  `lifetime` (L, optional, since 2026-09-20: the model owner's decision
+  on the strong force's range, "the lifetime L, counted on the event's own
+  age"; an integer from 1 through `age_bound`, a scalar: the flight gives
+  every direction one speed, so L intervals of flight are a sphere; an
+  event in transit whose age reaches L at the end of the walk makes no
+  next event but a click on the border `lifetime`, booked exactly as an
+  open face books an escape; absent, the family's events live for ever,
+  as every family did),
   `phase` (true by default; false: the family has no phase circle, its rays
   carry phase 0 and never turn, its measured events never turn, no
   `phase_window` is accepted for it) and `phase_per_link` (an integer
@@ -86,7 +94,16 @@ the model owner, 2026-09-19):
   naming this derivation and docs/MIGRATION.md (one canonical form);
 - `measured`: the measured events at the start, one per Node, each with a
   `position`, its `family`, its `amount` (a positive whole number of units,
-  below K x N / 2 for a family with a phase circle), and optionally its
+  below K x N / 2 for a family with a phase circle), optionally `held`
+  (since 2026-09-20, the physicist's design of the strong force: an object
+  of family name to a positive whole content the measured event holds of
+  that family beside its own, so that a nucleon is one measured event
+  holding its charged family and one unit of a strong family; the event's
+  own family may not be named, an unknown family, a content below 1 or
+  not an integer is refused; a free family held is released at the
+  world's rate like its own, a paid one is inert; its charge in every
+  column is the rational sum over what it holds; the phase-turn bound
+  covers the total), and optionally its
   `phase`, its `momentum` (three integers), `fixed` (true: an apparatus held in place, it takes
   pushes into its momentum and never steps), its `span` (three odd
   integers from 1, `[1, 1, 1]` by default: the measured event is a body on
@@ -189,9 +206,14 @@ odd integers from 1 or larger than its axis, a body whose Nodes leave the
 GameBoard on an open axis, two measured events sharing a Node, a detector
 naming a Node of a body that is not its `position`, `phase_by_momentum`
 without `action`, on a `fixed` measured event or on a family without a
-phase circle, and a turning body whose product `ticks x |p| x N` (the
+phase circle, a turning body whose product `ticks x |p| x N` (the
 count of Links stepped within the run is at most `ticks`) exceeds
-2^62 - 1 for a declared momentum component p.
+2^62 - 1 for a declared momentum component p, a `lifetime` that is not
+one integer from 1 (a list or a per-axis value, 0, a negative number, a
+fraction) or beyond `age_bound`, a declared ray of a family with a
+lifetime at an age at or beyond it, a detector named `lifetime` (the
+border's name), and `held` naming the event's own family, an unknown
+family or a content that is not a positive integer.
 """
 
 from __future__ import annotations
@@ -314,7 +336,12 @@ COLUMN_KEYS = {"value", "sign"}
 COLUMN_LIMIT = 8
 # The span of a measured event on one Node (the default): a body of one.
 ONE_NODE: tuple[int, int, int] = (1, 1, 1)
-FAMILY_KEYS = {"name", "quantum", "charge", "columns", "phase", "phase_per_link"}
+FAMILY_KEYS = {"name", "quantum", "charge", "columns", "lifetime", "phase", "phase_per_link"}
+# The border every event in transit of a family with a lifetime clicks on
+# when its age reaches the lifetime: named like a face detector in the
+# records, the books' escaped lines summing it with the faces'; a declared
+# detector may not take the name.
+LIFETIME_NAME = "lifetime"
 # The key of the first NatureBeam worlds that named the kind; the quantum decides it.
 KIND_KEY = "kind"
 # The key of the NatureBeam worlds before 2026-09-20 that gave a measured event its
@@ -326,6 +353,7 @@ MEASURED_KEYS = {
     "position",
     "family",
     "amount",
+    "held",
     "phase",
     "momentum",
     "fixed",
@@ -389,8 +417,11 @@ class FamilyDefinition:
     family, whose rays push by their content), its columns (`columns`:
     gravity first, charge second, the declared columns after, aligned by
     index across the families of the world; `charge` stays the value of
-    the second), whether it has a phase circle and the phase steps its
-    rays turn per Link crossed."""
+    the second), whether it has a phase circle, the phase steps its rays
+    turn per Link crossed, and its `lifetime` (L, or None for ever: the
+    age at which an event in transit of the family clicks on the border
+    `lifetime` instead of making its next event, the range of the family's
+    force in Links of flight)."""
 
     name: str
     quantum: int
@@ -398,6 +429,7 @@ class FamilyDefinition:
     phase: bool = True
     phase_per_link: int = 0
     columns: tuple[Column, ...] = ()
+    lifetime: int | None = None
 
     def __post_init__(self) -> None:
         # A family made without its columns (the tests' bare definitions,
@@ -471,9 +503,12 @@ class MeasuredDefinition:
     the phase window and the reading key of each entry, and its lamp. Its
     charge is its family's charge per unit of content times its content
     and is not declared. `span` is the set of Nodes it is a body on (three
-    odd extents centred on `position`, (1, 1, 1) for one Node) and
+    odd extents centred on `position`, (1, 1, 1) for one Node),
     `phase_by_momentum` whether it turns its phase by its momentum label
-    at every Link it steps (over the world's `action`)."""
+    at every Link it steps (over the world's `action`), and `held` the
+    content it holds per family in family order at the start: its
+    `amount` under its own family and what `held` declared of the others
+    (0 elsewhere)."""
 
     position: Address3
     family: int
@@ -488,6 +523,15 @@ class MeasuredDefinition:
     lamp: LampDefinition | None
     span: tuple[int, int, int] = ONE_NODE
     phase_by_momentum: bool = False
+    held: tuple[int, ...] = ()
+
+    def __post_init__(self) -> None:
+        # A definition made without `held` (the tests' bare definitions)
+        # holds its amount under its own family alone.
+        if not self.held:
+            found = [0] * (self.family + 1)
+            found[self.family] = self.amount
+            object.__setattr__(self, "held", tuple(found))
 
 
 @dataclass(frozen=True)
@@ -560,14 +604,22 @@ class NatureBeamWorld:
         return tuple(name for name, _ in self.columns[CHARGE_INDEX + 1 :])
 
     @property
+    def lifetimes(self) -> bool:
+        """Whether any family declares a lifetime (the border `lifetime` is
+        then a detector of the record, and the inverse interval is refused)."""
+        return any(family.lifetime is not None for family in self.families)
+
+    @property
     def hypotheses(self) -> list[str]:
         """The identities of the physical hypotheses the world declares
         beside the law, in a fixed order: `bohr-v1` for the turn by momentum
-        (`action`), `columns-v1` for a column beyond `charge`."""
+        (`action`), `columns-v1` for the one mechanism of the columns (a
+        column beyond `charge`, or a lifetime: a force of nature in this
+        law is a column with a sign and a range)."""
         found = []
         if self.action is not None:
             found.append(BOHR_RULE)
-        if self.declared_columns:
+        if self.declared_columns or self.lifetimes:
             found.append(COLUMNS_RULE)
         return found
 
@@ -589,8 +641,9 @@ class NatureBeamWorld:
         for index, entry in enumerate(self.measured):
             number = index + 1
             definition = self.families[family]
+            holds = family < len(entry.held) and entry.held[family] > 0
             if (
-                (entry.family == family and (definition.free or entry.lamp is not None))
+                (holds and (definition.free or (entry.family == family and entry.lamp is not None)))
                 or entry.table[family] == "rerelease"
                 or any(item.number == number and item.family == family for item in self.in_transit)
             ):
@@ -874,7 +927,34 @@ def _declared_columns(
     return found
 
 
-def _families(value: object, phase_steps: int) -> tuple[FamilyDefinition, ...]:
+def _lifetime(value: object, label: str, age_bound: int) -> int | None:
+    """A family's lifetime: one integer from 1 through the world's
+    `age_bound` (an event at age L is still on the GameBoard when the walk
+    ends, so the store's bound must hold it); a list or a per-axis value is
+    refused (the flight gives every direction one speed, so a scalar L is
+    a sphere and a vector would be a box), as are 0, a negative number and
+    a fraction."""
+    if value is None:
+        return None
+    if isinstance(value, list):
+        raise ValueError(
+            f"{BEAM_LAW}: {label} must be one integer (a scalar): the flight table gives every "
+            "direction one speed, so L intervals of flight reach a sphere; a per-axis lifetime "
+            "is refused"
+        )
+    lifetime = _integer(value, label, 1)
+    if lifetime > age_bound:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} {lifetime} is beyond the world's age_bound {age_bound}: an "
+            "event at the age L is still on the GameBoard at the end of its walk (declare a "
+            "larger age_bound or a shorter lifetime)"
+        )
+    return lifetime
+
+
+def _families(
+    value: object, phase_steps: int, age_bound: int = AMOUNT_BOUND
+) -> tuple[FamilyDefinition, ...]:
     if not isinstance(value, list) or not value:
         raise ValueError(f"{BEAM_LAW}: families must be a nonempty list")
     found: list[FamilyDefinition] = []
@@ -940,7 +1020,8 @@ def _families(value: object, phase_steps: int) -> tuple[FamilyDefinition, ...]:
                 f"{BEAM_LAW}: families[{index}].phase_per_link is refused for a family without a "
                 "phase circle"
             )
-        found.append(FamilyDefinition(name, quantum, charge, phase, per_link))
+        lifetime = _lifetime(obj.get("lifetime"), f"families[{index}].lifetime", age_bound)
+        found.append(FamilyDefinition(name, quantum, charge, phase, per_link, lifetime=lifetime))
         declared.append(columns)
     if 2 + len(names) > COLUMN_LIMIT:
         raise ValueError(
@@ -963,6 +1044,7 @@ def _families(value: object, phase_steps: int) -> tuple[FamilyDefinition, ...]:
                     for column in names
                 ),
             ),
+            family.lifetime,
         )
         for family, columns in zip(found, declared, strict=True)
     )
@@ -1108,11 +1190,25 @@ def _measured(
             raise ValueError(f"{BEAM_LAW}: {label}.family names an unknown family")
         family = names[family_name]
         amount = _integer(obj["amount"], f"{label}.amount", 1)
+        held = [0] * len(families)
+        held[family] = amount
+        declared_held = obj.get("held", {})
+        if not isinstance(declared_held, dict):
+            raise ValueError(f"{BEAM_LAW}: {label}.held must map family names to contents")
+        for key, content in declared_held.items():
+            if key not in names:
+                raise ValueError(f"{BEAM_LAW}: {label}.held names an unknown family {key!r}")
+            if names[key] == family:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.held names the event's own family {key!r}, whose "
+                    "content is `amount`"
+                )
+            held[names[key]] = _integer(content, f"{label}.held[{key!r}]", 1)
         phased = families[family].phase
-        if phased and 2 * amount >= K * phase_steps:
+        if phased and 2 * sum(held) >= K * phase_steps:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.amount must keep 2 x content below K x N (the phase step "
-                "per self-creation below half the circle)"
+                "per self-creation below half the circle; the content held of every family counts)"
             )
         # A measured event of a family without a phase circle has phase 0.
         phase = _integer(obj.get("phase", 0), f"{label}.phase", 0, phase_steps - 1 if phased else 0)
@@ -1179,9 +1275,11 @@ def _measured(
                 families[names[key]].phase,
                 rules[names[key]],
             )
-        if families[family].free:
-            # The label of a free release: amount x D along a heading.
-            _label_bound(amount * release[0] // release[1] or 1, 1, table, directions, label)
+        for held_family, content in enumerate(held):
+            if content and families[held_family].free:
+                # The label of a free release: amount x D along a heading,
+                # of the event's own family and of every free family held.
+                _label_bound(content * release[0] // release[1] or 1, 1, table, directions, label)
         lamp = None
         if "lamp" in obj:
             if families[family].free:
@@ -1211,6 +1309,7 @@ def _measured(
                 lamp,
                 span,
                 turning,
+                tuple(held),
             )
         )
     return tuple(found)
@@ -1310,7 +1409,7 @@ def _column_budget(
 
 def _held_of(entry: MeasuredDefinition) -> dict[int, int]:
     """The content a declared measured event holds per family at the start."""
-    return {entry.family: entry.amount}
+    return {family: content for family, content in enumerate(entry.held) if content}
 
 
 def _in_transit(
@@ -1338,6 +1437,13 @@ def _in_transit(
         top = phase_steps - 1 if families[family].phase else 0
         direction = _direction(obj["direction"], f"{label}.direction", table, rest=True)
         amount = _integer(obj["amount"], f"{label}.amount", 1)
+        age = _integer(obj.get("age", 0), f"{label}.age", 0, age_bound)
+        lifetime = families[family].lifetime
+        if lifetime is not None and age >= lifetime:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.age {age} is at or beyond the lifetime {lifetime} of the "
+                f"family {family_name!r}: the event would have clicked on the border already"
+            )
         # A declared ray of a paid family carries one phase step of content
         # per unit, quantum x 1 (no emitter declared its turn); a free one
         # carries none and its label is the amount along the direction.
@@ -1350,7 +1456,7 @@ def _in_transit(
                 direction,
                 amount,
                 _integer(obj.get("phase", 0), f"{label}.phase", 0, top),
-                _integer(obj.get("age", 0), f"{label}.age", 0, age_bound),
+                age,
             )
         )
     return tuple(found)
@@ -1383,6 +1489,11 @@ def _detectors(
             raise ValueError(
                 f"{BEAM_LAW}: {label}.name {name!r} is the name of a face detector (an open face "
                 "of the GameBoard is a detector of that name; declare another)"
+            )
+        if name == LIFETIME_NAME:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.name {name!r} is the name of the border every event of a "
+                "family with a lifetime clicks on; declare another"
             )
         positions_value = obj["positions"]
         if not isinstance(positions_value, list) or not positions_value:
@@ -1478,7 +1589,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     # The quantum of action of the turn by momentum, h: absent by default
     # (nothing turns by momentum), an integer from 1 when declared.
     action = None if "action" not in obj else _integer(obj["action"], "action", 1)
-    families = _families(obj["families"], phase_steps)
+    families = _families(obj["families"], phase_steps, age_bound)
     measured = _measured(
         obj["measured"],
         shape,

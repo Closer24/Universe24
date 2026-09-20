@@ -99,7 +99,8 @@ def execute_nature_beam_run(
         # The turn by momentum (the model owner's decision of 2026-09-20 on
         # Bohr): h when the world declares it, and then the identity of the
         # hypothesis beside the law, `bohr-v1`; `columns-v1` when the
-        # world declares a column beyond `charge` (`NatureBeamWorld.hypotheses`).
+        # world declares a column beyond `charge` or a lifetime
+        # (`NatureBeamWorld.hypotheses`).
         "action": world.action,
         "hypotheses": world.hypotheses,
         # The world's columns in order, (name, sign): gravity, charge, the
@@ -117,6 +118,9 @@ def execute_nature_beam_run(
                 ],
                 "phase": family.phase,
                 "phase_per_link": family.phase_per_link,
+                # The age at which the family's rays click on the border
+                # `lifetime` (None: the family lives forever).
+                "lifetime": family.lifetime,
             }
             for family in world.families
         ],

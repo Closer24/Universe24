@@ -31,6 +31,7 @@ kept, their pins the law of events').
 | `test_nature_beam_flight.py` | The flight: the table at 1 / sqrt 3 with its periods, a lone unit straight and unchanged, the isotropy, the periodic axis and the stub, the open face's click, `adjacent_node` ([below](#the-flight)) | `test_event_transit` (a), `test_periodic_axis` (a to c), `test_event_boundaries` |
 | `test_nature_beam_push.py` | The push as one bilinear form over the arriving rays' labels, the emitter's factor on the record, and the one momentum label the click, the re-emission, the home and the transit line move ([below](#the-push-as-one-form)) | new (2026-09-19, the night: the physics-rule review's F1 and the model owner's proposal 2) |
 | `test_columns.py` | The one coupling as a signed inner product over the columns: the two built-in columns equal to the landed form integer by integer and refusal by refusal on a grid, at the register's scale and on the replay of the series 7 worlds' `read` records; a third column with the sign minus giving the design's integers and the sign as a key; the refusals and the alignment; the bounds at parsing and at the push; every column floored on its own ([below](#the-columns)) | new (2026-09-20, the model owner's "one mechanism for all the laws on the GameBoard"; the mathematician's verified form) |
+| `test_lifetime.py` | The lifetime of a family and the held content: the click on the border `lifetime` booked as a face books an escape (the record 2^26, the ledger lines, the run's record), a ray read at the age L and then booked, the reach of L = 1, 2, 3 on the flight table (the six neighbours, the face diagonals, the cube diagonals and two Links), the inverse refused, the refusals; a measured event holding content of two families (the charges as rational sums, the push, the release of both, the record) and the register's proton ([below](#the-lifetime-and-the-held-content)) | new (2026-09-20, the model owner's "the strong force's range is a lifetime, L"; the physicist's D-1) |
 | `test_nature_beam_label.py` | The label along the unit vector of the direction at the flight table's scale: the table u_d by the exact integer rule (the pinned vectors, the length within 1.35 % of Q, antisymmetry, equivariance under the 48, no tie, the float agreement over every primitive direction within the bound), every label content x u_d with the recoil, the transit line and the books closing through clicks, a mirror and the open faces, the bound at Q x content x amount ([below](#the-label-along-the-unit-vector)) | new (2026-09-19, the model owner's decision on the physics-rule reviewer's verdict; every momentum pin of the suite re-pinned x 64, listed in its section) |
 | `test_nature_beam_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing; no collision at a Node that holds a measured event ([below](#the-collision-table)) | new |
 | `test_nature_beam_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact; the merge by one packed key and by the lexsort alike ([below](#the-bijection)) | new |
@@ -607,6 +608,80 @@ mathematician's counterexample):
   of amount 1 on +x, two at (1, 2, 0) with the ages 0 and 1, two at
   (0, 2, 0) with the ages 0 and 1, arriving one per tick) the reader's
   ages 1 .. 4 read -43, -42, -43, -43.
+
+## The lifetime and the held content
+
+`tests/test_lifetime.py` (docs/BEAM_LAW.md, section 2, section 3 step 6,
+section 5 and section 10 note 31 (vii) and (viii); the model owner,
+2026-09-20, "the strong force's range is a lifetime, L: the event whose
+age reaches L makes no next event but an escape click in the ledger, as
+at an open face"; the physicist's D-1, a measured event holding content
+of several families). K 2^20, N 64, `suspension` 0, every family without
+a phase circle unless said. The expected integers, written down before
+the first run:
+
+- (b) the lifetime click: a lone ray of the free family `s` (lifetime 3)
+  on +x from (2, 2, 2) on an open 7^3 GameBoard at `release` [0, 1] is at
+  (3, 2, 2) at the ages 1 and 2 (the heading steps at the ages 0, 2, 4,
+  ...) and at (4, 2, 2) at the age 3, booked at the end of tick 3: the
+  store empty, the border's escaped amount 1, momentum (64, 0, 0),
+  content 0, one click record (tick 3, node (4, 2, 2), detector
+  `lifetime`, measured None, family `s`, number 1, amount 1, phase 0,
+  momentum [64, 0, 0], content 0), the border's record 67 108 864 (2^26,
+  (32 x 256)^2 for one unit at phase 0), the books closed at every tick
+  (the escaped line 1, the momentum line (64, 0, 0) escaped),
+  `face_detectors()` ending with the border (`nodes` 0), `detectors()`
+  ending `face:-z`, `lifetime`, the run's record listing the border after
+  the faces, `lifetime` 3, 3, None per family, `columns-v1` under
+  `hypotheses` and the escaped line {family s, amount 1, content 0,
+  momentum [64, 0, 0]}; a ray of amount 5 of the paid family `light`
+  (quantum 2) with the lifetime 3: escaped content 10 and momentum
+  (640, 0, 0) on the border, the books' escaped content 10; a ray that
+  arrives at a `read` Node (a reader of `m`, content 1, at (4, 2, 2)) at
+  the age 3 is read (the push (-64, 0, 0), the record `read` before
+  `click` at tick 3) and then booked; the same world without lifetimes
+  keeps the ray (age 4 at (4, 2, 2) after tick 4, no record, `hypotheses`
+  []).
+- (c) the reach on the flight table: the 26 directions (the six headings,
+  the twelve face diagonals, the eight cube diagonals) from a source of
+  content 1 at the centre of a 9^3 GameBoard, one row per direction per
+  interval (`release` [1, 1]), read by fixed probes of content 1 of a paid
+  family (gravity alone: the push -V) at (5, 4, 4), (5, 5, 4), (5, 5, 5)
+  and (6, 4, 4): with the lifetime 1 the six neighbours alone are
+  reached, (5, 4, 4) reading 9 lines at every tick from 2 (the heading
+  and the eight diagonals whose first step is x), the push (-392, 0, 0)
+  = -(64 + 4 x 45 + 4 x 37); with 2 the face diagonals too, (5, 5, 4)
+  reading 3 lines from tick 3 ((1, 1, 0), (1, 1, 1) and (1, 1, -1) at
+  their second step), the push (-119, -119, 0); with 3 the cube diagonals
+  and the second Link, (5, 5, 5) reading the (1, 1, 1) line at tick 4 with
+  (-37, -37, -37) and (6, 4, 4) the heading at tick 4 with (-64, 0, 0);
+  26 rows click on the border at every tick from L + 1 on (78 after four
+  ticks at L = 1, the border's amount 26 after four ticks at L = 3), and
+  no row of the family carries an age at or beyond L after any tick.
+- (d) the inverse interval is refused on a GameBoard with a family of a
+  lifetime, naming the family and its lifetime ("refused with the family
+  's' of lifetime 3").
+- (e) the refusals, naming the key: `lifetime` 0, -1, 1.5, "3" (an
+  integer from 1), [3, 3, 3] (one integer, a scalar), 11 with
+  `age_bound` 10 (beyond the age bound; 10 accepted); a declared ray of
+  the family with the age 3 at the lifetime 3 (the age 2 accepted); a
+  detector named `lifetime`; `held` naming the event's own family, an
+  unknown family, a content 0 or 1.5, or not an object; a held total
+  breaking the phase-turn bound (K 16, N 64: 300 + 300 >= 512). The held
+  content: a measured event of `a` (charge [1, 2], strong [3, 2]) of
+  amount 4 holding `b` (charge 2, strong 1) 2 reads the charges gravity
+  (6, 1), charge (6, 1), strong (8, 1) (the reader `c` of
+  `tests/test_columns.py` (b) built from two families) and the push
+  (-128, 0, 0) from a `b` ray of amount 1 on +x at tick 1, releases both
+  families at the world's rate (rows of amount 4 of `a` and 2 of `b` per
+  direction per self-creation at `release` [1, 1]; released after two
+  ticks 8 of `a` and 6 of `b`, an emitter of `b` adding 1 per tick),
+  reports `held` [4, 2], the content 6 and the `charges` by name in the
+  run's record, counts under the owners of `b` (`owners(1)` = (1, 2)),
+  and the books balance; the register's proton, 1836 of `p` (charge 4)
+  holding one unit of `nuclear` (strong 10000, lifetime 3), reads the
+  charges (1837, 1), (7344, 1), (10000, 1), and `hypotheses`
+  ["columns-v1"].
 
 ## The re-emission
 

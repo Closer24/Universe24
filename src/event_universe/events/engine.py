@@ -60,6 +60,7 @@ from event_universe.events.world import (
     DETECTOR_READINGS,
     FACE_NAMES,
     LABEL_SCALE,
+    LIFETIME_NAME,
     MOMENTUM_BOUND,
     MeasuredDefinition,
     NatureBeamWorld,
@@ -192,8 +193,9 @@ class NatureBeamSimulation:
 
     def _measured(self, number: int, definition: MeasuredDefinition) -> Measured:
         count = len(self.families)
-        held = [0] * count
-        held[definition.family] = definition.amount
+        # What the event holds per family at the start: its amount under its
+        # own family and what `held` declared of the others.
+        held = list(definition.held) + [0] * (count - len(definition.held))
         detector = self.world.detector_of(definition.position)
         if detector is None:
             detector_set = DetectorSet(
@@ -642,16 +644,38 @@ class NatureBeamSimulation:
         the units that clicked there (`measured`, `clicks`), the `content`
         they carried, their `record` (the same square) and the
         `measured_content` of the measured events that stepped off; and the
-        `momentum` that left."""
-        found = []
+        `momentum` that left; then, when a family declares a lifetime, the
+        border `lifetime` with the same fields (no Nodes: the border is
+        wherever an event's age reaches its family's lifetime)."""
+        found: list[dict[str, object]] = []
         ledger = self.ledger
+        if self.world.lifetimes:
+            found.append(
+                {
+                    "name": LIFETIME_NAME,
+                    "nodes": 0,
+                    "threshold": 1,
+                    "families": {
+                        family.name: {
+                            "measured": ledger.lifetime_amount[f],
+                            "clicks": ledger.lifetime_amount[f],
+                            "content": ledger.lifetime_content[f],
+                            "record": ledger.lifetime_record[f],
+                            "measured_content": 0,
+                        }
+                        for f, family in enumerate(self.families)
+                    },
+                    "momentum": list(ledger.lifetime_momentum),
+                }
+            )
         for port in self.open_faces:
             axis = port >> 1
             nodes = 1
             for other in range(3):
                 if other != axis:
                     nodes *= self.shape[other]
-            found.append(
+            found.insert(
+                len(found) - (1 if self.world.lifetimes else 0),
                 {
                     "name": FACE_NAMES[port],
                     "nodes": nodes,
@@ -667,7 +691,7 @@ class NatureBeamSimulation:
                         for f, family in enumerate(self.families)
                     },
                     "momentum": list(ledger.face_momentum[port]),
-                }
+                },
             )
         return found
 

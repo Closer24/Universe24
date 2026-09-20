@@ -5,7 +5,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
-### The columns of the one coupling (2026-09-20)
+### The columns of the one coupling, the lifetime and the held content (2026-09-20)
 
 - The model owner's decision ("one mechanism for all the laws on the
   GameBoard", [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); the
@@ -32,6 +32,27 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   `charge` is declared; the states carry `charges` by column. The strong
   force is a column with the sign minus, no code of its own
   ([MIGRATION](docs/MIGRATION.md); `tests/test_columns.py`).
+- The lifetime and the held content (the model owner, 2026-09-20, "the
+  strong force's range is a lifetime, L: the event whose age reaches L
+  makes no next event but an escape click in the ledger, as at an open
+  face"; the physicist's D-1;
+  [BEAM_LAW note 31](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+  (vii) and (viii)): per family `lifetime` (an integer L from 1, one
+  scalar; absent, forever): a ray whose age reaches L at the end of its
+  walk, after that interval's reads and before the merge, clicks on the
+  border `lifetime`, a detector without Nodes listed after the faces,
+  booked exactly as an open face books an escape (the ledger's lifetime
+  lines summed into the escaped lines, one `click` record per row naming
+  the border); refused beyond `age_bound`, a declared ray at or beyond it
+  refused, the inverse interval refused with such a family; the reach the
+  flight table's (L = 1 the six neighbours, 2 the face diagonals, 3 the
+  cube diagonals and two Links). Per measured event `held` (family name
+  to content): the content the sum, the charge in every column the
+  rational sum over what is held, every free family held released beside
+  the own. `run.json` carries `lifetime` per family, the border among the
+  `detectors` and `columns-v1` under `hypotheses` when a lifetime is
+  declared. No existing world changes ([MIGRATION](docs/MIGRATION.md);
+  `tests/test_lifetime.py`).
 
 ### The names NatureBeam and GameBoard and the glossary's single names (2026-09-20)
 

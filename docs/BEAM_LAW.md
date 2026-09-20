@@ -139,7 +139,25 @@ column carries [0, 1] there, a paid family's values must be 0, at most
 `COLUMN_LIMIT` = 8 columns in all, and the world's column order is
 gravity, charge, then the names in the order of their first declaration;
 the record carries `columns-v1` under `hypotheses` when a column beyond
-`charge` is declared; `directions` (optional, at the world:
+`charge` is declared; since 2026-09-20 (note 31 (vii); the model owner,
+"the strong force's range is a lifetime, L") per family `lifetime`, an
+integer L from 1, one scalar (a list refused; absent, the family lives
+forever): a ray of the family whose age reaches L at the end of its walk
+makes no next event but a click on the border `lifetime`, booked exactly
+as an open face books an escape (step 6; section 5), refused beyond the
+world's `age_bound`, a declared ray of the family at or beyond it
+refused, and the name `lifetime` refused for a detector as a face's name
+is; the record carries `columns-v1` also when a lifetime is declared;
+since 2026-09-20 (note 31 (viii); the physicist's D-1) per measured
+event `held`, an object of family name to content (an integer from 1),
+the content the event holds of families other than its own beside its
+`amount`: its content is the sum over what it holds, its charge in every
+column the exact rational sum over the families held of their value
+times their content, every free family it holds is released at the
+world's rate beside its own, and a held paid family is content it
+carries (only a lamp releases paid content, and a lamp is of the event's
+own family); the own family and an unknown family are refused;
+`directions` (optional, at the world:
 a list of integer vectors beyond the six headings that any lamp or re-emitter
 may name; the table `D` is the two rest vectors, the six headings and these,
 in that order; each primitive with components in -P .. P, P = `direction_bound`,
@@ -292,7 +310,9 @@ order with each step's inverse:
    turned by `phase_per_link`; a ray that does not step this interval stays
    at its Node (its age still advances: the age is the flight phase, not a
    self-creation). A ray whose step leaves through an open face reaches the
-   face detector (step 4). Inverse: age back one, the same step subtracted,
+   face detector (step 4); a ray whose age reaches its family's `lifetime`
+   in this advance is read where it arrived (step 4) and then booked on
+   the border (step 6). Inverse: age back one, the same step subtracted,
    the phase turned back (a ray at age 0 is at its birth, which has no
    inverse: refused). Rest rays (direction 0, 1) stay. The age is advanced
    whole; the flight table is read at `age mod L_d`.
@@ -437,8 +457,21 @@ order with each step's inverse:
    the label's scale is the same step, `by_clock(age, Q n, Q k) =
    by_clock(age, n, k)`. No remainder is kept; the count is the whole
    part off the clock (implementation note 15; `tests/test_push_width.py`).
-6. **Merge identical rows; sort by Node.** A bijection (a permutation of rows
-   and a sum of interchangeable units).
+6. **The border `lifetime`; then merge identical rows and sort by Node.**
+   Since 2026-09-20 (note 31 (vii)) every row of a family with a
+   `lifetime` whose whole age is at or beyond it after this interval's
+   walk (read in step 4 where it arrived at a measured event; unread in
+   free space) clicks on the border `lifetime`: its amount, content and
+   label booked as an open face books an escape (the ledger's lifetime
+   lines, summed into the escaped lines beside the faces), one `click`
+   record per row naming the border, the border's record the square of
+   the coherent pointer of what clicked, per family; then the rows leave
+   the store. Local (the row's own age against its family's key), fixed
+   work (one comparison per row), no draw and no register: the one-way
+   border of the interval beside the click, so a GameBoard with a family
+   of a lifetime has no inverse interval (refused naming the family and
+   its lifetime). The merge is a bijection (a permutation of rows and a
+   sum of interchangeable units).
 
 The prototype's rule holds: only arrivals are measured (a ray created at the
 Node this interval is its own release and is not met until it arrives
@@ -659,6 +692,16 @@ content and is not the law).
 whose step leaves the GameBoard clicks there, its amount, label and content
 booked as escaped, its phase on the click record; the face's record is the
 same square. A periodic axis has no face.
+
+**The border `lifetime`** (since 2026-09-20, note 31 (vii)). A family that
+declares a `lifetime` L makes the GameBoard a detector without Nodes named
+`lifetime`, listed after the faces (`face_detectors()`, `detectors()`,
+the run's record): a ray of the family whose age reaches L at the end of
+its walk clicks there at step 6, booked as a face books an escape (the
+amount, the content, the label, the square of the pointer per family),
+and the books' escaped lines sum the faces and the border. The border
+is where the click is, not a place: the click record names the Node the
+ray was on.
 
 ## 6. What is deleted and which documents change
 
@@ -1554,4 +1597,54 @@ implementation's part of the contract. The design above is unchanged.
     states carry `charges` (the charge in every column by name). Checked
     on the 66 example worlds: `events.jsonl` byte-identical before and
     after, `state.json` equal but for the added `charges`, `run.json`
-    equal but for the added keys (VALIDATION.md).
+    equal but for the added keys (VALIDATION.md). (vii) The lifetime (the
+    model owner, 2026-09-20, "DECIDED: the strong force's range is a
+    lifetime, L: the event whose age reaches L makes no next event but an
+    escape click in the ledger, as at an open face"; the physicist's
+    design, scratchpad/strong/DESIGN.md; `tests/test_lifetime.py` (b) to
+    (d)): the family key `lifetime`, an integer L from 1, one scalar
+    (`FamilyDefinition.lifetime`, `NatureBeamWorld.lifetimes`); at step 6,
+    after the reads of step 4 and the self-creations of step 5 and before
+    the merge, every row of the family whose whole age is at or beyond L
+    clicks on the border `lifetime` (`LIFETIME_NAME`): its amount,
+    content and label booked in the ledger's `lifetime_amount`,
+    `lifetime_content` and `lifetime_momentum` and the square of its
+    coherent pointer in `lifetime_record`, summed into `escaped_amount`,
+    `escaped_content` and `escaped_momentum` beside the faces, the transit
+    momentum line lowered by what left, one `click` record per row naming
+    the border (`measured` None, the Node the row was on, its family,
+    number, amount, phase, label and content); then the rows leave the
+    store. The reach of a lifetime is the flight table's: L = 1 reaches
+    the six neighbours alone (every direction's first step is one Link
+    along a heading), L = 2 the twelve face diagonals too, L = 3 the eight
+    cube diagonals and the second Link of a heading (test (c)); a ray read
+    at the age L is read and then booked, the reading of step 4 before the
+    border. The parser refuses a lifetime beyond `age_bound` (a row would
+    carry an age beyond the store's bound before the border took it), a
+    declared ray in transit at or beyond its family's lifetime, and the
+    name `lifetime` on a detector; the inverse interval is refused on a
+    GameBoard with a family of a lifetime (the border has no inverse, as a
+    face has none). The record: `run.json`'s `detectors` carry the border
+    after the faces (`name` "lifetime", `nodes` 0, `threshold` 1, per
+    family `measured`, `clicks`, `content`, `record` and `measured_content`
+    0, and `momentum`), the `escaped` lines sum it, every family carries
+    its `lifetime` (None without one), and `hypotheses` carries
+    `columns-v1` when a lifetime is declared: a lifetime is the range of
+    a column, the other half of the one mechanism, so it shares the
+    identity and there is no third one. (viii) The held content (the
+    physicist's D-1; test (e)): the measured-event key `held`, an object
+    of family name to content, the content of every other family the
+    event holds beside its `amount` under its own (`MeasuredDefinition.held`,
+    aligned with the families; `Measured.held`, which the clicks of paid
+    content joined already): the content the frame reads is the sum, the
+    charges per column the rational sums of (i), every free family held is
+    released at the world's rate at every self-creation (rows of the held
+    amount per direction, as the own family's; the release of a held free
+    family was the engine's rule before, reached by no declared world),
+    the labels' bound and the phase-turn bound read the sum, and `owners`
+    counts the event under every family it holds. Refused naming the key:
+    the own family, an unknown family, a content that is not an integer
+    from 1, `held` that is not an object. The register's proton is 1836 of
+    `p` (charge 4) holding one unit of `nuclear` (strong 10000, lifetime
+    3): the charges (1837, 1), (7344, 1), (10000, 1). No existing world
+    declares a lifetime or `held`: every registered run is unchanged.
