@@ -378,7 +378,11 @@ order with each step's inverse:
    and the mathematician's verified form; note 31; `nature_beam.push_form`):
    for a group of a free family B's rays with the label flow `V_B`, per
    axis, `push_A = sum over the columns c of epsilon_c x sign(V E_c n_c) x
-   by_clock(age_A, |V x E_c x n_c|, D_c x d_c)`, with `(E_c, D_c)` the
+   by_clock(age_A, |V x E_c x n_c|, D_c x d_c)`, with `age_A` the
+   reader's clock age, the age before the interval's self-creation, at
+   which every rate of the law is read (since 2026-09-20, the four
+   unifications (4), note 33; until then the age after the frame's
+   advance, note 20), `(E_c, D_c)` the
    reader's charge in the column c as the frame read it (the exact
    rational sum over the families it holds of their value per unit of
    content times their content, `Measured.charges`), `(n_c, d_c)` the
@@ -1071,7 +1075,9 @@ implementation's part of the contract. The design above is unchanged.
     -2^25 and -2 in `7_mp` and `7_pm`, -12582912 and -3 in `7_pp_m4`,
     -2^24 and -1 in `7_00`, row by row). The rounding subtlety of today
     survives unchanged and is stated: `age_A` is the reader's age after
-    the frame's advance, frozen while it is owed. The reviewer's F7 is
+    the frame's advance, frozen while it is owed (until 2026-09-20: since
+    the four unifications (4), note 33, the columns are floored at the
+    clock age like every other rate). The reviewer's F7 is
     closed: fixed local work (one product and one `by_clock` per axis per
     factor class met), fixed local storage (two more integers per row,
     functions of the number today, so the store's bound does not grow;
@@ -1890,3 +1896,27 @@ implementation's part of the contract. The design above is unchanged.
     3 and 2 that pair 2 in test (g)) as it did and the push and the record
     read the clicked units as they did. Bit-exact: every world of the
     register replays byte-identical in `events.jsonl` and `state.json`.
+    **(4) The columns floored at the clock age like every other rate**
+    (`tests/test_nature_beam_push.py` (m); `tests/test_columns.py` (b), (e)
+    and `tests/test_nature_beam_push.py` (k) re-pinned). The one exception
+    of note 20: the columns' `by_clock` was read at `a_A`, the reader's
+    age after the frame's advance, while the turn, the release, the lamp,
+    the owed count and the step are read at the clock age `a_A - 1`, the
+    age before the interval's self-creation (the mathematician's row 8).
+    Now `push_form` takes `Measured.clock_age`: every rate of the law is
+    read at the clock age. What moves: nothing where the product `V x E_c
+    x n_c` is a multiple of `D_c x d_c` (`by_clock(a, n, d)` is then `n /
+    d` at every age: series 7's product 3 x 2^22 x [1, 2] is even, 0 of
+    200 ticks differ, the mathematician's clock_checks 3; `test_nature_beam_push`
+    (e)'s 1920 / 20 = 96 exactly); where it is not, the extra unit of
+    the floor lands on other ticks and the sum over the ticks is the same
+    (the floors telescope): with an odd flow on a fan direction, V =
+    u_(2, 1, 0) = (57, 29, 0), every tick moves by exactly one unit per
+    axis and the sum over 22 reads by none (test (m), the fractional pin
+    the owner accepted); the pins of `test_columns` (b) and (e) and of
+    `test_nature_beam_push` (k) are re-pinned with the new integers
+    written first (MIGRATION). The register: every world of the 85
+    replays byte-identical in `events.jsonl` and `state.json`, so no
+    registered series moves (C, 7, D, E, G, H, I, K, Bell, A10, the
+    catalog: every charged product of theirs is a multiple of its
+    denominators, or their reads never met a fractional floor).

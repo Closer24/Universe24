@@ -550,7 +550,10 @@ charge 1 the family `p` of charge [1, 5]) and every integer is unchanged.
   push -1280 + by_clock(age, |256 x 1 x 1 x 5|, 5 x 4) = -1280 + 64 =
   (-1216, 0, 0) (the ray's family's rho 1/4; the re-emitter's 1/5 would
   read 51 or 52), and the mirror's own free release of A under the
-  family A from tick 8 with -1280 + by_clock(age, 1280, 25); no error
+  family A from tick 8 with -1280 + by_clock(age, 1280, 25), the age
+  the reader's clock age, tick - 1 (re-pinned on 2026-09-20 for the four
+  unifications (4) from the age after the frame's advance, tick: the sum
+  over the 23 reads moves by -1); no error
   (until 2026-09-20 the re-emitted rows carried the re-emitter's held
   content of B, 0, and the charged reader divided by it); the mirror
   re-released 92 units and is pushed; the mirror's `charge` (4, 5), the
@@ -562,6 +565,21 @@ charge 1 the family `p` of charge [1, 5]) and every integer is unchanged.
   M, so every read pushes (-128 M, 0, 0), `pushed` (-2560, 0, 0),
   (-10240, 0, 0), (-40960, 0, 0) after 20 reads; the probe's `charge`
   (2 M, 1) and the books' `charge` [2 M + 1, 1].
+- (m) the columns are floored at the clock age like every other rate
+  (the four unifications, the model owner, 2026-09-20, (4); BEAM_LAW note
+  33, the one exception of note 20 removed; the integers written first):
+  the fan world of (g) with the source's `release` [1, 4] (one ray of
+  amount 1 per interval, the flow V = u_(2, 1, 0) = (57, 29, 0), odd on
+  both axes), the source's charge [1, 2] and the probe's [1, 1] (content
+  5): the probe reads at every tick t from 9 through 30 the push (-285 +
+  by_clock(t - 1, 285, 2), -145 + by_clock(t - 1, 145, 2), 0), that is
+  (-143, -73, 0) at an odd tick and (-142, -72, 0) at an even one (until
+  2026-09-20 the floor was read at the age after the frame's advance, t,
+  which put the extra unit on the other parity: every tick moves by
+  exactly one unit per axis), and `pushed` after the 22 reads (-3135,
+  -1595, 0), the same sum under both clocks (the floors telescope; the
+  mathematician's clock_checks 3); (e)'s pin does not move (1920 / 20 =
+  96 exactly) and (k)'s is re-pinned.
 
 ## The columns
 
@@ -600,17 +618,20 @@ mathematician's counterexample):
 - (b) the third column: the families `a` (charge [1, 2], strong [3, 2])
   and `b` (charge 2, strong 1) under `"strong": {"sign": -1}`; a reader
   of `a` of amount 1 (M 1, Q 1/2, G 3/2) met by one `b` ray of amount 1
-  on (1, 1, 0) (u = (45, 45, 0)) reads (-68, -68, 0) at the age 1 (the
-  ray at (2, 1, 0) with the age 1, arriving at tick 1) and (-67, -67, 0)
-  at the age 2 (the ray at (1, 1, 0) with the age 3, arriving at tick 2):
-  gravity -45, charge +45, strong -by_clock(age, 135, 2); a reader of `c`
+  on (1, 1, 0) (u = (45, 45, 0)) reads (-67, -67, 0) at tick 1 (the
+  reader's clock age 0; the ray at (2, 1, 0) with the age 1) and (-68,
+  -68, 0) at tick 2 (the clock age 1; the ray at (1, 1, 0) with the age
+  3): gravity -45, charge +45, strong -by_clock(clock age, 135, 2)
+  (re-pinned on 2026-09-20 for the four unifications (4), the columns
+  floored at the clock age like every other rate, from (-68, -68, 0) then
+  (-67, -67, 0) at the age after the frame's advance); a reader of `c`
   (charge 1, strong [4, 3]) of amount 6 (M 6, Q 6, G 8): a `b` ray of
   amount 1 on +x (-128, 0, 0), an `a` ray of amount 1 on +x (-960, 0, 0),
   an `a` ray of amount 3 on -x (2880, 0, 0); a reader of `d` (charge 0,
   no strong value) met by a `b` ray on +x (-64, 0, 0); with the sign +1
-  the same cases read (68, 68, 0), (67, 67, 0), (896, 0, 0), (576, 0, 0),
+  the same cases read (67, 67, 0), (68, 68, 0), (896, 0, 0), (576, 0, 0),
   (-1728, 0, 0); a third declared column `extra` (sign +1, the value 1 on
-  `a` and `b`) adds +45 per axis: (-23, -23, 0) and (-22, -22, 0); a
+  `a` and `b`) adds +45 per axis: (-22, -22, 0) and (-23, -23, 0); a
   reader of `q` (charge [1, 2]) of content 3 met by a `b` ray on the
   diagonal reads (0, 0, 0) at both ages (the landed parity case, -135 +
   135); the reader of `c` reports the charges gravity [6, 1], charge
@@ -653,7 +674,10 @@ mathematician's counterexample):
   -128 / 3 floored once -42, -43, -43, -42; on the engine (four `b` rays
   of amount 1 on +x, two at (1, 2, 0) with the ages 0 and 1, two at
   (0, 2, 0) with the ages 0 and 1, arriving one per tick) the reader's
-  ages 1 .. 4 read -43, -42, -43, -43.
+  clock ages 0 .. 3 (the ticks 1 .. 4) read -43, -43, -42, -43, the
+  per-column list itself (re-pinned on 2026-09-20 for the four
+  unifications (4) from -43, -42, -43, -43 at the ages after the frame's
+  advance, 1 .. 4).
 
 ## The lifetime and the held content
 

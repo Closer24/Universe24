@@ -82,6 +82,21 @@ except where a section below says.
   starts)` (new) sums a moment table per contiguous group;
   `read_groups` calls it. No world file changes; every example world
   replays byte-identical.
+- **(4) The columns floored at the clock age like every other rate.**
+  `push_form` takes the reader's clock age (`Measured.clock_age`, the age
+  before the interval's self-creation) where it took `Measured.age` (the
+  age after the frame's advance), so the columns' `by_clock` is read at
+  the same age as the turn, the release, the owed count and the step
+  ([BEAM_LAW note 33](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+  (4); note 20's exception is closed). A world whose product `V x E_c x
+  n_c` is not a multiple of `D_c x d_c` reads the floor's extra unit on
+  other ticks than before, the sum over the ticks unchanged; no world
+  file changes and every example world replays byte-identical. Re-pinned
+  with the new integers written first: `tests/test_columns.py` (b) ((-67,
+  -67, 0) then (-68, -68, 0) at the ticks 1 and 2, and the sign and
+  `extra` cases with them) and (e) (-43, -43, -42, -43 at the ticks 1 to
+  4), `tests/test_nature_beam_push.py` (k) (`by_clock(tick - 1, 1280,
+  25)`); the new test (m).
 
 ## The `wave` threshold on the pointer's square and the escaped momentum per family, on 2026-09-20 (issues #359 step A, #360, #361)
 

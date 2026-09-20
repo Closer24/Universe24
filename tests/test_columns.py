@@ -40,10 +40,15 @@ a group of a free family B's rays with the label flow V is, per axis,
     strong [3, 2]) and `b` (charge 2, strong 1) under `"strong": {"sign":
     -1}`; a reader of `a`, amount 1 (M 1, Q 1/2, G 3/2), met by one ray of
     `b` of amount 1 arriving on (1, 1, 0) (u = (45, 45, 0)) reads the push
-    (-67, -67, 0) at an even age and (-68, -68, 0) at an odd one (gravity
-    -45, charge +45, strong -by_clock(age, 135, 2)): two rays, one at
-    (2, 1, 0) with age 1 arriving at tick 1 (the reader's age 1) and one at
-    (1, 1, 0) with age 3 arriving at tick 2 (age 2), read -68 then -67; a
+    (-67, -67, 0) at an even clock age and (-68, -68, 0) at an odd one
+    (gravity -45, charge +45, strong -by_clock(age, 135, 2); the age the
+    reader's clock age, the age before the interval's self-creation, tick
+    - 1, since the four unifications (4) of 2026-09-20, BEAM_LAW note 33:
+    re-pinned with the new integers written first from the age after the
+    frame's advance, tick, which read -68 then -67): two rays, one at
+    (2, 1, 0) with age 1 arriving at tick 1 (the reader's clock age 0) and
+    one at (1, 1, 0) with age 3 arriving at tick 2 (the clock age 1), read
+    -67 then -68; a
     reader of `c` (charge 1, strong [4, 3]) of amount 6 (M 6, Q 6, G 8,
     the charges of the held reader of `tests/test_lifetime.py`): a `b` ray
     of amount 1 on +x gives (-128, 0, 0) (-384 + 768 - 512), an `a` ray of
@@ -51,10 +56,11 @@ a group of a free family B's rays with the label flow V is, per axis,
     on -x (2880, 0, 0); a reader with no strong value (`d`, charge 0)
     reading a `b` ray on +x: gravity alone, (-64, 0, 0). The sign is a
     key: the same worlds with `"strong": {"sign": 1}` read (+67, +67, 0)
-    at the even age and (+68, +68, 0) at the odd one, and (896, 0, 0) for
-    the reader of `c`. A third declared column (`"extra": {"sign": 1}`,
-    the value 1 on `a` and on `b`) adds +by_clock(age, 45 x 1 x 1, 1) =
-    +45 per axis to the first case: -23 at the odd age, -22 at the even.
+    at the even clock age and (+68, +68, 0) at the odd one, and (896, 0,
+    0) for the reader of `c`. A third declared column (`"extra": {"sign":
+    1}`, the value 1 on `a` and on `b`) adds +by_clock(age, 45 x 1 x 1, 1)
+    = +45 per axis to the first case: -22 at the even clock age (tick 1),
+    -23 at the odd one (tick 2).
     A world without a declared column reads the parity case of the
     landed form: a reader of `q` (charge [1, 2]) of content 3 met by a
     `b` ray on (1, 1, 0) reads (0, 0, 0) at both ages (-135 + 135). The
@@ -62,7 +68,7 @@ a group of a free family B's rays with the label flow V is, per axis,
     3) and `q` (content 5) with the charge [1, 3] and the strong value
     [2, 3] on both families, releasing at `release` [1, 1] toward each
     other, read equal and opposite pushes at every tick (the same
-    rationals floored at the same age: 320 x 1 / 3 and 320 x 4 / 3 on
+    rationals floored at the same clock age: 320 x 1 / 3 and 320 x 4 / 3 on
     `p`, 192 x 5 / 9 and 192 x 20 / 9 on `q`), and the run's record carries
     the world's columns, every family's aligned columns and the identity
     `columns-v1` under `hypotheses` (with `bohr-v1` first when `action` is
@@ -92,7 +98,10 @@ a group of a free family B's rays with the label flow V is, per axis,
     rho_B = [1, 1]: per column (the decided form) -64 + by_clock(age, 64,
     3) = -43, -43, -42, -43 at the ages 0, 1, 2, 3; the sum -128 / 3
     floored once would give -42, -43, -43, -42; on the engine the reader's
-    ages 1 .. 4 read -43, -42, -43, -43.
+    clock ages 0 .. 3 (the ticks 1 .. 4) read -43, -43, -42, -43 (since
+    the four unifications (4) of 2026-09-20, the columns at the clock age;
+    re-pinned with the new integers written first from -43, -42, -43, -43
+    at the ages after the frame's advance, 1 .. 4).
 """
 
 from __future__ import annotations
@@ -361,9 +370,11 @@ PARITY = [ray([2, 1, 0], "b", DIAGONAL, age=1), ray([1, 1, 0], "b", DIAGONAL, ag
 
 def test_a_third_column_with_the_sign_minus_gives_the_designs_integers():
     """(b)."""
-    assert pushes(world("a", 1, PARITY)) == [(1, [-68, -68, 0]), (2, [-67, -67, 0])]
-    assert pushes(world("a", 1, PARITY, sign=1)) == [(1, [68, 68, 0]), (2, [67, 67, 0])]
-    assert pushes(world("a", 1, PARITY, extra=True)) == [(1, [-23, -23, 0]), (2, [-22, -22, 0])]
+    # At the clock ages 0 and 1 (the ticks 1 and 2): the strong column's
+    # by_clock(0, 135, 2) = 67, by_clock(1, 135, 2) = 68.
+    assert pushes(world("a", 1, PARITY)) == [(1, [-67, -67, 0]), (2, [-68, -68, 0])]
+    assert pushes(world("a", 1, PARITY, sign=1)) == [(1, [67, 67, 0]), (2, [68, 68, 0])]
+    assert pushes(world("a", 1, PARITY, extra=True)) == [(1, [-22, -22, 0]), (2, [-23, -23, 0])]
     assert pushes(world("q", 3, PARITY)) == [(1, [0, 0, 0]), (2, [0, 0, 0])]
     for name, direction, position, amount, push, plus in (
         ("b", PLUS_X, [1, 2, 0], 1, [-128, 0, 0], [896, 0, 0]),
@@ -417,8 +428,9 @@ def test_two_bodies_at_mirror_nodes_read_equal_and_opposite_pushes(tmp_path):
     for tick in on_p:
         push = on_p[tick]
         assert push == [-v for v in on_q[tick]] and push[0] > 0 and push[1:] == [0, 0]  # type: ignore[union-attr]
-        # p: gravity 3 x 320 = 960, charge -(320 / 3 floored), strong +(1280 / 3 floored).
-        assert push[0] == 960 - by_clock(tick, 320, 3) + by_clock(tick, 1280, 3)  # type: ignore[index]
+        # p: gravity 3 x 320 = 960, charge -(320 / 3 floored), strong
+        # +(1280 / 3 floored), at the clock age tick - 1.
+        assert push[0] == 960 - by_clock(tick - 1, 320, 3) + by_clock(tick - 1, 1280, 3)  # type: ignore[index]
     assert simulation.measured[1].pushed == [-v for v in simulation.measured[2].pushed]
     path = tmp_path / "world.json"
     path.write_text(json.dumps({**document, "ticks": 1}), encoding="utf-8")
@@ -634,4 +646,5 @@ def test_every_column_is_floored_on_its_own():
         "in_transit": [ray([x, 2, 0], "b", PLUS_X, age=a) for x in (1, 0) for a in (0, 1)],
     }
     found = {tick: push[0] for tick, push in pushes(document)}
-    assert found == {1: -43, 2: -42, 3: -43, 4: -43}
+    assert found == {1: -43, 2: -43, 3: -42, 4: -43}
+    assert list(found.values()) == per_column

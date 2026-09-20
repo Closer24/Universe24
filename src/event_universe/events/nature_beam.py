@@ -1352,8 +1352,12 @@ def push_form(
     arriving family's value per unit of content in every column, the pairs
     (n_c, d_c) (gravity (1, 1), charge rho_B, a declared column's value or
     (0, 1)); `columns` the world's (name, sign) per column; `age` the
-    reader's age after the frame's advance. For a free family's rays, per
-    axis,
+    reader's clock age, the age before this interval's self-creation, at
+    which every rate of the law is read (the turn, the release, the owed
+    count, the step; the four unifications, the model owner, 2026-09-20,
+    (4), BEAM_LAW note 33: until then the columns alone were floored at
+    the age after the frame's advance, note 20). For a free family's rays,
+    per axis,
 
         push_A = sum over the columns c of
                  epsilon_c x sign(V E_c n_c) x by_clock(age_A, |V x E_c x n_c|, D_c x d_c),
@@ -2160,14 +2164,16 @@ def nature_beam(
                         # whatever the family order: a click of this interval
                         # joins `held` and is read by the next frame (the
                         # orchestrator's D1, 2026-09-20); the arriving side is
-                        # the family's value per column.
+                        # the family's value per column; the columns are
+                        # floored at the reader's clock age, as every rate of
+                        # the law is (the four unifications (4)).
                         push = push_form(
                             free,
                             plan.g_moment[gi],
                             entry.frame_charges,
                             values_of[family],
                             columns,
-                            entry.age,
+                            entry.clock_age,
                             entry,
                         )
                         entry.momentum = [
