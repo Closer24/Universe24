@@ -624,6 +624,129 @@ The frame player and the diagrams of this run are on the page (the
 scratchpad's `page2/`), nothing registered; the drafted register entry
 below carries the second run as its result.
 
+## The third run: under the reading's weight at the relative speed (`doppler-v1`) and the signed drive (2026-09-20)
+
+The second of the law's two lacks found by this series (a body's own
+motion did not Doppler what it read) is on main since `56a258f` (PR #379,
+`doppler-v1`, the grain flux form: under the world key `doppler` a free
+body takes the rows arriving at its Node at the flux of their stream
+through it, `(G Q - T_d s w) / (G Q)` on a heading with G = 2^12 the grain
+of its speed, BEAM_LAW note 38; records 129 and 130), with the signed drive
+of PR #377. This is the one run the Boss asked for after the merge: the
+record-click worlds with the key added and nothing else changed
+(`doppler/<crowd>_<clock>.json`, written by `make_worlds.py --doppler`),
+the expectations pinned first in
+[EXPECTATION_2.md](../../../docs/designs/hubble_stars/EXPECTATION_2.md) and
+`doppler/expectations.json` (the reading rule `flux`: the design's acoustic
+derivation with the reader's speed at the grain, q = +0.245 in the gravity
+crowd against +0.859 under the source rule), five worlds at their
+registered 400 intervals (the gravity crowd under the three clocks, the
+double and the coasting crowds under the clock-free control; rule (a) of
+the suspension, PR #383, is not on main at this writing), nothing
+registered.
+
+### The readings (2026-09-20, measured against the pinned flux expectations)
+
+| world | q (second run, the source rule) | q (this run, under the key) | q derived and pinned (flux) | bracket | H (t_0 + T_0), second run | this run | pinned | bracket | nearest / farthest form | k, largest | the Doppler part alone, q |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `doppler/coasting_none` | -0.108 | -0.108 inside | 0 (the exact Milne form) | -0.25 .. +0.25 | 1.026 | 1.026 inside | 1.000 | 0.90 .. 1.10 | q = 0 / q = +0.5 | 0.000 | -0.085 |
+| `doppler/gravity_none` | +0.922 | +0.345 inside | +0.245 | +0.045 .. +0.445 | 0.811 | 0.916 inside | 0.9325 | 0.839 .. 1.026 | q = +0.5 / q = -0.55 | 0.000 | +0.339 |
+| `doppler/gravity_scalar` | +0.749 | -0.158 OUTSIDE | +0.245 | +0.045 .. +0.445 | 0.854 | 1.008 inside | 0.9325 | 0.839 .. 1.026 | q = -0.55 / q = +0.5 (outside) | 0.031 | +0.327 |
+| `doppler/gravity_age` | +0.461 | +0.093 inside | +0.245 | +0.045 .. +0.445 | 0.874 | 0.958 inside | 0.9325 | 0.839 .. 1.026 | q = 0 / q = -0.55 | 0.030 | +0.358 |
+| `doppler/double_none` | +1.500 | +1.190 OUTSIDE | +0.596 | +0.298 .. +0.894 | 0.674 | 0.774 inside | 0.8539 | 0.769 .. 0.939 | q = +0.5 / q = -0.55 | 0.000 | +1.229 |
+
+The reading's formula 1 + z = (1 + k)(1 + v / c): 120 of 120 inside 2 %;
+the luminosity 1 / (1 + z): 120 of 120 inside 5 %; the longest burst 1
+Link in every star; every |p(end)| / p(0) inside its bracket; the
+ordering coasting < gravity < double under the clock-free control inside
+(the gaps +0.45 and +0.85); 35 pinned readings inside and 5 outside (the
+scalar clock's q, its nearest and farthest forms and the "q = -0.55 not
+the nearest" line; the double crowd's q). The coasting world's `gather`
+and `click` lines are identical to the second run's `record/coasting_none`
+(7178 gathers, no difference); its `step` records differ only in the sign
+of `drive` (the signed drive carries the momentum's sign). The runs 37 to
+41 s each, the books balanced at every interval.
+
+**The change per star** (the gravity crowd, the late window; the double
+crowd in `EXPECTATION_2.md`'s terms reads +0.023 to +0.068 higher in z,
+pinned +0.019 to +0.061):
+
+| star | r_0 | z, the second run (source rule, record 124) | z, this run (under the key) | the change read | the change pinned (flux - source) | \|p(end)\| / p(0), second run | this run | pinned (flux) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s_px1 | 3 | 0.0155 | 0.0390 | +0.0236 | +0.0097 | 0.447 | 0.629 | 0.676 |
+| s_mx1 | 4 | 0.0564 | 0.0726 | +0.0162 | +0.0126 | 0.549 | 0.757 | 0.789 |
+| s_py1 | 5 | 0.0739 | 0.0878 | +0.0140 | +0.0151 | 0.710 | 0.913 | 0.980 |
+| s_my1 | 6 | 0.0976 | 0.1108 | +0.0133 | +0.0172 | 0.755 | 0.937 | 1.003 |
+| s_pz1 | 7 | 0.1254 | 0.1406 | +0.0152 | +0.0183 | 0.826 | 1.042 | 1.108 |
+| s_mz1 | 8 | 0.1424 | 0.1597 | +0.0173 | +0.0196 | 0.846 | 1.068 | 1.107 |
+| s_px2 | 9 | 0.1130 | 0.1329 | +0.0200 | +0.0225 | 0.441 | 0.621 | 0.673 |
+| s_mx2 | 10 | 0.1263 | 0.1524 | +0.0261 | +0.0241 | 0.503 | 0.692 | 0.721 |
+| s_py2 | 11 | 0.1588 | 0.1835 | +0.0247 | +0.0236 | 0.580 | 0.762 | 0.815 |
+| s_my2 | 12 | 0.1761 | 0.2046 | +0.0286 | +0.0246 | 0.611 | 0.798 | 0.842 |
+| s_pz2 | 13 | 0.2060 | 0.2276 | +0.0215 | +0.0231 | 0.667 | 0.848 | 0.916 |
+| s_mz2 | 14 | 0.2296 | 0.2511 | +0.0216 | +0.0235 | 0.688 | 0.865 | 0.930 |
+| s_px3 | 15 | 0.2109 | 0.2409 | +0.0300 | +0.0271 | 0.487 | 0.661 | 0.702 |
+| s_mx3 | 16 | 0.2307 | 0.2602 | +0.0296 | +0.0277 | 0.526 | 0.693 | 0.731 |
+| s_py3 | 17 | 0.2603 | 0.2900 | +0.0297 | +0.0243 | 0.574 | 0.744 | 0.795 |
+| s_my3 | 18 | 0.2851 | 0.3144 | +0.0293 | +0.0246 | 0.594 | 0.770 | 0.814 |
+| s_pz3 | 19 | 0.3087 | 0.3386 | +0.0300 | +0.0216 | 0.637 | 0.803 | 0.870 |
+| s_mz3 | 20 | 0.3313 | 0.3585 | +0.0272 | +0.0218 | 0.656 | 0.827 | 0.883 |
+| s_px4 | 21 | 0.3265 | 0.3561 | +0.0296 | +0.0248 | 0.538 | 0.702 | 0.736 |
+| s_mx4 | 22 | 0.3456 | 0.3781 | +0.0325 | +0.0249 | 0.562 | 0.722 | 0.756 |
+| s_py4 | 23 | 0.3737 | 0.4061 | +0.0324 | +0.0220 | 0.600 | 0.754 | 0.801 |
+| s_my4 | 24 | 0.3955 | 0.4266 | +0.0311 | +0.0221 | 0.615 | 0.778 | 0.815 |
+| s_pz4 | 25 | 0.4245 | 0.4458 | +0.0213 | +0.0199 | 0.646 | 0.801 | 0.849 |
+| s_mz4 | 26 | 0.4444 | 0.4689 | +0.0245 | +0.0199 | 0.662 | 0.819 | 0.860 |
+
+Every star reads a higher z than under the source rule (24 of 24; the
+change +0.013 to +0.033, pinned +0.010 to +0.028), every star keeps more
+of its momentum (0.62 to 1.07 of p(0) against 0.44 to 0.85), and two stars
+of the fast lines end above their initial momentum (`s_pz1` 1.042 and
+`s_mz1` 1.068; pinned three, `s_my1` at 1.003 reads 0.937): the direction
+and the size of the flux's effect as pinned, star by star.
+
+### What the readings say
+
+- **The weight is the flux, and it acts as derived.** The control reads
+  q = +0.345 (pinned +0.245, inside), H (t_0 + T_0) 0.916 (pinned 0.933,
+  inside); the deceleration read from the same worlds fell from +0.92 to
+  +0.35 by the key alone, two thirds of what the source rule read, as
+  pinned. None of the four refutation lines of `EXPECTATION_2.md` is met:
+  the key acted on the pushes (q left the source bracket), removed no more
+  than the flux (no star above 1.16, q above the coasting bracket), touched
+  no light (the coasting clicks identical, the formula and the luminosity
+  120 of 120), and on the right side (the inner stars of the fast lines
+  gain).
+- **The double crowd decelerates more than the derivation says.** q =
+  +1.19 against +0.596 (bracket +0.298 .. +0.894), outside, the Doppler
+  part alone +1.23, H inside; every star's momentum ratio inside its
+  bracket and every star's z higher than under the source rule by about
+  what was pinned. The one-dimensional continuum derivation understates
+  the read q of the heavy crowd (as it did under the source rule, +1.5
+  against +1.5 at the fit's edge), while the per-star momenta match: the
+  fit's q of a crowd whose inner stars are nearly stopped (`s_px1` reads
+  z = 0.023, |p(end)| / p(0) 0.17) is not the derivation's q; the ordering
+  and the sign are as pinned. Registered as read.
+- **The scalar clock bends the diagram to the accelerating form.** Under
+  the presence clock the gravity crowd reads q = -0.158 (the clock-free
+  control +0.345, the age clock +0.093; the second run +0.749, +0.922,
+  +0.461): the clocks lower q as in the second run (by 0.5 and 0.25 here,
+  0.17 and 0.46 there), and here the lowering carries the scalar world
+  below the flux bracket and makes q = -0.55 the nearest form in that one
+  world. The Doppler part alone in the same world reads q = +0.327 (inside
+  the bracket): the bend is the star's clock's (k up to 0.031, the bursty
+  count of the presence, `EXPECTATION_2.md` section 3), not the flux's and
+  not the stars' motion. Reported against the control, as pinned; the
+  clock-free control is the reading of the model's gravity.
+- **What the model gives, once more.** With the reader's flux on, the
+  model's own gravity still decelerates every star and pushes none
+  outward; q = 0 without gravity, +0.35 with it, +1.19 doubled, and the
+  accelerating form q = -0.55 is the farthest of the three in every
+  clock-free gravitating world. The law has no term giving q < 0; the flux
+  weight made the deceleration smaller, not negative. The one world naming
+  q = -0.55 the nearest does so by its clock's scatter, with a positive
+  Doppler part.
+
 ## Verdict
 
 The detector reads, of stars thrown from one point without gravity, the
@@ -721,6 +844,22 @@ the 29 readings outside are registered as read.
   (759 readings inside, 1 outside: the scalar clock's k). The gravitational
   deceleration is readable at the detector once the step rule is the
   drive.
+- **Third run (2026-09-20, under the reading's weight at the relative
+  speed `doppler-v1` and the signed drive; main at `56a258f`; the
+  expectations re-derived by the flux rule at the grain and pinned first,
+  `docs/designs/hubble_stars/EXPECTATION_2.md` and
+  `doppler/expectations.json`).** Five worlds, the record-click worlds
+  with the key `doppler`: q = -0.108 (coasting, its clicks identical to
+  the second run's), +0.345 (gravity; derived +0.245, inside), +1.190
+  (double; derived +0.596, outside), -0.158 and +0.093 (gravity under the
+  scalar and age clocks; the scalar outside, q = -0.55 its nearest form
+  with the Doppler part alone +0.327); H (t_0 + T_0) 1.026, 0.916, 0.774,
+  1.008, 0.958, every H inside; every star's z higher than under the
+  source rule (+0.013 to +0.033, pinned +0.010 to +0.028) and every
+  momentum ratio inside; the reading's formula 120 of 120, the luminosity
+  120 of 120, the longest burst 1 Link; 35 readings inside, 5 outside. The
+  flux weight takes two thirds of the read deceleration away, as pinned,
+  and leaves it a deceleration.
 - **Verdict.** The kinematics of the law give the coasting universe exactly
   from one point (Milne, q = 0 to the grain); the law's gravity decelerates
   every star's momentum and pushes none outward, so nothing in the law
