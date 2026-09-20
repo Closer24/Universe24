@@ -1,6 +1,45 @@
 # Project status and restart guide
 
-## Where the project stands on 2026-09-19 (read this first)
+## Where the project stands on 2026-09-20 (read this first)
+
+This is a snapshot of `claude/universe24-new-3ytqde` at the pull request
+that carries the day's work to `main`; read current Git, the linked issues
+and pull requests, and [Highlights 5.4](HIGHLIGHTS.md#54-the-detector) (the
+record "The day of 2026-09-20 in summary") before treating it as live status.
+
+1. **One law, one engine, one name per thing.** The Beam Law (`beam-v1`,
+   [BEAM_LAW.md](BEAM_LAW.md), a world selected by `"law": "beam"`) runs in
+   `src/event_universe/events/`; the record in transit is `NatureBeam`, the
+   lattice is the GameBoard everywhere, the glossary of Highlights 5.6 names
+   each thing once. Every reading is a moment of the events that reach a
+   set in one interval; every rate is the whole part off an age (`by_clock`);
+   the collision is a table permutation; the click is the one one-way border.
+2. **The four forces on the GameBoard as one mechanism.** The push is one
+   signed inner product over declared columns per unit of content (gravity
+   the universal column, `charge`, `strong`), the range of a column its
+   family's lifetime `L` (an escape click at L), the contact through the
+   table at one Link. Series I (the nucleus) is registered; the weak force
+   (`become`, `phase_width`, D-1) is in flight in its own pull request.
+3. **The detector is all there is to measure.** A `DetectorSet` with one
+   record, a threshold on the coherent pointer's square under `wave`, a
+   phase window, the two kinds of readings (detector / GameBoard) on every
+   registered line, the experimenter's skill (`skills/experimenter/SKILL.md`:
+   a human measures nothing on the GameBoard; an emitter in, a detector out).
+4. **What the law predicts and where it fails, measured:** Newton's
+   identities, Gauss, the third law, the clock's redshift (E), the Hubble
+   diagram coasting (G), Bohr's orbit not closed (H), light neither bent nor
+   delayed (K; the meeting `meeting-v1` in flight makes it bend as a report),
+   the nucleus (I), Heisenberg in the record (A10), no single-click build-up
+   (A10 at a low rate), Bell S = 2 with no-signalling exact (A2; #363 in
+   flight reads the settings from distant events). Each is stated in
+   [HYPOTHESES.md](HYPOTHESES.md) so that it can fail and registered in
+   [EXPERIMENTS.md](EXPERIMENTS.md) with the expectation before the run.
+5. **Decided and recorded (Highlights 5.4):** an event is a number at one
+   place with a phase (option 1); no draw, no register, no memory at the
+   detector; the click the only one-way border; the meeting as a report;
+   the old-engine issues mapped to their live targets.
+
+## Where the project stood on 2026-09-19 (history)
 
 **One engine: the Beam Law.** This description is a snapshot of the
 branch `claude/universe24-new-3ytqde` at the commits that implemented

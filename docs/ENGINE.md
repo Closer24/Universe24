@@ -305,7 +305,9 @@ Node with the default reading); every measured event points to its set
 threshold (under `beam` on the amount summed over the set; under `wave`,
 since 2026-09-20, on the square of the coherent pointer of the set's
 arrivals in units of one ray, `nature_beam.pointer_units`, so that rays
-which cancel pass; [BEAM_LAW note 32](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+which cancel pass; the pointer gate is the click's, the entries that
+absorb, and a `read` entry keeps the amount gate under both readings;
+[BEAM_LAW note 32](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
 the window under `wave`, the pointer, the record and the
 pairing under `beam` are taken over the set by `nature_beam` step 4; the
 click's content, momentum and re-emission stay at the Node the ray
