@@ -13,7 +13,8 @@ the threshold gates every response of a detector, a receiver's and a
 re-emitter's alike, a smaller set passing with a `pass` record: under
 `beam` on the amount summed over the set, under `wave` (since 2026-09-20,
 issue #359 step A) on the square of the coherent pointer of the set's
-arrivals in units of one ray (`pointer_units`: the nearest integer to
+arrivals in units of one ray (`pointer_units`, deleted with the gate at the
+one click of 2026-09-20: the nearest integer to
 (X^2 + Y^2) / 2^26, one unit at any phase reading 1, a rays in phase a^2,
 rays that cancel 0); a release reads no threshold. What an arrival does
 stays at its Node (the content joins the measured event it reached, the
@@ -126,7 +127,7 @@ detector's record"), written down first. K 2^20, `suspension` 0, `release`
     the refusal of `"reading": "field"` names the key;
 (i) the threshold on the pointer's square under `wave` (the model owner,
     2026-09-20, issue #359 step A; the integers written first): one unit
-    at any of the 64 phases reads 1 unit (`pointer_units`), a rays in
+    at any of the 64 phases reads 1 unit (the deleted `pointer_units`), a rays in
     phase a^2 exactly through a = 11 (the tables' C^2 + S^2 within 237 of
     65536 at N = 64), two opposite 0, two a quarter turn apart 2; on the
     engine one ray (phase 8) clicks at threshold 1; two rays in phase (0
@@ -167,11 +168,9 @@ import pytest
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import (
-    POINTER_UNIT,
     circle_vectors,
     coherent_pointer,
     pointer_phases,
-    pointer_units,
     read_arrivals,
     reading_fits,
 )
@@ -789,18 +788,9 @@ def test_the_beam_reading_pairs_opposite_rays_and_counts_the_rest():
 
 def test_the_wave_threshold_reads_the_pointers_square():
     """(i)."""
-    cosines, sines = phase_cosines(64), phase_sines(64)
-    assert POINTER_UNIT == (32 * 256) ** 2 == 1 << 26
-    assert {pointer_units(32 * cosines[k], 32 * sines[k]) for k in range(64)} == {1}
-    assert all(
-        pointer_units(32 * a * cosines[k], 32 * a * sines[k]) == a * a
-        for a in range(1, 12)
-        for k in range(64)
-    )
-    assert pointer_units(32 * (cosines[0] + cosines[32]), 32 * (sines[0] + sines[32])) == 0
-    assert pointer_units(32 * (cosines[0] + cosines[16]), 32 * (sines[0] + sines[16])) == 2
-    third = (32 * (cosines[0] + cosines[21] + cosines[43]), 32 * (sines[0] + sines[21] + sines[43]))
-    assert third[0] ** 2 + third[1] ** 2 == 200704 and pointer_units(*third) == 0
+    # The pointer's square in units of one ray (`pointer_units`) gated the
+    # `wave` threshold until the one click; the function is deleted with
+    # the gate (2026-09-20). The cases below read the amount gate.
     counter = {
         "position": NODE,
         "family": "m",
@@ -917,8 +907,8 @@ def test_the_pointer_is_the_first_moment_of_the_one_reading_over_the_circle():
     moments = read_arrivals(circle, amount * 32)
     assert moments.flow.tolist() == [8192, 40960, 0]
     assert int(moments.presence) == 320 and int(moments.outside) == 320 and int(moments.here) == 0
-    assert x[0] * x[0] + y[0] * y[0] == 1744830464 == 26 * POINTER_UNIT
-    assert pointer_units(x[0], y[0]) == 26
+    # 26 units of one ray's squared pointer, (32 x 256)^2 = 2^26.
+    assert x[0] * x[0] + y[0] * y[0] == 1744830464 == 26 * (32 * 256) ** 2
     assert pointer_phases(x, y, cosines, sines) == [14]
     # Two contiguous groups: the rows 0 to 1 and the row 2.
     x, y = coherent_pointer(amount, phase, np.array([0, 2]), cosines, sines)

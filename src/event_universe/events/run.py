@@ -203,7 +203,7 @@ def execute_nature_beam_run(
         ],
         "display": "none",
     }
-    if simulation.layer is not None and world.recorded:
+    if world.recorded:
         # The amplitude law's world: the list of gathers (the clicks of the
         # world), the records open at the end and the layer's line.
         metadata["world"] = list(simulation.layer.gathers)

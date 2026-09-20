@@ -173,7 +173,6 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/retention.py`, `docs/RETENTION.md` | Registered output ownership, active writer protection and 24-hour cleanup |
 | `src/event_universe/diagnostics/numeric_audit.py` | Static audit that `core/` holds integer arithmetic only |
 | `tools/run_series.py` | The worlds of a series run one process per core, each with its log and artifacts, a summary table at the end; `--wall-seconds` and `--memory-mb` stop a run past the host's budget and report it not completed |
-| `tools/migrate_nature_beam_worlds.py` | A NatureBeam world rewritten to the form of 2026-09-19: `quantum` in place of `kind`, only the table entries that differ from the default |
 | `tools/check.py` | The affected-check: changed files and their consumers; `--full` for everything |
 | `examples/events/` | The worlds of the Beam Law: one content, two contents, two slits with a detector and the one-slit control; the Bell worlds, the coupling, orbit, redshift and Hubble series and the detector definitions |
 | `tests/` | One module per generic rule on a minimal GameBoard (the one reading, the flight, the collision table, the bijection, the detector's record, the re-emission, the clock, the phase window, the world file, the worlds, the preflight, the decoder, retention, the repository gates) |
