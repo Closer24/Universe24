@@ -11,6 +11,26 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series I, the nucleus: eight runs - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` on the commits of the one
+mechanism (the columns `de6c4968`, the lifetime and the held content
+`7a77fa0c`, the contact through the table `b2c164c2`) and the series I
+commit, source fingerprint
+`a86447318c757023605e4ba33ab1ef1a15726fef839b893d5d50b899750188f5`,
+Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
+
+| Check | Result |
+| --- | --- |
+| Series I, `examples/events/nucleus/` (eight worlds, `tools/run_series.py --jobs 3`, 3000 intervals each) | every run completed in 4 to 87 s with the books balanced at every tick; `tools/nucleus_readings.py`: 0 record checks failed, 29 readings inside, 1 outside (the first step of two protons at three Links at tick 66 against the steady toy's 30 .. 60), none moved; the table in [EXPERIMENTS, I](EXPERIMENTS.md#i-the-nucleus-2026-09-20) |
+| `tests/test_nucleus_readings.py` | the tool's reading of a run written by the runner pinned to the record: the design's pair on the six headings (the pushes (128, 0, 0) from -7936 and +8064, the hand-overs 256, 128, 640, the border's 12 clicks per interval from tick 4) |
+| `python tools/check.py` | ruff lint and format, mypy and the selected tests green |
+
+The runs establish what the one mechanism does on the engine (the
+designed pushes integer by integer, the deuteron bound at one Link and
+free at three, the binding threshold of two protons, the square sheared
+and the line held); they establish no physical law, for or against.
+
 ## The columns, the lifetime, the held content and the contact through the table: the 66 example worlds compared - 2026-09-20
 
 The worktree of `claude/universe24-new-3ytqde` on the commits of the one

@@ -129,6 +129,26 @@ no orbit closed well enough for the coherence reading (the reference
 orbit held its mean radius for two eccentric turns and was thrown out at
 a close pass), registered as the finding and not tuned.
 
+## The nucleus series
+
+The folder [nucleus/](nucleus/README.md) holds the eight worlds of series
+I, written by `nucleus/make_worlds.py`: an open 21^3 cube, three free
+families without a phase circle (`p` with `charge` 4, `n`, and `nuclear`
+with the column `strong` of value 10000 and sign minus and the `lifetime`
+3), nucleons that are free bodies of 1836 or 1839 units holding one unit
+of `nuclear` (`held`) and releasing one row per direction of the 290
+primitive directions with |a| + |b| + |c| <= 6 per interval, `width` 2^28:
+the deuteron at one and at three Links (kicked), two protons at one Link
+(G = 10000 and 7000) and at three, the square p n / n p and the line p n
+n p. `tools/nucleus_readings.py` reads the bodies' own `read` and
+`contact` records and the border's clicks (DETECTOR) and their steps and
+separations (GAMEBOARD), every line labelled by its kind; the register
+entry is
+[I, the nucleus (2026-09-20)](../../docs/EXPERIMENTS.md#i-the-nucleus-2026-09-20):
+the deuteron bound at one Link and free at three, two protons bound or
+repelled by the sign of Q^2 - G^2 - M^2, the square sheared apart and the
+line held, 29 readings inside and 1 outside, registered and not tuned.
+
 ## The orbit series
 
 The folder [orbit/](orbit/README.md) holds the six worlds of the orbit
