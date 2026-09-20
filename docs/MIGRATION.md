@@ -6,6 +6,63 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The reading's weight at the relative speed, on 2026-09-20 (`doppler-v1`, a world key, absent by default)
+
+The model owner's decision of 2026-09-20 (record 119 of
+[the log](LOG_2026-09-20.md): "a body TAKES a message at the rate at which
+it and the message meet"; the mathematician's admissible form, FORM.md
+section 6 of `docs/designs/push_relative_speed/` on the branch
+`claude/series-m-masses`, record 110, and its grain and flux form, GRAIN.md
+beside it, after the physics-rule review of the first build; series G2's
+finding, record 107;
+[BEAM_LAW note 38](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).
+A hypothesis beside the law with its own identity: `beam-v1` is unchanged
+without the key.
+
+- The world key `doppler`, true or false, false by default, refused on any
+  other value; `run.json` carries it and the identity `doppler-v1` under
+  `hypotheses` when it is true. Under it a free measured event reads the
+  rows that arrived at its Node for the push (step 4) with each direction's
+  label flow weighted by the flux of its rows through the body, one scalar
+  per (direction, body), the pair `(|G Q |v|^2 - T_d sum_a s_a w_a v_a|,
+  G Q |v|^2)` at the body's speed quantised to the grain, off the reader's
+  clock per component, before the columns (`nature_beam.weighted_flow`,
+  `flux_pair`, `quantised_speed`; `push_form` untouched). The product
+  |V_d| x num_d is tested by division before it is formed and refused
+  naming the body and the direction.
+- `world.SPEED_GRAIN`, G = 2^12, a constant of the law beside Q: the grain
+  of a body's speed, `w_a = G x |p_a| // D_a`, the remainder discarded each
+  interval (a declared grain, nothing accumulating; note 38 states the bias
+  below 1 / G in v). `world.step_divisor(momentum, content, width)`, D = Q
+  x S x M + |p|, is the one function of the step rule's divisor:
+  `engine.step_axis` reads it and the quantised speed reads it.
+- `Measured.frame_momentum`: the momentum the frame read at the start of
+  the interval, beside `frame_content` and `frame_charges` (not in the
+  record: a snapshot of the record's own momentum for the interval's
+  weight, one speed for every group of the interval).
+- No load-time bound is new: the parser's static budget of the columns
+  (`_column_budget`) takes the largest release flow times the weight's
+  largest factor on the table under the key (`weighted_flow_factor`, 3
+  on the headings). The registered G2 star worlds fit as registered (the
+  weighted flow's product 2^29, today's push 2^34) and one of them runs
+  under the key in `tests/test_doppler.py` (h) from
+  `tests/data/g2_gravity_scalar.json`, a temporary copy of
+  `examples/events/hubble_stars/gravity_scalar.json` of the series G2
+  branch that G2's merge replaces by the example's path (one canonical
+  copy). The first build's per-axis
+  pair, its load check of the pair (`_doppler_load_checks`,
+  `relative_speed_bound`, `axis_pace`, `FlightTable.pace`) and its
+  "per-direction floors only on an axis where the reader moves" rule
+  never reached main and are gone: the per-axis weight was wrong on every
+  fan direction (GRAIN.md section 2).
+- The pair is taken in absolute value (a body outrunning its source's rows
+  takes them from behind at |c - v|, the push keeping the flow's sign); a
+  fixed body reads at the weight 1; a free body at rest reads today's
+  integers by an exact division, on a fan as on a heading.
+- Nothing re-registers: the key is absent in every shipped world, the
+  gate set's fifteen worlds replay byte-identical, and nothing is re-run
+  under the key in this change. Nothing deleted.
+
 ## Families in entity definitions, on 2026-09-20 (`event-entities-v2`; host only, no law change)
 
 The model owner's decision of 2026-09-20 (record 113 of
@@ -49,9 +106,28 @@ as amended). The identity `beam-v1` is kept: the rule is the same count
 where the momentum is constant and a repair of it where it changes.
 
 - `core.integer.by_drive(drive, rate, denominator)`, the count primitive
-  (record 108): the whole part of an accumulated rate on the reader's own
-  record, (the count gained, the drive after), `by_clock` where the rate
-  is constant. `engine.step_axis(drive, momentum, content, width)` reads
+  (record 108): the whole part of an accumulated SIGNED rate on the
+  reader's own record, (the count gained, -1, 0 or +1, and the drive
+  after), `by_clock` where the rate is constant and of one sign. Signed
+  since record 126 of the same day: the first form took |p| and the
+  direction from the momentum's sign at the fire, so a momentum reversed
+  by a hand-over discharged the distance driven toward the partner as a
+  Link away (the deuteron under a suspension); `drive` on the record now
+  carries the sign of the momentum that drove it (a body under a
+  negative momentum reads a negative drive; its steps are the same).
+  Every world whose momenta keep one sign on every axis steps as before;
+  a world whose momentum reverses on an axis (an orbit, a turning body, a
+  pair under a hand-over) changes: of the 33 example worlds with a free
+  body, run at their registered length under the unsigned and the signed
+  drive and compared, 16 change (the orbit `s8_r12`, `s8_r24`,
+  `s32_r12`, `s32_r24`; Bohr `r2` to `r16`; the nucleus `alpha_line`,
+  `alpha_square`, `deuteron_1_kick`; the weak `j3_deuteron`,
+  `j3_deuteron_crowd`) and 17 read the same (the coupling `1b_*`, the
+  Hubble four, `deuteron_1`, `deuteron_3`, `pp_1`, `pp_1_weak`, `pp_3`,
+  `neutron_star`, `sun_planet`, `s1_*`, `j3_neutron_free`). The changed
+  registered entries (D, H, I, J) carry a dated line "Re-read under the
+  signed drive (2026-09-20)", D and H with their verdicts re-read once
+  more in the same form; the old numbers kept as history. `engine.step_axis(drive, momentum, content, width)` reads
   it and returns the sign of the Link stepped (or None) and the drive
   after it, in place of `step_axis(age, momentum, content, width)`
   returning the sign: the rule reads the body's record, not its age. The

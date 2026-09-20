@@ -165,6 +165,7 @@ short of it (p in label units; C on the first turn):
 | `s32_r12` | 32 | 12 | 576 | no: the return (-4, 0) (yes) | 289 (343) | 11.25 | -4, -2, +3, +5, -6, +9, -15 | 6.74 | 307 / 49121 | 1.32 | escaped through face:-y at tick 2891 |
 | `s32_r24` | 32 | 24 | 576 | no: the return (-13, 0) (yes) | 829 (687) | 28.27 | -13.00 | 1.46 | 77 / 8052 | 1.27 | escaped through face:-x at tick 1054 |
 
+(superseded for the pushed worlds by the re-read below, 2026-09-20)
 No orbit closes by the criterion (a return within one Link with the
 heading kept). The S = 1 probes outrun the field; the S = 8 probe at
 r = 12 makes one turn in 198 intervals (the derived 196) and leaves; the
@@ -227,3 +228,18 @@ at 495; `s32_r12` closes two turns (T 474, 236) and leaves at 1568;
 623 against the derived 687, the mean radius 23.63) and again in 464
 before leaving at 1849; T(24)^2 / T(12)^2 = 1.73 against 4. The register
 entry has every number ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under the signed drive (2026-09-20)
+
+The S = 1 probes read the same; the four others move differently under
+the signed drive (record 126: the drive is the signed distance the
+momentum has driven, a reversal first cancelling what was driven the
+other way): no orbit closes by the criterion (the S = 32 probe at r = 24
+returns 9 Links off at T 701, its closed return (-1, +1) under the
+unsigned drive having been the reversal defect's kick back), but that
+probe is bound for the whole run of 4000 intervals (four turns of 701 to
+880, the mean radius 26 to 36) and T(24)^2 / T(12)^2 from the first turns
+701 and 363 reads 3.73 against the expected 4; `s8_r12` closes the angle
+five times and leaves at 917, `s32_r12` three times and leaves at 2004,
+`s8_r24` does not turn. The register entry has every number and the
+verdict re-read ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
