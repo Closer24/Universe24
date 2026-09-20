@@ -127,6 +127,20 @@ marginals, GHZ, the finite-N bound as a theorem), a shorter and safer
 paper that predicts nothing; (B) the recommendation as recorded, which
 this plan cannot support on points (b) and (c) and would not write.
 
+### Decided (the owner, 2026-09-20): the paper is the click model on the `amplitude-v1` runs
+
+The owner's answer to the one question, in his words: "I want the amplitude
+runs, because they unify everything." So the paper is the one that needs
+`amplitude-v1`'s registered runs, not C4, and it waits for them. The
+coordinator's reading of the answer, open to the owner's correction: claim
+C2 (section 1.3) written so that C3 survives a referee who strikes the
+comparison with nature's S (section 1.4), with C4's registered results as
+the "before" inside it, and Part II holding every other statement of the
+program as a hypothesis with its status (section 12). The unification the
+owner names is the paper's spine: one record with rows, one click, one
+reading, and the same integers giving Born, interference, the pair, GHZ,
+which-path and the gate.
+
 ### 1.4 The candidate claims ranked by safety and by ease (the owner's request of 2026-09-20, relayed by the Boss session)
 
 Safety: what is proved or measured today and defensible against a hostile
