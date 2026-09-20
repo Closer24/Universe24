@@ -20,8 +20,7 @@ the model owner, 2026-09-19):
   (`NatureBeamWorld.turn`), refused at half the circle; the record carries
   the key as declared; `N`,
   the steps of the phase circle (64 by default, a power of two from 2 through
-  65536, the tables' bound `core.phase.MAX_PHASE_STEPS`; 4096 until
-  2026-09-20); `release` `[n, d]`, the rays a measured event of a free family
+  4096); `release` `[n, d]`, the rays a measured event of a free family
   releases per self-creation per declared direction per unit of content,
   read off its clock; `suspension` `[n, d]`, the rate of the
   clock's count: a measured event owes `by_clock(age, presence x n, d)`
