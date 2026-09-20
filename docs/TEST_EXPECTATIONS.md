@@ -600,6 +600,22 @@ The expected integers, written down before the first run:
   a label twice; a weight 0; `turn` on `pass` and beyond N - 1; a `turn`
   of 16 parsed into `label_turns`.
 
+## The amplitude law: the cone
+
+`tests/test_amplitude_cone.py`, on `cone_links` and `cone_intervals` (series
+L7, `examples/events/amplitude/expectations.json` under `cone`; the
+register's L7 entry), written before the run:
+
+- (a) the flight: every row clicks at its counter at the age 29 in both
+  worlds, 29 intervals after its birth (the flight table's m(29) = 17 on
+  +x, T = 110, and 24 on the diagonal (1, 1, 0), T = 156);
+- (b) the path phase phase - u at the click: 51 at the axis and 8 at the
+  diagonal under the integer form of `phase_per_link` (3 x 17 and 3 x 24
+  mod 64); 23 at both under the pair form [3, 1] (3 x 29 mod 64);
+- (c) one gather per record, one cell each, as many at each counter; the
+  file's pins equal the flight formula's (the ages 29 and 29, `same_age`
+  true, the Links 17 and 24).
+
 ## The meeting
 
 `tests/test_meeting.py` (docs/BEAM_LAW.md, section 3 step 3 and section 10

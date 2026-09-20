@@ -3772,6 +3772,40 @@ and 9).**
   skips a step as the births spend its content: 4096 births take 4099
   intervals); the reading tool's replay equals `run.json`'s `world`.
 
+**L7, the cone: which length a row's phase counts (the paper session's
+question, issue #376; the Boss's approval of 2026-09-20).**
+
+- **Model prediction, pinned before the run (`expectations.json` under
+  `cone`; the generator's commit before the run).** Two lamps of `light`,
+  one at (0, 0) on +x to a counter 17 Links away, one at (0, 3) on the
+  plane diagonal (1, 1, 0) to a counter at (12, 15), 24 Links along the
+  staircase (the Euclidean distances 17 and 16.97); N = 64, K 2^20, 96
+  intervals; two worlds of one geometry, `cone_links` with the integer
+  form of `phase_per_link` (3 per Link stepped) and `cone_intervals` with
+  the pair form [3, 1] (3 per interval of age). The flight table
+  ([BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam)) puts
+  both rows at their counters at the age 29 (m(29) = 17 on +x, T = 110;
+  24 on the diagonal, T = 156): the click at the same interval in both
+  worlds. The path phase phase - u at the click: `cone_links` 3 x 17 = 51
+  at the axis and 3 x 24 = 72 = 8 mod 64 at the diagonal; `cone_intervals`
+  3 x 29 = 87 = 23 mod 64 at both; every record the same.
+- **Run (2026-09-20, `cone_links` and `cone_intervals`, 96 intervals
+  0.5 s each, first on the head 725d811f of the one click's branch and
+  again on main 0f193fdb after it landed, the same fingerprint
+  `4bf55a62e6fd` and the same digests; completed and conserved; DETECTOR;
+  [record 144](LOG_2026-09-20.md#144-the-cone-test-of-the-paper-session-issue-376-approved-in-record-140-run-on-the-one-clicks-head-725d811f-no-src-change-the-flight-is-euclidean-to-one-intervals-rounding-in-every-direction-both-rows-arrive-at-age-29-on-the-axis-17-links-and-on-the-staircase-of-24-links-the-tables-1--sqrt-3-and-the-metric-of-the-phase-is-the-familys-declared-form-of-phase_per_link-the-integer-form-counts-the-links-stepped-51-and-8-mod-64-l1-and-the-pair-form-3-1-counts-the-intervals-of-age-23-and-23-euclidean-the-papers-row-1-the-octahedral-front-corrected-its-row-9-the-l1-path-difference-restricted-to-the-integer-form-so-the-two-slit-pearson-0368-of-slits_low-the-pair-form-is-not-explained-by-l1-the-isotropy-item-for-the-physicist-restated)).** The
+  age 29 at both counters in both worlds, 29 intervals after the birth;
+  the path phase 51 and 8 in `cone_links`, 23 and 23 in `cone_intervals`;
+  67 records per lamp (the births of the intervals 1 to 67), every one;
+  134 gathers per world, one per record, one cell each. Verdict: the
+  flight is Euclidean in every direction to the digital line's rounding
+  (the time to a Node), and the metric of the phase is the family's
+  declared form: the integer form counts the Links stepped (L1 along a
+  staircase), the pair form counts the intervals (Euclidean). Of the
+  registered worlds, the Mach-Zehnder with unequal arms and the two slits
+  declare the pair form; the pair, GHZ and the gate declare no phase per
+  Link. Which form nature's light is, the model does not say.
+
 **L, open items (2026-09-20, after (v)).** The one click (the design's
 section 6) is not landed: the record form as the default changes worlds
 outside the crowd-threshold series on the gate set
