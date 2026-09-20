@@ -469,6 +469,80 @@ the owner asked for, that its numbers are the world's rows and nothing
 else. When the one click lands on main the `record/` worlds become the
 shipped ones and the numbers are compared again.
 
+## The second run: under the step drive and the record click (2026-09-20)
+
+The model owner's decision on this series' two rule findings (records 107
+and 108: "1 and 2 are very important for a solution and a new run"; "yes;
+let him give a generic solution if he can"): change 1, the step drive, is
+on main since `f3a41f28` (PR #373; [BEAM_LAW note 17](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+as amended: a body's count of Links is the whole part of the distance its
+momentum has driven, on its own record, one Link per interval at most);
+change 2, the push read at the relative speed, was not admissible on the
+presence (the mathematician, record 110) and its arrivals form is built
+elsewhere under a key off by default. This is the ONE run the Boss asked
+for after change 1: the worlds under the record click (`record/`, the key
+`amplitude`, every reading from the `gather` lines) on main's engine, with
+the expectations of [DESIGN.md section 4](../../../docs/designs/hubble_stars/DESIGN.md)
+re-derived and pinned before the run, nothing registered.
+
+### The expectations re-derived and pinned before the run (`record/expectations.json`)
+
+The generator writes `record/expectations.json` with the reading rule
+`source`: the continuum derivation of the pushing throw with the emitter's
+Doppler alone (the law's reading rule as measured on the engine, "a body's
+own motion does not Doppler what it reads", the finding of the first
+registration; the first registration's `acoustic` rule stays in
+`expectations.json` as history), the brackets by the same rule as before
+(q within the larger of 0.2 and half the derived deceleration; H (t_0 +
+T_0) within 10 %; |p(end)| / p(0) within the derived spread widened by
+half). Under the step drive the derivation's flagged omission of the step
+rule's grain is no longer an omission, so this is the first run in which
+the derivation and the engine share the motion's rule; the clocks and the
+flight table's grain stay flagged.
+
+| Crowd (the late window, t_0 = 350) | q derived | q bracket | H (t_0 + T_0) derived | H bracket | \|p(end)\| / p(0) derived | bracket | the nearest form | the farthest |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `coasting` (the exact Milne form from one point) | 0.000 | -0.25 .. +0.25 | 1.000 | 0.90 .. 1.10 | 1.000 | 0.99 .. 1.01 | not pinned | not pinned |
+| `gravity` (the source rule) | +0.859 | +0.43 .. +1.29 | 0.827 | 0.744 .. 0.910 | 0.473 .. 0.897 (every star slower; none gains) | 0.209 .. 1.000 | q = +0.5 or q = 0 | q = -0.55 |
+| `double` (the source rule) | +1.500 (the fit's grid ends at 1.5: at or beyond it) | +0.75 .. +2.25 | 0.704 | 0.633 .. 0.774 | 0.033 .. 0.792 | 0.000 .. 1.000 | q = +0.5 or q = 0 | q = -0.55 |
+
+Unchanged: the reading's formula within 2 %, the luminosity 1 / (1 + z)
+within 5 %, k within 0 .. 0.05, the ordering coasting < gravity < double
+with gaps above 0.1, q = -0.55 NOT the nearest in any world. New, from the
+step drive (a GameBoard reading): the step rule's longest burst over the
+window's emission span is 1 Link per interval in every star of every
+world (the tool's criterion `step_burst_max`); the longest stall is the
+slowest star's own period, about 1 / v intervals, no longer tens of
+intervals beyond it.
+
+What the run answers: whether the model needs something added to read q <
+0. Under the source rule every star of the gravity crowds is derived to
+slow down (|p(end)| / p(0) below 1 for all 24), so the derived q is
+positive and large; the detector's reading is inside its bracket if the
+deceleration is now readable (the first registration's q swung from -0.76
+to +1.50 across the clocks because of the step rule's stalls and bursts),
+and q < 0 anywhere would be a reading the law has no term for.
+
+### The subset run, and why
+
+Five of the nine worlds: the three crowds under the clock-free control
+(`coasting_none`, `gravity_none`, `double_none`), because the question is
+the step rule's effect on the reading of the gravitational q and the
+clock-free control isolates it from the clocks' bursty counts (named
+already in the first registration); and the gravity crowd under the two
+clocks (`gravity_scalar`, `gravity_age`), to read whether the clocks still
+swing q by more than the bracket under the drive. The double crowd's two
+clock worlds are not run (its deceleration is the gravity crowd's doubled;
+they add no answer to the question).
+
+```bash
+PYTHONPATH=src python examples/events/hubble_stars/make_worlds.py --record
+PYTHONPATH=src python tools/run_series.py --jobs 3 --out artifacts/hubble_stars_drive examples/events/hubble_stars/record/{coasting_none,gravity_none,double_none,gravity_scalar,gravity_age}.json
+PYTHONPATH=src python tools/hubble_stars_readings.py artifacts/hubble_stars_drive --expectations examples/events/hubble_stars/record/expectations.json --png <dir> --json <file>
+```
+
+### The readings (to be written after the run)
+
 ## Verdict
 
 The detector reads, of stars thrown from one point without gravity, the

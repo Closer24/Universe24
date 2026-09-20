@@ -73,7 +73,7 @@ not dilute), so the presence is nearly uniform over the stars and the age
 moment grows with the star's distance from the others.
 
     python examples/events/hubble_stars/make_worlds.py            # the worlds and expectations.json
-    python examples/events/hubble_stars/make_worlds.py --record   # also record/<world>.json under the key `amplitude`
+    python examples/events/hubble_stars/make_worlds.py --record   # also record/<world>.json under the key `amplitude` and record/expectations.json (the source rule)
     python examples/events/hubble_stars/make_worlds.py --after    # derivation_after_the_runs.json only
 """
 
@@ -410,10 +410,18 @@ def fits_of(tool, points: list[dict[str, float]], t0: float) -> dict[str, object
     }
 
 
-def expectations() -> Json:
+def expectations(reading_rule: str = "acoustic") -> Json:
     """The expectations before the runs: the design table, the derived
     points and fits per crowd and window, and the brackets the tool
-    judges the late window against.
+    judges the late window against. `reading_rule` "acoustic" is the first
+    registration's derivation (the Doppler on the emitter and the reader);
+    "source" the derivation under the law's reading rule found on the
+    engine (a body's own motion does not Doppler what it reads: the
+    emitter's factor alone), pinned for the run under the record click and
+    the step drive of 2026-09-20 (`record/expectations.json`), where the
+    continuum derivation's flagged omission of the step rule's grain is
+    no longer an omission (the drive follows the momentum's history) and
+    the burst of the step rule is pinned at 1 Link per interval.
 
     The brackets, with their reasons: (i) the reading's formula 1 + z =
     (1 + k)(1 + v / c) within 2 % and the luminosity 1 / (1 + z) within
@@ -446,6 +454,7 @@ def expectations() -> Json:
     design = stars(MASS)
     found: Json = {
         "format": EXPECTATIONS_FORMAT,
+        "reading_rule": reading_rule,
         "c": c,
         "throw_age": THROW_AGE,
         "ticks": TICKS,
@@ -482,8 +491,13 @@ def expectations() -> Json:
         )
     found["exact_coasting_form"] = exact_by_window
     q_exact = float(exact_by_window["300-400"]["q_fit"])
+    if reading_rule == "source":
+        # The step drive (BEAM_LAW note 17 as amended, 2026-09-20): a body
+        # steps at most one Link per interval by construction, so the
+        # longest burst of the step rule over any window is 1 (GameBoard).
+        found["step_burst_max"] = 1
     for crowd in CROWDS:
-        derivation = throw_derivation(crowd)
+        derivation = throw_derivation(crowd, reading_rule)
         fits = {
             key: fits_of(tool, points, (int(key.split("-")[0]) + int(key.split("-")[1])) / 2.0)
             for key, points in derivation["windows"].items()
@@ -594,6 +608,22 @@ def main() -> None:
             path = HERE / "record" / f"{name}.json"
             path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
             print(path.relative_to(ROOT))
+        pinned = expectations("source")
+        (HERE / "record" / "expectations.json").write_text(
+            json.dumps(pinned, indent=1) + "\n", encoding="utf-8"
+        )
+        print((HERE / "record" / "expectations.json").relative_to(ROOT))
+        for crowd, entry in pinned["crowds"].items():
+            fit = entry["derived_fits"]["300-400"]
+            ratios = [p["momentum_ratio"] for p in entry["derived"]["300-400"]]
+            print(
+                f"record/{crowd} (the source rule, pinned): derived at t_0 = 350: q = {fit['q_fit']:+.3f}, "
+                f"H (t_0 + T_0) = {fit['hubble_time']:.4f}, the nearest form {fit['nearest']}, the farthest "
+                f"{fit['farthest']}; |p(end)| / p(0) from {min(ratios):.4f} to {max(ratios):.4f}; brackets: q "
+                f"{entry['q_bracket'][0]:+.3f} .. {entry['q_bracket'][1]:+.3f}, H (t_0 + T_0) "
+                f"{entry['hubble_bracket'][0]:.3f} .. {entry['hubble_bracket'][1]:.3f}, |p(end)| / p(0) "
+                f"{entry['momentum_ratio_bracket'][0]:.3f} .. {entry['momentum_ratio_bracket'][1]:.3f}"
+            )
     expected = expectations()
     (HERE / "expectations.json").write_text(json.dumps(expected, indent=1) + "\n", encoding="utf-8")
     print((HERE / "expectations.json").relative_to(ROOT))

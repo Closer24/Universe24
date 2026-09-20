@@ -864,6 +864,22 @@ def main(argv: list[str] | None = None) -> int:
                         f"{KIND_BOARD} `{run.name}`: |p(end)| / p(0) from {min(ratios):.4f} to {max(ratios):.4f} "
                         f"(expected {momentum_bracket[0]:.3f} .. {momentum_bracket[1]:.3f}): {verdict(ok)}"
                     )
+                burst_max = expected.get("step_burst_max")
+                bursts = [p.burst for p in fit.points if p.burst is not None]
+                if isinstance(burst_max, int) and bursts:
+                    # The step drive (2026-09-20): one Link per interval at most.
+                    ok = max(bursts) <= burst_max
+                    criteria.append(
+                        (
+                            f"{run.name}: the step rule's longest burst at most {burst_max} Link per "
+                            f"interval {KIND_BOARD}",
+                            ok,
+                        )
+                    )
+                    print(
+                        f"{KIND_BOARD} `{run.name}`: the longest burst {max(bursts)} (expected at most "
+                        f"{burst_max}): {verdict(ok)}"
+                    )
                 k_bracket = crowd.get("k_bracket") if isinstance(crowd, dict) else None
                 if isinstance(k_bracket, list):
                     ks = [p.k for p in fit.points]
