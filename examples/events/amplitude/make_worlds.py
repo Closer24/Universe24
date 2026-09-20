@@ -155,6 +155,17 @@ under `pair_n`). At N = 4096 the half-angle tables of 2N do not exist
 (the tables end at 4096 steps): the entry at an even setting s is the
 4096 table's at s / 2, the same rounding of the same angle.
 
+L7, the cone (the paper session's question on issue #376; the Boss's
+approval of 2026-09-20): `cone_links` and `cone_intervals`, one geometry
+(a lamp at (0, 0) on +x to a counter 17 Links away; a lamp at (0, 3) on
+the plane diagonal (1, 1, 0) to a counter at (12, 15), 24 Links on the
+staircase, the Euclidean distances 17 and 16.97; N 64, 96 intervals)
+under the integer form of `phase_per_link` (3 per Link stepped) and the
+pair form [3, 1] (3 per interval of age). Pinned from the flight table
+(BEAM_LAW section 3): both rows click at the age 29; the path phase
+phase - u at the click 51 and 8 under the integer form, 23 and 23 under
+the pair form (`expectations.json` under `cone`).
+
     python examples/events/amplitude/make_worlds.py [--out DIR]
 """
 

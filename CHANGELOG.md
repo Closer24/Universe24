@@ -5,6 +5,18 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### Series L7, the cone: which length a row's phase counts (2026-09-20)
+
+- Two worlds of one geometry under the amplitude law
+  (`examples/events/amplitude/cone_links.json` and `cone_intervals.json`,
+  by the generator; `expectations.json` under `cone`;
+  `tests/test_amplitude_cone.py`; the register's L7 entry): a row on the
+  heading +x and a row on the plane diagonal (1, 1, 0) reach counters at
+  the same Euclidean distance at the same age (the flight table, 1 / sqrt 3
+  in every direction); the integer form of `phase_per_link` turns the
+  phase per Link stepped (51 and 8 at the two counters), the pair form per
+  interval of age (23 and 23). No engine change.
+
 ### The verdicts of series D and H re-read under the step drive (2026-09-20)
 
 - The physics-rule reviewer's re-read of the two registered verdict
