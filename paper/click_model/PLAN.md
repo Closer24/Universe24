@@ -211,3 +211,37 @@ at 1024 and 4096; GHZ's zeros). Everything else is a hypothesis with its
 status. What makes it sharp is what it refuses: no derivation of the
 square, no fixed N, no claim below Tsirelson, no number before the
 register.
+
+## Referee round 1: the physics-rule reviewer as a hostile referee (2026-09-20)
+
+Verdict: major revision; every number confirmed, the definitions and two
+theorems not the model that produced them. Twenty-eight findings, all
+applied to the draft the same day:
+
+- Blocking, fixed: the rotation's matrix (the turn on the label-1 column,
+  as the engine has it, without which Y = X and GHZ is impossible); the
+  pair's "second click" narrative replaced by the engine's one gather at
+  completion from both settings (nothing is deleted; the near party's row
+  is written at the far tick); Theorem 1 restricted to F, S, R, M with the
+  collision named a nonlinear bijection that acts in no reported world;
+  E(N/4, N/8) = 46452/65773; the CNOT rows' provenance stated (re-run after
+  the gate's fix, reproduced on the paper's tree, now in summary.json).
+- Should fix, fixed: the figures' tree attributed to the paper branch's
+  merge 4ccf65c7 (fingerprint 731d0f56c9f9; main's is 48a9d1c91661); u is
+  every row's starting phase (the "read by no rule" qualified; the eight
+  totals explained); the pair form of the phase turn on the row, the click
+  reading p as is; Theorem 2's inverse the conjugate transpose; the tie
+  evidence cited as computation and the review's re-read; Theorem 4 "off
+  a tie"; the tables' norm script added (`checks/tables_norm.py`); Lemma 1
+  scoped to records whose rows all end; the two-slit re-pin disclosed and
+  Figure 2's 0.931 attributed to the generator's reading (the run's 15
+  clicks: 0.655); the preferred party by declaration stated; Hong-Ou-Mandel
+  marked as needing a rule the model lacks; the windowed which-path result
+  reported as a computed departure; the reading tool named a consistency
+  check, not an independent implementation; the registry's 2.83 attributed
+  to paper 1's own archive; the 12 gate and far worlds added to the summary.
+- Minor, fixed: the meeting noted as absent from the paper's worlds; the
+  abstract's injectivity qualified; "allows" for "must"; the module's
+  quotient narrowed to one m per set; live units; Figure 3's curve named
+  E(d, 0); Hensen "no N at three sigma"; the fair-sampling assumption; W
+  defined in Definition 3; the missing v0.3.1 tag already in step 5.

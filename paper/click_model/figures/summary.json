@@ -31,6 +31,18 @@
   "ghz_yxy": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
   "ghz_yyx": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
   "ghz_yyy": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
+  "bell_16_24_far": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
+  "path_16_24_far": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
+  "cnot_pair_0_8": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
+  "cnot_pair_0_24": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
+  "cnot_pair_16_8": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
+  "cnot_pair_16_24": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
+  "cnot_ghz_xxx": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
+  "cnot_ghz_xyy": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
+  "cnot_ghz_yxy": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
+  "cnot_ghz_yyx": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
+  "cnot_twice": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
+  "rotations_3": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
   "slits_low": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52",
   "bell_choosers": "731d0f56c9f90023721237a7ecc456800dab18866faa33e2420d0b8bbf845c52"
  },
@@ -733,6 +745,121 @@
    "screen_alone_weight": 0.931
   },
   "gathers": 64
+ },
+ "far": {
+  "bell_16_24_far": {
+   "cells": {
+    "++": 27,
+    "+-": 5,
+    "-+": 5,
+    "--": 27
+   },
+   "E": "11/16",
+   "gathers": 64
+  },
+  "path_16_24_far": {
+   "cells": {
+    "++": 16,
+    "+-": 16,
+    "-+": 16,
+    "--": 16
+   },
+   "E": "0",
+   "gathers": 64
+  }
+ },
+ "gate": {
+  "cnot_pair_0_8": {
+   "cells": {
+    "++": 27,
+    "+-": 5,
+    "-+": 5,
+    "--": 27
+   },
+   "E": "11/16"
+  },
+  "cnot_pair_0_24": {
+   "cells": {
+    "++": 5,
+    "+-": 27,
+    "-+": 27,
+    "--": 5
+   },
+   "E": "-11/16"
+  },
+  "cnot_pair_16_8": {
+   "cells": {
+    "++": 27,
+    "+-": 5,
+    "-+": 5,
+    "--": 27
+   },
+   "E": "11/16"
+  },
+  "cnot_pair_16_24": {
+   "cells": {
+    "++": 27,
+    "+-": 5,
+    "-+": 5,
+    "--": 27
+   },
+   "E": "11/16"
+  },
+  "S": "11/4",
+  "cnot_ghz_xxx": {
+   "triples": {
+    "++-": 16,
+    "+-+": 16,
+    "-++": 16,
+    "---": 16
+   },
+   "products": [
+    -1
+   ]
+  },
+  "cnot_ghz_xyy": {
+   "triples": {
+    "+++": 16,
+    "+--": 16,
+    "-+-": 16,
+    "--+": 16
+   },
+   "products": [
+    1
+   ]
+  },
+  "cnot_ghz_yxy": {
+   "triples": {
+    "+++": 16,
+    "+--": 16,
+    "-+-": 16,
+    "--+": 16
+   },
+   "products": [
+    1
+   ]
+  },
+  "cnot_ghz_yyx": {
+   "triples": {
+    "+++": 16,
+    "+--": 16,
+    "-+-": 16,
+    "--+": 16
+   },
+   "products": [
+    1
+   ]
+  },
+  "cnot_twice": {
+   "gathered": 70,
+   "born": 180,
+   "completed": "completed"
+  },
+  "rotations_3": {
+   "gathered": 98,
+   "born": 110,
+   "completed": "completed"
+  }
  },
  "choosers": {
   "0_8": {

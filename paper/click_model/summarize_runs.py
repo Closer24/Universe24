@@ -40,6 +40,9 @@ PAIR_WORLDS = {
 }
 PATH_WORLDS = ("path_0_8", "path_0_24", "path_16_8", "path_16_24")
 GHZ_WORLDS = ("ghz_xxx", "ghz_xyy", "ghz_yxy", "ghz_yyx", "ghz_yyy")
+FAR_WORLDS = ("bell_16_24_far", "path_16_24_far")
+CNOT_PAIR_WORLDS = ("cnot_pair_0_8", "cnot_pair_0_24", "cnot_pair_16_8", "cnot_pair_16_24")
+CNOT_GHZ_WORLDS = ("cnot_ghz_xxx", "cnot_ghz_xyy", "cnot_ghz_yxy", "cnot_ghz_yyx")
 
 
 def load_run(runs: Path, world: str) -> dict:
@@ -135,6 +138,44 @@ def summarise(runs: Path, expectations: dict) -> dict:
         counts = Counter("".join(outcomes(g)) for g in gathers(run, 64))
         products = sorted({(-1) ** key.count("-") for key in counts})
         out["ghz"][world] = {"triples": dict(sorted(counts.items())), "products": products}
+    # the far counters (no maintenance): the same E with Bob 116 Links farther
+    out["far"] = {}
+    for world in FAR_WORLDS:
+        run = load_run(runs, world)
+        out["fingerprints"][world] = run["source_sha256"]
+        cells = pair_cells(run, 64)
+        out["far"][world] = {
+            "cells": cells,
+            "E": str(correlation(cells, 64)),
+            "gathers": len(gathers(run, 64)),
+        }
+    # the gate: CNOT then the pair, CNOT twice, GHZ by one gate, the register's ceiling
+    out["gate"] = {}
+    s = Fraction(0)
+    for world, sign in zip(CNOT_PAIR_WORLDS, (1, -1, 1, 1), strict=True):
+        run = load_run(runs, world)
+        out["fingerprints"][world] = run["source_sha256"]
+        cells = pair_cells(run, 64)
+        e = correlation(cells, 64)
+        s += sign * e
+        out["gate"][world] = {"cells": cells, "E": str(e)}
+    out["gate"]["S"] = str(s)
+    for world in CNOT_GHZ_WORLDS:
+        run = load_run(runs, world)
+        out["fingerprints"][world] = run["source_sha256"]
+        counts = Counter("".join(outcomes(g)) for g in gathers(run, 64))
+        out["gate"][world] = {
+            "triples": dict(sorted(counts.items())),
+            "products": sorted({(-1) ** k.count("-") for k in counts}),
+        }
+    for world in ("cnot_twice", "rotations_3"):
+        run = load_run(runs, world)
+        out["fingerprints"][world] = run["source_sha256"]
+        out["gate"][world] = {
+            "gathered": run["layer"]["gathered"],
+            "born": run["layer"]["born"],
+            "completed": run["status"],
+        }
     run = load_run(runs, "slits_low")
     out["fingerprints"]["slits_low"] = run["source_sha256"]
     rows = gathers(run, 64)
@@ -220,6 +261,12 @@ def main() -> None:
             )
         )
     print("which-path S =", summary["which_path"]["S"])
+    print("far:", {w: v["E"] for w, v in summary["far"].items()})
+    print(
+        "gate: S =",
+        summary["gate"]["S"],
+        {w: summary["gate"][w] for w in ("cnot_ghz_xxx", "cnot_ghz_xyy", "cnot_twice", "rotations_3")},
+    )
     for world, entry in summary["ghz"].items():
         print(world, entry["triples"], "products", entry["products"])
     print(
