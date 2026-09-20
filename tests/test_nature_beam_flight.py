@@ -218,7 +218,14 @@ def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
         assert books["balanced"], tick
         assert store.size == 1 and int(store.node[0]) == store.flat((2, 0, 0))
         assert int(store.phase[0]) == 5 and int(store.direction[0]) == 6
-        assert books["momentum"] == {"measured": [0, 0, 0], "transit": [0, 0, 64], "escaped": [0, 0, 0]}
+        # The momentum block gained the `turned` line with the meeting
+        # (2026-09-20), zero without the world key `meeting`.
+        assert books["momentum"] == {
+            "measured": [0, 0, 0],
+            "transit": [0, 0, 64],
+            "escaped": [0, 0, 0],
+            "turned": [0, 0, 0],
+        }
     assert records == [] and simulation.face_detectors()[0]["name"] == "face:+x"
     assert [face["name"] for face in simulation.face_detectors()] == [
         "face:+x",

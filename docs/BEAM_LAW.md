@@ -68,7 +68,7 @@ is a bijection since identical units are interchangeable):
 | `node` | the Node (three integers, in `shape`) | 0 .. 4095 per axis |
 | `direction` | index into the world's direction table `D`; entries 0 and 1 are the two rest vectors (0, 0, 0) ("here a", "here b"), 2 .. 7 the six headings in Port order, 8 .. the declared further directions, each a primitive integer vector with every component in -P .. P | 0 .. len(D) - 1 |
 | `age` | the count of intervals since the measured event that created the ray, a birth or a re-emission (a collision keeps it), kept **whole** on the record since 2026-09-20 (note 25; until then reduced modulo the direction's period `L_d`): the flight reads it modulo `L_d`, its place on the digital line (section 3), and a measured event, the external thing, reads it whole as the age moment of the one reading (step 2); `age` 0 at birth | 0 .. `age_bound` |
-| `phase` | a step of the circle of N, stamped by the emitter's clock at birth, turned by the family's `phase_per_link` steps at every Link crossed | 0 .. N - 1 |
+| `phase` | a step of the circle of N, stamped by the emitter's clock at birth, turned by the family's `phase_per_link` steps at every Link crossed and, since 2026-09-20 under the world key `meeting` (note 34), advanced by the crowd a paid unit meets at every free-space Node in whole units of Q (the phase carries the crowd met modulo N, one grain step of the direction per wrap of the circle) | 0 .. N - 1 |
 | `number` | the last emitter (a measured event's number) | as today |
 | `amount` | whole units | 1 .. 2^62 - 1 (`AMOUNT_BOUND`) |
 | `content` | the content one unit carries (`quantum` x s at birth for a paid family, 0 for a free one) | 0 .. 2^62 - 1 |
@@ -194,7 +194,15 @@ momentum) and per measured event `phase_by_momentum` (true: the body
 turns its phase by its momentum label at every Link it steps, over h;
 false by default; the model owner's decision on Bohr, "put it as
 parameters outside the GameBoard like the age"; the record carries the
-identity `bohr-v1` under `hypotheses` when `action` is declared).
+identity `bohr-v1` under `hypotheses` when `action` is declared). Added on
+2026-09-20 (note 34; the model owner, "DECIDED: the meeting, M-R"): at the
+world `meeting` (true or false, false by default: every paid unit in
+transit reads the free crowd of the other numbers at every free-space
+Node after the collision and turns toward it by its phase register,
+section 3 step 3; refused with a paid family without a phase circle,
+which has no register; the record carries `meeting` as declared and the
+identity `meeting-v1` under `hypotheses` when it is true; absent, no world
+changes by a byte).
 Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
 `suspension`, `families`, `measured` (`table` with `read`, `measure`,
 `rerelease`, `pass` and `phase_window`), `in_transit` (gains `direction`,
@@ -364,7 +372,44 @@ order with each step's inverse:
    collision is a rule of free space, and a measured event's Node never
    parks a ray at rest or turns an arrival before the table reads it.
    Inverse: the inverse table on the output pattern at the same Nodes (the
-   class is invariant).
+   class is invariant). **Then the meeting** (since 2026-09-20, under the
+   world key `meeting`; the model owner, "DECIDED: the meeting, M-R: an
+   event in transit reads the crowd as a body does, a report, not a
+   balance"; note 34; `events/meeting.py`): at every Node of free space,
+   after the table, every PAID unit present (a row of a family with
+   `quantum` h >= 1) reads the free units of every number but its own at
+   the Node by the one reading set of step 2 (rest and moving alike), the
+   vector moment with the labels as weights, `V_B = sum amount x u_d` over
+   the free rows of the family B, and the column sum of its family
+   against theirs, `kappa_AB = sum_c epsilon_c c_A c_B` (gravity the
+   universal column, so a paid family without other columns reads
+   `kappa = -1`: the gravity of the crowd); the target is `t = sum_B
+   kappa_AB V_B` (for gravity `-V`, against the flow, toward the source,
+   exactly the direction of the push a body takes), and the unit's
+   direction is turned by k steps of the arc permutation `pi_t` of the
+   direction table toward t, k read off the register the unit already
+   carries, its phase: `adv = (|t| + Q // 2) // Q` (the crowd met in whole
+   units of Q, the nearest), `total = phase + adv`, `k = total // N`,
+   `phase' = total % N`, `|t| = isqrt(t . t)` the exact integer norm; so
+   N crowd units met turn the unit by one grain step whatever the spacing
+   of the meetings and the phase carries the crowd met modulo N. `pi_t`
+   partitions the moving directions into sectors about t (the sign
+   pattern of the part perpendicular to t in the frame `e1 = t x a`, a the
+   axis of the smallest |t| component, `e2 = t x e1`: the signs of
+   `u . e1`, `u . e2` and their difference of magnitudes; the directions
+   on the line of t a sector of their own), orders each sector by the
+   exact angle to t (the signed cos^2 as a fraction of integers, ties by
+   index) and shifts it cyclically by one step toward t, the closest
+   wrapping to the farthest; the rest directions are fixed. The free
+   units are untouched; two or more paid units at one Node read the same
+   V and never each other; content, amount, age and number are untouched;
+   the transit momentum line moves by `weight x (u_d' - u_d)` at every
+   turn, booked as the `turned` line per family, a report as the free
+   push on a body is. Inverse: the same reading of the untouched crowd,
+   `k = (adv - phase' + N - 1) // N`, `phase = phase' + k N - adv` and
+   `pi_t^-k`, before the inverse table (a bijection of (direction, phase)
+   for every fixed crowd). Without the key nothing reads and every world
+   is byte-identical.
 4. **The measured events' tables and the detectors.** A measured event meets
    the rays that arrived this interval at its Node, per family and number
    other than its own, as today: the threshold on the arrivals (section 5),
@@ -1920,3 +1965,77 @@ implementation's part of the contract. The design above is unchanged.
     registered series moves (C, 7, D, E, G, H, I, K, Bell, A10, the
     catalog: every charged product of theirs is a multiple of its
     denominators, or their reads never met a fractional floor).
+34. **The meeting, M-R: an event in transit reads the crowd as a body
+    does, a report** (the model owner, 2026-09-20, Highlights 5.4,
+    "DECIDED: the meeting, M-R", "go for it if it seems generic and smart
+    to you"; the physicist's and the mathematician's joint design of the
+    same day, `scratchpad/meeting/MEETING.md`, sections 1.2 M-R, 1.3, 2.1,
+    2.3, 3.1, 3.3 and 6, its scripts `turn_permutation.py` and
+    `k_deflection.py`; the identity `meeting-v1`; `events/meeting.py`;
+    `tests/test_meeting.py` (a) to (e); series K re-registered under the
+    key in EXPERIMENTS.md and VALIDATION.md). The rule is section 3 step 3
+    as written. What the implementation decided where the design was
+    silent, and what it found: (i) **The module and the two call sites.**
+    The arc permutation (built once per direction table from the flight
+    table's unit vectors and cached per target, forward and inverse), the
+    reading, the turn and the inverse live in `meeting.py`; `nature_beam`
+    calls `meet` once after the collision in step 3 and once before the
+    inverse collision, so the law's own function gains two lines and the
+    tables one field (`NatureBeamTables.arcs`). (ii) **The target as
+    read, not reduced.** The sector boundary `|u . e1| = |u . e2|` lies at
+    the angle 1 / |t| off the e1 axis (`e2 = t x e1` grows with |t|), so
+    `pi_t` depends on the magnitude of t and not on its direction alone:
+    the target is `t = kappa V` whole (the crowd's flow of one unit gives
+    (0, -64, 0), not (0, -1, 0)), which is how the design's offline flight
+    was flown and what its registered expectation assumes; the two give
+    the same chain from (1, 0, 0) on K's table. (iii) **kappa as a
+    rational, the target over the common denominator.** `kappa_AB` is the
+    reduced pair of the signed sum of the two families' values per unit
+    of content over the columns (`meeting.column_sum`, `rational_sum`),
+    and `t = sum_B n_AB (D / d_AB) V_B` over the least common denominator
+    D with `|t| = isqrt(t . t) // D`; in every world of the register a paid
+    family's values beyond gravity are 0 (the parser refuses others), so
+    `kappa = (-1, 1)` and `t = -V` exactly; D-1's whole charge on a paid
+    family would enter here without a change of code. (iv) **The bounds.**
+    Every product is tested by division before it is formed and refused
+    naming the Node or the target: the crowd's flow at a Node (the largest
+    label times the rows at the fullest Node within 2^62 - 1, as the
+    reading's bound), `n_AB x |V_B|` per family, a target component
+    beyond 2^30 (`t . t` must fit the work register for the exact root: a
+    crowd of 2^24 units on one heading), a target's component beyond 2^20
+    before its frame is formed, and the angle keys' products
+    `(u . t)^2 x |u|^2` beyond 2^62 - 1 (the design's bound, the products
+    within `(Q^2 |t|)^2`: a crowd of about 2^13 units at one Node met by a
+    paid unit; no registered world comes within a hundredth of it). (v)
+    **The rest and the phase.** A paid unit at rest reads the crowd and
+    advances its phase like any other (the coordinate map of the design's
+    section 2.1 applies to every paid unit), and the permutation fixes its
+    direction: it stays the table's. A paid family without a phase circle
+    is refused under the key at parsing, naming the register. (vi) **The
+    `turned` line.** `Ledger.turned_momentum` per family, the change of
+    the transit momentum line by the turns, is added to the books
+    (`families[<name>].turned` and `momentum.turned` in every audit line
+    of `run.json`, zero without the key; `tests/test_lifetime.py` (b) and
+    `tests/test_nature_beam_flight.py` re-pinned with the new line written
+    first) and the running transit
+    line is moved by the same delta, so `books(recount=True)` equals
+    `books()` under the key and the inverse returns both lines. (vii)
+    **The cost.** One segmented reading of the crowd per interval (two
+    `np.unique` passes over the free rows at free-space Nodes) and one
+    exact sector sort of at most `len(D)` directions per new target of a
+    turning row (about 1.4 ms per permutation on the 296-direction table
+    of series K, the turns a few per interval); measured on series K in
+    EXPERIMENTS.md. (viii) **What the register replays.** Every one of the
+    85 example worlds is byte-identical in `events.jsonl` and `state.json`
+    with the module present and the key absent, and the ten registered
+    worlds named by the design (the six of series 7, `2`, `s8_r12`, `r4`,
+    `coasting_age`) are byte-identical with the key declared (no paid row
+    in transit meets a free row in any of them); `run.json` gains the key
+    and the `turned` lines in every world (VALIDATION.md). (ix) **What the
+    offline flight left out.** The design flew the beam beside the replayed
+    crowd and skipped the turn at occupied Nodes, but let a ray pass
+    through the mass's Node; on the engine the mass is a measured event
+    whose table measures a paid arrival, so the rays turned into it click
+    there (122 of the beam in `mass`, 169 in `near`, 1 in `heavy`), and the
+    centroid at b = 6, M = 2^12 reads -1.8 pixels where the flight said
+    -3.0 (EXPERIMENTS.md, K under the meeting).

@@ -324,6 +324,11 @@ class Ledger:
     lifetime_content: list[int] = field(default_factory=list)
     lifetime_record: list[int] = field(default_factory=list)
     lifetime_momentum: list[list[int]] = field(default_factory=list)
+    # The `turned` line (the meeting, 2026-09-20; `events/meeting.py`): per
+    # family the change of the transit momentum line by the turns of its
+    # units in transit, weight x (u_d' - u_d) summed, a report as `pushed`
+    # is; zero without the world key `meeting`.
+    turned_momentum: list[list[int]] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         count = self.families
@@ -341,6 +346,7 @@ class Ledger:
         ):
             setattr(self, name, [0] * count)
         self.lifetime_momentum = [[0, 0, 0] for _ in range(count)]
+        self.turned_momentum = [[0, 0, 0] for _ in range(count)]
         for port in self.open_faces:
             self.face_amount[port] = [0] * count
             self.face_content[port] = [0] * count
@@ -378,3 +384,8 @@ class Ledger:
     def lifetime_momentum_total(self) -> list[int]:
         """The momentum that left on the border `lifetime`, summed over the families."""
         return [sum(self.lifetime_momentum[f][axis] for f in range(self.families)) for axis in range(3)]
+
+    def turned_momentum_total(self) -> list[int]:
+        """The `turned` line summed over the families: what the meetings moved
+        the transit momentum line by, in all."""
+        return [sum(self.turned_momentum[f][axis] for f in range(self.families)) for axis in range(3)]
