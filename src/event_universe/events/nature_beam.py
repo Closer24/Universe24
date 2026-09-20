@@ -102,7 +102,6 @@ from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import (
     apportion_whole,
     bounded_gcd,
-    by_drive,
     integer_root,
 )
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
@@ -117,6 +116,7 @@ from event_universe.events.amplitude import (
     label_of,
 )
 from event_universe.events.measured import (
+    CountTable,
     DetectorSet,
     Ledger,
     Measured,
@@ -2107,7 +2107,7 @@ def weighted_flow(
     labels: list[list[int]],
     entry: Measured,
     width: int,
-    accumulators: list[list[int]],
+    counts: CountTable,
 ) -> list[int]:
     """One group's label flow under `doppler` (BEAM_LAW note 38; since the
     fraction-free push of 2026-09-20, note 41, on the body's flow
@@ -2163,15 +2163,17 @@ def weighted_flow(
         numerator, denominator = flux_pair(vector, int(flight.resolution[direction]), speeds)
         if numerator == 0:
             continue
-        accumulator = accumulators[direction]
+        rates = []
         for axis in range(3):
             v = moments[direction][axis]
-            if not v:
-                continue
-            if abs(v) > MOMENTUM_BOUND // numerator:
+            if v and abs(v) > MOMENTUM_BOUND // numerator:
                 raise flux_bound_error(entry, direction, v, numerator)
-            whole, accumulator[axis] = by_drive(accumulator[axis], v * numerator, denominator)
-            flow[axis] = bounded(flow[axis] + whole, entry, "weighted flow")
+            rates.append(v * numerator)
+        # The direction's three rows of the table gain V_d,a x num_d over
+        # the flux's denominator in one loop.
+        wholes = counts.advance("flow", index=direction, values=rates, denominators=[denominator] * 3)
+        for axis in range(3):
+            flow[axis] = bounded(flow[axis] + wholes[axis], entry, "weighted flow")
     return flow
 
 
@@ -2182,7 +2184,7 @@ def push_form(
     values: tuple[tuple[int, int], ...],
     columns: tuple[tuple[str, int], ...],
     scales: tuple[int, ...],
-    accumulators: list[list[int]],
+    counts: CountTable,
     entry: Measured,
 ) -> list[int]:
     """The push a measured event A takes from one group of arriving rays:
@@ -2255,19 +2257,17 @@ def push_form(
         if abs(factor) > MOMENTUM_BOUND // lift:
             raise column_bound_error(entry, name, moment[0], abs(factor) * lift)
         factor *= lift
-        divisor = scale * scale
+        totals = []
         for axis in range(3):
             v = moment[axis]
-            if not v:
-                continue
-            if abs(v) > MOMENTUM_BOUND // abs(factor):
+            if v and abs(v) > MOMENTUM_BOUND // abs(factor):
                 raise column_bound_error(entry, name, v, abs(factor))
-            total = v * factor
-            if divisor == 1:
-                whole = total
-            else:
-                whole, accumulators[column][axis] = by_drive(accumulators[column][axis], total, divisor)
-            push[axis] = bounded(push[axis] + sign * whole, entry, "push")
+            totals.append(v * factor)
+        # The column's three rows of the table gain X over Lambda_c^2 in
+        # one loop (at Lambda 1 the whole part is X itself, the row 0).
+        wholes = counts.advance("push", index=column, values=totals)
+        for axis in range(3):
+            push[axis] = bounded(push[axis] + sign * wholes[axis], entry, "push")
     return push
 
 
@@ -3293,7 +3293,7 @@ def nature_beam(
                                 plan.t_share[k0:k1],
                                 entry,
                                 world.width,
-                                entry.acc_flow,
+                                entry.counts,
                             )
                         push = push_form(
                             free,
@@ -3302,7 +3302,7 @@ def nature_beam(
                             values_of[family],
                             columns,
                             scales,
-                            entry.acc_push,
+                            entry.counts,
                             entry,
                         )
                         entry.momentum = [
@@ -3603,7 +3603,10 @@ def nature_beam(
         # release is discarded, as the count off the clock was unread).
         lamp_count = 0
         if entry.lamp_rate is not None:
-            lamp_count, entry.acc_lamp = by_drive(entry.acc_lamp, entry.lamp_rate[0], entry.lamp_rate[1])
+            (lamp_count,) = entry.counts.advance("lamp")
+        # The release per family: every family's row of the table gains
+        # `held x n` in one loop (a paid family's row has the rate 0).
+        released = entry.counts.advance("release", values=entry.held)
         # The products born this self-creation (family, amount, content,
         # direction) and their recoil, for the `become` record.
         thrown_rows: list[list[object]] = []
@@ -3621,9 +3624,7 @@ def nature_beam(
                 # body's record, exact over any period of a changing
                 # content; the count off the clock, `by_clock(age, held x
                 # n, d)`, at a constant content from age 0).
-                amount, entry.acc_release[family] = by_drive(
-                    entry.acc_release[family], entry.held[family] * numerator, denominator_release
-                )
+                amount = released[family]
                 if amount:
                     born.extend(
                         (

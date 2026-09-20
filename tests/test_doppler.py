@@ -116,6 +116,7 @@ import pytest
 
 from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
+from event_universe.events.measured import counts_table
 from event_universe.events.nature_beam import (
     flight_table,
     flux_pair,
@@ -404,9 +405,9 @@ def test_the_refusals_and_the_budget():
     entry = _entry()
     entry.frame_momentum = [3 << 26, 0, 0]
     entry.frame_content = CONTENT
-    empty = [[0, 0, 0] for _ in range(3)]
+    empty = counts_table((1, 1), (0, 1), (0, 1), (True,), None, (), 3)
     assert weighted_flow(table, [2], [[64, 0, 0]], entry, 1, empty) == [18, 0, 0]  # type: ignore[arg-type]
-    assert empty[2] == [64 * 75776 - 18 * (G * Q), 0, 0]
+    assert empty.grid("flow")[2] == [64 * 75776 - 18 * (G * Q), 0, 0]
     with pytest.raises(
         OverflowError, match=r"weighted flow of measured event 2 .* direction 2 under doppler"
     ):

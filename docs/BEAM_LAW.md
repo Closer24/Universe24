@@ -3187,7 +3187,17 @@ implementation's part of the contract. The design above is unchanged.
     an empty accumulator at age 0 and a rate of one sign the two give the
     same integers at every self-creation and the accumulator holds `(age
     n) mod d` (FORM.md section 1, proved; test (a) on every count over
-    10^4 self-creations). What remains read off an age is a key (`ages_at_key`:
+    10^4 self-creations). The counts are one table on the body's record
+    (`Measured.counts`, a `CountTable` of `Count` rows built by
+    `measured.counts_table` from the world's rates: the name, the source of
+    the numerator, the index and axis, the rate's factor, the denominator,
+    the cap `at_most` and the accumulator), and one loop,
+    `CountTable.advance`, runs every row of a count through `by_drive` and
+    hands the whole parts to the count's consumer at the stage of the
+    interval where its numerator exists (the frame for the turn, step 5
+    for the release and the lamp, `_suspend` for the owed count, `_move`
+    for the drive, the reading for the push and the doppler weight): a
+    future count is a new row, not new code. What remains read off an age is a key (`ages_at_key`:
     the lifetime, the age bound, the clock trigger; a comparison, no
     rate), the rows' phase per interval of age (`by_clock_rows`: a ray's
     rate is its family's `phase_per_link`, a constant over its flight, so

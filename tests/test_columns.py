@@ -124,7 +124,7 @@ import pytest
 
 from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.measured import column_charges
+from event_universe.events.measured import CountTable, column_charges, counts_table
 from event_universe.events.nature_beam import push_form
 from event_universe.events.world import COLUMNS_RULE, MOMENTUM_BOUND, Column
 from event_universe.runner import run_initialization
@@ -204,7 +204,8 @@ def two_columns(
     # identity, which the loop over the ages would reach in age + 1 calls).
     scale = reader[1] * emitter[1] // math.gcd(reader[1], emitter[1])
     scales = (1, scale)
-    accumulators = [[0, 0, 0], [0, 0, 0]]
+    table = counts_table((1, 1), (0, 1), (0, 1), (True, True), None, scales, 0)
+    seeds = [0, 0, 0]
     if free:
         for axis in range(3):
             rate = (
@@ -215,7 +216,8 @@ def two_columns(
                 * (scale * scale // (reader[1] * emitter[1]))
             )
             seed = age * abs(rate) % (scale * scale)
-            accumulators[1][axis] = -seed if rate < 0 else seed
+            seeds[axis] = -seed if rate < 0 else seed
+    table.set("push", [0, 0, 0, *seeds])
     return push_form(
         free,
         list(moment),
@@ -223,9 +225,14 @@ def two_columns(
         ((1, 1), emitter),
         (GRAVITY, CHARGE),
         scales,
-        accumulators,
+        table,
         ENTRY,
     )
+
+
+def three_columns() -> CountTable:
+    """A table of counts with the push rows of three columns at Lambda 1."""
+    return counts_table((1, 1), (0, 1), (0, 1), (True,), None, (1, 1, 1), 0)
 
 
 def outcome(form, *arguments, **keys) -> object:
@@ -298,7 +305,7 @@ def test_the_two_built_in_columns_are_the_landed_form_integer_by_integer():
             assert found == expected or (expected == "refused" and found != "refused")
         refused += expected == "refused"
     assert 0 < beyond < refused < 3000 and 0 < beyond_lift < 3000
-    assert push_form(False, [5, -7, 9], [], (), (), (), [], ENTRY) == [5, -7, 9]
+    assert push_form(False, [5, -7, 9], [], (), (), (), CountTable([]), ENTRY) == [5, -7, 9]
 
 
 def test_the_series_7_read_records_replay_under_the_landed_form():
@@ -653,7 +660,7 @@ def test_the_bounds_at_parsing_and_at_the_push():
             ((1, 1), (0, 1), (1, 1)),
             columns,
             (1, 1, 1),
-            [[0, 0, 0] for _ in range(3)],
+            three_columns(),
             ENTRY,
         )
     within = (1 << 56) - 2
@@ -664,7 +671,7 @@ def test_the_bounds_at_parsing_and_at_the_push():
         ((1, 1), (0, 1), (1, 1)),
         columns,
         (1, 1, 1),
-        [[0, 0, 0] for _ in range(3)],
+        three_columns(),
         ENTRY,
     ) == [
         -(within * 64),
@@ -681,7 +688,7 @@ def test_the_bounds_at_parsing_and_at_the_push():
             ((1, 1), (0, 1), (1, 1)),
             columns,
             (1, 1, 1),
-            [[0, 0, 0] for _ in range(3)],
+            three_columns(),
             ENTRY,
         )
 

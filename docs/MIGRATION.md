@@ -46,6 +46,20 @@ primitive in place of two.
   unchanged); the lifted product is tested by division and refused naming
   the column where it does not fit (`tests/test_columns.py` (a)). Under
   `doppler` the weighted flow is counted per direction at G Q |v_d|^2.
+- The counts are ONE table on the body's record (the model owner's table
+  of 2026-09-20): `Measured.counts`, a `CountTable` of `Count` rows built
+  by `measured.counts_table` from the world's rates (per row the name, the
+  numerator's source, the index and axis, the rate's factor, the
+  denominator, the cap `at_most`, 1 on the drive, and the accumulator),
+  and one loop, `CountTable.advance`, runs the rows of a count through
+  `by_drive` and hands the whole parts to the count's consumer at the
+  stage where its numerator exists (the frame, `_suspend`, step 5,
+  `_move`, the reading); `Measured.acc_owed`, `acc_release`, `acc_lamp`,
+  `acc_turn`, `acc_push`, `acc_flow` and `drive` read and write that
+  table, and `engine.step_axis` and `engine.count_owed` remain as the
+  readings tools' forms of the same rule. Bit-identical to the law before
+  the table on every test and on the gate set (the digests of the
+  register replay above unchanged).
 - `run.json` and `state.json` carry the accumulators per measured event
   under `acc` by name (`owed`, `release`, `lamp`, `turn`, `push` per
   column, `flow` under the key), beside `drive`; a declared `acc` in a

@@ -48,7 +48,14 @@ import numpy as np
 from event_universe.core.game_board import Address3, adjacent_node
 from event_universe.core.integer import apportion_whole, by_clock, by_drive
 from event_universe.events.amplitude import Layer
-from event_universe.events.measured import TALLIES, DetectorSet, Ledger, Measured, rational_sum
+from event_universe.events.measured import (
+    TALLIES,
+    DetectorSet,
+    Ledger,
+    Measured,
+    counts_table,
+    rational_sum,
+)
 from event_universe.events.nature_beam import (
     NO_ARRIVAL,
     NO_BRANCH,
@@ -332,9 +339,15 @@ class NatureBeamSimulation:
             column_names=tuple(name for name, _ in self.world.columns),
             family_values=tuple(family.values for family in self.families),
             pending=[[] for _ in range(count)],
-            acc_release=[0] * count,
-            acc_push=[[0, 0, 0] for _ in self.world.columns],
-            acc_flow=[[0, 0, 0] for _ in self.world.directions] if self.world.doppler else [],
+            counts=counts_table(
+                self.world.turn_rate,
+                self.world.suspension,
+                self.world.release,
+                tuple(family.free for family in self.families),
+                None if definition.lamp is None else definition.lamp.rate,
+                self.world.column_scales,
+                len(self.world.directions) if self.world.doppler else 0,
+            ),
             taken=[dict.fromkeys(TALLIES, 0) for _ in range(count)],
             clicks=[0] * count,
             contact=tuple(definition.contact) + (CONTACT_DEFAULT,) * (count - len(definition.contact)),
@@ -472,7 +485,7 @@ class NatureBeamSimulation:
                     f"{list(entry.position)} ({content} x {numerator}) exceeds the integer bound "
                     f"{MOMENTUM_BOUND}"
                 )
-            turn, entry.acc_turn = by_drive(entry.acc_turn, content * numerator, denominator)
+            (turn,) = entry.counts.advance("turn", values=[content])
             if 2 * turn >= self.world.phase_steps:
                 raise ValueError(
                     f"{BEAM_LAW}: measured event {entry.number} turns its phase by half the circle "
@@ -491,7 +504,7 @@ class NatureBeamSimulation:
         the next."""
         if not self.world.suspension[0]:
             return
-        entry.owed, entry.acc_owed = count_owed(entry.acc_owed, entry.counted, self.world.suspension)
+        (entry.owed,) = entry.counts.advance("owed", values=[entry.counted])
 
     def _move(self, entry: Measured) -> None:
         """The step by the momentum, at most one per interval, when nothing
@@ -564,16 +577,18 @@ class NatureBeamSimulation:
         # crossed, the rule's count `axis_steps` raised): the frame's rule
         # as it was, one Link per interval, x before y before z.
         fired: tuple[int, int, int] | None = None
+        counts = entry.counts.advance(
+            "drive",
+            values=entry.momentum,
+            denominators=[step_divisor(p, content, self.world.width) for p in entry.momentum],
+        )
         for axis in range(3):
             momentum = entry.momentum[axis]
-            stepped, entry.drive[axis] = step_axis(
-                entry.drive[axis], momentum, content, self.world.width
-            )
-            if stepped is None:
+            if momentum == 0 or counts[axis] == 0:
                 continue
             entry.axis_steps[axis] += 1
             if fired is None:
-                fired = (axis, momentum, stepped)
+                fired = (axis, momentum, counts[axis])
         if fired is None:
             return
         axis, momentum, sign = fired

@@ -189,7 +189,11 @@ the turn is the free release's own form at the rate [1, K]; since the
 fraction-free law of the same day, [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 every count of the clock is `by_drive` on the body's own accumulator, the
 same integers as `by_clock(age, content x n, d)` at a constant content
-from age 0), its
+from age 0; the counts are one table on the record, `Measured.counts`,
+whose one loop `CountTable.advance` runs every row through `by_drive` and
+hands the whole part to the count's consumer, the turn here, the owed
+count at `_suspend`, the release and the lamp at step 5, the drive at
+`_move`, the push and the doppler weight at the reading), its
 release rate, its lamp's rate and window, its owed count) and its content
 (`frame_content`, read once before the law: M_A of the interval's push,
 the same whatever the order in which the families' clicks join `held`
