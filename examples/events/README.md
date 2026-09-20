@@ -223,7 +223,16 @@ collision would have turned and the Nodes shared with the crowd
 the deflection 0.000 pixel and the delay 0.00 interval at a crowd where
 nature would capture the beam, the derivation of the physicist's entry 2
 held: light is neither bent nor delayed in this law, a plain
-disagreement with nature, registered and not tuned.
+disagreement with nature, registered and not tuned. Since the meeting
+(2026-09-20, the world key `meeting`, [BEAM_LAW note 34](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+the folder also holds the four worlds under the key
+(`<name>_meeting.json`) and `lens_meeting.json`, two beams at +-b on a
+longer box; the register entry
+[K under the meeting (2026-09-20)](../../docs/EXPERIMENTS.md#k-under-the-meeting-2026-09-20):
+light bent toward the mass with the sign of gravity, the M / b form and
+the grain of the fan (-1.8 to -4.4 pixels; the lens crossing 71 Links
+past the mass), not delayed in time, the mass measuring the light turned
+into it; registered, 14 readings inside and 9 outside, not tuned.
 ## The entity catalog
 
 The folder [catalog/](catalog/README.md) holds the four worlds of

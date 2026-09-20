@@ -2340,6 +2340,175 @@ states "exactly" and means integer equality at every tick.
   readings, the conclusion) is in the session's scratchpad, not
   published.
 
+### K under the meeting (2026-09-20)
+
+- **Confronts.** The same question, the bending and the delay of light by
+  a mass, under the model owner's decision of the same day on the meeting
+  (Highlights 5.4, "DECIDED: the meeting, M-R": "an event in transit reads
+  the crowd as a body does, a report, not a balance"; the physicist's and
+  the mathematician's design, `scratchpad/meeting/MEETING.md`, the identity
+  `meeting-v1` under the world key `meeting`;
+  [BEAM_LAW section 3 step 3 and note 34](BEAM_LAW.md#3-the-nodes-interval-nature_beam)):
+  every paid unit of the beam reads the mass's free crowd at each
+  free-space Node it shares with it and turns toward the mass by one grain
+  step of the direction table per N = 64 crowd units met, the count kept
+  on its phase register, the crowd untouched. What the run reads: the
+  sign, the M / b form and the grain (the smallest step on K's table is
+  2.4 degrees, 10^4 times nature's 1.75 arcseconds at the Sun's limb, so
+  the value is out of reach by the grain and is not claimed), the delay in
+  time (none is predicted: the flight table is one speed), the phase
+  offset per pixel (the crowd met along the path modulo N, the
+  interferometric Shapiro reading) and a lens of two beams. Nothing was
+  tuned; a reading outside its bracket is reported with its numbers.
+- **Model prediction, pinned before the runs** (the design's offline
+  flight of the beam beside the replayed crowd, `k_deflection.py`, the
+  register N = 64; the brackets fixed in `tools/lensing_readings.py`
+  before the runs): `mass` the centroid -3.0 +- 0.5 pixels in y toward the
+  mass and 0 +- 0.5 in z, the width about 6.0, the mean age about 90.4
+  (+- 1: the bent path's extra Links, no delay in time), about 1547 of
+  1553 rays landing (the count ratio 0.996 +- 0.05), no ray on the faces;
+  `heavy` -4.3 with 209 rays wrapped to the faces (+- a quarter); `near`
+  -2.6 with 136; the phase offset of the arrivals about 55 steps of 64
+  (`mass`, `near`: 119 and 183 crowd units met modulo 64) and 24 (`heavy`:
+  216 modulo 64), +- 8 steps; the phase rate the lamp's turn 8 +- 0.05;
+  the control unchanged, byte for byte; the lens world's two beams at
+  +-b = 6 crossing about 70 Links past the mass, a grain of the fan and
+  not a focal law (no bracket). The sign toward the mass in every world,
+  the deflection growing with M at fixed b and with 1 / b at fixed M
+  within the finite path.
+- **Features.** The world key `meeting: true` on the four worlds of K
+  (`<name>_meeting.json`, the model ids `beam-lensing-<name>-meeting-v1`)
+  and the lens world `lens_meeting.json` (two lamps at y = 26 and 14 on a
+  105 x 41 x 41 box, the mass at x = 28, the screen at x = 102, 600
+  intervals); the books' `turned` line; the readings tool extended to the
+  phase offset per pixel, the `turned` line and the centroid per lamp.
+- **Two kinds of readings.** DETECTOR: the screen's clicks per pixel over
+  the window [110, 400] ([110, 600] in the lens world; the centroid, the
+  width, the mean age, the count, the faces, the mass's clicks of light),
+  the pixels' `record` lines (the phase rate), the click records' phase
+  against the lamp's phase at the birth (the offset per pixel); the lens
+  world's centroid per lamp and the crossing they imply. GAMEBOARD: the
+  world replayed through `NatureBeamSimulation` (the beam's rows in
+  flight, the rows turned off the lamp's directions, the meetings), the
+  books' `turned` line, the x where the lens world's two beams are closest.
+- **Run.** `examples/events/lensing/` (`make_worlds.py` writes the five
+  meeting worlds beside the four of K); `tools/run_series.py --jobs 2`;
+  `tools/lensing_readings.py` (the record checks, the DETECTOR tables of
+  both kinds of world and the GAMEBOARD replay; `tests/test_lensing_readings.py`
+  pins it to the engine).
+- **Result (2026-09-20, measured against expected).** The worktree of
+  `claude/universe24-new-3ytqde` from the tip `329c5660` with the meeting's
+  commits, source fingerprint
+  `dc1cce964db367167732b1727d9dc8d2fcf73a27bf13e33a1822cc5a84fff1a3`,
+  Python 3.14.0rc2, numpy 2.5.3, headless, four cores under the load of
+  the replay of the register (the elapsed seconds are not a measurement);
+  every run completed (17.6, 36.5, 28.9, 29.0 and 55.2 s for `control`,
+  `mass`, `heavy`, `near` and `lens`) with the books balanced at every
+  tick; 0 record checks failed, 14 readings inside, 9 outside, none moved.
+
+  | World | M | b | clicks | centroid y shift (expected) | z | width rms y | mean age (expected) | count ratio (expected) | light on the faces (expected) | light the mass took | phase offset, steps (expected), resultant | phase rate | verdicts |
+  | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+  | `control` | - | 6 | 1455 | 26.000 (0) | 20.000 | 2.828 | 89.40 (89.40) | - | 0 (0) | 0 | 0.0 (0), 1.00 | 8.000 | phase rate, phase offset: inside |
+  | `mass` | 2^12 | 6 | 1350 | -1.790 (-3.0) | 0.000 | 3.907 | 89.90 (90.43) | 0.928 (0.996) | 0 (0) | 122 | 19.7 (55), 0.09 | 8.191 | centroid y outside; z inside; delay inside; count outside; faces inside; offset outside; rate outside |
+  | `heavy` | 2^13 | 6 | 1242 | -4.359 (-4.3) | 0.000 | 5.277 | 90.64 (90.64) | 0.854 (0.858) | 210 (209) | 1 | 34.3 (24), 0.21 | 7.101 | centroid y, z, delay, count, faces inside; offset outside; rate outside |
+  | `near` | 2^12 | 3 | 1237 | -2.301 (-2.6) | 0.000 | 4.470 | 89.71 (89.72) | 0.850 (0.901) | 77 (136) | 169 | 62.3 (55), 0.31 | 11.273 | centroid y, z, delay, offset inside; count outside; faces outside; rate outside |
+  | `lens` | 2^12 | +-6 | 3958 | -6.255 and +6.255 per lamp: the crossing 71.0 Links past the mass (about 70) | - | - | 173.89 | - | 2 | 394 | 56.3, 0.58 | 6.364 | a grain, registered without a bracket |
+
+  - **The sign** (DETECTOR): toward the mass in every world, the centroid
+    at smaller y (-1.79, -4.36, -2.30 pixels), 0.000 in z. Inside.
+  - **The form** (DETECTOR): at twice the mass the engine reproduced the
+    offline flight almost integer by integer (-4.36 against -4.29; 210
+    rays on the faces against 209; the age 90.64 against 90.64; the width
+    5.28 against 5.28): inside. At half the impact distance -2.30 against
+    -2.59: inside. At (2^12, 6) -1.79 against -3.0: outside, and the count
+    ratio 0.928 against 0.996 outside, for one reason the offline flight
+    did not have: the mass is a measured event whose table measures a paid
+    arrival, and 122 rays of the beam, the most turned ones, clicked on it
+    (the flight let a ray pass through the mass's Node and land far down
+    the screen); in `near` 169 clicked on the mass and 77 reached the faces
+    where the flight wrapped 136 to the faces, so its count and faces read
+    outside too; in `heavy` the rays wrap to the faces before they reach
+    the mass's x (1 taken).
+  - **No delay in time** (DETECTOR): the mean age moved by the extra Links
+    of the bent digital lines, +0.50, +1.24, +0.31 intervals against the
+    control (the expected 90.43, 90.64, 89.72): inside in all three; the
+    flight table is one speed.
+  - **The phase offset** (DETECTOR): 0.000 exactly at every pixel of the
+    control (the check of the reading); under the meeting sharp at every
+    lit pixel (the resultant 0.92 to 0.98 at the nine most lit pixels of
+    `mass`, 0.71 to 1.00 in `near`, 0.30 to 0.90 in `heavy`) and tens of
+    steps apart from pixel to pixel (in `mass` 15.5, 51.8, 38.9, 23.2, 19.9,
+    48.2, 24.5, 4.9, 12.4 at (29, 20), (25, 20), (23, 20), (27, 20), (16,
+    20), (24, 20), (28, 20), (18, 20), (17, 20)), so the screen-wide
+    circular mean (19.7, 34.3, 62.3) has a small resultant (0.09, 0.21,
+    0.31) and reads outside the expected 55 and 24 in `mass` and `heavy`,
+    inside in `near`. The expectation "about 55 steps" was the mean crowd
+    met over all the rays; a pixel is reached by the rays of one path, and
+    the crowd met differs from path to path: the interferometric Shapiro
+    reading is per path, and an interferometer of two paths would read
+    their difference. 182, 40 and 146 click groups of several rows were
+    left out of the offset (their ages cannot be told apart on the record).
+  - **The phase rate** (DETECTOR): 8.191, 7.101, 11.273 against the turn
+    8 +- 0.05, outside in the three mass worlds, 8.000 in the control. Not
+    a redshift: the tool's estimator is the least-squares slope of a
+    pixel's unwrapped `record` phases, and under the meeting a pixel's
+    pointer mixes rays of different offsets from interval to interval, so
+    the unwrapping adds spurious turns; the per-click offsets above, with
+    their resultants, are the clean reading, and they say the phase is the
+    lamp's plus a constant per path. Registered outside as the bracket
+    was set; the estimator's limit is named, the bracket not moved.
+  - **The lens** (DETECTOR): the two beams' centroids at the screen 74
+    Links past the mass at y = 19.745 and 20.255, the shifts -6.255 and
+    +6.255 toward the mass's line, 0.51 pixel apart: on a straight flight
+    after the mass each crosses the line 71.0 Links past it (the expected
+    about 70), a grain of the fan. The mass took 394 of the two beams' rays
+    over 600 intervals, 2 reached the faces, the mean age 173.89. GAMEBOARD:
+    the two beams' mean lines are closest at x = 86.1 on average over the
+    window, 58 Links past the mass (49 to 101 from interval to interval).
+  - **The replay** (GAMEBOARD): the beam's rows in flight 447 at most in
+    `mass` (462 in `heavy`, 441 in `near`, 1662 in the lens world), none at
+    rest; rows on a direction off the lamp's five 21290 row-intervals over
+    the run in `mass` (54452, 29893, 175638) seen at 233 (559, 340, 1480)
+    Nodes; the Nodes holding a ray of the beam and a ray of the crowd in
+    one interval 164.9 per interval on average (190.7, 166.9, 413.8); the
+    crowd's rows 13618 at most (15501 in the lens world). The books'
+    `turned` line of `light` at the end: (-8016, -85088, 0) in `mass`,
+    (-142936, -215752, 0) in `heavy`, (-102000, -112152, 0) in `near`,
+    (-32448, 0, 0) in the lens world (the two beams' y turns cancel), 0 in
+    the control; the y component toward the mass, a report as `pushed` is.
+  - **The control** (DETECTOR, GAMEBOARD): every reading the control's of
+    series K, and `control_meeting`'s `events.jsonl` is byte-identical to
+    the control's replay (the sha256 `22ec156b13a2aa21...`): the key
+    without a crowd does nothing.
+  - **The cost** (host): `mass` stepped in-process for 400 intervals on an
+    idle machine, 19.9 ms per interval without the key and 24.5 ms with
+    it, the meeting 4.6 ms per interval (1.8 s over the run) for 13618
+    crowd rows and 447 rows of the beam, 67 permutations built in the
+    whole run at 0.58 ms each (0.04 s in all; the targets a beam meets
+    repeat); the elapsed seconds of the series above were taken under the
+    replay's load and are not a measurement.
+- **Verdict.** Under the meeting light is bent toward a mass with the
+  sign of gravity, the M / b form and the grain of the fan (the sign in
+  every world; twice the mass and half the impact distance inside their
+  brackets; the lens crossing 71 Links where about 70 was expected), it is
+  not delayed in time (the ages the bent path's) and not redshifted (the
+  phase the lamp's plus a sharp offset per path); the grain is the law's
+  limit, 10^4 times nature's angle, so the value is not claimed. What the
+  engine added that the offline flight lacked: the mass measures the
+  light that reaches it, so at (2^12, 6) the most turned rays click on
+  the mass (122) and the centroid reads -1.79 where -3.0 was expected,
+  outside; at b = 3 (169 taken) the count and the faces read outside for
+  the same reason. The interferometric Shapiro phase is per path, not per
+  screen: the expectation of one offset was the mean over rays, and the
+  per-pixel offsets are sharp and different; the phase-rate estimator is
+  not clean under the meeting and its three readings outside are the
+  estimator's, not the light's. Nothing was tuned. The register keeps the
+  physicist's entry 2 as it was measured without the key, and this entry
+  as the reading under it. The page of the run (the GameBoard as a
+  drawing, the moving picture of `mass_meeting` against the control with
+  a time control, the readings, the conclusion) is in the session's
+  scratchpad, not published.
+
 ### A3. Bell test in phase form, delayed geometry
 
 - **Confronts.** The same CHSH data as A2 and the quantum value at the

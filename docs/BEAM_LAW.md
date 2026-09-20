@@ -2023,9 +2023,16 @@ implementation's part of the contract. The design above is unchanged.
     **The cost.** One segmented reading of the crowd per interval (two
     `np.unique` passes over the free rows at free-space Nodes) and one
     exact sector sort of at most `len(D)` directions per new target of a
-    turning row (about 1.4 ms per permutation on the 296-direction table
-    of series K, the turns a few per interval); measured on series K in
-    EXPERIMENTS.md. (viii) **What the register replays.** Every one of the
+    turning row. Measured on series K's `mass` world on an idle machine
+    (400 intervals in-process, the host's wall time): 19.9 ms per interval
+    without the key and 24.5 ms with it, the meeting 4.6 ms per interval
+    (1.8 s over the run) for 13618 crowd rows and 447 rows of the beam;
+    67 permutations built in the whole run (the targets a beam meets
+    repeat) at 0.58 ms each on the 296-direction table, 0.04 s in all; the
+    rest of the cost is the two segmented readings of the crowd. Under the
+    load of the register's replay the same run took 36.5 s against the
+    control's 17.6 s (EXPERIMENTS.md, K under the meeting), which is not a
+    measurement. (viii) **What the register replays.** Every one of the
     85 example worlds is byte-identical in `events.jsonl` and `state.json`
     with the module present and the key absent, and the ten registered
     worlds named by the design (the six of series 7, `2`, `s8_r12`, `r4`,
