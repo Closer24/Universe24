@@ -190,12 +190,19 @@ def world(crowd: str, clock: str) -> Json:
         *({"name": name, "quantum": 0} for name in names),
     ]
 
-    def entry(rule: str, name: str | None = None) -> Json:
+    def entry(rule: str, name: str | None = None) -> Json | None:
         """A table entry: the rule, reading the age moment in the `age`
-        worlds (the detector's in every world)."""
-        if clock == "age" or name == "detector":
-            return {"rule": rule, "reads": "age"}
-        return {"rule": rule}
+        worlds (the detector's in every world); as the world file declares
+        only what differs from the default (a free family read), the default
+        rule is left out of a kept object and an entry equal to the default
+        is left out (None)."""
+        reads = clock == "age" or name == "detector"
+        if rule == "read":
+            return {"reads": "age"} if reads else None
+        return {"rule": rule, "reads": "age"} if reads else {"rule": rule}
+
+    def table(entries: dict[str, Json | None]) -> dict[str, Json]:
+        return {name: value for name, value in entries.items() if value is not None}
 
     measured: list[Json] = [
         {
@@ -203,7 +210,7 @@ def world(crowd: str, clock: str) -> Json:
             "family": "detector",
             "amount": 1,
             "fixed": True,
-            "table": {name: entry("measure", "detector") for name in names},
+            "table": table({name: entry("measure", "detector") for name in names}),
         }
     ]
     for axis in range(6):
@@ -215,7 +222,7 @@ def world(crowd: str, clock: str) -> Json:
                 "amount": 1 if factor == 1 else LIGHT * CHAIN * factor,
                 "fixed": True,
                 "directions": [list(port)],
-                "table": {name: entry("pass") for name in names},
+                "table": table({name: entry("pass") for name in names}),
             }
         )
     for name, position, p, _ in thrown:
@@ -228,7 +235,9 @@ def world(crowd: str, clock: str) -> Json:
             "directions": inward(p),
         }
         if clock == "age":
-            source["table"] = {other: entry("read") for other in ["mass", *names] if other != name}
+            source["table"] = table(
+                {other: entry("read") for other in ["mass", *names] if other != name}
+            )
         measured.append(source)
     return {
         "law": "beam",
@@ -264,7 +273,7 @@ def main() -> None:
     for crowd in CROWDS:
         for clock in CLOCKS:
             path = HERE / f"{crowd}_{clock}.json"
-            path.write_text(json.dumps(world(crowd, clock), separators=(",", ":")) + "\n")
+            path.write_text(json.dumps(world(crowd, clock)) + "\n", encoding="utf-8")
             print(path.relative_to(HERE.parents[2]))
 
 
