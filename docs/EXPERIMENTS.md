@@ -1478,6 +1478,81 @@ states "exactly" and means integer equality at every tick.
   holds: the S = 32 probe at r = 24 closes once; the rest of the verdict
   (the field's burst and the fan's grain turning the circle into a
   precessing polygon) stands as read ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+- **Verdict re-read under the step drive (2026-09-20; the physics-rule
+  reviewer, on the re-read line above and record 117; nothing re-run,
+  nothing tuned).** In the series' own criterion (closed: at the first
+  closing of the angle the probe within one Link of its start on each
+  axis with the heading kept; T within +- 15 % of the derived; the mean
+  radius r +- 1; |drift| <= 1 Link per orbit; T(24)^2 / T(12)^2 = 4 +-
+  15 %; C 1.00 +- 0.15) one orbit closes: the S = 32 probe at r = 24, on
+  its first turn, the return (-1, +1) with the heading kept, T 623
+  against the derived 687 (-9 %, inside), the mean radius 23.63 (inside
+  24 +- 1), the drift one Link (inside, at the bound), C 1.37 (outside,
+  as on every turn of every registration: the push read on the orbit is
+  1.3 to 1.4 times the ring mean of series C, the kicks landing where the
+  probe meets a shell, inside the ring's mean radius more often than
+  outside). No other world closes by the criterion: at S = 1 the probes
+  outrun the field (no push; the same runs); at S = 8 the r = 12 probe
+  closes the angle once (T 226 against 196, +15 %, at the bound; the
+  return +7, the mean radius 15.83, C 1.65: outside) and the r = 24 probe
+  does not turn; at S = 32 the r = 12 probe, expected to close, closes
+  the angle twice and not by the criterion (T 474 and 236 against 343,
+  +38 % and -31 %; the returns +3 and -7; the mean radii 16.63 and
+  10.96). The ratio has no closed pair: 623 / 474 squared is 1.73, but
+  474 is a wide loop's period and not a closed orbit's (the closed T(24)
+  against the derived T(12) gives 3.30, a measured against a derived
+  number, not a reading), so the flat-curve law T proportional to r (the
+  squares 4) is not measured, neither for nor against. What still does
+  not hold: the closed orbit does not repeat, its second turn returning
+  (-14, +1) at a mean radius 18.49 in 464 intervals and the probe
+  leaving through face:+x at 1849; and the motion at every width is
+  still a precessing polygon at the grain of the field (one shell per 10
+  intervals, several rays per read, whole labels of 64 on a momentum of
+  576), not the derived circle. The clause "no orbit closes by the
+  criterion at any width or radius" is superseded by this paragraph; the
+  third registration's numbers stand as history. The physical reading:
+  the force law did not change and the push it reads did not change (C
+  1.27 to 1.37 at r = 24, 1.32 to 1.29 on the first turn at r = 12; the
+  same field, the same momenta), and the return at r = 24 went from
+  (-13, 0) to (-1, +1): what kept the orbits from closing was the count
+  of Links off the clock, not the law's force. That count,
+  `by_clock(age, |p_a|, D_a)` = floor((age + 1) |p_a| / D_a) - floor(age
+  |p_a| / D_a) at the present |p_a|, fires on the phase of age x |p_a|
+  modulo D_a, as if the body had carried its present momentum component
+  for its whole age; on an orbit each component turns through zero every
+  turn and is changed at every shell's passage, so every kick re-set the
+  phase of each axis's step cycle, a stall while the component fell and a
+  burst while it rose (record 107: five Links in six intervals at 0.019
+  Links per interval), and the distance made on an axis was not the sum
+  of its speed over the intervals. Under the drive it is that sum to
+  within one Link per axis (the drive the remainder), the momentum and
+  the push untouched. The derivation of p assumes that the position is
+  the sum of the speed over the intervals; until the drive it was being
+  tested against a rule that did not obey it. The plane's force law: the
+  flux falls as 1 / r (series C, Gauss exact on the plane), so a circular
+  orbit's speed is independent of r and T is proportional to r; the
+  closed T(24) = 623 is 0.907 of the derived 687, so at the same width
+  the law predicts a closed T(12) of 311 (0.907 x 343), where Kepler's T
+  proportional to r^1.5 would give 220. The one wide loop of `s32_r12`
+  (the mean radius 16.63, T 474) sits on T proportional to r at its own
+  radius (343 x 16.63 / 12 = 475), a coincidence of one loop that is not
+  a reading of the criterion. What the series now predicts and what
+  would refute it, nothing pinned here (the next run pins its own numbers
+  first): (i) the closed turn is a reading of `beam-v1` as amended, the
+  same world under the same law re-reading T 623 (the GameBoard is
+  deterministic), and a change that un-closes it is registered as a law
+  change or a bug, never silently; (ii) a closed orbit at S = 32, r = 12
+  has T in 265 to 357 (311 +- 15 %) and gives T(24)^2 / T(12)^2 = 4 +-
+  15 %; a closed T(12) near 220 (the squares near 8) refutes the plane's
+  1 / r reading of the push; (iii) a closed orbit at any width reads C
+  1.3 to 1.4, the ring-geometry factor; C = 1.00 +- 0.15 on a closed
+  orbit refutes that explanation of C and reopens the derivation's
+  constant; (iv) the precession (the second turn's return (-14, +1)) is
+  the field's burst and grain, named before every run: a shell every
+  interval at the same emission, or a larger width, closes the second
+  turn at r = 24 and the first at r = 12 within one Link; if a smoother
+  field at S = 32 leaves r = 12 unclosed, the field's grain is not the
+  remaining cause either and the derivation of p is to be re-read.
 
 
 ### A10, the width of an opening and the spread behind it, under the Beam Law (2026-09-20)
@@ -2201,6 +2276,87 @@ states "exactly" and means integer equality at every tick.
   coherence reading at the closing radius stays outside (C(4) = 1.01
   against 2.0, the phase's turn per orbit not 0), so Bohr's lines are
   still not read behind the detector, neither for nor against ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+- **Verdict re-read under the step drive (2026-09-20; the physics-rule
+  reviewer, on the re-read line above and record 117; nothing re-run,
+  nothing tuned).** Two words of the design, kept apart. "Closes" is a
+  GAMEBOARD reading: the angle about the proton reaches 2 pi with the
+  return within r / 4 and T within 15 % of the derived; "stable", that
+  the electron stays on the GameBoard, closing again, for the run.
+  "Quantised" is the design's closure and its DETECTOR reading: the
+  phase's turn per orbit whole (4 p r = j h on the GameBoard with j
+  whole, the phase back on itself each turn), and so the faces' coherent
+  record adding in line, C(T) >= T / 2 after T >= 2 turns at a closing
+  radius and C(T) < 2 between. The law now gives the first and not the
+  second. At r = 8, the design's closing radius (j = 2 by the
+  construction of h), the electron closes the angle four times (T 944,
+  588, 1209, 1281 against 838: one inside 15 %, three outside; three of
+  the four returns within r / 4 = 2 Links; the mean radii 8.84, 6.50,
+  11.45, 13.15) and is on the GameBoard at the end of the run's 4200
+  intervals where it was thrown out at 1864: a stable orbit that closes,
+  the loop still eccentric under the whole kicks (84 lumps of 4.3
+  degrees per orbit). At r = 12, a between radius (j = 2.555), the orbit
+  is the best closed of the series by the criterion: five closings,
+  every T within 15 % of the derived 1462 (1454, 1658, 1416, 1334,
+  1290), every return within r / 4, the mean radii 12.46 to 11.37, on
+  the GameBoard at the end of 7400. The phase at the closing radius does
+  not close: the turn per orbit 0.828, 0.750, 0.797 of a circle beyond
+  whole circles against the design's 0, and the faces' record over four
+  turns C(4) = 1.01 against the expected 2.0 (outside). Bohr's
+  quantisation condition is NOT met at the radius built to meet it,
+  though the orbit closes. At r = 12 the record is bounded, C(5) = 0.49
+  (inside the between bound; the turn per orbit 0.609, 0.250, 0.141,
+  0.078 against 0.555), and at r = 4 and r = 6 C(2) = 1.38 and C(3) =
+  0.52 (inside): a bounded record is what a non-whole phase gives at any
+  radius and tells Bohr's ladder nothing by itself; the ladder of closing
+  radii has no pair (r = 2 closes the angle once, T 262 against 117 at a
+  mean radius 3.62, not by the criterion). So Bohr's lines are still not
+  read behind the detector, neither for nor against; what is read is
+  that the law's orbit is stable and that its phase's closure is not the
+  circle's. The clause "what the law lacked here is not the turn but a
+  stable closed orbit under whole kicks" is superseded by this paragraph:
+  the stable closed orbit exists; the next steps it named (a smoother
+  field, the orbit tilted, a body of 27 Nodes) are not what produced it,
+  the count of Links did (BEAM_LAW note 17 as amended). The registered
+  verdict's numbers stand as history. The physical reading: as in series
+  D, the orbit's failure to close was the count off the clock re-setting
+  each axis's step cycle at every kick, not the push (the mean inward
+  push read at r = 8 was 1.02 of the derived and the reads are the
+  same); the drive makes the position the sum of the speed over the
+  intervals within one Link per axis, and the same field with the same
+  momentum then binds the electron for the run. The phase's turn is now
+  a real reading of the turn rule against the orbit's shape. The turn by
+  momentum sums |p_axis| over the Links stepped (note 30 (ii)), 4 p r on
+  the GameBoard's circle of radius r at a constant |p|, and h was fixed
+  as 16 p(8) so that this sum is 2 h on that circle. The orbit the law
+  makes at r = 8 is not that circle: a loop of mean radius 6.5 to 13.2
+  over its four turns whose |p| changes along it as an eccentric orbit's
+  does, so its sum of |p_axis| over a turn is the loop's own action and
+  not 4 p(8) x 8, and its fractional part (0.75 to 0.83) is what the
+  loop's shape leaves; the registered 0.234 over the two turns of the old
+  count was the same reading on a different loop. The design's condition
+  is a condition on the action of the orbit the law actually makes, and
+  under the fan's whole kicks (one shell per 10 intervals) that orbit is
+  an eccentric precessing loop at every radius, as in series D. Nothing
+  in the record says the turn rule is wrong; it says the closure 4 p r =
+  j h was written for a circle the GameBoard does not draw at this grain
+  of the field. What would refute this reading, and what the series now
+  predicts, nothing pinned here: (i) at r = 8 the verdict "closes, not
+  quantised" is refuted by a re-run under the same law reading the turn
+  per orbit whole within 0.1 and C(4) >= 2 (the GameBoard is
+  deterministic: registered as a bug or a law change); (ii) if a smoother
+  field (a shell every interval at the same emission) at r = 8 gives a
+  loop with every mean radius 8 +- 1 and every return within r / 4, the
+  reading predicts the turn per orbit 0 +- 0.1 and C(T) growing as T^2
+  (C(4) >= 2); if that near-circular orbit still reads 0.75 to 0.83, the
+  eccentricity was not the cause and the turn's count on the GameBoard
+  (4 p r against 2 pi p r, the k0 off `axis_steps`) is to be re-derived;
+  (iii) a whole turn per orbit with a bounded C, or a turn far from whole
+  with C growing as T^2, refutes the design's tie between the phase's
+  closure and the detector's coherent record, not the orbit; (iv) with r
+  = 8 and r = 12 both stable, a closing radius below 8 that closes and
+  reads a whole turn gives the ratio of j^2 the design asks; r = 2 does
+  not close under the drive (its loop sits at 3.62), so the lowest rung
+  is to be found, not assumed.
 
 
 ### I, the nucleus (2026-09-20)

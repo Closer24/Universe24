@@ -135,6 +135,7 @@ records are a few hundred megabytes per world.
 
 ## What was measured (2026-09-20)
 
+(superseded for the pushed worlds by the re-read below, 2026-09-20)
 No orbit closed well enough for the coherence reading and the finding is
 registered as such: every electron was bound for one to three turns and
 then thrown out at a close pass; at r = 8 (the reference, j = 2) the two

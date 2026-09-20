@@ -27,8 +27,11 @@ record "The day of 2026-09-20 in summary") before treating it as live status.
    a human measures nothing on the GameBoard; an emitter in, a detector out).
 4. **What the law predicts and where it fails, measured:** Newton's
    identities, Gauss, the third law, the clock's redshift (E), the Hubble
-   diagram coasting (G), Bohr's orbit not closed (H), light neither bent nor
-   delayed (K; the meeting `meeting-v1` in flight makes it bend as a report),
+   diagram coasting (G), Bohr's orbit closed under the step drive but not
+   quantised (H: the orbit at r = 8 stable for the run, the phase's turn
+   per orbit 0.75 to 0.83 against 0 and C(4) = 1.01 against 2.0), light
+   neither bent nor delayed (K; the meeting `meeting-v1` in flight makes it
+   bend as a report),
    the nucleus (I), Heisenberg in the record (A10), no single-click build-up
    (A10 at a low rate), Bell S = 2 with no-signalling exact (A2; #363 in
    flight reads the settings from distant events). Each is stated in
@@ -97,15 +100,14 @@ performance: 0.23 to 1.0 us per Node per interval on the registered worlds
   as worlds and tables; whether the six-heading source of the coupling
   series should release on a fan of directions (the design's section 8
   expects the ring means of a fan, 0.31 to 0.33, and the six beams give the
-  GameBoard ring's count); the orbit series D after the label along the
-  unit vector (decided on 2026-09-19: the label of a unit is u_d, the
-  integer vector nearest Q D / |D| at Q = 64, every momentum in label
-  units, [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
-  note 23; re-run: no orbit closes by the criterion, the S = 32 probe at
-  r = 12 bound for 2891 intervals and seven precessing turns, C 1.3 to
-  1.5 against the ring mean's 1): whether to pre-fill the field, to
-  widen the push further, to read the count off the clock as well, or to
-  release the field continuously rather than in shells
+  GameBoard ring's count); the orbit series D under the step drive
+  (2026-09-20, record 117: the S = 32 probe at r = 24 closes by the
+  criterion, T 623 against the derived 687, the mean radius 23.63, C 1.37
+  against the ring mean's 1; its second turn returns (-14, +1); r = 12
+  closes the angle twice and not by the criterion): whether to release
+  the field continuously rather than in shells (the precession), to widen
+  the push further, or to pre-fill the field; 'to read the count off the
+  clock as well' is settled by the drive (record 108)
   ([D, the orbit](EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19)).
 - Derived and not solved: no inertia for a co-moving pair at first order in v
   (DERIVATIONS.md section 54); Bell at most 2; a single ray does not
