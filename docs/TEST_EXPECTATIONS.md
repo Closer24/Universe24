@@ -32,6 +32,7 @@ kept, their pins the law of events').
 | `test_nature_beam_push.py` | The push as one bilinear form over the arriving rays' labels, the emitter's factor on the record, and the one momentum label the click, the re-emission, the home and the transit line move ([below](#the-push-as-one-form)) | new (2026-09-19, the night: the physics-rule review's F1 and the model owner's proposal 2) |
 | `test_columns.py` | The one coupling as a signed inner product over the columns: the two built-in columns equal to the landed form integer by integer and refusal by refusal on a grid, at the register's scale and on the replay of the series 7 worlds' `read` records; a third column with the sign minus giving the design's integers and the sign as a key; the refusals and the alignment; the bounds at parsing and at the push; every column floored on its own ([below](#the-columns)) | new (2026-09-20, the model owner's "one mechanism for all the laws on the GameBoard"; the mathematician's verified form) |
 | `test_lifetime.py` | The lifetime of a family and the held content: the click on the border `lifetime` booked as a face books an escape (the record 2^26, the ledger lines, the run's record), a ray read at the age L and then booked, the reach of L = 1, 2, 3 on the flight table (the six neighbours, the face diagonals, the cube diagonals and two Links), the inverse refused, the refusals; a measured event holding content of two families (the charges as rational sums, the push, the release of both, the record) and the register's proton ([below](#the-lifetime-and-the-held-content)) | new (2026-09-20, the model owner's "the strong force's range is a lifetime, L"; the physicist's D-1) |
+| `test_contact.py` | The contact through the table: the design's pair on the six headings (+128 per interval, the labels 128, 0, 0, 128, 256, 384, 512 and the hand-overs 256, 128, 640, 512, 128, 256, 256, the sum 0, no step; at three Links the pair separates), the isolated hand-over under `measure`, `rerelease`, `read` and `pass` and the derived default, the apportioning over the occupants of a body's set, the register's proton and neutron over 1000 intervals (999 hand-overs of 310 967 280 640, the labels 0) ([below](#the-contact-through-the-table)) | new (2026-09-20, the model owner on the physicist's design, section 4.4) |
 | `test_nature_beam_label.py` | The label along the unit vector of the direction at the flight table's scale: the table u_d by the exact integer rule (the pinned vectors, the length within 1.35 % of Q, antisymmetry, equivariance under the 48, no tie, the float agreement over every primitive direction within the bound), every label content x u_d with the recoil, the transit line and the books closing through clicks, a mirror and the open faces, the bound at Q x content x amount ([below](#the-label-along-the-unit-vector)) | new (2026-09-19, the model owner's decision on the physics-rule reviewer's verdict; every momentum pin of the suite re-pinned x 64, listed in its section) |
 | `test_nature_beam_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing; no collision at a Node that holds a measured event ([below](#the-collision-table)) | new |
 | `test_nature_beam_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact; the merge by one packed key and by the lexsort alike ([below](#the-bijection)) | new |
@@ -683,6 +684,90 @@ the first run:
   charges (1837, 1), (7344, 1), (10000, 1), and `hypotheses`
   ["columns-v1"].
 
+## The contact through the table
+
+`tests/test_contact.py` (docs/BEAM_LAW.md, section 3 step 5 and section 10
+note 31 (ix); the model owner, 2026-09-20, on the physicist's design of
+the strong force, section 4.4): a body whose step on an axis is refused
+because the destination holds another measured event has arrived at that
+occupant, and the occupant's table entry for the body's family decides
+as it decides for a ray: `measure` hands the body's momentum component
+on that axis to the occupant, `rerelease` returns it, `read` and `pass`
+leave the labels as they were; `measure` where the entry is the keys'
+own rule for the body's family, declared or not (a paid arrival, the
+body's momentum its own label; `read` accumulates only where declared
+against the keys, on a paid family). K 2^20, N 64,
+`suspension` 0, `width` 1, every family without a phase circle. The
+expected integers, written down before the first run (the physicist's
+DESIGN.md test (f) and section 4.4):
+
+- (a) the pair on the six headings: two protons of `p` (amount 4, charge
+  3) holding one unit of `g` (strong 11 with the sign minus, lifetime 3),
+  the charges Q 12, G 11 and the content M 5, at one Link on an open 9^3
+  GameBoard, `release` [1, 1]: from tick 2 each reads per interval the
+  `p` row of amount 4 as -7936 (gravity +1280, electric -9216) and the
+  `g` row as +8064 (gravity +320, strong +7744), the push +128 toward the
+  other, (Q^2 - G^2 - M^2) x (-64); under the contact the momentum of p1
+  over ticks 2 .. 8 reads 128, 0, 0, 128, 256, 384, 512 (the mirror on
+  p2), the hand-overs at ticks 3 (256), 4 (128), 9 (640), 13 (512), 14
+  (128), 16 (256), 18 (256), 21 (384), 23, 25, 27 (256), 28 (128) and 30
+  (256), each a `contact` record (p1 to p2, the family `p`, the rule
+  `measure`, the axis 0), p2 never handing (its label is 0 when its turn
+  comes), no step in 30 intervals, the largest label 640 (handed at tick
+  9; after a tick no label is beyond 512), the sum of the two momenta 0
+  after every tick, p2's `contacts` [13, 0], the books balanced; with
+  `read` declared for `p` on both, the keys' own rule, the same
+  hand-overs (256 at tick 3, 128 at tick 4); with `pass` declared the `p`
+  rows are passed too and the `g` rows alone push, 8064 x (tick - 1). At
+  three Links (x 2 and x 5) no
+  `g` row reaches either body (the border takes it at the age 3), the
+  `p` row's -7936 is read at tick 6, and at tick 6 p1 steps to x 1 with
+  (-7936, 0, 0) and p2 to x 6 with (7936, 0, 0): the pair separates, no
+  contact.
+- (b) the isolated hand-over (`release` [0, 1], no rays): p1 of `p`,
+  content 5, momentum (256, 0, 0) at (1, 2, 2) and p2 of `q`, content 5,
+  fixed, at (2, 2, 2) on an open 5^3 GameBoard: the step rule fires at
+  tick 3 (`by_clock(2, 256, 576)` = 1) and is refused; under `measure`
+  (the default) p1 reads (0, 0, 0) and p2 (256, 0, 0), one `contact`
+  record {tick 3, number 1, node (1, 2, 2), to (2, 2, 2), occupant 2,
+  family `p`, rule `measure`, axis 0, component 256, momentum (0, 0, 0)},
+  p2's `contacts` [1, 0], the books' measured momentum line (256, 0, 0)
+  before and after; under `rerelease` p1 (-256, 0, 0) and p2 (512, 0, 0),
+  the component 512; under `pass` both unchanged, no record, the step
+  counted (p1's `steps` 1); an entry that declares no rule (`{"reads":
+  "scalar"}`) or the keys' own rule (`{"p": "read"}`) leaves the default;
+  a body of the paid family `h` (quantum 1, content 5, the same momentum)
+  hands 256 by the keys (`measure`, the record naming `h`) and keeps it
+  under `read` declared against the keys and under `pass`; the parser
+  derives `contact` ("measure", "measure", "measure") from an empty
+  table and from `{"p": "read"}`, ("measure", "measure", "read") from
+  `{"h": "read"}` and ("pass", "measure", "measure") from `{"p": "pass"}`.
+- (c) the apportioning: a body of span [1, 3, 1] (content 5, momentum
+  (300, 0, 0) at (1, 2, 2)) whose destination set holds q1 (content 1)
+  at (2, 1, 2) and q2 (content 3) at (2, 3, 2): 75 to q1 and 225 to q2,
+  the body 0, two records; with 301, 75 and 226 (the unit left to the
+  largest remainder); with q1 declaring `pass` for the body's family q1
+  takes nothing and the body keeps its 75; a body of span [1, 3, 1]
+  against one occupant of content 4 hands it the whole 300.
+- (d) the register's pair: a proton (1836 of `p`, charge 4, holding one
+  unit of `nuclear`, strong 10000 with the sign minus, lifetime 3) and a
+  neutron (1839 of `n` holding one unit of `nuclear`) at one Link on an
+  open 5^3 GameBoard, both releasing on the 290 primitive directions with
+  |a| + |b| + |c| <= 6, `release` [1, 1]: the pushes on the proton per
+  interval 10 161 754 944 from the neutron's `n` rows (1837 x 1839 x
+  3008, the x components of the 57 unit vectors whose first step is -x
+  summing to 3008) and 300 805 525 696 from its `nuclear` rows (10000 x
+  10000 x 3008 + 1837 x 3008), the sum 310 967 280 640; on the neutron
+  10 161 745 920 (1840 x 1836 x 3008) and 300 805 534 720 (300 800 000
+  000 + 1840 x 3008), the same sum, the mirror; under the contact the
+  labels after 1000 intervals (0, 0, 0) and (0, 0, 0), 999 hand-overs,
+  the largest component 310 967 280 640 (one interval's push), no step,
+  the books balanced at every tick; with `pass` declared on each for the
+  other's family (that family's rows passed too, the `nuclear` rows alone
+  read) the labels after 40 intervals 39 x 300 805 525 696 =
+  11 731 415 502 144 on the proton and -39 x 300 805 534 720 =
+  -11 731 415 854 080 on the neutron, no record.
+
 ## The re-emission
 
 `tests/test_nature_beam_reemission.py` (docs/BEAM_LAW.md, section 5). K 2^20,
@@ -749,7 +834,15 @@ from `test_event_clock`, `test_release_costs_by_phase_rate` and
   flow in label units; was 16) on +x steps once per two self-creations
   (three after six intervals); with momentum 64 (was 1) none after 16 and
   one after 17; the momentum untouched; a step onto a Node that holds a
-  measured event is refused, both remain, the step counted.
+  measured event is refused and, since 2026-09-20, is a contact read
+  through the occupant's table (`measure` by the keys; [the contact](#the-contact-through-the-table)):
+  on a bar of 3 x 1 x 1 the mover's step of interval 2 onto the resident
+  hands it the 1024 (one `contact` record, the mover's momentum 0 and
+  its step counted), the resident steps to x = 2 in the same interval
+  with the 1024 and leaves through face:+x at interval 4 (the escaped
+  momentum (1024, 0, 0), the measured line 16 after), the mover at x = 0
+  with one step for the rest (until 2026-09-20 both remained with their
+  momenta, the mover's steps counted at 2, 4 and 6).
 - (e) the count off the clock: a source of `m` of content k at x = 0 of a
   2 x 1 x 1 bar releasing k rays per direction per self-creation at
   `release` [1, 1] and a probe of `light` (content 1, measuring `m`) at
@@ -924,7 +1017,9 @@ expected integers, written down before the first run:
   interval 2, 3, 3, 4, 4, 5, 5; `at` holds its three Nodes and nothing
   else); with a fixed anchor at (5, 0, 0), a Node of the moved set at
   the age 6, the step is refused: x per interval 2, 3, 3, 4, 4, 4, three
-  steps counted, `at` of four Nodes; without it the step of the age 8
+  steps counted, `at` of four Nodes, and since 2026-09-20 the refusal is
+  a contact, the body's 1024 handed to the anchor (its momentum 0, the
+  anchor's (1024, 0, 0), the anchor's `contacts` [1, 0]); without it the step of the age 8
   leaves the GameBoard and the whole body clicks on face:+x (three `step`
   lines with the phase 0 before it, one click line with node (5, 0, 1),
   measured 1, amount 16; no measured event and no Node in `at` after;
@@ -1633,7 +1728,9 @@ reversible corrections that every path shares"; the architect's D2 and D3
 of the same day): a measured event's step onto a Node that holds a measured
 event is refused, the stepping event staying where it is with its momentum
 and the step counted (no merge; until then the two merged into the
-resident); an open face is a detector, every escape through it a click on
+resident; since 2026-09-20 the refused step is a contact read through the
+occupant's table and the momentum component is handed over,
+[the contact](#the-contact-through-the-table)); an open face is a detector, every escape through it a click on
 the face detector named by it, recorded like a detector's click, and the
 books' escaped lines the sums of the face clicks (nothing physical changes
 at the face); and the count a measured event owes is read off its clock,

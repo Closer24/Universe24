@@ -1181,6 +1181,16 @@ states "exactly" and means integer equality at every tick.
   model owner's decision (PROJECT_STATUS, "What is open"); nothing was
   tuned.
 
+- **Re-read under the contact through the table (2026-09-20).** The
+  free probes of `1b_m1`, `1b_m4` and `1b_m16` step to the Node beside
+  the source as registered (11 steps, the same records); from tick 32
+  every refused step hands the probe's x component to the fixed source
+  (169 `contact` records, m times `1b_m1`'s), the probe's momentum 0 at
+  the end where it was -2 260 249 792 (m = 1) and the source's
+  -1 186 507 968 where it was 1 073 741 824; the sum of the two and the
+  reads unchanged. The other eighteen worlds are byte-identical
+  ([validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+
 ### D, the orbit under the Beam Law, on the plane (2026-09-19)
 
 - **Confronts.** Whether a light free probe closes an orbit about a heavy
@@ -1424,6 +1434,15 @@ states "exactly" and means integer equality at every tick.
   start-up transient (31 intervals without field). Nothing was tuned; the
   widths and radii are the assignment's; the readings are registered
   outside their expectations where they fall outside.
+
+- **Re-read under the contact through the table (2026-09-20).** `s8_r12`
+  alone changes: at tick 174 the probe at the Node beside the source
+  hands 251 of its y momentum to the source (one `contact` record)
+  instead of keeping it, the angle then reaches 1.00 turn without
+  closing (the registered closing at tick 198 with the return (+5, 0)
+  is gone), C 0.30 over the run, and the probe leaves through face:+x
+  at tick 260 instead of 271. The five other worlds are byte-identical
+  ([validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
 
 ### A10, the width of an opening and the spread behind it, under the Beam Law (2026-09-20)
 
@@ -1900,6 +1919,18 @@ states "exactly" and means integer equality at every tick.
   a control without the atom, the fraction taken against the beam's phase
   rate), is registered as the next step with this design, not run.
   Nothing was tuned.
+
+- **Re-read under the contact through the table (2026-09-20).** `r2`
+  and `r4` change, the electron beside the proton handing its momentum
+  component to it instead of keeping it: `r2` takes 7 hand-overs (from
+  tick 72), turns 2.07 times with two closings (T 84 and 166, mean
+  radii 1.74 and 2.66), reads the phase's turn per orbit 0.688 against
+  the design's 0.946 and C(2) = 0.60 (outside), and leaves through
+  face:+x at tick 688 instead of face:-x at tick 254; `r4` takes one
+  hand-over at tick 454 and leaves through face:+y at tick 600 instead
+  of 540, its one closing the same. The verdict stands: no orbit closed
+  well enough for the coherence reading. `r6`, `r8`, `r12`, `r15` and
+  `r16` are byte-identical ([validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
 
 ### A3. Bell test in phase form, delayed geometry
 

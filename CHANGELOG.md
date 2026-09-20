@@ -5,7 +5,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
-### The columns of the one coupling, the lifetime and the held content (2026-09-20)
+### The columns of the one coupling, the lifetime, the held content and the contact through the table (2026-09-20)
 
 - The model owner's decision ("one mechanism for all the laws on the
   GameBoard", [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); the
@@ -53,6 +53,26 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   `detectors` and `columns-v1` under `hypotheses` when a lifetime is
   declared. No existing world changes ([MIGRATION](docs/MIGRATION.md);
   `tests/test_lifetime.py`).
+- The contact through the table (the model owner, 2026-09-20, on the
+  physicist's design of the strong force, section 4.4;
+  [BEAM_LAW note 31](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+  (ix)): a body whose step on an axis is refused because the destination
+  holds another measured event has arrived at that occupant, and the
+  occupant's table entry for the body's family decides as it decides for
+  a ray: `measure` (the rule wherever the entry is the keys' own for the
+  body's family, declared or not: a paid arrival, the body's momentum its
+  own label) hands the body's momentum component on that axis to the
+  occupant, the sum unchanged; `rerelease` returns it; `pass` and a
+  `read` declared against the keys leave the labels as they were (the
+  rule until now, under which a bound pair's labels grew without bound); a
+  body on a set hands the component apportioned whole over the occupants
+  of its destination set by their contents; one `contact` record per
+  hand-over, `contacts` on the occupant's state. No key. Of the 66
+  example worlds 60 are byte-identical; the coupling `1b_*`, Bohr `r2`
+  and `r4` and the orbit `s8_r12` change from the first refused step of
+  a body and are registered old against new
+  ([VALIDATION](docs/VALIDATION.md); [MIGRATION](docs/MIGRATION.md);
+  `tests/test_contact.py`).
 
 ### The names NatureBeam and GameBoard and the glossary's single names (2026-09-20)
 

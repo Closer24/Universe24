@@ -229,6 +229,11 @@ LAW_VALUE = "beam"
 # that still declares it is refused naming the migration, never read as a default.
 OLD_LAW_VALUE = "rays"
 TABLES = ("read", "measure", "rerelease", "pass")
+# The rule of a contact where the world declared none: a body that arrives
+# at a body is a paid arrival (its momentum is its own label, kappa = 1),
+# and the keys' rule for a paid arrival is `measure` (the model owner,
+# 2026-09-20; docs/BEAM_LAW.md note 31 (ix)).
+CONTACT_DEFAULT = "measure"
 # The quantum of a free family: its unit costs nothing and carries no content.
 FREE_QUANTUM = 0
 # The components of the one reading a table entry may select for its record;
@@ -508,7 +513,16 @@ class MeasuredDefinition:
     at every Link it steps (over the world's `action`), and `held` the
     content it holds per family in family order at the start: its
     `amount` under its own family and what `held` declared of the others
-    (0 elsewhere)."""
+    (0 elsewhere). `contact` is the rule per family (in family order) by
+    which this event reads a body of that family whose step onto it is
+    refused (the contact through the table, 2026-09-20): the entry's rule
+    where it differs from the keys' own rule for that family
+    (`default_rule`: `rerelease`, `pass`, `measure` on a free family,
+    `read` on a paid one), and `CONTACT_DEFAULT` (`measure`, the keys' rule
+    for a paid arrival: the body's momentum is its own label) where the
+    entry is the keys' own, declared or not, so that an entry equal to the
+    default changes nothing. The engine reads a missing entry as the
+    default."""
 
     position: Address3
     family: int
@@ -524,6 +538,7 @@ class MeasuredDefinition:
     span: tuple[int, int, int] = ONE_NODE
     phase_by_momentum: bool = False
     held: tuple[int, ...] = ()
+    contact: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         # A definition made without `held` (the tests' bare definitions)
@@ -1275,6 +1290,14 @@ def _measured(
                 families[names[key]].phase,
                 rules[names[key]],
             )
+        # The rule of a contact per family: the entry's rule where it
+        # differs from the keys' own rule for the family, `measure` (the
+        # keys' rule for a paid arrival, the body's momentum its own label)
+        # where the entry is the keys' own, declared or not.
+        contact = [
+            rule if rule != default_rule(family) else CONTACT_DEFAULT
+            for rule, family in zip(rules, families, strict=True)
+        ]
         for held_family, content in enumerate(held):
             if content and families[held_family].free:
                 # The label of a free release: amount x D along a heading,
@@ -1310,6 +1333,7 @@ def _measured(
                 span,
                 turning,
                 tuple(held),
+                tuple(contact),
             )
         )
     return tuple(found)

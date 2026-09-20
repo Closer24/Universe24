@@ -11,6 +11,49 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The columns, the lifetime, the held content and the contact through the table: the 66 example worlds compared - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` on the commits of the one
+mechanism ([BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+the columns (`de6c4968`, `columns-v1`), the lifetime and the held content
+(`7a77fa0c`) and the contact through the table (this commit), Python
+3.14.0rc2, numpy 2.5.3, headless, four cores. Every example world of
+`examples/events/` under the Beam Law (66; the entity worlds excluded) was
+run with `tools/run_series.py` under the engine before the columns
+(`ad20aa65`, source fingerprint
+`d29df4af8cfd79512d827d32df7b885948b2a90a4865cf1993b01bb74b76095c`), under
+the columns (`da74b0fff14e65e23f80154ba6528a3af0a328ea4a7565f071ee3de2f33ce84b`)
+and under the contact
+(`23a7e0fd2135e714bf072d09c5a0d4925ad0d3edb8b32adab0f84f1e9a010599`), and
+the runs compared file by file.
+
+| Check | Result |
+| --- | --- |
+| The columns: 66 worlds, before against after | `events.jsonl` byte-identical in every world; `state.json` equal but for the added `charges` per measured event; `run.json` equal but for the added `columns` keys and `hypotheses` (the two built-in columns are the landed form integer by integer) |
+| The lifetime and the held content: 66 worlds | unchanged: no example world declares a `lifetime` or `held` (the border and the held content are exercised by `tests/test_lifetime.py`) |
+| The contact through the table: 66 worlds, the columns against the contact | 60 worlds byte-identical in `events.jsonl` (no body of theirs ever stepped onto another); 6 worlds differ from the first refused step of a body on: the coupling `1b_m1`, `1b_m4`, `1b_m16` (tick 32), Bohr `r2` (tick 72) and `r4` (tick 454), the orbit `s8_r12` (tick 174); every run completed with the books balanced at every tick |
+| `python tools/check.py` after each commit (`tests/test_columns.py`, `tests/test_lifetime.py`, `tests/test_contact.py` among the selected) | ruff lint and format, mypy and the selected tests green |
+
+The six worlds under the contact, old (the refused step leaving the labels
+as they were) against new (the occupant's table reading the body,
+`measure` by the keys), `tools/bohr_readings.py` and
+`tools/orbit_readings.py` on the new runs:
+
+| World | Old | New |
+| --- | --- | --- |
+| coupling `1b_m1` | the free probe at x = 61 from tick 31, every further step refused, its momentum growing under every read to (-2 260 249 792, 0, 0) at tick 200, the source's (1 073 741 824, 0, 0) | the same 11 steps to x = 61; from tick 32 every refused step hands the probe's x component to the fixed source, 169 hand-overs (-146 316 992 at tick 32, then about -12.58 million per interval, one per interval), the probe's momentum (0, 0, 0) and the source's (-1 186 507 968, 0, 0) at tick 200; the sum of the two the same; the escaped line the same |
+| coupling `1b_m4`, `1b_m16` | the probe's momenta m times `1b_m1`'s: (-9 040 999 168, 0, 0) and (-36 163 996 672, 0, 0) | 169 hand-overs m times `1b_m1`'s (-585 267 968 and -2 341 071 872 at tick 32); the probe (0, 0, 0), the source (-2 598 548 224, 0, 0) and (-12 541 676 544, 0, 0) |
+| Bohr `r2` | 1.47 turns of the angle, one closing (T 79, return 1.0 Links, mean radius 1.74), r 1.0 .. 16.3, the electron out through face:-x at tick 254 after 33 steps, no coherence reading | 7 hand-overs to the fixed proton (ticks 72, 312, 389, 393, 404, 421, 425; 0.46 to 1.34 x 10^9 label units each, on x and on y), 2.07 turns, two closings (T 84 and 166, returns 0.0 and 1.4 Links, mean radii 1.74 and 2.66), r 1.0 .. 17.9, the phase's turn per orbit 0.688 (the design 0.946), C(2) = 0.60 and the slope 1.27 (outside C >= 1.0), out through face:+x at tick 688 after 76 steps; the proton's momentum (2 316 591 360, 3 929 525 040, 0) |
+| Bohr `r4` | 1.28 turns, one closing (T 138, return 2.0, mean radius 2.66), r 1.0 .. 18.4, out through face:+y at tick 540 after 68 steps | one hand-over at tick 454 (1 186 767 242 on y), 1.25 turns, the same one closing, r 1.0 .. 18.0, out through face:+y at tick 600 after 68 steps; no coherence reading either way |
+| orbit `s8_r12` | the angle reaching 2 pi at tick 198 with the return (+5, 0), mean radius 15.20, C 1.54 on the turn, out through face:+x at tick 271 after 144 steps | one hand-over at tick 174 (251 on y, the probe at the Node beside the source), the angle reaching 1.00 turn and no closing, r 1.0 .. 60.0, 17 reads of 3335 units, C 0.30 over the run, out through face:+x at tick 260 after 133 steps; the source's momentum (0, 251, 0) |
+
+The registered entries of series C, D and H keep the numbers of their date
+(a run is recorded once) and each carries a note pointing here; `r15`,
+`r16` and every other world with a body are unchanged, no step of theirs
+having been refused. The runs establish what the contact does on the
+engine (the hand-over as pinned, the books closed); they establish no
+physical law.
+
 ## Series G, the Hubble diagram behind the detector: four runs - 2026-09-20
 
 The worktree of `claude/universe24-new-3ytqde` at the merge of the charge

@@ -438,7 +438,12 @@ order with each step's inverse:
    units only: each row born is apportioned whole over the set in its
    fixed order, the leftover to the Nodes counted from `age mod w`, so
    the total released is the content's whatever the width. The step of a measured event by its momentum: as the
-   other change leaves it (no merge; refused onto an occupied Node; a
+   other change leaves it (no merge; refused onto an occupied Node, and
+   since 2026-09-20 the refused step is a contact read through the
+   occupant's table, note 31 (ix): the occupant's entry for the body's
+   family, `measure` by the keys, hands the body's momentum component on
+   that axis to the occupant, `rerelease` returns it, `read` and `pass`
+   leave the labels as they were; a
    body on a set steps as one, note 30; a body that declares
    `phase_by_momentum` in a world with `action` turns its phase at the
    Link it steps by the difference of two floors of k x |p| x N / h, k the
@@ -1648,3 +1653,66 @@ implementation's part of the contract. The design above is unchanged.
     `p` (charge 4) holding one unit of `nuclear` (strong 10000, lifetime
     3): the charges (1837, 1), (7344, 1), (10000, 1). No existing world
     declares a lifetime or `held`: every registered run is unchanged.
+    (ix) The contact through the table (the model owner, 2026-09-20, on
+    the physicist's design, section 4.4, "the contact of two bound
+    bodies": with the step refused and the labels left as they were, a
+    bound pair's labels grew under every push without bound, 10^10 to 3 x
+    10^11 per interval, until the integer bound refused the run, and no
+    book of the momentum on the measured events could close;
+    `tests/test_contact.py` (a) to (d)): a body whose step on an axis is
+    refused because the destination holds another measured event has
+    arrived at that occupant, and the occupant's table entry for the
+    body's family decides as it decides for a ray (`engine._contact`,
+    `Measured.contact`): `measure` hands the body's momentum component on
+    that axis to the occupant (the body's 0, the occupant's raised by it:
+    what a click takes, kappa = 1, the body's momentum its own label),
+    `rerelease` returns it (the body's component reversed, the occupant's
+    raised by twice it: what a mirror does), `read` and `pass` leave the
+    step refused and the labels as they are (the rule as it was: a world
+    that wants it declares the rule). Where the entry is the keys' own
+    rule for the body's family, declared or not, the contact is `measure`
+    (`world.CONTACT_DEFAULT`, `MeasuredDefinition.contact` per family:
+    the entry's rule where it differs from `default_rule`, `rerelease`,
+    `pass`, `measure` on a free family or `read` on a paid one, and
+    `measure` otherwise, so that an entry equal to the default changes
+    nothing, the table-from-keys decision kept): a body arriving at a
+    body is a paid arrival, its momentum its own label, and the keys' rule
+    for a paid arrival is `measure`; so a free family's `read`, the keys'
+    own, is the hand-over for its bodies as it is the push for its rays
+    (`read` accumulates only where it is declared against the keys, on a
+    paid family), and a declared `measure` on a free family absorbs its
+    rays and its bodies alike, as for any arrival. The sum of the momenta on the measured
+    events is unchanged by a hand-over (a transfer from one line to
+    another; the books' measured momentum line is their sum), each label
+    bounded by what one push accumulates between attempts. A body on a set
+    of Nodes whose destination set holds several occupants hands the
+    component apportioned whole over them by their contents
+    (`apportion_whole`, the units left to the largest remainders, ties from
+    the body's age modulo their count, in number order); an occupant of
+    content 0 takes nothing. One `contact` record per occupant that took a
+    hand-over (the tick, the body's number, its Node and the destination,
+    the `occupant`, the body's `family`, the `rule`, the `axis` and the
+    signed `component` the occupant gained, the body's `momentum` after);
+    no record under `read` or `pass`; the occupant's state counts the
+    hand-overs per family (`contacts`). Local (the destination Node is
+    read by the step already; the transfer crosses one Link in one
+    interval, as a ray's step does), fixed work (one entry per occupant of
+    the destination set), the steps the frame's, outside the walk and the
+    collision; no key and no third identity: the contact is a rule of the
+    frame, as the no-merge decision was, and a world that declares no
+    column reads it too. The design's integers hold on the engine: the
+    pair of the six headings (Q 12, G 11, M 5, +128 per interval) reads
+    128, 0, 0, 128, 256, 384, 512 over ticks 2 .. 8 and hands 256, 128,
+    640, 512, 128, 256, 256 at ticks 3, 4, 9, 13, 14, 16, 18, the sum of
+    the two labels 0 after every tick; the register's proton and neutron
+    at one Link on the 290 fan read 310 967 280 640 per interval and hand
+    it 999 times over 1000 intervals, the labels (0, 0, 0) at the end
+    (under `pass` declared on each for the other's family, 39 times the
+    `nuclear` rows' push alone after 40). Of the 66
+    example worlds 60 are byte-identical in `events.jsonl` (no body of
+    theirs ever stepped onto another) and six change from the first
+    refused step of a body on: the coupling `1b_m1`, `1b_m4`, `1b_m16`
+    (the free probe beside its source from tick 31, 169 hand-overs), Bohr
+    `r2` and `r4` (the electron beside the proton) and the orbit `s8_r12`
+    (one hand-over at tick 174), registered old against new in
+    VALIDATION.md.

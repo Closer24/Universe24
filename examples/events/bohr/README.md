@@ -144,3 +144,10 @@ start, wandered from r = 3 to 28, and the phase's turn per orbit measured
 0.234 of a circle beyond whole circles where the design says 0; the
 coherence over those two turns was C(2) = 0.84 (outside; expected at
 least 1.0). Nothing was tuned; the numbers are in the register.
+
+Under the contact through the table (2026-09-20) `r2` and `r4` change,
+the electron beside the proton handing its momentum component to it
+instead of keeping it: `r2` turns 2.07 times with two closings and
+leaves through face:+x at tick 688 (C(2) = 0.60, outside), `r4` leaves
+through face:+y at tick 600; the verdict stands, and the five other
+worlds are byte-identical ([validation](../../../docs/VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).

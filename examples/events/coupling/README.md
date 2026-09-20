@@ -165,6 +165,13 @@ failed, exit 0; 19 readings inside the expectation, 9 outside, registered:
   (c) |slope_count - slope_flow| 0.000, |slope_presence - slope_count|
   0.18 outside 0.10; (d) exact.
 
+Under the contact through the table (2026-09-20) the free probes of
+`1b_m1`, `1b_m4` and `1b_m16` step as registered and, from tick 32,
+hand the x component of their momentum to the fixed source at every
+refused step (169 `contact` records; the probe's momentum 0 at the end
+where it grew without bound); the other worlds are byte-identical
+([validation](../../../docs/VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+
 ## Result under the label along the unit vector (2026-09-19)
 
 The label of a unit along a heading is 64 e_d since the model owner's

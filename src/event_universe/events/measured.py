@@ -173,6 +173,14 @@ class Measured:
     taken: list[dict[str, int]] = field(default_factory=list)
     clicks: list[int] = field(default_factory=list)
     pushed: list[int] = field(default_factory=lambda: [0, 0, 0])
+    # The contact through the table (2026-09-20): per family the rule by
+    # which this event reads a body of that family whose step onto it is
+    # refused (`measure` hands the body's component on the axis of the
+    # step to this event, `rerelease` returns it, `pass` and a `read`
+    # declared against the keys leave the labels as they are), and per
+    # family the hand-overs taken.
+    contact: tuple[str, ...] = ()
+    contacts: list[int] = field(default_factory=list)
     # The interval's frame, set by the engine: whether this interval is a
     # self-creation, the age before it, the turn read off the clock and the
     # content the frame read (`frame_content`, M_A of the push: taken once
@@ -255,6 +263,7 @@ class Measured:
             "measured": [dict(entry) for entry in self.taken],
             "events": list(self.clicks),
             "pushed": list(self.pushed),
+            "contacts": list(self.contacts),
         }
 
 

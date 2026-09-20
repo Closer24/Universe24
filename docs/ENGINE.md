@@ -54,8 +54,21 @@ of a two-dimensional GameBoard with `{"z": "periodic"}`). A measured event's
 step by its momentum uses the same provider and wraps the same way; with
 an extent of 1 it lands on its own Node, no move, the step counted. A
 wrapped or plain target that holds another measured event refuses the step
-(no merge, the model owner, 2026-09-19: both remain, the mover where it was
-with its momentum, the step counted, no record).
+(no merge, the model owner, 2026-09-19: both remain, the mover where it was,
+the step counted) and, since 2026-09-20, the refused step is a **contact
+read through the occupant's table** (the model owner, on the physicist's
+design of the strong force; [BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(ix)): the occupant's table entry for the body's family decides as it
+decides for a ray, `measure` (the keys' rule for a paid arrival, the body's
+momentum its own label; the rule wherever the entry is the keys' own for
+the body's family, declared or not) handing the body's momentum component
+on that axis to the occupant (the body's 0, the occupant's raised by it,
+the sum unchanged), `rerelease` returning it (the body's component
+reversed, the occupant's raised by twice it), `pass` and a `read` declared
+against the keys (on a paid family) leaving the labels as they were (the
+rule as it was, no record). A body on a set whose destination set holds several
+occupants hands the component apportioned whole over them by their
+contents. Each hand-over is a `contact` record.
 
 **An open face is a detector** (the model owner, 2026-09-19). Every escape
 through an open face, a ray in the walk or a measured event's step, is a
@@ -390,7 +403,8 @@ rho x content, reduced), `charges` (the charge in every column by name,
 the exact rational sum over the families held, since 2026-09-20), momentum,
 windows, detector, age, owed, what waits to be created again (`home`,
 `home_content`), `waited`, phase steps, steps, what each met per family by
-rule, the clicks and the push taken; no record of its own since
+rule, the clicks and the push taken, and `contacts`, the hand-overs it
+took per family of the arriving body; no record of its own since
 2026-09-19, the record being the detector set's), the detectors
 (`detectors`: name, Nodes, threshold, `reading`, per family the amount
 measured, the clicks summed over its Nodes, the set's one cumulative
@@ -407,7 +421,11 @@ below the threshold, with `threshold`, or outside the window, with
 `window`, or paired under `beam`, with `cancelled` true), `step` (the
 measured event's number, its Node before and after, its momentum and,
 since 2026-09-20, its `phase` after the step: what the turn by momentum
-turned it to, the phase it had otherwise), and per
+turned it to, the phase it had otherwise), `contact` (since 2026-09-20:
+the body's `number`, its `node` and the destination `to`, the `occupant`,
+the body's `family`, the occupant's `rule` for it, the `axis` and the
+signed `component` the occupant gained, the body's `momentum` after; one
+per occupant that took a hand-over), and per
 interval per detector set and family a `record` line with the set's
 `record` (under `wave` the square with the `pointer` (X, Y); under `beam`
 the count), the set's `phase` and, for a set of one Node, its `node` and

@@ -179,6 +179,12 @@ intervals) and the GameBoard granularity of the fan's lines. The two
 earlier registrations (p = 3, 5, 9 under the D1 engine; p = 11, 15, 23
 under the label along D) are history in the register entry and in git.
 
+Under the contact through the table (2026-09-20) `s8_r12` alone
+changes: at tick 174 the probe beside the source hands 251 of its y
+momentum to it, the angle then reaches 1.00 turn without closing and
+the probe leaves through face:+x at tick 260; the five other worlds are
+byte-identical ([validation](../../../docs/VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+
 ## The readings (2026-09-19, the night; under the one push form; history)
 
 Source fingerprint

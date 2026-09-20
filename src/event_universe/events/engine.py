@@ -40,7 +40,7 @@ from collections.abc import Iterator
 import numpy as np
 
 from event_universe.core.game_board import Address3, adjacent_node
-from event_universe.core.integer import by_clock
+from event_universe.core.integer import apportion_whole, by_clock
 from event_universe.events.measured import TALLIES, DetectorSet, Ledger, Measured, rational_sum
 from event_universe.events.nature_beam import (
     NO_ARRIVAL,
@@ -57,6 +57,7 @@ from event_universe.events.nature_beam import (
 )
 from event_universe.events.world import (
     BEAM_LAW,
+    CONTACT_DEFAULT,
     DETECTOR_READINGS,
     FACE_NAMES,
     LABEL_SCALE,
@@ -242,6 +243,8 @@ class NatureBeamSimulation:
             pending=[[] for _ in range(count)],
             taken=[dict.fromkeys(TALLIES, 0) for _ in range(count)],
             clicks=[0] * count,
+            contact=tuple(definition.contact) + (CONTACT_DEFAULT,) * (count - len(definition.contact)),
+            contacts=[0] * count,
         )
 
     # -- the interval ----------------------------------------------------------
@@ -360,7 +363,8 @@ class NatureBeamSimulation:
         speed 1 / (S + 1) for every content and every step registered
         before the change is the same, `by_clock(age, Q n, Q k) =
         by_clock(age, n, k)`); no remainder is kept, the count is the whole
-        part off the clock. A step onto a measured event is refused; an
+        part off the clock. A step onto a measured event is refused and is
+        a contact read through the occupant's table (`_contact`); an
         escape is a click on the face; a periodic axis wraps.
 
         A body on a set of Nodes (`span`; the model owner, 2026-09-20)
@@ -462,7 +466,11 @@ class NatureBeamSimulation:
                         }
                     )
                 return
-            if any(self.at.get(node, entry.number) != entry.number for node in nodes):
+            occupants = sorted(
+                {self.at[node] for node in nodes if self.at.get(node, entry.number) != entry.number}
+            )
+            if occupants:
+                self._contact(entry, axis, origin, destination, occupants)
                 return
             for node in entry.nodes:
                 del self.at[node]
@@ -488,6 +496,91 @@ class NatureBeamSimulation:
                     }
                 )
             return
+
+    def _contact(
+        self,
+        entry: Measured,
+        axis: int,
+        origin: Address3,
+        destination: Address3,
+        occupants: list[int],
+    ) -> None:
+        """The contact through the table (the model owner, 2026-09-20, on
+        the physicist's design of the strong force, section 4.4): a body
+        whose step on an axis is refused because the destination holds
+        another measured event has arrived at that occupant, and the
+        occupant's table entry for the body's family decides, as it decides
+        for a ray (`Measured.contact`): `measure` hands the body's momentum
+        component on that axis to the occupant (the body's 0, the
+        occupant's raised by it: what a click takes, kappa = 1, the body's
+        momentum being its own label); `rerelease` returns it (the body's
+        component reversed, the occupant's raised by twice it: what a
+        mirror does); `read` and `pass` leave the step refused and the
+        labels as they are (the rule as it was until 2026-09-20: the two
+        bodies where they were, the component accumulating on the body
+        under every push until the integer bound refuses the run; a world
+        that wants it declares the rule). Where the entry is the keys' own
+        rule for the body's family (declared or not: an entry equal to the
+        default changes nothing) the contact is `measure`: a body arriving
+        at a body is a paid arrival, its momentum its own label, and the
+        keys' rule for a paid arrival is `measure` (`world.CONTACT_DEFAULT`);
+        so `read` on a free family, the keys' own, is the hand-over, and
+        `read` declared on a paid family the accumulation.
+        The sum of the momenta on the measured events is unchanged by a
+        hand-over (a transfer from one line to another; the books'
+        measured momentum line is their sum), each label bounded by what
+        one push accumulates between attempts. A body on a set of Nodes
+        whose destination set holds several occupants hands the component
+        apportioned whole over them by their contents
+        (`apportion_whole`, the units left to the largest remainders, ties
+        from the body's age modulo their count, in number order); an
+        occupant of content 0 takes nothing. One `contact` record per
+        occupant that took a hand-over (the tick, the body's number, its
+        Node and the destination, the occupant, the body's family, the
+        rule, the axis and the signed component the occupant gained); no
+        record under `read` or `pass`. Local (the destination Node is read
+        by the step already; the transfer crosses one Link in one
+        interval, as a ray's step does), fixed work (one entry per
+        occupant of the destination set), the steps the frame's, outside
+        the walk and the collision."""
+        component = entry.momentum[axis]
+        magnitude = abs(component)
+        if magnitude == 0:
+            return
+        sign = 1 if component > 0 else -1
+        contents = [self.measured[number].content for number in occupants]
+        shares = apportion_whole(magnitude, contents, entry.age % len(occupants))
+        family = self.families[entry.family].name
+        for number, share in zip(occupants, shares, strict=True):
+            occupant = self.measured[number]
+            rule = occupant.contact[entry.family]
+            if rule == "measure":
+                handed = sign * share
+            elif rule == "rerelease":
+                handed = 2 * sign * share
+            else:
+                continue
+            if handed == 0:
+                continue
+            occupant.momentum[axis] = bounded(occupant.momentum[axis] + handed, occupant, "momentum")
+            entry.momentum[axis] = bounded(entry.momentum[axis] - handed, entry, "momentum")
+            occupant.contacts[entry.family] += 1
+            if self.record is not None:
+                self.record(
+                    {
+                        "event": "contact",
+                        "tick": self.tick,
+                        "number": entry.number,
+                        "node": list(origin),
+                        "to": list(destination),
+                        "occupant": number,
+                        "family": family,
+                        "rule": rule,
+                        "axis": axis,
+                        "component": handed,
+                        "momentum": list(entry.momentum),
+                    }
+                )
 
     # -- the books -------------------------------------------------------------
 

@@ -6,7 +6,7 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
-## The columns of the one coupling, the lifetime and the held content, on 2026-09-20 (`columns` and `lifetime` per family; `held` per measured event; `columns-v1`)
+## The columns of the one coupling, the lifetime, the held content and the contact through the table, on 2026-09-20 (`columns` and `lifetime` per family; `held` per measured event; `columns-v1`; the `contact` record)
 
 The model owner's decision of 2026-09-20 ("one mechanism for all the laws
 on the GameBoard", [Highlights 5.4](HIGHLIGHTS.md#54-the-detector); the
@@ -127,6 +127,59 @@ columns and runs the same integer by integer (the 66 example worlds:
   `world.LIFETIME_NAME`; `MeasuredDefinition.held` (aligned with the
   families, the own amount under the own family); `NatureBeamSimulation.face_detectors()`
   ends with the border when a family declares a lifetime.
+- **The contact through the table** (the model owner, 2026-09-20, on the
+  physicist's design of the strong force, section 4.4; [BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+  (ix); [expectations](TEST_EXPECTATIONS.md#the-contact-through-the-table)):
+  no key. A body whose step on an axis is refused because the
+  destination holds another measured event has arrived at that occupant,
+  and the occupant's table entry for the body's family decides as it
+  decides for a ray: `measure` hands the body's momentum component on
+  that axis to the occupant (the body's 0, the occupant's raised by it,
+  the sum of the momenta on the measured events unchanged), `rerelease`
+  returns it (the body's component reversed, the occupant's raised by
+  twice it), `pass` and a `read` declared against the keys leave the
+  step refused and the labels as they were (the behaviour until
+  2026-09-20). **Where the entry is the keys' own rule for the body's
+  family, declared or not, the contact is `measure`** (a body arriving at
+  a body is a paid arrival, its momentum its own label, and the keys' rule
+  for a paid arrival is `measure`; `world.CONTACT_DEFAULT`,
+  `MeasuredDefinition.contact` per family: the entry's rule where it
+  differs from `default_rule`, `measure` otherwise, so that an entry equal
+  to the default changes nothing and the migration tool's trimming is
+  safe): a world that wants the accumulation as it was declares `pass`
+  for the arriving body's family on the occupant (or `read` for a paid
+  family), which is the same rule for that family's rays; on a free family
+  `read` is the keys' own and the contact stays the hand-over. A body on a
+  set of Nodes hands
+  the component apportioned whole over the occupants of its destination
+  set by their contents (`core.integer.apportion_whole`); an occupant of
+  content 0 takes nothing.
+- **The record**: `events.jsonl` gains `contact` records (the tick, the
+  body's `number`, its `node` and the destination `to`, the `occupant`,
+  the body's `family`, the occupant's `rule` for it, the `axis`, the
+  signed `component` the occupant gained and the body's `momentum`
+  after), one per occupant that took a hand-over, none under `read` or
+  `pass`; the measured events' states in `run.json` and `state.json`
+  carry `contacts`, the hand-overs taken per family of the arriving body.
+- **Which registered runs change**: of the 66 example worlds 60 are
+  byte-identical in `events.jsonl` (no body of theirs ever stepped onto
+  another); six change from the first refused step of a body on, their
+  numbers registered old against new in [validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20):
+  the coupling `1b_m1`, `1b_m4`, `1b_m16` (the free probe at the Node
+  beside its source from tick 31: until now its momentum grew under every
+  read, -2 260 249 792 on `1b_m1` at tick 200; now every refused step hands
+  the x component to the fixed source, 169 hand-overs, the probe's
+  momentum 0), Bohr `r2` and `r4` (the electron beside the proton: `r2`
+  now turns twice and leaves through face:+x at tick 688 instead of
+  face:-x at tick 254, `r4` leaves at tick 600 instead of 540) and the
+  orbit `s8_r12` (one hand-over at tick 174, the angle no longer closing,
+  out at tick 260 instead of 271). The registered entries of series C, D
+  and H keep the numbers of their date and carry a note. Every world
+  without a body arriving at a body, the Bell, slit, detector, redshift,
+  Hubble and Heisenberg worlds included, reads the same integer by
+  integer.
+- **The API**: `world.CONTACT_DEFAULT`, `MeasuredDefinition.contact`,
+  `Measured.contact` and `.contacts`, `NatureBeamSimulation._contact`.
 
 ## The names NatureBeam and GameBoard and the glossary's single names, on 2026-09-20
 
