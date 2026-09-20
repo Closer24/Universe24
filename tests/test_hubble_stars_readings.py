@@ -44,6 +44,7 @@ import importlib.util
 import json
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 
@@ -152,6 +153,29 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_declare_a_fo
     assert (
         gravity["q_bracket"][0] > expectations["crowds"]["gravity"]["derived_fits"]["300-400"]["q_fit"]
     )
+    # The worlds under the key `doppler` as well (doppler-v1, on main since
+    # PR #379) and the expectations pinned for the third run (the reading
+    # rule `flux`: the acoustic rule with the reader's speed at the grain
+    # G = 2^12, docs/designs/hubble_stars/EXPECTATION_2.md): the record
+    # worlds with the key added and nothing else changed.
+    for name, document in generator.doppler_worlds().items():
+        assert json.loads((WORLDS / "doppler" / f"{name}.json").read_text(encoding="utf-8")) == document
+        assert document["amplitude"] is True and document["doppler"] is True
+        without = {k: v for k, v in document.items() if k not in ("doppler", "model_id")}
+        record = generator.record_worlds()[name]
+        assert without == {k: v for k, v in record.items() if k != "model_id"}
+        parse_nature_beam_world(document)
+    flux = json.loads((WORLDS / "doppler" / "expectations.json").read_text(encoding="utf-8"))
+    assert flux["format"] == generator.EXPECTATIONS_FORMAT and flux["reading_rule"] == "flux"
+    assert flux["step_burst_max"] == 1
+    acoustic_q = expectations["crowds"]["gravity"]["derived_fits"]["300-400"]["q_fit"]
+    assert abs(flux["crowds"]["gravity"]["derived_fits"]["300-400"]["q_fit"] - acoustic_q) < 0.002
+    assert 0.24 < flux["crowds"]["gravity"]["derived_fits"]["300-400"]["q_fit"] < 0.25
+    assert generator.quantised(26 / 90) == 1183 / 4096 and generator.quantised(-26 / 90) == -1183 / 4096
+    # The tool names a run under the key by its folder.
+    assert TOOL.Run.prefix.fget(SimpleNamespace(under_doppler=True, under_record=True)) == "doppler/"
+    assert TOOL.Run.prefix.fget(SimpleNamespace(under_doppler=False, under_record=True)) == "record/"
+    assert TOOL.Run.prefix.fget(SimpleNamespace(under_doppler=False, under_record=False)) == ""
 
 
 def test_read_run_reads_the_record_and_the_engines_world(tmp_path):

@@ -1602,15 +1602,17 @@ before the first run:
   live momentum after the first group, 5, w 296, would give 56), the
   momentum after the interval -22, the set (4, 0, 0), (4, 0, 1),
   (4, 0, 2); without the key -64 each.
-- (h) the registered G2 star world `tests/data/g2_gravity_scalar.json`
-  (the reviewer's copy of `examples/events/hubble_stars/gravity_scalar.json`
-  on `claude/series-g2-stars`: 24 free stars of content 2^22 + 4096 at
-  width 2^20, one detector) parses with `doppler` true and the identity
+- (h) the registered G2 star world
+  `examples/events/hubble_stars/gravity_scalar.json` (the example's own
+  path; the reviewer's temporary copy `tests/data/g2_gravity_scalar.json`
+  was deleted when series G2 merged doppler-v1, MIGRATION: 24 free stars of
+  content 2^22 + 4096 at width 2^20, one detector) parses with `doppler`
+  true and the identity
   and runs 20 intervals without a refusal, its books balanced and a star
   pushed. Its table is the eight headings, where the flux equals the
   heading pair, so (h) is the stars' fit and not the fan's integers,
-  which rest on (f); the copy is temporary, and series G2's merge
-  replaces it by the example's path (one canonical copy per world).
+  which rest on (f); the temporary copy is gone since series G2's merge
+  of doppler-v1 (one canonical copy per world).
 
 ## The age
 

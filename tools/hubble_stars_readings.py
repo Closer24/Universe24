@@ -235,6 +235,7 @@ class Run:
     crowd: str
     clock: str
     under_record: bool
+    under_doppler: bool
     ticks: int
     completed: bool
     balanced: bool
@@ -249,8 +250,14 @@ class Run:
     fits: dict[tuple[int, int], Fit] = field(default_factory=dict)
 
     @property
+    def prefix(self) -> str:
+        """The folder of the world: `doppler/` under the key `doppler` (with
+        `amplitude`), `record/` under `amplitude` alone, none otherwise."""
+        return "doppler/" if self.under_doppler else "record/" if self.under_record else ""
+
+    @property
     def name(self) -> str:
-        return f"{'record/' if self.under_record else ''}{self.crowd}_{self.clock}"
+        return f"{self.prefix}{self.crowd}_{self.clock}"
 
 
 def axis_of(momentum: list[int]) -> tuple[int, int]:
@@ -268,6 +275,10 @@ def read_run(folder: Path) -> Run:
     # `rays-hubble-stars-record-<crowd>-<clock>-space-v1`) the `record`
     # lines are per record and the reading comes from the gather lines.
     under_record = parts[0] == "record"
+    # Under the key `doppler` as well (doppler-v1, the model id
+    # `rays-hubble-stars-record-doppler-<crowd>-<clock>-space-v1`) the
+    # reading is the same; the stars' pushes are weighted on the GameBoard.
+    under_doppler = "doppler" in parts[:-2]
     crowd, clock = parts[-2], parts[-1]
     table = flight_table(tuple(tuple(v) for v in record["directions"]))
     heading = np.array([HEADING_OFFSET])
@@ -335,6 +346,7 @@ def read_run(folder: Path) -> Run:
         crowd=crowd,
         clock=clock,
         under_record=under_record,
+        under_doppler=under_doppler,
         ticks=int(record["completed_ticks"]),
         completed=record["status"] == "completed",
         balanced=bool(record["conserved_at_every_completed_tick"]),
@@ -555,7 +567,10 @@ def find_runs(root: Path) -> list[Run]:
             found.append(read_run(path.parent))
     order = {"coasting": 0, "gravity": 1, "double": 2}
     clocks = {"none": 0, "scalar": 1, "age": 2}
-    return sorted(found, key=lambda r: (r.under_record, order.get(r.crowd, 9), clocks.get(r.clock, 9)))
+    return sorted(
+        found,
+        key=lambda r: (r.under_record, r.under_doppler, order.get(r.crowd, 9), clocks.get(r.clock, 9)),
+    )
 
 
 def load_expectations(path: Path) -> dict[str, object]:
@@ -702,7 +717,7 @@ def judge_fit(
 
 def print_bends(runs: list[Run], window: tuple[int, int]) -> None:
     by_name = {r.name: r for r in runs}
-    for prefix in ("", "record/"):
+    for prefix in ("", "record/", "doppler/"):
         for crowd in ("coasting", "gravity", "double"):
             scalar, age = by_name.get(f"{prefix}{crowd}_scalar"), by_name.get(f"{prefix}{crowd}_age")
             if scalar is None or age is None:
@@ -902,20 +917,20 @@ def main(argv: list[str] | None = None) -> int:
         print_bends(runs, window)
     ordering = expected.get("ordering")
     if isinstance(ordering, dict):
-        for under_record, clock in [(u, c) for u in (False, True) for c in ("none", "scalar", "age")]:
+        for prefix, clock in [
+            (p, c) for p in ("", "record/", "doppler/") for c in ("none", "scalar", "age")
+        ]:
             by_crowd = {
                 run.crowd: run.fits[REGISTERED_WINDOW].q_fit
                 for run in runs
-                if run.clock == clock
-                and run.under_record == under_record
-                and REGISTERED_WINDOW in run.fits
+                if run.clock == clock and run.prefix == prefix and REGISTERED_WINDOW in run.fits
             }
             crowds = [c for c in ordering["crowds"] if c in by_crowd]
             if len(crowds) < 2:
                 continue
             gaps = [by_crowd[b] - by_crowd[a] for a, b in zip(crowds, crowds[1:], strict=False)]
             ok = all(gap > float(ordering["minimum_gap"]) for gap in gaps)
-            tag = f"{'record/' if under_record else ''}{clock} clocks"
+            tag = f"{prefix}{clock} clocks"
             criteria.append(
                 (
                     f"{tag}: q in the order {' < '.join(crowds)} with every gap above "
@@ -939,6 +954,7 @@ def main(argv: list[str] | None = None) -> int:
                     "crowd": run.crowd,
                     "clock": run.clock,
                     "under_record": run.under_record,
+                    "under_doppler": run.under_doppler,
                     "completed": run.completed,
                     "balanced": run.balanced,
                     "elapsed": run.elapsed,

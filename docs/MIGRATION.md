@@ -46,10 +46,12 @@ without the key.
   on the headings). The registered G2 star worlds fit as registered (the
   weighted flow's product 2^29, today's push 2^34) and one of them runs
   under the key in `tests/test_doppler.py` (h) from
-  `tests/data/g2_gravity_scalar.json`, a temporary copy of
-  `examples/events/hubble_stars/gravity_scalar.json` of the series G2
-  branch that G2's merge replaces by the example's path (one canonical
-  copy). The first build's per-axis
+  `examples/events/hubble_stars/gravity_scalar.json` (the example's own
+  path). Deleted on the series G2 branch when it merged doppler-v1
+  (2026-09-20): `tests/data/g2_gravity_scalar.json`, the reviewer's
+  temporary copy of that world, byte-identical to it; the hygiene gate
+  keeps one canonical copy of every nonempty file, and the test reads the
+  example. The first build's per-axis
   pair, its load check of the pair (`_doppler_load_checks`,
   `relative_speed_bound`, `axis_pace`, `FlightTable.pace`) and its
   "per-direction floors only on an axis where the reader moves" rule
