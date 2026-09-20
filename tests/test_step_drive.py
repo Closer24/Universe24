@@ -73,9 +73,14 @@ written down before the first run:
     content 8388608 at rate [1, 1] on +y beside the proton and a control
     lamp at (10, 10, 16), each read by a `sum` set of one Node four Links
     up +y): over 3000 intervals neither nucleon makes a step (every
-    attempted step a hand-over; the drive as it was stepped the neutron
-    away after the contact handed it the proton's component), the books
-    balanced at every tick.
+    attempted step a hand-over; under the unsigned drive the same world
+    holds for 2092 intervals and the neutron steps to (12, 10, 10) at
+    tick 2093 with a positive momentum, the |p| it had accumulated toward
+    the proton discharged away from it, the physics-rule reviewer's
+    measurement on main), the books balanced at every tick; the hold is
+    the rule's consequence given the pair's symmetry (the pushes exact
+    mirrors, a hand-over zeroing both, the neutron's signed drive never
+    above 0), not a theorem for every pair.
 """
 
 from __future__ import annotations

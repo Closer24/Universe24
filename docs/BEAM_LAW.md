@@ -518,12 +518,15 @@ order with each step's inverse:
    chooses how slow its slowest motion is; every step registered before
    the label's scale is the same step, `by_clock(age, Q n, Q k) =
    by_clock(age, n, k)`. Since 2026-09-20 (note 17 as amended, the step
-   drive) the count is the whole part of the distance the momentum has
-   driven, kept on the body's record as `drive` per axis (`drive += |p|`
-   at every self-creation in which it may step, one Link and `drive -=
-   Q x S x M + |p|` at or beyond it), the same integers at a constant
-   momentum as the whole part off the clock (implementation notes 15 and
-   17; `tests/test_push_width.py`, `tests/test_step_drive.py`).
+   drive) the count is the whole part of the SIGNED distance the momentum
+   has driven, kept on the body's record as `drive` per axis (`drive +=
+   p` at every self-creation in which it may step, one Link on the + side
+   and `drive -= Q x S x M + |p|` at or beyond +D, one Link on the - side
+   and `drive += Q x S x M + |p|` at or beyond -D; signed since record
+   126 of the same day, the first form's `|p|` being history), the same
+   integers at a momentum of one sign as the whole part off the clock
+   (implementation notes 15 and 17; `tests/test_push_width.py`,
+   `tests/test_step_drive.py`).
 6. **The border `lifetime`; then merge identical rows and sort by Node.**
    Since 2026-09-20 (note 31 (vii)) every row of a family with a
    `lifetime` whose whole age is at or beyond it after this interval's

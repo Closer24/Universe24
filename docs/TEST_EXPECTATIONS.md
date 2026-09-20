@@ -1142,7 +1142,8 @@ DESIGN.md test (f) and section 4.4):
   `g` row as +8064 (gravity +320, strong +7744), the push +128 toward the
   other, (Q^2 - G^2 - M^2) x (-64); under the contact and the step drive
   (2026-09-20, [below](#the-step-drive): D = 320 + |p| on the content 5,
-  the drive gaining |p| at every self-creation) the momentum of p1 over
+  the drive gaining p at every self-creation, signed since record 126,
+  one sign here) the momentum of p1 over
   ticks 2 .. 8 reads 128, 256, 0, 0, 128, 0, 128 (the mirror on p2): p1's
   drive 128, 384, 768 >= 704 fires at tick 4 and hands 384; p2's drive
   128, 384, then nothing at tick 4 (its label 0 at its turn), 512 >= 448
@@ -1449,7 +1450,7 @@ expected integers, written down before the first run:
   39, by the drives at the two ends), where the rule as it was made
   floor(400 x 32 / 8224) = 1; no stall longer than 257 intervals
   (ceil(8224 / 32)), the smallest momentum's own period; the drive within
-  [0, D) after every interval.
+  [0, D) after every interval (one sign: the signed drive never negative).
 - (c) never two Links in one interval: content 3, width 4, a 41^3
   periodic cube with `age_bound` 64, the momentum on every axis drawn at
   every interval from `random.Random(20260920)` in [-(D - 1), D - 1] with
@@ -1485,8 +1486,13 @@ expected integers, written down before the first run:
   `counter` Node four Links up +y: over 3000 intervals no `step` record
   (the nucleons at (10, 10, 10) and (11, 10, 10) throughout), every
   attempted step a `contact` (their count the two bodies' `steps`), the
-  books balanced; under the first form the neutron stepped away after
-  the contact handed it the proton's component.
+  books balanced; under the first form the same world holds for 2092
+  intervals and the neutron steps to (12, 10, 10) at tick 2093 with a
+  positive momentum (the physics-rule reviewer's measurement on main:
+  the |p| accumulated toward the proton discharged away from it). The
+  hold is the rule's consequence given the pair's symmetry (mirror
+  pushes, a hand-over zeroing both, the neutron's signed drive never
+  above 0), not a theorem for every pair.
 
 ## The age
 
