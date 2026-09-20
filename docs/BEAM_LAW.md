@@ -1118,9 +1118,17 @@ implementation's part of the contract. The design above is unchanged.
     `tests/test_nature_beam_clock.py` (d), `tests/test_paid_charge.py` (d)
     and `tests/test_nucleus_readings.py`, each one self-creation later
     than the count off the clock stepped it (a body that receives a
-    momentum begins its drive at 0 instead of stepping off its age). "No
-    remainder is kept" above stands for the clock, the release, the lamp
-    and the owed count, which read a rate against an age no push changes.
+    momentum begins its drive at 0 instead of stepping off its age). The
+    exemption that stood here until the fraction-free law of 2026-09-20
+    ("'No remainder is kept' above stands for the clock, the release, the
+    lamp and the owed count, which read a rate against an age no push
+    changes") held only at a constant rate: a paid lamp's rate falls at
+    every birth and the crowd a clock reads on a fan changes at every
+    interval, so on the register the remainder of those counts was
+    discarded undeclared (the physics-rule reviewer, record 148). Since
+    note 41 below every count keeps its remainder on the body's
+    record, and `by_clock` off the age is the constant-rate identity of
+    that count, not a count of its own.
 18. **The one label; no collision at a measured event's Node** (the
     physics-rule reviewer's F1, blocking, and the model owner's decision on
     its case (c), the night of 2026-09-19; `tests/test_nature_beam_push.py` (h),
@@ -3146,3 +3154,123 @@ implementation's part of the contract. The design above is unchanged.
     give; the give removes it. Not checked on the engine before the run:
     the exact tick of the first contact (about 16 from the drive's
     arithmetic, met exactly), the alpha line's inner gives.
+
+41. **The fraction-free law: every count an
+    accumulator on the reader's record** (the model owner's records 147
+    and 148 of 2026-09-20; the mathematician's read-only
+    `docs/designs/fraction_free/FORM.md` (its section 1's claim corrected
+    by record 148: on the register no lamp and no crowd on a fan runs at
+    a constant rate); the physics-rule reviewer's read-only
+    `docs/designs/fraction_free/REVIEW_COUNTS.md`; `core.integer.by_drive`,
+    `engine.count_owed`, `engine._frame_all`, `engine._suspend`,
+    `nature_beam.push_form`, `nature_beam.weighted_flow`, the lamp and the
+    release in `nature_beam`, `amplitude.cell_of`; `Measured.acc_*`;
+    `tests/test_fraction_free.py` (a) to (f); the register re-registered
+    in one batch, MIGRATION "The fraction-free law"). No new identity: an
+    integer form of the same counts under `beam-v1`.
+    (i) **The one primitive.** Every count of a body is `by_drive` on one
+    bounded integer of the body's own record: the accumulator gains the
+    count's rate at the self-creation, the count is the whole part it
+    then holds in units of the count's denominator, that much is
+    subtracted, and the remainder stays below the denominator, its one
+    owner (the local integer operation contract's "declare the remainder
+    owner"), nothing at a Node. The counts and their records: the owed
+    count `acc_owed` (the rate `counted x n` at `suspension` [n, d],
+    below d; `count_owed`), the free release `acc_release` per family
+    (the rate `held x n` at `release` [n, d], below d), a lamp's rate
+    `acc_lamp` (below d of `rate`), the turn `acc_turn` (the rate
+    `content x n` at K = [n, d], below d; the phase is the turn's count
+    mod N as before), the push per column and axis `acc_push` (below
+    Lambda_c^2, (iv)), the doppler weight per direction and axis
+    `acc_flow` (below G Q |v_d|^2, (iv)) and the step's `drive` as note
+    17 built it. `by_clock(age, n, d)` is the constant-rate identity: from
+    an empty accumulator at age 0 and a rate of one sign the two give the
+    same integers at every self-creation and the accumulator holds `(age
+    n) mod d` (FORM.md section 1, proved; test (a) on every count over
+    10^4 self-creations). What remains read off an age is a key (`ages_at_key`:
+    the lifetime, the age bound, the clock trigger; a comparison, no
+    rate), the rows' phase per interval of age (`by_clock_rows`: a ray's
+    rate is its family's `phase_per_link`, a constant over its flight, so
+    the identity's case, with no record to hold an accumulator) and the
+    turn by momentum under `action` (the phase steps off
+    the Links stepped, `by_clock(k0, |p| N, h)`, note 30), left as built
+    and named here as the one count whose rate a push changes that is
+    not yet an accumulator (a decision of the model owner, not taken in
+    this note).
+    (ii) **Why the count of a changing rate is the accumulator's** (the
+    physics-rule reviewer's reading, record 148). Under E = h f the turn
+    is the lamp's frequency, `content x n / d` per self-creation, and the
+    number of turns a clock has made is the whole part of the integral of
+    its frequency over its history, which the accumulator holds and
+    nothing else; `by_clock` at the current rate re-prices the whole age
+    at today's rate, a history that never happened, and its drift has no
+    bound (on the Bell lamp of content K + 2, paying 2 per birth: +1 turn
+    in 160 births, +9 in 20 000, +1089 in 200 000). Every registered lamp
+    pays at every birth (its frequency falls) and every clock on a fan
+    reads a crowd that changes at every interval (the deuteron's rows
+    dwell 1 or 2 intervals: 128 800 and 104 880 at the proton), so the
+    "constant rate" that made the two forms bit-identical held on no
+    registered lamp and no crowd; the owed count is then the integral of
+    the potential along the clock's history (note 25), not `age x k_now /
+    d`: on `weak/j3_deuteron` 69 intervals waited of 700 in place of 80,
+    the same on both nucleons, the verdict BOUND unchanged, the neutron
+    firing at 568 (577) and its beta clicking the shell at 581 (590) with
+    the same content at the same Node.
+    (iii) **The one discarded count.** A lamp's accumulator advances at
+    every self-creation of the lamp; a self-creation whose turn is 0 (a
+    stall: the clock's accumulator short of one turn) or whose phase
+    falls outside the lamp's window births nothing, and the count the
+    lamp's accumulator gained there is taken out and lost, as the count
+    off the clock was unread at such a self-creation; not banked for a
+    later self-creation (a window is a gate on the clock's phase, not a
+    queue; a declared choice, `nature_beam` at the lamp's count).
+    (iv) **The push and the doppler weight.** Per column c the rate `V x
+    E_c n_c / (D_c d_c)` is lifted to the column's one denominator
+    Lambda_c^2, Lambda_c the least common multiple of the families'
+    value denominators in the column (`world.column_scales`: every
+    reader's charge denominator D_c and every arriving value's d_c divide
+    it), and counted on `acc_push[c][axis]`, signed as the drive is (a
+    reversed flow first cancels what it had accumulated), below
+    Lambda_c^2 in magnitude; Lambda is 1 on gravity and on charge wherever
+    the charges are whole (every registered world but the series 7 pair),
+    where the push was exact already and does not move. The lifted
+    product is tested by division before it is formed and refused naming
+    the column (`test_columns` (a): a refusal of its own where |V E n|
+    Lambda^2 / (D d) does not fit the register with coprime denominators
+    of 30 bits, never elsewhere). Under `doppler` the weighted flow of
+    each direction is counted on `acc_flow[d][axis]` at the denominator G
+    Q |v_d|^2 (one accumulator per direction: the directions' denominators
+    have no common multiple within the register on a fan of a few hundred
+    directions), so the split over the directions is a sum of whole parts
+    each exact on its own record. Per interval the count differs from the
+    floor off the clock by at most one label unit per column, axis and
+    interval, and the sum over any period is the whole part of the sum of
+    the numerators exactly (FORM.md section 2; tests (b), (d), (e): 396672
+    on the doppler bar for 396673, the remainder below G Q at every tick;
+    the fan at rest bit-identical to the unweighted push).
+    (v) **The ladder at the click.** The cell of a record's u is the first
+    k with `2 T u + T <= 2 N C_k`, the comparison of two products
+    (`amplitude.cell_of`), which is `u < b_k` with the rung `b_k = (2 N
+    C_k + T) // (2 T)` at the nearest integer: no division, the same
+    integers, the rungs a report on the gather line (test (f) on every
+    gather of the keyed worlds and on random ladders); the click's
+    rounding is the nearest-integer rung, declared, once per record.
+    (vi) **The record.** `state.json` and `run.json` carry the
+    accumulators per measured event under `acc` by name (`owed`,
+    `release`, `lamp`, `turn`, `push` per column, `flow` under the key),
+    beside `drive`; a run resumed from a state is the unbroken run in
+    every record (test (c)); a declared `acc` in a world file is refused.
+    (vii) **The alignment of a lamp's births with the ticks.** A paid lamp
+    of content K + c (T - 1) or more keeps one birth per interval over T
+    intervals; below that its exact clock stalls where its content has
+    fallen below K (the Bell lamps of content K + 2, paying 2 per birth,
+    once at tick 4; the L worlds' at tick 3), so the tick of a birth is
+    not the age of the lamp's clock, and a pair is read by its record
+    (the birth ordinal, `record` and `u` on every click and pass line),
+    never by a tick window or a tick offset. S = 176/64 on the CHSH
+    labels, the cells, the choosers' fifteen E and S = 156/64, the
+    Mach-Zehnder ports and the GHZ triples do not depend on the
+    alignment: a click is a function of the record's u and the settings
+    alone, the same integers read by ordinal on both counts (the
+    reviewer's `pair_by_ordinal.py`; `tools/bell_chsh.py`,
+    `tools/bell_choosers.py`, `tests/test_amplitude_pair.py`).

@@ -182,11 +182,14 @@ moved one after another in number order, a declared tie: when two bodies
 step in one interval and one's destination is the other's Node, the lower
 number steps first, [BEAM_LAW note 31 (ix)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
 for every measured
-event, its clock (its age, the turn `by_clock(age, content x n, d)` at the
-clock's rate `K` = [n, d], an integer K being [1, K] (`NatureBeamWorld.turn`;
-the four unifications (2), 2026-09-20: the turn is the free release's own
-form at the rate [1, K], `by_clock_rows` over the phased events in one
-array), its
+event, its clock (its age, the turn, the count of its accumulator `acc_turn`
+at the rate `content x n` over d, the clock's rate `K` = [n, d], an integer K
+being [1, K] (`NatureBeamWorld.turn`; the four unifications (2), 2026-09-20:
+the turn is the free release's own form at the rate [1, K]; since the
+fraction-free law of the same day, [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+every count of the clock is `by_drive` on the body's own accumulator, the
+same integers as `by_clock(age, content x n, d)` at a constant content
+from age 0), its
 release rate, its lamp's rate and window, its owed count) and its content
 (`frame_content`, read once before the law: M_A of the interval's push,
 the same whatever the order in which the families' clicks join `held`
@@ -196,8 +199,9 @@ are read and handed to `nature_beam` with the stores; `nature_beam` returns the 
 `per_port`, the amount that crossed into each Node through each Port this
 interval, a diagnostic of the walk for Gauss's flux); the frame turns the
 phases of the measured events that
-self-created, reads the owed count off the clock from what the clock
-counted (`_suspend`, `by_clock(age, k x n, d)`, k the presence, or for a
+self-created, reads the owed count as the count of the body's accumulator
+`acc_owed` at the rate k x n over d from what the clock
+counted (`_suspend`, `count_owed`; the same integers as `by_clock(age, k x n, d)` at a constant crowd, k the presence, or for a
 family whose table entry reads `age` the age moment `sum amount x age`
 over the same set, `measured.count_component`, `Measured.counted`;
 [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),

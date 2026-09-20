@@ -80,6 +80,12 @@ denominators. Exact-division operators must reject a zero divisor or a nonexact
 result. A rule that permits division with remainder must declare the existing
 bounded remainder owner, update and lifetime; do not silently discard a remainder,
 round through floating point, wrap overflow or clamp a failed calculation.
+In the Beam Law the owner of every count's remainder is the accumulator on
+the body's own record ([BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation), the
+fraction-free law of 2026-09-20; `core.integer.by_drive`): a whole part
+off the clock at the current rate discards the remainder of a changing
+rate, so it is admitted only as the constant-rate identity of a count, or
+as a comparison of an age against a key.
 Keep documented integer split/quantization policies explicit and test their
 accounting. Arithmetic failure must not leave a partially committed transaction.
 

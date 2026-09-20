@@ -61,14 +61,23 @@ fraction-free counts"), written down first:
     (`test_doppler` (b) and (f), `test_nature_beam_push` (k)); the
     primitive on 10^4 random rates below the denominator keeps an unsigned
     accumulator in [0, d) and a signed one in (-d, d), with `at_most` 1
-    and without.
+    and without;
+(f) the ladder at the click as the comparison of products
+    (`amplitude.cell_of`, the first k with 2 T u + T <= 2 N C_k) equals
+    the rungs' cell (`choose` on `rungs`) for every u on 2000 random
+    ladders (up to 8 cells, weights up to 2^20 over multiplicities up to
+    64, N 64 and 256; an empty ladder None) and on every gather of
+    `mz_equal`, `mz_345`, `bell_0_8` and `slits_low` (the chosen cell's
+    index in the gather's `cells` the comparison's).
 """
 
 from __future__ import annotations
 
+import importlib.util
 import io
 import json
 import random
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -76,12 +85,14 @@ import pytest
 
 from event_universe.core.integer import by_clock, by_drive
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
+from event_universe.events.amplitude import cell_of, choose, rungs
 from event_universe.events.engine import count_owed, step_axis
 from event_universe.events.nature_beam import NO_ARRIVAL
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import LABEL_SCALE, body_nodes
 from event_universe.snapshot_writer import write_snapshot
 
+ROOT = Path(__file__).resolve().parents[1]
 Q = LABEL_SCALE
 INTERVALS = 10_000
 RATES = [
@@ -414,3 +425,46 @@ def test_every_accumulator_stays_below_its_denominator():
         momentum = draw.choice((-1024, -7, 7, 1024))
         _, drive = step_axis(drive, momentum, 16, 8)
         assert abs(drive) < Q * 8 * 16 + abs(momentum)
+
+
+def test_the_ladders_cell_is_the_comparison_of_products():
+    """(f)."""
+    draw = random.Random(2026_09_20)
+    for _ in range(2000):
+        steps = draw.choice((64, 256))
+        weights = [
+            (draw.randrange(0, 1 << 20), draw.randrange(1, 65)) for _ in range(draw.randrange(1, 9))
+        ]
+        ladder, total = rungs(weights, steps)
+        for u in range(steps):
+            assert cell_of(weights, steps, u) == choose(ladder, u) if total[0] else None
+    assert cell_of([(0, 1), (0, 3)], 64, 5) is None and rungs([(0, 1), (0, 3)], 64)[1] == (0, 1)
+    spec = importlib.util.spec_from_file_location(
+        "amplitude_make_worlds_ff", ROOT / "examples" / "events" / "amplitude" / "make_worlds.py"
+    )
+    assert spec is not None and spec.loader is not None
+    generator = importlib.util.module_from_spec(spec)
+    sys.modules["amplitude_make_worlds_ff"] = generator
+    spec.loader.exec_module(generator)
+    worlds = {
+        "mz_equal": generator.mach_zehnder("mz_equal"),
+        "mz_345": generator.mach_zehnder("mz_345", splitter=generator.PYTHAGOREAN_5),
+        "bell_0_8": generator.pair_worlds()["bell_0_8"],
+        "slits_low": generator.two_slits_low(),
+    }
+    for name, world in worlds.items():
+        simulation = NatureBeamSimulation(parse_nature_beam_world(world))
+        for _ in range(int(world["ticks"])):
+            simulation.step()
+        assert simulation.layer is not None
+        gathers = simulation.layer.gathers
+        assert gathers, name
+        # The layer chose the cell by the comparison (`cell_of`); the
+        # gather reports the rungs: the rungs' cell of u is the chosen one.
+        for gather in gathers:
+            cells = gather["cells"]
+            assert isinstance(cells, list) and gather["chosen"] is not None, name
+            ladder = [int(cell[1]) for cell in cells]
+            chosen = [k for k, cell in enumerate(cells) if cell[0] == gather["chosen"]]
+            assert len(chosen) == 1, (name, gather["record"])
+            assert choose(ladder, int(gather["u"])) == chosen[0], (name, gather["record"])

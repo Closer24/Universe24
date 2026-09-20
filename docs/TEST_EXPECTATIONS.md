@@ -1680,8 +1680,22 @@ primitive). The integers, written first:
   `light` measuring one unit per interval at `suspension` [1, 4]
   (`acc_owed` = age mod 4, the age 8000 and 2000 intervals waited), a lamp
   at rate [1, 3] (`acc_lamp` = age mod 3, 3333 births);
+- (b) the sum over a period equal to the whole part of the sum of the
+  numerators on a varying flow (stage 2, the push and the doppler weight):
+  `tests/test_doppler.py` (b), the bar as posed with rows of 64 under the
+  key gives 396672 over 200 reads (396673 off the clock, the sum of 200
+  floors each with its remainder discarded), the body's flow accumulator
+  below G Q at every tick and G Q x 396672 + the accumulator equal to the
+  sum of the 200 fluxes exactly, the push's accumulators 0 (gravity and
+  charge at Lambda 1, the probe column's rate whole); and
+  `tests/test_nature_beam_push.py` (k), the reader's charge accumulator at
+  Lambda = lcm(5, 4) = 20: by_clock(tick - 8, 1280, 25) per read from the
+  empty accumulator at its first read and 1177 = floor(23 x 1280 / 25)
+  over the 23 reads (1178 off the clock from the age 7), the accumulator
+  23 x 1280 x 16 mod 400 at the end;
 - (c) the accumulators in `state.json` and `run.json` under `acc` by name
-  (`owed`, `release` per family, `lamp`, `turn`) beside `drive`: on a bar of
+  (`owed`, `release` per family, `lamp`, `turn`, `push` per column, `flow`
+  per direction under `doppler`) beside `drive`: on a bar of
   a source of `m` (content 3, 3 units per self-creation on +X), a probe of
   `light` (content 1) measuring them at `suspension` [1, 4], a turning body
   of `light` (content 3, K = [3, 8]) and a mover of `light` (content 16,
@@ -1694,11 +1708,30 @@ primitive). The integers, written first:
   the unbroken one at every one of the ticks 21 to 40 in every state and
   record; resumed with the accumulators emptied it differs; a declared
   `acc` refused as an unknown key;
+- (d) the per-direction split equal to the whole on a fan at rest:
+  `tests/test_doppler.py` (f), the fan reader at rest under the key reads
+  the same records as without it and its flow accumulators stay 0; at
+  w_y = 1 (the momentum (11648, 19584, 4352) after two reads of 64) the
+  third read's count is each direction's whole part from the empty
+  accumulator, (5821, 9787, 2175) (9788 on y off the clock at the age 2),
+  every accumulator the remainder below its denominator;
 - (e) the bound at every one of 2000 ticks on the worlds of (a): `acc_owed`
   below 4, `acc_release` below 10, `acc_lamp` below 3, `acc_turn` below 8,
-  the drive below D; `count_owed` on 10^4 random presences keeps its
-  accumulator in [0, d); the step's drive under a momentum reversing at
-  random stays within D.
+  the drive below D; the push's accumulators below Lambda_c^2 and the
+  flow's below G Q |v_d|^2 at every tick (`test_doppler` (b), (f),
+  `test_nature_beam_push` (k)); `count_owed` on 10^4 random presences keeps
+  its accumulator in [0, d); the step's drive under a momentum reversing at
+  random stays within D;
+- (f) the ladder at the click as the comparison of products
+  (`amplitude.cell_of`: the first k with 2 T u + T <= 2 N C_k) equals the
+  rungs' cell (`choose` on `rungs`) for every u on 2000 random ladders (up
+  to 8 cells, weights up to 2^20 over multiplicities up to 64, N 64 and
+  256, an empty ladder None) and on every gather of `mz_equal`, `mz_345`,
+  `bell_0_8` and `slits_low` (the chosen cell's index the comparison's);
+  `test_columns` (a) re-pinned: the column's count over the one
+  denominator Lambda^2 with the accumulator seeded as `age` reads leave
+  it, the same integers, and a refusal of its own where the lifted product
+  does not fit the register (coprime denominators of 30 bits).
 
 Re-pinned under the exact count, the old integers kept as history in each
 module's docstring (the whole part off the clock at the current rate
