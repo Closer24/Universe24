@@ -120,11 +120,41 @@ the nucleus, Bohr, the Hubble diagram. Not claimed: a derivation of
 quantum mechanics; a continuum limit; spin, polarization, bosons, fermions;
 Lorentz; the norm's exact conservation on the lattice (section 10).
 
-The two alternatives the owner may prefer instead: (A) the mechanism alone,
+The two alternatives the owner may prefer instead (ranked with the rest in
+1.4): (A) the mechanism alone,
 without the comparison with nature's S (Born, interference, exact
 marginals, GHZ, the finite-N bound as a theorem), a shorter and safer
 paper that predicts nothing; (B) the recommendation as recorded, which
 this plan cannot support on points (b) and (c) and would not write.
+
+### 1.4 The candidate claims ranked by safety and by ease (the owner's request of 2026-09-20, relayed by the Boss session)
+
+Safety: what is proved or measured today and defensible against a hostile
+referee. Ease: what already exists in the register and in the two
+submitted papers, the least new work. Ranked 1 (best) to 4.
+
+| Claim | Proved or measured today | New work | The referee's attack | Safety | Ease |
+| --- | --- | --- | --- | --- | --- |
+| C4 "Bell's assumption is a measurement in the model": a local integer engine with the settings chosen by GameBoard events gives S = 2 exactly, every E on the triangle, the marginals 1/2, no superdeterministic correlation (A2, A2 with the choosers, control 3 seeing a built-in one), with the law's registered limits beside it (no single-click build-up under the amount reading, light not bent without the meeting) | everything: registered runs with fingerprints, exact integers, the causal anatomy of paper 1 | none on the engine; the writing, the figures from existing runs | "a negative result about a model no one else uses; paper 1 already has S = 2 for the local candidates"; answer: the choosers on the GameBoard and the measured superdeterminism control are new, and the limits are stated so they can fail | 1 | 1 |
+| C3 (alternative A of 1.3) the click model's mechanism alone: Born from the uniform u, the integer Mach-Zehnder, exact marginals and no-signalling (T3), GHZ's exact zeros, T1, T2, and T4's two-sided bound with S(N) tabulated, no comparison with nature's S | the theorems are provable now (T3's tie case and T4's constant to finish); the integers are the design's checks, becoming measured when `amplitude-v1`'s runs are registered | the runs of the acceptance table (in flight), the proofs, the draft | "a non-local click is Bohm with extra steps; the tables' unitarity is only approximate; nothing is predicted"; answer: the non-locality is stated as forced by Bell, the residual is measured, and the prediction is left to C2 | 2 | 3 |
+| C2 (the claim of 1.3) C3 plus the finite-N Bell value as a prediction: S(N) above Tsirelson for about half the N, and the set of admissible N from Poh et al. | as C3, plus `checks/s_of_n.txt` (a computation, exact) | as C3, plus the run points at N = 64, 1024, 2048, the exact c_T, the comparison written with its assumptions | "why would nature's pairs be this model's pairs at any N; a no-signalling box beyond quantum mechanics is refuted in advance by every precision Bell test unless N is a power of two, which is a tuning"; answer: the claim is falsifiable and the excluded N are stated, but the referee's point stands as a risk | 3 | 4 |
+| C1 the recommendation as recorded (S below Tsirelson at every N, epsilon <= 4/N, N >= about 4000) | contradicted by the computation (1.2 (b), (c)) | none that could rescue it | "false on the model's own numbers" | 4 | not applicable |
+
+The judgement, stated plainly. The safest claim and the easiest claim are
+the same, C4: it needs no run that does not exist, every number in it is
+registered, and no sentence in it can be shown false; its weakness is
+that it is small, a measurement of an assumption and a list of limits,
+and a referee may call it a note. Among the claims that need
+`amplitude-v1`, the safest is C3 and the one with the physics is C2; the
+distance between them is one section (the comparison with Poh et al.) and
+one risk (the referee's attack on C2, which cannot be argued away, only
+stated). This plan recommends C2 written so that C3 survives if the
+comparison is struck out by a referee, and C4 folded into it as the
+"before" (the result of the amount reading that the click's reading
+replaces); if the owner wants the paper out before `amplitude-v1`'s runs
+exist, C4 is the paper that can be written today. The structure that
+makes any of these safe is section 12: one claim as the result, everything
+else a hypothesis with its status.
 
 ## 2. A new paper 3, not a revision of paper 1
 
@@ -509,13 +539,14 @@ journal with an article processing charge.
    design's table and this plan's computation; note every departure.
 3. Write `paper/click_model/main.tex` in the style and macros of
    `paper/main.tex` (article, 11pt, the same packages and hypersetup,
-   `thebibliography`): abstract within arXiv's 1920 characters;
-   introduction; the model (section 3 of this plan as two pages); the
-   theorems with proofs (section 4); the measurements (the tables from the
-   register, each row with its entry); the comparison with the Bell
-   experiments (the set of admissible N); the literature (section 5); what
-   is new; what is not claimed (section 10); reproducibility; the AI
-   paragraph; the bibliography. `figures.py` and the figures from the
+   `thebibliography`) and in the structure of section 12: abstract within
+   arXiv's 1920 characters; introduction; the model (section 3 of this
+   plan as two pages); the theorems with proofs (section 4); the
+   measurements (the tables from the register, each row with its entry);
+   the comparison with the Bell experiments (the set of admissible N); the
+   literature (section 5); what is new; what is not claimed (section 10);
+   the hypotheses of the program with their status (section 12);
+   reproducibility; the AI paragraph; the bibliography. `figures.py` and the figures from the
    summaries. The number-to-register table beside the draft.
 4. The hostile referee: the physics-rule reviewer skill
    (`skills/physics-rule-validation/SKILL.md`) reads the draft against the
@@ -528,3 +559,55 @@ journal with an article processing charge.
 5. The owner's review; `paper/arxiv_metadata.md` gains paper 3's title,
    abstract and categories; the release tag and Zenodo version; the arXiv
    submission by the owner.
+
+## 12. The structure of the paper: one claim as the result, everything else a hypothesis with its status (the owner's instruction of 2026-09-20)
+
+The paper has two parts. Part I is the result: the one claim the owner
+confirms (section 1), with its definition, theorems, measurements and
+comparison; nothing enters Part I that is not proved or registered.
+Part II is "The hypotheses of the program": everything else the
+repository holds, from the ten principles of `amplitude-v1` and the day's
+decisions in Highlights 5.4 to the series' verdicts on gravity, the
+nucleus, the weak force and the meeting, each stated as a falsifiable
+hypothesis with its status and asserted nowhere as a result. The status
+values: **registered run** (in the experiments register with a
+fingerprint and a date, the verdict quoted), **design only** (a check
+script's integers, no engine run), **not run** (stated on the hypotheses
+page or in Highlights, no design and no run), **published** (papers 1
+and 2). The table below is the section's draft; the draft quotes each
+verdict's own words and links each row to its entry.
+
+| Hypothesis, stated so that it can fail | Status | What the record says | Where |
+| --- | --- | --- | --- |
+| The world is the list of clicks; the GameBoard computes every continuation between clicks (principles 1 to 4, 7) | design only, becoming registered with `amplitude-v1` | the integer Mach-Zehnder, Born over u, one gather per birth | design sections 2 to 3, `mz.txt` |
+| The detector layer is the only non-local operation and is the apparatus's (principle 5, form A) | design only | the layer's table, lazy deletion, form B kept as the local alternative | design sections 5, 9, 11 |
+| Entanglement is a record with rows in two places, no further rule; S = 2.83 with no-signalling (principle 6) | design only (the prototype's 2.875 was a rounding); Part I once registered | 176/64 at N = 64, marginals exact | `bell.txt`, Part I |
+| Matter is structure that closes records; classical where clicks are dense, quantum where none (principle 8); the classical limit as click density (test 11) | not run | proposed after the ten acceptance tests, not decided | Highlights 5.4 "DECIDED: amplitude-v1 is built" |
+| The price 2^n per entangled record; a finite host predicts a ceiling, a description does not (principle 9) | design only | rows n x 2^n; the register's exact depth (62 balanced splits; Grover's six rotations exceed it on the lattice) | design sections 10, 12, `gate.txt` |
+| The two-record gate: CNOT as a joint label permutation; CNOT twice the identity; GHZ from two CNOTs; Grover clicks the marked row for every u | design only, acceptance tests after the merge | all four checked on the host's integers | `gate.txt` |
+| In the continuum limit Dirac and Lorentz (principle 10) | not run, not derived | stated; DERIVATIONS covers the earlier engines, not the Beam Law | Highlights 5.4; DERIVATIONS sections 51 to 56 |
+| Polarization, bosons, two sources of mass, gravity of the click model (principle 10's open list) | not run | open | Highlights 5.4 |
+| Bell under the amount reading: S = 2 exactly, the triangle 1 - 4k/N, no-signalling exact (the law's limit) | registered run (2026-09-19) | measured = expected, 326 criteria, the model's limit against the 2015 data | A2 under the Beam Law |
+| The law does not correlate the settings with the pair through their common past (no superdeterminism) | registered run (2026-09-20) | every E on the triangle, S = 2 on the quadruple, marginals 1/2 in 15 bins; the one-clock control sees the built-in correlation | A2 with the choosers; HYPOTHESES 11 |
+| Heisenberg in the record: the `wave` record narrows with the opening, the count does not; w x FWHM = 0.886 lambda | registered run (2026-09-20) | within 22 % at w = 27; not read at smaller widths (the fan's limit) | A10 |
+| Fringes do not build up one click at a time under the amount reading | registered run (2026-09-20) | the narrowing 0.31 at six rays per pixel per interval, gone at 0.14: a plain disagreement with nature, the law's limit; the `sum` reading's single-record weights are the design's answer, to be measured | A10 at a low rate; design test 2 |
+| The couplings on the plane: the identities, books and timing of the Beam Law hold; the far field of a six-beam source follows the Node count | registered run (2026-09-19) | exact identities; the ring means outside the +- 10 % expectation for six beams | C under the Beam Law |
+| The orbit under the Beam Law | registered run (2026-09-19) | registered; the verdict quoted in the draft from its entry | D |
+| The clock's redshift in space: M / r on the age clock and M / r^2 on the push from the same rays; no horizon | registered run (2026-09-20) | the 1 / r form holds; the pinned 15 % criterion missed at three radii by the shell ripple | E; PREDICTIONS 1 |
+| The Hubble diagram behind the detector: linear near, coasting far, nothing accelerates | registered run (2026-09-20) | z = v/c to 0.003, H t_0 = 1.03; q not told apart at this precision | G |
+| Bohr's lines behind the detector | registered run (2026-09-20) | no orbit closes under whole kicks; the lines not read, neither for nor against | H |
+| The nucleus: the strong reading a cut 1 / r^2 with the opposite sign, no Yukawa tail; the deuteron bound at one Link; the alpha a line, not a square | registered run (2026-09-20) | integer by integer as designed; the order of the bodies a declared tie | I |
+| Light beside a mass: neither bent nor delayed without a rule that reads the crowd | registered run (2026-09-20) | 0.000 pixel, 0.00 interval: a plain disagreement with nature | K; PREDICTIONS 2 |
+| Under the meeting light bends toward a mass with the sign and the M / b form, not delayed, not redshifted; an interferometric Shapiro phase per path | registered run (2026-09-20) | the sign in every world, the form inside its brackets, the grain 10^4 times nature's angle, so the value is not claimed; the mass absorbs the light it bends most | K under the meeting; HYPOTHESES 20 |
+| The weak force: the neutrino's admitted fraction w / N exactly, flat in energy; the neutron's decay a step with a line spectrum; a bound neutron later or never under the crowd gate | registered run (2026-09-20) | plain disagreements with nature (the exponential survival, the continuous spectrum, the stable bound neutron), registered as the law's limits, nothing tuned | J; PREDICTIONS 7, 8, 10, 18 |
+| A moving body's clock ticks at one rate at every speed; nature's gamma a limit | not run (series J4 defined) | the engine's finding; stated so that it can fail | HYPOTHESES 21 |
+| Redshift from delay growth on a closed GameBoard; the supernova test | published | paper 2: behind flat LambdaCDM by delta chi^2 = 9 to 106; the Tolman exponent against it | paper 2 |
+| Dark matter is a closed dimension; G = hbar c / (N m_0)^2; one mass ladder; confinement from the quark's field rays; the lottery as the only door | not run | forms, not values; the hypotheses page | HYPOTHESES 6, 12, 13, 14, 1 |
+| The 23 predictions of the law's own list | mixed: 1, 2, 5, 7, 8, 10, 18 registered; the rest not run | the five strongest quoted in Highlights 5.4 (the retarded field's aberration, the Nordtvedt-like flux, no radiation from accelerated charges, bodies outrunning light, no mass defect) | PREDICTIONS.md |
+
+Two rules for Part II. A hypothesis that a registered run contradicts is
+written as the model's limit in the register's words, never softened;
+a hypothesis without a run is written in one sentence with no number.
+Nothing in Part II is cited by Part I, and the abstract names Part II in
+one clause ("the hypotheses of the program are listed with their status
+and claimed nowhere").
