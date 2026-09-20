@@ -187,6 +187,7 @@ One agent may use several skills. Exploration normally uses one owner unless par
 4. In exploration, run the minimal probe and stop when the question is answered with adequate evidence. Do not drift into PR/reviewer/CI work.
 5. In candidate work, test the focused acceptance target and counterexamples; stop if falsified.
 6. In integration, coordinate the required rule review, tests, simulator run, regression and documentation, then reconcile on current main.
+   Keep the integration short per [the cost of an integration](../workflow.md#the-cost-of-an-integration-kept-short-the-model-owner-2026-09-20): the gate set of worlds and not the register, one full check at the end, one writer per document, agents on different sources, the pages and the reviews in parallel with the second half.
 7. Apply the PR skill only to integration, or when the user explicitly requests a PR for a candidate.
 
 ## Persistence and self-improvement

@@ -293,6 +293,40 @@ a run but may not repair physical state. Consult
 before applying old scalar/particle or disturbance assumptions to the primary
 API (`NatureBeamSimulation`).
 
+## The cost of an integration, kept short (the model owner, 2026-09-20)
+
+The weak force's integration took two and a quarter hours, a third of it
+documentation, a third re-checking, and a merge of eleven conflicting files
+because three agents wrote the same documents at once. The owner's rules from
+that day ("we said without 85 worlds"; "put it in the skill"):
+
+- **Replay the gate set, not the register.** Byte-identity of the lattice
+  under a new key is proved on a gate set of about fifteen example worlds,
+  one per table rule, key and family kind, so that every engine code path is
+  replayed once; the whole register (109 worlds on 2026-09-20) is replayed
+  only under `--full` or on demand. The gate set is listed with what each
+  world covers. Until the coverage-measured gate set exists, the agent
+  chooses it by the rules and keys and lists it in the report.
+- **Check once at each stage, fully once at the end.** `python tools/check.py`
+  scoped per stage; `--full` and the gate-set replay after the first
+  behaviour-free commit and at the end, not after every commit.
+- **One writer per document, and agents apart.** A code agent and a
+  documentation agent may run in parallel only with a written split of the
+  files; two implementation agents never run on the same sources or the same
+  register at once, since each then pays the merge.
+- **Small worlds.** An acceptance world is seconds: the Mach-Zehnder is
+  5 x 5. A long reading is a research run, made once.
+- **Pages apart.** The HTML pages with the frame player are made by a
+  separate agent from the runs, in parallel with the reviews, never by the
+  implementation agent.
+- **Report at the half.** An implementation of several stages sends its
+  measured integers after the first half, so the physics-rule review and the
+  genericity probe of that half run in parallel with the second half.
+- **Brief with the exact files.** An agent starts cold; the brief names the
+  documents, the design and the commit to start from, and the design's
+  evidence is committed under `docs/designs/<key>/` so every session can read
+  it.
+
 ## Performance work
 
 Initialization configuration is runtime data. UI and configuration changes must
