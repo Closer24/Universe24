@@ -19,6 +19,11 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
         "tests/test_configuration_validation.py",
         "tests/test_entity_loading_consumers.py",
     ),
+    "examples/events/entities/families.json": (
+        "tests/test_entity_definitions.py",
+        "tests/test_entity_catalog.py",
+    ),
+    "examples/events/entities/apparatus.json": ("tests/test_entity_definitions.py",),
 }
 
 

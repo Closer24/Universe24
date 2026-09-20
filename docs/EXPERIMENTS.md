@@ -1190,6 +1190,19 @@ states "exactly" and means integer equality at every tick.
   -1 186 507 968 where it was 1 073 741 824; the sum of the two and the
   reads unchanged. The other eighteen worlds are byte-identical
   ([validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+- **Re-read under the step drive (2026-09-20).** The free probes of
+  `1b_m1`, `1b_m4` and `1b_m16` make the same 11 steps to the Node beside
+  the source, each one interval later than registered (the ticks 22 to
+  32 in place of 21 to 31: the probe's drive begins at 0 when the first
+  rows arrive), and hand their x component over from tick 33 (168
+  `contact` records in place of 169 from tick 32, the first hand-over
+  larger, -157 823 232 for m = 1 in place of -146 316 992); the probe's
+  momentum 0 at the end and the source's -1 185 431 936 (m = 1),
+  -3 667 985 920 (m = 4), -13 598 201 856 (m = 16) where they were
+  -1 186 507 968, -2 598 548 224, -12 541 676 544; the reads and the sum
+  of the two momenta as before. The eighteen other worlds have no free
+  body and read the same (the record's new fields aside) ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### D, the orbit under the Beam Law, on the plane (2026-09-19)
 
@@ -1443,6 +1456,148 @@ states "exactly" and means integer equality at every tick.
   is gone), C 0.30 over the run, and the probe leaves through face:+x
   at tick 260 instead of 271. The five other worlds are byte-identical
   ([validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+- **Re-read under the step drive (2026-09-20; measured, nothing
+  pinned).** The S = 1 probes read the same (they take no push; the record's
+  new fields aside).
+  The four others move differently under the step drive (2026-09-20, BEAM_LAW note 17 as amended: a body's count of Links is the whole part of the distance its momentum has driven, on its own record; a body that receives a momentum begins its drive at 0 instead of stepping off its age): `s8_r12` closes one turn
+  by the criterion's angle (T 226 in place of the derived 196, the
+  return +7 Links, the mean radius 15.83, C 1.65), turns 1.93 times and
+  leaves through face:+x at tick 571 (registered: one turn in 198, no
+  closing, out at 260); `s8_r24` reverses its angle (-0.11 turns) and
+  leaves through face:+x at tick 495 (0.93 turns, out at 449); `s32_r12`
+  closes two turns (T 474, then 236; the returns +3, -7; the mean radii
+  16.63, 10.96; C 1.29, 1.85) and leaves through face:-y at tick 1568
+  (seven precessing turns, the first in 289, bound for 2891); `s32_r24`
+  closes by the criterion, the return (-1, +1) with the heading kept, T
+  623 against the derived 687, the mean radius 23.63 within 24 +- 1, C
+  1.37, then a second turn in 464 (the return (-14, +1), the mean radius
+  18.49) before leaving through face:+x at tick 1849 (one turn in 829,
+  then fell in, out at 1054); T(24)^2 / T(12)^2 = 1.73 against the
+  expected 4 (was 8.23). The record checks 0 failed. The verdict's clause
+  "no orbit closes by the criterion at any width or radius" no longer
+  holds: the S = 32 probe at r = 24 closes once; the rest of the verdict
+  (the field's burst and the fan's grain turning the circle into a
+  precessing polygon) stands as read ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+- **Verdict re-read under the step drive (2026-09-20; the physics-rule
+  reviewer, on the re-read line above and record 117; nothing re-run,
+  nothing tuned).** In the series' own criterion (closed: at the first
+  closing of the angle the probe within one Link of its start on each
+  axis with the heading kept; T within +- 15 % of the derived; the mean
+  radius r +- 1; |drift| <= 1 Link per orbit; T(24)^2 / T(12)^2 = 4 +-
+  15 %; C 1.00 +- 0.15) one orbit closes: the S = 32 probe at r = 24, on
+  its first turn, the return (-1, +1) with the heading kept, T 623
+  against the derived 687 (-9 %, inside), the mean radius 23.63 (inside
+  24 +- 1), the drift one Link (inside, at the bound), C 1.37 (outside,
+  as on every turn of every registration: the push read on the orbit is
+  1.3 to 1.4 times the ring mean of series C, the kicks landing where the
+  probe meets a shell, inside the ring's mean radius more often than
+  outside). No other world closes by the criterion: at S = 1 the probes
+  outrun the field (no push; the same runs); at S = 8 the r = 12 probe
+  closes the angle once (T 226 against 196, +15 %, at the bound; the
+  return +7, the mean radius 15.83, C 1.65: outside) and the r = 24 probe
+  does not turn; at S = 32 the r = 12 probe, expected to close, closes
+  the angle twice and not by the criterion (T 474 and 236 against 343,
+  +38 % and -31 %; the returns +3 and -7; the mean radii 16.63 and
+  10.96). The ratio has no closed pair: 623 / 474 squared is 1.73, but
+  474 is a wide loop's period and not a closed orbit's (the closed T(24)
+  against the derived T(12) gives 3.30, a measured against a derived
+  number, not a reading), so the flat-curve law T proportional to r (the
+  squares 4) is not measured, neither for nor against. What still does
+  not hold: the closed orbit does not repeat, its second turn returning
+  (-14, +1) at a mean radius 18.49 in 464 intervals and the probe
+  leaving through face:+x at 1849; and the motion at every width is
+  still a precessing polygon at the grain of the field (one shell per 10
+  intervals, several rays per read, whole labels of 64 on a momentum of
+  576), not the derived circle. The clause "no orbit closes by the
+  criterion at any width or radius" is superseded by this paragraph; the
+  third registration's numbers stand as history. The physical reading:
+  the force law did not change and the push it reads did not change (C
+  1.27 to 1.37 at r = 24, 1.32 to 1.29 on the first turn at r = 12; the
+  same field, the same momenta), and the return at r = 24 went from
+  (-13, 0) to (-1, +1): what kept the orbits from closing was the count
+  of Links off the clock, not the law's force. That count,
+  `by_clock(age, |p_a|, D_a)` = floor((age + 1) |p_a| / D_a) - floor(age
+  |p_a| / D_a) at the present |p_a|, fires on the phase of age x |p_a|
+  modulo D_a, as if the body had carried its present momentum component
+  for its whole age; on an orbit each component turns through zero every
+  turn and is changed at every shell's passage, so every kick re-set the
+  phase of each axis's step cycle, a stall while the component fell and a
+  burst while it rose (record 107: five Links in six intervals at 0.019
+  Links per interval), and the distance made on an axis was not the sum
+  of its speed over the intervals. Under the drive it is that sum to
+  within one Link per axis (the drive the remainder), the momentum and
+  the push untouched. The derivation of p assumes that the position is
+  the sum of the speed over the intervals; until the drive it was being
+  tested against a rule that did not obey it. The plane's force law: the
+  flux falls as 1 / r (series C, Gauss exact on the plane), so a circular
+  orbit's speed is independent of r and T is proportional to r; the
+  closed T(24) = 623 is 0.907 of the derived 687, so at the same width
+  the law predicts a closed T(12) of 311 (0.907 x 343), where Kepler's T
+  proportional to r^1.5 would give 220. The one wide loop of `s32_r12`
+  (the mean radius 16.63, T 474) sits on T proportional to r at its own
+  radius (343 x 16.63 / 12 = 475), a coincidence of one loop that is not
+  a reading of the criterion. What the series now predicts and what
+  would refute it, nothing pinned here (the next run pins its own numbers
+  first): (i) the closed turn is a reading of `beam-v1` as amended, the
+  same world under the same law re-reading T 623 (the GameBoard is
+  deterministic), and a change that un-closes it is registered as a law
+  change or a bug, never silently; (ii) a closed orbit at S = 32, r = 12
+  has T in 265 to 357 (311 +- 15 %) and gives T(24)^2 / T(12)^2 = 4 +-
+  15 %; a closed T(12) near 220 (the squares near 8) refutes the plane's
+  1 / r reading of the push; (iii) a closed orbit at any width reads C
+  1.3 to 1.4, the ring-geometry factor; C = 1.00 +- 0.15 on a closed
+  orbit refutes that explanation of C and reopens the derivation's
+  constant; (iv) the precession (the second turn's return (-14, +1)) is
+  the field's burst and grain, named before every run: a shell every
+  interval at the same emission, or a larger width, closes the second
+  turn at r = 24 and the first at r = 12 within one Link; if a smoother
+  field at S = 32 leaves r = 12 unclosed, the field's grain is not the
+  remaining cause either and the derivation of p is to be re-read.
+
+- **Re-read under the signed drive (2026-09-20; measured, nothing
+  pinned).** The S = 1 probes read the same (no push). The four others
+  move differently under the signed drive (2026-09-20, record 126; BEAM_LAW note 17 as amended: the drive is the SIGNED distance the momentum has driven, so a momentum reversed on an axis first cancels what it had driven the other way; the first form took |p| and the direction from the sign at the fire, and discharged a distance driven toward a partner as a Link away; every body whose momentum keeps one sign on every axis steps as before): `s8_r12` closes the angle five times (T
+  202, 65, 76, 184, 208; the returns -6, -5, -5, +2, +2 Links; the mean
+  radii 13.80, 4.97, 5.59, 12.19, 14.57; C 1.50 to 1.79) and leaves
+  through face:-x at tick 917 (one closing in 226 and out at 571 under
+  the unsigned drive); `s8_r24` turns 0.98 without closing and leaves
+  through face:+x at 496 (495 before); `s32_r12` closes three times (T
+  363, 482, 622; the returns +5, +4, +11; the mean radii 13.34, 18.40,
+  29.05; C 1.29, 1.40, 1.71) and leaves through face:-y at 2004 (two
+  closings, out at 1568); `s32_r24` is bound for the whole run of 4000
+  intervals and closes the angle four times (T 701, 821, 880, 878 against
+  the derived 687; the returns (+9, +1), (+12, +1), (+12, +1), (+12, +1),
+  the heading kept; the mean radii 26.25, 31.32, 35.70, 35.84; C 1.27,
+  1.32, 1.42, 1.54) where the unsigned drive closed it by the criterion
+  once (the return (-1, +1), T 623) and lost it at 1849. T(24)^2 /
+  T(12)^2 from the first turns 701 and 363 = 3.73 against the expected 4
+  (k = 2) and Kepler's 8 (was 1.73). The record checks 0 failed.
+- **Verdict re-read under the signed drive (2026-09-20; on the line
+  above; nothing tuned).** In the series' own criterion no orbit closes:
+  the S = 32 probe at r = 24, closed by the criterion under the unsigned
+  drive (the return (-1, +1)), returns 9 Links off at T 701 (T inside
+  15 % of 687; the mean radius 26.25 outside 24 +- 1; the drift 9 Links
+  outside), so the clause "one orbit closes by the criterion" of the
+  re-read above is superseded and the third registration's clause "no
+  orbit closes by the criterion at any width or radius" stands again,
+  now under a count of Links that is the signed sum of the speed. What
+  the signed drive gives that neither count before it gave: a probe
+  bound for the whole run at S = 32, r = 24 (four turns of 701 to 880
+  intervals, the mean radius drifting out from 26 to 36 Links, C 1.27 to
+  1.54), and a ratio of first-turn periods 3.73 within 7 % of the
+  flat-curve law T proportional to r (k = 2), from two turns that close
+  the angle with the heading kept (the returns 5 and 9 Links): a reading
+  of the derived law within its 15 %, on turns that are not closed
+  orbits, so the law is measured for and not against by this one pair,
+  not established. The unsigned drive's closed return at r = 24 was the
+  reversal defect's: a component turning through zero on the orbit
+  discharged its accumulated |p| as a Link the other way (record 126),
+  a kick back toward the source at every turn of a component's sign,
+  which tightened the loop; the signed count lets the loop precess
+  outward as the push it reads (C 1.3 to 1.5 times the ring mean, as on
+  every registration) drives it. The field's burst and the fan's grain
+  remain what they were. The registered verdicts stand as history ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### A10, the width of an opening and the spread behind it, under the Beam Law (2026-09-20)
 
@@ -1969,6 +2124,23 @@ states "exactly" and means integer equality at every tick.
   rms of 0.009 to 0.017 (the step rule's grain).
   The surprise is a limit of the reading and an artefact of the world, not
   a finding of the law; the register keeps the verdict above as read.
+- **Re-read under the step drive (2026-09-20; measured, nothing
+  pinned).** Every source is a lamp whose recoil changes its momentum at
+  every self-creation, so all four worlds move differently under the step drive (2026-09-20, BEAM_LAW note 17 as amended: a body's count of Links is the whole part of the distance its momentum has driven, on its own record; a body that receives a momentum begins its drive at 0 instead of stepping off its age),
+  by little: the near fit's H t_0 in the windows [100, 200), [200, 300),
+  [300, 400) and [200, 400) reads 0.877, 0.969, 1.017, 0.996 in both
+  coasting worlds (registered 0.875, 0.949, 1.029, 0.985), 1.144, 1.182,
+  1.305, 1.292 in `pushing_scalar` (1.079, 1.072, 1.292, 1.235) and
+  0.866, 0.932, 1.057, 1.036 in `pushing_age` (0.912, 1.017, 1.120,
+  1.060); the throw's own coasting form against the reading rms 0.0034
+  in z (0.0033) and 1.3 intervals in tau; the detector's own clock over
+  the run 0.8275, 0.9950, 0.2925, 0.9800 self-creations per interval
+  (0.8300, 1.0000, 0.3000, 0.9750). Of the three forms, q = -0.55 is the
+  nearest in 8 of the 12 windows (10 of 12 registered): `pushing_age`
+  now reads q = 0 the nearest in [100, 200) and [200, 300). 309 readings
+  inside and 27 outside (310 and 26); the reading's formula 288 of 288
+  inside 2 %. The verdict and the follow-up stand as read ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### H, Bohr's lines behind the detector (2026-09-20)
 
@@ -2117,6 +2289,169 @@ states "exactly" and means integer equality at every tick.
   of 540, its one closing the same. The verdict stands: no orbit closed
   well enough for the coherence reading. `r6`, `r8`, `r12`, `r15` and
   `r16` are byte-identical ([validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+- **Re-read under the step drive (2026-09-20; measured, nothing
+  pinned).** Every world changes under the step drive (2026-09-20, BEAM_LAW note 17 as amended: a body's count of Links is the whole part of the distance its momentum has driven, on its own record; a body that receives a momentum begins its drive at 0 instead of stepping off its age); the design, the widths and
+  the radii are the assignment's. `r2` closes once (T 262, the mean
+  radius 3.62), turns 1.64 times and leaves through face:-y at tick 410
+  (registered under the contact: two closings, C(2) = 0.60, out at 688);
+  `r4` closes twice (T 459 and 1074, the mean radii 5.21 and 11.62), one
+  return within 0.25 r, C(2) = 1.38 (inside the between radius's bound),
+  out through face:+y at 1871 (one closing, out at 600); `r6` closes
+  three times (597, 1088, 550), C(3) = 0.52, out through face:-y at 2682
+  (no closing, out at 1045); `r8`, the design's closing radius j = 2,
+  closes four times (T 944, 588, 1209, 1281; the mean radii 8.84, 6.50,
+  11.45, 13.15; three returns within 0.25 r) and is on the GameBoard at
+  the end of 4200 intervals, the phase's turn per orbit 0.828, 0.750,
+  0.797 of a circle beyond whole circles against the design's 0, C(4) =
+  1.01 against the expected T / 2 = 2.0 (outside; two closings, C(2) =
+  0.84, out at 1864); `r12` closes five times (1454, 1658, 1416, 1334,
+  1290; the mean radii 12.46, 13.68, 11.97, 11.66, 11.37; r from 9.4 to
+  15.7), every return within 0.25 r, on the GameBoard at the end of 7400,
+  the phase's turn 0.609, 0.250, 0.141, 0.078 against 0.555, C(5) = 0.49
+  (inside, bounded; 0.95 turns and out at 2097); `r15` closes once (T
+  2291) and leaves through face:-x at 3597 (two closings, out at 4683);
+  `r16` turns 0.48 and leaves through face:-x at 1851 (one closing, out
+  at 3568). The ladder takes no ratio (fewer than two closing radii with
+  two turns; was r = 8 / r = 2 = 4.00). 3 readings inside and 1 outside
+  (1 and 2). What changed in the finding: the orbit at r = 8 and r = 12
+  now holds for the run with returns within a quarter radius, so the
+  verdict's "what the law lacked here is a stable closed orbit under
+  whole kicks" is answered by the step rule, not by a smoother field; the
+  coherence reading at the closing radius stays outside (C(4) = 1.01
+  against 2.0, the phase's turn per orbit not 0), so Bohr's lines are
+  still not read behind the detector, neither for nor against ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+- **Verdict re-read under the step drive (2026-09-20; the physics-rule
+  reviewer, on the re-read line above and record 117; nothing re-run,
+  nothing tuned).** Two words of the design, kept apart. "Closes" is a
+  GAMEBOARD reading: the angle about the proton reaches 2 pi with the
+  return within r / 4 and T within 15 % of the derived; "stable", that
+  the electron stays on the GameBoard, closing again, for the run.
+  "Quantised" is the design's closure and its DETECTOR reading: the
+  phase's turn per orbit whole (4 p r = j h on the GameBoard with j
+  whole, the phase back on itself each turn), and so the faces' coherent
+  record adding in line, C(T) >= T / 2 after T >= 2 turns at a closing
+  radius and C(T) < 2 between. The law now gives the first and not the
+  second. At r = 8, the design's closing radius (j = 2 by the
+  construction of h), the electron closes the angle four times (T 944,
+  588, 1209, 1281 against 838: one inside 15 %, three outside; three of
+  the four returns within r / 4 = 2 Links; the mean radii 8.84, 6.50,
+  11.45, 13.15) and is on the GameBoard at the end of the run's 4200
+  intervals where it was thrown out at 1864: a stable orbit that closes,
+  the loop still eccentric under the whole kicks (84 lumps of 4.3
+  degrees per orbit). At r = 12, a between radius (j = 2.555), the orbit
+  is the best closed of the series by the criterion: five closings,
+  every T within 15 % of the derived 1462 (1454, 1658, 1416, 1334,
+  1290), every return within r / 4, the mean radii 12.46 to 11.37, on
+  the GameBoard at the end of 7400. The phase at the closing radius does
+  not close: the turn per orbit 0.828, 0.750, 0.797 of a circle beyond
+  whole circles against the design's 0, and the faces' record over four
+  turns C(4) = 1.01 against the expected 2.0 (outside). Bohr's
+  quantisation condition is NOT met at the radius built to meet it,
+  though the orbit closes. At r = 12 the record is bounded, C(5) = 0.49
+  (inside the between bound; the turn per orbit 0.609, 0.250, 0.141,
+  0.078 against 0.555), and at r = 4 and r = 6 C(2) = 1.38 and C(3) =
+  0.52 (inside): a bounded record is what a non-whole phase gives at any
+  radius and tells Bohr's ladder nothing by itself; the ladder of closing
+  radii has no pair (r = 2 closes the angle once, T 262 against 117 at a
+  mean radius 3.62, not by the criterion). So Bohr's lines are still not
+  read behind the detector, neither for nor against; what is read is
+  that the law's orbit is stable and that its phase's closure is not the
+  circle's. The clause "what the law lacked here is not the turn but a
+  stable closed orbit under whole kicks" is superseded by this paragraph:
+  the stable closed orbit exists; the next steps it named (a smoother
+  field, the orbit tilted, a body of 27 Nodes) are not what produced it,
+  the count of Links did (BEAM_LAW note 17 as amended). The registered
+  verdict's numbers stand as history. The physical reading: as in series
+  D, the orbit's failure to close was the count off the clock re-setting
+  each axis's step cycle at every kick, not the push (the mean inward
+  push read at r = 8 was 1.02 of the derived and the reads are the
+  same); the drive makes the position the sum of the speed over the
+  intervals within one Link per axis, and the same field with the same
+  momentum then binds the electron for the run. The phase's turn is now
+  a real reading of the turn rule against the orbit's shape. The turn by
+  momentum sums |p_axis| over the Links stepped (note 30 (ii)), 4 p r on
+  the GameBoard's circle of radius r at a constant |p|, and h was fixed
+  as 16 p(8) so that this sum is 2 h on that circle. The orbit the law
+  makes at r = 8 is not that circle: a loop of mean radius 6.5 to 13.2
+  over its four turns whose |p| changes along it as an eccentric orbit's
+  does, so its sum of |p_axis| over a turn is the loop's own action and
+  not 4 p(8) x 8, and its fractional part (0.75 to 0.83) is what the
+  loop's shape leaves; the registered 0.234 over the two turns of the old
+  count was the same reading on a different loop. The design's condition
+  is a condition on the action of the orbit the law actually makes, and
+  under the fan's whole kicks (one shell per 10 intervals) that orbit is
+  an eccentric precessing loop at every radius, as in series D. Nothing
+  in the record says the turn rule is wrong; it says the closure 4 p r =
+  j h was written for a circle the GameBoard does not draw at this grain
+  of the field. What would refute this reading, and what the series now
+  predicts, nothing pinned here: (i) at r = 8 the verdict "closes, not
+  quantised" is refuted by a re-run under the same law reading the turn
+  per orbit whole within 0.1 and C(4) >= 2 (the GameBoard is
+  deterministic: registered as a bug or a law change); (ii) if a smoother
+  field (a shell every interval at the same emission) at r = 8 gives a
+  loop with every mean radius 8 +- 1 and every return within r / 4, the
+  reading predicts the turn per orbit 0 +- 0.1 and C(T) growing as T^2
+  (C(4) >= 2); if that near-circular orbit still reads 0.75 to 0.83, the
+  eccentricity was not the cause and the turn's count on the GameBoard
+  (4 p r against 2 pi p r, the k0 off `axis_steps`) is to be re-derived;
+  (iii) a whole turn per orbit with a bounded C, or a turn far from whole
+  with C growing as T^2, refutes the design's tie between the phase's
+  closure and the detector's coherent record, not the orbit; (iv) with r
+  = 8 and r = 12 both stable, a closing radius below 8 that closes and
+  reads a whole turn gives the ratio of j^2 the design asks; r = 2 does
+  not close under the drive (its loop sits at 3.62), so the lowest rung
+  is to be found, not assumed.
+
+- **Re-read under the signed drive (2026-09-20; measured, nothing
+  pinned).** Every world changes under the signed drive (2026-09-20, record 126; BEAM_LAW note 17 as amended: the drive is the SIGNED distance the momentum has driven, so a momentum reversed on an axis first cancels what it had driven the other way; the first form took |p| and the direction from the sign at the fire, and discharged a distance driven toward a partner as a Link away; every body whose momentum keeps one sign on every axis steps as before); the design, the widths
+  and the radii are the assignment's. `r2` closes once (T 449, the mean
+  radius 6.04, the return 5 Links) and leaves through face:-y at 1264;
+  `r4` closes twice (T 545 and 1588; the mean radii 6.20 and 13.24; the
+  phase's turn per orbit 0.625 against the design's 0.463; C(2) = 0.51,
+  inside the between bound), out through face:+x at 2190; `r6` closes
+  once (T 1041, the mean radius 10.59, the return 8), out through face:-y
+  at 2160; `r8`, the design's closing radius, closes twice (T 1292 and
+  2016 against the derived 838, the returns 7 and 10 Links, the mean
+  radii 11.24 and 15.44), the phase's turn per orbit 0.969 against 0,
+  C(2) = 0.99 against the expected 1.0 (outside), and leaves through
+  face:+y at 3869 (four closings and on the GameBoard to the end under
+  the unsigned drive); `r12` turns 0.93 without closing and leaves
+  through face:+x at 2059 (five closings, on the GameBoard to the end
+  under the unsigned drive); `r15` closes once (T 2543, the return 3
+  Links within r / 4, the mean radius 17.61), out through face:+y at
+  3443; `r16` turns 0.48, out through face:-x at 1888. The ladder takes
+  no ratio. 1 reading inside and 1 outside.
+- **Verdict re-read under the signed drive (2026-09-20; on the line
+  above; nothing tuned).** The stable closed orbits of the re-read above
+  (r = 8 four closings and r = 12 five, on the GameBoard to the end) were
+  the unsigned drive's: on an orbit each momentum component turns through
+  zero every turn, and the first form discharged the |p| it had
+  accumulated before the turn as a Link in the new direction (record
+  126), a kick toward the proton at every sign change that held the
+  loop; with the count the signed sum of the speed, the same field and
+  the same momenta let every loop precess out and leave the GameBoard
+  (r = 8 at 3869 of 4200, r = 12 at 2059 of 7400). So the clause "the
+  stable closed orbit exists; the count of Links produced it" is
+  superseded: it was produced by the defect of that count, and the
+  registered verdict's "what the law lacked here is a stable closed
+  orbit under whole kicks" stands again, now under a count that is the
+  sum of the speed within one Link per axis. The second clause stands
+  as read: Bohr's quantisation is not met at the radius built to meet it
+  (the phase's turn per orbit 0.969 against 0 at r = 8; C(2) = 0.99
+  against 1.0), the record bounded at the between radii (C(2) = 0.51 at
+  r = 4), the ladder without a pair, so Bohr's lines are not read behind
+  the detector, neither for nor against. The physical reading of the
+  re-read above, that the failure to close was the count of Links and
+  not the push, is narrowed: the count off the clock re-set the step
+  cycle at every kick (a real defect, corrected), the unsigned drive
+  kicked back at every reversal (a real defect, corrected), and with
+  both corrected the push the law reads on an orbit (1.02 of the derived
+  at r = 8, the same reads) does not close it at this grain of the
+  field (one shell per 10 intervals, whole labels): the next steps the
+  registered verdict named (a smoother field, the orbit tilted, a body
+  of 27 Nodes) are open again. The registered verdicts stand as history
+  ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### I, the nucleus (2026-09-20)
 
@@ -2235,6 +2570,49 @@ states "exactly" and means integer equality at every tick.
   model owner: the scratchpad's `nucleus/nucleus.html` with the frame
   player of `nucleus.gif` (the square dispersing, one frame per 5
   intervals), published by Boss.
+- **Re-read under the step drive (2026-09-20; measured, nothing
+  pinned).** Every world changes under the step drive (2026-09-20, BEAM_LAW note 17 as amended: a body's count of Links is the whole part of the distance its momentum has driven, on its own record; a body that receives a momentum begins its drive at 0 instead of stepping off its age), the DETECTOR pushes at
+  tick 20 the same wherever the bodies have not moved: `deuteron_1` 169
+  hand-overs on p from tick 16 and 158 on n from tick 17, the largest
+  4 664 509 209 600 (191 and 148, the largest 7 152 247 454 720), no step,
+  6 of 6 inside; `deuteron_3` the first steps at ticks 33 and 34, out
+  through face:-x at 346 and face:+x at 311 (34; 358 and 285), inside;
+  `deuteron_1_kick` the kick outweighed by tick 5, no step, 168 and 157
+  hand-overs from ticks 19 and 20 (190 from 13 and 147 from 138),
+  inside; `pp_1` no step, 119 hand-overs on p1 from tick 23 and 115 on
+  p2 from tick 24 (171 on p1, none on p2), inside; `pp_1_weak` the first
+  steps at tick 118, out at 364 and 345, 120 strong reads per body (167;
+  379 and 334; 169), inside; `pp_3` the first steps at tick 68 (66), the
+  one reading outside as before; `alpha_square` disperses sooner, p4
+  stepping +x at tick 15, n2 at 22, p1 and n3 at 31, out through face:-y
+  at 125, face:+y and face:+x at 133, face:+x at 177 (57, 63, 70, 84;
+  180 to 538), so at tick 20 the bodies are no longer the design's square
+  and its two readings at that tick (the push per body, the shear) fall
+  outside, the dispersal inside; `alpha_line` holds, no step, 230, 190,
+  140 and 230 hand-overs, the label 0 after each, the largest
+  7 380 392 774 624 (257, 247, 11, 251; 16 500 521 232 560, the toy's
+  number). 27 readings inside and 3 outside (29 and 1). The verdict
+  stands: bound at one Link, free at three, the line rigid and the square
+  sheared ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+- **Re-read under the signed drive (2026-09-20; measured, nothing
+  pinned).** Under the signed drive (2026-09-20, record 126; BEAM_LAW note 17 as amended: the drive is the SIGNED distance the momentum has driven, so a momentum reversed on an axis first cancels what it had driven the other way; the first form took |p| and the direction from the sign at the fire, and discharged a distance driven toward a partner as a Link away; every body whose momentum keeps one sign on every axis steps as before) three worlds change, the five others read as
+  under the step drive (their bodies' momenta keep one sign on every
+  axis): `alpha_square` disperses later and reads the design at tick 20
+  again, the pushes per body the designed ones and the shear 49 090 283
+  970 per row (inside; outside under the unsigned drive, whose bodies had
+  moved by tick 20), p4 stepping +y at tick 81, n2 at 89, p1 at 95 (-y)
+  and n3 at 110, out through face:+x at 275 (n2), face:-x at 285 (p4),
+  face:+x at 336 (p1) and face:-y at 339 (n3), the largest separation
+  25.0 at the end, 5, 11, 12 and 3 hand-overs, the label 0 after each;
+  `alpha_line` holds with no step, 230, 184, 133 and 230 hand-overs (190
+  and 133 on the middle neutrons under the unsigned drive), the largest
+  7 380 392 774 624; `deuteron_1_kick` holds, 167 hand-overs on p from
+  tick 20 and 155 on n from tick 21 (168 and 157), the largest
+  4 908 378 332 160. 29 readings inside and 1 outside (`pp_3`'s first
+  step at tick 68, as before). The verdict stands: bound at one Link,
+  free at three, the line rigid and the square sheared ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### K, light beside a mass (2026-09-20)
 
@@ -2834,6 +3212,41 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   dense enough stabilises a neutron, bound or not). Nothing was tuned; no
   law changed beyond the one rule added. The page for the model owner:
   the scratchpad's `weak_impl/weak.html`, published by Boss.
+- **Re-read under the step drive (2026-09-20; measured, nothing
+  pinned).** `j3_neutron_free` reads the same (no push; the record's new fields
+  aside). Under the step drive (2026-09-20, BEAM_LAW note 17 as amended: a body's count of Links is the whole part of the distance its momentum has driven, on its own record; a body that receives a momentum begins its drive at 0 instead of stepping off its age)
+  `j3_deuteron`'s neutron fires at tick 572 (577 registered; the pinned
+  574 or up to 3 before it: inside now), the count 128590 at the trigger,
+  the shell's one beta click at 583 with the content 3, the neutron's
+  clock 626 of 700 (620); but the pair does not hold: each body makes 3
+  steps of 33 and 27 attempted (24 and 30 hand-overs; registered 0 of 39
+  and 21, every attempt refused), the GAMEBOARD reading "the pair holds
+  after the transformation" outside. `j3_deuteron_crowd`: no
+  transformation and no beta click, inside, the bodies 2 steps each of
+  35 and 29 attempted. 9 readings inside and 1 outside (10 and 0). The
+  verdict stands on the detector's readings (a step decay, a line, the
+  bound neutron later than the free one); the deuteron's holding at one
+  Link under the drive is series I's question (its deuterons hold; this
+  one, with the neutron's `become` and the shell, does not for 3 steps)
+  ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+- **Re-read under the signed drive (2026-09-20; measured, nothing
+  pinned).** `j3_neutron_free` reads the same (no push). Under the signed drive (2026-09-20, record 126; BEAM_LAW note 17 as amended: the drive is the SIGNED distance the momentum has driven, so a momentum reversed on an axis first cancels what it had driven the other way; the first form took |p| and the direction from the sign at the fire, and discharged a distance driven toward a partner as a Link away; every body whose momentum keeps one sign on every axis steps as before)
+  the deuteron holds again: `j3_deuteron`'s nucleons make 0 steps of 33
+  and 29 attempted (29 and 33 hand-overs), the neutron fires at tick 577
+  (the pinned 574 or up to 3 before it: outside, as the first
+  registration read; the unsigned drive had read 572), the shell's one
+  beta click at 590 with the content 3, the neutron's clock 620 of 700
+  (the first registration's numbers to the digit); `j3_deuteron_crowd`
+  never fires, its bodies 0 steps of 35 and 31 attempted. 9 readings
+  inside and 1 outside (the trigger tick, as registered). The 3 steps of
+  each body under the unsigned drive were the reversal defect's (record
+  126: the neutron, charged toward the proton, stepped away after the
+  contact handed it the proton's component), the case that found it;
+  the clause "the pair does not hold" of the re-read above is superseded
+  and the registered verdict's "the pair holds after the
+  transformation" stands ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 **The W world, the exchange form at one Link (no key added).**
 
@@ -2886,6 +3299,261 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   masses fixing it, the propagator's rise, V-A; registered as the law's
   limits, nothing tuned. The page for the model owner: the scratchpad's
   `weak_impl/weak.html`, published by Boss.
+
+### L, the amplitude law (2026-09-20)
+
+- **Confronts.** The model owner's decision of 2026-09-20 (Highlights 5.4,
+  "DECIDED: `amplitude-v1` is built, with the four recommendations and the
+  four unifications"; the ten principles, the corrected sentence "the
+  world is the list of clicks"): under the world key `amplitude` the
+  GameBoard computes every path of a record, locally and exactly, and the
+  world's list of clicks is read from it by the birth phase u on the
+  ladder of the record's offers, normalised by their sum with the rungs
+  at the nearest integer ([BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  the physicist's and the mathematician's design,
+  docs/designs/amplitude-v1/DESIGN.md, every integer from its check scripts).
+  The acceptance tests of the design, written before any run: the
+  Mach-Zehnder interferometer always at one port (test 1), Elitzur-Vaidman
+  (3), determinism (8), the two slits at a low rate (2), the register's
+  replay (10), and, in the second half, the pair with the choosers (4),
+  GHZ (5), the which-path world (6), no maintenance (9) and the gate. Not
+  claimed: that quantum mechanics is solved; claimed, once the runs pass:
+  that the engine's own tables give Born, interference, Bell with exact
+  marginals and S below Tsirelson at finite N, GHZ, which-path, CNOT and
+  Grover, with the named departures and the open items.
+
+**L1, the Mach-Zehnder interferometer and Elitzur-Vaidman (the design's
+section 3.4; the acceptance tests 1, 3 and 8).**
+
+- **Model prediction, pinned before the runs
+  ([the expectations](../examples/events/amplitude/README.md#l1-the-mach-zehnder-interferometer-and-elitzur-vaidman),
+  `examples/events/amplitude/expectations.json`, written by the
+  generator from the design's `mz.txt`).** A plane of 5 x 5, K 2^20, N 64,
+  75 intervals; the source at (0, 0) births one record per self-creation
+  on two arms (the birth phase u = t - 1 at tick t: 64 births span the
+  circle and complete by tick 75), mirrors at (3, 0) and (0, 3), the
+  splitter at (3, 3) with its split table selected by the arrival
+  ((20, 21): transmitted 20, reflected 21 with the quarter turn), D1 at
+  (4, 3) and D2 at (3, 4) reading `sum`. Expected over the 64 births
+  (DETECTOR, the gathers): `mz_equal` D1 64 and D2 0 (the offers
+  1681/1682 and 1/1682); `mz_half` 0 and 64; `mz_quarter` 32 and 32;
+  `mz_balanced` ((1, 1)) 64 and 0 with D2's rows cancelled on the GameBoard
+  (GAMEBOARD); `mz_345` ((3, 4)) 63 and 1, the same u = 63 falling in D2
+  where the rung moved; the unequal arms (arm 2 two intervals longer) at
+  `phase_per_link` 0: 64 and 0, at [8, 1]: 32 and 32, at [16, 1]: 0 and
+  64; Elitzur-Vaidman `ev_29` (arm 2 absorbed at (0, 3)): absorber 32,
+  D1 17, D2 15 (D2 the dark port of the unblocked device, 15/64 against
+  the ideal 16); `ev_169` ((119, 120)): 32, 16, 16; one gather per
+  completed record, the same list on a second run of the same world
+  (determinism), the record's `total` within 0.0019 of 1 on the (20, 21)
+  worlds (the tables' rounding).
+- **Features.** The world key `amplitude`, the split (`rerelease` with
+  `weights`, `turns` and `inputs`), the normal form's cancel, the pair
+  form of `phase_per_link`, the reading `sum`, the layer and its ladder;
+  `tests/test_amplitude_record.py`, `tests/test_amplitude_split.py`.
+- **Run (2026-09-20, the ten worlds of `examples/events/amplitude/`, 80
+  intervals each, `tools/run_series.py --jobs 3`, the source fingerprint
+  `ff5c382d672f` (the stage (v) source; `a7b924b3297a` at stage (iii),
+  the same integers), every run completed and conserved at every tick,
+  0.2 s each; the readings by `tools/amplitude_path.py --check`, whose
+  replay equals `run.json`'s `world` on every run; DETECTOR unless
+  said).** The
+  gathers over the 64 births of the ticks 1 .. 64 (the design's table
+  reproduced on every world):
+
+  | world | D1 | D2 | absorber | the design |
+  | --- | --- | --- | --- | --- |
+  | `mz_equal` | 64 | 0 | | 64, 0 |
+  | `mz_half` | 0 | 64 | | 0, 64 |
+  | `mz_quarter` | 32 | 32 | | 32, 32 |
+  | `mz_balanced` | 64 | 0 | | 64, 0 |
+  | `mz_345` | 63 | 1 | | 63, 1 |
+  | `mz_unequal_f0` | 64 | 0 | | 64, 0 |
+  | `mz_unequal_f8` | 32 | 32 | | 32, 32 |
+  | `mz_unequal_f16` | 0 | 64 | | 0, 64 |
+  | `ev_29` | 17 | 15 | 32 | 17, 15, 32 |
+  | `ev_169` | 16 | 16 | 32 | 16, 16, 32 |
+
+  One gather per birth, the last of the 64 at tick 75 (76 on
+  `mz_quarter`), the 11 records born after open at the end; the same list
+  on a second run (test 8). The record's `total` (GAMEBOARD, the sum of
+  the offers in the unit 2^58) is not the design's "1 within 0.0019" for
+  every u: over the 64 births it takes 8 values, 65448/65536 to
+  65773/65536 (within 237/65536 of 1), the same 8 on every one of the
+  ten worlds, the tables' rounding (C^2 + S^2 within 361 of 65536)
+  depending on u and the sum over the ports not seeing the split
+  (unitarity); pinned as measured beside the design's bound, marked
+  failing (`tests/test_amplitude_layer.py`). The split takes no click
+  gate (the decision on the review's B1): on `mz_quarter` the two arms
+  reach the splitter a half turn apart and both split, where the crowd's
+  pointer gate would have passed them (130 passes, a which-path device
+  reading 32/32 by coincidence); on `mz_unequal_f8` the rows of two
+  records reach it together and both split.
+
+**L2, the two slits at a low rate (the design's test 2).**
+
+- **Model prediction, pinned before the run
+  (`expectations.json` under `two_slits`, the generator's reading of one
+  birth by the design's `slits_read.py` on the reference world
+  `slits_one`, independent of the layer).** The shipped 60 x 121 world
+  under the key, the lamp at rate [1, 1] with the content K (u = t - 1
+  at the birth tick t), `phase_per_link` [8591334592, 2^30], the pixels
+  `sum`, the wall freed within 6 of each opening (every fan row leaves
+  the plane) and the lamp's three rows that miss the openings absorbed at
+  (7, 58), (7, 60), (7, 62) (a fan row and a lamp row at one set would
+  carry the multiplicities 455 and 5, refused). The reading, coherent
+  within one Node and incoherent across the Nodes of a set (the decision
+  of 2026-09-20 on the owner's point 5; a face of 24 Nodes hit is one
+  cell of the sum of its Nodes' squares): 80 sets with rows (3 wall Nodes,
+  75 pixels, the faces +y and -y), the total 847181/745472 = 1.136 of the
+  birth norm (the wall's rows 3/5, the fans 2/5, the cross terms of paths
+  meeting at one Node: 27 pixels receive two paths), the shares wall
+  0.528, screen 0.244, faces 0.228; the clicks over the 64 births by the
+  ladder: wall 34 (11, 12, 11), screen 15 (one each at y = 11, 29, 36, 43,
+  50, 56, 59, 60, 70, 77, 82, 90, 107 and two at 61), faces 15 (8, 7);
+  Pearson of the record's screen weights 0.744 with the incoherent sum,
+  0.368 with the Euclidean two-source cosine (the design's
+  shipped-geometry 0.753 and 0.381), the screen-alone histogram 0.931
+  with the weights (0.963). The design's "wall 3/5, screen 2/5" is not
+  this geometry's reading: the freed fans reach the open faces in y, a
+  third destination. (Before the per-Node decision the faces summed their
+  rows coherently, the total 1.258 and the shares 0.477 / 0.221 / 0.302,
+  the clicks 31 / 14 / 19: dated history of the same day.)
+- **Run (2026-09-20, `slits_low`, 230 intervals, 2.4 s, the fingerprint
+  `ff5c382d672f`, completed and conserved; `slits_one` 220 intervals
+  without the key, 0.7 s).** DETECTOR: 64 gathers of the 64 births by
+  tick 213 (the births go on: 230 records, 81 gathered, 149 open at the
+  end); the first record's cells are the reading's 80 sets with the
+  reading's rungs, its weight and total the reading's exactly, its click
+  at the wall Node (7, 58, 0) with the content 1; the clicks per set equal
+  the reading's on every one of the 80 sets (wall 34, screen 15, faces
+  15; a face's click at a Node of its edge); 3 distinct cell lists over
+  the 64 births, 32 with u = 0's (the tables' rounding by u, no rung
+  moved); the reading tool's replay equals `run.json`'s `world`.
+
+**L3, the pair with the choosers, the CHSH labels, the which-path world
+and no maintenance (the design's section 4; the acceptance tests 4, 6
+and 9).**
+
+- **Model prediction, pinned before the runs (`expectations.json` under
+  `pair`, the design's `bell.py` in the generator).** The registered A2
+  world under the key (the lamp's `arms` 2 and `branches` [[0, 1], [3,
+  1]], Alice's arm first; the four counters reading `sum`; at the CHSH
+  labels the chooser sources removed and the windows the integers). The
+  cells (oA, oB) over the 64 births: (0, 8) 27, 5, 5, 27 (E x 64 = 44);
+  (0, 24) 5, 27, 27, 5 (-44); (16, 8) and (16, 24) 27, 5, 5, 27 (44); S =
+  176/64 = 2.75 (2 sqrt 2 = 2.828; the discreteness: S = 2 sqrt 2 -
+  epsilon(N), the design's epsilon at most 4/N, not met at N = 64: 0.078
+  against 0.0625, as the design's own |E - cos| at this N, 0.0352 over
+  all pairs, is above 1/N); every marginal 32/64. The choosers'
+  15 setting pairs: E x 64 = 44, -60, 20, 60, -8, -48, -8, 60, -52, -64,
+  40, 20, -28, -36, 64 for a in (0, 12, 25, 38, 51) by b in (8, 29, 51);
+  on the registered quadruple (0, 25) x (8, 29) S = 156/64 = 2.4375 (2
+  exactly under A2's window gate). The which-path `read` on Alice's arm:
+  E x 64 = 44, -44, 0, 0, S = 88/64. Bob's counters 116 Links farther:
+  E(16, 24) x 64 = 44 (44 with the read: 0).
+- **Run (2026-09-20, `examples/events/amplitude/bell_*`, `path_*`, the
+  fingerprint `ff5c382d672f` (`ccb244fc112f` at stage (iv), the same
+  integers), every run completed and conserved, 0.2 s
+  each, `bell_choosers` 1000 intervals 3.3 s; the reading tool's replay
+  equals `run.json`'s `world` on every run; DETECTOR).** Every integer
+  above reproduced: the CHSH cells and E, S = 176/64, the marginals 32/64
+  exact (Alice + for u < 32), the 15 pairs' E and S = 156/64 on the
+  registered quadruple, the which-path E and S = 88/64, the far counters
+  E 44 and 0 with every record gathered at least 200 intervals after its
+  birth (`tests/test_amplitude_pair.py`). The tables' rounding does not
+  enter: both arms' rows carry the one phase u, whose factor is common
+  to every cell.
+
+**L4, GHZ (the design's 4.5; the acceptance test 5).**
+
+- **Model prediction, pinned before the run (`expectations.json` under
+  `ghz`).** Three arms on a plane of 7 x 7 (`branches` [[0, 1], [7, 1]]),
+  the counters' setting 16 with the turn 0 (X) or 16 (Y): XXX allows
+  +++, +--, -+-, --+ (16 births each, the product +1) and XYY, YXY, YYX
+  allow ++-, +-+, -++, --- (the product -1), the other four triples of
+  weight exactly 0 (39588699237876835586664300544 on the allowed, in
+  1/256^12); YYY allows all eight, 8 each.
+- **Run (2026-09-20, `ghz_xxx` .. `ghz_yyy`, 80 intervals, the
+  fingerprint `ff5c382d672f`, completed and conserved, 0.2 s each;
+  DETECTOR).** Every triple and count as pinned; the register's replay
+  equals `run.json`'s `world`.
+
+**L5, the gate between records (the design's section 10).**
+
+- **Model prediction, pinned before the runs (`expectations.json` under
+  `gate`, the design's `gate.py` on the host's joint state).** The
+  Hadamard on the GameBoard (a `rerelease` with `rotate` at the setting
+  N/4) turns |0> into {00: +, 10: -} (the amounts 181 of the 128 tables,
+  the phases u and u + 32, the multiplicity 65536); the CNOT at a gate
+  with the target's |0> gives {00: +, 11: -}, the pair; with Bob's window
+  at -b the CHSH labels give E x 64 = 44, -44, 44, 44, S = 176/64 (as
+  4.3); CNOT twice is the identity; GHZ by one gate of three parties
+  gives {000, 111} and the products -1 (XXX), +1 (XYY, YXY, YYX), this
+  convention's H; the register's ceiling: three label rotations on a
+  path (m = 2^48) fit, four (2^64) do not, Grover's six (2^96) are not a
+  world of the GameBoard, as the design's section 10 states (exact on the
+  host's integers, not on a Node); after n gates a record has at most
+  n x 2^n rows (the pair 4, GHZ 6).
+- **Run (2026-09-20, `cnot_pair_<a>_<b>`, `cnot_twice`, `cnot_ghz_*`,
+  `rotations_3`, the fingerprint `ff5c382d672f`, completed and
+  conserved, 0.3 s each; `rotations_4` refused at load).** Every integer
+  above reproduced on the GameBoard: the Hadamard's rows, the gate's rows
+  (the `gate` lines: the survivor, the joined record, the labels
+  [[0, 1], [3, 1]], 4 rows; GHZ [[0, 1], [7, 1]], 6 rows), S = 176/64,
+  CNOT twice's labels {0, 1} on both arms, GHZ's allowed triples and
+  products; the reading tool's replay equals `run.json`'s `world`
+  (`tests/test_amplitude_gate.py`). Departures: the gate joins records of
+  distinct lamps (one per lamp, the earliest born), the control the
+  record arriving on the entry's declared `control` direction, and acts
+  when rows of `parties` emitters are pending; a record that reaches a
+  gate with units elsewhere or an offer already made is refused (the
+  design's lazy relabelling of rows elsewhere is not built: two
+  sequential gates on an entangled record are one gate of three parties
+  here, or one gate per arm as in `cnot_twice`). Re-run after the review
+  of (v) (the gate's copies booked on the live count, the control
+  declared, the hold local): every integer above unchanged.
+
+**L6, the pair at N = 1024 and N = 4096 (the owner's paper numbers).**
+
+- **Model prediction, pinned before the runs (`expectations.json` under
+  `pair_n`).** The registered A2 board at the CHSH labels 0, N/8, N/4,
+  3N/8, one birth per u: S = 2896/1024 = 2.828125 at N = 1024 (the
+  design's), E x 1024 = 724, -724, 724, 724, |E - cos| <= 1/N on every
+  pair; S = 11584/4096 = 2.828125 at N = 4096, E x 4096 = 2900, -2900,
+  2892, 2892 against the cosine's 2896.3: the tables' entries in 1/256
+  round E by 0.0009, beyond 1/4096 = 0.00024, so the design's bound
+  |E - cos| <= 1/N holds at N = 1024 (0.00008 against 0.00098) and not
+  at 4096, nor at 64 (0.0196 against 0.0156), while S = 2 sqrt 2 -
+  epsilon with epsilon at most 4/N holds at 1024 and 4096 (0.0003) and
+  not at 64 (0.078 against 0.0625); S stays below 2 sqrt 2 = 2.828427
+  at every N. At N = 4096 the half-angle tables of 2N do
+  not exist: an even setting reads the 4096 table at s / 2.
+- **Run (2026-09-20, `bell_n1024_*` 1044 intervals 1.9 s each,
+  `bell_n4096_*` 4116 intervals 8.4 s each, the fingerprint
+  `ff5c382d672f`, completed and conserved; DETECTOR).** Every count the
+  reading's; S = 176/64, 2896/1024, 11584/4096 (2.75, 2.828125,
+  2.828125); the births counted by the record's ordinal (a lamp's clock
+  skips a step as the births spend its content: 4096 births take 4099
+  intervals); the reading tool's replay equals `run.json`'s `world`.
+
+**L, open items (2026-09-20, after (v)).** The one click (the design's
+section 6) is not landed: the record form as the default changes worlds
+outside the crowd-threshold series on the gate set
+([MIGRATION](MIGRATION.md), (vi)), so the key `amplitude` stays. The K
+finding under the record's click (the lensing worlds of `mass_meeting`
+under the key, the coordinator's record of 2026-09-20): the record's
+click beside the mass moved to smaller y against the control's in every
+world, -2.115, -5.208 and -4.432 pixels at the three (M, b) against the
+crowd's -2.021, -4.345 and -2.465, and the 464 records that reached the
+mass were absorbed whole by it; the two changes it asks for, u as the
+record's own field beside the running phase and a row's push by its share
+amount^2 / (m x norm) of the label, are the next item ([BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(ix)). The pushes are untouched by the columns: a branched row pushes
+matter by its amount as every row does (the owner's (c), the sum over the
+branches). Not built: unification (3) (refused: three columns under three
+keys), Grover (six rotations beyond the register's ceiling), two
+sequential gates on an entangled record, the full register replay.
 
 ### A3. Bell test in phase form, delayed geometry
 
@@ -4472,6 +5140,14 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   (design of 2026-09-17), with its finding that the Port-form corner and
   the Born table give no content ladder and that the ladder needs the
   ring's turn produced by its own field.
+  Closed by decision (the model owner, 2026-09-20, issue #369; Highlights
+  5.4 and the log's record 106): the masses and the charges are the
+  initialisation, the catalog's declared contents and charge per unit, not
+  derivable in the Beam Law (the standalone map of the paid exchange
+  reproduces the engine and selects no content); the rungs are inputs and
+  there is nothing to count. Kept as history; the number A10 also names the
+  Heisenberg run registered below under the Beam Law, a different
+  experiment.
 
 ### A11. The wide-phase run at the real N
 

@@ -1,13 +1,16 @@
 """Literal placement, dependency provenance and refusal before physical execution."""
 
 import hashlib
+import importlib.util
 import json
+import sys
 from copy import deepcopy
 from pathlib import Path
 
 import pytest
 
 from event_universe.configuration_validation import validate_configuration
+from event_universe.events import NatureBeamSimulation
 from event_universe.events.world import parse_nature_beam_world
 from event_universe.world_loading import BUNDLE_FORMAT, DocumentSyntaxError, load_world, main
 
@@ -306,3 +309,240 @@ def test_plain_escaped_surrogate_names_keep_the_existing_parser_domain():
     assert loaded.portable_source == source
     assert loaded.world == parse_nature_beam_world(plain)
     assert json.loads(loaded.expanded_source)["model_id"] == chr(0xD800)
+
+
+# -- families in definitions (event-entities-v2, 2026-09-20) -------------------------
+#
+# The model owner's decision of 2026-09-20 (record 113): one canonical
+# definition per family, referenced by the worlds. A definition of the
+# second format may carry `families`, merged into the expanded world by name:
+# (v2-a) the inline families first, then each instance's in declaration
+# order, a name already present kept when its keys agree; (v2-b) a differing
+# key is refused naming the family and the key; (v2-c) a definition of a
+# family alone (no measured Event) is admitted; (v2-d) a world whose
+# families come from a definition expands to the same bytes and the same
+# parsed world as the inline world, and runs the same; (v2-e) the first
+# format refuses `families`; (v2-f) every shipped definition of
+# `examples/events/entities/` places and parses, every family of the
+# register is defined once, and the files are their generator's.
+
+ROOT = Path(__file__).resolve().parents[1]
+ENTITIES = ROOT / "examples" / "events" / "entities"
+EXAMPLES = ROOT / "examples" / "events"
+
+
+def versioned(families=None, measured=None, detectors=None, name="three"):
+    """A second-format definitions document with one definition."""
+    return {
+        "format": "event-entities-v2",
+        "entities": [
+            {
+                "name": name,
+                "families": [] if families is None else families,
+                "measured": [] if measured is None else measured,
+                "detectors": [] if detectors is None else detectors,
+            }
+        ],
+    }
+
+
+def placed(world, entities):
+    return load_world(bundle(world, entities))
+
+
+def test_families_of_a_definition_merge_into_the_world_by_name():
+    """(v2-a): inline first, then the instances' in order; an agreeing repeat kept once."""
+    world = authored()
+    world["families"] = [{"name": "carrier", "quantum": 1}]
+    world["entities"] = [
+        {"name": "a", "definition": "three", "position": [1, 1, 0]},
+        {"name": "b", "definition": "three", "position": [5, 5, 0]},
+    ]
+    entities = versioned(
+        families=[{"name": "carrier", "quantum": 1}, {"name": "dust", "quantum": 0, "phase": False}],
+        measured=[{"position": [0, 0, 0], "family": "dust", "amount": 2, "fixed": True}],
+    )
+    loaded = placed(world, entities)
+    assert [family.name for family in loaded.world.families] == ["carrier", "dust"]
+    assert json.loads(loaded.expanded_source)["families"] == [
+        {"name": "carrier", "quantum": 1},
+        {"name": "dust", "quantum": 0, "phase": False},
+    ]
+    assert [event.position for event in loaded.world.measured] == [(1, 1, 0), (5, 5, 0)]
+
+
+@pytest.mark.parametrize(
+    "inline,declared,key",
+    [
+        ({"name": "carrier", "quantum": 1}, {"name": "carrier", "quantum": 2}, "quantum"),
+        ({"name": "carrier", "quantum": 1}, {"name": "carrier", "quantum": 1, "phase": True}, "phase"),
+        ({"name": "carrier", "quantum": 1, "charge": 0}, {"name": "carrier", "quantum": 1}, "charge"),
+    ],
+)
+def test_a_differing_key_is_refused_naming_the_family_and_the_key(inline, declared, key):
+    """(v2-b)."""
+    world = authored()
+    world["families"] = [inline]
+    entities = versioned(families=[declared])
+    with pytest.raises(ValueError, match=f"family 'carrier'.*different key '{key}'"):
+        placed(world, entities)
+    # Two instances of two definitions that disagree are refused the same way.
+    world["families"] = []
+    world["entities"] = [
+        {"name": "a", "definition": "three", "position": [1, 1, 0]},
+        {"name": "b", "definition": "other", "position": [5, 5, 0]},
+    ]
+    entities["entities"].append({**versioned(families=[inline], name="other")["entities"][0]})
+    with pytest.raises(ValueError, match=f"family 'carrier'.*different key '{key}'"):
+        placed(world, entities)
+
+
+def test_a_definition_of_a_family_alone_is_admitted():
+    """(v2-c): no measured Event, no detector; the family reaches the world."""
+    world = authored()
+    del world["families"]
+    world["measured"] = [
+        {
+            "position": [0, 0, 0],
+            "family": "carrier",
+            "amount": 1,
+            "fixed": True,
+            "table": {"carrier": "pass"},
+        }
+    ]
+    loaded = placed(world, versioned(families=[{"name": "carrier", "quantum": 1}]))
+    assert [family.name for family in loaded.world.families] == ["carrier"]
+    assert len(loaded.world.measured) == 1
+    # Without a family the empty definition is still refused, as in the first format.
+    with pytest.raises(ValueError, match="at least one Event"):
+        placed(authored(), versioned())
+
+
+def test_a_world_from_a_definition_expands_to_the_inline_bytes_and_runs_the_same():
+    """(v2-d): the same expanded document, the same parsed world, the same records."""
+    event = {
+        "position": [4, 4, 0],
+        "family": "carrier",
+        "amount": 1,
+        "fixed": True,
+        "table": {"carrier": "measure"},
+    }
+    inline = authored()
+    del inline["entity_definitions"], inline["entities"]
+    inline["measured"] = [event]
+    world = authored()
+    del world["families"]
+    world["entities"] = [{"name": "the", "definition": "three", "position": [4, 4, 0]}]
+    entities = versioned(
+        families=[{"name": "carrier", "quantum": 1}],
+        measured=[{**event, "position": [0, 0, 0]}],
+    )
+    defined = placed(world, entities)
+    plain = load_world(json.dumps(inline).encode("utf-8"))
+    assert json.loads(defined.expanded_source) == {**inline, "detectors": []}
+    assert defined.world == plain.world == parse_nature_beam_world(inline)
+    records = []
+    for loaded in (plain, defined):
+        lines = []
+        simulation = NatureBeamSimulation(loaded.world, lines.append)
+        for _ in range(3):
+            simulation.step()
+        records.append((lines, simulation.books(), simulation.snapshot()))
+    assert records[0] == records[1]
+
+
+def test_a_table_entry_of_a_window_alone_is_admitted_in_a_definition():
+    """A definition's table entry may omit `rule`, as a world's may: the
+    family's default rule applies (the world parser's contract)."""
+    entities = definitions()
+    entities["entities"][0]["measured"][0]["table"] = {"carrier": {"phase_window": 0}}
+    loaded = load_world(bundle(None, entities))
+    assert len(loaded.world.measured) == 3
+    entities["entities"][0]["measured"][0]["table"] = {"carrier": {"phase_window": 0, "formula": "x"}}
+    with pytest.raises(ValueError, match="unsupported keys"):
+        load_world(bundle(None, entities))
+
+
+def test_the_first_format_refuses_families_and_keeps_its_rules():
+    """(v2-e)."""
+    entities = definitions()
+    entities["entities"][0]["families"] = [{"name": "carrier", "quantum": 1}]
+    with pytest.raises(ValueError, match="unsupported keys"):
+        load_world(bundle(entities=entities))
+    entities = versioned(families=[{"name": "carrier", "quantum": 1, "formula": "x"}])
+    with pytest.raises(ValueError, match="unsupported keys"):
+        load_world(bundle(entities=entities))
+    entities = versioned(families=[{"name": "carrier", "quantum": 1}, {"name": "carrier", "quantum": 1}])
+    with pytest.raises(ValueError, match="duplicate family name"):
+        load_world(bundle(entities=entities))
+    entities = versioned()
+    entities["format"] = "event-entities-v3"
+    with pytest.raises(ValueError, match="format must be"):
+        load_world(bundle(entities=entities))
+
+
+def shipped_definitions(name: str) -> dict[str, object]:
+    return json.loads((ENTITIES / name).read_text(encoding="utf-8"))
+
+
+def register_family_names() -> set[str]:
+    names: set[str] = set()
+    for path in sorted(EXAMPLES.rglob("*.json")):
+        document = json.loads(path.read_text(encoding="utf-8"))
+        if isinstance(document, dict) and isinstance(document.get("families"), list):
+            names.update(str(family["name"]) for family in document["families"])
+    return names
+
+
+def test_the_shipped_definitions_are_the_generators_and_define_every_family_once():
+    """(v2-f): the files equal `make_definitions.py`'s documents; the 47 names once."""
+    path = ENTITIES / "make_definitions.py"
+    spec = importlib.util.spec_from_file_location("entities_make_definitions", path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules["entities_make_definitions"] = module
+    spec.loader.exec_module(module)
+    assert shipped_definitions("families.json") == module.families()
+    assert shipped_definitions("apparatus.json") == module.apparatus()
+    defined = [
+        family["name"]
+        for entity in shipped_definitions("families.json")["entities"]
+        for family in entity["families"]
+    ]
+    assert len(defined) == len(set(defined))
+    assert set(defined) == register_family_names()
+
+
+def entity_world(reference: str, definition: str, position: list[int]) -> dict[str, object]:
+    return {
+        "law": "beam",
+        "model_id": "entities-placement-test",
+        "shape": [9, 9, 3],
+        "ticks": 3,
+        "K": 4096,
+        "N": 64,
+        "release": [1, 1],
+        "suspension": 0,
+        "amplitude": True,
+        "families": [{"name": "light", "quantum": 1}],
+        "entity_definitions": reference,
+        "entities": [{"name": "it", "definition": definition, "position": position}],
+    }
+
+
+@pytest.mark.parametrize("reference", ["entities/families.json", "entities/apparatus.json"])
+def test_every_shipped_definition_places_parses_and_runs(reference):
+    """(v2-f): each definition placed alone in a small world of `K` 4096 under
+    the amplitude key parses through the canonical loader and runs three
+    intervals with the books balanced."""
+    for entity in shipped_definitions(Path(reference).name)["entities"]:
+        world = entity_world(reference, entity["name"], [4, 4, 1])
+        loaded = load_world(json.dumps(world).encode("utf-8"), base_dir=EXAMPLES)
+        names = [family.name for family in loaded.world.families]
+        assert names[0] == "light" and len(names) == len(set(names)), entity["name"]
+        for family in entity["families"]:
+            assert family["name"] in names, entity["name"]
+        assert len(loaded.world.measured) == len(entity["measured"]), entity["name"]
+        simulation = NatureBeamSimulation(loaded.world)
+        for _ in range(3):
+            simulation.step()
+            assert simulation.books()["balanced"], entity["name"]

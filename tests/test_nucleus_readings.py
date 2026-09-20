@@ -80,13 +80,22 @@ def test_read_run_reads_the_runners_record(tmp_path, monkeypatch):
     assert (first.family, first.start, first.kick) == ("p", (3, 4, 4), (0, 0, 0))
     assert first.push == (128, 0, 0) and second.push == (-128, 0, 0)
     assert first.push_by_family == {"p": (-7936, 0, 0), "g": (8064, 0, 0)}
+    # The step drive (2026-09-20): p1 hands at ticks 4 (384), 7 (256) and
+    # 10 (128), p2 back at 5 (-128) and 9 (-256); test_contact (a) derives
+    # them (the rule as it was: 3, 3, 640 and p2 never handing).
     assert (first.contacts, first.first_contact, first.largest_handed, first.handed_to_zero) == (
         3,
-        3,
-        640,
+        4,
+        384,
         True,
     )
-    assert second.contacts == 0 and first.steps == 0 and second.steps == 0
+    assert (second.contacts, second.first_contact, second.largest_handed, second.handed_to_zero) == (
+        2,
+        5,
+        256,
+        True,
+    )
+    assert first.steps == 0 and second.steps == 0
     assert first.strong_reads == 11 and second.strong_reads == 11
     assert min(reading.lifetime_clicks) == 4 and reading.lifetime_clicks[4] == 12
     assert first.cumulative[:4] == [(0, 0, 0), (128, 0, 0), (256, 0, 0), (384, 0, 0)]
@@ -96,7 +105,13 @@ def test_read_run_reads_the_runners_record(tmp_path, monkeypatch):
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         events = [json.loads(line) for line in stream if line.strip()]
     handed = [e for e in events if e["event"] == "contact"]
-    assert [(e["tick"], e["component"]) for e in handed] == [(3, 256), (4, 128), (9, 640)]
+    assert [(e["tick"], e["component"]) for e in handed] == [
+        (4, 384),
+        (5, -128),
+        (7, 256),
+        (9, -256),
+        (10, 128),
+    ]
     border = [e for e in events if e["event"] == "click" and e["detector"] == "lifetime"]
     assert len(border) == sum(reading.lifetime_clicks.values()) == 12 * 9
     assert TOOL.find_runs(tmp_path)[0].name == "pair"

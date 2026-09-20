@@ -517,8 +517,16 @@ order with each step's inverse:
    proportional to the content (the equivalence principle) and the world
    chooses how slow its slowest motion is; every step registered before
    the label's scale is the same step, `by_clock(age, Q n, Q k) =
-   by_clock(age, n, k)`. No remainder is kept; the count is the whole
-   part off the clock (implementation note 15; `tests/test_push_width.py`).
+   by_clock(age, n, k)`. Since 2026-09-20 (note 17 as amended, the step
+   drive) the count is the whole part of the SIGNED distance the momentum
+   has driven, kept on the body's record as `drive` per axis (`drive +=
+   p` at every self-creation in which it may step, one Link on the + side
+   and `drive -= Q x S x M + |p|` at or beyond +D, one Link on the - side
+   and `drive += Q x S x M + |p|` at or beyond -D; signed since record
+   126 of the same day, the first form's `|p|` being history), the same
+   integers at a momentum of one sign as the whole part off the clock
+   (implementation notes 15 and 17; `tests/test_push_width.py`,
+   `tests/test_step_drive.py`).
 6. **The border `lifetime`; then merge identical rows and sort by Node.**
    Since 2026-09-20 (note 31 (vii)) every row of a family with a
    `lifetime` whose whole age is at or beyond it after this interval's
@@ -1044,7 +1052,68 @@ implementation's part of the contract. The design above is unchanged.
     the count; the momentum is untouched by the step; `run.json` records
     `width`. The parser refuses 0, a negative width, a string and a
     fraction naming the key (`tests/test_push_width.py`; the experiment
-    that uses it is series D in EXPERIMENTS.md).
+    that uses it is series D in EXPERIMENTS.md). **Amended on 2026-09-20,
+    the step drive (superseded for the moving body only: record 107, the
+    findings, and record 108, the model owner's decision, "yes; let him
+    give a generic solution if he can"; the owner on series G2's finding,
+    "1 and 2 are very important for a solution and a new run"; change 2,
+    the push at the relative speed, not built as proposed, record 110;
+    the physicist's design RULES.md section 1 (docs/designs/hubble_stars/ on branch `claude/series-g2-stars`); `tests/test_step_drive.py`).**
+    Read at the current momentum, the whole part `floor(age |p| / D)`
+    stalled a body for tens of intervals under a falling momentum and then
+    stepped it at every interval (series G2: a star at 0.019 Links per
+    interval stepping five Links in six intervals, faster than the ray;
+    the Links made equal to age x v_now). The count is now the whole part
+    of the distance the momentum has driven: the body's own record
+    carries per axis one bounded integer `drive_a` (0 at the start, as
+    its age is on its record and nothing at a Node), and at every
+    self-creation in which it may step `drive_a += p_a`, the SIGNED
+    component; when `drive_a >= Q S M + |p_a|` it steps one Link on the
+    axis's + side and subtracts that, when `drive_a <= -(Q S M + |p_a|)`
+    one Link on the - side and adds it (record 126 of 2026-09-20, the
+    signed drive: the first form accumulated |p_a| and took the direction
+    from the sign at the fire, so a deuteron's neutron, charged by
+    fourteen intervals toward the proton, stepped away after the contact
+    handed it the proton's component; "the distance the momentum has
+    driven" is the signed sum, and the |p| form equals it only while the
+    momentum keeps one sign). With a momentum of one sign the step fires
+    exactly when `floor(n |p| / D)` increments (the drive is the signed
+    remainder of that division): every world whose bodies take no push
+    replays byte-identical, and every world whose momenta keep their sign
+    on every axis steps as under the first form; under a push the motion
+    follows the momentum's signed history at every self-creation, a
+    reversal first cancelling what was driven the other way, and never two
+    Links fall in one interval (one D is subtracted per self-creation; a
+    residual earned at a larger momentum fires at the following
+    self-creations, one Link each, the distance the momentum had driven).
+    The drive of every axis advances at every such self-creation, and the
+    frame's order stands as before, x before y before z: a later axis
+    whose drive reaches its D in the interval of an earlier axis's step
+    (made, refused or an escape) loses that Link, its D subtracted,
+    nothing carried, so a body with momentum on two axes at a constant
+    momentum steps exactly where it did. The turn by momentum (note 30
+    (ii)) reads its k0 off the record's count of the rule's fires on the
+    axis, `axis_steps` (a lost or refused step counted, as the whole part
+    off the clock counted it), the same number at a constant momentum.
+    The count primitive is `core.integer.by_drive(drive, rate, D)`, the
+    whole part of an accumulated signed rate on the reader's own record,
+    the count -1, 0 or +1 (the model owner's record 108, "a generic
+    solution if he can": one primitive every count against a rate could
+    use, equal to `by_clock` wherever the rate is constant and of one
+    sign); the step reads it now, and the
+    clock's turn, the owed count, the release and the lamp keep `by_clock`
+    with their docstrings saying they are the same count where the rate
+    is constant, so nothing registered outside the pushed-body worlds
+    moves. `run.json`, `state.json` and the `step` line carry `drive`; a
+    declared `drive` is refused as an unknown key. Re-registered under it, the old
+    integers kept as history in TEST_EXPECTATIONS.md: the bodies pushed or
+    handed a momentum in `tests/test_contact.py` (a), (d), (e),
+    `tests/test_nature_beam_clock.py` (d), `tests/test_paid_charge.py` (d)
+    and `tests/test_nucleus_readings.py`, each one self-creation later
+    than the count off the clock stepped it (a body that receives a
+    momentum begins its drive at 0 instead of stepping off its age). "No
+    remainder is kept" above stands for the clock, the release, the lamp
+    and the owed count, which read a rate against an age no push changes.
 18. **The one label; no collision at a measured event's Node** (the
     physics-rule reviewer's F1, blocking, and the model owner's decision on
     its case (c), the night of 2026-09-19; `tests/test_nature_beam_push.py` (h),
@@ -2373,3 +2442,215 @@ implementation's part of the contract. The design above is unchanged.
     if a step skipped a tick, is corrected, and nature's gamma is recorded
     as a limit of the law in HYPOTHESES.md entry 21 (series J4 the reading
     to make), not tuned in. Nothing of the engine changes.
+
+37. **The amplitude law, `amplitude-v1`: the record on the row, the
+    normal form, the split, the layer and the world's clicks read from
+    the GameBoard's paths** (the model owner, 2026-09-20, Highlights 5.4,
+    "DECIDED: `amplitude-v1` is built, with the four recommendations and
+    the four unifications"; the physicist's and the mathematician's
+    design, `docs/designs/amplitude-v1/DESIGN.md`, its check scripts the
+    integers; the branch `amplitude-impl` from `7f986124`, the commits (i)
+    `ca2e5fad`, (ii) `9ca0600c`, (iii) `578742e3`, (iv) `f3d4ad54`, (v)
+    `62369cb8` and this note's; the physics-rule reviews of (i)/(ii) and
+    of (iii) applied; MIGRATION (i) to (vi), ENGINE, TERMINOLOGY,
+    TEST_EXPECTATIONS, VALIDATION and the register's series L). Under the
+    world key `amplitude` and nowhere else, the GameBoard computes every
+    path of a record locally and exactly, and the world's list of clicks
+    is read from those paths by the birth phase u on a ladder of the
+    record's offers; without the key every world reads as it did, byte for
+    byte (the gate set, (viii)). The law in the world's terms:
+    **(i) The record on the row and the normal form** (the design's 1 and
+    2.3; commit (i)). Every row of the store carries three columns beyond
+    the ray's: `record` (the identity of the birth that made it, the
+    lamp's number x 2^32 + the birth's ordinal, `amplitude.record_identity`;
+    0 on a row of no record, which every row is without the key), `branch`
+    (the arm and the label packed, arm x 2^32 + label, bit k of the label
+    the arm k's; 0 without the key) and `multiplicity` (m, the product of
+    the splits' norms along the path, 1 without the key). The merge is the
+    normal form of the design's module |p + N/2> = -|p>: two rows of one
+    record, one branch and one multiplicity at one Node and direction whose
+    phases are opposite cancel, the signed sum by magnitude on every group
+    (the books' `cancelled` lines; N3 of the review: (i) alone kept a guard
+    that (ii) removed, so (i) is not runnable on a record alone,
+    MIGRATION). The flight, the collision and the push never read the
+    three columns (N10): a branched row pushes matter by its amount as
+    every row does, the owner's (c), the sum over the branches; the K
+    finding of (ix) is the next item on that.
+    **(ii) The split and the birth** (the design's 2.1, 2.3 and 3.1;
+    commit (ii); the owner's unification (2)). A `rerelease` entry under
+    the key declares `weights` (one integer per declared direction),
+    `turns` and `inputs` (a row of weights and turns per arrival
+    direction, N6: the beam splitter's matrix [[b i, a], [a, b i]] / c,
+    unitary, its conjugate transpose the inverse through the merge); a row
+    (w, m, p) arriving is re-emitted as (w a_i, m x A, p + t_i) with A the
+    sum of the squares; the split is the re-emission with a vector, one
+    rule, and a split is not a click (B1 of the review of (i)/(ii)): no
+    pointer gate and no window at a `rerelease` under the key, the amount
+    gate alone; the units a split creates, sum (a_i - 1) w per row, enter
+    `released` as every re-creation does (N5: the design's `split` line is
+    not a line of the books, the identity closes without it). A lamp
+    births one record per self-creation, k rows of one unit on its k
+    directions with the multiplicity k (the rate [1, 1] alone under the
+    key: r units per direction would be r identical paths with one birth,
+    refused; `branches` and `arms` give the joint labels of a pair or a
+    GHZ triple, one row per label per direction, m = paths x norm, a lamp
+    short of the quanta refused, S4). A row of a record taken home is
+    re-created with its columns and its m kept, apportioned whole as a row
+    of no record is (N8: no acceptance world sends a record's row home).
+    **(iii) The pair form of `phase_per_link`** (the design's frequency;
+    the owner's unification (1); N1, N2). Under the key a family may
+    declare [n, d], the phase per interval of age: a row turns
+    `by_clock(age, n, d)` at every walk that advances its age, the row's
+    own floor per segment from its age 0 at its birth or re-emission,
+    sum_j floor(A_j n / d) over a path's segments, equal to the design's
+    one floor at the click when d = 1 (every L1 world) and within one step
+    per segment otherwise; the integer form turns per Link crossed as it
+    did and the two are not the same number on the flight table (a heading
+    crosses 32 Links in 55 intervals). The default is the integer 0, not
+    the lamp's own turn: a family that turns in transit declares it.
+    **(iv) The layer, the reading `sum` and the ladder** (the design's 3,
+    5 and 7; commit (iii); the owner's unification (4)). The layer
+    (`events/amplitude.py`) is a host register beside the GameBoard, not a
+    Node's: it holds, per live record, its offers per Node (the pointers,
+    the residual units, the content and the momentum the rows carried
+    there), fed by the engine's `birth`, `split`, `cancel`, `rotate`,
+    `join` and `end`, and it completes a record when its live units are 0:
+    the cells (a set's weight the sum over its Nodes of the square of the
+    coherent sum over the labels of the products of the arms' residuals,
+    the decision of the review of (iii) on the owner's point 5: coherent
+    within one Node, incoherent across a set's Nodes), the rungs b_k =
+    (2 N C_k + Total) // (2 Total) at the nearest integer, u the birth's
+    phase choosing the cell, the Node within the cell chosen by the same
+    rungs over the Nodes (c_j = (2 W D_j + T) // (2 T)), the `gather` line
+    with the chosen set, arm and channel, the Node, the content and the
+    momentum, the weight, the total and the cells. `sum` is the one
+    pointer's reading at the record's scope (`DetectorSet.scope`: crowd,
+    record or none; unification (4) done as a scope, not as a fourth
+    reading): a `sum` set ends the units it takes with an offer and clicks
+    nothing itself; the crowd's readings `wave` and `beam` are untouched,
+    and a free family's rows keep the unkeyed apportioning and gates at
+    every entry (B2). One birth per rebirth: a record that chose a `sum`
+    re-emitter is born again there once, its rows by the split (B1 of the
+    review of (iii)). A `phase_window` on a `rerelease` whose Node reads no
+    `sum` set is refused at load (S3); the layer's set names are reserved
+    under the prefix `measured:` (S5); the multiplicity through every
+    re-emitter of the world is bounded at load within 2^62 - 1 (S6). The
+    reading tool `tools/amplitude_path.py` replays a run's register
+    through the layer and equals `run.json`'s `world` on every keyed run.
+    **(v) The pair, the rotation at the window and the label click** (the
+    design's 4; commit (iv)). A `sum` set whose window has the setting s
+    reads the rotation U_s = [[C'[s], S'[s] v(t)], [-S'[s], C'[s] v(t)]]
+    on the half-angle tables of 2N into its channels + and -, t the table
+    entry's `turn` on the label-1 column (0 by default), the setting
+    declared or read from a reading (at N = 4096 the tables of 2N do not
+    exist: an even setting reads the 4096 table at s / 2, an odd one is
+    refused); the click of a pair is one cell of the joint labels'
+    products over the arms, so the marginals are exact and the outcome of
+    the pair is the one u of the one record.
+    **(vi) The gate and the label rotation** (the design's 10 and its
+    `gate.py`; commit (v)). A `rerelease` entry declares `rotate`
+    (`world.Rotation`: one label bit turned on the GameBoard, two rows per
+    row on the bit cleared and set with the amounts w C' and w S' of the
+    half-angle tables and the matrix's signs, m x 65536) and `gate`
+    (`world.Gate`, the CNOT between the records of distinct lamps pending
+    at the entry, one record per emitter, the earliest born, exactly
+    `parties`; the control the record whose rows arrive on the entry's
+    declared `control` direction, required for two parties or more, so
+    that the circuit does not change with the order of the `measured`
+    list (the review of (v), S1); with `hold` the entry holds the rows
+    pending until rows of `parties` distinct emitters are pending at it,
+    read from the rows alone, the design's local hold, the layer's live
+    count left to the completion (B3); the layer's `join`: the joint
+    labels the product of the label sets permuted from the control's bit
+    0, every row replicated over the other records' labels, the units the
+    copies add booked on the live count as a split books its rows (B1:
+    until this fix every gathered record of the CNOT worlds ended at live
+    -1), the identities aliased; a record that reaches a gate with units
+    elsewhere or with an offer already made is refused by the layer,
+    since its rows and offers elsewhere would keep their pre-join labels
+    and drop out of the joint cells (B2; the design's lazy relabelling is
+    not built); a gate of one party relabels the rows present and joins
+    nothing); the `gate` and `rotate` lines. The register's ceiling: three label rotations on a path (m =
+    2^48) fit, four (2^64) are refused at load naming the Node, Grover's
+    six (2^96) are not a world of the GameBoard, as the design states.
+    **(vii) What the worlds gave** (series L, EXPERIMENTS; every integer
+    the design's check scripts' unless named). L1: the Mach-Zehnder at
+    one port (D1/D2 over 64 births: 64/0, 0/64, 32/32, 64/0 with D2's rows
+    cancelled on the GameBoard, 63/1 on (3, 4), the unequal arms 64/0,
+    32/32 and 0/64 at the pair 0, [8, 1] and [16, 1]), Elitzur-Vaidman
+    32/17/15 and 32/16/16, the same list on a second run. L2: the two
+    slits at a low rate, wall 34, screen 15, faces 15 of 64 under the
+    per-Node rule (re-pinned from 31/14/19 by the decision of the review
+    of (iii); the design's "3/5, 2/5" is not this geometry's reading,
+    every set the reading's). L3: the pair at the CHSH labels S = 176/64
+    (E x 64 = 44, -44, 44, 44), the registered quadruple 156/64, every
+    marginal 32/64, the which-path world 88/64, Bob's counters 116 Links
+    farther E = 44 (0 with the read): no maintenance. L4: GHZ's four
+    allowed triples per basis, the products -1 (XXX) and +1 (XYY, YXY,
+    YYX). L5: the CNOT pair 176/64, CNOT twice the identity, GHZ by one
+    gate of three parties the same triples. L6: S = 2896/1024 (E x 1024 =
+    724, -724, 724, 724) and S = 11584/4096 = 2.828125 (E x 4096 = 2900,
+    -2900, 2892, 2892), below 2 sqrt 2 = 2.828427 at every N; the design's
+    bound |E - cos| <= 1/N holds at N = 1024 and not at 64 (0.0196 against
+    0.0156) or 4096 (the tables' 1/256 entries round E by 0.0009 against
+    0.00024, the test pinned marked failing), and S = 2 sqrt 2 - epsilon
+    with epsilon at most 4/N holds at 1024 and 4096 and not at 64 (0.078
+    against 0.0625). Departures from the design, stated and not moved:
+    the record's total over u takes eight values from 65448/65536 to
+    65773/65536 on the (20, 21) splitter, the tables' own formula
+    (1681 q[u + 16] + q[u + 32]) / (1682 x 65536) pinned, the design's
+    0.0019 holding at u = 0 alone; the gate joins one record per lamp,
+    the earliest born, and holds a record whose rows are elsewhere (two
+    sequential gates on an entangled record are one gate of three parties
+    or one gate per arm, the design's lazy relabelling not built).
+    **(viii) The key's existence and the one click not landed.** From (i)
+    to (v) the key gates everything: the gate set of seventeen worlds (one
+    per table rule, key and family kind, the owner's change to the
+    design's test 7) replays byte-identical in `events.jsonl` and
+    `state.json` without it, `run.json` gaining the key false alone
+    (VALIDATION, the digests). The design's section 6, the record form
+    the default and the crowd's threshold path deleted, was tried at stage
+    (vi) as the owner's half-hour version (the key forced true, the `wave`
+    pointer gate off) on the gate set: three lamps are refused at load
+    (`two_slits` at the rate [64, 1], `catalog/lamp_mirror_screen` [4, 1],
+    `heisenberg/w3_beam` [47, 1]: the record form births one record per
+    self-creation), `catalog/sun_planet` fails in the run (a record's rows
+    reach the set `screen` with the multiplicities 9 and 36, one
+    multiplicity per offer), `bell/read`, `bell/a0_b8` and
+    `lensing/mass_meeting` change their clicks (their lamps at [1, 1]
+    birth records read by the ladder) and every world without a lamp
+    changes byte-wise by the columns written on its click lines and in
+    `state.json` with no value differing (`coupling/7_pp`, `one_content`,
+    `redshift/age`, `hubble/coasting_age`, `weak/j2_filter`,
+    `weak/w_exchange`, `detector/periodic_z_node`; `nucleus/deuteron_1`,
+    `weak/j3_neutron_free` and `bohr/r2` by their digests, their lines
+    not kept). Worlds outside the crowd-threshold series change, so by the
+    owner's rule stage (vi) stopped there and the key stays: the one
+    click needs the lamp's rate under the record form, a set's offer of
+    several multiplicities of one record, the columns written only where
+    a record is, and the design's test 7 restated as identity on the
+    worlds without a lamp; none is a half hour, none is done here.
+    **(ix) What is not done, and next.** Unification (3), one permutation
+    component for the collision, the meeting and the gate, is refused with
+    the reason: the collision permutes directions by the six-heading table,
+    the meeting turns phases, the gate permutes the labels of the rows of
+    different records, three different columns under three keys, and a
+    shared wrapper would add no logic and hide the three. The K finding
+    under the record's click (the coordinator's record of 2026-09-20, the
+    lensing worlds of `mass_meeting` under the key): the record's click
+    beside a mass moved to smaller y against the control's in every world,
+    -2.115, -5.208 and -4.432 pixels at the three (M, b) against the
+    crowd's -2.021, -4.345 and -2.465, and the 464 records that reached
+    the mass were absorbed whole by it; two changes are the next item, not
+    landed here (more than an hour together): u as the record's own field
+    on the row beside the running phase (u = the lamp's clock count mod N,
+    the GameBoard's rules reading the path phase, phase - u, the click
+    reading u; the test: the K record world's click centroid equals its
+    offers' expectation under uniform u within one rung) and a record's
+    row pushing matter with its share amount^2 / (m x norm) of the label,
+    the remainder booked on a ledger line (the test: the mass's momentum
+    per record equals the label times the sum of the shares). Also open:
+    the full register replay and the coverage-measured gate set (the
+    trimming pull request), the design's Grover (a world beyond the
+    register's ceiling), the design's `split` line of the books, and the
+    design's bounds at N = 64 and 4096 as stated above.

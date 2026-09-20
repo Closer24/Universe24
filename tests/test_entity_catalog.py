@@ -27,12 +27,15 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import re
 import sys
 from pathlib import Path
 
 import pytest
 
+from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.events import NatureBeamSimulation
+from event_universe.events import world as schema
 from event_universe.events.world import LAW_VALUE
 from event_universe.world_loading import load_world
 
@@ -113,3 +116,135 @@ def test_every_catalog_world_runs_with_the_books_balanced_and_its_readings_exist
         state = probe.state()
         assert state["age"] + state["waited"] == ticks, (name, probe.number)
         assert isinstance(state["owed"], int) and state["owed"] >= 0
+
+
+# -- the catalog against the parser and the register (2026-09-20) -----------------
+#
+# (d) every key the catalog names in an "Its keys today" cell is a key the
+#     world parser knows (its key sets in `world.py`, the nested keys of
+#     `rotate` and `gate`, the rules, the components, the readings, the
+#     faces and the border), or a family or column name a registered world
+#     declares (the keys of a table object are family names); (e) every
+#     family a registered world declares is named in the catalog, in a row
+#     or in the family-name table. The catalog cannot drift silently again.
+
+
+CATALOG_DOCUMENT = ROOT / "docs" / "ENTITY_CATALOG.md"
+EXAMPLES = ROOT / "examples" / "events"
+KEYS_COLUMN = "Its keys today"
+ROTATE_KEYS = {"setting", "bit", "turn"}
+GATE_KEYS = {"kind", "hold", "parties", "control"}
+VALUES = {"true", "false"}
+
+
+def register_worlds() -> list[dict[str, object]]:
+    """Every world under `examples/events` (a document with `families`)."""
+    found = []
+    for path in sorted(EXAMPLES.rglob("*.json")):
+        document = json.loads(path.read_text(encoding="utf-8"))
+        if isinstance(document, dict) and isinstance(document.get("families"), list):
+            found.append(document)
+    return found
+
+
+def register_names() -> tuple[set[str], set[str]]:
+    """The family names and the column names the registered worlds declare."""
+    families: set[str] = set()
+    columns: set[str] = set()
+    for document in register_worlds():
+        for family in document["families"]:
+            families.add(str(family["name"]))
+            columns.update(family.get("columns", {}))
+    return families, columns
+
+
+def parser_keys() -> set[str]:
+    """Every key and value word of the world file as `world.py` names it."""
+    found = set()
+    for group in (
+        schema.WORLD_KEYS,
+        schema.FAMILY_KEYS,
+        schema.MEASURED_KEYS,
+        schema.LAMP_KEYS,
+        schema.TABLE_ENTRY_KEYS,
+        schema.TRANSIT_KEYS,
+        schema.DETECTOR_KEYS,
+        schema.COLUMN_KEYS,
+        schema.BECOME_KEYS,
+        schema.WINDOW_READING_KEYS,
+        ROTATE_KEYS,
+        GATE_KEYS,
+        schema.TABLES,
+        schema.READS,
+        schema.DETECTOR_READINGS,
+        (schema.SUM_READING, schema.LIFETIME_NAME),
+        schema.FACE_NAMES,
+        schema.BOUNDARIES,
+        schema.GATE_KINDS,
+    ):
+        found.update(group)
+    return found
+
+
+def key_cells() -> list[tuple[str, str]]:
+    """The (entity, cell) pairs of every table column named `Its keys today`."""
+    cells = []
+    column = None
+    for line in CATALOG_DOCUMENT.read_text(encoding="utf-8").splitlines():
+        if not line.startswith("| "):
+            column = None
+            continue
+        parts = [part.strip() for part in line.strip().strip("|").split(" | ")]
+        if KEYS_COLUMN in parts:
+            column = parts.index(KEYS_COLUMN)
+            continue
+        if column is None or set(parts[0]) <= {"-"}:
+            continue
+        if column < len(parts):
+            cells.append((parts[0], parts[column]))
+    return cells
+
+
+def named_keys(cell: str) -> set[str]:
+    """The key words a cell names: a backticked identifier, the identifier
+    before a colon, and the string keys of a backticked JSON object."""
+    found = set()
+    for span in re.findall(r"`([^`]*)`", cell):
+        if re.fullmatch(r"[a-z_][a-z0-9_:+-]*", span):
+            found.add(span)
+        elif re.match(r"[a-z_]+\s*:", span):
+            found.add(span.split(":")[0].strip())
+        found.update(re.findall(r'"([a-z_][a-z0-9_]*)"\s*:', span))
+    return found
+
+
+def test_the_nested_key_sets_are_the_parsers():
+    """The nested keys the test spells (`rotate`, `gate`) are the parser's:
+    the parser accepts exactly them and refuses one more."""
+    assert schema._rotation({"rotate": {"setting": 1, "bit": 0, "turn": 0}}, "t", "rerelease", 64, True)
+    table = ((0, 0, 0), (0, 0, 0), *PORT_HEADINGS)
+    gate = {"kind": "cnot", "hold": True, "parties": 2, "control": [0, 1, 0]}
+    assert schema._gate({"gate": gate}, "t", "rerelease", True, table)
+    with pytest.raises(ValueError):
+        schema._rotation({"rotate": {"setting": 1, "extra": 0}}, "t", "rerelease", 64, True)
+    with pytest.raises(ValueError):
+        schema._gate({"gate": {**gate, "extra": 0}}, "t", "rerelease", True, table)
+
+
+def test_every_key_the_catalog_names_is_a_key_the_parser_knows():
+    """(d)."""
+    families, columns = register_names()
+    known = parser_keys() | families | columns | VALUES
+    cells = key_cells()
+    assert len(cells) >= 30
+    unknown = {(entity, key) for entity, cell in cells for key in named_keys(cell) if key not in known}
+    assert not unknown, sorted(unknown)
+
+
+def test_every_family_of_the_register_has_a_catalog_row():
+    """(e)."""
+    text = CATALOG_DOCUMENT.read_text(encoding="utf-8")
+    families, _ = register_names()
+    assert len(families) >= 20
+    missing = sorted(name for name in families if f"`{name}`" not in text)
+    assert not missing, missing

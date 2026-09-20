@@ -95,11 +95,21 @@ def positions(world: dict[str, object], ticks: int) -> tuple[list[int], list[int
 
 def test_width_one_is_the_rule_as_it_was():
     """(a)."""
+
     # The rule of one axis, the one place it lives (`engine.step_axis`):
-    # the sign of the Link stepped at this age, or None.
-    assert [step_axis(age, 1024, 16, 1) for age in range(1, 7)] == [None, 1, None, 1, None, 1]
-    assert step_axis(16, -64, 16, 1) is None and step_axis(17, -64, 16, 1) == -1
-    assert step_axis(9, 1024, 16, 8) == 1 and step_axis(5, 0, 16, 1) is None
+    # the sign of the Link stepped at this self-creation, or None, and the
+    # drive after it (the step drive of 2026-09-20: at a constant momentum
+    # the same self-creations as the rule off the clock).
+    def fired(momentum: int, content: int, width: int, count: int) -> list[int | None]:
+        drive, found = 0, []
+        for _ in range(count):
+            sign, drive = step_axis(drive, momentum, content, width)
+            found.append(sign)
+        return found
+
+    assert fired(1024, 16, 1, 6) == [None, 1, None, 1, None, 1]
+    assert fired(-64, 16, 1, 17)[15] is None and fired(-64, 16, 1, 17)[16] == -1
+    assert fired(1024, 16, 8, 9)[8] == 1 and step_axis(7, 0, 16, 1) == (None, 7)
     expected = [4, 5, 5, 6, 6, 7]
     assert positions(bar([mover(16, 1024)]), 6) == (expected, [0, 1, 1, 2, 2, 3])
     assert positions(bar([mover(16, 1024)], width=1), 6) == (expected, [0, 1, 1, 2, 2, 3])

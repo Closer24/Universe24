@@ -6,6 +6,319 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## Families in entity definitions, on 2026-09-20 (`event-entities-v2`; host only, no law change)
+
+The model owner's decision of 2026-09-20 (record 113 of
+[the log](LOG_2026-09-20.md): one canonical definition per family,
+referenced by the worlds instead of copying `families`; the architect's
+proposal in [entity definitions](ENTITY_DEFINITIONS.md#families-in-definitions-event-entities-v2-2026-09-20)):
+
+- A definitions document may declare `"format": "event-entities-v2"`; a
+  definition of that format may carry `families`, a list in the world's
+  family schema (`FAMILY_KEYS`), merged into the expanded world by name:
+  the inline families first, then each instance's in declaration order; a
+  name already present is kept when every key agrees and refused when one
+  differs, naming the family and the key. A definition of a family alone
+  (an empty `measured`) is admitted in the second format.
+- `event-entities-v1` is unchanged: `families` on a definition is refused
+  as an unsupported key, `measured` must hold an Event, and a world placing
+  a first-format definition expands to the same bytes as before (the gate
+  set replayed byte-identical, [validation](VALIDATION.md)).
+- Shipped: `examples/events/entities/families.json` (every family the
+  registered worlds declare, once, in the catalog's canonical form) and
+  `examples/events/entities/apparatus.json` (the external things and the
+  sources of `amplitude-v1` with the material family each is made of),
+  written by `make_definitions.py` beside them. No world references them
+  yet: the migration of the worlds per series follows stage (vii) of
+  `amplitude-v1` (the owner's order in record 113).
+- The loader's structural check of a definition's table entry no longer
+  requires `rule` in an object entry: the world parser has taken a window
+  alone (`{"phase_window": ...}`) since `amplitude-v1`, the rule being the
+  family's default, and a definition may now say what a world says (the
+  chooser's counter of `apparatus.json`). Both formats.
+- Nothing deleted.
+
+## The step drive, on 2026-09-20: the count of Links as the whole part of the driven distance
+
+The model owner's decision of 2026-09-20 on series G2's finding ("1 and 2
+are very important for a solution and a new run"; record 107 the findings,
+record 108 the owner's decision, "yes; let him give a generic solution if
+he can"; change 2 not built as proposed, record 110; the physicist's design RULES.md section 1 (docs/designs/hubble_stars/ on branch `claude/series-g2-stars`);
+[BEAM_LAW note 17](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+as amended). The identity `beam-v1` is kept: the rule is the same count
+where the momentum is constant and a repair of it where it changes.
+
+- `core.integer.by_drive(drive, rate, denominator)`, the count primitive
+  (record 108): the whole part of an accumulated SIGNED rate on the
+  reader's own record, (the count gained, -1, 0 or +1, and the drive
+  after), `by_clock` where the rate is constant and of one sign. Signed
+  since record 126 of the same day: the first form took |p| and the
+  direction from the momentum's sign at the fire, so a momentum reversed
+  by a hand-over discharged the distance driven toward the partner as a
+  Link away (the deuteron under a suspension); `drive` on the record now
+  carries the sign of the momentum that drove it (a body under a
+  negative momentum reads a negative drive; its steps are the same).
+  Every world whose momenta keep one sign on every axis steps as before;
+  a world whose momentum reverses on an axis (an orbit, a turning body, a
+  pair under a hand-over) changes: of the 33 example worlds with a free
+  body, run at their registered length under the unsigned and the signed
+  drive and compared, 16 change (the orbit `s8_r12`, `s8_r24`,
+  `s32_r12`, `s32_r24`; Bohr `r2` to `r16`; the nucleus `alpha_line`,
+  `alpha_square`, `deuteron_1_kick`; the weak `j3_deuteron`,
+  `j3_deuteron_crowd`) and 17 read the same (the coupling `1b_*`, the
+  Hubble four, `deuteron_1`, `deuteron_3`, `pp_1`, `pp_1_weak`, `pp_3`,
+  `neutron_star`, `sun_planet`, `s1_*`, `j3_neutron_free`). The changed
+  registered entries (D, H, I, J) carry a dated line "Re-read under the
+  signed drive (2026-09-20)", D and H with their verdicts re-read once
+  more in the same form; the old numbers kept as history. `engine.step_axis(drive, momentum, content, width)` reads
+  it and returns the sign of the Link stepped (or None) and the drive
+  after it, in place of `step_axis(age, momentum, content, width)`
+  returning the sign: the rule reads the body's record, not its age. The
+  clock's turn, the owed count, the release and the lamp keep `by_clock`
+  (their rate is one no push changes). A readings tool that replayed the
+  rule off the clock (`tools/coupling_readings.py`, `steps_by_rule`) calls
+  the engine's function with a drive.
+- `Measured.drive` and `Measured.axis_steps` (three integers each);
+  `run.json` and `state.json` carry them per measured event; the `step`
+  line carries `drive`. A declared `drive` on a measured event is refused
+  as an unknown key. The turn by momentum reads its k0 off `axis_steps`,
+  the count of the rule's fires on the axis (a lost or refused step
+  counted, as the count off the clock counted it).
+- The drive of every axis advances at every self-creation in which the
+  body may step; the frame's order stands (one Link per interval, x
+  before y before z, a later axis's coincident Link lost), so a body with
+  momentum on two axes steps where it did.
+- Every world whose bodies take no push replays byte-identical in
+  `events.jsonl` (the `step` line's new field aside) and in the positions,
+  momenta and books of `state.json`; the gate set's compare names the
+  worlds that change (the coupling `1b_m16`, Bohr `r2`, the nucleus
+  `alpha_square`, the weak `j3_deuteron`: bodies under a push or a
+  hand-over, each stepping one self-creation later than the count off
+  the clock stepped it). Of the 33 example worlds with a free body, 30
+  change at their registered length (every body under a push, a
+  hand-over or a lamp's recoil): the coupling `1b_m1`, `1b_m4`, `1b_m16`;
+  the orbit `s8_r12`, `s8_r24`, `s32_r12`, `s32_r24`; the Hubble
+  `coasting_scalar`, `coasting_age`, `pushing_scalar`, `pushing_age`;
+  Bohr `r2` to `r16`; the nucleus's eight; the weak `j3_deuteron`,
+  `j3_deuteron_crowd`; the catalog's `sun_planet` and `neutron_star` (no
+  number registered there); `s1_r12`, `s1_r24` and `j3_neutron_free` read
+  the same modulo those fields. Each registered entry (C, D, G, H, I, J in
+  EXPERIMENTS.md and the series READMEs) carries a dated "Re-read under
+  the step drive" line with the new numbers, the old kept as history.
+- Re-registered tests, the old integers kept as history in
+  TEST_EXPECTATIONS.md: `test_contact` (a), (d), (e),
+  `test_nature_beam_clock` (d), `test_paid_charge` (d),
+  `test_nucleus_readings` (bodies pushed or handed a momentum).
+
+## The amplitude law, on 2026-09-20, (i): the world key `amplitude`, the record on the row and the normal form (`amplitude-v1`)
+
+The model owner's decision of 2026-09-20 (Highlights 5.4, "DECIDED:
+`amplitude-v1` is built, with the four recommendations and the four
+unifications"), on the physicist's and the mathematician's design
+(docs/designs/amplitude-v1/DESIGN.md); [BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
+The first commit, no behaviour change without the key:
+
+- The world key `amplitude` (true or false, false by default; the identity
+  `amplitude-v1` under `hypotheses` and the key in `run.json` when true;
+  refused with N below 4 and with a lamp's `rate` other than [1, 1]).
+- The store gains the three int64 columns `record`, `branch` and
+  `multiplicity` (`nature_beam.FIELDS`, `IDENTITY_FIELDS`; `NatureBeam`
+  carries them with the defaults 0, 0, 1; `NatureBeam.record` is renamed
+  `record_line`, since `record` is now the row's field, and `state.json`
+  writes the three only under the key). A row of no record (every row
+  without the key, a declared ray in transit under it) carries 0, 0, 1,
+  which add no bit to the packed merge key.
+- `NatureBeamStore.merge(modulus)`: under the key the normal form with the
+  cancel (antiphase rows of one record subtract; what it removed returned
+  per (record, direction)); `Ledger.cancelled_amount`, `cancelled_content`
+  and `cancelled_momentum`, the books' `cancelled` lines and
+  `momentum.cancelled`, written under the key only.
+- Nothing deleted. Every example world replays byte-identical in
+  `events.jsonl` and `state.json` without the key; `run.json` gains
+  `amplitude` false ([validation](VALIDATION.md)).
+
+## The amplitude law, on 2026-09-20, (ii): the split, the birth of a record and the phase per interval of age
+
+The second commit of `amplitude-v1` (the design's sections 2.1, 2.3 and
+3.1; the owner's unifications (1) and (2)); no change without the key:
+
+- The split is `rerelease` with weights (`world.Split`, one rule): a
+  `rerelease` entry may declare `weights`, `turns` and `inputs` (the rows
+  of weights selected by the arrival direction; the design's single
+  vector cannot make a beam splitter, whose transmitted and reflected
+  weights depend on the side a row comes from, so the table gained its
+  `inputs`); under the key every re-emitted row (w, m, p) becomes the rows
+  (w a_i, m x A, p + t_i), the equal split where nothing is declared; the
+  apportioning as it was without the key. `PendingRow` carries `record`,
+  `branch`, `multiplicity`, `split` and `arrival`; `FamilyPlan` the taken
+  rows' columns.
+- The birth of a record: a lamp under the key (the rate [1, 1] alone)
+  births one record per self-creation with a release, one row of amount 1
+  per direction with the multiplicity the directions' count, the identity
+  the lamp's number x 2^32 + the birth's ordinal (`Measured.births`,
+  `nature_beam.record_identity`); a lamp may declare `turns` per direction.
+- The phase per interval of age: `phase_per_link` accepts the pair
+  `[n, d]` under the key (`FamilyDefinition.phase_per_age`; the record
+  carries the key as declared, `declared_phase_per_link`): the row turns
+  `by_clock(age, n, d)` at every walk that advances its age, in the
+  inverse walk back; the integer form is per Link crossed as it was. The
+  two forms are not one number on the flight table (the design's
+  premise "one Link per interval" does not hold on it), which the report
+  to the owner names.
+- The reading `sum` is accepted on a detector under the key (its record
+  the layer's, the next commit).
+- Nothing deleted. The gate set replays byte-identical without the key.
+  (Commit (i) alone was not runnable on a record alone: its merge kept the
+  signed sum where nothing cancelled, a lone far-half row reading a
+  negative amount; (ii) takes the magnitude on every group.)
+
+## The amplitude law, on 2026-09-20, (iii): the layer, the reading `sum` and the ladder
+
+The third commit of `amplitude-v1` (the design's sections 3, 5 and 7;
+the owner's decisions (a) the ladder normalised by the total with the
+rungs at the nearest integer and (c) a branched row pushes matter by its
+amount; the review of (i) and (ii)); no change without the key:
+
+- `events/amplitude.py`, the layer: a host register beside the GameBoard
+  that reads every record's ends (the clicks at the sets, the faces and
+  the border, the reads and re-emissions at `sum` sets), accumulates the
+  pointer per (set, arm, label), and at the record's completion (its live
+  units 0) takes the ladder over its cells, `b_k = (2 N C_k + Total) //
+  (2 Total)`, the cell of the birth phase u and the `gather` line (the
+  world's row); `run.json` gains `world`, `open` and `layer`;
+  `tools/amplitude_path.py` replays the register through it.
+- A split is not a click (the decision on the review's B1): under the
+  key a `rerelease` entry takes no pointer gate and no window, and a
+  `sum` set no pointer gate; the amount gate stays. Without the key the
+  gate is what it was. `PendingRow.offered`: the units a `sum`
+  re-emitter absorbed ended there; every other re-emitter's stay live
+  until the split re-creates them.
+- The reading `sum` is the pointer's reading at the record's scope
+  (`DetectorSet.scope`, the owner's unification (4)); its `record` line
+  is written at the gather with the scope.
+- `NatureBeamStore.merge` returns the units cancelled per (record,
+  direction, content per unit), no division in the booking (S3); the
+  pair form of `phase_per_link` is bounded at the parse by (age_bound +
+  1) x n <= 2^62 - 1 (S1); a lamp short of one quantum per direction
+  refuses the birth (S4); the `split` line carries the entry's phase
+  `u`; a rotated `sum` re-emitter's line carries `window` and `turn`.
+- Series L gains `slits_low` and its reference `slits_one`
+  (`examples/events/amplitude/`), the two slits at a low rate.
+- Nothing deleted.
+
+## The amplitude law, on 2026-09-20, (iv): the pair, the rotation at the window and the label click
+
+The fourth commit of `amplitude-v1` (the design's section 4); no change
+without the key:
+
+- A lamp under the key declares `branches` (the joint labels of a birth
+  with their weights) and `arms` (the directions that are separate
+  quanta); the birth is one row per label per direction, the branch
+  packing the arm and the label (`amplitude.branch_of`), the
+  multiplicity the paths per arm times the norm.
+- A table entry declares `turn` under the key: the rotation a `sum` set
+  reads at its window's setting turns the label-1 column by it
+  (`MeasuredDefinition.label_turns`, `Measured.label_turns`). The window
+  of a `sum` set is the rotation's setting, declared or read from a
+  reading (the choosers' form), never a gate; the layer's `Offer.setting`
+  and the gather's `windows` carry it.
+- A `read` entry on a `sum` set is a which-path factor: the labels are
+  its channels, the joint a product per label (`Offer.read`).
+- Series L gains L3 (`bell_choosers`, `bell_<a>_<b>`, `path_<a>_<b>`,
+  `bell_16_24_far`, `path_16_24_far`) and L4 (`ghz_<basis>`).
+- Nothing deleted.
+
+## The amplitude law, on 2026-09-20, (v): the gate, the label rotation and the review of (iii)
+
+The fifth commit of `amplitude-v1` (the design's section 10; the review
+of (iii)); no change without the key:
+
+- A `rerelease` entry declares `rotate` (the rotation of one label bit on
+  the GameBoard, `world.Rotation`) and `gate` (the CNOT between the records
+  of distinct lamps pending at the entry, `world.Gate`; the layer's
+  `join`, the identities aliased); the `gate` and `rotate` lines. The
+  register's ceiling is checked at load: the multiplicity through every
+  re-emitter of the world within 2^62 - 1 (S6).
+- Interference is coherent within one Node only (the decision on the
+  owner's point 5): the layer's offers are per Node, a set's cell weight
+  the sum over its Nodes of the per-Node squares, the click's Node chosen
+  by the rungs over the Nodes; the gather names the Node, the content and
+  the momentum of the chosen rows (S1). The two-slit expectations are
+  re-pinned (wall 34, screen 15, faces 15 of the 64 births).
+- One birth per rebirth at a chosen `sum` re-emitter, every re-created
+  row's units by its split (B1); a free family's rows keep the unkeyed
+  apportioning and gates at every entry (B2); a `phase_window` on a
+  `rerelease` whose Node reads no `sum` set is refused at load (S3); a
+  detector's name may not use the layer's prefix `measured:` (S5); the
+  reading tool completes on the `gather` lines (S2); the design is cited
+  at `docs/designs/amplitude-v1/DESIGN.md` (S4).
+- The half-angle tables at N = 4096: an even setting reads the 4096 table
+  at s / 2 (`amplitude.half_angle`), an odd one is refused.
+- Series L gains L5 (`cnot_pair_<a>_<b>`, `cnot_twice`, `cnot_ghz_<basis>`,
+  `rotations_3`, `rotations_4`) and L6 (`bell_n1024_<a>_<b>`,
+  `bell_n4096_<a>_<b>`).
+- Nothing deleted.
+
+## The amplitude law, on 2026-09-20, (v-fix): the gate's copies booked, the control declared, the hold local, a record elsewhere refused
+
+The gate review of (iv) and (v) (three blocking findings, one should fix;
+no pinned integer of the 46 keyed worlds moves; the gate set byte-identical
+without the key):
+
+- A `rerelease` entry's `gate` declares `control`, the direction the
+  control record's rows arrive on: required for two parties or more,
+  refused for one; the shipped CNOT worlds carry it (the pair's [1, 0, 0],
+  GHZ's [0, 1, 0]). Until now the control was the earliest-declared lamp,
+  and the `measured` list reversed turned the pair into a product (S1).
+- The gate acts when rows of `parties` distinct emitters are pending at
+  the entry, read from the rows alone (the design's local hold); the
+  layer's live count is no longer read by the GameBoard (B3).
+- The units the gate's copies add are booked on the layer's live count
+  (the `gate` line's `added`; the reading tool books it too): every
+  gathered record of the CNOT worlds ends at live 0 where it ended at -1
+  (B1).
+- A record that reaches a gate with units elsewhere or with an offer
+  already made is refused naming the record, the units and the sets: the
+  lazy relabelling of the design's section 10 is not built (B2).
+- Nothing deleted.
+
+## The amplitude law, on 2026-09-20, (vi): the one click, not landed; the key stays
+
+The design's section 6 (the record form the default, the key `amplitude`
+and its parsing deleted, the crowd-threshold path of the `wave` reading
+deleted) was tried after (v) as the model owner's half-hour version on
+the gate set of seventeen worlds ([validation](VALIDATION.md)): the key
+forced true and the `wave` pointer gate off, the replay compared with
+stage (v)'s digests. Worlds outside the crowd-threshold series change, so
+by the owner's rule the stage stopped there and nothing of it is
+committed:
+
+- Refused at load: `two_slits` (the lamp's rate [64, 1]),
+  `catalog/lamp_mirror_screen` ([4, 1]) and `heisenberg/w3_beam`
+  ([47, 1]): under the record form a lamp births one record per
+  self-creation and the rate [1, 1] alone is accepted.
+- Failed in the run: `catalog/sun_planet` (the record 8589934593 at the
+  set `screen` with the multiplicities 9 and 36: one multiplicity per
+  offer).
+- Changed clicks: `bell/read`, `bell/a0_b8` (the old A2, in the series)
+  and `lensing/mass_meeting` (outside it): their lamps at [1, 1] birth
+  records, read by the ladder in place of the crowd's threshold.
+- Changed bytes with no value changed: `coupling/7_pp`, `one_content`,
+  `redshift/age`, `hubble/coasting_age`, `weak/j2_filter`,
+  `weak/w_exchange` and `detector/periodic_z_node` (the columns `record`,
+  `branch` and `multiplicity` written on every click line, `rows` on the
+  read lines and the rows of `state.json`); `nucleus/deuteron_1`,
+  `weak/j3_neutron_free` and `bohr/r2` changed by their digests, their
+  lines not kept (no lamp in any of them).
+
+What the one click needs before it can be the default: the lamp's rate
+under the record form (r units per direction as r paths of one birth or
+as r births), a set's offer of several multiplicities of one record, the
+columns written only where a record is, and the design's test 7 restated
+as identity on the worlds without a lamp. Until then the key `amplitude`
+stays as (i) declared it, false by default, and the crowd's `wave`
+threshold stays; nothing deleted, nothing added.
+
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
