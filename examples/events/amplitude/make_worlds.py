@@ -155,6 +155,17 @@ under `pair_n`). At N = 4096 the half-angle tables of 2N do not exist
 (the tables end at 4096 steps): the entry at an even setting s is the
 4096 table's at s / 2, the same rounding of the same angle.
 
+L7, the cone (the paper session's question on issue #376; the Boss's
+approval of 2026-09-20): `cone_links` and `cone_intervals`, one geometry
+(a lamp at (0, 0) on +x to a counter 17 Links away; a lamp at (0, 3) on
+the plane diagonal (1, 1, 0) to a counter at (12, 15), 24 Links on the
+staircase, the Euclidean distances 17 and 16.97; N 64, 96 intervals)
+under the integer form of `phase_per_link` (3 per Link stepped) and the
+pair form [3, 1] (3 per interval of age). Pinned from the flight table
+(BEAM_LAW section 3): both rows click at the age 29; the path phase
+phase - u at the click 51 and 8 under the integer form, 23 and 23 under
+the pair form (`expectations.json` under `cone`).
+
     python examples/events/amplitude/make_worlds.py [--out DIR]
 """
 
@@ -955,12 +966,119 @@ def pair_worlds() -> dict[str, dict[str, object]]:
     return found
 
 
+# L7, the cone: which length a row's phase counts (the paper session's
+# question on issue #376, the Boss's approval of 2026-09-20; BEAM_LAW
+# section 3, the flight table, and note 37 (iii), the two forms of
+# `phase_per_link`). Two lamps, one on the heading +x toward a counter 17
+# Links away, one on the plane diagonal (1, 1, 0) toward a counter 12 Links
+# along each axis (the Euclidean distances 17 and 16.97). The flight table
+# moves every direction at 1 / sqrt 3 Links per interval, so the two rows
+# arrive at the same age; the integer form of `phase_per_link` turns the
+# phase per Link stepped (17 against 24), the pair form per interval of age
+# (the same turn at both counters).
+CONE_TICKS = 96
+CONE_STEP = 3
+CONE_AXIS_LINKS = 17
+CONE_DIAGONAL = 12
+DIAGONAL_XY = [1, 1, 0]
+FLIGHT_SCALE = 64
+
+
+def flight_age(direction: list[int], links: int) -> int:
+    """The first age at which the flight table has stepped `links` Links
+    on `direction` (BEAM_LAW section 3: T_d = isqrt(3 |v|^2 Q^2),
+    m(tau) = (2 tau S_1 Q + T_d) // (2 T_d), Q = 64)."""
+    s1 = sum(abs(c) for c in direction)
+    t_d = math.isqrt(3 * sum(c * c for c in direction) * FLIGHT_SCALE * FLIGHT_SCALE)
+    age = 0
+    while (2 * age * s1 * FLIGHT_SCALE + t_d) // (2 * t_d) < links:
+        age += 1
+    return age
+
+
+def cone(name: str, per_age: bool) -> dict[str, object]:
+    """The cone world: `per_age` selects the pair form [CONE_STEP, 1] (the
+    phase per interval of age) over the integer form (per Link stepped)."""
+    family: dict[str, object] = {"name": "light", "quantum": 1}
+    family["phase_per_link"] = [CONE_STEP, 1] if per_age else CONE_STEP
+    axis_end = [CONE_AXIS_LINKS, 0, 0]
+    diagonal_start = [0, 3, 0]
+    diagonal_end = [CONE_DIAGONAL, 3 + CONE_DIAGONAL, 0]
+    measured: list[dict[str, object]] = [
+        {
+            "position": [0, 0, 0],
+            "family": "light",
+            "amount": SOURCE_CONTENT,
+            "fixed": True,
+            "lamp": {"rate": [1, 1], "directions": [PLUS_X]},
+        },
+        {
+            "position": diagonal_start,
+            "family": "light",
+            "amount": SOURCE_CONTENT,
+            "fixed": True,
+            "lamp": {"rate": [1, 1], "directions": [DIAGONAL_XY]},
+        },
+        {"position": axis_end, "family": "light", "amount": 1, "fixed": True},
+        {"position": diagonal_end, "family": "light", "amount": 1, "fixed": True},
+    ]
+    return {
+        "law": "beam",
+        "model_id": f"beam-amplitude-{name}-v1",
+        "shape": [CONE_AXIS_LINKS + 2, 3 + CONE_DIAGONAL + 2, 1],
+        "boundary": {"z": "periodic"},
+        "ticks": CONE_TICKS,
+        "K": CLOCK,
+        "N": N,
+        "release": [0, 1],
+        "suspension": 0,
+        "directions": [DIAGONAL_XY],
+        "families": [family],
+        "measured": measured,
+        "detectors": [
+            {"name": "axis", "positions": [axis_end], "reading": "sum"},
+            {"name": "diagonal", "positions": [diagonal_end], "reading": "sum"},
+        ],
+    }
+
+
+def cone_worlds() -> dict[str, dict[str, object]]:
+    return {"cone_links": cone("cone_links", False), "cone_intervals": cone("cone_intervals", True)}
+
+
+def cone_expectations() -> dict[str, object]:
+    """Pinned before the run: the age of the click at each counter (the
+    flight table) and the path phase, phase - u modulo N, at the click
+    (the integer form: CONE_STEP per Link stepped; the pair form: CONE_STEP
+    per interval of age), the same for every record."""
+    axis_age = flight_age(PLUS_X, CONE_AXIS_LINKS)
+    diagonal_age = flight_age(DIAGONAL_XY, 2 * CONE_DIAGONAL)
+    return {
+        "links": {"axis": CONE_AXIS_LINKS, "diagonal": 2 * CONE_DIAGONAL},
+        "age_at_click": {"axis": axis_age, "diagonal": diagonal_age},
+        "same_age": axis_age == diagonal_age,
+        "cone_links": {
+            "path_phase": {
+                "axis": CONE_STEP * CONE_AXIS_LINKS % N,
+                "diagonal": CONE_STEP * 2 * CONE_DIAGONAL % N,
+            }
+        },
+        "cone_intervals": {
+            "path_phase": {
+                "axis": CONE_STEP * axis_age % N,
+                "diagonal": CONE_STEP * diagonal_age % N,
+            }
+        },
+    }
+
+
 def worlds() -> dict[str, dict[str, object]]:
     found = mach_zehnder_worlds()
     found.update(two_slits_worlds())
     found.update(pair_worlds())
     found.update(gate_worlds())
     found.update(pair_n_worlds())
+    found.update(cone_worlds())
     return found
 
 
@@ -1223,6 +1341,7 @@ def expectations() -> dict[str, object]:
         "ghz": ghz_expectations(),
         "gate": gate_expectations(),
         "pair_n": pair_n_expectations(),
+        "cone": cone_expectations(),
     }
 
 
