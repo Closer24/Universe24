@@ -4723,6 +4723,14 @@ sequential gates on an entangled record, the full register replay.
   (design of 2026-09-17), with its finding that the Port-form corner and
   the Born table give no content ladder and that the ladder needs the
   ring's turn produced by its own field.
+  Closed by decision (the model owner, 2026-09-20, issue #369; Highlights
+  5.4 and the log's record 106): the masses and the charges are the
+  initialisation, the catalog's declared contents and charge per unit, not
+  derivable in the Beam Law (the standalone map of the paid exchange
+  reproduces the engine and selects no content); the rungs are inputs and
+  there is nothing to count. Kept as history; the number A10 also names the
+  Heisenberg run registered below under the Beam Law, a different
+  experiment.
 
 ### A11. The wide-phase run at the real N
 
