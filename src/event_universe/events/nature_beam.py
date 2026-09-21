@@ -3692,9 +3692,9 @@ def _family_plan(
             rows_ev = np.concatenate((ev[others], ev[split]))
     if rows_w.shape[0] == 0:
         return plan
-    table = moment_table(rows_v, rows_w, rows_age)
-    np.add.at(presence[family], rows_ev, table[:, 0] + table[:, 1])
-    np.add.at(age_moment[family], rows_ev, table[:, AGE_COLUMN] + table[:, AGE_COLUMN + 1])
+    moments = moment_table(rows_v, rows_w, rows_age)
+    np.add.at(presence[family], rows_ev, moments[:, 0] + moments[:, 1])
+    np.add.at(age_moment[family], rows_ev, moments[:, AGE_COLUMN] + moments[:, AGE_COLUMN + 1])
     if admitted is None:
         return plan
     # The rows that click after the pairing (every taken row without
@@ -3731,7 +3731,7 @@ def _family_plan(
     overflow = first_reading_overflow(of_row, groups, a_t, v_arrival, age_t)
     if overflow is not None:
         fail(overflow[0], 2, overflow[1])
-    admitted_rows = table[position[taken]]
+    admitted_rows = moments[position[taken]]
     reading = moments_of_groups(admitted_rows, g_starts)
     for key in {entries[e].reads[family] for e in set(g_ev.tolist())}:
         plan.readings[key] = reading.component(key).tolist()
