@@ -1314,8 +1314,8 @@ as N grows the click's probabilities converge to the squared sums, at the
 rate `1 / N` (the paper's check: within `7.8 x 10^-3` at N = 64, `4.9 x
 10^-4` at 1024, `7.6 x 10^-6` at 65536). **Reached as a limit**, the
 squared sum itself the click's definition (E and the norm, the one
-imported law of physics, BEAM_LAW section 5), so what the limit returns
-is the precision, not the rule.
+imported law of physics, BEAM_LAW section 5; its form forced in 6.5),
+so what the limit returns is the precision, not the rule.
 
 **Tsirelson as a limit.** The pair's `S(N, Q)` at the CHSH labels, from
 the rungs and the tables: 2.75 at N = 64 (the registered `176 / 64`),
@@ -1403,13 +1403,216 @@ afterwards, so a row re-emitted at a re-emitter keeps its content and
 takes the re-emitter's declared turn: no rule makes the content of a row
 follow its frequency in flight.
 
-### 6.5 The verdict of target 6
+### 6.5 The uniqueness of the click's square: a lattice Gleason
+
+**The question** (record 170, the owner's, sent for a solution): the
+click's square `X^2 + Y^2` (`amplitude.py:641`: a cell's weight is the sum
+over the ends' Node tuples of `real^2 + imaginary^2` of the summed
+pointers) is the one operation of the model beyond translate, threshold,
+the declared matrix and the addition, and the place where the Born rule
+is put in. Asked here: whether rows whose phases cancel, non-negative
+counts, a total conserved at every declared split and invariance under
+the phase rotation force the reading at a click to be a positive
+quadratic form of the record's group-ring element, `|ev(f)|^2` up to a
+constant, on the register's declared splits; or what weaker statement
+holds, and what the register pins.
+
+**The objects.** A record's rows at one Node and label are one element
+`f = sum_p f_p x^p` of the group ring `Z[Z_N]` (`f_p` the amount at the
+phase p, section 1.1); the pointer is `ev(f) = sum_p f_p zeta^p` at the
+tables' scale (`amplitude.py:562-565`: `weight x (C[p], S[p])`, summed
+per `(Node, label)`); the merge's cancel (the design's 2.3: two rows of
+one record at a phase difference of exactly `N/2` subtract) identifies
+`x^{N/2}` with `-1`, so the rows after the cancel are an element of
+`Z[x] / (x^{N/2} + 1)`. For N a power of two (64, 1024, 4096: every
+registered N) `x^{N/2} + 1` is the cyclotomic polynomial of N, so this
+quotient is the ring of cyclotomic integers `Z[zeta_N]` itself, a free
+Z-module of rank `N/2` on the basis `1, x, ..., x^{N/2 - 1}`, and `ev` is
+the identity on it: the GameBoard's cancel and the click's zero are one
+relation, exactly. (For an N with an odd factor they are not: at N = 12
+three rows at the phases 0, 4, 8 read 0 at the click and cancel nowhere
+on the GameBoard; the register has no such N.) The reading is a function
+`R: Z[zeta_N] -> R` of a cell's element; the ladder normalises by the
+record's total (2.5), so R matters up to one factor per record, and the
+multiplicity m is the split's bookkeeping of that factor.
+
+**The hypotheses**, each an operation of section 1 and nothing else:
+
+- (a) the phase rotation: `R(x f) = R(f)`. A rotation of the record's
+  phase by one step changes no weight: the ladder (`rungs`,
+  `amplitude.py:174-194`) takes no u, and L1's 64 births at 64 birth
+  phases read one ladder up to the tables' rounding (6.2 (ii));
+- (b) the balanced splitter conserves for every two inputs: the (1, 1)
+  split with the quarter turn on the reflected row (`mz_balanced`; the
+  table form `weights [[a, b], [b, a]]`, `turns [[16, 0], [0, 16]]` of
+  `mz_345.json` with a = b = 1) sends the inputs f on arm 1 and g on arm
+  2 to `x^{N/4} f + g` toward one port and `f + x^{N/4} g` toward the
+  other, with the multiplicity factor `A_2`, and the total is conserved:
+  `R(x^{N/4} f + g) + R(f + x^{N/4} g) = A_2 (R(f) + R(g))` for all f, g
+  in `Z[zeta_N]`;
+- (c) counts: `R(f) >= 0`.
+
+Not assumed: continuity, a dimension, the form of R on one row, or
+Theorem 2's `A = sum a_i^2`.
+
+**Theorem (the lattice Gleason).** Under (a), (b), (c), with N a power
+of two,
+
+    A_2 = 2,   R(f) = sum over odd j, 1 <= j < N/2, of c_j |sigma_j(f)|^2,   c_j >= 0,
+    sigma_j(f) = sum_p f_p exp(2 pi i j p / N)     (the j-th Galois conjugate of ev(f); sigma_1 = ev).
+
+Every such R is a positive quadratic form on the lattice, homogeneous,
+`R(a f) = a^2 R(f)`; it conserves the total at every declared split
+`(a_1, ..., a_k; t_1, ..., t_k)` of one row or of two recombining inputs
+exactly if and only if the multiplicity factor is `A = sum a_i^2`
+(Theorem 2's rule, here a consequence), and at every label rotation
+`U_s` with the factor `C'^2 + S'^2`. Two rows `a x^p` and `b x^{p + D}`
+at one Node read
+
+    R = C (a^2 + b^2) + 2 a b K(D),   C = sum c_j,   K(D) = sum c_j cos(2 pi j D / N),
+
+with `K(0) = C`, `K(N/4) = 0`, `K(N/2) = -C` for every admissible R. The
+Born form `|ev(f)|^2` is `c_1 = 1` and the other `c_j = 0`: `K(D) =
+cos(2 pi D / N)`.
+
+**Proof.** (i) g = 0 in (b) with (a): `R(x^{N/4} f) + R(f) = 2 R(f) =
+A_2 R(f)`, so `A_2 = 2` (R not identically 0). (ii) Replace g by
+`x^{-N/4} g` in (b) and use (a) on the first term, `x^{N/4} f +
+x^{-N/4} g = x^{N/4} (f - g)` since `x^{-N/2} = -1`: `R(f - g) + R(f +
+g) = 2 R(f) + 2 R(g)`, the parallelogram law on the abelian group
+`Z[zeta_N]`. (iii) The parallelogram law alone makes R a quadratic form;
+on a lattice Jordan and von Neumann's argument needs no continuity:
+`R(0) = 0` (f = g = 0), `R(-f) = R(f)` (f = 0); for `B(f, g) = R(f + g)
+- R(f) - R(g)`, symmetric, with `B(f, -g) = -B(f, g)` by the law, the
+law at `(f + g, h)`, `(f + h, g)` and `(f, g - h)` gives `R(f + g + h) =
+R(f + g) + R(f + h) + R(g) + R(h) - R(f) - R(g - h)`, whence `B(f + g, h)
+- B(f, h) - B(g, h) = 2 R(g) + 2 R(h) - R(g + h) - R(g - h) = 0`: B is
+Z-bilinear, `R(f) = B(f, f) / 2` (the law at (f, f)), so R is the
+restriction to `Z^{N/2}` of the real quadratic form of the symmetric
+matrix `M = (B(x^i, x^j))`, and `R(a f) = a^2 R(f)`. (iv) (a) transfers
+to B by polarisation, `B(x f, x g) = B(f, g)`; multiplication by x is a
+signed permutation of the basis, an orthogonal matrix P, so `P^T M P =
+M` and M commutes with P. P has the `N/2` distinct eigenvalues `zeta^j`,
+j odd, with the eigen-functionals `sigma_j` (`sigma_j(x f) = zeta^j
+sigma_j(f)`), so M is diagonal in that basis with real entries paired
+under `j <-> -j`: `R(f) = sum_j c_j |sigma_j(f)|^2` over the `N/4`
+conjugate pairs. (v) Were some `c_j < 0`, the real form would be
+negative on an open cone of `R^{N/2}`, which contains lattice points,
+against (c): every `c_j >= 0`. (vi) The conservation at a general split:
+on one row `w x^p` the outputs `w a_i x^{p + t_i}` sum to `(sum a_i^2)
+w^2 C` by homogeneity and (a), against `A w^2 C`: `A = sum a_i^2`. On
+two recombining inputs, `a f + b x^{N/4} g` and `a g + b x^{N/4} f` (the
+`(a, b)` splitter with the quarter turn), the cross terms `2 a b B(f,
+x^{N/4} g)` and `2 a b B(g, x^{N/4} f) = 2 a b B(x^{N/4} g, x^{N/2} f) =
+-2 a b B(f, x^{N/4} g)` cancel and the total is `(a^2 + b^2) (R(f) +
+R(g))`; the label rotation's pair `(C' f + S' x^t g, -S' f + C' x^t g)`
+cancels the same way with `C'^2 + S'^2`. (vii) Two rows: `|sigma_j(a +
+b x^D)|^2 = a^2 + b^2 + 2 a b cos(2 pi j D / N)`, and at `D = 0, N/4,
+N/2` the cosine is `1, 0, -1` for every odd j. (Each identity of (vi)
+and (vii) was also checked numerically on random elements at N = 64.)
+
+**What is reached and what is not.** Reached: the reading is a positive
+quadratic form of the record's element, forced by the phase rotation,
+the balanced splitter's conservation and the counts alone, with no
+continuity and no dimension. (Gleason's own theorem needs dimension 3
+and fails at 2; the lattice version does not, because (b) holds for
+every two inputs and not only for orthogonal decompositions, which is
+the parallelogram law, a stronger hypothesis, and the balanced splitter
+accepts every pair of records.) The multiplicity rule `A = sum a_i^2` is
+derived, not assumed; the square is the only power (`R(a f) = a^2
+R(f)`: no `|w|^k` with `k != 2` conserves, the paper's "Theorem 2 admits
+only k = 2"); and the cross term `2 a b K(D)`, the product between two
+rows the GameBoard never forms (record 170: "the merge adds only
+identical rows"), is forced to exist at the click by (b), because the
+two outputs of a balanced splitter conserve the total only through
+cross terms that cancel between them. Not reached by the algebra: the
+constants `c_j`, the detector's response to the harmonics of the phase.
+This is the lattice Gleason's weaker statement, and it is the exact
+analogue of Gleason's: his theorem gives `<v, T v>` with T a free
+positive operator (the state); here T is a free positive operator
+commuting with the rotation, `diag(c_j)` on the Galois planes. Each
+single harmonic alone is the Born form under the relabelling `p -> j p`
+of the phase steps (an automorphism of `Z_N` for j odd): it reads the
+declared rate `n / d` as `j n / d`, a change of the declaration, not of
+the law. A mixture of harmonics is a different law: the flat mixture,
+every `c_j` equal, is `R(f) = sum_p f_p^2` on the reduced basis
+(Parseval over the odd j; checked), the reading that squares each
+phase's amount after the GameBoard's merge and cancel and forms no
+product across phases; it satisfies (a), (b), (c) exactly. The algebra
+of the splits admits the phase-blind detector; what excludes it is the
+register.
+
+**Against the registered integers.**
+
+- The power. The `(3, 4)` split's `63 / 1` (`mz_345`, L1): the elements
+  at the ports are `7 x^{p + 16}` (4 and 3 in phase) and `1 x^{p + 32}`
+  (the cancel's remainder of 4 and 3 in antiphase), single rows, so a
+  power k reads `C 7^k` against `C 1`; the rung `b_1 = (2 x 64 x 49 +
+  50) // 100 = 63` at k = 2, and `63 / 1` holds iff `7^k` lies in
+  `[125 / 3, 127)`, k in `[1.917, 2.489)`: k = 1 gives `56 / 8`, k = 3
+  gives `64 / 0`. The pair's cells `27, 5, 5, 27` (`bell_16_24_far`,
+  `E x 64 = 44`): at the turn 0 (every registered pair world declares
+  `phase_window` only) every entry of `U_s` is real and every pointer
+  sits on one antipodal pair of phases, so a cell's element is the
+  single row `(C'_a C'_b +- S'_a S'_b) x^p` and the reading tests only
+  the power: the first cell is 27 iff k lies in `[1.784, 2.054)`; k = 1
+  gives `23, 9, 9, 23` (`E x 64 = 28`), k = 3 gives `30, 2, 2, 30` (56).
+  Both windows contain 2 and exclude 1 and 3. The (20, 21) split's `64 /
+  0` needs only `k >= 1.304`; `mz_quarter`'s `32 / 32` and
+  `mz_balanced`'s `64 / 0` are symmetric and test nothing.
+- The harmonics. Every registered Mach-Zehnder world puts its two rows
+  at a phase difference in `{0, 16, 32}` (the arm's turn; the two
+  intervals at 8 or 16 steps), where K reads `C, 0, -C` for every
+  admissible `c_j`: the MZ cells check the power and nothing about the
+  harmonics, and the pair at the turn 0 likewise. Only the two slits
+  test K: `slits_low`'s fans put rows of one record at a pixel at every
+  phase difference, and record 156's map gives the bands at y = 35 ..
+  38, 59 .. 61, 82 .. 85 with the cosine's Pearson 0.963 (7.1): the
+  kernel `cos(2 pi D / 64)` of j = 1, 64 steps per 23.5 pixels. At the
+  harmonic j the same rows read `cos(2 pi j D / 64)`, a fringe of period
+  `23.5 / j` pixels (7.8 at j = 3, 2.6 at j = 9, below a pixel from j =
+  31), and the flat mixture reads the comb `[D = 0] - [D = 32]`; the
+  registered bands exclude both. So `c_j = 0` for `j != 1` is pinned by
+  the two-slit register alone, and with it `R = c |ev(f)|^2`.
+- The tables. The built click is this form to the tables' rounding: a
+  record's total reads `65448 / 65536` to `65773 / 65536` over the 64
+  birth phases (6.2 (ii)), the tables' violation of (a), a part in 276;
+  the theorem's R is the exact form the design checks as the inverse
+  (2.4), and the design's 2.5 (the ladder normalised by the record's
+  total, not by T at birth) is the rule that keeps one click per record
+  under that violation.
+
+**The limit.** As `N = 2^k` grows the admissible readings are the same
+family with `N / 4` constants; for two rows at the angle `theta = 2 pi D
+/ N`, `K(theta) = sum over odd j of c_j cos(j theta)`, the closed cone
+of the even positive-definite functions on the circle with odd harmonics
+only (`K(theta + pi) = -K(theta)`, the cancel), whose extreme rays are
+the single cosines; the Born kernel `cos theta` is the first of them,
+the visibility is `V(theta) = K(theta) / K(0)`, and 6.3's `2 w_1 w_2 /
+(w_1^2 + w_2^2)` is its amplitude. The limit adds nothing: no N and no
+continuity forces `c_j = [j = 1]`; the fundamental is what the register
+reads and what the phase means (one step of phase per declared `n / d`:
+a detector at the harmonic j is a detector reading the wavelength
+`lambda / j`).
+
+**Verdict.** **Reached** for the form: on the lattice `Z[zeta_N]`, N a
+power of two, the rotation, the balanced splitter's conservation for
+every two inputs and the counts force a positive quadratic form, the
+square as the only power and the multiplicity rule `sum a_i^2`; the
+registered `63 / 1` and `27, 5, 5, 27` pin the power to 2 (the windows
+`[1.917, 2.489)` and `[1.784, 2.054)`). **Not reached** from the
+algebra: the harmonic constants `c_j` (Gleason's free state), pinned to
+the fundamental by the two-slit bands of record 156 only; every
+Mach-Zehnder and pair world of the register is blind to them.
+
+### 6.6 The verdict of target 6
 
 | Formula | Verdict | The place |
 | --- | --- | --- |
 | The cost per record, `k x prod (sum_i a_i)` units against `log2 (cells)` bits | **New** (a formula with no counterpart in known physics): 82, 4, 6, 185 units for 1, 2, 3, 6.3 bits; the cost the apparatus's product of weights, the information the Holevo bound | the split creates content on the released line; the norm `w^2 / m` is what is kept |
 | The Holevo bound | **reached** as an identity (`log2 d` per click; GHZ's 2 bits of 3) | Definition 3 of the click |
-| Born's rule | **reached as a limit**: `|P - W/T| <= 1 / (2 N)`; the rule itself the click's definition (imported) | the rung; the dark port 0 of 64 at `1 / 1682` |
+| Born's rule | **reached as a limit** for the precision, `|P - W/T| <= 1 / (2 N)`; the form of the rule **reached** in 6.5 (a positive quadratic form, forced), its harmonic constants pinned by the register | the rung; the dark port 0 of 64 at `1 / 1682` |
+| The click's square, its uniqueness (the lattice Gleason) | **reached** for the form: the rotation, the balanced splitter's conservation for every two inputs and the counts force a positive quadratic form, the power 2 (63 / 1 pins k to [1.917, 2.489); 27, 5, 5, 27 to [1.784, 2.054)) and `A = sum a_i^2`; **not reached** from the algebra: the harmonic constants `c_j`, Gleason's free state, pinned to the fundamental by record 156's bands alone | 6.5: the balanced splitter's conservation is the parallelogram law on `Z[zeta_N]`; the MZ and pair worlds are blind to the harmonics |
 | Tsirelson's bound | **reached as a limit**: `S(N, Q) -> 2 sqrt 2`, 2.75, 2.8125, 2.828125 registered at 64, 1024, 4096; two-sided at finite N | the rungs and the tables |
 | The visibility | **reached** for two rows at a Node, `2 w_1 w_2 / (w_1^2 + w_2^2)`; **different law** for a partial read: a step `[reads = 0]`, S from 176/64 to 88/64 | the read factor selects a label whole |
 | The classical-quantum boundary | **New**, a quantity of the law: two rows at one Node and no read before it | record 77's density of clicks = the density of reads |
@@ -1581,7 +1784,7 @@ still need what the law lacks, an energy and a transition.
 | 3 Newton and Coulomb | Gauss exactly; the inverse square in the shell mean; `G = K (n / d) / (4 pi S)`; `k_C = G`, the ratio `-rho_A rho_B` | | per Node without the limit of every direction |
 | 4 special relativity | the light cone and `omega = c k`; the Lorentz symmetry of the rows' limit | the moving reader's `c -+ v`; the clock at 1; `v = p / (m + p)`; the cap 1 above c | velocity addition, `E = m c^2`, the moving mass |
 | 5 general relativity | Poisson and the retarded wave equation of the delay field; the redshift at first order; Newton's geodesics; the general flux | the redshift at second order, no horizon; the meeting's delay `~ M / b` | Einstein's equation; light on `main`; the post-Newtonian terms |
-| 6 the information cost | Holevo; Born and Tsirelson as limits; the visibility of two rows; `E = (h N) f`; **New**: the cost per record and the boundary as quantities | the partial read (a step) | Landauer |
+| 6 the information cost | Holevo; Born and Tsirelson as limits; the click's square as a positive quadratic form with the power 2 and `sum a_i^2` derived (the lattice Gleason, 6.5); the visibility of two rows; `E = (h N) f`; **New**: the cost per record and the boundary as quantities | the partial read (a step) | Landauer; the click's harmonic constants `c_j` (Gleason's free state), register-pinned to the fundamental |
 | 7 Young and Bohr | Young's fringes in the limit of every direction (the exact two-path law, `lambda D / s` its paraxial form); Bohr's `2 pi p r = j h` and `r_j ~ j^2` | the spectrum at the orbital frequency | the levels' energies and the Rydberg lines |
 
 ## 9. The law of information on the GameBoard: the inventory restated as one law, and its cases derived
