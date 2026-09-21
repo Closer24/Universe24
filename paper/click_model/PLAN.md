@@ -391,3 +391,37 @@ tables' unitarity; the lattice defined once as the GameBoard; the layer's
 necessity argued (18 intervals apart). Left for the owner: the title, the
 arXiv identifiers of papers 1 and 2, confirmation of the two experimental
 values against the PDFs, the release tag and version DOI.
+
+## Referee round 3 (2026-09-21): the round-2 fixes verified, three majors
+
+Verdict: major revision, narrow; every registered integer, the proofs, the
+definitions against the engine and the story's consistency confirmed; the
+22 round-2 fixes verified. Three majors, all applied: (1) the exclusion of
+N = 256 (and the admitted set from 184) holds at the CHSH labels only,
+since E depends on (a, b) beyond a - b: at N = 256 the maximum of S over
+all quadruples is 91/32 and 181,152 quadruples lie within three sigma of
+Poh; at N = 64 the maximum is 11/4, so its exclusion stands; a third
+assumption stated in the Bell section and the abstract qualified "at the
+CHSH labels"; (2) the plane-wave "limit" was a tautology of the check's
+own definition of k (omega = c k by construction) and is withdrawn, the
+record's interference wavelength c N d / n kept; three limits and two
+conservations now; (3) measurement independence "by construction" was
+false: u and a chooser are both clocks, independent when the chooser's
+period is coprime to N and the run covers the common period (the
+registered world's periods 3 and 5), and a period sharing a factor with N
+would correlate by construction ('t Hooft's case). Minors applied: the
+bound 0.0444 and 0.045 with rho = 256 - sqrt 2 / 2 (0.0443 was rounded
+down); the eq. (ebound) middle term as proved; the archived engine's N a
+power of two disclosed; the tie evidence computed and printed (the CHSH
+labels to 4096, every pair at 1024) and record 105 cited as it reads; the
+loophole-free comparison restricted to Hensen's CHSH value (the CH-Eberhard
+experiments need the detector efficiency); Bohm's |psi|^2 distribution
+stated correctly; Meyer and Kent cited for finite precision, not for
+Tsirelson; psi-ontic wording; the labels' weights in eq. (joint); the
+Young plateau at 0.90 named with its cause; the count of limits; the
+checks bibitem completed; the two-slit figure labelled; the roadmap names
+the limits section; "lattice" wording; u on the row in the archived code
+noted; the one re-pin noted beside "computed before its run"; Figure 3's
+caption counts distinct pairs (17 of 18). Left for the owner: the title,
+the arXiv identifiers, the two experimental values against the PDFs, the
+release tag and version DOI.

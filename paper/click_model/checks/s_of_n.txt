@@ -53,3 +53,9 @@ N excluded at 5 sigma by Poh et al.: 136 of 512; largest excluded N: 3016
 N allowed within 3 sigma: 276 of 512; the smallest ten: [184, 232, 280, 368, 416, 464, 512, 552, 560, 600]
 N >= 1024: S(N) from 2.82443 to 2.83212
 largest N x |S(N) - 2 sqrt 2| over all N: 7.76 at N = 48 (the claim epsilon <= 4/N needs this <= 4)
+
+S over every setting quadruple, and the rung ties:
+  N= 64: max S over all quadruples = 11/4 = 2.75000; quadruples within 3 sigma of Poh: 0
+  N=256: max S over all quadruples = 91/32 = 2.84375; quadruples within 3 sigma of Poh: 181152
+  rung ties at the CHSH labels for every 8 | N <= 4096: 0
+  rung ties over every setting pair at N = 1024: 0

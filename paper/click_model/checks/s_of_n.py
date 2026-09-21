@@ -89,6 +89,52 @@ def marginals_exact(n: int) -> bool:
     return True
 
 
+def tie(n: int, a: int, b: int) -> bool:
+    """A rung tie: 2 N W(+,+) / T an odd integer (Theorem 3)."""
+    w = joint_weights(n, a, b)
+    total = sum(w.values())
+    numerator = 2 * n * w[(0, 0)]
+    return numerator % total == 0 and (numerator // total) % 2 == 1
+
+
+def quadruples_and_ties() -> None:
+    """The maximum of S over every setting quadruple (a, a', b, b') at
+    N = 64 and 256, the count of quadruples within three sigma of Poh et
+    al. 2015 (the third assumption of the Bell section: E depends on
+    (a, b) beyond a - b), and the rung ties at the CHSH labels for every
+    8 | N <= 4096 and over every pair at N = 1024."""
+    print()
+    print("S over every setting quadruple, and the rung ties:")
+    for n in (64, 256):
+        e = [[float(counts(n, a, b)[1]) for b in range(n)] for a in range(n)]
+        best = -9.0
+        within = 0
+        for a in range(n):
+            for a2 in range(n):
+                for b in range(n):
+                    eab, ea2b = e[a][b], e[a2][b]
+                    row_a, row_a2 = e[a], e[a2]
+                    for b2 in range(n):
+                        value = eab - row_a[b2] + ea2b + row_a2[b2]
+                        if value > best:
+                            best = value
+                        if abs(value - POH_S) <= 3 * POH_SIGMA:
+                            within += 1
+        print(
+            f"  N={n:3d}: max S over all quadruples = {Fraction(best).limit_denominator(4096)} = {best:.5f};"
+            f" quadruples within 3 sigma of Poh: {within}"
+        )
+    labels = sum(
+        tie(n, a, b)
+        for n in range(8, 4097, 8)
+        for a, b in ((0, n // 8), (0, 3 * n // 8), (n // 4, n // 8), (n // 4, 3 * n // 8))
+    )
+    print(f"  rung ties at the CHSH labels for every 8 | N <= 4096: {labels}")
+    print(
+        f"  rung ties over every setting pair at N = 1024: {sum(tie(1024, a, b) for a in range(1024) for b in range(1024))}"
+    )
+
+
 def main() -> None:
     print("reproduction of bell.txt:")
     for n in (64, 256, 1024):
@@ -153,3 +199,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+    quadruples_and_ties()

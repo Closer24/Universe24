@@ -24,6 +24,9 @@ re-run in the register after the gate's fix with the same integers;
 | Two slits: Pearson of the weights with the incoherent sum, the cosine, the screen-alone histogram | 0.744, 0.368, 0.931 | register (the generator's reading, `expectations.json`) | L2 |
 | The pair at N = 64: the CHSH cells | 27, 5, 5, 27 (E x 64 = 44, -44, 44, 44) | register | L3, `bell_0_8`, `bell_0_24`, `bell_16_8`, `bell_16_24` |
 | S(64) | 176/64 = 2.75 | register | L3 |
+| The maximum of S over every setting quadruple at N = 64 and 256; quadruples within 3 sigma of Poh at N = 256 | 11/4; 91/32 = 2.84375; 181,152 | computation | `checks/s_of_n.txt` |
+| Rung ties at the CHSH labels for every 8 divides N up to 4096, and over every pair at N = 1024 | 0; 0 | computation | `checks/s_of_n.txt`; record 105 for 64, 256, 1024 and 4096 at a = 0, 1024 |
+| The bound of Theorem 4 with rho = 256 - sqrt 2 / 2: 4 delta and 16 delta | 0.01108 < 0.0111; 0.04432 < 0.0444 | computation | the proof |
 | Every marginal 32/64 in all 4096 setting pairs at N = 64 | 32/64 | register (re-read from `bell_0_8`'s rows by the reviewer, record 105) and computation | L3; record 105; `checks/s_of_n.txt` |
 | The choosers' 15 bins, E x 64 | 44, -60, 20, 60, -8, -48, -8, 60, -52, -64, 40, 20, -28, -36, 64 | register | L3, `bell_choosers`; `summary.json` `choosers` |
 | The registered quadruple (0, 25) x (8, 29) | S = 156/64 | register | L3 |
