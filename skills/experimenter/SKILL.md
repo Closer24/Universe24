@@ -105,6 +105,13 @@ replays a rule of the engine, and it prints the kind of every line.
   on the GameBoard there are only events; a row is the record of an event in
   transit, a body a measured event ("ray" is retired, record 183).
 
+## Run
+
+Write worlds, run and read them as
+[examples/events/README.md](../../examples/events/README.md) says under
+"Writing and running a new series" (the direction table, a free family's
+release, a lamp's reservoir, the runner's record and the format gate).
+
 ## Hand back
 
 The commit hashes, the design choices (families, GameBoard, detectors, probes,

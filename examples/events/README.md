@@ -57,6 +57,56 @@ Run one:
 python -m event_universe --init examples/events/one_content.json --output artifacts/one_content
 ```
 
+## Writing and running a new series: what the experimenter of 2026-09-21 had to find out by refusals
+
+The rules below are the engine's (docs/ENGINE.md and the refusals of
+`events/world.py`); they are gathered here because each cost a run or a
+refusal to learn while series O and P were built.
+
+1. **A body's oblique directions are the world's table.** A body's
+   `directions` (its releases and re-emissions) and a lamp's `directions`
+   name vectors; a vector beyond the six headings must be declared once in
+   the world's `directions` table, in primitive form (components coprime:
+   `(3, -3, 0)` is refused, write `(1, -1, 0)`), and the table must not
+   repeat a heading (`(0, -1, 0)` is refused there; a body still names it).
+   A row flies on the digital line of its vector (`nature_beam._bresenham`:
+   at each Link the axis furthest behind, the lowest axis first), so which
+   Nodes a fan visits is that line's: `(-4, -3, 0)` from `(x, y + 3)` visits
+   `x - 3`, `x - 4` and `x - 5` on the plane `y`, not `x - 4` alone. Print
+   the store's rows for a few intervals before pinning a geometry.
+2. **A free family's release goes whole on every direction.** A `mass`
+   body of `amount` A releases `release x A` units per self-creation on
+   each of its directions (nine directions, nine rows of the whole
+   release; the release costs a free family nothing); the presence a
+   neighbour counts is per row at its Node, "outside and here", about two
+   per unit of a heading row's flux at c = 0.58 Links per interval. A paid
+   family's release is apportioned whole over the directions.
+3. **A lamp spends.** Its wheel turns by its content over K, and its
+   content falls by one unit per birth: a lamp of 8192 units is 6 % slow
+   after 500 births, which a clock experiment reads as a false k. Give a
+   clock experiment's lamp a reservoir far beyond the run's births
+   (2^20 units for 500 births: 0.05 %).
+4. **Load a world as the tests do.** `load_world(path.read_bytes(),
+   base_dir=path.parent, root=<the examples/events folder>)` returns a
+   `LoadedWorld`; its `.world` is what `NatureBeamSimulation` takes. A
+   world's `..` references climb one level only.
+5. **Run a series headless and read the record.**
+   `PYTHONPATH=src python tools/run_series.py --jobs 3 --out <dir> <worlds...>`
+   writes `<dir>/<world>/run/{run.json, initialization.json, events.jsonl,
+   state.json}` and a `summary.md`. The lines to read: `birth` (a lamp's
+   self-creation, `measured` the lamp's number, `record` its record), `click`
+   (`measured` the reader, `record & 0xFFFFFFFF` the birth ordinal, so the
+   slope of ordinal against tick is 1 / (1 + z); `age` the flight when the
+   reader's entry `reads: "age"`), `step` (`number`, `node`, `to`), `contact`
+   (`number`, `occupant`, `given`), `home`. `state.json` carries per measured
+   event `waited`, `owed`, `presence`, `age`, `content`, `position`. Write
+   the reading script before the run and keep it beside the design.
+6. **Before `python tools/check.py`**, format and lint the changed Python
+   files: `python -m ruff format <files>` and `python -m ruff check <files>`;
+   the gate fails on an unformatted file before it runs a test. Regenerate
+   the worlds after formatting the generator and confirm the shipped JSON
+   is unchanged (the tests compare document for document).
+
 ## The Bell run
 
 The folder [bell/](bell/README.md) holds the ten worlds of the Bell run A2
