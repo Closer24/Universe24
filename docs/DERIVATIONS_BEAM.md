@@ -6052,10 +6052,23 @@ errors), `181 / 64 = 2.828` from N = 512, `S -> 2 sqrt 2` with the bound
 limit, the marginals exact (`32 / 64` in all 4096 setting pairs, no
 signalling), and the reason it is not a hidden-variable value: the one
 read-out per record of 22.1, a record of two rows read at two detectors
-with one Gram weight over both, which no joint distribution over the
-record's phases reproduces above 2 (the same Fourier fact as the
-support bound: the pair's weights are the transform of the record's
-phases, not a mixture of its cells). **R**, with nothing added.
+with one Gram weight over both. What is proven: (1) on the tree, the
+pair's weight at the settings (a, b) is ONE Gram form of the record's
+evaluation (E, then B; 6.2, 6.5), quadratic in the record vector **f**
+with cross terms between its cells, where a mixture over the cells is
+linear in **f** with weights that do not depend on the settings
+jointly; (2) in mathematics, a joint probability distribution over the
+four outcomes of two settings a side exists if and only if the CHSH
+inequalities hold (Fine 1982, Phys. Rev. Lett. 48, 291), so the
+registered `176 / 64 = 2.75` has no such distribution. What is NOT
+proven on the tree: that the quadratic form's excess over 2 is "the
+same Fourier fact as the support bound" of 22.1 (i); that phrase is
+withdrawn. The support bound is Donoho and Stark's on one vector's
+transform; the Bell excess is a statement about a quadratic form of two
+evaluations against every mixture, and no derivation of the one from
+the other is written here. **R** for `S(N, Q)` and its limit, as
+registered; the relation between the two facts not proven on the
+tree.
 
 ### 22.4 The verdict of section 22
 

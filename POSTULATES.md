@@ -32,7 +32,7 @@ hypothesis is that cell sensitivity together with on-board information retention
 can produce Heisenberg uncertainty; this remains a research target.
 Under the Beam Law (`beam-v1`, 2026-09-19) the interval is a bijection
 on a GameBoard without a measured event and the click is the one one-way border;
-the detector's record is the squared coherent sum of the rays it clicked,
+the detector's record is the squared coherent sum of the rows it clicked,
 read on the GameBoard. This inserts no quantum bound and does not claim that a
 world with clicks is reversible. The law and its open limits are in
 [the Beam Law](docs/BEAM_LAW.md) and

@@ -305,7 +305,7 @@ documentation, a third re-checking, and a merge of eleven conflicting files
 because three agents wrote the same documents at once. The owner's rules from
 that day ("we said without 85 worlds"; "put it in the skill"):
 
-- **Replay the gate set, not the register.** Byte-identity of the lattice
+- **Replay the gate set, not the register.** Byte-identity of the GameBoard
   under a new key is proved on a gate set of about fifteen example worlds,
   one per table rule, key and family kind, so that every engine code path is
   replayed once; the whole register (109 worlds on 2026-09-20) is replayed
@@ -420,13 +420,13 @@ will read after the detector and its form (the readings by type in
 ENGINE.md): a scalar, an integer 3-vector in a declared unit (**p**, **f**),
 the traceless second-moment tensor **T**, or the record's phase-count vector.
 
-(6) The observed value is the reading, not the board's number (the owner,
+(6) The observed value is the reading, not the GameBoard's number (the owner,
 2026-09-21, record 210): a distance, a time, a speed, a mass, an energy, a
-force, an angle or a probability is produced from the board's Links,
+force, an angle or a probability is produced from the GameBoard's Links,
 intervals, contents, phase steps and weights only through a named reading
 (HIGHLIGHTS 5.7's dictionary); an experiment's observable comes from a
 detector declared in the world file, never from the host's state, and a
-board quantity is never compared with nature directly.
+GameBoard quantity is never compared with nature directly.
 
 (7) Only a detector's reading is a measurement (the owner, 2026-09-21,
 record 281, translated: "many get confused and take results they measured,

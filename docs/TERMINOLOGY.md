@@ -1,299 +1,531 @@
 # Canonical simulation terminology
 
-Universe24 uses one canonical vocabulary for the active simulator. These names describe the model, documentation, identifiers, diagnostics and configuration concepts.
+The paper's glossary and its symbols table are taken from this file at one
+named commit: the paper cites the commit it copied, and a later edit here is
+a later commit the paper takes or not (the model owner, 2026-09-21: "make
+sure we have a glossary and definitions, everything ordered, exactly what we
+defined, no old words there; and that the paper has it too").
 
-## Core terms
+This file is the one glossary of the Beam Law (`beam-v1`, [BEAM_LAW.md](BEAM_LAW.md)):
+every canonical term defined once, in one or two sentences in the law's own
+words, with the note, section or record that owns it. The rules themselves
+live in the owning documents (the table in [AGENTS.md](../AGENTS.md)); this
+file names, it does not legislate. It is ordered by kind, not alphabetically,
+so that it reads as the law's vocabulary: the location, the state, the rule,
+the readings, the widths, the identities, the symbols, the retired words.
+Every symbol follows the notation rule ([skills/workflow.md, "Notation"](../skills/workflow.md#notation-every-symbol-named-its-kind-shown-the-model-owner-2026-09-21-record-184)):
+named in English at its first use, a scalar plain, a vector in bold
+lowercase (**p**), a tensor, a matrix or an operator in bold uppercase (**C**).
+The engine's data and the human names of the same things, one row each, are
+in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
+[ENGINE.md, "The detector's readings by type"](ENGINE.md#the-detectors-readings-by-type).
 
-- **Node** — one local location in Event Space. A Node is the basic physical location of the simulator.
-- **NodeState** — all local information currently owned by one Node. NodeState is not a second physical object; it is the state of the Node.
-- **Scalar** — a one-component local value.
-- **Vector** — a three-component local value.
-- **Port** — one local directional connection endpoint of a Node.
-- **Link** — the causal connection between neighboring Nodes. A Link owns a transferred value while it is in transit.
-- **GameBoard** — the cubic lattice of Nodes of Highlights 3.1, with the six Port headings in Port order and the faces per axis, open or periodic; a world declares its `shape`; `GameBoard` in code, `game_board` in module and function names; board, lattice and grid are not used for it (the model owner, 2026-09-20, [Highlights 5.4](HIGHLIGHTS.md#54-the-detector), "DECIDED: the name of the board is GameBoard").
-- **Event** — a local state transition at a Node or a completed transfer on a Link.
-- **LocalRule** — configured local logic that reads only the NodeState and values that have already arrived through Links, then proposes the next local state and outgoing transfers.
+## The location
 
-## The Beam Law (2026-09-19)
+- **Node**: one local location of the GameBoard. Between intervals it holds
+  nothing but the rows present at it and the body there; nothing else is
+  kept at a Node (BEAM_LAW section 3; the third test of every rule, local).
+- **NodeState**: all local information one Node owns at an interval, the
+  records of its rows and of its body; not a second physical object
+  (AGENTS.md, the canonical terminology).
+- **Scalar**, **Vector**: a one-component and a three-component local value;
+  input and output are roles of them, not further kinds (AGENTS.md).
+- **Port**: one of the six directional connection endpoints of a Node, in
+  Port order +x, -x, +y, -y, +z, -z (`PORT_HEADINGS`, `core/game_board.py`).
+- **Link**: the causal connection between two neighbouring Nodes, one unit
+  step on one axis. A row crosses at most one Link per interval, the causal
+  bound (LOCALITY-1 in [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md#locality-1-end-to-end-local-physics)).
+- **GameBoard**: the cubic lattice of Nodes with six Ports each and the faces
+  per axis, open or periodic (the world keys `shape` and `boundary`);
+  `GameBoard` in code, `game_board` in module and function names; the only
+  noun for it (the model owner, 2026-09-20, [Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+  "DECIDED: the name of the board is GameBoard"). In the vector form, the
+  translation group Z_X x Z_Y x Z_Z acting by shift operators (record 191).
+- **Face, face detector**: an open face of the GameBoard is a detector,
+  named `face:+x` .. `face:-z`, with the threshold 1: every row or body that
+  leaves through it clicks on it, the escape a measurement at the border and
+  not a loss; a periodic axis has no faces (the model owner, 2026-09-19;
+  [ENGINE.md, GameBoard topology](ENGINE.md#per-axis-gameboard-topology-2026-09-19-implementation-amendment)).
+- **Event**: a local state transition at a Node or a completed transfer on a
+  Link. On the GameBoard there are only events: a row is an event in
+  transit, a body an event created here without end (the model owner,
+  2026-09-20, "there is no ray, there is only an event").
+- **LocalRule**: configured local logic that reads only the NodeState and the
+  values that arrived through Links, then proposes the next local state and
+  the outgoing transfers (AGENTS.md).
+- **Interval (tick)**: the step t -> t + 1 of the whole GameBoard, one
+  application of the interval's map **F**; `tick` in every record key and
+  identifier, "interval" the prose noun (Highlights 5.6, item 9).
+- **The cube group**: the 48 signed axis permutations about a Node, 24
+  rotations and 24 reflections, under which every rule is covariant
+  (`core.game_board.cube_symmetries`); its hand is its pseudoscalar, +1 on a
+  rotation and -1 on a reflection (record 191 of [the log](LOG_2026-09-20.md)).
+- **The phase circle**: the world's one circle of N steps, the cyclic group
+  Z_N of the phase, with its unit vectors at the scale 256 (`core.phase.PhaseCircle`,
+  the tables C and S).
 
-The current model ([Highlights](HIGHLIGHTS.md) 5.4, "DECIDED: the law of the
-ray"; `beam-v1`, [the Beam Law](BEAM_LAW.md), [the engine](ENGINE.md)).
-The terms of the law of events below that the Beam Law keeps (measured event,
-self-creation, clock, the count, turn, quantum, content carried, measurement
-and click, detector, face detector, refused step, home, books, table, push)
-keep their meaning; what the Beam Law changes is named here.
+## The state
 
-- **Beam (ray)** — the record of an event in transit, `NatureBeam` in the code ("ray" its informal name in prose: the model owner's reading rule of 2026-09-20, there is no ray, there is only an event); the one thing in transit: a record (`NatureBeam`: the Node, a direction, an age, a phase, a number, an amount and a content per unit; since 2026-09-20 nothing of its emitter but the number, the factor of the electric push being its family's charge per unit of content) moving along the digital line of its direction at one speed for every direction, 1 / sqrt 3, at most one Link per interval; identical records at one Node are one record with the amounts added. An event in transit is a ray.
-- **Direction** — an index into the world's direction table D: 0 and 1 the two rest vectors (here a, here b), 2 .. 7 the six headings in Port order, 8 .. the declared primitive vectors (`directions`, components in -P .. P, P = `direction_bound`). A ray's momentum is not stored: it is its label (below).
-- **Label (the one momentum)** — the momentum of a row of rays, `nature_beam.momentum_labels`: amount x content x u_d for a paid family, amount x u_d for a free one (its unit carries no content; its label is the unit along u_d), u_d the unit vector of the direction (below). Since the night of 2026-09-19 every momentum the law reads or moves is this label: the push's moment, the click's momentum, the face click's, the recoil of a release or a re-emission, what comes home and the transit line of the books; no momentum is read off a Port. Its magnitude is Q = 64 per unit of its weight for every direction within 1.35 % (the model owner's decision of 2026-09-19 on the physics-rule reviewer's verdict; until then the label was along the integer direction D and grew with |D|, [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation), notes 21 and 23). Every `momentum` of a world file and of the record is in label units: 64 per unit of amount along a heading.
-- **Unit vector of a direction (u_d)** — the integer vector nearest Q D / |D| at the flight's scale Q = 64, one world constant per direction computed once in the direction table (`nature_beam.unit_label`, the flight's `labels`) by the exact integer rule k(|a|) = (isqrt((2 Q |a|)^2 // |D|^2) + 1) // 2 per component with the sign restored: exactly Q e_d on a heading, (0, 0, 0) on a rest direction, |u_d| = Q within sqrt 3 / (2 Q), parallel to D within 0.78 degrees, u_{-D} = -u_D exactly, equivariant under the 48 signed axis permutations, no exact tie for a direction bound below 147, no component beyond Q. The label of a unit is along it, and the reading's vector and tensor moments are taken on it ([BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file) and note 23; `tests/test_nature_beam_label.py`).
-- **Column (per unit of content, with a sign)** — since 2026-09-20 (the model owner, Highlights 5.4, "one mechanism for all the laws on the GameBoard"; the mathematician's verified form; [BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)): a value per unit of content a family declares, the pair (n, d), under a column name whose sign is the column's, +1 (like values push apart) or -1 (like values pull together), the family key `columns` (`{"<name>": {"value": n or [n, d], "sign": 1 or -1}}`); the push is the signed inner product over the columns, per column the whole part off the reader's clock of V x (the reader's charge in the column) x (the arriving family's value), floored on its own. Every family carries `gravity` first (the value (1, 1), the sign minus: the law's -M_A V_B, never declared) and `charge` second (rho, the sign plus; the family key `charge` its value); a family that does not name a column carries (0, 1) there; a paid family's values are 0; at most 8 columns in a world. A force of nature is a column with a sign and a lifetime on its family (the strong force the column `strong` of sign minus), never a code path. `Column`, `FamilyDefinition.columns`, `NatureBeamWorld.columns`; the identity `columns-v1` under `hypotheses` when a column beyond `charge` is declared.
-- **Charge in a column (of a measured event)** — the exact rational sum over the families a measured event holds of their value in the column times their content, the reduced pair (E, D) (`Measured.charges`, `measured.column_charges`; `frame_charges` what the frame read for the interval's push): gravity's is the content (M, 1), the charge column's rho x M for an event of one family (the report `Measured.charge`), a declared column's the family's value times the content it holds of that family; `state.json` carries them as `charges` by name. This is "per unit of content" read generically (the physicist's D-1).
-- **Lifetime (of a family)** — since 2026-09-20 (the model owner, Highlights 5.4, "the strong force's range is a lifetime, L: the event whose age reaches L makes no next event but an escape click in the ledger, as at an open face"; [BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (vii)): the family key `lifetime`, an integer L from 1, one scalar (absent, the family lives forever). A ray of the family whose whole age is at or beyond L at the end of the interval's walk, after the readings of that interval and before the merge, clicks on the border `lifetime`: a detector without Nodes, listed after the faces, on which the click is booked exactly as an open face books an escape (the amount, the content, the label, the square of the pointer; the ledger's lifetime lines summed into the escaped lines; one `click` record per row naming the border and the Node the ray was on). The range of a column is its family's lifetime read on the flight rule: L = 1 reaches the six neighbouring Nodes, 2 the twelve face diagonals too, 3 the eight cube diagonals and the second Link of a heading. Refused beyond `age_bound`; a declared ray at or beyond it refused; the inverse interval refused on a GameBoard with such a family. `FamilyDefinition.lifetime`, `NatureBeamWorld.lifetimes`, `LIFETIME_NAME`, `Ledger.lifetime_amount`; the identity `columns-v1` under `hypotheses` when a lifetime is declared.
-- **Held content (of a measured event)** — the content a measured event carries of every family, aligned with the families (`Measured.held`): its `amount` under its own family and, since 2026-09-20 (the physicist's D-1; [BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (viii)), what the key `held` declares of the others (`{"<family>": content}`, an integer from 1 each; the own family and an unknown one refused), joined by the paid content its clicks measure. Its content (`Measured.content`, M_A of the push) is the sum; its charge in every column is the rational sum over what it holds (the entry "Charge in a column"); every free family it holds is released at the world's rate at every self-creation beside its own, and it counts under the owners of every family it holds. The register's proton is 1836 of `p` holding one unit of `nuclear`, the strong column's family with the lifetime 3.
-- **Contact (a refused step read through the table)** — since 2026-09-20 (the model owner, on the physicist's design of the strong force, section 4.4; [BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (ix)): a body whose step on an axis is refused because the destination holds another measured event has arrived at that occupant, and the occupant's table entry for the body's family decides as it decides for a ray: `measure` hands the body's momentum component on that axis to the occupant (the body's 0, the occupant's raised by it; kappa = 1, the body's momentum its own label), `rerelease` returns it (the body's component reversed, the occupant's raised by twice it), `read` and `pass` leave the step refused and the labels as they were. Where the entry is the keys' own rule for the body's family, declared or not (an entry equal to the default changes nothing), the contact is `measure`, the keys' rule for a paid arrival, so `read` accumulates only where it is declared against the keys, on a paid family (`world.CONTACT_DEFAULT`, `MeasuredDefinition.contact`, `Measured.contact`). The sum of the momenta on the measured events is unchanged by a hand-over; a body on a set hands the component apportioned whole over the occupants of its destination set by their contents (`apportion_whole`). One `contact` record per occupant that took a hand-over (`engine._contact`); the occupant's `contacts` count them per family. No key, no identity: a rule of the frame, as the no-merge decision was.
-- **Crossing (of a row and a body)** — since 2026-09-21 (the model owner's record 158 of 2026-09-20; [BEAM_LAW note 48](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)): the one meeting of a row and a body, where their world lines cross, read once. A body's step precedes the law (`NatureBeamSimulation.step`: the frame, the steps, the law, the clocks' turn and count), so the reading of an interval finds the body at its destination; a body reads every arrival at its Nodes (C3), and in the interval of a step the rows that crossed its Link the other way (C1, the swap) and the rows resident at the Node it entered whose motion is against the step (C2), never a row that came over its own Link behind it, in that interval (C3') or the next after a rest at the origin (C3'', the leapfrog), nor a resident row moving with it (C2'). Its inputs are the body's own two last Links (`Measured.step_port`, `last_step_port`, the headings **e** and **e'**; in `state.json` and on the `step` line) and the rows' own last two steps off the flight rule (`Flight.walk_step` at the age); nothing is kept at a Node. A moving reader's Doppler is the count of the rows it crosses, 1 + v / c toward and 1 - v / c away on an axis (`tests/test_crossing.py`); the world key `doppler` and the grain G of `doppler-v1` are deleted with it (MIGRATION). Distinct from the contact (a refused step read through the occupant's table, which the design names a crossing read at the step already) and from the meeting (a dwell reading of the crowd by a paid row, not a crossing count).
-- **The push (one product)** — what a measured event A takes from a group of rays arriving at its Node, `nature_beam.push_form`: since 2026-09-20 the signed inner product over the columns (the entry "Column" above), of which the two built-in columns are the form of the same day: for a free family's rays ONE product, `push_A = M_A x (rho_A rho_B - 1) x V_B`, with V_B the label flow of the rays (the vector moment of the one reading with the labels as weights), M_A the reader's content as the frame read it and rho_A, rho_B the two families' charges per unit of content, formed as the gravity -M_A V_B plus the electric part off the reader's clock by the declared pairs, sign x by_clock(age_A, |V n_A n_B M_A|, d_A d_B); for a paid family's rays V_B itself (the label carries h s). Nothing is on the record but the ray's number and nothing is looked up by number (the model owner, 2026-09-19 "2 with the physicist" and 2026-09-20 charge per unit of content; until 2026-09-20 kappa was + q_A q_B / M_B with the emitter's (q_B, M_B) on the record).
-- **Charge per unit of content (rho)** — the family key `charge` since 2026-09-20 (the model owner, Highlights 5.4): an integer or a pair `[n, d]` as `suspension` is; a measured event's charge is the rational sum over the families it holds of rho times the content held, rho times its content for an event of one family (a report, `Measured.charge`, the reduced pair; the books' `charge` line the exact rational sum), so the electric push is proportional to the reader's content as the gravity is (the equivalence principle for the electric push); a paid family's rho is 0 (its `charge`, since 2026-09-20, is another thing: the entry below); the per-event key `charge` is refused naming MIGRATION. One charge per unit of content is one family: the series 7 worlds declare `q` for the source and `p` for the probe.
-- **Charge of a paid family (per unit of amount, D-1)** — since 2026-09-20 (the model owner, Highlights 5.4, "go on everything", item (2); [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (ii)): the family key `charge` on a paid family, a whole integer c per unit of amount (a fraction refused), read on the charge line of the books only: the charge of a measured event is rho times its content for a free family and the declared whole charge times the amount for a paid family (the units it clicked and the units waiting to be created again, `Measured.units`; `Measured.charges`, the report `Measured.charge`), and the books' `charge` line adds c times the rows in transit and c times the units escaped, so that it is conserved through a click, a home, an escape and a transformation. The push is untouched: a paid ray pushes by its label, the paid family's `charge` column value stays (0, 1) (`FamilyDefinition.column_charge`) and the frame reads `charges(for_push=True)`. A lamp on a charged paid family is refused. `Measured.unit_charges`, `Ledger.units_escaped`.
-- **Hand (of a row)** — since 2026-09-20 (`hand-v1`; the model owner, record 128 of [the log](LOG_2026-09-20.md), "the hand's three choices confirmed"; [BEAM_LAW note 39](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)): the row's column `hand` in {-1, 0, +1}, the sense in which the event in transit turns about its own direction, +1 a right-handed screw along u_d, -1 a left-handed one, 0 none (every row of every world without a declaration); the helicity, which at the flight's one speed is the chirality; a pseudoscalar (kept by the 24 proper rotations of the cube, negated by the 24 improper ones), a bit relative to the direction and so untouched by every rule that changes the direction; carried unchanged through every re-creation and an identity field of the merge (opposite hands never merge or cancel). Given by the family key `hand` (the catalog's home of the hand, as `charge` is), a lamp's `hand` (circular light), a transit row's `hand` and the right-hand rule at a birth (the entry "Axis"); read by the parity filter alone, the table-entry key `hand` (admitted = the threshold and the window and the hand; refused on `pass`), never by a push, a moment, a pointer or a clock: a hand is not a column. On a branched family of the amplitude law the hand is the meaning of a label bit (a third entry per branch of the lamp's `branches`), never the column, one or the other per family. `NatureBeam.hand`, `PendingRow.hand`, `FamilyDefinition.hand`, `Measured.hands`; the click lines carry `hand`, the books `left` and `right`; the identity `hand-v1` under `hypotheses`.
-- **Axis (of a measured event)** — since 2026-09-20 (`hand-v1`, the same decision): the measured-event key `axis`, one of the six headings in Port order declared as its vector ([1, 0, 0] .. [0, 0, -1]), the body's axial record (Wu's polarised nucleus), an axial vector under the 48 symmetries (a -> det(g) g a), a declaration fixed like `fixed` (no ledger of angular momentum: a click does not turn it). Read in one place, the right-hand rule at the birth of every product of the event's `become`: a product of hand h leaves only on the event's directions d with sign(A . u_d) = h (a left-handed product AGAINST the axis, a right-handed one along it: Wu's electrons; the strict hemisphere, the equator not admitted), the apportioning of today over the admitted subset; a product without a hand is stamped sign(A . u_d) on the direction it leaves on; a handed product at a parent without an axis leaves on every declared direction with its hand (an unpolarised parent is lawful). An empty admitted set is refused at load. `MeasuredDefinition.axis`, `Measured.axis`, `world.axis_sign`; `run.json` carries it per number.
-- **The pointer's register bound** — `nature_beam.POINTER_AMOUNT_BOUND` = (2^62 - 1) // (32 x 257) = 560759486676481: the amount a detector Node or a face may click of one family in one interval with the coherent pointer (X, Y) summed in the int64 register (each component within 32 x 257 x the amount); beyond it the pointer is summed in Python integers. The record X^2 + Y^2 and its accumulation are exact Python integers always: a record is a report of the host, never refused and never wrapped, and it may exceed 2^63 in `run.json` and `state.json` (parsed as an arbitrary-precision integer). The affordable amount `RECORD_AMOUNT_BOUND` = 261123 and its refusal (the night of 2026-09-19) are deleted ([BEAM_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
-- **Flight table** — the name kept from the tables built at load until the model owner's record 155 ("no tables", 2026-09-20); since then the flight is one world constant per direction (`Flight`: S_1 = |a| + |b| + |c|, T_d = isqrt(3 |v|^2 Q^2), the Bresenham line of the vector, the period L_d and the unit label) and the position's accumulator on the row, off the age: m(tau) = (2 tau S_1 Q + T_d) // (2 T_d) Manhattan steps made, the residue (tau r + T_d) mod d with r = 2 S_1 Q and d = 2 T_d, and the interval's step the count `by_drive_rows` gains at the residue (the array form of `core.integer.by_drive`, 2026-09-21), the m-th unit step of the line; a rest direction never moves. Nothing written by hand, no field on the row.
-- **Age (of a ray)** — the count of intervals since the measured event that created the ray, a birth or a re-emission (a collision is a permutation and keeps it), kept whole on the record since 2026-09-20 (the model owner, 2026-09-19, "the clock beside a mass ... go for it"; [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation), note 25). The GameBoard's rules read it only modulo the direction's period (the flight) or not at all (the collision); a measured event, the external thing, reads it whole. Bounded by the world key `age_bound` (twice the flight bound by default on a GameBoard with an open axis, required on a GameBoard periodic on every axis); a ray beyond it refuses the run. A measured event's age is its clock, a different count (below).
-- **Age moment** — the component `age` of the one reading: `sum amount x age` over a reading set, a first moment in the age, split outside and here as the count is (`Moments.age`). A reading aid of the measured event that changes nothing on the GameBoard. A table entry that declares `reads: "age"` carries it on its record and its clock counts it in place of the presence (`measured.count_component`): a clock beside a mass then reads (M / r^2) x r = M / r in space while the push keeps reading the flow, M / r^2, Einstein's pair from two readings of the same rays.
-- **Rest slot** — one of the two slots of a Node, beside the six Ports, where a ray is at rest (the directions 0 and 1); a head-on pair parks in them by the collision table and leaves again at the next collision.
-- **Collision** — at a Node of free space (one that holds no measured event: rays meet the table there, not each other; the model owner's decision of 2026-09-19), the permutation of the directions of the single rays of one (Node, number, content) group in one interval by the eight-slot table: a slot empty, single or a crowd (two or more); the class of a state (the crowd mask, the number of singles, their headings' sum) is invariant, the forward map is the cyclic shift by +1 inside the class and the inverse by -1; a crowd slot never changes; a lone ray is fixed. A bijection, generated from the rule and checked at load (INV[FWD[s]] = s on all 3^8 states).
-- **Cube group (of the GameBoard)** — since 2026-09-21 (the vector program, record 191 of [the log](LOG_2026-09-20.md)): the 48 symmetries of the lattice about a Node, the signed axis permutations, each as its image of the six Ports (`core.game_board.cube_symmetries`, `compose_symmetries`, `inverse_symmetry`); a group (closed, with the identity and every inverse). Its **hand** is the pseudoscalar of the group (`symmetry_hand`): +1 on the 24 rotations, -1 on the 24 reflections, multiplicative under composition. The six-heading patterns fall into orbits under it (`tests/test_nature_beam_collision.py` (b), the orbit-stabilizer and Burnside properties).
-- **Phase circle** — since 2026-09-21 named as the object it was: the world's one circle of N steps, the cyclic group of the phase (`core.phase.PhaseCircle`: a turn adds modulo N, a difference subtracts, the opposite phase is half a turn away) with its unit vectors at the scale 256 (`vector`, the tables' (C, S)); one per world (`phase_circle(N)`, cached), carried by the engine's tables (`NatureBeamTables.circle`) and the layer; the phase mask N - 1 is its `mask`.
-- **Collision action** — since 2026-09-21 named as the object it was: the collision table is the action of the cyclic group on the 3^8 slot states by the shift (`CollisionTable.act`, `forward` and `inverse`), whose orbits are the classes of BEAM_LAW section 4 (the crowd mask, the number of singles, their headings' sum: the invariants of every move); per code its class (`orbit`) and its class's size (`period`), the least power of the shift that returns it; one cycle per class (`tests/test_group_structure.py` (c)).
-- **Meeting** — since 2026-09-20 (the model owner, Highlights 5.4, "DECIDED: the meeting, M-R: an event in transit reads the crowd as a body does, a report, not a balance"; the physicist's and the mathematician's design M-R; [BEAM_LAW section 3 step 3 and note 35](BEAM_LAW.md#3-the-nodes-interval-nature_beam); `events/meeting.py`; the identity `meeting-v1` under the world key `meeting`, false by default): at a Node of free space, after the collision, a paid unit's reading of the free crowd of every number but its own by the one reading set (the vector moment V with the labels as weights) and the column sum kappa of its family against theirs (gravity: -1), and its turn toward the target t = kappa V by k steps of the arc permutation of the direction table (the moving directions in sectors about t, each ordered by the exact angle to t and shifted one step toward it, the closest wrapping to the farthest; the rest directions fixed), k read off its phase register: the crowd met in whole units of Q is added to the phase, one grain step per wrap of the circle, so the phase carries the crowd met modulo N (a phase delay by the crowd). The crowd is untouched, and so are the unit's content, amount, age and number; paid units never read each other; the books keep a `turned` line per family, the change of the transit momentum line by the turns, a report as `pushed` is. Distinct from the collision (below), which permutes the single units of one number and content on the eight slots and conserves their headings' sum: the meeting is one-sided, a reading, and turns by the crowd's sign. A bijection of (direction, phase) for every fixed crowd, inverted from the untouched crowd before the inverse collision. A paid family without a phase circle is refused under the key.
-- **The one reading** (`read_arrivals`) — the amount-weighted moments of order 0, 1 and 2 of the direction vectors of a Node's arrivals, taken once over the one reading set (the model owner, 2026-09-19: valid for a fan as for the six headings): order 0 the count, split outside (a ray that arrived this interval, its vector u_d of the direction it arrived on) and here (a ray that did not step, its vector (0, 0, 0), so it enters the zeroth moment alone); order 1 the net flow, sum amount x u_d; order 2 the traceless tensor, 3 x sum amount x u (x) u less its trace on the diagonal, a symmetric integer 3 x 3 matrix of trace zero (since 2026-09-19 on the unit vectors u_d at the scale Q = 64, so a fan's flow reads Q per unit of amount direction-blind; until then on the integer directions D). Every coupling selects its component by the declared key `reads` of its table entry (`scalar` by default). The presence is the scalar over every number but the reader's own; the push reads the flow; the detector's record is the same moments over the clicked rays with their amplitudes as weights, the scalar squared. On the six headings the moments are the slot decomposition of the first NatureBeam worlds exactly; until the night of 2026-09-19 that decomposition (the seven Port slots over an orthogonal basis) was the implementation.
-- **The table generated from the keys** (`default_table`) — the model owner, 2026-09-19: a measured event's table is one function of the families' keys, a free family (`quantum` 0) read (the push taken, the rays go on) and a paid one (`quantum` 1 or more) measured (the click), no window; a world declares only the entries that differ (a window, a rule off the default, a `reads` component), an entry equal to the default being accepted and changing nothing. The kind of a family is derived from its quantum and never declared (`kind` is refused).
-- **Detector (a set with one record)** — since 2026-09-19 (the model owner: "a detector measuring three Nodes sees one electron that can be on any of the three"): a declared set of measured events (`detectors[].positions`) with ONE record; a click says "here, in one of these" and not which; the declared width of the set is the position's uncertainty, and the reading, not the GameBoard, is what is uncertain. Its threshold is over the whole set in one interval (every number but each Node's own) on the amount arriving (under `wave`, from 2026-09-20 to stage (vii) step 4 of the same day, on the square of the coherent pointer of the arrivals in units of one ray, the entry "Threshold under wave", deleted with the one click); its record is one per set, and its `reading` is `wave` (the default since 2026-09-20) or `beam`. A measured event outside every declared detector is a detector of one Node. What an arrival does stays at its Node: the content and the momentum join the measured event the ray reached, the re-emission is that Node's. At run time `DetectorSet` (`NatureBeamSimulation.detector_sets`), `Measured.detector_set` ([BEAM_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
-- **Threshold under `wave` (the pointer's square in units of one ray)** — deleted at stage (vii) step 4 of 2026-09-20 (the one click, [MIGRATION](MIGRATION.md) (vii-4): the threshold is the amount summed over the set under both readings, the crowd's pointer giving the set's phase and its record alone; a record's rows in antiphase cancel at the merge). As it stood since 2026-09-20 (the model owner; issue #359 step A; [BEAM_LAW note 32](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)): a `wave` detector set clicks in an interval when the square of the coherent pointer of its arrivals (every number but each Node's own), read in units of one ray, is at least its `threshold`, and passes otherwise with `pass` records naming `threshold`. The unit is the square of one unit's pointer at phase 0, (32 x 256)^2 = 2^26, and the reading the nearest integer, `nature_beam.pointer_units(X, Y) = (X^2 + Y^2 + 2^25) // 2^26`: one unit at any phase reads 1 (the tables' C^2 + S^2 within 361 of 65536 for every N through 4096), a rays in phase a^2 (exactly through a = 11 at N = 64), two opposite rays 0, two a quarter turn apart 2; so rays that cancel pass whether or not a window is declared, and the window then reads the same pointer's phase as before. No memory between intervals. Under `beam` the threshold is the amount summed over the set, as it was for both readings until 2026-09-20.
-- **Extent (of a detector)** — the number of Nodes of its set, declared by its `positions`: the uncertainty of the position a click of the set reports (a screen read as pixels one Node wide resolves y to a Node; a screen declared as one detector reads one record). Distinct from the `phase_window`, the window on the phase circle.
-- **Transformation (`become`, the identity `weak-v1`)** — since 2026-09-20 (the model owner, Highlights 5.4, "go on everything", item (1); [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (iii)): the fifth table rule, on the one-way side of the border beside `read`, `measure`, `rerelease` and `pass`: a measured event becomes an event of another family (`into`) and releases the rest as products (`products`, [family, amount, content per unit] each, paid from what it holds of its own family, a free product's content 0), born as a re-release is with the recoil over all of them; two triggers, one function (`nature_beam.transform`): the clock trigger, the measured-event key `become` fired at the self-creation whose clock reaches `at` (`ages_at_key`) while the crowd gate is open, and the click trigger, a table entry whose rule is `become`, an arrival clicked within the window as `measure` clicks it. The charges balance at load; the key and the entries are consumed at the transformation; the books' `became` line and the record's `become` line. `world.Transformation`, `Measured.became`, `Ledger.held_became`.
-- **Crowd (the gate of the clock trigger)** — the optional key `crowd` of a measured event's `become`, an integer from 0: the transformation fires only at a pulse of its key (the ages `at`, 2 `at`, ...) at which the count the clock read is below it; the law's form of the condition that keeps a bound neutron stable (series J3), a gate on a pulse and not a reset of the clock. The count the clock reads also slows the pulse itself, as it slows every clock (`by_clock` at the world's suspension).
-- **The W (a paid family with a lifetime of 1)** — since 2026-09-20 (the model owner, Highlights 5.4, "go on everything", item (3); [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (iv)): no key of its own: a paid family (`quantum` 1) with a whole charge per unit of amount (D-1) and the family key `lifetime` 1, no column, thrown as a product of a `become` and measured by the keys' rule at the neighbour it reaches at the age 1, where it stays held (the neighbour's charge and content then the sum's); booked on the border `lifetime` where no table took it. L = 0 is no family at all: the contact form of the weak force is the `become` entry itself (series J1 and J3); no Z family (a neutral current is the neutrino's own row met by a `rerelease` within a window). The register's `w_exchange`.
-- **Width of a window (`phase_width`)** — since 2026-09-20 (the model owner, Highlights 5.4, "go on everything": the neutrino first, no change of law; [BEAM_LAW note 36](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (i)): the table-entry and lamp key `phase_width`, an integer w from 1 through N, N / 2 by default; a window is its setting s and its width w, the w consecutive steps of the circle [s - floor(w / 2), s - floor(w / 2) + w), a phase at the distance d = (phase - s) mod N inside when (d + floor(w / 2)) mod N < w (`nature_beam.window_admits`, the one floor of the window and its width; at N / 2 the half circle as it was). The admitted fraction of a source's rays is w / N exactly when the source's stride over the circle (its turn per self-creation) is coprime to N: the detector's world sees a cross-section where the GameBoard has a stride (series J2). Refused where a window is and without its window's setting. `MeasuredDefinition.widths`, `LampDefinition.width`, `Measured.widths`, `Measured.lamp_width`, `world.default_width`.
-- **Record (of a detector)** — per interval, per detector set and family: under the reading `wave`, the pointer over the whole set of the clicked rays' amplitudes (32 x amount at the ray's phase over the 1/256 tables) read by the one reading, its scalar part the pointer (X, Y) and the record X^2 + Y^2, the set's phase the pointer's nearest step (`nature_beam.pointer_phases`), returned to every measured event of the set after the click; under `beam`, the plain count of the units that clicked after the pairing. The `record` line of `events.jsonl` (one per set, its `node` None for a set of several Nodes) and the cumulative `record` of the run's detector report. What was called the wave is the `wave` reading of a crowd of rays at a detector, the one imported law of physics (intensity = the square of the summed amplitudes); it lives nowhere else on the GameBoard.
-- **Reading (of a detector)** — the key `reading` on a declared detector (2026-09-19): `wave` the default since 2026-09-20 (the model owner: "on the GameBoard a ray, in the world a wave"; a measured event outside every declared detector reads it too); `beam` (declared; the model owner's "only events"; the default from 2026-09-19 to 2026-09-20): in one interval, over the set, the rays that would click are paired by opposite phase (exactly opposite without a window on the Node; within the half circle centred on the opposite phase with one), greedily in the order of the rows; a paired couple passes on whole (`pass` lines with `cancelled`), the rest click, the record the count, the phase returned the last clicked row's; `wave`: the coherent pointer over the set, its square the record, its nearest step the phase returned and the phase the window reads.
-- **Record (of a birth, `amplitude-v1`)** — since 2026-09-20, in a recorded world, one with a lamp (the key `amplitude` of the law's first stages deleted at the one click; [BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)): the identity a lamp's self-creation gives every row it births, the lamp's number x 2^32 + the birth's ordinal (`amplitude.record_identity`), carried on the row through every split, re-emission, rotation and gate until the row is absorbed or cancelled; the column `record` of the store (0 on a row of no record, which every row is without the key), the `record` of the `birth`, `split`, `gather` and click lines. One record is one quantum of the world's list of clicks: its rows are its paths, its click is one. Distinct from the record of a detector (above, the crowd's pointer) and from the run's record (`run.json`).
-- **Branch (arm and label)** — the column `branch` of a record's row, the arm and the label packed as arm x 2^32 + label (`amplitude.branch_of`): the arm the lamp's direction the row was born on (`arms` on the lamp), the label the joint label of the record's branches (`branches` on the lamp, bit k of a label the arm k's); a `turn` on a table entry turns one label's phase, a `rotate` on a `rerelease` turns one label bit, a `gate` permutes the labels of the rows of the joined records. Without the key 0.
-- **Multiplicity (m)** — the column `multiplicity` of a record's row: the product of the norms of the splits along the row's path (A = the sum of the squares of a split's weights), 65536 per label rotation, the count of a lamp's paths at its birth; a row's amount over m x the birth's unit is its amplitude, and one record's rows at one set carry one m (the design's one multiplicity per offer, refused otherwise). Bounded through every re-emitter of the world at load within 2^62 - 1. Without the key 1.
-- **Layer** — `events/amplitude.py`, the host register beside the GameBoard, present in every world and empty without a lamp (the design's sections 3 and 5): per live record its offers, fed by the engine's `birth`, `split`, `cancel`, `rotate`, `join` and `end`, completing a record when its live units reach 0 and choosing its click; a report of the host, counted as host cost and never read by a Node's rule (`NatureBeamSimulation.layer`; `tools/amplitude_path.py` replays a run's register through it).
-- **Offer** — what a record's rows put at a `sum` set's Node when the set ends them: the phase-count vector per label and Node (the amounts at their phases, `Offer.counts`; until 2026-09-21 the pointer over the tables), the residual per channel (the same kind of vector after the set's reading), the residual units, the content and the momentum the rows carried (`amplitude.Offer`); a set's weight in the cells is the sum over its Nodes of the bilinear form of the sum over the labels, coherent within one Node and incoherent across a set's Nodes (the decision of 2026-09-20 on the review of (iii)); since 2026-09-21 the form is **f**^T **G** **f** with the Gram matrix of the tables for one arm and, for several arms, the same form on the tensor product of the arms' vectors through its factorisation, the pointers' product taken with itself, `core.integer.signed_inner((X, Y), (X, Y), (1, 1))`, nothing squared as a step of its own (the model owner's order and decision, records 173 and 188 of [the log](LOG_2026-09-20.md); [BEAM_LAW note 37 (xi) and (xii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).
-- **Phase-count vector (f) and the Gram matrix (G)** — **f** (bold, a vector) the record's rows at one end Node and label as the count per phase step of the circle, f_p the amount at the phase p at the amplitude scale 32 (`amplitude.Counts`, sparse: a phase absent counts 0), the group-ring element of the design written as a vector; **E** (bold, a matrix) the 2 x N matrix whose rows are the tables C and S, the pointer (X, Y) = **E f** its evaluation at the circle (`Layer.evaluate`, a report and the several-arm factor); **G** = **E**^T **E** the Gram matrix of the tables, G_jk = C_j C_k + S_j S_k over the rounded entries themselves (`core.phase.phase_gram`, built once per N at load, stored through N = 512): the click's declared matrix, the weight of a one-arm cell **f**^T **G** **f** (`Layer.gram_form`) with no pointer formed; a read's factor the multiple 256^2 of the ring's identity e_0, an arm's factors multiplied in Z[Z_N] (`ring_product`), the rotation's entries scalars on the counts and its turn a shift of the phases. Since 2026-09-21 (record 188; [BEAM_LAW note 37 (xii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).
-- **Ladder (rungs)** — the record's cells in the order of its offers, each cell's rung b_k = (2 W C_k + Total) // (2 Total), the cumulative weight over the total at the nearest integer of the record's wheel W (N under the wheel [1, N]; since 2026-09-21, note 46): the record's coordinate u falls in the cell whose rung it is below, and within a set of several Nodes the Node by the same rungs over the Nodes' weights (`amplitude.rungs`, `cell_of`, `node_choice`); the design's section 5, Born's rule read as a count over the wheel.
-- **Birth wheel (r, W)** — a lamp's declared rate `wheel` [r, W] (since 2026-09-21, the model owner's decision, record 180 of [the log](LOG_2026-09-20.md); [BEAM_LAW note 46](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)): one `Count` row of the lamp's counts table advanced by r over W at every birth, its accumulator before the advance the record's coordinate u on the ladder (u = ordinal x r mod W), the click's rungs on W; declared on every lamp, no default ([1, N] the count of births mod N as built; [2531, 4096] the golden rate of `slits_huygens`); its remainder in `state.json` under `acc` as `wheel`.
-- **Gather (the click of a record)** — the completion of a record: when its live units are 0 the layer reads its ladder at u and the record clicks at the chosen set, arm and channel, at the chosen Node, with the content and the momentum the chosen rows carried; the `gather` line of the record (the set, the arm, the channel, the Node, the windows, the weight, the total, u and the cells). A record with rows still live gathers nothing; a `sum` set clicks nothing on its own (the reading `sum` is the one pointer's reading at the record's scope, `DetectorSet.scope`).
-- **The click's Node** — the Node of a record's click within a set of several Nodes is chosen by the rungs over the Nodes' weights, each Node's weight the bilinear form **f**^T **G** **f** of its own phase-count vector (the square of its coherent sum, with no pointer formed; interference coherent within one Node only); the record clicks at one Node, and the set's extent stays the reading's uncertainty as it was.
-- **Birth phase (u)** — the record's own field on its rows (the column `birth`, since stage (vii) step 2 of 2026-09-20, the K finding, note 37 (ix)): since 2026-09-21 the lamp's birth wheel's count, u = ordinal x r mod W under the lamp's declared `wheel` [r, W] ([BEAM_LAW note 46](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation); the lamp's count of births less one mod N under [1, N], as built until then; a rebirth's u the re-emitter's own count mod N), uniform over births whatever the lamp's turn, carried through every re-creation and on the `birth`, `click` and `gather` lines: the record's coordinate on the ladder, read by the click alone; the rows' birth phase is u mod N. Every rule of the GameBoard that reads a record row's phase reads the path phase, phase - u (the meeting's register, the crowd's readings, the windows, the faces); a row of no record has u = 0 and reads its phase itself. Until then u was the lamp's clock phase at the birth and ran with the row's phase.
-- **Exact phase at the click (phi)** — since 2026-09-21 (the model owner's decision, record 163 (2) of [the log](LOG_2026-09-20.md); [BEAM_LAW note 45](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)) the phase a record's row is read at when it ends (a click, a `sum` re-emitter, an open face, the border): the phase at the exact time of its last Link, phi = phase - floor(terms n / d) + floor(n made T_d / (d S_1 Q)) mod N from the row's two counts, the phase per interval of age n / d (the pair form) and the flight table's count of Links made on its direction, one floor at the click, a Euclidean division with the remainder kept (`nature_beam.exact_phase`; the click line's `exact` and `remainder`); the row's `phase` column stays the walk's, read by every rule of the GameBoard as before.
-- **Phase returned** — after a click, every measured event of the detector's set takes the set's phase as its own (the model owner, 2026-09-19: "the detector must also return to the GameBoard the information it received"), so a lamp or a re-emitter releases afterwards at the phase it received; the frame's turn by content over K is added after it; a pass or a read leaves the phase alone.
-- **Re-emission** — a `rerelease` entry: the rays it takes are created again at the Node's next self-creation on the measured event's declared `directions`, the amount apportioned whole, each part keeping the arriving phase and content per unit, stamped with the re-emitter's number, age 0, the recoil taken. A bijection on (direction, phase).
-- **Bijection** — the walk and the collision have inverses (`NatureBeamSimulation.inverse_step`): T forward intervals followed by T inverse intervals return the store bit-exact on a GameBoard without a measured event. The click is the only one-way border.
-- **Suspension, owed** — a measured event's owed count is read off its clock from what it counted (`by_clock(age, k x n, d)`, k the presence, or since 2026-09-20 the age moment for a family whose table entry reads `age`), as under the law of events; there is no suspension of a ray (a ray in transit never waits; the seventh exit is the rest slot).
-- **Phase per Link** — the family key `phase_per_link`: the phase steps a ray turns at every Link crossed, 0 by default (a ray does not turn in transit unless the family declares it).
-- **Interval (tick)** — the step tick t -> t + 1 of the whole GameBoard: `tick` in every record key and identifier (`tick`, `ticks`, `completed_ticks`, the `tick` of every record line), "interval" the prose noun for the same step (Highlights 5.6, item 9, 2026-09-20).
-- **Carried** — `amount x content`, the content a row of rays carries: the content line of the books (`content_released`, `content_absorbed`), the `content` a click joins and the face detectors' `content`; one name for that product wherever it is summed (Highlights 5.6, item 13, 2026-09-20).
-- **Body on a set (span)** — since 2026-09-20 (the model owner's principle of the detector as a set applied to the electron, "the electron of width 3", proposal 1 of the physicist's report on hydrogen; [BEAM_LAW note 30](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)): a measured event that declares `span`, three odd integers from 1 (`[1, 1, 1]` by default, one Node), is a body on the block of span_x x span_y x span_z Nodes centred on its `position` (`world.body_nodes`, `Measured.nodes`), ONE record on all of them. Its threshold, its clock's count and its push read the one reading set summed over its Nodes, per Node; its releases are apportioned whole over its Nodes (the leftover to the Nodes counted from `age mod w`), so its flux is its content's whatever the width; the step moves the whole set as one (refused when a Node of the moved set holds another measured event, the refusal a contact read through the occupants' tables since 2026-09-20, the entry "Contact"; the whole body clicks on the face detector when any of its Nodes would leave; every Node wraps on a periodic axis); no collision acts at any of its Nodes; its record lines name its `position`; a detector names it by its `position`. A body of one Node is the measured event as it was. Distinct from the extent of a detector (its `positions`), the width of the push (`width`) and a window.
-- **Action (h)** — the world key `action`, an integer from 1 in the units of the momentum label times Links, absent by default (the model owner's decision of 2026-09-20 on Bohr, "put it as parameters outside the GameBoard like the age"; [BEAM_LAW note 30](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)): the quantum of action of the turn by momentum, the momentum times the Links stepped that make one whole turn of a body's phase. Without it nothing turns by momentum. When it is declared the record carries the identity `bohr-v1` under `hypotheses`, the turn being a physical hypothesis beside the law and not a rule of the GameBoard.
-- **Turn by momentum (of a body)** — the measured-event key `phase_by_momentum` (true; false by default; refused without `action`, on a `fixed` measured event and on a family without a phase circle): at the Link a body steps on an axis whose momentum component is p, its phase turns by the count the `action` row of its table of counts gains, |p| x N over h at every Link the step rule counts on the axis (the model owner's record 155 of [the log](LOG_2026-09-20.md), built on the branch `no-tables`, [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (i); until then the difference of two floors of k x |p| x N / h, `by_clock(k0, |p| x N, h)`, k0 the Links stepped, the same integers at a constant momentum), so that after k Links stepped at a constant momentum the phase has turned floor(k x |p| x N / h) mod N; the axes compose (x before y before z, the turns summed); the `step` record line carries the phase after the step. A rule of the measured event, the external thing, read from its own record: the rays' flight and collision are untouched, the rays it releases carry its phase as before. Distinct from the clock's turn (content over K per self-creation, by time) and from a ray's `phase_per_link` (a rule of the ray in transit). Its closure on an orbit is de Broglie's condition in the GameBoard's metric: the turn per orbit is (N / h) x the sum over the Links stepped of |p_axis|, 4 p r for a circle of radius r (series H in [EXPERIMENTS](EXPERIMENTS.md)).
-- **Accumulator (of a count)** — since 2026-09-20 ([BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation), the fraction-free law): the one bounded integer on a body's record that owns a count's remainder, `Measured.acc_owed`, `acc_release` per family, `acc_lamp`, `acc_turn`, `acc_push` per column and axis, and the step's `drive`; it gains the count's rate at each self-creation and the count is the whole part it then holds (`core.integer.by_drive`), the remainder kept below the denominator, nothing at a Node; the residue is the phase of the count within its cycle, what the clock has already made toward its next whole count (the model owner's reading, record 150 of [the log](LOG_2026-09-20.md)), which is why `state.json` carries it; `by_clock` off the age is its constant-rate identity, not a count of its own. The accumulators are the rows of the body's table of counts, `Measured.counts` (a `CountTable` of `Count` rows: the name, the numerator's source, the index and axis, the rate's factor, the denominator, the cap and the accumulator), advanced by the one loop `CountTable.advance`; `acc_*` and `drive` read that table. Since record 155 of 2026-09-20 the `action` row (the turn by momentum) and the `place` rows (a set body's Nodes' claims on its releases) too, and a record row in flight carries its own accumulators, `share_x/y/z`, the part of its push on a body not yet delivered, written to `state.json` as `share` on a row that holds one. In `state.json` and `run.json` under `acc` by name.
-- **Width (of the push)** — the world key `width`, S, an integer from 1 (the model owner's D1, 2026-09-19): a free measured event of content M with the momentum component p on an axis steps one Link per (S x M + p) / p self-creations on that axis, the count the accumulator row `drive` of the body's table of counts gives at the rate |p| over S x M + |p| (`core.integer.by_drive`, one Link per self-creation at most, the remainder kept on the body's record: [BEAM_LAW note 17](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) as amended and note 41; `by_clock(age, |p|, S x M + |p|)` its constant-rate identity). S = 1 (the default) is the rule as it was, one Link per (M + p) / p. One unit of net flow gives any body p = M, so the speed it gives is 1 / (S + 1) for every content: the equivalence principle is kept and the world chooses its slowest motion. Distinct from `suspension` `[n, d]`, the width of the clock's count, and from `phase_window`, the width of a detector.
+- **Row**: the record of an event in transit, `NatureBeam` in the code: a
+  Node, a direction, an age, a phase, a number, an amount and a content per
+  unit, moving along the digital line of its direction at one pace for every
+  direction; identical rows at one Node are one row with the amounts added
+  ([BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)).
+  The system has rows and bodies (the model owner, record 183, 2026-09-21);
+  a row is a body of no content (the first test of every rule, generic).
+- **Body (a measured event)**: an event created here without end, at one
+  Node or on a set of Nodes (`span`), with one record: its held content per
+  family, its momentum vector **p**, its phase, its clock and its counts
+  table; it meets what arrives by its table and releases off its clock
+  ([BEAM_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
+- **Record (of a quantum)**: in a recorded world (one with a lamp,
+  `amplitude-v1`), the identity a lamp's self-creation gives every row it
+  births, the lamp's number x 2^32 + the birth's ordinal, carried through
+  every split, re-emission, rotation and gate; one record is one quantum of
+  the world's list of clicks, its rows are its paths, its click is one
+  (BEAM_LAW note 37). In the vector form the record is the phase-count
+  vector **f** of Z^N, an element of the group ring Z[Z_N] (record 188).
+- **Family**: one row of the family table, the world's `families`: its
+  quantum h (0 a free family, 1 or more a paid one), its charge per unit of
+  content rho, its columns, its lifetime L, its phase (a circle or none),
+  its phase per Link and its hand; its kind is derived from its quantum and
+  never declared (the model owner, 2026-09-19, the table from the keys).
+- **Content**: the integer M a body holds, or a paid row carries per unit,
+  in the family's units: the mass; `content` on a body or a row
+  (BEAM_LAW section 2). A free row carries no content.
+- **Amount**: the whole units in a row or a record, the intensity;
+  `amount`. **Carried** is amount x content, the content a row carries, the
+  content line of the books (Highlights 5.6, item 13).
+- **The momentum label**: the momentum of a row is not stored, it is its
+  label, content x **u**_d per unit for a paid family and amount x **u**_d
+  for a free one, **u**_d the unit vector of its direction at the scale
+  Q = 64; every momentum the law reads or moves (the push, the click, the
+  recoil, the books' lines) is this label, in label units, Q per unit of
+  amount along a heading (BEAM_LAW section 2, notes 18 and 23).
+- **Phase**: a step of the circle of N: on a row, stamped by the emitter's
+  clock at birth and turned by the family's `phase_per_link` at every Link
+  crossed; on a body, the turns of its clock (BEAM_LAW section 2). A record
+  row's rules read its path phase, the phase less its birth phase u
+  (note 37); at its end the row is read at the exact phase (below).
+- **Age**: on a row, the count of intervals since the event that created it,
+  a birth or a re-emission, kept whole on the record; the flight reads it
+  modulo the direction's period, a body reads it whole as the age moment
+  (note 25). On a body, its clock.
+- **Number**: the last emitter's number on a row, a body's number; a reader
+  reads everything at its Node but its own number (the one reading set).
+- **Direction**: an index into the world's direction table: 0 and 1 the two
+  rest directions, 2 .. 7 the six headings in Port order, 8 .. the declared
+  primitive vectors **D** with components in -P .. P (BEAM_LAW section 2).
+  The **unit vector of a direction** **u**_d is the integer vector nearest
+  Q **D** / |**D**|, one constant per direction computed once at load,
+  of length Q within 1.35 percent (note 23).
+- **Hand**: the row's column `hand` in {-1, 0, +1}, the sense in which the
+  event in transit turns about its own direction, a pseudoscalar under the
+  48 symmetries, carried unchanged through every re-creation and an
+  identity field of the merge (`hand-v1`, note 39). The **axis** of a body
+  is its declared axial heading, read by the right-hand rule at the birth of
+  a transformation's products (the same note).
+- **Held content**: what a body holds of every family (`held`), its own
+  amount under its own family; its content is the sum, its charge in every
+  column the rational sum over what it holds (note 31 (viii)).
+- **Charge**: of a family, rho, the charge per unit of content, an integer
+  or a pair [n, d]; of a body, rho times its content, and per column the
+  rational sum of the column's value times the content held; of a paid
+  family, a whole charge per unit of amount read on the charge line of the
+  books alone (the model owner, 2026-09-20; note 36 (ii)).
+- **Column**: a value per unit of content a family declares under a name
+  with a sign, +1 like values push apart, -1 like values pull together;
+  every family carries `gravity` first and `charge` second. A force of nature
+  is a column with a sign and a lifetime on its family, never a code path
+  (the model owner, 2026-09-20, note 31; `columns-v1`).
+- **Clock**: the count of a body's self-creations, its age; every rate of the
+  body, the turn, the release, the owed count, is read off it.
+- **The counts table**: the rows of a body's record that own its counts,
+  one accumulator each: the owed count, the release per family, the lamp,
+  the turn, the push per column and axis, the drive, the action and the
+  place rows (`Measured.counts`, note 41).
+- **The store**: the host's arrays, one row per record per family, sorted by
+  Node at every interval; a report of the host, not a thing of the law
+  (BEAM_LAW section 3).
 
-## The law of events (2026-09-19, deleted the same day)
+## The rule
 
-The model of the evening of 2026-09-19 ([Highlights](HIGHLIGHTS.md) 5.4, "The
-law of events" and "The principles of the law of events"; `events-v1`, in git
-at any commit before its deletion, [migration](MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1)).
-The terms marked below as the sides, the suspension of a bundle and the
-phase-less family's diagonal are history; the others are kept by the Beam Law:
+- **The six verbs**: the only operations of the law on the state vector
+  (the model owner, records 181 and 202): the translation of an accumulator
+  by its rate; the bilinear form with a declared matrix; the group-ring
+  addition; the permutation; the evaluation; the Euclidean division with the
+  remainder kept. A rule that needs a seventh verb (a root) is stated under
+  its own identity outside the law.
+- **The three tests**: generic, vector, local; a rule enters the law only if
+  it passes all three ([skills/workflow.md](../skills/workflow.md#the-three-tests-of-every-rule-generic-vector-local-the-model-owner-2026-09-21-record-202), record 202).
+- **Accumulator**: the one bounded integer on a body's record that owns a
+  count: it gains the count's rate at each self-creation, the count is the
+  whole part it then holds in units of the wall, and the remainder stays in
+  it (`core.integer.by_drive`; the fraction-free law, note 41).
+- **Rate**: what an accumulator gains per interval, at most bilinear in the
+  state (record 202): the flight's 2 S_1 Q, the drive's |p_a|, the turn's
+  content x n, the owed count's k x n; the rate vector **r** of the state.
+- **Wall**: the denominator of an accumulator, the value at which its count
+  fires and the accumulator is reduced: the flight's 2 T_D, the drive's
+  Q S M + |p_a| per axis, the turn's d; the map is linear between walls and
+  jumps at a wall (DERIVATIONS_BEAM section 0).
+- **Remainder**: what an accumulator keeps below its wall after a count,
+  never discarded at run time; the phase of the count within its cycle
+  (the model owner, records 150 and 155 (3)).
+- **Count**: the whole part an accumulator yields at a self-creation, the
+  sixth verb; a clock's count of self-creations; the owed count.
+- **Drive**: the body's accumulator of its step, per axis the rate p_a
+  against the wall Q S M + |p_a|, at most one Link per self-creation, the
+  remainder on the body's record (note 17 as amended; the step drive of
+  2026-09-20). Under form B, decided and not built, the flight of the
+  momentum's direction at the fraction the momentum earns (record 301).
+- **Flight**: the row's position accumulator on the digital line of its
+  direction: it starts at T_D, gains 2 S_1 Q per interval against the wall
+  2 T_D, and its count picks the unit step of the line; a rest direction
+  never moves (BEAM_LAW section 3, the flight rule; the flight table is
+  retired, MIGRATION 2026-09-20). The step's count is `by_drive_rows`, the
+  array form of `core.integer.by_drive` over the rows (2026-09-21); nothing
+  written by hand, no field on the row.
+- **Walk**: step 1 of the interval, departures become arrivals: every row
+  whose flight counts a Link crosses it whole, its record unchanged
+  ([BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam)).
+- **Crossing**: the one meeting of a row and a body, where their world lines
+  cross, read once: a body reads every arrival at its Nodes, and in the
+  interval of a step the rows that crossed its Link the other way and the
+  resident rows moving against it, never a row behind it; a moving reader's
+  Doppler is the count of the rows it crosses, 1 +- v / c on an axis
+  (record 158; note 48; [MIGRATION](MIGRATION.md#the-crossing-rule-on-2026-09-21-the-step-before-the-law-a-row-and-a-body-met-once-the-key-doppler-and-the-grain-deleted)).
+- **Meeting**: under the world key `meeting` (`meeting-v1`), at a Node of
+  free space after the collision, a paid unit's reading of the free crowd
+  and its turn toward the target kappa **V** by k steps of the arc
+  permutation, k read off its phase; the crowd is untouched, a report and
+  not a balance (the model owner, 2026-09-20, note 35).
+- **Collision**: at a Node of free space, one that holds no body, the
+  permutation of the directions of the single rows of one (Node, number,
+  content) group by the eight-slot table, a bijection whose class (the crowd
+  mask, the number of singles, their headings' sum) is invariant
+  ([BEAM_LAW section 4](BEAM_LAW.md#4-the-collision-table)).
+- **Push (the coupling)**: what a body takes from the rows arriving at its
+  Node, the signed inner product over the columns, per column the whole part
+  off the reader's clock of **V** times the reader's charge in the column
+  times the arriving family's value: gravity -M_A **V**_B, the electric part
+  rho_A rho_B M_A **V**_B; for a paid family's rows the label itself; the
+  bilinear form **C a** (note 31; DERIVATIONS_BEAM).
+- **Table**: a body's rule per family, generated from the families' keys: a
+  free family read (`read`, the push taken, the rows go on), a paid one
+  measured (`measure`, the click); a world declares only what differs, a
+  window, `rerelease`, `pass`, `become` or a `reads` component (the model
+  owner, 2026-09-19). Not a table at a Node.
+- **Click (measurement)**: a paid row's units merged into a body's record by
+  the rule `measure`: the content joins, the label enters the momentum, the
+  phase is read, one click per unit; the click is the only one-way border of
+  the law (BEAM_LAW section 5). **Gather** is the click of a record: when
+  its live units are 0 the layer reads its ladder at u and the record clicks
+  at the chosen set, arm, channel and Node, with the content and the momentum
+  the chosen rows carried; each Node's weight is the bilinear form
+  **f**^T **G** **f** of its own phase-count vector, no pointer formed,
+  coherent within one Node only (record 188; note 37 (xii); on main at
+  7e523c55).
+- **Exact phase at the click**: the phase a record's row is read at when it
+  ends (a click, a `sum` re-emitter, an open face, the border), the phase at
+  the exact time of its last Link, phi = phase - floor(terms n / d) +
+  floor(n made T_D / (d S_1 Q)) mod N from the row's two counts, the phase
+  per interval of age n / d and the Links made on its direction, one floor
+  at the click with the remainder kept (`nature_beam.exact_phase`; the click
+  line's `exact` and `remainder`); the row's `phase` column stays the
+  walk's (the model owner, record 163 (2); note 45).
+- **Offer, ladder**: what a record's rows put at a `sum` set's Node when the
+  set ends them, the phase-count vector per label and Node (`Offer.counts`),
+  the residual units, the content and the momentum they carried; a set's
+  weight in the cells is the sum over its Nodes of the bilinear form of the
+  sum over the labels. The ladder is the record's cells in the order of its
+  offers, each cell's rung b_k = (2 W C_k + Total) // (2 Total) on the
+  record's wheel W, and u falls in the cell whose rung it is below: Born's
+  rule read as a count over the wheel (note 37 (iii) and (xii); note 46).
+- **Release**: what a body's self-creation creates: at a turn s each unit a
+  lamp releases costs it h x s content, carries that content and the
+  momentum h x s **u**_d along its direction, E = h f; a free family's
+  release costs nothing; a body releases every free family it holds at the
+  world's `release` rate ([ENGINE.md](ENGINE.md#a-release-costs-the-emitter-by-its-phase-rate)).
+- **Turn**: the phase steps s a body's clock gains at a self-creation, the
+  whole part of age x content x n / d gained at the clock's pair K = [n, d],
+  0 for a family without a phase circle; a release is priced by it (the
+  model owner, 2026-09-19). The **turn by momentum**, under `action`
+  (`bohr-v1`), adds |p_a| x N over h at every Link stepped on the axis.
+- **Wheel (the birth wheel)**: a lamp's declared rate `wheel` [r, W], no
+  default: one `Count` row of the lamp's counts table advanced by r over W
+  at every birth, its accumulator before the advance the record's
+  coordinate u = ordinal x r mod W on the ladder, written on the record and
+  its rows at birth, the rows' birth phase u mod N; [1, N] the count of
+  births mod N as built before, [2531, 4096] the golden rate of
+  `slits_huygens` (the model owner, record 180; note 46; on main at
+  7e523c55). A rebirth at a re-emitter that is no lamp keeps u = its count
+  of births less one mod N.
+- **Lifetime**: the family key `lifetime`, an integer L from 1: a row of the
+  family whose whole age reaches L clicks on the border `lifetime`, a
+  detector without Nodes booked as an open face books an escape; the range
+  of a column is its family's lifetime (the model owner, 2026-09-20,
+  note 31 (vii)).
+- **Suspension pair**: the world key `suspension` [n, d]: a body that read
+  the presence k after its self-creation owes the count k x n / d before its
+  next one, the **owed count** on its accumulator, on average one
+  self-creation per 1 + k n / d intervals; a row in transit never waits
+  (the model owner, 2026-09-19; the fraction-free law).
+- **Merge**: identical rows at one Node become one row with the amounts
+  added; in a recorded world rows of one record in antiphase cancel, the
+  group-ring addition (BEAM_LAW section 3 step 6).
+- **Split**: a `rerelease` entry with `weights`: an arriving row leaves as the
+  rows w a_i with the multiplicity m x A and the phase + t_i, the
+  multiplication by the apparatus's integer matrix (note 37 (ii)).
+- **Fan**: every re-emitter emits on all primitive directions within P, each
+  weighted by the angle it covers, Huygens on the lattice; decided, not
+  built (the model owner, record 160 and 163 (1)).
+- **Re-emission**: a `rerelease` entry: the rows it takes are created again at
+  the Node's next self-creation on the body's `directions`, apportioned
+  whole, with the arriving phase and content, the re-emitter's number, age 0
+  and the recoil taken (BEAM_LAW section 5). **Home** is a row of the body's
+  own number arriving at it, created again the same way, pushing nothing.
+- **Transformation (`become`, `weak-v1`)**: the fifth table rule: a body
+  becomes an event of another family and releases the rest as products, born
+  as a re-release with the recoil over all of them; a clock trigger (`at`,
+  gated by `crowd`) and a click trigger (note 36 (iii)). The W is a paid
+  family with a whole charge and the lifetime 1, no key of its own (note 36 (iv)).
+- **Contact**: a body's step refused because the destination holds another
+  body, read through the occupant's table entry for the body's family:
+  `measure` hands the momentum component over, `rerelease` returns it,
+  `read` and `pass` leave it (note 31 (ix)). **Give** (`binding-v1`): at a
+  contact under `measure` a body that holds paid content of another family
+  gives it to the flight as content in flight, the binding that costs
+  content (note 40).
+- **Window**: a table entry's or a lamp's setting `phase_window` s and width
+  `phase_width` w, the w consecutive steps of the circle about s a phase
+  must be in to be admitted, N / 2 by default; a window may be read from a
+  reading (note 36 (i)).
+- **Threshold**: a detector set's `threshold`, the amount summed over the set
+  in one interval below which every row passes with a `pass` record; the
+  sensitivity; at a record's click the divisor of the rungs (BEAM_LAW
+  section 5).
+- **Lamp**: a body's declared source: at its self-creations it births rows
+  of its family with its amount, phase and wheel value, in a recorded world
+  one record per birth, at its declared `rate` and `wheel` (the world's
+  `lamp` key; BEAM_LAW section 5, note 46).
+- **Detector**: a declared set of measured events (`detectors[].positions`)
+  with one record; a click says "here, in one of these", the set's extent
+  the position's uncertainty; a measured event outside every declared
+  detector is a detector of one Node (the model owner, 2026-09-19).
+- **Self-creation**: a body created at the next interval, at its Node or
+  where it steps, one tick of its clock; a row's transfer is not one.
+- **Step**: the Link a body's drive counts on an axis; refused onto a Node
+  that holds a body (a contact); a body on a set moves as one; before the
+  law in the interval's order (the frame, the steps, the law, the clocks'
+  turn and count; MIGRATION 2026-09-21).
+- **Frame**: the engine's bookkeeping of an interval, the tick, the steps,
+  the books and the record; it computes no physics of the row
+  ([ENGINE.md](ENGINE.md#the-beam-law-beam-v1)).
+- **Bijection**: the walk, the collision, the meeting and the merge have
+  inverses (`NatureBeamSimulation.inverse_step`); the click is the only
+  one-way border.
 
-- **Event** — the one thing on the GameBoard: a place (a Node), a time (an interval) and a record (amount, phase, number, momentum, heading, counts). There is no shadow and no real, no field and no matter as other things.
-- **Event in transit** — since the Beam Law, a ray (above): created at its next place by the flight rule, at most one Link per interval, whole, its record unchanged; it turns only by its family's `phase_per_link`. Under the law of events one Link every interval.
-- **Measured event** — an event created here without end (what was called matter, held content, a click's resident); its clock is the count of its self-creations; it meets what arrives by its table and releases off its clock.
-- **Self-creation** — a measured event created at the next interval, at its Node or, in the interval in which its body steps, at the Node it steps to; a tick of its clock. The engine (`_frame_all`) advances the age at every interval in which nothing is owed, and `_move` steps the body after it in the same interval, so a moving body's clock runs at the rate of one at rest. A ray's transfer is not a self-creation: a ray in transit has no clock. Corrected on 2026-09-20 (the physicist's finding, WEAK.md 2.4; the model owner: the engine stands): the earlier sentence "a transfer is not one" read as if a body's step skipped a tick of its clock, which the engine never did; nature's gamma is recorded as a limit of the law in [HYPOTHESES entry 21](HYPOTHESES.md#21-a-moving-bodys-clock-the-engines-rate-is-one-at-every-speed-natures-gamma-a-limit-stated-so-that-it-can-fail), not tuned in.
-- **Suspension** (of a bundle in transit: history; a measured event's count is kept, above) — the count an event carries after it reads the presence at its Node, everything present there this interval over every family and every number but its own (the arrivals, the units waiting among them and, here, the content of the measured event at the Node), times the world's fractional width `[n, d]`, the whole part (`presence x n // d`; no amplitude, no square root): the intervals it is created here before it moves; what arrives behind it waits with it. A measured event reads the same presence k after its self-creation and owes the count read off its clock, `by_clock(age, k x n, d)`, the whole part of age x k n / d gained by that self-creation (the model owner, 2026-09-19, the clock's count read off the clock; no remainder kept, the age owns it), paid before its next one: on average one self-creation per 1 + k n / d intervals.
-- **Presence** — everything present at a Node this interval, over every family: the amount that arrived (the units waiting there among it, held as arrivals) and, here, the content of the measured event at the Node under its number; a reader reads it less its own number. What the suspension reads (the model owner, 2026-09-19), formed over the one reading set below.
-- **One reading set; here, the seventh exit** — the model owner's decision of 2026-09-19 (Highlights 5.4): every coupling reads "everything present at the Node but the reader's own number, including here": the suspension's presence, the push's flow (each number's flow, the emitter's electric factor its own, summed over the set), a detector's threshold (the family's amount summed over every number but the Node's own) and its window (the phase of their coherent sum, `Transit.phase_at`). Here is the seventh exit beside the six Ports, where an event is created at the same Node: a waiting unit (held as an arrival, counted in the presence) and a measured event (its content counted in the presence under its number). What came home waits in the measured event's record, is not content and is not presence. The record stays per number, the detector's label, a response's record carrying the set's phase and a `home` record its own number's; a measured event's own content and its own number's units are never read ([the engine](ENGINE.md), `tests/test_one_reading_set.py`). Until that day a waiting unit counted as presence and a measured event's content did not, and the push, the size and the threshold read one number.
-- **Phase-less family** — a family declaring `"phase": false`: its events carry phase 0 and never turn, its measured events never turn (kept by the Beam Law); under the law of events its arrivals were mutually incoherent (history): the one rule of the Node (`mix_arrivals`) weighs its sides by the diagonal of the coherent sum, 32^2 x (the number's amount over the six Ports + 3 x its amount through the side's own Port), a lone arrival four ninths back and one ninth each other way, no cross term between Ports or between numbers; the field of matter without phase (the model owner, 2026-09-19).
-- **Clock** — the count of a measured event's self-creations (its age); every rate (the release, the lamp, the phase, the step, the electric push and, since 2026-09-19, the count the suspension owes) is read off it by whole division, with no remainder anywhere.
-- **Owed (the count)** — what a measured event owes after a self-creation before its next one (`Measured.owed`): read off its clock from the presence k it read, `by_clock(age, k x n, d)` at the world's `suspension` `[n, d]`, written once per self-creation, never accumulated (until 2026-09-19 `k x n // d` whole, so the smallest slowing was 1 / 2).
-- **The sides** (history, deleted with the law of events) — the six shares of a Node's computation from the vectors (the coherent sum, the squared leaving amplitudes), placed in whole units by the largest remainder with the ties in the interval's Port order; a group with no whole for any side goes whole by its momentum. For a phase-less family, each Port's arrival's own six shares, added per heading.
-- **Push** — what the units of every number but the measured event's own do to its momentum, once their set has passed the threshold and the window: for a free family the net flow of each number's units (amount times travel heading over the six Ports) times the content, toward the emitter, and the electric reading of the same flow with the emitter's factor, summed over the numbers; for a paid family the momentum they carry (the model owner, 2026-09-19).
-- **Table** — a measured event's declared rule per family: `read`, `measure`, `rerelease` or `pass`.
-- **Turn (s)** — the phase steps a measured event's clock gains at one self-creation, `by_clock(age, content, K)`, the whole part of age x content / K gained, read from its content before that self-creation's releases; 0 for a family without a phase circle. A release is priced by it (the model owner, 2026-09-19).
-- **Quantum (h)** — the family key `quantum`: the content of one unit of a paid family per phase step of its emitter's turn. A unit released at a turn of s costs its emitter `quantum` x s content, carries that content and the momentum `quantum` x s along its heading, and gives that content to the measured event that measures it: E = h f. A self-creation whose turn is 0 releases nothing. A free family's release costs nothing and its units carry no content (the model owner, 2026-09-19, "I approve the proposal"; [the engine](ENGINE.md#a-release-costs-the-emitter-by-its-phase-rate)). Since the night of 2026-09-19 the quantum is the family's one key of kind: h = 0 is a free family, h >= 1 a paid one, and `kind` is not declared (the table generated from the keys, above).
-- **Content carried** — the integer an event in transit carries beside its amount, phase and momentum: what its release cost, set at birth (amount x `quantum` x s), added when arrivals join a slot, and going with the units at every Node exactly as the momentum does; the content line of the books sums it.
-- **Measurement, click** — an event of another number merged into a measured event's record by the rule `measure`: the content it carries joins (amount x `quantum` x s, a free family's none), the momentum enters, the phase is read, one click per unit whatever it carries; the click record carries the content measured.
-- **Detector** — a named set of measured events with one table and a threshold; its Nodes and its threshold are its sensitivity ("a kind of detector sensitivity"), the threshold met by the family's amount arriving at a Node in one interval summed over every number but the Node's own (one reading set), and its statement is read off the record. Since 2026-09-19 under the Beam Law the threshold and the record are over the whole set (the entry "Detector (a set with one record)" above).
-- **Face detector** — an open face of the GameBoard as a detector (the model owner, 2026-09-19, one of the three reversible corrections that every path shares): named by the face (`face:+x` ... `face:-z`), its Nodes the Nodes of the face, its threshold 1; every event that leaves the GameBoard through it, a bundle in transit or a measured event's step, is a click on it, recorded like a detector's click (the tick, the Node, the number, the amount, the phase, the momentum, the content), and the books' escaped lines are the sums of the face clicks (the momentum that left booked per family since 2026-09-20, `Ledger.face_momentum[port][family]`, the family's own `escaped_momentum(family)` reported in `run.json`). The escape is a measurement at the border, not a loss; nothing physical changes at the face. A periodic axis has no faces. Since 2026-09-20 the border `lifetime` (the entry "Lifetime") is a detector of the same kind without Nodes, listed after the faces.
-- **Refused step** — a measured event's step by its momentum onto a Node that holds a measured event (the model owner, 2026-09-19, no merge): the stepping event stays where it is with its momentum untouched, the resident is untouched, and `steps` counts the step made; until that day the two merged into the resident.
-- **Home** — an event of the measured event's own number that arrives at it: created again at its next self-creation, pushing nothing and never counted as content.
-- **Books** — the ledger per family, the measured line (in content), the transit line (in amount) and the content line (the content carried in transit: released by the lamps and what leaves again = current + escaped + absorbed), exact at every interval; the momentum reported on the measured events, in transit and escaped.
+## The readings
 
-The terms below are the road to this law: the ray-event model, the law of the
-bit and the law of the shadow. Where an entry names a store, a return, a bit,
-a draw or a shadow, the law of events has none; the entry is history.
+- **Detector reading**: the record of a detector's set or of a measured
+  event, a click, a record's moments, a pointer, an owed count, an external
+  thing's reading, as declared in the world file; the only kind reality
+  has; only a detector reading is compared with nature or pinned (the model
+  owner, record 281; AGENTS.md).
+- **GameBoard reading**: the host's view of the deterministic GameBoard, a
+  row's position, the count or flow at a Node, a body's steps, the shell
+  means, the books; a diagnostic, labelled GAMEBOARD wherever it appears and
+  never compared with nature (records 163 (5) and 281).
+- **The crowd (the one reading set)**: everything present at the Node but
+  the reader's own number, here included: the arrivals of every family and
+  number and, here, the content of the body at the Node under its number;
+  every coupling, the presence, the push, the threshold, the window and the
+  meeting, reads it (the model owner, 2026-09-19; note 47, the crowd audit).
+- **The reading (the moments)**: the amount-weighted moments of order 0, 1
+  and 2 of the unit vectors of a Node's arrivals over the one reading set:
+  order 0 the count, split outside and here; order 1 the net flow **f**;
+  order 2 the traceless tensor **T**; and the age moment; a table entry
+  selects its component by `reads` (`read_arrivals`; the model owner,
+  2026-09-19). The **presence** is the order-0 reading, the count k the
+  owed count reads; the **flow** **V** is the order-1 reading with the
+  labels as weights, what the push reads.
+- **Record (of a detector)**: per interval, per set and family, under the
+  reading `wave` the pointer (X, Y) over the clicked rows' amplitudes,
+  32 x amount at the row's phase over the 1/256 tables, and its square
+  X^2 + Y^2; under `beam` the count clicked after the pairing by opposite
+  phase; the `record` line and the run's cumulative `record`; the set's
+  phase is returned to every body of the set (BEAM_LAW section 5). The
+  reading `sum` accumulates one record's rows for the record's click.
+- **Pointer**: (X, Y), the coherent sum over the clicked rows, the
+  evaluation **E** **f** of a phase-count vector at the circle; the `wave`
+  record of a detector set is its square, while the click of a record forms
+  no pointer, its weight being the Gram form (`Layer.evaluate`, a report;
+  record 188; note 37 (xii)).
+- **Books**: the ledger per family, exact at every interval: the measured,
+  transit, content and charge lines and the momentum on the bodies, in
+  transit, escaped and turned; a GameBoard reading (ENGINE.md).
+- **Register**: the recorded detector readings of the worlds of a series,
+  `expectations.json`, `gate_set.json` and the READMEs, one source per
+  number, which a test reads and never copies (TEST_EXPECTATIONS.md).
+- **Pin**: a detector reading's expected value written before the run,
+  derived from the law's operations where a formula exists; a formula
+  gives, a run proves, and nothing is tuned backward (records 205 and 305).
+- **Registered run**: a research run made once, on a stated date, at one
+  runtime source fingerprint, its expectation written before it and its
+  result recorded with the fingerprint in VALIDATION.md (EXPERIMENTS.md).
+- **Series**: the worlds of one question (D, G2, J, R, ...) registered under
+  `examples/events/<series>/` with their `expectations.json`, README,
+  readings tool and comparing test (TEST_EXPECTATIONS.md).
+- **Gate set**: `examples/events/gate_set.json`, the digests of the
+  registered lamp-free worlds replayed for bit-identity; the replay
+  mechanism, never a pin.
+- **Experiment**: a world file, a detector, a derived expectation and a run
+  that compares; a run without a derived expectation is a research run and
+  says so (record 205).
 
-## Ray-event terms (2026-09-17 to 2026-09-18; deleted on 2026-09-19)
+## The widths (the grain)
 
-History marker (2026-09-19): the ray-event model, the law of the bit and the
-law of the shadow were deleted on 2026-09-19 with the engines before the Beam
-Law ([migration](MIGRATION.md)); the terms below (`ray-event-state-v1`,
-`detector-mark-v1`, `detector-return-v1`, `spatial_fields[i].charge`,
-`charge_totals()`, the ledger's lines) are theirs and name nothing in the
-engine. The active terms are under
-[The Beam Law (2026-09-19)](#the-beam-law-2026-09-19).
+The constants of the law, not of a world: resolutions whose limit reaches
+the known formulas (Highlights 5.7).
 
-The ray-event model ([Highlights](HIGHLIGHTS.md) 3.3, 3.19, 3.20 and 5.1;
-ray-event model) uses these terms;
-`ray-event-state-v1` (ray state)
-carries them on every ray, `detector-mark-v1`
-(Detector mark) sets
-the Detector bit at a marked Node, `detector-return-v1`
-(Detector return) returns
-a seeded thing a mark misses to its seed Node, `inverse-split-v1`
-(Inverse split)
-restores it there, and `detector-absorb-v1`
-(the click absorbs)
-absorbs the thing a click realizes into the mark's resident thing.
+- **Q = 64**: the label's scale and the flight's grain, the length of every
+  unit vector **u**_d; the only knob of the pace (record 191).
+- **S**: the width of the push, the world key `width`, 1 by default: a body
+  of content M with the momentum component p steps one Link per
+  (S M + p) / p self-creations on that axis (note 17).
+- **N**: the steps of the phase circle, the world key `N`.
+- **P**: the direction bound, the world key `direction_bound`: every
+  declared direction has its components in -P .. P.
+- **K = [n, d]**: the clock's pair, the world key `K`: the turn per
+  self-creation is content x n / d; an integer K is [1, K].
+- **W**: the circle of a lamp's birth wheel, the lamp key `wheel` [r, W],
+  the click's own grain beside N: 4096 under the golden rate, N under [1, N]
+  (record 180; note 46).
+- **c**: the pace of a row, Q / T_D = 32 / 55 Links per interval on an axis
+  and 1 / sqrt 3 in the limit of the grain; derived from locality and
+  straightness, the norm of the flight operator, never declared (record 191).
 
-Since 2026-09-18 the law of the bit ([Highlights](HIGHLIGHTS.md) 5.4, the
-definitions and points 1 to 25) is the current model, and the terms of
-[the law of the bit](#the-law-of-the-bit-2026-09-18) below are its
-vocabulary; `bit-law-v1`, `node-mixing-v1`, `clock-readings-v1`,
-`node-is-ports-v1` and `lanes-v1` implement it
-(spatial fields), with
-the return as a field (point 3 as amended) pending. Where an entry below describes the form before that date, it says
-so; the identifiers it names stay the code's.
+## The identities
 
-- **Ray** — since 2026-09-18 content in motion on a line with an amount, a phase, a heading and a bit, and, for a thing, a momentum (Highlights 5.4, definitions); a shadow carries no step count (point 3). Before that date: the trajectory of one event between two interactions: one heading, one straight line, one Node per Link interval, carrying its share of the event's information. In the spatial-field implementation a `Ray` record is one straight-moving share of a ray field.
-- **Interaction** — a meeting of rays at a Node in one interval, decided by the coupling declared between their families; its result is at most six events, one per Port. In the current slice an emission by a resident record and a firing `ray_interactions` group are the interactions that create rays.
-- **Layer** — a set of families that couple: a connected component of the ray fields over the participants of the declared `ray_interactions`, derived, never declared (`ray-layers-v1`, layers). A meeting exists only inside a layer; rays of different layers cross as if the other were not there, so two events can happen at one Node in one interval. A family that no rule selects is its own layer.
-- **Output** — one of the new event rays that a meeting with declared `outputs` creates at its Node in place of its participants (`ray-meeting-conversion-v1`, meetings with outputs): a family, an amount, a heading (a Port, the source input's or its reverse), a phase and a delay, stamped with the meeting's Ports and shares; an output of amount zero is no ray.
-- **Field ray** — since 2026-09-18 a shadow ([the law of the bit](#the-law-of-the-bit-2026-09-18)): a ray of its owner's family with bit 0; there is no field family, and `field_of` is refused (Highlights 5.4, point 12; `bit-law-v1`). Before that date: a ray of a family declared with `field_of`: the information of a ray of that family spreading in ray form to the Nodes around it (`released-field-v1`, released field). Every ray is the same ray; a field ray is not a second kind, it makes no event until it meets a ray whose declared coupling responds, and a field has no field. Light is the field of a charge (Highlights 3.5, model owner, 2026-09-17): the catalog's `light` family is the electromagnetic field in ray form, released by the electron and the positron and emitted by any source. A field ray is a ray with an empty event record, rest rate 0 and charge 0, and nothing else (Highlights 3.5, "the field is matter's message about itself", model owner, 2026-09-17): it says "I am here", from which heading, how much, at what phase and with which sign of charge, and the ray that meets it reads the message by its own table; that is why it merges by family and phase and spreads, and why nothing in the engine knows what a field is.
-- **Light** — since 2026-09-18 a family of the catalog like any other, whose things have no clock: light emitted at an event is a thing of the light family, and the field of a charge is that charge's own shadows, not light (Highlights 5.4, point 12; 3.3, there is no light and no matter). Before that date: the electromagnetic field in ray form, one family of the catalog (Highlights 3.5, model owner, 2026-09-17): rest rate 0 and charge 0, its phase the emitter's at emission, delivered unchanged; released by a charge as its field and emitted at an event by any source, a photon being one quantum of it and an absorption its meeting with a bound group. Nothing distinguishes the ray a charge releases from the light an atom emits but its amount, its phase and its event.
-- **Source sign** — since 2026-09-18 the sign of the owner's charge on a shadow, read with the owner's charge over its content by a thing's electricity reading (Highlights 5.4, point 16; `clock-readings-v1`). Before that date: the sign of the charge of the ray that released a field ray, carried on the field ray as a visible property like the Detector's bit (Highlights 3.5, model owner, 2026-09-17), read by the coupling that meets it and never encoded in the phase, which is reserved for interference: the catalog's open `source_sign` entry of the light family, carried by feature 12, with which `electron_field_turn.opposite_charge`, the attraction of opposite charges, closes (A5). Until feature 12 the sign is read from the two families that meet.
-- **Release** — retired on 2026-09-18 (Highlights 5.4, "A thing does not emit"; `bit-law-v1`): a thing does not release shadows interval after interval; its shadows are given with the GameBoard (the prefill, `initial_field`) and circulate, and a family's `release` ratio is the size of its things' shadow sets, content times that ratio. Before that date: the departure, from a Node a ray crosses, of one field ray per Port heading except the ray's own, each carrying the whole quanta of the ray's amount times the declared `release` ratio and the ray's phase, booked as a source (`released-field-v1`).
-- **Spreading** — since 2026-09-18 the Node's mixing ([the law of the bit](#the-law-of-the-bit-2026-09-18); Highlights 5.4, point 24; `node-mixing-v1`): nothing is declared, and a family's `spread` table is refused. Before that date: the release, at every Node that field content reaches, of that content again in all six headings by the family's declared split table (`spread` in the catalog), the backward heading included and the remainder owned (Highlights 3.17); field content meeting at a Node combines by phase before it spreads, and the shares below one quantum are owned by the Node per family and heading and leave as one whole quantum through that heading when they reach one (Highlights 3.5, model owner, 2026-09-17, replacing the phase-selected heading; `field-remainder-v1`, feature 12b, the remainder register below). Huygens' principle in the GameBoard's language, one catalog entry and not an engine mechanism: feature 12 of the ray-event model (Highlights 3.5, model owner, 2026-09-17), in the code since 2026-09-17 as `field-spreading-v1` (field spreading): six weights in Port order relative to the arriving heading, the backward one positive and the four transverse equal; the content that arrived is taken off the Node after the marks and the meetings, amounts add per arriving heading, the phase of the whole is the phase of the coherent sum, each heading's content is shared in whole quanta, the shares below one quantum going to the Node's remainder registers (until `field-remainder-v1` of the same day the remainder left whole through the entry the phase selects, the interim rule); the departures are fresh field rays with no event, the total is exact and the momentum difference is booked as a source, published as the `field_spread` record. A family that declares no `spread` keeps its field on the six axis lines of its source, and its light goes straight. Distinct from whether a bound group or an external body spreads, which is whether its content leaves its Node.
-- **Remainder register** — retired on 2026-09-18 with the word register (Highlights 5.4, point 22; `node-is-ports-v1`): what a Node holds below one quantum is a shadow parked at the Node, a bit-0 ray of its owner on the heading it will leave through, in ninths of a quantum since the mixing (`node-mixing-v1`), counted as shadow content. Before that date: the Node's ownership of the sub-quantum shares of a spread (Highlights 3.5, model owner, 2026-09-17; 3.17): per family and heading, the quanta the floors of the split table leave are kept at the Node with their phase combined by the coherence rule, and leave as one whole quantum through that heading when they reach one, so the average intensities are exact and deterministic and a weak field reaches every Node in the end; a quantum may wait at a Node for that, while the front of a strong field moves at the causal speed. Chosen over a phase-selected heading, which the screen run (E6) showed sends a single quantum along one fixed line and leaves every Node off the axis dark; In the code since 2026-09-17 as `field-remainder-v1` (feature 12b; the split and the remainder): eighteen registers per spreading family on the Node, by source sign and Port, in units of 1/S with S the table's total, filled by the shares one spread leaves, their phase combined with the share's by `phase_of_sum` weighted by amount, releasing k whole quanta through their Port when they reach kS as fresh eventless field rays with the register's phase and sign; a Node with a nonzero register stays active until it is empty; the world ledger and the local audit count the registers as current content, their sum over S, whole quanta always since the weights sum to S, with no momentum; a register never escapes; the `field_spread` record carries `released`, `stored`, `registers` and `register_phases`, the snapshot `field_remainders`. `field-spreading-v1` selected the remainder's heading by phase until then.
-- **Source sign** — the sign of the source's charge on a field ray, `source_sign` on `Ray`, -1, 0 or 1 (Highlights 3.5, the field is matter's message about itself; model owner, 2026-09-17; `field-spreading-v1`): set at the release from the releasing family's charge (a body's from its declared charge), 0 on an emission, part of the merge identity so that opposite signs stay two rays, kept by the return, copied by the inverse split, carried by a meeting's output from the input of its own family and through the spread per sign; a visible property like the Detector bit, never encoded in the phase, read by a coupling as the bit is.
-- **Returned field quantum** — retired on 2026-09-18: a shadow a mark returns is turned back with its heading reversed and its momentum inverted, a field from then on (Highlights 5.4, points 3 and 6), which settles the open decision of Highlights 5.5. Before that date: a field quantum of a spreading family that a Detector returned with 0: it reverses on the line it arrived by and walks back, its steps at 0 once counted down, with no inverse split, until it is restored to the record that emitted its family, ended at content of the family its field is the field of or at content a declared rule couples with it (its release unbooked as a negative source), taken by a body's sink, or escaped; the `field_returned` record. The orchestrator's proposal of Highlights 5.5, implemented exactly by `field-spreading-v1` and pending the model owner's decision.
-- **Recoil** — since 2026-09-18 the return of the shadow itself (Highlights 5.4, point 3): the shadow that pushed a thing turns back with its momentum inverted and is a field from then on, mixing at every Node, and its owner takes the recoil wherever that field reaches it; the meeting creates nothing, and Newton's third law holds through the field. Before that date: the field ray returned reversed by the meeting that changed the ray it met: an output of the declared rule with heading `"reversed"`, a new event ray walking back along the field ray's line toward the line of the ray that released it, carrying the opposite momentum at finite speed (Highlights 3.14).
-- **Bound group** — a set of rays that repeat: a periodic orbit of the ordinary meeting rule on a ring of Nodes, whose corner meetings, under an ordinary `ray_interactions` rule with outputs, reproduce the rays that entered them, so that every ray is back at the same Node with the same heading, amount and phase modulo the circle after the period (`loop-binding-v1`, binding as a loop, loop binding; Highlights 3.4, model owner, 2026-09-17): matter. Its content is the sum of its rays' amounts, exact; its clock is the phase of its rays, advancing by the rest rate at every Link (since 2026-09-18 by its content / K, Highlights 5.4, point 19); nothing at a Node names it, and a reader finds it in the record. The held form, rays held at one Node by a rule without outputs whose assignments set `delay` 1 (`ray-binding-v1`) with its momentum register (`bound-group-motion-v1`), was removed on 2026-09-17.
-- **Momentum register of a bound group** — removed on 2026-09-17 with `bound-group-motion-v1` (feature 14, `loop-binding-v1`): a bound group is rays in motion on a ring, read by heading like every ray, and its motion as a whole is its corners shifting, a different periodic orbit (loop binding, open).
-- **Momentum of a thing** (until 2026-09-18 the momentum register of a ray) — since 2026-09-18 a property of the thing, a vector it carries like its amount and its phase (`Ray.momentum`): every push adds to it, and when its component on an axis reaches the thing's content the thing steps to that axis and the momentum drops by that content; it sets direction only, never speed, and the word register leaves the model (Highlights 5.4, points 21 and 22; `clock-readings-v1`, `ray-momentum-turn-v3`). Before that date: a free ray's momentum, three integers carried on the ray (`Ray.momentum`; `ray-momentum-turn-v2`, a free ray turns by momentum; Highlights 3.5, 3.14, 3.16, 3.28): by default amount x heading, the line its event gave it, which every created ray carries and every existing record keeps; set by a push, sign x amount x heading of a field ray met under a coupling of free rays whose `momentum_table` names the field family, the field ray returned reversed; walked by the DDA at every departure in place of the heading, so the ray's direction is its momentum and its speed stays one Link per interval; the DDA's accumulators kept through a push since v2 (2026-09-17; v1 reset them), so a ray pushed at every interval walks the line of its running register; cleared when a push brings it back to the default, negated by a return, summed when rays merge; the world ledger reads the ray by it. The heading index stays the ray's line for the rules that read it. The momentum register of a bound group given to a free ray; the transverse part of the lag of feature 8, the turn, carried with no modulus but the ray's amount.
-- **Step of a bound group** — removed on 2026-09-17 with `bound-group-motion-v1`; see the momentum register of a bound group.
-- **Loop** — a closed path of meetings under the ordinary coupling table that reproduces the rays that entered it: the outputs leave, walk their Links, meet again, and the meeting gives the same amounts, the same phases modulo the circle and the same headings, so the pattern repeats forever; a fixed point of the meeting table, the only declared thing being the table (Highlights 3.4, model owner, 2026-09-17). A pattern whose meeting does not close disperses; the group's clock is the period of its loop, and the ladder of hypothesis 12 is the set of contents and phases that close a loop. Feature 14 of the ray-event model.
-- **Ring** — the Nodes a loop lives on: on the cubic GameBoard the smallest is a unit square of four Nodes with rays circulating both ways, each corner meeting every interval two rays that leave through each other's Ports. A bound group lives on a ring, not at one Node; its size is the ring, its field is its rays' shadow set, given with the GameBoard (since 2026-09-18, Highlights 5.4, "A thing does not emit"; until then released by its rays in motion, five headings each), and its motion as a whole is its corners shifting, not a register on a Node (Highlights 3.4, 2026-09-17).
-- **String** — the strong field between two quarks in the language of binding as a loop (Highlights 3.26, model owner, 2026-09-17): the gluon family differs from light by one catalog line, its rays couple to each other (`gluon_gluon_binding`), so the field between quarks does not spread as a sphere but closes into loops of gluon rays along the line between them, a pattern whose content, and so whose mass, grows with the distance; stretched to the content at which a new loop closes with a quark and an antiquark it breaks into two hadrons, hadronization. Nothing inserted: hypothesis 13 says whether the two catalog lines produce it, in a research run after feature 14 (E7).
-- **Closure condition** — what a pattern of rays must satisfy to be bound (Highlights 3.4): its meetings under the ordinary coupling table reproduce the rays that entered them, amounts, phases modulo the circle and headings alike, so that the pattern repeats; a pattern that does not close disperses. The ladder of hypothesis 12 is the set of contents that satisfy it, and in the strong field only colour-neutral patterns satisfy it, which is confinement as a closure condition (Highlights 3.26, 2026-09-17).
-- **Tick of a bound group** — removed on 2026-09-17 with the held form (`loop-binding-v1`): a group's clock is its rays' phases advancing at every Link, and its corner meetings are ordinary events with departures; no `bound_tick` record exists. Where Highlights 3.26 says a decaying group draws "at each tick", the implementation reads the group's ticks as its corner meetings (`decay-draw-v1`, 2026-09-17, for the model owner to confirm): the decay draw below.
-- **Unbinding** — an arriving ray meets a ring ray at a corner by the table declared for the families present, and the outputs leave the ring or join it (`loop-binding-v1`, Highlights 3.4); nothing else creates or destroys a group. A ring whose corner lacks a partner disperses: the lone ray fires no rule and crosses off the ring.
-- **Delay table** — retired on 2026-09-18 (Highlights 5.4, points 9 and 21; `clock-readings-v1`): a thing delays nothing and every ray moves one Link per interval, the one exception being the wait of point 23; the catalog's `mass_field_delay` is retired with it. Before that date: the `delay` of a meeting output declared as `{"of": i, "table": [six], "per": u}`: the whole quanta of the amount of input i times the table entry of the Port that input came through, over the unit, in phase steps of the output's face clock on that side, carried as the ray's `lag`; a transverse lag that reaches the modulus (the phase modulus today, the lag's own declared modulus with feature 8b) is one Link toward the lagging side, gravity as bending by delay (Highlights 3.28).
-- **Table split** — the split of the content two inputs share between two outputs in the ratio a declared integer table gives at their phase difference, the table output taking the whole quanta of its share and the rest output the rest, including the remainder (Highlights 3.17); the engine only splits by the table, the physics is the declared table (Highlights 3.26). Since 2026-09-18 the table is computed from the family's phase width N, cos² of half the phase difference in N-ths rounded, and declared by no one (Highlights 5.4, point 17); it serves two things of one family that meet, not the shadows, which the Node mixes (point 24).
-- **Event of a ray** — a change of trajectory: a new straight line leaving an interaction through one Port. The core term Event above names the engine's local transitions and completed transfers; a ray's event is the interaction that created its trajectory.
-- **Steps** — retired for a shadow on 2026-09-18 (Highlights 5.4, point 3: its return is a field with no step count); a thing has steps, the real counts and the shadow does not (point 6, model owner, 2026-09-18), so a thing missed at a mark walks back on them to its birth event (the settled rule (iii), `node-is-ports-v1`). Before that date: the number of Links a ray has walked since its event, counted up while outbound and down on the walk back; zero at the event Node.
-- **Outbound** — the flag of a seeded thing missed at a mark on its walk back to its seed Node (the settled rule (iii)); a shadow's return is a field and carries no such flag since 2026-09-18 (Highlights 5.4, point 3). Before that date: `1` while a ray travels on its event's heading, `0` once it is reversed on its own line (a return). A draw of 0 at a marked Node is the one thing that sets `0`.
-- **Return** — since 2026-09-18 what a push or a mark does to a shadow (Highlights 5.4, points 3 and 6): the same shadow with its heading reversed and its momentum inverted, a field like any other from then on, mixing at every Node and absorbed wherever it reaches its owner; no step counter, no trace, no chase, no inverse split (`bit-law-v1` and `node-is-ports-v1` walk it home on the owner's trace, the interim form until the amended point 3 lands). What a mark does with a seeded thing it misses (the settled rule (iii); `detector-return-v1`, before 2026-09-18 what it did with any ray whose draw was 0): the same wave ray reversed on its line, unchanged in amount, phase and event record, leaving in the same interval through the Port it came in through and walking its steps back one Link per tick. A returning ray enters no coupling and no absorption, is sampled by nothing, merges with nothing and is drawn for by no mark; a return is no measurement, and the `detector_return` record is a record of the reversal, not of an outcome.
-- **Resident returned ray** — a seeded thing missed at a mark, back at its seed Node (the settled rule (iii); a shadow performs no inverse split since 2026-09-18, Highlights 5.4, point 3): a returning ray at `steps` 0: it is at its event Node and stays there as a resident ray with `outbound` 0, its phase, amount and event record exactly what it left the event with, until the next cycle's inverse split consumes it: no Link is planned for it, its phase does not move, and it enters no coupling.
-- **Inverse split** — since 2026-09-18 the inverse split of a lone seeded thing missed at a mark, the ray itself, restored to its lamp and leaving again on its original heading (the settled rule (iii), `node-is-ports-v1`); a shadow performs none (Highlights 5.4, point 3). Before that date: what a returned ray does at its event Node (`inverse-split-v1`): it performs the inverse of its own share of the event by the world's return mode, transmitting its amount, phase and bit to the sibling lines of the event, continuing straight, or ending into the annulled sink; nothing stays at the Node. If the event's input is still at the Node, the share is first restored to it exactly and the transmission funded from it in the same interval.
-- **Transmission** — a term of the form before 2026-09-18 (no shadow performs an inverse split, Highlights 5.4, point 3): the new event ray or rays the inverse split creates at the event Node: outbound, no steps walked, the returned ray's phase and bit, the mask of the lines transmitted to and the amount per line as their event record. A ray like any other; what happens when it meets the share it chases is a declared coupling.
-- **Return mode** — deleted on 2026-09-18 in the cleanup under the law of the bit (`cleanup-law-v1`): the one behaviour is the inverse split to the sibling lines. Until then, the world key `return_mode` with the three values `siblings` (default: every line the event sent to except the ray's own), `straight` (the one line opposite its own) and `annul` (the share ends there); since 2026-09-18 read only for a seeded thing missed at a mark (the settled rule (iii)).
-- **Annulled** — content that left the world at an inverse split in `annul` mode, into an explicitly accounted sink per field (`annulled_totals()`): initial + sources = current + dissipated + escaped + annulled at every completed tick; its information survives only in the `inverse_split` record.
-- **Absorbed by bodies** — content that ended in an external body's sink (`external-body-v1`), one exact counter per family on the body and the audit line `absorbed_by_bodies` per field (`external_body_totals()`): initial + sources = current + dissipated + escaped + annulled + absorbed_by_bodies at every completed tick, the sources holding what the bodies released (since 2026-09-18 a body radiates nothing and nothing is sourced, Highlights 5.4, point 7; the per-bit ledgers of `node-is-ports-v1` read the real line initial + converted = current + escaped + absorbed and the shadow line initial = current + escaped + absorbed_at_home); its information survives only in the `external_body_absorbed` record.
-- **Absorbed by marks** — content a Detector mark absorbed on a click (`detector-absorb-v1`; Highlights 5.4 "A click is an absorption", model owner, 2026-09-18): one exact counter per family on the mark and the audit line `absorbed_by_marks` per field (`detector_mark_totals()`): initial + sources = current + dissipated + escaped + annulled + absorbed_by_bodies + absorbed_by_marks at every completed tick; the momentum of what a mark absorbed, amount x heading, is the marks' momentum line (`detector_mark_momentum()`); its information survives only in the `detector_click` record with its `absorbed` amount. Since 2026-09-18 a mark absorbs a thing into its resident thing, absorb the default for every family, and returns a shadow (Highlights 5.4, point 6; `node-is-ports-v1`); the mark's `on_click` says pass per family.
-- **Field family** — retired on 2026-09-18 (Highlights 5.4, point 12; `bit-law-v1`): there is no field family, a shadow is a ray of its owner's family with bit 0, and `field_of` is refused. Before that date: a ray family declared `field_of` another (`released-field-v1`): its rays are the eventless field rays a release and a spread make, light and the field of a charge being one such family (Highlights 3.5). The engine's notion of a field, read by the default of a click (`field_family`, `detector-absorb-v1`): a field family is absorbed on a click and every other family, matter, passes.
-- **Momentum accumulator** — since 2026-09-18 the momentum of the body as a thing, stepping it when a component reaches its content (Highlights 5.4, point 21; `clock-readings-v1`); before that date the exact velocity of an external body: per axis an integer that adds the momentum component every interval and steps the body one Link on that axis when it reaches a whole amount, subtracting the amount; the bodies' momentum is its own audit line (`external_body_momentum()`).
-- **Event Ports** — the six-bit mask of the Ports the ray's event sent to, in Port order `[+X, -X, +Y, -Y, +Z, -Z]`.
-- **Event shares** — the amount the ray's event sent through each Port, six entries in Port order and zero where the mask bit is zero: the information a returning ray needs for the inverse split.
-- **Detector bit** — since 2026-09-18 the bit of every ray, set at birth and never changed at a meeting: 1 *real*, a thing, 0 *shadow*, its field (Highlights 5.4, the law of the bit; `bit-law-v1`, the field `detector` with the values 1 and 0, the names `real` and `shadow` in the records and the books, `node-is-ports-v1`); a mark reads it and draws on nothing, and the couplings on a carried bit (`on_bit_1`, `on_bit_0`, `detector-bit-property-v1`) are retired. Before that date: what a ray records of a Detector event: `0` none, `1` a Detector event that drew 0, `2` a Detector event that drew 1. The bit is all a Detector adds to a ray; a marked Node sets it on every arrival carrying no bit (`detector-mark-v1`); it is a property of the ray like charge (Highlights 5.4, model owner, 2026-09-17; `detector-bit-property-v1`, feature 2b, landed 2026-09-17): visible to every meeting as the read-only ray property `detector`, inherited by the outputs of any meeting the ray takes part in (the highest bit of the inputs, 1 over 0 over none, unless the rule declares `bit`), readable by a catalog coupling in a `when` guard, shown in the record and the rendering, and read by a Detector: a ray carrying 1 passes a later Detector without a draw, a ray carrying 0 is a transmission and is never drawn, only a ray carrying no bit is drawn, by the marked Node's declared coupling (`on_bit_1`, `on_bit_0`: `pass` by default, `draw` on request) (the bit read).
-- **Detector mark** — since 2026-09-18 a Node whose bit is set with a thing resident at it, the mark's counter (Highlights 5.4, points 6, 14 and 22; `bit-law-v1`, `node-is-ports-v1`): its `setting` `[n, d]` is a table, the k-th thing to arrive caught when k mod d < n, else returned; `on_click` is the resident's declared table per family, absorb (the default) or pass; a shadow is returned without a draw and never counted, unless the resident is its home; there is no seed and no draw. Before that date: the Detector bit of a Node together with its setting `n / d`, its ticket seed and its couplings on a carried bit (`detectors` in the initialization, `DetectorMark` in the code): bounded Node metadata, not a record and not stock. A marked Node draws one bit per arriving ray carrying no bit from its own ticket stream, reading nothing else from the ray; a ray carrying a bit is read and, by default, passed without a draw (`on_bit_1`, `on_bit_0`, Highlights 5.4, `detector-bit-property-v1`); and it is otherwise an ordinary Node. Since `detector-absorb-v1` (2026-09-18) it also carries its coupling on a click per family (`on_click`: `absorb` or `pass`, absorb the default for a field family and pass for matter) and its one exact counter per family with the momentum of what it absorbed, bounded metadata like a body's sink.
-- **Click** — since 2026-09-18 the absorption of a thing into the mark's resident thing, the `detector_click` record with its `absorbed` amount (Highlights 5.4, points 6 and 22); a shadow is never a click. Before that date: the `detector_click` record of a draw of 1 at a marked Node: position, tick, Port, family, amount and bit 1. The click is the record of the measurement and the only one; a draw of 0 records nothing, because a return is no measurement. Since `detector-absorb-v1` (2026-09-18, Highlights 5.4 "A click is an absorption") a click on a field family absorbs the quantum into the mark's counter by default and the record carries `absorbed`, the amount, nothing of the quantum going on; a click on matter passes the ray with the bit 1 as before, the record as before.
-- **Pass** — since 2026-09-18 a thing the mark's declared table lets through with its bit 1 (Highlights 5.4, point 6). Before that date: the `detector_pass` record of a ray that a marked Node read and let pass without a draw (`detector-bit-property-v1`): position, tick, Port, family, amount and the bit the ray carries, 1 for a realized ray and 0 for a transmission. A pass is no measurement: the ray was measured where its bit was set. The viewer draws it as the event kind `pass`.
-- **Decay draw** — retired on 2026-09-18 (Highlights 5.4, point 20; `clock-readings-v1`): a decay is a table, a bound group breaking when a declared condition on its own state is met (`decay: {"after_periods": n}` or `{"content_at_most": c}` on the conversion's rule), nothing drawn, no counter and no ticket; `draw` and `seed` on a rule are refused. Before that date: the one draw of a bound group that can decay (Highlights 3.26 and 3.19: such a group is a source, a source is a Detector, and at each of its ticks it draws with its declared ratio as the setting; `decay-draw-v1`, feature 13, landed 2026-09-17 in the loop form): a `ray_interactions` rule with outputs that declares `draw: [n, d]` and its `seed` is a decaying conversion, and when its participants meet, the meeting draws once, per meeting and not per ray, from the Node's ticket stream with the unsalted draw of the mark; on 1 the conversion fires, on 0 the rule does not fire and the meeting continues to the next rule in declared order, the corner table, so the group ticks on unchanged. The Node counts as marked by the declaration for that draw alone (its stream seeded from the declaration salted by its position where no `detectors` mark is set), so the only draw is still at a marked Node; the `decay_draw` record (position, tick, rule, setting, ticket, bit) is one line per ticket consumed. A ring survives k meetings with probability (1 - n/d)^k (a decaying group draws).
-- **Physical picture** — the list of PASS clicks in the frame of the observer (Highlights 5.4, "everything begins and is realized at a marked Node", model owner, 2026-09-17; 3.29, 3.30): a source is a Detector, so every ray's history begins at a marked Node; between marked Nodes it is content on paths, combining by phase where paths meet; a marked Node that draws 1 realizes one path of events and its return cancels the others through their event (since 2026-09-18 a mark draws nothing, it absorbs the thing that arrives, Highlights 5.4, point 14); and nothing else is ever seen. The rendering of the GameBoard is the record's view, which no observer inside the world has; the same run drawn as clicks only is the physical picture, the eye view.
-- **External body** — since 2026-09-18 a thing with declared tables (Highlights 5.4, point 22 and the settled rule (v); `node-is-ports-v1`): it has an identity (`thing`), its content is its `amount`, its shadows are given with the GameBoard (`initial_field`) and it radiates nothing, it absorbs things into its sink and returns shadows, and its `momentum_table` reads the shadows' message by content or by charge (`reads`, point 16). Before that date: the second declared element of a world beside the Detector mark (Highlights 3.19; model owner, 2026-09-17; named "fixed body" earlier that day): a Node declared to hold a family with an amount (finite, of any width, since it enters no sum; it only sets how much field leaves per interval), a charge if wanted and an initial momentum (a heading and a pace, zero for a body at rest; the world key `initial_momentum`), standing for a star, a neutron star, a fixed proton, a large charge or a piece of apparatus. It radiates exactly as any bound group does, by the one field rule with the strength its amount gives; it does not spread, its defining property (it never splits, binds, unbinds, converts or decays, and its whole content stays at one Node), and it is not pushed by matter (whatever arrives at it is met by the declared coupling of its family, absorption into an explicitly accounted sink by default, and the body's content never changes). Its motion is caused by fields only (model owner, 2026-09-17, replacing the declared trajectory, never caused, of earlier that day): it starts with its declared momentum, an arriving field ray of a family its coupling table names changes that momentum by the table, and nothing else moves it, since matter that arrives is absorbed without a push; its velocity is its momentum over its amount, kept as an exact accumulator that steps one Link when a full amount has accumulated on an axis, so against an electron it stands still while two stars turn each other over long times. The audit books what it radiates as a source and what it absorbs as a sink, and carries the bodies' momentum as its own line. On the Node it is bounded metadata like the Detector mark: the kind of mark, the declaration and one exact counter, the sink totals per family; no rays, no history. It is feature 7b, `external-body-v1`, of the ray-event model, after feature 7, in the code since 2026-09-17 (external body). Where the back-reaction is wanted, a star that recoils or a proton that moves, an ordinary bound group with a large amount is declared instead.
-- **Apparatus** — since 2026-09-18 things with declared tables (Highlights 5.4, point 22): the mark, a Node whose bit is set with a thing resident at it, and the external body with its identity, content and coupling rule; a mirror, a splitter, a phase plate, a polarizer, a wall, a screen and a beam stop are bodies under a declared table. Before that date: the name for the two declared, non-physical elements of a world: the Detector mark and the external body. Each is a declaration on a Node, not physics, and bounded Node metadata, not a record, not a ray and not a device. The external body's couplings make the pieces of apparatus by name (Highlights 3.19): a wall, a screen and a beam stop are its default coupling, absorption into an explicitly accounted sink; a reversed heading is a mirror; a split by a declared table is a beam splitter; a phase offset is a phase plate; a polarization read is a polarizer (feature 11, `ray-polarization-v1`, 2026-09-17: the body's coupling value `polarizer`, declared on the body with its angle, its pass Port and its table). In the Node's law in five steps (Highlights 5.2, model owner, 2026-09-17) the mark is step 2, applied after what arrived is received and before the meeting by table: the two marks are the whole apparatus of a world, the only places where the GameBoard does something the tables do not say, and both are declarations in the initial file, never physics.
-- **Polarization** — a family property read only at a meeting, exactly as charge is (Highlights 3.26; feature 11, `ray-polarization-v1`, 2026-09-17; polarization): `polarization` on `Ray`, a transverse direction modulo a half turn, an integer step of the family's polarization circle of 2^`polarization_bits` steps per half turn (the world key on the family; its phase width by default), or -1 for none, an unpolarized ray, which every ray of every existing world and every released field ray is. Step 0 is the first transverse GameBoard axis of the ray's heading and half the circle the second, the two states of Highlights 3.26; the steps between are the transverse direction it allows for the circular case, without the handedness bit. A lamp declares the polarization of what it emits (`polarization` on the emission); rays merge only at equal polarization; a meeting's outputs carry their source input's unless the output declares one (`polarization` on the output: `"same"`, `{"of": i}`, `"none"` or a step); a spread carries the axial mean of what it takes; the return, the inverse split and a push keep it; a coupling's guard reads it; the polarizer reads it. The electron family's spin is the same property at one bit, with no other engine meaning.
-- **Polarizer** — an external body's coupling (`coupling: "polarizer"` with a `polarizer` declaration: the family it polarizes, its `angle` in steps of that family's circle, its `pass` Port and its `table`, one entry per step in D-ths, the catalog's cos^2 rounded; `ray-polarization-v1`, feature 11): each arriving outbound ray of the family is split by the table at the difference between the body's angle and the ray's polarization, the whole quanta of amount x T[d] / D leaving on the pass Port as a fresh event ray with the body's angle as its polarization, the whole quanta of the rest ending in the body's sink, and the two shares below one quantum in the body's six remainder registers (per source sign, pass and sink, in D-ths, with a phase each) until they reach one, as a spread's registers own its remainder (since 2026-09-18 shadows parked at the body's Node, `node-is-ports-v1`); energy exact at every arrival and in the ledger, the registers counted as current content. Declared on the body and not as a rule over a token, because its rest ends in a counter and its remainder in registers. One `polarizer` record per arriving ray. Made by A12 (Malus's law, the chain) and used by A13 as the Bell setting.
-- **Hidden variable** — a value carried on a ray that no coupling, absorber or readout reads: the event Ports and the event shares, read by the inverse split alone (`inverse-split-v1`). The Detector bit was hidden in `ray-event-state-v1` and is the visible property of Highlights 5.4 since `detector-bit-property-v1` (2026-09-17). Steps and outbound are read by the return (`detector-return-v1`): the transport of a returning ray and its momentum readout. A marked Node writes the Detector bit, reads it on a later arrival, and reads none of the hidden ones (the form before 2026-09-18; since then the bit is set at birth and a mark reads it without a draw, Highlights 5.4, points 1 and 14).
-- **Wave ray** — every ray: a ray carrying a phase of its family's declared width; a plain ray is the special case whose family's rest rate is 0 (since 2026-09-18 whose things have no clock, Highlights 5.4, point 19), not a second kind (wave-ray families, `wave-ray-family-v1`).
-- **Family** — the kind of a ray; on the GameBoard one ray spatial field, whose `spatial_fields` entry is the catalog entry declaring the family's phase width, its charge, whether its things have a clock (`clock`, since 2026-09-18 in place of a rest rate, Highlights 5.4, point 19), the size of its shadow set (`release`) and its tables. A ray's `family` view is the index of that field.
-- **Rest rate** — retired on 2026-09-18 (Highlights 5.4, point 19; `clock-readings-v1`): no family declares a rate; a thing advances its phase by its content / K per interval, one K for the world (`K`, and `clock: true` on the family), and a shadow has no clock; `kerengonen.phase_advance` is refused. Before that date: the steps a family's phase advances every interval, the ray's mass as a clock, 0 for light, whose rays carry their emitter's phase unchanged.
-- **Phase width** — since the cleanup of 2026-09-18 one for the world: `N`, the number of steps of the phase circle, a world key like `K`, 64 by default (the definitions of the law of the bit); `phase_bits` on a family is refused. Until then `phase_bits`: the phase of a family's rays is an integer from 0 below 2^`phase_bits`, and every phase advance or difference is a mask with 2^`phase_bits` - 1, never a division. The phase is the one value with its own declared width, unbounded in the model; it is read only at a meeting and only as a difference, so the width is the family's choice of the resolution its couplings need, eight steps resolving the Born table, and the fine delay of gravity is a lag register with its own modulus, not a wide phase (Highlights 3.28, 2026-09-17; the lag register and the delay retired on 2026-09-18, Highlights 5.4, points 21 and 22). Since 2026-09-18 N = 2^`phase_bits` is the one input behind interference: the steering table is computed from it (point 17) and the Node's mixing reads it (point 24).
-- **Charge** — the charge of one thing of a family, whole, whatever its content, `spatial_fields[i].charge` (`charge-per-thing-v1`, Highlights 5.4 point 16 as amended, 2026-09-18; per quantum before); a body's is its declared `charge`. It is what a thing multiplies an electric message by. The charge readout of rays is the charge of the things they are summed over them (a merged ray of k things k times the family's charge), and over the things a record's stock has not yet emitted (`charge_totals()`, `escaped_charge_totals()`), an invariant of every declared ray interaction.
-- **Ledger** — the world audit of one completed tick (`ray-event-audit-v1`, the world ledger): one line per conserved field (amount per family, momentum) and one per ray family (charge), each reading initial, sourced, current, escaped, annulled, absorbed and, since `detector-absorb-v1`, absorbed_by_marks, exact when initial + sourced = current + escaped + annulled + absorbed + absorbed_by_marks. `Simulation.audit()` reads it; the runner records it per tick under `audit` and its identity as `conserved_at_every_completed_tick`. Since 2026-09-18 (`bit-law-v1`, `node-is-ports-v1`; Highlights 5.4, points 7 and 22) the ledger is kept per bit, the real line reading initial + converted = current + escaped + absorbed and the shadow line initial = current + escaped + absorbed_at_home; no line is sourced.
-- **Sourced** — retired on 2026-09-18 (Highlights 5.4, point 7): no line is sourced; things conserve among themselves exactly, shadows are initial content given with the GameBoard, and a source is a thing that spends its content. Before that date: the ledger line of what an explicitly accounted source added to the world (Highlights 3.15): a field release, a sourced emission, the momentum a table split moves, an inverse split without its input at the Node; `source_totals()`. A funded emission is not a source: the emitter pays.
-- **Absorbed** — the ledger line of what the external bodies' sinks took (`external-body-v1`; `external_body_totals()`, the `absorbed_by_bodies` line), with the momentum field's components when one is bound; the bodies' own momentum and charge are their own lines beside the identity. `absorbed_by_marks` is the marks' line beside it (`detector-absorb-v1`; `detector_mark_totals()`), the marks' momentum and counters their own lines.
+An identity is the name a world's record carries for a law or for a
+hypothesis beside it (`run.json`: `law` and `hypotheses`); a hypothesis is
+stated so that it can fail and never enters the law by its list.
 
-## The law of the bit (2026-09-18)
+| Identity | What it names | Status |
+| --- | --- | --- |
+| `beam-v1` | the Beam Law, `"law": "beam"` | the law |
+| `amplitude-v1` | the record: rows of one quantum, the split, the cancellation at the merge, the one click at the ladder (note 37) | built; under `hypotheses` when a lamp is declared |
+| `meeting-v1` | the meeting, the world key `meeting` (note 35) | built; under `hypotheses` when the key is declared |
+| `binding-v1` | the give at the contact, a body holding paid content of another family (note 40) | built; under `hypotheses` from the first held paid content |
+| `hand-v1` | the hand of a row and the axis of a body (note 39) | built; under `hypotheses` when a hand or an axis is declared |
+| `weak-v1` | the transformation `become` (note 36) | built; under `hypotheses` when a `become` is declared |
+| `columns-v1` | a column beyond `charge` or a lifetime (note 31) | built; under `hypotheses` when declared |
+| `bohr-v1` | the turn by momentum, the world key `action` (note 30) | built; under `hypotheses` when declared |
+| form B | one motion primitive: a body's drive as the flight of its momentum's direction at a fraction | decided (records 183, 191, 301), not built |
+| `covariant-readings-v1` | the four covariant readings of DERIVATIONS_BEAM section 17, in place of `lorentz-v1` | decided (record 270), not built |
+| `optical-v1` | the rows' rule at a Node for the bending, the Shapiro delay, the second-order redshift and Snell ([the design](designs/gr_rows/DESIGN.md)) | decided as a hypothesis, not built |
+| `colour-v1` | a Z_3 label on the quarks ([the design](designs/quarks/QUARKS.md)) | decided (record 270), not built |
+| `expansion-v1` | the growing wall of the flight with the rate H declared, absent by default | a declared assumption (record 279), not built |
+| the click without amplitudes; the birth wheel at a declared rate; the exact phase at the click | the Gram form on the phase-count vector (record 188, note 37 (xii)); the lamp key `wheel` (record 180, note 46); phi at the row's end (record 163 (2), note 45) | built, on main at 7e523c55 (PR #457); rules of `beam-v1`, no identity of their own |
+| the scheduler | the GameBoard as one vector map between events, the jump to the next carry (record 191 (3)) | decided, in build |
 
-The fixed terms of [Highlights](HIGHLIGHTS.md) 5.4 (the definitions paragraph,
-model owner, 2026-09-18; one name per thing, one thing per name), with the
-point that states each and the identity that implements it.
+## The symbols
 
-- **Bit** — the one property that says what a ray is; its two values are *real* (1) and *shadow* (0), and it is set at birth and never changes at a meeting (points 1, 10; `bit-law-v1`, the ray field `detector`).
-- **Thing** — a real ray (an electron, a photon, a piece of a split): it has mass and a clock, one path, its momentum, and its shadow set; "thing" is the noun for a real ray (points 9, 10; `node-is-ports-v1`).
-- **Shadow** — a ray with bit 0, the field of a thing, of the same family as its thing (point 12); it carries its owner's identity, charge and content as a message, has no mass and no clock, and is absorbed where it reaches its owner (point 3).
-- **Owner** — the thing a shadow belongs to; `owner` on every ray, the thing's stable id (`bit-law-v1`).
-- **Shadow set** — all the shadows of one thing, its size proportional to the thing's content, the family's `release` times the content (point 18); one set per thing, read twice, by content for gravity and by charge for electricity (points 16, 18; `clock-readings-v1`).
-- **Standing set** — the shadows around a thing at rest, a steady state a formula can give (points 11, 13).
-- **Content** — the amount of a thing; it is its mass and its clock, content / K phase steps per interval (point 19; `clock-readings-v1`).
-- **Momentum** — a property of a thing, a vector it carries like its amount and its phase; every push adds to it, and when its component on an axis reaches the thing's content the thing steps to that axis and the momentum drops by that content; it sets direction only, never speed (point 21; the momentum of a thing, above).
-- **Meeting** — two rays at one Node in one interval. **Event** — a change of trajectory at a Node that holds a real ray (point 13); a push is not one (point 15).
-- **Push** — the field's arithmetic on a thing's momentum, what a thing takes from a shadow it meets (point 15); it costs the thing the wait below.
-- **Reading** — what a thing multiplies a shadow's message by, gravity by content and electricity by charge (point 16; `reads` beside every `momentum_table`, `clock-readings-v1`).
-- **Return** — a shadow turned back by a push or by a mark: the same shadow with its heading reversed and its momentum inverted, a field like any other from then on (points 3, 6); see the entry above.
-- **Parked shadow** — the remainder: a shadow parked at a Node, an amount below one quantum waiting to become one (Highlights 3.17, point 22; `node-is-ports-v1`, `Ray.parked`, in ninths since `node-mixing-v1`).
-- **Mixing** — the Node's step on the shadows of one owner that arrive in an interval, the coherent sum shared among the six Ports, each Port sending a third of the sum less its own arrival, sent back (point 24; `node-mixing-v1`); it is how a shadow spreads.
-- **Steering** — two things of one family meeting, the share leaving each Port set by the table of their phase difference (Highlights 5.2); the table is computed from N (point 17).
-- **Wait** — the tick a thing pays for every whole quantum it reads, an interval in which it neither moves nor advances its phase (point 23; `wait_per_quantum`, `clock-readings-v1`); the only wait in the world (point 25).
-- **Mark** — a Node whose Detector bit is set; it absorbs things into a resident thing, its counter, and returns shadows (points 6, 22); see the Detector mark above.
-- **Source** — a thing that spends its own content as things of another family by an emission table (point 22; `node-is-ports-v1`).
-- **Prefill** — the shadows given with the GameBoard at the start (`initial_field`, `bit-law-v1`); a thing does not emit them.
-- **Books** — the ledger, kept per bit: things conserve amount, momentum and charge among themselves exactly, shadows are initial content (point 7); see the ledger above.
-- **Lane** — one direction of a Port, in or out; two per Port, twelve per Node; a lane carries per interval at most one real ray and one shadow per owner, two real rays of one family given one lane being one real ray; no queue, no wait but the clock's (point 25; `lanes-v1`, feature 18, a Port is two lanes).
-- **K** — the content per phase step per interval, one for the world (the world key `K`). **N** — the number of steps of the phase circle, 2^`phase_bits`, the one input behind interference (points 17, 24).
-- **Trace**, **register**, **counter**, **seed**, **lottery**, **field family**, **rest rate**, **delay** — retired words (points 3, 12, 14, 19, 21, 22): a return follows nothing, a Node remembers no departure, a mark's counter is a resident thing, a thing's momentum is its property, nothing is drawn, and nothing is delayed.
+Every symbol the documents use, its English name, its kind, its unit in the
+law and where it is defined. In a code span every letter is plain; its kind
+is the one stated here.
 
-## Values do not become new physical kinds when they move
+| Symbol | Name | Kind | Unit | Defined in |
+| --- | --- | --- | --- | --- |
+| Q | the label's scale, the flight's grain, 64 | scalar | label units per unit of amount | BEAM_LAW section 2 |
+| S | the width of the push (`width`) | scalar | dimensionless | BEAM_LAW note 17 |
+| N | the steps of the phase circle (`N`) | scalar | phase steps per turn | BEAM_LAW section 2 |
+| P | the direction bound (`direction_bound`) | scalar | Links (a component) | BEAM_LAW section 2 |
+| K, n / d | the clock's pair (`K`), the turn per unit of content per self-creation | scalar, a pair | phase steps per unit of content per interval | ENGINE, a release costs the emitter |
+| W, r | the circle of a lamp's birth wheel and its rate, the lamp key `wheel` [r, W] | scalars | wheel steps, wheel steps per birth | BEAM_LAW note 46 |
+| c | the pace of a row | scalar | Links per interval | record 191; DERIVATIONS_BEAM 2.4 |
+| T_D | the direction's period constant, isqrt(3 abs(**D**)^2 Q^2), the flight's wall over 2 | scalar | label units x Links | BEAM_LAW section 3 |
+| S_1 | the Manhattan length of a direction, abs(a) + abs(b) + abs(c) | scalar | Links | BEAM_LAW section 3 |
+| L_d | the period of a direction's line | scalar | intervals | BEAM_LAW section 3 |
+| **D** | a direction of the world's table, a primitive integer vector | vector | Links | BEAM_LAW section 2 |
+| **u**_d | the unit vector of a direction at the scale Q | vector | label units | BEAM_LAW section 2, note 23 |
+| tau | the age of a row | scalar | intervals | BEAM_LAW section 2 |
+| m(tau) | the flight's count at the age, the row's place on its line | scalar | unit steps of the line | BEAM_LAW section 3 |
+| **p**, p_x | a body's momentum vector and its component on an axis | vector, scalar | label units | BEAM_LAW section 2 |
+| abs(**p**)_1 | the Manhattan norm of the momentum | scalar | label units | designs/light_speed/FORM.md, form B |
+| M | a body's content, its mass | scalar | units of content | BEAM_LAW section 2 |
+| h | a family's quantum (`quantum`), the content of one unit per phase step of the emitter's turn | scalar | units of content per phase step | ENGINE, a release costs the emitter |
+| h (under `action`) | the quantum of action, the world key `action` | scalar | label units x Links | BEAM_LAW note 30 |
+| f (in E = h f) | the frequency, the turn per self-creation | scalar | phase steps per interval | ENGINE, a release costs the emitter |
+| E, E_0 | a body's energy as an accumulator of the work, its rest value | scalar | units of content x c^2 | DERIVATIONS_BEAM section 17 (`covariant-readings-v1`) |
+| s | the turn of a clock at a self-creation | scalar | phase steps | BEAM_LAW section 3 step 5 |
+| k | the presence a body read, the count the owed count reads | scalar | units of amount | BEAM_LAW section 3 step 2 |
+| n, d | the suspension pair (`suspension`) | scalars | dimensionless | ENGINE, the world |
+| rho | the charge per unit of content of a family (`charge`) | scalar, rational | charge per unit of content | BEAM_LAW section 2 |
+| L | the lifetime of a family (`lifetime`) | scalar | intervals | BEAM_LAW note 31 (vii) |
+| kappa | the meeting's column sum of a family against the crowd's | scalar | dimensionless | BEAM_LAW note 35 |
+| **V** | the label flow at a Node, the order-1 reading with the labels as weights (the derivation's **a**) | vector | label units | BEAM_LAW section 3 step 2 |
+| **f** | the net flow, the order-1 reading on the unit vectors | vector | Q per unit of amount along a heading | ENGINE, the readings by type |
+| **f** (of a record) | the phase-count vector of a record's rows at one end Node and label, f_p the amount at the phase p at the amplitude scale 32 (`amplitude.Counts`), the record's element of Z[Z_N] | vector | 32 per unit of amount, per phase step | record 188; BEAM_LAW note 37 (xii) |
+| **T** | the traceless second moment, 3 sum amount **u**_d **u**_d^T less its trace | tensor, 3 x 3 symmetric | Q^2 per unit of amount | ENGINE, the readings by type |
+| **C** | the coupling matrix, the reader's charges per column | matrix | charge per unit of content | DERIVATIONS_BEAM section 0 |
+| **G** | the click's Gram matrix, **E**^T **E**, G_jk = C_j C_k + S_j S_k over the rounded tables (`core.phase.phase_gram`); the weight of a cell **f**^T **G** **f** | matrix | 256^2 | record 188; BEAM_LAW note 37 (xii) |
+| **E** | the 2 x N matrix whose rows are the tables C and S; the pointer **E** **f** its evaluation at the circle (`Layer.evaluate`, a report) | matrix | 256 per unit | BEAM_LAW note 37 (xii); DERIVATIONS_BEAM section 6 |
+| **F** | the interval's map, one piecewise-linear map of the state | operator | none | DERIVATIONS_BEAM section 0 |
+| **s**, **r**, d | the state vector on the torus, its rate vector, its wall per component | vector, vector, scalar | mixed, per row of the counts table | designs/vector_form/LAW.md |
+| (X, Y) | the pointer, the coherent sum of a set's clicked rows | a vector of the phase plane Z^2 | 32 x 256 per unit of amount | BEAM_LAW section 5 |
+| u | the record's coordinate on the ladder, the birth wheel's value ordinal x r mod W; the rows' birth phase u mod N | scalar on Z_W | wheel steps | BEAM_LAW notes 37 (ix) and 46 |
+| phi, terms, made | the exact phase at the click and the row's two counts it is read from, the intervals the phase holds and the Links made on its direction | scalars | phase steps; intervals; Links | BEAM_LAW note 45 |
+| m | the multiplicity of a record's row | scalar | dimensionless | BEAM_LAW note 37 (i) |
+| A | the norm of a split, the sum of the squares of its weights | scalar | dimensionless | BEAM_LAW note 37 (ii) |
+| **A** | the axis of a body (`axis`) | vector | one heading | BEAM_LAW note 39 |
+| b_k, C_k, T | a rung of the ladder on the record's wheel W, a cell's cumulative weight, the total | scalars | wheel steps; the unit 2^58 | BEAM_LAW notes 37 (iii) and 46 |
+| w | the width of a window (`phase_width`) | scalar | phase steps | BEAM_LAW note 36 (i) |
+| **v**, v | a body's velocity and its speed | vector, scalar | Links per interval | DERIVATIONS_BEAM |
+| beta | the speed over the pace of a row, v / c | scalar | dimensionless | DERIVATIONS_BEAM section 12 |
+| gamma | the Lorentz factor, 1 / sqrt(1 - beta^2) | scalar | dimensionless | DERIVATIONS_BEAM; HYPOTHESES 21 |
+| z | the redshift a detector reads | scalar | dimensionless | DERIVATIONS_BEAM section 15; series G |
+| H, a | the growing wall's rate per interval and growth factor (`expansion-v1`) | scalars | dimensionless | DERIVATIONS_BEAM section 15 |
+| lambda, theta | the wavelength, an angle | scalars | Links, radians | DERIVATIONS_BEAM |
+| zeta_N | the primitive N-th root of unity | scalar | none | DERIVATIONS_BEAM 6.5 |
+| G (the grain) | the deleted grain of `doppler-v1` | retired | none | MIGRATION 2026-09-21 |
 
-Input and output are roles, not value types. Values remain Scalars or Vectors throughout their lifetime.
+## Retired words
 
-A Scalar or Vector can have local transport metadata such as:
+A word below is no longer used for an active thing. It may appear in a
+quoted decision, a MIGRATION entry, a LOG record or a historical section,
+which say so; nowhere else.
 
-- `resident` — owned by the Node;
-- `incoming` — completed a Link transfer and is available to the Node's local rules;
-- `waiting` — reserved at the Node until its configured directional delay expires;
-- `outgoing` — reserved for a Port and ready for Link dispatch;
-- `in_transit` — owned by a Link until arrival.
-
-Direction, Port, ownership and timing metadata do not change a Scalar into a different kind of physical quantity.
-
-## Node model
-
-Conceptually:
-
-```text
-Node
-  NodeState
-    Scalars
-    Vectors
-    ownership / port / timing metadata
-  LocalRules
-  Ports -> Links -> neighboring Nodes
-```
-
-A Node may receive values from several neighboring Nodes on the same tick. Those arrivals are one local Event set. The configured LocalRules determine whether and how they interact. The engine must not silently compress distinct simultaneous arrivals before the selected local interaction has access to them.
-
-Directional delay belongs to a Node's outgoing scheduling. It is an integer multiple of `link_ticks`. A waiting value remains owned by its Node until dispatch. Link transit begins only after dispatch and always takes the configured fixed Link time.
-
-## No second physical-location noun
-
-Node is the only active physical-location noun. `Site` is not a synonym for Node.
-
-- Active code, documentation, tests and diagnostics use `Node` or `NodeState` for a simulation location or its local state.
-- `Site` may appear only when it is part of an external standard name or when it denotes a distinct non-physical mathematical/register concept. In quantum code, prefer `register` or `register_index` when that is the actual meaning.
-- External protocol, package and API identifiers are preserved verbatim when renaming them would change their defined identity.
-- Retired pre-migration location identifiers are not retained as active API aliases.
-- Historical evidence may preserve old literal names when changing them would falsify the recorded source; such evidence does not define the active vocabulary.
+| Retired | Named | Now | Retired by |
+| --- | --- | --- | --- |
+| board, the game board, lattice (as the noun), grid | the GameBoard | GameBoard | the model owner, 2026-09-20; [MIGRATION](MIGRATION.md#the-names-naturebeam-and-gameboard-and-the-glossarys-single-names-on-2026-09-20). "Lattice" stays as the mathematical term (the translation group of the lattice, a lattice gas) |
+| site, Site | a Node | Node, `node`, NodeState | AGENTS.md, no second physical-location noun |
+| ray, rays (the noun); "the law of the ray" | a row; the Beam Law | row, rows, `NatureBeam`; the Beam Law | rows and bodies, record 183 (2026-09-21); the name, record 37 of 2026-09-20; ray stays only in a quoted decision |
+| `rays-v1` | the identity of the law | `beam-v1`, the same law | MIGRATION, the names; a historical identity name only |
+| light and matter (as the two things) | rows and bodies | rows (of any family) and bodies (measured events) | record 183 |
+| wave, wave function (a thing on the GameBoard) | nothing: the Node holds no wave | the reading key `wave` (the pointer's square over the crowd) is a key name; a record's vector is **f** in Z^N | record 15 of 2026-09-19; record 188 |
+| the flight table, `FlightTable`, `flight_table` | the per-direction step table | the flight, the row's position accumulator (`Flight`, `direction_flight`) | [MIGRATION](MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded) |
+| the key `doppler`, `doppler-v1`, the grain G, `quantised_speed` | the reading's weight at the relative speed | the crossing: the Doppler is the count of the rows a moving reader crosses | [MIGRATION](MIGRATION.md#the-crossing-rule-on-2026-09-21-the-step-before-the-law-a-row-and-a-body-met-once-the-key-doppler-and-the-grain-deleted) |
+| `weighted_flow`, `flux_pair`, `frame_momentum`, `acc.flow` | the weighted flow of `doppler-v1` and the frame's copy of the momentum | the label flow **V** read at the crossing; `Measured.momentum` | the same entry |
+| a register or a table at a Node; a remainder discarded | counts kept at Nodes | nothing at a Node: every count an accumulator on the body's record, the remainder kept | record 155; MIGRATION, no registers at Nodes, no tables; the third test |
+| `lorentz-v1` | the seventh verb, a root at a declared grain | `covariant-readings-v1`, decided and not built; a historical identity name | Highlights 5.4, "Lorentz, B replaced" (record 270) |
+| the law of events, `events-v1`; the sides, the shares, the placement, the tie order, the scatter, the coherent sum at a Node, the seventh exit | the model of the evening of 2026-09-19 | the Beam Law | [MIGRATION](MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1) |
+| the ray-event model, the law of the bit, the law of the shadow, `bit-law-v1`, `field-only-v1`, `ray-event-state-v1` | the engines before the Beam Law | none; in git before their deletion | [MIGRATION](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted) |
+| `reversible-detector-v1`, `dynamics`, `transduce`, `port_map` | the reversible detector | the detector's record and the re-emission | BEAM_LAW section 1 |
+| `kind` (a family key) | the kind of a family | derived from `quantum` | [MIGRATION](MIGRATION.md#the-table-from-the-keys-and-the-moments-on-2026-09-19-the-night) |
+| `phase_turn` | a row's turn in flight | `phase_per_link` | MIGRATION, the law of the ray |
+| the key `amplitude`; the threshold under `wave` on the pointer's square, `pointer_units`; `RECORD_AMOUNT_BOUND`, the affordable amount | the first stages of the amplitude law | a lamp makes a recorded world; the threshold is the amount summed over the set; the record is exact, never refused | [MIGRATION](MIGRATION.md#the-amplitude-law-on-2026-09-20-vii-4-the-one-click-the-record-form-the-law); [MIGRATION](MIGRATION.md#the-push-as-one-form-the-one-label-and-the-affordable-amount-on-2026-09-19-the-night) |
+| `charge` on a measured event; the row's `charge` and `mass` columns | the emitter's charge and content on the record | the family's charge per unit of content rho; nothing on the row but its number | [MIGRATION](MIGRATION.md#charge-per-unit-of-content-on-2026-09-20-the-familys-charge-a-pair-no-charge-on-a-measured-event-the-records-two-columns-gone) |
+| a momentum read off a Port; the label along **D** | the momentum before the one label | the momentum label along **u**_d | [MIGRATION](MIGRATION.md#the-label-along-the-unit-vector-of-the-direction-on-2026-09-19-the-momentum-units-change-by-q--64) |
+| the whole part off the clock (`by_clock`) as a count of its own | the count before the fraction-free law | the accumulator's count; `by_clock` its constant-rate identity | [MIGRATION](MIGRATION.md#the-fraction-free-law-on-2026-09-20-every-count-an-accumulator-on-the-bodys-record) |
 
 ## Naming rule
 
-When adding or renaming active implementation symbols:
-
-- use `node` / `nodes` for positions and position-indexed state;
-- use `NodeState` for the local state record;
-- use `port` for a directional endpoint;
-- use `link` for in-transit ownership;
-- use `event` for a local transition;
-- use `scalar` / `vector` for physical value shape;
-- use `register` / `register_index` for a quantum algebra register when it is not a physical-location name;
-- do not introduce `site`, `input state`, or `output state` as alternative physical nouns.
-
-The active API and configuration use the canonical Node vocabulary directly. Breaking migrations are explicit and must update all active consumers rather than preserving a parallel physical vocabulary.
+A name identifies a component's actual responsibility in simple English:
+portable ASCII file names, `snake_case` modules and functions, explicit
+class names; one canonical copy of each nonempty file; no historical model
+called "current" (AGENTS.md). The one exception recorded: the law's record
+is `NatureBeam` and its one function `nature_beam`, the model owner's own
+names (BEAM_LAW, "The owner's name"). Every new symbol enters this file with
+its name, kind, unit and owner before a document uses it alone.
