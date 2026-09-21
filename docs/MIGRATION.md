@@ -39,8 +39,62 @@ and note 25](BEAM_LAW.md#3-the-nodes-interval-nature_beam).
   byte-identical (the gate set replayed, `examples/events/gate_set.json`).
   The bound clock of record 123 (`binding/proton_bond_lamp`, `suspension`
   0) owes nothing under either word and does not move.
-- `tests/test_clock_age.py` (the default, the presence word, the edges);
-  `tests/test_nature_beam_age.py` (b) and (c) amended.
+- The shape (records 421, 422 and 428 of the log of 2026-09-21, the
+  owner's generic-solution rule): the age word enters the engine as ONE
+  wall function of the crowd, `core.integer.age_wall(r, w, c, k, [n, d])`
+  = (r x d, w x (d + c k n)), over the declared set `measured.AGE_WALL_SET`
+  of (count, coefficient) pairs; today `("owed", 1)` alone: the body's
+  self-creation, one per interval, becomes one per (d + k n) / d
+  intervals, and `engine.count_owed` owes the excess of the stretched
+  wall over the stretched rate in units of d, `by_drive(acc_owed, (d + k
+  n) - d, d)`, the same integers as the owed count before the function
+  was named (no world moves by the shape). The row's flight joins under
+  optical-v1's key with its own coefficient 1 + gamma (gamma the
+  post-Newtonian parameter) by a declaration in the set and nothing else
+  moving; the phase per age (`turn`, `action`, a row's `phase_per_link`)
+  is never a member (`measured.AGE_WALL_NEVER`, refused before the set is
+  read): a stretched phase per age would redshift light in transit (the
+  physicist's note, record 428).
+- `tests/test_clock_age.py` (the default, the presence word, the edges,
+  the shape); `tests/test_nature_beam_age.py` (b) and (c) amended;
+  `tests/test_integer_arithmetic.py` (c) the wall function's integers.
+  `tests/test_clock_word.py`'s guard `assert "replicated" not in expected`
+  replaced by its complement (the Boss's decision of record 402: the
+  register's `replicated` map points at
+  [docs/REPLICATIONS.md#clock_word-t](REPLICATIONS.md#clock_word-t) for
+  `one_plus_z`, `first_row_tick` and `ratio_6_over_3`; the generator
+  carries the map through a regeneration, `register_map.carry_replicated`).
+- The replay (record 409, confirmed on this branch after the merge of
+  `main`): the gate set (`examples/events/gate_set.json` through
+  `tools/run_series.py --list --fast`) byte-identical on 15 of its 16
+  worlds against `main`'s engine (state, books and events), `weak/
+  j3_deuteron` moved (its neutron's clock reads the proton's rows without
+  a word) and its digests re-pinned. The re-registrations, each with the
+  old value beside the new and the date, every number labelled DETECTOR
+  or GAMEBOARD: series E's `scalar` world (its k x r the constant now,
+  the mean 72.19, twice the `age` world's 36.18; [the README](../examples/events/redshift/README.md#re-read-under-clock-age-v1-2026-09-21)),
+  series C item 6 (the identity replayed on the age moment; [the README](../examples/events/coupling/README.md#re-read-under-clock-age-v1-2026-09-21)),
+  series G's two `scalar` worlds ([the README](../examples/events/hubble/README.md#re-read-under-clock-age-v1-2026-09-21)),
+  series J's five ([the README](../examples/events/weak/README.md#re-read-under-clock-age-v1-2026-09-21);
+  the J1 decay ticks move from 522 to 525 to 602 to 642 and beyond the
+  run, NATURE row 8a's FAIL standing in form, its population truncated:
+  a question for the model owner), series U's eight, V's two and S's five
+  (the still readings at the age word's derived pins, 5.5 times the
+  presence word's k; the moving worlds' emulated crowds declared for the
+  presence word's k, a research reading until re-declared; the READMEs of
+  [U](../examples/events/crowd_clock/README.md), [V](../examples/events/cluster_clock/README.md)
+  and [S](../examples/events/reader_clock/README.md), the age word's pins
+  in each register's block `clock_age_v1`), the catalog's `clock_near_mass`
+  and `neutron_star` ([the README](../examples/events/catalog/README.md)).
+  The readings tools amended with the word: `tools/coupling_readings.py`
+  (item 6 replays the age moment; the ring keys follow the diagnostic's
+  `arrived`), `tools/redshift_readings.py` (k x r for both worlds),
+  `tools/hubble_stars_readings.py` (the run's world read through
+  `world_loading.world_of_run`). Series G2's twelve `hubble_stars` worlds
+  moved by their digests but are not re-read: the register's own tool reads
+  NaN for `coasting_none`, a world the word does not touch (the replicator's
+  finding of record 408 on `main`), so their lines carry the digests' move
+  and no number until the tool is repaired, which is outside this branch.
 
 ## The covariant readings, on 2026-09-21 (a world key, absent by default)
 

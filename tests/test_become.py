@@ -60,7 +60,9 @@ reader, gravity -M_A x 64 per unit (a free ray's label never joins).
     (a)}`: a row born at tick t arrives at tick t + 5 (m(5) = 3) with the
     phase t - 1; the ray of phase 0 clicks at tick 6: the push of a free
     ray on the reader of content 7, gravity (-448, 0, 0), then the
-    transformation with the trigger "click", the products born in step 5
+    transformation with the trigger "click" and the count 5 (the clicked
+    row's age moment, 1 x 5; the presence 1 until clock-age-v1,
+    2026-09-21), the products born in step 5
     of tick 6 (the clock age 5): `beta` on -z (the heading 5 mod 6 = 5),
     label (0, 0, -128); `nu` on +x (the next heading, 0), label (64, 0,
     0); the recoil (-64, 0, 128); the reader's momentum (-512, 0, 128)
@@ -80,18 +82,24 @@ reader, gravity -M_A x 64 per unit (a free ray's label never joins).
 (c) the crowd slows the trigger and the gate holds it: `p` fixed at
     (1, 2, 2) of content 64 releasing 64 units per heading per
     self-creation (`release` [1, 1]) and `n` fixed at (2, 2, 2) with `at`
-    3 and `suspension` [1, 128]: the `n` counts 64 at tick 2 (the arrivals
-    born at tick 1) and 128 from tick 3 on (64 arriving, 64 dwelling at
-    m(2) = m(1)); its owed count is the count of its owed accumulator (the
-    fraction-free law, 2026-09-20): 64 at tick 2 owes nothing, 64 + 128 =
-    192 at tick 3 owes 1 (the remainder 64), and 1 after every
-    self-creation from then on (the self-creations at the ticks 1, 2, 3,
-    5, 7, ...), so it fires at tick 3 (the age 3), as the free `n` alone
-    does; the `become` record's `counted` 128 (until the fraction-free law
-    the whole part off the clock at the age 1, `by_clock(1, 64, 128)` = 1,
-    owed 1 at tick 2 and the trigger fired at tick 4). With `crowd` 64 it
-    never fires in 40 intervals (the count 128 at every self-creation
-    from tick 3, the ages 3, 6, 9, ...); with `crowd` 129 at tick 3;
+    3 and `suspension` [1, 128]: the `n` counts the age moment (clock-age-v1,
+    2026-09-21, record 394; the presence until the word), 64 at tick 2 (the
+    arrivals born at tick 1, at the age 1) and 192 from tick 3 on (64
+    arriving at the age 1, 64 dwelling at the age 2, m(2) = m(1)); its owed
+    count is the count of its owed accumulator (the fraction-free law,
+    2026-09-20): 64 at tick 2 owes nothing, 64 + 192 = 256 at tick 3 owes 2,
+    then 192 owes 1 and 256 owes 2 in turn (the self-creations at the ticks
+    1, 2, 3, 6, 8, 11: age 6, waited 6 and the remainder 64 after 12
+    intervals), so it fires at tick 3 (the age 3), as the free `n` alone
+    does; the `become` record's `counted` 192 (the presence 128 until the
+    word, the count then 64 + 128 = 192 owing 1 at tick 3 and 1 after every
+    self-creation, the ticks 1, 2, 3, 5, 7, ..., age 7 and waited 5; until
+    the fraction-free law the whole part off the clock at the age 1,
+    `by_clock(1, 64, 128)` = 1, owed 1 at tick 2 and the trigger fired at
+    tick 4). With `crowd` 64 it never fires in 40 intervals (the count 192
+    at every self-creation from tick 3); with `crowd` 193 at tick 3 (the
+    count 192 below it) and with `crowd` 129 never (129 held the presence
+    word's 128 open);
 (e) the charge line through the click of the beta product: the world of
     (a) with a fixed absorber `w` (content 1) at (2, 4, 2), its entry for
     `beta` the keys' `measure`: the beta row clicks there at tick 6 (the
@@ -314,7 +322,9 @@ def test_the_click_trigger_fires_at_the_first_arrival_inside_the_window():
     reader = simulation.measured[2]
     become = [r for r in records if r["event"] == "become"]
     assert len(become) == 1 and become[0]["tick"] == 6 and become[0]["triggered"] == 6
-    assert become[0]["trigger"] == "click" and become[0]["counted"] == 1
+    # clock-age-v1 (2026-09-21): the count the clock read is the age moment,
+    # the clicked row's 1 x 5 (the presence 1 until the word).
+    assert become[0]["trigger"] == "click" and become[0]["counted"] == 5
     assert become[0]["products"] == [["beta", 1, 2, [0, 0, -1]], ["nu", 1, 0, [1, 0, 0]]]
     assert become[0]["recoil"] == [-64, 0, 128]
     clicks = [r for r in records if r["event"] == "click" and r["measured"] == 2]
@@ -360,16 +370,27 @@ def test_the_crowd_slows_the_trigger_and_the_gate_holds_it():
     """(c)."""
     simulation, records, _ = run(crowded(BECOME), 12)
     become = [r for r in records if r["event"] == "become"]
-    assert [(r["tick"], r["counted"]) for r in become] == [(3, 128)]
-    assert simulation.measured[2].age == 7 and simulation.measured[2].waited == 5
+    # clock-age-v1 (2026-09-21): the count is the age moment, 64 x 1 + 64 x 2
+    # = 192 at tick 3 (the presence 128 until the word).
+    assert [(r["tick"], r["counted"]) for r in become] == [(3, 192)]
+    # The owed accumulator at [1, 128] on the age moment: 64 at tick 2 owes 0,
+    # 64 + 192 = 256 at tick 3 owes 2, then 192 owes 1 and 256 owes 2 in
+    # turn (the self-creations at the ticks 1, 2, 3, 6, 8, 11: age 6, waited
+    # 6, the remainder 64 after tick 11); under the presence word age 7,
+    # waited 5, the remainder 64.
+    assert simulation.measured[2].age == 6 and simulation.measured[2].waited == 6
     assert simulation.measured[2].acc_owed == 64
     free, free_records, _ = run(world([neutron()], suspension=[1, 128]), 12)
     assert [r["tick"] for r in free_records if r["event"] == "become"] == [3]
     held, held_records, _ = run(crowded({**BECOME, "crowd": 64}, ticks=40), 40)
     assert [r for r in held_records if r["event"] == "become"] == []
     assert held.measured[2].held == [7, 0, 0, 0, 0] and held.measured[2].become is not None
-    gated, gated_records, _ = run(crowded({**BECOME, "crowd": 129}), 12)
-    assert [(r["tick"], r["counted"]) for r in gated_records if r["event"] == "become"] == [(3, 128)]
+    # The gate just above the count: 193 on the age moment 192 (129 on the
+    # presence 128 until the word); 129 now holds it (192 is not below 129).
+    gated, gated_records, _ = run(crowded({**BECOME, "crowd": 193}), 12)
+    assert [(r["tick"], r["counted"]) for r in gated_records if r["event"] == "become"] == [(3, 192)]
+    held_low, held_low_records, _ = run(crowded({**BECOME, "crowd": 129}), 12)
+    assert [r for r in held_low_records if r["event"] == "become"] == []
 
 
 # -- (e) ---------------------------------------------------------------------------

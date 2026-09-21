@@ -218,6 +218,13 @@ counted (`_suspend`, `count_owed`; the same integers as `by_clock(age, k x n, d)
 `sum amount x age` over the same set since `clock-age-v1` (2026-09-21, the
 model owner's word, record 394), or for a family whose table entry reads
 `presence` the presence, `measured.count_component`, `Measured.counted`;
+the age word's shape one wall function of the crowd, `core.integer.age_wall`,
+the rate r x d against the wall w x (d + c k n) over the declared set
+`measured.AGE_WALL_SET` of accumulators with a coefficient c each, today the
+clock alone at c = 1, the owed count the excess of its stretched wall over
+its stretched rate in units of d, integer for integer as before; the flight
+joins under optical-v1's key at its own coefficient by a declaration in the
+set, the phase per age never (`AGE_WALL_NEVER`);
 [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 note 25) and books the interval. The step of a measured event
 by its momentum (`_move`, before the law: on an axis whose momentum component is p in

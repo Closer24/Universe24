@@ -27,7 +27,18 @@ a fixed reader of `light` at x = 3, `suspension` [1, 4], 24 intervals):
     know is refused naming the words, `presence` among them; `presence` is
     accepted on `pass` (a window is not); a world whose clocked entries
     declare `presence` parses and runs as the same world did before the
-    word (series T's `presence_3`, its expectations' pin 1 + z = 1.300).
+    word (series T's `presence_3`, its expectations' pin 1 + z = 1.300);
+(d) the shape (records 421, 422 and 428 of docs/LOG_2026-09-20.md, the
+    owner's generic-solution rule): the age word enters the engine as ONE
+    wall function, `core.integer.age_wall`, over the declared set
+    `measured.AGE_WALL_SET`; today the set is the body's clock alone
+    (`owed`) at the coefficient 1; the phase per age (`turn`, `action`) is
+    never a member, refused by `age_wall_coefficient` before the set is
+    read; a count outside the set is refused; the clock's owed count is
+    the excess of the stretched wall over the stretched rate in units of
+    d, `count_owed(acc, 11, [1, 4])` = `by_drive(acc, 15 - 4, 4)`, integer
+    for integer with `by_drive(acc, 11, 4)` over 24 self-creations at a
+    changing crowd (0, 5, 11, 11, ...), and (0, acc) at the width 0.
 """
 
 from __future__ import annotations
@@ -38,8 +49,15 @@ from pathlib import Path
 
 import pytest
 
+from event_universe.core.integer import age_wall, by_drive
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.measured import count_component
+from event_universe.events.engine import count_owed
+from event_universe.events.measured import (
+    AGE_WALL_NEVER,
+    AGE_WALL_SET,
+    age_wall_coefficient,
+    count_component,
+)
 from event_universe.events.world import READS, Q
 from event_universe.world_loading import load_world
 
@@ -82,7 +100,7 @@ def test_the_edges_of_the_word():
             [5, 1, 1], measured=[{**reader, "table": table}], release=[1, 1], suspension=[1, 4], ticks=24
         )
         simulation = NatureBeamSimulation(parse_nature_beam_world(world))
-        for tick in range(1, 25):
+        for _tick in range(1, 25):
             simulation.step()
         body = simulation.measured[1]
         assert (body.age, body.waited, body.owed) == (24, 0, 0), table
@@ -104,3 +122,25 @@ def test_the_edges_of_the_word():
     )
     expected = json.loads((folder / "expectations.json").read_text(encoding="utf-8"))
     assert round(expected["worlds"]["presence_3"]["one_plus_z"], 3) == 1.3
+
+
+def test_the_age_word_is_one_wall_function_over_a_declared_set():
+    """(d)."""
+    assert AGE_WALL_SET == (("owed", 1),)
+    assert age_wall_coefficient("owed") == 1
+    assert AGE_WALL_NEVER == ("turn", "action")
+    for name in AGE_WALL_NEVER:
+        assert name not in dict(AGE_WALL_SET)
+        with pytest.raises(ValueError, match="never a member"):
+            age_wall_coefficient(name)
+    with pytest.raises(ValueError, match="not a member"):
+        age_wall_coefficient("flight")
+    assert age_wall(1, 1, age_wall_coefficient("owed"), 11, (1, 4)) == (4, 15)
+    assert count_owed(0, 11, (1, 4)) == by_drive(0, 15 - 4, 4) == (2, 3)
+    crowd = [0, 0, 0, 0, 5] + [11] * 19
+    left = right = 0
+    for counted in crowd:
+        owed, left = count_owed(left, counted, (1, 4))
+        expected, right = by_drive(right, counted * 1, 4)
+        assert (owed, left) == (expected, right), counted
+    assert count_owed(3, 11, (0, 4)) == (0, 3)

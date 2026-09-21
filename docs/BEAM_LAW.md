@@ -549,7 +549,22 @@ order with each step's inverse:
    clock beside a mass reads M / r in space, the potential's form, the
    push keeping M / r^2; note 25), or on a table entry that reads
    `presence` the presence, the count of the law until that word (an entry
-   that reads `age` counts the age moment as it did). Every new ray:
+   that reads `age` counts the age moment as it did). The age word's
+   shape (records 421, 422 and 428 of the log of 2026-09-21, the owner's
+   generic-solution rule): ONE wall function of the crowd,
+   `core.integer.age_wall`, over a declared set of accumulators with a
+   declared coefficient c per member (`measured.AGE_WALL_SET`): a count at
+   the rate r against the wall w becomes the count at the rate r x d
+   against the wall w x (d + c k n); today the set is the body's clock
+   alone at c = 1 (its self-creation, one per interval, becomes one per
+   (d + k n) / d intervals, and the excess of the stretched wall over the
+   stretched rate in units of d is the owed count above, integer for
+   integer: `engine.count_owed`); the row's flight joins under optical-v1's
+   key with its own coefficient 1 + gamma (gamma the post-Newtonian
+   parameter) by a declaration in the set and nothing else moving; the
+   phase per age of a row (the turn, the turn by momentum, `phase_per_link`)
+   is never a member, since a stretched phase per age would redshift light
+   in transit (the physicist's note of record 428). Every new ray:
    `age` 0, the emitter's phase, its number. A measured event on a set of
    Nodes (`span`, note 30) releases at every Node of its set with whole
    units only: each row born is apportioned whole over the set in its
@@ -1532,7 +1547,17 @@ implementation's part of the contract. The design above is unchanged.
     and the presence only on an entry that reads `presence`, a word of
     `reads` whose record carries the presence as `scalar` does; the worlds
     that read a clock without the word moved and were re-registered with
-    the identity on their lines (MIGRATION, 2026-09-21); step 4 reads both over every ray of another number at the
+    the identity on their lines (MIGRATION, 2026-09-21). The shape of the
+    word (records 421, 422 and 428): the age moment enters the engine as
+    one wall function, `core.integer.age_wall(r, w, c, k, [n, d])` = (r x
+    d, w x (d + c k n)), over the declared set `measured.AGE_WALL_SET` of
+    (count, coefficient) pairs, today `("owed", 1)` alone; `engine.count_owed`
+    owes the excess of the clock's stretched wall over its stretched rate
+    in units of d, `by_drive(acc_owed, (d + k n) - d, d)`, the same integers
+    as before the function was named; a second member (the row's flight at
+    1 + gamma, optical-v1) is a declaration in the set; the phase per age is
+    never one (`measured.AGE_WALL_NEVER`, refused before the set is read);
+    `tests/test_clock_age.py` (d), `tests/test_integer_arithmetic.py` (c); step 4 reads both over every ray of another number at the
     Node (rest and moving alike, as the presence) into `Measured.presence`
     and `Measured.counted`, and the frame's `_suspend` owes
     `by_clock(age_A, counted x n, d)`. (iv) The bound of the age, the

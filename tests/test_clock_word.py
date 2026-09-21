@@ -101,7 +101,15 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
     assert expected["flux"] == F
     assert [round(expected["worlds"][n]["k"], 3) for n in NAMES] == [0.3, 0.3, 1.65, 3.15]
     assert [round(expected["worlds"][n]["one_plus_z"], 3) for n in NAMES] == [1.3, 1.3, 2.65, 4.15]
-    assert "replicated" not in expected
+    # The register's `replicated` map (docs/REPLICATIONS.md, the rule of
+    # record 353): series T was run once and replicated in round 2, so the
+    # three run-block keys point at the replication's line (the Boss's
+    # decision of record 402; until clock-age-v1 the guard read "measured
+    # once", `replicated` absent).
+    assert expected["replicated"] == {
+        key: "docs/REPLICATIONS.md#clock_word-t"
+        for key in ("one_plus_z", "first_row_tick", "ratio_6_over_3")
+    }
 
 
 def test_the_lamps_count_under_each_word_at_each_distance():

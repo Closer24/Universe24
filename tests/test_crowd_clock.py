@@ -14,9 +14,12 @@ written down first:
     moving);
 (b) the presence at the still lamp's Node once the crowd's rows arrive
     (after the twelfth interval of `still_005`) is 4 F = 328, and the
-    lamp's clock owes accordingly: in `still_1` (k = 1) the lamp births
-    once in two intervals between the twentieth and the hundredth (40
-    births, within 2);
+    lamp's clock owes the age moment (clock-age-v1, 2026-09-21, record
+    394; until then the presence): in `still_1` (F = 16384, the presence
+    4 F = 2^16, the age moment 22 F = 360448, the two headings' rows at the
+    ages 5 and 6 per source, k = 5.5) the lamp births once in 6.5
+    intervals between the twentieth and the hundredth (12 births, within
+    1 of 80 / 6.5; under the presence word k = 1 and 40 births);
 (c) the derivation's algebra, no world's numbers: 1 + z =
     (1 + k)(1 + v / c) reaches z = 1 only with a slowed clock for v < c
     (1 + v / c < 2 for every v below c), a still lamp at k = 1 reads z = 1
@@ -122,8 +125,11 @@ def test_the_presence_at_the_lamp_is_four_times_the_flux_and_the_clock_owes_it()
     for _ in range(100):
         sim.step()
     assert sim.measured[LAMP].presence == 4 * 16384
+    # clock-age-v1: the clock counts the age moment, 22 F, k = 5.5 (the
+    # presence word's k = 1 gave 40 births, within 2).
+    assert sim.measured[LAMP].counted == 22 * 16384 == 360448
     inside = sum(1 for t in births if 20 <= t < 100)
-    assert abs(inside - 40) <= 2, inside
+    assert abs(inside - 12) <= 1, inside
 
 
 def test_the_algebra_of_the_crowds_clock():
