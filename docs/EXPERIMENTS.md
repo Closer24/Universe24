@@ -8489,3 +8489,25 @@ sign rule, and its other couplings are catalog entries.
   [validation entry](VALIDATION.md#external-detector-definition-with-a-periodic-return---2026-09-19).
   This is a compact graph demonstration, not arbitrary 3D equivalence or a
   derivation of quantum measurement laws.
+
+### The visual gallery (2026-09-21)
+
+The model owner's request of 2026-09-21 (translated: "a visualisation
+agent on a separate, strong machine, so that one can see in beautiful HTML
+pages all the different situations we talk about ... beams and clicks,
+that is what we have; make it beautiful"): one HTML page per situation
+under `docs/pages/gallery/`, each with the run playing inside the page (a
+frame player with play and pause, a slider over the intervals, the GIF as
+a link), the GameBoard drawn with the world file's name of every thing on
+it, and every number from the run's files or from the register with the
+path named; the moving picture a GameBoard reading, the clicks and the
+pushes detector readings. A page made from a registered world changes
+nothing in it and pins nothing; a page made from a demonstration world
+([`examples/events/gallery/`](../examples/events/gallery/README.md)) says
+so and registers nothing. Written by `tools/gallery_pages.py`
+(`tests/test_gallery_pages.py` pins the capture to the engine's stores);
+the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
+
+- [The beam](pages/gallery/beam.html): a lamp's rows spreading on the
+  digital lines of its fan, the phase as colour, the front against the
+  circle of c and the L1 bound (the demonstration world `beam_fan`).

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The visual gallery</title>
+<style>
+:root {
+  --bg: #f6f4ee; --ink: #1c1b18; --muted: #5f5b52; --line: #d9d4c7; --card: #ffffff;
+  --accent: #b5541b; --accent-ink: #ffffff; --board: #0e1018; --good: #2f7a4f;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121317; --ink: #ebe7dd; --muted: #a39d90; --line: #2c2f38; --card: #1a1c23;
+    --accent: #e8935a; --accent-ink: #14110d; --board: #0e1018; --good: #7fcf9a;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121317; --ink: #ebe7dd; --muted: #a39d90; --line: #2c2f38; --card: #1a1c23;
+  --accent: #e8935a; --accent-ink: #14110d; --board: #0e1018; --good: #7fcf9a;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 Georgia, "Times New Roman", serif; }
+main { max-width: 900px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 2rem; line-height: 1.15; margin: 0 0 4px; }
+h2 { font-size: 1.3rem; margin: 40px 0 8px; border-top: 1px solid var(--line); padding-top: 16px; }
+p.lead { color: var(--muted); margin-top: 0; }
+p, li, dd, dt, td, th { font-size: 1rem; }
+a { color: var(--accent); }
+nav.crumbs { font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
+figure.player { margin: 16px 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+figure.player canvas { display: block; max-width: 100%; height: auto; margin: 0 auto; background: var(--board); border-radius: 4px; image-rendering: pixelated; }
+figure.player .controls { display: flex; gap: 12px; align-items: center; margin: 10px 0 4px; }
+figure.player input.slider { flex: 1; }
+figure.player button { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 6px; padding: 6px 14px; font: inherit; cursor: pointer; }
+figure.player span.tick { font-variant-numeric: tabular-nums; min-width: 8em; }
+figure.player dl.readings { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 4px 16px; margin: 8px 0 0; }
+figure.player dl.readings div { display: flex; gap: 8px; }
+figure.player dl.readings dt { color: var(--muted); margin: 0; }
+figure.player dl.readings dd { margin: 0; font-variant-numeric: tabular-nums; }
+figcaption { color: var(--muted); font-size: 0.92rem; margin-top: 8px; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: normal; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+code { font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; font-size: 0.9em; }
+.legend { display: flex; flex-wrap: wrap; gap: 10px 20px; margin: 8px 0; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.swatch { width: 14px; height: 14px; border-radius: 50%; display: inline-block; border: 1px solid #fff8; }
+.wheel { width: 14px; height: 14px; border-radius: 50%; display: inline-block; background: conic-gradient(hsl(0 85% 50%), hsl(60 85% 50%), hsl(120 85% 50%), hsl(180 85% 50%), hsl(240 85% 50%), hsl(300 85% 50%), hsl(360 85% 50%)); }
+.kind { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.demo { background: var(--card); border-left: 4px solid var(--accent); padding: 8px 12px; margin: 12px 0; }
+.three { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.three section { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; min-height: 120px; }
+.three h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.three pre { font-size: 0.8rem; white-space: pre-wrap; margin: 0; font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; }
+ul.pages li { margin: 8px 0; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>The visual gallery</h1>
+<p class="lead">Beams and clicks, nothing else: the situations of the law, one page each, with the run playing inside the page.</p>
+
+<p>The model owner, 2026-09-21 (translated): "a visualisation agent on a separate, strong machine, so
+that one can see in beautiful HTML pages all the different situations we talk about: quarks, nucleons,
+how something hits something and comes apart; the visualisation gives our world in simulations, in HTML
+pages; it composes all the families, high-energy photons, all kinds of things that break them apart;
+and it shows how it looks in our system, because in our system there is something that spreads, the
+beam, and there are clicks, nothing else: beams and clicks, that is what we have; make it beautiful."</p>
+<p>Every page plays the run inside the page (play, pause, a slider over the intervals, the interval
+shown, the GIF as a link), draws the GameBoard with the world file's name of every thing on it, and
+takes every number from the run's files or from the register, naming the path. The moving picture is a
+GameBoard reading, the host's view; the clicks, the pointers and the pushes are detector readings, the
+only kind reality has (<a href="../../EXPERIMENTS.md">the register</a>, "Two kinds of readings"). A
+page made from a registered world says so and changes nothing in it; a page made from a demonstration
+world says so and registers nothing. The quarks are not modelled today (the nucleon is a family,
+<a href="../../ENTITY_CATALOG.md">the entity catalog</a>); a design is in preparation.</p>
+<ul class="pages"><li><a href="beam.html">The beam</a>: a lamp&#x27;s rows spreading on the digital lines of the fan, the phase as colour; the front against the circle of c and the L1 bound (a demonstration world)</li><li><b>The clicks</b> (in preparation): the catalog&#x27;s optical bench: a laser, a mirror, a slit and a screen of pixels clicking as records arrive; the pointer per pixel and the click list growing (a registered placement world)</li><li><b>The nucleus</b> (in preparation): series I: the deuteron bound at one Link, free at three, and the alpha square sheared apart; the strong rows&#x27; escape clicks at the lifetime (registered worlds)</li><li><b>The decay</b> (in preparation): series J: a neutron family becoming another (the transformation become), the products&#x27; flight to the shell, the W exchange at one Link; the trigger ticks and counts from the register</li><li><b>The collision</b> (in preparation): rows meeting at a Node permuted by the collision table: the head-on pair parks, turns and leaves; the classes of the group action (a demonstration world)</li><li><b>High-energy rows</b> (in preparation): series K under the meeting: a beam of light passing a mass, bent toward it; the mass measuring the most turned rows (registered worlds)</li><li><b>Our world</b> (in preparation): the vector world, the software world and our world side by side for one record from its birth to its click, in the Mach-Zehnder world of the amplitude series (a registered world)</li></ul>
+<p>Two more pages are made on the Boss's machine and will be linked here when they are on main: how a
+click looks (one record spreading, the click, the deletion) and Bell on the board.</p>
+<p>The pages are written by <code>tools/gallery_pages.py</code> (<code>--page all</code> rewrites them
+from the worlds and the runs); the demonstration worlds are in
+<code>examples/events/gallery/</code>.</p>
+
+</main>
+<script>
+document.querySelectorAll('figure.player').forEach(function (figure) {
+  var data = JSON.parse(figure.querySelector('script.frames').textContent);
+  var canvas = figure.querySelector('canvas');
+  var context = canvas.getContext('2d');
+  var sheet = figure.querySelector('img.sheet');
+  var slider = figure.querySelector('input.slider');
+  var button = figure.querySelector('button.play');
+  var tick = figure.querySelector('span.tick');
+  var readings = figure.querySelector('dl.readings');
+  figure.querySelector('a.gif').href = figure.querySelector('a.gifdata').href;
+  var frame = 0, timer = null;
+  function show(k) {
+    frame = k;
+    var sx = (k % data.columns) * data.width, sy = Math.floor(k / data.columns) * data.height;
+    context.drawImage(sheet, sx, sy, data.width, data.height, 0, 0, data.width, data.height);
+    slider.value = k;
+    tick.textContent = 'interval ' + data.ticks[k];
+    var lines = data.readings[k] || {};
+    readings.innerHTML = Object.keys(lines).map(function (key) {
+      return '<div><dt>' + key + '</dt><dd>' + lines[key] + '</dd></div>';
+    }).join('');
+    figure.dispatchEvent(new CustomEvent('frame', {detail: k}));
+  }
+  function play() {
+    if (timer) { clearInterval(timer); timer = null; button.textContent = 'Play'; return; }
+    button.textContent = 'Pause';
+    timer = setInterval(function () { show((frame + 1) % data.count); }, data.duration);
+  }
+  button.addEventListener('click', play);
+  slider.addEventListener('input', function () {
+    if (timer) { clearInterval(timer); timer = null; button.textContent = 'Play'; }
+    show(parseInt(slider.value, 10));
+  });
+  if (sheet.complete) { show(0); } else { sheet.addEventListener('load', function () { show(0); }); }
+});
+</script>
+</body>
+</html>

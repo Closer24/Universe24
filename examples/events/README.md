@@ -413,6 +413,20 @@ not experiments: each parses and runs its intervals with the books
 balanced, `tests/test_entity_catalog.py` pins no number, and the register
 tests things on them later.
 
+## The visual gallery's demonstration worlds
+
+The folder [gallery/](gallery/README.md) holds the two worlds of the
+visual gallery (`docs/pages/gallery/`, the model owner's request of
+2026-09-21) where no registered world shows the story, written by
+`gallery/make_worlds.py`: `beam_fan.json`, a lamp of `light` on a plane
+releasing on the 48 primitive in-plane directions with |a| + |b| <= 6
+(the beam spreading on the digital lines of its fan), and
+`collision.json`, six declared rows of one number and content meeting at
+two Nodes of free space (the collision table's permutation). They are
+demonstrations, not experiments: nothing read off them is registered or
+pinned. `tools/gallery_pages.py` writes the pages from these worlds and
+from the registered ones.
+
 ## The detector definitions
 
 The folder [detector/](detector/README.md) holds four worlds that place
