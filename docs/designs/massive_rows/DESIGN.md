@@ -109,7 +109,8 @@ massive family gets `(2 abs(p_D)_1, 2 E'_D, E'_D)` and `(abs(p_{D,a}) N,
 h)`. `walk_step` reads the family's flight table where it reads
 `Flight`'s pair today (`nature_beam` :724, the same `by_drive_rows`), and
 the walk's turn reads the family's turn table where it multiplies
-`phase_per_link` by the Links moved today (:2715), through
+`phase_per_link` by the Links moved today (:2868-2871, the forward
+walk's `turned`; :2715 is `_inverse_interval`'s, S9), through
 `by_drive_rows` on the row's `acc_turn`; no flag is read at run time, the
 special case is a value. The identity test is the tables' equality (a
 family without the flag has Flight's numbers), and the byte identity of
@@ -141,10 +142,23 @@ family that is not massive), added to `IDENTITY_FIELDS` (`nature_beam`
 :945): the merge sums the amounts of rows equal in every other field,
 and two rows with different remainders must not merge (S2). The turn of
 the arriving Link is in the phase before step 4, as today's `turned` is
-(:2715, before the click reads), so the click reads the row's phase
+(:2868-2871, before the click reads), so the click reads the row's phase
 column as it is; `exact_phase` (:588) already returns the phase as it is
 for a family without the pair form, and the massive family has none: no
 bypass exists to build (S3, S6; the first round's item 7 is deleted).
+The pin's photon (`slits_huygens`'s `light`) has the pair form
+(`phase_per_link` 0 and `phase_per_age` the pair, `world.py`
+:1536-1551): its turn table is (0, 1), and its turn per interval of age
+(`by_clock_rows` at :2869-2870, carried through a re-emission) stays as
+it is, outside the turn table, which covers the per-Link part alone
+(S11). `acc_turn` is constant 0 on every row of a family without the
+flag, so it takes a width of 0 bits in the packed merge key (:1390-1396)
+and leaves the key and the merge's order what they were, as the hand
+does (:941-944). The inverse interval (`_inverse_interval`, :2657-2722,
+used by seven test modules on worlds without the flag) is refused on a
+world that declares `massive_rows`, naming the key, as it is refused on a
+GameBoard with a `lifetime` detector (ENGINE.md) (S9): the inverse of the
+turn's `by_drive` is exact per Link but is not built.
 
 **The birth.** A lamp of a massive family births as today's lamp does
 (:4330-4404: at a self-creation with a release, as many records as the
@@ -195,28 +209,36 @@ every screen pixel holds content after 100 intervals (7422 `click` lines,
 0 cancels; the reviewer's run). The photon's other units are absorbed at
 their own pixels, never cancelled. So the hand-over of one quantum to
 one Node is NOT the click as built; it is the identity's own rule, and
-it is stated as one (M1):
+it is stated as one (M1), in the VALUE FORM (M6): every family carries,
+formed at load from its keys and never read as a flag at run time, two
+declared integers, the placed fraction `f_F` of an arrival (1 for a
+family without `massive`, 0 with it) and the completion's quantum `q_F`
+(0 without, `quantum` = M with), so that the pair (1, 0) is the click as
+built by value and (0, M) the rule below.
 
-1. **the arrival**: a massive row ending at a `measure` entry is not
-   absorbed into `held`; its units end with an offer as today, and its
-   content and its share of the label WAIT at that entry as a
-   re-release's pending rows wait (`entry.pending`, the entry's own
-   state, on the absorbed line of the books: nothing at a Node beyond
-   the events there);
+1. **the arrival**: a row of family F ending at a set of the layer (a
+   `measure` entry, an open face, the border) ends its units with an
+   offer as today (`Layer.end`, :593-663); `f_F x amount x content`
+   goes where it goes today (the entry's `held` at :3902, or the
+   escaped lines at a face, :2779-2795) and `(1 - f_F) x amount x
+   content` with the row's label WAITS in the record's own state
+   (item 5); the `click` line carries `amount x content` and the label
+   (`content`, `push`; :3932-3945, `t_carried`, `t_label`) as today for
+   both values of `f_F` (S10): the line reports what arrived, the value
+   says where it went;
 2. **the completion**: when the record's live count reaches 0 and the
    ladder chooses its cell and Node (the click as built), the chosen
-   Node's entry takes ONE quantum, `M = quantum` (the birth's one unit of
-   amount, whatever the amplitude weight `w a_i` of the chosen row), into
-   its `held` (`measured += M`) and the record's one label, `content x
-   p_D` of the chosen row's direction, into its momentum; every other
-   entry's pending of that record, the chosen row's surplus included,
+   Node's set takes `q_F` (ONE quantum, `M = quantum`, whatever the
+   amplitude weight `w a_i` of the chosen row) into its `held`
+   (`measured += q_F`) and `q_F x` the chosen row's direction's entry
+   of the family's label table (`p_D` for a massive family, `u_D` for
+   every other: the label of one quantum, section 2) into its momentum;
+   the record's waiting elsewhere, the chosen row's surplus included,
    goes to the CANCELLED lines (units, content, labels: the meaning of
    `cancelled` widens from the merge's antiphase cancel to the
-   completion's, and the books' identity `initial + released = current +
-   escaped + absorbed + cancelled` holds at every step with the pending
-   on the absorbed line until the completion); the `click` line's
-   `content` and `momentum` are M and the one label, the `gather` line's
-   the same;
+   completion's); at (1, 0) nothing waits and nothing moves, today's
+   bytes; the `gather` line's `content` and `momentum` are `q_F` and
+   the one label (S10), the `click` line's what arrived (item 1);
 3. **the order**: the completion is taken after the arrivals of the
    interval (after step 4 and the merge, as the gather is today), and the
    next interval reads the placed content and momentum (the frame's
@@ -228,14 +250,59 @@ it is stated as one (M1):
    non-local operation at the one-way border (the layer's principle 5)
    is physical, the price record 332 admits ("the click gathering it to
    one Node"); no crowd, no field map, no replay; the host's work per
-   completion as today's gather.
+   completion as today's gather;
+5. **the waiting state** (S8): the waiting content and label of a
+   record are NOT an entry's `pending` (step 5 re-creates the pending
+   rows at the next self-creation, :4169-4342: a home, a re-release, a
+   product); they are the record's own, kept where the record's offers
+   are kept, `Offer.content` and `Offer.momentum` per Node
+   (`amplitude.py` :334-335, accumulated by `Layer.end` at :660 and
+   today a report of the gather at :886, :909), so the storage is
+   today's, O(open records x ended Nodes), and the record leaves the
+   table at its completion with its waiting resolved (item 2). The
+   books: the content line `initial + released = current + escaped +
+   absorbed + cancelled` gains under `absorbed` the sub-line `waiting`
+   (the sum over the open records; absent when 0, as the `cancelled`
+   line is absent without the amplitude law, `engine.py` :1017-1021),
+   the momentum line the same, and the identities hold at every step:
+   an arrival moves `amount x content` from `current` to `waiting`
+   (`f_F` = 0) or to `measured` (`f_F` = 1); a completion moves `q_F`
+   from `waiting` to `measured` (or to `escaped`, item 6) and the rest
+   to `cancelled`. `state.json` gains nothing: the layer's records are
+   not in the snapshot today (`run.py` :208-211 lists the open records
+   and the layer's line in `run.json`), and the waiting is written where
+   the offers are, in `run.json`'s `open` count and the books' line;
+6. **the completion at a face** (M7): the layer's sets are the entries
+   outside every detector, the declared detectors, the six faces in Port
+   order and the border (`amplitude.py` :68-69, :400-408); the pin
+   world's x and y faces are open (z periodic), and the registered
+   photon completed a third of its records at a face (faces 1503 of
+   4096, the wall 882, the screen 1711). A massive row escaping through
+   an open face is clicked on the face as today (:2818-2856: `Layer.end`
+   at the face's set with the row's amount, phase, `amount x content`
+   and label; the face's `click` line with `record`, `branch`,
+   `multiplicity` and `u`): its units end at the face's offer, and by
+   item 1 its content and label wait (`f_F` = 0) instead of leaving on
+   the escaped lines at the escape. When the ladder's chosen Node is a
+   face's, the completion writes `q_F` and the one label as a body's
+   escape writes them (`engine.py` :651-672: the content to the face's
+   `face_content` and the books' escaped line, the label to the face's
+   `face_momentum` and the momentum line's escaped entry, the face's
+   `clicks` as today), no body is formed (a face has no entry and no
+   `held`), and the record's waiting elsewhere is cancelled as at an
+   entry. At (1, 0) the whole content and label leave at the escape and
+   the completion moves nothing: today's bytes. In the pin the faces'
+   completions are a GAMEBOARD diagnostic (the escaped lines by Port,
+   about a third of the records on the photon's lines and amounts), not
+   a reading (section 4).
 
-The measured event that takes M and the label is a body from then on as
-series H's electron is (its content the sum, pushed and stepping by the
-drive, its self-creations releasing its own family's free rows as its
+The measured event that takes `q_F` and the label is a body from then on
+as series H's electron is (its content the sum, pushed and stepping by
+the drive, its self-creations releasing its own family's free rows as its
 field); a fixed event (a screen) takes both without stepping, as series
-D's source takes the probe's push. A set whose Node carries no event is
-refused at load as today (the validator's rule). So the two
+D's source takes the probe's push. A declared detector's set names Nodes
+that carry measured events (`world.py` :2835, the detectors' positions
+rule); a face is a set without an entry, item 6. So the two
 representations meet at the completion and nowhere else (23.5): matter in
 flight a record of massive rows, matter after the completion a body.
 **The bound electron stays a body**: series H's electron (the free family
@@ -245,6 +312,17 @@ design, and a body never becomes a record (no rule of the GameBoard turns
 held content into rows of a massive family; a lamp is the only birth).
 The standing record of rows under a potential (23.4) is named and not
 designed here: the free particle first.
+
+**The books of one record** (S7). The lamp pays `k M` per record at the
+birth (`cost = quantum x turn` per row, :4358; the pin's 5 x 64 = 320),
+the split at an opening releases `amount x weight x content` per copy
+(:4263), and the click books `amount x content` per arriving row
+(:3902): the photon's lamp and books, kept as they are (not the label's
+shares of stage (vii) step 3, which would change the birth's cost and
+section 7's count). So under the identity ONE quantum M lands per record
+and the rest of the record's content, `(k - 1) M` of the birth and the
+split's amplification, is cancelled at the completion; the books close by
+item 5.
 
 ## 4. The pin: `slits_matter`, as section 23.3 states it, re-derived by the accumulator rule
 
@@ -319,7 +397,11 @@ permutations, and the collision table's Port-order tie (the auditor's
 round 3) moves a collision's outcome at a face, but neither reaches a
 reading of this pin: the Farey fan contains tied directions, and the
 cell a row ends in is read at its Node by its own line, the same lines
-the registered photon's registration carried.
+the registered photon's registration carried. The records whose
+completion the ladder places at a face (section 3, item 6; about a third
+on the photon's lines and amounts) write their quantum and label on the
+escaped lines by Port, a GAMEBOARD diagnostic reported beside the pin,
+not a reading of it.
 
 ## 5. The three tests, on paper
 
@@ -327,10 +409,12 @@ the registered photon's registration carried.
   h): every family carries a flight table and a turn table at load, the
   massive family's from its keys and every other family's Flight's and
   `(phase_per_link, 1)` by value, so the special case is a value and no
-  name or flag is read at run time (M4); the completion's rule adds
-  declared integers (M, the one label) to the existing keys `held` and
-  `momentum` of the event at the Node; no kind, no family name, no new
-  verb.
+  name or flag is read at run time (M4); the completion's rule is two
+  declared integers per family formed at load, the placed fraction `f_F`
+  and the quantum `q_F` ((1, 0) without the flag, (0, M) with it), added
+  by value to the existing keys `held` and `momentum` of the event at
+  the Node or to the face's escaped lines (M6); no kind, no family name,
+  no flag at run time, no new verb.
 - **Vector.** The flight the translation on the row's digital line with
   a wall (T); the exact square `E'_0^2 + 3 p . p` a bilinear form (B);
   `E'_D` by comparisons at load, one `isqrt` per direction in the class
@@ -377,23 +461,27 @@ the registered photon's registration carried.
    today.
 5. **The walk** (`walk_step` :724, `by_drive_rows`): the family's flight
    triple in place of `Flight`'s pair, read by value for every family.
-6. **The turn** at the walk (:2715): the family's turn table through
+6. **The turn** at the walk (:2868-2871): the family's turn table through
    `by_drive_rows` on `acc_turn`, the count added to the phase mod N
    before step 4; `acc_turn` in `IDENTITY_FIELDS` (:945) and the store's
    columns (S2, S5).
 7. **The re-release** (`rerelease` with `weights`): the new rows' table
    entries by their directions, `acc_turn` 0, the entry's momentum by the
    shares (M2).
-8. **The completion** (`amplitude.Layer.complete`, `measured`, the
-   `measure` entry at :3902 and the gather's report at :886, :909): the
-   arrival's pending in place of the placement into `held` for a massive
-   family's rows; at the completion the placement of section 3 (M to
-   `held`, the one label to the momentum, the rest to the cancelled
-   lines), the `click` and `gather` lines' `content` M and `momentum` the
-   label.
+8. **The completion** (`amplitude.Layer.end` :593-663 and `complete`
+   :837-935, the `measure` entry at :3902, the face's `Layer.end` at
+   :2818-2856, the body's escape at `engine.py` :651-672 for the face's
+   lines): the per-family pair `(f_F, q_F)` read by value at every
+   arrival (`f_F x amount x content` placed or escaped as today, the
+   rest to the record's waiting in its offers) and at every completion
+   (`q_F` and the one label to the chosen Node's `held` and momentum or
+   to the chosen face's escaped lines, the rest of the waiting to the
+   cancelled lines); the books' `waiting` sub-line; the `gather` line's
+   `content` `q_F` and `momentum` the label, the `click` line as today
+   (section 3).
 9. **The tests**: the gate set byte identical (the tables' equality for
    every family without the flag: the count `phase_per_link` per Link
-   with the remainder 0); the primitive's identity (a massive table at
+   with the remainder 0, and the pair `(f_F, q_F)` = (1, 0)); the primitive's identity (a massive table at
    `E'_0 = 0` with `p = Q D` equal to Flight's on every direction: the
    round-2 map's A, 1332 of 1332); the plane wave (the phase at a Node
    `(N / h) p . x` to one remainder on a monotone line); the completion
@@ -408,10 +496,12 @@ the registered photon's registration carried.
 **What the build touches** (S5): `world.py` and `world_loading.py` (the
 keys); the load-time tables beside `Flight`; `momentum_labels` and
 `share_of`'s callers (the label from the table); `walk_step`'s call site
-and the walk's turn; the store's columns and `IDENTITY_FIELDS`
-(`acc_turn`); the `measure` entry's placement and the gather's report
-(the completion's rule); the books' `cancelled` line (its meaning
-widened); the tests above.
+and the walk's turn (:2868-2871); the store's columns, `IDENTITY_FIELDS`
+and the packed key's width (`acc_turn`); `_inverse_interval` (:2657, the
+refusal on a world with the key); the `measure` entry's placement, the
+face's `Layer.end` and the gather's report (the completion's rule with
+the pair `(f_F, q_F)`); the books' `cancelled` line (its meaning widened)
+and the `waiting` sub-line; the tests above.
 
 **What it must not touch.** `Flight` and `direction_flight` themselves
 (the photon's numbers are copied by value into its table, never changed)
@@ -425,7 +515,8 @@ row reads no crowd: V is 23.4's name, not this design); the entity
 definitions (no shipped family becomes massive; `matter` is declared in
 the pin world alone); the registered worlds and their records, and the
 placement of every family that is not massive (a `measure` click of the
-photon places at the arrival as today).
+photon places at the arrival as today: the pair (1, 0) by value, not a
+branch); the inverse interval on a world without the key.
 
 ## 7. The host cost, and one choice for the Boss
 
@@ -440,8 +531,9 @@ pin's Pearson and visibility read on 1024 gathers (the map's clicks at
 1024 and 4096 births read the same cells within one, TWO_SLITS.md
 section 8) and the cells' widths a quarter of the pin's. The lamp's
 clock reads its held content over K = 2^30 and 320 units leave per
-birth, so about 2.5 self-creations are lost by the 4096th interval: 4096
-births take about 4099 intervals (S4). The choice of W is the Boss's;
+birth (`k M`, section 3's books; the split's shares would make it 64 and
+the loss 0.5, and are not adopted, S7), so about 2.5 self-creations are
+lost by the 4096th interval: 4096 births take about 4099 intervals (S4). The choice of W is the Boss's;
 the pin above is written at 4096.
 
 ## 8. Review round 1: every must-fix and should-fix, and what was done
@@ -497,6 +589,45 @@ reproduces its numbers independently on the engine's own lines.
   section 2, "The turn". Done.
 - The auditor's note on the ties (the exit faces, the collision table):
   section 4, "No exit face is read". Done.
+
+## 8b. Review round 2 (head 9ac1dc2f; ADMISSIBLE WITH CORRECTIONS): every finding and what was done
+
+The delta review (both maps re-run byte identical; M1 to M5 and S1 to
+S4, S6 answered, S5 partly): two must-fixes and five should-fixes.
+
+- **M6** (the completion stated as a run-time branch on the flag): the
+  value form, two declared integers per family at load, the placed
+  fraction `f_F` and the quantum `q_F`, (1, 0) without the flag and (0,
+  M) with it; stated in section 3 (the opening and items 1, 2, 6),
+  section 5 (generic), section 6 (items 8 and 9, the must-not-touch
+  list). Done.
+- **M7** (the completion at a face unstated; a third of the pin's
+  records): section 3, item 6, the face click of a massive row as built
+  (:2818-2856), the face-chosen completion writing `q_F` and the label
+  as a body's escape does (`engine.py` :651-672), no body, the waiting
+  cancelled, the identity at (1, 0); the faces' completions named a
+  GameBoard diagnostic in section 4; the "no event at the Node" sentence
+  restated as the detectors' positions rule (`world.py` :2835), which a
+  face is outside. Done.
+- **S7** (the lamp pays `k M` = 320, M lands): section 3, "The books of
+  one record", and section 7; the photon's lamp and books kept, the
+  shares not adopted (S4's 2.5 stands). Done.
+- **S8** (the waiting is not `entry.pending`): section 3, item 5: the
+  record's offers (`Offer.content`, `Offer.momentum`), the `waiting`
+  sub-line of the books, its absence when 0, `state.json` unchanged
+  (the layer's records in `run.json`), the storage O(open records x
+  ended Nodes). Done.
+- **S9** (the turn line :2715 is the inverse walk's): the forward walk's
+  turn :2868-2871 in sections 2 and 6; `_inverse_interval` (:2657)
+  refused on a world with the key, in the touched places. Done.
+- **S10** (the `click` line carries `amount x content` and the label):
+  section 3, items 1 and 2: the `click` line as today, the `gather` line
+  `q_F`. Done.
+- **S11** (the pin's photon has the pair form): section 2, "The turn":
+  the turn table (0, 1), the per-age turn outside it, as today. Done.
+- The reviewer's notes: the visibility 0.965 and the dark pixels 0 to
+  2.3 on the map's weights, inside the pin's `0.95 +- 0.03` and 0 to 3;
+  `acc_turn`'s 0-bit width in the packed key (section 2). Noted.
 
 ## 9. Links
 
