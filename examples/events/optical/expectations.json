@@ -1,0 +1,99 @@
+{
+ "format": "optical-expectations-v1",
+ "derivation": "docs/designs/one_wall/NOTE.md section 6 and docs/designs/open_problems/light_bending/NOTE.md section 5 (the pins from the lattice's lines, before any run): k(b) the age moment of the crowd's rows at the beam's Node per interval of dwell, k = A n / d; the deflection the sum over the row's dwell of the transverse flow's turn at the weight (1 + gamma) content x e_D (verb 2, REVIEW_3 must-fix 1: e_D, never T_D), the centroid's shift the deflection times the 26 Links to the screen; the delay the sum of f n A / d over the dwell (verb 1, the flight's wall 2 T_D (d + f n A)); f = 1 + gamma",
+ "suspension": [
+  1,
+  16384
+ ],
+ "mass_factor": 16,
+ "ticks": 400,
+ "gammas": [
+  0,
+  1
+ ],
+ "brackets": {
+  "shift_pixels": 0.5,
+  "delay_intervals": 1.0,
+  "ratio": 0.25
+ },
+ "worlds": {
+  "control_g0": {
+   "gamma": 0,
+   "flight_coefficient": 1,
+   "mass": null,
+   "shift": 0.0,
+   "delay": 0.0
+  },
+  "mass_g0": {
+   "gamma": 0,
+   "flight_coefficient": 1,
+   "mass": 65536,
+   "impact": 6,
+   "shift": -1.93,
+   "shift_bracket": 0.5,
+   "delay": 2.68,
+   "delay_bracket": 1.0,
+   "lamp_rate": 0.918
+  },
+  "near_g0": {
+   "gamma": 0,
+   "flight_coefficient": 1,
+   "mass": 65536,
+   "impact": 3,
+   "shift": -2.42,
+   "shift_bracket": 0.5,
+   "delay": 2.17,
+   "delay_bracket": 1.0,
+   "lamp_rate": 1.0
+  },
+  "control_g1": {
+   "gamma": 1,
+   "flight_coefficient": 2,
+   "mass": null,
+   "shift": 0.0,
+   "delay": 0.0
+  },
+  "mass_g1": {
+   "gamma": 1,
+   "flight_coefficient": 2,
+   "mass": 65536,
+   "impact": 6,
+   "shift": -3.86,
+   "shift_bracket": 0.5,
+   "delay": 5.36,
+   "delay_bracket": 1.0,
+   "lamp_rate": 0.918
+  },
+  "near_g1": {
+   "gamma": 1,
+   "flight_coefficient": 2,
+   "mass": 65536,
+   "impact": 3,
+   "shift": -4.83,
+   "shift_bracket": 0.5,
+   "delay": 4.34,
+   "delay_bracket": 1.0,
+   "lamp_rate": 1.0
+  }
+ },
+ "ratios": {
+  "mass": {
+   "shift_f2_over_f1": 2.0,
+   "delay_f2_over_f1": 2.0,
+   "expected": 2.0,
+   "bracket": 0.25
+  },
+  "near": {
+   "shift_f2_over_f1": 1.9958677685950414,
+   "delay_f2_over_f1": 2.0,
+   "expected": 2.0,
+   "bracket": 0.25
+  }
+ },
+ "derivations": {
+  "shift": "DETECTOR: the centroid of the screen's clicks in pixels against the control's, negative toward the mass (tools/lensing_readings.py, the late window); the continuum's (1 + gamma) 2 G M / (b c^2) on the lattice's lines",
+  "delay": "DETECTOR: the mean age of the arrivals at the screen against the control's (the click records carry the age moment, reads: age): Shapiro's delay, the sum of f n A / d over the row's dwell",
+  "ratio_f2_over_f1": "the ratio of the centroid's shift at gamma = 1 over gamma = 0: 2.00, the space part gamma doubling the time part's turn (the number the run reads)",
+  "lamp_rate": "GAMEBOARD: the lamp's clock rate under the age word, its births per interval (clock-age-v1, the law's default; not the key's)"
+ }
+}

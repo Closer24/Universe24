@@ -6662,6 +6662,57 @@ sequential gates on an entangled record, the full register replay.
   grain); the choice of the word is the owner's, the readings that would
   move with it listed in NOTE.md section 2; it establishes no physical law.
 
+### optical-v1's pin worlds, light beside a mass under the key (2026-09-21)
+
+- **Confronts.** The bending and the delay of light beside a mass, the
+  time part and the space part (PPN gamma) of the weak-field metric:
+  nature's (1 + gamma) 2 G M / (b c^2) with gamma = 1 (1.751 arcsec at the
+  Sun; VLBI's 0.99992 +- 0.00012) and Shapiro's (1 + gamma) 2 G M / c^3
+  times the logarithm (Cassini, 2 x 10^-5). The design
+  [docs/designs/one_wall/NOTE.md](designs/one_wall/NOTE.md) (12423748) with
+  REVIEW_3 (docs/designs/optical_v1/REVIEW_3.md on branch claude/optical-v1-review-3, 81b72bfb) and the light-bending note's
+  section 5; the build on branch `optical-v1` (2026-09-21).
+- **Model prediction, pinned before the run** (the one-wall note's
+  section 6, from the lattice's lines; DETECTOR, the bracket 0.5 pixel and
+  1 interval): series K's `mass` (M = 2^16, b = 6) and `near` (2^16,
+  b = 3) at the pair [1, 16384] under `optical` at gamma 0 (f = 1) and
+  gamma 1 (f = 2): the centroid's shift on the screen -1.93 / -3.86 pixels
+  (`mass`) and -2.42 / -4.83 (`near`), the delay 2.68 / 5.36 and 2.17 /
+  4.34 intervals; the number the run reads: the ratio of the two shifts
+  2.00 within 0.25 (the space part doubling the time part); the register
+  `examples/events/optical/expectations.json`.
+- **Run.** 2026-09-21 on branch `optical-v1` (`tools/run_series.py --jobs
+  2`, 400 intervals, the six worlds in two folders by gamma with a control
+  each, 26 to 41 s per world), read by `tools/lensing_readings.py
+  --no-replay` against each folder's control (DETECTOR; its verdict
+  lines are series K's own pins, not this entry's): `mass` at f = 1 the
+  centroid's shift -1.607 pixels (pinned -1.93: inside 0.5) and the delay
+  +2.89 intervals (2.68: inside 1); at f = 2 -3.812 (pinned -3.86: inside)
+  and +5.87 (5.36: inside); `near` at f = 1 -2.992 (pinned -2.42: outside
+  by 0.07) and +2.40 (2.17: inside); at f = 2 -4.654 (pinned -4.83:
+  inside) and +4.97 (4.34: inside), 1122 of the control's 1455 clicks
+  reaching the screen and 398 of the beam's clicks taken by the mass
+  (the beam bent into it); the ratios f = 2 over f = 1: the delays 2.03
+  (`mass`) and 2.07 (`near`), the pinned 2.00 within 0.25; the shifts
+  2.37 (`mass`) and 1.56 (`near`), outside the bracket. What the run
+  decides: the delay's factor 2 is reached at both impact parameters (the
+  wall's coefficient 1 + gamma read as Shapiro's), and the shift's factor
+  is not read to 0.25 at this fan (a single row turns whole fan steps
+  when its momentum crosses a bisector, the note's verb 3; the centroid
+  of a beam of five directions moves in the fan's comb, the light-bending
+  note's section 4), the mean of the four shifts inside the pins to 0.5
+  pixel; the widths of the arrival grow with f (0.514 / 0.833 and 1.371 /
+  2.326 pixels rms). Not decided by the run: whether the fan's grain is
+  the design's to widen (a denser fan, the note's second pin) or the
+  turn's to dither (the earlier design's wheel), a question for the
+  physicist through the Boss. The readings with every column in
+  [the worlds' README](../examples/events/optical/README.md); the gate
+  set byte identical without the key.
+- **Verdict.** The wall's factor reached (the delay 2.03 and 2.07 for
+  2.00); the turn's factor not reached at this grain (2.37 and 1.56 for
+  2.00 within 0.25): a hypothesis under its own identity, nothing of it
+  in the law, gamma an input of the world.
+
 ### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
 
 - **Confronts:** the single-graviton detector proposed by Tobar, Manikandan, Beitel and Pikovski (Nature Communications 15, 7229, 2024; construction begun in 2026): a massive acoustic resonator cooled to its ground state, weakly monitored, whose single quantum jump to its first level during a passing gravitational wave is one graviton absorbed, a gravito-phononic photoelectric effect; the key is to read individual transitions, since the mean energy is always consistent with a classical wave.

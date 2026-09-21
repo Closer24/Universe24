@@ -106,6 +106,7 @@ import numpy as np
 from event_universe.core.game_board import PORT_HEADINGS, Address3, adjacent_node
 from event_universe.core.integer import (
     MAX_WORK_INT,
+    age_wall,
     apportion_whole,
     bounded_gcd,
     checked_work,
@@ -123,11 +124,13 @@ from event_universe.events.amplitude import (
     label_of,
 )
 from event_universe.events.measured import (
+    FLIGHT_MEMBER,
     CountTable,
     DetectorSet,
     Ledger,
     Measured,
     PendingRow,
+    age_wall_coefficient,
     count_component,
 )
 from event_universe.events.meeting import ArcTable, arc_table, meet
@@ -257,12 +260,28 @@ class NatureBeam:
     share_x: int = 0
     share_y: int = 0
     share_z: int = 0
+    # optical-v1 (2026-09-21, the world key `optical`; docs/designs/one_wall/NOTE.md
+    # section 2): the flight's accumulator as a field of the row with its
+    # residue, `made` the Links made on its line and `residue` what the
+    # accumulator holds toward the next, in the units of the stretched
+    # wall (the rate 2 S_1 Q d against the wall 2 T_D (d + f n A)); and the
+    # turn's accumulator **W** = n **w** (three integers), the crowd's push
+    # on the row not yet turned into a change of its direction. (0, 0) and
+    # (0, 0, 0) on every row of a world without the key, where the flight
+    # is off the age (`Flight.accumulator`) and nothing turns.
+    made: int = 0
+    residue: int = 0
+    turn_x: int = 0
+    turn_y: int = 0
+    turn_z: int = 0
 
     def record_line(self, vectors: np.ndarray, handed: bool = False) -> dict[str, object]:
         """The row as `state.json` writes it, the direction as its vector;
         a row of a record with its columns, a row of no record without
         them; in a world that declares a hand with its `hand`; a row that
-        holds an undelivered share with its `share`."""
+        holds an undelivered share with its `share`; under `optical` its
+        flight accumulator `flight` [made, residue] and, when it holds one,
+        its turn accumulator `turn`."""
         line: dict[str, object] = {
             "direction": [int(v) for v in vectors[self.direction]],
             "age": self.age,
@@ -280,6 +299,10 @@ class NatureBeam:
             line["hand"] = self.hand
         if self.share_x or self.share_y or self.share_z:
             line["share"] = [self.share_x, self.share_y, self.share_z]
+        if self.made or self.residue:
+            line["flight"] = [self.made, self.residue]
+        if self.turn_x or self.turn_y or self.turn_z:
+            line["turn"] = [self.turn_x, self.turn_y, self.turn_z]
         return line
 
 
@@ -563,6 +586,7 @@ def exact_phase(
     rate: tuple[int, int] | None,
     modulus: int,
     where: str,
+    last_link: tuple[int, int] | None = None,
 ) -> tuple[int, int, int]:
     """The phase of a row at the exact time of its last Link (the model
     owner's decision of 2026-09-21, record 163 (2) of the log of 2026-09-20;
@@ -585,12 +609,30 @@ def exact_phase(
     on a rest slot, reads its phase as it is (the remainder 0 over 1); the
     phase per Link crossed (the integer form) is exact per Link already. A
     row whose direction a collision changed reads its age on its present
-    line, as the flight table does for its next step."""
+    line, as the flight table does for its next step. Under `optical`
+    (optical-v1, 2026-09-21) the time of the last Link is not the count's:
+    the caller hands `last_link` = (age r - s, r), r = 2 S_1 Q d the
+    stretched rate and s the row's stored residue after the carry (the
+    last Link crossed at the fraction 1 - s / r of its interval), and the
+    one floor is floor(n (age r - s) / (d r))."""
     s1 = int(flight.manhattan[direction])
     if rate is None or s1 == 0:
         return phase % modulus, 0, 1
     numerator, denominator = rate
     resolution = int(flight.resolution[direction])
+    if last_link is not None:
+        time_numerator, time_denominator = last_link
+        try:
+            product = checked_work(numerator * time_numerator)
+        except OverflowError as error:
+            raise OverflowError(
+                f"{BEAM_LAW}: the exact phase at {where}: the numerator n x (age r - s) = "
+                f"{numerator} x {time_numerator} exceeds the working register {MAX_WORK_INT}"
+            ) from error
+        divisor = denominator * time_denominator
+        made_phase, remainder = divmod(product, divisor)
+        held = (terms * numerator) // denominator
+        return (phase - held + made_phase) % modulus, remainder, divisor
     made = (2 * made_at * s1 * Q + resolution) // (2 * resolution)
     try:
         product = checked_work(checked_work(numerator * made) * resolution)
@@ -679,6 +721,15 @@ class Flight:
     period: np.ndarray
     lines: np.ndarray
     labels: np.ndarray
+    # optical-v1 (2026-09-21): e_D = isqrt(3 u_D . u_D) per direction, 110 or
+    # 111 on every moving direction (0 on a rest direction), the energy of
+    # one unit of content on the row in mass units (REVIEW_3 must-fix 1:
+    # never the direction's T_D); and the neighbour table, per direction the
+    # indices of its up to `FAN_NEIGHBOURS` nearest moving directions of the
+    # table by the cosine (exact integer comparisons at load), -1 padded: the
+    # fan a row turns on (`optical_turn`).
+    energy: np.ndarray = field(default_factory=lambda: np.zeros(0, dtype=np.int64))
+    neighbours: np.ndarray = field(default_factory=lambda: np.zeros((0, 0), dtype=np.int64))
 
     def manhattan_steps(self, direction: np.ndarray, age: np.ndarray) -> np.ndarray:
         """m(tau) = (2 tau S_1 Q + T_d) // (2 T_d): the Manhattan steps made
@@ -793,9 +844,62 @@ def direction_flight(vectors: tuple[tuple[int, int, int], ...]) -> Flight:
             lines[index, j] = step
     # The labels: the unit vector of every direction at the scale Q.
     labels = np.array([unit_label(vector) for vector in vectors], dtype=np.int64).reshape(count, 3)
-    return Flight(
-        np.array(vectors, dtype=np.int64).reshape(count, 3), manhattan, resolution, period, lines, labels
+    energy = np.array(
+        [integer_root(3 * sum(int(c) * int(c) for c in label)) for label in labels.tolist()],
+        dtype=np.int64,
     )
+    return Flight(
+        np.array(vectors, dtype=np.int64).reshape(count, 3),
+        manhattan,
+        resolution,
+        period,
+        lines,
+        labels,
+        energy,
+        fan_neighbours(vectors),
+    )
+
+
+# optical-v1: the neighbours of a direction on the fan, at most six (the
+# Voronoi neighbours of a direction on the sphere are about six; the Farey
+# neighbours on a plane two).
+FAN_NEIGHBOURS = 6
+
+
+def fan_neighbours(vectors: tuple[tuple[int, int, int], ...]) -> np.ndarray:
+    """The neighbour table of a direction set (optical-v1, 2026-09-21): per
+    direction the indices of its `FAN_NEIGHBOURS` nearest moving
+    directions of the table within a right angle, nearest first, by the
+    exact comparison of cosines ((D . D')^2 |D''|^2 against (D . D'')^2
+    |D'|^2 in Python integers, ties by index), -1 padded; a rest direction
+    has none. A table at load, as T_D and u_D are."""
+    count = len(vectors)
+    table = np.full((count, FAN_NEIGHBOURS), -1, dtype=np.int64)
+    norms = [sum(c * c for c in v) for v in vectors]
+    for index, vector in enumerate(vectors):
+        if norms[index] == 0:
+            continue
+        candidates = []
+        for other, candidate in enumerate(vectors):
+            if other == index or norms[other] == 0:
+                continue
+            dot = sum(a * b for a, b in zip(vector, candidate, strict=True))
+            if dot <= 0:
+                continue
+            candidates.append((dot, norms[other], other))
+
+        def nearer(left: tuple[int, int, int], right: tuple[int, int, int]) -> int:
+            # left before right when its cosine is larger: dot_l^2 n_r > dot_r^2 n_l
+            lhs = left[0] * left[0] * right[1]
+            rhs = right[0] * right[0] * left[1]
+            if lhs != rhs:
+                return -1 if lhs > rhs else 1
+            return -1 if left[2] < right[2] else (1 if left[2] > right[2] else 0)
+
+        candidates.sort(key=functools.cmp_to_key(nearer))
+        for k, (_, _, other) in enumerate(candidates[:FAN_NEIGHBOURS]):
+            table[index, k] = other
+    return table
 
 
 # -- the collision table ---------------------------------------------------------
@@ -937,6 +1041,15 @@ FIELDS = (
     "share_x",
     "share_y",
     "share_z",
+    # optical-v1 (2026-09-21): the flight's accumulator (made, residue) and
+    # the turn's accumulator, identity fields (two rows at different points
+    # of their walls are two rows), constant 0 without the key (a width of
+    # 0 bits in the packed key: the merge and its order as they were).
+    "made",
+    "residue",
+    "turn_x",
+    "turn_y",
+    "turn_z",
 )
 # The fields that make two rows identical (the amount is what the merge
 # adds); since `amplitude-v1` the record, the branch and the multiplicity
@@ -955,6 +1068,11 @@ IDENTITY_FIELDS = (
     "branch",
     "multiplicity",
     "hand",
+    "made",
+    "residue",
+    "turn_x",
+    "turn_y",
+    "turn_z",
 )
 # The three columns of the amplitude law as a row of no record carries them.
 NO_RECORD = 0
@@ -963,7 +1081,18 @@ ONE_PATH = 1
 NO_RECORD_COLUMNS = {"record": NO_RECORD, "branch": NO_BRANCH, "multiplicity": ONE_PATH, "birth": 0}
 # The columns a caller may leave out of `append`: the record's four and
 # the hand (a row without a declaration has none).
-COLUMN_DEFAULTS = {**NO_RECORD_COLUMNS, "hand": NO_HAND, "share_x": 0, "share_y": 0, "share_z": 0}
+COLUMN_DEFAULTS = {
+    **NO_RECORD_COLUMNS,
+    "hand": NO_HAND,
+    "share_x": 0,
+    "share_y": 0,
+    "share_z": 0,
+    "made": 0,
+    "residue": 0,
+    "turn_x": 0,
+    "turn_y": 0,
+    "turn_z": 0,
+}
 # The place of `phase` in the identity fields: the merge of a record's rows
 # reads it modulo the half circle with a sign (the cancel).
 PHASE_FIELD = IDENTITY_FIELDS.index("phase")
@@ -1298,6 +1427,11 @@ class NatureBeamStore:
         self.share_x: np.ndarray
         self.share_y: np.ndarray
         self.share_z: np.ndarray
+        self.made: np.ndarray
+        self.residue: np.ndarray
+        self.turn_x: np.ndarray
+        self.turn_y: np.ndarray
+        self.turn_z: np.ndarray
 
     @property
     def size(self) -> int:
@@ -1528,6 +1662,11 @@ class NatureBeamStore:
                 int(self.share_x[i]),
                 int(self.share_y[i]),
                 int(self.share_z[i]),
+                int(self.made[i]),
+                int(self.residue[i]),
+                int(self.turn_x[i]),
+                int(self.turn_y[i]),
+                int(self.turn_z[i]),
             )
             for k, i in enumerate(range(lo, stop))
         ]
@@ -2422,6 +2561,91 @@ class Interval:
     entered: np.ndarray
     trail_nodes: np.ndarray
     trail_events: np.ndarray
+    # optical-v1: the crowd's moments at every Node with a row, read once
+    # before step 1 (None without the key).
+    crowd: CrowdMoments | None = None
+
+
+class CrowdMoments:
+    """optical-v1 (2026-09-21; docs/designs/one_wall/NOTE.md sections 1 and
+    2): the two moments of the one reading set at every Node with a row,
+    read once before step 1 from the rows present at the end of the
+    interval before, one interval retarded as a body's push is: the age
+    moment A = sum amount x age over the rows there and the flow **V** =
+    sum amount x u over the rows that arrived (their `arrival` direction),
+    each less the rows of the reader's own number (a comparison of numbers,
+    as `crowd_flow` makes it; no family name). Segmented sums keyed by the
+    Node and by (Node, number), the products bounded before they are
+    formed; nothing kept at a Node."""
+
+    def __init__(self, stores: list[NatureBeamStore], unit: np.ndarray) -> None:
+        nodes = [s.node for s in stores if s.size]
+        if not nodes:
+            self.empty = True
+            return
+        self.empty = False
+        node = np.concatenate(nodes)
+        number = np.concatenate([s.number for s in stores if s.size])
+        amount = np.concatenate([s.amount for s in stores if s.size])
+        age = np.concatenate([s.age for s in stores if s.size])
+        arrival = np.concatenate([s.arrival for s in stores if s.size])
+        largest = int(amount.max()) if amount.size else 0
+        oldest = int(age.max()) if age.size else 0
+        if largest and oldest and largest > MOMENTUM_BOUND // oldest:
+            raise OverflowError(
+                f"{BEAM_LAW}: optical-v1's reading of the age moment: an amount x age of "
+                f"{largest} x {oldest} exceeds the integer bound {MOMENTUM_BOUND}"
+            )
+        moment = amount * age
+        arrived = arrival != NO_ARRIVAL
+        label = np.zeros((node.shape[0], 3), dtype=np.int64)
+        if arrived.any():
+            label[arrived] = amount[arrived, None] * unit[arrival[arrived]]
+        self.keys, inverse = np.unique(node, return_inverse=True)
+        fullest = int(np.bincount(inverse).max())
+        if largest and fullest > MAX_WORK_INT // max(1, largest * max(oldest, Q)):
+            raise OverflowError(
+                f"{BEAM_LAW}: optical-v1's reading of {fullest} rows at one Node exceeds the "
+                f"working register {MAX_WORK_INT}"
+            )
+        self.moment = np.zeros(self.keys.shape[0], dtype=np.int64)
+        np.add.at(self.moment, inverse, moment)
+        self.flow = np.zeros((self.keys.shape[0], 3), dtype=np.int64)
+        np.add.at(self.flow, inverse, label)
+        self.span = int(max(number.max(), 0)) + 1
+        self.pair_keys, pair_inverse = np.unique(node * self.span + number, return_inverse=True)
+        self.pair_moment = np.zeros(self.pair_keys.shape[0], dtype=np.int64)
+        np.add.at(self.pair_moment, pair_inverse, moment)
+        self.pair_flow = np.zeros((self.pair_keys.shape[0], 3), dtype=np.int64)
+        np.add.at(self.pair_flow, pair_inverse, label)
+
+    def _lookup(self, keys: np.ndarray, wanted: np.ndarray, values: np.ndarray) -> np.ndarray:
+        if keys.shape[0] == 0:
+            return np.zeros((wanted.shape[0],) + values.shape[1:], dtype=np.int64)
+        at = np.minimum(np.searchsorted(keys, wanted), keys.shape[0] - 1)
+        hit = keys[at] == wanted
+        shape = (slice(None),) + (None,) * (values.ndim - 1)
+        result: np.ndarray = np.where(hit[shape], values[at], 0)
+        return result
+
+    def age_moment(self, node: np.ndarray, number: np.ndarray) -> np.ndarray:
+        """A per reader: the Node's age moment less the reader's own number's."""
+        if self.empty:
+            return np.zeros(node.shape[0], dtype=np.int64)
+        total = self._lookup(self.keys, node, self.moment)
+        own = self._lookup(self.pair_keys, node * self.span + number, self.pair_moment)
+        result: np.ndarray = total - own
+        return result
+
+    def arrival_flow(self, node: np.ndarray, number: np.ndarray) -> np.ndarray:
+        """**V** per reader (rows, 3): the Node's arrival flow less the
+        reader's own number's."""
+        if self.empty:
+            return np.zeros((node.shape[0], 3), dtype=np.int64)
+        total = self._lookup(self.keys, node, self.flow)
+        own = self._lookup(self.pair_keys, node * self.span + number, self.pair_flow)
+        result: np.ndarray = total - own
+        return result
 
 
 def heading_port(step: np.ndarray) -> np.ndarray:
@@ -2555,6 +2779,7 @@ def interval_frame(
         entered=entered,
         trail_nodes=trail_nodes,
         trail_events=trail_events,
+        crowd=CrowdMoments(stores, unit) if world.optical is not None else None,
     )
 
 
@@ -2598,6 +2823,12 @@ def nature_beam(
     # it by its phase register; the crowd untouched (`meeting.meet`).
     if world.meeting:
         meet(stores, world, tables, frame.occupied, ledger)
+    # optical-v1 (under the world key `optical`): the turn at the same
+    # place, the rows pushed by the crowd's flow and turned to the fan's
+    # nearest direction (`optical_turn`); refused together with `meeting`
+    # at load (one turn verb per row).
+    if world.optical is not None:
+        optical_turn(frame)
 
     # 4. The measured events' tables and the detectors.
     _measure(frame)
@@ -2676,6 +2907,11 @@ def _inverse_interval(frame: Interval) -> GameBoardDiagnostics:
         raise ValueError(
             f"{BEAM_LAW}: the inverse interval is defined on a GameBoard without measured events"
         )
+    if world.optical is not None:
+        raise ValueError(
+            f"{BEAM_LAW}: the inverse interval is refused under the key optical: a row's wall reads "
+            "the crowd of the interval before, which the after-state does not hold (optical-v1)"
+        )
     for definition in families:
         if definition.lifetime is not None:
             raise ValueError(
@@ -2724,6 +2960,209 @@ def _inverse_interval(frame: Interval) -> GameBoardDiagnostics:
     return GameBoardDiagnostics(shape, unit, [])
 
 
+def optical_rate_and_wall(
+    flight: Flight, world: NatureBeamWorld, direction: np.ndarray, age_moment: np.ndarray
+) -> tuple[np.ndarray, np.ndarray]:
+    """optical-v1's verb 1 (docs/designs/one_wall/NOTE.md section 2): the
+    row's flight accumulator in the age wall's declared set at the
+    coefficient f = 1 + gamma (`measured.age_wall_set`), the one wall
+    function `core.integer.age_wall` on the flight's pair (the rate
+    2 S_1 Q, the wall 2 T_D): the rate 2 S_1 Q d against the wall
+    2 T_D (d + f n A), [n, d] the clock's pair and A the crowd's age moment
+    at the row's Node. The largest wall of the rows is tested against the
+    working register before any product is formed, refused naming the rule."""
+    numerator, denominator = world.suspension
+    coefficient = age_wall_coefficient(FLIGHT_MEMBER, world.optical)
+    s1 = flight.manhattan[direction]
+    t = flight.resolution[direction]
+    largest_t = int(t.max()) if t.size else 1
+    largest_a = int(age_moment.max()) if age_moment.size else 0
+    stretch = denominator + coefficient * largest_a * numerator
+    if 2 * largest_t > MAX_WORK_INT // max(1, stretch):
+        raise OverflowError(
+            f"{BEAM_LAW}: optical-v1's wall 2 T_D (d + f n A) = 2 x {largest_t} x {stretch} "
+            f"exceeds the working register {MAX_WORK_INT}"
+        )
+    rate = np.zeros(direction.shape[0], dtype=np.int64)
+    wall = np.zeros(direction.shape[0], dtype=np.int64)
+    for k in range(direction.shape[0]):
+        r, w = age_wall(
+            2 * int(s1[k]), 2 * int(t[k]), coefficient, int(age_moment[k]), (numerator, denominator)
+        )
+        rate[k], wall[k] = r * Q, w
+    return rate, wall
+
+
+def optical_walk_step(
+    frame: Interval, store: NatureBeamStore
+) -> tuple[np.ndarray, Callable[[int, int], tuple[int, int]]]:
+    """Step 1 under `optical`: the row's stored accumulator gains the
+    stretched rate against the wall the crowd's age moment stretches
+    (`optical_rate_and_wall`), the count gained (0 or 1: the rate never
+    exceeds the wall) is the interval's Manhattan step on the row's line at
+    the place `made mod S_1`, and the accumulator after is kept on the row
+    with the count made. A row whose accumulator is empty (a row born or
+    declared before this interval, (0, 0)) starts from the flight's off-age
+    pair at its age scaled to the stretched units (`Flight.accumulator`
+    times d): the same integers as the flight without the key at A = 0.
+    Returns the step and a function giving the time of the last Link of a
+    row as (age r - s, r) for the exact phase (`exact_phase`, `last_link`)."""
+    flight = frame.flight
+    world = frame.world
+    assert frame.crowd is not None
+    numerator, denominator = world.suspension
+    fresh = (store.made == 0) & (store.residue == 0)
+    if fresh.any():
+        made0, residue0 = flight.accumulator(store.direction[fresh], store.age[fresh])
+        store.made[fresh] = made0
+        store.residue[fresh] = residue0 * denominator
+    age_moment = frame.crowd.age_moment(store.node, store.number)
+    rate, wall = optical_rate_and_wall(flight, world, store.direction, age_moment)
+    moved, residue = by_drive_rows(store.residue, rate, wall)
+    moved = np.minimum(moved, 1)
+    s1 = flight.manhattan[store.direction]
+    place = np.where(s1 > 0, store.made % np.maximum(s1, 1), 0)
+    step: np.ndarray = flight.lines[store.direction, place] * moved[:, None]
+    store.residue = residue
+    store.made = store.made + moved
+    rates = rate
+
+    def last_link(index: int, age_after: int) -> tuple[int, int]:
+        r = int(rates[index])
+        return age_after * r - int(store.residue[index]), r
+
+    return step, last_link
+
+
+def optical_last_link(
+    store: NatureBeamStore, flight: Flight, world: NatureBeamWorld, index: int, age: int
+) -> tuple[int, int]:
+    """The time of a row's last Link off its stored accumulator, after the
+    walk: (age r - s, r) with r = 2 S_1 Q d the stretched rate and s the
+    residue (`exact_phase`'s `last_link`)."""
+    r = 2 * int(flight.manhattan[store.direction[index]]) * Q * world.suspension[1]
+    return age * r - int(store.residue[index]), r
+
+
+def optical_turn(frame: Interval) -> None:
+    """optical-v1's verbs 2 and 3 (docs/designs/one_wall/NOTE.md sections 1
+    and 2), at the meeting's place after the collision, on every row of
+    free space (a Node without a measured event) of every family: the
+    turn's accumulator **W** = n **w** is translated by the crowd's arrival
+    flow **V** at the row's Node (less its own number's; the interval's own
+    arrivals, read here after the walk and the collision, `CrowdMoments`;
+    the wall's age moment is the one read before step 1) at the rate n x
+    weight, the weight
+    (1 + gamma) x content x e_D, content the row's whole content (its
+    amount times the content per unit; 0 on a free family's row, which
+    therefore never turns), gravity's sign (**W** -= n weight **V**); then
+    the row's whole momentum **P** = Q d content **u**_D + **W** (the
+    note's Q S content **u**_D + **w** with S = d / n, cleared of n) is
+    compared with the fan's neighbours of its direction, and when a
+    neighbour D' is nearer to **P** than D (the exact comparison of cosines
+    in Python integers, (**P** . D')^2 |D|^2 > (**P** . D)^2 |D'|^2 with
+    **P** . D' > 0, the nearest of the neighbours taken) the direction
+    label moves to D' and **W** += Q d content (**u**_D - **u**_D'), so
+    that **P** is conserved across the turn; the row's label changes and
+    the books' `turned` line takes the difference, as the meeting's does.
+    Bounds: n x weight x |V| tested by division before the product; the
+    row's phase, amount, content, number and record untouched."""
+    assert frame.crowd is not None
+    world = frame.world
+    flight = frame.flight
+    unit = frame.unit
+    ledger = frame.ledger
+    families = frame.families
+    occupied = frame.occupied
+    # The flow is the interval's own arrivals at the row's Node (the
+    # crossing rule's set, what a body's push reads in the same interval;
+    # the arrival marks are cleared at the merge), read here after the walk
+    # and the collision; the age moment of the wall was read before step 1.
+    crowd = CrowdMoments(frame.stores, unit)
+    numerator, denominator = world.suspension
+    coefficient = age_wall_coefficient(FLIGHT_MEMBER, world.optical)
+    vectors = flight.vectors
+    norms = [int(sum(int(c) * int(c) for c in v)) for v in vectors.tolist()]
+    for family, store in enumerate(frame.stores):
+        if store.size == 0:
+            continue
+        rows = np.flatnonzero(~occupied[store.node] & (store.direction >= REST_DIRECTIONS))
+        if rows.shape[0] == 0:
+            continue
+        content = store.amount[rows] * store.content[rows]
+        weight = coefficient * content * flight.energy[store.direction[rows]]
+        flow = crowd.arrival_flow(store.node[rows], store.number[rows])
+        widest = int(np.abs(flow).max(initial=0))
+        heaviest = int(weight.max(initial=0))
+        if widest and heaviest and numerator * heaviest > MAX_WORK_INT // (widest * 2):
+            raise OverflowError(
+                f"{BEAM_LAW}: optical-v1's push n x weight x V = {numerator} x {heaviest} x "
+                f"{widest} on the family {families[family].name!r} exceeds the working register "
+                f"{MAX_WORK_INT}"
+            )
+        turn = np.stack([store.turn_x[rows], store.turn_y[rows], store.turn_z[rows]], axis=1)
+        turn = turn - numerator * weight[:, None] * flow
+        store.turn_x[rows], store.turn_y[rows], store.turn_z[rows] = turn[:, 0], turn[:, 1], turn[:, 2]
+        # The nearest of the fan for the rows that hold a push.
+        held = np.flatnonzero(turn.any(axis=1))
+        if held.shape[0] == 0:
+            continue
+        chosen: list[int] = []
+        turned: list[int] = []
+        for k in held.tolist():
+            index = int(rows[k])
+            d = int(store.direction[index])
+            label = Q * denominator * int(content[k])
+            u = unit[d].tolist()
+            momentum = [label * int(u[a]) + int(turn[k, a]) for a in range(3)]
+            v = vectors[d].tolist()
+            dot = sum(momentum[a] * int(v[a]) for a in range(3))
+            best, best_dot, best_norm = d, dot, norms[d]
+            for other in flight.neighbours[d].tolist():
+                if other < 0:
+                    break
+                w = vectors[other].tolist()
+                dot_other = sum(momentum[a] * int(w[a]) for a in range(3))
+                if dot_other <= 0:
+                    continue
+                if dot_other * dot_other * best_norm > best_dot * best_dot * norms[other] or (
+                    best_dot <= 0
+                ):
+                    best, best_dot, best_norm = other, dot_other, norms[other]
+            if best != d:
+                chosen.append(index)
+                turned.append(best)
+        if not chosen:
+            continue
+        chosen_rows = np.array(chosen, dtype=np.int64)
+        new_direction = np.array(turned, dtype=np.int64)
+        coordinates = np.stack(store.coordinates(store.node[chosen_rows]), axis=1)
+        free = families[family].free
+        before = momentum_labels(
+            unit,
+            store.direction[chosen_rows],
+            store.amount[chosen_rows],
+            store.content[chosen_rows],
+            free,
+            coordinates,
+        )
+        after = momentum_labels(
+            unit, new_direction, store.amount[chosen_rows], store.content[chosen_rows], free, coordinates
+        )
+        delta = [a - b for a, b in zip(exact_column_sums(after), exact_column_sums(before), strict=True)]
+        ledger.transit_momentum = [a + b for a, b in zip(ledger.transit_momentum, delta, strict=True)]
+        ledger.turned_momentum[family] = [
+            a + b for a, b in zip(ledger.turned_momentum[family], delta, strict=True)
+        ]
+        # W += Q d content (u_D - u_D'): P conserved across the turn.
+        whole = Q * denominator * (store.amount[chosen_rows] * store.content[chosen_rows])
+        shift = whole[:, None] * (unit[store.direction[chosen_rows]] - unit[new_direction])
+        store.turn_x[chosen_rows] += shift[:, 0]
+        store.turn_y[chosen_rows] += shift[:, 1]
+        store.turn_z[chosen_rows] += shift[:, 2]
+        store.direction[chosen_rows] = new_direction
+
+
 def _walk(frame: Interval) -> list[ArrivalRows]:
     """Step 1, the walk: departures become arrivals by the flight's rule at
     the row's age; the escapes click on the open faces (BEAM_LAW section 3)."""
@@ -2748,8 +3187,14 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
             arrivals.append(ArrivalRows.empty())
             continue
         # The flight's rule at the row's age: the position's accumulator
-        # per direction, off the age (the rate constant over the flight).
-        step = flight.walk_step(store.direction, store.age)
+        # per direction, off the age (the rate constant over the flight);
+        # under `optical` the accumulator on the row against the wall the
+        # crowd's age moment stretches (`optical_walk_step`).
+        if frame.crowd is None:
+            step = flight.walk_step(store.direction, store.age)
+            last_link = None
+        else:
+            step, last_link = optical_walk_step(frame, store)
         moved = step.any(axis=1)
         x, y, z = store.coordinates(store.node)
         coordinates = np.stack([x, y, z], axis=1) + step
@@ -2810,6 +3255,7 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
                     definition.phase_per_age,
                     modulus,
                     FACE_NAMES[int(port[index])],
+                    None if last_link is None else last_link(index, int(store.age[index]) + 1),
                 )
                 for index in gone.tolist()
             }
@@ -3541,9 +3987,17 @@ def _family_plan(
             families[family].phase_per_age,
             modulus,
             f"measured event {int(e)}",
+            None
+            if frame.crowd is None
+            else optical_last_link(store, flight, frame.world, int(ix), int(ag)),
         )
-        for ph, ag, ar, e in zip(
-            ph_t.tolist(), age_t.tolist(), read_on[taken].tolist(), ev_t.tolist(), strict=True
+        for ph, ag, ar, e, ix in zip(
+            ph_t.tolist(),
+            age_t.tolist(),
+            read_on[taken].tolist(),
+            ev_t.tolist(),
+            at[taken].tolist(),
+            strict=True,
         )
     ]
     e_ends = np.append(e_starts[1:], groups)
@@ -4783,6 +5237,9 @@ def _border(frame: Interval) -> None:
                 definition.phase_per_age,
                 modulus,
                 LIFETIME_NAME,
+                None
+                if frame.crowd is None
+                else optical_last_link(store, flight, frame.world, int(index), int(store.age[index])),
             )
             for index in gone.tolist()
         }

@@ -403,6 +403,9 @@ WORLD_KEYS = {
     # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
     # object, absent by default (`COVARIANT_KEYS`).
     "covariant_readings",
+    # optical-v1 (2026-09-21): the world's post-Newtonian parameter gamma,
+    # a non-negative integer, absent by default (`OPTICAL_RULE`).
+    "optical",
     "directions",
     "direction_bound",
     "families",
@@ -512,6 +515,17 @@ WEAK_RULE = "weak-v1"
 # declares `meeting: true`; absent, no paid unit reads the crowd and every
 # world reads as it did, byte for byte.
 MEETING_RULE = "meeting-v1"
+# The identity of the rows' rule at a Node for general relativity's formulas
+# (the model owner's "go" of 2026-09-21, record 303, in its generic form,
+# records 421 to 428 and REVIEW_3; docs/designs/one_wall/NOTE.md): under the
+# world key `optical: gamma` (gamma the post-Newtonian parameter, a
+# non-negative integer, nature's 1) the row's flight joins the age wall's
+# declared set at the coefficient f = 1 + gamma (`measured.age_wall_set`),
+# and every row of content in free space is pushed by the crowd's flow with
+# the weight (1 + gamma) x content x e_D and turns to the fan's direction
+# nearest its whole momentum (`nature_beam.optical_turn`). Absent, nothing
+# of it exists and every world reads as it did, byte for byte.
+OPTICAL_RULE = "optical-v1"
 # The identity of the hand (`hand-v1`; the model owner, 2026-09-20, record
 # 128 of docs/LOG_2026-09-20.md, "the hand's three choices confirmed"; the
 # physicist's design hand/DESIGN.md with the mathematician's FORM.md; BEAM_LAW
@@ -1038,6 +1052,17 @@ class NatureBeamWorld:
     # The covariant readings (the world key `covariant_readings`, absent by
     # default): the declaration, or None (`covariant-readings-v1`).
     covariant: CovariantDeclaration | None = None
+    # optical-v1 (the world key `optical`, absent by default): gamma, the
+    # post-Newtonian parameter, or None; the flight's coefficient is
+    # `flight_coefficient`, 1 + gamma.
+    optical: int | None = None
+
+    @property
+    def flight_coefficient(self) -> int | None:
+        """The age wall's coefficient of the row's flight under `optical`,
+        f = 1 + gamma (the time part 1 and the space part gamma of the
+        weak-field index 1 + (1 + gamma) k), None without the key."""
+        return None if self.optical is None else 1 + self.optical
 
     @property
     def recorded(self) -> bool:
@@ -1181,6 +1206,8 @@ class NatureBeamWorld:
             found.append(HAND_RULE)
         if self.covariant is not None:
             found.append(COVARIANT_READINGS_RULE)
+        if self.optical is not None:
+            found.append(OPTICAL_RULE)
         if self.binding:
             found.append(BINDING_RULE)
         return found
@@ -3095,6 +3122,57 @@ def _detectors(
     return tuple(found)
 
 
+def _optical(
+    value: object, suspension: tuple[int, int], meeting: bool, table: tuple[Vector, ...]
+) -> int | None:
+    """The world key `optical` (`optical-v1`, 2026-09-21; docs/designs/one_wall/NOTE.md
+    section 2, the declarations and the refusals once): gamma, a
+    non-negative integer (a boolean, a float, a string or a negative
+    integer refused), or None when absent. Refused at load, naming the
+    rule: with `suspension` [0, d] (the wall would be stretched by nothing
+    and the turn would act alone: a declared identity that does nothing);
+    with `meeting` (one turn verb per row, the physicist's must-fix of
+    2026-09-21: the two turns act on the same headings from the same flow
+    and would add on every row); with a direction table in which a moving
+    direction has no neighbour (no other moving direction within a right
+    angle: the six headings alone, for one, whose neighbours are all
+    orthogonal; a row on such a direction would have no fan to turn on). The other refusals of the note (a wall, a weight or a momentum
+    beyond the register) are the run's, tested by division before the
+    product is formed."""
+    if value is None:
+        return None
+    if type(value) is not int or value < 0:
+        raise ValueError(
+            f"{BEAM_LAW}: optical must be a non-negative integer, gamma the post-Newtonian "
+            f"parameter (nature's 1), not {value!r}"
+        )
+    if suspension[0] == 0:
+        raise ValueError(
+            f"{BEAM_LAW}: the key optical is refused with suspension {list(suspension)}: the "
+            "age wall stretches the flight by the clock's pair n / d, and at n = 0 nothing is "
+            "stretched while the turn would act alone (a declared identity that does nothing)"
+        )
+    if meeting:
+        raise ValueError(
+            f"{BEAM_LAW}: the key optical is refused with the key meeting: one turn verb per row "
+            "(the two turns, the meeting's at its grain constant and optical-v1's at the flow's "
+            "weight, act on the same headings from the same flow and would add on every row)"
+        )
+    moving = [v for v in table if any(v)]
+    for vector in moving:
+        if not any(
+            sum(a * b for a, b in zip(vector, other, strict=True)) > 0
+            for other in moving
+            if other != vector
+        ):
+            raise ValueError(
+                f"{BEAM_LAW}: the key optical is refused: the direction {list(vector)} has no "
+                "neighbour (no other moving direction within a right angle), and a row turns to "
+                "the fan's nearest direction"
+            )
+    return value
+
+
 def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     """Reject anything but a lawful world of the Beam Law."""
     if not isinstance(document, dict):
@@ -3228,6 +3306,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
     )
     detectors = _detectors(obj.get("detectors", []), shape, periodic, measured)
+    optical = _optical(obj.get("optical"), suspension, meeting, table)
     world = NatureBeamWorld(
         model_id,
         shape,
@@ -3250,6 +3329,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         action,
         meeting=meeting,
         covariant=covariant,
+        optical=optical,
     )
     _record_load_checks(measured, detectors, families, phase_steps)
     # The push's denominator per column, Lambda_c^2 (`measured.counts_table`),

@@ -131,6 +131,7 @@ kept, their pins the law of events').
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the two integer audits (`core/` integers only; `events/` integer numpy and nothing that leaves the integers, `run.py` outside it), LOCALITY-1 documented without an exception, and the six-read test ([below](#locality-and-bounded-local-work)): a Node reads nothing beyond one Link, a change reaches a Node no sooner than the flight allows |
 | `test_group_structure.py` | The group structure named on 2026-09-21: the cube's group of 48 (closed, the identity, every inverse, the hand +1 on 24 rotations and -1 on 24 reflections, multiplicative), the phase circle as the cyclic group with its unit vectors (a turn, a difference, the opposite phase; equal phases 65536, opposite phases its negative, C^2 + S^2 within 361 of 65536), the collision as a group action (the period the class's size, one cycle per class, the inverse undoing the shift, the invariants constant along a cycle) ([below](#the-group-structure)) | new (2026-09-21; the vector program, record 191; BEAM_LAW note 42) |
 | `test_meeting.py` | The meeting: the arc permutation of the direction table (a permutation for 1034 targets on K's table, the rest fixed, the chain from +x, the k-fold shift), the phase register (61, 62, 63, 0, 1, 2 with the turn at the fourth; the inverse), the sign of the turn and the `turned` line, the crowd and the record untouched, the bijection with the meeting (50 forward, 50 inverse) and the refusals ([below](#the-meeting)) | new (2026-09-20, the model owner's "DECIDED: the meeting, M-R"; the physicist's and the mathematician's design) |
+| `test_optical.py` | optical-v1 in its generic form (2026-09-21, the world key `optical: gamma`, absent by default; docs/designs/one_wall/NOTE.md): the flight's wall stretched by the crowd's age moment at f = 1 + gamma integer for integer with `by_drive` by hand (one Link per 12 intervals on a crowd of A = 12 at [1, 4], f = 2; the flight off the age without the key); the push and the turn of one row (**W** = (0, -14080, 0) then the label to (1, -1, 0) and **W** = (4864, -2560, 0), the books' `turned` line (-19, -45, 0)); **P** conserved across the turn; the refusals (suspension 0, meeting, gamma out of range, a direction without a neighbour) and the identity; byte identity without the key and the declared set; the six pin worlds parse, run balanced and carry their pins ([below](#optical-v1-in-its-generic-form)) | new (2026-09-21, optical-v1) |
 | `test_amplitude_record.py` | The record on the row (`amplitude-v1`): the world key `amplitude` deleted and refused, the identity `amplitude-v1` on a world with a lamp alone; the four columns `record`, `branch`, `multiplicity` and `birth` at their defaults on every row of no record and the merge's packed key unchanged by them; the merge's normal form, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
 | `test_amplitude_split.py` | The split, the birth of a record and the phase per interval of age: a lamp's birth of one record of k rows with the multiplicity k and the identity number x 2^32 + ordinal; the (20, 21) splitter's rows (41 in phase toward D1, 1 in antiphase toward D2, the multiplicity 1682) and the balanced split's cancel on the GameBoard with the `cancelled` lines; the pair form of `phase_per_link` (40 at [8, 1], 26 at [16, 3], 24 at the integer 8 after 5 intervals; the inverse bit-exact); the refusals ([below](#the-amplitude-law-the-split)); the birth's and the split's rows and cancels read from `expectations.json` under `mach_zehnder` (2026-09-21) | new (2026-09-20; the design's sections 2.1, 2.3, 3.1 and 3.4; the owner's unifications (1) and (2)) |
 | `test_amplitude_layer.py` | The layer: the reading `sum` at the record's scope, the offers, the ladder at completion and the gathers, on series L: the ten Mach-Zehnder and Elitzur-Vaidman worlds click as the design's table over the 64 births (tests 1, 3), the same list twice and the moved rung (8), a split takes no click gate (the review's B1), the two slits at a low rate against the generator's reading of one birth (2: 78 of 80 sets exact, one rung moved by the tables' rounding), the gate set parses without the key (7), the reading tool's replay equals `run.json`'s `world` (10), the pair form bounded at the parse (S1), the cancel booked per content (S3), a lamp short of one quantum per direction refused (S4), the `record` line's scope ([below](#the-amplitude-law-the-layer)); every number of the series read from `expectations.json` (2026-09-21) | new (2026-09-20; the design's sections 3, 5 and 7; the decision on the split's gate) |
@@ -1887,6 +1888,57 @@ the first run (the design's section 5, tests (a) to (d)):
   `hypotheses` gain `binding-v1` and the runner's `run.json` carries it,
   its `contact` records `given` 2 then 0; the momentum lines sum to
   (-384, 0, 0), the declared row's label and the body's, at every tick.
+
+## optical-v1 in its generic form
+
+`tests/test_optical.py` (the model owner's "go" of 2026-09-21, record 303,
+in the generic form of records 421 to 428; the design
+docs/designs/one_wall/NOTE.md at 12423748 with REVIEW_3's four must-fixes
+and the physicist's fifth; the world key `optical: gamma`, absent by
+default), the integers written before the run:
+
+- (a) the wall: a bar of 12 x 1 x 1 at `suspension` [1, 4] and `optical` 1
+  (f = 2), a lamp of `light` at x = 0 birthing one row per interval on
+  +x, a rest crowd of `m` (number 2, amount 4, age 3, the age moment 12)
+  at x = 4 .. 8: the first row's accumulator gains the rate 2 S_1 Q d =
+  512 against the wall 2 T_D (d + f n A) = 880 off the crowd and 6160 on
+  it from the start T_D d = 440 (`core.integer.age_wall` on the flight's
+  pair), its x after the ticks 2 .. 40 is 1, 1, 2, 2, 3, 3, then 4 for
+  twelve intervals, 5 for twelve, 6 ..., equal to `by_drive` by hand,
+  its stored (made, residue) (1, 72) after tick 2 and (4, 1016) after
+  tick 9; without the key 1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6, 7, 8, 8, 9, 9,
+  10, 10, 11 and the fields (0, 0).
+- (b) the push and the turn: a GameBoard of 6 x 3 x 1 at [1, 4], `optical`
+  1, the twelve edge diagonals declared; a row of `light` (number 1,
+  amount 1, content 1) at (1, 1, 0) on +x and a row of `m` (number 2,
+  amount 1) at (2, 0, 0) on +y, both at age 0: in interval 1 both reach
+  (2, 1, 0), the m row's arrival is the flow (0, 64, 0), the light row's
+  **W** = -(1 x 2 x 1 x 110) x (0, 64, 0) = (0, -14080, 0), its **P** =
+  (16384, -14080, 0) nearer to (1, -1, 0) than to +x (30464^2 x 1 >
+  16384^2 x 2), the label moves and **W** += 256 x (19, 45, 0) =
+  (4864, -2560, 0); the books' `turned` line of `light` (-19, -45, 0), the
+  transit momentum (45, 19, 0), balanced; the m row (content 0) untouched;
+  without the key the row keeps +x and the line is 0.
+- (c) **P** = Q d content **u**_D + **W** before the turn equals it after,
+  (16384, -14080, 0); the row's amount, content, number and phase
+  untouched.
+- (d) the refusals: `optical` with `suspension` 0 ("refused with
+  suspension"), with `meeting` ("one turn verb per row"), gamma -1, true,
+  "2" and 1.5 ("optical must be a non-negative integer"), the six headings
+  alone ("the direction [1, 0, 0] has no neighbour"); the identity
+  `optical-v1` last under `hypotheses` with gamma 1 and the flight
+  coefficient 2; absent without the key.
+- (e) byte identity without the key: the bar's rows keep `made`, `residue`
+  and the turn fields at 0 over twenty intervals and the state's rows
+  carry no `flight` or `turn` key; `age_wall_set(None)` is the law's
+  (("owed", 1),), `age_wall_set(0)` adds ("flight", 1) and
+  `age_wall_set(1)` ("flight", 2); no never-member in the set.
+- (f) the pin worlds: the six shipped worlds of `examples/events/optical/`
+  equal their generator's, carry the identity at [1, 16384] with gamma
+  0 or 1, run ten intervals balanced; the register's pins -1.93 / -3.86
+  and -2.42 / -4.83 pixels, the delays 2.68 / 5.36 and 2.17 / 4.34, the
+  ratio 2.00 with the bracket 0.5 pixel; the inverse interval refused
+  under the key.
 
 ## The covariant readings
 
