@@ -3299,7 +3299,14 @@ implementation's part of the contract. The design above is unchanged.
     carry, periodic in S_1, computed once from the vectors at load,
     `lines`); the pair (m(tau), the residue (tau r + T_d) mod d) is formed
     in one place, `Flight.accumulator(direction, age)`, which `walk_step`
-    reads for the step and the click's exact phase reads for the residue
+    reads for the step (since 2026-09-21, the model owner's word on the
+    flight's accumulator, record 299, through `nature_beam.by_drive_rows`,
+    the array form of the one count primitive `core.integer.by_drive`,
+    equal to it row by row: the residue gains r over d and the count
+    gained is the step, the accumulator after the next age's residue;
+    the pair off the age is the verb's constant-rate identity applied
+    tau times from T_d, as `by_clock` is of `by_drive`, so the row
+    carries no field) and the click's exact phase reads for the residue
     at an arrival (TWO_SLITS.md section 2; test (f) of the flight); a
     ray's rate never changes over its flight, so both counts are read off
     the whole age and the row carries no field (the inventory's 1.4:
