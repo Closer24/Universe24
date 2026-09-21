@@ -73,7 +73,11 @@ reading `sum`.
 `mz_equal` the two rows toward D1 merge in phase (amount 41, multiplicity
 1682) and the two toward D2 cancel to 1 in antiphase; on `mz_balanced`
 the rows toward D2 cancel entirely. **What the world reads** (DETECTOR):
-the clicks per port over the 64 births in the table above, the ladder at
+the clicks per port over the 64 births in the table above (the gathers'
+`chosen`, the `world` list of `run.json`, one click per record; a detector
+entry's `clicks` field of `run.json` counts the offers instead, every row
+that ended at the set, and reads higher: D1 476 and D2 68 on `mz_345`
+against the 63 and 1 registered here), the ladder at
 each record's completion normalised by the sum of its offers with the
 rungs at the nearest integer, `b_k = (2 N C_k + Total) // (2 Total)`
 (`expectations.json` under `mach_zehnder`). Since 2026-09-21 (the
