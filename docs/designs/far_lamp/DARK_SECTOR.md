@@ -158,7 +158,9 @@ galaxy is an initial state, as in nature's model. The clean closure the
 owner asks for would need a rule that is not one of the six (an
 acceleration floor `a_0`, which is what the radial acceleration relation
 measures), stated under its own identity and tested against the same
-three tests; this note proposes none.
+three tests; this note proposes none. The owner's second look, whether S can be
+derived and whether the push's rounding is that floor, is
+[S_AND_A0.md](S_AND_A0.md): neither, on the law's own arithmetic.
 
 ## 7. Links
 
