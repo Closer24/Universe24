@@ -474,3 +474,36 @@ the signed drive) and 0.848, 1.018, 1.086, 1.035 in `pushing_age` (0.866,
 the 12 windows (8 of 12); 310 readings inside and 26 outside (309 and 27).
 The verdict stands as read. The register entry has every number
 ([migration](../../../docs/MIGRATION.md#the-fraction-free-law-on-2026-09-20-every-count-an-accumulator-on-the-bodys-record)).
+
+## Re-read under the directional drive (2026-09-21)
+
+Under the directional drive ([BEAM_LAW note 49](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+the model owner's records 191 and 301) every source walks the line of
+its momentum at the pace |p|_1 S_1 Q / (Q S M S_1 Q + |p|_1 T_D), the
+rows' pace the cap: the declared throws on the axes, 0.05 to 0.35 of the
+rows' speed under the per-axis rule, now run at the factor 1 / (1 + 0.72
+v) of that (`make_worlds.py`'s `speed` reads the rate over the wall of
+`drive_rate_and_wall`; the world files are unchanged), so the sources'
+`step` lines over 400 intervals are 1308 for 1505 in the two coasting
+worlds, 1260 for 1449 in `pushing_age` and 1244 for 1431 in
+`pushing_scalar`. The four worlds re-run as registered on the branch
+`directional-drive` (source fingerprint
+`6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`,
+Python 3.14, headless, one world at a time beside the base tree's
+replay), 41.4, 43.9, 50.2 and 45.2 s with the books balanced at every
+tick (the base tree 47.1, 41.6, 42.9, 51.5 s); `tools/hubble_readings.py`
+with its replay: 8 record checks passed, 0 failed, exit 0; every world
+moved against the base (the digests in the branch's VALIDATION table).
+
+The near fit's H t_0 in the windows [100, 200), [200, 300), [300, 400)
+and [200, 400) reads 0.874, 0.973, 1.032, 1.002 in the two coasting
+worlds (0.877, 0.969, 1.017, 0.996 under the fraction-free law), 1.153,
+1.270, 1.333, 1.319 in `pushing_scalar` (1.176, 1.302, 1.324, 1.301) and
+0.861, 1.038, 1.080, 1.037 in `pushing_age` (0.848, 1.018, 1.086,
+1.035); q = -0.55 is the nearest of the three forms in 12 of the 12
+windows (9 of 12); 308 readings inside and 28 outside (310 and 26): the
+coasting worlds' first window reads H t_0 0.874 against the pin "1
+within 10 %" and q = 0 not the nearest, as before, and `pushing_scalar`
+keeps H t_0 > 1 in every window. The reading's formula 288 of 288 inside
+2 %. The verdict stands as read; the numbers above are this re-read's
+([migration](../../../docs/MIGRATION.md#form-b-the-bodies-drive-on-the-momentums-line-2026-09-21)).

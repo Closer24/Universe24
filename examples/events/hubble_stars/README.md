@@ -824,3 +824,55 @@ the rows it crosses (1 + v / c toward, 1 - v / c away on an axis, as a
 count) and its step precedes the law, so the nine base worlds and the
 nine `record/` worlds move where a star steps; their run under the rule,
 with its expectations pinned first, is the G2 session's.
+
+## Re-read under the directional drive (2026-09-21)
+
+Under the directional drive ([BEAM_LAW note 49](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+the model owner's records 191 and 301) every star walks the line of its
+momentum at the pace |p|_1 S_1 Q / (Q S M S_1 Q + |p|_1 T_D), the factor
+1 / (1 + 0.72 v) of the per-axis rule's speed at the declared momentum
+(the star of v = 0.35 c runs at 0.83 of its design), so the stars' `step`
+lines over 400 intervals fall from 1536 to 1345 in the coasting worlds,
+1427 to 1250 in the gravity worlds and 1299 to 1135 in the double ones
+(the `record/` worlds the same); the world files are unchanged and
+`expectations.json` and `record/expectations.json` are re-derived by
+`make_worlds.py` at the rule's speeds (its `speed` off
+`drive_rate_and_wall`, `momentum_of_speed` its inverse, the throw's push
+`(1 - |v| T_D / Q)^2 a / S`; the coasting control's derived q -0.297).
+The eighteen worlds re-run as registered on the branch
+`directional-drive` (source fingerprint
+`6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`,
+Python 3.14, headless, one world at a time beside the base tree's
+replay), 46 to 73 s each with the books balanced at every tick (the base
+tree 46 to 75 s); every world moved against the base (the digests in the
+branch's VALIDATION table).
+
+`tools/hubble_stars_readings.py` reads the `record/` worlds' `gather`
+lines (0 record checks failed, exit 0; the tool's `initialization.json`
+is the resolved world, as the runner writes it under
+`resolved_initialization.json`, a host step): the late window [300, 400),
+t_0 = 350, the free fit's q and H (t_0 + T_0): `record/coasting_none`
+-0.497 and 1.046 (-0.108 and 1.026 under the fraction-free law; q outside
+-0.25 .. +0.25, H inside), `record/coasting_scalar` -0.716 and 1.119,
+`record/coasting_age` -0.646 and 1.113 (both outside on both);
+`record/gravity_none` -0.028 and 0.930 (+0.922 and 0.811; inside the
+re-derived brackets, q = -0.55 not the farthest form), `record/gravity_scalar`
+-0.284 and 0.999 and `record/gravity_age` -0.184 and 0.987 (q outside
+-0.15 .. +0.25); `record/double_none` +0.880 and 0.780 and
+`record/double_age` +0.440 and 0.862 (inside on every pin),
+`record/double_scalar` -0.461 and 0.979 (outside). The ordering coasting <
+gravity < double with every gap above 0.10 holds under the clock-free and
+the age clocks and fails under the scalar clock; the reading's formula 1
++ z = (1 + k)(1 + v / c) 648 of 648 star-windows inside 2 % on the nine
+`record/` worlds and the luminosity 648 of 648 inside 5 %; the world-level
+pins 22 inside and 23 outside. The nine base worlds' `record` lines read
+`nan` in the tool (its parse of the record's pointer predates the click
+of 2026-09-21; the base tree's own run of `coasting_none` reads the same
+`nan`, checked): their readings are not taken by this re-read, which is a
+tool's limit, not the law's, left for the G2 session. The stars now move
+slower than the design that pinned the brackets: the gravity and double
+worlds read a smaller q at the same push, as the re-derived expectations
+say, and the coasting control's q reads below its bracket in every clock;
+the verdict as read stands as history and the series' run under the
+crossing rule and the drive, with its expectations pinned first, is the
+G2 session's ([migration](../../../docs/MIGRATION.md#form-b-the-bodies-drive-on-the-momentums-line-2026-09-21)).

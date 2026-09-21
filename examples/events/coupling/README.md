@@ -215,3 +215,24 @@ ticks 22 to 32 in place of 21 to 31) and hand their x component over from
 tick 33 (168 `contact` records in place of 169 from tick 32); the reads
 are the same; the eighteen other worlds have no free body and read the same (the
 record's new fields aside). The register entry has the momenta ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under the directional drive (2026-09-21)
+
+Under the directional drive ([BEAM_LAW note 49](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+the model owner's records 191 and 301) the free probes of `1b_m1`,
+`1b_m4` and `1b_m16` make the same 11 steps to the Node beside the source,
+at the ticks 24, 26, 28, 30, 32, 34, 36, 37, 39, 41, 43 in place of 22 to
+32 (the probe's drive fires on the momentum's line at the pace |p|_1 S_1
+Q / (Q S M S_1 Q + |p|_1 T_D), the rows' pace the cap, so a probe the
+per-axis rule walked one Link per interval now walks one per two), and
+hand their x component over from tick 45 (103 `contact` records in place
+of 168 from tick 33; the first hand-over -534 775 104 for m = 1,
+-2 139 100 416 for m = 4, -8 556 401 664 for m = 16); the probe's
+momentum at the end -37 750 080, -151 000 320, -604 001 280 (0 before)
+and the source's -1 386 220 800, -4 471 141 376, -15 737 081 856
+(-1 185 431 936, -3 667 985 920, -13 598 201 856); the reads 181, 185
+and 202. The three worlds moved against the base (the branch's
+VALIDATION table; `1b_m16` also at the gate set's cap of 25 intervals,
+one step for three); the eighteen other worlds have no free body and read
+the same, their `state.json` differing by the record's new fields alone
+([migration](../../../docs/MIGRATION.md#form-b-the-bodies-drive-on-the-momentums-line-2026-09-21)).

@@ -284,6 +284,73 @@ units, one kick of 11 degrees on a momentum of 192) and leaves through
 +y at tick 128 (82). No orbit closes, as expected at this momentum; the
 host reading `fast_steps` is 117 on `s1_r12` (its momentum grows under
 the kicks to above the one-Link-per-two-intervals mark; note 48's
-report) and 0 on `s1_r24`. The four other worlds are re-registered with
-the register in the second stage of the branch.
+report) and 0 on `s1_r24`. The four other worlds are re-read below, in
+the second stage of the branch.
 
+## Re-read under the directional drive, the four other worlds (2026-09-21)
+
+The S = 8 and S = 32 worlds re-run as registered (the momenta 320 and 576
+kept; the circular condition under form B would want 384 and 640, above)
+on the branch `directional-drive` (source fingerprint
+`6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`,
+Python 3.14, headless, the runner one world at a time beside the base
+tree's own replay, the movers' driver of the branch's VALIDATION table),
+every run completed in 6.1 to 6.4 s with the books balanced at every tick
+(the base tree 6.0 to 6.1 s), `tools/orbit_readings.py`: 12 record checks
+passed, 0 failed, exit 0. The pace at the declared momentum on a heading,
+|p|_1 S_1 Q / (Q S M S_1 Q + |p|_1 T_D): 320 x 64 / (64 x 8 x 64 + 320 x
+110) = 0.3013 Links per interval at S = 8 (0.385 under the per-axis rule),
+576 x 64 / (64 x 32 x 64 + 576 x 110) = 0.1896 at S = 32 (0.220), the
+factor 1 / (1 + 0.72 v) of FORM.md; the derived period of a circle at
+that pace, written before the run: T(12) = 250 and T(24) = 500 at S = 8,
+T(12) = 398 and T(24) = 795 at S = 32. The digests (the events, the
+books, `state.json` with the drive's fields and the marks stripped):
+`s8_r12` `d86d9c735232` / `d1628ff97049` / `cb404b841802`, `s8_r24`
+`db9ad12acf7e` / `7dece7c47d11` / `b1f665a85d9e`, `s32_r12`
+`40f95212fec8` / `f5157edd148c` / `328d712c88cd`, `s32_r24`
+`878dfdc4801e` / `c0066110df19` / `a6d5e79672d3`; every one moved against
+the base (the signed drive's registration).
+
+| World | S | r | p | Closed (expected) | T (derived) | Mean radius | Turns | r min .. max | Reads / units | C | End |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `s8_r12` | 8 | 12 | 320 | no turn (no) | - (250) | - | 0.90 | 3.6 .. 73.8 | 21 / 3374 | 0.40 (the run) | escaped through face:+x at tick 314 |
+| `s8_r24` | 8 | 24 | 320 | no turn (no) | - (500) | - | 0.91 | 4.2 .. 70.0 | 32 / 3677 | 0.40 (the run) | escaped through face:+x at tick 485 |
+| `s32_r12` | 32 | 12 | 576 | no turn (no) | - (398) | - | 0.08 | 1.0 .. 67.5 | 76 / 10798 | 1.14 (the run) | escaped through face:+x at tick 867 |
+| `s32_r24` | 32 | 24 | 576 | no: the return (-12, 0), heading kept (no) | 621, 616 (795) | 21.29, 26.09 | 2.17 | 10.6 .. 67.5 | 124 / 13109 | 1.29, 1.60 | escaped through face:+y at tick 1436 |
+
+What changed against the signed drive's registration (the section
+above): `s8_r12` no longer closes the angle five times (it left at 917);
+it is turned through 0.90 of a turn, in to r = 3.6 and out to 73.8, and
+leaves through +x at 314; `s8_r24`, which did not turn, now turns 0.91
+and leaves at 485 (495); `s32_r12` no longer closes three times (2004):
+it falls to r = 1.0 by tick 147, swings out to 67.5 and leaves through
++x at 867, 0.08 of a turn on the angle; `s32_r24`, bound for the whole
+run before (four turns of 701 to 880, the mean radius 26 to 36), closes
+the angle twice, T 621 and 616 on the mean radii 21.29 and 26.09, and
+leaves through +y at tick 1436. No orbit closes by the series' criterion
+(measured = expected at these momenta); the host reading `fast_steps`
+(note 48) is 52, 42, 56 and 41. The extra reads at S = 32 (13109 units
+for 8052) are the slower probe's: it crosses more of the fan's rows per
+Link.
+
+**The rosette at S = 32, r = 24, read against row 58 of
+[DERIVATIONS_BEAM 21.5](../../../docs/DERIVATIONS_BEAM.md) (GAMEBOARD
+readings; the row's pins are on `s32_r24_lamp` and `s32_r12_lamp`, the
+detector variants "to be written", not in the register; the registered
+world has no detector, so nothing here is a measurement).** From the
+probe's `step` records about the source at (60, 60): the angle's
+recurrence T = 621 and 616 (the pin 795, within 700 to 830: outside; the
+analytic 2 pi r / v is a circle's at r = 24, and the registered probe is
+on a rosette from 10.6 to 67.5); the mean radius over a turn 21.29 and
+26.09 (the pin 23.6 +- 1 from the clicks' ages: outside on both turns);
+the radial minima at ticks 297 (r 18.4), 651 (r 10.6) and 1175 (r 13.3),
+the direction of the minimum advancing by -109.5 degrees over the radial
+period 297 to 651 (354 intervals) and by -118.2 degrees over 651 to 1175
+(524 intervals), the pin -105 +- 15 per radial period: inside on both
+(the rosette precesses at the plane's apsidal angle, as the row derives;
+the first radial period from the launch at r = 24, -211.7 degrees over
+291 intervals, is the launch's and not a period of the rosette);
+T(24) / T(12) not taken (the pin 2.00 +- 0.15): `s32_r12` does not close.
+The readings are the host's (`scratchpad` script over the step records,
+the tool's T and mean radius above agree to the interval); the pinned
+DETECTOR readings wait for the lamp worlds.

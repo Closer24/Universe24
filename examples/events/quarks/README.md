@@ -141,3 +141,38 @@ nothing in the run raises a bound set's mass above its parts, the
 proton's 99 % binding is not in the law. Nothing was tuned; no law
 changed. The design's verdict of section 5 stands with two readings
 outside on the kicked world, reported.
+
+## Re-read under the directional drive (2026-09-21)
+
+Under the directional drive ([BEAM_LAW note 49](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+the model owner's records 191 and 301) a quark's drive fires on the line
+of its momentum against the wall Q S M S_1 Q + |p|_1 T_D, so a bound
+body hands over at other ticks and a free one steps at the pace |p|_1
+S_1 Q over that wall. The seven worlds re-run as registered on the branch
+`directional-drive` (source fingerprint
+`6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`, one
+world at a time beside the base tree's replay, every run completed with
+the books balanced at every tick; every world moved against the base,
+the digests in the branch's VALIDATION table), `tools/quarks_readings.py`
+over the six bound and dispersing worlds and the kicked one: 0 record
+checks failed, 48 readings inside and 7 outside, nothing moved. The
+lines hold: `q1_proton_line` and `q2_neutron_line` with no step in 3000
+intervals, the pushes at tick 20 the design's integers exactly, 378 and
+12 hand-overs (411 in all; 390 and 22 for 318 on the neutron line) and
+the read mass 20 and 25; `q5_deuteron_line` holds with 951 hand-overs
+(963) and `q7_proton_dressed` with 414 (435), the dressed end's
+418 547 308 613 as pinned. The triangle shears from tick 23 (27; the
+toy's 25), every body out through the faces, the largest separation
+21.56. The rectangle now disperses from tick 14 (176; the toy's 161): the
+u at (10, 11, 10) steps first, the six bodies leave through the faces
+with 13 to 30 steps each, and the seven pins read at the reference tick
+20 are outside (the six pushes and the 1740 glue rows, 1646 measured),
+because the set has already begun to move when the tick is read; the
+pins are the design's static layout, reported, not moved, and the
+shape's fate is the registered one (the collinear tower holds, the
+side-by-side one does not). The kicked u leaves through face:-x at tick
+75 (63; the pin 70 to 90, now inside), the d and the other u drift and
+leave through face:-x at 1096 and 969 (the pair that broke at about
+1190: 39 steps for 9, 48 hand-overs for 187), the read mass 20. The
+verdict of section 5 stands: the law binds in a line and does not
+confine, nothing tuned ([migration](../../../docs/MIGRATION.md#form-b-the-bodies-drive-on-the-momentums-line-2026-09-21)).

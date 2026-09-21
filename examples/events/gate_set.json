@@ -14,9 +14,9 @@
    "cap": 700,
    "covers": "become by the clock (weak-v1), held, lifetime, columns with a sign, a paid family's charge",
    "digests": {
-    "state_sha256": "6d6664b0e2a59b9d4560148e4ae20c85301c23cc1bc048865acd855ccac99ac5",
+    "state_sha256": "48c2ebdc54ad925518a93be1c4621b9e54b1e530de2e283e92e9a54e9c2314bd",
     "audit_sha256": "9f286fe9bb10790e0522237cf5384d5824e9ab75da4c0d81ee57fbdddca4d5d1",
-    "events_sha256": "d4ed49978382c6366a789cb0871bb01ab78de00948d417abf19f6f97f2f87dc3"
+    "events_sha256": "81eb925c0d9ea1711dece4e54579b59590eb3ef416583ce002c900822b97228e"
    }
   },
   {
@@ -25,9 +25,9 @@
    "cap": 689,
    "covers": "action (bohr-v1), phase_by_momentum, charge as a pair, span",
    "digests": {
-    "state_sha256": "1266e714dcbc2e19ea0d78fa664392064ddb215a7e888c456fd7b2da3da30645",
-    "audit_sha256": "ef75f59dd76e6efc2cbd318cd5117c6b282ca1018350e5e41197c70fb37de430",
-    "events_sha256": "05d83fef6cc1b1a7ad6c6dd501264e8aca2bc2604a511828e2142550de031004"
+    "state_sha256": "45cbcff636fdd8e2ca336d2d52e2a326b041a0ac5b60a82505608a19b78f9964",
+    "audit_sha256": "180e6210b1d79678654fe33e0a96e962c50dbfd84dee7d62f49810d9c336af99",
+    "events_sha256": "3b42ad40656a9bf8af75b9834b6d57f8769df4538ade159af28991bb37c2c11f"
    }
   },
   {
@@ -48,7 +48,7 @@
    "cap": 2,
    "covers": "entity definitions, in_transit, a detector set with a threshold",
    "digests": {
-    "state_sha256": "35aa64ce6ee9855c1fad3cc35db28819984090e22ac2e8bc6459bab859d8e59d",
+    "state_sha256": "778ba2f11d449b7c99c38bef3010f967abc80e9dff9dd7baeca22f29ef51c8f7",
     "audit_sha256": "975863cdb72c13719aa21397c178434501fd81de11cda2ab6037ea959e9cc9f8",
     "events_sha256": "4b4994530f291bb5dbe986b532ffd3c9f8e8bcd585ca986ee4369e768ff749f9"
    }
@@ -65,7 +65,7 @@
    "cap": 1,
    "covers": "phase_width on a table entry",
    "digests": {
-    "state_sha256": "6feb6b1919f2d555ea2489b0628366144d78b828d75d0f1b7c0ef98d3f489a19",
+    "state_sha256": "a7136976daad927d91564e5048c06465337c9cb9d12b6805a78309128951253a",
     "audit_sha256": "9f16ab276ee061317098eaef3abe18df5a4979b173596e750a63bf46883f3137",
     "events_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
    }
@@ -76,7 +76,7 @@
    "cap": 1,
    "covers": "become by the crowd",
    "digests": {
-    "state_sha256": "39a98b04009ea005b15aa5475a15bed8c012909d0b398927d26a1db29ba2a668",
+    "state_sha256": "e956d2b2a9336bfb8107ff58a5a758aaf029f536dbb3c6696846186d7db7eb10",
     "audit_sha256": "9a55af2c075019704c10922fd5dce8397b1d77fe63ce7ab3e570c2f8a9b6b72e",
     "events_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
    }
@@ -93,9 +93,9 @@
    "cap": 180,
    "covers": "the lifetime's escape of a crowd, the contact of bound bodies",
    "digests": {
-    "state_sha256": "6cd2d66b8b6e1ab17b98d92e4e075fee8082c5fcb72f67bbb77f425a4f45d4d8",
-    "audit_sha256": "36c952faf91f421ce6bed2adc5400d182f8fc12be1c9865e0224711299b9a580",
-    "events_sha256": "4b450d2295b7faf6da6eb274ada79b8bafcb345049f6095f470da5c0ae1c1912"
+    "state_sha256": "b9608eadc379c3dcd2b5730ec5b6d7a249038cb927f1cd1db008241cc9c1f1fd",
+    "audit_sha256": "fa058a73e77b04f4a624b4d31f03c83f5a2938bb874a504afa4b83e0c83501b2",
+    "events_sha256": "049b25733e95a07d9abf4d23074225a428062598cd03ac4942c60559310099ba"
    }
   },
   {
@@ -104,7 +104,7 @@
    "cap": 1,
    "covers": "suspension as a pair, the age moment, a body owing intervals while pushed",
    "digests": {
-    "state_sha256": "165dc5db4176cec8c1961fd947fb1304b909219a938452a6da4ef454a1b28a3b",
+    "state_sha256": "edb91b655d93b9bbb43e7ae6a6b1823477800b038813f005c125f67567153642",
     "audit_sha256": "7e219a1d03c8caddc617ccf2a69b34543912c3e09646cec7ae7a8d1fc454dc71",
     "events_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
    }
@@ -115,9 +115,9 @@
    "cap": 25,
    "covers": "a phase-less family's push on the plane",
    "digests": {
-    "state_sha256": "62e3d43f35658fd3717b9c0f8f7868b3cd0b8689d5b76d737106828c9b19c2a0",
-    "audit_sha256": "40f66f2c5ab8ff251ae07249b6de1810fc1315245929125e93a463cba656936a",
-    "events_sha256": "0d14724e855fee26859bce47c813eb68076dd27e52e4d8c3dddaf9bcecab4444"
+    "state_sha256": "f639ee3830b8f79d96253df3ff937e552e60abdfd1a0cb505ec8091c5b40c096",
+    "audit_sha256": "7dd43ac79607c6d419a3370320a4322b44aa996756f1845eec786d446f249188",
+    "events_sha256": "4ad9c9d2f85c1d38fabf43d5f82bfa7c7e848228ff75d62d98d105da3f2162ad"
    }
   },
   {
@@ -138,7 +138,7 @@
    "cap": 23,
    "covers": "hand on a family (hand-v1), axis and the right-hand rule in become, the parity filter and the pass by hand, hand on the click, become and face lines, left/right in the books",
    "digests": {
-    "state_sha256": "be402522aec9e62054e455b12f72d1ee581532f4f5706672f02762402b9bcc12",
+    "state_sha256": "93e6d19ca22e14580abccbdd97be19a0513e65b30d3d30e021f4db97fe95ed1c",
     "audit_sha256": "4d746dbe6084c30c6cd034c175f0efb1931d9fa2aa2c608783f928d611db645e",
     "events_sha256": "d4d927fb55cdfa9a1330eea3818edb6275d14c1c460ea6e0d3e34a12c0f38988"
    }

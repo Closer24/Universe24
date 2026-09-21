@@ -206,3 +206,50 @@ and the books of the seven worlds move, the readings do not (every
 orbit, closing, phase at a closing and C(2) as under the action row; 2
 readings inside, 0 outside). The verdict stands; the register entry has
 the line ([migration](../../../docs/MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded)).
+
+## Re-read under the directional drive (2026-09-21)
+
+Under the directional drive ([BEAM_LAW note 49](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+form B of [FORM.md](../../../docs/designs/light_speed/FORM.md) section
+3; the model owner's records 191 and 301) the electron walks the digital
+line of its momentum's direction at the pace |p|_1 S_1 Q / (Q S M S_1 Q
++ |p|_1 T_D) with T_D = 110 on a heading, the rows' pace the cap: at the
+declared momenta (Q S M = 64 x 45120 x 1836 = 5 301 780 480) its speed on
+a heading is 0.1000 Links per interval at r = 2 for the per-axis rule's
+0.1077 (the factor 1 / (1 + 0.72 v) of FORM.md, 0.928 there) and 0.0575
+at r = 8 for 0.0600 (0.958), and it no longer outruns a diagonal of the
+lattice. The seven worlds re-run as registered on the branch
+`directional-drive` (source fingerprint
+`6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`,
+Python 3.14, headless, the runner one world at a time beside the base
+tree's replay), every run completed with the books balanced at every
+tick, 21.8, 23.2, 24.0, 35.2, 70.4, 104.9 and 105.5 s for r = 2 to 16
+(the base tree 29.5, 30.2, 27.6, 39.3, 70.3, 103.5, 116.7 s);
+`tools/bohr_readings.py`: 14 record checks passed, 0 failed, 0 readings
+inside, 0 outside (no closing radius with two turns: no coherence reading
+is taken anywhere), exit 0. Every world moved against the base (the
+digests in the branch's VALIDATION table; the electron's `step` lines 30,
+52, 44, 49, 137, 113 and 51 for 109, 141, 185, 167, 227, 186 and 258).
+
+No orbit holds. `r2` turns 0.56 (r from 2.0 to 17.1) and leaves through
+face:-x at tick 190 (one closing, T 449, and out at 1264 under the
+signed drive); `r4` -0.14 of a turn, r 1.0 to 22.8, out through face:-y
+at 230 (two closings, out at 2190); `r6` 0.38, r 6.0 to 26.9, out
+through face:-x at 366 (one closing, out at 2160); `r8`, the design's
+closing radius, 0.40 of a turn, r 7.8 to 27.2, out through face:-x at
+672 (two closings, T 1292 and 2016, out at 3869); `r12` closes the angle
+once, T = 1255 with the return 2.0 Links and the mean radius 12.52 (the
+design's r), the body's phase 52 of 64 at the closing, and leaves
+through face:+y at 1611 (0.93 of a turn, out at 2059); `r15` 0.68 of a
+turn, r 14.9 to 32.2, out through face:-y at 1714 (one closing, out at
+3443); `r16` 0.28, r 14.6 to 30.4, out through face:+y at 691 (0.48, out
+at 1888). The ladder takes no ratio (fewer than two closing radii with
+two turns). Bohr's lines are still not read, neither for nor against;
+the registered verdict's "what the law lacked is a stable closed orbit
+under whole kicks" stands under the drive on the momentum's line as it
+stood under the signed drive: the electron's momentum is turned by whole
+shells of the fan (6.4 degrees per ray at this grain), and one loop at
+the slower pace does not close before a close pass throws it out. The
+worlds keep their declared momenta (the circular condition under form B
+would want them 1 / (1 - 0.72 v) larger, a design change for the
+physicist). The register entry has the numbers ([migration](../../../docs/MIGRATION.md#form-b-the-bodies-drive-on-the-momentums-line-2026-09-21)).

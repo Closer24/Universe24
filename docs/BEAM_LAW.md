@@ -3999,3 +3999,9 @@ implementation's part of the contract. The design above is unchanged.
     `state.json` differing by the record's new fields alone. The crowd
     audit's drive row (note 47) reads `_move` and `step_line` since this
     note.
+    The drive is one row of the counts table, `by_drive` with `at_most`
+    1, and the flight (note 41 (viii)) stays its own accumulator: forming
+    the two through one `by_drive_rows` (the architect's PR #490) was not
+    on `main` when this branch merged it, so the flight's form through
+    that row is left to the architect, no digest changed by this note on
+    that account.

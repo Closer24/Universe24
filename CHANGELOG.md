@@ -22,6 +22,19 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   integers kept in its docstring (MIGRATION, "Form B, the bodies' drive
   on the momentum's line, 2026-09-21"); `tests/test_directional_drive.py`
   pins the rule from the formulas before the run.
+- The second stage of the same change: the register's generators read
+  the rule's speed (`hubble_stars/make_worlds.py`, `hubble/make_worlds.py`:
+  `speed` off `drive_rate_and_wall`, the star expectations re-derived; the
+  world files unchanged); the gate set's nine digest-carrying worlds
+  regenerated from the head replay (all nine moved); every registered
+  world with a measured event that is not fixed (61 files) replayed on
+  the base and the head and compared per world (VALIDATION, the dated
+  table: 2 identical, 58 moved, `catalog/neutron_star` refused at tick 7
+  by the drive's wall bound and pinned so in `tests/test_entity_catalog.py`);
+  the series re-read in their READMEs and EXPERIMENTS (C, D, G, G2, H, I,
+  J, N, R and the catalog), series D's `s32_r24` read against the Kepler
+  row of DERIVATIONS_BEAM 21.5 as GAMEBOARD readings (the row's detector
+  worlds not in the register).
 
 ### Series L7, the cone: which length a row's phase counts (2026-09-20)
 

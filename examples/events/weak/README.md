@@ -312,3 +312,30 @@ corners and the deuteron, are inside under the range, 36 readings inside
 and 0 outside; nothing else moves. `tests/test_weak_readings.py` (e)
 replays the generator's warm run on the shipped worlds against the
 register.
+
+## Re-read under the directional drive (2026-09-21)
+
+Under the directional drive ([BEAM_LAW note 49](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+the model owner's records 191 and 301) a body's drive fires on the line
+of its momentum against the wall Q S M S_1 Q + |p|_1 T_D, so the
+deuteron's nucleons attempt their refused steps at other ticks and hand
+over at them. Re-run as registered on the branch `directional-drive`
+(source fingerprint
+`6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`, one
+world at a time beside the base tree's replay, the books balanced at
+every tick; `tools/weak_readings.py`: 0 record checks failed, 8 readings
+inside, 0 outside, exit 0): `j3_deuteron`'s nucleons make 0 steps of 32
+and 32 attempted (32 and 32 hand-overs; 33 and 29 under the signed
+drive), the neutron fires at tick 568 with the count 128590 read at the
+trigger (inside its pinned range 523 .. 574 by the generator's warm run,
+which reads the same on both trees: the clock does not step), the
+shell's one beta click at 581 with the content 3 and the age 13, the
+neutron's clock 631 of 700 with 69 waited; the pair holds after the
+transformation. `j3_neutron_free` reads the same records as on the base
+(no push, no step: identical in its events and its books, its
+`state.json` differing by the record's new fields alone), the neutron
+firing at its key 512 exactly and the beta at the shell at 526 with the
+content 3. `j3_deuteron_crowd` at the gate set's cap of one interval is
+identical; at its registered 700 intervals it moves where the pair hands
+over (the branch's VALIDATION table). J2 and the W world have no free
+body and read the same. The verdict stands ([migration](../../../docs/MIGRATION.md#form-b-the-bodies-drive-on-the-momentums-line-2026-09-21)).

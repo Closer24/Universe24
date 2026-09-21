@@ -1272,6 +1272,22 @@ states "exactly" and means integer equality at every tick.
   body and read the same (the record's new fields aside) ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
 
 
+- **Re-read under the directional drive (2026-09-21; measured, nothing
+  pinned; [BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  The free probes of `1b_m1`, `1b_m4` and `1b_m16` make the same 11 steps
+  to the Node beside the source at the ticks 24 to 43, one Link per two
+  intervals (22 to 32, one per interval, under the step drive: the drive
+  on the momentum's line is capped at the rows' pace), and hand their x
+  component over from tick 45 (103 `contact` records for 168 from 33; the
+  first hand-over -534 775 104 for m = 1, -2 139 100 416 for m = 4,
+  -8 556 401 664 for m = 16); the probe's momentum at the end -37 750
+  080, -151 000 320, -604 001 280 (0) and the source's -1 386 220 800,
+  -4 471 141 376, -15 737 081 856 (-1 185 431 936, -3 667 985 920,
+  -13 598 201 856); the equivalence of the three m holds to the tick.
+  The three worlds moved against the base (VALIDATION, the dated table);
+  the eighteen other worlds have no free body and read the same
+  ([the series README](../examples/events/coupling/README.md#re-read-under-the-directional-drive-2026-09-21)).
+
 ### D, the orbit under the Beam Law, on the plane (2026-09-19)
 
 - **Confronts.** Whether a light free probe closes an orbit about a heavy
@@ -1690,6 +1706,38 @@ states "exactly" and means integer equality at every tick.
   stage ([the series README](../examples/events/orbit/README.md#re-read-under-the-directional-drive-at-s--1-2026-09-21);
   [migration](MIGRATION.md#form-b-the-bodies-drive-on-the-momentums-line-2026-09-21)).
 
+
+- **Re-read under the directional drive, the four other worlds (2026-09-21;
+  measured, the periods derived before the run).** The S = 8 and S = 32
+  worlds re-run as registered (the momenta 320 and 576 kept) on the
+  branch `directional-drive` (fingerprint
+  `6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`, one
+  world at a time beside the base tree's replay, 6.1 to 6.4 s each, the
+  books balanced, 12 record checks passed): the pace on a heading 0.3013
+  Links per interval at S = 8 (0.385 under the per-axis rule) and 0.1896
+  at S = 32 (0.220), the derived circle's T(12) = 250 and T(24) = 500 at
+  S = 8, 398 and 795 at S = 32. No orbit closes by the criterion
+  (measured = expected at these momenta): `s8_r12` turns 0.90 (r 3.6 to
+  73.8) and leaves through face:+x at 314 (five closings and out at 917
+  under the signed drive), `s8_r24` 0.91 and out at 485 (no turn, 495),
+  `s32_r12` falls to r = 1.0 by tick 147 and is thrown out through
+  face:+x at 867 with 0.08 of a turn (three closings, out at 2004),
+  `s32_r24` closes the angle twice, T 621 and 616 on the mean radii 21.29
+  and 26.09, and leaves through face:+y at 1436 (bound for the run
+  before, four turns of 701 to 880). The rosette at S = 32, r = 24 read
+  against row 58 of DERIVATIONS_BEAM 21.5 (GAMEBOARD readings; the
+  row's pins are on the detector worlds `s32_r24_lamp` and `s32_r12_lamp`,
+  "to be written", not in the register, so nothing here is a
+  measurement): T 621 and 616 against the pin 795 in 700 to 830, outside
+  (the analytic period is a circle's at r = 24; the probe is on a rosette
+  from 10.6 to 67.5); the mean radius 21.29 and 26.09 against 23.6 +- 1,
+  outside; the radial minimum's direction advancing -109.5 and -118.2
+  degrees over the radial periods 297 to 651 and 651 to 1175 against
+  -105 +- 15, inside on both (the plane's apsidal angle, as the row
+  derives); T(24) / T(12) not taken, `s32_r12` not closing. `fast_steps`
+  52, 42, 56, 41 (a host reading). Every world moved against the base
+  ([the series README](../examples/events/orbit/README.md#re-read-under-the-directional-drive-the-four-other-worlds-2026-09-21);
+  [migration](MIGRATION.md#form-b-the-bodies-drive-on-the-momentums-line-2026-09-21)).
 
 ### A10, the width of an opening and the spread behind it, under the Beam Law (2026-09-20)
 
@@ -2286,6 +2334,27 @@ states "exactly" and means integer equality at every tick.
   reading's formula 288 of 288 inside 2 %. The verdict and the follow-up
   stand as read; the numbers above are kept as history.
 
+- **Re-read under the directional drive (2026-09-21; measured, nothing
+  pinned; [BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  Every source walks the line of its momentum at the pace |p|_1 S_1 Q /
+  (Q S M S_1 Q + |p|_1 T_D), the factor 1 / (1 + 0.72 v) of the per-axis
+  speed (the sources' `step` lines 1308 for 1505 in the coasting worlds,
+  1260 for 1449 and 1244 for 1431 in the pushing ones; the world files
+  unchanged, `make_worlds.py`'s `speed` off `drive_rate_and_wall`). Re-run
+  as registered on the branch `directional-drive` (fingerprint
+  `6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`,
+  41 to 50 s each, the books balanced, 8 record checks passed): the near
+  fit's H t_0 in the windows [100, 200), [200, 300), [300, 400) and [200,
+  400) reads 0.874, 0.973, 1.032, 1.002 in the two coasting worlds (0.877,
+  0.969, 1.017, 0.996 under the fraction-free law), 1.153, 1.270, 1.333,
+  1.319 in `pushing_scalar` (1.176, 1.302, 1.324, 1.301) and 0.861, 1.038,
+  1.080, 1.037 in `pushing_age` (0.848, 1.018, 1.086, 1.035); q = -0.55
+  the nearest of the three forms in 12 of the 12 windows (9 of 12); 308
+  readings inside and 28 outside (310 and 26); the reading's formula 288
+  of 288 inside 2 %. Every world moved against the base (VALIDATION, the
+  dated table). The verdict and the follow-up stand as read; the numbers
+  above are this re-read's ([the series README](../examples/events/hubble/README.md#re-read-under-the-directional-drive-2026-09-21)).
+
 ### G2, the Hubble diagram with stars behind the detector (2026-09-20)
 
 - **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**
@@ -2453,6 +2522,33 @@ states "exactly" and means integer equality at every tick.
   star steps (VALIDATION, the dated table of the change); the run of the
   series under the rule, with its expectations pinned first, is the G2
   session's, not this change's.
+
+- **Re-read under the directional drive (2026-09-21; measured, the
+  expectations re-derived by the generator; [BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  Every star walks the line of its momentum at the pace |p|_1 S_1 Q / (Q
+  S M S_1 Q + |p|_1 T_D), the factor 1 / (1 + 0.72 v) of the per-axis
+  speed (the star of 0.35 c at 0.83 of its design; the `step` lines 1536
+  to 1345, 1427 to 1250, 1299 to 1135 per crowd); `expectations.json` and
+  `record/expectations.json` re-derived by `make_worlds.py` at the rule's
+  speeds, the world files unchanged. The eighteen worlds re-run as
+  registered on the branch `directional-drive` (fingerprint
+  `6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`, 46
+  to 73 s each, the books balanced): on the nine `record/` worlds, the
+  late window's free fit q and H (t_0 + T_0) read -0.497 and 1.046
+  (coasting, none), -0.716 and 1.119 (scalar), -0.646 and 1.113 (age),
+  -0.028 and 0.930 (gravity, none), -0.284 and 0.999 (scalar), -0.184 and
+  0.987 (age), +0.880 and 0.780 (double, none), -0.461 and 0.979
+  (scalar), +0.440 and 0.862 (age); the ordering coasting < gravity <
+  double holds under the clock-free and the age clocks and fails under
+  the scalar clock; the reading's formula 648 of 648 inside 2 %, the
+  luminosity 648 of 648 inside 5 %, the world-level pins 22 inside and 23
+  outside (the gravity and double worlds read a smaller q at the slower
+  pace, the coasting control below its bracket). The nine base worlds'
+  `record` lines read `nan` in the tool (its parse predates the click; the
+  base tree reads the same): not taken, a tool's limit. Every world moved
+  against the base (VALIDATION, the dated table); the series' run under
+  the crossing rule and the drive, pinned first, stays the G2 session's
+  ([the series README](../examples/events/hubble_stars/README.md#re-read-under-the-directional-drive-2026-09-21)).
 
 ### H, Bohr's lines behind the detector (2026-09-20)
 
@@ -2800,6 +2896,30 @@ states "exactly" and means integer equality at every tick.
   digit; 0 record checks failed, 2 readings inside, 0 outside. The
   verdict stands.
 
+- **Re-read under the directional drive (2026-09-21; measured, nothing
+  pinned; [BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  The electron walks the line of its momentum at the pace |p|_1 S_1 Q /
+  (Q S M S_1 Q + |p|_1 T_D): 0.1000 Links per interval on a heading at r
+  = 2 for the per-axis rule's 0.1077, 0.0575 at r = 8 for 0.0600 (the
+  factor 1 / (1 + 0.72 v)). Re-run as registered on the branch
+  `directional-drive` (fingerprint
+  `6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`, 22
+  to 106 s each, the books balanced, 14 record checks passed): no orbit
+  holds; `r2` turns 0.56 and leaves through face:-x at 190 (one closing
+  and out at 1264 under the signed drive), `r4` -0.14 and out through
+  face:-y at 230 (two closings, 2190), `r6` 0.38 and out through face:-x
+  at 366 (one closing, 2160), `r8` 0.40 and out through face:-x at 672
+  (two closings, T 1292 and 2016, out at 3869), `r12` closes the angle
+  once, T = 1255 with the return 2.0 Links and the mean radius 12.52, the
+  phase 52 of 64, out through face:+y at 1611 (0.93 of a turn, 2059),
+  `r15` 0.68 and out through face:-y at 1714 (one closing, 3443), `r16`
+  0.28 and out through face:+y at 691 (0.48, 1888); the ladder takes no
+  ratio; 0 readings inside, 0 outside (no closing radius with two turns).
+  Every world moved against the base (VALIDATION, the dated table). Bohr's
+  lines are still not read, neither for nor against; the registered
+  verdict's "what the law lacked is a stable closed orbit under whole
+  kicks" stands ([the series README](../examples/events/bohr/README.md#re-read-under-the-directional-drive-2026-09-21)).
+
 ### I, the nucleus (2026-09-20)
 
 - **Confronts.** Whether the one mechanism of the model owner's decisions
@@ -2960,6 +3080,30 @@ states "exactly" and means integer equality at every tick.
   step at tick 68, as before). The verdict stands: bound at one Link,
   free at three, the line rigid and the square sheared ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
 
+
+- **Re-read under the directional drive (2026-09-21; measured, nothing
+  pinned; [BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  A body's drive fires on the line of its momentum against the wall Q S
+  M S_1 Q + |p|_1 T_D, so the bound pairs hand over at other ticks and
+  the separating bodies step at the slower pace. Re-run as registered on
+  the branch `directional-drive` (fingerprint
+  `6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`, the
+  books balanced): `deuteron_1` holds with 156 and 153 hand-overs from
+  ticks 18 and 19 (191 and 148), `deuteron_1_kick` holds with 158 and
+  155 (167 and 155), the kick outweighed by tick 5; `deuteron_3`
+  separates, both bodies stepping first at 34, out at 352 and 316;
+  `pp_1` holds (132 hand-overs each), `pp_1_weak` separates (the first
+  step at 120 for 167, out at 373 and 353), `pp_3` repels (the first step
+  at 70 for 66, outside the toy's 30 .. 60 as before, out at 296 and
+  275); `alpha_square` reads the designed pushes and the shear
+  49 090 283 970 per row again and disperses sooner (p4 +y at 33, n2 +y
+  at 37, n3 -x at 48, p1 +y at 52 for 81, 89, 110, 95; out through the
+  faces at 108 to 143 for 275 to 339; 4, 6, 7 and 2 hand-overs);
+  `alpha_line` holds with 217, 211, 195 and 217 hand-overs (230, 184,
+  133, 230), the largest 7 776 223 182 528. 29 readings inside and 1
+  outside (`pp_3`'s first step). Every world moved against the base
+  (VALIDATION, the dated table). The verdict stands: bound at one Link,
+  free at three, the line rigid and the square sheared ([the series README](../examples/events/nucleus/README.md#re-read-under-the-directional-drive-2026-09-21)).
 
 ### K, light beside a mass (2026-09-20)
 
@@ -3737,6 +3881,18 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   law"); `tests/test_weak_readings.py` (e) replays the generator's warm run
   on the shipped worlds against the register.
 
+- **Re-read under the directional drive (2026-09-21; measured, nothing
+  pinned; [BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  The deuteron's nucleons attempt their refused steps at the drive's
+  fires on the momentum's line: `j3_deuteron` holds with 0 steps of 32
+  and 32 attempted (32 hand-overs each; 33 and 29 under the signed
+  drive), the neutron fires at tick 568 with the count 128590 (inside
+  its pinned range 523 .. 574), the shell's one beta click at 581 with
+  the content 3, the clock 631 of 700; `j3_neutron_free` is identical in
+  its events and books (no push), the fire at 512 and the beta at 526;
+  8 readings inside, 0 outside. `j3_deuteron_crowd` and the W world:
+  VALIDATION's dated table. The verdict stands ([the series README](../examples/events/weak/README.md#re-read-under-the-directional-drive-2026-09-21)).
+
 ### L, the amplitude law (2026-09-20)
 
 - **Confronts.** The model owner's decision of 2026-09-20 (Highlights 5.4,
@@ -4262,6 +4418,20 @@ sequential gates on an entangled record, the full register replay.
   of the falling rate), no contact, no `bond` row or click, `held.bond` 2
   at 3000, the proton's held (1834, 0, 1, 2, 0, 0), no step. B1 and B3
   are identical (no lamp, no crowd on a fan). The verdict stands.
+
+- **Re-read under the directional drive (2026-09-21; measured, nothing
+  pinned; [BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  The refused step at which a bonded body gives comes at the drive's
+  fire on the momentum's line: B1's first contacts at tick 18 (16) with
+  `given` 2 on each first and 0 after, its two `bond` clicks at tick 20
+  (19) with the content 2, no step, the held contents as registered; B2
+  identical in its events and books (no body under a push); B3's gives
+  at 10 and 12 (15 and 16), its four `bond` clicks at 12 and 14 (18 and
+  19), the dispersal earlier and in another order (p1 -y at 26, n3 -y at
+  31, p4 +x at 38, n2 +y at 49 for p4 81, n2 89, p1 95, n3 111; out
+  through the faces at 122 to 351 for 308 to 344), the escaped `bond` 8
+  and the ratio 2.0 as registered. Every pin inside in kind; the verdict
+  stands ([the series README](../examples/events/binding/README.md#re-read-under-the-directional-drive-2026-09-21)).
 
 ### Q, c measured behind a detector (2026-09-21)
 
@@ -6284,6 +6454,24 @@ sequential gates on an entangled record, the full register replay.
   design's section 5 stands; the paper takes the quark rows as inputs
   with these readings.
 
+
+- **Re-read under the directional drive (2026-09-21; measured, nothing
+  pinned; [BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  A quark's drive fires on the line of its momentum against the wall Q S
+  M S_1 Q + |p|_1 T_D. Re-run as registered on the branch
+  `directional-drive` (fingerprint
+  `6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`, the
+  books balanced): the lines hold (u d u and d u d with no step, the
+  pushes the design's integers exactly, 390 and 302 hand-overs for 411
+  and 318; the six-quark line with 951 for 963; the dressed proton with
+  414 for 435), the triangle shears from tick 23 (27) and the rectangle
+  from tick 14 (176), so the rectangle's seven pins at the reference
+  tick 20 read outside (the set already moving when the tick is read;
+  reported, not moved); the kicked u leaves at tick 75 (63; the pin 70 to
+  90, now inside), its pair drifts out at 969 and 1096; the read mass the
+  exact sum in every world. 48 readings inside, 7 outside. Every world
+  moved against the base (VALIDATION, the dated table). The verdict
+  stands: the law binds in a line and does not confine ([the series README](../examples/events/quarks/README.md#re-read-under-the-directional-drive-2026-09-21)).
 
 ### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
 

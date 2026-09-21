@@ -142,3 +142,41 @@ step first at ticks 81 to 110 and leave between 275 and 339), the line
 holds with 230, 184, 133, 230 hand-overs, the kicked deuteron holds with
 167 and 155; 29 readings inside and 1 outside (`pp_3`'s first step). The
 verdict stands. The register entry has the numbers ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under the directional drive (2026-09-21)
+
+Under the directional drive ([BEAM_LAW note 49](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+the model owner's records 191 and 301) a body's drive fires on the line
+of its momentum against the wall Q S M S_1 Q + |p|_1 T_D, so the bound
+pairs hand over at other ticks and the separating ones step at the pace
+|p|_1 S_1 Q over that wall. The eight worlds re-run as registered on the
+branch `directional-drive` (source fingerprint
+`6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`, one
+world at a time beside the base tree's replay, every run completed with
+the books balanced at every tick; every world moved against the base,
+the digests in the branch's VALIDATION table), `tools/nucleus_readings.py`:
+0 record checks failed, 29 readings inside and 1 outside (`pp_3`'s first
+step, as at every registration), exit 0. The deuteron at one Link reads
+the designed 310 967 280 640 per interval on each body and never steps,
+156 and 153 hand-overs from ticks 18 and 19 (191 and 148), the largest
+4 975 476 490 240, 0 after each; the kicked deuteron holds, the kick
+outweighed by tick 5, 158 and 155 hand-overs from ticks 22 and 23 (167
+and 155 under the signed drive); at three Links the pair reads gravity
+alone (1 067 524 788 on the proton) and separates, both bodies stepping
+first at tick 34 and out through the faces at 352 and 316. Two protons at
+one Link hold at G = 10000 (148 716 220 864 inward, 132 hand-overs each
+from ticks 24 and 25, no step) and separate at G = 7000 (4 691 779 136
+outward, the first step at tick 120 for 167, out at 373 and 353 for 334
+and 379); at three Links they repel by the designed 15 977 466 864 and
+separate, the first step at tick 70 (66; outside the toy's 30 .. 60, as
+before), out at 296 and 275. The square p n / n p reads the designed
+pushes and the shear of 49 090 283 970 per row again and disperses
+sooner: p4 steps +y at tick 33, n2 +y at 37, n3 -x at 48, p1 +y at 52
+(81, 89, 110, 95 under the signed drive), out through face:+y at 108
+(n2), face:+x at 111 (p1), face:+y at 136 (p4) and face:-y at 143 (n3)
+(275 to 339), 4, 6, 7 and 2 hand-overs, the largest separation 22.83 at
+the end. The line p n n p holds: no step in 3000 intervals, 217, 211,
+195 and 217 hand-overs (230, 184, 133, 230), the label 0 after each, the
+largest 7 776 223 182 528. The verdict stands: bound at one Link, free
+at three, the line rigid and the square sheared; the model's alpha is
+the line. Nothing was tuned ([migration](../../../docs/MIGRATION.md#form-b-the-bodies-drive-on-the-momentums-line-2026-09-21)).

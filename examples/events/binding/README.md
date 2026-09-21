@@ -133,3 +133,35 @@ its I7 lamp turns by its accumulator, 3000 births as before, the set's
 2993 gathers with 2958 of content 8 and 35 of content 7 (2961 and 32),
 no contact, no `bond` row or click, `held.bond` 2, no step; B1 and B3
 are identical. The verdict stands ([migration](../../../docs/MIGRATION.md#the-fraction-free-law-on-2026-09-20-every-count-an-accumulator-on-the-bodys-record)).
+
+## Re-read under the directional drive (2026-09-21)
+
+Under the directional drive ([BEAM_LAW note 49](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+the model owner's records 191 and 301) a body's drive fires on the line
+of its momentum against the wall Q S M S_1 Q + |p|_1 T_D, so the refused
+step at which a bonded body gives comes at other ticks; the three worlds
+re-run as registered on the branch `directional-drive` (source fingerprint
+`6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`, one
+world at a time beside the base tree's replay, the books balanced at
+every tick), read from `events.jsonl`, `run.json` and `state.json` as the
+first registration was. B1 (`deuteron_bond`): the first contact of both
+bodies at tick 18 (16), `given` 2 on each first and 0 on the 319 later
+ones (346), the two border clicks of `bond` at tick 20 (19) at (8, 10,
+10) and (13, 10, 10), each amount 2 and content 2, no step in 3000
+intervals, p at (10, 10, 10) held (1834, 0, 1, 0) and n at (11, 10, 10)
+held (0, 1837, 1, 0): every pin inside as before. B2
+(`proton_bond_lamp`): 0 contacts, no `bond` click, `held.bond` 2, no
+step, the lamp's 2993 gathers: inside, the run identical in its events
+and books to the base (no body under a push). B3 (`alpha_square_bond`):
+the gives at ticks 10 (p1, n2) and 12 (n3, p4) for 15 and 16, the four
+`bond` clicks at 12 and 14 for 18 and 19, `given` 2 on each first
+contact and 0 on the 26 later ones; the dispersal earlier and in another
+order: p1 steps -y at tick 26, n3 -y at 31, p4 +x at 38, n2 +y at 49
+(p4 +y at 81, n2 89, p1 -y 95, n3 -x 111), out through face:-y at 122
+(p4), face:+y at 132 (p1), face:+x at 143 (n3) and face:+x at 351 (n2)
+(308 to 344); 17, 15, 13 and 22 steps, no body left at 3000: inside in
+kind (the cluster disperses through the faces), the ticks this rule's.
+The escaped content of `bond` and the ratio 2.0 to the deuteron as
+registered. The verdict stands: the give once, the clicks with the
+content, the pair stable, the books exact, the alpha at 2.0 x; nothing
+tuned ([migration](../../../docs/MIGRATION.md#form-b-the-bodies-drive-on-the-momentums-line-2026-09-21)).

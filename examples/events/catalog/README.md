@@ -105,8 +105,8 @@ the direction's resolution T_D), so by tick 6 a neutron's |p|_1 is 5 x
 7 with the books balanced through tick 6 (`tests/test_entity_catalog.py`
 (b)); its re-placement at a content within the bound is a catalog change
 for the physicist, not this rule's. `sun_planet` moves (the planet at
-0.1648 Links per interval for the derived 0.1869 at its momentum 7713621;
-the branch's VALIDATION table has its digests), `lamp_mirror_screen` and
+0.1648 Links per interval for the derived 0.1869 at its momentum 7713621,
+13 `step` lines in its 50 intervals for 11; the branch's VALIDATION table
+has its digests), `lamp_mirror_screen` and
 `clock_near_mass` read the same records (no moving body), their
 `state.json` differing by the record's new fields alone.
-

@@ -11,6 +11,178 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Form B, the directional drive: the gate set and the movers replayed against main eacdc73b - 2026-09-21
+
+The branch `directional-drive` (a body walks the digital line of its
+momentum's direction at the pace |p|_1 S_1 Q / (Q S M S_1 Q + |p|_1 T_D),
+one drive per body; `step_axis` retired; the model owner's records 191
+and 301, form B of `docs/designs/light_speed/FORM.md` section 3;
+[MIGRATION](MIGRATION.md#form-b-the-bodies-drive-on-the-momentums-line-2026-09-21),
+[BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+against the tree it grew from, `main` at `eacdc73b` (PR #492; the click
+of PR #457 and the crossing rule on both trees): the gate set
+(`examples/events/gate_set.json`, sixteen worlds at their caps, replayed
+by `tools/run_series.py --list ... --fast --jobs 2` on the head and, for
+the fifteen short of `w27_beam`, on the base) and the movers, every
+registered world with a measured event that is not fixed (66 world files:
+the nine `hubble_stars/` worlds and their nine `record/` worlds, the four
+`hubble/` worlds, the seven of Bohr, the six of the orbit, the eight of
+the nucleus, the seven of the quarks, the three of the binding, the
+three free probes of the coupling, `weak/j3_deuteron`,
+`j3_deuteron_crowd`, `j3_neutron_free`, the catalog's `sun_planet` and
+`neutron_star`, and the two gate worlds `detector/grouped_12_nodes` and
+`weak/j2_ladder`, at their registered length or the gate's cap), every
+world run on both trees through the runner one process at a time (two
+at most on the machine), and compared per world by a digest driver (the
+disk held no two full replays, so a run's `events.jsonl` was digested and
+deleted): the sha256 of `events.jsonl`, of the books (`json.dumps` of
+`run.json`'s `audit`, as `tools/run_series.py` and
+`tests/test_amplitude_click.py` (d) take it) and of `state.json` with the
+record's new fields `drive`, `line` and `direction` and the crossing's
+two marks stripped from every measured event (the drive's fields alone
+are new in every state; the gate set's own digests take the state
+whole), the count of `step` and `contact` lines on both trees and the
+head's `fast_steps`. The verdict `identical` needs all three digests
+equal. The source fingerprints (`source_sha256` of `run.json`): the base
+`e81a378ceec0b7f8e65bb5c4ea2c7e48dd93728ab6e84dbe33148eecd919a6af` (main
+eacdc73b); the head
+`6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`
+(directional-drive fc9b9e20, main eacdc73b merged; the documentation
+commits after it change no source). `heisenberg/w27_beam` at its cap 200
+completed on the head (3600 s, the run near 4.4 GB, the books balanced;
+the register carries no digest for it) and was not run on the base: not
+compared. `catalog/neutron_star` is refused on the head at tick 7 (the
+drive's wall beyond 2^62 - 1 at |p|_1 = 5 x 2^51; note 49) and completes
+its 40 intervals on the base: not compared, the refusal pinned in
+`tests/test_entity_catalog.py` (b). The host time of the 39 movers with a
+declared momentum or a step in the window, one process at a time: the
+base 1708 s, the head 1667 s; the eighteen bodies at rest under a push
+the base 995 s, the head 922 s; the gate set's head replay 3639 s of wall time with
+two jobs, 3600 of them `w27_beam`.
+
+What the rule predicts (note 49): a world whose measured events are all
+fixed reads the same records; a body with a momentum walks the line of
+its direction at the pace above, on an axis 1 / (1 + 0.72 v) of the
+per-axis rule's v = |p| / (Q S M + |p|), so every world with a stepping
+body moves in its events, its books and its state; a body at rest under
+a push that never completes a Link fires its drive at other intervals
+than the per-axis rule's step (the wall Q S M S_1 Q + |p|_1 T_D against Q
+S M + |p|), so its hand-overs at the refused steps move in the events
+while the books may stay. What the table shows: every world without a
+free body is identical, the drive's fields apart (the gate's `a0_b0`,
+`lamp_mirror_screen`, `heavy_meeting`, `grouped_12_nodes`, `fixed`,
+`j2_ladder`, `j3_deuteron_crowd`, `pushing_age` at its cap of one
+interval, `w1_beam`, `wu`); every world with a body under a momentum or a
+push moved: the orbit's `s1_r12` makes 255 Links for 60 (its momentum
+grows under the fan's kicks, `fast_steps` 117), `s32_r24` 421 for 383;
+Bohr's electron in `r2` 30 Links for 109 over 3000 intervals (30 for 52
+at the cap 689, `fast_steps` 8) and 51 for 258 in `r16`; the stars of
+`hubble_stars/coasting_none` 1345 Links for 1536 and of `double_none`
+1135 for 1299, the hubble sources 1308 for 1505; the kicked quark world
+`q6_proton_kick` 39 steps for 9 and 48 hand-overs for 187 (the kicked u
+out through face:-x at tick 75 for 63, the d and the other u out at 1096
+and 969 for a pair that broke at about 1190); the nucleus' `deuteron_3`
+keeps its 17 steps at other ticks and `deuteron_1_kick` its books with
+313 contact lines for 323; `alpha_square` at the gate's cap 180 makes 57
+Links for 22 with 19 hand-overs for 31; `sun_planet` 13 for 11 over 50
+intervals; `1b_m16` 1 for 3 at the cap 25; `j3_deuteron` keeps its
+books and moves 126 of its 721329 event lines (the contact at tick 18
+gone, tick 19's component 4 975 476 490 240 for 4 664 509 209 600).
+The bodies at rest under a push move in their events and keep their
+books where no Link completes (`nucleus/alpha_line` with 840 contact
+lines for 777, `deuteron_1` 309 for 327, `pp_1` 264 for 234, the quark
+lines `q1` 390 for 411, `q2` 302 for 318, `q5` 951 for 962, `q7` 414 for
+435: the drive fires at other intervals, every refused step a
+hand-over), and move their books too where a body leaves (`pp_1_weak`,
+`pp_3`, the binding's `alpha_square_bond` and `deuteron_bond`, the quark
+triangle and rectangle); the two worlds whose free body is never pushed
+are identical, the drive's fields apart (`binding/proton_bond_lamp`,
+`weak/j3_neutron_free`). Every run balanced at every completed tick on both
+trees. The gate set's digests were regenerated from the head replay by
+`tools/run_series.py --list` (`write_gate_digests`, the register's
+tooling; nine worlds carry digests, all nine moved: the state's in every
+one, the events' and the books' where a body stepped or fired under a
+push). The rows, in the gate set's order and then the movers':
+
+| world | verdict | events.jsonl | the ledger | state.json | step lines | contact lines | fast steps | balanced | ticks |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `bell/a0_b0.json` | identical | same | same | same (the drive's fields apart) | 0 | 0 | 0 | yes | 160 |
+| `weak/j3_deuteron.json` | moved | changed (721329 -> 721329 lines) | same | changed | 0 | 64 | 0 | yes | 700 |
+| `bohr/r2.json` | moved | changed (170333 -> 170036 lines) | changed | changed | 52 -> 30 | 0 | 8 | yes | 689 |
+| `catalog/lamp_mirror_screen.json` | identical | same | same | same (the drive's fields apart) | 0 | 0 | 0 | yes | 14 |
+| `lensing/heavy_meeting.json` | identical | same | same | same (the drive's fields apart) | 0 | 0 | 0 | yes | 111 |
+| `detector/grouped_12_nodes.json` | identical | same | same | same (the drive's fields apart) | 0 | 0 | 0 | yes | 2 |
+| `bell/fixed.json` | identical | same | same | same (the drive's fields apart) | 0 | 0 | 0 | yes | 13 |
+| `weak/j2_ladder.json` | identical | same | same | same (the drive's fields apart) | 0 | 0 | 0 | yes | 1 |
+| `weak/j3_deuteron_crowd.json` (the gate's cap) | identical | same | same | same (the drive's fields apart) | 0 | 0 | 0 | yes | 1 |
+| `heisenberg/w27_beam.json` | not compared | - | - | - | - | - | - | - | 200 |
+| `nucleus/alpha_square.json` (the gate's cap) | moved | changed (391080 -> 282130 lines) | changed | changed | 22 -> 57 | 31 -> 19 | 19 | yes | 180 |
+| `hubble/pushing_age.json` (the gate's cap) | identical | same | same | same (the drive's fields apart) | 0 | 0 | 0 | yes | 1 |
+| `coupling/1b_m16.json` (the gate's cap) | moved | changed (37 -> 35 lines) | changed | changed | 3 -> 1 | 0 | 0 | yes | 25 |
+| `heisenberg/w1_beam.json` | identical | same | same | same (the drive's fields apart) | 0 | 0 | 0 | yes | 1 |
+| `catalog/sun_planet.json` | moved | changed (24 -> 24 lines) | changed | changed | 2 -> 1 | 0 | 0 | yes | 12 |
+| `hand/wu.json` | identical | same | same | same (the drive's fields apart) | 0 | 0 | 0 | yes | 23 |
+| `hubble_stars/coasting_none.json` | moved | changed (49580 -> 49506 lines) | changed | changed | 1536 -> 1345 | 0 | 0 | yes | 400 |
+| `hubble_stars/coasting_scalar.json` | moved | changed (49232 -> 49167 lines) | changed | changed | 1523 -> 1335 | 0 | 0 | yes | 400 |
+| `hubble_stars/coasting_age.json` | moved | changed (49381 -> 49333 lines) | changed | changed | 1525 -> 1336 | 0 | 0 | yes | 400 |
+| `hubble_stars/gravity_none.json` | moved | changed (88217 -> 90668 lines) | changed | changed | 1427 -> 1250 | 0 | 0 | yes | 400 |
+| `hubble_stars/gravity_scalar.json` | moved | changed (87744 -> 90154 lines) | changed | changed | 1416 -> 1242 | 0 | 0 | yes | 400 |
+| `hubble_stars/gravity_age.json` | moved | changed (88018 -> 90445 lines) | changed | changed | 1417 -> 1246 | 0 | 0 | yes | 400 |
+| `hubble_stars/double_none.json` | moved | changed (89627 -> 91973 lines) | changed | changed | 1299 -> 1135 | 0 | 0 | yes | 400 |
+| `hubble_stars/double_scalar.json` | moved | changed (88518 -> 90833 lines) | changed | changed | 1277 -> 1116 | 0 | 0 | yes | 400 |
+| `hubble_stars/double_age.json` | moved | changed (89081 -> 91442 lines) | changed | changed | 1282 -> 1120 | 0 | 0 | yes | 400 |
+| `hubble_stars/record/coasting_none.json` | moved | changed (49580 -> 49506 lines) | changed | changed | 1536 -> 1345 | 0 | 0 | yes | 400 |
+| `hubble_stars/record/coasting_scalar.json` | moved | changed (49232 -> 49167 lines) | changed | changed | 1523 -> 1335 | 0 | 0 | yes | 400 |
+| `hubble_stars/record/coasting_age.json` | moved | changed (49381 -> 49333 lines) | changed | changed | 1525 -> 1336 | 0 | 0 | yes | 400 |
+| `hubble_stars/record/gravity_none.json` | moved | changed (88217 -> 90668 lines) | changed | changed | 1427 -> 1250 | 0 | 0 | yes | 400 |
+| `hubble_stars/record/gravity_scalar.json` | moved | changed (87744 -> 90154 lines) | changed | changed | 1416 -> 1242 | 0 | 0 | yes | 400 |
+| `hubble_stars/record/gravity_age.json` | moved | changed (88018 -> 90445 lines) | changed | changed | 1417 -> 1246 | 0 | 0 | yes | 400 |
+| `hubble_stars/record/double_none.json` | moved | changed (89627 -> 91973 lines) | changed | changed | 1299 -> 1135 | 0 | 0 | yes | 400 |
+| `hubble_stars/record/double_scalar.json` | moved | changed (88518 -> 90833 lines) | changed | changed | 1277 -> 1116 | 0 | 0 | yes | 400 |
+| `hubble_stars/record/double_age.json` | moved | changed (89081 -> 91442 lines) | changed | changed | 1282 -> 1120 | 0 | 0 | yes | 400 |
+| `hubble/coasting_age.json` | moved | changed (27352 -> 27878 lines) | changed | changed | 1505 -> 1308 | 0 | 0 | yes | 400 |
+| `hubble/coasting_scalar.json` | moved | changed (27352 -> 27878 lines) | changed | changed | 1505 -> 1308 | 0 | 0 | yes | 400 |
+| `hubble/pushing_age.json` | moved | changed (34818 -> 35670 lines) | changed | changed | 1449 -> 1260 | 0 | 0 | yes | 400 |
+| `hubble/pushing_scalar.json` | moved | changed (34360 -> 35127 lines) | changed | changed | 1431 -> 1244 | 0 | 0 | yes | 400 |
+| `bohr/r2.json` | moved | changed (777077 -> 776246 lines) | changed | changed | 109 -> 30 | 0 | 8 | yes | 3000 |
+| `bohr/r4.json` | moved | changed (776362 -> 775112 lines) | changed | changed | 141 -> 52 | 0 | 10 | yes | 3000 |
+| `bohr/r6.json` | moved | changed (775742 -> 774178 lines) | changed | changed | 185 -> 44 | 0 | 17 | yes | 3000 |
+| `bohr/r8.json` | moved | changed (1088973 -> 1087737 lines) | changed | changed | 167 -> 49 | 0 | 12 | yes | 4200 |
+| `bohr/r12.json` | moved | changed (1926516 -> 1925251 lines) | changed | changed | 227 -> 137 | 0 | 27 | yes | 7400 |
+| `bohr/r15.json` | moved | changed (2658400 -> 2657413 lines) | changed | changed | 186 -> 113 | 0 | 36 | yes | 10200 |
+| `bohr/r16.json` | moved | changed (2685322 -> 2682718 lines) | changed | changed | 258 -> 51 | 0 | 15 | yes | 10300 |
+| `orbit/s1_r12.json` | moved | changed (46589 -> 46803 lines) | changed | changed | 60 -> 255 | 0 | 117 | yes | 4000 |
+| `orbit/s1_r24.json` | moved | changed (46589 -> 46591 lines) | changed | changed | 60 -> 61 | 0 | 0 | yes | 4000 |
+| `orbit/s8_r12.json` | moved | changed (46695 -> 46711 lines) | changed | changed | 147 -> 161 | 0 | 52 | yes | 4000 |
+| `orbit/s8_r24.json` | moved | changed (46785 -> 46781 lines) | changed | changed | 230 -> 220 | 0 | 42 | yes | 4000 |
+| `orbit/s32_r12.json` | moved | changed (46938 -> 46912 lines) | changed | changed | 305 -> 307 | 2 -> 0 | 56 | yes | 4000 |
+| `orbit/s32_r24.json` | moved | changed (46999 -> 47074 lines) | changed | changed | 383 -> 421 | 0 | 41 | yes | 4000 |
+| `nucleus/deuteron_1_kick.json` | moved | changed (3477872 -> 3477862 lines) | same | changed | 0 | 323 -> 313 | 0 | yes | 3000 |
+| `nucleus/deuteron_3.json` | moved | changed (377443 -> 384995 lines) | changed | changed | 17 | 0 | 0 | yes | 3000 |
+| `quarks/q6_proton_kick.json` | moved | changed (3513532 -> 1239393 lines) | changed | changed | 9 -> 39 | 187 -> 48 | 3 | yes | 3000 |
+| `catalog/sun_planet.json` | moved | changed (558 -> 571 lines) | changed | changed | 11 -> 13 | 0 | 4 | yes | 50 |
+| `binding/alpha_square_bond.json` | moved | changed (741524 -> 426538 lines) | changed | changed | 62 -> 67 | 32 -> 30 | 19 | yes | 3000 |
+| `binding/deuteron_bond.json` | moved | changed (3477899 -> 3477872 lines) | changed | changed | 0 | 348 -> 321 | 0 | yes | 3000 |
+| `binding/proton_bond_lamp.json` | identical | same | same | same (the drive's fields apart) | 0 | 0 | 0 | yes | 3000 |
+| `coupling/1b_m1.json` | moved | changed (4813 -> 4749 lines) | changed | changed | 11 | 167 -> 103 | 1 | yes | 200 |
+| `coupling/1b_m4.json` | moved | changed (4845 -> 4778 lines) | changed | changed | 11 | 167 -> 103 | 1 | yes | 200 |
+| `nucleus/alpha_line.json` | moved | changed (6997904 -> 6997967 lines) | same | changed | 0 | 777 -> 840 | 0 | yes | 3000 |
+| `nucleus/deuteron_1.json` | moved | changed (3477876 -> 3477858 lines) | same | changed | 0 | 327 -> 309 | 0 | yes | 3000 |
+| `nucleus/pp_1.json` | moved | changed (3477783 -> 3477813 lines) | same | changed | 0 | 234 -> 264 | 0 | yes | 3000 |
+| `nucleus/pp_1_weak.json` | moved | changed (414066 -> 418716 lines) | changed | changed | 19 | 0 | 0 | yes | 3000 |
+| `nucleus/pp_3.json` | moved | changed (323412 -> 328641 lines) | changed | changed | 17 | 0 | 0 | yes | 3000 |
+| `quarks/q1_proton_line.json` | moved | changed (5234725 -> 5234704 lines) | same | changed | 0 | 411 -> 390 | 0 | yes | 3000 |
+| `quarks/q2_neutron_line.json` | moved | changed (5234632 -> 5234616 lines) | same | changed | 0 | 318 -> 302 | 0 | yes | 3000 |
+| `quarks/q3_proton_triangle.json` | moved | changed (543400 -> 566774 lines) | changed | changed | 52 -> 59 | 4 -> 3 | 4 | yes | 3000 |
+| `quarks/q4_deuteron_rectangle.json` | moved | changed (3492398 -> 1289284 lines) | changed | changed | 125 -> 130 | 390 -> 43 | 16 | yes | 3000 |
+| `quarks/q5_deuteron_line.json` | moved | changed (10541711 -> 10541700 lines) | same | changed | 0 | 962 -> 951 | 0 | yes | 3000 |
+| `quarks/q7_proton_dressed.json` | moved | changed (5234749 -> 5234728 lines) | same | changed | 0 | 435 -> 414 | 0 | yes | 3000 |
+| `weak/j3_neutron_free.json` | identical | same | same | same (the drive's fields apart) | 0 | 0 | 0 | yes | 600 |
+| `catalog/neutron_star.json` | not compared (refused at tick 7 on the head) | - | - | - | - | - | - | - | 40 |
+| `coupling/1b_m16.json` | moved | changed (4941 -> 4872 lines) | changed | changed | 11 | 167 -> 103 | 1 | yes | 200 |
+| `nucleus/alpha_square.json` | moved | changed (796402 -> 282182 lines) | changed | changed | 63 -> 57 | 31 -> 19 | 19 | yes | 3000 |
+| `weak/j3_deuteron_crowd.json` | moved | changed (721329 lines) | same | changed | 0 | 68 | 0 | yes | 700 |
+
 ## The crossing rule: the gate set and the movers replayed against no-tables 2bbc5a64 - 2026-09-21
 
 The branch `crossing` (the step before the law, the two marks, the reading
