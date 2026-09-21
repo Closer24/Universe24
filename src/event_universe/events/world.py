@@ -420,7 +420,7 @@ AMPLITUDE_LEAST_STEPS = 4
 # The world key `doppler` of the reading's weight at the relative speed
 # (`doppler-v1`, 2026-09-20, BEAM_LAW note 38 as it was), deleted on
 # 2026-09-21 with the crossing rule (the model owner's record 158 of
-# 2026-09-20; note 42): a moving body's Doppler is the count of the rows
+# 2026-09-20; note 43): a moving body's Doppler is the count of the rows
 # it crosses, no weight. A world that declares the key is refused as an
 # unknown key (MIGRATION).
 

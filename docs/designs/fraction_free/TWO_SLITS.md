@@ -419,3 +419,79 @@ within P) and the weights (the angle covered); the bound 4096 caps P per
 dimension as above. Then the 290-fan worlds re-register once by their
 weights, the slits and the small plane fans by set and weights, and no
 world is forced to 3362 rows per release.
+
+## 10. The 3D integer form of the fan law on the register's 290 fan (read-only, the map, 2026-09-21)
+
+On the Boss's bounded item after the owner's yes to P. Notation (the owner's rule, record 184): every symbol is named in English at its first use and a Greek letter is written as a word (gamma, tau, phi, zeta); a scalar is plain (c, M, N, Q, gamma), a vector is bold lowercase (**q** the vertex vector, **s** the state vector on the torus, **r** the rate vector, **e** the step's unit vector), a matrix or an operator is bold uppercase (**F** the interval's map, **C** the coupling matrix), and a component is plain with its index (p_a); the direction vector keeps its uppercase letter D as in BEAM_LAW, where T_D is its resolution, the one exception, and inside code spans and code blocks every symbol is plain. Every integer is
+from `fan_sphere_map.py` beside this file (`fan_sphere_map.out`, 2 s; the
+Delaunay triangles from the convex hull of the unit points, `scipy`, a
+host computation at load; everything else in integers).
+
+**One correction to the message of 00:37Z.** The circumcentre of three
+directions on the sphere is `D1 x D2 + D2 x D3 + D3 x D1` only when the
+three have EQUAL length (the plane through three integer points is not
+the plane through the three unit points); in general it is
+
+    q = (D1 x D2) |D3| + (D2 x D3) |D1| + (D3 x D1) |D2|      (q the vertex, the circumcentre vector; D1, D2, D3 the three directions)
+
+with the lengths by isqrt at a grain G_C, and G_C must be large: on a
+small triangle the three cross products nearly cancel (on ((5,1,0),
+(4,1,0), (4,1,1)) the components are differences of about 20 giving a
+result of about 1), so G_C = 2^12 leaves the vertex 0.03 degrees off and
+the cell's area 1.4 percent off; at G_C = 2^24 (a load-time host integer
+of at most 2^30, computed once) the vertex is exact to 2^-14 and every
+cell's area is within 5.3 x 10^-4 of the exact spherical area. The
+vertex vector's direction alone matters, so before the area formula every
+vector of a triangle (D and its two vertices) is brought to the length
+S = 2^14 by one isqrt with a symmetric rounding (the same under every
+sign flip and permutation), and the area is Van Oosterom-Strackee at the
+grain G = 2^5 on those vectors with tan x = x:
+
+    Omega(u, v, w) = 2 G^3 |u . (v x w)| / (L_u L_v L_w + G^2 ((u . v) L_w + (u . w) L_v + (v . w) L_u)),   L_x = isqrt(G^2 x . x)
+    weight(D) = floor(G_w x sum_i Omega(D, q_i, q_{i+1})),   G_w = 2^15
+
+(Omega the solid angle of the triangle with the vertices u, v, w; L_x the
+length of x at the grain G; q_i the vertices of the cell of D in angular
+order)
+
+(the numerator within 2^54, the denominator within 2^60, a length
+within 2^20: every product within the register's ceiling; the small-angle
+approximation's error below 10^-6 on these triangles). The weights of
+the 290 fan by direction class (`fan_sphere_map.out`):
+
+| class | members | weight | share | against the equal share | exact area (sr) |
+| --- | --- | --- | --- | --- | --- |
+| (1, 0, 0) | 6 | 1273 | 0.00309 | x 0.90 | 0.03884 |
+| (1, 1, 0) | 12 | 2073 | 0.00504 | x 1.46 | 0.06326 |
+| (1, 1, 1) | 8 | 2588 | 0.00629 | x 1.82 | 0.07900 |
+| (2, 1, 0) | 24 | 1366 | 0.00332 | x 0.96 | 0.04171 |
+| (2, 1, 1) | 24 | 1550 | 0.00377 | x 1.09 | 0.04732 |
+| (3, 1, 0) | 24 | 970 | 0.00236 | x 0.68 | 0.02962 |
+| (2, 2, 1) | 24 | 1955 | 0.00475 | x 1.38 | 0.05967 |
+| (3, 1, 1) | 24 | 1318 | 0.00320 | x 0.93 | 0.04022 |
+| (3, 2, 0) | 24 | 1419 | 0.00345 | x 1.00 | 0.04334 |
+| (4, 1, 0) | 24 | 483 | 0.00117 | x 0.34 | 0.01476 |
+| (3, 2, 1) | 48 | 1783 | 0.00433 | x 1.26 | 0.05442 |
+| (4, 1, 1) | 24 | 1316 | 0.00320 | x 0.93 | 0.04017 |
+| (5, 1, 0) | 24 | 991 | 0.00241 | x 0.70 | 0.03028 |
+
+The sum of the weights is 411 634 (4 pi x G_w = 411 774, pi the circle's
+constant: the floor per
+cell loses 140), the minimum 483 and the maximum 2588, max / min 5.36;
+A = the sum of squares 644 972 354 (2^30), within 2^31, so two such
+re-emitters on one world pass the load-time ceiling (A^2 within 2^62) at
+G_w = 2^15, the grain to declare (2^16 would pass 2^31). The weights are
+exactly equal within every class (the 48 symmetries, checked on all 290);
+the cells have 4, 6, 8 or 9 vertices; the exact areas sum to 4 pi to six
+places (the cells tile the sphere); a sample of 400 000 points on the
+sphere agrees with the shares within its own noise (1.2 percent). The
+plane form is the restriction of the 3D form: on the great circle z = 0
+(the plane fan F_6, 23 directions on the half circle, 22 Farey gaps) the
+3D angle between neighbours, `atan2(|D x D'|, D . D')`, is identically
+the exact `arcsin(1 / (|D| |D'|))` since `|D x D'| = 1` for Farey
+neighbours, and the plane form `3 Q^2 / (T_d T_d')` is within 0.0026 of
+it (isqrt's rounding of T_d, the flight table's own). This is the form
+the implementer builds from when P lands: the fan's set from P, the
+Delaunay triangles (a convex hull of the unit points, once at load), the
+circumcentres at G_C = 2^24, the areas at S = 2^14 and G = 2^5, the
+weights at G_w = 2^15, then `apportion_whole` as today.

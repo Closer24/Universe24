@@ -176,7 +176,11 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_declare_a_fo
     assert pinned["step_burst_max"] == 1
     assert pinned["crowds"]["coasting"]["q_bracket"] == expectations["crowds"]["coasting"]["q_bracket"]
     gravity = pinned["crowds"]["gravity"]
-    assert 0.85 < gravity["derived_fits"]["300-400"]["q_fit"] < 0.87
+    # The registered fit against the register's own bracket (since
+    # 2026-09-21 no literal of a world's number here).
+    assert (
+        gravity["q_bracket"][0] <= gravity["derived_fits"]["300-400"]["q_fit"] <= gravity["q_bracket"][1]
+    )
     assert (
         gravity["q_bracket"][0] > expectations["crowds"]["gravity"]["derived_fits"]["300-400"]["q_fit"]
     )

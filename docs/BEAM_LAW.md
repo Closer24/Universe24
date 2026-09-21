@@ -456,7 +456,7 @@ order with each step's inverse:
    `charge` (rho, the sign plus: its term is the electric part below), and
    a declared column (the strong force, the sign minus) is a third term of
    the same sum, not a term of the code. Since the crossing rule
-   (2026-09-21, note 42; the model owner's record 158 of 2026-09-20) the
+   (2026-09-21, note 43; the model owner's record 158 of 2026-09-20) the
    rows a reader meets are the crossings of its world line: its arrivals
    and, in the interval of a step, the rows on its Link against it and
    the rows at the Node it entered moving against it, never a row that
@@ -2719,7 +2719,7 @@ implementation's part of the contract. The design above is unchanged.
     owner, 2026-09-20, record 119; the world key `doppler`, the flux of a
     row's stream through a moving body at its speed quantised to the grain
     G = 2^12, off the reader's clock before the columns, `weighted_flow`):
-    deleted on 2026-09-21 with the crossing rule (note 42; the model
+    deleted on 2026-09-21 with the crossing rule (note 43; the model
     owner's record 158, "in both cases the key leaves the code": a moving
     reader's Doppler is the count of the rows it crosses, no weight, no
     grain). The note's text, the key, the grain, `quantised_speed`,
@@ -3073,7 +3073,7 @@ implementation's part of the contract. The design above is unchanged.
     mod N as before), the push per column and axis `acc_push` (below
     Lambda_c^2, (iv)) and the step's `drive` as note 17 built it (the
     doppler weight's rows per direction and axis, `acc_flow`, left with
-    the key on 2026-09-21, note 42). `by_clock(age, n, d)` is the constant-rate identity: from
+    the key on 2026-09-21, note 43). `by_clock(age, n, d)` is the constant-rate identity: from
     an empty accumulator at age 0 and a rate of one sign the two give the
     same integers at every self-creation and the accumulator holds `(age
     n) mod d` (FORM.md section 1, proved; test (a) on every count over
@@ -3161,7 +3161,7 @@ implementation's part of the contract. The design above is unchanged.
     tests (b), (e); the weighted flow's rows under `doppler`, `acc_flow`
     at the denominator G Q |v_d|^2, one per direction, and their tests on
     the doppler bar, 396672 for 396673 off the clock, left with the key on
-    2026-09-21, note 42).
+    2026-09-21, note 43).
     (v) **The ladder at the click.** The cell of a record's u is the first
     k with `2 T u + T <= 2 N C_k`, the comparison of two products
     (`amplitude.cell_of`), which is `u < b_k` with the rung `b_k = (2 N
@@ -3282,7 +3282,7 @@ implementation's part of the contract. The design above is unchanged.
     `width // 2` (constants of N and the width); the speed at the grain G
     (`quantised_speed`, `G |p| // D`, the remainder below 1 / G by
     declaration, note 38 as it was) left with the crossing rule on
-    2026-09-21 (note 42).
+    2026-09-21 (note 43).
     (4) a guard or an addressing: every `MOMENTUM_BOUND // x` and
     `AMOUNT_BOUND // x` (a bound tested by division before a product is
     formed: `measured.column_charges`, `engine._frame_all`,
@@ -3344,7 +3344,22 @@ implementation's part of the contract. The design above is unchanged.
     the x row alone, the y row's five whole parts, 2925, never delivered
     (the phase would read 26 with them; the physics-rule review of
     2026-09-21, item 2).
-42. **The crossing rule: a row and a body meet once, at the crossing of
+
+42. **The group structure named** (2026-09-21; the vector program, record
+    191; the architect's item 3; names and types only, no rule changed and
+    every registered integer the same): the collision table is the action
+    of the cyclic group on the slot states by the shift, its orbits the
+    classes of section 4 (`CollisionTable.act`, `orbit`, `period`); the
+    world's circle of N steps is the cyclic group of the phase with its
+    unit vectors (`core.phase.PhaseCircle`, carried by the tables as
+    `circle`; the two scalar turns of the engine and the layer's tables
+    read it); the 48 signed axis permutations are the cube's group with
+    its hand as the pseudoscalar (`core.game_board.cube_symmetries`,
+    `symmetry_hand`), the same 48 maps the collision test enumerated. The
+    tests state the properties (closure, inverse, the orbit-stabilizer and
+    Burnside counts, one cycle per class) in place of the counted orbits
+    (`tests/test_group_structure.py`; `test_nature_beam_collision.py` (b)).
+43. **The crossing rule: a row and a body meet once, at the crossing of
     their world lines** (the model owner's record 158 of 2026-09-20, "the
     step reads the crossed Link"; the physicist's design
     `docs/designs/crossing/DESIGN.md` on the experimenter's finding of

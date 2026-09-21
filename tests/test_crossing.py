@@ -1,7 +1,7 @@
 """The crossing rule (2026-09-21; the model owner's record 158 of
 2026-09-20, "the step reads the crossed Link"; the physicist's design
 docs/designs/crossing/DESIGN.md; docs/BEAM_LAW.md section 3 step 4 and note
-42): a row and a body meet ONCE, at the crossing of their world lines. The
+43): a row and a body meet ONCE, at the crossing of their world lines. The
 body's step precedes the law (`_move` before `nature_beam`), so the reading
 of an interval finds the body at its destination; a body reads every
 arrival at its Nodes as before, and in the interval of a step it also

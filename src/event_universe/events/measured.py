@@ -449,7 +449,7 @@ class Measured:
     # driven since the last step, `|drive_a| < Q S M + |p_a|`).
     axis_steps: list[int] = field(default_factory=lambda: [0, 0, 0])
     # The crossing rule (the model owner's record 158 of 2026-09-20; BEAM_LAW
-    # note 42): the Port of the Link the body crossed this interval
+    # note 43): the Port of the Link the body crossed this interval
     # (`step_port`, -1 without a step: none fired, a refused step, an
     # escape) and the one it crossed the interval before (`last_step_port`),
     # the body's own two last Links, set by `_move` at the start of every
@@ -714,7 +714,7 @@ class Measured:
             "steps": self.steps,
             "drive": list(self.drive),
             "axis_steps": list(self.axis_steps),
-            # The crossing rule's two marks (BEAM_LAW note 42): the Port of
+            # The crossing rule's two marks (BEAM_LAW note 43): the Port of
             # the Link crossed this interval and the interval before.
             "step_port": self.step_port,
             "last_step_port": self.last_step_port,

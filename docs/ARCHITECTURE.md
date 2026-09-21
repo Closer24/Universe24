@@ -189,8 +189,8 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 | Module | Allowed dependencies |
 | --- | --- |
 | `core/integer` | Standard-library types; owns the working-register bound (`checked_work`) and the Beam Law's integer primitives (`bounded_gcd`, `integer_root`, `by_clock`, `apportion_whole`) |
-| `core/game_board` | `core/integer` (`checked_work`); the GameBoard's addresses, the six Port headings in Port order (`PORT_HEADINGS`, `adjacent_node`) and the bound of a declared charge and quantum (`MAX_VALUE`) |
-| `core/phase` | `core/integer`; the phase circle's cosine and sine tables from fixed-point series, cached per N |
+| `core/game_board` | `core/integer` (`checked_work`); the GameBoard's addresses, the six Port headings in Port order (`PORT_HEADINGS`, `adjacent_node`), the cube's group of 48 with its hand (`cube_symmetries`, `compose_symmetries`, `inverse_symmetry`, `symmetry_hand`; named 2026-09-21) and the bound of a declared charge and quantum (`MAX_VALUE`) |
+| `core/phase` | `core/integer`; the phase circle's cosine and sine tables from fixed-point series, cached per N, and the circle itself as the cyclic group of N steps with its unit vectors (`PhaseCircle`, `phase_circle`; named 2026-09-21) |
 | `events/world` | `core/integer`, `core/game_board`; the world file of the Beam Law, its keys, defaults, bounds and refusals (`parse_nature_beam_world`, `NatureBeamWorld`), the constants `Q`, `LABEL_SCALE`, `FACE_NAMES`; no execution |
 | `events/measured` | `core/integer`, `core/game_board`, `events/world`; the records the engine keeps beside the rays (`Measured`, `DetectorSet`, `Ledger`, the reduced rational pairs); no law |
 | `events/nature_beam` | `core/integer`, `core/game_board`, `core/phase`, `events/amplitude`, `events/measured`, `events/meeting`, `events/world` and numpy; the Beam Law, one function over the whole GameBoard (the flight table, the one reading, the collision table, the push, the detector's record, the releases, the store) |
@@ -204,7 +204,8 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 | `configuration_validation` | `events/world`, `world_loading`; read-only |
 | `runner` | `events/run`, `retention`, `world_loading` |
 | `ui` | `configuration_validation`, `json_documents`, `retention`, `world_loading`; local HTTP and isolated CLI process ownership |
-| `diagnostics/numeric_audit` | Standard library; the static integer audit of `core/` |
+| `diagnostics/numeric_audit` | Standard library; the two static audits, `core/` integers only and `events/` integer numpy and nothing that leaves the integers (`run.py`, the artifacts' writer, outside it) |
+| `diagnostics/shell_readings` | `events/engine`, `core/game_board`, numpy; the shell means of the engine's readings, read-only, the one floating-point calculation of the package (a host diagnostic, outside the engine since 2026-09-21) |
 | `tools/` | Readers of the record, loaded by their path and never imported by the package (the architecture review of 2026-09-20: a tool calls the engine's functions, it owns no rule): `coupling_readings` imports `core/integer`, `core/game_board`, `events`, `events/nature_beam`, `events/world`, `json_documents` and numpy; `orbit_readings` `core/integer`, `events`, `events/nature_beam`, `events/world`, `json_documents`; `heisenberg_readings` `core/integer`, `events`, `json_documents`; `redshift_readings` `events`; `migrate_nature_beam_worlds` `events/world`; `bell_chsh`, `run_series` and `check` the standard library; the `derivations_round*` scripts numpy |
 | `tests/` | The package's modules under test, the tools by their path (`importlib`), the gates (`tests/architecture_rules.py`, the repository scanners) the standard library; `tools/check.py` selects a test by its imports and by the files it names |
 

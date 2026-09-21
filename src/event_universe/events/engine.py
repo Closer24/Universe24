@@ -174,7 +174,7 @@ class NatureBeamSimulation:
         # on every `contact` record carries `given` and the run's record the
         # identity `binding-v1` (`hypotheses`).
         self.binding = world.binding
-        # The crossing rule's report (BEAM_LAW note 42, "not proved"): the
+        # The crossing rule's report (BEAM_LAW note 43, "not proved"): the
         # count of Links crossed in the interval right after another Link
         # of the same body (a body faster than one Link per two intervals,
         # |p_a| > Q S M, possible under pushes), where the one-interval
@@ -411,7 +411,7 @@ class NatureBeamSimulation:
         """One interval: the clocks' frame, the measured events' steps, the
         law, then the clocks' turn and count. The step comes before the
         law since the crossing rule (the model owner's record 158 of
-        2026-09-20; BEAM_LAW note 42): a body's departure becomes its
+        2026-09-20; BEAM_LAW note 43): a body's departure becomes its
         arrival as a row's does in the walk, so the reading of the interval
         finds the body at its destination and reads there what it met by
         the step itself; until then the step was the interval's last act
@@ -438,7 +438,7 @@ class NatureBeamSimulation:
         for number in sorted(self.measured):
             entry = self.measured[number]
             if entry.creating:
-                entry.phase = (entry.phase + entry.turn) & self.world.phase_mask
+                entry.phase = self.tables.circle.turn(entry.phase, entry.turn)
                 entry.turned += entry.turn
                 self._suspend(entry)
 
@@ -587,7 +587,7 @@ class NatureBeamSimulation:
         declared momentum whose product with `ticks` x N could pass the
         bound).
 
-        The crossing rule's marks (record 158; BEAM_LAW note 42): at its
+        The crossing rule's marks (record 158; BEAM_LAW note 43): at its
         entry, for every measured event, the Port of the Link crossed the
         interval before becomes `last_step_port` and `step_port` is -1
         until a Link is crossed below (no fire, a refused step and an
@@ -706,7 +706,7 @@ class NatureBeamSimulation:
             # this self-creation (the same integer as `by_clock(k0, |p| N,
             # h)` off the Links stepped, k0, at a constant momentum; the
             # exact sum of the momentum's history where it changes).
-            entry.phase = (entry.phase + turns[axis]) & self.world.phase_mask
+            entry.phase = self.tables.circle.turn(entry.phase, turns[axis])
         if self.record is not None:
             self.record(
                 {
@@ -1183,31 +1183,6 @@ class NatureBeamSimulation:
             )
         return found
 
-    def shell_readings(self, family: int, centre: Address3, radius: int) -> dict[str, float]:
-        """The shell means at one radius of the last interval's readings: the
-        Nodes at Euclidean distance within a half Link of `radius` from the
-        centre, their number, the mean count (the amount that arrived per
-        Node), the mean radial flow (amount x the arrival's unit vector at
-        the scale Q projected on the radial unit vector, summed per Node: Q
-        per unit of amount moving radially) and the mean presence (every
-        ray at the Node)."""
-        node_offsets = np.indices(self.shape).reshape(3, -1).T - np.array(centre)
-        distance = np.sqrt((node_offsets * node_offsets).sum(axis=1))
-        chosen = np.abs(distance - radius) < 0.5
-        chosen &= distance > 0
-        positions = node_offsets[chosen]
-        radial = positions / distance[chosen][:, None]
-        cells = tuple((positions + np.array(centre)).T)
-        arrived = self.readings.arrived[family][cells]
-        flow = self.readings.flow[family][cells]
-        presence = self.readings.presence[family][cells]
-        return {
-            "nodes": float(chosen.sum()),
-            "arrived": float(arrived.mean()),
-            "flow": float((flow * radial).sum(axis=1).mean()),
-            "presence": float(presence.mean()),
-        }
-
     def cube_flux(self, family: int, centre: Address3, half: int) -> int:
         """The net outward flow through the closed surface between the cube of
         half-width `half` about the centre and its neighbours, this interval:
@@ -1272,6 +1247,11 @@ class NatureBeamSimulation:
         written as `NatureBeam.record` says."""
         nodes = sorted({int(node) for store in self.stores for node in np.unique(store.node)})
         vectors = self.tables.flight.vectors
+        # The world's `handed` read once: the property scans every measured
+        # event, and a row's line is written once per row (2026-09-21: the
+        # state's write of w27_beam at 30 intervals from 251.9 s to 9.7 s,
+        # the bytes identical).
+        handed = self.world.handed
         for flat in nodes:
             x, y, z = self.stores[0].coordinates(np.array([flat]))
             entry: dict[str, object] = {"position": [int(x[0]), int(y[0]), int(z[0])], "families": []}
@@ -1281,6 +1261,6 @@ class NatureBeamSimulation:
                 lo, hi = store.slice(flat)
                 if hi == lo:
                     continue
-                beams = [beam.record_line(vectors, self.world.handed) for beam in store.rows(lo, hi)]
+                beams = [beam.record_line(vectors, handed) for beam in store.rows(lo, hi)]
                 families.append({"family": family.name, "rays": beams})
             yield entry

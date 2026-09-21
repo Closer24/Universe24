@@ -334,7 +334,7 @@ def resumed(
         entry.turned, entry.steps = int(line["phase_steps"]), int(line["steps"])
         entry.drive = [int(v) for v in line["drive"]]
         entry.axis_steps = [int(v) for v in line["axis_steps"]]
-        # The crossing rule's two marks (BEAM_LAW note 42), the body's own
+        # The crossing rule's two marks (BEAM_LAW note 43), the body's own
         # two last Links, carried in the state as the drive is.
         entry.step_port, entry.last_step_port = int(line["step_port"]), int(line["last_step_port"])
         entry.taken = [dict(t) for t in line["measured"]]

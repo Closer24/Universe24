@@ -11,7 +11,7 @@ python -m pip install -e '.[render,dev]'
 The model owner's record 158 of 2026-09-20 ("the step reads the crossed
 Link") on the experimenter's finding of record 151; the physicist's design
 [docs/designs/crossing/DESIGN.md](designs/crossing/DESIGN.md); the branch
-`crossing`; [BEAM_LAW note 42](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
+`crossing`; [BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
 The identity `beam-v1` is kept.
 
 - The order of the interval: the frame, the measured events' steps
@@ -66,13 +66,133 @@ The identity `beam-v1` is kept.
   the two marks, the events' and the books' where a body stepped or fired
   under a push). `run.json` gains `fast_steps`, the Links crossed right
   after another of the same body (the rule's count not proved there, note
-  42: a report). The registered worlds with a
+  43: a report). The registered worlds with a
   completed step or a fire under a push move (VALIDATION, the dated
   table of this change): series G2 (the run under the rule is the G2
   session's), the hubble worlds, D, H, the catalog's `sun_planet`, the
   nucleus, binding and weak pairs; every world whose measured events are
   all fixed reads the same records, and its `state.json` differs by the
   two marks alone.
+
+## The group structure named, on 2026-09-21 (host only, no law change)
+
+The architect's item 3 of the proposal on the runs (record 203; the vector
+program, record 191, "everything represented in vectors and matrices, from
+group theory"): the three group objects of the law named and typed, bit-exact
+under the gate set; BEAM_LAW note 42. No rule changed; every registered
+integer the same.
+
+- `core.game_board.cube_symmetries()`: the cube's group of 48 (the signed
+  axis permutations as images of the six Ports), with `IDENTITY_SYMMETRY`,
+  `compose_symmetries`, `inverse_symmetry` and `symmetry_hand` (+1 a
+  rotation, -1 a reflection). The collision test's local `cube_group()`
+  is deleted; it enumerated the same 48 maps.
+- `core.phase.PhaseCircle` and `phase_circle(N)`: the world's circle of N
+  steps as the cyclic group of the phase (`turn`, `difference`,
+  `opposite`, `mask`, `half`) with its unit vectors (`vector`, the tables'
+  (C, S)) and the tables themselves (`cosines`, `sines`). The engine's
+  tables carry it (`NatureBeamTables.circle`, a new field; `cosines` and
+  `sines` stay as arrays), the engine's two scalar turns read it
+  (`circle.turn` in place of `& phase_mask`, the same integers for N a
+  power of two), and the layer holds it (`Layer.circle`, with `steps`,
+  `cosines` and `sines` as before).
+- `nature_beam.CollisionTable` gains `orbit` (the class index per code)
+  and `period` (the class's size per code) and the method `act(code,
+  backward)`, the shift the engine's collision step calls; `forward`,
+  `inverse`, `singles` and `powers` are unchanged.
+- `tests/test_nature_beam_collision.py` (b) states the orbits as
+  properties (the orbit-stabilizer and Burnside counts) in place of the
+  counted sizes; `tests/test_group_structure.py` is new (the group, the
+  circle, the action). TERMINOLOGY gains the cube group, the phase circle
+  and the collision action; ARCHITECTURE's and the README's rows for
+  `core/game_board` and `core/phase` name them.
+
+## The trimming's part 2, the register split, on 2026-09-21 (host only, no law change)
+
+The Boss's decision under the owner's rule (records 169 and 184 of
+2026-09-20 and 2026-09-21; the architect's audit item 10): a test reads a
+world's numbers from the register. Every number a test pinned of a shipped
+world (a world file of `examples/events/` or one its generator writes)
+moved to the register beside the world, one source per number, and the
+test asserts equality with the value read from there; no test body holds
+a literal of a world's number. The gate set stays the replay mechanism;
+the numbers themselves are unchanged (bit-exact: no run moved).
+
+- `examples/events/gate_set.json`: each lamp-free world carries `digests`
+  (`state_sha256`, `audit_sha256`, `events_sha256` at its cap), the table
+  `PINNED_DIGESTS` of `tests/test_amplitude_click.py` (d), deleted there.
+- `examples/events/bell/expectations.json` (new, `bell-expectations-v1`):
+  the ten A2 worlds read by `tools/bell_chsh.py` under the one click (the
+  criteria, the count failed, the tick offsets, the CHSH sum, the primed
+  sum, three correlations), the literals of
+  `tests/test_nature_beam_worlds.py` (b).
+- `examples/events/expectations.json` (new,
+  `root-worlds-expectations-v1`): `two_contents`'s face records at its
+  20th interval, the literals of `tests/test_nature_beam_worlds.py` (e).
+- `examples/events/amplitude/expectations.json`: under `mach_zehnder` the
+  gathers' last tick and the totals' spread, `mz_equal`'s `birth`,
+  `split` and `first_gather`, `mz_balanced`'s `split`, `mz_345`'s
+  `pythagorean_5`, the two splits' tick of `mz_quarter` and
+  `mz_unequal_f8`; under `two_slits` the last gather's tick, the face
+  gathers and the first gather; under `pair` the `birth`, the
+  `choosers_early` records and `far_min_flight`; under `gate` the
+  `rotate_line`, the `gate_line`, the `pair_rows`, `twice` (an object now:
+  `identity`, `later_gates`, `rows`; it was `true`), the `ghz_gate_line`
+  and the `rotation_multiplicity`. The literals of
+  `tests/test_amplitude_split.py`, `test_amplitude_layer.py`,
+  `test_amplitude_pair.py` and `test_amplitude_gate.py` read there; a
+  register value restated as a literal beside its read (the CHSH sum 176,
+  the sums 88, 2896 and 11584, the correlations 724 and 2900, the total
+  847181/745472, the clicks by kind) is dropped, the read alone remaining.
+- `tests/test_amplitude_cone.py`: the register's pins (the Links, the age
+  at the click, the path phases) are derived from the two worlds and the
+  flight table and compared, the literals gone.
+- `tests/test_hubble_stars_readings.py`: the literal ranges on the
+  registered fits (0.85 .. 0.87, 0.24 .. 0.25) are the register's own
+  `q_bracket` of each run.
+- Left, with the reason: a test's own minimal world keeps its expected
+  integers in the test (the owner's rule of 2026-09-17): the two-slit
+  world `tests/test_nature_beam_worlds.py` (a) builds, the Bell choosers'
+  fixed-phase case of `tests/test_bell_choosers.py`, the K record world of
+  `tests/test_amplitude_click.py` (f) (the registered `lensing/mass_meeting`
+  altered by the test: the lamp's turns 0, every pixel reading `sum`, 300
+  intervals) and the bars of the twelve `*_readings` modules, which read
+  no shipped world. Whether those reproduce a known experiment is the
+  owner's question (the audit's item 10, Q5), untouched.
+- `tools/check.py`'s resource map names the registers' readers.
+## The architecture audit's three items, on 2026-09-21 (host only, no law change)
+
+The architect's audit of genericity and locality (the model owner's request
+of 2026-09-21; the Boss's assignment of its three host-only items as one
+pull request), bit-exact by construction: no physical function changed.
+
+- `NatureBeamSimulation.shell_readings` (the shell means of the readings,
+  the one floating-point calculation of the package) is moved out of the
+  engine class to `diagnostics/shell_readings.py`: `simulation.shell_readings(
+  family, centre, radius)` -> `shell_readings(simulation, family, centre,
+  radius)` from `event_universe.diagnostics.shell_readings`, the same
+  dictionary. Its readers moved: `tests/test_nature_beam_worlds.py` (c) and
+  `tools/coupling_readings.py`. `cube_flux` (integers) stays on the engine.
+- The static numeric audit covers both physical layers
+  (`diagnostics.numeric_audit.audit_physical_modules`): `core/` by
+  `static_integer_audit` as before (integers only, no numeric library) and
+  `events/` by the new `static_events_audit` (integer numpy permitted;
+  refused: a float or complex literal, true division, a float dtype or
+  constant, `sqrt`, the means, the transcendental functions and the modules
+  `cmath`, `decimal`, `fractions`, `random`, `scipy`). `events/run.py`, the
+  artifacts' writer (path joins with `/`, no physics), is outside it as the
+  import gate exempts it. `tests/test_architecture.py` asserts both layers
+  audited and clean; SIMULATOR_DEFINITIONS' gate line says what each audit
+  checks. `tools/check.py` selects `test_architecture.py` for every change
+  under `src/`, as before.
+- `tests/test_locality.py` runs the six-read test (LOCALITY-1's executable
+  form, gone since the scalar candidate's deletion on 2026-09-17): on a bar
+  of 13 x 1 x 1, rows placed beyond one Link of a Node change nothing of
+  its interval (its rows, its readings, the collision there, the click and
+  the push at a detector), and a change at k Links reaches a Node no sooner
+  than the flight's first arrival (1, 3, 5 intervals for k = 1, 2, 3). The
+  layer of `amplitude-v1` is outside the claim (the one non-local operation
+  the model owner decided, records 72 and 74 of 2026-09-20).
 
 ## No registers at Nodes, no tables, on 2026-09-20: the last counts join the table, the flight as the position's accumulator, no remainder discarded
 

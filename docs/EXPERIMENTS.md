@@ -2415,7 +2415,7 @@ states "exactly" and means integer equality at every tick.
   definitions those files reference and was not re-run. The verdicts as
   re-read stand; the numbers above are kept as history.
 - **The key `doppler` deleted (2026-09-21; the crossing rule, [BEAM_LAW
-  note 42](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
   the model owner's records 151 and 158 of 2026-09-20).** The nine worlds
   `hubble_stars/doppler/` and their flux expectations are deleted with the
   key ([MIGRATION](MIGRATION.md#the-crossing-rule-on-2026-09-21-the-step-before-the-law-a-row-and-a-body-met-once-the-key-doppler-and-the-grain-deleted));

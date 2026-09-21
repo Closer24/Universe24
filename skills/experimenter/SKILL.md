@@ -109,3 +109,23 @@ The commit hashes, the design choices (families, GameBoard, detectors, probes,
 lamps), the table expected against measured with the kind of each reading,
 the verdict in plain words, the path of the page and its GIF, and what the
 law lacked.
+
+## The main course (the owner, 2026-09-21, record 176)
+
+No run of a constant-rate world without its pinned formula (the expectation is the formula's integer); a run of a state-dependent world reports beside the limit's formula (skills/workflow.md).
+
+## Notation (the owner, 2026-09-21, record 184)
+
+Every symbol is named in English at its first use (never a Greek letter alone: "gamma (the Lorentz factor)"), and its kind is shown by its type: a scalar plain, a vector in bold lowercase (**p**), a tensor, matrix or operator in bold uppercase (**C**); skills/workflow.md, "Notation".
+
+## The three tests of every rule (the owner, 2026-09-21, record 202)
+
+A rule enters the law only if it is generic (one primitive with declared integers, no family name or kind), vector (one of the six verbs on the state vector, its rate at most bilinear, no root, no float) and local (its own record and the six neighbours, fixed work, nothing kept at a Node); state the three verdicts, one line each; skills/workflow.md, "The three tests of every rule".
+
+## A formula gives, a run proves; the vector after the detector (the owner, 2026-09-21, record 205)
+
+Before any run: the expectation derived from the law's operations (the derivation mathematician's targets are its source) and the vector or tensor the detector will read named with its form; the run compares; a run without a derived expectation is a research run and says so; the register entry carries the formula's section beside the number; skills/workflow.md, "The main course".
+
+## The observed value is the reading (the owner, 2026-09-21, record 210)
+
+Every observable of an experiment (a distance, a time, a speed, a mass, an energy, an angle, a probability) is produced by a detector declared in the world file through its named transformation (HIGHLIGHTS 5.7's dictionary), never read from the host's state; a board quantity is never compared with nature directly.

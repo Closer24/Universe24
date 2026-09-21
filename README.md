@@ -164,14 +164,15 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/events/engine.py` | The frame around the law: the clocks, the owed count off the clock, the steps by the momentum, the books, the readings, the inverse interval, the snapshot; it computes no physics |
 | `src/event_universe/events/run.py` | The artifacts of a run: the input, the events, the state, the record |
 | `src/event_universe/core/integer.py` | Shared bounded integer primitives |
-| `src/event_universe/core/game_board.py` | The GameBoard's addresses, the six Port headings and the bound of a declared charge and quantum |
-| `src/event_universe/core/phase.py` | The phase circle's cosine and sine tables in bounded integers |
+| `src/event_universe/core/game_board.py` | The GameBoard's addresses, the six Port headings, the cube's group of 48 with its hand, and the bound of a declared charge and quantum |
+| `src/event_universe/core/phase.py` | The phase circle, the cyclic group of N steps with its unit vectors, and its cosine and sine tables in bounded integers |
 | `src/event_universe/runner.py` | `python -m event_universe`: a world file to headless artifacts |
 | `src/event_universe/configuration_validation.py` | Read-only preflight of a world file |
 | `src/event_universe/snapshot_writer.py` | `state.json` written Node by Node, byte for byte the snapshot's JSON |
 | `src/event_universe/ui.py`, `ui_assets/` | Local configuration workspace, templates and isolated CLI jobs |
 | `src/event_universe/retention.py`, `docs/RETENTION.md` | Registered output ownership, active writer protection and 24-hour cleanup |
-| `src/event_universe/diagnostics/numeric_audit.py` | Static audit that `core/` holds integer arithmetic only |
+| `src/event_universe/diagnostics/numeric_audit.py` | The two static audits: `core/` holds integer arithmetic only, `events/` integer numpy and nothing that leaves the integers |
+| `src/event_universe/diagnostics/shell_readings.py` | The shell means of the engine's readings, a read-only host diagnostic in floating point |
 | `tools/run_series.py` | The worlds of a series run one process per core, each with its log and artifacts, a summary table at the end; `--wall-seconds` and `--memory-mb` stop a run past the host's budget and report it not completed |
 | `tools/check.py` | The affected-check: changed files and their consumers; `--full` for everything |
 | `examples/events/` | The worlds of the Beam Law: one content, two contents, two slits with a detector and the one-slit control; the Bell worlds, the coupling, orbit, redshift and Hubble series and the detector definitions |
