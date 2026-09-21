@@ -278,6 +278,10 @@ replace it and the check that decides between them. The case: optical-v1's
 declared f = 2 against one-wall-v1's one wall for every accumulator and the
 push on a row with its energy as the weight (issue #605, record 421).
 
+### Every item as an information-transfer system (the owner, 2026-09-21, record 530)
+
+The owner's word: "Always understand how each item affects as an information-transfer system, what the generic solution is and why it will work; short answers." Before the Boss brings the owner a question, gives a session an order, weighs a review finding or lists a decision, it states three short answers, one line each, never an essay: (1) the information: what the item moves between which records or Nodes, through which Link and Port, at what rate, what is kept and what is lost; (2) the generic solution: the one primitive, for every family alike, from which the number follows (the section above), never a patch beside it; (3) why it will work: the mechanism on the GameBoard, with the reading that would show it and the reading that would refute it. The three answers go into the order or the question itself, so the session or the owner reads the reason with the ask.
+
 ### The main course (the owner, 2026-09-21, record 176)
 
 Assign the formula before the run for a constant-rate world, and the limit's derivation beside the run for a state-dependent one (skills/workflow.md, "The main course"); assign every new rule first in its generic vector form (record 177).
