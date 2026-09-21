@@ -65,6 +65,7 @@ at its first use. The recurring symbols:
 | phi | scalar | a body's phase |
 | omega | scalar | the angular frequency |
 | rho | scalar | the charge per unit of content, a family's declaration |
+| alpha, `alpha_G`, k (section 16) | scalars | the fine-structure constant; the gravitational coupling `G m_p^2 / (hbar c)`; the electron's count in units of the minimal mass |
 | kappa | scalar | the meeting's column sum per unit |
 | zeta_N | scalar | the primitive N-th root of unity, `exp(2 pi i / N)` |
 | sigma_j | map | the j-th Galois conjugate of the evaluation `ev` (section 6.5) |
@@ -84,7 +85,7 @@ cited as orders, not as code.
 
 Section 0 states the law as one operator with its two blocks and places
 every result under its block (the owner's second pass, record 167 as the
-Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall). The
+Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass). The
 targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
@@ -3986,3 +3987,216 @@ admits the rule. **Different from the throw** in the centre, the bound
 of record 218 is the stepping form's reading of the one constant K over
 a growing board (section 13) and adds nothing to the rule; the periodic
 universe and the rule's entry are the owner's.
+
+## 16. The numbers of nature from the law's structure: what is reached as c was, what is bound or related, what is input
+
+**The question** (the owner, records 239 and 243, translated: "try all
+the things, all the numbers they measured; try to derive them yourself
+from the groups, like big G, and other numbers known in nature; try to
+reach them yourself, as you reached c"; "so maybe mass is not a free
+parameter: the minimal mass"; the Boss's order). The host script
+[nature_numbers.py](designs/derivations_beam/nature_numbers.py) with its
+output [nature_numbers.out](designs/derivations_beam/nature_numbers.out)
+makes every number below; no run.
+
+**The rule against numerology, stated first and applied throughout.** A
+number of nature is reached only by a path from the law's structure
+(16.3) that passes the three tests (generic, vector, local) and yields
+the number as c was yielded: as the value of a defined quantity in the
+law's own units, with no search. A match found by searching combinations
+of the structure's integers is a coincidence, reported with the chance
+of finding one at that tolerance in a set of that size, never a result.
+"Not reachable from the structure" is a valid and expected answer for
+most of the list, and no constant enters PREDICTIONS.md as derived
+unless its path passes the three tests. 16.4 applies the rule to the
+one near-match the search finds.
+
+### 16.1 What c had, and what a constant must have to be reached the same way
+
+c is a property of the lattice alone: the flight's Manhattan accumulator
+(rate `2 S_1 Q`, wall `2 T_D`) crosses at most one Link per interval on
+every line, and the largest isotropic pace with that property is the
+cube diagonal's, `S_1 Q <= T_D` by Cauchy-Schwarz with equality on the
+diagonals (section 13.2 (a); record 186). So c is DIMENSIONLESS in the
+law's units, `1 / sqrt 3` Links per interval, fixed by locality and
+straightness on the cube, and its SI value, 299 792 458 metres per
+second, is a unit conversion: a ruler-and-clock reading between two
+detectors (Highlights 5.7's dictionary, record 191). What c had: a
+quantity defined by the law (the operator norm of the flight), a
+structure that fixes it (the cube, the six Ports, one carry per
+interval), and no declared number in it.
+
+**The consequence for every constant that carries units.** In the law's
+units a Link, an interval, a unit of content and a phase step are the
+units, so every dimensional constant of nature is one of three things:
+1 or a ratio of the grain (c; the age per Link `sqrt 3`; the dwell `55 /
+32`), a declared column of the world (G is the width, `G = K (n / d) /
+(4 pi S)`, section 3.3; h is the world's `action`; e is `rho M`, the
+charge per unit of content times the content; the Coulomb constant is G
+itself, section 3.4), or absent (k_B: the law has no temperature;
+section 14's entropy is in bits, and Boltzmann's constant is the
+conversion of bits to joules per kelvin, a unit). None of them can be
+reached as c was, because none of them is dimensionless: G, h, e and c
+in SI are the dictionary's four conversions, as physics itself says of
+its units. What can be reached, in principle, are the DIMENSIONLESS
+numbers of nature. The list, with one source each (CODATA 2022: Mohr,
+Newell, Taylor and Tiesinga, Rev. Mod. Phys. 2025; PDG 2024: Navas et
+al., Phys. Rev. D 110, 030001; Planck 2018: Aghanim et al., A&A 641, A6,
+2020):
+
+| the number | the measured value | source |
+| --- | --- | --- |
+| the fine-structure constant `alpha = e^2 / (4 pi epsilon_0 hbar c)` | `1 / 137.035999177(21)` | CODATA 2022 |
+| `m_p / m_e` | 1836.152673426(32) | CODATA 2022 |
+| `m_mu / m_e` | 206.7682827(46) | CODATA 2022 |
+| `m_n / m_p` | 1.00137841946(40) | CODATA 2022 |
+| `m_tau / m_e` | 3477.23(23) | PDG 2024 |
+| the gravitational coupling `alpha_G = G m_p^2 / (hbar c)` | `5.906 x 10^-39` | from CODATA 2022's G, `m_p`, hbar, c |
+| the strong coupling `alpha_s(M_Z)` | 0.1180(9) | PDG 2024 |
+| the weak coupling: `G_F / (hbar c)^3` and the Weinberg angle `sin^2 theta_W` (MS-bar at `M_Z`) | `1.1663788(6) x 10^-5 GeV^-2`; 0.23122(4) | CODATA 2022; PDG 2024 |
+| the electron's anomaly `a_e = (g - 2) / 2` | `1.15965218 x 10^-3` (the last digits at 1 part in 10^10) | CODATA 2022 |
+| the deceleration `q_0 = Omega_m / 2 - Omega_Lambda` | -0.53 (from `Omega_m` = 0.315(7), `Omega_Lambda` = 0.685) | Planck 2018 |
+| the density ratios `Omega_b`, `Omega_c`, `Omega_Lambda` | 0.049, 0.265, 0.685 | Planck 2018 |
+| the photons per baryon `1 / eta` | `1.63 x 10^9` (`eta = 6.12 x 10^-10`) | Planck 2018 (PDG 2024's BBN review) |
+
+### 16.2 The minimal mass: a theorem of the law, and what follows from it
+
+**The theorem.** In the law a body's mass is its content M, and M is a
+whole number of units: the amounts of the state vector are integers (a
+row's amount, a body's `content`, `1 <= M`, the masses design's bound
+`M <= K_clock (N / 2 - 1)`), and every place the mass acts reads that
+integer linearly, the inertial mass in the drive's wall `Q S M` (form B:
+`Q S M S_1 Q + |p|_1 T_D`), the passive gravitational mass in the push
+`M_A (rho_A rho_B - 1) V` and the active one in the release, `content x
+n / d` rows per direction per self-creation (the turn's rate). So the
+smallest mass of the law is ONE UNIT, `M = 1`, and every mass is a whole
+multiple of it: fixed by the integer form of the state, not declared,
+as c is fixed by the lattice; a mass between 0 and 1 unit, or between 1
+and 2, does not exist in the law. **Reached, with its scope stated**:
+the theorem fixes the existence of a least mass and the integrality of
+every mass ratio; it does not fix the unit's size against any body's
+mass (the electron may be one unit or a million), because every map of
+the law on the amounts is linear or homogeneous (PREDICTIONS 26: no
+number of the law selects a mass), so the unit is the least count and
+not a scale.
+
+**(a) The ratios as rationals, and the electron's count.** If the
+electron is k units, the proton is `k x 1836.152673426` units to the
+measured precision, a whole number only for some k. The script's table
+(A), at CODATA 2022's uncertainties:
+
+| the ratios required whole | the smallest k (the electron's units) | the counts |
+| --- | --- | --- |
+| `m_p / m_e` alone | 4526 | the proton 8 310 427 |
+| `m_mu / m_e` alone | 889 | the muon 183 817 |
+| `m_p / m_e` and `m_mu / m_e` | 13 840 | the proton 25 412 353, the muon 2 861 673 (the masses design's k at CODATA 2018, unchanged) |
+| with `m_n / m_e` | 45 129 | the proton 82 863 734, the neutron 82 977 955, the muon 9 331 246 |
+
+At `k = 1` (the electron one unit, the catalog's 1836) the proton's
+count is off by 0.152673 units, `8.3 x 10^-5` of the ratio and `4.8 x
+10^6` standard deviations: **the electron is not the minimal mass**, or
+the unit is finer than the electron by at least the factor 4526 (the
+proton's ratio alone) and 13 840 (with the muon). But this is the
+arithmetic of a fine grid, as the masses design said: any k above the
+inverse precision fits, 989 567 of the k below 3 000 000 fit the proton
+and the muon together, and the law fixes no k. So the theorem BOUNDS
+the unit (`m_unit <= m_e / 4526`) and relates the ratios (all rational);
+it derives none of them. **Bound and related, not reached.**
+
+**(b) The second definition of mass, from the computation.** Section 13
+counts the cost: a body's own accumulators cost 5 operations each per
+interval whatever M (the drive, the turn, the owed count), so a body's
+INERTIAL mass costs nothing per unit; what M costs is its RELEASE, `12
+P` operations per row born times `content x n / d` births per direction
+per self-creation, linear in M; and the wait it causes in every reader,
+`26 k / K` intervals per self-creation for the k rows read (13.2 (b)),
+reads that release count. So the computational definition of mass is
+the rows a body puts on the GameBoard per interval over its rate `n /
+d`, and it agrees with the first definition as an identity: it is the
+same integer M read at the release instead of at the drive. The
+agreement is the equivalence principle of section 3.3 (the source's
+rows `content x n / d`, the reader's response `1 / (Q S M)`, `M_A`
+cancelling) and adds no number: the unit of content costs `12 P n / d`
+operations per interval to hold on the board and 26 to read, both
+functions of the widths and not of nature's masses.
+
+**(c) The unit in kilograms.** A conversion of the dictionary and
+nothing the structure fixes: the law's mass unit is `m_e / k` with k the
+electron's count, bounded below by (a) and otherwise free; the only
+mass a structure could fix would be a combination of the law's
+constants, and `sqrt(hbar c / G)` in the law's units is `sqrt(h (4 pi
+S) / (sqrt 3 x 2 pi K (n / d)))`, two declared columns (the width S and
+the action h) and the fan's count: declared, not structural. **Input**,
+with the theorem's bound.
+
+### 16.3 The law's structural numbers: what a derivation may use
+
+The only things a derivation may use, each a count of the law's form
+and not a declaration of a world:
+
+| kind | the numbers | where |
+| --- | --- | --- |
+| the cube | 3 axes, 6 Ports, 2 hands; the group of the Ports of order `48 = 2^3 x 3!` (the signed permutations of the axes), its 24 rotations and 24 reflections (the determinant the hand) | record 226; `core.game_board` |
+| the flight | `c = 1 / sqrt 3`; the age per Link `sqrt 3`; on the register's grain `T_d = 110, 156, 192` at `Q = 64` (the heading, the face and the cube diagonal), the dwell `55 / 32` | sections 1.4, 13.2 (a) |
+| the collision table | `3^8 = 6561` slot states (8 slots: six headings and two rest slots, each empty, single or crowd), 5440 classes, 4429 fixed states, 2132 moving, the cycle lengths 1, 2, 3, 4, 6 (4429, 933, 52, 23, 3 classes) | `ladder.out` A; section 11.3 |
+| the samplings, declared per world | N (the circle of phases, 64 on the register), W (the wheel, 4096), Q (the pace's grain, 64), P and the fan (5 and 290 directions; 16 and 1423; the Bohr shell 2616), `K_clock` (`2^20`, `2^22`), the width S | Highlights 5.7 (1); section 13.3 |
+| the operations | the six verbs; the Gram form of rank 2 with its eight totals `65448 .. 65773 / 65536` (the rounding at 1 / 256); the one threshold; the wait `26 k / K`; the push's columns (gravity, charge, strong) with one constant `k_C = G` | sections 0, 6.5, 13.1, 3.4 |
+| the limits they reach | `2 sqrt 2` (the Bell bound, 6.2); the Gleason power 2; `log2 N = 6` bits per record; `4 pi` (the shell); Milne's `q = 0` | sections 6, 14, 15 |
+
+Everything else in a world file is an input: the family table (content,
+the cost h, rho, sigma, the lifetime, the phase rate, the hand), the
+width, the state and the apparatus (Highlights 5.7's three kinds).
+
+### 16.4 Each number of nature against the structure
+
+| the number | the path, if any | what it yields | verdict | what would have to be added, named as a hypothesis |
+| --- | --- | --- | --- | --- |
+| `alpha` | In the law `alpha_law = k_C q_e^2 / (hbar c)` with `k_C = G = K (n / d) / (4 pi S)`, `q_e = rho_e M_e`, `hbar = h / (2 pi)`, `c = 1 / sqrt 3`: `alpha_law = sqrt 3 K (n / d) (rho_e M_e)^2 / (2 S h)`; equivalently the electron's speed over c on Bohr's first orbit, `2 pi sqrt 3 M k / h` (7.2's closure), the width, the charges and the action all declared. The search over the structure (the script's (C): 3360 products and quotients of two structural numbers with the exponents 1 and 2): the nearest is `3^8 / 48 = 136.6875`, 0.25 % below `1 / alpha`; the set has 136 values within a factor `e^(1/2)` of 137, so 0.82 hits within 0.3 % are expected and 1 is found: a coincidence at the expected rate, reported and not a result | a ratio of three declarations | **input** | a rule tying `rho^2 S` to `h`: charge quantised in units of `sqrt(h c / G)` times a number the structure fixes (none is in sight; `charge-v1`, not built) |
+| `m_p / m_e`, `m_mu / m_e`, `m_n / m_p`, `m_tau / m_e` | the family table's contents, rational by 16.2's theorem; the electron's count bounded below (4526; 13 840; 45 129); the search: nearest `5440 / 3 = 1813` (1.2 % off) and `24^2 / (2 sqrt 2) = 203.6` (1.5 %), 0 hits within 0.3 % where 0.7 are expected | rationals with a bound on the unit | **bound and related, not reached** | a nonlinear closure on amounts (a binding that costs content, issue #369; the masses design section 6's smallest rule) under its own identity |
+| `alpha_G` | `alpha_G,law = G M_p^2 / (hbar c) = sqrt 3 K (n / d) M_p^2 / (2 S h)`: declared. With `alpha` it is RELATED by the one constant `k_C = G` (3.4): `alpha / alpha_G = (q_p / M_p)^2 = rho_p^2`, so nature's two couplings declare one number of the family table, `rho_p = sqrt(alpha / alpha_G) = 1.11 x 10^18` per unit of content (e in units of `sqrt G m_p`), and the neutrality of matter gives `rho_e = -rho_p m_p / m_e = -2.04 x 10^21`; the register's [1, 1] and -15 are a scale chosen for the runs (the masses design 4); the ratio of the electric to the gravitational force on the electron-proton pair is then `alpha m_p / (alpha_G m_e) = 2.27 x 10^39`, an identity of the form | one declared rho for two of nature's numbers | **related, not reached** | the same as alpha's: a rule fixing rho; nothing in the structure carries `10^18` (the largest structural number is 6561; W is 4096) |
+| `alpha_s` | the strong column, `sigma = 10 000` with the sign -1 and the lifetime 3 on the register, a declared value per unit; the law's couplings do not run (every rule linear or homogeneous in the amounts, no scale in the coefficients): `alpha_s(M_Z)` = 0.118 against `alpha_s` about 1 at 1 GeV is a running the law has not | a declared column | **input**, the running absent | a coupling that depends on the momentum transfer: outside the six verbs as a rate at most bilinear in the state; a hypothesis named, not built |
+| the weak coupling, `sin^2 theta_W` | the law's weak rule is `become` at a key on the age with a lifetime L (HYPOTHESES 21, series J): a transformation at a count, not a rate proportional to a coupling; no second gauge coupling and no mixing between two, so no angle | nothing | **absent** | two couplings and their mixing: a structure the law does not have |
+| `a_e = (g - 2) / 2` | the law has no spin and no magnetic moment: a body's readings are the moments of the arriving rows (order 0, 1, 2 and the age), its hand a `Z_2` (the determinant of the cube's group) with no coupling; g is undefined | nothing | **absent** | a spin and a magnetic coupling, both outside the reading operator as it stands |
+| `q_0` | section 15: the growing wall at a constant H gives Milne, `q = 0`, exactly; the register's throws `q = -0.108 +- 0.25`; nature's -0.53 +- 0.05 (Planck 2018) is outside both | 0, a bracket | **reached for the form (0), not for nature's number** | a rising H (a second rate on the wall under `expansion-v1`), giving `q < 0`: a hypothesis, the register cannot pin it (section 15.4's identity of the throw and the wall) |
+| `Omega_b`, `Omega_c`, `Omega_Lambda` | the contents placed in the initial state (Highlights 5.7 (3)); no rule of the law fixes a ratio of contents (16.2's theorem: linear in the amounts) | nothing | **input** (the state) | none within the law: the initial state is the third kind of input |
+| the photons per baryon | the law's counterpart is the rows per unit of held content on the GameBoard: `P x (n / d) x t` rows per unit released over t intervals from a free family's rate, unbounded in time (no absorption balances the release; a linear law has no equilibrium of rows and bodies, no temperature); section 6's units per bit (82, 2, 2, 29) are the apparatus's, section 14's `log2 N` bits per record the click's; none is `1.6 x 10^9` | a number of the world's age and rate | **absent** | an equilibrium between the release and the absorption (a thermal state), which needs a nonlinear rule |
+
+### 16.5 What the search says, and the rule applied
+
+The one near-match, `3^8 / 48 = 136.6875` against 137.036, is 0.25 %
+off, and 0.82 hits at 0.3 % are expected from the set's own density:
+its chance is of order one, and it has no path (no rule of the law
+divides the collision table's slot states by the cube's group, and the
+quotient would be a count of orbits, an integer, not a coupling).
+Reported as a coincidence. The masses find no hit at 0.3 % where 0.7
+are expected. The search confirms the rule's expectation: with about
+twenty-five structural numbers and their pairwise products, a match at
+a few parts in a thousand to any given target is expected about once,
+and none of the matches has a path.
+
+### 16.6 The verdict of section 16
+
+**Reached as c was**: nothing on the list, and the reason is stated:
+every constant with units is a conversion of the dictionary (G the
+width, h the action, e the charge per unit of content times the
+content, k_B absent), and the dimensionless numbers of nature are ratios
+of those declarations or of the initial state, none a count of the
+structure. **Bound or related**: the minimal mass, one unit, a theorem
+of the integer form, with every mass ratio rational and the electron at
+least 4526 units (13 840 with the muon) so that the unit is below the
+electron's mass by that factor at least; `alpha` and `alpha_G` related
+through the one constant `k_C = G` to one declared number, `rho_p =
+sqrt(alpha / alpha_G) = 1.11 x 10^18` per unit of content, and the
+neutrality of matter giving `rho_e` from it; `q = 0` reached for the
+form and nature's -0.53 not. **Input**: `alpha` (three declarations),
+the mass ratios (the family table), `alpha_G` (the width), `alpha_s`
+(the strong column, no running), the density ratios (the state).
+**Absent**: the weak coupling and the Weinberg angle (a key, not a
+coupling; no mixing), `g - 2` (no spin), the photons per baryon (no
+equilibrium). **What each would need**, named and not built: a rule
+fixing rho against h and S (charge quantised in `sqrt(h c / G)`), a
+nonlinear closure on the amounts for the masses, a running coupling
+for the strong column, two couplings and a mixing for the weak, a spin
+for `g`, a thermal balance for the photons, a rising H for `q`. **The
+rule against numerology** held: one coincidence at the expected rate,
+no path, no entry in PREDICTIONS.md.
