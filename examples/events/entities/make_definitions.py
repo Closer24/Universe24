@@ -126,6 +126,32 @@ def families() -> dict[str, object]:
                 for axis in ("px", "mx", "py", "my", "pz", "mz")
             ],
         ),
+        # The massive quantum (`massive-rows-v1`, 2026-09-21): a paid family
+        # declared `massive` with its phase circle spelled, placed with its
+        # lamp (the pin's keys: M 64, p 220, the wheel of `slits_matter`),
+        # since the family's tables are formed from its lamp's
+        # `momentum_magnitude`; a world that places it declares
+        # `massive_rows`, `action` and `age_bound`. The pin worlds spell the
+        # family by the design's row (no `phase` key) and carry their own
+        # lamp, so they keep it inline and place no second lamp.
+        {
+            "name": "massive_quantum",
+            "families": [{"name": "matter", "quantum": 64, "phase": True, "massive": True}],
+            "measured": [
+                measured(
+                    "matter",
+                    [0, 0, 0],
+                    amount=SOURCE_CONTENT,
+                    lamp={
+                        "rate": [1, 1],
+                        "wheel": [2531, 4096],
+                        "directions": [RIGHT],
+                        "momentum_magnitude": 220,
+                    },
+                )
+            ],
+            "detectors": [],
+        },
     ]
     return {"format": FORMAT, "entities": entities}
 

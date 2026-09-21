@@ -14,10 +14,6 @@ ROOT = Path(__file__).resolve().parents[1]
 RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
     "examples/events/README.md": ("tests/test_nature_beam_worlds.py",),
     # The registers a test reads a world's numbers from (2026-09-21).
-    "examples/events/gate_set.json": (
-        "tests/test_nature_beam_worlds.py",
-        "tests/test_amplitude_click.py",
-    ),
     "examples/events/expectations.json": ("tests/test_nature_beam_worlds.py",),
     "examples/events/bell/expectations.json": ("tests/test_nature_beam_worlds.py",),
     "examples/events/amplitude/expectations.json": (
@@ -32,6 +28,19 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
     ),
     "examples/events/c_measured/expectations.json": ("tests/test_c_measured.py",),
     "examples/events/c_measured/c_measured.json": ("tests/test_c_measured.py",),
+    # The massive rows' register, worlds and generators (2026-09-21): the
+    # test that reads the pin, the byte-identity digests and the replay.
+    "examples/events/massive_rows/expectations.json": ("tests/test_massive_rows.py",),
+    "examples/events/massive_rows/make_worlds.py": ("tests/test_massive_rows.py",),
+    "examples/events/massive_rows/replay_register.py": ("tests/test_massive_rows.py",),
+    "examples/events/massive_rows/slits_matter.json": ("tests/test_massive_rows.py",),
+    "examples/events/massive_rows/slits_matter_1024.json": ("tests/test_massive_rows.py",),
+    "examples/events/massive_rows/slits_matter_small.json": ("tests/test_massive_rows.py",),
+    "examples/events/gate_set.json": (
+        "tests/test_nature_beam_worlds.py",
+        "tests/test_amplitude_click.py",
+        "tests/test_massive_rows.py",
+    ),
     "examples/events/detector/entities/detectors.json": (
         "tests/test_entity_definitions.py",
         "tests/test_configuration_validation.py",

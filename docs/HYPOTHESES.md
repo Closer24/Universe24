@@ -1126,4 +1126,3 @@ couplings.
 - **Status.** Built on 2026-09-21 beside the law (`tests/test_massive_rows.py`,
   the register byte identical without the key); the pin's run and its
   verdict in the series README as run.
-
