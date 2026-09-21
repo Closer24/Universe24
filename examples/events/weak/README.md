@@ -276,3 +276,39 @@ and 0.038); `j3_neutron_free`, `w_exchange` and J2 are identical. 34
 readings inside and 2 outside (the trigger ticks of the lattice's corners
 and of the deuteron, as before). The register entry has the numbers
 ([migration](../../../docs/MIGRATION.md#the-fraction-free-law-on-2026-09-20-every-count-an-accumulator-on-the-bodys-record)).
+
+## Re-pinned under the fraction-free law (2026-09-21)
+
+The fraction-free batch re-read the runs above but left the register's
+`become` entries as the first registration's warm run had written them
+(the count each clock read at tick 100 of the engine before
+[BEAM_LAW note 41](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+the architect's root cause, record 254: the first commit whose warm run
+differs is e7ba13c6, the owed count on its accumulator). Re-pinned by the
+generator at `main` as the lesson of the first registration asked: for
+every neutron the range of the count over the dwell period, the ticks 61
+to 120 of a warm run of 120 intervals (the transient over by tick 36, the
+window longer than one cycle of the owed count, 2^20 / c intervals), and
+the trigger ticks at both ends of the range; the reading inside when the
+neutron fires within them or up to 3 intervals before. The old integers,
+kept as history (the full maps in git before this re-pin):
+
+| World | The first registration (2026-09-20) |
+| --- | --- |
+| `j1_lattice` | the counts 22068, 23907, 25746 at tick 100; the ticks 522 .. 524 |
+| `j1_source` | the counts 25746, 26164, 31681, 32099, 36195 at tick 100; the ticks 524 .. 529 |
+| `j3_deuteron` | the counts 128590 at tick 100; the ticks 574 .. 574 |
+| `j3_deuteron_crowd` | never (the gate 65536) |
+| `j3_neutron_free` | the counts 0 at tick 100; the ticks 512 .. 512 |
+
+The re-pin: `j1_lattice` the counts 11034 to 27585 in four ranges, the
+ticks 517 to 525; `j1_source` 20647 to 36195 in five ranges, 522 to 529;
+`j3_deuteron` the range 23881 to 128590 (the proton's rows dwell at the
+neutron's Node), 523 to 574; `j3_neutron_free` 0, 512; the gate as it was.
+Against the runs at `main` every neutron of both J1 worlds and the
+deuteron's fire within their ranges (522 to 524, 523 to 528 and 568):
+the two readings outside since the first registration, the lattice's
+corners and the deuteron, are inside under the range, 36 readings inside
+and 0 outside; nothing else moves. `tests/test_weak_readings.py` (e)
+replays the generator's warm run on the shipped worlds against the
+register.

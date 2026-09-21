@@ -209,15 +209,19 @@ class Count:
     counted, `held` the content held of the row's family, `rate` the
     lamp's own rate, `momentum` the momentum on the row's axis, `column`
     the column's lifted numerator on the axis, `flow` the flux-weighted
-    flow of the direction on the axis); `index` the family, the column or
-    the direction the row belongs to and `axis` its axis (0 where the count
-    has none); `numerator` the rate's own factor n (1 where the loop is
+    flow of the direction on the axis); `index` the family, the column,
+    the direction or, for the turn by momentum, the axis the row belongs
+    to, and `axis` its axis (0 where the count has none); `numerator` the rate's own factor n (1 where the loop is
     handed the whole numerator); `denominator` d (the last one used where
     the loop is handed it, the step's divisor and the flux's); `at_most`
     the cap on the count gained at one self-creation (1 on the drive, 0
     otherwise); `idle_at_zero` whether a numerator of 0 leaves the row as it
     is (the step's rule: a momentum of 0 never steps); and `accumulator`,
-    the remainder's owner, one bounded integer."""
+    the remainder's owner, one bounded integer. The `place` rows of a body
+    on a set (the Nodes' claims on its releases) are the one kind not run
+    through `advance`: `nature_beam.place_over_nodes` is their rule (an
+    argmax carry on the claims, BEAM_LAW note 41 (viii)), and
+    `advance("place")` is never called."""
 
     name: str
     source: str
@@ -322,14 +326,21 @@ def counts_table(
     lamp_rate: tuple[int, int] | None,
     column_scales: tuple[int, ...],
     directions: int,
+    action: int | None = None,
+    phase_steps: int = 1,
+    nodes: int = 1,
 ) -> CountTable:
     """A body's table of counts from the world's rates (BEAM_LAW note 41):
     the turn, the owed count, the release per family (its rate 0 on a paid
     family: it releases nothing freely), the lamp's rate where the body is
     a lamp, the drive per axis (the step's divisor handed to the loop, the
     cap 1, idle at a momentum of 0), the push per column and axis over
-    Lambda_c^2, and, under `doppler`, the flow per direction of the world's
-    table and axis (the flux's denominator handed to the loop)."""
+    Lambda_c^2, under `doppler` the flow per direction of the world's
+    table and axis (the flux's denominator handed to the loop), and under
+    the world key `action` the turn by momentum per axis (the model
+    owner's record 155 of 2026-09-20, "no exception": the rate |p_a| x N at
+    every Link the step rule counts on the axis, over h; its index the
+    axis)."""
     rows = [
         Count("turn", "content", 0, 0, turn_rate[0], turn_rate[1]),
         Count("owed", "crowd", 0, 0, suspension[0], suspension[1]),
@@ -351,6 +362,12 @@ def counts_table(
         for direction in range(directions)
         for axis in range(3)
     )
+    if action is not None:
+        rows.extend(Count("action", "momentum", axis, axis, phase_steps, action) for axis in range(3))
+    if nodes > 1:
+        # A body on a set: the claim of every Node on the body's releases,
+        # in units of 1 / nodes (`nature_beam.place_over_nodes`).
+        rows.extend(Count("place", "amount", node, 0, 1, nodes) for node in range(nodes))
     return CountTable(rows)
 
 
@@ -450,8 +467,12 @@ class Measured:
     # (the lamp's rate [n, d]), `drive` per axis (the momentum over the
     # step's divisor D, the cap `at_most` 1), `push` per column and axis
     # (the column's lifted numerator over Lambda_c^2, `nature_beam.push_form`)
-    # and, under the world key `doppler`, `flow` per direction and axis
-    # (the flux-weighted flow over G Q |v_d|^2, `nature_beam.weighted_flow`).
+    # under the world key `doppler`, `flow` per direction and axis (the
+    # flux-weighted flow over G Q |v_d|^2, `nature_beam.weighted_flow`) and
+    # under `action` the turn by momentum `action` per axis (|p_a| N per
+    # Link the step rule counts on the axis, over h; record 155), and on
+    # a body on a set the `place` row per Node, the Node's claim on the
+    # body's releases in units of 1 / nodes (`nature_beam.place_over_nodes`).
     # `acc_owed`, `acc_release`, `acc_lamp`, `acc_turn`, `acc_push`,
     # `acc_flow` and `drive` below read and write the table; `state.json`
     # and `run.json` carry the accumulators under `acc` by name, beside
@@ -672,6 +693,10 @@ class Measured:
         }
         if self.acc_flow:
             found["flow"] = [list(axes) for axes in self.acc_flow]
+        if self.counts.of("action"):
+            found["action"] = self.counts.values("action")
+        if self.counts.of("place"):
+            found["place"] = self.counts.values("place")
         return found
 
     def state(self) -> dict[str, object]:

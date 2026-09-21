@@ -11,6 +11,79 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## No tables: the batch under the share's accumulator and the Nodes' claims - 2026-09-20
+
+The branch `no-tables` after its third item (no remainder discarded at
+run time: `share_of` with the row's accumulator, `place_over_nodes` with
+the Nodes' claims; [MIGRATION](MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded)):
+the 95 candidate worlds (series L, K, H, the catalog, G2's 27) run at
+their registered length under the guards and compared with the same
+worlds on the tree before the item (series H against the action-row
+tree, the rest against the head of `fraction-free`): 87 identical in
+events and books (every world of L including record 144's cone and the
+which-path worlds, every world of K, every world of G2, the catalog's
+`lamp_mirror_screen` and `neutron_star`; `clock_near_mass` in its events
+and books, its `state.json` carrying the `place` claims of a body that
+releases nothing), 8 moved: the seven worlds of series H (the electron a
+body on three Nodes, its releases placed by the Nodes' claims) and the
+catalog's `sun_planet` (the sun two bodies on sets of three Nodes). What
+moved and by how much (the columns as in the fraction-free table below):
+
+| world | what moved | births | waits | steps | clicks | ages |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bohr/r12.json` | events, books | 0 | 0 | 0 | 1925039 | same |
+| `bohr/r15.json` | events, books | 0 | 0 | 0 | 2657829 | same |
+| `bohr/r16.json` | events, books | 0 | 0 | 0 | 2683089 | same |
+| `bohr/r2.json` | events, books | 0 | 0 | 0 | 776599 | same |
+| `bohr/r4.json` | events, books | 0 | 0 | 0 | 775789 | same |
+| `bohr/r6.json` | events, books | 0 | 0 | 0 | 774793 | same |
+| `bohr/r8.json` | events, books | 0 | 0 | 0 | 1088889 | same |
+| `catalog/sun_planet.json` | events, books | 50 | 0 | 10 -> 11 | 209 -> 244 | same |
+
+Series H's orbits under the claims: the register's H entry and the Bohr
+README. `sun_planet`: the planet at (22, 25, 0) after 50 intervals with 11
+steps ((23, 25, 0), 10), the screen's 152 light clicks (147), the faces'
+`mass` 19, 19, 7, 7 (19, 19, 0, 21) and `light` 6, 0, 28, 5 (6, 0, 22, 6),
+the escaped `light` 39 units of content 304 (34 of 263).
+
+## No tables: the gate set under the flight rule - 2026-09-20
+
+The branch `no-tables` after its second item (the flight table retired:
+`Flight.walk_step`, the position's accumulator per direction off the age;
+[MIGRATION](MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded)):
+the seventeen worlds of the gate set (`examples/events/gate_set.json`) run
+at their registered length under the guards, `events.jsonl`, `state.json`
+and the books digested and compared with the same worlds on the tree
+before the item (`bohr/r2` against the action-row tree of the first item,
+the sixteen others against the head of `fraction-free`, the digests of
+the register replay below): 17 of 17 identical in events, state and
+books. The step table per direction over its period was built from the
+same rule at load, so nothing could move; the replay is the proof.
+
+## No tables: series H under the action row - 2026-09-20
+
+The branch `no-tables` ([MIGRATION](MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded);
+the model owner's record 155) against its base `ddec5166` (the head of
+`fraction-free`): the seven worlds of series H run on both trees at their
+registered length under the guards (`--wall-seconds 1200 --memory-mb
+4096`), `events.jsonl` and `state.json` digested, the books (`audit`)
+digested. The turn by momentum as the `action` row moves the electron's
+phase and nothing of its steps: the events of every world moved (the
+rays' phases), the books of every world are identical, every orbit's
+closings, periods, returns, radii and escapes are the signed drive's
+(`tools/bohr_readings.py` on both, the numbers in the register's H entry).
+The digests (the first 16 hexadecimal digits of the sha256):
+
+| world | events.jsonl (was) | events.jsonl (now) | state.json (now) | books |
+| --- | --- | --- | --- | --- |
+| `r2` | `ea52bf20dda2d125` | `af97b4fd9a61444d` | `0fb4d0945f04b5ba` | identical |
+| `r4` | `4532306a56eb3276` | `d37ae7d22246744b` | `bc2d82f5250901d4` | identical |
+| `r6` | `9cd943bafcc6def4` | `541ad66e08b551ab` | `1e117afc41fd7990` | identical |
+| `r8` | `30f5083c1186d478` | `830a6f3caa7062a9` | `3fa56b6963e2b810` | identical |
+| `r12` | `da8cc1cd922ef2e1` | `a08542a5cd0bf548` | `ab7be58212465791` | identical |
+| `r15` | `b82a90b67b4d0fb4` | `4f4b6d9cd339e07b` | `f499a30e4fb8c5e6` | identical |
+| `r16` | `929dbfe2afda38ec` | `9dfa570683034b9b` | `af507d6861a76026` | identical |
+
 ## The fraction-free law: the register replayed once on the branch against the base a2120413 - 2026-09-20
 
 The branch `fraction-free` ([BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);

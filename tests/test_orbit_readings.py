@@ -1,6 +1,6 @@
 """The orbit readings tool reads the engine's own functions (Highlights 5.4,
 the architecture review of 2026-09-20: `tools/orbit_readings.py` now reads
-the fan's labels off `nature_beam.flight_table`, the release off
+the fan's labels off `nature_beam.direction_flight`, the release off
 `engine.by_clock` and the world's keys through `parse_nature_beam_world`). Each
 reading of the tool is checked against the engine on a minimal GameBoard; the
 expected values of docs/TEST_EXPECTATIONS.md ("The tools read the

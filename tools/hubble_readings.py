@@ -14,7 +14,7 @@ and the distance from the ages of the arriving rows on the click records
 (`reading` = the age moment, amount x age, under `reads: "age"`): the
 light-travel time tau = the age and the distance d = m(tau) Links, m the
 Manhattan steps of the flight table read through the engine's own
-`flight_table`, whose period also gives c (README.md there).
+`direction_flight`, whose period also gives c (README.md there).
 
 Every number is labelled by its kind (the model owner, 2026-09-20): a
 DETECTOR reading is the record of the detector's set or of a measured event
@@ -67,7 +67,7 @@ import numpy as np
 
 from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.nature_beam import flight_table
+from event_universe.events.nature_beam import direction_flight
 from event_universe.events.world import HEADING_OFFSET, Q
 from event_universe.world_loading import world_of_run
 
@@ -96,7 +96,7 @@ KIND_DETECTOR = "[DETECTOR]"
 KIND_BOARD = "[GAMEBOARD]"
 # The flight table of the six headings (the two rest vectors first): m(age)
 # and c are the same on every heading.
-HEADINGS_TABLE = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
+HEADINGS_FLIGHT = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
 
 
 def milne(x: float) -> float:
@@ -225,7 +225,7 @@ def read_run(folder: Path) -> Run:
     document = world_of_run(folder)
     model = str(record["model"])
     crowd, clock = model[len(MODEL_PREFIX) : -len(MODEL_SUFFIX)].split("-")
-    table = flight_table(tuple(tuple(v) for v in record["directions"]))
+    table = direction_flight(tuple(tuple(v) for v in record["directions"]))
     heading = np.array([HEADING_OFFSET])
     period = int(table.period[HEADING_OFFSET])
     c = int(table.manhattan_steps(heading, np.array([period]))[0]) / period
@@ -323,7 +323,7 @@ def links(ages: list[float]) -> np.ndarray:
     interval)."""
     direction = np.full(len(ages), HEADING_OFFSET, dtype=np.int64)
     whole = np.asarray([round(age) for age in ages], dtype=np.int64)
-    return HEADINGS_TABLE.manhattan_steps(direction, whole)
+    return HEADINGS_FLIGHT.manhattan_steps(direction, whole)
 
 
 def window_point(run: Run, source: Source, window: tuple[int, int]) -> Point | None:

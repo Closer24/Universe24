@@ -14,7 +14,7 @@ of 7. Expected, written down first:
     the line; since the fraction-free law of 2026-09-20 the pair is read
     by its record, the lamp's exact clock stalling once at tick 4 on this
     lamp) equal 1 + the flight age at which the pair ray reaches each
-    counter, `FlightTable.manhattan_steps` (the +X heading: 3 Links by
+    counter, `Flight.manhattan_steps` (the +X heading: 3 Links by
     the age 5, 6 by 10, 7 by 12, 8 by 13): 6, 11, 13, 14;
 (b) one bin, (20, 44): n = 64 (the ages 6..69 by record: the six records
     born before tick 8 meet no setting, the design's warm-up of 7 by

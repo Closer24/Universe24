@@ -1,0 +1,7917 @@
+{
+ "format": "c-measured-expectations-v1",
+ "derivation": "docs/DERIVATIONS_BEAM.md section 11.1 (the flight's closed form) and docs/designs/light_speed/FORM.md section 1 (c = 1 / sqrt 3 and its finite grain)",
+ "world": "c_measured.json",
+ "Q": 64,
+ "half_width": 32,
+ "side": 65,
+ "centre": [
+  32,
+  32,
+  32
+ ],
+ "fan_manhattan": 6,
+ "fan": 290,
+ "birth_tick": 1,
+ "births": 1,
+ "clicks": 290,
+ "last_tick": 98,
+ "ticks": 100,
+ "c": 0.57735,
+ "pace": {
+  "min": 0.571767,
+  "max": 0.589286,
+  "mean": 0.581018
+ },
+ "asymptotic_pace": {
+  "min": 0.57735,
+  "max": 0.581818,
+  "mean": 0.578375
+ },
+ "classes": {
+  "axes": {
+   "count": 6,
+   "ages": [
+    56
+   ],
+   "pace": {
+    "min": 0.589286,
+    "max": 0.589286,
+    "mean": 0.589286
+   }
+  },
+  "face_diagonals": {
+   "count": 12,
+   "ages": [
+    79
+   ],
+   "pace": {
+    "min": 0.581866,
+    "max": 0.581866,
+    "mean": 0.581866
+   }
+  },
+  "body_diagonals": {
+   "count": 8,
+   "ages": [
+    97
+   ],
+   "pace": {
+    "min": 0.577412,
+    "max": 0.577412,
+    "mean": 0.577412
+   }
+  },
+  "rest": {
+   "count": 264,
+   "ages": [
+    57,
+    58,
+    59,
+    60,
+    63,
+    68,
+    69,
+    71,
+    84
+   ],
+   "pace": {
+    "min": 0.571767,
+    "max": 0.588439,
+    "mean": 0.580901
+   }
+  }
+ },
+ "directions": [
+  {
+   "direction": [
+    -5,
+    -1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 39,
+   "age": 57,
+   "tick": 58,
+   "node": [
+    0,
+    26,
+    32
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -6,
+    0
+   ],
+   "distance_squared": 1125,
+   "pace": 0.588439,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    -5,
+    0,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 39,
+   "age": 57,
+   "tick": 58,
+   "node": [
+    0,
+    32,
+    26
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    0,
+    -6
+   ],
+   "distance_squared": 1125,
+   "pace": 0.588439,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    -5,
+    0,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 39,
+   "age": 57,
+   "tick": 58,
+   "node": [
+    0,
+    32,
+    38
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    0,
+    6
+   ],
+   "distance_squared": 1125,
+   "pace": 0.588439,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    -5,
+    1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 39,
+   "age": 57,
+   "tick": 58,
+   "node": [
+    0,
+    38,
+    32
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    6,
+    0
+   ],
+   "distance_squared": 1125,
+   "pace": 0.588439,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    -4,
+    -1,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    0,
+    24,
+    24
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -8,
+    -8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    -4,
+    -1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    0,
+    24,
+    32
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -8,
+    0
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    -4,
+    -1,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    0,
+    24,
+    40
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -8,
+    8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    -4,
+    0,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    0,
+    32,
+    24
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    0,
+    -8
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    -4,
+    0,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    0,
+    32,
+    40
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    0,
+    8
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    -4,
+    1,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    0,
+    40,
+    24
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    8,
+    -8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    -4,
+    1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    0,
+    40,
+    32
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    8,
+    0
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    -4,
+    1,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    0,
+    40,
+    40
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    8,
+    8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    -3,
+    -2,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    0,
+    10,
+    21
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -22,
+    -11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -3,
+    -2,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    0,
+    10,
+    32
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -22,
+    0
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    -3,
+    -2,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    0,
+    10,
+    43
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -22,
+    11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -3,
+    -1,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    0,
+    21,
+    10
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -11,
+    -22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -3,
+    -1,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    0,
+    21,
+    21
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -11,
+    -11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    -3,
+    -1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    0,
+    21,
+    32
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -11,
+    0
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    -3,
+    -1,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    0,
+    21,
+    43
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -11,
+    11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    -3,
+    -1,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    0,
+    21,
+    54
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -11,
+    22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -3,
+    0,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    0,
+    32,
+    10
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    0,
+    -22
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    -3,
+    0,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    0,
+    32,
+    21
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    0,
+    -11
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    -3,
+    0,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    0,
+    32,
+    43
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    0,
+    11
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    -3,
+    0,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    0,
+    32,
+    54
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    0,
+    22
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    -3,
+    1,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    0,
+    43,
+    10
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    11,
+    -22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -3,
+    1,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    0,
+    43,
+    21
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    11,
+    -11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    -3,
+    1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    0,
+    43,
+    32
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    11,
+    0
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    -3,
+    1,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    0,
+    43,
+    43
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    11,
+    11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    -3,
+    1,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    0,
+    43,
+    54
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    11,
+    22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -3,
+    2,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    0,
+    54,
+    21
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    22,
+    -11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -3,
+    2,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    0,
+    54,
+    32
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    22,
+    0
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    -3,
+    2,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    0,
+    54,
+    43
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    22,
+    11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -2,
+    -3,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    10,
+    0,
+    21
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -22,
+    -33,
+    -11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -2,
+    -3,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    10,
+    0,
+    32
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -22,
+    -33,
+    0
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    -2,
+    -3,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    10,
+    0,
+    43
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -22,
+    -33,
+    11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -2,
+    -2,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    0,
+    0,
+    16
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -32,
+    -16
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    -2,
+    -2,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    0,
+    0,
+    48
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -32,
+    16
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    -2,
+    -1,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    10,
+    21,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    -22,
+    -11,
+    -33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -2,
+    -1,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    0,
+    16,
+    0
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -16,
+    -32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    -2,
+    -1,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    0,
+    16,
+    16
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -16,
+    -16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    -2,
+    -1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    0,
+    16,
+    32
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -16,
+    0
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    -2,
+    -1,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    0,
+    16,
+    48
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -16,
+    16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    -2,
+    -1,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    0,
+    16,
+    64
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -16,
+    32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    -2,
+    -1,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    10,
+    21,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    -22,
+    -11,
+    33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -2,
+    0,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    10,
+    32,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    -22,
+    0,
+    -33
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    -2,
+    0,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    0,
+    32,
+    16
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    0,
+    -16
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    -2,
+    0,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    0,
+    32,
+    48
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    0,
+    16
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    -2,
+    0,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    10,
+    32,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    -22,
+    0,
+    33
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    -2,
+    1,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    10,
+    43,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    -22,
+    11,
+    -33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -2,
+    1,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    0,
+    48,
+    0
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    16,
+    -32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    -2,
+    1,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    0,
+    48,
+    16
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    16,
+    -16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    -2,
+    1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    0,
+    48,
+    32
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    16,
+    0
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    -2,
+    1,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    0,
+    48,
+    48
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    16,
+    16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    -2,
+    1,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    0,
+    48,
+    64
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    16,
+    32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    -2,
+    1,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    10,
+    43,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    -22,
+    11,
+    33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -2,
+    2,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    0,
+    64,
+    16
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    32,
+    -16
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    -2,
+    2,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    0,
+    64,
+    48
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    32,
+    16
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    -2,
+    3,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    10,
+    64,
+    21
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -22,
+    33,
+    -11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -2,
+    3,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    10,
+    64,
+    32
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -22,
+    33,
+    0
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    -2,
+    3,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    10,
+    64,
+    43
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -22,
+    33,
+    11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -1,
+    -5,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 40,
+   "age": 59,
+   "tick": 60,
+   "node": [
+    25,
+    0,
+    32
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -7,
+    -33,
+    0
+   ],
+   "distance_squared": 1138,
+   "pace": 0.571767,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    -1,
+    -4,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    24,
+    0,
+    24
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -8,
+    -33,
+    -8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    -1,
+    -4,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    24,
+    0,
+    32
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -8,
+    -33,
+    0
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    -1,
+    -4,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    24,
+    0,
+    40
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -8,
+    -33,
+    8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    -1,
+    -3,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    21,
+    0,
+    10
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -11,
+    -33,
+    -22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -1,
+    -3,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    21,
+    0,
+    21
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -11,
+    -33,
+    -11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    -1,
+    -3,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    21,
+    0,
+    32
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -11,
+    -33,
+    0
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    -1,
+    -3,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    21,
+    0,
+    43
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -11,
+    -33,
+    11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    -1,
+    -3,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    21,
+    0,
+    54
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -11,
+    -33,
+    22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -1,
+    -2,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    21,
+    10,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    -11,
+    -22,
+    -33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -1,
+    -2,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    16,
+    0,
+    0
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -16,
+    -33,
+    -32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    -1,
+    -2,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    16,
+    0,
+    16
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -16,
+    -33,
+    -16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    -1,
+    -2,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    16,
+    0,
+    32
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -16,
+    -33,
+    0
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    -1,
+    -2,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    16,
+    0,
+    48
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -16,
+    -33,
+    16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    -1,
+    -2,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    16,
+    0,
+    64
+   ],
+   "face": "face:-y",
+   "displacement": [
+    -16,
+    -33,
+    32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    -1,
+    -2,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    21,
+    10,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    -11,
+    -22,
+    33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -1,
+    -1,
+    -4
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    24,
+    24,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    -8,
+    -8,
+    -33
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    -1,
+    -1,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    21,
+    21,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    -11,
+    -11,
+    -33
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    -1,
+    -1,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    16,
+    16,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    -16,
+    -16,
+    -33
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    -1,
+    -1,
+    -1
+   ],
+   "class": "body_diagonals",
+   "manhattan": 3,
+   "resolution": 192,
+   "links": 97,
+   "age": 97,
+   "tick": 98,
+   "node": [
+    0,
+    0,
+    0
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -32,
+    -32
+   ],
+   "distance_squared": 3137,
+   "pace": 0.577412,
+   "asymptotic_pace": 0.57735
+  },
+  {
+   "direction": [
+    -1,
+    -1,
+    0
+   ],
+   "class": "face_diagonals",
+   "manhattan": 2,
+   "resolution": 156,
+   "links": 65,
+   "age": 79,
+   "tick": 80,
+   "node": [
+    0,
+    0,
+    32
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -32,
+    0
+   ],
+   "distance_squared": 2113,
+   "pace": 0.581866,
+   "asymptotic_pace": 0.58019
+  },
+  {
+   "direction": [
+    -1,
+    -1,
+    1
+   ],
+   "class": "body_diagonals",
+   "manhattan": 3,
+   "resolution": 192,
+   "links": 97,
+   "age": 97,
+   "tick": 98,
+   "node": [
+    0,
+    0,
+    64
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    -32,
+    32
+   ],
+   "distance_squared": 3137,
+   "pace": 0.577412,
+   "asymptotic_pace": 0.57735
+  },
+  {
+   "direction": [
+    -1,
+    -1,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    16,
+    16,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    -16,
+    -16,
+    33
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    -1,
+    -1,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    21,
+    21,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    -11,
+    -11,
+    33
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    -1,
+    -1,
+    4
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    24,
+    24,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    -8,
+    -8,
+    33
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    -1,
+    0,
+    -5
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 40,
+   "age": 59,
+   "tick": 60,
+   "node": [
+    25,
+    32,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    -7,
+    0,
+    -33
+   ],
+   "distance_squared": 1138,
+   "pace": 0.571767,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    -1,
+    0,
+    -4
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    24,
+    32,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    -8,
+    0,
+    -33
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    -1,
+    0,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    21,
+    32,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    -11,
+    0,
+    -33
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    -1,
+    0,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    16,
+    32,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    -16,
+    0,
+    -33
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    -1,
+    0,
+    -1
+   ],
+   "class": "face_diagonals",
+   "manhattan": 2,
+   "resolution": 156,
+   "links": 65,
+   "age": 79,
+   "tick": 80,
+   "node": [
+    0,
+    32,
+    0
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    0,
+    -32
+   ],
+   "distance_squared": 2113,
+   "pace": 0.581866,
+   "asymptotic_pace": 0.58019
+  },
+  {
+   "direction": [
+    -1,
+    0,
+    0
+   ],
+   "class": "axes",
+   "manhattan": 1,
+   "resolution": 110,
+   "links": 33,
+   "age": 56,
+   "tick": 57,
+   "node": [
+    0,
+    32,
+    32
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    0,
+    0
+   ],
+   "distance_squared": 1089,
+   "pace": 0.589286,
+   "asymptotic_pace": 0.581818
+  },
+  {
+   "direction": [
+    -1,
+    0,
+    1
+   ],
+   "class": "face_diagonals",
+   "manhattan": 2,
+   "resolution": 156,
+   "links": 65,
+   "age": 79,
+   "tick": 80,
+   "node": [
+    0,
+    32,
+    64
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    0,
+    32
+   ],
+   "distance_squared": 2113,
+   "pace": 0.581866,
+   "asymptotic_pace": 0.58019
+  },
+  {
+   "direction": [
+    -1,
+    0,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    16,
+    32,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    -16,
+    0,
+    33
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    -1,
+    0,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    21,
+    32,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    -11,
+    0,
+    33
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    -1,
+    0,
+    4
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    24,
+    32,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    -8,
+    0,
+    33
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    -1,
+    0,
+    5
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 40,
+   "age": 59,
+   "tick": 60,
+   "node": [
+    25,
+    32,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    -7,
+    0,
+    33
+   ],
+   "distance_squared": 1138,
+   "pace": 0.571767,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    -1,
+    1,
+    -4
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    24,
+    40,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    -8,
+    8,
+    -33
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    -1,
+    1,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    21,
+    43,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    -11,
+    11,
+    -33
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    -1,
+    1,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    16,
+    48,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    -16,
+    16,
+    -33
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    -1,
+    1,
+    -1
+   ],
+   "class": "body_diagonals",
+   "manhattan": 3,
+   "resolution": 192,
+   "links": 97,
+   "age": 97,
+   "tick": 98,
+   "node": [
+    0,
+    64,
+    0
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    32,
+    -32
+   ],
+   "distance_squared": 3137,
+   "pace": 0.577412,
+   "asymptotic_pace": 0.57735
+  },
+  {
+   "direction": [
+    -1,
+    1,
+    0
+   ],
+   "class": "face_diagonals",
+   "manhattan": 2,
+   "resolution": 156,
+   "links": 65,
+   "age": 79,
+   "tick": 80,
+   "node": [
+    0,
+    64,
+    32
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    32,
+    0
+   ],
+   "distance_squared": 2113,
+   "pace": 0.581866,
+   "asymptotic_pace": 0.58019
+  },
+  {
+   "direction": [
+    -1,
+    1,
+    1
+   ],
+   "class": "body_diagonals",
+   "manhattan": 3,
+   "resolution": 192,
+   "links": 97,
+   "age": 97,
+   "tick": 98,
+   "node": [
+    0,
+    64,
+    64
+   ],
+   "face": "face:-x",
+   "displacement": [
+    -33,
+    32,
+    32
+   ],
+   "distance_squared": 3137,
+   "pace": 0.577412,
+   "asymptotic_pace": 0.57735
+  },
+  {
+   "direction": [
+    -1,
+    1,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    16,
+    48,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    -16,
+    16,
+    33
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    -1,
+    1,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    21,
+    43,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    -11,
+    11,
+    33
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    -1,
+    1,
+    4
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    24,
+    40,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    -8,
+    8,
+    33
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    -1,
+    2,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    21,
+    54,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    -11,
+    22,
+    -33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -1,
+    2,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    16,
+    64,
+    0
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -16,
+    33,
+    -32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    -1,
+    2,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    16,
+    64,
+    16
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -16,
+    33,
+    -16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    -1,
+    2,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    16,
+    64,
+    32
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -16,
+    33,
+    0
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    -1,
+    2,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    16,
+    64,
+    48
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -16,
+    33,
+    16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    -1,
+    2,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    16,
+    64,
+    64
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -16,
+    33,
+    32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    -1,
+    2,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    21,
+    54,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    -11,
+    22,
+    33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -1,
+    3,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    21,
+    64,
+    10
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -11,
+    33,
+    -22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -1,
+    3,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    21,
+    64,
+    21
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -11,
+    33,
+    -11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    -1,
+    3,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    21,
+    64,
+    32
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -11,
+    33,
+    0
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    -1,
+    3,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    21,
+    64,
+    43
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -11,
+    33,
+    11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    -1,
+    3,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    21,
+    64,
+    54
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -11,
+    33,
+    22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    -1,
+    4,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    24,
+    64,
+    24
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -8,
+    33,
+    -8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    -1,
+    4,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    24,
+    64,
+    32
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -8,
+    33,
+    0
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    -1,
+    4,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    24,
+    64,
+    40
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -8,
+    33,
+    8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    -1,
+    5,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 40,
+   "age": 59,
+   "tick": 60,
+   "node": [
+    25,
+    64,
+    32
+   ],
+   "face": "face:+y",
+   "displacement": [
+    -7,
+    33,
+    0
+   ],
+   "distance_squared": 1138,
+   "pace": 0.571767,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    0,
+    -5,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 39,
+   "age": 57,
+   "tick": 58,
+   "node": [
+    32,
+    0,
+    26
+   ],
+   "face": "face:-y",
+   "displacement": [
+    0,
+    -33,
+    -6
+   ],
+   "distance_squared": 1125,
+   "pace": 0.588439,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    0,
+    -5,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 39,
+   "age": 57,
+   "tick": 58,
+   "node": [
+    32,
+    0,
+    38
+   ],
+   "face": "face:-y",
+   "displacement": [
+    0,
+    -33,
+    6
+   ],
+   "distance_squared": 1125,
+   "pace": 0.588439,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    0,
+    -4,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    32,
+    0,
+    24
+   ],
+   "face": "face:-y",
+   "displacement": [
+    0,
+    -33,
+    -8
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    0,
+    -4,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    32,
+    0,
+    40
+   ],
+   "face": "face:-y",
+   "displacement": [
+    0,
+    -33,
+    8
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    0,
+    -3,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    32,
+    0,
+    10
+   ],
+   "face": "face:-y",
+   "displacement": [
+    0,
+    -33,
+    -22
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    0,
+    -3,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    32,
+    0,
+    21
+   ],
+   "face": "face:-y",
+   "displacement": [
+    0,
+    -33,
+    -11
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    0,
+    -3,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    32,
+    0,
+    43
+   ],
+   "face": "face:-y",
+   "displacement": [
+    0,
+    -33,
+    11
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    0,
+    -3,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    32,
+    0,
+    54
+   ],
+   "face": "face:-y",
+   "displacement": [
+    0,
+    -33,
+    22
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    0,
+    -2,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    32,
+    10,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    0,
+    -22,
+    -33
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    0,
+    -2,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    32,
+    0,
+    16
+   ],
+   "face": "face:-y",
+   "displacement": [
+    0,
+    -33,
+    -16
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    0,
+    -2,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    32,
+    0,
+    48
+   ],
+   "face": "face:-y",
+   "displacement": [
+    0,
+    -33,
+    16
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    0,
+    -2,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    32,
+    10,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    0,
+    -22,
+    33
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    0,
+    -1,
+    -5
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 40,
+   "age": 59,
+   "tick": 60,
+   "node": [
+    32,
+    25,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    0,
+    -7,
+    -33
+   ],
+   "distance_squared": 1138,
+   "pace": 0.571767,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    0,
+    -1,
+    -4
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    32,
+    24,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    0,
+    -8,
+    -33
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    0,
+    -1,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    32,
+    21,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    0,
+    -11,
+    -33
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    0,
+    -1,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    32,
+    16,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    0,
+    -16,
+    -33
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    0,
+    -1,
+    -1
+   ],
+   "class": "face_diagonals",
+   "manhattan": 2,
+   "resolution": 156,
+   "links": 65,
+   "age": 79,
+   "tick": 80,
+   "node": [
+    32,
+    0,
+    0
+   ],
+   "face": "face:-y",
+   "displacement": [
+    0,
+    -33,
+    -32
+   ],
+   "distance_squared": 2113,
+   "pace": 0.581866,
+   "asymptotic_pace": 0.58019
+  },
+  {
+   "direction": [
+    0,
+    -1,
+    0
+   ],
+   "class": "axes",
+   "manhattan": 1,
+   "resolution": 110,
+   "links": 33,
+   "age": 56,
+   "tick": 57,
+   "node": [
+    32,
+    0,
+    32
+   ],
+   "face": "face:-y",
+   "displacement": [
+    0,
+    -33,
+    0
+   ],
+   "distance_squared": 1089,
+   "pace": 0.589286,
+   "asymptotic_pace": 0.581818
+  },
+  {
+   "direction": [
+    0,
+    -1,
+    1
+   ],
+   "class": "face_diagonals",
+   "manhattan": 2,
+   "resolution": 156,
+   "links": 65,
+   "age": 79,
+   "tick": 80,
+   "node": [
+    32,
+    0,
+    64
+   ],
+   "face": "face:-y",
+   "displacement": [
+    0,
+    -33,
+    32
+   ],
+   "distance_squared": 2113,
+   "pace": 0.581866,
+   "asymptotic_pace": 0.58019
+  },
+  {
+   "direction": [
+    0,
+    -1,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    32,
+    16,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    0,
+    -16,
+    33
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    0,
+    -1,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    32,
+    21,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    0,
+    -11,
+    33
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    0,
+    -1,
+    4
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    32,
+    24,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    0,
+    -8,
+    33
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    0,
+    -1,
+    5
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 40,
+   "age": 59,
+   "tick": 60,
+   "node": [
+    32,
+    25,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    0,
+    -7,
+    33
+   ],
+   "distance_squared": 1138,
+   "pace": 0.571767,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    0,
+    0,
+    -1
+   ],
+   "class": "axes",
+   "manhattan": 1,
+   "resolution": 110,
+   "links": 33,
+   "age": 56,
+   "tick": 57,
+   "node": [
+    32,
+    32,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    0,
+    0,
+    -33
+   ],
+   "distance_squared": 1089,
+   "pace": 0.589286,
+   "asymptotic_pace": 0.581818
+  },
+  {
+   "direction": [
+    0,
+    0,
+    1
+   ],
+   "class": "axes",
+   "manhattan": 1,
+   "resolution": 110,
+   "links": 33,
+   "age": 56,
+   "tick": 57,
+   "node": [
+    32,
+    32,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    0,
+    0,
+    33
+   ],
+   "distance_squared": 1089,
+   "pace": 0.589286,
+   "asymptotic_pace": 0.581818
+  },
+  {
+   "direction": [
+    0,
+    1,
+    -5
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 40,
+   "age": 59,
+   "tick": 60,
+   "node": [
+    32,
+    39,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    0,
+    7,
+    -33
+   ],
+   "distance_squared": 1138,
+   "pace": 0.571767,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    0,
+    1,
+    -4
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    32,
+    40,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    0,
+    8,
+    -33
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    0,
+    1,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    32,
+    43,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    0,
+    11,
+    -33
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    0,
+    1,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    32,
+    48,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    0,
+    16,
+    -33
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    0,
+    1,
+    -1
+   ],
+   "class": "face_diagonals",
+   "manhattan": 2,
+   "resolution": 156,
+   "links": 65,
+   "age": 79,
+   "tick": 80,
+   "node": [
+    32,
+    64,
+    0
+   ],
+   "face": "face:+y",
+   "displacement": [
+    0,
+    33,
+    -32
+   ],
+   "distance_squared": 2113,
+   "pace": 0.581866,
+   "asymptotic_pace": 0.58019
+  },
+  {
+   "direction": [
+    0,
+    1,
+    0
+   ],
+   "class": "axes",
+   "manhattan": 1,
+   "resolution": 110,
+   "links": 33,
+   "age": 56,
+   "tick": 57,
+   "node": [
+    32,
+    64,
+    32
+   ],
+   "face": "face:+y",
+   "displacement": [
+    0,
+    33,
+    0
+   ],
+   "distance_squared": 1089,
+   "pace": 0.589286,
+   "asymptotic_pace": 0.581818
+  },
+  {
+   "direction": [
+    0,
+    1,
+    1
+   ],
+   "class": "face_diagonals",
+   "manhattan": 2,
+   "resolution": 156,
+   "links": 65,
+   "age": 79,
+   "tick": 80,
+   "node": [
+    32,
+    64,
+    64
+   ],
+   "face": "face:+y",
+   "displacement": [
+    0,
+    33,
+    32
+   ],
+   "distance_squared": 2113,
+   "pace": 0.581866,
+   "asymptotic_pace": 0.58019
+  },
+  {
+   "direction": [
+    0,
+    1,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    32,
+    48,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    0,
+    16,
+    33
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    0,
+    1,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    32,
+    43,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    0,
+    11,
+    33
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    0,
+    1,
+    4
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    32,
+    40,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    0,
+    8,
+    33
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    0,
+    1,
+    5
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 40,
+   "age": 59,
+   "tick": 60,
+   "node": [
+    32,
+    39,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    0,
+    7,
+    33
+   ],
+   "distance_squared": 1138,
+   "pace": 0.571767,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    0,
+    2,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    32,
+    54,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    0,
+    22,
+    -33
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    0,
+    2,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    32,
+    64,
+    16
+   ],
+   "face": "face:+y",
+   "displacement": [
+    0,
+    33,
+    -16
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    0,
+    2,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    32,
+    64,
+    48
+   ],
+   "face": "face:+y",
+   "displacement": [
+    0,
+    33,
+    16
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    0,
+    2,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    32,
+    54,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    0,
+    22,
+    33
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    0,
+    3,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    32,
+    64,
+    10
+   ],
+   "face": "face:+y",
+   "displacement": [
+    0,
+    33,
+    -22
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    0,
+    3,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    32,
+    64,
+    21
+   ],
+   "face": "face:+y",
+   "displacement": [
+    0,
+    33,
+    -11
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    0,
+    3,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    32,
+    64,
+    43
+   ],
+   "face": "face:+y",
+   "displacement": [
+    0,
+    33,
+    11
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    0,
+    3,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    32,
+    64,
+    54
+   ],
+   "face": "face:+y",
+   "displacement": [
+    0,
+    33,
+    22
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    0,
+    4,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    32,
+    64,
+    24
+   ],
+   "face": "face:+y",
+   "displacement": [
+    0,
+    33,
+    -8
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    0,
+    4,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    32,
+    64,
+    40
+   ],
+   "face": "face:+y",
+   "displacement": [
+    0,
+    33,
+    8
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    0,
+    5,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 39,
+   "age": 57,
+   "tick": 58,
+   "node": [
+    32,
+    64,
+    26
+   ],
+   "face": "face:+y",
+   "displacement": [
+    0,
+    33,
+    -6
+   ],
+   "distance_squared": 1125,
+   "pace": 0.588439,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    0,
+    5,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 39,
+   "age": 57,
+   "tick": 58,
+   "node": [
+    32,
+    64,
+    38
+   ],
+   "face": "face:+y",
+   "displacement": [
+    0,
+    33,
+    6
+   ],
+   "distance_squared": 1125,
+   "pace": 0.588439,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    1,
+    -5,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 40,
+   "age": 59,
+   "tick": 60,
+   "node": [
+    39,
+    0,
+    32
+   ],
+   "face": "face:-y",
+   "displacement": [
+    7,
+    -33,
+    0
+   ],
+   "distance_squared": 1138,
+   "pace": 0.571767,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    1,
+    -4,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    40,
+    0,
+    24
+   ],
+   "face": "face:-y",
+   "displacement": [
+    8,
+    -33,
+    -8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    1,
+    -4,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    40,
+    0,
+    32
+   ],
+   "face": "face:-y",
+   "displacement": [
+    8,
+    -33,
+    0
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    1,
+    -4,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    40,
+    0,
+    40
+   ],
+   "face": "face:-y",
+   "displacement": [
+    8,
+    -33,
+    8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    1,
+    -3,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    43,
+    0,
+    10
+   ],
+   "face": "face:-y",
+   "displacement": [
+    11,
+    -33,
+    -22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    1,
+    -3,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    43,
+    0,
+    21
+   ],
+   "face": "face:-y",
+   "displacement": [
+    11,
+    -33,
+    -11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    1,
+    -3,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    43,
+    0,
+    32
+   ],
+   "face": "face:-y",
+   "displacement": [
+    11,
+    -33,
+    0
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    1,
+    -3,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    43,
+    0,
+    43
+   ],
+   "face": "face:-y",
+   "displacement": [
+    11,
+    -33,
+    11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    1,
+    -3,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    43,
+    0,
+    54
+   ],
+   "face": "face:-y",
+   "displacement": [
+    11,
+    -33,
+    22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    1,
+    -2,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    43,
+    10,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    11,
+    -22,
+    -33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    1,
+    -2,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    48,
+    0,
+    0
+   ],
+   "face": "face:-y",
+   "displacement": [
+    16,
+    -33,
+    -32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    1,
+    -2,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    48,
+    0,
+    16
+   ],
+   "face": "face:-y",
+   "displacement": [
+    16,
+    -33,
+    -16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    1,
+    -2,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    48,
+    0,
+    32
+   ],
+   "face": "face:-y",
+   "displacement": [
+    16,
+    -33,
+    0
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    1,
+    -2,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    48,
+    0,
+    48
+   ],
+   "face": "face:-y",
+   "displacement": [
+    16,
+    -33,
+    16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    1,
+    -2,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    48,
+    0,
+    64
+   ],
+   "face": "face:-y",
+   "displacement": [
+    16,
+    -33,
+    32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    1,
+    -2,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    43,
+    10,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    11,
+    -22,
+    33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    1,
+    -1,
+    -4
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    40,
+    24,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    8,
+    -8,
+    -33
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    1,
+    -1,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    43,
+    21,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    11,
+    -11,
+    -33
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    1,
+    -1,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    48,
+    16,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    16,
+    -16,
+    -33
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    1,
+    -1,
+    -1
+   ],
+   "class": "body_diagonals",
+   "manhattan": 3,
+   "resolution": 192,
+   "links": 97,
+   "age": 97,
+   "tick": 98,
+   "node": [
+    64,
+    0,
+    0
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -32,
+    -32
+   ],
+   "distance_squared": 3137,
+   "pace": 0.577412,
+   "asymptotic_pace": 0.57735
+  },
+  {
+   "direction": [
+    1,
+    -1,
+    0
+   ],
+   "class": "face_diagonals",
+   "manhattan": 2,
+   "resolution": 156,
+   "links": 65,
+   "age": 79,
+   "tick": 80,
+   "node": [
+    64,
+    0,
+    32
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -32,
+    0
+   ],
+   "distance_squared": 2113,
+   "pace": 0.581866,
+   "asymptotic_pace": 0.58019
+  },
+  {
+   "direction": [
+    1,
+    -1,
+    1
+   ],
+   "class": "body_diagonals",
+   "manhattan": 3,
+   "resolution": 192,
+   "links": 97,
+   "age": 97,
+   "tick": 98,
+   "node": [
+    64,
+    0,
+    64
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -32,
+    32
+   ],
+   "distance_squared": 3137,
+   "pace": 0.577412,
+   "asymptotic_pace": 0.57735
+  },
+  {
+   "direction": [
+    1,
+    -1,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    48,
+    16,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    16,
+    -16,
+    33
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    1,
+    -1,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    43,
+    21,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    11,
+    -11,
+    33
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    1,
+    -1,
+    4
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    40,
+    24,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    8,
+    -8,
+    33
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    1,
+    0,
+    -5
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 40,
+   "age": 59,
+   "tick": 60,
+   "node": [
+    39,
+    32,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    7,
+    0,
+    -33
+   ],
+   "distance_squared": 1138,
+   "pace": 0.571767,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    1,
+    0,
+    -4
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    40,
+    32,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    8,
+    0,
+    -33
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    1,
+    0,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    43,
+    32,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    11,
+    0,
+    -33
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    1,
+    0,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    48,
+    32,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    16,
+    0,
+    -33
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    1,
+    0,
+    -1
+   ],
+   "class": "face_diagonals",
+   "manhattan": 2,
+   "resolution": 156,
+   "links": 65,
+   "age": 79,
+   "tick": 80,
+   "node": [
+    64,
+    32,
+    0
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    0,
+    -32
+   ],
+   "distance_squared": 2113,
+   "pace": 0.581866,
+   "asymptotic_pace": 0.58019
+  },
+  {
+   "direction": [
+    1,
+    0,
+    0
+   ],
+   "class": "axes",
+   "manhattan": 1,
+   "resolution": 110,
+   "links": 33,
+   "age": 56,
+   "tick": 57,
+   "node": [
+    64,
+    32,
+    32
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    0,
+    0
+   ],
+   "distance_squared": 1089,
+   "pace": 0.589286,
+   "asymptotic_pace": 0.581818
+  },
+  {
+   "direction": [
+    1,
+    0,
+    1
+   ],
+   "class": "face_diagonals",
+   "manhattan": 2,
+   "resolution": 156,
+   "links": 65,
+   "age": 79,
+   "tick": 80,
+   "node": [
+    64,
+    32,
+    64
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    0,
+    32
+   ],
+   "distance_squared": 2113,
+   "pace": 0.581866,
+   "asymptotic_pace": 0.58019
+  },
+  {
+   "direction": [
+    1,
+    0,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    48,
+    32,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    16,
+    0,
+    33
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    1,
+    0,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    43,
+    32,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    11,
+    0,
+    33
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    1,
+    0,
+    4
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    40,
+    32,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    8,
+    0,
+    33
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    1,
+    0,
+    5
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 40,
+   "age": 59,
+   "tick": 60,
+   "node": [
+    39,
+    32,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    7,
+    0,
+    33
+   ],
+   "distance_squared": 1138,
+   "pace": 0.571767,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    1,
+    1,
+    -4
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    40,
+    40,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    8,
+    8,
+    -33
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    1,
+    1,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    43,
+    43,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    11,
+    11,
+    -33
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    1,
+    1,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    48,
+    48,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    16,
+    16,
+    -33
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    1,
+    1,
+    -1
+   ],
+   "class": "body_diagonals",
+   "manhattan": 3,
+   "resolution": 192,
+   "links": 97,
+   "age": 97,
+   "tick": 98,
+   "node": [
+    64,
+    64,
+    0
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    32,
+    -32
+   ],
+   "distance_squared": 3137,
+   "pace": 0.577412,
+   "asymptotic_pace": 0.57735
+  },
+  {
+   "direction": [
+    1,
+    1,
+    0
+   ],
+   "class": "face_diagonals",
+   "manhattan": 2,
+   "resolution": 156,
+   "links": 65,
+   "age": 79,
+   "tick": 80,
+   "node": [
+    64,
+    64,
+    32
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    32,
+    0
+   ],
+   "distance_squared": 2113,
+   "pace": 0.581866,
+   "asymptotic_pace": 0.58019
+  },
+  {
+   "direction": [
+    1,
+    1,
+    1
+   ],
+   "class": "body_diagonals",
+   "manhattan": 3,
+   "resolution": 192,
+   "links": 97,
+   "age": 97,
+   "tick": 98,
+   "node": [
+    64,
+    64,
+    64
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    32,
+    32
+   ],
+   "distance_squared": 3137,
+   "pace": 0.577412,
+   "asymptotic_pace": 0.57735
+  },
+  {
+   "direction": [
+    1,
+    1,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    48,
+    48,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    16,
+    16,
+    33
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    1,
+    1,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    43,
+    43,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    11,
+    11,
+    33
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    1,
+    1,
+    4
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    40,
+    40,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    8,
+    8,
+    33
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    1,
+    2,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    43,
+    54,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    11,
+    22,
+    -33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    1,
+    2,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    48,
+    64,
+    0
+   ],
+   "face": "face:+y",
+   "displacement": [
+    16,
+    33,
+    -32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    1,
+    2,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    48,
+    64,
+    16
+   ],
+   "face": "face:+y",
+   "displacement": [
+    16,
+    33,
+    -16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    1,
+    2,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    48,
+    64,
+    32
+   ],
+   "face": "face:+y",
+   "displacement": [
+    16,
+    33,
+    0
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    1,
+    2,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    48,
+    64,
+    48
+   ],
+   "face": "face:+y",
+   "displacement": [
+    16,
+    33,
+    16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    1,
+    2,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    48,
+    64,
+    64
+   ],
+   "face": "face:+y",
+   "displacement": [
+    16,
+    33,
+    32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    1,
+    2,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    43,
+    54,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    11,
+    22,
+    33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    1,
+    3,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    43,
+    64,
+    10
+   ],
+   "face": "face:+y",
+   "displacement": [
+    11,
+    33,
+    -22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    1,
+    3,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    43,
+    64,
+    21
+   ],
+   "face": "face:+y",
+   "displacement": [
+    11,
+    33,
+    -11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    1,
+    3,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    43,
+    64,
+    32
+   ],
+   "face": "face:+y",
+   "displacement": [
+    11,
+    33,
+    0
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    1,
+    3,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    43,
+    64,
+    43
+   ],
+   "face": "face:+y",
+   "displacement": [
+    11,
+    33,
+    11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    1,
+    3,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    43,
+    64,
+    54
+   ],
+   "face": "face:+y",
+   "displacement": [
+    11,
+    33,
+    22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    1,
+    4,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    40,
+    64,
+    24
+   ],
+   "face": "face:+y",
+   "displacement": [
+    8,
+    33,
+    -8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    1,
+    4,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    40,
+    64,
+    32
+   ],
+   "face": "face:+y",
+   "displacement": [
+    8,
+    33,
+    0
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    1,
+    4,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    40,
+    64,
+    40
+   ],
+   "face": "face:+y",
+   "displacement": [
+    8,
+    33,
+    8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    1,
+    5,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 40,
+   "age": 59,
+   "tick": 60,
+   "node": [
+    39,
+    64,
+    32
+   ],
+   "face": "face:+y",
+   "displacement": [
+    7,
+    33,
+    0
+   ],
+   "distance_squared": 1138,
+   "pace": 0.571767,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    2,
+    -3,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    54,
+    0,
+    21
+   ],
+   "face": "face:-y",
+   "displacement": [
+    22,
+    -33,
+    -11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    2,
+    -3,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    54,
+    0,
+    32
+   ],
+   "face": "face:-y",
+   "displacement": [
+    22,
+    -33,
+    0
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    2,
+    -3,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    54,
+    0,
+    43
+   ],
+   "face": "face:-y",
+   "displacement": [
+    22,
+    -33,
+    11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    2,
+    -2,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    64,
+    0,
+    16
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -32,
+    -16
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    2,
+    -2,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    64,
+    0,
+    48
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -32,
+    16
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    2,
+    -1,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    54,
+    21,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    22,
+    -11,
+    -33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    2,
+    -1,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    64,
+    16,
+    0
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -16,
+    -32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    2,
+    -1,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    64,
+    16,
+    16
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -16,
+    -16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    2,
+    -1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    64,
+    16,
+    32
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -16,
+    0
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    2,
+    -1,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    64,
+    16,
+    48
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -16,
+    16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    2,
+    -1,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    64,
+    16,
+    64
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -16,
+    32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    2,
+    -1,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    54,
+    21,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    22,
+    -11,
+    33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    2,
+    0,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    54,
+    32,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    22,
+    0,
+    -33
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    2,
+    0,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    64,
+    32,
+    16
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    0,
+    -16
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    2,
+    0,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    64,
+    32,
+    48
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    0,
+    16
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    2,
+    0,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    54,
+    32,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    22,
+    0,
+    33
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    2,
+    1,
+    -3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    54,
+    43,
+    0
+   ],
+   "face": "face:-z",
+   "displacement": [
+    22,
+    11,
+    -33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    2,
+    1,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    64,
+    48,
+    0
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    16,
+    -32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    2,
+    1,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    64,
+    48,
+    16
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    16,
+    -16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    2,
+    1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 3,
+   "resolution": 247,
+   "links": 49,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    64,
+    48,
+    32
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    16,
+    0
+   ],
+   "distance_squared": 1345,
+   "pace": 0.582131,
+   "asymptotic_pace": 0.579386
+  },
+  {
+   "direction": [
+    2,
+    1,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 271,
+   "links": 65,
+   "age": 69,
+   "tick": 70,
+   "node": [
+    64,
+    48,
+    48
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    16,
+    16
+   ],
+   "distance_squared": 1601,
+   "pace": 0.579891,
+   "asymptotic_pace": 0.578477
+  },
+  {
+   "direction": [
+    2,
+    1,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    64,
+    48,
+    64
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    16,
+    32
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    2,
+    1,
+    3
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    54,
+    43,
+    64
+   ],
+   "face": "face:+z",
+   "displacement": [
+    22,
+    11,
+    33
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    2,
+    2,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    64,
+    64,
+    16
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    32,
+    -16
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    2,
+    2,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 332,
+   "links": 81,
+   "age": 84,
+   "tick": 85,
+   "node": [
+    64,
+    64,
+    48
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    32,
+    16
+   ],
+   "distance_squared": 2369,
+   "pace": 0.579433,
+   "asymptotic_pace": 0.578313
+  },
+  {
+   "direction": [
+    2,
+    3,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    54,
+    64,
+    21
+   ],
+   "face": "face:+y",
+   "displacement": [
+    22,
+    33,
+    -11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    2,
+    3,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    54,
+    64,
+    32
+   ],
+   "face": "face:+y",
+   "displacement": [
+    22,
+    33,
+    0
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    2,
+    3,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    54,
+    64,
+    43
+   ],
+   "face": "face:+y",
+   "displacement": [
+    22,
+    33,
+    11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    3,
+    -2,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    64,
+    10,
+    21
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -22,
+    -11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    3,
+    -2,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    64,
+    10,
+    32
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -22,
+    0
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    3,
+    -2,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    64,
+    10,
+    43
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -22,
+    11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    3,
+    -1,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    64,
+    21,
+    10
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -11,
+    -22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    3,
+    -1,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    64,
+    21,
+    21
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -11,
+    -11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    3,
+    -1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    64,
+    21,
+    32
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -11,
+    0
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    3,
+    -1,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    64,
+    21,
+    43
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -11,
+    11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    3,
+    -1,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    64,
+    21,
+    54
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -11,
+    22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    3,
+    0,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    64,
+    32,
+    10
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    0,
+    -22
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    3,
+    0,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    64,
+    32,
+    21
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    0,
+    -11
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    3,
+    0,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    64,
+    32,
+    43
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    0,
+    11
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    3,
+    0,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    64,
+    32,
+    54
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    0,
+    22
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    3,
+    1,
+    -2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    64,
+    43,
+    10
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    11,
+    -22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    3,
+    1,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    64,
+    43,
+    21
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    11,
+    -11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    3,
+    1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 4,
+   "resolution": 350,
+   "links": 44,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    64,
+    43,
+    32
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    11,
+    0
+   ],
+   "distance_squared": 1210,
+   "pace": 0.579751,
+   "asymptotic_pace": 0.578245
+  },
+  {
+   "direction": [
+    3,
+    1,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 367,
+   "links": 55,
+   "age": 63,
+   "tick": 64,
+   "node": [
+    64,
+    43,
+    43
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    11,
+    11
+   ],
+   "distance_squared": 1331,
+   "pace": 0.579093,
+   "asymptotic_pace": 0.578376
+  },
+  {
+   "direction": [
+    3,
+    1,
+    2
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    64,
+    43,
+    54
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    11,
+    22
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    3,
+    2,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    64,
+    54,
+    21
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    22,
+    -11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    3,
+    2,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 399,
+   "links": 55,
+   "age": 68,
+   "tick": 69,
+   "node": [
+    64,
+    54,
+    32
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    22,
+    0
+   ],
+   "distance_squared": 1573,
+   "pace": 0.583251,
+   "asymptotic_pace": 0.578334
+  },
+  {
+   "direction": [
+    3,
+    2,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 414,
+   "links": 66,
+   "age": 71,
+   "tick": 72,
+   "node": [
+    64,
+    54,
+    43
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    22,
+    11
+   ],
+   "distance_squared": 1694,
+   "pace": 0.579693,
+   "asymptotic_pace": 0.57842
+  },
+  {
+   "direction": [
+    4,
+    -1,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    64,
+    24,
+    24
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -8,
+    -8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    4,
+    -1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    64,
+    24,
+    32
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -8,
+    0
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    4,
+    -1,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    64,
+    24,
+    40
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -8,
+    8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    4,
+    0,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    64,
+    32,
+    24
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    0,
+    -8
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    4,
+    0,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    64,
+    32,
+    40
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    0,
+    8
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    4,
+    1,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    64,
+    40,
+    24
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    8,
+    -8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    4,
+    1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 5,
+   "resolution": 457,
+   "links": 41,
+   "age": 58,
+   "tick": 59,
+   "node": [
+    64,
+    40,
+    32
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    8,
+    0
+   ],
+   "distance_squared": 1153,
+   "pace": 0.585446,
+   "asymptotic_pace": 0.577415
+  },
+  {
+   "direction": [
+    4,
+    1,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 470,
+   "links": 49,
+   "age": 60,
+   "tick": 61,
+   "node": [
+    64,
+    40,
+    40
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    8,
+    8
+   ],
+   "distance_squared": 1217,
+   "pace": 0.581425,
+   "asymptotic_pace": 0.577721
+  },
+  {
+   "direction": [
+    5,
+    -1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 39,
+   "age": 57,
+   "tick": 58,
+   "node": [
+    64,
+    26,
+    32
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    -6,
+    0
+   ],
+   "distance_squared": 1125,
+   "pace": 0.588439,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    5,
+    0,
+    -1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 39,
+   "age": 57,
+   "tick": 58,
+   "node": [
+    64,
+    32,
+    26
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    0,
+    -6
+   ],
+   "distance_squared": 1125,
+   "pace": 0.588439,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    5,
+    0,
+    1
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 39,
+   "age": 57,
+   "tick": 58,
+   "node": [
+    64,
+    32,
+    38
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    0,
+    6
+   ],
+   "distance_squared": 1125,
+   "pace": 0.588439,
+   "asymptotic_pace": 0.577588
+  },
+  {
+   "direction": [
+    5,
+    1,
+    0
+   ],
+   "class": "rest",
+   "manhattan": 6,
+   "resolution": 565,
+   "links": 39,
+   "age": 57,
+   "tick": 58,
+   "node": [
+    64,
+    38,
+    32
+   ],
+   "face": "face:+x",
+   "displacement": [
+    33,
+    6,
+    0
+   ],
+   "distance_squared": 1125,
+   "pace": 0.588439,
+   "asymptotic_pace": 0.577588
+  }
+ ]
+}

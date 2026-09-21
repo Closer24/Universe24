@@ -7,7 +7,7 @@ WEAK.md sections 1, 2 and 4.5).
 
 Every expectation printed here is written before the run and is a GameBoard
 computation from the engine's own functions, never a rule replayed: the
-first-arrival ages off the flight table (`nature_beam.flight_table`) for
+first-arrival ages off the flight table (`nature_beam.direction_flight`) for
 J2, and for J1 and J3 the count each clock reads at its Node
 (`Measured.counted`, the presence over every ray of another number) on the
 same world run without its `become` keys until the crowd is steady, from
@@ -117,7 +117,7 @@ sys.path.insert(0, str(ROOT / "src"))
 import numpy as np  # noqa: E402
 
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world  # noqa: E402
-from event_universe.events.nature_beam import flight_table  # noqa: E402
+from event_universe.events.nature_beam import direction_flight  # noqa: E402
 from event_universe.world_loading import families_by_definition  # noqa: E402
 
 # The shipped definitions the world's families come from where they equal
@@ -165,8 +165,15 @@ J3_WIDTH = 1 << 28
 J3_SHELL = 8
 J3_TICKS = 700
 J3_FREE_TICKS = 600
-# The intervals run without `become` to read the steady crowd of each clock.
-WARM_TICKS = 100
+# The warm run without `become` that reads the crowd of each clock: its
+# length and the dwell period over which the count's range is taken (the
+# lesson of the first registration, 2026-09-20, and the re-pin of
+# 2026-09-21: the count a clock reads under a fan's dwells is not one
+# number over its history; the transient is over by tick 36 (the farthest
+# line-mate's rows arrive by tick 21, the fan's by 18) and the window holds
+# more than one cycle of the owed count, 2^20 / c intervals at c = 27585).
+WARM_TICKS = 120
+DWELL = (61, 120)
 # The W world: the W's content per unit, the neutron's key and the run.
 W_CONTENT = 3
 W_AT = 8
@@ -209,7 +216,7 @@ def shell_nodes(centre: tuple[int, int, int], radius: int, side: int) -> list[li
 def first_arrival_age(distance: int) -> int:
     """The age at which a heading ray first reaches `distance` Links, off
     the engine's flight table (a GameBoard computation of the expectation)."""
-    table = flight_table(((0, 0, 0), (0, 0, 0), PLUS_X))
+    table = direction_flight(((0, 0, 0), (0, 0, 0), PLUS_X))
     ages = np.arange(1, 4 * distance + 64, dtype=np.int64)
     steps = table.manhattan_steps(np.full(ages.shape, 2, dtype=np.int64), ages)
     return int(ages[np.flatnonzero(steps >= distance)[0]])
@@ -516,27 +523,38 @@ def w_expectations() -> dict[str, dict[str, object]]:
     }
 
 
-def steady_counts(document: Json) -> dict[int, int]:
-    """The count each `n` clock reads at its Node once the crowd is steady
-    (a GameBoard reading of the engine itself): the world run without its
-    `become` keys for WARM_TICKS intervals, `Measured.counted` per neutron."""
+def count_ranges(document: Json) -> dict[int, tuple[int, int]]:
+    """The range of the count each `n` clock reads at its Node over the
+    dwell period (a GameBoard reading of the engine itself): the world run
+    without its `become` keys for WARM_TICKS intervals, `Measured.counted`
+    per neutron at every tick, its least and greatest value over the ticks
+    DWELL[0] .. DWELL[1]. Until 2026-09-21 the one value at tick 100."""
     warm = json.loads(json.dumps(document))
     for entry in warm["measured"]:
         entry.pop("become", None)
     warm["ticks"] = WARM_TICKS
     simulation = NatureBeamSimulation(parse_nature_beam_world(warm))
-    for _ in range(WARM_TICKS):
+    neutrons = [i + 1 for i, entry in enumerate(warm["measured"]) if entry["family"] == "n"]
+    low = dict.fromkeys(neutrons, 0)
+    high = dict.fromkeys(neutrons, 0)
+    for tick in range(1, WARM_TICKS + 1):
         simulation.step()
-    return {
-        number: int(entry.counted)
-        for number, entry in simulation.measured.items()
-        if warm["measured"][number - 1]["family"] == "n"
-    }
+        if tick < DWELL[0]:
+            continue
+        for number in neutrons:
+            count = int(simulation.measured[number].counted)
+            if tick == DWELL[0]:
+                low[number] = high[number] = count
+            else:
+                low[number] = min(low[number], count)
+                high[number] = max(high[number], count)
+    return {number: (low[number], high[number]) for number in neutrons}
 
 
 def trigger_tick(count: int) -> int:
     """The self-creation that takes a clock reading the constant count c to
-    the age `at`: at + floor(at x c / 2^20) (the owed counts telescope)."""
+    the age `at`: at + floor(at x c / 2^20) (the owed counts telescope); at
+    the two ends of the count's range, the two ends of the trigger's."""
     return AT + (AT * count) // SUSPENSION[1]
 
 
@@ -546,14 +564,19 @@ def become_expectations(worlds: dict[str, Json]) -> dict[str, dict[str, object]]
         if name == "j3_deuteron_crowd":
             found[name] = {"ticks": {}, "never": True, "gate": 65536}
             continue
-        counts = steady_counts(document)
-        ticks = {str(number): trigger_tick(count) for number, count in counts.items()}
+        ranges = count_ranges(document)
+        ticks = {
+            str(number): [trigger_tick(low), trigger_tick(high)]
+            for number, (low, high) in ranges.items()
+        }
         found[name] = {
-            "counts": {str(number): count for number, count in counts.items()},
+            "counts": {str(number): [low, high] for number, (low, high) in ranges.items()},
             "ticks": ticks,
-            "earliest": min(ticks.values()),
-            "latest": max(ticks.values()),
+            "earliest": min(low for low, _ in ticks.values()),
+            "latest": max(high for _, high in ticks.values()),
             "slack": 3,
+            "dwell": list(DWELL),
+            "warm_ticks": WARM_TICKS,
         }
     return found
 
@@ -580,7 +603,7 @@ def main() -> None:
     # docs/DERIVATIONS_BEAM.md, or "measured" with the target.
     expectations["derivations"] = {
         "j2": "the first arrivals from the flight table (the rows born by the ticks a heading row needs to walk 8 Links: ticks - tau_8, tau_k = ceil((2 k - 1) T_D / (2 S_1 Q)), DERIVATIONS_BEAM 11.1; BEAM_LAW section 3); the first clicks the arrivals' admitted share on the window (BEAM_LAW note 36: w / N for a stride coprime to N, else the admitted phases of the stride's orbit over the orbit's size: 1/64, the half circle, 2/64, 0); the far detector's clicks the rows of the stride outside the far phase; derived here from the flight table and compared by tests/test_weak_readings.py (d)",
-        "become": "measured (weak-v1: the counts of the transformations of J1 over the run)",
+        "become": f"measured, the range over the dwell period of ticks {DWELL[0]} to {DWELL[1]} of a warm run of {WARM_TICKS} intervals of the world without its `become` keys (the count each `n` clock reads at its Node, `Measured.counted`, at every tick of the window: the transient over by tick 36, the window longer than one cycle of the owed count, 2^20 / c intervals; a GameBoard reading of the engine, re-pinned under the fraction-free law on 2026-09-21, the one count at tick 100 until then); the trigger ticks at + floor(at x c / 2^20) at both ends of the range (the owed accumulator of BEAM_LAW note 41 gains between the least and the greatest count per interval once the crowd is steady), the reading inside when the neutron fires within them or up to `slack` intervals before (the build-up); `never` where the `crowd` gate holds; compared with the generator's warm runs on the shipped worlds by tests/test_weak_readings.py (e)",
         "w": "measured (the exchange world: `at` and the click's tick the clock's count under the crowd gate, the label Q x the amount, the content and the charge as declared)",
     }
     for name, j2_expected in j2_expectations().items():
@@ -600,10 +623,12 @@ def main() -> None:
                 continue
             counts = expected["counts"]
             assert isinstance(counts, dict)
-            values = sorted(set(counts.values()))
+            lows = sorted({low for low, _ in counts.values()})
+            highs = sorted({high for _, high in counts.values()})
             print(
-                f"  {name}: {len(counts)} clocks, the steady counts from {values[0]} to {values[-1]} "
-                f"({len(values)} distinct), the trigger ticks {expected['earliest']} .. {expected['latest']} "
+                f"  {name}: {len(counts)} clocks, the counts over the ticks {DWELL[0]} .. {DWELL[1]} "
+                f"from {lows[0]} to {highs[-1]} ({len(set(map(tuple, counts.values())))} distinct ranges), "
+                f"the trigger ticks {expected['earliest']} .. {expected['latest']} "
                 f"(each up to {expected['slack']} earlier by the build-up)"
             )
     expectations["w"] = w_expectations()

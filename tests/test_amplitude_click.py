@@ -37,7 +37,13 @@ down before the first run:
     counts' accumulators, and at stage 2 `acc.push` per column, with the
     audit and the events of the nine worlds unchanged at stage 2, every
     push accumulator 0 on them (Lambda 1 on gravity and on whole charges);
-    `j3_deuteron`'s audit and events moved at stage 1, the owed count);
+    `j3_deuteron`'s audit and events moved at stage 1, the owed count;
+    `bohr/r2`'s events and state re-pinned once more when the turn by
+    momentum joined the table as the `action` row, record 155 of
+    2026-09-20: the electron's phase moves, its books do not; and once
+    more when a set's release over its Nodes became the Nodes' claims on
+    the body's table, `place_over_nodes`, the same record: the electron
+    is a body on three Nodes);
 (e) step 2, u the record's own field: on a bar with a lamp at the stride
     1 (K 2^20, content 2^20) and a counter whose `measure` entry has the
     window 0 of width 8, every record's row clicks (the window reads the
