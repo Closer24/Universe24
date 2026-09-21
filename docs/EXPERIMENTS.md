@@ -4102,6 +4102,74 @@ sequential gates on an entangled record, the full register replay.
   at 3000, the proton's held (1834, 0, 1, 2, 0, 0), no step. B1 and B3
   are identical (no lamp, no crowd on a fan). The verdict stands.
 
+### Q, c measured behind a detector (2026-09-21)
+
+- **Confronts.** The model owner's "go for it" of 2026-09-21 (record 236 of
+  the day's log: verify c by a run behind a detector against the formula)
+  under his rule that a formula gives and a run proves (record 205; the
+  register entry carries the derivation's section beside its number and
+  the test derives and compares): whether every row of a fan leaves the
+  GameBoard through an open face (an open face is a detector, an escape is
+  a click) at the tick the closed form of the flight gives
+  ([DERIVATIONS_BEAM section 11.1](DERIVATIONS_BEAM.md#111-the-linear-block-the-lattice-as-the-translation-group-the-shift-operator-and-the-flights-closed-form),
+  the Links made by the age tau, m_D(tau) = floor((2 tau S_1 Q + T_D) /
+  (2 T_D)) on the direction's digital line, D the direction vector, S_1
+  its Manhattan length, T_D its resolution and Q = 64 the label's scale,
+  so that the k-th Link falls at the age tau_k = ceil((2 k - 1) T_D /
+  (2 S_1 Q))), on every direction, and what Euclidean pace the faces read
+  against c = 1 / sqrt 3 Links per interval and its finite grain
+  ([FORM.md section 1](designs/light_speed/FORM.md), 0.5774 to 0.5818 at
+  Q = 64). Read at the faces only: the click's tick, its Node and its
+  face (the direction off the click's momentum label through the engine's
+  own table; the click record carries no age and no direction, the age
+  being the tick less the lamp's own `birth` tick).
+- **Model prediction, pinned before the run
+  ([the expectations](../examples/events/c_measured/README.md#the-expectation-written-before-the-run),
+  `examples/events/c_measured/expectations.json` and `derived.csv`, written
+  by `make_world.py` from the closed form).** One open cube of 65^3 (the
+  half-width 32), Q 64, N 64, one lamp of `light` at the centre with the
+  content 290 at K 290 (one birth at tick 1 of one record of 290 rows on
+  the fan of 290 primitive directions with |a| + |b| + |c| <= 6, the
+  content spent, then a turn of 0), 100 intervals. Per direction the
+  escape at its first Link k off the GameBoard, the click at tick 1 +
+  tau_k on the Node after k - 1 Links: the 6 axes at the age 56 (33
+  Links, the pace 33 / 56 = 0.5893), the 12 face diagonals at 79 (65
+  Links, 0.5819), the 8 body diagonals at 97 (97 Links, 0.5774), the 264
+  others at the ages 57 to 84 (the pace 0.5718 to 0.5884); over the fan
+  the pace min 0.5718, max 0.5893, mean 0.5810 against c = 0.5774 and the
+  asymptotic Q |D| / T_D over the fan 0.5774 to 0.5818 (mean 0.5784, the
+  same range as FORM.md's table within 64, its extremes the body diagonal
+  and the heading); 290 clicks on the faces and none elsewhere, the
+  escaped momentum (0, 0, 0), one gather, the books balanced. Two
+  properties of the grain, from the derivation: the finite escape's pace
+  spreads wider than the asymptotic range (the first Link at the first
+  interval and the ceiling of tau_k), and the line's tie (the lowest axis
+  first) is not covariant under the permutation of the axes ((5, 1, 0)
+  escapes at Link 39, age 57; (1, 5, 0) at Link 40, age 59; the faces
+  57, 47, 41 per pair). Refutation: any click whose tick, Node or face
+  differs from the derived one of its direction, or a pace outside the
+  derived range.
+- **Features.** The open faces as detectors, the lamp's single birth (E =
+  h f: the content spent), the record form's click line per row;
+  `tools/c_measured_readings.py`; `tests/test_c_measured.py`
+  (derive-and-compare, the template `tests/test_amplitude_cone.py`).
+- **Run (2026-09-21, `python -m event_universe --init
+  examples/events/c_measured/c_measured.json`, headless, 100 intervals,
+  0.39 s, the source fingerprint `acf789fe0811`, completed and conserved
+  at every tick; the readings by `tools/c_measured_readings.py`, its
+  verdict inside; DETECTOR unless said).** One birth at tick 1; 290 clicks
+  on the faces (`face:+x` 57, `face:-x` 57, `face:+y` 47, `face:-y` 47,
+  `face:+z` 41, `face:-z` 41), 290 of 290 at the derived tick, Node and
+  face, none differing; the pace over the fan min 0.5718, max 0.5893,
+  mean 0.5810, every class as pinned
+  ([the table](../examples/events/c_measured/README.md#what-was-measured-2026-09-21));
+  one gather at the end; the two properties of the grain confirmed by the
+  clicks. Inside on every reading, nothing moved. No rule touched (the
+  flight rule read against the three tests: generic, vector, local). The
+  run establishes that the engine's flight is its closed form on every
+  direction of the fan and that a detector on the faces reads c = 1 / sqrt
+  3 within the grain of the finite escape; it establishes no physical law.
+
 ### A3. Bell test in phase form, delayed geometry
 
 - **Confronts.** The same CHSH data as A2 and the quantum value at the
