@@ -3487,9 +3487,10 @@ implementation's part of the contract. The design above is unchanged.
     six, so the table at 1 / 256 is the declared rounding that keeps the
     comparison on rational integers; without it every `wave` record's
     square and every rung of the ladder would move by the rounding, the
-    gate's E at N = 4096 first (the xfail): a change of the click's
-    registered integers, taken only on the owner's word. A statement, not
-    a change.
+    gate's E at N = 4096 first (the xfail). The owner's word is given: the
+    table stays and is a declared input of the law beside Q, S and N, the
+    circle's rounding (the model owner, record 328 of [the log](LOG_2026-09-20.md),
+    the fixed-point transforms its precedent). A statement, not a change.
 42. **The group structure named** (2026-09-21; the vector program, record
     191; the architect's item 3; names and types only, no rule changed and
     every registered integer the same): the collision table is the action

@@ -395,6 +395,12 @@ the known formulas (Highlights 5.7).
   of content M with the momentum component p steps one Link per
   (S M + p) / p self-creations on that axis (note 17).
 - **N**: the steps of the phase circle, the world key `N`.
+- **The circle's rounding, 1 / 256**: the scale of the circle's tables of
+  cos and sin (`core.phase.phase_cosines`, `phase_sines`), computed once
+  at load from N by integer series and read only at the click through the
+  Gram matrix; a declared input of the law beside Q, S and N, kept as the
+  fixed-point transforms of signal processing keep theirs (the model
+  owner, record 328).
 - **P**: the direction bound, the world key `direction_bound`: every
   declared direction has its components in -P .. P.
 - **K = [n, d]**: the clock's pair, the world key `K`: the turn per
