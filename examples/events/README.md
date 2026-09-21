@@ -381,7 +381,9 @@ arms, a half and a quarter turn on one arm, the balanced (1, 1) split, the
 (3, 4) split, arms unequal by two intervals at three phases per interval,
 and Elitzur-Vaidman's absorber on one arm; L2, the two slits at a low
 rate (the shipped two-slit world under the key with the wall freed beside
-the openings, and its one-birth reference); L3, the pair on the A2 world
+the openings, and its one-birth reference; L2b, the two slits with the
+fan by angle, the Huygens fan of width 48 with the angle weights, whose
+weights carry Young's fringes); L3, the pair on the A2 world
 with the choosers, at the CHSH labels, with a which-path read and with
 Bob's counters far; L4, GHZ; L5, the gate between records (the CNOT
 pair, CNOT twice, GHZ by one gate, the register's ceiling); L6, the pair

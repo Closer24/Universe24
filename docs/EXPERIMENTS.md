@@ -3945,6 +3945,44 @@ question, issue #376; the Boss's approval of 2026-09-20).**
   declare the pair form; the pair, GHZ and the gate declare no phase per
   Link. Which form nature's light is, the model does not say.
 
+**L2b, the two slits with the fan by angle (Huygens on the lattice; the
+mathematician's run of 2026-09-20 under the Boss's standing authorization,
+records 160 and 163).**
+
+- **Model prediction, pinned before the run (the world's README paragraph,
+  from `two_slits_map.py` with the world's weights).** `slits_low`'s
+  geometry, lamp and frequency; each opening's fan the Farey fan of width
+  P = 48 within the freed band (1327 of 1423 primitive directions) with
+  each direction weighted by the angle it covers (half the gap to each
+  Farey neighbour, exactly 1 / (|D| |D'|), integers at the grain 2^18;
+  [TWO_SLITS.md section 7](designs/fraction_free/TWO_SLITS.md)); 420
+  intervals; no src change. Pinned: the record's total 2.677, the shares
+  wall / screen / faces 0.224 / 0.410 / 0.366; the screen WEIGHTS with
+  Young's fringes, Pearson 0.895 with the Euclidean two-source cosine,
+  visibility 0.954, the peak at y = 59 (0.012 of the total); the first 64
+  births' clicks wall 14, screen 27 on 27 named pixels, faces 23; no click
+  at a dark pixel; 32 distinct cells fixed after the 64th birth (u repeats
+  with the period 64); the click histogram's Pearson 0.499.
+- **Run (2026-09-20, `slits_huygens`, 420 intervals in 76.3 s, 0.18 s per
+  interval, 2659 rows per record, completed and conserved at every tick,
+  271 records gathered, 149 open; DETECTOR; the page
+  https://claude.ai/artifact/6pyy8C62muHshZ7iMDCUx9).** Total 2.6771,
+  shares 0.224 / 0.410 / 0.366; Pearson 0.895, visibility 0.954, the peak
+  y = 59 at 0.01204; the first 64 births wall 14, screen 27 on the pinned
+  27 pixels, faces 23; no click at a dark pixel in 271; 32 distinct cells
+  in the first 64 and in all 271, every u clicking its one cell at every
+  birth; the histogram's Pearson 0.493. Every pin reproduced; none of the
+  refutation line's four conditions occurred. Verdict: Young's fringes are
+  in the record's weights from the fan by angle alone, under the built
+  phase; the clicks cannot show them while u repeats with the period 64.
+  The evidence for the fan as a width P of the law with the angle weights
+  (decided, [record 163](LOG_2026-09-20.md#163-decided-the-owner-2355z-on-the-bosss-list-of-six-1-yes-the-fan-as-a-width-p-of-the-law-with-the-angle-weights-as-the-rule-of-every-fan-huygens-on-the-lattice-record-160-2-yes-the-exact-phase-at-the-click-from-the-rows-two-accumulators-record-156-5-yes-the-registers-pins-as-detector-readings-only-6-rule-a-closed-pr-383-record-139-3-the-birth-wheel-and-4-the-fan-direction-doppler-left-with-two-questions-explain-why-doppler-is-needed-when-it-emerges-by-itself-what-is-the-birth-wheel-the-owners-words-translated-the-bosss-answers-nothing-is-added-for-doppler-the-key-and-g-are-deleted-the-crossing-rule-alone-gives-it-the-lattices-own-count-on-a-fan-direction-is-the-laws-statement-so-4-is-closed-by-the-question-itself-and-the-wheel-is-the-lamps-count-written-on-the-record-at-birth-that-the-ladder-reads-at-the-click-in-place-of-a-draw)), and for the wheel as
+  what turns the weights into counts; the wheel's form checked with the
+  map ([TWO_SLITS.md section 8](designs/fraction_free/TWO_SLITS.md)): the
+  golden-rate count on the lamp's record gives the same clicks as the
+  bit-reversed ordinal within one click at 4096 births
+  ([record 164](LOG_2026-09-20.md#164-the-fan-by-angle-run-on-main-slits_huygens-l2b-the-mathematician-no-src-change-pr-410-the-page-httpsclaudeaiartifact6pyy8c62muhshz7imdcux9-every-pin-reproduced-the-records-screen-weights-carry-youngs-fringes-at-the-euclidean-spacing-pearson-0895-with-the-two-source-cosine-visibility-0954-the-peak-at-y--59-from-the-farey-fan-of-width-48-with-the-angle-weights-alone-under-the-built-phase-the-clicks-cannot-show-them-27-screen-cells-of-121-32-cells-in-all-fixed-for-the-whole-run-u-repeating-with-the-period-64-the-evidence-for-p-as-a-width-of-the-law-decided-record-163-and-for-the-wheel-as-what-turns-weights-into-counts-the-golden-rate-wheel-checked-with-the-map-two_slitsmd-section-8-the-same-clicks-as-the-bit-reversed-ordinal-within-one-click-at-4096-births-the-same-cells-filled-by-1024-the-golden-rate-the-generic-wheel-as-one-row-of-the-counts-table-the-wheels-form-for-the-owner)).
+
 **L, open items (2026-09-20, after (v)).** The one click (the design's
 section 6) is not landed: the record form as the default changes worlds
 outside the crowd-threshold series on the gate set
