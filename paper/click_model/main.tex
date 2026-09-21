@@ -123,6 +123,18 @@ worlds and recorded runs are archived \cite{zenodo}.
 
 \section{The model}\label{sec:model}
 
+\paragraph{In one sentence.} The model is one piecewise-linear map on an
+integer torus; the measurement is the one threshold that is read out. The
+state is a vector of integers, and every interval does three things to it
+and nothing else: it translates the vector by a rate and takes what
+crossed a threshold as the events (the flight, the phase, every count and
+the birth), it multiplies by a declared integer matrix (the split and the
+rotation, exact and reversible), and it adds (the merge, where equal
+phases sum and opposite phases cancel). Between clicks the rates are
+constant, so the map has a closed form and every number of this paper is
+computed from it before any run; the click is the one threshold whose
+crossing is written down, and it deletes what it read.
+
 \paragraph{The GameBoard and the circle.} Nodes are the points of a box in
 $\Z^3$ (an axis may be periodic); each Node has six Links. Time is the
 interval $t \in \Z$. The circle is $\Z_N$ with $4 \mid N$. The tables are
