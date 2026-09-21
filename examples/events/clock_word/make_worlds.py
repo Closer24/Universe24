@@ -15,16 +15,16 @@ pin that decides on the GameBoard: two crowds of the same release F at
 different distances are the same push, and only the age clock reads the
 distance.
 
-The worlds, in series P's geometry (`../crowd_clock/make_worlds.py`, the
+The worlds, in series U's geometry (`../crowd_clock/make_worlds.py`, the
 one copy of the fan, the speeds and the pinned k): the lamp `s_px1` at rest
 at x = 10 (2^20 units, one unit per self-creation on +x, the wheel
 [1, 64]), two `mass` sources at 3 or at 6 Links on +y and +z, each
-releasing F = 4915 units per interval on series P's fan of nine toward the
+releasing F = 4915 units per interval on series U's fan of nine toward the
 lamp's line, `suspension` [1, 2^16], the detector fixed at x = 110
 measuring `s_px1` with `reads: "age"`; the lamp's entry for `mass`
 `{"rule": "pass", "reads": "presence"}` (the presence word; the bare `pass`
 until clock-age-v1, 2026-09-21) or `{"rule": "pass", "reads": "age"}` (the
-age word, series E's precedent, the law's default since clock-age-v1); the bar 121 x 9 x 9 at 3 Links (series P's) and
+age word, series E's precedent, the law's default since clock-age-v1); the bar 121 x 9 x 9 at 3 Links (series U's) and
 121 x 15 x 15 at 6. Run under beam-v1 as declared: no change under src/.
 
     python examples/events/clock_word/make_worlds.py     # the worlds and expectations.json
@@ -43,7 +43,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 
 def _crowd_clock():
-    """Series P's generator, the one copy of the fan and the speeds."""
+    """Series U's generator, the one copy of the fan and the speeds."""
     path = HERE.parent / "crowd_clock" / "make_worlds.py"
     spec = importlib.util.spec_from_file_location("crowd_clock_make_worlds", path)
     module = importlib.util.module_from_spec(spec)
@@ -81,7 +81,7 @@ Json = dict[str, object]
 
 
 def fan(axis: int, distance: int) -> list[list[int]]:
-    """Series P's fan of nine toward the lamp's line from a source `distance`
+    """Series U's fan of nine toward the lamp's line from a source `distance`
     Links up the axis, (dx, -distance, 0) or (dx, 0, -distance) for
     dx = -4 .. 4, each in primitive form."""
     import math
@@ -187,7 +187,7 @@ def expectations() -> Json:
         "derivations": {
             "one_plus_z": (
                 "DETECTOR: the lamp's light at x = 110, 1 + z the inverse slope of the birth ordinal "
-                "against the click's tick in the window, series P's reading; k the count the lamp's "
+                "against the click's tick in the window, series U's reading; k the count the lamp's "
                 "clock owes per self-creation, presence x n / d under the presence word, the age "
                 "moment x n / d under the age word (NOTE.md section 6)"
             ),

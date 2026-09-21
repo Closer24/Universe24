@@ -4109,6 +4109,42 @@ def _measure(frame: Interval) -> None:
         gather_records(layer, tick, entries, measured, families, record)
 
 
+def covariant_release(entry: Measured, denominator: int) -> list[int]:
+    """The release's count under `covariant-readings-v1` (DERIVATIONS_BEAM
+    17.6 M6 and N4): per family the row of the table gains `held_f x (E' /
+    g) x n` over `(E'_0 / g) x d`, the content-equivalent of the body's own
+    energy in place of its content (at rest E' = E'_0 and the count is the
+    law's `held_f x n` over d exactly; in motion E' / E'_0 = gamma times it),
+    advanced once per lattice interval, the owed intervals included, with
+    the remainder kept; every product tested by division before it is
+    formed. A body of no content (E'_0 = 0) holds nothing to release and
+    takes the law's rows (their rates 0). `denominator` is the world's
+    `release` d (the row's own is overwritten by the loop at every call)."""
+    readings = entry.covariant
+    assert readings is not None
+    rows = entry.counts.of("release")
+    if readings.rest == 0:
+        return entry.counts.advance("release", values=entry.held)
+    values: list[int] = []
+    denominators: list[int] = []
+    for _, held in zip(rows, entry.held, strict=True):
+        if held and readings.energy > MOMENTUM_BOUND // held:
+            raise OverflowError(
+                f"{BEAM_LAW}: covariant-readings-v1: the release's rate held x E' / g = "
+                f"{held} x {readings.energy} of measured event {entry.number} exceeds the integer "
+                f"bound {MOMENTUM_BOUND}"
+            )
+        values.append(held * readings.energy)
+        if readings.rest > MOMENTUM_BOUND // denominator:
+            raise OverflowError(
+                f"{BEAM_LAW}: covariant-readings-v1: the release's wall E'_0 / g x d = "
+                f"{readings.rest} x {denominator} of measured event {entry.number} exceeds the "
+                f"integer bound {MOMENTUM_BOUND}"
+            )
+        denominators.append(readings.rest * denominator)
+    return entry.counts.advance("release", values=values, denominators=denominators)
+
+
 def _release_family(
     frame: Interval,
     entry: Measured,
@@ -4121,13 +4157,15 @@ def _release_family(
     thrown_rows: list[list[object]],
     thrown_recoil: list[int],
     born_columns: list[dict[str, np.ndarray]],
+    release_only: bool = False,
 ) -> list[int]:
     """One family's releases of one measured event at this self-creation:
     the free family's release, the pending rows (home, re-released, the
     products), the lamp's births, then the recoil on the reader and the
     rows' columns added to `born_columns` (the store's batch of the
     interval, appended once by `_release`); returns the recoil of the
-    products thrown (the `become` record's).
+    products thrown (the `become` record's). With `release_only` (an owed
+    interval under `covariant-readings-v1`, 17.6 N4) the free release alone.
     """
     tick = frame.tick
     record = frame.record
@@ -4168,7 +4206,7 @@ def _release_family(
                 )
                 for direction in entry.directions
             )
-    if entry.pending[family]:
+    if entry.pending[family] and not release_only:
         ways = len(entry.directions)
         reborn = NO_RECORD
         pending_rows = entry.pending[family]
@@ -4344,6 +4382,7 @@ def _release_family(
         entry.pending[family] = held_back
     if (
         entry.lamp_rate is not None
+        and not release_only
         and family == entry.family
         and turn > 0
         and (
@@ -4582,11 +4621,20 @@ def _release(frame: Interval) -> None:
     # pending (home, re-released or a product) or one with a clock trigger
     # of a transformation; any other would find nothing to create.
     for entry in entries:
-        if not entry.creating or not (
-            entry.lamp_rate is not None
-            or any(free and held > 0 for free, held in zip(free_of, entry.held, strict=True))
-            or any(entry.pending)
-            or entry.become is not None
+        releasing = any(free and held > 0 for free, held in zip(free_of, entry.held, strict=True))
+        # Under `covariant-readings-v1` the free release runs per lattice
+        # interval (DERIVATIONS_BEAM 17.6 N4): on an owed interval the body
+        # visits this step for its release alone (no lamp, no pending row,
+        # no trigger: those stay per self-creation).
+        release_only = not entry.creating and entry.covariant is not None and releasing
+        if not release_only and (
+            not entry.creating
+            or not (
+                entry.lamp_rate is not None
+                or releasing
+                or any(entry.pending)
+                or entry.become is not None
+            )
         ):
             continue
         age, turn = entry.clock_age, entry.turn
@@ -4598,7 +4646,8 @@ def _release(frame: Interval) -> None:
         # below it; the products are born below with age 0.
         clock_trigger = entry.become
         if (
-            clock_trigger is not None
+            not release_only
+            and clock_trigger is not None
             and clock_trigger.at is not None
             and bool(ages_at_key(np.array([entry.age], dtype=np.int64), clock_trigger.at)[0])
             and (clock_trigger.crowd is None or entry.counted < clock_trigger.crowd)
@@ -4610,11 +4659,17 @@ def _release(frame: Interval) -> None:
         # count a self-creation of turn 0 or outside the window cannot
         # release is discarded, as the count off the clock was unread).
         lamp_count = 0
-        if entry.lamp_rate is not None:
+        if entry.lamp_rate is not None and not release_only:
             (lamp_count,) = entry.counts.advance("lamp")
         # The release per family: every family's row of the table gains
-        # `held x n` in one loop (a paid family's row has the rate 0).
-        released = entry.counts.advance("release", values=entry.held)
+        # `held x n` in one loop (a paid family's row has the rate 0);
+        # under `covariant-readings-v1` the content-equivalent of the body's
+        # own energy in place of its content (`covariant_release`).
+        released = (
+            covariant_release(entry, frame.world.release[1])
+            if entry.covariant is not None
+            else entry.counts.advance("release", values=entry.held)
+        )
         # The products born this self-creation (family, amount, content,
         # direction) and their recoil, for the `become` record.
         thrown_rows: list[list[object]] = []
@@ -4632,6 +4687,7 @@ def _release(frame: Interval) -> None:
                 thrown_rows,
                 thrown_recoil,
                 born_columns[family],
+                release_only,
             )
         # The `become` record, at the products' birth: the trigger and its
         # tick, the families, the products with their directions and the

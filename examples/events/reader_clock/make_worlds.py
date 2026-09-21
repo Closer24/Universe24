@@ -1,12 +1,12 @@
 """Write the five worlds of series S, a reader inside a crowd, and the
 expectations before the runs (`expectations.json`).
 
-The model owner, 2026-09-21 (in conversation, translated), after series P
-and Q: "start" the test the experimenter proposed of a detector that sits
+The model owner, 2026-09-21 (in conversation, translated), after series U
+and V: "start" the test the experimenter proposed of a detector that sits
 inside a crowd itself, as Earth sits inside the Milky Way. Under the law as
 built (BEAM_LAW step 4) a body's clock owes k intervals per self-creation,
 k the presence of other numbers' rows at its Node over the suspension's
-wall; series P and Q read a lamp's slowing at a detector at rest with no
+wall; series U and V read a lamp's slowing at a detector at rest with no
 crowd. A reader inside a crowd of its own is slowed alike, and what it
 reads in ITS OWN clock is the ratio of the two: 1 + z = (1 + k_s)(1 + v / c)
 / (1 + k_r), the source's clock over the reader's. A reader denser than its
@@ -26,7 +26,7 @@ unchanged by the reader's crowd and the reader's own count is
 The world: a bar of 121 x 9 x 9 Nodes (open). THE READER (`s_px1`, fixed at
 x = 10, 2^20 units, a lamp of one unit per self-creation on -x, the wheel
 [1, 64]) measures `s_px1` with `reads: "age"` and lets `mass` pass; its
-crowd, when it has one, is series P's pair of `mass` sources three Links up
+crowd, when it has one, is series U's pair of `mass` sources three Links up
 +y and +z with the fan of nine directions at F_r units per interval. THE
 SOURCE (`s_px1`, at x = 70, the same lamp shining -x to the reader, letting
 `mass` and `s_px1` pass) with its own crowd at F_s. Five worlds:
@@ -56,7 +56,7 @@ from event_universe.register_map import carry_replicated  # noqa: E402
 
 
 def _crowd_clock():
-    """Series P's generator, the one copy of the fan, the speeds and the
+    """Series U's generator, the one copy of the fan, the speeds and the
     pinned k."""
     path = HERE.parent / "crowd_clock" / "make_worlds.py"
     spec = importlib.util.spec_from_file_location("crowd_clock_make_worlds", path)
@@ -128,7 +128,7 @@ def crowd(x: int, k: float, moving: bool) -> list[Json]:
             "table": {"s_px1": {"rule": "pass"}},
         }
         if moving:
-            # the crowd slowed alike, emulated (series Q): the sources at
+            # the crowd slowed alike, emulated (series V): the sources at
             # the waiting lamp's pace v / (1 + k)
             source["momentum"] = [P.momentum(SPEED_OVER_C * C / (1 + k), amount), 0, 0]
         else:

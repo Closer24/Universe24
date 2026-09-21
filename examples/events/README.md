@@ -439,9 +439,27 @@ charge per unit of amount and `lifetime` 1, thrown by a neutron's
 `become` and measured by the proton one Link away one interval later,
 which then has a neutron's charge and content.
 
+## The covariant series
+
+The folder [covariant/](covariant/README.md) holds the four worlds of
+series S, the covariant readings (`covariant-readings-v1`, the world key
+`covariant_readings`; the model owner's decision of 2026-09-21, record 270
+of the log of 2026-09-20, on DERIVATIONS_BEAM section 17 as amended in
+17.6), written by `covariant/make_worlds.py` with their expectations before
+the runs (`covariant/expectations.json`): the muon of J4 (the catalog's
+`mu`, content 207, `become` at 64 into `e` with the products `beta` and
+`nu`) at rest, at p = 3640 and at p = 12 856 label units on an open bar of
+201 x 1 x 1 with the +x face at x = 200, and series G2's `coasting_none` in
+its record form under the key at the grain 2^18. `tools/covariant_readings.py`
+reads the products' clicks on the +x face and the centre's pointer
+(DETECTOR) and the `become` lines, the `energy` lines with their
+invariant and the intervals owed to proper time (GAMEBOARD) against the
+pins; the register entry is
+[S, the covariant readings (2026-09-21)](../../docs/EXPERIMENTS.md#s-the-covariant-readings-2026-09-21).
+
 ## The hand series
 
-The folder [hand/](hand/README.md) holds the worlds of series P, the hand
+The folder [hand/](hand/README.md) holds the worlds of series U, the hand
 (`hand-v1`, the model owner's decision of 2026-09-20, record 128 of the
 log; [BEAM_LAW note 39](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
 written by `hand/make_worlds.py`: `w_hand`, the W world with a second
@@ -484,7 +502,7 @@ at N = 1024 and 4096. The register entry is
 ## The c series
 
 The folder [c_measured/](c_measured/README.md) holds the one world of
-series Q, c measured behind a detector, written by `c_measured/make_world.py`
+series V, c measured behind a detector, written by `c_measured/make_world.py`
 with its register (`expectations.json` and `derived.csv`: the closed form's
 escape of every direction, DERIVATIONS_BEAM.md section 11.1, written before
 the run): an open cube of 65^3 whose six faces are the detectors, one lamp

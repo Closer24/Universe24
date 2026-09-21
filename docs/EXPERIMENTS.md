@@ -1665,6 +1665,32 @@ states "exactly" and means integer equality at every tick.
   outward as the push it reads (C 1.3 to 1.5 times the ring mean, as on
   every registration) drives it. The field's burst and the fan's grain
   remain what they were. The registered verdicts stand as history ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+- **Re-read under the crossing rule (2026-09-21; measured, nothing
+  pinned).** The two re-reads above describe the tree before the
+  crossing rule (the step before the law, a row and a body met once;
+  [migration](MIGRATION.md#the-crossing-rule-on-2026-09-21-the-step-before-the-law-a-row-and-a-body-met-once-the-key-doppler-and-the-grain-deleted);
+  [VALIDATION's crossing-rule table](VALIDATION.md#the-crossing-rule-the-gate-set-and-the-movers-replayed-against-no-tables-2bbc5a64---2026-09-21)
+  records the orbit worlds' events moved). Under it, the auditor's round
+  9 at main e42c49e5 and the architect's own run of
+  `tools/orbit_readings.py` on the two shipped worlds (unchanged, sha256
+  27c40ef0 and 68e4e681) read the same: `s32_r12` closes the angle once
+  (T 525, the return (-11, 0), heading kept, the mean radius 17.90, C
+  1.87) and leaves through face:-x at 932 (three closings at 363, 482,
+  622 and the exit at 2004 under the signed drive); `s32_r24` closes the
+  angle once (T 932, the return (+8, 0), heading kept, the mean radius
+  34.16, C 1.29) and leaves through face:-x at 1239 (bound for the whole
+  run of 4000 under the signed drive); T(24)^2 / T(12)^2 from the first
+  turns 932 and 525 = 3.15 against the expected 4 (3.73 before); no orbit
+  closes by the criterion; the record checks 0 failed. By kind: T, the
+  returns, the radii and C are GAMEBOARD readings (the probe's `step` and
+  `read` records, the host's view); the exits are DETECTOR readings (the
+  face detectors' clicks). No pin moved, no world changed. For C = 1.29
+  and 1.87 against the derivation's 1, the physicist's orbit note
+  (`docs/designs/orbit_read/NOTE.md`, PR #597): a digital line crosses
+  the unit ring at S_1 / |D| Nodes, the fan's Manhattan mean 1.287 (4 /
+  pi for a fan uniform in angle), so a body on a fan reads 1.13 to 1.43
+  shell means at rest, series C's C = 1.00 having been read on the six
+  headings where the factor is 1.
 
 
 ### A10, the width of an opening and the spread behind it, under the Beam Law (2026-09-20)
@@ -6172,6 +6198,32 @@ sequential gates on an entangled record, the full register replay.
   law: no identity, no key, no rule. The test
   `tests/test_amplitude_malus.py` derives the pin from the worlds and the
   engine's tables and replays the three worlds against the register.
+- **Extended at 22.5 degrees (2026-09-21; the auditor's round 10 part 2,
+  registered by the architect on the Boss's order; host operations and
+  worlds only).** The three worlds above with one setting changed each,
+  written by the generator: `malus_22_5` (the last polariser's window 32,
+  22.5 degrees), `malus_67_5` (the window 96, 67.5 degrees),
+  `malus_chain_22_5` (the rotate 32 and the window 32, the chain at
+  22.5-degree steps); 300 intervals, each once through the runner (1.1
+  to 1.5 s; the source `c0911671e6431575`, the initializations
+  `4267f8f2e4160240`, `a2bcd5ed820b51d0`, `86bc2c74ac725517`; completed
+  and conserved at every tick). **Pinned first** from the tables (C'[32]
+  = 237, S'[32] = 98, C'[96] = 98, S'[96] = 237; the note's sections 3
+  and 4; [DERIVATIONS_BEAM 24.3 row 4](DERIVATIONS_BEAM.md#243-the-delta-p-table-every-computable-difference-from-quantum-mechanics-or-relativity-as-the-law-is-declared)):
+  the weights 237^2 / 98^2, the rungs [0, 219, 256], the counts 0+ 219,
+  0- 37; 98^2 / 237^2, [0, 37, 256], 37 / 219; 237^4, (237 x 98)^2, 98^4,
+  (98 x 237)^2, [0, 187, 219, 224, 256], 187 / 32 / 5 / 32. **The
+  engine's counts second** (DETECTOR, the gathers' chosen cells over the
+  records 1 .. 256, u over every residue of the wheel once): 219 / 37, 37
+  / 219, 187 / 32 / 5 / 32; the difference zero; over every record
+  gathered by the end (289 of 299, 10 open, the first gather at tick 11)
+  247 / 42, 42 / 247, 212 / 35 / 6 / 36. GAMEBOARD: the books balanced
+  at every interval. So 24.3 row 4's numbers are run in the law: 219 /
+  256 = 0.85547 against cos^2 22.5 degrees = 0.85355 and the chain's 187
+  / 256 = 0.73047 against cos^4 = 0.72855, +0.0019 both, the tables'
+  rounding at the scale 256 (the owner's declared input, record 328).
+  The test replays the six worlds against the register; no `src/`
+  change, no pin moved.
 
 ### A13. Bell test with polarization settings (after feature 11)
 
@@ -6364,6 +6416,89 @@ sequential gates on an entangled record, the full register replay.
   with these readings.
 
 
+### S, the covariant readings (2026-09-21)
+
+- **Confronts.** The model owner's decision of 2026-09-21 (record 270 of
+  the log of 2026-09-20, on the derivation mathematician's section 17:
+  "Yes, that is what comes out right, no?"; today's order, about 11:52Z,
+  translated: "you said covariant-readings-v1 is needed to confirm the
+  formula or to run it; have them do it, urgently"): the formula at the top
+  of the owner's page, W = E_0^2 + 3 **p** . **p** (the exact square of a
+  body's energy, compared and never rooted; E_0 = Q S M; c^2 = 1 / 3),
+  must stand on a run. The hypothesis `covariant-readings-v1`
+  ([DERIVATIONS_BEAM 17.6](DERIVATIONS_BEAM.md#176-amended-per-the-physics-rule-review-of-covariant-readings-v1-record-297-the-nine-must-fixes-the-integer-forms-the-should-fixes),
+  the physics-rule reviews of records 297 and 314; [HYPOTHESES 25](HYPOTHESES.md#25-the-covariant-readings-a-bodys-energy-as-an-exact-square-compared-and-never-rooted-its-clock-gated-by-e_0--e-stated-so-that-it-can-fail)),
+  a world key beside the law: every body's record carries W and E' (the
+  largest integer with E'^2 <= W, by comparisons), a second owed count
+  gates its self-creations at E'_0 / E', the drive's wall loses its cap
+  term (the pace p / E'), the crowd's count is charged with the sum over
+  the owed intervals, the free release runs per lattice interval. Against
+  nature's rows 4a and 4b of [NATURE](NATURE.md): the muon's lifetime in
+  flight (gamma), the moving lamp's z = gamma (1 + beta) - 1. Read at the
+  +x face of the J4 bar (the products' clicks, DETECTOR) and at the centre
+  of the coasting world (the pointer's z, DETECTOR); the `become` lines and
+  the `energy` lines GAMEBOARD.
+- **Model prediction, pinned before the run
+  ([the expectations](../examples/events/covariant/README.md#the-expectations-pinned-before-the-runs-expectationsjson);
+  `examples/events/covariant/expectations.json`, derived by the generator
+  from the engine's own rules beside the design's numbers).** The muon
+  (content 207, Q S M = 13 248) at rest, at p = 3640 and at 12 856 (E' at
+  load 13 248, 14 671, 25 910; gamma 1, 1.1074, 1.9558): the 64th
+  self-creation at the design's 64, 70.9 and 125.2 within one tick and at
+  the derived 64, 70 and 124 (k + floor((k - 1) (E' - E'_0) / E'_0)); the
+  electron product's click on the +x face at the design's 391, 367 and 345
+  within two ticks and at the derived 392, 369 and 345 (the flight table's
+  steps from the decay's Node 10, 27, 72); `coasting_none`'s `s_mz2` at
+  its declared momentum z = 0.369 +- 0.003 (gamma 1.04967, the pace 0.1755;
+  the register's 0.2636 without the key); E'^2 <= W < (E' + 1)^2 on every
+  `energy` line of every run.
+- **Features.** The world key `covariant_readings` (`c2` [1, 3], `grain` g)
+  and the identity `covariant-readings-v1` ([BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file),
+  [ENGINE.md's readings by type](ENGINE.md#the-detectors-readings-by-type));
+  no rule of the six verbs changed; the catalog's `muon`; reading (ii),
+  the gradient push, not built (17.6 M4: not Lorentz's pair), the pair's
+  round trips withdrawn (17.6 M5); the base `main`'s per-axis drive (form
+  B, record 342, BLOCKED in review, record 348, not on `main`; on the two
+  pinned worlds every momentum lies on one axis, where the two drives
+  without their cap term are one count); a `fixed` measured event (the
+  apparatus) carries no readings.
+- **Run.** `examples/events/covariant/` (the four worlds written by
+  `make_worlds.py`), `tools/run_series.py --jobs 2`, 420 and 400
+  intervals, headless; the readings by `tools/covariant_readings.py`
+  (every line DETECTOR or GAMEBOARD). The worktree `covariant_readings`
+  from main `f5417ab3`, the project's environment (Python 3.14.0rc2, numpy
+  2.5.3); the source fingerprint `24e0c1ba...`; the J4 runs 0.3 s each, the
+  coasting run 42.9 s (41.0 s without the key on the same head); every run
+  completed with the books balanced at every tick; the tool: 0 record
+  checks failed, 24 readings inside, 1 outside, nothing moved
+  ([the page](../examples/events/covariant/README.md#what-was-measured-2026-09-21)).
+
+  | World | Expected | Measured | Verdict |
+  | --- | --- | --- | --- |
+  | `j4_muon_rest` | E' 13 248; the `become` at 64 at x = 10; the `beta` click at 391 +- 2 (derived 392); the invariant | 13 248; tick 64 at x = 10; the click at 392, content 207; 420 lines, 0 failures; 0 intervals owed | inside (7 of 7) |
+  | `j4_muon_3640` | E' 14 671; the `become` at 70.9 +- 1 (derived 70 at x = 27); the click at 367 +- 2 (derived 369); the invariant | 14 671; tick 70 at x = 27; the click at 369 (the decay derived back 70); 0 failures; 6 intervals owed to proper time | inside (7 of 7) |
+  | `j4_muon_12856` | E' 25 910; the `become` at 125.2 +- 1 (derived 124 at x = 72); the click at 345 +- 2 (derived 345); the invariant | 25 910; tick 124 at x = 72: **OUTSIDE the design's pin by 0.2**, inside the derived (the discrete count from an empty accumulator lies one gamma - 1 = 0.96 below 64 gamma; the reviewer's own re-derivation of record 314 gives 124); the click at 345 (the decay derived back 124); 0 failures; 61 intervals owed | 6 of 7 inside, 1 outside (reported, not moved) |
+  | `coasting_none_covariant` | `s_mz2` z = 0.369 +- 0.003; E' / g 1 128 171 883 over 1 074 790 400 (gamma 1.04967); the pace 0.1755; the invariant | z = 0.3674; 1 128 171 883 over 1 074 790 400; 18 steps in the late window's 100 intervals (0.180); 9567 lines, 0 failures; `s_mz2` owed 18 intervals of 400; 25 paid families off 3 h n = Q S d reported, no refusal | inside (4 of 4) |
+
+- **Verdict (S).** The formula stands on the run: on every `energy` line of
+  the four runs (10 827 lines) E'^2 <= W < (E' + 1)^2 held with E' kept by
+  comparisons alone after the load-time root; the muon's clock ran at
+  E'_0 / E' (64 self-creations in 70 and 124 intervals against 64 at rest),
+  its electron product reached the face at the ticks the flight table
+  derives from that clock (392, 369, 345 against the design's 391, 367,
+  345), and the moving star's light read z = 0.3674 at the identity's beta
+  0.3040 where the law without the key read 0.2636 and nature's gamma (1 +
+  beta) gives 0.369. The one reading outside is the discrete cadence's
+  offset of gamma - 1 below the continuum's 64 gamma at gamma 1.96,
+  reported with its integer. The OFF replay of `coasting_none` on the base
+  and the head is byte for byte equal, the gate set's digests unchanged.
+  Nothing was tuned; NATURE rows 4a and 4b are re-read under both
+  identities; the law's FAIL rows stand beside the identity, as record 270
+  decided. Not built: the contraction (reading (ii)); the host cost apart
+  from the model's is the comparison walk at a change of content (at most
+  258 per frame on the coasting world, up to 25 123 at the muon's
+  `become`), reported on the record.
+
 ### T, the clock's word (2026-09-21)
 
 - **Confronts.** The physicist's pin of 2026-09-21
@@ -6385,7 +6520,7 @@ sequential gates on an entangled record, the full register replay.
   ([the folder](../examples/events/clock_word/README.md),
   `examples/events/clock_word/expectations.json` with its `derivations`
   map, written by `make_worlds.py`; the `replicated` map absent: measured
-  once, awaiting replication).** Series P's geometry: the lamp `s_px1` at
+  once, awaiting replication).** Series U's geometry: the lamp `s_px1` at
   rest at x = 10 (2^20 units, one unit per self-creation on +x, the wheel
   [1, 64]), two `mass` sources at 3 or at 6 Links on +y and +z each
   releasing F = 4915 units per interval on the fan of nine toward the

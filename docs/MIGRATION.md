@@ -42,6 +42,52 @@ and note 25](BEAM_LAW.md#3-the-nodes-interval-nature_beam).
 - `tests/test_clock_age.py` (the default, the presence word, the edges);
   `tests/test_nature_beam_age.py` (b) and (c) amended.
 
+## The covariant readings, on 2026-09-21 (a world key, absent by default)
+
+The model owner's decision of 2026-09-21 (record 270 of the log of
+2026-09-20; DERIVATIONS_BEAM section 17 as amended in 17.6 per the
+physics-rule reviews, records 297 and 314): `covariant-readings-v1` is
+built beside the law under its own identity in place of lorentz-v1, as
+readings and a cadence, not as a change of the six verbs. The world key
+`covariant_readings` (`{"c2": [1, 3], "grain": g}`, optional `"books"`) and
+the measured-event key `E` are new; a world without the key parses,
+runs and records as it did, byte for byte (the OFF replay of
+`hubble_stars/coasting_none` on the head equal to the base in state, books
+and events; `tests/test_covariant_readings.py` (a); the gate set's digests
+unchanged). Under the key: every body that is not `fixed` carries E'_0 =
+Q S M, W = E'_0^2 + 3 **p** . **p** and E' = the largest integer with E'^2
+<= W (the load-time root once, then comparisons), at the grain g; a second
+owed count `tau` gates its self-creations (one per E' / E'_0 intervals in
+the mean); `step_divisor` takes `cap` false (the wall Q S M without |p_a|);
+the crowd's count is charged with the sum of the readings since the last
+self-creation; the free release runs per lattice interval at held x E'
+over E'_0 x d; the record gains the `energy` line per body per interval,
+`energy` on the `step` line, the `covariant` block and `acc.tau` of a
+body's state, and the run's `covariant_readings` block; the domain |p|_1
+<= Q S M, the one-axis domain (the base is `main`'s per-axis drive, on which
+the pace p / E' holds for a momentum on one axis; form B has not landed)
+and the push ceiling of one grain per interval refuse a world at load or a
+run at the frame; a `fixed` measured event carries no readings and is
+outside these checks. No rule of the law, no registered number and
+no shipped world moved: the new worlds are `examples/events/covariant/`
+(series S: the three J4 muon worlds and `coasting_none` in its record
+form under the key), the catalog gained the definition `muon` (`mu`).
+The readings tool is `tools/covariant_readings.py`; the pins and the run
+blocks are in `examples/events/covariant/expectations.json`.
+
+## Three Malus worlds at 22.5 degrees, on 2026-09-21 (worlds and the register; no rule change)
+
+The auditor's round 10 part 2: `examples/events/amplitude/make_worlds.py`
+writes `malus_22_5`, `malus_67_5` and `malus_chain_22_5` (the shipped
+Malus worlds with one setting changed each: the window 32, the window 96,
+the rotate 32 with the window 32), and `expectations.json` under `malus`
+carries their pins from the tables and the run's readings (the blocks
+`malus_22_5`, `malus_67_5`, `malus_chain_22_5`, `run_22_5`), the
+derivation line naming DERIVATIONS_BEAM 24.3 row 4. `tests/
+test_amplitude_malus.py` replays the six worlds; its case (c) runs on
+every world with a rotation. The register's A12 entry and the README say
+so. No `src/` change; no pin moved.
+
 ## The register's replicated map carried through a regeneration, on 2026-09-21 (host only)
 
 The replicator's round 1 found that `examples/events/amplitude/make_worlds.py`

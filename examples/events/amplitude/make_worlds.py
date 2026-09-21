@@ -336,6 +336,12 @@ MALUS_SETTINGS: dict[str, tuple[int | None, int]] = {
     "malus_a": (None, 64),
     "malus_b": (None, 128),
     "malus_c": (64, 64),
+    # The auditor's round 10 part 2 (2026-09-21): one setting changed each,
+    # 22.5 degrees (s = 32) and 67.5 degrees (s = 96), the chain at 22.5
+    # (the rotate 32, the read, the window 32); DERIVATIONS_BEAM 24.3 row 4.
+    "malus_22_5": (None, 32),
+    "malus_67_5": (None, 96),
+    "malus_chain_22_5": (32, 32),
 }
 
 
@@ -2231,6 +2237,26 @@ REGISTERED_RUN_READINGS: dict[str, dict[str, object]] = {
             "conserved_at_every_completed_tick": True,
             "kinds": "counts DETECTOR (the gathers' chosen cells); split, rotate and read lines DETECTOR (the record lines of a measured event); the books GAMEBOARD",
         },
+        # A12 at 22.5 degrees: the auditor's round 10 part 2 (2026-09-21), one
+        # setting changed each, registered by the architect on the Boss's order;
+        # the map's pins first (the note's sections 3 and 4; DERIVATIONS_BEAM
+        # 24.3 row 4: 219 / 256 = 0.85547 against cos^2 22.5 = 0.85355, 187 /
+        # 256 = 0.73047 against cos^4 = 0.72855), the engine's counts second,
+        # the difference zero; each world once through the runner, 300
+        # intervals, 1.1 to 1.5 s each. The kinds as the run of the three
+        # worlds above.
+        "run_22_5": {
+            "date": "2026-09-21",
+            "source_sha256": "c0911671e6431575e5c6349de972707b4c03f9b7083fdc5c7013e5b50b390812",
+            "worlds": ["malus_22_5", "malus_67_5", "malus_chain_22_5"],
+            "intervals": MALUS_TICKS,
+            "born": 299,
+            "gathered": 289,
+            "open": 10,
+            "first_gather_tick": 11,
+            "conserved_at_every_completed_tick": True,
+            "derivation": "DERIVATIONS_BEAM 24.3 row 4; docs/designs/malus/NOTE.md sections 3 and 4",
+        },
     },
     "malus.malus_a": {
         "measured": {
@@ -2263,6 +2289,38 @@ REGISTERED_RUN_READINGS: dict[str, dict[str, object]] = {
             },
             "rotate_line": {"setting": 64, "bit": 0, "turn": 0, "rows": 2, "units": [1, 362]},
             "read_rows": [[0, 65536, 181, 0], [1, 65536, 181, 128]],
+            "read_rows_columns": "label, multiplicity, amount, phase (the two rows of a record at the read, the set bit a half turn on)",
+        }
+    },
+    "malus.malus_22_5": {
+        "measured": {
+            "initialization_sha256": "4267f8f2e4160240f423c3448b4aca21e23f5a51d2c7047ad9d8b5112fed42bf",
+            "counts": {"0+": 219, "0-": 37},
+            "all_gathered": {"0+": 247, "0-": 42},
+        }
+    },
+    "malus.malus_67_5": {
+        "measured": {
+            "initialization_sha256": "a2bcd5ed820b51d0357518dcd245bb5dccffb1fdaef1bb53ce20066be0365ec6",
+            "counts": {"0+": 37, "0-": 219},
+            "all_gathered": {"0+": 42, "0-": 247},
+        }
+    },
+    "malus.malus_chain_22_5": {
+        "measured": {
+            "initialization_sha256": "86bc2c74ac7255173ff13b30b9342e3413ff9181ce1235e79f52d285e8c17bdf",
+            "counts": {"0+": 187, "0-": 32, "1+": 5, "1-": 32},
+            "all_gathered": {"0+": 212, "0-": 35, "1+": 6, "1-": 36},
+            "split": {
+                "lines": 592,
+                "per_record": 2,
+                "rebirth": False,
+                "u_kept": True,
+                "first": {"tick": 4, "absorbed": 237, "born": 237, "multiplicity": 65536},
+                "note": "as malus_c: the rotate re-creates the rows and keeps the record's identity and its u",
+            },
+            "rotate_line": {"setting": 32, "bit": 0, "turn": 0, "rows": 2, "units": [1, 335]},
+            "read_rows": [[0, 65536, 237, 0], [1, 65536, 98, 128]],
             "read_rows_columns": "label, multiplicity, amount, phase (the two rows of a record at the read, the set bit a half turn on)",
         }
     },
@@ -2354,7 +2412,7 @@ DERIVATIONS: dict[str, str] = {
     "pair_n": "measured (target 6: |E - cos| <= 1/N the design's bound at N = 1024, failing at 4096 by the tables' rounding; 2896/1024 the design's sum)",
     "bell_24_4": "DERIVATIONS_BEAM 24.4 and 6.2: S = 181 / 64 exactly from the rungs b_k = (2 W C_k + T) // (2 T) of the ladder on the wheel W = N over the design's joint weights (bell.py, the half-angle tables of 2N), the marginals W / 2, every count within one of W x its weight over the total; the counts per cell under pair_n; the readings measured, the run of 2026-09-21, no number moved",
     "cone": "DERIVATIONS_BEAM 11.1: the flight's closed form m_D(tau) and tau_k = ceil((2 k - 1) T_D / (2 S_1 Q)), the phase k m_D(tau) under the integer form and floor(tau n / d) under the pair form; `exact` the phase at the exact time of the last Link, the whole part and the remainder of n x Links x T_D over d x S_1 x Q (BEAM_LAW note 45); derived from the worlds and compared by tests/test_amplitude_cone.py",
-    "malus": "docs/designs/malus/NOTE.md section 3 (the mathematician's pin before the run): the cells' weights the products of the half-angle tables' entries of 2N = 512 (core/phase.py: C'[64] = S'[64] = 181, C'[128] = 0, S'[128] = 256; the rotation the design's 2.2, the window's channels 4.1), the counts the click's rungs b_k = (2 W C_k + T) // (2 T) over W = 256 births on the wheel [159, 256] (BEAM_LAW note 46; DERIVATIONS_BEAM 6.2), Malus's cos^2 exact at 45 and 90 degrees; derived from the worlds and compared by tests/test_amplitude_malus.py; the split lines' rebirth, the gathers and the books measured (the run of 2026-09-21)",
+    "malus": "docs/designs/malus/NOTE.md section 3 (the mathematician's pin before the run): the cells' weights the products of the half-angle tables' entries of 2N = 512 (core/phase.py: C'[64] = S'[64] = 181, C'[128] = 0, S'[128] = 256; the rotation the design's 2.2, the window's channels 4.1), the counts the click's rungs b_k = (2 W C_k + T) // (2 T) over W = 256 births on the wheel [159, 256] (BEAM_LAW note 46; DERIVATIONS_BEAM 6.2), Malus's cos^2 exact at 45 and 90 degrees; at 22.5 and 67.5 degrees and on the chain at 22.5 (malus_22_5, malus_67_5, malus_chain_22_5; the auditor's round 10 part 2, 2026-09-21) the note's sections 3 and 4 and DERIVATIONS_BEAM 24.3 row 4, the tables' rounding: 219 / 256 = 0.85547 against cos^2 22.5 = 0.85355 and 187 / 256 = 0.73047 against cos^4 = 0.72855, the map's pins first, the engine's counts second, the difference zero; derived from the worlds and compared by tests/test_amplitude_malus.py; the split lines' rebirth, the gathers and the books measured (the runs of 2026-09-21)",
     "mz_345_n": "DERIVATIONS_BEAM 6.5 and 6.2: the (3, 4) split's rows at the ports by the world's declared turns, 7 at u + N / 4 toward D1 and 1 at u + N / 2 toward D2 (the design's offers 49/50 and 1/50), their weights on core/phase.py's tables and the rungs b_k = (2 W C_k + T) // (2 T) of amplitude.rungs on the wheel W = N, the cell of u by amplitude.cell_of (the rung 31 at N = 32 and 125 at N = 128, the rung of the exact offers (2 N x 49 + 50) // 100, unmoved by the tables' rounding at any u); the power window per N from the rung, 7^k in [(2 b - 1) / (2 N - 2 b + 1), (2 b + 1) / (2 N - 2 b - 1)), intersected with the pair's [1.784, 2.054) of 6.5 (stated, not derived here); derived from the worlds and compared by tests/test_amplitude_mz_345_n.py; the gathers and the books measured (the run of 2026-09-21)",
 }
 
