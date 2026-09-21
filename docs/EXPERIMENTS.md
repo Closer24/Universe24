@@ -8634,3 +8634,7 @@ the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
   meeting, `mass_meeting` beside `control`, run as declared: the beam bent
   toward the mass, the screen's centroid, the rows the mass took and the
   books' turned line of the runs beside the register's.
+- [The atom](pages/gallery/atom.html): series H's `r8`, run as declared:
+  the electron circling the proton with its momentum arrow and its copies
+  spreading, its phase turning by its momentum, the proton's shell of
+  copies; the steps and the exit of the run beside the register's.
