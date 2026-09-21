@@ -8926,6 +8926,22 @@ the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
   the atom (`bohr/r8`, the release and the orbit) and the beam beside the
   mass (`lensing/mass_meeting`), run as declared, the whole GameBoard drawn
   in an isometric projection with the bodies' copies and arrows.
+- [The quarks](pages/gallery/quarks.html): series R's `q1_proton_line`
+  (the line u d u holding, no step) and `q6_proton_kick` (the kicked u
+  walking off through the face -x), run as declared on today's package,
+  their readings beside the register's; and a demonstration world,
+  `gallery/proton_electron` (the same line with an electron of the charge
+  -7344 thrown at it with 2 x 10^13 label units on +x): the electron hands
+  its momentum to the first quark through the contact, the momentum passes
+  down the line and the far quark walks off through the face +x, the rest
+  following; the law binds and does not confine. Nothing registered.
+- [The formulas and Einstein](pages/gallery/einstein.html): no run; the
+  law's one map of six verbs in cards (DERIVATIONS_BEAM section 0,
+  HIGHLIGHTS 5.7) and the Einstein map of DERIVATIONS_BEAM 21.4, every
+  result of the special and the general theory with its status today,
+  what the six verbs give, what must be added under which identity and
+  the pin, with the tables of section 17 (built on Newton, tried on
+  Lorentz); nothing added, nothing pinned.
 - [The octahedron and the 48](pages/gallery/formula.html): no run; one
   Node's six Ports drawn as an octahedron with the sphere of radius
   c = 1 / sqrt 3 inscribed in it, turning; the 48 signed axis permutations

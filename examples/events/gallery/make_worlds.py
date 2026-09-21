@@ -28,6 +28,17 @@ register; a page made from one says so.
   permutation at a Node of free space (the head-on pair parks on the rest
   slots, turns to another axis and leaves; the triple's odd unit goes on).
 
+- `proton_electron.json` (the page "The quarks"): series R's registered
+  `q1_proton_line` (the quark bodies u d u at (9..11, 10, 10) holding one
+  unit of `glue` each, the same families, fan and width) with one more
+  free family `e` (one unit of content, the charge -7344 per unit: minus
+  the register's proton, no strong column) and one body of it at
+  (3, 10, 10) thrown at the line with the momentum 2 x 10^13 label units on
+  +x (one Link per about 1.4 self-creations at the width 2^37), 600
+  intervals: what a fast electron does to a proton of three quarks under
+  the law as it is (the contact through the table hands its momentum to
+  the quark it hits; nothing confines).
+
 Run `python examples/events/gallery/make_worlds.py` to write them again.
 """
 
@@ -165,11 +176,44 @@ def collision() -> dict[str, object]:
     }
 
 
+def proton_electron() -> dict[str, object]:
+    """Series R's proton line as registered, plus the thrown electron."""
+    base = json.loads((HERE.parent / "quarks" / "q1_proton_line.json").read_text(encoding="utf-8"))
+    world = dict(base)
+    world["model_id"] = "gallery-proton_electron-demonstration-v1"
+    world["ticks"] = 600
+    families = list(base["families"])
+    families.append({"name": "e", "quantum": 0, "charge": -ELECTRON_CHARGE, "phase": False})
+    world["families"] = families
+    measured = [dict(m) for m in base["measured"]]
+    measured.append(
+        {
+            "position": [3, 10, 10],
+            "family": "e",
+            "amount": 1,
+            "fixed": False,
+            "momentum": [ELECTRON_KICK, 0, 0],
+            "directions": list(measured[0]["directions"]),
+        }
+    )
+    world["measured"] = measured
+    return world
+
+
+# The register's proton charge (4 per unit on 1836 units of `p`; series R's
+# u carries 2/3 of it, its d -1/3); the electron's whole charge is minus it.
+ELECTRON_CHARGE = 7344
+# The throw: one Link per (Q S M + p) / p self-creations with Q = 64,
+# S = 2^37 (series R's width) and M = 1, so 1.44 self-creations per Link.
+ELECTRON_KICK = 2 * 10**13
+
+
 def main() -> None:
     for name, world in (
         ("beam_fan", beam_fan()),
         ("clicks_plate", clicks_plate()),
         ("collision", collision()),
+        ("proton_electron", proton_electron()),
     ):
         (HERE / f"{name}.json").write_text(json.dumps(world) + "\n", encoding="utf-8")
         print(name)
