@@ -62,6 +62,14 @@ FONT_PATHS = (
     Path("/usr/share/fonts/dejavu/DejaVuSans.ttf"),
 )
 MAX_FRAMES = 120
+# Appended to the caption of every picture with bodies (the model owner,
+# 2026-09-21: a body's copies spreading, transparent, and its arrow).
+COPIES_NOTE = (
+    "Every body is drawn with the copies, in the owner's word: the body's own rows, the rows carrying its "
+    "number that its self-creations release on its directions, drawn as translucent discs in its colour at "
+    "their Nodes on the GameBoard; and with the white arrow of its momentum label, the vector p of its record "
+    "(no arrow at p = 0); a product row carries a short arrow along its direction of the fan."
+)
 SQRT3 = math.sqrt(3.0)
 # Each family without a phase circle takes one of these colours, in the
 # order the world declares its families; a family with a phase circle is
@@ -305,6 +313,17 @@ class Plane:
     # Draw only the bodies at this z (a shell of readers projected would
     # cover the plane); None draws every body.
     body_slice_z: int | None = None
+    # The world's direction table, for the arrows on the rows of the
+    # families in `arrow_families` (a few rows: the products, the beam).
+    directions: list[tuple[int, int, int]] = field(default_factory=list)
+    arrow_families: set[str] = field(default_factory=set)
+    # A body's copies: its own rows (the rows carrying its number) drawn as
+    # translucent discs in its colour, spreading in every direction; and
+    # the arrow of its momentum vector p.
+    copies: bool = True
+    # The families whose bodies are coloured by their phase (the electron
+    # turning its phase by its momentum).
+    phase_bodies: set[str] = field(default_factory=set)
 
     @property
     def size(self) -> tuple[int, int]:
@@ -405,6 +424,9 @@ class Plane:
             cx, cy = self.pixel(node[0], node[1])
             half = self.scale / 2
             draw.rectangle([cx - half, cy - half, cx + half - 1, cy + half - 1], outline=(120, 220, 160))
+        if self.copies:
+            self.draw_copies(image, frame)
+        draw = ImageDraw.Draw(image)
         radius = max(self.scale * self.body_radius, 3.0)
         for body in frame.bodies:
             if self.body_slice_z is not None and body.position[2] != self.body_slice_z:
@@ -425,9 +447,90 @@ class Plane:
                     font=font(max(8, int(self.scale * 0.7))),
                     anchor="mm",
                 )
+            self.draw_momentum(draw, body, cx, cy, radius)
+        for rows in frame.rows:
+            if rows.family in self.arrow_families:
+                self.draw_row_arrows(draw, rows)
         if decorate is not None:
             decorate(draw)
         return image
+
+    def draw_copies(self, image: Image.Image, frame: Frame) -> None:
+        """The copies of every body: the rows that carry its number, drawn
+        as translucent discs in the body's colour at their Nodes (a body
+        releases rows in every direction; what spreads is the body's own
+        record, many times over)."""
+        overlay = Image.new("RGBA", image.size, (0, 0, 0, 0))
+        draw = ImageDraw.Draw(overlay)
+        nx, ny, _ = self.shape
+        radius = max(self.scale * 0.42, 2.0)
+        for body in frame.bodies:
+            colour = BODY_COLOURS.get(body.family, (230, 230, 230))
+            total = np.zeros((nx, ny), dtype=np.float64)
+            for rows in frame.rows:
+                mine = rows.number == body.number
+                if self.slice_z is not None:
+                    mine &= rows.z == self.slice_z
+                if not mine.any():
+                    continue
+                np.add.at(total, (rows.x[mine], rows.y[mine]), rows.amount[mine].astype(np.float64))
+            if not total.any():
+                continue
+            largest = float(total.max())
+            for i, j in zip(*np.nonzero(total), strict=True):
+                if (int(i), int(j)) == (body.position[0], body.position[1]):
+                    continue
+                alpha = int(28 + 96 * math.log2(1.0 + total[i, j]) / math.log2(1.0 + largest))
+                cx, cy = self.pixel(int(i), int(j))
+                draw.ellipse([cx - radius, cy - radius, cx + radius, cy + radius], fill=(*colour, alpha))
+        image.paste(Image.alpha_composite(image.convert("RGBA"), overlay).convert("RGB"))
+
+    def draw_momentum(
+        self, draw: ImageDraw.ImageDraw, body: Body, cx: float, cy: float, radius: float
+    ) -> None:
+        """The arrow of the body's momentum vector p, in the plane: where
+        the body travels; no arrow for a momentum of zero."""
+        px, py = body.momentum[0], body.momentum[1]
+        if px == 0 and py == 0:
+            return
+        length = max(1.6 * self.scale, 12.0)
+        norm = math.hypot(px, py)
+        ux, uy = px / norm, -py / norm
+        tip = (cx + ux * (radius + length), cy + uy * (radius + length))
+        draw.line(
+            [(cx + ux * radius, cy + uy * radius), tip],
+            fill=(255, 255, 255),
+            width=max(2, self.scale // 6),
+        )
+        head = max(4.0, self.scale * 0.5)
+        left = (tip[0] - ux * head - uy * head * 0.6, tip[1] - uy * head + ux * head * 0.6)
+        right = (tip[0] - ux * head + uy * head * 0.6, tip[1] - uy * head - ux * head * 0.6)
+        draw.polygon([tip, left, right], fill=(255, 255, 255))
+
+    def draw_row_arrows(self, draw: ImageDraw.ImageDraw, rows: Rows) -> None:
+        """A short arrow per row along its direction vector, for a family of
+        a few rows (a product, a beam)."""
+        for k in range(rows.amount.size):
+            if self.slice_z is not None and int(rows.z[k]) != self.slice_z:
+                continue
+            d = self.directions[int(rows.direction[k])] if self.directions else (0, 0, 0)
+            if d[0] == 0 and d[1] == 0:
+                continue
+            norm = math.hypot(d[0], d[1])
+            ux, uy = d[0] / norm, -d[1] / norm
+            cx, cy = self.pixel(int(rows.x[k]), int(rows.y[k]))
+            length = max(self.scale * 1.2, 8.0)
+            tip = (cx + ux * length, cy + uy * length)
+            draw.line([(cx, cy), tip], fill=(255, 255, 255), width=2)
+            head = max(3.0, self.scale * 0.35)
+            draw.polygon(
+                [
+                    tip,
+                    (tip[0] - ux * head - uy * head * 0.6, tip[1] - uy * head + ux * head * 0.6),
+                    (tip[0] - ux * head + uy * head * 0.6, tip[1] - uy * head - ux * head * 0.6),
+                ],
+                fill=(255, 255, 255),
+            )
 
 
 @dataclass
@@ -566,8 +669,9 @@ class Player:
         }
         return f"""
 <figure class="player" id="{self.key}">
-  <canvas width="{w}" height="{h}" aria-label="the moving picture"></canvas>
-  <div class="controls">
+  <img class="gif" alt="the moving picture" src="{data_url(gif, "image/gif")}">
+  <canvas width="{w}" height="{h}" aria-label="the moving picture" hidden></canvas>
+  <div class="controls" hidden>
     <button class="play" type="button">Play</button>
     <input class="slider" type="range" min="0" max="{len(self.images) - 1}" value="0">
     <span class="tick">interval 0</span>
@@ -575,10 +679,10 @@ class Player:
   <dl class="readings"></dl>
   <div class="three"></div>
   <figcaption>{self.caption} <a class="gif" download="{self.key}.gif">The GIF</a> (the frames at
-  {self.duration_ms} ms; {len(self.images)} frames).</figcaption>
+  {self.duration_ms} ms; {len(self.images)} frames; the GIF plays by itself, the player with its slider needs
+  scripts enabled).</figcaption>
   <script type="application/json" class="frames">{json.dumps(data)}</script>
   <img class="sheet" alt="" src="{data_url(png, "image/png")}" hidden>
-  <a hidden class="gifdata" href="{data_url(gif, "image/gif")}"></a>
 </figure>
 """
 
@@ -594,7 +698,8 @@ document.querySelectorAll('figure.player').forEach(function (figure) {
   var tick = figure.querySelector('span.tick');
   var readings = figure.querySelector('dl.readings');
   var panels = figure.querySelector('div.three');
-  figure.querySelector('a.gif').href = figure.querySelector('a.gifdata').href;
+  var gif = figure.querySelector('img.gif');
+  figure.querySelector('a.gif').href = gif.src;
   var frame = 0, timer = null;
   function show(k) {
     frame = k;
@@ -623,7 +728,13 @@ document.querySelectorAll('figure.player').forEach(function (figure) {
     if (timer) { clearInterval(timer); timer = null; button.textContent = 'Play'; }
     show(parseInt(slider.value, 10));
   });
-  if (sheet.complete) { show(0); } else { sheet.addEventListener('load', function () { show(0); }); }
+  function start() {
+    gif.hidden = true;
+    canvas.hidden = false;
+    figure.querySelector('div.controls').hidden = false;
+    show(0);
+  }
+  if (sheet.complete) { start(); } else { sheet.addEventListener('load', start); }
 });
 """
 
@@ -652,6 +763,7 @@ p, li, dd, dt, td, th { font-size: 1rem; }
 a { color: var(--accent); }
 nav.crumbs { font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
 figure.player { margin: 16px 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+figure.player img.gif { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 4px; image-rendering: pixelated; }
 figure.player canvas { display: block; max-width: 100%; height: auto; margin: 0 auto; background: var(--board); border-radius: 4px; image-rendering: pixelated; }
 figure.player .controls { display: flex; gap: 12px; align-items: center; margin: 10px 0 4px; }
 figure.player input.slider { flex: 1; }
@@ -771,6 +883,7 @@ def plane_for(replay: Replay, scale: int, slice_z: int | None = None) -> Plane:
             for i, family in enumerate(world.families)
         },
         slice_z=slice_z,
+        directions=list(replay.directions),
     )
     for detector in world.detectors:
         for position in detector.positions:
@@ -1650,7 +1763,7 @@ def nucleus_player(
         if left:
             lines["bodies that left (face click lines)"] = "; ".join(left)
         readings.append(lines)
-    player = Player(key, images, list(ticks), readings, caption, duration_ms)
+    player = Player(key, images, list(ticks), readings, caption + " " + COPIES_NOTE, duration_ms)
     return player, record, events
 
 
@@ -1675,7 +1788,7 @@ def page_nucleus(out: Path, runs: Path | None) -> Path:
         "deuteron_3",
         folder / "deuteron_3.json",
         runs,
-        frame_ticks(360),
+        frame_ticks(360, 90),
         "The deuteron at three Links, kicked outward, `deuteron_3`: the pair separates and leaves through the "
         "faces (one frame per three intervals).",
         100,
@@ -1684,7 +1797,7 @@ def page_nucleus(out: Path, runs: Path | None) -> Path:
         "alpha_square",
         folder / "alpha_square.json",
         runs,
-        frame_ticks(345),
+        frame_ticks(345, 90),
         "The square p n / n p, `alpha_square`: sheared apart, a proton steps first, the four disperse and leave "
         "(one frame per three intervals).",
         100,
@@ -1877,6 +1990,7 @@ def decay_player(
         if name in replay.families:
             plane.largest[name] = 1.0
     plane.on_top = "beta" if "beta" in replay.families else ("w" if "w" in replay.families else None)
+    plane.arrow_families = {name for name in ("beta", "nu", "w") if name in replay.families}
     becomes = by_tick(events["become"])
     clicks = by_tick(shell)
     images = [plane.image(frame) for frame in frames]
@@ -1911,7 +2025,7 @@ def decay_player(
             or "none"
         )
         readings.append(lines)
-    player = Player(key, images, list(ticks), readings, caption, duration_ms)
+    player = Player(key, images, list(ticks), readings, caption + " " + COPIES_NOTE, duration_ms)
     return player, record, events
 
 
@@ -2315,7 +2429,7 @@ def lensing_player(
                 tuple(audit[t - 1]["families"]["light"].get("turned", (0, 0, 0)))
             )
         readings.append(lines)
-    player = Player(key, images, ticks, readings, caption, 100)
+    player = Player(key, images, ticks, readings, caption + " " + COPIES_NOTE, 100)
     events = {
         "screen": [c for v in screen.values() for c in v],
         "taken": [c for v in taken.values() for c in v],
@@ -2473,6 +2587,172 @@ times nature's angle at the Sun's limb, so the value is not claimed.</p>
     )
 
 
+@register("atom")
+def page_atom(out: Path, runs: Path | None) -> Path:
+    """(8) The atom, series H: the electron orbiting the proton with its
+    momentum arrow and its copies, its phase turning by its momentum, the
+    proton's shell of copies; the faces reading what comes out."""
+    world = WORLDS / "bohr" / "r8.json"
+    record_dir = runner_record(world, runs)
+    record = read_json(record_dir / "run.json")
+    events = scan_events(record_dir / "events.jsonl", ["step"])
+    exits = [
+        line
+        for line in scan_events(record_dir / "events.jsonl", ["click"])["click"]
+        if line.get("measured") is not None and str(line.get("detector", "")).startswith("face")
+    ]
+    replay = Replay(world)
+    ticks = frame_ticks(min(replay.ticks, (int(exits[0]["tick"]) + 30) if exits else replay.ticks))  # type: ignore[arg-type]
+    frames = replay.run(ticks)
+    proton = tuple(int(c) for c in replay.world.measured[0].position)
+    plane = plane_for(replay, scale=6, slice_z=proton[2])
+    plane.largest = largest_amounts(frames)
+    plane.floor = 0.1
+    plane.weights = {"p": 0.35, "e": 0.8}
+    plane.phase_bodies = {"e"}
+    plane.body_radius = 0.9
+    plane.body_labels = False
+    steps = by_tick(events["step"])
+    images = [plane.image(frame) for frame in frames]
+    readings = []
+    previous_angle = None
+    turned = 0.0
+    for frame in frames:
+        t = frame.tick
+        electron = next((b for b in frame.bodies if b.family == "e"), None)
+        lines: dict[str, str] = {}
+        if electron is not None:
+            dx, dy = electron.position[0] - proton[0], electron.position[1] - proton[1]
+            angle = math.atan2(dy, dx)
+            if previous_angle is not None:
+                delta = angle - previous_angle
+                while delta > math.pi:
+                    delta -= 2 * math.pi
+                while delta < -math.pi:
+                    delta += 2 * math.pi
+                turned += delta
+            previous_angle = angle
+            lines["the electron's Node (GameBoard reading)"] = str(electron.position)
+            lines["its distance from the proton, Links"] = f"{math.hypot(dx, dy):.2f}"
+            lines["its momentum vector p (label units)"] = str(electron.momentum)
+            lines["its phase on the circle Z_64 (turned by its momentum)"] = num(electron.phase)
+            lines["the angle turned since the start, in orbits"] = f"{turned / (2 * math.pi):.2f}"
+        else:
+            lines["the electron"] = "gone: it left through a face"
+        lines["steps so far (step lines)"] = num(sum(len(v) for k, v in steps.items() if k <= t))
+        readings.append(lines)
+    player = Player(
+        "atom",
+        images,
+        ticks,
+        readings,
+        "`r8`: the plane z = 22 of the 45^3 cube (the orbit's plane), 6 pixels per Node; the proton p at the "
+        "centre with its shell of copies (one row per direction of 2616 every 10 intervals, the in-plane ones "
+        "drawn), the electron e as a disc coloured by its phase, with its momentum arrow and its own copies; the "
+        "proton is fixed and does not step, its arrow the momentum it was handed; one frame per 33 intervals. "
+        + COPIES_NOTE,
+        100,
+    )
+    entry_url = "../../EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20"
+    exit_text = (
+        f"the electron left through {exits[0]['detector']} at the interval {exits[0]['tick']}"
+        if exits
+        else "the electron is on the GameBoard at the end"
+    )
+    body = f"""
+{registered_note(world, "H, Bohr's lines behind the detector (2026-09-20)", entry_url)}
+<h2>The GameBoard</h2>
+<p>An open cube of 45 x 45 x 45 Nodes, K = {num(replay.world.K)}, N = 64, the world's <code>action</code>
+h = {
+        num(int(record["action"]))
+    } (the identity <code>bohr-v1</code>). <b>The proton</b> at (22, 22, 22), measured
+event 1: a fixed body of 1836 units of <code>p</code> (<code>charge</code> [1, 1]) releasing one row per
+direction of a shell of 2616 primitive directions every 10 intervals, its field. <b>The electron</b>, measured
+event 2: a free body of 1836 units of <code>e</code> (<code>charge</code> -15, a phase circle) on a set of three
+Nodes (<code>span</code> [1, 1, 3]) at r = 8 on the +x axis, with the tangential momentum
+<b>p</b> = {
+        tuple(int(c) for c in replay.world.measured[1].momentum)
+    } the series README derives from the engine's
+own flight lines for a circular orbit, turning its phase by its momentum at every Link it steps
+(<code>phase_by_momentum</code> under h) and releasing rows on four directions that carry that phase to the
+open faces, the <code>wave</code> detectors of what comes out of the atom.</p>
+{
+        legend(
+            family_legend(Replay(world))
+            + [
+                ("the proton (a body of p)", swatch(BODY_COLOURS["p"])),
+                ("the electron (a body of e), coloured by its phase", '<i class="wheel"></i>'),
+            ]
+        )
+    }
+<h2>Why this page</h2>
+<p>The owner asked that a body be shown with its spreading: "if one sees an electron, one should also see its
+spreading, its copies in space, transparent, and the arrow of its vector, where it travels". Here the electron
+is that body: at every self-creation it releases rows on its directions (its copies, the translucent discs
+that spread from it at the pace of the flight table), it reads the proton's rows and is pushed by the one
+coupling (the charge column), its momentum vector <b>p</b> is the white arrow, and its phase, an element of
+Z_64, turns by |<b>p</b>| N over h at every Link it steps, so the disc's colour goes round the circle as it
+orbits. What a detector reads of the atom is on the faces: the coherent record of the electron's rows.</p>
+<h2>The moving picture</h2>
+{player.html()}
+<p>What to see: the electron circles the proton, its arrow turning with it and its copies streaming outward;
+the proton's shell of copies pulses every 10 intervals through the plane; the phase colour of the electron
+turns as it moves. The register (the signed-drive re-read of series H, then the turn by momentum as a row of
+the counts table): the orbit at r = 8 closes the angle twice (T 1292, 2016), the phase's turn per orbit 0.969
+against the expected 0, the faces' coherence C(2) = 1.24, and the electron leaves at 3869; Bohr's lines are not
+read and the register keeps that verdict, nothing tuned. In this run {exit_text}.</p>
+<h2>The readings</h2>
+<table>
+<tr><th>Reading</th><th>Kind</th><th>This run</th><th>The register</th></tr>
+<tr><td>the electron's steps; its exit</td><td>GameBoard; detector (the faces)</td><td class="num">{
+        num(len(events["step"]))
+    }; {html.escape(exit_text)}</td><td>closes the angle twice (T 1292, 2016); leaves at 3869</td></tr>
+<tr><td>the electron's rows clicked on the faces (x, y)</td><td>detector</td><td class="num">{
+        ", ".join(
+            f"{d['name']} {d['families']['e']['clicks']}"
+            for d in record["detectors"]
+            if d["families"]["e"]["clicks"]
+        )
+    }</td><td>the faces' coherence at the closing C(2) = 1.24 (the criterion 1.0)</td></tr>
+<tr><td>the books balanced at every interval</td><td>GameBoard</td><td class="num">{
+        record["conserved_at_every_completed_tick"]
+    }</td><td>yes</td></tr>
+</table>
+{
+        sources(
+            [
+                (
+                    "the world",
+                    "<code>examples/events/bohr/r8.json</code> (series H, registered), run as declared for 4200 intervals",
+                ),
+                (
+                    "the run",
+                    "<code>run.json</code> and <code>events.jsonl</code> made by <code>python -m event_universe --init examples/events/bohr/r8.json</code>",
+                ),
+                ("the source fingerprint", fingerprint_line(record)),
+                (
+                    "the register",
+                    f'<a href="{entry_url}">H, Bohr lines behind the detector (2026-09-20)</a> and <a href="../../../examples/events/bohr/README.md">the series README</a> (the re-reads under the step drive, the signed drive and the counts table)',
+                ),
+                (
+                    "the frames",
+                    "the world replayed in process through <code>NatureBeamSimulation</code>, the stores read at the drawn intervals (a GameBoard reading)",
+                ),
+            ]
+        )
+    }
+"""
+    return write_page(
+        out,
+        "atom",
+        page(
+            "The atom",
+            "Series H: the electron circling the proton with its momentum arrow and its copies spreading, its phase turning by its momentum.",
+            body,
+        ),
+    )
+
+
 @register("index")
 def page_index(out: Path, runs: Path | None) -> Path:
     entries = [
@@ -2507,6 +2787,12 @@ def page_index(out: Path, runs: Path | None) -> Path:
             "energy.html",
             "High-energy rows",
             "series K under the meeting: a beam of light passing a mass, bent toward it; the mass measuring the most turned rows (registered worlds)",
+        ),
+        (
+            "atom.html",
+            "The atom",
+            "series H: the electron circling the proton with its momentum arrow and its copies spreading, "
+            "its phase turning by its momentum; the faces reading what comes out (a registered world)",
         ),
         (
             "worlds.html",
