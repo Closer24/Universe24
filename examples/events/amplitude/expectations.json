@@ -2191,6 +2191,262 @@
    "kinds": "counts DETECTOR (the gathers' chosen cells); split, rotate and read lines DETECTOR (the record lines of a measured event); the books GAMEBOARD"
   }
  },
+ "mz_345_n": {
+  "reference": "DERIVATIONS_BEAM 6.5 (the power window) and 6.2 (the rung), the pin written before the run",
+  "splitter": [
+   3,
+   4
+  ],
+  "offers": {
+   "D1": "49/50",
+   "D2": "1/50"
+  },
+  "ratio": "7",
+  "pair_power_window": [
+   1.784,
+   2.054
+  ],
+  "power_windows": {
+   "64": {
+    "world": "mz_345",
+    "rung": 63,
+    "cells": "63 / 1",
+    "ratio_power_k_in": [
+     "125/3",
+     "127"
+    ],
+    "k_in": [
+     1.917,
+     2.489
+    ]
+   },
+   "32": {
+    "world": "mz_345_n32",
+    "rung": 31,
+    "cells": "31 / 1",
+    "ratio_power_k_in": [
+     "61/3",
+     "63"
+    ],
+    "k_in": [
+     1.548,
+     2.129
+    ]
+   },
+   "128": {
+    "world": "mz_345_n128",
+    "rung": 125,
+    "cells": "125 / 3",
+    "ratio_power_k_in": [
+     "249/7",
+     "251/5"
+    ],
+    "k_in": [
+     1.835,
+     2.012
+    ]
+   }
+  },
+  "intersection": {
+   "k_in": [
+    1.917,
+    2.012
+   ],
+   "lower_bound_from": "N = 64",
+   "upper_bound_from": "N = 128",
+   "contains": [
+    2
+   ],
+   "excludes": [
+    1,
+    3
+   ]
+  },
+  "worlds": {
+   "mz_345_n32": {
+    "N": 32,
+    "W": 32,
+    "ports": {
+     "D1": [
+      [
+       4,
+       8
+      ],
+      [
+       3,
+       8
+      ]
+     ],
+     "D2": [
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       16
+      ]
+     ]
+    },
+    "multiplicity": 50,
+    "counts": {
+     "D1": 31,
+     "D2": 1
+    },
+    "u_to_D2": [
+     31
+    ],
+    "rungs": [
+     31,
+     32
+    ],
+    "distinct_totals": 5,
+    "wheel": [
+     1,
+     32
+    ],
+    "ticks": 80,
+    "births": 32,
+    "rung_of_the_exact_offers": 31
+   },
+   "mz_345_n128": {
+    "N": 128,
+    "W": 128,
+    "ports": {
+     "D1": [
+      [
+       4,
+       32
+      ],
+      [
+       3,
+       32
+      ]
+     ],
+     "D2": [
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       64
+      ]
+     ]
+    },
+    "multiplicity": 50,
+    "counts": {
+     "D1": 125,
+     "D2": 3
+    },
+    "u_to_D2": [
+     125,
+     126,
+     127
+    ],
+    "rungs": [
+     125,
+     128
+    ],
+    "distinct_totals": 16,
+    "wheel": [
+     1,
+     128
+    ],
+    "ticks": 150,
+    "births": 128,
+    "rung_of_the_exact_offers": 125
+   }
+  },
+  "run": {
+   "date": "2026-09-21",
+   "order": "the power window of DERIVATIONS_BEAM 6.5 pinned from above; the Boss's order on the auditor's round 4",
+   "runner": "python -m event_universe --init <world> --output <dir> --ticks <intervals>, headless, one world at a time",
+   "main": "c8edd50f",
+   "package_version": "0.3.1",
+   "source_sha256": "5d254c8544aadc8826cee940024a36e88430135b08ba7719c7ae2eba4aabbbd3",
+   "families_sha256": "438444b1cec9eb47263ac6b4203a1028b94ef9e97819aceadf860e7680ce15ca",
+   "readings_by_kind": "DETECTOR: the gathers of the first W records by ordinal (the counts per port, the u of every click at D2, the rungs and the totals on the gather lines, the last gather's tick, the counts over every gather); GAMEBOARD: the books and the layer's counts (born, gathered, open), a diagnostic",
+   "host_cost": "the runner's wall time per world on a loaded host, apart from the model's cost: the plane's 25 Nodes at fixed local work per interval over the world's intervals, one record's offers held at the layer until its completion",
+   "verdict": "PASS: every pin met on both worlds, no number moved",
+   "worlds": {
+    "mz_345_n32": {
+     "initialization_sha256": "b6e203013ac62a3f183ab9e08fcd1d5a85fd48a82850d12268aa045cf23b673c",
+     "expanded_sha256": "aee5468bcc81d923b69d1fe82f142e632616c0bc9f39d19718754a16ae70985d",
+     "completed_ticks": 80,
+     "elapsed_seconds": 0.25,
+     "host_wall_seconds": 0.48,
+     "readings": {
+      "DETECTOR": {
+       "counts": {
+        "D1": 31,
+        "D2": 1
+       },
+       "u_to_D2": [
+        31
+       ],
+       "gathered_of_W": 32,
+       "rungs_on_every_gather": [
+        31,
+        32
+       ],
+       "distinct_totals": 5,
+       "last_gather_tick": 44,
+       "counts_over_every_gather": {
+        "D1": 66,
+        "D2": 2
+       }
+      },
+      "GAMEBOARD": {
+       "conserved_at_every_completed_tick": true,
+       "books_balanced_every_tick": true,
+       "born": 79,
+       "gathered": 68,
+       "open": 11
+      }
+     }
+    },
+    "mz_345_n128": {
+     "initialization_sha256": "cef1d39dd4c6aeeb1d669a2ceb042f3fe607b4d1cf47d50f8dd08d9c82a83265",
+     "expanded_sha256": "1b53b7da832bd3b69d142df2febbfe05a0973955931ae02085e0b706065b7cd3",
+     "completed_ticks": 150,
+     "elapsed_seconds": 0.41,
+     "host_wall_seconds": 0.63,
+     "readings": {
+      "DETECTOR": {
+       "counts": {
+        "D1": 125,
+        "D2": 3
+       },
+       "u_to_D2": [
+        125,
+        126,
+        127
+       ],
+       "gathered_of_W": 128,
+       "rungs_on_every_gather": [
+        125,
+        128
+       ],
+       "distinct_totals": 16,
+       "last_gather_tick": 140,
+       "counts_over_every_gather": {
+        "D1": 135,
+        "D2": 3
+       }
+      },
+      "GAMEBOARD": {
+       "conserved_at_every_completed_tick": true,
+       "books_balanced_every_tick": true,
+       "born": 149,
+       "gathered": 138,
+       "open": 11
+      }
+     }
+    }
+   }
+  }
+ },
  "derivations": {
   "births": "declared: the lamp's first 64 records read by their birth ordinal (the design); no formula gives the count",
   "mach_zehnder": "the offers by the click's bilinear form f^T G f on the splitter's rows (DERIVATIONS_BEAM 6.7: mz_equal's 1681/1682 and 1/1682 exact at every u); the clicks by the ladder's rungs b_k = (2 N C_k + Total) // (2 Total) on the offers (BEAM_LAW note 37; DERIVATIONS_BEAM 6.2); the totals' spread the tables' rounding (6.7); the births' and the splits' rows and ticks measured (the design's mz.py, the run)",
@@ -2201,6 +2457,7 @@
   "pair_n": "measured (target 6: |E - cos| <= 1/N the design's bound at N = 1024, failing at 4096 by the tables' rounding; 2896/1024 the design's sum)",
   "bell_24_4": "DERIVATIONS_BEAM 24.4 and 6.2: S = 181 / 64 exactly from the rungs b_k = (2 W C_k + T) // (2 T) of the ladder on the wheel W = N over the design's joint weights (bell.py, the half-angle tables of 2N), the marginals W / 2, every count within one of W x its weight over the total; the counts per cell under pair_n; the readings measured, the run of 2026-09-21, no number moved",
   "cone": "DERIVATIONS_BEAM 11.1: the flight's closed form m_D(tau) and tau_k = ceil((2 k - 1) T_D / (2 S_1 Q)), the phase k m_D(tau) under the integer form and floor(tau n / d) under the pair form; `exact` the phase at the exact time of the last Link, the whole part and the remainder of n x Links x T_D over d x S_1 x Q (BEAM_LAW note 45); derived from the worlds and compared by tests/test_amplitude_cone.py",
-  "malus": "docs/designs/malus/NOTE.md section 3 (the mathematician's pin before the run): the cells' weights the products of the half-angle tables' entries of 2N = 512 (core/phase.py: C'[64] = S'[64] = 181, C'[128] = 0, S'[128] = 256; the rotation the design's 2.2, the window's channels 4.1), the counts the click's rungs b_k = (2 W C_k + T) // (2 T) over W = 256 births on the wheel [159, 256] (BEAM_LAW note 46; DERIVATIONS_BEAM 6.2), Malus's cos^2 exact at 45 and 90 degrees; derived from the worlds and compared by tests/test_amplitude_malus.py; the split lines' rebirth, the gathers and the books measured (the run of 2026-09-21)"
+  "malus": "docs/designs/malus/NOTE.md section 3 (the mathematician's pin before the run): the cells' weights the products of the half-angle tables' entries of 2N = 512 (core/phase.py: C'[64] = S'[64] = 181, C'[128] = 0, S'[128] = 256; the rotation the design's 2.2, the window's channels 4.1), the counts the click's rungs b_k = (2 W C_k + T) // (2 T) over W = 256 births on the wheel [159, 256] (BEAM_LAW note 46; DERIVATIONS_BEAM 6.2), Malus's cos^2 exact at 45 and 90 degrees; derived from the worlds and compared by tests/test_amplitude_malus.py; the split lines' rebirth, the gathers and the books measured (the run of 2026-09-21)",
+  "mz_345_n": "DERIVATIONS_BEAM 6.5 and 6.2: the (3, 4) split's rows at the ports by the world's declared turns, 7 at u + N / 4 toward D1 and 1 at u + N / 2 toward D2 (the design's offers 49/50 and 1/50), their weights on core/phase.py's tables and the rungs b_k = (2 W C_k + T) // (2 T) of amplitude.rungs on the wheel W = N, the cell of u by amplitude.cell_of (the rung 31 at N = 32 and 125 at N = 128, the rung of the exact offers (2 N x 49 + 50) // 100, unmoved by the tables' rounding at any u); the power window per N from the rung, 7^k in [(2 b - 1) / (2 N - 2 b + 1), (2 b + 1) / (2 N - 2 b - 1)), intersected with the pair's [1.784, 2.054) of 6.5 (stated, not derived here); derived from the worlds and compared by tests/test_amplitude_mz_345_n.py; the gathers and the books measured (the run of 2026-09-21)"
  }
 }
