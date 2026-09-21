@@ -1665,6 +1665,32 @@ states "exactly" and means integer equality at every tick.
   outward as the push it reads (C 1.3 to 1.5 times the ring mean, as on
   every registration) drives it. The field's burst and the fan's grain
   remain what they were. The registered verdicts stand as history ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+- **Re-read under the crossing rule (2026-09-21; measured, nothing
+  pinned).** The two re-reads above describe the tree before the
+  crossing rule (the step before the law, a row and a body met once;
+  [migration](MIGRATION.md#the-crossing-rule-on-2026-09-21-the-step-before-the-law-a-row-and-a-body-met-once-the-key-doppler-and-the-grain-deleted);
+  [VALIDATION's crossing-rule table](VALIDATION.md#the-crossing-rule-the-gate-set-and-the-movers-replayed-against-no-tables-2bbc5a64---2026-09-21)
+  records the orbit worlds' events moved). Under it, the auditor's round
+  9 at main e42c49e5 and the architect's own run of
+  `tools/orbit_readings.py` on the two shipped worlds (unchanged, sha256
+  27c40ef0 and 68e4e681) read the same: `s32_r12` closes the angle once
+  (T 525, the return (-11, 0), heading kept, the mean radius 17.90, C
+  1.87) and leaves through face:-x at 932 (three closings at 363, 482,
+  622 and the exit at 2004 under the signed drive); `s32_r24` closes the
+  angle once (T 932, the return (+8, 0), heading kept, the mean radius
+  34.16, C 1.29) and leaves through face:-x at 1239 (bound for the whole
+  run of 4000 under the signed drive); T(24)^2 / T(12)^2 from the first
+  turns 932 and 525 = 3.15 against the expected 4 (3.73 before); no orbit
+  closes by the criterion; the record checks 0 failed. By kind: T, the
+  returns, the radii and C are GAMEBOARD readings (the probe's `step` and
+  `read` records, the host's view); the exits are DETECTOR readings (the
+  face detectors' clicks). No pin moved, no world changed. For C = 1.29
+  and 1.87 against the derivation's 1, the physicist's orbit note
+  (`docs/designs/orbit_read/NOTE.md`, PR #597): a digital line crosses
+  the unit ring at S_1 / |D| Nodes, the fan's Manhattan mean 1.287 (4 /
+  pi for a fan uniform in angle), so a body on a fan reads 1.13 to 1.43
+  shell means at rest, series C's C = 1.00 having been read on the six
+  headings where the factor is 1.
 
 
 ### A10, the width of an opening and the spread behind it, under the Beam Law (2026-09-20)
@@ -6172,6 +6198,32 @@ sequential gates on an entangled record, the full register replay.
   law: no identity, no key, no rule. The test
   `tests/test_amplitude_malus.py` derives the pin from the worlds and the
   engine's tables and replays the three worlds against the register.
+- **Extended at 22.5 degrees (2026-09-21; the auditor's round 10 part 2,
+  registered by the architect on the Boss's order; host operations and
+  worlds only).** The three worlds above with one setting changed each,
+  written by the generator: `malus_22_5` (the last polariser's window 32,
+  22.5 degrees), `malus_67_5` (the window 96, 67.5 degrees),
+  `malus_chain_22_5` (the rotate 32 and the window 32, the chain at
+  22.5-degree steps); 300 intervals, each once through the runner (1.1
+  to 1.5 s; the source `c0911671e6431575`, the initializations
+  `4267f8f2e4160240`, `a2bcd5ed820b51d0`, `86bc2c74ac725517`; completed
+  and conserved at every tick). **Pinned first** from the tables (C'[32]
+  = 237, S'[32] = 98, C'[96] = 98, S'[96] = 237; the note's sections 3
+  and 4; [DERIVATIONS_BEAM 24.3 row 4](DERIVATIONS_BEAM.md#243-the-delta-p-table-every-computable-difference-from-quantum-mechanics-or-relativity-as-the-law-is-declared)):
+  the weights 237^2 / 98^2, the rungs [0, 219, 256], the counts 0+ 219,
+  0- 37; 98^2 / 237^2, [0, 37, 256], 37 / 219; 237^4, (237 x 98)^2, 98^4,
+  (98 x 237)^2, [0, 187, 219, 224, 256], 187 / 32 / 5 / 32. **The
+  engine's counts second** (DETECTOR, the gathers' chosen cells over the
+  records 1 .. 256, u over every residue of the wheel once): 219 / 37, 37
+  / 219, 187 / 32 / 5 / 32; the difference zero; over every record
+  gathered by the end (289 of 299, 10 open, the first gather at tick 11)
+  247 / 42, 42 / 247, 212 / 35 / 6 / 36. GAMEBOARD: the books balanced
+  at every interval. So 24.3 row 4's numbers are run in the law: 219 /
+  256 = 0.85547 against cos^2 22.5 degrees = 0.85355 and the chain's 187
+  / 256 = 0.73047 against cos^4 = 0.72855, +0.0019 both, the tables'
+  rounding at the scale 256 (the owner's declared input, record 328).
+  The test replays the six worlds against the register; no `src/`
+  change, no pin moved.
 
 ### A13. Bell test with polarization settings (after feature 11)
 

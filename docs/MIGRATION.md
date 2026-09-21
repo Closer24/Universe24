@@ -6,6 +6,19 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## Three Malus worlds at 22.5 degrees, on 2026-09-21 (worlds and the register; no rule change)
+
+The auditor's round 10 part 2: `examples/events/amplitude/make_worlds.py`
+writes `malus_22_5`, `malus_67_5` and `malus_chain_22_5` (the shipped
+Malus worlds with one setting changed each: the window 32, the window 96,
+the rotate 32 with the window 32), and `expectations.json` under `malus`
+carries their pins from the tables and the run's readings (the blocks
+`malus_22_5`, `malus_67_5`, `malus_chain_22_5`, `run_22_5`), the
+derivation line naming DERIVATIONS_BEAM 24.3 row 4. `tests/
+test_amplitude_malus.py` replays the six worlds; its case (c) runs on
+every world with a rotation. The register's A12 entry and the README say
+so. No `src/` change; no pin moved.
+
 ## The register's replicated map carried through a regeneration, on 2026-09-21 (host only)
 
 The replicator's round 1 found that `examples/events/amplitude/make_worlds.py`
