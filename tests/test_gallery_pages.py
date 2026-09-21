@@ -245,3 +245,11 @@ def test_the_48_are_24_rotations_then_24_improper_ones_and_the_solid_projects_th
         assert ((u - cx) ** 2 + (v - cy) ** 2) ** 0.5 <= gallery_pages.INRADIUS * 1.5**0.5 * 40 + 1e-9
     assert solid.image().size == solid.size
     assert solid.image(mapping=matrices[30], axis=(1, 0, 0), sphere=False).size == solid.size
+
+
+def test_the_formula_figures_are_written(tmp_path: Path) -> None:
+    """The still pictures for the paper: the octahedron and the contact
+    sheet of the 48, two PNG files at the small scale."""
+    paths = gallery_pages.formula_figures(tmp_path, scale=24)
+    assert [p.name for p in paths] == ["octahedron.png", "the_48.png"]
+    assert all(p.read_bytes()[:8] == b"\x89PNG\r\n\x1a\n" for p in paths)

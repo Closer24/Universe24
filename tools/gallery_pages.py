@@ -3813,6 +3813,48 @@ def formula_html() -> str:
     return f'<div class="three formula">{items}</div>'
 
 
+def formula_figures(out: Path, scale: int = 160) -> list[Path]:
+    """Still pictures of the formula page for the paper (the model owner,
+    2026-09-21: "send the paper writer to attach this shape"): the
+    octahedron of the six Ports with the sphere of c, and a contact sheet
+    of the 48 (the 24 rotations in the upper half, the 24 improper ones in
+    the lower, six per row, each the octahedron after g with its matrix).
+    Written as PNG at the given scale; nothing is read from a run."""
+    out.mkdir(parents=True, exist_ok=True)
+    solid = Solid(scale, angle=0.55)
+    octahedron = out / "octahedron.png"
+    solid.image().save(octahedron, optimize=True)
+    small = Solid(scale // 3, angle=0.55, labels=True)
+    w, h = small.size
+    mono = font(max(10, int(small.scale * 0.3)))
+    head = int(small.scale * 1.4)
+    cell_h = h + head
+    sheet = Image.new("RGB", (6 * w, 8 * cell_h + int(small.scale * 0.5)), (14, 16, 24))
+    draw = ImageDraw.Draw(sheet)
+    for index, g in enumerate(signed_permutations()):
+        det = determinant(g)
+        axis: Sequence[int] | None = None
+        if " about " in symmetry_name(g):
+            axis = fixed_vector(g if det == 1 else -g)
+        elif "in the plane across" in symmetry_name(g):
+            axis = fixed_vector(-g)
+        column, row = index % 6, index // 6
+        x0 = column * w
+        y0 = row * cell_h + (int(small.scale * 0.5) if row >= 4 else 0)
+        sheet.paste(small.image(mapping=g, axis=axis, sphere=False, radius_line=False), (x0, y0 + head))
+        draw.text((x0 + 6, y0 + 2), f"g {index + 1}, det {det:+d}", fill=(232, 236, 239), font=mono)
+        for line_index, line in enumerate(matrix_lines(g)):
+            draw.text(
+                (x0 + 6, y0 + int(small.scale * 0.34) * (line_index + 1)),
+                line,
+                fill=(154, 165, 173),
+                font=mono,
+            )
+    contact = out / "the_48.png"
+    sheet.save(contact, optimize=True)
+    return [octahedron, contact]
+
+
 @register("formula")
 def page_formula(out: Path, runs: Path | None) -> Path:
     del runs  # no run: the page draws the law's geometry and its group
@@ -4042,7 +4084,17 @@ def main(argv: Sequence[str] | None = None) -> None:
     parser.add_argument(
         "--runs", type=Path, default=None, help="keep and reuse the runner's records here"
     )
+    parser.add_argument(
+        "--figures",
+        type=Path,
+        default=None,
+        help="write the still pictures of the formula page (the octahedron, the 48) here and stop",
+    )
     args = parser.parse_args(argv)
+    if args.figures is not None:
+        for path in formula_figures(args.figures):
+            print(f"{path} ({path.stat().st_size / 1e6:.2f} MB)")
+        return
     names = (
         [name for name in PAGES if name != "index"] + ["index"] if args.page == "all" else [args.page]
     )
