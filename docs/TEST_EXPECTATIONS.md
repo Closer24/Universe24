@@ -68,7 +68,7 @@ kept, their pins the law of events').
 | `test_coupling_readings.py`, `test_orbit_readings.py`, `test_heisenberg_readings.py`, `test_hubble_readings.py` | The tools read the engine (the architecture review of 2026-09-20; the experimenter skill): each reading of `tools/coupling_readings.py`, `tools/orbit_readings.py`, `tools/heisenberg_readings.py` and `tools/hubble_readings.py` equals the engine's own function on a minimal GameBoard (the front off `manhattan_steps`, the step rule and the release off `by_clock`, the push off `unit_label`, the fan's labels off `flight_table`, the detector records off `DetectorSet`, the declared charge per unit of content; the Hubble tool's c = 32 / 55 and m(age) off `flight_table`, its `record` lines and click ages off the run of a bar of 61 x 1 x 1, its z within the digital step's grain of 1 + v / c); the expected integers are in each module's docstring |
 | `test_hubble_stars_readings.py` | The series G2 tool (`tools/hubble_stars_readings.py`) reads the engine (the experimenter's rule): the shipped worlds of `examples/events/hubble_stars/` equal their generator's and `expectations.json` declares its format; on a bar of 61 x 1 x 1 run through the runner (a star of a paid family holding a mass of 2^22 and shining one unit per self-creation toward a detector of one Node, the speed 1 / 2 Link per self-creation) the tool's `record` lines, click ages, steps (30 in 60 intervals), homes (its outward rows taken home, 64 units each) and final momentum are the engine's, z within the digital step's grain of 1 + v / c, the reading's formula within 2 % and the luminosity within 5 %; the fits read the exact coasting form as q = 0 with H (t_0 + T_0) = 1 to 1e-6 and the exact Einstein-de Sitter form as q = +0.5 to 1e-3; the expected integers are in the module's docstring | new (2026-09-20, series G2) |
 | `test_bohr_readings.py` | The series H tool reads the engine (the experimenter's rule, 2026-09-20): the flight time from the centre's plane to a face off `FlightTable.manhattan_steps` (5 Links at the age 8, 6 at 10, 1 at 1), the pointer per turn and the coherence ratio off `nature_beam.coherent_pointer` with the circle's tables ((16384, 0) and (-8192, 0) for two units at phase 0 and one at 32, C = 0.2; 1.8 with the third at 0; the slope of [1, 4, 9] is 2), and `read_run` on a run written by the runner (a proton of `p` at (5, 5, 1) of an 11 x 11 x 3 GameBoard on the four in-plane headings, an electron of `e` of span [1, 1, 3] at (8, 5, 1) with the momentum [0, 320, 0], `pass` for `p`, `action` 65536, 20 intervals: the radius 3, j = 0.05859375, the flights 8, the clicks per face equal to the record's, no read, the steps' phases 5, 5, 5, 6 at the ticks 5, 9, 13, 17, the first -x click at tick 16); the expected integers are in the module's docstring |
-| `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the integer audit of `core/`, and LOCALITY-1 documented without an exception |
+| `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the two integer audits (`core/` integers only; `events/` integer numpy and nothing that leaves the integers, `run.py` outside it), LOCALITY-1 documented without an exception, and the six-read test ([below](#locality-and-bounded-local-work)): a Node reads nothing beyond one Link, a change reaches a Node no sooner than the flight allows |
 | `test_meeting.py` | The meeting: the arc permutation of the direction table (a permutation for 1034 targets on K's table, the rest fixed, the chain from +x, the k-fold shift), the phase register (61, 62, 63, 0, 1, 2 with the turn at the fourth; the inverse), the sign of the turn and the `turned` line, the crowd and the record untouched, the bijection with the meeting (50 forward, 50 inverse) and the refusals ([below](#the-meeting)) | new (2026-09-20, the model owner's "DECIDED: the meeting, M-R"; the physicist's and the mathematician's design) |
 | `test_amplitude_record.py` | The record on the row (`amplitude-v1`): the world key `amplitude` deleted and refused, the identity `amplitude-v1` on a world with a lamp alone; the four columns `record`, `branch`, `multiplicity` and `birth` at their defaults on every row of no record and the merge's packed key unchanged by them; the merge's normal form, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
 | `test_amplitude_split.py` | The split, the birth of a record and the phase per interval of age: a lamp's birth of one record of k rows with the multiplicity k and the identity number x 2^32 + ordinal; the (20, 21) splitter's rows (41 in phase toward D1, 1 in antiphase toward D2, the multiplicity 1682) and the balanced split's cancel on the GameBoard with the `cancelled` lines; the pair form of `phase_per_link` (40 at [8, 1], 26 at [16, 3], 24 at the integer 8 after 5 intervals; the inverse bit-exact); the refusals ([below](#the-amplitude-law-the-split)) | new (2026-09-20; the design's sections 2.1, 2.3, 3.1 and 3.4; the owner's unifications (1) and (2)) |
@@ -2909,11 +2909,28 @@ review; this check does not certify physical acceptance.
 
 ## Locality and bounded local work
 
-`test_locality.py` creates no world and advances no time: it checks that
-LOCALITY-1 is documented in SIMULATOR_DEFINITIONS.md and AGENTS.md without an
-exception (end-to-end provenance, fixed work and storage for fixed K).
-LOCALITY-1 also requires manual end-to-end review of every input of a physical
-rule; passing this check alone does not establish it.
+`test_locality.py` (a) checks that LOCALITY-1 is documented in
+SIMULATOR_DEFINITIONS.md and AGENTS.md without an exception (end-to-end
+provenance, fixed work and storage for fixed K), and since 2026-09-21 (the
+architecture audit's item 8; the six-read tests LOCALITY-1 names were deleted
+with the scalar candidate on 2026-09-17) runs the six-read test on a minimal
+GameBoard, (b) and (c). LOCALITY-1 also requires manual end-to-end review of
+every input of a physical rule; passing these checks alone does not establish
+it. The layer of `amplitude-v1` (the click's join and deletion over a record's
+identity, the one non-local operation the model owner decided, records 72 and
+74 of 2026-09-20) is outside the test's claim: no world of it declares a
+record. A bar of 13 x 1 x 1, y and z periodic, K 2^20 so that no phase moves,
+`suspension` 0, `release` [0, 1], the families `m` (free, the reader's), `f`
+(free, another number's) and `light` (paid); the measured events 1 (of `f`,
+at x = 12, fixed) and 2 (`d`, of `m`, content 4, at x = 9, fixed, measuring
+`light` and reading `f`, a `beam` detector so that the window reads each
+ray's own phase); the Nodes under test X_c = 3 (free space) and X_d = 9 (the
+detector's). Written down first:
+
+| Case | Input | Expected |
+| --- | --- | --- |
+| (b) the six-read test | the world A: a head-on pair of `light` at x = 2 (+X) and x = 4 (-X, phase 32), a `light` unit at x = 8 on +X, an `f` unit at x = 10 on -X; the world B: A with rows beyond one Link of both Nodes changed, a `light` pair at x = 6 (+X phase 5, -X phase 40), a `light` unit at x = 0 on -X and one at x = 11 on +X; one interval each | A and B byte-identical at X_c (the rows) and at X_d (the rows, d's state with its momentum and the detector `d`'s record) and in the readings of both Nodes (arrived, flow, presence per family); the pair parked at X_c as the two rest rays (directions 0 and 1), `d` clicked 1 unit of `light`, d's momentum not (0, 0, 0); B not A at x = 5 and x = 7 (the pair of x = 6 walked apart) and in the face detectors' records; both books balanced |
+| (c) the causal bound | the world D0: the pair alone; D_k: D0 with a `light` unit k Links from X_d on +X, k = 1, 2, 3; stepped through the first arrival | X_d's rows and the reader's side identical before the flight's first arrival at k Links and different at it: the intervals 1, 3 and 5 (`test_nature_beam_flight` (a)), each at least k |
 
 ## Repository language
 
@@ -3335,7 +3352,7 @@ designs, are given in brackets as (old ...).
   0.990, 0.985); the escape per interval is 0.13 of the emission, within
   0.03 (0.131 measured; old 0.983).
 - (b) the shell means over ticks 201 to 300 at r = 4, 6, 8, 10 and 12
-  (`shell_readings`): the count times r^2 / q reads 2.00, 1.93, 1.63, 1.11,
+  (the host diagnostic `diagnostics.shell_readings`): the count times r^2 / q reads 2.00, 1.93, 1.63, 1.11,
   0.70, each within 10 % (old 0.157 to 0.172, flat as 1 / r^2); the radial
   flow times 4 pi r^2 / q reads 2.78, 2.38, 2.00, 1.43, 0.99, each within
   10 % (old 0.997 to 1.16; the shell's mean radial arrival counts what
