@@ -884,3 +884,28 @@ named, gamma = 29.33 once, Q_f written Q in the register; (23) the
 lattice-frame qualifier in "Tried on Lorentz", route C's closure in one
 clause; (24) the two role words of the click chapter replaced. The
 abstract re-fitted under 1920 characters.
+
+## The Lorentz decision closed (2026-09-21, record 270): the covariant readings in place of the seventh operation
+
+The owner told the paper session "it is no longer A plus B, it is
+closed"; the derivation mathematician's note (his branch at 129fbd87,
+17.5 and 18.1) cites record 270: covariant-readings-v1 is built beside
+the law in place of lorentz-v1; main's log at 3ae2ac92 ends at 266, so
+the record lands with the Boss's next pull request. Applied: the Lorentz
+section's opening and "The decision" (the law kept with its prediction
+as a row that can fail; the comparison hypothesis first the root, now
+the covariant readings, decided in its place; both run against the same
+pins; route C closed), the table's Lorentz and E = m c^2 rows ("the
+comparison hypothesis decided for the build, on paper, not built"), row
+5b's parenthetical, the abstract ("the hypothesis built beside it"), the
+log bibitem (270). The derivation's sections 19 (the masses generically)
+and 20 (the periodic universe) are new on his branch and not yet read
+for the table; 13.2 (a) corrected per record 262; 12c.1 names its two
+sphere means. The referee's check on this
+change (the same agent, read-only): minor, five items, applied: the
+derivation's grounds detached from the decision's sentence; the pins of
+18.1 named; "the first decision: A and B" in the log bibitem; row 4a
+"decided for the build" and the isotropy row's clause for uniformity; a
+caveat in the manuscript's submission note that record 270 and its
+decision line are not yet in the archive's log (PLAN.md is not read by a
+referee), and 18.1 added to the derivations bibitem.
