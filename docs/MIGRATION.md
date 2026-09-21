@@ -6,6 +6,34 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The one count primitive in its array form, on 2026-09-21 (host only, bit-exact, no law change)
+
+The model owner's word on the flight's accumulator (record 299: "yes,
+with this it is beautiful and generic"): the same verb, the Euclidean
+division with the remainder kept, was written twice, as
+`core.integer.by_drive` on a body's record and as the flight's own array
+expression on the rows. One implementation of the law's count, in two
+forms.
+
+- `events.nature_beam.by_drive_rows(drive, rate, denominator, at_most)`:
+  `by_drive` over numpy int64 rows, the same integers row by row (signed
+  rates, the cap, the remainder kept; a denominator below 1 refused, the
+  accumulator plus the rate bounded to the working register before the
+  sum is formed). It lives beside `by_clock_rows`, the array form of the
+  other count, since `core/` stays standard-library integers.
+- `Flight.walk_step` takes the interval's step as the count
+  `by_drive_rows` gains at the row's residue over the wall; the residue
+  and the step are the verb's two outputs. `Flight.accumulator` is
+  unchanged in form and named as the verb's constant-rate identity
+  (the pair off the age, tau applications from T_d).
+- Bit-exact: the gate set's state, books and events digests unchanged
+  (`tests/test_amplitude_click.py` (d)); `tests/test_nature_beam_flight.py`
+  (g) the walk on every direction of the register's fans over a full
+  period against the closed form and the verb iterated;
+  `tests/test_fraction_free.py` (j) the array form against `by_drive` on
+  a grid of 111 996 cases with the named edges.
+- BEAM_LAW note 41 (viii) and TERMINOLOGY's "Flight table" line say so.
+
 ## The crossing rule, on 2026-09-21: the step before the law, a row and a body met once, the key `doppler` and the grain deleted
 
 The model owner's record 158 of 2026-09-20 ("the step reads the crossed

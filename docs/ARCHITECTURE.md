@@ -188,7 +188,7 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 
 | Module | Allowed dependencies |
 | --- | --- |
-| `core/integer` | Standard-library types; owns the working-register bound (`checked_work`) and the Beam Law's integer primitives (`bounded_gcd`, `integer_root`, `by_clock`, `apportion_whole`) |
+| `core/integer` | Standard-library types; owns the working-register bound (`checked_work`) and the Beam Law's integer primitives (`bounded_gcd`, `integer_root`, `by_clock`, `by_drive`, `apportion_whole`); the array forms of the two counts over rows (`by_clock_rows`, `by_drive_rows`) live in `events/nature_beam` with numpy |
 | `core/game_board` | `core/integer` (`checked_work`); the GameBoard's addresses, the six Port headings in Port order (`PORT_HEADINGS`, `adjacent_node`), the cube's group of 48 with its hand (`cube_symmetries`, `compose_symmetries`, `inverse_symmetry`, `symmetry_hand`; named 2026-09-21) and the bound of a declared charge and quantum (`MAX_VALUE`) |
 | `core/phase` | `core/integer`; the phase circle's cosine and sine tables from fixed-point series, cached per N, and the circle itself as the cyclic group of N steps with its unit vectors (`PhaseCircle`, `phase_circle`; named 2026-09-21) |
 | `events/world` | `core/integer`, `core/game_board`; the world file of the Beam Law, its keys, defaults, bounds and refusals (`parse_nature_beam_world`, `NatureBeamWorld`), the constants `Q`, `LABEL_SCALE`, `FACE_NAMES`; no execution |
