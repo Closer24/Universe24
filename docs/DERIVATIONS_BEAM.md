@@ -5732,6 +5732,8 @@ column.
 | 55 | Hubble's law, `z = H d / c` | the growing wall `2 T_D a`, the tick wall | `z = H d / c_0` at first order, `1 + z = e^(H d / c_0)` in full | 15.2, 20.4, 21.5 | `growing_wall.py` | the 24 stars, rms 0.0044 at T = 440 | no pin; a host reading (`growing_wall.py`); the registered G2 run's pin is the coasting form and Milne's `H t_0 = 1` within 10 %, first order | first order in `H d / c_0` | `(H d / c_0)^2 / 2`; the accumulator's part in 400 | R for the form under `expansion-v1`, H an input |
 | 56 | the aberration of light | the aberration rule `w = Q W D + T_D N_v`, the nearest direction by comparison | Bradley's `tan theta' = sin theta / (cos theta + beta)` | 12.2, 21.5 | `lorentz_field.py` | the pins 304 / 116 / 157 at k = 4 (not run) | pinned, not run: 304 / 116 / 157 at k = 4 (12.2) | first order in beta | `beta^2 / 2` against nature's `gamma`; the fan's grain `1 / P` | R at first order, D at second |
 | 57 | Schrodinger for a free particle | the pair (flight, phase) of the linear block; a body's phase per Link | none: the rows' dispersion is `omega = c k`, a body is one record | 21.5 |  | none | no run | not applicable | not applicable | not reached (D); `dispersion-v1` named |
+| 58 | Kepler's three laws | the push `p += -M_A V(x)` in the shell mean (B), the drive on the momentum's direction, form B (T) | the ellipse, equal areas, `T = 2 pi r^(3/2) sqrt(4 pi S / q)` with `G M_B = q / (4 pi S)`; on the plane `T = 2 pi r (Q S m + abs(p) / c) / abs(p)`, `T ~ r` | 3.3, 12b.2, 21.5 | `kepler_compton.py` | series D's `s32_r24` (the plane); `s32_r24_lamp` and `s32_r12_lamp` to be written | pinned, not run: T 795 (700 to 830), the mean radius `23.6 +- 1`, the age's minimum advancing `-105 +- 15` degrees per radial period, `T(24) / T(12) = 2.00 +- 0.15` (21.5 row 58) | first order in `Link / r` and in `v / c` | form B's first-order slowing `1 / (1 - v / c)`; the fan's grain (`r^-1.83` on the 2616 shell); the lattice's own precession not derived | R in the limit (space); the plane's exponent 1 (F); the lattice's precession D |
+| 59 | Compton, `lambda' - lambda = (h / (M c)) (1 - cos theta)` | the exact square (B) and the momentum's conservation at a `measure` then a `rerelease` (17.6 M7, N5), the released turn `floor(k' / h)` (T) | `1 / k' - 1 / k = sqrt 3 (1 - cos theta) / (Q S M)`, `lambda = h / k` Links, `c = 1 / sqrt 3` | 17.6 M7, N5, 21.5 | `kepler_compton.py` | the `compton` world (to be written), after covariant-readings-v1 is built | pinned, not run: the faces' turns 16 (+x), 11 (+-y, +-z), 8 (-x), 14 and 9 on the face diagonals, from k = 16 at `Q S M = 64` (21.5 row 59) | exact on the pair `c^2 = [1, 3]`; first order in `(k - k') / k` at the heading's c | the residual `(gamma^2 - 3) (k - k')^2 / (2 E'_0 gamma)`, `gamma^2 - 3 = 141 / 3025`; the floor of `k' / h` (one step); the fan's grain | H under covariant-readings-v1 with the exchange's accounting (`books`, N5); D on `main` |
 
 ### 21.3 How to read the map for the paper
 
@@ -5946,6 +5948,122 @@ flight table does not have (every row flies at c); what would state it
 is a family of rows whose pace reads their phase per Link (a dispersion
 in the flight's wall, `dispersion-v1`), named, not designed; the caveat
 stands: the law has no wave on the lattice, it has rows and one click.
+
+**58. Kepler's three laws.** (1) The rule: the push `p += -M_A V(x)`
+with **V** the flow in the shell mean (`q Q / N(r)`, radial; B, 3.3) and
+the drive on the momentum's direction, form B (T; FORM.md section 3):
+`v = abs(p) / (Q S M)` at small momentum, the cap c as the momentum
+grows. (2) The limit: the Link to zero, small momentum (`v << c`), every
+direction (the shell mean). (3) The order: the leading order in `Link /
+r` and in `v / c`; the force exact in the shell mean (Gauss, 5.5). (4)
+The symmetry: the cube's 48 and the shell mean's isotropy (the fan's
+grain its ripple, 3.2). (5) The error term, three parts: (i) the fan's
+grain, `r^-1.83` against `r^-2` on the 2616-direction shell (7.2), the
+shell's ripple `+- 7` percent (3.2); (ii) form B's cap, `p = Q S M v /
+(1 - v / c)`: an inertia growing at FIRST order in `v / c`, so a circular
+orbit's period is the Newtonian `2 pi r / v` times `1 / (1 - v / c)`
+(`s32_r24`: 795 against today's 687, the host check), and an eccentric
+orbit's apsides advance at that order, not derived here; (iii) the
+retarded field of a FIXED source is static and gives no precession; a
+moving source's retarded push gives the drift and the decay of 12b.2,
+not a precession (E12). Kepler's three laws in the limit, in space: the
+ellipse (the apsidal angle `pi` of the `1 / r^2` force: closed), equal
+areas (the force central: the fan's lines radial within 0.8 degrees),
+`T^2 ~ a^3` with `T = 2 pi r^(3/2) sqrt(4 pi S / q)` and `G M_B = q /
+(4 pi S)` (the host check: at S = 512 with series E's fan of 290
+directions, T(12) = 1230 and T(24) = 3480, the ratio 2.8284 = `2^(3/2)`,
+the exponent 1.5000). On the plane, where the register's orbits are
+(series D), the force is `1 / r`: `T ~ r` (the ratio 2, the squares 4),
+and the orbit is a rosette with the apsidal angle `pi / sqrt 2 = 127.28`
+degrees, the perihelion moving by `-105.44` degrees per radial period, the
+plane's own law and not the lattice's. (6) The pin, on ONE declared world:
+series D's registered `s32_r24` (S = 32, r = 24, p = 576 label units, the
+fixed source of content `2^10` on the plane's fan of 120 directions, q =
+12 rows per interval, 4000 intervals) with ONE change so that a detector
+reads it: the probe's family releases one row per direction of the same
+fan every 10 intervals (the source's `release` `[1, 2^10 x 10]`; the
+register's probe releases at the age 10240, beyond the run) and the
+source is a detector of one Node with `measure` on the probe's family;
+named `s32_r24_lamp`, to be written, `s32_r12_lamp` beside it. The
+DETECTOR reading is the source's click list of the probe's rows, whose
+arrival directions turn with the probe. Under form B: the period T, the
+recurrence of the arrival direction's angle, 795 (the analytic `2 pi r /
+v` with `v = 288 / 1519 = 0.1896` on a heading and 0.1893 on the
+diagonal, the host check) within the continuum's own margin, 700 to 830
+(12b.2's integrated at-rest periods 743 and 718 against the analytic 795,
+the 9 percent the burst field and the fan's grain owe); the mean radius
+from the clicks' ages, `r = age x c` per direction, `23.6 +- 1` (the
+register's 23.63 under the step drive; the continuum's extents 22.7 by
+23.8); the precession: the direction of the age's minimum moving by
+`-105 +- 15` degrees per radial period (the polygon's kicks, 6.4 degrees
+per ray); the exponent: `T(24) / T(12) = 2.00 +- 0.15` with
+`s32_r12_lamp` (analytic 397.7 and 795.3), the exponent 1 on the plane,
+`3 / 2` being space's. Record 131's "no closed orbit by D's criterion"
+restated: the law predicts eccentric loops precessing at the `1 / r`
+force's apsidal angle, bound for the run (four turns of 701 to 880
+registered under the signed drive, the mean radius 26 to 36), and the
+run must show the clicks' direction turning through `2 pi` with the
+period above and the age's minimum advancing by the apsidal angle; the
+criterion "returns within one Link" is a circle's and not this force's.
+For `3 / 2` itself a world in space is named and not pinned here: the
+probe on series H's 2616-direction shell (the one fan the register
+resolves at r = 12 to 24), whose ring flux `r^-1.83` reads the exponent
+`(1 + 1.83) / 2 = 1.42` on that fan and `3 / 2` in the limit of every
+direction. The three tests: pass (the law's own push and drive). **R** in
+the limit (Kepler's third law with G named, 3.3); the plane's register
+**F** for the exponent (1); the lattice's own precession **D**, not
+derived.
+
+**59. Compton, `lambda' - lambda = (h / (M c)) (1 - cos theta)`.** (1) The
+rule: a row of momentum k (label units; `k = h s` for a lamp's unit at
+the turn s, 17.6 M7) absorbed at the body's Node (`measure`: the content
+and the momentum join, the content identity of 17.6 M7 on W), then a row
+released on one direction of the re-emitter's declared fan at the angle
+theta to the incoming one, with the books balanced for that one row (the
+exchange's accounting, 17.6 N5, declared under `books`): the released
+momentum k' fixed by the exact square (B) and the momentum's conservation
+(the body's recoil `p = k - k'` as vectors), the released turn `s' =
+floor(k' / h)` (T, the remainder kept). From `W = E'_0^2 + 3 p . p` with
+the row's energy `sqrt 3 k` in `E'` units on the pair `c^2 = [1, 3]`:
+`(E'_0 + sqrt 3 k - sqrt 3 k')^2 = E'_0^2 + 3 abs(k - k')^2`, whence
+
+    1 / k' - 1 / k = sqrt 3 (1 - cos theta) / (Q S M),   lambda = h / k Links:   lambda' - lambda = (h / (Q S M c)) (1 - cos theta),
+
+Compton's formula with the rest `Q S M` and `c = 1 / sqrt 3`, exactly (the
+host check). (2) The limit: none for the momenta (an identity of the
+exact square); every direction for the angle. (3) The order: exact on
+the pair; at the heading's own `c = 32 / 55` (the row's energy `(96 / 55)
+k`, M7) first order in `(k - k') / k`, with the residual `(gamma^2 - 3)
+(k - k')^2 / (2 E'_0 gamma)`, `gamma = 96 / 55`, `gamma^2 - 3 = 141 /
+3025` (at 90 degrees `k' = 11.195` against 11.165 on the pair). (4) The
+symmetry: the fan's 48 (the headings and the face diagonals). (5) The
+error: the fan's grain (theta at the declared directions only, `cos theta
+= +- 1 / sqrt 2` on the face diagonals), the floor of `s'` (one step), the
+identity's domain `abs(p)_1 <= Q S M` (N2). (6) The pin, the declared
+world `compton`, to be written: an open cube of 41 Nodes a side, S = 1,
+N = 64, the key `covariant_readings` with `c2 = [1, 3]`, `grain = 1` and
+`books`; a lamp of the paid family `light` (quantum h = 1) at (2, 20, 20)
+releasing one unit per interval on +x at the turn s = 16 steps per
+self-creation (`k = h s = 16` label units, `E = h s`); a free body of
+content M = 1 (`Q S M = 64`) at the centre with `measure` on `light` and
+`rerelease` on the six headings and the twelve face diagonals; the six
+faces as detectors reading `light` with `reads: "age"`, the DETECTOR
+reading the phase rate of the rows at each face (the `record` lines'
+phase slope, `hubble_readings`' method), that is the released turn per
+direction: 16 at the +x face (theta = 0, no shift), 11 at the +-y and +-z
+faces (90 degrees, `k' = 11.165`), 8 at the -x face (180 degrees, `k' =
+8.574`), 14 on the forward face diagonals (45 degrees, 14.199) and 9 on
+the backward ones (135 degrees, 9.200), each to one step; the body's
+recoil `abs(p) = 19.5` label units at 90 degrees (0.305 of `Q S M`,
+inside N2's domain) a GameBoard diagnostic of its `step` lines, not the
+pin. What refutes: a face reading a turn off by more than one step from
+these, or the same turn at every face (the law on `main`: the released
+row takes the re-emitter's declared turn, 6.4, no shift). The three
+tests: generic (no name), vector (B, T, D), local (the body's record and
+its Node). **H** under covariant-readings-v1 as amended, with the
+exchange's accounting of N5 (Compton is exactly the books' balance for
+one row in and one row out); **D** on `main`. The run after
+covariant-readings-v1 is built.
 
 ## 22. The uncertainty relation from the six verbs, and Bell beside it
 
