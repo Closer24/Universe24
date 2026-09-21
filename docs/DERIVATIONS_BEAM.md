@@ -358,3 +358,222 @@ phase of a row in flight is a point of `Z_N` on the record and of `Z_{N d}`
 only through the age (nothing is discarded, since the rate is constant);
 and the flight is not a per-axis accumulator but one Manhattan accumulator
 with a comparison ladder on the axes' deficits.
+
+## 2. Doppler from the crossing rule: 1 + v/c and 1 - v/c on the axis, exactly 1 on the transverse, and the Manhattan flux on a fan direction
+
+**The rule derived from** (record 158, the physicist's design, not yet
+built; until it lands the statement of the record is the rule): a row and
+a body meet ONCE, at the crossing of their world lines. A body at rest
+meets a row when the row arrives at its Node (the law as built,
+`nature_beam.py:2741`); a body stepping from O into X along the signed
+axis unit e meets, in the interval of the step, the rows that crossed its
+own Link the other way (C1) and the rows resident at X moving against it
+(C2, `u . e < 0`), and does not meet the rows moving with it, the rows
+behind it on its Link, or one interval later the rows it met at O. The
+operations: the walk of the rows (T, section 1.2 step 1), the body's
+step by the drive (T/D), and the meeting as a comparison of two records'
+last Links (D). The count is an integer per interval; nothing is weighted.
+
+**What main does** (record 153, the engine as built, `engine.py:378-401`:
+the reading before the step, the arrivals only): a reader stepping one
+Link per k intervals toward a lamp at rest reads k rows per k intervals,
+and k away; the reader's Doppler is absent. That is the registered
+state; the derivation below is of the rule of record 158, and its check
+is the record's own encounter counts and the doppler bar's registered
+rates, whose limit the count reproduces.
+
+### 2.1 The stream and the speed of light on the axis
+
+A lamp at rest releases one row per interval on the heading `(1, 0, 0)`.
+The row of age tau is at `m(tau) = (2 tau Q + T) // (2 T)` Links with
+`T = T_d = isqrt(3 Q^2) = 110`, so the rows advance `c = Q / T = 32 / 55`
+Links per interval (0.5818; `1 / sqrt 3` = 0.5774, the isqrt's rounding
+of 110.85 to 110, within 0.8 %) and stand `c` Links apart: the stream's
+density is `n = T / Q = 55 / 32` rows per Link (record 153's 1.72), and a
+reader at rest meets `n c = 1` row per interval, the lamp's rate. As Q
+grows, `Q / T_d -> 1 / sqrt 3` for every direction (the flight table's
+limit, BEAM_LAW section 3: within 1.35 % at Q = 64 on every direction of
+the table); the speed of light of the limit is `1 / sqrt 3` Links per
+interval in the lattice's frame, isotropic.
+
+A body of content M with the momentum p on the axis steps one Link per
+`D / abs(p)` self-creations, `D = Q S M + abs(p)` (`engine.py:85-116`), so
+its speed is `v = abs(p) / (Q S M + abs(p))` Links per interval, a
+rational below 1; record 153's reader has `M = 21 x 2^16`, `abs(p) = 7 x
+2^22`, `Q S M = 21 x 2^22`, `D = 28 x 2^22`, `v = 1 / 4` exactly, and `v /
+c = 55 / 128 = 0.4297`.
+
+### 2.2 The encounter count and its limit: the receiver's Doppler
+
+The rows' world lines are the staircases `x_j(t) = x_0 - m(t - j)`, one
+per released row j; the body's is the staircase `x_b(t) = x_b0 + s
+floor(t / k)`, s = +1 toward the lamp. The rule counts every crossing of a
+row's staircase with the body's once. Over an interval of length tau the
+body sweeps `v tau` Links and the stream advances `c tau` Links, so the
+rows whose lines cross the body's are those within `(c + s v) tau` Links
+of it: the count is
+
+    E(tau) = n (c + s v) tau + O(1) = (1 + s v / c) tau + O(1),
+
+the O(1) the boundary row (a row exactly at a wall of the swept
+interval), never more than one. Over a whole number of Links of the
+body's path the count is exact: in `L k` intervals the body sweeps L Links
+and the count is `L k + n L` exactly when `n L` is whole. The rate per
+interval in the limit of many intervals is
+
+    1 + v / c   toward the lamp,      1 - v / c   away from it,
+
+the receiver's Doppler of a source at rest in the lattice's frame, with c
+the table's speed on the axis. **Reached**, exactly (the rounding never
+exceeds one row, and vanishes over whole Links).
+
+**The registered checks** (record 158's proof of the rule on the
+experimenter's streams of record 153, the rows' and the body's positions
+as the engine made them, the count by the rule):
+
+| Stream, body | The formula | The count of record 158 | Difference |
+| --- | --- | --- | --- |
+| toward, k = 4, 32 intervals | `32 (1 + 55 / 128) = 183 / 4 = 45.75` | 45 | the boundary row |
+| toward, k = 8, 48 intervals | `48 (1 + 55 / 256) = 933 / 16 = 58.31` | 58 | the boundary row |
+| away, k = 4, 32 intervals | `32 (1 - 55 / 128) = 73 / 4 = 18.25` | 19 | the boundary row |
+| away, k = 8, 48 intervals | `48 (1 - 55 / 256) = 603 / 16 = 37.69` | 38 | the boundary row |
+| toward, k = 4, 32 Links (128 intervals) | `128 + 55 = 183` | 183 | exact |
+| toward, k = 8, 32 Links (256 intervals) | `256 + 55 = 311` | 311 | exact |
+| at rest, 48 intervals | 48 | 48 | exact |
+
+The weight that doppler-v1 supplied in place of the missing count (record
+153: the flux pair `374784 / 262144` at k = 4) is `1 + 55 / 128 = 183 /
+128` exactly, `262144 x 183 / 128 = 374784`: the key was the limit of the
+count, put on the flow as a factor. The doppler bar of `tests/test_doppler.py`
+(b), FORM.md's map, registers the same limit at five speeds: over 200
+intervals the receding body at `v = 0.30` reads the weighted rate `200 (1
+- 0.30 x 55 / 32) = 96.875` (the register's 96.9; 6204 / 64 = 96.94 with
+the speed's grain), at 0.45 `45.31` (45.3), the approaching body at 0.30
+`303.125` (303.1), the co-moving body at `v = c` 0 (0), the outrunning
+body at 0.75 `200 (0.75 x 55 / 32 - 1) = 57.81` (57.8): every one is
+`abs(1 - v / c)` times the rest rate, the encounter count's limit, and
+under the crossing rule these become counts of 97, 45, 303, 0 and 58 rows
+within one (record 158's tests (a) to (e), pinned there).
+
+### 2.3 The transverse motion
+
+A body stepping on y through a stream on x meets, at its step, no row of
+the destination: the rows' `u . e_y` is 0, neither against nor with, and
+the rule counts only arrivals (C2 needs `u . e < 0`). Its count is the
+rest rate, exactly 1 per interval at every v (record 158: "transverse
+exactly 1"). In the continuum this is the classical transverse Doppler, 1:
+the rows a point meets per unit time do not change when it moves along
+the fronts. Nature's transverse Doppler is `1 / sqrt(1 - v^2 / c^2)` (Ives
+and Stilwell 1938): at `v = 0.30 c` the factor 1.048, at the G2 stars'
+`v / c = 0.057 .. 0.27` from 1.002 to 1.038. **Different law** at order
+`v^2 / c^2`: the lattice's transverse count is 1, and nothing in the six
+operations carries a body's speed into its clock or its reading (target
+4).
+
+### 2.4 The fan direction: the Manhattan flux against the Euclidean one
+
+Let the stream be on a direction `D = (a, b, c_z)` of the table, released
+one row per interval, and let the body move on x at v. A row of D
+advances `S_1 Q / T_d` Manhattan steps per interval, `a / S_1` of them on
+x: its velocity is `(Q / T_d) D` per axis (GRAIN.md section 2). In a world
+of full extent the rows of a plane stream occupy the Nodes at a density
+`n` per Node, and a Node at rest is entered by rows through its Ports at
+the rate `n x (S_1 Q / T_d)` per interval (each Manhattan step of a row is
+an arrival at some Node; each Node receives its share); the body stepping
+into X meets the n rows resident there (all against it, `u_x < 0`) once
+per step, `n v` per interval more, and the rule's C1 and C3 clauses make
+no row count twice or drop. In the limit the ratio of the moving count to
+the rest count is
+
+    1 + v x T_d / (Q S_1)   (the crossing rule: the Manhattan flux)
+
+against the continuum flux of a plane wave whose wave vector is along D
+(GRAIN.md section 2, the flux `1 - v . c_d / abs(c_d)^2`):
+
+    1 + v x a T_d / (Q abs(D)^2)   (the Euclidean flux).
+
+The two Doppler terms differ by the factor `abs(D)^2 / (a S_1)`: 1 on
+every heading and on every direction whose nonzero components are all
++-1 (`abs(D)^2 = S_1` and `a = 1`: the face and the space diagonals, for a
+body on any of their axes), and not 1 elsewhere: 5/6 on `(2, 1, 0)` and
+`(3, 1, 0)` for a body on x (the count under-reads the Euclidean Doppler
+by 17 %), 5/3 on `(1, 2, 0)` and 5/2 on `(1, 3, 0)` for a body on x (the
+count over-reads it), 1985/2244 on the screen's `(44, 7, 0)`. The reason
+is the Node: a lattice reader is a cube whose faces are its six Ports, so
+the rows it meets per interval are the Manhattan flux `n (abs(c_x) +
+abs(c_y) + abs(c_z))` at rest and `n (abs(c_x) + v + abs(c_y) + abs(c_z))`
+in motion, while a continuum point reader in a plane wave meets the fronts
+at the Euclidean rate `n (abs(c) + v cos theta)`. **Different law** on a
+general fan direction, stated: the emergent Doppler on the lattice is `1 +
+v / c_1` with `c_1 = S_1 Q / T_d` the direction's Manhattan speed (0.82 on
+the face diagonal), not `1 + v cos theta / abs(c)`; equal to it on the
+headings and the diagonals. As Q grows the ratio `abs(D)^2 / (a S_1)`
+does not change: this is a limit of the lattice, not of the resolution
+(a fan of every direction, target 7, averages it over the fan's
+directions, where `sum_D (a S_1) / abs(D)^2` decides the mean).
+
+**Record 158's two numbers.** The design names `1 + 2.44 / k` head-on on
+a face diagonal against `1 + 1.22 / k`. Both are rationals of the table:
+`2.44 = T_d / Q = 156 / 64` and `1.22 = T_d / (Q S_1) = 156 / 128` on
+`(1, 1, 0)`. The second is the formula above in a world of full extent
+(the Manhattan and the Euclidean flux coincide on the face diagonal, the
+ratio 1). The first is the same count on a world whose y axis has the
+extent 1: there a row's y-step is a self-Link (`game_board.py:48-49`) that
+crosses no world line and is no arrival, so the stream's Manhattan speed
+on the real axes is `S_1' Q / T_d` with `S_1' = 1`, `c_1 = 64 / 156 =
+0.41` on x, the rows stand `2.44` per Link and the count reads `1 + v x
+156 / 64`: the correct Doppler of a stream that moves at 0.41 along the
+bar, which is what a diagonal direction is on that bar. So the deviation
+of record 158 is the bar's geometry, not a departure of the count; on the
+plane the count and the flux agree there. One fact of the engine for the
+implementer, found on the way: on `main` a self-Link step marks an
+arrival (`nature_beam.py:2399, 2412`: `moved` is true and the Node is the
+same), so a body at rest on a periodic axis of extent 1 reads a row with a
+component on that axis again at every such step; the crossing rule's
+"once" removes it (a self-Link crosses no line), and the rule's tests on
+the bar should pin the rest rate at 1 per interval, not `S_1 / S_1'`.
+
+### 2.5 The source's Doppler: a moving lamp
+
+A lamp of content M thrown at v releases one row per self-creation, and
+its clock ticks at every interval whether or not it steps (`engine.py:
+418-451`; HYPOTHESES entry 21: the rate is one at every speed). Between
+two releases the lamp moves v Links on average and the row moves c, so
+the rows stand `c - v` Links apart ahead of the lamp and `c + v` behind
+it; a reader at rest meets them at the rate `c / (c - v) = 1 / (1 - v / c)`
+ahead and `1 / (1 + v / c)` behind: the classical source Doppler, `1 + z =
+1 + v / c` for a receding lamp, exactly in the limit (the staircase of the
+lamp's steps is a jitter of at most one Link in the spacing, one row in
+the count over a period). **Reached.** The registered check: series G2's
+`coasting_none` (the stars thrown from one point, gravity off; the
+hubble_stars README's per-star table), where the detector's z per star is
+`1 + z = (1 + k)(1 + v / c)` with k = 0: s_my1 declared `v / c = 0.1146`
+reads z = 0.1146, s_pz2 0.2483 reads 0.2478, s_mz2 0.2674 reads 0.2636,
+s_px1 0.0573 reads 0.0611, every star within the grain of the digital
+step (0.003 in z, the README's), and the crowd fits the Milne form with
+`q = 0.000`, `H (t_0 + T_0) = 1.000` (record 138 and the README).
+
+### 2.6 The two Doppler formulas and nature's one
+
+The lattice gives the receiver's `1 + v / c` (2.2) and the source's `1 /
+(1 - v / c)` (2.5) as two different laws, as the classical ether did;
+they agree to first order in `v / c` and differ at second: at `v / c =
+0.5156` (the bar's approaching body) 1.516 against 2.065. Nature has one
+formula for both, `sqrt((1 + v / c) / (1 - v / c))` (1.769 at that speed),
+which lies between them, because in nature only the relative velocity
+exists. **Different law** at order `v^2 / c^2`, the lattice's frame
+preferred: the flight table's c is isotropic in the lattice's frame and
+in no other, and the crossing rule counts in that frame. Whether the
+limit has any Lorentz-like symmetry, and what a moving clock reads, is
+target 4; the answer here is what the count says: no factor of `gamma`
+enters any of the six operations, so none appears in the limit.
+
+### 2.7 The verdict of target 2
+
+| Formula | Verdict | The place |
+| --- | --- | --- |
+| The receiver's Doppler `1 +- v / c` on the axis | **reached** under the crossing rule (record 158), exact over whole Links and within one row otherwise; on `main` **not reached** (k per k, record 153) | `c = Q / T_d`, the table's rational; the boundary row |
+| The transverse Doppler | **different law**: exactly 1 (the classical value); nature's `gamma` absent at order `v^2 / c^2` | no operation carries a speed into a reading |
+| A fan direction | **different law**: the Manhattan flux `1 + v T_d / (Q S_1)` in place of the Euclidean `1 + v a T_d / (Q abs(D)^2)`; equal on the headings and the diagonals, off by `abs(D)^2 / (a S_1)` elsewhere; record 158's 2.44 and 1.22 are `156 / 64` (a bar of extent 1) and `156 / 128` (the plane) | the Node is a cube with six Ports |
+| The source's Doppler `1 / (1 -+ v / c)` | **reached** (the classical law; G2 `coasting_none`, z = v / c per star within the grain) | the lamp's clock at rate 1 |
+| The relativistic Doppler | **different law** at `v^2 / c^2`: two formulas, receiver's and source's, in place of nature's one | the lattice's frame |
