@@ -5302,6 +5302,135 @@ factor the lattice's geometry cannot supply, and one stays open; nothing
 claimed beyond that, and every closure is a hypothesis with its pins,
 not a build.
 
+### 18.6 Series O, two stars each the detector of the other, under covariant-readings-v1: the expected readings pinned before any run
+
+**The order** (the owner through the G2 session, record 344: "pass it
+to the Boss with a request for lorentz-v1 on this experiment"; record
+270 builds `covariant-readings-v1` in place of lorentz-v1, so the test
+is under that identity). The worlds are series O's
+(`examples/events/two_stars`, PR #517; the design
+`docs/designs/two_stars/DESIGN.md`): a bar of 201 x 3 x 3, star A
+(`s_px1`) at x = 70 and star B (`s_mx1`) at x = 130, each a mass `2^22`
+with a lamp of one unit per self-creation on both headings, each
+measuring the other's light with `reads: age`, two fixed lab detectors
+at x = 5 and x = 195 reading the outward light; `symmetric` (the stars
+at `+-0.2 c_h` under the law's drive, gravity on), `rest_frame` (A at
+`+0.4 c_h` onto B at rest), `symmetric_pass` (gravity off), 500
+intervals, the windows [50, 150) and [150, 250); the momenta declared
+for the law's drive `v = p / (Q S M + p)`, `Q S M = 2^48.003` (M = `2^22
++ 2^13`). The identity's rules used are 17.6's as amended: M1 (a body's
+self-creations one per `gamma = E' / E'_0` intervals; the drive's rate
+per self-creation Newton's, so the pace per interval `p / E'`), N1
+(the crossing count read per interval and charged per self-creation),
+N2 (the domain `abs(p)_1 <= Q S M`: both momenta inside, at 0.13 and
+0.30 of it), N4 (the lamp's count per self-creation: a moving lamp
+emits per proper time), M3 (`c^2 = [1, 3]`; the rows on a heading at
+`c_h = 32 / 55`). The host script
+[series_o_identity.py](designs/derivations_beam/series_o_identity.py)
+with its output
+[series_o_identity.out](designs/derivations_beam/series_o_identity.out)
+makes every number below from the world files, exact rationals; no run.
+
+**(a) The pace of the declared momenta changes under the identity.**
+`p / E'` against the law's `p / (Q S M + p)`: the symmetric stars at
+0.1284 Links per interval (0.2207 `c_h`, `gamma = 1.02568`) in place of
+0.1164 (0.2 `c_h`); the mover of `rest_frame` at 0.2685 (0.4615 `c_h`,
+`gamma = 1.1296`) in place of 0.2327 (0.4 `c_h`). The pins below are on
+the registered momenta (M2's rule); the momenta that would keep 0.2 and
+0.4 `c_h` under the identity are 33 504 989 557 488 and 71 719 693 608
+158 (`p = Q S M v / sqrt(1 - 3 v^2)`), for a re-declared world.
+
+**(b) The clock question, in the form's own words.** The click's tick
+belongs to the lattice interval: the click is read per interval (N1)
+and its record carries the engine's tick. The reader's own clock is its
+age, which advances once per self-creation, one per `gamma_r` intervals
+(M1). The record's reading tool (DESIGN section 6: `1 + z` from the
+slope of the birth ordinal against the click's tick, the lamp's rate
+one birth per interval) therefore reads in lattice time and assumes the
+declared rate; with `v_s` the source's speed toward the reader (negative
+when receding) and `v_r` the reader's toward the source, a moving lamp's
+units are `(c_h - v_s) gamma_s` Links apart (one per `gamma_s`
+intervals, N4) and the reader meets `(c_h + v_r) / ((c_h - v_s)
+gamma_s)` of them per interval, so
+
+    the tool reads   1 + z = (c_h - v_s) gamma_s / (c_h + v_r),          the lamp's proper emission shows, the reader's proper time does not;
+    per the reader's own clock   1 + z = (c_h - v_s) gamma_s / ((c_h + v_r) gamma_r),   the slope against the reader's AGE in place of the tick,
+
+the second being the identity's Doppler (17.3 (i)), nature's `sqrt((1 -
+beta) / (1 + beta))` up to the grain between `c_h` and `1 / sqrt 3` (0.8
+percent in v; 0.606 against 0.608 below). Both are pinned; the tool as
+written returns the first, and the second needs the reader's age from
+its own record beside the click line.
+
+**(c) The table**, at the declared momenta and the identity's pace,
+constant speeds (the control's; the gravity worlds at their start), the
+law as built beside (DESIGN section 3 at the declared momenta; measured
+in section 7, the second window, in brackets):
+
+| World | the reading | the identity, the tool | the identity, the reader's own clock | nature at the identity's speeds | the law as built (measured) |
+| --- | --- | --- | --- | --- | --- |
+| `symmetric_pass` | A reads B | 0.6548 | 0.6384 | 0.6384 | 0.6667 (0.6672) |
+| | B reads A | 0.6548 | 0.6384 | 0.6384 | 0.6667 (0.6670) |
+| | the left lab reads A (receding) | 1.2520 | 1.2520 | 1.2515 | 1.2000 (1.2046) |
+| | the right lab reads B (receding) | 1.2520 | 1.2520 | 1.2515 | 1.2000 (1.1998) |
+| `rest_frame` | A, the mover, reads B | 0.6842 | 0.6057 | 0.6070 | 0.7143 (0.7090) |
+| | B, at rest, reads A | 0.6083 | 0.6083 | 0.6070 | 0.6000 (0.5929) |
+| | the left lab reads A (receding) | 1.6509 | 1.6509 | 1.6475 | 1.4000 (1.4015) |
+| | the right lab reads B (at rest) | 1.0000 | 1.0000 | 1.0000 | 1.0000 (1.0000) |
+| `symmetric` | as the control at the start | 0.6548 | 0.6384 | 0.6384 | 0.6497, 0.6329 (0.6517) |
+
+In the symmetric frame the readings per the stars' own clocks are `(c_h
+- v) / (c_h + v)` exactly, the law's own form at the identity's speeds:
+the frame hides the identity in the proper readings (DESIGN section 3's
+identity again) and shows it in the tool's by the lamp's `gamma_s`,
+0.655 against 0.638. In the rest frame the two outsiders read alike per
+their own clocks (0.606 and 0.608, nature's 0.607) where the law reads
+0.714 against 0.600: the lattice's frame is no longer visible in the
+mutual readings; the tool still tells them apart (0.684 against 0.608)
+because it reads the mover in lattice time. The labs carry the lamp's
+`gamma` (1.252 and 1.651 against the law's 1.200 and 1.400). Under
+gravity (`symmetric`, `rest_frame`) the identity's push is `-grad(A)`
+(M4), whose effect on an approaching pair is not derived here; the law's
+own gravity moved the mutual reading by 2 percent between the windows
+(0.665 to 0.652, section 7), the size of the correction to expect.
+
+**(d) The first contacts** (no gravity; the first interval t with
+`floor(t v_A) + floor(t v_B) >= 60`, the pace in the mean with the two
+remainders of M1): `symmetric_pass` at 234 +- 2 under the identity (the
+law's 258, measured 258); `rest_frame` at 224 +- 2 without gravity (the
+law's 258 without it, measured 254 with it); `symmetric` at 234 less
+the gravity's lead, which the law's run put at 7 intervals (258 to 251).
+
+**(e) What refutes the identity on this run** (the grain of z 0.003 per
+window; the brackets ten grains): (1) the control's mutual reading by
+the tool outside 0.655 +- 0.01 (0.667 is the law's, four grains away);
+(2) a lab's reading in the control outside 1.252 +- 0.01 (1.200 the
+law's: the lamp's `gamma`, N4); (3) the control's contact outside 234 +-
+2 (258 the law's: the pace `p / E'`, M1); (4) in `rest_frame`, the two
+stars' readings per their own clocks unlike by more than 0.01 (the
+identity 0.606 and 0.608; the law 0.714 and 0.600), or the tool's
+reading of the mover outside 0.684 +- 0.01. What refutes the law as
+built is any of the identity's values read where the law's are pinned
+(DESIGN section 4).
+
+**(f) The G2 session's 0.7794 for the mover, corrected.** It is the
+law's mover reading at the declared pace, 0.7143, times `gamma(0.4 c_h)
+= 1.0911`: the factor on the wrong side. Under the identity the reader's
+self-creations are fewer (one per `gamma_r` intervals), so its count per
+self-creation is larger and `1 + z` per its own clock is the law's
+reading OVER `gamma`: 0.6547 at the law's pace, and at the identity's own
+pace of the declared momentum 0.606 (the tool 0.684). A mover reading
+0.78 would refute the law and the identity both.
+
+**(g) The law's expected readings, restated beside.** DESIGN section 3
+at the declared momenta, no `gamma` anywhere: the mutual `(1 - v_s /
+c_h) / (1 + v_r / c_h)`, 2 / 3 in the symmetric worlds, 0.714 and 0.600
+in `rest_frame`; the labs `1 + v_s / c_h`, 1.200 and 1.400; the control's
+contact 258. Section 7 measured 0.667 / 0.667, 0.709 / 0.593, 1.205 /
+1.200 and 1.402 / 1.000 in the second windows and the contacts 258, 251,
+254. Nothing enters the law; the identity stays a hypothesis, and this
+run is its third pinned world beside J4's muon and `coasting_none`.
+
 ## 19. The masses generically: a bound set's mass as its total content, the nucleon as a chain of three on the bipartite lattice, from the electron to the quarks
 
 **The owner's direction** (2026-09-21, in conversation, translated:
