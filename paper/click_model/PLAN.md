@@ -334,3 +334,18 @@ owner. The mathematician's two-slit answer (records 156, 160): the wheel
 W = 2^12, the exact phase and the fan's width P wait for the owner's word;
 `slits_huygens` ordered on main; the paper's numbers re-pinned once after
 the fraction-free batch.
+
+## The click's square, sent to the Boss for resolution (2026-09-21)
+
+The one-sentence paragraph names the click's fourth operation, the square
+(commit ae450bfd). Three placements sent to the Boss on the owner's word
+("send it all to the Boss for a solution"): (1) keep it and prove it
+forced (Theorem 2's conservation admits only k = 2; a lattice Gleason, for
+the derivation mathematician); (2) the square as the return (Cramer's
+transactional form, the owner's postulate 24, retired on 2026-09-19),
+which makes the click local but is constrained by two experiments: a
+real-time return puts the click at 3 L / c against time-tagged detections
+at L / c, standing returns fail delayed choice; (3) the apparatus's ledger
+as today, the one atemporal step. The owner inclined to reopen 2026-09-19
+and, on the two experiments, sent the whole for resolution. The paper
+keeps (3) with (1) beside it until the answer.
