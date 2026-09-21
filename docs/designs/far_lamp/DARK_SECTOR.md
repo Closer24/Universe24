@@ -65,7 +65,9 @@ as `1 - n . beta`. At a galaxy's edge `beta = v / c` is 3 to 7 parts in
 
 The curves are read to a few km/s out of 100 to 250, that is to a part in
 100 of the shift; the law's readings differ from the classical Doppler by
-parts in `10^6` of it. **No reading through a detector makes a Keplerian
+parts in `10^4` of the shift (the departures `7 x 10^-8` to `5 x 10^-7`
+over the shifts `2.7 x 10^-4` to `7.3 x 10^-4`, that is parts in `10^7`
+of the reading), a hundred times below the curves' own precision. **No reading through a detector makes a Keplerian
 edge look flat**: the shifts are what the law itself would read.
 
 ## 2. What the law's field does at a galaxy's edge
