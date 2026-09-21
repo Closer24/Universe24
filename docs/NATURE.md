@@ -111,6 +111,7 @@ derivation's expectation whose run is not yet registered (rule (e)).
 | 11a | The deceleration parameter q read from the brightness of a far lamp at rest under the growing wall (the second order of the Hubble diagram, d_L = (c / H)(z + (1 - q) z^2 / 2 + ...)) | q_0 = -0.53 +- 0.01, Planck 2018, Aghanim et al. 2020, A&A 641, A6 (row 3's source); the Hubble diagram's shape from the supernovae, Riess et al. 1998, AJ 116, 1009, and Perlmutter et al. 1999, ApJ 517, 565 | a derivation's pin, [the far lamp through a detector](designs/far_lamp/BRIGHTNESS.md) (record 282): the stream read at 1 / (1 + z) of the lamp's rate with the birth content per click (DERIVATIONS_BEAM 6.4), the flux L / (4 pi d^2 (1 + z)) with d = (c_0 / H) ln(1 + z), d_L = (c_0 / H) ln(1 + z) sqrt(1 + z) = (c_0 / H)(z - z^3 / 24 + ...): q_eff = +1; `far_lamp_map.out` section 2 | H = 1 / 400, T_D = 110, S_1 Q = 64 (section 15's stream); `expansion-v1` not built | FAIL: +1 against -0.53, 1.53 apart, on the decelerating side of Einstein-de Sitter (+0.5); pinned; the run not made |
 | 11b | The stretch of a far lamp's stream over 1 + z (the time dilation of the light curve) | the exponent b of the stretch (1 + z)^b: b = 0.97 +- 0.10, Blondin et al. 2008, ApJ 682, 724 (to verify against the source); the expanding form's b = 1 | the same pin: 400 rows released over 400 intervals arrive over 1452 intervals at 300 Links, the factor 3.639 against e^(H d / c_0) = 3.629 (`far_lamp_map.out` section 4 (a)); the stretch equals 1 + z, b = 1 | the same | PASS: b = 1 within the measured 0.97 +- 0.10; pinned; the run not made |
 | 11c | The surface brightness of a resolved source at z over its surface brightness at rest (Tolman's test) | (1 + z)^-4, Tolman 1930; measured as (1 + z)^-n with n between 2.3 and 3.1 in the R and I bands before any correction and consistent with 4 once the sources' own brightening is removed, Lubin and Sandage 2001, AJ 122, 1084 (to verify against the source) | the same pin: the board's Nodes and the fan's lines fixed under the wall (15.5), a ruler of l Nodes at d subtends l / d, the flux (1 + z)^-1: the surface brightness (1 + z)^-1, n = 1 (`far_lamp_map.out` section 4 (b)) | the same | FAIL: n = 1 against 4 (against 2.3 at the least), three powers of 1 + z at the most; at z = 1 the ratio 0.500 against 0.062; pinned; the run not made |
+| 12 | The clock's field at two distances from a crowd at the same push (the same g): the ratio of the two clocks' shifts, the form of the field a clock reads (the potential, 1 / r, or the flux, 1 / r^2) | 2.00 at the distances 6 and 3: the potential Phi = g r at equal g, the form nature's clocks share between two heights: the GPS gravitational term 45.7 us per day equals the potential's G M (1 / R - 1 / r) / c^2 with the one constant fixed by the ground's gradient g h / c^2 (Ashby 2003, Living Rev. Relativity 6, 1; Pound and Rebka 1960, Phys. Rev. Lett. 4, 337: 2.46 x 10^-15 over 22.5 m), and the eccentric Galileo satellites' modulation follows the potential to 2.5 x 10^-5 (Delva et al. 2018, Phys. Rev. Lett. 121, 231101) (to verify against the source); a flux form would read 0.62 of the GPS term and twice the Galileo modulation | series T, `examples/events/clock_word/` (the register's entry [T, the clock's word](EXPERIMENTS.md#t-the-clocks-word-2026-09-21), `readings.json`, main afb533a8; measured once, the replicator's round pending): DETECTOR, the `1 + z` of a lamp's light at x = 110 from a lamp at 3 and at 6 Links from two crowds of the same release F in the windows 200 to 350 and 350 to 500: the presence word (the law's default, BEAM_LAW step 5: the owed rate a_r n / d, a_r the presence, n / d the suspension pair) 1.3000 / 1.3000 at 3 and 1.3000 / 1.3000 at 6, the ratio of the two rates 1.000; the age word (`reads: "age"` on the lamp's entry, note 25) 2.6517 / 2.6514 at 3 and 4.1500 / 4.1506 at 6 (the rate a_tau n / d, a_tau the age moment), the ratio 3.1503 / 1.6516 = 1.907 (the pin 1.909, [the read](designs/clock_age/NOTE.md) section 6: the lattice's dwelling ages 5, 6 and 10, 11) | N = 64; `suspension` [1, 2^16], F = 4915 per source per interval, the owed rate 0.30 to 3.15 (the scale is the suspension pair's, not the word's: nature's G M / (r c^2) is 7 x 10^-10 at the Earth); the word declared per table entry | the presence word FAIL on the form: 1.000 against 2.00 (the clock reads the flux, flat along the beam; at the Earth 0.62 of the GPS term and twice the Galileo modulation); the age word PASS on the form: 1.907 against 2.00, 4.7 percent below by the lattice's grain (the potential's form); the law's default word is the owner's to choose; measured once until the replicator's round |
 
 ## The notes to the rows
 
@@ -433,6 +434,29 @@ one click, with the crowd form's 22 percent as the last reading. Nature's
 Nairz, Arndt and Zeilinger 2002 as the verification of the uncertainty
 relation.
 
+**12, the clock's word.** [The read](designs/clock_age/NOTE.md) of
+2026-09-21 pinned the test before the run (section 6): two crowds of the
+same release at 3 and at 6 Links are the same push (on the lattice only
+the two headings' rows dwell at the lamp's Node, two intervals each, so
+the presence is 4 F at both distances), and only a clock counting the age
+moment reads the distance (22 F and 42 F, the dwelling ages 5, 6 and 10,
+11). Series T ran the four worlds under beam-v1 as declared, no change
+under `src/`, and met every pin: the presence clock reads 1.3000 at both
+distances, the age clock 2.65 and 4.15. Nature's clocks between two heights
+follow the potential: the GPS gravitational term equals the potential's
+form with the constant fixed by the ground's gradient (45.7 / 45.7 =
+1.00), where the flux form gives 0.62 (28.3 us per day) and twice the
+eccentric modulation of the Galileo satellites (`clock_age_map.py`
+section D). The reading's own form is the ratio of the two clocks' fields
+at the same push: the potential 2.00, the presence word 1.000, the age
+word 1.907 (the grain of the dwelling ages; the continuum's 2.000 outside
+the pin's 1.91 +- 0.05, as the read says). The scale is not the word's:
+the world's `suspension` pair sets the owed rate (0.30 to 3.15 here),
+nature's G M / (r c^2) is 7 x 10^-10 at the Earth's surface. The law's default word (BEAM_LAW step 5)
+is the presence, and the age word is a declared option per entry (note
+25); the row carries a verdict per word, and the owner chooses the default.
+Measured once by the G2 session; the replicator's round is pending.
+
 **11a to 11c, the far lamp through a detector.** The pin is a derivation
 ([BRIGHTNESS.md](designs/far_lamp/BRIGHTNESS.md), the owner's order of
 record 280, received as record 282), not a registered run: the rule of
@@ -484,8 +508,8 @@ registered as a pair.
 
 | Verdict | Rows |
 | --- | --- |
-| PASS | 1a (Bell, the record's pair, 1.65 standard errors), 2b (the Mach-Zehnder, 0.9988), 2c (the power 2 in [1.917, 2.012)), 9 (Malus, 128 / 256, 0 and 64 / 256 exact at 45 and 90 degrees), 11b (the stretch of a far lamp's stream, 1 + z, pinned) |
-| FAIL | 1b (the window form, S = 2), 2a (the two-slit visibility 0.966 in the clicks, 0.954 in the weights), 3 (q = -0.108 against -0.53), 4a (the muon, a factor 29.33, pinned), 4b (the moving lamp, 0.052 in z), 5b (the frame, eight to twelve orders, pinned), 7b (the alpha, a factor 6.4), 8a (the decay's step, a factor 88), 8b (the filter, 0 against 1), 8c (the massless neutrino, REFUTED by the oscillations), 11a (the far lamp's brightness, q_eff = +1 against -0.53, pinned), 11c (the surface brightness, one power of 1 + z against four, pinned) |
+| PASS | 12 under the age word (the clock's field 1.907 against the potential's 2.00), 1a (Bell, the record's pair, 1.65 standard errors), 2b (the Mach-Zehnder, 0.9988), 2c (the power 2 in [1.917, 2.012)), 9 (Malus, 128 / 256, 0 and 64 / 256 exact at 45 and 90 degrees), 11b (the stretch of a far lamp's stream, 1 + z, pinned) |
+| FAIL | 12 under the presence word, the law's default (the clock's field flat, 1.000 against 2.00), 1b (the window form, S = 2), 2a (the two-slit visibility 0.966 in the clicks, 0.954 in the weights), 3 (q = -0.108 against -0.53), 4a (the muon, a factor 29.33, pinned), 4b (the moving lamp, 0.052 in z), 5b (the frame, eight to twelve orders, pinned), 7b (the alpha, a factor 6.4), 8a (the decay's step, a factor 88), 8b (the filter, 0 against 1), 8c (the massless neutrino, REFUTED by the oscillations), 11a (the far lamp's brightness, q_eff = +1 against -0.53, pinned), 11c (the surface brightness, one power of 1 + z against four, pinned) |
 | BOUND | 5a (Q >= 2^56 for 10^-17, beyond the word at the register's fan), 7a (the give per nucleon: 4 to 5 units of 3677 about nature's 4.35) |
 | NOT YET | 6 (Bohr's ratio), 10 (the single opening under the one click); the runs of 4a, 5b and 11 |
 
