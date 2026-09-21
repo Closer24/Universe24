@@ -1370,3 +1370,57 @@ Uffink's inequality "of the same form as" the entropy row's identity;
 the count per self-creation per direction on the lattice; the
 abstract's list re-ordered. The navigation gate: main's boss skill
 routes paper-coordinator and not paper-writer; the route row restored.
+
+## Wave 5 (2026-09-21, after the merge of main at 9958214e): Eq. (1) first, the exact square, the second round
+
+The owner's word (record 320, pending on main; relayed by the Boss at
+about 09:55Z, translated): "at the beginning of the paper there should
+be our big formula, and what is derived from it, if it is zero and
+times it is zero, and all these things ... exactly in the same form,
+where everyone always puts it." Applied in the standard place: the
+abstract states the law in words; the introduction ends by announcing
+Eq. (1); the first section after the introduction states it once as
+the first numbered displayed equation, every symbol named at first
+use, the six operations as a numbered list under it, then "The special
+cases that follow at once" (seven, each a rate, wall or content at zero
+or a wall times a factor, one line each with its place: the row as the
+body of zero content; the free family at zero cost; the pair at zero
+turning a rule off; the bilinear push at zero flow and zero content;
+the wall times a factor, the growing wall and the optical wall; the
+phase-less family; the remainder kept at every division), then "What
+follows from Eq. (1), in order" with the sections; the old "The map"
+paragraph becomes "The components of Eq. (1)" without its duplicates.
+The exact-square page the mathematician sent at the owner's order ("it
+is beautiful") entered as a boxed figure in the Lorentz section, with
+its integers re-checked (14 671^2 <= 215 258 304 < 14 672^2; 25 910^2
+<= 671 339 712) and one correction: S is the world's width, not the
+GameBoard's size. The second round of the covariant readings' review
+(record 314, buildable with must-fixes; 17.6's N1 to N6, PR #485 at
+135f80a1) entered the Lorentz section: the domain of the pace, the push
+ceiling and three comparisons, the crossing count's sum, the release
+per lattice interval, the load-time identity a diagnostic, the books'
+balance withdrawn, the J4 shape [201, 1, 1] with the re-derived ticks.
+The appendix says the map now carries the pin column (PR #489). The
+log bibitem: records 312, 314, 316, 317, 318. A bibitem for the vector
+form of the law (LAW.md). Referee round 20 pending.
+
+## Referee round 20 (2026-09-21): wave 5, major revision, applied
+
+Fifteen findings, three major, all applied: the zero-content case is
+form B's (the drive on the momentum's direction, decided and not
+built), stated so, with the built per-axis drive's case beside it and
+the flight's ratio S_1 Q_f / T_d, not "the wall 2 T_d"; the push named
+on the gravity column with the charge column's term, and "no inertia at
+zero content" replaced by the content cancelling in the ratio (the
+equivalence principle); N1's count is gamma times the moving reader's
+count 1 - n.beta per direction, not the rest count. Minor: the free
+family as a declaration at h = 0 with the table's reading; the
+suspension pair n_s / d_s, a and H named at first use; the phase-less
+family as the family without a circle; the remainder kept at every
+division but the click's, the charge column under its accumulator;
+section 9 for the law of information; N5's exception (a world that
+declares the books); E' set at load by the integer root then kept by
+comparisons; the caption's algebra (division by 9, E' the root to the
+remainder); the figure's table narrowed; Q_f, S, M, T_d, S_1, N named
+at first use in the reordered section; "among them" for the roundings
+with the click's rung added; the log bibitem's punctuation.

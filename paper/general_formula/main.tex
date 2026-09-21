@@ -81,6 +81,10 @@ computed before any run; where the rate is a function of what arrives (a
 body reading the messages at its Node) the map is iterated and its
 continuum limit is a differential equation. One comparison is read out,
 the click, and it is the only place a quantity leaves the state.
+Section~\ref{sec:law} states it once as Eq.~(\ref{eq:map}), names its
+symbols, lists the six operations that make its rates and walls, and
+gives its immediate special cases before any derivation; the paper
+refers back to Eq.~(\ref{eq:map}) thereafter.
 
 \paragraph{What is derived and what is put in.} Part~I states the law:
 the state, the map, its two blocks, the read-out, and the inputs (the
@@ -133,6 +137,103 @@ cited at a version \cite{zenodo}.
 
 \section{The law}\label{sec:law}
 
+The law is one map $\mathbf F$ applied at every Node of the GameBoard
+at every interval, per component $s$ of the state, each with its own
+rate $r$ and wall $b$:
+\begin{equation}\label{eq:map}
+s \leftarrow s + r, \qquad e \leftarrow [s \ge b], \qquad s \leftarrow s - e\,b .
+\end{equation}
+Here $s$ is one accumulator of the state, a bounded integer on a circle
+or a line; $r$ its declared rate, a constant of the world for a message
+in transit and a reading of what arrives for a body; $b$ its declared
+wall, a positive integer; $[\,\cdot\,]$ the Iverson bracket, $1$ when
+the comparison holds and $0$ otherwise; and $e$ the event bit: every
+crossing $e = 1$ is an event (a Link crossed, a phase step taken, a
+count completed, a birth, a push), and nothing else happens. The
+remainder $s - b$ stays on the record, so the third step is the
+Euclidean division with its remainder kept. The rates and walls of every
+component are made of six operations and nothing else
+\cite{highlights,lawvector}:
+\begin{enumerate}
+\item the translation of an accumulator by its rate (the flight, the
+phase, the age, every count);
+\item the multiplication by a declared integer matrix or bilinear form
+(a split, a rotation; a coupling, the click's Gram matrix);
+\item the addition in the group ring $\Z[\Z_N]$ (the merge, where
+opposite phases cancel);
+\item the permutation of the joint state (a collision, a gate);
+\item the evaluation of the record at the $N$th root of unity, $\Z[\Z_N]
+\to \Z[\zeta_N]$ ($N$ the phase circle's width), and its norm (the
+click's one quadratic step);
+\item the Euclidean division with the remainder kept, and the
+comparison (the carry that is the event; the threshold).
+\end{enumerate}
+Two places are not linear and there is no third: the carry, a bijection
+$\Z \to \Z/b \times \Z$ that loses nothing, and the click's threshold,
+the one comparison read out per record, whose remainder is not read:
+the one place the law deletes by design.
+
+\paragraph{The special cases that follow at once.} Each is
+Eq.~(\ref{eq:map}) with one rate, wall or content set to zero, or one
+wall multiplied by a factor; each is stated in one line with the place
+that carries it \cite{derivations,lawvector}.
+\begin{enumerate}
+\item A row is a body of zero content: under the drive on the
+momentum's direction (decided, not built; the vector form's 4.3) the
+drive at $Q_f S M = 0$ is the flight itself, the flight's ratio $S_1
+Q_f/T_d$ of Links per interval, hence $c = 1/\sqrt3$ ($Q_f$ the
+flight's grain, $S$ the world's width, $M$ the content, $T_d$ the
+direction's wall, $S_1$ its Manhattan length; Section~\ref{sec:model},
+Proposition~\ref{prop:pace}). Under the drive as built, per axis, the
+case gives one Link per interval on the axis, the causal bound.
+\item A free family is declared at zero cost, $h = 0$, with the table's
+reading in place of absorption: its rows push their reader and take no
+recoil at birth, so for it the third law is a symmetry between two
+readers, not a conservation message by message (statement I5 below;
+the derivation's 3.3).
+\item A pair at zero turns a rule off: a suspension of $0$ owes no
+interval and nothing slows the clock (statement I4; the derivation's
+4.3); a world key absent is no meeting and no optical rule (the
+derivation's 5.4).
+\item The push is bilinear, $\mathrm{push} = M\,\mathbf V$ on the
+gravity column with $\mathbf V$ the label flow of the arriving rows
+(the charge column adds $\rho_A\rho_B M\,\mathbf V$), and the
+acceleration at small momentum is $\mathrm{push}/(Q_f S M)$: at zero
+flow no push; the content cancels in the ratio, the equivalence
+principle (the derivation's 3.3, 3.4).
+\item A wall times a factor changes one thing wherever $T_d$ is a wall:
+the growing wall $2T_d\,a$, with $a$ the wall's scale rising at the
+rate $H$ per interval, is the expansion (the derivation's 15); the
+optical wall $2T_d(d_s + f n_s \mathcal A)$, with $n_s/d_s$ the clock's
+suspension pair (the owed count's rate), $\mathcal A$ the age moment of
+the rows at the Node (Section~\ref{sec:delay}) and $f$ the declared
+factor, is the rows reading the crowd (optical-v1, designed and not
+built \cite{grrows}).
+\item A family declared without a circle is phase-less: it turns never
+and clicks by no phase; a rate of zero steps per Link is the case with
+the circle kept (the family table's declaration \cite{highlights}).
+\item The remainder is kept at every division but the click's, the one
+read-out, so nothing else is lost and the floor of every rate is zero
+(the charge column's remainder under its accumulator): no rounding of
+the weak field, no acceleration below which the law departs from itself
+(Section~\ref{sec:dark}).
+\end{enumerate}
+
+\paragraph{What follows from Eq.~(\ref{eq:map}), in order.} Gauss's law
+exactly and Newton's and Coulomb's inverse square in the shell mean,
+from operation 2 and the release (Section~\ref{sec:newton}; the
+derivation's 3); the receiver's and the source's Doppler, from the
+crossing count (2); Poisson's equation, the retarded wave equation and
+the clock's redshift at first order, from the age moment
+(Section~\ref{sec:delay}; 5); Born's rule as a limit, the lattice
+Gleason and the uncertainty relation, from operation 5
+(Section~\ref{sec:gleason}; 6, 22); Young's spacing and Bohr's condition
+in form, from the fan and the turn (7); the information law and the
+entropy, from the one read-out (6.1, 9, 14); the expansion as a growing
+wall (15); the masses in form (19). Each is a row of
+Table~\ref{tab:consequences} with its status, and each was reached by
+the three steps of the Method.
+
 \paragraph{The state.} The GameBoard is a box of Nodes in $\Z^3$, each
 joined to six neighbours by Links through six Ports; an axis may be
 periodic. Time is the interval $t \in \Z$. The state at an interval is a
@@ -146,15 +247,8 @@ content per unit, and under a record its identity, label, multiplicity
 and birth phase. A body carries its Node, its content $M$, its momentum
 vector $\mathbf p$ and its table of counts, one accumulator per count.
 
-\paragraph{The map.} The law is one map $\mathbf F$ applied at every Node
-at every interval, per component $s$ of the state with its own rate $r$
-and wall $b$ (the ladder's rungs $\rung_k$ of Part~III are walls of this
-kind):
-\begin{equation}\label{eq:map}
-s \leftarrow s + r, \qquad e \leftarrow [s \ge b], \qquad s \leftarrow s - e\,b,
-\end{equation}
-and every wall crossing $e = 1$ is an event: a Link crossed, a phase
-step taken, a count completed, a birth, a push. The components and their
+\paragraph{The components of Eq.~(\ref{eq:map}).} The ladder's rungs
+$\rung_k$ of Part~III are walls of this kind. The components and their
 $(r, b)$ \cite{derivations}: a row's Manhattan count (the rate $2S_1Q_f$,
 the wall $2T_d$, started at $T_d$; $d$ the direction vector, $S_1$ its
 Manhattan length, $T_d = \lfloor\sqrt{3|d|^2Q_f^2}\rfloor$ its
@@ -170,17 +264,12 @@ fraction, capped at $c$, is decided and not built); a body's counts (the
 turn, the owed count, the release, the lamp, the push per column, each a
 rate against a wall); a record's birth phase (the rate $1$ per birth,
 the wall $N$; a wheel of width $W = 4096$ is decided and not built); and
-the click's ladder, one comparison read once. The operations that make
-these components are six \cite{highlights}, or a rounding declared at
-load: the translation of an accumulator by its rate; the multiplication
-by a declared integer matrix (a split, a rotation) and the bilinear form
-(a coupling, the click's Gram matrix); the addition in the group ring
-$\Z[\Z_N]$ (the merge, where opposite phases cancel); the permutation (a
-collision, a gate); the evaluation of the tables at the root of unity;
-and the Euclidean division whose remainder is kept (the carry that is
-the event, and the threshold). Two places are not linear and there is no
-third \cite{highlights}: the carry, a bijection that loses nothing, and
-the click's threshold, the one read-out that deletes.
+the click's ladder, one comparison read once. Beside the six
+operations stand the roundings declared at load, each a constant of the
+law, among them the tables of the circle at $1/256$, the unit vector of
+a direction to the nearest integer vector, $T_d$ by the integer square
+root, the click's rung to the nearest integer and the fan's weights at
+the grain $G$ \cite{lawvector}.
 
 \paragraph{The two blocks.} $\mathbf F$ is linear where its rates are
 constants of the world and feeds back where a rate is a function of what
@@ -2140,7 +2229,24 @@ closed); on a change of content the square gains $Q_f S(2E'_0 + Q_f S\,\mathrm d
 inertia of energy and the mass defect are identities of the record; the
 identity $3hn = Q_f S d$ ties the cost $h$ of a phase step, the turn's
 pair $n/d$, the width and the grain to the pace and is checked at load.
-What the readings do not give: the contraction. The gradient of the age
+The second round of the review (buildable with must-fixes, six
+sentences, all made) declared the identity's domain and cadence: the
+pace $p/E'$ holds while the momentum's Manhattan length is at most $Q_f
+S M$ ($\gamma$ at most $2$ on a heading, refused at load beyond it);
+the push per interval is capped at the grain, so $E'$ is kept by at
+most three comparisons per interval; the crossing count is summed on
+the record between self-creations and charged at the self-creation,
+so the count per self-creation is $\gamma$ times the moving reader's
+count $1 - \mathbf n\cdot\boldsymbol\beta$ per direction; the release advances per lattice interval, so a body's field
+is its own energy per interval (the probe's pin, $1$ at rest and
+$\gamma$ in motion, stands); the load-time identity is a diagnostic,
+not a refusal, except where a world declares the exchange's books; and
+the sentence that the exchange's books balance is
+withdrawn until derived (a row's energy on the heading's $c$ and the
+square on the pair $[1, 3]$ leave a gap no rate closes)
+\cite{derivations,log}. Figure~\ref{fig:square} shows the identity's
+energy form beside Einstein's. What the readings do not give: the
+contraction. The gradient of the age
 moment alone gives, on a co-moving pair, the rest force along the
 motion and $\gamma$ times it across, where Maxwell's are $1 - \beta^2$
 and $1/\gamma$; the magnetic part of the push needs the source's
@@ -2154,6 +2260,39 @@ six operations, the record and its six neighbours), reviewed as
 admissible with must-fixes and amended accordingly \cite{log}; not
 built, not run; every moving body's register moves under them.
 
+\begin{figure}[H]\centering
+\fbox{\begin{minipage}{0.96\textwidth}\small
+\setlength{\tabcolsep}{3pt}
+\begin{center}
+{\large $W_E = E'^2_0 + 3\,\mathbf p\cdot\mathbf p$, \qquad $E'^2 \le W_E < (E' + 1)^2$}
+\end{center}
+\begin{tabular}{p{1.4in}p{4.45in}}
+$W_E$ & the state carried: not the energy but its exact square, a bilinear form of the momentum on the record (operation 2); a push changes $\mathbf p$ and $W_E$ follows exactly, nothing drifts \\
+$E'_0 = Q_f S M$ & the rest energy in whole units: the content $M$, the flight's grain $Q_f$ and the world's width $S$; forced by the Newtonian limit so that the pace at low momentum is Newton's $p/(Q_f S M)$ \\
+$3 = 1/c^2$ & the pair $[1, 3]$ declared once for the identity, from the flight's $c = 1/\sqrt3$ Links per interval \\
+$\mathbf p\cdot\mathbf p$ & the momentum in label units contracted with itself under the identity matrix; no root is ever taken \\
+$E'$ & set at load by the integer root, a declared rounding, then kept by comparisons (operation 6) as the largest integer whose square is at most $W_E$, rising by one while $(E'+1)^2 \le W_E$ and falling by one while $E'^2 > W_E$; $E' = 3E$ \\
+$p/E'$ & the pace in Links per interval, Newton's at low momentum, at most $1/\sqrt3$; $\gamma = E'/E'_0$, a ratio of two whole numbers; the proper time an owed count gating the self-creation \\
+\end{tabular}
+\begin{center}
+\begin{tabular}{lcl}
+Einstein, 1905: $E^2 = E_0^2 + p^2c^2$ & $\longleftrightarrow$ & $E = E'/3$, \quad $E_0 = mc^2 = Q_f S M/3$, \quad $c^2 = 1/3$, \quad $p^2 = \mathbf p\cdot\mathbf p$ \\
+\end{tabular}
+
+\begin{tabular}{lrrrrrr}
+\toprule
+The muon of J4 & $E'_0$ & $p$ & $3\,\mathbf p\cdot\mathbf p$ & $W_E$ & $E'$ & $E'/E'_0$ \\
+\midrule
+at rest & $13\,248$ & $0$ & $0$ & $175\,509\,504$ & $13\,248$ & $1$ \\
+thrown & $13\,248$ & $3\,640$ & $39\,748\,800$ & $215\,258\,304$ & $14\,671$ & $1.1074$ \\
+thrown & $13\,248$ & $12\,856$ & $495\,830\,208$ & $671\,339\,712$ & $25\,910$ & $1.9558$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{minipage}}
+\caption{\label{fig:square}The identity's energy form, covariant-readings-v1, beside Einstein's: whole numbers on one record, a bilinear form and a comparison; no root, no fraction, no floating point. Substituting $E' = 3E$ and $E'_0 = 3E_0$ into the exact square and dividing by $9$ gives $E^2 = E_0^2 + p^2/3 = E_0^2 + p^2c^2$: the continuum form is a corollary of the integer one, $E'$ its root to the remainder. The muon's rows are the registered integers of the derivation's 17.6 (check the middle row: $14\,671^2 = 215\,238\,241 \le W_E$ and $14\,672^2 = 215\,267\,584 > W_E$). Status: a hypothesis, not built; it enters beside the law only when its pinned runs meet their pins.}
+\end{figure}
+
 \paragraph{The decision.} The law stays the six operations and states
 its prediction as declared, an unslowed counter in motion, as a row that
 can fail against the muon in flight (Table~\ref{tab:nature}, rows 4a and
@@ -2166,11 +2305,12 @@ need no operation beyond the six and give $E = mc^2$ and the electric part of th
 the root gives the clock and the contraction by declaration and no
 energy of motion. Both the law and the hypothesis are to be run against
 the same pins, restated on the declared integers and as detector
-readings (the derivation's 18.1 as amended): the muon of a J4 world at
-$p = 3640$ and $12\,856$ label units, its electron product's click on
-the far face at $367$ and $345$ intervals against $391$ at rest, the
-decay's $70.9$ and $125.2$ derived back by the flight table within one
-interval; the coasting star at its declared momentum, $z = 0.369 \pm
+readings (the derivation's 18.1 as amended): the muon of a J4 world of
+shape $[201, 1, 1]$ at $p = 3640$ and $12\,856$ label units, its
+electron product's click on the far face at $367$ and $345$ intervals
+against $391$ at rest (re-derived with the drive's whole steps at
+$368.2$, $345.2$ and $390.6$, within the two-interval tolerance), the
+decay's $70.9$ and $125.2$ derived back by the flight table; the coasting star at its declared momentum, $z = 0.369 \pm
 0.003$ ($0.315$ only on a re-declared momentum); the pair's round trips
 withdrawn from this identity, since the contraction is not its to give;
 the paper to state both readings when they exist. A third route of the same day, a slowing by the crowd a
@@ -2287,7 +2427,8 @@ result of the derivation alone is proved; a pin without its run, or a
 number read after the run, is assumed or open, never measured.
 Tables~\ref{tab:recorda} and~\ref{tab:recordb} are the paper's rows of
 the derivation map (\cite{derivations}, section 21), one row per
-formula.
+formula; since this round the map itself carries the pin before the run
+as a column beside the run, with the same words where none exists.
 
 \begin{table}[H]\centering\scriptsize
 \setlength{\tabcolsep}{2pt}
@@ -2397,8 +2538,9 @@ submission.]
 \bibitem{design} The design of \texttt{amplitude-v1} and its check outputs, \texttt{docs/designs/amplitude-v1/} of the archived code \cite{zenodo}.
 \bibitem{register} The experiments register, \texttt{docs/EXPERIMENTS.md} of the archived code \cite{zenodo}: series L (the click chapter, with the worlds \texttt{examples/events/amplitude/}, their \texttt{expectations.json} and the reading tool \texttt{tools/amplitude\_path.py}), L2b and L7, and, for Table~\ref{tab:consequences}, series C, D, E, G2, H, J, K, N, Q (c measured behind a detector) and R (the quarks, seven worlds); every entry carries its expectation written before the run and its source fingerprint.
 \bibitem{checks} \texttt{paper/general\_formula/checks/s\_of\_n.py}, \texttt{which\_path\_window.py}, \texttt{tables\_norm.py}, \texttt{information\_transfer.py}, \texttt{limits.py} and \texttt{light\_speed.py} with their outputs, \texttt{figures/summary.json} and \texttt{NUMBERS.md}, in the archived code \cite{zenodo}.
-\bibitem{log} The dated log of 2026-09-20, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}, records 96 (coherence within one Node), 101 (the landing), 102 (the checks of this paper), 105 (the review of the pair and the gate: the marginals re-read over all 4096 setting pairs, the arms' order), 144 (the cone, L7), 156 (the two slits: the wheel, the exact phase, the 18 intervals), 160 (the fan's angular weights) and, for the pace and Section~\ref{sec:lorentz}, records 186 and 191 (c as the flight's norm; the one operator for rows and bodies), 213, 224 and 228 (the derivation's sections 12, 13 and 12b), 225 and 226 (the group of 48 and its conservation up to the lattice), 230 (the three routes), 231 (a boost not among the 48), 245 (section 12c closes route C), 249 (the first decision: A and B), 259, 260 and 264 (the covariant readings recommended in place of the root; one paper on the general formula), 261, 262 (the owner's finding on 13.2 (a)), 266, 270 (the three decisions: colour-v1 to be tried, the covariant readings in place of the build of lorentz-v1, the periodic universe open), 271 and 278 (one quantum of mass and the crowd addendum ordered; the addendum delivered), 273 and 276 (the masses on the group; the crowd audit), 272, 274 and 275 (the title and the closure), 277 and 281 (the GameBoard reached only through detectors; only a detector's reading is a measurement), 267, 273 and 275 (the quarks' design delivered, the run ordered and registered as series R; its record is the register's entry), 280 and 282 (the far lamp through a detector), 291, 292 and 294 (the directions: all of Einstein; Heisenberg, the uncertainty relation and Bell; the general formulas through the formula at a Node), 297 (the physics-rule review of the covariant readings, admissible with must-fixes), 298 (the dark sector for the paper), 300 (the further formulas and the six-point standard), 302 and 303 (the rows' rule at a Node reachable in form; the go to its build after review) 305 (the method in plain words: the infinite limit derives the form, the run confirms the number, the pin orders the first before the second) and 306 (the nine must-fixes amended in 17.6).
+\bibitem{log} The dated log of 2026-09-20, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}, records 96 (coherence within one Node), 101 (the landing), 102 (the checks of this paper), 105 (the review of the pair and the gate: the marginals re-read over all 4096 setting pairs, the arms' order), 144 (the cone, L7), 156 (the two slits: the wheel, the exact phase, the 18 intervals), 160 (the fan's angular weights) and, for the pace and Section~\ref{sec:lorentz}, records 186 and 191 (c as the flight's norm; the one operator for rows and bodies), 213, 224 and 228 (the derivation's sections 12, 13 and 12b), 225 and 226 (the group of 48 and its conservation up to the lattice), 230 (the three routes), 231 (a boost not among the 48), 245 (section 12c closes route C), 249 (the first decision: A and B), 259, 260 and 264 (the covariant readings recommended in place of the root; one paper on the general formula), 261, 262 (the owner's finding on 13.2 (a)), 266, 270 (the three decisions: colour-v1 to be tried, the covariant readings in place of the build of lorentz-v1, the periodic universe open), 271 and 278 (one quantum of mass and the crowd addendum ordered; the addendum delivered), 273 and 276 (the masses on the group; the crowd audit), 272, 274 and 275 (the title and the closure), 277 and 281 (the GameBoard reached only through detectors; only a detector's reading is a measurement), 267, 273 and 275 (the quarks' design delivered, the run ordered and registered as series R; its record is the register's entry), 280 and 282 (the far lamp through a detector), 291, 292 and 294 (the directions: all of Einstein; Heisenberg, the uncertainty relation and Bell; the general formulas through the formula at a Node), 297 (the physics-rule review of the covariant readings, admissible with must-fixes), 298 (the dark sector for the paper), 300 (the further formulas and the six-point standard), 302 and 303 (the rows' rule at a Node reachable in form; the go to its build after review) 305 (the method in plain words: the infinite limit derives the form, the run confirms the number, the pin orders the first before the second), 306 (the nine must-fixes amended in 17.6), 312 (the physics-rule review of optical-v1, admissible with eight must-fixes), 314 and 317 (the second round of the covariant readings, buildable with must-fixes; the six fixes delivered), 316 (the derivation record per formula, the owner's direction through this paper) and 318 (optical-v1 amended per its review).
 \bibitem{lightspeed} c in the vector law, \texttt{docs/designs/light\_speed/FORM.md} with the map \texttt{light\_speed\_map.py} and its output, of the archived code \cite{zenodo}.
+\bibitem{lawvector} The law as one vector algebra: every rule in force as a vector operation, with its integer form beside it, \texttt{docs/designs/vector\_form/LAW.md} of the archived code \cite{zenodo}: the six operations, $c$ as the norm of the flight operator, every declared rounding at load as a constant of the law.
 \bibitem{architecture} The architecture and its local integer operation contract, \texttt{docs/ARCHITECTURE.md} of the archived code \cite{zenodo}: generic operations and law ownership (names are data and select no hidden equation; the engine owns no force, energy, momentum or field equation; payloads carry bounded state values and declared identifiers, never formula strings, expression trees or callbacks).
 \bibitem{highlights} The project's decisions and dictionary, \texttt{docs/HIGHLIGHTS.md} of the archived code \cite{zenodo}, section 5.7 (the conversions, the six operations, what is derived and what is input).
 \bibitem{derivations} The derivations of the beam law, \texttt{docs/DERIVATIONS\_BEAM.md} of the archived code \cite{zenodo}, sections 0 (the operator and its two blocks), 2 (Doppler), 3 (Newton and Coulomb), 4 (special relativity as the limit's symmetry), 5 (the delay field), 6 (the information cost and the click's square), 7 (Young and Bohr), 9 (the law of information), 12, 12b and 12c (Lorentz from the delay field; the mover's counter), 13 (the one constant), 14 (entropy), 15 (the growing wall), 16 (the numbers of nature), 17 (the theorem of covariant readings), 18 (the three structural failures under one logic), 19 (the masses generically), 20 (the periodic universe against the measured numbers), 21 (the derivation map, its Einstein map and the six-point standard) and 22 (the uncertainty relation, Bell beside it).
