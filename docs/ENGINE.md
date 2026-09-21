@@ -193,13 +193,18 @@ from age 0; the counts are one table on the record, `Measured.counts`,
 whose one loop `CountTable.advance` runs every row through `by_drive` and
 hands the whole part to the count's consumer, the turn here, the owed
 count at `_suspend`, the release and the lamp at step 5, the drive and
-the turn by momentum at `_move`, the push and the doppler weight at the
-reading), its
+the turn by momentum at `_move`, the push at the reading), its
 release rate, its lamp's rate and window, its owed count) and its content
 (`frame_content`, read once before the law: M_A of the interval's push,
 the same whatever the order in which the families' clicks join `held`
 within the interval; [BEAM_LAW note 27](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
-are read and handed to `nature_beam` with the stores; `nature_beam` returns the readings
+are read; since the crossing rule (2026-09-21; [BEAM_LAW note 42](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+the model owner's record 158) the measured events then STEP by their
+momentum (`_move`, below: a body's departure becomes its arrival as a
+row's does in the walk, so the law reads a body at its destination and
+reads there what it met by the step itself; until then the step was the
+interval's last act and the destination was read one interval later),
+and the stores are handed to `nature_beam`, which returns the readings
 (the count, the flow and the presence per Node, dense arrays read-only, and
 `per_port`, the amount that crossed into each Node through each Port this
 interval, a diagnostic of the walk for Gauss's flux); the frame turns the
@@ -210,8 +215,8 @@ counted (`_suspend`, `count_owed`; the same integers as `by_clock(age, k x n, d)
 family whose table entry reads `age` the age moment `sum amount x age`
 over the same set, `measured.count_component`, `Measured.counted`;
 [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
-note 25), moves the measured events
-by their momentum (`_move`: on an axis whose momentum component is p in
+note 25) and books the interval. The step of a measured event
+by its momentum (`_move`, before the law: on an axis whose momentum component is p in
 label units, one Link per (Q x S x M + p) / p self-creations, M the
 content, S the world's `width`, 1 by default, and Q = 64 the label's
 scale; since 2026-09-20 the step drive, [BEAM_LAW note 17](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
@@ -233,12 +238,23 @@ before; the model owner's D1 of 2026-09-19 and the label along the unit
 vector of the same day,
 [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam) step 5
 and notes 15 and 23; one unit of net flow, the label Q M, gives the speed
-1 / (S + 1); at most one Link per interval, x before y before z, only in
-an interval where nothing is owed; the rule of one axis is
+1 / (S + 1); at most one Link per interval, x before y before z, at a
+self-creation (an interval where nothing was owed at the frame), the
+drive advanced by the momentum after the previous interval's push (the
+step precedes the law: at a constant momentum the same Links at the same
+self-creations, under a push a fire can fall one interval later than it
+did before the crossing rule); the rule of one axis is
 `engine.step_axis`, the owed count `engine.count_owed`, each the one place
 its rule lives and what the readings tools read; `run.json`, `state.json`
-and the `step` line carry `drive` and the state `axis_steps`) and books
-the interval.
+and the `step` line carry `drive` and the state `axis_steps`, and since
+the crossing rule the body's two marks `step_port` and `last_step_port`,
+the Ports of its own two last Links, -1 without one (a refused step, an
+escape, no fire), which the reading reads as the headings e and e' of
+the rule) is a contact when its destination holds another measured
+event, an escape when it leaves through an open face, both before the
+law: a row given at a contact makes its first Link in the interval of
+the give, and the rows a body releases in the interval of a step are
+born at its destination with the phase turned at the Link.
 A measured event on a set of Nodes (`span`, [BEAM_LAW note 30](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 `Measured.span`, `Measured.nodes`, `world.body_nodes`) is one record on
 all of them, and since the four unifications (2026-09-20, (3),
@@ -255,7 +271,12 @@ Nodes would leave; every Node wraps on a periodic axis), and `nature_beam`
 reads its arrivals over the set (one moment table per family over the
 rows at the set, the presence and the age moment its zeroth and age
 moments over the present rows, the record's component and the push's flow
-its moments over the admitted rows) and apportions its releases over it.
+its moments over the admitted rows; since the crossing rule the admitted
+rows are the crossings, [BEAM_LAW note 42](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+the arrivals but for a row that came over the body's own Link behind it,
+the entered Nodes' residents against the step and the rows that crossed
+the trailing face's Links the other way, each read on its own direction)
+and apportions its releases over it.
 The turn by momentum (the world key `action`, h, and the measured-event
 key `phase_by_momentum`; [BEAM_LAW note 30 (ii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 the model owner's decision of 2026-09-20 on Bohr, "put it as parameters
@@ -455,21 +476,12 @@ declares a lamp (`NatureBeamWorld.recorded`); a lamp is refused with N
 below 4 (a record's circle holds the quarter turn of a reflection); a
 world without a lamp reads as it did before the law, byte for byte
 (`tests/test_amplitude_click.py` (d): the gate set's lamp-free worlds at
-their caps against their pinned digests); `doppler` (since 2026-09-20, true or false, false by default: the
-reading's weight at the relative speed `doppler-v1`,
-[BEAM_LAW note 38](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
-under it a free measured event reads the rows that arrived at its Node
-for the push with each direction's label flow weighted by the flux of
-its rows through the body, the rate at which it and the message meet,
-one scalar per (direction, body), (|G Q |v|^2 - T_d sum_a s_a w_a v_a|,
-G Q |v|^2) with the body's speed quantised to the grain G = 2^12
-(`SPEED_GRAIN`, a constant of the law) from its own record, off the
-reader's clock per component, before the columns; refused when it is not
-true or false; the static budget of the columns takes the weight's
-largest factor on the table under it (no other load-time bound: the
-registered G2 star worlds fit as registered); the record carries it and
-the identity `doppler-v1` under `hypotheses` when it is true; absent, and
-for every body at rest or held in place, every world reads as it did, byte for byte); the keys of the hand (since 2026-09-20, `hand-v1`,
+their caps against their pinned digests); `doppler` (the reading's
+weight at the relative speed of 2026-09-20, `doppler-v1`, deleted on
+2026-09-21 with the crossing rule,
+[BEAM_LAW note 42](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+a moving reader's Doppler is the count of the rows it crosses; a world
+that declares the key is refused as an unknown key, MIGRATION); the keys of the hand (since 2026-09-20, `hand-v1`,
 [BEAM_LAW note 39](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
 `hand`, -1 or +1, on a family (every row born of it carries it), on a
 lamp (a circularly polarised lamp of a family without a hand; a chiral

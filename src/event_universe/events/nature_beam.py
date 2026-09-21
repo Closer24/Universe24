@@ -2279,16 +2279,18 @@ def nature_beam(
     # lines. Per measured event the heading e of the Link its body crossed
     # this interval (the zero vector without a step) and e' of the interval
     # before, off its own record (`Measured.step_port`, `last_step_port`,
-    # set by `_move` before the law); per Node whether a body ENTERED it
-    # this interval (the leading face of its moved set: its neighbour along
-    # e is not in the set) and, on the trailing face (an origin Node the
-    # moved set left, of free space), the event whose Link ends there. A
-    # body without a step this interval marks nothing; the step of a body
-    # on a set is the set's, each Node with its own origin.
+    # set by `_move` before the law); the Nodes a body ENTERED this
+    # interval (the leading face of its moved set: its neighbour along e
+    # is not in the set) and, on the trailing face (an origin Node the
+    # moved set left, of free space), the Node with the event whose Link
+    # ends there: a few flat indices per stepping body, looked up per row
+    # (host work per row, not per Node of the GameBoard). A body without
+    # a step this interval marks nothing; the step of a body on a set is
+    # the set's, each Node with its own origin.
     ev_step = np.zeros((events, DIMENSIONS), dtype=np.int64)
     ev_last = np.zeros((events, DIMENSIONS), dtype=np.int64)
-    entered = np.zeros(nodes, dtype=bool)
-    trail_event = np.full(nodes, -1, dtype=np.int64)
+    entered_nodes: list[int] = []
+    trail_pairs: list[tuple[int, int]] = []
     for which, entry in enumerate(entries):
         if entry.last_step_port >= 0:
             ev_last[which] = PORT_HEADINGS[entry.last_step_port]
@@ -2300,12 +2302,16 @@ def nature_beam(
         for member in held:
             ahead = adjacent_node(member, port, shape, world.periodic)
             if ahead is None or ahead not in held:
-                entered[stores[0].flat(member)] = True
+                entered_nodes.append(int(stores[0].flat(member)))
             origin = adjacent_node(member, port ^ 1, shape, world.periodic)
             if origin is not None and origin not in held:
-                flat = stores[0].flat(origin)
+                flat = int(stores[0].flat(origin))
                 if not occupied[flat]:
-                    trail_event[flat] = which
+                    trail_pairs.append((flat, which))
+    entered = np.array(sorted(entered_nodes), dtype=np.int64)
+    trail_pairs.sort()
+    trail_nodes = np.array([flat for flat, _ in trail_pairs], dtype=np.int64)
+    trail_events = np.array([which for _, which in trail_pairs], dtype=np.int64)
 
     def collide(store: NatureBeamStore, backward: bool) -> None:
         """Step 3: at every Node of free space, per (number, content) class,
@@ -2643,9 +2649,13 @@ def nature_beam(
             # gathered with the rows at the set into the group of the
             # event; the reading's bound covers the larger group, at most
             # the rows at one more Node per Node of the set.
-            swap = np.flatnonzero(trail_event[store.node] >= 0)
+            swap = (
+                np.flatnonzero(np.isin(store.node, trail_nodes))
+                if trail_nodes.shape[0]
+                else np.zeros(0, dtype=np.int64)
+            )
             if swap.shape[0]:
-                ev_swap = trail_event[store.node[swap]]
+                ev_swap = trail_events[np.searchsorted(trail_nodes, store.node[swap])]
                 backward = (
                     flight.walk_step(store.arrival[swap], np.maximum(store.age[swap] - 1, 0))
                     == -ev_step[ev_swap]
@@ -2700,7 +2710,7 @@ def nature_beam(
             leapfrog = ~stepped & e_last.any(axis=1) & (s_1 == e_last).all(axis=1) & rested
             against = (unit[direction] * e_rows).sum(axis=1) < 0
             crossing = (arrived & ~with_step & ~leapfrog) | (
-                ~arrived & stepped & against & entered[store.node[at]]
+                ~arrived & stepped & against & np.isin(store.node[at], entered)
             )
             # The direction a row is read on: an arrival's the direction it
             # arrived on (at a body's Node its direction, no collision

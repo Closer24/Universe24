@@ -15,7 +15,7 @@ START = 40
 
 
 def m(tau: int) -> int:
-    return (2 * tau * Q + T) // (2 * T) if tau >= 0 else -10**9
+    return (2 * tau * Q + T) // (2 * T) if tau >= 0 else -(10**9)
 
 
 def run(k: int, sense: int, ticks: int, x0: int = START, births_from: int = -109) -> dict:
@@ -29,7 +29,7 @@ def run(k: int, sense: int, ticks: int, x0: int = START, births_from: int = -109
         stepped = sense if t % k == 0 else 0
         R[t] = R[t - 1] + stepped
         mark[t] = stepped
-        X, O = R[t], R[t - 1]
+        X, origin = R[t], R[t - 1]
         got: list[tuple[int, str]] = []
         for b in births:
             if b > t:
@@ -39,7 +39,7 @@ def run(k: int, sense: int, ticks: int, x0: int = START, births_from: int = -109
             if stepped:
                 e = stepped
                 # C1: the row crossed the body's Link in the opposite sense (the swap).
-                if r0 == X and r1 == O:
+                if r0 == X and r1 == origin:
                     got.append((b, "C1 swap on the Link"))
                     continue
                 # C2: resident at the destination, moving against the step.
@@ -48,7 +48,7 @@ def run(k: int, sense: int, ticks: int, x0: int = START, births_from: int = -109
                     continue
                 # C3 at a step interval: an arrival at X.
                 if r1 == X and r0 != X:
-                    if u * e > 0 and r0 == O:
+                    if u * e > 0 and r0 == origin:
                         continue  # came with the body from its origin: met there
                     got.append((b, "C3 arrival (the body arrived too)"))
                     continue
@@ -76,26 +76,36 @@ def run(k: int, sense: int, ticks: int, x0: int = START, births_from: int = -109
             missed.append(b)
     windows = []
     bounds = [0] + [t for t in range(1, ticks + 1) if t % k == 0]
-    for lo, hi in zip(bounds[:-1], bounds[1:]):
+    for lo, hi in zip(bounds[:-1], bounds[1:], strict=True):
         windows.append(sum(len(reads[t]) for t in range(lo + 1, hi + 1)))
-    return {"R": R, "reads": reads, "twice": twice, "missed": missed, "windows": windows,
-            "total": sum(len(v) for v in reads.values())}
+    return {
+        "R": R,
+        "reads": reads,
+        "twice": twice,
+        "missed": missed,
+        "windows": windows,
+        "total": sum(len(v) for v in reads.values()),
+    }
 
 
 if __name__ == "__main__":
     for k, sense, ticks in ((4, -1, 32), (8, -1, 48), (4, +1, 32), (8, +1, 48)):
         out = run(k, sense, ticks)
         name = f"{'toward' if sense < 0 else 'away'}_k{k}"
-        print(f"== {name}: windows {out['windows']} total {out['total']} / {ticks}; "
-              f"read twice {out['twice']}; missed {out['missed']}")
+        print(
+            f"== {name}: windows {out['windows']} total {out['total']} / {ticks}; "
+            f"read twice {out['twice']}; missed {out['missed']}"
+        )
         for t in range(1, ticks + 1):
-            if t % k == 0 or any(tag != 'C3 arrival' for _, tag in out['reads'][t]):
-                print(f"   tick {t} body {out['R'][t-1]}->{out['R'][t]}: {out['reads'][t]}")
+            if t % k == 0 or any(tag != "C3 arrival" for _, tag in out["reads"][t]):
+                print(f"   tick {t} body {out['R'][t - 1]}->{out['R'][t]}: {out['reads'][t]}")
     # The exact sum over a period: 32 Links crossed = 32 k intervals, the body
     # started far from both ends (a long GameBoard, no face), stream pre-filled.
     for k in (4, 8):
         for sense in (-1, +1):
             ticks = 32 * k
             out = run(k, sense, ticks, x0=400, births_from=-700)
-            print(f"period k={k} sense={sense:+d}: total {out['total']} over {ticks} "
-                  f"(expected {ticks + 55 if sense < 0 else ticks - 55}); twice {len(out['twice'])}; missed {out['missed']}")
+            print(
+                f"period k={k} sense={sense:+d}: total {out['total']} over {ticks} "
+                f"(expected {ticks + 55 if sense < 0 else ticks - 55}); twice {len(out['twice'])}; missed {out['missed']}"
+            )

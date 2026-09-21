@@ -811,3 +811,16 @@ gravity worlds move (record: +0.380 and 0.896, +0.750 and 0.858; doppler:
 on the nine record worlds, 1358 and 10 on the nine `doppler` worlds. The
 verdicts as re-read stand; the register entry has the numbers
 ([migration](../../../docs/MIGRATION.md#the-fraction-free-law-on-2026-09-20-every-count-an-accumulator-on-the-bodys-record)).
+
+## The key `doppler` deleted with the crossing rule (2026-09-21)
+
+The nine worlds of the third run, `doppler/<crowd>_<clock>.json`, and
+`doppler/expectations.json` are deleted with the world key `doppler`
+([BEAM_LAW note 42](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+the model owner's records 151 and 158 of 2026-09-20; [migration](../../../docs/MIGRATION.md#the-crossing-rule-on-2026-09-21-the-step-before-the-law-a-row-and-a-body-met-once-the-key-doppler-and-the-grain-deleted));
+`make_worlds.py --doppler` is gone with them and the readings of the
+third run above stay as history. Under the crossing rule a star reads
+the rows it crosses (1 + v / c toward, 1 - v / c away on an axis, as a
+count) and its step precedes the law, so the nine base worlds and the
+nine `record/` worlds move where a star steps; their run under the rule,
+with its expectations pinned first, is the G2 session's.
