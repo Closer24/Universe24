@@ -80,7 +80,7 @@ cited as orders, not as code.
 
 Section 0 states the law as one operator with its two blocks and places
 every result under its block (the owner's second pass, record 167 as the
-Boss relayed it); sections 9 and 10 answer records 166 and 162. The
+Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events). The
 targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
@@ -2341,3 +2341,282 @@ What refutes 10.2: a front body reading 57 in the tick after its step
 (then the crossing rule reads the rows it was derived not to), or more
 than `57 (k - 1) + 17` per cycle, or a round-trip ratio at k = 4 below
 `gamma` = 1.107.
+
+## 11. The GameBoard as one vector map between events: the event-driven form of the interval, its bit-identity, and its count
+
+**The question** (the owner's, 2026-09-21, translated: "think also whether
+the whole lattice can be moved to something vectorial, so that one need
+not jump one by one; that the lattice itself, or the space, enters the
+formula of the vectors"; the Boss's item, record 190). The answer here:
+the interval stepping of `nature_beam.py` and `engine.py` is bit-identical
+to an event-driven form in which the whole state is one vector **s** on
+the product torus advancing linearly between events, and the lattice
+enters through the flight's closed form; what the event form removes is
+the idle intervals and the idle Nodes, and what it cannot remove is the
+events and their order. The host script beside this document,
+[event_count.py](designs/derivations_beam/event_count.py) with its output
+[event_count.out](designs/derivations_beam/event_count.out), counts the
+events against the intervals and the active Nodes on five registered
+worlds (each run in-process for its own ticks, a reproduction of
+registered integers, no engine change).
+
+### 11.1 The linear block: the lattice as the translation group, the shift operator and the flight's closed form
+
+The GameBoard `Z_X x Z_Y x Z_Z` is its own translation group (a periodic
+axis a circle, an open axis a segment whose ends are the faces). A
+direction **D** of the world's table gives the shift operator **S**_D: the
+translation of a row's Node along its digital line by one Link. Its t-th
+power on a row born at the Node **x**_0 is one lookup and no stepping:
+
+    x(tau) = x_0 + line_D[m_D(tau)],   m_D(tau) = floor((2 tau S_1 Q + T_D) / (2 T_D)),
+
+`line_D` the Bresenham prefix of the direction (the deficit ladder of
+section 1.4, `flight.lines`) and `m_D` the Manhattan count (the
+accumulator started at `T_D`, rate `2 S_1 Q`, wall `2 T_D`), so the k-th
+Link of the row falls at the age
+
+    tau_k = ceil((2 k - 1) T_D / (2 S_1 Q)),   k = 1, 2, ...
+
+the age at which the accumulator crosses its wall the k-th time. The
+phase is a closed form too: `k m_D(tau)` under the integer form of
+`phase_per_link`, `floor(tau n / d)` under the pair form (the sum of
+`by_clock_rows` over the ages telescopes). A record's rows at a click are
+therefore the sum of closed forms: at an end Node the element
+`f = sum over the rows that reach it of amount x x^(phase_0 + floor(tau_row n / d))`,
+`tau_row` the first age at which the row's line reaches the Node (the
+inverse of the lookup), and the click's weight is `f^T G f` (6.7): the
+two-slit click is computed at the click time, no interval stepped, which
+is what record 156's map did for `slits_low` and what reproduced its 64
+registered clicks (7.1, 6.7). In the evaluation at `zeta_N` the
+translations become phases: `ev(x^(floor(tau n / d))) = zeta^(floor(tau n
+/ d))`, the t-th power of the shift a phase factor, the plane wave of
+target 7 with the lattice inside it (the L1 count `m_D`, the Euclidean
+time `T_D`, the line's rounding). That is the sense in which "the lattice
+itself enters the formula of the vectors": through `m_D(tau)` and
+`line_D`, not through a step.
+
+### 11.2 The whole board between two events: one vector on the product torus
+
+**The state vector.** Every count of the law is an accumulator `(s, r, d)`
+on a record and nothing at a Node (the fraction-free law, BEAM_LAW note
+41; section 0). Per row: the Manhattan count (wall `2 T_D`), its three
+axis deficits (the ladder), its age (rate 1, no wall), its phase (rate
+`phase_per_link` per Link or `n / d` per interval, the wall d, the whole
+part read mod N). Per body, the rows of its `CountTable`
+(`measured.py:205-316`, one loop `advance`, one primitive `by_drive`,
+`core/integer.py:77`): the turn (rate `content x n`, wall d), the count
+owed (rate `k x n`, k the presence or the age moment, wall d; then the
+countdown `owed -= 1` per interval, rate 1), the release per family (rate
+`held x n`, wall d), the lamp (its rate `[n, d]`), the push per column
+and axis (rate the column's lifted numerator of the arriving flow, wall
+`Lambda_c^2`), the doppler weight per direction and axis (wall `G Q
+|v_d|^2`), the drive per axis (rate `p_a`, wall `Q S M + |p_a|`, the cap
+one per self-creation, signed). Per record: the birth wheel u (rate 1
+per birth, wall N), the live count (rate 0, the ends subtract). So **s**
+is one integer vector on the product of the components' tori, `prod_i
+Z_(d_i)` on the walled components and `Z` on the ages, and the rate
+vector **r** is a function of **s**.
+
+**Between events.** A rate changes only at a carry, because every rule
+that reads the state reads it at a carry (11.3 (ii)). So between two
+events
+
+    s(t) = s(t_0) + (t - t_0) r,   componentwise, exactly (integers, no rounding),
+
+and the next event is the first carry of any component,
+
+    t* = t_0 + min over i with r_i > 0 of ceil((d_i - s_i) / r_i)
+
+(a component whose rate is 0 or of the wrong sign never carries; the
+signed drive carries at `-D` on the negative side; a component with the
+cap `at_most = 1` carries at every interval once `|r_i| >= d_i`, else by
+the ceiling: its count by t is `min(t, floor((s_0 + t |p|) / D))`, exact
+under the cap). The carries at `t*` are then taken in the interval's
+order, and the rates re-read at the Nodes touched and their six
+neighbours.
+
+**The interval's order**, which the event form keeps as the total order
+on the carries of one `t*` (every rate is per interval, so `t*` is an
+integer and simultaneity is exact): (0) the frame, every body at once
+(the turn's carry, the countdown of a wait; the content, the charges and
+the momentum read once for the interval), before (1) the walk, every row
+at once (its Link by the flight table at its age; the escapes click on
+the faces in Port order), (2) the readings of the arrivals per Node, (3)
+the collision per Node per class in (number, content) order, (4) the
+tables: the measured events by number, then the declared detectors, the
+faces, the border (the clicks, the re-emissions, the gates, the
+rotations; the pushes on the bodies), (5) the self-creations by number
+(the transformation's trigger, the lamp, the release), (6) the border
+`lifetime`, then the merge (the normal form with the cancel); then, in
+`engine.step`, the count owed by number and the drive by number with the
+axes x before y before z, a coincident fire on a later axis lost (its
+wall subtracted, no Link). Two bodies stepping toward one Node in one
+interval: the lower number steps, the higher is refused and reads the
+occupant's table (the contact): the number order is data of the law.
+
+### 11.3 Theorem: the event-driven form is bit-identical to the interval stepping
+
+**Statement.** Let the events be the carries of every component of **s**
+listed in 11.2, taken at their integer times in the interval's order,
+with the rates re-read after each event at the Nodes touched and their
+six neighbours, and with the collision scheduled at every interval at a
+Node whose single units form a moving state (below, (iii)). Then the
+sequence of states at the events, and the state at every interval read
+off the closed form between them, are the same integers as the interval
+stepping's, on every world of `beam-v1`.
+
+**Proof.** (i) Every component's rule is `by_drive` (a body's counts, the
+drive) or a constant-rate count read off the age (a row's Manhattan
+count and deficits, its phase, the age itself, the countdown of a wait):
+between carries `by_drive` applied k times at a constant rate r with no
+carry is one addition, `s + k r` (it adds r and subtracts nothing while
+`|s| < d`), and the closed forms of 11.1 are exactly the same integers
+(section 1.4: the accumulator equals `m(tau)` on seven directions over
+600 intervals). So the state between events is the linear formula, bit
+for bit. (ii) Every rule that reads the state reads it at a carry: the
+tables and the detectors read the arrivals, the rows that crossed a Link
+this interval (`arrival = where(moved, direction, NO_ARRIVAL)`,
+`nature_beam.py:2464`; `read_arrivals`, `439-460`: "(0, 0, 0) for one
+that did not step"); the readings' resident amounts (the presence k, the
+age moment) are rates of the owed count, constant between a Link in and
+a Link out, the age moment linear in t (its accumulator then gains a
+linear rate, a quadratic closed form, its carry the first t where a
+quadratic in integers crosses the wall: the one place the scheduler's
+`t*` is a root, `isqrt`, and not a ceiling of a quotient; exact all the
+same); the clicks act on arrivals; the merge (`4149`) fuses rows equal in
+every identity field, which two rows become only by a Link or a birth;
+the contact reads a body's Link; the border, the age bound and the
+`become` trigger compare the age with a key, a wall on the age (rate 1);
+the push changes the momentum, the drive's rate, at a reading of
+arrivals; a release or a birth creates components at a carry of the
+release's or the lamp's accumulator, and the lamp's discard (note 41
+(iii): a self-creation of turn 0 or outside the window releases nothing
+and loses the count) happens at a carry of the lamp's accumulator and
+nowhere else (`3599-3606`). (iii) The one rule that acts on rows that made
+no Link is the collision: `collide` (`2345-2390`) permutes every single
+unit on a heading or a rest slot at a free Node, arrived this interval or
+not (`eligible` is not filtered by `moved`), and on the table every
+moving state lies on a cycle: 2132 of the 6561 slot states move, and none
+of them reaches a fixed state under repeated application (checked on
+`collision_table()`: 4429 fixed states, 2132 on cycles, 0 moving states
+whose target occupies the same slots). So a moving group at one Node is
+permuted again at every interval it stays co-located. In the event form
+this is a count of rate 1 and wall 1 at that Node while its condition
+holds: after each firing the next event at that Node is scheduled at
+`t + 1`, no interval is skipped there, and the integers are the same; the
+gain is nil at such Nodes (no acceptance world has a collision act, BEAM
+LAW section 4; series C's rings do). (iv) Simultaneous carries: `t*` is
+an integer, so the set of carries at `t*` is exactly the set the stepping
+finds in that interval, and the interval's order of 11.2 is a total order
+on them; the event form applies the same order. The three places where
+the order changes the integers, each kept: the drive's coincident fire
+(the first axis in x, y, z order makes the Link, a later axis's fire is
+lost with its wall subtracted: an event without a Link, scheduled as
+one, `engine.py:585-592`); two bodies toward one Node (the lower number
+steps first, the higher meets the occupant: the contact); the collision's
+class order (number, then content). (v) The rates re-read at every
+interval today although the state did not change: the frame reads
+content, charges and momentum every interval (constants between events);
+the drive advances at every self-creation (linear, (i)); the readings
+are recomputed at every Node with arrivals and are empty without; under
+the meeting key the crowd's flow and its norm are read every interval,
+a function of the resident rows, constant between a Link in and out; the
+lamp's accumulator advances at every self-creation (linear, its carries
+the births or the discards). A re-read of an unchanged state returns the
+same rate, so the linear formula between events is the stepping's own
+sequence of additions: nothing changes. (vi) What would break it: a rule
+that changes the state at an interval with no carry anywhere. There is
+none in the rows (the walk, the phase, the age, the merge, the clicks
+are carries or linear); in the bodies the countdown of a wait and the
+age are linear; the collision is (iii). The theorem holds. QED.
+
+**What the theorem says and does not say.** It says the stepping is a
+scheduler that visits every Node at every interval and finds nothing at
+most of them; the event form visits the carries. It does not say the
+events are fewer than the intervals: a lamp paying at every birth changes
+its own rate at every birth (an event per interval), a body in a crowd
+takes a push at every interval rows arrive (an event per interval), a
+row in flight makes a Link every `T_D / (S_1 Q)` intervals on the
+average (1.7 on a heading, 1.2 on a face diagonal, 1 on a cube diagonal:
+an event per Link). The count below is that ratio on the register.
+
+### 11.4 The count: events against intervals x active Nodes on five registered worlds
+
+Each world run in-process for its own ticks by `event_count.py`; per
+interval the host counts the carries it can read from the state: the
+Links of rows (the flight table's step at their age, read before the
+interval), the Links of bodies, the clicks (every end), the rows born,
+the pushes taken (a body's momentum changed), and the Nodes active
+(holding a row or a body) after the interval; the merges and the
+collisions are not counted (the store reports neither; both happen at a
+Link or a birth, so the events are undercounted by the merges alone).
+The registered integer each run reproduces is named in the last column.
+
+| World (the series) | Nodes; intervals run | Links of rows per interval | clicks per interval | rows born per interval | momentum changes per interval (pushes, recoils) | active Nodes per interval | events (Links + clicks + births) against intervals x active Nodes | against intervals x all Nodes | the registered integer reproduced |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `slits_low` (L2) | 7260; 230 | 9428.6 | 96.2 | 175.9 | 5.8 | 3426.6 | 2 231 147 against 788 126: **2.83** | 1.34 | the 64 clicks: wall 34, screen 15, faces 15 |
+| `bell_16_24` (L3) | 21; 80 | 18.4 | 3.5 | 4.0 | 1.8 | 12.5 | 2068 against 1001: **2.07** | 1.23 | the cells 27, 5, 5, 27 |
+| `cone_links` (L7) | 323; 96 | 34.1 | 1.4 | 2.0 | 3.4 | 36.9 | 3597 against 3544: **1.02** | 0.12 | every record clicks at the age 29 |
+| `deuteron_1_kick` (I2b) | 9261; 2040 of 3000 (the script's seven-minute cap) | 12 076.6 | 1152.9 | 1160.0 | 2.0 | 4563.7 | 29 354 628 against 9 309 919: **3.15** | 1.55 | no Link of either body: the drive fired 113 and 106 times and the 219 fires were booked as the occupants' contacts, every fire refused |
+| `coasting_none` (G2) | 27 270 901; 400 | 5924.3 | 38.7 | 79.6 | 24.9 | 692.7 | 2 418 536 against 277 090: **8.73** | 0.00022 | the 24 thrown stars' `|p(end)| / |p(0)|` 1.0000 to 1.0000 (the README's 1.000) |
+
+Read: on every world the events outnumber the active Node-intervals
+(the rows make a Link every 1.2 to 1.7 intervals and several rows share
+a Node), so an event form gains nothing over the stepping where the
+board is dense: the two slits, the pair, the cone and the deuteron are
+dense (12 to 50 percent of the Nodes active), and there the ratio against
+all the Nodes is above 1 too (0.12 on the cone: the one sparse case of
+the four). It gains where the board is empty: G2's throw has 693 active
+Nodes of 27 million, so the stepping visits 39 000 empty Nodes per event
+(the ratio `2.2 x 10^-4`), and the event form visits the 8.7 events per
+active Node-interval only. No interval of any of the five is idle (an
+event in every interval: the lamps and the releases birth at every
+interval, the rows make Links at every interval), so the event form
+never jumps over an interval on the register; it jumps over Nodes. The
+interactions (clicks, births, momentum changes) are 8 to 74 percent of
+the active Node-intervals: the rest of the events are Links in free
+space, the trivial carries of 11.5.
+
+### 11.5 What cannot be removed: the order of events, and the feedback block's iteration
+
+**Theorem (the order).** Two events at one `t*` commute exactly when the
+Nodes they read and write are disjoint: an event reads and writes the
+Node of its carry and, through the readings, the tables, the contact and
+the merge, that Node's six neighbours and the set it belongs to
+(LOCALITY-1: nothing farther). Events whose neighbourhoods meet do not
+commute in general (a body's step refused by the other's; the collision's
+class order; a merge of a born row with an arriving one), and the law
+fixes their order by the interval's stage, then the number, then the
+axis (11.2). So the order of events is part of the law, not of the
+scheduler: the event form is local (the next event at a Node depends on
+the accumulators there and on the rows in flight toward it), and its
+scheduler is a queue of carry times per Node, the min over components,
+which LOCALITY-1 allows and nothing else does.
+
+**Theorem (the feedback block).** Across events the feedback block has no
+closed form (record 181): the next event time is `t*_(k+1) = phi(s_k)`
+with `phi` the min of ceilings of 11.2, a piecewise-linear function whose
+pieces are chosen by the state, and `s_(k+1) = s_k + (t*_(k+1) - t*_k)
+r(s_k) + (the carries)`; the sequence is a difference equation whose
+exact solution is its iteration, and whose limit is the derivation's
+differential equation (sections 3 to 5). The linear block's closed form
+is the case of no event: a row whose Links meet no table, no body and no
+row of its own class (or only spectators) has every Link a trivial carry
+that changes no rate, so its state at any t is 11.1's formula and its
+first interaction is the first `tau_k` whose destination Node is a set,
+a body or an occupied Node, computable from the formula when those are
+at rest (the two slits, the cone, the pair) and iterated when they move
+(a body in a crowd, a crowd under a body). The event form removes the
+idle intervals and the idle Nodes, never an event and never its place in
+the order; its cost is the events plus the scheduling, against the
+intervals times the active Nodes for the stepping: the table of 11.4.
+
+**Verdict.** **Reached**: the event-driven form is bit-identical to the
+interval stepping on every world of `beam-v1`, with the collision the
+one rule scheduled at every interval of co-location and the age moment
+the one carry whose time is a root; the lattice enters the vectors'
+formula through the flight's closed form `x_0 + line_D[m_D(tau)]` and its
+evaluation at `zeta_N`. **Not removable**: the events and their order
+(LOCALITY-1), and the feedback block's iteration (record 181), the linear
+block's closed form being the case of no event. The count on the
+register is the table of 11.4.
