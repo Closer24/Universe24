@@ -1,0 +1,238 @@
+A. THE SHIPPED DEFINITIONS: THE SETS (the entities) AND THEIR FAMILIES, WITH EVERY DECLARED KEY
+| entity (the set) | family | quantum h | charge | columns | lifetime | phase circle | hand |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `photon` | `light` | 1 | none | none | for ever | yes | none |
+| `electron` | `e` | 0 | -15 | none | for ever | yes | none |
+| `electron_born_by_become` | `beta` | 1 | -7344 | none | for ever | yes | none |
+| `proton` | `p` | 0 | [1, 1] | none | for ever | no | none |
+| `neutron` | `n` | 0 | none | none | for ever | no | none |
+| `strong_family` | `nuclear` | 0 | none | {"strong": {"value": 10000, "sign": -1}} | 3 | no | none |
+| `bond_family` | `bond` | 1 | none | none | 3 | no | none |
+| `up_quark` | `u` | 0 | 1224 | none | for ever | no | none |
+| `glue_family` | `glue` | 0 | none | {"strong": {"value": 10000, "sign": -1}} | 3 | no | none |
+| `neutrino` | `nu` | 0 | none | none | for ever | yes | none |
+| `antineutrino` | `nubar` | 0 | none | none | for ever | yes | 1 |
+| `w_boson` | `w` | 1 | -7344 | none | 1 | no | none |
+| `wall_material` | `wall` | 1 | none | none | for ever | yes | none |
+| `screen_material` | `screen` | 1 | none | none | for ever | yes | none |
+| `counter_material` | `counter` | 1 | none | none | for ever | yes | none |
+| `apparatus_material` | `apparatus` | 1 | none | none | for ever | yes | none |
+| `carrier_material` | `carrier` | 1 | none | none | for ever | yes | none |
+| `detector_material` | `detector` | 1 | none | none | for ever | yes | none |
+| `detector_material_d` | `d` | 1 | none | none | for ever | no | none |
+| `mass_m` | `m` | 0 | 0 | none | for ever | no | none |
+| `mass` | `mass` | 0 | 0 | none | for ever | no | none |
+| `neutron_star_material` | `neutron` | 0 | 0 | none | for ever | no | none |
+| `probe_material` | `probe` | 0 | 0 | none | for ever | no | none |
+| `source_material` | `s` | 0 | none | none | for ever | no | none |
+| `test_charge` | `q` | 0 | [0, 1] | none | for ever | yes | none |
+| `choosers` | `sa` | 0 | none | none | for ever | yes | none |
+| `choosers` | `sb` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `px1` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `px2` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `px3` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `px4` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `mx1` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `mx2` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `mx3` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `mx4` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `py1` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `py2` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `py3` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `py4` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `my1` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `my2` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `my3` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `my4` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `pz1` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `pz2` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `pz3` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `pz4` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `mz1` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `mz2` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `mz3` | 0 | none | none | for ever | yes | none |
+| `thrown_sources` | `mz4` | 0 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_px1` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_mx1` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_py1` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_my1` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_pz1` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_mz1` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_px2` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_mx2` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_py2` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_my2` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_pz2` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_mz2` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_px3` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_mx3` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_py3` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_my3` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_pz3` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_mz3` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_px4` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_mx4` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_py4` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_my4` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_pz4` | 1 | none | none | for ever | yes | none |
+| `hubble_stars` | `s_mz4` | 1 | none | none | for ever | yes | none |
+75 families in 28 entities
+
+B. THE FAMILIES THE WORLDS DECLARE INLINE (a declaration that differs from the shipped one, or a name the definitions lack), with the worlds
+| family | quantum | charge | columns | lifetime | phase | phase_per_link | hand | worlds |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `beta` | 1 | -7344 | null | None | None | null | -1 | 1: hand/wu |
+| `carrier` (as shipped) | 1 | null | null | None | None | null | None | 4: detector/grouped_12_nodes, detector/periodic_z_node, detector/shared_100_nodes... |
+| `d` | 0 | -272 | null | None | False | null | None | 8: gallery/proton_electron, quarks/q1_proton_line, quarks/q2_neutron_line... |
+| `d` (as shipped) | 1 | null | null | None | False | null | None | 2: hand/nu_hand, hand/wu |
+| `detector` (as shipped) | 1 | null | null | None | None | null | None | 16: hubble/coasting_age, hubble/coasting_scalar, hubble/pushing_age... |
+| `e` | 0 | -7344 | null | None | False | null | None | 1: gallery/proton_electron |
+| `glue` (as shipped) | 0 | null | {"strong": {"value": 10000, "sign": -1}} | 3 | False | null | None | 7: gallery/proton_electron, quarks/q1_proton_line, quarks/q2_neutron_line... |
+| `glue` | 0 | null | {"strong": {"value": [10000, 606], "sign": -1}} | 3 | False | null | None | 1: quarks/q7_proton_dressed |
+| `light` | 1 | null | null | None | None | 3 | None | 1: amplitude/cone_links |
+| `light` | 1 | null | null | None | None | [16, 1] | None | 1: amplitude/mz_unequal_f16 |
+| `light` | 1 | null | null | None | None | [3, 1] | None | 1: amplitude/cone_intervals |
+| `light` | 1 | null | null | None | None | [8, 1] | None | 1: amplitude/mz_unequal_f8 |
+| `light` | 1 | null | null | None | None | [8591334592, 1073741824] | None | 3: amplitude/slits_huygens, amplitude/slits_low, amplitude/slits_one |
+| `light` (as shipped) | 1 | null | null | None | None | null | None | 2: masses/cavity_equal, masses/cavity_unequal |
+| `m` | 0 | 0 | null | None | None | null | None | 15: coupling/1a_m1, coupling/1a_m16, coupling/1a_m4... |
+| `mass` (as shipped) | 0 | 0 | null | None | False | null | None | 12: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `mass` | 0 | null | null | None | False | null | None | 4: hubble/coasting_age, hubble/coasting_scalar, hubble/pushing_age... |
+| `n` (as shipped) | 0 | null | null | None | False | null | None | 5: hand/w_hand, hand/w_two_sides, hand/wu... |
+| `nu` | 0 | null | null | None | None | null | -1 | 1: hand/nu_hand |
+| `nubar` (as shipped) | 0 | null | null | None | None | null | 1 | 1: hand/wu |
+| `nuclear` | 0 | null | {"strong": {"value": 7000, "sign": -1}} | 3 | False | null | None | 1: nucleus/pp_1_weak |
+| `p` | 0 | 4 | null | None | False | null | None | 21: atoms/helium_r12, binding/alpha_square_bond, binding/deuteron_bond... |
+| `p` | 0 | [-2, 1] | null | None | None | null | None | 2: coupling/7_mm, coupling/7_pm |
+| `p` | 0 | [0, 1] | null | None | None | null | None | 1: coupling/7_00 |
+| `p` | 0 | [1, 2] | null | None | None | null | None | 1: coupling/7_pp_m4 |
+| `p` | 0 | [2, 1] | null | None | None | null | None | 2: coupling/7_mp, coupling/7_pp |
+| `q` | 0 | [-1, 2] | null | None | None | null | None | 2: coupling/7_mm, coupling/7_mp |
+| `q` (as shipped) | 0 | [0, 1] | null | None | None | null | None | 1: coupling/7_00 |
+| `q` | 0 | [1, 2] | null | None | None | null | None | 3: coupling/7_pm, coupling/7_pp, coupling/7_pp_m4 |
+| `s_mx1` (as shipped) | 1 | null | null | None | None | null | None | 12: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_mx2` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_mx3` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_mx4` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_my1` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_my2` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_my3` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_my4` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_mz1` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_mz2` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_mz3` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_mz4` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_px1` (as shipped) | 1 | null | null | None | None | null | None | 12: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_px2` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_px3` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_px4` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_py1` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_py2` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_py3` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_py4` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_pz1` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_pz2` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_pz3` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `s_pz4` (as shipped) | 1 | null | null | None | None | null | None | 9: record/coasting_age, record/coasting_none, record/coasting_scalar... |
+| `u` (as shipped) | 0 | 1224 | null | None | False | null | None | 8: gallery/proton_electron, quarks/q1_proton_line, quarks/q2_neutron_line... |
+| `w` | 1 | -7344 | null | 1 | False | null | -1 | 1: hand/w_hand |
+| `w` (as shipped) | 1 | -7344 | null | 1 | False | null | None | 1: hand/w_two_sides |
+
+C. THE CONTENT EVERY FAMILY CARRIES ON THE WORLDS' MEASURED EVENTS (the masses as declared; `held` beside)
+| family | the amounts declared (series) |
+| --- | --- |
+| `apparatus` | 1 (catalog, gallery) |
+| `counter` | 1 (amplitude, bell, binding) |
+| `d` | 1 (hand, weak); 9 (gallery, quarks) |
+| `detector` | 1 (hubble, hubble_stars, record, two_stars) |
+| `e` | 1 (gallery); 1836 (atoms, bohr) |
+| `light` | 1 (amplitude); 290 (c_measured); 8192 (masses); 20480 (masses); 32768 (masses); 1048576 (amplitude); 1048578 (bell); 8388608 (binding); 15728642 (amplitude, bell); 33554432 (catalog, gallery); 1073741824 (amplitude); 8591334592 (buildup, events, heisenberg, lensing); 1125899906842624 (amplitude) |
+| `m` | 1 (coupling, orbit, redshift); 4 (coupling); 16 (coupling); 1024 (orbit); 4096 (lensing, redshift); 8192 (lensing); 1048576 (coupling); 4194304 (coupling); 16777216 (coupling, events) |
+| `mass` | 1 (hubble); 1024 (catalog); 4096 (catalog, hubble); 65536 (catalog) |
+| `mx1` | 64 (hubble); 1024 (hubble) |
+| `mx2` | 64 (hubble); 1024 (hubble) |
+| `mx3` | 64 (hubble); 1024 (hubble) |
+| `mx4` | 64 (hubble); 1024 (hubble) |
+| `my1` | 64 (hubble); 1024 (hubble) |
+| `my2` | 64 (hubble); 1024 (hubble) |
+| `my3` | 64 (hubble); 1024 (hubble) |
+| `my4` | 64 (hubble); 1024 (hubble) |
+| `mz1` | 64 (hubble); 1024 (hubble) |
+| `mz2` | 64 (hubble); 1024 (hubble) |
+| `mz3` | 64 (hubble); 1024 (hubble) |
+| `mz4` | 64 (hubble); 1024 (hubble) |
+| `n` | 1837 (atoms, binding); 1839 (hand, nucleus, weak) |
+| `neutron` | 67108864 (catalog) |
+| `nu` | 4096 (hand, weak) |
+| `p` | 1 (coupling); 4 (coupling); 1834 (atoms, binding); 1836 (atoms, bohr, hand, nucleus, weak) |
+| `probe` | 1 (catalog); 1024 (orbit) |
+| `px1` | 64 (hubble); 1024 (hubble) |
+| `px2` | 64 (hubble); 1024 (hubble) |
+| `px3` | 64 (hubble); 1024 (hubble) |
+| `px4` | 64 (hubble); 1024 (hubble) |
+| `py1` | 64 (hubble); 1024 (hubble) |
+| `py2` | 64 (hubble); 1024 (hubble) |
+| `py3` | 64 (hubble); 1024 (hubble) |
+| `py4` | 64 (hubble); 1024 (hubble) |
+| `pz1` | 64 (hubble); 1024 (hubble) |
+| `pz2` | 64 (hubble); 1024 (hubble) |
+| `pz3` | 64 (hubble); 1024 (hubble) |
+| `pz4` | 64 (hubble); 1024 (hubble) |
+| `q` | 16777216 (coupling) |
+| `s` | 4096 (weak) |
+| `s_mx1` | 4096 (hubble_stars, record); 8192 (two_stars) |
+| `s_mx2` | 4096 (hubble_stars, record) |
+| `s_mx3` | 4096 (hubble_stars, record) |
+| `s_mx4` | 4096 (hubble_stars, record) |
+| `s_my1` | 4096 (hubble_stars, record) |
+| `s_my2` | 4096 (hubble_stars, record) |
+| `s_my3` | 4096 (hubble_stars, record) |
+| `s_my4` | 4096 (hubble_stars, record) |
+| `s_mz1` | 4096 (hubble_stars, record) |
+| `s_mz2` | 4096 (hubble_stars, record) |
+| `s_mz3` | 4096 (hubble_stars, record) |
+| `s_mz4` | 4096 (hubble_stars, record) |
+| `s_px1` | 4096 (hubble_stars, record); 8192 (two_stars) |
+| `s_px2` | 4096 (hubble_stars, record) |
+| `s_px3` | 4096 (hubble_stars, record) |
+| `s_px4` | 4096 (hubble_stars, record) |
+| `s_py1` | 4096 (hubble_stars, record) |
+| `s_py2` | 4096 (hubble_stars, record) |
+| `s_py3` | 4096 (hubble_stars, record) |
+| `s_py4` | 4096 (hubble_stars, record) |
+| `s_pz1` | 4096 (hubble_stars, record) |
+| `s_pz2` | 4096 (hubble_stars, record) |
+| `s_pz3` | 4096 (hubble_stars, record) |
+| `s_pz4` | 4096 (hubble_stars, record) |
+| `sa` | 3 (bell); 15728640 (bell); 201326592 (amplitude, bell) |
+| `sb` | 5 (bell); 15728640 (bell); 335544320 (amplitude, bell) |
+| `screen` | 1 (catalog) |
+| `u` | 4 (gallery, quarks) |
+| `wall` | 1 (amplitude, buildup, events, heisenberg, lensing) |
+| held | `nuclear` 1 (atoms, binding, nucleus, weak); `bond` 2 (atoms, binding); `glue` 1 (gallery, quarks); `glue` 606 (quarks); `glue` 607 (quarks); `mass` 4194304 (hubble_stars, record, two_stars); `mass` 8388608 (hubble_stars, record) |
+
+D. THE GROUP EACH DECLARED QUANTITY LIVES ON, PER SHIPPED FAMILY OF THE PHYSICS (the apparatus materials and the star sources listed once)
+- `light`: the quantum h = 1 units per unit of amount (E = h f, the click's content in whole turns); no charge line; a phase on the circle Z_N; its rows' directions on the fan F_P under the 48 signed axis permutations
+- `e`: the content M on the scale (free, an input); the charge per unit of content rho = -15 (Z); a phase on the circle Z_N; its rows' directions on the fan F_P under the 48 signed axis permutations
+- `beta`: the quantum h = 1 units per unit of amount (E = h f, the click's content in whole turns); the whole charge per unit of amount -7344 (Z; a paid family's rays push by their label); a phase on the circle Z_N; its rows' directions on the fan F_P under the 48 signed axis permutations
+- `p`: the content M on the scale (free, an input); the charge per unit of content rho = 1/1, a winding on the circle (Z); no phase circle (turns never, clicks by no phase); its rows' directions on the fan F_P under the 48 signed axis permutations
+- `n`: the content M on the scale (free, an input); no charge line; no phase circle (turns never, clicks by no phase); its rows' directions on the fan F_P under the 48 signed axis permutations
+- `nuclear`: the content M on the scale (free, an input); no charge line; the column `strong` sigma = 10000 with the sign -1 (a signed scalar per unit); no phase circle (turns never, clicks by no phase); the lifetime L = 3 Links (Z); its rows' directions on the fan F_P under the 48 signed axis permutations
+- `bond`: the quantum h = 1 units per unit of amount (E = h f, the click's content in whole turns); no charge line; no phase circle (turns never, clicks by no phase); the lifetime L = 3 Links (Z); its rows' directions on the fan F_P under the 48 signed axis permutations
+- `u`: the content M on the scale (free, an input); the charge per unit of content rho = 1224 (Z); no phase circle (turns never, clicks by no phase); its rows' directions on the fan F_P under the 48 signed axis permutations
+- `glue`: the content M on the scale (free, an input); no charge line; the column `strong` sigma = 10000 with the sign -1 (a signed scalar per unit); no phase circle (turns never, clicks by no phase); the lifetime L = 3 Links (Z); its rows' directions on the fan F_P under the 48 signed axis permutations
+- `nu`: the content M on the scale (free, an input); no charge line; a phase on the circle Z_N; its rows' directions on the fan F_P under the 48 signed axis permutations
+- `nubar`: the content M on the scale (free, an input); no charge line; a phase on the circle Z_N; the hand +1 (Z_2, the pseudoscalar of the 48); its rows' directions on the fan F_P under the 48 signed axis permutations
+- `w`: the quantum h = 1 units per unit of amount (E = h f, the click's content in whole turns); the whole charge per unit of amount -7344 (Z; a paid family's rays push by their label); no phase circle (turns never, clicks by no phase); the lifetime L = 1 Links (Z); its rows' directions on the fan F_P under the 48 signed axis permutations
+- `m`: the content M on the scale (free, an input); the charge per unit of content rho = 0 (Z); no phase circle (turns never, clicks by no phase); its rows' directions on the fan F_P under the 48 signed axis permutations
+- `mass`: the content M on the scale (free, an input); the charge per unit of content rho = 0 (Z); no phase circle (turns never, clicks by no phase); its rows' directions on the fan F_P under the 48 signed axis permutations
+- `probe`: the content M on the scale (free, an input); the charge per unit of content rho = 0 (Z); no phase circle (turns never, clicks by no phase); its rows' directions on the fan F_P under the 48 signed axis permutations
+- `q`: the content M on the scale (free, an input); the charge per unit of content rho = 0/1, a winding on the circle (Z); a phase on the circle Z_N; its rows' directions on the fan F_P under the 48 signed axis permutations
+- `d`: the quantum h = 1 units per unit of amount (E = h f, the click's content in whole turns); no charge line; no phase circle (turns never, clicks by no phase); its rows' directions on the fan F_P under the 48 signed axis permutations
+- the apparatus materials (`wall`, `screen`, `counter`, `apparatus`, `carrier`, `detector`): paid, h = 1, no charge, a phase circle, the click's readers
+- the sources (`s`, `sa`, `sb`, the 24 `thrown_sources`, the 24 `hubble_stars`): free or paid sources of the register's throws, no charge
+
+E. THE STATE VECTOR PER KIND (what a row and a body carry, ENGINE.md and LAW.md section 1)
+- a row: its Node (Z^3 on the box), its direction (a primitive vector of the fan F_P), its age (Z), its phase (Z_N), its number (the family), its amount, its content per unit; under a record its identity, its label (bits, one per arm), its multiplicity and its birth phase u (Z_W); its momentum label amount x u_d at the scale Q (a vector of label units)
+- a body (a measured event): its Node, its content M, its momentum vector p (label units), its charge per column (rho x M), its held content per family, its table of counts (one accumulator per count: the drive, the clock, the wheel, the action), its set of Nodes (`span`)
+- the six verbs on these: the translation, the bilinear form, the group-ring addition on Z[Z_N], the permutation (the 48), the evaluation (the tables), the Euclidean division with the remainder kept
