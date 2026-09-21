@@ -1685,3 +1685,212 @@ messages is a symmetry and not a balance (I5), so a bound pair whose
 clocks lock can drift under any rule at the waiting body; the balance
 per message needs a recoil at the free release, the owner's question of
 record 132's section 7.
+
+## 10. Lorentz from a detector: the bond as a light clock, on paper
+
+The owner (record 162, as the Boss relayed it): "Lorentz is derived from
+a detector; a moving body is a detector moving over the Nodes". Target 4
+is then operational, not a symmetry of the lattice: Lorentz emerges if
+and only if a body's clock and its length are made of rays at c. A light
+clock between two Nodes of the body slows by `gamma`; a length held by
+exchanged rays contracts; a moving detector measuring c by round trips
+reads c. Today the body's clock is a counter of intervals that does not
+slow with motion (section 4.3). Binding-v1's bond (note 40) and the
+strong exchange of series I are already a light clock: two bodies at one
+Link exchanging rows every interval. This section derives that clock's
+period at rest and in motion, on paper, from the flight table and the
+crossing rule, against `gamma`; then the counter against the exchange,
+and whether the rule "the body's clock is its own exchange" is one of
+the six operations. Every integer below is derived; the ones the register
+holds are named; the run is pinned for the experimenter after the
+crossing rule lands.
+
+### 10.1 The exchange at rest: the registered deuteron
+
+The geometry of `deuteron_1` and `deuteron_1_kick` (`examples/events/
+nucleus/make_worlds.py:158-161`; the README's base): the proton p at (10,
+10, 10) and the neutron n at (11, 10, 10) in an open 21^3 cube, each
+releasing one row of `nuclear` per direction of the 290-direction fan at
+every self-creation (`release` [1, 1], `suspension` 0), the strong column
+G = 10000 with the lifetime 3; the kick world adds opposite momenta
+`-10^12` and `+10^12` on x. The exchange is the rows whose first Link is
+on the axis toward the partner: 57 of the 290 directions (the README's
+`U(1) = 3008`, the sum of their unit labels' x components; the arithmetic
+check of this section reproduces 57 and 3008). A row released at the
+self-creation of tick t makes its first Link at age 1 (`m(1) = 1` on
+every direction of the fan) and is read by the partner at tick t + 1: the
+transit is 1 interval, the round trip 2, and the partner reads 57 rows
+per interval from tick 2 on. Registered: the push on p `310 967 280 640`
+per interval toward n "from tick 2" (I1's expectation, met), 0 steps in
+3000 intervals, the label 0 after each hand-over. So at rest the bond
+exchanges at the rate 57 per interval each way, the round trip 2
+intervals, `c_first = 1` Link per interval on the first Link (the
+flight's first step is at age 1; the mean pace `32 / 55` shows only from
+the second Link: ages 1, 3, 5, 7, 8, ...).
+
+### 10.2 The exchange in motion: the pair thrown at v = 1 / k along the bond
+
+Let both nucleons carry the same momentum on +x (not the register's
+opposite kicks) so that each steps one Link per k self-creations, k = 4
+and 8 (`abs(p) = Q S M / (k - 1)`; with `S = 2^28` and `M = 1837`, `Q S M
+= 3.156 x 10^13`: `p = 1.052 x 10^13` at k = 4 and `4.51 x 10^12` at k =
+8, above the register's kick of `10^12`). Two bodies at one Link cannot
+step into each other: the rear body's step onto the front body's Node is
+refused and hands its component over (`engine.py:661-766`), so a bound
+pair moves front first, rear after. Take the front body B stepping at
+tick 0 of each cycle and the rear body A one tick later (the case the
+contact leaves when their drives fire one tick apart; a coincident fire
+hands A's whole `p_x` to B and breaks the lock, a leapfrog the run will
+show). The rows, per cycle of k ticks, with A at Node 0 and B at Node 1
+at the cycle's start, B at 2 from the end of tick 0, A at 1 from the end
+of tick 1, every release at the body's Node before its step:
+
+- **A's rows toward B** (the forward exchange). Released at tick 0 at
+  Node 0: at tick 1 at Node 1, B already at 2: missed; of the 57, the 17
+  whose second Link is also +x (`U(2) = 1048` of 3008 in label units; 4 of
+  them make it at age 2, 13 at age 3) reach Node 2 and are read at ticks 2
+  and 3; the other 40 turn off the axis on their second step and never
+  reach B (they end on the border at age 3). Released at tick 1 at Node 0:
+  at tick 2 at Node 1, where A now is: they are A's own number, taken
+  HOME and re-created at A's self-creation of tick 3 at Node 1 with age 0,
+  so they reach B at tick 4: transit 3, none lost. Released at ticks 2 to
+  k - 1 at Node 1: read at Node 2 one tick later, transit 1.
+- **B's rows toward A** (the backward exchange). Released at tick 0 at
+  Node 1: read at Node 0 at tick 1 (A still there); released at tick 1 and
+  later at Node 2: read at Node 1 one tick later. Transit 1 always, none
+  lost. The crossing rule adds nothing here (no row crosses A's Link the
+  other way in A's step tick, none rests at its destination moving
+  against it).
+
+Per cycle B receives `17 + 57 + 57 (k - 2) = 57 (k - 1) + 17` of the
+`57 k` rows sent to it and A receives `57 k`; the mean forward transit
+over the rows received is `(4 x 2 + 13 x 3 + 57 x 3 + 57 (k - 2)) / (57
+(k - 1) + 17)`; the backward transit is 1. The round trip and its ratio
+to the rest value 2, against `gamma = 1 / sqrt(1 - v^2 / c^2)` with c the
+exchange's mean pace `32 / 55` on the axis (the isotropic `1 / sqrt 3`
+gives the same to three places):
+
+| k | v | `v / c` | forward rows received per cycle | mean forward transit | round trip | ratio to rest | `gamma` | `gamma^2` (the ether light clock, no contraction) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 4 | 1/4 | 0.4297 | 188 of 228 | 1.766 | 2.766 | **1.383** | 1.107 | 1.226 |
+| 8 | 1/8 | 0.2148 | 416 of 456 | 1.346 | 2.346 | **1.173** | 1.024 | 1.048 |
+
+**The bond's length.** One Link for `k - 1` ticks of the cycle and two
+Links for one tick (between B's step and A's): the mean `1 + 1 / k`, a
+dilation by v, where nature contracts by `1 / gamma` (0.903 and 0.977).
+
+**The transverse bond** (the pair side by side on y, both stepping +x in
+the same tick; no contact, the steps coincide): the rows released in the
+step tick miss the partner (it has moved one Link on x) except the 11 of
+the 47 first-step-on-y directions whose second step is +x (10 at age 2, 1
+at age 3); the rows of the other `k - 1` ticks transit in 1. Received per
+way per cycle `47 (k - 1) + 11` of `47 k`; the mean transit 1.079 at k = 4
+and 1.035 at k = 8; the rate of messages received `0.809` and `0.904` of
+the rest rate. Against `gamma` (1.107, 1.024): the transverse period's
+ratio 1.079 is near `gamma` at k = 4 by coincidence (the lost rows, not
+a dilation) and 1.035 against 1.024 at k = 8.
+
+**Verdict.** The bond clock slows in motion, and by more than `gamma`:
+**different law**, `1 + 2 / k` at the leading order on the axis (the
+whole-interval steps stretch the bond to two Links once per cycle, and
+the second Link of a row takes 2 intervals where the first took 1),
+against `gamma^2` for an ether light clock without contraction and
+`gamma` for nature's; and the exchange is lossy in motion (40 of 228 rows
+per cycle at k = 4 on the axis, 36 of 188 transverse), which no light
+clock is. The bond's length dilates by `1 + 1 / k` and does not contract.
+A moving detector made of this bond would not read c by round trips: it
+would read a longer round trip forward than back (1.766 against 1 at k =
+4), the lattice's frame visible one-way and two-way alike, because the
+exchange's rows are on the flight table and the bodies step on whole
+Links. The register's number this rests on is the rest exchange (the
+push from tick 2, 0 steps, the label 0 after each hand-over); the moving
+integers above are pinned and unchecked.
+
+### 10.3 The counter against the exchange
+
+The body's clock counts every interval in which nothing is owed
+(`engine.py:444-451`): in the cycles above both bodies tick k times per
+cycle at every v, while the bond exchanges `57 (k - 1) + 17` rows forward
+and `57 k` back per cycle, with the round trip `2 + 4 / k` to the leading
+order. A clock made of the exchange would run at the rest rate over the
+round trip's ratio, `1 / 1.383` at k = 4 and `1 / 1.173` at k = 8, and the
+counter runs at 1: the two clocks of one body disagree in motion, and
+neither agrees with `gamma`. This is the operational content of section
+4.3: the law's clock is the counter, and the register's stars (G2's
+`coasting_none`, `z = v / c` per star within the grain) read the
+counter's rate, not the exchange's.
+
+### 10.4 The rule that would make the body's clock its own exchange
+
+**As a torus operation.** "A body self-creates when it has received its
+bond's round trip" is a count on the record with the rate the arrivals
+of the bond family: `acc_bond += (bond rows received this interval)`; a
+self-creation when `acc_bond >= d`, `acc_bond -= d`, with d the rows of
+one exchange at rest (57 per interval per partner on the register's fan,
+or the declared bond's rows). That is F's feedback block (section 0), one
+row of the counts table with the rate a reading (like the owed count's
+presence), local (the body's own arrivals), no register at a Node: **one
+of the six operations**. Under it the body's clock slows exactly by the
+exchange's loss and delay: to `0.809` of the rest rate transverse and to
+the received fraction `(57 (k - 1) + 17) / (57 k)` forward-side at k = 4
+(0.825), the two bodies of one pair disagreeing (A receives every row, B
+does not): a clock that slows with motion, anisotropically, and not by
+`gamma`.
+
+**What Lorentz needs beyond it, and whether it is an operation.** The
+light clock's `gamma` on the axis needs the bond to contract by `1 /
+gamma = sqrt(1 - v^2 / c^2)` so that the longitudinal round trip equals
+the transverse one; on the lattice the bond is whole Links held by the
+contact rule (one Link, or two for a tick), and no operation of section 1
+produces a square root at run time but the meeting's `isqrt` (section
+1.3 item 10, a rounding whose remainder no record owns) and the load-time
+`u_d`, `T_d`. A contraction of a one-Link bond is not representable; a
+bond of L Links contracted to `floor(L / gamma)` would need `gamma` from
+the body's own momentum, `1 / sqrt(1 - (p / (Q S M + p))^2 / c^2)`, a
+root of a rational function of the state: **not one of the six
+operations**, and not derivable from them (the six are translations,
+bilinear forms, permutations, group-ring sums, the evaluation and the
+division; none takes a root). So: the clock as the exchange is a torus
+operation and gives a slowing that is not `gamma`; the contraction that
+would make it `gamma` is not, and the honest statement is that Lorentz's
+`gamma` is not reached by a rule of the six, whether the clock is the
+counter or the exchange. What the exchange clock does reach is the
+first-order fact that a moving bond's messages take longer forward than
+back and are partly lost, a preferred frame read by the bond itself.
+
+### 10.5 The run, pinned before it (for the experimenter, after the crossing rule lands)
+
+The geometry of `deuteron_1_kick` with both kicks on +x at the momenta
+above (k = 4 and k = 8), the crossing rule built, 200 intervals; the
+readings from `events.jsonl`'s `read` lines per body per tick (the
+`nuclear` rows) and the `step` and `contact` lines:
+
+1. At rest (the register's `deuteron_1`): 57 `nuclear` rows read per body
+   per tick from tick 2; the push `310 967 280 640` per interval; 0 steps
+   (registered).
+2. In motion, if the pair moves front-then-rear one tick apart: per cycle
+   of k ticks the rear body reads 57 per tick; the front body reads 0, 4,
+   70, 114 over the ticks after its step at k = 4 (0, 4, 70, 114, 57, 57,
+   57, 57 at k = 8), `188` per cycle at k = 4 and `416` at k = 8 of the
+   `57 k` sent; 40 rows per cycle of the rear body's fan end on the border
+   `lifetime` at age 3 without a reader; the `read` line's push on the
+   front body in the tick after its step 0, the strong part of the next
+   tick `240 x (10^8 + 1837)` in label units (the 4 age-2 rows' x
+   components, 240 of 3008).
+3. If the drives fire in the same tick, the rear body's refused step hands
+   its whole `p_x` to the front body (a `contact` line with `component`
+   `10^13`-sized), the front body steps at its next fire with `2 p`, and
+   the pair leapfrogs: the cycle above does not form, and the reading is
+   the contact lines' sequence; pinned as the alternative, not as the
+   expectation.
+4. Transverse (the pair at (10, 10, 10) and (10, 11, 10), both kicked +x):
+   47 rows per tick per body at rest from tick 2; in motion `47 (k - 1) +
+   11` per cycle per body, the 36 lost rows per cycle on the border.
+5. The bodies' clocks: k self-creations per cycle at every v (the counter),
+   registered as the law's rule; a slowing of either body's clock in the
+   run refutes section 4.3 and this section.
+
+What refutes 10.2: a front body reading 57 in the tick after its step
+(then the crossing rule reads the rows it was derived not to), or more
+than `57 (k - 1) + 17` per cycle, or a round-trip ratio at k = 4 below
+`gamma` = 1.107.
