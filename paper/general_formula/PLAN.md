@@ -935,3 +935,70 @@ the front's arrival as the flight table's first age; u_d, S, theta, e,
 epsilon_0, m_p named, Huxley 2003 cited; which body owns which
 coefficient; the accumulator on the branch labelled; the delay-field
 pointer to the table's row; "in form, the ratio exact at r = 12".
+
+## Referee round 12 (2026-09-21): the delay field, the lattice Gleason and the click's two questions, major revision, applied
+
+Three pieces read together: the delay-field section (the derivation's
+section 5, series E and K), the lattice Gleason (6.5) and the paragraph
+on the owner's two hypotheses. Eighteen findings, all applied. Symbols:
+the clock pair n_c / d_c, the dwell tau_L (delta was the map's error
+term), the presence Pi (P is the phase wall), the age moment in
+calligraphic A (A was the click's constant), C_a and C_Sigma for the
+redshift fit's two constants, Delta for the meeting key's offset and
+calligraphic K for the general flux (K is the coupling); the redshift
+fit's second list and its C = 33.12 quoted from the register, not from
+memory. The meeting key named with the registered centroids; G2's two
+readings named with their world. Gleason's title without "unique"
+(uniqueness is up to the odd constants c_j, which are not reached);
+hypothesis (b) stated as a hypothesis on the reading, not as a seventh
+operation; the two-slit bands attributed to record 156's host map,
+"consistent with c_j = 0 for j not 1, no bound stated, pinned by no run".
+The table: the click-weight row, the redshift row ("named, not pinned"),
+Einstein's row with "no cosmological term", the intro sentence. Part I's
+read-out paragraph: where the Born rule enters, "forced in form, free in
+its constants"; the "what is not claimed" Born bullet in the same words.
+The two hypotheses moved out of the history section into a new paragraph
+"Two questions of the click, open", placed before it: the detector
+question with nothing claimed, the click as a choice among futures with
+the record's injectivity "given the apparatus's record (the bijection
+theorem)" and the entropy of section 14 named as "the only computed
+quantity near that reading". Two bibitems: Gleason 1957, Jordan, von
+Neumann and Wigner 1935. Not applied: nothing; the round closed with no
+residual.
+
+## The owner's two hypotheses on the click (2026-09-21, about 05:50Z to 06:00Z), what enters and what stays out
+
+The owner (translated): "one hypothesis, entirely a hypothesis: what a
+detector is and why one cannot touch the GameBoard; whether the Sun
+clicks at all, or clicks arise only on Earth"; then, correcting himself:
+"not only a living being makes a click; I would say the clicks are
+somehow connected to life, that clicks arise from life; a hypothesis to
+be checked, and I am not going into it now". And: "beyond the click all
+possibilities exist, the click chooses one, and the number of paths to
+the future changes; put it in the paper as a hypothesis and nothing
+else; the paper is formulas, how we reached them, and the proofs, as is
+customary". In the manuscript (the hypotheses section of the click
+chapter, under referee round 12): the law's two kinds of reading and the
+open question which physical systems are detectors, with nothing
+claimed; and the click as a choice among futures as a hypothesis, the
+computed quantity behind it named (the derivation's section 14). Not in
+the manuscript, by the owner's word: "clicks arise from life" (no
+formula, no test in the model; kept here as his hypothesis for the
+record, to be put to the Boss).
+
+## Sources announced for later citation (2026-09-21, from the architect and the derivation mathematician; not yet on main)
+
+BEAM_LAW note 47, the crowd audit (record 276; the architect's branch at
+5bd58241): one table of the 23 rules in force with what each reads of its
+own record and of the crowd, 13 reading the crowd and 10 only their own
+record (the walk, the escape, the click's choice, the re-emission, the
+rotation, the turn, the birth, the release, the border lifetime, the
+decay's timing), with the hypotheses under which the crowd would enter
+(decay-by-crowd-v1, covariant-readings-v1, the meeting): the source for
+one sentence of Part I's "two blocks" (which rules read the crowd and
+which only their record), cited by title until the note numbers are
+reconciled with the click branch's. BEAM_LAW notes 43 and 44 (the bound
+set's mass; the parity of the bipartite lattice): the sources for the
+masses row with 19.1 and 19.3. Sections 18 to 20 with 16.2 (f), (g),
+18.2's addendum and 19.5: the rows drafted in the scratchpad enter when
+they are on main and merged into the branch.
