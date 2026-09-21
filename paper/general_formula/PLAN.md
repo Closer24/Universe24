@@ -2487,3 +2487,62 @@ runs at 512 and 4096); the founding formulas one by one are not kept as
 a section (their closed rows are in the table and the Gleason section);
 the glossary is not kept (the notation table stands). 40 pages.
 
+## Wave 30 (2026-09-21): the Boss's twelve items on the cut, from the chief physicist's and the mathematician's certainty lists (record 457's order)
+
+The criterion of the cut (record 454, on the owner's "keep what is
+certain"): a passage stays only as (a) a rule of the law as the
+repository states it, (b) a derivation closed in DERIVATIONS_BEAM with
+its row cited, (c) a registered run with its fingerprint and detector
+readings, or (d) a declared hypothesis or a stated non-claim. Done on
+the cut: (1) no conditional derivation remains (the flow rows to one
+NOT REACHED line; Compton and E = mc^2 one line each under
+covariant-readings-v1; the built identity stays as (d) with series S's
+readings and its one-axis domain, an orbit refused); (2) form B out
+everywhere (P9 states the drive as built on main, per axis; the
+table's legend, the Newton paragraph, the click model's parenthetical,
+the Lorentz domain); (3) optical-v1 one line, designed and reviewed,
+not built; the bending keeps the registered 0.000 against nature's
+1.75 arcseconds, cited to the derivation's 24.3 row 14 (the cut's
+"the register's row 14" was the long form's table row: a citation
+slip, fixed); (4) the table of consequences: every pinned or
+unchecked row is one non-claim line without a number (Bohr's
+condition, Kepler, Compton, Newton's geodesics, Bradley, Schroedinger,
+the single-opening spread, the periodic universe), the HYPOTHESIS rows
+one line with the identity's name and status (source-velocity-v1,
+expansion-v1, optical-v1, covariant-readings-v1, massive-rows-v1),
+Heisenberg's arrays and Dirac's spin added as NOT REACHED; (5) the
+register's pinned rows (4a's law reading, 5b, 6, 10, 11a to 11c)
+carry "not run" in the reading column and no number, every FAIL a
+FAIL, the BOUND rows and 4b's 0.2636 unchanged; (6) Planck and de
+Broglie cite 24.1 row 25 (one constant h = h_q N = h_A); Bohr's
+energies, Heisenberg's arrays, Schroedinger and Dirac one non-claim
+line in "What is not claimed"; Born, Young (L2b) and Tsirelson stay
+with their fingerprints; (7) the uncertainty relation: the circle as
+position and its transform as momentum a stated identification, the
+finite-Fourier bounds mathematics on Z_N, the Weyl relation an
+identity, the single opening's 0.886 out (a pin, not run); the row
+HYPOTHESIS; (8) Lorentz: the theorem restricted to the plane-wave
+stream (a hypothesis for arbitrary row data), the decision in one
+sentence (record 270), the law's three rows stated (4a a pin, not
+run; 4b registered; the pace on main), the seventh-operation narrative
+and the round-trip pins out, the contraction one line; (9) no general
+push constant is stated (C = 1 only as series C's reading in the long
+form; the cut states none); (10) no trace of the dark sector's
+"missing content"; (11) "What is new" item 4 kept, restated to what
+Remark rem:nodispersion proves (the periodicity of a local linear
+scheme's dispersion relation), the coordinator's call for the
+mathematician; (12) the optical-metric limit sentence and the Young
+"partial third" out. The families' tables and the glossary stay on
+the tree, cited by path (the families' audit; TERMINOLOGY through the
+notation table). The Boss's "J4's registered numbers" for the law's
+FAIL rows: the register's J4 worlds are series S's, run under the key;
+under the law the muon in flight is a pin (row 4a), so the row carries
+no number; the dispersion the Boss wrote, v = p / (m + p / c), is form
+B's, and the law on main reads |p_a| / (N_l N_w M + |p_a|) per axis.
+The Boss's "Young's fringes (series L2, 36.5 / 60 / 83.5)": those
+integers are the slits_matter pin under massive-rows-v1, not L2's
+readings; L2b's registered fringes stay (the bright pixels 19 to 51,
+the dark 0 to 3). Main b6ab1bb3 merged (records 367 to 453 on the
+tree: the owner's clock word cited as record 394, series G2's
+replication FAIL as record 408). The PDF: 38 pages.
+
