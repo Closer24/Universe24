@@ -2470,4 +2470,20 @@ glossary; the repository bibitems shortened to one line and the uncited
 ones removed. Compiled: 40 pages at 11pt, no overflow, no undefined
 reference; every number kept is one the long form carries with its
 source in NUMBERS.md. The full text stays in git at c15c1174.
+The Boss's procedure for the same word (record 454): the referee retired
+in skills/paper-coordinator/SKILL.md in one paragraph; the cut by one
+criterion, (a) a rule of the law as the repository states it, (b) a
+derivation closed in DERIVATIONS_BEAM with its row cited, (c) a
+registered run with its fingerprint and detector readings, (d) a
+declared hypothesis or a stated non-claim; three further cuts under it:
+the Lorentz decision paragraph (a decision under review), the causal
+anatomy section (an interpretation), the literature essay to one
+paragraph; the uncited bibitems removed (72 remain). Where the cut
+departs from the Boss's first reading: the confrontation register is
+kept in full (its FAIL rows are registered detector readings, criterion
+(c), and the owner's "certain" includes the failures); the one
+prediction is kept (a derivation, 24.4, with registered and replicated
+runs at 512 and 4096); the founding formulas one by one are not kept as
+a section (their closed rows are in the table and the Gleason section);
+the glossary is not kept (the notation table stands). 40 pages.
 
