@@ -86,7 +86,7 @@ cited as orders, not as code.
 
 Section 0 states the law as one operator with its two blocks and places
 every result under its block (the owner's second pass, record 167 as the
-Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass); section 17 answers the owner's direction of 2026-09-21 (the law above Newton and Einstein: the theorem of covariant readings); section 18 answers records 264 and 265 (the three structural failures of the register under one logic); section 19 answers the owner's direction of 2026-09-21 on the masses (a bound set's mass as its total content, the nucleon as a chain of three on the bipartite lattice). The
+Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass); section 17 answers the owner's direction of 2026-09-21 (the law above Newton and Einstein: the theorem of covariant readings); section 18 answers records 264 and 265 (the three structural failures of the register under one logic); section 19 answers the owner's direction of 2026-09-21 on the masses (a bound set's mass as its total content, the nucleon as a chain of three on the bipartite lattice); section 20 answers record 270 (the periodic universe against the measured numbers). The
 targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
@@ -4163,7 +4163,14 @@ a multiple of e), so the theorem is conditional on that fact and
 exact under it. The floors on the register and the quark design: the
 electron `[-15, 1]` and the proton `[1, 1]` one unit, the up quark
 `[2, 3]` and the down quark `[-1, 3]` (records 249, 251) three units
-each, a family declared at `[-5, 69]` sixty-nine. Confronted:
+each, a family declared at `[-5, 69]` sixty-nine. The quarks design
+(QUARKS.md, PR #454) puts the up quark on 4 units and the down on 9
+with the elementary charge declared as `e = 7344` label units, so that
+every quark charge is a whole number and rho a pair with denominator 1:
+the design fixes the charge per unit by choosing e, and its counts are
+multiples of the floors (the floors 1 and 3 are the smallest counts
+under nature's whole charge in units of e / 3, the design's counts the
+nearest whole numbers to PDG's masses), not the floors. Confronted:
 
 - **(a) with the electron's bound.** The theorem gives the electron's
   floor as 1 unit and 16.2 (a) gives its count as at least 4526 by the
@@ -4597,7 +4604,8 @@ not the bodies. **For the owner and the Boss**: the four covariant
 readings are named as one hypothesis, `covariant-readings-v1`, four
 rules that pass the three tests on paper and change every moving
 body's register; not built here; the seventh verb is not needed for
-any of them.
+any of them. The owner decided (record 270) that covariant-readings-v1
+is built beside the law in place of lorentz-v1.
 
 ## 18. The three structural failures of the register under one logic
 
@@ -4645,7 +4653,8 @@ and the cube's 48 carry no boost (record 231: a boost mixes a space
 step with a time step and is not among the signed permutations of the
 axes), so the symmetry is the LIMIT's, the wave equation's, and c enters
 the bodies through the drive `v = p c^2 / E` and nowhere else. **Closed
-on paper**, as `covariant-readings-v1`, not built; the run decides.
+on paper**, as `covariant-readings-v1`, which the owner decided (record
+270) is built beside the law in place of lorentz-v1; the run decides.
 
 ### 18.2 The weak forms (rows 8a, 8b): what the click can and cannot give
 
@@ -4898,6 +4907,18 @@ one of them a number:
   charges at the chain's ends against nature's spread (the content in
   flight carries the charge along the rows, which a chain of point
   bodies does not read). **Reached in sign, short in magnitude by 3.**
+- **The quarks design's three shapes** (QUARKS.md, "the shapes": the
+  range L = 3 admits bonds up to three Links, so beside the line there
+  are the corner, bonds 1, 1 and `sqrt 2`, and the equilateral triangle
+  of the face-diagonal sublattice, mutual `sqrt 2`, whose stabiliser in
+  the 48 is `S_3`). The charge radius decides between them (the script
+  `periodic_images.py`, (C)): the line gives `+4 / 3` and `-2 / 3 L^2`
+  for the proton and the neutron with the odd quark at the centre, the
+  corner `+4 / 9` and `-2 / 9` (the same signs, the same ratio -1 / 2),
+  the triangle 0 and 0 (a charged equilateral triangle has no second
+  moment about its charge centroid). Nature's negative `r_n^2` therefore
+  excludes the triangle and admits the line and the corner, both with
+  the odd quark at the centre: a pin for the design.
 - **The colour of the law is the parity.** The lattice's two classes of
   Nodes are the only "colour" a bond on the six Ports knows: a contact
   is always between the two classes, and a set of three has two of one
@@ -4935,3 +4956,97 @@ within the grain; `m_n - m_p` equal to the held difference; the escape
 click's content the released binding; and, if the electric family is
 paid, the proton heavier than the strong reading by about one part in
 a thousand of its mass (1.0 MeV of 938).
+
+## 20. The periodic universe against the measured numbers
+
+**The owner's decision** (record 270, translated: "a periodic universe
+is a possibility but it needs a proof, or leave it open: the
+mathematician, according to the numbers that are measured"; the Boss's
+order). Two boards, what each predicts for a detector at rest under the
+growing wall of section 15, the measured numbers that decide, the
+verdict in the owner's terms, and expansion-v1's rule stated once so
+that it can be chosen. The host script
+[periodic_images.py](designs/derivations_beam/periodic_images.py) with
+its output
+[periodic_images.out](designs/derivations_beam/periodic_images.out)
+makes the numbers; no run.
+
+### 20.1 The two boards under the growing wall, and what each predicts
+
+The periodic GameBoard is the torus `Z_X x Z_Y x Z_Z` with no faces (a
+row leaving one side enters the other; records 218, 234); the open
+board is the segment whose ends are faces (an open face is a detector,
+an escape a click, the content lost outward). Both under 15.1 (b): the
+flight's wall `2 T_D a` with `a = 1 + H t`, no Node inserted, the
+coordinates fixed, c in Links per interval unchanged and `c_0 / a` in
+the original Nodes per interval. For a detector at rest:
+
+| the reading | the periodic board | the open board |
+| --- | --- | --- |
+| the Hubble diagram, z against the flight time | `1 + z = a(t_r) / a(t_e)`, Milne's `z = tau / (T - tau)`, `q = 0` (15.2, 15.4): the wall is local, the board's topology does not enter inside the first winding | the same, exactly |
+| the far stars' images | a lamp's rows return along every winding: images of one lamp at the winding distances `n L` (L the box's side) along the axes and the diagonals, `z_n = e^(H n L / c_0) - 1` under the tick wall, their count within the causal reach `(c_0 / H) ln(1 + H t)` (the script's (A), section 15's world, L = 301, H = 1 / 400: no image before t = 1000, 18 at t = 3000, 80 at 10 000, 304 at 100 000; `z_1 = 2.68`, `z_2 = 12.6`, `z_3 = 48.9`; the reach saturates at 1807 Links by `10^6` intervals, 3402 by `10^9`, so the count is finite for ever) | none: a row that reaches a face is a click, nothing returns |
+| the largest angular scales | no mode longer than the box: the power of the oldest rows (the crowd's first shell) is missing beyond L, and the sky of a detector repeats: the same rows arrive from two directions at once when the reach exceeds `L / 2` (the matched circles of a torus) | no cut, no repeat |
+| the isotropy of the count | isotropic from every Node (15.4 (i)); the images anisotropic, aligned with the axes and the diagonals of the box (the fan's grain, 15.5) | isotropic from every Node; no images |
+| Seeliger's accumulation | fills without bound in a static board (14.3, 15.5: linear in t); cured by the wall, the presence steady from about 1000 intervals (0.000765 of `q dwell` per source at L = 301) | never fills: the rows leave through the faces; cured trivially, at the price of the content lost |
+
+So the two boards differ in nothing a detector reads inside the first
+winding, and in three things beyond it: the images, the cut at the
+largest scales with the repeated sky, and the anisotropy of the images.
+
+### 20.2 The measured numbers that decide
+
+Per number: its value with one source, what the law's boards say, and
+whether the register can compare it (NATURE.md's rule (b): a
+dimensionless comparison the register makes; a size in metres needs
+the dictionary).
+
+| the number | measured | the boards | the comparison |
+| --- | --- | --- | --- |
+| the deceleration `q_0` | -0.53 (from `Omega_m` = 0.315(7), `Omega_Lambda` = 0.685, Planck 2018, Aghanim et al., A&A 641, A6, 2020) | Milne's 0 on BOTH boards (15.4): the wall gives it, the topology does not | dimensionless, the register's (16.4: not reached; nature's -0.53 outside the coasting bracket); decides nothing between the boards |
+| the matched circles | none found: the fundamental domain of a flat torus larger than the last-scattering surface, `R_i > 0.97 chi_rec` for the inscribed radius (Planck 2015 results XVIII, A&A 594, A18, 2016; Planck 2013 XXVI: 0.92), so the box's side `L > 1.94 chi_rec = 27.2` Gpc, 0.97 of the surface's diameter (Cornish, Spergel, Starkman and Komatsu 2004, Phys. Rev. Lett. 92, 201302: beyond 24 Gpc) | a periodic board whose box is smaller than the reach shows the repeated sky; the bound says the box is at least 0.97 of the diameter of the oldest shell, so the first image lies at or beyond the last-scattering surface | a ratio, `L / (2 chi_rec)`, dimensionless: the register compares its box to its reach the same way; the measured value is a bound, `> 0.97` |
+| the ghost images | none in the catalogues (cosmic crystallography, Lehoucq, Lachieze-Rey and Luminet 1996, A&A 313, 339; Roukema 1996): no pair of images of one source at a winding distance within the catalogues' depth of a few Gpc | the periodic board predicts them at `n L` with `z_n` above; their absence bounds L below the catalogue depth only | a count, dimensionless; weaker than the circles |
+| the largest-scale anomalies | the low quadrupole and the lack of large-angle correlation, at 2 to 3 standard deviations (Planck 2018 results VII, isotropy and statistics, A&A 641, A7, 2020) | compatible with a box of about one diameter (the missing power beyond L) and with chance; not a proof | a ratio (the correlation statistic), dimensionless; the register has no oldest shell registered yet |
+
+### 20.3 The verdict, in the owner's terms
+
+**Open, neither proven nor refuted.** Every reading inside the first
+winding is the same on both boards, and the only measurements that
+reach the whole sky put the period beyond 0.97 of the last-scattering
+surface's diameter: a periodic universe smaller than the surface is
+REFUTED (no matched circles), one larger than the surface is
+indistinguishable from an open one by any measurement to date, because
+no signal has yet crossed a winding. **The one number that decides**:
+the box's side in last-scattering diameters, `L / (2 chi_rec)`. Measured
+`> 0.97`; a matched pair of circles found would fix it below 1 and
+prove the torus; nothing can push it above 1 by observation, since the
+image that would show it lies beyond the oldest light. What the law's
+registers would have to show for the periodic board to be more than a
+convention: a lamp's second image at the winding distance with the
+redshift `e^(H L / c_0) - 1` (2.68 in section 15's world), the repeated
+sky when the reach passes `L / 2`, and the steady presence of 15.5, all
+on a run under the growing wall, which the open board cannot show. So
+today the law's choice of board is a CONVENTION, and it is stated as
+such: the periodic board is the one that closes Seeliger under the wall
+without losing content through faces (15.5) and keeps the total
+computation constant (16.2 (f)), the open board the one every registered
+world uses; neither is required by a measured number, and the owner may
+leave it open.
+
+### 20.4 expansion-v1, stated once so that it can be chosen
+
+The rule: the flight's wall is `2 T_D x a` with `a = H_den + H_num x
+tick`, H = `[H_num, H_den]` a declared constant of the world, the rate
+`2 S_1 Q x H_den` untouched, the tick the interval's index read by the
+row at its carry (a local reading, the interval every record carries;
+15.2); the body's drive under form B scales its `T_D` the same way
+(15.5), the turn's wall does not (15.3); the board periodic or open as
+the world's one boolean (the existing `boundary` key), with no other
+change. The three tests (15.6): generic, one wall factor for every
+family and direction, no name; vector, a translation whose wall is a
+count, F's feedback block, no root, no float; local, if the tick is a
+local reading, and then it reads only the row's own accumulator. What
+it gives: `1 + z = a(t_r) / a(t_e)`, Milne's `q = 0`, `c a = c_0`,
+Seeliger cured on the periodic board; what it does not: nature's `q_0
+= -0.53` (a rising H would be a second declared rate, a hypothesis
+beside this one), and any decision between the boards. Absent by
+default; the identity `expansion-v1`.

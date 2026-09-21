@@ -1,0 +1,30 @@
+(A) The periodic board under the growing wall: L = 301, H = 1 / 400, the Hubble length c_0 / H = 233 Links
+  t = 1000: the reach 289 Links = 0.96 boxes, images of one lamp inside it 0
+  t = 3000: the reach 494 Links = 1.64 boxes, images of one lamp inside it 18
+  t = 10000: the reach 752 Links = 2.50 boxes, images of one lamp inside it 80
+  t = 100000: the reach 1276 Links = 4.24 boxes, images of one lamp inside it 304
+  the redshift of the n-th image along an axis, z = exp(H n L / c_0) - 1:
+    n = 1: z = 2.68
+    n = 2: z = 12.55
+    n = 3: z = 48.90
+  the reach saturates at (c_0 / H) ln(1 + H t): 1807 Links at t = 10^6, 3402 at 10^9
+
+(B) Nature's bounds on a cubic torus
+  the last-scattering diameter 2 chi_rec = 28 Gpc comoving
+  matched circles, Planck 2015 XVIII: R_i > 0.97 chi_rec, so the box L > 27.2 Gpc = 0.97 of the diameter
+  Cornish, Spergel, Starkman and Komatsu 2004: no matched circles, the box beyond 24 Gpc
+  the last-scattering volume over the box's at the bound: (1 / 0.97)^3 = 1.10: the first image at or beyond the surface
+
+(C) The quarks design's three shapes: the mean square charge radius about the charge centroid (Link^2)
+  line      u d u / d at the centre    r^2 = +1.3333
+  line      d u d / u at the centre    r^2 = -0.6667
+  line      u u d / d at an end        r^2 = -0.6667
+  line      d d u / u at an end        r^2 = +0.3333
+  corner    u d u / d at the centre    r^2 = +0.4444
+  corner    d u d / u at the centre    r^2 = -0.2222
+  corner    u u d / d at an end        r^2 = -0.2222
+  corner    d d u / u at an end        r^2 = +0.1111
+  triangle  u d u / d at the centre    r^2 = +0.0000
+  triangle  d u d / u at the centre    r^2 = +0.0000
+  triangle  u u d / d at an end        r^2 = +0.0000
+  triangle  d d u / u at an end        r^2 = +0.0000
