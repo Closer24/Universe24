@@ -74,6 +74,45 @@ The identity `beam-v1` is kept.
   all fixed reads the same records, and its `state.json` differs by the
   two marks alone.
 
+## The readings by type and the registers' derivations, on 2026-09-21 (host only, no law change)
+
+The owner's two principles of the experiments (record 205: "a formula
+gives, a run proves"; "after the detector, name the vector to read"),
+built as documentation and register annotation; no run moved, every
+registered number unchanged.
+
+- `docs/ENGINE.md` gains the table "The detector's readings by type":
+  every quantity the record exposes, by type (scalar, vector, tensor,
+  pair) with its line or field, its unit and its kind (detector or
+  GameBoard); `docs/EXPERIMENTS.md` points to it from the two kinds of
+  readings. The coherent pointer (X, Y) was already on the `record` line;
+  nothing new is exposed.
+- Every register (`examples/events/expectations.json`, `bell/`,
+  `amplitude/`, `hubble_stars/` and its `record/` and `doppler/`,
+  `weak/`) gains a `derivations` map, one entry per key: the formula or
+  the section of `docs/DERIVATIONS_BEAM.md`, or `measured` with the
+  target. The generators (`amplitude/make_worlds.py`,
+  `hubble_stars/make_worlds.py`, `weak/make_worlds.py`) write it; the
+  amplitude generator also reproduces the register split's hand-added
+  entries (`REGISTERED_RUN_READINGS`), so the shipped file equals the
+  generator's again. The rule is in `docs/TEST_EXPECTATIONS.md` beside the
+  register rule.
+- Three tests derive and compare where a closed form exists:
+  `tests/test_nature_beam_worlds.py` (b) the Bell plus offset (the first
+  birth's tick plus the flight table's age at 8 Links),
+  `tests/test_hubble_stars_readings.py` (a) the star worlds' c (Q / T_D
+  off the flight table) and the new `tests/test_weak_readings.py` (d),
+  the register of series J2 from the five shipped worlds, the flight table
+  and `window_admits`.
+- `docs/THREE_WORLDS.md`'s software column corrected against `main`
+  (`Moments` for `Reading`, `execute_nature_beam_run` for `execute_run`,
+  `core/game_board.py` for a `GameBoard` class, the `hand` column int64,
+  the flight table for an accumulator, the `Split` row for a fan's
+  weights, the Count rows for `acc_turn` and `acc_owed`, `met` marked as
+  not on `main`, `apply_gate` and `rotate_rows` named) with the modules
+  added; the rows of the reading, the click and the record point to the
+  readings table.
+
 ## The group structure named, on 2026-09-21 (host only, no law change)
 
 The architect's item 3 of the proposal on the runs (record 203; the vector

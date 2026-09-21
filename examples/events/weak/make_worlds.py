@@ -575,6 +575,14 @@ def main() -> None:
     # never `format`): the tests that read every JSON under examples/events
     # as a world skip it, as they skip an entity definitions file.
     expectations: dict[str, object] = {"format": EXPECTATIONS_FORMAT, "j2": j2_expectations()}
+    # The source of every entry (the owner's principle of 2026-09-21, record
+    # 205: a formula gives, a run proves): the formula or the section of
+    # docs/DERIVATIONS_BEAM.md, or "measured" with the target.
+    expectations["derivations"] = {
+        "j2": "the first arrivals from the flight table (the rows born by the ticks a heading row needs to walk 8 Links: ticks - tau_8, tau_k = ceil((2 k - 1) T_D / (2 S_1 Q)), DERIVATIONS_BEAM 11.1; BEAM_LAW section 3); the first clicks the arrivals' admitted share on the window (BEAM_LAW note 36: w / N for a stride coprime to N, else the admitted phases of the stride's orbit over the orbit's size: 1/64, the half circle, 2/64, 0); the far detector's clicks the rows of the stride outside the far phase; derived here from the flight table and compared by tests/test_weak_readings.py (d)",
+        "become": "measured (weak-v1: the counts of the transformations of J1 over the run)",
+        "w": "measured (the exchange world: `at` and the click's tick the clock's count under the crowd gate, the label Q x the amount, the content and the charge as declared)",
+    }
     for name, j2_expected in j2_expectations().items():
         print(f"  {name}: expected (GAMEBOARD, from the flight table) {j2_expected}")
     worlds = {**j2_worlds(), **j1_worlds(), **j3_worlds(), **w_worlds()}

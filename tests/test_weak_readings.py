@@ -51,6 +51,19 @@ Two fast cases pin the tool to the engine's record:
     tick 4, the label 192, the content 1839, the charge [0, 1]) the five
     criteria inside, the kinds GAMEBOARD, DETECTOR, DETECTOR, DETECTOR,
     GAMEBOARD; with the click tick pinned at 5 the second outside.
+(d) the register of series J2 (`examples/events/weak/expectations.json`)
+    derived from the five shipped worlds and the engine's flight table and
+    compared, entry by entry (the register's `derivations`; a formula gives,
+    a run proves, record 205): the first reader's arrivals are the rows born
+    at the ticks up to `ticks` less the age at which a heading row has
+    walked the reader's distance (DERIVATIONS_BEAM 11.1); its clicks are the
+    arrivals whose phase, the source's stride (its content x the clock's
+    rate, the whole part) times the birth ordinal less one over the circle,
+    the reader's window admits (`window_admits`, BEAM_LAW note 36; the
+    declared width or the half circle); the far detector's clicks are the
+    rows born by `ticks` less its own arrival age that no reader's window
+    admits (a reader's click takes the row out of the flight, a pass leaves
+    it). The five worlds of the register and no other; each entry equal.
 """
 
 from __future__ import annotations
@@ -61,8 +74,12 @@ import math
 import sys
 from pathlib import Path
 
+import numpy as np
+
 from event_universe.events import parse_nature_beam_world
+from event_universe.events.nature_beam import direction_flight, window_admits
 from event_universe.events.run import execute_nature_beam_run
+from event_universe.events.world import default_width
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("weak_readings_tool", ROOT / "tools" / "weak_readings.py")
@@ -259,3 +276,50 @@ def test_read_run_reads_the_w_world(tmp_path):
     ]
     late = {"w": {"w_exchange": {**pinned["w"]["w_exchange"], "click_tick": 5}}}
     assert [ok for _, ok, _ in TOOL.expectations(reading, late)] == [True, False, True, True, True]
+
+
+def first_arrival_age(table, distance: int) -> int:
+    """The least age at which a heading row's Manhattan steps (the position
+    accumulator's count, `Flight.manhattan_steps`) reach `distance`."""
+    ages = np.arange(1, 4 * distance + 64, dtype=np.int64)
+    steps = table.manhattan_steps(np.full(ages.shape, 2, dtype=np.int64), ages)
+    return int(ages[np.flatnonzero(steps >= distance)[0]])
+
+
+def admitted(reader: dict, phase: int, modulus: int) -> bool:
+    """Whether the reader's window admits the phase: the declared width or
+    the half circle, by the engine's one floor."""
+    entry = reader["table"]["nu"]
+    width = int(entry.get("phase_width", default_width(modulus)))
+    return bool(window_admits((phase - int(entry["phase_window"])) % modulus, width, modulus))
+
+
+def test_the_j2_register_is_derived_from_the_worlds_and_the_flight_rule():
+    """(d)."""
+    folder = ROOT / "examples" / "events" / "weak"
+    registered = json.loads((folder / "expectations.json").read_text(encoding="utf-8"))
+    assert registered["format"] == "weak-expectations-v1"
+    assert set(registered["derivations"]) == {"j2", "become", "w"}
+    derived: dict[str, dict[str, int]] = {}
+    for path in sorted(folder.glob("j2_*.json")):
+        world = json.loads(path.read_text(encoding="utf-8"))
+        source, *readers = world["measured"]
+        (direction,) = source["directions"]
+        table = direction_flight(((0, 0, 0), (0, 0, 0), tuple(direction)))
+        ticks, modulus = int(world["ticks"]), int(world["N"])
+        stride = TOOL.stride_of(world, source)
+        far = readers.pop()
+        assert far["table"] == {"nu": {"rule": "measure"}}
+        first = readers[0]
+        born_first = ticks - first_arrival_age(table, first["position"][0])
+        born_far = ticks - first_arrival_age(table, far["position"][0])
+        phases = [(stride * (t - 1)) % modulus for t in range(1, max(born_first, born_far) + 1)]
+
+        derived[path.stem] = {
+            "first_arrivals": born_first,
+            "first_clicks": sum(1 for p in phases[:born_first] if admitted(first, p, modulus)),
+            "far": sum(
+                1 for p in phases[:born_far] if not any(admitted(r, p, modulus) for r in readers)
+            ),
+        }
+    assert derived == registered["j2"]

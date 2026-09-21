@@ -39,7 +39,10 @@ not in reality. A comparison with nature (section A) uses detector readings
 only; a GameBoard reading describes the mechanism, checks the books or
 draws the picture. Where an entry of the past registered a GameBoard reading
 as the measurement, it says so from this date, and the detector form is
-added when the entry is re-run.
+added when the entry is re-run. Every quantity the record exposes, by type
+(scalar, vector, tensor, pair) with its line, unit and kind, is the table
+[the detector's readings by type](ENGINE.md#the-detectors-readings-by-type)
+(2026-09-21, record 205: an entry names the vector it will read from it).
 
 **The rule of every entry.** Before its run, an entry names the features it
 needs (numbers 1 to 12 below), the GameBoard, the families, the Detector marks

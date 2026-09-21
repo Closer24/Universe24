@@ -25,7 +25,9 @@ docs/TEST_EXPECTATIONS.md ("The worlds of the Beam Law"), written down first:
     periods 4 and 16 is below 0.5;
 (b) Bell (the ten A2 worlds under `"law": "beam"`, `tools/bell_chsh.py`):
     S = 2 exactly, S' = 3/2 exactly, the controls +1, -1, 0, no-signalling
-    exact, 0 criteria failed;
+    exact, 0 criteria failed; the registered plus offset derived from the
+    flight table (the tick of the first birth plus the age at which a
+    heading row has walked the 8 Links, DERIVATIONS_BEAM 11.1) and compared;
 (c) one content of 2^24 at the centre of an open 11^3 GameBoard at `release`
     [1, 128], 40 intervals: the books close at every tick, the content is
     2^24 at every tick, the momentum on the measured events zero, the flux
@@ -70,6 +72,7 @@ import pytest
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.diagnostics.shell_readings import shell_readings
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
+from event_universe.events.nature_beam import direction_flight
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import MOMENTUM_BOUND
 from event_universe.world_loading import load_world
@@ -242,6 +245,29 @@ def test_the_bell_worlds_read_the_triangle_and_the_chsh_bound(tmp_path):
     }
     assert checks.failed == registered["failed"] and len(checks.rows) == registered["criteria"]
     assert runs[(0, 0)].offsets == registered["offsets_0_0"]
+    # The registered plus offset derived and compared (DERIVATIONS_BEAM 11.1,
+    # the register's `derivations`; a formula gives, a run proves, record
+    # 205): a pair's age is its birth ordinal less one, so the offset tick -
+    # age of a plus counter is the tick of the lamp's first birth plus the
+    # age tau_8 at which a heading row has walked the PATH Links to it, the
+    # least age whose Manhattan steps (the position accumulator's count,
+    # `Flight.manhattan_steps`) reach PATH; the minus counters, one Link
+    # on, hold no click under the one click (0).
+    first_birth = min(
+        int(line["tick"])
+        for line in map(
+            json.loads,
+            (tmp_path / "a0_b0" / "events.jsonl").read_text(encoding="utf-8").splitlines(),
+        )
+        if line["event"] == "birth"
+    )
+    table = direction_flight(((0, 0, 0), (0, 0, 0), (1, 0, 0)))
+    ages = np.arange(1, 8 * make_worlds.PATH, dtype=np.int64)
+    walked = table.manhattan_steps(np.full(ages.shape, 2, dtype=np.int64), ages)
+    tau = int(ages[np.flatnonzero(walked >= make_worlds.PATH)[0]])
+    assert registered["offsets_0_0"]["alice_plus"] == first_birth + tau
+    assert registered["offsets_0_0"]["bob_plus"] == first_birth + tau
+    assert registered["offsets_0_0"]["alice_minus"] == registered["offsets_0_0"]["bob_minus"] == 0
     assert bell.chsh(runs, bell.CHSH) == registered["chsh_sum"]
     assert bell.chsh(runs, bell.PRIME) == registered["primed_sum"]
     for key, correlation in registered["correlations"].items():
