@@ -8581,3 +8581,56 @@ sign rule, and its other couplings are catalog entries.
   E x 64 = 44, -44, 44, 44 and S = 176 / 64 = 2.75 against the bounds 2
   and 2 sqrt 2 = 2.83, the runs' gathers equal to the register on every
   world; a demonstration of the registered L3 runs, no new reading.
+
+### The visual gallery (2026-09-21)
+
+The model owner's request of 2026-09-21 (translated: "a visualisation
+agent on a separate, strong machine, so that one can see in beautiful HTML
+pages all the different situations we talk about ... beams and clicks,
+that is what we have; make it beautiful"): one HTML page per situation
+under `docs/pages/gallery/`, each with the run playing inside the page (a
+frame player with play and pause, a slider over the intervals, the GIF as
+a link), the GameBoard drawn with the world file's name of every thing on
+it, and every number from the run's files or from the register with the
+path named; the moving picture a GameBoard reading, the clicks and the
+pushes detector readings. A page made from a registered world changes
+nothing in it and pins nothing; a page made from a demonstration world
+([`examples/events/gallery/`](../examples/events/gallery/README.md)) says
+so and registers nothing. Written by `tools/gallery_pages.py`
+(`tests/test_gallery_pages.py` pins the capture to the engine's stores);
+the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
+
+- [The beam](pages/gallery/beam.html): a lamp's rows spreading on the
+  digital lines of its fan, the phase as colour, the front against the
+  circle of c and the L1 bound (the demonstration world `beam_fan`).
+- [The clicks](pages/gallery/clicks.html): a plate of pixels on the far
+  side of a narrow beam, every record's one click landing on one pixel by
+  the ladder's rungs and its wheel value u, the click list growing one
+  line per record (the demonstration world `clicks_plate`; the catalog's
+  optical bench cited beside it).
+- [Our world](pages/gallery/worlds.html): the vector world, the software
+  world and our world side by side for one record from its birth to its
+  click, on the registered Mach-Zehnder world with equal arms
+  (`amplitude/mz_equal`): the rows as points and the record's pointer at
+  the ports, the store's int64 columns and the gather line, and the one
+  click D1 read; the register's D1 64, D2 0 beside the run's.
+- [The nucleus](pages/gallery/nucleus.html): series I's `deuteron_1`
+  (bound at one Link, the strong rows' escape clicks on the border
+  `lifetime`), `deuteron_3` (free at three Links, the pair leaving through
+  the faces) and `alpha_square` (sheared apart), run as declared; the
+  pushes, hand-overs, steps and exits of the runs beside the register's.
+- [The decay](pages/gallery/decay.html): series J's `j3_neutron_free`
+  (the transformation `become` at 512, the beta's click at the shell),
+  `j3_deuteron` (the bound neutron firing later, at 568) and `w_exchange`
+  (the W thrown and measured one Link and one interval later), run as
+  declared; the trigger ticks and counts of the runs beside the
+  register's, J1, J2 and P cited from the register.
+- [The collision](pages/gallery/collision.html): six declared rows on an
+  open 9^3 cube of free space, the head-on pair parking on the rest slots,
+  turning to another axis and leaving, the triple's odd unit going on, the
+  diagonal unit a spectator; the slots occupied per interval (the
+  demonstration world `collision`).
+- [High-energy rows](pages/gallery/energy.html): series K under the
+  meeting, `mass_meeting` beside `control`, run as declared: the beam bent
+  toward the mass, the screen's centroid, the rows the mass took and the
+  books' turned line of the runs beside the register's.
