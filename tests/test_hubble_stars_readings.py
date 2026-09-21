@@ -160,8 +160,9 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_declare_a_fo
     assert expectations["reading_rule"] == "acoustic"
     # The registered speed derived and compared (DERIVATIONS_BEAM 2.1, the
     # register's `derivations`): c = Q / T_D Links per interval on a heading,
-    # T_D the heading's resolution on the flight table (isqrt(3 Q^2) = 110).
-    table = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
+    # T_D the heading's resolution of the flight rule (isqrt(3 Q^2) = 110),
+    # the wall of the position's accumulator over its rate.
+    table = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
     assert expectations["c"] == Q / int(table.resolution[HEADING_OFFSET])
     assert set(expectations["derivations"]) == set(expectations) - {"format", "derivations"}
     # The record-click worlds (reading `sum` at the centre; the key

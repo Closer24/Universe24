@@ -77,7 +77,7 @@ from pathlib import Path
 import numpy as np
 
 from event_universe.events import parse_nature_beam_world
-from event_universe.events.nature_beam import flight_table, window_admits
+from event_universe.events.nature_beam import direction_flight, window_admits
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import default_width
 
@@ -279,7 +279,8 @@ def test_read_run_reads_the_w_world(tmp_path):
 
 
 def first_arrival_age(table, distance: int) -> int:
-    """The least age at which a heading row's Manhattan steps reach `distance`."""
+    """The least age at which a heading row's Manhattan steps (the position
+    accumulator's count, `Flight.manhattan_steps`) reach `distance`."""
     ages = np.arange(1, 4 * distance + 64, dtype=np.int64)
     steps = table.manhattan_steps(np.full(ages.shape, 2, dtype=np.int64), ages)
     return int(ages[np.flatnonzero(steps >= distance)[0]])
@@ -293,7 +294,7 @@ def admitted(reader: dict, phase: int, modulus: int) -> bool:
     return bool(window_admits((phase - int(entry["phase_window"])) % modulus, width, modulus))
 
 
-def test_the_j2_register_is_derived_from_the_worlds_and_the_flight_table():
+def test_the_j2_register_is_derived_from_the_worlds_and_the_flight_rule():
     """(d)."""
     folder = ROOT / "examples" / "events" / "weak"
     registered = json.loads((folder / "expectations.json").read_text(encoding="utf-8"))
@@ -304,7 +305,7 @@ def test_the_j2_register_is_derived_from_the_worlds_and_the_flight_table():
         world = json.loads(path.read_text(encoding="utf-8"))
         source, *readers = world["measured"]
         (direction,) = source["directions"]
-        table = flight_table(((0, 0, 0), (0, 0, 0), tuple(direction)))
+        table = direction_flight(((0, 0, 0), (0, 0, 0), tuple(direction)))
         ticks, modulus = int(world["ticks"]), int(world["N"])
         stride = TOOL.stride_of(world, source)
         far = readers.pop()
