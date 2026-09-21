@@ -92,7 +92,7 @@ derivation's expectation whose run is not yet registered (rule (e)).
 | --- | --- | --- | --- | --- | --- |
 | 1a | The CHSH sum S of a pair read at two detectors, the record's pair | S = 2.42 +- 0.20, Hensen et al. 2015, Nature 526, 682; the quantum bound 2 sqrt 2 = 2.828, Cirel'son 1980, Lett. Math. Phys. 4, 93 | `examples/events/amplitude/bell_*.json`; `amplitude/expectations.json` `pair.chsh_S` = 176 in the unit 64: S = 2.75; `pair.chsh.*.E` = 44, -44, 44, 44 | N = 64; K = 15 x 2^20: not under the one set (K) | PASS: 0.33 above the measured, 1.65 of its standard error; 0.078 below the quantum bound |
 | 1b | The CHSH sum S under the phase-form window (the crowd form's Bell test) | the same | `examples/events/bell/a*_b*.json`; `bell/expectations.json` `chsh_sum` = 2, `primed_sum` = 2 | N = 64; K = 15 x 2^20: not under the one set (K) | FAIL: S = 2 exactly, 0.42 below the measured, 2.1 standard errors; the local bound, the model's registered limit for the window form |
-| 2a | The two-slit fringe visibility of one quantum at a time, (I_max - I_min) / (I_max + I_min) | 98 percent for single-photon two-path interference, Grangier, Roger and Aspect 1986, Europhys. Lett. 1, 173 (to verify against the source); the ideal for equal paths 1 | `examples/events/amplitude/slits_huygens.json`; the register entry L2b of [EXPERIMENTS](EXPERIMENTS.md#l-the-amplitude-law-2026-09-20) and record 164: the record's screen weights, visibility 0.954, Pearson 0.895 with the two-source cosine | N = 64; P = 48; K = 2^30: not under the one set (K); the clicks need the wheel | FAIL: 0.954 against 0.98, 0.026 below the measured and 0.046 below the ideal; the cause named (the fan's grain), the clicks NOT YET |
+| 2a | The two-slit fringe visibility of one quantum at a time, (I_max - I_min) / (I_max + I_min) | 98 percent for single-photon two-path interference, Grangier, Roger and Aspect 1986, Europhys. Lett. 1, 173 (to verify against the source); the ideal for equal paths 1 | `examples/events/amplitude/slits_huygens.json` (the lamp's golden-rate `wheel` [2531, 4096], 4300 intervals, 4096 births under the exact phase at the click); the register entry L2b of [EXPERIMENTS](EXPERIMENTS.md#l-the-amplitude-law-2026-09-20), re-registered under the birth wheel, and the run's record beside the world ([the amplitude README, L2](../examples/events/amplitude/README.md#l2-the-two-slits-at-a-low-rate)): the clicks' visibility 0.966 (DETECTOR; the record's screen weights 0.954, record 164), the dark cells 0 to 3 as pinned (DETECTOR, the mean 0.68), the counts' Pearson with the two-source cosine 0.891 (DETECTOR; the weights' 0.895) against the pinned 0.96: a miss, the pin derived for the screen's fan and not this world's own Farey fan | N = 64; P = 48; K = 2^30: not under the one set (K); the wheel W = 4096 | FAIL: 0.966 against 0.98, 0.014 below the measured and 0.034 below the ideal; the cause named (the fan's grain); the fringes in the clicks as in the weights; the correlation pin 0.96 missed at 0.891, the pin the screen's fan's |
 | 2b | The Mach-Zehnder visibility of one quantum at a time (the dark port's fraction) | the same 98 percent, the same source | `examples/events/amplitude/mz_equal.json`; `mach_zehnder.mz_equal.offers` D1 = 1681/1682, D2 = 1/1682; `clicks` D1 = 64, D2 = 0 | N = 64; K = 2^20 | PASS: the offers' visibility (1681 - 1) / 1682 = 0.9988 above the measured 0.98; the clicks 64 / 0 over 64 births |
 | 2c | The power of the click's form (Born's exponent 2; nature's counterpart the absence of third-order interference) | the Sorkin parameter kappa = 0.0064 +- 0.0119 (consistent with 0, the quadratic form), Sinha et al. 2010, Science 329, 418 (to verify against the source) | `mz_345.json` `mach_zehnder.mz_345.clicks` 63 / 1 and `bell_16_24.json`, `bell_16_24_far.json` `pair.chsh.16_24.counts` 27, 5, 5, 27 (`pair.far.bell_16_24` = 44); [DERIVATIONS_BEAM 6.5](DERIVATIONS_BEAM.md#65-the-uniqueness-of-the-clicks-square-a-lattice-gleason): the power k pinned to [1.917, 2.489) and [1.784, 2.054) | N = 64; K = 2^20 (mz_345), 15 x 2^20 (the pair) | PASS: the intersection [1.917, 2.054) contains 2; the bracket's width is the register's resolution at N = 64 |
 | 3 | The deceleration parameter q of the Hubble diagram | q_0 = Omega_m / 2 - Omega_Lambda = -0.53 +- 0.01 from Omega_m = 0.315 +- 0.007 (flat), Planck 2018, Aghanim et al. 2020, A&A 641, A6; the discovery of q_0 < 0: Riess et al. 1998, AJ 116, 1009, and Perlmutter et al. 1999, ApJ 517, 565 | `examples/events/hubble_stars/record/coasting_none.json` (the third run's `doppler/coasting_none.json` was deleted with the key on 2026-09-21, [MIGRATION](MIGRATION.md#the-crossing-rule-on-2026-09-21-the-step-before-the-law-a-row-and-a-body-met-once-the-key-doppler-and-the-grain-deleted); its readings stay as history in EXPERIMENTS); the register entry G2 (the second and third runs): q = -0.108 inside the coasting bracket -0.25 .. +0.25, H (t_0 + T_0) = 1.026; the gravity crowd +0.922 (record) and +0.345 (doppler), the double +1.500 and +1.190; [section 15](DERIVATIONS_BEAM.md#154-the-milne-case-and-the-registers-24-stars-at-rest)'s growing wall q = 0 (Milne) | N = 64; K = 4 198 400 and S = 2^20: not under the one set (K); the third run's worlds carried the key `doppler-v1` (deleted on 2026-09-21), the coasting reading identical with and without it | FAIL: the coasting -0.108 is 0.42 above nature's -0.53 (1.7 times the register's bracket); every gravitating reading is 0.87 to 2.0 above; the law has no term with q < 0 |
@@ -144,28 +144,41 @@ row is kept because the reading is registered; the law's Bell reading is
 the record's pair (1a), which reads the one record at two places.
 
 **2a, the two-slit visibility.** The registered visibility is of the
-record's screen WEIGHTS (the Gram weight per cell, a detector reading:
-the cell's share of the click), between the two-source cosine's bright
-pixels (y = 35 to 38, 59 to 61, 82 to 85; 23.5 pixels apart, the exact
-two-path law's 23.3, [DERIVATIONS_BEAM 7.1](DERIVATIONS_BEAM.md#71-youngs-fringes))
-and its dark ones, from the Farey fan of width 48 with the angle weights,
-under the built phase; the clicks cannot show the fringes on `main`
-because u repeats with the period 64 (32 cells fixed after the 64th
-birth). The comparison with an experiment counts clicks, so in the clicks
-the row is NOT YET until the wheel W = 4096 lands; the map's clicks at
-4096 births under the exact phase read the same 0.954 (record 164,
-TWO_SLITS.md section 8). The published value: Grangier, Roger and Aspect
+CLICKS: `slits_huygens` on `main` declares the lamp's golden-rate birth
+wheel [2531, 4096] and runs 4300 intervals for 4096 births under the
+exact phase at the click (the register entry L2b, re-registered under
+the birth wheel; the run's record beside the world in the amplitude
+README, L2; every one of the records 1 to 4096 gathered). The clicks
+read the visibility 0.966 between the two-source cosine's bright pixels
+(y = 35 to 38, 59 to 61, 82 to 85; 23.5 pixels apart, the exact two-path
+law's 23.3, [DERIVATIONS_BEAM 7.1](DERIVATIONS_BEAM.md#71-youngs-fringes))
+and its dark ones, from the Farey fan of width 48 with the angle weights;
+the record's screen WEIGHTS (the Gram weight per cell: the cell's share
+of the click) read 0.954 (record 164), and the wheel turns the weights
+into counts: the histogram's Pearson with the first record's own rungs
+1.000 over the 126 cells, every count within 2 of its width. Of the
+pins set before the run, the dark cells 0 to 3 are met (the mean 0.68);
+the counts' Pearson with the cosine, 0.891 against the pinned 0.96, is a
+miss and not called met: the pin was derived for the screen's fan (the
+map's section 8, the screen share 0.35) and not for this world's own
+Farey fan (the screen share 0.418, the peak at 0.012 of the total), and
+the weights' own Pearson is 0.895. Every number in this paragraph is a
+detector reading (the clicks on the screen's cells), from the register
+entry L2b and the run's record; the world's `expectations.json` pins the
+sibling `two_slits` and not this run. The published value: Grangier, Roger and Aspect
 1986 read a visibility of 98 percent with one photon at a time in a
 Mach-Zehnder interferometer, the same two-path observable in another
 geometry; the two-slit build-ups with single electrons (Tonomura et al.
 1989, Am. J. Phys. 57, 117; Bach et al. 2013, New J. Phys. 15, 033018) show
 the fringes without a published visibility figure, which is the caveat.
 Nature's ideal for two equal openings is 1, and the measured 0.98 is a
-lower bound on it, so the law's 0.954 is short by 0.026 of the measured
-and 0.046 of the ideal: FAIL, with the cause registered (the fan's grain:
-the scratch map of record 160 gives 0.94 at P = 32, 0.97 at P = 48 and 0.96
-at P = 64 in the weights, the run 0.954 at P = 48); whether a wider fan or
-a finer weight grain closes the gap is not registered.
+lower bound on it, so the law's clicks at 0.966 are short by 0.014 of the
+measured and 0.034 of the ideal (the weights' 0.954 by 0.026 and 0.046):
+FAIL, with the cause registered (the fan's grain: the scratch map of
+record 160 gives 0.94 at P = 32, 0.97 at P = 48 and 0.96 at P = 64 in the
+weights, the run 0.954 at P = 48 in the weights and 0.966 in the clicks);
+whether a wider fan or a finer weight grain closes the gap is not
+registered.
 
 **2b, the Mach-Zehnder.** `mz_equal`'s split is the Pythagorean (20, 21)
 pair, whose offers at the two ports are 1681 / 1682 and 1 / 1682 (the
@@ -449,7 +462,7 @@ registered as a pair.
 | Verdict | Rows |
 | --- | --- |
 | PASS | 1a (Bell, the record's pair, 1.65 standard errors), 2b (the Mach-Zehnder, 0.9988), 2c (the power 2 in [1.917, 2.054)), 11b (the stretch of a far lamp's stream, 1 + z, pinned) |
-| FAIL | 1b (the window form, S = 2), 2a (the two-slit visibility 0.954), 3 (q = -0.108 against -0.53), 4a (the muon, a factor 29.33, pinned), 4b (the moving lamp, 0.052 in z), 5b (the frame, eight to twelve orders, pinned), 7b (the alpha, a factor 6.4), 8a (the decay's step, a factor 88), 8b (the filter, 0 against 1), 8c (the massless neutrino, REFUTED by the oscillations), 11a (the far lamp's brightness, q_eff = +1 against -0.53, pinned), 11c (the surface brightness, one power of 1 + z against four, pinned) |
+| FAIL | 1b (the window form, S = 2), 2a (the two-slit visibility 0.966 in the clicks, 0.954 in the weights), 3 (q = -0.108 against -0.53), 4a (the muon, a factor 29.33, pinned), 4b (the moving lamp, 0.052 in z), 5b (the frame, eight to twelve orders, pinned), 7b (the alpha, a factor 6.4), 8a (the decay's step, a factor 88), 8b (the filter, 0 against 1), 8c (the massless neutrino, REFUTED by the oscillations), 11a (the far lamp's brightness, q_eff = +1 against -0.53, pinned), 11c (the surface brightness, one power of 1 + z against four, pinned) |
 | BOUND | 5a (Q >= 2^56 for 10^-17, beyond the word at the register's fan), 7a (the give per nucleon: 4 to 5 units of 3677 about nature's 4.35) |
 | NOT YET | 6 (Bohr's ratio), 9 (Malus), 10 (the single opening under the one click); the runs of 4a, 5b and 11 |
 
