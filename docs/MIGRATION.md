@@ -6,6 +6,18 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The register's replicated map carried through a regeneration, on 2026-09-21 (host only)
+
+The replicator's round 1 found that `examples/events/amplitude/make_worlds.py`
+rewrites `expectations.json` from the worlds and the design and would drop
+the `replicated` map (PR #545). `event_universe.register_map.carry_replicated`
+reads the map of the register file on disk and writes it unchanged into the
+regenerated register; the amplitude generator's `expectations()` takes the
+file's path and carries the map, `main` writes it beside the regenerated
+blocks; `tests/test_register_map.py` pins the cases (the file absent, the map
+present, a block regenerated with its entry kept, the shipped register the
+generator's). No reading changes; no number moved.
+
 ## Series R re-registered under the crossing rule, on 2026-09-21 (the register's replay blocks; no rule change)
 
 The crossing rule (BEAM_LAW note 48, PR #468, merged 2026-09-21 07:24Z)

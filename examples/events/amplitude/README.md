@@ -72,7 +72,7 @@ reading `sum`.
 **What the GameBoard does** (GAMEBOARD, `tests/test_amplitude_split.py`): on
 `mz_equal` the two rows toward D1 merge in phase (amount 41, multiplicity
 1682) and the two toward D2 cancel to 1 in antiphase; on `mz_balanced`
-the rows toward D2 cancel entirely. **What the world reads** (DETECTOR):
+the rows toward D2 cancel entirely. **What the world reads** (DETECTOR; the generator rewrites `expectations.json` from the worlds and the design and carries its `replicated` map through unchanged, `event_universe.register_map`, since 2026-09-21):
 the clicks per port over the 64 births in the table above (the gathers'
 `chosen`, the `world` list of `run.json`, one click per record; a detector
 entry's `clicks` field of `run.json` counts the offers instead, every row
