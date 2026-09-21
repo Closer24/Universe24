@@ -294,6 +294,8 @@ class Plane:
     largest: dict[str, float] = field(default_factory=dict)
     detector_nodes: set[tuple[int, int, int]] = field(default_factory=set)
     detector_names: dict[tuple[int, int, int], str] = field(default_factory=dict)
+    body_radius: float = 0.55
+    body_labels: bool = True
 
     @property
     def size(self) -> tuple[int, int]:
@@ -384,7 +386,7 @@ class Plane:
             cx, cy = self.pixel(node[0], node[1])
             half = self.scale / 2
             draw.rectangle([cx - half, cy - half, cx + half - 1, cy + half - 1], outline=(120, 220, 160))
-        radius = max(self.scale * 0.55, 3.0)
+        radius = max(self.scale * self.body_radius, 3.0)
         for body in frame.bodies:
             if self.slice_z is not None and body.position[2] != self.slice_z and self.shape[2] > 1:
                 pass
@@ -395,7 +397,7 @@ class Plane:
                 fill=colour,
                 outline=(255, 255, 255),
             )
-            if self.scale >= 12:
+            if self.body_labels and self.scale >= 12:
                 label = body.family[:2]
                 draw.text(
                     (cx, cy),
@@ -518,6 +520,9 @@ class Player:
     readings: Sequence[dict[str, str]]
     caption: str
     duration_ms: int = 120
+    # Optional: per frame a list of (title, html) panels drawn side by side
+    # under the readings (the three worlds page).
+    panels: Sequence[Sequence[tuple[str, str]]] | None = None
 
     def html(self) -> str:
         png, columns, w, h = sprite_sheet(self.images)
@@ -530,6 +535,7 @@ class Player:
             "ticks": list(self.ticks),
             "readings": list(self.readings),
             "duration": self.duration_ms,
+            "panels": [list(map(list, frame)) for frame in self.panels] if self.panels else None,
         }
         return f"""
 <figure class="player" id="{self.key}">
@@ -540,6 +546,7 @@ class Player:
     <span class="tick">interval 0</span>
   </div>
   <dl class="readings"></dl>
+  <div class="three"></div>
   <figcaption>{self.caption} <a class="gif" download="{self.key}.gif">The GIF</a> (the frames at
   {self.duration_ms} ms; {len(self.images)} frames).</figcaption>
   <script type="application/json" class="frames">{json.dumps(data)}</script>
@@ -559,6 +566,7 @@ document.querySelectorAll('figure.player').forEach(function (figure) {
   var button = figure.querySelector('button.play');
   var tick = figure.querySelector('span.tick');
   var readings = figure.querySelector('dl.readings');
+  var panels = figure.querySelector('div.three');
   figure.querySelector('a.gif').href = figure.querySelector('a.gifdata').href;
   var frame = 0, timer = null;
   function show(k) {
@@ -571,6 +579,11 @@ document.querySelectorAll('figure.player').forEach(function (figure) {
     readings.innerHTML = Object.keys(lines).map(function (key) {
       return '<div><dt>' + key + '</dt><dd>' + lines[key] + '</dd></div>';
     }).join('');
+    if (data.panels) {
+      panels.innerHTML = (data.panels[k] || []).map(function (panel) {
+        return '<section><h3>' + panel[0] + '</h3>' + panel[1] + '</section>';
+      }).join('');
+    }
     figure.dispatchEvent(new CustomEvent('frame', {detail: k}));
   }
   function play() {
@@ -632,8 +645,10 @@ code { font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; font-size: 0
 .swatch { width: 14px; height: 14px; border-radius: 50%; display: inline-block; border: 1px solid #fff8; }
 .wheel { width: 14px; height: 14px; border-radius: 50%; display: inline-block; background: conic-gradient(hsl(0 85% 50%), hsl(60 85% 50%), hsl(120 85% 50%), hsl(180 85% 50%), hsl(240 85% 50%), hsl(300 85% 50%), hsl(360 85% 50%)); }
 .kind { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.note { font-size: 0.85rem; color: var(--muted); margin: 6px 0 0; }
 .demo { background: var(--card); border-left: 4px solid var(--accent); padding: 8px 12px; margin: 12px 0; }
-.three { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+figure.player div.three:empty { display: none; }
+.three { display: grid; margin-top: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
 .three section { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; min-height: 120px; }
 .three h3 { margin: 0 0 6px; font-size: 1.05rem; }
 .three pre { font-size: 0.8rem; white-space: pre-wrap; margin: 0; font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; }
@@ -1189,6 +1204,328 @@ largest weight, so the far screen is rarely chosen there (its run's <code>gather
         page(
             "The clicks",
             "A plate on the far side of a beam clicking as records arrive: one click per record, the list growing.",
+            body,
+        ),
+    )
+
+
+def followed_record(frame: Frame, first: int, first_gather: int) -> int | None:
+    """The record the three-worlds page follows at a frame: the first
+    record until its click, then the youngest record alive."""
+    if frame.tick <= first_gather:
+        return first
+    alive = [int(r) for rows in frame.rows for r in rows.record if int(r) != 0]
+    return max(alive) if alive else None
+
+
+@register("worlds")
+def page_worlds(out: Path, runs: Path | None) -> Path:
+    """(7) Our world: the vector world, the software world and our world
+    side by side for one record from its birth to its click, on the
+    registered Mach-Zehnder world with equal arms."""
+    world = WORLDS / "amplitude" / "mz_equal.json"
+    record_dir = runner_record(world, runs)
+    record = read_json(record_dir / "run.json")
+    events = scan_events(
+        record_dir / "events.jsonl", ["birth", "split", "cancel", "click", "record", "gather"]
+    )
+    replay = Replay(world)
+    N = replay.world.phase_steps
+    ticks = frame_ticks(replay.ticks)
+    frames = replay.run(ticks)
+    plane = plane_for(replay, scale=44)
+    plane.largest = largest_amounts(frames)
+    plane.body_radius = 0.26
+    plane.body_labels = False
+    plane.margin = 18
+    directions = replay.directions
+    first = int(events["birth"][0]["record"])  # type: ignore[arg-type]
+    first_gather = next(int(g["tick"]) for g in events["gather"] if int(g["record"]) == first)  # type: ignore[arg-type]
+    by_record: dict[int, dict[str, list[dict[str, object]]]] = {}
+    for kind in ("birth", "split", "cancel", "click", "gather"):
+        for line in events[kind]:
+            key = "of" if kind == "record" else "record"
+            by_record.setdefault(int(line[key]), {}).setdefault(kind, []).append(line)  # type: ignore[arg-type]
+    for line in events["record"]:
+        by_record.setdefault(int(line["of"]), {}).setdefault("record", []).append(line)  # type: ignore[arg-type]
+    names = {int(m.number): m for m in replay.simulation.measured.values()}
+    labels = {1: "the lamp", 2: "mirror 1", 3: "mirror 2", 4: "the splitter", 5: "D1", 6: "D2"}
+
+    def ring_for(followed: int | None) -> Callable[[ImageDraw.ImageDraw], None]:
+        def decorate(draw: ImageDraw.ImageDraw) -> None:
+            for number, label in labels.items():
+                body = names[number]
+                cx, cy = plane.pixel(body.position[0], body.position[1])
+                draw.text(
+                    (cx, cy + plane.scale * 0.62),
+                    label,
+                    fill=(235, 235, 235),
+                    font=font(11),
+                    anchor="mm",
+                )
+            if followed is None:
+                return
+            for rows in current_frame.rows:
+                for k in range(rows.amount.size):
+                    if int(rows.record[k]) == followed:
+                        cx, cy = plane.pixel(int(rows.x[k]), int(rows.y[k]))
+                        r = plane.scale * 0.5 - 2
+                        draw.rectangle(
+                            [cx - r, cy - r, cx + r, cy + r], outline=(255, 255, 255), width=2
+                        )
+
+        return decorate
+
+    images = []
+    panels = []
+    readings = []
+    for current_frame in frames:
+        t = current_frame.tick
+        followed = followed_record(current_frame, first, first_gather)
+        images.append(plane.image(current_frame, ring_for(followed)))
+        rows_of: list[tuple[int, ...]] = []
+        for rows in current_frame.rows:
+            for k in range(rows.amount.size):
+                if followed is not None and int(rows.record[k]) == followed:
+                    rows_of.append(
+                        (
+                            int(rows.x[k]),
+                            int(rows.y[k]),
+                            int(rows.z[k]),
+                            int(rows.direction[k]),
+                            int(rows.age[k]),
+                            int(rows.phase[k]),
+                            int(rows.amount[k]),
+                            int(rows.number[k]),
+                            int(rows.multiplicity[k]),
+                            int(rows.birth[k]),
+                        )
+                    )
+        lines = by_record.get(followed, {}) if followed is not None else {}
+        gathered = [g for g in lines.get("gather", []) if int(g["tick"]) <= t]  # type: ignore[arg-type]
+        clicks_so_far = {"D1": 0, "D2": 0}
+        for g in events["gather"]:
+            if int(g["tick"]) <= t:  # type: ignore[arg-type]
+                clicks_so_far[str(g["chosen"][0][0])] += 1  # type: ignore[index]
+        # The vector world: the rows as points of the product of circles and
+        # lines, the record as the vector f at the ports.
+        if followed is None:
+            vector = "<p>No record alive.</p>"
+        elif rows_of:
+            vector = (
+                "<pre>"
+                + "\n".join(
+                    f"row: Node ({x}, {y}), direction {directions[d]}, phase {ph} of Z_{N}, age {a}, amount {m}, number {n}"
+                    for x, y, _, d, a, ph, m, n, _, _ in rows_of
+                )
+                + "</pre>"
+            )
+            vector += (
+                f'<p class="note">the record\'s identity {followed}, its birth phase u = {rows_of[0][9]}, '
+                f"its multiplicity m = {rows_of[0][8]} (the paths so far); the record is one element of "
+                f"Z[Z_{N}] per end Node: the amounts that ended at each phase</p>"
+            )
+        elif gathered:
+            g = gathered[-1]
+            ports = [r for r in lines.get("record", []) if int(r["tick"]) == int(g["tick"])]  # type: ignore[arg-type]
+            vector = (
+                "<pre>"
+                + "\n".join(
+                    f"f at {r['detector']}: pointer (X, Y) = {tuple(r['pointer'])}, the square X^2 + Y^2 = {r['record']}"  # type: ignore[arg-type]
+                    for r in ports
+                )
+                + "</pre>"
+            )
+            vector += (
+                f'<p class="note">the weight of each cell is the bilinear form f^T G f (the square of the pointer); '
+                f"the rungs over the cells' cumulative weights: {', '.join(str(c[0][0][0]) + ' < ' + str(c[1]) for c in g['cells'])}; "  # type: ignore[index]
+                f"u = {g['u']} selects {g['chosen'][0][0]}; the record is then translated to nothing: deleted everywhere</p>"
+            )  # type: ignore[index]
+        else:
+            vector = "<p>The record has clicked and is gone: the state vector no longer holds it.</p>"
+        # The software world: the store's columns, the int64 fields as they are.
+        if rows_of:
+            body_rows = "\n".join(
+                f"node {x * 5 + y} (x {x}, y {y}) | direction {d} | age {a} | phase {ph} | number {n} | "
+                f"amount {m} | content {m} | record {followed} | branch 0 | multiplicity {mu} | birth {u}"
+                for x, y, _, d, a, ph, m, n, mu, u in rows_of
+            )
+            software = (
+                f'<pre>{body_rows}</pre><p class="note">NatureBeamStore.light, one int64 row per row: '
+                f"node the packed index x * 5 + y, direction an index into the world's direction table, "
+                f"content per unit the family's quantum 1, birth the wheel value u</p>"
+            )
+        elif gathered:
+            g = gathered[-1]
+            software = (
+                f"<pre>gather line, events.jsonl, tick {g['tick']}:\n  record {g['record']}, u {g['u']}, chosen {g['chosen'][0][0]},\n"  # type: ignore[index]
+                f"  weight {g['weight']}, total {g['total']} (the unit 2^58),\n  cells {json.dumps(g['cells'])}\n"
+                f"click line: D1 amount 41, phase 16, content 41, push [2624, 0, 0]</pre>"
+                f"<p class=\"note\">Layer.complete (amplitude.py) removed the record from the layer's table and NatureBeamStore.merge dropped its rows; DetectorSet.record of D1 grew by the square; the books moved by the click's content and momentum</p>"
+            )
+        else:
+            software = "<p>No row of this record in the store.</p>"
+        # Our world: what the two detectors read.
+        if gathered and followed == first:
+            ours = (
+                f"<p><b>D1 clicked</b> at the interval {gathered[-1]['tick']}: one photon arrived at (4, 3). D2 did not click. "
+                f"Nothing else of this photon was ever seen: not its two arms, not its phases, not the 41 rows that merged.</p>"
+            )
+        elif followed == first:
+            ours = (
+                "<p>Nothing yet. The photon is on its way, unseen: a detector reads only the click.</p>"
+            )
+        else:
+            ours = "<p>The later photons repeat the story: each is seen once, at D1.</p>"
+        ours += (
+            f"<p>The click list so far: D1 {clicks_so_far['D1']}, D2 {clicks_so_far['D2']} (the gather lines up to this interval). "
+            f"The register's pinned reading over the first 64 births: D1 64, D2 0 (<code>examples/events/amplitude/expectations.json</code>, <code>mach_zehnder.mz_equal.clicks</code>).</p>"
+        )
+        panels.append(
+            [("The vector world", vector), ("The software world", software), ("Our world", ours)]
+        )
+        readings.append(
+            {
+                "the record followed": str(followed) if followed is not None else "none",
+                "records completed so far (gather lines)": num(
+                    len([g for g in events["gather"] if int(g["tick"]) <= t])
+                ),  # type: ignore[arg-type]
+                "rows in the store (GameBoard reading)": num(
+                    int(sum(int(r.amount.size) for r in current_frame.rows))
+                ),
+            }
+        )
+    player = Player(
+        "worlds",
+        images,
+        ticks,
+        readings,
+        "The 5 x 5 plane, 44 pixels per Node; every Node with rows coloured by their phase and amount; the "
+        "rows of the followed record ringed in white; the lamp, the mirrors, the splitter and the ports labelled "
+        "by the world file's numbers.",
+        duration_ms=350,
+        panels=panels,
+    )
+    entry = "L, the amplitude law (2026-09-20)"
+    body = f"""
+{registered_note(world, entry, "../../EXPERIMENTS.md#l-the-amplitude-law-2026-09-20")}
+<h2>The GameBoard</h2>
+<p>The Mach-Zehnder world with equal arms of the amplitude series (L1): a plane of 5 x 5 with z periodic, K =
+{num(replay.world.K)}, N = {
+        N
+    }. <b>The lamp</b> at (0, 0), measured event 1, content 2^20 at K 2^20 (the turn one
+step per self-creation, each birth paying 2 content), births one record per self-creation of two rows of
+amount 1, +x (arm 1) and +y (arm 2, the reflection's quarter turn 16 on the row), the multiplicity 2.
+<b>Mirror 1</b> at (3, 0), measured event 2, re-emits +x arrivals on +y; <b>mirror 2</b> at (0, 3), event
+3, re-emits +y arrivals on +x. <b>The splitter</b> at (3, 3), event 4, a <code>rerelease</code> whose
+weights (20, 21) and turns are selected by the arrival's direction. <b>D1</b> at (4, 3), event 5, and
+<b>D2</b> at (3, 4), event 6, are one-Node detectors reading <code>sum</code>: the record's own pointer over
+its lifetime, the one click at its completion.</p>
+{
+        legend(
+            [
+                ("a row, coloured by its phase on the circle", '<i class="wheel"></i>'),
+                (
+                    "the lamp, the mirrors, the splitter, the ports: measured events of light",
+                    swatch(BODY_COLOURS["light"]),
+                ),
+                (
+                    "the rows of the followed record",
+                    '<i class="swatch" style="background: none; border: 2px solid #fff"></i>',
+                ),
+            ]
+        )
+    }
+<h2>Why this page</h2>
+<p>The owner asked (<a href="../../THREE_WORLDS.md">the three worlds</a>): "let there be precise definitions
+between what a thing is in the vector world, what it is in the software world and what it is in our world; a
+click, for us, is a sampling of the game engine that yields a number, and it does an operation in the engine,
+a vector operation, and an operation in our world". This page follows one record, the first the lamp births,
+from its birth to its click, and shows at every interval the same thing three times: as integer vectors on
+tori and the operations of the map <b>F</b>; as the int64 columns of the store and the lines of the record;
+and as what a detector reads, which is a click and nothing else. Beams and clicks: in the vector world the
+beam is a set of points moving by translation, split by an integer matrix, added in the group ring; in the
+software world it is rows of a store; in our world it is nothing until the click.</p>
+<h2>The moving picture, the three worlds beside it</h2>
+{player.html()}
+<p>What to see, interval by interval. At 1 the record is born: two rows, one per arm, the phases 0 and 16.
+At 6 each row reaches its mirror and is re-emitted on the other axis (the split with one weight: the phase
+and the content kept, the age started again). At 11 both reach the splitter in the same interval and each is
+split by the matrix (20, 21) with the quarter turn on the reflected row: toward D1 the two rows of amount 20
+and 21 are in phase and merge to 41 (the group-ring addition), toward D2 they are in antiphase and cancel to
+1 (the <code>cancel</code> line: 40 units removed on the GameBoard). At 12 the rows end at the ports and
+offer their cells; the weights are the squares of the pointers, 1681 against 1 out of 1682; the wheel value
+u = 0 falls under D1's rung; the click lands at D1 and the record is deleted everywhere. Our world saw one
+thing: D1 clicked.</p>
+<h2>The readings</h2>
+<table>
+<tr><th>Reading</th><th>Kind</th><th>Value</th><th>Source</th></tr>
+<tr><td>the clicks at D1 and D2 over the run's {record["completed_ticks"]} intervals ({
+        num(len(events["gather"]))
+    } records completed)</td><td>detector</td><td class="num">D1 {
+        num(sum(1 for g in events["gather"] if g["chosen"][0][0] == "D1"))
+    }, D2 {
+        num(sum(1 for g in events["gather"] if g["chosen"][0][0] == "D2"))
+    }</td><td><code>events.jsonl</code>, the <code>gather</code> lines' <code>chosen</code></td></tr>
+<tr><td>the register's pin over the first 64 births</td><td>detector</td><td class="num">D1 64, D2 0</td><td><code>examples/events/amplitude/expectations.json</code>, <code>mach_zehnder.mz_equal.clicks</code>; the offers 1681/1682 and 1/1682</td></tr>
+<tr><td>the first record's offers</td><td>detector</td><td class="num">D1: 41 units at the phase 16, the square {
+        num(
+            int(
+                next(
+                    r["record"]
+                    for r in events["record"]
+                    if int(r["of"]) == first and r["detector"] == "D1"
+                )
+            )
+        )
+    }; D2: 1 unit at the phase 32, the square {
+        num(
+            int(
+                next(
+                    r["record"]
+                    for r in events["record"]
+                    if int(r["of"]) == first and r["detector"] == "D2"
+                )
+            )
+        )
+    }</td><td><code>events.jsonl</code>, the <code>click</code> and <code>record</code> lines of the record {
+        first
+    }</td></tr>
+<tr><td>the rows cancelled toward D2 per record</td><td>GameBoard (the books)</td><td class="num">40</td><td><code>events.jsonl</code>, the <code>cancel</code> line at the interval 11</td></tr>
+<tr><td>the books balanced at every interval</td><td>GameBoard</td><td class="num">{
+        record["conserved_at_every_completed_tick"]
+    }</td><td><code>run.json</code></td></tr>
+</table>
+{
+        sources(
+            [
+                (
+                    "the world",
+                    f"<code>{relative(world)}</code>, registered in series L (the amplitude law), run as declared for {record['completed_ticks']} intervals",
+                ),
+                (
+                    "the run",
+                    f"<code>run.json</code> and <code>events.jsonl</code> made by <code>python -m event_universe --init {relative(world)}</code>",
+                ),
+                ("the source fingerprint", fingerprint_line(record)),
+                (
+                    "the frames and the store's columns",
+                    "the world replayed in process through <code>NatureBeamSimulation</code>, the stores read at every interval (a GameBoard reading); the software column prints the store's int64 fields as they are",
+                ),
+                (
+                    "the words",
+                    '<a href="../../THREE_WORLDS.md">THREE_WORLDS.md</a>, the six transformations; <a href="../../HIGHLIGHTS.md">Highlights</a> 5.7, the three conversions',
+                ),
+            ]
+        )
+    }
+"""
+    return write_page(
+        out,
+        "worlds",
+        page(
+            "Our world",
+            "One record from its birth to its click, seen three times: the vector world, the software world and our world.",
             body,
         ),
     )

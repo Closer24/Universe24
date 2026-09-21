@@ -8516,3 +8516,9 @@ the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
   the ladder's rungs and its wheel value u, the click list growing one
   line per record (the demonstration world `clicks_plate`; the catalog's
   optical bench cited beside it).
+- [Our world](pages/gallery/worlds.html): the vector world, the software
+  world and our world side by side for one record from its birth to its
+  click, on the registered Mach-Zehnder world with equal arms
+  (`amplitude/mz_equal`): the rows as points and the record's pointer at
+  the ports, the store's int64 columns and the gather line, and the one
+  click D1 read; the register's D1 64, D2 0 beside the run's.

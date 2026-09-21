@@ -49,8 +49,10 @@ code { font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; font-size: 0
 .swatch { width: 14px; height: 14px; border-radius: 50%; display: inline-block; border: 1px solid #fff8; }
 .wheel { width: 14px; height: 14px; border-radius: 50%; display: inline-block; background: conic-gradient(hsl(0 85% 50%), hsl(60 85% 50%), hsl(120 85% 50%), hsl(180 85% 50%), hsl(240 85% 50%), hsl(300 85% 50%), hsl(360 85% 50%)); }
 .kind { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.note { font-size: 0.85rem; color: var(--muted); margin: 6px 0 0; }
 .demo { background: var(--card); border-left: 4px solid var(--accent); padding: 8px 12px; margin: 12px 0; }
-.three { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+figure.player div.three:empty { display: none; }
+.three { display: grid; margin-top: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
 .three section { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; min-height: 120px; }
 .three h3 { margin: 0 0 6px; font-size: 1.05rem; }
 .three pre { font-size: 0.8rem; white-space: pre-wrap; margin: 0; font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; }
@@ -77,7 +79,7 @@ only kind reality has (<a href="../../EXPERIMENTS.md">the register</a>, "Two kin
 page made from a registered world says so and changes nothing in it; a page made from a demonstration
 world says so and registers nothing. The quarks are not modelled today (the nucleon is a family,
 <a href="../../ENTITY_CATALOG.md">the entity catalog</a>); a design is in preparation.</p>
-<ul class="pages"><li><a href="beam.html">The beam</a>: a lamp&#x27;s rows spreading on the digital lines of the fan, the phase as colour; the front against the circle of c and the L1 bound (a demonstration world)</li><li><a href="clicks.html">The clicks</a>: the catalog&#x27;s optical bench: a laser, a mirror, a slit and a screen of pixels clicking as records arrive; the pointer per pixel and the click list growing (a registered placement world)</li><li><b>The nucleus</b> (in preparation): series I: the deuteron bound at one Link, free at three, and the alpha square sheared apart; the strong rows&#x27; escape clicks at the lifetime (registered worlds)</li><li><b>The decay</b> (in preparation): series J: a neutron family becoming another (the transformation become), the products&#x27; flight to the shell, the W exchange at one Link; the trigger ticks and counts from the register</li><li><b>The collision</b> (in preparation): rows meeting at a Node permuted by the collision table: the head-on pair parks, turns and leaves; the classes of the group action (a demonstration world)</li><li><b>High-energy rows</b> (in preparation): series K under the meeting: a beam of light passing a mass, bent toward it; the mass measuring the most turned rows (registered worlds)</li><li><b>Our world</b> (in preparation): the vector world, the software world and our world side by side for one record from its birth to its click, in the Mach-Zehnder world of the amplitude series (a registered world)</li></ul>
+<ul class="pages"><li><a href="beam.html">The beam</a>: a lamp&#x27;s rows spreading on the digital lines of the fan, the phase as colour; the front against the circle of c and the L1 bound (a demonstration world)</li><li><a href="clicks.html">The clicks</a>: the catalog&#x27;s optical bench: a laser, a mirror, a slit and a screen of pixels clicking as records arrive; the pointer per pixel and the click list growing (a registered placement world)</li><li><b>The nucleus</b> (in preparation): series I: the deuteron bound at one Link, free at three, and the alpha square sheared apart; the strong rows&#x27; escape clicks at the lifetime (registered worlds)</li><li><b>The decay</b> (in preparation): series J: a neutron family becoming another (the transformation become), the products&#x27; flight to the shell, the W exchange at one Link; the trigger ticks and counts from the register</li><li><b>The collision</b> (in preparation): rows meeting at a Node permuted by the collision table: the head-on pair parks, turns and leaves; the classes of the group action (a demonstration world)</li><li><b>High-energy rows</b> (in preparation): series K under the meeting: a beam of light passing a mass, bent toward it; the mass measuring the most turned rows (registered worlds)</li><li><a href="worlds.html">Our world</a>: the vector world, the software world and our world side by side for one record from its birth to its click, in the Mach-Zehnder world of the amplitude series (a registered world)</li></ul>
 <p>Two more pages are made on the Boss's machine and will be linked here when they are on main: how a
 click looks (one record spreading, the click, the deletion) and Bell on the board.</p>
 <p>The pages are written by <code>tools/gallery_pages.py</code> (<code>--page all</code> rewrites them
@@ -95,6 +97,7 @@ document.querySelectorAll('figure.player').forEach(function (figure) {
   var button = figure.querySelector('button.play');
   var tick = figure.querySelector('span.tick');
   var readings = figure.querySelector('dl.readings');
+  var panels = figure.querySelector('div.three');
   figure.querySelector('a.gif').href = figure.querySelector('a.gifdata').href;
   var frame = 0, timer = null;
   function show(k) {
@@ -107,6 +110,11 @@ document.querySelectorAll('figure.player').forEach(function (figure) {
     readings.innerHTML = Object.keys(lines).map(function (key) {
       return '<div><dt>' + key + '</dt><dd>' + lines[key] + '</dd></div>';
     }).join('');
+    if (data.panels) {
+      panels.innerHTML = (data.panels[k] || []).map(function (panel) {
+        return '<section><h3>' + panel[0] + '</h3>' + panel[1] + '</section>';
+      }).join('');
+    }
     figure.dispatchEvent(new CustomEvent('frame', {detail: k}));
   }
   function play() {
