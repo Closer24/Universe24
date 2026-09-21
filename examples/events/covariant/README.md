@@ -141,7 +141,9 @@ its tolerance and the derived integer exactly.
 `run.json`'s `source_sha256`; Python 3.14.0rc2, numpy 2.5.3, headless; the
 J4 runs 0.3 s each, the coasting run 42.9 s; every run completed with the
 books balanced at every tick): 0 record checks failed, 24 readings inside,
-1 outside, nothing moved.
+1 outside, nothing moved. Relabelled on 2026-09-21: the one reading the
+tool counted outside is outside the continuum's number alone and inside
+the design's own integer pin 124 (DERIVATIONS_BEAM 17.6 M2: the 64th self-creation "at the integers 70 and 124 by the primitive's own count"; the continuum's 64 gamma = 125.2 is the limit, one gamma - 1 above the cadence from an empty accumulator; the physics-rule review REVIEW_3, must-fix 3: a relabel, nothing moved).
 
 | World | Reading | Kind | Measured | Verdict |
 | --- | --- | --- | --- | --- |
@@ -154,7 +156,7 @@ books balanced at every tick): 0 record checks failed, 24 readings inside,
 | | the `beta` click | DETECTOR | tick 369; the decay derived back 70 | inside (the design's 367 +- 2, at the edge; the derived 369) |
 | | the invariant | GAMEBOARD | 420 lines, 0 failures; 6 intervals owed to proper time (gamma 1.1074: 64 self-creations in 70 intervals) | inside |
 | `j4_muon_12856` | E' at load | GAMEBOARD | 25 910 | inside |
-| | the `become` line | GAMEBOARD | tick 124 at x = 72 | **OUTSIDE** the design's 125.2 +- 1 by 0.2; inside the derived 124 |
+| | the `become` line | GAMEBOARD | tick 124 at x = 72 | inside the design's integer pin 124 exactly (17.6 M2); 0.2 beyond the continuum's 125.2 +- 1, the limit (relabelled, REVIEW_3 must-fix 3) |
 | | the `beta` click | DETECTOR | tick 345; the decay derived back 124 | inside (the design's 345 +- 2; the derived 345) |
 | | the invariant | GAMEBOARD | 420 lines, 0 failures; 61 intervals owed (64 self-creations in 124 intervals, gamma 1.9558) | inside |
 | `coasting_none_covariant` | `s_mz2`'s z | DETECTOR | 0.3674 | inside (0.366 .. 0.372; the design's 0.369) |
@@ -163,9 +165,9 @@ books balanced at every tick): 0 record checks failed, 24 readings inside,
 | | the invariant | GAMEBOARD | 9567 lines, 0 failures; `s_mz2` owed 18 intervals of 400 (the outer stars up to 55) | inside |
 | | the load-time diagnostic | GAMEBOARD | 25 paid families off 3 h n = Q S d by 3 - 2^48 x 4 198 400 / 2^22 each (quantum 1 at Q S = 2^26); `books` false, no refusal | reported |
 
-**The one reading outside.** The muon at p = 12 856 fires its 64th
-self-creation at tick 124, where the design pins 125.2 +- 1 (0.2 beyond
-the tolerance). The cause is the discrete count itself, not a defect: from
+**The one reading the tool counted outside.** The muon at p = 12 856 fires
+its 64th self-creation at tick 124, inside the design's own integer pin 124 (DERIVATIONS_BEAM 17.6 M2: the 64th self-creation "at the integers 70 and 124 by the primitive's own count"; the continuum's 64 gamma = 125.2 is the limit, one gamma - 1 above the cadence from an empty accumulator; the physics-rule review REVIEW_3, must-fix 3: a relabel, nothing moved), and 0.2 beyond the tolerance
+of the continuum's 125.2 +- 1 that the generator also pinned. The cause is the discrete count itself, not a defect: from
 an empty accumulator the k-th self-creation falls at k + floor((k - 1)
 (E' - E'_0) / E'_0) = 64 + floor(63 x 12662 / 13248) = 124, one (gamma - 1)
 = 0.96 below the continuum's 64 gamma = 125.2 (the same count gives 70
