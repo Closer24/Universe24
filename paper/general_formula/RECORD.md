@@ -1,5 +1,7 @@
 # Paper 3, the click model: the record of the plan (the long form; the two-page plan is PLAN.md)
 
+*2026-09-21: by the owner's decision the manuscript became the paper on the general formula, with the click model as its measurement chapter; this record is the history of the first plan and is not rewritten (PLAN.md, "One paper, on the general formula").*
+
 Written 2026-09-20 by the paper coordinator (a separate session, by the
 model owner's decision recorded in
 [Highlights 5.4](../../docs/HIGHLIGHTS.md#54-the-detector), "DECIDED: the

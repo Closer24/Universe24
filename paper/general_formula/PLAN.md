@@ -713,3 +713,54 @@ Delta t); the automata cited by key; the redshift z named; the
 fourth-order term marked an order of magnitude; NUMBERS.md's symbol
 Lambda; this entry's predecessor marked superseded; the birth added to
 Remark 1's rule list.
+
+## One paper, on the general formula (DECIDED by the owner, 2026-09-21, about 05:02Z)
+
+The owner, after the assessment of the record (his words, translated):
+"No, no, we take one paper, a paper on the general formula, that is it."
+So: one manuscript on the map **F** of the integer torus (the state vector,
+the six verbs, the click as the one threshold), every result as its
+consequence, and the click-model manuscript folded in as the measurement
+chapter; no separate submission of the click-model paper. The directory
+`paper/click_model` was renamed `paper/general_formula` with its
+consumers (`paper/README.md`, the manuscript's own paths; the log's
+historical mentions untouched).
+
+The structure: Part I, the formula (DERIVATIONS_BEAM.md section 0 and 9.1,
+with the two precisions of section 0: the rates of the feedback block are
+bilinear, and the threshold read out is one comparison against the norm
+of the linear evaluation). Part II, what follows from the formula: one
+table in four rows, each entry with its derivation's section and its
+registered check or its pin: REACHED (Newton, Coulomb, Gauss and the
+third law, 3.1 to 3.4, series C; Doppler on the axis under the crossing
+rule, 2.2, record 158; c as the largest uniform pace, this paper's
+Proposition 1; Born as the lattice Gleason and Tsirelson as a limit, 6.2
+and 6.5, series L; Young's spacing in the limit of every direction, 7.1,
+record 156; Bohr's condition and radii in form, 7.2, series H; Poisson
+and the retarded delay field, the first-order redshift, Newton's retarded
+geodesics, 5.1 to 5.3, series E; the information cost and the boundary,
+6.1 and 6.3); INPUT, NOT DERIVED (G as the width S, 3.3; the masses M,
+PREDICTIONS 26; the family table, record 189); NOT REACHED (Einstein's
+equation, 5.5 and 5.6; E = m c^2 and velocity addition, 4.5; Bohr's
+energies and the Rydberg lines, 7.3; the harmonic constants of the click,
+6.5); DIFFERENT LAW, stated as a falsifiable row (Lorentz: the counter
+at 1, the dispersion, the push one factor short, decision A and B; the
+transverse Doppler exactly 1, 2.3; the second-order redshift, 5.2). Then
+the derivation sections of Part II written one by one from
+DERIVATIONS_BEAM with the register's checks, each after a hostile
+referee round. Part III, the click model, the measurement chapter: the
+present sections unchanged in content. Part IV, the pace (Proposition 1,
+Remark 1, the octahedron), Lorentz and the decision, what is not reached,
+the literature, the reproducibility.
+
+The conditions before the results are written as results, per the main
+course: the three builds and form B on main (the code the formula,
+record 221 (2)); each reached formula with its confirming run cited from
+the register (form B's cone, the thrown orbit, J4 and 12c's probe are
+pins, not runs); the derivation's sections 12c to 16 on main; a referee
+round per section. Until then a section states its formula with its
+source and its check's status. The click chapter's numbers are re-run
+over the 48 worlds after the fraction-free and wheel re-pin, as planned.
+Asked of the Boss: the record and the 5.4 line; the derivation
+mathematician informed; the builds' and runs' timeline; the re-pin's
+timing. The title is proposed to the owner with the skeleton.
