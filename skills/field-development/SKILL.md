@@ -94,3 +94,7 @@ handoff. Verify an exported portable input after relocation and keep the source
 closure fixed for an in-flight run. Do not treat a file reference as permission
 for implicit path searches or restore a deleted entity evaluator. Report actual
 configured Events, physical output and unresolved law limits separately.
+
+## Notation (the owner, 2026-09-21, record 184)
+
+Every symbol is named in English at its first use (never a Greek letter alone: "gamma (the Lorentz factor)"), and its kind is shown by its type: a scalar plain, a vector in bold lowercase (**p**), a tensor, matrix or operator in bold uppercase (**C**); skills/workflow.md, "Notation".

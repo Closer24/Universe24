@@ -134,3 +134,7 @@ not in this skill. Preserve notification preferences and avoid duplicate jobs.
 If the application permits only one heartbeat per thread, combine the daily gate
 with the existing hourly cleanup. Report scheduler restoration separately from
 the numerical audit result. Cloning Git alone does not activate an automation.
+
+## Notation (the owner, 2026-09-21, record 184)
+
+Every symbol is named in English at its first use (never a Greek letter alone: "gamma (the Lorentz factor)"), and its kind is shown by its type: a scalar plain, a vector in bold lowercase (**p**), a tensor, matrix or operator in bold uppercase (**C**); skills/workflow.md, "Notation".

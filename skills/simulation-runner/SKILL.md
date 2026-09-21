@@ -132,3 +132,7 @@ For speed investigations, follow the shared workflow's
 once dependencies and source identity are verified; installing it again is setup
 work, not a simulator benchmark. A performance investigation alone does not
 request visualization or visual test execution.
+
+## Notation (the owner, 2026-09-21, record 184)
+
+Every symbol is named in English at its first use (never a Greek letter alone: "gamma (the Lorentz factor)"), and its kind is shown by its type: a scalar plain, a vector in bold lowercase (**p**), a tensor, matrix or operator in bold uppercase (**C**); skills/workflow.md, "Notation".
