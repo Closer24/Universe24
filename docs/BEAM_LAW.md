@@ -214,7 +214,42 @@ Node after the collision and turns toward it by its phase register,
 section 3 step 3; refused with a paid family without a phase circle,
 which has no register; the record carries `meeting` as declared and the
 identity `meeting-v1` under `hypotheses` when it is true; absent, no world
-changes by a byte).
+changes by a byte). Added on 2026-09-21 (`massive-rows-v1`, the model
+owner's yes of record 332 of the log of 2026-09-20 and the mathematician's
+design [docs/designs/massive_rows/DESIGN.md](designs/massive_rows/DESIGN.md),
+ADMISSIBLE in the physics-rule review's three rounds; an identity beside
+the law, declared as `bohr-v1` is): at the world `massive_rows` (true or
+false, false by default; with it `age_bound` is declared, a massive row's
+pace being its family's and not the flight's) and, under it alone, per
+family `massive` (true: a paid family with a phase circle and no
+`phase_per_link`, whose rows are records of massive rows: its label per
+direction p_D, the integer vector nearest p D / |D| by `unit_label`'s
+rule at the scale p in place of Q (`world.scaled_label`), the flight by
+the one accumulator of note 41 (viii) at the rate 2 abs(p_D)_1 against
+the wall 2 E'_D from the start E'_D, E'_D = isqrt((Q S M)^2 + 3 p_D .
+p_D) formed at load (M the `quantum`, S the `width`; the massless case
+E'_0 = 0 with the flight vector Q D gives Flight's pair on every
+direction: the photon's table is Flight's by value), de Broglie's turn
+abs(p_a) N over the world's `action` h at every axis Link on the row's
+one accumulator `acc_turn` (an identity field of the merge), and the
+completion's rule in the value form: every family carries at load the
+placed fraction f_F of an arrival and the completion's quantum q_F, (1,
+0) without the flag (the click as built) and (0, M) with it, so that a
+massive row's units, content and label wait in its record's offer where
+they ended and the record's completion hands ONE quantum, M and the one
+label p_D of the chosen row's direction, to the chosen set (an entry's
+`held`, `clicks` and momentum, or a face's escaped lines), the rest to
+the `cancelled` lines; no flag is read at run time) and per lamp of a
+massive family `momentum_magnitude` (p, an integer from 1, one value per
+family; required there, refused on any other lamp); refused at load with
+`phase_per_link` in either form, on a free family or a family without a
+phase circle, without `action`, and at the birth a massive lamp whose
+turn is not 1; the record carries `massive_rows` as declared and the
+identity under `hypotheses` when it is true, the books the `waiting`
+lines and the rows' record `acc_turn`; the inverse interval is refused
+with the key; absent, no world changes by a byte
+(`tests/test_massive_rows.py` (a)); the pin `slits_matter` and its run
+are in [examples/events/massive_rows/README.md](../examples/events/massive_rows/README.md).
 Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
 `suspension`, `families`, `measured` (`table` with `read`, `measure`,
 `rerelease`, `pass` and `phase_window`, since 2026-09-20 with its width

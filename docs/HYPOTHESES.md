@@ -1066,3 +1066,64 @@ couplings.
   deuteron, the third-law gap of record 126 made visible by held paid
   content before the give (the review's finding, reported, not moved); the
   pp threshold not run.
+
+## 25. The free particle as a record of massive rows: de Broglie's fringes from h / p, stated so that it can fail
+
+- **Statement (the model owner's yes of 2026-09-21, record 332 of
+  docs/LOG_2026-09-20.md; the derivation mathematician's check,
+  DERIVATIONS_BEAM section 23, record 336; the mathematician's design
+  [docs/designs/massive_rows/DESIGN.md](designs/massive_rows/DESIGN.md),
+  ADMISSIBLE in the physics-rule review's three rounds;
+  [BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file);
+  `massive-rows-v1`).** A free quantum of matter flies as a photon does:
+  under the world key `massive_rows` a paid family declared `massive`
+  births records of rows over its lamp's fan, each row carrying the
+  momentum label p_D (the direction's unit vector at the scale p, the
+  lamp's `momentum_magnitude`) and the content M (the family's `quantum`),
+  flying by the flight's one accumulator at the rate 2 abs(p_D)_1 against
+  the wall 2 E'_D (E'_D = isqrt((Q S M)^2 + 3 p_D . p_D) at load; the
+  photon its E'_0 = 0 case, one primitive), turning de Broglie's abs(p_a)
+  N / h at every axis Link on one accumulator (the plane wave to one
+  remainder), clicking by the click as built, and at the record's
+  completion handing ONE quantum, M and the one label of the chosen row's
+  direction, to the chosen set, a body from then on as series H's electron
+  is; a body never becomes a record, and the bound electron stays a body.
+  Every family carries the same tables by value (the photon's Flight's,
+  the pair (1, 0)), no flag read at run time, no new verb. Claimed: de
+  Broglie's wavelength h / p and the group pace p / E' from the declared
+  integers alone, so the two-slit fringes of matter from the same law and
+  apparatus as light's. Not claimed: the potential (23.4, the standing
+  record under V), the transition of a body back to a record, Klein-Gordon
+  or Schrodinger reached beyond the linear block (23.2).
+- **The pin (`slits_matter`, [examples/events/massive_rows/README.md](../examples/events/massive_rows/README.md);
+  the design's section 4, every number with its line, pinned before the
+  run).** `slits_huygens`' plane, apparatus and Farey fan with `matter`
+  (M 64, p 220, S 1, h 1024: E'_0 = 4096, E' = 4113, the pace 220 / 4113
+  = 0.0926 c, the wavelength 256 / 55 = 4.6545 Links, the photon world's
+  4.654): the lamp leg 139 (the photon's 13); the first `click` line at
+  `screen_60` about the tick 955 within 5 (the group pace) and at
+  `screen_37` and `screen_83` about 1016; the bright bands centred at the
+  pixels 36.5, 60 and 83.5 within one; Pearson of the gathers' counts with
+  the two-source cosine 0.89 +- 0.03 on the declared Farey fan (the
+  registered photon's 0.891), the visibility 0.95 +- 0.03, the dark pixels
+  0 to 3; the run 5750 intervals for every record of 4096 births, first
+  at 1024 births (the wheel [633, 1024], 2700 intervals). The faces' and
+  the wall's completions are a GAMEBOARD diagnostic beside it; the
+  screen's gathers the DETECTOR reading.
+- **What would refute it.** A band off by more than one pixel (the
+  wavelength not h / p); the centre's first `click` line off by more than
+  5 intervals of 955 (the pace not p / E'); no fringes (the phase not
+  p . x); a registered world without the key whose bytes move; a books
+  line off by one unit at any tick; a completion placing other than one
+  quantum M and one label. The confrontation, dimensionless: Jonsson 1961
+  and Tonomura et al. 1989 as 23.3 states them (the fringe positions in
+  units of lambda D / s, the build-up one click per birth).
+- **The price, named.** The completion's choice moves state (today the
+  layer only reads): the apparatus's one non-local operation at the
+  one-way border is physical under this identity, admitted by record 332
+  ("the click gathering it to one Node"); the record's waiting is the
+  host's, O(open records x ended Nodes), beside the offers it lives in.
+- **Status.** Built on 2026-09-21 beside the law (`tests/test_massive_rows.py`,
+  the register byte identical without the key); the pin's run and its
+  verdict in the series README as run.
+

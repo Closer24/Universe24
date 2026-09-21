@@ -500,6 +500,23 @@ register entry is
 0.5893 (the mean 0.5810) over the fan at this GameBoard, 0.5774 to
 0.5818 in the limit, against c = 0.5774.
 
+## The massive rows
+
+The folder [massive_rows/](massive_rows/README.md) holds the worlds of the
+massive rows (`massive-rows-v1`, the model owner's yes of 2026-09-21,
+record 332; the design docs/designs/massive_rows/DESIGN.md), written by
+`massive_rows/make_worlds.py` from series L's generator beside
+`slits_huygens` with `expectations.json` pinned before the run: the pin
+`slits_matter` (the two slits with the massive family `matter`, M 64 and
+p 220 at S 1 and h 1024, 4096 births over 5750 intervals), the 1024-birth
+run `slits_matter_1024` (the wheel [633, 1024], 2700 intervals) and the
+small replay world `slits_matter_small` (8 births read over 48 intervals,
+its record registered by `replay_register.py`); `read_run.py` reads a run
+against the pin, every number labelled DETECTOR (the screen's gathers,
+the first `click` lines) or GAMEBOARD (the faces' and the wall's
+completions, the books). The register entry is
+[S, the massive rows (2026-09-21)](../../docs/EXPERIMENTS.md#s-the-massive-rows-2026-09-21).
+
 ## The entity catalog
 
 The folder [catalog/](catalog/README.md) holds the four worlds of

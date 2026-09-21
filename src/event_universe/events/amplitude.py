@@ -294,7 +294,9 @@ def node_choice(weights: list[int], width: int, position: int) -> int:
     """The Node tuple within a cell: the rungs c_j = (2 W D_j + T) //
     (2 T) over the tuples' weights (W the cell's width in u, D_j the
     cumulative weight, T the cell's weight), the first j with the position
-    (u less the cell's first rung) below c_j."""
+    (u less the cell's first rung) below c_j. The same rungs read the row
+    within the chosen Node (`massive-rows-v1`: the ladder's third level,
+    over the waiting units per direction at the Node)."""
     total = sum(weights)
     cumulative = 0
     for j, weight in enumerate(weights):
@@ -302,6 +304,21 @@ def node_choice(weights: list[int], width: int, position: int) -> int:
         if position < (2 * width * cumulative + total) // (2 * total):
             return j
     return len(weights) - 1
+
+
+def node_rung(weights: list[int], width: int, j: int) -> tuple[int, int]:
+    """The rung of the j-th choice of `node_choice`: [c_{j-1}, c_j) over
+    the same weights and width (c_0 = 0; an empty total gives [0, width)),
+    what the next level of the ladder reads its position and width from."""
+    total = sum(weights)
+    if total == 0:
+        return 0, width
+    rungs = [0]
+    cumulative = 0
+    for weight in weights:
+        cumulative += weight
+        rungs.append((2 * width * cumulative + total) // (2 * total))
+    return rungs[j], max(rungs[j + 1], rungs[j] + 1)
 
 
 @dataclass
@@ -334,6 +351,18 @@ class Offer:
     content: dict[Node, int] = field(default_factory=dict)
     momentum: dict[Node, list[int]] = field(default_factory=dict)
     last_tick: int = 0
+    # The record's waiting state (`massive-rows-v1`, the design's section 3
+    # item 5): per Node the units, the content and the labels of the rows
+    # that ended there and were NOT placed at their arrival ((1 - f_F) x
+    # what they brought, f_F the family's placed fraction), and per Node
+    # the waiting units per direction (the row the completion places its
+    # quantum on is read by the rungs over them); empty at f_F = 1, so the
+    # click as built holds nothing here. Resolved at the completion: the
+    # chosen end's quantum placed, the rest cancelled.
+    waiting_units: dict[Node, int] = field(default_factory=dict)
+    waiting_content: dict[Node, int] = field(default_factory=dict)
+    waiting_momentum: dict[Node, list[int]] = field(default_factory=dict)
+    waiting_directions: dict[Node, dict[int, int]] = field(default_factory=dict)
 
     def channels(self) -> list[int]:
         return sorted(self.residuals)
@@ -372,6 +401,14 @@ class LiveRecord:
     gather: dict[str, object] | None = None
     ends: int = 0
     last_end: int = 0
+    # The completion's choice (`complete`): the chosen ends (one offer and
+    # its Node per arm) and u's position within the chosen Node tuple's
+    # rung with that rung's width, what the placement reads
+    # (`nature_beam.gather_records`: the chosen row by the same rungs over
+    # the directions at the Node).
+    chosen_ends: list[tuple[Offer, Node]] = field(default_factory=list)
+    chosen_position: int = 0
+    chosen_width: int = 0
 
     def offer(self, set_index: int, arm: int, read: bool) -> Offer:
         key = (set_index, arm)
@@ -604,14 +641,20 @@ class Layer:
         node: Node | None = None,
         content: int = 0,
         momentum: list[int] | None = None,
+        placed: int = 1,
+        direction: int = -1,
     ) -> None:
         """Rows of a record that ended at a set (`absorbed`: a click, a
         face, the border; the units leave the live count) or were read
         there and went on (a which-path factor): the offer at (set, arm)
         accumulates their pointer and the residual per channel at their
-        Node, with the content and the momentum they brought. A gathered
-        record's rows are dropped (the lazy deletion, section 9: the record
-        left the table at its completion and `resolve` finds nothing)."""
+        Node, with the content and the momentum they brought. With `placed`
+        the family's placed fraction f_F (`massive-rows-v1`; 1 by default,
+        the click as built): (1 - f_F) x the units, the content and the
+        momentum wait in the offer at the Node, the units per `direction`
+        (the row's), until the completion. A gathered record's rows are
+        dropped (the lazy deletion, section 9: the record left the table
+        at its completion and `resolve` finds nothing)."""
         found = self.resolve(identity)
         if found is None:
             return
@@ -662,6 +705,16 @@ class Layer:
             held = offer.momentum.setdefault(at, [0] * len(momentum))
             for axis, value in enumerate(momentum):
                 held[axis] += value
+        kept = 1 - placed
+        if kept:
+            offer.waiting_units[at] = offer.waiting_units.get(at, 0) + kept * amount
+            offer.waiting_content[at] = offer.waiting_content.get(at, 0) + kept * content
+            if momentum is not None:
+                waiting = offer.waiting_momentum.setdefault(at, [0] * len(momentum))
+                for axis, value in enumerate(momentum):
+                    waiting[axis] += kept * value
+            by_direction = offer.waiting_directions.setdefault(at, {})
+            by_direction[direction] = by_direction.get(direction, 0) + kept * amount
         # The count of the rows at their phase, the amplitude scale on the
         # amount; the residual per channel the count times the entry's
         # scalar at the phase shifted by the entry's turn (no pointer).
@@ -878,10 +931,15 @@ class Layer:
                 common = gcd(numerator, multiplicity) or 1
                 weight = [numerator // common, multiplicity // common]
                 first = ladder[k - 1] if k else 0
-                j = node_choice([w for _, w in tuples], ladder[k] - first, found.u - first)
+                node_weights = [w for _, w in tuples]
+                j = node_choice(node_weights, ladder[k] - first, found.u - first)
+                lower, upper = node_rung(node_weights, ladder[k] - first, j)
                 nodes, _ = tuples[j]
                 nodes_chosen = [list(node) for node in nodes]
                 chosen_ends = [o for o, _ in factors_chosen if not o.read]
+                found.chosen_ends = list(zip(chosen_ends, nodes, strict=True))
+                found.chosen_position = found.u - first - lower
+                found.chosen_width = upper - lower
                 for offer, node in zip(chosen_ends, nodes, strict=True):
                     content += offer.content.get(node, 0)
                     for axis, value in enumerate(offer.momentum.get(node, [])):

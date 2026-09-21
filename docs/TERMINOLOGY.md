@@ -432,6 +432,7 @@ stated so that it can fail and never enters the law by its list.
 | `weak-v1` | the transformation `become` (note 36) | built; under `hypotheses` when a `become` is declared |
 | `columns-v1` | a column beyond `charge` or a lifetime (note 31) | built; under `hypotheses` when declared |
 | `bohr-v1` | the turn by momentum, the world key `action` (note 30) | built; under `hypotheses` when declared |
+| `massive-rows-v1` | the free particle as a record of massive rows: the world key `massive_rows`, the family key `massive`, the lamp key `momentum_magnitude` ([the design](designs/massive_rows/DESIGN.md)) | built (2026-09-21); under `hypotheses` when the key is declared |
 | form B | one motion primitive: a body's drive as the flight of its momentum's direction at a fraction | decided (records 183, 191, 301), not built |
 | `covariant-readings-v1` | the four covariant readings of DERIVATIONS_BEAM section 17, in place of `lorentz-v1` | decided (record 270), not built |
 | `optical-v1` | the rows' rule at a Node for the bending, the Shapiro delay, the second-order redshift and Snell ([the design](designs/gr_rows/DESIGN.md)) | decided as a hypothesis, not built |

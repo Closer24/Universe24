@@ -835,6 +835,17 @@ class Ledger:
     # line's units); zero without a declared hand.
     taken_left: list[int] = field(default_factory=list)
     taken_right: list[int] = field(default_factory=list)
+    # The `waiting` lines (`massive-rows-v1`, 2026-09-21; the design's
+    # section 3 item 5): per family the units, the content and the labels
+    # of the rows of a record that ended (a click, a face, the border) and
+    # were not placed at their arrival ((1 - f_F) x what they brought, f_F
+    # the family's placed fraction), the sub-line of `absorbed` that waits
+    # for the record's completion, where the chosen set takes the quantum
+    # q_F and the rest is cancelled. Zero in a world without the key
+    # `massive_rows` (every family's f_F is 1), and written only there.
+    waiting_amount: list[int] = field(default_factory=list)
+    waiting_content: list[int] = field(default_factory=list)
+    waiting_momentum: list[list[int]] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         count = self.families
@@ -855,8 +866,11 @@ class Ledger:
             "cancelled_content",
             "taken_left",
             "taken_right",
+            "waiting_amount",
+            "waiting_content",
         ):
             setattr(self, name, [0] * count)
+        self.waiting_momentum = [[0, 0, 0] for _ in range(count)]
         self.lifetime_momentum = [[0, 0, 0] for _ in range(count)]
         self.turned_momentum = [[0, 0, 0] for _ in range(count)]
         self.cancelled_momentum = [[0, 0, 0] for _ in range(count)]
@@ -914,3 +928,17 @@ class Ledger:
         """The labels the merge's cancel removed, summed over the families
         (the amplitude law)."""
         return [sum(self.cancelled_momentum[f][axis] for f in range(self.families)) for axis in range(3)]
+
+    def wait(self, family: int, units: int, content: int, momentum: list[int]) -> None:
+        """What a family's records have waiting moved by (units, content,
+        labels): positive at an end that waits, negative at the completion
+        that resolves it (`massive-rows-v1`)."""
+        self.waiting_amount[family] += units
+        self.waiting_content[family] += content
+        self.waiting_momentum[family] = [
+            a + b for a, b in zip(self.waiting_momentum[family], momentum, strict=True)
+        ]
+
+    def waiting_momentum_total(self) -> list[int]:
+        """The labels waiting with the open records, summed over the families."""
+        return [sum(self.waiting_momentum[f][axis] for f in range(self.families)) for axis in range(3)]

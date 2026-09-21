@@ -6,6 +6,65 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The massive rows, on 2026-09-21 (`massive-rows-v1`, an identity beside the law; every world without the key byte identical)
+
+The model owner's yes of 2026-09-21 (record 332 of docs/LOG_2026-09-20.md:
+"with the electron this is the right thing to do; it works exactly by the
+system's tools; a free quantum today does not replicate") on the
+mathematician's design [docs/designs/massive_rows/DESIGN.md](designs/massive_rows/DESIGN.md),
+ADMISSIBLE in the physics-rule review's three rounds, built beside the
+law under one world key. Three keys, one row column, no new verb:
+
+- the world key `massive_rows` (false by default; `age_bound` declared
+  with it), the family key `massive` (a paid family with a phase circle
+  and no `phase_per_link`) and the lamp key `momentum_magnitude` (p, the
+  magnitude of the family's momentum label, one value per family);
+- every family gets at load, beside `Flight`, its tables over the world's
+  directions (`nature_beam.FamilyFlight`): the flight triple (rate, wall,
+  start), the labels, the turn's numerators per axis over one
+  denominator and the completion's pair (f_F, q_F). A family without the
+  flag carries Flight's numbers (2 S_1 Q, 2 T_D, T_D), u_D,
+  (`phase_per_link`, 1) and (1, 0) by value; a massive family p_D at the
+  scale p, (2 abs(p_D)_1, 2 E'_D, E'_D) with E'_D = isqrt((Q S M)^2 + 3
+  p_D . p_D), (abs(p_{D,a}) N, h) and (0, M). The walk reads the family's
+  triple where it read Flight's pair, the turn the family's table through
+  `by_drive_rows` on the new row column `acc_turn` (an identity field of
+  the merge, a width of 0 bits in the packed key when constant, written on
+  the row's line of `state.json` only in a world with the key), every
+  label the family's label table; no flag is read at run time;
+- the completion in the value form: at every end (a `measure` click, a
+  face, the border) f_F x the units, the content and the labels go where
+  they went and (1 - f_F) x them wait in the record's offer under the
+  books' `absorbed` line (the new `waiting` sub-line of the transit and
+  content lines and the `waiting` momentum line, written only with the
+  key); at the record's completion every chosen end takes q_F into the
+  measured event's `held`, one unit into its `clicks` and q_F x the label
+  of the chosen row's direction into its momentum (a face or the border:
+  its escaped lines, no body formed), the chosen row by the ladder's rungs
+  over the waiting units per direction at the Node, the rest of the
+  waiting to the `cancelled` lines; the `gather` line's `content` and
+  `momentum` are then q_F and the one label; the `click` line as today;
+- refused at load: `massive` without the key, with `phase_per_link` in
+  either form, on a free family, without a phase circle, without `action`;
+  `momentum_magnitude` on a lamp of a family that is not massive, absent
+  on a massive lamp, below 1, two values on one family, a massive family
+  without a lamp; `age_bound` absent with the key; a rest energy or a
+  turn's rate beyond 2^62 - 1; at the birth, a massive lamp whose turn is
+  not 1 (a born row's content is quantum x turn, and the tables are formed
+  for M); the inverse interval on a world with the key;
+- `run.json` carries `massive_rows` as declared, `massive-rows-v1` under
+  `hypotheses` when it is true (after `amplitude-v1`) and per family
+  `massive` and `momentum_magnitude` only then.
+
+Without the key every registered world reads as it did, byte for byte:
+the gate set's lamp-free worlds at their caps, `mz_345`, `bell_0_8` and
+`slits_low` at their ticks (`tests/test_massive_rows.py` (a), the digests
+registered from the base tree in `examples/events/massive_rows/expectations.json`).
+The worlds of the pin, `slits_matter` (4096 births) and `slits_matter_1024`,
+and the small replay world are in `examples/events/massive_rows/`
+([README](../examples/events/massive_rows/README.md)); the identity's entry is
+[HYPOTHESES section 25](HYPOTHESES.md#25-the-free-particle-as-a-record-of-massive-rows-de-broglies-fringes-from-h--p-stated-so-that-it-can-fail).
+
 ## Series R re-registered under the crossing rule, on 2026-09-21 (the register's replay blocks; no rule change)
 
 The crossing rule (BEAM_LAW note 48, PR #468, merged 2026-09-21 07:24Z)
