@@ -1205,6 +1205,11 @@ class NatureBeamSimulation:
         written as `NatureBeam.record` says."""
         nodes = sorted({int(node) for store in self.stores for node in np.unique(store.node)})
         vectors = self.tables.flight.vectors
+        # The world's `handed` read once: the property scans every measured
+        # event, and a row's line is written once per row (2026-09-21: the
+        # state's write of w27_beam at 30 intervals from 251.9 s to 9.7 s,
+        # the bytes identical).
+        handed = self.world.handed
         for flat in nodes:
             x, y, z = self.stores[0].coordinates(np.array([flat]))
             entry: dict[str, object] = {"position": [int(x[0]), int(y[0]), int(z[0])], "families": []}
@@ -1214,6 +1219,6 @@ class NatureBeamSimulation:
                 lo, hi = store.slice(flat)
                 if hi == lo:
                     continue
-                beams = [beam.record_line(vectors, self.world.handed) for beam in store.rows(lo, hi)]
+                beams = [beam.record_line(vectors, handed) for beam in store.rows(lo, hi)]
                 families.append({"family": family.name, "rays": beams})
             yield entry
