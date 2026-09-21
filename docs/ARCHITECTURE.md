@@ -126,6 +126,22 @@ fraction-free law of 2026-09-20; `core.integer.by_drive`): a whole part
 off the clock at the current rate discards the remainder of a changing
 rate, so it is admitted only as the constant-rate identity of a count, or
 as a comparison of an age against a key.
+The tables the engine carries at run time are declarations of the world,
+each computed once at load from its declared integers and read by the
+rules as a constant ([BEAM_LAW note 41 (viii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+2026-09-21), with the test that pins its entries:
+the flight's constants per direction (`nature_beam.direction_flight`: S_1,
+T_d = isqrt(3 |**v**|^2 Q^2), the period, the Bresenham line, the unit
+label **u**_d; `tests/test_nature_beam_label.py` (a), `tests/test_nature_beam_flight.py` (a) and (g));
+the phase circle (`core.phase.phase_circle`: cos and sin of every step at
+1 / 256 by fixed-point series; `tests/test_group_structure.py` (b), the
+amplitude gate's xfail at N = 4096); the collision table
+(`nature_beam.collision_table`: the shift on the 3^8 slot states, generated
+from the class rule; `tests/test_nature_beam_collision.py` (b),
+`tests/test_group_structure.py` (c)); the arc table of the meeting
+(`meeting.arc_table` on the unit labels, per target on demand;
+`tests/test_meeting.py`); the cube's group (`core.game_board.cube_symmetries`,
+read by no rule at run time; `tests/test_group_structure.py` (a)).
 Keep documented integer split/quantization policies explicit and test their
 accounting. Arithmetic failure must not leave a partially committed transaction.
 
