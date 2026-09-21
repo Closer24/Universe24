@@ -1318,12 +1318,27 @@ class NatureBeamStore:
         amplitude law default to a row of no record (0, 0, 1) and the hand
         to none (0) when the caller names none of them (a declared ray, the
         tests' bare rows)."""
-        count = columns["node"].shape[0]
-        for name, default in COLUMN_DEFAULTS.items():
-            if name not in columns:
-                columns[name] = np.full(count, default, dtype=np.int64)
+        self.extend([columns])
+
+    def extend(self, batches: list[dict[str, np.ndarray]]) -> None:
+        """Rows appended in batches, one concatenation per field for all the
+        batches in their order (the same rows in the same order as one
+        `append` per batch; the host's cost linear in the rows instead of
+        one copy of the store per batch): the interval's releases are
+        collected per family and appended once."""
+        for columns in batches:
+            count = columns["node"].shape[0]
+            for name, default in COLUMN_DEFAULTS.items():
+                if name not in columns:
+                    columns[name] = np.full(count, default, dtype=np.int64)
         for name in FIELDS:
-            setattr(self, name, np.concatenate([getattr(self, name), columns[name].astype(np.int64)]))
+            setattr(
+                self,
+                name,
+                np.concatenate(
+                    [getattr(self, name), *[columns[name].astype(np.int64) for columns in batches]]
+                ),
+            )
 
     def keep(self, mask: np.ndarray) -> None:
         """Keep the rows the mask selects, in every field."""
@@ -4103,12 +4118,14 @@ def _release_family(
     released: list[int],
     thrown_rows: list[list[object]],
     thrown_recoil: list[int],
+    born_columns: list[dict[str, np.ndarray]],
 ) -> list[int]:
     """One family's releases of one measured event at this self-creation:
     the free family's release, the pending rows (home, re-released, the
     products), the lamp's births, then the recoil on the reader and the
-    rows appended to the store; returns the recoil of the products thrown
-    (the `become` record's).
+    rows' columns added to `born_columns` (the store's batch of the
+    interval, appended once by `_release`); returns the recoil of the
+    products thrown (the `become` record's).
     """
     tick = frame.tick
     record = frame.record
@@ -4521,20 +4538,22 @@ def _release_family(
     ledger.transit_momentum = [
         a + b for a, b in zip(ledger.transit_momentum, born_momentum, strict=True)
     ]
-    store.append(
-        node=node_column,
-        direction=direction_column,
-        age=np.zeros(count, dtype=np.int64),
-        phase=np.array([b[3] for b in born], dtype=np.int64),
-        number=np.full(count, entry.number, dtype=np.int64),
-        amount=amount_column,
-        content=content_column,
-        arrival=np.full(count, NO_ARRIVAL, dtype=np.int64),
-        record=np.array([b[5] for b in born], dtype=np.int64),
-        branch=np.array([b[6] for b in born], dtype=np.int64),
-        multiplicity=np.array([b[7] for b in born], dtype=np.int64),
-        birth=np.array([b[8] for b in born], dtype=np.int64),
-        hand=np.array([b[9] for b in born], dtype=np.int64),
+    born_columns.append(
+        {
+            "node": node_column,
+            "direction": direction_column,
+            "age": np.zeros(count, dtype=np.int64),
+            "phase": np.array([b[3] for b in born], dtype=np.int64),
+            "number": np.full(count, entry.number, dtype=np.int64),
+            "amount": amount_column,
+            "content": content_column,
+            "arrival": np.full(count, NO_ARRIVAL, dtype=np.int64),
+            "record": np.array([b[5] for b in born], dtype=np.int64),
+            "branch": np.array([b[6] for b in born], dtype=np.int64),
+            "multiplicity": np.array([b[7] for b in born], dtype=np.int64),
+            "birth": np.array([b[8] for b in born], dtype=np.int64),
+            "hand": np.array([b[9] for b in born], dtype=np.int64),
+        }
     )
     ledger.transit_released[family] += int(exact_sum(amount_column))
     return thrown_recoil
@@ -4552,6 +4571,10 @@ def _release(frame: Interval) -> None:
     free_of = frame.free_of
     entries = frame.entries
     # 5. The self-creations: the releases into the store.
+    # The rows born this interval, per family, in the order of the measured
+    # events and of the families: appended to the store once at the end of
+    # the step (`NatureBeamStore.extend`), the same rows in the same order.
+    born_columns: list[list[dict[str, np.ndarray]]] = [[] for _ in stores]
     # Only a measured event that can release anything is visited (in number
     # order): a lamp, a holder of a free family's content, one with rows
     # pending (home, re-released or a product) or one with a clock trigger
@@ -4596,7 +4619,17 @@ def _release(frame: Interval) -> None:
         thrown_recoil = [0, 0, 0]
         for family, store in enumerate(stores):
             thrown_recoil = _release_family(
-                frame, entry, family, store, age, turn, lamp_count, released, thrown_rows, thrown_recoil
+                frame,
+                entry,
+                family,
+                store,
+                age,
+                turn,
+                lamp_count,
+                released,
+                thrown_rows,
+                thrown_recoil,
+                born_columns[family],
             )
         # The `become` record, at the products' birth: the trigger and its
         # tick, the families, the products with their directions and the
@@ -4620,6 +4653,9 @@ def _release(frame: Interval) -> None:
                         }
                     )
             entry.transformed = []
+    for family, store in enumerate(stores):
+        if born_columns[family]:
+            store.extend(born_columns[family])
 
 
 def _border(frame: Interval) -> None:

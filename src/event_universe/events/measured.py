@@ -429,6 +429,10 @@ class Measured:
     # `charges` for the charge line of the books and the report, never by
     # the push (`charges(for_push=True)` leaves it out).
     unit_charges: tuple[Pair, ...] = ()
+    # The memo of `charges`: its inputs and its result (host only).
+    _charges_cache: tuple[tuple[bool, tuple[int, ...], tuple[int, ...]], list[Pair]] | None = field(
+        default=None, repr=False, compare=False
+    )
     # The transformation `become` (the weak force, 2026-09-20): the clock
     # trigger as declared (None without, and None once it fired), per
     # family the click trigger of the entry whose rule is `become` (None
@@ -581,7 +585,19 @@ class Measured:
         reader's side of the push (`nature_beam.push_form`), which leaves
         the paid units out: the charge of a measured event is rho times
         its content for a free family and the declared whole charge times
-        the amount for a paid family, and the push reads only the former."""
+        the amount for a paid family, and the push reads only the former.
+        The last result is kept with its inputs (what is held and the units
+        per paid family) and returned again while they are the same: the
+        same integers, computed once per change (host only)."""
+        units = (
+            ()
+            if for_push or not self.unit_charges
+            else tuple(self.units(family) for family in range(len(self.unit_charges)))
+        )
+        key = (for_push, tuple(self.held), units)
+        cached = self._charges_cache
+        if cached is not None and cached[0] == key:
+            return list(cached[1])
         charges = column_charges(
             [
                 (self.family_values[family], content)
@@ -592,15 +608,15 @@ class Measured:
             self.number,
             self.position,
         )
-        if for_push or not self.unit_charges:
-            return charges
-        terms = [
-            (numerator * self.units(family), denominator)
-            for family, (numerator, denominator) in enumerate(self.unit_charges)
-            if numerator and self.units(family)
-        ]
-        if terms:
-            charges[CHARGE_INDEX] = rational_sum([charges[CHARGE_INDEX], *terms])
+        if units:
+            terms = [
+                (numerator * count, denominator)
+                for count, (numerator, denominator) in zip(units, self.unit_charges, strict=True)
+                if numerator and count
+            ]
+            if terms:
+                charges[CHARGE_INDEX] = rational_sum([charges[CHARGE_INDEX], *terms])
+        self._charges_cache = (key, list(charges))
         return charges
 
     @property

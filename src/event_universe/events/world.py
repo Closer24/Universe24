@@ -302,6 +302,7 @@ family or a content that is not a positive integer.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import cached_property
 
 from event_universe.core.game_board import MAX_VALUE, PORT_HEADINGS, Address3
 from event_universe.core.integer import bounded_gcd, by_clock, integer_root, rational_sum
@@ -1067,13 +1068,14 @@ class NatureBeamWorld:
             for entry in self.measured
         )
 
-    @property
+    @cached_property
     def handed(self) -> bool:
         """Whether the world declares a hand anywhere (`hand-v1`): a
         family's, a lamp's or a transit row's `hand`, a table entry's
         parity filter, a lamp's label hands, or a measured event's `axis`.
         Without one no row carries a hand, no line of the record names one
-        and every world reads as it did, byte for byte."""
+        and every world reads as it did, byte for byte. Read once per
+        world (a cached property: the world is frozen)."""
         return (
             any(family.hand for family in self.families)
             or any(item.hand for item in self.in_transit)

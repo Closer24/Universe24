@@ -900,6 +900,29 @@ section.big math { font-size: 2.4rem; margin: 10px 0; }
 section.big .conditions math { font-size: 1.4rem; margin: 4px 0; }
 math[display="block"] { max-width: 100%; overflow-x: auto; }
 .scroll { overflow-x: auto; }
+.who { display: inline-block; font: 0.72rem/1.4 Georgia, serif; letter-spacing: 0.06em; text-transform: uppercase; padding: 1px 8px; border-radius: 999px; border: 1px solid; margin: 0 0 4px; }
+.who.law { color: var(--accent); border-color: var(--accent); }
+.who.newton { color: #f0a050; border-color: #f0a050; }
+.who.lorentz { color: #c79cff; border-color: #c79cff; }
+.who.einstein { color: #6cb4ff; border-color: #6cb4ff; }
+.who.planck, .who.doppler { color: #b8b8c8; border-color: #b8b8c8; }
+section.big.theirs-box math { color: #6cb4ff; font-size: 1.8rem; }
+.owners { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.owners section { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.owners h3 { margin: 0 0 6px; font-size: 1rem; }
+.owners ul { padding-left: 1.1em; margin: 4px 0; }
+.owners li { font-size: 0.9rem; margin: 3px 0; }
+.story { display: grid; gap: 12px; }
+.story .step { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; }
+.story h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.story .pair { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; }
+.story .pair > div, .story .step, .owners section, .smalls section { min-width: 0; }
+.story .arrow { font-size: 1.6rem; color: var(--muted); transform: rotate(-90deg); }
+.story .theirs math { color: #6cb4ff; }
+.story math { font-size: 1.3rem; margin: 6px 0; }
+.story p { font-size: 0.9rem; margin: 4px 0; }
+.story p.status { border-top: 1px solid var(--line); padding-top: 6px; margin-top: 8px; }
+@media (max-width: 640px) { .story .pair { grid-template-columns: 1fr; } .story .arrow { transform: none; text-align: center; } }
 .deriveds { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
 .deriveds section { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
 .deriveds h3 { margin: 0 0 4px; font-size: 1.05rem; }
@@ -4711,73 +4734,111 @@ NATURE_FORMULA = m(
     mfrac(mn("1"), mn("3")),
 )
 
-# The derived formulas: (name, MathML, explanation, where).
-DERIVED = (
+# Who owns what: the badge classes and their names.
+WHO = {
+    "law": "the law (yours)",
+    "newton": "Newton",
+    "lorentz": "Lorentz",
+    "einstein": "Einstein",
+    "planck": "Planck",
+    "doppler": "Doppler",
+}
+
+
+def who(key: str) -> str:
+    return f'<span class="who {key}">{WHO[key]}</span>'
+
+
+# The story: from the formula at the top, step by step, to the formulas of
+# the others. Per step: (title, the law's step as MathML, its explanation,
+# the formula it converges to as MathML, whose it is, the explanation, the
+# status today, where in DERIVATIONS_BEAM.md).
+GAMMA = mfrac(mn("1"), msqrt(mrow(mn("1"), mo("&minus;"), mfrac(msup(mi("v"), mn("2")), C2))))
+STORY = (
     (
-        "The rest energy is the content",
-        m(
-            E0,
-            mo("="),
-            mi("m"),
-            C2,
-            mspace,
-            mo("&LeftRightArrow;"),
-            mspace,
-            E0,
-            mo("="),
-            mi("Q"),
-            mi("S"),
-            mi("M"),
-        ),
-        "the energy at rest is the width times the content, forced by the Newtonian limit: E = m c^2, with the "
-        "law's E' = 3 E in whole units",
-        "17.3 (iii), 17.6 M3",
+        "The rest energy",
+        m(msub(mi("E"), mn("0")), mo("="), mi("Q"), mi("S"), mi("M")),
+        "the energy at rest is the width times the content, whole; forced by the Newtonian limit of the "
+        "drive (17.3 (iii))",
+        m(E0, mo("="), mi("m"), C2),
+        "einstein",
+        "the inertia of energy, 1905; in the law c^2 = 1 / 3 and m = Q S M, so the two are one line",
+        "under covariant-readings-v1 (decided, not built); as declared the content and the momentum are untied",
+        "17.3, 17.6 M3",
     ),
     (
-        "The invariant, kept exactly",
+        "The invariant",
+        m(
+            msup(mi("E"), mn("2")),
+            mo("&le;"),
+            mi("W"),
+            mo("&lt;"),
+            msup(mrow(mo("("), mi("E"), mo("+"), mn("1"), mo(")")), mn("2")),
+        ),
+        "E is the largest integer whose square is at most W, kept by comparisons alone, at most three per "
+        "interval: no root, no float, the sixth verb; W is bilinear in p and never drifts",
         m(msup(mi("E"), mn("2")), mo("&minus;"), msup(mi("p"), mn("2")), C2, mo("="), msup(E0, mn("2"))),
-        "the state carried is the square W, bilinear in p with the identity matrix, no drift; E rises or falls by "
-        "one while the comparison says so, at most three comparisons per interval: no root, the sixth verb",
+        "einstein",
+        "the energy-momentum relation, 1905 to 1907 (Minkowski's form, 1908); the same relation, but for "
+        "continuous quantities and from two postulates",
+        "under covariant-readings-v1; the script's 40 000 pushes keep it at every step",
         "17.6 M3",
     ),
     (
         "The pace",
-        m(
-            mi("v"),
-            mo("="),
-            mfrac(mrow(mi("p"), C2), mi("E")),
-            mspace,
-            mo("="),
-            mspace,
-            mfrac(mi("p"), msup(mi("E"), mo("&prime;"))),
-        ),
-        "in Links per interval: the drive's Newtonian rate p / (Q S M) per self-creation times the "
-        "self-creation's cadence E_0 / E, the covariant pace exactly, capped at c = 1 / sqrt 3 as p grows",
-        "17.6 M1",
+        m(mi("v"), mo("="), mfrac(mi("p"), msup(mi("E"), mo("&prime;")))),
+        "Links per interval: the drive's Newtonian rate per self-creation, p / (Q S M), times the "
+        "self-creation's cadence E_0 / E; capped at c = 1 / sqrt 3 as p grows",
+        m(mi("v"), mo("="), mfrac(mrow(mi("p"), C2), mi("E"))),
+        "einstein",
+        "the velocity of a body from its energy and momentum, 1905; the velocity addition follows",
+        "under covariant-readings-v1; as declared v = p / (m + p / c), first order off Newton",
+        "17.6 M1, 4.4",
     ),
     (
-        "The Lorentz factor and proper time",
+        "Proper time",
         m(
-            mi("&gamma;"),
-            mo("="),
+            "<mtext>one self-creation per&nbsp;</mtext>",
             mfrac(mi("E"), E0),
-            mo("="),
-            mfrac(mn("1"), msqrt(mrow(mn("1"), mo("&minus;"), mfrac(msup(mi("v"), mn("2")), C2)))),
+            "<mtext>&nbsp;intervals</mtext>",
         ),
-        "one self-creation per gamma intervals by the owed count by_drive(acc_tau, E - E_0, E_0): the age, the "
-        "turn, the crowd's count and the decay follow proper time at once. The muon of J4: gamma 1.1074 and "
-        "1.9558, its 64th self-creation at 70.9 and 125.2 intervals against 64 at rest",
-        "17.6 M1, M2",
+        "the body owes by_drive(acc_tau, E - E_0, E_0) intervals after every self-creation: its age, its "
+        "turn, its decay and its count all follow that cadence, a counted mechanism",
+        m(mi("&gamma;"), mo("="), mfrac(mi("E"), E0), mo("="), GAMMA),
+        "lorentz",
+        "the Lorentz factor: Lorentz's local time (1895, 1904) as a mechanism, Einstein's time dilation "
+        "(1905) as kinematics; the muon of J4 fires at 70.9 and 125.2 intervals against 64 at rest",
+        "under covariant-readings-v1; as declared the rate is 1 at every speed (a different law, registered)",
+        "17.6 M1, M2; 4.3",
     ),
     (
         "The momentum",
-        m(P, mo("="), mi("&gamma;"), mi("m"), mi("v", bold=True)),
-        "from v = p c^2 / E and gamma = E / E_0: nature's momentum, second order off Newton's m v, where the "
-        "law as declared (v = p / (m + p / c)) is first order off",
+        m(P, mo("="), msup(mi("E"), mo("&prime;")), mi("v", bold=True)),
+        "from the pace: the momentum vector is the energy times the velocity",
+        m(
+            P,
+            mo("="),
+            mi("&gamma;"),
+            mi("m"),
+            mi("v", bold=True),
+            mspace,
+            mo("&rarr;"),
+            mspace,
+            P,
+            mo("="),
+            mi("m"),
+            mi("v", bold=True),
+        ),
+        "newton",
+        "at low speed Newton's momentum (1687); at every speed Lorentz's and Einstein's gamma m v",
+        "under covariant-readings-v1 the right order; as declared p = m v / (1 - v / c), a first-order departure",
         "17.2, 17.6 M1",
     ),
     (
-        "Doppler with gamma",
+        "Doppler",
+        m("<mtext>the crossing count per self-creation</mtext>"),
+        "a moving reader meets the rows of a stream at 1 - n . beta per interval and is charged per "
+        "self-creation, gamma intervals apart",
         m(
             mn("1"),
             mo("+"),
@@ -4794,103 +4855,153 @@ DERIVED = (
                 mo(")"),
             ),
         ),
-        "the crossing count charged per self-creation: gamma (1 - n . beta), the transverse gamma; the coasting "
-        "star s_mz2 at beta 0.3042 reads z = 0.3691 (the pin 0.369 +- 0.003)",
-        "17.6 M1, M2",
+        "einstein",
+        "the relativistic Doppler with the transverse gamma, 1905; at low speed Doppler's 1 +- v / c "
+        "(1842), which the law reaches as declared and registered (record 158)",
+        "the gamma under covariant-readings-v1 (the pin z = 0.369); the classical count reached today",
+        "2.2, 17.6 M2",
     ),
     (
-        "The Newtonian limit",
+        "Newton's laws",
         m(
-            mi("E"),
-            mo("&asymp;"),
-            mi("m"),
-            C2,
+            P,
+            mo("&larr;"),
+            P,
             mo("+"),
-            mfrac(msup(mi("p"), mn("2")), mrow(mn("2"), mi("m"))),
+            mi("C", bold=True),
+            mi("a", bold=True),
+            mspace,
+            mo(","),
+            mspace,
+            mi("x"),
+            mo("&larr;"),
+            mi("x"),
+            mo("+"),
+            mo("["),
+            "<mtext>drive</mtext>",
+            mo("&ge;"),
+            mi("D"),
+            mo("]"),
+        ),
+        "the push, bilinear in the state (the reader's charges times the arriving flow), and the drive; the "
+        "shell mean of the flux is the inverse square, retarded at c",
+        m(
+            mi("F"),
+            mo("="),
+            mi("m"),
+            mi("a"),
             mspace,
             mo(","),
             mspace,
             mi("F"),
             mo("="),
-            mi("m"),
-            mi("a"),
+            mfrac(mrow(mi("G"), mi("M"), mi("m")), msup(mi("r"), mn("2"))),
         ),
-        "at p much smaller than Q S M c: the kinetic energy p^2 / 2 m, F = m a with m = Q S M (series 7's "
-        "push_m = m push_1), inertia exact (G2's stars 1.0000), the third law to the grain",
-        "17.2",
+        "newton",
+        "the three laws and gravitation (1687), with G = K (n / d) / (4 pi S); the equivalence principle "
+        "exact because M cancels",
+        "reached as declared and registered (inertia 1.0000, push_m = m push_1, series E's inverse square, series D's orbit)",
+        "3.1 to 3.4, 17.2",
     ),
     (
-        "The cost of a row, and the identity of the inputs",
+        "The speed of light",
         m(
-            mi("E"),
+            mi("m"),
+            mo("("),
+            mi("&tau;"),
+            mo(")"),
             mo("="),
-            mi("h"),
-            mi("f"),
+            "<mtext>floor</mtext>",
+            mo("("),
+            mfrac(
+                mrow(
+                    mn("2"),
+                    mi("&tau;"),
+                    msub(mi("S"), mn("1")),
+                    mi("Q"),
+                    mo("+"),
+                    msub(mi("T"), mi("d")),
+                ),
+                mrow(mn("2"), msub(mi("T"), mi("d"))),
+            ),
+            mo(")"),
+        ),
+        "the flight table: a row walks its digital line at Q / T_d Links per interval, the same on every "
+        "direction, 32 Links in 55 intervals on an axis",
+        m(
+            mi("c"),
+            mo("="),
+            mfrac(mn("1"), msqrt(mn("3"))),
             mspace,
             mo(","),
             mspace,
-            mn("3"),
-            mi("h"),
-            mi("n"),
+            mi("&omega;"),
             mo("="),
-            mi("Q"),
-            mi("S"),
-            mi("d"),
+            mi("c"),
+            mi("k"),
         ),
-        "a row's energy is its cost per phase step; the books of an exchange balance only if 3 h n = Q S d for "
-        "every paid family (checked at load under the identity): the mass defect of a bound set is then the "
-        "escaped rows' energy",
+        "einstein",
+        "one c for every observer is Einstein's second postulate (1905) and the ether's wave speed for "
+        "Lorentz; here it is DERIVED: the largest isotropic pace at which no direction crosses two Links in "
+        "one interval, and the rows' limit is the wave equation whose symmetry is Lorentz's",
+        "reached as declared and registered (record 144's cone, series K's 89.40)",
+        "1.4, 2.1, 4.1",
+    ),
+    (
+        "The quantum of energy",
+        m(mn("3"), mi("h"), mi("n"), mo("="), mi("Q"), mi("S"), mi("d")),
+        "the release pays h content per phase step; the exchange's books balance only under this identity "
+        "of the cost, the rate and the width, checked at load",
+        m(mi("E"), mo("="), mi("h"), mi("f")),
+        "planck",
+        "Planck's relation (1900) and Einstein's light quantum (1905): here the release's accounting, and "
+        "the mass defect of a bound set is the escaped rows' energy",
+        "E = h f reached as declared (6.4); the identity under covariant-readings-v1",
         "6.4, 17.6 M7",
     ),
     (
-        "A change of content",
+        "Gravity on a clock",
         m(
-            mi("&Delta;"),
-            mi("W"),
-            mo("="),
-            mi("Q"),
-            mi("S"),
-            mrow(mo("("), mn("2"), E0, mo("+"), mi("Q"), mi("S"), mi("&Delta;"), mi("M"), mo(")")),
-            mi("&Delta;"),
-            mi("M"),
-        ),
-        "on a click, a release, a give or a become the rest part follows the content and the kinetic part is "
-        "kept: the identity (E_0 + Q S dM)^2 - E_0^2, bilinear, exact",
-        "17.6 M7",
-    ),
-    (
-        "What the identity does not give",
-        m(
-            mfrac(mn("1"), mi("&gamma;")),
+            "<mtext>rate</mtext>",
             mspace,
-            mo("("),
-            mtext_c := "<mtext>the contraction</mtext>",
-            mo(")"),
+            mfrac(mn("1"), mrow(mn("1"), mo("+"), mi("k"), mi("n"), mo("/"), mi("d"))),
         ),
-        "the gradient of the age moment across the six Ports gives -grad(A) only: the rest force along the "
-        "motion and gamma times it across, not Maxwell's 1 - beta^2 and 1 / gamma; the magnetic term needs a "
-        "row carrying its source's momentum, source-velocity-v1, named and not designed",
-        "17.6 M4, M5",
+        "a clock slows by the crowd it reads (the age moment), never by its speed; the age moment obeys "
+        "Poisson's equation",
+        m(
+            mfrac(mrow(mi("&Delta;"), mi("f")), mi("f")),
+            mo("="),
+            mo("&minus;"),
+            mfrac(mrow(mi("G"), mi("M")), mrow(mi("r"), C2)),
+        ),
+        "einstein",
+        "the gravitational redshift at first order (1911) and Newton's potential; the second order, the "
+        "bending 4 G M / (c^2 b), the delay and the perihelion (1915) are not reached",
+        "the first order reached and registered (series E); the second order needs field-source-v1 and optical-v1",
+        "5.1, 5.2, 21.4",
     ),
 )
 
 
-def derived_html(entry: tuple[str, str, str, str]) -> str:
-    name, formula, explanation, where = entry
+def story_html(entry: tuple[str, str, str, str, str, str, str, str]) -> str:
+    title, law_formula, law_text, target, owner, target_text, status, where = entry
     return (
-        f'<section class="derived"><h3>{html.escape(name)}</h3>{formula}'
-        f"<p>{explanation}.</p>"
-        f'<p class="note">DERIVATIONS_BEAM.md {html.escape(where)}</p></section>'
+        f'<section class="step"><h3>{html.escape(title)}</h3>'
+        f'<div class="pair"><div class="mine">{who("law")}{law_formula}<p>{law_text}.</p></div>'
+        f'<div class="arrow">&darr;</div>'
+        f'<div class="theirs">{who(owner)}{target}<p>{target_text}.</p></div></div>'
+        f'<p class="status"><b>Today:</b> {status}. <span class="note">DERIVATIONS_BEAM.md {html.escape(where)}</span></p>'
+        "</section>"
     )
 
 
 @register("einstein")
 def page_einstein(out: Path, runs: Path | None) -> Path:
-    """(12) The formula and Einstein: the main formula at the top, the
-    formulas derived from it below, then the comparison with Newton,
-    Lorentz and Einstein; no run, no claim added."""
+    """(12) The formula and Einstein: the owner's formula at the top, whose
+    each formula is, and the story of the derivations from it to Newton's,
+    Lorentz's and Einstein's; no run, no claim added."""
     del runs
-    derived = "".join(derived_html(entry) for entry in DERIVED)
+    steps = "".join(story_html(entry) for entry in STORY)
     smalls = "".join(small_formula_html(entry) for entry in SMALL_FORMULAS)
     comparison = "".join(
         f"<tr><th>{html.escape(q)}</th><td>{html.escape(n)}</td><td>{html.escape(lo)}</td>"
@@ -4905,31 +5016,56 @@ def page_einstein(out: Path, runs: Path | None) -> Path:
     )
     body = f"""
 <section class="big">
-<p class="kind">The main formula: the exact square of a body's energy, in the law's whole units</p>
+<p class="kind">{who("law")} the exact square of a body's energy, in whole numbers</p>
 {MAIN_FORMULA}
 <div class="conditions">{MAIN_CONDITIONS}</div>
-<p class="kind">W the state carried, bilinear in the momentum vector p; E the largest integer whose square is at most W, kept by comparisons; E<sub>0</sub> the rest value, the width Q S times the content M; c<sup>2</sup> declared as the pair [1, 3]</p>
-<p class="kind">in nature's units</p>
+<p class="kind">W the state carried, bilinear in the momentum vector p; E the largest integer whose square is at most W, kept by comparisons; E<sub>0</sub> the rest value, the width Q S times the content M; c<sup>2</sup> = 1 / 3 derived from the flight</p>
+</section>
+<section class="big theirs-box">
+<p class="kind">{who("einstein")} the same relation in nature's units, 1905 to 1907</p>
 {NATURE_FORMULA}
 </section>
-<p><b>Where it stands</b>: this is the identity of <code>covariant-readings-v1</code>, the four covariant readings
-of a body (the drive, the turn, the push, the count) named in DERIVATIONS_BEAM section 17, reviewed by the
-physics-rule reviewer (record 297, admissible with must-fixes, the integer forms of 17.6) and decided by the
-owner (record 270) to be built beside the law; it is not built today, and the law as declared keeps the
-drive v = p / (m + p / c) and a clock's rate 1 at every speed. Everything below is derived from the main
-formula on paper, with the pins a run would meet written before it; nothing is added here.</p>
-<h2>The formulas derived from it</h2>
-<div class="deriveds">{derived}</div>
-<h2>The comparison: Newton, Lorentz, Einstein, and the law</h2>
-<p>The Boss's summary of the owner's question (record 231): Newton's absolute space and time are the law's
-low-speed regime; Lorentz explained the null ether-wind measurement by a mechanism, matter contracting and
-clocks slowing under the ether; Einstein kept the same transformations and dropped the mechanism, two
-postulates making the contraction and the slowing properties of space and time. The law has a derivation
-where Einstein has a postulate (c from locality and straightness) and a mechanism where Lorentz has the ether
-(the retarded flux and the crossing rule). The theorem of section 17: the linear block's limit carries
-Lorentz's symmetry, so every formula of the special theory holds for what is built from it alone, and for a
-body exactly as far as its four readings are covariant: the main formula above is that covariance, written
-in integers.</p>
+<h2>What is yours and what is theirs</h2>
+<p>The formula at the top is the law's: its numbers are whole, E is kept by comparisons and never by a root,
+E<sub>0</sub> = Q S M ties the rest energy to the content, and c<sup>2</sup> = 1 / 3 is derived from the
+flight table, not declared. Written in nature's units it reads E<sup>2</sup> = E<sub>0</sub><sup>2</sup> +
+p<sup>2</sup> c<sup>2</sup>, which is Einstein's relation of 1905 to 1907: the relation is his, the integer
+form and the mechanism that reaches it are the law's. Everything below is derived from the top: each step
+shows the law's line on the left and, on the right, whose formula it becomes and when it was found.</p>
+<div class="owners">
+<section><h3>{who("law")}</h3><ul>
+<li>W = E<sub>0</sub><sup>2</sup> + 3 p . p, E by comparisons, E<sub>0</sub> = Q S M</li>
+<li>c = 1 / sqrt 3 derived from the flight table (32 Links in 55 intervals)</li>
+<li>proper time as an owed count: one self-creation per E / E<sub>0</sub> intervals</li>
+<li>the crossing count (Doppler as a count of rows met)</li>
+<li>the push p &lt;- p + <b>C a</b> and the drive: one coupling over the columns, bilinear, local</li>
+<li>the click as the one threshold; the identity 3 h n = Q S d</li>
+</ul><p class="note">the six verbs on integers, one map at every Node (HIGHLIGHTS 5.7)</p></section>
+<section><h3>{who("newton")}</h3><ul>
+<li>the three laws: inertia, F = m a, action and reaction (1687)</li>
+<li>gravitation G M m / r<sup>2</sup>, absolute space and time</li>
+<li>p = m v, the Galilean composition</li>
+</ul><p class="note">the law's low-speed regime, every row registered</p></section>
+<section><h3>{who("lorentz")}</h3><ul>
+<li>the transformations and the local time (1895, 1904)</li>
+<li>the contraction 1 / gamma and the slowing sqrt(1 - beta<sup>2</sup>) as a mechanism in the ether</li>
+<li>the electron's mass growing with speed</li>
+</ul><p class="note">the law stands nearer to Lorentz: a mechanism, not a postulate (record 231)</p></section>
+<section><h3>{who("einstein")}</h3><ul>
+<li>the two postulates and the kinematics: gamma, the Doppler with gamma (1905)</li>
+<li>E<sub>0</sub> = m c<sup>2</sup> (1905), E<sup>2</sup> = E<sub>0</sub><sup>2</sup> + p<sup>2</sup> c<sup>2</sup> (1907), v = p c<sup>2</sup> / E</li>
+<li>the light quantum E = h f (1905, after Planck 1900)</li>
+<li>the general theory: the redshift, the bending, the delay, the perihelion (1911 to 1915)</li>
+</ul><p class="note">the special theory one hypothesis away; the general theory's first order reached</p></section>
+</div>
+<h2>The story: from the top, step by step, to theirs</h2>
+<div class="story">{steps}</div>
+<p><b>Where it stands</b>: the top formula and the steps marked "under covariant-readings-v1" are the four
+covariant readings of a body named in DERIVATIONS_BEAM section 17, reviewed (record 297) and decided by the
+owner (record 270) to be built beside the law; not built today, and the law as declared keeps the drive
+v = p / (m + p / c) and a clock's rate 1 at every speed. The steps marked "reached as declared" are the
+law on main, registered. Nothing is added here.</p>
+<h2>The comparison in one table</h2>
 <div class="scroll"><table class="map compare"><tr><th>The quantity</th><th>Newton</th><th>Lorentz</th><th>Einstein</th><th>The law (its status today)</th></tr>{
         comparison
     }</table></div>
@@ -4944,9 +5080,6 @@ s &lt;- s - e d
 <p class="kind">the state s an integer vector on the torus, r its rates, d its walls; every wall crossing an event</p>
 <pre class="formula small-caps">click k where  2 T u + T &lt;= 2 N C<sub>k</sub>,   C<sub>k</sub> = <b>f</b><sup>T</sup> <b>G f</b></pre>
 </section>
-<p>The statement (the owner, record 181, HIGHLIGHTS 5.7): the state is integer vectors on tori and one
-tensor; the law is one map <b>F</b> at every Node, made of six operations; the GameBoard computes exactly
-where the formula has only a limit; the measurement is the one threshold read out.</p>
 <div class="smalls">{smalls}</div>
 </details>
 <details><summary>The full Einstein map, E1 to E19 (DERIVATIONS_BEAM 21.4): {
@@ -4963,15 +5096,15 @@ where the formula has only a limit; the measurement is the one threshold read ou
             [
                 (
                     "the main formula W = E_0^2 + 3 p . p, E by comparisons, the pace p / E, the proper-time cadence, the identity 3 h n = Q S d, the muon's 70.9 and 125.2, the star's z = 0.369",
-                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> section 17.6 (M1 to M9, record 297; the host script amended_pins.py)',
+                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> section 17.6 (M1 to M9, record 297)',
                 ),
                 (
-                    "the theorem of covariant readings, built on Newton, tried on Lorentz, the verdict",
+                    "the theorem of covariant readings, built on Newton, tried on Lorentz",
                     '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> sections 17.1 to 17.5; the owner\'s decision, record 270',
                 ),
                 (
-                    "the operator F, its two blocks, the closed form, the components and their limits",
-                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> section 0; sections 2 to 7',
+                    "c, Doppler, Newton and Coulomb, the symmetry of the limit, the delay field, the click, Young and Bohr",
+                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> sections 0 and 2 to 7',
                 ),
                 (
                     "the statement, the six verbs, what is derived and what is input",
@@ -4985,6 +5118,10 @@ where the formula has only a limit; the measurement is the one threshold read ou
                     "the Einstein map, E1 to E19",
                     '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> section 21.4 (record 291)',
                 ),
+                (
+                    "the dates of the others' formulas",
+                    "the standard history: Newton 1687; Doppler 1842; Lorentz 1892 to 1904; Planck 1900; Einstein 1905, 1907, 1911, 1915; Minkowski 1908",
+                ),
             ]
         )
     }
@@ -4994,8 +5131,8 @@ where the formula has only a limit; the measurement is the one threshold read ou
         "einstein",
         page(
             "The formula and Einstein",
-            "The main formula at the top, the exact square of a body's energy; the formulas derived from it "
-            "below; then the comparison with Newton, Lorentz and Einstein, quantity by quantity.",
+            "Your formula at the top; whose each formula is; and the story of the derivations from it to "
+            "Newton's, Lorentz's and Einstein's, step by step.",
             body,
         ),
     )
@@ -5058,9 +5195,9 @@ def page_index(out: Path, runs: Path | None) -> Path:
         (
             "einstein.html",
             "The formula and Einstein",
-            "the main formula at the top (the exact square of a body's energy, W = E_0^2 + 3 p . p), the "
-            "formulas derived from it, and the comparison with Newton, Lorentz and Einstein quantity by "
-            "quantity; the one map and the Einstein map beneath (no run)",
+            "the owner's formula at the top (the exact square of a body's energy, W = E_0^2 + 3 p . p), whose "
+            "each formula is, and the story of the derivations from it to Newton's, Lorentz's and Einstein's; "
+            "the comparison table, the one map and the Einstein map beneath (no run)",
         ),
         (
             "formula.html",
