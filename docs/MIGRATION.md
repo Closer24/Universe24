@@ -6,6 +6,17 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The paper-writer skill folded into paper-coordinator, on 2026-09-21 (docs only)
+
+`skills/paper-writer/SKILL.md` (the manuscript's method: equations first,
+one source per number, the four labels, the referee round before any
+material enters) is deleted; its content is the method section of
+[skills/paper-coordinator/SKILL.md](../skills/paper-coordinator/SKILL.md),
+the one skill of the role (the model owner, record 309), and the Boss's
+routing table carries paper-coordinator alone. The manuscript's own plan
+(`paper/general_formula/PLAN.md`) keeps the rounds' history under the old
+name where it was written.
+
 ## The one count primitive in its array form, on 2026-09-21 (host only, bit-exact, no law change)
 
 The model owner's word on the flight's accumulator (record 299: "yes,

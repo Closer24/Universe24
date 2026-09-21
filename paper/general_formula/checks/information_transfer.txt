@@ -1,0 +1,80 @@
+
+== 1. The causal cone: the flight table, 1 / sqrt 3 in every direction
+  (1, 0, 0):  349 Links in 600 intervals, Euclidean distance  349.00 = 0.5817 per interval (1 / sqrt 3 = 0.5774); Links per Euclidean Link 1.0000
+  (1, 1, 0):  492 Links in 600 intervals, Euclidean distance  347.90 = 0.5798 per interval (1 / sqrt 3 = 0.5774); Links per Euclidean Link 1.4142
+  (1, 1, 1):  600 Links in 600 intervals, Euclidean distance  346.41 = 0.5774 per interval (1 / sqrt 3 = 0.5774); Links per Euclidean Link 1.7321
+  (3, 1, 0):  439 Links in 600 intervals, Euclidean distance  347.06 = 0.5784 per interval (1 / sqrt 3 = 0.5774); Links per Euclidean Link 1.2649
+  (5, 2, 1):  506 Links in 600 intervals, Euclidean distance  346.43 = 0.5774 per interval (1 / sqrt 3 = 0.5774); Links per Euclidean Link 1.4606
+  reading: c = a / (tau sqrt 3), isotropic; the L1 count is in the Links stepped, not in the time
+  measured (L7): 17 Links on +x and 24 on (1, 1, 0) both reached at the age 29
+
+== 2. Wavelength: the pair form n / d per interval gives N d / n intervals = c N d / n Links along the flight (the manuscript's form); the integer form p per Link gives N / p Links stepped
+  N =    64, rate 8/1 steps per interval: lambda = 8.0000 intervals = 4.6188 Links along the flight
+  N =    64, rate 8591334592/1073741824 steps per interval: lambda = 7.9987 intervals = 4.6180 Links along the flight
+  N =  4096, rate 1/1 steps per interval: lambda = 4096.0000 intervals = 2364.8267 Links along the flight
+  N =  4096, rate 2048/1 steps per interval: lambda = 2.0000 intervals = 1.1547 Links along the flight
+  N = 65536, rate 1/3 steps per interval: lambda = 196608.0000 intervals = 113511.6817 Links along the flight
+  the register's Mach-Zehnder with unequal arms (the pair form [8, 1] at N = 64): lambda = 8 intervals = 4.62 Links
+  visible 500 nm: lambda = 4.999e-07 m, so a <= lambda / 2 = 2.500e-07 m
+  the 1.4 PeV photon of LHAASO (2021): lambda = 8.856e-22 m, so a <= lambda / 2 = 4.428e-22 m
+  the Planck length 1.616e-35 m is 2.74e+13 times below that bound
+  reading: the Link is at most half the shortest wavelength ever seen; no lower bound on a from this
+
+== 3. The click's precision: |P(o) - W_o / T| <= 1 / (2 N)
+  N =    64: the probabilities are multiples of 1/N, each within 7.81e-03 of the squared sum
+  N =   184: the probabilities are multiples of 1/N, each within 2.72e-03 of the squared sum
+  N =  1024: the probabilities are multiples of 1/N, each within 4.88e-04 of the squared sum
+  N =  4096: the probabilities are multiples of 1/N, each within 1.22e-04 of the squared sum
+  N = 65536: the probabilities are multiples of 1/N, each within 7.63e-06 of the squared sum
+  a squared-sum law confirmed to delta = 1e-02 needs N >= 50
+  a squared-sum law confirmed to delta = 1e-03 needs N >= 500
+  a squared-sum law confirmed to delta = 1e-04 needs N >= 5000
+  the pair's S at N = 64 .. 4096 against Poh et al. 2015 is the sharper bound (N >= 184, s_of_n.txt)
+
+== 4. No amplification at a split: sum w_i^2 / m_i = w^2 / m
+  shares (1, 1): A = 2, sum (w a_i)^2 / (m A) = 1 x w^2 / m
+  shares (3, 4): A = 25, sum (w a_i)^2 / (m A) = 1 x w^2 / m
+  shares (1, 2, 2): A = 9, sum (w a_i)^2 / (m A) = 1 x w^2 / m
+  shares (5, 12): A = 169, sum (w a_i)^2 / (m A) = 1 x w^2 / m
+  two rows of the full norm would need the sum 2: refused by the identity above
+
+== 5. Bits per click: at most log2 (cells) per record
+  Mach-Zehnder (2 counters): <= 1.00 bits per click
+  Elitzur-Vaidman (absorber, D1, D2): <= 1.58 bits per click
+  the pair (4 cells): <= 2.00 bits per click
+  GHZ (8 triples): <= 3.00 bits per click
+  two slits (80 sets): <= 6.32 bits per click
+  GHZ XXX in the register: {'+++': 16, '+--': 16, '-+-': 16, '--+': 16} = 4 of 8 triples, 2 bits, the product fixed (1 bit of the 3 is the law's)
+
+== 6. The heat of a click (a conjecture): Q >= k T ln 2 x (bits of the rows - bits of the cell)
+  N =   64, Mach-Zehnder :  16.2 bits erased; at   300 K Q >= 4.64e-20 J = 0.290 eV
+  N =   64, Mach-Zehnder :  16.2 bits erased; at     1 K Q >= 1.55e-22 J = 0.001 eV
+  N =   64, the pair     :  32.3 bits erased; at   300 K Q >= 9.28e-20 J = 0.580 eV
+  N =   64, the pair     :  32.3 bits erased; at     1 K Q >= 3.09e-22 J = 0.002 eV
+  N = 4096, Mach-Zehnder :  28.2 bits erased; at   300 K Q >= 8.09e-20 J = 0.505 eV
+  N = 4096, Mach-Zehnder :  28.2 bits erased; at     1 K Q >= 2.70e-22 J = 0.002 eV
+  N = 4096, the pair     :  56.3 bits erased; at   300 K Q >= 1.62e-19 J = 1.010 eV
+  N = 4096, the pair     :  56.3 bits erased; at     1 K Q >= 5.39e-22 J = 0.003 eV
+  reading: a detector's least dissipation per click; only a lower bound, far below any real detector's
+
+== 7. Two slits: the integer form (L1 Links) against the pair form (Euclidean intervals); s = 6, D = 44, lambda = 8 (illustrative units: Links here, not the world's intervals)
+   y   L1 diff  Euclid diff   I_links   I_intervals
+   0     0.00      0.000    4.00      4.00
+   4    -6.00     -0.542    2.00      3.82
+   8    -6.00     -1.071    2.00      3.33
+  12    -6.00     -1.576    2.00      2.65
+  16    -6.00     -2.047    2.00      1.93
+  20    -6.00     -2.479    2.00      1.27
+  24    -6.00     -2.869    2.00      0.74
+  Euclidean fringe spacing lambda D / s = 58.7 Links; the L1 pattern has none beyond |y| = s / 2
+  the register's two-slit world declares the pair form; its Pearson 0.368 with the cosine (L2) is not the L1 effect
+
+== 8. The correlation does not depend on the distance: the far worlds
+  bell_16_24: cells {'++': 27, '+-': 5, '-+': 5, '--': 27}, E = 11/16; Bob 116 Links farther: cells {'++': 27, '+-': 5, '-+': 5, '--': 27}, E = 11/16
+  the joint distribution is fixed at the birth (u with the record); the click adds nothing that travels
+
+== 9. The cone test, L7: the pins and the readings
+  age             axis / diagonal: pin (29, 29), read (29, 29), equal
+  cone_links      axis / diagonal: pin (51, 8), read (51, 8), equal
+  cone_intervals  axis / diagonal: pin (23, 23), read (23, 23), equal
+  67 records per lamp, 134 gathers per world, one cell each

@@ -1,0 +1,33 @@
+(A) Series D's plane, S = 32, m = 1, q = 12 rows per interval, p = 576 label units (n = 9):
+  form B on (0, 1, 0): Manhattan pace 288/1519 = 0.1896, Euclidean 0.1896 Links per interval
+  form B on (1, 1, 0): Manhattan pace 13024/48641 = 0.2678, Euclidean 0.1893 Links per interval
+  the analytic period at r = 12: 2 pi r / v = 397.7 intervals (today's drive: 343)
+  the analytic period at r = 24: 2 pi r / v = 795.3 intervals (today's drive: 687)
+  the exponent of T against r on the plane: T(24) / T(12) = 2 exactly (a 1 / r force), the ratio of the squares 4
+  the apsidal angle of a 1 / r force (near-circular): pi / sqrt 2 = 2.2214 rad = 127.28 degrees,
+  so the perihelion moves by 2 x that less 360 = -105.44 degrees per radial period (the plane's own law, not the lattice's)
+
+(B) Kepler in space (the shell mean, series E's fan: q = 290 rows per interval, one row per direction per interval):
+  a = -q / (4 pi S r^2) Links per interval^2 (3.3: G M_B = q / (4 pi S)); the circular orbit n = sqrt(S q / (4 pi r)), T = 2 pi r^(3/2) sqrt(4 pi S / q)
+  S = 512, r = 12: n = 31.38, p = Q n = 2008 label units, v = 0.0613 Links per interval (0.106 c), T = 1230
+  S = 512, r = 24: n = 22.19, p = Q n = 1420 label units, v = 0.0433 Links per interval (0.075 c), T = 3480
+  S = 512: T(24) / T(12) = 2.8284 against 2^(3/2) = 2.8284; the exponent log2 of the ratio = 1.5000
+  S = 8192, r = 12: n = 125.52, p = Q n = 8033 label units, v = 0.0153 Links per interval (0.027 c), T = 4921
+  S = 8192, r = 24: n = 88.75, p = Q n = 5680 label units, v = 0.0108 Links per interval (0.019 c), T = 13919
+  S = 8192: T(24) / T(12) = 2.8284 against 2^(3/2) = 2.8284; the exponent log2 of the ratio = 1.5000
+
+(C) Compton from the exact square W = E'_0^2 + 3 p . p: a row of momentum k absorbed by a body at rest, a row of momentum k' released at the angle theta;
+  W before = (E'_0 + sqrt 3 k)^2 with the row's energy sqrt 3 k in E' units on the pair c^2 = [1, 3]; after: (E'_0 + sqrt 3 k - sqrt 3 k')^2 = E'_0^2 + 3 |k - k'|^2
+  => 1 / k' - 1 / k = sqrt 3 (1 - cos theta) / E'_0, i.e. lambda' - lambda = (h / (Q S M c)) (1 - cos theta) with lambda = h / k, c = 1 / sqrt 3, exactly.
+  the declared world: Q S M = 64 (S = 1, M = 1), the lamp's quantum h = 1 at the turn s = 16 steps per self-creation, so k = h s = 16 label units;
+  the fan of the re-emitter: the six headings (cos theta = 1, 0, 0, 0, 0, -1) and the twelve face diagonals (cos theta = +-1/sqrt 2 or 0)
+  theta = 0 (+x): k' = 16.000 label units, the released turn s' = floor(k' / h) = 16 steps (from 16), the body's recoil |p| = 0.00 label units (0.000 of Q S M)
+  theta = 45 deg (face diagonal forward): k' = 14.199 label units, the released turn s' = floor(k' / h) = 14 steps (from 16), the body's recoil |p| = 11.68 label units (0.182 of Q S M)
+  theta = 90 deg (+-y, +-z): k' = 11.165 label units, the released turn s' = floor(k' / h) = 11 steps (from 16), the body's recoil |p| = 19.51 label units (0.305 of Q S M)
+  theta = 135 deg (face diagonal back): k' = 9.200 label units, the released turn s' = floor(k' / h) = 9 steps (from 16), the body's recoil |p| = 23.43 label units (0.366 of Q S M)
+  theta = 180 deg (-x): k' = 8.574 label units, the released turn s' = floor(k' / h) = 8 steps (from 16), the body's recoil |p| = 24.57 label units (0.384 of Q S M)
+  at the heading's own c = 32 / 55 the row's energy is (96 / 55) k (17.6 M7) and gamma^2 - 3 = 141/3025 = 0.0466:
+  the relation then holds to first order in (k - k') / k with the residual (gamma^2 - 3) (k - k')^2 / (2 E'_0 gamma) in k', second order (the error term at the heading's c).
+  at 90 deg with the heading's c: k' = 11.195 (against 11.165 on the pair), the floor of k' / h the same or one less
+  at 180 deg with the heading's c: k' = 8.611 (against 8.574 on the pair), the floor of k' / h the same or one less
+
