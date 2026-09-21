@@ -167,6 +167,11 @@ taken to cover the push and the click's weight, it does not.
 
 ## 1. The inventory: every rule of beam-v1 as an operation on the integer torus, and what is not one
 
+Read against main `f89884f0` and the fraction-free branch at `ddec5166`;
+the fraction-free law landed on main at `cd6bb887` on 2026-09-21; the
+items ordered on the branch are now on main; the re-read of the inventory
+against main follows the no-tables and click pull requests, once.
+
 **The claim audited** (the Boss's statement of the law to the owner, record
 155, verified here against the documents and the code). The state is
 integer vectors on tori and nothing at a Node. A row (a ray's record,
@@ -233,7 +238,7 @@ listed again in section 1.3 with what replaces it. Every line is `main` at
 
 | Rule | Where | Operation | Verdict |
 | --- | --- | --- | --- |
-| The Manhattan count `m(tau) = (2 tau S_1 Q + T_d) // (2 T_d)` | `nature_beam.py:549-554`, `632-643` (the step table) | (T)/(D): an accumulator started at `T_d` (the half), gaining `2 S_1 Q` per interval, carrying one Manhattan step at `2 T_d`; `2 S_1 Q <= 2 T_d`, so at most one Link per interval | a torus operation; the table `flight.steps[direction, age mod L_d]` at `2398` is its exact cache, since the rate is constant and the age is the accumulator (FORM.md section 1); checked below |
+| The Manhattan count `m(tau) = (2 tau S_1 Q + T_d) // (2 T_d)` | `nature_beam.py:549-554`, `632-643` (the step table) | (T)/(D): an accumulator started at `T_d` (the half), gaining `2 S_1 Q` per interval, carrying one Manhattan step at `2 T_d`; `2 S_1 Q <= 2 T_d`, so at most one Link per interval | as built a floor at run time (D) whose remainder is dropped; nothing is lost, because the dropped remainder is a function of the age alone (the accumulator started at `T_d`, gaining `2 S_1 Q`, carrying at `2 T_d`, equals `m(tau)` on seven directions over 600 intervals, section 1.4), so it is a torus operation with the age as the accumulator; the table `flight.steps[direction, age mod L_d]` at `2398` is its exact cache (FORM.md section 1); checked below |
 | The digital line (Bresenham): at Manhattan step j the axis maximising `abs(v_i) (j + 1) - S_1 abs(pos_i)`, the lowest axis on a tie | `nature_beam.py:580-592` | (T)+(D): three deficit accumulators, each gaining `abs(v_i)` per Manhattan step, the carry `S_1` taken from the largest (a comparison, the axis furthest behind); ties by axis order | a torus operation with a declared tie (x before y before z); the table `lines` its cache |
 | The wrap on a periodic axis | `nature_beam.py:2403-2405` | (T) on the circle `Z_extent` | a torus operation |
 | The open face: the escape | `nature_beam.py:2407, 2413-2483` | the border; the escaped rows' pointer (E) and labels (B) booked | the one-way border (a click), not an operation on the state |
@@ -454,10 +459,13 @@ record 155 (2) names ("the flight table as the position's accumulator per
 axis") is NOT this form. Its one natural reading: axis i carries an
 accumulator at the rate `abs(v_i) Q` with the wall `T_d`, so that the
 Links made on axis i by the age tau are `floor(tau abs(v_i) Q / T_d)`. On
-`(1, 1, 0)` the two axes then share the rate `64 / 156`, fire at the same
-intervals (2, 4, 7, 9, ...), two Links in one interval, and their total
-by age 29 is `2 x floor(29 x 64 / 156) = 22` against `m(29) = 24` (one
-floor of the sum with the half start against two floors without it). The torus form of the flight is the one above: one count of Manhattan
+`(1, 1, 0)` the two axes then share the rate `64 / 156` and fire in the
+same intervals (3, 5, 8, 10, ... under the plain floor; 2, 4, 7, 9, ...
+under the half-rounded floor `(64 tau + 78) // 156`), two Links in one
+interval either way, which the walk forbids; the total by age 29 is `2 x
+floor(29 x 64 / 156) = 22` under the plain floor against `m(29) = 24`, and
+24 under the half-rounded one, which agrees with `m(tau)` at 29 and not at
+every age (at age 1: 0 against 1). The torus form of the flight is the one above: one count of Manhattan
 steps and the line's deficits, which the age holds whole. The implementer
 retiring the table keeps the age and computes the step from it, or carries
 the two accumulators; either is bit-identical, the per-axis form is not.
@@ -496,7 +504,7 @@ section 1.3).
 | P | `nature_beam.py:610, 611, 612` (the flight's period `L_d`); `meeting.py:328, 333` (the columns' common denominator); `amplitude.py:153, 167, 184, 194, 650, 697` (lcm, gcd, the common denominator of two multiplicities, the reduced pair, the multiplicity over the arm's norm) |
 | R at load | `core/integer.py:34, 36` (`integer_root`, Newton's iteration: the exact floor of a root, used at load for `T_d` and `u_d` and at run time by the meeting, item 10); `core/phase.py:28, 33, 34, 43, 48, 49, 63, 66, 83, 88` (the tables C and S from the fixed-point series, rounded to the nearest at the scale 256); `amplitude.py:132, 139` (the half-angle table's index, refused where it is not whole); `nature_beam.py:575` (`u_d`), `508` (the window's half width), `1125, 1221, 1883, 2599` and `world.py:1656` (the half circle `N // 2`, exact for every N of the law); `world.py:474, 1303, 1304` (ceilings of the budgets and the flight bound) |
 | R at the click | `amplitude.py:192` (the rung `(2 N C_k + T) // (2 T)`, the nearest integer, once per record; the comparison form on the branch), `215` (the Node's rung within the cell) |
-| E | `core/integer.py:45` (`reduced`, by the gcd), `108` (the apportioning's floors, the remainders given out in the same call, nothing left); `engine.py:800` (the give, `held // h` with `held mod h` kept on the giver); `meeting.py:233, 240` (the register's carry `total // N` with the residue kept as the phase, and its inverse); `nature_beam.py:553` (`m(tau)`, the Manhattan count: the age holds the residue, section 1.4); `nature_beam.py:492` and `core/integer.py:67` where the rate is constant (the constant-rate identity, FORM.md section 1: the phase per interval of age, the lamp's rate, `ages_at_key`) |
+| E | `core/integer.py:45` (`reduced`, by the gcd), `108` (the apportioning's floors, the remainders given out in the same call, nothing left); `engine.py:800` (the give, `held // h` with `held mod h` kept on the giver); `meeting.py:233, 240` (the register's carry `total // N` with the residue kept as the phase, and its inverse); `nature_beam.py:553` (`m(tau)`, the Manhattan count: as built a floor whose dropped remainder is a function of the age, which holds it, section 1.4); `nature_beam.py:492` and `core/integer.py:67` where the rate is constant (the constant-rate identity, FORM.md section 1: the phase per interval of age, the lamp's rate, `ages_at_key`) |
 | C | `nature_beam.py:3774, 3789, 3799` (the units a lamp can pay, `held // cost`, a comparison and the cap `min` of item 13) |
 | D | `core/integer.py:67` and `nature_beam.py:492` where the rate changes (the turn, the owed count, the release, the columns: items 1 to 4; the branch's `by_drive` replaces them); `nature_beam.py:853` (`share_of`, item 12); `2057` (the speed's grain, item 5); `meeting.py:232, 239` (the crowd met to the nearest Q, item 9) and `358` (the norm over the common denominator, item 9); and `core/integer.py:67` again through `by_clock` (`58-67`, called at `engine.py:644`: the turn under `action`, item 6) |
 
@@ -681,7 +689,7 @@ a face diagonal against `1 + 1.22 / k`. Both are rationals of the table:
 (the Manhattan and the Euclidean flux coincide on the face diagonal, the
 ratio 1). The first is the same count on a world whose y axis has the
 extent 1: there a row's y-step is a self-Link (the wrap `nature_beam.py:2403-2405`;
-the adjacency's self-Link `game_board.py:57-62`) that crosses no world
+the adjacency's self-Link, its docstring `game_board.py:38-39` and the wrap `61-64`) that crosses no world
 line and is no arrival, so the stream's Manhattan speed
 on the real axes is `S_1' Q / T_d` with `S_1' = 1`, `c_1 = 64 / 156 =
 0.41` on x, the rows stand `2.44` per Link and the count reads `1 + v x
@@ -837,8 +845,9 @@ and reads their sum: `q Q / (4 pi r^2)` again (the Huygens fan of target
 with components in -P .. P) that limit is not isotropic: the density of
 directions per solid angle is the cube's, `3^(3/2) = 5.2` times larger
 toward a corner than toward a face centre in the limit (3.0 at P = 8 and
-3.5 at P = 16 within 11.5 degrees of the corner against the face, the
-arithmetic check), a cubic anisotropy of the DECLARATION, absent for a
+3.3 at P = 16: the primitive vectors of the cube within 11.5 degrees of
+the corner direction against those within 11.5 degrees of a face centre,
+76 / 25 and 544 / 165, the arithmetic check), a cubic anisotropy of the DECLARATION, absent for a
 fan declared within a ball `abs(D) <= P`. The lattice's own anisotropy is
 `abs(u_d)` within 1.35 % of Q (the isqrt of `unit_label`), vanishing as
 Q grows.
@@ -985,7 +994,8 @@ frame is measurable by a one-way count and by nothing two-way.
 A body's clock is the count of its self-creations; `_frame_all` advances
 it at every interval in which nothing is owed, and `_move` steps the body
 after it, so a body thrown at any v ticks at the rate of one at rest
-(HYPOTHESES entry 21, the physicist's finding; TERMINOLOGY corrected).
+(HYPOTHESES entry 21, the physicist's finding: "the engine's rate is one
+at every speed, nature's gamma a limit stated so that it can fail").
 The only slowing of the law is the owed count, `owed = by_clock(age, k n,
 d)` with k the crowd the clock reads (the presence, or the age moment),
 `engine.py:475-485`: a clock slows by what it reads, `1 / (1 + k n / d)`,
@@ -1160,8 +1170,8 @@ b turns by
 
 the form `M / b` of Newton's and Einstein's deflection with the sign
 toward the mass, the constant a grain of the fan; and its phase gains the
-crowd met, `integral of abs(V) dt / Q`, which is `q / (4 N b c)` too: a
-phase delay `~ M / b`. Nature's deflection is `4 G M / (b c^2)` and its
+crowd met, `integral of abs(V) dt / Q`, which is `q / (4 b c)` phase
+steps, `q / (4 N b c)` turns of the circle: a phase delay `~ M / b`. Nature's deflection is `4 G M / (b c^2)` and its
 Shapiro delay `(2 G M / c^3) ln(4 r_1 r_2 / b^2)`: the delay reads the
 POTENTIAL along the path (M / r integrated, a logarithm), the meeting's
 phase reads the FLOW (M / r^2 integrated, `1 / b`). **Different law** for
@@ -1172,8 +1182,8 @@ every world (-1.79, -4.36, -2.30 pixels at (2^12, 6), (2^13, 6), (2^12,
 3); the offline flight's -3.0, -4.3, -2.6, the first outside because 122
 of the most turned rays clicked on the mass itself), the mean age moved
 only by the bent path's extra Links (+0.50, +1.24, +0.31 intervals), the
-phase offset per pixel sharp (the resultant 0.92 to 0.98 at the lit
-pixels of `mass`) and tens of steps apart from pixel to pixel: the crowd
+phase offset per pixel sharp (the README's words: "resultant 0.9 to
+1.0 at the lit pixels of `mass` and `near`") and tens of steps apart from pixel to pixel: the crowd
 met is per path, an interferometer of two paths reads their difference.
 The smallest step of K's table is 2.4 degrees, `10^4` times nature's 1.75
 arcseconds: the value is out of reach by the grain and is not claimed
@@ -1392,8 +1402,9 @@ Planck's constant the declared quantum times the circle, `h N`, and the
 frequency the lamp's own turn: a unit carries the content its lamp's
 frequency says, exactly, at every birth. **Reached**, as an identity of
 the release. Registered: the Bell lamps of content `K + 2` pay 2 per
-birth and stall once at tick 4 when their content falls below K (note 41
-(vii), record 148: "a paid lamp's frequency falls at every birth, the cost
+birth and stall once at tick 4 when their content falls below K (the
+bell README: "paying 2 per birth, stalls once, at tick 4: 159 births in
+160"; note 41 (vii), record 148: "a paid lamp's frequency falls at every birth, the cost
 quantum x turn"); the L1 lamp of content 2^20 at K = 2^20 turns 1 per
 self-creation and pays 1 per unit. What does not return: the frequency of
 a row in flight is its family's `phase_per_link` or its pair form, a
@@ -1711,8 +1722,11 @@ theta| x r |sin theta| d theta = pi p r` and the y-Links give the same:
     sum over the Links of |p_axis| = 2 pi p r = the action  integral of p . dl,
 
 exactly in the limit of small Links (the arithmetic check of this
-section on lattice circles: `2.010, 2.003, 2.0004, 2.0001 x pi r` at r =
-8, 16, 64, 256). The phase closes on itself when
+section: on the circle of the nearest lattice points to radius r, walked
+by axis Links with a diagonal move counted as two, the tangent's
+component on the stepped axis summed per Link reads `2.041, 2.011, 2.003,
+2.000 x pi p r` at r = 8, 16, 64, 256; the digits depend on the circle
+walked, the limit 2 does not). The phase closes on itself when
 
     2 pi p r = j h,   j whole:   Bohr's quantization of the action, exactly, with h the world's `action`.
 
@@ -1729,8 +1743,9 @@ circle's 2 pi r"); the sum over the Links of the component on the
 stepped axis is the action `2 pi p r` and not `4 p r`, so with `h = 16
 p(8)` the design's `j = 2.000` at r = 8 is `j = pi = 3.14`, and the
 table's j are `pi / 2` times larger (r = 2: 1.49; 4: 2.30; 6: 2.71; 8:
-3.14; 12: 4.01; 15: 4.51; 16: 5.10): the whole values fall at r = 12 (j
-= 4) and near r = 2 (j = 1.5, between), not at r = 8; in the step-drive
+3.14; 12: 4.01; 15: 4.51; 16: 5.10): the one whole value falls at r = 12
+(j = 4.01), the only registered radius with a whole j, not at r = 8
+(3.14); r = 2 reads 1.49; in the step-drive
 re-read r = 12 closed five times with every return within `r / 4` and r
 = 8 four times. The registered fractions of the phase's turn beyond
 whole circles at r = 8 (0.234 on the base over one pair of closings, 0.75
