@@ -1722,3 +1722,46 @@ removed; the floating-point sentence dropped as a duplicate of the
 section's own sentence and the figure's caption; the passage reduced to
 one sentence so that nothing in the section is said twice.
 
+## Wave 11 (2026-09-21): Schrodinger reached only in part (section 23), records 329 to 336
+
+Main at 5cc43ae7 merged (PR #500's records 329 to 336; PR #507's
+section 23). Schrodinger's equation for a free particle: on the law as
+built not reached (every row at c); under massive-rows-v1, a hypothesis
+named and not built, the time-independent free equation reached in
+form (the massive row's wall E' = isqrt(E'_0^2 + 3 p . p), the photon
+its E'_0 = 0 case; de Broglie's turn per Link; the phase (N / h) p . x
+on the Nodes; the Helmholtz limit with k = 2 pi p / h, the
+time-independent Klein-Gordon form exactly, Schrodinger's at second
+order in p / E'_0; Born's |psi|^2 the click's Gram form), the
+time-dependent form not reached (no frequency in flight, forced by the
+click; one momentum per record); the pin slits_matter before any run
+(the bands at 36.5, 60, 83.5 within one; Pearson 0.96 +- 0.02; the
+centre's first click at 1 + 828 within 2), the confrontation Jonsson
+1961 and Tonomura 1989; the price stated (a massive quantum in flight a
+record of rows, matter a body after the click; record 332). Changed:
+the QM section's Schrodinger paragraph and its sum, the table of
+consequences, the derivation record, the hypotheses section's one
+sentence (massive-rows-v1 named once), the jonsson1961 bibitem, the
+derivations bibitem (23; row 60; E19), the log bibitem (330 to 336),
+the citations of 334 and 335 in Part I and the tables. Referee round
+28 pending.
+
+## Referee round 28 (2026-09-21): Schrodinger in part, applied
+
+Thirteen findings, two major, all applied: the derivation record's row
+restored to six cells (the order and the error term in their own
+columns; the label "the limit proved under massive-rows-v1, the pin
+assumed"); the consequences row's status prefixed "pin:" as the legend
+binds; "not replicating in flight" in 23.5's words (the birth over the
+fan the one apportioning); the phase exact to the accumulator's
+remainder; Born's |psi|^2 the Gram form at the click and nowhere
+between clicks; the wall E' by comparisons at the birth, no root in
+flight; the QM section's status list gains "under a hypothesis named
+beside it"; the hypotheses section says the design is ordered and not
+delivered (record 336), not run; two commas in the bibitems; record
+333's gloss with the atoms; record 334 cited as the owner's direction,
+not as evidence. Reported, pre-existing: the abstract at 1944 characters
+between its LaTeX markers (the plain-text count for arXiv's 1920 is
+taken at submission, arxiv_metadata.md); the Heisenberg single-opening
+row's status without "pin:".
+
