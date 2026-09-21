@@ -1,0 +1,232 @@
+{
+ "format": "quarks-expectations-v1",
+ "worlds": {
+  "q1_proton_line": {
+   "push_tick": 20,
+   "pushes": {
+    "1": [
+     416530868696,
+     0,
+     0
+    ],
+    "2": [
+     0,
+     0,
+     0
+    ],
+    "3": [
+     -416530868696,
+     0,
+     0
+    ]
+   },
+   "border_rows_per_interval": 870,
+   "read_mass": 20,
+   "fate": {
+    "holds": true,
+    "toy_first_step": null,
+    "first_hand_over_about": 17
+   }
+  },
+  "q2_neutron_line": {
+   "push_tick": 20,
+   "pushes": {
+    "1": [
+     435372008672,
+     0,
+     0
+    ],
+    "2": [
+     0,
+     0,
+     0
+    ],
+    "3": [
+     -435372008672,
+     0,
+     0
+    ]
+   },
+   "border_rows_per_interval": 870,
+   "read_mass": 25,
+   "fate": {
+    "holds": true,
+    "toy_first_step": null,
+    "first_hand_over_about": 22
+   }
+  },
+  "q3_proton_triangle": {
+   "push_tick": 20,
+   "pushes": {
+    "1": [
+     -46833992744,
+     -55544787168,
+     126813807239
+    ],
+    "2": [
+     148740759524,
+     -116576861778,
+     -66677616293
+    ],
+    "3": [
+     -101906766780,
+     172121648946,
+     -60136190946
+    ]
+   },
+   "border_rows_per_interval": 870,
+   "read_mass": 20,
+   "fate": {
+    "holds": false,
+    "toy_first_step": 25,
+    "toy_spread": 317.25
+   }
+  },
+  "q4_deuteron_rectangle": {
+   "push_tick": 20,
+   "pushes": {
+    "1": [
+     514900489024,
+     384064524729,
+     0
+    ],
+    "2": [
+     0,
+     486661618356,
+     0
+    ],
+    "3": [
+     -514900489024,
+     384064524729,
+     0
+    ],
+    "4": [
+     550101777180,
+     -402779816516,
+     0
+    ],
+    "5": [
+     0,
+     -449231033022,
+     0
+    ],
+    "6": [
+     -550101777180,
+     -402779816516,
+     0
+    ]
+   },
+   "border_rows_per_interval": 1740,
+   "read_mass": 45,
+   "fate": {
+    "holds": false,
+    "toy_first_step": 161,
+    "toy_spread": 685.81
+   }
+  },
+  "q5_deuteron_line": {
+   "push_tick": 20,
+   "pushes": {
+    "1": [
+     419551209892,
+     0,
+     0
+    ],
+    "2": [
+     101923625280,
+     0,
+     0
+    ],
+    "3": [
+     3787403148,
+     0,
+     0
+    ],
+    "4": [
+     -3787401568,
+     0,
+     0
+    ],
+    "5": [
+     -81931883236,
+     0,
+     0
+    ],
+    "6": [
+     -439542951616,
+     0,
+     0
+    ]
+   },
+   "border_rows_per_interval": 1740,
+   "read_mass": 45,
+   "fate": {
+    "holds": true,
+    "toy_first_step": null,
+    "first_hand_over_about": 17
+   }
+  },
+  "q6_proton_kick": {
+   "push_tick": 2,
+   "pushes": {
+    "1": [
+     336852257664,
+     0,
+     0
+    ],
+    "2": [
+     0,
+     0,
+     0
+    ],
+    "3": [
+     -336852257664,
+     0,
+     0
+    ]
+   },
+   "border_rows_per_interval": 870,
+   "read_mass": 20,
+   "fate": {
+    "holds": false,
+    "engine_first_step": 6,
+    "step_every_about": 7,
+    "toy_escape_tick": 78,
+    "leaves_through": "face:-x"
+   }
+  },
+  "q7_proton_dressed": {
+   "push_tick": 20,
+   "pushes": {
+    "1": [
+     418547308612,
+     0,
+     0
+    ],
+    "2": [
+     0,
+     0,
+     0
+    ],
+    "3": [
+     -418547308612,
+     0,
+     0
+    ]
+   },
+   "border_rows_per_interval": 870,
+   "read_mass": 1836,
+   "fate": {
+    "holds": true,
+    "toy_first_step": null,
+    "first_hand_over_about": 16
+   }
+  }
+ },
+ "derivations": {
+  "pushes": "the push per interval on each body at `push_tick` (tick 20: every line of the fan within the reach has arrived and no body has stepped; tick 2 for the kicked world: the one-Link lines alone), the sum over the other bodies of (Q_A Q_B - G_A G_B - M_A M_B) x U(r) per column floored off the reader's clock (BEAM_LAW step 4, note 31), U(r) the label sum of the fan's lines arriving at the Node within the glue's lifetime from the engine's flight table; derived by docs/designs/quarks/quark_numbers.py (`shape_pushes`, `push_between`, `Fan`) and compared by tests/test_quarks_expectations.py; the engine's accumulator (note 41 (iv)) may differ by one label unit where a charge is not whole (the dressed world's d, the pair 3035000/303)",
+  "border_rows_per_interval": "290 rows of the glue family per body per interval click on the border `lifetime` from tick 4 (one row per direction of the fan per self-creation, whatever the amount held; the lifetime 3; note 31 (vii))",
+  "read_mass": "the content a detector reads of the bound set is the exact sum of its members' declared contents (step 4: a read moves no content; note 40: the give only lowers it); QUARKS.md 4.3",
+  "fate": "measured (GAMEBOARD): the strong design's toy (quark_numbers.py section 3 to 5, the steady delivery of the fan with the step drive and the contact rule over 3000 intervals) says a line holds and a corner, a triangle and a side-by-side rectangle shear; the engine decides; the first hand-over about sqrt(2 x 64 S M / F) intervals after the pushes begin (QUARKS.md 4.1)"
+ }
+}

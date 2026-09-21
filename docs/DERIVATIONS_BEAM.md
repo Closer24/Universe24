@@ -86,7 +86,7 @@ cited as orders, not as code.
 
 Section 0 states the law as one operator with its two blocks and places
 every result under its block (the owner's second pass, record 167 as the
-Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass); section 17 answers the owner's direction of 2026-09-21 (the law above Newton and Einstein: the theorem of covariant readings); section 18 answers records 264 and 265 (the three structural failures of the register under one logic); section 19 answers the owner's direction of 2026-09-21 on the masses (a bound set's mass as its total content, the nucleon as a chain of three on the bipartite lattice); section 20 answers record 270 (the periodic universe against the measured numbers); section 21 is the derivation map for the paper (every formula with its premises, script, run and status). The
+Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass); section 17 answers the owner's direction of 2026-09-21 (the law above Newton and Einstein: the theorem of covariant readings); section 18 answers records 264 and 265 (the three structural failures of the register under one logic); section 19 answers the owner's direction of 2026-09-21 on the masses (a bound set's mass as its total content, the nucleon as a chain of three on the bipartite lattice); section 20 answers record 270 (the periodic universe against the measured numbers); section 21 is the derivation map for the paper (every formula with its premises, script, run and status; 21.4 the Einstein map); section 22 answers records 291 and 292 (the uncertainty relation from the six verbs, and Bell). The
 targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
@@ -5360,3 +5360,166 @@ nothing in the structure carries the number I. The general formula of
 the paper is the operator F of section 0 with its two blocks; the rows
 of this map are its limits, and the map is the proof that each limit
 was taken from F and from nothing else.
+
+### 21.4 The Einstein map: every result of the special and the general theory, its status today, what the six give, what must be added, the pin
+
+The owner's direction (record 291): "derive all of Einstein, not only
+`E = m c^2`". One row per result. "Today" is the law on `main` (the
+crossing rule landed, BEAM_LAW note 48; form B decided); "the six give"
+is what follows from the verbs as declared; "to add" names the reading
+or the rule needed, under its identity (covariant-readings-v1 is the
+decided one, record 270, its physics-rule review the gate of its build;
+the others are named, not decided); "the pin" is the number a run must
+meet, written before it.
+
+| # | Einstein's result | status today | what the six verbs give | what must be added, under which identity | the pin a run would meet |
+| --- | --- | --- | --- | --- | --- |
+| E1 | Lorentz's symmetry of light, `omega = c k`, the light cone | R | the rows' limit is the wave equation at c (4.1, 5.1) | nothing | series K's ages, 89.40 in every world (registered) |
+| E2 | `gamma`, the time dilation of a moving clock | D (the rate 1, 4.3; NATURE 4a) | no operation carries a body's speed into its clock | the turn per proper time `E_0 / E` (17.3 (iv)), covariant-readings-v1 | J4's muon: the 64th turn at 71 and 125 (`64 gamma` = 70.9, 125.2), one tick's tolerance |
+| E3 | the contraction `1 / gamma` | D (12b.2: 0.87 .. 0.96 by the dispersion, unstable) | the retarded flux push (12.1), the flux one `1 / gamma` short | the gradient of the age moment across the six Ports (17.3 (ii)), covariant-readings-v1 | the thrown `s32_r24`: the extents' ratio `1 / gamma` = 0.977 at 1 / 8, the round trips equal along and across within the grain |
+| E4 | Doppler with `gamma`, `1 + z = gamma (1 + beta)` | D (the count `1 + beta`, 2.2; NATURE 4b) | the crossing count per interval, exact | the count per turn (17.3 (i)), covariant-readings-v1 | `coasting_none`'s `s_mz2`: `z = 0.315 +- 0.003` (today 0.2636) |
+| E5 | `E = m c^2`, the inertia of energy | not reached (4.5, 12.4) | `E = h f` for a row; the content and the momentum of a body untied | E as an accumulator of the work, `E_0 = Q S M c^2` forced by the Newtonian limit (17.3 (iii)), covariant-readings-v1 | a lamp emitting two opposite units keeps its speed (12.4's recoil balanced, `h s S c` free), its wall falling by the rows' E over `c^2` |
+| E6 | the invariant `E^2 - p^2 c^2 = E_0^2`, `v = p c^2 / E`, the velocity addition | D (`v = p / (m + p / c)`, 4.4) | the drive's rational form, first order off Newton | the same accumulator; the EXACT DISCRETE form in integers with the remainder kept, to be proved (17.1's note; the host script is a floating-point check) | the invariant constant to the grain over 40 000 pushes in integers; the composition of two throws by momenta reproducing Einstein's addition within the grain |
+| E7 | the field of a moving charge (Heaviside), the magnetic term | D (12.1, 12b.1: the flux along `n_ret`; the count's number right, the field short) | the age moment is the Lienard-Wiechert potential exactly (12.1) | the gradient push (17.3 (ii)), covariant-readings-v1 | the co-moving pair's transverse push `1 / gamma` of rest (not `1 / gamma^2`), the deuteron fan at k = 4: `(1 - beta^2) / (1 - beta^2 sin^2 theta)^(3/2)` along the present separation |
+| E8 | Poisson's equation, the field of a source | R (5.1) | the age moment, sourced by the release | nothing | series E: `k_a r = 36.1`, `k_s r^2 = 41.5` |
+| E9 | the gravitational redshift at first order | R (5.2) | the owed count on the age moment, `1 / (1 + k_a)` | nothing | series E's shells |
+| E10 | Newton's geodesics (the retarded inverse square, the orbit) | R (3.3, 5.3) | the push and the drive | nothing | series D's orbit; `push_m = m push_1` |
+| E11 | the second-order redshift, `sqrt(1 - 2 G M / (r c^2))` | D (5.2: `1 / (1 + k)` at second order, no horizon) | a clock slowed by what it reads, linear in the crowd | the field's self-source: the rows in flight as sources of rows (the content in flight gravitates), `field-source-v1`, not decided | the strong-field probes k = 2 .. 9 of series E re-read: the rate `1 - k + k^2 / 2 - ...` against `1 - k + k^2 - ...` |
+| E12 | the perihelion advance, `6 pi G M / (c^2 a (1 - e^2))` | not reached (5.6: post-Newtonian terms) | the retarded push gives the drift and the decay of 12b.2, not a precession | one sixth from the velocity terms of covariant-readings-v1 (the special-relativistic advance), five sixths from the field's nonlinearity, `field-source-v1` | the thrown orbit's apsidal drift per turn in the Newtonian regime: `pi beta_orbit^2` per turn from the readings alone (one sixth of Einstein's), the rest after the self-source |
+| E13 | the bending of light, `4 G M / (c^2 b)` | D (5.4, NATURE: series K's 0.000; the meeting key `~ M / b`) | the flight blind to the crowd | a rule on the LINEAR block: the row's wall reading the age moment (`flight-in-field-v1`), giving the delay's half, `2 G M / (c^2 b)`; the space half needs the second-order field | series K's beam at b = 6: a deflection of `2 G M / (c^2 b)` under the wall alone, `4 G M / (c^2 b)` with the field's second order |
+| E14 | the Shapiro delay | D (5.4) | no delay in time on `main` | the same `flight-in-field-v1` | the lensing world's round trip lengthened by `(2 G M / c^3) ln(4 r_1 r_2 / b^2)` |
+| E15 | the equivalence principle for a bound body | D (19.5: the release reads the held content) | the source's rows from the held content, `M_A` cancelling for a free body (3.3, exact) | the release reading the energy accumulator E (19.5), inside covariant-readings-v1 with binding-v1 | a bound pair's field equal to its total energy's; Nordtvedt's `eta` below `10^-4` |
+| E16 | the self-gravitation of the field's content | not reached | the rows carry no source | `field-source-v1` (rows in flight releasing, or the wall reading the presence) | E11's and E12's numbers |
+| E17 | the tensor source (the stress as a source) | D (record 196: the order-2 moment is read, the push uses the flow) | the reading **R** returns the traceless second moment | the push reading the order-2 moment as well, a column of the coupling (`tensor-source-v1`) | a moving crowd's push on a probe differing from a static crowd's by the stress term |
+| E18 | the cosmological term, `q_0 = -0.53` | D (15.4: Milne's 0) | the growing wall at a constant H | a rising H, a second declared rate under `expansion-v1` | the 24 stars' `z(tau)` with `q < 0` against the register's bracket |
+
+**Read across**: the special theory is one hypothesis away
+(covariant-readings-v1, rows E2 to E7 and E15), the exact discrete
+proof of its invariant the one open mathematical item; the general
+theory's first order is reached (E8 to E10) and its second order needs
+the field to be its own source (E11, E12, E16) and the rows to read the
+field (E13, E14), two named readings on the two blocks, neither
+decided; the tensor source and the cosmological term are separate
+declarations. Nothing enters the law by this table.
+
+## 22. The uncertainty relation from the six verbs, and Bell beside it
+
+**The owner's direction** (records 291 and 292, translated: "let them
+derive all of Einstein"; "confirm all of them, and also Heisenberg and
+the uncertainty principle, and Bell"). The host script
+[uncertainty_lattice.py](designs/derivations_beam/uncertainty_lattice.py)
+with its output
+[uncertainty_lattice.out](designs/derivations_beam/uncertainty_lattice.out)
+makes the numbers; no run.
+
+### 22.1 The conjugate pair on the torus, and what the six verbs give exactly
+
+**The pair.** A record is the vector **f** of `Z[Z_N]` of the amounts
+that ended at each phase (section 0; 6.7); its position is the Node its
+rows ended at (a cell of the ladder, the click's one read-out), its
+momentum the label with the phase per Link `abs(p) N / h` (the turn by
+momentum, 7.2: the wavelength `lambda = h / abs(p)` Links, de Broglie's
+relation as the declared turn) and, for a row, the direction of the fan.
+The click evaluates **f** at the N-th roots of unity (E) and weighs the
+result by the Gram form (B, 6.5): the evaluation is the discrete Fourier
+transform on the circle `Z_N`, and the position and the phase are the
+two sides of one transform.
+
+**What is exact, from the transform alone (R).** (i) The support
+bound: a record whose rows end on s phases has an evaluation supported
+on at least `N / s` of the N roots, `abs(supp f) x abs(supp f_hat) >= N`
+(Donoho and Stark 1989, SIAM J. Appl. Math. 49, 906, for any finite
+cyclic group), checked by enumeration at N = 64 on the register's records
+(the script's (A)): one phase gives all 64 roots, the antiphase pair 32,
+a comb of every eighth phase 8 (the product 64 exactly, the equality
+case), a run of 8 phases 57. No hypothesis: it is the Fourier
+transform's, and the law's click is that transform (E and the norm, the
+one imported law, BEAM_LAW section 5). (ii) The Weyl relation: the shift
+by one phase U and the multiplication by `omega^y` V on `Z_N` satisfy `V
+U = omega U V` with `omega` the primitive N-th root (the script's (B),
+exact to `10^-15`): the finite commutator of position and momentum on
+the torus, the algebra from which the continuum's `[x, p] = i hbar`
+follows as `N -> infinity` with `hbar = h N / (2 pi)` per 6.4's `E = h
+s = (h N) f`. Both pass the three tests trivially: no name, the
+evaluation verb and the group ring, the record's own vector.
+
+**What is a limit (R as a limit).** The variance form `Delta x Delta p
+>= hbar / 2` (Kennard 1927; Robertson 1929 for any pair) follows from
+(ii) by Cauchy-Schwarz on the Gram form of 6.5 (a positive quadratic
+form on the record vector, so the Robertson argument runs verbatim
+with the finite commutator) in the limit `N -> infinity` of a record
+spread over many phases; at finite N the bound is the finite group's
+(the entropic form of Hirschman and of Maassen and Uffink: the sum of
+the two Shannon entropies at least `log2 N`, which is section 14's
+identity "bits read plus bits erased = `log2 N` per record" read for
+the conjugate pair), and the Gaussian equality case does not exist on
+`Z_N`. **So**: reached exactly in the support and entropic forms, as a
+limit in the variance form, with `hbar` the world's action times the
+circle over `2 pi`; nothing is added to the law, and no hypothesis is
+named.
+
+**What makes it an uncertainty and not a spread.** The click reads ONE
+cell of one record (Definition 3, 6.1): a record read at a Node gives
+its position and erases its phase vector (14.2: `log2 N - H` bits
+erased), and a record read on the fan's angle (the far screen) gives
+its momentum's direction and not the Node it came from. The two are not
+jointly readable because there is one read-out, the same reason the
+law has no hidden joint distribution for Bell (below); the reading, not
+the GameBoard, is what is uncertain (Highlights 5.4, A10's premise).
+
+### 22.2 The pin for A10 under the one click (NATURE row 10), before any run
+
+The single opening of width w Nodes, one emitter per Node re-emitting
+on a fan, read on a screen L Links behind: the record's weight in `s =
+sin theta` is the array factor `[sin(pi w s / lambda) / (w sin(pi s /
+lambda))]^2` (the transform of a run of w phases, 22.1 (i)) times the
+fan's angular density (3.2's `N(theta)`, the grain). Its full width at
+half maximum is `0.886 lambda / w` for `w >= lambda` (the Fraunhofer
+constant), so the dimensionless product is
+
+    w x FWHM(sin theta) / lambda = 0.886      (the far field, the fan of every direction).
+
+At the registered geometry (`w27`: w = 27, L = 108, `lambda = 8 c` with
+`c = 32 / 55` on `main`, 4.655 Links; the Fresnel number `w^2 / (lambda
+L) = 1.45`) the exact sum over the 27 emitters at L = 108 on the 161
+pixels gives 0.916 (the script's (C)): the near field at Fresnel number
+1.45 widens the lobe by 3.4 % over Fraunhofer's, which is the whole
+correction the geometry owes; the crowd form read 1.08 (NATURE row 10,
+kept as history), whose 22 % the sparse fan explains (47 directions,
+spacing 0.083 in s, half the FWHM: a lobe of two directions). **The
+pin**: under the one click on `w27` with the fan of every direction
+(the screen's fan by angle, record 155's 1423 directions, spacing
+0.0026 in s), the record's clicks over the 161 pixels give `w x FWHM /
+lambda = 0.92 +- 0.03` (0.916 by the exact sum; 0.886 in the far-field
+limit `L -> infinity`), the count of plain clicks per pixel the fan's
+profile at every w (the control, unchanged), and at w = 9 (Fresnel
+number 0.16) the product `0.886 +- 0.03`; what refutes 22: a product
+below 0.85 at any width at or above `lambda`, or one that does not fall
+toward 0.886 as L grows.
+
+### 22.3 Bell, beside it
+
+Bell's inequality is not derived here because it is already registered
+and derived: 6.2's `S(N, Q)` at the CHSH labels from the rungs and the
+tables, `176 / 64 = 2.75` at N = 64 (NATURE row 1a, PASS at 1.65 standard
+errors), `181 / 64 = 2.828` from N = 512, `S -> 2 sqrt 2` with the bound
+`8 / N + 16 arcsin(sqrt 2 / (2 Q))`, Tsirelson's bound reached as a
+limit, the marginals exact (`32 / 64` in all 4096 setting pairs, no
+signalling), and the reason it is not a hidden-variable value: the one
+read-out per record of 22.1, a record of two rows read at two detectors
+with one Gram weight over both, which no joint distribution over the
+record's phases reproduces above 2 (the same Fourier fact as the
+support bound: the pair's weights are the transform of the record's
+phases, not a mixture of its cells). **R**, with nothing added.
+
+### 22.4 The verdict of section 22
+
+The uncertainty relation is reached from the six verbs: exactly in its
+support and entropic forms on the circle `Z_N` (the evaluation verb is
+the Fourier transform), exactly in its algebra (the Weyl relation, the
+finite commutator), and as the limit `N -> infinity` in Kennard's
+variance form with `hbar = h N / (2 pi)`; the one read-out per record is
+what makes it an uncertainty; A10's pin under the one click is `0.92 +-
+0.03` at the registered geometry and `0.886` in the far field; Bell is
+registered at `176 / 64` and derived as a limit at `2 sqrt 2`. No
+hypothesis; the three tests pass.

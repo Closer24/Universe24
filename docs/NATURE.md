@@ -95,7 +95,7 @@ derivation's expectation whose run is not yet registered (rule (e)).
 | 2a | The two-slit fringe visibility of one quantum at a time, (I_max - I_min) / (I_max + I_min) | 98 percent for single-photon two-path interference, Grangier, Roger and Aspect 1986, Europhys. Lett. 1, 173 (to verify against the source); the ideal for equal paths 1 | `examples/events/amplitude/slits_huygens.json`; the register entry L2b of [EXPERIMENTS](EXPERIMENTS.md#l-the-amplitude-law-2026-09-20) and record 164: the record's screen weights, visibility 0.954, Pearson 0.895 with the two-source cosine | N = 64; P = 48; K = 2^30: not under the one set (K); the clicks need the wheel | FAIL: 0.954 against 0.98, 0.026 below the measured and 0.046 below the ideal; the cause named (the fan's grain), the clicks NOT YET |
 | 2b | The Mach-Zehnder visibility of one quantum at a time (the dark port's fraction) | the same 98 percent, the same source | `examples/events/amplitude/mz_equal.json`; `mach_zehnder.mz_equal.offers` D1 = 1681/1682, D2 = 1/1682; `clicks` D1 = 64, D2 = 0 | N = 64; K = 2^20 | PASS: the offers' visibility (1681 - 1) / 1682 = 0.9988 above the measured 0.98; the clicks 64 / 0 over 64 births |
 | 2c | The power of the click's form (Born's exponent 2; nature's counterpart the absence of third-order interference) | the Sorkin parameter kappa = 0.0064 +- 0.0119 (consistent with 0, the quadratic form), Sinha et al. 2010, Science 329, 418 (to verify against the source) | `mz_345.json` `mach_zehnder.mz_345.clicks` 63 / 1 and `bell_16_24.json`, `bell_16_24_far.json` `pair.chsh.16_24.counts` 27, 5, 5, 27 (`pair.far.bell_16_24` = 44); [DERIVATIONS_BEAM 6.5](DERIVATIONS_BEAM.md#65-the-uniqueness-of-the-clicks-square-a-lattice-gleason): the power k pinned to [1.917, 2.489) and [1.784, 2.054) | N = 64; K = 2^20 (mz_345), 15 x 2^20 (the pair) | PASS: the intersection [1.917, 2.054) contains 2; the bracket's width is the register's resolution at N = 64 |
-| 3 | The deceleration parameter q of the Hubble diagram | q_0 = Omega_m / 2 - Omega_Lambda = -0.53 +- 0.01 from Omega_m = 0.315 +- 0.007 (flat), Planck 2018, Aghanim et al. 2020, A&A 641, A6; the discovery of q_0 < 0: Riess et al. 1998, AJ 116, 1009, and Perlmutter et al. 1999, ApJ 517, 565 | `examples/events/hubble_stars/record/coasting_none.json` and `doppler/coasting_none.json`; the register entry G2 (the second and third runs): q = -0.108 inside the coasting bracket -0.25 .. +0.25, H (t_0 + T_0) = 1.026; the gravity crowd +0.922 (record) and +0.345 (doppler), the double +1.500 and +1.190; [section 15](DERIVATIONS_BEAM.md#154-the-milne-case-and-the-registers-24-stars-at-rest)'s growing wall q = 0 (Milne) | N = 64; K = 4 198 400 and S = 2^20: not under the one set (K); the `doppler` worlds carry the key `doppler-v1`, the coasting reading identical with and without it | FAIL: the coasting -0.108 is 0.42 above nature's -0.53 (1.7 times the register's bracket); every gravitating reading is 0.87 to 2.0 above; the law has no term with q < 0 |
+| 3 | The deceleration parameter q of the Hubble diagram | q_0 = Omega_m / 2 - Omega_Lambda = -0.53 +- 0.01 from Omega_m = 0.315 +- 0.007 (flat), Planck 2018, Aghanim et al. 2020, A&A 641, A6; the discovery of q_0 < 0: Riess et al. 1998, AJ 116, 1009, and Perlmutter et al. 1999, ApJ 517, 565 | `examples/events/hubble_stars/record/coasting_none.json` (the third run's `doppler/coasting_none.json` was deleted with the key on 2026-09-21, [MIGRATION](MIGRATION.md#the-crossing-rule-on-2026-09-21-the-step-before-the-law-a-row-and-a-body-met-once-the-key-doppler-and-the-grain-deleted); its readings stay as history in EXPERIMENTS); the register entry G2 (the second and third runs): q = -0.108 inside the coasting bracket -0.25 .. +0.25, H (t_0 + T_0) = 1.026; the gravity crowd +0.922 (record) and +0.345 (doppler), the double +1.500 and +1.190; [section 15](DERIVATIONS_BEAM.md#154-the-milne-case-and-the-registers-24-stars-at-rest)'s growing wall q = 0 (Milne) | N = 64; K = 4 198 400 and S = 2^20: not under the one set (K); the third run's worlds carried the key `doppler-v1` (deleted on 2026-09-21), the coasting reading identical with and without it | FAIL: the coasting -0.108 is 0.42 above nature's -0.53 (1.7 times the register's bracket); every gravitating reading is 0.87 to 2.0 above; the law has no term with q < 0 |
 | 4a | The muon's lifetime in flight over its lifetime at rest | gamma = 29.33 at the CERN storage ring, the dilation confirmed as gamma to a fractional error of about 2 x 10^-3 at 95 percent confidence (the brief's 0.1 percent; to verify against the source), Bailey et al. 1977, Nature 268, 301 | series J4 ([HYPOTHESES 21](HYPOTHESES.md#21-a-moving-bodys-clock-the-engines-rate-is-one-at-every-speed-natures-gamma-a-limit-stated-so-that-it-can-fail), [light_speed/FORM.md section 4](designs/light_speed/FORM.md#4-lorentz-v1-stated-so-that-it-can-fail)): the `become` at tick 64 at every speed, the ratio 1; no world file, not run; lorentz-v1 would read 71 and 126 at 0.43 and 0.86 of c | the pinned world: N = 64, K = 2^20, S = 1 | FAIL (pinned; the run not made): the ratio 1 against 29.33, a factor 29.33; the open decision of record 230, routes A, B, C |
 | 4b | The redshift z of a moving lamp against its speed (the Doppler with the clock's factor) | 1 + z = gamma (1 + beta) along the motion, the time-dilation factor confirmed to 2.3 x 10^-9 at beta = 0.338, Botermann et al. 2014, Phys. Rev. Lett. 113, 120405 (to verify against the source); the classic Ives and Stilwell 1938, J. Opt. Soc. Am. 28, 215 | `hubble_stars/coasting_none.json`, the star `s_mz2` at beta = 0.2674 ([the README's table](../examples/events/hubble_stars/README.md#the-readings-2026-09-20-measured-against-expected)): z = 0.2636; [DERIVATIONS_BEAM 4.3](DERIVATIONS_BEAM.md#43-a-moving-clock-the-rate-is-one-at-every-speed): nature's 0.315 at that beta, the classical 0.2674 | N = 64; K = 4 198 400: not under the one set (K) | FAIL: 0.2636 against 0.315, 0.051 below in z (17 grains of 0.003); the clock's factor gamma = 1.0378 absent |
 | 5a | The anisotropy of c by direction, delta c / c, from the grain | delta c / c below about 10^-17, Herrmann et al. 2009, Phys. Rev. D 80, 105011, and 9.2 +- 10.7 x 10^-19, Nagel et al. 2015, Nature Communications 6, 8174 (both to verify against the source) | the flight table at Q = 64: the Euclidean pace Q \|D\| / T_D from 0.5774 to 0.5818 over the 1 780 418 primitive directions within 64 ([light_speed/FORM.md section 1](designs/light_speed/FORM.md#1-the-statement-of-c-completed)); the run-time check record 144's cone (17 and 24 Links at age 29, `amplitude/expectations.json` `cone`) | Q = 64 | BOUND on Q: the registered 7.6 x 10^-3 falls as 1 / (sqrt 3 Q); below 10^-17 needs Q >= 5.8 x 10^16 (2^56), below 10^-18 needs Q >= 5.8 x 10^17 (2^59); beyond the 64-bit word at the register's fan radius 48 (13.3's bound Q \|D\| <= 2^61 / sqrt 3) |
@@ -108,6 +108,9 @@ derivation's expectation whose run is not yet registered (rule (e)).
 | 8c | The neutrino's mass: the lightest massive neutrino over the electron's mass | at least 0.05 eV / 0.511 MeV = 1 x 10^-7 and at most 0.8 eV / 0.511 MeV = 1.6 x 10^-6: the oscillations give the squared mass differences 7.4 x 10^-5 eV^2 and 2.5 x 10^-3 eV^2 (PDG 2024, Navas et al., Phys. Rev. D 110, 030001, the neutrino mixing review), so at least one mass is above sqrt(2.5 x 10^-3) eV = 0.05 eV; the direct bound m below 0.8 eV (KATRIN, Aker et al. 2022, Nature Physics 18, 160) | `examples/events/entities/families.json`: the `nu` family with `quantum` 0 and no content, the register's neutrino massless ([DERIVATIONS_BEAM 19.5](DERIVATIONS_BEAM.md#195-the-rest-of-the-masses-as-readings-after-a-detector)) | the family table (a content is an input) | REFUTED: 0 against at least 1 x 10^-7 (a content above 0 is an input the register does not declare; the oscillation itself, a family turning into another with the flight, is not modelled) |
 | 9 | Malus's law, the fraction transmitted through a polariser at 45 degrees | 1 / 2 (cos^2 of 45 degrees; a third polariser at 45 degrees between two crossed ones passes 1 / 4 of the polarised intensity), Malus 1809 (to verify the citation) | none: the entry A12 of [EXPERIMENTS](EXPERIMENTS.md#a12-maluss-law-and-the-three-polarizer-chain-after-feature-11) is planned, after feature 11 (polarisation), not built | the entry's N = 2^8 | NOT YET: needed, a polariser as a coupling table on a two-state label of the row and the three-polariser chain's fractions |
 | 10 | The single-opening spread, w x Delta(sin theta) / lambda (w the opening's width, theta the angle behind it, lambda the wavelength) | 0.886 (the full width at half maximum of the Fraunhofer single-slit pattern), verified with fullerene molecules by Nairz, Arndt and Zeilinger 2002, Phys. Rev. A 65, 032109 (to verify against the source) | `examples/events/heisenberg/w27_wave.json`; the register entry A10: the product 4.99 at w = 27 with lambda = 4.619 Links, 4.99 / 4.619 = 1.08; the crowd form's number, kept as history; the record form's re-run of `w27_beam` did not complete | N = 64; K = 2^30: not under the one set (K) | NOT YET under the one click: the last registered value 1.08 against 0.886 is 22 percent above (the Fresnel number 1.46 named as the cause); the smaller widths unread |
+| 11a | The deceleration parameter q read from the brightness of a far lamp at rest under the growing wall (the second order of the Hubble diagram, d_L = (c / H)(z + (1 - q) z^2 / 2 + ...)) | q_0 = -0.53 +- 0.01, Planck 2018, Aghanim et al. 2020, A&A 641, A6 (row 3's source); the Hubble diagram's shape from the supernovae, Riess et al. 1998, AJ 116, 1009, and Perlmutter et al. 1999, ApJ 517, 565 | a derivation's pin, [the far lamp through a detector](designs/far_lamp/BRIGHTNESS.md) (record 282): the stream read at 1 / (1 + z) of the lamp's rate with the birth content per click (DERIVATIONS_BEAM 6.4), the flux L / (4 pi d^2 (1 + z)) with d = (c_0 / H) ln(1 + z), d_L = (c_0 / H) ln(1 + z) sqrt(1 + z) = (c_0 / H)(z - z^3 / 24 + ...): q_eff = +1; `far_lamp_map.out` section 2 | H = 1 / 400, T_D = 110, S_1 Q = 64 (section 15's stream); `expansion-v1` not built | FAIL: +1 against -0.53, 1.53 apart, on the decelerating side of Einstein-de Sitter (+0.5); pinned; the run not made |
+| 11b | The stretch of a far lamp's stream over 1 + z (the time dilation of the light curve) | the exponent b of the stretch (1 + z)^b: b = 0.97 +- 0.10, Blondin et al. 2008, ApJ 682, 724 (to verify against the source); the expanding form's b = 1 | the same pin: 400 rows released over 400 intervals arrive over 1452 intervals at 300 Links, the factor 3.639 against e^(H d / c_0) = 3.629 (`far_lamp_map.out` section 4 (a)); the stretch equals 1 + z, b = 1 | the same | PASS: b = 1 within the measured 0.97 +- 0.10; pinned; the run not made |
+| 11c | The surface brightness of a resolved source at z over its surface brightness at rest (Tolman's test) | (1 + z)^-4, Tolman 1930; measured as (1 + z)^-n with n between 2.3 and 3.1 in the R and I bands before any correction and consistent with 4 once the sources' own brightening is removed, Lubin and Sandage 2001, AJ 122, 1084 (to verify against the source) | the same pin: the board's Nodes and the fan's lines fixed under the wall (15.5), a ruler of l Nodes at d subtends l / d, the flux (1 + z)^-1: the surface brightness (1 + z)^-1, n = 1 (`far_lamp_map.out` section 4 (b)) | the same | FAIL: n = 1 against 4 (against 2.3 at the least), three powers of 1 + z at the most; at z = 1 the ratio 0.500 against 0.062; pinned; the run not made |
 
 ## The notes to the rows
 
@@ -394,6 +397,35 @@ one click, with the crowd form's 22 percent as the last reading. Nature's
 Nairz, Arndt and Zeilinger 2002 as the verification of the uncertainty
 relation.
 
+**11a to 11c, the far lamp through a detector.** The pin is a derivation
+([BRIGHTNESS.md](designs/far_lamp/BRIGHTNESS.md), the owner's order of
+record 280, received as record 282), not a registered run: the rule of
+section 15.2 on its own integers (the wall `2 T_D a`, `a = H_den + H_num
+x tick`, H = 1 / 400, `T_D = 110`, `S_1 Q = 64`), a lamp at rest releasing
+one row per interval, a detector at rest counting. The arithmetic: the
+stream arrives `1 + z` times slower (clicks per interval 0.650 at 100
+Links and 0.275 at 300, against `1 / (1 + z)` = 0.651 and 0.276) and every
+click carries its birth content (6.4: no rule makes the content follow
+the frequency in flight), so the flux has one factor of `1 / (1 + z)`
+where the expanding form has two; with `d = (c_0 / H) ln(1 + z)` the
+effective luminosity distance is `ln(1 + z) sqrt(1 + z)` in units of
+`c_0 / H`, whose series `z - z^3 / 24` has no `z^2` term, `q_eff = +1`
+(11a). Against flat Lambda-CDM at `Omega_m = 0.3` as the stand-in for the
+measured curve with the intercept free, the shape residual is 0.339 mag
+rms on z from 0.01 to 1.5 (Milne 0.055, Einstein-de Sitter 0.194); the
+register's own Pantheon+ fit ([HYPOTHESES 7](HYPOTHESES.md#7-redshift-without-recession-and-no-dark-energy))
+found the one-factor reading behind at every exponent. The stretch of
+the stream is `1 + z` exactly (11b). The surface brightness falls as `(1
++ z)^-1` because the board's Nodes and the fan's lines are fixed under
+the wall (11c). What would change 11a and 11c: a rule that lowers the
+content a click reads with the redshift, not one of the six (it would
+give `(1 + z) ln(1 + z)`, `q_eff = 0`, still not nature's); nothing in H,
+the grain or the width S, which set the intercept. The run that would
+register the pins: a lamp of rate 1 and a detector at 100 and 300 Links
+on a periodic board under `expansion-v1` at H = 1 / 400, expected `1 + z`
+= 1.539 and 3.639, clicks per interval 0.650 and 0.275, the content per
+click unchanged.
+
 ## Readings with a counterpart in quantum theory but no published dimensionless figure at hand
 
 Not tabulated, so that no source is invented: the Elitzur-Vaidman
@@ -416,10 +448,10 @@ registered as a pair.
 
 | Verdict | Rows |
 | --- | --- |
-| PASS | 1a (Bell, the record's pair, 1.65 standard errors), 2b (the Mach-Zehnder, 0.9988), 2c (the power 2 in [1.917, 2.054)) |
-| FAIL | 1b (the window form, S = 2), 2a (the two-slit visibility 0.954), 3 (q = -0.108 against -0.53), 4a (the muon, a factor 29.33, pinned), 4b (the moving lamp, 0.052 in z), 5b (the frame, eight to twelve orders, pinned), 7b (the alpha, a factor 6.4), 8a (the decay's step, a factor 88), 8b (the filter, 0 against 1), 8c (the massless neutrino, REFUTED by the oscillations) |
+| PASS | 1a (Bell, the record's pair, 1.65 standard errors), 2b (the Mach-Zehnder, 0.9988), 2c (the power 2 in [1.917, 2.054)), 11b (the stretch of a far lamp's stream, 1 + z, pinned) |
+| FAIL | 1b (the window form, S = 2), 2a (the two-slit visibility 0.954), 3 (q = -0.108 against -0.53), 4a (the muon, a factor 29.33, pinned), 4b (the moving lamp, 0.052 in z), 5b (the frame, eight to twelve orders, pinned), 7b (the alpha, a factor 6.4), 8a (the decay's step, a factor 88), 8b (the filter, 0 against 1), 8c (the massless neutrino, REFUTED by the oscillations), 11a (the far lamp's brightness, q_eff = +1 against -0.53, pinned), 11c (the surface brightness, one power of 1 + z against four, pinned) |
 | BOUND | 5a (Q >= 2^56 for 10^-17, beyond the word at the register's fan), 7a (the give per nucleon: 4 to 5 units of 3677 about nature's 4.35) |
-| NOT YET | 6 (Bohr's ratio), 9 (Malus), 10 (the single opening under the one click); the runs of 4a and 5b |
+| NOT YET | 6 (Bohr's ratio), 9 (Malus), 10 (the single opening under the one click); the runs of 4a, 5b and 11 |
 
 What the tally says, in the register's terms: the click's form (Born,
 the pair, the power) passes; the grain shows at the second digit of a
@@ -427,7 +459,7 @@ visibility; every reading that depends on a body's clock in motion fails
 by nature's gamma, which is one finding read four ways (4a, 4b, 5b and the
 absence of contraction), the open decision of record 230; the strong
 binding fails in its ratio and bounds its input; the weak force fails in
-its forms (a step, a line, a filter) and its neutrino's mass (8c, refuted); the expansion fails in its sign. A
+its forms (a step, a line, a filter) and its neutrino's mass (8c, refuted); the expansion fails in its sign (3) and, read through a detector, in the brightness of a far lamp (11a, one factor of 1 + z short) and in the surface brightness (11c), while the stretch of the lamp's stream passes (11b). A
 FAIL here is a prediction of the law stated so that it fails, as
 [PREDICTIONS](PREDICTIONS.md) asks, never a number to move.
 
@@ -441,7 +473,9 @@ percent, against the brief's 0.1 percent); Botermann et al. 2014 (2.3 x
 et al. 2021 (877.75 +- 0.28 s); Nairz, Arndt and Zeilinger 2002 (the
 figure of the paper); Malus 1809 (the citation); Formaggio and Zeller 2012
 (the cross-section's order; the attenuation per metre in row 8b is an
-order-of-magnitude estimate from it, not a figure of the paper). The values not marked
+order-of-magnitude estimate from it, not a figure of the paper); Blondin
+et al. 2008 (the stretch's exponent 0.97 +- 0.10); Lubin and Sandage 2001
+(the exponents 2.3 to 3.1 before correction). The values not marked
 (Hensen 2015's 2.42 +- 0.20, Cirel'son's 2 sqrt 2, Planck 2018's Omega_m,
 AME2020's binding energies, Michelson and Morley 1887, the exponential's
 ln 9 / ln 2, Balmer's 27 / 20) are known to the precision stated.
