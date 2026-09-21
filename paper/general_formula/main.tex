@@ -183,8 +183,9 @@ load, among them the circle's rounding at $1/256$ (record 328
 \item[(P8)] \emph{The physical inputs.} The family table, per family
 the content (the mass number), the cost $h$ per phase step, the charge
 per unit of content, the strong column, the lifetime, the phase rate
-and the hand; the world's width $S$, the push per unit of content per
-unit of flow, which carries what physics calls Newton's constant; and
+and the hand (its instance, every family the register declares with
+its values, in Appendix~\ref{sec:families}); the world's width $S$, the
+push per unit of content per unit of flow, which carries what physics calls Newton's constant; and
 the state and the apparatus of a world (the box with its boundaries,
 the bodies with their momenta and contents, the lamps, the detectors,
 the splitters, the gates).
@@ -445,7 +446,9 @@ primitive integer vector on whose digital line it walks), its age, its
 phase on the circle $\Z_N$, its number (its family), its amount, its
 content per unit, and under a record its identity, label, multiplicity
 and birth phase. A body carries its Node, its content $M$, its momentum
-vector $\mathbf p$ and its table of counts, one accumulator per count.
+vector $\mathbf p$ and its table of counts, one accumulator per count
+(the fields per kind and the six verbs on them, F4 in
+Appendix~\ref{sec:families}).
 
 \paragraph{The components of Eq.~(\ref{eq:map}).} The ladder's rungs
 $\rung_k$ of Part~III are walls of this kind. The components and their
@@ -568,14 +571,23 @@ section 4; the apportioning's tie, by the row's age, breaks no axis
 symmetry; this paper meets the first, Section~\ref{sec:model}); under the circle $\Z_N$
 exactly on the turns between events and at the click only up to the
 tables' rounding; and under the permutations of the families, each with
-its columns of the family table carried along. The first tie is read
+its columns of the family table carried along (Table~\ref{tab:f3}
+gives, family by family, the group each declared quantity lives on).
+The first tie is read
 through the six faces' detectors in record 349 \cite{log}: one source
 on five declared directions, its world mapped through all $48$; the
 auditor's verdict, the label, the row's momentum and the hand
 covariant, the Nodes crossed and the exit face covariant only under the
 $8$ elements that keep the axis order, exact on every untied direction
 (the mapped-back clicks and the escaped momentum equal the base under
-those $8$ alone). A boost, which mixes a
+those $8$ alone). The second tie is read the same way in record 359
+\cite{log}: two transit singles meeting head-on, parked and permuted
+again at every interval they dwell, come back equal to the base under
+$16$ of the $48$ (the identity and one cyclic permutation of the axes,
+with every sign) and differ under $32$, $16$ of them proper rotations,
+the difference reaching the detector; the collision's outcome is
+coupled to the flight's Link timing, and the covariance fails on the
+collision as \cite{beamlaw}, section 4, states. A boost, which mixes a
 step in space with a step in time, is not among the $48$: Lorentz's
 symmetry is not a symmetry of the GameBoard but of the limit of its linear
 block, the wave equation at $c$ (Section~\ref{sec:lorentz}). The $48$
@@ -691,10 +703,10 @@ HYPOTHESIS & The expansion as a growing wall of the flight: $c\,a = c_0$, $1 + z
 HYPOTHESIS & Hubble's law $z = Hd/c$ & reached for the form under expansion-v1, a declared assumption (record 279), $H$ an input: $z = Hd/c_0$ at first order, $1 + z = e^{Hd/c_0}$ in full; the error $(Hd/c_0)^2/2$ and the accumulator's part in $400$ & 15.2, 20.4, 21.5 & the $24$ stars, rms $0.0044$ at $T = 440$ (host) \\
 DERIVED & Bradley's aberration, $\tan\theta' = \sin\theta/(\cos\theta + \beta)$ ($\beta$ the observer's speed over $c$) & reached at first order in $\beta$ by the aberration rule (the nearest direction by comparison); different law at second, $\beta^2/2$ against nature's $\gamma$; the error the fan's grain $1/P$ & 12.2, 21.5 & the pins $304/116/157$ per cycle at $k = 4$, not run \\
 DERIVED & The smallest mass per kind: a charged family's floor is the reduced denominator of its charge per unit & reached as a theorem, conditional on nature's whole charge (the floors $1$ and $3$); the counts input & 16.2 (d) & the register's electron and proton $1$; the quark design's quarks $3$ \\
-DERIVED & The masses: a bound set's mass as its total content (held plus in flight less escaped), the nucleon as a chain of three with the odd quark at the centre, the release of a bound body reading its energy accumulator & reached in form; reached in sign (the neutron's charge radius squared negative); $m_n - m_p$ as the held difference with the electric part named ($2.54$, $1.51$ with the paid electric column, against $1.29$); bound: the floors $1$ and $3$; input: the electron's count, the quarks' held counts and every bond's content in flight; in the law the quarks compose the nucleons' charge and binding, not their mass \cite{quarks}; confinement absent, colour-v1 named for it and failing the vector and local tests; refuted as declared: a massless neutrino (Table~\ref{tab:nature}, row 8c) & 19.1 to 19.5; \cite{beamlaw} notes 43, 44 & series R, seven worlds at $3000$ intervals, the pins written before the run \cite{quarks}: the push on every body the design's integer exactly (the dressed world to the accumulator's one unit); the lines $u\,d\,u$, $d\,u\,d$ and $u\,d\,u\,d\,u\,d$ hold, the triangle and the rectangle shear (the first step at $27$ and $176$ against the design's integer replay's $25$ and $161$); 19.4's pins met: a chain and never a triangle, $m_n - m_p$ the held difference ($25 - 20$ units); the read mass the exact sum in every world ($20, 25, 20, 45, 45, 20, 1836$; the proton's $99$ percent binding not in the law); the kicked $u$ leaves through the face at $63$ with its $2/3\,e$ (the pin $70$ to $90$, outside by seven, reported and not moved) and the pair it leaves behind breaks at about $1190$ (the pin ``a bound pair'', outside): the law binds and does not confine \\
+DERIVED & The masses: a bound set's mass as its total content (held plus in flight less escaped), the nucleon as a chain of three with the odd quark at the centre, the release of a bound body reading its energy accumulator & reached in form; reached in sign (the neutron's charge radius squared negative); $m_n - m_p$ as the held difference with the electric part named ($2.54$, $1.51$ with the paid electric column, against $1.29$); bound: the floors $1$ and $3$; input: the electron's count, the quarks' held counts and every bond's content in flight; in the law the quarks compose the nucleons' charge and binding, not their mass \cite{quarks}; confinement absent, colour-v1 named for it and failing the vector and local tests; refuted as declared: a massless neutrino (Table~\ref{tab:nature}, row 8c) & 19.1 to 19.5; \cite{beamlaw} notes 43, 44 & series R, seven worlds at $3000$ intervals, the pins written before the run \cite{quarks}: the push on every body the design's integer exactly (the dressed world to the accumulator's one unit); the lines $u\,d\,u$, $d\,u\,d$ and $u\,d\,u\,d\,u\,d$ hold, the triangle and the rectangle shear (the first step at $27$ and $176$ against the design's integer replay's $25$ and $161$); 19.4's pins met: a chain and never a triangle, $m_n - m_p$ the held difference ($25 - 20$ units); the read mass the exact sum in every world ($20, 25, 20, 45, 45, 20, 1836$; the proton's $99$ percent binding not in the law); the kicked $u$ leaves through the face at $63$ with its $2/3\,e$ in the registered run of $3000$ intervals, made before the crossing rule, and at $64$ in the register's replay of the first $100$ intervals under the rule, written from the engine on 2026-09-21 (the pin $70$ to $90$, outside by six or seven, reported and not moved) and the pair it leaves behind breaks at about $1190$ (the pin ``a bound pair'', outside): the law binds and does not confine \\
 \midrule
 INPUT & Newton's constant $G = K\eta/(4\pi S)$, $\eta = n/d$ the release rate per unit of content per direction & reached in form, with the width $S$ an input, a choice of units ($\alpha_G = \alpha/\rho_p^2$, $\alpha$ the fine-structure constant, $\alpha_G$ the gravitational coupling of two protons, $\rho_p$ the proton's charge per unit of content); no rule in sight fixes the hierarchy $\alpha/\alpha_G = 1.2 \times 10^{36}$ & 3.3, 16.2 (e) & the world file's width \\
-INPUT & The masses and charges of the families & input: the initialisation & record 106; \cite{predictions} & the family table \\
+INPUT & The masses and charges of the families & input: the initialisation & record 106; \cite{predictions} & the family table: its instance and the contents as declared, Tables~\ref{tab:f1} and~\ref{tab:f2} \\
 \midrule
 NOT REACHED & Einstein's field equation & not reached: no tensor source, no self-gravitation, no metric for the rows, no cosmological term & 5.5, 5.6 & \\
 HYPOTHESIS & The bending of light, the Shapiro delay, Snell's law & not reached on the archived code; reached in form under optical-v1, a rule on the rows under its own identity (the flight's wall and a row's direction reading the crowd's age moment and flow at the row's own Node, with one new integer, the factor $2$), designed and reviewed twice (admissible with eight must-fixes, then buildable after form B lands), not yet built; Snell's law a fourth pin of the same rule to first order in the pace ratio & 5.4, 5.6; \cite{grrows} & series K: $0.000$ registered; the pin series K's four worlds re-run with the clock's pair $[1, 256]$ \\
@@ -1025,7 +1037,38 @@ $r = 6$ and outside at $8, 10, 12$ by the shell mean's ripple entering
 the ratio whole, at a strong field ($k_a = 2$ to $9$) where the
 first-order line fails as pinned; the weak-field confrontation ($k_a \ll
 1$) is a run the register names as the follow-up, neither pinned nor
-made.
+made. The clock alone, without the field's push, is read on the tree's
+crowd-clock worlds \cite{crowdclock}: a lamp inside a crowd of two
+sources whose rows it lets pass, the coupling off by the world's word,
+read by a fixed detector; eight worlds whose expectation the design
+pinned before any run, run twice on main \texttt{119fd9b} (the first
+run read the lamp's own spending, its wheel turning by its content,
+and the worlds were amended to a reservoir of $2^{20}$ units), the
+entry drafted and not registered. Every one of the $32$ readings of
+the second run inside its pin: a lamp at rest reads $1 + z = 1 + k$
+with $k = 4F/2^{16}$, $F$ the crowd's units per source per interval,
+inside its pin at every rung, $1.000$ and $1.006$ in the two windows
+for the pinned $1.005$ at $k = 0.005$ (inside by the pin's tolerance
+of $0.02$, the whole of $k$ there), and exact at $k = 0.08, 0.3, 1, 2$
+($1 + z = 1.080, 1.300, 2.000, 3.000$), so $z = 1$ and $z = 2$ are
+read with nothing moving and the count is unbounded; every birth reaches the
+detector; a lamp thrown at $0.2c$ inside its crowd reads $1.283$,
+between the sum $1 + k + v/c$ and the product $(1 + k)(1 + v/c)$ and
+nearer the sum, and, stepping only at a self-creation, moves at $v/(1
++ k)$ and falls behind its unslowed crowd within the pinned bracket
+(record 359 \cite{log}); measured once. Five such members before one
+detector, at rest and thrown as one at $0.2c$ with each member's sources
+at $v/(1 + k)$, the design pinned before its one run on main
+\texttt{d8cb46e}, the entry drafted and not registered
+\cite{crowdclock}: at rest $1 + z = 1.0000, 1.0999, 1.3001, 1.6000,
+2.0000$ at $k = 0, 0.1, 0.3, 0.6, 1$, a spread of $0.363$ in $z$ with
+nothing moving and no member below the bare one's $1$; thrown as one
+$1.2007, 1.3022, 1.5066, 1.8092, 2.2147$ for the pinned $1 + k + v/c$,
+the terms adding, the product $(1 + k)(1 + v/c)$ refuted from $k = 0.3$
+up ($2.4$ at $k = 1$); measured once. What the runs cannot say is
+whether a galaxy's redshift is such a clock or a cluster's dispersion a
+spread of such clocks; they say what the law as built makes of a
+crowd.
 
 \paragraph{Bodies: Newton's geodesics, retarded.} A body's push reads
 the flow and its speed the step rule, so in the limit it follows the
@@ -3111,7 +3154,7 @@ as a column beside the run, with the same words where none exists.
 \toprule
 The formula & The operations and the premise & The limit and the closed form & The pin, written before the run & The reading; the label \\
 \midrule
-$c$, the pace of light & translation on the flight's accumulator, one carry per interval; isotropy; the wall $T_d$ declared (P9) & $c = 1/\sqrt3$ Links per interval; $32/55$ on a heading at $Q_f = 64$ & the escape interval, Node and face of every direction of the fan, from the closed form (series Q's \texttt{derived.csv}) & $290$ of $290$ inside; the engine is its closed form and no physical law; the bound proved, the value the flight operator's norm given the declared wall (24.1, row 9) \\
+$c$, the pace of light & translation on the flight's accumulator, one carry per interval; isotropy; the wall $T_d$ declared (P9) & $c = 1/\sqrt3$ Links per interval; $32/55$ on a heading at $Q_f = 64$ & the escape interval, Node and face of every direction of the fan, from the closed form (series Q's \texttt{derived.csv}) & $290$ of $290$ inside; read again by the auditor on a fan world of all $290$ primitive directions within Manhattan $6$, one source, $80$ intervals: $290$ of $290$ first clicks at the pinned interval, face and Node, the pace $Q_f|d|/T_d$ from exactly $1/\sqrt3$ on the eight diagonals to $32/55$ on the headings, never above, at $Q_f = 64$ every direction at or above $1/\sqrt3$ by the integer root's rounding (record 359 \cite{log}); the engine is its closed form and no physical law; the bound proved, the value the flight operator's norm given the declared wall (24.1, row 9) \\
 The flight's line and period & the Bresenham deficits & $m(\tau) = \lfloor (2\tau S_1 Q_f + T_d)/(2T_d) \rfloor$ & the cone's two rows at the age $29$ (series L7) & inside; measured once \\
 The plane wave, $\omega = ck$ & evaluation on the phase, the flight & the rows' limit is the retarded wave equation at $c$ & the mean age the control's within one interval (the flight table's $89$ and $90$; series K) & $89.40$ in every world; measured once \\
 The source's Doppler & a thrown lamp releasing one row per self-creation at a clock of rate $1$; the rows $c \mp v$ Links apart (translation) & $1/(1 \mp v/c)$ ahead and behind, $1 + z = 1 + v/c$ for a receding lamp, exact in the limit (2.5) & Milne's $q = 0 \pm 0.25$ and $Ht_0$ about $1$ (series G2, coasting); no per-star pin before the run & every star within $0.004$ of $v/c$, $0.1146 \to 0.1146$, $0.2483 \to 0.2478$, $0.2674 \to 0.2636$, $0.0573 \to 0.0611$, two at $0.0038$ above the grain $0.003$, a host reading after the run; $q = -0.108$ inside; measured once for the fit, the per-star form read after the run \\
@@ -3126,11 +3169,11 @@ The bending of light & the rows blind to the crowd & none on the archived code; 
 The growing wall, the redshift & translation with a growing wall (the feedback block) & $1 + z = a(t_r)/a(t_e)$, Milne's $q = 0$, $c\,a = c_0$ & Milne's $q = 0$ within $\pm 0.25$ (series G2, coasting) & $-0.108$ coasting, under a world key since deleted, inside; the $24$ stars re-read at rest under the wall, rms $0.0044$ at $T = 440$, a host reading with no run; nature's $-0.53$ FAIL (row 3); the wall's form assumed until run \\
 The far lamp through a detector & the wall, the birth content per click & $L_{\mathrm{lamp}}/(4\pi r^2(1+z))$, $q_{\mathrm{eff}} = +1$, the stretch $1 + z$ & $q_{\mathrm{eff}} = +1$; the stretch $3.639$ against $3.629$; the surface brightness $(1+z)^{-1}$ (rows 11a to 11c) & the run not made; on the pin 11a and 11c FAIL, 11b PASS; assumed \\
 The minimal mass and the floors per kind & the integer form; the charge line $[n, d]$ & one unit; the floor $d$ under a whole charge: $1, 1, 3, 3$ & the quarks' contents as multiples of $3$ (series R declares $4$ and $9$) & the floors proved; the counts assumed (inputs) \\
-A bound set's mass & held plus in flight less escaped & $m_n - m_p$ the held difference, $2.54$ ($1.51$ with the electric part) against $1.29$ & the read mass the sum ($20, 25, 20, 45, 45, 20, 1836$); a chain and never a triangle; the kicked $u$ out at $70$ to $90$; the pair left behind bound (series R) & the mass and the shapes inside; the kicked $u$ at $63$ and the pair broken at about $1190$ outside, reported; the form measured once, the counts assumed \\
+A bound set's mass & held plus in flight less escaped & $m_n - m_p$ the held difference, $2.54$ ($1.51$ with the electric part) against $1.29$ & the read mass the sum ($20, 25, 20, 45, 45, 20, 1836$); a chain and never a triangle; the kicked $u$ out at $70$ to $90$; the pair left behind bound (series R) & the mass and the shapes inside; the kicked $u$ at $63$ before the crossing rule and at $64$ in the replay under it, and the pair broken at about $1190$ outside, reported; the form measured once, the counts assumed \\
 The periodic universe & the two GameBoards under the wall & open; $L_{\mathrm{box}}/(2\chi_{\mathrm{rec}}) > 0.97$ ($\chi_{\mathrm{rec}}$ the comoving distance to last scattering) & a lamp's second image at the winding distance with the redshift $e^{HL_{\mathrm{box}}/c_0} - 1$ & not run; open \\
 \bottomrule
 \end{tabular}
-\caption{\label{tab:recorda}The derivation record of the formulas of Part~II: the field, the flight, gravity, the expansion and the masses. The pin column carries the expectation the register holds from before the run, or says that none exists; the reading column carries what the run or the host read, and the label: measured (a reading inside a pin written first), proved, assumed (a pin without its run; a declared input), open. By the owner's rule (record 353 \cite{log}), a run counts as measured only when a second, independent runner has re-run it from the register's world at main and checked the reading from the four directions (the $48$ signed permutations of the axes, the renaming of the entities, another order where the register allows one, the pin against the reading), with the line recorded in the replications document that record 353 orders (\texttt{docs/REPLICATIONS.md}, no line of it on the tree at this writing); until that line exists the label reads ``measured once'', awaiting replication. Sources: the derivation map and the register \cite{derivations,register}.}
+\caption{\label{tab:recorda}The derivation record of the formulas of Part~II: the field, the flight, gravity, the expansion and the masses. The pin column carries the expectation the register holds from before the run, or says that none exists; the reading column carries what the run or the host read, and the label: measured (a reading inside a pin written first), proved, assumed (a pin without its run; a declared input), open. By the owner's rule (record 353 \cite{log}), a run counts as measured only when a second, independent runner has re-run it from the register's world at main and checked the reading from the four directions (the $48$ signed permutations of the axes, the renaming of the entities, another order where the register allows one, the pin against the reading), with the line recorded in the replications document that record 353 orders (\texttt{docs/REPLICATIONS.md}, pointed at by the register's \texttt{replicated} map beside its \texttt{derivations}, one entry per run block, an absent entry meaning measured once, record 360 \cite{log}; no line of the document on the tree at this writing); until that line exists the label reads ``measured once'', awaiting replication. Sources: the derivation map and the register \cite{derivations,register}.}
 \end{table}
 
 \begin{table}[H]\centering\scriptsize
@@ -3180,6 +3223,186 @@ Schr\"odinger for a free particle & the massive row's flight against the wall $E
 \end{tabular}
 \caption{\label{tab:recordc}The rows added under the six-point standard (\cite{derivations}, sections 21.2 and 21.5): the operations and the premise, the closed form, the order of the expansion, the error term, and the pin or the reading with its label. $\mathbf g$ is the field's acceleration, $\rho$ and $\mathbf j$ the source density and current, $\mathbf E$, $\mathbf B$, $\mathbf J$ and $\mu_0$ Maxwell's fields, current and constant, $\hat f$ the evaluation of the record $f$.}
 \end{table}
+
+\section*{Appendix: the families, the sets, the groups and the vectors}\label{sec:families}
+
+Every number in this appendix is a declaration of the register, an
+input under P8, and none is a measurement: no run made them. They are
+read from the one source, the definitions file
+\texttt{examples/events/entities/families.json} and the worlds under
+\texttt{examples/events/}, by the mathematician's host script, whose
+audit found that the paper carried the family table's schema and never
+its rows \cite{familiesaudit} (the owner's word of 2026-09-21, record
+358 \cite{log}). The keys are the engine's \cite{engine}: $h$ the
+quantum, $0$ for a free family and $1$ or more for a paid one (the kind
+is derived from it, never declared); the charge, per unit of content for
+a free family (an integer, or a fraction $n/d$, a winding on the circle)
+and the whole charge per unit of amount for a paid one; the strong
+column with its value and sign, the further column of the one coupling
+beside gravity and charge; the lifetime $L$, the age at which a row of
+the family clicks on the border of that name, for ever when unset; the
+phase circle, yes for a phase on $\Z_N$ and no for a phase-less family
+that turns never; the hand, the pseudoscalar bit $\pm 1$ that the $48$
+read by the determinant, none when unset. A world may declare a family
+beyond the definitions, or with other values than the shipped ones;
+those declarations are the register's declared variants of that world
+(Table~\ref{tab:f1b}), read by the same law, not a second law. The
+count: $75$ families in $28$ entities (the sets) in the definitions, and
+$21$ declarations of the worlds that differ from them.
+
+\begin{table}[H]\centering\scriptsize
+\begin{tabular}{p{1.15in}p{1.3in}p{0.2in}p{0.5in}p{1.1in}p{0.45in}p{0.35in}p{0.35in}}
+\toprule
+Entity (the set) & Family & $h$ & Charge & Column & $L$ & Circle & Hand \\
+\midrule
+\texttt{photon} & \texttt{light} & $1$ & none & none & for ever & yes & none \\
+\texttt{electron} & \texttt{e} & $0$ & $-15$ & none & for ever & yes & none \\
+\texttt{electron\_born\_by\_become} & \texttt{beta} & $1$ & $-7344$ & none & for ever & yes & none \\
+\texttt{proton} & \texttt{p} & $0$ & $1/1$ & none & for ever & no & none \\
+\texttt{neutron} & \texttt{n} & $0$ & none & none & for ever & no & none \\
+\texttt{strong\_family} & \texttt{nuclear} & $0$ & none & strong $10000$, sign $-1$ & $3$ & no & none \\
+\texttt{bond\_family} & \texttt{bond} & $1$ & none & none & $3$ & no & none \\
+\texttt{up\_quark} & \texttt{u} & $0$ & $1224$ & none & for ever & no & none \\
+\texttt{glue\_family} & \texttt{glue} & $0$ & none & strong $10000$, sign $-1$ & $3$ & no & none \\
+\texttt{neutrino} & \texttt{nu} & $0$ & none & none & for ever & yes & none \\
+\texttt{antineutrino} & \texttt{nubar} & $0$ & none & none & for ever & yes & $+1$ \\
+\texttt{w\_boson} & \texttt{w} & $1$ & $-7344$ & none & $1$ & no & none \\
+\texttt{wall\_material} & \texttt{wall} & $1$ & none & none & for ever & yes & none \\
+\texttt{screen\_material} & \texttt{screen} & $1$ & none & none & for ever & yes & none \\
+\texttt{counter\_material} & \texttt{counter} & $1$ & none & none & for ever & yes & none \\
+\texttt{apparatus\_material} & \texttt{apparatus} & $1$ & none & none & for ever & yes & none \\
+\texttt{carrier\_material} & \texttt{carrier} & $1$ & none & none & for ever & yes & none \\
+\texttt{detector\_material} & \texttt{detector} & $1$ & none & none & for ever & yes & none \\
+\texttt{detector\_material\_d} & \texttt{d} & $1$ & none & none & for ever & no & none \\
+\texttt{mass\_m} & \texttt{m} & $0$ & $0$ & none & for ever & no & none \\
+\texttt{mass} & \texttt{mass} & $0$ & $0$ & none & for ever & no & none \\
+\texttt{neutron\_star\_material} & \texttt{neutron} & $0$ & $0$ & none & for ever & no & none \\
+\texttt{probe\_material} & \texttt{probe} & $0$ & $0$ & none & for ever & no & none \\
+\texttt{source\_material} & \texttt{s} & $0$ & none & none & for ever & no & none \\
+\texttt{test\_charge} & \texttt{q} & $0$ & $0/1$ & none & for ever & yes & none \\
+\texttt{choosers} & \texttt{sa} & $0$ & none & none & for ever & yes & none \\
+\texttt{choosers} & \texttt{sb} & $0$ & none & none & for ever & yes & none \\
+\texttt{thrown\_sources} & the 24 families \texttt{px1} to \texttt{mz4} & $0$ & none & none & for ever & yes & none \\
+\texttt{hubble\_stars} & the 24 families \texttt{s\_px1} to \texttt{s\_mz4} & $1$ & none & none & for ever & yes & none \\
+\bottomrule
+\end{tabular}
+\caption{\label{tab:f1}F1, the family table's instance: the $75$ families of the shipped definitions in their $28$ entities, every declared key (the $24$ thrown sources and the $24$ Hubble stars, $48$ families of one shape each, given as one row each). A charge $n/d$ is a winding on the circle. Inputs of the register \cite{familiesaudit}.}
+\end{table}
+
+\begin{table}[H]\centering\scriptsize
+\begin{tabular}{p{0.45in}p{0.2in}p{0.45in}p{1.05in}p{0.4in}p{0.45in}p{0.9in}p{0.35in}p{1.6in}}
+\toprule
+Family & $h$ & Charge & Column & $L$ & Circle & Phase per Link & Hand & Worlds \\
+\midrule
+\texttt{beta} & $1$ & $-7344$ & none & for ever & unset: yes & none & $-1$ & 1 world (\texttt{hand/wu}) \\
+\texttt{d} & $0$ & $-272$ & none & for ever & no & none & none & 8 worlds (\texttt{gallery/proton\_electron}, \ldots) \\
+\texttt{e} & $0$ & $-7344$ & none & for ever & no & none & none & 1 world (\texttt{gallery/proton\_electron}) \\
+\texttt{glue} & $0$ & none & strong $[10000, 606]$, sign $-1$ & $3$ & no & none & none & 1 world (\texttt{quarks/q7\_proton\_dressed}) \\
+\texttt{light} & $1$ & none & none & for ever & unset: yes & $3$ & none & 1 world (\texttt{amplitude/cone\_links}) \\
+\texttt{light} & $1$ & none & none & for ever & unset: yes & $[16, 1]$ & none & 1 world (\texttt{amplitude/mz\_unequal\_f16}) \\
+\texttt{light} & $1$ & none & none & for ever & unset: yes & $[3, 1]$ & none & 1 world (\texttt{amplitude/cone\_intervals}) \\
+\texttt{light} & $1$ & none & none & for ever & unset: yes & $[8, 1]$ & none & 1 world (\texttt{amplitude/mz\_unequal\_f8}) \\
+\texttt{light} & $1$ & none & none & for ever & unset: yes & $[8591334592, 1073741824]$ & none & 3 worlds (\texttt{amplitude/slits\_huygens}, \ldots) \\
+\texttt{m} & $0$ & $0$ & none & for ever & unset: yes & none & none & 15 worlds (\texttt{coupling/1a\_m1}, \ldots) \\
+\texttt{mass} & $0$ & none & none & for ever & no & none & none & 4 worlds (\texttt{hubble/coasting\_age}, \ldots) \\
+\texttt{nu} & $0$ & none & none & for ever & unset: yes & none & $-1$ & 1 world (\texttt{hand/nu\_hand}) \\
+\texttt{nuclear} & $0$ & none & strong $7000$, sign $-1$ & $3$ & no & none & none & 1 world (\texttt{nucleus/pp\_1\_weak}) \\
+\texttt{p} & $0$ & $4$ & none & for ever & no & none & none & 21 worlds (\texttt{atoms/helium\_r12}, \ldots) \\
+\texttt{p} & $0$ & $-2/1$ & none & for ever & unset: yes & none & none & 2 worlds (\texttt{coupling/7\_mm}, \ldots) \\
+\texttt{p} & $0$ & $0/1$ & none & for ever & unset: yes & none & none & 1 world (\texttt{coupling/7\_00}) \\
+\texttt{p} & $0$ & $1/2$ & none & for ever & unset: yes & none & none & 1 world (\texttt{coupling/7\_pp\_m4}) \\
+\texttt{p} & $0$ & $2/1$ & none & for ever & unset: yes & none & none & 2 worlds (\texttt{coupling/7\_mp}, \ldots) \\
+\texttt{q} & $0$ & $-1/2$ & none & for ever & unset: yes & none & none & 2 worlds (\texttt{coupling/7\_mm}, \ldots) \\
+\texttt{q} & $0$ & $1/2$ & none & for ever & unset: yes & none & none & 3 worlds (\texttt{coupling/7\_pm}, \ldots) \\
+\texttt{w} & $1$ & $-7344$ & none & $1$ & no & none & $-1$ & 1 world (\texttt{hand/w\_hand}) \\
+\bottomrule
+\end{tabular}
+\caption{\label{tab:f1b}F1b, the $21$ declarations of the worlds that differ from the shipped definitions or name a family the definitions lack, with the count of worlds and the first: the nucleus's proton at the charge $4$, the quarks' \texttt{d} at $-272$ (a free family of the shipped detector material's name), \texttt{e} at $-7344$ in the gallery world, the coupling series' charges on \texttt{p} and \texttt{q} as windings, \texttt{nuclear} at $7000$ for the threshold's control, \texttt{glue} at $[10000, 606]$, the lamps' phase per Link, the W's, the neutrino's and \texttt{beta}'s hand; and three declarations that differ only by a key left unset where the definitions set it: \texttt{m} of the coupling series and the coupling series' \texttt{p} with the circle unset, so that they carry a phase circle where the shipped families carry none, and the Hubble worlds' \texttt{mass} with the charge unset. ``Unset: yes'' in the circle column means the world does not set the key and the engine's default, a circle, holds \cite{engine}. Inputs of the register \cite{familiesaudit}.}
+\end{table}
+
+\begin{table}[H]\centering\scriptsize
+\begin{tabular}{p{1.5in}p{5.0in}}
+\toprule
+Family & The content on the worlds' measured events, per series \\
+\midrule
+\texttt{apparatus} & $1$ (\texttt{catalog}, \texttt{gallery}) \\
+\texttt{counter} & $1$ (\texttt{amplitude}, \texttt{bell}, \texttt{binding}) \\
+\texttt{d} & $1$ (\texttt{hand}, \texttt{weak}); $9$ (\texttt{gallery}, \texttt{quarks}) \\
+\texttt{detector} & $1$ (\texttt{crowd\_clock}, \texttt{hubble}, \texttt{hubble\_stars}, \texttt{record}, \texttt{two\_stars}) \\
+\texttt{e} & $1$ (\texttt{gallery}); $1836$ (\texttt{atoms}, \texttt{bohr}) \\
+\texttt{light} & $1$ (\texttt{amplitude}); $290$ (\texttt{c\_measured}); $8192$ (\texttt{masses}); $20480$ (\texttt{masses}); $32768$ (\texttt{masses}); $1048576$ (\texttt{amplitude}); $1048578$ (\texttt{bell}); $8388608$ (\texttt{binding}); $15728642$ (\texttt{amplitude}, \texttt{bell}); $33554432$ (\texttt{catalog}, \texttt{gallery}); $1073741824$ (\texttt{amplitude}); $8591334592$ (\texttt{buildup}, \texttt{events}, \texttt{heisenberg}, \texttt{lensing}); $1125899906842624$ (\texttt{amplitude}) \\
+\texttt{m} & $1$ (\texttt{coupling}, \texttt{orbit}, \texttt{redshift}); $4$ (\texttt{coupling}); $16$ (\texttt{coupling}); $1024$ (\texttt{orbit}); $4096$ (\texttt{lensing}, \texttt{redshift}); $8192$ (\texttt{lensing}); $1048576$ (\texttt{coupling}); $4194304$ (\texttt{coupling}); $16777216$ (\texttt{coupling}, \texttt{events}) \\
+\texttt{mass} & $1$ (\texttt{hubble}); $1024$ (\texttt{catalog}); $4096$ (\texttt{catalog}, \texttt{hubble}); $65536$ (\texttt{catalog}); $5373952$ (\texttt{crowd\_clock}); $85917696$ (\texttt{crowd\_clock}); $322109440$ (\texttt{crowd\_clock}); $1073741824$ (\texttt{crowd\_clock}); $2147483648$ (\texttt{crowd\_clock}) \\
+\texttt{n} & $1837$ (\texttt{atoms}, \texttt{binding}); $1839$ (\texttt{hand}, \texttt{nucleus}, \texttt{weak}) \\
+\texttt{neutron} & $67108864$ (\texttt{catalog}) \\
+\texttt{nu} & $4096$ (\texttt{hand}, \texttt{weak}) \\
+\texttt{p} & $1$ (\texttt{coupling}); $4$ (\texttt{coupling}); $1834$ (\texttt{atoms}, \texttt{binding}); $1836$ (\texttt{atoms}, \texttt{bohr}, \texttt{hand}, \texttt{nucleus}, \texttt{weak}) \\
+\texttt{probe} & $1$ (\texttt{catalog}); $1024$ (\texttt{orbit}) \\
+\texttt{q} & $16777216$ (\texttt{coupling}) \\
+\texttt{s} & $4096$ (\texttt{weak}) \\
+\texttt{sa} & $3$ (\texttt{bell}); $15728640$ (\texttt{bell}); $201326592$ (\texttt{amplitude}, \texttt{bell}) \\
+\texttt{sb} & $5$ (\texttt{bell}); $15728640$ (\texttt{bell}); $335544320$ (\texttt{amplitude}, \texttt{bell}) \\
+\texttt{screen} & $1$ (\texttt{catalog}) \\
+\texttt{u} & $4$ (\texttt{gallery}, \texttt{quarks}) \\
+\texttt{wall} & $1$ (\texttt{amplitude}, \texttt{buildup}, \texttt{events}, \texttt{heisenberg}, \texttt{lensing}) \\
+the 24 thrown sources, \texttt{px1} to \texttt{mz4} & $64$ (\texttt{hubble}); $1024$ (\texttt{hubble}) \\
+the 24 Hubble stars, \texttt{s\_px1} to \texttt{s\_mz4} & $4096$ (\texttt{hubble\_stars}, \texttt{record}); \texttt{s\_mx1} also $8192$ (\texttt{two\_stars}); \texttt{s\_px1} also $8192$ (\texttt{two\_stars}) and $1048576$ (\texttt{crowd\_clock}) \\
+held beside a measured event & \texttt{nuclear} $1$ (\texttt{atoms}, \texttt{binding}, \texttt{nucleus}, \texttt{weak}); \texttt{bond} $2$ (\texttt{atoms}, \texttt{binding}); \texttt{glue} $1$ (\texttt{gallery}, \texttt{quarks}); \texttt{glue} $606$ (\texttt{quarks}); \texttt{glue} $607$ (\texttt{quarks}); \texttt{mass} $4194304$ (\texttt{hubble\_stars}, \texttt{record}, \texttt{two\_stars}); \texttt{mass} $8388608$ (\texttt{hubble\_stars}, \texttt{record}) \\
+\bottomrule
+\end{tabular}
+\caption{\label{tab:f2}F2, the masses as declared: the content every family carries on the worlds' measured events, per series of the register (the folder's name), with the content held beside a measured event in the last row. These are the initialisation that Table~\ref{tab:consequences} names as the input of the masses (record 106 \cite{log}; \cite{predictions}). Inputs of the register \cite{familiesaudit}; the crowd-clock series is on the tree since the audit, so its contents are the script's on this tree, not the audit's output file's.}
+\end{table}
+
+\begin{table}[H]\centering\scriptsize
+\begin{tabular}{p{0.45in}p{1.35in}p{1.25in}p{0.35in}p{1.15in}p{0.75in}p{0.65in}}
+\toprule
+Family & Content & Charge & Phase & Column & Lifetime & Hand \\
+\midrule
+\texttt{light} & the quantum $h = 1$ per unit, $E = hf$ & none & $\Z_N$ & none & none & none \\
+\texttt{e} & the content $M$ on the scale, free & $\rho = -15$, on $\Z$ & $\Z_N$ & none & none & none \\
+\texttt{beta} & the quantum $h = 1$ per unit, $E = hf$ & $-7344$ per unit of amount, on $\Z$ & $\Z_N$ & none & none & none \\
+\texttt{p} & the content $M$ on the scale, free & $\rho = 1/1$, on $\Z$ (a winding) & none & none & none & none \\
+\texttt{n} & the content $M$ on the scale, free & none & none & none & none & none \\
+\texttt{nuclear} & the content $M$ on the scale, free & none & none & strong $\sigma = 10000$, sign $-1$ & $L = 3$, on $\Z$ & none \\
+\texttt{bond} & the quantum $h = 1$ per unit, $E = hf$ & none & none & none & $L = 3$, on $\Z$ & none \\
+\texttt{u} & the content $M$ on the scale, free & $\rho = 1224$, on $\Z$ & none & none & none & none \\
+\texttt{glue} & the content $M$ on the scale, free & none & none & strong $\sigma = 10000$, sign $-1$ & $L = 3$, on $\Z$ & none \\
+\texttt{nu} & the content $M$ on the scale, free & none & $\Z_N$ & none & none & none \\
+\texttt{nubar} & the content $M$ on the scale, free & none & $\Z_N$ & none & none & $+1$, on $\Z_2$ \\
+\texttt{w} & the quantum $h = 1$ per unit, $E = hf$ & $-7344$ per unit of amount, on $\Z$ & none & none & $L = 1$, on $\Z$ & none \\
+\texttt{m} & the content $M$ on the scale, free & $\rho = 0$, on $\Z$ & none & none & none & none \\
+\texttt{mass} & the content $M$ on the scale, free & $\rho = 0$, on $\Z$ & none & none & none & none \\
+\texttt{probe} & the content $M$ on the scale, free & $\rho = 0$, on $\Z$ & none & none & none & none \\
+\texttt{q} & the content $M$ on the scale, free & $\rho = 0/1$, on $\Z$ (a winding) & $\Z_N$ & none & none & none \\
+\texttt{d} & the quantum $h = 1$ per unit, $E = hf$ & none & none & none & none & none \\
+\multicolumn{7}{p{6.4in}}{the apparatus materials (wall, screen, counter, apparatus, carrier, detector): paid, h = 1, no charge, a phase circle, the click's readers} \\
+\multicolumn{7}{p{6.4in}}{the sources (s, sa, sb, the 24 thrown\_sources, the 24 hubble\_stars): free or paid sources of the register's throws, no charge} \\
+\bottomrule
+\end{tabular}
+\caption{\label{tab:f3}F3, the group each declared quantity lives on, per shipped family of the physics, the rule of \cite{predictions}: what lives on a compact group is quantised by the law's widths, what lives on the scale is free. The content $M$ of a free family lives on the scale (free, an input); the quantum $h$ of a paid family sets its click's content in whole turns, $E = hf$; the charge on $\Z$ (a winding on the circle when a fraction); the phase on the circle $\Z_N$; the strong column a signed scalar per unit; the lifetime on $\Z$; the hand on $\Z_2$, the pseudoscalar of the $48$; and every family's rows walk the directions of the fan $F_P$ under the $48$ signed permutations of the axes. Inputs of the register \cite{familiesaudit}.}
+\end{table}
+
+\paragraph{F4, the state vector per kind.} What a row and a body carry,
+for every family alike, with the per-family differences in
+Table~\ref{tab:f1} (\cite{engine}; the vector form's statement of the
+state \cite{lawvector}):
+\begin{itemize}
+\item A row: its Node ($\Z^3$ on the box), its direction (a primitive
+vector of the fan $F_P$), its age ($\Z$), its phase ($\Z_N$), its number
+(the family), its amount and its content per unit; under a record its
+identity, its label (bits, one per arm), its multiplicity and its birth
+phase $u$ ($\Z_W$); its momentum the label amount times $\mathbf u_d$ at
+the scale $Q$, a vector of label units.
+\item A body, a measured event: its Node, its content $M$, its momentum
+vector $\mathbf p$ (label units), its charge per column ($\rho M$), its
+held content per family, its table of counts (one accumulator per
+count: the drive, the clock, the wheel, the action) and its set of
+Nodes.
+\item The six verbs on these, the six operations of P3: the
+translation, the bilinear form, the group-ring addition on $\Z[\Z_N]$,
+the permutation (the $48$), the evaluation (the tables) and the
+Euclidean division with the remainder kept.
+\end{itemize}
 
 \section*{Appendix: glossary and symbols}\label{sec:glossary}
 
@@ -3257,7 +3480,7 @@ merge, one tree whose history holds the three trees named above and the
 log records this paper cites; it replaces the concept DOI below, and its
 code no longer has the world key. Every record, note, design and
 register row this text cites is on the tree it was written on (main
-merged at \texttt{e2259ef6}); the far lamp's rows 11a to 11c rest on a
+merged at \texttt{33330d59}); the far lamp's rows 11a to 11c rest on a
 pin whose run is not made.
 
 \section*{Use of AI tools}
@@ -3275,10 +3498,13 @@ submission.]
 \bibitem{design} The design of \texttt{amplitude-v1} and its check outputs, \texttt{docs/designs/amplitude-v1/} of the archived code \cite{zenodo}.
 \bibitem{register} The experiments register, \texttt{docs/EXPERIMENTS.md} of the archived code \cite{zenodo}: series L (the click chapter, with the worlds \texttt{examples/events/amplitude/}, their \texttt{expectations.json}, the block ``Bell at $N = 512$ and $4096$ under the click and the wheel, the pin of 24.4'' with \texttt{expectations.json} under \texttt{bell\_24\_4} and \texttt{tests/test\_amplitude\_bell\_24\_4.py}, and the reading tool \texttt{tools/amplitude\_path.py}), L2b and L7, and, for Table~\ref{tab:consequences}, series C, D, E, G2, H, J, K, N, Q (c measured behind a detector) and R (the quarks, seven worlds); every entry carries its expectation written before the run and its source fingerprint.
 \bibitem{checks} \texttt{paper/general\_formula/checks/s\_of\_n.py}, \texttt{which\_path\_window.py}, \texttt{tables\_norm.py}, \texttt{information\_transfer.py}, \texttt{limits.py} and \texttt{light\_speed.py} with their outputs, \texttt{figures/summary.json} and \texttt{NUMBERS.md}, in the archived code \cite{zenodo}.
-\bibitem{log} The dated log of 2026-09-20, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}, records 96 (coherence within one Node), 101 (the landing), 102 (the checks of this paper), 105 (the review of the pair and the gate: the marginals re-read over all 4096 setting pairs, the arms' order), 142 (the hand built: a pseudoscalar column on the row, the parity test over all 48), 144 (the cone, L7), 156 (the two slits: the wheel, the exact phase, the 18 intervals), 160 (the fan's angular weights) and, for the pace and Section~\ref{sec:lorentz}, records 186 and 191 (c as the flight's norm; the one operator for rows and bodies), 213, 224 and 228 (the derivation's sections 12, 13 and 12b), 225 and 226 (the group of 48 and its conservation up to the lattice), 230 (the three routes), 231 (a boost not among the 48), 245 (section 12c closes route C), 249 (the first decision: A and B), 259, 260 and 264 (the covariant readings recommended in place of the root; one paper on the general formula), 261, 262 (the owner's finding on 13.2 (a)), 266, 270 (the three decisions: colour-v1 to be tried, the covariant readings in place of the build of lorentz-v1, the periodic universe open), 271 and 278 (one quantum of mass and the crowd addendum ordered; the addendum delivered), 273 and 276 (the masses on the group; the crowd audit), 272, 274 and 275 (the title and the closure), 277 and 281 (the GameBoard reached only through detectors; only a detector's reading is a measurement), 267, 273 and 275 (the quarks' design delivered, the run ordered and registered as series R; its record is the register's entry), 280 and 282 (the far lamp through a detector), 291, 292 and 294 (the directions: all of Einstein; Heisenberg, the uncertainty relation and Bell; the general formulas through the formula at a Node), 297 (the physics-rule review of the covariant readings, admissible with must-fixes), 298 (the dark sector for the paper), 300 (the further formulas and the six-point standard), 302 and 303 (the rows' rule at a Node reachable in form; the go to its build after review), 305 (the method in plain words: the infinite limit derives the form, the run confirms the number, the pin orders the first before the second), 306 (the nine must-fixes amended in 17.6), 312 (the physics-rule review of optical-v1, admissible with eight must-fixes), 314 and 317 (the second round of the covariant readings, buildable with must-fixes; the six fixes delivered), 316 (the derivation record per formula, the owner's direction through this paper), 318 (optical-v1 amended per its review), 320 (the general formula first, in the standard place), 322 (the cosine table and the referee's findings assigned), 323 (optical-v1 buildable, the second review), 324 (the click landed on main: the exact phase, the wheel, the Gram form), 326 (the owner's direction through the paper coordinator: a quantum-mechanics section for the endorser), 327 and 328 (the cosine table: the owner's word ``go with the beautiful solution'' and his correction, the existing tables at $1/256$ stay and are declared an input of the law, with the four precedents), 330 (the owner's go on Kepler, Compton and Malus, the pin before the run), 331 and 332 (the question whether Schr\"odinger's equation can be reached, the route proposed; the owner's yes to the electron as rows in flight), 333 (the atoms' pins ordered; everything on main), 334 (the owner through the Visualiser: the octahedron and the $48$ as what follows from the formula; the paper to explain the $24$ rotations and every law in order), 335 (the Kepler and Compton pins landed; the Malus note buildable from the entries in force), 336 (Schr\"odinger's equation under massive-rows-v1 reached only in part; the design of the free particle ordered), 337 (the owner's review of the paper as a theory: the physics must come out of the law and not go in as input; the postulates first, the standing of every formula, the differences as predictions), 338 (the owner through the Visualiser: the octahedron and the $48$ to the paper; page 10 landed), 339 (section 24 landed; Malus A12 PASS; the Bell run for the pin of 24.4 ordered), 340 (the owner's second review: the missing hypothesis of the lattice Gleason theorem, the empty reads zero and some input reads; his eight runs on main, the axis preference and a body's pace above the rows'; the high-rate series $0, 2, 5, 7, 10$), 342 and 348 (form B built and its physics-rule review, blocked on the drive's unit), 343 and 345 (the formulas of flow, heat and temperature ordered and the inventory delivered), 346 (the auditor's first round: the Gleason gap and Eq.~(1)'s count confirmed on the integers), 347 (series D's lamp worlds under form B with row 58's pins restated before any run, the precession $-81 \pm 15$ under form B's pace), 349 (the auditor's second round: the fixes of record 340 verified; the line's tie read under the $48$ on a fan, the label, the row's momentum and the hand covariant by the auditor's verdict, the Nodes crossed and the exit face not on a tied direction), 352 (the owner's order for this paper: every formula with how the law derives or reaches it, where its form stands above the known one said so, the unneeded left out), 353 (the owner's rule for every run the paper relies on: two runners and a check from every direction, the replications document ordered, ``measured once'' until its line exists) and 356 (the owner's order to read how the great papers present the formulas their authors reach against the ones derived from their own, the precedents study for this paper).
+\bibitem{log} The dated log of 2026-09-20, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}, records 96 (coherence within one Node), 101 (the landing), 102 (the checks of this paper), 105 (the review of the pair and the gate: the marginals re-read over all 4096 setting pairs, the arms' order), 142 (the hand built: a pseudoscalar column on the row, the parity test over all 48), 144 (the cone, L7), 156 (the two slits: the wheel, the exact phase, the 18 intervals), 160 (the fan's angular weights) and, for the pace and Section~\ref{sec:lorentz}, records 186 and 191 (c as the flight's norm; the one operator for rows and bodies), 213, 224 and 228 (the derivation's sections 12, 13 and 12b), 225 and 226 (the group of 48 and its conservation up to the lattice), 230 (the three routes), 231 (a boost not among the 48), 245 (section 12c closes route C), 249 (the first decision: A and B), 259, 260 and 264 (the covariant readings recommended in place of the root; one paper on the general formula), 261, 262 (the owner's finding on 13.2 (a)), 266, 270 (the three decisions: colour-v1 to be tried, the covariant readings in place of the build of lorentz-v1, the periodic universe open), 271 and 278 (one quantum of mass and the crowd addendum ordered; the addendum delivered), 273 and 276 (the masses on the group; the crowd audit), 272, 274 and 275 (the title and the closure), 277 and 281 (the GameBoard reached only through detectors; only a detector's reading is a measurement), 267, 273 and 275 (the quarks' design delivered, the run ordered and registered as series R; its record is the register's entry), 280 and 282 (the far lamp through a detector), 291, 292 and 294 (the directions: all of Einstein; Heisenberg, the uncertainty relation and Bell; the general formulas through the formula at a Node), 297 (the physics-rule review of the covariant readings, admissible with must-fixes), 298 (the dark sector for the paper), 300 (the further formulas and the six-point standard), 302 and 303 (the rows' rule at a Node reachable in form; the go to its build after review), 305 (the method in plain words: the infinite limit derives the form, the run confirms the number, the pin orders the first before the second), 306 (the nine must-fixes amended in 17.6), 312 (the physics-rule review of optical-v1, admissible with eight must-fixes), 314 and 317 (the second round of the covariant readings, buildable with must-fixes; the six fixes delivered), 316 (the derivation record per formula, the owner's direction through this paper), 318 (optical-v1 amended per its review), 320 (the general formula first, in the standard place), 322 (the cosine table and the referee's findings assigned), 323 (optical-v1 buildable, the second review), 324 (the click landed on main: the exact phase, the wheel, the Gram form), 326 (the owner's direction through the paper coordinator: a quantum-mechanics section for the endorser), 327 and 328 (the cosine table: the owner's word ``go with the beautiful solution'' and his correction, the existing tables at $1/256$ stay and are declared an input of the law, with the four precedents), 330 (the owner's go on Kepler, Compton and Malus, the pin before the run), 331 and 332 (the question whether Schr\"odinger's equation can be reached, the route proposed; the owner's yes to the electron as rows in flight), 333 (the atoms' pins ordered; everything on main), 334 (the owner through the Visualiser: the octahedron and the $48$ as what follows from the formula; the paper to explain the $24$ rotations and every law in order), 335 (the Kepler and Compton pins landed; the Malus note buildable from the entries in force), 336 (Schr\"odinger's equation under massive-rows-v1 reached only in part; the design of the free particle ordered), 337 (the owner's review of the paper as a theory: the physics must come out of the law and not go in as input; the postulates first, the standing of every formula, the differences as predictions), 338 (the owner through the Visualiser: the octahedron and the $48$ to the paper; page 10 landed), 339 (section 24 landed; Malus A12 PASS; the Bell run for the pin of 24.4 ordered), 340 (the owner's second review: the missing hypothesis of the lattice Gleason theorem, the empty reads zero and some input reads; his eight runs on main, the axis preference and a body's pace above the rows'; the high-rate series $0, 2, 5, 7, 10$), 342 and 348 (form B built and its physics-rule review, blocked on the drive's unit), 343 and 345 (the formulas of flow, heat and temperature ordered and the inventory delivered), 346 (the auditor's first round: the Gleason gap and Eq.~(1)'s count confirmed on the integers), 347 (series D's lamp worlds under form B with row 58's pins restated before any run, the precession $-81 \pm 15$ under form B's pace), 349 (the auditor's second round: the fixes of record 340 verified; the line's tie read under the $48$ on a fan, the label, the row's momentum and the hand covariant by the auditor's verdict, the Nodes crossed and the exit face not on a tied direction), 352 (the owner's order for this paper: every formula with how the law derives or reaches it, where its form stands above the known one said so, the unneeded left out), 353 (the owner's rule for every run the paper relies on: two runners and a check from every direction, the replications document ordered, ``measured once'' until its line exists), 356 (the owner's order to read how the great papers present the formulas their authors reach against the ones derived from their own, the precedents study for this paper), 358 (the owner's word through the physicist's session: the tables of the masses, the groups, the sets and the vectors of all the families in the paper; the mathematician's audit), 359 (the auditor's third round: the pace bound read on all $290$ directions; the collision's tie under the $48$ on two singles, $16$ of $48$; the crowd's clock read, $z = 1$ and $2$ from a lamp at rest) and 360 (the landings; the register's \texttt{replicated} map beside \texttt{derivations}).
 \bibitem{gallery} The visual gallery's page on the octahedron and the $48$, \texttt{docs/pages/gallery/formula.html} of the archived code \cite{zenodo}, and its tool \texttt{tools/gallery\_pages.py} (\texttt{--figures} writes \texttt{the\_48.png} for this paper, and \texttt{octahedron.png}, which the paper does not use; \texttt{tests/test\_gallery\_pages.py} checks the $24$ and $24$); the page reads no run and no world, pins nothing and enters nothing in the register.
+\bibitem{familiesaudit} The families in the paper, the mathematician's audit of 2026-09-21, \texttt{docs/designs/paper\_families/FAMILY\_TABLE\_AUDIT.md} of the archived code \cite{zenodo}, with its host script \texttt{family\_table.py} and output \texttt{family\_table.out}, read-only over \texttt{examples/events/entities/families.json} and the worlds under \texttt{examples/events/}; no run, nothing here is a rule.
+\bibitem{crowdclock} The crowd's clock, \texttt{docs/designs/crowd\_clock/DESIGN.md} of the archived code \cite{zenodo} (sections 3, the pins before the run; 5, what the run cannot decide; 7, the two runs), the eight worlds \texttt{examples/events/crowd\_clock/} with their \texttt{expectations.json} and \texttt{README.md} (the register entry drafted, not registered), and \texttt{tests/test\_crowd\_clock.py}, which pins the worlds to their generator, the presence $4F$ at the lamp on a short run and the algebra, not the series' readings; the cluster of crowds, \texttt{docs/designs/cluster\_clock/DESIGN.md} (sections 3, 5 and 7), its two worlds \texttt{examples/events/cluster\_clock/} with their \texttt{expectations.json} and \texttt{README.md} (the entry drafted, not registered) and \texttt{tests/test\_cluster\_clock.py}, likewise.
 \bibitem{lightspeed} c in the vector law, \texttt{docs/designs/light\_speed/FORM.md} with the map \texttt{light\_speed\_map.py} and its output, of the archived code \cite{zenodo}.
 \bibitem{lawvector} The law as one vector algebra: every rule in force as a vector operation, with its integer form beside it, \texttt{docs/designs/vector\_form/LAW.md} of the archived code \cite{zenodo}: the six operations, $c$ as the norm of the flight operator, every declared rounding at load as a constant of the law.
+\bibitem{engine} The engine's document, \texttt{docs/ENGINE.md} of the archived code \cite{zenodo}: the world file's \texttt{families} and their keys (\texttt{quantum}, \texttt{charge}, \texttt{columns}, \texttt{lifetime}, \texttt{phase}, \texttt{phase\_per\_link}, \texttt{hand}), the state a row and a body carry, and the readings by type.
 \bibitem{architecture} The architecture and its local integer operation contract, \texttt{docs/ARCHITECTURE.md} of the archived code \cite{zenodo}: generic operations and law ownership (names are data and select no hidden equation; the engine owns no force, energy, momentum or field equation; payloads carry bounded state values and declared identifiers, never formula strings, expression trees or callbacks).
 \bibitem{postulates} The postulates of the program, \texttt{POSTULATES.md} of the archived code \cite{zenodo}, sections 1 to 5 (locations and events; bounded local information; local and causal consistency; a maximum causal speed; integers only) and 10 (measurement and display outside the physics).
 \bibitem{highlights} The project's decisions and dictionary, \texttt{docs/HIGHLIGHTS.md} of the archived code \cite{zenodo}, section 5.4 (``The Detector'': the law and the owner's decisions, one line each; its subsection ``Decisions of 2026-09-21'') and section 5.7 (the conversions, the six operations, what is derived and what is input).
