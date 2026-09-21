@@ -52,5 +52,12 @@ re-run in the register after the gate's fix with the same integers;
 | The two-slit record's offered total against its birth norm | 847181/745472 = 1.136 | register (the generator's reading) | `expectations.json` two_slits.total |
 | Young under the fan's discreteness: Pearson(W, cosine) at K = 91, 361, 721 directions; pixels with both openings | 0.45, 0.84, 0.90; all 121 from K = 721 | computation | `checks/limits.txt` section 2b |
 | Young under the flight's rounding alone at lambda = 8 intervals | Pearson 0.93 | computation | `checks/limits.txt` section 2 |
-| The plane wave: omega / k = 1 / sqrt 3 for every rate n / d | c | computation | `checks/limits.txt` section 3 |
+| The plane wave: omega / k = 1 / sqrt 3 for every rate n / d | withdrawn (referee round 3: k was defined as omega / c) | computation | `checks/limits.txt` section 3, kept as history |
+| A record's interference wavelength under the pair form n / d | c N d / n Links along the flight | computation (the definition of the phase and the flight; no script) | the limits section |
+| The abstract's bound | 8/N + 0.045 (16 delta = 0.04432 rounded up) | computation | the proof of Theorem 4 |
+| The two paths of one record at a pixel of the two-slit world | up to 18 intervals apart | the mathematician's map | record 156 (main) |
+| The two-slit run's clicks: pixels and cells | 14 pixels; 19 cells landed by the first 64 births, the same for every birth after | register and the mathematician's map | `summary.json`; record 156 |
+| The lattice's primitive fan with equal weights at the width 64; with the angular weights | Pearson 0.65; 0.90 | the mathematician's map | record 160 (main) |
+| The exact phase's effect on the two-slit Pearson | 0.02 (0.390 to 0.407) | the mathematician's map | record 156 |
+| The prediction for the wheel W = 2^12, the angular fan and the exact phase | fringes at the Euclidean spacing, Pearson 0.963, visibility 0.96 over 4096 births | pinned before any run | record 156 |
 | L7, the cone: the age at both counters; the path phase under the integer and the pair form | 29 and 29; 51 and 8; 23 and 23 | register | L7, `cone_links`, `cone_intervals`; record 144 |

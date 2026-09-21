@@ -67,10 +67,11 @@ statement of the program is a hypothesis, claimed nowhere.
 \paragraph{The model in plain words.} The GameBoard (the lattice, where a
 shorter word serves) is a mail board.
 Cells (Nodes), each wired to six neighbours; a wire carries one packet one
-step per tick, and nothing travels farther or faster. A packet is four
-numbers: how much (the amount), where to (the direction), a rotating
-counter (the phase, advanced a fixed step at every wire it crosses) and a
-birth number. A cell has no memory: what is in it now is exactly the
+step per tick, and nothing travels farther or faster. A packet carries
+four numbers that matter here, how much (the amount), where to (the
+direction), a rotating counter (the phase, advanced a fixed step at every
+wire it crosses) and a birth number, and its bookkeeping (a label and a
+multiplicity, Definition~\ref{def:row}). A cell has no memory: what is in it now is exactly the
 packets in it now. The rules are local and few. Transfer: a packet moves
 to the neighbour its direction names. Duplication at a splitter: a packet
 becomes several packets in several directions with declared shares, the
@@ -110,7 +111,7 @@ registry and the
 configured law are gone. What remains is the lattice, one record with
 rows, and one measurement rule, the click of Definition~\ref{def:click}.
 Section~\ref{sec:model} defines the model in standard terms; the words
-wave, collapse and superposition appear first in Section~\ref{sec:lit},
+collapse and superposition appear first in Section~\ref{sec:lit},
 each as another author's name for one of these things.
 Section~\ref{sec:theorems} proves what can be proved of it;
 Section~\ref{sec:measure} reports what the engine measured, from runs
@@ -135,7 +136,9 @@ rotation, exact and reversible), and it adds (the merge, where equal
 phases sum and opposite phases cancel). Between clicks the rates are
 constant, so the map has a closed form, and every count of the
 measurements table is computed from it by the design's check scripts
-before its run (one, the two slits, re-pinned once after a first run,
+before its run, the two slits excepted (its expectation is the
+generator's reading of a one-birth reference world through the same
+geometry on the engine, re-pinned once after a first run,
 Section~\ref{sec:measure}); the departures of Section~\ref{sec:measure}
 are what the runs added. (The engine also holds a collision table and a push of matter
 by a row's share, $\mathrm{amount}^2/m$; neither acts in these worlds. The
@@ -143,7 +146,8 @@ flight table is computed once at load.) The click is the one place with a fourth
 operation: the apparatus sums a record's rows through the tables and
 \emph{squares} the sum (the norm, where the Born rule is put in), and only
 then applies its threshold to $u$; it is the one threshold whose crossing
-is written down, and it releases the record it read.
+is written down, and it is done with the record it read (the archived
+code then releases it).
 
 \paragraph{The GameBoard and the circle.} Nodes are the points of a box in
 $\Z^3$ (an axis may be periodic); each Node has six Links. Time is the
@@ -220,8 +224,11 @@ Theorem~\ref{th:isometry}; the GHZ bases below are $X = (s, 0)$ and
 $Y = (s, N/4)$.
 \item[M] Normal form: merge and cancel as in Definition~\ref{def:row}.
 \item[B] Birth: a lamp's self-creation at interval $t$ releases record $r$
-with $u = (b - 1) \bmod N$, $b$ the lamp's count of births (its clock; $b - 1 = t - 1$
-only while the lamp births at every interval), rows of amount $1$ on its $k$
+with $u$ the lamp's phase at the birth, $(b - 1) \bmod N$ for a lamp
+started at $0$ that turns one step per birth, $b$ its count of births
+(every world here; $b - 1 = t - 1$ only while the lamp births at every
+interval; the archived code writes $(b - 1) \bmod N$ directly), rows of
+amount $1$ on its $k$
 directions with $m = k$, each row's phase starting at $u$ (plus the
 lamp's own turn), and, for a pair, the declared labels with integer
 weights on separate arms.
@@ -292,7 +299,7 @@ chooser's period is coprime to $N$ and the run covers their common
 period, as in this paper's choosers' world (periods $3$ and $5$ against
 $N = 64$, every bin one birth per $u$, every marginal $32/64$); a chooser
 whose period shares a factor with $N$ (not run) would correlate with $u$
-by construction, 't Hooft's case. The earlier engine's run \cite{paper1}
+by construction, a correlation of the kind superdeterminism posits. The earlier engine's run \cite{paper1}
 is history. $u$ is also the phase every row of
 the record starts from, so it enters every table read as a common offset
 of the record's phasors: exactly invariant before the tables' rounding
@@ -313,8 +320,8 @@ moved and the integers of series L kept as recorded \cite{beamlaw,register}.
 \section{Four theorems}\label{sec:theorems}
 
 \begin{theorem}[The interval is injective between clicks]\label{th:bijection}
-For an interval without a click or a collision, $M \circ R \circ S \circ
-F$ is an injective $\Z$-linear map from $\bigoplus_r M_r$ to
+For an interval without a click, an end at a face or the border, or a
+collision, $M \circ R \circ S \circ F$ is an injective $\Z$-linear map from $\bigoplus_r M_r$ to
 $\bigoplus_r M_r$ paired with the apparatus's record of the rows the
 splitters and rotators absorbed in that interval; the GameBoard's state
 at any interval between two clicks, together with that record,
@@ -332,7 +339,8 @@ and re-emits at age $0$; given that line it is injective on the
 amplitudes by Theorem~\ref{th:isometry}, and without it two rows
 differing only in age have the same image: the split is inverted only
 because the click line records what it absorbed. $R$ is injective
-because $U_s^{\mathsf T}U_s$ is a nonzero scalar. $M$ replaces a
+because $U_s^{\mathsf T}U_s$ is diagonal with positive entries ($n_s I$ at
+$t = 0$). $M$ replaces a
 representative by the normal form of the same element of $M_r$, the
 identity on the module. A composition of injective linear maps is
 injective. The collision permutes the directions of the amount-$1$ rows
@@ -370,7 +378,8 @@ $C'S' - S'C' = 0$ in integers.
 
 So a record's norm is conserved exactly by $S$ and by the flight, and by
 $R$ and by every read through the tables only within the tables' rounding
-($-351/65536$ to $+361/65536$ per row for $N \le 65536$); the integer
+($-351/65536$ to $+361/65536$ per row for the powers of two through
+$65536$); the integer
 Mach-Zehnder's total over the 64 birth phases takes eight values from
 $65448/65536$ to $65773/65536$, the same eight on every one of its ten
 worlds \cite{register}. The normalisation by $T$ in \eqref{eq:rung} makes
@@ -466,7 +475,7 @@ resolution $1/256$ of the circle's tables. At the CHSH labels the tables'
 entries are the same at every $N$ ($237, 98$ and $181, 181$), so
 $E(0, N/8) = 46565/65773$ and $E(N/4, N/8) = 46452/65773$ exactly at every
 $N$ before the rounding of the cells, which is why the powers of two from
-512 all give $181/64$ \cite{register}. At a tie $c_{--} = c_{++} - 1$ and
+512 all give $181/64$ \cite{checks,register}. At a tie $c_{--} = c_{++} - 1$ and
 $E_N$ drops by $2/N$; no tie occurs at the CHSH labels up to $4096$.
 
 \section{The measurements}\label{sec:measure}
@@ -509,7 +518,7 @@ arm 2 two intervals longer, $f = 0, 8, 16$ & & $64/0,\ 32/32,\ 0/64$ & the same\
 Elitzur-Vaidman, $(20, 21)$; $(119, 120)$ & absorber / D1 / D2 & $32/17/15$; $32/16/16$ & the same\\
 Two slits, one birth at a time & wall / screen / faces of 64 & $34 / 15 / 15$ & the same, every one of 80 sets\\
 The pair, $N = 64$, CHSH labels & cells $++, +-, -+, --$ & $27, 5, 5, 27$ ($E = \pm 44/64$) & the same; $S = 176/64$\\
-every marginal & first party $+$; second party $+$ & $32/64$; $32/64$ in the 19 registered pairs (all 4096 by computation and by the review's re-read) & Theorem~\ref{th:marginals}\\
+every marginal & first party $+$; second party $+$ & $32/64$; $32/64$ in the 19 registered bins (18 distinct pairs; all 4096 by computation and by the review's re-read) & Theorem~\ref{th:marginals}\\
 the choosers' 15 setting pairs & $E \times 64$ & $44, -60, 20, 60, -8, -48, -8, 60, -52, -64, 40, 20, -28, -36, 64$ & the same\\
 which-path read on one arm & $E \times 64$ & $44, -44, 0, 0$; $S = 88/64$ & the same\\
 no maintenance, 116 Links farther & $E(16, 24) \times 64$ & $44$ ($0$ with the read) & the same\\
@@ -521,7 +530,7 @@ The pair, $N = 1024$ & $E \times 1024$; $S$ & $724, -724, 724, 724$; $2896/1024$
 The pair, $N = 4096$ & $E \times 4096$; $S$ & $2900, -2900, 2892, 2892$; $11584/4096$ & the same\\
 \bottomrule
 \end{tabular}
-\caption{The measurements of series L. Every row is a count of clicks over one birth per birth phase; the last column is the expectation written into the worlds' expectation file before the run, from the design's check scripts.}
+\caption{The measurements of series L. Every row is a count of clicks over one birth per birth phase; the last column is the expectation written into the worlds' expectation file before the run, from the design's check scripts (the two slits from the generator's reading of the reference world).}
 \label{tab:measure}
 \end{table}
 
@@ -608,7 +617,8 @@ parameter dependence at $B$, exactly where the bonded pair of
 $B$ is deterministic given $\lambda$ and both settings. Which party is
 $A$ is the world file's declaration, a preferred party by declaration
 and not by the lattice. The model is
-deterministic, measurement-independent and parameter-dependent, the class
+deterministic and parameter-dependent, and measurement-independent in the
+registered choosers' world, the class
 Bell's theorem requires of a deterministic model above the bound
 \cite{bell1964,chsh1969}; Theorem~\ref{th:marginals} is what keeps the
 dependence from being a signal, as \cite{grw1980} showed of quantum
@@ -644,7 +654,8 @@ both settings, and the near party's row is written at the far party's
 tick; no-signalling is proved for the equal-weight pair and open beyond
 it; the first party is the world file's choice.
 \item Not exact unitarity on the lattice: the tables' norm is within
-$-351$ to $+361$ of $65536$ per row, the rotation is an isometry only up
+$-351$ to $+361$ of $65536$ per row for the powers of two through
+$65536$, the rotation is an isometry only up
 to that, and the record's total over $u$ takes eight values.
 \item Not a fixed $N$, hence not a prediction of nature's $S$: a
 constraint on $N$ under stated assumptions.
@@ -732,14 +743,15 @@ result of this paper.
 
 A model in integers is judged also by what it returns as its resolution
 grows, as a Fourier sum returns $\pi$. Three limits follow from the
-definitions and are computed in \cite{checks} (\texttt{checks/limits.txt}),
+definitions and are computed in \cite{checks} (\texttt{limits.txt} for
+Tsirelson and Young, \texttt{information\_transfer.txt} for the cone),
 two conservations hold exactly, and two limits do not follow and are
 stated as such.
 
 \paragraph{Tsirelson's value as a limit.} The bound of
 Theorem~\ref{th:bell} has two terms, $2/N$ from the ladder's rungs and
-$4\arcsin(\sqrt2/2Q)$ from the tables' scale $Q$ ($256$ in every run of
-this paper). As $N$ and $Q$ grow both vanish: $S(N, Q) \to 2\sqrt2$. The
+$4\arcsin(\sqrt2/(2(Q - \sqrt2/2)))$ from the tables' scale $Q$ ($256$ in
+every run of this paper). As $N$ and $Q$ grow both vanish: $S(N, Q) \to 2\sqrt2$. The
 computed values are $S = 2.75$, $2.8125$ and $2.828125$ at $N = 64$, $256$
 and $1024$, unchanged by $Q$ from $256$ to $2^{20}$ at these $N$ (the rungs
 decide), with the bound $0.125$, $0.031$ and $0.0078$ at $Q = 2^{20}$
@@ -754,8 +766,9 @@ diagonal (the register's L7: a row of $17$ Links on an axis and a row of
 $24$ Links on the plane diagonal, at the same Euclidean distance to one
 percent, reach their counters at the same age $29$). That anisotropy is
 set by the flight scale $Q_f = 64$ and does not shrink with the Link or
-the age; the front is a sphere only as $Q_f$ grows, a second parameter
-beside the tables' $Q$, and then $c = a/(\tau\sqrt3)$. A family whose
+the age; every declared direction's speed reaches $1/\sqrt3$ only as $Q_f$
+grows, a second parameter beside the tables' $Q$ (the front's shape is
+the fan's, a third), and then $c = a/(\tau\sqrt3)$. A family whose
 phase turns $n/d$ steps per interval gives two paths of one record a
 phase difference of $n/d$ times their difference in age, so a record's
 interference wavelength is $cNd/n$ Links along the flight; a plane wave
@@ -782,9 +795,8 @@ at the width $64$, a comb) and does with each direction weighted by the
 angle it covers ($0.90$) \cite{log}. Third the flight's rounding to whole
 intervals: $0.07$ in an idealised two-path computation at this
 wavelength, $0.02$ on the world itself. The limit of every direction with
-its angular weight returns Young's pattern up to a plateau at $0.90$ (the
-fan's angular density over the screen, an envelope the bare cosine
-lacks); the same map predicts, for a
+its angular weight returns Young's pattern up to a plateau at $0.90$ (a
+plateau whose cause is not computed here); the same map predicts, for a
 wheel, the angular fan and the exact phase, fringes at the Euclidean
 spacing with visibility $0.96$ over $4096$ births, a prediction pinned
 before its run \cite{log}; the registered run is far from it, and the
@@ -872,15 +884,17 @@ world list, the check scripts of the exact computations with their
 outputs, the runs' summary and the figure script are archived
 \cite{zenodo}; the register entry of series L carries every run's world,
 duration and source fingerprint, and a table beside the manuscript maps
-each number of this paper to its source. Python 3.14, no floating point in
-any physical module; the runs take seconds each and the whole series
-under two minutes on four cores. The register's runs carry the
+each number of this paper to its source. The project's declared
+interpreter is Python 3.14; no floating point is in any physical module;
+the runs take seconds each (the register's durations). The register's runs carry the
 fingerprint \texttt{ff5c382d672f} (the gate worlds re-run after the
 gate's fix with the same integers); the figures' runs carry
 \texttt{731d0f56c9f9}, the paper's tree; every integer is equal. The two
 cone worlds of L7 carry \texttt{4bf55a62e6fd}, the tree of the one click.
-The archive's version DOI for the tree of these runs replaces the concept
-DOI below at submission; the latest version no longer has the world key.
+The archived version cited at submission is the tagged release after the
+merge, one tree whose history holds the three trees named above and the
+log records this paper cites; it replaces the concept DOI below, and its
+code no longer has the world key.
 
 \section*{Use of AI tools}
 The simulator's code, the design documents, the check scripts and the
@@ -897,7 +911,7 @@ submission.]
 \bibitem{design} The design of \texttt{amplitude-v1} and its check outputs, \texttt{docs/designs/amplitude-v1/} of the archived code \cite{zenodo}.
 \bibitem{register} The experiments register, series L, \texttt{docs/EXPERIMENTS.md} of the archived code \cite{zenodo}, with the worlds \texttt{examples/events/amplitude/}, their \texttt{expectations.json} and the reading tool \texttt{tools/amplitude\_path.py}.
 \bibitem{checks} \texttt{paper/click\_model/checks/s\_of\_n.py}, \texttt{which\_path\_window.py}, \texttt{tables\_norm.py}, \texttt{information\_transfer.py} and \texttt{limits.py} with their outputs, \texttt{figures/summary.json} and \texttt{NUMBERS.md}, in the archived code \cite{zenodo}.
-\bibitem{log} The dated log of 2026-09-20, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}, records 96 (coherence within one Node), 101 (the landing), 102 (the checks of this paper) and 105 (the review of the pair and the gate: the marginals re-read over all 4096 setting pairs, the arms' order).
+\bibitem{log} The dated log of 2026-09-20, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}, records 96 (coherence within one Node), 101 (the landing), 102 (the checks of this paper), 105 (the review of the pair and the gate: the marginals re-read over all 4096 setting pairs, the arms' order), 144 (the cone, L7), 156 (the two slits: the wheel, the exact phase, the 18 intervals) and 160 (the fan's angular weights).
 \bibitem{bell1964} J. S. Bell, Physics 1, 195 (1964).
 \bibitem{chsh1969} J. F. Clauser, M. A. Horne, A. Shimony and R. A. Holt, Phys. Rev. Lett. 23, 880 (1969).
 \bibitem{jarrett1984} J. P. Jarrett, No\^us 18, 569 (1984).

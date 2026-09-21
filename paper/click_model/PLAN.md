@@ -425,3 +425,31 @@ noted; the one re-pin noted beside "computed before its run"; Figure 3's
 caption counts distinct pairs (17 of 18). Left for the owner: the title,
 the arXiv identifiers, the two experimental values against the PDFs, the
 release tag and version DOI.
+
+## Referee round 4 (2026-09-21): minor revision; the round-3 fixes verified
+
+Verdict: minor revision; every round-3 fix verified (the quadruple maxima
+and the 181,152 recomputed independently; the bound's constants; the
+wavelength algebra; the periods 3 and 5 and the 960 births; the tie
+evidence; every integer of the table and the figures). Nineteen findings,
+all applied: the method claim excepts the two slits (its expectation is
+the generator's reading of the reference world slits_one on the engine,
+not a check script's closed form), in the thesis paragraph and the
+table's caption; the archived version named as the tagged release after
+the merge (one tree holding the three trees and the cited records), the
+log bibitem extended to records 144, 156 and 160; the class sentence of
+the causal section made consistent with the coprime-periods statement;
+"wave" dropped from the roadmap's list; u on the tree of the runs (the
+lamp's phase at the birth) stated beside the archived code's (b - 1) mod
+N; "is done with the record" for the tree of the runs; the 512/2048 cited
+to the checks; the light cone's source named (information_transfer.txt);
+the plateau's cause withdrawn as not computed; the sphere sentence made
+precise (each direction's speed; the front's shape the fan's); the
+powers-of-two qualifier on the tables' norm in two places; 19 bins and 18
+distinct pairs; U^T U diagonal; Theorem 1 excludes an end at a face or the
+border; the Q term as proved; superdeterminism wording; the packet's
+bookkeeping; the interpreter as the project's declared one and the
+duration claim dropped; NUMBERS.md rows for every number of the Young
+paragraph and the withdrawn plane-wave row marked. The referee: once
+findings 1 to 3 are applied no major finding remains and the manuscript
+is stable in its physics, numbers and proofs. Round 5 confirms.
