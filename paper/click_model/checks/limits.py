@@ -87,7 +87,10 @@ def tsirelson_limit() -> None:
     print(
         "  the bound goes to zero as N and Q grow: S(N, Q) -> 2 sqrt 2, the Tsirelson value, as a limit;"
     )
-    print("  at Q = 256 the tables' term 16 arcsin(sqrt 2 / 512) = 0.0442 stays whatever N does")
+    print(
+        "  at Q = 256 the tables' term stays whatever N does: 16 arcsin(sqrt 2 / 512) = 0.0442 at the nominal"
+        " length 256, 0.0443 at the least table length sqrt 65185 = 255.3 (the proof's value)"
+    )
 
 
 def pearson(a: list[float], b: list[float]) -> float:

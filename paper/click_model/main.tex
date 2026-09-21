@@ -33,39 +33,39 @@ Bell correlations and GHZ, with computed departures from quantum mechanics}
 
 \begin{abstract}
 We define an integer model of one quantum in transit and one measurement
-rule, and report what it gives. Space is a GameBoard of Nodes
+rule and report what it gives. Space is a GameBoard of Nodes
 joined by six Links; every quantity is a bounded integer; every rule
 between births and clicks is local and, given the apparatus's record,
 injective. An event in transit is
-a record of rows, each with an amount, an integer phase on a circle of
-$N$ steps, a multiplicity and the record's number; a splitter multiplies
+a record of rows, each an amount, an integer phase on a circle of $N$
+steps, a multiplicity and the record's number; a splitter multiplies
 a row into rows by integer weights, an exact isometry. The measurement
 rule is the click: the apparatus keeps, per record and Node, the running
 sum of the rows' integer phasors; when every row of a record has ended it
 lays the cells on a ruler by the squared sums, and a phase fixed at the
 birth, which no rule reads as a number, picks the point where the record
 is gathered. That rule is the Born rule, put in once; nothing
-below the square is derived. From it and the lattice we prove four
+below it is derived. From it and the lattice we prove four
 theorems (injectivity between clicks given the apparatus's record; the
 split an isometry; a pair's marginals exactly $1/2$, no-signalling; the
 CHSH value at $N$ steps an exact rational within $8/N + 0.044$ of
 $2\sqrt2$, on both sides of it) and measure on the
-engine: the Mach-Zehnder always at one port, Elitzur-Vaidman, fringes one
-quantum at a time, the pair at $S = 2.75$ for $N = 64$ and $181/64$ for
-$N = 1024$ and $4096$ with every marginal exactly one half, GHZ's exact
-zeros, a which-path world and a CNOT gate. The click is non-local: a
-pair is gathered once, when both arms have ended, from the joint weights
-of both settings. $S(N)$ lies above $2\sqrt2$ for about half the $N$,
+engine: the Mach-Zehnder always at one port, Elitzur-Vaidman, two slits one
+quantum at a time (a sparse fan, no fringes), the pair at $S = 2.75$ for $N = 64$ and $181/64$ for
+$N = 1024$ and $4096$ with every marginal exactly $1/2$, GHZ's exact
+zeros, which-path and a CNOT gate. The click is non-local: a
+pair is gathered once, when both arms have ended, from both settings'
+joint weights. $S(N)$ lies above $2\sqrt2$ for about half the $N$,
 so a Bell measurement constrains $N$ under stated assumptions and
 validates nothing: the photon-pair value $2.82759 \pm 0.00051$ excludes
 $N = 64$ and $256$ and admits the powers of two from 512. Every other
-statement of the program is a hypothesis with its status, claimed
-nowhere.
+statement of the program is a hypothesis with its status, claimed nowhere.
 \end{abstract}
 
 \section{Introduction}
 
-\paragraph{The model in plain words.} The GameBoard is a mail board.
+\paragraph{The model in plain words.} The GameBoard (the lattice, in the
+rest of this paper) is a mail board.
 Cells (Nodes), each wired to six neighbours; a wire carries one packet one
 step per tick, and nothing travels farther or faster. A packet is four
 numbers: how much (the amount), where to (the direction), a rotating
@@ -125,18 +125,22 @@ worlds and recorded runs are archived \cite{zenodo}.
 
 \paragraph{In one sentence.} The model is one piecewise-linear map on an
 integer torus; the measurement is the one threshold that is read out. The
-state is a vector of integers, and every interval does three things to it
-and nothing else: it translates the vector by a rate and takes what
+state is a vector of integers, and in the worlds of this paper every
+interval does three things to it: it translates the vector by a rate and takes what
 crossed a threshold as the events (the flight, the phase, every count and
 the birth), it multiplies by a declared integer matrix (the split and the
 rotation, exact and reversible), and it adds (the merge, where equal
 phases sum and opposite phases cancel). Between clicks the rates are
-constant, so the map has a closed form and every number of this paper is
-computed from it before any run. The click is the one place with a fourth
+constant, so the map has a closed form, and every count of the
+measurements table is computed from it by the design's check scripts
+before its run; the departures of Section~\ref{sec:measure} are what the
+runs added. (The engine also holds a collision table and a push of matter
+by a row's share, $\mathrm{amount}^2/m$; neither acts in these worlds. The
+flight table is computed once at load.) The click is the one place with a fourth
 operation: the apparatus sums a record's rows through the tables and
 \emph{squares} the sum (the norm, where the Born rule is put in), and only
 then applies its threshold to $u$; it is the one threshold whose crossing
-is written down, and it deletes what it read.
+is written down, and it releases the record it read.
 
 \paragraph{The GameBoard and the circle.} Nodes are the points of a box in
 $\Z^3$ (an axis may be periodic); each Node has six Links. Time is the
@@ -145,13 +149,15 @@ $C_N[p] = \mathrm{round}(256\cos(2\pi p/N))$ and $S_N[p] = C_N[p - N/4]$,
 so $C_N[p + N/2] = -C_N[p]$ and $S_N[p + N/4] = C_N[p]$ exactly; the norm
 $C_N^2 + S_N^2$ lies in $[65536 - 351,\ 65536 + 361]$ for every power of
 two $N \le 65536$ (the extremes $65185$ and $65897$, the latter at
-$N = 4096$, $p = 503$: $C = 184$, $S = 179$; at $N = 64$ the range is
+$N = 4096$, $p = 503$ and $3593$: $C = 184$, $|S| = 179$; at $N = 64$ the range is
 $-88$ to $+237$) \cite{checks}. The half-angle tables are $C'_N = C_{2N}$,
 $S'_N = S_{2N}$. Directions $D$ are the six headings and declared
 primitive integer vectors; the flight table gives, per direction $d$ and
 age $\tau$, the Node offset $\mathrm{pos}_d(\tau)$ on the digital line of
-$d$, at most one Link per interval and Euclidean speed $1/\sqrt3$ for every
-$d$ \cite{beamlaw}.
+$d$, at most one Link per interval, and Euclidean speed $Q_f|d|/T_d$ with
+$T_d = \lfloor\sqrt{3|d|^2Q_f^2}\rfloor$ and the flight scale $Q_f = 64$:
+within $0.8$ percent of $1/\sqrt3$ for every $d$, exact on $(1,1,1)$
+\cite{beamlaw}.
 
 \begin{definition}[Row and record]\label{def:row}
 A \emph{row} is $(x, d, \tau, p, e, h, r, \ell, w, m)$: Node, direction,
@@ -169,14 +175,19 @@ with $|p + N/2\rangle = -|p\rangle$, taken modulo the scaling
 $(w, m) \sim (kw, k^2 m)$; the GameBoard's state is one normal form per
 element of $\bigoplus_r M_r$. The norm is $\langle\psi,\psi\rangle =
 \sum_{\text{rows}} w^2/m$. The engine narrows the quotient at a
-detector: rows of one record with different $m$ at one set are refused,
-so every set reads one $m$.
+detector: rows of one record with different $m$ at one set are added when
+the ratio of the multiplicities is the square of a rational (the pointers
+rescaled by the integer roots) and refused otherwise; no reported world
+exercises the rescaling, so every set below reads one $m$.
 \end{definition}
 
 The host, not any Node, keeps per live record the birth phase $u \in \Z_N$,
 the count of live units (amounts), an accumulated pointer $(X, Y)$ per
 (Node, label) and a gathered flag. This is the apparatus's layer; the
-lattice never reads it.
+lattice never reads it. It is a memory no Node could own: on the two-slit
+world the two paths of one record reach a pixel up to $18$ intervals
+apart, so no Node ever holds both rows, and the coherent sum exists only
+in the record's ledger \cite{log}.
 
 \begin{definition}[The update rules of one interval]\label{def:rules}
 Applied in this order to every row.
@@ -206,7 +217,8 @@ Theorem~\ref{th:isometry}; the GHZ bases below are $X = (s, 0)$ and
 $Y = (s, N/4)$.
 \item[M] Normal form: merge and cancel as in Definition~\ref{def:row}.
 \item[B] Birth: a lamp's self-creation at interval $t$ releases record $r$
-with $u = t \bmod N$ (the lamp's clock), rows of amount $1$ on its $k$
+with $u = (b - 1) \bmod N$, $b$ the lamp's count of births (its clock; $b - 1 = t - 1$
+only while the lamp births at every interval), rows of amount $1$ on its $k$
 directions with $m = k$, each row's phase starting at $u$ (plus the
 lamp's own turn), and, for a pair, the declared labels with integer
 weights on separate arms.
@@ -269,11 +281,12 @@ inverse-transform sampling of a uniform variable, so over births with $u$
 uniform on $\Z_N$ the count in channel $k$ is $\rung_k - \rung_{k-1}$, the
 nearest integer to $N W_k/T$, Born to the resolution $1/N$. No principle
 below the square is offered. The uniformity of $u$ is an assumption about
-the source: $u = t \bmod N$ is uniform when the lamp emits at $N$
-consecutive intervals, which is how every run below is made (one birth
-per $u$), and it is independent of the settings only when nothing that
-sets them reads $t \bmod N$, which the choosers' run of \cite{paper1}
-measured with settings of odd periods. $u$ is also the phase every row of
+the source: $u = (b - 1) \bmod N$ is uniform over $N$ consecutive births,
+which is how every run below is made (one birth per $u$), and it is
+independent of the settings only when nothing that sets them reads $b
+\bmod N$: this model's choosers' world (L3) sets them by counters of odd
+periods and every bin's marginals are $32/64$; the earlier engine's run
+\cite{paper1} is history. $u$ is also the phase every row of
 the record starts from, so it enters every table read as a common offset
 of the record's phasors: exactly invariant before the tables' rounding
 and not after it (the record's total over $u$ takes eight values,
@@ -284,10 +297,11 @@ lattice's rules: the interference of one record, the exact marginals, the
 $\cos^2$ correlation of the pair, GHZ's zeros, and the finite-$N$ value
 of $S$. The click is the only step that removes combinations and adds a
 row to the world's list; the birth is the only step that adds
-combinations. In the engine the law is selected by a world key
-(\texttt{amplitude}), and the worlds without it read as before; making
-the record form the only click is work in progress and changes nothing
-in the runs reported here \cite{beamlaw}.
+combinations. At the tree of the runs reported here the law was selected by a world
+key (\texttt{amplitude}) and the worlds without it read as before; the
+archived code has since made the record form the only click and deleted
+the key, with dated lines in its register for what its later changes
+moved and the integers of series L kept as recorded \cite{beamlaw,register}.
 
 \section{Four theorems}\label{sec:theorems}
 
@@ -364,10 +378,12 @@ $u < N/2$ and $-$ for $u \ge N/2$, for every $(a, b)$ and every $N$; and
 the second party's count of $+$ is exactly $N/2$ for every $(a, b)$ unless
 $2N W(+,+)/T$ is an odd integer (a tie of the rung), in which case it is
 $N/2 + 1$. No tie occurs for any setting pair at $N = 8, 16, 24, 32, 48,
-64, 96, 128, 192, 256, 512, 1024$, nor at the CHSH labels for any multiple
-of $8$ up to $4096$ (computed from the rule, \cite{checks}); the engine's
-marginals at $N = 64$ were re-read from its rows over all 4096 setting
-pairs in the gate review and are $32/64$ in every pair \cite{log}.
+64, 96, 128, 192, 256, 512$ (computed from the rule, \cite{checks}), nor
+at $N = 1024$ over every pair and at the CHSH labels for any multiple of
+$8$ up to $4096$ (the gate review's computation, \cite{log}); the
+reviewer also recomputed the marginals from the rows of one registered
+world at $N = 64$ for all 4096 setting pairs, $32/64$ in every pair
+\cite{log}.
 \end{theorem}
 \begin{proof}
 Write $n_a = C'[a]^2 + S'[a]^2$. Since the rows of $U_b$ are orthogonal on
@@ -420,7 +436,9 @@ $|c_{++} - x| \le \tfrac12$ and $E_N = 4c_{++}/N - 1$ from the mirror
 symmetry, so $|E_N - (4W(+,+)/T - 1)| \le 2/N$. The vector
 $(C'[s], S'[s])$ differs from $256(\cos\theta_s, \sin\theta_s)$,
 $\theta_s = \pi s/N$, by at most $\tfrac12$ per component, so its
-direction differs from $\theta_s$ by at most $\delta = \arcsin(\sqrt2/512)$;
+direction differs from $\theta_s$ by at most $\delta = \arcsin(\sqrt2/(2\rho))$
+with $\rho = \sqrt{65185} = 255.3$ the least length of a table vector, so
+$16\delta \le 0.0443$;
 $J(+,+)/\sqrt{n_a n_b}$ is the cosine of the angle between the two
 directions, $\cos(\theta_a - \theta_b + \epsilon)$ with $|\epsilon| \le
 2\delta$, and $4W(+,+)/T - 1 = 2\cos^2(\cdot) - 1 = \cos(2(\theta_a -
@@ -452,7 +470,10 @@ the gate's review fixed its bookkeeping, the register recording the same
 integers. The figures were drawn from all 46 worlds run again on the
 paper's tree (the merge \texttt{4ccf65c7} of the main branch's
 \texttt{d2064195}, fingerprint \texttt{731d0f56c9f9}), every integer
-equal to the register's, the gate worlds included \cite{checks}. Each
+equal to the register's, the gate worlds included \cite{checks}; the two
+worlds of L7 (the cone) were run later, on the tree that made the record
+form the only click (its head \texttt{725d811f} and the main branch's
+\texttt{0f193fdb}, fingerprint \texttt{4bf55a62e6fd}) \cite{register}. Each
 world is run for one birth per birth phase, $u = 0, \dots, N-1$, and the
 reading tool of the archive replays each run's register through the
 layer and equals the run's world list on every run; the tool builds the
@@ -507,7 +528,7 @@ The pair, $N = 4096$ & $E \times 4096$; $S$ & $2900, -2900, 2892, 2892$; $11584/
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.95\linewidth]{figures/pair_64.pdf}
-\caption{The pair at $N = 64$: $E(a, b)$ against $a - b$. The step curve is $E(d, 0)$ computed from the rule for every $d$ (a computation from the formulas, not a run; at $N = 64$ every registered $E$ lies on it, though $E$ depends on $(a, b)$ and not only on $a - b$ through the tables, as the two values at $N = 4096$ show); the grey line is the tables' cosine; the circles are the four CHSH worlds and the squares the fifteen bins of the choosers' world, both registered runs. Every marginal in every bin is $32/64$.}
+\caption{The pair at $N = 64$: $E(a, b)$ against $a - b$. The step curve is $E(d, 0)$ computed from the rule for every $d$ (a computation from the formulas, not a run; $18$ of the $19$ registered $E$ lie on it, and the choosers' bin $(51, 8)$ reads $-28/64$ where $E(43, 0)$ is $-32/64$, since $E$ depends on $(a, b)$ and not only on $a - b$ through the tables, as the two values at $N = 4096$ also show); the grey line is the tables' cosine; the circles are the four CHSH worlds and the squares the fifteen bins of the choosers' world, both registered runs. Every marginal in every bin is $32/64$.}
 \end{figure}
 
 \begin{figure}[H]\centering
@@ -609,8 +630,9 @@ constraint on $N$ under stated assumptions.
 abstract), not bosons or fermions, not Lorentz invariance (one speed for
 every direction, no boost), not the classical limit as click density
 (proposed, not run), not a treatment of noise or detector inefficiency.
-\item Not the engine's default: the law runs under a world key, and
-making the record form the only click is work in progress.
+\item Not the tree of the archive's latest version: the runs are the
+tree named in Section~\ref{sec:measure}; the later code made the record
+form the only click and re-pinned the ticks of every lamp world.
 \end{itemize}
 
 \section{The hypotheses of the program}\label{sec:hyp}
@@ -696,44 +718,64 @@ $4\arcsin(\sqrt2/2Q)$ from the tables' scale $Q$ ($256$ in every run of
 this paper). As $N$ and $Q$ grow both vanish: $S(N, Q) \to 2\sqrt2$. The
 computed values are $S = 2.75$, $2.8125$ and $2.828125$ at $N = 64$, $256$
 and $1024$, unchanged by $Q$ from $256$ to $2^{20}$ at these $N$ (the rungs
-decide), with the bound $0.17$, $0.075$ and $0.0078$ at $Q = 2^{20}$. The
+decide), with the bound $0.125$, $0.031$ and $0.0078$ at $Q = 2^{20}$
+($0.169$, $0.075$ and $0.052$ at $Q = 256$). The
 finite-$N$ departures of Section~\ref{sec:bell} are the terms of this
 limit, not a second law.
 
-\paragraph{The isotropic light cone and the plane wave.} The flight table
-moves every direction at $1/\sqrt3$ Links per interval on its digital line
-(the register's L7: a row of $17$ Links on an axis and a row of $24$ Links
-on the plane diagonal, at the same Euclidean distance to one percent,
-reach their counters at the same age $29$), so as the Link shrinks the
-front is a sphere and $c = a/(\tau\sqrt3)$. A family whose phase turns
-$n/d$ steps per interval carries $kx - \omega t$ along its line with
-$\omega = ck$ for every rate, the floor's error below $1/d$ step per
-interval: the massless wave equation's plane wave, without dispersion.
+\paragraph{The light cone and the plane wave.} The flight table moves
+every direction at $1/\sqrt3$ Links per interval within $1/T_d$: $0.8$
+percent fast on an axis, $0.5$ on the plane diagonal, exact on the body
+diagonal (the register's L7: a row of $17$ Links on an axis and a row of
+$24$ Links on the plane diagonal, at the same Euclidean distance to one
+percent, reach their counters at the same age $29$). That anisotropy is
+set by the flight scale $Q_f = 64$ and does not shrink with the Link or
+the age; the front is a sphere only as $Q_f$ grows, a second parameter
+beside the tables' $Q$, and then $c = a/(\tau\sqrt3)$. A family whose
+phase turns $n/d$ steps per interval carries $kx - \omega t$ along its
+line with $\omega = c_d k$ for every rate, $c_d$ the direction's speed
+above, the floor's error below $1/d$ step per interval: the massless wave
+equation's plane wave, without dispersion, isotropic in the same limit.
 
 \paragraph{Young's fringes and the fan.} The two-slit world of L2
 correlates $0.368$ with the cosine pattern and $0.744$ with the incoherent
-sum. The residual is the fan's discreteness, not the flight's rounding:
-each opening re-emits along $91$ directions, and only $27$ of the $75$
-pixels reached receive rows from both openings; where one opening alone
-reaches a pixel there is nothing to interfere. A computation with $K$
-directions per opening at the world's wavelength gives the correlation
-with the cosine $0.45$ at $K = 91$ (the register's $0.37$ in its own
-geometry), $0.84$ at $361$ and $0.90$ from $721$ on, every pixel seeing
-both openings from $K = 721$; the flight's rounding to whole intervals
-alone costs $0.07$ at this wavelength. The limit of every direction
-(Huygens') returns Young's pattern up to the fan's envelope; the
-registered run is far from it by its fan, and the paper does not claim the
-fringes.
+sum, and its clicks fall on $14$ pixels. Three things hide the fringes,
+in this order \cite{log}. First the wheel: $u = (b-1) \bmod 64$ repeats
+with the births, so the $19$ cells landed by the first $64$ births are the
+cells of every birth after them and no number of births adds a pixel to
+Figure~2; a mathematician's map that reproduces the register's $64$
+clicks exactly shows it, and proposes a wheel of $2^{12}$ births beside
+$N$. Second the fan: each opening re-emits along $91$ directions, and only
+$27$ of the $75$ pixels reached receive rows from both openings; where one
+opening alone reaches a pixel there is nothing to interfere. A computation
+with $K$ directions per opening spaced equally in angle (the angular
+measure) gives the correlation with the cosine $0.45$ at $K = 91$ (the
+register's $0.37$ in its own geometry), $0.84$ at $361$ and $0.90$ from
+$721$ on, every pixel seeing both openings from $721$; the lattice's own
+fan of primitive directions with equal weights does not converge ($0.65$
+at the width $64$, a comb) and does with each direction weighted by the
+angle it covers ($0.90$) \cite{log}. Third the flight's rounding to whole
+intervals: $0.07$ in an idealised two-path computation at this
+wavelength, $0.02$ on the world itself. The limit of every direction with
+its angular weight returns Young's pattern; the same map predicts, for a
+wheel, the angular fan and the exact phase, fringes at the Euclidean
+spacing with visibility $0.96$ over $4096$ births, a prediction pinned
+before its run \cite{log}; the registered run is far from it, and the
+paper does not claim the fringes.
 
-\paragraph{The continuity equation.} The books hold the content exactly at
-every interval (measured, in transit and escaped sum to a constant) and
-the split keeps $\sum w^2/m$ (Theorem~\ref{th:isometry}): in the limit
-these are $\partial_t \rho + \nabla \cdot j = 0$ for the content and the
-conservation of a record's norm, the current of the squared sum. No
-approximation enters: the integers conserve, the limit inherits.
+\paragraph{Conservation, not yet a continuity equation.} Two things are
+conserved exactly on the lattice: the content (measured, in transit and
+escaped sum to a constant at every interval, the books) and, through
+every split, $\sum w^2/m$ (Theorem~\ref{th:isometry}). The offered norm
+is not: the tables' rounding moves a record's total over eight values
+(Section~\ref{sec:measure}), and where paths of one record meet at one
+Node their cross terms enter, the two-slit record offering $847181/745472
+= 1.136$ of its birth norm. A current on the Links is not defined in this
+paper, so $\partial_t \rho + \nabla \cdot j = 0$ is the derivation's task,
+not a result here; what the limit inherits is the two exact conservations.
 
 \paragraph{What does not return, and why.} The lattice and its interval
-are a rest frame. The front is isotropic in that frame; nothing in the
+are a rest frame. The front is isotropic to $0.8$ percent in that frame; nothing in the
 definitions says that a moving body reads the same $c$, so Lorentz
 invariance is not a limit of this model but a property it must show or
 lack, on worlds with moving clocks (the program's, not this paper's). The
@@ -755,8 +797,9 @@ Theorem~\ref{th:marginals}, as it is a theorem of quantum mechanics
 
 't Hooft's cellular automaton interpretation \cite{thooft2016} keeps
 determinism and meets Bell by superdeterminism; here the model is
-deterministic given $u$, the settings are GameBoard events measured not
-to correlate with the pair \cite{paper1}, and the Bell value is met by an
+deterministic given $u$, the settings are GameBoard events whose bins
+show no correlation with $u$ (this paper's choosers' world; the earlier
+engine's run in \cite{paper1}), and the Bell value is met by an
 explicit non-local click. Wolfram's hypergraph rewriting and Gorard's
 multiway quantum mechanics \cite{wolfram2020,gorard2020} take the
 branches of a multiway system as the superposition and a completion as
@@ -768,7 +811,7 @@ click's reading of one record added. Quantum cellular automata and
 quantum lattice gases \cite{bialynicki1994,meyer1996,arrighi2019} are
 local unitary rules on complex amplitudes; here no complex number is on
 the lattice, the split is an exact integer isometry, and the tables'
-unitarity holds within $361/65536$ and is measured, not assumed. Bohm's
+unitarity holds within $361/65536$ and is computed, not assumed. Bohm's
 theory and quantum equilibrium \cite{bohm1952,dgz1992} derive Born from a
 uniform distribution of the hidden variable over the ensemble; the ruler
 over $u$ is the same move, one integer per record with a table for the
@@ -805,7 +848,10 @@ any physical module; the runs take seconds each and the whole series
 under two minutes on four cores. The register's runs carry the
 fingerprint \texttt{ff5c382d672f} (the gate worlds re-run after the
 gate's fix with the same integers); the figures' runs carry
-\texttt{731d0f56c9f9}, the paper's tree; every integer is equal.
+\texttt{731d0f56c9f9}, the paper's tree; every integer is equal. The two
+cone worlds of L7 carry \texttt{4bf55a62e6fd}, the tree of the one click.
+The archive's version DOI for the tree of these runs replaces the concept
+DOI below at submission; the latest version no longer has the world key.
 
 \section*{Use of AI tools}
 The simulator's code, the design documents, the check scripts and the

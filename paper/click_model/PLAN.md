@@ -361,3 +361,33 @@ every formula meets known physics twice; the classical-quantum boundary as
 the property of the rate), sent to the Boss by trigger and posted on issue
 #376 for the owner. The Boss edits the skills on main; nothing in skills/
 is touched on this branch.
+
+## Referee round 2 (2026-09-21): the material added since round 1
+
+Verdict: major revision; every integer of the measurements table, the
+four theorems and the S(N) table confirmed. Twenty-two findings, all
+applied the same day: the abstract no longer promises fringes; the
+one-sentence paragraph claims the counts of the table computed before
+their runs (not "every number"), names the collision table and the push by
+share as engine operations that act in none of these worlds, and says
+"releases" for the gathered record; Figure 3's caption corrected (18 of 19
+registered E on the step curve; the choosers' bin (51, 8) reads -28/64
+where E(43, 0) is -32/64); the bound at Q = 2^20 corrected (0.125, 0.031,
+0.0078; the Q = 256 values 0.169, 0.075, 0.052); the flight's speed stated
+as within 0.8 percent of 1 / sqrt 3 at the flight scale Q_f = 64, the
+sphere only as Q_f grows, the two scales named apart; u defined by the
+birth ordinal, uniform over N consecutive births; the Young paragraph
+names the wheel first (the click set periodic in u, record 156), the fan's
+angular measure (record 160) and the rounding's 0.02 on the world; the
+continuity paragraph reduced to the two exact conservations with the
+offered norm's departures (the eight totals, 1.136 on the two slits); the
+world-key sentences dated to the tree of the runs, L7's tree and
+fingerprint stated, the version DOI to replace the concept DOI at
+submission; the multiplicity rule as built; the tie evidence cited to the
+gate review; the reviewer's recomputation of the marginals worded as such;
+the proof's delta with the least table length (0.0443 everywhere); the
+choosers' world cited for measurement independence; "computed" for the
+tables' unitarity; the lattice defined once as the GameBoard; the layer's
+necessity argued (18 intervals apart). Left for the owner: the title, the
+arXiv identifiers of papers 1 and 2, confirmation of the two experimental
+values against the PDFs, the release tag and version DOI.

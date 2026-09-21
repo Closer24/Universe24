@@ -43,7 +43,10 @@ re-run in the register after the gate's fix with the same integers;
 | Poh et al. 2015 | S = 2.82759 +- 0.00051 | literature | Phys. Rev. Lett. 115, 180408 |
 | Hensen et al. 2015 | S = 2.42 +- 0.20 (2.38 +- 0.14 over both runs) | literature | Nature 526, 682; Sci. Rep. 6, 30289 |
 | Paper 1's local candidates and the choosers' run | S = 2 exactly; the registry 2.83 | register (A2, A2 with the choosers) and paper 1 | the "before" |
-| S(N, Q) at N = 64, 256, 1024 for Q = 256 .. 2^20; the bound 8/N + 16 arcsin(sqrt 2 / 2Q) | 2.75, 2.8125, 2.828125; 0.17, 0.075, 0.0078 at Q = 2^20 | computation | `checks/limits.txt` section 1 |
+| S(N, Q) at N = 64, 256, 1024 for Q = 256 .. 2^20; the bound 8/N + 16 arcsin(sqrt 2 / 2Q) | 2.75, 2.8125, 2.828125; the bound 0.125, 0.031, 0.0078 at Q = 2^20 (0.169, 0.075, 0.052 at Q = 256) | computation | `checks/limits.txt` section 1 |
+| The choosers' bin (51, 8) against the step curve E(d, 0) | E = -28/64; E(43, 0) = -32/64; 18 of 19 registered E on the curve | register and computation | `summary.json` choosers; `checks/s_of_n.py` |
+| The flight speed per direction at the flight scale Q_f = 64 | 0.8 percent above 1 / sqrt 3 on an axis, 0.5 on the plane diagonal, exact on (1, 1, 1) | computation | `checks/information_transfer.txt` section 1; BEAM_LAW section 3 |
+| The two-slit record's offered total against its birth norm | 847181/745472 = 1.136 | register (the generator's reading) | `expectations.json` two_slits.total |
 | Young under the fan's discreteness: Pearson(W, cosine) at K = 91, 361, 721 directions; pixels with both openings | 0.45, 0.84, 0.90; all 121 from K = 721 | computation | `checks/limits.txt` section 2b |
 | Young under the flight's rounding alone at lambda = 8 intervals | Pearson 0.93 | computation | `checks/limits.txt` section 2 |
 | The plane wave: omega / k = 1 / sqrt 3 for every rate n / d | c | computation | `checks/limits.txt` section 3 |
