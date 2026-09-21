@@ -396,6 +396,25 @@ pair, CNOT twice, GHZ by one gate, the register's ceiling); L6, the pair
 at N = 1024 and 4096. The register entry is
 [L, the amplitude law (2026-09-20)](../../docs/EXPERIMENTS.md#l-the-amplitude-law-2026-09-20).
 
+## The c series
+
+The folder [c_measured/](c_measured/README.md) holds the one world of
+series Q, c measured behind a detector, written by `c_measured/make_world.py`
+with its register (`expectations.json` and `derived.csv`: the closed form's
+escape of every direction, DERIVATIONS_BEAM.md section 11.1, written before
+the run): an open cube of 65^3 whose six faces are the detectors, one lamp
+of `light` at the centre holding exactly one birth's content (one record
+of 290 rows on the fan of 290 primitive directions with |a| + |b| + |c| <=
+6 at tick 1, then nothing), 100 intervals. `tools/c_measured_readings.py`
+reads the faces' clicks (the tick, the Node, the face; the direction off
+the engine's label table) against the derived tick, Node and face of
+every direction and the escapes' pace against c = 1 / sqrt 3; the
+register entry is
+[Q, c measured behind a detector (2026-09-21)](../../docs/EXPERIMENTS.md#q-c-measured-behind-a-detector-2026-09-21):
+290 of 290 clicks at the derived tick, Node and face, the pace 0.5718 to
+0.5893 (the mean 0.5810) over the fan at this GameBoard, 0.5774 to
+0.5818 in the limit, against c = 0.5774.
+
 ## The entity catalog
 
 The folder [catalog/](catalog/README.md) holds the four worlds of

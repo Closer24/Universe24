@@ -27,6 +27,8 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
         "tests/test_amplitude_pair.py",
         "tests/test_amplitude_split.py",
     ),
+    "examples/events/c_measured/expectations.json": ("tests/test_c_measured.py",),
+    "examples/events/c_measured/c_measured.json": ("tests/test_c_measured.py",),
     "examples/events/detector/entities/detectors.json": (
         "tests/test_entity_definitions.py",
         "tests/test_configuration_validation.py",
