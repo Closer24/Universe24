@@ -2557,8 +2557,8 @@ The registered integer each run reproduces is named in the last column.
 | `slits_low` (L2) | 7260; 230 | 9428.6 | 96.2 | 175.9 | 5.8 | 3426.6 | 2 231 147 against 788 126: **2.83** | 1.34 | the 64 clicks: wall 34, screen 15, faces 15 |
 | `bell_16_24` (L3) | 21; 80 | 18.4 | 3.5 | 4.0 | 1.8 | 12.5 | 2068 against 1001: **2.07** | 1.23 | the cells 27, 5, 5, 27 |
 | `cone_links` (L7) | 323; 96 | 34.1 | 1.4 | 2.0 | 3.4 | 36.9 | 3597 against 3544: **1.02** | 0.12 | every record clicks at the age 29 |
-| `deuteron_1_kick` (I2b) | 9261; 2025 of 3000 (the script's seven-minute cap) | 12 076.1 | 1152.9 | 1160.0 | 2.0 | 4563.4 | 29 137 728 against 9 240 964: **3.15** | 1.55 | no Link of either body: the drive fired 113 and 105 times and the 218 fires were booked as the occupants' contacts, every fire refused |
-| `coasting_none` (G2) | 27 270 901; 400 | 5924.3 | 38.7 | 79.6 | 24.9 | 692.7 | 2 418 536 against 277 090: **8.73** | 0.00022 | 25 bodies, the momentum at the end the momentum declared (`p(end) / p(0) = 1.000`) |
+| `deuteron_1_kick` (I2b) | 9261; 2040 of 3000 (the script's seven-minute cap) | 12 076.6 | 1152.9 | 1160.0 | 2.0 | 4563.7 | 29 354 628 against 9 309 919: **3.15** | 1.55 | no Link of either body: the drive fired 113 and 106 times and the 219 fires were booked as the occupants' contacts, every fire refused |
+| `coasting_none` (G2) | 27 270 901; 400 | 5924.3 | 38.7 | 79.6 | 24.9 | 692.7 | 2 418 536 against 277 090: **8.73** | 0.00022 | the 24 thrown stars' `|p(end)| / |p(0)|` 1.0000 to 1.0000 (the README's 1.000) |
 
 Read: on every world the events outnumber the active Node-intervals
 (the rows make a Link every 1.2 to 1.7 intervals and several rows share

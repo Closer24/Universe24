@@ -1,0 +1,36 @@
+EVENTS AGAINST INTERVALS x ACTIVE NODES on five registered worlds (host count, the engine's own run)
+
+slits_low (L2): shape [60, 121, 1] (7260 Nodes), 230 of 230 intervals run in 3 s
+  per interval: rows' Links 9428.6, bodies' Links 0.000, clicks 96.16, births 175.90, momentum changes (pushes, recoils) 5.75, turns 1.00, waits begun 0.000
+  active Nodes per interval 3426.6 of 7260; intervals with no Link, click, birth or push: 0 of 230
+  events (Links + clicks + births) 2231147 against intervals x active Nodes 788126: ratio 2.831; against intervals x all Nodes 1669800: 1.34e+00
+  interactions (clicks + births + pushes) 63896: 0.081 per active Node-interval; the record's events {'birth': 229, 'click': 22117, 'record': 6661, 'rerelease': 432, 'split': 432, 'gather': 80}
+  registered check: the 64 clicks by kind {'wall': 34, 'screen': 15, 'faces': 15} (the register: {'wall': 34, 'screen': 15, 'faces': 15})
+
+bell_16_24 (L3): shape [21, 1, 1] (21 Nodes), 80 of 80 intervals run in 0 s
+  per interval: rows' Links 18.4, bodies' Links 0.000, clicks 3.52, births 3.95, momentum changes (pushes, recoils) 1.76, turns 0.99, waits begun 0.000
+  active Nodes per interval 12.5 of 21; intervals with no Link, click, birth or push: 0 of 80
+  events (Links + clicks + births) 2068 against intervals x active Nodes 1001: ratio 2.066; against intervals x all Nodes 1680: 1.23e+00
+  interactions (clicks + births + pushes) 739: 0.738 per active Node-interval; the record's events {'birth': 79, 'click': 282, 'record': 268, 'gather': 67}
+  registered check: the cells {'++': 27, '+-': 5, '-+': 5, '--': 27} (the register: {'++': 27, '+-': 5, '-+': 5, '--': 27})
+
+cone_links (L7): shape [19, 17, 1] (323 Nodes), 96 of 96 intervals run in 0 s
+  per interval: rows' Links 34.1, bodies' Links 0.000, clicks 1.38, births 1.98, momentum changes (pushes, recoils) 3.35, turns 1.98, waits begun 0.000
+  active Nodes per interval 36.9 of 323; intervals with no Link, click, birth or push: 0 of 96
+  events (Links + clicks + births) 3597 against intervals x active Nodes 3544: ratio 1.015; against intervals x all Nodes 31008: 1.16e-01
+  interactions (clicks + births + pushes) 644: 0.182 per active Node-interval; the record's events {'birth': 190, 'click': 132, 'record': 132, 'gather': 132}
+  registered check: every record clicks at the age [29] (the register: 29 on the axis and on the staircase)
+
+deuteron_1_kick (I2b): shape [21, 21, 21] (9261 Nodes), 2040 of 3000 intervals run in 420 s
+  per interval: rows' Links 12076.6, bodies' Links 0.000, clicks 1152.92, births 1160.00, momentum changes (pushes, recoils) 1.97, turns 0.00, waits begun 0.000
+  active Nodes per interval 4563.7 of 9261; intervals with no Link, click, birth or push: 0 of 2040
+  events (Links + clicks + births) 29354628 against intervals x active Nodes 9309919: ratio 3.153; against intervals x all Nodes 18892440: 1.55e+00
+  interactions (clicks + births + pushes) 4722373: 0.507 per active Node-interval; the record's events {'read': 8156, 'click': 2351953, 'contact': 219}
+  registered check: the drive fired [113, 106] times, 219 in all, and 219 contacts were booked on the occupants: every fire refused, no Link (the register: no step, the first refused step of each body toward the other)
+
+coasting_none (G2): shape [301, 301, 301] (27270901 Nodes), 400 of 400 intervals run in 39 s
+  per interval: rows' Links 5924.3, bodies' Links 3.840, clicks 38.65, births 79.59, momentum changes (pushes, recoils) 24.91, turns 23.94, waits begun 0.000
+  active Nodes per interval 692.7 of 27270901; intervals with no Link, click, birth or push: 0 of 400
+  events (Links + clicks + births) 2418536 against intervals x active Nodes 277090: ratio 8.728; against intervals x all Nodes 10908360400: 2.22e-04
+  interactions (clicks + births + pushes) 57262: 0.207 per active Node-interval; the record's events {'birth': 9576, 'step': 1536, 'home': 1531, 'read': 7178, 'click': 15459, 'record': 7154, 'gather': 7154}
+  registered check: 25 bodies; |p(end)| / |p(0)| from 1.0000 to 1.0000 on the 24 thrown stars (the README's p(end) / p(0) = 1.000 on the coasting control)
