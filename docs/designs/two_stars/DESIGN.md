@@ -10,9 +10,9 @@ frame. It is the owner's form of Lorentz made into a run
 ([record 162](../../LOG_2026-09-20.md): "a moving body is a detector moving
 over the Nodes"), on the register's own star (series G2, the catalog's kind)
 and on the law as it stands on main after the crossing rule
-([note 48](../../BEAM_LAW.md)). Nothing is run here; the worlds and the
-expectation are pinned so that the run, when the Boss orders it, is made
-once. Nothing is registered.
+([note 48](../../BEAM_LAW.md)). Sections 1 to 6 were written and the
+expectation pinned before any run; section 7 is the first run, made on the
+owner's word the same day. Nothing is registered.
 
 ## 1. The board, as an exchange of messages
 
@@ -188,3 +188,61 @@ per self-creation, exactly as `tools/hubble_stars_readings.py` reads the
 detector's lines; the criteria of section 3 inside or outside; an HTML page
 published as an artifact. Every number above is a detector reading except
 the speeds and the gap, which are the GameBoard's.
+
+## 7. Measured (2026-09-21, the first run, after the pins above)
+
+Run on the model owner's word ("show a nice HTML of them with the
+animation") on main 5cc43ae, the three worlds of section 2 at their 500
+intervals (3.1 to 3.2 s each, headless, the books balanced at every
+interval); the readings from the stars' and the labs' `click` lines (1 + z
+from the slope of the birth ordinal of the record's identity against the
+tick of the click, the lamp's rate one birth per interval), the `contact`
+lines and the `step` lines; the page
+https://claude.ai/artifact/Sr8fRHoQyMNEPkXqbFP4Ta (the animation, the
+tables, the births received tick by tick). The expectation of section 3
+was not moved.
+
+| World | window | A reads B | pinned | B reads A | pinned | the left lab reads A | pinned | the right lab reads B | pinned |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `symmetric_pass` | [50, 150) | 0.6666 inside | 0.6667 | 0.6661 inside | 0.6667 | 1.2502 outside | 1.2000 | 1.2351 outside | 1.2000 |
+| `symmetric_pass` | [150, 250) | 0.6672 inside | 0.6667 | 0.6670 inside | 0.6667 | 1.2046 inside | 1.2000 | 1.1998 inside | 1.2000 |
+| `symmetric` | [50, 150) | 0.6648 inside | 0.6497 | 0.6643 inside | 0.6497 | 1.2502 outside | 1.2123 | 1.2351 inside | 1.2123 |
+| `symmetric` | [150, 250) | 0.6517 inside | 0.6329 | 0.6515 inside | 0.6329 | 1.2046 inside | 1.2248 | 1.1998 inside | 1.2248 |
+| `rest_frame` | [50, 150) | 0.7118 inside | 0.6974 | 0.6014 inside | 0.5811 | 1.4591 outside | 1.4087 | 1.0045 inside | 1.0176 |
+| `rest_frame` | [150, 250) | 0.7090 inside | 0.6805 | 0.5929 outside | 0.5626 | 1.4015 inside | 1.4175 | 1.0000 outside | 1.0354 |
+
+The first contacts: `symmetric_pass` 258 (pinned 254 +- 3, outside by one),
+`symmetric` 251 (pinned 237 +- 5, outside), `rest_frame` 254 and 255
+(pinned 236 +- 5, outside). 17 of 24 readings of 1 + z inside, 7 outside;
+the contacts 0 of 3 inside.
+
+**Read.** (1) The symmetric frame reads alike: 2 / 3 to the third digit in
+the control, nature's value too (the identity of section 3), and alike
+under gravity. (2) The rest frame tells the two outsiders apart: 0.71
+against 0.60, a difference of 0.11 as pinned, where nature reads 0.637 for
+both; the lattice's frame is visible to its own moving detectors, at first
+order in v / c. (3) The labs read the source's Doppler without gamma
+(1.20 for 0.2 c, 1.40 for 0.4 c; nature 1.225 and 1.543). (4) The lab
+readings of the first window are outside because the window opened forty
+intervals before the light first reached the labs (tick 112) and holds
+thirty clicks; the second window is the reading. (5) Gravity deepens the
+blueshift by half of what the derivation said (0.665 to 0.652 read, 0.650
+to 0.633 derived) and brings the contact seven intervals forward (251
+against 258), not seventeen: the derivation let the mass rows act from the
+first interval, but they need a hundred intervals to cross the gap, and it
+let the stars move from the first interval, but a drive starts at 0 and
+makes its first Link after 1 / v intervals (59 Links closing at 0.2327
+Links per interval from a first Link at tick 9: 258). Two corrections to
+the derivation of section 3, not to the law; the pins stand as written and
+outside. (6) `rest_frame`'s right lab reads B at 1.0000 in the second
+window, outside its pinned 1.035: B, at rest, was moved by the gravity of
+A's rows less than derived (one step before the contact), the same
+correction. **Found on the GameBoard, not foreseen (section 3, item 5,
+wrong):** a star that measures the other's light TAKES that light's content
+into its holdings, and at the contact binding-v1's give (note 40) hands it
+to the flight: `given` 235 in `symmetric`, 239 in the control, 222 and 252
+in `rest_frame`; a detector that absorbs light carries what it absorbed.
+After the first contact the symmetric pair stands at one Link and meets
+again at tick 420 (both hand over); in the rest frame the mover stops at
+tick 255 and the star at rest leaves at the mover's speed (a Newton's
+cradle of one Link), so from then on every reader sees B recede.

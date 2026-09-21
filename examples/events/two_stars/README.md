@@ -5,8 +5,8 @@ The model owner's request (2026-09-21, in conversation, translated):
 creatures from outside". The design with the expectation pinned before any
 run is [docs/designs/two_stars/DESIGN.md](../../../docs/designs/two_stars/DESIGN.md);
 this folder holds the three worlds it declares, written by `make_worlds.py`,
-and `expectations.json`, the generator's derivation. Nothing has been run;
-nothing is registered.
+and `expectations.json`, the generator's derivation. The first run and its
+readings are the design's section 7 (2026-09-21); nothing is registered.
 
 ## The worlds
 
@@ -65,4 +65,11 @@ derivation's algebra and the pinned contact ticks.
   (1.200, 1.409 against nature's 1.225, 1.543); gravity deepens the
   blueshift and brings the contact from tick 254 to 237; the contact is the
   hand-over.
-- **Run.** Not yet made.
+- **Run.** 2026-09-21 on main 5cc43ae, the first run (the design's
+  section 7): 17 of 24 readings of 1 + z inside and 7 outside, the three
+  contacts outside (the derivation's two omissions, the mass rows' flight
+  time and the drive's first Link); the symmetric frame reads 2 / 3 to
+  the third digit; the rest frame reads 0.71 against 0.60 where nature
+  reads 0.637 for both; the labs read without gamma; a measuring star
+  gives the light it took at the contact (binding-v1), not foreseen.
+  The page https://claude.ai/artifact/Sr8fRHoQyMNEPkXqbFP4Ta.
