@@ -52,7 +52,11 @@ decisions and the referee rounds; `RECORD.md` the long form of the first
 plan; `NUMBERS.md` every number and its source; `checks/` the paper's own
 computations from the designs' formulas with the repository's tables
 (computations and not runs, their outputs beside them); `figures.py` and
-`octahedron.py` the figure scripts. Every run the paper cites is in the
+`octahedron.py` the figure scripts; `figures/the_48.png` and
+`figures/octahedron.png` are written by the visual gallery's tool,
+`python tools/gallery_pages.py --figures paper/general_formula/figures`
+(the 48 signed axis permutations and the octahedron of the six Ports,
+from the definitions, no run). Every run the paper cites is in the
 [experiments register](../docs/EXPERIMENTS.md); every formula is the
 derivation's ([DERIVATIONS_BEAM.md](../docs/DERIVATIONS_BEAM.md)) with its
 section number; papers 1 and 2 are not changed by it.

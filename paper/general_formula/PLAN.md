@@ -1811,3 +1811,19 @@ citing: Poh et al. 2015 (PRL 115, 180408), Herrmann et al. 2009 (PRD
 Davidson 1920 (Phil. Trans. R. Soc. A 220, 291), Shapiro et al. 2004
 (PRL 92, 121101).
 
+## Wave 12 (2026-09-21): the 48 figure attached, record 334
+
+The Visualiser's page 10 (PR #508, on main at 807b1be7) and its tool
+tools/gallery_pages.py --figures write octahedron.png and the_48.png
+for the paper: the 48 signed axis permutations, each the octahedron of
+the six Ports after g with its matrix and determinant, the 24 rotations
+above (the identity 1, half turns about the Port axes 3, quarter turns
+6, half turns about the edge axes 6, third turns about the diagonals
+8) and the 24 improper below (reflections in the Port planes 3, the
+inversion 1, reflections in the diagonal planes 6, quarter turns with a
+reflection 6, sixth turns with a reflection 8); the test pins the
+counts; no run, nothing pinned by the page. Part I gains Figure
+fig:the48 after the group paragraph; the paper's own octahedron.pdf
+stays; the gallery bibitem; paper/README.md names the two files and
+the command. Referee round 31 pending.
+
