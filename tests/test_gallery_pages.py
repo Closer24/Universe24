@@ -140,5 +140,56 @@ def test_player_embeds_the_frames_the_gif_and_the_intervals(world_path: Path) ->
     assert "data:image/gif;base64," in document and "data:image/png;base64," in document
     assert '"ticks": [0, 1, 2, 3]' in document and '"count": 4' in document
     assert '<button class="play"' in document and 'input class="slider"' in document
+    # The GIF is a visible image of the page: the picture moves without scripts.
+    assert '<img class="gif" alt="the moving picture" src="data:image/gif;base64,' in document
     gif = gallery_pages.gif_bytes(images, 100)
     assert gif[:6] in (b"GIF87a", b"GIF89a")
+
+
+def test_a_body_is_drawn_with_its_momentum_arrow_and_its_copies(tmp_path: Path) -> None:
+    """A body of momentum (64, 0, 0) on a 9 x 9 x 1 plane releasing on +x:
+    its arrow (white pixels to its right, none at a momentum of zero) and
+    its copies (translucent discs of its colour at its rows' Nodes, absent
+    with `copies` off)."""
+    world = {
+        "law": "beam",
+        "model_id": "gallery-pages-test-arrow-v1",
+        "shape": [9, 9, 1],
+        "boundary": {"z": "periodic"},
+        "ticks": 4,
+        "K": 4,
+        "N": 64,
+        "release": [1, 1],
+        "suspension": 0,
+        "families": [{"name": "m", "quantum": 0, "phase": False}],
+        "measured": [
+            {"position": [4, 4, 0], "family": "m", "amount": 8, "fixed": True, "directions": [[1, 0, 0]]}
+        ],
+    }
+    path = tmp_path / "arrow.json"
+    path.write_text(json.dumps(world), encoding="utf-8")
+    replay = gallery_pages.Replay(path)
+    frames = replay.run([3])
+    frame = frames[0]
+    assert frame.rows[0].amount.size >= 1  # the body's own rows on +x
+    plane = gallery_pages.plane_for(replay, scale=8)
+    plane.largest = gallery_pages.largest_amounts(frames)
+    still = np.asarray(plane.image(frame)).astype(int)
+    moving = gallery_pages.Frame(
+        frame.tick,
+        frame.rows,
+        [
+            gallery_pages.Body(b.number, b.family, b.position, b.content, (64, 0, 0), b.phase)
+            for b in frame.bodies
+        ],
+        frame.sets,
+    )
+    with_arrow = np.asarray(plane.image(moving)).astype(int)
+    cx, cy = plane.pixel(4, 4)
+    right = (slice(int(cy) - 2, int(cy) + 3), slice(int(cx) + 8, int(cx) + 20))
+    white = lambda a: int((a[right].sum(axis=2) > 700).sum())  # noqa: E731
+    assert white(still) == 0 and white(with_arrow) > 0
+    plane.copies = False
+    without = np.asarray(plane.image(frame)).astype(int)
+    rx, ry = plane.pixel(5, 4)
+    assert tuple(still[int(ry), int(rx)]) != tuple(without[int(ry), int(rx)])
