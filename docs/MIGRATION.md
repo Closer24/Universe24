@@ -16,7 +16,10 @@ regenerated register; the amplitude generator's `expectations()` takes the
 file's path and carries the map, `main` writes it beside the regenerated
 blocks; `tests/test_register_map.py` pins the cases (the file absent, the map
 present, a block regenerated with its entry kept, the shipped register the
-generator's). No reading changes; no number moved.
+generator's). The seven other generators that write a register (weak,
+hubble_stars with its `record/expectations.json`, two_stars, cluster_clock,
+crowd_clock, reader_clock, c_measured) take the same call the same day
+(the test's (e) on two_stars). No reading changes; no number moved.
 
 ## Series R re-registered under the crossing rule, on 2026-09-21 (the register's replay blocks; no rule change)
 
