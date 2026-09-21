@@ -2,7 +2,7 @@
 expectations before the runs (`expectations.json`).
 
 The model owner, 2026-09-21 (in conversation, translated), after series U
-and Q: "start" the test the experimenter proposed of a detector that sits
+and V: "start" the test the experimenter proposed of a detector that sits
 inside a crowd itself, as Earth sits inside the Milky Way. Under the law as
 built (BEAM_LAW step 4) a body's clock owes k intervals per self-creation,
 k the presence of other numbers' rows at its Node over the suspension's
