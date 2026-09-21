@@ -56,6 +56,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[2] / "src"))
 
 from event_universe.events.nature_beam import Q  # noqa: E402
+from event_universe.register_map import carry_replicated  # noqa: E402
 from event_universe.world_loading import families_by_definition  # noqa: E402
 
 # The shipped definitions the world's family comes from (the model owner's
@@ -260,7 +261,10 @@ def world(register: Json) -> Json:
 
 def main() -> None:
     register = expectations()
-    (HERE / "expectations.json").write_text(json.dumps(register, indent=1) + "\n", encoding="utf-8")
+    (HERE / "expectations.json").write_text(
+        json.dumps(carry_replicated(HERE / "expectations.json", register), indent=1) + "\n",
+        encoding="utf-8",
+    )
     document = families_by_definition(world(register), FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
     (HERE / "c_measured.json").write_text(
         json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8"

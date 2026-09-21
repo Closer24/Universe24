@@ -64,6 +64,20 @@ The worlds of the pin, `slits_matter` (4096 births) and `slits_matter_1024`,
 and the small replay world are in `examples/events/massive_rows/`
 ([README](../examples/events/massive_rows/README.md)); the identity's entry is
 [HYPOTHESES section 25](HYPOTHESES.md#25-the-free-particle-as-a-record-of-massive-rows-de-broglies-fringes-from-h--p-stated-so-that-it-can-fail).
+## The register's replicated map carried through a regeneration, on 2026-09-21 (host only)
+
+The replicator's round 1 found that `examples/events/amplitude/make_worlds.py`
+rewrites `expectations.json` from the worlds and the design and would drop
+the `replicated` map (PR #545). `event_universe.register_map.carry_replicated`
+reads the map of the register file on disk and writes it unchanged into the
+regenerated register; the amplitude generator's `expectations()` takes the
+file's path and carries the map, `main` writes it beside the regenerated
+blocks; `tests/test_register_map.py` pins the cases (the file absent, the map
+present, a block regenerated with its entry kept, the shipped register the
+generator's). The seven other generators that write a register (weak,
+hubble_stars with its `record/expectations.json`, two_stars, cluster_clock,
+crowd_clock, reader_clock, c_measured) take the same call the same day
+(the test's (e) on two_stars). No reading changes; no number moved.
 
 ## Series R re-registered under the crossing rule, on 2026-09-21 (the register's replay blocks; no rule change)
 
@@ -75,8 +89,17 @@ written at 05:21Z (the bisect of the architect, the Boss's order of
 at tick 64, where before the rule it stepped every 7 (6, 13, ..., 62) and
 clicked at 69; the first hand-over of `q1_proton_line` is at tick 18 (17
 before), of `q2_neutron_line` at 23 (22), of `q7_proton_dressed` at 17
-(16); the pushes at the reference tick are unchanged. No test replayed the
-fate lines, so the register drifted from the tree. Now every world of
+(16); q3_proton_triangle's first step is at 28 (27 in the README's
+3000-interval run) and q5_deuteron_line's first hand-overs at 18, 23, 27
+and 28 (bodies 2, 5, 4, 3); the pushes at the reference tick are
+unchanged; the 3000-interval fates (q4's first step at 176, q6's pair
+breaking at about 1190) are of the run before the rule and are not
+re-registered beyond 100 intervals (the physicist's line-by-line table
+for the quarks design, `docs/designs/quarks/SERIES_R_CROSSING_NUMBERS.md`).
+The quarks README's run row for q6 read the exit at 63, the engine before
+the register's commit; at the register's commit (eba635dd) the face click
+is at 69, and the row says so since 2026-09-21. No test replayed the fate
+lines, so the register drifted from the tree. Now every world of
 `examples/events/quarks/expectations.json` carries a `replay` block, the
 engine's record of its first 100 intervals by kind (the steps with their
 Nodes and the hand-overs, GAMEBOARD; the face clicks of the bodies that

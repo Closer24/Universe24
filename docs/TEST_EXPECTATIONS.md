@@ -96,7 +96,8 @@ kept, their pins the law of events').
 | `test_step_drive.py` | The step drive (2026-09-20, BEAM_LAW note 17 as amended): the count of Links as the whole part of the distance the momentum has driven, one bounded integer per axis on the body's record: the identity at a constant momentum with `by_clock(n - 1, \|p\|, D)` over 4000 self-creations and twelve momenta; the identity on two axes (the coincident step lost as before); the integrated distance under a halving momentum (38 within 1, 37 to 39, where the rule as it was made 1); never two Links in one interval under a random momentum over 10 000 intervals with the drive in [0, 2 D - 1); the record (`drive`, `axis_steps`, the `step` line) and a declared `drive` refused; the turn by momentum unchanged; the signed drive under a reversal (no Link until the drive cancels and reaches -D) and the bound pair under a suspension holding for 3000 intervals ([below](#the-step-drive)) | new (2026-09-20, series G2's finding, record 107; the owner's decision, record 108); the drive signed the same day (record 126) |
 | `test_crossing.py` | The crossing rule (2026-09-21, BEAM_LAW note 48; the model owner's record 158 of 2026-09-20, the physicist's design docs/designs/crossing/DESIGN.md): the experimenter's streams read as counts, 45 in 32 and 58 in 48 toward, 19 in 32 and 38 in 48 away with the windows of each step, 48 in 48 at rest, no row twice (the `measure` counts equal), the probe pair -2880 = 64 x 45 and the key `doppler` refused; the streams beyond the axis on a plane of lines, 32, 24 and 36 in 32; one row met once (a `read` line at tick 12, 3, 1 in three worlds); the sums over a period 183, 311, 74, 202; the fast steps reported (18 and 6 at the momentum 96, 20 and 10 at 128, 15 and 0 at 64) ([below](#the-crossing-rule)) | new (2026-09-21; the pins of (c) from the rule transcribed on the lines' geometry, docs/designs/crossing/crossing_2d.py, before the run) |
 | `test_crowd_clock.py` | Series P, a lamp inside a crowd, still and moving (`examples/events/crowd_clock/`, docs/designs/crowd_clock/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced with the moving bodies at 0.2 c by the drive's rule; the presence at the still lamp's Node once the crowd's rows arrive is 4 F (328 for F = 82) and the k = 1 lamp births once in two intervals (40 of 80 within 2); the algebra (z = 1 needs a slowed clock for v < c, a still lamp at k = 1 and 2 reads z = 1 and 2, the lag k v t / (1 + k) and the exit from a fan of reach 4 at 69 intervals for k = 1); the expected values in the module's docstring ([below](#a-lamp-inside-a-crowd-series-p)) | new (2026-09-21, series P; design and pins, the run in the design's section 7) |
-| `test_reader_clock.py` | Series R, a reader inside a crowd (`examples/events/reader_clock/`, docs/designs/reader_clock/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced, the reader at x = 10 with a lamp of its own measuring `s_px1` by age, the source at x = 70, the crowds' fluxes k 2^16 / 4, the receding source at 0.2 c and its sources at 0.1 c by the drive's rule; the presence 4 F at the reader and the source after twelve intervals; the algebra of the ratio (0.5, 1, 4 / 3, 1.1); the expected values in the module's docstring ([below](#a-reader-inside-a-crowd-series-r)) | new (2026-09-21, series R; design and pins, the run in the design's section 7) |
+| `test_reader_clock.py` | Series S, a reader inside a crowd (`examples/events/reader_clock/`, docs/designs/reader_clock/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced, the reader at x = 10 with a lamp of its own measuring `s_px1` by age, the source at x = 70, the crowds' fluxes k 2^16 / 4, the receding source at 0.2 c and its sources at 0.1 c by the drive's rule; the presence 4 F at the reader and the source after twelve intervals; the algebra of the ratio (0.5, 1, 4 / 3, 1.1); the expected values in the module's docstring ([below](#a-reader-inside-a-crowd-series-s)) | new (2026-09-21, series S; design and pins, the run in the design's section 7) |
+| `test_clock_word.py` | Series T, the clock's word (`examples/events/clock_word/`, docs/designs/clock_age/NOTE.md section 6, the register's entry "T, the clock's word"): the shipped worlds equal their generator's and run ten intervals balanced (the lamp at x = 10, the detector at x = 110 reading `age`, the two `mass` sources at 3 or 6 Links at F = 4915, the lamp's `mass` entry `pass` or `{"rule": "pass", "reads": "age"}`); after twelve intervals the lamp's count is 4 F under the presence word at both distances and 22 F, 42 F under the age word, the presence 4 F in all, the first counting tick 6 and 11 with the first row's count alone; the algebra (k = 0.3, 0.3, 1.65, 3.15; the ratio 1 and 42 / 22 = 1.909 against the continuum's 2); the expected values in the module's docstring ([below](#the-clocks-word-series-t)) | new (2026-09-21, series T; the pins the physicist's, the run in the register) |
 | `test_cluster_clock.py` | Series Q, a cluster of crowds read by one detector (`examples/events/cluster_clock/`, docs/designs/cluster_clock/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced, the five lamps at numbers 2, 3, 6, 9, 12 with the momenta of 0.2 c and their sources' of 0.2 c / (1 + k) by the drive's rule; the presence at every lamp of a crowd is 4 F after twelve intervals and the bare lamp's at most 8; the algebra of the sum 1 + k + v / c against the product (1 + k)(1 + v / c) and the pinned dispersion 0.363 around 0.4; the expected values in the module's docstring ([below](#a-cluster-of-crowds-series-q)) | new (2026-09-21, series Q; design and pins, the run in the design's section 7) |
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
@@ -140,6 +141,7 @@ kept, their pins the law of events').
 | `test_exact_phase.py` | The exact phase at the click (2026-09-21): the axis and the diagonal at the rate 8 (u + 41 with the remainder 48 / 64, u + 42 with the remainder 0 / 128 where the walk read u + 40), the layer's pointer at it, the integer form without it, a face's row (u + 4 where the walk read u + 56), the numerator beyond the register refused, the primitive `exact_phase` ([below](#the-exact-phase-at-the-click)) | new (2026-09-21; record 163 (2); BEAM_LAW note 45) |
 | `test_birth_wheel.py` | The birth wheel at a declared rate (2026-09-21): the key required on every lamp and refused as a bare integer, a rate 0 or a wheel 0; every world file with a lamp declares it; [1, N] the count of births (the lamp's `acc` `wheel`, the rungs on 64); the golden rate's first ten u and phases, the rungs on 4096; the cell read on the wheel (two equal cells: a, b, a, b, a, a, b, a, b, b against 32 a then 32 b); the replay tool reads the wheel from the lamp ([below](#the-birth-wheel)) | new (2026-09-21; record 180; BEAM_LAW note 46) |
 | `test_amplitude_malus.py` | A12 under the click, Malus's law from the table entries in force (2026-09-21): the pin of `docs/designs/malus/NOTE.md` derived again from the three worlds and the engine's half-angle tables of 2N = 512 (the cells' weights the products of C' and S', the rungs b_k = (2 W C_k + T) // (2 T) over the wheel's 256 births) against the register; the replay of `malus_a`, `malus_b` and `malus_c` (u over every residue once, the registered rungs on every gather, the chosen cells 128 / 128, 0 / 256 and 64 each, the books balanced); the rotate keeps the record's u (every `split` line at the rotation `rebirth` False with the record's identity and its u, two per row; the `rotate` and `read` lines) ([below](#the-amplitude-law-malus)); every number read from `expectations.json` under `malus` | new (2026-09-21; the model owner's go, record 330; the mathematician's note) |
+| `test_register_map.py` | The register's `replicated` map carried through a regeneration (2026-09-21, the replicator's round 1): a register file absent or without the map leaves the regenerated register as it is; a file with the map gives it entry by entry, detached; a regenerated block keeps its entry and so does a block the generator no longer writes; the shipped amplitude register equals its generator's output with the map; another generator (two_stars) carries a map present and leaves a bare register as it is ([below](#the-registers-verification-map-carried-through-a-regeneration)) | new (2026-09-21) |
 | `test_host_batches.py` | The host's batches and memos (2026-09-21, the model owner's order "optimization and simplify"): the store's `extend` over batches equal to one `append` per batch in the same order, the defaults filled, an empty batch nothing; a body's `charges` memo equal to a fresh computation on every body of the shipped J3 world after 3 intervals and following a change of what is held and of the units clicked; the world's `handed` read once ([below](#the-hosts-batches-and-memos)) | new (2026-09-21) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
@@ -3907,7 +3909,7 @@ of `examples/events/crowd_clock/` by `make_worlds.py`):
   4 (1 + k) / (k v), 69 intervals for k = 1 at v = 0.2 c, later for
   k = 0.3.
 
-## A reader inside a crowd (series R)
+## A reader inside a crowd (series S)
 
 `tests/test_reader_clock.py` (docs/designs/reader_clock/DESIGN.md; the
 worlds of `examples/events/reader_clock/` by `make_worlds.py`, which imports
@@ -3954,6 +3956,34 @@ imports series P's generator):
   every k; the product (1 + k)(1 + v / c) exceeds it by k v / c, 0.2 at
   k = 1 and v = 0.2 c; the dispersion of the five k is 0.363 and their mean
   0.4.
+
+## The clock's word (series T)
+
+`tests/test_clock_word.py` (docs/designs/clock_age/NOTE.md section 6; the
+worlds of `examples/events/clock_word/` by `make_worlds.py`, which imports
+series P's generator; the register's entry "T, the clock's word"):
+
+- (a) the shipped worlds equal `make_worlds.worlds()` document for document,
+  parse under the law and run ten intervals balanced; the detector is number
+  1 at x = 110 with `reads: "age"`, the lamp number 2 at x = 10 fixed with a
+  lamp on +x and its `mass` entry `pass` (the presence word) or
+  `{"rule": "pass", "reads": "age"}` (the age word), the two `mass` sources
+  numbers 3 and 4 at 3 or 6 Links on +y and +z at F = 4915 per interval (the
+  amount F x 2^16) on the fan of nine; the bar 121 x 9 x 9 at 3 Links and
+  121 x 15 x 15 at 6; `expectations.json` declares
+  `clock-word-expectations-v1`, the windows [200, 350] and [350, 500], the
+  pinned k = 0.300, 0.300, 1.650, 3.150 and 1 + z = 1.300, 1.300, 2.650,
+  4.150, and no `replicated` map.
+- (b) after twelve intervals the lamp's count per self-creation is the
+  presence 4 F = 19660 at both distances under the presence word and the
+  age moment 22 F = 108130 at 3 Links and 42 F = 206430 at 6 under the age
+  word, the presence 4 F under both words; the first interval at which the
+  count is not zero is tick 6 at 3 Links and tick 11 at 6, and the count
+  then is the first row's alone (2 F under the presence word, 2 F x 5 and
+  2 F x 10 under the age word).
+- (c) the algebra of the pin: k = (count per F) x F / 2^16; the ratio of the
+  two k at the same F is 1 under the presence word and 42 / 22 = 1.909
+  under the age word, against the continuum's potential 2.000.
 
 ## One reading set
 
@@ -4190,3 +4220,28 @@ u steps at 6, 12, 19, 25, 32, 38, 45, 51, 58 to (0, 10, 10) and clicks
 through `face:-x` at 64; q1_proton_line's first hand-over at 18,
 q2_neutron_line's at 23, q7_proton_dressed's at 17; q3_proton_triangle's
 first step at 28. A register that drifts from the tree fails here.
+
+## The register's verification map carried through a regeneration
+
+`tests/test_register_map.py` (`event_universe.register_map.carry_replicated`;
+docs/MIGRATION.md, "The register's replicated map carried through a
+regeneration, on 2026-09-21"): a generator that rewrites its register
+from the worlds and the design reads the register file's `replicated`
+map back and writes it unchanged, so the replicator's entries (PR #545)
+survive a regeneration. The expected results, written down first: (a) a
+register file absent, or present without the map, leaves the regenerated
+register as it is; (b) a file with the map gives the regenerated register
+that map, equal entry by entry and detached from the file's object; (c) a
+block regenerated with new numbers keeps its entry beside them, and the
+entry of a block the generator no longer writes is kept too (the
+replicator's, never the generator's to drop); (d) the shipped amplitude
+register equals `make_worlds.expectations()`, the map included; (e)
+another generator (`two_stars/make_worlds.py`, its folder redirected to a
+temporary one) writing into a folder that holds a register with the map
+carries it entry by entry beside its regenerated blocks, and into a
+folder without one writes the register as it is. Every generator that
+writes a register carries the map since 2026-09-21: amplitude, weak,
+hubble_stars (the register and `record/expectations.json`), two_stars,
+cluster_clock, crowd_clock, reader_clock and c_measured, so the
+replicator's entries land on any register without a generator dropping
+them.

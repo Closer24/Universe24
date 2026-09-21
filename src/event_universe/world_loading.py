@@ -42,6 +42,8 @@ _AUTHOR_KEYS = {"entity_definitions", "entities"}
 
 @dataclass(frozen=True)
 class DefinitionSource:
+    """One definition file a world includes: its path, its bytes and their sha256."""
+
     path: str
     source: bytes
     sha256: str
@@ -49,6 +51,9 @@ class DefinitionSource:
 
 @dataclass(frozen=True)
 class LoadedWorld:
+    """A world loaded from its file: the parsed world, the portable and the expanded sources and
+    the definitions it depends on."""
+
     world: NatureBeamWorld
     portable_source: bytes
     expanded_source: bytes
@@ -487,6 +492,8 @@ def families_by_definition(
             by_first[cast(str, carried[0]["name"])] = (name, carried)
 
     def tiling(start: int) -> list[str] | None:
+        """The names of the carried definitions that tile the families from `start`, or None
+        where they do not."""
         names: list[str] = []
         index = start
         while index < len(families):

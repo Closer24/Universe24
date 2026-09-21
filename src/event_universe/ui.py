@@ -55,12 +55,15 @@ def validate_source(source: object) -> dict[str, object]:
 
 
 def default_configs() -> Path:
+    """The folder of the example worlds: the repository's, or the installed share folder."""
     source = Path(__file__).resolve().parents[2] / "examples" / "events"
     return source if source.is_dir() else Path(sys.prefix) / "share/event-universe/examples"
 
 
 @dataclass
 class Job:
+    """A run started from the workspace: its process, its log, its output and its state."""
+
     identifier: str
     model: str
     requested_ticks: int
@@ -74,6 +77,7 @@ class Job:
     elapsed: float = 0
 
     def refresh(self) -> None:
+        """Read the process's exit code and finish the job once it ended."""
         code = self.process.poll()
         if code is not None:
             if self.state == "running":
@@ -89,6 +93,7 @@ class Job:
                 self.lease.finish()
 
     def describe(self) -> dict[str, object]:
+        """The job's state for the workspace page, with the run's metadata once it ended."""
         self.refresh()
         metadata: object = None
         path = self.output / "run.json"
@@ -115,6 +120,7 @@ class Job:
         }
 
     def stop(self) -> None:
+        """Terminate the job if it is running."""
         self.refresh()
         if self.state != "running":
             return
@@ -145,6 +151,7 @@ class Workspace:
         self.lock = threading.Lock()
 
     def export(self, source: object) -> dict[str, str]:
+        """Validate a world source and write it as an export file; returns its URL and name."""
         summary = validate_source(source)
         assert isinstance(source, str)
         identifier = uuid4().hex
@@ -162,6 +169,7 @@ class Workspace:
         return {"url": f"/exports/{identifier}.json", "name": name}
 
     def templates(self) -> list[dict[str, object]]:
+        """The example worlds as templates, each with its validation summary."""
         result: list[dict[str, object]] = []
         for path in sorted(self.configs.rglob("*.json")):
             try:
@@ -271,12 +279,15 @@ class Workspace:
             return report
 
     def close(self) -> None:
+        """Stop every job."""
         with self.lock:
             for job in self.jobs.values():
                 job.stop()
 
 
 class WorkspaceServer(ThreadingHTTPServer):
+    """The local HTTP server of the workspace, with one token per start."""
+
     daemon_threads = True
 
     def __init__(self, workspace: Workspace, port: int = 8765) -> None:
@@ -287,12 +298,14 @@ class WorkspaceServer(ThreadingHTTPServer):
         self.origin = f"http://127.0.0.1:{self.server_port}"
 
     def server_close(self) -> None:
+        """Close the workspace, then the server."""
         try:
             self.workspace.close()
         finally:
             super().server_close()
 
     def service_actions(self) -> None:
+        """Clean up finished runs between requests, at most once per interval."""
         now = time.monotonic()
         if now - self._last_cleanup >= CLEANUP_INTERVAL_SECONDS:
             self.workspace.cleanup()
@@ -300,12 +313,17 @@ class WorkspaceServer(ThreadingHTTPServer):
 
 
 class WorkspaceHandler(BaseHTTPRequestHandler):
+    """The HTTP handler of the workspace: pages and files on GET, runs and exports on POST,
+    local requests only."""
+
     server: WorkspaceServer
 
     def log_message(self, format: str, *args: object) -> None:
+        """Silence the standard request log."""
         pass
 
     def setup(self) -> None:
+        """Set the connection's timeout."""
         super().setup()
         self.connection.settimeout(10)
 
@@ -338,6 +356,7 @@ class WorkspaceHandler(BaseHTTPRequestHandler):
         self._send(json.dumps(value).encode(), "application/json; charset=utf-8", status)
 
     def do_GET(self) -> None:
+        """Serve the workspace page, its API and the run and export files to a local request."""
         if not self._local_request():
             self._json({"error": "Only this local workspace may access the server."}, 403)
             return
@@ -397,6 +416,7 @@ class WorkspaceHandler(BaseHTTPRequestHandler):
             self._json({"error": "Not found"}, 404)
 
     def do_POST(self) -> None:
+        """Start, stop or export from a local request that carries the workspace token."""
         if not self._local_request() or not hmac.compare_digest(
             self.headers.get("X-Workspace-Token", ""), self.server.token
         ):
@@ -443,6 +463,7 @@ class WorkspaceHandler(BaseHTTPRequestHandler):
 
 
 def main() -> None:
+    """Command line: open the local configuration workspace in the browser."""
     parser = argparse.ArgumentParser(description="Open the local Universe24 configuration workspace.")
     parser.add_argument(
         "--port", type=int, default=8765, help="Local HTTP port; 0 chooses an unused port"

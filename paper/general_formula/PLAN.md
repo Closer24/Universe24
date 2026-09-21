@@ -2015,3 +2015,153 @@ directions carry no heading, so "exact on the headings" is the pin's
 host analysis and series P's test, not this run; the paper says "exact
 on every untied direction" for the run.
 
+## Wave 16 (2026-09-21): the families' appendix (record 358), record 359's readings, the crowd's clock, the replicated map
+
+The owner's word through the physicist's session (record 358): the
+tables of the masses, the groups, the sets and the vectors of all the
+families in the paper; the mathematician's audit (PR #547) found the
+schema carried and the rows never. Done: a new appendix before the
+glossary, "the families, the sets, the groups and the vectors", with
+F1 (the 75 families in their 28 entities, every declared key; the 24
+thrown sources and the 24 Hubble stars one row each), F1b (the 21
+declarations of the worlds that differ from the definitions, said once
+to be the register's declared variants and not a second law), F2 (the
+content every family carries on the worlds' measured events, per
+series; the held content), F3 (the group per declared quantity, per
+family of the physics, PREDICTIONS 26's rule) and F4 (the state vector
+per kind, the six verbs); every number an input of the register, none
+a measurement; the tables generated from the tree's script over the
+one source (families.json and the worlds) by a scratch script, so the
+crowd-clock worlds landed since the audit are in F2. Pointers: P8, the
+masses row of Table 1 (F1, F2), "The state" (F4), the symmetries (F3).
+The audit's answers: all the families (question 1); the variants said
+once (2); the masses row cites F2 (3); F3 in the appendix with a
+pointer beside the symmetries (4). Record 359: the second tie's
+reading beside the first's (16 of 48, the difference reaching the
+detector); the pace bound read again on all 290 directions in the c
+row of the record appendix; the crowd's clock in the clock's-redshift
+paragraph (the tree's worlds, pinned before the run, run twice on
+main 119fd9b, the entry drafted and not registered; series Q landed
+on main at 33330d59 during the wave and is cited beside it, the
+cluster at rest and thrown as one, the sum against the product, its
+entry drafted and not registered), measured once. Series R
+re-registered under the crossing rule (PR #554): the masses row and
+the record appendix give the kicked u's exit at 63 in the registered
+3000-interval run before the rule and at 64 in the replay under it. Record 360: the register's
+replicated map in the record appendix's caption. The log bibitem to
+360; two bibitems (the audit, the crowd's clock). Reported to the Boss
+as the tree's: the audit's prose says 27 entities and 23 inline
+declarations where its output counts 28 and 21; TERMINOLOGY gives the
+lifetime in intervals and the audit in Links (the paper says the age);
+the quarks' README table and its prose disagree on the kicked u's exit
+before the crossing rule (the table's 3000-interval run: reaches the
+face at 62, leaves at 63; the prose and MIGRATION: clicked at 69).
+Referee round 37 (four findings, all applied): the unset circle is the
+engine's default, a circle, and the caption names every difference
+(m, the coupling p, the Hubble mass, e in the gallery, beta's hand);
+the crowd-clock content is s_px1's alone in F2; at k = 0.005 the
+reading 1.000/1.006 is inside the pin by its tolerance, not exact, the
+four higher rungs exact; a comma in the log bibitem. The referee's
+notes kept: the second window's 1.271 not printed; the test pins the
+presence 4F on a short run, not the series' readings. Referee round 38
+on the additions after main moved to 33330d59 (series Q, series R's
+replay): no FAIL; his wording note applied (a cluster's dispersion a
+spread of clocks); his note kept for the Boss: the quarks' README run
+row says the kicked u left at 63 before the crossing rule and the
+README's prose and MIGRATION say 69.
+
+## Wave 17 (2026-09-21): the precedents study's five verdict lines (record 356; PRECEDENTS.md on main)
+
+The Boss's relay of the study's PART D, applied with a referee round:
+(1) KEEP the ledger, the standing column, the one prediction, the
+not-claimed list (nothing changed). (2) CHANGE fig:square: the
+energy-momentum relation of special relativity in place of "Einstein,
+1905" (in neither 1905 paper), and the caption in the greats' form
+("gives ... exactly; the relation is not new"); the stands-above
+paragraph's "Einstein's" likewise. (3) CHANGE the abstract: the twelve
+FAIL with their cause in one clause (seven the law's as declared in a
+run made, four from a pin whose run is not made, one a declared input
+refuted), the abstract cut elsewhere to stay under 1920 plain
+characters. (4) ADOPT a closing sentence in the greats' form at the end
+of sec:newton (no number of nature met, the reason), sec:delay (Delva
+et al. 2.5e-5, Vessot et al.; the second order below reach), sec:gleason
+(Sinha et al.'s kappa; the harmonic constants the gap) and sec:qm
+(Hensen et al.'s 2.42 +- 0.20; Bohr's ratio awaiting its line); one
+sentence in the Introduction in the author's voice ("what is new here,
+it seems"); "as is well known" at the Courant condition and Kennard's
+form. (5) ADOPT: the commit SHAs out of tab:nature's caption, the
+nature prose, series C's fingerprint and the crowd-clock commits in Part
+II, into Reproducibility; one-line bibitems for Shannon 1948, Landauer
+1961, Bresenham 1965 and Jefimenko 1966, cited at the eponyms. Also:
+the auditor's round 4b, the four words "with T > 0 by Theorem
+th:isometry" in Lemma lem:one; the reader inside a crowd (PR #558, one
+run on main d8cb46e, drafted and not registered) beside the cluster;
+PRECEDENTS.md cited by path. Not yet on main, so not cited: records
+361 to 366 (PR #559) and the (3, 4) split at N = 32 and 128 (PR #563).
+Reported to the Boss as the tree's: examples/events/reader_clock/README.md
+calls itself "Series R", the quarks' letter. Referee round 39 (four
+findings, all applied): main merged at 3fa35e09 before the commit (the
+study and the reader's worlds on the tree); the lemma's T > 0 stated
+with its reason (the offers summed over all ends the born row's norm
+up to rounding) rather than by a bare reference; the reader's formula
+the sum form as pinned; the glossary caption's commit to
+Reproducibility. His notes applied: "Galileo" and "loophole-free" not
+on the tree, dropped; sec:newton "confronts no number of nature (the
+protons' ratio enters as an input)"; the Courant sentence's grammar.
+His caveat kept: the abstract folds the hypothesis rows (3; 8a, 8b)
+into "the law's as declared", the finer sorting in sec:nature.
+
+## Wave 18 (2026-09-21): records 361 to 366 by number, the split at N = 32 and 128, the derivation's section 26, the clock's word
+
+Main merged at d17af9b9, PR #566 merged (the Boss's merge of main into this branch for
+PR #566's CI taken as a merge commit; PRs #552, #559, #562, #563, #567).
+The log bibitem to 366; the precedents by records 356 and 366; series
+R's replay by record 364; the lemma's T = 0 by record 363. The (3, 4)
+split at N = 32 and 128 (PR #563, the register's mz_345_n block): the
+power window sharpened to [1.917, 2.012) in the "Against the registered
+integers" paragraph, the click's-weight row of Table 1, the record
+appendix and the Gleason section's closing sentence; Table tab:nature's
+row 2c left as the register's row (the physicist restates it). The
+derivation's section 26 (the ten formulas the paper wants and the
+derivation lacks, record 352) cited at the end of the stands-above
+paragraph, none claimed. Record 365 and the mathematician's note on the
+clock's word: the crowd-clock worlds' k is the presence (M / r^2), the
+series E clock the age moment (M / r); the presence's clock mapped to
+nature fails in form (0.058 against 0.24) and in scale (1e-5 against
+1e-3); the owner's decision pending; one sentence in the clock's
+paragraph, a bibitem for the note. The notation (record 362,
+docs/designs/notation/NOTATION.md, the mathematician's proposal): no
+rename in the paper until the Boss's decision is in TERMINOLOGY; then
+one wave with a notation table at the paper's head. Referee round 40:
+one finding (a comma in the log bibitem), applied; his soft points
+applied (the lemma cites rounds 4 and 4b, not 4b alone).
+
+## Wave 19 (2026-09-21): the notation wave (record 362; the Boss's decision on NOTATION.md)
+
+The Boss's decision (his message of 12:45Z under record 362, on the
+mathematician's docs/designs/notation/NOTATION.md): every formula in
+physics' letters (E^2 = E_0^2 + p^2 c^2 with c^2 = 1/3, v = p c^2 / E,
+E_0 = m c^2); the integer form (E / c^2)^2 = m^2 + 3 p . p kept as the
+exact square, never rooted, its integer root written floor(E / c^2)
+(the macro \Eint); the prime of E' dropped; the grain family as the
+one rule (N_phi the circle, N_l the label's scale, N_w the width, N_D
+the direction bound, N_theta the fan's grain, N_u the wheel; this
+paper adds N_t for the cosine tables' scale, 256, on the same rule),
+the definition line m = N_l N_w M with the one note that the law's
+documents write Q, S and N; the cheap renames: the four W's to
+E^2/c^4, R(f) and R_k, d_p and N_u; bold F to bold Phi; the fan's G to
+N_theta; P to N_D; the ladder's T to C_K; the presence k to a_r and
+the age moment's k_a to a_tau; bold V to bold a; c_1 the heading's
+pace; the direction D with T_D and u_D and Eq. (1)'s wall d (the
+ladder's rungs b_k unchanged); the multiplicity and the Links made by
+the age in code font (\mathtt m); Young's D and s to z_s and a_s
+(the direction's letter taken). A notation table at the paper's head
+(Table tab:notation, after the Method paragraph) and the glossary
+appendix restated to it; a bibitem for the proposal and the decision.
+Also under the Boss's order of 12:45Z: the clock's-word sentence and
+its bibitem removed (nothing of it cited until the owner's word and
+the run); the crowd paragraph keeps one clause that its k is the
+presence, from the worlds' own README. Done by one scratch script
+(notation.py) with exact anchors, then the leftovers checked by grep.
+Referee round 41 before the commit.
+

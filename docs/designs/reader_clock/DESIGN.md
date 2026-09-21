@@ -1,4 +1,4 @@
-# Series R, a reader inside a crowd: the design, with the expectation pinned before any run
+# Series S, a reader inside a crowd: the design, with the expectation pinned before any run
 
 The G2 experimenter, 2026-09-21, on the model owner's word ("start", after
 series P and Q, on the experimenter's proposal of a detector that sits

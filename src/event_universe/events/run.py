@@ -57,6 +57,7 @@ def execute_nature_beam_run(
     with (output / "events.jsonl").open("w", encoding="utf-8", buffering=1 << 20) as stream:
 
         def record(event: dict[str, object]) -> None:
+            """Write one event line to `events.jsonl`."""
             stream.write(json.dumps(event) + "\n")
 
         simulation = NatureBeamSimulation(world, observer=record)

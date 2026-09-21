@@ -279,18 +279,25 @@ class NatureBeamSimulation:
 
     @property
     def arrived(self) -> list[np.ndarray]:
+        """Per family, the amount arrived at every Node in the last interval (a GameBoard
+        reading)."""
         return self.readings.arrived
 
     @property
     def flow(self) -> list[np.ndarray]:
+        """Per family, the net flow vector at every Node in the last interval (a GameBoard
+        reading)."""
         return self.readings.flow
 
     @property
     def per_port(self) -> list[np.ndarray]:
+        """Per family, the amount that crossed into every Node through each Port in the last
+        interval (a GameBoard reading)."""
         return self.readings.per_port
 
     @property
     def presence(self) -> list[np.ndarray]:
+        """Per family, the presence at every Node in the last interval (a GameBoard reading)."""
         return self.readings.presence
 
     def _measured(self, number: int, definition: MeasuredDefinition) -> Measured:
@@ -1116,6 +1123,7 @@ class NatureBeamSimulation:
         }
 
     def contents(self) -> list[dict[str, object]]:
+        """The state of every measured event, in number order (a GameBoard reading)."""
         return [self.measured[number].state() for number in sorted(self.measured)]
 
     def detectors(self) -> list[dict[str, object]]:
@@ -1261,6 +1269,7 @@ class NatureBeamSimulation:
         yield "nodes", self._node_entries()
 
     def snapshot(self) -> dict[str, object]:
+        """The snapshot as one dictionary, the streamed parts listed."""
         return {
             key: (list(value) if isinstance(value, Iterator) else value)
             for key, value in self.snapshot_stream()
