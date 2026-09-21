@@ -1166,3 +1166,34 @@ met (a chain and never a triangle; m_n - m_p the held difference, 25 - 20
 units; the F pin is not read by the register); LaTeX quotes; the
 compositions spaced as the source writes them. Verified: every number of
 the cell against the register's entry R and the worlds' README.
+
+## The crossing rule on the tree (2026-09-21, after the merge of main at 562fb736 and a9acbd67)
+
+BEAM_LAW note 48 (PR #468): the crossing rule is built; the key doppler,
+the grain G, weighted_flow, flux_pair, frame_momentum, the doppler worlds
+and tests/test_doppler.py are deleted, note 38 a tombstone. The paper
+cited none of the deleted names (checked: no hit for doppler as a key,
+weighted flow, flux pair, frame momentum, note 38, the grain G). Two
+rows change: the receiver's Doppler from "pin, decided and not built" to
+"reached under the crossing rule, built", with the rule's counts (toward
+k + 55/32 per k intervals, 45 in 32 and 58 in 48; away 19 and 38; 183
+and 311 over a period exact; c = 32/55) and the G2 run under the rule
+still pinned, not made; the transverse Doppler's check names the rule's
+transverse stream at exactly the rest rate (32 in 32). The delay-field
+section's "a key since deleted" was already right. Records 274 to 289
+(PR #470) are on the tree; 289 is the closure record. The beamlaw
+bibitem adds note 48.
+
+## Referee round 16 (2026-09-21): the Doppler rows under note 48, applied
+
+Seven findings, all applied: no pin exists for the G2 run under the rule
+(EXPERIMENTS: the pinning is laid on that session), so the cell says
+"not yet made, its expectations to be pinned first"; the derivation's
+2.7 on the tree still reads "on main not reached" (written before the
+build), stated in the row and reported to the Boss for the derivation's
+own fix; the streams are record 151's, the counts record 158's design,
+the pins the rule's tests; "built" without "on the archived code" until
+the archive's version is confirmed; note 48's own caveat carried (a
+reader faster than one Link per two intervals counted, not proved;
+exact over whole Links, within one row otherwise); the period named (32
+Links at k = 4, 8); the bibitem's gloss left as a gloss.
