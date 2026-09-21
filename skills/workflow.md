@@ -404,6 +404,30 @@ consequences govern how every role works.
    clicks per record; the program's advantage is there, and every design
    states on which side its world lies.
 
+**Refined by the model owner on 2026-09-21 (record 205): a formula gives, a
+run proves; and after the detector, the vector.** (1) A register entry
+carries the formula, or the derivation's section, beside its number, and
+where a formula exists the test derives and compares rather than reads a
+pinned number (`tests/test_amplitude_cone.py` is the template). (2) A run
+without a derived expectation is a research run and says so in its page
+and its record. (3) The derivation mathematician's targets
+(DERIVATIONS_BEAM.md) are the source of every series' expectations; a
+target not reached marks a quantity a run may only measure. (4) The
+register's `expectations.json` entries carry a `derivation` field, and the
+review of an experiment's pull request checks the derivation before the
+numbers. (5) An experiment names, before the run, the vector or tensor it
+will read after the detector and its form (the readings by type in
+ENGINE.md): a scalar, an integer 3-vector in a declared unit (**p**, **f**),
+the traceless second-moment tensor **T**, or the record's phase-count vector.
+
+(6) The observed value is the reading, not the board's number (the owner,
+2026-09-21, record 210): a distance, a time, a speed, a mass, an energy, a
+force, an angle or a probability is produced from the board's Links,
+intervals, contents, phase steps and weights only through a named reading
+(HIGHLIGHTS 5.7's dictionary); an experiment's observable comes from a
+detector declared in the world file, never from the host's state, and a
+board quantity is never compared with nature directly.
+
 ## The generic vector form first (the model owner's ask, 2026-09-21, record 177)
 
 Every new rule of the law is sought and stated first in its generic vector
@@ -431,6 +455,48 @@ component of a vector is a scalar and is written plain with its index
 (`p_x`). In code the identifier's name says the kind where it matters
 (`momentum` a vector of three integers, `count_table` a table). Every
 role's skill points here; a review checks it as it checks the language.
+
+## The three tests of every rule: generic, vector, local (the model owner, 2026-09-21, record 202)
+
+A rule enters the law only if it passes all three, and every role applies
+them: the implementer before writing it, the reviewer before admitting it,
+the mathematician when stating its form, the Boss when ordering it.
+
+1. **Generic.** One primitive with declared integers (a rate, a wall, a
+   matrix, a table) and no family name or kind; the same primitive serves
+   every family; its special cases are values, not branches (a row is a
+   body of no content); the engine branches on no name.
+2. **Vector.** One of the six verbs on the state vector: the translation of
+   an accumulator by its rate, the bilinear form with a declared matrix, the
+   group-ring addition, the permutation, the evaluation, the Euclidean
+   division with the remainder kept; its rate at most bilinear in the
+   state; no root, no float, no rounding at run time beyond the ones
+   declared at load.
+3. **Local.** It reads only its own record and the six neighbouring Nodes
+   (LOCALITY-1); fixed work and storage for a fixed K; nothing kept at a
+   Node; every host reading labelled host.
+
+A rule that fails one test does not enter the law. A hypothesis that needs
+more (a seventh verb, a root at a declared grain) is stated under its own
+identity, outside the law, until it passes or the owner admits the verb.
+State the three verdicts, one line each, in the design, the review and the
+pull request.
+Why the three tests give the least computation in the large system (the
+owner's question, 2026-09-21, record 206): the cost of an exact run is the
+number of events times a constant, with nothing that grows with the
+GameBoard's size or the number of families; local bounds the work per Node
+(six neighbours), vector makes each step a fixed number of bounded-integer
+operations with no iteration inside it and gives the rows a closed form,
+generic makes one primitive serve every family (one code path, one table,
+one verification). The number of events is the floor of any exact
+computation. And it follows that a generic system is ruled by small
+conditions: the only free numbers are the family table's declared integers,
+the width and the initial state; a large system has no rule of its own
+scale, every known formula is the limit of the small local rule, and a
+change of one small condition moves the registered integers everywhere,
+exactly: a wrong small condition is caught by the large system's pins.
+ Form B of the body's drive was the first rule read against
+the three (record 201 of the log of 2026-09-20).
 
 ## Tools and authority
 
