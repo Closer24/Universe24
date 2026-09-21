@@ -42,6 +42,17 @@ docs/TEST_EXPECTATIONS.md ("The flight"), written down first:
     equals `manhattan_steps`, the residue equals (tau r + T_d) mod d and
     stays in [0, d), and `walk_step` is the line's m-th unit step times
     [residue + r >= d]; a rest direction holds (0, 1) at every age.
+(g) the flight through the one primitive (2026-09-21, record 299;
+    `nature_beam.by_drive_rows`): for every direction of the register's fans
+    (the six headings, the 290 primitive vectors with |a| + |b| + |c| <= 6 of
+    series I and J, the 91 of the two-slit openings with a >= 1 and a + |b|
+    <= 12) over one full period plus one, the walk's step at every age is
+    the closed form's, m(tau + 1) - m(tau) with m(tau) = (2 tau S_1 Q + T_d)
+    // (2 T_d), on the m(tau)-th unit step of the line; and the primitive
+    applied age by age from the start T_d at the rate 2 S_1 Q over the wall
+    2 T_d reproduces `Flight.accumulator`'s (m, residue) at every age, its
+    counts summing to m(tau): the residue and the step are the verb's two
+    outputs.
 """
 
 from __future__ import annotations
@@ -55,7 +66,7 @@ from event_universe.configuration_validation import validate_configuration
 from event_universe.core.game_board import PORT_HEADINGS, adjacent_node
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.nature_beam import Flight, Q, direction_flight
+from event_universe.events.nature_beam import Flight, Q, by_drive_rows, direction_flight
 from event_universe.events.run import execute_nature_beam_run
 
 SLIT_DIRECTIONS = [[1, 1, 0], [1, -1, 0], [2, 1, 0], [2, -1, 0], [3, 1, 0], [3, -1, 0]]
@@ -383,3 +394,56 @@ def test_the_flight_accumulator_is_read_in_one_place():
         assert (flight.walk_step(directions, ages) == expected).all()
         if s1 == 0:
             assert set(made.tolist()) == {0} and set(residue.tolist()) == {1}
+
+
+# -- (g) ---------------------------------------------------------------------------
+
+
+def register_fans() -> tuple[tuple[int, int, int], ...]:
+    """The directions the register's worlds fly on: the six headings, the
+    290 fan of series I and J and the two-slit openings' 91."""
+    found: list[tuple[int, int, int]] = [(0, 0, 0), (0, 0, 0), *PORT_HEADINGS]
+    for a in range(-6, 7):
+        for b in range(-6, 7):
+            for c in range(-6, 7):
+                if 0 < abs(a) + abs(b) + abs(c) <= 6 and np.gcd.reduce([a, b, c]) == 1:
+                    found.append((a, b, c))
+    for a in range(1, 13):
+        for b in range(-12, 13):
+            if a + abs(b) <= 12 and np.gcd(a, b) == 1:
+                found.append((a, b, 0))
+    return tuple(dict.fromkeys(found))
+
+
+def test_the_flight_is_the_one_primitive_on_every_fan_direction_over_a_period():
+    """(g)."""
+    vectors = register_fans()
+    assert len(vectors) >= 2 + 6 + 290
+    flight = direction_flight(vectors)
+    for index, vector in enumerate(vectors):
+        s1 = sum(abs(c) for c in vector)
+        if s1 == 0:
+            continue
+        t, period = int(flight.resolution[index]), int(flight.period[index])
+        rate, wall = 2 * s1 * Q, 2 * t
+        ages = np.arange(period + 2, dtype=np.int64)
+        directions = np.full(ages.shape, index)
+        made, residue = flight.accumulator(directions, ages)
+        # The closed form: the step at tau is m(tau + 1) - m(tau) on the
+        # m(tau)-th unit step of the line.
+        counts = flight.manhattan_steps(directions, ages)
+        moved = counts[1:] - counts[:-1]
+        assert set(moved.tolist()) <= {0, 1}
+        expected = flight.lines[index, made[:-1] % s1] * moved[:, None]
+        assert (flight.walk_step(directions[:-1], ages[:-1]) == expected).all()
+        # The verb applied age by age from T_d reproduces the accumulator.
+        acc = np.array([t], dtype=np.int64)
+        summed = 0
+        for tau in range(period + 1):
+            assert int(acc[0]) == int(residue[tau]) and summed == int(made[tau])
+            count, acc = by_drive_rows(acc, rate, wall)
+            assert int(count[0]) == int(moved[tau])
+            summed += int(count[0])
+        # One period returns the residue to its start and makes period x
+        # S_1 Q / T_d Manhattan steps exactly.
+        assert int(residue[period]) == int(residue[0]) and int(made[period]) * t == period * s1 * Q

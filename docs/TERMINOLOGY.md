@@ -183,7 +183,9 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   direction: it starts at T_D, gains 2 S_1 Q per interval against the wall
   2 T_D, and its count picks the unit step of the line; a rest direction
   never moves (BEAM_LAW section 3, the flight rule; the flight table is
-  retired, MIGRATION 2026-09-20).
+  retired, MIGRATION 2026-09-20). The step's count is `by_drive_rows`, the
+  array form of `core.integer.by_drive` over the rows (2026-09-21); nothing
+  written by hand, no field on the row.
 - **Walk**: step 1 of the interval, departures become arrivals: every row
   whose flight counts a Link crosses it whole, its record unchanged
   ([BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam)).
@@ -393,6 +395,12 @@ the known formulas (Highlights 5.7).
   of content M with the momentum component p steps one Link per
   (S M + p) / p self-creations on that axis (note 17).
 - **N**: the steps of the phase circle, the world key `N`.
+- **The circle's rounding, 1 / 256**: the scale of the circle's tables of
+  cos and sin (`core.phase.phase_cosines`, `phase_sines`), computed once
+  at load from N by integer series and read only at the click through the
+  Gram matrix; a declared input of the law beside Q, S and N, kept as the
+  fixed-point transforms of signal processing keep theirs (the model
+  owner, record 328).
 - **P**: the direction bound, the world key `direction_bound`: every
   declared direction has its components in -P .. P.
 - **K = [n, d]**: the clock's pair, the world key `K`: the turn per

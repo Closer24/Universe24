@@ -87,7 +87,7 @@ cited as orders, not as code.
 
 Section 0 states the law as one operator with its two blocks and places
 every result under its block (the owner's second pass, record 167 as the
-Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass); section 17 answers the owner's direction of 2026-09-21 (the law above Newton and Einstein: the theorem of covariant readings); section 18 answers records 264 and 265 (the three structural failures of the register under one logic); section 19 answers the owner's direction of 2026-09-21 on the masses (a bound set's mass as its total content, the nucleon as a chain of three on the bipartite lattice); section 20 answers record 270 (the periodic universe against the measured numbers); section 21 is the derivation map for the paper (every formula with its premises, script, run, the pin before the run, the order of the expansion, the error term and status; 21.4 the Einstein map; 21.5 the standard of record 300 and the new rows); section 22 answers records 291 and 292 (the uncertainty relation from the six verbs, and Bell); section 23 answers record 331 (Schrodinger's equation and the massive row, massive-rows-v1, reached only in part). The
+Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass); section 17 answers the owner's direction of 2026-09-21 (the law above Newton and Einstein: the theorem of covariant readings); section 18 answers records 264 and 265 (the three structural failures of the register under one logic); section 19 answers the owner's direction of 2026-09-21 on the masses (a bound set's mass as its total content, the nucleon as a chain of three on the bipartite lattice); section 20 answers record 270 (the periodic universe against the measured numbers); section 21 is the derivation map for the paper (every formula with its premises, script, run, the pin before the run, the order of the expansion, the error term and status; 21.4 the Einstein map; 21.5 the standard of record 300 and the new rows); section 22 answers records 291 and 292 (the uncertainty relation from the six verbs, and Bell); section 23 answers record 331 (Schrodinger's equation and the massive row, massive-rows-v1, reached only in part); section 24 answers record 337 (the inputs ledger, the bilinear rate forced, the Delta P table and the one prediction, S = 181 / 64). The
 targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
@@ -6464,3 +6464,181 @@ spreads. The potential's form is the eikonal of 23.4, named and not
 derived further. The three tests pass on the massive row, with the
 photon its `E'_0 = 0` case. The identity `massive-rows-v1` is named and
 not built; its pin is 23.3, before any run; nothing enters the law.
+
+## 24. The inputs ledger, the Delta P table and the one prediction the paper can carry
+
+**The owner's order** (record 337, 2026-09-21: "check how the paper can
+indeed be strengthened as a theory"). The referee's question on which
+the paper stands or falls: does the physics come from **F**, or hide in
+the rates **r**, the walls d, the family tables, the bilinear forms, the
+matrices and the click rule; in particular "its rates are constant for a
+message in transit and bilinear in the state for a body reading what
+arrives": who fixed the bilinear rate; and the strongest test is a
+prediction `P_U24 = P_QM + Delta P` computed in advance and measurable.
+This section answers on the law as built at `main` 5cc43ae7, under the
+six-point standard (21.5): every entry a fact of a section, a note or a
+registered number; no run; nothing enters the law. Three labels for an
+input: **DERIVED** from **F** (with the argument that forces it),
+**POSTULATE** (a grain or a rule stated in one line, with what breaks
+without it), **INPUT** (a declared number, with the smallest postulate
+that would replace it, or "none in sight"). Three verdicts for a
+difference: **refuted**, **open**, **below reach**.
+
+### 24.1 The inputs ledger: every place physics enters the law
+
+| # | The input | Where it enters | Label | The argument, or what breaks, or the smallest replacing postulate |
+| --- | --- | --- | --- | --- |
+| 1 | the GameBoard: the cubic lattice, six Ports, one carry per Node per interval (K) | AGENTS.md, section 0 | POSTULATE | the stage; without it nothing is computed; K the one constant (13) |
+| 2 | the six verbs T, B, G, P, E, D and nothing else | section 1, the three tests | POSTULATE | the grammar; what breaks without it: the inventory's "NOT" list (1.3) enters the law |
+| 3 | LOCALITY-1: a reader's own record and its six neighbours, fixed work for fixed K | AGENTS.md, note 47 | POSTULATE | without it the crowd is global (the deleted Q-ORACLE-1); with it every rate is a function of the arrivals |
+| 4 | the bijection: every step invertible but the click (the one non-bijective read) | 6.1, 9, 14 | POSTULATE | forces the information law (9) and the entropy identity (14); without it records could be copied |
+| 5 | the integer contract: bounded integers, every count an accumulator with its remainder kept | 1.2, FORM.md | POSTULATE (a grain) | a body's content is a count of units and a row's amount a count: the additivity of 24.2 (ii) |
+| 6 | the cube's 48 signed axis permutations | 4.1, FORM.md section 3 | DERIVED | the symmetry group of input 1; the law commutes with it up to the declared ties |
+| 7 | the constant rate in transit: a row reads nothing of the crowd (the flight blind) | note 47 (the walk reads nothing), B7 | POSTULATE on `main`, a choice among few | the alternative is optical-v1 (the wall reads the age moment; BUILDABLE, record 323); what it forces: the superposition of rows (5.1's linearity), the retarded field, `omega = c k` (4.1) |
+| 8 | the bilinear rate of a body's reading: `r = C a`, the reader's columns against the first moment of the arrivals | note 47 (the one reading, the moments of order 0, 1, 2 and the age), 3.3, 0 | DERIVED from 5 and 7 | forced by two additivities, proved in 24.2; the choice among few is WHICH moment (order 0, 1, 2 or the age) and the columns' values (row 18) |
+| 9 | `c = 1 / sqrt 3` Links per interval, the cap of every pace | 13.2 (a), record 186, 23.1 | DERIVED | the operator norm of the flight: `S_1 Q <= T_D` is Cauchy-Schwarz on the Manhattan accumulator, equality on the body diagonals; the cap of a massive row the exact square's own |
+| 10 | `32 / 55` on an axis (the crossing rule's count) | 2.7, note 48 | DERIVED given Q | `T_D = isqrt(3 Q^2)` at Q = 64: c rounded by the grain Q (input 14) |
+| 11 | the factor 3 in the dispersion `E'^2 = E'_0^2 + 3 p . p` | 17.6 M3, 23.2 | DERIVED | `c^2 = 1 / 3` from input 9, declared as the pair `[1, 3]` |
+| 12 | the click's form: the square of the evaluation, `f^T G f` | 6.5, 6.7 | DERIVED up to the Galois coefficients `c_j >= 0`; `c_1 = 1` a POSTULATE | 6.5's theorem: rotation invariance, the balanced splitter's conservation and non-negativity force a positive quadratic form `sum c_j abs(sigma_j f)^2`; Born's member `c_1 = 1` is the one imported law; Malus bounds the others (24.3 row 4) |
+| 13 | the tables C, S at the scale 256 (the click's rounding) | core/phase.py, record 328 | POSTULATE (a grain) | an input of the law beside Q, S, N by the owner's word; what it costs: the norm a part in 276 (6.2), the 22.5-degree chain (24.3) |
+| 14 | Q, the label's scale (64) | 2.1, 13.3 | POSTULATE (a grain) | sets c's rounding per direction (24.3 row 5); the limit `Q -> infinity` isotropic |
+| 15 | N, the circle of phases (64, 4096) | 6.2 | POSTULATE (a grain) | Born within `1 / (2 N)`, `S(N)` within `8 / N`; the limits are the formulas |
+| 16 | W, the birth wheel, and the coordinate u | 6.2, note 46 | POSTULATE | the click's coordinate on the ladder; without it no click chooses; its form (the bit-reversed ordinal, the golden rate) a design among few |
+| 17 | P, the fan's grain, and the angle weights | record 160, 163 | POSTULATE (a grain) | Huygens' weights derived from P (`3 Q^2 / (T_d T_d')`); the shell ripple and `r^-1.83` are its cost |
+| 18 | the family table: the content M, the quantum h, the charge rho, the strong column sigma, the lifetime L, the phase rate n / d, the hand | families.json, record 189 | INPUT | M: none in sight (a count on Z, 16.2 (g)); h: none in sight; rho: the floors per kind constrain it (16.2 (d)); sigma, L, n / d: none in sight; the hand's structure the 48's pseudoscalar (DERIVED), its value INPUT |
+| 19 | S, the width (what carries G) | 3.3, 16.2 (e), S_AND_A0.md | INPUT | none in sight: every candidate refuted or a relabelling |
+| 20 | the drive, form B (the flight's accumulator at the momentum's fraction) | FORM.md section 3, 17.2 | POSTULATE among few | form A or B (record 186); Newton's limit fixes the small-p form, input 9 the cap; the first-order departure from `p = m v` is its cost (24.3 row 8); covariant-readings-v1 replaces it by the exact square (H) |
+| 21 | the collision table (a permutation per class) | 1.2 step 3 | POSTULATE among few | conservation forces a bijection of the slots; the cyclic shift is the design's choice |
+| 22 | the crossing rule (a row and a body meet once) | note 48 | DERIVED given 7 and 20 | the count of crossings of two digital lines (record 158); the receiver's Doppler its consequence (2.7) |
+| 23 | the detector's declarations: the threshold, the window, `measure`, `pass`, `read`, `rerelease` | BEAM_LAW section 5 | POSTULATE (the apparatus) | the reading is the apparatus's, never the GameBoard's (Highlights 5.4); a branch on a declared verb, not on a name |
+| 24 | the exact phase at the click (note 45) | 11.1 | DERIVED | a function of the row's age and direction at a constant rate |
+
+So the physics that is NOT in **F** is short: seven grains (1, 5, 13,
+14, 15, 16, 17), two rules chosen among few (7, 20, 21 with them), one
+imported member of a derived family (12's `c_1 = 1`), the apparatus (23),
+and the two inputs no postulate replaces (18, 19). Everything else in the
+referee's list (the bilinear form, the matrices, c, the factor 3, the
+crossing count, the click's square) is derived from those.
+
+### 24.2 The referee's question: is "bilinear in the state" forced?
+
+**The claim.** The rate of a body's momentum is bilinear in the state:
+the reader's content (its columns) against the first moment of the
+arriving rows (0; 3.3; note 47). **It is forced**, over the integers, by
+two additivities that are themselves postulates 5 and 7:
+
+- (i) additivity over the arrivals: the rows do not read each other
+  (input 7), so the reading of a set of arriving rows is the sum of the
+  readings of its rows, `r(m, A + B) = r(m, A) + r(m, B)`, and a row of
+  amount w is w rows of amount 1 (the apportioning; input 5);
+- (ii) additivity over the reader's units: a body of content m is m
+  units, each reading alone (input 5; the equivalence principle as a
+  rule, the registered item 1 of series C, `push_m = m x push_1` record by
+  record), so `r(m_1 + m_2, A) = r(m_1, A) + r(m_2, A)`.
+
+**Proof** (two lines). Over Z, a map additive in one argument is linear
+in it: `r(m, A) = m r(1, A)` by induction on m, and `r(1, A) = sum over
+the rows of A of w x r(1, one unit of that row)`. The one unit's reading
+is a function of the row's declared numbers alone (its direction **D**,
+its family's columns, its age), so `r = m x sum over the rows of w x
+g(D, family, age)`: the content times a moment of the arrivals, a
+bilinear form. With `g = C u_D` (the columns times the direction's unit
+vector) it is the flow (the moment of order 1); with `g = C` the
+presence (order 0); with g quadratic in `u_D` the second moment; with g
+the age the age moment: note 47's four readings and no other. That is
+the whole freedom: bilinear is forced, the ORDER of the moment and the
+columns' values are the choice among few (the columns INPUT, row 18).
+Nothing non-linear in the state can enter a body's rate without
+breaking (i) (a row's effect depending on the other rows) or (ii) (a unit
+of content reading differently in company), and the lattice Gleason of
+6.5 shows the one quadratic step of the law, the click, is forced the
+same way on the record's vector. **Answer**: forced by symmetry of the
+count (additivity in both arguments), not chosen; what is chosen is the
+moment's order per rate, and the register pins it (the push the flow,
+the clock the presence or the age moment).
+
+### 24.3 The Delta P table: every computable difference from quantum mechanics or relativity, as the law is declared
+
+Each row: the difference, the law's number, nature's or the theory's,
+the size, the experiment that bounds it today (the source as
+NATURE.md's rows carry it, or named here), the verdict. Where
+covariant-readings-v1 (17.6, buildable) or optical-v1 (record 323)
+changes the row, the row says so; the verdict is `main`'s.
+
+| # | The difference | The law | Quantum mechanics or relativity | Delta P | The experiment that bounds it | Verdict |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | Tsirelson's bound reached as a limit only: the CHSH sum at the registered Bell world, N = 256 | `S = 720 / 256 = 2.8125` (bell.txt line 6, the exact cells, unchanged by the tables' scale from 256 to `2^20`) | `2 sqrt 2 = 2.828427` | `-0.0159` (0.56 percent) | Poh, Joshi, Cere, Cabello and Kurtsiefer 2015, Phys. Rev. Lett. 115, 180408: `S = 2.82759 +- 0.00051` (the deficit `0.00084 +- 0.00051`) | REFUTED at N = 256 (31 standard errors); N = 64's `2.75` likewise |
+| 2 | the same at N a power of two at or above 512 | `S = 181 / 64 = 2.828125` exactly (6.2: the registered `2896 / 1024`, `11584 / 4096`; record 102: every power of two from 512) | `2.828427` | `-3.02 x 10^-4` | the same measurement: the law's deficit is `1.1` standard errors from the measured deficit | OPEN, within reach (24.4) |
+| 3 | the same at N not a power of two | above `2 sqrt 2` for 252 of the 512 values of N (record 102): a no-signalling box | at most `2 sqrt 2` | up to `+8 / N` | the same measurement bounds an excess above `0.001` at two standard errors | REFUTED for those N: the law's N is a power of two |
+| 4 | the click's rounding to the scale 256: one polariser at 22.5 degrees and the 22.5-degree chain (Malus) | the pass `219 / 256 = 0.85547` and the chain `187 / 256 = 0.73047` at N = W = 256 (malus_map.out, sections 2 and 4) | `cos^2 = 0.85355`, `cos^4 = 0.72855` | `+0.0019` both (0.22 and 0.26 percent) | Malus's law at a polariser, NATURE row 9 (not yet run in the law); a precision Malus test at `10^-3` decides | OPEN at the tables' scale; REFUTED by any test at `10^-3` unless the scale is raised (the cost of input 13 by the owner's word, record 328); the exact form removes it (24.1 row 13) |
+| 5 | the anisotropy of c: the one-way pace per direction at Q = 64 | `32 / 55` on an axis, `64 sqrt 2 / 156` on a face diagonal, `1 / sqrt 3` on the body diagonal: `+0.78`, `+0.49`, `0` percent | isotropic | `7.6 x 10^-3` | Herrmann et al. 2009, Phys. Rev. D 80, 105011 (`10^-17`); Nagel et al. 2015, Nature Communications 6, 8174 (`9.2 +- 10.7 x 10^-19`); NATURE row 5a | REFUTED at Q = 64 by fifteen orders; OPEN only as a bound on the grain, `Q >= 5.8 x 10^17` (NATURE 5a) |
+| 6 | the two arms of a moving laboratory (no contraction on `main`) | the round trip `gamma^2` along and `gamma` across (12.3) | equal (Michelson and Morley) | `beta^2 / 2 = 5 x 10^-9` at the Earth's `10^-4` | the same sources; NATURE row 5b | REFUTED on `main` by nine orders; the contraction not derived under covariant-readings-v1 either (17.6 M4) |
+| 7 | the moving clock: the rate 1 at every speed | the muon's `become` at tick 64 at every speed (4.3, J4) | `gamma = 29.33` | a factor 29.33 | Bailey et al. 1977, Nature 268, 301; NATURE row 4a | REFUTED on `main`; under covariant-readings-v1 the 64th at `64 gamma` (17.6 M2), the pin J4's 367 / 345 / 391 |
+| 8 | the Doppler without gamma | `1 + z = 1 + beta` (`s_mz2`: 0.2636 at beta 0.2674) | `gamma (1 + beta)`: 0.315 | `0.051` in z | Botermann et al. 2014, Phys. Rev. Lett. 113, 120405 (`2.3 x 10^-9` at beta 0.338); NATURE row 4b | REFUTED on `main`; under covariant-readings-v1 `z = 0.369 +- 0.003` on the registered world (17.6 N5) |
+| 9 | the drive's first-order departure from `p = m v` (form B) | `p = m v / (1 - v / c)`: 5.3 percent more momentum per unit speed at `0.05 c` (17.2) | `gamma m v`: 0.13 percent | `v / c` at first order | the momentum of fast electrons, Bucherer 1909, Ann. Phys. 333, 513, and every accelerator since (`10^-6`) | REFUTED on `main`; the exact square of covariant-readings-v1 has relativity's form (E5, E6) |
+| 10 | the dispersion `E'^2 = E'_0^2 + 3 p . p` under covariant-readings-v1 | the same form as relativity's; the grain: `E'` within a part in `E'` (`E'^2 <= W < (E' + 1)^2`) | `E^2 = m^2 c^4 + p^2 c^2` | `1 / E'_0` (a part in 4096 to a part in `2^48` on the register) | the same tests as row 9 (`10^-6`) | BELOW REACH at `E'_0 >= 2^20`; REFUTED at J4's `E'_0 = 13248` (`7.5 x 10^-5`) if J4's grain were nature's; a bound on the grain |
+| 11 | the matter wavelength per axis Link (section 23): the fringe spacing's dependence on the apparatus's orientation to the axes | none: the phase at a Node is `(N / h) p . x` exactly (23.1), the wavelength `h / p` on every direction; the flight's staircase one Link | none | `0` in the phase; one Link in the arrival | spatial anisotropy of matter (Hughes-Drever type), Kostelecky and Russell, Rev. Mod. Phys. 83, 11 (2011) data tables (`10^-22` and below) | OPEN at 0 (no difference to test at the phase's level); the massive row not built |
+| 12 | the gravitational redshift at second order (5.2) | `1 - k + ...`, the second order the lattice's, no horizon | `(1 + 2 Phi / c^2)^(1/2)` | `(G M / r c^2)^2 = 5 x 10^-19` at the Earth | the first order to `2.5 x 10^-5` (Galileo satellites, Delva et al. 2018, Phys. Rev. Lett. 121, 231101); Gravity Probe A, Vessot et al. 1980, Phys. Rev. Lett. 45, 2081 | BELOW REACH |
+| 13 | the perihelion advance (E12) | 0: the bilinear push has no post-Newtonian term (5.3) | `43` arcseconds per century for Mercury | `43` arcseconds per century | Clemence 1947, Rev. Mod. Phys. 19, 361; the modern ephemerides | REFUTED on `main` |
+| 14 | the bending of light (E13) | 0 on `main` (series K's 0.000) | `1.75` arcseconds at the Sun's limb | `1.75` arcseconds | Dyson, Eddington and Davidson 1920, Phil. Trans. R. Soc. A 220, 291; VLBI to `10^-4` (Shapiro et al. 2004, Phys. Rev. Lett. 92, 121101) | REFUTED on `main`; optical-v1 gives `~ M / b` toward the mass, the constant a grain (BUILDABLE, record 323) |
+| 15 | the deceleration parameter (E18, 15.4) | `q = 0` (Milne) under the wall; `+0.35` to `+0.92` with gravity | `-0.53 +- 0.01` | `0.53` to `1.45` | Planck 2018, Aghanim et al. 2020, A&A 641, A6; Riess et al. 1998; Perlmutter et al. 1999; NATURE rows 3 and 11a | REFUTED |
+| 16 | the neutrino's mass (18, 19.5) | 0: a free row of a family without content | at least `1 x 10^-7` of the electron's | the mass itself | the oscillations and KATRIN; NATURE row 8c | REFUTED |
+| 17 | the weak force's two forms (18.2) | the decay curve's width over its median bounded by the record; the passage through an identical detector a filter | memoryless: `ln 9 / ln 2 = 3.17`; the passage about 1 | the form | NATURE rows 8a and 8b | REFUTED as declared (18.2's addendum names the crowd's supply) |
+| 18 | the strong ratio (18.3) | the alpha's binding over the deuteron's 2.0 (series N) | 12.72 | a factor 6.4 | AME2020; NATURE row 7b | REFUTED |
+| 19 | the growing wall's brightness (11a) and Tolman (11c) | `q_eff = +1`; three powers of `1 + z` short | `-0.53`; `(1 + z)^-4` | as NATURE 11a, 11c | Pantheon+; Lubin and Sandage 2001 | REFUTED |
+| 20 | Born's rule to the rung `1 / (2 N)` (6.2) | the cell's probability a multiple of `1 / N` | the squared amplitude | `0.0078` at N = 64, `1.2 x 10^-4` at N = 4096 | Sinha et al. 2010, Science 329, 418 (the Sorkin parameter `0.0064 +- 0.0119`, a different observable); NATURE row 2c | OPEN at N = 4096 (below the tests' `10^-2`); the rounding is not the Sorkin term |
+
+### 24.4 The one prediction the paper can carry
+
+**The candidate.** Of the open rows within reach, the smallest is row 2:
+for N a power of two at or above 512, the law's CHSH sum on the
+maximally entangled pair at the CHSH settings is
+
+    S_U24 = 181 / 64 = 2.828125 exactly,   Delta S = S_U24 - 2 sqrt 2 = -3.02 x 10^-4,
+
+with the marginals exactly `1 / 2` (no signalling, 6.2), unchanged by the
+tables' scale from 256 to `2^20` and by N from 512 to 4096 (the registered
+`2896 / 1024` and `11584 / 4096`, both `181 / 64`; record 102 for every
+power of two from 512). This is `P_U24 = P_QM + Delta P` computed in
+advance: the deficit of the correlation at each of the four settings is
+`Delta E = -2 sqrt 2 / 4 + 181 / 256 = -7.6 x 10^-5`, the same at each.
+
+**What bounds it today.** Poh et al. 2015 measured `S = 2.82759 +-
+0.00051`, a deficit `0.00084 +- 0.00051` from `2 sqrt 2`: the law's
+deficit `0.00030` is inside at 1.1 standard errors, and the measurement
+excludes the law's N = 256 (`0.0159`, 31 standard errors) and every N
+that is not a power of two (an excess above `0.001`). **What refutes**: a
+CHSH measurement on a maximally entangled pair with an uncertainty below
+`1 x 10^-4` reading a deficit below `2 x 10^-4` (S above 2.8282), or any
+deficit above `4 x 10^-4` outside its error; three times Poh's
+precision decides. **What the law owes before the pin is final**: the
+registered Bell worlds at N = 512 and 4096 run under the one click and
+the wheel `[r, W]` on the registered geometry (the values above are the
+design's host map, bell.txt, at N = 64, 256 and 1024 and 6.2's statement
+for the rest; the run at N = 4096 is the pin's run, no number moved). The
+pin before that run: `11584 / 4096` at every quadruple of the CHSH
+settings, the marginals `2048 / 4096`, the counts over `W` births within
+one of `W x` their rungs.
+
+**Why this one.** Rows 5 to 9 and 13 to 19 are refuted on `main` or
+below reach; row 4 is a grain the owner has declared an input (the
+tables' scale, record 328) and falls with it, not with the law; row 11 is
+zero; row 20 is a rounding. Row 2 is a number of the law's own structure
+(the rungs of the ladder at a power-of-two N, not the tables), fixed for
+every N the register uses, and one experiment already sits at its
+edge. It is the prediction the paper can carry: a CHSH sum three parts
+in ten thousand below Tsirelson's bound, exactly `181 / 64`.
+
+### 24.5 The verdict of section 24
+
+The physics of the law lives in seven grains, two rules chosen among
+few, one imported member of a derived family, the apparatus's
+declarations and two inputs no postulate replaces (24.1); the bilinear
+rate the referee asked about is forced by additivity in both its
+arguments over the integers (24.2), the choice being the moment's
+order. Of twenty computable differences from quantum mechanics and
+relativity (24.3), twelve are refuted on `main` as declared (five of
+them closed by covariant-readings-v1 or optical-v1 in form, to be run),
+three are below reach, four are open, and one is a prediction within
+reach: `S = 181 / 64`, three parts in ten thousand below Tsirelson's
+bound (24.4). No run; nothing enters the law.
