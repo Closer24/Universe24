@@ -3005,9 +3005,12 @@ def optical_walk_step(
     (the rate never exceeds a row's own wall, so a row on its own direction
     counts 0 or 1 with nothing to keep; a residue carried across a turn is
     rescaled by `optical_turn` to the new direction's rate, record 496,
-    and may then exceed the new wall by up to 3.3 per cent in the pin
-    worlds' fan, a Link already paid, which the cap counts once and keeps:
-    the review of record 494, M1), is the interval's Manhattan step on the
+    and may then exceed the new wall by the ratio T_old S_new / (S_old
+    T_new), at most 1.2035 over the pin worlds' fan (GAMEBOARD, the flight
+    table at load: a heading to (0, 4, -1), 110 x 5 / 457; a heading to
+    (24, 1, 0) 1.0331), a Link already paid, which the cap counts once and
+    keeps whatever the surplus: the review of record 494, M1), is the
+    interval's Manhattan step on the
     row's line at the place `made mod S_1`, and the accumulator after is
     kept on the row with the count made. A row whose accumulator is empty
     (a row born or declared before this interval, (0, 0)) starts from the
@@ -3089,9 +3092,11 @@ def optical_turn(frame: Interval) -> None:
     S_new) of an interval) is dropped, the one truncation of the flight's
     time, bounded by one unit per turn (the exact form carries a
     denominator that grows with every turn, refused by the bounded local
-    record). The rescaled residue may exceed the new wall by up to
-    T_old S_new / (S_old T_new), 3.3 per cent in the pin worlds' fan, a
-    Link already paid, which the walk's cap counts once and keeps."""
+    record). The rescaled residue may exceed the new wall by the ratio
+    T_old S_new / (S_old T_new), at most 1.2035 over the pin worlds' fan
+    (GAMEBOARD, the flight table at load: a heading to (0, 4, -1), 110 x 5
+    / 457; a heading to (24, 1, 0) 1.0331), a Link already paid, which the
+    walk's cap counts once and keeps whatever the surplus."""
     assert frame.crowd is not None
     world = frame.world
     flight = frame.flight

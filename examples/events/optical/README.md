@@ -172,9 +172,15 @@ hundredths, as the reviewer's counterexample tree had them (his residue
 scaled by T_new / T_old: -1.622 / -3.806 and -3.000 / -4.408 pixels, the
 delays 2.96 / 6.04 and 2.60 / 5.15); `near` at f = 2 moved by more than a
 pixel under the physicist's rule, S_new / S_old, which differs from the
-T ratio by 1.72 at a turn from a heading to a diagonal, in the world where
-the beam turns most and the mass takes most. No pin was changed and no
-second rule entered; the reading is recorded as it is.
+T ratio by 3.3 per cent in the plane's near fan, where every turn of this
+world happens ((1, 0, 0) to (24, +-1, 0): T / S 110 against 106.5; a
+heading-to-diagonal turn's 1.72 is a diagonal's, not this world's). The
+cause of the pixel's move is the capture threshold, not a sensitivity of
+the deflection to the residue rule (the chief physicist, record 505;
+DETECTOR): the mass takes 547 clicks, 94 per cent of the two inner
+directions' 582, against 415, 1.4 directions, under the T ratio; the
+pixel's move is a capture count. No pin was changed and no second rule
+entered; the reading is recorded as it is.
 
 The bounded diagnostic re-read (GAMEBOARD, `tools/optical_readings.py`,
 the first run's value as "was"): the mean transverse angle of **P**

@@ -6743,9 +6743,14 @@ sequential gates on an entangled record, the full register replay.
   worlds, not three, `near` at f = 2 now outside by 1.06 pixel, the
   survivors' reading with the mass taking 547; the wall's factor, the comb
   and the bracket's fact stand as read; the reviewer's counterexample (the
-  residue scaled by T_new / T_old) had moved the four by hundredths, and
-  the physicist's S ratio differs from the T ratio by 1.72 at a turn from
-  a heading to a diagonal. GAMEBOARD: the mean transverse angle of **P**
+  residue scaled by T_new / T_old) had moved the four by hundredths; the
+  physicist's S ratio differs from the T ratio by 3.3 per cent in the
+  plane's near fan where every turn of this world happens ((1, 0, 0) to
+  (24, +-1, 0)), and the pixel's move is a capture count, the capture
+  threshold its cause (record 505; DETECTOR: 547 taken, 94 per cent of
+  the two inner directions' 582, against 415, 1.4 directions, under the
+  T ratio), not a sensitivity of the deflection to the residue rule.
+  GAMEBOARD: the mean transverse angle of **P**
   -4.203 / -8.976 degrees (`mass`, the ratio 2.136; was 2.076) and -6.993
   / -8.277 (`near`, 1.184; was 1.744, 80 survivors' rows for 99). The
   rule and the pins unchanged; the readings with every column in the
