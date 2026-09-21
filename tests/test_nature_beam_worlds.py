@@ -68,6 +68,7 @@ import numpy as np
 import pytest
 
 from event_universe.core.phase import phase_cosines, phase_sines
+from event_universe.diagnostics.shell_readings import shell_readings
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import MOMENTUM_BOUND
@@ -276,8 +277,8 @@ def test_one_content_streams_outward_with_the_books_closed():
         assert books["momentum"]["measured"] == [0, 0, 0]
         if tick > 20:
             assert simulation.cube_flux(0, centre, 2) == emission, tick
-            three = simulation.shell_readings(0, centre, 3)
-            four = simulation.shell_readings(0, centre, 4)
+            three = shell_readings(simulation, 0, centre, 3)
+            four = shell_readings(simulation, 0, centre, 4)
             assert (
                 three["arrived"] * three["nodes"] == emission
                 and four["arrived"] * four["nodes"] == emission
