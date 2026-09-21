@@ -1512,6 +1512,36 @@ afterwards, so a row re-emitted at a re-emitter keeps its content and
 takes the re-emitter's declared turn: no rule makes the content of a row
 follow its frequency in flight.
 
+**The dictionary of h (the external reviewer's F08, issue #553, closed
+here by one calibration).** The law has two keys that nature writes as
+one constant: the family's `quantum`, `h_q`, paid per phase step (this
+section), and the world's `action`, `h_A`, that turns the phase by
+`abs(p) N / h_A` steps per Link (7.2, 23.1). Planck's constant read from
+the release is `h_q N` (content x interval per cycle: `E = h_q s = (h_q
+N) f`); read from the wavelength it is `h_A` (the momentum label p is the
+physical momentum in the units the drive fixes, `v = p / (Q S M)` Links
+per interval, 3.3, so `lambda = h_A / p` Links and `p lambda = h_A`,
+content x interval per cycle, the same unit). One Planck constant is the
+calibration
+
+    h_A = h_q N,    h = h_q N = h_A,    hbar = h / (2 pi),    E = h f,    lambda = h / p,    k = 2 pi p / h,
+
+a constraint on the inputs beside 17.6's `3 h_q n = Q S d` (the click's
+`E = h f` and the drive's `E_0 = Q S M c^2` one energy at rest), not a
+rule: with both, the family's quantum, the world's action, the pair `[n,
+d]` and the width S describe one energy and one action. The check the
+register already holds: a photon of turn rate `n / d` (`f = n / (d N)`
+cycles per interval) has `E = h_q n / d` and `p = E / c`, so `lambda =
+h_A / p = (h_A / h_q) c d / n`, which is the wave's `c / f = c N d / n`
+if and only if `h_A = h_q N` (23.3's `256 / 55` Links from `h / p` and
+from `c N d / n`, the point of that pin). The limit `N -> infinity` of
+section 22 is taken at fixed h (the physical action): `h_q = h / N -> 0`
+with the phase step `2 pi / N`, the Link and the interval fixed, the
+momentum a label whose turn per Link, `p / h_q` steps, is `2 pi p / h`
+radians; so `hbar = h N_phi / (2 pi)` in the paper's letters (h there the
+quantum) and `hbar = h_A / (2 pi)` (h the action) are one number. CLOSED
+as a calibration (24.1 row 25); what stays INPUT is the value of h.
+
 ### 6.5 The uniqueness of the click's square: a lattice Gleason
 
 **The question** (record 170, the owner's, sent for a solution): the
@@ -4958,7 +4988,12 @@ of `main` it has no magnitude and no direction. Form B lands and
 re-registers its 47 moving-body worlds first; the identity's OFF
 baseline is that register, and its pull request shows the crossing
 rule's validation table unchanged to the byte with the key absent (S8's
-test 5).
+test 5). Until form B lands the identity is built on `main`'s per-axis
+drive with its cap term keyed off, on the domain of a momentum on one
+axis (refused otherwise), where the count equals form B's; the OFF
+baseline is `main`'s register; form B's landing re-registers the
+identity's worlds with the domain lifted (REVIEW_3's must-fix 1,
+2026-09-21: the build under record 348, form B BLOCKED).
 
 **M9, the pins as detector readings.** The muon's pin is restated as the
 products' face clicks on a J4 world file, to be written before the run
@@ -6520,8 +6555,9 @@ world's action (the `action` key, 7.2); N the circle; **x** a Node's
 position (integers); **k** the wave vector of the continuum limit, `k =
 2 pi p / h`, and lambda `= h / p` the wavelength in Links; psi the wave
 function of the continuum limit (a field of the limit, never a state of
-the lattice); m the mass and `hbar = h N / (2 pi)` in the dictionary of
-16.1; L a path's length in Links; V a potential.
+the lattice); m the mass and `hbar = h / (2 pi)` with h the action (`h =
+h_q N`, the quantum times the circle, 6.4's dictionary and 24.1 row 25;
+the constants of 16.1); L a path's length in Links; V a potential.
 
 ### 23.1 The massive row, and the three tests
 
@@ -6803,13 +6839,14 @@ difference: **refuted**, **open**, **below reach**.
 | 15 | N, the circle of phases (64, 4096) | 6.2 | POSTULATE (a grain) | Born within `1 / (2 N)`, `S(N)` within `8 / N`; the limits are the formulas |
 | 16 | W, the birth wheel, and the coordinate u | 6.2, note 46 | POSTULATE | the click's coordinate on the ladder; without it no click chooses; its form (the bit-reversed ordinal, the golden rate) a design among few |
 | 17 | P, the fan's grain, and the angle weights | record 160, 163 | POSTULATE (a grain) | Huygens' weights derived from P (`3 Q^2 / (T_d T_d')`); the shell ripple and `r^-1.83` are its cost |
-| 18 | the family table: the content M, the quantum h, the charge rho, the strong column sigma, the lifetime L, the phase rate n / d, the hand | families.json, record 189 | INPUT | M: none in sight (a count on Z, 16.2 (g)); h: none in sight; rho: the floors per kind constrain it (16.2 (d)); sigma, L, n / d: none in sight; the hand's structure the 48's pseudoscalar (DERIVED), its value INPUT |
+| 18 | the family table: the content M, the quantum h, the charge rho, the strong column sigma, the lifetime L, the phase rate n / d, the hand | families.json, record 189 | INPUT | M: none in sight (a count on Z, 16.2 (g)); h: the family's quantum `h_q` and the world's action `h_A` one constant by the calibration `h_A = h_q N` (row 25, 6.4), its value none in sight; rho: the floors per kind constrain it (16.2 (d)); sigma, L, n / d: none in sight; the hand's structure the 48's pseudoscalar (DERIVED), its value INPUT |
 | 19 | S, the width (what carries G) | 3.3, 16.2 (e), S_AND_A0.md | INPUT | none in sight: every candidate refuted or a relabelling |
 | 20 | the drive, form B (the flight's accumulator at the momentum's fraction) | FORM.md section 3, 17.2 | POSTULATE among few | form A or B (record 186); Newton's limit fixes the small-p form, input 9 the cap; the first-order departure from `p = m v` is its cost (24.3 row 8); covariant-readings-v1 replaces it by the exact square (H) |
 | 21 | the collision table (a permutation per class) | 1.2 step 3 | POSTULATE among few | conservation forces a bijection of the slots; the cyclic shift is the design's choice |
 | 22 | the crossing rule (a row and a body meet once) | note 48 | DERIVED given 7 and 20 | the count of crossings of two digital lines (record 158); the receiver's Doppler its consequence (2.7) |
 | 23 | the detector's declarations: the threshold, the window, `measure`, `pass`, `read`, `rerelease` | BEAM_LAW section 5 | POSTULATE (the apparatus) | the reading is the apparatus's, never the GameBoard's (Highlights 5.4); a branch on a declared verb, not on a name |
 | 24 | the exact phase at the click (note 45) | 11.1 | DERIVED | a function of the row's age and direction at a constant rate |
+| 25 | the dictionary of h: the family's quantum `h_q` (paid per phase step) and the world's action `h_A` (the turn per momentum per Link) | 6.4, 7.2, 23.1; issue #553 (the external reviewer's F08) | DERIVED as a constraint on the inputs (a calibration) | one Planck constant `h = h_q N = h_A`, `hbar = h / (2 pi)`, `E = h f`, `lambda = h / p`, `k = 2 pi p / h`; the photon's `lambda = h_A / (E / c)` equals its wave's `c N d / n` if and only if `h_A = h_q N` (23.3's `256 / 55`); with 17.6's `3 h_q n = Q S d` one energy and one action; the limit `N -> infinity` at fixed h, `h_q = h / N`; CLOSED as a calibration, the value of h INPUT (row 18) |
 
 So the physics that is NOT in **F** is short: seven grains (1, 5, 13,
 14, 15, 16, 17), three rules chosen among few (7, 20, 21), one
@@ -6869,7 +6906,7 @@ changes the row, the row says so; the verdict is `main`'s.
 | 1 | Tsirelson's bound reached as a limit only: the CHSH sum at the registered Bell world, N = 256 | `S = 720 / 256 = 2.8125` (bell.txt line 6, the exact cells, unchanged by the tables' scale from 256 to `2^20`) | `2 sqrt 2 = 2.828427` | `-0.0159` (0.56 percent) | Poh, Joshi, Cere, Cabello and Kurtsiefer 2015, Phys. Rev. Lett. 115, 180408: `S = 2.82759 +- 0.00051` (the deficit `0.00084 +- 0.00051`) | REFUTED at N = 256 (30 standard errors: the measured `2.82759` less the law's `2.8125` is `0.0151`, `29.6` times `0.00051`; the `0.0159` of the difference column is the law's deficit from `2 sqrt 2` itself, `31.2` errors, not the distance from the measurement); N = 64's `2.75` likewise |
 | 2 | the same at N = 512, 1024, 2048, 4096 and 8192, the plateau | `S = 181 / 64 = 2.828125` exactly (the registered `1448 / 512`, `2896 / 1024`, `11584 / 4096`; the closed form of 24.4 on the tables' exact correlations, `bell_plateau.py`; record 102's "every power of two from 512" was wrong above 8192, the external reviewer's F01) | `2.828427` | `-3.02 x 10^-4` | the same measurement: the law's deficit is `1.1` standard errors from the measured deficit | OPEN, within reach (24.4) |
 | 3 | the same at N not a power of two, or a power of two outside the plateau | above `2 sqrt 2` for 252 of the 512 values of N (record 102), at the powers of two N = 16, 32 and 128 (S = 3, 3 and `23 / 8`; the engine reads `23 / 8 = 2.875` at N = 128, the auditor's round 6 at d17af9b9) and at N = 16384 and 32768 (`5793 / 2048 = 2.828613`, `+1.9 x 10^-4` above the bound: the rungs of both settings round up together and the plateau ends); N = 65536 gives `11585 / 4096 = 2.828369`, N = 131072 `46341 / 16384 = 2.828430`, `2^20` `370727 / 131072 = 2.828423`, and the limit is the tables' own `186034 / 65773 = 2.828425`, `2.1 x 10^-6` below the bound (24.4's closed form; `bell_plateau.py`): a no-signalling box wherever S is above the bound | at most `2 sqrt 2` | up to `+8 / N` (N = 16, 32, 128: 3, 3, `23 / 8`; 16384 and 32768: `+1.9 x 10^-4`; from 65536 within `6 x 10^-5` of the bound) | the same measurement bounds an excess above `0.001` at two standard errors | REFUTED for N = 16, 32, 128 and the non-powers above the bound by more than `0.001`; N = 16384 and 32768 at `2.0` standard errors from the measurement (the edge, `+0.00102`); the powers from 65536 inside (1.5 to 1.6 errors); the law's N is the plateau's (row 2) or 65536 and above |
-| 4 | the click's rounding to the scale 256: one polariser at 22.5 degrees and the 22.5-degree chain (Malus) | the pass `219 / 256 = 0.85547` and the chain `187 / 256 = 0.73047` at N = W = 256 (malus_map.out, sections 2 and 4) | `cos^2 = 0.85355`, `cos^4 = 0.72855` | `+0.0019` both (0.22 and 0.26 percent) | Malus's law at a polariser, NATURE row 9 (not yet run in the law); a precision Malus test at `10^-3` decides | OPEN at the tables' scale; REFUTED by any test at `10^-3` unless the scale is raised (the cost of input 13 by the owner's word, record 328); the exact form removes it (24.1 row 13) |
+| 4 | the click's rounding to the scale 256: one polariser at 22.5 degrees and the 22.5-degree chain (Malus) | the pass `219 / 256 = 0.85547` and the chain `187 / 256 = 0.73047` at N = W = 256 (malus_map.out, sections 2 and 4) | `cos^2 = 0.85355`, `cos^4 = 0.72855` | `+0.0019` both (0.22 and 0.26 percent) | Malus's law at a polariser, NATURE row 9; RUN in the law (EXPERIMENTS A12, extended at 22.5 degrees, 2026-09-21, record 395): the gathers' chosen cells over the records 1 .. 256, a DETECTOR reading, `219 / 37` of 256 at the polariser and `187 / 32 / 5 / 32` on the chain, the pinned counts exactly (the difference zero), the same `+0.0019` against nature; a precision Malus test at `10^-3` decides | OPEN at the tables' scale; REFUTED by any test at `10^-3` unless the scale is raised (the cost of input 13 by the owner's word, record 328); the exact form removes it (24.1 row 13) |
 | 5 | the anisotropy of c: the one-way pace per direction at Q = 64 | `32 / 55` on an axis, `64 sqrt 2 / 156` on a face diagonal, `1 / sqrt 3` on the body diagonal: `+0.78`, `+0.49`, `0` percent | isotropic | `7.6 x 10^-3` | Herrmann et al. 2009, Phys. Rev. D 80, 105011 (`10^-17`); Nagel et al. 2015, Nature Communications 6, 8174 (`9.2 +- 10.7 x 10^-19`); NATURE row 5a | REFUTED at Q = 64 by fifteen orders; OPEN only as a bound on the grain, `Q >= 5.8 x 10^17` (NATURE 5a) |
 | 6 | the two arms of a moving laboratory (no contraction on `main`) | the round trip `gamma^2` along and `gamma` across (12.3) | equal (Michelson and Morley) | `beta^2 / 2 = 5 x 10^-9` at the Earth's `10^-4` | the same sources; NATURE row 5b | REFUTED on `main` by nine orders; the contraction not derived under covariant-readings-v1 either (17.6 M4) |
 | 7 | the moving clock: the rate 1 at every speed | the muon's `become` at tick 64 at every speed (4.3, J4) | `gamma = 29.33` | a factor 29.33 | Bailey et al. 1977, Nature 268, 301; NATURE row 4a | REFUTED on `main`; under covariant-readings-v1 the 64th at `64 gamma` (17.6 M2), the pin J4's 367 / 345 / 391 |
