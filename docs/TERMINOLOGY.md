@@ -458,7 +458,7 @@ names everywhere.
 | N_D (P in the law's documents until their next pass) | the direction bound (`direction_bound`) | scalar | Links (a component) | BEAM_LAW section 2; record 369 |
 | K, n / d | the clock's pair (`K`), the turn per unit of content per self-creation | scalar, a pair | phase steps per unit of content per interval | ENGINE, a release costs the emitter |
 | N_u, r (W in the law's documents until their next pass) | the circle of a lamp's birth wheel and its rate, the lamp key `wheel` [r, W] | scalars | wheel steps, wheel steps per birth | BEAM_LAW note 46; record 369 |
-| c, c_1 | c the limit pace of the law, 1 / sqrt 3 Links per interval (c^2 = 1 / 3), the pace of a row on the diagonals; c_1 = S_1 Q / T_D the Manhattan pace of a direction (64 / 110 on a heading; written c_h in DERIVATIONS_BEAM 18.6 until its next pass) | scalars | Links per interval | record 191; DERIVATIONS_BEAM 2.4; record 369 |
+| c, c_h | c the limit pace of the law, 1 / sqrt 3 Links per interval (c^2 = 1 / 3), the pace of a row on the diagonals; c_h = S_1 Q / T_D the Manhattan pace of a direction (64 / 110 on a heading; the paper's and DERIVATIONS_BEAM 18.6's letter; c_1 is Born's harmonic constant in the paper, so record 369's c_1 is withdrawn) | scalars | Links per interval | record 191; DERIVATIONS_BEAM 2.4; records 369 and 379 |
 | T_D | the direction's period constant, isqrt(3 abs(**D**)^2 Q^2), the flight's wall over 2 | scalar | label units x Links | BEAM_LAW section 3 |
 | S_1 | the Manhattan length of a direction, abs(a) + abs(b) + abs(c) | scalar | Links | BEAM_LAW section 3 |
 | L_d | the period of a direction's line | scalar | intervals | BEAM_LAW section 3 |
@@ -476,6 +476,7 @@ names everywhere.
 | E, E_0 | a body's energy as an accumulator of the work, its rest value E_0 = m c^2; the paper's E^2 = E_0^2 + p^2 c^2 with the exact square (E / c^2)^2 = m^2 + 3 p . p kept as an integer and never rooted (`energy_square`); no prime on E | scalar | units of content x c^2 | DERIVATIONS_BEAM section 17 (`covariant-readings-v1`); record 369 |
 | s | the turn of a clock at a self-creation | scalar | phase steps | BEAM_LAW section 3 step 5 |
 | a_r (k in the law's documents until their next pass) | the presence a body read, the count the owed count reads | scalar | units of amount | BEAM_LAW section 3 step 2; record 369 |
+| a_tau (k_a in the law's documents until their next pass) | the age moment a body read, the sum over the rows dwelling at its Node of amount x age, the count on a table entry that reads `age` | scalar | units of amount x intervals | BEAM_LAW section 3 step 5; record 379 |
 | n, d | the suspension pair (`suspension`) | scalars | dimensionless | ENGINE, the world |
 | rho | the charge per unit of content of a family (`charge`) | scalar, rational | charge per unit of content | BEAM_LAW section 2 |
 | L | the lifetime of a family (`lifetime`) | scalar | intervals | BEAM_LAW note 31 (vii) |
@@ -487,6 +488,7 @@ names everywhere.
 | **C** | the coupling matrix, the reader's charges per column | matrix | charge per unit of content | DERIVATIONS_BEAM section 0 |
 | **G** | the click's Gram matrix, **E**^T **E**, G_jk = C_j C_k + S_j S_k over the rounded tables (`core.phase.phase_gram`); the weight of a cell **f**^T **G** **f** | matrix | 256^2 | record 188; BEAM_LAW note 37 (xii) |
 | **E** | the 2 x N matrix whose rows are the tables C and S; the pointer **E** **f** its evaluation at the circle (`Layer.evaluate`, a report) | matrix | 256 per unit | BEAM_LAW note 37 (xii); DERIVATIONS_BEAM section 6 |
+| N_t | the cosine tables' scale, 256, the unit of the tables C and S of **E** (the paper's letter, needed for S(N, Q)) | scalar | table units per unit | BEAM_LAW note 37 (xii); record 379 |
 | **Phi** (**F** in the law's documents until their next pass) | the interval's map, one piecewise-linear map of the state | operator | none | DERIVATIONS_BEAM section 0; record 369 |
 | **s**, **r**, d | the state vector on the torus, its rate vector, its wall per component | vector, vector, scalar | mixed, per row of the counts table | designs/vector_form/LAW.md |
 | (X, Y) | the pointer, the coherent sum of a set's clicked rows | a vector of the phase plane Z^2 | 32 x 256 per unit of amount | BEAM_LAW section 5 |
