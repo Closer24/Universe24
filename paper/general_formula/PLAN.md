@@ -764,3 +764,52 @@ over the 48 worlds after the fraction-free and wheel re-pin, as planned.
 Asked of the Boss: the record and the 5.4 line; the derivation
 mathematician informed; the builds' and runs' timeline; the re-pin's
 timing. The title is proposed to the owner with the skeleton.
+
+## Referee round 9 (2026-09-21): the one paper's frame, major revision, applied
+
+The frame (the title, the abstract, the introduction, Part I "The law",
+Part II "The table", the part markers) went to a hostile referee before
+its first commit. Verdict: major revision, twenty-four findings, every
+one verified against the derivation's verdict tables, HIGHLIGHTS 5.7, the
+register and the code; all applied the same day. The substance: (1)
+Born's rule was claimed three incompatible ways (derived in the abstract,
+put in in Part I, disclaimed in Part III): the abstract now says "the
+click's weight forced to a positive quadratic form of power 2", the
+table's row adds "not reached from the algebra: the harmonic constants".
+(2) to (5), (11), (12) four "reached" rows had no confirming run of the
+law on the archived code (Doppler under the crossing rule, decided and
+not built; Young's fringes in the weights and a host map, the wheel not
+built; Bohr's j = 4.01 the derivation's arithmetic with no closing
+orbit; the geodesics with series D closing none; the redshift's
+weak-field run pinned): each row now says pin or names the true check,
+and the abstract separates "against recorded runs" from "in the limit
+only, their runs pinned". (6), (7) Part I described form B's drive and
+the wheel W as the law run: now main's per-axis drive saturating at one
+Link per interval above c, form B and W = 4096 stated as decided and not
+built. (8) the isotropy row hid the bond clock's refutation: now a
+different-law row, named in the abstract. (9) the bending of light given
+its own row; Einstein's check cell empty. (10) G "reached in form, with
+the width an input". (13) the click chapter's sentences that said "this
+paper" where the one-paper frame made them false ("of this chapter",
+"series L"; the hypotheses section as the chapter's history where an
+item became a table row; the roadmap rewritten; "In one sentence" tied
+to Part I's six operations). (14) the introduction's roadmap corrected
+(the pace is in Part III; the table's rows to be written out one by one,
+no promise of sections that do not exist). (15) the legend maps the
+table's statuses onto the four labels and adds "new"; the c row "the
+bound proved; the value assumed". (16) the register, derivations and
+predictions bibitems widened to what the table cites; the caption names
+the log's records. (17), (18) the six operations and the inputs cited to
+HIGHLIGHTS 5.7 with the quotation marked, "or a rounding declared at
+load", the fan's grain G and the wheel's rounding added, "no fourth"
+dropped. (19) the balance (I5) with the cancelled and the free/paid
+distinction. (20) "the one read-out that deletes". (21) the wall's
+letter b (the direction keeps d), the pair form's rate nu in Part I, the
+width S told from the CHSH S. (22) Gauss's check as the square's
+half-widths; the transverse Doppler's check a host script. (23) the
+table's widths 1.5 / 1.25 / 1.1 / 2.25 in at 3 pt. (24) the title
+without "piecewise-linear" (the derivation's own precision: bilinear
+rates in the bodies); British spelling throughout. The referee's closing
+line, recorded: the frame is defensible in principle; the measurement
+chapter is the only part yet confirmed end to end, and the table must say
+so row by row, which it now does.

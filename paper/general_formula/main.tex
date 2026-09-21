@@ -1,9 +1,12 @@
-% Paper 3, the click model: a new paper on the click model only (the owner's
-% decision of 2026-09-20; PLAN.md). Every number of a run is the experiments
-% register's (docs/EXPERIMENTS.md, series L, the source fingerprint
-% ff5c382d672f); the figures are drawn by figures.py from figures/summary.json,
-% the runs reproduced on the paper branch's merge 4ccf65c7 of main's d2064195 (fingerprint 731d0f56c9f9,
-% every integer equal); NUMBERS.md maps each number to its source.
+% The paper on the general formula (the owner's decision of 2026-09-21: one
+% paper only, the map F of the integer torus, every result as its consequence,
+% the click model as its measurement chapter; PLAN.md). Every formula is the
+% derivation's (docs/DERIVATIONS_BEAM.md) with its section; every run is the
+% experiments register's (docs/EXPERIMENTS.md); the click chapter's runs are
+% series L (the source fingerprint ff5c382d672f), its figures drawn by
+% figures.py from figures/summary.json (the runs reproduced on the merge
+% 4ccf65c7 of main's d2064195, fingerprint 731d0f56c9f9, every integer equal);
+% NUMBERS.md maps each number to its source.
 \documentclass[11pt]{article}
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb,amsthm}
@@ -22,9 +25,8 @@
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\rung}{b}
 
-\title{The click model: an integer GameBoard with one measurement rule,\\
-the click that reads one record's squared sum, gives interference,\\
-Bell correlations and GHZ, with computed departures from quantum mechanics}
+\title{One map on an integer torus: the general formula of a local integer\\
+universe, what follows from it and what does not, and the click that reads it}
 \author{Alon Gonen\\
 \small Independent researcher\\
 \small \texttt{alon@defounder.ai} \quad ORCID 0009-0008-2701-4599}
@@ -34,37 +36,257 @@ Bell correlations and GHZ, with computed departures from quantum mechanics}
 \maketitle
 
 \begin{abstract}
-We define an integer model of one quantum in transit and one measurement
-rule and report what it gives. Space is a GameBoard of Nodes
-joined by six Links; every quantity is a bounded integer; every rule
-between births and clicks is local and, given the apparatus's record,
-injective. An event in transit is
-a record of rows, each an amount, an integer phase on a circle of $N$
-steps, a multiplicity and the record's number; a splitter multiplies
-a row into rows by integer weights, an exact isometry. The measurement
-rule is the click: the apparatus keeps, per record and Node, the running
-sum of the rows' integer phasors; when every row of a record has ended it
-lays the cells on a ruler by the squared sums, and a phase fixed at the
-birth, which no rule reads as a number, picks the point where the record
-is gathered. That rule is the Born rule, put in once; nothing
-below it is derived. From it and the lattice we prove four
-theorems (injectivity between clicks given the apparatus's record; the
-split an isometry; a pair's marginals exactly $1/2$ off a rung tie,
-no-signalling; the CHSH value at $N$ steps an exact rational within $8/N + 0.045$ of
-$2\sqrt2$, on both sides of it) and measure on the
-engine: the Mach-Zehnder always at one port, Elitzur-Vaidman, two slits one
-quantum at a time (a sparse fan, no fringes), the pair at $S = 2.75$ for $N = 64$ and $181/64$ for
-$N = 1024$ and $4096$ with every marginal exactly $1/2$, GHZ's exact
-zeros, which-path and a CNOT gate. The click is non-local: a
-pair is gathered once, when both arms have ended, from both settings'
-joint weights. $S(N)$ lies above $2\sqrt2$ for about half the $N$,
-so a Bell measurement constrains $N$ under stated assumptions: at the
-CHSH labels the photon-pair value $2.82759 \pm 0.00051$ excludes
-$N = 64$ and $256$ and admits the powers of two from 512. Every other
-statement of the program is a hypothesis, claimed nowhere.
+We state one law and report what follows from it. The state of the
+universe is a vector of bounded integers on the GameBoard, Nodes joined
+by six Links; the law is one map applied at every Node at every
+interval, per component with a rate and a wall: translate, compare with
+the wall, subtract on crossing; every crossing is an event. Its rates
+are constant for a message in transit (a closed form) and bilinear in
+the state for a body reading what arrives; the one read-out
+that deletes is the click, one comparison of a birth phase against the
+squared norm of a record's integer sum. From this law, its integer
+tables and the declared families follow, in the continuum limit and
+against recorded runs: Gauss's law exactly, Newton's and Coulomb's
+inverse square in the shell mean, the largest uniform pace $c = 1/\sqrt3$ Links per interval, the click's
+weight forced to a positive quadratic form of power $2$ and Tsirelson's
+bound as a limit, Poisson's equation for the delay field; and, in the
+limit only, their runs pinned, Doppler on the axis, Young's spacing and
+Bohr's condition in form. What does not follow is
+stated with the same care: Newton's constant is a formula with the
+world's declared width in it, and the masses are its initialisation; Einstein's field equation, $E = mc^2$ and
+velocity addition are not reached; the Lorentz factor is not in the law,
+which predicts an unslowed clock in motion and a moving laboratory's
+two-way anisotropy of $c$ as rows that can fail, one already failed. The measurement chapter defines the click model exactly, proves
+four theorems, among them the CHSH value at $N$ phase steps within $8/N
++ 0.045$ of $2\sqrt2$ on both sides of it, and reports the runs
+recorded before the text, from the Mach-Zehnder to the pair at $S =
+2.75$ and $181/64$ with exact marginals, GHZ and a CNOT gate. Every number has one source; every claim is
+measured, proved, assumed or open.
 \end{abstract}
 
 \section{Introduction}
+
+\paragraph{One law.} This paper states one law for a universe of bounded
+integers and reports, with one source per number and one of four labels
+per claim (measured in a recorded run, proved from the definitions,
+assumed, or open), what follows from it and what does not. The law is
+one map applied at every Node of a cubic GameBoard at every interval:
+each component of the state is an accumulator with a declared rate and a
+declared wall, translated by its rate, compared with its wall, reduced
+by the wall when it crosses, and every crossing is an event. Nothing
+else happens. Where a component's rate is a constant of the world (a
+message in transit) the map has a closed form and its consequences are
+computed before any run; where the rate is a function of what arrives (a
+body reading the messages at its Node) the map is iterated and its
+continuum limit is a differential equation. One comparison is read out,
+the click, and it is the only place a quantity leaves the state.
+
+\paragraph{What is derived and what is put in.} Part~I states the law:
+the state, the map, its two blocks, the read-out, and the inputs (the
+grain of the computation, the table of families with the world's width,
+the initial state). Part~II is one table: every formula of known physics
+that the law reaches in the limit and confirms in a recorded run, every
+constant it takes as an input, every formula it does not reach, and
+every place where it gives a different law, stated as a row that a
+measurement can refute; each entry names the section of the derivation
+that carries it and the run or the pin that checks it, and in this
+version the table stands on those sections and the register, its rows
+to be written out one by one as each passes review. Part~III is the
+measurement chapter: the click model exactly, the pace of its rows and
+its rounding, four theorems, and the runs of one quantum, a pair, three
+quanta and a gate, recorded before the text. Part~IV states the
+continuum limits that return and those that do not, the decision taken
+on Lorentz, and the literature.
+
+\paragraph{Method.} Equations first, runs as confirmation. Every formula
+is derived from the definitions in a derivation document of the archive
+\cite{derivations}, cited here by section; every run is cited from the
+experiments register \cite{register} with its world, its expectation
+written before the run and its source fingerprint; every number of the
+manuscript is mapped to its source in a table beside it \cite{checks}.
+A formula whose confirming run has not been made is stated as a pin, not
+as a result. The archive will be cited at a version \cite{zenodo}.
+
+\part{The formula}\label{part:formula}
+
+\section{The law}\label{sec:law}
+
+\paragraph{The state.} The GameBoard is a box of Nodes in $\Z^3$, each
+joined to six neighbours by Links through six Ports; an axis may be
+periodic. Time is the interval $t \in \Z$. The state at an interval is a
+vector $\mathbf s$ of bounded integers on a product of circles and lines,
+and it is the multiset of the messages in transit (the rows) and the
+bodies (the measured events), and nothing else: a Node holds no
+register, remainder or draw. A row carries its Node, its direction (a
+primitive integer vector on whose digital line it walks), its age, its
+phase on the circle $\Z_N$, its number (its family), its amount, its
+content per unit, and under a record its identity, label, multiplicity
+and birth phase. A body carries its Node, its content $M$, its momentum
+vector $\mathbf p$ and its table of counts, one accumulator per count.
+
+\paragraph{The map.} The law is one map $\mathbf F$ applied at every Node
+at every interval, per component $s$ of the state with its own rate $r$
+and wall $b$ (the ladder's rungs $\rung_k$ of Part~III are walls of this
+kind):
+\begin{equation}\label{eq:map}
+s \leftarrow s + r, \qquad e \leftarrow [s \ge b], \qquad s \leftarrow s - e\,b,
+\end{equation}
+and every wall crossing $e = 1$ is an event: a Link crossed, a phase
+step taken, a count completed, a birth, a push. The components and their
+$(r, b)$ \cite{derivations}: a row's Manhattan count (the rate $2S_1Q_f$,
+the wall $2T_d$, started at $T_d$; $d$ the direction vector, $S_1$ its
+Manhattan length, $T_d = \lfloor\sqrt{3|d|^2Q_f^2}\rfloor$ its
+resolution, $Q_f$ the flight's grain), with three axis deficits choosing
+the axis of each Link; a row's phase (an integer per Link, or a declared
+rational $\nu$ of steps per interval, written $n/d$ in Part~III, its
+whole part read modulo $N$); a row's age (the rate $1$, no wall); a
+body's drive on each axis (the rate $|p_a|$, the wall $Q_f S M +
+|p_a|$, $M$ the content and $S$ the world's width, not the CHSH sum $S$
+of Part~III), whose speed $p/(Q_f S M + p)$ saturates at one Link per
+interval, above the rows' pace (the drive as the flight operator at a
+fraction, capped at $c$, is decided and not built); a body's counts (the
+turn, the owed count, the release, the lamp, the push per column, each a
+rate against a wall); a record's birth phase (the rate $1$ per birth,
+the wall $N$; a wheel of width $W = 4096$ is decided and not built); and
+the click's ladder, one comparison read once. The operations that make
+these components are six \cite{highlights}, or a rounding declared at
+load: the translation of an accumulator by its rate; the multiplication
+by a declared integer matrix (a split, a rotation) and the bilinear form
+(a coupling, the click's Gram matrix); the addition in the group ring
+$\Z[\Z_N]$ (the merge, where opposite phases cancel); the permutation (a
+collision, a gate); the evaluation of the tables at the root of unity;
+and the Euclidean division whose remainder is kept (the carry that is
+the event, and the threshold). Two places are not linear and there is no
+third \cite{highlights}: the carry, a bijection that loses nothing, and
+the click's threshold, the one read-out that deletes.
+
+\paragraph{The two blocks.} $\mathbf F$ is linear where its rates are
+constants of the world and feeds back where a rate is a function of what
+arrives. The linear block is the rows in flight: the flight, the phase
+and the age at constant rates, the merge, the integer matrices of a
+split, a rotation or a gate, and the evaluation at the click. Every
+component of it has the closed form $s(t) = \lfloor s_0 + rt \rfloor$, so
+a row's state at any interval is a formula of its birth and its age, and
+the limits of Part~II are limits of that formula. The feedback block is
+the bodies: the push, whose rate is the reader's content times the flow
+of the arriving rows (bilinear in the state); the owed count, whose rate
+is what the body reads (the presence, or the age moment); the turn and
+the release, whose rate is the content; the drive, whose rate is the
+momentum the push changes. These have no closed form; they are iterated,
+and their continuum limit is the differential equation $d\mathbf s/dt =
+\mathbf r(\mathbf s)$. The exact word for the whole map is therefore
+piecewise-linear in the rows with bilinear rates in the bodies
+\cite{derivations}.
+
+\paragraph{The read-out.} The click reads one comparison and nothing else
+leaves the rows (a detector's other readings, the counts, the flow and
+the moments of the rows at its Node, read and delete nothing): for a
+record whose rows have all ended, the apparatus
+sums the rows' integer phasors per cell through the tables, squares the
+sums (the one quadratic step of the law, where the Born rule is put in),
+lays the cells on a ladder by those squared sums, and compares the
+record's birth phase $u$ with the ladder's rungs; the cell whose rung $u$
+falls under is the click, and the record is done. Between a birth and a
+click every step of the linear block is injective given the apparatus's
+record (Theorem~\ref{th:bijection}); the click is the one deletion.
+
+\paragraph{The law in five statements.} (I1) A message is a row: created
+at exactly one event, a self-creation of a body, ended at exactly one
+event, a read that absorbs it, an escape or the border of its lifetime;
+between them in transit, and nothing else exists. (I2) A Node transmits
+per interval the rows that step out of it, one Port and one Link each at
+the flight's pace, holding nothing back and copying nothing. (I3) A body
+receives the rows of other numbers that reach it and emits only at its
+self-creations. (I4) A clock's rate is the reciprocal of one plus what
+it reads: a body's clock counts its self-creations and owes after each
+an interval count proportional to the messages present, so it is slowed
+by messages and by nothing else. (I5) The balance: every message
+released is on exactly one line of the books at every interval,
+released equals in transit plus absorbed plus escaped plus cancelled,
+per family, in amount and in content, exact at every interval; a paid
+message carries its label out of its emitter at birth and into its
+reader at its end, so for paid messages momentum is conserved and the
+third law holds message by message, while a free message (a field's row)
+takes no recoil at birth and pushes its reader by its label times the
+reader's content, so for free messages the third law is a symmetry
+between two readers, exact only while both read the same number of each
+other's messages \cite{derivations}.
+
+\paragraph{What is put in.} Three kinds of input \cite{highlights}. The
+grain of the computation, constants of the law and not of the world: $N$
+the circle of phases, $Q_f$ the pace's grain, $P$ the sphere of
+directions, $W$ the birth wheel (decided), $G$ the fan's grain, the
+clock's pair, and the roundings declared at load (the tables at $1/256$,
+$T_d$ by the integer square root, the rounding of the wheel's phase). The table of families, the physical inputs: per
+family the content (the mass number), the cost $h$ per phase step, the
+charge per unit of content, the strong column, the lifetime, the phase
+rate and the hand; and the world's width $S$, the push per unit of
+content per unit of flow, which carries what physics calls Newton's
+constant. And the state and the apparatus: the box, the bodies with
+their momenta and contents, the lamps, the detectors, the splitters, the
+gates. In the program's words: ``if the law is right, the input to the
+real world is the family table, the initial state and one grain; $c$,
+$h$ and $G$ are units there as here'' \cite{highlights}.
+
+\part{What follows from the formula}\label{part:table}
+
+\section{The table}\label{sec:table}
+
+Every formula below is derived from the law of Section~\ref{sec:law} in
+the derivation document of the archive \cite{derivations}, by the section
+named, and checked against the recorded run named, from the register
+\cite{register}; where the check is a pin written before a run not yet
+made, the row says so. ``Reached'' means the known formula returns in
+the continuum limit (proved there) and a recorded run agrees within the
+stated grain (measured); where the run is pinned and not made the status
+says ``pin''; ``different law'' means the law gives another formula,
+stated so that a measurement can refute it (open, or measured against);
+``not reached'' means no operation of the law produces it (open);
+``input'' means the law takes it from the world file (assumed); ``new''
+means a quantity of the law with no counterpart in known physics. In
+this version every row stands on its derivation's section and its
+check; the rows are written out here one by one as each passes review.
+
+\begin{table}[H]\centering\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{1.5in}p{1.25in}p{1.1in}p{2.25in}}
+\toprule
+Formula & Status & Derivation & Check \\
+\midrule
+Gauss's law of a free family's flux & reached, exact & 3.1 & series C: the flux through a square of half-width $h$ over the source's rate, $1.0000$ at $h = 4, 8, 12, 20, 40$ \\
+Newton's inverse square, the equivalence principle, the third law at rest & reached in the shell mean; retarded at $c$ & 3.2, 3.3 & series C: nine ring readings $r/N(r)$; $\mathrm{push}_m = m \times \mathrm{push}_1$; the momenta's ratio $1.0000$ \\
+Coulomb's law, $k_C = G$, the sign $-\rho_A\rho_B$ & reached in form & 3.4 & series C item 7: $-1$, $-1/4$ \\
+The receiver's Doppler $1 \pm v/c$ on the axis & pin: reached under the crossing rule, decided and not built; on the archived code not reached & 2.2, 2.7 & record 158's design counts $45, 58, 19, 38, 183, 311$ (a host script); the run pinned \\
+The source's Doppler $1/(1 \mp v/c)$ & reached & 2.5 & series G2, coasting stars \\
+$c = 1/\sqrt3$ Links per interval & the bound proved (the largest uniform pace); the value assumed (the supremum) & this paper, Prop.~\ref{prop:pace}; 13.2 & series L7: the cone, both rows at the age $29$ \\
+The click's weight as a positive quadratic form of power $2$ & reached for the form (the lattice Gleason: rotation invariance, the balanced splitter's conservation and the counts force it); not reached from the algebra: the harmonic constants, pinned by the register & 6.5, 6.6 & series L: $63/1$ pins the power to $[1.917, 2.489)$, the far pair's $27, 5, 5, 27$ to $[1.784, 2.054)$ \\
+Tsirelson's bound as a limit, $S(N, Q) \to 2\sqrt2$ & reached as a limit; two-sided at finite $N$ & 6.2; Thm.~\ref{th:bell} & series L: $176/64$, $2896/1024$, $11584/4096$ \\
+Young's spacing $\Lambda D/s$ & reached in the limit of every direction; no registered click pattern shows it (the wheel decided, not built); pin & 7.1 & L2b's fringes in the record's weights (visibility $0.954$); record 156's map (host) $23.5$ against $23.3$; the run under the wheel pinned \\
+Bohr's condition $2\pi p r = jh$ and $r_j \sim j^2$ & reached in form; the deciding reading unchecked & 7.2, 7.3 & series H: no orbit closes (record 131); $j = 4.01$ at $r = 12$ is the derivation's arithmetic on the registered momentum \\
+Poisson's equation and the retarded wave equation of the delay field & reached & 5.1 & series E: $k_a r = 36.1$, $k_s r^2 = 41.5$ \\
+The gravitational redshift & reached at first order; different law at second order, no horizon & 5.2 & series E: the $1/r$ form at the strong field $k = 2$ to $9$; the weak-field run pinned \\
+Newton's geodesics, retarded & reached in the limit; the post-Newtonian terms not & 5.3 & no registered orbit confirms it (series D closes none, record 131); the push law is checked by series C \\
+The information cost per record and the classical-quantum boundary & new, a quantity of the law & 6.1, 6.3 & series L: $82, 4, 6, 185$ units for $1, 2, 3, 6.3$ bits \\
+\midrule
+Newton's constant $G = K(n/d)/(4\pi S)$ & reached in form, with the width $S$ an input & 3.3 & the world file's width \\
+The masses and charges of the families & input: the initialisation & record 106; \cite{predictions} & the family table \\
+\midrule
+Einstein's field equation & not reached: no tensor source, no self-gravitation, no metric for the rows & 5.5, 5.6 & \\
+The bending of light & not reached on the archived code; reached in form, $\sim M/b$, under a hypothesis that reads the crowd & 5.4, 5.6 & series K: $0.000$ registered \\
+$E = mc^2$, velocity addition, the mass of a moving body & not reached: no energy of motion & 4.5 & \\
+Bohr's energies and the Rydberg lines & not reached: no energy, no transition & 7.3 & \\
+\midrule
+The Lorentz factor: a clock in motion, the dispersion $v(p)$, the force between moving bodies & different law, stated as a row that can fail (the decision: the law kept, a hypothesis built beside it) & 4.3, 4.4, 12, 12b, 12c; Sect.~\ref{sec:lorentz} & J4's muon (a pin: the $64$th turn at $64$); G2's fastest star $z = 0.2636$ against $0.315$ \\
+The transverse Doppler & different law: exactly $1$ & 2.3 & record 158's design script, transverse exactly $1$ (host) \\
+The isotropy of $c$ & different law: a moving laboratory's two-way anisotropy of order $\beta^2/2$, refuted by \cite{nagel2015} unless the laboratory is at rest in the lattice's frame; the rounding's anisotropy below $1/T_d$ a bound on $Q_f$ & Prop.~\ref{prop:pace}; 12.3; Sect.~\ref{sec:lorentz} & the $10^{-18}$ measurement; $Q_f$ of order $5.8 \times 10^{17}$ \\
+\bottomrule
+\end{tabular}
+\caption{\label{tab:consequences}What follows from the law and what does not. The derivation column gives the section of \cite{derivations} (or of this paper); the check column the register's series \cite{register}, the log's record \cite{log}, or the pin where the run is not made.}
+\end{table}
+
+\part{The click model: the measurement chapter}\label{part:click}
+
+\section{The click model}\label{sec:model}
 
 \paragraph{The model in plain words.} The GameBoard (the lattice, where a
 shorter word serves) is a mail board.
@@ -80,7 +302,7 @@ becomes several packets in several directions with declared shares, the
 birth number the same on all. Merging: identical packets add; identical
 packets with opposite counters cancel and leave nothing. Deflection
 beside a mass: a packet's direction is turned by a table, and the turn
-can be undone (no world of this paper has a mass). The collector, the
+can be undone (no world of this chapter has a mass). The collector, the
 apparatus, keeps per birth number and per cell the running sum of the
 packets' arrows. When every packet of a birth has ended, the collector
 lays the cells on a ruler in proportion to the squared lengths of those
@@ -98,7 +320,7 @@ a birth and its click can be run backwards, given the collectors' record
 of what they absorbed.
 
 \paragraph{What was asked, and what came before.} The question of this
-paper is the one a previous paper on the same simulator asked of four
+chapter is the one a previous paper on the same simulator asked of four
 candidate mechanisms \cite{paper1}: which resource does an integer,
 local, causal model need to reproduce the correlations of one quantum and
 of a pair. There, every candidate whose information travelled only on
@@ -112,30 +334,28 @@ of the time was replaced and none of its tables is reproduced. Here the
 registry and the
 configured law are gone. What remains is the lattice, one record with
 rows, and one measurement rule, the click of Definition~\ref{def:click}.
-Section~\ref{sec:model} defines the model in standard terms; the words
-collapse and superposition appear first in Section~\ref{sec:lit},
-each as another author's name for one of these things.
-Section~\ref{sec:theorems} proves what can be proved of it;
-Section~\ref{sec:measure} reports what the engine measured, from runs
-recorded before this text was written; Section~\ref{sec:bell} compares
-the finite-$N$ Bell value with the experiments; Section~\ref{sec:causal}
-places the click in the causal anatomy of Bell's theorem;
-Sections~\ref{sec:new} to \ref{sec:hyp} say what is new, what is not
-claimed, and what the program hypothesises beside this result;
-Section~\ref{sec:limits} states what returns in the continuum limit and
-what does not. All code,
-worlds and recorded runs are archived \cite{zenodo}.
+This chapter defines the model in standard terms (the words collapse
+and superposition appear first in Section~\ref{sec:lit}, each as another
+author's name for one of these things), proves what can be proved of it
+(Section~\ref{sec:theorems}), reports what the engine measured, from
+runs recorded before this text was written (Section~\ref{sec:measure}),
+compares the finite-$N$ Bell value with the experiments
+(Section~\ref{sec:bell}), places the click in the causal anatomy of
+Bell's theorem (Section~\ref{sec:causal}), and says what is new in it,
+what it does not claim and what the program hypothesised beside it at
+the time of its runs (Sections~\ref{sec:new} to \ref{sec:hyp}). All
+code, worlds and recorded runs are archived \cite{zenodo}.
 
-\section{The model}\label{sec:model}
 
-\paragraph{In one sentence.} The model is one piecewise-linear map on an
-integer torus; the measurement is the one threshold that is read out. The
-state is a vector of integers, and in the worlds of this paper every
-interval does three things to it: it translates the vector by a rate and takes what
-crossed a threshold as the events (the flight, the phase, every count and
-the birth), it multiplies by a declared integer matrix (the split and the
-rotation, exact and reversible), and it adds (the merge, where equal
-phases sum and opposite phases cancel). Between clicks the rates are
+\paragraph{In one sentence.} The model is the law of Part~I on worlds
+without bodies; the measurement is the one threshold that is read out.
+The state is a vector of integers, and in the worlds of this chapter
+every interval applies three of the six operations to it: it translates
+the vector by a rate and takes what crossed a wall as the events (the
+flight, the phase, every count and the birth), it multiplies by a
+declared integer matrix (the split and the rotation, exact and
+reversible), and it adds (the merge, where equal phases sum and opposite
+phases cancel). Between clicks the rates are
 constant, so the map has a closed form, and every count of the
 measurements table is computed from it by the design's check scripts
 before its run, the two slits excepted (its expectation is the
@@ -253,7 +473,7 @@ is not (on $(1, 1, 0)$, for half of the $48$, the line of $gd$ and $g$
 applied to the line of $d$ differ at the odd Links and agree at every
 whole period; on $(1, 0, 0)$ and $(2, 1, 0)$ they agree everywhere
 \cite{checks}), so the flight commutes with the $48$ at the periods and
-not between them. No body moves in the worlds of this paper.
+not between them. No body moves in the worlds of this chapter.
 
 \paragraph{No dispersion.} What the lattice does not do to the pace is
 as definite as what it does.
@@ -842,8 +1062,9 @@ the same argument, and the lattice Boltzmann sound speed; the table's
 sitting at the supremum is a third statement of the design.
 Proposition~\ref{prop:pace} adds the exact integer table at the bound and
 the grain's anisotropy as a bound on $Q_f$.
-\item Not a continuum limit of the model as a whole (Section~\ref{sec:limits}
-states the computed limits), not spin or polarization (the labels are
+\item Not a continuum limit of the click chapter's model as a whole
+(Section~\ref{sec:limits} states its computed limits;
+Table~\ref{tab:consequences} the law's), not spin or polarisation (the labels are
 abstract), not bosons or fermions, not Lorentz invariance (one speed for
 every direction, no boost; Section~\ref{sec:lorentz}), not the classical limit as click density
 (proposed, not run), not a treatment of noise or detector inefficiency.
@@ -855,12 +1076,15 @@ by no rule of the GameBoard) and re-pinned the ticks of every lamp world.
 
 \section{The hypotheses of the program}\label{sec:hyp}
 
-Everything the program states beside this paper's result is listed here
-with its status and claimed nowhere. ``Follows from'' is written only
+Everything the program stated beside the click chapter's result at the
+time of its runs is listed here with its status then and claimed
+nowhere; where an item has since become a row of
+Table~\ref{tab:consequences}, the table's verdict is the paper's and
+this paragraph is the chapter's history. ``Follows from'' is written only
 where the rule it follows from is named; the rest is conjectured within
-the same GameBoard and not a consequence of the click. Status: registered
+the same GameBoard and not a consequence of the click. Status (the Introduction's labels in the register's words): registered (measured)
 (a run in the archived register with a fingerprint and the verdict
-quoted), design (a check script's integers, no run), not run, published.
+quoted), design (a check script's integers, no run: a computation), not run (open), published (cited).
 
 \paragraph{Consequences of the click model.} Entanglement without
 maintenance and its end at any intermediate click (from ``nothing between
@@ -925,7 +1149,9 @@ families as the universe's initialisation, not derivable in this law
 content an open design); dark matter as a closed dimension, $G$ from the
 lattice's width, a moving body's clock (not run). Each is stated in the
 archived register in the words of its verdict, and none is cited by the
-result of this paper.
+result of this chapter.
+
+\part{What returns, what does not, and the decision on Lorentz}\label{part:limits}
 
 \section{Continuum limits: what returns and what does not}\label{sec:limits}
 
@@ -939,7 +1165,7 @@ do not follow and are stated as such.
 \paragraph{Tsirelson's value as a limit.} The bound of
 Theorem~\ref{th:bell} has two terms, $2/N$ from the ladder's rungs and
 $4\arcsin(\sqrt2/(2(Q - \sqrt2/2)))$ from the tables' scale $Q$ ($256$ in
-every run of this paper). As $N$ and $Q$ grow both vanish: $S(N, Q) \to 2\sqrt2$. The
+every run of series L). As $N$ and $Q$ grow both vanish: $S(N, Q) \to 2\sqrt2$. The
 computed values are $S = 2.75$, $2.8125$ and $2.828125$ at $N = 64$, $256$
 and $1024$, unchanged by $Q$ from $256$ to $2^{20}$ at these $N$ (the rungs
 decide), with the bound $0.125$, $0.031$ and $0.0078$ at $Q = 2^{20}$
@@ -1009,7 +1235,7 @@ not a result here; what the limit inherits is the two exact conservations.
 are a rest frame. The front is isotropic to $0.8$ percent in that frame; nothing in the
 definitions says that a moving body reads the same $c$, so Lorentz
 invariance is not a limit of this model but a property it must show or
-lack, on worlds with moving clocks (the program's, not this paper's;
+lack, on worlds with moving clocks (the program's, not the click chapter's;
 Section~\ref{sec:lorentz} states what the program's derivation has found
 and the decision taken). The
 field equations of gravitation are not reachable from a model without
@@ -1022,7 +1248,7 @@ two.
 
 \section{Lorentz: what the law predicts, and the decision taken}\label{sec:lorentz}
 
-The worlds of this paper have no body and no clock in motion, so nothing
+The worlds of the click chapter have no body and no clock in motion, so nothing
 in Sections~\ref{sec:model} to \ref{sec:limits} depends on this section;
 it is here because a model with one pace in a rest frame owes the reader
 its position on Lorentz invariance. The position, the author's decision
@@ -1126,7 +1352,7 @@ muon in flight; and the seventh operation is built beside the law under
 its own identity as a comparison hypothesis, both to be run against the
 same pins, the paper to state both readings when they exist. Whatever
 those runs show, the results of Sections~\ref{sec:theorems} to
-\ref{sec:bell} are unchanged, since no row of this paper's worlds
+\ref{sec:bell} are unchanged, since no row of the click chapter's worlds
 carries a mass or a clock in motion.
 
 \section{Literature and positioning}\label{sec:lit}
@@ -1230,11 +1456,13 @@ submission.]
 \bibitem{paper2} A. Gonen, Redshift from delay growth on a closed integer GameBoard: the law, its kinematic correspondence to a scale factor, and the supernova test (2026), arXiv preprint.
 \bibitem{beamlaw} The Beam Law and its implementation notes (note 37, the amplitude law), \texttt{docs/BEAM\_LAW.md} of the archived code \cite{zenodo}.
 \bibitem{design} The design of \texttt{amplitude-v1} and its check outputs, \texttt{docs/designs/amplitude-v1/} of the archived code \cite{zenodo}.
-\bibitem{register} The experiments register, series L (and, for Section~\ref{sec:lorentz}, series G2), \texttt{docs/EXPERIMENTS.md} of the archived code \cite{zenodo}, with the worlds \texttt{examples/events/amplitude/}, their \texttt{expectations.json} and the reading tool \texttt{tools/amplitude\_path.py}.
+\bibitem{register} The experiments register, \texttt{docs/EXPERIMENTS.md} of the archived code \cite{zenodo}: series L (the click chapter, with the worlds \texttt{examples/events/amplitude/}, their \texttt{expectations.json} and the reading tool \texttt{tools/amplitude\_path.py}), L2b and L7, and, for Table~\ref{tab:consequences}, series C, D, E, G2, H, J, K and N; every entry carries its expectation written before the run and its source fingerprint.
 \bibitem{checks} \texttt{paper/general\_formula/checks/s\_of\_n.py}, \texttt{which\_path\_window.py}, \texttt{tables\_norm.py}, \texttt{information\_transfer.py}, \texttt{limits.py} and \texttt{light\_speed.py} with their outputs, \texttt{figures/summary.json} and \texttt{NUMBERS.md}, in the archived code \cite{zenodo}.
 \bibitem{log} The dated log of 2026-09-20, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}, records 96 (coherence within one Node), 101 (the landing), 102 (the checks of this paper), 105 (the review of the pair and the gate: the marginals re-read over all 4096 setting pairs, the arms' order), 144 (the cone, L7), 156 (the two slits: the wheel, the exact phase, the 18 intervals), 160 (the fan's angular weights) and, for the pace and Section~\ref{sec:lorentz}, records 186 and 191 (c as the flight's norm; the one operator for rows and bodies), 213, 224 and 228 (the derivation's sections 12, 13 and 12b), 226 (the group of 48), 230 (the three routes), 245 (section 12c closes route C) and 249 (the decision: A and B).
 \bibitem{lightspeed} c in the vector law, \texttt{docs/designs/light\_speed/FORM.md} with the map \texttt{light\_speed\_map.py} and its output, of the archived code \cite{zenodo}.
-\bibitem{derivations} The derivations of the beam law, \texttt{docs/DERIVATIONS\_BEAM.md} of the archived code \cite{zenodo}, sections 4 (special relativity as the limit's symmetry), 12, 12b and 12c (Lorentz from the delay field; the mover's counter) and 13 (the one constant).
+\bibitem{highlights} The project's decisions and dictionary, \texttt{docs/HIGHLIGHTS.md} of the archived code \cite{zenodo}, section 5.7 (the conversions, the six operations, what is derived and what is input).
+\bibitem{derivations} The derivations of the beam law, \texttt{docs/DERIVATIONS\_BEAM.md} of the archived code \cite{zenodo}, sections 0 (the operator and its two blocks), 2 (Doppler), 3 (Newton and Coulomb), 4 (special relativity as the limit's symmetry), 5 (the delay field), 6 (the information cost and the click's square), 7 (Young and Bohr), 9 (the law of information), 12, 12b and 12c (Lorentz from the delay field; the mover's counter) and 13 (the one constant).
+\bibitem{predictions} The predictions register, \texttt{docs/PREDICTIONS.md} of the archived code \cite{zenodo}, entry 26 (the masses).
 \bibitem{bell1964} J. S. Bell, Physics 1, 195 (1964).
 \bibitem{chsh1969} J. F. Clauser, M. A. Horne, A. Shimony and R. A. Holt, Phys. Rev. Lett. 23, 880 (1969).
 \bibitem{jarrett1984} J. P. Jarrett, No\^us 18, 569 (1984).
