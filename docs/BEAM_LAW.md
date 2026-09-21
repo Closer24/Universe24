@@ -3313,7 +3313,14 @@ implementation's part of the contract. The design above is unchanged.
     carry, periodic in S_1, computed once from the vectors at load,
     `lines`); the pair (m(tau), the residue (tau r + T_d) mod d) is formed
     in one place, `Flight.accumulator(direction, age)`, which `walk_step`
-    reads for the step and the click's exact phase reads for the residue
+    reads for the step (since 2026-09-21, the model owner's word on the
+    flight's accumulator, record 299, through `nature_beam.by_drive_rows`,
+    the array form of the one count primitive `core.integer.by_drive`,
+    equal to it row by row: the residue gains r over d and the count
+    gained is the step, the accumulator after the next age's residue;
+    the pair off the age is the verb's constant-rate identity applied
+    tau times from T_d, as `by_clock` is of `by_drive`, so the row
+    carries no field) and the click's exact phase reads for the residue
     at an arrival (TWO_SLITS.md section 2; test (f) of the flight); a
     ray's rate never changes over its flight, so both counts are read off
     the whole age and the row carries no field (the inventory's 1.4:
@@ -3438,6 +3445,66 @@ implementation's part of the contract. The design above is unchanged.
     (the phase would read 26 with them; the physics-rule review of
     2026-09-21, item 2).
 
+    **The tables the engine carries at run time** (2026-09-21; the paper's
+    referee under the owner's direction, record 316, that a formula's
+    derivation must not depend on the formula itself: the paper states the
+    caveat, the tree states the fact). Every table below is computed once
+    at load from the declared integers of the world and read by the rules
+    as a constant, so the three tests of record 202 read the rule (the
+    walk, the click, the collision, the meeting) and never the load; a
+    rounding taken at load is a declared rounding of the world (record
+    156, "C and S computed from N as a declared rounding"), not a formula
+    inside a rule.
+    - The flight's constants per direction (`nature_beam.direction_flight`,
+      the `Flight` of the world's direction set): from the declared
+      vectors **v** and Q = 64, S_1 = |a| + |b| + |c| a sum, T_d =
+      isqrt(3 |**v**|^2 Q^2) an integer root at load (a declared rounding),
+      the period L_d by two gcds, the line by the deficits' argmax (the
+      Bresenham comparison), and the unit label **u**_d (`unit_label`), an
+      integer root per component (a declared rounding). The walk reads r =
+      2 S_1 Q and d = 2 T_d as the direction's integers, never the root.
+      Pinned: `tests/test_nature_beam_label.py` (a) (**u**_d),
+      `tests/test_nature_beam_flight.py` (a) and (g) (T_d, the periods, the
+      lines).
+    - The phase circle (`core.phase.phase_circle`, `phase_cosines`,
+      `phase_sines`, cached per N): from the declared N, cos(2 pi d / N)
+      and sin at the scale 256 by fixed-point series in integers, rounded
+      to the nearest integer: the declared resolution of the click's Gram
+      form (the click's notes 45 and 46) at 1 / 256; the pointer and the
+      click read the entries as declared integers. Pinned:
+      `tests/test_group_structure.py` (b) (equal phases 65536, opposite
+      phases exactly the negative, C^2 + S^2 within 361 of 65536) and the
+      amplitude gate's xfail at N = 4096 (`tests/test_amplitude_gate.py`,
+      the rounding named: E at 2900 / 4096 against the cosine's 2896.3 /
+      4096).
+    - The collision table (`nature_beam.collision_table`, cached once):
+      from the eight slots and the class rule of section 4, the shift as
+      a permutation of the 3^8 slot states, generated; no closed form, no
+      rounding. Pinned: `tests/test_nature_beam_collision.py` (b),
+      `tests/test_group_structure.py` (c).
+    - The arc table of the meeting (`meeting.arc_table` on the unit labels,
+      the permutation per target on demand, cached): from **u**_d their
+      norms as sums of squares, and per target an integer root of the
+      target's norm (a declared rounding at the meeting's read), the
+      permutation by integer comparisons. Pinned: `tests/test_meeting.py`.
+    - The cube's group (`core.game_board.cube_symmetries`, cached): the 48
+      signed axis permutations, generated; read by no rule at run time,
+      the tests' constant.
+    Not tables: the window (the one floor `window_admits`), the ladder's
+    rungs (per record at its completion, from its offers), the counts table
+    of a body (its state, not a constant) and the flight's accumulator (off
+    the age). On the cosine table: the exact form of the phase is the
+    record's phase-count vector **f** in Z[Z_N] (note 45) and the click's
+    comparison is of the norms |**f**(zeta_N)|^2, algebraic integers of
+    Z[zeta_N]; with no table at all that comparison is a sign test of an
+    algebraic number on its cyclotomic representative, a verb outside the
+    six, so the table at 1 / 256 is the declared rounding that keeps the
+    comparison on rational integers; without it every `wave` record's
+    square and every rung of the ladder would move by the rounding, the
+    gate's E at N = 4096 first (the xfail). The owner's word is given: the
+    table stays and is a declared input of the law beside Q, S and N, the
+    circle's rounding (the model owner, record 328 of [the log](LOG_2026-09-20.md),
+    the fixed-point transforms its precedent). A statement, not a change.
 42. **The group structure named** (2026-09-21; the vector program, record
     191; the architect's item 3; names and types only, no rule changed and
     every registered integer the same): the collision table is the action
@@ -4000,8 +4067,10 @@ implementation's part of the contract. The design above is unchanged.
     audit's drive row (note 47) reads `_move` and `step_line` since this
     note.
     The drive is one row of the counts table, `by_drive` with `at_most`
-    1, and the flight (note 41 (viii)) stays its own accumulator: forming
-    the two through one `by_drive_rows` (the architect's PR #490) was not
-    on `main` when this branch merged it, so the flight's form through
-    that row is left to the architect, no digest changed by this note on
-    that account.
+    1; the flight (note 41 (viii)) is its own accumulator, its step read
+    through the array form `by_drive_rows` since the architect's PR #490
+    (on `main` while this branch's second stage ran, merged after the
+    replays; bit-exact there). Forming the drive through that array form
+    as well, one verb in one place, is left to the architect: nothing of
+    the digests of this note is changed on that account, and the drive
+    of a body and the walk of a row stay two calls of the same verb.

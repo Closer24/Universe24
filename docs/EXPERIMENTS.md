@@ -9084,3 +9084,10 @@ the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
   the atom (`bohr/r8`, the release and the orbit) and the beam beside the
   mass (`lensing/mass_meeting`), run as declared, the whole GameBoard drawn
   in an isometric projection with the bodies' copies and arrows.
+- [The octahedron and the 48](pages/gallery/formula.html): no run; one
+  Node's six Ports drawn as an octahedron with the sphere of radius
+  c = 1 / sqrt 3 inscribed in it, turning; the 48 signed axis permutations
+  one per frame with the matrix, the determinant, the kind and the hand's
+  bit (24 rotations, then 24 improper ones; the counts enumerated by the
+  builder, records 226 and 231); the general formula stated in the words of
+  HIGHLIGHTS 5.7, no claim added.

@@ -191,7 +191,9 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   direction: it starts at T_D, gains 2 S_1 Q per interval against the wall
   2 T_D, and its count picks the unit step of the line; a rest direction
   never moves (BEAM_LAW section 3, the flight rule; the flight table is
-  retired, MIGRATION 2026-09-20).
+  retired, MIGRATION 2026-09-20). The step's count is `by_drive_rows`, the
+  array form of `core.integer.by_drive` over the rows (2026-09-21); nothing
+  written by hand, no field on the row.
 - **Walk**: step 1 of the interval, departures become arrivals: every row
   whose flight counts a Link crosses it whole, its record unchanged
   ([BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam)).
@@ -401,6 +403,12 @@ the known formulas (Highlights 5.7).
   of content M with the momentum component p steps one Link per
   (S M + p) / p self-creations on that axis (note 17).
 - **N**: the steps of the phase circle, the world key `N`.
+- **The circle's rounding, 1 / 256**: the scale of the circle's tables of
+  cos and sin (`core.phase.phase_cosines`, `phase_sines`), computed once
+  at load from N by integer series and read only at the click through the
+  Gram matrix; a declared input of the law beside Q, S and N, kept as the
+  fixed-point transforms of signal processing keep theirs (the model
+  owner, record 328).
 - **P**: the direction bound, the world key `direction_bound`: every
   declared direction has its components in -P .. P.
 - **K = [n, d]**: the clock's pair, the world key `K`: the turn per
@@ -495,7 +503,8 @@ is the one stated here.
 | H, a | the growing wall's rate per interval and growth factor (`expansion-v1`) | scalars | dimensionless | DERIVATIONS_BEAM section 15 |
 | lambda, theta | the wavelength, an angle | scalars | Links, radians | DERIVATIONS_BEAM |
 | zeta_N | the primitive N-th root of unity | scalar | none | DERIVATIONS_BEAM 6.5 |
-| G (the grain) | the deleted grain of `doppler-v1` | retired | none | MIGRATION 2026-09-21 |
+| G (the fan's grain) | the grain of the fan's angular weights: each direction of the fan within P carries the angle it covers, half the gap to each Farey neighbour, gap(D, D') = 3 Q^2 / (T_D T_D'), as the integer a_D = floor(G x (gap(D^-, D) + gap(D, D^+)) / 2), G = 2^18 in the plane (2^24, 2^14 and 2^5 in the sphere's form); a constant of the law beside N, Q, P, W and K; a different constant from the retired grain of `doppler-v1` below, kept | scalar | dimensionless, a resolution of the angle | [TWO_SLITS.md](designs/fraction_free/TWO_SLITS.md) sections 7 and 10; [LAW.md](designs/vector_form/LAW.md); Highlights 5.7; the fan of record 160 decided and not built, so BEAM_LAW has no owning note yet |
+| G (the grain of `doppler-v1`) | the deleted grain of the reading's weight at the relative speed | retired | none | MIGRATION 2026-09-21 |
 
 ## Retired words
 
@@ -512,7 +521,7 @@ which say so; nowhere else.
 | light and matter (as the two things) | rows and bodies | rows (of any family) and bodies (measured events) | record 183 |
 | wave, wave function (a thing on the GameBoard) | nothing: the Node holds no wave | the reading key `wave` (the pointer's square over the crowd) is a key name; a record's vector is **f** in Z^N | record 15 of 2026-09-19; record 188 |
 | the flight table, `FlightTable`, `flight_table` | the per-direction step table | the flight, the row's position accumulator (`Flight`, `direction_flight`) | [MIGRATION](MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded) |
-| the key `doppler`, `doppler-v1`, the grain G, `quantised_speed` | the reading's weight at the relative speed | the crossing: the Doppler is the count of the rows a moving reader crosses | [MIGRATION](MIGRATION.md#the-crossing-rule-on-2026-09-21-the-step-before-the-law-a-row-and-a-body-met-once-the-key-doppler-and-the-grain-deleted) |
+| the key `doppler`, `doppler-v1`, the grain G, `quantised_speed` | the reading's weight at the relative speed | the crossing: the Doppler is the count of the rows a moving reader crosses; the fan's grain G (the angular weights of record 160, the symbols table) is a different constant, kept | [MIGRATION](MIGRATION.md#the-crossing-rule-on-2026-09-21-the-step-before-the-law-a-row-and-a-body-met-once-the-key-doppler-and-the-grain-deleted) |
 | `weighted_flow`, `flux_pair`, `frame_momentum`, `acc.flow` | the weighted flow of `doppler-v1` and the frame's copy of the momentum | the label flow **V** read at the crossing; `Measured.momentum` | the same entry |
 | a register or a table at a Node; a remainder discarded | counts kept at Nodes | nothing at a Node: every count an accumulator on the body's record, the remainder kept | record 155; MIGRATION, no registers at Nodes, no tables; the third test |
 | `lorentz-v1` | the seventh verb, a root at a declared grain | `covariant-readings-v1`, decided and not built; a historical identity name | Highlights 5.4, "Lorentz, B replaced" (record 270) |

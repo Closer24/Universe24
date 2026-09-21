@@ -169,6 +169,46 @@ The identity `beam-v1` is kept.
   `initialization.json` to be the resolved world (the runner writes it
   under `resolved_initialization.json` since the family definitions), a
   host step of the reading, not changed here.
+
+## The paper-writer skill folded into paper-coordinator, on 2026-09-21 (docs only)
+
+`skills/paper-writer/SKILL.md` (the manuscript's method: equations first,
+one source per number, the four labels, the referee round before any
+material enters) is deleted; its content is the method section of
+[skills/paper-coordinator/SKILL.md](../skills/paper-coordinator/SKILL.md),
+the one skill of the role (the model owner, record 309), and the Boss's
+routing table carries paper-coordinator alone. The manuscript's own plan
+(`paper/general_formula/PLAN.md`) keeps the rounds' history under the old
+name where it was written.
+
+## The one count primitive in its array form, on 2026-09-21 (host only, bit-exact, no law change)
+
+The model owner's word on the flight's accumulator (record 299: "yes,
+with this it is beautiful and generic"): the same verb, the Euclidean
+division with the remainder kept, was written twice, as
+`core.integer.by_drive` on a body's record and as the flight's own array
+expression on the rows. One implementation of the law's count, in two
+forms.
+
+- `events.nature_beam.by_drive_rows(drive, rate, denominator, at_most)`:
+  `by_drive` over numpy int64 rows, the same integers row by row (signed
+  rates, the cap, the remainder kept; a denominator below 1 refused, the
+  accumulator plus the rate bounded to the working register before the
+  sum is formed). It lives beside `by_clock_rows`, the array form of the
+  other count, since `core/` stays standard-library integers.
+- `Flight.walk_step` takes the interval's step as the count
+  `by_drive_rows` gains at the row's residue over the wall; the residue
+  and the step are the verb's two outputs. `Flight.accumulator` is
+  unchanged in form and named as the verb's constant-rate identity
+  (the pair off the age, tau applications from T_d).
+- Bit-exact: the gate set's state, books and events digests unchanged
+  (`tests/test_amplitude_click.py` (d)); `tests/test_nature_beam_flight.py`
+  (g) the walk on every direction of the register's fans over a full
+  period against the closed form and the verb iterated;
+  `tests/test_fraction_free.py` (j) the array form against `by_drive` on
+  a grid of 111 996 cases with the named edges.
+- BEAM_LAW note 41 (viii) and TERMINOLOGY's "Flight table" line say so.
+
 ## The quark families defined once, on 2026-09-21 (host only, no law change)
 
 The families `u` (`quantum` 0, `charge` 1224, `phase` false) and `glue`
