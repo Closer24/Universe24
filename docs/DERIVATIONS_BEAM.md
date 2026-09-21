@@ -6813,7 +6813,7 @@ changes the row, the row says so; the verdict is `main`'s.
 
 | # | The difference | The law | Quantum mechanics or relativity | Delta P | The experiment that bounds it | Verdict |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Tsirelson's bound reached as a limit only: the CHSH sum at the registered Bell world, N = 256 | `S = 720 / 256 = 2.8125` (bell.txt line 6, the exact cells, unchanged by the tables' scale from 256 to `2^20`) | `2 sqrt 2 = 2.828427` | `-0.0159` (0.56 percent) | Poh, Joshi, Cere, Cabello and Kurtsiefer 2015, Phys. Rev. Lett. 115, 180408: `S = 2.82759 +- 0.00051` (the deficit `0.00084 +- 0.00051`) | REFUTED at N = 256 (31 standard errors); N = 64's `2.75` likewise |
+| 1 | Tsirelson's bound reached as a limit only: the CHSH sum at the registered Bell world, N = 256 | `S = 720 / 256 = 2.8125` (bell.txt line 6, the exact cells, unchanged by the tables' scale from 256 to `2^20`) | `2 sqrt 2 = 2.828427` | `-0.0159` (0.56 percent) | Poh, Joshi, Cere, Cabello and Kurtsiefer 2015, Phys. Rev. Lett. 115, 180408: `S = 2.82759 +- 0.00051` (the deficit `0.00084 +- 0.00051`) | REFUTED at N = 256 (30 standard errors: the measured `2.82759` less the law's `2.8125` is `0.0151`, `29.6` times `0.00051`; the `0.0159` of the difference column is the law's deficit from `2 sqrt 2` itself, `31.2` errors, not the distance from the measurement); N = 64's `2.75` likewise |
 | 2 | the same at N a power of two at or above 512 | `S = 181 / 64 = 2.828125` exactly (6.2: the registered `2896 / 1024`, `11584 / 4096`; record 102: every power of two from 512) | `2.828427` | `-3.02 x 10^-4` | the same measurement: the law's deficit is `1.1` standard errors from the measured deficit | OPEN, within reach (24.4) |
 | 3 | the same at N not a power of two, or a power of two below 512 other than 64 and 256 | above `2 sqrt 2` for 252 of the 512 values of N (record 102), and at the powers of two N = 16, 32 and 128, where S = 3, 3 and `23 / 8` (the theorem of record 102; the engine reads `23 / 8 = 2.875` at N = 128, the auditor's round 6 at d17af9b9): a no-signalling box | at most `2 sqrt 2` | up to `+8 / N` (N = 16, 32 and 128 give 3, 3 and `23 / 8`) | the same measurement bounds an excess above `0.001` at two standard errors | REFUTED for those N: the law's N is a power of two at or above 512 (row 2), or 64 or 256 (row 1) |
 | 4 | the click's rounding to the scale 256: one polariser at 22.5 degrees and the 22.5-degree chain (Malus) | the pass `219 / 256 = 0.85547` and the chain `187 / 256 = 0.73047` at N = W = 256 (malus_map.out, sections 2 and 4) | `cos^2 = 0.85355`, `cos^4 = 0.72855` | `+0.0019` both (0.22 and 0.26 percent) | Malus's law at a polariser, NATURE row 9 (not yet run in the law); a precision Malus test at `10^-3` decides | OPEN at the tables' scale; REFUTED by any test at `10^-3` unless the scale is raised (the cost of input 13 by the owner's word, record 328); the exact form removes it (24.1 row 13) |
@@ -6854,7 +6854,9 @@ advance: the deficit of the correlation at each of the four settings is
 **What bounds it today.** Poh et al. 2015 measured `S = 2.82759 +-
 0.00051`, a deficit `0.00084 +- 0.00051` from `2 sqrt 2`: the law's
 deficit `0.00030` is inside at 1.1 standard errors, and the measurement
-excludes the law's N = 256 (`0.0159`, 31 standard errors) and every N
+excludes the law's N = 256 (`2.82759 - 2.8125 = 0.0151`, 30 standard
+errors, `29.6`; the law's deficit from `2 sqrt 2`, `0.0159`, is `31.2`
+errors and is not the distance from the measurement) and every N
 that is not a power of two (an excess above `0.001`). **What refutes**: a
 CHSH measurement on a maximally entangled pair with an uncertainty below
 `1 x 10^-4` reading a deficit below `2 x 10^-4` (S above 2.8282), or any
