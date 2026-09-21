@@ -2232,3 +2232,27 @@ letters, not the register's), applied; his note applied ("at first
 order" dropped from the series T passage); everything else PASS; his
 word for the PR body after the fix: CLEAN.
 
+## Wave 22 (2026-09-21): the owner's word on the clock, entered as an assumption
+
+The owner to the coordinator (about 14:00Z, translated): "I said the
+age moment, but this is added to the paper as an assumption, right?"
+Yes: P9 (the rules chosen among few) gains the clock's word, the age
+moment, the potential's form M / r, with the alternative (the presence,
+M / r^2) named and what refutes it on the form (series T on the
+GameBoard; nature's clocks between two heights follow the potential);
+the series T passage says the word was chosen and entered as an
+assumption, not a derivation; row 12's verdict cell reads PASS under
+the age word "by the owner's word (an assumption, P9)", the presence
+word the alternative's FAIL; the abstract's clause "under the clock's
+word assumed, the age moment"; the nature prose and the differences'
+sentence likewise. The record number is cited when it lands; the
+register's row 12 is the physicist's to restate. Referee round 44
+(four findings, all applied): P9 and the series T passage say what the
+law as built counts today (the presence by default, the age moment per
+table entry, BEAM_LAW section 3) and that the owner's word makes the
+age moment the law's word with the engine's default to follow; the
+"What departs" and "What is delayed" passages reconciled to it; P9's
+heading says the ledger does not yet carry the clock's word; the notes
+applied (I4's wording, the comma series). His word after the fixes:
+CLEAN.
+
