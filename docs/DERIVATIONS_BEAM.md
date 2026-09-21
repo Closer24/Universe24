@@ -1034,10 +1034,15 @@ on the body's axis: a direction against the motion gives `n (c_1 + v)`,
 the same direction with it gives `n (c_1 - v)` (the rows overtake the body
 from behind), the sum `2 n c_1` at every v below `c_1`. So a body moving
 through an isotropic crowd reads the rest count exactly, to every order in
-v below `c_1`: no two-way measurement inside the crowd detects the
-motion (the lattice's Michelson-Morley null, exact), while a one-way
-count of one stream detects it at first order (section 2). The preferred
-frame is measurable by a one-way count and by nothing two-way.
+v below `c_1`: no two-way COUNT inside the crowd detects the motion
+(`n (c_1 + v) + n (c_1 - v) = 2 n c_1`, the null of the count, exact),
+while a one-way count of one stream detects it at first order (section
+2). The round-trip TIME is another quantity and is not null: a signal
+sent along the motion and back takes `2 L c / (c^2 - v^2)`, `gamma^2`
+times the rest along the motion and `gamma` across (section 12.3, the
+ether light clock; NATURE.md row 5b, the registered FAIL at `beta^2 /
+2`), second order in v. The preferred frame is measurable by a one-way
+count and by a two-way time, and by no two-way count.
 
 ### 4.3 A moving clock: the rate is one at every speed
 
@@ -4034,8 +4039,11 @@ c is a property of the lattice alone: the flight's Manhattan accumulator
 every line, and the largest isotropic pace with that property is the
 cube diagonal's, `S_1 Q <= T_D` by Cauchy-Schwarz with equality on the
 diagonals (section 13.2 (a); record 186). So c is DIMENSIONLESS in the
-law's units, `1 / sqrt 3` Links per interval, fixed by locality and
-straightness on the cube, and its SI value, 299 792 458 metres per
+law's units, `1 / sqrt 3` Links per interval, fixed by the three
+statements of 13.2 (a) (the cube diagonal's bound from locality, the
+isotropy as a second axiom giving the inequality `c <= 1 / sqrt 3`, and
+the flight table's sitting at the supremum as a third statement;
+records 253, 262), and its SI value, 299 792 458 metres per
 second, is a unit conversion: a ruler-and-clock reading between two
 detectors (Highlights 5.7's dictionary, record 191). What c had: a
 quantity defined by the law (the operator norm of the flight), a
@@ -4432,7 +4440,14 @@ as a candidate and not a build. The host script
 [covariant_readings.py](designs/derivations_beam/covariant_readings.py)
 with its output
 [covariant_readings.out](designs/derivations_beam/covariant_readings.out)
-makes the numbers; no run.
+makes the numbers; no run. The script is a floating-point consistency
+check of the proposal, not the exact discrete proof: its parts (A) and
+(D) use `gamma(beta)` with a square root, and its part (C) integrates
+`dE = c^2 p . dp / E` by the midpoint rule to about `10^-8`; "without a
+root" below names the PROPOSED form (the accumulator with the remainder
+kept), and the exact discrete form, integers and remainders with the
+invariant closed to the grain, is what covariant-readings-v1 must prove
+before it is built.
 
 ### 17.1 The theorem, and what "above" means
 
