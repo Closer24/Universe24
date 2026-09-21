@@ -1606,6 +1606,34 @@ class NatureBeamStore:
             key = (key << width) + (column - low)
         return key
 
+    def merge_words(self, columns: list[np.ndarray]) -> list[np.ndarray]:
+        """The identity fields packed into as few integer words per row as
+        their widths need, the first word the most significant, each field
+        offset to its least value in the order of `IDENTITY_FIELDS` (the
+        Node first) and no field split across two words: the words in
+        order sort the rows exactly as the lexsort of the fields does and
+        equal words are identical rows. One word is `merge_key`'s key; the
+        merge takes the words where the one key does not fit (a world whose
+        records and multiplicities carry 32 bits each, the massive rows'
+        pin), a lexsort over two or three words in place of one over the
+        eleven fields (the same total order; `massive-rows-fast`, 2026-09-21)."""
+        lows = [int(column.min()) for column in columns]
+        widths = [
+            (int(column.max()) - low).bit_length() for column, low in zip(columns, lows, strict=True)
+        ]
+        words: list[np.ndarray] = []
+        word = np.zeros(self.size, dtype=np.int64)
+        used = 0
+        for column, low, width in zip(columns, lows, widths, strict=True):
+            if used + width > 62:
+                words.append(word)
+                word = np.zeros(self.size, dtype=np.int64)
+                used = 0
+            word = (word << width) + (column - low)
+            used += width
+        words.append(word)
+        return words
+
     def merge(self, modulus: int = 0) -> dict[tuple[int, int, int], int]:
         """Identical rows (equal in every field but the amount) merged, the
         amounts added, the rows in the total order of the identity fields,
@@ -1635,13 +1663,16 @@ class NatureBeamStore:
         key = self.merge_key(columns)
         same = np.zeros(self.size, dtype=bool)
         if key is None:
-            order = np.lexsort(tuple(reversed(columns)))
+            # The words of `merge_words` in place of the eleven fields: the
+            # same total order, the same-row test on the words.
+            words = self.merge_words(columns)
+            order = np.lexsort(tuple(reversed(words)))
             self.take(order)
-            columns = [column[order] for column in columns]
             sign = sign[order]
             same[1:] = True
-            for column in columns:
-                same[1:] &= column[1:] == column[:-1]
+            for word in words:
+                word = word[order]
+                same[1:] &= word[1:] == word[:-1]
         else:
             order = np.argsort(key, kind="stable")
             self.take(order)

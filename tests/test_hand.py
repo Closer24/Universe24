@@ -757,9 +757,9 @@ def test_a_world_without_a_declaration_reads_as_it_did(tmp_path):
         content=np.array([1, 1, 1]),
         arrival=np.array([0, 0, 0]),
     )
-    assert IDENTITY_FIELDS[-1] == "hand"
+    assert "hand" in IDENTITY_FIELDS
     with_hand = store.merge_key()
-    without = store.merge_key([getattr(store, name) for name in IDENTITY_FIELDS[:-1]])
+    without = store.merge_key([getattr(store, name) for name in IDENTITY_FIELDS if name != "hand"])
     assert with_hand is not None and without is not None and with_hand.tolist() == without.tolist()
 
 
