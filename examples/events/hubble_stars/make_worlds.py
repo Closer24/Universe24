@@ -527,6 +527,21 @@ def expectations(reading_rule: str = "acoustic") -> Json:
         "format": EXPECTATIONS_FORMAT,
         "reading_rule": reading_rule,
         "c": c,
+        # The source of every entry (the owner's principle of 2026-09-21,
+        # record 205: a formula gives, a run proves): the formula or the
+        # section of docs/DERIVATIONS_BEAM.md, or "measured" with the target.
+        "derivations": {
+            "reading_rule": "declared (the design's reading rule of this run)",
+            "c": "DERIVATIONS_BEAM 2.1: c = Q / T_D = 64 / 110 = 32 / 55 Links per interval on a heading (T_D = isqrt(3 Q^2)); derived from the flight table and compared by tests/test_hubble_stars_readings.py (a)",
+            "throw_age": "declared (the design's throw)",
+            "ticks": "declared",
+            "windows": "declared (the reading windows)",
+            "registered_window": "declared",
+            "stars": "the speed declared by the design (the throw's fractions of c); the momentum from it by the drive's rule v = p / (Q S M + p) (DERIVATIONS_BEAM 2.1) at the grain; the distances declared",
+            "crowds": "measured (target 5: the gravitational redshift reached at first order, the second order a different law, DERIVATIONS_BEAM 5.2; the brackets the design's)",
+            "exact_coasting_form": "the coasting form 1 + z = 1 + v / c, the receiver's Doppler (DERIVATIONS_BEAM 2.2): q = 0, h the throw's rate; the fit of the exact form",
+            "ordering": "declared (the design's ordering criterion)",
+        },
         "throw_age": THROW_AGE,
         "ticks": TICKS,
         "windows": [list(w) for w in WINDOWS],
@@ -567,6 +582,7 @@ def expectations(reading_rule: str = "acoustic") -> Json:
         # steps at most one Link per interval by construction, so the
         # longest burst of the step rule over any window is 1 (GameBoard).
         found["step_burst_max"] = 1
+        found["derivations"]["step_burst_max"] = "declared (the step rule's cap under the signed drive)"
     for crowd in CROWDS:
         derivation = throw_derivation(crowd, reading_rule)
         fits = {

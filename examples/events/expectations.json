@@ -24,5 +24,8 @@
   "face_minus_x": {
    "record": 9223372036854775808
   }
+ },
+ "derivations": {
+  "two_contents": "the face records by BEAM_LAW section 5: the square of the pointer of the rows that clicked, X = sum 32 x amount x C[phase], Y likewise, the record += X^2 + Y^2 (the Gram form, DERIVATIONS_BEAM 6.7), computed from the click lines and compared by tests/test_nature_beam_worlds.py (e); the clicks' ticks and amounts measured (the two beams of 2^17 on +y meeting the face at the 20th interval)"
  }
 }
