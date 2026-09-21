@@ -38,7 +38,7 @@ is no such thing" about the host's readings of the GameBoard):
 A click is assigned to the turn in which its ray was released: the click's
 tick less the flight time of its heading from the centre's plane to the
 face, the least age at which the flight table's Manhattan steps reach the
-face (`FlightTable.manhattan_steps`, the engine's own), which is exact for
+face (`Flight.manhattan_steps`, the engine's own), which is exact for
 a release at the centre and within about r x sqrt 3 intervals of it
 elsewhere on the orbit (a few intervals against a period of hundreds).
 
@@ -67,7 +67,7 @@ from pathlib import Path
 import numpy as np
 
 from event_universe.core.phase import phase_cosines, phase_sines
-from event_universe.events.nature_beam import coherent_pointer, flight_table
+from event_universe.events.nature_beam import coherent_pointer, direction_flight
 from event_universe.events.world import FACE_NAMES
 from event_universe.world_loading import world_of_run
 
@@ -138,7 +138,7 @@ class Reading:
 def flight_delay(heading: Vector, links: int) -> int:
     """The least age at which a ray on `heading` has made `links` Manhattan
     steps: the engine's flight table (`manhattan_steps`)."""
-    table = flight_table((heading,))
+    table = direction_flight((heading,))
     age = 0
     while int(table.manhattan_steps(np.array([0]), np.array([age]))[0]) < links:
         age += 1

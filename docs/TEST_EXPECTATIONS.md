@@ -9,7 +9,10 @@ example world, compares two worlds or reproduces a known experiment; those are
 research runs, made once and recorded with a fingerprint and a date in
 [validation evidence](VALIDATION.md), never repeated as tests. Entries recorded
 before that date describe the suite as it was and are brought under the rule
-when their tests change.
+when their tests change. A pinned integer here, as a pin of the register, is
+what a detector read (a click, a record line); a reading of the GameBoard
+itself (a store's rows, a replay, a probe's count) is a host reading, and the
+tools label it GAMEBOARD (the model owner's record 163 of 2026-09-20, (5)).
 
 Since 2026-09-21 (the trimming's part 2, the register split; the Boss's
 decision under the owner's rule), a test reads a world's numbers from the
@@ -78,6 +81,7 @@ kept, their pins the law of events').
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
 | `test_paid_charge.py` | A paid family's charge per unit of amount (D-1): the books' charge line conserved through the click of a charged paid row, its escape, its home and the escape of the body that holds it; the push untouched (the label alone, with the charge -1 and 0 alike); the refusals and the record ([below](#a-paid-familys-charge)) | new (2026-09-20, the model owner's "go on everything", item (2)) |
 | `test_window_width.py` | The width of a window, `phase_width`: the one floor `window_admits` equal to the half circle at the default width on every pair, the admitted fraction w / N against the source's stride (10, 20, 40, 320 of 640; the stride 2's coset), `beam`'s pairing arc, a lamp's width, the refusals ([below](#the-width-of-a-window)) | new (2026-09-20, the model owner's "go on everything", the neutrino first) |
+| `test_gallery_pages.py` | The visual gallery's page tool (`tools/gallery_pages.py`, host-only, headless) reads the engine's stores for the picture and replays no rule: on a head-on pair of declared rows on an open 7^3 GameBoard the capture at the intervals 1 and 3 equals the store (the rows at x = 2 and 4 after the first Link, both at the meeting Node on the rest slots after the collision), a copy and not a view; the frame sampling keeps the ends within its bound; the plane lights the two Nodes and no other; the page carries the frame player, the sprite sheet, the GIF as a visible image and the intervals; a body is drawn with its momentum arrow (none at zero) and its copies, its own rows as translucent discs (the owner's record 279; page 8, the atom) | new (2026-09-21, the visual gallery); the arrow and the copies 2026-09-21 |
 | `test_quarks_expectations.py` | Series R, the quarks (`examples/events/quarks/`; the physicist's design `docs/designs/quarks/QUARKS.md`): the shipped worlds are their generator's, document by document, and parse; the register's push per body at the reference tick (`expectations.json`) derived from the world files by the design's `quark_numbers.py` (the one coupling over the columns with the fan's delivery from the engine's flight table cut at the glue's lifetime) and compared entry by entry; the border's rows per interval (290 per body) and the read mass (the sum of the declared contents) derived and compared; the least strong value that binds each quark pair at one Link (u u 4896, d d 2448, u d 0) from the binding condition on the rows' charges; no number of a run pinned | new (2026-09-21, series R; a formula gives, a run proves, record 205) |
 | `test_weak_readings.py` | The weak-force readings tool (series J) reads the runner's record and the flight table: on a short bar run through the runner, the first reader's 3 clicks of 192 arrivals, the far detector's 151, the first-arrival ages 13 and 51; on the toy of the transformation with a shell of 62 readers, the `become` line and the shell's one click ([below](#the-width-of-a-window), [the transformation](#the-transformation)); (d) the register of series J2 (`examples/events/weak/expectations.json`) derived from the five shipped worlds and the flight table and compared entry by entry; (e) the register of J1 and J3 replayed by the generator's warm run on the shipped worlds (the range of each clock's count over the dwell period, the trigger ticks at its ends) | new (2026-09-20, series J2; (b) with series J1); (d) and (e) 2026-09-21 |
 | `test_become.py` | The transformation `become`, `weak-v1`: the clock trigger at the self-creation whose clock reaches `at`, the products born as a re-release is with the recoil over all of them, the `became` line and the charge line exact; the click trigger within a window and the entry consumed; the crowd slowing the trigger and the gate holding it; the charge line through the click of the product; the refusals and the run refused when the event cannot pay ([below](#the-transformation)) | new (2026-09-20, the model owner's "go on everything", item (1)) |
@@ -96,6 +100,7 @@ kept, their pins the law of events').
 | `test_check_scope.py` | The affected-check's selection |
 | `test_coupling_readings.py`, `test_orbit_readings.py`, `test_heisenberg_readings.py`, `test_hubble_readings.py` | The tools read the engine (the architecture review of 2026-09-20; the experimenter skill): each reading of `tools/coupling_readings.py`, `tools/orbit_readings.py`, `tools/heisenberg_readings.py` and `tools/hubble_readings.py` equals the engine's own function on a minimal GameBoard (the front off `manhattan_steps`, the step rule and the release off `by_clock`, the push off `unit_label`, the fan's labels off `flight_table`, the detector records off `DetectorSet`, the declared charge per unit of content; the Hubble tool's c = 32 / 55 and m(age) off `flight_table`, its `record` lines and click ages off the run of a bar of 61 x 1 x 1, its z within the digital step's grain of 1 + v / c); the expected integers are in each module's docstring |
 | `test_hubble_stars_readings.py` | The series G2 tool (`tools/hubble_stars_readings.py`) reads the engine (the experimenter's rule): the shipped worlds of `examples/events/hubble_stars/` equal their generator's, `expectations.json` declares its format, its c is derived from the flight table (Q / T_D) and compared, and its `derivations` map names every entry; on a bar of 61 x 1 x 1 run through the runner (a star of a paid family holding a mass of 2^22 and shining one unit per self-creation toward a detector of one Node, the speed 1 / 2 Link per self-creation) the tool's `record` lines, click ages, steps (30 in 60 intervals), homes (its outward rows taken home, 64 units each) and final momentum are the engine's, z within the digital step's grain of 1 + v / c, the reading's formula within 2 % and the luminosity within 5 %; the fits read the exact coasting form as q = 0 with H (t_0 + T_0) = 1 to 1e-6 and the exact Einstein-de Sitter form as q = +0.5 to 1e-3; the expected integers are in the module's docstring | new (2026-09-20, series G2); the registered fits against the register's own brackets, no literal range (2026-09-21) |
+| `test_c_measured.py` | Series Q, c measured behind a detector (`examples/events/c_measured/`): the escape tick of every direction of a fan derived from the closed form of the flight (DERIVATIONS_BEAM.md section 11.1) with the engine's lines and compared with the register written before the run and with the run's clicks on the open faces (the tick, the Node, the face), the pace over the fan against c = 1 / sqrt 3, and the readings tool `tools/c_measured_readings.py` on the runner's record ([below](#c-measured-behind-a-detector)) | new (2026-09-21, the model owner's "go for it", record 236; the template `test_amplitude_cone.py`) |
 | `test_bohr_readings.py` | The series H tool reads the engine (the experimenter's rule, 2026-09-20): the flight time from the centre's plane to a face off `FlightTable.manhattan_steps` (5 Links at the age 8, 6 at 10, 1 at 1), the pointer per turn and the coherence ratio off `nature_beam.coherent_pointer` with the circle's tables ((16384, 0) and (-8192, 0) for two units at phase 0 and one at 32, C = 0.2; 1.8 with the third at 0; the slope of [1, 4, 9] is 2), and `read_run` on a run written by the runner (a proton of `p` at (5, 5, 1) of an 11 x 11 x 3 GameBoard on the four in-plane headings, an electron of `e` of span [1, 1, 3] at (8, 5, 1) with the momentum [0, 320, 0], `pass` for `p`, `action` 65536, 20 intervals: the radius 3, j = 0.05859375, the flights 8, the clicks per face equal to the record's, no read, the steps' phases 5, 5, 5, 6 at the ticks 5, 9, 13, 17, the first -x click at tick 16); the expected integers are in the module's docstring |
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the two integer audits (`core/` integers only; `events/` integer numpy and nothing that leaves the integers, `run.py` outside it), LOCALITY-1 documented without an exception, and the six-read test ([below](#locality-and-bounded-local-work)): a Node reads nothing beyond one Link, a change reaches a Node no sooner than the flight allows |
 | `test_group_structure.py` | The group structure named on 2026-09-21: the cube's group of 48 (closed, the identity, every inverse, the hand +1 on 24 rotations and -1 on 24 reflections, multiplicative), the phase circle as the cyclic group with its unit vectors (a turn, a difference, the opposite phase; equal phases 65536, opposite phases its negative, C^2 + S^2 within 361 of 65536), the collision as a group action (the period the class's size, one cycle per class, the inverse undoing the shift, the invariants constant along a cycle) ([below](#the-group-structure)) | new (2026-09-21; the vector program, record 191; BEAM_LAW note 42) |
@@ -231,7 +236,11 @@ derived from `quantum`).
 every direction, 1 / sqrt 3, on the digital line of the momentum, at most
 one Link per interval, the age modulo the direction's period.
 
-- (a) the flight table: for every direction T_d >= S_1 Q and m(tau + 1) -
+- (a) the flight rule (the position's accumulator per direction off the
+  age, `Flight.walk_step`, record 155 of 2026-09-20; until then a step
+  table per direction over its period built from the same rule; the
+  step at tau checked as the m(tau)-th unit step of the line when the
+  count moves): for every direction T_d >= S_1 Q and m(tau + 1) -
   m(tau) in {0, 1}; the periods (1, 0, 0) T 110, L 55; (1, 1, 0) T 156,
   L 39; (1, 1, 1) T 192, L 3; (3, 1, 0) T 350, L 175; a rest direction never
   moves; the first arrival of a heading ray at m Links, m = 1..11, in the
@@ -254,6 +263,16 @@ one Link per interval, the age modulo the direction's period.
 - (e) `adjacent_node` on (3, 2, 1) with x and z periodic (re-pinned from
   `test_event_boundaries`): (2, 1, 0) +X -> (0, 1, 0), (0, 1, 0) -X ->
   (2, 1, 0), (1, 1, 0) +Y -> None, +Z and -Z -> (1, 1, 0) itself.
+- (f) the flight accumulator read in one place (`Flight.accumulator`,
+  the pair (m, the residue); the physics-rule review of no-tables,
+  2026-09-21, item 5; BEAM_LAW note 41 (viii)): on the heading (1, 0, 0)
+  (T_d 110, the rate r = 128 over the wall d = 220) the pairs at the ages
+  0 to 3 are (0, 110), (1, 18), (1, 146), (2, 54); on (1, 1, 0) (T_d 156,
+  r 256, d 312) (0, 156), (1, 100), (2, 44), (2, 300); over 600 ages on
+  every direction of the test's table m equals `manhattan_steps`, the
+  residue equals (tau r + T_d) mod d and stays in [0, d), and
+  `walk_step` is the line's (m mod S_1)-th unit step times [residue + r
+  >= d]; a rest direction holds (0, 1) at every age.
 
 ## The collision table
 
@@ -677,6 +696,38 @@ register's L7 entry), written before the run: Since 2026-09-21 the test derives 
 - (c) one gather per record, one cell each, as many at each counter; the
   file's pins equal the flight formula's (the ages 29 and 29, `same_age`
   true, the Links 17 and 24).
+
+## c measured behind a detector
+
+`tests/test_c_measured.py`, on `examples/events/c_measured/c_measured.json`
+(series Q, `expectations.json` beside it, written before the run by
+`make_world.py`; the register's Q entry): the test derives the register's
+pins from the world and the closed form of the flight
+(DERIVATIONS_BEAM.md section 11.1: the Links made by the age tau on the
+direction D, m_D(tau) = floor((2 tau S_1 Q + T_D) / (2 T_D)), S_1 the
+direction's Manhattan length, T_D its resolution, Q = 64 the label's
+scale, so the k-th Link falls at tau_k = ceil((2 k - 1) T_D / (2 S_1 Q)))
+with the engine's flight table's lines as line_D, and compares; it holds
+no literal of a world's number.
+
+- (a) the register is the closed form: per direction of the lamp's fan the
+  first Link k off the GameBoard, its age tau_k, the click's tick birth +
+  tau_k, its Node after k - 1 Links, its face, the displacement after k
+  Links and the pace |x_k - x_0|_2 / tau_k, equal to the register row by
+  row; the totals (the pace's min, max, mean over the fan; the asymptotic
+  Q |D| / T_D) and the classes (the 6 axes, the 12 face diagonals, the 8
+  body diagonals, the rest by the direction's magnitudes) recomputed; the
+  world's `ticks` past the last escape;
+- (b) the run in process: one birth at the registered tick with the fan's
+  units, one click per direction on a face at the derived tick, Node and
+  face (the direction off the engine's label table from the click's
+  momentum), every direction once, one gather, the books balanced, the
+  escaped amount the clicks;
+- (c) the readings tool reads the runner's record (the world run into a
+  temporary folder): the registered births and clicks, no unmatched
+  click, every escape at its row, the pace totals the register's, the
+  verdict inside; the edge: one registered tick moved by one reads that
+  direction as differing and the verdict outside.
 
 ## The meeting
 
@@ -1695,7 +1746,18 @@ expected integers, written down before the first run:
 - (e) the turn by momentum at a constant momentum: content 16, momentum
   320, `action` 7, phase 5: the turns at the first five Links 2925, 2926,
   2926, 2925, 2926 (mod 64) as `test_nature_beam_body` (d) pins, and
-  `axis_steps` [5, 0, 0] after 24 intervals.
+  `axis_steps` [5, 0, 0] after 24 intervals; and the `action` row's whole
+  part at a Link not crossed, pinned before any change (BEAM_LAW note 41
+  (viii), the owner's item 9; the physics-rule review of no-tables,
+  2026-09-21, item 2): the coincidence body of (a) (content 1, the
+  momentum (64, 64, 0), D = 128 on both axes, x stepping at the even
+  self-creations and y losing every one of its Links) under `action` 7 at
+  N = 64, phase 0, holds after 10 intervals `acc.action` [5, 5, 0] (the
+  residue of five counts of |p| N = 4096 = 7 x 585 + 1 on each axis, in
+  `state.json` too), the drives (0, 0, 0), `axis_steps` [5, 5, 0], `steps`
+  5, the position (9, 4, 0) and the phase 45 = 5 x 585 mod 64 from the x
+  row alone: the y row's five whole parts, 2925, were never delivered
+  (the phase would read 26 with them).
 - (f) the signed drive under a reversal (record 126): content 16, width 8,
   D = 9216, the momentum +1024 for eight self-creations (the drive 8192,
   no Link) and -1024 from the ninth: the first form stepped -x at the
@@ -1836,6 +1898,27 @@ born there carry the content 2, the turn at their birth: the labels 2 x
 the unit vector, the screen's pushes (128, 0, 0) and (128, 12, 0) with the
 share (9, 0, 0), the mirror's second reflection at the share (7, 5, 0);
 the turn 3 and the content 3 on every row until then).
+
+**No remainder discarded (record 155 of 2026-09-20; note 41 (viii)).**
+`tests/test_fraction_free.py` (h): on 2000 random labels, amounts and
+multiplicities the shares of a row pushed k times sum to the whole part of
+k x label x amount over m exactly with the accumulator below m, the floor
+per push alone short by up to k - 1 units; on a bar of a lamp of records
+(three rows per record) and four readers at x = 4 .. 7 the readers' pushes
+sum to the read lines' pushes, strictly between 21 and 22 per unit read
+(the +x row's label 64 over m = 3, the remainder carried), the state
+writing `share` on a row that holds one; (i) `place_over_nodes` on random
+amounts over 2 to 7 Nodes places every amount whole, the claims summing to
+zero within the number of Nodes and every Node within one unit of its
+equal share; `test_nature_beam_body` (c) re-pinned (6, 5, 5 and 5, 6, 5 for
+8, 4, 4 and 4, 8, 4; the lamp on a set at x = 1 for x = 2 with the claims
+(-1, -1, 2)); `bohr/r2`'s gate digests re-pinned (a body on three Nodes).
+
+**The turn by momentum as the `action` row (record 155 of 2026-09-20).**
+`test_nature_beam_body` (d) and `test_step_drive` (e) are unchanged: at a
+constant momentum the row's count at each Link is `by_clock(k0, |p| N, h)`
+(2925, 2926, 2926, 2925, 2926 at |p| 320, N 64, h 7); `acc.action` in the
+record; the refusal of `ticks x |p| x N` beyond the bound as declared.
 
 **The Bell and amplitude readings by record (the alignment).** A paid
 lamp's exact clock stalls where its content has fallen below K (the Bell

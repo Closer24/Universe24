@@ -218,7 +218,10 @@ def print_shells(readings: list[Reading]) -> list[tuple[str, bool]]:
 
 
 def print_singles(readings: list[Reading]) -> None:
-    print("the single probes (the window; the granularity of the fan: a probe on a line reads its beam)")
+    print(
+        "GAMEBOARD (a host reading of the GameBoard, the probes' counts) the single probes "
+        "(the window; the granularity of the fan: a probe on a line reads its beam)"
+    )
     print("| r | direction | Node | k scalar | k age | k scalar x r^2 | k age x r |")
     print("| --- | --- | --- | --- | --- | --- | --- |")
     by_kind = {r.kind: r for r in readings}

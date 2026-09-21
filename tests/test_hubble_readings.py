@@ -41,7 +41,7 @@ import numpy as np
 from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.nature_beam import flight_table
+from event_universe.events.nature_beam import direction_flight
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import HEADING_OFFSET, Q
 
@@ -94,11 +94,11 @@ def bar_world() -> dict[str, object]:
 
 
 def test_the_speed_and_the_distance_are_the_flight_tables():
-    table = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
+    table = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
     heading = np.array([HEADING_OFFSET])
     assert int(table.period[HEADING_OFFSET]) == 55
     assert int(table.manhattan_steps(heading, np.array([55]))[0]) == 32
-    assert TOOL.HEADINGS_TABLE.period[HEADING_OFFSET] == 55
+    assert TOOL.HEADINGS_FLIGHT.period[HEADING_OFFSET] == 55
     assert TOOL.links([17.0, 34.0]).tolist() == [10, 20]
     assert TOOL.links([16.0, 33.0]).tolist() == [9, 19]
 

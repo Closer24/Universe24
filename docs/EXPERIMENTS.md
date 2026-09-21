@@ -16,7 +16,12 @@ the run and its result recorded with that fingerprint in the
 suite, and no test of the test suite is an experiment: a test pins a contract
 of the code, an experiment asks the model a question it may answer either way.
 A stated acceptance requirement is not a passing test, and a passing run is
-not a law of nature (Highlights 3.21, 5.5).
+not a law of nature (Highlights 3.21, 5.5). Since the model owner's record
+163 of 2026-09-20 the register's pins are detector readings (the clicks
+and the records a run writes), and what the tools read off the GameBoard
+itself (`shell_readings`, the cube flux, the probes' counts and every
+replay of the engine) is a host reading, labelled GAMEBOARD on every line
+a tool prints: it exists for us, not in the model.
 
 **Who decides.** The model owner decides which entries exist, in what order
 they run, what each one pins, and what an outcome means for the model. A
@@ -2723,6 +2728,41 @@ states "exactly" and means integer equality at every tick.
   of 27 Nodes) are open again. The registered verdicts stand as history
   ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
 
+- **Re-read under the turn by momentum as a row of the table of counts
+  (2026-09-20; measured, nothing pinned; the model owner's record 155,
+  [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (i)).**
+  The electron's momentum changes at every push along the orbit, so the
+  count off the Links stepped, `by_clock(k0, |p| N, h)`, re-priced every
+  earlier Link on the axis at the present |p|; the `action` row sums |p| N
+  Link by Link. The turn changes nothing of the step, so every orbit is
+  the signed drive's to the Link: the same closings, periods, returns,
+  mean radii and escapes in all seven worlds (`r2` T 449, out through
+  face:-y at 1264; `r4` T 545 and 1588, out at 2190; `r6` T 1041, out at
+  2160; `r8` T 1292 and 2016, out at 3869; `r12` no closing, out at 2059;
+  `r15` T 2543 with the return 3 within r / 4, out at 3443; `r16` out at
+  1888), the books identical at every tick; what moves is the phase at a
+  closing by a step or two (`r2` 30 for 31; `r4` 61 and 36 for 61 and 37;
+  `r6` 31 for 39; `r8` 55 and 53 for 54 and 52; `r15` 62 for 0) and with
+  it the coherence of the faces' record: `r4`'s turn per orbit 0.609
+  against the design's 0.463 (0.625) with C(2) = 0.49 (0.51), inside;
+  `r8`'s turn per orbit 0.969 against 0 as before and C(2) = 1.24 (0.99),
+  now inside the closing criterion C >= 1.0 after 2 turns. 0 record checks
+  failed; 2 readings inside and 0 outside (1 and 1). The ladder still
+  takes no ratio (no closing radius returns within r / 4 at r = 8 with two
+  turns); the verdict as re-read stands: what the law lacks is a stable
+  closed orbit under whole kicks. The events of the seven worlds moved
+  and their books did not; the numbers above are kept as history.
+- **Re-read under the Nodes' claims (2026-09-20; measured, nothing
+  pinned; record 155 (3), [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (viii)).**
+  The electron is a body on three Nodes, and its field rows are now
+  placed over them by the Nodes' claims (`place_over_nodes`) in place of
+  the leftover unit to the Node `age mod 3`: the events and the books of
+  all seven worlds move (where a row is born on the set), and nothing of
+  the readings: every orbit, closing, period, return, mean radius, escape
+  and phase at a closing, `r4`'s turn per orbit 0.609 and C(2) = 0.49,
+  `r8`'s 0.969 and C(2) = 1.24, are the action-row re-read's to the
+  digit; 0 record checks failed, 2 readings inside, 0 outside. The
+  verdict stands.
 
 ### I, the nucleus (2026-09-20)
 
@@ -4128,6 +4168,74 @@ sequential gates on an entangled record, the full register replay.
   of the falling rate), no contact, no `bond` row or click, `held.bond` 2
   at 3000, the proton's held (1834, 0, 1, 2, 0, 0), no step. B1 and B3
   are identical (no lamp, no crowd on a fan). The verdict stands.
+
+### Q, c measured behind a detector (2026-09-21)
+
+- **Confronts.** The model owner's "go for it" of 2026-09-21 (record 236 of
+  the day's log: verify c by a run behind a detector against the formula)
+  under his rule that a formula gives and a run proves (record 205; the
+  register entry carries the derivation's section beside its number and
+  the test derives and compares): whether every row of a fan leaves the
+  GameBoard through an open face (an open face is a detector, an escape is
+  a click) at the tick the closed form of the flight gives
+  ([DERIVATIONS_BEAM section 11.1](DERIVATIONS_BEAM.md#111-the-linear-block-the-lattice-as-the-translation-group-the-shift-operator-and-the-flights-closed-form),
+  the Links made by the age tau, m_D(tau) = floor((2 tau S_1 Q + T_D) /
+  (2 T_D)) on the direction's digital line, D the direction vector, S_1
+  its Manhattan length, T_D its resolution and Q = 64 the label's scale,
+  so that the k-th Link falls at the age tau_k = ceil((2 k - 1) T_D /
+  (2 S_1 Q))), on every direction, and what Euclidean pace the faces read
+  against c = 1 / sqrt 3 Links per interval and its finite grain
+  ([FORM.md section 1](designs/light_speed/FORM.md), 0.5774 to 0.5818 at
+  Q = 64). Read at the faces only: the click's tick, its Node and its
+  face (the direction off the click's momentum label through the engine's
+  own table; the click record carries no age and no direction, the age
+  being the tick less the lamp's own `birth` tick).
+- **Model prediction, pinned before the run
+  ([the expectations](../examples/events/c_measured/README.md#the-expectation-written-before-the-run),
+  `examples/events/c_measured/expectations.json` and `derived.csv`, written
+  by `make_world.py` from the closed form).** One open cube of 65^3 (the
+  half-width 32), Q 64, N 64, one lamp of `light` at the centre with the
+  content 290 at K 290 (one birth at tick 1 of one record of 290 rows on
+  the fan of 290 primitive directions with |a| + |b| + |c| <= 6, the
+  content spent, then a turn of 0), 100 intervals. Per direction the
+  escape at its first Link k off the GameBoard, the click at tick 1 +
+  tau_k on the Node after k - 1 Links: the 6 axes at the age 56 (33
+  Links, the pace 33 / 56 = 0.5893), the 12 face diagonals at 79 (65
+  Links, 0.5819), the 8 body diagonals at 97 (97 Links, 0.5774), the 264
+  others at the ages 57 to 84 (the pace 0.5718 to 0.5884); over the fan
+  the pace min 0.5718, max 0.5893, mean 0.5810 against c = 0.5774 and the
+  asymptotic Q |D| / T_D over the fan 0.5774 to 0.5818 (mean 0.5784, the
+  same range as FORM.md's table within 64, its extremes the body diagonal
+  and the heading); 290 clicks on the faces and none elsewhere, the
+  escaped momentum (0, 0, 0), one gather, the books balanced. Two
+  properties of the grain, from the derivation: the finite escape's pace
+  spreads wider than the asymptotic range (the first Link at the first
+  interval and the ceiling of tau_k), and the line's tie (the lowest axis
+  first) is not covariant under the permutation of the axes ((5, 1, 0)
+  escapes at Link 39, age 57; (1, 5, 0) at Link 40, age 59; the faces
+  57, 47, 41 per pair). Refutation: any click whose tick, Node or face
+  differs from the derived one of its direction, or a pace outside the
+  derived range.
+- **Features.** The open faces as detectors, the lamp's single birth (E =
+  h f: the content spent), the record form's click line per row;
+  `tools/c_measured_readings.py`; `tests/test_c_measured.py`
+  (derive-and-compare, the template `tests/test_amplitude_cone.py`).
+- **Run (2026-09-21, `python -m event_universe --init
+  examples/events/c_measured/c_measured.json`, headless, 100 intervals,
+  0.39 s, the source fingerprint `acf789fe0811`, completed and conserved
+  at every tick; the readings by `tools/c_measured_readings.py`, its
+  verdict inside; DETECTOR unless said).** One birth at tick 1; 290 clicks
+  on the faces (`face:+x` 57, `face:-x` 57, `face:+y` 47, `face:-y` 47,
+  `face:+z` 41, `face:-z` 41), 290 of 290 at the derived tick, Node and
+  face, none differing; the pace over the fan min 0.5718, max 0.5893,
+  mean 0.5810, every class as pinned
+  ([the table](../examples/events/c_measured/README.md#what-was-measured-2026-09-21));
+  one gather at the end; the two properties of the grain confirmed by the
+  clicks. Inside on every reading, nothing moved. No rule touched (the
+  flight rule read against the three tests: generic, vector, local). The
+  run establishes that the engine's flight is its closed form on every
+  direction of the fan and that a detector on the faces reads c = 1 / sqrt
+  3 within the grain of the finite escape; it establishes no physical law.
 
 ### A3. Bell test in phase form, delayed geometry
 
@@ -8632,3 +8740,60 @@ sign rule, and its other couplings are catalog entries.
   E x 64 = 44, -44, 44, 44 and S = 176 / 64 = 2.75 against the bounds 2
   and 2 sqrt 2 = 2.83, the runs' gathers equal to the register on every
   world; a demonstration of the registered L3 runs, no new reading.
+
+### The visual gallery (2026-09-21)
+
+The model owner's request of 2026-09-21 (translated: "a visualisation
+agent on a separate, strong machine, so that one can see in beautiful HTML
+pages all the different situations we talk about ... beams and clicks,
+that is what we have; make it beautiful"): one HTML page per situation
+under `docs/pages/gallery/`, each with the run playing inside the page (a
+frame player with play and pause, a slider over the intervals, the GIF as
+a link), the GameBoard drawn with the world file's name of every thing on
+it, and every number from the run's files or from the register with the
+path named; the moving picture a GameBoard reading, the clicks and the
+pushes detector readings. A page made from a registered world changes
+nothing in it and pins nothing; a page made from a demonstration world
+([`examples/events/gallery/`](../examples/events/gallery/README.md)) says
+so and registers nothing. Written by `tools/gallery_pages.py`
+(`tests/test_gallery_pages.py` pins the capture to the engine's stores);
+the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
+
+- [The beam](pages/gallery/beam.html): a lamp's rows spreading on the
+  digital lines of its fan, the phase as colour, the front against the
+  circle of c and the L1 bound (the demonstration world `beam_fan`).
+- [The clicks](pages/gallery/clicks.html): a plate of pixels on the far
+  side of a narrow beam, every record's one click landing on one pixel by
+  the ladder's rungs and its wheel value u, the click list growing one
+  line per record (the demonstration world `clicks_plate`; the catalog's
+  optical bench cited beside it).
+- [Our world](pages/gallery/worlds.html): the vector world, the software
+  world and our world side by side for one record from its birth to its
+  click, on the registered Mach-Zehnder world with equal arms
+  (`amplitude/mz_equal`): the rows as points and the record's pointer at
+  the ports, the store's int64 columns and the gather line, and the one
+  click D1 read; the register's D1 64, D2 0 beside the run's.
+- [The nucleus](pages/gallery/nucleus.html): series I's `deuteron_1`
+  (bound at one Link, the strong rows' escape clicks on the border
+  `lifetime`), `deuteron_3` (free at three Links, the pair leaving through
+  the faces) and `alpha_square` (sheared apart), run as declared; the
+  pushes, hand-overs, steps and exits of the runs beside the register's.
+- [The decay](pages/gallery/decay.html): series J's `j3_neutron_free`
+  (the transformation `become` at 512, the beta's click at the shell),
+  `j3_deuteron` (the bound neutron firing later, at 568) and `w_exchange`
+  (the W thrown and measured one Link and one interval later), run as
+  declared; the trigger ticks and counts of the runs beside the
+  register's, J1, J2 and P cited from the register.
+- [The collision](pages/gallery/collision.html): six declared rows on an
+  open 9^3 cube of free space, the head-on pair parking on the rest slots,
+  turning to another axis and leaving, the triple's odd unit going on, the
+  diagonal unit a spectator; the slots occupied per interval (the
+  demonstration world `collision`).
+- [High-energy rows](pages/gallery/energy.html): series K under the
+  meeting, `mass_meeting` beside `control`, run as declared: the beam bent
+  toward the mass, the screen's centroid, the rows the mass took and the
+  books' turned line of the runs beside the register's.
+- [The atom](pages/gallery/atom.html): series H's `r8`, run as declared:
+  the electron circling the proton with its momentum arrow and its copies
+  spreading, its phase turning by its momentum, the proton's shell of
+  copies; the steps and the exit of the run beside the register's.

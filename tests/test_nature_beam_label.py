@@ -89,7 +89,7 @@ from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import (
     Q,
-    flight_table,
+    direction_flight,
     label_weights,
     momentum_labels,
     unit_label,
@@ -135,7 +135,7 @@ def test_the_table_is_the_nearest_integer_vector_at_the_scale_q_without_ties():
     for port, heading in enumerate(PORT_HEADINGS):
         assert unit_label(heading) == tuple(64 * c for c in heading), port
     assert unit_label((0, 0, 0)) == (0, 0, 0)
-    table = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS, *FAN, *NEGATIVES))
+    table = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS, *FAN, *NEGATIVES))
     assert table.labels[:2].tolist() == [[0, 0, 0], [0, 0, 0]]
     for row, direction in zip(table.labels[2:], (*PORT_HEADINGS, *FAN, *NEGATIVES), strict=True):
         assert row.tolist() == list(unit_label(direction)), direction
@@ -329,7 +329,7 @@ def test_the_bound_refuses_a_label_of_two_to_the_fifty_six_and_accepts_one_less(
         )
         assert parsed.in_transit[0].amount == (1 << 56) - 1
     assert MOMENTUM_BOUND // Q == (1 << 56) - 1
-    labels = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS, (1, 1, 0))).labels
+    labels = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS, (1, 1, 0))).labels
     heading, diagonal = 2, 8
     node = np.array([[2, 2, 2]], dtype=np.int64)
     for amount, content, free in ((1 << 28, 1 << 28, False), (1 << 56, 0, True)):

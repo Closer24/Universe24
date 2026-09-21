@@ -41,7 +41,7 @@ from pathlib import Path
 
 from event_universe.core.integer import by_clock
 from event_universe.events import parse_nature_beam_world
-from event_universe.events.nature_beam import flight_table
+from event_universe.events.nature_beam import direction_flight
 from event_universe.events.world import LABEL_SCALE, MeasuredDefinition, NatureBeamWorld
 from event_universe.world_loading import world_of_run
 
@@ -50,7 +50,7 @@ from event_universe.world_loading import world_of_run
 # is a reader of the record, never a second owner of a rule): the release
 # off the clock `core.integer.by_clock` (the primitive the engine's release
 # calls), the fan's labels off the flight table
-# `nature_beam.flight_table`, the scale `world.LABEL_SCALE`, the world's
+# `nature_beam.direction_flight`, the scale `world.LABEL_SCALE`, the world's
 # keys and the source's Node through `parse_nature_beam_world`.
 MODEL_PREFIX = "rays-orbit-"
 MODEL_SUFFIX = "-plane-v1"
@@ -78,9 +78,9 @@ def fan_emission(world: NatureBeamWorld, source: MeasuredDefinition) -> float:
 def fan_label(world: NatureBeamWorld, source: MeasuredDefinition) -> float:
     """The mean label magnitude of the source's fan in units of Q: the mean
     |u_d| / Q over its declared directions, u_d the label of one unit
-    along d off the engine's flight table (`FlightTable.labels`, the unit
+    along d off the engine's flight table (`Flight.labels`, the unit
     vector of the direction at the scale Q)."""
-    labels = flight_table(world.directions).labels
+    labels = direction_flight(world.directions).labels
     return sum(
         math.hypot(*(int(v) for v in labels[direction])) / LABEL_SCALE for direction in source.directions
     ) / len(source.directions)

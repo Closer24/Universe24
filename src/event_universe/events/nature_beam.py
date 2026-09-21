@@ -12,7 +12,7 @@ border. The law is ONE generic
 function (the owner's name): `nature_beam` performs the interval's steps in
 order, each a bijection on the GameBoard's state except the border:
 
-1. the walk: every ray whose flight table steps this interval is created at
+1. the walk: every ray whose flight rule steps this interval is created at
    the neighbour along its step (the wrap on a periodic axis; through an
    open face it clicks on the face detector), its age advanced by one (the
    age is the count of intervals since the measured event that created the
@@ -74,16 +74,16 @@ order, each a bijection on the GameBoard's state except the border:
 
 Every momentum the law reads or moves is the one label of the rows,
 `momentum_labels` (content x amount x u_d for a paid family, amount x u_d
-for a free one, u_d the unit vector of the direction at the flight table's
+for a free one, u_d the unit vector of the direction at the flight's
 scale Q = 64: the integer vector nearest Q D / |D|, `unit_label`, one
-world constant per direction on the flight table, exactly Q e_d on a
+world constant per direction of the flight, exactly Q e_d on a
 heading; the model owner's decision of 2026-09-19 on the physics-rule
 reviewer's verdict, BEAM_LAW section 2 and note 23): the push's moment, the
 click's momentum, the face click's, the recoil at a release or a
 re-emission and the transit line of the books; no momentum is read off a
 Port, and the reading's vector and tensor moments are taken on u_d as
 well, so a fan's flow reads Q per unit of amount direction-blind. No other
-function holds a piece of the law: `flight_table`, `collision_table` and
+function holds a piece of the law: `direction_flight`, `collision_table` and
 `read_arrivals` are the pure tables and the one reading it takes;
 `NatureBeamStore` is the structure of arrays it moves. Integers only. The engine
 (`engine.py`) schedules and books; it computes no physics.
@@ -156,7 +156,7 @@ from event_universe.events.world import (
 
 Record = Callable[[dict[str, object]], None]
 # The one scale of the law is the world's constant `world.Q`: the time
-# resolution of the flight table, T_d = isqrt(3 |v|^2 Q^2), and the length of
+# resolution of the flight, T_d = isqrt(3 |v|^2 Q^2), and the length of
 # a unit's momentum label, u_d the integer vector nearest Q D / |D|
 # (`world.LABEL_SCALE` is the same number); the parser derives the age bound
 # from it.
@@ -243,11 +243,20 @@ class NatureBeam:
     # identity field of the merge. The flight, the collision, the push and
     # every moment never read it; a table entry's parity filter does.
     hand: int = 0
+    # The share's accumulators (the model owner's record 155 of 2026-09-20,
+    # "no remainder discarded"; BEAM_LAW note 41 (viii)): per axis the part
+    # of the row's push on a body not yet delivered, `share_of`; 0 on a row
+    # of no record and on every row that never pushed; summed at a merge;
+    # left with the row when it is absorbed or escapes.
+    share_x: int = 0
+    share_y: int = 0
+    share_z: int = 0
 
     def record_line(self, vectors: np.ndarray, handed: bool = False) -> dict[str, object]:
         """The row as `state.json` writes it, the direction as its vector;
         a row of a record with its columns, a row of no record without
-        them; in a world that declares a hand with its `hand`."""
+        them; in a world that declares a hand with its `hand`; a row that
+        holds an undelivered share with its `share`."""
         line: dict[str, object] = {
             "direction": [int(v) for v in vectors[self.direction]],
             "age": self.age,
@@ -263,6 +272,8 @@ class NatureBeam:
             line["u"] = self.birth
         if handed:
             line["hand"] = self.hand
+        if self.share_x or self.share_y or self.share_z:
+            line["share"] = [self.share_x, self.share_y, self.share_z]
         return line
 
 
@@ -532,35 +543,73 @@ def ages_at_key(age: np.ndarray, key: int) -> np.ndarray:
     return result
 
 
-# -- the flight table ------------------------------------------------------------
+# -- the flight ------------------------------------------------------------------
 
 
 @dataclass(frozen=True)
-class FlightTable:
-    """One world constant per direction: v, S_1 = |a| + |b| + |c|,
-    T_d = isqrt(3 |v|^2 Q^2), the Bresenham line of v (S_1 unit steps), the
-    least period L_d of the flight phase, the step table (the Link a ray of
-    direction d crosses at age tau: a heading, or zero for no move) and
+class Flight:
+    """The flight of a direction set, one world constant per direction: v,
+    S_1 = |a| + |b| + |c|, T_d = isqrt(3 |v|^2 Q^2), the Bresenham line of
+    v (its S_1 unit steps, `lines`), the least period L_d of the flight's
+    phase (a fact about the rate, which the readers use for c) and
     `labels`, the unit vector u_d of each direction at the scale Q
     (`unit_label`; (0, 0, 0) for a rest direction): the momentum label of
     one unit of amount along d, the same length within sqrt 3 / (2 Q) for
-    every direction and exactly Q e_d on a heading. The reading's weight
-    at the relative speed (BEAM_LAW note 38) reads `vectors` and
-    `resolution` alone: a direction's velocity is (Q / T_d) v per axis."""
+    every direction and exactly Q e_d on a heading. The Link a ray crosses
+    at an age is the position's accumulator rule (`walk_step`; the model
+    owner's record 155 of 2026-09-20, "no tables": until then a step table
+    per direction over its period, built from the same rule at load). The
+    reading's weight at the relative speed (BEAM_LAW note 38) reads
+    `vectors` and `resolution` alone: a direction's velocity is (Q / T_d)
+    v per axis."""
 
     vectors: np.ndarray
     manhattan: np.ndarray
     resolution: np.ndarray
     period: np.ndarray
     lines: np.ndarray
-    steps: np.ndarray
     labels: np.ndarray
 
     def manhattan_steps(self, direction: np.ndarray, age: np.ndarray) -> np.ndarray:
         """m(tau) = (2 tau S_1 Q + T_d) // (2 T_d): the Manhattan steps made
-        by age tau."""
+        by age tau, the whole count of the position's accumulator (below)
+        over the ages 0 .. tau - 1."""
         s1, t = self.manhattan[direction], self.resolution[direction]
         result: np.ndarray = (2 * age * s1 * Q + t) // (2 * t)
+        return result
+
+    def accumulator(self, direction: np.ndarray, age: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+        """The position's accumulator of a ray of direction d at age tau,
+        formed in this one place (BEAM_LAW note 41 (viii)): the pair (m,
+        the residue), m = m(tau) the count of Manhattan steps made by the
+        age and the residue (tau r + T_d) mod d what the accumulator holds
+        toward the next step, r = 2 S_1 Q its rate and d = 2 T_d its wall
+        (T_d the direction's resolution, S_1 its Manhattan length, Q the
+        label's scale). `walk_step` reads it for the interval's step; the
+        click's exact phase reads the residue at an arrival (TWO_SLITS.md
+        section 2). A ray's rate never changes over its flight (a
+        re-release or a split is a new row at age 0), so both are off the
+        age and the row carries no field for them."""
+        s1, t = self.manhattan[direction], self.resolution[direction]
+        held = age * (2 * s1 * Q) + t
+        denominator = 2 * t
+        return held // denominator, held % denominator
+
+    def walk_step(self, direction: np.ndarray, age: np.ndarray) -> np.ndarray:
+        """The Link a ray of direction d crosses at age tau (a heading, or
+        zero for no move), by the position's accumulator on the row, the
+        one count rule of the law (BEAM_LAW note 41 (viii); the digital
+        line of the flight): the accumulator gains r = 2 S_1 Q at every
+        interval over d = 2 T_d from the start T_d (`accumulator`), e =
+        [acc + r >= d] is the Manhattan step of the interval (r <= d, so e
+        is 0 or 1), and the step is the m-th unit step of the direction's
+        line, m the count made before it (FORM.md section 1 (i))."""
+        s1, t = self.manhattan[direction], self.resolution[direction]
+        rate = 2 * s1 * Q
+        made, residue = self.accumulator(direction, age)
+        moved = (residue + rate) // (2 * t)
+        place = np.where(s1 > 0, made % np.maximum(s1, 1), 0)
+        result: np.ndarray = self.lines[direction, place] * moved[:, None]
         return result
 
 
@@ -602,8 +651,8 @@ def _bresenham(vector: tuple[int, int, int]) -> list[tuple[int, int, int]]:
     return line
 
 
-def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
-    """The flight table of a direction set, computed once at load."""
+def direction_flight(vectors: tuple[tuple[int, int, int], ...]) -> Flight:
+    """The flight of a direction set, its constants computed once at load."""
     count = len(vectors)
     manhattan = np.zeros(count, dtype=np.int64)
     resolution = np.ones(count, dtype=np.int64)
@@ -626,31 +675,11 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
     for index, line in enumerate(lines_list):
         for j, step in enumerate(line):
             lines[index, j] = step
-    # The label table: the unit vector of every direction at the scale Q.
+    # The labels: the unit vector of every direction at the scale Q.
     labels = np.array([unit_label(vector) for vector in vectors], dtype=np.int64).reshape(count, 3)
-    table = FlightTable(
-        np.array(vectors, dtype=np.int64).reshape(count, 3),
-        manhattan,
-        resolution,
-        period,
-        lines,
-        np.zeros(0),
-        labels,
+    return Flight(
+        np.array(vectors, dtype=np.int64).reshape(count, 3), manhattan, resolution, period, lines, labels
     )
-    longest_period = int(period.max(initial=1))
-    # The step table is small integers (a heading or zero): one byte each.
-    steps = np.zeros((count, longest_period, 3), dtype=np.int8)
-    for index in range(count):
-        s1 = int(manhattan[index])
-        if s1 == 0:
-            continue
-        ages = np.arange(int(period[index]), dtype=np.int64)
-        direction = np.full(ages.shape, index, dtype=np.int64)
-        m0 = table.manhattan_steps(direction, ages)
-        m1 = table.manhattan_steps(direction, ages + 1)
-        moved = m1 > m0
-        steps[index, : len(ages)] = np.where(moved[:, None], lines[index, m0 % s1], 0)
-    return FlightTable(table.vectors, manhattan, resolution, period, lines, steps, labels)
 
 
 # -- the collision table ---------------------------------------------------------
@@ -736,16 +765,16 @@ def collision_table() -> CollisionTable:
 
 @dataclass(frozen=True)
 class NatureBeamTables:
-    """The two pure tables of a world and the circle's tables: the flight
-    table of its direction set, the collision table (the group action of
-    the shift on the slot states), the phase circle (`circle`, the cyclic
-    group of N steps with its unit vectors) and its cosines and sines at
-    1/256 as arrays for the vectorized readings. The window is not a table
-    but the one floor `window_admits` of a distance against a width (since
-    2026-09-20; until then a table over the distances of the half
-    circle)."""
+    """The constants of a world's law: the flight of its direction set (the
+    position's accumulator rule per direction, `Flight`), the collision
+    table (the group action of the shift on the slot states), the phase
+    circle (`circle`, the cyclic group of N steps with its unit vectors)
+    and its cosines and sines at 1/256 as arrays for the vectorized
+    readings. The window is not a table but the one floor `window_admits`
+    of a distance against a width (since 2026-09-20; until then a table
+    over the distances of the half circle)."""
 
-    flight: FlightTable
+    flight: Flight
     collision: CollisionTable
     circle: PhaseCircle
     cosines: np.ndarray
@@ -757,7 +786,7 @@ class NatureBeamTables:
 
 def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
     circle = phase_circle(world.phase_steps)
-    flight = flight_table(world.directions)
+    flight = direction_flight(world.directions)
     return NatureBeamTables(
         flight,
         collision_table(),
@@ -784,6 +813,9 @@ FIELDS = (
     "multiplicity",
     "birth",
     "hand",
+    "share_x",
+    "share_y",
+    "share_z",
 )
 # The fields that make two rows identical (the amount is what the merge
 # adds); since `amplitude-v1` the record, the branch and the multiplicity
@@ -810,7 +842,7 @@ ONE_PATH = 1
 NO_RECORD_COLUMNS = {"record": NO_RECORD, "branch": NO_BRANCH, "multiplicity": ONE_PATH, "birth": 0}
 # The columns a caller may leave out of `append`: the record's four and
 # the hand (a row without a declaration has none).
-COLUMN_DEFAULTS = {**NO_RECORD_COLUMNS, "hand": NO_HAND}
+COLUMN_DEFAULTS = {**NO_RECORD_COLUMNS, "hand": NO_HAND, "share_x": 0, "share_y": 0, "share_z": 0}
 # The place of `phase` in the identity fields: the merge of a record's rows
 # reads it modulo the half circle with a sign (the cancel).
 PHASE_FIELD = IDENTITY_FIELDS.index("phase")
@@ -876,16 +908,54 @@ def label_overflow_rows(
     return result
 
 
-def share_of(label: int, amount: int, multiplicity: int) -> int:
-    """A record row's push on matter along one axis (stage (vii) step 3,
+def share_of(label: int, amount: int, multiplicity: int, accumulator: int = 0) -> tuple[int, int]:
+    """A record row's push on a body along one axis (stage (vii) step 3,
     the K finding of 2026-09-20): its share amount^2 / m of the quantum's
     unit label (the record's norm is in m: the shares of a record's rows
-    sum to one), `label x amount // m` floored toward zero on the row's
-    label `label` (amount x content x u_d), exact on the host's integers;
-    the rest of the label, label - share, is the books' `remainder`. A
-    row of no record (m 1, the label its own) pushes by its label."""
-    whole = abs(label) * amount // multiplicity
-    return -whole if label < 0 else whole
+    sum to one), the whole part of `accumulator + label x amount` in units
+    of m toward zero (`label` the row's label, amount x content x u_d) and
+    the remainder kept: since the model owner's record 155 of 2026-09-20
+    (BEAM_LAW note 41 (viii)) the row's own accumulator, the part of its
+    push not yet delivered, so that a row read at every interval of its
+    passage pushes the exact sum over the passage and nothing is
+    discarded while the row lives; the remainder leaves with the row when
+    it is absorbed (to the books' `remainder` line with the rest of the
+    label, label - share) or escapes. Returns (the share, the accumulator
+    after). A row of no record (m 1, the label its own) pushes by its
+    label."""
+    total = accumulator + label * amount
+    whole = abs(total) // multiplicity
+    share = -whole if total < 0 else whole
+    return share, total - share * multiplicity
+
+
+def place_over_nodes(counts: CountTable, amount: int, ways: int) -> list[int]:
+    """`amount` whole units placed over the `ways` Nodes of a body on a
+    set (BEAM_LAW note 41 (viii); the model owner's record 155): every
+    Node's `place` row of the body's table gains the amount, the whole
+    part `amount // ways` goes to every Node and is taken off every row,
+    and the `amount mod ways` units left go one each to the Nodes whose
+    row holds the largest claim (ties to the lower Node), each taking
+    `ways` off its row; the rows sum to zero after every placement and
+    each stays within `ways` of zero, so every Node is within one unit of
+    its equal share of everything the body has ever released, and no
+    remainder is discarded: the claim carries to the next row and the
+    next self-creation. Until record 155 the leftover units went to the
+    Nodes counted from `age mod ways`, an exact apportioning within the
+    row whose ties were reset at every row (`apportion_whole`)."""
+    rows = counts.of("place")
+    if len(rows) != ways:
+        raise ValueError(f"{BEAM_LAW}: a body of {ways} Nodes has {len(rows)} place rows")
+    base, left = divmod(amount, ways)
+    shares = [base] * ways
+    for row in rows:
+        row.accumulator += amount - base * ways
+    if left:
+        order = sorted(range(ways), key=lambda k: (-rows[k].accumulator, k))
+        for k in order[:left]:
+            shares[k] += 1
+            rows[k].accumulator -= ways
+    return shares
 
 
 def label_weights(amount: np.ndarray, content: np.ndarray, free: bool) -> np.ndarray:
@@ -917,7 +987,7 @@ def momentum_labels(
 ) -> np.ndarray:
     """The one momentum label of rows of rays, (rows, 3): the label weight
     (`label_weights`) along the unit vector of the direction at the scale
-    Q (`labels`, the flight table's `labels`), content x amount x u_d for
+    Q (`labels`, the flight's `labels`), content x amount x u_d for
     a paid family, amount x u_d for a free one. The product is checked
     BEFORE it is formed, per row, weight x max|u_d| within 2^62 - 1
     (`label_overflow_rows`); the first row beyond it is refused loudly
@@ -1104,6 +1174,9 @@ class NatureBeamStore:
         self.multiplicity: np.ndarray
         self.birth: np.ndarray
         self.hand: np.ndarray
+        self.share_x: np.ndarray
+        self.share_y: np.ndarray
+        self.share_z: np.ndarray
 
     @property
     def size(self) -> int:
@@ -1245,7 +1318,22 @@ class NatureBeamStore:
                 if modulus
                 else amount
             )
+        # The undelivered shares of merged rows add (the momentum a row has
+        # not yet delivered is the group's); bounded like the amounts.
+        shares_summed: dict[str, np.ndarray] = {}
+        for name in ("share_x", "share_y", "share_z"):
+            column = getattr(self, name)
+            if column.any():
+                summed = np.add.reduceat(column.astype(object), starts)
+                if max(abs(int(v)) for v in summed) > MOMENTUM_BOUND:
+                    raise OverflowError(
+                        f"{BEAM_LAW}: the undelivered share of a merged row exceeds the integer "
+                        f"bound {MOMENTUM_BOUND}"
+                    )
+                shares_summed[name] = summed.astype(np.int64)
         self.keep(~same)
+        for name, summed in shares_summed.items():
+            setattr(self, name, summed)
         if modulus:
             # The cancel: the signed sum's magnitude stays, at the phase of
             # the larger side (the half-circle phase of the group, plus the
@@ -1295,13 +1383,16 @@ class NatureBeamStore:
                 int(self.multiplicity[i]),
                 int(self.birth[i]),
                 int(self.hand[i]),
+                int(self.share_x[i]),
+                int(self.share_y[i]),
+                int(self.share_z[i]),
             )
             for k, i in enumerate(range(lo, stop))
         ]
 
     def labels(self, rows: np.ndarray, unit: np.ndarray, free: bool) -> np.ndarray:
         """The momentum labels of the given rows (`momentum_labels`, the one
-        label of the law) along the unit vectors `unit` (the flight table's
+        label of the law) along the unit vectors `unit` (the flight's
         `labels`)."""
         return momentum_labels(
             unit,
@@ -1370,7 +1461,7 @@ class GameBoardDiagnostics:
 
     def __init__(self, shape: Address3, vectors: np.ndarray, rows: list[ArrivalRows]) -> None:
         self.shape = shape
-        # The unit vectors of the directions (the flight table's `labels`).
+        # The unit vectors of the directions (the flight's `labels`).
         self.vectors = vectors
         self.rows = rows
         self._moments: tuple[list[np.ndarray], list[np.ndarray], list[np.ndarray]] | None = None
@@ -1711,7 +1802,7 @@ class FamilyPlan:
     t_multiplicity: list[int] = field(default_factory=list)
     h_birth: list[int] = field(default_factory=list)
     t_birth: list[int] = field(default_factory=list)
-    # The shares of the taken rows (their push on matter, `share_of`; the
+    # The shares of the taken rows (their push on a body, `share_of`; the
     # label itself on a row of no record), the remainder per group (the
     # labels less the shares of an absorbed group, to the books) and the
     # remainder per measured event of the home rows.
@@ -2104,7 +2195,7 @@ def flux_pair(
     message meet over the message's own rate, one scalar per (direction,
     body) as a pair (numerator, denominator): with the direction's
     velocity (Q / T_d) v per axis (v = (a, b, c) the vector, T_d its
-    resolution from the flight table, |v|^2 its squared length) and the
+    resolution from the flight, |v|^2 its squared length) and the
     body's quantised speed w_a / G per axis (`quantised_speed`), the
     factor 1 - (v_body . c_d) / |c_d|^2 in integers,
 
@@ -2126,7 +2217,7 @@ def flux_pair(
 
 
 def weighted_flow(
-    flight: FlightTable,
+    flight: Flight,
     arrivals: list[int],
     labels: list[list[int]],
     entry: Measured,
@@ -2433,14 +2524,14 @@ def nature_beam(
             collide(store, backward=True)
             resting = store.direction < REST_DIRECTIONS
             # The age back by one (whole; a rest ray keeps its age); the
-            # flight table is read modulo the period. A ray at age 0 is at
-            # its birth, which has no inverse.
+            # Link crossed at that age by the flight's rule. A ray at age 0
+            # is at its birth, which has no inverse.
             back = np.where(resting, store.age, store.age - 1)
             if (back < 0).any():
                 raise ValueError(
                     f"{BEAM_LAW}: the inverse walk of a ray at age 0 (its birth has no inverse)"
                 )
-            step = flight.steps[store.direction, back % flight.period[store.direction]].astype(np.int64)
+            step = flight.walk_step(store.direction, back)
             moved = step.any(axis=1)
             x, y, z = store.coordinates(store.node)
             coordinates = np.stack([x, y, z], axis=1) - step
@@ -2469,9 +2560,9 @@ def nature_beam(
         if store.size == 0:
             arrivals.append(ArrivalRows.empty())
             continue
-        # The flight reads the age modulo the direction's period, its
-        # place on the digital line; the age itself is kept whole.
-        step = flight.steps[store.direction, store.age % flight.period[store.direction]].astype(np.int64)
+        # The flight's rule at the row's age: the position's accumulator
+        # per direction, off the age (the rate constant over the flight).
+        step = flight.walk_step(store.direction, store.age)
         moved = step.any(axis=1)
         x, y, z = store.coordinates(store.node)
         coordinates = np.stack([x, y, z], axis=1) + step
@@ -2669,9 +2760,9 @@ def nature_beam(
                 tables.sines,
                 modulus,
             )
-            for set_index, step in enumerate(steps_of):
-                if step is not None:
-                    settings[named, set_index] = step
+            for set_index, chosen_step in enumerate(steps_of):
+                if chosen_step is not None:
+                    settings[named, set_index] = chosen_step
         half = modulus // 2
         presence = np.zeros((count, events), dtype=np.int64)
         # The age moment over the same set, the measured event's reading of
@@ -2765,9 +2856,15 @@ def nature_beam(
                     home_record = store.record[at[home]]
                     home_shares = home_labels.tolist()
                     for k in np.flatnonzero(home_record != NO_RECORD).tolist():
-                        m = int(store.multiplicity[at[home[k]]])
+                        i = int(at[home[k]])
+                        m = int(store.multiplicity[i])
                         home_shares[k] = [
-                            share_of(int(v), int(amount[home[k]]), m) for v in home_labels[k].tolist()
+                            share_of(int(v), int(amount[home[k]]), m, int(acc[i]))[0]
+                            for v, acc in zip(
+                                home_labels[k].tolist(),
+                                (store.share_x, store.share_y, store.share_z),
+                                strict=True,
+                            )
                         ]
                     taken_in = np.array(
                         [
@@ -3054,15 +3151,25 @@ def nature_beam(
                 fail(overflow[0], 4, overflow[1])
             flow = admitted_rows[:, 2 : 2 + DIMENSIONS]
             labels = flow if free else flow * c_t[:, None]
-            # The push of a record's row on matter is its share of the
+            # The push of a record's row on a body is its share of the
             # quantum's label (stage (vii) step 3, `share_of`); a row of no
             # record pushes by its label, so the moments are what they were
             # without a record.
             record_t = store.record[at[taken]]
             shares = labels.tolist()
+            columns = (store.share_x, store.share_y, store.share_z)
             for k in np.flatnonzero(record_t != NO_RECORD).tolist():
-                m = int(store.multiplicity[at[taken[k]]])
-                shares[k] = [share_of(int(v), int(a_t[k]), m) for v in labels[k].tolist()]
+                i = int(at[taken[k]])
+                m = int(store.multiplicity[i])
+                found = [
+                    share_of(int(v), int(a_t[k]), m, int(column[i]))
+                    for v, column in zip(labels[k].tolist(), columns, strict=True)
+                ]
+                shares[k] = [share for share, _ in found]
+                if rule_t[k] == READ_RULE:
+                    # The row goes on: the undelivered part stays on it.
+                    for column, (_, rest) in zip(columns, found, strict=True):
+                        column[i] = rest
             g_ends = (g_starts + g_sizes).tolist()
             plan.g_moment = [
                 [sum(shares[k][axis] for k in range(s, e)) for axis in range(3)]
@@ -3948,22 +4055,28 @@ def nature_beam(
             if not born:
                 continue
             # A body on a set of Nodes releases at every Node of the set
-            # with whole units only: each born row's amount is apportioned
-            # whole over the body's Nodes in their fixed order, equal
-            # weights, the leftover units to the Nodes counted from `age mod
-            # w` (the tie rule of the re-emission over the directions), so
-            # that the total released is the content's release whatever the
-            # width, no Node is favoured over w self-creations and the books
-            # balance (the shares sum to the amount, every share keeps the
-            # row's content per unit and phase, the labels' sum is the same
-            # recoil). A body of one Node (every measured event until
-            # 2026-09-20) releases every row at its one Node, unchanged.
+            # with whole units only: each born row's amount is placed whole
+            # over the body's Nodes, `amount // w` at every Node and the
+            # `amount mod w` units left at the Nodes whose claim is largest
+            # (`place_over_nodes`: the claims are the `place` rows of the
+            # body's table of counts, one per Node, the fractional share
+            # each Node is owed carried from row to row and self-creation
+            # to self-creation; the model owner's record 155 of 2026-09-20,
+            # "no remainder discarded"; until then the leftover went to the
+            # Nodes counted from `age mod w`, the tie reset at every row),
+            # so that the total released is the content's release whatever
+            # the width, every Node is within one unit of its equal share
+            # at every row and the books balance (the shares sum to the
+            # amount, every share keeps the row's content per unit and
+            # phase, the labels' sum is the same recoil). A body of one Node
+            # (every measured event until 2026-09-20) releases every row at
+            # its one Node, unchanged.
             body = entry.nodes
             if len(body) > 1:
                 ways = len(body)
                 placed: list[tuple[int, BornRow]] = []
                 for row_born in born:
-                    shares = apportion_whole(row_born[1], [1] * ways, age % ways)
+                    shares = place_over_nodes(entry.counts, row_born[1], ways)
                     placed.extend(
                         (store.flat(node), (row_born[0], share, *row_born[2:]))
                         for node, share in zip(body, shares, strict=True)
@@ -4001,7 +4114,9 @@ def nature_beam(
                     for k, b in enumerate(born):
                         for axis in range(3):
                             label = int(labels[k, axis])
-                            recoil[axis] += share_of(label, b[1], b[7]) if b[5] != NO_RECORD else label
+                            recoil[axis] += (
+                                share_of(label, b[1], b[7])[0] if b[5] != NO_RECORD else label
+                            )
                     ledger.remainder_momentum[family] = [
                         a - (whole - taken)
                         for a, whole, taken in zip(

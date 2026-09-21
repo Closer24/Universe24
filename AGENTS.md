@@ -140,6 +140,13 @@ responsibilities. Keep renames, consumers, migration notes and the
 - Displays and measurements only read state. Runs and tests are headless unless
   visualization is explicitly requested. Do not capture frames or load render
   dependencies in the ordinary runner path; see the definitions display contract.
+- A measurement is a detector's reading: a click, a record's moments or an
+  external thing's reading, as declared in the world file. Only a measurement is
+  compared with nature or pinned as an expectation. A GameBoard reading (the
+  host's view of stores, books, presences and phases) is a diagnostic; label it
+  so wherever it appears (the readings by type in docs/ENGINE.md). A number
+  whose kind is not named is not a result (the model owner, 2026-09-21,
+  record 281 of docs/LOG_2026-09-20.md).
 - A behavior change needs a dedicated test with inputs, an expected result and an
   edge case. Preserve current physical contract coverage. A new physical
   hypothesis needs an explicit model identity.
