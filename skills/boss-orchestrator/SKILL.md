@@ -177,6 +177,7 @@ and failure analysis to the test owner; Boss coordinates the returned results.
 | A real experiment, measured behind a detector or at an external thing | [experimenter](../experimenter/SKILL.md) |
 | Regression | [regression-check](../regression-check/SKILL.md) |
 | PR review/merge | [pr-review-and-merge](../pr-review-and-merge/SKILL.md) |
+| A paper from the register's integers and the design's formulas, with a hostile referee round before any material enters | [paper-writer](../paper-writer/SKILL.md) |
 
 One agent may use several skills. Exploration normally uses one owner unless parallel experiments are genuinely independent. Do not create idle agents to match the routing table.
 
