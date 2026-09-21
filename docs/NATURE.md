@@ -106,7 +106,7 @@ derivation's expectation whose run is not yet registered (rule (e)).
 | 8a | The shape of the neutron's decay curve: the 10th-to-90th-percentile width of the decay times over their median | ln 9 / ln 2 = 3.17 for a memoryless (exponential) survival, the form of every lifetime measurement, e.g. the bottle measurement of Gonzalez et al. 2021, Phys. Rev. Lett. 127, 162501 (tau_n, the neutron's lifetime, 877.75 +- 0.28 s; to verify against the source) | `examples/events/weak/j1_lattice.json` and `j1_source.json`; the register entry J1 and [the worlds' README](../examples/events/weak/README.md): the shell's 64 beta clicks, the width over the median 0.036 and 0.038; every click the content 3 (a line) | N = 64, K = 2^20 | FAIL: 0.036 against 3.17, a factor 88 (a step where nature has an exponential; PREDICTIONS entry 10); the line against nature's continuous beta spectrum a second FAIL without a number |
 | 8b | The neutrino's passage: the count of an identical detector placed behind the first, over the first's count | about 1: the cross-section of a MeV neutrino, of order 10^-43 cm^2 (Formaggio and Zeller 2012, Rev. Mod. Phys. 84, 1307), attenuates a beam by less than a part in 10^16 per metre of ordinary matter, so two identical detectors in line read the same count | `examples/events/weak/j2_filter.json`; `weak/expectations.json` `j2.j2_filter.first_clicks` = 16 of 1024, the 127 readers behind it 0 (the ladder `j2_ladder`: each residue's reader 16, nothing behind the 64th) | N = 64; K = 4096: not under the one set (K) | FAIL: 0 against about 1 (a filter set by the window's residue, not an attenuation set by the depth; PREDICTIONS entries 7 and 8) |
 | 8c | The neutrino's mass: the lightest massive neutrino over the electron's mass | at least 0.05 eV / 0.511 MeV = 1 x 10^-7 and at most 0.8 eV / 0.511 MeV = 1.6 x 10^-6: the oscillations give the squared mass differences 7.4 x 10^-5 eV^2 and 2.5 x 10^-3 eV^2 (PDG 2024, Navas et al., Phys. Rev. D 110, 030001, the neutrino mixing review), so at least one mass is above sqrt(2.5 x 10^-3) eV = 0.05 eV; the direct bound m below 0.8 eV (KATRIN, Aker et al. 2022, Nature Physics 18, 160) | `examples/events/entities/families.json`: the `nu` family with `quantum` 0 and no content, the register's neutrino massless ([DERIVATIONS_BEAM 19.5](DERIVATIONS_BEAM.md#195-the-rest-of-the-masses-as-readings-after-a-detector)) | the family table (a content is an input) | REFUTED: 0 against at least 1 x 10^-7 (a content above 0 is an input the register does not declare; the oscillation itself, a family turning into another with the flight, is not modelled) |
-| 9 | Malus's law, the fraction transmitted through a polariser at 45 degrees | 1 / 2 (cos^2 of 45 degrees; a third polariser at 45 degrees between two crossed ones passes 1 / 4 of the polarised intensity), Malus 1809 (to verify the citation) | none: the entry A12 of [EXPERIMENTS](EXPERIMENTS.md#a12-maluss-law-and-the-three-polarizer-chain-after-feature-11) is planned, after feature 11 (polarisation), not built | the entry's N = 2^8 | NOT YET: needed, a polariser as a coupling table on a two-state label of the row and the three-polariser chain's fractions |
+| 9 | Malus's law, the fraction transmitted through a polariser at 45 degrees | 1 / 2 (cos^2 of 45 degrees; a third polariser at 45 degrees between two crossed ones passes 1 / 4 of the polarised intensity), Malus 1809 (to verify the citation) | `examples/events/amplitude/malus_a.json`, `malus_b.json`, `malus_c.json` (one bar of 7, N = 256, the lamp on the wheel [159, 256], every row born on the label 0; the polariser the rotation of the label bit by a declared setting, `rotate` 64 on the GameBoard in `malus_c` or the `sum` set's window s = 64, 128, 64 at the end, and the which-path `read` at a `sum` set: the entries in force, no feature 11, [the note](designs/malus/NOTE.md)); the entry A12 of [EXPERIMENTS](EXPERIMENTS.md#a12-maluss-law-and-the-three-polarizer-chain-after-feature-11), re-run under the click (2026-09-21), and the run's record beside the worlds ([the amplitude README, A12 under the click](../examples/events/amplitude/README.md#a12-under-the-click-maluss-law-from-the-table-entries-in-force)): over the records 1 to 256 the cells (DETECTOR) (a) 0+ 128, 0- 128; (b) 0+ 0, 0- 256; (c) 0+ 64, 0- 64, 1+ 64, 1- 64, every pin met exactly (`expectations.json` under `malus`); the absorbed rows click in their own cells, no body sinks them | N = 256; W = 256; K = 2^50: not under the one set (K) | PASS: 128 of 256 = 1 / 2 exactly at 45 degrees, 0 of 256 crossed, 64 of 256 = 1 / 4 of the births and 1 / 2 of the 128 the first polariser passed with the third between: Malus's cos^2 exact at 45 and 90 degrees (the tables 181 = 181, 0 and 256, no rounding; at 22.5 degrees the tables would give 219 of 256 against 0.8536, not run); the limit: one which-path read per arm, the 22.5-degree chain of four not covered |
 | 10 | The single-opening spread, w x Delta(sin theta) / lambda (w the opening's width, theta the angle behind it, lambda the wavelength) | 0.886 (the full width at half maximum of the Fraunhofer single-slit pattern), verified with fullerene molecules by Nairz, Arndt and Zeilinger 2002, Phys. Rev. A 65, 032109 (to verify against the source) | `examples/events/heisenberg/w27_wave.json`; the register entry A10: the product 4.99 at w = 27 with lambda = 4.619 Links, 4.99 / 4.619 = 1.08; the crowd form's number, kept as history; the record form's re-run of `w27_beam` did not complete | N = 64; K = 2^30: not under the one set (K) | NOT YET under the one click: the last registered value 1.08 against 0.886 is 22 percent above (the Fresnel number 1.46 named as the cause); the smaller widths unread |
 | 11a | The deceleration parameter q read from the brightness of a far lamp at rest under the growing wall (the second order of the Hubble diagram, d_L = (c / H)(z + (1 - q) z^2 / 2 + ...)) | q_0 = -0.53 +- 0.01, Planck 2018, Aghanim et al. 2020, A&A 641, A6 (row 3's source); the Hubble diagram's shape from the supernovae, Riess et al. 1998, AJ 116, 1009, and Perlmutter et al. 1999, ApJ 517, 565 | a derivation's pin, [the far lamp through a detector](designs/far_lamp/BRIGHTNESS.md) (record 282): the stream read at 1 / (1 + z) of the lamp's rate with the birth content per click (DERIVATIONS_BEAM 6.4), the flux L / (4 pi d^2 (1 + z)) with d = (c_0 / H) ln(1 + z), d_L = (c_0 / H) ln(1 + z) sqrt(1 + z) = (c_0 / H)(z - z^3 / 24 + ...): q_eff = +1; `far_lamp_map.out` section 2 | H = 1 / 400, T_D = 110, S_1 Q = 64 (section 15's stream); `expansion-v1` not built | FAIL: +1 against -0.53, 1.53 apart, on the decelerating side of Einstein-de Sitter (+0.5); pinned; the run not made |
 | 11b | The stretch of a far lamp's stream over 1 + z (the time dilation of the light curve) | the exponent b of the stretch (1 + z)^b: b = 0.97 +- 0.10, Blondin et al. 2008, ApJ 682, 724 (to verify against the source); the expanding form's b = 1 | the same pin: 400 rows released over 400 intervals arrive over 1452 intervals at 300 Links, the factor 3.639 against e^(H d / c_0) = 3.629 (`far_lamp_map.out` section 4 (a)); the stretch equals 1 + z, b = 1 | the same | PASS: b = 1 within the measured 0.97 +- 0.10; pinned; the run not made |
@@ -392,11 +392,30 @@ with the energy (entry 7). The stride-2 worlds (`j2_stride2` 32 of 1024,
 `j2_stride2_odd` 0) show the fraction to be the residue's and not the
 rate's.
 
-**9, Malus.** Feature 11 (polarisation, a two-state label on the row) is
-not built and A12 is planned; nothing registered. NOT YET: needed, the
-polariser as a coupling table and the three-polariser chain's fractions
-(1 / 2 at 45 degrees, 0 crossed, 1 / 4 of the polarised intensity with the
-third between), read as clicks.
+**9, Malus.** A polariser needs no feature: the two-state label is the
+record's joint label bit, the rotation by the polariser's angle is the
+`rotate` entry on the GameBoard or a `sum` set's window at the end (the
+half-angle tables of 2N, the setting s the angle 180 s / N degrees), and
+the projection is the which-path `read` at a `sum` set, whose factor
+selects the label so that the click's cells split by it; the rows the
+polariser absorbs go on and click in their own cells, and the fraction
+transmitted is the pass cells' count over the births (the mathematician's
+[note](designs/malus/NOTE.md), the owner's go of record 330). The three
+worlds ran once, 300 intervals each, completed and conserved at every
+tick; over the records 1 to 256 (u = ordinal x 159 mod 256 over every
+residue once) the cells read (DETECTOR) 128 / 128 for one polariser at 45
+degrees, 0 / 256 for two crossed, and 64 / 64 / 64 / 64 for the third at
+45 degrees between two crossed: the pass 1 / 2, 0 and 1 / 4 of the births
+exactly, every pin met and none moved, every cell within its rung width
+over all 289 records gathered. PASS: at 45 and 90 degrees the tables are
+exact (181 = 181; 0 and 256), so these three fractions carry no rounding;
+where the rounding shows, at 22.5 degrees, the tables would give 219 of
+256 against cos^2 = 0.8536 (the note's section 3, not run). The limit:
+one which-path read per arm with a rotation before it, so the entry's
+four-polariser chain at 22.5-degree steps (a second read after a
+rotation) is not covered; a polariser here is a rotation and a which-path
+read, not a body with a sink. Nothing entered the law: no identity, no
+key, no rule.
 
 **10, the single opening.** A10 read the `wave` record behind one opening
 of w Nodes: the product w x FWHM(sin theta) reaches 0.886 lambda within 22
@@ -461,13 +480,14 @@ registered as a pair.
 
 | Verdict | Rows |
 | --- | --- |
-| PASS | 1a (Bell, the record's pair, 1.65 standard errors), 2b (the Mach-Zehnder, 0.9988), 2c (the power 2 in [1.917, 2.054)), 11b (the stretch of a far lamp's stream, 1 + z, pinned) |
+| PASS | 1a (Bell, the record's pair, 1.65 standard errors), 2b (the Mach-Zehnder, 0.9988), 2c (the power 2 in [1.917, 2.054)), 9 (Malus, 128 / 256, 0 and 64 / 256 exact at 45 and 90 degrees), 11b (the stretch of a far lamp's stream, 1 + z, pinned) |
 | FAIL | 1b (the window form, S = 2), 2a (the two-slit visibility 0.966 in the clicks, 0.954 in the weights), 3 (q = -0.108 against -0.53), 4a (the muon, a factor 29.33, pinned), 4b (the moving lamp, 0.052 in z), 5b (the frame, eight to twelve orders, pinned), 7b (the alpha, a factor 6.4), 8a (the decay's step, a factor 88), 8b (the filter, 0 against 1), 8c (the massless neutrino, REFUTED by the oscillations), 11a (the far lamp's brightness, q_eff = +1 against -0.53, pinned), 11c (the surface brightness, one power of 1 + z against four, pinned) |
 | BOUND | 5a (Q >= 2^56 for 10^-17, beyond the word at the register's fan), 7a (the give per nucleon: 4 to 5 units of 3677 about nature's 4.35) |
-| NOT YET | 6 (Bohr's ratio), 9 (Malus), 10 (the single opening under the one click); the runs of 4a, 5b and 11 |
+| NOT YET | 6 (Bohr's ratio), 10 (the single opening under the one click); the runs of 4a, 5b and 11 |
 
 What the tally says, in the register's terms: the click's form (Born,
-the pair, the power) passes; the grain shows at the second digit of a
+the pair, the power) passes, and Malus's fractions pass exactly at 45 and
+90 degrees (9), where the tables carry no rounding; the grain shows at the second digit of a
 visibility; every reading that depends on a body's clock in motion fails
 by nature's gamma, which is one finding read four ways (4a, 4b, 5b and the
 absence of contraction), the open decision of record 230; the strong

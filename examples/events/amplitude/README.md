@@ -266,7 +266,63 @@ L5 entry has the numbers and the runs.
 N/4, 3N/8 on the A2 board, N + 20 intervals, one birth per u: S as the
 integer ratio at each N against the design's 2896/1024 and the bound
 |E - cos| <= 1/N (`expectations.json` under `pair_n`; the register's L6
-entry).
+entry). `bell_n512_<a>_<b>`, the same at N = 512, added on 2026-09-21
+for the pin of 24.4 (the section below).
+
+## Bell at N = 512 and 4096 under the click and the wheel: the pin of 24.4
+
+The run the law owes before the pin of
+[DERIVATIONS_BEAM section 24.4](../../../docs/DERIVATIONS_BEAM.md#244-the-one-prediction-the-paper-can-carry)
+is final (the Boss's order of 2026-09-21 under the model owner's record
+337): the registered Bell geometry of L6 (the A2 bar of 21, the lamp at
+x = 10 on two arms with the labels 00 and 11, Alice's counters at x = 7
+and 4, Bob's at 17 and 18, the four counters reading `sum`) under the one
+click and the wheel [1, N], at N = 512 (`bell_n512_<a>_<b>`, the CHSH
+labels 0, 64, 128, 192; 532 intervals; added by the generator on
+2026-09-21, every other shipped world byte-identical) and at N = 4096
+(the registered `bell_n4096_<a>_<b>`, 4116 intervals). **Pinned before
+the run (`expectations.json` under `bell_24_4`, the counts per cell under
+`pair_n`; the derivation: the design's joint weights on the half-angle
+tables of 2N and the ladder's rungs b_k = (2 W C_k + T) // (2 T) on the
+wheel W = N, BEAM_LAW notes 37 (iii) and 46):** S = 181 / 64 = 2.828125
+exactly at both N (1448 / 512 and 11584 / 4096) over the quadruple
+E(0, N/8) - E(0, 3N/8) + E(N/4, N/8) + E(N/4, 3N/8); the marginals W / 2
+exactly (256 / 512 and 2048 / 4096) on every world; every count over the
+W births within one of W x its cell's weight over the total; the cells
+(++, +-, -+, --) at N = 512: 219, 37, 37, 219 (E x 512 = 364) at (0, 64),
+37, 219, 219, 37 (-364) at (0, 192), 218, 38, 38, 218 (360) at (128, 64)
+and at (128, 192); at N = 4096 the registered 1749, 299, 299, 1749
+(2900), 299, 1749, 1749, 299 (-2900), 1747, 301, 301, 1747 (2892) twice.
+What refutes: any count outside its rung by more than one, a marginal off
+W / 2, or S off 181 / 64; no number moves after the run.
+
+**Run (2026-09-21, main a625ec9f, the runner headless one world at a
+time, `python -m event_universe --init <world> --output <dir>`; the
+source sha256 `47fffbefe2d222b7...`, the families' `438444b1cec9eb47...`,
+the initialization shas per world in the register's run block;
+completed and conserved at every tick, the books balanced; DETECTOR,
+the gathers of the first W records by ordinal):** every pin met on the
+eight worlds: the counts per cell equal to the pinned counts to the
+unit, E x W 364, -364, 360, 360 at N = 512 and 2900, -2900, 2892, 2892
+at 4096, S = 1448 / 512 and 11584 / 4096, both exactly 181 / 64;
+Alice's and Bob's + counts 256 of 512 and 2048 of 4096 on every world;
+every count within one of W x its weight (the widths 218.62 / 37.38 and
+218.40 / 37.60 at 512, 1748.96 / 299.04 and 1747.20 / 300.80 at 4096);
+the rungs on every gather of a world one list, the pinned one (the
+records' totals take 57 distinct values at N = 512 and 139 at 4096, the
+tables' rounding by u of note 37 (xii), and move no rung); one gather per
+record, W of W gathered (531 born in 532 intervals, 519 gathered and 12
+open at the end at N = 512; 4113, 4101 and 12 at 4096: the lamp's clock
+stalls as the births spend its content). GAMEBOARD: conserved at every
+completed tick, the books balanced at every tick. The host: the runner's
+wall time 1.50 to 1.54 s per world at N = 512 and 9.32 to 9.64 s at
+4096 on a loaded host (the engine's own 1.24 to 1.27 s and 8.74 to
+9.05 s), reported apart from the model's cost, the bar's 21 Nodes at
+fixed local work per interval over 532 or 4116 intervals and one
+record's offers held at the layer until its completion. Verdict: PASS,
+the pin of 24.4 stands as written; `tests/test_amplitude_bell_24_4.py`
+derives the pin from the worlds and the ladder and replays the eight
+worlds bit-exact against the registered counts.
 
 ## L7: the cone, which length a row's phase counts
 

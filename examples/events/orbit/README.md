@@ -146,6 +146,105 @@ the least and greatest radius, the reads, the units taken, C measured
 against m q L / (2 pi r), how the run ended) and the period ratios per
 width.
 
+## The lamp worlds `s32_r24_lamp` and `s32_r12_lamp` (2026-09-21, written before any run)
+
+The two worlds [DERIVATIONS_BEAM 21.5](../../../docs/DERIVATIONS_BEAM.md#215-the-standard-and-the-new-rows-under-it)
+row 58 (Kepler's three laws) named "to be written", on the Boss's order
+after the model owner's record 333: series D's S = 32 worlds with one
+change so that a detector reads the orbit, under the directional drive
+(form B, [light_speed/FORM.md section 3](../../../docs/designs/light_speed/FORM.md#3-the-vector-form-that-inserts-c-into-the-bodies-one-flight-primitive-for-rows-and-bodies);
+BEAM_LAW note 49). Written by the generator; every number below is printed
+by the host map [lamp_orbits_map.py](../../../docs/designs/derivations_beam/lamp_orbits_map.py)
+with its output [lamp_orbits_map.out](../../../docs/designs/derivations_beam/lamp_orbits_map.out),
+whose one source of the fan, the emission, the momentum and the pace is
+this generator. Every number is a GAMEBOARD reading of the design (derived
+before the run) unless labelled the detector's expected reading; no run
+(the runs by an experimenter on the Boss's order).
+
+**What the two worlds declare** (the model ids
+`rays-orbit-s32-r<r>-lamp-plane-v1`; everything not named here is
+`s32_r<r>`'s). The probe is a body of the shipped free family `probe`
+(charge 0, no phase circle: the same push as `m`, gravity alone) of
+content 2^10, so that at the world's one `release` [1, 2^10 x 10] it
+releases one row per direction of the same fan of 120 every 10 intervals,
+as the source does (a probe of content 1 releases at the age 10240, beyond
+the run; the dynamics per unit of content do not depend on the content:
+the push per ray is one unit of n whatever m, and the pace reads n alone);
+the source's table measures the probe's family (`{"probe": "measure"}`:
+the probe's rows that reach the source's Node click there), and a
+detector `source` of that one Node reads the count (`beam`, the family
+having no phase circle). The momentum is the circular-orbit momentum
+under the directional drive: the pace on a heading is `n Q / (Q S + n
+T_D) = 64 n / (64 S + 110 n)` per unit of content in place of `n / (S +
+n)`, so the circular condition `n v = A = q L C / (2 pi) = 1.910` reads
+`64 n^2 = A (64 S + 110 n)`, n = 9.629 at S = 32, the nearest whole 10:
+640 label units per unit of content (today's rule gave 9, 576), 655360
+for the probe of content 2^10. The pace at n = 10 is 0.2033 Links per
+interval (beta = 0.349 of the rows' 0.582; the kept 576 would give
+0.1896); the kick of one ray is 64 on 640, 5.7 degrees.
+
+| World | r | p (label units; per unit of content) | the pace | the analytic circle's T = 2 pi r / v | Intervals |
+| --- | --- | --- | --- | --- | --- |
+| `s32_r12_lamp` | 12 | 655360; 640 | 0.2033 | 371 | 4000 |
+| `s32_r24_lamp` | 24 | 655360; 640 | 0.2033 | 742 | 4000 |
+
+**The pins, restated from row 58 for these worlds.** The map integrates
+the law's continuum limit on the plane with the declared n = 10 (the
+smooth `1 / r` push of the fan's mean, the directional drive's pace, one
+step per interval, the source unpushed): the whole n above the circle's
+9.629 makes a near-circular rosette, not a circle.
+
+- **The period T** (GAMEBOARD; the DETECTOR reading is the recurrence of
+  the clicks' arrival direction through 2 pi): `s32_r24_lamp` 784
+  intervals (the analytic 742 at n = 10; 21.5 wrote 795 at the kept 576),
+  within the continuum's own margin of 9 percent that
+  [12b.2](../../../docs/DERIVATIONS_BEAM.md#12b2-the-orbit-as-the-bond-the-registered-orbit-thrown)
+  carries for the burst field and the fan's grain: 714 to 855;
+  `s32_r12_lamp` 392 (371 analytic): 357 to 428.
+- **The mean radius** (GAMEBOARD; DETECTOR: the clicks' ages, `r = age x
+  c` per direction, the flight 24 Links x 110 / 64 = 41 intervals on a
+  heading at r = 24, 21 at r = 12): 24.8 +- 1 (the extents 24.0 to 25.9)
+  and 12.4 +- 1 (12.0 to 13.0).
+- **The precession per radial period**, the angle between successive
+  closest approaches less 360 degrees (GAMEBOARD; DETECTOR: the direction
+  of the ages' minimum): -81 +- 15 degrees at both radii, the radial
+  period 614 at r = 24 and 307 at r = 12. Row 58's -105 +- 15 is the
+  plane's `1 / r` force under a Newtonian pace (the apsidal angle `pi /
+  sqrt 2 = 127.3` degrees), which the map reproduces (-105.5); under the
+  cap the pace grows more slowly than the momentum (the local exponent
+  `d ln v / d ln n = 0.65` at n = 10, beta = 0.35; today's per-axis rule
+  0.78 at n = 9, giving -90.5), the radial oscillation is faster against
+  the turning and the apsidal angle is 139.7 degrees: the restatement is
+  form B's, not the fan's. It holds for the near-circular loop these
+  momenta make; a loop widened to eccentricity by the kicks reads its
+  own precession (the registered `s32_r24` at the kept 576 under form B:
+  a rosette from r = 10.6 to 67.5, -109.5 and -118.2 degrees), which the
+  map does not pin.
+- **The exponent**: `T(24) / T(12) = 2.00 +- 0.15` (the integrated 2.00;
+  the plane's exponent 1; space's `3 / 2` would give 2.83).
+- **The clicks** (the detector's expected readings): the probe's ray
+  toward the source exists only where the probe's Node lies on a fan line
+  through the source (its reduced direction within the fan's `|D| <= 8`),
+  28 of the 68 ring Nodes at r = 12 and 16 of the 144 at r = 24; one shell
+  every 10 intervals, so about 15 clicks per orbit of 37 shells at r = 12
+  and about 8 per orbit of 74 at r = 24; each click's arrival direction is
+  the probe's direction from the source reversed and its age the flight,
+  so the clicks' directions turn through 2 pi in T and the ages' minimum
+  points to the closest approach. Whether the count reading `beam` at a
+  `measure` entry of a phase-less family records every arrival as a
+  click is what the experimenter reads on the first shells; the `click`
+  lines of `events.jsonl` carry the same rows either way.
+
+**What refutes** (row 58's last column, for these worlds): a period
+outside its bracket (form B's first-order slowing of the cap); a ratio
+at 2.83 (space's exponent on the plane) or outside 2.00 +- 0.15; a
+precession outside -81 +- 15 degrees (-105 would be the Newtonian
+pace's, 0 a closed ellipse of the `1 / r^2` force and not the plane's
+`1 / r`); a closed return within one Link is a circle's criterion and is
+not expected. A record check as above (completed, the books balanced at
+every tick); every reading registered inside or outside its pin and
+never moved.
+
 ## The readings (2026-09-19, under the label along the unit vector)
 
 Source fingerprint `0eaa589ab51cdc0a12a863cd23e535e1e8ac052e8b4f3f8facf30ef05a323c5a` (the worktree of
