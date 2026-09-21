@@ -86,7 +86,7 @@ cited as orders, not as code.
 
 Section 0 states the law as one operator with its two blocks and places
 every result under its block (the owner's second pass, record 167 as the
-Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass); section 17 answers the owner's direction of 2026-09-21 (the law above Newton and Einstein: the theorem of covariant readings). The
+Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass); section 17 answers the owner's direction of 2026-09-21 (the law above Newton and Einstein: the theorem of covariant readings); section 18 answers records 264 and 265 (the three structural failures of the register under one logic). The
 targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
@@ -4521,3 +4521,189 @@ readings are named as one hypothesis, `covariant-readings-v1`, four
 rules that pass the three tests on paper and change every moving
 body's register; not built here; the seventh verb is not needed for
 any of them.
+
+## 18. The three structural failures of the register under one logic
+
+**The question** (the owner, records 264 and 265, translated: "explain
+whether there is a generic solution to this from the vector groups, or
+maybe c enters here; you said you have problems with the masses and
+with the self clock; see that it closes too with the same logic"; "do
+all three settle things generically and truly to our structure?"). The
+failures are NATURE.md's rows 4a, 4b and 5b (the clock in motion), 8a
+and 8b (the weak forms) and 7b (the strong ratio), with the masses
+beside them. The logic is one: every rule of a body is a reading of the
+linear block, and a failure closes when a covariant reading exists
+within the six verbs, passes the three tests, and the register's number
+follows from it; it stays open when the reading needs what the six do
+not have. The host script
+[decay_click.py](designs/derivations_beam/decay_click.py) with its
+output [decay_click.out](designs/derivations_beam/decay_click.out)
+makes the numbers of 18.2; no run.
+
+### 18.1 The clock in motion (rows 4a, 4b, 5b): closed on paper by section 17
+
+Section 17.3 named the four covariant readings within the six verbs:
+the count per turn, the push as the gradient of the age moment across
+the six Ports, the energy as an accumulator of the work with the drive
+`v = p c^2 / E`, and the turn per proper time `E_0 / E`; no root, no
+family name, the record and its six neighbours. Under them the three
+rows close: 4a, the muon of J4 fires its 64th turn at 70.9 and 125.2 at
+0.43 c and 0.86 c (nature's `gamma`, lorentz-v1's 71 and 126 by the
+root; the law as declared 64); 4b, `s_mz2` at `beta = 0.2674` reads `1 +
+z = gamma (1 + beta)`, `z = 0.315` (the register's 0.2636 as declared,
+the count per interval); 5b, the two arms of a moving laboratory read
+the same round trip, since under the gradient push the bond contracts
+by `1 / gamma` along the motion (Lorentz's 1904 argument on Heaviside's
+field) and the clock slows by `gamma` both ways, where the flux push
+gives `gamma^2` along and `gamma` across (12.3: 1.375 and 1.140 at
+0.4297 on the register's table; `beta^2 / 2 = 5 x 10^-9` at the Earth's
+orbital speed). **What a run must show**: the muon's 64th turn at 71 and
+125 (the tolerance one tick); the pair in motion of 12.4 with the same
+round trip along and across (the ratio 1 within the grain, against
+1.375 / 1.140); `coasting_none`'s `s_mz2` at `z = 0.315 +- 0.003`. Two
+things stay as they were and belong to the same logic: route C stays
+closed (12c: the crossing count through an isotropic crowd is the rest
+count exactly, so nothing of the clock's slowing comes from the crowd),
+and the cube's 48 carry no boost (record 231: a boost mixes a space
+step with a time step and is not among the signed permutations of the
+axes), so the symmetry is the LIMIT's, the wave equation's, and c enters
+the bodies through the drive `v = p c^2 / E` and nowhere else. **Closed
+on paper**, as `covariant-readings-v1`, not built; the run decides.
+
+### 18.2 The weak forms (rows 8a, 8b): what the click can and cannot give
+
+**The failures.** J1's decay at a fixed lifetime L gives every neutron
+the same tick, a step: the 10th-to-90th width over the median 0.036
+against the memoryless 3.17. J2's passage by a phase window gives a
+filter: the rows in the window are absorbed by the first reader (16 of
+1024), the rest pass every reader, and the 127 readers behind read 0
+where nature's second detector reads the first's count. Both come from
+deterministic rules read once: a lifetime, a residue.
+
+**The click as the mechanism.** The one non-bijective read of the law is
+the click: one threshold `[u < b_k]` of the record's wheel u against a
+rung of the crowd's cumulative weights (6.2, 6.5). Read as the decay's
+mechanism at a rate, it is "at every self-creation compare the body's u
+with the rung b of the rate `p = b / W`, and `become` at the first
+success"; read as the passage per Node of depth, "at every Node compare
+the row's u with the rung of the absorption". As rules both pass the
+three tests by construction: no family name (one rung, one comparison),
+one verb (D, the comparison; T for the wheel), local (the record and
+its Node). The question is the number: whether the survival is
+memoryless. The answer splits on WHAT u is compared with.
+
+**(i) Against the body's own record: bounded, never memoryless.** If the
+rung is fixed and u advances on the record (the golden wheel `u_n = u_0
++ n r mod W`, record 155, or the bit-reversed wheel of record 156), the
+decay time is the first passage of a rotation into an interval of
+length p, and by the three-distance theorem a rotation's return times
+into an interval of length p are bounded by about `1 / p`: every body
+decays before a hard maximum, and the survival is a ramp, not an
+exponential. The script (B), over all 4096 birth phases at `p = 1 / 64`:
+the 10th, 50th and 90th percentiles 7, 33, 77 with the maximum 89, the
+width over the median 2.12 against the geometric law's 7, 45, 147 and
+3.11 (3.17 in the limit of small p); at `p = 1 / 1024` the ratio is 1.60
+against 3.17; the bit-reversed wheel 1.55 (C). The same holds for the
+passage: with u advanced per Link the count behind n Nodes falls as
+0.984, 0.844, 0.000 at n = 1, 10, 100 against `(1 - p)^n` = 0.984,
+0.854, 0.207 (D), a ramp to zero at the depth `1 / p`; with u fixed per
+row it is J2's filter, all or nothing. **The theorem behind it**: every
+count on the body's own record is a deterministic sequence of bounded
+discrepancy (a rotation, a bit reversal, a counter), so its first
+passage into any interval is bounded, and a memoryless survival, whose
+maximum is unbounded and whose width over the median is 3.17, cannot
+come from the record alone, at any W and any rate. **Refuted** for the
+record.
+
+**(ii) Against the crowd: memoryless if and only if the crowd mixes.**
+If the rung is the crowd's, the cumulative Gram weight of the rows
+arriving at the body's Node in that interval (6.5's ladder, read per
+interval), the comparison is fresh at every interval exactly as fresh as
+the crowd's phases are: the survival is memoryless in the limit where
+the arriving rows' weights decorrelate from one interval to the next,
+which is a property of the WORLD (many sources, many directions, the
+ages mixing on the circle `Z_N`), not of the rule, and cannot be proved
+on paper for a given world; it can be pinned. Then the decay's rate is
+`p = b / T` with T the crowd's total weight, the survival `(1 - p)^n`,
+the width over the median 3.17 in the limit, and the passage per Node
+`(1 - p)^n` with p the reader's absorption, nature's "about 1" for a
+small p (0.984 at `p = 1 / 64` behind one reader, 15.75 of 16). The
+price, stated: in an empty world there is no crowd, no weight and no
+click, so a body in J4's bar would never decay (or, with the lifetime L
+kept as the wall, decay at L exactly as today): the memoryless decay of
+this reading needs a background crowd everywhere, the same need as
+route C's (12c.5) and section 15.5's steady presence under the growing
+wall, and the decay's rate then reads the background (a decay slower
+where the crowd is thinner: a prediction, and a departure from nature's
+constancy of the lifetime unless the background is the same
+everywhere). **Named**, as one hypothesis, `decay-by-crowd-v1`: the
+`become` trigger as the click of the body's u against the crowd's rung
+at the rate, and the absorption of a row at a reader as the click of its
+u against the reader's rung; passes the three tests; not built.
+
+**The pins a run would have to meet** (before any run): (1) J1's neutrons
+in a crowd world (the source's fan on, the crowd mixing): the 64 beta
+clicks' width over the median within 0.5 of 3.17, the maximum decay
+time beyond `3 / p`, no two clicks at one tick more often than the
+geometric law's; (2) the same world with the crowd off: every click at
+L (today's register, 0.036); (3) J2 with the readers reading the
+crowd's rung at `p = 1 / 64`: the second reader's count `16 x 63 / 64
+= 15.75` (16 or 15 in integers) and the n-th `16 (1 - p)^(n - 1)`, 12.9
+at the 15th; (4) what refutes the hypothesis: a bounded maximum in (1),
+a ramp in (3), or a rate that does not follow the crowd's total weight.
+
+### 18.3 The strong ratio (row 7b): the give per contact pair, in form and in number
+
+**The failure.** The give of binding-v1 is once per body (`units = held
+// h`, the remainder kept, section 1.3's table), so the escaped content
+of a bound set is linear in its bodies: the alpha's four `bond` clicks
+release 8 against the deuteron's 4, the ratio 2.0 where nature's binding
+energies give `28.296 / 2.2246 = 12.72`.
+
+**The give per contact pair.** The set's geometry on the six Ports: the
+cubic lattice is bipartite (a Link joins Nodes of opposite parity), so it
+has no triangle and no tetrahedron; four bodies at adjacent Nodes form
+at most a square (a 4-cycle, 4 contact Links), a line or an L (3), never
+6 mutual contacts. A give per contact Link (a count over the Ports, the
+comparison verb, local, no family name: it passes the three tests)
+gives the deuteron 1, the three-body line or L 2, the alpha's square 4:
+the ratio 4.0 against 12.72, and for the tritium and helium-3 2.0
+against nature's 3.81 and 3.47. Counting the square's two diagonals as
+second-neighbour contacts at the same give raises the alpha to 6.0;
+at a weaker give, between 4 and 6. **Reached in form, short in number**:
+the pair count gives 1 : 2 : 4 (or 6) where nature gives 1 : 3.8 : 12.7,
+and the remainder, a factor of 2 to 3 on the alpha, is not a count of
+contacts on any lattice geometry: it needs the quark substructure (the
+nucleon as a bound set of three, the quarks design, record 251), where
+the alpha's give counts contacts between quarks across nucleons. The
+pins: the alpha on the square 4 clicks of the pair give, the ratio 4.0;
+the alpha on a line 3 and 3.0; the tritium 2.0.
+
+### 18.4 The masses
+
+The honest sentence of 16.2 (d): the law fixes floors and no counts. One
+unit is the least mass (the integer form), a charged family's floor is
+the reduced denominator of its charge per unit of content (1 for the
+electron and the proton, 3 for the up and down quarks), and every mass
+ratio is a rational number of the family table; the counts (the
+electron at least 4526 units, the nucleons multiples of 3 if the binding
+holds no content) are inputs, and no logic of the six verbs selects
+them (PREDICTIONS 26: a linear law is scale-free in its coefficients).
+**Open**, and stated as open: the same logic closes nothing here, and
+what would close it is a nonlinear closure on the amounts (binding-v1's
+content in flight, the quarks design), named and not built.
+
+### 18.5 The verdict per failure
+
+| the failure | the logic | the verdict |
+| --- | --- | --- |
+| the clock in motion (4a, 4b, 5b) | the four covariant readings of section 17, one hypothesis `covariant-readings-v1` | **closes on paper**: 70.9 and 125.2, `z = 0.315`, the arms equal; route C closed, the 48 carry no boost, c enters through `v = p c^2 / E` |
+| the weak forms (8a, 8b) | the click as the decay and the passage | **half**: against the body's own record it is refuted (bounded first passage, the width over the median 2.1 and 1.6 against 3.17, a ramp against the exponential); against the crowd's rung it is memoryless exactly as far as the crowd mixes, named `decay-by-crowd-v1`, needing a background crowd everywhere, pinned |
+| the strong ratio (7b) | the give per contact pair on the six Ports | **in form, not in number**: 4.0 (6.0 with the diagonals) against 12.72; the rest the quarks' |
+| the masses | none within the six | **open**: the floors 1 and 3 fixed, the counts inputs |
+
+So: one closes under a logic already in the law, one splits (the
+record cannot, the crowd can), one closes in form and stays short by a
+factor the lattice's geometry cannot supply, and one stays open; nothing
+claimed beyond that, and every closure is a hypothesis with its pins,
+not a build.
