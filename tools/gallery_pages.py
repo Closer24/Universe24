@@ -106,6 +106,8 @@ BODY_COLOURS = {
     "m": (200, 200, 220),
     "d": (120, 200, 160),
     "w": (220, 120, 255),
+    "u": (255, 150, 60),
+    "e": (110, 225, 255),
 }
 
 
@@ -1795,11 +1797,18 @@ def nucleus_player(
     ticks: Sequence[int],
     caption: str,
     duration_ms: int,
+    weights: dict[str, float] | None = None,
+    on_top: str = "nuclear",
+    border_family: str = "nuclear",
+    push_body: int = 1,
+    colours: int = 128,
+    scale: int = 10,
 ) -> tuple[Player, dict[str, object], dict[str, list[dict[str, object]]]]:
-    """One series I world replayed and drawn as the x-y projection (the
-    amounts summed over z), the bodies as discs; per frame the bodies'
-    Nodes, the steps and hand-overs so far, the border's clicks in the
-    interval and the push read by body 1."""
+    """One series I world (or series R's, the quarks) replayed and drawn as
+    the x-y projection (the amounts summed over z), the bodies as discs;
+    per frame the bodies' Nodes, the steps and hand-overs so far, the
+    border's clicks of the strong family in the interval and the push read
+    by one body."""
     record_dir = runner_record(world, runs)
     record = read_json(record_dir / "run.json")
     events = scan_events(record_dir / "events.jsonl", ["step", "contact", "read", "become"])
@@ -1814,19 +1823,19 @@ def nucleus_player(
     # The plane of the bodies (z = 10 in every series I world): the rows in
     # that plane alone, so that the strong rows' halo is visible under the
     # fan's crowd.
-    plane = plane_for(replay, scale=10, slice_z=int(replay.world.measured[0].position[2]))
+    plane = plane_for(replay, scale=scale, slice_z=int(replay.world.measured[0].position[2]))
     plane.largest = largest_amounts(frames)
     plane.floor = 0.12
-    plane.weights = {"p": 0.5, "n": 0.5}
-    plane.on_top = "nuclear"
+    plane.weights = weights if weights is not None else {"p": 0.5, "n": 0.5}
+    plane.on_top = on_top
     steps = by_tick(events["step"])
     contacts = by_tick(events["contact"])
     exits = by_tick(face_exits)
     pushes: dict[int, int] = {}
     for line in events["read"]:
-        if int(line["measured"]) == 1:  # type: ignore[arg-type]
+        if int(line["measured"]) == push_body:  # type: ignore[arg-type]
             pushes[int(line["tick"])] = pushes.get(int(line["tick"]), 0) + int(line["push"][0])  # type: ignore[arg-type, index]
-    border = escaped_per_tick(record, "nuclear")
+    border = escaped_per_tick(record, border_family)
     images = [plane.image(frame) for frame in frames]
     readings = []
     for frame in frames:
@@ -1838,10 +1847,10 @@ def nucleus_player(
             or "none on the GameBoard (all left through the faces)",
             "steps so far (step lines)": num(sum(len(v) for k, v in steps.items() if k <= t)),
             "hand-overs so far (contact lines)": num(sum(len(v) for k, v in contacts.items() if k <= t)),
-            "the border's clicks of nuclear this interval (run.json, audit)": num(
+            f"the border's clicks of {border_family} this interval (run.json, audit)": num(
                 border[t - 1] if 1 <= t <= len(border) else 0
             ),
-            "the push read by body 1 on x this interval (read lines)": num(pushes.get(t, 0)),
+            f"the push read by body {push_body} on x this interval (read lines)": num(pushes.get(t, 0)),
         }
         left = [
             f"{e['measured']} through {e['detector']} at {e['tick']}"
@@ -1852,7 +1861,9 @@ def nucleus_player(
         if left:
             lines["bodies that left (face click lines)"] = "; ".join(left)
         readings.append(lines)
-    player = Player(key, images, list(ticks), readings, caption + " " + COPIES_NOTE, duration_ms)
+    player = Player(
+        key, images, list(ticks), readings, caption + " " + COPIES_NOTE, duration_ms, colours=colours
+    )
     return player, record, events
 
 
@@ -3132,12 +3143,14 @@ def volume_player(
     phase_bodies: set[str] | None = None,
     arrow_families: set[str] | None = None,
     dot_bodies: set[str] | None = None,
+    copies: bool = True,
 ) -> Player:
     replay = Replay(world)
     frames = replay.run(ticks)
     volume = volume_for(replay, scale)
     volume.largest = largest_amounts(frames)
     volume.dot_bodies = dot_bodies or set()
+    volume.copies = copies
     volume.weights = weights or {}
     volume.phase_bodies = phase_bodies or set()
     volume.arrow_families = arrow_families or set()
@@ -3159,7 +3172,13 @@ def volume_player(
         for frame in frames
     ]
     return Player(
-        key, images, list(ticks), readings, caption + " " + COPIES_NOTE, duration_ms, colours=64
+        key,
+        images,
+        list(ticks),
+        readings,
+        caption + " " + COPIES_NOTE if copies else caption,
+        duration_ms,
+        colours=64,
     )
 
 
@@ -3973,6 +3992,273 @@ listed in <a href="../../HIGHLIGHTS.md">HIGHLIGHTS 5.7</a> and derived in
     )
 
 
+# ---------------------------------------------------------------------------
+# Page 11: the quarks (the model owner, 2026-09-21: "prepare one on the
+# quarks too, one that can be broken apart by an electron moving fast at
+# them: breaking a proton").
+# ---------------------------------------------------------------------------
+
+
+def quark_bodies_text(frame: Frame) -> str:
+    return (
+        "; ".join(f"{b.number}: {b.family} at {b.position}" for b in frame.bodies)
+        or "none on the GameBoard (all left through the faces)"
+    )
+
+
+@register("quarks")
+def page_quarks(out: Path, runs: Path | None) -> Path:
+    """(11) The quarks, series R: the proton line u d u holding, the kicked
+    quark walking off (the law binds and does not confine), and a
+    demonstration: a fast electron thrown at the line."""
+    folder = WORLDS / "quarks"
+    demo_world = GALLERY_WORLDS / "proton_electron.json"
+    weights = {"u": 0.35, "d": 0.35, "e": 0.25}
+    line, line_record, line_events = nucleus_player(
+        "proton_line",
+        folder / "q1_proton_line.json",
+        runs,
+        list(range(0, 49)),
+        "The proton line u d u, `q1_proton_line`: the plane z = 10 of the 21^3 cube (the bodies' plane, the "
+        "rows in it alone), 14 pixels per Node; u at (9, 10, 10), d at (10, 10, 10), u at (11, 10, 10), each "
+        "holding one unit of `glue` (gold rows, reaching three Links and clicking on the border `lifetime`). "
+        "One frame per interval: the three bodies releasing their rows into the Nodes beside them; the line "
+        "holds 3000 intervals with no step (the register's R).",
+        120,
+        weights=weights,
+        on_top="glue",
+        border_family="glue",
+        scale=14,
+    )
+    kick, kick_record, kick_events = nucleus_player(
+        "proton_kick",
+        folder / "q6_proton_kick.json",
+        runs,
+        list(range(0, 91, 2)),
+        "The kicked quark, `q6_proton_kick`: the left u thrown -x by 10^13 label units; it steps every seven "
+        "intervals, its push falling to the electric residual beyond the reach, and leaves through the face "
+        "-x (one frame per two intervals): the law binds and does not confine.",
+        160,
+        weights=weights,
+        on_top="glue",
+        border_family="glue",
+        colours=64,
+        scale=14,
+    )
+    hit, hit_record, hit_events = nucleus_player(
+        "proton_electron",
+        demo_world,
+        runs,
+        list(range(0, 121, 3)),
+        "The fast electron, `proton_electron` (a demonstration world): the electron e (cyan) at (3, 10, 10) "
+        "thrown +x at the line with 2 x 10^13 label units, about one Link per 1.4 intervals; what the law does "
+        "when it reaches the first quark is what the frames show (one frame per three intervals): the contact through "
+        "the table hands the momentum to the occupant, and a quark that walks off is not held back.",
+        160,
+        weights=weights,
+        on_top="glue",
+        border_family="glue",
+        push_body=4,
+        colours=64,
+        scale=14,
+    )
+    volume = volume_player(
+        "volume_proton_electron",
+        demo_world,
+        list(range(0, 121, 3)),
+        6,
+        "The same demonstration in three dimensions, one frame per three intervals, the cube turning slowly: "
+        "the line of three quarks with their glue (the gold halo), the electron arriving on +x, the knocked "
+        "quark leaving, with the arrows of their momentum labels. Here only the glue rows are drawn (their "
+        "reach three Links, the strong column's range) and the bodies' copies are not: four bodies releasing "
+        "on 290 directions fill the cube; the plane above shows the u, d and e rows and the copies.",
+        100,
+        weights={"u": 0.0, "d": 0.0, "glue": 0.4, "e": 0.0},
+        copies=False,
+    )
+
+    def first_steps(events: dict[str, list[dict[str, object]]]) -> str:
+        seen: dict[int, dict[str, object]] = {}
+        for entry in events["step"]:
+            seen.setdefault(int(entry["number"]), entry)  # type: ignore[arg-type]
+        return (
+            "; ".join(
+                f"body {n} at the interval {entry['tick']} from {tuple(entry['node'])} to {tuple(entry['to'])}"  # type: ignore[arg-type]
+                for n, entry in sorted(seen.items())
+            )
+            or "none"
+        )
+
+    def step_ticks(events: dict[str, list[dict[str, object]]], number: int, limit: int = 12) -> str:
+        ticks = [int(e["tick"]) for e in events["step"] if int(e["number"]) == number]  # type: ignore[arg-type]
+        text = ", ".join(str(t) for t in ticks[:limit])
+        return (
+            f"{text}{', ...' if len(ticks) > limit else ''} ({len(ticks)} steps in all)"
+            if ticks
+            else "none"
+        )
+
+    def exits(events: dict[str, list[dict[str, object]]]) -> str:
+        return (
+            "; ".join(
+                f"body {e['measured']} through {e['detector']} at {e['tick']}" for e in events["exit"]
+            )
+            or "none"
+        )
+
+    def read_mass(world: Path) -> str:
+        """The contents declared (the family's units and the held units),
+        their sum what a detector reads as the set's mass."""
+        declared = read_json(world)["measured"]
+        assert isinstance(declared, list)
+        parts = [int(m["amount"]) + sum(int(v) for v in m.get("held", {}).values()) for m in declared]
+        return " + ".join(str(c) for c in parts) + " = " + str(sum(parts))
+
+    hit_first_contact = min(
+        (int(e["tick"]) for e in hit_events["contact"]),
+        default=None,  # type: ignore[arg-type]
+    )
+    entry_url = "../../EXPERIMENTS.md#r-the-quarks-2026-09-21"
+    body = f"""
+{registered_note(folder / "q1_proton_line.json", "R, the quarks (2026-09-21)", entry_url)}
+<p class="demo">Also registered there: <code>examples/events/quarks/q6_proton_kick.json</code>, run as declared.
+Series R is a research run of a read-only design (<a href="../../designs/quarks/QUARKS.md">the quarks as
+families of the family table</a>): the quarks are not rows of the law's family table today, and nothing on this
+page changes that. The third world is a demonstration written for this page.</p>
+{demonstration_note(demo_world)}
+<h2>The GameBoard</h2>
+<p>Series I's cube: 21 x 21 x 21 open Nodes, K = {num(1 << 20)}, N = 64, the width of the push 2^37, the
+contact through the table, the fan of the 290 primitive directions with |a| + |b| + |c| at most 6. Three free
+families without a phase circle: <code>u</code> (4 units of content, the charge 1224 per unit: the whole
+charge 4896, 2/3 of the register's proton 7344), <code>d</code> (9 units at -272: -2448, -1/3) and
+<code>glue</code> (the column <code>strong</code> of value 10 000 with the sign minus, the <code>lifetime</code>
+3: series I's <code>nuclear</code> at the quark level). A <b>quark</b> is a body of <code>u</code> or
+<code>d</code> holding one unit of <code>glue</code>; every body releases one row of its held content per
+direction per interval; the push per interval between two bodies within the reach is
+(Q<sub>A</sub> Q<sub>B</sub> - G<sub>A</sub> G<sub>B</sub> - M<sub>A</sub> M<sub>B</sub>) x U(r) per unit per
+direction. In the demonstration a fourth family <code>e</code> (one unit of content, the charge -7344 per
+unit, minus the proton's; no strong column) has one body at (3, 10, 10) with the momentum 2 x 10^13 label
+units on +x: at the width 2^37 it steps one Link per (64 x 2^37 + p) / p = 1.44 self-creations. No detector
+is declared: the bodies' <code>read</code> and <code>contact</code> records are the readings, the six faces and
+the border <code>lifetime</code> the detectors of what leaves.</p>
+{
+        legend(
+            [
+                ("the u rows", swatch(FAMILY_COLOURS[0])),
+                ("the d rows", swatch(FAMILY_COLOURS[1])),
+                ("the glue rows (the strong column, lifetime 3)", swatch(FAMILY_COLOURS[2])),
+                ("the e rows", swatch(FAMILY_COLOURS[3])),
+                ("a u quark (a body of u)", swatch(BODY_COLOURS["u"])),
+                ("a d quark (a body of d)", swatch(BODY_COLOURS["d"])),
+                ("the electron (a body of e)", swatch(BODY_COLOURS["e"])),
+            ]
+        )
+    }
+<h2>Why this page</h2>
+<p>The owner asked for the quarks: a proton that a fast electron can break apart. In series R the proton is
+three quark bodies in a line, bound by the one coupling over the columns through the strong column of the
+glue each holds, with the contact through the table: a body refused a step onto its neighbour's Node hands
+its momentum component to the occupant. The register's verdict: the line holds, and a kicked quark walks
+off, because the law binds and does not confine (nothing in it grows with distance). The demonstration throws
+an electron at the line: the electron's charge pulls the u and pushes the d as it comes, and when it reaches
+the first quark its momentum is handed over through the table. Whether the line breaks, which quark leaves
+and what the electron does afterwards are read off the run below, not assumed.</p>
+<h2>1. The proton line holds</h2>
+{line.html()}
+<h2>2. A kicked quark walks off</h2>
+{kick.html()}
+<h2>3. A fast electron thrown at the proton (a demonstration)</h2>
+{hit.html()}
+{volume.html()}
+<h2>What the runs read</h2>
+<table>
+<tr><th>Reading (kind)</th><th>q1_proton_line</th><th>q6_proton_kick</th><th>proton_electron (demonstration)</th></tr>
+<tr><th>the first step of each body (GAMEBOARD, step lines)</th><td>{
+        html.escape(first_steps(line_events))
+    }</td><td>{html.escape(first_steps(kick_events))}</td><td>{
+        html.escape(first_steps(hit_events))
+    }</td></tr>
+<tr><th>the steps of the kicked or hit body (GAMEBOARD)</th><td>none</td><td>body 1: {
+        html.escape(step_ticks(kick_events, 1))
+    }</td><td>body 4, the electron: {html.escape(step_ticks(hit_events, 4))}</td></tr>
+<tr><th>hand-overs over the run (contact lines)</th><td class="num">{
+        num(len(line_events["contact"]))
+    }</td><td class="num">{num(len(kick_events["contact"]))}</td><td class="num">{
+        num(len(hit_events["contact"]))
+    }</td></tr>
+<tr><th>the first hand-over (contact lines)</th><td>{
+        html.escape(str(min((int(e["tick"]) for e in line_events["contact"]), default="none")))
+    }</td><td>{
+        html.escape(str(min((int(e["tick"]) for e in kick_events["contact"]), default="none")))
+    }</td><td>{
+        html.escape(str(hit_first_contact) if hit_first_contact is not None else "none")
+    }</td></tr>
+<tr><th>what left through the faces (DETECTOR, face click lines)</th><td>{
+        html.escape(exits(line_events))
+    }</td><td>{html.escape(exits(kick_events))}</td><td>{html.escape(exits(hit_events))}</td></tr>
+<tr><th>the contents declared, their sum the read mass (DETECTOR)</th><td>{
+        html.escape(read_mass(folder / "q1_proton_line.json"))
+    }</td><td>{html.escape(read_mass(folder / "q6_proton_kick.json"))}</td><td>{
+        html.escape(read_mass(demo_world))
+    }</td></tr>
+<tr><th>the run's intervals (completed)</th><td class="num">{
+        num(int(line_record["completed_ticks"]))
+    }</td><td class="num">{num(int(kick_record["completed_ticks"]))}</td><td class="num">{
+        num(int(hit_record["completed_ticks"]))
+    }</td></tr>
+</table>
+<p>The register's pins for the two registered worlds (series R, read and compared there): the push at the
+interval 20 on the ends of the line +-416 530 868 696 on x and 0 on the middle, exactly; no step in 3000
+intervals; the read mass 20 units (the exact sum of the declared contents: nothing raises a bound set's mass
+above its parts, the proton's 99 percent binding is not in the law); the kicked u steps -x at the intervals
+6, 13, 20, ... every seven and leaves through <code>face:-x</code> at 63 with its charge 2/3 e, outside the
+page's pin of 70 to 90 by seven intervals, reported and not moved. The demonstration has no pin: its
+readings above are what its run did.</p>
+{
+        sources(
+            [
+                (
+                    "the worlds q1_proton_line and q6_proton_kick, their families, fan, width and pins",
+                    '<a href="../../../examples/events/quarks/README.md">examples/events/quarks/README.md</a>, <code>expectations.json</code>; the register, <a href="'
+                    + entry_url
+                    + '">R, the quarks (2026-09-21)</a>',
+                ),
+                (
+                    "the design (read-only): the six quark rows, what the law lacks for confinement",
+                    '<a href="../../designs/quarks/QUARKS.md">docs/designs/quarks/QUARKS.md</a> (sections 1, 2, 5); the owner\'s direction, records 249, 251 and 256 of the log of 2026-09-20',
+                ),
+                (
+                    "the demonstration world",
+                    f"<code>{relative(demo_world)}</code>, written by <code>examples/events/gallery/make_worlds.py</code> from <code>q1_proton_line.json</code> with the family <code>e</code> and its body added; the electron's charge -7344 is minus the register's proton (4 per unit on 1836 units); the throw 2 x 10^13 label units",
+                ),
+                (
+                    "the steps, hand-overs, pushes and exits per frame",
+                    "the runs' <code>events.jsonl</code> (the kinds step, contact, read, click) and <code>run.json</code> (the audit's transit lines), replayed in process for the pictures",
+                ),
+                (
+                    "the runs' fingerprints",
+                    f"q1 {fingerprint_line(line_record)}; q6 {fingerprint_line(kick_record)}; the demonstration {fingerprint_line(hit_record)}",
+                ),
+                (
+                    "the step rule (one Link per (Q S M + p) / p self-creations) and the contact through the table",
+                    '<a href="../../BEAM_LAW.md">BEAM_LAW.md</a>, note 31; <code>src/event_universe/events/engine.py</code>, <code>step_axis</code>',
+                ),
+            ]
+        )
+    }
+"""
+    return write_page(
+        out,
+        "quarks",
+        page(
+            "The quarks",
+            "Series R: the proton of three quarks holding in a line, a kicked quark walking off, and a fast "
+            "electron thrown at the proton; the law binds and does not confine.",
+            body,
+        ),
+    )
+
+
 @register("index")
 def page_index(out: Path, runs: Path | None) -> Path:
     entries = [
@@ -4019,6 +4305,13 @@ def page_index(out: Path, runs: Path | None) -> Path:
             "In three dimensions",
             "the nucleus, the decay, the atom and the beam beside the mass, the whole GameBoard drawn in an "
             "isometric projection, the bodies releasing themselves into the Nodes beside them (registered worlds)",
+        ),
+        (
+            "quarks.html",
+            "The quarks",
+            "series R: the proton of three quarks holding in a line, a kicked quark walking off, and a fast "
+            "electron thrown at the proton, handing its momentum through the table (two registered worlds and "
+            "a demonstration world)",
         ),
         (
             "formula.html",
