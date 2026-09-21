@@ -4216,7 +4216,7 @@ sequential gates on an entangled record, the full register replay.
   none moved. The digests of 47 of the 48 worlds moved; the numbers
   above are kept as history.
 
-### S, the massive rows (2026-09-21)
+### W, the massive rows (2026-09-21)
 
 - **Confronts.** The model owner's yes of 2026-09-21 (record 332 of
   docs/LOG_2026-09-20.md: "with the electron this is the right thing to

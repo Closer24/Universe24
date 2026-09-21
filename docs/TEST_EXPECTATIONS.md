@@ -832,7 +832,7 @@ number:
   records the register's (79, 68, 11 and 149, 138, 11) and its books
   balanced at the end.
 
-## The massive rows
+## The massive rows (series W)
 
 `tests/test_massive_rows.py` (`massive-rows-v1`, 2026-09-21; the model
 owner's yes, record 332 of docs/LOG_2026-09-20.md; the mathematician's

@@ -1143,8 +1143,10 @@ couplings.
   momentum label p_D (the direction's unit vector at the scale p, the
   lamp's `momentum_magnitude`) and the content M (the family's `quantum`),
   flying by the flight's one accumulator at the rate 2 abs(p_D)_1 against
-  the wall 2 E'_D (E'_D = isqrt((Q S M)^2 + 3 p_D . p_D) at load; the
-  photon its E'_0 = 0 case, one primitive), turning de Broglie's abs(p_a)
+  the wall 2 E'_D (E'_D = isqrt((Q S M)^2 + 3 p_D . p_D) at load, the 3
+  Flight's constant, the 3 of T_D, fixed by the law and read from no key
+  where `covariant-readings-v1` declares the same factor as the d of its
+  key `c2` = [1, d]; the photon its E'_0 = 0 case, one primitive), turning de Broglie's abs(p_a)
   N / h at every axis Link on one accumulator (the plane wave to one
   remainder), clicking by the click as built, and at the record's
   completion handing ONE quantum, M and the one label of the chosen row's

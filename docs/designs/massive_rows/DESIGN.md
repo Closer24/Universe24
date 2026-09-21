@@ -27,7 +27,12 @@ label units) and p its magnitude, M the content of one row (units), S the
 world's width, Q = 64 the label's scale, `E'_0 = Q S M` the rest energy
 in the identity's units, `E'` the largest integer with `E'^2 <= E'_0^2 +
 3 p . p`, h the world's action, N the circle, **D** a direction of the
-table. Rows and bodies, not light and matter.
+table. Rows and bodies, not light and matter. The 3 of `E'_0^2 + 3 p . p`
+is Flight's constant, the 3 of `T_D` and of the speed 1 / sqrt 3, fixed by
+the law for every world and read from no key; `covariant-readings-v1`
+declares the same factor as the d of its key `c2` = [1, d] (its design's
+[1, 3]), and the two identities do not share a world (a massive family
+needs `action`, which the covariant key refuses).
 
 **The design in one line.** A paid family may be declared massive: its
 lamp births records of rows over the fan as a photon's lamp does, each

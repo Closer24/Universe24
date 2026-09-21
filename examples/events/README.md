@@ -533,7 +533,7 @@ its record registered by `replay_register.py`); `read_run.py` reads a run
 against the pin, every number labelled DETECTOR (the screen's gathers,
 the first `click` lines) or GAMEBOARD (the faces' and the wall's
 completions, the books). The register entry is
-[S, the massive rows (2026-09-21)](../../docs/EXPERIMENTS.md#s-the-massive-rows-2026-09-21).
+[W, the massive rows (2026-09-21)](../../docs/EXPERIMENTS.md#w-the-massive-rows-2026-09-21).
 
 ## The entity catalog
 

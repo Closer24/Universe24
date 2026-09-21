@@ -6,7 +6,7 @@ The worlds of `massive-rows-v1` (the model owner's yes of 2026-09-21,
 ADMISSIBLE in the physics-rule review's three rounds; the identity in
 [BEAM_LAW section 2](../../../docs/BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
 and [HYPOTHESES section 26](../../../docs/HYPOTHESES.md#26-the-free-particle-as-a-record-of-massive-rows-de-broglies-fringes-from-h--p-stated-so-that-it-can-fail);
-the register entry [S, the massive rows](../../../docs/EXPERIMENTS.md#s-the-massive-rows-2026-09-21)).
+the register entry [W, the massive rows](../../../docs/EXPERIMENTS.md#w-the-massive-rows-2026-09-21)).
 A free quantum of matter flies as a photon does: a paid family declared
 `massive` births records of rows over its lamp's fan, each row carrying
 the momentum label p_D at the scale p (the lamp's `momentum_magnitude`)
