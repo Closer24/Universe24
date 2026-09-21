@@ -4243,8 +4243,13 @@ sequential gates on an entangled record, the full register replay.
   gathers); the run 5750 intervals for every record of 4096 births, first
   at 1024 births (`slits_matter_1024`, 2700 intervals); the faces' and
   the wall's completions a GAMEBOARD diagnostic beside it.
-- **Run.** In the series README as run (the 1024-birth run first, the
-  4096-birth pin when the host allows).
+- **Run.** The 1024-birth run (`slits_matter_1024`, 2700 intervals)
+  completed on 2026-09-21 and PASSES, every pinned number inside its
+  bracket (DETECTOR: the first `click` lines at ticks 955 and 1016, the
+  bands' centres 37.06, 59.99 and 83.02, Pearson 0.88, the visibility
+  0.964, the dark maximum 1, 433 clicks); the reading in the series README
+  and under `slits_matter_1024.run` in its register, the same digests on
+  the three heads that ran it. The 4096-birth pin when the host allows.
 
 ### N, the binding that costs content (2026-09-20)
 
