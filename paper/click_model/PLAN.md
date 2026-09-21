@@ -315,3 +315,22 @@ bits out), noted for Part II. Sent to the Boss for the mathematician: the
 click as the evaluation of Z[Z_N] at zeta_N, the accumulator's exact phase
 and exact u, and now the limit's symmetry (a moving body's c) and the
 field equation of the delay rule.
+
+## The law as one piecewise-linear map (2026-09-21, the owner's framing, sent to the Boss and the derivation mathematician)
+
+The state is an integer vector on a torus; every interval translates it by
+a rate, thresholds, subtracts; the events are what crossed. Where the rate
+is constant (the rows between clicks) the map has a closed form, the floor
+of a linear function: the quantum part is computed without runs (the
+paper's checks do so). Where the rate depends on the state (the push, the
+collision, the crowd) the map is a difference equation whose solution is
+the iteration or the continuum limit: the classical part. The boundary is
+the property of the rate. Proposed sentence for the model section, pending
+the owner's wording: "the model is one piecewise-linear map on an integer
+torus; the measurement is the one threshold that is read out." Also
+pending: a `checks/formula_run.py` that recomputes every integer of the
+measurements table from the formulas (a run without runs), offered to the
+owner. The mathematician's two-slit answer (records 156, 160): the wheel
+W = 2^12, the exact phase and the fan's width P wait for the owner's word;
+`slits_huygens` ordered on main; the paper's numbers re-pinned once after
+the fraction-free batch.
