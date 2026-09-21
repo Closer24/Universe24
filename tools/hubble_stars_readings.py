@@ -72,7 +72,7 @@ import numpy as np
 from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.events import parse_nature_beam_world
 from event_universe.events.nature_beam import direction_flight
-from event_universe.events.world import HEADING_OFFSET, Q
+from event_universe.events.world import HEADING_OFFSET, drive_rate_and_wall
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_PREFIX = "rays-hubble-stars-"
@@ -97,6 +97,18 @@ KIND_BOARD = "[GAMEBOARD]"
 # The flight's constants of the six headings (the two rest vectors first): m(age)
 # and c are the same on every heading.
 HEADINGS_FLIGHT = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
+
+
+def declared_speed(momentum: int, content: int, width: int) -> float:
+    """A star's speed on a heading from its declared momentum, off the
+    engine's own rule (`world.drive_rate_and_wall`, the directional drive
+    of 2026-09-21, BEAM_LAW note 49): rate / wall = |p| Q / (Q S M Q + |p|
+    T_D) Links per self-creation, T_D = 110 the heading's resolution
+    (until then |p| / (Q S M + |p|), the per-axis rule)."""
+    rate, wall = drive_rate_and_wall(
+        [momentum, 0, 0], content, width, 1, int(HEADINGS_FLIGHT.resolution[HEADING_OFFSET])
+    )
+    return rate / wall
 
 
 def beam_speed() -> float:
@@ -295,7 +307,7 @@ def read_run(folder: Path) -> Run:
         content = int(declared["amount"]) + sum(int(v) for v in declared.get("held", {}).values())
         p = max(abs(int(v)) for v in declared["momentum"])
         distance = sum(abs(int(a) - int(b)) for a, b in zip(declared["position"], centre, strict=True))
-        stars[family] = Star(family, number, content, p, p / (Q * width * content + p), distance)
+        stars[family] = Star(family, number, content, p, declared_speed(p, content, width), distance)
     by_number = {star.number: star for star in stars.values()}
     signs = {
         star.number: axis_of(document["measured"][star.number - 1]["momentum"])

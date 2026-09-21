@@ -217,11 +217,14 @@ class Count:
     the cap on the count gained at one self-creation (1 on the drive, 0
     otherwise); `idle_at_zero` whether a numerator of 0 leaves the row as it
     is (the step's rule: a momentum of 0 never steps); and `accumulator`,
-    the remainder's owner, one bounded integer. The `place` rows of a body
-    on a set (the Nodes' claims on its releases) are the one kind not run
-    through `advance`: `nature_beam.place_over_nodes` is their rule (an
-    argmax carry on the claims, BEAM_LAW note 41 (viii)), and
-    `advance("place")` is never called."""
+    the remainder's owner, one bounded integer. Two kinds of rows are not
+    run through `advance`: the `place` rows of a body on a set (the Nodes'
+    claims on its releases; `nature_beam.place_over_nodes` is their rule,
+    an argmax carry on the claims, BEAM_LAW note 41 (viii)) and, since
+    2026-09-21 (note 49), the `line` rows, the three deficit accumulators
+    of the digital line a body walks (`engine.line_step` is their rule,
+    the flight's Bresenham choice as an argmax carry); `advance("place")`
+    and `advance("line")` are never called."""
 
     name: str
     source: str
@@ -332,10 +335,15 @@ def counts_table(
     """A body's table of counts from the world's rates (BEAM_LAW note 41):
     the turn, the owed count, the release per family (its rate 0 on a paid
     family: it releases nothing freely), the lamp's rate where the body is
-    a lamp, the drive per axis (the step's divisor handed to the loop, the
-    cap 1, idle at a momentum of 0), the push per column and axis over
-    Lambda_c^2, and under the world key `action` the turn by momentum per
-    axis (the model
+    a lamp, the drive (one row since the directional drive of 2026-09-21,
+    BEAM_LAW note 49: the rate |p|_1 S_1 Q and the wall Q S M S_1 Q + |p|_1
+    T_D handed to the loop at every self-creation, the cap 1, idle at a
+    momentum of 0; until then one row per axis at the momentum component
+    over the step's divisor) with the three `line` rows, the deficit
+    accumulators of the body's digital line (an argmax carry, not run
+    through the loop: `engine.line_step`), the push per column and axis
+    over Lambda_c^2, and under the world key `action` the turn by momentum
+    per axis (the model
     owner's record 155 of 2026-09-20, "no exception": the rate |p_a| x N at
     every Link the step rule counts on the axis, over h; its index the
     axis)."""
@@ -349,7 +357,8 @@ def counts_table(
     )
     if lamp_rate is not None:
         rows.append(Count("lamp", "rate", 0, 0, lamp_rate[0], lamp_rate[1]))
-    rows.extend(Count("drive", "momentum", 0, axis, 1, 1, 1, True) for axis in range(3))
+    rows.append(Count("drive", "momentum", 0, 0, 1, 1, 1, True))
+    rows.extend(Count("line", "direction", axis, axis, 1, 1) for axis in range(3))
     rows.extend(
         Count("push", "column", column, axis, 1, scale * scale)
         for column, scale in enumerate(column_scales)
@@ -443,11 +452,18 @@ class Measured:
     waited: int = 0
     turned: int = 0
     steps: int = 0
-    # Per axis the Links stepped, the k0 of the turn by momentum (the step
-    # drive itself, BEAM_LAW note 17 as amended, is the `drive` rows of the
-    # table of counts below: per axis the signed distance the momentum has
-    # driven since the last step, `|drive_a| < Q S M + |p_a|`).
+    # Per axis the Links the step rule counted, the k0 of the turn by
+    # momentum (the drive itself, BEAM_LAW note 49, is the `drive` row of
+    # the table of counts below, one accumulator on the digital line of
+    # the momentum's direction, and the line's place its `line` rows).
     axis_steps: list[int] = field(default_factory=lambda: [0, 0, 0])
+    # The direction D of the line the drive's residue is measured along
+    # (note 49): the primitive direction of the momentum at the body's last
+    # self-creation with a momentum, (0, 0, 0) until the first; when the
+    # momentum's direction changes the drive and the deficits keep their
+    # residues on the new line, a reversal (D_old . D < 0) negating the
+    # drive. In `state.json` and on the `step` line as `direction`.
+    line_direction: tuple[int, int, int] = (0, 0, 0)
     # The crossing rule (the model owner's record 158 of 2026-09-20; BEAM_LAW
     # note 48): the Port of the Link the body crossed this interval
     # (`step_port`, -1 without a step: none fired, a refused step, an
@@ -467,8 +483,11 @@ class Measured:
     # Node. The rows: `turn` (the rate `content x n` at the clock's rate K =
     # [n, d]), `owed` (`counted x n` at `suspension` [n, d]), `release` per
     # family (`held x n` at `release` [n, d]; 0 on a paid family), `lamp`
-    # (the lamp's rate [n, d]), `drive` per axis (the momentum over the
-    # step's divisor D, the cap `at_most` 1), `push` per column and axis
+    # (the lamp's rate [n, d]), `drive` (one row: |p|_1 S_1 Q over the wall
+    # Q S M S_1 Q + |p|_1 T_D on the digital line of the momentum's
+    # direction, the cap `at_most` 1; note 49) with the `line` rows (the
+    # three deficit accumulators of the line, an argmax carry:
+    # `engine.line_step`), `push` per column and axis
     # (the column's lifted numerator over Lambda_c^2, `nature_beam.push_form`),
     # under `action` the turn by momentum `action` per axis (|p_a| N per
     # Link the step rule counts on the axis, over h; record 155), and on
@@ -655,12 +674,25 @@ class Measured:
         self.counts.set("release", values)
 
     @property
-    def drive(self) -> list[int]:
-        return self.counts.values("drive")
+    def drive(self) -> int:
+        """The drive's accumulator (BEAM_LAW note 49): the signed distance
+        the momentum has driven along the body's line since its last Link,
+        in units of the wall."""
+        return self.counts.one("drive")
 
     @drive.setter
-    def drive(self, values: list[int]) -> None:
-        self.counts.set("drive", values)
+    def drive(self, value: int) -> None:
+        self.counts.set("drive", [value])
+
+    @property
+    def line(self) -> list[int]:
+        """The three deficit accumulators of the body's digital line (the
+        `line` rows; `engine.line_step` advances them at every Link)."""
+        return self.counts.values("line")
+
+    @line.setter
+    def line(self, values: list[int]) -> None:
+        self.counts.set("line", values)
 
     @property
     def acc_push(self) -> list[list[int]]:
@@ -712,7 +744,11 @@ class Measured:
             "waited": self.waited,
             "phase_steps": self.turned,
             "steps": self.steps,
-            "drive": list(self.drive),
+            # The directional drive (BEAM_LAW note 49): the one accumulator,
+            # the line's three deficits and the line's direction.
+            "drive": self.drive,
+            "line": list(self.line),
+            "direction": list(self.line_direction),
             "axis_steps": list(self.axis_steps),
             # The crossing rule's two marks (BEAM_LAW note 48): the Port of
             # the Link crossed this interval and the interval before.

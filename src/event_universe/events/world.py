@@ -28,9 +28,11 @@ the model owner, 2026-09-19):
   ray at its Node of every number but its own (an integer w is accepted as
   `[w, 1]`; `[1, 1]` by default; 0 or `[0, d]` for none); `width`, the
   width S of the push (the model owner's D1, 2026-09-19): a free measured
-  event of content M with the momentum component p on an axis steps one
-  Link per (S x M + p) / p self-creations on that axis, an integer from 1
-  (the default: the rule as it was, one Link per (M + p) / p); 0 or a
+  event of content M and momentum vector p walks the digital line of p's
+  direction at the pace |p|_1 S_1 Q / (Q S M S_1 Q + |p|_1 T_D) Links per
+  self-creation (the directional drive of 2026-09-21, BEAM_LAW note 49;
+  until then one Link per (Q S M + p) / p self-creations per axis), an
+  integer from 1 (the default); 0 or a
   negative width is refused; `age_bound`, the largest age a ray may carry
   (an integer from 1; the age is the count of intervals since the measured
   event that created the ray, kept whole on the record since 2026-09-20 so
@@ -425,13 +427,40 @@ AMPLITUDE_LEAST_STEPS = 4
 # unknown key (MIGRATION).
 
 
-def step_divisor(momentum: int, content: int, width: int) -> int:
-    """D_a = Q x S x M + |p_a|, the divisor of the step rule on one axis
-    (BEAM_LAW section 3 step 5 and note 17: one Link per D_a / |p_a|
-    self-creations; `engine.step_axis` reads it), the denominator of the
-    body's speed |p_a| / D_a in Links per interval: M the content, S the
-    world's `width`, Q the label's scale."""
-    return LABEL_SCALE * width * content + abs(momentum)
+def drive_rate_and_wall(
+    momentum: list[int], content: int, width: int, manhattan: int, resolution: int
+) -> tuple[int, int]:
+    """The rate and the wall of a body's drive on the digital line of its
+    momentum's direction D (BEAM_LAW section 3 step 5 and note 49; form B
+    of docs/designs/light_speed/FORM.md section 3; `engine._move` and
+    `engine.step_line` read it): rate = |p|_1 x S_1 Q and wall = Q S M x
+    S_1 Q + |p|_1 x T_D, with |p|_1 = sum |p_a| the Manhattan norm of the
+    momentum vector p in label units, M the content, S the world's
+    `width`, Q = 64 the label's scale, S_1 = `manhattan` the direction's
+    Manhattan length and T_D = `resolution` its resolution isqrt(3 |D|^2
+    Q^2) (the flight table's constants of the direction). The body's
+    Manhattan pace is rate / wall Links per self-creation: |p|_1 / (Q S M)
+    at a small momentum, whose Euclidean speed on the line of D is |p|_2 /
+    (Q S M) on every direction (Newton's limit, isotropic, the momentum
+    unit as it was: one unit of net flow, the label Q M, gives Q / (Q S +
+    T_D), 64 / (64 S + 110) on a heading), bending to the rows' S_1 Q /
+    T_D as the momentum grows and never above it (S_1 Q <= T_D on every
+    direction, FORM.md section 1: c = 1 / sqrt 3 is the cap of every
+    body); at M = 0 a row's own rate over its wall. Until 2026-09-21 the
+    divisor of the per-axis rule was `step_divisor`, D_a = Q S M + |p_a|
+    (note 17), whose cap was one Link per interval, 1.72 c. A wall beyond
+    the integer bound (|p|_1 x T_D past 2^62 - 1) is refused, as the
+    push's bound refuses a momentum."""
+    norm = sum(abs(component) for component in momentum)
+    rate = norm * manhattan * LABEL_SCALE
+    wall = LABEL_SCALE * width * content * manhattan * LABEL_SCALE + norm * resolution
+    if wall > MOMENTUM_BOUND:
+        raise OverflowError(
+            f"{BEAM_LAW}: the drive's wall Q S M S_1 Q + |p|_1 T_D ({wall}) exceeds the integer "
+            f"bound {MOMENTUM_BOUND} (the momentum {momentum} on the direction of Manhattan length "
+            f"{manhattan} and resolution {resolution})"
+        )
+    return rate, wall
 
 
 # The identity of the turn by momentum, a physical hypothesis beside the
@@ -2892,8 +2921,8 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     if suspension[0] == 0:
         # Off: 0 and [0, d] alike, recorded as [0, 1].
         suspension = (0, 1)
-    # The width S of the push: one Link per (S x M + p) / p self-creations;
-    # 1 (the rule as it was) unless the world declares it, never below 1.
+    # The width S of the push, the Q S M of the drive's wall
+    # (`drive_rate_and_wall`); 1 unless the world declares it, never below 1.
     width = _integer(obj.get("width", 1), "width", 1)
     bound = _integer(obj.get("direction_bound", DEFAULT_DIRECTION_BOUND), "direction_bound", 1, 4096)
     table = _direction_table(obj.get("directions", []), bound)

@@ -636,6 +636,16 @@ def unit_label(vector: Vector) -> Vector:
     return found[0], found[1], found[2]
 
 
+def direction_resolution(vector: Vector) -> int:
+    """T_d = isqrt(3 |v|^2 Q^2), the resolution of a direction (BEAM_LAW
+    section 3): the wall of a row's position accumulator at the rate S_1 Q,
+    and since 2026-09-21 (note 49) of a body's drive at its momentum's
+    fraction of that rate, one integer root per direction, taken at load
+    for the table's directions (`direction_flight`) and once per direction
+    on the host for a body's line (`engine.NatureBeamSimulation._line`)."""
+    return integer_root(3 * sum(c * c for c in vector) * Q * Q)
+
+
 def _bresenham(vector: tuple[int, int, int]) -> list[tuple[int, int, int]]:
     """The S_1 unit steps of one period of the digital line of v: at each
     step the axis whose progress is furthest behind, the lowest axis first."""
@@ -664,7 +674,7 @@ def direction_flight(vectors: tuple[tuple[int, int, int], ...]) -> Flight:
         if s1 == 0:
             lines_list.append([])
             continue
-        t = integer_root(3 * sum(c * c for c in vector) * Q * Q)
+        t = direction_resolution(vector)
         resolution[index] = t
         p = t // bounded_gcd(s1 * Q, t)
         per_period = s1 * Q * p // t

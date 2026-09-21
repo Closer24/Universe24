@@ -20,7 +20,9 @@ written down first:
     a fixed proton of `p` (content 4, charge [1, 1]) at (5, 5, 1) on the
     four in-plane headings at `release` [1, 4], an electron of `e` (content
     16, charge -15, phase 5) at (8, 5, 1) of span [1, 1, 3] with the
-    momentum [0, 320, 0] (the steps at the ages 5, 9, 13, 17), `pass` for
+    momentum [0, 320, 0] (the steps at the ages 5, 10, 15, 20 under the
+    directional drive of 2026-09-21, BEAM_LAW note 49, the rate 20480
+    against the wall 100736; 5, 9, 13, 17 until then), `pass` for
     `p` (no push: the momentum constant), `phase_by_momentum` and `action`
     65536 (320 / 1024 of a step per Link: the phases 5, 5, 5, 6 after the
     four steps), releasing on the four in-plane headings, 20 intervals, the
@@ -134,7 +136,7 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     reads = [e for e in events if e["event"] == "read" and e["measured"] == TOOL.ELECTRON]
     assert reading.reads == len(reads) == 0
     steps = [e for e in events if e["event"] == "step" and e["number"] == TOOL.ELECTRON]
-    assert [(e["tick"], e["phase"]) for e in steps] == [(5, 5), (9, 5), (13, 5), (17, 6)]
+    assert [(e["tick"], e["phase"]) for e in steps] == [(5, 5), (10, 5), (15, 5), (20, 6)]
     assert reading.turns == [] and 0 < reading.angle_turns < 1
     minus = [
         e["tick"]

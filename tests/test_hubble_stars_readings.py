@@ -16,21 +16,24 @@ written down first:
     star `s_px1` at x = 25, a lamp of the paid family (`amount` 4096, `rate`
     [1, 1] on (-1, 0, 0)) holding `mass` 2^22 (the free family, `charge` 0,
     no phase circle), K = the content 2^22 + 4096 (the turn 1 per
-    self-creation), with the momentum [Q S M, 0, 0] (the speed p / (Q S M +
-    p) = 1 / 2 Link per self-creation: a step at every second
+    self-creation), with the momentum [Q S M, 0, 0] (since the directional
+    drive of 2026-09-21, BEAM_LAW note 49, the speed |p| Q / (Q S M Q + |p|
+    T_D) = 64 / 174 = 0.3678 Links per self-creation on the heading, read
+    off the engine's `drive_rate_and_wall` by the tool's `declared_speed`;
+    until then p / (Q S M + p) = 1 / 2, a step at every second
     self-creation), releasing its mass rows on the two headings of x. The
     reading: the crowd `gravity` and the clock `scalar` off the model name,
-    rho = 1, c = 32 / 55, the star's declared speed 1 / 2, its initial
+    rho = 1, c = 32 / 55, the star's declared speed 64 / 174, its initial
     distance 5 and its content 2^22 + 4096, its `record` lines the engine's
     detector set's (one per interval with a click, the phase the pointer's
     step), its clicks' age moments the engine's (amount 1, the reading the
-    age), its steps the engine's `step` records (30 in 60 intervals), its
+    age), its steps the engine's `step` records (22 in 60 intervals, floor(60
+    x 64 / 174); 30 until 2026-09-21), its
     homes the engine's `home` records (its outward rows taken home when it
     stepped in the release interval), completed and balanced; the window
-    [20, 60): the pointer's turn reads 1 + z = 1 + v / c with v = 1 / 2
-    within the grain of the digital step (0.05 in z), k = 0 (no
-    suspension), the reading's formula within 2 % and the luminosity
-    (clicks per interval) 1 / (1 + z) within 5 %;
+    [20, 60): the star's declared speed in units of c, v / c = 110 / 174 =
+    0.6322 (0.859 until 2026-09-21), k = 0 (no suspension); the acoustic
+    rule's z undefined under the record form (below);
 (c) the fits on the exact coasting throw from one point (`exact_points`)
     read q = 0 and H (t_0 + T_0) = 1 to 1e-6 with the power-law family
     free in H and q, q = 0 the nearest of the three forms with rms 0, and
@@ -55,7 +58,7 @@ from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import direction_flight
 from event_universe.events.run import execute_nature_beam_run
-from event_universe.events.world import HEADING_OFFSET, Q
+from event_universe.events.world import HEADING_OFFSET, Q, drive_rate_and_wall
 from event_universe.world_loading import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -77,7 +80,7 @@ WIDTH = 1 << 20
 MASS = 1 << 22
 LIGHT = 1 << 12
 CONTENT = MASS + LIGHT
-MOMENTUM = Q * WIDTH * CONTENT  # v = p / (Q S M + p) = 1 / 2
+MOMENTUM = Q * WIDTH * CONTENT  # v = p Q / (Q S M Q + p T_D) = 64 / 174 (1 / 2 until 2026-09-21)
 
 
 def bar_world() -> dict[str, object]:
@@ -217,9 +220,10 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     assert list(run.stars) == ["s_px1"]
     star = run.stars["s_px1"]
     assert (star.number, star.content, star.momentum) == (2, CONTENT, MOMENTUM)
-    assert star.declared_speed == 0.5 and star.initial_distance == 5
-    assert by_clock(0, MOMENTUM, Q * WIDTH * CONTENT + MOMENTUM) == 0
-    assert by_clock(1, MOMENTUM, Q * WIDTH * CONTENT + MOMENTUM) == 1
+    assert star.declared_speed == 64 / 174 and star.initial_distance == 5
+    rate, wall = drive_rate_and_wall([MOMENTUM, 0, 0], CONTENT, WIDTH, 1, 110)
+    assert (rate, wall) == (MOMENTUM * 64, MOMENTUM * 174) and star.declared_speed == rate / wall
+    assert [by_clock(age, rate, wall) for age in range(3)] == [0, 0, 1]
     simulation = NatureBeamSimulation(world)
     steps: list[int] = []
     turns: list[tuple[int, int]] = []
@@ -235,7 +239,7 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
         if detector_set.record[family] != record_before:
             assert detector_set.phase[family] is not None
             turns.append((tick, detector_set.phase[family]))
-    assert star.steps == steps and len(steps) == 30
+    assert star.steps == steps and len(steps) == 22 == TICKS * 64 // 174
     assert star.turns == turns and len(turns) > 20
     ages = {}
     for tick, rows in star.clicks.items():
@@ -259,7 +263,7 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     # (until that step z within 0.05 of 0.5 / c, the formula and the
     # luminosity within their tolerances).
     assert math.isnan(point.z)
-    assert point.declared == 0.5 / run.c
+    assert point.declared == (64 / 174) / run.c and round(point.declared, 4) == 0.6322
 
 
 def test_the_fits_read_the_exact_forms():

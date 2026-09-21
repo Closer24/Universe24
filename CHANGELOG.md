@@ -5,6 +5,24 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The directional drive: a body walks the line of its momentum, c the cap (2026-09-21)
+
+- The step rule of a free measured event is one drive per body on the
+  digital line of its momentum's direction, `by_drive(drive, |p|_1 S_1 Q,
+  Q S M S_1 Q + |p|_1 T_D, at_most = 1)`, the Link the line's next step by
+  the line's three deficit accumulators (BEAM_LAW note 49; form B of
+  docs/designs/light_speed/FORM.md section 3; the model owner's records
+  191 and 301): Newton's limit as it was, the rows' pace the cap, a row
+  the body of no content. The per-axis step (`engine.step_axis`,
+  `world.step_divisor`, three `drive` rows, the coincident fire lost) is
+  retired; `engine.body_direction`, `engine.line_step`,
+  `engine.step_line` and `world.drive_rate_and_wall` replace it, and the
+  record carries `drive` (one integer), `line` and `direction`. Every
+  test whose body moves by its momentum is re-pinned with the old
+  integers kept in its docstring (MIGRATION, "Form B, the bodies' drive
+  on the momentum's line, 2026-09-21"); `tests/test_directional_drive.py`
+  pins the rule from the formulas before the run.
+
 ### Series L7, the cone: which length a row's phase counts (2026-09-20)
 
 - Two worlds of one geometry under the amplitude law

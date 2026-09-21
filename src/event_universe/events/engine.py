@@ -19,15 +19,19 @@ the law read back for the clock (`by_drive(acc_owed, k x n, d)` at the
 world's `suspension` `[n, d]`, k the presence, or the age moment for a
 family whose table entry reads `age`: `measured.count_component`), and
 steps the free measured events by their
-momentum (one Link per (Q x S x M + p) / p self-creations on
-an axis whose momentum component is p in label units, M the content, S the
-world's `width` and Q = 64 the label's scale, the step drive `by_drive(drive,
-p, Q x S x M + |p|, at_most=1)`: one unit of net flow, the label Q x M,
-gives the speed 1 / (S + 1)
-for every content, as it did when the label of a heading was the unit; at
-most one Link per interval, x before y before z; a step onto a Node that
-holds a measured event is refused; through an open face the step is a
-click on the face detector; on a periodic axis it wraps). The books
+momentum (since 2026-09-21 the directional drive, BEAM_LAW note 49: a body
+of content M and momentum vector p walks the digital line of D, the
+primitive direction nearest to p within the world's `direction_bound`,
+with one accumulator on its record, `by_drive(drive, |p|_1 x S_1 Q, Q x S
+x M x S_1 Q + |p|_1 x T_D, at_most=1)`, |p|_1 the Manhattan norm of p in
+label units, S the world's `width`, Q = 64 the label's scale, S_1 and T_D
+the direction's Manhattan length and resolution, the Link the line's next
+step by the three deficit accumulators of the line; one unit of net flow,
+the label Q x M, gives the speed Q / (Q S + T_D) for every content, 64 /
+(64 S + 110) on a heading; at most one Link per interval, and never above
+the rows' S_1 Q / T_D; a step onto a Node that holds a measured event is
+refused; through an open face the step is a click on the face detector;
+on a periodic axis it wraps). The books
 (`books`): per family the measured line, in content,
 initial + measured = current + spent + escaped; the transit line, in amount,
 initial + released = current + escaped + absorbed; the content line, the
@@ -46,7 +50,7 @@ from collections.abc import Iterator
 import numpy as np
 
 from event_universe.core.game_board import Address3, adjacent_node
-from event_universe.core.integer import apportion_whole, by_drive
+from event_universe.core.integer import apportion_whole, bounded_gcd, by_drive, checked_work
 from event_universe.events.amplitude import Layer
 from event_universe.events.measured import (
     TALLIES,
@@ -67,6 +71,7 @@ from event_universe.events.nature_beam import (
     NatureBeamTables,
     Record,
     bounded,
+    direction_resolution,
     exact_column_sums,
     exact_sum,
     momentum_labels,
@@ -77,6 +82,7 @@ from event_universe.events.world import (
     BEAM_LAW,
     BINDING_RULE,
     CONTACT_DEFAULT,
+    DEFAULT_DIRECTION_BOUND,
     DETECTOR_READINGS,
     FACE_NAMES,
     LIFETIME_NAME,
@@ -85,46 +91,137 @@ from event_universe.events.world import (
     NO_HAND,
     MeasuredDefinition,
     NatureBeamWorld,
+    Vector,
     body_nodes,
-    step_divisor,
+    drive_rate_and_wall,
 )
 
-__all__ = ["TALLIES", "Measured", "NatureBeamSimulation", "count_owed", "step_axis"]
+__all__ = [
+    "TALLIES",
+    "Measured",
+    "NatureBeamSimulation",
+    "body_direction",
+    "count_owed",
+    "line_step",
+    "step_line",
+]
+
+# The rest vector: a body with no momentum has no line.
+NO_LINE: Vector = (0, 0, 0)
 
 
-def step_axis(drive: int, momentum: int, content: int, width: int) -> tuple[int | None, int]:
-    """The step rule of one axis (BEAM_LAW section 3 step 5 and note 17 as
-    amended on 2026-09-20, the step drive; `_move` calls it): the sign of
-    the Link a free measured event of content M = `content` steps this
-    self-creation on an axis whose momentum component is p = `momentum`,
-    and the drive after it. The drive is the SIGNED distance the momentum
-    has driven since the last step, in label units, on the body's own
-    record: `drive + p` is compared with D = Q x S x M + |p|, S the
-    world's `width`; at or beyond +D the body steps one Link on the axis's
-    + side and D is subtracted, at or beyond -D one Link on the - side and
-    D is added, otherwise it waits (record 126 of 2026-09-20: the drive was
-    |p| with the direction from the sign at the fire until then, so a
-    momentum reversed by a hand-over discharged the distance driven toward
-    the partner as a Link away). With a momentum of one sign the step
-    fires exactly when `floor(n |p| / D)` increments over the
-    self-creations n, the rule as it was (`by_clock(age - 1, |p|, D)`: the
-    drive is the signed remainder of that division); under a changing
-    momentum the Links made follow the momentum's signed history, a
-    reversal first cancelling what was driven the other way, never two in
-    one self-creation (one D is subtracted per self-creation; a residual
-    earned at a larger momentum fires at the following self-creations,
-    one Link each). A momentum of 0 never steps and leaves the drive as it
-    is. The count primitive is `core.integer.by_drive` (the model owner's
-    record 108: the whole part of an accumulated rate on the reader's own
-    record, `by_clock` where the rate is constant), with `at_most` 1: the
-    step's own rule of one Link per interval, the residual of a larger
-    momentum kept in the drive; the one place the step rule lives, the
-    readings tools read it from here. The divisor D is
-    `world.step_divisor`."""
-    if momentum == 0:
-        return None, drive
-    fired, drive = by_drive(drive, momentum, step_divisor(momentum, content, width), at_most=1)
-    return (fired or None), drive
+def body_direction(momentum: list[int], bound: int) -> Vector:
+    """The direction D of a body's line from its momentum vector p (BEAM_LAW
+    section 3 step 5 and note 49; form B of docs/designs/light_speed/FORM.md
+    section 3): the primitive vector of p itself when its components are
+    within the world's `direction_bound` P, else the nearest primitive
+    within the bound by the exact comparison (p' . D)^2 |D'|^2 >= (p' .
+    D')^2 |D|^2 with p' . D > 0 over the candidates D' at every scale s = 1
+    .. P of p's largest component (the other two components rounded to the
+    nearest at that scale, half up), the first at a tie; (0, 0, 0) for p =
+    0. p' is p with its three components shifted right by one count to
+    within 2^k, k = 29 - 2 x bits(P) (15 at the default bound 64), so that
+    the direction is read within 2^-k and every product of the comparison
+    stays within the 64-bit register ((3 x 2^k x P)^2 x 3 P^2 below 2^63;
+    `checked_work` guards it). A bilinear form of two table vectors and a
+    comparison, no root, no float; the direction's constants (S_1, T_D) are
+    the flight table's for that direction (`direction_resolution`), formed
+    once per direction on the host (`NatureBeamSimulation._line`). Read at
+    every self-creation from the body's own momentum: under a push the
+    line re-targets and the accumulators keep their residues."""
+    largest = max(abs(component) for component in momentum)
+    if largest == 0:
+        return NO_LINE
+    precision = max(1, 29 - 2 * bound.bit_length())
+    shift = max(0, largest.bit_length() - precision)
+    shifted = tuple((abs(c) >> shift) * (1 if c > 0 else -1) for c in momentum)
+    common = bounded_gcd(bounded_gcd(shifted[0], shifted[1]), shifted[2])
+    primitive = (shifted[0] // common, shifted[1] // common, shifted[2] // common)
+    if max(abs(component) for component in primitive) <= bound:
+        return primitive
+    axis = max(range(3), key=lambda a: (abs(shifted[a]), -a))
+    longest = abs(shifted[axis])
+    best: Vector = NO_LINE
+    best_dot = 0
+    best_norm = 1
+    for scale in range(1, bound + 1):
+        rounded = [
+            scale if a == axis else (2 * scale * abs(shifted[a]) + longest) // (2 * longest)
+            for a in range(3)
+        ]
+        signed = [magnitude if shifted[a] >= 0 else -magnitude for a, magnitude in enumerate(rounded)]
+        common = bounded_gcd(bounded_gcd(signed[0], signed[1]), signed[2])
+        candidate = (signed[0] // common, signed[1] // common, signed[2] // common)
+        dot = sum(s * c for s, c in zip(shifted, candidate, strict=True))
+        norm = sum(c * c for c in candidate)
+        if best == NO_LINE or checked_work(dot * dot * best_norm) > checked_work(
+            best_dot * best_dot * norm
+        ):
+            best, best_dot, best_norm = candidate, dot, norm
+    return best
+
+
+def line_step(deficits: list[int], direction: Vector) -> int:
+    """The axis of the next Manhattan step on the digital line of D, by the
+    line's three deficit accumulators (the Bresenham choice of the flight,
+    BEAM_LAW note 41 (viii) and DERIVATIONS_BEAM 1.3: at Manhattan step j
+    the axis maximising |D_a| (j + 1) - S_1 |pos_a|, the lowest axis on a
+    tie, which the deficits carry as an argmax carry, `nature_beam.
+    _bresenham` its closed period at load): every deficit gains |D_a|, the
+    axis furthest behind (the largest deficit, the lowest axis on a tie)
+    is stepped and its deficit loses S_1 = sum |D_a|. Returns the axis; the
+    deficits are advanced in place. On a body the deficits are the `line`
+    rows of its table of counts (note 49): kept with their residues when D
+    changes, so that the line re-targets from where the body stands and
+    nothing is discarded; their sum is 0 after every step."""
+    for axis in range(3):
+        deficits[axis] += abs(direction[axis])
+    chosen = max(range(3), key=lambda a: (deficits[a], -a))
+    deficits[chosen] -= sum(abs(component) for component in direction)
+    return chosen
+
+
+def step_line(
+    drive: int,
+    deficits: list[int],
+    direction: Vector,
+    momentum: list[int],
+    content: int,
+    width: int,
+    bound: int = DEFAULT_DIRECTION_BOUND,
+) -> tuple[tuple[int, int] | None, int, Vector]:
+    """The step rule of one self-creation (BEAM_LAW section 3 step 5 and
+    note 49, the directional drive; the composition `_move` makes through
+    the body's table of counts, spelled once here for the readings tools
+    and the tests): the body's line D from its momentum (`body_direction`);
+    a change of line keeps the drive and the deficits with their residues,
+    and a reversal (the new D against the old, D_old . D < 0, more than a
+    quarter turn) negates the drive, the signed distance driven along the
+    line (record 126 of 2026-09-20 in form B: what was driven toward the
+    old heading is first cancelled on the new line, never discharged as a
+    Link the other way); the accumulator gains rate = |p|_1 S_1 Q against
+    the wall Q S M S_1 Q + |p|_1 T_D (`world.drive_rate_and_wall`), one
+    Link at most; at a fire the Link is the line's next step
+    (`line_step`), its sign the direction's on that axis, and the sign of
+    the count (-1 when a negated residual beyond the wall fires: a Link
+    toward the old heading, along -D). A momentum of 0 never steps and
+    leaves the drive, the deficits and the line as they are. Returns ((the
+    axis, the sign of the Link) or None, the drive after, the line's
+    direction after); the deficits are advanced in place."""
+    heading = body_direction(momentum, bound)
+    if heading == NO_LINE:
+        return None, drive, direction
+    if heading != direction:
+        if sum(a * b for a, b in zip(direction, heading, strict=True)) < 0:
+            drive = -drive
+        direction = heading
+    manhattan = sum(abs(component) for component in heading)
+    rate, wall = drive_rate_and_wall(momentum, content, width, manhattan, direction_resolution(heading))
+    fired, drive = by_drive(drive, rate, wall, at_most=1)
+    if not fired:
+        return None, drive, direction
+    axis = line_step(deficits, heading)
+    return (axis, fired * (1 if heading[axis] > 0 else -1)), drive, direction
 
 
 def count_owed(accumulator: int, counted: int, suspension: tuple[int, int]) -> tuple[int, int]:
@@ -181,6 +278,12 @@ class NatureBeamSimulation:
         # mark cannot tell a leapfrog of lag two from a first arrival; the
         # run's record carries it as `fast_steps`, no refusal.
         self.fast_steps = 0
+        # The constants of a body's line (BEAM_LAW note 49): per direction its
+        # Manhattan length S_1 and its resolution T_D, the flight table's
+        # constants of that direction, formed once on the host at the
+        # direction's first use (`_line`; a declared direction reads the
+        # same numbers off `tables.flight`).
+        self._lines: dict[Vector, tuple[int, int]] = {}
         self.open_faces = tuple(port for port in range(6) if not world.periodic[port >> 1])
         self.ledger = Ledger(count, self.open_faces)
         # The detectors at run time: the declared ones first, in their
@@ -519,33 +622,66 @@ class NatureBeamSimulation:
             return
         (entry.owed,) = entry.counts.advance("owed", values=[entry.counted])
 
+    def _line(self, direction: Vector) -> tuple[int, int]:
+        """S_1 and T_D of a body's line, the flight table's constants of the
+        direction (`nature_beam.direction_resolution`), formed once per
+        direction on the host and cached: a table read, not a count."""
+        found = self._lines.get(direction)
+        if found is None:
+            found = (sum(abs(component) for component in direction), direction_resolution(direction))
+            self._lines[direction] = found
+        return found
+
     def _move(self, entry: Measured) -> None:
         """The step by the momentum, at most one per interval, at a
         self-creation (an interval in which nothing was owed at the frame,
         `creating`; since the crossing rule the step precedes the law and
         this interval's owed count, so the drive advances at every
         self-creation, where until then it advanced in the interval after
-        the count owed was paid off): on an axis whose momentum component
-        is p (in label units),
-        one Link per (Q x S x M + p) / p self-creations, since 2026-09-20 by
-        the step drive (`step_axis`, BEAM_LAW note 17 as amended: the
-        body's record carries per axis the distance the momentum has
-        driven since its last step, and at a constant momentum the same
-        self-creations as `by_clock(age, |p|, Q x S x M + |p|)`), with M
-        the content, S the world's `width` (the model owner's D1 of
-        2026-09-19) and Q = 64 the
-        label's scale (the physics-rule reviewer's correction 2 of the
-        label along the unit vector, 2026-09-19: the width in units of one
-        free unit's label, Q x M, so that one unit of net flow gives the
-        speed 1 / (S + 1) for every content and every step registered
-        before the change is the same, `by_clock(age, Q n, Q k) =
-        by_clock(age, n, k)`); the drive of every axis advances at every
-        self-creation in which the body may step, the first axis whose
-        rule fires makes the step, and a later axis's coincident fire is
-        lost, its D subtracted, nothing carried (the frame's rule as it
-        was). A step onto a measured event is refused and is
-        a contact read through the occupant's table (`_contact`); an
-        escape is a click on the face; a periodic axis wraps.
+        the count owed was paid off). Since 2026-09-21 the directional
+        drive (BEAM_LAW note 49; form B of docs/designs/light_speed/FORM.md
+        section 3; the model owner's record 301 on the vector program,
+        record 191): a body of content M (the content the frame read) and
+        momentum vector p walks the digital line of D, the primitive
+        direction nearest to p within the world's `direction_bound`
+        (`body_direction`), with ONE accumulator on its record, the `drive`
+        row of its table of counts, gaining rate = |p|_1 S_1 Q against the
+        wall Q S M S_1 Q + |p|_1 T_D at every self-creation in which it may
+        step (`world.drive_rate_and_wall`: |p|_1 the Manhattan norm of p in
+        label units, S the world's `width`, Q = 64 the label's scale, S_1
+        and T_D the direction's Manhattan length and resolution, `_line`),
+        one Link at most (`at_most` 1); at a fire the Link is the line's
+        next Manhattan step by the three deficit accumulators of the line,
+        the `line` rows of the table (`line_step`), its sign the
+        direction's on that axis. The body's pace is |p|_1 S_1 Q / (Q S M
+        S_1 Q + |p|_1 T_D) Links per self-creation: |p|_1 / (Q S M) at a
+        small momentum (Newton's limit, the Euclidean speed |p|_2 / (Q S M)
+        on every direction), bending to the rows' S_1 Q / T_D as the
+        momentum grows and never above it; a body of no content is a row
+        (the same rate over the same wall, the same deficits). Until then
+        the step was per axis (`step_axis`, note 17 as amended): a body
+        outran its own family's rows above |p| = 1.39 Q S M (the
+        derivation's 4.4). What the line does under a push: D is read
+        from the momentum at every self-creation; when it changes, the
+        drive and the deficits keep their residues and are re-read on the
+        new line (nothing discarded, nothing kept beyond the events at the
+        Node: record 108, note 41 (viii)), the residue re-read against the
+        new wall as the old drive's was against the new divisor; a
+        reversal (D_old . D < 0) negates the drive, the signed distance
+        driven along the line (record 126 in form B: what was driven
+        toward the old heading is first cancelled on the new line, never
+        discharged as a Link the other way), and a negated residual beyond
+        the wall fires as a count of -1, a Link along -D, toward the old
+        heading. A momentum of 0 never steps and leaves the drive, the
+        deficits and the line as they are. The line's step lands on one
+        axis, so a step is one Link on one Port per interval at most and
+        the crossing rule's marks are set as note 48 says. A step onto a
+        measured event is refused and is a contact read through the
+        occupant's table (`_contact`, the component on the Link's axis);
+        an escape is a click on the face; a periodic axis wraps. The
+        standalone composition of the same primitives is `step_line` (the
+        readings tools); this method advances the rows of the body's table
+        through `CountTable.advance` (note 41, the one loop).
 
         A body on a set of Nodes (`span`; the model owner, 2026-09-20)
         steps as one: its centre moves one Link and its set with it, the
@@ -558,34 +694,29 @@ class NatureBeamSimulation:
         `action`, h; the model owner's decision of 2026-09-20 on Bohr, "put
         it as parameters outside the GameBoard like the age"): a rule of the
         measured event, the external thing, read from its own record. At
-        the Link the body steps on an axis whose momentum component is p,
-        its phase turns by the difference of two floors,
-
-            floor(k1 x |p| x N / h) - floor(k0 x |p| x N / h),
-
-        with k0 the count of the step rule's fires on that axis before this
-        one (the record's `axis_steps` less one, a lost or refused step
-        counted; at a constant momentum floor((age - 1) x |p| / (Q S M +
-        |p|)), the count the rule gave at the age before this
-        self-creation) and k1 = k0 + 1 the count after it (with a constant
-        momentum k1 is the Links
-        stepped on the axis, so after k Links the phase has turned
-        floor(k x |p| x N / h) mod N in all), that is `by_clock(k0, |p| x
-        N, h)`: nothing is kept at a Node and no remainder register
-        exists, the count and the turn are functions of the record (the
-        age, the momentum). The axes compose: the steps are x before y
-        before z, and the phase's turn is the sum of the three components'
-        turns at the Links stepped on each (a step lost to an earlier
-        axis's step in the same interval turns nothing: no Link was
-        crossed). It changes nothing of the rays' flight or collision; the
-        rays the body releases carry its phase (the turn at the step comes
-        first since the crossing rule, the step preceding the law, so the
-        rows born in the interval of a step carry the phase turned at the
-        Link; the clock's turn by content over K is added after the law as
-        always); without `action` there is no turn. The product k1 x |p| x
-        N is bounded before it is formed (`bounded`; the parser refused a
-        declared momentum whose product with `ticks` x N could pass the
-        bound).
+        the Link the body steps on an axis whose momentum component is p_a,
+        its phase turns by the whole part the `action` row of that axis
+        gains at the rate |p_a| x N over h (record 155: the row gains at
+        every Link the step rule counts on the axis, whether the Link is
+        crossed or refused at a contact, and the whole part is delivered
+        to the phase only at a Link crossed; a count at a Link not crossed
+        is discarded, as the count off the Links stepped skipped it: note
+        30 (ii)); at a constant momentum on an axis the same integers as
+        `by_clock(k0, |p_a| x N, h)`, k0 the count of the rule's fires on
+        that axis before this one (the record's `axis_steps` less one, a
+        refused step counted). Nothing is kept at a Node and no remainder
+        register exists: the count and the turn are functions of the
+        record. On a line over several axes the turns of the axes compose,
+        the phase's turn the sum of the components' turns at the Links
+        stepped on each. It changes nothing of the rays' flight or
+        collision; the rays the body releases carry its phase (the turn at
+        the step comes first since the crossing rule, the step preceding
+        the law, so the rows born in the interval of a step carry the phase
+        turned at the Link; the clock's turn by content over K is added
+        after the law as always); without `action` there is no turn. The
+        product |p_a| x N is bounded before it is formed (`bounded`; the
+        parser refused a declared momentum whose product with `ticks` x N
+        could pass the bound).
 
         The crossing rule's marks (record 158; BEAM_LAW note 48): at its
         entry, for every measured event, the Port of the Link crossed the
@@ -600,39 +731,37 @@ class NatureBeamSimulation:
         content = entry.content
         if content <= 0:
             return
-        # The drive of every axis advances at this self-creation; the first
-        # axis whose rule fires makes the step, and a fire on a later axis
-        # in the same self-creation is lost (its D subtracted, no Link
-        # crossed, the rule's count `axis_steps` raised): the frame's rule
-        # as it was, one Link per interval, x before y before z.
-        fired: tuple[int, int, int] | None = None
-        counts = entry.counts.advance(
-            "drive",
-            values=entry.momentum,
-            denominators=[step_divisor(p, content, self.world.width) for p in entry.momentum],
-        )
-        turns = [0, 0, 0]
-        for axis in range(3):
-            momentum = entry.momentum[axis]
-            if momentum == 0 or counts[axis] == 0:
-                continue
-            entry.axis_steps[axis] += 1
-            if entry.phase_by_momentum and self.world.action is not None:
-                # The turn by momentum, the `action` row of the axis (record
-                # 155: one rule, no exception): the row gains |p| x N at
-                # every Link the step rule counts on the axis, whether the
-                # Link is crossed, lost to an earlier axis's step or refused
-                # at a contact, and the whole part over h is delivered to
-                # the phase only at a Link crossed below (a count at a Link
-                # not crossed is discarded, as the count off the Links
-                # stepped skipped it: note 30 (ii)).
-                bounded(abs(momentum) * self.world.phase_steps, entry, "turn by momentum")
-                (turns[axis],) = entry.counts.advance("action", index=axis, values=[abs(momentum)])
-            if fired is None:
-                fired = (axis, momentum, counts[axis])
-        if fired is None:
+        heading = body_direction(entry.momentum, self.world.direction_bound)
+        if heading == NO_LINE:
             return
-        axis, momentum, sign = fired
+        if heading != entry.line_direction:
+            # The line re-targets; a reversal negates the signed distance
+            # driven along it (record 126 in form B).
+            if sum(a * b for a, b in zip(entry.line_direction, heading, strict=True)) < 0:
+                entry.drive = -entry.drive
+            entry.line_direction = heading
+        manhattan, resolution = self._line(heading)
+        rate, wall = drive_rate_and_wall(
+            entry.momentum, content, self.world.width, manhattan, resolution
+        )
+        (fired,) = entry.counts.advance("drive", values=[rate], denominators=[wall])
+        if fired == 0:
+            return
+        deficits = entry.line
+        axis = line_step(deficits, heading)
+        entry.line = deficits
+        sign = fired * (1 if heading[axis] > 0 else -1)
+        momentum = entry.momentum[axis]
+        entry.axis_steps[axis] += 1
+        turn = 0
+        if entry.phase_by_momentum and self.world.action is not None:
+            # The turn by momentum, the `action` row of the axis stepped
+            # (record 155: one rule, no exception): the row gains |p_a| x N
+            # at every Link the step rule counts on the axis, whether the
+            # Link is crossed or refused at a contact, and the whole part
+            # over h is delivered to the phase only at a Link crossed below.
+            bounded(abs(momentum) * self.world.phase_steps, entry, "turn by momentum")
+            (turn,) = entry.counts.advance("action", index=axis, values=[abs(momentum)])
         entry.steps += 1
         origin = entry.position
         port = 2 * axis + (0 if sign > 0 else 1)
@@ -703,10 +832,10 @@ class NatureBeamSimulation:
             self.fast_steps += 1
         if entry.phase_by_momentum and self.world.action is not None:
             # The turn of the Link crossed: the `action` row's count of
-            # this self-creation (the same integer as `by_clock(k0, |p| N,
+            # this self-creation (the same integer as `by_clock(k0, |p_a| N,
             # h)` off the Links stepped, k0, at a constant momentum; the
             # exact sum of the momentum's history where it changes).
-            entry.phase = self.tables.circle.turn(entry.phase, turns[axis])
+            entry.phase = self.tables.circle.turn(entry.phase, turn)
         if self.record is not None:
             self.record(
                 {
@@ -717,7 +846,8 @@ class NatureBeamSimulation:
                     "to": list(destination),
                     "momentum": list(entry.momentum),
                     "phase": entry.phase,
-                    "drive": list(entry.drive),
+                    "drive": entry.drive,
+                    "direction": list(heading),
                     "step_port": port,
                     "last_step_port": entry.last_step_port,
                 }

@@ -526,27 +526,37 @@ order with each step's inverse:
    Link it steps by the difference of two floors of k x |p| x N / h, k the
    count of Links the step rule gives at its age, note 30 (ii)), with
    the width of the push since 2026-09-19 (the model owner's D1) and
-   the label's scale since the same day (note 23): on an axis whose
-   momentum component is p (in label units), a free measured event of
-   content M steps one Link per (Q x S x M + p) / p self-creations,
-   `by_clock(age, |p|, Q x S x M + |p|)`, S the world key `width` (an
-   integer from 1; 1 by default), Q = 64 the label's scale (the width in
-   units of one free unit's label, Q x M; the physics-rule reviewer's
-   correction 2). One unit of net flow gives any body p = Q M, so the
-   speed it gives is 1 / (S + 1) for every content: the push stays
-   proportional to the content (the equivalence principle) and the world
-   chooses how slow its slowest motion is; every step registered before
-   the label's scale is the same step, `by_clock(age, Q n, Q k) =
-   by_clock(age, n, k)`. Since 2026-09-20 (note 17 as amended, the step
-   drive) the count is the whole part of the SIGNED distance the momentum
-   has driven, kept on the body's record as `drive` per axis (`drive +=
-   p` at every self-creation in which it may step, one Link on the + side
-   and `drive -= Q x S x M + |p|` at or beyond +D, one Link on the - side
-   and `drive += Q x S x M + |p|` at or beyond -D; signed since record
-   126 of the same day, the first form's `|p|` being history), the same
-   integers at a momentum of one sign as the whole part off the clock
-   (implementation notes 15 and 17; `tests/test_push_width.py`,
-   `tests/test_step_drive.py`).
+   the label's scale since the same day (note 23), and since 2026-09-21
+   the directional drive (note 49; form B of the mathematician's
+   docs/designs/light_speed/FORM.md section 3; the model owner's record
+   301): a free measured event of content M and momentum vector **p** (in
+   label units) walks the digital line of D, the primitive direction
+   nearest to **p** within the world's `direction_bound`, with one
+   accumulator on its record, `by_drive(drive, |p|_1 x S_1 Q, Q x S x M x
+   S_1 Q + |p|_1 x T_D, at_most = 1)`, |p|_1 = sum |p_a| the Manhattan
+   norm of **p**, S the world key `width` (an integer from 1; 1 by
+   default), Q = 64 the label's scale, S_1 and T_D the direction's
+   Manhattan length and resolution, the Link at a fire the line's next
+   step by the line's three deficit accumulators (the flight's own
+   Bresenham choice, note 41 (viii)), so that the body's pace is |p|_1 /
+   (Q S M) Links per self-creation at a small momentum (Newton's limit,
+   the Euclidean speed |**p**|_2 / (Q S M) on every direction) and bends
+   to the rows' S_1 Q / T_D as the momentum grows, never above it: c is
+   the cap of every body, a row the body of no content. One unit of net
+   flow gives any body p = Q M, so the speed it gives is Q / (Q S + T_D)
+   for every content, 64 / (64 S + 110) on a heading (1 / (S + 1) until
+   2026-09-21): the push stays proportional to the content (the
+   equivalence principle) and the world chooses how slow its slowest
+   motion is. Until 2026-09-21 the rule was per axis: one Link per (Q x S
+   x M + p) / p self-creations on an axis whose momentum component is p,
+   `by_clock(age, |p|, Q x S x M + |p|)` (the width in units of one free
+   unit's label, Q x M; the physics-rule reviewer's correction 2), and
+   since 2026-09-20 (note 17 as amended, the step drive) the whole part of
+   the SIGNED distance the momentum had driven, kept on the body's record
+   as `drive` per axis (signed since record 126 of the same day), the
+   same integers at a momentum of one sign as the whole part off the
+   clock (implementation notes 15 and 17; `tests/test_push_width.py`,
+   `tests/test_step_drive.py`, `tests/test_directional_drive.py`).
 6. **The border `lifetime`; then merge identical rows and sort by Node.**
    Since 2026-09-20 (note 31 (vii)) every row of a family with a
    `lifetime` whose whole age is at or beyond it after this interval's
@@ -1143,7 +1153,11 @@ implementation's part of the contract. The design above is unchanged.
     discarded undeclared (the physics-rule reviewer, record 148). Since
     note 41 below every count keeps its remainder on the body's
     record, and `by_clock` off the age is the constant-rate identity of
-    that count, not a count of its own.
+    that count, not a count of its own. **Superseded on 2026-09-21 by the
+    directional drive (note 49): one drive per body on the digital line
+    of its momentum's direction, the per-axis rows and their coincident
+    fire retired, the rows' pace the cap; this note's integers are the
+    history of the per-axis rule.**
 18. **The one label; no collision at a measured event's Node** (the
     physics-rule reviewer's F1, blocking, and the model owner's decision on
     its case (c), the night of 2026-09-19; `tests/test_nature_beam_push.py` (h),
@@ -3610,3 +3624,159 @@ implementation's part of the contract. The design above is unchanged.
     the hubble worlds, D, H, the catalog's `sun_planet`, the nucleus,
     binding and weak pairs; every world whose measured events are all
     fixed reads the same records.
+
+49. **The directional drive: a body walks the digital line of its
+    momentum's direction at the pace its momentum earns, the rows' pace
+    the cap** (2026-09-21; the model owner's record 191, the vector
+    program, "everything moves to vectors and operations, including c",
+    and record 301, the build, "do it, yes, if it solves a bug": the
+    registered defect of the law against nature that a body outran its
+    own family's rows above |**p**| = 1.39 Q S M (DERIVATIONS_BEAM 4.4 and
+    4.5, two invariant speeds; the bar's outrunning body at v = 0.75) and
+    the base of the special-relativity build (the covariant-readings
+    review's must-fix 8); the mathematician's form B,
+    `docs/designs/light_speed/FORM.md` sections 2, 3 and 5 with its map
+    `light_speed_map.py`; built on the branch `directional-drive`;
+    `tests/test_directional_drive.py`). The symbols, named once: **p** the
+    momentum vector of a body in label units, p_a its component on an
+    axis, |p|_1 = sum |p_a| its Manhattan norm and |**p**|_2 its Euclidean
+    norm; M the body's content and S the world's `width`; Q = 64 the
+    label's scale; D the direction vector of the body's line, a primitive
+    integer vector, S_1 = sum |D_a| its Manhattan length and T_D = isqrt(3
+    |D|^2 Q^2) its resolution (the flight table's constants of a
+    direction, note 41 (viii)); c = 1 / sqrt 3 Links per interval the
+    rows' Euclidean pace, S_1 Q / T_D their Manhattan pace on D (64 / 110
+    on a heading). **The rule** (section 3 step 5; `engine._move`, the
+    standalone composition `engine.step_line`, the primitives
+    `engine.body_direction`, `engine.line_step` and
+    `world.drive_rate_and_wall`), one row of the counts table and nothing
+    new in the six verbs:
+
+        D     = the primitive direction nearest to p within the world's `direction_bound` P (the primitive p / gcd(p) itself when within P)
+        rate  = |p|_1 x S_1 Q,   wall = Q S M x S_1 Q + |p|_1 x T_D
+        step  = by_drive(drive, rate, wall, at_most = 1) on the digital line of D, the Link the line's next step by its three deficit accumulators
+
+    so that the body's Manhattan pace is |p|_1 S_1 Q / (Q S M S_1 Q + |p|_1
+    T_D) Links per self-creation: |p|_1 / (Q S M) at a small momentum,
+    whose Euclidean speed is |**p**|_2 / (Q S M) on every direction
+    (Newton's limit, isotropic, the momentum unit as it was), bending to
+    S_1 Q / T_D as the momentum grows and never above it (S_1 Q <= T_D on
+    every direction, FORM.md section 1); a body of no content walks as a
+    row, `by_drive(S_1 Q, T_D)` with the same deficits. The per-axis rule
+    of note 17 (three `drive` rows, x before y before z, the coincident
+    fire of a later axis lost) is retired: one drive per body, one Link on
+    one Port per interval at most, so that the crossing rule's marks
+    `step_port` and `last_step_port` are set as note 48 says and a
+    diagonal momentum walks the diagonal's digital line in the line's
+    order (DERIVATIONS_BEAM 1.3 item 7 closed by construction: one
+    accumulator, one Link, nothing dropped). **The direction from the
+    momentum** (`body_direction`): p' is **p** with its three components
+    shifted right by one count to within 2^k, k = 29 - 2 x bits(P) (15 at
+    the default bound 64; the direction read within 2^-k, a tenth of the
+    table's own half-step 1 / 128, and every product of the comparison
+    within the 64-bit register); D is the primitive of p' when its
+    components are within P, else the nearest primitive within P by the
+    exact comparison (p' . D)^2 |D'|^2 >= (p' . D')^2 |D|^2 with p' . D > 0
+    over the candidates D' at every scale s = 1 .. P of p''s largest
+    component (the two others rounded to the nearest at that scale, half
+    up), the first at a tie: a bilinear form of two table vectors and a
+    comparison, no root, no float; -**p** reads -D exactly and k D reads
+    D at every scale k; two momenta on one ray beyond the bound may read
+    neighbouring candidates (a read within the precision, not
+    scale-invariant). The direction's constants S_1 and T_D are the flight
+    table's for that direction, formed once per direction on the host at
+    its first use (`nature_beam.direction_resolution`, the one root, as at
+    load for a declared direction; `NatureBeamSimulation._line`). **What
+    the drive does when D changes after a push** (decided here, the
+    reading of record 108 and note 41 (viii)): D is read from the momentum
+    at every self-creation; when it changes, the accumulator and the three
+    deficits keep their residues and are re-read on the new line, nothing
+    discarded and nothing kept beyond the events at the Node (the residue
+    is re-read against the new wall exactly as the per-axis drive's was
+    against the new divisor when |p_a| changed; a residual earned at a
+    larger momentum fires at the following self-creations, one Link each;
+    an axis the new line does not use keeps its deficit until a later line
+    uses it; the deficits sum to 0 after every step). **How a reversal
+    discharges** (record 126's signed drive in form B: the drive signed on
+    the line): the record carries the line's direction beside the drive
+    (`Measured.line_direction`, the direction at the last self-creation
+    with a momentum, (0, 0, 0) until the first); when the new direction is
+    against the old, D_old . D < 0 (more than a quarter turn, one bilinear
+    form of two table vectors), the line is reversed and the drive
+    negated: the signed distance driven toward the old heading is first
+    cancelled on the new line, never discharged as a Link the other way
+    (record 126's deuteron); a turn of a quarter or less keeps the drive,
+    the distance driven counting on the new line; a negated residual
+    beyond the wall fires as a count of -1, a Link along -D toward the old
+    heading (as the per-axis drive fired a pending Link toward its own
+    sign). A momentum of 0 never steps and leaves the drive, the deficits
+    and the line as they are. **The record**: `Measured.drive` one
+    integer, `line` the three deficits (the `line` rows of the table of
+    counts, an argmax carry not run through the loop, as the `place`
+    rows), `direction` the line's D and `axis_steps` per axis the Links
+    the rule counted (the k0 of the turn by momentum, whose `action` row
+    is the axis's of the Link stepped); in `state.json` and `run.json`
+    under those names and on the `step` line as `drive` and `direction`;
+    a declared `drive` or `line` is refused as an unknown key. **The
+    bound**: the wall |p|_1 T_D + Q S M S_1 Q within 2^62 - 1 (|p|_1 up to
+    2^47 at T_D up to 2^14), refused at the step beyond it as the push's
+    bound refuses a momentum. **The three tests on the rule as built**:
+    generic (one primitive with declared integers, the rate and the wall,
+    no family name or kind, a row the body of no content: the same
+    accumulator as the flight's at the momentum's fraction of its rate);
+    vector (the count verb with the remainder kept, `by_drive`; the
+    direction by a bilinear form and a comparison; no root at run time
+    beyond the direction's T_D, the table's own constant formed at its
+    first use, no float); local (the body's own record, its momentum,
+    content, drive, deficits and line; the direction table's bound read
+    at load; fixed work per self-creation: at most P candidates in the
+    direction's scan and one `by_drive`; nothing kept at a Node). **The
+    pins** (`tests/test_directional_drive.py`, derived from floor(n rate /
+    wall) and the flight's own line before the first run): (a) the map's
+    four directions at |p|_1 = Q S M, the displacements (220, 0, 0), (135,
+    135, 0), (100, 100, 100), (190, 63, 0) in 600 intervals and the
+    Euclidean speeds 0.3667, 0.3182, 0.2887, 0.3336, met exactly; (b) the
+    cap, met (the outrunning body of the derivation's 2.2 at (192, 0, 0),
+    content 1, 268 Links in 550 for the heading's 320; at 2^40 on a
+    heading 31 in 55 and 319 in 550, on the cube diagonal 54 in 55); (c)
+    Newton's limit within one Link over 4000 intervals on three
+    directions, met; (d) a body of no content against the flight table's
+    row: the same count of Links over a period and the same Node at its
+    end on (1, 0, 0), (1, 1, 0) and (5, -3, 2), met; TICK BY TICK NOT MET,
+    each of the body's Links at the row's self-creation or the one after
+    (the lags {0, 1}), because the row's accumulator starts at the half
+    of its wall (T_d: the rounding to the nearest, note 41 (viii), note
+    13) and a body's at 0 as every count of a body does (note 41); the
+    map's section D compared its own walk with itself and not with the
+    engine's row; the pin is not moved, the lag is pinned and the choice
+    (the body's accumulator from 0, the rule as stated) is the owner's to
+    revisit; (e) the reversal, the -x Link at the twenty-sixth
+    self-creation with the drive negated (the twenty-fifth under the
+    per-axis signed drive; the tenth had the line been kept, record 126's
+    defect), met; (f) p = 0 never steps and leaves the drive, met; (g) the
+    crossing marks on a diagonal walk, one Port per Link, met. **The
+    hubble stars' z** (the FORM's section 3): a star's speed in units of c
+    at the declared momentum is read off the rule by
+    `tools/hubble_stars_readings.py` (`declared_speed` = rate / wall over
+    c), so the bar of `tests/test_hubble_stars_readings.py` (b) at p = Q S
+    M reads v = 64 / 174 and v / c = 110 / 174 = 0.6322 (1 / 2 and 0.859
+    until the rule), 22 Links in 60 intervals for 30. **Re-pinned under
+    the rule** (MIGRATION, "Form B, the bodies' drive on the momentum's
+    line, 2026-09-21", the old and new integers with their cause;
+    TEST_EXPECTATIONS): every test whose body moves by its momentum, the
+    old integers kept in each docstring; the crossing's reader keeps
+    every count, its momentum re-derived so that k x rate = wall exactly
+    (|p| = 32 Q S M / (64 k - 110) at M = 14673 x 2^11); the gate set's
+    digests of every lamp-free world with a moving body regenerated by
+    `tools/run_series.py --list`; series D at S = 1 re-run first and its
+    expectations re-pinned with the derived period. **The registered
+    worlds with a moving body** (FORM.md counts 47) re-registered by the
+    register's own generators, never by hand, with the VALIDATION section
+    of this branch (the digest table: identical, moved or not compared,
+    per world, as the crossing's). No world with a moving body is
+    byte-identical: on an axis the speed becomes v / (1 + v (T_D / Q - 1))
+    of the per-axis rule's v = |p| / (Q S M + |p|), 1 / (1 + 0.72 v); the
+    87 worlds with no moving body read the same records, their
+    `state.json` differing by the record's new fields alone. The crowd
+    audit's drive row (note 47) reads `_move` and `step_line` since this
+    note.

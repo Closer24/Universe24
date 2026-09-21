@@ -24,9 +24,15 @@ detector's):
     2): a lamp at x = 0 of a bar of 64 releasing one row of amount 1 per
     interval on +x, the stream pre-filled (the row of age tau at m(tau) =
     (2 tau Q + T) // (2 T), Q 64, T 110: 32 Links per 55 intervals), a
-    reader of content M = 21 x 2^16 at x = 40 whose momentum makes it
-    step one Link per k intervals exactly (|p| = Q S M / 3 at k = 4, Q S M
-    / 7 at k = 8; the sign minus toward the lamp), `read` on the beam, the
+    reader of content M = 14673 x 2^11 at x = 40 whose momentum makes it
+    step one Link per k intervals exactly under the directional drive of
+    2026-09-21 (BEAM_LAW note 49: the rate |p| x 64 against the wall Q S M
+    x 64 + |p| x 110 on a heading, so |p| = 32 Q S M / 73 at k = 4 and 32 Q
+    S M / 201 at k = 8, k x rate = wall exactly; until then M = 21 x 2^16
+    with |p| = Q S M / 3 and Q S M / 7 under the per-axis rule, the same
+    Links at the same ticks: the reader's pace is re-earned by its
+    momentum and every count below is unchanged; the sign minus toward
+    the lamp), `read` on the beam, the
     charges cancelling the push: toward at k = 4 the reader reads 45 rows
     in 32 intervals, the windows of k intervals ending at each step [5, 6,
     6, 5, 6, 6, 6, 5]; toward at k = 8 58 in 48, [9, 10, 10, 9, 10, 10];
@@ -97,15 +103,19 @@ detector's):
     1 + v / c toward and 1 - v / c away with v = 1 / k and c = 32 / 55,
     as a count;
 (f) the report of the fast steps (the design's section 2, "not proved"):
-    a body faster than one Link per two intervals, |p| > Q S M, can cross
-    a Link in the interval right after another; the engine counts those
-    Links (`NatureBeamSimulation.fast_steps`, `run.json`'s `fast_steps`),
-    no refusal. Content 1, width 1 (Q S M = 64), no rows: at the momentum
-    96 (D = 160, the drive 96 per self-creation) the Links fall at the
-    self-creations 2, 4, 5, 7, 9, 10, ..., every fifth one right after
-    another: 18 Links in 30 intervals and 6 fast; at 128 (D = 192) at 2,
-    3, 5, 6, ...: 20 Links and 10 fast; at 64 (D = 128, one Link per two
-    intervals exactly) 15 Links and 0 fast; at 32 (D = 96) 10 and 0; the
+    a body faster than one Link per two intervals can cross a Link in the
+    interval right after another; the engine counts those Links
+    (`NatureBeamSimulation.fast_steps`, `run.json`'s `fast_steps`), no
+    refusal. Content 1, width 1 (Q S M = 64), no rows, under the
+    directional drive (the speed |p| x 64 / (4096 + |p| x 110), above 1 /
+    2 from |p| = 228 and never above 64 / 110): at the momentum 1024 (v =
+    0.5614) the Links fall at the self-creations 2, 4, 6, 8, 9, 11, 13,
+    15, ...: 16 Links in 30 intervals and 3 fast; at 4096 (v = 0.5766) at
+    2, 4, 6, 7, 9, 11, 13, 14, ...: 17 Links and 4 fast; at 256 (v =
+    0.5079) 15 Links and 0 fast; at 64 (v = 0.3678) 11 and 0 (until
+    2026-09-21, under the per-axis rule: at 96 with D = 160 the Links at
+    2, 4, 5, 7, 9, 10, ..., 18 Links and 6 fast; at 128 20 and 10; at 64,
+    one Link per two intervals exactly, 15 and 0; at 32 10 and 0); the
     runner's record carries the count.
 """
 
@@ -119,16 +129,18 @@ import pytest
 
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import direction_flight
-from event_universe.events.world import LABEL_SCALE, step_divisor
+from event_universe.events.world import LABEL_SCALE, drive_rate_and_wall
 from event_universe.runner import run_initialization
 
 Q = LABEL_SCALE
 T_HEADING = 110
 PLUS_X = [1, 0, 0]
 PLUS_Y = [0, 1, 0]
-M = 21 << 16
+M = 14673 << 11
 QSM = Q * 1 * M
-MOMENTUM = {4: QSM // 3, 8: QSM // 7}
+# One Link per k intervals exactly: k x rate = wall on a heading, |p| = 32
+# Q S M / (64 k - 110) (the directional drive, BEAM_LAW note 49).
+MOMENTUM = {4: 32 * QSM // 73, 8: 32 * QSM // 201}
 LAMP, READER = 1, 2
 
 
@@ -256,8 +268,9 @@ def test_the_experimenters_streams_are_read_at_the_crossing_rate(case):
     k, sense, ticks, expected, expected_windows = STREAMS[case]
     momentum = 0 if k is None else sense * MOMENTUM[k]
     if k is not None:
-        assert (QSM + abs(momentum)) // abs(momentum) == k
-        assert step_divisor(momentum, M, 1) == QSM + abs(momentum)
+        assert 32 * QSM % (64 * k - 110) == 0
+        rate, wall = drive_rate_and_wall([momentum, 0, 0], M, 1, 1, T_HEADING)
+        assert k * rate == wall
     simulation, records = run(bar(momentum, ticks))
     reader = simulation.measured[READER]
     counts = per_tick(records, READER, ticks)
@@ -495,17 +508,21 @@ def lone(momentum: int, ticks: int) -> dict[str, object]:
 
 
 @pytest.mark.parametrize(
-    ("momentum", "links", "fast"), [(96, 18, 6), (128, 20, 10), (64, 15, 0), (32, 10, 0)]
+    ("momentum", "links", "fast"), [(1024, 16, 3), (4096, 17, 4), (256, 15, 0), (64, 11, 0)]
 )
 def test_the_fast_steps_are_reported(momentum, links, fast, tmp_path):
     """(f)."""
+    rate, wall = drive_rate_and_wall([momentum, 0, 0], 1, 1, 1, T_HEADING)
+    assert (2 * rate > wall) == (momentum > 227) and links == 30 * rate // wall
     simulation, records = run(lone(momentum, 30))
     ticks = steps_of(records, 1)
     assert len(ticks) == links and simulation.measured[1].steps == links
     assert sum(1 for a, b in zip(ticks, ticks[1:], strict=False) if b == a + 1) == fast
     assert simulation.fast_steps == fast
-    if momentum == 96:
-        assert ticks[:8] == [2, 4, 5, 7, 9, 10, 12, 14]
+    if momentum == 1024:
+        assert ticks[:8] == [2, 4, 6, 8, 9, 11, 13, 15]
+    if momentum == 4096:
+        assert ticks[:8] == [2, 4, 6, 7, 9, 11, 13, 14]
     path = tmp_path / "world.json"
     path.write_text(json.dumps(lone(momentum, 30)), encoding="utf-8")
     record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))

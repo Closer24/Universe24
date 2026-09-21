@@ -12,12 +12,16 @@ expected integers, written down first: the push per interval at the
 reference tick 20 is not read (the run is shorter), so the tool's
 reference is moved to tick 3 for the test: body 1 reads (128, 0, 0), the
 `p` rows (-7936, 0, 0) and the `g` rows (8064, 0, 0), body 2 the mirror;
-the hand-overs of body 1 at ticks 3 (256), 4 (128) and 9 (640), three in
-all, the first at tick 3, the largest 640, the label 0 after each; body 2
-none; no step; the border `lifetime` clicking 12 rows per interval from
-tick 4 (6 per body); the pair's separation 1.00 throughout (the
-hand-overs since the step drive and the crossing rule are the ones
-`test_contact.py` (a) pins, cited at the assertion); the run
+the hand-overs of body 1 at ticks 6 (512), 11 (128) and 12 (128), three
+in all, the first at tick 6, the largest 512, the label 0 after each; body
+2 at ticks 7 (-128) and 10 (-384), two, the largest 384 (the directional
+drive of 2026-09-21, BEAM_LAW note 49, the hand-overs `test_contact.py`
+(a) pins, cited at the assertion; under the per-axis drive and the
+crossing rule's order body 1 at 5 (384), 8 (256), 11 (128) and body 2 at
+6 (-128), 10 (-256); the rule as it was: body 1 at 3 (256), 4 (128), 9
+(640), the largest 640, body 2 none); no step; the border `lifetime`
+clicking 12 rows per interval from tick 4 (6 per body); the pair's
+separation 1.00 throughout; the run
 completed and balanced over 12 ticks; the `g` reads per body 11 (one per
 interval from tick 2); the criteria of a world outside the register's
 eight are none.
@@ -82,21 +86,22 @@ def test_read_run_reads_the_runners_record(tmp_path, monkeypatch):
     assert (first.family, first.start, first.kick) == ("p", (3, 4, 4), (0, 0, 0))
     assert first.push == (128, 0, 0) and second.push == (-128, 0, 0)
     assert first.push_by_family == {"p": (-7936, 0, 0), "g": (8064, 0, 0)}
-    # Since the crossing rule (2026-09-21, the step before the law): p1
-    # hands at ticks 5 (384), 8 (256) and 11 (128), p2 back at 6 (-128) and
-    # 10 (-256); test_contact (a) derives them (under the step drive of
-    # 2026-09-20 one interval earlier, 4, 7, 10 and 5, 9; the rule as it
-    # was: 3, 3, 640 and p2 never handing).
+    # Under the directional drive (2026-09-21, BEAM_LAW note 49): p1 hands
+    # at ticks 6 (512), 11 (128) and 12 (128), p2 back at 7 (-128) and 10
+    # (-384); test_contact (a) derives them (under the per-axis drive and
+    # the crossing rule's order 5, 8, 11 and 6, 10; one interval earlier
+    # under the step drive of 2026-09-20; the rule as it was: 3, 3, 640 and
+    # p2 never handing).
     assert (first.contacts, first.first_contact, first.largest_handed, first.handed_to_zero) == (
         3,
-        5,
-        384,
+        6,
+        512,
         True,
     )
     assert (second.contacts, second.first_contact, second.largest_handed, second.handed_to_zero) == (
         2,
-        6,
-        256,
+        7,
+        384,
         True,
     )
     assert first.steps == 0 and second.steps == 0
@@ -110,11 +115,11 @@ def test_read_run_reads_the_runners_record(tmp_path, monkeypatch):
         events = [json.loads(line) for line in stream if line.strip()]
     handed = [e for e in events if e["event"] == "contact"]
     assert [(e["tick"], e["component"]) for e in handed] == [
-        (5, 384),
-        (6, -128),
-        (8, 256),
-        (10, -256),
+        (6, 512),
+        (7, -128),
+        (10, -384),
         (11, 128),
+        (12, 128),
     ]
     border = [e for e in events if e["event"] == "click" and e["detector"] == "lifetime"]
     assert len(border) == sum(reading.lifetime_clicks.values()) == 12 * 9

@@ -6,6 +6,119 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## Form B, the bodies' drive on the momentum's line, 2026-09-21
+
+The model owner's record 191 (the vector program, "everything moves to
+vectors and operations, including c") and record 301 (the build: "do it,
+yes, if it solves a bug", the registered defect of DERIVATIONS_BEAM 4.4
+and 4.5 that a body outran its own family's rows above |**p**| = 1.39 Q S
+M); the mathematician's form B,
+[docs/designs/light_speed/FORM.md](designs/light_speed/FORM.md) section
+3 with its map; the branch `directional-drive`;
+[BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
+The identity `beam-v1` is kept.
+
+- The step rule: a free measured event of content M and momentum vector
+  **p** walks the digital line of D, the primitive direction nearest to
+  **p** within the world's `direction_bound` (`engine.body_direction`),
+  with ONE accumulator on its record, `by_drive(drive, |p|_1 S_1 Q, Q S M
+  S_1 Q + |p|_1 T_D, at_most = 1)` (`world.drive_rate_and_wall`), the
+  Link at a fire the line's next Manhattan step by the line's three
+  deficit accumulators (`engine.line_step`); the rows' pace S_1 Q / T_D is
+  the cap, a row the body of no content. Until then the rule was per
+  axis (`engine.step_axis`, `world.step_divisor`, three `drive` rows, x
+  before y before z, a later axis's coincident fire lost), one Link per
+  (Q S M + p) / p self-creations, whose cap was one Link per interval,
+  1.72 c. What moves: every body that moves by its momentum; on an axis
+  the speed becomes v / (1 + v (T_D / Q - 1)) of the per-axis rule's v =
+  |p| / (Q S M + |p|), 1 / (1 + 0.72 v); one unit of net flow gives 64 /
+  (64 S + 110) in place of 1 / (S + 1); a diagonal momentum walks the
+  diagonal's line in the line's order. Decided here (note 49): when the
+  push changes D the drive and the deficits keep their residues on the
+  new line; a reversal (D_old . D < 0) negates the drive (record 126 in
+  form B); a momentum of 0 never steps and leaves the drive as it is.
+- Deleted: `engine.step_axis`, `world.step_divisor` and the per-axis
+  `drive` rows of `counts_table`. New: `engine.body_direction`,
+  `engine.line_step`, `engine.step_line` (the one place the rule lives
+  for the readings tools), `world.drive_rate_and_wall`,
+  `nature_beam.direction_resolution` (the one root of a direction, which
+  `direction_flight` reads too), `Measured.line` (the three deficits, the
+  `line` rows of the table of counts), `Measured.line_direction` and the
+  cache `NatureBeamSimulation._line`.
+- The record: `Measured.drive` is one integer (a list of three until
+  then); `state.json` and `run.json` carry `drive` (one integer), `line`
+  (the three deficits) and `direction` (the line's D) per measured event
+  beside `axis_steps`; the `step` line carries `drive` (one integer) and
+  `direction`; a declared `drive` or `line` is refused as an unknown key.
+  A test-level resume restores the three (`tests/test_fraction_free.py`).
+- The readings tools: `tools/coupling_readings.py`'s `steps_by_rule`
+  replays `engine.step_line`; `tools/hubble_stars_readings.py` reads a
+  star's declared speed off `drive_rate_and_wall` (`declared_speed`, 64 /
+  174 at p = Q S M on a heading, 1 / 2 until then).
+- The new test `tests/test_directional_drive.py` (the pins derived from
+  floor(n rate / wall) and the flight's own line before the first run;
+  (d)'s tick-by-tick pin against the row's accumulator not met, the
+  row's starting at the half of its wall and a body's at 0: stated in
+  note 49, the count, the Node and the lag pinned). Re-pinned under the
+  rule, the old integers kept as history in each docstring and in
+  TEST_EXPECTATIONS: `test_step_drive` (a) the two-axis body to (12, 7,
+  0) on the line of (16, 5, 0) with `axis_steps` [8, 3, 0] and the drive
+  744576 for (16, 9, 0), [12, 5, 0] and (0, 960, 0), the former
+  coincidence to (7, 6, 0) with [3, 2, 0] for (9, 4, 0) with [5, 5, 0],
+  (b) 33 Links for 38, the stall 258 for 257, (d) the steps at 10 and 20
+  with the drive 495616 for 9, 18, 27 and 0, (e) four Links at 5, 10, 15,
+  20 for five at 5, 9, 13, 17, 21 and `acc.action` [3, 2, 0] for [5, 5,
+  0], (f) the -x Link at the twenty-sixth self-creation with the drive
+  18432 for the twenty-fifth with 0; `test_push_width` (a) the ages 3, 6,
+  9 for 2, 4, 6 and at 64 one Link after 18 for 17, (b) the ages 10, 20,
+  30 for 9, 18, 27, (c) the intervals 19, 39, 59 for 17, 35, 53;
+  `test_crossing` (a) to (e) every count kept, the reader's content
+  14673 x 2^11 and momentum 32 Q S M / 73 and 32 Q S M / 201 for 21 x
+  2^16 and Q S M / 3 and Q S M / 7 (k x rate = wall exactly), (f) the
+  fast steps 16 and 3 at 1024, 17 and 4 at 4096, 15 and 0 at 256, 11 and
+  0 at 64 for 18 and 6 at 96, 20 and 10 at 128, 15 and 0 at 64, 10 and 0
+  at 32; `test_fraction_free` (a) the mover's Link at 8194 with the
+  drive 115602 for 8193 and 1807, (c) the resumed drive 11424 for 1616;
+  `test_coupling_readings` (b) the ticks 3, 6, 9 for 2, 4, 6, 8, 10 and
+  5, 10 for 4, 8, the diagonal walk 2, 4, 6, 7, 9 on x, y, x, y, x for 2,
+  4, 6, 8, 10 on x; `test_hubble_stars_readings` (b) the speed 64 / 174
+  and 22 steps in 60 for 1 / 2 and 30; `test_contact` (a) the pair's
+  momenta 128, 256, 384, 512, 128, 128, 256 and the first hand-over at
+  tick 6 with 512 for 128, 256, 384, 128, 128, 256, 128 and tick 5 with
+  384, the fourteen hand-overs 8 by p1 and 6 by p2 for fifteen 9 and 6,
+  at three Links the steps at 9 with -+23808 for 8 with -+15872, (d) 827
+  hand-overs by both nucleons from tick 5 with 3 P for 997 by the proton
+  from tick 4 with 2 P, (e) the contacts at tick 3 and a free at tick 6
+  for 2 and 4 (b first: 3 and 6 for 2 and 3); `test_binding` (a) the
+  give at tick 5 handing 2304 and the click at 7 for tick 4, 1536 and 6,
+  (b) the fire at 4, the click at 6 and the second contact at 9 for 3, 5
+  and 7, (c) the take at 4 and the second contact at 8 for 3 and 6, (d)
+  the `read` pair over 8 intervals for 5, (f) the give at 4 and the
+  click and second contact at 6 for 3 and 5; `test_nucleus_readings` p1
+  at 6 (512), 11, 12 and p2 at 7, 10 (-384) for 5 (384), 8, 11 and 6, 10
+  (-256); `test_orbit_readings` (c) two reads at 9 and 10 and the steps
+  at 3, 6, 9, 11 for four reads at 6, 7, 10, 11 and the steps at 2, 4,
+  ..., 12; `test_paid_charge` (d) the steps at 9, 13 and the escape at 17
+  for 8, 11 and 14; `test_nature_beam_body` (a) five steps, the x per
+  interval 3 (5), 4 (6), 5 (6), 6 (5), 7 (6), 8 (2), 101 units clicked,
+  the transit line 104 + 517 + 121 for six steps, 3 (4), 4 (5), 5 (5), 6
+  (5), 7 (5), 8 (6), 99 units and 102 + 521 + 119, (b) the ages 3, 6, 9
+  and the escape at 11 for 2, 4, 6 and 8, (d) the phase 9 after 12 for
+  11, 5 for 37 at `action` 4096, the composed body at (12, 7, 0) with the
+  phases 10 and 13 for (16, 9, 0) with 14 and 18; `test_nature_beam_clock`
+  (d) two Links after six intervals for three, the contact at 3 and the
+  resident's step at 5 and escape at 8 for 2, 3 and 5;
+  `test_nature_beam_reemission` (b) the escape at interval 3 with the
+  phase 2 for 2 with 1; `test_bohr_readings` (c) the steps at 5, 10, 15,
+  20 for 5, 9, 13, 17. The gate set's digests of every lamp-free world
+  with a moving body regenerated by `tools/run_series.py --list`
+  (`gate_set.json`); series D at S = 1 re-run first and re-read in the
+  series' README and EXPERIMENTS with the derived period. The registered
+  worlds with a moving body (FORM.md counts 47) re-registered by their
+  generators in the second stage of the branch, with the VALIDATION
+  digest table; the worlds with no moving body read the same records,
+  their `state.json` differing by the record's new fields alone.
+
 ## The crossing rule, on 2026-09-21: the step before the law, a row and a body met once, the key `doppler` and the grain deleted
 
 The model owner's record 158 of 2026-09-20 ("the step reads the crossed

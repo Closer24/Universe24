@@ -1,44 +1,51 @@
 """The width of the push (the model owner's D1, 2026-09-19, Highlights 5.4;
-docs/BEAM_LAW.md, section 3, step 5 and implementation note 15): a free
-measured event of content M with the momentum component p on an axis steps
-one Link per (S x M + p) / p self-creations on that axis, `by_clock(age,
-|p|, S x M + |p|)`, S the world key `width` (an integer from 1; 1 by
-default, the rule as it was: one Link per (M + p) / p). One rule in
-isolation on a bar; no push arrives (`release` [0, 1]). The expected
-integers of docs/TEST_EXPECTATIONS.md ("The width of the push"), written
-down first:
+docs/BEAM_LAW.md, section 3, step 5 and implementation note 15): the world
+key `width` S, the Q S M of the step rule's wall. One rule in isolation on
+a bar; no push arrives (`release` [0, 1]). Since the directional drive of
+2026-09-21 (BEAM_LAW note 49; `tests/test_directional_drive.py`) a free
+measured event of content M with the momentum p on a heading steps at the
+rate |p| x 64 against the wall Q S M x 64 + |p| x 110 (T_D = 110 the
+heading's resolution), one Link per self-creation at most, so that one unit
+of net flow, p = Q M, gives the speed 64 / (64 S + 110) for every content
+(until then one Link per (Q S M + p) / p self-creations, the speed 1 / (S +
+1)). The expected integers of docs/TEST_EXPECTATIONS.md ("The width of the
+push"), re-pinned on 2026-09-21 with the old integers kept here as history:
 
 Since 2026-09-19 the label of a unit along a heading is Q e_d with Q = 64
-(BEAM_LAW section 2 and note 23), every declared `momentum` is in label
-units, and the rule reads `by_clock(age, |p|, Q x S x M + |p|)`: the
-momenta below are the first pins times 64 and every position is unchanged
-(`by_clock(age, Q n, Q k) = by_clock(age, n, k)`).
+(BEAM_LAW section 2 and note 23), and every declared `momentum` is in label
+units.
 
-(a) S = 1 reads exactly as the rule was: content 16 with momentum 1024
-    (16 x 64: one unit of net flow) on +x from x = 4 steps at the
-    self-creations of ages 2, 4, 6 (x after intervals 1 to 6: 4, 5, 5, 6,
-    6, 7), with `width` 1 declared and with the key absent alike; with
-    momentum 64 none after 16 intervals and one after 17;
-(b) S = 8 with p = Q M: content 16 with momentum 1024 steps once per 9
-    self-creations, at the ages 9, 18, 27 (x = 4 through interval 8, 5 from
-    9, 6 from 18, 7 at 27; `steps` 0, 1, 2, 3); a content of 3 with momentum
-    192 steps at the same ages (the speed a unit of flow gives, 1 / (S + 1),
-    is the same for every content);
-(c) the step is counted off the clock with no stored remainder: with
+(a) S = 1: content 16 with momentum 1024 (16 x 64: one unit of net flow;
+    rate 65536, wall 178176, the speed 0.3678) on +x from x = 4 steps at
+    the self-creations of ages 3, 6, 9 (x after intervals 1 to 6: 4, 4, 5,
+    5, 5, 6; `steps` 0, 0, 1, 1, 1, 2), with `width` 1 declared and with
+    the key absent alike; with momentum 64 (rate 4096, wall 72576) none
+    after 17 intervals and one after 18 (until 2026-09-21 the ages 2, 4, 6,
+    x 4, 5, 5, 6, 6, 7, and at 64 none after 16, one after 17);
+(b) S = 8 with p = Q M: content 16 with momentum 1024 (rate 65536, wall
+    636928, the speed 0.10289 = 64 / 622) steps once per 9.72
+    self-creations, at the ages 10, 20, 30 (x = 4 through interval 9, 5
+    from 10, 6 from 20; `steps` 0, 1, 2 over 27 intervals); a content of 3
+    with momentum 192 (rate 12288, wall 119424, the same speed) steps at
+    the same ages (the speed a unit of flow gives, 64 / (64 S + 110), is
+    the same for every content; until 2026-09-21 once per 9, at 9, 18, 27,
+    x 4, 5, 6, 7 and `steps` 3 after 27);
+(c) the step is counted on the body's record with the remainder kept: with
     `suspension` [1, 4] and a crowd of 4 rays of another number at rest on
     every Node it visits, the probe of (b) owes one interval after every
     self-creation (age after interval n is ceil(n / 2)); since the
     crossing rule (2026-09-21, BEAM_LAW note 48: the step before the law,
     the drive advanced at the self-creation itself) the step of the ages
-    9, 18, 27 lands on the self-creation, the intervals 17, 35, 53 (x
-    after intervals 17, 18, 35, 36, 53, 54, 60: 4, 4, 5, 5, 6, 6, 6; age 30
-    and waited 30 after 60), and after every interval `steps` is the whole
-    part of age x 1024 / 9216 (= age x 16 / 144), nothing carried (with the
-    step after the law and the count owed, until the crossing rule, the
-    drive advanced in the interval that paid the count and the steps fell
-    at 18, 36, 54, `steps` the whole part of (age - 1) x 16 / 144 after a
-    self-creation; the first run corrected the interval of the step from
-    17 to 18: the order of the frame, not the rule);
+    10, 20, 30 lands on the self-creation, the intervals 19, 39, 59 (x
+    after intervals 17, 18, 35, 36, 53, 54, 60: 3, 3, 4, 4, 5, 5, 6; after
+    19, 20, 39, 40, 59, 60: 4, 4, 5, 5, 6, 6; age 30 and waited 30 after
+    60), and after every interval `steps` is the whole part of age x
+    65536 / 636928, nothing carried (until 2026-09-21 the ages 9, 18, 27 at
+    the intervals 17, 35, 53, x 4, 4, 5, 5, 6, 6, 6 after 17, 18, 35, 36,
+    53, 54, 60 and `steps` the whole part of age x 16 / 144; with the step
+    after the law and the count owed, until the crossing rule, the steps
+    fell at 18, 36, 54; the first run corrected the interval of the step
+    from 17 to 18: the order of the frame, not the rule);
 (d) a world without `width` parses to 1; `width` 8 parses to 8 and the
     runner's record carries it; 0, -1, a string and a fraction are refused
     naming `width`.
@@ -51,7 +58,7 @@ import json
 import pytest
 
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.engine import step_axis
+from event_universe.events.engine import step_line
 from event_universe.runner import run_initialization
 
 REST = 0  # The first rest direction of the table ("here a").
@@ -98,35 +105,37 @@ def positions(world: dict[str, object], ticks: int) -> tuple[list[int], list[int
 def test_width_one_is_the_rule_as_it_was():
     """(a)."""
 
-    # The rule of one axis, the one place it lives (`engine.step_axis`):
-    # the sign of the Link stepped at this self-creation, or None, and the
-    # drive after it (the step drive of 2026-09-20: at a constant momentum
-    # the same self-creations as the rule off the clock).
+    # The rule of one self-creation, the one place it lives for the tools
+    # (`engine.step_line`): the sign of the Link stepped on the line, or
+    # None, and the drive after it (the directional drive of 2026-09-21).
     def fired(momentum: int, content: int, width: int, count: int) -> list[int | None]:
-        drive, found = 0, []
+        drive, deficits, line, found = 0, [0, 0, 0], (0, 0, 0), []
         for _ in range(count):
-            sign, drive = step_axis(drive, momentum, content, width)
-            found.append(sign)
+            step, drive, line = step_line(drive, deficits, line, [momentum, 0, 0], content, width)
+            found.append(None if step is None else step[1])
         return found
 
-    assert fired(1024, 16, 1, 6) == [None, 1, None, 1, None, 1]
-    assert fired(-64, 16, 1, 17)[15] is None and fired(-64, 16, 1, 17)[16] == -1
-    assert fired(1024, 16, 8, 9)[8] == 1 and step_axis(7, 0, 16, 1) == (None, 7)
-    expected = [4, 5, 5, 6, 6, 7]
-    assert positions(bar([mover(16, 1024)]), 6) == (expected, [0, 1, 1, 2, 2, 3])
-    assert positions(bar([mover(16, 1024)], width=1), 6) == (expected, [0, 1, 1, 2, 2, 3])
-    xs, steps = positions(bar([mover(16, 64)]), 17)
-    assert xs[15] == 4 and xs[16] == 5 and steps[15] == 0 and steps[16] == 1
+    assert fired(1024, 16, 1, 9) == [None, None, 1, None, None, 1, None, None, 1]
+    assert fired(-64, 16, 1, 18)[16] is None and fired(-64, 16, 1, 18)[17] == -1
+    assert fired(1024, 16, 8, 10)[8] is None and fired(1024, 16, 8, 10)[9] == 1
+    assert step_line(7, [0, 0, 0], (1, 0, 0), [0, 0, 0], 16, 1) == (None, 7, (1, 0, 0))
+    expected = [4, 4, 5, 5, 5, 6]
+    assert positions(bar([mover(16, 1024)]), 6) == (expected, [0, 0, 1, 1, 1, 2])
+    assert positions(bar([mover(16, 1024)], width=1), 6) == (expected, [0, 0, 1, 1, 1, 2])
+    xs, steps = positions(bar([mover(16, 64)]), 18)
+    assert xs[16] == 4 and xs[17] == 5 and steps[16] == 0 and steps[17] == 1
 
 
 def test_width_eight_steps_once_per_nine_self_creations():
     """(b)."""
-    expected = [4] * 8 + [5] * 9 + [6] * 9 + [7]
+    expected = [4] * 9 + [5] * 10 + [6] * 8
     xs, steps = positions(bar([mover(16, 1024)], width=8), 27)
     assert xs == expected
-    assert steps == [0] * 8 + [1] * 9 + [2] * 9 + [3]
+    assert steps == [0] * 9 + [1] * 10 + [2] * 8
     xs, steps = positions(bar([mover(3, 192)], width=8), 27)
-    assert xs == expected and steps[-1] == 3
+    assert xs == expected and steps[-1] == 2
+    xs, steps = positions(bar([mover(3, 192)], width=8), 30)
+    assert xs[-1] == 7 and steps[-1] == 3
 
 
 def test_the_step_is_counted_off_the_clock_with_no_remainder():
@@ -146,11 +155,12 @@ def test_the_step_is_counted_off_the_clock_with_no_remainder():
         assert entry.age == (tick + 1) // 2 and entry.waited == tick // 2, tick
         # The drive advances at the self-creation (the step before the law,
         # the crossing rule of 2026-09-21): the count is the whole part of
-        # age x 1024 / 9216 after every interval, odd and even alike.
-        assert entry.steps == entry.age * 1024 // 9216 == entry.age * 16 // 144, tick
+        # age x 65536 / 636928 after every interval, odd and even alike.
+        assert entry.steps == entry.age * 65536 // 636928, tick
         assert entry.momentum == [1024, 0, 0]
         xs[tick] = entry.position[0]
-    assert [xs[t] for t in (17, 18, 35, 36, 53, 54, 60)] == [4, 4, 5, 5, 6, 6, 6]
+    assert [xs[t] for t in (17, 18, 35, 36, 53, 54, 60)] == [3, 3, 4, 4, 5, 5, 6]
+    assert [xs[t] for t in (19, 20, 39, 40, 59, 60)] == [4, 4, 5, 5, 6, 6]
     assert entry.age == 30 and entry.waited == 30 and entry.steps == 3
 
 

@@ -16,8 +16,12 @@ BEAM_LAW note 48) the step, its contact and its give precede the
 interval's law: a fire under a push falls one interval later than it did
 (the drive of a self-creation advances by the momentum after the previous
 interval's push) and a row given at a contact makes its first Link in the
-interval of the give; the ticks below are re-pinned so, and the ticks
-before are kept as history where they are named:
+interval of the give; and since the directional drive of the same day
+(BEAM_LAW note 49) a body fires when its one drive, gaining |p| x 64 per
+self-creation on a heading, reaches the wall Q S M x 64 + |p| x 110 (M the
+content, held paid units included), one or two intervals later again than
+the per-axis drive's D = Q S M + |p|; the ticks below are re-pinned so,
+and the ticks before are kept as history where they are named:
 
 (a) the pair on the six headings of `tests/test_contact.py` (a) with the
     paid family `bond` (quantum 1, lifetime 3) held 2 by the mover p1 (its
@@ -25,61 +29,72 @@ before are kept as history where they are named:
     2 p1 reads p2's `p` row as -7424 (gravity 7 x 4 against charge 144)
     and its `g` row as +8192 (gravity 7 plus strong 121), the push 768
     toward p2 (p2 reads -7936 and +8064 as before: p1's rows are 4 of `p`
-    and 1 of `g`, the held `bond` never released); p1's drive 768 at tick
-    3 (by the momentum after tick 2), then 768 + 1536 = 2304 at or beyond
-    D = 448 + 1536 at tick 4 (at tick 3 until the crossing rule): its step
-    is refused and it hands 1536 to p2 (the record's `component`), then
-    gives its 2 units of `bond` as one row of amount 2, content 1, on the
-    heading -x (the direction index 3 of the table) at (3, 4, 4), the row's
-    label (-128, 0, 0), the recoil +128 on p1 (its momentum (128, 0, 0)
-    after the contact), its held (4, 1, 0), the record's `given` 2; the
+    and 1 of `g`, the held `bond` never released); p1's drive 49152 at tick
+    3 (768 x 64, by the momentum after tick 2), 147456 at tick 4 (below
+    the wall 28672 + 110 x 2304 = 282112 at the content 7) and 294912 at
+    or beyond it at tick 5: its step is refused and it hands 2304 to p2
+    (the record's `component`), then gives its 2 units of `bond` as one
+    row of amount 2, content 1, on the heading -x (the direction index 3
+    of the table) at (3, 4, 4), the row's label (-128, 0, 0), the recoil
+    +128 on p1 (its momentum (128, 0, 0) after the contact, 896 after the
+    push of the tick), its held (4, 1, 0), the record's `given` 2; the
     row, born before the walk of the give's interval, makes its first
     Link in that interval (age 0 to 1) and its second at age 3 and clicks
-    on the border `lifetime` at tick 6 at (1, 4, 4) with amount 2, content
-    2 and momentum (-128, 0, 0); p1's second contact at tick 5 hands 896
-    and gives 0 (`given` 0: it carries nothing; 256 at tick 4 until the
-    crossing rule); the `bond` books at every
+    on the border `lifetime` at tick 7 at (1, 4, 4) with amount 2, content
+    2 and momentum (-128, 0, 0); p1's second contact at tick 7 hands 1024
+    and gives 0 (`given` 0: it carries nothing) (until 2026-09-21, under
+    the per-axis drive with D = 448 + |p|: the give at tick 4 handing
+    1536, the click at tick 6, the second contact at tick 5 handing 896;
+    256 at tick 4 until the crossing rule); the `bond` books at every
     tick: measured initial 2 = current + spent 2, the content released 2
-    in transit until tick 6 and escaped after, the row's label (-128, 0,
+    in transit until tick 7 and escaped after, the row's label (-128, 0,
     0), the recoil's opposite, on the `bond` transit line until the border
-    books it at tick 6 (the two bodies' labels do not sum to 0 in this
+    books it at tick 7 (the two bodies' labels do not sum to 0 in this
     toy: p1 reads p2's rows with its gravity charge 7 and p2 reads p1's
     rows, which carry no `bond`, with 5, the third-law gap of record 126;
     the momentum the give moves is the recoil against the row alone);
     `binding-v1` under the world's hypotheses after `columns-v1`.
-    The toy's pair does not hold: the 1536 handed to p2 (content 5, D =
-    320 + |p|) steps it away at tick 5, as the toy of test_contact would
-    under any hand-over of that size; the rule's claim is the give, the
-    recoil, the click and the books, not the toy's binding;
+    The toy's pair does not hold: the 2304 handed to p2 (content 5, its
+    line reversed) steps it away at tick 7, as the toy of test_contact
+    would under any hand-over of that size; the rule's claim is the give,
+    the recoil, the click and the books, not the toy's binding;
 (b) the remainder: p1 of `p` (content 5, momentum (256, 0, 0)) at (3, 3, 3)
     holding `bond` 3 with the quantum 2, a fixed occupant at (4, 3, 3) on an
     open 7^3 GameBoard, `release` [0, 1] (no rays): the step fires at tick
-    3 (`by_drive`: 256, 512, 768 >= D = 448 + 256) and is refused; p1
+    4 (`by_drive` at the rate 16384 against the wall 32768 + 28160 = 60928
+    on the content 8: 16384, 32768, 49152, 65536) and is refused; p1
     hands 256, gives 3 // 2 = 1 unit of content 2 (the row amount 1,
     content 2, label (-128, 0, 0)), keeps 3 mod 2 = 1 (`held` (5, 0, 0,
     1)), takes the recoil (128, 0, 0), the record's `given` 2; the border
-    click at tick 5 at (1, 3, 3) with amount 1, content 2 (the given row
-    walks in the interval of the give; tick 6 until the crossing rule);
-    the second
-    contact at tick 7 (the drive 64, 192, 320, 448, 576 >= D = 384 + 128)
-    hands 128 and gives 0; the books: measured initial 3 = current 1 +
-    spent 2, transit released 1 = escaped 1, content released 2 = escaped
-    2, the momentum lines summing to (256, 0, 0) at every tick; a body
-    holding `bond` 1 with the quantum 2 gives nothing (0 units), `given`
-    0, its held and momentum as under the contact alone;
+    click at tick 6 at (1, 3, 3) with amount 1, content 2 (the given row
+    walks in the interval of the give); the second contact at tick 9 (the
+    residue 4608, then 8192 per self-creation against the wall 24576 +
+    14080 = 38656 on the content 6) hands 128 and gives 0 (until
+    2026-09-21, under the per-axis drive: the fire at tick 3 with 256,
+    512, 768 >= D = 448 + 256, the click at tick 5, the second contact at
+    tick 7 with 576 >= 384 + 128; the click at tick 6 until the crossing
+    rule); the books over nine intervals: measured initial 3 = current 1
+    + spent 2, transit released 1 = escaped 1, content released 2 =
+    escaped 2, the momentum lines summing to (256, 0, 0) at every tick; a
+    body holding `bond` 1 with the quantum 2 gives nothing (0 units),
+    `given` 0, its held and momentum as under the contact alone;
 (c) the take: (b) with the quantum 1, `bond` 2 and a third fixed body of
     `q` (content 5) at (2, 3, 3) on the line behind p1: the row given on
     -x arrives at (2, 3, 3) at age 1, in the interval of the give (tick
-    3; tick 4 until the crossing rule), and the third body's entry for
-    `bond`, `measure` by the keys, takes it: one `click` record at tick 3
+    4 under the directional drive, the rate 16384 against the wall 28672 +
+    28160 = 56832 on the content 7; tick 3 under the per-axis drive, 4
+    until the crossing rule), and the third body's entry for `bond`,
+    `measure` by the keys, takes it: one `click` record at tick 4
     (measured 3, family `bond`, number 1, amount 2, content 2, the
     push (-128, 0, 0)), the third body's held (0, 5, 0, 2), its clicks
     (0, 0, 0, 2), its momentum (-128, 0, 0) (the label taken), the
     `bond` books measured +2 (initial 2 + measured 2 = current 2 + spent
-    2), transit released 2 = absorbed 2, no border click over seven
+    2), transit released 2 = absorbed 2, the second contact at tick 8
+    (the residue 8704 then 8192 per self-creation against 34560 on the
+    content 5; tick 6 until 2026-09-21), no border click over nine
     intervals; with `pass` declared on the third body for `bond` the row
-    goes on and clicks on the border at tick 5 at (1, 3, 3) with content
-    2, the third body untouched;
+    goes on and clicks on the border at tick 6 at (1, 3, 3) with content
+    2 (tick 5 until 2026-09-21), the third body untouched;
 (d) a body that carries no paid content: the worlds of `tests/test_contact.py`
     (a) to (e) write their `contact` records without the `given` key and
     equal to the ones pinned there (the isolated hand-over's record byte
@@ -95,14 +110,18 @@ before are kept as history where they are named:
     `bond` row of amount 2 in transit at (4, 3, 3) on -x, age 0: at tick 1
     the row reaches the body at age 1 and is TAKEN under the keys (held
     `bond` 2, the label -128 taken: momentum (-384, 0, 0)); the body's step
-    fires at tick 3 (the drive -384, -768, -1152 beyond D = 448 + 384),
-    refused: it hands -384 and GIVES the 2 units it took on +x (the recoil
-    -128: momentum (-128, 0, 0)), the engine raises the fact at that give,
-    the record carries `given` 2, the border click at tick 5 at (5, 3, 3)
-    with content 2 and momentum (128, 0, 0), the next contact at tick 5
-    (the drive -320 left after the fire, then -448 = -D at the content 5,
-    by the momentum after tick 4; tick 4 until the crossing rule) with
-    `given` 0; the simulation's
+    fires at tick 4 (the drive 16384 at tick 1 by the -256 it was born
+    with, then 24576 per self-creation against the wall 28672 + 42240 =
+    70912 on the content 7: 40960, 65536, 90112), refused: it hands -384
+    and GIVES the 2 units it took on +x (the recoil -128: momentum (-128,
+    0, 0)), the engine raises the fact at that give, the record carries
+    `given` 2, the border click at tick 6 at (5, 3, 3) with content 2 and
+    momentum (128, 0, 0), the next contact at tick 6 (the residue 19200,
+    then 8192 per self-creation against 34560 on the content 5: 27392,
+    35584) with `given` 0 (until 2026-09-21, under the per-axis drive: the
+    fire at tick 3 with -384, -768, -1152 beyond D = 448 + 384, the click
+    and the next contact at tick 5; tick 4 until the crossing rule); the
+    simulation's
     `hypotheses` gain `binding-v1` and the runner's `run.json` carries it.
 """
 
@@ -197,26 +216,28 @@ def test_the_give_at_the_first_hand_over_of_the_pair():
         books = simulation.books(recount=True)
         assert books["balanced"], tick
         # The row's label (-128, 0, 0), the recoil's opposite, in transit
-        # from the give at tick 4 until the border books it at tick 6.
+        # from the give at tick 5 until the border books it at tick 7.
         store = simulation.stores[2]
         in_transit = [
             int(v) for v in exact_column_sums(store.labels(np.arange(store.size), unit, False))
         ]
-        assert in_transit == ([-128, 0, 0] if 4 <= tick < 6 else [0, 0, 0]), tick
-        assert simulation.ledger.lifetime_momentum[2] == ([-128, 0, 0] if tick >= 6 else [0, 0, 0])
+        assert in_transit == ([-128, 0, 0] if 5 <= tick < 7 else [0, 0, 0]), tick
+        assert simulation.ledger.lifetime_momentum[2] == ([-128, 0, 0] if tick >= 7 else [0, 0, 0])
         bond = books["families"]["bond"]
-        assert bond["measured"]["initial"] == 2 and bond["measured"]["spent"] == (2 if tick >= 4 else 0)
-        assert bond["measured"]["current"] == (0 if tick >= 4 else 2)
-        assert bond["content"]["released"] == (2 if tick >= 4 else 0)
-        assert bond["content"]["current"] == (2 if 4 <= tick < 6 else 0)
-        assert bond["content"]["escaped"] == (2 if tick >= 6 else 0)
+        assert bond["measured"]["initial"] == 2 and bond["measured"]["spent"] == (2 if tick >= 5 else 0)
+        assert bond["measured"]["current"] == (0 if tick >= 5 else 2)
+        assert bond["content"]["released"] == (2 if tick >= 5 else 0)
+        assert bond["content"]["current"] == (2 if 5 <= tick < 7 else 0)
+        assert bond["content"]["escaped"] == (2 if tick >= 7 else 0)
         if tick == 2:
             assert p1.momentum == [768, 0, 0] and p2.momentum == [-128, 0, 0]
         if tick == 3:
-            assert p1.momentum == [1536, 0, 0] and p1.held == [4, 1, 2]
+            assert p1.momentum == [1536, 0, 0] and p1.held == [4, 1, 2] and p1.drive == 49152
         if tick == 4:
+            assert p1.momentum == [2304, 0, 0] and p1.held == [4, 1, 2] and p1.drive == 147456
+        if tick == 5:
             # The give before the walk: the row has made its first Link.
-            assert p1.momentum == [896, 0, 0] and p1.held == [4, 1, 0]
+            assert p1.momentum == [896, 0, 0] and p1.held == [4, 1, 0] and p1.drive == 12800
             store = simulation.stores[2]
             assert store.size == 1
             assert (
@@ -236,11 +257,11 @@ def test_the_give_at_the_first_hand_over_of_the_pair():
     handed = [
         (r["tick"], r["number"], r["component"], r["given"], r["momentum"]) for r in contacts(records)
     ]
-    assert handed == [(4, 1, 1536, 2, [128, 0, 0]), (5, 1, 896, 0, [0, 0, 0])]
+    assert handed == [(5, 1, 2304, 2, [128, 0, 0]), (7, 1, 1024, 0, [0, 0, 0])]
     assert clicks(records, "bond") == [
         {
             "event": "click",
-            "tick": 6,
+            "tick": 7,
             "node": [1, 4, 4],
             "measured": None,
             "detector": "lifetime",
@@ -252,9 +273,9 @@ def test_the_give_at_the_first_hand_over_of_the_pair():
             "content": 2,
         }
     ]
-    # The toy's pair separates under the 1536 handed to p2 (a step at tick
-    # 5); the give is once, at the first hand-over.
-    assert [(r["tick"], r["number"]) for r in records if r["event"] == "step"][0] == (5, 2)
+    # The toy's pair separates under the 2304 handed to p2 (a step at tick
+    # 7); the give is once, at the first hand-over.
+    assert [(r["tick"], r["number"]) for r in records if r["event"] == "step"][0] == (7, 2)
     assert p1.held == [4, 1, 0] and p1.state()["held"] == [4, 1, 0]
 
 
@@ -280,19 +301,19 @@ def line_world(quantum: int, held: int, third: dict[str, object] | None = None) 
 
 def test_the_remainder_stays_held():
     """(b)."""
-    simulation, records = run(line_world(2, 3), 7)
+    simulation, records = run(line_world(2, 3), 9)
     body, occupant = simulation.measured[1], simulation.measured[2]
     assert simulation.world.hypotheses == [COLUMNS_RULE, BINDING_RULE]
     assert body.held == [5, 0, 0, 1] and body.momentum == [0, 0, 0] and body.position == (3, 3, 3)
     assert occupant.momentum == [384, 0, 0]
     assert [(r["tick"], r["component"], r["given"], r["momentum"]) for r in contacts(records)] == [
-        (3, 256, 2, [128, 0, 0]),
-        (7, 128, 0, [0, 0, 0]),
+        (4, 256, 2, [128, 0, 0]),
+        (9, 128, 0, [0, 0, 0]),
     ]
     assert [
         (r["tick"], r["node"], r["detector"], r["amount"], r["content"], r["momentum"])
         for r in clicks(records, "bond")
-    ] == [(5, [1, 3, 3], "lifetime", 1, 2, [-128, 0, 0])]
+    ] == [(6, [1, 3, 3], "lifetime", 1, 2, [-128, 0, 0])]
     bond = simulation.books(recount=True)["families"]["bond"]
     assert (bond["measured"]["initial"], bond["measured"]["current"], bond["measured"]["spent"]) == (
         3,
@@ -305,7 +326,7 @@ def test_the_remainder_stays_held():
     # Edge: one unit held below the quantum gives nothing.
     simulation, records = run(line_world(2, 1), 7)
     assert simulation.measured[1].held == [5, 0, 0, 1] and simulation.measured[1].momentum == [0, 0, 0]
-    assert [(r["tick"], r["component"], r["given"]) for r in contacts(records)] == [(3, 256, 0)]
+    assert [(r["tick"], r["component"], r["given"]) for r in contacts(records)] == [(4, 256, 0)]
     assert not clicks(records, "bond") and simulation.stores[3].size == 0
 
 
@@ -315,16 +336,16 @@ def test_the_remainder_stays_held():
 def test_the_give_taken_by_a_body_on_its_line():
     """(c)."""
     third: dict[str, object] = {"position": [2, 3, 3], "family": "q", "amount": 5, "fixed": True}
-    simulation, records = run(line_world(1, 2, third), 7)
+    simulation, records = run(line_world(1, 2, third), 9)
     taker = simulation.measured[3]
     assert taker.held == [0, 5, 0, 2] and taker.clicks == [0, 0, 0, 2] and taker.momentum == [-128, 0, 0]
     assert [
         (r["tick"], r["node"], r["measured"], r["number"], r["amount"], r["content"], r["push"])
         for r in clicks(records, "bond")
-    ] == [(3, [2, 3, 3], 3, 1, 2, 2, [-128, 0, 0])]
+    ] == [(4, [2, 3, 3], 3, 1, 2, 2, [-128, 0, 0])]
     assert [(r["tick"], r["component"], r["given"]) for r in contacts(records)] == [
-        (3, 256, 2),
-        (6, 128, 0),
+        (4, 256, 2),
+        (8, 128, 0),
     ]
     bond = simulation.books(recount=True)["families"]["bond"]
     assert (bond["measured"]["initial"], bond["measured"]["measured"], bond["measured"]["current"]) == (
@@ -340,10 +361,10 @@ def test_the_give_taken_by_a_body_on_its_line():
     )
     assert momentum_sum(simulation) == [256, 0, 0]
     # `pass` declared on the third body: the row goes on to the border.
-    simulation, records = run(line_world(1, 2, {**third, "table": {"bond": "pass"}}), 7)
+    simulation, records = run(line_world(1, 2, {**third, "table": {"bond": "pass"}}), 9)
     assert simulation.measured[3].held == [0, 5, 0, 0] and simulation.measured[3].momentum == [0, 0, 0]
     assert [(r["tick"], r["node"], r["detector"], r["content"]) for r in clicks(records, "bond")] == [
-        (5, [1, 3, 3], "lifetime", 2)
+        (6, [1, 3, 3], "lifetime", 2)
     ]
     bond = simulation.books(recount=True)["families"]["bond"]
     assert bond["measured"]["measured"] == 0 and bond["content"]["escaped"] == 2
@@ -358,7 +379,7 @@ def test_a_body_without_paid_content_contacts_as_before():
     q2: dict[str, object] = {"position": [2, 3, 2], "family": "q", "amount": 3, "fixed": True}
     worlds: list[tuple[dict[str, object], int]] = [
         (pair_world(1), 8),
-        (pair_world(1, "read"), 5),
+        (pair_world(1, "read"), 8),
         (isolated(), 3),
         (isolated({"p": "rerelease"}), 3),
         (isolated(None, "h"), 3),
@@ -443,12 +464,15 @@ def test_a_body_that_takes_paid_content_gives_it_at_its_next_contact(tmp_path):
             assert body.held == [5, 0, 0, 2] and body.momentum == [-384, 0, 0]
             assert simulation.binding is False
         if tick == 3:
-            assert body.held == [5, 0, 0, 0] and body.momentum == [-128, 0, 0]
+            assert body.held == [5, 0, 0, 2] and body.momentum == [-384, 0, 0] and body.drive == 65536
+            assert simulation.binding is False
+        if tick == 4:
+            assert body.held == [5, 0, 0, 0] and body.momentum == [-128, 0, 0] and body.drive == 19200
             assert simulation.binding is True
             assert simulation.hypotheses == [COLUMNS_RULE, BINDING_RULE]
     assert [(r["tick"], r["component"], r["given"], r["momentum"]) for r in contacts(records)] == [
-        (3, -384, 2, [-128, 0, 0]),
-        (5, -128, 0, [0, 0, 0]),
+        (4, -384, 2, [-128, 0, 0]),
+        (6, -128, 0, [0, 0, 0]),
     ]
     taken = [r for r in clicks(records, "bond") if r["measured"] == 1]
     assert [(r["tick"], r["node"], r["content"], r["push"]) for r in taken] == [
@@ -458,7 +482,7 @@ def test_a_body_that_takes_paid_content_gives_it_at_its_next_contact(tmp_path):
         (r["tick"], r["node"], r["detector"], r["amount"], r["content"], r["momentum"])
         for r in clicks(records, "bond")
         if r["measured"] is None
-    ] == [(5, [5, 3, 3], "lifetime", 2, 2, [128, 0, 0])]
+    ] == [(6, [5, 3, 3], "lifetime", 2, 2, [128, 0, 0])]
     bond = simulation.books(recount=True)["families"]["bond"]
     assert (bond["measured"]["measured"], bond["measured"]["spent"], bond["measured"]["current"]) == (
         2,

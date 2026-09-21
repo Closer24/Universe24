@@ -13,11 +13,16 @@ engine"), written down first:
     which one unit declared on +x at (0, 0, 0) of an open 14 x 1 x 1 bar
     stands m Links out;
 (b) the step rule: a free probe of content 1 pushed once by (64, 0, 0) (one
-    unit's label) steps by the tool's rule at the ticks 2, 4, 6, 8, 10 on x
-    at width 1 and at 4, 8 at width 3; pushed by (64, 64, 0) at the ticks
-    2, 4, 6, 8, 10 on x alone (x before y, at most one Link per interval);
-    on the GameBoard a free measured event of content 1 with that declared
-    momentum makes the same `step` records (tick, axis), width by width;
+    unit's label) steps by the tool's rule, since the directional drive of
+    2026-09-21 (BEAM_LAW note 49; `engine.step_line`: the rate 64 x 64
+    against the wall 64 S x 64 + 64 x 110), at the ticks 3, 6, 9 on x at
+    width 1 and at 5, 10 at width 3; pushed by (64, 64, 0) it walks the
+    line of (1, 1, 0) (rate 16384, wall 28160) at the ticks 2, 4, 6, 7, 9
+    on x, y, x, y, x (until then, per axis: 2, 4, 6, 8, 10 on x at width
+    1, 4, 8 at width 3, and 2, 4, 6, 8, 10 on x alone for (64, 64, 0), x
+    before y); on the GameBoard a free measured event of content 1 with
+    that declared momentum makes the same `step` records (tick, axis),
+    width by width;
 (c) the release: `RELEASE_PER_HEADING` = by_clock(0, 2^24, 128) = 131072
     and q = 6 x 131072 = 786432; a source of 2^24 on the six headings at
     `release` [1, 128] has released 786432 units after its first
@@ -89,12 +94,13 @@ def test_the_front_is_the_flight_tables_first_arrival_as_the_engine_walks_it():
 
 def engine_steps(momentum: list[int], width: int) -> list[tuple[int, int]]:
     """The (tick, axis) of the `step` records of a free measured event of
-    content 1 at (2, 1, 0) of an open 20 x 3 x 1 GameBoard with the declared
-    momentum, over ten intervals at the world's `width`."""
+    content 1 at (2, 1, 0) of an open 20 x 6 x 1 GameBoard (tall enough for
+    the diagonal walk's two y Links) with the declared momentum, over ten
+    intervals at the world's `width`."""
     records: list[dict[str, object]] = []
     probe = {"position": [2, 1, 0], "family": "m", "amount": 1, "momentum": momentum}
     simulation = NatureBeamSimulation(
-        parse_nature_beam_world(bar([20, 3, 1], [probe], width=width)), records.append
+        parse_nature_beam_world(bar([20, 6, 1], [probe], width=width)), records.append
     )
     for _ in range(10):
         simulation.step()
@@ -104,10 +110,16 @@ def engine_steps(momentum: list[int], width: int) -> list[tuple[int, int]]:
 
 def test_the_step_rule_is_the_engines_step_off_the_clock():
     """(b)."""
-    x_only = [(t, 0) for t in (2, 4, 6, 8, 10)]
+    x_only = [(t, 0) for t in (3, 6, 9)]
     assert TOOL.steps_by_rule({1: (0, (UNIT, 0, 0))}, 1, 1, 10) == x_only
-    assert TOOL.steps_by_rule({1: (0, (UNIT, 0, 0))}, 1, 1, 10, 3) == [(4, 0), (8, 0)]
-    assert TOOL.steps_by_rule({1: (0, (UNIT, UNIT, 0))}, 1, 1, 10, 1) == x_only
+    assert TOOL.steps_by_rule({1: (0, (UNIT, 0, 0))}, 1, 1, 10, 3) == [(5, 0), (10, 0)]
+    assert TOOL.steps_by_rule({1: (0, (UNIT, UNIT, 0))}, 1, 1, 10, 1) == [
+        (2, 0),
+        (4, 1),
+        (6, 0),
+        (7, 1),
+        (9, 0),
+    ]
     for momentum, width in (([UNIT, 0, 0], 1), ([UNIT, 0, 0], 3), ([UNIT, UNIT, 0], 1)):
         reads = {1: (0, (momentum[0], momentum[1], momentum[2]))}
         assert engine_steps(momentum, width) == TOOL.steps_by_rule(reads, 1, 1, 10, width), (

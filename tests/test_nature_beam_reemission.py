@@ -31,12 +31,16 @@ below is in label units.
     escaped lines the faces' sums; the same bar with {"x": "periodic"}: no
     click, the ray at x = 0; a measured event of `m` (content 16, momentum
     (1024, 0, 0), one unit of net flow in label units) at x = 2 steps off
-    at interval 2: one `click` on `face:+x` with `measured` 1, amount 16,
-    phase 1 (K 16: the body escapes in the interval of its second
+    at interval 3 (the directional drive of 2026-09-21, BEAM_LAW note 49:
+    the rate 65536 against the wall 178176, the first Link at the third
+    self-creation): one `click` on `face:+x` with `measured` 1, amount 16,
+    phase 2 (K 16: the body escapes in the interval of its third
     self-creation, before that interval's clock turn, since the step
     precedes the law under the crossing rule of 2026-09-21, BEAM_LAW note
-    48; phase 2 until then, the step after the turn), momentum (1024, 0,
-    0), `held` [16, 0], `home` [0, 0], the measured line's escaped 16;
+    48; under the per-axis drive, until 2026-09-21, at interval 2 with the
+    phase 1, and phase 2 before the crossing rule, the step after the
+    turn), momentum (1024, 0, 0), `held` [16, 0], `home` [0, 0], the
+    measured line's escaped 16;
 (c) home: the own number's arrivals are taken and created again at the next
     self-creation on the declared directions with the arriving phase and
     content: a lamp's ray (content 1, phase 7) returning to its lamp on a
@@ -211,20 +215,21 @@ def test_an_escape_through_an_open_face_is_a_click_on_the_face_detector():
         parse_nature_beam_world(bar([3, 1, 1], [mover], clock=16)), records.append
     )
     simulation.step()
+    simulation.step()
     assert records == [] and simulation.measured[1].position == (2, 0, 0)
     simulation.step()
     assert simulation.measured == {} and simulation.at == {}
     assert records == [
         {
             "event": "click",
-            "tick": 2,
+            "tick": 3,
             "node": [2, 0, 0],
             "measured": 1,
             "detector": "face:+x",
             "family": "m",
             "number": 1,
             "amount": 16,
-            "phase": 1,
+            "phase": 2,
             "momentum": [1024, 0, 0],
             "content": 16,
             "held": [16, 0],

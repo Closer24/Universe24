@@ -72,10 +72,11 @@ kept, their pins the law of events').
 | `test_nature_beam_detector.py` | The detector's record: two rays in phase and in antiphase (the antiphase pair passing since 2026-09-20); the threshold gating a receiver and a re-emitter over the set (under `wave` on the pointer's square in units of one ray since 2026-09-20, (i)); a release reading no threshold; the record exact and never refused (the pointer in the register up to its bound, the square in Python integers); the detector a set of Nodes with one record (the record, the threshold and the window over the set); the phase returned to the set's events after a click; the `beam` reading (the pairing by opposite phase, the count) ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
 | `test_nature_beam_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_nature_beam_clock.py` | The clock under the Beam Law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-beam-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
-| `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder (since the step drive of 2026-09-20 the same integers, the remainder now the drive on the body's record); the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
+| `test_push_width.py` | The width of the push: the world key `width` S, the Q S M of the drive's wall (since the directional drive of 2026-09-21 the rate \|p\| x 64 against the wall Q S M x 64 + \|p\| x 110 on a heading, one unit of net flow giving 64 / (64 S + 110); until then one Link per (Q S M + p) / p self-creations); the step counted on the body's record under a suspension; the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1); re-pinned on 2026-09-21 under the directional drive (BEAM_LAW note 49), the old integers kept as history |
 | `test_fraction_free.py` | The fraction-free counts (2026-09-20, BEAM_LAW note 41): every count of a body an accumulator on its record, `by_drive`'s count; the identity at a constant rate on every count over 10^4 intervals, the accumulators carried in `state.json` and a resumed run identical, the bound below the denominator at every tick, a column whose Lambda_c^2 leaves the register refused at load ([below](#the-fraction-free-counts)) | new (2026-09-20, the mathematician's FORM.md, the physics-rule reviewer's REVIEW_COUNTS.md, records 147 and 148) |
-| `test_step_drive.py` | The step drive (2026-09-20, BEAM_LAW note 17 as amended): the count of Links as the whole part of the distance the momentum has driven, one bounded integer per axis on the body's record: the identity at a constant momentum with `by_clock(n - 1, \|p\|, D)` over 4000 self-creations and twelve momenta; the identity on two axes (the coincident step lost as before); the integrated distance under a halving momentum (38 within 1, 37 to 39, where the rule as it was made 1); never two Links in one interval under a random momentum over 10 000 intervals with the drive in [0, 2 D - 1); the record (`drive`, `axis_steps`, the `step` line) and a declared `drive` refused; the turn by momentum unchanged; the signed drive under a reversal (no Link until the drive cancels and reaches -D) and the bound pair under a suspension holding for 3000 intervals ([below](#the-step-drive)) | new (2026-09-20, series G2's finding, record 107; the owner's decision, record 108); the drive signed the same day (record 126) |
-| `test_crossing.py` | The crossing rule (2026-09-21, BEAM_LAW note 48; the model owner's record 158 of 2026-09-20, the physicist's design docs/designs/crossing/DESIGN.md): the experimenter's streams read as counts, 45 in 32 and 58 in 48 toward, 19 in 32 and 38 in 48 away with the windows of each step, 48 in 48 at rest, no row twice (the `measure` counts equal), the probe pair -2880 = 64 x 45 and the key `doppler` refused; the streams beyond the axis on a plane of lines, 32, 24 and 36 in 32; one row met once (a `read` line at tick 12, 3, 1 in three worlds); the sums over a period 183, 311, 74, 202; the fast steps reported (18 and 6 at the momentum 96, 20 and 10 at 128, 15 and 0 at 64) ([below](#the-crossing-rule)) | new (2026-09-21; the pins of (c) from the rule transcribed on the lines' geometry, docs/designs/crossing/crossing_2d.py, before the run) |
+| `test_step_drive.py` | The step drive (2026-09-20, BEAM_LAW note 17 as amended; since 2026-09-21 the one drive of the directional drive, note 49): the count of Links as the whole part of the distance the momentum has driven, one bounded integer on the body's record: the identity at a constant momentum with `by_clock(n - 1, rate, wall)` over 4000 self-creations and twelve momenta; the walk on two axes (the line of (16, 5, 0), 11 Links in 24; the former coincidence on the line of (1, 1, 0)); the integrated distance under a halving momentum (33 within 1, 32 to 34; 38 until 2026-09-21, where the rule as it was made 1); never two Links in one interval under a random momentum over 10 000 intervals with the drive below twice the largest wall; the record (`drive`, `line`, `direction`, `axis_steps`, the `step` line) and a declared `drive` refused; the turn by momentum unchanged; the reversal negating the drive on the line (no Link until the distance driven is cancelled: the twenty-sixth self-creation, the twenty-fifth until 2026-09-21) and the bound pair under a suspension holding for 3000 intervals ([below](#the-step-drive)) | new (2026-09-20, series G2's finding, record 107; the owner's decision, record 108); the drive signed the same day (record 126); re-pinned on 2026-09-21 under the directional drive, the old integers kept as history |
+| `test_crossing.py` | The crossing rule (2026-09-21, BEAM_LAW note 48; the model owner's record 158 of 2026-09-20, the physicist's design docs/designs/crossing/DESIGN.md): the experimenter's streams read as counts, 45 in 32 and 58 in 48 toward, 19 in 32 and 38 in 48 away with the windows of each step, 48 in 48 at rest, no row twice (the `measure` counts equal), the probe pair -2880 = 64 x 45 and the key `doppler` refused; the streams beyond the axis on a plane of lines, 32, 24 and 36 in 32; one row met once (a `read` line at tick 12, 3, 1 in three worlds); the sums over a period 183, 311, 74, 202; the fast steps reported (16 and 3 at the momentum 1024, 17 and 4 at 4096, 15 and 0 at 256, 11 and 0 at 64 under the directional drive; 18 and 6 at 96, 20 and 10 at 128, 15 and 0 at 64 until 2026-09-21) ([below](#the-crossing-rule)) | new (2026-09-21; the pins of (c) from the rule transcribed on the lines' geometry, docs/designs/crossing/crossing_2d.py, before the run); the reader's momentum re-derived under the directional drive the same day, every count kept (BEAM_LAW note 49) |
+| `test_directional_drive.py` | The directional drive (2026-09-21, BEAM_LAW note 49; form B of docs/designs/light_speed/FORM.md section 3; the model owner's records 191 and 301): a body walks the digital line of its momentum's direction with one drive at the rate \|p\|_1 S_1 Q against the wall Q S M S_1 Q + \|p\|_1 T_D, the rows' pace the cap: the map's four displacements (220, 0, 0), (135, 135, 0), (100, 100, 100), (190, 63, 0) in 600 intervals at \|p\|_1 = Q S M, exactly; the cap (268 Links in 550 for the heading's 320 at the outrunning body's momentum, 31 in 55 and 319 in 550 at 2^40, 54 in 55 on the cube diagonal); Newton's limit within one Link over 4000 intervals; a body of no content making the row's count and Node over a period, each Link at the row's tick or one later; the reversal negating the drive (the -x Link at the twenty-sixth self-creation); p = 0 never stepping; the crossing marks on a diagonal walk; the direction read from the momentum and the line's deficits against the flight's own line; the bound ([below](#the-directional-drive)) | new (2026-09-21; the pins derived from floor(n rate / wall) and the flight's line before the first run; (d)'s tick-by-tick pin not met, its cause stated) |
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
@@ -98,8 +99,8 @@ kept, their pins the law of events').
 | `test_integer_arithmetic.py` | The shared bounded integer primitives; since 2026-09-20 the fraction-free primitive `by_drive` (the whole part by default, the step's cap `at_most`) ([below](#shared-integer-arithmetic)) |
 | `test_retention.py` | Generated-output ownership, lifetime and cleanup |
 | `test_check_scope.py` | The affected-check's selection |
-| `test_coupling_readings.py`, `test_orbit_readings.py`, `test_heisenberg_readings.py`, `test_hubble_readings.py` | The tools read the engine (the architecture review of 2026-09-20; the experimenter skill): each reading of `tools/coupling_readings.py`, `tools/orbit_readings.py`, `tools/heisenberg_readings.py` and `tools/hubble_readings.py` equals the engine's own function on a minimal GameBoard (the front off `manhattan_steps`, the step rule and the release off `by_clock`, the push off `unit_label`, the fan's labels off `flight_table`, the detector records off `DetectorSet`, the declared charge per unit of content; the Hubble tool's c = 32 / 55 and m(age) off `flight_table`, its `record` lines and click ages off the run of a bar of 61 x 1 x 1, its z within the digital step's grain of 1 + v / c); the expected integers are in each module's docstring |
-| `test_hubble_stars_readings.py` | The series G2 tool (`tools/hubble_stars_readings.py`) reads the engine (the experimenter's rule): the shipped worlds of `examples/events/hubble_stars/` equal their generator's, `expectations.json` declares its format, its c is derived from the flight table (Q / T_D) and compared, and its `derivations` map names every entry; on a bar of 61 x 1 x 1 run through the runner (a star of a paid family holding a mass of 2^22 and shining one unit per self-creation toward a detector of one Node, the speed 1 / 2 Link per self-creation) the tool's `record` lines, click ages, steps (30 in 60 intervals), homes (its outward rows taken home, 64 units each) and final momentum are the engine's, z within the digital step's grain of 1 + v / c, the reading's formula within 2 % and the luminosity within 5 %; the fits read the exact coasting form as q = 0 with H (t_0 + T_0) = 1 to 1e-6 and the exact Einstein-de Sitter form as q = +0.5 to 1e-3; the expected integers are in the module's docstring | new (2026-09-20, series G2); the registered fits against the register's own brackets, no literal range (2026-09-21) |
+| `test_coupling_readings.py`, `test_orbit_readings.py`, `test_heisenberg_readings.py`, `test_hubble_readings.py` | The tools read the engine (the architecture review of 2026-09-20; the experimenter skill): each reading of `tools/coupling_readings.py`, `tools/orbit_readings.py`, `tools/heisenberg_readings.py` and `tools/hubble_readings.py` equals the engine's own function on a minimal GameBoard (the front off `manhattan_steps`, the step rule off `engine.step_line` since the directional drive of 2026-09-21 and the release off `by_clock`, the push off `unit_label`, the fan's labels off `flight_table`, the detector records off `DetectorSet`, the declared charge per unit of content; the Hubble tool's c = 32 / 55 and m(age) off `flight_table`, its `record` lines and click ages off the run of a bar of 61 x 1 x 1, its z within the digital step's grain of 1 + v / c); the expected integers are in each module's docstring |
+| `test_hubble_stars_readings.py` | The series G2 tool (`tools/hubble_stars_readings.py`) reads the engine (the experimenter's rule): the shipped worlds of `examples/events/hubble_stars/` equal their generator's, `expectations.json` declares its format, its c is derived from the flight table (Q / T_D) and compared, and its `derivations` map names every entry; on a bar of 61 x 1 x 1 run through the runner (a star of a paid family holding a mass of 2^22 and shining one unit per self-creation toward a detector of one Node, the speed 64 / 174 Links per self-creation off the engine's `drive_rate_and_wall` since the directional drive of 2026-09-21, 1 / 2 until then) the tool's `record` lines, click ages, steps (22 in 60 intervals; 30 until 2026-09-21), homes (its outward rows taken home, 64 units each) and final momentum are the engine's, the declared speed in units of c 110 / 174 (the acoustic z undefined under the record form); the fits read the exact coasting form as q = 0 with H (t_0 + T_0) = 1 to 1e-6 and the exact Einstein-de Sitter form as q = +0.5 to 1e-3; the expected integers are in the module's docstring | new (2026-09-20, series G2); the registered fits against the register's own brackets, no literal range (2026-09-21) |
 | `test_c_measured.py` | Series Q, c measured behind a detector (`examples/events/c_measured/`): the escape tick of every direction of a fan derived from the closed form of the flight (DERIVATIONS_BEAM.md section 11.1) with the engine's lines and compared with the register written before the run and with the run's clicks on the open faces (the tick, the Node, the face), the pace over the fan against c = 1 / sqrt 3, and the readings tool `tools/c_measured_readings.py` on the runner's record ([below](#c-measured-behind-a-detector)) | new (2026-09-21, the model owner's "go for it", record 236; the template `test_amplitude_cone.py`) |
 | `test_bohr_readings.py` | The series H tool reads the engine (the experimenter's rule, 2026-09-20): the flight time from the centre's plane to a face off `FlightTable.manhattan_steps` (5 Links at the age 8, 6 at 10, 1 at 1), the pointer per turn and the coherence ratio off `nature_beam.coherent_pointer` with the circle's tables ((16384, 0) and (-8192, 0) for two units at phase 0 and one at 32, C = 0.2; 1.8 with the third at 0; the slope of [1, 4, 9] is 2), and `read_run` on a run written by the runner (a proton of `p` at (5, 5, 1) of an 11 x 11 x 3 GameBoard on the four in-plane headings, an electron of `e` of span [1, 1, 3] at (8, 5, 1) with the momentum [0, 320, 0], `pass` for `p`, `action` 65536, 20 intervals: the radius 3, j = 0.05859375, the flights 8, the clicks per face equal to the record's, no read, the steps' phases 5, 5, 5, 6 at the ticks 5, 9, 13, 17, the first -x click at tick 16); the expected integers are in the module's docstring |
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the two integer audits (`core/` integers only; `events/` integer numpy and nothing that leaves the integers, `run.py` outside it), LOCALITY-1 documented without an exception, and the six-read test ([below](#locality-and-bounded-local-work)): a Node reads nothing beyond one Link, a change reaches a Node no sooner than the flight allows |
@@ -1666,48 +1667,55 @@ from `test_event_clock`, `test_release_costs_by_phase_rate` and
 implementation note 15; the model owner's D1, 2026-09-19). One rule in
 isolation: an open bar of 12 x 1 x 1, K 1024, N 64, `release` [0, 1] (no
 push arrives), a free measured event of content M with the momentum p on
-+x; the step rule `by_clock(age, |p|, Q x S x M + |p|)` with S the
-world's `width` and Q = 64 the label's scale (since 2026-09-19, the label
-along the unit vector, [BEAM_LAW note 23](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
-the declared momenta below are the first pins times 64 and every position
-is unchanged, `by_clock(age, Q n, Q k) = by_clock(age, n, k)`). The
-expected integers, written down before the first run:
++x; the world's `width` S is the Q S M of the drive's wall, and since the
+directional drive of 2026-09-21 ([BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+the section "The directional drive" below) the body steps on the heading
+at the rate |p| x 64 against the wall Q S M x 64 + |p| x 110 (T_D = 110),
+one Link per self-creation at most, the count floor(n rate / wall) after
+n self-creations; until then one Link per (Q x S x M + p) / p
+self-creations, `by_clock(age, |p|, Q x S x M + |p|)` (the label along the
+unit vector, Q = 64, since 2026-09-19, [BEAM_LAW note 23](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).
+The expected integers, re-pinned on 2026-09-21 from the formula before the
+run, the old integers kept as history:
 
-- (a) S = 1 reads exactly as the rule was: content 16 with momentum 1024
-  (was 16) from x = 4 steps at the ages 2, 4, 6 (x after intervals 1 to 6:
-  4, 5, 5, 6, 6, 7; `steps` 0, 1, 1, 2, 2, 3), with `width` 1 declared and
-  with the key absent alike; with momentum 64 (was 1) none after 16
-  intervals and one after 17.
-- (b) S = 8 with p = Q M: content 16 with momentum 1024 steps once per 9
-  self-creations, at the ages 9, 18, 27 (x 4 through interval 8, 5 from 9,
-  6 from 18, 7 at 27; `steps` 0, 1, 2, 3); content 3 with momentum 192
-  (was 3) steps at the same ages (the speed a unit of flow gives,
-  1 / (S + 1), is the same for every content).
-- (c) off the clock, no remainder: the probe of (b) at x = 3 with
-  `suspension` [1, 4] and a crowd of 4 rays of another number (a fixed
-  anchor of content 1 at x = 11) at rest on x = 3 to 7 owes one interval
-  after every self-creation (age after interval n is ceil(n / 2), waited
-  floor(n / 2)); since the crossing rule (2026-09-21, [BEAM_LAW note
-  48](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+- (a) S = 1: content 16 with momentum 1024 (16 x 64: one unit of net flow;
+  rate 65536, wall 178176, the speed 0.3678 = 64 / 174) from x = 4 steps
+  at the ages 3, 6, 9 (x after intervals 1 to 6: 4, 4, 5, 5, 5, 6; `steps`
+  0, 0, 1, 1, 1, 2), with `width` 1 declared and with the key absent
+  alike; with momentum 64 (rate 4096, wall 72576) none after 17 intervals
+  and one after 18. Until 2026-09-21 (the rule as it was): the ages 2, 4,
+  6, x 4, 5, 5, 6, 6, 7, `steps` 0, 1, 1, 2, 2, 3; at 64 none after 16,
+  one after 17.
+- (b) S = 8 with p = Q M: content 16 with momentum 1024 (rate 65536, wall
+  636928, the speed 0.10289 = 64 / 622) steps at the ages 10, 20, 30 (x 4
+  through interval 9, 5 from 10, 6 from 20, 7 from 30; `steps` 0, 1, 2
+  over 27 intervals, 3 after 30); content 3 with momentum 192 (rate
+  12288, wall 119424, the same speed) steps at the same ages (the speed a
+  unit of flow gives, 64 / (64 S + 110), is the same for every content).
+  Until 2026-09-21: once per 9 self-creations, at 9, 18, 27, x 4, 5, 6, 7,
+  `steps` 0, 1, 2, 3 after 27 (the speed 1 / (S + 1)).
+- (c) the step counted on the body's record, the remainder kept: the
+  probe of (b) at x = 3 with `suspension` [1, 4] and a crowd of 4 rays of
+  another number (a fixed anchor of content 1 at x = 11) at rest on x = 3
+  to 7 owes one interval after every self-creation (age after interval n
+  is ceil(n / 2), waited floor(n / 2)); since the crossing rule
+  (2026-09-21, [BEAM_LAW note 48](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
   the step before the law, the drive advanced at the self-creation itself)
-  the step of the ages 9, 18, 27 lands on the self-creation, the intervals
-  17, 35, 53: x after intervals 17, 18, 35, 36, 53, 54, 60 is 4, 4, 5, 5,
-  6, 6, 6; age 30, waited 30, `steps` 3 after 60; after every interval
-  `steps` = age x 1024 // 9216 (= age x 16 // 144) (with the step after
-  the law and the count owed, until the crossing rule, the drive advanced
-  in the interval that paid the count: the steps at 18, 36, 54, x 3, 4,
-  4, 5, 5, 6, 6, and `steps` (age - 1) x 16 // 144 after a self-creation);
-  the momentum
-  (1024, 0, 0) untouched; the books
-  balanced at every interval. (The first run corrected the interval of the
-  step from 17 to 18: the order of the frame, not the rule.)
+  the step of the ages 10, 20, 30 lands on the self-creation, the
+  intervals 19, 39, 59: x after intervals 17, 18, 35, 36, 53, 54, 60 is
+  3, 3, 4, 4, 5, 5, 6 and after 19, 20, 39, 40, 59, 60 is 4, 4, 5, 5, 6,
+  6; age 30, waited 30, `steps` 3 after 60; after every interval `steps` =
+  age x 65536 // 636928; the momentum (1024, 0, 0) untouched; the books
+  balanced at every interval. Until 2026-09-21 the ages 9, 18, 27 at the
+  intervals 17, 35, 53 (x 4, 4, 5, 5, 6, 6, 6 after 17, 18, 35, 36, 53,
+  54, 60; `steps` = age x 16 // 144), and with the step after the law and
+  the count owed, until the crossing rule, the steps at 18, 36, 54 (`steps`
+  (age - 1) x 16 // 144 after a self-creation; the first run corrected the
+  interval of the step from 17 to 18: the order of the frame, not the
+  rule).
 - (d) a world without `width` parses to 1; `width` 8 parses to 8 and the
   runner's `run.json` carries `width` 8; 0, -1, `"8"` and 1.5 are refused
   with "width must be an integer from 1".
-
-Since the step drive (2026-09-20, below) the remainder of the division
-`age x |p| / D` is kept on the body's record as `drive`; every integer of
-(a) to (d) is unchanged, the identity the step drive's test (a) proves.
 
 ## The step drive
 
@@ -1715,106 +1723,192 @@ Since the step drive (2026-09-20, below) the remainder of the division
 as amended on 2026-09-20; the physicist's design RULES.md section 1 (docs/designs/hubble_stars/ on branch `claude/series-g2-stars`);
 the model owner on series G2's finding, "1 and 2 are very important for a
 solution and a new run"; record 107 the findings, record 108 the owner's
-decision).
-The count of Links a free measured event has made on an axis is the whole
-part of the SIGNED distance its momentum has driven: one bounded integer
-per axis on its record, `drive += p` at every self-creation in which it
-may step, on every axis, a step on the + side and `drive -= D` when
-`drive >= D`, a step on the - side and `drive += D` when `drive <= -D`,
-D = Q x S x M + |p| (the signed drive of record 126, 2026-09-20; the
-first form accumulated |p| and took the direction from the sign at the
-fire, a defect under a reversal); at most one Link per interval, x
-before y before z, as before: a
-later axis whose drive reaches its D in the interval of an earlier axis's
-step loses that Link (its D subtracted, nothing carried, the rule's count
-on the axis, `axis_steps`, raised as the count off the clock was). The
-expected integers, written down before the first run:
+decision; since 2026-09-21 the one drive of the directional drive,
+[BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).
+The count of Links a free measured event has made is the whole part of
+the distance its momentum has driven: one bounded integer on its record,
+`drive += |p|_1 S_1 Q` at every self-creation in which it may step, a
+step (the line's next Link) and `drive -= W` when `drive >= W`, W = Q S M
+S_1 Q + |p|_1 T_D; at most one Link per interval; a reversal of the line
+negates the drive (record 126 in form B). Until 2026-09-21 one accumulator
+per axis at the rate p_a (signed) over D_a = Q S M + |p_a|, x before y
+before z, a later axis's coincident fire lost. The expected integers,
+re-pinned on 2026-09-21 from the formula before the run, the old integers
+kept as history:
 
 - (a) the identity at a constant momentum: over 4000 self-creations, for
-  p in {1, 7, 64, 1000, 1024, 4095, 9215} at D = 9216 (content 16, width
-  8) and p in {1, 5, 63, 64, 127} at content 1 and width 1, the drive
-  fires exactly where `by_clock(n - 1, |p|, D)` is 1 and the drive after
-  the n-th self-creation is n x |p| mod D; the negative momentum the same
-  with the sign -1 and the drive -(n x |p| mod D); the count primitive
+  p in {1, 7, 64, 1000, 1024, 4095, 9215} at content 16 and width 8 and p
+  in {1, 5, 63, 64, 127} at content 1 and width 1, on a heading (rate |p| x
+  64, wall Q S M x 64 + |p| x 110), `engine.step_line` fires exactly where
+  `by_clock(n - 1, rate, wall)` is 1 and the drive after the n-th
+  self-creation is n x rate mod wall; the momentum -p the same fires with
+  the sign -1 on the line (-1, 0, 0) and the same drive (until 2026-09-21
+  the fires where `by_clock(n - 1, |p|, D)` is 1 with the drive n x |p|
+  mod D, and -(n x |p| mod D) at -p); the count primitive
   `core.integer.by_drive` (record 108) the same identity over 400
   self-creations, at the rate 7 against 3 a count of 1 at every
   self-creation with the drive 30 x 4 after 30 and at -7 a count of -1
   with the drive -120 (the primitive's count is -1, 0 or 1; below the
   denominator it is `by_clock`'s with the sign), a denominator of 0
-  refused;
-  `test_push_width` (a) to (c) unchanged. On two axes
-  (the physics-rule review's counterexample): content 16, width 1,
-  momentum (1024, 320, 0) from (4, 4, 0), D = (2048, 1344): x steps at
-  the even self-creations, y at 5, 9, 13, 17, 21 (y's drive after n
-  self-creations 320 n mod 1344: 1600 >= 1344 at n = 5, then 1536, 1472,
-  1408, 1344 at 9, 13, 17, 21), the body at (16, 9, 0) after 24 with
-  `axis_steps` [12, 5, 0] and `steps` 17, the drives (0, 960, 0); and the
-  coincidence: content 1, width 1, momentum (64, 64, 0),
-  D = 128 on both, both rules fire at the even self-creations, x steps
-  and y loses every one: after 10 intervals x has moved 5 and y 0,
-  `axis_steps` [5, 5, 0], `steps` 5, the drives (0, 0, 0), the same
-  positions as `by_clock` on each axis with the coincidence lost.
+  refused. On two axes (the physics-rule review's counterexample):
+  content 16, width 1, momentum (1024, 320, 0) from (4, 4, 0) walks the
+  line of (16, 5, 0) (S_1 21, T_D 1858; rate 1806336, wall 3873408): the
+  Links at the self-creations 3, 5, 7, 9, 11, 13, 16, 18, 20, 22, 24, the
+  third, seventh and eleventh on y (the ticks 7, 16, 24), the body at
+  (12, 7, 0) after 24 with `axis_steps` [8, 3, 0], `steps` 11 and the
+  drive 744576 (until 2026-09-21, D = (2048, 1344): x at the even
+  self-creations, y at 5, 9, 13, 17, 21, the body at (16, 9, 0) with
+  `axis_steps` [12, 5, 0], `steps` 17 and the drives (0, 960, 0)); and
+  content 1, width 1, momentum (64, 64, 0), the former coincidence, now
+  the line of (1, 1, 0) (rate 16384, wall 28160): the Links at 2, 4, 6, 7,
+  9 on x, y, x, y, x, after 10 intervals (7, 6, 0), `axis_steps` [3, 2,
+  0], `steps` 5, the drive 23040, the line's deficits [-1, 1, 0] (until
+  2026-09-21 both rules fired at the even self-creations, x stepped and y
+  lost every one: (9, 4, 0), `axis_steps` [5, 5, 0], `steps` 5, the
+  drives (0, 0, 0)).
 - (b) the integrated distance: content 16, width 8, the momentum halved
   from outside after every 50th interval from 4096 down to 32; after 400
   intervals the body has made the Links of its integrated speed, the sum
-  over the intervals of |p| / (Q x S x M + |p|) = 38.0, within 1 (37 to
-  39, by the drives at the two ends), where the rule as it was made
-  floor(400 x 32 / 8224) = 1; no stall longer than 257 intervals
-  (ceil(8224 / 32)), the smallest momentum's own period; the drive within
-  [0, D) after every interval (one sign: the signed drive never negative).
+  over the intervals of rate / wall = 32.98, within 1 (32 to 34; until
+  2026-09-21 the sum of |p| / (Q S M + |p|) = 38.0, 37 to 39), where the
+  rule as it was made floor(400 x 32 / 8224) = 1; the drive never
+  negative; no stall longer than ceil(wall / rate) = 258 intervals at the
+  smallest momentum (257 until 2026-09-21).
 - (c) never two Links in one interval: content 3, width 4, a 41^3
-  periodic cube with `age_bound` 64, the momentum on every axis drawn at
-  every interval from `random.Random(20260920)` in [-(D - 1), D - 1] with
-  Q x 4 x 3 = 768; over 10 000 intervals every step moves the body by
-  exactly one Link on one axis, `steps` counts them (more than 1000),
-  |drive| on every axis below 2 x 768 - 1 after every interval (the
-  largest D of the draw: a residual earned at a larger momentum fires at
-  the following self-creations, one Link each, never two in one).
-- (d) the record: content 16, width 8, momentum 1024, 27 intervals through
-  the runner: the steps at the ticks 9, 18, 27 with `drive` [0, 0, 0] on
-  each `step` line (27 x 1024 = 3 x 9216), `run.json`'s measured state
-  and `state.json` carrying `drive` [0, 0, 0] and `axis_steps` [3, 0, 0],
-  `steps` 3; a measured event declaring `drive` refused with "unknown
-  keys: drive".
-- (e) the turn by momentum at a constant momentum: content 16, momentum
-  320, `action` 7, phase 5: the turns at the first five Links 2925, 2926,
-  2926, 2925, 2926 (mod 64) as `test_nature_beam_body` (d) pins, and
-  `axis_steps` [5, 0, 0] after 24 intervals; and the `action` row's whole
-  part at a Link not crossed, pinned before any change (BEAM_LAW note 41
-  (viii), the owner's item 9; the physics-rule review of no-tables,
-  2026-09-21, item 2): the coincidence body of (a) (content 1, the
-  momentum (64, 64, 0), D = 128 on both axes, x stepping at the even
-  self-creations and y losing every one of its Links) under `action` 7 at
-  N = 64, phase 0, holds after 10 intervals `acc.action` [5, 5, 0] (the
-  residue of five counts of |p| N = 4096 = 7 x 585 + 1 on each axis, in
-  `state.json` too), the drives (0, 0, 0), `axis_steps` [5, 5, 0], `steps`
-  5, the position (9, 4, 0) and the phase 45 = 5 x 585 mod 64 from the x
-  row alone: the y row's five whole parts, 2925, were never delivered
-  (the phase would read 26 with them).
-- (f) the signed drive under a reversal (record 126): content 16, width 8,
-  D = 9216, the momentum +1024 for eight self-creations (the drive 8192,
-  no Link) and -1024 from the ninth: the first form stepped -x at the
-  ninth (8192 + 1024 = 9216); the signed drive reads 8192 - 1024 k and
-  steps -x first at the twenty-fifth (8192 - 17 x 1024 = -9216), the body
-  at x = 4 until then, its drive 0 after the step and -5120 after 30
-  intervals, `steps` 1, `axis_steps` [1, 0, 0]; the primitive alone at
-  8192 with the rate -1024 counts 0; the same body under +1024 for eight
-  and 0 after keeps its drive 8192 and its Node.
-- (g) the bound pair under a suspension holds (the Boss's W1 of record
-  126): the register's `deuteron_1` under `amplitude` with `suspension`
-  [1, 134217728], a paid family `light` and a lamp of it (content
-  8388608, rate [1, 1], turns [8]) on +y beside the proton at (10, 11,
-  10) and a control lamp at (10, 10, 16), each read by a `sum` set of one
-  `counter` Node four Links up +y: over 3000 intervals no `step` record
-  (the nucleons at (10, 10, 10) and (11, 10, 10) throughout), every
-  attempted step a `contact` (their count the two bodies' `steps`), the
-  books balanced; under the first form the same world holds for 2092
-  intervals and the neutron steps to (12, 10, 10) at tick 2093 with a
-  positive momentum (the physics-rule reviewer's measurement on main:
-  the |p| accumulated toward the proton discharged away from it). The
-  hold is the rule's consequence given the pair's symmetry (mirror
-  pushes, a hand-over zeroing both, the neutron's signed drive never
-  above 0), not a theorem for every pair.
+  periodic cube with `age_bound` 64, a momentum drawn at every interval
+  from a seeded generator in [-(Q S M - 1), Q S M - 1] on every axis over
+  10 000 intervals: every step one Link on one axis, |drive| below twice
+  the largest wall of the draw (2 x 37 711 872, the cube diagonal at
+  |p|_1 = 3 x 767) after every interval, the line's deficits summing to
+  0, more than 1000 Links (until 2026-09-21 |drive| below 2 D_max - 1 per
+  axis).
+- (d) the record: content 16, width 8, momentum 1024 over 27 intervals
+  through the runner: `run.json` and `state.json` carry `drive` 495616 (27
+  x 65536 - 2 x 636928), `line` [0, 0, 0], `direction` [1, 0, 0] and
+  `axis_steps` [2, 0, 0] with `steps` 2; the `step` lines at the ticks 10
+  and 20 carry `drive` 18432 and 36864 and `direction` [1, 0, 0] (until
+  2026-09-21 three steps at 9, 18, 27, the drive [0, 0, 0] and
+  `axis_steps` [3, 0, 0]); a world that declares `drive` on a measured
+  event is refused, "unknown keys: drive".
+- (e) the turn by momentum unchanged at a constant momentum: content 16,
+  momentum 320, `action` 7, phase 5: four Links in 24 intervals at the
+  ticks 5, 10, 15, 20 turning by 2925, 2926, 2926, 2925 (mod 64),
+  `axis_steps` [4, 0, 0] (until 2026-09-21 five Links, the fifth turn
+  2926, `axis_steps` [5, 0, 0]); the body of (a) with (64, 64, 0) under
+  `action` 7 at N = 64 after 10 intervals: (7, 6, 0), `axis_steps` [3, 2,
+  0], `steps` 5, the drive 23040, `acc.action` [3, 2, 0] (the residues of
+  three and two counts of 4096 = 7 x 585 + 1) and the phase 45 = 5 x 585
+  mod 64, every whole part delivered (until 2026-09-21 the coincident y
+  fires were lost: `acc.action` [5, 5, 0], the phase 45 from the x row
+  alone, 26 had the y row's parts been delivered).
+- (f) the reversal (record 126 in form B): content 16, width 8 (rate
+  65536, wall 636928), +1024 for eight self-creations (the drive 524288,
+  no Link) and -1024 from the ninth: the line reversed and the drive
+  negated to -524288, then gaining 65536 per self-creation, the -x Link
+  at the twenty-sixth self-creation (the drive 18432 after it), x = 4 for
+  25 intervals then 3, the drive 280576 after 30, `steps` 1, `axis_steps`
+  [1, 0, 0]; the primitive on the negated drive fires nothing at the
+  ninth; the same body under +1024 for eight and 0 for twenty keeps its
+  drive 524288 and its Node (until 2026-09-21: the -x Link at the
+  twenty-fifth, 8192 - 17 x 1024 = -9216, the drive 0 after it and -5120
+  after 30; the drive kept 8192 when the momentum stops; the unsigned
+  drive as it first was stepped -x at the ninth).
+- (g) the bound pair under a suspension holds: the register's
+  `deuteron_1` under the record form with `suspension` [1, 134217728], a
+  paid family `light`, a lamp of that family of content 8388608 at rate
+  [1, 1] on +y beside the proton and a control lamp at (10, 10, 16), each
+  read by a `sum` set of one Node four Links up +y: over 3000 intervals
+  neither nucleon makes a step (every attempted step a hand-over, no
+  `step` line, the `contact` lines as many as the two bodies' fires), the
+  books balanced at every 250th tick and at the end (under the unsigned
+  drive the same world held for 2092 intervals and the neutron stepped to
+  (12, 10, 10) at tick 2093 with a positive momentum, the physics-rule
+  reviewer's measurement on main).
+
+## The directional drive
+
+`tests/test_directional_drive.py` (docs/BEAM_LAW.md section 3 step 5 and
+note 49; form B of docs/designs/light_speed/FORM.md section 3 with its map
+`light_speed_map.py`; the model owner's record 191, the vector program,
+and record 301, the build). A body of content M and momentum vector **p**
+walks the digital line of D, the primitive direction nearest to **p**
+within the world's `direction_bound`, with one accumulator on its record,
+`by_drive(drive, |p|_1 S_1 Q, Q S M S_1 Q + |p|_1 T_D, at_most = 1)`, the
+Link at a fire the line's next Manhattan step by the line's three deficit
+accumulators (`engine.line_step`, the flight's Bresenham choice); the pace
+|p|_1 / (Q S M) at a small momentum (Newton's limit, isotropic in the
+Euclidean speed |**p**|_2 / (Q S M)) bending to the rows' S_1 Q / T_D,
+never above it. One rule in isolation on a periodic cube of 32^3 or an
+open bar of 64, no push (`release` [0, 1]). The expected integers, derived
+from floor(n rate / wall) and the flight's own line before the first run:
+
+- (a) the map's four directions (`light_speed_map.out` B): content 2^14 at
+  width 1 (Q S M = 2^20) with |p|_1 = 2^20 on (1, 0, 0), (1, 1, 0), (1, 1,
+  1) and (3, 1, 0) (the momenta (2^20, 0, 0), (2^19, 2^19, 0), (349525,
+  349525, 349526), which reads (1, 1, 1) through the direction's precision
+  of 2^15, and (3 x 2^18, 2^18, 0)) over 600 intervals: the displacements
+  (220, 0, 0), (135, 135, 0), (100, 100, 100), (190, 63, 0), the Links 220,
+  270, 300, 253, exactly the map's; the Euclidean speeds 0.3667, 0.3182,
+  0.2887, 0.3336 Links per interval; every Link one Port; the books
+  balanced. Met.
+- (b) the cap: content 1, width 1 (Q S M = 64): the outrunning body of the
+  derivation's 2.2 at (192, 0, 0) (rate 12288, wall 25216, v = 0.4873;
+  0.75 until the rule) makes 268 Links in 550 intervals below the
+  heading's 320 = 550 x 32 / 55 (412 until the rule); at 2^40 on a heading
+  31 Links in 55 and 319 in 550, never 32 per 55; on the cube diagonal at
+  (2^40, 2^40, 2^40) (T_D = 192 = S_1 Q) 54 in 55 and 549 in 550; after
+  every interval n the Links made are floor(n rate / wall) and at most n
+  S_1 Q / T_D. Met.
+- (c) Newton's limit: content 2^14, width 1, 4000 intervals: (4096, 0, 0)
+  makes (15, 0, 0) against Newton's 15.62 Links; (2048, 2048, 0) makes (8,
+  7, 0), 10.63 against 11.05; (1365, 1365, 1366) makes (5, 5, 5), 8.66
+  against 9.02 (its direction (1, 1, 1) by the nearest-primitive scan, the
+  momentum's own primitive beyond the bound); each within one Link. Met.
+- (d) a body of no content walks as a row: `engine.step_line` at content 0
+  on (1, 0, 0), (1, 1, 0) and (5, -3, 2) over one period (55, 39, 683
+  intervals) makes the row's count of Links (32, 32, 640) and stands at
+  the row's Node at the period's end ((32, 0, 0), (16, 16, 0), (320,
+  -192, 128)). The pin as given, tick by tick with `Flight.walk_step`, is
+  NOT met: each of the body's Links falls at the row's self-creation or
+  the one after (the lags {0, 1} on all three), because the row's
+  accumulator starts at the half of its wall (note 41 (viii), note 13)
+  and a body's at 0 (note 41); the map's section D compared its own walk
+  with itself. The count, the Node and the lag are the pins kept; the
+  tick-by-tick pin stands unmet with its cause (note 49).
+- (e) the reversal: content 16, width 8 (rate 65536, wall 636928), +1024
+  for eight self-creations (the drive 524288) and -1024 from the ninth:
+  the line reversed and the drive negated, the -x Link at the
+  twenty-sixth self-creation (the drive 18432 after it, 280576 after 30;
+  x = 4 for 25 intervals then 3; `steps` 1, `axis_steps` [1, 0, 0]); the
+  line kept would have fired at the tenth (record 126's defect); +1024
+  for eight and 0 for twenty-two keeps the drive 524288, the line (1, 0,
+  0) and the Node; the runner's files carry `drive` (one integer), `line`
+  and `direction` (27 intervals: 495616, [0, 0, 0], [1, 0, 0], the steps
+  at 10 and 20 with `drive` 18432 and 36864); a declared `drive` or `line`
+  is refused as an unknown key. Met.
+- (f) p = 0 never steps: `step_line(7, [1, -1, 0], (1, 0, 0), [0, 0, 0],
+  16, 1)` returns (None, 7, (1, 0, 0)) with the deficits untouched; a body
+  with momentum (0, 0, 0) stays at its Node over 50 intervals with `drive`
+  0 and `direction` (0, 0, 0). Met.
+- (g) the crossing marks on a diagonal walk: content 1, width 1, (64, 64,
+  0) on a plane (rate 16384, wall 28160): the Links at 2, 4, 6, 7, 9 on x,
+  y, x, y, x, `step_port` 0, 2, 0, 2, 0, `last_step_port` -1, -1, -1, 0, -1
+  (`fast_steps` 1), the body at (7, 6, 0) from (4, 4, 0) with `axis_steps`
+  [3, 2, 0], `steps` 5, the deficits [-1, 1, 0] and the drive 23040 (the
+  first draft of the mark at tick 7 wrote 2, a transcription slip
+  corrected against the line's order). The direction read from the
+  momentum (`engine.body_direction`): (1024, 320, 0) reads (16, 5, 0),
+  (-5, 0, 0) reads (-1, 0, 0), (2^40, 0, 0) reads (1, 0, 0), (1365, 1365,
+  1366) reads (1, 1, 1), (0, 0, 0) reads (0, 0, 0); k D reads D at every
+  scale k up to 2^20 for 300 primitives within the bound; -**p** reads -D;
+  every read of 300 momenta with components up to 2^30 is primitive
+  within the bound and within 0.5 degrees. `engine.line_step` reproduces
+  the flight's own line (`nature_beam._bresenham`) over three periods on
+  (1, 0, 0), (1, 1, 0), (3, 1, 0), (5, -3, 2) and (44, 7, 0), the deficits
+  summing to 0 after every step and returning to 0 at the period's end.
+  `drive_rate_and_wall` at the momentum 2^62 - 1 on a heading is refused
+  ("the drive's wall"), and at (2^20, 0, 0) on content 2^14 returns (2^26,
+  2^26 + 110 x 2^20). Met.
 
 ## The fraction-free counts
 
@@ -1831,8 +1925,10 @@ primitive). The integers, written first:
   the count off the clock: a fixed source of content 3 at `release` [1, 10]
   on +X (`acc_release` = 3 x age mod 10, 3000 units released), a fixed body
   of content 3 at K = [3, 8] (`acc_turn` = 9 x age mod 8, `turned` 11250),
-  a free body of content 16 at momentum 1 and `width` 8 (D = 8193: one Link
-  at the self-creation 8193, the drive 1807 after 10^4), a fixed probe of
+  a free body of content 16 at momentum 1 and `width` 8 (since the
+  directional drive of 2026-09-21 the rate 64 against the wall 524398: one
+  Link at the self-creation 8194, the drive 115602 after 10^4; until then D
+  = 8193, one Link at 8193 and the drive 1807), a fixed probe of
   `light` measuring one unit per interval at `suspension` [1, 4]
   (`acc_owed` = age mod 4, the age 8000 and 2000 intervals waited), a lamp
   at rate [1, 3] (`acc_lamp` = age mod 3, 3333 births);
@@ -1989,8 +2085,12 @@ first run:
 - (a) the experimenter's streams: a lamp at x = 0 of a bar of 64 releasing
   one row of amount 1 per interval on +x, the stream pre-filled (the row
   of age tau at m(tau) = (2 tau Q + 110) // 220), a reader of content M =
-  21 x 2^16 at x = 40 stepping one Link per k intervals exactly (|p| = Q S
-  M / 3 at k = 4, Q S M / 7 at k = 8; the sign minus toward the lamp),
+  14673 x 2^11 at x = 40 stepping one Link per k intervals exactly (under
+  the directional drive of 2026-09-21, [BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  |p| = 32 Q S M / 73 at k = 4 and 32 Q S M / 201 at k = 8, k x rate = wall
+  on the heading; until then M = 21 x 2^16 with |p| = Q S M / 3 and Q S M
+  / 7: the same Links at the same ticks, every count below unchanged; the
+  sign minus toward the lamp),
   `read` on the beam, the charges cancelling the push: toward at k = 4 the
   reader reads 45 rows in 32 intervals, the windows of k intervals ending
   at each step [5, 6, 6, 5, 6, 6, 6, 5]; toward at k = 8 58 in 48, [9, 10,
@@ -2063,11 +2163,16 @@ first run:
   cannot tell a leapfrog of lag two from a first arrival): the engine
   counts those Links, `NatureBeamSimulation.fast_steps`, and the runner's
   record carries `fast_steps`, no refusal. A lone body of content 1 at
-  width 1 (Q S M = 64), no rows, 30 intervals: at the momentum 96 (D =
-  160, the drive 96 per self-creation) the Links fall at the
-  self-creations 2, 4, 5, 7, 9, 10, 12, 14, ..., 18 Links and 6 right
-  after another; at 128 (D = 192) 20 Links and 10 fast; at 64 (D = 128,
-  one Link per two intervals exactly) 15 and 0; at 32 (D = 96) 10 and 0.
+  width 1 (Q S M = 64), no rows, 30 intervals, under the directional drive
+  (the speed |p| x 64 / (4096 + |p| x 110), above 1 / 2 from |p| = 228):
+  at the momentum 1024 (v = 0.5614) the Links fall at the self-creations
+  2, 4, 6, 8, 9, 11, 13, 15, ..., 16 Links and 3 right after another; at
+  4096 (v = 0.5766) at 2, 4, 6, 7, 9, 11, 13, 14, ..., 17 Links and 4 fast;
+  at 256 (v = 0.5079) 15 and 0; at 64 (v = 0.3678) 11 and 0. Until
+  2026-09-21, under the per-axis rule: at 96 (D = 160) the Links at 2, 4,
+  5, 7, 9, 10, 12, 14, ..., 18 Links and 6 fast; at 128 (D = 192) 20 and
+  10; at 64 (D = 128, one Link per two intervals exactly) 15 and 0; at 32
+  (D = 96) 10 and 0.
 
 ## The age
 

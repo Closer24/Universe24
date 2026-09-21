@@ -19,19 +19,25 @@ set and the turn by momentum"), written down first:
     self-creation), a fixed counter of `light` at (9, 1, 1) measuring `m`
     in the `wave` detector `d`, a head-on pair of number 2 on +-y at x = 6
     that parks at (6, 1, 1) at the first interval and leaves on +-z; 30
-    intervals: the body's x per interval 3 (4 times), 4 (5), 5 (5), 6 (5),
-    7 (5), 8 (6); the body at (8, 1, 1), age 30, phase 5, 6 steps, held
-    [16, 0]; the counter held [0, 4], 99 units clicked, momentum (-25344,
-    0, 0), the record 37348285440 at phase 5; 152 clicks, 20 record lines,
-    5 steps, 5 homes (the body stepping onto its own +x ray); the pair's
-    clicks on face:-z (phase 40) and face:+z (phase 3) at tick 6; 25 rows
-    of 102 units in the store; the transit line 2 + 740 = 102 + 521 + 119
-    (since the crossing rule of 2026-09-21 the step precedes the law, so
-    the body reads its own +x ray home in the interval of the step, one
-    interval earlier, and one unit fewer leaves through the faces:
-    73, 111, 112, 113, 112 through -x, +y, -y, +z, -z; 101 units, 522 escaped and 74,
-    111, 111, 113, 113 until then); the same integers with `span` [1, 1,
-    1] declared, every record equal;
+    intervals, under the directional drive of 2026-09-21 (BEAM_LAW note
+    49: the rate 16384 against the wall 65536 + 28160 = 93696, one Link
+    per 5.72 self-creations): the body's x per interval 3 (5 times), 4
+    (6), 5 (6), 6 (5), 7 (6), 8 (2); the body at (8, 1, 1), age 30, phase
+    5, 5 steps, momentum (256, 0, 0) (its sixth fire, onto the counter,
+    falls after the run), held [16, 0]; the counter held [0, 4], 101 units
+    clicked, momentum (-25856, 0, 0), the record 39636288512 at phase 5,
+    no contact; 152 clicks, 20 record lines, 5 steps, 5 homes (the body
+    stepping onto its own +x ray); the pair's clicks on face:-z (phase 40)
+    and face:+z (phase 3) at tick 6; 25 rows of 104 units in the store;
+    the transit line 2 + 740 = 104 + 517 + 121, 75, 111, 108, 110, 113
+    through -x, +y, -y, +z, -z (under the per-axis drive, until
+    2026-09-21: x 3 (4 times), 4 (5), 5 (5), 6 (5), 7 (5), 8 (6), 6 steps,
+    the sixth refused at tick 30 as a contact handing 256 to the counter,
+    99 units clicked, the counter's momentum (-25344 + 256, 0, 0) and
+    record 37348285440, 25 rows of 102 units, 2 + 740 = 102 + 521 + 119,
+    73, 111, 112, 113, 112 through the faces since the crossing rule, and
+    101 units, 522 escaped, 74, 111, 111, 113, 113 before it); the same
+    integers with `span` [1, 1, 1] declared, every record equal;
 (b) a set of three Nodes: a fixed body of `light` (content 4) at (4, 0, 1)
     of an open 9 x 1 x 3 bar with span [1, 1, 3] (the Nodes (4, 0, 0),
     (4, 0, 1), (4, 0, 2)) measuring `m` in the `wave` detector `d` of
@@ -45,15 +51,19 @@ set and the turn by momentum"), written down first:
     threshold on the pointer's square), one ray alone passes (`threshold`
     3), no click, no push; the step: a free
     body of `m` (content 16, momentum [1024, 0, 0]) of span [1, 1, 3] at
-    (2, 0, 1) of an open 6 x 1 x 3 bar steps at the ages 2, 4, 6 with all
-    three Nodes (x per interval 2, 3, 3, 4, 4, 5, 5); with a fixed anchor
-    at (5, 0, 0), a Node of the moved set at the age 6, the step is
-    refused and the body stays at (4, 0, 1) with 3 steps counted, its
-    momentum handed to the anchor (the contact of 2026-09-20); without
-    it the step of the age 8 leaves the GameBoard and the whole body clicks
-    on face:+x (one click, node (5, 0, 1), amount 16, the measured line's
-    escaped 16, no measured event left); with x periodic it wraps to
-    (0, 0, 1) with the Nodes (0, 0, 0), (0, 0, 1), (0, 0, 2); on a bar
+    (2, 0, 1) of an open 6 x 1 x 3 bar steps at the ages 3, 6, 9 with all
+    three Nodes (the directional drive of 2026-09-21, the rate 65536
+    against the wall 178176; x per interval 2, 2, 3, 3, 3, 4, 4, 4, 4);
+    with a fixed anchor at (5, 0, 0), a Node of the moved set at the age
+    9, the step is refused and the body stays at (4, 0, 1) with 3 steps
+    counted, its momentum handed to the anchor (the contact of
+    2026-09-20); without it the step of the age 11 leaves the GameBoard
+    and the whole body clicks on face:+x (one click, node (5, 0, 1),
+    amount 16, the measured line's escaped 16, no measured event left);
+    with x periodic it wraps to (0, 0, 1) at the age 11 with the Nodes (0,
+    0, 0), (0, 0, 1), (0, 0, 2) (until 2026-09-21 the ages 2, 4, 6, x 2, 3,
+    3, 4, 4, 5, 5, the refusal at the age 6, the escape and the wrap at
+    the age 8); on a bar
     with z periodic of extent 3 the body at (2, 0, 0) is on (2, 0, 2),
     (2, 0, 0), (2, 0, 1) in that order;
 (c) the books balance with a set that releases: a free body of `m`
@@ -87,24 +97,30 @@ set and the turn by momentum"), written down first:
     [0, 21], the recoil (0, -192, 0), the transit momentum (0, 192, 0);
 (d) the turn: a free body of `m` (content 16, phase 5, K 2^20: the
     clock's turn 0) of momentum [1024, 0, 0] at x = 20 of an open
-    40 x 1 x 1 bar steps at the ages 2, 4, 6, ... (k = age // 2): with
-    `action` 65536 (|p| N / h = 1 per Link) its phase after 12 intervals
-    is 5 + 6 = 11 and the rays born at tick 2 and at tick 3 carry 6
-    (`release` [1, 16] on -X, away from the body's path; since the
-    crossing rule of 2026-09-21 the step and its turn precede the law, so
-    the release of the interval of a step carries the phase turned at the
-    Link: 5 at tick 2 until then);
-    with `action` 4096 (16 per Link) 5 + 96 mod 64 =
-    37; with momentum [320, 0, 0] and `action` 7 (a remainder each step:
-    the steps at the intervals 5, 9, 13, 17, 21, the floors of k x 20480
-    / 7 = 2925, 5851, 8777, 11702, 14628) the phase after the intervals
-    5, 9, 13, 17, 21, 24 is 50, 32, 14, 59, 41, 41; composed over axes,
-    momentum [1024, 320, 0] with `action` 65536 on a 40 x 40 x 1 GameBoard
-    (the x steps at the even ages, the y steps at 5, 9, 13, 17, 21: no
-    step lost): the y turns floor(0.3125 k) - floor(0.3125 (k - 1)) = 0,
-    0, 0, 1, 0, so the phase after 17 intervals is 5 + 8 + 1 = 14 and
-    after 24 it is 5 + 12 + 1 = 18; the same worlds without `action` keep
-    the phase 5 throughout;
+    40 x 1 x 1 bar steps at the ages 3, 6, 9, 11 (the directional drive of
+    2026-09-21, the rate 65536 against the wall 178176; the ages 2, 4, 6,
+    ..., k = age // 2, until then): with `action` 65536 (|p| N / h = 1 per
+    Link) its phase after 12 intervals is 5 + 4 = 9 (11 until then) and
+    the rays born at tick 2 carry 5, at tick 3 and at tick 4 6 (`release`
+    [1, 16] on -X, away from the body's path; since the crossing rule of
+    2026-09-21 the step and its turn precede the law, so the release of
+    the interval of a step, tick 3, carries the phase turned at the Link;
+    6 at tick 2 and 3 under the per-axis drive, 5 at tick 2 before the
+    crossing rule); with `action` 4096 (16 per Link) 5 + 64 mod 64 = 5 (37
+    until then, six Links); with momentum [320, 0, 0] and `action` 7 (a
+    remainder each step: the steps at the intervals 5, 10, 15, 20, the
+    floors of k x 20480 / 7 = 2925, 5851, 8777, 11702; 5, 9, 13, 17, 21
+    and 14628 until then) the phase after the intervals 4, 5, 9, 13, 17,
+    21, 24 is 5, 50, 50, 32, 14, 59, 59 (5, 50, 32, 14, 59, 41, 41 until
+    then); composed over axes, momentum [1024, 320, 0] with `action`
+    65536 on a 40 x 40 x 1 GameBoard, the body walks the line of (16, 5,
+    0) (the Links at 3, 5, 7, 9, 11, 13, 16, 18, 20, 22, 24, the third,
+    seventh and eleventh on y): the y turns floor(0.3125 k) - floor(0.3125
+    (k - 1)) = 0, 0, 0 over three y Links, so the phase after 17 intervals
+    is 5 + 5 = 10 and after 24 it is 5 + 8 = 13, the body at (12, 7, 0)
+    (until then the x steps at the even ages and the y steps at 5, 9, 13,
+    17, 21 with the y turns 0, 0, 0, 1, 0: 14 and 18, the body at (16, 9,
+    0)); the same worlds without `action` keep the phase 5 throughout;
 (e) the GameBoard is unchanged by the two keys: 324 fixed rays of `light` on
     the periodic 8 x 8 x 4 GameBoard of `test_nature_beam_age` (e) (number 1, an
     anchor of `light` at (7, 7, 3) their home) with a free body of `m`
@@ -259,30 +275,28 @@ def run_one_node(
 def test_a_set_of_one_node_is_todays_measured_event():
     """(a)."""
     simulation, records, xs = run_one_node(BODY_OF_ONE)
-    assert xs == [3] * 4 + [4] * 5 + [5] * 5 + [6] * 5 + [7] * 5 + [8] * 6
+    assert xs == [3] * 5 + [4] * 6 + [5] * 6 + [6] * 5 + [7] * 6 + [8] * 2
     body, counter = simulation.measured[1], simulation.measured[2]
     assert body.position == (8, 1, 1) and body.nodes == ((8, 1, 1),) and body.span == (1, 1, 1)
-    # The step of tick 30 onto the counter is refused and is a contact: the
-    # body's 256 handed to the counter (until 2026-09-20 the body kept it
-    # and the counter read -25344).
+    # The body's sixth fire, onto the counter, falls after the run (under
+    # the per-axis drive it fell at tick 30, refused as a contact handing
+    # 256 to the counter; until 2026-09-20 the body kept it).
     assert (body.age, body.phase, body.momentum, body.steps, body.held) == (
         30,
         5,
-        [0, 0, 0],
-        6,
+        [256, 0, 0],
+        5,
         [16, 0],
     )
-    assert counter.held == [0, 4] and counter.clicks == [99, 0] and counter.contacts == [1, 0]
-    assert counter.momentum == [-25344 + 256, 0, 0]
-    assert counter.detector_set.record == [37348285440, 0] and counter.detector_set.phase == [5, None]
+    assert counter.held == [0, 4] and counter.clicks == [101, 0] and counter.contacts == [0, 0]
+    assert counter.momentum == [-101 * 256, 0, 0] == [-25856, 0, 0]
+    assert counter.detector_set.record == [39636288512, 0] and counter.detector_set.phase == [5, None]
     kinds = {
         kind: sum(1 for r in records if r["event"] == kind)
         for kind in ("click", "record", "step", "home", "contact")
     }
-    assert kinds == {"click": 152, "record": 20, "step": 5, "home": 5, "contact": 1}
-    assert [(r["tick"], r["component"], r["occupant"]) for r in records if r["event"] == "contact"] == [
-        (30, 256, 2)
-    ]
+    assert kinds == {"click": 152, "record": 20, "step": 5, "home": 5, "contact": 0}
+    assert [r for r in records if r["event"] == "contact"] == []
     by_detector = {}
     for r in records:
         if "detector" in r:
@@ -305,23 +319,23 @@ def test_a_set_of_one_node_is_todays_measured_event():
     ]
     assert pair == [(6, "face:-z", 40), (6, "face:+z", 3)]
     store = simulation.stores[M]
-    assert store.size == 25 and int(store.amount.sum()) == 102
+    assert store.size == 25 and int(store.amount.sum()) == 104
     transit = simulation.books()["families"]["m"]["transit"]
     assert transit == {
         "initial": 2,
         "released": 740,
-        "current": 102,
-        "escaped": 521,
-        "absorbed": 119,
+        "current": 104,
+        "escaped": 517,
+        "absorbed": 121,
         "balanced": True,
     }
     assert {port: units[M] for port, units in simulation.ledger.face_amount.items()} == {
         0: 0,
-        1: 73,
+        1: 75,
         2: 111,
-        3: 112,
-        4: 113,
-        5: 112,
+        3: 108,
+        4: 110,
+        5: 113,
     }
     # The span declared as one Node: every record equal, every row equal.
     declared, declared_records, declared_xs = run_one_node({**BODY_OF_ONE, "span": [1, 1, 1]})
@@ -403,26 +417,26 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
     simulation = NatureBeamSimulation(parse_nature_beam_world(mover_world([anchor])))
     body = simulation.measured[1]
     xs = []
-    for tick in range(1, 7):
+    for tick in range(1, 10):
         simulation.step()
         assert simulation.books()["balanced"], tick
         xs.append(body.position[0])
         assert body.nodes == tuple((body.position[0], 0, z) for z in range(3)), tick
         assert all(simulation.occupant(node) == 1 for node in body.nodes), tick
-    assert xs == [2, 3, 3, 4, 4, 4] and body.steps == 3 and simulation.occupant((5, 0, 0)) == 2
+    assert xs == [2, 2, 3, 3, 3, 4, 4, 4, 4] and body.steps == 3 and simulation.occupant((5, 0, 0)) == 2
     assert len(simulation.at) == 4
     # The refused step is a contact: the body's x component handed to the anchor.
     assert body.momentum == [0, 0, 0] and simulation.measured[2].momentum == [1024, 0, 0]
     assert simulation.measured[2].contacts == [1, 0]
-    # Without the anchor the whole body clicks on the face at the age 8.
+    # Without the anchor the whole body clicks on the face at the age 11.
     records.clear()
     simulation = NatureBeamSimulation(parse_nature_beam_world(mover_world([])), records.append)
     body = simulation.measured[1]
     xs = []
-    for _ in range(7):
+    for _ in range(10):
         simulation.step()
         xs.append(body.position[0])
-    assert xs == [2, 3, 3, 4, 4, 5, 5] and [r["event"] for r in records] == ["step"] * 3
+    assert xs == [2, 2, 3, 3, 3, 4, 4, 4, 5, 5] and [r["event"] for r in records] == ["step"] * 3
     assert [r["phase"] for r in records] == [0, 0, 0]
     simulation.step()
     assert simulation.measured == {} and simulation.at == {}
@@ -436,7 +450,7 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
     simulation = NatureBeamSimulation(
         parse_nature_beam_world(mover_world([], boundary={"x": "periodic"}))
     )
-    for _ in range(8):
+    for _ in range(11):
         simulation.step()
     body = simulation.measured[1]
     assert body.position == (0, 0, 1) and body.nodes == ((0, 0, 0), (0, 0, 1), (0, 0, 2))
@@ -562,29 +576,34 @@ def test_a_body_turns_its_phase_by_its_momentum_at_every_link_it_steps():
     """(d)."""
     assert [by_clock(k, 320 * 64, 7) for k in range(5)] == [2925, 2926, 2926, 2925, 2926]
     assert [(k * 20480) // 7 for k in range(1, 6)] == [2925, 5851, 8777, 11702, 14628]
-    # One step of the circle per Link: k = age // 2.
+    # One step of the circle per Link: the Links at 3, 6, 9, 11 (the rate
+    # 65536 against the wall 178176).
+    links = [3, 6, 9, 11]
     turned, xs, simulation = phases(turning_world([1024, 0, 0], 65536, release=[1, 16]), 12)
-    assert xs == [20 + (tick // 2) for tick in range(1, 13)] and xs[-1] == 26
-    assert turned == [5 + (tick // 2) for tick in range(1, 13)] and turned[-1] == 11
+    assert xs == [20 + sum(1 for k in links if k <= tick) for tick in range(1, 13)] and xs[-1] == 24
+    assert turned == [5 + sum(1 for k in links if k <= tick) for tick in range(1, 13)]
+    assert turned[-1] == 9
     store = simulation.stores[M]
-    born_at = {2: 6, 3: 6}
+    born_at = {2: 5, 3: 6, 4: 6}
     for tick, phase in born_at.items():
         age = 12 - tick
         assert set(store.phase[store.age == age].tolist()) == {phase}, tick
     # Sixteen steps per Link.
     turned, _, _ = phases(turning_world([1024, 0, 0], 4096), 12)
-    assert turned[-1] == (5 + 6 * 16) % 64 == 37
-    # A remainder each step: the steps at 5, 9, 13, 17, 21.
+    assert turned[-1] == (5 + 4 * 16) % 64 == 5
+    # A remainder each step: the steps at 5, 10, 15, 20.
     turned, xs, _ = phases(turning_world([320, 0, 0], 7), 24)
-    assert [xs[t - 1] for t in (4, 5, 9, 13, 17, 21, 24)] == [20, 21, 22, 23, 24, 25, 25]
-    assert [turned[t - 1] for t in (4, 5, 9, 13, 17, 21, 24)] == [5, 50, 32, 14, 59, 41, 41]
-    assert turned[-1] == (5 + 14628) % 64
-    # The axes compose: x steps at the even ages, y at 5, 9, 13, 17, 21.
+    assert [xs[t - 1] for t in (4, 5, 9, 13, 17, 21, 24)] == [20, 21, 21, 22, 23, 24, 24]
+    assert [turned[t - 1] for t in (4, 5, 9, 13, 17, 21, 24)] == [5, 50, 50, 32, 14, 59, 59]
+    assert turned[-1] == (5 + 11702) % 64
+    # The axes compose on the line of (16, 5, 0): eight x Links and three
+    # y Links in 24 intervals, the y turns 0, 0, 0.
     document = turning_world([1024, 320, 0], 65536, shape=[40, 40, 1])
     document["measured"][0]["position"] = [4, 4, 0]  # type: ignore[index]
     turned, _, simulation = phases(document, 24)
-    assert simulation.measured[1].position == (16, 9, 0)
-    assert turned[16] == 14 and turned[23] == 18
+    assert simulation.measured[1].position == (12, 7, 0)
+    assert simulation.measured[1].axis_steps == [8, 3, 0]
+    assert turned[16] == 10 and turned[23] == 13
     # Without `action` the phase is today's: the clock's turn alone, 0.
     for momentum in ([1024, 0, 0], [320, 0, 0]):
         turned, _, _ = phases(turning_world(momentum, None), 24)
@@ -798,10 +817,11 @@ def test_one_set_object_shared_by_a_body_and_a_detector_and_one_table_over_it():
     simulation.step()
     assert body.presence == 0 and body.counted == 0
     simulation.step()
+    simulation.step()
     assert body.position == (3, 0, 1)
     assert body.detector_set.nodes == {(3, 0, 0): 1, (3, 0, 1): 1, (3, 0, 2): 1}
     assert set(simulation.at) == set(body.nodes) and body.nodes == ((3, 0, 0), (3, 0, 1), (3, 0, 2))
-    for _ in range(6):
+    for _ in range(8):
         simulation.step()
     assert simulation.measured == {} and simulation.at == {} and body.detector_set.nodes == {}
     # The one table with the two masks: the reading with the amount's

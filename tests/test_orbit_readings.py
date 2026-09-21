@@ -32,24 +32,23 @@ engine"), written down first:
     `click` of the probe on a face, or the Node beside the source reached;
     here neither: the least radius 3 at (7, 4, 0)), the run completed and
     balanced. The probe's `read` lines, derived under the crossing rule
-    (2026-09-21, BEAM_LAW note 48; the probe steps +y at the ticks 2, 4,
-    6, 8, 10, 12, at (7, 4, 0) from tick 6 and (7, 6, 0) from tick 10; the
-    source's +x row born at tick k at x = 4 + m(t - k), m = 0, 1, 1, 2, 2,
-    3, 3, ..., its (1, 1, 0) row on the line (5, 4), (5, 5), (6, 5), (6, 6),
-    (7, 6), (7, 7) at the count m' = 0, 1, 2, 2, 3, 4, 5, 6, 7): at tick 6
-    the +x row of tick 1 arrives at (7, 4, 0) as the probe enters it (C3,
-    both arrived), at tick 7 the +x row of tick 2 arrives (C3), at tick 8
-    the +x row of tick 3 arrives at the probe's origin as it steps to (7,
-    5, 0) (not met, no crossing), at tick 10 the (1, 1, 0) row of tick 4
-    arrives at (7, 6, 0) from (6, 6, 0) as the probe enters it (C3, the
-    row's step +x against the probe's +y), at tick 11 the row of tick 5
-    arrives (C3), and at tick 12 that row moves (7, 6, 0) -> (7, 7, 0)
-    with the probe's step (C3', met once at 11): 4 lines, at the ticks 6,
-    7, 10, 11, of amount 4 each, every push (0, 0, 0) and the units 0
-    (until the crossing rule the probe at (7,
-    4, 0) on +y read the diagonal row that reached its origin as it
-    stepped away, the leapfrog read the rule removes: from there it meets
-    no row of the eight directions in 12 intervals).
+    (2026-09-21, BEAM_LAW note 48) and the directional drive of the same
+    day (note 49: the rate 4096 against the wall 4096 + 7040 = 11136, the
+    probe steps +y at the ticks 3, 6, 9, 11, at (7, 4, 0) from tick 9 and
+    (7, 5, 0) from tick 11; the source's +x row born at tick k at x = 4 +
+    m(t - k), m = 0, 1, 1, 2, 2, 3, 3, 4, ...): at tick 9 the +x row of
+    tick 4 arrives at (7, 4, 0) as the probe enters it (C3, both arrived),
+    at tick 10 the +x row of tick 5 arrives (C3), at tick 11 the +x row of
+    tick 6 arrives at the probe's origin as it steps to (7, 5, 0) (not
+    met, no crossing), and no row of the eight directions passes (7, 5, 0)
+    in 12 intervals (the (1, 1, 0) line runs (5, 4), (5, 5), (6, 5), (6, 6),
+    (7, 6), (7, 7)): 2 lines, at the ticks 9 and 10, of amount 4 each,
+    every push (0, 0, 0) and the units 0 (under the per-axis drive, until
+    2026-09-21, the probe stepped at 2, 4, 6, 8, 10, 12 and read 4 lines,
+    at 6, 7, 10, 11, the last two the (1, 1, 0) rows of ticks 4 and 5 met
+    at (7, 6, 0); until the crossing rule the probe at (7, 4, 0) on +y
+    read the diagonal row that reached its origin as it stepped away, the
+    leapfrog read the rule removes).
 """
 
 from __future__ import annotations
@@ -163,12 +162,17 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         events = [json.loads(line) for line in stream if line.strip()]
     reads = [e for e in events if e["event"] == "read" and e["measured"] == TOOL.PROBE]
-    assert reading.reads == len(reads) == 4
+    assert reading.reads == len(reads) == 2
     assert [(e["tick"], e["amount"], e["node"]) for e in reads] == [
-        (6, 4, [7, 4, 0]),
-        (7, 4, [7, 4, 0]),
-        (10, 4, [7, 6, 0]),
-        (11, 4, [7, 6, 0]),
+        (9, 4, [7, 4, 0]),
+        (10, 4, [7, 4, 0]),
+    ]
+    steps = [e for e in events if e["event"] == "step" and e["number"] == TOOL.PROBE]
+    assert [(e["tick"], e["to"]) for e in steps] == [
+        (3, [7, 2, 0]),
+        (6, [7, 3, 0]),
+        (9, [7, 4, 0]),
+        (11, [7, 5, 0]),
     ]
     assert reading.units == sum(abs(e["push"][0]) + abs(e["push"][1]) for e in reads) == 0
     assert all(e["push"] == [0, 0, 0] for e in reads)

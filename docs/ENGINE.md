@@ -218,37 +218,49 @@ family whose table entry reads `age` the age moment `sum amount x age`
 over the same set, `measured.count_component`, `Measured.counted`;
 [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 note 25) and books the interval. The step of a measured event
-by its momentum (`_move`, before the law: on an axis whose momentum component is p in
-label units, one Link per (Q x S x M + p) / p self-creations, M the
-content, S the world's `width`, 1 by default, and Q = 64 the label's
-scale; since 2026-09-20 the step drive, [BEAM_LAW note 17](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
-as amended: the body's record carries per axis `drive`, the signed
-distance the momentum has driven since the last step, `drive += p` at
-every self-creation in which it may step and a step on the + side when
-`drive >= Q x S x M + |p|` or on the - side when `drive <= -(Q x S x M +
-|p|)`, that much subtracted with the sign (record 126: signed, so a
-reversal first cancels what was driven the other way), so the count of
-Links is the whole part of the driven distance, bit-identical at a constant momentum to
-`by_clock(age, |p|, Q x S x M + |p|)` and never two Links in one
-interval, the count primitive `core.integer.by_drive` (record 108: the
-whole part of an accumulated rate on the reader's record; the clock's
-turn, the owed count, the release and the lamp keep `by_clock`, the same
-count where the rate is constant); the drive of every axis advances at every such self-creation,
-and a later axis whose drive reaches its D in the interval of an earlier
-axis's step loses that Link, its D subtracted, as the frame lost it
-before; the model owner's D1 of 2026-09-19 and the label along the unit
-vector of the same day,
-[BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam) step 5
-and notes 15 and 23; one unit of net flow, the label Q M, gives the speed
-1 / (S + 1); at most one Link per interval, x before y before z, at a
+by its momentum (`_move`, before the law; since 2026-09-21 the
+directional drive, [BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+form B of docs/designs/light_speed/FORM.md section 3: a body of content M
+and momentum vector **p** in label units walks the digital line of D, the
+primitive direction nearest to **p** within the world's `direction_bound`
+(`engine.body_direction`: the primitive of **p** itself when within the
+bound, else the nearest by the exact comparison of cross-multiplied
+squares over the candidates at every scale of the largest component),
+with one accumulator on its record, the `drive` row of its table of
+counts, gaining rate = |p|_1 S_1 Q against the wall Q S M S_1 Q + |p|_1
+T_D at every self-creation in which it may step
+(`world.drive_rate_and_wall`: |p|_1 the Manhattan norm of **p**, S the
+world's `width`, 1 by default, Q = 64 the label's scale, S_1 and T_D the
+direction's Manhattan length and resolution, the flight table's
+constants formed once per direction on the host), one Link at most; at a
+fire the Link is the line's next Manhattan step by the three deficit
+accumulators of the line, the `line` rows (`engine.line_step`, the
+flight's Bresenham choice), its sign the direction's on that axis; the
+body's pace is |p|_1 / (Q S M) Links per self-creation at a small
+momentum (Newton's limit, the Euclidean speed |**p**|_2 / (Q S M) on
+every direction) and bends to the rows' S_1 Q / T_D as the momentum
+grows, never above it (c the cap of every body; a body of no content
+walks as a row); one unit of net flow, the label Q M, gives the speed Q
+/ (Q S + T_D), 64 / (64 S + 110) on a heading; when the push changes the
+direction the drive and the deficits keep their residues on the new
+line, a reversal (D_old . D < 0) negating the drive (record 126 in form
+B: the distance driven toward the old heading is first cancelled), and a
+momentum of 0 never steps and leaves the drive as it is; the count
+primitive `core.integer.by_drive` (record 108: the whole part of an
+accumulated rate on the reader's record); until 2026-09-21 the rule was
+per axis, one Link per (Q x S x M + p) / p self-creations on an axis
+whose momentum component is p, the signed drive per axis of note 17 as
+amended, x before y before z with a later axis's coincident fire lost,
+whose cap was one Link per interval, 1.72 c; at a
 self-creation (an interval where nothing was owed at the frame), the
 drive advanced by the momentum after the previous interval's push (the
 step precedes the law: at a constant momentum the same Links at the same
 self-creations, under a push a fire can fall one interval later than it
-did before the crossing rule); the rule of one axis is
-`engine.step_axis`, the owed count `engine.count_owed`, each the one place
+did before the crossing rule); the rule of one self-creation is
+`engine.step_line`, the owed count `engine.count_owed`, each the one place
 its rule lives and what the readings tools read; `run.json`, `state.json`
-and the `step` line carry `drive` and the state `axis_steps`, and since
+and the `step` line carry `drive` and `direction`, the state `line` and
+`axis_steps`, and since
 the crossing rule the body's two marks `step_port` and `last_step_port`,
 the Ports of its own two last Links, -1 without one (a refused step, an
 escape, no fire), which the reading reads as the headings e and e' of
@@ -958,7 +970,7 @@ things themselves, one row each in the three worlds, are in
 | the reading of the moments, order 0 | scalar | `reading` on a `click` or `read` line when the entry reads `scalar` (the presence), `outside` (the rays that arrived) or `here` (the rays that did not step) | units of amount | detector |
 | the net flow **f** | vector, 3 components | `reading` on a `click` or `read` line when the entry reads `vector`: sum amount x **u**_d over the arrivals, on the unit vectors of the directions | Q = 64 per unit of amount along a heading | detector |
 | the traceless second moment **T** | tensor, 3 x 3 symmetric of trace zero | `reading` on a `click` or `read` line when the entry reads `tensor`: 3 sum amount x **u**_d **u**_d^T less its trace on the diagonal | Q^2 per unit of amount | detector |
-| the momentum **p** of a measured event | vector | `momentum` of its state (`measured` of `run.json` and `state.json`); `pushed` (the push taken, summed) and `drive` (the drive's count per axis) beside it | label units: Q = 64 per unit of amount along a heading | detector |
+| the momentum **p** of a measured event | vector | `momentum` of its state (`measured` of `run.json` and `state.json`); `pushed` (the push taken, summed), `drive` (the one accumulator of its line, note 49), `line` (the line's deficits) and `direction` (the line's D) beside it | label units: Q = 64 per unit of amount along a heading | detector |
 | the label **p** of a row | vector | `push` on a `click` or `read` line (the row group's label, what the reader took); `momentum` on a face `click`; `momentum` on a `gather` line (what the chosen rows gave); `recoil` on a `become` line; `momentum` per family on a face and the border | label units | detector |
 | the share of a record's row | vector | `share` on the `click` line of a record's row: the row's push on matter, label x amount // m | label units | detector |
 | a Node as a position | vector of Links (x, y, z) | `node` on every line; `position` of a measured event's state; `to` on a `step` line | Links | GameBoard |

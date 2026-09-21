@@ -16,8 +16,11 @@ fraction-free counts"), written down first:
     floor(3 x age / 10), 3000 after 10^4), the turn of a fixed body of
     content 3 at K = [3, 8] (`acc_turn` = 9 x age mod 8, `turned` floor(9
     x age / 8) = 11250 after 10^4), the drive of a free body of content 16
-    at momentum 1 and `width` 8 (D = 8193: one Link at the self-creation
-    8193, the drive 10^4 - 8193 = 1807 after), the owed count of a fixed
+    at momentum 1 and `width` 8 (since the directional drive of 2026-09-21,
+    BEAM_LAW note 49, the rate 64 against the wall 8192 x 64 + 110 =
+    524398: one Link at the self-creation 8194, the drive 64 x 10^4 -
+    524398 = 115602 after; until then D = 8193, one Link at 8193 and the
+    drive 1807 after), the owed count of a fixed
     probe measuring one unit per interval at `suspension` [1, 4]
     (`acc_owed` = age mod 4, the probe's age 8000 and 2000 intervals
     waited after 10^4; the probe a paid body of `light`, so it releases
@@ -125,7 +128,7 @@ from event_universe.core.game_board import MAX_VALUE
 from event_universe.core.integer import by_clock, by_drive
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.amplitude import cell_of, choose, rungs
-from event_universe.events.engine import count_owed, step_axis
+from event_universe.events.engine import count_owed, step_line
 from event_universe.events.measured import CountTable, counts_table
 from event_universe.events.nature_beam import NO_ARRIVAL, place_over_nodes, share_of
 from event_universe.events.run import execute_nature_beam_run
@@ -228,7 +231,9 @@ def test_every_count_of_a_body_at_a_constant_rate_is_the_count_off_the_clock():
     """(a), the engine: the release, the turn and the drive on one bar."""
     simulation = NatureBeamSimulation(parse_nature_beam_world(bar([SOURCE, TURNER, MOVER])))
     source, turner, mover = (simulation.measured[n] for n in (1, 2, 3))
-    reach = Q * 8 * 16 + 1
+    rate, wall = 64, Q * 8 * 16 * 64 + 110
+    reach = -(-wall // rate)
+    assert (wall, reach) == (524398, 8194)
     for tick in range(1, INTERVALS + 1):
         simulation.step()
         assert simulation.books()["balanced"], tick
@@ -238,11 +243,12 @@ def test_every_count_of_a_body_at_a_constant_rate_is_the_count_off_the_clock():
         # The turn at [3, 8] on the content 3: the rate 9 over 8.
         assert turner.age == tick and turner.acc_turn == (9 * tick) % 8, tick
         assert turner.turned == (9 * tick) // 8, tick
-        # The drive at the momentum 1: D = 8193, one Link at 8193.
-        assert mover.age == tick and mover.drive == [tick % reach, 0, 0], tick
+        # The drive at the momentum 1: the rate 64 over the wall 524398,
+        # one Link at 8194.
+        assert mover.age == tick and mover.drive == (tick * rate) % wall, tick
         assert mover.steps == tick // reach and mover.position == (1 + tick // reach, 0, 0), tick
     assert simulation.ledger.transit_released[M] == 3000 and turner.turned == 11250
-    assert mover.steps == 1 and mover.drive == [1807, 0, 0]
+    assert mover.steps == 1 and mover.drive == 115602
 
 
 def test_the_owed_count_and_the_lamps_rate_at_a_constant_rate_are_the_counts_off_the_clock():
@@ -328,7 +334,11 @@ def resumed(
         entry.momentum = [int(v) for v in line["momentum"]]
         entry.age, entry.owed, entry.waited = int(line["age"]), int(line["owed"]), int(line["waited"])
         entry.turned, entry.steps = int(line["phase_steps"]), int(line["steps"])
-        entry.drive = [int(v) for v in line["drive"]]
+        entry.drive = int(line["drive"])
+        entry.line = [int(v) for v in line["line"]]
+        direction = tuple(int(v) for v in line["direction"])
+        assert len(direction) == 3
+        entry.line_direction = direction
         entry.axis_steps = [int(v) for v in line["axis_steps"]]
         # The crossing rule's two marks (BEAM_LAW note 48), the body's own
         # two last Links, carried in the state as the drive is.
@@ -400,7 +410,10 @@ def test_the_accumulators_are_carried_in_the_state_and_a_resumed_run_is_the_unbr
         {"owed": 0, "release": [0, 0], "lamp": 0, "turn": 48 * 20 % 8, "push": push},
     ]
     assert entries[1]["age"] == 12 and entries[1]["waited"] == 8
-    assert entries[3]["drive"] == [20 * 1000 % (Q * 8 * 16 + 1000), 0, 0] and entries[3]["steps"] == 2
+    # The mover's drive: the rate 64000 against the wall 524288 + 110000
+    # (the directional drive of 2026-09-21; 20 x 1000 mod 9192 = 1616 with
+    # two steps under the per-axis drive).
+    assert entries[3]["drive"] == 20 * 64000 % 634288 == 11424 and entries[3]["steps"] == 2
     # Every count's phase at the age is its accumulator: the run resumed
     # with them is the unbroken one, tick for tick and record for record.
     continued = resumed(world, state, keep_accumulators=True)
@@ -441,9 +454,13 @@ def test_every_accumulator_stays_below_its_denominator():
             assert all(0 <= acc < 10 for acc in entry.acc_release), (tick, entry.number)
             assert 0 <= entry.acc_lamp < 3, (tick, entry.number)
             assert 0 <= entry.acc_turn < (8 if entry in simulation.measured.values() else 1 << 20), tick
-            for axis in range(3):
-                reach = Q * 8 * entry.content + abs(entry.momentum[axis])
-                assert abs(entry.drive[axis]) < reach, (tick, entry.number, axis)
+            # The drive below its wall plus one rate (the directional drive
+            # of 2026-09-21: on a heading Q S M x 64 + |p| x 110 and |p| x 64).
+            norm = sum(abs(v) for v in entry.momentum)
+            assert abs(entry.drive) < Q * 8 * entry.content * 64 + norm * 110 + norm * 64, (
+                tick,
+                entry.number,
+            )
     # The primitive: an unsigned accumulator in [0, d), a signed one in
     # (-d, d), with the step's cap and without, under random rates.
     draw = random.Random(41)
@@ -462,12 +479,14 @@ def test_every_accumulator_stays_below_its_denominator():
             count, owed = count_owed(owed, draw.randrange(1 << 10), (1, denominator))
             assert 0 <= owed < denominator
     # The step's drive: a momentum reversing at random keeps the drive
-    # within D on a body of content 16 at width 8.
-    drive = 0
+    # within the largest wall plus one rate on a body of content 16 at
+    # width 8 (the line reversed negates the drive; the wall at |p| = 1024
+    # is 636928, the rate 65536).
+    drive, deficits, line = 0, [0, 0, 0], (0, 0, 0)
     for _ in range(INTERVALS):
         momentum = draw.choice((-1024, -7, 7, 1024))
-        _, drive = step_axis(drive, momentum, 16, 8)
-        assert abs(drive) < Q * 8 * 16 + abs(momentum)
+        _, drive, line = step_line(drive, deficits, line, [momentum, 0, 0], 16, 8)
+        assert abs(drive) < 636928 + 65536
 
 
 def test_the_ladders_cell_is_the_comparison_of_products():

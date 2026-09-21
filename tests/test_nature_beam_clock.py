@@ -44,19 +44,25 @@ momentum; no merge. Re-pinned from `test_event_clock`,
     record with `content` 4 or 8, 10 rays in flight carrying 60, the books
     balanced; a lamp of turn 0 releases nothing;
 (d) the step: content 16 with momentum 1024 (16 x 64, one unit of net
-    flow in label units) on +x steps once per two self-creations (three
-    after six intervals); with momentum 64 none after 16 and one after 17;
-    the momentum untouched; a step onto a Node that holds a measured event
-    is refused and, since 2026-09-20, is a contact read through the
-    occupant's table (`measure` by the keys): on a bar of 3 x 1 x 1 the
-    mover's step of interval 2 onto the resident hands it the 1024 (one
-    `contact` record, the mover's momentum 0, its step counted), the
-    resident's drive is 1024 at that interval and 2048 = D at the next
-    (the step drive of 2026-09-20), so it steps to x = 2 at interval 3
-    with the 1024 and leaves through face:+x at interval 5 (the escaped
-    momentum (1024, 0, 0), the measured line 16), the mover at x = 0 with
-    one step for the rest (the rule as it was, the count off the clock,
-    stepped the resident in the interval of the hand-over and out at 4);
+    flow in label units) on +x steps once per 2.72 self-creations under
+    the directional drive of 2026-09-21 (BEAM_LAW note 49: the rate 65536
+    against the wall 178176; two Links after six intervals, three after
+    nine); with momentum 64 (the rate 4096 against 72576) none after 17
+    and one after 18; the momentum untouched; a step onto a Node that
+    holds a measured event is refused and, since 2026-09-20, is a contact
+    read through the occupant's table (`measure` by the keys): on a bar of
+    3 x 1 x 1 the mover's step of interval 3 onto the resident hands it
+    the 1024 (one `contact` record, the mover's momentum 0, its step
+    counted), the resident's drive is 65536 at that interval, 131072 at
+    the next and 196608 >= 178176 at the third, so it steps to x = 2 at
+    interval 5 with the 1024 and leaves through face:+x at interval 8
+    (the escaped momentum (1024, 0, 0), the measured line 16), the mover
+    at x = 0 with one step for the rest (under the per-axis drive, until
+    2026-09-21: once per two self-creations, three Links after six, at 64
+    none after 16 and one after 17, the contact at interval 2, the
+    resident's drive 1024 then 2048 = D, its step at 3 and its escape at
+    5; the rule as it was, the count off the clock, stepped the resident
+    in the interval of the hand-over and out at 4);
 (e) the owed count (`engine.count_owed`, since the fraction-free law of
     2026-09-20 the count the owed accumulator gains, `by_drive(acc, k x n,
     d)`, equal to `by_clock(age, k x n, d)` at a constant k from age 0): a
@@ -249,7 +255,7 @@ def test_a_lamp_releases_off_its_clock_at_the_cost_of_its_turn_and_takes_the_rec
 
 def test_a_measured_event_steps_off_its_clock_and_a_step_onto_another_is_refused():
     """(d)."""
-    for momentum, ticks, expected_x in ((1024, 6, 4 + 3), (64, 16, 4), (64, 17, 5)):
+    for momentum, ticks, expected_x in ((1024, 6, 4 + 2), (1024, 9, 4 + 3), (64, 17, 4), (64, 18, 5)):
         simulation = NatureBeamSimulation(
             parse_nature_beam_world(
                 world(
@@ -271,18 +277,18 @@ def test_a_measured_event_steps_off_its_clock_and_a_step_onto_another_is_refused
         parse_nature_beam_world(world([mover, resident], shape=[3, 1, 1], release=[0, 1], K=16)),
         records.append,
     )
-    for tick in range(1, 7):
+    for tick in range(1, 10):
         simulation.step()
         books = simulation.books()
         assert books["balanced"], tick
         first = simulation.measured[1]
-        assert first.position == (0, 0, 0) and first.momentum == [1024 if tick < 2 else 0, 0, 0], tick
-        assert first.steps == min(tick // 2, 1), tick
-        if tick < 5:
+        assert first.position == (0, 0, 0) and first.momentum == [1024 if tick < 3 else 0, 0, 0], tick
+        assert first.steps == (1 if tick >= 3 else 0), tick
+        if tick < 8:
             second = simulation.measured[2]
-            assert second.position == (1 if tick < 3 else 2, 0, 0), tick
-            assert second.momentum == [0 if tick < 2 else 1024, 0, 0] and second.steps == (
-                0 if tick < 3 else 1
+            assert second.position == (1 if tick < 5 else 2, 0, 0), tick
+            assert second.momentum == [0 if tick < 3 else 1024, 0, 0] and second.steps == (
+                0 if tick < 5 else 1
             )
             assert books["families"]["m"]["measured"]["current"] == 32
             assert books["momentum"]["measured"] == [1024, 0, 0]
@@ -301,9 +307,9 @@ def test_a_measured_event_steps_off_its_clock_and_a_step_onto_another_is_refused
             }
             assert books["momentum"]["escaped"] == [1024, 0, 0]
     assert [(r["event"], r["tick"], r["number"]) for r in records] == [
-        ("contact", 2, 1),
-        ("step", 3, 2),
-        ("click", 5, 2),
+        ("contact", 3, 1),
+        ("step", 5, 2),
+        ("click", 8, 2),
     ]
     assert (
         records[0]["component"] == 1024
