@@ -140,6 +140,7 @@ class _Lock:
             self.stream.close()
 
     def close(self) -> None:
+        """Release the lock if held and close its file."""
         if self.held:
             self.stream.seek(0)
             if sys.platform == "win32":
@@ -380,6 +381,7 @@ class ArtifactLease:
         self.finish()
 
     def finish(self) -> None:
+        """Finish the lease once: record its targets in the catalog and release its lock."""
         if self._closed:
             return
         try:
@@ -399,6 +401,7 @@ class ArtifactLease:
             self._lock.close()
 
     def close(self) -> None:
+        """Finish the lease (the alias the writers call)."""
         self.finish()
 
 
@@ -571,6 +574,7 @@ def watcher_lock(roots: Sequence[Path]) -> _Lock:
 
 
 def main() -> None:
+    """Command line: remove expired registered simulator artifacts under the given roots."""
     parser = argparse.ArgumentParser(description="Remove expired registered simulator artifacts.")
     parser.add_argument("--root", type=Path, action="append", required=True)
     parser.add_argument("--dry-run", action="store_true")

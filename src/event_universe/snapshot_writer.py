@@ -21,7 +21,9 @@ class SnapshotSource(Protocol):
     """A world whose snapshot streams as (key, value) pairs
     (`NatureBeamSimulation.snapshot_stream`)."""
 
-    def snapshot_stream(self) -> Iterator[tuple[str, object]]: ...
+    def snapshot_stream(self) -> Iterator[tuple[str, object]]:
+        """Yield the snapshot's (key, value) pairs in order."""
+        ...
 
 
 def _nested(text: str, depth: int) -> str:

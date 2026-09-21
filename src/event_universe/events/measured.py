@@ -288,10 +288,12 @@ class CountTable:
         return found
 
     def one(self, name: str) -> int:
+        """The accumulator of a one-row count, 0 where the table has no such row."""
         rows = self.of(name)
         return rows[0].accumulator if rows else 0
 
     def values(self, name: str) -> list[int]:
+        """The accumulators of a count's rows, in order."""
         return [row.accumulator for row in self.of(name)]
 
     def grid(self, name: str) -> list[list[int]]:
@@ -555,6 +557,7 @@ class Measured:
 
     @property
     def content(self) -> int:
+        """The content the body holds, summed over the families."""
         return sum(self.held)
 
     @property
@@ -632,9 +635,11 @@ class Measured:
         return self.detector_set.threshold
 
     def pending_amount(self, family: int) -> int:
+        """The units of a family pending release."""
         return sum(row.amount for row in self.pending[family])
 
     def pending_content(self, family: int) -> int:
+        """The content of a family pending release (amount x content)."""
         return sum(row.amount * row.content for row in self.pending[family])
 
     def pending_thrown_amount(self, family: int) -> int:
@@ -644,52 +649,64 @@ class Measured:
         return sum(row.amount for row in self.pending[family] if row.thrown)
 
     def pending_thrown_content(self, family: int) -> int:
+        """The content of the products of a transformation waiting to be born."""
         return sum(row.amount * row.content for row in self.pending[family] if row.thrown)
 
     # -- the table of counts read and written by the count's name --------------
 
     @property
     def acc_owed(self) -> int:
+        """The owed count's accumulator (the counts table's `owed` row)."""
         return self.counts.one("owed")
 
     @acc_owed.setter
     def acc_owed(self, value: int) -> None:
+        """Set the owed count's accumulator."""
         self.counts.set("owed", [value])
 
     @property
     def acc_turn(self) -> int:
+        """The turn's accumulator."""
         return self.counts.one("turn")
 
     @acc_turn.setter
     def acc_turn(self, value: int) -> None:
+        """Set the turn's accumulator."""
         self.counts.set("turn", [value])
 
     @property
     def acc_lamp(self) -> int:
+        """The lamp's accumulator."""
         return self.counts.one("lamp")
 
     @acc_lamp.setter
     def acc_lamp(self, value: int) -> None:
+        """Set the lamp's accumulator."""
         self.counts.set("lamp", [value])
 
     @property
     def acc_release(self) -> list[int]:
+        """The release accumulators, one per family."""
         return self.counts.values("release")
 
     @acc_release.setter
     def acc_release(self, values: list[int]) -> None:
+        """Set the release accumulators, one per family."""
         self.counts.set("release", values)
 
     @property
     def drive(self) -> list[int]:
+        """The drive's accumulators, one per axis."""
         return self.counts.values("drive")
 
     @drive.setter
     def drive(self, values: list[int]) -> None:
+        """Set the drive's accumulators, one per axis."""
         self.counts.set("drive", values)
 
     @property
     def acc_push(self) -> list[list[int]]:
+        """The push accumulators per column, the three axes each."""
         return self.counts.grid("push")
 
     def accumulators(self) -> dict[str, object]:
@@ -717,6 +734,8 @@ class Measured:
         return found
 
     def state(self) -> dict[str, object]:
+        """The body's state for the record: its number, position, family, held content, charges,
+        momentum and counts."""
         charges = self.charges()
         return {
             "number": self.number,
@@ -875,6 +894,8 @@ class Ledger:
         return faces + self.lifetime_amount[family]
 
     def escaped_content(self, family: int) -> int:
+        """The content that left through the open faces and on the border `lifetime`, per
+        family."""
         faces = sum(self.face_content[port][family] for port in self.open_faces)
         return faces + self.lifetime_content[family]
 
@@ -905,6 +926,7 @@ class Ledger:
         return [sum(self.turned_momentum[f][axis] for f in range(self.families)) for axis in range(3)]
 
     def remainder_momentum_total(self) -> list[int]:
+        """The remainder momentum summed over the families."""
         total = [0, 0, 0]
         for vector in self.remainder_momentum:
             total = [a + b for a, b in zip(total, vector, strict=True)]
