@@ -146,3 +146,62 @@ clocks) and the `step` lines of every lamp and source (the lag).
 `tests/test_cluster_clock.py` pins the shipped worlds to the generator,
 the presence 4 F at every lamp once the rows arrive, the pace of the
 emulated sources and the algebra of the sum against the product.
+
+## 7. Measured (2026-09-21, one run on main d8cb46e, after the pins above)
+
+The run is `tools/run_series.py --jobs 2` over the two worlds (four seconds
+each, the books balanced, 500 intervals), read by the experimenter's script
+in the window 250 to 500 per lamp number. Every one of the ten readings of
+1 + z is inside the tolerance of 0.02; every birth ordinal up to the last
+click arrived (no light lost); the lag between each lamp and its emulated
+sources stayed within one Link through the run.
+
+| Member | pinned k | k read from the lamp's births | at rest 1 + z (pinned) | click rate | age | moving as one 1 + z (pinned; the product) | click rate | age first .. last | shift from rest |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `m0` | 0 | 0.000 | 1.0000 (1.000) | 1.000 | 63 | 1.2007 (1.200; 1.200) | 0.836 | 94 .. 135 | +0.2007 |
+| `m01` | 0.1 | 0.101 | 1.0999 (1.100) | 0.912 | 98 | 1.3022 (1.300; 1.320) | 0.764 | 120 .. 158 | +0.2023 |
+| `m03` | 0.3 | 0.302 | 1.3001 (1.300) | 0.768 | 132 | 1.5066 (1.500; 1.560) | 0.664 | 147 .. 180 | +0.2066 |
+| `m06` | 0.6 | 0.592 / 0.613 | 1.6000 (1.600) | 0.628 | 166 | 1.8092 (1.800; 1.920) | 0.552 | 175 .. 202 | +0.2092 |
+| `m1` | 1 | 1.000 / 1.016 | 2.0000 (2.000) | 0.500 | 201 | 2.2147 (2.200; 2.400) | 0.452 | 206 .. 228 | +0.2147 |
+
+The cluster at rest: z mean 0.4000 (pinned 0.400), dispersion 0.3633
+(pinned 0.363), minimum 0.0000 (pinned 0). Moving as one: z mean 0.6067,
+dispersion 0.3683 against 0.3633 at rest.
+
+**What the run decides.**
+
+1. **A cluster at rest reads a velocity dispersion.** Five bodies fixed to
+   the GameBoard read 1 + z = 1.000, 1.100, 1.300, 1.600, 2.000 to the
+   fourth digit: a reader of speeds would call it 0.36 c of dispersion
+   around 0.4 c, with nothing moving, and one-sided (no member below the
+   bare one's 1.000). The spread is the spread of the members' crowds.
+2. **A cluster moving as one adds the Doppler; the spread stays.** Each
+   member's z shifted by 0.201 to 0.215 for the pinned 0.200; the product
+   form (0.220, 0.260, 0.320, 0.400 for k = 0.1 to 1) is refuted at every
+   member from k = 0.3 up (2.2147 read where the product would be 2.400).
+   The dispersion moved from 0.363 to 0.368. A small excess over the sum
+   grows with k (+0.002, +0.007, +0.009, +0.015 for k = 0.1, 0.3, 0.6, 1)
+   and follows the k read from the lamps' births (1.016 for the pinned 1;
+   0.613 for 0.6): the moving lamp counts a little more presence than the
+   fixed one (its crowd's rows are released from a source that has moved on
+   since), inside the tolerance and the k bracket; not a term of the
+   reading.
+3. **The emulation held.** The sources at v / (1 + k) kept within one Link
+   of their waiting lamp for 500 intervals at every k: a body that waits k
+   intervals per self-creation moves at v / (1 + k) on the GameBoard, as
+   series P found, to the Link.
+4. **The control.** The bare member read 1.0000 and 1.2007: series O's lab
+   reading, the Doppler alone.
+
+**For the owner's question.** Under the law as built, yes: a cluster's
+velocity dispersion can be a spread of the members' clocks, of the size of
+the spread of their crowds' k, with no motion and no mass to bind it; the
+cluster's own motion adds the same Doppler to every member and does not
+widen the spread. What would tell it apart in nature, if the mapping of
+units were known (it is not, section 5): the members' z around the mean
+skewed to the red and never bluer than the frame's, the denser members
+redder; and k by the flux of rows through the member's Node (about the sum
+of M / r^2 over its crowd) where gravitational redshift goes by the
+potential. The rotation curve of a single galaxy is not touched: both sides
+of a radius share one k, and the half-difference of their readings gives the
+speed without it.

@@ -43,4 +43,10 @@ presence 4 F at every lamp, the emulated pace and the algebra.
   rest 1 + z_i = 1 + k_i (a dispersion of 0.36 c with nothing moving, never
   below the bare member's 1.000); moving as one 1 + z_i = 1 + k_i + v / c,
   the terms adding, every member shifted by 0.200 and the spread untouched.
-- **Run.** Section 7 of the design, when done.
+- **Run.** 2026-09-21 on main d8cb46e (the design's section 7): all ten
+  readings inside the tolerance; at rest 1 + z = 1.0000, 1.0999, 1.3001,
+  1.6000, 2.0000 (a dispersion of 0.363 with nothing moving, none below the
+  bare member); moving as one 1.2007, 1.3022, 1.5066, 1.8092, 2.2147 for the
+  pinned 1.2, 1.3, 1.5, 1.8, 2.2 (the product form, 2.4 at k = 1, refuted),
+  the dispersion 0.368; every lamp within one Link of its emulated sources;
+  no light lost.
