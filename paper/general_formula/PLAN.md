@@ -2439,3 +2439,35 @@ Also P10 restated by the Boss's decision (record 435; the Born note's
 line), series G2's status by date (record 408 to follow). The title is
 the owner's; put to him. Referee round 51.
 
+## Wave 29 (2026-09-21): the cut to 40 pages (the owner's word, "shorten the paper to 40 pages; keep what is certain"; no referee)
+
+The owner's word supersedes record 373's arXiv-first full paper and
+cancels the referee rounds. The manuscript is cut from the long form
+(commit c15c1174, 97 pages) to what is proved, measured and, where the
+second runner's line exists, replicated: Part I the law (the postulates,
+the assumptions table, Eq. (1) and its operations, the group, the
+state, the components, the two blocks, the read-out, the five
+statements, the inputs, the symmetries and the theorem of the 24);
+Part II the table of consequences in short (standing, formula,
+derivation, check; the status column left to the long form), Newton and
+Coulomb, the delay field (Poisson, the retarded wave equation, the
+clock's redshift with series T replicated, the crowd worlds in one
+passage, light in one paragraph), the lattice Gleason and the
+confrontation register; Part III the click model (without the
+plain-words and history paragraphs and the time-of-flight bounds), the
+four theorems, the measurements (the table, the two-slit and S(N)
+figures), the Bell value, the causal anatomy, what is new, what is not
+claimed, the hypotheses in one paragraph; Part IV the one prediction
+(the differences' table left to the derivation's 24.3), the limits
+(without Young's fan paragraph), Lorentz (the theorem, Newton, the
+built hypothesis with series S, the figure, the decision), the
+literature, Reproducibility (naming the long form's commit), the AI
+line. Dropped to the tree: the special cases, "what follows in order",
+the figure of the 48, "where the law's form stands above", the dark
+sector, the founding formulas one by one, flow and heat, the
+differences' table, the record appendix, the families' appendix, the
+glossary; the repository bibitems shortened to one line and the uncited
+ones removed. Compiled: 40 pages at 11pt, no overflow, no undefined
+reference; every number kept is one the long form carries with its
+source in NUMBERS.md. The full text stays in git at c15c1174.
+
