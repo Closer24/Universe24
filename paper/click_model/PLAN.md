@@ -609,3 +609,33 @@ Two findings go to the Boss: FORM.md section 1's "2072 cube diagonals"
 (8 are; 2064 are near ones where isqrt's floor closes a gap below
 1 / Q_f), and the Lorentz section's reading that the law's bond clock
 predicts a Michelson-Morley signal a moving laboratory does not see.
+
+## The Lorentz decision in the manuscript (2026-09-21, the Boss's message of 04:24Z; records 245 and 249)
+
+The owner decided routes (A) and (B) together (record 249, a Highlights
+5.4 line): the law stays the six verbs and states its prediction that a
+body's own counter does not slow with speed as a falsifiable row against
+the muon in flight; lorentz-v1 is built beside the law under its own
+identity as a comparison hypothesis, both run against the same pins, the
+paper stating both. Route (C) is closed by section 12c (record 245, PR
+#437): the crossing rule's count of a mover through an isotropic crowd at
+rest has the sphere mean exactly 1, the owed count and the counter's rate
+are the rest ones, the sweep's 1 + beta^2 / 3 is not the rule and the
+registered transverse count refutes it, the mover's rate is never below
+one half of the rest rate. Applied: the section retitled "Lorentz: what
+the law predicts, and the decision taken"; its opening states the
+decision; the last paragraph is "The three routes, and the decision"
+with route (C) closed on 12c's numbers and the decision (A) and (B) with
+the two readings to come; the limits section's cross-reference; the log
+bibitem cites 230, 245 and 249 (245 and 249 land on main with the Boss's
+next records pull request; 230 is on main since PR #433); the
+derivations bibitem names 12c; NUMBERS.md's route-C row replaced by 12c's
+three numbers. The verdict on c and the direction "a paper on everything"
+are recorded by the Boss (records 253 and 255); no action on the latter. A short referee check on
+the change (the same day): pass on substance, every closure claim traced
+to 12c; applied its wording fixes (the count's excess odd in the
+component; the owed count's mean; the decision named the author's, a
+choice and not a derivation's result; the redshift z, the pace v, the
+momentum p and the mass m named at first use in the section); its caveat
+stands: the citations of records 245 and 249 dangle until the Boss's
+records pull request lands, so the manuscript is not merged before it.

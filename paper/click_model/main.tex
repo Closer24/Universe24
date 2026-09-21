@@ -938,7 +938,7 @@ definitions says that a moving body reads the same $c$, so Lorentz
 invariance is not a limit of this model but a property it must show or
 lack, on worlds with moving clocks (the program's, not this paper's;
 Section~\ref{sec:lorentz} states what the program's derivation has found
-and the decision that is open). The
+and the decision taken). The
 field equations of gravitation are not reachable from a model without
 mass: the program's rule that held content delays the flight would give,
 in the limit, an optical metric and its geodesics, not the equation the
@@ -947,12 +947,15 @@ Section~\ref{sec:hyp}. The paper claims the two limits, the partial third
 up to its plateau, and the two conservations above, and neither of these
 two.
 
-\section{Lorentz: an open question of the theory}\label{sec:lorentz}
+\section{Lorentz: what the law predicts, and the decision taken}\label{sec:lorentz}
 
 The worlds of this paper have no body and no clock in motion, so nothing
 in Sections~\ref{sec:model} to \ref{sec:limits} depends on this section;
 it is here because a model with one pace in a rest frame owes the reader
-its position on Lorentz invariance, and the position is open. The
+its position on Lorentz invariance. The position, the author's decision
+of 2026-09-21 \cite{log}, is that the law does not give Lorentz's
+factor and says so as a falsifiable prediction, with a hypothesis built
+beside it for comparison. The
 statements below are the program's derivation on the same GameBoard with
 its law of bodies (a body's drive; the push of a body by the rows it
 reads), made on paper and in host scripts from that law's definitions,
@@ -998,9 +1001,10 @@ limit's equations, its pins for a run stated and the run not made).
 counter's rule the program's muon world would read its $64$th turn at the
 interval $64$ at every speed (section 4.3; the design's map; the world
 defined and not run), and the fastest coasting star of its Hubble world
-reads $z = 0.2636$ where the classical value is $0.2674$ and $\gamma$'s
+reads the redshift $z = 0.2636$ where the classical value is $0.2674$ and $\gamma$'s
 $0.315$ (registered in the program's series G2 \cite{register}). (iv)
-The dispersion is $v = p/(m + p/c)$ under the decided cap, not
+The dispersion, the pace $v$ at the momentum $p$ of a body of mass $m$,
+is $v = p/(m + p/c)$ under the decided cap, not
 $p/\sqrt{m^2c^2 + p^2}$: $0.632c$ against $0.864c$ at $p = m$ in the
 map's units, the momentum at which Newton's pace is one Link per
 interval \cite{lightspeed}.
@@ -1022,22 +1026,35 @@ its annual change of velocity forbids; the grain bound of
 Proposition~\ref{prop:pace} is a second, weaker consequence on top of
 that.
 
-\paragraph{The open decision, three routes.} (A) The operations alone:
-the law predicts against those measurements, the isotropy of $c$ among
-them by (vi), unless a reading on the detector's side gives $\gamma$
-where the GameBoard's count does not. (B)
-A seventh operation, an integer root at a declared grain, under a
-hypothesis identity of its own outside the law (in the design's map the
-muon's $64$th turn moves to the intervals $71$ and $126$ at $0.43c$ and
-$0.86c$ \cite{lightspeed}). (C) A reading budget: a moving body's owed
-count grows with the rows it meets at their relative speed
-$|\mathbf n - \boldsymbol\beta|$, whose isotropic mean over the sphere is
-$1 + \beta^2/3$, a slowing of the operations' own order and not
-Lorentz's number (ordered on 2026-09-21 as the derivation's section 12c,
-in preparation). The choice is open in
-the program and the paper records it so; whichever route is taken, the
-results of Sections~\ref{sec:theorems} to \ref{sec:bell} are unchanged,
-since no row of this paper's worlds carries a mass or a clock in motion.
+\paragraph{The three routes, and the decision.} Three routes were put
+to the program \cite{log}. (A) The operations alone: the law predicts
+against those measurements, the isotropy of $c$ among them by (vi),
+unless a reading on the detector's side gives $\gamma$ where the
+GameBoard's count does not. (B) A seventh operation, an integer root at
+a declared grain, under a hypothesis identity of its own outside the law
+(in the design's map the muon's $64$th turn moves to the intervals $71$
+and $126$ at $0.43c$ and $0.86c$ \cite{lightspeed}). (C) A reading
+budget: a moving body's counter slowed by the rows it meets, if the
+crossings grow with its speed. Route (C) is closed by the derivation's
+section 12c: under the crossing rule a mover through an isotropic crowd
+at rest counts the rest count exactly at every speed to the cap (the
+count's excess over the rest count is odd in the row's component along
+the step, and the crowd has as many rows against the step as with it),
+so the owed count's mean over the crowd and the counter's rate are the
+rest ones; the mean $1 + \beta^2/3$ of the
+relative speed $|\mathbf n - \boldsymbol\beta|$ is the sweep of point
+rows, not the rule, and the registered transverse count refutes it; what
+a crowd does give is anisotropic, in the crowd's frame, never a slowing
+below one half of the rest rate, and nothing in an empty world
+\cite{derivations}. The decision (the author's, 2026-09-21, a choice
+and not a derivation's result) is (A) and (B) together: the law stays the operations and states, as a row that can
+fail, that a body's own counter does not slow with its speed, against the
+muon in flight; and the seventh operation is built beside the law under
+its own identity as a comparison hypothesis, both to be run against the
+same pins, the paper to state both readings when they exist. Whatever
+those runs show, the results of Sections~\ref{sec:theorems} to
+\ref{sec:bell} are unchanged, since no row of this paper's worlds
+carries a mass or a clock in motion.
 
 \section{Literature and positioning}\label{sec:lit}
 
@@ -1133,9 +1150,9 @@ submission.]
 \bibitem{design} The design of \texttt{amplitude-v1} and its check outputs, \texttt{docs/designs/amplitude-v1/} of the archived code \cite{zenodo}.
 \bibitem{register} The experiments register, series L (and, for Section~\ref{sec:lorentz}, series G2), \texttt{docs/EXPERIMENTS.md} of the archived code \cite{zenodo}, with the worlds \texttt{examples/events/amplitude/}, their \texttt{expectations.json} and the reading tool \texttt{tools/amplitude\_path.py}.
 \bibitem{checks} \texttt{paper/click\_model/checks/s\_of\_n.py}, \texttt{which\_path\_window.py}, \texttt{tables\_norm.py}, \texttt{information\_transfer.py}, \texttt{limits.py} and \texttt{light\_speed.py} with their outputs, \texttt{figures/summary.json} and \texttt{NUMBERS.md}, in the archived code \cite{zenodo}.
-\bibitem{log} The dated log of 2026-09-20, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}, records 96 (coherence within one Node), 101 (the landing), 102 (the checks of this paper), 105 (the review of the pair and the gate: the marginals re-read over all 4096 setting pairs, the arms' order), 144 (the cone, L7), 156 (the two slits: the wheel, the exact phase, the 18 intervals), 160 (the fan's angular weights) and, for the pace and Section~\ref{sec:lorentz}, records 186 and 191 (c as the flight's norm; the one operator for rows and bodies), 213, 224 and 228 (the derivation's sections 12, 13 and 12b), 226 (the group of 48); the three routes of Section~\ref{sec:lorentz} are the day's item of 2026-09-21 that ordered the derivation's section 12c, not yet a record.
+\bibitem{log} The dated log of 2026-09-20, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}, records 96 (coherence within one Node), 101 (the landing), 102 (the checks of this paper), 105 (the review of the pair and the gate: the marginals re-read over all 4096 setting pairs, the arms' order), 144 (the cone, L7), 156 (the two slits: the wheel, the exact phase, the 18 intervals), 160 (the fan's angular weights) and, for the pace and Section~\ref{sec:lorentz}, records 186 and 191 (c as the flight's norm; the one operator for rows and bodies), 213, 224 and 228 (the derivation's sections 12, 13 and 12b), 226 (the group of 48), 230 (the three routes), 245 (section 12c closes route C) and 249 (the decision: A and B).
 \bibitem{lightspeed} c in the vector law, \texttt{docs/designs/light\_speed/FORM.md} with the map \texttt{light\_speed\_map.py} and its output, of the archived code \cite{zenodo}.
-\bibitem{derivations} The derivations of the beam law, \texttt{docs/DERIVATIONS\_BEAM.md} of the archived code \cite{zenodo}, sections 4 (special relativity as the limit's symmetry), 12 and 12b (Lorentz from the delay field) and 13 (the one constant).
+\bibitem{derivations} The derivations of the beam law, \texttt{docs/DERIVATIONS\_BEAM.md} of the archived code \cite{zenodo}, sections 4 (special relativity as the limit's symmetry), 12, 12b and 12c (Lorentz from the delay field; the mover's counter) and 13 (the one constant).
 \bibitem{bell1964} J. S. Bell, Physics 1, 195 (1964).
 \bibitem{chsh1969} J. F. Clauser, M. A. Horne, A. Shimony and R. A. Holt, Phys. Rev. Lett. 23, 880 (1969).
 \bibitem{jarrett1984} J. P. Jarrett, No\^us 18, 569 (1984).
