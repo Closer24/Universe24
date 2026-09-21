@@ -719,6 +719,13 @@ its pin is reported with its numbers and never moved.
 | q7 | the push on each end at tick 20; the read mass | 418 547 308 612 or 613 (the accumulator's unit); 1836 at every tick | a read mass other than 1836; a step |
 | all | the books | initial = current + spent + escaped per family at every tick; the momentum line closed through every hand-over | any imbalance |
 
+Read on the engine on 2026-09-21 as series R (the page
+[the quarks](../../../examples/events/quarks/README.md), the register's
+entry R): every push exact, the lines hold, the triangle and the
+rectangle shear, the line of six holds, the kicked u leaves at tick 63
+and the pair it leaves breaks at about 1190 (two pins outside, reported),
+the read mass the sum in every world.
+
 **What refutes the design as a whole:** a line that does not hold (then
 the contact rule's bound or the delivery is wrong and the strong design's
 verdict on the alpha line is in question too); a triangle that holds

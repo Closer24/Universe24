@@ -182,6 +182,22 @@ the deuteron bound at one Link and free at three, two protons bound or
 repelled by the sign of Q^2 - G^2 - M^2, the square sheared apart and the
 line held, 29 readings inside and 1 outside, registered and not tuned.
 
+## The quarks series
+
+The folder [quarks/](quarks/README.md) holds the seven worlds of series
+R, written by `quarks/make_worlds.py`: series I's base with the up and the
+down quarks as free families (4 and 9 units of content, the charges 1224
+and -272 per unit: the whole charges 2/3 and -1/3 of the register's proton
+7344) each holding one unit of the strong family `glue` (sigma 10000,
+lifetime 3), three bodies in a line, a triangle, two triples side by side
+and end to end, a kicked quark and a dressed line whose glue makes the
+read mass 1836; the pins derived by the design's `quark_numbers.py` in
+`quarks/expectations.json` and compared by `tests/test_quarks_expectations.py`;
+`tools/quarks_readings.py` reads the bodies' `read`, `contact` and step
+records and the border's clicks. The register entry is
+[R, the quarks (2026-09-21)](../../docs/EXPERIMENTS.md#r-the-quarks-2026-09-21);
+the design is [the quarks as families of the family table](../../docs/designs/quarks/QUARKS.md).
+
 ## The binding series
 
 The folder [binding/](binding/README.md) holds the three worlds of series
