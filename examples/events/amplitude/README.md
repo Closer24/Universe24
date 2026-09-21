@@ -92,6 +92,70 @@ and 0 / 64 included); the unequal arms' records read their two paths at
 the exact time of their last Links, so their weights and totals moved
 (eight totals per world as before); the equal arms are bit-identical.
 
+## The (3, 4) split at N = 32 and 128: the power window of 6.5 pinned from above
+
+**The order** (2026-09-21, the Boss on the auditor's round 4).
+[DERIVATIONS_BEAM 6.5](../../../docs/DERIVATIONS_BEAM.md#65-the-uniqueness-of-the-clicks-square-a-lattice-gleason)
+pins the power k of the click's square to a window from the registered
+cells: `mz_345`'s 63 / 1 at N = 64 gives [1.917, 2.489) and the pair's
+27, 5, 5, 27 gives [1.784, 2.054), both containing 2 and excluding 1 and
+3, the upper bound 2.054 the pair's. The same split at another N reads
+another window: the cells b / (N - b) hold iff 7^k / (7^k + 1) lies in
+[(b - 1/2) / N, (b + 1/2) / N), and at N = 128 the rung 125 puts the
+upper bound at 2.012. **The worlds** `mz_345_n32` and `mz_345_n128` (the
+generator's `mz_345_n_worlds`): `mz_345` scaled to N as `bell_n` scales
+the pair, the lamp's wheel [1, N], its turn N / 4 on arm 2 (8 and 32) and
+the splitter's turns N / 4; 80 and 150 intervals (every birth of the
+circle completed; the ports click eleven or twelve intervals after a
+birth); every other shipped world byte-identical.
+
+**Pinned before the run** (`expectations.json` under `mz_345_n`; the
+derivation from the engine's own tables and ladder, `core/phase.py`'s C
+and S of N, `amplitude.rungs` and `amplitude.cell_of`, on the rows the
+world's declared turns put at the ports: 4 + 3 = 7 in phase at u + N / 4
+toward D1, 3 at u and 4 at u + N / 2 toward D2, the cancel's remainder 1,
+the multiplicity 2 x 25 = 50; the design's offers 49/50 and 1/50): the
+first rung b_1 = (2 N x 49 + 50) // 100, 31 at N = 32 and 125 at N = 128,
+unmoved by the tables' rounding at any u (the same derivation gives the
+registered 63 / 1 with u = 63 at N = 64), so
+
+| world | N | the rungs | D1 | D2 | u to D2 | the totals' spread | the window on k |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `mz_345_n32` | 32 | 31, 32 | 31 | 1 | 31 | 5 values | [1.548, 2.129): 7^k in [61/3, 63) |
+| `mz_345` (L1, registered) | 64 | 63, 64 | 63 | 1 | 63 | 8 | [1.917, 2.489): 7^k in [125/3, 127) |
+| `mz_345_n128` | 128 | 125, 128 | 125 | 3 | 125, 126, 127 | 16 | [1.835, 2.012): 7^k in [249/7, 251/5) |
+
+The intersection of the three windows with the pair's [1.784, 2.054) is
+[1.917, 2.012), the lower bound N = 64's and the upper N = 128's; it
+contains 2 and excludes 1 and 3. What refutes: a count off its rung, a
+click at D2 from a u below the rung, or a rung other than the exact
+offers'; no number moves after the run.
+
+**Run (2026-09-21, main c8edd50f, the runner headless one world at a
+time, `python -m event_universe --init <world> --output <dir> --ticks 80`
+and `--ticks 150`; the source sha256 `5d254c8544aadc88...`, the families'
+`438444b1cec9eb47...`, the initializations `b6e203013ac62a3f...` and
+`cef1d39dd4c6aeeb...`; completed and conserved at every tick, the books
+balanced; DETECTOR, the gathers of the first W records by ordinal):**
+every pin met on both worlds: `mz_345_n32` D1 31, D2 1, the one click at
+D2 from u = 31, the rungs 31, 32 on every gather, 5 distinct totals, the
+last of the 32 gathered at tick 44 (79 born in 80 intervals, 68 gathered,
+11 open at the end; over every gather 66 / 2, the wheel's period);
+`mz_345_n128` D1 125, D2 3 from u = 125, 126, 127, the rungs 125, 128 on
+every gather, 16 distinct totals, the last of the 128 gathered at tick
+140 (149 born in 150 intervals, 138 gathered, 11 open; over every gather
+135 / 3). GAMEBOARD: conserved at every completed tick, the books
+balanced at every tick. The host: the runner's wall time 0.48 s and
+0.63 s per world (the engine's own 0.25 s and 0.41 s), reported apart
+from the model's cost, the plane's 25 Nodes at fixed local work per
+interval over 80 or 150 intervals and one record's offers held at the
+layer until its completion. Verdict: PASS, the power window of 6.5 is
+pinned from above at 2.012 by the register; `tests/test_amplitude_mz_345_n.py`
+derives the pin from the worlds and the engine's tables and ladder and
+replays both worlds bit-exact against the registered readings. The text
+of 6.5 still states the window from N = 64 alone, [1.917, 2.489); the
+narrowing is the register's until the mathematician carries it there.
+
 ## L2: the two slits at a low rate
 
 **The world** `slits_low` (the design's test 2): the shipped

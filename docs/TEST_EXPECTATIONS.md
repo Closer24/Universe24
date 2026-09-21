@@ -131,6 +131,7 @@ kept, their pins the law of events').
 | `test_amplitude_pair.py` | The pair, the which-path world, no maintenance and GHZ: a lamp's `branches` and `arms` (the birth of four rows on two arms with the labels 0 and 3), the CHSH labels (E x 64 = 44, -44, 44, 44; S = 176/64; the marginals 32/64), the choosers (the 15 setting pairs' E; S = 156/64 on the registered quadruple), the which-path `read` (E = 44, -44, 0, 0; S = 88/64), Bob's counters 116 Links farther (E unchanged), GHZ's allowed triples and products, the refusals ([below](#the-amplitude-law-the-pair)); every number of the series read from `expectations.json` under `pair` and `ghz` (2026-09-21) | new (2026-09-20; the design's section 4 and its `bell.py`) |
 | `test_amplitude_gate.py` | The gate between records and the pair at N = 1024 and 4096: the Hadamard and the CNOT on the GameBoard (|00> - |11>), the pair by the gate at the CHSH labels (S = 176/64), CNOT twice the identity, GHZ by one gate of three parties, the register's ceiling (three rotations run, four refused at load), the refusals, S = 2896/1024 with |E - cos| <= 1/N, S = 11584/4096 with the bound failing at the tables' rounding; the review of (v): the gate's copies booked on the live count (every gathered record at live 0), a record with an offer or units elsewhere refused at the gate, the control by its declared arrival direction (the `measured` list reversed gives the same outcomes), the control's refusals ([below](#the-amplitude-law-the-gate)); every number of the series read from `expectations.json` under `gate` and `pair_n` (2026-09-21) | new (2026-09-20; the design's section 10 and its `gate.py`; the owner's paper numbers; the review of (v)) |
 | `test_amplitude_bell_24_4.py` | Bell at N = 512 and 4096 under the one click and the wheel, the pin of DERIVATIONS_BEAM 24.4 (the run the law owes before the pin is final): the pin derived from each world file and the ladder (N, the wheel W = N, the settings off the counters' windows, the labels off the lamp; the design's joint weights and the rungs b_k = (2 W C_k + T) // (2 T) give the register's counts, widths and rungs; every count within one of W x its weight; the marginals W / 2; S = 1448 / 512 and 11584 / 4096, both 181 / 64 exactly), and the replay of the eight worlds bit-exact against the registered readings of the run of 2026-09-21 (the counts per cell, E x W, the marginals, one gather per record, the rungs and the windows on every gather) ([below](#the-amplitude-law-bell-at-n--512-and-4096-the-pin-of-244)); every number read from `expectations.json` under `bell_24_4` and `pair_n` | new (2026-09-21; the Boss's order under the model owner's record 337; DERIVATIONS_BEAM 24.4) |
+| `test_amplitude_mz_345_n.py` | The (3, 4) split at N = 32 and 128 under the one click and the wheel, the power window of DERIVATIONS_BEAM 6.5 pinned from above: the pin derived from each world file and the engine's own tables and ladder (N and the wheel W = N off the lamp; the ports' rows off the lamp's turns and the splitter's weights and turns, 7 at u + N / 4 toward D1 and 1 at u + N / 2 toward D2 with the multiplicity 50; the pointers on `phase_cosines` and `phase_sines`, the rungs by `amplitude.rungs` and the cell of every u by `amplitude.cell_of` give the register's counts 31 / 1 and 125 / 3, the u to D2 (31; 125, 126, 127), the rungs (31, 32) and (125, 128) equal to the exact offers' rung (2 N x 49 + 50) // 100, and the totals' spread; the same derivation gives the registered 63 / 1 at N = 64), the power window per N from the rung ([1.548, 2.129), [1.917, 2.489), [1.835, 2.012)) and its intersection with the pair's [1.784, 2.054), [1.917, 2.012), containing 2 and excluding 1 and 3, and the replay of both worlds bit-exact against the registered readings of the run of 2026-09-21 (the counts per port, the u to D2, the rungs on every gather, the totals' spread, the births, gathers and open records, the books balanced) ([below](#the-amplitude-law-the-3-4-split-at-n--32-and-128)); every number read from `expectations.json` under `mz_345_n` and `mach_zehnder` | new (2026-09-21; the Boss's order on the auditor's round 4; DERIVATIONS_BEAM 6.5) |
 | `test_amplitude_click.py` | The one click (stage (vii)): a lamp's rate births as many records as it says with the ordinals and the birth phases in order, two multiplicities of one record at one offer take the common denominator or are refused, the columns are written only where a record is, and every gate-set world without a lamp reads as it did before the law at its cap (its pinned digests); step 2: u the record's own field (a narrow window admits every record's row, the K record world's clicks within one rung of its offers); step 3: the push by share (the mass's momentum the sum of the shares, the remainder line, the unkeyed bar as it was) ([below](#the-amplitude-law-the-one-click)); the gate worlds' digests read from `gate_set.json` (2026-09-21) | new (2026-09-20; the design's sections 2.1, 2.5 and 6; the K finding) |
 | `test_amplitude_gram.py` | The click without amplitudes (2026-09-21): the Gram matrix of the tables (its eight diagonal values, not circulant, rank 2, the antipodal pairs killed, stored through N = 512), the identity f^T G f = X^2 + Y^2 on random vectors and on `mz_equal`'s record at every u, the layer's cells against the click as it was on synthetic one-arm, read, rotated, pair and GHZ records, the turn as a shift exact at the quarter turns and not at t = 3, the tensor form exact and the convolution not, the ring product ([below](#the-click-without-amplitudes)) | new (2026-09-21; record 188; BEAM_LAW note 37 (xii)) |
 | `test_exact_phase.py` | The exact phase at the click (2026-09-21): the axis and the diagonal at the rate 8 (u + 41 with the remainder 48 / 64, u + 42 with the remainder 0 / 128 where the walk read u + 40), the layer's pointer at it, the integer form without it, a face's row (u + 4 where the walk read u + 56), the numerator beyond the register refused, the primitive `exact_phase` ([below](#the-exact-phase-at-the-click)) | new (2026-09-21; record 163 (2); BEAM_LAW note 45) |
@@ -776,6 +777,54 @@ of 2026-09-21; the test holds no literal of a world's number:
   (GAMEBOARD) registered as conserved at every completed tick;
 - (d) S from the registered readings' E equals the derived S of (b): the
   run's S is 181 / 64 at both N.
+
+## The amplitude law: the (3, 4) split at N = 32 and 128
+
+`tests/test_amplitude_mz_345_n.py`, on `mz_345_n32` and `mz_345_n128`
+(L1 scaled to N, `examples/events/amplitude/expectations.json` under
+`mz_345_n`; the register's L1 entry and the README's section), the power
+window of DERIVATIONS_BEAM section 6.5 pinned from above, the pin written
+before the run of 2026-09-21; the test holds no literal of a world's
+number:
+
+- (a) the pin derived from each world file and the engine's own tables and
+  ladder: N and the lamp's wheel [1, W] with W = N; the rows at the two
+  ports off the lamp's turns and the splitter's weights and turns (the
+  generator's `mach_zehnder_ports`: a + b = 7 in phase at the quarter turn
+  toward D1, a at the birth phase and b at the half turn toward D2, the
+  cancel's remainder 1; the multiplicity the birth's rows times a^2 + b^2,
+  50); per u the ports' pointers on `phase_cosines` and `phase_sines` of
+  N, the rungs by `amplitude.rungs` on the wheel and the cell of u by
+  `amplitude.cell_of` give the register's counts (D1 31, D2 1 at N = 32;
+  D1 125, D2 3 at 128), the u of every click at D2 (31; 125, 126, 127:
+  every u from the first rung up), the rungs (31, 32 and 125, 128, one
+  list at every u) and the totals' spread (5 and 16 values); the first
+  rung is the rung of the design's exact offers 49/50 and 1/50,
+  (2 N x 49 + 50) // 100, unmoved by the tables' rounding; the generator's
+  `mach_zehnder_pin` agrees; the same derivation on the registered
+  `mz_345` at N = 64 gives L1's 63 / 1 with u = 63 to D2, the rungs 63, 64
+  and the eight totals;
+- (b) the power window per N from the rung (6.5: the ports' single rows
+  read 7 = (a + b) / (b - a) against 1, a power k reads 7^k against 1, and
+  the cells b / (N - b) hold iff 7^k / (7^k + 1) lies in [(2 b - 1) /
+  (2 N), (2 b + 1) / (2 N)), that is 7^k in [(2 b - 1) / (2 N - 2 b + 1),
+  (2 b + 1) / (2 N - 2 b - 1)); the bounds of 7^k exact, k's to three
+  decimals) equals the register's: [61/3, 63) and [1.548, 2.129) at 32,
+  [125/3, 127) and [1.917, 2.489) at 64, [249/7, 251/5) and [1.835,
+  2.012) at 128; the intersection of the three with the pair's registered
+  [1.784, 2.054) is the register's [1.917, 2.012), its lower bound
+  N = 64's and its upper bound N = 128's; it contains 2 and excludes 1
+  and 3;
+- (c) the replay of each shipped world file in-process, loaded as the
+  runner loads it, bit-exact against the registered readings of the run
+  (DETECTOR): one gather per record over the first W records by ordinal,
+  the counts per port, the u of every click at D2, every gather's rungs
+  the pinned list, the totals' spread, the last gather's tick (44 and
+  140) and the counts over every gather (66 / 2 and 135 / 3); the run's
+  GameBoard reading (GAMEBOARD) registered as conserved at every completed
+  tick with the books balanced, the replay's births, gathers and open
+  records the register's (79, 68, 11 and 149, 138, 11) and its books
+  balanced at the end.
 
 ## The amplitude law: Malus
 
