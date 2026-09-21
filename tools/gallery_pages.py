@@ -65,9 +65,10 @@ MAX_FRAMES = 120
 # Appended to the caption of every picture with bodies (the model owner,
 # 2026-09-21: a body's copies spreading, transparent, and its arrow).
 COPIES_NOTE = (
-    "Every body is drawn with its copies, its own rows spreading in every direction as translucent discs "
-    "in its colour, and with the white arrow of its momentum vector p (no arrow: at rest); a product row "
-    "carries a short arrow along its direction."
+    "Every body is drawn with the copies, in the owner's word: the body's own rows, the rows carrying its "
+    "number that its self-creations release on its directions, drawn as translucent discs in its colour at "
+    "their Nodes on the GameBoard; and with the white arrow of its momentum label, the vector p of its record "
+    "(no arrow at p = 0); a product row carries a short arrow along its direction of the fan."
 )
 SQRT3 = math.sqrt(3.0)
 # Each family without a phase circle takes one of these colours, in the
