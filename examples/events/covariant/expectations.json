@@ -222,7 +222,8 @@
     }
    },
    "inside": 6,
-   "of": 7
+   "of": 7,
+   "note": "the one reading counted outside (the become tick 124 against the continuum's 125.2 +- 1) is inside the design's own integer pin 124 (DERIVATIONS_BEAM 17.6 M2: the 64th self-creation \"at the integers 70 and 124 by the primitive's own count\"; the continuum's 64 gamma = 125.2 is the limit, one gamma - 1 above the cadence from an empty accumulator; the physics-rule review REVIEW_3, must-fix 3: a relabel, nothing moved)"
   },
   "j4_muon_3640": {
    "source_sha256": "24e0c1bacec8e5b82fc602b1fc4580a234d420e922bbc1e9223df64d0eb60c3d",
