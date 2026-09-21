@@ -9,7 +9,10 @@ example world, compares two worlds or reproduces a known experiment; those are
 research runs, made once and recorded with a fingerprint and a date in
 [validation evidence](VALIDATION.md), never repeated as tests. Entries recorded
 before that date describe the suite as it was and are brought under the rule
-when their tests change.
+when their tests change. A pinned integer here, as a pin of the register, is
+what a detector read (a click, a record line); a reading of the GameBoard
+itself (a store's rows, a replay, a probe's count) is a host reading, and the
+tools label it GAMEBOARD (the model owner's record 163 of 2026-09-20, (5)).
 
 ## Suite inventory of 2026-09-19: one engine, the Beam Law
 
