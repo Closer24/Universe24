@@ -2484,7 +2484,9 @@ def page_index(out: Path, runs: Path | None) -> Path:
         (
             "clicks.html",
             "The clicks",
-            "the catalog's optical bench: a laser, a mirror, a slit and a screen of pixels clicking as records arrive; the pointer per pixel and the click list growing (a registered placement world)",
+            "a plate of pixels on the far side of a narrow beam clicking as records arrive, one click per "
+            "record by the ladder and the wheel value u, the click list growing (a demonstration world; the "
+            "catalog's optical bench cited beside it)",
         ),
         (
             "nucleus.html",
