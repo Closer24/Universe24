@@ -36,11 +36,133 @@ branch's form named as the ordered one. The crossing rule (record 158) and
 the `no-tables` items of record 155 are designed and not built; they are
 cited as orders, not as code.
 
-The targets, in the Boss's order, one section each: 1 the inventory (the
+Section 0 states the law as one operator with its two blocks and places
+every result under its block (the owner's second pass, record 167 as the
+Boss relayed it); sections 9 and 10 answer records 166 and 162. The
+targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
 general relativity, the delay field; 6 the information cost and the
 classical-quantum boundary; 7 Young's spacing and Bohr's levels.
+
+## 0. The operator F: one piecewise-linear map on the integer torus, its two blocks, and where every result of this document sits
+
+**The statement** (the owner's, accepted in record 167 as the Boss
+relayed it; verified here against sections 1 to 7). The whole law is one
+map F applied at every Node at every interval to the integer state s, per
+component with its own rate r and wall d:
+
+    s <- s + r;   e <- [s >= d];   s <- s - e d,
+
+every wall crossing an event. The components of s and their (r, d): a
+row's Manhattan count (rate `2 S_1 Q`, wall `2 T_d`, started at `T_d`;
+section 1.4) and its three axis deficits (rate `abs(v_i)` per Manhattan
+step, the carry `S_1` from the largest); a row's phase (rate
+`phase_per_link` per Link, or `n` per interval of age with the wall d,
+the whole part read mod N); a row's age (rate 1, no wall); a body's drive
+per axis (rate `p_a`, wall `Q S M + abs(p_a)`); a body's counts, on the
+branch the table `acc` (the turn: rate `content x n`, wall d; the owed
+count: rate `counted x n`, wall d; the release and the lamp; the push per
+column: rate `V E_c n_c`, wall `Lambda_c^2`); a record's birth wheel u
+(rate 1 per birth, wall N); the click's ladder (the comparison `2 T u + T
+<= 2 N C_k`, a wall read once). Everything in section 1.2 is F on one of
+these components or a permutation of them (the collision, the meeting's
+arc, the gate, the apportioning's tie), and the exceptions are section
+1.3's list.
+
+**The two blocks.** F is linear where its rates are constants of the
+world, and it feeds back where a rate is a function of what arrives:
+
+- **The linear block** (rows in flight): the translation at a constant
+  rate (the flight, the phase per Link or per interval, the age); the
+  group-ring addition at the merge (`Z[Z_N]`, with the cancel `[p + N/2]
+  = -[p]`); the integer matrix of a split (`w -> w a_i`, `m -> m A`) or
+  of a rotation (the half-angle tables) or of a gate (a permutation of
+  labels); and the evaluation `ev: Z[Z_N] -> Z[zeta_N]` at the click,
+  linear over the group ring. Every component here has the closed form
+
+      s(t) = floor(s_0 + r t)     (the accumulator's whole part at a constant rate; FORM.md section 1),
+
+  so a row's state at any time is a formula of its birth and its age, and
+  the limits of this document are limits of that formula.
+- **The feedback block** (the rates as functions of the arrivals): the
+  push `r = C a` (C the reader's charges per column, a the label flow of
+  the arriving rows: the rate of a body's momentum is bilinear in the
+  state, the reader's content times the flow); the owed count (the rate
+  the presence, or the age moment); the turn and the release (the rate
+  the content, which the clicks change); the drive (the rate the momentum,
+  which the push changes); the meeting's turn (the rate the crowd's flow).
+  These have no closed form; they are iterated, and their continuum limit
+  is the differential equation `ds / dt = r(s)`.
+
+**The readout.** The click reads one comparison, the ladder's cell `2 T u
++ T <= 2 N C_k`, and nothing else leaves the rows (section 6.1); the `C_k`
+it compares against are the norms `|ev(.)|^2` of the linear block's
+evaluations, the one quadratic step of the law.
+
+**Every result of this document under its block**, with its closed form
+or its difference equation, its limit, and the registered integer it is
+checked against:
+
+| Block | Component and its closed form | The limit | The registered check | Section |
+| --- | --- | --- | --- | --- |
+| linear | the flight, `m(tau) = floor((2 tau S_1 Q + T_d) / (2 T_d))` and the deficit ladder | the digital line at `Q / T_d -> 1 / sqrt 3` Links per interval, isotropic | record 144's cone, 17 and 24 Links at age 29 | 1.4, 4.1 |
+| linear | the phase, `floor((n / d) tau) mod N` along the line | `omega = c k`, dispersionless (the paper's check) | L7's path phases 23 and 23 (the pair form), 51 and 8 (the integer form) | 4.1, 7.1 |
+| linear | the crossing count of a row's line with a body's, `n (c +- v) tau + O(1)` | the receiver's Doppler `1 +- v / c` | record 158's 45, 58, 19, 38, 183, 311; the bar's 96.9 .. 303.1 | 2.2 |
+| linear | the merge, `Z[Z_N]` at one Node | the coherent sum within one Node | L1's `mz_equal` 41 of multiplicity 1682 | 6.3 |
+| linear | the evaluation at `zeta_N` and the norm | `S(N, Q) -> 2 sqrt 2`; Born to `1 / (2 N)` | `176 / 64`, `2896 / 1024`, `11584 / 4096`; the dark port 0 of 64 | 6.2 |
+| linear | two rows' phases at a pixel, `(n / d)(L_1 - L_2) / c` | Young's `lambda D / s`, from the fan's angular measure (record 160's Farey weights `3 Q^2 / (T_d T_d')` per direction) | L1's unequal arms 64/0, 32/32, 0/64; record 156's spacing 20.5 | 7.1 |
+| linear | the split's norm `sum w_i^2 / m_i = w^2 / m` | the conservation of a record's norm | L1's (3, 4) split 63/1 | 6.1 |
+| feedback | the push, `p_{t+1} = p_t + C a_t`, `a_t` the flow at the body's Node | `dp / dt = -M grad(A)`: Newton's and Coulomb's `1 / r^2` in the shell mean | series C's nine ring readings `r / N(r)`; item 7's `-1`, `-1 / 4` | 3.2 .. 3.4 |
+| feedback | the drive, `x_{t+1} = x_t + [drive >= D]`, `v = p / (Q S M + p)` | the dispersion `v(p)`, saturating at 1 | the bar's speeds 0.30, 0.45, 0.75 exact | 4.4 |
+| feedback | the owed count, `owed = by_clock(age, k n, d)` (the branch: `acc_owed`) | the clock at `1 / (1 + k n / d)`, the potential `M / r` under `age` | series E's `k_a r = 36.1`, `k_s r^2 = 41.5` | 5.1, 5.2 |
+| feedback | the field of many bodies, the sum of their rows' moments | Poisson and the retarded wave equation, linear | series E; series K's 0.000 (no term on the rows) | 5.1, 5.4 |
+| feedback | the turn under `action`, `phi += floor(k_1 abs(p) N / h) - floor(k_0 abs(p) N / h)` | the action `2 pi p r = j h` | series H's re-reads (r = 12 the whole j) | 7.2 |
+
+**The feedback block per world class**, its difference equation and its
+continuum limit `ds / dt = r(s)`, against the register:
+
+| Class | The difference equation, per interval | The limit | Registered |
+| --- | --- | --- | --- |
+| D, the orbit (a body about a fixed source, gravity) | `p += -M_A V(x)`, `V(x)` the flow at x (`q Q / N(r)` in the shell mean, radial); `x` by the drive | `d^2 x / dt^2 = -G M x / abs(x)^3`, a Kepler orbit with the retarded field | no orbit closed by D's criterion; the flat-curve period ratio 3.73 against 4 (record 131): the six-heading shells of section 3.2, not the limit's ellipse |
+| H, Bohr (the electric column against the proton's fan, the turn) | the same with `C = M_A (rho_A rho_B - 1)` and `phi` by the turn | the same orbit; the closure `2 pi p r = j h` | the mean inward push 40 600 against the derived 39 660 (1.02); r = 8 and 12 closing under the step drive | 7.2 |
+| G2, the stars (bodies thrown from one point in a crowd) | `p_i += -M_i sum_j V_j(x_i)` and the clock's owed count from the crowd | the deceleration of a matter-only expansion, `q > 0`, retarded | `q = +0.922` (the source rule), `+0.345` (under the key), `-0.108` coasting; nothing gives `q < 0` (records 124, 138) |
+| I, the nucleus (two bodies at one Link, three columns) | `p += (Q_A Q_B - G_A G_B - M_A M_B) U(1)` per interval toward the partner; a refused step hands `p_x` over | a fixed point `p = 0` on both after each contact: a bound pair | the deuteron's `310 967 280 640` per interval, 0 steps in 3000, the label 0 after each hand-over; the branch's 69 waits of 700 |
+| J, the weak (a clock in a crowd against a key) | `owed = by_clock(age, c n, d)` at the crowd c; the trigger at `at` | `t_trigger = at (1 + c n / d)`, the telescoped count | j1's 522 .. 524 pinned from 12 to 14 rows (525 at 15), j3's 574 pinned and 577 read (the crowd not one number) |
+
+**The classical-quantum boundary as the property of the rate.** A
+component whose rate is a constant of the world has the closed form
+`floor(s_0 + r t)`: its state at the click is a formula of its birth,
+exact whatever happened in between, and two such components of one record
+meeting at one Node are compared exactly by the evaluation: that is the
+quantum case, and the interference is the closed form's. A component
+whose rate is a function of the state is iterated, its history matters,
+and its limit is a differential equation: the classical case, a body's
+momentum under the push. A record is quantum while its rows are in the
+linear block and no read has selected a label (section 6.3: the
+visibility `[reads = 0] x 2 w_1 w_2 / (w_1^2 + w_2^2)`, the which-path S
+from `176 / 64` to `88 / 64`), and a body is classical because its rate
+reads the crowd. The boundary is crossed once per record, at the click,
+which is the one place the linear block's closed form is compared against
+a wall.
+
+**The paper's sentence.** "The model is one piecewise-linear map on an
+integer torus; the measurement is the one threshold that is read out."
+This document supports it with two precisions, without which it is not
+exact: (i) the map is piecewise-linear in every component of the rows
+(the flight, the phase, the age, the merge, the split, the evaluation)
+and in every count at a fixed content, but the feedback block's rates
+are bilinear in the state (the push is the reader's content times the
+arriving flow, `nature_beam.py:2147-2221`), so the exact word for the
+whole map is "piecewise-linear with bilinear rates" (or "piecewise-linear
+in the rows"); (ii) the threshold read out is one comparison per record
+(`2 T u + T <= 2 N C_k`, `amplitude.cell_of` on the branch, `rungs` and
+`choose` on main, `amplitude.py:174-203`), and the quantity it compares
+against is the norm of the linear evaluation, the law's one quadratic
+step; the sentence is exact if "the one threshold" is read as that
+comparison and the norm is understood as what it compares. With those
+two readings the document supports the sentence; with "piecewise-linear"
+taken to cover the push and the click's weight, it does not.
 
 ## 1. The inventory: every rule of beam-v1 as an operation on the integer torus, and what is not one
 
