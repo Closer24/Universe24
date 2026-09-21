@@ -1002,3 +1002,97 @@ set's mass; the parity of the bipartite lattice): the sources for the
 masses row with 19.1 and 19.3. Sections 18 to 20 with 16.2 (f), (g),
 18.2's addendum and 19.5: the rows drafted in the scratchpad enter when
 they are on main and merged into the branch.
+
+## The title decided, the closure declared (2026-09-21, the Boss's consolidated message of about 06:00Z; records 272 to 275, in the Boss's open pull request)
+
+The owner's decision (record 275, translated: "3, only that it explains
+how 24 follows from the group"): the title is "Universe24: a local
+integer law of nature and what follows from it"; the descriptive line
+became the abstract's first sentence in its short form. The condition
+is met by Theorem th:group in Part I's symmetries paragraph, with its
+proof in one paragraph: the maps of the six Ports keeping opposite Ports
+opposite are the signed permutations of the three axes, 2^3 x 3! = 48
+(the hyperoctahedral group B_3, record 226, the derivation's 16.3); the
+determinant is onto {+1, -1}, its kernel the 24 rotations of the cube
+(the symmetric group on the four body diagonals), its other coset the 24
+reflections; the hand is that determinant on a row (BEAM_LAW's parity
+passage: the image differs under exactly the 24 improper elements). What
+24 is exactly: the orientation-preserving symmetries of the octahedron
+of the six Ports, the rotation group of the cube. No further title
+candidates.
+
+The closure (record 275, "we are closed on everything"): the paper
+carries the quarks by the design's pins (QUARKS.md on the tree; series R
+not yet), the masses (section 19, notes 43 and 44), every formula with
+how and why it is derived and its registered run beside it, and names
+the GameBoard as the instrument of every table entry and not the
+subject (one sentence in the Method paragraph). A FAIL row stays FAIL.
+
+## Wave 3 applied (2026-09-21, after the merge of main at d870fedb)
+
+The drafted rows entered once their sources were on the tree: the
+masses row (19.1 to 19.5; notes 43, 44; the quarks design's pins; the
+colour sentence "in the law the quarks compose the nucleons' charge and
+binding, not their mass", colour-v1 a hypothesis to be tried, record 270
+(1)); the weak forms row (18.2 with its addendum, decay-by-crowd-v1
+pinned); the strong ratio row (18.3: 4.0, 6.0 with the diagonals,
+against 12.72); the periodic universe row (20.2, 20.3: open, a
+convention; the deciding number L / (2 chi_rec) measured above 0.97,
+Planck 2015 XVIII); the three-failures paragraph after the confrontation
+table (18.5). The c row gains series Q (merged at 3be07117: 290 of 290
+face clicks at the derived interval, Node and face; the pace 0.5718 to
+0.5893, mean 0.5810). Part I's two-blocks paragraph gains the crowd
+audit's sentence (note 47: 23 rules, 13 read the crowd, 10 only their
+own record). The confrontation section: the detector rule in one
+sentence (the register's rules; the owner's record 281), eighteen rows at
+d1fe2712 (three PASS, ten FAIL of which two pinned and one a refutation
+of a declared input, two BOUND, three NOT YET), row 8c (the massless
+neutrino, refuted; PDG 2024 and KATRIN 2022 as the register cites them)
+and row 3b, the far lamp's brightness through a detector (records 280
+and 282; the note docs/designs/far_lamp/BRIGHTNESS.md with its pull
+request open): q_eff = +1 from the luminosity distance ln(1 + z)
+sqrt(1 + z) (checked here: the z^2 coefficient vanishes, so (1 - q) / 2
+= 0), the shape residual 0.339 mag rms against flat Lambda-CDM (Milne
+0.055), the stretch 1 + z passing exactly against (1 + z)^(0.97 +- 0.10)
+(Blondin 2008), the surface brightness (1 + z)^-1 against Tolman's
+(1 + z)^-4. Row 3b is the one place this text cites a source not on
+its tree; it is marked as this paper's addition, cited by title, and
+named in the submission caveat with the instruction to re-read its
+numbers at the merge (the rule of referee round 10 kept visible, not
+broken silently). The Lorentz section's host integration is now called
+what the derivation's corrected 17.1 calls it: a floating-point
+consistency check, not the discrete proof.
+
+## Referee round 13 (2026-09-21): the title, the theorem of the 24, wave 3 and the far lamp, major revision, applied
+
+Sixteen findings, all applied. MAJOR: the theorem's last sentence and
+its proof claimed the hand as "the one datum" telling the 24 from the
+24 and attributed the parity reading to "the derivation's" worlds;
+BEAM_LAW's parity passage (series P's worlds of tests/test_hand.py)
+reads exactly the 24 improper elements only on worlds with an axis, an
+axial vector tells them apart too, and a hand without an axis is
+mirror-equal under all 48: the statement now says "the one pseudoscalar
+column ... as does an axial vector", the proof names series P and the
+axis. MINOR: the faithfulness of the rotations' action on the four body
+diagonals shown in one clause (the identity and the central inversion
+alone fix all four, the inversion improper); Lambda-CDM written in words
+(Lambda is the wavelength here); the symbols of row 3b and the periodic
+row renamed (r for the distance, L_lamp, L_box; H and c_0 named at first
+use in the expansion row); the neutrino family in typewriter (nu is the
+turn rate); q_0 = -0.53 +- 0.01 as in row 3, Riess and Perlmutter for the
+discovery only; the one clause on why the power of (1 + z) is one (each
+click delivers the row's birth content, 6.4; read at the arrival rate
+the power would be two and q_eff = 0, this paper's remark); the caveat
+names the two numbers of row 3b unverified against any file of the tree
+(0.339 / 0.055 mag rms; 0.97 +- 0.10) and adds records 271, 273 and 276;
+row 3 described as the thrown stars' Doppler z; the weak forms row in
+the addendum's words (the rung the family's own b / W, the wheel
+advanced by the arriving rows, failing only in an empty world); the
+masses row's pins attributed to 19.4 and the seven worlds' own, colour-
+v1 named for confinement and failing the vector and local tests; the
+register cited by its base 88d843ef with row 8c added at d1fe2712; the
+preamble's rule with its exception (a pin marked so); the abstract's
+mass "in form". Verified without change by the referee: the 48 / 24 / 24
+and record 226; note 47's 23 / 13 / 10; series Q's numbers; the tally;
+row 8c; the strong ratio; the periodic row; the host check's 10^-12;
+the column counts; the four theorems of the measurement chapter.

@@ -25,8 +25,7 @@
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\rung}{b}
 
-\title{One map on an integer torus: the general formula of a local integer\\
-universe, what follows from it and what does not, and the click that reads it}
+\title{Universe24: a local integer law of nature and what follows from it}
 \author{Alon Gonen\\
 \small Independent researcher\\
 \small \texttt{alon@defounder.ai} \quad ORCID 0009-0008-2701-4599}
@@ -36,36 +35,34 @@ universe, what follows from it and what does not, and the click that reads it}
 \maketitle
 
 \begin{abstract}
-We state one law and report what follows from it. The state of the
-universe is a vector of bounded integers on the GameBoard of Nodes and
-six Links; the law is one map applied at every Node at every
-interval, per component with a rate and a wall: translate, compare with
-the wall, subtract on crossing; every crossing is an event. Its rates
-are constant for a message in transit and bilinear in
-the state for a body reading what arrives; the one read-out that
-deletes is the click, one comparison of a birth phase against a
-record's squared integer sum. From this law, its tables
-and the declared families follow, in the continuum limit and
-against recorded runs: Gauss's law exactly, Newton's and Coulomb's
-inverse square in the shell mean, the largest uniform pace $c =
-1/\sqrt3$ Links per interval, the click's weight forced to a positive
+One piecewise-linear map on an integer torus is the law; we state it and
+report what follows from it. The state of the universe is a vector of
+bounded integers on the GameBoard of Nodes and six Links; the law is one
+map applied at every Node at every interval, per component with a rate
+and a wall: translate, compare with the wall, subtract on crossing;
+every crossing is an event. Its rates are constant for a message in
+transit and bilinear in the state for a body reading what arrives; the
+one read-out that deletes is the click, one comparison of a birth phase
+against a record's squared integer sum. The name counts the $24$
+rotations among the $48$ symmetries of the axes. From this law, its
+tables and the declared families follow, in the limit and against runs: Gauss's law exactly, Newton's and
+Coulomb's inverse square in the shell mean, the largest uniform pace $c
+= 1/\sqrt3$ Links per interval, the click's weight forced to a positive
 quadratic form of power $2$ and Tsirelson's bound as a limit, Poisson's
-equation for the delay field; and, in the limit only, Doppler, Young's
-spacing and Bohr's condition. What does not follow is stated with the same care: Newton's
-constant carries the world's declared width and the masses are inputs;
-Einstein's field equation is not reached; the
-Lorentz factor is not in the law as declared, which predicts an
-unslowed clock in motion as a row that can fail, while the hypothesis
-built beside it, the covariant readings, gives the factor and $E =
-mc^2$ on paper. Seventeen dimensionless readings meet nature under one
-parameter set: three pass, nine fail, two bound a parameter,
-three await a run. The measurement chapter defines the click model
-exactly, proves four theorems (the CHSH value at $N$ phase steps within
-$8/N + 0.045$ of $2\sqrt2$, on both sides of it) and reports the runs
-recorded before the text, from the Mach-Zehnder to the pair at $S =
-2.75$, GHZ and a CNOT gate. Every
-number has one source; every claim is measured, proved, assumed or
-open.
+equation for the delay field; in form, a bound set's mass as its total
+content; and, in the limit only, Doppler, Young's spacing and Bohr's
+condition.
+What does not follow is stated as plainly: Newton's constant carries
+the world's declared width and the masses' counts are inputs;
+Einstein's field equation is not reached; the Lorentz factor is not in
+the law as declared, which predicts an unslowed clock in motion, a row
+that can fail; the covariant readings built beside it give the factor
+and $E = mc^2$ on paper. Eighteen dimensionless readings meet nature
+under one parameter set: three pass, ten fail, two bound a parameter,
+three await a run; a far lamp's brightness fails too. The measurement
+chapter defines the click model exactly, proves four theorems and
+reports the runs recorded before the text. Every number has one source;
+every claim is measured, proved, assumed or open.
 \end{abstract}
 
 \section{Introduction}
@@ -109,7 +106,10 @@ experiments register \cite{register} with its world, its expectation
 written before the run and its source fingerprint; every number of the
 manuscript is mapped to its source in a table beside it \cite{checks}.
 A formula whose confirming run has not been made is stated as a pin, not
-as a result. The archive will be cited at a version \cite{zenodo}.
+as a result. The GameBoard, the lattice of Nodes with six Ports on which
+the one map is applied per interval, is the instrument of every table
+entry and not the subject of this paper. The archive will be cited at a
+version \cite{zenodo}.
 
 \part{The formula}\label{part:formula}
 
@@ -180,7 +180,13 @@ momentum the push changes. These have no closed form; they are iterated,
 and their continuum limit is the differential equation $d\mathbf s/dt =
 \mathbf r(\mathbf s)$. The exact word for the whole map is therefore
 piecewise-linear in the rows with bilinear rates in the bodies
-\cite{derivations}.
+\cite{derivations}. What each rule reads is audited rule by rule
+\cite{beamlaw}: of the $23$ rules in force at the audited commit, $13$
+read the crowd (everything at the Node but the rule's own number, and
+the six neighbouring Nodes) and $10$ read only their own record: the
+walk, the escape at a face, the click's choice, the re-emission, the
+rotation, the turn, the birth, the release, the border lifetime and the
+decay's timing.
 
 \paragraph{The read-out.} The click reads one comparison and nothing else
 leaves the rows (a detector's other readings, the counts, the flow and
@@ -249,7 +255,42 @@ symmetry is not a symmetry of the lattice but of the limit of its linear
 block, the wave equation at $c$ (Section~\ref{sec:lorentz}). The $48$
 are the lattice's stand-in for the rotation group; angular momentum is
 conserved only up to the lattice, and no Noether theorem for the map is
-claimed \cite{log}.
+claimed \cite{log}. The name of the program counts them.
+
+\begin{theorem}[the $24$ of the name]\label{th:group}
+The maps of the six Ports onto themselves that send opposite Ports to
+opposite Ports form the group of the signed permutations of the three
+axes, of order $2^3 \cdot 3! = 48$. The determinant is a homomorphism of
+this group onto $\{+1, -1\}$; its kernel, the rotations of the cube, has
+index $2$ and order $24$, and is the group of the permutations of the
+cube's four body diagonals; the other coset, the reflections, has $24$
+elements too. The hand, the one pseudoscalar column of a row, which a
+map $g$ sends to $\det(g)$ times itself, tells the $24$ rotations from
+the $24$ reflections, as does an axial vector.
+\end{theorem}
+
+\begin{proof}
+A map of the six Ports that keeps opposite Ports opposite permutes the
+three axes ($3!$ choices) and then fixes a sign on each ($2^3$ choices),
+and every such choice is realised by one signed permutation matrix; so
+the group is the hyperoctahedral group $B_3$, the symmetry group of the
+cube and of the octahedron of the Ports, of order $48$. The determinant
+of a signed permutation matrix is $\pm 1$ and multiplicative, and it is
+$-1$ on the reflection in one coordinate plane, so it is onto $\{+1,
+-1\}$; the kernel of a homomorphism onto a group of two elements has
+index $2$, so there are $24$ rotations and $24$ reflections. A rotation
+of the cube permutes its four body diagonals; the only signed
+permutations fixing all four diagonals as lines are the identity and
+the central inversion, whose determinant is $-1$, so the action of the
+kernel is faithful, and both groups having order $24$, the rotations are
+the symmetric group on the four diagonals. A pseudoscalar column goes to
+$\det(g)$ times itself by definition; series P's parity worlds with an
+axis read exactly the $24$ improper elements as those under which the
+image differs and none of the $24$ proper ones, and a hand without an
+axis is mirror-equal under all $48$ \cite{beamlaw,log}. That the
+six operations commute with the $48$ up to the three ties is the
+statement above, not part of this theorem.
+\end{proof}
 
 \part{What follows from the formula}\label{part:table}
 
@@ -281,7 +322,7 @@ Newton's inverse square, the equivalence principle, the third law at rest & reac
 Coulomb's law, $k_C = G$, the sign $-\rho_A\rho_B$ & reached in form & 3.4 & series C item 7: $-1$, $-1/4$ \\
 The receiver's Doppler $1 \pm v/c$ on the axis & pin: reached under the crossing rule, decided and not built; on the archived code not reached & 2.2, 2.7 & record 158's design counts $45, 58, 19, 38, 183, 311$ (a host script); the run pinned \\
 The source's Doppler $1/(1 \mp v/c)$ & reached & 2.5 & series G2, coasting stars \\
-$c = 1/\sqrt3$ Links per interval & the bound proved (the largest uniform pace); the value assumed (the supremum) & this paper, Prop.~\ref{prop:pace}; 13.2 & series L7: the cone, both rows at the age $29$ \\
+$c = 1/\sqrt3$ Links per interval & the bound proved (the largest uniform pace); the value assumed (the supremum) & this paper, Prop.~\ref{prop:pace}; 13.2, 11.1 & series L7: the cone, both rows at the age $29$; series Q: $290$ of $290$ face clicks at the derived interval, Node and face, the pace $0.5718$ to $0.5893$ (mean $0.5810$; the asymptotic $0.5774$ to $0.5818$) \\
 The click's weight as a positive quadratic form of power $2$ & reached for the form (the lattice Gleason: rotation invariance, the balanced splitter's conservation and the counts force it); not reached from the algebra: the harmonic constants, consistent with the fundamental by record 156's host map and pinned by no run & 6.5, 6.6 & series L: $63/1$ pins the power to $[1.917, 2.489)$, the far pair's $27, 5, 5, 27$ to $[1.784, 2.054)$ \\
 Tsirelson's bound as a limit, $S(N, Q) \to 2\sqrt2$ & reached as a limit; two-sided at finite $N$ & 6.2; Thm.~\ref{th:bell} & series L: $176/64$, $2896/1024$, $11584/4096$ \\
 Young's spacing $\Lambda D/s$ & reached in the limit of every direction; no registered click pattern shows it (the wheel decided, not built); pin & 7.1 & L2b's fringes in the record's weights (visibility $0.954$); record 156's map (host) $23.5$ against $23.3$; the run under the wheel pinned \\
@@ -291,8 +332,9 @@ The gravitational redshift & reached at first order; different law at second ord
 Newton's geodesics, retarded & reached in the limit; the post-Newtonian terms not & 5.3 & no registered orbit confirms it (series D closes none, record 131); the push law is checked by series C \\
 The information cost per record and the classical-quantum boundary & new, a quantity of the law & 6.1, 6.3 & series L: $82, 4, 6, 185$ units for $1, 2, 3, 6.3$ bits \\
 The entropy as the count of torus points consistent with the click list, produced only at the click, the cancel and the leaks; the second law & new; the second law reached in the law's terms & 14 & six registered worlds: bits read plus bits erased $= \log_2 N$ per record \\
-The expansion as a growing wall of the flight: $c\,a = c_0$, $1 + z = a(t_r)/a(t_e)$, the Milne case $q = 0$ & reached for the form; nature's $q_0 = -0.53$ not reached (Table~\ref{tab:nature}, row 3); whether the wall reads the tick locally is the open decision & 15 & series G2's $24$ thrown stars re-read at rest under the wall, rms $0.0044$ (host); $q = -0.108$ coasting, registered \\
+The expansion as a growing wall of the flight: $c\,a = c_0$, $1 + z = a(t_r)/a(t_e)$ ($a$ the wall's scale, $H$ its growth rate, $c_0$ the pace at $a = 1$), the Milne case $q = 0$ & reached for the form; nature's $q_0 = -0.53$ not reached (Table~\ref{tab:nature}, row 3); whether the wall reads the tick locally is the open decision & 15 & series G2's $24$ thrown stars re-read at rest under the wall, rms $0.0044$ (host); $q = -0.108$ coasting, registered \\
 The smallest mass per kind: a charged family's floor is the reduced denominator of its charge per unit & reached as a theorem, conditional on nature's whole charge (the floors $1$ and $3$); the counts input & 16.2 (d) & the register's electron and proton $1$; the quark design's quarks $3$ \\
+The masses: a bound set's mass as its total content (held plus in flight less escaped), the nucleon as a chain of three with the odd quark at the centre, the release of a bound body reading its energy accumulator & reached in form; reached in sign (the neutron's charge radius squared negative); $m_n - m_p$ as the held difference with the electric part named ($2.54$, $1.51$ with the paid electric column, against $1.29$); bound: the floors $1$ and $3$; input: the electron's count, the quarks' held counts and every bond's content in flight; in the law the quarks compose the nucleons' charge and binding, not their mass \cite{quarks}; confinement absent, colour-v1 named for it and failing the vector and local tests; refuted as declared: a massless neutrino (Table~\ref{tab:nature}, row 8c) & 19.1 to 19.5; \cite{beamlaw} notes 43, 44 & the pins before any run: 19.4's (a chain and never a triangle, the same read mass for $uud$ and $udd$ within the grain) and the seven worlds' own \cite{quarks}; no run registered on the archived tree \\
 \midrule
 Newton's constant $G = K\eta/(4\pi S)$, $\eta = n/d$ the release rate per unit of content per direction & reached in form, with the width $S$ an input, a choice of units ($\alpha_G = \alpha/\rho_p^2$, $\alpha$ the fine-structure constant, $\alpha_G$ the gravitational coupling of two protons, $\rho_p$ the proton's charge per unit of content); no rule in sight fixes the hierarchy $\alpha/\alpha_G = 1.2 \times 10^{36}$ & 3.3, 16.2 (e) & the world file's width \\
 The masses and charges of the families & input: the initialisation & record 106; \cite{predictions} & the family table \\
@@ -302,10 +344,13 @@ The bending of light & not reached on the archived code; reached in form, $\sim 
 $E = mc^2$, velocity addition, the mass of a moving body & not reached as declared: no energy of motion; reached under the covariant readings, the hypothesis decided for the build, on paper (Sect.~\ref{sec:lorentz}) & 4.5, 17.4 & \\
 Bohr's energies and the Rydberg lines & not reached: no energy, no transition & 7.3 & \\
 Heisenberg's single-opening spread, $w\,\Delta(\sin\theta)/\Lambda = 0.886$ ($w$ the opening's width, $\theta$ the angle behind it, $\Lambda$ the wavelength) & not yet under the one click: the last registered value is the crowd form's & 6, 7; the register's A10 & series A10: $1.08$ at the width $27$ \\
+The periodic universe against the measurements & open, a convention: every reading inside the first winding is the same on the periodic and the open GameBoard; the one deciding number, the box's side $L_{\mathrm{box}}$ in last-scattering diameters, measured above $0.97$ \cite{planck2015}; a smaller torus refuted (no matched circles), a larger one indistinguishable by any measurement to date & 20 & no run under the growing wall; the pin is a lamp's second image at the winding distance with the redshift $e^{H L_{\mathrm{box}}/c_0} - 1$ \\
 \midrule
 The Lorentz factor: a clock in motion, the dispersion $v(p)$, the force between moving bodies, $E = mc^2$ & different law as declared (three of a body's four readings in the lattice's frame; the count's number covariant, its rate not), a row that can fail; reached under the covariant readings, the comparison hypothesis decided for the build, on paper, not built & 4.3, 4.4, 12, 12b, 12c, 17; Sect.~\ref{sec:lorentz} & J4's muon (a pin: the $64$th turn at $64$ as declared, $70.9$ and $125.2$ under the covariant readings); G2's fastest star $z = 0.2636$ against $0.315$ \\
 The transverse Doppler & different law: exactly $1$ & 2.3 & record 158's design script, transverse exactly $1$ (host) \\
 The isotropy of $c$ & different law: a moving laboratory's two-way anisotropy of order $\beta^2/2$, refuted by \cite{nagel2015} unless the laboratory is at rest in the lattice's frame, removed under the covariant readings (Table~\ref{tab:nature}, row 5b); the rounding's anisotropy below $1/T_d$ a bound on $Q_f$ & Prop.~\ref{prop:pace}; 12.3; Sect.~\ref{sec:lorentz} & the $10^{-18}$ measurement; $Q_f$ of order $5.8 \times 10^{17}$ \\
+The neutron's decay curve and the neutrino's passage (a step and a window where nature is memoryless) & different law as built; against the body's own record a click is refuted (the width over the median $2.1$ and $1.6$ against $3.17$, a ramp against the exponential); against a comparison the crowd keeps fresh (the rung the family's own $b/W$, the wheel advanced by the arriving rows) a click is memoryless as far as the crowd mixes (decay-by-crowd-v1, a hypothesis pinned, failing only in an empty world) & 18.2 with its addendum & series J1 and J2 (Table~\ref{tab:nature}, rows 8a and 8b) \\
+The alpha's binding over the deuteron's & different law: the give per contact Link on the six Ports gives $4.0$ ($6.0$ with the diagonals) against $12.72$, the lattice bipartite (no triangle, no tetrahedron); the remainder the quarks' & 18.3 & series N (Table~\ref{tab:nature}, row 7b) \\
 \bottomrule
 \end{tabular}
 \caption{\label{tab:consequences}What follows from the law and what does not. The derivation column gives the section of \cite{derivations} (or of this paper); the check column the register's series \cite{register}, the log's record \cite{log}, or the pin where the run is not made.}
@@ -781,7 +826,11 @@ Theorem~\ref{th:bell}.
 
 \section{The confrontation with nature}\label{sec:nature}
 
-The program keeps a confrontation register \cite{nature}: one row per
+Only a detector's reading is a measurement; a number of the GameBoard
+(a probe's presence, a row's count) is never compared with nature
+except as a pin marked so, and the register's rules say so
+\cite{nature}. The program keeps a
+confrontation register \cite{nature}: one row per
 registered detector reading that has a dimensionless counterpart in
 nature, read under one parameter set (the grain and the family table as
 the registered worlds declare them, nothing moved to meet an experiment;
@@ -793,8 +842,10 @@ where the reading is not registered. A FAIL is a result of the law and is
 stated with the same care as a pass; where a derivation has pinned the
 reading and its run is not made, the verdict is given from the pin and
 says so, and the row is also a NOT YET for the run. The register's
-seventeen rows, read at the archive's commit \texttt{88d843ef} (three
-PASS, nine FAIL, of which two are pinned, two BOUND, three NOT YET), are
+eighteen rows (its base \texttt{88d843ef}; row 8c added at
+\texttt{d1fe2712}; three
+PASS, ten FAIL, of which two are pinned and one is a refutation of a
+declared input, two BOUND, three NOT YET), are
 Table~\ref{tab:nature}; six of the published values are marked in the
 register as to be verified against their sources before submission
 (the visibility of \cite{grangier1986}, the Sorkin parameter of
@@ -802,9 +853,11 @@ register as to be verified against their sources before submission
 \cite{botermann2014} and \cite{nagel2015}, the figure of
 \cite{nairz2002}) and are printed here as the register prints them; the
 dimensional constants, which need the dictionary's conversion fixed
-once, are not in this pass. Two cells are this paper's additions to the
-register, marked so in the table: the covariant readings of
-Section~\ref{sec:lorentz} in rows 4a and 5b, which the register predates.
+once, are not in this pass. Three cells are this paper's additions to
+the register, marked so in the table: the covariant readings of
+Section~\ref{sec:lorentz} in rows 4a and 5b, which the register
+predates, and row 3b, the far lamp's brightness through a detector, from
+a note of the same day \cite{farlamp}.
 
 \begin{table}[H]\centering\footnotesize
 \setlength{\tabcolsep}{4pt}
@@ -818,6 +871,7 @@ Row & Observable and nature's value & The law's registered reading & Verdict \\
 2b & Mach-Zehnder visibility: $0.98$ & the offers $1681/1682$, the clicks $64/0$ & PASS: $0.9988$ \\
 2c & The power of the click's form: the Sorkin parameter of third-order interference $\kappa = 0.0064 \pm 0.0119$ \cite{sinha2010} & the power pinned to $[1.917, 2.054)$ by $63/1$ and $27, 5, 5, 27$ & PASS: contains $2$ \\
 3 & The deceleration parameter $q_0 = -0.53 \pm 0.01$ \cite{planck2018,riess1998,perlmutter1999} & $-0.108$ coasting; the gravity and double crowds $+0.35$ to $+1.5$ & FAIL: no term with $q < 0$ \\
+3b & The brightness of standard lamps against $z$, $q_0 = -0.53 \pm 0.01$ as in row 3 (the discovery of $q_0 < 0$ \cite{riess1998,perlmutter1999}); the stretch of their light curves $(1 + z)^{0.97 \pm 0.10}$ \cite{blondin2008}; Tolman's surface brightness $(1 + z)^{-4}$ \cite{tolman1930} & the lamp at rest under the growing wall, read at $1/(1 + z)$ of its rate, each click delivering the row's birth content (the derivation's 6.4; read at the arrival rate instead, the power would be two and $q_{\mathrm{eff}} = 0$, this paper's remark): the flux $L_{\mathrm{lamp}}/(4\pi r^2 (1 + z))$ with $r = (c_0/H)\ln(1 + z)$, $q_{\mathrm{eff}} = +1$; the stretch $1 + z$; the surface brightness $(1 + z)^{-1}$ (\cite{farlamp}; this paper's addition) & FAIL: after a detector the gap widens, the shape residual against the flat model with a cosmological constant $0.339$ mag rms (Milne's $0.055$); the stretch passes exactly; the surface brightness fails by three powers; the law carries no dark energy and its brightness is short of it by more than Milne is \\
 4a & The muon's lifetime in flight, $\gamma = 29.33$ \cite{bailey1977} & the counter's ratio $1$ (a pin, J4 not run) & FAIL (pinned): a factor $29.33$ as declared; $\gamma$ exactly under the covariant readings, decided for the build (J4's pins $70.9$ and $125.2$ at $0.43c$ and $0.86c$ against $64$; this paper's addition) \\
 4b & A moving lamp's redshift with the clock's factor \cite{botermann2014} & $z = 0.2636$ at $\beta = 0.2674$ & FAIL: $0.315$ expected, $17$ grains below \\
 5a & The anisotropy of $c$ by direction, below $10^{-18}$ \cite{nagel2015} & the pace $0.5774$ to $0.5818$ at $Q_f = 64$ & BOUND on $Q_f$: of order $5.8 \times 10^{17}$ \\
@@ -827,12 +881,25 @@ Row & Observable and nature's value & The law's registered reading & Verdict \\
 7b & The alpha's binding over the deuteron's, $12.72$ \cite{ame2020} & $2.0$ (series N) & FAIL: a factor $6.4$; the give once per body \\
 8a & The neutron's decay curve (exponential, width over median $3.17$; the lifetime of \cite{gonzalez2021}) & $0.036$, a step (series J1) & FAIL: a factor $88$ \\
 8b & The neutrino's passage through a second detector, about $1$ & $0$ (series J2, a window) & FAIL \\
+8c & The lightest massive neutrino over the electron's mass: at least $1 \times 10^{-7}$ from the oscillations' squared mass differences \cite{pdg2024}, at most $1.6 \times 10^{-6}$ from the direct bound \cite{katrin2022} & the \texttt{nu} family with no content, massless as declared (19.5) & FAIL (a declared input refuted): $0$ against at least $10^{-7}$; a content above $0$ is an input the register does not declare; the oscillation itself, a family turning into another in flight, is not modelled \\
 9 & Malus's law at $45$ degrees, $1/2$ & no polariser built & NOT YET \\
 10 & The single-opening spread $0.886$ \cite{nairz2002} & $1.08$, the crowd form's (series A10) & NOT YET under the one click \\
 \bottomrule
 \end{tabular}
-\caption{\label{tab:nature}The confrontation register \cite{nature} at the archive's commit \texttt{88d843ef}: seventeen dimensionless readings against nature under one parameter set (eight worlds with another clock pair, on which no verdict depends). Each row's arithmetic and caveat are in the register; the published sources are cited here.}
+\caption{\label{tab:nature}The confrontation register \cite{nature} (base \texttt{88d843ef}, row 8c added at \texttt{d1fe2712}): eighteen dimensionless readings against nature under one parameter set (eight worlds with another clock pair, on which no verdict depends). Each row's arithmetic and caveat are in the register; the published sources are cited here. Row 3b is this paper's addition.}
 \end{table}
+
+The register's three structural failures are read under one logic in
+the derivation \cite{derivations}: the clock in motion closes on paper
+under the covariant readings (rows 4a, 4b, 5b); the weak forms split,
+the body's own record refuted and a comparison the crowd keeps fresh
+memoryless as far as the crowd mixes, the rung the family's own (rows
+8a, 8b; a hypothesis pinned); the strong ratio closes in form and stays short in number (row
+7b); the masses stay open, their floors fixed and their counts inputs
+(row 8c refutes one declared count). Row 3 is the thrown stars'
+Doppler $z$ (and on paper the wall's Milne $q = 0$), not the brightness;
+after a detector the brightness widens the gap (row 3b), and the one
+reading of that row the law passes exactly is the stretch $1 + z$.
 
 \part{The click model: the measurement chapter}\label{part:click}
 
@@ -1904,8 +1971,10 @@ the energy $E$ as an accumulator of the work done by the push, with
 the drive $\mathbf v = \mathbf p c^2/E$; and the turn per proper time,
 $E_0/E$ per interval, $E_0$ the rest energy. Under them $E_0 = mc^2$, $m$
 the body's content in the drive's units, is forced by the Newtonian
-limit; the invariant $E^2 - p^2c^2$ is kept to $10^{-12}$ in a host
-integration (whether the remainder closes it exactly is open); the
+limit; the invariant $E^2 - p^2c^2$ is kept to $10^{-12}$ in a
+floating-point host integration, a consistency check of the proposal
+and not the discrete proof, which the hypothesis must give in integers
+and remainders before it is built; the
 muon's $64$th turn falls at $70.9$ and $125.2$ at $0.43c$ and $0.86c$;
 the field of a moving charge is Heaviside's with the magnetic term; the
 contraction and the bond's period are Lorentz's by Lorentz's 1904
@@ -2029,9 +2098,16 @@ code no longer has the world key. Two things this text cites are, at
 the tree it was written on, decided and not yet entered in the archive's
 log and decisions file: the record of the covariant readings decided in
 place of the seventh operation (record 270, carried by the derivation's
-17.5 and 18.1), whose entry and matching decision line must be on the
-archived tree before submission, together with the derivation's
-sections as amended.
+17.5 and 18.1), the records of the weak addendum, the masses' notes and
+the crowd audit (271, 273, 276), the records of the title and of the
+closure (272 to 275), the far lamp's brightness note of row 3b
+\cite{farlamp} and the quarks' run (series R), whose entries and
+matching decision lines must be on the archived tree before submission,
+together with the derivation's sections as amended. Two numbers of row
+3b, the shape residual $0.339$ mag rms with Milne's $0.055$ and the
+exponent $0.97 \pm 0.10$, are unverified against any file of the tree
+this text was written on and are to be re-read against the note at its
+merge.
 
 \section*{Use of AI tools}
 The simulator's code, the design documents, the check scripts and the
@@ -2044,15 +2120,15 @@ submission.]
 \begin{thebibliography}{99}
 \bibitem{paper1} A. Gonen, A finite-integer causal-GameBoard testbed: which resources reproduce interference, causal collapse and Bell correlations on one GameBoard (2026), arXiv preprint.
 \bibitem{paper2} A. Gonen, Redshift from delay growth on a closed integer GameBoard: the law, its kinematic correspondence to a scale factor, and the supernova test (2026), arXiv preprint.
-\bibitem{beamlaw} The Beam Law and its implementation notes (note 37, the amplitude law), \texttt{docs/BEAM\_LAW.md} of the archived code \cite{zenodo}.
+\bibitem{beamlaw} The Beam Law and its implementation notes, \texttt{docs/BEAM\_LAW.md} of the archived code \cite{zenodo}: note 37 (the amplitude law), 43 (the mass of a bound set as its total content), 44 (the parity, the group's two classes) and 47 (the crowd audit: what every rule in force reads of its own record and of the crowd).
 \bibitem{design} The design of \texttt{amplitude-v1} and its check outputs, \texttt{docs/designs/amplitude-v1/} of the archived code \cite{zenodo}.
-\bibitem{register} The experiments register, \texttt{docs/EXPERIMENTS.md} of the archived code \cite{zenodo}: series L (the click chapter, with the worlds \texttt{examples/events/amplitude/}, their \texttt{expectations.json} and the reading tool \texttt{tools/amplitude\_path.py}), L2b and L7, and, for Table~\ref{tab:consequences}, series C, D, E, G2, H, J, K and N; every entry carries its expectation written before the run and its source fingerprint.
+\bibitem{register} The experiments register, \texttt{docs/EXPERIMENTS.md} of the archived code \cite{zenodo}: series L (the click chapter, with the worlds \texttt{examples/events/amplitude/}, their \texttt{expectations.json} and the reading tool \texttt{tools/amplitude\_path.py}), L2b and L7, and, for Table~\ref{tab:consequences}, series C, D, E, G2, H, J, K, N and Q (c measured behind a detector); every entry carries its expectation written before the run and its source fingerprint.
 \bibitem{checks} \texttt{paper/general\_formula/checks/s\_of\_n.py}, \texttt{which\_path\_window.py}, \texttt{tables\_norm.py}, \texttt{information\_transfer.py}, \texttt{limits.py} and \texttt{light\_speed.py} with their outputs, \texttt{figures/summary.json} and \texttt{NUMBERS.md}, in the archived code \cite{zenodo}.
-\bibitem{log} The dated log of 2026-09-20, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}, records 96 (coherence within one Node), 101 (the landing), 102 (the checks of this paper), 105 (the review of the pair and the gate: the marginals re-read over all 4096 setting pairs, the arms' order), 144 (the cone, L7), 156 (the two slits: the wheel, the exact phase, the 18 intervals), 160 (the fan's angular weights) and, for the pace and Section~\ref{sec:lorentz}, records 186 and 191 (c as the flight's norm; the one operator for rows and bodies), 213, 224 and 228 (the derivation's sections 12, 13 and 12b), 225 and 226 (the group of 48 and its conservation up to the lattice), 230 (the three routes), 231 (a boost not among the 48), 245 (section 12c closes route C), 249 (the first decision: A and B), 259, 260 and 264 (the covariant readings recommended in place of the root) and 270 (the covariant readings decided in its place).
+\bibitem{log} The dated log of 2026-09-20, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}, records 96 (coherence within one Node), 101 (the landing), 102 (the checks of this paper), 105 (the review of the pair and the gate: the marginals re-read over all 4096 setting pairs, the arms' order), 144 (the cone, L7), 156 (the two slits: the wheel, the exact phase, the 18 intervals), 160 (the fan's angular weights) and, for the pace and Section~\ref{sec:lorentz}, records 186 and 191 (c as the flight's norm; the one operator for rows and bodies), 213, 224 and 228 (the derivation's sections 12, 13 and 12b), 225 and 226 (the group of 48 and its conservation up to the lattice), 230 (the three routes), 231 (a boost not among the 48), 245 (section 12c closes route C), 249 (the first decision: A and B), 259, 260 and 264 (the covariant readings recommended in place of the root; one paper on the general formula), 261, 262 (the owner's finding on 13.2 (a)), 266, and, in the Boss's open pull request at the time of writing, 270 (the covariant readings decided in its place), 272, 274 and 275 (the title and the closure).
 \bibitem{lightspeed} c in the vector law, \texttt{docs/designs/light\_speed/FORM.md} with the map \texttt{light\_speed\_map.py} and its output, of the archived code \cite{zenodo}.
 \bibitem{highlights} The project's decisions and dictionary, \texttt{docs/HIGHLIGHTS.md} of the archived code \cite{zenodo}, section 5.7 (the conversions, the six operations, what is derived and what is input).
-\bibitem{derivations} The derivations of the beam law, \texttt{docs/DERIVATIONS\_BEAM.md} of the archived code \cite{zenodo}, sections 0 (the operator and its two blocks), 2 (Doppler), 3 (Newton and Coulomb), 4 (special relativity as the limit's symmetry), 5 (the delay field), 6 (the information cost and the click's square), 7 (Young and Bohr), 9 (the law of information), 12, 12b and 12c (Lorentz from the delay field; the mover's counter), 13 (the one constant), 14 (entropy), 15 (the growing wall), 16 (the numbers of nature), 17 (the theorem of covariant readings) and 18.1 (the clock in motion closed on paper, with the pins).
-\bibitem{nature} The confrontation register, \texttt{docs/NATURE.md} of the archived code \cite{zenodo}: seventeen dimensionless detector readings against nature under one parameter set, with each row's arithmetic, source and caveat.
+\bibitem{derivations} The derivations of the beam law, \texttt{docs/DERIVATIONS\_BEAM.md} of the archived code \cite{zenodo}, sections 0 (the operator and its two blocks), 2 (Doppler), 3 (Newton and Coulomb), 4 (special relativity as the limit's symmetry), 5 (the delay field), 6 (the information cost and the click's square), 7 (Young and Bohr), 9 (the law of information), 12, 12b and 12c (Lorentz from the delay field; the mover's counter), 13 (the one constant), 14 (entropy), 15 (the growing wall), 16 (the numbers of nature), 17 (the theorem of covariant readings), 18 (the three structural failures under one logic), 19 (the masses generically), 20 (the periodic universe against the measured numbers) and 21 (the derivation map).
+\bibitem{nature} The confrontation register, \texttt{docs/NATURE.md} of the archived code \cite{zenodo}: eighteen dimensionless detector readings against nature under one parameter set, with each row's arithmetic, source and caveat.
 \bibitem{predictions} The predictions register, \texttt{docs/PREDICTIONS.md} of the archived code \cite{zenodo}, entry 26 (the masses).
 \bibitem{bell1964} J. S. Bell, Physics 1, 195 (1964).
 \bibitem{chsh1969} J. F. Clauser, M. A. Horne, A. Shimony and R. A. Holt, Phys. Rev. Lett. 23, 880 (1969).
@@ -2076,6 +2152,13 @@ submission.]
 \bibitem{planck2018} N. Aghanim et al. (Planck Collaboration), Astron. Astrophys. 641, A6 (2020).
 \bibitem{riess1998} A. G. Riess et al., Astron. J. 116, 1009 (1998).
 \bibitem{perlmutter1999} S. Perlmutter et al., Astrophys. J. 517, 565 (1999).
+\bibitem{blondin2008} S. Blondin et al., Astrophys. J. 682, 724 (2008).
+\bibitem{tolman1930} R. C. Tolman, Proc. Natl. Acad. Sci. USA 16, 511 (1930).
+\bibitem{planck2015} P. A. R. Ade et al. (Planck Collaboration), Astron. Astrophys. 594, A18 (2016).
+\bibitem{pdg2024} S. Navas et al. (Particle Data Group), Phys. Rev. D 110, 030001 (2024).
+\bibitem{katrin2022} M. Aker et al. (KATRIN Collaboration), Nature Phys. 18, 160 (2022).
+\bibitem{quarks} The quarks as families of the family table, \texttt{docs/designs/quarks/QUARKS.md} of the archived code \cite{zenodo}: the design, its seven worlds and the pins written before the run.
+\bibitem{farlamp} The far lamp's brightness through a detector, \texttt{docs/designs/far\_lamp/BRIGHTNESS.md}, a note of 2026-09-21 whose pull request was open when this text was written; to be on the archived tree before submission.
 \bibitem{ame2020} M. Wang, W. J. Huang, F. G. Kondev, G. Audi and S. Naimi, Chin. Phys. C 45, 030003 (2021).
 \bibitem{gonzalez2021} F. M. Gonzalez et al., Phys. Rev. Lett. 127, 162501 (2021).
 \bibitem{nairz2002} O. Nairz, M. Arndt and A. Zeilinger, Phys. Rev. A 65, 032109 (2002).
