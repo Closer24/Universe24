@@ -2546,3 +2546,47 @@ the dark 0 to 3). Main b6ab1bb3 merged (records 367 to 453 on the
 tree: the owner's clock word cited as record 394, series G2's
 replication FAIL as record 408). The PDF: 38 pages.
 
+### Wave 30, addenda 1 and 2 (records 458 and 459): the physicist's five and the mathematician's five
+
+(13) Series T stays "replicated": REPLICATIONS.md on main at b6ab1bb3
+carries the Replicator's block for series T (afb533a, every world
+bit-exact); NATURE row 12's own label ("measured once, the replicator's
+round pending") lags the block. (14) The crowd-clock worlds are cited
+by their pages' titles (Series U: a lamp inside a crowd, still and
+moving; Series V: a cluster of crowds read by one detector; Series S:
+a reader inside a crowd), their register entries drafted and not
+registered; the covariant readings by the register's entry "S, the
+covariant readings" everywhere (the letter alone nowhere). (15) The
+S(N) figure shows the powers of two 64 to 8192 only (figures.py; the
+runs at 64, 1024, 4096 as open circles); the Bell section and the
+prediction lose the multiples-of-8 statements (91/32, 181,152, 184,
+136 of 512, 3016, S = 3 at 16 and 32); Theorem th:bell keeps its
+exact count of the multiples of 8, a proved statement. (16) The
+assumptions table checked row by row: every row's "assumptions that
+force it" is a postulate, a declared input, a theorem of the paper or
+a section of the derivation (P1, P4, P9; P3, P5; 24.2, P8; th:gleason,
+P10; N_t and the labels; 22's identification, assumed; P8, P9, 24.1
+row 25; the calibration assumed; the coarse graining); the five
+statements are the law's rules (I1 to I5); both kept. (17) fig:square's
+caption names covariant-readings-v1 and says "a hypothesis beside the
+law". (g1) meeting-v1 one line in the hypotheses paragraph as a
+registered hypothesis (K under the meeting: the centroid -1.790,
+-4.359, -2.301 pixel, DETECTOR), not coupled to optical-v1. (g2) The
+rows' pace untouched. (g3) The DERIVED rows keep their series and
+keys; the FAIL rows their registered readings. (g4) The notation
+table kept; the glossary cited by path (docs/TERMINOLOGY.md). The
+families: P8 says every world's families are the shipped definitions
+(75 families in 27 entities, examples/events/entities/families.json)
+plus the 23 inline declarations (the audit's count; the Boss's
+addendum said 21), cited to the audit with family_table.out. (18) The
+three labels: Kepler and Bohr's condition OPEN, the single-opening
+spread OPEN without the 0.886, Compton one line without numbers (as in
+the wave). (19) Form B's last two mentions in Part I out (the
+components paragraph, the cap sentence). (20) th:bell's statement
+"through 8192" with the run and computed N named. (21) Row 4a's
+reading keeps J4's registered rest reading (the 64th self-creation at
+64, j4_muon_rest); in flight a pin. (22) "What is new" item 4 claims
+only the first half of rem:nodispersion (no rule reads a phase into a
+step); the remark attributes "no local linear wave scheme is both" to
+Meyer's theorem. The PDF: 38 pages.
+

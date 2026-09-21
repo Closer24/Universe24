@@ -155,3 +155,6 @@ re-run in the register after the gate's fix with the same integers;
 | The cut: 40 pages at 11pt with 1-inch margins (the owner's word of 2026-09-21, "shorten to 40 pages, keep what is certain"); the long form 97 pages at commit c15c1174; no overflow, no undefined reference | as stated | pdflatex, three passes |
 | Nature's bending of light at the Sun's limb, 1.75 arcseconds (Dyson, Eddington and Davidson 1920), against the law's registered 0.000 pixel and 0.00 interval (series K) | as stated | published; the law's reading measured (the register's series K; DERIVATIONS_BEAM 24.3 row 14, REFUTED on main) |
 | The PDF's page count of the cut after wave 30 (the Boss's twelve items; main b6ab1bb3 merged): 38 pages at 11pt | 38 | DETECTOR reading of the compiled PDF (pdflatex, three passes; no overfull vbox) |
+| The meeting (meeting-v1, the world key `meeting`): the beam's centroid toward the mass -1.790, -4.359, -2.301 pixel in the three worlds `mass`, `heavy`, `near` (DETECTOR) | as stated | measured once (EXPERIMENTS.md, "K under the meeting") |
+| The S(N) figure: the powers of two 64, 256, 512, 1024, 2048, 4096, 8192 only (11/4, 45/16, then 181/64), the runs at 64, 1024, 4096 | as stated | computed (checks/s_of_n.py) and measured (series L, L6; the register's block of 24.4) |
+
