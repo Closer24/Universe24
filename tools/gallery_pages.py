@@ -895,7 +895,8 @@ pre.formula { font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; color
 .smalls pre.formula { font-size: 1.1rem; }
 .smalls p { font-size: 0.92rem; margin: 4px 0; }
 table.compare td.ours { color: var(--good); }
-math { font-family: "Latin Modern Math", "STIX Two Math", "Cambria Math", "DejaVu Serif", serif; color: var(--accent); }
+math { font-family: "Latin Modern Math", "STIX Two Math", "Cambria Math", "Noto Sans Math", "DejaVu Serif", serif; color: var(--accent); }
+math[display="block"] { padding: 4px 10px; box-sizing: border-box; }
 section.big math { font-size: 2.4rem; margin: 10px 0; }
 section.big .conditions math { font-size: 1.4rem; margin: 4px 0; }
 math[display="block"] { max-width: 100%; overflow-x: auto; }
@@ -928,7 +929,7 @@ section.big.theirs-box math { color: #6cb4ff; font-size: 1.8rem; }
 .deriveds h3 { margin: 0 0 4px; font-size: 1.05rem; }
 .deriveds math { font-size: 1.45rem; margin: 8px 0; }
 .deriveds p { font-size: 0.92rem; margin: 4px 0; }
-@media (max-width: 600px) { section.big math { font-size: 1.35rem; } }
+@media (max-width: 600px) { section.big math { font-size: 1.7rem; } section.big .conditions math { font-size: 1.15rem; } section.big.theirs-box math { font-size: 1.35rem; } }
 details summary { cursor: pointer; color: var(--accent); margin: 12px 0; }
 @media (max-width: 600px) { section.big pre.formula { font-size: 1.5rem; } section.big pre.formula.small-caps { font-size: 1rem; } }
 td.reached { color: var(--good); white-space: nowrap; }
@@ -937,7 +938,7 @@ td.missing { color: #f08080; }
 """
 
 
-def page(title: str, lead: str, body: str, *, index_link: bool = True) -> str:
+def page(title: str, lead: str, body: str, *, index_link: bool = True, head: str = "") -> str:
     crumbs = (
         '<nav class="crumbs"><a href="index.html">The gallery</a> · <a href="../../README.md">The documentation</a></nav>'
         if index_link
@@ -949,7 +950,7 @@ def page(title: str, lead: str, body: str, *, index_link: bool = True) -> str:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)}</title>
-<style>{STYLE}</style>
+{head}<style>{STYLE}</style>
 </head>
 <body>
 <main>
@@ -4710,28 +4711,18 @@ MAIN_CONDITIONS = m(
     mi("W"),
     mo("&lt;"),
     msup(mrow(mo("("), mi("E"), mo("+"), mn("1"), mo(")")), mn("2")),
-    mspace,
-    mo(","),
-    mspace,
-    E0,
-    mo("="),
-    mi("Q"),
-    mi("S"),
-    mi("M"),
-)
+) + m(E0, mo("="), mi("Q"), mi("S"), mi("M"))
 NATURE_FORMULA = m(
-    msup(mi("E"), mn("2")),
-    mo("="),
-    msup(E0, mn("2")),
-    mo("+"),
-    msup(mi("p"), mn("2")),
-    C2,
-    mspace,
-    mo(","),
-    mspace,
-    C2,
-    mo("="),
-    mfrac(mn("1"), mn("3")),
+    msup(mi("E"), mn("2")), mo("="), msup(E0, mn("2")), mo("+"), msup(mi("p"), mn("2")), C2
+) + m(C2, mo("="), mfrac(mn("1"), mn("3")))
+
+# A mathematical font for the formulas where the reader's device has none
+# (a stylesheet from Google Fonts, the one external source the page
+# contract allows; the page reads the same without it).
+MATH_FONT = (
+    '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Math&display=swap">\n'
 )
 
 # Who owns what: the badge classes and their names.
@@ -5134,6 +5125,7 @@ s &lt;- s - e d
             "Your formula at the top; whose each formula is; and the story of the derivations from it to "
             "Newton's, Lorentz's and Einstein's, step by step.",
             body,
+            head=MATH_FONT,
         ),
     )
 
