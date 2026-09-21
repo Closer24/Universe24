@@ -29,6 +29,47 @@ difference. **Not reached**: the rules as declared do not determine the
 quantity, and what would is stated plainly. **New** marks a formula the
 GameBoard gives that has no counterpart in known physics.
 
+**Symbols** (the owner's rule, record 184). Every symbol is named in
+English at its first use, and a Greek letter is written as a Latin word
+with the quantity's name (gamma, the Lorentz factor), never as a letter
+alone. The kind of a quantity is shown by its type in prose: a scalar
+plain (c, M, N, gamma), a vector in bold lowercase (**p** the momentum
+vector, **s** the state vector on the torus, **r** the rate vector), a
+matrix, a tensor or an operator in bold uppercase (**F** the interval's
+map, **C** the coupling matrix, **G** the click's Gram matrix), a
+component plain with its index (`p_x`). Inside a formula (a code span or a
+code block) every letter is plain, its kind being the one stated here or
+at its first use. The recurring symbols:
+
+| Symbol | Kind | Name |
+| --- | --- | --- |
+| **F** | operator | the interval's map, one piecewise-linear map of the state (section 0) |
+| **s**, **r**, d | vector, vector, scalar per component | the state on the torus, its rate, its wall (the accumulator `s += r; e = [s >= d]; s -= e d`) |
+| **C**, **a** | matrix, vector | the coupling matrix (the reader's charges per column) and the label flow vector of the arriving rows; the push `r = C a` |
+| **G**, **P** | matrix, matrix | the click's Gram matrix and the rotation of the phase as a signed permutation (section 6.5); `U_s` the label rotation matrix of the half-angle tables |
+| **p**, `p_x` | vector, component | a body's momentum and its component on an axis |
+| **v**, v | vector, scalar | a body's velocity and its speed in Links per interval |
+| **V** (the code's `V`) | vector | the label flow read at a Node, the vector moment of the arriving rows (written `V` in formulas as the code writes it) |
+| **D**, `u_d`, `T_d`, `S_1` | vector, vector, scalar, scalar | a direction of the world's table, its unit vector at the scale Q, its period `isqrt(3 abs(D)^2 Q^2)`, its Manhattan length |
+| c | scalar | the pace of a row, `Q / T_d` Links per interval on the axis (`32 / 55`) |
+| Q, N, K, h | scalars | the direction table's scale (64), the circle of the phase, the world's content quantum, the world's action quantum |
+| M, k, q | scalars | a body's content (its mass); a crowd or a coupling count; a charge (in sections 2.5 and 5.5, q is the deceleration parameter of the Hubble fit, stated there) |
+| n / d | rational | the declared phase rate per interval |
+| u | scalar | the birth phase of a record, the wheel `ordinal mod N` |
+| tau | scalar | the age of a row in intervals |
+| gamma | scalar | the Lorentz factor `1 / sqrt(1 - v^2 / c^2)` |
+| lambda | scalar | the wavelength |
+| theta | scalar | an angle |
+| pi | scalar | the ratio of the circle |
+| phi | scalar | a body's phase |
+| omega | scalar | the angular frequency |
+| rho | scalar | the charge per unit of content, a family's declaration |
+| kappa | scalar | the meeting's column sum per unit |
+| zeta_N | scalar | the primitive N-th root of unity, `exp(2 pi i / N)` |
+| sigma_j | map | the j-th Galois conjugate of the evaluation `ev` (section 6.5) |
+| Lambda_c | scalar | a column's declared bound on the branch |
+| f | element | a record's rows at a Node as an element of the group ring `Z[Z_N]` |
+
 The reference tree is `main` at `f89884f0` (the law as landed on 2026-09-20,
 BEAM_LAW notes 1 to 40); where the fraction-free branch
 (`origin/fraction-free` at `ddec5166`, note 41 there, record 154, its
@@ -50,12 +91,13 @@ classical-quantum boundary; 7 Young's spacing and Bohr's levels.
 
 **The statement** (the owner's, accepted in record 167 as the Boss
 relayed it; verified here against sections 1 to 7). The whole law is one
-map F applied at every Node at every interval to the integer state s, per
-component with its own rate r and wall d:
+map **F** (the interval's map) applied at every Node at every interval to
+the integer state vector **s**, per component with its own rate **r** and
+wall d:
 
     s <- s + r;   e <- [s >= d];   s <- s - e d,
 
-every wall crossing an event. The components of s and their (r, d): a
+every wall crossing an event. The components of **s** and their (r, d): a
 row's Manhattan count (rate `2 S_1 Q`, wall `2 T_d`, started at `T_d`;
 section 1.4) and its three axis deficits (rate `abs(v_i)` per Manhattan
 step, the carry `S_1` from the largest); a row's phase (rate
@@ -64,14 +106,14 @@ the whole part read mod N); a row's age (rate 1, no wall); a body's drive
 per axis (rate `p_a`, wall `Q S M + abs(p_a)`); a body's counts, on the
 branch the table `acc` (the turn: rate `content x n`, wall d; the owed
 count: rate `counted x n`, wall d; the release and the lamp; the push per
-column: rate `V E_c n_c`, wall `Lambda_c^2`); a record's birth wheel u
+column: rate `V E_c n_c`, wall `Lambda_c^2`, Lambda_c the column's declared bound); a record's birth wheel u
 (rate 1 per birth, wall N); the click's ladder (the comparison `2 T u + T
-<= 2 N C_k`, a wall read once). Everything in section 1.2 is F on one of
+<= 2 N C_k`, a wall read once). Everything in section 1.2 is **F** on one of
 these components or a permutation of them (the collision, the meeting's
 arc, the gate, the apportioning's tie), and the exceptions are section
 1.3's list.
 
-**The two blocks.** F is linear where its rates are constants of the
+**The two blocks.** **F** is linear where its rates are constants of the
 world, and it feeds back where a rate is a function of what arrives:
 
 - **The linear block** (rows in flight): the translation at a constant
@@ -79,16 +121,16 @@ world, and it feeds back where a rate is a function of what arrives:
   group-ring addition at the merge (`Z[Z_N]`, with the cancel `[p + N/2]
   = -[p]`); the integer matrix of a split (`w -> w a_i`, `m -> m A`) or
   of a rotation (the half-angle tables) or of a gate (a permutation of
-  labels); and the evaluation `ev: Z[Z_N] -> Z[zeta_N]` at the click,
-  linear over the group ring. Every component here has the closed form
+  labels); and the evaluation `ev: Z[Z_N] -> Z[zeta_N]` at the click
+  (zeta_N the primitive N-th root of unity), linear over the group ring. Every component here has the closed form
 
       s(t) = floor(s_0 + r t)     (the accumulator's whole part at a constant rate; FORM.md section 1),
 
   so a row's state at any time is a formula of its birth and its age, and
   the limits of this document are limits of that formula.
 - **The feedback block** (the rates as functions of the arrivals): the
-  push `r = C a` (C the reader's charges per column, a the label flow of
-  the arriving rows: the rate of a body's momentum is bilinear in the
+  push `r = C a` (**C** the coupling matrix, the reader's charges per
+  column; **a** the label flow vector of the arriving rows: the rate of a body's momentum is bilinear in the
   state, the reader's content times the flow); the owed count (the rate
   the presence, or the age moment); the turn and the release (the rate
   the content, which the clicks change); the drive (the rate the momentum,
@@ -107,18 +149,18 @@ checked against:
 
 | Block | Component and its closed form | The limit | The registered check | Section |
 | --- | --- | --- | --- | --- |
-| linear | the flight, `m(tau) = floor((2 tau S_1 Q + T_d) / (2 T_d))` and the deficit ladder | the digital line at `Q / T_d -> 1 / sqrt 3` Links per interval, isotropic | record 144's cone, 17 and 24 Links at age 29 | 1.4, 4.1 |
-| linear | the phase, `floor((n / d) tau) mod N` along the line | `omega = c k`, dispersionless (the paper's check) | L7's path phases 23 and 23 (the pair form), 51 and 8 (the integer form) | 4.1, 7.1 |
+| linear | the flight, `m(tau) = floor((2 tau S_1 Q + T_d) / (2 T_d))` (tau the age in intervals) and the deficit ladder | the digital line at `Q / T_d -> 1 / sqrt 3` Links per interval, isotropic | record 144's cone, 17 and 24 Links at age 29 | 1.4, 4.1 |
+| linear | the phase, `floor((n / d) tau) mod N` along the line | `omega = c k` (omega the angular frequency, k here the wave number), dispersionless (the paper's check) | L7's path phases 23 and 23 (the pair form), 51 and 8 (the integer form) | 4.1, 7.1 |
 | linear | the crossing count of a row's line with a body's, `n (c +- v) tau + O(1)` | the receiver's Doppler `1 +- v / c` | record 158's 45, 58, 19, 38, 183, 311; the bar's 96.9 .. 303.1 | 2.2 |
 | linear | the merge, `Z[Z_N]` at one Node | the coherent sum within one Node | L1's `mz_equal` 41 of multiplicity 1682 | 6.3 |
 | linear | the evaluation at `zeta_N` and the norm | `S(N, Q) -> 2 sqrt 2`; Born to `1 / (2 N)` | `176 / 64`, `2896 / 1024`, `11584 / 4096`; the dark port 0 of 64 | 6.2 |
-| linear | two rows' phases at a pixel, `(n / d)(L_1 - L_2) / c` | Young's fringes at `L_1 - L_2 = +- j lambda` (paraxially `lambda D / s`), from the fan's angular measure (record 160's Farey weights `3 Q^2 / (T_d T_d')` per direction) | L1's unequal arms 64/0, 32/32, 0/64; record 156's bands 23.5 apart against the exact 23.3 | 7.1 |
+| linear | two rows' phases at a pixel, `(n / d)(L_1 - L_2) / c` | Young's fringes at `L_1 - L_2 = +- j lambda` (lambda the wavelength; paraxially `lambda D / s`), from the fan's angular measure (record 160's Farey weights `3 Q^2 / (T_d T_d')` per direction) | L1's unequal arms 64/0, 32/32, 0/64; record 156's bands 23.5 apart against the exact 23.3 | 7.1 |
 | linear | the split's norm `sum w_i^2 / m_i = w^2 / m` | the conservation of a record's norm | L1's (3, 4) split 63/1 | 6.1 |
 | feedback | the push, `p_{t+1} = p_t + C a_t`, `a_t` the flow at the body's Node | `dp / dt = -M grad(A)`: Newton's and Coulomb's `1 / r^2` in the shell mean | series C's nine ring readings `r / N(r)`; item 7's `-1`, `-1 / 4` | 3.2 .. 3.4 |
 | feedback | the drive, `x_{t+1} = x_t + [drive >= D]`, `v = p / (Q S M + p)` | the dispersion `v(p)`, saturating at 1 | the bar's speeds 0.30, 0.45, 0.75 exact | 4.4 |
 | feedback | the owed count, `owed = by_clock(age, k n, d)` (the branch: `acc_owed`) | the clock at `1 / (1 + k n / d)`, the potential `M / r` under `age` | series E's `k_a r = 36.1`, `k_s r^2 = 41.5` | 5.1, 5.2 |
 | feedback | the field of many bodies, the sum of their rows' moments | Poisson and the retarded wave equation, linear | series E; series K's 0.000 (no term on the rows) | 5.1, 5.4 |
-| feedback | the turn under `action`, `phi += floor(k_1 abs(p) N / h) - floor(k_0 abs(p) N / h)` | the action `2 pi p r = j h` | series H's re-reads (r = 12 the whole j) | 7.2 |
+| feedback | the turn under `action`, `phi += floor(k_1 abs(p) N / h) - floor(k_0 abs(p) N / h)` (phi the body's phase) | the action `2 pi p r = j h` (pi the ratio of the circle) | series H's re-reads (r = 12 the whole j) | 7.2 |
 
 **The feedback block per world class**, its difference equation and its
 continuum limit `ds / dt = r(s)`, against the register:
@@ -177,13 +219,13 @@ against main follows the no-tables and click pull requests, once.
 integer vectors on tori and nothing at a Node. A row (a ray's record,
 `NatureBeam`, `nature_beam.py:195-240`): its Node in `Z_X x Z_Y x Z_Z` (a
 periodic axis a circle, an open axis a segment with the face as its
-border), its direction an index of the world's table D, its age a whole
+border), its direction an index of the world's table of direction vectors **D**, its age a whole
 count, its phase in `Z_N` (and, in the pair form of `phase_per_link`, a
 point of `Z_{N d}` whose whole part is the phase, note 37 (iii); the row
 carries the age, from which that point is a function), its number, its
 amount, its content, and under a record its identity, branch, multiplicity,
 birth phase u and hand. A body (`Measured`, `measured.py:205-353`): its
-held content per family in `Z^F`, its momentum p in `Z^3`, its phase in
+held content per family in `Z^F`, its momentum vector **p** in `Z^3` (components `p_x`, `p_y`, `p_z`), its phase in
 `Z_N`, its clock age, its drive per axis in `(-D, D)`, and on the
 fraction-free branch its counts table, the point `acc` of `Z^n / d Z^n`.
 One operator every interval at every Node. Six operations only:
@@ -194,7 +236,8 @@ One operator every interval at every Node. Six operations only:
   (`core/integer.py:70-86`, `by_drive`), the one primitive of every count;
 - **(B) the bilinear form**: a moment `sum_rows w x u^(x)k` of the
   neighbourhood's rows (k = 0, 1, 2 and the age), and the coupling `r = C
-  a`, a signed inner product over declared columns times the moment;
+  a` (**C** the coupling matrix, **a** the flow vector), a signed inner
+  product over declared columns times the moment;
 - **(G) the group-ring addition** in `Z[Z_N]`: the merge of identical rows,
   with `[p + N/2] = -[p]` on a record's rows (the cancel);
 - **(P) a permutation of the joint state**: the collision, the meeting's
@@ -673,7 +716,8 @@ is the Node: a lattice reader is a cube whose faces are its six Ports, so
 the rows it meets per interval are the Manhattan flux `n (abs(c_x) +
 abs(c_y) + abs(c_z))` at rest and `n (abs(c_x) + v + abs(c_y) + abs(c_z))`
 in motion, while a continuum point reader in a plane wave meets the fronts
-at the Euclidean rate `n (abs(c) + v cos theta)`. **Different law** on a
+at the Euclidean rate `n (abs(c) + v cos theta)` (theta the angle
+between the row's direction and the reader's velocity). **Different law** on a
 general fan direction, stated: the emergent Doppler on the lattice is `1 +
 v / c_1` with `c_1 = S_1 Q / T_d` the direction's Manhattan speed (0.82 on
 the face diagonal), not `1 + v cos theta / abs(c)`; equal to it on the
@@ -741,7 +785,7 @@ exists. **Different law** at order `v^2 / c^2`, the lattice's frame
 preferred: the flight table's c is isotropic in the lattice's frame and
 in no other, and the crossing rule counts in that frame. Whether the
 limit has any Lorentz-like symmetry, and what a moving clock reads, is
-target 4; the answer here is what the count says: no factor of `gamma`
+target 4; the answer here is what the count says: no factor of `gamma` (the Lorentz factor, `1 / sqrt(1 - v^2 / c^2)`)
 enters any of the six operations, so none appears in the limit.
 
 ### 2.7 The verdict of target 2
@@ -1035,7 +1079,7 @@ the unit of speed the Link per interval:
 and both saturate, the lattice's at the Link speed 1 and not at the
 flight's `c = 1 / sqrt 3`. Two invariant speeds cannot share a Lorentz
 group: the walk's bound 1 (one Link per interval for rows and bodies
-alike) is the causal speed, and light's `1 / sqrt 3` is below it, so a
+alike) is the causal speed, and the rows' `1 / sqrt 3` is below it, so a
 body of `p > 1.39 Q S M` (`v > 32 / 55`; 1.37 at `1 / sqrt 3`) outruns
 its own family's rows (the bar's outrunning body at `v = 0.75`, section
 2.2, registered). Nature's light is at
@@ -1060,7 +1104,7 @@ no direction crosses two Links in one interval.
 **What "held content delays the flight" is in beam-v1.** Nothing in
 flight is delayed: a row moves by the flight table at one speed, blind to
 the crowd (BEAM_LAW section 3; series K, registered: the mean age 89.40
-in every world, the delta 0.00). What a crowd delays is a CLOCK: a body
+in every world, the difference 0.00). What a crowd delays is a CLOCK: a body
 reads at its Node the presence of every row of another number (or, on an
 entry that reads `age`, the age moment) and owes `by_clock(age, k n, d)`
 intervals before its next self-creation (`engine.py:475-485`; on the
@@ -1149,13 +1193,13 @@ precession, and is not read here as either.
 
 ### 5.4 Light: no optical metric on main; the meeting's turn as a key
 
-On `main` a row reads nothing of the crowd: light is neither bent nor
+On `main` a row reads nothing of the crowd: a row is neither bent nor
 delayed beside a mass, exactly (series K: the deflection 0.000 pixel in y
 and z at `M = 2^12` and `2^13`, `b = 6` and 3, the mean age 89.40 in every
 world, the count and the phase rate the control's, at a crowd where
 nature would capture the beam). **Not reached**: the equivalence principle
-holds for bodies (section 3.3) and not for light; the delay field is a
-metric for clocks and for matter's pushes, not for the flight. The
+holds for bodies (section 3.3) and not for rows; the delay field is a
+metric for clocks and for the bodies' pushes, not for the flight. The
 paper's statement ("an optical metric and its geodesics") describes a
 rule the law does not have.
 
@@ -1205,7 +1249,7 @@ content's release does); (ii) the field's own energy as a source, the
 nonlinearity (here the rows carry content 0, are read by no row, and the
 fields of two sources add exactly: gravity does not gravitate); (iii) the
 metric acting on light and on clocks alike (here on clocks and on
-matter's pushes, not on the flight); (iv) a cosmological term (here none:
+the bodies' pushes, not on the flight); (iv) a cosmological term (here none:
 series G2's deceleration `q = +0.345` under the key and `+0.922` under
 the source rule with gravity on, `-0.108` coasting, the law having no term
 that gives `q < 0`, records 124 and 138). **Not reached** for Einstein's
@@ -1222,7 +1266,7 @@ equation; **reached** for its weak-field flux form and its retardation.
 | The bending of light | **not reached** on `main` (0.000 registered); under `meeting-v1` **reached in form** `~ M / b` toward the mass, the constant a grain | the flight blind to the crowd |
 | The Shapiro delay | **not reached** on `main` (0.00); under the key **different law**: a phase `~ M / b` from the flow, not `M ln(4 r_1 r_2 / b^2)` from the potential, and no delay in time | the meeting reads the flow |
 | The general flux | **reached**: Gauss's law of the field exact at every instant, the continuity equation | the weak-field flux form of the field equation |
-| Einstein's equation | **not reached**: no tensor source, no self-gravitation, no metric for light, no cosmological term (`q > 0` registered) | the law's gravity is scalar and linear |
+| Einstein's equation | **not reached**: no tensor source, no self-gravitation, no metric for the rows, no cosmological term (`q > 0` registered) | the law's gravity is scalar and linear |
 
 ## 6. The information cost: units created per record against bits out, the click's discrete cost, and the classical-quantum boundary as a quantity
 
@@ -1430,7 +1474,8 @@ holds, and what the register pins.
 
 **The objects.** A record's rows at one Node and label are one element
 `f = sum_p f_p x^p` of the group ring `Z[Z_N]` (`f_p` the amount at the
-phase p, section 1.1); the pointer is `ev(f) = sum_p f_p zeta^p` at the
+phase p, section 1.1); the pointer is `ev(f) = sum_p f_p zeta^p` (zeta
+the primitive N-th root of unity) at the
 tables' scale (`amplitude.py:562-565`: `weight x (C[p], S[p])`, summed
 per `(Node, label)`); the merge's cancel (the design's 2.3: two rows of
 one record at a phase difference of exactly `N/2` subtract) identifies
@@ -1477,8 +1522,8 @@ Every such R is a positive quadratic form on the lattice, homogeneous,
 `(a_1, ..., a_k; t_1, ..., t_k)` of one row or of two recombining inputs
 exactly if and only if the multiplicity factor is `A = sum a_i^2`
 (Theorem 2's rule, here a consequence), and at every label rotation
-`U_s` with the factor `C'^2 + S'^2`. Two rows `a x^p` and `b x^{p + D}`
-at one Node read
+`U_s` with the factor `C'^2 + S'^2`. Two rows `a x^p` and `b x^{p + D}` (D
+here the phase difference in steps) at one Node read
 
     R = C (a^2 + b^2) + 2 a b K(D),   C = sum c_j,   K(D) = sum c_j cos(2 pi j D / N),
 
@@ -1500,12 +1545,14 @@ R(f + g) + R(f + h) + R(g) + R(h) - R(f) - R(g - h)`, whence `B(f + g, h)
 - B(f, h) - B(g, h) = 2 R(g) + 2 R(h) - R(g + h) - R(g - h) = 0`: B is
 Z-bilinear, `R(f) = B(f, f) / 2` (the law at (f, f)), so R is the
 restriction to `Z^{N/2}` of the real quadratic form of the symmetric
-matrix `M = (B(x^i, x^j))`, and `R(a f) = a^2 R(f)`. (iv) (a) transfers
+matrix **G** `= (B(x^i, x^j))`, the click's Gram matrix, and `R(a f) = a^2
+R(f)`. (iv) (a) transfers
 to B by polarisation, `B(x f, x g) = B(f, g)`; multiplication by x is a
-signed permutation of the basis, an orthogonal matrix P, so `P^T M P =
-M` and M commutes with P. P has the `N/2` distinct eigenvalues `zeta^j`,
+signed permutation of the basis, an orthogonal matrix **P**, so `P^T G P
+= G` and **G** commutes with **P**. **P** has the `N/2` distinct
+eigenvalues `zeta^j`,
 j odd, with the eigen-functionals `sigma_j` (`sigma_j(x f) = zeta^j
-sigma_j(f)`), so M is diagonal in that basis with real entries paired
+sigma_j(f)`), so **G** is diagonal in that basis with real entries paired
 under `j <-> -j`: `R(f) = sum_j c_j |sigma_j(f)|^2` over the `N/4`
 conjugate pairs. (v) Were some `c_j < 0`, the real form would be
 negative on an open cone of `R^{N/2}`, which contains lattice points,
@@ -1657,7 +1704,8 @@ is `|e^(i phi_1) + e^(i phi_2)|^2 = 2 + 2 cos(2 pi (n / (d N)) (L_1 - L_2)
 / c)`. The bright pixels are where `L_1 - L_2 = +- j lambda`, `lambda = c N d
 / n` Links (the wavelength: `N d / n` intervals at c Links per interval),
 and only in the paraxial limit `s, y << D` does that become the spacing
-`delta_y = lambda D / s`, Young's small-angle law. On `slits_low` the
+`delta_y = lambda D / s` (delta_y the fringe spacing), Young's small-angle
+law. On `slits_low` the
 angle is not small (`y / D` is 0.5 at the first fringe): `lambda = 8
 intervals x 32 / 55 = 4.654` Links, the paraxial spacing would be `4.654
 x 44 / 10 = 20.5` pixels, and the exact condition `sqrt(D^2 + (y +
@@ -1798,7 +1846,7 @@ still need what the law lacks, an energy and a transition.
 | 2 Doppler | `1 +- v / c` on the axis under the crossing rule; the source's `1 / (1 -+ v / c)` | the transverse 1; the Manhattan flux on a fan direction; two formulas at `v^2` | on `main`, the reader's Doppler (k per k) |
 | 3 Newton and Coulomb | Gauss exactly; the inverse square in the shell mean; `G = K (n / d) / (4 pi S)`; `k_C = G`, the ratio `-rho_A rho_B` | | per Node without the limit of every direction |
 | 4 special relativity | the light cone and `omega = c k`; the Lorentz symmetry of the rows' limit | the moving reader's `c -+ v`; the clock at 1; `v = p / (m + p)`; the cap 1 above c | velocity addition, `E = m c^2`, the moving mass |
-| 5 general relativity | Poisson and the retarded wave equation of the delay field; the redshift at first order; Newton's geodesics; the general flux | the redshift at second order, no horizon; the meeting's delay `~ M / b` | Einstein's equation; light on `main`; the post-Newtonian terms |
+| 5 general relativity | Poisson and the retarded wave equation of the delay field; the redshift at first order; Newton's geodesics; the general flux | the redshift at second order, no horizon; the meeting's delay `~ M / b` | Einstein's equation; the rows' bending on `main`; the post-Newtonian terms |
 | 6 the information cost | Holevo; Born and Tsirelson as limits; the click's square as a positive quadratic form with the power 2 and `sum a_i^2` derived (the lattice Gleason, 6.5); the visibility of two rows; `E = (h N) f`; **New**: the cost per record and the boundary as quantities | the partial read (a step) | Landauer; the click's harmonic constants `c_j` (Gleason's free state), register-pinned to the fundamental |
 | 7 Young and Bohr | Young's fringes in the limit of every direction (the exact two-path law, `lambda D / s` its paraxial form); Bohr's `2 pi p r = j h` and `r_j ~ j^2` | the spectrum at the orbital frequency | the levels' energies and the Rydberg lines |
 
@@ -1893,7 +1941,7 @@ interval at t (B's messages take one interval to A, A's to B):
 - Under (c), messages neither stop nor are missed; I5's symmetry is
   untouched by a wait and the third law holds as at rest. What changes:
   the release no longer stops with the clock, so a lamp in a crowd emits
-  at the interval's rate and its light carries the clock's slowing only
+  at the interval's rate and its rows carry the clock's slowing only
   in its phase, not in its count; the register's luminosity reading of
   series G and G2 (the click rate `1 / (1 + k)` times the Doppler, the
   hubble_stars README) would move by `(1 + k)`. A different law with a
