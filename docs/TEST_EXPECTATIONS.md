@@ -33,7 +33,11 @@ the Links, the age at the click and the path phases derived from the two
 worlds and the flight table; the Bell plus offset, the star worlds' c and
 the register of series J2 the same). A run without a derived expectation
 is a research run and its register says so (`measured`). A review checks
-the derivation before the numbers.
+the derivation before the numbers. A law change re-registers every
+register its runs feed, and every generator has its comparing test (the
+lesson of 2026-09-21: the fraction-free batch re-read the weak README and
+left its register's warm-run counts, which no test compared;
+`tests/test_weak_readings.py` (e) since).
 
 ## Suite inventory of 2026-09-19: one engine, the Beam Law
 
@@ -74,7 +78,7 @@ kept, their pins the law of events').
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
 | `test_paid_charge.py` | A paid family's charge per unit of amount (D-1): the books' charge line conserved through the click of a charged paid row, its escape, its home and the escape of the body that holds it; the push untouched (the label alone, with the charge -1 and 0 alike); the refusals and the record ([below](#a-paid-familys-charge)) | new (2026-09-20, the model owner's "go on everything", item (2)) |
 | `test_window_width.py` | The width of a window, `phase_width`: the one floor `window_admits` equal to the half circle at the default width on every pair, the admitted fraction w / N against the source's stride (10, 20, 40, 320 of 640; the stride 2's coset), `beam`'s pairing arc, a lamp's width, the refusals ([below](#the-width-of-a-window)) | new (2026-09-20, the model owner's "go on everything", the neutrino first) |
-| `test_weak_readings.py` | The weak-force readings tool (series J) reads the runner's record and the flight table: on a short bar run through the runner, the first reader's 3 clicks of 192 arrivals, the far detector's 151, the first-arrival ages 13 and 51; on the toy of the transformation with a shell of 62 readers, the `become` line and the shell's one click ([below](#the-width-of-a-window), [the transformation](#the-transformation)); (d) the register of series J2 (`examples/events/weak/expectations.json`) derived from the five shipped worlds and the flight table and compared entry by entry | new (2026-09-20, series J2; (b) with series J1); (d) 2026-09-21 |
+| `test_weak_readings.py` | The weak-force readings tool (series J) reads the runner's record and the flight table: on a short bar run through the runner, the first reader's 3 clicks of 192 arrivals, the far detector's 151, the first-arrival ages 13 and 51; on the toy of the transformation with a shell of 62 readers, the `become` line and the shell's one click ([below](#the-width-of-a-window), [the transformation](#the-transformation)); (d) the register of series J2 (`examples/events/weak/expectations.json`) derived from the five shipped worlds and the flight table and compared entry by entry; (e) the register of J1 and J3 replayed by the generator's warm run on the shipped worlds (the range of each clock's count over the dwell period, the trigger ticks at its ends) | new (2026-09-20, series J2; (b) with series J1); (d) and (e) 2026-09-21 |
 | `test_become.py` | The transformation `become`, `weak-v1`: the clock trigger at the self-creation whose clock reaches `at`, the products born as a re-release is with the recoil over all of them, the `became` line and the charge line exact; the click trigger within a window and the entry consumed; the crowd slowing the trigger and the gate holding it; the charge line through the click of the product; the refusals and the run refused when the event cannot pay ([below](#the-transformation)) | new (2026-09-20, the model owner's "go on everything", item (1)) |
 | `test_w_world.py` | The W world, the exchange at one Link: the W (paid, charge -7344 per unit, lifetime 1) thrown at the neutron's key and measured by the proton one interval later, its content and charge a neutron's; the W into empty space on the border; the click trigger on the proton refused with the design's sketch and balanced with a positive product; the refusals ([below](#the-w-world)) | new (2026-09-20, the model owner's "go on everything", item (3)) |
 | `test_nature_beam_window_reads.py` | A table entry's window read from a reading (`phase_window` `{"reads": ..., "offset": ...}`): the centre the setting ray's phase plus the offset, a ray inside clicking with the `window` on its record and a ray outside passing with `window` and `reads`; the edge case of no setting ray (a `pass` naming `window` None) and of an antiphase pair; the parsing and the refusals ([below](#a-window-read-from-a-reading)) | new (2026-09-20, issue #363) |
@@ -2426,6 +2430,24 @@ the half circle): 16, 16, 512, 32, 0; the far detector's clicks the rows
 born by 1037 less its own arrival age (326), 711, that no reader's window
 admits: 699, 0, 352, 688, 711. The derived register equals the shipped one
 entry by entry.
+
+`tests/test_weak_readings.py` (e), the register of J1 and J3 replayed (the
+re-pin under the fraction-free law, 2026-09-21; the Boss's order on the
+architect's root cause, record 254): the generator's warm run on each
+shipped world (`j1_lattice`, `j1_source`, `j3_deuteron`,
+`j3_neutron_free`: the world without its `become` keys for 120 intervals)
+gives, per neutron, the range of the count its clock reads over the ticks
+61 to 120 and the trigger ticks at + floor(at x c / 2^20) at both ends;
+the counts, the ticks, the earliest, the latest, the slack 3, the dwell
+[61, 120] and the warm length equal the register's entry by entry, and
+`j3_deuteron_crowd`'s `never` entry is the generator's constant. The
+tool reads a pinned tick as a range [lo, hi] or as one integer (test (b):
+the tick 3 inside [2, 3] and [3, 4], outside [4, 5] and [1, 2]). The
+registered ranges: `j1_lattice` the counts 11034 .. 27585 in four ranges,
+the ticks 517 .. 525; `j1_source` 20647 .. 36195, 522 .. 529;
+`j3_deuteron` 23881 .. 128590, 523 .. 574; `j3_neutron_free` 0, 512 (the
+first registration's one count at tick 100 and its ticks 522 .. 524, 524
+.. 529, 574 and 512 kept as history in the series' README).
 
 ## The hand
 

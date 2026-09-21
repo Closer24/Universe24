@@ -371,6 +371,16 @@ def j2_expectations(reading: Reading) -> list[Criterion]:
     return found
 
 
+def tick_range(pinned: object) -> tuple[int, int]:
+    """A pinned trigger tick as the range [lo, hi]: a pair as registered
+    (the trigger ticks of the count's range over the dwell period), one
+    integer as lo = hi."""
+    if isinstance(pinned, list):
+        lo, hi = pinned
+        return int(str(lo)), int(str(hi))
+    return int(str(pinned)), int(str(pinned))
+
+
 def become_expectations(reading: Reading, expected: dict[str, object]) -> list[Criterion]:
     """J1 and J3 against the expectations the generator pinned from the
     engine's own presence reading: the trigger ticks, the shell's curve, the
@@ -391,17 +401,21 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
     ticks = expected.get("ticks", {})
     slack = int(str(expected.get("slack", 0)))
     assert isinstance(ticks, dict)
+    # A pinned tick is a range [lo, hi] (since 2026-09-21 the trigger ticks
+    # of the range of the count over a dwell period) or one integer (lo =
+    # hi, the pin of one tick's count as it was).
+    ranges = {number: tick_range(pinned) for number, pinned in ticks.items()}
     inside = all(
         number in fired
-        and int(str(ticks[str(number)])) - slack
+        and ranges[str(number)][0] - slack
         <= int(str(fired[number]["triggered"]))
-        <= int(str(ticks[str(number)]))
+        <= ranges[str(number)][1]
         for number in (thing.number for thing in neutrons)
     )
     found.append(
         (
-            f"every neutron fires at its pinned tick or up to {slack} before it "
-            f"({min(ticks.values())} .. {max(ticks.values())} pinned)",
+            f"every neutron fires within its pinned range or up to {slack} before it "
+            f"({min(lo for lo, _ in ranges.values())} .. {max(hi for _, hi in ranges.values())} pinned)",
             inside,
             GAMEBOARD,
         )

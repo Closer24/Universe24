@@ -45,6 +45,10 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
         "tests/test_amplitude_click.py",
     ),
     "examples/events/entities/apparatus.json": ("tests/test_entity_definitions.py",),
+    # The weak register and its generator: the tests that derive or replay
+    # their entries (J2 from the flight table, J1 and J3 from the warm runs).
+    "examples/events/weak/expectations.json": ("tests/test_weak_readings.py",),
+    "examples/events/weak/make_worlds.py": ("tests/test_weak_readings.py",),
 }
 
 
