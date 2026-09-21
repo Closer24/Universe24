@@ -39,6 +39,7 @@ import base64
 import colorsys
 import html
 import io
+import itertools
 import json
 import math
 import shutil
@@ -877,6 +878,9 @@ figure.player div.three:empty { display: none; }
 .three h3 { margin: 0 0 6px; font-size: 1.05rem; }
 .three pre { font-size: 0.8rem; white-space: pre-wrap; margin: 0; font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; }
 ul.pages li { margin: 8px 0; }
+.formula section ol { padding-left: 1.2em; margin: 4px 0; }
+.formula section li { margin: 2px 0; font-size: 0.95rem; }
+.formula section div { font-size: 0.95rem; }
 """
 
 
@@ -3290,6 +3294,643 @@ moving pictures here are GameBoard readings, the host's view of the replay's sto
     )
 
 
+# ---------------------------------------------------------------------------
+# Page 10: the octahedron, the 48 and the general formula (the model owner,
+# 2026-09-21: "what follows exactly from our formula is an octahedron ...
+# 48 in the matrix, 24 rotations and 24 transformations; yes, build it").
+# ---------------------------------------------------------------------------
+
+PORT_LABELS = ("+x", "-x", "+y", "-y", "+z", "-z")
+PORT_VECTORS = ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
+PORT_COLOURS = (
+    (255, 96, 96),
+    (255, 168, 72),
+    (88, 168, 255),
+    (176, 128, 255),
+    (255, 224, 72),
+    (88, 220, 210),
+)
+# The inradius of the octahedron whose vertices are the six Ports at one
+# Link: the face x + y + z = 1 lies at 1 / sqrt 3 from the centre. It is the
+# law's c (HIGHLIGHTS 5.7, "Straightness and one pace": the largest
+# isotropic pace at which no direction crosses two Links in one interval,
+# equality on the cube diagonals).
+INRADIUS = 1.0 / math.sqrt(3.0)
+OCTAHEDRON_EDGES = tuple(
+    (i, j)
+    for i in range(6)
+    for j in range(i + 1, 6)
+    if PORT_VECTORS[i] != tuple(-c for c in PORT_VECTORS[j])
+)
+CUBE_CORNERS = tuple((x, y, z) for x in (-1, 1) for y in (-1, 1) for z in (-1, 1))
+CUBE_EDGES = tuple(
+    (a, b)
+    for a in range(8)
+    for b in range(a + 1, 8)
+    if sum(1 for i in range(3) if CUBE_CORNERS[a][i] != CUBE_CORNERS[b][i]) == 1
+)
+
+
+def permutation_sign(perm: Sequence[int]) -> int:
+    sign = 1
+    for i in range(len(perm)):
+        for j in range(i + 1, len(perm)):
+            if perm[i] > perm[j]:
+                sign = -sign
+    return sign
+
+
+def signed_permutations() -> list[np.ndarray]:
+    """The 48 signed axis permutations, the maps of the six Ports onto
+    themselves that send opposite Ports to opposite Ports: 3! orderings of
+    the axes times 2^3 choices of sign. The 24 of determinant +1 (the
+    rotations) come first, then the 24 of determinant -1 (the reflections,
+    the inversion among them); the determinant is the sign of the
+    permutation times the product of the signs, in integers (record 226 of
+    docs/LOG_2026-09-20.md; docs/designs/hand/FORM.md section 2). Column i
+    of g is the image of the axis i."""
+    proper: list[np.ndarray] = []
+    improper: list[np.ndarray] = []
+    for perm in itertools.permutations(range(3)):
+        for signs in itertools.product((1, -1), repeat=3):
+            g = np.zeros((3, 3), dtype=np.int64)
+            for i in range(3):
+                g[perm[i], i] = signs[i]
+            det = permutation_sign(perm) * signs[0] * signs[1] * signs[2]
+            (proper if det == 1 else improper).append(g)
+    return proper + improper
+
+
+def determinant(g: np.ndarray) -> int:
+    """The determinant of a signed permutation matrix, in integers."""
+    perm = [int(np.nonzero(g[:, i])[0][0]) for i in range(3)]
+    signs = [int(g[perm[i], i]) for i in range(3)]
+    return permutation_sign(perm) * signs[0] * signs[1] * signs[2]
+
+
+def fixed_vector(g: np.ndarray) -> tuple[int, int, int]:
+    """The first nonzero v in {-1, 0, 1}^3 with g v = v (the axis of a
+    rotation, the normal of a reflection of -g)."""
+    for v in itertools.product((1, 0, -1), repeat=3):
+        if any(v) and (g @ np.array(v) == np.array(v)).all():
+            return v
+    raise ValueError("no fixed vector")
+
+
+def vector_text(v: Sequence[int]) -> str:
+    return "(" + ", ".join(str(int(c)) for c in v) + ")"
+
+
+def symmetry_name(g: np.ndarray) -> str:
+    """What one of the 48 does, read from its determinant and its trace: a
+    rotation (det +1) is the identity (trace 3), a half turn (trace -1), a
+    quarter turn (trace 1) or a third turn (trace 0) about its fixed axis;
+    an improper one (det -1) is the inversion (trace -3), a reflection in a
+    plane (trace 1), or a quarter turn (trace -1) or a sixth turn (trace 0)
+    followed by the reflection across its axis."""
+    det = determinant(g)
+    trace = int(np.trace(g))
+    if det == 1:
+        if trace == 3:
+            return "the identity"
+        angle = {-1: 180, 1: 90, 0: 120}[trace]
+        return f"a rotation by {angle} degrees about {axis_text(fixed_vector(g))}"
+    if trace == -3:
+        return "the inversion, every Port to its opposite"
+    if trace == 1:
+        return f"a reflection in the plane across {axis_text(fixed_vector(-g))}"
+    angle = {-1: 90, 0: 60}[trace]
+    return (
+        f"a rotation by {angle} degrees about {axis_text(fixed_vector(-g))} with the "
+        "reflection across it"
+    )
+
+
+def axis_text(v: Sequence[int]) -> str:
+    """An axis by its kind: through a Port, through an edge's midpoint, or
+    a diagonal of the cube (through a face's centre)."""
+    kind = {1: "the Port axis", 2: "the edge axis", 3: "the diagonal"}[sum(1 for c in v if c)]
+    return f"{kind} {vector_text(v)}"
+
+
+def port_image(g: np.ndarray) -> list[int]:
+    """The polar image of the six Ports in Port order: the index of the
+    Port that g sends each Port to (the table of hand/FORM.md section 2)."""
+    images = []
+    for v in PORT_VECTORS:
+        w = tuple(int(c) for c in g @ np.array(v))
+        images.append(PORT_VECTORS.index(w))
+    return images
+
+
+def symmetry_classes(matrices: Sequence[np.ndarray]) -> list[tuple[str, int]]:
+    """The kinds among the 48 with their counts, in the order first met."""
+    counts: dict[str, int] = {}
+    for g in matrices:
+        name = symmetry_name(g)
+        kind = name
+        for axis_kind in ("the Port axis", "the edge axis", "the diagonal"):
+            if axis_kind in name:
+                kind = name.split(axis_kind)[0] + axis_kind
+                if "with the reflection" in name:
+                    kind += " with the reflection across it"
+        counts[kind] = counts.get(kind, 0) + 1
+    return list(counts.items())
+
+
+@dataclass
+class Solid:
+    """The octahedron of the six Ports (the vertices at one Link on the
+    axes: the L1 ball, one Link per interval along an axis), the sphere
+    inscribed in it (its radius 1 / sqrt 3, the law's c) and the cube whose
+    face centres are the six Ports (the 48 are the cube's symmetries too),
+    drawn in the isometric projection of the three-dimensional pages,
+    turned about the vertical axis by an angle; drawn at SUPERSAMPLE times
+    the size and downsampled. The projection is an orthographic one scaled
+    by sqrt 1.5, so the sphere projects to a circle."""
+
+    scale: int
+    angle: float = 0.0
+    margin: int = 28
+    labels: bool = True
+
+    COS30 = math.cos(math.pi / 6)
+    SIN30 = math.sin(math.pi / 6)
+    PROJECTION_GAIN = math.sqrt(1.5)
+
+    @property
+    def size(self) -> tuple[int, int]:
+        return (
+            int(2 * 1.9 * self.scale) + 2 * self.margin,
+            int(2 * 2.1 * self.scale) + 2 * self.margin,
+        )
+
+    @property
+    def centre(self) -> tuple[float, float]:
+        w, h = self.size
+        return w / 2, h / 2
+
+    def turned(self, x: float, z: float) -> tuple[float, float]:
+        c, s_ = math.cos(self.angle), math.sin(self.angle)
+        return x * c - z * s_, x * s_ + z * c
+
+    def project(self, x: float, y: float, z: float) -> tuple[float, float]:
+        cx, cy = self.centre
+        xr, zr = self.turned(x, z)
+        return (
+            cx + (xr - zr) * self.COS30 * self.scale,
+            cy + (-y + (xr + zr) * self.SIN30) * self.scale,
+        )
+
+    def depth(self, x: float, y: float, z: float) -> float:
+        """Larger is nearer the viewer: the projection looks along (1, 1, 1)
+        of the turned solid."""
+        xr, zr = self.turned(x, z)
+        return xr + zr + y
+
+    def image(
+        self,
+        mapping: np.ndarray | None = None,
+        axis: Sequence[int] | None = None,
+        sphere: bool = True,
+        cube: bool = True,
+        radius_line: bool = True,
+    ) -> Image.Image:
+        """The solid; with a mapping g, the octahedron after g: every Port's
+        disc drawn at g's image of it, in the Port's own colour."""
+        k = SUPERSAMPLE
+        w, h = self.size
+        over = Image.new("RGBA", (w * k, h * k), (14, 16, 24, 255))
+        draw = ImageDraw.Draw(over)
+        g = np.eye(3, dtype=np.int64) if mapping is None else mapping
+        positions = [tuple(int(c) for c in g @ np.array(v)) for v in PORT_VECTORS]
+
+        def line(a: Sequence[float], b: Sequence[float], colour: tuple[int, ...], width: float) -> None:
+            pa, pb = self.project(*a), self.project(*b)
+            draw.line(
+                [(pa[0] * k, pa[1] * k), (pb[0] * k, pb[1] * k)],
+                fill=colour,
+                width=max(1, int(width * k)),
+            )
+
+        def composite(layer: Image.Image) -> None:
+            nonlocal over, draw
+            over = Image.alpha_composite(over, layer)
+            draw = ImageDraw.Draw(over)
+
+        if cube:
+            for a, b in CUBE_EDGES:
+                line(CUBE_CORNERS[a], CUBE_CORNERS[b], (58, 62, 80, 255), 0.6)
+        for v in PORT_VECTORS[::2]:
+            line(tuple(-c for c in v), v, (46, 50, 64, 255), 0.5)
+        if axis is not None:
+            n = math.sqrt(sum(c * c for c in axis))
+            far = tuple(1.6 * c / n for c in axis)
+            layer = Image.new("RGBA", over.size, (0, 0, 0, 0))
+            pa, pb = self.project(*[-c for c in far]), self.project(*far)
+            ImageDraw.Draw(layer).line(
+                [(pa[0] * k, pa[1] * k), (pb[0] * k, pb[1] * k)],
+                fill=(*ACCENT, 170),
+                width=max(1, int(1.2 * k)),
+            )
+            composite(layer)
+        # The back edges, then the sphere, then the front edges and vertices.
+        edges = sorted(
+            OCTAHEDRON_EDGES,
+            key=lambda e: self.depth(
+                *[(p + q) / 2 for p, q in zip(positions[e[0]], positions[e[1]], strict=True)]
+            ),
+        )
+        back = [
+            e
+            for e in edges
+            if self.depth(*[(p + q) / 2 for p, q in zip(positions[e[0]], positions[e[1]], strict=True)])
+            < 0
+        ]
+        front = [e for e in edges if e not in back]
+        for i, j in back:
+            line(positions[i], positions[j], (120, 126, 150, 255), 0.9)
+        if sphere:
+            cx, cy = self.project(0, 0, 0)
+            r = INRADIUS * self.PROJECTION_GAIN * self.scale
+            # The eight points where the sphere touches the faces, on the
+            # cube's diagonals: the ones behind the sphere first, dim.
+            touches = [tuple(INRADIUS / math.sqrt(3.0) * c for c in corner) for corner in CUBE_CORNERS]
+            dot = self.scale * 0.035
+
+            def touch_dots(front: bool) -> None:
+                for t in touches:
+                    if (self.depth(*t) >= 0) != front:
+                        continue
+                    tx, ty = self.project(*t)
+                    draw.ellipse(
+                        [(tx - dot) * k, (ty - dot) * k, (tx + dot) * k, (ty + dot) * k],
+                        fill=(*ACCENT, 255) if front else (40, 110, 70, 255),
+                    )
+
+            touch_dots(False)
+            layer = Image.new("RGBA", over.size, (0, 0, 0, 0))
+            ImageDraw.Draw(layer).ellipse(
+                [(cx - r) * k, (cy - r) * k, (cx + r) * k, (cy + r) * k],
+                fill=(*ACCENT, 60),
+                outline=(*ACCENT, 210),
+                width=max(1, int(0.8 * k)),
+            )
+            composite(layer)
+            if radius_line:
+                # The radius to the nearest of the four lower touching points.
+                touch = max((t for t in touches if t[1] < 0), key=lambda t: self.depth(*t))
+                line((0, 0, 0), touch, (*ACCENT, 255), 1.0)
+            touch_dots(True)
+        for i, j in front:
+            line(positions[i], positions[j], (222, 228, 240, 255), 1.3)
+        order = sorted(range(6), key=lambda i: self.depth(*positions[i]))
+        f = font(max(10, int(self.scale * 0.22)))
+        for i in order:
+            px, py = self.project(*positions[i])
+            near = self.depth(*positions[i]) >= 0
+            colour = PORT_COLOURS[i] if near else tuple(int(c * 0.6) for c in PORT_COLOURS[i])
+            r = self.scale * (0.11 if near else 0.085)
+            draw.ellipse(
+                [(px - r) * k, (py - r) * k, (px + r) * k, (py + r) * k],
+                fill=(*colour, 255),
+                outline=(14, 16, 24, 255),
+                width=max(1, int(0.5 * k)),
+            )
+        out = over.resize((w, h), Image.Resampling.LANCZOS).convert("RGB")
+        if self.labels:
+            text = ImageDraw.Draw(out)
+            for i in order:
+                px, py = self.project(*positions[i])
+                dx = 1 if positions[i][0] + positions[i][2] >= 0 else -1
+                label = PORT_LABELS[i]
+                text.text(
+                    (
+                        px + dx * self.scale * 0.16 - (0 if dx > 0 else f.getlength(label)),
+                        py - self.scale * 0.16,
+                    ),
+                    label,
+                    fill=PORT_COLOURS[i],
+                    font=f,
+                )
+            if sphere and radius_line:
+                touch = max(
+                    (
+                        tuple(INRADIUS / math.sqrt(3.0) * c for c in corner)
+                        for corner in CUBE_CORNERS
+                        if corner[1] < 0
+                    ),
+                    key=lambda t: self.depth(*t),
+                )
+                tx, ty = self.project(*[0.5 * c for c in touch])
+                text.text((tx + 4, ty - self.scale * 0.26), "c", fill=ACCENT, font=f)
+        return out
+
+
+def octahedron_player(frames: int, scale: int) -> Player:
+    solid = Solid(scale)
+    images = []
+    for index in range(frames):
+        solid.angle = 2 * math.pi * index / frames
+        images.append(solid.image())
+    readings = [
+        {
+            "the vertices": "the six Ports, one Link from the Node on its three axes",
+            "the sphere": f"radius 1 / sqrt 3 = {INRADIUS:.5f} Links per interval, the law's c",
+            "the sphere touches the faces at": "(+-1, +-1, +-1) / 3, the cube's diagonals",
+            "the turn": f"{index + 1} of {frames}",
+        }
+        for index in range(frames)
+    ]
+    return Player(
+        "octahedron",
+        images,
+        list(range(frames)),
+        readings,
+        "The octahedron of the six Ports (its vertices the Ports +x, -x, +y, -y, +z, -z at one Link, its "
+        "faces the L1 bound |x| + |y| + |z| = 1: one Link per interval), the sphere inscribed in it, of "
+        "radius 1 / sqrt 3 = c (green), touching the eight faces on the cube's diagonals, and the cube "
+        "whose face centres are the six Ports (faint). The solid turns slowly about the vertical axis; the "
+        "frame counter is the turn, not an interval of any run.",
+        duration_ms=80,
+        colours=64,
+    )
+
+
+def matrix_lines(g: np.ndarray) -> list[str]:
+    return ["  ".join(f"{int(c):>2d}" for c in row) for row in g]
+
+
+def the_48_player(scale: int) -> Player:
+    """One frame per signed axis permutation: the octahedron before and
+    after it, its matrix, its determinant, its kind and the hand's bit."""
+    matrices = signed_permutations()
+    before = Solid(scale, angle=0.55, labels=True)
+    after = Solid(scale, angle=0.55, labels=True)
+    w, h = before.size
+    gap = int(scale * 2.4)
+    width = 2 * w + gap
+    height = h + int(scale * 1.1)
+    title_font = font(max(12, int(scale * 0.24)))
+    mono = font(max(12, int(scale * 0.28)))
+    images = []
+    readings = []
+    for index, g in enumerate(matrices):
+        det = determinant(g)
+        name = symmetry_name(g)
+        axis: Sequence[int] | None = None
+        if " about " in name:
+            axis = fixed_vector(g if det == 1 else -g)
+        elif "in the plane across" in name:
+            axis = fixed_vector(-g)
+        left = before.image(sphere=False, cube=True, radius_line=False)
+        right = after.image(mapping=g, axis=axis, sphere=False, cube=True, radius_line=False)
+        canvas = Image.new("RGB", (width, height), (14, 16, 24))
+        top = int(scale * 1.1)
+        canvas.paste(left, (0, top))
+        canvas.paste(right, (w + gap, top))
+        draw = ImageDraw.Draw(canvas)
+        half = "of the 24 rotations" if det == 1 else "of the 24 improper ones"
+        ordinal = index + 1 if det == 1 else index + 1 - 24
+        head = f"g {index + 1} of 48: {ordinal} {half}; det {det:+d}"
+        draw.text((12, 8), head, fill=(232, 236, 239), font=title_font)
+        draw.text((12, 8 + int(scale * 0.34)), name, fill=(154, 165, 173), font=title_font)
+        draw.text(
+            (12, 8 + int(scale * 0.68)),
+            f"the hand: h -> {'+' if det == 1 else '-'}h",
+            fill=ACCENT,
+            font=title_font,
+        )
+        x0 = w + gap // 2
+        y0 = top + h // 2 - int(scale * 0.5)
+        for row, line in enumerate(matrix_lines(g)):
+            draw.text(
+                (x0 - mono.getlength(line) / 2, y0 + row * int(scale * 0.36)),
+                line,
+                fill=(232, 236, 239),
+                font=mono,
+            )
+        draw.text(
+            (x0 - mono.getlength("g") / 2, y0 - int(scale * 0.42)), "g", fill=(154, 165, 173), font=mono
+        )
+        draw.text((12, top + h - int(scale * 0.3)), "before", fill=(154, 165, 173), font=title_font)
+        draw.text(
+            (w + gap + 12, top + h - int(scale * 0.3)), "after g", fill=(154, 165, 173), font=title_font
+        )
+        images.append(canvas)
+        readings.append(
+            {
+                "g": f"{index + 1} of 48 ({ordinal} {half})",
+                "what it is": name,
+                "det g": f"{det:+d}",
+                "the polar image of (+x -x +y -y +z -z)": " ".join(str(i) for i in port_image(g)),
+                "the hand h -> det(g) h": f"h -> {'+' if det == 1 else '-'}h",
+            }
+        )
+    return Player(
+        "the_48",
+        images,
+        list(range(48)),
+        readings,
+        "The 48 signed axis permutations, one per frame: the octahedron of the six Ports before (left) "
+        "and after g (right, every Port's disc carried to its image in the Port's own colour; the green "
+        "line the axis of a rotation or the normal of a reflection), the matrix g between them, its "
+        "determinant, and the hand's bit, kept by the 24 rotations and flipped by the 24 improper ones. "
+        "The frame counter is the index of g, not an interval of any run.",
+        duration_ms=700,
+        colours=64,
+    )
+
+
+def formula_html() -> str:
+    """The general formula, drawn as cards: the state vectors, the map F of
+    six verbs, the reading, the click, in the words of HIGHLIGHTS 5.7 with
+    no claim added."""
+    cards = [
+        (
+            "The state: three vectors",
+            "<b>A row</b> (a message in flight) is a point of a product of circles and lines: its Node in "
+            "Z<sub>X</sub> x Z<sub>Y</sub> x Z<sub>Z</sub>, its direction (an index of the fan F<sub>P</sub>), its "
+            "phase on the circle Z<sub>N</sub>, its age, its amount and its number. <b>A record</b> is the vector "
+            "<b>f</b> of Z<sup>N</sup> of the amounts that ended at each phase, an element of the group ring "
+            "Z[Z<sub>N</sub>]. <b>A body</b> (a measured event) is its held contents, its momentum vector "
+            "<b>p</b> and its counts table, one accumulator (s, r, d) per count. A Node is an index and holds "
+            "nothing.",
+        ),
+        (
+            "The map F: six verbs, no seventh",
+            "<ol>"
+            "<li><b>the translation</b> of an accumulator by its rate, s &lt;- s + r: the flight, the phase, "
+            "the age, every count;</li>"
+            "<li><b>the bilinear form</b> with a declared matrix: the coupling <b>C a</b>, the click's "
+            "<b>G</b>, the moments;</li>"
+            "<li><b>the group-ring addition</b> in Z[Z<sub>N</sub>]: the merge, an antiphase pair "
+            "cancelling;</li>"
+            "<li><b>the permutation</b>: the collision table, the gate;</li>"
+            "<li><b>the evaluation</b> of the tables at zeta<sub>N</sub>, the primitive N-th root of unity;</li>"
+            "<li><b>the Euclidean division</b> with the remainder kept: the carry that is the event, and the "
+            "threshold.</li>"
+            "</ol>"
+            "Two places are not linear and there is no third: the carry (a bijection) and the click's "
+            "threshold (the one read-out). A root at run time is outside the six.",
+        ),
+        (
+            "The reading R: nobody sees the state",
+            "A detector reads its Node's neighbourhood by one linear reading <b>R</b>: the moments of the "
+            "arriving rows, order 0 a scalar (the presence), order 1 a vector (the flow, the pointer), order 2 "
+            "a tensor (the spread) and the age moment: the content of the stress-energy tensor <b>T</b>. Every "
+            "value compared with nature is such a reading; a GameBoard reading is a diagnostic.",
+        ),
+        (
+            "The click: one threshold",
+            "The click is one bilinear form on the record, the weight <b>f</b><sup>T</sup> <b>G f</b> with "
+            "<b>G</b> = <b>E</b><sup>T</sup> <b>E</b> the Gram matrix of the rounded cosine and sine tables, "
+            "then one threshold [u &lt; b<sub>k</sub>] against the rungs of the cells' cumulative weights, u "
+            "the lamp's wheel written on the record at its birth. The click discards information by design, "
+            "the law's one cost.",
+        ),
+        (
+            "The symmetry: 48 = 3! x 2<sup>3</sup> = 24 + 24",
+            "The maps of the six Ports onto themselves that send opposite Ports to opposite Ports are the "
+            "signed permutations of the three axes: 3! orderings times 2<sup>3</sup> signs, 48 in all, the "
+            "symmetry group of the octahedron and of the cube. The determinant splits them: 24 of determinant "
+            "+1, the rotations, and 24 of determinant -1, the reflections with the inversion among them. The "
+            "hand of a row is a pseudoscalar: h -&gt; det(g) h, kept by the 24 rotations, flipped by the 24 "
+            "improper ones. A Lorentz boost mixes a space step with a time step and is not among the 48: "
+            "Lorentz's symmetry belongs to the limit, not to the group.",
+        ),
+        (
+            "c from the octahedron",
+            "The octahedron's faces are |x| + |y| + |z| = 1, one Link per interval: the L1 bound of a step. "
+            "The sphere inscribed in it has radius 1 / sqrt 3, the distance from the centre to the face "
+            "x + y + z = 1, and touches the faces where the cube's diagonals cross them. That is c: the "
+            "largest isotropic pace at which no direction crosses two Links in one interval, with equality "
+            "on the cube diagonals; derived, not declared. The flight table realises it in integers, 32 "
+            "Links in 55 intervals on an axis.",
+        ),
+    ]
+    items = "".join(f"<section><h3>{title}</h3><div>{body}</div></section>" for title, body in cards)
+    return f'<div class="three formula">{items}</div>'
+
+
+@register("formula")
+def page_formula(out: Path, runs: Path | None) -> Path:
+    del runs  # no run: the page draws the law's geometry and its group
+    matrices = signed_permutations()
+    proper = [g for g in matrices if determinant(g) == 1]
+    improper = [g for g in matrices if determinant(g) == -1]
+    classes_proper = symmetry_classes(proper)
+    classes_improper = symmetry_classes(improper)
+    kinds = "".join(
+        f'<tr><th>{html.escape(kind)}</th><td class="num">{count}</td></tr>'
+        for kind, count in classes_proper + classes_improper
+    )
+    log = "../../LOG_2026-09-20.md"
+    body = f"""
+<p class="demo"><b>No run and no world</b>: this page draws the geometry of one Node and the group of its
+six Ports, and states the general formula in the words of
+<a href="../../HIGHLIGHTS.md">HIGHLIGHTS section 5.7</a>. Every count on it is enumerated by the page's
+builder from the three axes; nothing is pinned and nothing enters the register.</p>
+<p>The model owner, 2026-09-21 (translated): "what follows exactly from our formula is an octahedron;
+that is what follows from our formula. And we have in the matrix 48, with 24 rotations and 24
+transformations." The six Ports of a Node are the six vertices of an octahedron; the sphere inscribed in it
+has the radius c; the symmetries of that octahedron are the 48 signed axis permutations, 24 rotations and
+24 improper ones, and the hand tells the halves apart.</p>
+<h2>The octahedron of the six Ports and the sphere of c</h2>
+{
+        legend(
+            [
+                (f"the Port {label}", swatch(colour))
+                for label, colour in zip(PORT_LABELS, PORT_COLOURS, strict=True)
+            ]
+            + [("the sphere of radius c and its radius to a face", swatch(ACCENT))]
+        )
+    }
+{octahedron_player(60, 70).html()}
+<h2>The 48: 24 rotations and 24 improper ones</h2>
+<p>The frames are the 48 matrices in the order the builder enumerates them, the 24 of determinant +1
+first. Among the rotations: the identity, the quarter turns and the half turns about the axes of the
+Ports, the half turns about the axes through the edges' midpoints, and the third turns about the cube's
+diagonals; among the improper ones: the inversion, the reflections in the three planes of the Ports and
+in the six diagonal planes, and the turns followed by a reflection. The counts, enumerated by the builder:</p>
+<table><tr><th>The kind</th><th>Count</th></tr>{
+        kinds
+    }<tr><th>the rotations (det +1)</th><td class="num">{
+        len(proper)
+    }</td></tr><tr><th>the improper ones (det -1)</th><td class="num">{
+        len(improper)
+    }</td></tr><tr><th>all</th><td class="num">{len(matrices)}</td></tr></table>
+{the_48_player(64).html()}
+<h2>The general formula</h2>
+<p><b>The statement</b> (the owner, record 181, in HIGHLIGHTS 5.7): the state is integer vectors on tori
+and one tensor; the law is one map <b>F</b> (the interval's map) at every Node, made of six operations; the
+GameBoard computes exactly where the formula has only a limit; the measurement is the one threshold read
+out.</p>
+{formula_html()}
+<p>The three tests of every rule (record 202): generic (one primitive with declared integers, no family
+name), vector (one of the six verbs, no root, no float), local (its own record and the six neighbours,
+nothing kept at a Node). What is derived from the six verbs alone, what is not, and what is input are
+listed in <a href="../../HIGHLIGHTS.md">HIGHLIGHTS 5.7</a> and derived in
+<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a>; this page adds no claim.</p>
+{
+        sources(
+            [
+                (
+                    "48 = 3! x 2^3, 24 + 24 by the determinant; not a constant of the law",
+                    f'<a href="{log}">record 226</a> of the log of 2026-09-20; the matrices enumerated by <code>signed_permutations()</code> in <code>tools/gallery_pages.py</code>',
+                ),
+                (
+                    "24 is the octahedron's 24 rotations; the boost is not among the 48",
+                    f'<a href="{log}">record 231</a>',
+                ),
+                (
+                    "the hand h -> det(g) h; the polar image of the six Ports per g",
+                    '<a href="../../designs/hand/FORM.md">hand/FORM.md</a> section 2 (its first rows: the identity 0 1 2 3 4 5; z -> -z 0 1 2 3 5 4; y -> -y 0 1 3 2 4 5, reproduced by the player), <a href="'
+                    + log
+                    + '">record 142</a>',
+                ),
+                (
+                    "the kinds and their counts",
+                    "enumerated by <code>symmetry_name()</code> from the determinant and the trace of each g; the sum of the kinds is 24 and 24",
+                ),
+                (
+                    "c = 1 / sqrt 3 derived (straightness and one pace)",
+                    '<a href="../../HIGHLIGHTS.md">HIGHLIGHTS 5.7</a>, "The principles" (records 186, 191); the inradius of the octahedron with its vertices at one Link, computed as 1 / sqrt 3 = '
+                    + f"{INRADIUS:.6f}"
+                    + " by the builder",
+                ),
+                (
+                    "32 Links in 55 intervals on an axis",
+                    '<a href="../../BEAM_LAW.md">BEAM_LAW.md</a>, the flight table (32 / 55 = '
+                    + f"{32 / 55:.5f}"
+                    + " Links per interval against c = "
+                    + f"{INRADIUS:.5f}"
+                    + ")",
+                ),
+                (
+                    "the 20 orbits of the collision table under the 48",
+                    '<a href="../../BEAM_LAW.md">BEAM_LAW.md</a>, "The 20 orbits" (10 x 2; the group includes the reflections)',
+                ),
+                (
+                    "the statement, the three conversions, the six verbs, the click",
+                    '<a href="../../HIGHLIGHTS.md">HIGHLIGHTS 5.7</a> (records 173 to 198, 202); <a href="../../THREE_WORLDS.md">THREE_WORLDS.md</a>',
+                ),
+            ]
+        )
+    }
+"""
+    return write_page(
+        out,
+        "formula",
+        page(
+            "The octahedron and the 48",
+            "One Node's six Ports are an octahedron; the sphere inside it has the radius c; its 48 "
+            "symmetries are 24 rotations and 24 improper ones; the law is one map of six verbs.",
+            body,
+        ),
+    )
+
+
 @register("index")
 def page_index(out: Path, runs: Path | None) -> Path:
     entries = [
@@ -3336,6 +3977,13 @@ def page_index(out: Path, runs: Path | None) -> Path:
             "In three dimensions",
             "the nucleus, the decay, the atom and the beam beside the mass, the whole GameBoard drawn in an "
             "isometric projection, the bodies releasing themselves into the Nodes beside them (registered worlds)",
+        ),
+        (
+            "formula.html",
+            "The octahedron and the 48",
+            "one Node's six Ports as an octahedron with the sphere of c inside it, turning; the 48 signed "
+            "axis permutations one per frame, 24 rotations and 24 improper ones, the hand's bit kept or "
+            "flipped; the general formula in the words of HIGHLIGHTS 5.7 (no run)",
         ),
         (
             "worlds.html",

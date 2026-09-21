@@ -211,3 +211,37 @@ def test_the_volume_draws_the_cube_and_every_lit_node(world_path: Path) -> None:
         assert pixels[int(v), int(u)].sum() > 120
     u, v = volume.project(3, 5, 2)  # an unlit Node away from the cube's edges
     assert pixels[int(v), int(u)].sum() < 120
+
+
+def test_the_48_are_24_rotations_then_24_improper_ones_and_the_solid_projects_the_sphere() -> None:
+    """The formula page's group: 48 distinct signed axis permutations closed
+    under the product, the 24 of determinant +1 first (the classes of the
+    octahedron's rotations: 1 + 3 + 6 + 6 + 8) then the 24 of determinant -1
+    (3 + 1 + 6 + 6 + 8); the polar images of hand/FORM.md section 2's first
+    rows reproduced; the edge case, the inversion, sends every Port to its
+    opposite and flips the hand. The solid's projection is an orthographic
+    one with the gain sqrt 1.5, so the inscribed sphere of radius 1 / sqrt 3
+    projects to a circle and its picture has the solid's size."""
+    matrices = gallery_pages.signed_permutations()
+    assert len(matrices) == 48 and len({g.tobytes() for g in matrices}) == 48
+    dets = [gallery_pages.determinant(g) for g in matrices]
+    assert dets[:24] == [1] * 24 and dets[24:] == [-1] * 24
+    keys = {g.tobytes() for g in matrices}
+    assert all((a @ b).tobytes() in keys for a in matrices for b in matrices)
+    assert [n for _, n in gallery_pages.symmetry_classes(matrices[:24])] == [1, 3, 6, 6, 8]
+    assert [n for _, n in gallery_pages.symmetry_classes(matrices[24:])] == [3, 1, 6, 6, 8]
+    images = {tuple(gallery_pages.port_image(g)) for g in matrices}
+    assert {(0, 1, 2, 3, 4, 5), (0, 1, 2, 3, 5, 4), (0, 1, 3, 2, 4, 5)} <= images
+    inversion = -np.eye(3, dtype=np.int64)
+    assert gallery_pages.port_image(inversion) == [1, 0, 3, 2, 5, 4]
+    assert gallery_pages.determinant(inversion) == -1
+    assert gallery_pages.symmetry_name(inversion).startswith("the inversion")
+    solid = gallery_pages.Solid(40, angle=0.3)
+    cx, cy = solid.centre
+    for corner in gallery_pages.CUBE_CORNERS:
+        # A point of the sphere, on a cube diagonal, projects inside the circle.
+        point = [gallery_pages.INRADIUS / 3**0.5 * c for c in corner]
+        u, v = solid.project(*point)
+        assert ((u - cx) ** 2 + (v - cy) ** 2) ** 0.5 <= gallery_pages.INRADIUS * 1.5**0.5 * 40 + 1e-9
+    assert solid.image().size == solid.size
+    assert solid.image(mapping=matrices[30], axis=(1, 0, 0), sphere=False).size == solid.size
