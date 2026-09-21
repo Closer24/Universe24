@@ -192,8 +192,9 @@ same integers as `by_clock(age, content x n, d)` at a constant content
 from age 0; the counts are one table on the record, `Measured.counts`,
 whose one loop `CountTable.advance` runs every row through `by_drive` and
 hands the whole part to the count's consumer, the turn here, the owed
-count at `_suspend`, the release and the lamp at step 5, the drive at
-`_move`, the push and the doppler weight at the reading), its
+count at `_suspend`, the release and the lamp at step 5, the drive and
+the turn by momentum at `_move`, the push and the doppler weight at the
+reading), its
 release rate, its lamp's rate and window, its owed count) and its content
 (`frame_content`, read once before the law: M_A of the interval's push,
 the same whatever the order in which the families' clicks join `held`

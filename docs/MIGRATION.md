@@ -6,6 +6,23 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## No registers at Nodes, no tables, on 2026-09-20: the last counts join the table, the flight as the position's accumulator, no remainder discarded
+
+The model owner's record 155 of 2026-09-20 ("go for it: no registers at
+Nodes, no tables") on the fraction-free law below; the branch
+`no-tables`. The identity `beam-v1` is kept.
+
+- The turn by momentum under `action` ([BEAM_LAW note 30 (ii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  note 41 (i)) is the `action` row of the body's table of counts, per
+  axis: the row gains |p_a| x N at every Link the step rule counts on the
+  axis and the whole part over h turns the phase at the Link crossed (a
+  count at a Link lost or refused is discarded, as before); the same
+  integers as `by_clock(k0, |p| N, h)` at a constant momentum, the exact
+  sum where the momentum changes along the path. `run.json` and
+  `state.json` carry `acc.action` (three integers) on a turning body.
+  Series H re-read: the register's dated line. The parser's bound on
+  `ticks x |p| x N` stays as declared; at run time only |p| N is formed.
+
 ## The fraction-free law, on 2026-09-20: every count an accumulator on the body's record
 
 The model owner's records 147 and 148 of 2026-09-20 on the mathematician's

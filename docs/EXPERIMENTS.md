@@ -2720,6 +2720,30 @@ states "exactly" and means integer equality at every tick.
   of 27 Nodes) are open again. The registered verdicts stand as history
   ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
 
+- **Re-read under the turn by momentum as a row of the table of counts
+  (2026-09-20; measured, nothing pinned; the model owner's record 155,
+  [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (i)).**
+  The electron's momentum changes at every push along the orbit, so the
+  count off the Links stepped, `by_clock(k0, |p| N, h)`, re-priced every
+  earlier Link on the axis at the present |p|; the `action` row sums |p| N
+  Link by Link. The turn changes nothing of the step, so every orbit is
+  the signed drive's to the Link: the same closings, periods, returns,
+  mean radii and escapes in all seven worlds (`r2` T 449, out through
+  face:-y at 1264; `r4` T 545 and 1588, out at 2190; `r6` T 1041, out at
+  2160; `r8` T 1292 and 2016, out at 3869; `r12` no closing, out at 2059;
+  `r15` T 2543 with the return 3 within r / 4, out at 3443; `r16` out at
+  1888), the books identical at every tick; what moves is the phase at a
+  closing by a step or two (`r2` 30 for 31; `r4` 61 and 36 for 61 and 37;
+  `r6` 31 for 39; `r8` 55 and 53 for 54 and 52; `r15` 62 for 0) and with
+  it the coherence of the faces' record: `r4`'s turn per orbit 0.609
+  against the design's 0.463 (0.625) with C(2) = 0.49 (0.51), inside;
+  `r8`'s turn per orbit 0.969 against 0 as before and C(2) = 1.24 (0.99),
+  now inside the closing criterion C >= 1.0 after 2 turns. 0 record checks
+  failed; 2 readings inside and 0 outside (1 and 1). The ladder still
+  takes no ratio (no closing radius returns within r / 4 at r = 8 with two
+  turns); the verdict as re-read stands: what the law lacks is a stable
+  closed orbit under whole kicks. The events of the seven worlds moved
+  and their books did not; the numbers above are kept as history.
 
 ### I, the nucleus (2026-09-20)
 

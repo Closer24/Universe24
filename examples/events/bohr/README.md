@@ -181,3 +181,18 @@ without closing, r = 15 closes once with the return within r / 4. Bohr's
 lines are still not read; the registered verdict's "what the law lacked
 is a stable closed orbit under whole kicks" stands again. The register
 entry has every world's numbers and the verdict re-read ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under the turn by momentum as a row of the table of counts (2026-09-20)
+
+By the model owner's record 155 ("no registers at Nodes, no tables") the
+turn by momentum is the `action` row of the electron's table of counts
+([BEAM_LAW note 41](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(i)): |p| N per Link the step rule counts on the axis, over h, the exact
+sum along the orbit where the count off the Links stepped re-priced every
+earlier Link at the present momentum. The orbits are unchanged to the
+Link (the same closings, periods, returns, radii and escapes in all seven
+worlds); the phase at a closing moves by a step or two and with it the
+faces' coherence: `r4` C(2) = 0.49 (0.51), `r8` C(2) = 1.24 (0.99, now
+inside the closing criterion); 2 readings inside, 0 outside (1 and 1).
+Bohr's lines are still not read and the verdict stands. The register entry
+has every number ([migration](../../../docs/MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded)).

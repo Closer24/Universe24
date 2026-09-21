@@ -11,6 +11,30 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## No tables: series H under the action row - 2026-09-20
+
+The branch `no-tables` ([MIGRATION](MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded);
+the model owner's record 155) against its base `ddec5166` (the head of
+`fraction-free`): the seven worlds of series H run on both trees at their
+registered length under the guards (`--wall-seconds 1200 --memory-mb
+4096`), `events.jsonl` and `state.json` digested, the books (`audit`)
+digested. The turn by momentum as the `action` row moves the electron's
+phase and nothing of its steps: the events of every world moved (the
+rays' phases), the books of every world are identical, every orbit's
+closings, periods, returns, radii and escapes are the signed drive's
+(`tools/bohr_readings.py` on both, the numbers in the register's H entry).
+The digests (the first 16 hexadecimal digits of the sha256):
+
+| world | events.jsonl (was) | events.jsonl (now) | state.json (now) | books |
+| --- | --- | --- | --- | --- |
+| `r2` | `ea52bf20dda2d125` | `af97b4fd9a61444d` | `0fb4d0945f04b5ba` | identical |
+| `r4` | `4532306a56eb3276` | `d37ae7d22246744b` | `bc2d82f5250901d4` | identical |
+| `r6` | `9cd943bafcc6def4` | `541ad66e08b551ab` | `1e117afc41fd7990` | identical |
+| `r8` | `30f5083c1186d478` | `830a6f3caa7062a9` | `3fa56b6963e2b810` | identical |
+| `r12` | `da8cc1cd922ef2e1` | `a08542a5cd0bf548` | `ab7be58212465791` | identical |
+| `r15` | `b82a90b67b4d0fb4` | `4f4b6d9cd339e07b` | `f499a30e4fb8c5e6` | identical |
+| `r16` | `929dbfe2afda38ec` | `9dfa570683034b9b` | `af507d6861a76026` | identical |
+
 ## The fraction-free law: the register replayed once on the branch against the base a2120413 - 2026-09-20
 
 The branch `fraction-free` ([BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);

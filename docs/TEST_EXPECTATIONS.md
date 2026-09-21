@@ -1762,6 +1762,12 @@ the unit vector, the screen's pushes (128, 0, 0) and (128, 12, 0) with the
 share (9, 0, 0), the mirror's second reflection at the share (7, 5, 0);
 the turn 3 and the content 3 on every row until then).
 
+**The turn by momentum as the `action` row (record 155 of 2026-09-20).**
+`test_nature_beam_body` (d) and `test_step_drive` (e) are unchanged: at a
+constant momentum the row's count at each Link is `by_clock(k0, |p| N, h)`
+(2925, 2926, 2926, 2925, 2926 at |p| 320, N 64, h 7); `acc.action` in the
+record; the refusal of `ticks x |p| x N` beyond the bound as declared.
+
 **The Bell and amplitude readings by record (the alignment).** A paid
 lamp's exact clock stalls where its content has fallen below K (the Bell
 lamps of content K + 2, once at tick 4; the L worlds' lamps of 2^20 at

@@ -1666,7 +1666,11 @@ implementation's part of the contract. The design above is unchanged.
     as the step rule's count does). Where the momentum changes along
     the path (a push between two steps) the count k0 is the rule's
     count at the current age and momentum, not a history: the
-    placement rule reads the record, not the past. Placed, as the owner
+    placement rule reads the record, not the past (until the model owner's
+    record 155 of 2026-09-20, note 41 (i): the count is the `action` row
+    of the body's table of counts, the exact sum of |p| N over the Links
+    counted on the axis, so a push between two steps is counted where it
+    happened). Placed, as the owner
     said, outside the GameBoard like the age: a rule of the measured event,
     the external thing, read from its own record (its momentum label,
     its age); it changes nothing of the rays' flight or collision (test
@@ -3199,14 +3203,25 @@ implementation's part of the contract. The design above is unchanged.
     for the drive, the reading for the push and the doppler weight): a
     future count is a new row, not new code. What remains read off an age is a key (`ages_at_key`:
     the lifetime, the age bound, the clock trigger; a comparison, no
-    rate), the rows' phase per interval of age (`by_clock_rows`: a ray's
-    rate is its family's `phase_per_link`, a constant over its flight, so
-    the identity's case, with no record to hold an accumulator) and the
-    turn by momentum under `action` (the phase steps off
-    the Links stepped, `by_clock(k0, |p| N, h)`, note 30), left as built
-    and named here as the one count whose rate a push changes that is
-    not yet an accumulator (a decision of the model owner, not taken in
-    this note).
+    rate) and the rows' phase per interval of age (`by_clock_rows`: a
+    ray's rate is its family's `phase_per_link`, a constant over its
+    flight, so the identity's case, with no record to hold an
+    accumulator). The turn by momentum under `action` (note 30 (ii)) was
+    left as built by the first form of this note, the one count whose
+    rate a push changes that was not an accumulator; by the model owner's
+    record 155 of 2026-09-20 ("no registers at Nodes, no tables": one
+    rule, no exception) it is the `action` row of the table per axis: the
+    row gains |p_a| x N at every Link the step rule counts on the axis
+    (crossed, lost to an earlier axis's step, or refused at a contact) and
+    the whole part over h turns the phase at the Link crossed, the count
+    of a Link not crossed discarded as the count off the Links stepped
+    skipped it; the same integers as `by_clock(k0, |p| N, h)` at a
+    constant momentum (test (d) of `test_nature_beam_body` and (e) of
+    `test_step_drive` unchanged), the exact sum of |p| N over the Links
+    where the momentum changes along the path (series H, the register's
+    dated line: the count off the Links re-priced every earlier Link at
+    the present momentum). The product formed at run time is |p| N alone
+    (the parser's bound on ticks x |p| x N stays as declared).
     (ii) **Why the count of a changing rate is the accumulator's** (the
     physics-rule reviewer's reading, record 148). Under E = h f the turn
     is the lamp's frequency, `content x n / d` per self-creation, and the
