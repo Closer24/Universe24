@@ -1,4 +1,4 @@
-"""Read the runs of series S, the clock's word, against `expectations.json`
+"""Read the runs of series T, the clock's word, against `expectations.json`
 and write `readings.json` beside them (the measured block the register's
 entry quotes; no number typed by hand).
 

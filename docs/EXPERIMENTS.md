@@ -6364,7 +6364,7 @@ sequential gates on an entangled record, the full register replay.
   with these readings.
 
 
-### S, the clock's word (2026-09-21)
+### T, the clock's word (2026-09-21)
 
 - **Confronts.** The physicist's pin of 2026-09-21
   ([docs/designs/clock_age/NOTE.md](designs/clock_age/NOTE.md) section 6,

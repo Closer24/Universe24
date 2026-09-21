@@ -1,13 +1,14 @@
-# Series S: the clock's word, the presence or the age moment
+# Series T: the clock's word, the presence or the age moment
 
 The Boss's order of 2026-09-21 (12:45Z) to the G2 experimenter, a rule-353
 experiment (a second pair of hands on the physicist's pin; the replicator
 runs it again later): build the four worlds exactly as the physicist's read
 pins them in [docs/designs/clock_age/NOTE.md](../../../docs/designs/clock_age/NOTE.md)
 section 6 (the numbers from `clock_age_map.py` beside it), register them
-under the next free series letter with the pins before the run, run them
+under the next free series letter (T: the register's A, C, D, E, G, H, I, J, K, L, N, P, Q, R
+are taken and S is the reader inside a crowd) with the pins before the run, run them
 under beam-v1 as declared (no change under `src/`), and read them. The
-register's entry is [docs/EXPERIMENTS.md, "S, the clock's word"](../../../docs/EXPERIMENTS.md#s-the-clocks-word-2026-09-21);
+register's entry is [docs/EXPERIMENTS.md, "T, the clock's word"](../../../docs/EXPERIMENTS.md#t-the-clocks-word-2026-09-21);
 the expectations with the `derivations` map are `expectations.json`
 (written by `make_worlds.py`; the `replicated` map absent: measured once,
 awaiting replication); the readings tool is `read_runs.py`.

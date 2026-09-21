@@ -1,4 +1,4 @@
-# Series R: a reader inside a crowd
+# Series S: a reader inside a crowd
 
 The model owner's word (2026-09-21, in conversation): "start", on the
 experimenter's proposal, after series P and Q, of a detector that sits

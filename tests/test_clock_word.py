@@ -1,4 +1,4 @@
-"""Series S, the clock's word: the presence or the age moment
+"""Series T, the clock's word: the presence or the age moment
 (`examples/events/clock_word/`, docs/designs/clock_age/NOTE.md section 6).
 The expected values of docs/TEST_EXPECTATIONS.md ("The clock's word"),
 written down first, from the physicist's pin and the map's section B:

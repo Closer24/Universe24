@@ -1,4 +1,4 @@
-"""Write the four worlds of series S, the clock's word (the presence or the
+"""Write the four worlds of series T, the clock's word (the presence or the
 age moment), and the register's expectations before the run
 (`expectations.json`).
 
