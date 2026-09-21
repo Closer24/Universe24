@@ -687,8 +687,8 @@ class Cube:
 # The GIF, the sprite sheet and the page
 
 
-def gif_bytes(images: Sequence[Image.Image], duration_ms: int) -> bytes:
-    palettes = [image.quantize(colors=96, method=Image.Quantize.MEDIANCUT) for image in images]
+def gif_bytes(images: Sequence[Image.Image], duration_ms: int, colours: int = 96) -> bytes:
+    palettes = [image.quantize(colors=colours, method=Image.Quantize.MEDIANCUT) for image in images]
     buffer = io.BytesIO()
     palettes[0].save(
         buffer,
@@ -702,7 +702,7 @@ def gif_bytes(images: Sequence[Image.Image], duration_ms: int) -> bytes:
     return buffer.getvalue()
 
 
-def sprite_sheet(images: Sequence[Image.Image]) -> tuple[bytes, int, int, int]:
+def sprite_sheet(images: Sequence[Image.Image], colours: int = 128) -> tuple[bytes, int, int, int]:
     """One PNG holding every frame in a grid; (png, columns, width, height)."""
     w, h = images[0].size
     columns = max(1, min(len(images), int(math.ceil(math.sqrt(len(images) * h / max(w, 1))))))
@@ -711,7 +711,9 @@ def sprite_sheet(images: Sequence[Image.Image]) -> tuple[bytes, int, int, int]:
     for k, image in enumerate(images):
         sheet.paste(image, ((k % columns) * w, (k // columns) * h))
     buffer = io.BytesIO()
-    sheet.quantize(colors=128, method=Image.Quantize.MEDIANCUT).save(buffer, format="PNG", optimize=True)
+    sheet.quantize(colors=colours, method=Image.Quantize.MEDIANCUT).save(
+        buffer, format="PNG", optimize=True
+    )
     return buffer.getvalue(), columns, w, h
 
 
@@ -733,10 +735,12 @@ class Player:
     # Optional: per frame a list of (title, html) panels drawn side by side
     # under the readings (the three worlds page).
     panels: Sequence[Sequence[tuple[str, str]]] | None = None
+    # The palette of the sprite sheet and the GIF (fewer colours: a smaller page).
+    colours: int = 128
 
     def html(self) -> str:
-        png, columns, w, h = sprite_sheet(self.images)
-        gif = gif_bytes(self.images, self.duration_ms)
+        png, columns, w, h = sprite_sheet(self.images, self.colours)
+        gif = gif_bytes(self.images, self.duration_ms, min(self.colours, 96))
         data = {
             "columns": columns,
             "width": w,
@@ -844,6 +848,7 @@ a { color: var(--accent); }
 nav.crumbs { font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
 figure.player { margin: 16px 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
 figure.player img.gif { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 4px; }
+figure.player img.gif[hidden], figure.player canvas[hidden], figure.player div.controls[hidden] { display: none; }
 figure.player canvas { display: block; max-width: 100%; height: auto; margin: 0 auto; background: var(--board); border-radius: 4px; }
 figure.player .controls { display: flex; gap: 12px; align-items: center; margin: 10px 0 4px; }
 figure.player input.slider { flex: 1; accent-color: var(--accent); }
@@ -3149,7 +3154,9 @@ def volume_player(
         }
         for frame in frames
     ]
-    return Player(key, images, list(ticks), readings, caption + " " + COPIES_NOTE, duration_ms)
+    return Player(
+        key, images, list(ticks), readings, caption + " " + COPIES_NOTE, duration_ms, colours=64
+    )
 
 
 @register("volume")
@@ -3160,9 +3167,9 @@ def page_volume(out: Path, runs: Path | None) -> Path:
     deuteron = volume_player(
         "volume_deuteron",
         WORLDS / "nucleus" / "deuteron_1.json",
-        list(range(0, 49)),
-        9,
-        "The deuteron at one Link, `deuteron_1` (series I), the whole 21^3 cube, one frame per interval: the proton "
+        list(range(0, 49, 2)),
+        6,
+        "The deuteron at one Link, `deuteron_1` (series I), the whole 21^3 cube, one frame per two intervals: the proton "
         "and the neutron releasing their rows on the 290 directions into the Nodes beside them, the strong rows "
         "(gold) clicking on the border at three Links, the p and n rows flying to the faces.",
         120,
@@ -3171,9 +3178,9 @@ def page_volume(out: Path, runs: Path | None) -> Path:
     decay = volume_player(
         "volume_decay",
         WORLDS / "weak" / "j3_neutron_free.json",
-        list(range(500, 546)),
-        9,
-        "The free neutron's decay, `j3_neutron_free` (series J), the whole 21^3 cube from the interval 500, one "
+        list(range(504, 546)),
+        6,
+        "The free neutron's decay, `j3_neutron_free` (series J), the whole 21^3 cube from the interval 504, one "
         "frame per interval: the transformation at 512, the beta and the neutrino leaving on their directions "
         "(the arrows), the beta's click on the shell of readers at r = 8, the neutrino out through a face.",
         150,
@@ -3184,9 +3191,9 @@ def page_volume(out: Path, runs: Path | None) -> Path:
     atom_release = volume_player(
         "volume_atom_release",
         WORLDS / "bohr" / "r8.json",
-        list(range(0, 49)),
-        5,
-        "The atom, `r8` (series H), the whole 45^3 cube at its first 48 intervals, one frame per interval: the "
+        list(range(0, 49, 2)),
+        3,
+        "The atom, `r8` (series H), the whole 45^3 cube at its first 48 intervals, one frame per two intervals: the "
         "proton's shells of 2616 rows leaving every 10 intervals, the electron (coloured by its phase) with its "
         "momentum arrow releasing its rows on its four directions.",
         120,
@@ -3196,9 +3203,9 @@ def page_volume(out: Path, runs: Path | None) -> Path:
     atom_orbit = volume_player(
         "volume_atom_orbit",
         WORLDS / "bohr" / "r8.json",
-        frame_ticks(3900, 60),
-        5,
-        "The atom, `r8`, the orbit over 3900 intervals, one frame per 66: the electron circling the proton in the "
+        frame_ticks(3900, 40),
+        3,
+        "The atom, `r8`, the orbit over 3900 intervals, one frame per 100: the electron circling the proton in the "
         "plane z = 22 of the cube, its copies and its arrow turning with it.",
         120,
         weights={"p": 0.4, "e": 0.0},
@@ -3207,10 +3214,10 @@ def page_volume(out: Path, runs: Path | None) -> Path:
     lens = volume_player(
         "volume_lens",
         WORLDS / "lensing" / "mass_meeting.json",
-        frame_ticks(400, 60),
-        5,
+        frame_ticks(400, 40),
+        3,
         "The beam beside the mass, `mass_meeting` (series K under the meeting), the whole 57 x 41 x 41 box, one "
-        "frame per 6.8 intervals: the lamp's rows (coloured by their phase) passing the mass and bent toward "
+        "frame per 10 intervals: the lamp's rows (coloured by their phase) passing the mass and bent toward "
         "it, the mass's crowd of 290 directions dimmed, the screen at x = 54.",
         100,
         weights={"m": 0.25, "light": 1.0, "wall": 0.0},
