@@ -35,7 +35,11 @@ current origin/main; use isolated worktrees for concurrent tasks and submit a PR
 7. Commit code and documentation together. Keep generated outputs outside source
    commits; attach them to reviews or saved experiment packages.
 
-Formatting is managed by Ruff. The development dependencies are declared in
+Formatting is managed by Ruff: before `python tools/check.py`, run
+`python -m ruff format <changed .py files>` and `python -m ruff check <changed
+.py files>` (the gate fails on an unformatted file before it runs a test;
+after formatting a world generator, regenerate its worlds and confirm the
+shipped JSON is unchanged). The development dependencies are declared in
 `pyproject.toml`; exact tool versions used for the delivered validation are
 recorded in `docs/VALIDATION.md`. No coverage percentage substitutes for tests of
 integer bounds, causality, occupancy, momentum and known historical regressions.
