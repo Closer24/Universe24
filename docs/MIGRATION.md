@@ -6,6 +6,30 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The interval in named steps, on 2026-09-21 (host only, bit-exact)
+
+The model owner's order of 2026-09-21 ("optimization and simplify"). The
+interval `nature_beam` was one function of 2,091 lines; it is now the
+orchestrator of its six steps, each a function of the same module called
+by `nature_beam` alone, every line of the law's text moved and not
+changed: `interval_frame` reads the frame `Interval` once (the world's
+constants, the measured events in number order with the index of the one
+at each Node, the crossing marks of note 48); `_walk` (step 1),
+`_collide` (step 3, the closure `collide` before), `_measure` (step 4:
+`_measured_arrays` reads `MeasuredArrays`, the measured events' tables in
+array form; `_family_plan` the closure `family_plan` before; `_apply_plans`
+and `_apply_plan` the record loop per measured event and family;
+`_refuse` the closure `refuse`); `_release` (step 5) with
+`_release_family` per family; `_border` (step 6); `_merge`;
+`_inverse_interval` the inverse branch. `heading_port` is a module
+function. The unused read of the world's `release` pair at step 5 is
+deleted (the release is the counts table's row since the fraction-free
+law). No rule, no register, no run moved: the gate set's digests
+(`tests/test_amplitude_click.py` (d)), the worlds, the bijection, the
+books and the detectors read as before. References by the old names
+(`family_plan`, `collide`) in the documentation are renamed; a dated log
+record keeps its wording.
+
 ## The paper-writer skill folded into paper-coordinator, on 2026-09-21 (docs only)
 
 `skills/paper-writer/SKILL.md` (the manuscript's method: equations first,
