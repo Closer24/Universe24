@@ -16,8 +16,8 @@ the lattice's lines, the ratio of the two shifts 2.00 the number a run
 reads).
 
     python examples/events/optical/make_worlds.py     # the worlds and expectations.json
-    PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/optical_g0 examples/events/optical/control_g0.json examples/events/optical/mass_g0.json examples/events/optical/near_g0.json
-    PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/optical_g1 examples/events/optical/control_g1.json examples/events/optical/mass_g1.json examples/events/optical/near_g1.json
+    PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/optical_g0 examples/events/optical/control_g0.json examples/events/optical/mass_g0.json examples/events/optical/near_g0.json examples/events/optical/far_g0.json
+    PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/optical_g1 examples/events/optical/control_g1.json examples/events/optical/mass_g1.json examples/events/optical/near_g1.json examples/events/optical/far_g1.json
     PYTHONPATH=src python tools/lensing_readings.py artifacts/optical_g0     # and _g1: the centroid's shift and the delay against the control
 """
 
@@ -43,7 +43,7 @@ SUSPENSION = [1, 16384]
 # The mass sixteen times series K's SOURCE = 2^12: 2^16.
 MASS_FACTOR = 16
 GAMMAS = (0, 1)
-NAMES = ("control", "mass", "near")
+NAMES = ("control", "mass", "near", "far")
 # The pins from the lattice's lines (the one-wall note's section 6, DETECTOR
 # if run; the bracket 0.5 pixel on the centroid's shift and 1 interval on
 # the delay): per world the shift in pixels toward the mass (negative in y)
@@ -64,10 +64,40 @@ PINS: dict[str, dict[str, object]] = {
         "delay": {1: 2.17, 2: 4.34},
         "lamp_rate": 1.000,
     },
+    # The far world (records 505 and 540): b = 8, where no direction of the
+    # beam is taken by the mass (the innermost line at 5.83 Links, beyond
+    # mass's 3.83); the deflection's second pin, near at f = 2 being a
+    # capture reading. Its lamp rate is read at its first run (None).
+    "far": {
+        "mass": 1 << 16,
+        "impact": 8,
+        "shift": {1: -1.69, 2: -3.37},
+        "delay": {1: 2.15, 2: 4.29},
+        "lamp_rate": None,
+    },
 }
 SHIFT_BRACKET = 0.5
 DELAY_BRACKET = 1.0
+# The ratios' bracket: 0.25 on mass and near as registered (by fiat; a
+# registered pin moves on the model owner's word); on far the brackets
+# propagated in quadrature from +-0.5 pixel and +-1 interval (the chief
+# physicist, record 540): 0.66 on the shifts' ratio, 1.04 on the delays'.
 RATIO_BRACKET = 0.25
+RATIO_BRACKETS: dict[str, dict[str, float]] = {"far": {"shift": 0.66, "delay": 1.04}}
+# The capture reading of near at f = 2 (DETECTOR, the mass's clicks; the two
+# inner directions of the beam, two fifths of the 1455 rows): the centroid
+# is the survivors' (the three outer lines at 3, 4.08 and 5.17 Links), so
+# near_g1 carries no deflection pin; the old shift pin stays beside it as
+# superseded (records 505 and 540).
+CAPTURE_NEAR_G1: dict[str, object] = {
+    "taken_by_the_mass": 582,
+    "taken_bracket": 146,
+    "reading": (
+        "capture: the centroid is the survivors' (the three outer lines at 3, 4.08 and 5.17 "
+        "Links); no deflection pin"
+    ),
+    "shift_pin_superseded": -4.83,
+}
 
 
 def _lensing():
@@ -138,11 +168,26 @@ def expectations() -> Json:
             ),
             "ratio_f2_over_f1": (
                 "the ratio of the centroid's shift at gamma = 1 over gamma = 0: 2.00, the space "
-                "part gamma doubling the time part's turn (the number the run reads)"
+                "part gamma doubling the time part's turn (the number the run reads); the bracket "
+                "0.25 on mass and near as registered (the 0.25 was by fiat; the bracket propagated "
+                "in quadrature from +-0.5 pixel and +-1 interval is 0.83 on the delays' ratio at "
+                "b = 6; the chief physicist, record 540), on far the propagated brackets, 0.66 on "
+                "the shifts' ratio (`bracket`) and 1.04 on the delays' (`delay_bracket`)"
             ),
             "lamp_rate": (
                 "GAMEBOARD: the lamp's clock rate under the age word, its births per interval "
-                "(clock-age-v1, the law's default; not the key's)"
+                "(clock-age-v1, the law's default; not the key's); far's is None until its first "
+                "run reads it"
+            ),
+            "capture": (
+                "DETECTOR: the mass's clicks at near, f = 2 (taken_by_the_mass 582 +- 146, the two "
+                "inner directions of the beam at 0.83 and 1.92 Links, two fifths of 1455): a capture "
+                "reading, the centroid the survivors' (the three outer lines at 3, 4.08 and 5.17 "
+                "Links), so near_g1 carries no deflection pin and the old shift pin stays as "
+                "shift_pin_superseded; the deflection's second pin is far (b = 8, no direction "
+                "taken, the innermost at 5.83 Links beyond mass's 3.83); the source: the note's "
+                "map, section E, the one-line form, GAMEBOARD arithmetic, the chief physicist's "
+                "record 540 (records 505 and 540)"
             ),
         },
     }
@@ -156,7 +201,7 @@ def expectations() -> Json:
             "delay": 0.0,
         }
         for name, pin in PINS.items():
-            out["worlds"][f"{name}_g{gamma}"] = {
+            entry: Json = {
                 "gamma": gamma,
                 "flight_coefficient": f,
                 "mass": pin["mass"],
@@ -167,15 +212,24 @@ def expectations() -> Json:
                 "delay_bracket": DELAY_BRACKET,
                 "lamp_rate": pin["lamp_rate"],
             }
+            if name == "near" and gamma == 1:
+                # The capture reading in place of the deflection pin.
+                del entry["shift"], entry["shift_bracket"]
+                entry.update(CAPTURE_NEAR_G1)
+            out["worlds"][f"{name}_g{gamma}"] = entry
     out["run_2026_09_21"] = RUN_2026_09_21
     out["run_2026_09_21_m1"] = RUN_2026_09_21_M1
     for name, pin in PINS.items():
-        out["ratios"][name] = {
+        ratios: Json = {
             "shift_f2_over_f1": pin["shift"][2] / pin["shift"][1],
             "delay_f2_over_f1": pin["delay"][2] / pin["delay"][1],
             "expected": 2.0,
             "bracket": RATIO_BRACKET,
         }
+        if name in RATIO_BRACKETS:
+            ratios["bracket"] = RATIO_BRACKETS[name]["shift"]
+            ratios["delay_bracket"] = RATIO_BRACKETS[name]["delay"]
+        out["ratios"][name] = ratios
     return out
 
 
