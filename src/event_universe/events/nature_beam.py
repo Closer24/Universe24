@@ -1192,7 +1192,7 @@ def _pack_words(columns: list[np.ndarray], size: int) -> list[np.ndarray]:
     word = np.zeros(size, dtype=np.int64)
     used = 0
     for column, low, width in zip(columns, lows, widths, strict=True):
-        if used + width > 62:
+        if used and used + width > 62:
             words.append(word)
             word = np.zeros(size, dtype=np.int64)
             used = 0
@@ -1802,33 +1802,28 @@ class NatureBeamStore:
         to its least value, so that the keys order the rows exactly as the
         lexsort of the fields does and equal keys are identical rows; None
         when the fields' ranges do not fit the register (62 bits), the
-        lexsort then taking the same total order. The three columns of the
-        amplitude law are constant on rows of no record (a width of 0 bits each)
-        and leave the key and the order what they were."""
-        if columns is None:
-            columns = [getattr(self, name) for name in IDENTITY_FIELDS]
-        lows = [int(column.min()) for column in columns]
-        widths = [
-            (int(column.max()) - low).bit_length() for column, low in zip(columns, lows, strict=True)
-        ]
-        if sum(widths) > 62:
-            return None
-        key = np.zeros(self.size, dtype=np.int64)
-        for column, low, width in zip(columns, lows, widths, strict=True):
-            key = (key << width) + (column - low)
-        return key
+        merge then taking the same total order on the words of
+        `merge_words`. The three columns of the amplitude law are constant
+        on rows of no record (a width of 0 bits each) and leave the key and
+        the order what they were."""
+        words = self.merge_words(columns)
+        return words[0] if len(words) == 1 else None
 
-    def merge_words(self, columns: list[np.ndarray]) -> list[np.ndarray]:
-        """The identity fields packed into as few integer words per row as
-        their widths need, the first word the most significant, each field
-        offset to its least value in the order of `IDENTITY_FIELDS` (the
-        Node first) and no field split across two words: the words in
+    def merge_words(self, columns: list[np.ndarray] | None = None) -> list[np.ndarray]:
+        """The identity fields (`columns` in the order of `IDENTITY_FIELDS`,
+        the fields themselves by default) packed into as few integer words
+        per row as their widths need (`_pack_words`): the first word the
+        most significant, each field offset to its least value, the Node
+        first and no field split across two words, so that the words in
         order sort the rows exactly as the lexsort of the fields does and
         equal words are identical rows. One word is `merge_key`'s key; the
         merge takes the words where the one key does not fit (a world whose
         records and multiplicities carry 32 bits each, the massive rows'
         pin), a lexsort over two or three words in place of one over the
-        eleven fields (the same total order; `massive-rows-fast`, 2026-09-21)."""
+        eleven fields (the same total order; `massive-rows-fast`,
+        2026-09-21). A lone field wider than 62 bits is a word of its own."""
+        if columns is None:
+            columns = [getattr(self, name) for name in IDENTITY_FIELDS]
         return _pack_words(columns, self.size)
 
     def merge(self, modulus: int = 0) -> dict[tuple[int, int, int], int]:
@@ -1836,9 +1831,12 @@ class NatureBeamStore:
         amounts added, the rows in the total order of the identity fields,
         the Node first (so no second sort by Node is needed). A bijection: a
         permutation of rows and a sum of interchangeable units. The order
-        is taken by the one packed key (`merge_key`) where the fields fit
-        the register, by the lexsort of the fields otherwise: the same
-        total order either way.
+        is taken on the packed words of the identity fields (`merge_words`:
+        one word, the packed key, where the fields fit the register; the
+        lexsort of two or three words otherwise), the same total order as
+        the lexsort of the fields, the same rows in the same order; when no
+        two rows are identical the sorted store is the result and nothing
+        else is touched.
 
         Under the amplitude key (`modulus` the circle's N; BEAM_LAW note 37)
         the merge is the design's normal form: two rows of one record equal
@@ -4621,6 +4619,42 @@ def _measure(frame: Interval) -> None:
         gather_records(frame)
 
 
+def covariant_release(entry: Measured, denominator: int) -> list[int]:
+    """The release's count under `covariant-readings-v1` (DERIVATIONS_BEAM
+    17.6 M6 and N4): per family the row of the table gains `held_f x (E' /
+    g) x n` over `(E'_0 / g) x d`, the content-equivalent of the body's own
+    energy in place of its content (at rest E' = E'_0 and the count is the
+    law's `held_f x n` over d exactly; in motion E' / E'_0 = gamma times it),
+    advanced once per lattice interval, the owed intervals included, with
+    the remainder kept; every product tested by division before it is
+    formed. A body of no content (E'_0 = 0) holds nothing to release and
+    takes the law's rows (their rates 0). `denominator` is the world's
+    `release` d (the row's own is overwritten by the loop at every call)."""
+    readings = entry.covariant
+    assert readings is not None
+    rows = entry.counts.of("release")
+    if readings.rest == 0:
+        return entry.counts.advance("release", values=entry.held)
+    values: list[int] = []
+    denominators: list[int] = []
+    for _, held in zip(rows, entry.held, strict=True):
+        if held and readings.energy > MOMENTUM_BOUND // held:
+            raise OverflowError(
+                f"{BEAM_LAW}: covariant-readings-v1: the release's rate held x E' / g = "
+                f"{held} x {readings.energy} of measured event {entry.number} exceeds the integer "
+                f"bound {MOMENTUM_BOUND}"
+            )
+        values.append(held * readings.energy)
+        if readings.rest > MOMENTUM_BOUND // denominator:
+            raise OverflowError(
+                f"{BEAM_LAW}: covariant-readings-v1: the release's wall E'_0 / g x d = "
+                f"{readings.rest} x {denominator} of measured event {entry.number} exceeds the "
+                f"integer bound {MOMENTUM_BOUND}"
+            )
+        denominators.append(readings.rest * denominator)
+    return entry.counts.advance("release", values=values, denominators=denominators)
+
+
 def _release_family(
     frame: Interval,
     entry: Measured,
@@ -4633,13 +4667,15 @@ def _release_family(
     thrown_rows: list[list[object]],
     thrown_recoil: list[int],
     born_columns: list[dict[str, np.ndarray]],
+    release_only: bool = False,
 ) -> list[int]:
     """One family's releases of one measured event at this self-creation:
     the free family's release, the pending rows (home, re-released, the
     products), the lamp's births, then the recoil on the reader and the
     rows' columns added to `born_columns` (the store's batch of the
     interval, appended once by `_release`); returns the recoil of the
-    products thrown (the `become` record's).
+    products thrown (the `become` record's). With `release_only` (an owed
+    interval under `covariant-readings-v1`, 17.6 N4) the free release alone.
     """
     tick = frame.tick
     record = frame.record
@@ -4683,7 +4719,7 @@ def _release_family(
                 )
                 for direction in entry.directions
             )
-    if entry.pending[family]:
+    if entry.pending[family] and not release_only:
         ways = len(entry.directions)
         reborn = NO_RECORD
         pending_rows = entry.pending[family]
@@ -4859,6 +4895,7 @@ def _release_family(
         entry.pending[family] = held_back
     if (
         entry.lamp_rate is not None
+        and not release_only
         and family == entry.family
         and turn > 0
         and (
@@ -5105,11 +5142,20 @@ def _release(frame: Interval) -> None:
     # pending (home, re-released or a product) or one with a clock trigger
     # of a transformation; any other would find nothing to create.
     for entry in entries:
-        if not entry.creating or not (
-            entry.lamp_rate is not None
-            or any(free and held > 0 for free, held in zip(free_of, entry.held, strict=True))
-            or any(entry.pending)
-            or entry.become is not None
+        releasing = any(free and held > 0 for free, held in zip(free_of, entry.held, strict=True))
+        # Under `covariant-readings-v1` the free release runs per lattice
+        # interval (DERIVATIONS_BEAM 17.6 N4): on an owed interval the body
+        # visits this step for its release alone (no lamp, no pending row,
+        # no trigger: those stay per self-creation).
+        release_only = not entry.creating and entry.covariant is not None and releasing
+        if not release_only and (
+            not entry.creating
+            or not (
+                entry.lamp_rate is not None
+                or releasing
+                or any(entry.pending)
+                or entry.become is not None
+            )
         ):
             continue
         age, turn = entry.clock_age, entry.turn
@@ -5121,7 +5167,8 @@ def _release(frame: Interval) -> None:
         # below it; the products are born below with age 0.
         clock_trigger = entry.become
         if (
-            clock_trigger is not None
+            not release_only
+            and clock_trigger is not None
             and clock_trigger.at is not None
             and bool(ages_at_key(np.array([entry.age], dtype=np.int64), clock_trigger.at)[0])
             and (clock_trigger.crowd is None or entry.counted < clock_trigger.crowd)
@@ -5133,11 +5180,17 @@ def _release(frame: Interval) -> None:
         # count a self-creation of turn 0 or outside the window cannot
         # release is discarded, as the count off the clock was unread).
         lamp_count = 0
-        if entry.lamp_rate is not None:
+        if entry.lamp_rate is not None and not release_only:
             (lamp_count,) = entry.counts.advance("lamp")
         # The release per family: every family's row of the table gains
-        # `held x n` in one loop (a paid family's row has the rate 0).
-        released = entry.counts.advance("release", values=entry.held)
+        # `held x n` in one loop (a paid family's row has the rate 0);
+        # under `covariant-readings-v1` the content-equivalent of the body's
+        # own energy in place of its content (`covariant_release`).
+        released = (
+            covariant_release(entry, frame.world.release[1])
+            if entry.covariant is not None
+            else entry.counts.advance("release", values=entry.held)
+        )
         # The products born this self-creation (family, amount, content,
         # direction) and their recoil, for the `become` record.
         thrown_rows: list[list[object]] = []
@@ -5155,6 +5208,7 @@ def _release(frame: Interval) -> None:
                 thrown_rows,
                 thrown_recoil,
                 born_columns[family],
+                release_only,
             )
         # The `become` record, at the products' birth: the trigger and its
         # tick, the families, the products with their directions and the

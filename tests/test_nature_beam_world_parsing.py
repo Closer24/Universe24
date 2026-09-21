@@ -126,7 +126,14 @@ def test_the_world_refuses_by_name():
         "declares groups",
     )
     refused({**world, "directions": [[2, 2, 0]]}, "primitive vector")
-    refused({**world, "directions": [[65, 1, 0]]}, "from -64 through 64")
+    refused(
+        {**world, "directions": [[65, 1, 0]]},
+        r"directions\[0\] components must be integers from -64 through 64",
+    )
+    refused(
+        {**world, "measured": [{**world["measured"][0], "position": [-1, 0, 0]}]},
+        r"measured\[0\]\.position components must be integers on the GameBoard",
+    )  # type: ignore[index]
     refused(
         {**world, "measured": [{**world["measured"][0], "directions": [[1, 1, 0]]}]}, "does not declare"
     )  # type: ignore[index]

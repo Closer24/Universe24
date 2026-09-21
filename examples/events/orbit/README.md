@@ -342,3 +342,21 @@ probe is bound for the whole run of 4000 intervals (four turns of 701 to
 five times and leaves at 917, `s32_r12` three times and leaves at 2004,
 `s8_r24` does not turn. The register entry has every number and the
 verdict re-read ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under the crossing rule (2026-09-21)
+
+The section above describes the tree before the crossing rule (the step
+before the law: a row and a body met once,
+[migration](../../../docs/MIGRATION.md#the-crossing-rule-on-2026-09-21-the-step-before-the-law-a-row-and-a-body-met-once-the-key-doppler-and-the-grain-deleted)).
+Under it the S = 32 probes move again, the worlds unchanged: `s32_r12`
+closes the angle once (T 525, the return (-11, 0), heading kept, the mean
+radius 17.90, C 1.87) and leaves through face:-x at 932 (three closings
+and the exit at 2004 before); `s32_r24` closes the angle once (T 932, the
+return (+8, 0), the mean radius 34.16, C 1.29) and leaves through face:-x
+at 1239 (bound for the whole run before); T(24)^2 / T(12)^2 = 3.15
+against 4 (3.73 before); no orbit closes by the criterion. T, the returns,
+the radii and C are GameBoard readings (the probe's `step` and `read`
+records); the exits are the face detectors' clicks. Measured once by the
+auditor at main e42c49e5 and read the same by the tool on this tree;
+nothing pinned, no pin moved. The register entry has the numbers
+([EXPERIMENTS, D](../../../docs/EXPERIMENTS.md)).

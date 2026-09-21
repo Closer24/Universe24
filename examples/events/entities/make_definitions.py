@@ -42,6 +42,10 @@ def families() -> dict[str, object]:
         family_definition("photon", [{"name": "light", **inert}]),
         family_definition("electron", [{"name": "e", "quantum": 0, "charge": -15, "phase": True}]),
         family_definition("electron_born_by_become", [{"name": "beta", "quantum": 1, "charge": -7344}]),
+        # The muon (series S, 2026-09-21): a free family of content 207 per
+        # measured event with the electron's whole charge -7344 over its
+        # 207 units (the catalog's row "the muon, the tau": [n_e, 207 d_e]).
+        family_definition("muon", [{"name": "mu", "quantum": 0, "charge": [-7344, 207], "phase": True}]),
         family_definition("proton", [{"name": "p", "quantum": 0, "charge": [1, 1], "phase": False}]),
         family_definition("neutron", [{"name": "n", "quantum": 0, "phase": False}]),
         family_definition(
@@ -126,6 +130,32 @@ def families() -> dict[str, object]:
                 for axis in ("px", "mx", "py", "my", "pz", "mz")
             ],
         ),
+        # The massive quantum (`massive-rows-v1`, 2026-09-21): a paid family
+        # declared `massive` with its phase circle spelled, placed with its
+        # lamp (the pin's keys: M 64, p 220, the wheel of `slits_matter`),
+        # since the family's tables are formed from its lamp's
+        # `momentum_magnitude`; a world that places it declares
+        # `massive_rows`, `action` and `age_bound`. The pin worlds spell the
+        # family by the design's row (no `phase` key) and carry their own
+        # lamp, so they keep it inline and place no second lamp.
+        {
+            "name": "massive_quantum",
+            "families": [{"name": "matter", "quantum": 64, "phase": True, "massive": True}],
+            "measured": [
+                measured(
+                    "matter",
+                    [0, 0, 0],
+                    amount=SOURCE_CONTENT,
+                    lamp={
+                        "rate": [1, 1],
+                        "wheel": [2531, 4096],
+                        "directions": [RIGHT],
+                        "momentum_magnitude": 220,
+                    },
+                )
+            ],
+            "detectors": [],
+        },
     ]
     return {"format": FORMAT, "entities": entities}
 

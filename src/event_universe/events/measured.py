@@ -331,6 +331,7 @@ def counts_table(
     phase_steps: int = 1,
     nodes: int = 1,
     lamp_wheel: tuple[int, int] | None = None,
+    covariant: bool = False,
 ) -> CountTable:
     """A body's table of counts from the world's rates (BEAM_LAW note 41):
     the turn, the owed count, the release per family (its rate 0 on a paid
@@ -367,7 +368,53 @@ def counts_table(
         # A body on a set: the claim of every Node on the body's releases,
         # in units of 1 / nodes (`nature_beam.place_over_nodes`).
         rows.extend(Count("place", "amount", node, 0, 1, nodes) for node in range(nodes))
+    if covariant:
+        rows.append(Count("tau", "energy", 0, 0, 1, 1))
     return CountTable(rows)
+
+
+@dataclass
+class CovariantReadings:
+    """A body's energy readings under `covariant-readings-v1` (the world key
+    `covariant_readings`; DERIVATIONS_BEAM 17.6), at the identity's grain g:
+    `rest` E'_0 / g = (Q S / g) x M read at the frame; `square` W / g^2 =
+    (E'_0 / g)^2 + d (p / g) . (p / g), the exact square (bilinear in the
+    momentum, nothing accumulated); `energy` E' / g, the largest integer
+    with `energy^2 <= square`, kept by comparisons alone (the load-time
+    root once, then at every frame a rise by one while `(E' + 1)^2 <= W`
+    and a fall by one while `E'^2 > W`); `previous` the momentum at the
+    last frame, against which the push ceiling `|dp|_1 <= g` per interval
+    is checked (17.6 N3: then E' moves by at most two per frame and the
+    comparisons are fixed work); `counted_sum` the sum of the clock's
+    readings over the intervals since the last self-creation (17.6 N1:
+    charged to the crowd's owed count at the self-creation); `owed_tau` the
+    count the proper-time gate charged this interval and `waited_tau` the
+    intervals owed to it in all; `comparisons` this frame's count and
+    `most_comparisons` the largest of the run (a report)."""
+
+    grain: int
+    factor: int
+    rest: int = 0
+    square: int = 0
+    energy: int = 0
+    previous: list[int] = field(default_factory=lambda: [0, 0, 0])
+    counted_sum: int = 0
+    owed_tau: int = 0
+    waited_tau: int = 0
+    comparisons: int = 0
+    most_comparisons: int = 0
+
+    def state(self) -> dict[str, object]:
+        return {
+            "grain": self.grain,
+            "c2": [1, self.factor],
+            "energy": self.energy,
+            "rest": self.rest,
+            "square": self.square,
+            "waited": self.waited_tau,
+            "counted_sum": self.counted_sum,
+            "comparisons": self.most_comparisons,
+        }
 
 
 @dataclass
@@ -554,6 +601,10 @@ class Measured:
     frame_charges: list[Pair] = field(default_factory=list)
     presence: int = 0
     counted: int = 0
+    # The covariant readings (`covariant-readings-v1`, the world key
+    # `covariant_readings`): the body's energy readings and the proper-time
+    # gate's state, None without the key (nothing is computed or written).
+    covariant: CovariantReadings | None = None
 
     @property
     def content(self) -> int:
@@ -731,6 +782,8 @@ class Measured:
             found["place"] = self.counts.values("place")
         if self.counts.of("wheel"):
             found["wheel"] = self.counts.one("wheel")
+        if self.counts.of("tau"):
+            found["tau"] = self.counts.one("tau")
         return found
 
     def state(self) -> dict[str, object]:
@@ -773,6 +826,9 @@ class Measured:
             "contacts": list(self.contacts),
             # The transformations fired (the weak force, 2026-09-20).
             "became": self.became,
+            # The covariant readings (`covariant-readings-v1`), under the
+            # world key alone: every other state byte for byte as it was.
+            **({} if self.covariant is None else {"covariant": self.covariant.state()}),
         }
 
 

@@ -2165,3 +2165,228 @@ presence, from the worlds' own README. Done by one scratch script
 (notation.py) with exact anchors, then the leftovers checked by grep.
 Referee round 41 before the commit.
 
+## Wave 20 (2026-09-21): the replications round 1 into the labels; NATURE row 2c restated
+
+docs/REPLICATIONS.md on main (PR #580, the Replicator's round 1): the
+blocks of L1 (the Mach-Zehnder set), L3 (the pair), L6 (the pair at
+N = 512 to 4096), the run of 24.4 and A12 REPLICATED, every registered
+reading equal bit-exact and the four checks met; NATURE 11b
+INCONCLUSIVE (a pin without a run). The paper: the abstract's five
+PASS as "four re-run and checked by a second runner, one a pin without
+its run"; the nature prose names rows 1a, 2b, 2c and 9 as re-run; the
+prediction paragraph "pinned, run and re-run by the second runner";
+the record appendix's rows of Born's rule, the lattice Gleason,
+Tsirelson's bound and Malus "measured and replicated" with the block
+named; the caption's rule restated (a run with its line reads
+"measured and replicated"); a bibitem for the document; Reproducibility
+names the re-runs' tree. NATURE row 2c restated on main (PR #578): the
+paper's row 2c carries [1.917, 2.012) with the split at N = 32 and 128.
+The other "measured once" labels (series C, E, K, G2, L7, H, R, the
+crowd worlds) stay until round 2. Referee round 42, the cleanliness
+round over the whole paper (the Boss's seven items): ten findings,
+all applied: the abstract's "run and replicated"; the Method's "every
+registered run" with the three crowd runs named as drafted; Kepler's
+row 58 restated to its amended pin (784 in [714, 855], 392 in [357,
+428], 24.8 and 12.4, -81 +- 15 under form B's pace; record 347); the
+30 against 31 standard errors of N = 256 stated with both sources (a
+tree disagreement between checks/s_of_n.txt and 24.3/24.4, reported);
+Bohr's energy row to 26.5's standing (an identity of readings, the
+transition not reached); the not-claimed list's "not a prediction of
+nature's S" qualified by the one prediction at a power of two; the
+abstract's "(pinned, not run)" on Kepler alone; the figures'
+fingerprint 731d0f56c9f9 named as figures/summary.json's; the unused
+POSTULATE standing said so; the letters with a second meaning named
+in the head table. PASS on the labels (every replicated label in a
+round-1 block, every "measured once" outside), the commits (19 hexes,
+every one an ancestor of HEAD or a register fingerprint), 60 numbers
+traced, the counts (44 rows of Table 1; 22 differences; 21 nature
+rows; P1 to P10; six places) and section 26 (none of the ten claimed).
+
+## Wave 21 (2026-09-21): series T, the clock's word, both readings and no choice; the series letters; row 3 of the differences
+
+The Boss's orders of 13:25Z to 13:35Z: (b) series T (PR #587, merged
+at afb533a8, the register's entry "T, the clock's word", the physicist's
+pins before the run): one passage in the clock's-redshift paragraph in
+the greats' form and one row (23) in the differences table, labelled
+measured once, both readings and no choice (the presence clock 1.3000
+at 3 and at 6 Links alike; the age clock 2.6517 and 4.1500, the ratio
+1.907 for the pinned 1.909, the continuum's 2.000; the GPS
+ground-to-orbit shift 45.7 us per day against Ashby's 45.7 under the
+age word, 28.3 under the presence word); the clock_age note's bibitem
+back, Ashby 2003 added, the register bibitem names series T. The series
+letters as the Boss fixed them: the reader S, the clock worlds T, the
+lamp in a crowd U and the cluster V (U and V pending their retitling
+PR, said so). Row 3 of the differences reworded as the auditor's round
+6 found (the theorem's own N = 16, 32 and 128 with S = 3, 3 and 23/8;
+the escape "a power of two at or above 512, or 64 or 256"); the round
+itself is not on the tree's log, so it is not cited, and the row cites
+Theorem th:bell. Main moved to 12ff2fb1 during the wave (PR #591):
+NATURE row 12, the clock's field at two distances (series T, both
+words), is the register's row now, so the paper's confrontation table
+carries it as row 12 (PASS under the age word, FAIL under the presence
+word, the law's default; the word the owner's choice), the tallies
+read twenty-two, the abstract carries the row in one clause, and the
+differences' row 23 written first is withdrawn; Pound and Rebka 1960
+added. Referee round 43: one finding (U and V are the clock note's
+letters, not the register's), applied; his note applied ("at first
+order" dropped from the series T passage); everything else PASS; his
+word for the PR body after the fix: CLEAN.
+
+## Wave 22 (2026-09-21): the owner's word on the clock, entered as an assumption
+
+The owner to the coordinator (about 14:00Z, translated): "I said the
+age moment, but this is added to the paper as an assumption, right?"
+Yes: P9 (the rules chosen among few) gains the clock's word, the age
+moment, the potential's form M / r, with the alternative (the presence,
+M / r^2) named and what refutes it on the form (series T on the
+GameBoard; nature's clocks between two heights follow the potential);
+the series T passage says the word was chosen and entered as an
+assumption, not a derivation; row 12's verdict cell reads PASS under
+the age word "by the owner's word (an assumption, P9)", the presence
+word the alternative's FAIL; the abstract's clause "under the clock's
+word assumed, the age moment"; the nature prose and the differences'
+sentence likewise. The record number is cited when it lands; the
+register's row 12 is the physicist's to restate. Referee round 44
+(four findings, all applied): P9 and the series T passage say what the
+law as built counts today (the presence by default, the age moment per
+table entry, BEAM_LAW section 3) and that the owner's word makes the
+age moment the law's word with the engine's default to follow; the
+"What departs" and "What is delayed" passages reconciled to it; P9's
+heading says the ledger does not yet carry the clock's word; the notes
+applied (I4's wording, the comma series). His word after the fixes:
+CLEAN.
+
+## Wave 23 (2026-09-21): the external reviewer's findings (batch #577, F01 to F18; issues #544, #548, #549, #553, #555, #556, #557, #565, #586)
+
+The owner's independent testing agent reviewed main.tex at d17af9b9 (issue #577's comment of 13:21Z, F01 to F18) and the focused issues. The Boss's order of 14:12Z: each finding gets one disposition, FIXED at a commit, NOT ACCEPTED with the reason, or STATED AS A HYPOTHESIS. The verified findings and their dispositions (the commit is this wave's):
+
+| Finding | Issue | Disposition | What the paper now says |
+| --- | --- | --- | --- |
+| F01 the universal 181/64 | #548 | FIXED | verified with the repository's tables (checks/s_powers_of_two.py): 181/64 at 512 to 8192, 5793/2048 at 16384 and 32768, the fixed-table limit 186034/65773; the prediction restated as the exact function of N_phi and N_t with its value on the registered range; the abstract, the stands-above item, the Bell section, the not-claimed list, the differences' row 2 and the prediction paragraph; the per-setting deficits given (725/1024 and 723/1024 at 4096); "five times the precision"; the non-powers of two not excluded by experiment but by declaration; Poh's optimized settings named |
+| F02 the 1/(2N) bound | #544 | FIXED | a cell within 1/N (two cumulative rungs each within 1/(2N)); the counts 21, 22, 21 at three equal weights; "nearest integer" withdrawn; the Born paragraph, the ledger, the stands-above item, the differences' row 20, the record appendix |
+| F03 the non-local gather | #577 | FIXED | P6 names the pair's click as the law's one non-local operation with its state in the apparatus's list |
+| F04 Gauss at every instant | #549 | FIXED (restricted) | exact at every instant for a steady source after the front; the varying source carries the transit term (25.4's continuity with the row amount as density); the stands-above item, Table 1's row, the continuum's row 1, the record appendix |
+| F05 the dwell T_D/Q | #565 | FIXED | tau_L the radial residence factor T_D/(N_l |D|) = 1/v_D (1.72 on a heading, sqrt 3 in the limit); the per-Link dwell T_D/(S_1 N_l) named apart; the shell's coefficient depends on its geometry; the glossary |
+| F06 the wave/Poincare limit of the block | #577 | STATED AS A HYPOTHESIS | the continuum table's row 16: DERIVED for a plane-wave stream (4.1), a hypothesis for arbitrary row data (17.1 conditional) |
+| F07 the uncertainty's identification | #553 | STATED AS A HYPOTHESIS | Table 1's row: the transform's identities on the phase circle are exact; the reading of the circle as position and its transform as momentum is an identification assumed (22), Kennard's form its limit under it |
+| F08 the h against hN dictionary | #553 | OPEN to the derivation mathematician | the paper's E = hs = (h N_phi) f, hbar = h N_phi / (2 pi) and lambda = h/p need one calibration; not changed here without the mathematician's dictionary (24.1's row for h) |
+| F09 the quadratic form "forced" | #577 | STATED AS A HYPOTHESIS | the theorem under the added measurement axiom (the balanced splitter's conservation for every pair); the built tables break phase invariance by their rounding, the theorem the exact form's; the abstract's "forced" softened |
+| F10 the PASS tally | #555 | FIXED (labels) | row 2c: PASS on the power, Sinha's kappa a different observable not computed (compatible, not the same observable); row 11b a compatibility from a pin, not a measurement; the abstract already sorts the five |
+| F11 Poh's settings and the precision | #577 | FIXED | five times the precision, the optimized settings and the detection model named, the identification assumed |
+| F12 the neutrino's quantities | #556 | FIXED | row 8c: the heavier state of the atmospheric splitting at least 1e-7 (the lightest unbounded below), the effective beta-decay mass at most 1.6e-6; the verdict FAIL on the splittings stands; the differences' row 16 likewise; the physicist re-reads NATURE row 8c |
+| F13 the division and the unwrapped count | #557 | FIXED | the division toward zero with the signed remainder (Euclidean for a non-negative accumulator); the bijection stated; the closed form named the unwrapped count |
+| F14 bounded torus, unbounded counts | #577 | FIXED (stated) | P1: a world whose counts would exceed the declared bounds is refused at load; no overflow rule inside a run |
+| F15 the entropy and the second law | #577, #586 | FIXED (restricted) | the identity is the outcome's coarse graining: bits read plus bits not read of u, u kept in the world's list as a GameBoard diagnostic; no second law claimed (an identity, no ensemble); Table 1's rows, the stands-above item, the continuum's rows 12 and 23, the record appendix |
+| F16 the derived couplings' supplied physics | #577 | FIXED (stated) | the redshift's calibration a_tau = GM/(r c^2) assumed, the clock's pair and the width not fixing it |
+| F17 the gas's closure | #577 | FIXED (stated) | the continuum table's caption: every "in form" row of the gas rests on the product-measure closure of 25.5, whose error is not bounded |
+| F18 novelty | #577 | FIXED (stated) | the Introduction's sentence names the supplied structures stored as integers (the tables, the pair's joint contraction, the energy's square) |
+| the isometry's zero vector, T > 0 (#557) | #557 | FIXED earlier | the lemma states C_K > 0 (wave 17); the split theorem's vector: "every integer vector" now read with A > 0, stated in this wave if the referee asks |
+| the submission metadata (#557) | #557 | OPEN, the owner's | the AI-tool line, the release tag and the arXiv identifiers are the owner's at submission (the Reproducibility section says so) |
+
+The check checks/s_powers_of_two.py is added with its output; NUMBERS.md carries the new numbers. Referee round 45 (six findings, all applied: the differences' row 20's departure per cell; the entropy row's one standing; P1's overflow rule as the engine has it, refused at load where the static budget covers it and loudly at the step otherwise; the abstract's "at the powers of two"; row 3's 136 of 512 excluded under the identification, the rest surviving, the power of two a declaration; the Bell section's phrase bounded through 8192; his notes applied: the continuity identity holds for every source, the flux-equals-release form for a steady one; the energy's square the covariant readings'; Poh's angles not on the tree, dropped). His word after the fixes: CLEAN WITH NOTES. Then one reply per focused issue with the disposition and the commit.
+
+## Wave 24 (2026-09-21): the Boss's three messages that crossed wave 23 (14:16Z, 14:22Z, 14:26Z)
+
+(1) The click definition says what a non-absorbing read is (a deferred
+offer keyed by the labels, gathered at the record's one click) and that
+a read, a rotation and a second read taken as two outcomes in time is
+not modelled (issue 584, the architect's disposition). (2) The Bohr
+paragraph says a transition is one-shot (`become`, once, no product
+change of its own) and that an excited state that relaxes has no hook
+(issue 585). (3) The orbit's inward push: the physicist's note
+(docs/designs/orbit_read/NOTE.md, on the tree at 75efe7b5) in Kepler's
+row of the table, the differences' prose list and the record appendix,
+with its bibitem: the fan's Manhattan mean 1.287 (4 / pi uniform), series
+C's C = 1 on the six headings, the same form and a different constant.
+(4) The mathematician's exact numbers for F01 (PR 594, pending on main):
+the check extended with the closed form on the fixed correlations beyond
+the tables' bound, 11585/4096 at 65536, 46341/16384 at 131072,
+370727/131072 at 2^20, the distances from Poh (+1.05 on the plateau,
++2.01 at 16384 and 32768, +1.5 to +1.65 beyond), the same values the
+mathematician reports; the prediction paragraph and the Bell section
+carry them. Not done, waiting on the tree: "record 394" for the owner's
+word on the clock (cited by date until PR 581 lands, per the rule);
+NATURE row 8c's 9.8e-8 (PR 598); Malus at 22.5 degrees run (A12's
+registration and 24.3 row 4's turn to "run"). Referee round 46 before
+the commit.
+Referee round 46: FAIL on three lines, fixed: the closed form cited to
+the check alone (24.4 on the tree lacks it); the distance from Poh one
+number, 1.05 standard errors, in the abstract, the 24.4 paragraph, the
+prediction paragraph and NUMBERS (the Bell section keeps its local
+"standard deviations" beside the 152 and 30, a pre-existing mix of the
+two words across sections, noted); the orbit note's 1.29 labelled host
+arithmetic, no run, "registered" kept for the orbits alone. His notes
+applied: the auditor's pin 1.00 +- 0.15 apart from the register's
+C = 1.00 +- 0.10 on a fan (the refuted one); the push constant as the
+register's letter in typewriter (plain C is the cosine table's entry);
+the ring means 1.13 to 1.43 at r = 8 to 28; the read's selector keyed
+by the labels at the read and applied at the gather to the labels as
+the rotation left them; `become` turns the event into the `into`
+family, its products released, the key consumed. CLEAN WITH NOTES.
+
+## Wave 25 (2026-09-21): main be194aca merged; what it landed taken into the paper
+
+Merged after wave 24's push: PR 594 (24.4's closed form and the plateau's
+domain, bell_plateau.py, now cited beside the paper's check; 24.3 row 1's
+29.6, so N = 256 is 30 by both), PR 598 (NATURE row 8c: the heaviest
+mass state at least 9.8e-8, the lightest not bounded below; the paper's
+row 8c and the differences' row 16 follow it), PR 592 (ENGINE's readings
+by type: the non-absorbing read a deferred offer, cited in the click
+definition; the three Malus worlds at 22.5 degrees registered under A12
+extended, the tables' rungs met exactly: the consequences' Malus row,
+NATURE row 9, the differences' row 4 and the record appendix say run,
+measured once), PR 600 (wave 23). Reproducibility: main merged at
+be194aca. Still waiting on the tree: record 394 (PR 581; the owner's word
+cited by date), wave 22's PR 596, the replicator's round 2, the
+retitling of series U and V. Referee round 47 before the commit.
+Referee round 47: FAIL on one stale row, fixed: the differences' row 1
+(N = 256: 30 standard errors, 29.6, by the check and the derivation's
+24.3 row 1 and 24.4; the 31 the deficit from the bound over the error).
+His notes applied: NATURE row 9 and 24.3 row 4 on the tree not yet
+restated for the 22.5-degree run, said in the paper's row 9; the Malus
+note's bibitem says run since as A12 and A12 extended; "standard errors"
+at N = 256 in the Bell section. CLEAN WITH NOTES.
+
+## Wave 26 (2026-09-21): main e2faf65c merged; replications round 2 (part 1) and the series letters
+
+PR 601: series T, the cone (L7), the (3, 4) split at N = 32 and 128, the
+two slits (L2, L2b) and the click's gate set REPLICATED (19 worlds, no
+FAIL): the clock sentence, NATURE row 12, the register paragraph, the
+flight row and Young's row say measured and replicated; the
+replications bibitem and Reproducibility name round 2's trees, 5fbd0c7
+and afb533a for series T. PR
+595: a lamp inside a crowd is series U and a cluster of crowds series V
+in the register's documents; "its retitling pending" dropped. A slip on
+the tree, reported to the Boss and not edited here: the same PR
+retitled examples/events/README.md's hand series from P to U and c
+measured from Q to V, while docs/EXPERIMENTS.md keeps "P, the hand" and
+"Q, c measured", so the README now carries two series U and two series
+V; the paper keeps P and Q for the hand and c measured as the
+experiments register has them. Reproducibility: main merged at
+e2faf65c. Referee round 48 before the commit.
+Referee round 48: FAIL on two lines, fixed: round 2 ran on two trees
+(5fbd0c7; afb533a for series T alone), said in the bibitem and in
+Reproducibility; a NUMBERS row for round 2 as a whole. His notes
+applied: row 12's replication moved out of the five PASS's parenthesis;
+the 48 images not run on slits_huygens, said in Young's row and the
+bibitem; the clock's word register's map pending; main b7ddf93f (the
+open-problems note on Lorentz, docs only) merged, Reproducibility
+follows. CLOSURE.md, the closure list for the arXiv cut, added on the
+Boss's order of 14:47Z (referee round 49). CLEAN WITH NOTES.
+
+## Wave 27 (2026-09-21): the figures in black and white (the owner's word, "regenerate")
+
+The owner's word: colour figures are not wanted, black and white only.
+The five drawn figures (the Mach-Zehnder counts, the two slits, the pair
+at N = 64, S(N), the octahedron) are regenerated by figures.py and
+octahedron.py from the same summary.json and the same checks, every
+series told apart by its fill (black, white with a hatch, grey), its
+marker (a filled circle, an open square, an open circle) or its line
+style (solid, dashed), never by hue; the Poh band pale grey; the links
+of the PDF black (hyperref's allcolors). The 48-permutations figure was
+already black and white (0.9 percent coloured pixels, the gallery's
+markers). No number moved: the scripts' data paths are unchanged (the
+diff is colours, hatches, markers and a --png preview option). The PDF
+compiled here with pdflatex (three passes, clean) is 80 pages, not the
+105 of the word-count estimate; the Boss told.
+

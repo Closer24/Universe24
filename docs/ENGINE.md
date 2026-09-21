@@ -650,7 +650,11 @@ is formed and refused naming the Node (the load-time ceiling multiplies
 the declared `weights`, `rotate` and `gate` factors alone and no longer
 a plain `rerelease`'s, since a path's count of re-emissions is not known
 at load: a bound moved from load to run, so a world may run before the
-split's own check refuses it); refused on a rule
+split's own check refuses it; two guards, then: the static path ceiling
+at load, an acyclic count of the splits, rotations and gates on a path,
+and the run-time bound at the split, a cycle among re-emitters, two
+openings feeding each other, caught by the run-time bound alone and
+outside the register's ceiling); refused on a rule
 other than `rerelease` and on a free family's entry; a split is not a
 click: a `rerelease` entry takes every arriving row of its
 family on its own, with no pointer gate and no window, the amount gate
@@ -838,7 +842,12 @@ the identity of the one mechanism of the columns and their range;
 is `become`, the identity of the transformation; `meeting-v1` when
 `meeting` is true, after it; `amplitude-v1` when a lamp is declared (a
 recorded world); `massive-rows-v1` when the world declares
-`massive_rows`, after it; `hand-v1` when a hand or an axis is declared anywhere,
+`massive_rows`, after it; `hand-v1` when a hand or an axis is declared anywhere;
+`covariant-readings-v1` when the world declares `covariant_readings`
+(2026-09-21, the model owner's record 270; the record then carries the
+key's block `covariant_readings`: the pair `c2`, the `grain`, `books`, the
+paid families off 3 h n = Q S d as `off_identity`, the most `comparisons`
+one frame took and `waited`, the intervals each body owed to proper time),
 last; `[]` without any; in a world with a hand every family carries
 its `hand` and every number its `axis`, the heading's vector or None),
 `columns` (the
@@ -1019,6 +1028,7 @@ things themselves, one row each in the three worlds, are in
 | the net flow **f** | vector, 3 components | `reading` on a `click` or `read` line when the entry reads `vector`: sum amount x **u**_d over the arrivals, on the unit vectors of the directions | Q = 64 per unit of amount along a heading | detector |
 | the traceless second moment **T** | tensor, 3 x 3 symmetric of trace zero | `reading` on a `click` or `read` line when the entry reads `tensor`: 3 sum amount x **u**_d **u**_d^T less its trace on the diagonal | Q^2 per unit of amount | detector |
 | the momentum **p** of a measured event | vector | `momentum` of its state (`measured` of `run.json` and `state.json`); `pushed` (the push taken, summed) and `drive` (the drive's count per axis) beside it | label units: Q = 64 per unit of amount along a heading | detector |
+| the energy E' of a body (`covariant-readings-v1`, the world key `covariant_readings`; DERIVATIONS_BEAM 17.6) | scalars: E' / g the energy, E'_0 / g = (Q S / g) M the rest energy, W / g^2 = (E'_0 / g)^2 + d (**p** / g) . (**p** / g) its exact square, at the identity's grain g and the declared c^2 = [1, d] | the `energy` line of `events.jsonl` per body per interval (`energy`, `rest`, `square`, `creating`, `owed` the intervals the proper-time gate charged, `comparisons`); `energy` on the `step` line beside `drive`; the `covariant` block of a body's state (`energy`, `rest`, `square`, `waited` the intervals owed to proper time, `counted_sum`, `comparisons` the most in one frame) and `acc.tau` its proper-time accumulator; the run's `covariant_readings` block (the declaration, the paid families off 3 h n = Q S d, the comparisons, `waited` per body); written under the key alone, on bodies that are not `fixed` | E' in units of Q S per unit of content (E' = 3 E at c^2 = 1 / 3), at the grain g | GameBoard (a diagnostic: the host's view of the body's record; the detector's readings under the identity are the products' face clicks and the centre's pointer, series S) |
 | the label **p** of a row | vector | `push` on a `click` or `read` line (the row group's label, what the reader took); `momentum` on a face `click`; `momentum` on a `gather` line (what the chosen rows gave); `recoil` on a `become` line; `momentum` per family on a face and the border | label units | detector |
 | the share of a record's row | vector | `share` on the `click` line of a record's row: the row's push on matter, label x amount // m | label units | detector |
 | the placed quantum of a completion | scalar M and a vector | `content` and `momentum` on a `gather` line: under `massive-rows-v1` the family's q_F (its `quantum`, M) and q_F x the label-table entry of the chosen row's direction, what the chosen set took at the completion (for every other family what the chosen rows brought, as before; the `click` line reports what arrived, `content` and `push`, for both); after it `held`, `events` and `momentum` of the measured event at the chosen Node, or a face's `content`, `clicks` and `momentum` | units of content; label units | detector |
@@ -1027,6 +1037,7 @@ things themselves, one row each in the three worlds, are in
 | the step of a measured event | scalars and a vector | `steps` and `axis_steps` of its state; the `step` line | Links | GameBoard |
 | the charge | a reduced pair (n, d) | `charge` of a measured event's state (rho x content, reduced) and `charges` per column by name; the `charge` line of the books | the family's charge per unit of content (a paid family: a whole charge per unit of amount) | detector (the state); GameBoard (the books) |
 | the gather's weight and total | reduced pairs | `weight` and `total` on a `gather` line, `T` the norm, `cells` the rungs | the unit 2^58 (`unit`) | detector (the one click) |
+| a non-absorbing read of a record's rows | a deferred offer, not an outcome | the `read` line of a record's rows that went on: the layer stores a residual selector keyed by the record's current label set (`amplitude.Layer.end`, the read branch) and the rows continue; a later rotation replaces that label set (`Layer.rotate`, `nature_beam.rotate_rows`) and the record's one click gathers at its far completion, so a read followed by a rotation and a second read is not a sequential measurement and is out of the register's contract (sequential-instrument use is unsupported under `amplitude-v1`; issue #584, 2026-09-21) | units of amount | detector (deferred to the gather) |
 | the books | scalars and vectors, exact at every tick | `audit` of `run.json` per completed tick: per family the sums, the `momentum` block (`measured`, `transit`, `escaped`, `turned`), the `charge` line, `balanced` | units, label units, pairs | GameBoard |
 | the flow and the counts at a Node, the shell means | scalars and vectors | `state.json` Node by Node (the rows' columns); `diagnostics/shell_readings.py` | units, label units | GameBoard |
 
