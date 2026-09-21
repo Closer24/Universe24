@@ -349,3 +349,15 @@ at L / c, standing returns fail delayed choice; (3) the apparatus's ledger
 as today, the one atemporal step. The owner inclined to reopen 2026-09-19
 and, on the two experiments, sent the whole for resolution. The paper
 keeps (3) with (1) beside it until the answer.
+
+## The main course, to the skills (2026-09-21)
+
+The owner: "add it to skills, ask the Boss to add it to their skills; this
+is the main course". Drafted as a section for skills/workflow.md with one
+line per role (equations first, runs as confirmation; class 1 constant
+rate, closed form, the formula pinned before any run; class 2
+state-dependent rate, the difference equation, the iteration or the limit;
+every formula meets known physics twice; the classical-quantum boundary as
+the property of the rate), sent to the Boss by trigger and posted on issue
+#376 for the owner. The Boss edits the skills on main; nothing in skills/
+is touched on this branch.
