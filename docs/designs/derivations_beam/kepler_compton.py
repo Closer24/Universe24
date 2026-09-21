@@ -12,6 +12,7 @@ every pinned integer is a floor of them.
 
 from __future__ import annotations
 
+import math
 from decimal import Decimal, getcontext
 from fractions import Fraction
 from math import isqrt
@@ -164,7 +165,51 @@ def compton() -> None:
     print()
 
 
+def apsidal_under_dispersion() -> None:
+    """(D) The apsidal angle of a near-circular orbit under a dispersion v(p)
+    (the check of the physicist's lamp-world pins, 21.5 row 58 as amended):
+    with the push on the momentum and the pace v(p) along it, the radial
+    frequency is (v_0 / r_0) sqrt(1 + e) against the angular v_0 / r_0, e =
+    d ln v / d ln p at the circle, so the apsidal angle is psi = pi / sqrt(1 +
+    e) and the precession per radial period 2 psi - 360 degrees; the
+    Newtonian pace (e = 1) gives the plane's pi / sqrt 2. The paces: today's
+    per-axis n / (S + n) (e = S / (S + n)), form B's on a heading 64 n / (64 S
+    + 110 n) (e = 64 S / (64 S + 110 n)); the lamp worlds at S = 32."""
+    print(
+        "(D) The apsidal angle under a dispersion: psi = pi / sqrt(1 + e), e = d ln v / d ln p at the circle;"
+    )
+    print("    the precession per radial period 2 psi - 360 degrees (the plane's 1 / r push; S = 32):")
+    s = Decimal(32)
+    cases = [
+        ("the Newtonian pace v = n / S (the plane's own law)", Decimal(1)),
+        ("today's per-axis pace n / (S + n) at n = 9", s / (s + 9)),
+        ("form B's pace 64 n / (64 S + 110 n) at n = 10", 64 * s / (64 * s + 110 * 10)),
+        ("form B's pace at n = 9", 64 * s / (64 * s + 110 * 9)),
+    ]
+    for name, e in cases:
+        psi = Decimal(str(math.pi)) / (1 + e).sqrt()
+        deg = psi * 180 / Decimal(str(math.pi))
+        print(
+            f"  {name}: e = {e:.4f}, psi = {deg:.2f} degrees, the precession {2 * deg - 360:+.2f} per radial period"
+        )
+    print(
+        "  the physicist's integrator (lamp_orbits_map.out 2b): 127.3 / -105.5, 134.8 / -90.5, 139.7 / -80.6:"
+    )
+    print(
+        "  the closed form within 0.4 degrees at the rosette's amplitude (r 12.0 to 13.0), so -81 +- 15 stands under form B's pace."
+    )
+    v_head = Decimal(64 * 10) / Decimal(64 * 32 + 110 * 10)
+    v_diag = Decimal(64 * 10) / Decimal(64 * 32 + 110 * 10 * Decimal(2).sqrt())
+    print(
+        f"  the pace at n = 10 on a heading {v_head:.4f} Links per interval (T = 2 pi r / v: {2 * Decimal(str(math.pi)) * 12 / v_head:.1f} at r = 12,"
+        f" {2 * Decimal(str(math.pi)) * 24 / v_head:.1f} at r = 24); under FORM.md 3.1's form (c) the Euclidean pace on the plane's diagonal"
+        f" would be {v_diag:.4f} (the wall's |p|_1 T_h), an anisotropy of {(1 - v_diag / v_head) * 100:.1f} percent that would re-pin the lamp worlds if (c) is adopted."
+    )
+    print()
+
+
 if __name__ == "__main__":
     kepler_plane()
     kepler_space()
     compton()
+    apsidal_under_dispersion()

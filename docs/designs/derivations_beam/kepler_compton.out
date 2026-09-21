@@ -31,3 +31,13 @@
   at 90 deg with the heading's c: k' = 11.195 (against 11.165 on the pair), the floor of k' / h the same or one less
   at 180 deg with the heading's c: k' = 8.611 (against 8.574 on the pair), the floor of k' / h the same or one less
 
+(D) The apsidal angle under a dispersion: psi = pi / sqrt(1 + e), e = d ln v / d ln p at the circle;
+    the precession per radial period 2 psi - 360 degrees (the plane's 1 / r push; S = 32):
+  the Newtonian pace v = n / S (the plane's own law): e = 1.0000, psi = 127.28 degrees, the precession -105.44 per radial period
+  today's per-axis pace n / (S + n) at n = 9: e = 0.7805, psi = 134.90 degrees, the precession -90.21 per radial period
+  form B's pace 64 n / (64 S + 110 n) at n = 10: e = 0.6506, psi = 140.11 degrees, the precession -79.79 per radial period
+  form B's pace at n = 9: e = 0.6741, psi = 139.12 degrees, the precession -81.77 per radial period
+  the physicist's integrator (lamp_orbits_map.out 2b): 127.3 / -105.5, 134.8 / -90.5, 139.7 / -80.6:
+  the closed form within 0.4 degrees at the rosette's amplitude (r 12.0 to 13.0), so -81 +- 15 stands under form B's pace.
+  the pace at n = 10 on a heading 0.2033 Links per interval (T = 2 pi r / v: 370.9 at r = 12, 741.7 at r = 24); under FORM.md 3.1's form (c) the Euclidean pace on the plane's diagonal would be 0.1776 (the wall's |p|_1 T_h), an anisotropy of 12.6 percent that would re-pin the lamp worlds if (c) is adopted.
+
