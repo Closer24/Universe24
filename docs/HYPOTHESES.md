@@ -1073,3 +1073,58 @@ couplings.
   deuteron, the third-law gap of record 126 made visible by held paid
   content before the give (the review's finding, reported, not moved); the
   pp threshold not run.
+
+## 25. The covariant readings: a body's energy as an exact square compared and never rooted, its clock gated by E'_0 / E', stated so that it can fail
+
+- **Statement (the model owner's decision of 2026-09-21, record 270 of
+  the log of 2026-09-20, on the derivation mathematician's section 17;
+  the design as amended in [DERIVATIONS_BEAM 17.6](DERIVATIONS_BEAM.md#176-amended-per-the-physics-rule-review-of-covariant-readings-v1-record-297-the-nine-must-fixes-the-integer-forms-the-should-fixes)
+  per the physics-rule reviews, records 297 and 314; `covariant-readings-v1`,
+  the world key `covariant_readings`).** Beside the law, under its own
+  identity: a body's record carries the exact square of its energy, W =
+  E'_0^2 + 3 **p** . **p** with E'_0 = Q S M (c^2 = 1 / 3 declared as the
+  pair [1, 3]; E' = 3 E), and E' the largest integer with E'^2 <= W, kept
+  by comparisons alone (the load-time root once); after every
+  self-creation the body owes `by_drive(acc_tau, E' - E'_0, E'_0)` further
+  intervals, so its self-creations come one per E' / E'_0 = gamma
+  intervals in the mean and everything counted per self-creation (the
+  age, `become`, the turn, the lamp, the drive's gain) follows its proper
+  time; the drive's wall loses its cap term, so the pace per lattice
+  interval is p / E' = p c^2 / E, the covariant dispersion (on `main`'s
+  per-axis drive, `step_axis`, for a momentum on one axis: the identity's
+  domain until form B's directional drive lands, refused otherwise); the crowd's
+  count is charged with the sum of the readings since the last
+  self-creation; the free release runs per lattice interval at the
+  content-equivalent of the body's own energy. E = m c^2 is then forced by
+  the Newtonian limit (17.3 (iii)): E'_0 = Q S M with no freedom. Nothing
+  of the six verbs changes; with the key absent every world reads as it
+  did, byte for byte.
+- **The expectations (series S, [EXPERIMENTS](EXPERIMENTS.md#s-the-covariant-readings-2026-09-21)).**
+  The muon of J4 at p = 3640 and 12 856 label units (gamma 1.1074 and
+  1.9558): its 64th self-creation at the design's 70.9 and 125.2 within one
+  tick, the products' click on the +x face at 367 and 345 within two (the
+  detector's reading); `coasting_none`'s `s_mz2` at its declared momentum:
+  z = 0.369 +- 0.003 (the register's 0.2636 without the key); the invariant
+  E'^2 <= W < (E' + 1)^2 at every interval.
+- **What it depends on.** The pair c^2 = [1, 3] declared once (the flight
+  table's per-direction (Q S_1 / T_D)^2 is the alternative and shifts the
+  muon's 64th by 0.7 tick at 0.86 c); the grain g that fits W / g^2 in the
+  word; the domain |p|_1 <= Q S M (above it the drive's one Link per
+  self-creation gives a pace that falls with p); the push ceiling of one
+  grain per interval, under which the root's comparisons are at most three
+  per frame (a change of content moves E' by about Q S |dM| / g in that
+  frame, counted and reported: the host cost apart from the model's).
+- **What it does not give.** The contraction and the magnetic part of the
+  push (17.6 M4, M5: `-grad(A)` alone is not Lorentz's 1904 pair; the
+  vector potential needs a source's velocity no local reading gives,
+  `source-velocity-v1` named and not designed); the fixed apparatus (a
+  `fixed` measured event's momentum line is the push it took and never a
+  motion: it carries no readings and keeps the lattice's clock); the
+  discrete cadence from an empty accumulator puts the k-th self-creation
+  at k + floor((k - 1) (gamma - 1)), one (gamma - 1) below k gamma.
+- **What would refute it.** A `become` line of a moving muon at tick 64 (no
+  slowing); a face click of the products off the flight table's derivation
+  from the `become` line; a line where E'^2 > W or W >= (E' + 1)^2; a step
+  of a body without the key that differs from the register.
+- **Status.** Built on 2026-09-21 and run once (series S): the readings in
+  [the register](EXPERIMENTS.md#s-the-covariant-readings-2026-09-21).

@@ -1,9 +1,11 @@
-"""S(N) of the pair at the CHSH labels for the powers of two from 512 to 32768, with the tables fixed at 256.
+"""S(N) of the pair at the CHSH labels for the powers of two from 512 to 32768, with the tables fixed at 256; beyond, the closed form.
 
 Exact integers and fractions; a computation, not a run. The four correlations are listed
 because they differ between the two pairs of settings once N is large enough for the
 rungs' rounding to fall on different sides. The tables' bound (2N at most 65536) stops
-the computation at N = 32768; the fixed-table limit is 2 (46565 + 46452) / 65773.
+the computation at N = 32768; the fixed-table limit is 2 (46565 + 46452) / 65773. Beyond the bound the
+closed form on the fixed correlations, S(N) = 8 (c1 + c1') / N - 4 with c1 the rung of (1 + E) / 4,
+gives the value at 65536 and above, with its distance from Poh et al. 2015 (2.82759 +- 0.00051).
 """
 
 from __future__ import annotations
@@ -45,6 +47,26 @@ def main() -> None:
     limit = Fraction(2 * (46565 + 46452), 65773)
     print(f"fixed-table limit 2 (46565 + 46452) / 65773 = {limit} = {float(limit):.9f}")
     print(f"2 sqrt 2 = {2 * 2**0.5:.9f}")
+    print("beyond the tables' bound, the closed form on the fixed correlations:")
+    print("N, S = 8 (c1 + c1') / N - 4, c1, c1', standard deviations from Poh")
+    for n in [512, 4096, 16384, 65536, 131072, 2**20]:
+        c1, c1p = fixed_count(n, E1), fixed_count(n, E2)
+        s_value = Fraction(8 * (c1 + c1p), n) - 4
+        print(f"{n}, {s_value} = {float(s_value):.9f}, {c1}, {c1p}, {sigma(s_value):+.2f}")
+
+
+E1, E2 = Fraction(46565, 65773), Fraction(46452, 65773)
+POH, POH_ERROR = Fraction("2.82759"), Fraction("0.00051")
+
+
+def fixed_count(n: int, e: Fraction) -> int:
+    """The first cell's count, the rung of the weight (1 + E) / 4 at the fixed correlation E."""
+    weight = (1 + e) / 4
+    return (2 * n * weight.numerator + weight.denominator) // (2 * weight.denominator)
+
+
+def sigma(s_value: Fraction) -> float:
+    return float((s_value - POH) / POH_ERROR)
 
 
 if __name__ == "__main__":

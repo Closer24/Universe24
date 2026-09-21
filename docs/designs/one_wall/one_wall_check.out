@@ -1,0 +1,28 @@
+1. FERMAT'S TURN AGAINST NEWTON'S PUSH AT c, per unit G M / c^2 (the impact parameter in Links)
+   b = 6, L = 26: Fermat 0.324797, the push 0.324797, the closed form 2 (G M / c^2) L / (b sqrt(L^2 + b^2)) = 0.324797, the limit 2 / b = 0.333333
+   b = 3, L = 26: Fermat 0.662273, the push 0.662273, the closed form 2 (G M / c^2) L / (b sqrt(L^2 + b^2)) = 0.662273, the limit 2 / b = 0.666667
+   b = 6, L = 1000: Fermat 0.333327, the push 0.333327, the closed form 2 (G M / c^2) L / (b sqrt(L^2 + b^2)) = 0.333327, the limit 2 / b = 0.333333
+   b = 3, L = 1000: Fermat 0.666664, the push 0.666664, the closed form 2 (G M / c^2) L / (b sqrt(L^2 + b^2)) = 0.666664, the limit 2 / b = 0.666667
+   the two integrands are one expression: b / (b^2 + x^2)^(3/2) per unit G M / c^2; the difference is 0 exactly
+
+2. THE WAVEFRONT'S TILT IS THE DERIVATIVE OF THE SHAPIRO DELAY (the wall alone)
+   b = 6, L = 26: c |d tau / db| = 0.324797; the turn's 2 / b = 0.333333; the exact 2 / sqrt(b^2 + L^2) x L / b = 0.324797
+   b = 6, L = 1000: c |d tau / db| = 0.333327; the turn's 2 / b = 0.333333; the exact 2 / sqrt(b^2 + L^2) x L / b = 0.333327
+   b = 6, L = 1e+06: c |d tau / db| = 0.333333; the turn's 2 / b = 0.333333; the exact 2 / sqrt(b^2 + L^2) x L / b = 0.333333
+   b = 3, L = 26: c |d tau / db| = 0.662273; the turn's 2 / b = 0.666667; the exact 2 / sqrt(b^2 + L^2) x L / b = 0.662273
+   b = 3, L = 1000: c |d tau / db| = 0.666664; the turn's 2 / b = 0.666667; the exact 2 / sqrt(b^2 + L^2) x L / b = 0.666664
+   b = 3, L = 1e+06: c |d tau / db| = 0.666667; the turn's 2 / b = 0.666667; the exact 2 / sqrt(b^2 + L^2) x L / b = 0.666667
+   at finite L the tilt is 2 L / (b sqrt(b^2 + L^2)), the turn's closed form exactly: one number, two readings
+
+3. THE TWO CONSTANTS ON THE GAMEBOARD (5.1 and 3.3), exact rationals
+   release [1, 1], suspension [1, 2], S = 2: k_wall / k_push = 1 = (n / d)_susp x S = 1
+   release [1, 1], suspension [1, 4096], S = 4096: k_wall / k_push = 1 = (n / d)_susp x S = 1
+   release [1, 1], suspension [1, 16384], S = 4096: k_wall / k_push = 1/4 = (n / d)_susp x S = 1/4
+   release [1, 1], suspension [1, 2], S = 4096: k_wall / k_push = 2048 = (n / d)_susp x S = 2048
+   one constant (the redshift's G the orbit's G, the wall's tilt the push's turn) if and only if (n / d)_susp = 1 / S
+
+4. THE SUM 'WALL 2 + PUSH 2 = 4': what each reading gives, per unit G M / (b c^2), L / b -> infinity
+   the heading of one row (a screen's centroid):   wall 0, push 2, both 2   (a scalar enters only the wall)
+   the wavefront's tilt (the delay's gradient):     wall 2, push 0, both 2   (the push changes no pace)
+   the delay (Shapiro, the coefficient of the log): wall 1, push 0, both 1   (nature's 1 + gamma = 2)
+   no reading gives 4; the 4 counts the g_00 term in the wave language and in the ray language

@@ -26,8 +26,8 @@ import numpy as np  # noqa: E402
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
-BLUE, ORANGE, AQUA = "#2a78d6", "#eb6834", "#1baf7a"
-INK, MUTED = "#0b0b0b", "#52514e"
+# Black and white only (the model owner, 2026-09-21).
+INK, DARK, MID, LIGHT, PALE = "#000000", "#404040", "#808080", "#c8c8c8", "#e4e4e4"
 
 PORTS = {
     (1, 0, 0): "$+x$",
@@ -67,7 +67,7 @@ def draw(output: Path) -> None:
         ((-1, -1, 1), (1, -1, 1)),
         ((-1, -1, 1), (-1, 1, 1)),
     ):
-        ax.plot(*zip(a, b, strict=True), color="#d8d7d2", linewidth=0.7)
+        ax.plot(*zip(a, b, strict=True), color=LIGHT, linewidth=0.7)
 
     # the inscribed sphere of radius 1 / sqrt 3
     radius = 1 / math.sqrt(3)
@@ -76,13 +76,13 @@ def draw(output: Path) -> None:
         radius * np.cos(u) * np.sin(v),
         radius * np.sin(u) * np.sin(v),
         radius * np.cos(v),
-        color=ORANGE,
+        color=MID,
         linewidth=0.35,
-        alpha=0.55,
+        alpha=0.7,
     )
 
     # the octahedron, the L1 unit ball
-    collection = Poly3DCollection(faces(), alpha=0.18, facecolor=BLUE, edgecolor=BLUE, linewidth=1.1)
+    collection = Poly3DCollection(faces(), alpha=0.22, facecolor=LIGHT, edgecolor=INK, linewidth=1.1)
     ax.add_collection3d(collection)
 
     # the six Ports
@@ -100,10 +100,10 @@ def draw(output: Path) -> None:
 
     # the touching points on the cube diagonals, one per face
     for sx, sy, sz in product((1, -1), repeat=3):
-        ax.scatter(sx / 3, sy / 3, sz / 3, color=ORANGE, s=10, depthshade=False)
-    ax.plot([0, 1 / 3], [0, -1 / 3], [0, 1 / 3], color=ORANGE, linewidth=1.0)
+        ax.scatter(sx / 3, sy / 3, sz / 3, facecolors="none", edgecolors=INK, s=14, depthshade=False)
+    ax.plot([0, 1 / 3], [0, -1 / 3], [0, 1 / 3], color=INK, linewidth=1.0, linestyle="--")
     ax.scatter(0, 0, 0, color=INK, s=8, depthshade=False)
-    ax.text(0.40, -0.44, 0.14, r"$1/\sqrt{3}$", color=ORANGE, fontsize=9)
+    ax.text(0.40, -0.44, 0.14, r"$1/\sqrt{3}$", color=INK, fontsize=9)
 
     ax.set_xlim(-1.05, 1.05)
     ax.set_ylim(-1.05, 1.05)
@@ -120,8 +120,18 @@ def draw(output: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--output", type=Path, default=HERE / "figures")
+    parser.add_argument("--png", type=Path, default=None, help="also write a PNG preview here")
     args = parser.parse_args()
     draw(args.output)
+    if args.png is not None:
+        args.png.mkdir(parents=True, exist_ok=True)
+        original = plt.Figure.savefig
+
+        def save_png(fig, path, *rest, **options):
+            original(fig, args.png / (Path(path).stem + ".png"), dpi=150)
+
+        plt.Figure.savefig = save_png  # type: ignore[method-assign]
+        draw(args.output)
 
 
 if __name__ == "__main__":
