@@ -453,6 +453,75 @@ def two_slits_low() -> dict[str, object]:
     return world
 
 
+# L2b: the openings' fan by angle (Huygens on the lattice; the
+# mathematician's TWO_SLITS.md section 7, 2026-09-20): every primitive
+# direction (a, b, 0) with a >= 1 and a + |b| <= HUYGENS_WIDTH, ordered by
+# angle (consecutive directions are Farey neighbours, |a b' - a' b| = 1),
+# each carrying as its split weight the angle it covers, half the gap to
+# each neighbour, the gap between D and D' being 3 Q^2 / (T_D T_D') in the
+# flight table's own resolution T_D = isqrt(3 |D|^2 Q^2) (the exact
+# 1 / (|D| |D'|) for Farey neighbours), at the grain HUYGENS_GRAIN. The
+# freed band admits at most FREED_HALF_WIDTH steps along the wall's plane
+# before a row's first step in x, that is |b| <= (2 FREED_HALF_WIDTH + 1) a;
+# the steeper directions are left out (they would walk into the wall or
+# through the other opening), their angle lost at the fan's edges.
+FLIGHT_Q = 64
+HUYGENS_WIDTH = 48
+# The grain keeps the load-time ceiling: the check multiplies every
+# re-emitter's sum of squares A on the world (two openings: A^2 within 2^62,
+# A within 2^31); at 2^18 the weights run 123 .. 5619 and A = 7.1 x 10^8.
+HUYGENS_GRAIN = 1 << 18
+HUYGENS_SLOPE = 2 * FREED_HALF_WIDTH + 1
+HUYGENS_TICKS = 420
+
+
+def flight_resolution(vector: tuple[int, int]) -> int:
+    """T_D = isqrt(3 |D|^2 Q^2), the flight table's resolution of D."""
+    return math.isqrt(3 * (vector[0] ** 2 + vector[1] ** 2) * FLIGHT_Q * FLIGHT_Q)
+
+
+def huygens_fan() -> tuple[list[tuple[int, int]], dict[tuple[int, int], int]]:
+    """The full primitive fan within HUYGENS_WIDTH in angle order and the
+    integer angle weight of every direction; the admitted directions are
+    those within HUYGENS_SLOPE."""
+    full = [
+        (a, b)
+        for a in range(1, HUYGENS_WIDTH + 1)
+        for b in range(-HUYGENS_WIDTH, HUYGENS_WIDTH + 1)
+        if a + abs(b) <= HUYGENS_WIDTH and math.gcd(a, b) == 1
+    ]
+    full.sort(key=lambda v: math.atan2(v[1], v[0]))
+    weights: dict[tuple[int, int], int] = {}
+    for i, v in enumerate(full):
+        neighbours = [full[j] for j in (i - 1, i + 1) if 0 <= j < len(full)]
+        gaps = [
+            Fraction(3 * FLIGHT_Q * FLIGHT_Q, flight_resolution(v) * flight_resolution(w))
+            for w in neighbours
+        ]
+        if len(gaps) == 1:
+            gaps = gaps * 2
+        weights[v] = int(HUYGENS_GRAIN * sum(gaps) / 2)
+    admitted = [v for v in full if abs(v[1]) <= HUYGENS_SLOPE * v[0]]
+    return admitted, weights
+
+
+def two_slits_huygens() -> dict[str, object]:
+    """L2b's world: `slits_low` with each opening's fan the Farey fan of
+    width HUYGENS_WIDTH weighted by angle (the split's `weights`)."""
+    world = two_slits_low()
+    world["model_id"] = "beam-amplitude-slits_huygens-v1"
+    world["ticks"] = HUYGENS_TICKS
+    admitted, weights = huygens_fan()
+    # The world's direction table names every vector of the fan (the six
+    # headings are the world's own); the registered 90 are among them.
+    world["directions"] = [[a, b, 0] for a, b in admitted if (a, b) != (1, 0)]
+    for entry in world["measured"]:
+        if entry.get("table") == {"light": "rerelease"}:
+            entry["table"] = {"light": {"rule": "rerelease", "weights": [weights[v] for v in admitted]}}
+            entry["directions"] = [[a, b, 0] for a, b in admitted]
+    return world
+
+
 def two_slits_one() -> dict[str, object]:
     """The design's reference: one birth through L2's geometry without the
     key, the lamp's five rows declared as rays of amount 91."""
@@ -645,7 +714,11 @@ def two_slits_reading() -> dict[str, object]:
 
 
 def two_slits_worlds() -> dict[str, dict[str, object]]:
-    return {"slits_low": two_slits_low(), "slits_one": two_slits_one()}
+    return {
+        "slits_low": two_slits_low(),
+        "slits_one": two_slits_one(),
+        "slits_huygens": two_slits_huygens(),
+    }
 
 
 def bell(

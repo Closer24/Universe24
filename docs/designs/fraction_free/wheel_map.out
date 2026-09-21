@@ -1,0 +1,25 @@
+W = 4096; the golden rate 2531 / 4096 = 0.6179; the bright pixels [35, 36, 37, 38, 59, 60, 61, 82, 83, 84, 85]; the dark [13, 14, 15, 16, 17, 18, 19, 20, 48, 49, 50, 70, 71, 72, 100, 101, 102, 103, 104, 105, 106, 107]
+
+== the registered fan of 91, the built phase: 126 cells, 80 with weight
+  bit-reversed  256 births: wall 136, screen 62 on 43 pixels, faces 58; bright [0, 2, 0, 1, 4, 7, 5, 0, 0, 2, 0]; dark [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 2, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1]; Pearson 0.329; visibility 0.647
+  bit-reversed 4096 births: wall 2162, screen 1001 on 75 pixels, faces 933; bright [0, 32, 0, 8, 71, 109, 71, 8, 0, 32, 0]; dark [7, 0, 0, 0, 0, 0, 8, 8, 5, 5, 27, 27, 4, 5, 8, 8, 0, 0, 0, 0, 0, 8]; Pearson 0.367; visibility 0.693
+  bit-reversed empty cells (with weight) per prefix: [(64, 60), (256, 32), (1024, 0), (4096, 0)]; worst |count - B w / T| at 4096: 1.08
+  golden        256 births: wall 135, screen 62 on 45 pixels, faces 59; bright [0, 2, 0, 1, 5, 6, 4, 1, 0, 1, 0]; dark [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]; Pearson 0.390; visibility 0.739
+  golden       4096 births: wall 2162, screen 1001 on 75 pixels, faces 933; bright [0, 32, 0, 8, 72, 108, 71, 8, 0, 32, 0]; dark [7, 0, 0, 0, 0, 0, 9, 7, 5, 5, 27, 26, 5, 4, 8, 8, 0, 0, 0, 0, 0, 8]; Pearson 0.368; visibility 0.695
+  golden       empty cells (with weight) per prefix: [(64, 61), (256, 30), (1024, 0), (4096, 0)]; worst |count - B w / T| at 4096: 1.14
+
+== the screen's fan, the built phase (the wheel alone): 124 cells, 102 with weight
+  bit-reversed  256 births: wall 165, screen 91 on 71 pixels, faces 0; bright [2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1]; dark [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]; Pearson 0.783; visibility 0.900
+  bit-reversed 4096 births: wall 2629, screen 1467 on 99 pixels, faces 0; bright [29, 29, 29, 25, 25, 29, 25, 24, 29, 29, 29]; dark [4, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 4]; Pearson 0.905; visibility 0.924
+  bit-reversed empty cells (with weight) per prefix: [(64, 77), (256, 28), (1024, 0), (4096, 0)]; worst |count - B w / T| at 4096: 0.76
+  golden        256 births: wall 165, screen 91 on 69 pixels, faces 0; bright [2, 1, 3, 1, 1, 1, 3, 1, 2, 1, 3]; dark [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; Pearson 0.708; visibility 0.949
+  golden       4096 births: wall 2629, screen 1467 on 99 pixels, faces 0; bright [29, 29, 29, 25, 25, 29, 25, 25, 29, 29, 29]; dark [4, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 4]; Pearson 0.904; visibility 0.924
+  golden       empty cells (with weight) per prefix: [(64, 76), (256, 30), (1024, 1), (4096, 0)]; worst |count - B w / T| at 4096: 0.76
+
+== the screen's fan, the exact phase (the wheel and the exact phase): 124 cells, 122 with weight
+  bit-reversed  256 births: wall 166, screen 90 on 70 pixels, faces 0; bright [2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1]; dark [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; Pearson 0.799; visibility 0.951
+  bit-reversed 4096 births: wall 2654, screen 1442 on 107 pixels, faces 0; bright [28, 29, 29, 29, 29, 29, 28, 29, 29, 29, 28]; dark [2, 2, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 1, 1, 3]; Pearson 0.963; visibility 0.954
+  bit-reversed empty cells (with weight) per prefix: [(64, 97), (256, 49), (1024, 22), (4096, 12)]; worst |count - B w / T| at 4096: 0.94
+  golden        256 births: wall 166, screen 90 on 68 pixels, faces 0; bright [1, 2, 2, 2, 2, 1, 3, 1, 2, 1, 3]; dark [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]; Pearson 0.742; visibility 0.905
+  golden       4096 births: wall 2654, screen 1442 on 107 pixels, faces 0; bright [28, 29, 29, 29, 29, 29, 28, 29, 29, 29, 28]; dark [2, 2, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 1, 1, 3]; Pearson 0.963; visibility 0.954
+  golden       empty cells (with weight) per prefix: [(64, 96), (256, 51), (1024, 22), (4096, 12)]; worst |count - B w / T| at 4096: 0.94
