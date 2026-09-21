@@ -65,7 +65,12 @@ MAX_FRAMES = 120
 # The helpers (the bodies, their copies, the arrows, the outlines) are drawn
 # at this factor of the size and downsampled: sharp over the blocky board.
 SUPERSAMPLE = 4
+# The three-dimensional players turn the cube once over this many frames.
+TURN_FRAMES = 150
 # The accent of the pages: green, in dark mode (the model owner, 2026-09-21).
+# A body's copies fade with their age over this many intervals: the rows
+# just released into the Nodes beside the body are the bright ones.
+AGE_FADE = 40
 ACCENT = (74, 222, 128)
 # Appended to the caption of every picture with bodies (the model owner,
 # 2026-09-21: a body's copies spreading, transparent, and its arrow).
@@ -73,7 +78,11 @@ COPIES_NOTE = (
     "Every body is drawn with the copies, in the owner's word: the body's own rows, the rows carrying its "
     "number that its self-creations release on its directions, drawn as translucent discs in its colour at "
     "their Nodes on the GameBoard; and with the white arrow of its momentum label, the vector p of its record "
-    "(no arrow at p = 0); a product row carries a short arrow along its direction of the fan."
+    "(no arrow at p = 0); a product row carries a short arrow along its direction of the fan. The copies "
+    "fade with their age: the bright ones are the rows just released into the Nodes beside the body, the "
+    "faint ones far along their lines; every particle is a beam, releasing itself at every self-creation. A "
+    "copy looks like its body: a disc with a rim, coloured as the body is (by the row's phase for a family "
+    "with a phase circle): the body radiates itself."
 )
 SQRT3 = math.sqrt(3.0)
 # Each family without a phase circle takes one of these colours, in the
@@ -487,10 +496,11 @@ class Plane:
         directions, drawn as translucent discs in the body's colour at their
         Nodes; what spreads is the body's own record, many times over."""
         nx, ny, _ = self.shape
-        radius = max(self.scale * 0.44, 2.0)
+        base = max(self.scale * 0.46, 2.0)
         for body in frame.bodies:
             colour = BODY_COLOURS.get(body.family, (230, 230, 230))
             total = np.zeros((nx, ny), dtype=np.float64)
+            youngest = np.full((nx, ny), AGE_FADE * 4, dtype=np.float64)
             for rows in frame.rows:
                 mine = rows.number == body.number
                 if self.slice_z is not None:
@@ -498,17 +508,40 @@ class Plane:
                 if not mine.any():
                     continue
                 np.add.at(total, (rows.x[mine], rows.y[mine]), rows.amount[mine].astype(np.float64))
+                np.minimum.at(youngest, (rows.x[mine], rows.y[mine]), rows.age[mine].astype(np.float64))
             if not total.any():
                 continue
             largest = float(total.max())
+            # A copy looks like the body itself: for a family with a phase
+            # circle, the youngest row's phase at the Node gives the copy's
+            # hue, as the body's own disc is coloured by its phase.
+            phase_at: dict[tuple[int, int], int] = {}
+            if self.phased.get(body.family, False):
+                for rows in frame.rows:
+                    mine = rows.number == body.number
+                    if self.slice_z is not None:
+                        mine &= rows.z == self.slice_z
+                    order = np.argsort(rows.age[mine], kind="stable")
+                    xs, ys, phases = rows.x[mine][order], rows.y[mine][order], rows.phase[mine][order]
+                    for x, y, phase in zip(xs.tolist(), ys.tolist(), phases.tolist(), strict=True):
+                        phase_at.setdefault((x, y), phase)
             for i, j in zip(*np.nonzero(total), strict=True):
                 if (int(i), int(j)) == (body.position[0], body.position[1]):
                     continue
-                alpha = int(30 + 100 * math.log2(1.0 + total[i, j]) / math.log2(1.0 + largest))
+                # The rows just released, in the Nodes beside the body, are
+                # bright and large; the rows far along their lines faint.
+                fade = 0.3 + 0.7 * max(0.0, 1.0 - youngest[i, j] / AGE_FADE)
+                alpha = int((30 + 100 * math.log2(1.0 + total[i, j]) / math.log2(1.0 + largest)) * fade)
+                radius = base * (0.72 + 0.38 * fade)
                 cx, cy = self.pixel(int(i), int(j))
+                tint = colour
+                if (int(i), int(j)) in phase_at:
+                    tint = phase_colour(phase_at[(int(i), int(j))], self.phase_steps)
                 over.ellipse(
                     [(cx - radius) * k, (cy - radius) * k, (cx + radius) * k, (cy + radius) * k],
-                    fill=(*colour, alpha),
+                    fill=(*tint, alpha),
+                    outline=(235, 240, 245, min(255, alpha + 70)),
+                    width=max(1, k // 4),
                 )
 
     def draw_momentum(
@@ -654,8 +687,8 @@ class Cube:
 # The GIF, the sprite sheet and the page
 
 
-def gif_bytes(images: Sequence[Image.Image], duration_ms: int) -> bytes:
-    palettes = [image.quantize(colors=96, method=Image.Quantize.MEDIANCUT) for image in images]
+def gif_bytes(images: Sequence[Image.Image], duration_ms: int, colours: int = 96) -> bytes:
+    palettes = [image.quantize(colors=colours, method=Image.Quantize.MEDIANCUT) for image in images]
     buffer = io.BytesIO()
     palettes[0].save(
         buffer,
@@ -669,7 +702,7 @@ def gif_bytes(images: Sequence[Image.Image], duration_ms: int) -> bytes:
     return buffer.getvalue()
 
 
-def sprite_sheet(images: Sequence[Image.Image]) -> tuple[bytes, int, int, int]:
+def sprite_sheet(images: Sequence[Image.Image], colours: int = 128) -> tuple[bytes, int, int, int]:
     """One PNG holding every frame in a grid; (png, columns, width, height)."""
     w, h = images[0].size
     columns = max(1, min(len(images), int(math.ceil(math.sqrt(len(images) * h / max(w, 1))))))
@@ -678,7 +711,9 @@ def sprite_sheet(images: Sequence[Image.Image]) -> tuple[bytes, int, int, int]:
     for k, image in enumerate(images):
         sheet.paste(image, ((k % columns) * w, (k // columns) * h))
     buffer = io.BytesIO()
-    sheet.quantize(colors=128, method=Image.Quantize.MEDIANCUT).save(buffer, format="PNG", optimize=True)
+    sheet.quantize(colors=colours, method=Image.Quantize.MEDIANCUT).save(
+        buffer, format="PNG", optimize=True
+    )
     return buffer.getvalue(), columns, w, h
 
 
@@ -700,10 +735,12 @@ class Player:
     # Optional: per frame a list of (title, html) panels drawn side by side
     # under the readings (the three worlds page).
     panels: Sequence[Sequence[tuple[str, str]]] | None = None
+    # The palette of the sprite sheet and the GIF (fewer colours: a smaller page).
+    colours: int = 128
 
     def html(self) -> str:
-        png, columns, w, h = sprite_sheet(self.images)
-        gif = gif_bytes(self.images, self.duration_ms)
+        png, columns, w, h = sprite_sheet(self.images, self.colours)
+        gif = gif_bytes(self.images, self.duration_ms, min(self.colours, 96))
         data = {
             "columns": columns,
             "width": w,
@@ -811,6 +848,7 @@ a { color: var(--accent); }
 nav.crumbs { font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
 figure.player { margin: 16px 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
 figure.player img.gif { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 4px; }
+figure.player img.gif[hidden], figure.player canvas[hidden], figure.player div.controls[hidden] { display: none; }
 figure.player canvas { display: block; max-width: 100%; height: auto; margin: 0 auto; background: var(--board); border-radius: 4px; }
 figure.player .controls { display: flex; gap: 12px; align-items: center; margin: 10px 0 4px; }
 figure.player input.slider { flex: 1; accent-color: var(--accent); }
@@ -1824,11 +1862,12 @@ def page_nucleus(out: Path, runs: Path | None) -> Path:
         "deuteron_1",
         folder / "deuteron_1.json",
         runs,
-        frame_ticks(60, 40),
+        list(range(0, 49)),
         "The deuteron at one Link, `deuteron_1`: the plane z = 10 of the 21^3 cube (the bodies' plane, the rows "
         "in it alone), 10 pixels per Node; the proton p (red) at (10, 10, 10) and the neutron n (blue) at (11, 10, 10); "
         "the `nuclear` rows (gold) reach three Links and click on the border `lifetime`, the `p` and `n` rows "
-        "fly to the faces.",
+        "fly to the faces. One frame per interval: each body releasing its rows into the Nodes beside it at "
+        "every self-creation, the rows walking outward at the pace of the flight table.",
         120,
     )
     free, free_record, free_events = nucleus_player(
@@ -2082,6 +2121,16 @@ def page_decay(out: Path, runs: Path | None) -> Path:
     transformation `become`, the products' flight to the shell, the W
     exchange at one Link; the trigger ticks and counts from the register."""
     folder = WORLDS / "weak"
+    release, _, _ = decay_player(
+        "j3_release",
+        folder / "j3_neutron_free.json",
+        runs,
+        list(range(0, 49)),
+        "The release, `j3_neutron_free` at its first 48 intervals, one frame per interval: the neutron is a "
+        "beam, releasing one row per direction of the 290 into the Nodes beside it at every self-creation, "
+        "the rows walking outward; the shell's ring at r = 8.",
+        120,
+    )
     free_ticks = list(range(0, 501, 50)) + list(range(501, 561, 2))
     free, free_record, free_events = decay_player(
         "j3_neutron_free",
@@ -2168,6 +2217,8 @@ charges balancing at load; the clock is slowed by the count it reads as every cl
 crowd fires later and a neutron alone at the key exactly. The hand of the products (series P, the parity
 test) and the neutrino's phase window (series J2, the filter) are cited below from the register; this page
 shows the transformation itself.</p>
+<h2>The release: a body is a beam</h2>
+{release.html()}
 <h2>The free neutron</h2>
 {free.html()}
 <p>What to see: nothing for 511 intervals but the neutron's own rows; at {fb["tick"] if fb else "?"} the
@@ -2427,6 +2478,7 @@ def lensing_player(
     world: Path,
     runs: Path | None,
     caption: str,
+    ticks: Sequence[int] | None = None,
 ) -> tuple[Player, dict[str, object], dict[str, list[dict[str, object]]]]:
     """A series K world replayed as the x-y projection, the beam's rows on
     top of the mass's dimmed crowd; per frame the beam in flight, the
@@ -2442,7 +2494,7 @@ def lensing_player(
     taken = by_tick([c for c in clicks if c.get("detector") is None])
     faces = by_tick([c for c in clicks if str(c.get("detector", "")).startswith("face")])
     replay = Replay(world)
-    ticks = frame_ticks(replay.ticks, 72)
+    ticks = list(ticks) if ticks is not None else frame_ticks(replay.ticks, 72)
     frames = replay.run(ticks)
     plane = plane_for(replay, scale=6)
     plane.largest = largest_amounts(frames)
@@ -2504,6 +2556,15 @@ def page_energy(out: Path, runs: Path | None) -> Path:
     passing a mass and bent toward it, the mass measuring the most turned
     rows; the control beside it."""
     folder = WORLDS / "lensing"
+    release, _, _ = lensing_player(
+        "mass_release",
+        folder / "mass_meeting.json",
+        runs,
+        "The release, `mass_meeting` at its first 48 intervals, one frame per interval: the mass is a beam, "
+        "releasing one row per direction of the 290 into the Nodes beside it at every self-creation, its "
+        "crowd walking outward; the lamp's first records on their five lines.",
+        list(range(0, 49)),
+    )
     mass, mass_record, mass_events = lensing_player(
         "mass_meeting",
         folder / "mass_meeting.json",
@@ -2556,6 +2617,8 @@ owner's decision of 2026-09-20 ("an event in transit reads the crowd as a body d
 balance"), the beam is bent toward the mass with the sign of gravity and the M / b form, at the grain of the
 fan: this page shows that run beside its control. What the mass does to the rows that reach it is the
 other half of the story: it measures them (the click), and the most turned rows end there.</p>
+<h2>The release: a body is a beam</h2>
+{release.html()}
 <h2>The beam beside the mass, under the meeting</h2>
 {mass.html()}
 <h2>The control: no mass</h2>
@@ -2655,11 +2718,33 @@ def page_atom(out: Path, runs: Path | None) -> Path:
     plane = plane_for(replay, scale=8, slice_z=proton[2])
     plane.largest = largest_amounts(frames)
     plane.floor = 0.1
-    plane.weights = {"p": 0.35, "e": 0.8}
+    plane.weights = {"p": 0.35, "e": 0.0}
     plane.phase_bodies = {"e"}
     plane.body_radius = 0.9
     plane.body_labels = False
     steps = by_tick(events["step"])
+    early = Replay(world).run(list(range(0, 49)))
+    release = Player(
+        "atom_release",
+        [plane.image(frame) for frame in early],
+        list(range(0, 49)),
+        [
+            {
+                "rows of the proton on the GameBoard (GameBoard reading)": num(
+                    int(sum(int(r.amount.sum()) for r in frame.rows if r.family == "p"))
+                ),
+                "rows of the electron on the GameBoard": num(
+                    int(sum(int(r.amount.sum()) for r in frame.rows if r.family == "e"))
+                ),
+            }
+            for frame in early
+        ],
+        "The release, `r8` at its first 48 intervals, one frame per interval: the proton is a beam, releasing "
+        "one row per direction of its shell of 2616 into the Nodes beside it every 10 intervals (the rows in "
+        "the plane z = 22 drawn), the shells walking outward; the electron releasing its rows on its four "
+        "directions at every self-creation. " + COPIES_NOTE,
+        120,
+    )
     images = [plane.image(frame) for frame in frames]
     readings = []
     previous_angle = None
@@ -2740,7 +2825,9 @@ that spread from it at the pace of the flight table), it reads the proton's rows
 coupling (the charge column), its momentum vector <b>p</b> is the white arrow, and its phase, an element of
 Z_64, turns by |<b>p</b>| N over h at every Link it steps, so the disc's colour goes round the circle as it
 orbits. What a detector reads of the atom is on the faces: the coherent record of the electron's rows.</p>
-<h2>The moving picture</h2>
+<h2>The release: a body is a beam</h2>
+{release.html()}
+<h2>The orbit</h2>
 {player.html()}
 <p>What to see: the electron circles the proton, its arrow turning with it and its copies streaming outward;
 the proton's shell of copies pulses every 10 intervals through the plane; the phase colour of the electron
@@ -2800,6 +2887,409 @@ read and the register keeps that verdict, nothing tuned. In this run {exit_text}
     )
 
 
+@dataclass
+class Volume:
+    """The whole GameBoard in three dimensions, an isometric projection (x
+    to the right and down, z to the left and down, y up), the rows
+    aggregated per Node and drawn as translucent discs back to front, the
+    bodies with their copies and the arrows of their momentum labels as
+    on the plane; drawn at SUPERSAMPLE times the size and downsampled
+    (the model owner, 2026-09-21: "now show all of these in three
+    dimensions")."""
+
+    shape: tuple[int, int, int]
+    scale: int
+    phase_steps: int
+    phased: dict[str, bool]
+    colours: dict[str, tuple[int, int, int]]
+    directions: list[tuple[int, int, int]]
+    margin: int = 24
+    weights: dict[str, float] = field(default_factory=dict)
+    largest: dict[str, float] = field(default_factory=dict)
+    phase_bodies: set[str] = field(default_factory=set)
+    arrow_families: set[str] = field(default_factory=set)
+    body_radius: float = 0.9
+    copies: bool = True
+    # The families whose bodies are drawn as small dots (a shell of readers,
+    # a screen of pixels): the apparatus, not the story.
+    dot_bodies: set[str] = field(default_factory=set)
+    # The cube turned about its vertical axis by this angle (radians): the
+    # player turns it slowly, frame by frame (the model owner, 2026-09-21:
+    # "let the cube turn slowly").
+    angle: float = 0.0
+
+    COS30 = math.cos(math.pi / 6)
+    SIN30 = math.sin(math.pi / 6)
+
+    @property
+    def diagonal(self) -> float:
+        nx, _, nz = self.shape
+        return math.hypot(nx, nz)
+
+    @property
+    def size(self) -> tuple[int, int]:
+        _, ny, _ = self.shape
+        d = self.diagonal
+        return (
+            int(2 * d * self.COS30 * self.scale) + 2 * self.margin,
+            int((ny + 2 * d * self.SIN30) * self.scale) + 2 * self.margin,
+        )
+
+    def turned(self, x: float, z: float) -> tuple[float, float]:
+        """The horizontal coordinates about the cube's centre, turned by the
+        angle."""
+        nx, _, nz = self.shape
+        cx, cz = (nx - 1) / 2, (nz - 1) / 2
+        dx, dz = x - cx, z - cz
+        c, s_ = math.cos(self.angle), math.sin(self.angle)
+        return dx * c - dz * s_, dx * s_ + dz * c
+
+    def project(self, x: float, y: float, z: float) -> tuple[float, float]:
+        _, ny, _ = self.shape
+        d = self.diagonal
+        xr, zr = self.turned(x, z)
+        u = self.margin + (d * self.COS30 + (xr - zr) * self.COS30) * self.scale
+        v = self.margin + (ny - y + d * self.SIN30 + (xr + zr) * self.SIN30) * self.scale
+        return u, v
+
+    def depth(self, x: float, y: float, z: float) -> float:
+        """Larger is nearer the viewer: drawn later."""
+        xr, zr = self.turned(x, z)
+        return xr + zr + y * 0.5
+
+    def edges(self, draw: ImageDraw.ImageDraw, k: int) -> None:
+        nx, ny, nz = self.shape
+        c = [(x, y, z) for x in (-0.5, nx - 0.5) for y in (-0.5, ny - 0.5) for z in (-0.5, nz - 0.5)]
+        for a in c:
+            for b in c:
+                if sum(1 for i in range(3) if a[i] != b[i]) == 1 and a < b:
+                    near = (a[0] + a[1] + a[2] + b[0] + b[1] + b[2]) > (nx + ny + nz - 3)
+                    pa, pb = self.project(*a), self.project(*b)
+                    draw.line(
+                        [(pa[0] * k, pa[1] * k), (pb[0] * k, pb[1] * k)],
+                        fill=(96, 102, 124, 255) if near else (52, 56, 72, 255),
+                        width=max(1, k // 2),
+                    )
+
+    def nodes(self, frame: Frame) -> list[tuple[int, int, int, tuple[int, int, int], int, float]]:
+        """Per lit Node and family: (x, y, z, colour, alpha, radius factor),
+        the copies of a body in its colour (its phase hue for a phased
+        family), the other rows in their family's colour, dimmed by the
+        family's weight; the amount sets the alpha."""
+        out: list[tuple[int, int, int, tuple[int, int, int], int, float]] = []
+        numbers = {body.number: body for body in frame.bodies}
+        for rows in frame.rows:
+            if rows.amount.size == 0:
+                continue
+            weight = self.weights.get(rows.family, 1.0)
+            if weight <= 0:
+                continue
+            packed = rows.x * 1_000_000 + rows.y * 1000 + rows.z
+            unique, inverse = np.unique(packed, return_inverse=True)
+            total = np.zeros(unique.size)
+            np.add.at(total, inverse, rows.amount.astype(np.float64))
+            largest = max(self.largest.get(rows.family, float(total.max())), 1.0)
+            angle = rows.phase.astype(np.float64) * (2 * math.pi / self.phase_steps)
+            cx = np.zeros(unique.size)
+            sy = np.zeros(unique.size)
+            np.add.at(cx, inverse, rows.amount * np.cos(angle))
+            np.add.at(sy, inverse, rows.amount * np.sin(angle))
+            youngest = np.full(unique.size, AGE_FADE * 4, dtype=np.float64)
+            np.minimum.at(youngest, inverse, rows.age.astype(np.float64))
+            owner = np.full(unique.size, -1, dtype=np.int64)
+            for n in numbers:
+                mine = rows.number == n
+                if mine.any():
+                    owner[np.unique(inverse[mine])] = n
+            for idx in range(unique.size):
+                node = int(unique[idx])
+                x, y, z = node // 1_000_000, (node // 1000) % 1000, node % 1000
+                level = math.log2(1.0 + total[idx]) / math.log2(1.0 + largest)
+                fade = 0.3 + 0.7 * max(0.0, 1.0 - youngest[idx] / AGE_FADE)
+                body = numbers.get(int(owner[idx]))
+                if self.copies and body is not None and (x, y, z) != body.position:
+                    colour = BODY_COLOURS.get(body.family, (230, 230, 230))
+                    if self.phased.get(rows.family, False):
+                        colour = phase_colour(
+                            math.atan2(sy[idx], cx[idx]) / (2 * math.pi) * self.phase_steps,
+                            self.phase_steps,
+                        )
+                    out.append((x, y, z, colour, int((22 + 90 * level) * fade), 0.34 + 0.14 * fade))
+                else:
+                    if self.phased.get(rows.family, False):
+                        colour = phase_colour(
+                            math.atan2(sy[idx], cx[idx]) / (2 * math.pi) * self.phase_steps,
+                            self.phase_steps,
+                        )
+                    else:
+                        colour = self.colours[rows.family]
+                    out.append((x, y, z, colour, int((26 + 100 * level) * weight), 0.34))
+        return out
+
+    def image(self, frame: Frame) -> Image.Image:
+        k = SUPERSAMPLE // 2 or 1
+        w, h = self.size
+        over = Image.new("RGBA", (w * k, h * k), (14, 16, 24, 255))
+        draw = ImageDraw.Draw(over)
+        self.edges(draw, k)
+        items = self.nodes(frame)
+        items.sort(key=lambda t: self.depth(t[0], t[1], t[2]))
+        base = max(self.scale * 0.5, 1.5)
+        for x, y, z, colour, alpha, factor in items:
+            r = base * factor / 0.5
+            u, v = self.project(x, y, z)
+            draw.ellipse([(u - r) * k, (v - r) * k, (u + r) * k, (v + r) * k], fill=(*colour, alpha))
+        radius = max(self.scale * self.body_radius, 3.0)
+        for body in sorted(frame.bodies, key=lambda b: self.depth(*b.position)):
+            u, v = self.project(*body.position)
+            colour = BODY_COLOURS.get(body.family, (230, 230, 230))
+            if body.family in self.dot_bodies:
+                dot = max(self.scale * 0.22, 1.5)
+                draw.ellipse(
+                    [(u - dot) * k, (v - dot) * k, (u + dot) * k, (v + dot) * k], fill=(*colour, 110)
+                )
+                continue
+            if body.family in self.phase_bodies:
+                colour = phase_colour(body.phase, self.phase_steps)
+            glow = radius * 1.9
+            draw.ellipse(
+                [(u - glow) * k, (v - glow) * k, (u + glow) * k, (v + glow) * k], fill=(*colour, 55)
+            )
+            draw.ellipse(
+                [(u - radius) * k, (v - radius) * k, (u + radius) * k, (v + radius) * k],
+                fill=(*colour, 255),
+                outline=(245, 245, 245, 255),
+                width=max(1, k // 2),
+            )
+            px, py, pz = body.momentum
+            if px or py or pz:
+                du, dv = self.project(px, py, pz)
+                ou, ov = self.project(0, 0, 0)
+                ux, uy = du - ou, dv - ov
+                norm = math.hypot(ux, uy)
+                if norm > 0:
+                    ux, uy = ux / norm, uy / norm
+                    arrow(
+                        draw,
+                        (u + ux * radius, v + uy * radius),
+                        (ux, uy),
+                        max(1.8 * self.scale, 14.0),
+                        max(2.0, self.scale / 5),
+                        k,
+                    )
+        for rows in frame.rows:
+            if rows.family not in self.arrow_families:
+                continue
+            for j in range(rows.amount.size):
+                d = self.directions[int(rows.direction[j])]
+                if not any(d):
+                    continue
+                du, dv = self.project(*d)
+                ou, ov = self.project(0, 0, 0)
+                ux, uy = du - ou, dv - ov
+                norm = math.hypot(ux, uy)
+                if norm == 0:
+                    continue
+                u, v = self.project(int(rows.x[j]), int(rows.y[j]), int(rows.z[j]))
+                arrow(
+                    draw,
+                    (u, v),
+                    (ux / norm, uy / norm),
+                    max(self.scale * 1.3, 9.0),
+                    max(1.5, self.scale / 6),
+                    k,
+                )
+        return over.resize((w, h), Image.LANCZOS).convert("RGB")
+
+
+def volume_for(replay: Replay, scale: int) -> Volume:
+    world = replay.world
+    return Volume(
+        tuple(world.shape),
+        scale,
+        world.phase_steps,
+        {family.name: bool(family.phase) for family in world.families},
+        {
+            family.name: FAMILY_COLOURS[i % len(FAMILY_COLOURS)]
+            for i, family in enumerate(world.families)
+        },
+        list(replay.directions),
+    )
+
+
+def volume_player(
+    key: str,
+    world: Path,
+    ticks: Sequence[int],
+    scale: int,
+    caption: str,
+    duration_ms: int,
+    weights: dict[str, float] | None = None,
+    phase_bodies: set[str] | None = None,
+    arrow_families: set[str] | None = None,
+    dot_bodies: set[str] | None = None,
+) -> Player:
+    replay = Replay(world)
+    frames = replay.run(ticks)
+    volume = volume_for(replay, scale)
+    volume.largest = largest_amounts(frames)
+    volume.dot_bodies = dot_bodies or set()
+    volume.weights = weights or {}
+    volume.phase_bodies = phase_bodies or set()
+    volume.arrow_families = arrow_families or set()
+    images = []
+    for index, frame in enumerate(frames):
+        # The cube turns slowly: a full turn over TURN_FRAMES frames.
+        volume.angle = 2 * math.pi * index / TURN_FRAMES
+        images.append(volume.image(frame))
+    readings = [
+        {
+            "rows on the GameBoard (GameBoard reading)": num(
+                int(sum(int(r.amount.sum()) for r in frame.rows))
+            ),
+            "the bodies (number: family at Node)": "; ".join(
+                f"{b.number}: {b.family} at {b.position}" for b in frame.bodies
+            )
+            or "none",
+        }
+        for frame in frames
+    ]
+    return Player(
+        key, images, list(ticks), readings, caption + " " + COPIES_NOTE, duration_ms, colours=64
+    )
+
+
+@register("volume")
+def page_volume(out: Path, runs: Path | None) -> Path:
+    """(9) In three dimensions: the deuteron, the free neutron's decay, the
+    atom and the beam beside the mass, the whole GameBoard drawn in an
+    isometric projection."""
+    deuteron = volume_player(
+        "volume_deuteron",
+        WORLDS / "nucleus" / "deuteron_1.json",
+        list(range(0, 49, 2)),
+        6,
+        "The deuteron at one Link, `deuteron_1` (series I), the whole 21^3 cube, one frame per two intervals: the proton "
+        "and the neutron releasing their rows on the 290 directions into the Nodes beside them, the strong rows "
+        "(gold) clicking on the border at three Links, the p and n rows flying to the faces.",
+        120,
+        weights={"p": 0.45, "n": 0.45, "nuclear": 1.0},
+    )
+    decay = volume_player(
+        "volume_decay",
+        WORLDS / "weak" / "j3_neutron_free.json",
+        list(range(504, 546)),
+        6,
+        "The free neutron's decay, `j3_neutron_free` (series J), the whole 21^3 cube from the interval 504, one "
+        "frame per interval: the transformation at 512, the beta and the neutrino leaving on their directions "
+        "(the arrows), the beta's click on the shell of readers at r = 8, the neutrino out through a face.",
+        150,
+        weights={"n": 0.3, "p": 0.3, "nuclear": 0.6, "beta": 1.0, "nu": 1.0, "d": 0.0},
+        arrow_families={"beta", "nu"},
+        dot_bodies={"d"},
+    )
+    atom_release = volume_player(
+        "volume_atom_release",
+        WORLDS / "bohr" / "r8.json",
+        list(range(0, 49, 2)),
+        3,
+        "The atom, `r8` (series H), the whole 45^3 cube at its first 48 intervals, one frame per two intervals: the "
+        "proton's shells of 2616 rows leaving every 10 intervals, the electron (coloured by its phase) with its "
+        "momentum arrow releasing its rows on its four directions.",
+        120,
+        weights={"p": 0.4, "e": 0.0},
+        phase_bodies={"e"},
+    )
+    atom_orbit = volume_player(
+        "volume_atom_orbit",
+        WORLDS / "bohr" / "r8.json",
+        frame_ticks(3900, 40),
+        3,
+        "The atom, `r8`, the orbit over 3900 intervals, one frame per 100: the electron circling the proton in the "
+        "plane z = 22 of the cube, its copies and its arrow turning with it.",
+        120,
+        weights={"p": 0.4, "e": 0.0},
+        phase_bodies={"e"},
+    )
+    lens = volume_player(
+        "volume_lens",
+        WORLDS / "lensing" / "mass_meeting.json",
+        frame_ticks(400, 40),
+        3,
+        "The beam beside the mass, `mass_meeting` (series K under the meeting), the whole 57 x 41 x 41 box, one "
+        "frame per 10 intervals: the lamp's rows (coloured by their phase) passing the mass and bent toward "
+        "it, the mass's crowd of 290 directions dimmed, the screen at x = 54.",
+        100,
+        weights={"m": 0.25, "light": 1.0, "wall": 0.0},
+        dot_bodies={"wall"},
+    )
+    body = f"""
+<p class="demo"><b>Registered worlds</b>, run as declared and replayed in process; the same runs as the pages
+of the plane (the nucleus, the decay, the atom, high-energy rows), now the whole GameBoard drawn in three
+dimensions. Nothing changed in any world, nothing pinned.</p>
+<h2>The GameBoard in three dimensions</h2>
+<p>An isometric projection of the cube, turning slowly about its vertical axis as the frames play (a full
+turn over 150 frames): at the start x is to the right and down, z to the left and down, y up; the near
+edges brighter. Every Node with rows is a translucent disc, the rows of one Node and family added (their
+amount the alpha), drawn from the far corner to the near one; a body's own rows are its copies, discs in
+its colour (the phase hue for a family with a phase circle) with a rim; the body a disc with a glow and its
+momentum arrow projected. The model owner, 2026-09-21: "now show all of these in three dimensions".</p>
+{
+        legend(
+            [
+                ("the p rows", swatch(FAMILY_COLOURS[0])),
+                ("the n rows", swatch(FAMILY_COLOURS[1])),
+                ("the nuclear rows (the strong column)", swatch(FAMILY_COLOURS[2])),
+                ("a row of a family with a phase circle, by its phase", '<i class="wheel"></i>'),
+                ("a proton", swatch(BODY_COLOURS["p"])),
+                ("a neutron", swatch(BODY_COLOURS["n"])),
+                ("the mass", swatch(BODY_COLOURS["m"])),
+                ("the lamp", swatch(BODY_COLOURS["light"])),
+            ]
+        )
+    }
+<h2>The nucleus: the deuteron releasing itself</h2>
+{deuteron.html()}
+<h2>The decay: the free neutron becoming a proton</h2>
+{decay.html()}
+<h2>The atom: the release</h2>
+{atom_release.html()}
+<h2>The atom: the orbit</h2>
+{atom_orbit.html()}
+<h2>High-energy rows: the beam beside the mass</h2>
+{lens.html()}
+<h2>The readings</h2>
+<p>The numbers of these runs are on their pages of the plane, with their sources: <a href="nucleus.html">the
+nucleus</a>, <a href="decay.html">the decay</a>, <a href="atom.html">the atom</a>,
+<a href="energy.html">high-energy rows</a>; the collision page is already drawn in three dimensions. The
+moving pictures here are GameBoard readings, the host's view of the replay's stores.</p>
+{
+        sources(
+            [
+                (
+                    "the worlds",
+                    "<code>examples/events/nucleus/deuteron_1.json</code>, <code>weak/j3_neutron_free.json</code>, <code>bohr/r8.json</code>, <code>lensing/mass_meeting.json</code> (registered), replayed in process as declared",
+                ),
+                (
+                    "the frames",
+                    "each world replayed through <code>NatureBeamSimulation</code>, the stores read at the drawn intervals and projected (a GameBoard reading)",
+                ),
+                ("the builder", "<code>tools/gallery_pages.py</code>, the volume renderer"),
+            ]
+        )
+    }
+"""
+    return write_page(
+        out,
+        "volume",
+        page(
+            "In three dimensions",
+            "The nucleus, the decay, the atom and the beam beside the mass, the whole GameBoard drawn in an isometric projection.",
+            body,
+        ),
+    )
+
+
 @register("index")
 def page_index(out: Path, runs: Path | None) -> Path:
     entries = [
@@ -2840,6 +3330,12 @@ def page_index(out: Path, runs: Path | None) -> Path:
             "The atom",
             "series H: the electron circling the proton with its momentum arrow and its copies spreading, "
             "its phase turning by its momentum; the faces reading what comes out (a registered world)",
+        ),
+        (
+            "volume.html",
+            "In three dimensions",
+            "the nucleus, the decay, the atom and the beam beside the mass, the whole GameBoard drawn in an "
+            "isometric projection, the bodies releasing themselves into the Nodes beside them (registered worlds)",
         ),
         (
             "worlds.html",

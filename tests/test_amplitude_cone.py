@@ -15,7 +15,15 @@ law: the cone"), written down before the run:
     diagonal under the integer form (3 x 17 and 3 x 24 mod 64), 23 at
     both under the pair form (3 x 29 mod 64);
 (c) one gather per record, one cell each, as many at each counter; the
-    expectation file's pins equal the flight formula's.
+    expectation file's pins equal the flight formula's;
+(d) the exact phase at the click (2026-09-21, BEAM_LAW note 45): under the
+    pair form the click line's `exact` less u is the whole part of
+    3 x made x T_d over S_1 Q modulo N with its `remainder` over S_1 Q,
+    3 x 17 x 110 = 5610 = 87 x 64 + 42 at the axis (23, [42, 64]) and
+    3 x 24 x 156 = 11232 = 87 x 128 + 96 at the diagonal (23, [96, 128]):
+    the same whole part as the walk's 3 x 29 = 87 (the design's 41.75 and
+    42.00 are the rate 8's, `tests/test_exact_phase.py`); under the integer
+    form no `exact` is written, the phase being exact per Link.
 """
 
 from __future__ import annotations
@@ -28,6 +36,7 @@ import pytest
 
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import nature_beam_tables
+from event_universe.events.world import LABEL_SCALE
 
 ROOT = Path(__file__).resolve().parents[1]
 WORLDS = ROOT / "examples" / "events" / "amplitude"
@@ -65,6 +74,12 @@ def test_the_age_and_the_path_phase_at_the_click(name: str, expectation: dict) -
         assert click["age"] == expectation["age_at_click"][detector]  # (a)
         assert click["tick"] - birth["tick"] == expectation["age_at_click"][detector]
         assert (click["phase"] - birth["u"]) % N == expectation[name]["path_phase"][detector]  # (b)
+        exact = expectation["exact"][name]
+        if name == "cone_intervals":  # (d)
+            assert (click["exact"] - birth["u"]) % N == exact["path_phase"][detector]
+            assert click["remainder"] == exact["remainder"][detector]
+        else:
+            assert "exact" not in click and "remainder" not in click
         seen[detector] += 1
     assert seen["axis"] == seen["diagonal"] > 0  # (c)
     assert all(len(gather["chosen"]) == 1 for gather in gathers)
@@ -88,6 +103,7 @@ def test_the_pins_are_the_flight_formula(expectation: dict) -> None:
     detectors = {detector["name"]: detector["positions"][0] for detector in world["detectors"]}
     links: dict[str, int] = {}
     ages: dict[str, int] = {}
+    headings: dict[str, int] = {}
     for name, position in detectors.items():
         # The lamp whose one direction's line reaches the detector: the
         # offset is a positive multiple of the direction.
@@ -102,6 +118,7 @@ def test_the_pins_are_the_flight_formula(expectation: dict) -> None:
             raise AssertionError(name)
         links[name] = sum(abs(c) for c in offset)
         heading = parsed.directions.index(tuple(direction))
+        headings[name] = heading
         candidates = np.arange(1, 200, dtype=np.int64)
         walked = flight.manhattan_steps(np.full(candidates.shape, heading, dtype=np.int64), candidates)
         ages[name] = int(candidates[walked >= links[name]][0])
@@ -116,3 +133,18 @@ def test_the_pins_are_the_flight_formula(expectation: dict) -> None:
     assert expectation["cone_intervals"]["path_phase"] == {
         name: (ages[name] * numerator // denominator) % N for name in detectors
     }
+    # (d) The exact phase at the click (BEAM_LAW note 46): under the pair
+    # form the whole part and the remainder of n x Links x T_d over
+    # d x S_1 x Q (the flight table's resolution and Manhattan length, the
+    # label scale Q), the whole part mod N; the integer form's `exact` the
+    # path phase itself with the remainder 0 over 1.
+    exact = expectation["exact"]
+    assert exact["cone_links"]["path_phase"] == expectation["cone_links"]["path_phase"]
+    assert exact["cone_links"]["remainder"] == {name: [0, 1] for name in detectors}
+    for name in detectors:
+        heading = headings[name]
+        s1 = int(flight.manhattan[heading])
+        resolution = int(flight.resolution[heading])
+        whole, rest = divmod(numerator * links[name] * resolution, denominator * s1 * LABEL_SCALE)
+        assert exact["cone_intervals"]["path_phase"][name] == whole % N
+        assert exact["cone_intervals"]["remainder"][name] == [rest, s1 * LABEL_SCALE]

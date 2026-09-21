@@ -103,7 +103,7 @@ def worlds() -> dict[str, Json]:
             "amount": LAMP_CONTENT,
             "phase": 0,
             "fixed": True,
-            "lamp": {"rate": [1, 1], "directions": [list(LAMP_OFFSET)]},
+            "lamp": {"rate": [1, 1], "wheel": [1, 64], "directions": [list(LAMP_OFFSET)]},
         },
         {"position": list(counter), "family": "counter", "amount": 1, "fixed": True},
     ]

@@ -4,7 +4,7 @@
  "families": [{"name": "light", "quantum": 1}],
  "measured": [
   {"position": [2, 0, 0], "family": "light", "amount": 32768, "phase": 0, "fixed": true,
-   "lamp": {"rate": [1, 1], "directions": [[1, 0, 0]]}},
+   "lamp": {"rate": [1, 1], "wheel": [1, 64], "directions": [[1, 0, 0]]}},
   {"position": [9, 0, 0], "family": "light", "amount": 8192, "phase": 0, "fixed": true,
-   "lamp": {"rate": [1, 1], "directions": [[-1, 0, 0]]}}
+   "lamp": {"rate": [1, 1], "wheel": [1, 64], "directions": [[-1, 0, 0]]}}
  ]}

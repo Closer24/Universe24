@@ -384,7 +384,13 @@ def test_a_release_reads_no_threshold_and_a_reading_is_gated_like_a_measurement(
     a threshold of 4), re-pinned on the pointer gate on 2026-09-20 (1, 2) and
     pinned back the same day when the closing gate found that a `read` keeps
     the amount gate (test (k)); the lamp cases never moved."""
-    lamp = {"position": NODE, "family": "light", "amount": 24, "fixed": True, "lamp": {"rate": [1, 1]}}
+    lamp = {
+        "position": NODE,
+        "family": "light",
+        "amount": 24,
+        "fixed": True,
+        "lamp": {"wheel": [1, 64], "rate": [1, 1]},
+    }
     simulation = NatureBeamSimulation(parse_nature_beam_world(world([lamp], [], 5, clock=24)))
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
     assert entry.detector == 0 and entry.threshold == 5
@@ -654,7 +660,13 @@ def test_a_click_returns_the_sets_phase_to_its_measured_events():
     assert simulation.detectors()[0]["families"]["light"]["phase"] == 40
     assert [r["phase"] for r in records if r["event"] == "record"] == [40]
     # A lamp that clicked releases at the received phase; the turn follows.
-    lamp = {"position": NODE, "family": "light", "amount": 24, "fixed": True, "lamp": {"rate": [1, 1]}}
+    lamp = {
+        "position": NODE,
+        "family": "light",
+        "amount": 24,
+        "fixed": True,
+        "lamp": {"wheel": [1, 64], "rate": [1, 1]},
+    }
     simulation = NatureBeamSimulation(
         parse_nature_beam_world(world([lamp, SOURCE], [arrival(1, phase=40)], 1, clock=24))
     )

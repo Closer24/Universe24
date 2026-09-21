@@ -181,7 +181,7 @@ def lamp(x: int, amount: int, direction: list[int], rate: list[int]) -> dict[str
         "family": "light",
         "amount": amount,
         "fixed": True,
-        "lamp": {"rate": rate, "directions": [direction]},
+        "lamp": {"wheel": [1, 64], "rate": rate, "directions": [direction]},
     }
 
 
@@ -192,7 +192,7 @@ def test_a_lamp_releases_off_its_clock_at_the_cost_of_its_turn_and_takes_the_rec
         "family": "light",
         "amount": 100,
         "fixed": True,
-        "lamp": {"rate": [1, 3]},
+        "lamp": {"wheel": [1, 64], "rate": [1, 3]},
     }
     simulation = NatureBeamSimulation(parse_nature_beam_world(world([six], release=[0, 1], K=82)))
     for _ in range(9):

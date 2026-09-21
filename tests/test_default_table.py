@@ -170,7 +170,13 @@ def test_the_kind_is_derived_from_the_quantum_and_never_declared():
     assert charged.families[0].charge == (-3, 1) and not hasattr(charged.measured[0], "charge")
     halves = parse_nature_beam_world(world([{"name": "m", "quantum": 0, "charge": [1, 2]}]))
     assert halves.families[0].charge == (1, 2)
-    lamp = {"position": [1, 1, 1], "family": "m", "amount": 4, "fixed": True, "lamp": {"rate": 1}}
+    lamp = {
+        "position": [1, 1, 1],
+        "family": "m",
+        "amount": 4,
+        "fixed": True,
+        "lamp": {"wheel": [1, 64], "rate": 1},
+    }
     lit = parse_nature_beam_world({**world([{"name": "m", "quantum": 2}]), "measured": [lamp]})
     assert lit.measured[0].lamp is not None and not lit.families[0].free
     refused(

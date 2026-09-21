@@ -8,11 +8,12 @@ material family each is made of. Both in the format `event-entities-v2`
 (docs/ENTITY_DEFINITIONS.md): a definition may carry `families`, merged into
 the world that places it by name. A family named by two series with
 different keys (the proton's charge per series, the coupling's test
-charges, the amplitude series' `phase_per_link` as a pair) is written here
-in the catalog's canonical form; a world whose family differs keeps it
-inline. The amounts of the sources are for a world of `K` 4096 (a turn of 1
-per self-creation on a content of 4096); a world with another `K` writes its
-own source.
+charges, the amplitude series' `phase_per_link` as a pair, the quark
+worlds' `d` against the detector material `d`, the dressed quark world's
+`glue` at a pair) is written here in the catalog's canonical form; a world
+whose family differs keeps it inline. The amounts of the sources are for a
+world of `K` 4096 (a turn of 1 per self-creation on a content of 4096); a
+world with another `K` writes its own source.
 
     python examples/events/entities/make_definitions.py
 """
@@ -60,6 +61,25 @@ def families() -> dict[str, object]:
         # circle, the lifetime 3 as the strong family's.
         family_definition(
             "bond_family", [{"name": "bond", "quantum": 1, "lifetime": 3, "phase": False}]
+        ),
+        # The quarks of series R (docs/designs/quarks/QUARKS.md; the worlds
+        # of `quarks/`): the up quark `u`, and `glue`, the strong family a
+        # quark body holds one unit of (the keys of `nuclear` under another
+        # name). The down quark `d` of the same worlds shares its name with
+        # the detector material `d` below and keeps its row inline; so does
+        # the dressed world's `glue` at the pair [10000, 606].
+        family_definition("up_quark", [{"name": "u", "quantum": 0, "charge": 1224, "phase": False}]),
+        family_definition(
+            "glue_family",
+            [
+                {
+                    "name": "glue",
+                    "quantum": 0,
+                    "columns": {"strong": {"value": 10000, "sign": -1}},
+                    "lifetime": 3,
+                    "phase": False,
+                }
+            ],
         ),
         family_definition("neutrino", [{"name": "nu", "quantum": 0}]),
         # The antineutrino of series P (`hand-v1`): a free family whose every
@@ -134,7 +154,10 @@ def apparatus() -> dict[str, object]:
             "families": light(),
             "measured": [
                 measured(
-                    "light", origin, amount=SOURCE_CONTENT, lamp={"rate": [1, 1], "directions": [RIGHT]}
+                    "light",
+                    origin,
+                    amount=SOURCE_CONTENT,
+                    lamp={"rate": [1, 1], "wheel": [1, 64], "directions": [RIGHT]},
                 )
             ],
             "detectors": [],
@@ -147,7 +170,7 @@ def apparatus() -> dict[str, object]:
                     "light",
                     origin,
                     amount=SOURCE_CONTENT,
-                    lamp={"rate": [1, 1], "directions": [RIGHT], "phase_window": 16},
+                    lamp={"rate": [1, 1], "wheel": [1, 64], "directions": [RIGHT], "phase_window": 16},
                 )
             ],
             "detectors": [],
@@ -215,6 +238,7 @@ def apparatus() -> dict[str, object]:
                     amount=SOURCE_CONTENT,
                     lamp={
                         "rate": [1, 1],
+                        "wheel": [1, 64],
                         "directions": [LEFT, RIGHT],
                         "arms": 2,
                         "branches": [[0, 1], [3, 1]],
@@ -233,6 +257,7 @@ def apparatus() -> dict[str, object]:
                     amount=SOURCE_CONTENT,
                     lamp={
                         "rate": [1, 1],
+                        "wheel": [1, 64],
                         "directions": [LEFT, RIGHT, UP],
                         "arms": 3,
                         "branches": [[0, 1], [7, 1]],

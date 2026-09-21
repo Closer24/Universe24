@@ -268,7 +268,7 @@ def sun_planet() -> tuple[Json, dict[str, float]]:
             "phase": 0,
             "fixed": True,
             "span": list(STAR_SPAN),
-            "lamp": {"rate": [1, 1], "directions": LAMP_FAN},
+            "lamp": {"rate": [1, 1], "wheel": [1, N], "directions": LAMP_FAN},
         },
         {
             "position": [cx + PLANET_RADIUS, cy, cz],
@@ -382,7 +382,12 @@ def lamp_mirror_screen() -> Json:
             "amount": LAMP,
             "phase": 0,
             "fixed": True,
-            "lamp": {"rate": LASER_RATE, "directions": [[1, 0, 0]], "phase_window": LASER_WINDOW},
+            "lamp": {
+                "rate": LASER_RATE,
+                "wheel": [1, N],
+                "directions": [[1, 0, 0]],
+                "phase_window": LASER_WINDOW,
+            },
         },
         {
             "position": list(MIRROR),

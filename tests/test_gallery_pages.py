@@ -193,3 +193,21 @@ def test_a_body_is_drawn_with_its_momentum_arrow_and_its_copies(tmp_path: Path) 
     without = np.asarray(plane.image(frame)).astype(int)
     rx, ry = plane.pixel(5, 4)
     assert tuple(still[int(ry), int(rx)]) != tuple(without[int(ry), int(rx)])
+
+
+def test_the_volume_draws_the_cube_and_every_lit_node(world_path: Path) -> None:
+    """The three-dimensional view of the head-on world at the interval 1:
+    the image has the projection's size, and the two rows' Nodes project
+    to lit pixels (their family colour) where the projection says."""
+    replay = gallery_pages.Replay(world_path)
+    frames = replay.run([1])
+    volume = gallery_pages.volume_for(replay, scale=10)
+    volume.largest = gallery_pages.largest_amounts(frames)
+    image = volume.image(frames[0])
+    assert image.size == volume.size
+    pixels = np.asarray(image).astype(int)
+    for node in ((2, 3, 3), (4, 3, 3)):
+        u, v = volume.project(*node)
+        assert pixels[int(v), int(u)].sum() > 120
+    u, v = volume.project(3, 5, 2)  # an unlit Node away from the cube's edges
+    assert pixels[int(v), int(u)].sum() < 120

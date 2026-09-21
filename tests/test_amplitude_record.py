@@ -73,7 +73,7 @@ def lamp_world(**overrides: object) -> dict[str, object]:
                 "family": "light",
                 "amount": 16,
                 "fixed": True,
-                "lamp": {"rate": [1, 1], "directions": [[1, 0, 0], [0, 1, 0]]},
+                "lamp": {"wheel": [1, N], "rate": [1, 1], "directions": [[1, 0, 0], [0, 1, 0]]},
             },
             {"position": [4, 0, 0], "family": "light", "amount": 1, "fixed": True},
         ],
@@ -110,7 +110,7 @@ def test_the_key_is_deleted_and_the_identity_follows_a_lamp(tmp_path: Path):
     rate_world = lamp_world()
     measured = rate_world["measured"]
     assert isinstance(measured, list)
-    measured[0] = {**measured[0], "lamp": {"rate": [2, 1], "directions": [[1, 0, 0]]}}
+    measured[0] = {**measured[0], "lamp": {"wheel": [1, N], "rate": [2, 1], "directions": [[1, 0, 0]]}}
     rated = parse_nature_beam_world(rate_world).measured[0].lamp
     assert rated is not None and rated.rate == (2, 1)
     small = lamp_world(N=4)

@@ -115,7 +115,7 @@ def lamp(**keys: object) -> dict[str, object]:
         "amount": K_B + 2,
         "phase": 0,
         "fixed": True,
-        "lamp": {"rate": [1, 1], "directions": [[1, 0, 0]], **keys},
+        "lamp": {"wheel": [1, 64], "rate": [1, 1], "directions": [[1, 0, 0]], **keys},
     }
 
 

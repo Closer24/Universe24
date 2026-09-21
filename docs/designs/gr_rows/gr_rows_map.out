@@ -1,0 +1,56 @@
+1. THE PINS ON THE SUN (nature's numbers): k = G M / (r c^2) at the limb, the deflection 4 k, the Shapiro delay's coefficient 2 G M / c^3
+   k at the limb = 2.122e-06; Newton's deflection 2 k = 0.876 arcsec; Einstein's 4 k = 1.751 arcsec (Dyson, Eddington and Davidson 1920: 1.98 +- 0.16 and 1.61 +- 0.40; VLBI: gamma = 0.99992 +- 0.00012, Lambert and Le Poncin-Lafitte 2011)
+   the Shapiro delay at Cassini's geometry (Earth at 1 au, Saturn at 8.43 au, the ray at 1.6 solar radii): (2 G M / c^3) ln(4 r_1 r_2 / b^2) = 131 microseconds; Cassini's gamma - 1 = (2.1 +- 2.3) x 10^-5 (Bertotti, Iess and Tortora 2003)
+   the second-order redshift: nature's 1 + z = 1 / sqrt(1 - 2 k) = 1 + k + (3 / 2) k^2 + (5 / 2) k^3 ...; the law today 1 + z = 1 + k exactly (the clock at 1 / (1 + k), 5.2)
+
+2. THE RULE'S INTEGERS ON THE PIN WORLD (must-fix 7): series K's worlds with the mass x 16 (16 rays per direction per interval), the pair [n_s, d_s] = [1, 4096], the key optical: 2
+   the age moment at b scales with the mass: A = 16 x the README's; k_a(b) = n_s A / d_s; the wall 2 T_D (d_s + f n_s A); the deflection 2 f k_a(b); the delay (f k_a(b) b / c) ln(4 r_1 r_2 / b^2)
+   the beam's own age moment A_beam = 45 to 77 per Node (a GameBoard reading of the README): the crowd's rows inside the beam read it, k_beam = A_beam / d_s, their pace 1 / (1 + f k_beam), their presence and age moment there up by the inverse: the back-reaction on what the beam reads
+   k_beam = 0.0110 to 0.0188; the crowd's pace inside the beam 0.978 to 0.964; the back-reaction factor on A read by the beam 1.022 to 1.038
+
+   world | M | b | k_a(b) (derived) | the deflection 2 f k_a(b), radians (derived) | the centroid's shift, pixels, DETECTOR (the bracket 0.5) | the same with the back-reaction | the delay, intervals (derived) | the mean age, DETECTOR (89.40 registered; the bracket 1) | with the back-reaction | the lamp's clock rate at r = sqrt(26^2 + b^2), GAMEBOARD | the count ratio, DETECTOR (the bracket 1 percent) | the phase rate, DETECTOR (8 registered)
+   mass  | 2^16 | 6 | 0.0445 | 0.1781 | -4.63 | -4.73 to -4.81 | 3.97 | 93.37 | 93.45 to 93.52 | 0.9901 | 0.990 | 7.921
+   heavy | 2^17 | 6 | 0.0887 | 0.3547 | -9.22 | -9.42 to -9.57 | 7.90 | 97.30 | 97.47 to 97.60 | 0.9805 | 0.980 | 7.844
+   near  | 2^16 | 3 | 0.0887 | 0.3547 | -9.22 | -9.42 to -9.57 | 5.22 | 94.62 | 94.73 to 94.81 | 0.9899 | 0.990 | 7.920
+   the sign: the turn accumulator w takes -V (the flux points away from the source, 5.1), so the step is toward the mass, negative in y on the screen (the README's convention)
+   the factor: with optical: 1 (Newton's index) every shift and every delay above is halved; Cassini reads the factor as 2 to 2 x 10^-5
+   the count ratio: the lamp's entry declares reads: age for the mass's family, so its self-creations are slowed by 1 / (1 + k_lamp) and its births with them (series E's reading): outside series K's 1 percent bracket in heavy, by the pin world's own declaration and not by the rows' rule
+
+3. THE TURN ON THE FAN: the step at the light's directions (2.4 degrees between (1, 0, 0) and (24, +-1, 0)), THETA_G = round(G x angle), the mean turn in steps, the wheel's share
+   G = 2^16, THETA_G(2.4 degrees) = 2729; the wall per row (W - u) d_s Q^5 THETA_G / W is whole because Q^5 = 2^30 is a multiple of W = 2^12 (no remainder discarded at birth)
+   mass : the mean turn 0.1781 rad = 4.28 steps of 0.0416 rad; of 122 rays about 34 turn one more step than the rest; the centroid's mean exact over records, the per-ray turn whole
+   heavy: the mean turn 0.3547 rad = 8.52 steps of 0.0416 rad; of 122 rays about 63 turn one more step than the rest; the centroid's mean exact over records, the per-ray turn whole
+   near : the mean turn 0.3547 rad = 8.52 steps of 0.0416 rad; of 122 rays about 63 turn one more step than the rest; the centroid's mean exact over records, the per-ray turn whole
+   the bound of the rate: f n_s T_D G Q^2 |V| within 2^62 - 1 asks |V| <= 2^62 / (f n_s T_D G Q^2) = 7.81e+07 label units at [1, 4096]'s n_s = 1, tested by division before the product as the meeting's (iv); the pin world's |V| at b is of order 10^3
+
+4. THE RAYS THE MASS MAY TAKE (should-fix 10): the turn before x = 28 lowers a ray by about theta b / 2; the beam's lowest ray at the mass's plane sits b - 26 / 12 Links from the mass's row of Nodes (the (12, -1, 0) direction)
+   mass : the lowest ray at 3.8 Links, lowered by 0.53: clears the mass's Node by 3.3 Links
+   heavy: the lowest ray at 3.8 Links, lowered by 1.06: clears the mass's Node by 2.8 Links
+   near : the lowest ray at 0.8 Links, lowered by 0.53: clears the mass's Node by 0.3 Links; the (12, -1, 0) share, one fifth of the rays, may enter the mass's Node: the centroid's bracket must allow it
+
+5. THE SECOND-ORDER REDSHIFT AS A DETECTOR PIN (must-fix 8, should-fix 9): two lamps at k'_1 and k'_2 read at one screen, 1 + z = (1 + w_1) / (1 + w_2) with w = k' + (3 / 2) k'^2 in integers (2 k n d + 3 k^2 n^2) / (2 d^2)
+   k'_1 = 6.25e-02, k'_2 = 3.91e-03: the phase-rate ratio today 1.0583658, with the term 1.0641781, nature's 1.0648608; the residual -6.8e-04 (the third order, (5 / 2) k'_1^3 = 6.1e-04)
+   k'_1 = 1.56e-02, k'_2 = 9.77e-04: the phase-rate ratio today 1.0146341, with the term 1.0149985, nature's 1.0150083; the residual -9.8e-06 (the third order, (5 / 2) k'_1^3 = 9.5e-06)
+   k'_1 = 1.00e-03, k'_2 = 6.25e-05: the phase-rate ratio today 1.0009374, with the term 1.0009389, nature's 1.0009389; the residual -2.5e-09 (the third order, (5 / 2) k'_1^3 = 2.5e-09)
+   the bound of 3 k^2 n_s^2: k the age moment at a dense Node (the nucleon's 57 rows at ages of hundreds, k of order 10^4) times n_s, within 2^62 tested at the frame; the term under the same key optical, so series E (k = 2 to 9 at [1, 1], the added wait 6 to 121) is unchanged without it
+
+6. THE MAP AT ONE NODE, THE COST AGAINST K (the operations per row per interval; 13.1's counts for the walk 16 and the reading 26 per row read)
+   the Node's moments of the other numbers' rows: A (the age moment, two columns) and V (the flow, three): five of the table's thirteen columns | about 12 per row read when computed alone (26 where a body at the Node reads the whole table), once per Node per interval, at every Node with a row
+   the wall of the flight: 2 T_D (d_s + f n_s A), one multiply and one add                                                                      | 2
+   the walk against the wall (the carry, the deficits), the position accumulator now a field of the row                                         | 16 (today's)
+   the turn accumulator w += -f n_s T_D G (Q^2 V - (V . u) u): a dot product, a scale, three multiplies, three adds                             | 10
+   the projections on the fan's neighbours of D: p = w . t(D, D') against (W - u) d_s Q^5 THETA_G / W, one per neighbour                        | 2 per neighbour, 4 to 6 neighbours
+   the step to D' and the remainder kept: w -= t(D, D') d_s Q^3 THETA_G                                                                         | 3, at a step
+   the store per row: four integers (the position accumulator with its residue, the three of w); nothing at the Node (the moments are readings of the rows present, recomputed per interval); the host's segmented sums reported apart (the meeting's 4.6 ms per interval on mass, note 35 (vii), the reference)
+
+7. SNELL'S LAW AT A BOUNDARY OF TWO CROWDS: n = 1 + f k_a the pace ratio; the rule's turn across the boundary is Delta theta = -(n_2 - n_1) tan theta_1 (Fermat's ray equation at n near 1); Snell's n_1 sin theta_1 = n_2 sin theta_2
+   the pin before the numbers: the rule gives Snell to first order in n_2 - n_1 = f (k_2 - k_1), the residual of order (n_2 - n_1)^2; the sign toward the denser crowd; no world yet makes a slab of crowd (a crowd of M / r has no sharp boundary): the pin is the ray equation's, Snell in the limit of a thin transition
+   k_2 = 1/256 (n_2 = 1.00781), theta_1 = 30 deg: Snell's theta_2 = 29.744 deg, the rule's 29.742 deg, the difference -0.002 deg (order (n_2 - 1)^2 = 6.1e-05)
+   k_2 = 1/256 (n_2 = 1.00781), theta_1 = 60 deg: Snell's theta_2 = 59.239 deg, the rule's 59.225 deg, the difference -0.015 deg (order (n_2 - 1)^2 = 6.1e-05)
+   k_2 = 1/64 (n_2 = 1.03125), theta_1 = 30 deg: Snell's theta_2 = 29.003 deg, the rule's 28.966 deg, the difference -0.036 deg (order (n_2 - 1)^2 = 9.8e-04)
+   k_2 = 1/64 (n_2 = 1.03125), theta_1 = 60 deg: Snell's theta_2 = 57.117 deg, the rule's 56.899 deg, the difference -0.218 deg (order (n_2 - 1)^2 = 9.8e-04)
+   k_2 = 1/16 (n_2 = 1.12500), theta_1 = 30 deg: Snell's theta_2 = 26.388 deg, the rule's 25.865 deg, the difference -0.523 deg (order (n_2 - 1)^2 = 1.6e-02)
+   k_2 = 1/16 (n_2 = 1.12500), theta_1 = 60 deg: Snell's theta_2 = 50.336 deg, the rule's 47.595 deg, the difference -2.741 deg (order (n_2 - 1)^2 = 1.6e-02)
+   Fermat's least time: the rule is the ray equation d theta / dl = grad_perp(f k_a), Fermat's Euler-Lagrange form at n near 1; the fan's choice of direction (the Huygens fan of TWO_SLITS section 7) gives the least-time path as the click's stationary phase only if the row's phase advances per interval (a clock, the slits' declaration), not per Link
+
+8. THE VERDICT: REACHABLE IN FORM for the bending and the delay (one identity, optical-v1, keyed by the world's optical: f; the flight's wall and the turn read the crowd's age moment and flow at the row's own Node with the clock's pair), the pin the re-scaled series K at [1, 4096]; Snell to first order; the second-order redshift a bilinear term on the clock's rate under the same key; the build waits on the owner's go (record 303), form B on main, and the reviewer's re-read
