@@ -1,0 +1,24 @@
+(A) The minimal mass: the electron's count k (CODATA 2022 uncertainties)
+  m_p / m_e: k = 4526; the counts {'m_p / m_e': 8310427}
+  m_mu / m_e: k = 889; the counts {'m_mu / m_e': 183817}
+  m_p / m_e and m_mu / m_e: k = 13840; the counts {'m_p / m_e': 25412353, 'm_mu / m_e': 2861673}
+  m_p / m_e and m_mu / m_e and m_n / m_e: k = 45129; the counts {'m_p / m_e': 82863734, 'm_mu / m_e': 9331246, 'm_n / m_e': 82977955}
+  at k = 1 the proton would be 1836 units: off by 0.152673 = 8.31e-05 of the ratio, 4.8e+06 sigma
+  the best rational below 10^7: 9289603153 / 5059276
+
+(B) k_C = G with the charge in units of content: rho_p^2 = alpha / alpha_G
+  rho_p = sqrt(alpha / alpha_G) = 1.1116e+18 per unit of content (e in units of sqrt G m_p)
+  rho_e = -rho_p m_p / m_e = -2.0410e+21 (the neutrality of matter); the register's are [1, 1] and -15
+  F_e / F_g for e and p = alpha m_p / (alpha_G m_e) = 2.269e+39
+
+(C) The rule against numerology, applied
+  combinations of two structural numbers with exponents 1 and 2: 3360
+  1 / alpha = 137.035999: nearest 6561 (3^8 slot states)^1 / 48 (the cube's group)^1 = 136.6875 (-0.25%), then 48 (the cube's group)^1 x 2 sqrt 2 (the Bell bound)^1 = 135.7645 (-0.93%), 933 (2-cycles)^2 / 6561 (3^8 slot states)^1 = 132.6763 (-3.18%)
+    hits within 0.3%: 1; expected from the set's density (136 values within a factor e^0.5): 0.82
+  m_p / m_e = 1836.152673: nearest 5440 (collision classes)^1 / sqrt 3^2 = 1813.3333 (-1.24%), then 5440 (collision classes)^1 / 3 (the axes)^1 = 1813.3333 (-1.24%), 24 (its rotations)^2 x pi^1 = 1809.5574 (-1.45%)
+    hits within 0.3%: 0; expected from the set's density (123 values within a factor e^0.5): 0.74
+  m_mu / m_e = 206.768283: nearest 24 (its rotations)^2 / 2 sqrt 2 (the Bell bound)^1 = 203.6468 (-1.51%), then 933 (2-cycles)^2 / N = 64^2 = 212.5217 (+2.78%), 933 (2-cycles)^2 / Q = 64^2 = 212.5217 (+2.78%)
+    hits within 0.3%: 0; expected from the set's density (127 values within a factor e^0.5): 0.76
+
+(D) q of nature against the law's 0: Planck 2018 Omega_m = 0.315, Omega_Lambda = 0.685
+  q_0 = Omega_m / 2 - Omega_Lambda = -0.528; the law's Milne 0 and the register's -0.108 +- 0.25
