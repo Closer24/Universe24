@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,12 +12,12 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #121317; --ink: #ebe7dd; --muted: #a39d90; --line: #2c2f38; --card: #1a1c23;
-    --accent: #e8935a; --accent-ink: #14110d; --board: #0e1018; --good: #7fcf9a;
+    --accent: #4ade80; --accent-ink: #0b1a10; --board: #0e1018; --good: #7fcf9a;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #121317; --ink: #ebe7dd; --muted: #a39d90; --line: #2c2f38; --card: #1a1c23;
-  --accent: #e8935a; --accent-ink: #14110d; --board: #0e1018; --good: #7fcf9a;
+  --bg: #0f1114; --ink: #e8ecef; --muted: #9aa5ad; --line: #262b33; --card: #171a1f;
+  --accent: #4ade80; --accent-ink: #0b1a10; --board: #0e1018; --good: #7fcf9a;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 Georgia, "Times New Roman", serif; }
@@ -29,10 +29,10 @@ p, li, dd, dt, td, th { font-size: 1rem; }
 a { color: var(--accent); }
 nav.crumbs { font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
 figure.player { margin: 16px 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
-figure.player img.gif { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 4px; image-rendering: pixelated; }
-figure.player canvas { display: block; max-width: 100%; height: auto; margin: 0 auto; background: var(--board); border-radius: 4px; image-rendering: pixelated; }
+figure.player img.gif { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 4px; }
+figure.player canvas { display: block; max-width: 100%; height: auto; margin: 0 auto; background: var(--board); border-radius: 4px; }
 figure.player .controls { display: flex; gap: 12px; align-items: center; margin: 10px 0 4px; }
-figure.player input.slider { flex: 1; }
+figure.player input.slider { flex: 1; accent-color: var(--accent); }
 figure.player button { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 6px; padding: 6px 14px; font: inherit; cursor: pointer; }
 figure.player span.tick { font-variant-numeric: tabular-nums; min-width: 8em; }
 figure.player dl.readings { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 4px 16px; margin: 8px 0 0; }

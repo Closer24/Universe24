@@ -62,6 +62,11 @@ FONT_PATHS = (
     Path("/usr/share/fonts/dejavu/DejaVuSans.ttf"),
 )
 MAX_FRAMES = 120
+# The helpers (the bodies, their copies, the arrows, the outlines) are drawn
+# at this factor of the size and downsampled: sharp over the blocky board.
+SUPERSAMPLE = 4
+# The accent of the pages: green, in dark mode (the model owner, 2026-09-21).
+ACCENT = (74, 222, 128)
 # Appended to the caption of every picture with bodies (the model owner,
 # 2026-09-21: a body's copies spreading, transparent, and its arrow).
 COPIES_NOTE = (
@@ -389,6 +394,11 @@ class Plane:
     def image(
         self, frame: Frame, decorate: Callable[[ImageDraw.ImageDraw], None] | None = None
     ) -> Image.Image:
+        """The board at its Node resolution (blocky: one cell per Node), and
+        over it the helpers, sharp: the detector outlines, the bodies'
+        copies, the bodies, the arrows, drawn at SUPERSAMPLE times the size
+        and downsampled (the model owner, 2026-09-21: the board may be
+        pixelated, the helpers sharp and beautiful)."""
         image, draw = self.canvas()
         nx, ny, _ = self.shape
         rgb = np.zeros((nx, ny, 3), dtype=np.float64)
@@ -416,6 +426,9 @@ class Plane:
         if self.scale != 1:
             lit = lit.resize(board.size, Image.NEAREST)
         image.paste(board, (self.margin, self.margin), lit)
+        k = SUPERSAMPLE
+        overlay = Image.new("RGBA", (image.width * k, image.height * k), (0, 0, 0, 0))
+        over = ImageDraw.Draw(overlay)
         for node in self.detector_nodes:
             if self.slice_z is not None and node[2] != self.slice_z:
                 continue
@@ -423,47 +436,58 @@ class Plane:
                 continue
             cx, cy = self.pixel(node[0], node[1])
             half = self.scale / 2
-            draw.rectangle([cx - half, cy - half, cx + half - 1, cy + half - 1], outline=(120, 220, 160))
+            over.rectangle(
+                [(cx - half) * k, (cy - half) * k, (cx + half - 1) * k, (cy + half - 1) * k],
+                outline=(*ACCENT, 220),
+                width=max(1, k // 2),
+            )
         if self.copies:
-            self.draw_copies(image, frame)
-        draw = ImageDraw.Draw(image)
+            self.draw_copies(over, frame, k)
         radius = max(self.scale * self.body_radius, 3.0)
         for body in frame.bodies:
             if self.body_slice_z is not None and body.position[2] != self.body_slice_z:
                 continue
             cx, cy = self.pixel(body.position[0], body.position[1])
             colour = BODY_COLOURS.get(body.family, (230, 230, 230))
-            draw.ellipse(
-                [cx - radius, cy - radius, cx + radius, cy + radius],
-                fill=colour,
-                outline=(255, 255, 255),
+            if body.family in self.phase_bodies:
+                colour = phase_colour(body.phase, self.phase_steps)
+            # A soft glow, then the disc with a thin light rim.
+            glow = radius * 1.9
+            over.ellipse(
+                [(cx - glow) * k, (cy - glow) * k, (cx + glow) * k, (cy + glow) * k],
+                fill=(*colour, 55),
+            )
+            over.ellipse(
+                [(cx - radius) * k, (cy - radius) * k, (cx + radius) * k, (cy + radius) * k],
+                fill=(*colour, 255),
+                outline=(245, 245, 245, 255),
+                width=max(1, k // 2),
             )
             if self.body_labels and self.scale >= 12:
-                label = body.family[:2]
-                draw.text(
-                    (cx, cy),
-                    label,
-                    fill=(0, 0, 0),
-                    font=font(max(8, int(self.scale * 0.7))),
+                over.text(
+                    (cx * k, cy * k),
+                    body.family[:2],
+                    fill=(0, 0, 0, 255),
+                    font=font(max(8, int(self.scale * 0.7)) * k),
                     anchor="mm",
                 )
-            self.draw_momentum(draw, body, cx, cy, radius)
+            self.draw_momentum(over, body, cx, cy, radius, k)
         for rows in frame.rows:
             if rows.family in self.arrow_families:
-                self.draw_row_arrows(draw, rows)
+                self.draw_row_arrows(over, rows, k)
+        overlay = overlay.resize(image.size, Image.LANCZOS)
+        image = Image.alpha_composite(image.convert("RGBA"), overlay).convert("RGB")
         if decorate is not None:
-            decorate(draw)
+            decorate(ImageDraw.Draw(image))
         return image
 
-    def draw_copies(self, image: Image.Image, frame: Frame) -> None:
-        """The copies of every body: the rows that carry its number, drawn
-        as translucent discs in the body's colour at their Nodes (a body
-        releases rows in every direction; what spreads is the body's own
-        record, many times over)."""
-        overlay = Image.new("RGBA", image.size, (0, 0, 0, 0))
-        draw = ImageDraw.Draw(overlay)
+    def draw_copies(self, over: ImageDraw.ImageDraw, frame: Frame, k: int) -> None:
+        """The copies of every body (the owner's word): the body's own rows,
+        the rows carrying its number that its self-creations release on its
+        directions, drawn as translucent discs in the body's colour at their
+        Nodes; what spreads is the body's own record, many times over."""
         nx, ny, _ = self.shape
-        radius = max(self.scale * 0.42, 2.0)
+        radius = max(self.scale * 0.44, 2.0)
         for body in frame.bodies:
             colour = BODY_COLOURS.get(body.family, (230, 230, 230))
             total = np.zeros((nx, ny), dtype=np.float64)
@@ -480,57 +504,69 @@ class Plane:
             for i, j in zip(*np.nonzero(total), strict=True):
                 if (int(i), int(j)) == (body.position[0], body.position[1]):
                     continue
-                alpha = int(28 + 96 * math.log2(1.0 + total[i, j]) / math.log2(1.0 + largest))
+                alpha = int(30 + 100 * math.log2(1.0 + total[i, j]) / math.log2(1.0 + largest))
                 cx, cy = self.pixel(int(i), int(j))
-                draw.ellipse([cx - radius, cy - radius, cx + radius, cy + radius], fill=(*colour, alpha))
-        image.paste(Image.alpha_composite(image.convert("RGBA"), overlay).convert("RGB"))
+                over.ellipse(
+                    [(cx - radius) * k, (cy - radius) * k, (cx + radius) * k, (cy + radius) * k],
+                    fill=(*colour, alpha),
+                )
 
     def draw_momentum(
-        self, draw: ImageDraw.ImageDraw, body: Body, cx: float, cy: float, radius: float
+        self, over: ImageDraw.ImageDraw, body: Body, cx: float, cy: float, radius: float, k: int
     ) -> None:
-        """The arrow of the body's momentum vector p, in the plane: where
-        the body travels; no arrow for a momentum of zero."""
+        """The arrow of the body's momentum label, the vector p of its
+        record, in the plane: where the body travels; no arrow at p = 0."""
         px, py = body.momentum[0], body.momentum[1]
         if px == 0 and py == 0:
             return
-        length = max(1.6 * self.scale, 12.0)
+        length = max(1.8 * self.scale, 14.0)
         norm = math.hypot(px, py)
         ux, uy = px / norm, -py / norm
-        tip = (cx + ux * (radius + length), cy + uy * (radius + length))
-        draw.line(
-            [(cx + ux * radius, cy + uy * radius), tip],
-            fill=(255, 255, 255),
-            width=max(2, self.scale // 6),
-        )
-        head = max(4.0, self.scale * 0.5)
-        left = (tip[0] - ux * head - uy * head * 0.6, tip[1] - uy * head + ux * head * 0.6)
-        right = (tip[0] - ux * head + uy * head * 0.6, tip[1] - uy * head - ux * head * 0.6)
-        draw.polygon([tip, left, right], fill=(255, 255, 255))
+        arrow(over, (cx + ux * radius, cy + uy * radius), (ux, uy), length, max(2.0, self.scale / 5), k)
 
-    def draw_row_arrows(self, draw: ImageDraw.ImageDraw, rows: Rows) -> None:
-        """A short arrow per row along its direction vector, for a family of
-        a few rows (a product, a beam)."""
-        for k in range(rows.amount.size):
-            if self.slice_z is not None and int(rows.z[k]) != self.slice_z:
+    def draw_row_arrows(self, over: ImageDraw.ImageDraw, rows: Rows, k: int) -> None:
+        """A short arrow per row along its direction of the fan, for a family
+        of a few rows (a product, a beam)."""
+        for j in range(rows.amount.size):
+            if self.slice_z is not None and int(rows.z[j]) != self.slice_z:
                 continue
-            d = self.directions[int(rows.direction[k])] if self.directions else (0, 0, 0)
+            d = self.directions[int(rows.direction[j])] if self.directions else (0, 0, 0)
             if d[0] == 0 and d[1] == 0:
                 continue
             norm = math.hypot(d[0], d[1])
             ux, uy = d[0] / norm, -d[1] / norm
-            cx, cy = self.pixel(int(rows.x[k]), int(rows.y[k]))
-            length = max(self.scale * 1.2, 8.0)
-            tip = (cx + ux * length, cy + uy * length)
-            draw.line([(cx, cy), tip], fill=(255, 255, 255), width=2)
-            head = max(3.0, self.scale * 0.35)
-            draw.polygon(
-                [
-                    tip,
-                    (tip[0] - ux * head - uy * head * 0.6, tip[1] - uy * head + ux * head * 0.6),
-                    (tip[0] - ux * head + uy * head * 0.6, tip[1] - uy * head - ux * head * 0.6),
-                ],
-                fill=(255, 255, 255),
-            )
+            cx, cy = self.pixel(int(rows.x[j]), int(rows.y[j]))
+            arrow(over, (cx, cy), (ux, uy), max(self.scale * 1.3, 9.0), max(1.5, self.scale / 6), k)
+
+
+def arrow(
+    over: ImageDraw.ImageDraw,
+    start: tuple[float, float],
+    unit: tuple[float, float],
+    length: float,
+    width: float,
+    k: int,
+) -> None:
+    """An arrow in the accent colour with a dark halo, drawn at k times the
+    size on the overlay: the shaft and a filled head."""
+    ux, uy = unit
+    tip = (start[0] + ux * length, start[1] + uy * length)
+    head = max(4.0, width * 2.6)
+    base = (tip[0] - ux * head, tip[1] - uy * head)
+    left = (base[0] - uy * head * 0.55, base[1] + ux * head * 0.55)
+    right = (base[0] + uy * head * 0.55, base[1] - ux * head * 0.55)
+    for colour, extra in (((10, 12, 18, 200), width * 1.2), ((*ACCENT, 255), 0.0)):
+        over.line(
+            [(start[0] * k, start[1] * k), (base[0] * k, base[1] * k)],
+            fill=colour,
+            width=int((width + extra) * k),
+        )
+        over.polygon(
+            [(tip[0] * k, tip[1] * k), (left[0] * k, left[1] * k), (right[0] * k, right[1] * k)],
+            fill=colour,
+            outline=colour,
+            width=int(extra * k),
+        )
 
 
 @dataclass
@@ -559,6 +595,17 @@ class Cube:
         )
 
     def image(self, frame: Frame, highlight: tuple[int, int, int] | None = None) -> Image.Image:
+        """Drawn at SUPERSAMPLE times the size and downsampled: sharp."""
+        k = SUPERSAMPLE
+        scale, margin = self.scale, self.margin
+        self.scale, self.margin = scale * k, margin * k
+        try:
+            large = self.draw_scene(frame, highlight)
+        finally:
+            self.scale, self.margin = scale, margin
+        return large.resize(self.size, Image.LANCZOS)
+
+    def draw_scene(self, frame: Frame, highlight: tuple[int, int, int] | None = None) -> Image.Image:
         image = Image.new("RGB", self.size, (14, 16, 24))
         draw = ImageDraw.Draw(image)
         nx, ny, nz = self.shape
@@ -575,7 +622,7 @@ class Cube:
         if highlight is not None:
             cx, cy = self.project(*highlight)
             r = self.scale * 0.6
-            draw.ellipse([cx - r, cy - r, cx + r, cy + r], outline=(120, 220, 160), width=2)
+            draw.ellipse([cx - r, cy - r, cx + r, cy + r], outline=ACCENT, width=max(2, self.scale // 8))
         radius = self.scale * 0.32
         for rows in frame.rows:
             order = np.argsort(rows.z, kind="stable")
@@ -599,7 +646,7 @@ class Cube:
                 )
                 if any(d):
                     ex, ey = self.project(x + 0.9 * d[0], y + 0.9 * d[1], z + 0.9 * d[2])
-                    draw.line([(cx, cy), (ex, ey)], fill=(255, 255, 255), width=2)
+                    draw.line([(cx, cy), (ex, ey)], fill=ACCENT, width=max(2, self.scale // 8))
         return image
 
 
@@ -608,7 +655,7 @@ class Cube:
 
 
 def gif_bytes(images: Sequence[Image.Image], duration_ms: int) -> bytes:
-    palettes = [image.quantize(colors=128, method=Image.Quantize.MEDIANCUT) for image in images]
+    palettes = [image.quantize(colors=96, method=Image.Quantize.MEDIANCUT) for image in images]
     buffer = io.BytesIO()
     palettes[0].save(
         buffer,
@@ -631,7 +678,7 @@ def sprite_sheet(images: Sequence[Image.Image]) -> tuple[bytes, int, int, int]:
     for k, image in enumerate(images):
         sheet.paste(image, ((k % columns) * w, (k // columns) * h))
     buffer = io.BytesIO()
-    sheet.quantize(colors=256, method=Image.Quantize.MEDIANCUT).save(buffer, format="PNG", optimize=True)
+    sheet.quantize(colors=128, method=Image.Quantize.MEDIANCUT).save(buffer, format="PNG", optimize=True)
     return buffer.getvalue(), columns, w, h
 
 
@@ -746,12 +793,12 @@ STYLE = """
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #121317; --ink: #ebe7dd; --muted: #a39d90; --line: #2c2f38; --card: #1a1c23;
-    --accent: #e8935a; --accent-ink: #14110d; --board: #0e1018; --good: #7fcf9a;
+    --accent: #4ade80; --accent-ink: #0b1a10; --board: #0e1018; --good: #7fcf9a;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #121317; --ink: #ebe7dd; --muted: #a39d90; --line: #2c2f38; --card: #1a1c23;
-  --accent: #e8935a; --accent-ink: #14110d; --board: #0e1018; --good: #7fcf9a;
+  --bg: #0f1114; --ink: #e8ecef; --muted: #9aa5ad; --line: #262b33; --card: #171a1f;
+  --accent: #4ade80; --accent-ink: #0b1a10; --board: #0e1018; --good: #7fcf9a;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 Georgia, "Times New Roman", serif; }
@@ -763,10 +810,10 @@ p, li, dd, dt, td, th { font-size: 1rem; }
 a { color: var(--accent); }
 nav.crumbs { font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
 figure.player { margin: 16px 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
-figure.player img.gif { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 4px; image-rendering: pixelated; }
-figure.player canvas { display: block; max-width: 100%; height: auto; margin: 0 auto; background: var(--board); border-radius: 4px; image-rendering: pixelated; }
+figure.player img.gif { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 4px; }
+figure.player canvas { display: block; max-width: 100%; height: auto; margin: 0 auto; background: var(--board); border-radius: 4px; }
 figure.player .controls { display: flex; gap: 12px; align-items: center; margin: 10px 0 4px; }
-figure.player input.slider { flex: 1; }
+figure.player input.slider { flex: 1; accent-color: var(--accent); }
 figure.player button { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 6px; padding: 6px 14px; font: inherit; cursor: pointer; }
 figure.player span.tick { font-variant-numeric: tabular-nums; min-width: 8em; }
 figure.player dl.readings { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 4px 16px; margin: 8px 0 0; }
@@ -802,7 +849,7 @@ def page(title: str, lead: str, body: str, *, index_link: bool = True) -> str:
         else ""
     )
     return f"""<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1725,7 +1772,7 @@ def nucleus_player(
     # The plane of the bodies (z = 10 in every series I world): the rows in
     # that plane alone, so that the strong rows' halo is visible under the
     # fan's crowd.
-    plane = plane_for(replay, scale=12, slice_z=int(replay.world.measured[0].position[2]))
+    plane = plane_for(replay, scale=10, slice_z=int(replay.world.measured[0].position[2]))
     plane.largest = largest_amounts(frames)
     plane.floor = 0.12
     plane.weights = {"p": 0.5, "n": 0.5}
@@ -1777,9 +1824,9 @@ def page_nucleus(out: Path, runs: Path | None) -> Path:
         "deuteron_1",
         folder / "deuteron_1.json",
         runs,
-        frame_ticks(60),
+        frame_ticks(60, 40),
         "The deuteron at one Link, `deuteron_1`: the plane z = 10 of the 21^3 cube (the bodies' plane, the rows "
-        "in it alone), 12 pixels per Node; the proton p (red) at (10, 10, 10) and the neutron n (blue) at (11, 10, 10); "
+        "in it alone), 10 pixels per Node; the proton p (red) at (10, 10, 10) and the neutron n (blue) at (11, 10, 10); "
         "the `nuclear` rows (gold) reach three Links and click on the border `lifetime`, the `p` and `n` rows "
         "fly to the faces.",
         120,
@@ -1788,7 +1835,7 @@ def page_nucleus(out: Path, runs: Path | None) -> Path:
         "deuteron_3",
         folder / "deuteron_3.json",
         runs,
-        frame_ticks(360, 90),
+        frame_ticks(360, 45),
         "The deuteron at three Links, kicked outward, `deuteron_3`: the pair separates and leaves through the "
         "faces (one frame per three intervals).",
         100,
@@ -1797,7 +1844,7 @@ def page_nucleus(out: Path, runs: Path | None) -> Path:
         "alpha_square",
         folder / "alpha_square.json",
         runs,
-        frame_ticks(345, 90),
+        frame_ticks(345, 45),
         "The square p n / n p, `alpha_square`: sheared apart, a proton steps first, the four disperse and leave "
         "(one frame per three intervals).",
         100,
@@ -2035,7 +2082,7 @@ def page_decay(out: Path, runs: Path | None) -> Path:
     transformation `become`, the products' flight to the shell, the W
     exchange at one Link; the trigger ticks and counts from the register."""
     folder = WORLDS / "weak"
-    free_ticks = list(range(0, 501, 25)) + list(range(501, 561))
+    free_ticks = list(range(0, 501, 50)) + list(range(501, 561, 2))
     free, free_record, free_events = decay_player(
         "j3_neutron_free",
         folder / "j3_neutron_free.json",
@@ -2044,19 +2091,19 @@ def page_decay(out: Path, runs: Path | None) -> Path:
         "The free neutron, `j3_neutron_free`: the x-y projection of the 21^3 cube (the rows' amounts summed over z), "
         "12 pixels per Node; the neutron n at (10, 10, 10); the shell of readers at r = 8 (its ring in the plane "
         "z = 10 drawn, the rest of the shell not) is one `beam` "
-        "detector of 762 Nodes measuring beta; the beta row drawn on top (its colour in the legend); one frame per 25 intervals "
-        "until 500, then every interval.",
+        "detector of 762 Nodes measuring beta; the beta row drawn on top (its colour in the legend); one frame per 50 intervals "
+        "until 500, then every second interval.",
         150,
     )
-    bound_ticks = list(range(0, 551, 25)) + list(range(551, 611))
+    bound_ticks = list(range(0, 551, 50)) + list(range(551, 611, 2))
     bound, bound_record, bound_events = decay_player(
         "j3_deuteron",
         folder / "j3_deuteron.json",
         runs,
         bound_ticks,
         "The bound neutron, `j3_deuteron`: the deuteron of series I with `become` at 512 on the neutron; the "
-        "same shell; the proton p and the neutron n at one Link; one frame per 25 intervals until "
-        "550, then every interval.",
+        "same shell; the proton p and the neutron n at one Link; one frame per 50 intervals until "
+        "550, then every second interval.",
         150,
     )
     exchange, exchange_record, exchange_events = decay_player(
@@ -2395,7 +2442,7 @@ def lensing_player(
     taken = by_tick([c for c in clicks if c.get("detector") is None])
     faces = by_tick([c for c in clicks if str(c.get("detector", "")).startswith("face")])
     replay = Replay(world)
-    ticks = frame_ticks(replay.ticks)
+    ticks = frame_ticks(replay.ticks, 72)
     frames = replay.run(ticks)
     plane = plane_for(replay, scale=6)
     plane.largest = largest_amounts(frames)
@@ -2463,7 +2510,7 @@ def page_energy(out: Path, runs: Path | None) -> Path:
         runs,
         "`mass_meeting`: the x-y projection of the 57 x 41 x 41 box, 6 pixels per Node; the lamp at (2, 26, 20), "
         "the mass m at the centre (28, 20, 20) with its crowd of 290 directions dimmed, the beam's rows on top "
-        "coloured by their phase, the screen at x = 54 (the green column); one frame per 3.4 intervals.",
+        "coloured by their phase, the screen at x = 54 (the green column); one frame per 5.6 intervals.",
     )
     control, control_record, control_events = lensing_player(
         "control",
@@ -2602,10 +2649,10 @@ def page_atom(out: Path, runs: Path | None) -> Path:
         if line.get("measured") is not None and str(line.get("detector", "")).startswith("face")
     ]
     replay = Replay(world)
-    ticks = frame_ticks(min(replay.ticks, (int(exits[0]["tick"]) + 30) if exits else replay.ticks))  # type: ignore[arg-type]
+    ticks = frame_ticks(min(replay.ticks, (int(exits[0]["tick"]) + 30) if exits else replay.ticks), 90)  # type: ignore[arg-type]
     frames = replay.run(ticks)
     proton = tuple(int(c) for c in replay.world.measured[0].position)
-    plane = plane_for(replay, scale=6, slice_z=proton[2])
+    plane = plane_for(replay, scale=8, slice_z=proton[2])
     plane.largest = largest_amounts(frames)
     plane.floor = 0.1
     plane.weights = {"p": 0.35, "e": 0.8}
@@ -2646,10 +2693,10 @@ def page_atom(out: Path, runs: Path | None) -> Path:
         images,
         ticks,
         readings,
-        "`r8`: the plane z = 22 of the 45^3 cube (the orbit's plane), 6 pixels per Node; the proton p at the "
+        "`r8`: the plane z = 22 of the 45^3 cube (the orbit's plane), 8 pixels per Node; the proton p at the "
         "centre with its shell of copies (one row per direction of 2616 every 10 intervals, the in-plane ones "
         "drawn), the electron e as a disc coloured by its phase, with its momentum arrow and its own copies; the "
-        "proton is fixed and does not step, its arrow the momentum it was handed; one frame per 33 intervals. "
+        "proton is fixed and does not step, its arrow the momentum it was handed; one frame per 43 intervals. "
         + COPIES_NOTE,
         100,
     )

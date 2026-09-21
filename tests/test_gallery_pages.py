@@ -148,7 +148,7 @@ def test_player_embeds_the_frames_the_gif_and_the_intervals(world_path: Path) ->
 
 def test_a_body_is_drawn_with_its_momentum_arrow_and_its_copies(tmp_path: Path) -> None:
     """A body of momentum (64, 0, 0) on a 9 x 9 x 1 plane releasing on +x:
-    its arrow (white pixels to its right, none at a momentum of zero) and
+    its arrow (accent-green pixels to its right, none at a momentum of zero) and
     its copies (translucent discs of its colour at its rows' Nodes, absent
     with `copies` off)."""
     world = {
@@ -187,7 +187,7 @@ def test_a_body_is_drawn_with_its_momentum_arrow_and_its_copies(tmp_path: Path) 
     with_arrow = np.asarray(plane.image(moving)).astype(int)
     cx, cy = plane.pixel(4, 4)
     right = (slice(int(cy) - 2, int(cy) + 3), slice(int(cx) + 8, int(cx) + 20))
-    white = lambda a: int((a[right].sum(axis=2) > 700).sum())  # noqa: E731
+    white = lambda a: int(((a[right][:, :, 1] > 170) & (a[right][:, :, 0] < 130)).sum())  # noqa: E731  # the accent green
     assert white(still) == 0 and white(with_arrow) > 0
     plane.copies = False
     without = np.asarray(plane.image(frame)).astype(int)
