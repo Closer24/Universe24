@@ -3555,3 +3555,62 @@ implementation's part of the contract. The design above is unchanged.
     one unit on one axis, so that the parity check is a property of the
     Ports and its test (every heading flips the parity; no three headings
     sum to zero) is missing, for the Boss to order.
+47. **The crowd audit: what every rule in force reads of its own record
+    and of the crowd** (2026-09-21; the owner's question, record 276, "are
+    you checking the crowd everywhere?"; the architect's audit of `main`
+    at 86b59ba1; a table, no rule changed, no run moved; the numbers 45
+    and 46 are the click branch's). The crowd of a reader is the one
+    reading set of section 3 step 2: everything at its Node but its own
+    number, and the six neighbouring Nodes (LOCALITY-1), read by
+    `read_arrivals` as the moments of the arrivals. One row per rule, the
+    citation the function and line of `src/event_universe/events/` on
+    `main`.
+
+    | The rule | Reads of its own record | Reads of the crowd | The code |
+    | --- | --- | --- | --- |
+    | the walk (the flight) | the row's direction, age and position accumulator (rate 2 S_1 Q, wall 2 T_D) | nothing | `Flight.walk_step`, nature_beam.py:598; step 1 at 2556 |
+    | the escape at a face | the row's position against the open boundary; the face click | nothing | nature_beam.py:2569 to 2574 |
+    | the merge | the row's identity fields (Node, direction, age, phase, number, content, record, branch, multiplicity, hand) | the rows at its Node identical in every field but the amount (a phase difference of N / 2 under the amplitude key) | `NatureBeamStore.merge`, nature_beam.py:1260; called at 2553 and 4288 |
+    | the readings (the one reading set) | the reader's number (excluded from the set) | the arrivals at the Node: the amounts on their direction vectors, the moments of order 0, 1 and 2 and the age moment | `read_arrivals`, nature_beam.py:450; step 2 at 2679 |
+    | the collision | the row's slot (its direction) and its (number, content) class | the single units of the same number and content in the eight slots of a free Node: its own crowd only, never another number's | `collide`, nature_beam.py:2460; step 3 at 2685 |
+    | the meeting (`meeting-v1`, the world key `meeting`) | the paid row's label and number | the free crowd's labels at its Node less its own number (`crowd_flow`), the arc permutation toward the target | `meet`, meeting.py:282; `crowd_flow`, meeting.py:244; called at 2693 |
+    | the coupling (the push over the columns) | the reader's content and charges as the frame read them (`frame_content`, `frame_charges`), its push accumulators | the label flow V_B of the group of arriving rays, per column | `push_form`, nature_beam.py:2295; called at 3429; the frame `_frame_all`, engine.py:445 |
+    | the reading's weight under `doppler` (note 38) | the reader's momentum as the frame read it (`frame_momentum`), its flow accumulators | the arriving rows' directions and labels per direction | `weighted_flow`, nature_beam.py:2219; called at 3421 |
+    | the click's admission (the threshold, the window) | the set's threshold and its window's setting and width (declared), the set's phase | the arriving rows: the amount summed over the set against the threshold, each row's phase against the window | nature_beam.py:2905 to 2977 |
+    | the click's choice at a `sum` set (the one click) | the record's own cells' weights and its u: the cell as a comparison of two products | nothing: the ladder is the record's own | `Layer.complete`, amplitude.py:684; `cell_of`, amplitude.py:208, called at 706 |
+    | the re-emission (`rerelease`, the split) | the entry's declared weights and turns; the one arriving row re-emitted (its direction, record, branch, multiplicity) | the one row it re-emits, never the set | nature_beam.py:3502 |
+    | the gate (`amplitude-v1`) | the entry's declared gate | the pending rows of every record present at the entry: the other records' labels (a crowd of records) | `apply_gate`, nature_beam.py:1898; called at 3791 |
+    | the rotation | the row's own label bit and phase; the set's declared setting | nothing | `rotate_rows`, nature_beam.py:1977; called at 3800 |
+    | the transformation `become`, the clock trigger | the body's own age at the key `at` (`ages_at_key`) | the count its clock read this interval (`counted`) as the gate `crowd` only: open below the gate, never a rate | nature_beam.py:3720 to 3729; `transform`, nature_beam.py:1538 |
+    | the transformation `become`, the click trigger | the entry's window | one arriving row of the entry's family admitted by the window | nature_beam.py:3651 |
+    | the clock's count (`counted`) | the body's number (excluded) and the component its entry `reads` | the presence, or the age moment, of every number but its own at its Node | nature_beam.py:3252 to 3255; `measured.count_component` |
+    | the owed count | the body's owed accumulator and the world's suspension pair | the count above, times n / d, as the whole part the accumulator gains | `count_owed`, engine.py:131; `_suspend`, engine.py:499 |
+    | the turn | the body's content and its turn accumulator at the rate n / d; under `action` its momentum and the Links stepped | nothing | `_frame_all`, engine.py:445 (the turn at 488); the turn by momentum in `_move`, engine.py:512 |
+    | the birth (the lamp) | the lamp's rate on its own accumulator, its held content, its birth ordinal | nothing | nature_beam.py:3730 to 3737 (`advance("lamp")`), the births at 3823 and 4008 |
+    | the release (a free family's emission) | the body's held content times its rate on its release accumulators | nothing | nature_beam.py:3740 (`advance("release")`) |
+    | the drive (the step) | the body's momentum, content and drive accumulators, the world's width | the occupant of the destination Node, one neighbour, when the step is refused | `step_axis`, engine.py:95; `_move`, engine.py:512; `occupant` at 668 |
+    | the contact and the give (`binding-v1`) | the body's momentum component and its held paid content | the one occupant's table entry for the body's family | `_contact`, engine.py:696; `_give`, engine.py:803 |
+    | the border `lifetime` (the escape click at L) | the row's own age against its family's lifetime | nothing | nature_beam.py:4212 (`ages_at_key`); the age bound at 4325 |
+
+    Of the 23 rows, 13 read the crowd (the merge, the readings, the
+    collision within its own class, the meeting, the coupling, the doppler
+    weight, the click's admission, the gate, the two triggers of `become`
+    (the clock's as a gate only), the clock's count, the owed count
+    through it, the drive's contact with the give) and 10 read nothing but
+    their own record: the walk, the escape at a face, the click's choice,
+    the re-emission (one row, never the set), the rotation, the turn, the
+    birth, the release, the border `lifetime`, and the decay's timing (the
+    clock trigger's age at `at`, the crowd entering only as the gate). For
+    those, the hypothesis under which the crowd would enter, where one is
+    stated: the decay, `decay-by-crowd-v1` (DERIVATIONS_BEAM 18.2 (ii)):
+    the `become` trigger as the click of the body's u against the crowd's
+    cumulative rung, memoryless where the crowd mixes, named and not
+    built; the turn, `covariant-readings-v1` (DERIVATIONS_BEAM section 17,
+    record 270): the clock's rate E_0 / E with E the energy accumulator the
+    pushes feed, so the crowd would enter the turn through the push, named
+    and not built; the flight, the meeting already in force under the key
+    `meeting` (a row in transit reads the crowd's flow, the one place the
+    crowd enters the walk). For the birth, the release, the escape at a
+    face, the border `lifetime`, the rotation, the re-emission and the
+    click's choice no derivation names a crowd: they stay "no crowd", for
+    the owner to decide, nothing invented.
