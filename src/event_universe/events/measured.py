@@ -16,6 +16,7 @@ from event_universe.events.world import (
     CHARGE_INDEX,
     MOMENTUM_BOUND,
     NO_HAND,
+    PRESENCE_WORD,
     SUM_READING,
     Gate,
     Rotation,
@@ -128,16 +129,18 @@ def column_charges(
 
 def count_component(reads: str) -> str:
     """The component of the one reading a measured event's clock counts for
-    a family, selected by its table entry's `reads` key: the age moment
-    (`age`, sum amount x age over every ray of another number at its Node)
-    on an entry that reads `age`, the presence (`scalar`) on every other
-    entry, whose key names only what its record carries. A reading aid of
-    the measured event, the external thing (the model owner, 2026-09-19,
-    "it must be checked in the detector and not on the GameBoard"): it only
-    helps the detector's computation of its count and changes nothing of
-    the GameBoard; the GameBoard's rules (the flight, the collision) never read the
-    age whole."""
-    return AGE_READS if reads == AGE_READS else PRESENCE_READS
+    a family, selected by its table entry's `reads` key. Since clock-age-v1
+    (the model owner's word of 2026-09-21, record 394; BEAM_LAW section 3
+    step 5 and note 25): the age moment (`age`, sum amount x age over every
+    ray of another number at its Node) on every entry, whatever its record
+    carries, unless the entry reads `presence`, which selects the presence
+    (`scalar`, the zeroth moment) for the clock as the law counted it
+    before the word. A reading aid of the measured event, the external
+    thing (the model owner, 2026-09-19, "it must be checked in the detector
+    and not on the GameBoard"): it only helps the detector's computation of
+    its count and changes nothing of the GameBoard; the GameBoard's rules
+    (the flight, the collision) never read the age whole."""
+    return PRESENCE_READS if reads == PRESENCE_WORD else AGE_READS
 
 
 @dataclass

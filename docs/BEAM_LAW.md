@@ -522,9 +522,12 @@ order with each step's inverse:
    (`apportion_whole`, ties in table order from `age mod len(directions)`),
    the owed count read off the clock from what the clock counted over
    every ray of another number at its Node, `by_clock(age_A, k n, d)`: k
-   the presence, or on a table entry that reads `age` the age moment
-   `sum amount x age` of that family (note 25: the clock beside a mass
-   then reads M / r in space, the push keeping M / r^2). Every new ray:
+   the age moment `sum amount x age` of that family (the identity
+   `clock-age-v1`, the model owner's word of 2026-09-21, record 394: the
+   clock beside a mass reads M / r in space, the potential's form, the
+   push keeping M / r^2; note 25), or on a table entry that reads
+   `presence` the presence, the count of the law until that word (an entry
+   that reads `age` counts the age moment as it did). Every new ray:
    `age` 0, the emitter's phase, its number. A measured event on a set of
    Nodes (`span`, note 30) releases at every Node of its set with whole
    units only: each row born is apportioned whole over the set in its
@@ -1496,10 +1499,18 @@ implementation's part of the contract. The design above is unchanged.
     it. The age is read whole only by a measured event, the external
     thing; this component is a reading aid of the detector and changes
     nothing on the GameBoard. (iii) What the clock counts is selected on the
-    measured-event side, `measured.count_component(reads)`: the age moment
-    on an entry that reads `age`, the presence on every other entry (the
-    default: every world without the key reads the same, integer by
-    integer); step 4 reads both over every ray of another number at the
+    measured-event side, `measured.count_component(reads)`: until
+    2026-09-21 the age moment on an entry that reads `age` and the presence
+    on every other entry (the default then: every world without the key
+    read the same, integer by integer); since `clock-age-v1` (the model
+    owner's word of 2026-09-21, record 394, on the G2 session's mapping of
+    the two words to nature's clocks and the physicist's two-crowd pin,
+    series T: the presence word reads the same count at 3 and at 6 Links
+    from one release, the age word 22 : 42) the age moment on every entry
+    and the presence only on an entry that reads `presence`, a word of
+    `reads` whose record carries the presence as `scalar` does; the worlds
+    that read a clock without the word moved and were re-registered with
+    the identity on their lines (MIGRATION, 2026-09-21); step 4 reads both over every ray of another number at the
     Node (rest and moving alike, as the presence) into `Measured.presence`
     and `Measured.counted`, and the frame's `_suspend` owes
     `by_clock(age_A, counted x n, d)`. (iv) The bound of the age, the

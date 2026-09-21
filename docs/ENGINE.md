@@ -214,9 +214,10 @@ interval, a diagnostic of the walk for Gauss's flux); the frame turns the
 phases of the measured events that
 self-created, reads the owed count as the count of the body's accumulator
 `acc_owed` at the rate k x n over d from what the clock
-counted (`_suspend`, `count_owed`; the same integers as `by_clock(age, k x n, d)` at a constant crowd, k the presence, or for a
-family whose table entry reads `age` the age moment `sum amount x age`
-over the same set, `measured.count_component`, `Measured.counted`;
+counted (`_suspend`, `count_owed`; the same integers as `by_clock(age, k x n, d)` at a constant crowd, k the age moment
+`sum amount x age` over the same set since `clock-age-v1` (2026-09-21, the
+model owner's word, record 394), or for a family whose table entry reads
+`presence` the presence, `measured.count_component`, `Measured.counted`;
 [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 note 25) and books the interval. The step of a measured event
 by its momentum (`_move`, before the law: on an axis whose momentum component is p in

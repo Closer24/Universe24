@@ -99,7 +99,8 @@ kept, their pins the law of events').
 | `test_reader_clock.py` | Series S, a reader inside a crowd (`examples/events/reader_clock/`, docs/designs/reader_clock/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced, the reader at x = 10 with a lamp of its own measuring `s_px1` by age, the source at x = 70, the crowds' fluxes k 2^16 / 4, the receding source at 0.2 c and its sources at 0.1 c by the drive's rule; the presence 4 F at the reader and the source after twelve intervals; the algebra of the ratio (0.5, 1, 4 / 3, 1.1); the expected values in the module's docstring ([below](#a-reader-inside-a-crowd-series-s)) | new (2026-09-21, series S; design and pins, the run in the design's section 7) |
 | `test_clock_word.py` | Series T, the clock's word (`examples/events/clock_word/`, docs/designs/clock_age/NOTE.md section 6, the register's entry "T, the clock's word"): the shipped worlds equal their generator's and run ten intervals balanced (the lamp at x = 10, the detector at x = 110 reading `age`, the two `mass` sources at 3 or 6 Links at F = 4915, the lamp's `mass` entry `pass` or `{"rule": "pass", "reads": "age"}`); after twelve intervals the lamp's count is 4 F under the presence word at both distances and 22 F, 42 F under the age word, the presence 4 F in all, the first counting tick 6 and 11 with the first row's count alone; the algebra (k = 0.3, 0.3, 1.65, 3.15; the ratio 1 and 42 / 22 = 1.909 against the continuum's 2); the expected values in the module's docstring ([below](#the-clocks-word-series-t)) | new (2026-09-21, series T; the pins the physicist's, the run in the register) |
 | `test_cluster_clock.py` | Series Q, a cluster of crowds read by one detector (`examples/events/cluster_clock/`, docs/designs/cluster_clock/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced, the five lamps at numbers 2, 3, 6, 9, 12 with the momenta of 0.2 c and their sources' of 0.2 c / (1 + k) by the drive's rule; the presence at every lamp of a crowd is 4 F after twelve intervals and the bare lamp's at most 8; the algebra of the sum 1 + k + v / c against the product (1 + k)(1 + v / c) and the pinned dispersion 0.363 around 0.4; the expected values in the module's docstring ([below](#a-cluster-of-crowds-series-q)) | new (2026-09-21, series Q; design and pins, the run in the design's section 7) |
-| `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
+| `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it (on an entry that reads `age`; since clock-age-v1, 2026-09-21, on every entry but one that reads `presence`); the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
+| `test_clock_age.py` | clock-age-v1, the clock's word (the model owner's word of 2026-09-21, record 394; BEAM_LAW section 3 step 5 and note 25): on the bar of the age tests' (c) a reader whose entry omits `reads` counts the age moment (5 then 11, the ages of the `age` reader) with its `read` records carrying the flow, and so does every word but `presence`; the word `presence` counts the presence as before (the ages 1 .. 18, 18) with the record carrying the presence; the edges: no crowd owes nothing under either word, an unknown word refused naming the words, `presence` accepted on `pass` and a window still refused there, series T's `presence_3` declaring the word parses and keeps its pin ([below](#the-clocks-word-clock-age-v1)) | new (2026-09-21, clock-age-v1) |
 | `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
 | `test_paid_charge.py` | A paid family's charge per unit of amount (D-1): the books' charge line conserved through the click of a charged paid row, its escape, its home and the escape of the body that holds it; the push untouched (the label alone, with the charge -1 and 0 alike); the refusals and the record ([below](#a-paid-familys-charge)) | new (2026-09-20, the model owner's "go on everything", item (2)) |
@@ -2435,8 +2436,9 @@ of the presence; the GameBoard's step is unchanged by the whole age.
   leaves it 41 while rotating the flow; the keyed form over two Nodes reads
   82 and 41; without ages the moment is 0; an amount 2^40 at the age 2^23
   is refused with `OverflowError` before any product is formed and at
-  2^22 - 1 accepted; `count_component` selects `age` for `age` and
-  `scalar` for the five other keys.
+  2^22 - 1 accepted; `count_component` selects `age` for every key but
+  `presence`, which selects `scalar` (clock-age-v1, 2026-09-21; until then
+  `age` for `age` and `scalar` for the five other keys).
 - (c) the clock: a source of `m` (content 1) at x = 0 of an open 5 x 1 x 1
   bar at `release` [1, 1] and a fixed reader of `light` (content 1) at
   x = 3 whose entry for `m` reads `age`, `suspension` [1, 4]: a ray born at
@@ -2448,11 +2450,14 @@ of the presence; the GameBoard's step is unchanged by the whole age.
   7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 11, 11, its
   self-creations at the ticks 1 to 6, 8, 12, 16, 19, 23 with (presence,
   counted) = (1, 5) at tick 6 and (2, 11) from tick 8; its 19 `read`
-  records carry the reading 5 (the arrival's age moment); the same reader
-  without the key counts the presence and owes `by_clock(age, 2, 4)`: 1,
-  2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 10, 11, 12, 12, 13, 14, 14, 15, 16, 16,
-  17, 18, 18 (unchanged by the change), counted equal to the presence at
-  every self-creation, its `read` records carrying the flow [1, 0, 0].
+  records carry the reading 5 (the arrival's age moment); since
+  clock-age-v1 (2026-09-21) the same reader without the key counts the age
+  moment too, with the same ages, its `read` records carrying the flow
+  [1, 0, 0]; the reader whose entry reads `presence` (until clock-age-v1
+  every reader without the key) counts the presence and owes
+  `by_clock(age, 2, 4)`: 1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 10, 11, 12, 12,
+  13, 14, 14, 15, 16, 16, 17, 18, 18, counted equal to the presence at
+  every self-creation, its `read` records carrying the presence 1.
 - (d) the parsing: `flight_bound` of an open 11^3 GameBoard over the six
   headings is 54 (D_M = 31 Links, ceil(31 x 110 / 64)) and 111 with the
   direction (1, 0, 64) declared (T 7095, one period, ceil(7095 / 64));
@@ -3884,6 +3889,32 @@ series P's generator; the register's entry "T, the clock's word"):
 - (c) the algebra of the pin: k = (count per F) x F / 2^16; the ratio of the
   two k at the same F is 1 under the presence word and 42 / 22 = 1.909
   under the age word, against the continuum's potential 2.000.
+
+## The clock's word, clock-age-v1
+
+`tests/test_clock_age.py` (the model owner's word of 2026-09-21, record 394;
+docs/designs/clock_age/NOTE.md sections 2 and 7; BEAM_LAW section 3 step 5
+and note 25; MIGRATION, 2026-09-21), on the bar of `tests/test_nature_beam_age.py`
+(c): a source of `m` at x = 0 of an open 5 x 1 x 1 bar at `release` [1, 1],
+a fixed reader of `light` at x = 3, `suspension` [1, 4], 24 intervals.
+
+- (a) the default: a reader whose entry omits `reads` (`{"m": "read"}`)
+  counts the age moment, 5 at the first arrival then 11 (the ages 5 and 6
+  of the two rays at its Node), and ages 1, 2, 3, 4, 5, 6, 6, 7, 7, 7, 7,
+  8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11 as the `age` reader does; its
+  `read` records carry the flow [Q, 0, 0]; an entry that reads `age`,
+  `scalar`, `outside`, `here`, `vector` or `tensor` counts the same;
+  `count_component` gives `age` for every word but `presence`.
+- (b) the presence word: a reader whose entry reads `presence` counts the
+  presence (1 then 2) and ages 1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 10, 11,
+  12, 12, 13, 14, 14, 15, 16, 16, 17, 18, 18, the ages of every reader
+  before the word; its records carry the presence, 1 per arriving row;
+  `count_component("presence")` is `scalar`.
+- (c) the edges: with the source removed the reader owes nothing under
+  either word and ages 1 .. 24; a `reads` word the law does not know is
+  refused naming the words; `presence` is accepted on `pass`, a window on
+  `pass` still refused; series T's `presence_3.json` declares the word on
+  the lamp's `mass` entry and its expectations keep the pin 1 + z = 1.300.
 
 ## One reading set
 

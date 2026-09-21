@@ -6,6 +6,42 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The clock's word, on 2026-09-21: clock-age-v1, the age moment as the clock's default
+
+The model owner's decision of 2026-09-21 (record 394; the age word chosen
+on the G2 session's mapping of the two words to nature's clocks, records
+362 and 363, and the physicist's two-crowd pin,
+[docs/designs/clock_age/NOTE.md](designs/clock_age/NOTE.md), run as series T
+with every pin met, [the register](EXPERIMENTS.md#t-the-clocks-word-2026-09-21)).
+The identity `clock-age-v1` beside `beam-v1`; [BEAM_LAW section 3 step 5
+and note 25](BEAM_LAW.md#3-the-nodes-interval-nature_beam).
+
+- The default of `measured.count_component`: the clock counts the age
+  moment `sum amount x age` over the rays of another number at its Node
+  on every table entry, whatever the entry's record carries; until this
+  day it counted the presence unless the entry read `age`.
+- The word `presence`, new in `reads`, selects the presence for the clock
+  (the count of the law until this day); its record carries the presence,
+  the zeroth moment, as `scalar` does. `age` still selects the age moment.
+  Nothing else moves: the push, the flight, the release, the turn and the
+  `become` trigger keep their readings; the record's component (`scalar`,
+  `outside`, `here`, `vector`, `tensor`, `age`) is untouched by the word.
+- What moves: every world whose clock reads a crowd without `reads: "age"`
+  or `reads: "presence"`, under a nonzero `suspension`. The register's
+  lines re-read on this day, the old value kept beside the new with the
+  date: series E's `scalar` world, series C's item 6 (`coupling/6`), series
+  G's `coasting_scalar` and `pushing_scalar`, series G2's `coasting_scalar`,
+  `gravity_scalar` and `double_scalar` (the base and the `record` worlds),
+  series J's J1 and J3 worlds, series U, V and S, the catalog's
+  `neutron_star` (its five presence probes) and `clock_near_mass`; series
+  T's presence worlds declare the word (`{"rule": "pass", "reads":
+  "presence"}`) and read as they did; the worlds that read no clock are
+  byte-identical (the gate set replayed, `examples/events/gate_set.json`).
+  The bound clock of record 123 (`binding/proton_bond_lamp`, `suspension`
+  0) owes nothing under either word and does not move.
+- `tests/test_clock_age.py` (the default, the presence word, the edges);
+  `tests/test_nature_beam_age.py` (b) and (c) amended.
+
 ## The register's replicated map carried through a regeneration, on 2026-09-21 (host only)
 
 The replicator's round 1 found that `examples/events/amplitude/make_worlds.py`

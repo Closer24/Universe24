@@ -35,8 +35,8 @@ Links and 121 x 15 x 15 at 6; 500 intervals.
 
 | World | the lamp's `mass` entry | distance | pinned count per self-creation | pinned k | pinned 1 + z (DETECTOR) | the first row at the lamp |
 | --- | --- | --- | --- | --- | --- | --- |
-| `presence_3.json` | `pass` | 3 | 4 F (two headings' rows, two intervals each) | 0.300 | 1.300 +- 0.02 | tick 6 |
-| `presence_6.json` | `pass` | 6 | 4 F | 0.300 (the presence clock cannot tell the distances apart) | 1.300 +- 0.02 | tick 11 |
+| `presence_3.json` | `{"rule": "pass", "reads": "presence"}` (the bare `pass` until clock-age-v1) | 3 | 4 F (two headings' rows, two intervals each) | 0.300 | 1.300 +- 0.02 | tick 6 |
+| `presence_6.json` | `{"rule": "pass", "reads": "presence"}` | 6 | 4 F | 0.300 (the presence clock cannot tell the distances apart) | 1.300 +- 0.02 | tick 11 |
 | `age_3.json` | `{"rule": "pass", "reads": "age"}` | 3 | 22 F (the ages 5, 6 per source) | 1.650 | 2.650 +- 0.05 | tick 6 |
 | `age_6.json` | `{"rule": "pass", "reads": "age"}` | 6 | 42 F (the ages 10, 11) | 3.150 | 4.150 +- 0.05; the ratio of the two k 1.909 +- 0.05 (the continuum's 2.000) | tick 11 |
 

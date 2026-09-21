@@ -6393,7 +6393,10 @@ sequential gates on an entangled record, the full register replay.
   measuring `s_px1` with `reads: "age"`, the bar 121 x 9 x 9 at 3 Links
   and 121 x 15 x 15 at 6, 500 intervals; four worlds, the lamp's `mass`
   entry `pass` (the presence word) or `{"rule": "pass", "reads": "age"}`
-  (the age word), at 3 and at 6. On the lattice only the two headings' rows
+  (the age word), at 3 and at 6 (since clock-age-v1, 2026-09-21, the
+  presence word is declared, `{"rule": "pass", "reads": "presence"}`, the
+  age moment being the law's default; the worlds read as they did, the
+  register's replay test holding). On the lattice only the two headings' rows
   dwell at the lamp's Node, each for two intervals (the map checks the nine
   lines of each source), so the presence is 4 F at both distances and the
   flow the push would read the same; the age moment is 22 F at 3 (the ages

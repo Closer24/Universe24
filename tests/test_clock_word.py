@@ -6,8 +6,10 @@ written down first, from the physicist's pin and the map's section B:
 (a) the shipped worlds equal `make_worlds.worlds()` document for document,
     parse under the law and run ten intervals with the books balanced; the
     detector is number 1 at x = 110 reading `age`, the lamp number 2 at
-    x = 10 fixed with a lamp on +x, its `mass` entry `pass` (the presence
-    word) or `{"rule": "pass", "reads": "age"}` (the age word), the two
+    x = 10 fixed with a lamp on +x, its `mass` entry `{"rule": "pass",
+    "reads": "presence"}` (the presence word; the bare `pass` until
+    clock-age-v1, 2026-09-21) or `{"rule": "pass", "reads": "age"}` (the age
+    word), the two
     `mass` sources numbers 3 and 4 at 3 or 6 Links on +y and +z with
     F = 4915 per interval (the amount F x 2^16) on the fan of nine toward
     the lamp's line; the bar 121 x 9 x 9 at 3 Links and 121 x 15 x 15 at
@@ -76,7 +78,11 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
         assert detector["table"]["s_px1"] == {"rule": "measure", "reads": "age"}
         assert lamp["position"] == [10, centre, centre] and lamp["fixed"]
         assert lamp["lamp"]["directions"] == [[1, 0, 0]]
-        expected_entry = {"rule": "pass"} if word == "presence" else {"rule": "pass", "reads": "age"}
+        expected_entry = (
+            {"rule": "pass", "reads": "presence"}
+            if word == "presence"
+            else {"rule": "pass", "reads": "age"}
+        )
         assert lamp["table"]["mass"] == expected_entry
         assert [s["position"] for s in sources] == [
             [10, centre + distance, centre],

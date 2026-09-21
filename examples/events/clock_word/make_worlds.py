@@ -21,9 +21,10 @@ at x = 10 (2^20 units, one unit per self-creation on +x, the wheel
 [1, 64]), two `mass` sources at 3 or at 6 Links on +y and +z, each
 releasing F = 4915 units per interval on series P's fan of nine toward the
 lamp's line, `suspension` [1, 2^16], the detector fixed at x = 110
-measuring `s_px1` with `reads: "age"`; the lamp's entry for `mass` `pass`
-(the presence word) or `{"rule": "pass", "reads": "age"}` (the age word,
-series E's precedent); the bar 121 x 9 x 9 at 3 Links (series P's) and
+measuring `s_px1` with `reads: "age"`; the lamp's entry for `mass`
+`{"rule": "pass", "reads": "presence"}` (the presence word; the bare `pass`
+until clock-age-v1, 2026-09-21) or `{"rule": "pass", "reads": "age"}` (the
+age word, series E's precedent, the law's default since clock-age-v1); the bar 121 x 9 x 9 at 3 Links (series P's) and
 121 x 15 x 15 at 6. Run under beam-v1 as declared: no change under src/.
 
     python examples/events/clock_word/make_worlds.py     # the worlds and expectations.json
@@ -100,7 +101,12 @@ def declared_directions(distance: int) -> list[list[int]]:
 
 def world(name: str, word: str, distance: int, side: int) -> Json:
     centre = side // 2
-    mass_entry: Json = {"rule": "pass"} if word == "presence" else {"rule": "pass", "reads": "age"}
+    # Since clock-age-v1 (2026-09-21) the clock's default is the age moment,
+    # so the presence word is declared: `reads: "presence"` (until then the
+    # bare `pass` counted the presence and `reads: "age"` the age moment).
+    mass_entry: Json = (
+        {"rule": "pass", "reads": "presence"} if word == "presence" else {"rule": "pass", "reads": "age"}
+    )
     lamp: Json = {
         "position": [LAMP_X, centre, centre],
         "family": "s_px1",
