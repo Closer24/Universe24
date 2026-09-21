@@ -16,6 +16,7 @@ Run from the repository root:
 from __future__ import annotations
 
 import math
+import random
 
 # The register's integers (section 15's stream; the nucleus fan; the reading's cost).
 K_FAN = 290  # the 290 fan, F_6
@@ -199,4 +200,83 @@ print(
 )
 print(
     "   (B) REFUTED: the push's divisions keep the remainder (the floor is zero), a discarding floor would cut the weak field with a band shape (the wrong sign and the wrong shape against the RAR), and the deep law needs a root (not one of the six); the dark sector stays as record 283 says"
+)
+
+# D. The owner's hypothesis (record 285): the far system read before any click.
+print()
+print(
+    "D. THE FAR SYSTEM READ BEFORE ANY CLICK (record 285): DOES THE OFFERS' SPREAD SET A FLOOR ON THE READ VELOCITY?"
+)
+print(
+    "   (1) what the detector reads of a stream is its arrival count per interval (the Doppler, section 2: the crossing rule) and the moments of the arriving rows (order 0, 1, 2 and the age);"
+)
+print(
+    "       a spread of the rows' direction labels or phases changes the moments of order 1 and 2 and the phase-count vector's width, not the count per interval. On integers:"
+)
+rng = random.Random(7)
+
+
+def stream_counts(
+    spread_steps: int, phase_spread: int, released: int = 400, rate_num: int = 3, rate_den: int = 4
+):
+    """A moving lamp releasing one row per interval, read by a detector that counts arrivals: the source's
+    Doppler 1 / (1 - v / c) is the release spacing over the arrival spacing (section 2.3); each row carries a
+    direction label spread over 'spread_steps' steps of the table and a phase spread over 'phase_spread'
+    steps (the crowd met under the meeting, or nothing on main). The count per interval does not read either."""
+    arrivals = []
+    for k in range(released):
+        # the arrival tick: the release tick plus a flight shortened by the source's approach at rate_num / rate_den
+        # of the pace (the crossing rule's whole-Link count); the spread touches the label and the phase only
+        _label = rng.randrange(-spread_steps, spread_steps + 1)
+        _phase = rng.randrange(0, phase_spread + 1)
+        arrivals.append(
+            k * rate_den - k * rate_num
+        )  # spacing (rate_den - rate_num) / rate_den of the release spacing
+    spacing = (arrivals[-1] - arrivals[0]) / (released - 1)
+    return spacing / rate_den  # the arrival spacing over the release spacing = 1 - v / c
+
+
+for spread_steps, phase_spread in ((0, 0), (3, 16), (40, 63)):
+    ratio = stream_counts(spread_steps, phase_spread)
+    print(
+        f"       label spread +-{spread_steps:2d} steps, phase spread {phase_spread:2d} steps: the arrival spacing over the release spacing {ratio:.4f} = 1 - v / c at v / c = 3 / 4 (unchanged)"
+    )
+print(
+    "       the read velocity is the count's, whatever the labels' and phases' spread: a spread broadens the line (order 2) and does not move its centre (order 1 in time)"
+)
+print()
+print(
+    "   (2) what grows with the distance or the crowd met, so that a far system differs from the Sun: on main nothing but the age and the count's dilution (a row reads nothing of the crowd, 5.4);"
+)
+print(
+    "       under meeting-v1 the direction label turns one step per N crowd units met and the phase gains the crowd met (section 5.4): the spread of the labels and of the phase-count vector grows with the crowd met, the count per interval does not"
+)
+print()
+print("   (3) the pins against a floor on the read velocity from a spread:")
+c_km = 299_792.458
+for name, v_spread_km in (
+    ("the Sun's planets read by the same detector, the radial-velocity precision", 0.001),
+    ("a galaxy's edge, the flat speed", 200.0),
+):
+    print(f"       {name}: v = {v_spread_km:g} km/s, beta = {v_spread_km / c_km:.1e}")
+print(
+    "       a spread fixed at birth reads the same for the Sun and for a far galaxy: bounded by the planets' Doppler at 1 m/s (a part in 2 x 10^5 of a galaxy's edge);"
+)
+print(
+    "       a spread growing with the distance is refuted by the Tully-Fisher relation's independence of distance: the flat speed follows M^(1/4) with 0.1 dex scatter in M (0.025 dex in v, 6 percent) from 1 to 100 Mpc, no term in d;"
+)
+for m in (1e8, 1e9, 1e10, 1e11):
+    print(
+        f"       M = {m:.0e} M_sun: v_flat = (M / 47)^(1 / 4) = {(m / 47) ** 0.25:6.1f} km/s, the same at every distance"
+    )
+print(
+    "       the cluster's edge: Zwicky's dispersion is a spread of the CENTRES of many galaxies' lines (each galaxy its own source, its own count), which a width of each line cannot make;"
+)
+print(
+    "       the Bullet Cluster: the bending under meeting-v1 is the crowd met along the path, unchanged by whether the rows clicked before; the offers' reading moves no lensing mass;"
+)
+print("       the sky: a reading before the click repeats no source")
+print()
+print(
+    "   (4) VERDICT D: REFUTED: the read velocity is the arrival count, which no spread of labels or phases moves; a spread fixed at birth is bounded by the Solar System at a part in 2 x 10^5 of the edge speed, a spread growing with distance by Tully-Fisher's independence of distance; the cluster's dispersion is of centres, not widths"
 )
