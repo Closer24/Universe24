@@ -1,4 +1,4 @@
-# Series P: a lamp inside a crowd, still and moving
+# Series U: a lamp inside a crowd, still and moving
 
 The model owner's remark (2026-09-21, in conversation after the two-stars
 run, translated): "this could explain something about distant galaxies and

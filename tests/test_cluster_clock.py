@@ -1,4 +1,4 @@
-"""Series Q, a cluster of crowds read by one detector, at rest and moving as
+"""Series V, a cluster of crowds read by one detector, at rest and moving as
 one (`examples/events/cluster_clock/`, docs/designs/cluster_clock/DESIGN.md).
 The expected values of docs/TEST_EXPECTATIONS.md ("A cluster of crowds"),
 written down first:
