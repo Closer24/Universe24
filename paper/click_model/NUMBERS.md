@@ -1,11 +1,14 @@
 # Every number of the paper, and where it comes from
 
-Three kinds, named on every row: **register** (a run recorded in
+Four kinds, named on every row: **register** (a run recorded in
 [docs/EXPERIMENTS.md](../../docs/EXPERIMENTS.md), series L, with its source
 fingerprint), **design** (the check outputs of
 [docs/designs/amplitude-v1/](../../docs/designs/amplitude-v1/)), and
 **computation** (this directory's `checks/`, from the design's formulas with
-the repository's tables, not an engine run). The paper cites a run only from
+the repository's tables, not an engine run), and **map** (the mathematician's
+`two_slits_map.py` of `docs/designs/fraction_free/` on the merged tree, records
+156 and 160; record 160's width sweep is a scratch map not in the repository,
+labelled so). Literature values are their own kind, cited by the paper. The paper cites a run only from
 the register. The runs were reproduced for the figures on the paper's tree, the merge
 `4ccf65c7` of main's `d2064195` (source fingerprint `731d0f56c9f9`; main's
 own is `48a9d1c91661`, the two trees differing by one docstring), every
@@ -46,7 +49,7 @@ re-run in the register after the gate's fix with the same integers;
 | Poh et al. 2015 | S = 2.82759 +- 0.00051 | literature | Phys. Rev. Lett. 115, 180408 |
 | Hensen et al. 2015 | S = 2.42 +- 0.20 (2.38 +- 0.14 over both runs) | literature | Nature 526, 682; Sci. Rep. 6, 30289 |
 | Paper 1's local candidates and the choosers' run | S = 2 exactly; the registry 2.83 | register (A2, A2 with the choosers) and paper 1 | the "before" |
-| S(N, Q) at N = 64, 256, 1024 for Q = 256 .. 2^20; the bound 8/N + 16 arcsin(sqrt 2 / 2Q) | 2.75, 2.8125, 2.828125; the bound 0.125, 0.031, 0.0078 at Q = 2^20 (0.169, 0.075, 0.052 at Q = 256) | computation | `checks/limits.txt` section 1 |
+| S(N, Q) at N = 64, 256, 1024 for Q = 256 .. 2^20; the bound 8/N + 16 arcsin(sqrt 2 / 2Q) | 2.75, 2.8125, 2.828125; the bound 0.125, 0.031, 0.0078 at Q = 2^20 (0.169, 0.076, 0.052 at Q = 256 with rho = Q - sqrt 2 / 2; limits.txt prints 0.075 at the nominal Q) | computation | `checks/limits.txt` section 1 |
 | The choosers' bin (51, 8) against the step curve E(d, 0) | E = -28/64; E(43, 0) = -32/64; 18 of 19 registered E on the curve | register and computation | `summary.json` choosers; `checks/s_of_n.py` |
 | The flight speed per direction at the flight scale Q_f = 64 | 0.8 percent above 1 / sqrt 3 on an axis, 0.5 on the plane diagonal, exact on (1, 1, 1) | computation | `checks/information_transfer.txt` section 1; BEAM_LAW section 3 |
 | The two-slit record's offered total against its birth norm | 847181/745472 = 1.136 | register (the generator's reading) | `expectations.json` two_slits.total |
@@ -59,5 +62,15 @@ re-run in the register after the gate's fix with the same integers;
 | The two-slit run's clicks: pixels and cells | 14 pixels; 19 cells landed by the first 64 births, the same for every birth after | register and the mathematician's map | `summary.json`; record 156 |
 | The lattice's primitive fan with equal weights at the width 64; with the angular weights | Pearson 0.65; 0.90 | the mathematician's map | record 160 (main) |
 | The exact phase's effect on the two-slit Pearson | 0.02 (0.390 to 0.407) | the mathematician's map | record 156 |
-| The prediction for the wheel W = 2^12, the angular fan and the exact phase | fringes at the Euclidean spacing, Pearson 0.963, visibility 0.96 over 4096 births | pinned before any run | record 156 |
+| The prediction for the wheel W = 2^12, the screen's fan (one direction per pixel from each opening, equal multiplicity) and the exact phase | fringes at the Euclidean spacing, Pearson 0.963, visibility 0.96 over 4096 births | map, pinned before any run | record 156 |
+| The angular fan alone (P = 48): the pin of `slits_huygens` | fringes in the weights (Pearson about 0.9, visibility 0.95 to 0.97), none in the clicks until the wheel | map (a scratch map), pinned before the run | record 160 |
 | L7, the cone: the age at both counters; the path phase under the integer and the pair form | 29 and 29; 51 and 8; 23 and 23 | register | L7, `cone_links`, `cone_intervals`; record 144 |
+| The sigma distances of S(N) from Poh: N = 64, 256, the powers of two from 512; the first admitted N; excluded at five sigma; the largest excluded | 152, 30, +1.0; 184; 136 of 512; 3016 | computation | `checks/s_of_n.txt` |
+| The second party's strict count 33/64 in 3944 of 4096 setting pairs at N = 64 (the crossing that the nearest rung removes) | 3944; 33/64 | design | `docs/designs/amplitude-v1/DESIGN.md` section 4.3 |
+| The two-slit clicks' Pearson with the weights | 0.655 | register (the generator's reading) | `summary.json` two_slits.pearson.histogram_weight |
+| The tables' norm range at N = 64 | -88 to +237 | computation | `checks/tables_norm.txt` |
+| The Mach-Zehnder offers at the equal arms | 1681/1682 and 1/1682 | design | L1; `expectations.json` |
+| The two-slit fan: directions per opening; pixels reached; pixels reached by both openings | 91; 75; 27 | register and map | `expectations.json` two_slits (pixels_with_rows, two_path_pixels); record 160 |
+| The register's ceiling: balanced splits, (20, 21) splits, (1, 2, 2) splits and rotations that fit below 2^62 | 62; 13; 6; 3 (the fourth refused) | design and register | the design's section 10; L5 |
+| The choosers' periods and the births that cover their common period with N | 3 and 5; 960 = lcm(3, 5, 64) | register (the world file) | `bell_choosers.json`; `make_worlds.py` |
+| The two-slit sets | 80 | register (the generator's reading) | `expectations.json` two_slits.sets |

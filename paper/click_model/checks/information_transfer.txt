@@ -8,13 +8,13 @@
   reading: c = a / (tau sqrt 3), isotropic; the L1 count is in the Links stepped, not in the time
   measured (L7): 17 Links on +x and 24 on (1, 1, 0) both reached at the age 29
 
-== 2. Wavelength and the Link: lambda = N d / n Links; lambda >= 2 Links
-  N =    64, rate 8/1 steps per interval: lambda = 8.0000 Links
-  N =    64, rate 8591334592/1073741824 steps per interval: lambda = 7.9987 Links
-  N =  4096, rate 1/1 steps per interval: lambda = 4096.0000 Links
-  N =  4096, rate 2048/1 steps per interval: lambda = 2.0000 Links
-  N = 65536, rate 1/3 steps per interval: lambda = 196608.0000 Links
-  the register's Mach-Zehnder with unequal arms (phase per Link 8 at N = 64): lambda = 8 Links
+== 2. Wavelength: the pair form n / d per interval gives N d / n intervals = c N d / n Links along the flight (the manuscript's form); the integer form p per Link gives N / p Links stepped
+  N =    64, rate 8/1 steps per interval: lambda = 8.0000 intervals = 4.6188 Links along the flight
+  N =    64, rate 8591334592/1073741824 steps per interval: lambda = 7.9987 intervals = 4.6180 Links along the flight
+  N =  4096, rate 1/1 steps per interval: lambda = 4096.0000 intervals = 2364.8267 Links along the flight
+  N =  4096, rate 2048/1 steps per interval: lambda = 2.0000 intervals = 1.1547 Links along the flight
+  N = 65536, rate 1/3 steps per interval: lambda = 196608.0000 intervals = 113511.6817 Links along the flight
+  the register's Mach-Zehnder with unequal arms (the pair form [8, 1] at N = 64): lambda = 8 intervals = 4.62 Links
   visible 500 nm: lambda = 4.999e-07 m, so a <= lambda / 2 = 2.500e-07 m
   the 1.4 PeV photon of LHAASO (2021): lambda = 8.856e-22 m, so a <= lambda / 2 = 4.428e-22 m
   the Planck length 1.616e-35 m is 2.74e+13 times below that bound

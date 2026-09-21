@@ -72,7 +72,10 @@ def wavelengths() -> None:
     age (the pair form), or an integer per Link crossed. Its wavelength is
     N d / n Links; the shortest is 2 Links (n / d = N / 2, the alias
     bound); the resolution of the phase is 2 pi / N whatever the rate."""
-    section("2. Wavelength and the Link: lambda = N d / n Links; lambda >= 2 Links")
+    section(
+        "2. Wavelength: the pair form n / d per interval gives N d / n intervals = c N d / n Links along the flight"
+        " (the manuscript's form); the integer form p per Link gives N / p Links stepped"
+    )
     for n_steps, n, d in (
         (64, 8, 1),
         (64, 8591334592, 1073741824),
@@ -81,10 +84,11 @@ def wavelengths() -> None:
         (65536, 1, 3),
     ):
         print(
-            f"  N = {n_steps:5d}, rate {n}/{d} steps per interval: lambda = {n_steps * d / n:.4f} Links"
+            f"  N = {n_steps:5d}, rate {n}/{d} steps per interval: lambda = {n_steps * d / n:.4f} intervals"
+            f" = {n_steps * d / n / math.sqrt(3):.4f} Links along the flight"
         )
     print(
-        "  the register's Mach-Zehnder with unequal arms (phase per Link 8 at N = 64): lambda = 8 Links"
+        "  the register's Mach-Zehnder with unequal arms (the pair form [8, 1] at N = 64): lambda = 8 intervals = 4.62 Links"
     )
     energies = {"visible 500 nm": 2.48, "the 1.4 PeV photon of LHAASO (2021)": 1.4e15}
     for name, ev in energies.items():

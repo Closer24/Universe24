@@ -453,3 +453,26 @@ duration claim dropped; NUMBERS.md rows for every number of the Young
 paragraph and the withdrawn plane-wave row marked. The referee: once
 findings 1 to 3 are applied no major finding remains and the manuscript
 is stable in its physics, numbers and proofs. Round 5 confirms.
+
+## Referee round 5 (2026-09-21): the round-4 fixes verified; twelve items, none a proof or a registered integer
+
+Verdict: minor revision; every round-4 fix verified; the proofs, the
+integers and the literature attributions confirmed once more; LaTeX
+checked by script (references, citations, braces, figure files). Twelve
+findings, all applied: the bound at N = 256 with rho reads 0.076 (0.075
+was the nominal Q); the 0.96 prediction credited to the screen's fan of
+record 156 (one direction per pixel, equal multiplicity), the angular fan's
+own pin (fringes in the weights, none in the clicks until the wheel)
+stated beside it; the Young limit counted as partial (two limits, a
+partial third, two conservations) and "not a continuum limit" qualified
+"of the model as a whole"; NUMBERS.md declares the map as a fourth kind
+and gains rows for every remaining number (the sigma distances, 3944 and
+33/64, 0.655, -88 to +237, the offers, the fan's 91/75/27, the ceiling's
+62/13/6/3, the periods and the 960 births, the 80 sets);
+information_transfer.txt section 2 relabelled to intervals and c N d / n
+Links; the multiplicity rule dated to the two trees; R's injectivity
+argued through diag(1, v(t)); the CNOT-GHZ triples worded as the two sets
+exchanged; the phase window named a rule outside Definition 2 that reads
+u; eq. (joint) shortened and the labels' weights moved to the sentence;
+the measurements table set in p-columns at footnotesize; the double
+citation merged. Round 6 is the confirmation.

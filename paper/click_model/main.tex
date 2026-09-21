@@ -181,11 +181,12 @@ $\Z$-module $M_r$ on the basis $(x, d, \tau, p \bmod N/2, e, h, \ell, m)$
 with $|p + N/2\rangle = -|p\rangle$, taken modulo the scaling
 $(w, m) \sim (kw, k^2 m)$; the GameBoard's state is one normal form per
 element of $\bigoplus_r M_r$. The norm is $\langle\psi,\psi\rangle =
-\sum_{\text{rows}} w^2/m$. The engine narrows the quotient at a
+\sum_{\text{rows}} w^2/m$. The archived engine narrows the quotient at a
 detector: rows of one record with different $m$ at one set are added when
 the ratio of the multiplicities is the square of a rational (the pointers
-rescaled by the integer roots) and refused otherwise; no reported world
-exercises the rescaling, so every set below reads one $m$.
+rescaled by the integer roots) and refused otherwise; at the tree of the
+runs two multiplicities at one set were refused, and no reported world
+has them, so every set below reads one $m$.
 \end{definition}
 
 The host, not any Node, keeps per live record the birth phase $u \in \Z_N$,
@@ -261,10 +262,11 @@ with arms at two rotated sets $A$ and $B$ (settings $a$, $b$) the cells
 are the joint outcomes $(o_A, o_B)$ in the arms' declared order, with
 the weights
 \begin{equation}
-W(o_A, o_B) = J(o_A, o_B)^2,\qquad J(o_A, o_B) = \sum_\ell c_\ell\,U_a[o_A][\ell]\,U_b[o_B][\ell]\quad(c_\ell\ \mbox{the labels' weights, } (1, 1)\ \mbox{in every world here}),
+W(o_A, o_B) = J(o_A, o_B)^2,\qquad J(o_A, o_B) = \sum_\ell c_\ell\,U_a[o_A][\ell]\,U_b[o_B][\ell],
 \label{eq:joint}
 \end{equation}
-and the record is gathered once, when the rows at both arms have ended:
+$c_\ell$ the labels' declared weights, $(1, 1)$ in every world here; and
+the record is gathered once, when the rows at both arms have ended:
 the world's row carries both outcomes at the completion interval, so the
 near party's outcome is written at the far party's tick. Reading the
 ladder in that order is the same as a coarse rung over $o_A$ followed by
@@ -339,8 +341,8 @@ and re-emits at age $0$; given that line it is injective on the
 amplitudes by Theorem~\ref{th:isometry}, and without it two rows
 differing only in age have the same image: the split is inverted only
 because the click line records what it absorbed. $R$ is injective
-because $U_s^{\mathsf T}U_s$ is diagonal with positive entries ($n_s I$ at
-$t = 0$). $M$ replaces a
+because $U_{s,t} = U_s\,\mathrm{diag}(1, v(t))$, the turn a bijection and
+$U_s^{\mathsf T}U_s = n_s I$. $M$ replaces a
 representative by the normal form of the same element of $M_r$, the
 identity on the module. A composition of injective linear maps is
 injective. The collision permutes the directions of the amount-$1$ rows
@@ -504,8 +506,8 @@ $34/15/15$, when the per-Node coherence rule was decided at the review of
 the implementation's third stage; every other row's expectation stood
 from before its first run \cite{register,log}.
 
-\begin{table}[H]\centering\small
-\begin{tabular}{llll}
+\begin{table}[H]\centering\footnotesize
+\begin{tabular}{p{1.45in}p{1.15in}p{1.35in}p{2.15in}}
 \toprule
 World & Reading & Registered & Expected before the run\\
 \midrule
@@ -524,7 +526,7 @@ which-path read on one arm & $E \times 64$ & $44, -44, 0, 0$; $S = 88/64$ & the 
 no maintenance, 116 Links farther & $E(16, 24) \times 64$ & $44$ ($0$ with the read) & the same\\
 GHZ, XXX & the allowed triples & $+++, +--, -+-, --+$, 16 each; product $+1$ & the same, the other four exactly 0\\
 GHZ, XYY, YXY, YYX & & $++-, +-+, -++, ---$, 16 each; product $-1$ & the same\\
-CNOT on $H|0\rangle|0\rangle$, then the pair & $S$ & $176/64$ & the same; CNOT twice the identity; GHZ by one gate the same triples with the products $-1$ (XXX), $+1$ (the others), this convention's $H$\\
+CNOT on $H|0\rangle|0\rangle$, then the pair & $S$ & $176/64$ & the same; CNOT twice the identity; GHZ by one gate the same two sets of triples, exchanged between the bases, the products $-1$ (XXX), $+1$ (the others), this convention's $H$\\
 the register's ceiling & label rotations on one path & three fit, four refused at load & the same\\
 The pair, $N = 1024$ & $E \times 1024$; $S$ & $724, -724, 724, 724$; $2896/1024$ & the same\\
 The pair, $N = 4096$ & $E \times 4096$; $S$ & $2900, -2900, 2892, 2892$; $11584/4096$ & the same\\
@@ -659,7 +661,8 @@ $65536$, the rotation is an isometry only up
 to that, and the record's total over $u$ takes eight values.
 \item Not a fixed $N$, hence not a prediction of nature's $S$: a
 constraint on $N$ under stated assumptions.
-\item Not a continuum limit, not spin or polarization (the labels are
+\item Not a continuum limit of the model as a whole (Section~\ref{sec:limits}
+states the computed limits), not spin or polarization (the labels are
 abstract), not bosons or fermions, not Lorentz invariance (one speed for
 every direction, no boost), not the classical limit as click density
 (proposed, not run), not a treatment of noise or detector inefficiency.
@@ -706,8 +709,9 @@ quantum is the click: sharp per record (a distinguishing click removes
 every other combination at once) and continuous over births by the
 density of clicks; a partial which-path device is a different apparatus
 and a different world in this model: a phase window admitting part of
-the circle on one arm of the Mach-Zehnder, computed from the rule
-\cite{checks}, gives neither the linear nor the quadratic duality
+the circle on one arm of the Mach-Zehnder, a rule outside
+Definition~\ref{def:rules} that reads the row's phase and so $u$,
+computed from the rule \cite{checks}, gives neither the linear nor the quadratic duality
 relation between visibility and path knowledge, and an absorber count
 that depends on the arm phase and on the window's centre, because the
 window and the ruler read the same $u$; this is an open problem of the
@@ -742,11 +746,11 @@ result of this paper.
 \section{Continuum limits: what returns and what does not}\label{sec:limits}
 
 A model in integers is judged also by what it returns as its resolution
-grows, as a Fourier sum returns $\pi$. Three limits follow from the
-definitions and are computed in \cite{checks} (\texttt{limits.txt} for
-Tsirelson and Young, \texttt{information\_transfer.txt} for the cone),
-two conservations hold exactly, and two limits do not follow and are
-stated as such.
+grows, as a Fourier sum returns $\pi$. Two limits follow from the
+definitions and are computed in \cite{checks} (Tsirelson in
+\texttt{limits.txt}, the cone in \texttt{information\_transfer.txt}), a
+third (Young) is partial, two conservations hold exactly, and two limits
+do not follow and are stated as such.
 
 \paragraph{Tsirelson's value as a limit.} The bound of
 Theorem~\ref{th:bell} has two terms, $2/N$ from the ladder's rungs and
@@ -755,7 +759,7 @@ every run of this paper). As $N$ and $Q$ grow both vanish: $S(N, Q) \to 2\sqrt2$
 computed values are $S = 2.75$, $2.8125$ and $2.828125$ at $N = 64$, $256$
 and $1024$, unchanged by $Q$ from $256$ to $2^{20}$ at these $N$ (the rungs
 decide), with the bound $0.125$, $0.031$ and $0.0078$ at $Q = 2^{20}$
-($0.169$, $0.075$ and $0.052$ at $Q = 256$). The
+($0.169$, $0.076$ and $0.052$ at $Q = 256$). The
 finite-$N$ departures of Section~\ref{sec:bell} are the terms of this
 limit, not a second law.
 
@@ -797,9 +801,11 @@ intervals: $0.07$ in an idealised two-path computation at this
 wavelength, $0.02$ on the world itself. The limit of every direction with
 its angular weight returns Young's pattern up to a plateau at $0.90$ (a
 plateau whose cause is not computed here); the same map predicts, for a
-wheel, the angular fan and the exact phase, fringes at the Euclidean
-spacing with visibility $0.96$ over $4096$ births, a prediction pinned
-before its run \cite{log}; the registered run is far from it, and the
+wheel, the screen's fan (one direction per pixel from each opening, equal
+multiplicity) and the exact phase, fringes at the Euclidean spacing with
+visibility $0.96$ over $4096$ births, a prediction pinned before its run;
+for the angular fan alone it pins fringes in the weights and none in the
+clicks until the wheel \cite{log}; the registered run is far from it, and the
 paper does not claim the fringes.
 
 \paragraph{Conservation, not yet a continuity equation.} Two things are
@@ -822,15 +828,16 @@ field equations of gravitation are not reachable from a model without
 mass: the program's rule that held content delays the flight would give,
 in the limit, an optical metric and its geodesics, not the equation the
 delay field obeys; that derivation is open and listed in
-Section~\ref{sec:hyp}. The paper claims the three limits and the two
-conservations above and neither of these two.
+Section~\ref{sec:hyp}. The paper claims the two limits, the partial third
+up to its plateau, and the two conservations above, and neither of these
+two.
 
 \section{Literature and positioning}\label{sec:lit}
 
 The click is a non-local step, forced by Bell's theorem because the
 marginals are exact and $S > 2$ \cite{bell1964,chsh1969}; it is
 parameter-dependent at fixed $u$ in the sense of the causal anatomy of
-\cite{paper1} \cite{jarrett1984,shimony1986}; no-signalling is
+\cite{jarrett1984,shimony1986} as \cite{paper1} used it; no-signalling is
 Theorem~\ref{th:marginals}, as it is a theorem of quantum mechanics
 \cite{grw1980}.
 
