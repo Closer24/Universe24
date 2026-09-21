@@ -1,0 +1,57 @@
+A. NATURE AT THE SUN'S LIMB
+   k = G M / (r c^2) = 2.123e-06; Newton's 2 k = 0.876 arcsec; Einstein's 4 k = 1.752 arcsec (Dyson, Eddington and Davidson 1920: 1.98 +- 0.16, 1.61 +- 0.40; VLBI gamma = 0.99992 +- 0.00012)
+   the factor 2 over Newton: the time part (the clock's potential, g_00) and the space part (g_rr) of the weak isotropic metric, one each; Cassini fixes it to 2 x 10^-5
+
+B. SERIES K'S MASS ON THE LATTICE: THE PRESENCE P AND THE AGE MOMENT A ON THE BEAM'S LINE (host, from the flight lines)
+   mass: M = 2^12 (1 row per direction per interval), b = 6; the beam's line y = 26, z = 20
+     x:     2    6   10   14   18   22   26   30   34   38   42   46   50   54
+     A(y+1)   47   79    0   27   21    0   38   38    0   21   27    0   79   47
+     A(y)     91   40   33    0   20   15   34   34   15   20    0   33   40   91
+     A(y-1)   91   77   33   26   19   27   28   28   27   19   26   33   77   91
+     P(y)      2    1    1    0    1    1    3    3    1    1    0    1    1    2
+     at the mass's plane x = 28: P = 2, A = 21 (the README's shell-mean estimate: P 1.10, A 11.4)
+     the beam's nine Nodes at the plane, mean P 2.33, mean A 22.7
+   heavy: M = 2^13 (2 row per direction per interval), b = 6; the beam's line y = 26, z = 20
+     x:     2    6   10   14   18   22   26   30   34   38   42   46   50   54
+     A(y+1)   94  158    0   54   42    0   76   76    0   42   54    0  158   94
+     A(y)    182   80   66    0   40   30   68   68   30   40    0   66   80  182
+     A(y-1)  182  154   66   52   38   54   56   56   54   38   52   66  154  182
+     P(y)      4    2    2    0    2    2    6    6    2    2    0    2    2    4
+     at the mass's plane x = 28: P = 4, A = 42 (the README's shell-mean estimate: P 2.20, A 22.8)
+     the beam's nine Nodes at the plane, mean P 4.67, mean A 45.3
+   near: M = 2^12 (1 row per direction per interval), b = 3; the beam's line y = 23, z = 20
+     x:     2    6   10   14   18   22   26   30   34   38   42   46   50   54
+     A(y+1)    0   38  128  100    0   25   31   31   25    0  100  128   38    0
+     A(y)      0    0   31   49   55   23   19   19   23   55   49   31    0    0
+     A(y-1)    0    0    0    0   52   34   15   15   34   52    0    0    0    0
+     P(y)      0    0    1    2    3    2    3    3    2    3    2    1    0    0
+     at the mass's plane x = 28: P = 6, A = 29 (the README's shell-mean estimate: P 4.40, A 22.8)
+     the beam's nine Nodes at the plane, mean P 5.44, mean A 26.3
+   The fan's grain: a Node on one of the 290 lines reads that line's rows (about 2 per Link of dwell at the ages of the flight); a Node off every line reads 0; the shell mean is the continuum's M / r^2 and M / r (series E).
+
+C. THE DEFLECTION PER LINK AND SUMMED ALONG THE PATH (Fermat on n = 1 + f k_a: d theta = f (n_s / d_s) x (A(y+1) - A(y-1)) / 2 per Link in x)
+   per unit of the pair (n_s / d_s = 1), the lattice's sum over x = 2 .. 54 of the transverse difference of A across the beam's line, against the continuum's 2 f A(b) with A(b) the shell mean at b:
+   mass (b = 6), f = 2: the lattice's summed gradient -663.0 per unit pair; the continuum 2 f A(b) = 48.1 (A(b) = 12.0); at the pin pair [1, 4096] and the mass x 16: -2.5898 rad (lattice) against 0.1880 rad (continuum; the design's 0.178)
+   mass (b = 6), f = 1: the lattice's summed gradient -331.5 per unit pair; the continuum 2 f A(b) = 24.1 (A(b) = 12.0); at the pin pair [1, 4096] and the mass x 16: -1.2949 rad (lattice) against 0.0940 rad (continuum; the design's 0.178)
+      the Links where the transverse difference is not 0: 49 of 53; the largest +13 at x = 15, the smallest -42 at x = 4 (the sign: A grows toward the mass, y decreasing, so the difference is negative and the turn is toward the mass)
+   heavy (b = 6), f = 2: the lattice's summed gradient -1326.0 per unit pair; the continuum 2 f A(b) = 96.3 (A(b) = 24.1); at the pin pair [1, 4096] and the mass x 16: -5.1797 rad (lattice) against 0.3760 rad (continuum; the design's 0.355)
+   heavy (b = 6), f = 1: the lattice's summed gradient -663.0 per unit pair; the continuum 2 f A(b) = 48.1 (A(b) = 24.1); at the pin pair [1, 4096] and the mass x 16: -2.5898 rad (lattice) against 0.1880 rad (continuum; the design's 0.355)
+      the Links where the transverse difference is not 0: 49 of 53; the largest +26 at x = 15, the smallest -85 at x = 4 (the sign: A grows toward the mass, y decreasing, so the difference is negative and the turn is toward the mass)
+   near (b = 3), f = 2: the lattice's summed gradient +840.0 per unit pair; the continuum 2 f A(b) = 96.3 (A(b) = 24.1); at the pin pair [1, 4096] and the mass x 16: +3.2812 rad (lattice) against 0.3760 rad (continuum; the design's 0.355)
+   near (b = 3), f = 1: the lattice's summed gradient +420.0 per unit pair; the continuum 2 f A(b) = 48.1 (A(b) = 24.1); at the pin pair [1, 4096] and the mass x 16: +1.6406 rad (lattice) against 0.1880 rad (continuum; the design's 0.355)
+      the Links where the transverse difference is not 0: 47 of 53; the largest +64 at x = 10, the smallest -26 at x = 18 (the sign: A grows toward the mass, y decreasing, so the difference is negative and the turn is toward the mass)
+   The lattice's line sum is the grain's: the beam's line crosses the fan's lines at a few Nodes, where the difference is tens per Link, and reads 0 between them; the continuum's 2 f A(b) is what the shell means give. On the fan the turn is whole steps of THETA_G (2.4 degrees at the smallest), the design's dither over records (gr_rows/DESIGN.md section 4).
+
+D. THE THREE CANDIDATES OF THE OWNER'S HYPOTHESIS, WHAT EACH READS AT b = 6 (M = 2^12), THE CLOCK'S k AND THE ROW'S TURN
+   per unit pair: at the beam's Node on the mass's plane the presence word gives k_s = 2.0000, the age word k_a = 21.0000 (the shell mean's k_a(b) = 12.0333)
+      (A) the age word for the rows only (optical-v1's verbs on the rows, the clock counting the presence): the row turns by 2 f k_a(b) = 48.1333 rad at f = 2 toward the mass and is delayed as the potential's logarithm; a clock at the same Node runs at 1 / (1 + k_s) = 0.3333, the M / r^2 form that GPS and Galileo refute at two heights: two different fields from one stream for two readers, no one metric
+      (B) the age word for the clock only (the law as decided, record 394; the flight blind to the crowd): the row turns 0 (series K's 0.000 stands) and is not delayed; the clock runs at 1 / (1 + k_a) = 0.0767, the potential's form; the bending of light NOT reached, the disagreement with nature (the physicist's entry 2) stands
+      (C) the age word for both (clock-age-v1 and optical-v1 with the declared f): one index n = 1 + f k_a for the rows and the clock's 1 + k_a: the row turns by 2 f k_a(b) = 48.1333 rad at f = 2 (24.0667 at f = 1, Newton's), is delayed by (f k_a(b) b / c) ln(4 r1 r2 / b^2), and the clock beside it runs at 1 / (1 + k_a): the time part of the metric is the clock's word, the space part is the second unit of f; the 2 is declared, not derived from the verbs
+   the design's pin pair [1, 4096], the mass x 16: at the beam's Node on the mass's plane the presence word gives k_s = 0.0078, the age word k_a = 0.0820 (the shell mean's k_a(b) = 0.0470)
+      (A) the age word for the rows only (optical-v1's verbs on the rows, the clock counting the presence): the row turns by 2 f k_a(b) = 0.1880 rad at f = 2 toward the mass and is delayed as the potential's logarithm; a clock at the same Node runs at 1 / (1 + k_s) = 0.9922, the M / r^2 form that GPS and Galileo refute at two heights: two different fields from one stream for two readers, no one metric
+      (B) the age word for the clock only (the law as decided, record 394; the flight blind to the crowd): the row turns 0 (series K's 0.000 stands) and is not delayed; the clock runs at 1 / (1 + k_a) = 0.9551, the potential's form; the bending of light NOT reached, the disagreement with nature (the physicist's entry 2) stands
+      (C) the age word for both (clock-age-v1 and optical-v1 with the declared f): one index n = 1 + f k_a for the rows and the clock's 1 + k_a: the row turns by 2 f k_a(b) = 0.1880 rad at f = 2 (0.0940 at f = 1, Newton's), is delayed by (f k_a(b) b / c) ln(4 r1 r2 / b^2), and the clock beside it runs at 1 / (1 + k_a): the time part of the metric is the clock's word, the space part is the second unit of f; the 2 is declared, not derived from the verbs
+
+E. WHAT IS DERIVED AND WHAT IS CONDITIONAL, for the owner's question
+   derived on the GameBoard: the presence falls as M / r^2 and the age moment as M / r from the same rows (series E: k_s r^2 = 41.5, k_a r = 36.1; the fan's dilution as the shell), the push as minus the gradient of A (5.1), the clock at 1 / (1 + k_a) (5.2, first order), the bending's FORM M / b and its sign from any turn that reads a transverse gradient (the meeting's grain, optical-v1's index), the delay's logarithm from a pace that reads A along the path (optical-v1 verb 1)
+   conditional: the factor 2 of Einstein over Newton (declared as f in optical-v1; a derivation would need the space part from the verbs, a row's Link that shortens beside a mass, which no verb of the six gives: the flight table is one speed and the Links are the lattice's), the identification k_a = G M / (r c^2) (the suspension pair sets the scale, nature fixes it by one clock), the field equation beyond the static case (A obeys the retarded scalar wave equation of a stream, 5.1; Einstein's nonlinear equation is not this, 5.5)
