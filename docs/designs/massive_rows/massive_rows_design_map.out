@@ -1,0 +1,37 @@
+1. THE MOMENTUM LABEL AND THE ENERGY PER DIRECTION OF THE PIN WORLD'S TABLE (load-time integers, the class of T_D's)
+   the table: the six headings and the 1326 declared directions of slits_huygens (the openings' Farey fan by angle); the lamp's own 5: [(1, 0, 0), (1, 1, 0), (1, -1, 0), (2, 1, 0), (2, -1, 0)]
+   E'_0 = Q S M = 4096 (S = 1, M = 64); p = 220; h = 1024; N = 64
+   |p_D| over the table: 219.32 to 220.64 (the rounding within sqrt 3 / 2 = 0.87 of 220: 0.29 percent at most)
+   E'_D = isqrt(E'_0^2 + 3 p_D . p_D): 4113 to 4113 (W = 16922416 at |p| = 220 exactly: E' = 4113); gamma = E' / E'_0 = 1.00415
+   the Euclidean pace |p_D|_2 / E'_D: 0.05332 to 0.05364, the mean 0.05349 (the isotropy the rounding's: 0.60 percent spread); the photon's 1 / sqrt 3 = 0.5774, this pace 0.0926 c
+   examples (D: p_D, |p_D|, E', the rate |p_D|_1, the wall E', the Manhattan pace |p|_1 / E'):
+      (1, 0, 0): (220, 0, 0), 220.00, 4113, 220, 4113, 0.05349
+      (-1, 0, 0): (-220, 0, 0), 220.00, 4113, 220, 4113, 0.05349
+      (0, 1, 0): (0, 220, 0), 220.00, 4113, 220, 4113, 0.05349
+      (1, 0, 0): (220, 0, 0), 220.00, 4113, 220, 4113, 0.05349
+      (1, -1, 0): (156, -156, 0), 220.62, 4113, 312, 4113, 0.07586
+      (2, -1, 0): (197, -98, 0), 220.03, 4113, 295, 4113, 0.07172
+      (2, 1, 0): (197, 98, 0), 220.03, 4113, 295, 4113, 0.07172
+      (1, 1, 0): (156, 156, 0), 220.62, 4113, 312, 4113, 0.07586
+      (3, 38, 0): (17, 219, 0), 219.66, 4113, 236, 4113, 0.05738
+      (1, 13, 0): (17, 219, 0), 219.66, 4113, 236, 4113, 0.05738
+
+2. THE TURN PER AXIS LINK AND THE FLIGHT'S ACCUMULATOR (the row's two rates)
+   the turn: at a Link crossed on the axis a the phase turns by_drive(acc_turn, |p_a| N, h) steps: on a heading |p| N / h = 14080 / 1024 = 13.75 steps per Link; de Broglie's wavelength h / p = 4.6545 Links (the photon world's 4.654)
+   the flight: the accumulator's rate 2 |p_D|_1 against the wall 2 E'_D, started at E'_D (today's convention, rate 2 S_1 Q against 2 T_D at the half): the photon case E'_0 = 0 with p = Q D gives the rate 2 S_1 Q and the wall 2 isqrt(3 Q^2 |D|^2) = 2 T_D to the integer, one primitive for every row
+   the bounds: E'^2 = 16916769 < 2^62; the turn's numerator |p_a| N <= 14080 and the accumulator below h + |p_a| N; the phase-count vectors of the click as today
+
+3. WHAT THE CLICK PLACES, AND THE BOOKS
+   the openings re-release an arriving row of amount w as 1327 rows of amounts w a_i (the weights 123 to 5619, the sum 783863) with the multiplicity m x A, A = sum a_i^2 = 714364777: the copies of one quantum over the fan, as the photon's
+   at the click the chosen row's direction D gives the momentum p_D and the content placed is ONE quantum, M = 64 (the family's quantum per unit of the birth's amount 1), whatever the amplitude weight w a_i of the chosen row; the rest of the record's units are cancelled as the photon's are (the books: initial + released = current + escaped + absorbed + cancelled)
+   the recoil at a re-release: the wall takes p_D' - p_D per re-emitted row on its own momentum (fixed: no step), as it takes the photon's; the lamp takes -p_D per row born
+   the lamp's budget: 4096 births x 5 rows x 64 = 1310720 units of content at the births; the lamp's amount 1073741824 (content 68719476736) holds it 52429 times over
+
+4. THE PIN'S ARRIVALS WITH THE LAMP-TO-OPENING FLIGHT COUNTED (section 23.3 counts from the opening)
+   the centre pixel 60: the paths from the openings 44.28 and 44.28 Links, 828 and 828 intervals at the pace 0.05349 (section 23.3's numbers); the lamp at x = 2 to the opening at x = 8: 6 Links more, 112 intervals (the photon's 10), so the first click at the tick about 941 to 941
+   the first-fringe pixel 36.7: the paths from the openings 47.65 and 52.32 Links, 891 and 978 intervals at the pace 0.05349 (section 23.3's numbers); the lamp at x = 2 to the opening at x = 8: 6 Links more, 112 intervals (the photon's 10), so the first click at the tick about 1004 to 1091
+   the last birth at 4096 arrives by about 4096 + 112 + 978 = 5186: the run needs about 5250 intervals (section 23.3's 5100 counted from the opening)
+
+5. THE HOST COST AGAINST slits_huygens (host numbers)
+   a row lives from its birth to its click about 86 intervals for the photon and 940 for the massive row (10.9 times), so with a birth per interval the rows in flight at once are 10.9 times slits_huygens' and the work per interval with them
+   slits_huygens ran 4300 intervals in 1334 s (0.31 s per interval); slits_matter at 4096 births and about 5250 intervals: about 4.9 hours; at 1024 births (the wheel [633, 1024], the golden rate at W = 1024) and about 2200 intervals: about 2.1 hours; the records in proportion
