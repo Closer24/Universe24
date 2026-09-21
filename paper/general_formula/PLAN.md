@@ -2347,3 +2347,30 @@ restated for the 22.5-degree run, said in the paper's row 9; the Malus
 note's bibitem says run since as A12 and A12 extended; "standard errors"
 at N = 256 in the Bell section. CLEAN WITH NOTES.
 
+## Wave 26 (2026-09-21): main e2faf65c merged; replications round 2 (part 1) and the series letters
+
+PR 601: series T, the cone (L7), the (3, 4) split at N = 32 and 128, the
+two slits (L2, L2b) and the click's gate set REPLICATED (19 worlds, no
+FAIL): the clock sentence, NATURE row 12, the register paragraph, the
+flight row and Young's row say measured and replicated; the
+replications bibitem and Reproducibility name round 2's trees, 5fbd0c7
+and afb533a for series T. PR
+595: a lamp inside a crowd is series U and a cluster of crowds series V
+in the register's documents; "its retitling pending" dropped. A slip on
+the tree, reported to the Boss and not edited here: the same PR
+retitled examples/events/README.md's hand series from P to U and c
+measured from Q to V, while docs/EXPERIMENTS.md keeps "P, the hand" and
+"Q, c measured", so the README now carries two series U and two series
+V; the paper keeps P and Q for the hand and c measured as the
+experiments register has them. Reproducibility: main merged at
+e2faf65c. Referee round 48 before the commit.
+Referee round 48: FAIL on two lines, fixed: round 2 ran on two trees
+(5fbd0c7; afb533a for series T alone), said in the bibitem and in
+Reproducibility; a NUMBERS row for round 2 as a whole. His notes
+applied: row 12's replication moved out of the five PASS's parenthesis;
+the 48 images not run on slits_huygens, said in Young's row and the
+bibitem; the clock's word register's map pending; main b7ddf93f (the
+open-problems note on Lorentz, docs only) merged, Reproducibility
+follows. CLOSURE.md, the closure list for the arXiv cut, added on the
+Boss's order of 14:47Z (referee round 49). CLEAN WITH NOTES.
+
