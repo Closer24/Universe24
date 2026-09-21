@@ -53,6 +53,7 @@ at its first use. The recurring symbols:
 | **D**, `u_d`, `T_d`, `S_1` | vector, vector, scalar, scalar | a direction of the world's table, its unit vector at the scale Q, its period `isqrt(3 abs(D)^2 Q^2)`, its Manhattan length |
 | c | scalar | the pace of a row, `Q / T_d` Links per interval on the axis (`32 / 55`) |
 | Q, N, K, h | scalars | the direction table's scale (64), the circle of the phase, the world's content quantum, the world's action quantum |
+| K (section 13 only), `K_clock` | scalars | the computation budget of one Node per interval; in section 13 the world's content quantum is written `K_clock` |
 | M, k, q | scalars | a body's content (its mass); a crowd or a coupling count; a charge (in sections 2.5 and 5.5, q is the deceleration parameter of the Hubble fit, stated there) |
 | n / d | rational | the declared phase rate per interval |
 | u | scalar | the birth phase of a record, the wheel `ordinal mod N` |
@@ -81,7 +82,7 @@ cited as orders, not as code.
 
 Section 0 states the law as one operator with its two blocks and places
 every result under its block (the owner's second pass, record 167 as the
-Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field). The
+Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field); section 13 answers record 209 (the one constant K, the computation per Node per interval). The
 targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
@@ -2927,3 +2928,261 @@ closed form and never as an operation. (vi) The seventh verb is not
 needed for `gamma` to appear in a period; it is needed for `gamma` to
 slow a body's own counter or to contract its bond (lorentz-v1), which
 nothing of the six derives.
+
+## 13. The one constant K: the fixed computation per Node per interval, what it explains, what it bounds, what it leaves free
+
+**The question** (the owner's, 2026-09-21, translated: "can one define
+the total computation as a given that must be constant? then it could
+explain many derived parameters"; the Boss's answer and order, record
+209). In this section K is the computation budget of one Node per
+interval, the number of integer operations a Node may do whatever is at
+it; the world's content quantum, written K elsewhere in this document,
+is written `K_clock` here. A constant TOTAL computation over a growing
+GameBoard is the stepping form's reading of K (section 11.4: the
+stepping visits every Node, the event form visits the events) and is
+deferred to section 15 with the owner's addendum on the growing lattice.
+
+### 13.1 What the law already fixes
+
+Highlights 3.12 (local bounded processing): "each Node performs one
+bounded local update per tick using fixed-capacity channels, bounded
+payloads and identifiers, and six adjacent connections; per-Node work
+and storage must not grow with world size or elapsed history". LOCALITY-1
+(SIMULATOR_DEFINITIONS.md): "for fixed K and fixed-width integers, its
+work and stored state must be O(1) with respect to world size, source
+count, elapsed ticks and traveled distance". So the given is per Node: K
+integer operations per interval and a fixed store, the same K at every
+Node; a global constant is not admissible (no global quantity; the
+world's total is the sum over the active Nodes, section 11.4). Two
+precisions the code forces. (i) As built the work at a Node is
+proportional to the rows at it (the walk, the reading and the click are
+per row, `nature_beam.py:2441-2565`, `358-397`, `amplitude.py:562-565`),
+and the rows at a Node are bounded only through the merge: rows of one
+number, content, direction, age, phase and record fuse (`4149`), so a
+free family has at most `P x L_D x N` distinct rows per Node per number
+(the fan, the flight's period, the circle), a bound that is a function of
+the widths; rows of different records never fuse, so under the amplitude
+key the rows per Node grow with the open records (ENGINE.md: "the host's
+work and memory per interval follow the open records"). K is therefore
+a requirement the widths realise for the free families and a host cost
+for the records, as 3.12 says of itself ("accepted requirements; their
+encounter implementation still needs verification"). (ii) Two of the
+interval's stages are host operations over every row, not per Node: the
+store's sort before the merge (`NatureBeamStore.sort`, `1117`) and the
+layer's ladder at a record's completion (`amplitude.py:681-776`); in the
+event form of section 11 both are per Node and per record.
+
+**The operations that count, per interval, from the code** (integer
+operations; a lookup, an add, a multiply, a compare or a floor division
+each one):
+
+| Operation | Per | Count | Where |
+| --- | --- | --- | --- |
+| the walk: the flight table's step (a mod and a lookup), the three coordinates, the wrap or the face, the flat index, the phase per Link, the phase per age (`by_clock_rows`), the age | row | about 16 | `nature_beam.py:2441-2565` |
+| the reading: the moment table's 13 columns (2 counts, 3 flow, 6 tensor, 2 age) and their sums per Node | arriving row | 26 | `358-397`, `439-486` |
+| the collision: the class key, the 8-slot code, the table's lookup, the permutation | Node with two singles of one class | about 20 | `2345-2390` |
+| the push: per column and axis one product and one `by_drive` (an add, a division, a compare, a subtraction) | body, per group of arrivals | 5 x 3 x columns (30 with gravity and charge) | `2180-2277` |
+| the turn, the owed count, the release per family, the lamp: one `by_drive` each | body | 5 each | `engine.py:442-509`, `nature_beam.py:3599-3606` |
+| the drive: one `by_drive` per axis (three today; one under form B) | body | 15 (5) | `engine.py:585-600` |
+| a release: one row born per direction of the fan, the apportioning's share | releasing body | 12 P (P rows of 12 fields) | `3618-3644`, `3804` |
+| the click: the pointer (2 products, 2 adds), the residual per channel (a `cmul`, 6) | ending row | 10 | `amplitude.py:562-599` |
+| the merge: the identity key per row; the sort over the store (host, `R log R`) | row | about 10, plus the host's sort | `1117-1237` |
+
+### 13.2 The four consequences, proved or bounded
+
+**(a) c = 1 / sqrt 3, the flight's cap.** What K gives: one interval's
+work on a row is one carry of its Manhattan accumulator at most (`2 S_1
+Q <= 2 T_D`, the rate below the wall: at most one Link per interval, the
+walk's causal bound, LOCALITY-1's "six causally available neighbour
+records"), and the digital line of a direction **D** makes exactly `S_1 =
+|D|_1` Links per period, the least number of Links any lattice path from
+the Node to the Node at **D** can make (the L1 distance): the least
+computation per Euclidean progress, one carry per Link. What K does not
+give: the value `1 / sqrt 3`. One Link per interval on every direction
+would let a heading row fly at 1 Link per interval and a cube-diagonal
+row at `sqrt 3` per interval; the same Euclidean pace in every direction
+(the flight table's isotropy, `T_D = isqrt(3 |D|^2 Q^2)`) is a second
+axiom, and it fixes the pace at the diagonal's, `1 / sqrt 3`, the largest
+isotropic pace that crosses at most one Link per interval on every line
+(`S_1 Q <= T_D`, Cauchy-Schwarz with equality on the diagonals: c is the
+operator norm of the flight, record 186). **Partial**: K fixes the bound
+(one carry per interval, the Manhattan count as the least computation),
+isotropy fixes the number; the count against K is the walk's 16
+operations per row per interval, and 1 carry per `T_D / (S_1 Q)`
+intervals (1.72 on a heading, 1.22 on a face diagonal, 1 on a cube
+diagonal).
+
+**(b) The clock's slowing by the crowd as a computation budget.** A body
+that self-creates reads the rows at its Node (the presence k, or the age
+moment) and owes `by_drive(acc_owed, k n, d)` intervals before its next
+self-creation (`engine.py:496-509`; section 9.2): the wait is
+proportional to the crowd. The reading costs 26 operations per row
+(13.1), so reading k rows costs `26 k` operations; if a Node's budget is
+K per interval, the reading of k rows takes `26 k / K` intervals, and the
+owed count is exactly that cost if and only if the world's suspension
+pair is the reading's cost over the budget,
+
+    [n, d] = [26, K]      (or [c_read, K] with c_read the reading's operations per row).
+
+Then the gravitational slowing of a clock, `1 / (1 + k n / d)` (section
+5.2, series E's `k_s r^2 = 41.5`), is the fraction of the body's
+intervals its reading consumes: a body in a denser crowd self-creates
+less often because its Node's budget is spent on reading. **Partial**,
+and the register decides how far it holds: the suspension pair is a
+declared key, `[1, 1]` in series E's `scalar` world and `[1, 2]` in its
+`age` world (section 5.1), so under the budget reading those two worlds
+have `K = 26` and `K = 52` operations per interval, two budgets and not
+one; and the `age` world reads 13 columns where the `scalar` world needs
+11 (no age moment), a ratio `11 / 13` and not `1 / 2`. So the owed count
+is a computation budget in form (the wait proportional to the rows read,
+one `by_drive` on the body's record) and the register's two suspensions
+are not one K: what would make them one is a rule "the suspension of
+every world is `[c_read, K]`", a declaration of K, which the law does not
+have. The count against K: 26 per row read plus 5 for the owed count's
+carry.
+
+**(c) The click's one bit per record.** The click reads one comparison
+per record, the cell of u on the ladder (`cell_of`, `amplitude.py:208`),
+and deletes the record: at most `log2 (cells)` bits leave the rows
+(section 6.1, the Holevo identity). Is the one read-out a consequence of
+K? The ladder over `cells` cells costs `cells` comparisons and the lcm of
+the multiplicities, once per record at its completion, on the host (the
+layer, principle 5: the apparatus's one non-local operation): K bounds
+its length, `cells <= K`, only if the ladder is counted as the Node's
+work in the interval of the completion, and then the bits per record are
+bounded by `log2 K`. The ONE read-out per record (one cell, not several)
+is Definition 3 of the click, a design, not a consequence of K: a click
+reading two cells would cost two comparisons and fit any K above 2.
+**Bounded, not explained**: K bounds the bits per record by `log2 K`;
+the one bit is the click's definition. The count: `cells` comparisons
+per record, 10 operations per ending row.
+
+**(d) The reading's rank-2 limit.** The moment table has 13 columns per
+row (13.1): the counts, the flow (rank 1), the traceless tensor (rank 2,
+six entries), the age. A rank-r moment adds the symmetric monomials of
+degree r, `(r + 1)(r + 2) / 2` columns (10 at rank 3, 15 at rank 4), so
+the reading's cost per row is `2 + sum over the ranks kept of (r + 1)(r
++ 2) / 2`, and for a Node reading k rows K bounds the rank: the largest r
+with `k x cost(r) <= K`. That is a bound, and at the register's K it is
+loose (13 columns against a budget of hundreds). What fixes rank 2 is
+the vector test (record 202): every rate is at most bilinear in the
+state, the push reads the flow (rank 1) times the reader's content and
+nothing reads the tensor as a rate (it is reported, `reads: tensor`,
+record 205: "the one rank-2 form and the contract's limit"), so a rank-3
+moment would be computed and read by no rule; the contract's tensor
+limit (ARCHITECTURE.md) is that statement as a bound of the code.
+**Bounded by K, fixed by bilinearity**: the count is 26 per row at rank
+2, 46 at rank 3, 76 at rank 4.
+
+### 13.3 The grain from K: the budget equation and the register's widths
+
+**The hypothesis.** If K is the one given, the widths N (the phase
+circle), P (the fan), Q (the pace's grain), W (the birth wheel) and
+`K_clock` (the clock's pair) are bounded or fixed by the cost of the
+operations that use them. **The costs, from 13.1:**
+
+- **P** enters the work directly: a release births P rows at one Node in
+  one interval (`12 P` operations, the apportioning's P shares), and a
+  re-emission at an opening births P per arriving row: `P <= K / 12` at
+  every source Node. P also enters the store through the flight table,
+  `P x (3 L_D + 3 S_1 + 3)` integers (the steps per period, the line,
+  the label).
+- **N** enters the store, not the work: the tables C and S are `2 N`
+  integers and the half-angle tables `4 N` (`core/phase.py`,
+  `amplitude.py:125-140`); the phase's operations per row (an add and a
+  mod) cost the same at every N. N is bounded by the word width (a
+  phase within 2^62; the tables' bound 65536, `MAX_PHASE_STEPS`) and by
+  the store per Node if every Node holds the tables.
+- **W** enters as one accumulator per record (`u = ordinal mod W`, or the
+  golden rate on `Z_W`): one integer of `log2 W` bits and one operation
+  per birth, whatever W.
+- **Q** and **`K_clock`** enter the word width only: the flight's
+  accumulator holds up to `2 T_D = 2 isqrt(3 |D|^2 Q^2)`, so `Q |D| <=
+  2^61 / sqrt 3` (the fan's radius and the pace's grain bound each other
+  through the word), the turn's product `content x n` must stay within
+  `2^62` and below `K_clock x N / 2` (the frame's refusal at half the
+  circle, `engine.py:475-489`), the push's `Lambda_c^2` within `2^62`.
+
+**The budget equation the law implies**, per Node per interval, with r
+the rows at the Node, a the arriving rows, b the bodies, e the ending
+rows and one release of P rows:
+
+    K >= 16 r + 26 a + 20 [collision] + b (30 + 15 + 20) + 12 P [release] + 10 e,
+    store >= 12 r + 6 N + P (3 L_D + 3 S_1 + 3) + 6561 (the collision table) + the bodies' tables,
+    word: Q |D|_max <= 2^61 / sqrt 3,  content x n < K_clock N / 2 <= 2^62,  Lambda_c^2 <= 2^62.
+
+**The register's choices against it.** N = 64 (the amplitude worlds; a
+store of 384 integers), P = 290 (the nucleus fan; 3480 operations at a
+release) and 1423 (the two-slit fan by angle; 17 076), Q = 64 with `|D|`
+up to 48 (`Q |D| = 3072` against `2^61 / sqrt 3`: fifty bits to spare), W
+= 4096 (twelve bits), `K_clock = 2^20` with contents up to `2^30`
+(thirty-two bits to spare). The largest per-interval cost on the register
+is a source Node's release, `12 P`, of order `10^3` to `10^4`, and the
+largest per-interval reading is the nucleons' (57 rows, 1482 operations)
+and a two-slit opening's (91 re-emissions per arriving row); the
+tables' costs are hundreds, the wheel's one operation, the word's bounds
+untouched by fifty bits. **The widths sit at several budgets, not one:**
+P at thousands of operations, N and W at hundreds of integers of store
+and one operation, Q and `K_clock` at the word width with most of it
+unused. Nothing in the register puts two widths at the same K, and no
+width is at a bound.
+
+**Are the widths free of K?** Yes, as the law stands: each width is a
+resolution chosen below its bound (record 189, kind (1)), K bounds P
+from above (`P <= K / 12`), bounds N and W through the store and the
+word, and fixes none of them. PREDICTIONS 26 stands as written: the
+widths are the sizes of finite samplings of compact groups, and what
+they quantise is what lives on those groups. **What would fix them:** one
+added principle, "every Node's budget is exhausted", that is, the widths
+as large as K and the store allow (`P = K / 12` at a source, `N` and `W`
+filling the store's remainder, `Q |D|` and `K_clock N` at the word
+width): then the one number K, with the word width, would fix P and
+bound the rest, and the law's grain would be the largest the budget
+admits. That principle is not in the law, and the register does not sit
+at it (fifty bits unused); it is stated here so that it can be chosen.
+
+### 13.4 What K cannot explain
+
+The family table: the contents M (a mass, on the non-compact scale,
+free: PREDICTIONS 26), the cost h, the charge per unit of content rho,
+the strong column, the lifetime L, the phase rate `n / d` and the hand
+(record 189, kind (2)); the world's width S (the push per unit of content
+per unit of flow, what physics calls Newton's constant); and the initial
+state, the GameBoard's extents and the bodies' positions, momenta and
+contents (kind (3)). K is a bound on the operations; these are the
+operands. Nor does K alone give c: it gives the causal bound, and
+isotropy gives the number (13.2 (a)).
+
+### 13.5 The three tests on the statement "K is the one constant"
+
+- **Generic**: passes. K is a bound with no family name, the same at
+  every Node for every family; its special cases (a row, a body, a lamp)
+  are counts of the same operations, not branches.
+- **Vector**: passes vacuously. K is not one of the six verbs and changes
+  no component of the state; it is a bound on how many verbs an interval
+  may apply at a Node, a constraint on the law's form, not a rule of the
+  state. Where it would enter the state (13.2 (b), the suspension as
+  `[c_read, K]`) it enters through an existing verb, the owed count's
+  `by_drive`.
+- **Local**: passes in the per-Node form and fails in the global one. A
+  budget per Node reads nothing beyond the Node; a constant total over
+  the board is a global quantity (LOCALITY-1's "no global field solve"),
+  admissible only as the sum the stepping form computes and not as a
+  rule any Node can read.
+
+### 13.6 The verdict of section 13
+
+**Reached** (K explains): the causal bound of one Link per interval and
+the Manhattan count as the least computation per Euclidean progress
+(13.2 (a), the bound half of c); the wait as the reading's cost in form,
+one `by_drive` on the body's record proportional to the rows read (13.2
+(b)). **Partial** (K bounds): the value `c = 1 / sqrt 3` needs isotropy;
+the bits per record are bounded by `log2 K` and fixed at one by the
+click's definition; the reading's rank is bounded by K and fixed at 2 by
+bilinearity; P is bounded by `K / 12` at a source, N and W by the store,
+Q and `K_clock` by the word; the register's widths sit at several
+budgets, none at a bound, so the widths are free of K and PREDICTIONS 26
+stands. **Free** (K leaves): the family table, the width S, the initial
+state, and the number `1 / sqrt 3` itself. The statement passes the
+three tests in its per-Node form and fails the local test as a global
+total.
