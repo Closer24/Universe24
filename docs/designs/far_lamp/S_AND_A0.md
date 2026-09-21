@@ -1,4 +1,4 @@
-# The width S and the acceleration floor: can S be derived, and is the push's rounding the "something else" behind the flat curves?
+# The width S, the acceleration floor and the far system read before any click: can S be derived, is the push's rounding the "something else" behind the flat curves, and does the unclicked reading make the edge's velocity constant?
 
 The model owner, 2026-09-21, after the dark-sector verdict (record 284,
 translated): "give the physicist a way to sort out the dark matter: if it
@@ -7,14 +7,20 @@ derived?" The Boss's two items: (A) whether the width S (the push per
 unit of content per unit of flow, what physics calls Newton's constant)
 can be derived from the structure with no free number; (B) whether the
 push's Euclidean division, the sixth verb, leaves an acceleration floor
-at weak fields that would play the part nature's `a_0` plays. Written by
+at weak fields that would play the part nature's `a_0` plays; and (D) the
+owner's own hypothesis (record 285, translated: "whether MOND and dark
+matter can be closed in one thing, maybe something connected to the
+clicks in the far galaxy, where there is no sensing, where all the
+possibilities still exist, so we see only the space of possibilities; I
+want to explain why one sees a constant velocity"), stated in the law's
+terms without the life assumption (record 277) and tested on paper. Written by
 the mathematician, read-only, on the law as it stands on main; the pins
 before the numbers; every number made by the host script
 [s_and_a0_map.py](s_and_a0_map.py) with its output
 [s_and_a0_map.out](s_and_a0_map.out); no run, no fit, no rule proposed.
 Notation per record 184; rows and bodies, not light and matter.
 
-**The two verdicts in one sentence each.** (A) None of the candidates
+**The three verdicts in one sentence each.** (A) None of the candidates
 derives S: the two of section 16.2 (e) are a choice of units and a
 refuted one, the budget form leaves `K_budget` unfixed, and a budget tied
 to the wall's H moves the input from S to H if H is the declared constant
@@ -22,7 +28,13 @@ and is refuted by lunar laser ranging if H is the running rate. (B)
 REFUTED: the push's divisions keep the remainder, so the floor is zero; a
 discarding floor would cut the weak field in a band, the wrong sign and
 the wrong shape against the radial acceleration relation; and the deep
-law a flat curve needs is a root of the state, not one of the six.
+law a flat curve needs is a root of the state, not one of the six. (D)
+REFUTED: the velocity a detector reads is the stream's arrival count,
+which no spread of the unclicked offers' labels or phases moves; a spread
+fixed at birth is bounded by the Solar System's planets read from the
+same detector, a spread growing with distance by the Tully-Fisher
+relation's independence of distance, and a cluster's dispersion is of
+the centres of many sources' lines, not a width.
 
 ## 0. The pins, before any number
 
@@ -161,9 +173,97 @@ on the gas and not on the galaxies unless unseen content is added there;
 this note proposes it not. No run is written for the owner's go, since
 no pin is met on paper.
 
+## D. The far system read before any click (the owner's hypothesis, record 285)
+
+**(1) The hypothesis in the law's terms, without the life assumption.**
+A far system's rows reach our detector with no click between their birth
+and our reading, so what we read is the click model's state before any
+click: the record's phase-count vector on the fan (amplitude-v1), the
+Gram form of the click without amplitudes (6.7), and the detector's
+moments of the arriving rows, order 0 (the presence), 1 (the flow), 2
+(the spread tensor) and the age (5.7's reading **R**), not one clicked
+path. This is true of every source in the law: the first click is at our
+detector for the Sun as for a far galaxy, since a row's flight is a
+translation and no click happens where no detector is. So the hypothesis
+predicts something for far systems and not for the Sun only through a
+quantity that grows with the distance or with the crowd met: on main
+there is none but the age and the count's dilution (a row reads nothing
+of the crowd, 5.4); under `meeting-v1` (off by default) the direction
+label turns one step of the table per N crowd units met and the phase
+gains the crowd met (5.4), so the spread of the labels over the fan and
+the width of the phase-count vector grow with the crowd met en route,
+while the wheel's freshness u is written at birth and does not.
+
+**(2) What such a reading gives for the Doppler at a galaxy's edge.** The
+velocity a detector reads of a moving lamp is the stream's arrival count
+against the release count, the crossing rule (section 2: the receiver's
+`1 +- v / c`, the source's `1 / (1 -+ v / c)`, exact over whole Links),
+the order-0 moment in time. A spread of the rows' direction labels or
+phases changes the moments of order 1 and 2 and the phase-count vector's
+width; it does not change how many rows arrive per interval. The script
+reads a lamp approaching at `v / c = 3 / 4`, one row per interval, with
+the labels spread over 0, 3 and 40 steps of the table and the phases over
+0, 16 and 63 steps: the arrival spacing over the release spacing is
+0.2500 in every case, `1 - v / c` unchanged. **No floor and no plateau**:
+a spread broadens the line (the spread tensor) and does not move its
+centre; a velocity read as constant where the orbital velocity falls
+would need a reading that maps a width to a shift, and no moment of the
+law does.
+
+**(3) The pins.** (i) The Solar System: the planets' Doppler is read from
+the same detector as a galaxy's, to 1 m/s (the radial-velocity method's
+precision, to verify against the source), a part in `2 x 10^5` of a
+galaxy's edge speed; a spread fixed at birth is bounded there, and
+Cassini bounds any extra field along the path (`gamma - 1 = (2.1 +-
+2.3) x 10^-5`, Bertotti, Iess and Tortora 2003, Nature 425, 374). (ii)
+The baryonic Tully-Fisher relation: `v_flat^4 = G M a_0`, the flat speed
+following `M^(1 / 4)` with 0.1 dex of scatter in M (Lelli, McGaugh and
+Schombert 2016, ApJ 816, L14; the slope 3.85 +- 0.09, Lelli et al. 2019,
+MNRAS 484, 3267) from 1 to 100 Mpc with no term in the distance: a spread
+growing with distance or with the crowd met is refuted, since the crowd
+met varies from galaxy to galaxy and grows with d while the relation
+does not. (iii) The radial acceleration relation's shape is a function
+of `g_bar` alone (section 0); a width of the reading is not a function
+of `g_bar`. (iv) The Bullet Cluster: under `meeting-v1` the bending is
+the crowd met along the path, unchanged by whether the rows clicked
+before; the offers' reading moves no lensing mass. (v) The sky: a
+reading before the click repeats no source (a point in the hypothesis's
+favour against the periodic dimension). (vi) The cluster's edge the
+owner named: Zwicky's dispersion (Coma, about 1000 km/s, Zwicky 1933,
+Helv. Phys. Acta 6, 110, to verify against the source) is a spread of
+the CENTRES of many galaxies' lines, each galaxy its own source with its
+own count; a width of each line, which is all a spread of the offers can
+give, does not displace the centres, and within one galaxy the flat
+curve is ordered (receding on one side, approaching on the other, at the
+same speed to large r), not a random displacement.
+
+**(4) Verdict (D): REFUTED.** The read velocity is the arrival count,
+which no spread of the unclicked offers moves; a spread fixed at birth
+is bounded by the Solar System at a part in `2 x 10^5` of the edge speed;
+a spread growing with distance or with the crowd met is refuted by
+Tully-Fisher's independence of distance; a cluster's dispersion is of
+centres, not widths. No run is written, since no pin is met on paper. As
+a hypothesis under its own identity it would need a reading that turns a
+width into a shift, which is not one of 5.7's readings (**R** is linear
+in the arriving rows) and would move the planets' Doppler as well.
+
+**(5) For the owner, in plain words.** Why one sees a constant velocity
+at a galaxy's edge: under dark matter's reading, because unseen content
+sits around the galaxy and holds the edge as Newton's law says content
+does; under MOND's reading, because the pull of the visible content
+stops falling as `1 / r^2` below one acceleration `a_0` and falls as `1 /
+r` instead, which needs a root of the field; under the reading of the
+offers, it would be because the far light arrives unclicked and its
+spread is read as a speed, but the detector reads a speed from how many
+rows arrive per interval and a spread changes only how wide the line is,
+so this reading does not give a constant velocity, for a far galaxy or
+for the Sun. Of the three, the law can carry today only the first, as an
+input family of unseen content (record 283): the second needs the
+seventh verb (a root) and the third is refuted by the law's own reading.
+
 ## C. What stays
 
-Both items fail, so the dark sector stays as record 283 and
+All three items fail, so the dark sector stays as record 283 and
 [DARK_SECTOR.md](DARK_SECTOR.md) say: no rule of the six derives or needs
 dark energy (the far lamp's `q_eff = +1`, [BRIGHTNESS.md](BRIGHTNESS.md)),
 unseen content is admitted as an input family and not derived, the flat
@@ -173,5 +273,6 @@ was.
 ## D. Links
 
 - The width and G: [DERIVATIONS_BEAM.md](../../DERIVATIONS_BEAM.md) sections 3.3, 3.4, 13.2 (b), 13.3, 13.4, 16.2 (e) and (f), 16.4; the growing wall and `expansion-v1`: 15, 20.4; the push's form and its divisions: [designs/vector_form/LAW.md](../vector_form/LAW.md) sections 3 and 6; the inventory of what is not one of the six: section 1.
+- The click model and the readings: [designs/amplitude-v1/CLICK_SQUARE.md](../amplitude-v1/CLICK_SQUARE.md); the click without amplitudes: DERIVATIONS_BEAM.md 6.7; the moments and the crossing rule: sections 2 and 5.7 of [HIGHLIGHTS.md](../../HIGHLIGHTS.md); the meeting: DERIVATIONS_BEAM.md 5.4.
 - The dark sector: [DARK_SECTOR.md](DARK_SECTOR.md); the far lamp: [BRIGHTNESS.md](BRIGHTNESS.md).
 - The map: [s_and_a0_map.py](s_and_a0_map.py), [s_and_a0_map.out](s_and_a0_map.out).
