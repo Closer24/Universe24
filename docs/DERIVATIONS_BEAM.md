@@ -312,7 +312,7 @@ listed again in section 1.3 with what replaces it. Every line is `main` at
 | Rule | Where | Operation | Verdict |
 | --- | --- | --- | --- |
 | The Manhattan count `m(tau) = (2 tau S_1 Q + T_d) // (2 T_d)` | `nature_beam.py:549-554`, `632-643` (the step table) | (T)/(D): an accumulator started at `T_d` (the half), gaining `2 S_1 Q` per interval, carrying one Manhattan step at `2 T_d`; `2 S_1 Q <= 2 T_d`, so at most one Link per interval | as built a floor at run time (D) whose remainder is dropped; nothing is lost, because the dropped remainder is a function of the age alone (the accumulator started at `T_d`, gaining `2 S_1 Q`, carrying at `2 T_d`, equals `m(tau)` on seven directions over 600 intervals, section 1.4), so it is a torus operation with the age as the accumulator; the table `flight.steps[direction, age mod L_d]` at `2398` is its exact cache (FORM.md section 1); checked below |
-| The digital line (Bresenham): at Manhattan step j the axis maximising `abs(v_i) (j + 1) - S_1 abs(pos_i)`, the lowest axis on a tie | `nature_beam.py:580-592` | (T)+(D): three deficit accumulators, each gaining `abs(v_i)` per Manhattan step, the carry `S_1` taken from the largest (a comparison, the axis furthest behind); ties by axis order | a torus operation with a declared tie (x before y before z); the table `lines` its cache |
+| The digital line (Bresenham): at Manhattan step j the axis maximising `abs(v_i) (j + 1) - S_1 abs(pos_i)`, the lowest axis on a tie | `nature_beam.py:580-592` | (T)+(D): three deficit accumulators, each gaining `abs(v_i)` per Manhattan step, the carry `S_1` taken from the largest (a comparison, the axis furthest behind); ties by axis order | a torus operation with a declared tie (x before y before z), the second declared breaking of the 48 beside the collision's Port-order tie (the auditor's round 2, on a fan world of five directions): covariant on the six headings and on every direction without a tie; for a tied direction ((1, 1, 0), (3, 1, 2), (0, 1, -3); not (2, 1, 0) or (1, -2, 0)) the 40 axis permutations move the Nodes crossed and the exit face, not the label `u_d`, the momentum or the hand; the table `lines` its cache |
 | The wrap on a periodic axis | `nature_beam.py:2403-2405` | (T) on the circle `Z_extent` | a torus operation |
 | The open face: the escape | `nature_beam.py:2407, 2413-2483` | the border; the escaped rows' pointer (E) and labels (B) booked | the one-way border (a click), not an operation on the state |
 | The phase per Link `phase += phase_per_link x moved` | `nature_beam.py:2496, 2501` | (T) on `Z_N` by the Links stepped | a torus operation |
@@ -1550,12 +1550,17 @@ Not assumed: continuity, a dimension, the form of R on one row, or
 Theorem 2's `A = sum a_i^2`.
 
 **Theorem (the lattice Gleason).** Under (a) to (e), with N a power of
-two,
+two and `N >= 4` (N = 2 has no quarter turn; the register's N run from
+32 to 4096),
 
     A_2 = 2,   R(f) = sum over odd j, 1 <= j < N/2, of c_j |sigma_j(f)|^2,   c_j >= 0,
     sigma_j(f) = sum_p f_p exp(2 pi i j p / N)     (the j-th Galois conjugate of ev(f); sigma_1 = ev).
 
-Every such R is a positive quadratic form on the lattice, homogeneous,
+The exact classification behind it (the auditor's round 1, a host check
+on the integers for N = 4 to 1024): under (a) to (c) either R is constant
+with `A_2 = 1`, or `R(0) = 0` with R not identically zero and then `A_2 =
+2` and the sum form; the zero function satisfies (a) to (c) with every
+`A_2`. Every such R is a positive quadratic form on the lattice, homogeneous,
 `R(a f) = a^2 R(f)`; it conserves the total at every declared split
 `(a_1, ..., a_k; t_1, ..., t_k)` of one row or of two recombining inputs
 exactly if and only if the multiplicity factor is `A = sum a_i^2`
@@ -1599,9 +1604,10 @@ against (c): every `c_j >= 0`. (vi) The conservation at a general split:
 on one row `w x^p` the outputs `w a_i x^{p + t_i}` sum to `(sum a_i^2)
 w^2 C` by homogeneity and (a), against `A w^2 C`: `A = sum a_i^2`. On
 two recombining inputs, `a f + b x^{N/4} g` and `a g + b x^{N/4} f` (the
-`(a, b)` splitter with the quarter turn), the cross terms `2 a b B(f,
-x^{N/4} g)` and `2 a b B(g, x^{N/4} f) = 2 a b B(x^{N/4} g, x^{N/2} f) =
--2 a b B(f, x^{N/4} g)` cancel and the total is `(a^2 + b^2) (R(f) +
+`(a, b)` splitter with the quarter turn), the cross terms `a b B(f,
+x^{N/4} g)` and `a b B(g, x^{N/4} f) = a b B(x^{N/4} g, x^{N/2} f) =
+-a b B(f, x^{N/4} g)` (B as (iii) defines it, `R(f + g) - R(f) - R(g)`)
+cancel and the total is `(a^2 + b^2) (R(f) +
 R(g))`; the label rotation's pair `(C' f + S' x^t g, -S' f + C' x^t g)`
 cancels the same way with `C'^2 + S'^2`. (vii) Two rows: `|sigma_j(a +
 b x^D)|^2 = a^2 + b^2 + 2 a b cos(2 pi j D / N)`, and at `D = 0, N/4,
@@ -5907,7 +5913,7 @@ column.
 | 55 | Hubble's law, `z = H d / c` | the growing wall `2 T_D a`, the tick wall | `z = H d / c_0` at first order, `1 + z = e^(H d / c_0)` in full | 15.2, 20.4, 21.5 | `growing_wall.py` | the 24 stars, rms 0.0044 at T = 440 | no pin; a host reading (`growing_wall.py`); the registered G2 run's pin is the coasting form and Milne's `H t_0 = 1` within 10 %, first order | first order in `H d / c_0` | `(H d / c_0)^2 / 2`; the accumulator's part in 400 | R for the form under `expansion-v1`, H an input |
 | 56 | the aberration of light | the aberration rule `w = Q W D + T_D N_v`, the nearest direction by comparison | Bradley's `tan theta' = sin theta / (cos theta + beta)` | 12.2, 21.5 | `lorentz_field.py` | the pins 304 / 116 / 157 at k = 4 (not run) | pinned, not run: 304 / 116 / 157 at k = 4 (12.2) | first order in beta | `beta^2 / 2` against nature's `gamma`; the fan's grain `1 / P` | R at first order, D at second |
 | 57 | Schrodinger for a free particle | the pair (flight, phase) of the linear block; a body's phase per Link | none: the rows' dispersion is `omega = c k`, a body is one record | 21.5 |  | none | no run | not applicable | not applicable | not reached (D); `dispersion-v1` named; section 23 checks the route as `massive-rows-v1` (row 60) |
-| 58 | Kepler's three laws | the push `p += -M_A V(x)` in the shell mean (B), the drive on the momentum's direction, form B (T) | the ellipse, equal areas, `T = 2 pi r^(3/2) sqrt(4 pi S / q)` with `G M_B = q / (4 pi S)`; on the plane `T = 2 pi r (Q S m + abs(p) / c) / abs(p)`, `T ~ r` | 3.3, 12b.2, 21.5 | `kepler_compton.py` | series D's `s32_r24` (the plane); `s32_r24_lamp` and `s32_r12_lamp` to be written | pinned, not run: T 795 (700 to 830), the mean radius `23.6 +- 1`, the age's minimum advancing `-105 +- 15` degrees per radial period, `T(24) / T(12) = 2.00 +- 0.15` (21.5 row 58) | first order in `Link / r` and in `v / c` | form B's first-order slowing `1 / (1 - v / c)`; the fan's grain (`r^-1.83` on the 2616 shell); the lattice's own precession not derived | R in the limit (space); the plane's exponent 1 (F); the lattice's precession D |
+| 58 | Kepler's three laws | the push `p += -M_A V(x)` in the shell mean (B), the drive on the momentum's direction, form B (T) | the ellipse, equal areas, `T = 2 pi r^(3/2) sqrt(4 pi S / q)` with `G M_B = q / (4 pi S)`; on the plane `T = 2 pi r (Q S m + abs(p) / c) / abs(p)`, `T ~ r` | 3.3, 12b.2, 21.5 | `kepler_compton.py` | series D's `s32_r24` (the plane); `s32_r24_lamp` and `s32_r12_lamp` to be written | pinned, not run, on the lamp worlds `s32_r24_lamp` and `s32_r12_lamp` under form B's pace (decided and in build; the physicist's `lamp_orbits_map.py`, the circular momenta re-derived under the directional drive, n = 10 at S = 32, 640 label units per unit of content): T 784 (714 to 855) at r = 24 and 392 (357 to 428) at r = 12, the mean radius `24.8 +- 1` and `12.4 +- 1`, the age's minimum advancing `-81 +- 15` degrees per radial period at both radii (the closed form `psi = pi / sqrt(1 + e)`, `e = d ln v / d ln p = 0.651` at n = 10: 140.1 degrees, `-79.8`; `kepler_compton.py` (D)), `T(24) / T(12) = 2.00 +- 0.15`; the earlier `-105 +- 15` the Newtonian pace's (e = 1) and the earlier 795 form B's period at the kept momentum 576, both kept as the record (21.5 row 58) | first order in `Link / r` and in `v / c` | form B's first-order slowing `1 / (1 - v / c)`; the fan's grain (`r^-1.83` on the 2616 shell); the lattice's own precession not derived | R in the limit (space); the plane's exponent 1 (F); the lattice's precession D |
 | 59 | Compton, `lambda' - lambda = (h / (M c)) (1 - cos theta)` | the exact square (B) and the momentum's conservation at a `measure` then a `rerelease` (17.6 M7, N5), the released turn `floor(k' / h)` (T) | `1 / k' - 1 / k = sqrt 3 (1 - cos theta) / (Q S M)`, `lambda = h / k` Links, `c = 1 / sqrt 3` | 17.6 M7, N5, 21.5 | `kepler_compton.py` | the `compton` world (to be written), after covariant-readings-v1 is built | pinned, not run: the faces' turns 16 (+x), 11 (+-y, +-z), 8 (-x), 14 and 9 on the face diagonals, from k = 16 at `Q S M = 64` (21.5 row 59) | exact on the pair `c^2 = [1, 3]`; first order in `(k - k') / k` at the heading's c | the residual `(gamma^2 - 3) (k - k')^2 / (2 E'_0 gamma)`, `gamma^2 - 3 = 141 / 3025`; the floor of `k' / h` (one step); the fan's grain | H under covariant-readings-v1 with the exchange's accounting (`books`, N5); D on `main` |
 | 60 | Schrodinger for a free particle, `massive-rows-v1` | the massive row: the flight's wall `E' = isqrt(E'_0^2 + 3 p . p)` (the photon its `E'_0 = 0` case, `T_D`), the turn `abs(p_a) N / h` per axis Link (7.2), no turn per interval | the phase `(N / h) p . x` on the Nodes; the Helmholtz equation `Laplacian(psi) + k^2 psi = 0`, `k = 2 pi p / h`: the time-independent Klein-Gordon form exactly, Schrodinger's at small p; the time-dependent form not reached | 23 | `massive_rows.py` | the `slits_matter` world (to be written) | pinned, not run: the bright bands at the pixels 36.5, 60, 83.5 within one, Pearson `0.96 +- 0.02`, the centre's first click at `1 + 828` within 2 (23.3) | exact on the Nodes for the phase; the dispersion within a part in `E'`; Schrodinger's at second order in `p / E'_0` | the fan's grain, the floor of `E'` (a part in 4113), the temporal phase dropped (a global factor per record) | reached only in part (the time-independent form); H, `massive-rows-v1` named, not built |
 
@@ -6177,7 +6183,27 @@ register's 23.63 under the step drive; the continuum's extents 22.7 by
 `-105 +- 15` degrees per radial period (the polygon's kicks, 6.4 degrees
 per ray); the exponent: `T(24) / T(12) = 2.00 +- 0.15` with
 `s32_r12_lamp` (analytic 397.7 and 795.3), the exponent 1 on the plane,
-`3 / 2` being space's. Record 131's "no closed orbit by D's criterion"
+`3 / 2` being space's. **Amended for the lamp worlds as written** (the
+physicist, the branch `claude/series-m-masses`, `lamp_orbits_map.py`):
+the circular momenta re-derived under the directional drive, n = 10 at S
+= 32 (640 label units per unit of content; the kept 576 was today's
+rule's), so T = 784 (714 to 855) at r = 24 and 392 (357 to 428) at r =
+12, the mean radius `24.8 +- 1` and `12.4 +- 1`, the precession `-81 +-
+15` degrees per radial period at both radii, `T(24) / T(12) = 2.00 +-
+0.15`. The precession is checked here by the closed form of a
+near-circular orbit under a dispersion: with the push on the momentum
+and the pace v(p) along it, the radial frequency is `(v_0 / r_0) sqrt(1
++ e)` against the angular `v_0 / r_0`, `e = d ln v / d ln p` at the
+circle, so the apsidal angle is `psi = pi / sqrt(1 + e)`: e = 1 gives
+the plane's `pi / sqrt 2` and `-105.4`; form B's pace on a heading at n =
+10 gives e = 0.651, 140.1 degrees and `-79.8` per radial period (the
+physicist's integrator `-80.6` at the rosette's amplitude, within 0.4
+degrees; today's per-axis pace at n = 9 gives e = 0.780, 134.9 and
+`-90.2`, the integrator's `-90.5`): `-81` is right under form B's pace and
+`-105` was the Newtonian pace's ([kepler_compton.py](designs/derivations_beam/kepler_compton.py)
+(D)). Under FORM.md 3.1's form (c), if adopted, the pace on the plane's
+diagonal at n = 10 is 13 percent below the heading's and the lamp worlds
+are re-pinned. Record 131's "no closed orbit by D's criterion"
 restated: the law predicts eccentric loops precessing at the `1 / r`
 force's apsidal angle, bound for the run (four turns of 701 to 880
 registered under the signed drive, the mean radius 26 to 36), and the
@@ -6762,8 +6788,8 @@ changes the row, the row says so; the verdict is `main`'s.
 | 18 | the strong ratio (18.3) | the alpha's binding over the deuteron's 2.0 (series N) | 12.72 | a factor 6.4 | AME2020; NATURE row 7b | REFUTED |
 | 19 | the growing wall's brightness (11a) and Tolman (11c) | `q_eff = +1`; three powers of `1 + z` short | `-0.53`; `(1 + z)^-4` | as NATURE 11a, 11c | Pantheon+; Lubin and Sandage 2001 | REFUTED |
 | 20 | Born's rule to the rung `1 / (2 N)` (6.2) | the cell's probability a multiple of `1 / N` | the squared amplitude | `0.0078` at N = 64, `1.2 x 10^-4` at N = 4096 | Sinha et al. 2010, Science 329, 418 (the Sorkin parameter `0.0064 +- 0.0119`, a different observable); NATURE row 2c | OPEN at N = 4096 (below the tests' `10^-2`); the rounding is not the Sorkin term |
-| 21 | the axis preference of the drive as declared on `main` (the per-axis step, `step_axis`, the step on the axis of the largest component, x before y on a tie) | equal momentum on two axes: the body advanced 26 Nodes in x and none in y (the owner's report, eight runs on `main` 5cc43ae7, record 340) | isotropic motion: 45 degrees | the direction of motion off by 45 degrees; the speed per axis `n / (S + n)` | any measurement of a free body's track (the orbit README's "x before y"; series D's polygon) | REFUTED on `main` as declared; the fix form B's directional drive, in build (record 186, 301): one accumulator on the momentum's line, the Euclidean pace `abs(p) / (Q S M)` on every direction |
-| 22 | a body's pace not bounded by c on `main` | a fast body at 0.925 Nodes per interval against the rows' 0.582 on an axis (the same report, record 340); the per-axis drive caps at one Link per interval per axis, `1.72 c` (FORM.md section 2; the register's series D at S = 1 at `1.29 c`, record 186 (2)) | nothing outruns light | up to `sqrt 3` Nodes per interval, 3 c | every bound on superluminal matter (the Cohen-Glashow bound from the absence of vacuum Cherenkov radiation, Phys. Rev. Lett. 107, 181803 (2011)) | REFUTED on `main` as declared; closed under form B (the cap `S_1 Q / T_D` on the line) and the covariant readings (`p / E' <= 1 / sqrt 3` by the exact square, 17.6 M3, 23.1) |
+| 21 | the axis preference of the drive as declared on `main` (the per-axis step, `step_axis`: every axis's drive advances at every self-creation and the FIRST axis whose rule fires makes the step, x before y before z, a coincident fire of a later axis lost, `engine._move` on `main`; with equal components the same axis fires every time, with unequal components the smaller axis steps where the larger does not fire) | equal momentum on two axes: the body advanced 26 Nodes in x and none in y (the owner's report, eight runs on `main` 5cc43ae7, record 340) | isotropic motion: 45 degrees | the direction of motion off by 45 degrees; the speed per axis `n / (S + n)` | any measurement of a free body's track (the orbit README's "x before y"; series D's polygon) | REFUTED on `main` as declared; the fix form B's directional drive, in build (record 186, 301): one accumulator on the momentum's line, the Euclidean pace `abs(p) / (Q S M)` on every direction |
+| 22 | a body's pace not bounded by c on `main` | a fast body at 0.925 Nodes per interval against the rows' 0.582 on an axis (the same report, record 340); the per-axis drive caps at one Link per interval in all (one axis steps per interval, the first whose rule fires), `sqrt 3 c = 1.73 c` on a heading (FORM.md section 2's `1.72 c = T_d / Q`; the register's series D at S = 1 at `1.29 c`, record 186 (2)) | nothing outruns light | one Link per interval, `1.72 c` on a heading; never `sqrt 3` Nodes per interval | every bound on superluminal matter (the Cohen-Glashow bound from the absence of vacuum Cherenkov radiation, Phys. Rev. Lett. 107, 181803 (2011)) | REFUTED on `main` as declared; closed under form B (the cap `S_1 Q / T_D` on the line) and the covariant readings (`p / E' <= 1 / sqrt 3` by the exact square, 17.6 M3, 23.1) |
 
 ### 24.4 The one prediction the paper can carry
 
@@ -6935,8 +6961,10 @@ three (temperature as a reading, the ideal gas law per axis, Newton's
 cooling of the content); by reference, two (Maxwell's, the wave
 equation); not reached, nine (the isotropic Navier-Stokes,
 equipartition's equality, Maxwell-Boltzmann, temperature from entropy,
-Planck's spectrum, Dirac, Hooke, Ohm, Stokes), of which five fall to one
-identity, `elastic-contact-v1`, whose three tests pass on paper and whose
+Planck's spectrum, Dirac, Hooke, Ohm, Stokes), of which four fall to one
+identity, `elastic-contact-v1` (equipartition's equality,
+Maxwell-Boltzmann, Ohm, Stokes; the isotropic Navier-Stokes to
+`fan-collision-v1`), whose three tests pass on paper and whose
 design is not this section's. Nothing enters the law.
 
 ### 25.4 The continuity equation from the books (row 1)
