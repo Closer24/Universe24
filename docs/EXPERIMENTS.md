@@ -2308,6 +2308,17 @@ states "exactly" and means integer equality at every tick.
   reading's formula 288 of 288 inside 2 %. The verdict and the follow-up
   stand as read; the numbers above are kept as history.
 
+- **Re-read under `clock-age-v1` (2026-09-21; record 394; the head of
+  branch `clock-age-v1`).** The two `scalar` worlds' sources count the
+  age moment of one another's light: `coasting_scalar`'s near-fit H t_0
+  reads 1.0346, 1.2685, 1.5693 in the three windows and 1.3700 in the late
+  half (0.8718, 0.9667, 1.0123 and 0.9938 under the presence word on
+  `main`'s engine by the same tool), `pushing_scalar`'s 4.6923, 7.0505,
+  9.1890 and 8.1459 (1.1820, 1.3220, 1.3900 and 1.3499); the two `age`
+  worlds byte-identical (record 409); DETECTOR readings, 303 inside and 33
+  outside over the four; the table with the forms and the detectors' own
+  clocks in [the worlds' README](../examples/events/hubble/README.md#re-read-under-clock-age-v1-2026-09-21).
+
 ### G2, the Hubble diagram with stars behind the detector (2026-09-20)
 
 - **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**
@@ -2475,6 +2486,15 @@ states "exactly" and means integer equality at every tick.
   star steps (VALIDATION, the dated table of the change); the run of the
   series under the rule, with its expectations pinned first, is the G2
   session's, not this change's.
+
+- **Under `clock-age-v1` (2026-09-21; record 394).** The twelve worlds
+  (the six base worlds and the six `record/` worlds whose stars' entries
+  measure the other stars' light without a word) moved by their digests
+  (record 409) and are not re-read here: the register's own tool,
+  `tools/hubble_stars_readings.py`, reads NaN for `coasting_none`, a
+  world the word does not touch (the replicator's finding of record 408
+  on `main`), so no number of this series is re-registered until the tool
+  is repaired; the lines above stand as the presence word's, dated.
 
 ### H, Bohr's lines behind the detector (2026-09-20)
 
