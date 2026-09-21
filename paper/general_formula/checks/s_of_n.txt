@@ -1,0 +1,61 @@
+reproduction of bell.txt:
+  N=64: E = ['11/16', '-11/16', '11/16', '11/16']; S = 11/4 = 2.75000; cells {(0, 0): 27, (0, 1): 5, (1, 0): 5, (1, 1): 27}
+  N=256: E = ['45/64', '-45/64', '45/64', '45/64']; S = 45/16 = 2.81250; cells {(0, 0): 109, (0, 1): 19, (1, 0): 19, (1, 1): 109}
+  N=1024: E = ['181/256', '-181/256', '181/256', '181/256']; S = 181/64 = 2.82812; cells {(0, 0): 437, (0, 1): 75, (1, 0): 75, (1, 1): 437}
+  N=64 marginals 1/2 in all 4096 setting pairs: True
+
+the marginals and the per-E deviation over every setting pair (a, b):
+  N=   8: marginals 1/2 in all 64 pairs: True; max |E - C_N[a-b]/256| = 0.20703 = 1.66/N; max |E - cos| = 0.20711 = 1.66/N
+  N=  16: marginals 1/2 in all 256 pairs: True; max |E - C_N[a-b]/256| = 0.11719 = 1.88/N; max |E - cos| = 0.11732 = 1.88/N
+  N=  24: marginals 1/2 in all 576 pairs: True; max |E - C_N[a-b]/256| = 0.07552 = 1.81/N; max |E - cos| = 0.07451 = 1.79/N
+  N=  32: marginals 1/2 in all 1024 pairs: True; max |E - C_N[a-b]/256| = 0.05469 = 1.75/N; max |E - cos| = 0.05557 = 1.78/N
+  N=  48: marginals 1/2 in all 2304 pairs: True; max |E - C_N[a-b]/256| = 0.04297 = 2.06/N; max |E - cos| = 0.04335 = 2.08/N
+  N=  64: marginals 1/2 in all 4096 pairs: True; max |E - C_N[a-b]/256| = 0.03516 = 2.25/N; max |E - cos| = 0.03552 = 2.27/N
+  N=  96: marginals 1/2 in all 9216 pairs: True; max |E - C_N[a-b]/256| = 0.02474 = 2.38/N; max |E - cos| = 0.02374 = 2.28/N
+  N= 128: marginals 1/2 in all 16384 pairs: True; max |E - C_N[a-b]/256| = 0.02344 = 3.00/N; max |E - cos| = 0.02222 = 2.84/N
+  N= 192: marginals 1/2 in all 36864 pairs: True; max |E - C_N[a-b]/256| = 0.01823 = 3.50/N; max |E - cos| = 0.01687 = 3.24/N
+  N= 256: marginals 1/2 in all 65536 pairs: True; max |E - C_N[a-b]/256| = 0.01562 = 4.00/N; max |E - cos| = 0.01527 = 3.91/N
+  N= 512: marginals 1/2 in all 262144 pairs: True; max |E - C_N[a-b]/256| = 0.01172 = 6.00/N; max |E - cos| = 0.01150 = 5.89/N
+
+2 sqrt 2 = 2.82843; Poh et al. 2015: S = 2.82759 +- 0.00051
+N, S(N), S(N) - 2 sqrt 2, (S(N) - S_Poh) / sigma
+      8             2  2.00000  -0.82843   -1622.7
+     16             3  3.00000  +0.17157    +338.1
+     24           8/3  2.66667  -0.16176    -315.5
+     32             3  3.00000  +0.17157    +338.1
+     40          14/5  2.80000  -0.02843     -54.1
+     48           8/3  2.66667  -0.16176    -315.5
+     56          20/7  2.85714  +0.02872     +57.9
+     64          11/4  2.75000  -0.07843    -152.1
+     72          26/9  2.88889  +0.06046    +120.2
+     80          14/5  2.80000  -0.02843     -54.1
+     88         32/11  2.90909  +0.08066    +159.8
+     96          17/6  2.83333  +0.00491     +11.3
+    104         36/13  2.76923  -0.05920    -114.4
+    112          20/7  2.85714  +0.02872     +57.9
+    120          14/5  2.80000  -0.02843     -54.1
+    128          23/8  2.87500  +0.04657     +93.0
+    192          17/6  2.83333  +0.00491     +11.3
+    256         45/16  2.81250  -0.01593     -29.6
+    384          17/6  2.83333  +0.00491     +11.3
+    512        181/64  2.82812  -0.00030      +1.0
+    768          17/6  2.83333  +0.00491     +11.3
+   1024        181/64  2.82812  -0.00030      +1.0
+   1536        181/64  2.82812  -0.00030      +1.0
+   2048        181/64  2.82812  -0.00030      +1.0
+   3072        181/64  2.82812  -0.00030      +1.0
+   4096        181/64  2.82812  -0.00030      +1.0
+
+N (8 | N, N <= 4096 (the tables bound raised to 65536 on 2026-09-20)) with S(N) > 2 sqrt 2: 252 of 512; the first twenty: [16, 32, 56, 72, 88, 96, 112, 128, 152, 168, 192, 208, 224, 248, 264, 280, 288, 304, 328, 344]
+largest S(N): 3.00000 at N = 16
+smallest N with |S(N) - S_Poh| <= 3 sigma: 184
+N excluded at 5 sigma by Poh et al.: 136 of 512; largest excluded N: 3016
+N allowed within 3 sigma: 276 of 512; the smallest ten: [184, 232, 280, 368, 416, 464, 512, 552, 560, 600]
+N >= 1024: S(N) from 2.82443 to 2.83212
+largest N x |S(N) - 2 sqrt 2| over all N: 7.76 at N = 48 (the claim epsilon <= 4/N needs this <= 4)
+
+S over every setting quadruple, and the rung ties:
+  N= 64: max S over all quadruples = 11/4 = 2.75000; quadruples within 3 sigma of Poh: 0
+  N=256: max S over all quadruples = 91/32 = 2.84375; quadruples within 3 sigma of Poh: 181152
+  rung ties at the CHSH labels for every 8 | N <= 4096: 0
+  rung ties over every setting pair at N = 1024: 0
