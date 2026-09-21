@@ -114,6 +114,7 @@ kept, their pins the law of events').
 | `test_amplitude_gram.py` | The click without amplitudes (2026-09-21): the Gram matrix of the tables (its eight diagonal values, not circulant, rank 2, the antipodal pairs killed, stored through N = 512), the identity f^T G f = X^2 + Y^2 on random vectors and on `mz_equal`'s record at every u, the layer's cells against the click as it was on synthetic one-arm, read, rotated, pair and GHZ records, the turn as a shift exact at the quarter turns and not at t = 3, the tensor form exact and the convolution not, the ring product ([below](#the-click-without-amplitudes)) | new (2026-09-21; record 188; BEAM_LAW note 37 (xii)) |
 | `test_exact_phase.py` | The exact phase at the click (2026-09-21): the axis and the diagonal at the rate 8 (u + 41 with the remainder 48 / 64, u + 42 with the remainder 0 / 128 where the walk read u + 40), the layer's pointer at it, the integer form without it, a face's row (u + 4 where the walk read u + 56), the numerator beyond the register refused, the primitive `exact_phase` ([below](#the-exact-phase-at-the-click)) | new (2026-09-21; record 163 (2); BEAM_LAW note 45) |
 | `test_birth_wheel.py` | The birth wheel at a declared rate (2026-09-21): the key required on every lamp and refused as a bare integer, a rate 0 or a wheel 0; every world file with a lamp declares it; [1, N] the count of births (the lamp's `acc` `wheel`, the rungs on 64); the golden rate's first ten u and phases, the rungs on 4096; the cell read on the wheel (two equal cells: a, b, a, b, a, a, b, a, b, b against 32 a then 32 b); the replay tool reads the wheel from the lamp ([below](#the-birth-wheel)) | new (2026-09-21; record 180; BEAM_LAW note 46) |
+| `test_amplitude_malus.py` | A12 under the click, Malus's law from the table entries in force (2026-09-21): the pin of `docs/designs/malus/NOTE.md` derived again from the three worlds and the engine's half-angle tables of 2N = 512 (the cells' weights the products of C' and S', the rungs b_k = (2 W C_k + T) // (2 T) over the wheel's 256 births) against the register; the replay of `malus_a`, `malus_b` and `malus_c` (u over every residue once, the registered rungs on every gather, the chosen cells 128 / 128, 0 / 256 and 64 each, the books balanced); the rotate keeps the record's u (every `split` line at the rotation `rebirth` False with the record's identity and its u, two per row; the `rotate` and `read` lines) ([below](#the-amplitude-law-malus)); every number read from `expectations.json` under `malus` | new (2026-09-21; the model owner's go, record 330; the mathematician's note) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -724,6 +725,39 @@ register's L7 entry), written before the run: Since 2026-09-21 the test derives 
   part as the walk's 3 x 29 = 87 at the rate 3 (the design's 41.75 and
   42.00 are the rate 8's, `test_exact_phase`); under the integer form no
   `exact` is written; the file's pins under `cone.exact`.
+
+## The amplitude law: Malus
+
+`tests/test_amplitude_malus.py` (A12 under the click; the mathematician's
+note docs/designs/malus/NOTE.md, sections 2 and 3; the model owner's go,
+record 330 of docs/LOG_2026-09-20.md; docs/BEAM_LAW.md note 46), on the
+worlds `malus_a`, `malus_b` and `malus_c` of series L's generator
+(`examples/events/amplitude/make_worlds.py`, `expectations.json` under
+`malus`: the pin written before the run of 2026-09-21 and the run's
+readings beside it, every count a DETECTOR reading, the books GAMEBOARD).
+The expected integers, written down before the first run:
+
+- (a) the pin derived again from the worlds and the engine's tables: on
+  the half-angle tables of 2N = 512, C'[64] = S'[64] = 181 and C'[128] =
+  0, S'[128] = 256; the cells' weights `malus_a` 0+ 181^2, 0- 181^2;
+  `malus_b` 0+ 0, 0- 256^2; `malus_c` 0+, 0-, 1+ and 1- 181^4 each; the
+  rungs [0, 128, 256], [0, 0, 256] and [0, 64, 128, 192, 256]; the counts
+  128 / 128, 0 / 256 and 64 each, the pass (the cell 0+) 128, 0 and 64 of
+  256, equal to the register's;
+- (b) the replay: 256 gathers of the ordinals 1 .. 256 per world, u =
+  ordinal x 159 mod 256 over every residue once; every gather's cells the
+  registered rungs in the click's order (the read's labels ascending, the
+  channels + before -); the chosen cells as (a), bit-exact, and as the
+  run's reading; over every record gathered by the end (289 of 299 born,
+  10 open, the first gather at tick 11) 145 / 144, 0 / 289 and 73 / 72 /
+  72 / 72; the books balanced;
+- (c) `malus_c`: 592 `split` lines at the rotation, `rebirth` False on
+  every one, the record's own identity and its birth u, two per record
+  (the first at tick 4: absorbed 181, born 181, multiplicity 65536); the
+  `rotate` line setting 64, bit 0, turn 0, 2 rows, the record's units 1
+  to 362; the `read` line's rows the labels 0 and 1 at the multiplicity
+  65536 and the amount 181, the phases 0 and 128 (the set bit a half turn
+  on).
 
 ## The birth wheel
 
