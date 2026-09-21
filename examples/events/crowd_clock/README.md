@@ -71,6 +71,7 @@ presence 4 F at the lamp's Node once the rows arrive, and the algebra.
   lamp reads 1 + z = 1.000/1.006, 1.080, 1.300, 2.000, 3.000 for the pinned
   1.005, 1.08, 1.3, 2, 3 (k = 4 F / 2^16 exact to the rung, z = 1 and 2 from
   a lamp at rest); every birth reaches the detector; the moving lamp reads
-  (1 + k)(1 + v / c) inside its crowd (1.283 for 1.295) and falls behind it,
+  1.283 inside its crowd, between the sum 1 + k + v / c (1.279) and the
+  product (1.295), and falls behind it,
   leaving the fan at ticks 181 and 86 within the pinned brackets and reading
   the Doppler alone thereafter (1.85 then 1.21).

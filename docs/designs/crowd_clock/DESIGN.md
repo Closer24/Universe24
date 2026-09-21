@@ -246,9 +246,17 @@ the oblique directions' crossing Nodes, as the bracket allowed.
    arrived, at every rung; the crowd slows the clock and takes nothing from
    the light (the rows `pass`; the coupling is off by the world's word, so
    this is the clock alone).
-3. **The two factors multiply at the detector.** `moving_08` read 1.283 and
-   1.271 where (1 + k read)(1 + 0.2) is 1.295 and 1.277: the clock's excess
-   over the Doppler 1.200 is the crowd's, within 0.012.
+3. **The clock's term adds to the Doppler at the detector.** `moving_08`
+   read 1.283 and 1.271 with the k read 0.079 and 0.064: between the sum
+   1 + k + v / c (1.279, 1.264) and the product (1 + k)(1 + v / c) (1.295,
+   1.277), inside the tolerance of both, nearer the sum. The pin (d) wrote
+   the product; the lamp's speed on the GameBoard is v / (1 + k) (item 4),
+   so the Doppler is by that speed and the reading is (1 + k)(1 + v /
+   ((1 + k) c)) = 1 + k + v / c whether or not the crowd keeps pace. Series
+   Q decides between the two forms with a comoving crowd (2.2147 read for
+   the sum's 2.200 against the product's 2.400): the sum. The excess of
+   0.004 to 0.007 over the sum here is series Q's too (the moving lamp's
+   slightly higher k).
 4. **A slowed lamp cannot travel with an unslowed crowd.** It moves at
    v / (1 + k) (the step drive counts Links only at a self-creation), falls
    behind at the pinned rate, leaves the fan within the pinned bracket, and
@@ -257,7 +265,8 @@ the oblique directions' crossing Nodes, as the bracket allowed.
    star of a galaxy is in the crowd of all the others: then the whole crowd
    moves at v / (1 + k), and the detector reads
    1 + z = (1 + k)(1 + v / ((1 + k) c)) = 1 + k + v / c, the two terms
-   adding, not multiplying. This last line is derived, not run.
+   adding, not multiplying. The same holds for the lamp left behind: its
+   own speed is v / (1 + k) too (item 3). Series Q runs the comoving case.
 5. **The first run's lesson.** A lamp's own spending reads as a k of the
    order of births / K; a clock experiment needs a reservoir far beyond the
    run's births, or a lamp of the fraction-free kind whose wheel does not
