@@ -251,6 +251,18 @@ Report PR state separately from physical conclusions. Do not call a hypothesis s
 Before assigning a new rule or a world key for an observed effect (a Doppler, an aberration, a redshift, a drift), first assign the one-world test that asks whether the effect already follows from the rules the law has (the flight of one Link per interval, the meeting, the step, the click), with the proposed key absent and the expectation pinned before the run. If it emerges, no rule is built. If it does not, the hole is in the generic step that misses it (a reader that does not read the Link it crosses, a count that re-prices its whole age at today's rate) and is fixed there, once and for every family, never by a weighted rule beside the generic one. A key that supplies what a step misses is a patch; when its test exists, it leaves the code. Doppler-v1 was such a key (record 134); the reader's Doppler test of record 151 decides whether the step or the key was wrong. The same check applies to a count: a rate that is not whole per interval needs its phase, not a re-evaluation of its age (records 147, 148).
 
 
+### A long run calls the Architect first (the owner, 2026-09-21, record 441)
+
+The owner's rule: "If there is a long simulation run, always call the
+Architect for improvement." A run that will take more than about ten
+minutes of host time, or whose cost grows with the store as it runs, is
+never launched as it is: the Boss first orders the Architect to profile
+the code path the run exercises and improve it (implementation only, the
+small-world replay bit-exact, the gate set byte-identical, timings before
+and after on the same input, no world, pin or rule moved), and the run
+goes on the improved branch. The case: the massive rows' 4096-birth run,
+stopped at 73 minutes with half its intervals done (records 411, 412).
+
 ### What is the generic solution? (the owner, 2026-09-21, record 421)
 
 The owner's standing question to the Boss: "What is the generic solution?
