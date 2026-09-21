@@ -2070,3 +2070,44 @@ spread of clocks); his note kept for the Boss: the quarks' README run
 row says the kicked u left at 63 before the crossing rule and the
 README's prose and MIGRATION say 69.
 
+## Wave 17 (2026-09-21): the precedents study's five verdict lines (record 356; PRECEDENTS.md on main)
+
+The Boss's relay of the study's PART D, applied with a referee round:
+(1) KEEP the ledger, the standing column, the one prediction, the
+not-claimed list (nothing changed). (2) CHANGE fig:square: the
+energy-momentum relation of special relativity in place of "Einstein,
+1905" (in neither 1905 paper), and the caption in the greats' form
+("gives ... exactly; the relation is not new"); the stands-above
+paragraph's "Einstein's" likewise. (3) CHANGE the abstract: the twelve
+FAIL with their cause in one clause (seven the law's as declared in a
+run made, four from a pin whose run is not made, one a declared input
+refuted), the abstract cut elsewhere to stay under 1920 plain
+characters. (4) ADOPT a closing sentence in the greats' form at the end
+of sec:newton (no number of nature met, the reason), sec:delay (Delva
+et al. 2.5e-5, Vessot et al.; the second order below reach), sec:gleason
+(Sinha et al.'s kappa; the harmonic constants the gap) and sec:qm
+(Hensen et al.'s 2.42 +- 0.20; Bohr's ratio awaiting its line); one
+sentence in the Introduction in the author's voice ("what is new here,
+it seems"); "as is well known" at the Courant condition and Kennard's
+form. (5) ADOPT: the commit SHAs out of tab:nature's caption, the
+nature prose, series C's fingerprint and the crowd-clock commits in Part
+II, into Reproducibility; one-line bibitems for Shannon 1948, Landauer
+1961, Bresenham 1965 and Jefimenko 1966, cited at the eponyms. Also:
+the auditor's round 4b, the four words "with T > 0 by Theorem
+th:isometry" in Lemma lem:one; the reader inside a crowd (PR #558, one
+run on main d8cb46e, drafted and not registered) beside the cluster;
+PRECEDENTS.md cited by path. Not yet on main, so not cited: records
+361 to 366 (PR #559) and the (3, 4) split at N = 32 and 128 (PR #563).
+Reported to the Boss as the tree's: examples/events/reader_clock/README.md
+calls itself "Series R", the quarks' letter. Referee round 39 (four
+findings, all applied): main merged at 3fa35e09 before the commit (the
+study and the reader's worlds on the tree); the lemma's T > 0 stated
+with its reason (the offers summed over all ends the born row's norm
+up to rounding) rather than by a bare reference; the reader's formula
+the sum form as pinned; the glossary caption's commit to
+Reproducibility. His notes applied: "Galileo" and "loophole-free" not
+on the tree, dropped; sec:newton "confronts no number of nature (the
+protons' ratio enters as an input)"; the Courant sentence's grammar.
+His caveat kept: the abstract folds the hypothesis rows (3; 8a, 8b)
+into "the law's as declared", the finer sorting in sec:nature.
+
