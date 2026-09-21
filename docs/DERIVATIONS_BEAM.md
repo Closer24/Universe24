@@ -3175,7 +3175,11 @@ over the sphere is `(1 + beta^2) / 2` and the mean of `abs(n_x)` is `1 /
 diagonal alike). The two crossing counts have the mean 1 by the
 reflection `n_e -> -n_e`: the count is odd in the row's component along
 the step, and an isotropic crowd has as many rows against the step as
-with it. The sweep exceeds the rule exactly on the rows with `abs(n_e) <
+with it. Named explicitly, the comparison is between two sphere means:
+the mean of the crossing rule's per-direction factor `1 - n . beta`,
+which is exactly 1, and the mean of the relative speed `abs(n - beta)`,
+the distance from the point **beta** to the unit sphere, which is `1 +
+beta^2 / 3` and is the sweep of point rows that the rule does not make. The sweep exceeds the rule exactly on the rows with `abs(n_e) <
 beta`, the near-transverse ones, which the rule does not meet at a step
 (record 158's C2: a resident row at the destination is met only if it
 moves against the step, `u . e < 0`; a row moving across the step is
@@ -3471,7 +3475,11 @@ row at `sqrt 3` per interval; the same Euclidean pace in every direction
 axiom, and it fixes the pace at the diagonal's, `1 / sqrt 3`, the largest
 isotropic pace that crosses at most one Link per interval on every line
 (`S_1 Q <= T_D`, Cauchy-Schwarz with equality on the diagonals: c is the
-operator norm of the flight, record 186). **Partial**: K fixes the bound
+operator norm of the flight, record 186). The flight table's sitting AT
+that supremum, `1 / sqrt 3` and not below it, is a third statement of
+the design beside locality and straightness, since a slower isotropic
+pace obeys both (the paper's finding, round 7; the second axiom above
+in the paper's words). **Partial**: K fixes the bound
 (one carry per interval, the Manhattan count as the least computation),
 isotropy fixes the number; the count against K is the walk's 16
 operations per row per interval, and 1 carry per `T_D / (S_1 Q)`
