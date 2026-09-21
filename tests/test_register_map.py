@@ -8,7 +8,10 @@ equal entry by entry and detached from the file's object; (c) a block
 regenerated with new numbers keeps its `replicated` entry beside the new
 numbers, and an entry of a block the generator no longer writes is kept
 too (the replicator's, never the generator's to drop); (d) the shipped
-amplitude register equals its generator's output, the map included.
+amplitude register equals its generator's output, the map included;
+(e) a generator of another register (`two_stars/make_worlds.py`) writing
+into a folder that holds a register with the map carries it, and into a
+folder without one leaves the register as it is.
 """
 
 from __future__ import annotations
@@ -18,10 +21,13 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
+
 from event_universe.register_map import carry_replicated
 
 ROOT = Path(__file__).resolve().parents[1]
 AMPLITUDE = ROOT / "examples" / "events" / "amplitude"
+TWO_STARS = ROOT / "examples" / "events" / "two_stars"
 
 
 def test_an_absent_file_or_map_leaves_the_register_as_it_is(tmp_path: Path):
@@ -75,3 +81,26 @@ def test_the_shipped_amplitude_register_is_the_generators_with_the_map():
     generated = module.expectations()
     assert generated == shipped
     assert ("replicated" in generated) == ("replicated" in shipped)
+
+
+def test_another_generator_carries_the_map_and_leaves_a_bare_register_as_it_is(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """(e)."""
+    spec = importlib.util.spec_from_file_location("two_stars_make_worlds", TWO_STARS / "make_worlds.py")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules["two_stars_make_worlds"] = module
+    spec.loader.exec_module(module)
+    monkeypatch.setattr(module, "HERE", tmp_path)
+    monkeypatch.setattr(module, "ROOT", tmp_path)
+    shipped = json.loads((TWO_STARS / "expectations.json").read_text(encoding="utf-8"))
+    on_disk = dict(shipped)
+    on_disk["replicated"] = {"worlds": "docs/REPLICATIONS.md#two-stars"}
+    (tmp_path / "expectations.json").write_text(json.dumps(on_disk, indent=1) + "\n", encoding="utf-8")
+    module.main()
+    written = json.loads((tmp_path / "expectations.json").read_text(encoding="utf-8"))
+    assert written["replicated"] == {"worlds": "docs/REPLICATIONS.md#two-stars"}
+    assert {k: v for k, v in written.items() if k != "replicated"} == shipped
+    (tmp_path / "expectations.json").unlink()
+    module.main()
+    assert json.loads((tmp_path / "expectations.json").read_text(encoding="utf-8")) == shipped

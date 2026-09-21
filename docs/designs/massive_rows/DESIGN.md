@@ -158,8 +158,8 @@ flag, so it takes a width of 0 bits in the packed merge key (:1390-1396)
 and leaves the key and the merge's order what they were, as the hand
 does (:941-944). The inverse interval (`_inverse_interval`, :2657-2722,
 used by the tests of the inverse run, `test_amplitude_split`,
-`test_group_structure`, `test_hand`, `test_lifetime` and `test_meeting`,
-on worlds without the flag) is refused on a
+`test_lifetime`, `test_meeting` and `test_nature_beam_bijection`, on
+worlds without the flag) is refused on a
 world that declares `massive_rows`, naming the key, as it is refused on a
 GameBoard with a `lifetime` detector (ENGINE.md) (S9): the inverse of the
 turn's `by_drive` is exact per Link but is not built.
@@ -225,8 +225,8 @@ built by value and (0, M) the rule below.
    offer as today (`Layer.end`, :593-663); `f_F x amount x content`
    goes where it goes today (the entry's `held` at :3902, or the
    escaped lines at a face, :2779-2795) and `(1 - f_F) x amount x
-   content` with the row's label WAITS in the record's own state
-   (item 5); the `click` line carries `amount x content` and the label
+   content` with `(1 - f_F) x` the row's label WAIT in the record's own
+   state (item 5); the `click` line carries `amount x content` and the label
    (`content`, `push`; :3932-3945, `t_carried`, `t_label`) as today for
    both values of `f_F` (S10): the line reports what arrived, the value
    says where it went;
@@ -298,7 +298,17 @@ built by value and (0, M) the rule below.
    the completion moves nothing: today's bytes. In the pin the faces'
    completions are a GAMEBOARD diagnostic (the escaped lines by Port,
    about a third of the records on the photon's lines and amounts), not
-   a reading (section 4).
+   a reading (section 4);
+7. **the units line and the clicks count** (S12): at an arrival `f_F x
+   amount` units are absorbed and counted at the set as today (the
+   entry's `clicks` and the books' absorbed line at :3903, the face's
+   `clicks` and the escaped line at :2779) and `(1 - f_F) x amount` wait
+   with the content (item 5, the `waiting` sub-line of the units line
+   too); at the completion ONE unit goes to the chosen set's `clicks` and
+   to its absorbed or escaped line, the rest of the record's waiting
+   units to the cancelled line; at (1, 0) nothing waits: today's bytes.
+   The pin's `gather` lines are untouched (one per record, the chosen
+   Node, as today).
 
 The measured event that takes `q_F` and the label is a body from then on
 as series H's electron is (its content the sum, pushed and stepping by
@@ -436,7 +446,8 @@ reading.
   row at most 5619 x 221 before the content's factor).
 - **Local.** The row's own record and its family's table; a free row
   reads nothing of any Node; the re-release at its own Node; the arrival
-  at its entry, the content waiting there as the entry's own pending;
+  at its entry, the content waiting in the record's own offers (section
+  3, item 5), never in the entry's `pending`;
   the completion through the layer, the apparatus's one non-local
   operation, now moving state and named as the identity's price
   (section 3, item 4). Nothing is kept at a Node beyond the events
@@ -474,7 +485,10 @@ reading.
 6. **The turn** at the walk (:2868-2871): the family's turn table through
    `by_drive_rows` on `acc_turn`, the count added to the phase mod N
    before step 4; `acc_turn` in `IDENTITY_FIELDS` (:945) and the store's
-   columns (S2, S5).
+   columns (S2, S5); the row's record in `state.json` (`engine.py`
+   :1244, `_node_entries`, written as `NatureBeam.record` says) omits
+   `acc_turn` on a world without the key, so every registered
+   `state.json` stays byte identical (the gate test of item 9).
 7. **The re-release** (`rerelease` with `weights`): the new rows' table
    entries by their directions, `acc_turn` 0, the entry's momentum by the
    shares (M2).
@@ -639,6 +653,17 @@ S4, S6 answered, S5 partly): two must-fixes and five should-fixes.
 - The reviewer's notes: the visibility 0.965 and the dark pixels 0 to
   2.3 on the map's weights, inside the pin's `0.95 +- 0.03` and 0 to 3;
   `acc_turn`'s 0-bit width in the packed key (section 2). Noted.
+
+**Round 3 (head b1248102): ADMISSIBLE, no blocking finding**; the build
+started on it. The follow-up, this commit: S8's leftover sentence in
+section 5 (the waiting in the record's offers, not the entry's
+`pending`); **S12**, the units line and the clicks count under `(f_F,
+q_F)` (section 3, item 7); **S13** (a) the same sentence, (b) item 1's
+`(1 - f_F) x` the label, (c) `acc_turn` omitted from the row's record in
+`state.json` on a world without the key (section 6, item 6), (d) the
+inverse run's tests as they are (`test_nature_beam_bijection` runs it;
+`test_group_structure` and `test_hand` only name an inverse of their
+own).
 
 ## 9. Links
 

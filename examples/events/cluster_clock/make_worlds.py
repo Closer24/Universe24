@@ -42,6 +42,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 sys.path.insert(0, str(ROOT / "src"))
+from event_universe.register_map import carry_replicated  # noqa: E402
 
 
 def _crowd_clock():
@@ -215,7 +216,10 @@ def main() -> None:
         path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
         print(path.relative_to(ROOT))
     expected = expectations()
-    (HERE / "expectations.json").write_text(json.dumps(expected, indent=1) + "\n", encoding="utf-8")
+    (HERE / "expectations.json").write_text(
+        json.dumps(carry_replicated(HERE / "expectations.json", expected), indent=1) + "\n",
+        encoding="utf-8",
+    )
     for name, m in expected["members"].items():
         r = expected["cluster_rest"]["members"][name]["one_plus_z"]
         mv = expected["cluster_moving"]["members"][name]

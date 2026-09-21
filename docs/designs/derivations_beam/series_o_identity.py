@@ -10,7 +10,7 @@ moving lamp emits per proper time (N4); the drive's rate per self-creation
 is Newton's p / (Q S M), so the pace per lattice interval is p c^2 / E (M1, on
 the domain |p|_1 <= Q S M, N2); the crossing count is read per interval and
 charged per self-creation (N1); c^2 = [1, 3] (M3), the rows on a heading at
-c_1 = 32 / 55 Links per interval (2.1).
+c_h = 32 / 55 Links per interval (2.1).
 
 Run from the repository root:
 
@@ -56,8 +56,8 @@ class Star:
 
 def reading(v_source_toward: Fr, gamma_s: Fr, v_reader_toward: Fr, gamma_r: Fr) -> tuple[Fr, Fr]:
     """A lamp moving at v_s toward its reader (negative: away), emitting one
-    unit per gamma_s intervals, its units (c_1 - v_s) gamma_s Links apart on
-    the axis; a reader moving at v_r toward them meets (c_1 + v_r) / ((c_1 -
+    unit per gamma_s intervals, its units (c_h - v_s) gamma_s Links apart on
+    the axis; a reader moving at v_r toward them meets (c_h + v_r) / ((c_h -
     v_s) gamma_s) per lattice interval. Returns (1 + z by the record's tool,
     the births per click tick against the lamp's declared rate of one per
     interval; 1 + z per the reader's own clock, the count per self-creation)."""
@@ -93,9 +93,9 @@ for name in ("symmetric_pass", "symmetric", "rest_frame"):
     for s in (a, b):
         print(
             f"  {s.name} at x = {s.x}: p = {s.p:+d} ({dec(Fr(abs(s.p), s.qsm), 5)} of Q S M);"
-            f" the law's pace {dec(s.v_law, 5)} Links per interval = {dec(s.v_law / C_H, 4)} c_1;"
+            f" the law's pace {dec(s.v_law, 5)} Links per interval = {dec(s.v_law / C_H, 4)} c_h;"
             f" E / c^2 = {s.e}, gamma = E / (m c^2) = {dec(s.gamma, 5)};"
-            f" the identity's pace p c^2 / E = {dec(s.v, 5)} = {dec(s.beta_h, 4)} c_1, beta = {s.beta_id:.4f} on c = 1 / sqrt 3"
+            f" the identity's pace p c^2 / E = {dec(s.v, 5)} = {dec(s.beta_h, 4)} c_h, beta = {s.beta_id:.4f} on c = 1 / sqrt 3"
         )
     # A moves toward +x (toward B), B toward -x (toward A) or at rest.
     va, vb = a.sign * a.v, -b.sign * b.v  # each star's speed TOWARD the other
@@ -119,7 +119,7 @@ for name in ("symmetric_pass", "symmetric", "rest_frame"):
         + " (a lab at rest: the tool's and its own clock's readings are one)"
     )
     print(
-        f"  nature at the same speeds (beta on c_1): the mutual {nat_mut:.4f} for both;"
+        f"  nature at the same speeds (beta on c_h): the mutual {nat_mut:.4f} for both;"
         f" the labs (1 + beta) gamma: {(1 + float(va / C_H)) / math.sqrt(1 - float(va / C_H) ** 2):.4f} of A,"
         f" {(1 + float(vb / C_H)) / math.sqrt(1 - float(vb / C_H) ** 2):.4f} of B"
     )
@@ -127,7 +127,7 @@ for name in ("symmetric_pass", "symmetric", "rest_frame"):
     law_b = (1 - va / C_H) / (1 + vb / C_H)
     va_law, vb_law = a.sign * a.v_law, -b.sign * b.v_law
     print(
-        f"  the law as built at the law's own pace ({dec(a.v_law / C_H, 3)} c_1, {dec(b.v_law / C_H, 3)} c_1):"
+        f"  the law as built at the law's own pace ({dec(a.v_law / C_H, 3)} c_h, {dec(b.v_law / C_H, 3)} c_h):"
         f" A reads B {dec((1 - vb_law / C_H) / (1 + va_law / C_H))},"
         f" B reads A {dec((1 - va_law / C_H) / (1 + vb_law / C_H))},"
         f" the labs {dec(1 + va_law / C_H)} and {dec(1 + vb_law / C_H)}"
@@ -169,5 +169,5 @@ for v_c in (Fr(2, 10), Fr(4, 10)):
     p_re = round(a.qsm * float(v) / math.sqrt(1 - 3 * float(v) ** 2))
     e_re = math.isqrt(a.qsm * a.qsm + 3 * p_re * p_re)
     print(
-        f"  {dec(v_c, 1)} c_1: p = {p_re} (p c^2 / E = {dec(Fr(p_re, e_re), 5)} = {dec(Fr(p_re, e_re) / C_H, 4)} c_1)"
+        f"  {dec(v_c, 1)} c_h: p = {p_re} (p c^2 / E = {dec(Fr(p_re, e_re), 5)} = {dec(Fr(p_re, e_re) / C_H, 4)} c_h)"
     )

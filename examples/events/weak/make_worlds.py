@@ -118,6 +118,7 @@ import numpy as np  # noqa: E402
 
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world  # noqa: E402
 from event_universe.events.nature_beam import direction_flight  # noqa: E402
+from event_universe.register_map import carry_replicated  # noqa: E402
 from event_universe.world_loading import families_by_definition  # noqa: E402
 
 # The shipped definitions the world's families come from where they equal
@@ -635,7 +636,8 @@ def main() -> None:
     for name, w_expected in w_expectations().items():
         print(f"  {name}: expected (GAMEBOARD, from the rule) {w_expected}")
     (args.out / "expectations.json").write_text(
-        json.dumps(expectations, indent=1) + "\n", encoding="utf-8"
+        json.dumps(carry_replicated(args.out / "expectations.json", expectations), indent=1) + "\n",
+        encoding="utf-8",
     )
     print(args.out / "expectations.json")
 
