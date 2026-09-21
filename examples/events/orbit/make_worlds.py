@@ -82,6 +82,27 @@ WIDTHS = (1, 8, 32)
 RADII = (12, 24)
 # The tool's constant of the flow on the plane, flow x 2 pi r / q (series C).
 FLOW_CONSTANT = 1.0
+# The lamp worlds (2026-09-21, DERIVATIONS_BEAM 21.5 row 58; the Boss's order
+# on the model owner's record 333): series D's S = 32 worlds with one change
+# so that a detector reads the orbit. The probe is a body of the shipped free
+# family `probe` (charge 0, no phase circle: the same push as `m`) of content
+# 2^10, so that at the world's one `release` it releases one row per direction
+# of the same fan every 10 intervals as the source does (a body of content 1
+# releases at the age 10240, beyond the run); the source's table measures the
+# probe's family (the click at the source's Node) and a detector of that one
+# Node reads the count (`beam`, the family having no phase circle). The
+# momentum is the circular-orbit momentum under the directional drive (form
+# B, BEAM_LAW note 49): the probe walks the line of its momentum at the pace
+# n Q / (Q S + n T_D) per unit of content, 64 n / (64 S + 110 n) on a heading,
+# so the circular condition n x 64 n / (64 S + 110 n) = A gives n = 9.63 at
+# S = 32, the nearest whole 10 (640 label units per unit of content, 655360
+# for the probe of content 2^10; the dynamics per unit of content do not
+# depend on the content: the push per ray is one unit of n whatever m, and
+# the pace reads n alone). Everything else series D's.
+LAMP_WIDTH = 32
+LAMP_PROBE_FAMILY = "probe"
+LAMP_PROBE_CONTENT = SOURCE
+T_D_AXIS = 110  # the axis direction's period constant, isqrt(3 Q^2) at Q = 64
 Json = dict[str, object]
 
 
@@ -125,6 +146,43 @@ def expected_period(width: int, radius: int) -> float:
     return 2 * math.pi * radius * (width + n) / n
 
 
+def form_b_pace(n: float, width: int) -> float:
+    """The directional drive's pace on a heading per unit of content, n Q / (Q S + n T_D)."""
+    return n * LABEL_SCALE / (LABEL_SCALE * width + n * T_D_AXIS)
+
+
+def orbit_momentum_form_b(width: int) -> tuple[float, int]:
+    """The circular-orbit momentum under the directional drive, n x pace(n) = A:
+    64 n^2 = A (64 S + 110 n), the real root and the nearest whole."""
+    a = EMISSION * LABEL_MAGNITUDE * FLOW_CONSTANT / (2 * math.pi)
+    n = (T_D_AXIS * a + math.sqrt((T_D_AXIS * a) ** 2 + 4 * LABEL_SCALE * LABEL_SCALE * width * a)) / (
+        2 * LABEL_SCALE
+    )
+    return n, max(1, round(n))
+
+
+def lamp_world(radius: int) -> Json:
+    """Series D's S = 32 world at `radius` with the probe a lamp of its own
+    light and the source its detector (the comment at LAMP_WIDTH)."""
+    document = world(LAMP_WIDTH, radius)
+    _, n = orbit_momentum_form_b(LAMP_WIDTH)
+    document["model_id"] = f"rays-orbit-s{LAMP_WIDTH}-r{radius}-lamp-plane-v1"
+    document["families"] = [
+        {"name": "m", "quantum": 0, "charge": 0, "phase": False},
+        {"name": LAMP_PROBE_FAMILY, "quantum": 0, "charge": 0, "phase": False},
+    ]
+    source, probe = document["measured"]  # type: ignore[misc]
+    source["table"] = {LAMP_PROBE_FAMILY: "measure"}
+    probe["family"] = LAMP_PROBE_FAMILY
+    probe["amount"] = LAMP_PROBE_CONTENT
+    probe["momentum"] = [0, n * LABEL_SCALE * LAMP_PROBE_CONTENT, 0]
+    probe["directions"] = [list(v) for v in FAN]
+    document["detectors"] = [
+        {"name": "source", "positions": [list(CENTRE)], "threshold": 1, "reading": "beam"}
+    ]
+    return document
+
+
 def world(width: int, radius: int) -> Json:
     _, n = orbit_momentum(width)
     return {
@@ -163,7 +221,10 @@ def world(width: int, radius: int) -> Json:
 
 
 def worlds() -> dict[str, Json]:
-    return {f"s{width}_r{radius}": world(width, radius) for width in WIDTHS for radius in RADII}
+    made = {f"s{width}_r{radius}": world(width, radius) for width in WIDTHS for radius in RADII}
+    for radius in RADII:
+        made[f"s{LAMP_WIDTH}_r{radius}_lamp"] = lamp_world(radius)
+    return made
 
 
 def main() -> None:
@@ -179,6 +240,14 @@ def main() -> None:
             f"S = {width}: n = {real:.3f} -> p = {whole} ({whole * LABEL_SCALE} label units), "
             f"v = {speed:.3f} per axis, {periods}"
         )
+    real_b, whole_b = orbit_momentum_form_b(LAMP_WIDTH)
+    pace = form_b_pace(whole_b, LAMP_WIDTH)
+    print(
+        f"the lamp worlds at S = {LAMP_WIDTH} under the directional drive: n = {real_b:.3f} -> {whole_b} "
+        f"({whole_b * LABEL_SCALE} label units per unit of content, {whole_b * LABEL_SCALE * LAMP_PROBE_CONTENT} for the probe of content {LAMP_PROBE_CONTENT}), "
+        f"the pace on a heading {pace:.4f} Links per interval, "
+        + ", ".join(f"T({r}) = {2 * math.pi * r / pace:.0f}" for r in RADII)
+    )
     for name, document in worlds().items():
         path = HERE / f"{name}.json"
         document = families_by_definition(document, FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)

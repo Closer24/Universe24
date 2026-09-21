@@ -1765,3 +1765,122 @@ between its LaTeX markers (the plain-text count for arXiv's 1920 is
 taken at submission, arxiv_metadata.md); the Heisenberg single-opening
 row's status without "pin:".
 
+## Record 337 (2026-09-21): the paper as a theory, four parts
+
+The owner's order through the Boss (record 337): the physics must come
+out of the law and not go in as input; a few postulates, one local
+update law, the known phenomena; the referee's question whether the
+physics comes from F or hides in r, b, the family tables, the bilinear
+forms, the matrices and the click rule; the strongest test a
+prediction computed in advance. Four parts, each its own push (on one
+branch, successive heads): (1) paper/README.md: the archived v0.3.1
+manuscripts named historical, general_formula/main.tex the one paper.
+(2) The postulates P1 to P10 at the head of Section sec:law, before
+Eq. (1), from the derivation's inputs ledger (24.1): the bounded
+integers, the GameBoard, the six operations, locality, one Link per
+interval, the click, the grains, the physical inputs, the rules chosen
+among few (the flight blind to the crowd, form B's drive, the
+collision's shift), Born's member c_1 = 1 the one imported law; the
+bilinear rate of a body's reading derived (24.2). With it the owner's
+finding on the lattice Gleason: hypothesis (d), the empty record reads
+zero and R is not identically zero, without which the constant reading
+satisfies (a) to (c); the derivation's 6.5 has the same gap (reported
+to the Boss). (3) The standing column of Table tab:consequences, one
+word per row: DERIVED, HYPOTHESIS, POSTULATE, INPUT, DIFFERENT, NOT
+REACHED, OPEN, the words after the ledger; c = 1/sqrt 3 DERIVED given
+the flight's declared wall (24.1 row 9), the expansion rows HYPOTHESIS
+(expansion-v1 a declared assumption, record 279), the different-law
+rows DIFFERENT. (4) The section "Where the law differs, by how much,
+and what bounds it" from 24.3 (twenty differences with the bounding
+experiment and the verdict on main) and 24.4 (the one prediction: S =
+181/64 = 2.828125 for N a power of two at or above 512, three parts in
+ten thousand below Tsirelson's bound, inside Poh et al. 2015 at 1.1
+standard errors, what refutes it, the run at N = 512 and 4096 pending);
+the twelve failures stay in the abstract. Referee round 29 (eleven
+findings, four major: P4's invented phrases, P6 too narrow, the
+expansion rows, the table's width; the README's leftovers) applied;
+"What is put in" shortened to what P7 and P8 do not say (the circle's
+rounding with its precedents, the program's quotation). Referee round
+30 on P9, P10, the relabelling of c and the differing section pending.
+The references of 24.3 verified against the publishers' records before
+citing: Poh et al. 2015 (PRL 115, 180408), Herrmann et al. 2009 (PRD
+80, 105011), Botermann et al. 2014 (PRL 113, 120405), Bucherer 1909
+(Ann. Phys. 333, 513), Kostelecky and Russell 2011 (Rev. Mod. Phys. 83,
+11), Delva et al. 2018 (PRL 121, 231101), Vessot et al. 1980 (PRL 45,
+2081), Clemence 1947 (Rev. Mod. Phys. 19, 361), Dyson, Eddington and
+Davidson 1920 (Phil. Trans. R. Soc. A 220, 291), Shapiro et al. 2004
+(PRL 92, 121101).
+
+## Wave 12 (2026-09-21): the 48 figure attached, record 334
+
+The Visualiser's page 10 (PR #508, on main at 807b1be7) and its tool
+tools/gallery_pages.py --figures write octahedron.png and the_48.png
+for the paper: the 48 signed axis permutations, each the octahedron of
+the six Ports after g with its matrix and determinant, the 24 rotations
+above (the identity 1, half turns about the Port axes 3, quarter turns
+6, half turns about the edge axes 6, third turns about the diagonals
+8) and the 24 improper below (reflections in the Port planes 3, the
+inversion 1, reflections in the diagonal planes 6, quarter turns with a
+reflection 6, sixth turns with a reflection 8); the test pins the
+counts; no run, nothing pinned by the page. Part I gains Figure
+fig:the48 after the group paragraph; the paper's own octahedron.pdf
+stays; the gallery bibitem; paper/README.md names the two files and
+the command. Referee round 31 pending.
+
+## Referee round 31 (2026-09-21): the 48 figure, applied
+
+Eight findings, two major, all applied (in the commit after the
+figure's, which went out before the findings were in): the figure set
+by height (0.72 of the text height) so the block with its caption fits
+one page under [H]; the caption says the matrices and indices are
+legible on the page, not in print; the builder's order named;
+"checks", not "pins", for the test; the hand as a row's pseudoscalar
+column with record 142; the duplicated sentence folded into the
+paragraph; the README and the bibitem say the paper uses the_48.png
+only (octahedron.png written and not used, not committed); the bibitem
+quotes the page's own words. Main merged at bd74c49a (records 338 and
+339; the log bibitem adds them).
+
+## Record 340 (2026-09-21): the owner's second review, from main at 119fd9b8
+
+Eq. (1) written as the count primitive implements it (the derivation's
+section 0 restated, PR #525): e = sign(s) min(floor(|s|/b), a) with
+the signed rate and the remainder kept, the cap a = 1 the drive's
+alone, every other count firing the whole part (the owner's high-rate
+series 0, 2, 5, 7, 10), and one sentence on where the 0/1 form holds
+(the flight, the drive by its cap, the wheel, a slow clock). The
+lattice Gleason's hypotheses (d) the empty reads zero and (e) some
+input reads, as 6.5 states them (record 340). The abstract's pace
+qualified: the rows' pace c, the largest uniform one, a body's pace
+not bounded by it under the law as declared. The axis preference and a
+body's pace above the rows' stated where the drive is stated (the
+owner's eight runs: 26 Nodes on x and none on y; 0.925 against 0.582;
+the cap one Link per interval, 1.72 c, the engine's rule that one axis
+steps per interval) and as rows 21 and 22 of the differing table (24.3),
+both refuted on main as declared and closed under form B's directional
+drive, in build (PR #526 in review). A duplicated ame2020 bibitem
+removed. Referee round 32 pending.
+
+## Referee round 32 (2026-09-21): record 340's round, applied
+
+Twelve findings, four major, all applied: under the cap the residual
+above the wall is kept and fires one event at each following interval
+(not a Euclidean remainder); the cap and the sign named as operation
+6's comparison, the capped carry an injection that loses nothing, so
+still no third non-linear place; the abstract's and the introduction's
+summaries in the count form ("count the walls it holds, capped at one
+for the drive; every wall counted is an event"), the glossary's e the
+event count with a its cap; a = infinity where no cap is declared; the
+drive's form with the sign; the axis preference in the engine's words
+(the first axis whose rule fires, x before y before z when two fire in
+one interval); a body's cap one Link per interval in all, T_d / Q_f =
+1.72 times the rows' pace on a heading (sqrt 3 c), not "up to sqrt 3
+Nodes per interval, 3 c" as 24.3 row 22 has it (the tree's error,
+reported: the engine's _move steps one axis per interval; FORM.md's
+1.72 c agrees); row 22 closed also under the covariant readings; the
+Cohen-Glashow bound named as the neutrinos', the charged bodies' the
+vacuum Cherenkov one; (d) excludes the constant reading and (e) the
+zero detector, said so; "form B in build" in the abstract. The
+abstract at 1921 plain characters after the measurement-chapter
+sentence was cut for the prediction's.
+

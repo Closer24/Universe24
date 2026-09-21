@@ -106,6 +106,8 @@ BODY_COLOURS = {
     "m": (200, 200, 220),
     "d": (120, 200, 160),
     "w": (220, 120, 255),
+    "u": (255, 150, 60),
+    "e": (110, 225, 255),
 }
 
 
@@ -881,6 +883,57 @@ ul.pages li { margin: 8px 0; }
 .formula section ol { padding-left: 1.2em; margin: 4px 0; }
 .formula section li { margin: 2px 0; font-size: 0.95rem; }
 .formula section div { font-size: 0.95rem; }
+.formula section pre { font-size: 0.85rem; white-space: pre-wrap; margin: 6px 0; font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; color: var(--accent); }
+table.map td, table.map th { font-size: 0.85rem; }
+section.big { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 20px 16px; margin: 16px 0 24px; text-align: center; }
+section.big pre.formula { font-size: 2.2rem; line-height: 1.3; }
+section.big pre.formula.small-caps { font-size: 1.35rem; }
+pre.formula { font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; color: var(--accent); white-space: pre-wrap; margin: 8px 0; }
+.smalls { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.smalls section { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.smalls h3 { margin: 0 0 4px; font-size: 1.05rem; }
+.smalls pre.formula { font-size: 1.1rem; }
+.smalls p { font-size: 0.92rem; margin: 4px 0; }
+table.compare td.ours { color: var(--good); }
+math { font-family: "Latin Modern Math", "STIX Two Math", "Cambria Math", "DejaVu Serif", serif; color: var(--accent); }
+section.big math { font-size: 2.4rem; margin: 10px 0; }
+section.big .conditions math { font-size: 1.4rem; margin: 4px 0; }
+math[display="block"] { max-width: 100%; overflow-x: auto; }
+.scroll { overflow-x: auto; }
+.who { display: inline-block; font: 0.72rem/1.4 Georgia, serif; letter-spacing: 0.06em; text-transform: uppercase; padding: 1px 8px; border-radius: 999px; border: 1px solid; margin: 0 0 4px; }
+.who.law { color: var(--accent); border-color: var(--accent); }
+.who.newton { color: #f0a050; border-color: #f0a050; }
+.who.lorentz { color: #c79cff; border-color: #c79cff; }
+.who.einstein { color: #6cb4ff; border-color: #6cb4ff; }
+.who.planck, .who.doppler { color: #b8b8c8; border-color: #b8b8c8; }
+section.big.theirs-box math { color: #6cb4ff; font-size: 1.8rem; }
+.owners { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.owners section { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.owners h3 { margin: 0 0 6px; font-size: 1rem; }
+.owners ul { padding-left: 1.1em; margin: 4px 0; }
+.owners li { font-size: 0.9rem; margin: 3px 0; }
+.story { display: grid; gap: 12px; }
+.story .step { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; }
+.story h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.story .pair { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; }
+.story .pair > div, .story .step, .owners section, .smalls section { min-width: 0; }
+.story .arrow { font-size: 1.6rem; color: var(--muted); transform: rotate(-90deg); }
+.story .theirs math { color: #6cb4ff; }
+.story math { font-size: 1.3rem; margin: 6px 0; }
+.story p { font-size: 0.9rem; margin: 4px 0; }
+.story p.status { border-top: 1px solid var(--line); padding-top: 6px; margin-top: 8px; }
+@media (max-width: 640px) { .story .pair { grid-template-columns: 1fr; } .story .arrow { transform: none; text-align: center; } }
+.deriveds { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.deriveds section { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.deriveds h3 { margin: 0 0 4px; font-size: 1.05rem; }
+.deriveds math { font-size: 1.45rem; margin: 8px 0; }
+.deriveds p { font-size: 0.92rem; margin: 4px 0; }
+@media (max-width: 600px) { section.big math { font-size: 1.35rem; } }
+details summary { cursor: pointer; color: var(--accent); margin: 12px 0; }
+@media (max-width: 600px) { section.big pre.formula { font-size: 1.5rem; } section.big pre.formula.small-caps { font-size: 1rem; } }
+td.reached { color: var(--good); white-space: nowrap; }
+td.different { color: #e0b44a; }
+td.missing { color: #f08080; }
 """
 
 
@@ -1795,11 +1848,18 @@ def nucleus_player(
     ticks: Sequence[int],
     caption: str,
     duration_ms: int,
+    weights: dict[str, float] | None = None,
+    on_top: str = "nuclear",
+    border_family: str = "nuclear",
+    push_body: int = 1,
+    colours: int = 128,
+    scale: int = 10,
 ) -> tuple[Player, dict[str, object], dict[str, list[dict[str, object]]]]:
-    """One series I world replayed and drawn as the x-y projection (the
-    amounts summed over z), the bodies as discs; per frame the bodies'
-    Nodes, the steps and hand-overs so far, the border's clicks in the
-    interval and the push read by body 1."""
+    """One series I world (or series R's, the quarks) replayed and drawn as
+    the x-y projection (the amounts summed over z), the bodies as discs;
+    per frame the bodies' Nodes, the steps and hand-overs so far, the
+    border's clicks of the strong family in the interval and the push read
+    by one body."""
     record_dir = runner_record(world, runs)
     record = read_json(record_dir / "run.json")
     events = scan_events(record_dir / "events.jsonl", ["step", "contact", "read", "become"])
@@ -1814,19 +1874,19 @@ def nucleus_player(
     # The plane of the bodies (z = 10 in every series I world): the rows in
     # that plane alone, so that the strong rows' halo is visible under the
     # fan's crowd.
-    plane = plane_for(replay, scale=10, slice_z=int(replay.world.measured[0].position[2]))
+    plane = plane_for(replay, scale=scale, slice_z=int(replay.world.measured[0].position[2]))
     plane.largest = largest_amounts(frames)
     plane.floor = 0.12
-    plane.weights = {"p": 0.5, "n": 0.5}
-    plane.on_top = "nuclear"
+    plane.weights = weights if weights is not None else {"p": 0.5, "n": 0.5}
+    plane.on_top = on_top
     steps = by_tick(events["step"])
     contacts = by_tick(events["contact"])
     exits = by_tick(face_exits)
     pushes: dict[int, int] = {}
     for line in events["read"]:
-        if int(line["measured"]) == 1:  # type: ignore[arg-type]
+        if int(line["measured"]) == push_body:  # type: ignore[arg-type]
             pushes[int(line["tick"])] = pushes.get(int(line["tick"]), 0) + int(line["push"][0])  # type: ignore[arg-type, index]
-    border = escaped_per_tick(record, "nuclear")
+    border = escaped_per_tick(record, border_family)
     images = [plane.image(frame) for frame in frames]
     readings = []
     for frame in frames:
@@ -1838,10 +1898,10 @@ def nucleus_player(
             or "none on the GameBoard (all left through the faces)",
             "steps so far (step lines)": num(sum(len(v) for k, v in steps.items() if k <= t)),
             "hand-overs so far (contact lines)": num(sum(len(v) for k, v in contacts.items() if k <= t)),
-            "the border's clicks of nuclear this interval (run.json, audit)": num(
+            f"the border's clicks of {border_family} this interval (run.json, audit)": num(
                 border[t - 1] if 1 <= t <= len(border) else 0
             ),
-            "the push read by body 1 on x this interval (read lines)": num(pushes.get(t, 0)),
+            f"the push read by body {push_body} on x this interval (read lines)": num(pushes.get(t, 0)),
         }
         left = [
             f"{e['measured']} through {e['detector']} at {e['tick']}"
@@ -1852,7 +1912,9 @@ def nucleus_player(
         if left:
             lines["bodies that left (face click lines)"] = "; ".join(left)
         readings.append(lines)
-    player = Player(key, images, list(ticks), readings, caption + " " + COPIES_NOTE, duration_ms)
+    player = Player(
+        key, images, list(ticks), readings, caption + " " + COPIES_NOTE, duration_ms, colours=colours
+    )
     return player, record, events
 
 
@@ -3132,12 +3194,14 @@ def volume_player(
     phase_bodies: set[str] | None = None,
     arrow_families: set[str] | None = None,
     dot_bodies: set[str] | None = None,
+    copies: bool = True,
 ) -> Player:
     replay = Replay(world)
     frames = replay.run(ticks)
     volume = volume_for(replay, scale)
     volume.largest = largest_amounts(frames)
     volume.dot_bodies = dot_bodies or set()
+    volume.copies = copies
     volume.weights = weights or {}
     volume.phase_bodies = phase_bodies or set()
     volume.arrow_families = arrow_families or set()
@@ -3159,7 +3223,13 @@ def volume_player(
         for frame in frames
     ]
     return Player(
-        key, images, list(ticks), readings, caption + " " + COPIES_NOTE, duration_ms, colours=64
+        key,
+        images,
+        list(ticks),
+        readings,
+        caption + " " + COPIES_NOTE if copies else caption,
+        duration_ms,
+        colours=64,
     )
 
 
@@ -3973,6 +4043,1101 @@ listed in <a href="../../HIGHLIGHTS.md">HIGHLIGHTS 5.7</a> and derived in
     )
 
 
+# ---------------------------------------------------------------------------
+# Page 11: the quarks (the model owner, 2026-09-21: "prepare one on the
+# quarks too, one that can be broken apart by an electron moving fast at
+# them: breaking a proton").
+# ---------------------------------------------------------------------------
+
+
+def quark_bodies_text(frame: Frame) -> str:
+    return (
+        "; ".join(f"{b.number}: {b.family} at {b.position}" for b in frame.bodies)
+        or "none on the GameBoard (all left through the faces)"
+    )
+
+
+@register("quarks")
+def page_quarks(out: Path, runs: Path | None) -> Path:
+    """(11) The quarks, series R: the proton line u d u holding, the kicked
+    quark walking off (the law binds and does not confine), and a
+    demonstration: a fast electron thrown at the line."""
+    folder = WORLDS / "quarks"
+    demo_world = GALLERY_WORLDS / "proton_electron.json"
+    weights = {"u": 0.35, "d": 0.35, "e": 0.25}
+    line, line_record, line_events = nucleus_player(
+        "proton_line",
+        folder / "q1_proton_line.json",
+        runs,
+        list(range(0, 49)),
+        "The proton line u d u, `q1_proton_line`: the plane z = 10 of the 21^3 cube (the bodies' plane, the "
+        "rows in it alone), 14 pixels per Node; u at (9, 10, 10), d at (10, 10, 10), u at (11, 10, 10), each "
+        "holding one unit of `glue` (gold rows, reaching three Links and clicking on the border `lifetime`). "
+        "One frame per interval: the three bodies releasing their rows into the Nodes beside them; the line "
+        "holds 3000 intervals with no step (the register's R).",
+        120,
+        weights=weights,
+        on_top="glue",
+        border_family="glue",
+        scale=14,
+    )
+    kick, kick_record, kick_events = nucleus_player(
+        "proton_kick",
+        folder / "q6_proton_kick.json",
+        runs,
+        list(range(0, 91, 2)),
+        "The kicked quark, `q6_proton_kick`: the left u thrown -x by 10^13 label units; it steps every seven "
+        "intervals, its push falling to the electric residual beyond the reach, and leaves through the face "
+        "-x (one frame per two intervals): the law binds and does not confine.",
+        160,
+        weights=weights,
+        on_top="glue",
+        border_family="glue",
+        colours=64,
+        scale=14,
+    )
+    hit, hit_record, hit_events = nucleus_player(
+        "proton_electron",
+        demo_world,
+        runs,
+        list(range(0, 121, 3)),
+        "The fast electron, `proton_electron` (a demonstration world): the electron e (cyan) at (3, 10, 10) "
+        "thrown +x at the line with 2 x 10^13 label units, about one Link per 1.4 intervals; what the law does "
+        "when it reaches the first quark is what the frames show (one frame per three intervals): the contact through "
+        "the table hands the momentum to the occupant, and a quark that walks off is not held back.",
+        160,
+        weights=weights,
+        on_top="glue",
+        border_family="glue",
+        push_body=4,
+        colours=64,
+        scale=14,
+    )
+    volume = volume_player(
+        "volume_proton_electron",
+        demo_world,
+        list(range(0, 121, 3)),
+        6,
+        "The same demonstration in three dimensions, one frame per three intervals, the cube turning slowly: "
+        "the line of three quarks with their glue (the gold halo), the electron arriving on +x, the knocked "
+        "quark leaving, with the arrows of their momentum labels. Here only the glue rows are drawn (their "
+        "reach three Links, the strong column's range) and the bodies' copies are not: four bodies releasing "
+        "on 290 directions fill the cube; the plane above shows the u, d and e rows and the copies.",
+        100,
+        weights={"u": 0.0, "d": 0.0, "glue": 0.4, "e": 0.0},
+        copies=False,
+    )
+
+    def first_steps(events: dict[str, list[dict[str, object]]]) -> str:
+        seen: dict[int, dict[str, object]] = {}
+        for entry in events["step"]:
+            seen.setdefault(int(entry["number"]), entry)  # type: ignore[arg-type]
+        return (
+            "; ".join(
+                f"body {n} at the interval {entry['tick']} from {tuple(entry['node'])} to {tuple(entry['to'])}"  # type: ignore[arg-type]
+                for n, entry in sorted(seen.items())
+            )
+            or "none"
+        )
+
+    def step_ticks(events: dict[str, list[dict[str, object]]], number: int, limit: int = 12) -> str:
+        ticks = [int(e["tick"]) for e in events["step"] if int(e["number"]) == number]  # type: ignore[arg-type]
+        text = ", ".join(str(t) for t in ticks[:limit])
+        return (
+            f"{text}{', ...' if len(ticks) > limit else ''} ({len(ticks)} steps in all)"
+            if ticks
+            else "none"
+        )
+
+    def exits(events: dict[str, list[dict[str, object]]]) -> str:
+        return (
+            "; ".join(
+                f"body {e['measured']} through {e['detector']} at {e['tick']}" for e in events["exit"]
+            )
+            or "none"
+        )
+
+    def read_mass(world: Path) -> str:
+        """The contents declared (the family's units and the held units),
+        their sum what a detector reads as the set's mass."""
+        declared = read_json(world)["measured"]
+        assert isinstance(declared, list)
+        parts = [int(m["amount"]) + sum(int(v) for v in m.get("held", {}).values()) for m in declared]
+        return " + ".join(str(c) for c in parts) + " = " + str(sum(parts))
+
+    hit_first_contact = min(
+        (int(e["tick"]) for e in hit_events["contact"]),
+        default=None,  # type: ignore[arg-type]
+    )
+    entry_url = "../../EXPERIMENTS.md#r-the-quarks-2026-09-21"
+    body = f"""
+{registered_note(folder / "q1_proton_line.json", "R, the quarks (2026-09-21)", entry_url)}
+<p class="demo">Also registered there: <code>examples/events/quarks/q6_proton_kick.json</code>, run as declared.
+Series R is a research run of a read-only design (<a href="../../designs/quarks/QUARKS.md">the quarks as
+families of the family table</a>): the quarks are not rows of the law's family table today, and nothing on this
+page changes that. The third world is a demonstration written for this page.</p>
+{demonstration_note(demo_world)}
+<h2>The GameBoard</h2>
+<p>Series I's cube: 21 x 21 x 21 open Nodes, K = {num(1 << 20)}, N = 64, the width of the push 2^37, the
+contact through the table, the fan of the 290 primitive directions with |a| + |b| + |c| at most 6. Three free
+families without a phase circle: <code>u</code> (4 units of content, the charge 1224 per unit: the whole
+charge 4896, 2/3 of the register's proton 7344), <code>d</code> (9 units at -272: -2448, -1/3) and
+<code>glue</code> (the column <code>strong</code> of value 10 000 with the sign minus, the <code>lifetime</code>
+3: series I's <code>nuclear</code> at the quark level). A <b>quark</b> is a body of <code>u</code> or
+<code>d</code> holding one unit of <code>glue</code>; every body releases one row of its held content per
+direction per interval; the push per interval between two bodies within the reach is
+(Q<sub>A</sub> Q<sub>B</sub> - G<sub>A</sub> G<sub>B</sub> - M<sub>A</sub> M<sub>B</sub>) x U(r) per unit per
+direction. In the demonstration a fourth family <code>e</code> (one unit of content, the charge -7344 per
+unit, minus the proton's; no strong column) has one body at (3, 10, 10) with the momentum 2 x 10^13 label
+units on +x: at the width 2^37 it steps one Link per (64 x 2^37 + p) / p = 1.44 self-creations. No detector
+is declared: the bodies' <code>read</code> and <code>contact</code> records are the readings, the six faces and
+the border <code>lifetime</code> the detectors of what leaves.</p>
+{
+        legend(
+            [
+                ("the u rows", swatch(FAMILY_COLOURS[0])),
+                ("the d rows", swatch(FAMILY_COLOURS[1])),
+                ("the glue rows (the strong column, lifetime 3)", swatch(FAMILY_COLOURS[2])),
+                ("the e rows", swatch(FAMILY_COLOURS[3])),
+                ("a u quark (a body of u)", swatch(BODY_COLOURS["u"])),
+                ("a d quark (a body of d)", swatch(BODY_COLOURS["d"])),
+                ("the electron (a body of e)", swatch(BODY_COLOURS["e"])),
+            ]
+        )
+    }
+<h2>Why this page</h2>
+<p>The owner asked for the quarks: a proton that a fast electron can break apart. In series R the proton is
+three quark bodies in a line, bound by the one coupling over the columns through the strong column of the
+glue each holds, with the contact through the table: a body refused a step onto its neighbour's Node hands
+its momentum component to the occupant. The register's verdict: the line holds, and a kicked quark walks
+off, because the law binds and does not confine (nothing in it grows with distance). The demonstration throws
+an electron at the line: the electron's charge pulls the u and pushes the d as it comes, and when it reaches
+the first quark its momentum is handed over through the table. Whether the line breaks, which quark leaves
+and what the electron does afterwards are read off the run below, not assumed.</p>
+<h2>1. The proton line holds</h2>
+{line.html()}
+<h2>2. A kicked quark walks off</h2>
+{kick.html()}
+<h2>3. A fast electron thrown at the proton (a demonstration)</h2>
+{hit.html()}
+{volume.html()}
+<h2>What the runs read</h2>
+<table>
+<tr><th>Reading (kind)</th><th>q1_proton_line</th><th>q6_proton_kick</th><th>proton_electron (demonstration)</th></tr>
+<tr><th>the first step of each body (GAMEBOARD, step lines)</th><td>{
+        html.escape(first_steps(line_events))
+    }</td><td>{html.escape(first_steps(kick_events))}</td><td>{
+        html.escape(first_steps(hit_events))
+    }</td></tr>
+<tr><th>the steps of the kicked or hit body (GAMEBOARD)</th><td>none</td><td>body 1: {
+        html.escape(step_ticks(kick_events, 1))
+    }</td><td>body 4, the electron: {html.escape(step_ticks(hit_events, 4))}</td></tr>
+<tr><th>hand-overs over the run (contact lines)</th><td class="num">{
+        num(len(line_events["contact"]))
+    }</td><td class="num">{num(len(kick_events["contact"]))}</td><td class="num">{
+        num(len(hit_events["contact"]))
+    }</td></tr>
+<tr><th>the first hand-over (contact lines)</th><td>{
+        html.escape(str(min((int(e["tick"]) for e in line_events["contact"]), default="none")))
+    }</td><td>{
+        html.escape(str(min((int(e["tick"]) for e in kick_events["contact"]), default="none")))
+    }</td><td>{
+        html.escape(str(hit_first_contact) if hit_first_contact is not None else "none")
+    }</td></tr>
+<tr><th>what left through the faces (DETECTOR, face click lines)</th><td>{
+        html.escape(exits(line_events))
+    }</td><td>{html.escape(exits(kick_events))}</td><td>{html.escape(exits(hit_events))}</td></tr>
+<tr><th>the contents declared, their sum the read mass (DETECTOR)</th><td>{
+        html.escape(read_mass(folder / "q1_proton_line.json"))
+    }</td><td>{html.escape(read_mass(folder / "q6_proton_kick.json"))}</td><td>{
+        html.escape(read_mass(demo_world))
+    }</td></tr>
+<tr><th>the run's intervals (completed)</th><td class="num">{
+        num(int(line_record["completed_ticks"]))
+    }</td><td class="num">{num(int(kick_record["completed_ticks"]))}</td><td class="num">{
+        num(int(hit_record["completed_ticks"]))
+    }</td></tr>
+</table>
+<p>The register's pins for the two registered worlds (series R, read and compared there): the push at the
+interval 20 on the ends of the line +-416 530 868 696 on x and 0 on the middle, exactly; no step in 3000
+intervals; the read mass 20 units (the exact sum of the declared contents: nothing raises a bound set's mass
+above its parts, the proton's 99 percent binding is not in the law); the kicked u steps -x at the intervals
+6, 13, 20, ... every seven and leaves through <code>face:-x</code> at 63 with its charge 2/3 e, outside the
+page's pin of 70 to 90 by seven intervals, reported and not moved. The demonstration has no pin: its
+readings above are what its run did.</p>
+{
+        sources(
+            [
+                (
+                    "the worlds q1_proton_line and q6_proton_kick, their families, fan, width and pins",
+                    '<a href="../../../examples/events/quarks/README.md">examples/events/quarks/README.md</a>, <code>expectations.json</code>; the register, <a href="'
+                    + entry_url
+                    + '">R, the quarks (2026-09-21)</a>',
+                ),
+                (
+                    "the design (read-only): the six quark rows, what the law lacks for confinement",
+                    '<a href="../../designs/quarks/QUARKS.md">docs/designs/quarks/QUARKS.md</a> (sections 1, 2, 5); the owner\'s direction, records 249, 251 and 256 of the log of 2026-09-20',
+                ),
+                (
+                    "the demonstration world",
+                    f"<code>{relative(demo_world)}</code>, written by <code>examples/events/gallery/make_worlds.py</code> from <code>q1_proton_line.json</code> with the family <code>e</code> and its body added; the electron's charge -7344 is minus the register's proton (4 per unit on 1836 units); the throw 2 x 10^13 label units",
+                ),
+                (
+                    "the steps, hand-overs, pushes and exits per frame",
+                    "the runs' <code>events.jsonl</code> (the kinds step, contact, read, click) and <code>run.json</code> (the audit's transit lines), replayed in process for the pictures",
+                ),
+                (
+                    "the runs' fingerprints",
+                    f"q1 {fingerprint_line(line_record)}; q6 {fingerprint_line(kick_record)}; the demonstration {fingerprint_line(hit_record)}",
+                ),
+                (
+                    "the step rule (one Link per (Q S M + p) / p self-creations) and the contact through the table",
+                    '<a href="../../BEAM_LAW.md">BEAM_LAW.md</a>, note 31; <code>src/event_universe/events/engine.py</code>, <code>step_axis</code>',
+                ),
+            ]
+        )
+    }
+"""
+    return write_page(
+        out,
+        "quarks",
+        page(
+            "The quarks",
+            "Series R: the proton of three quarks holding in a line, a kicked quark walking off, and a fast "
+            "electron thrown at the proton; the law binds and does not confine.",
+            body,
+        ),
+    )
+
+
+# ---------------------------------------------------------------------------
+# Page 12: the formulas and Einstein (the model owner, 2026-09-21: "my
+# formula at the top, big; below it the small formulas with their
+# explanation; then the comparison between me and Einstein, Lorentz and
+# Newton, to see the derivations").
+# ---------------------------------------------------------------------------
+
+# The Einstein map of DERIVATIONS_BEAM.md section 21.4, one row per result:
+# (number, Einstein's result, the status today, what the six verbs give,
+# what must be added and under which identity, the pin a run would meet).
+# R: reached; D: a different law as declared; N: not reached.
+EINSTEIN_MAP = (
+    (
+        "E1",
+        "Lorentz's symmetry of light, omega = c k, the light cone",
+        "R",
+        "the rows' limit is the wave equation at c (4.1, 5.1)",
+        "nothing",
+        "series K's ages, 89.40 in every world (registered)",
+    ),
+    (
+        "E2",
+        "gamma (the Lorentz factor), the time dilation of a moving clock",
+        "D (the rate 1, 4.3; NATURE 4a)",
+        "no operation carries a body's speed into its clock",
+        "the self-creation gated by the proper-time owed count (17.6 M1), covariant-readings-v1",
+        "J4's world of 17.6 M9: the products' face clicks at 367 and 345 (the decay at 70.9 and 125.2 derived), 391 at rest",
+    ),
+    (
+        "E3",
+        "the contraction 1 / gamma",
+        "D (12b.2: 0.87 to 0.96 by the dispersion, unstable)",
+        "the retarded flux push (12.1); -grad(A) alone gives the rest force along and gamma across (17.6 M4)",
+        "the magnetic part of the push, which needs the source's velocity: source-velocity-v1, named, not designed",
+        "none until then; the geometry when it comes: the thrown orbit at beta 0.43 or above, the extents' ratio 0.903",
+    ),
+    (
+        "E4",
+        "Doppler with gamma, 1 + z = gamma (1 + beta)",
+        "D (the count 1 + beta, 2.2; NATURE 4b)",
+        "the crossing count per interval, exact",
+        "the count charged per self-creation, the cadence of 17.6 M1, covariant-readings-v1",
+        "coasting_none's s_mz2 at its declared momentum: z = 0.369 +- 0.003",
+    ),
+    (
+        "E5",
+        "E = m c^2, the inertia of energy",
+        "N (4.5, 12.4)",
+        "E = h f for a row; the content and the momentum of a body untied",
+        "E'_0 = Q S M forced by the Newtonian limit, W gaining on a change of content, the load-time identity 3 h n = Q S d (17.6 M3, M7), covariant-readings-v1",
+        "a lamp emitting two opposite units keeps its pace, its W falling by the content identity per unit paid",
+    ),
+    (
+        "E6",
+        "the invariant E^2 - p^2 c^2 = E_0^2, v = p c^2 / E, the velocity addition",
+        "D (v = p / (m + p / c), 4.4)",
+        "the drive's rational form, first order off Newton",
+        "W = E'_0^2 + 3 p . p exact and E' by comparisons (17.6 M3); the pace p / E'; form B's directional accumulator without the cap term (M8)",
+        "E'^2 <= W < (E' + 1)^2 at every interval of a pinned run",
+    ),
+    (
+        "E7",
+        "the field of a moving charge (Heaviside), the magnetic term",
+        "D (12.1, 12b.1)",
+        "the age moment is the Lienard-Wiechert potential exactly (12.1); its gradient across the six Ports gives -grad(A) only (17.6 M4)",
+        "the magnetic part: source-velocity-v1, named, not designed",
+        "none until then; under -grad(A) alone the co-moving pair's pushes are the rest force along and gamma times the rest across",
+    ),
+    (
+        "E8",
+        "Poisson's equation, the field of a source",
+        "R (5.1)",
+        "the age moment, sourced by the release",
+        "nothing",
+        "series E: k_a r = 36.1, k_s r^2 = 41.5",
+    ),
+    (
+        "E9",
+        "the gravitational redshift at first order",
+        "R (5.2)",
+        "the owed count on the age moment, 1 / (1 + k_a)",
+        "nothing",
+        "series E's shells",
+    ),
+    (
+        "E10",
+        "Newton's geodesics (the retarded inverse square, the orbit)",
+        "R (3.3, 5.3)",
+        "the push and the drive",
+        "nothing",
+        "series D's orbit; push_m = m push_1",
+    ),
+    (
+        "E11",
+        "the second-order redshift, sqrt(1 - 2 G M / (r c^2))",
+        "D (5.2: 1 / (1 + k) at second order, no horizon)",
+        "a clock slowed by what it reads, linear in the crowd",
+        "the field's self-source: the rows in flight as sources of rows, field-source-v1, not decided",
+        "the strong-field probes k = 2 to 9 of series E re-read",
+    ),
+    (
+        "E12",
+        "the perihelion advance, 6 pi G M / (c^2 a (1 - e^2))",
+        "N (5.6: post-Newtonian terms)",
+        "the retarded push gives the drift and the decay of 12b.2, not a precession",
+        "one sixth from the velocity terms of covariant-readings-v1, five sixths from the field's nonlinearity, field-source-v1",
+        "the thrown orbit's apsidal drift per turn, pi beta_orbit^2 from the readings alone (one sixth of Einstein's)",
+    ),
+    (
+        "E13",
+        "the bending of light, 4 G M / (c^2 b)",
+        "D (5.4; series K's 0.000; the meeting key about M / b)",
+        "the flight blind to the crowd",
+        "a rule on the linear block: the row's wall reading the age moment (optical-v1), giving the delay's half; the space half needs the second-order field",
+        "series K's beam at b = 6: 2 G M / (c^2 b) under the wall alone, 4 G M / (c^2 b) with the field's second order",
+    ),
+    (
+        "E14",
+        "the Shapiro delay",
+        "D (5.4)",
+        "no delay in time on main",
+        "the same optical-v1",
+        "the lensing world's round trip lengthened by (2 G M / c^3) ln(4 r_1 r_2 / b^2)",
+    ),
+    (
+        "E15",
+        "the equivalence principle for a bound body",
+        "D (19.5)",
+        "the source's rows from the held content, M_A cancelling for a free body (3.3, exact)",
+        "the release reading the body's own E' / (Q S) (17.6 M6), inside covariant-readings-v1; the energy in flight, field-source-v1",
+        "a thrown body beside a probe of content 1: the probe's push against the body's drive, 1 at rest and gamma in motion",
+    ),
+    (
+        "E16",
+        "the self-gravitation of the field's content",
+        "N",
+        "the rows carry no source",
+        "field-source-v1 (rows in flight releasing, or the wall reading the presence)",
+        "E11's and E12's numbers",
+    ),
+    (
+        "E17",
+        "the tensor source (the stress as a source)",
+        "D (record 196)",
+        "the reading R returns the traceless second moment",
+        "the push reading the order-2 moment as well, a column of the coupling (tensor-source-v1)",
+        "a moving crowd's push on a probe differing from a static crowd's by the stress term",
+    ),
+    (
+        "E18",
+        "the cosmological term, q_0 = -0.53",
+        "D (15.4: Milne's 0)",
+        "the growing wall at a constant H",
+        "a rising H, a second declared rate under expansion-v1",
+        "the 24 stars' z(tau) with q < 0 against the register's bracket",
+    ),
+    (
+        "E19",
+        "the relativistic dispersion of a massive quantum, E^2 = m^2 c^4 + p^2 c^2 as a wave (Klein-Gordon)",
+        "N (every row flies at c)",
+        "the rows' massless wave equation (4.1, 5.1)",
+        "massive-rows-v1 (section 23): the row's wall E' = isqrt(E'_0^2 + 3 p . p)",
+        "slits_matter's bands at 36.5, 60, 83.5 and the centre's first click at 1 + 828 (23.3)",
+    ),
+)
+
+
+def status_class(status: str) -> str:
+    return {"R": "reached", "D": "different", "N": "missing"}[status[0]]
+
+
+# The small formulas: (name, the formula, what it is, what it derives to,
+# where in DERIVATIONS_BEAM.md), the components of the one map.
+SMALL_FORMULAS = (
+    (
+        "The flight",
+        "m(tau) = floor((2 tau S<sub>1</sub> Q + T<sub>d</sub>) / (2 T<sub>d</sub>))",
+        "a row's Manhattan count at the age tau on its direction d (S<sub>1</sub> the direction's L1 length, "
+        "Q the pace's grain, T<sub>d</sub> the direction's wall by isqrt): the accumulator's whole part at a constant rate",
+        "the digital line at Q / T<sub>d</sub> -&gt; 1 / sqrt 3 Links per interval, the same on every direction: "
+        "c, derived as the largest isotropic pace at which no direction crosses two Links in one interval",
+        "1.4, 2.1, 4.1",
+    ),
+    (
+        "The phase",
+        "phi(tau) = floor((n / d) tau) mod N",
+        "a row's phase on the circle Z<sub>N</sub>, n / d the family's rate",
+        "omega = c k along the line, dispersionless: "
+        "the massless wave equation at c in the limit, whose symmetry is Lorentz's",
+        "4.1, 7.1",
+    ),
+    (
+        "The merge",
+        "[p] + [p + N / 2] = 0 in Z[Z<sub>N</sub>]",
+        "two rows of one record at one Node add in the group ring; an antiphase pair cancels",
+        "the coherent sum within one Node; Young's fringes at L<sub>1</sub> - L<sub>2</sub> = +- j lambda",
+        "6.3, 7.1",
+    ),
+    (
+        "The click",
+        "w = <b>f</b><sup>T</sup> <b>G f</b>,  <b>G</b> = <b>E</b><sup>T</sup> <b>E</b>;  click k where 2 T u + T &lt;= 2 N C<sub>k</sub>",
+        "one bilinear form on the record's phase-count vector <b>f</b>, then one threshold against the rungs of the "
+        "cells' cumulative weights, u the wheel written at the birth",
+        "Born's rule as the unique reading (the lattice "
+        "Gleason), S = 176 / 64 = 2.75 on the pair; the one read-out, the law's one cost",
+        "6.1 to 6.7",
+    ),
+    (
+        "The push",
+        "<b>p</b><sub>t+1</sub> = <b>p</b><sub>t</sub> + <b>C a</b><sub>t</sub>",
+        "a body's momentum changed by the coupling matrix <b>C</b> (its charges per column: gravity, the charge, the "
+        "strong column) applied to the arriving label flow <b>a</b>: bilinear in the state",
+        "d<b>p</b> / dt = -M grad(A): Newton's and Coulomb's 1 / r<sup>2</sup> in the shell mean, retarded at c; "
+        "Gauss's law exact; G = K (n / d) / (4 pi S)",
+        "3.1 to 3.4",
+    ),
+    (
+        "The drive",
+        "x<sub>t+1</sub> = x<sub>t</sub> + [drive &gt;= Q S M + |p|],  v = p / (Q S M + p)",
+        "a body steps one Link when its drive crosses the wall; M its content, S the width",
+        "Newton's F = m a with "
+        "m = Q S M at p &lt;&lt; Q S M c; the pace saturating at c: p = m v / (1 - v / c), first order off Newton's m v",
+        "4.4, 17.2",
+    ),
+    (
+        "The clock",
+        "owed = by_clock(age, k n, d):  rate 1 / (1 + k n / d)",
+        "a body's own counter, slowed by the crowd k it reads (the presence, or the age moment), never by its speed",
+        "the gravitational redshift at first order, 1 / (1 + k<sub>a</sub>); the moving clock's rate 1 (a different law "
+        "from Einstein's gamma, registered in G2)",
+        "4.3, 5.2",
+    ),
+    (
+        "The field",
+        "A(x, t) = the age moment of the arriving rows",
+        "what a detector reads of a source's rows, sourced by the release",
+        "Poisson's equation and the retarded wave equation; the Lienard-Wiechert potential exactly",
+        "5.1, 12.1",
+    ),
+    (
+        "The turn",
+        "phi += floor(k<sub>1</sub> |p| N / h) - floor(k<sub>0</sub> |p| N / h)",
+        "a body's phase turned by its momentum under action",
+        "Bohr's levels, 2 pi p r = j h (r = 8 and 12 closing)",
+        "7.2",
+    ),
+    (
+        "The cost",
+        "E = h f",
+        "the content a lamp pays per phase step at the release, h the family's cost, f the rate",
+        "Planck's relation as the release's accounting; E = p c for a row",
+        "6.4, 16.1",
+    ),
+)
+
+# The comparison: (the quantity, Newton, Lorentz, Einstein, the law today
+# with its derivation and status).
+COMPARISON = (
+    (
+        "The speed of light",
+        "no limit: gravity acts at once",
+        "the ether's wave speed c; matter contracts and clocks slow under the ether so that the ether wind is not measured",
+        "a postulate: one c for every observer",
+        "DERIVED: c = 1 / sqrt 3 Links per interval from the flight's straightness and one pace; the rows' limit is the wave equation at c, the light cone (reached, series K's 89.40 in every world)",
+    ),
+    (
+        "Inertia and F = m a",
+        "the first and the second law, p = m v",
+        "Newton's, with the electron's mass growing with speed by the ether",
+        "p = gamma m v; F = dp / dt",
+        "the drive: p an accumulator kept between pushes (inertia 1.0000, G2's stars); F = m a with m = Q S M at low speed (series 7's push_m = m push_1); the law's own p = m v / (1 - v / c) departs at FIRST order where nature's gamma departs at second: a different law, the covariant drive p c^2 / E has the right order (17.2)",
+    ),
+    (
+        "The third law and momentum",
+        "action and reaction equal and opposite",
+        "as Newton's",
+        "the conservation of energy-momentum",
+        "the apportioning at the release: the two sources' momenta equal and opposite to the grain (9 612 145 197 056 against -9 612 088 573 952; reached)",
+    ),
+    (
+        "Gravitation",
+        "G M / r^2, absolute space and time",
+        "not addressed",
+        "the geodesics of a curved metric; the field equation with the stress-energy tensor as its source",
+        "the push's shell mean: the inverse square retarded at c, the equivalence principle exact (M_A cancels), G = K (n / d) / (4 pi S); Poisson's equation from the age moment (reached: series E's k_s r^2 = 41.5, series D's orbit); the tensor source and the field's self-source not reached (E16, E17)",
+    ),
+    (
+        "Doppler",
+        "1 +- v / c, the classical count",
+        "1 +- v / c with the ether's correction",
+        "gamma (1 +- beta), the transverse gamma",
+        "the crossing count per interval: 1 +- v / c exactly, 1 across (reached: record 158's 45, 58, 19, 38); the gamma needs the count charged per self-creation, covariant-readings-v1 (E4)",
+    ),
+    (
+        "A moving clock",
+        "absolute time: no slowing",
+        "clocks slow by sqrt(1 - beta^2), a mechanism in the ether",
+        "the same factor gamma, a property of space and time",
+        "a DIFFERENT law as declared: the rate is 1 at every speed; a clock slows only by what it reads, 1 / (1 + k n / d) (registered: G2's coasting star reads z = 0.2636 against the relativistic 0.315); under covariant-readings-v1 the turn per proper time gives the muon at 70.9 and 125.2 (E2)",
+    ),
+    (
+        "The contraction",
+        "none",
+        "1 / gamma by the ether's push on the bond (1892 to 1904)",
+        "1 / gamma, kinematics",
+        "0.87 to 0.96 by the drive's dispersion, unstable (12b.2): a different law; under covariant readings reached by Lorentz's own 1904 argument on Heaviside's field, once the magnetic term is carried (source-velocity-v1, named; E3)",
+    ),
+    (
+        "E = m c^2",
+        "none: mass and energy separate",
+        "the electron's electromagnetic mass",
+        "the inertia of energy, the mass defect",
+        "not reached as declared (the content and the momentum untied); E = h f for a row reached; under covariant-readings-v1 E'_0 = Q S M is forced by the Newtonian limit and the invariant E'^2 - 3 p . p is kept by the accumulator without a root (E5, E6)",
+    ),
+    (
+        "The field of a moving charge",
+        "none",
+        "Heaviside's field, the magnetic term from the ether",
+        "the same, from the transformation",
+        "the age moment is the Lienard-Wiechert potential exactly; its gradient across the six Ports gives -grad(A) only, the magnetic part missing (E7, source-velocity-v1)",
+    ),
+    (
+        "Gravity on clocks and light",
+        "none (Soldner's half bending from a corpuscle)",
+        "none",
+        "the redshift sqrt(1 - 2 G M / (r c^2)), the bending 4 G M / (c^2 b), the Shapiro delay, the perihelion 6 pi G M / (c^2 a (1 - e^2))",
+        "the redshift at first order reached (series E); its second order, the bending, the delay and the perihelion not reached on main: the flight is blind to the crowd (series K's 0.000) and the rows carry no source; named as optical-v1 and field-source-v1, not decided (E11 to E14)",
+    ),
+    (
+        "The quantum",
+        "none",
+        "none",
+        "E = h f (1905), the light quantum",
+        "E = h f as the release's accounting; the click as the one threshold gives Born's rule uniquely, Young's spacing, Bohr's levels; the uncertainty relation from the six verbs (section 22)",
+    ),
+)
+
+
+def small_formula_html(entry: tuple[str, str, str, str, str]) -> str:
+    name, formula, what, derives, where = entry
+    return (
+        f'<section class="small"><h3>{html.escape(name)}</h3><pre class="formula">{formula}</pre>'
+        f"<p><b>What it is:</b> {what}.</p><p><b>What it derives to:</b> {derives}.</p>"
+        f'<p class="note">DERIVATIONS_BEAM.md {html.escape(where)}</p></section>'
+    )
+
+
+def m(*items: str) -> str:
+    """A MathML formula (block): the items are MathML elements."""
+    return '<math display="block">' + "".join(items) + "</math>"
+
+
+def mi(x: str, bold: bool = False) -> str:
+    return f'<mi mathvariant="bold">{x}</mi>' if bold else f"<mi>{x}</mi>"
+
+
+def mn(x: str) -> str:
+    return f"<mn>{x}</mn>"
+
+
+def mo(x: str) -> str:
+    return f"<mo>{x}</mo>"
+
+
+def msub(base: str, sub: str) -> str:
+    return f"<msub>{base}{sub}</msub>"
+
+
+def msup(base: str, sup: str) -> str:
+    return f"<msup>{base}{sup}</msup>"
+
+
+def mfrac(a: str, b: str) -> str:
+    return f"<mfrac>{a}{b}</mfrac>"
+
+
+def msqrt(a: str) -> str:
+    return f"<msqrt>{a}</msqrt>"
+
+
+def mrow(*items: str) -> str:
+    return "<mrow>" + "".join(items) + "</mrow>"
+
+
+E0 = msub(mi("E"), mn("0"))
+P = mi("p", bold=True)
+C2 = msup(mi("c"), mn("2"))
+
+# The main formula: the exact square of the energy, the invariant of
+# covariant-readings-v1 (DERIVATIONS_BEAM 17.6 M3): W = E_0^2 + 3 p . p in
+# the law's whole units (c^2 declared as the pair [1, 3]), E kept as the
+# largest integer with E^2 <= W by comparisons, E_0 = Q S M.
+mspace = '<mspace width="1.5em"/>'
+MAIN_FORMULA = m(mi("W"), mo("="), msup(E0, mn("2")), mo("+"), mn("3"), mrow(P, mo("&sdot;"), P))
+MAIN_CONDITIONS = m(
+    msup(mi("E"), mn("2")),
+    mo("&le;"),
+    mi("W"),
+    mo("&lt;"),
+    msup(mrow(mo("("), mi("E"), mo("+"), mn("1"), mo(")")), mn("2")),
+    mspace,
+    mo(","),
+    mspace,
+    E0,
+    mo("="),
+    mi("Q"),
+    mi("S"),
+    mi("M"),
+)
+NATURE_FORMULA = m(
+    msup(mi("E"), mn("2")),
+    mo("="),
+    msup(E0, mn("2")),
+    mo("+"),
+    msup(mi("p"), mn("2")),
+    C2,
+    mspace,
+    mo(","),
+    mspace,
+    C2,
+    mo("="),
+    mfrac(mn("1"), mn("3")),
+)
+
+# Who owns what: the badge classes and their names.
+WHO = {
+    "law": "the law (yours)",
+    "newton": "Newton",
+    "lorentz": "Lorentz",
+    "einstein": "Einstein",
+    "planck": "Planck",
+    "doppler": "Doppler",
+}
+
+
+def who(key: str) -> str:
+    return f'<span class="who {key}">{WHO[key]}</span>'
+
+
+# The story: from the formula at the top, step by step, to the formulas of
+# the others. Per step: (title, the law's step as MathML, its explanation,
+# the formula it converges to as MathML, whose it is, the explanation, the
+# status today, where in DERIVATIONS_BEAM.md).
+GAMMA = mfrac(mn("1"), msqrt(mrow(mn("1"), mo("&minus;"), mfrac(msup(mi("v"), mn("2")), C2))))
+STORY = (
+    (
+        "The rest energy",
+        m(msub(mi("E"), mn("0")), mo("="), mi("Q"), mi("S"), mi("M")),
+        "the energy at rest is the width times the content, whole; forced by the Newtonian limit of the "
+        "drive (17.3 (iii))",
+        m(E0, mo("="), mi("m"), C2),
+        "einstein",
+        "the inertia of energy, 1905; in the law c^2 = 1 / 3 and m = Q S M, so the two are one line",
+        "under covariant-readings-v1 (decided, not built); as declared the content and the momentum are untied",
+        "17.3, 17.6 M3",
+    ),
+    (
+        "The invariant",
+        m(
+            msup(mi("E"), mn("2")),
+            mo("&le;"),
+            mi("W"),
+            mo("&lt;"),
+            msup(mrow(mo("("), mi("E"), mo("+"), mn("1"), mo(")")), mn("2")),
+        ),
+        "E is the largest integer whose square is at most W, kept by comparisons alone, at most three per "
+        "interval: no root, no float, the sixth verb; W is bilinear in p and never drifts",
+        m(msup(mi("E"), mn("2")), mo("&minus;"), msup(mi("p"), mn("2")), C2, mo("="), msup(E0, mn("2"))),
+        "einstein",
+        "the energy-momentum relation, 1905 to 1907 (Minkowski's form, 1908); the same relation, but for "
+        "continuous quantities and from two postulates",
+        "under covariant-readings-v1; the script's 40 000 pushes keep it at every step",
+        "17.6 M3",
+    ),
+    (
+        "The pace",
+        m(mi("v"), mo("="), mfrac(mi("p"), msup(mi("E"), mo("&prime;")))),
+        "Links per interval: the drive's Newtonian rate per self-creation, p / (Q S M), times the "
+        "self-creation's cadence E_0 / E; capped at c = 1 / sqrt 3 as p grows",
+        m(mi("v"), mo("="), mfrac(mrow(mi("p"), C2), mi("E"))),
+        "einstein",
+        "the velocity of a body from its energy and momentum, 1905; the velocity addition follows",
+        "under covariant-readings-v1; as declared v = p / (m + p / c), first order off Newton",
+        "17.6 M1, 4.4",
+    ),
+    (
+        "Proper time",
+        m(
+            "<mtext>one self-creation per&nbsp;</mtext>",
+            mfrac(mi("E"), E0),
+            "<mtext>&nbsp;intervals</mtext>",
+        ),
+        "the body owes by_drive(acc_tau, E - E_0, E_0) intervals after every self-creation: its age, its "
+        "turn, its decay and its count all follow that cadence, a counted mechanism",
+        m(mi("&gamma;"), mo("="), mfrac(mi("E"), E0), mo("="), GAMMA),
+        "lorentz",
+        "the Lorentz factor: Lorentz's local time (1895, 1904) as a mechanism, Einstein's time dilation "
+        "(1905) as kinematics; the muon of J4 fires at 70.9 and 125.2 intervals against 64 at rest",
+        "under covariant-readings-v1; as declared the rate is 1 at every speed (a different law, registered)",
+        "17.6 M1, M2; 4.3",
+    ),
+    (
+        "The momentum",
+        m(P, mo("="), msup(mi("E"), mo("&prime;")), mi("v", bold=True)),
+        "from the pace: the momentum vector is the energy times the velocity",
+        m(
+            P,
+            mo("="),
+            mi("&gamma;"),
+            mi("m"),
+            mi("v", bold=True),
+            mspace,
+            mo("&rarr;"),
+            mspace,
+            P,
+            mo("="),
+            mi("m"),
+            mi("v", bold=True),
+        ),
+        "newton",
+        "at low speed Newton's momentum (1687); at every speed Lorentz's and Einstein's gamma m v",
+        "under covariant-readings-v1 the right order; as declared p = m v / (1 - v / c), a first-order departure",
+        "17.2, 17.6 M1",
+    ),
+    (
+        "Doppler",
+        m("<mtext>the crossing count per self-creation</mtext>"),
+        "a moving reader meets the rows of a stream at 1 - n . beta per interval and is charged per "
+        "self-creation, gamma intervals apart",
+        m(
+            mn("1"),
+            mo("+"),
+            mi("z"),
+            mo("="),
+            mi("&gamma;"),
+            mrow(
+                mo("("),
+                mn("1"),
+                mo("&minus;"),
+                mi("n", bold=True),
+                mo("&sdot;"),
+                mi("&beta;", bold=True),
+                mo(")"),
+            ),
+        ),
+        "einstein",
+        "the relativistic Doppler with the transverse gamma, 1905; at low speed Doppler's 1 +- v / c "
+        "(1842), which the law reaches as declared and registered (record 158)",
+        "the gamma under covariant-readings-v1 (the pin z = 0.369); the classical count reached today",
+        "2.2, 17.6 M2",
+    ),
+    (
+        "Newton's laws",
+        m(
+            P,
+            mo("&larr;"),
+            P,
+            mo("+"),
+            mi("C", bold=True),
+            mi("a", bold=True),
+            mspace,
+            mo(","),
+            mspace,
+            mi("x"),
+            mo("&larr;"),
+            mi("x"),
+            mo("+"),
+            mo("["),
+            "<mtext>drive</mtext>",
+            mo("&ge;"),
+            mi("D"),
+            mo("]"),
+        ),
+        "the push, bilinear in the state (the reader's charges times the arriving flow), and the drive; the "
+        "shell mean of the flux is the inverse square, retarded at c",
+        m(
+            mi("F"),
+            mo("="),
+            mi("m"),
+            mi("a"),
+            mspace,
+            mo(","),
+            mspace,
+            mi("F"),
+            mo("="),
+            mfrac(mrow(mi("G"), mi("M"), mi("m")), msup(mi("r"), mn("2"))),
+        ),
+        "newton",
+        "the three laws and gravitation (1687), with G = K (n / d) / (4 pi S); the equivalence principle "
+        "exact because M cancels",
+        "reached as declared and registered (inertia 1.0000, push_m = m push_1, series E's inverse square, series D's orbit)",
+        "3.1 to 3.4, 17.2",
+    ),
+    (
+        "The speed of light",
+        m(
+            mi("m"),
+            mo("("),
+            mi("&tau;"),
+            mo(")"),
+            mo("="),
+            "<mtext>floor</mtext>",
+            mo("("),
+            mfrac(
+                mrow(
+                    mn("2"),
+                    mi("&tau;"),
+                    msub(mi("S"), mn("1")),
+                    mi("Q"),
+                    mo("+"),
+                    msub(mi("T"), mi("d")),
+                ),
+                mrow(mn("2"), msub(mi("T"), mi("d"))),
+            ),
+            mo(")"),
+        ),
+        "the flight table: a row walks its digital line at Q / T_d Links per interval, the same on every "
+        "direction, 32 Links in 55 intervals on an axis",
+        m(
+            mi("c"),
+            mo("="),
+            mfrac(mn("1"), msqrt(mn("3"))),
+            mspace,
+            mo(","),
+            mspace,
+            mi("&omega;"),
+            mo("="),
+            mi("c"),
+            mi("k"),
+        ),
+        "einstein",
+        "one c for every observer is Einstein's second postulate (1905) and the ether's wave speed for "
+        "Lorentz; here it is DERIVED: the largest isotropic pace at which no direction crosses two Links in "
+        "one interval, and the rows' limit is the wave equation whose symmetry is Lorentz's",
+        "reached as declared and registered (record 144's cone, series K's 89.40)",
+        "1.4, 2.1, 4.1",
+    ),
+    (
+        "The quantum of energy",
+        m(mn("3"), mi("h"), mi("n"), mo("="), mi("Q"), mi("S"), mi("d")),
+        "the release pays h content per phase step; the exchange's books balance only under this identity "
+        "of the cost, the rate and the width, checked at load",
+        m(mi("E"), mo("="), mi("h"), mi("f")),
+        "planck",
+        "Planck's relation (1900) and Einstein's light quantum (1905): here the release's accounting, and "
+        "the mass defect of a bound set is the escaped rows' energy",
+        "E = h f reached as declared (6.4); the identity under covariant-readings-v1",
+        "6.4, 17.6 M7",
+    ),
+    (
+        "Gravity on a clock",
+        m(
+            "<mtext>rate</mtext>",
+            mspace,
+            mfrac(mn("1"), mrow(mn("1"), mo("+"), mi("k"), mi("n"), mo("/"), mi("d"))),
+        ),
+        "a clock slows by the crowd it reads (the age moment), never by its speed; the age moment obeys "
+        "Poisson's equation",
+        m(
+            mfrac(mrow(mi("&Delta;"), mi("f")), mi("f")),
+            mo("="),
+            mo("&minus;"),
+            mfrac(mrow(mi("G"), mi("M")), mrow(mi("r"), C2)),
+        ),
+        "einstein",
+        "the gravitational redshift at first order (1911) and Newton's potential; the second order, the "
+        "bending 4 G M / (c^2 b), the delay and the perihelion (1915) are not reached",
+        "the first order reached and registered (series E); the second order needs field-source-v1 and optical-v1",
+        "5.1, 5.2, 21.4",
+    ),
+)
+
+
+def story_html(entry: tuple[str, str, str, str, str, str, str, str]) -> str:
+    title, law_formula, law_text, target, owner, target_text, status, where = entry
+    return (
+        f'<section class="step"><h3>{html.escape(title)}</h3>'
+        f'<div class="pair"><div class="mine">{who("law")}{law_formula}<p>{law_text}.</p></div>'
+        f'<div class="arrow">&darr;</div>'
+        f'<div class="theirs">{who(owner)}{target}<p>{target_text}.</p></div></div>'
+        f'<p class="status"><b>Today:</b> {status}. <span class="note">DERIVATIONS_BEAM.md {html.escape(where)}</span></p>'
+        "</section>"
+    )
+
+
+@register("einstein")
+def page_einstein(out: Path, runs: Path | None) -> Path:
+    """(12) The formula and Einstein: the owner's formula at the top, whose
+    each formula is, and the story of the derivations from it to Newton's,
+    Lorentz's and Einstein's; no run, no claim added."""
+    del runs
+    steps = "".join(story_html(entry) for entry in STORY)
+    smalls = "".join(small_formula_html(entry) for entry in SMALL_FORMULAS)
+    comparison = "".join(
+        f"<tr><th>{html.escape(q)}</th><td>{html.escape(n)}</td><td>{html.escape(lo)}</td>"
+        f'<td>{html.escape(e)}</td><td class="ours">{html.escape(us)}</td></tr>'
+        for q, n, lo, e, us in COMPARISON
+    )
+    einstein_rows = "".join(
+        f'<tr><td class="num">{n}</td><td>{html.escape(result)}</td>'
+        f'<td class="{status_class(status)}">{html.escape(status)}</td><td>{html.escape(gives)}</td>'
+        f"<td>{html.escape(add)}</td><td>{html.escape(pin)}</td></tr>"
+        for n, result, status, gives, add, pin in EINSTEIN_MAP
+    )
+    body = f"""
+<section class="big">
+<p class="kind">{who("law")} the exact square of a body's energy, in whole numbers</p>
+{MAIN_FORMULA}
+<div class="conditions">{MAIN_CONDITIONS}</div>
+<p class="kind">W the state carried, bilinear in the momentum vector p; E the largest integer whose square is at most W, kept by comparisons; E<sub>0</sub> the rest value, the width Q S times the content M; c<sup>2</sup> = 1 / 3 derived from the flight</p>
+</section>
+<section class="big theirs-box">
+<p class="kind">{who("einstein")} the same relation in nature's units, 1905 to 1907</p>
+{NATURE_FORMULA}
+</section>
+<h2>What is yours and what is theirs</h2>
+<p>The formula at the top is the law's: its numbers are whole, E is kept by comparisons and never by a root,
+E<sub>0</sub> = Q S M ties the rest energy to the content, and c<sup>2</sup> = 1 / 3 is derived from the
+flight table, not declared. Written in nature's units it reads E<sup>2</sup> = E<sub>0</sub><sup>2</sup> +
+p<sup>2</sup> c<sup>2</sup>, which is Einstein's relation of 1905 to 1907: the relation is his, the integer
+form and the mechanism that reaches it are the law's. Everything below is derived from the top: each step
+shows the law's line on the left and, on the right, whose formula it becomes and when it was found.</p>
+<div class="owners">
+<section><h3>{who("law")}</h3><ul>
+<li>W = E<sub>0</sub><sup>2</sup> + 3 p . p, E by comparisons, E<sub>0</sub> = Q S M</li>
+<li>c = 1 / sqrt 3 derived from the flight table (32 Links in 55 intervals)</li>
+<li>proper time as an owed count: one self-creation per E / E<sub>0</sub> intervals</li>
+<li>the crossing count (Doppler as a count of rows met)</li>
+<li>the push p &lt;- p + <b>C a</b> and the drive: one coupling over the columns, bilinear, local</li>
+<li>the click as the one threshold; the identity 3 h n = Q S d</li>
+</ul><p class="note">the six verbs on integers, one map at every Node (HIGHLIGHTS 5.7)</p></section>
+<section><h3>{who("newton")}</h3><ul>
+<li>the three laws: inertia, F = m a, action and reaction (1687)</li>
+<li>gravitation G M m / r<sup>2</sup>, absolute space and time</li>
+<li>p = m v, the Galilean composition</li>
+</ul><p class="note">the law's low-speed regime, every row registered</p></section>
+<section><h3>{who("lorentz")}</h3><ul>
+<li>the transformations and the local time (1895, 1904)</li>
+<li>the contraction 1 / gamma and the slowing sqrt(1 - beta<sup>2</sup>) as a mechanism in the ether</li>
+<li>the electron's mass growing with speed</li>
+</ul><p class="note">the law stands nearer to Lorentz: a mechanism, not a postulate (record 231)</p></section>
+<section><h3>{who("einstein")}</h3><ul>
+<li>the two postulates and the kinematics: gamma, the Doppler with gamma (1905)</li>
+<li>E<sub>0</sub> = m c<sup>2</sup> (1905), E<sup>2</sup> = E<sub>0</sub><sup>2</sup> + p<sup>2</sup> c<sup>2</sup> (1907), v = p c<sup>2</sup> / E</li>
+<li>the light quantum E = h f (1905, after Planck 1900)</li>
+<li>the general theory: the redshift, the bending, the delay, the perihelion (1911 to 1915)</li>
+</ul><p class="note">the special theory one hypothesis away; the general theory's first order reached</p></section>
+</div>
+<h2>The story: from the top, step by step, to theirs</h2>
+<div class="story">{steps}</div>
+<p><b>Where it stands</b>: the top formula and the steps marked "under covariant-readings-v1" are the four
+covariant readings of a body named in DERIVATIONS_BEAM section 17, reviewed (record 297) and decided by the
+owner (record 270) to be built beside the law; not built today, and the law as declared keeps the drive
+v = p / (m + p / c) and a clock's rate 1 at every speed. The steps marked "reached as declared" are the
+law on main, registered. Nothing is added here.</p>
+<h2>The comparison in one table</h2>
+<div class="scroll"><table class="map compare"><tr><th>The quantity</th><th>Newton</th><th>Lorentz</th><th>Einstein</th><th>The law (its status today)</th></tr>{
+        comparison
+    }</table></div>
+<details><summary>The one map of six verbs and its small formulas (the law as declared)</summary>
+<section class="big">
+<p class="kind">The one map F at every Node, every interval</p>
+<pre class="formula">
+s &lt;- s + r
+e &lt;- [s &gt;= d]
+s &lt;- s - e d
+</pre>
+<p class="kind">the state s an integer vector on the torus, r its rates, d its walls; every wall crossing an event</p>
+<pre class="formula small-caps">click k where  2 T u + T &lt;= 2 N C<sub>k</sub>,   C<sub>k</sub> = <b>f</b><sup>T</sup> <b>G f</b></pre>
+</section>
+<div class="smalls">{smalls}</div>
+</details>
+<details><summary>The full Einstein map, E1 to E19 (DERIVATIONS_BEAM 21.4): {
+        sum(1 for r in EINSTEIN_MAP if r[2].startswith("R"))
+    } reached as declared, {sum(1 for r in EINSTEIN_MAP if r[2].startswith("D"))} a different law, {
+        sum(1 for r in EINSTEIN_MAP if r[2].startswith("N"))
+    } not reached</summary>
+<div class="scroll"><table class="map"><tr><th>#</th><th>Einstein's result</th><th>status</th><th>what the six verbs give</th><th>what must be added, under which identity</th><th>the pin a run would meet</th></tr>{
+        einstein_rows
+    }</table></div>
+</details>
+{
+        sources(
+            [
+                (
+                    "the main formula W = E_0^2 + 3 p . p, E by comparisons, the pace p / E, the proper-time cadence, the identity 3 h n = Q S d, the muon's 70.9 and 125.2, the star's z = 0.369",
+                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> section 17.6 (M1 to M9, record 297)',
+                ),
+                (
+                    "the theorem of covariant readings, built on Newton, tried on Lorentz",
+                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> sections 17.1 to 17.5; the owner\'s decision, record 270',
+                ),
+                (
+                    "c, Doppler, Newton and Coulomb, the symmetry of the limit, the delay field, the click, Young and Bohr",
+                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> sections 0 and 2 to 7',
+                ),
+                (
+                    "the statement, the six verbs, what is derived and what is input",
+                    '<a href="../../HIGHLIGHTS.md">HIGHLIGHTS 5.7</a>',
+                ),
+                (
+                    "Newton, Lorentz and Einstein in the owner's question",
+                    '<a href="../../LOG_2026-09-20.md">record 231</a> of the log of 2026-09-20',
+                ),
+                (
+                    "the Einstein map, E1 to E19",
+                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> section 21.4 (record 291)',
+                ),
+                (
+                    "the dates of the others' formulas",
+                    "the standard history: Newton 1687; Doppler 1842; Lorentz 1892 to 1904; Planck 1900; Einstein 1905, 1907, 1911, 1915; Minkowski 1908",
+                ),
+            ]
+        )
+    }
+"""
+    return write_page(
+        out,
+        "einstein",
+        page(
+            "The formula and Einstein",
+            "Your formula at the top; whose each formula is; and the story of the derivations from it to "
+            "Newton's, Lorentz's and Einstein's, step by step.",
+            body,
+        ),
+    )
+
+
 @register("index")
 def page_index(out: Path, runs: Path | None) -> Path:
     entries = [
@@ -4019,6 +5184,20 @@ def page_index(out: Path, runs: Path | None) -> Path:
             "In three dimensions",
             "the nucleus, the decay, the atom and the beam beside the mass, the whole GameBoard drawn in an "
             "isometric projection, the bodies releasing themselves into the Nodes beside them (registered worlds)",
+        ),
+        (
+            "quarks.html",
+            "The quarks",
+            "series R: the proton of three quarks holding in a line, a kicked quark walking off, and a fast "
+            "electron thrown at the proton, handing its momentum through the table (two registered worlds and "
+            "a demonstration world)",
+        ),
+        (
+            "einstein.html",
+            "The formula and Einstein",
+            "the owner's formula at the top (the exact square of a body's energy, W = E_0^2 + 3 p . p), whose "
+            "each formula is, and the story of the derivations from it to Newton's, Lorentz's and Einstein's; "
+            "the comparison table, the one map and the Einstein map beneath (no run)",
         ),
         (
             "formula.html",

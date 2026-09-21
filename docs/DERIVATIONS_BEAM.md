@@ -2555,7 +2555,7 @@ release's or the lamp's accumulator, and the lamp's discard (note 41
 (iii): a self-creation of turn 0 or outside the window releases nothing
 and loses the count) happens at a carry of the lamp's accumulator and
 nowhere else (`3599-3606`). (iii) The one rule that acts on rows that made
-no Link is the collision: `collide` (`2345-2390`) permutes every single
+no Link is the collision: `_collide` permutes every single
 unit on a heading or a rest slot at a free Node, arrived this interval or
 not (`eligible` is not filtered by `moved`), and on the table every
 moving state lies on a cycle: 2132 of the 6561 slot states move, and none

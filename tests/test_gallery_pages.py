@@ -28,6 +28,11 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+# The page tool draws with Pillow, which is in the `render` extra and not
+# in `dev`: on a host without it the suite collects and this module is
+# skipped (the ordinary runner path stays free of render dependencies).
+pytest.importorskip("PIL")
+
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("gallery_pages", ROOT / "tools" / "gallery_pages.py")
 assert SPEC is not None and SPEC.loader is not None
