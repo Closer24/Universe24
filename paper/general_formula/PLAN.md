@@ -2015,3 +2015,58 @@ directions carry no heading, so "exact on the headings" is the pin's
 host analysis and series P's test, not this run; the paper says "exact
 on every untied direction" for the run.
 
+## Wave 16 (2026-09-21): the families' appendix (record 358), record 359's readings, the crowd's clock, the replicated map
+
+The owner's word through the physicist's session (record 358): the
+tables of the masses, the groups, the sets and the vectors of all the
+families in the paper; the mathematician's audit (PR #547) found the
+schema carried and the rows never. Done: a new appendix before the
+glossary, "the families, the sets, the groups and the vectors", with
+F1 (the 75 families in their 28 entities, every declared key; the 24
+thrown sources and the 24 Hubble stars one row each), F1b (the 21
+declarations of the worlds that differ from the definitions, said once
+to be the register's declared variants and not a second law), F2 (the
+content every family carries on the worlds' measured events, per
+series; the held content), F3 (the group per declared quantity, per
+family of the physics, PREDICTIONS 26's rule) and F4 (the state vector
+per kind, the six verbs); every number an input of the register, none
+a measurement; the tables generated from the tree's script over the
+one source (families.json and the worlds) by a scratch script, so the
+crowd-clock worlds landed since the audit are in F2. Pointers: P8, the
+masses row of Table 1 (F1, F2), "The state" (F4), the symmetries (F3).
+The audit's answers: all the families (question 1); the variants said
+once (2); the masses row cites F2 (3); F3 in the appendix with a
+pointer beside the symmetries (4). Record 359: the second tie's
+reading beside the first's (16 of 48, the difference reaching the
+detector); the pace bound read again on all 290 directions in the c
+row of the record appendix; the crowd's clock in the clock's-redshift
+paragraph (the tree's worlds, pinned before the run, run twice on
+main 119fd9b, the entry drafted and not registered; series Q landed
+on main at 33330d59 during the wave and is cited beside it, the
+cluster at rest and thrown as one, the sum against the product, its
+entry drafted and not registered), measured once. Series R
+re-registered under the crossing rule (PR #554): the masses row and
+the record appendix give the kicked u's exit at 63 in the registered
+3000-interval run before the rule and at 64 in the replay under it. Record 360: the register's
+replicated map in the record appendix's caption. The log bibitem to
+360; two bibitems (the audit, the crowd's clock). Reported to the Boss
+as the tree's: the audit's prose says 27 entities and 23 inline
+declarations where its output counts 28 and 21; TERMINOLOGY gives the
+lifetime in intervals and the audit in Links (the paper says the age);
+the quarks' README table and its prose disagree on the kicked u's exit
+before the crossing rule (the table's 3000-interval run: reaches the
+face at 62, leaves at 63; the prose and MIGRATION: clicked at 69).
+Referee round 37 (four findings, all applied): the unset circle is the
+engine's default, a circle, and the caption names every difference
+(m, the coupling p, the Hubble mass, e in the gallery, beta's hand);
+the crowd-clock content is s_px1's alone in F2; at k = 0.005 the
+reading 1.000/1.006 is inside the pin by its tolerance, not exact, the
+four higher rungs exact; a comma in the log bibitem. The referee's
+notes kept: the second window's 1.271 not printed; the test pins the
+presence 4F on a short run, not the series' readings. Referee round 38
+on the additions after main moved to 33330d59 (series Q, series R's
+replay): no FAIL; his wording note applied (a cluster's dispersion a
+spread of clocks); his note kept for the Boss: the quarks' README run
+row says the kicked u left at 63 before the crossing rule and the
+README's prose and MIGRATION say 69.
+
