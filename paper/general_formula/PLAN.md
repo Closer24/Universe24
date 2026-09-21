@@ -2202,3 +2202,33 @@ every one an ancestor of HEAD or a register fingerprint), 60 numbers
 traced, the counts (44 rows of Table 1; 22 differences; 21 nature
 rows; P1 to P10; six places) and section 26 (none of the ten claimed).
 
+## Wave 21 (2026-09-21): series T, the clock's word, both readings and no choice; the series letters; row 3 of the differences
+
+The Boss's orders of 13:25Z to 13:35Z: (b) series T (PR #587, merged
+at afb533a8, the register's entry "T, the clock's word", the physicist's
+pins before the run): one passage in the clock's-redshift paragraph in
+the greats' form and one row (23) in the differences table, labelled
+measured once, both readings and no choice (the presence clock 1.3000
+at 3 and at 6 Links alike; the age clock 2.6517 and 4.1500, the ratio
+1.907 for the pinned 1.909, the continuum's 2.000; the GPS
+ground-to-orbit shift 45.7 us per day against Ashby's 45.7 under the
+age word, 28.3 under the presence word); the clock_age note's bibitem
+back, Ashby 2003 added, the register bibitem names series T. The series
+letters as the Boss fixed them: the reader S, the clock worlds T, the
+lamp in a crowd U and the cluster V (U and V pending their retitling
+PR, said so). Row 3 of the differences reworded as the auditor's round
+6 found (the theorem's own N = 16, 32 and 128 with S = 3, 3 and 23/8;
+the escape "a power of two at or above 512, or 64 or 256"); the round
+itself is not on the tree's log, so it is not cited, and the row cites
+Theorem th:bell. Main moved to 12ff2fb1 during the wave (PR #591):
+NATURE row 12, the clock's field at two distances (series T, both
+words), is the register's row now, so the paper's confrontation table
+carries it as row 12 (PASS under the age word, FAIL under the presence
+word, the law's default; the word the owner's choice), the tallies
+read twenty-two, the abstract carries the row in one clause, and the
+differences' row 23 written first is withdrawn; Pound and Rebka 1960
+added. Referee round 43: one finding (U and V are the clock note's
+letters, not the register's), applied; his note applied ("at first
+order" dropped from the series T passage); everything else PASS; his
+word for the PR body after the fix: CLEAN.
+
