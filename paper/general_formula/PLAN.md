@@ -2324,3 +2324,26 @@ by the labels at the read and applied at the gather to the labels as
 the rotation left them; `become` turns the event into the `into`
 family, its products released, the key consumed. CLEAN WITH NOTES.
 
+## Wave 25 (2026-09-21): main be194aca merged; what it landed taken into the paper
+
+Merged after wave 24's push: PR 594 (24.4's closed form and the plateau's
+domain, bell_plateau.py, now cited beside the paper's check; 24.3 row 1's
+29.6, so N = 256 is 30 by both), PR 598 (NATURE row 8c: the heaviest
+mass state at least 9.8e-8, the lightest not bounded below; the paper's
+row 8c and the differences' row 16 follow it), PR 592 (ENGINE's readings
+by type: the non-absorbing read a deferred offer, cited in the click
+definition; the three Malus worlds at 22.5 degrees registered under A12
+extended, the tables' rungs met exactly: the consequences' Malus row,
+NATURE row 9, the differences' row 4 and the record appendix say run,
+measured once), PR 600 (wave 23). Reproducibility: main merged at
+be194aca. Still waiting on the tree: record 394 (PR 581; the owner's word
+cited by date), wave 22's PR 596, the replicator's round 2, the
+retitling of series U and V. Referee round 47 before the commit.
+Referee round 47: FAIL on one stale row, fixed: the differences' row 1
+(N = 256: 30 standard errors, 29.6, by the check and the derivation's
+24.3 row 1 and 24.4; the 31 the deficit from the bound over the error).
+His notes applied: NATURE row 9 and 24.3 row 4 on the tree not yet
+restated for the 22.5-degree run, said in the paper's row 9; the Malus
+note's bibitem says run since as A12 and A12 extended; "standard errors"
+at N = 256 in the Bell section. CLEAN WITH NOTES.
+
