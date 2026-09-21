@@ -83,7 +83,7 @@ not prove conservation in every sampled branch or retention of quantum phase and
 correlations. Check mass assumptions in kinetic-energy readouts, and reject
 missing diagnostic payloads instead of treating them as zero.
 
-For wave-derived moments, distinguish the incident density, selected measurement
+For the moments of a reading, distinguish the incident density, selected measurement
 state and any ordinary output re-encoding. Absorption vacuum has no particle
 momentum distribution. A finite derivative observable is not automatically
 canonical momentum; check phase-sensitive states with identical position
