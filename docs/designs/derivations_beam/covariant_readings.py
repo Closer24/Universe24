@@ -1,6 +1,13 @@
 """Section 17 of DERIVATIONS_BEAM.md: the law above Newton and Einstein,
 the theorem of covariant readings. Host arithmetic; no run.
 
+A floating-point consistency check of the proposal, not the exact
+discrete proof: (A) and (D) use gamma(beta) with math.sqrt, and (C)
+integrates dE = c^2 p . dp / E by the midpoint rule to about 1e-8. The
+"without a root" of section 17.3 is the proposed form (an accumulator
+with its remainder kept); the exact discrete form, in integers with the
+invariant closed to the grain, is what covariant-readings-v1 must prove.
+
 (A) Einstein's 1905 argument run with the law's Doppler (1 -+ beta) and
     with the covariant one gamma (1 -+ beta).
 (B) The dispersion: today's v = p / (m + p / c) against the covariant
