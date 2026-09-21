@@ -55,7 +55,15 @@ written down before the first run:
 (e) the turn by momentum unchanged at a constant momentum: the phases of
     `test_nature_beam_body` (d) (its own module) and, here, a body of
     content 16 with the momentum 320 and `action` 7 turning by 2925, 2926,
-    2926, 2925, 2926 over its first five Links;
+    2926, 2925, 2926 over its first five Links; and the `action` row's
+    whole part at a Link not crossed, pinned before any change (BEAM_LAW
+    note 41 (viii), the owner's item 9; the physics-rule review of
+    no-tables, 2026-09-21, item 2): the coincidence body of (a) (content
+    1, the momentum (64, 64, 0), D = 128 on both axes) under `action` 7
+    at N = 64 holds, after 10 intervals, `acc.action` [5, 5, 0] (the
+    residue of five counts of |p| N = 4096 = 7 x 585 + 1 on each axis)
+    and the phase 45 = 5 x 585 mod 64 from the x row alone, the y row's
+    five whole parts, 2925, never delivered (26 with them);
 (f) the signed drive under a reversal (the Boss's diagnosis of the
     deuteron under a suspension, record 126 of 2026-09-20): a body of
     content 16 on a bar with width 8 (D = 9216) with the momentum +1024
@@ -317,6 +325,29 @@ def test_the_turn_by_momentum_is_unchanged_at_a_constant_momentum():
         phase = entry.phase
     assert turns == [t % 64 for t in (2925, 2926, 2926, 2925, 2926)]
     assert entry.axis_steps == [5, 0, 0]
+
+
+def test_the_action_rows_whole_part_at_a_link_not_crossed_is_pinned():
+    """(e), the coincidence body under `action`: the y row's whole parts
+    are discarded at the Links lost, its residue kept."""
+    world = bar(
+        [{**mover(1, [64, 64, 0], position=[4, 4, 0]), "phase": 0, "phase_by_momentum": True}],
+        action=7,
+        ticks=10,
+        shape=[64, 64, 1],
+        families=[{"name": "m", "quantum": 0, "charge": 0}],
+    )
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world))
+    entry = simulation.measured[1]
+    for _ in range(10):
+        simulation.step()
+    assert entry.position == (9, 4, 0) and entry.axis_steps == [5, 5, 0] and entry.steps == 5
+    assert entry.drive == [0, 0, 0]
+    assert 64 * 64 == 7 * 585 + 1
+    assert entry.counts.values("action") == [5, 5, 0]
+    assert entry.state()["acc"]["action"] == [5, 5, 0]
+    assert entry.phase == (5 * 585) % 64 == 45
+    assert (2 * 5 * 585) % 64 == 26
 
 
 # -- (f) ---------------------------------------------------------------------------

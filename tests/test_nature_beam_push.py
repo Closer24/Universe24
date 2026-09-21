@@ -303,6 +303,11 @@ def test_the_form_on_the_reviewers_world_its_sign_and_the_uncharged_probe():
             "multiplicity",
             "birth",
             "hand",
+            # The share's accumulators, the part of a record row's push not
+            # yet delivered (record 155 of 2026-09-20, note 41 (viii)).
+            "share_x",
+            "share_y",
+            "share_z",
         )
         assert not hasattr(store, "charge") and not hasattr(store, "mass")
         assert simulation.measured[1].charge == (3, 1) if source_charge[0] > 0 else (-3, 1)

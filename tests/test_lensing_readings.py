@@ -2,7 +2,7 @@
 experimenter's rule, 2026-09-20: a readings tool never replays a rule of
 the engine; `tools/lensing_readings.py` reads the lamp's turn and the
 mass's rays per direction off `core.integer.by_clock`, the speed and the
-dwell off `nature_beam.flight_table`, the world's keys through
+dwell off `nature_beam.direction_flight`, the world's keys through
 `parse_nature_beam_world`, the records off the runner's record and the
 GameBoard view through `NatureBeamSimulation`). Each reading is checked
 against the engine on a minimal GameBoard; the expected integers, written

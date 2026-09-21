@@ -9,7 +9,10 @@ example world, compares two worlds or reproduces a known experiment; those are
 research runs, made once and recorded with a fingerprint and a date in
 [validation evidence](VALIDATION.md), never repeated as tests. Entries recorded
 before that date describe the suite as it was and are brought under the rule
-when their tests change.
+when their tests change. A pinned integer here, as a pin of the register, is
+what a detector read (a click, a record line); a reading of the GameBoard
+itself (a store's rows, a replay, a probe's count) is a host reading, and the
+tools label it GAMEBOARD (the model owner's record 163 of 2026-09-20, (5)).
 
 Since 2026-09-21 (the trimming's part 2, the register split; the Boss's
 decision under the owner's rule), a test reads a world's numbers from the
@@ -106,8 +109,8 @@ kept, their pins the law of events').
 | `test_amplitude_gate.py` | The gate between records and the pair at N = 1024 and 4096: the Hadamard and the CNOT on the GameBoard (|00> - |11>), the pair by the gate at the CHSH labels (S = 176/64), CNOT twice the identity, GHZ by one gate of three parties, the register's ceiling (three rotations run, four refused at load), the refusals, S = 2896/1024 with |E - cos| <= 1/N, S = 11584/4096 with the bound failing at the tables' rounding; the review of (v): the gate's copies booked on the live count (every gathered record at live 0), a record with an offer or units elsewhere refused at the gate, the control by its declared arrival direction (the `measured` list reversed gives the same outcomes), the control's refusals ([below](#the-amplitude-law-the-gate)); every number of the series read from `expectations.json` under `gate` and `pair_n` (2026-09-21) | new (2026-09-20; the design's section 10 and its `gate.py`; the owner's paper numbers; the review of (v)) |
 | `test_amplitude_click.py` | The one click (stage (vii)): a lamp's rate births as many records as it says with the ordinals and the birth phases in order, two multiplicities of one record at one offer take the common denominator or are refused, the columns are written only where a record is, and every gate-set world without a lamp reads as it did before the law at its cap (its pinned digests); step 2: u the record's own field (a narrow window admits every record's row, the K record world's clicks within one rung of its offers); step 3: the push by share (the mass's momentum the sum of the shares, the remainder line, the unkeyed bar as it was) ([below](#the-amplitude-law-the-one-click)); the gate worlds' digests read from `gate_set.json` (2026-09-21) | new (2026-09-20; the design's sections 2.1, 2.5 and 6; the K finding) |
 | `test_amplitude_gram.py` | The click without amplitudes (2026-09-21): the Gram matrix of the tables (its eight diagonal values, not circulant, rank 2, the antipodal pairs killed, stored through N = 512), the identity f^T G f = X^2 + Y^2 on random vectors and on `mz_equal`'s record at every u, the layer's cells against the click as it was on synthetic one-arm, read, rotated, pair and GHZ records, the turn as a shift exact at the quarter turns and not at t = 3, the tensor form exact and the convolution not, the ring product ([below](#the-click-without-amplitudes)) | new (2026-09-21; record 188; BEAM_LAW note 37 (xii)) |
-| `test_exact_phase.py` | The exact phase at the click (2026-09-21): the axis and the diagonal at the rate 8 (u + 41 with the remainder 48 / 64, u + 42 with the remainder 0 / 128 where the walk read u + 40), the layer's pointer at it, the integer form without it, a face's row (u + 4 where the walk read u + 56), the numerator beyond the register refused, the primitive `exact_phase` ([below](#the-exact-phase-at-the-click)) | new (2026-09-21; record 163 (2); BEAM_LAW note 43) |
-| `test_birth_wheel.py` | The birth wheel at a declared rate (2026-09-21): the key required on every lamp and refused as a bare integer, a rate 0 or a wheel 0; every world file with a lamp declares it; [1, N] the count of births (the lamp's `acc` `wheel`, the rungs on 64); the golden rate's first ten u and phases, the rungs on 4096; the cell read on the wheel (two equal cells: a, b, a, b, a, a, b, a, b, b against 32 a then 32 b); the replay tool reads the wheel from the lamp ([below](#the-birth-wheel)) | new (2026-09-21; record 180; BEAM_LAW note 44) |
+| `test_exact_phase.py` | The exact phase at the click (2026-09-21): the axis and the diagonal at the rate 8 (u + 41 with the remainder 48 / 64, u + 42 with the remainder 0 / 128 where the walk read u + 40), the layer's pointer at it, the integer form without it, a face's row (u + 4 where the walk read u + 56), the numerator beyond the register refused, the primitive `exact_phase` ([below](#the-exact-phase-at-the-click)) | new (2026-09-21; record 163 (2); BEAM_LAW note 45) |
+| `test_birth_wheel.py` | The birth wheel at a declared rate (2026-09-21): the key required on every lamp and refused as a bare integer, a rate 0 or a wheel 0; every world file with a lamp declares it; [1, N] the count of births (the lamp's `acc` `wheel`, the rungs on 64); the golden rate's first ten u and phases, the rungs on 4096; the cell read on the wheel (two equal cells: a, b, a, b, a, a, b, a, b, b against 32 a then 32 b); the replay tool reads the wheel from the lamp ([below](#the-birth-wheel)) | new (2026-09-21; record 180; BEAM_LAW note 46) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -233,7 +236,11 @@ derived from `quantum`).
 every direction, 1 / sqrt 3, on the digital line of the momentum, at most
 one Link per interval, the age modulo the direction's period.
 
-- (a) the flight table: for every direction T_d >= S_1 Q and m(tau + 1) -
+- (a) the flight rule (the position's accumulator per direction off the
+  age, `Flight.walk_step`, record 155 of 2026-09-20; until then a step
+  table per direction over its period built from the same rule; the
+  step at tau checked as the m(tau)-th unit step of the line when the
+  count moves): for every direction T_d >= S_1 Q and m(tau + 1) -
   m(tau) in {0, 1}; the periods (1, 0, 0) T 110, L 55; (1, 1, 0) T 156,
   L 39; (1, 1, 1) T 192, L 3; (3, 1, 0) T 350, L 175; a rest direction never
   moves; the first arrival of a heading ray at m Links, m = 1..11, in the
@@ -256,6 +263,16 @@ one Link per interval, the age modulo the direction's period.
 - (e) `adjacent_node` on (3, 2, 1) with x and z periodic (re-pinned from
   `test_event_boundaries`): (2, 1, 0) +X -> (0, 1, 0), (0, 1, 0) -X ->
   (2, 1, 0), (1, 1, 0) +Y -> None, +Z and -Z -> (1, 1, 0) itself.
+- (f) the flight accumulator read in one place (`Flight.accumulator`,
+  the pair (m, the residue); the physics-rule review of no-tables,
+  2026-09-21, item 5; BEAM_LAW note 41 (viii)): on the heading (1, 0, 0)
+  (T_d 110, the rate r = 128 over the wall d = 220) the pairs at the ages
+  0 to 3 are (0, 110), (1, 18), (1, 146), (2, 54); on (1, 1, 0) (T_d 156,
+  r 256, d 312) (0, 156), (1, 100), (2, 44), (2, 300); over 600 ages on
+  every direction of the test's table m equals `manhattan_steps`, the
+  residue equals (tau r + T_d) mod d and stays in [0, d), and
+  `walk_step` is the line's (m mod S_1)-th unit step times [residue + r
+  >= d]; a rest direction holds (0, 1) at every age.
 
 ## The collision table
 
@@ -457,7 +474,7 @@ expected integers, written down before the first run:
   sets in the layer's order with the reading's rungs, its chosen cell
   (`measured:223`, the Node (7, 58, 0), the content 1) has the reading's
   weight and its `total` the reading's 4834019/4259840 (847181/745472
-  until the exact phase at the click of 2026-09-21, BEAM_LAW note 43; the
+  until the exact phase at the click of 2026-09-21, BEAM_LAW note 45; the
   reading takes each row's phase from the `exact` of its click line on the
   reference run; a face of 24 Nodes
   hit sums its Nodes' squares: coherent within a Node, incoherent across
@@ -685,7 +702,7 @@ register's L7 entry), written before the run: Since 2026-09-21 the test derives 
 - (c) one gather per record, one cell each, as many at each counter; the
   file's pins equal the flight formula's (the ages 29 and 29, `same_age`
   true, the Links 17 and 24);
-- (d) the exact phase at the click (2026-09-21, BEAM_LAW note 43): under
+- (d) the exact phase at the click (2026-09-21, BEAM_LAW note 45): under
   the pair form the click line's `exact` less u is the whole part of
   3 x made x T_d over S_1 Q mod N with its `remainder` over S_1 Q, 3 x 17 x
   110 = 5610 = 87 x 64 + 42 at the axis (23, [42, 64]) and 3 x 24 x 156 =
@@ -698,7 +715,7 @@ register's L7 entry), written before the run: Since 2026-09-21 the test derives 
 
 `tests/test_birth_wheel.py` (2026-09-21; the model owner's decision, record
 180 of docs/LOG_2026-09-20.md on record 163 (3); the mathematician's
-TWO_SLITS.md section 8 with `wheel_map.py`; docs/BEAM_LAW.md note 44): the
+TWO_SLITS.md section 8 with `wheel_map.py`; docs/BEAM_LAW.md note 46): the
 wheel is one `Count` row of the lamp's counts table, declared on the lamp
 as `wheel` [r, W]; u = ordinal x r mod W is written on the record at birth;
 the rungs at the click are (2 W C_k + T) // (2 T) and the cell [u < b_k].
@@ -733,7 +750,7 @@ The expected integers, written down before the first run:
 
 `tests/test_exact_phase.py` (2026-09-21; the model owner's decision, record
 163 (2) of docs/LOG_2026-09-20.md; the mathematician's TWO_SLITS.md section
-2; docs/BEAM_LAW.md note 43): a row's phase is read at its click at the
+2; docs/BEAM_LAW.md note 45): a row's phase is read at its click at the
 exact time of its last Link, phi = (n / d) x made x T_d / (S_1 Q) from the
 row's two counts, one floor at the click, a Euclidean division with the
 remainder kept on the click line (`exact`, `remainder`), no float. The
@@ -1837,7 +1854,18 @@ expected integers, written down before the first run:
 - (e) the turn by momentum at a constant momentum: content 16, momentum
   320, `action` 7, phase 5: the turns at the first five Links 2925, 2926,
   2926, 2925, 2926 (mod 64) as `test_nature_beam_body` (d) pins, and
-  `axis_steps` [5, 0, 0] after 24 intervals.
+  `axis_steps` [5, 0, 0] after 24 intervals; and the `action` row's whole
+  part at a Link not crossed, pinned before any change (BEAM_LAW note 41
+  (viii), the owner's item 9; the physics-rule review of no-tables,
+  2026-09-21, item 2): the coincidence body of (a) (content 1, the
+  momentum (64, 64, 0), D = 128 on both axes, x stepping at the even
+  self-creations and y losing every one of its Links) under `action` 7 at
+  N = 64, phase 0, holds after 10 intervals `acc.action` [5, 5, 0] (the
+  residue of five counts of |p| N = 4096 = 7 x 585 + 1 on each axis, in
+  `state.json` too), the drives (0, 0, 0), `axis_steps` [5, 5, 0], `steps`
+  5, the position (9, 4, 0) and the phase 45 = 5 x 585 mod 64 from the x
+  row alone: the y row's five whole parts, 2925, were never delivered
+  (the phase would read 26 with them).
 - (f) the signed drive under a reversal (record 126): content 16, width 8,
   D = 9216, the momentum +1024 for eight self-creations (the drive 8192,
   no Link) and -1024 from the ninth: the first form stepped -x at the
@@ -1978,6 +2006,27 @@ born there carry the content 2, the turn at their birth: the labels 2 x
 the unit vector, the screen's pushes (128, 0, 0) and (128, 12, 0) with the
 share (9, 0, 0), the mirror's second reflection at the share (7, 5, 0);
 the turn 3 and the content 3 on every row until then).
+
+**No remainder discarded (record 155 of 2026-09-20; note 41 (viii)).**
+`tests/test_fraction_free.py` (h): on 2000 random labels, amounts and
+multiplicities the shares of a row pushed k times sum to the whole part of
+k x label x amount over m exactly with the accumulator below m, the floor
+per push alone short by up to k - 1 units; on a bar of a lamp of records
+(three rows per record) and four readers at x = 4 .. 7 the readers' pushes
+sum to the read lines' pushes, strictly between 21 and 22 per unit read
+(the +x row's label 64 over m = 3, the remainder carried), the state
+writing `share` on a row that holds one; (i) `place_over_nodes` on random
+amounts over 2 to 7 Nodes places every amount whole, the claims summing to
+zero within the number of Nodes and every Node within one unit of its
+equal share; `test_nature_beam_body` (c) re-pinned (6, 5, 5 and 5, 6, 5 for
+8, 4, 4 and 4, 8, 4; the lamp on a set at x = 1 for x = 2 with the claims
+(-1, -1, 2)); `bohr/r2`'s gate digests re-pinned (a body on three Nodes).
+
+**The turn by momentum as the `action` row (record 155 of 2026-09-20).**
+`test_nature_beam_body` (d) and `test_step_drive` (e) are unchanged: at a
+constant momentum the row's count at each Link is `by_clock(k0, |p| N, h)`
+(2925, 2926, 2926, 2925, 2926 at |p| 320, N 64, h 7); `acc.action` in the
+record; the refusal of `ticks x |p| x N` beyond the bound as declared.
 
 **The Bell and amplitude readings by record (the alignment).** A paid
 lamp's exact clock stalls where its content has fallen below K (the Bell

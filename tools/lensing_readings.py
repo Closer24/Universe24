@@ -90,7 +90,7 @@ import numpy as np
 
 from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.nature_beam import flight_table
+from event_universe.events.nature_beam import direction_flight
 from event_universe.events.world import HEADING_OFFSET, REST_DIRECTIONS
 from event_universe.world_loading import world_of_run
 
@@ -209,12 +209,12 @@ class Reading:
 
 
 # The speed on a heading read off the flight table: m(T) Links per period.
-HEADINGS_TABLE = flight_table(
+HEADINGS_FLIGHT = direction_flight(
     ((0, 0, 0), (0, 0, 0), (1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
 )
-HEADING_PERIOD = int(HEADINGS_TABLE.period[HEADING_OFFSET])
+HEADING_PERIOD = int(HEADINGS_FLIGHT.period[HEADING_OFFSET])
 HEADING_LINKS = int(
-    HEADINGS_TABLE.manhattan_steps(np.array([HEADING_OFFSET]), np.array([HEADING_PERIOD]))[0]
+    HEADINGS_FLIGHT.manhattan_steps(np.array([HEADING_OFFSET]), np.array([HEADING_PERIOD]))[0]
 )
 SPEED = HEADING_LINKS / HEADING_PERIOD
 DWELL = HEADING_PERIOD / HEADING_LINKS

@@ -14,7 +14,7 @@ through the apparatus's Port events, the births, the splits, the ends and
 the cancels the merge reports), chooses one offer by the record's birth
 coordinate u on the ladder of the offers' weights, normalised by their
 sum, the rungs at the nearest integer on the record's wheel W (the owner's
-decision (a); the birth wheel of 2026-09-21, BEAM_LAW note 44: W the
+decision (a); the birth wheel of 2026-09-21, BEAM_LAW note 46: W the
 denominator of the lamp's declared rate [r, W], u = ordinal x r mod W,
 W = N under [1, N]):
 
@@ -269,9 +269,10 @@ def choose(found: list[int], u: int) -> int | None:
 def cell_of(weights: list[tuple[int, int]], steps: int, u: int) -> int | None:
     """The cell of u as the comparison of two products (the fraction-free
     law, 2026-09-20, BEAM_LAW note 41 (v); the mathematician's FORM.md
-    section 5): the first k with 2 T u + T <= 2 N C_k, C_k the cumulative
-    weight over the cells' common denominator and T the total, which is
-    u < b_k for the rung b_k = (2 N C_k + T) // (2 T) at the nearest
+    section 5): the first k with 2 T u + T <= 2 W C_k, C_k the cumulative
+    weight over the cells' common denominator, T the total and W the
+    record's wheel (`steps`; N under the wheel [1, N], note 46), which is
+    u < b_k for the rung b_k = (2 W C_k + T) // (2 T) at the nearest
     integer, no division and no rounding, the same integers as `choose`
     on `rungs`; None when the ladder is empty (T = 0)."""
     denominator = 1

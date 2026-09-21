@@ -72,7 +72,7 @@ import pytest
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.diagnostics.shell_readings import shell_readings
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.nature_beam import flight_table
+from event_universe.events.nature_beam import direction_flight
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import MOMENTUM_BOUND
 from event_universe.world_loading import load_world
@@ -251,8 +251,9 @@ def test_the_bell_worlds_read_the_triangle_and_the_chsh_bound(tmp_path):
     # 205): a pair's age is its birth ordinal less one, so the offset tick -
     # age of a plus counter is the tick of the lamp's first birth plus the
     # age tau_8 at which a heading row has walked the PATH Links to it, the
-    # least age whose Manhattan steps reach PATH on the flight table; the
-    # minus counters, one Link on, hold no click under the one click (0).
+    # least age whose Manhattan steps (the position accumulator's count,
+    # `Flight.manhattan_steps`) reach PATH; the minus counters, one Link
+    # on, hold no click under the one click (0).
     first_birth = min(
         int(line["tick"])
         for line in map(
@@ -261,7 +262,7 @@ def test_the_bell_worlds_read_the_triangle_and_the_chsh_bound(tmp_path):
         )
         if line["event"] == "birth"
     )
-    table = flight_table(((0, 0, 0), (0, 0, 0), (1, 0, 0)))
+    table = direction_flight(((0, 0, 0), (0, 0, 0), (1, 0, 0)))
     ages = np.arange(1, 8 * make_worlds.PATH, dtype=np.int64)
     walked = table.manhattan_steps(np.full(ages.shape, 2, dtype=np.int64), ages)
     tau = int(ages[np.flatnonzero(walked >= make_worlds.PATH)[0]])

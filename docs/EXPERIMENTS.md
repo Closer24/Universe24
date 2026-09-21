@@ -16,7 +16,12 @@ the run and its result recorded with that fingerprint in the
 suite, and no test of the test suite is an experiment: a test pins a contract
 of the code, an experiment asks the model a question it may answer either way.
 A stated acceptance requirement is not a passing test, and a passing run is
-not a law of nature (Highlights 3.21, 5.5).
+not a law of nature (Highlights 3.21, 5.5). Since the model owner's record
+163 of 2026-09-20 the register's pins are detector readings (the clicks
+and the records a run writes), and what the tools read off the GameBoard
+itself (`shell_readings`, the cube flux, the probes' counts and every
+replay of the engine) is a host reading, labelled GAMEBOARD on every line
+a tool prints: it exists for us, not in the model.
 
 **Who decides.** The model owner decides which entries exist, in what order
 they run, what each one pins, and what an outcome means for the model. A
@@ -2723,6 +2728,41 @@ states "exactly" and means integer equality at every tick.
   of 27 Nodes) are open again. The registered verdicts stand as history
   ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
 
+- **Re-read under the turn by momentum as a row of the table of counts
+  (2026-09-20; measured, nothing pinned; the model owner's record 155,
+  [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (i)).**
+  The electron's momentum changes at every push along the orbit, so the
+  count off the Links stepped, `by_clock(k0, |p| N, h)`, re-priced every
+  earlier Link on the axis at the present |p|; the `action` row sums |p| N
+  Link by Link. The turn changes nothing of the step, so every orbit is
+  the signed drive's to the Link: the same closings, periods, returns,
+  mean radii and escapes in all seven worlds (`r2` T 449, out through
+  face:-y at 1264; `r4` T 545 and 1588, out at 2190; `r6` T 1041, out at
+  2160; `r8` T 1292 and 2016, out at 3869; `r12` no closing, out at 2059;
+  `r15` T 2543 with the return 3 within r / 4, out at 3443; `r16` out at
+  1888), the books identical at every tick; what moves is the phase at a
+  closing by a step or two (`r2` 30 for 31; `r4` 61 and 36 for 61 and 37;
+  `r6` 31 for 39; `r8` 55 and 53 for 54 and 52; `r15` 62 for 0) and with
+  it the coherence of the faces' record: `r4`'s turn per orbit 0.609
+  against the design's 0.463 (0.625) with C(2) = 0.49 (0.51), inside;
+  `r8`'s turn per orbit 0.969 against 0 as before and C(2) = 1.24 (0.99),
+  now inside the closing criterion C >= 1.0 after 2 turns. 0 record checks
+  failed; 2 readings inside and 0 outside (1 and 1). The ladder still
+  takes no ratio (no closing radius returns within r / 4 at r = 8 with two
+  turns); the verdict as re-read stands: what the law lacks is a stable
+  closed orbit under whole kicks. The events of the seven worlds moved
+  and their books did not; the numbers above are kept as history.
+- **Re-read under the Nodes' claims (2026-09-20; measured, nothing
+  pinned; record 155 (3), [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (viii)).**
+  The electron is a body on three Nodes, and its field rows are now
+  placed over them by the Nodes' claims (`place_over_nodes`) in place of
+  the leftover unit to the Node `age mod 3`: the events and the books of
+  all seven worlds move (where a row is born on the set), and nothing of
+  the readings: every orbit, closing, period, return, mean radius, escape
+  and phase at a closing, `r4`'s turn per orbit 0.609 and C(2) = 0.49,
+  `r8`'s 0.969 and C(2) = 1.24, are the action-row re-read's to the
+  digit; 0 record checks failed, 2 readings inside, 0 outside. The
+  verdict stands.
 
 ### I, the nucleus (2026-09-20)
 
@@ -3751,7 +3791,7 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   reading 32/32 by coincidence); on `mz_unequal_f8` the rows of two
   records reach it together and both split.
 - **Re-read under the exact phase at the click (2026-09-21, the branch
-  `click`; [BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  `click`; [BEAM_LAW note 45](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
   Every port's clicks stand on the ten worlds (`mz_unequal_f0` D1 64,
   `mz_unequal_f8` 32 / 32, `mz_unequal_f16` D2 64 included; 68 gathers
   each); the unequal arms' weights and totals moved (eight distinct totals
@@ -3798,7 +3838,7 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   the 64 births, 32 with u = 0's (the tables' rounding by u, no rung
   moved); the reading tool's replay equals `run.json`'s `world`.
 - **Re-registered under the exact phase at the click (2026-09-21, the
-  branch `click`; [BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  branch `click`; [BEAM_LAW note 45](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
   `tests/test_amplitude_layer.py` (d)).** The reference `slits_one` declares
   the frequency and the reading takes each row's phase from the `exact` of
   its click line; the reading and the run of `slits_low` agree on every one
@@ -3956,7 +3996,7 @@ question, issue #376; the Boss's approval of 2026-09-20).**
   declare the pair form; the pair, GHZ and the gate declare no phase per
   Link. Which form nature's light is, the model does not say.
 - **Re-read under the exact phase at the click (2026-09-21, the branch
-  `click`; [BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  `click`; [BEAM_LAW note 45](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
   Both worlds keep their pins (the age 29, the path phases 51 / 8 and
   23 / 23); `cone_intervals`'s click lines carry the exact phase, 3 x 17 x
   110 = 5610 = 87 x 64 + 42 at the axis and 3 x 24 x 156 = 11232 = 87 x
@@ -4005,7 +4045,7 @@ records 160 and 163).**
 
 - **Re-registered under the birth wheel (2026-09-21, the branch `click`;
   the model owner's decision, [record 180](LOG_2026-09-20.md#180-the-wheel-as-the-generic-vector-form-the-owner-2026-09-21-about-0105z-the-owners-words-translated-the-wheel-was-also-turned-into-a-generic-vector-wasnt-it-the-bosss-yes-taken-as-the-decision-on-record-163-3-the-birth-wheel-is-one-row-of-the-counts-table-on-the-lamps-record-acc--2531-acc-mod-4096-the-translation-on-the-torus-z--4096-that-every-count-is-the-lamp-writes-the-rows-value-on-the-record-at-birth-as-u-at-the-click-the-cells-cumulative-weights-are-sums-the-rungs-2-w-c_k--t--2-t-one-declared-rounding-and-the-choice-u--b_k-the-wall-test-so-the-whole-click-is-a-multiplication-by-declared-matrices-an-addition-an-inner-product-and-a-threshold-no-step-of-its-own-the-map-record-164-showed-the-same-clicks-as-the-bit-reversed-ordinal-within-one-click-at-4096-births-physically-the-lamps-phase-at-the-moment-of-birth-at-a-rate-incommensurate-with-its-birth-rate-built-as-item-3-of-the-click-pull-request-after-the-exact-phase);
-  [BEAM_LAW note 44](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  [BEAM_LAW note 46](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
   the run that shows the wheel).** `slits_huygens` declares the golden
   rate `wheel` [2531, 4096] and runs 4300 intervals for 4096 births under
   the exact phase at the click. Pinned before the run: as ordered, the
@@ -4020,7 +4060,7 @@ end, every one of the records 1 to 4096 gathered): dark
   the total (51 clicks at y = 59, 60, 61); the counts' Pearson with the
   cosine 0.891 against the weights' 0.895, the visibility 0.966; against
   the first record's rungs the histogram's Pearson 1.000 over the 126
-  cells, every count within 2 of its width; wall 882, screen 1711 on 107
+  cells, every count within 2 of its width (within 2 and not one: the rungs are per record, the tables' eight totals at u mod 64, a part in 276, note 37 (xii), so the counts are compared with the first record's rungs); wall 882, screen 1711 on 107
   pixels, faces 1503; the first 64 births wall 14, screen 27, faces 23 with
   32 distinct cells, 69 by 256, 101 by 1024. Verdict: the wheel turns the
   weights into counts, the fringes in the clicks as in the weights; the

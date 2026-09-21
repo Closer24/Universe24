@@ -1,6 +1,6 @@
 """The exact phase at the click (2026-09-21; the model owner's decision,
 record 163 (2) of docs/LOG_2026-09-20.md; the mathematician's
-docs/designs/fraction_free/TWO_SLITS.md section 2; BEAM_LAW note 43): a
+docs/designs/fraction_free/TWO_SLITS.md section 2; BEAM_LAW note 45): a
 row's phase is read at its click at the exact time of its last Link,
 phi = (n / d) x made x T_d / (S_1 Q) from the row's two counts (the phase
 per interval of age, the pair form, and the flight table's count of Links),
@@ -30,7 +30,7 @@ before the first run:
     ((age_bound + 1) x n within 2^62 - 1) and the click 17 Links away is
     refused naming the exact phase, the measured event (the counter, 1)
     and the numerator 2^55 x 17 x 110 beyond the working register 2^63 - 1;
-(f) the primitive itself: `exact_phase` on the flight table of +x and
+(f) the primitive itself: `exact_phase` on the flight of +x and
     (1, 1, 0) gives (a), (b) and (d) from the phase, the terms and the age
     of the last Link; a rest slot and a family without the pair form return
     the phase with the remainder 0 over 1.
@@ -41,7 +41,7 @@ from __future__ import annotations
 import pytest
 
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.nature_beam import REST_DIRECTIONS, exact_phase, flight_table
+from event_universe.events.nature_beam import REST_DIRECTIONS, direction_flight, exact_phase
 
 N = 64
 K = 1 << 20
@@ -184,7 +184,7 @@ def test_the_numerator_beyond_the_register_is_refused():
 
 def test_the_primitive():
     """(f)."""
-    flight = flight_table(((1, 0, 0), (1, 1, 0), (0, 0, 0)))
+    flight = direction_flight(((1, 0, 0), (1, 1, 0), (0, 0, 0)))
     assert exact_phase(40, 29, 29, 0, flight, (8, 1), N, "a") == (41, 48, 64)
     assert exact_phase(40, 29, 29, 1, flight, (8, 1), N, "a") == (42, 0, 128)
     assert exact_phase(56, 7, 8, 0, flight, (8, 1), N, "a") == (4, 48, 64)

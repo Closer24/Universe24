@@ -7,7 +7,7 @@ WEAK.md sections 1, 2 and 4.5).
 
 Every expectation printed here is written before the run and is a GameBoard
 computation from the engine's own functions, never a rule replayed: the
-first-arrival ages off the flight table (`nature_beam.flight_table`) for
+first-arrival ages off the flight table (`nature_beam.direction_flight`) for
 J2, and for J1 and J3 the count each clock reads at its Node
 (`Measured.counted`, the presence over every ray of another number) on the
 same world run without its `become` keys until the crowd is steady, from
@@ -117,7 +117,7 @@ sys.path.insert(0, str(ROOT / "src"))
 import numpy as np  # noqa: E402
 
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world  # noqa: E402
-from event_universe.events.nature_beam import flight_table  # noqa: E402
+from event_universe.events.nature_beam import direction_flight  # noqa: E402
 from event_universe.world_loading import families_by_definition  # noqa: E402
 
 # The shipped definitions the world's families come from where they equal
@@ -216,7 +216,7 @@ def shell_nodes(centre: tuple[int, int, int], radius: int, side: int) -> list[li
 def first_arrival_age(distance: int) -> int:
     """The age at which a heading ray first reaches `distance` Links, off
     the engine's flight table (a GameBoard computation of the expectation)."""
-    table = flight_table(((0, 0, 0), (0, 0, 0), PLUS_X))
+    table = direction_flight(((0, 0, 0), (0, 0, 0), PLUS_X))
     ages = np.arange(1, 4 * distance + 64, dtype=np.int64)
     steps = table.manhattan_steps(np.full(ages.shape, 2, dtype=np.int64), ages)
     return int(ages[np.flatnonzero(steps >= distance)[0]])

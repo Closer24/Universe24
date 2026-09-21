@@ -62,7 +62,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[2] / "src"))
 
-from event_universe.events.nature_beam import flight_table  # noqa: E402
+from event_universe.events.nature_beam import direction_flight  # noqa: E402
 from event_universe.events.world import LABEL_SCALE, LAW_VALUE  # noqa: E402
 from event_universe.world_loading import families_by_definition  # noqa: E402
 
@@ -190,9 +190,9 @@ def declared(fan: list[Vector]) -> list[list[int]]:
 def entries_per_node(directions: list[Vector], reach: int) -> dict[Vector, int]:
     """The entries per shell each Node within `reach` of the source receives
     from the fan's digital lines, walked along the engine's own flight
-    lines (`flight_table`: S_1 unit steps per period of the Bresenham line
+    lines (`direction_flight`: S_1 unit steps per period of the Bresenham line
     of every direction) until they pass `reach`."""
-    table = flight_table(tuple(directions))
+    table = direction_flight(tuple(directions))
     count: dict[Vector, int] = {}
     for index in range(len(directions)):
         steps = int(table.manhattan[index])

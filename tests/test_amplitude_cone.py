@@ -16,7 +16,7 @@ law: the cone"), written down before the run:
     both under the pair form (3 x 29 mod 64);
 (c) one gather per record, one cell each, as many at each counter; the
     expectation file's pins equal the flight formula's;
-(d) the exact phase at the click (2026-09-21, BEAM_LAW note 43): under the
+(d) the exact phase at the click (2026-09-21, BEAM_LAW note 45): under the
     pair form the click line's `exact` less u is the whole part of
     3 x made x T_d over S_1 Q modulo N with its `remainder` over S_1 Q,
     3 x 17 x 110 = 5610 = 87 x 64 + 42 at the axis (23, [42, 64]) and
@@ -133,7 +133,7 @@ def test_the_pins_are_the_flight_formula(expectation: dict) -> None:
     assert expectation["cone_intervals"]["path_phase"] == {
         name: (ages[name] * numerator // denominator) % N for name in detectors
     }
-    # (d) The exact phase at the click (BEAM_LAW note 44): under the pair
+    # (d) The exact phase at the click (BEAM_LAW note 46): under the pair
     # form the whole part and the remainder of n x Links x T_d over
     # d x S_1 x Q (the flight table's resolution and Manhattan length, the
     # label scale Q), the whole part mod N; the integer form's `exact` the

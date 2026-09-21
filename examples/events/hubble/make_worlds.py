@@ -18,7 +18,7 @@ axis; it steps one Link per (Q S M + p) / p self-creations (BEAM_LAW section
 p) Links per interval, and p is chosen for the speed ladder v = c x V(axis)
 x (2 i - 1) / (2 CHAIN - 1) with V from 0.35 to 0.6: the twenty-four speeds
 span 0.05 c to 0.6 c, c the ray's speed on a heading read off the flight
-table (`flight_table`: m(L) Links per period L, 32 / 55 = 0.5818 per
+table (`direction_flight`: m(L) Links per period L, 32 / 55 = 0.5818 per
 interval). Every source releases at every self-creation one row of F rays
 on the heading toward the centre alone (`release` [1, 64]: `by_clock(age,
 M, 64)` = M / 64 rays per direction per self-creation), the row carrying
@@ -96,7 +96,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[2] / "src"))
 
 from event_universe.core.game_board import PORT_HEADINGS  # noqa: E402
-from event_universe.events.nature_beam import flight_table  # noqa: E402
+from event_universe.events.nature_beam import direction_flight  # noqa: E402
 from event_universe.events.world import HEADING_OFFSET, Q  # noqa: E402
 from event_universe.world_loading import families_by_definition  # noqa: E402
 
@@ -140,7 +140,7 @@ Json = dict[str, object]
 def beam_speed() -> float:
     """The ray's speed on a heading, read off the flight table: the Links
     made in one period of the heading's digital line over the period."""
-    table = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
+    table = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
     heading = np.array([HEADING_OFFSET])
     period = int(table.period[HEADING_OFFSET])
     return int(table.manhattan_steps(heading, np.array([period]))[0]) / period

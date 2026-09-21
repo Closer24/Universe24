@@ -206,7 +206,7 @@ def replay(trace: Trace, family_name: str, ticks: list[int]) -> None:
                 )
                 for factors, numerator, multiplicity, _ in cells
             ]
-            # The rungs on the record's wheel (N under [1, N]; note 44).
+            # The rungs on the record's wheel (N under [1, N]; note 46).
             ladder, total = rungs([(n, m) for _, n, m in weights], live.wheel)
         gathered = [
             e for e in events[start:] if e["event"] == "gather" and e["record"] == trace.identity
@@ -249,7 +249,7 @@ def offers_from_ends(
         X, Y = found.setdefault(set_name, {}).get((node, label), (0, 0))
         weight = AMPLITUDE_SCALE * int(e["amount"])
         # The phase the layer reads at an end: the exact phase at the row's
-        # last Link where the click line carries it (note 43), else the walk's.
+        # last Link where the click line carries it (note 45), else the walk's.
         phase = int(e.get("exact", e["phase"]))
         found[set_name][(node, label)] = (X + weight * cosines[phase], Y + weight * sines[phase])
     return found

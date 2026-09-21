@@ -149,7 +149,7 @@ the model owner, 2026-09-19):
   component; an entry equal to the default is accepted and changes nothing)
   and, for a measured event of a paid family, its `lamp` (`wheel` `[r, W]`, the
   birth wheel's rate, required: u = ordinal x r mod W the record's coordinate on
-  the ladder, [1, N] the count of births mod N, BEAM_LAW note 44; `rate` `[n, d]` units
+  the ladder, [1, N] the count of births mod N, BEAM_LAW note 46; `rate` `[n, d]` units
   per self-creation per direction, `directions` the directions it releases
   on, the six headings by default, and optionally its `phase_window`); and,
   since 2026-09-20 (the weak force, `weak-v1`: the model owner's "go on
@@ -277,7 +277,7 @@ family and per column, and the sum over the columns), `dynamics`,
 that is not primitive, a component beyond P, a direction the world does not
 declare, a label `Q x content x amount` beyond 2^62 - 1 on a declared ray or
 a lamp's release (Q = `LABEL_SCALE` = 64: the momentum label of a ray is
-along the unit vector of its direction at the flight table's scale, the
+along the unit vector of its direction at the flight's scale, the
 model owner's decision of 2026-09-19 on the physics-rule reviewer's
 verdict, [BEAM_LAW section 2](../../../docs/BEAM_LAW.md), so every declared
 `momentum` and every momentum of the record is in label units, Q per unit
@@ -329,7 +329,7 @@ FREE_QUANTUM = 0
 AGE_READS = "age"
 READS = ("scalar", "outside", "here", "vector", "tensor", AGE_READS)
 # The one scale Q of the law (BEAM_LAW sections 2 and 3): the time resolution
-# of the flight table, where the turn of a direction is T_d = isqrt(3 |v|^2
+# of the flight, where the turn of a direction is T_d = isqrt(3 |v|^2
 # Q^2) and a ray makes S_1 Manhattan steps per T_d / Q intervals in the mean,
 # and the length of the momentum label, `LABEL_SCALE` below.
 Q = 64
@@ -808,7 +808,7 @@ class LampDefinition:
 
     rate: tuple[int, int]
     # The birth wheel (`wheel`, [r, W]; the model owner's decision of
-    # 2026-09-21, record 180 of the log of 2026-09-20; BEAM_LAW note 44):
+    # 2026-09-21, record 180 of the log of 2026-09-20; BEAM_LAW note 46):
     # the rate of one row of the lamp's counts table, advanced by r over W
     # at every birth, whose accumulator before the advance is the record's
     # coordinate u on the ladder, u = ordinal x r mod W; the rungs of the
@@ -1501,7 +1501,7 @@ def _lifetime(value: object, label: str, age_bound: int) -> int | None:
         return None
     if isinstance(value, list):
         raise ValueError(
-            f"{BEAM_LAW}: {label} must be one integer (a scalar): the flight table gives every "
+            f"{BEAM_LAW}: {label} must be one integer (a scalar): the flight gives every "
             "direction one speed, so L intervals of flight reach a sphere; a per-axis lifetime "
             "is refused"
         )

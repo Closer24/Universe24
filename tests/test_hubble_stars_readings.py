@@ -52,7 +52,7 @@ import numpy as np
 from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.nature_beam import flight_table
+from event_universe.events.nature_beam import direction_flight
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import HEADING_OFFSET, Q
 from event_universe.world_loading import load_world
@@ -160,8 +160,9 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_declare_a_fo
     assert expectations["reading_rule"] == "acoustic"
     # The registered speed derived and compared (DERIVATIONS_BEAM 2.1, the
     # register's `derivations`): c = Q / T_D Links per interval on a heading,
-    # T_D the heading's resolution on the flight table (isqrt(3 Q^2) = 110).
-    table = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
+    # T_D the heading's resolution of the flight rule (isqrt(3 Q^2) = 110),
+    # the wall of the position's accumulator over its rate.
+    table = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
     assert expectations["c"] == Q / int(table.resolution[HEADING_OFFSET])
     assert set(expectations["derivations"]) == set(expectations) - {"format", "derivations"}
     # The record-click worlds (reading `sum` at the centre; the key
@@ -277,7 +278,7 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
 
 def test_the_fits_read_the_exact_forms():
     """(c)."""
-    table = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
+    table = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
     heading = np.array([HEADING_OFFSET])
     assert int(table.period[HEADING_OFFSET]) == 55
     assert int(table.manhattan_steps(heading, np.array([55]))[0]) == 32

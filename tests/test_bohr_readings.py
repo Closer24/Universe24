@@ -1,6 +1,6 @@
 """The Bohr readings tool reads the engine's own functions (the experimenter's
 rule, 2026-09-20: a readings tool never replays a rule of the engine;
-`tools/bohr_readings.py` reads the flight time off `FlightTable.manhattan_steps`,
+`tools/bohr_readings.py` reads the flight time off `Flight.manhattan_steps`,
 the coherent pointer off `nature_beam.coherent_pointer` with the circle's
 tables of `core/phase.py`, and the run off the runner's record). Each reading
 is checked against the engine on a minimal GameBoard; the expected integers,

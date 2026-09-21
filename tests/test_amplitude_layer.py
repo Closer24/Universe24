@@ -39,7 +39,7 @@ layer"), written down before the first run:
     80 sets of the reading in the layer's order with the reading's rungs;
     its chosen cell's weight and its total equal the reading's fractions
     (the total 4834019/4259840 since the exact phase at the click of
-    2026-09-21, BEAM_LAW note 43, 847181/745472 under the phase of the
+    2026-09-21, BEAM_LAW note 45, 847181/745472 under the phase of the
     whole intervals: the wall's three rows 3/5, the fans 2/5 and the cross
     terms of paths meeting at one Node; a face of 24 Nodes hit sums its
     Nodes' squares, coherent within a Node and incoherent across Nodes,

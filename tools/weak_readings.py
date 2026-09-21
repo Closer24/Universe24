@@ -16,7 +16,7 @@ such thing" about the host's readings of the GameBoard):
   spectrum) and their ages (the flight), the nucleons' own clocks (their
   `age` and `waited`) and their `contact` records (J1, J3);
 - GAMEBOARD readings, the host's view of the mechanism: the expectation
-  computed from the engine's flight table (the rays born early enough to
+  computed from the engine's flight rule (the rays born early enough to
   reach a distance within the run) or from the engine's own presence
   reading before the run (`expectations.json`), the source's stride, each
   measured event's `become` line (the tick its clock fired, the count it
@@ -59,7 +59,7 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe.events.nature_beam import flight_table
+from event_universe.events.nature_beam import direction_flight
 from event_universe.world_loading import world_of_run
 
 MODEL_PREFIX = "beam-weak-"
@@ -152,8 +152,8 @@ class Reading:
 
 def first_arrival_age(distance: int) -> int:
     """The age at which a heading ray first reaches `distance` Links, off
-    the engine's flight table (GAMEBOARD: the expectation's computation)."""
-    table = flight_table(((0, 0, 0), (0, 0, 0), (1, 0, 0)))
+    the engine's flight rule (GAMEBOARD: the expectation's computation)."""
+    table = direction_flight(((0, 0, 0), (0, 0, 0), (1, 0, 0)))
     ages = np.arange(1, 4 * distance + 64, dtype=np.int64)
     steps = table.manhattan_steps(np.full(ages.shape, 2, dtype=np.int64), ages)
     return int(ages[np.flatnonzero(steps >= distance)[0]])
@@ -513,7 +513,7 @@ def expectations(reading: Reading, pinned: dict[str, object] | None = None) -> l
     """The criteria of each world against its expectation, written before
     the runs (README.md): (label, inside, the kind of the reading). The
     expected far counts of J2 are the rays born at the ticks 1 .. ticks -
-    a_far (a_far the first-arrival age off the flight table) whose phase no
+    a_far (a_far the first-arrival age off the flight rule) whose phase no
     reader on the way admits; the expected trigger ticks of J1 and J3 are
     the generator's, from the engine's own presence reading."""
     if reading.name.startswith("j2"):
@@ -562,7 +562,7 @@ def print_world(reading: Reading, pinned: dict[str, object]) -> list[Criterion]:
             print(
                 f"[{DETECTOR}]   the far detector (x = {thing.position[0]}): {thing.clicks.get('nu', 0)} clicks; "
                 f"[{GAMEBOARD}] {born} rays reach its distance within the run (the first-arrival age "
-                f"{first_arrival_age(thing.position[0])} off the flight table)"
+                f"{first_arrival_age(thing.position[0])} off the flight rule)"
             )
     elif reading.name.startswith("w_"):
         for thing in reading.things:
