@@ -259,3 +259,20 @@ drive were the reversal defect's, the case that found it), and
 `j3_deuteron_crowd` never fires with 0 steps; 9 readings inside and 1
 outside (the trigger tick, as registered). The register entry has the
 numbers ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under the fraction-free law (2026-09-20)
+
+Under the fraction-free law ([BEAM_LAW note 41](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+records 147 and 148) the owed count is the count of each clock's
+accumulator, exact over the crowd's history, where the count off the
+clock had credited the whole age at the current crowd: `j3_deuteron`'s
+nucleons wait 69 intervals of 700 each (80), attempt 33 and 31 steps
+every one a refused contact (the pair holds), the neutron fires at 568
+(577) and its beta clicks the shell at 581 (590) with the content 3 at
+the same Node; `j3_deuteron_crowd` never fires (69 waited, 36 and 33
+attempted); the J1 neutrons fire at 522 to 524 and 523 to 528 with the
+shell's step as registered (the medians 551.5 and 553.5, the widths 0.036
+and 0.038); `j3_neutron_free`, `w_exchange` and J2 are identical. 34
+readings inside and 2 outside (the trigger ticks of the lattice's corners
+and of the deuteron, as before). The register entry has the numbers
+([migration](../../../docs/MIGRATION.md#the-fraction-free-law-on-2026-09-20-every-count-an-accumulator-on-the-bodys-record)).

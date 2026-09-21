@@ -28,7 +28,13 @@ a group of a free family B's rays with the label flow V is, per axis,
     three axes with different signs, M_A in 0 .. 3, n_A and n_B in -2 ..
     2, d_A and d_B in 1 .. 3, the age 0 .. 4: 49 500 cases) and on 3 000
     random cases at the register's scale (V to 2^62, M_A to 2^40, n and d
-    to 2^30 - 1, the age to 2^31; a refusal shared); and the replay of
+    to 2^30 - 1, the age to 2^31; a refusal shared, and since the
+    fraction-free law of 2026-09-20 (BEAM_LAW note 41) the column's count
+    is its accumulator's over the one denominator Lambda^2, Lambda =
+    lcm(d_A, d_B), the accumulator seeded as `age` reads leave it: the
+    same integers, and a refusal of its own where the lifted product |V n
+    M n| Lambda^2 / (d_A d_B) does not fit the register with coprime
+    denominators of 30 bits, never elsewhere); and the replay of
     the series 7 worlds of `examples/events/coupling/` (the mathematician's
     second replay): every `read` record's push recomputed by the landed
     form from the record alone (its `reading` is V, the fixed reader's
@@ -108,6 +114,7 @@ from __future__ import annotations
 
 import itertools
 import json
+import math
 import random
 from fractions import Fraction
 from pathlib import Path
@@ -117,7 +124,7 @@ import pytest
 
 from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.measured import column_charges
+from event_universe.events.measured import CountTable, column_charges, counts_table
 from event_universe.events.nature_beam import push_form
 from event_universe.events.world import COLUMNS_RULE, MOMENTUM_BOUND, Column
 from event_universe.runner import run_initialization
@@ -188,7 +195,44 @@ def two_columns(
         charges = column_charges([(((1, 1), reader), content)], 2, 1, ENTRY.position)
     else:
         charges = [(content, 1), (reader[0] * content, reader[1])]
-    return push_form(free, list(moment), charges, ((1, 1), emitter), (GRAVITY, CHARGE), age, ENTRY)
+    # The charge column's common denominator Lambda over the two families
+    # (`world.column_scales`) and the reader's charge accumulator as `age`
+    # reads of this constant flow from empty leave it, sign x (age x |X|
+    # mod Lambda^2) per axis with X the column's lifted rate (FORM.md
+    # section 1: the next count is then the whole part off the clock at
+    # that age, `by_clock(age, |X|, Lambda^2)`, the accumulator's
+    # identity, which the loop over the ages would reach in age + 1 calls).
+    scale = reader[1] * emitter[1] // math.gcd(reader[1], emitter[1])
+    scales = (1, scale)
+    table = counts_table((1, 1), (0, 1), (0, 1), (True, True), None, scales, 0)
+    seeds = [0, 0, 0]
+    if free:
+        for axis in range(3):
+            rate = (
+                moment[axis]
+                * reader[0]
+                * content
+                * emitter[0]
+                * (scale * scale // (reader[1] * emitter[1]))
+            )
+            seed = age * abs(rate) % (scale * scale)
+            seeds[axis] = -seed if rate < 0 else seed
+    table.set("push", [0, 0, 0, *seeds])
+    return push_form(
+        free,
+        list(moment),
+        charges,
+        ((1, 1), emitter),
+        (GRAVITY, CHARGE),
+        scales,
+        table,
+        ENTRY,
+    )
+
+
+def three_columns() -> CountTable:
+    """A table of counts with the push rows of three columns at Lambda 1."""
+    return counts_table((1, 1), (0, 1), (0, 1), (True,), None, (1, 1, 1), 0)
 
 
 def outcome(form, *arguments, **keys) -> object:
@@ -211,7 +255,7 @@ def test_the_two_built_in_columns_are_the_landed_form_integer_by_integer():
         total += 1
     assert total == 49500
     rng = random.Random(20260920)
-    refused = beyond = 0
+    refused = beyond = beyond_lift = 0
     for _ in range(3000):
         moment = [rng.choice([-1, 1]) * rng.randrange(0, 1 << rng.randrange(1, 63)) for _ in range(3)]
         m = rng.randrange(0, 1 << rng.randrange(1, 41))
@@ -224,25 +268,44 @@ def test_the_two_built_in_columns_are_the_landed_form_integer_by_integer():
         age = rng.randrange(0, 1 << 31)
         free = rng.random() < 0.9
         expected = outcome(landed_push_form, free, list(moment), m, (n_a, d_a), (n_b, d_b), age)
-        # The unreduced pair forms the landed product exactly, so the two
-        # forms refuse together; the reduced pair, the frame's, refuses
-        # at most where the landed form refused and never elsewhere.
-        assert (
-            outcome(two_columns, free, moment, m, (n_a, d_a), (n_b, d_b), age, reduce=False) == expected
+        # The fraction-free form counts the column's rate over the one
+        # denominator Lambda^2 (Lambda = lcm(d_a, d_b)), so its lifted
+        # product |V E n| x Lambda^2 / (d_a d_b) must fit the register
+        # where the landed form's |V E n| had to: with coprime denominators
+        # of 30 bits it refuses where the landed form accepted (`lifted`),
+        # never elsewhere, and gives the same integers where both accept
+        # (on the register every column's Lambda is 1 or a few tens).
+        scale = d_a * d_b // math.gcd(d_a, d_b)
+        lift = scale * scale // (d_a * d_b)
+        lifted = (
+            free
+            and bool(n_a and n_b and m)
+            and (
+                abs(n_a * m * n_b) > MOMENTUM_BOUND // lift
+                or any(abs(v) > MOMENTUM_BOUND // (abs(n_a * m * n_b) * lift) for v in moment if v)
+            )
         )
+        unreduced = outcome(two_columns, free, moment, m, (n_a, d_a), (n_b, d_b), age, reduce=False)
+        if lifted:
+            assert unreduced == "refused"
+            beyond_lift += 1
+        else:
+            assert unreduced == expected
         found = outcome(two_columns, free, moment, m, (n_a, d_a), (n_b, d_b), age)
         # The frame's reduced pair refuses a charge rho_A M_A beyond the
         # register on its own (the landed form never formed it alone) and
-        # otherwise at most where the landed form refused, never elsewhere,
-        # with the same integers where both accept.
+        # otherwise at most where the landed form or the lift refused,
+        # never elsewhere, with the same integers where both accept.
         if free and m and abs(n_a) > MOMENTUM_BOUND // m:
             assert found == "refused"
             beyond += 1
+        elif lifted:
+            assert found == "refused" or found == expected
         else:
             assert found == expected or (expected == "refused" and found != "refused")
         refused += expected == "refused"
-    assert 0 < beyond < refused < 3000
-    assert push_form(False, [5, -7, 9], [], (), (), 3, ENTRY) == [5, -7, 9]
+    assert 0 < beyond < refused < 3000 and 0 < beyond_lift < 3000
+    assert push_form(False, [5, -7, 9], [], (), (), (), CountTable([]), ENTRY) == [5, -7, 9]
 
 
 def test_the_series_7_read_records_replay_under_the_landed_form():
@@ -591,11 +654,25 @@ def test_the_bounds_at_parsing_and_at_the_push():
         OverflowError, match="the push of measured event 1 at \\[2, 2, 0\\] .* in the column 'strong'"
     ):
         push_form(
-            True, [64, 0, 0], [(1, 1), (0, 1), (1 << 56, 1)], ((1, 1), (0, 1), (1, 1)), columns, 0, ENTRY
+            True,
+            [64, 0, 0],
+            [(1, 1), (0, 1), (1 << 56, 1)],
+            ((1, 1), (0, 1), (1, 1)),
+            columns,
+            (1, 1, 1),
+            three_columns(),
+            ENTRY,
         )
     within = (1 << 56) - 2
     assert push_form(
-        True, [64, 0, 0], [(within, 1), (0, 1), (0, 1)], ((1, 1), (0, 1), (1, 1)), columns, 0, ENTRY
+        True,
+        [64, 0, 0],
+        [(within, 1), (0, 1), (0, 1)],
+        ((1, 1), (0, 1), (1, 1)),
+        columns,
+        (1, 1, 1),
+        three_columns(),
+        ENTRY,
     ) == [
         -(within * 64),
         0,
@@ -610,7 +687,8 @@ def test_the_bounds_at_parsing_and_at_the_push():
             [(within, 1), (0, 1), (within, 1)],
             ((1, 1), (0, 1), (1, 1)),
             columns,
-            0,
+            (1, 1, 1),
+            three_columns(),
             ENTRY,
         )
 

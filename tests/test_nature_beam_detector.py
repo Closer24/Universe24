@@ -388,16 +388,21 @@ def test_a_release_reads_no_threshold_and_a_reading_is_gated_like_a_measurement(
     simulation = NatureBeamSimulation(parse_nature_beam_world(world([lamp], [], 5, clock=24)))
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
     assert entry.detector == 0 and entry.threshold == 5
-    for tick in (1, 2):
+    # The lamp of content 24 at K 24 turns 1 at tick 1 and pays 6; its turn
+    # is then the count of its accumulator (the fraction-free law,
+    # 2026-09-20): 18 gives 0 at tick 2 (no release) and 36 gives 1 at
+    # tick 3 (the whole part off the clock at the content 18,
+    # `by_clock(1, 18, 24)` = 1, released at tick 2 until then).
+    for tick, releases in ((1, 1), (2, 1), (3, 2)):
         simulation.step()
         assert simulation.books()["balanced"], tick
         fresh = light.age == 0
-        assert sorted(light.direction[fresh].tolist()) == [2, 3, 4, 5, 6, 7], tick
+        assert sorted(light.direction[fresh].tolist()) == ([2, 3, 4, 5, 6, 7] if tick != 2 else []), tick
         assert (light.content[fresh] == 1).all() and (light.amount[fresh] == 1).all()
-        assert entry.held == [0, 24 - 6 * tick] and simulation.ledger.held_spent[LIGHT] == 6 * tick, tick
-        assert simulation.ledger.transit_released[LIGHT] == 6 * tick and entry.momentum == [0, 0, 0], (
-            tick
-        )
+        assert entry.held == [0, 24 - 6 * releases], tick
+        assert simulation.ledger.held_spent[LIGHT] == 6 * releases, tick
+        assert simulation.ledger.transit_released[LIGHT] == 6 * releases, tick
+        assert entry.momentum == [0, 0, 0] and entry.acc_turn == (0, 18, 12)[tick - 1], tick
     assert simulation.detectors()[0]["families"]["light"] == {
         "measured": 0,
         "clicks": 0,
@@ -663,10 +668,18 @@ def test_a_click_returns_the_sets_phase_to_its_measured_events():
     # (re-run under the one click (stage (vii) step 4); the verdict to be re-read).
     fresh = light.age == 0
     assert int(fresh.sum()) == 6 and (light.phase[fresh] == 0).all()
+    # The turn is the count of the accumulator (the fraction-free law,
+    # 2026-09-20): the content 19 gives 0 at tick 2 (the phase stays 41,
+    # no birth) and 38 gives 1 at tick 3 (the phase 42, the rows born at u
+    # = 1; the whole part off the clock, `by_clock(1, 19, 24)` = 1, put
+    # them at tick 2 until then).
     simulation.step()
     assert simulation.books()["balanced"]
-    assert entry.phase == 42
-    assert (light.phase[light.age == 0] == 1).all()
+    assert entry.phase == 41 and entry.acc_turn == 19 and int((light.age == 0).sum()) == 0
+    simulation.step()
+    assert simulation.books()["balanced"]
+    assert entry.phase == 42 and entry.acc_turn == 14
+    assert int((light.age == 0).sum()) == 6 and (light.phase[light.age == 0] == 1).all()
     # The set of three Nodes: every measured event of the set takes the phase.
     quarter = [at_node(SET_NODES[0], phase=0), at_node(SET_NODES[2], phase=16, number=5)]
     simulation = NatureBeamSimulation(parse_nature_beam_world(set_world(quarter)))

@@ -42,7 +42,12 @@ the relative speed"), written down before the first run:
     floor off the clock); without the key 12800 in every case. The bar as
     the finding posed it, rows of amount 64, runs under the key (the pair
     of the first build refused it) and reads receding at 0.30 within a
-    row of the amount-1 line (396673 of 4096 per row: 96.84);
+    row of the amount-1 line (396672 of 4096 per row: 96.84; since the
+    fraction-free law of 2026-09-20 the count of the body's flow
+    accumulator, the whole part of the sum of the 200 fluxes exactly,
+    the remainder on the record below G Q at every tick and the push's
+    accumulators 0; 396673 off the clock until then, the fraction-free
+    tests (b) and (e));
 (c) the third law on two fixed bodies (series C item 2's mirror world of
     `test_columns.py` (b)) unchanged: equal and opposite pushes at every
     tick, the same integers as without the key;
@@ -111,6 +116,7 @@ import pytest
 
 from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
+from event_universe.events.measured import counts_table
 from event_universe.events.nature_beam import (
     flight_table,
     flux_pair,
@@ -297,11 +303,43 @@ def test_the_bar_of_the_finding(case):
 
 
 def test_the_bar_as_posed_with_rows_of_64_runs_under_the_key():
-    """(b), the register: rows of amount 64 on the body of content 2^20."""
-    simulation, records = run(bar(3 << 26, 7, 40, doppler=True, amount=64))
-    assert len(reads_of(records, 2)) == 200
-    assert push_sum(records, 2) == [396673, 0, 0]
-    assert abs(396673 / 4096 - 6204 / 64) < 1
+    """(b), the register: rows of amount 64 on the body of content 2^20;
+    since the fraction-free law (2026-09-20, BEAM_LAW note 41) the weighted
+    flow is the count of the body's flow accumulator, exact over the run
+    (396672; 396673 off the clock, the sum of 200 floors each with its
+    remainder discarded), the fraction-free tests (b) and (e): the sum of
+    the counts is the whole part of the sum of the fluxes, and the
+    accumulators of the flow and of the push stay below their denominators
+    at every tick."""
+    world = bar(3 << 26, 7, 40, doppler=True, amount=64)
+    records: list[dict[str, object]] = []
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
+    body = simulation.measured[2]
+    heading = simulation.world.directions.index((1, 0, 0))
+    exact = 0
+    denominators: set[int] = set()
+    for tick in range(1, 201):
+        simulation.step()
+        assert simulation.books()["balanced"], tick
+        # The flux of the interval off the speed the frame read, the flow
+        # the one read's amount at the label 64 (the beam's rows all on
+        # +x, one accumulator per direction and axis).
+        speeds = quantised_speed(body.frame_momentum, body.frame_content, 7)
+        numerator, denominator = flux_pair((1, 0, 0), T_HEADING, speeds)
+        denominators.add(denominator)
+        (read,) = [r for r in reads_of(records, 2) if r["tick"] == tick]
+        exact += 64 * int(str(read["amount"])) * numerator
+        assert 0 <= body.acc_flow[heading][0] < denominator, tick
+        assert body.acc_flow[heading][1:] == [0, 0] and all(
+            axes == [0, 0, 0] for d, axes in enumerate(body.acc_flow) if d != heading
+        ), tick
+        # The push's accumulators: gravity and charge have Lambda 1 and
+        # the probe column's rate V' x 2^40 / 2^40 is whole, so all stay 0.
+        assert all(axes == [0, 0, 0] for axes in body.acc_push), tick
+    assert len(reads_of(records, 2)) == 200 and denominators == {G * Q}
+    assert push_sum(records, 2) == [396672, 0, 0]
+    assert exact == G * Q * 396672 + body.acc_flow[heading][0] and exact // (G * Q) == 396672
+    assert abs(396672 / 4096 - 6204 / 64) < 1
 
 
 # -- (c) ---------------------------------------------------------------------------
@@ -367,19 +405,21 @@ def test_the_refusals_and_the_budget():
     entry = _entry()
     entry.frame_momentum = [3 << 26, 0, 0]
     entry.frame_content = CONTENT
-    assert weighted_flow(table, [2], [[64, 0, 0]], entry, 1, 0) == [18, 0, 0]  # type: ignore[arg-type]
+    empty = counts_table((1, 1), (0, 1), (0, 1), (True,), None, (), 3)
+    assert weighted_flow(table, [2], [[64, 0, 0]], entry, 1, empty) == [18, 0, 0]  # type: ignore[arg-type]
+    assert empty.grid("flow")[2] == [64 * 75776 - 18 * (G * Q), 0, 0]
     with pytest.raises(
         OverflowError, match=r"weighted flow of measured event 2 .* direction 2 under doppler"
     ):
-        weighted_flow(table, [2], [[1 << 50, 0, 0]], entry, 1, 0)  # type: ignore[arg-type]
+        weighted_flow(table, [2], [[1 << 50, 0, 0]], entry, 1, empty)  # type: ignore[arg-type]
     # The speed's register intermediate G x |p_a| is tested before it is
     # formed: a momentum of 2^50 + 1 on the y axis (above bound / G) is
     # refused naming the body, its Node and the axis; 2^50 - 1 is not.
     entry.frame_momentum = [0, (1 << 50) + 1, 0]
     with pytest.raises(OverflowError, match=r"speed of measured event 2 .* on axis 1 under doppler"):
-        weighted_flow(table, [2], [[64, 0, 0]], entry, 1, 0)  # type: ignore[arg-type]
+        weighted_flow(table, [2], [[64, 0, 0]], entry, 1, empty)  # type: ignore[arg-type]
     entry.frame_momentum = [0, (1 << 50) - 1, 0]
-    weighted_flow(table, [2], [[64, 0, 0]], entry, 1, 0)  # type: ignore[arg-type]
+    weighted_flow(table, [2], [[64, 0, 0]], entry, 1, empty)  # type: ignore[arg-type]
     headings = (
         (0, 0, 0),
         (0, 0, 0),
@@ -586,8 +626,15 @@ def test_the_fan_directions_together_and_the_fan_reader_at_rest():
     assert records == plain_records and push_sum(records, 1) == [3 * 91, 3 * 153, 3 * 34]
     assert under.measured[1].momentum == plain.measured[1].momentum == [273, 459, 102]
     assert G * max(under.measured[1].momentum) < step_divisor(0, CONTENT, 1)
+    # The fraction-free test (d): at rest the per-direction split equals
+    # the whole and the flow accumulators are untouched.
+    assert all(axes == [0, 0, 0] for axes in under.measured[1].acc_flow)
     # With rows of amount 64 the third read differs: the momentum after two
-    # reads, (11648, 19584, 4352), passes D / G on y (w_y = 1, the grain).
+    # reads, (11648, 19584, 4352), passes D / G on y (w_y = 1, the grain);
+    # its count is the whole part of each direction's flux from the empty
+    # accumulator (the two reads at rest left it 0), one below the whole
+    # part off the clock at the age 2 on y (9787; 9788 until the
+    # fraction-free law of 2026-09-20).
     under, records = run(fan(0, [DIAGONAL, SLANTED, OBLIQUE], True))
     plain, plain_records = run(fan(0, [DIAGONAL, SLANTED, OBLIQUE], False))
     pushes, plain_pushes = (
@@ -595,8 +642,18 @@ def test_the_fan_directions_together_and_the_fan_reader_at_rest():
         [r["push"] for r in reads_of(plain_records, 1)],
     )
     assert pushes[:2] == plain_pushes[:2] == [[5824, 9792, 2176]] * 2
-    assert pushes[2] == [5821, 9788, 2175] and plain_pushes[2] == [5824, 9792, 2176]
-    assert quantised_speed([11648, 19584, 4352], CONTENT, 1) == ((0, 1), (1, 1), (0, 1))
+    assert pushes[2] == [5821, 9787, 2175] and plain_pushes[2] == [5824, 9792, 2176]
+    speeds = quantised_speed([11648, 19584, 4352], CONTENT, 1)
+    assert speeds == ((0, 1), (1, 1), (0, 1))
+    third = [0, 0, 0]
+    for direction in (DIAGONAL, SLANTED, OBLIQUE):
+        index = FAN_INDEX[tuple(direction)]
+        numerator, denominator = flux_pair(tuple(direction), int(FAN_TABLE.resolution[index]), speeds)  # type: ignore[arg-type]
+        for axis, component in enumerate(unit_label(tuple(direction))):  # type: ignore[arg-type]
+            third[axis] += 64 * component * numerator // denominator
+            remainder = 64 * component * numerator % denominator
+            assert under.measured[1].acc_flow[index][axis] == remainder < denominator
+    assert third == pushes[2]
 
 
 # -- (g) ---------------------------------------------------------------------------

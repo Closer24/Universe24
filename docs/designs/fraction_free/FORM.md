@@ -1,5 +1,14 @@
 # The fraction-free law: every count an accumulator on the reader's record (read-only, the mathematician, 2026-09-20)
 
+> Section 1's claim that the constant-rate counts are bit-identical on the
+> register is corrected by records 147 and 148 of 2026-09-20 and
+> [BEAM_LAW note 41](../../BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation): on the register no paid
+> lamp and no crowd on a fan runs at a constant rate (a lamp pays at every
+> birth, a crowd changes at every interval), so every lamp world and every
+> crowd world moves under the accumulator, which is the law's count (the
+> physics-rule reviewer's [REVIEW_COUNTS.md](REVIEW_COUNTS.md)). The rest
+> of this design stands as written.
+
 On the Boss's question after the signed drive landed (PR #377, `by_drive`
 in `core/integer.py`: `drive += rate`, a count of +-1 when the drive
 reaches +-denominator, that much subtracted, the remainder kept; record
