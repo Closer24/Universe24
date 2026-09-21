@@ -577,3 +577,185 @@ enters any of the six operations, so none appears in the limit.
 | A fan direction | **different law**: the Manhattan flux `1 + v T_d / (Q S_1)` in place of the Euclidean `1 + v a T_d / (Q abs(D)^2)`; equal on the headings and the diagonals, off by `abs(D)^2 / (a S_1)` elsewhere; record 158's 2.44 and 1.22 are `156 / 64` (a bar of extent 1) and `156 / 128` (the plane) | the Node is a cube with six Ports |
 | The source's Doppler `1 / (1 -+ v / c)` | **reached** (the classical law; G2 `coasting_none`, z = v / c per star within the grain) | the lamp's clock at rate 1 |
 | The relativistic Doppler | **different law** at `v^2 / c^2`: two formulas, receiver's and source's, in place of nature's one | the lattice's frame |
+
+## 3. Newton and Coulomb from the bilinear coupling and the flow's moments
+
+**The operations.** The free release (T): a body of content M_B holding a
+free family releases `by_clock(age, M_B n, d)` units on EVERY declared
+direction at each self-creation (`nature_beam.py:3546-3566`: the count
+is per direction, so a fan of K directions releases `K M_B n / d` per
+interval, the flux q); the walk (T, section 1.2); the reading (B): the
+label flow `V = sum amount x u_d` of the rows arriving at the reader's
+Node, `abs(u_d) = Q` within 1.35 % on every direction; the coupling (B):
+per axis `push_A = M_A (rho_A rho_B - 1) V` (`push_form`,
+`nature_beam.py:2147-2221`; the gravity column `-M_A V`, the charge column
+`+rho_A rho_B M_A V`, every column a signed value per unit of content
+declared per family, BEAM_LAW note 31); the momentum (T) `p_A += push`;
+the step (D) one Link per `D / abs(p)` self-creations, `D = Q S M_A +
+abs(p)`. The register: series C (`examples/events/coupling/`, the
+plane 121 x 121 x 1, the source of content 2^24 on the six headings at
+`release` [1, 128], `q = 6 x 2^17 = 786432` per interval in four in-plane
+beams of `3 x 2^16`; EXPERIMENTS "C, the couplings under the Beam Law")
+and its item 7, series 7 (two free families with the charges [1, 2] and
+[2, 1] per unit of content).
+
+### 3.1 Gauss's law, exact
+
+The walk is a translation: a row released inside a closed surface crosses
+it once and never returns (no collision acts on a fan or on lone beams,
+BEAM_LAW section 4), so after the front has passed, the amount crossing
+any closed surface per interval equals the release inside it, exactly:
+
+    sum over the surface's Ports of the amount crossed = q.
+
+**Reached exactly.** Registered: series C item 5, the flux through the
+square of half-width h over q is `1.0000` at h = 4, 8, 12, 20, 40 and
+the escape through the faces `1.0000 q` (the tool sums the Links crossed,
+`per_port`, the walk's own diagnostic).
+
+### 3.2 The far field: a beam does not dilute, a shell does
+
+On a beam the flow per Node is `amount x u_d`, the same at every Node of
+the digital line: the field along a beam is `1 / r^0`, and off every beam
+it is 0 (item 5P, registered: the axial count `q / 4` per interval
+constant with r; item 3: a probe off both axes reads nothing). The
+inverse square is the density of beams over a shell. A shell at the
+distance r holds `N(r)` Nodes (on the plane the ring `abs(dist - r) <
+1/2`; in space the shell), and the K beams cross it at K of them, so the
+shell mean of the flow is `q Q / N(r)` per Node, and the mean over the
+shell of what a body reads is
+
+    <V>(r) = q Q / N(r) -> q Q / (2 pi r)  on the plane,  q Q / (4 pi r^2)  in space,
+
+as `N(r) -> 2 pi r` and `4 pi r^2`. The departure at finite r is the
+lattice's count of Nodes on a shell, Gauss's circle problem: `N(r) = 2 pi
+r + O(r^theta)` with `theta <= 131 / 208` (Huxley), so the shell mean's
+relative ripple vanishes as `r^(theta - 1)`. **Reached in the shell
+mean**, with the ripple named.
+
+**The registered check** (series C item 5, world 5, the nine radii; the
+tool's ring is `abs(dist - r) < 0.5`, `engine.py:1120-1143`): the
+register's `count x r / q` and `flow x 2 pi r / q` are `r / N(r)` and `2
+pi r / N(r)` to every printed digit, N(r) counted on the lattice
+(the arithmetic check of this section):
+
+| r | N(r) | `r / N(r)` | registered `count x r / q` | `2 pi r / N(r)` | registered `flow x 2 pi r / q` |
+| --- | --- | --- | --- | --- | --- |
+| 4 | 32 | 0.125 | 0.125 | 0.785 | 0.785 |
+| 6 | 40 | 0.150 | 0.150 | 0.942 | 0.942 |
+| 8 | 48 | 0.167 | 0.167 | 1.047 | 1.047 |
+| 12 | 68 | 0.176 | 0.176 | 1.109 | 1.109 |
+| 16 | 112 | 0.143 | 0.143 | 0.898 | 0.898 |
+| 20 | 112 | 0.179 | 0.179 | 1.122 | 1.122 |
+| 24 | 144 | 0.167 | 0.167 | 1.047 | 1.047 |
+| 30 | 200 | 0.150 | 0.150 | 0.942 | 0.942 |
+| 40 | 264 | 0.152 | 0.152 | 0.952 | 0.952 |
+
+The registered slope `-0.944` of the count against r over the nine radii
+is the log-log slope of `1 / N(r)` over them (`r / N(r)` fits `+0.056`);
+the design's `+-10 %` was missed at r = 12, 16, 20 because `N(16) = N(20)
+= 112`: the ring's Node count, not the law. In the limit `<count x r /
+q> -> 1 / (2 pi) = 0.159`, which the nine readings straddle (0.125 to
+0.179). The verdict of series C ("the far-field readings follow the
+GameBoard ring's Node count and not r") is this identity read off the
+register.
+
+**Per Node, not in the mean.** A single body at r reads a beam or nothing
+(item 6: "a Node reads one ray or none"), so the inverse square on ONE
+Node exists only in the limit of every direction, K -> infinity at fixed
+r, when every Node of the shell lies on about `K / N(r)` digital lines
+and reads their sum: `q Q / (4 pi r^2)` again (the Huygens fan of target
+7). With a fan declared as a cube of directions (every primitive vector
+with components in -P .. P) that limit is not isotropic: the density of
+directions per solid angle is the cube's, `3^(3/2) = 5.2` times larger
+toward a corner than toward a face centre in the limit (3.0 at P = 8 and
+3.5 at P = 16 within 11.5 degrees of the corner against the face, the
+arithmetic check), a cubic anisotropy of the DECLARATION, absent for a
+fan declared within a ball `abs(D) <= P`. The lattice's own anisotropy is
+`abs(u_d)` within 1.35 % of Q (the isqrt of `unit_label`), vanishing as
+Q grows.
+
+### 3.3 Newton's law and G's place
+
+A body A of content M_A at the mean flow `<V>` takes per interval `push =
+-M_A <V>` (label units) and its speed is `v = p / (Q S M_A + p)`; for `p
+<< Q S M_A` the acceleration is `a = push / (Q S M_A)` Links per
+interval^2, so
+
+    a = - G M_B / r^2,     G = K (n / d) / (4 pi S)     (space; on the plane a = -G' M_B / r, G' = K (n / d) / (2 pi S)),
+
+in Links^3 per unit of content per interval^2: G is the source's release
+rate per unit of content per direction `n / d`, times the number of
+directions K, over `4 pi` and the world's width S. Nothing of A enters: the
+equivalence principle is exact (item 1 registered: `push_m = m x push_1`
+record by record for m = 1, 4, 16, and the step rule divides by M_A). The
+third law at rest is exact to the apportioning's grain (item 2: the two
+sources' momenta `9612145197056` and `-9612088573952`, the ratio 1.0000).
+**Reached in the shell mean, G named**; per Node in the limit of every
+direction. Two departures from Newton's law as written, both stated: the
+field is retarded at c = Q / T_d (item 4: the front at r arrives at the
+tick `1 + m^-1(r)`: 8, 11, 14, 21, 28, 35, 42, 52, 69 at r = 4 .. 40),
+so the limit is the retarded inverse square and not action at a
+distance; and the speed the push builds saturates at `v = p / (Q S M +
+p) < 1` Link per interval, above the flight's `c = 0.58`: a body can
+outrun its own field's rows (the bar of section 2.2, 0.75 registered), a
+limit of the law (target 4).
+
+### 3.4 Coulomb's law and the one constant
+
+The charge column adds `+rho_A rho_B M_A V` per axis. With `q_A = rho_A
+M_A` and `q_B = rho_B M_B` the charges (rho the declared charge per unit of
+content), and `<V>` proportional to M_B as above, the electric push in the
+shell mean is
+
+    push_e = q_A q_B x K (n / d) Q / (4 pi r^2),    a_e = (q_A q_B / M_A) x G / r^2,
+
+Coulomb's inverse square with the SAME constant as gravity, `k_C = G` in
+the law's units (charge in units of content), repulsive for like signs
+(V points away from the source; `+V` pushes A outward, `-V` inward). The
+ratio of the two forces on one body is `-rho_A rho_B = -q_A q_B / (M_A
+M_B)` at every r. **Reached**, exactly in form. Registered: item 7's
+electric / gravity `-1` and `-1 / 4` exactly (the probes of charge [2, 1]
+on content 1 and [1, 2] on content 4 against the source's [1, 2] on
+2^24), and series 7's coefficients `M_A (rho_A rho_B - 1)` read integer
+by integer on the `read` records: 0 in `7_pp` and `7_mm` (like charges of
+`rho_A rho_B = 1`: the electric push cancels the gravity exactly),
+`-2^25` and `-2` in `7_mp` and `7_pm` (the source of 2^24 and the probe of
+1 at `rho_A rho_B = -1`), `-12582912 = -(3/4) 2^24` and `-3` in `7_pp_m4`
+(`rho_A rho_B = 1/4`), `-2^24` and `-1` in `7_00`. Nature's ratio for two
+protons, `e^2 / (4 pi eps_0 G m_p^2) = 1.24 x 10^36`, is `rho_p^2` here:
+`rho_p = 1.1 x 10^18` units of charge per unit of content (the electron
+`2.0 x 10^21`); the hierarchy is the declared rho, not a formula of the
+law (record 106: the masses and charges are the initialisation).
+
+### 3.5 What departs, and where
+
+1. The field along a beam does not fall: `1 / r^0` on a digital line, 0
+   off it; the inverse square is a shell mean, or the limit of every
+   direction (3.2).
+2. The shell's Node count `N(r)` against `2 pi r` and `4 pi r^2`: the
+   Gauss circle problem, `O(r^theta)`, the registered nine ring readings
+   exactly (3.2).
+3. A cube fan's `3^(3/2)` corner-to-face density: the declaration's, not
+   the law's (3.2).
+4. `abs(u_d)` within 1.35 % of Q: the isqrt at load, vanishing as Q grows.
+5. The field retarded at `c = Q / T_d`, and the body's speed capped at 1
+   above c (3.3).
+6. The clock's count reads the presence, which on a beam does not fall
+   with r (item 6: the clock on the axis owed the beam's presence at
+   every r); the potential's `1 / r` is the age moment's reading (BEAM_LAW
+   note 25, series E), target 5.
+7. The charge column's floor per interval where `rho_A rho_B` is not whole
+   (section 1.3 item 4): on gravity the divisor is 1 and Newton's push is
+   exact in integers at every interval; Coulomb's with a fractional rho
+   is exact in the sum over a period only under the accumulator (the
+   branch).
+
+### 3.6 The verdict of target 3
+
+| Formula | Verdict | The constant or the place |
+| --- | --- | --- |
+| Gauss's law | **reached** exactly (the walk a translation; the flux 1.0000 at every h) | none |
+| The inverse square | **reached** in the shell mean, `<V> = q Q / N(r)`, `N(r) -> 4 pi r^2`; per Node only in the limit of every direction; the nine ring readings of series C are `r / N(r)` and `2 pi r / N(r)` exactly | the Gauss circle problem's ripple `r^(theta - 1)`; a cube fan's `3^(3/2)` |
+| Newton's `a = -G M / r^2` | **reached** in the shell mean with the equivalence principle exact and the third law exact at rest; retarded at c; the speed capped at 1 | `G = K (n / d) / (4 pi S)` |
+| Coulomb's `F = k q_A q_B / r^2` | **reached** in form, `k_C = G`, the ratio `-rho_A rho_B` exact (item 7, series 7) | the hierarchy `rho_p^2 = 1.24 x 10^36` a declaration |
