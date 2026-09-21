@@ -2,7 +2,7 @@
 the relative speed" (the G2 physicist's RULES.md section 2 on
 `claude/series-g2-stars` at 5322dc4), read by the mathematician on
 2026-09-20 before any engine run. Standalone: `by_clock` restated, the
-flight table's pace taken from the engine's own `flight_table` (the one
+flight table's pace taken from the engine's own `direction_flight` (the one
 import), exact integers and fractions (a report of the host, never a
 physical fallback). Output beside this file: `relative_speed_map.out`.
 
@@ -28,7 +28,9 @@ import math
 from fractions import Fraction
 from pathlib import Path
 
-from event_universe.events.nature_beam import flight_table, unit_label
+import numpy as np
+
+from event_universe.events.nature_beam import direction_flight, unit_label
 
 Q = 64
 T_HEADING = math.isqrt(3 * Q * Q)  # 110
@@ -184,13 +186,13 @@ section("C. The gate set's deuteron (weak/j3_deuteron.json): the first read at o
 world = json.loads((ROOT / "examples/events/weak/j3_deuteron.json").read_text(encoding="utf-8"))
 vectors = tuple(tuple(v) for v in world["directions"])
 headings = ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
-table = flight_table(((0, 0, 0), (0, 0, 0)) + headings + vectors)
+table = direction_flight(((0, 0, 0), (0, 0, 0)) + headings + vectors)
 today = Fraction(0)
 proposal_sum = Fraction(0)
 count = 0
 for index in range(2, 2 + len(headings) + len(vectors)):
     vector = tuple(int(v) for v in table.vectors[index])
-    if tuple(int(v) for v in table.steps[index][0]) != (1, 0, 0):
+    if tuple(int(v) for v in table.walk_step(np.array([index]), np.array([0]))[0]) != (1, 0, 0):
         continue  # the first step is not +x: the row does not reach the neighbour on +x
     count += 1
     s1, t_d = int(table.manhattan[index]), int(table.resolution[index])

@@ -5,7 +5,7 @@ The one engine of Universe24 is the engine of the Beam Law (`beam-v1`;
 ray", the model owner, 2026-09-19). Its design and implementation contract is
 [the Beam Law](BEAM_LAW.md): the beam (the record of an event in transit;
 "ray" is its informal name) `NatureBeam`, the one
-function `nature_beam`, the flight table at 1 / sqrt 3, the eight-slot
+function `nature_beam`, the flight rule at 1 / sqrt 3, the eight-slot
 collision table and its inverse, the detector's squared record, the
 re-emission, the deletions and the expectations. This document is the
 bookkeeping around that law as implemented: the code, the GameBoard, the frame of
@@ -18,7 +18,7 @@ evening of 2026-09-19; the law of the shadow; the law of the bit) are in git
 The code: `src/event_universe/events/` (`world.py` the world file and its
 refusals, `measured.py` the measured event's record and the ledger,
 `nature_beam.py` the law (the record, the one reading `read_arrivals`, the
-flight table, the collision table, the store of records per family and the
+flight rule, the collision table, the store of records per family and the
 function `nature_beam`), `meeting.py` the meeting (since 2026-09-20: the arc
 permutation of the direction table, the reading of the free crowd by a paid
 unit in transit, the turn by its phase register and the inverse, under the
@@ -53,7 +53,7 @@ the one provider of adjacency: for a Port, add its signed unit heading on
 its axis; an in-range target is the ordinary neighbour; a coordinate that
 exits a periodic axis wraps to 0 after the positive face or to `extent - 1`
 after the negative face; `None` only for a transfer through an open outer
-face. It neither reads state nor advances time. The flight table decides
+face. It neither reads state nor advances time. The flight rule decides
 when a ray crosses a Link (at most one per interval; BEAM_LAW section 3) and
 `adjacent_node` says where the Link leads; the ray crosses it whole, its
 record unchanged, so with an extent of 1 a ray on a periodic axis lands on
@@ -144,14 +144,14 @@ whole), a phase (a step of the circle of N), a number (the
 last emitter), an amount (whole units) and a content per unit; its momentum
 is not stored, it is amount x content x u_d for a paid family and
 amount x u_d for a free one (its unit carries no content), u_d the unit
-vector of the direction at the flight table's scale Q = 64 (the integer
+vector of the direction at the flight's scale Q = 64 (the integer
 vector nearest Q D / |D|, exactly Q e_d on a heading; the model owner's
 decision of 2026-09-19, [BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
 and note 23), so every momentum of the record is in label units, Q per
 unit of amount along a heading. The Node holds nothing
 between intervals but the rays present at it and the measured event there.
 The law of one interval at one Node is `nature_beam` ([BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam)):
-the walk by the flight table, the one reading, the collision by the table
+the walk by the flight rule, the one reading, the collision by the table
 (at the Nodes of free space: none at a Node that holds a measured event),
 the measured event's table (`read`, `measure`, `rerelease`, `pass` and,
 since 2026-09-20, `become`, the transformation, each
@@ -194,8 +194,9 @@ same integers as `by_clock(age, content x n, d)` at a constant content
 from age 0; the counts are one table on the record, `Measured.counts`,
 whose one loop `CountTable.advance` runs every row through `by_drive` and
 hands the whole part to the count's consumer, the turn here, the owed
-count at `_suspend`, the release and the lamp at step 5, the drive at
-`_move`, the push and the doppler weight at the reading), its
+count at `_suspend`, the release and the lamp at step 5, the drive and
+the turn by momentum at `_move`, the push and the doppler weight at the
+reading), its
 release rate, its lamp's rate and window, its owed count) and its content
 (`frame_content`, read once before the law: M_A of the interval's push,
 the same whatever the order in which the families' clicks join `held`
@@ -261,16 +262,25 @@ The turn by momentum (the world key `action`, h, and the measured-event
 key `phase_by_momentum`; [BEAM_LAW note 30 (ii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 the model owner's decision of 2026-09-20 on Bohr, "put it as parameters
 outside the GameBoard like the age") is applied in `_move` at the Link a
-body steps: its phase turns by `by_clock(k0, |p| x N, h)` with k0 the
-count of the step rule's fires on that axis before this one (the
-record's `axis_steps`, a lost or refused step counted, since the step
-drive; at a constant momentum the count the step rule gave at its age
-before the self-creation), the
-difference of two floors of k x |p| x N / h, no
-register anywhere; the axes compose; the product is bounded before it is
-formed; without `action` nothing turns. A rule of the measured event, the
-external thing, read from its own record; the rays' flight and collision
-are untouched.
+body steps: since the model owner's record 155 of 2026-09-20 (no tables;
+[BEAM_LAW note 41 (i) and (viii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+it is the `action` row of the body's table of counts, one row per axis:
+at every Link the step rule counts on an axis whose momentum component is
+p (a Link crossed, a Link lost to an earlier axis's step in the same
+self-creation, a Link refused at a contact) the row gains |p| x N (N the
+phase circle's steps) over h (the world's `action`), and the whole part
+the row then holds turns the phase at the Link crossed; at a Link not
+crossed that whole part is discarded and the residue kept (note 41
+(viii), the owner's item 9, pinned by `tests/test_step_drive.py` (e)); at
+a constant momentum the same integers as the retired `by_clock(k0, |p| x
+N, h)`, the difference of two floors at k0 the count of the rule's fires
+on the axis, and the exact sum of the momentum's history where it
+changes; the axes compose; the product |p| x N is bounded before it is
+formed; without `action` there are no rows and nothing turns. `run.json`
+and `state.json` carry the three accumulators as `acc.action` beside
+`drive` and `axis_steps`. A rule of the measured event, the external
+thing, read from its own record; the rays' flight and collision are
+untouched.
 `inverse_step` runs the
 inverse collision and the inverse walk on a GameBoard without a measured event
 (the bijection of [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam);
@@ -325,7 +335,7 @@ the pushes taken, the labels of what clicked or came home and the recoils,
 the transit line the sum over the store of the one label of every row
 (`nature_beam.momentum_labels`: amount x content x u_d for a paid family,
 amount x u_d for a free family, whose unit carries no content; u_d the
-unit vector of the direction at the scale Q, the flight table's
+unit vector of the direction at the scale Q, the flight's
 `labels`), the escaped line the faces' sums, every line in label units, and, since
 2026-09-20, the `turned` line (`Ledger.turned_momentum`, per family under
 `families[<name>].turned` and the world's total under `momentum.turned`):
@@ -335,19 +345,30 @@ momentum line by, `weight x (u_d' - u_d)` summed over the turns
 the meeting under the world key `meeting`; zero without it), and, since
 stage (vii) step 3 of the amplitude law (the K finding of 2026-09-20),
 the `remainder` line in a recorded world (`Ledger.remainder_momentum`,
-per family and under `momentum.remainder`): a record's row pushes matter
+per family and under `momentum.remainder`): a record's row pushes a body
 with its share amount^2 / m of the quantum's unit label (the record's
-norm in m, a record's shares summing to one), the integer form label x
-amount // m floored toward zero (`nature_beam.share_of`), at its
-absorption (the click's push, the entry's momentum; the `share` beside
-the `push` on the click line), at a home, at the push of a `read` and
-at the recoil of a paid re-creation (the born rows' shares, a lamp's
-birth and a split alike), while the transit line carries the rows' whole
-labels; the remainder line takes the labels less the shares at an
-absorption or a home and gives the born labels less the recoil at a
-re-creation, so that measured + transit + escaped + cancelled +
-remainder moves only by the pushes, the turns and the escapes; a row of
-no record pushes by its label as it did. For a paid family the three
+norm in m, a record's shares summing to one), since the model owner's
+record 155 of 2026-09-20 ([BEAM_LAW note 41 (viii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+the whole part of the row's own accumulator plus label x amount in units
+of m, toward zero, with the remainder kept on the row
+(`nature_beam.share_of`; the store's `share_x`, `share_y`, `share_z`,
+written as `share` on the row's line of `state.json`), so that a row
+read at every interval of a passage pushes the exact sum over the
+passage and the push of a `read` moves the remainder line by nothing;
+the residue leaves with the row when it is absorbed (the click's push,
+the entry's momentum; the `share` beside the `push` on the click line)
+or comes home, to the remainder line with the rest of the label, and the
+line gives the born labels less the recoil at the recoil of a paid
+re-creation (the born rows' shares, a lamp's birth and a split alike),
+while the transit line carries the rows' whole labels; so measured +
+transit + escaped + cancelled + remainder moves only by the pushes, the
+turns and the escapes, and the remainder line reads what left with
+absorbed rows and homes, nothing of a row that lives; a row of no record
+pushes by its label as it did. A body on a set of Nodes places its
+releases over its Nodes by their claims, the `place` rows of its table of
+counts (`nature_beam.place_over_nodes`, every Node within one unit of its
+equal share of all the body has released; `acc.place` in `run.json` and
+`state.json`). For a paid family the three
 lines close over the click, the re-emission and the home (measured +
 transit + escaped constant; a `read` of a paid ray is a report of its
 label, the ray going on), and under the meeting the transit line moves
@@ -507,7 +528,7 @@ one floor at the click when d = 1 and within one step per segment
 otherwise; the default stays the integer 0, not the lamp's own turn: a
 family that turns in transit declares it); the integer form turns per
 Link crossed as it did, and on the
-flight table the two are not the same number: a heading crosses 32 Links
+flight rule the two are not the same number: a heading crosses 32 Links
 in 55 intervals; refused on a family without a phase
 circle; the record carries the key as declared)); `measured`
 (`position`, `family`, `amount`, `phase`, `momentum`, `fixed`, `span`
@@ -857,7 +878,7 @@ In a recorded world the record gains the lines of the layer
 (`events/amplitude.py`, the design's sections 3 and 5): `birth` (a lamp's
 record: `record`, `u`, `labels`, `arms`, `units`, `multiplicity`), the
 `click`, `read` and `rerelease` lines carry the rows' `record`, `branch`,
-`multiplicity`, `u`, `share` (the row's push on matter) and `age` where
+`multiplicity`, `u`, `share` (the row's push on a body) and `age` where
 the row is a record's (`rows` on a group
 line, the rows of a record among the group's, absent where none is;
 `window` and `turn` at a rotated `sum` set), `split` (per re-created row: `absorbed`, `born`,

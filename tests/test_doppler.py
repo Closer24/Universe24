@@ -112,13 +112,14 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.measured import counts_table
 from event_universe.events.nature_beam import (
-    flight_table,
+    direction_flight,
     flux_pair,
     quantised_speed,
     unit_label,
@@ -401,7 +402,7 @@ def test_the_refusals_and_the_budget():
     for value in (1, "true", None, [True]):
         with pytest.raises(ValueError, match="doppler must be true or false"):
             parse_nature_beam_world({**base, "doppler": value})
-    table = flight_table(((0, 0, 0), (0, 0, 0), (1, 0, 0)))
+    table = direction_flight(((0, 0, 0), (0, 0, 0), (1, 0, 0)))
     entry = _entry()
     entry.frame_momentum = [3 << 26, 0, 0]
     entry.frame_content = CONTENT
@@ -474,7 +475,7 @@ def test_the_grain_the_pair_and_the_record(tmp_path: Path):
     assert flux_pair((1, 3, 2), 414, star) == (3180254, 3670016)
     assert abs(311348 / 524288 - 0.5938) < 1e-4 and abs(1018519 / 1310720 - 0.7770) < 1e-4
     assert abs(3180254 / 3670016 - 0.8665) < 1e-4
-    table = flight_table(((0, 0, 0), (0, 0, 0), (1, 0, 0), (1, 1, 0), (1, 2, 0), (1, 3, 2)))
+    table = direction_flight(((0, 0, 0), (0, 0, 0), (1, 0, 0), (1, 1, 0), (1, 2, 0), (1, 3, 2)))
     assert table.resolution.tolist() == [1, 1, 110, 156, 247, 414]
     # The record.
     world = bar(1 << 25, 1, 4, doppler=True, length=8, ticks=1)
@@ -497,7 +498,7 @@ def test_the_grain_the_pair_and_the_record(tmp_path: Path):
 # -- (f) ---------------------------------------------------------------------------
 
 READER = (4, 6, 4)
-FAN_TABLE = flight_table(
+FAN_FLIGHT = direction_flight(
     (
         (0, 0, 0),
         (0, 0, 0),
@@ -527,9 +528,11 @@ def placed(direction: list[int], tick: int, amount: int = 64) -> dict[str, objec
     less the steps of the flight table from an age whose step at tick - 1
     is a move."""
     index = FAN_INDEX[tuple(direction)]
-    period = int(FAN_TABLE.period[index])
+    period = int(FAN_FLIGHT.period[index])
     for age in range(period):
-        steps = [FAN_TABLE.steps[index][(age + k) % period].tolist() for k in range(tick)]
+        steps = [
+            FAN_FLIGHT.walk_step(np.array([index]), np.array([age + k]))[0].tolist() for k in range(tick)
+        ]
         if any(steps[-1]):
             position = [READER[a] - sum(int(s[a]) for s in steps) for a in range(3)]
             return {
@@ -609,7 +612,7 @@ def test_the_fan_directions_together_and_the_fan_reader_at_rest():
     expected = [0, 0, 0]
     for direction in (DIAGONAL, SLANTED, OBLIQUE):
         index = FAN_INDEX[tuple(direction)]
-        numerator, denominator = flux_pair(tuple(direction), int(FAN_TABLE.resolution[index]), speeds)  # type: ignore[arg-type]
+        numerator, denominator = flux_pair(tuple(direction), int(FAN_FLIGHT.resolution[index]), speeds)  # type: ignore[arg-type]
         for axis, component in enumerate(unit_label(tuple(direction))):  # type: ignore[arg-type]
             expected[axis] += sum(
                 by_clock(age, 64 * component * numerator, denominator) for age in range(3)
@@ -648,7 +651,7 @@ def test_the_fan_directions_together_and_the_fan_reader_at_rest():
     third = [0, 0, 0]
     for direction in (DIAGONAL, SLANTED, OBLIQUE):
         index = FAN_INDEX[tuple(direction)]
-        numerator, denominator = flux_pair(tuple(direction), int(FAN_TABLE.resolution[index]), speeds)  # type: ignore[arg-type]
+        numerator, denominator = flux_pair(tuple(direction), int(FAN_FLIGHT.resolution[index]), speeds)  # type: ignore[arg-type]
         for axis, component in enumerate(unit_label(tuple(direction))):  # type: ignore[arg-type]
             third[axis] += 64 * component * numerator // denominator
             remainder = 64 * component * numerator % denominator

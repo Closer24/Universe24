@@ -16,7 +16,11 @@ keys, a free family read and a paid one measured; a world declares only
 the entries that differ, `tools/migrate_nature_beam_worlds.py` having rewritten
 these) and, where wanted, the detectors. The engine recognizes nothing by
 physical name; a run is headless and its readings are made from the record
-(`run.json`, `events.jsonl`, `state.json`). The GameBoard is open on every face
+(`run.json`, `events.jsonl`, `state.json`). A pin of the register is a
+detector reading (a click, a record line); a reading of the GameBoard
+itself (`shell_readings`, the cube flux, the probes' counts, a replay) is a
+host reading, labelled GAMEBOARD by every tool that prints one (the model
+owner's record 163 of 2026-09-20). The GameBoard is open on every face
 unless the world declares an axis periodic (`"boundary": {"z": "periodic"}`).
 A beam (the record of an event in transit; "ray" is its informal name) flies
 at 1 / sqrt 3 on the digital line of its direction (the flight

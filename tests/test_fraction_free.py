@@ -85,7 +85,32 @@ fraction-free counts"), written down first:
     loads with Lambda_c = 2^30 - 1; `m` at [1, 3] and `w` at [1,
     715827883] (3 x 715827883 = 2^31 + 1, the smallest two values can
     form above the ceiling) are refused with Lambda_c = 2147483649 (its
-    square above the bound by 2^32 + 1).
+    square above the bound by 2^32 + 1);
+(h) no remainder discarded at run time (the model owner's record 155 of
+    2026-09-20; note 41 (viii)): a record row's push on a body keeps its
+    remainder on the row (`share_of` with the row's accumulator, the
+    columns `share_x/y/z`): on random labels, amounts and multiplicities
+    the shares of a row pushed k times sum to the whole part of k x label
+    x amount over m exactly and the accumulator stays below m in
+    magnitude, where the floor per push alone falls short by up to k - 1
+    units; on a bar of a lamp of records (K 2^20, content 2^20, one row
+    per birth on +x, +y and +z, the two last leaving through the open
+    faces at once) and four fixed readers of a paid family at
+    x = 4 .. 7 reading `light` with the rule `read` over 30 intervals
+    (three rows per record, m = 3, the +x row's label 64 leaving the
+    remainder 1 per read), every row at a reader carries its accumulator
+    below m, the readers' pushes are the sum of the read lines' pushes,
+    and that sum is strictly between 21 and 22 units per unit read (the
+    carried remainders delivered as the 22nd unit every third read; the
+    floor alone gives 21); the run's state writes `share` on a row that
+    holds one;
+(i) a set's release over its Nodes (`place_over_nodes`): on random
+    amounts over 2 to 7 Nodes, every placement sums to the amount, the
+    claims sum to zero and stay within the number of Nodes, and after every
+    row every Node is within one unit of its equal share of everything
+    placed so far; the rows of `test_nature_beam_body` (c) re-pinned (6, 5,
+    5 and 5, 6, 5 for 8, 4, 4 and 4, 8, 4; the lamp on a set at x = 1 for
+    x = 2).
 """
 
 from __future__ import annotations
@@ -105,7 +130,8 @@ from event_universe.core.integer import by_clock, by_drive
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.amplitude import cell_of, choose, rungs
 from event_universe.events.engine import count_owed, step_axis
-from event_universe.events.nature_beam import NO_ARRIVAL
+from event_universe.events.measured import CountTable, counts_table
+from event_universe.events.nature_beam import NO_ARRIVAL, place_over_nodes, share_of
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import LABEL_SCALE, MOMENTUM_BOUND, body_nodes
 from event_universe.snapshot_writer import write_snapshot
@@ -531,3 +557,102 @@ def test_a_column_whose_lifted_denominator_leaves_the_register_is_refused_at_loa
     assert f"the column 's': Lambda_c = {above}," in message
     assert f"beyond the integer bound {MOMENTUM_BOUND}" in message
     assert f"at most {(1 << 31) - 1}" in message
+
+
+# -- (h), (i) ----------------------------------------------------------------------
+
+
+def test_a_record_rows_push_keeps_its_remainder_on_the_row():
+    """(h)."""
+    draw = random.Random(155)
+    for _ in range(2000):
+        label = draw.choice((-1, 1)) * draw.randrange(0, 1 << 30)
+        amount, m, pushes = draw.randrange(1, 64), draw.randrange(1, 500), draw.randrange(1, 12)
+        accumulator, delivered, floors = 0, 0, 0
+        for _ in range(pushes):
+            share, accumulator = share_of(label, amount, m, accumulator)
+            delivered += share
+            floors += share_of(label, amount, m)[0]
+            assert abs(accumulator) < m
+        total = pushes * label * amount
+        exact = -(abs(total) // m) if total < 0 else abs(total) // m
+        assert delivered == exact and 0 <= abs(exact) - abs(floors) <= pushes - 1
+    world = {
+        "law": "beam",
+        "model_id": "share-accumulator-test",
+        "shape": [12, 2, 2],
+        "boundary": "open",
+        "ticks": 30,
+        "K": 1 << 20,
+        "N": 64,
+        "release": [0, 1],
+        "suspension": 0,
+        "families": [
+            {"name": "light", "quantum": 1, "charge": 0},
+            {"name": "reader", "quantum": 1, "charge": 0},
+        ],
+        "measured": [
+            {
+                "position": [0, 0, 0],
+                "family": "light",
+                "amount": 1 << 20,
+                "fixed": True,
+                "lamp": {"rate": [1, 1], "directions": [[1, 0, 0], [0, 1, 0], [0, 0, 1]]},
+            },
+            *(
+                {
+                    "position": [x, 0, 0],
+                    "family": "reader",
+                    "amount": 3,
+                    "fixed": True,
+                    "table": {"light": "read"},
+                }
+                for x in (4, 5, 6, 7)
+            ),
+        ],
+    }
+    lines: list[dict[str, object]] = []
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world), observer=lines.append)
+    store = simulation.stores[0]
+    readers = [store.flat((x, 0, 0)) for x in (4, 5, 6, 7)]
+    for tick in range(1, 31):
+        simulation.step()
+        assert simulation.books()["balanced"], tick
+        # A row read keeps the part of its push not yet delivered, below m.
+        at_readers = np.isin(store.node, readers) & (store.record != 0)
+        for i in np.flatnonzero(at_readers).tolist():
+            assert abs(int(store.share_x[i])) < int(store.multiplicity[i])
+    reads = [line for line in lines if line["event"] == "read"]
+    units = sum(int(str(line["amount"])) for line in reads)
+    pushed = sum(int(line["push"][0]) for line in reads)  # type: ignore[index]
+    assert reads and pushed == sum(simulation.measured[n].pushed[0] for n in (2, 3, 4, 5))
+    # The +x row's label is 64 over m = 3: 21 per read with the remainder
+    # 1 carried on the row from reader to reader, delivered as the 22nd
+    # unit every third read (the floor alone would give 21 x units).
+    assert 21 * units < pushed < 22 * units
+    written = state_of(simulation)["nodes"]
+    assert isinstance(written, list)
+    rows_with_share = [
+        ray for node in written for group in node["families"] for ray in group["rays"] if "share" in ray
+    ]
+    assert rows_with_share and all(len(ray["share"]) == 3 for ray in rows_with_share)
+
+
+def test_a_sets_release_is_placed_by_the_nodes_claims():
+    """(i)."""
+    draw = random.Random(155)
+    for _ in range(300):
+        ways = draw.randrange(2, 8)
+        counts = counts_table((1, 1), (0, 1), (0, 1), (True,), None, (1,), 0, None, 1, ways)
+        assert isinstance(counts, CountTable)
+        placed = [0] * ways
+        total = 0
+        for _ in range(40):
+            amount = draw.randrange(0, 50)
+            shares = place_over_nodes(counts, amount, ways)
+            assert sum(shares) == amount and all(share >= 0 for share in shares)
+            total += amount
+            placed = [a + b for a, b in zip(placed, shares, strict=True)]
+            claims = counts.values("place")
+            assert sum(claims) == 0 and all(abs(claim) < ways for claim in claims)
+            assert all(abs(ways * got - total) < ways for got in placed)

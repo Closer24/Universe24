@@ -72,3 +72,20 @@ the contact are in implementation), and everything the weak force does
 white dwarf, a comet and dark matter are placeable with these worlds' keys
 and other numbers, and no world of the catalog places them; a galaxy's
 throw is placed by series G (`examples/events/hubble/`).
+
+## Re-read under the Nodes' claims (2026-09-20)
+
+By the model owner's record 155 ("no remainder discarded") a body on a
+set of Nodes places every released row over its Nodes by the Nodes'
+claims (`place_over_nodes`, the `place` rows of its table of counts;
+[BEAM_LAW note 41](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(viii)) in place of the leftover unit to the Node `age mod w`: the sun of
+`sun_planet` (two bodies on sets of three Nodes) moves, the planet
+standing at (22, 25, 0) after 50 intervals with 11 steps ((23, 25, 0)
+with 10), the screen's 152 light clicks (147), the faces' `mass` 19, 19,
+7, 7 (19, 19, 0, 21) and `light` 6, 0, 28, 5 (6, 0, 22, 6), the escaped
+light 39 units of content 304 (34 of 263), the books balanced at every
+tick; `clock_near_mass` is unchanged in its events and books (its bodies
+release nothing; the claims 0 in its `state.json`); `lamp_mirror_screen`
+and `neutron_star` are identical. The old integers are history
+([migration](../../../docs/MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded)).
