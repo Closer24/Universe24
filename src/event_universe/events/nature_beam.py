@@ -1143,24 +1143,28 @@ def _walk_rows(
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """The walk's per-row arithmetic (step 1 of BEAM_LAW section 3): the
     Link each row crosses at its age by the family's flight (`walk_step`),
-    whether it moved, its coordinates after the step (the wrap on a periodic
-    axis) and whether it left through an open face. Row by row the same
-    integers as the block in `_walk` was; a large store is cut into chunks
-    of rows computed on the host's threads and joined (`massive-rows-fast`,
+    whether it moved, the flat index of its Node after the step (the wrap
+    on a periodic axis; a row that left keeps the index its unwrapped
+    coordinates give, and leaves) and whether it left through an open
+    face. Row by row the same integers as the block in `_walk` was: the
+    flat index is the coordinates' sum over the axes at the store's
+    strides, formed axis by axis; a large store is cut into chunks of
+    rows computed on the host's threads and joined (`massive-rows-fast`,
     2026-09-21)."""
 
     def rows(lo: int, hi: int) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         step = table.walk_step(store.direction[lo:hi], store.age[lo:hi])
-        moved = step.any(axis=1)
-        x, y, z = store.coordinates(store.node[lo:hi])
-        coordinates = np.stack([x, y, z], axis=1) + step
+        moved = (step[:, 0] != 0) | (step[:, 1] != 0) | (step[:, 2] != 0)
         escaped = np.zeros(hi - lo, dtype=bool)
-        for axis in range(3):
+        node = np.zeros(hi - lo, dtype=np.int64)
+        for axis, coordinate in enumerate(store.coordinates(store.node[lo:hi])):
+            after = coordinate + step[:, axis]
             if periodic[axis]:
-                coordinates[:, axis] %= extents[axis]
+                after %= extents[axis]
             else:
-                escaped |= (coordinates[:, axis] < 0) | (coordinates[:, axis] >= extents[axis])
-        return step, moved, coordinates, escaped
+                escaped |= (after < 0) | (after >= extents[axis])
+            node += after * store.strides[axis]
+        return step, moved, node, escaped
 
     size = store.size
     if size < _GATHER_ROWS or _GATHER_THREADS < 2:
@@ -1171,9 +1175,9 @@ def _walk_rows(
     )
     step = np.concatenate([chunk[0] for chunk in chunks])
     moved = np.concatenate([chunk[1] for chunk in chunks])
-    coordinates = np.concatenate([chunk[2] for chunk in chunks])
+    node = np.concatenate([chunk[2] for chunk in chunks])
     escaped = np.concatenate([chunk[3] for chunk in chunks])
-    return step, moved, coordinates, escaped
+    return step, moved, node, escaped
 
 
 def _pool() -> ThreadPoolExecutor:
@@ -3190,13 +3194,14 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
         # The flight's rule at the row's age: the position's accumulator
         # per direction, off the age (the rate constant over the flight),
         # by the family's triple.
-        step, moved, coordinates, escaped = _walk_rows(table, store, world.periodic, extents)
+        step, moved, node_after, escaped = _walk_rows(table, store, world.periodic, extents)
+        left = bool(escaped.any())
         # The Port of the Link crossed (a diagnostic of the walk, and the
         # face a ray leaves through) and the direction the ray arrived on.
         port = np.full(store.size, -1, dtype=np.int64)
         port[moved] = heading_port(step[moved])
         arrival = np.where(moved, store.direction, NO_ARRIVAL)
-        if escaped.any():
+        if left:
             gone = np.flatnonzero(escaped)
             x, y, z = store.coordinates(store.node)
             labels = store.labels(gone, unit, definition.free)
@@ -3309,7 +3314,7 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
                     if handed:
                         face_line["hand"] = int(store.hand[index])
                     record(face_line)
-        store.node = coordinates @ np.array(store.strides, dtype=np.int64)
+        store.node = node_after
         crossed = moved & ~escaped
         crossed_node, crossed_port = store.node[crossed], port[crossed]
         crossed_amount = store.amount[crossed]
@@ -3340,9 +3345,13 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
         store.age = np.where(resting, store.age, store.age + 1)
         store.phase = (store.phase + turned) % modulus
         store.arrival = arrival
-        if escaped.any():
-            store.keep(~escaped)
-        store.sort()
+        # The rows that left drop and the rest sort by Node, stably, in
+        # one gather: the stable order of every row with the rows that
+        # left taken out of it, the order the drop and then the sort gave.
+        order = np.argsort(store.node, kind="stable")
+        if left:
+            order = order[~escaped[order]]
+        store.take(order)
         arrivals.append(
             ArrivalRows(
                 store.node, store.arrival, store.amount, crossed_node, crossed_port, crossed_amount
