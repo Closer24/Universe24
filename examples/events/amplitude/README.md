@@ -99,6 +99,52 @@ set: a face is one cell of the sum of its Nodes' squares), the ladder's
 clicks over the 64 births, the shares, the pixels and the correlations
 (the register's L2 entry has the numbers and the run).
 
+**The fan by angle** `slits_huygens` (L2b; the mathematician's
+[TWO_SLITS.md section 7](../../../docs/designs/fraction_free/TWO_SLITS.md),
+run on the Boss's order of 2026-09-20 under the owner's standing
+authorization, as the evidence for the decision on P as a width of the
+law): `slits_low`'s geometry, lamp and frequency, each opening's
+re-emission the Farey fan of width 48 (every primitive direction (a, b, 0)
+with a >= 1 and a + |b| <= 48, 1423 in angle order, consecutive
+directions Farey neighbours) restricted to |b| <= 13 a by the freed band
+(1327 directions; the 96 steeper ones would walk into the wall or through
+the other opening, 3.5 percent of the angle), each direction's split
+weight the angle it covers (half the gap to each neighbour, the gap
+3 Q^2 / (T_D T_D') at the grain 2^18: the weights 123 to 5619, A = sum
+of squares 714 364 777, the multiplicity 5 A within 2^32; the load-time
+ceiling multiplies both openings' A, so A stays within 2^31), 420
+intervals (at least 256 births completed). **Pinned before the run, from
+`docs/designs/fraction_free/two_slits_map.py`'s walk with these integer
+weights (the built phase, the click as built):** the first record's total
+2.677 of the birth norm (the rows of one opening meet at a pixel nearly
+in phase), the shares wall 0.224, screen 0.410, faces 0.366; the screen
+WEIGHTS with Young's fringes, Pearson 0.895 with the Euclidean two-source
+cosine (the pace 64/110, the wavelength 4.654 Links), visibility 0.954
+between the cosine's bright pixels (y = 35 to 38, 59 to 61, 82 to 85) and
+its dark ones (13 to 20, 48 to 50, 70 to 72, 100 to 107), the peak at y =
+59 to 61 at 0.012 of the total against the rung 1 / 2N = 0.0078; the
+CLICKS over the 64 births of u = 0 .. 63: wall 14 (4, 5, 5), screen 27 on
+27 pixels one each (y = 2, 25, 31, 33, 35, 37, 39, 41, 43, 47, 56, 57, 59,
+60, 61, 63, 64, 74, 77, 79, 81, 83, 85, 87, 89, 97, 119: the cumulative
+rungs fall where the weights are, 7 of the 11 bright pixels hit and none
+of the 22 dark, the histogram's Pearson 0.499 with the cosine), faces 23
+(11, 12); 32 distinct cells over the 64 births and the same cells for
+every later birth (u repeats with the period 64). Refutation: a Pearson of
+the weights below 0.85 or a visibility below 0.9, a click at a dark
+pixel, or a click cell outside the 64-birth list after tick 64.
+
+**Run (2026-09-20, `slits_huygens`, 420 intervals, 76.3 s, main f89884f9,
+completed and conserved; 271 records gathered, 149 open at the end;
+DETECTOR).** Every pinned number reproduced: the first record's total
+2.6771, the shares 0.224 / 0.410 / 0.366, the weights' Pearson 0.895 and
+visibility 0.954 with the peak at y = 59 (0.01204 of the total); the
+first 64 births' clicks wall 14, screen 27 on the pinned 27 pixels, faces
+23; no click at a dark pixel in 271; 32 distinct cells in the first 64
+births and 32 in all 271 (every u clicked its one cell at every birth);
+the histogram's Pearson 0.493 at 271. The fringes are in the record's
+weights and not in the clicks: TWO_SLITS.md section 7, the page
+<https://claude.ai/artifact/6pyy8C62muHshZ7iMDCUx9>.
+
 ## L3: the pair, the which-path world and no maintenance
 
 The registered A2 world `examples/events/bell/read.json` (a bar of 21, the
