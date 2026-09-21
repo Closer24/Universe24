@@ -4315,6 +4315,36 @@ the computation per Node, the width and G are constants of the law, the
 pace in the original Nodes is what the expansion changes, and the three
 numbers above are the two inputs' (h and S), not the structure's.
 
+**(g) Whether any rule selects a bound set's counts** (the owner, record
+271, translated: "there is only one quantum of mass because a click
+cannot measure mass; the other masses need to be derived from it, but
+we do not know how to derive mass at a click"). The owner's reading is
+the law's: a click measures `E = h f`, the content of a paid unit, never
+a mass; a mass is read by the push (the dictionary, Highlights 5.7),
+and the one quantum of mass is the unit of 16.2's theorem. Whether the
+other masses derive from it is the question whether any rule of the
+six selects the count of held rows of a bound set, so that some counts
+are stable under the dynamics and the rest are rejected. Read against
+every rule that touches a bound set: binding-v1's read mass is the
+exact sum of the held parts (the quarks design: 20 units against
+1836, record 115); the strong column's push is linear in the contents
+(`M_A (rho_A rho_B - 1) V`, homogeneous); the contact rule hands over
+momentum, not content; the lifetime L ends a row and the escape click
+releases its content whatever the set's count; the give is `held // h`
+with the remainder kept, so a body whose held content falls below h
+gives nothing, a FLOOR of h per bound body and not a count; the steady
+state `F = H (n / d) tau` holds for every H. **No rule of the six reads
+a content back into its own survival**: every map of the law on the
+amounts is linear or homogeneous (PREDICTIONS 26), so every count is
+stable and none is selected, and the only selections the law makes are
+floors (the unit, a charged family's d, the give's h). A selection
+would need a nonlinear closure on the amounts (the masses design's
+section 6: a window set by the reader's own phase, which gives a
+harmonic ladder nature does not show), stated under its own identity,
+outside the law. So the paper states the masses as inputs with this
+reason: the law fixes the quantum and the floors, and a linear law
+cannot fix a count.
+
 ### 16.3 The law's structural numbers: what a derivation may use
 
 The only things a derivation may use, each a count of the law's form
@@ -4727,6 +4757,70 @@ everywhere). **Named**, as one hypothesis, `decay-by-crowd-v1`: the
 at the rate, and the absorption of a row at a reader as the click of its
 u against the reader's rung; passes the three tests; not built.
 
+**Addendum: the background crowd named, and the beam-and-bottle pin**
+(the owner, record 271, translated: "what do you mean that a
+background crowd is needed? maybe that solves everything; what is this
+background crowd you need?"; the host script
+[crowd_decay.py](designs/derivations_beam/crowd_decay.py) with its
+output [crowd_decay.out](designs/derivations_beam/crowd_decay.out)).
+
+*What the crowd is.* Nothing new: the field rows every body already
+emits under the coupling, the free family's rows of sections 3 and 5
+whose presence and flow the push reads, plus light and any passed
+family's rows, reaching every Node within the horizon. Its density at a
+Node is the sum over the sources of `M / r^2` (3.2's shell mean, `q
+dwell / (4 pi r^2)` per source), so the nearest large mass dominates:
+in the law's universe the crowd at a body on the Earth is the Earth's
+rows (`M / r^2 = 1.5 x 10^11` kg per m^2 in the units of the script's
+(A)), the Sun's `6 x 10^-4` of that, a laboratory's own matter `7 x
+10^-9`, and the cosmic background, the sum over every source to the
+Hubble length under the growing wall (15.5: `4 pi rho R_H`, saturating
+at the Hubble length), `10^-10`. So the crowd is uniform on a
+detector's scale (the Earth's rows change by `2 h / R` over a height h,
+`3 x 10^-7` per metre) and never absent inside a galaxy; it is absent
+only in the law's empty worlds. Does it mix? A sum of many sources
+with ages differing by more than the circle's period `N` intervals
+brings phases from every residue of `Z_N`, and the arriving rows' Gram
+weight at a Node changes from interval to interval by the rows that
+arrive and leave: the Earth's rows alone come from `10^51` units on
+`290` directions at every age, so the mixing condition of (ii) is met
+wherever a crowd is; it is the empty world that fails it.
+
+*The prediction the hypothesis cannot avoid, and its pin.* As written
+in (ii), with the rung the crowd's total weight T, the decay rate is `p
+= b / T` and FOLLOWS the local crowd: a lifetime measured where the
+crowd differs differs, in proportion. Nature's neutron lifetime in a
+beam is `887.7 +- 2.2` s (Yue et al. 2013, Phys. Rev. Lett. 111, 222501)
+and in a bottle `877.75 +- 0.36` s (UCNtau, Gonzalez et al. 2021, Phys.
+Rev. Lett. 127, 162501), a difference of 10.0 s, 1.13 % of the
+lifetime, 4.5 standard deviations (a ratio, rule (b)). To reproduce it
+the hypothesis needs the beam's crowd 1.12 % thinner than the bottle's;
+the two apparatus differ by their own matter, `7 x 10^-9` of the
+Earth's crowd: the hypothesis CANNOT reproduce the beam-and-bottle
+difference (it predicts the two equal to a part in `10^8`), and it is
+not refuted by it either, since the Earth's crowd is the same for
+both. What refutes the rate-from-the-crowd reading is the lifetime OFF
+the Earth (the script's (C)): the rate in proportion to `M / r^2` gives
+a neutron's lifetime 6 times the Earth's on the Moon, 1.3 times at 500
+km above Venus against MESSENGER's `780 +- 60 +- 70` s there (Wilson et
+al. 2020, Phys. Rev. Research 2, 023316, within 15 % of the Earth's
+value), 1700 times in interplanetary space at 1 au, and `4 x 10^7`
+times at Voyager 1, whose plutonium-238 has decayed at its 87.7-year
+half-life for 45 years (the RTGs' output, NASA JPL's Voyager mission
+status): **refuted** for the rate as the crowd's weight. **The
+correction of (ii)**: the crowd may supply only the FRESHNESS of the
+comparison, not the rate: the body's wheel u advanced each interval by
+the arriving rows' phase sum (a reading of the crowd, T on the record
+with a rate read from the rows, bilinear, local), and the rung the
+family's own `b / W` (the declared rate, as J1's L is declared today).
+Then the rate is constant wherever any crowd mixes (the Sun's rows
+suffice at Voyager, `3 x 10^3` kg per m^2), the survival is memoryless
+as far as the phase sum mixes, the beam-and-bottle difference is not
+predicted (it stays nature's open anomaly, as it is in the standard
+model), and the hypothesis fails only in an empty world. `decay-by-
+crowd-v1` is restated in that form; the pins below hold with (4) read
+accordingly.
+
 **The pins a run would have to meet** (before any run): (1) J1's neutrons
 in a crowd world (the source's fan on, the crowd mixing): the 64 beta
 clicks' width over the median within 0.5 of 3.17, the maximum decay
@@ -4736,7 +4830,7 @@ L (today's register, 0.036); (3) J2 with the readers reading the
 crowd's rung at `p = 1 / 64`: the second reader's count `16 x 63 / 64
 = 15.75` (16 or 15 in integers) and the n-th `16 (1 - p)^(n - 1)`, 12.9
 at the 15th; (4) what refutes the hypothesis: a bounded maximum in (1),
-a ramp in (3), or a rate that does not follow the crowd's total weight.
+a ramp in (3), or a rate that follows the crowd's weight (the addendum: the rate is the family's, the crowd supplies the freshness).
 
 ### 18.3 The strong ratio (row 7b): the give per contact pair, in form and in number
 
