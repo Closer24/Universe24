@@ -178,6 +178,7 @@ and failure analysis to the test owner; Boss coordinates the returned results.
 | Regression | [regression-check](../regression-check/SKILL.md) |
 | PR review/merge | [pr-review-and-merge](../pr-review-and-merge/SKILL.md) |
 | The manuscript, with its referee | [paper-coordinator](../paper-coordinator/SKILL.md) |
+| The manuscript's method: equations first, one source per number, the four labels, the referee round before any material enters | [paper-writer](../paper-writer/SKILL.md) |
 | A design, a hypothesis or a verdict on physics (item by item) | the physicist's session, by Routine; a review file by [physics-rule-validation](../physics-rule-validation/SKILL.md) before its build |
 | A derivation, the map's status, order and error term | the derivation mathematician's session, by Routine ([the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309)) |
 | The law's text, the genericity probe, a host-only unification | the architect's session, by Routine |

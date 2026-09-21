@@ -1312,3 +1312,61 @@ Gleason window "derived from the measured counts after the runs", not
 in the pin column with the pair give as the unrun crowd form; the
 cosine table's arguments named (d the phase difference, N the circle's
 phases); Born's P named. The pin/reading separation holds on every row.
+
+## Wave 4 (2026-09-21, after the merge of main at 42b3d470: PRs #472, #474, #475, #476, #477, #479, #481, #482)
+
+Applied from the tree: (1) the Lorentz section and its rows per the
+derivation's 17.6 (the nine must-fixes of the physics-rule review,
+record 297): the self-creation gated by a proper-time owed count, the
+exact square W = E'_0^2 + 3 p.p carried and E' by comparisons, c^2 =
+[1, 3], the pace p / E', the identity 3 h n = Q S d checked at load;
+the contraction NOT derived (the gradient of the age moment alone; the
+magnetic part needs source-velocity-v1, named and not designed); the
+pins restated on declared integers as detector readings (the muon's
+products' face clicks at 367 and 345 against 391 at rest, the decay at
+70.9 and 125.2 derived back; z = 0.369 +- 0.003 at the declared
+momentum; the 5b pin withdrawn). (2) Section 22, the uncertainty
+relation: a paragraph after the lattice Gleason (the support and
+entropic bounds exact on Z_N, the Weyl relation, Kennard's form as the
+limit with hbar = h N / (2 pi), the one read-out as the reason), a row
+in Table 1, the Heisenberg row with the pin 0.92 +- 0.03 at w = 27 and
+0.886 +- 0.03 at w = 9, the crowd form's 1.08 explained by its sparse
+fan; the abstract names it. (3) The greats under the six-point standard
+(record 300; 21.2 rows 47 to 57 with the order of the expansion and the
+error term; 21.5): Gauss and continuity, Faraday and Ampere-Maxwell
+with the Lorentz force and Biot-Savart (H under source-velocity-v1),
+Planck and de Broglie (identities), Boltzmann and Shannon (R) with
+Landauer (D), Hubble (R for the form), the aberration (R at first
+order, D at second), Schrodinger (not reached): rows in Table 1 and a
+third appendix table with the two new columns. (4) Item F, optical-v1
+(record 302, the design and its review, admissible with eight
+must-fixes; the go to the build after review, record 303): the bending
+row and one sentence in the delay-field section naming where the rule
+lives (record 294). (5) The Method paragraph in record 305's words and
+the standard's three sources. (6) The dark row's planets sourced (HARPS
+1 m/s, Mayor 2003). (7) The log bibitem: records 291 to 305 as cited, a
+punctuation glitch fixed. Referee round 19 pending.
+
+## Referee round 19 (2026-09-21): wave 4, major revision small in extent, applied
+
+Fifteen findings, five major, all applied: the proper-time gate stated
+as the accumulator it is (gaining E' - E'_0 against the wall E'_0 with
+the remainder kept), not a floor of the ratio, which would owe nothing
+at both J4 momenta; the supports of 22.1 are 64, 32, 8, 57 for 1, 2, 8,
+8 phases (the products 64, 64, 64, 456), not "products 64, 64, 64, 57";
+two stale sentences outside the diff that said the readings remove row
+5b (the isotropy row; the three-failures paragraph) now say the
+contraction is withdrawn from the identity; the Method's "every derived
+formula" reduced to the rows added in this revision, the earlier rows
+carrying the order and the error term where the derivation states
+them; the invariant stated as W_E - 3 p.p = E'_0^2 with E' the integer
+root (the exact square renamed W_E, since W is the wheel's width); E',
+E'_0, gamma, beta, the age moment, g, rho, j named at first use in
+their rows; the third appendix table narrowed by 0.02 in; record 306
+and section 22 added to the bibitems (record 312, the optical review,
+not on the tree, so not cited); optical-v1 reads the rows at the row's
+own Node, and 21.4 calls the same rule flight-in-field-v1; Maassen and
+Uffink's inequality "of the same form as" the entropy row's identity;
+the count per self-creation per direction on the lattice; the
+abstract's list re-ordered. The navigation gate: main's boss skill
+routes paper-coordinator and not paper-writer; the route row restored.
