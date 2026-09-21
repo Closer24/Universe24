@@ -1239,3 +1239,163 @@ follow its frequency in flight.
 | The classical-quantum boundary | **stated as a quantity**: two rows at one Node and no read before it | record 77's density of clicks = the density of reads |
 | E = h f | **reached** as the release's identity, `E = h s = (h N) f` | Planck's constant `h N`; in flight the frequency and the content are untied |
 | Landauer's heat | **not a formula of the law** (record 140) | |
+
+## 7. Young's spacing from the click in the limit of every direction, and Bohr's levels from the turn under `action`
+
+### 7.1 Young's fringes
+
+**The operations.** The re-emission on a fan (the split with equal
+weights: one row per direction, the multiplicity K), the walk (T), the
+phase per interval of age (T on `Z_{N d}`, the pair form), the merge (G)
+where two rows of one record meet at one Node, the click (E and the norm)
+at the record's completion; the record: the two-slit world `slits_low`
+(L2: the lamp's rate [1, 1], the pair form `[8591334592, 2^30]` = 8.00
+steps per interval, the fans of 91 per opening, `s = 10` between the
+openings, the screen at `D = 44`, N = 64), record 156's map
+(`two_slits_map.py`: the register's 64 clicks reproduced exactly, then
+the prediction under the screen's fan, the wheel and the exact phase),
+the paper's `limits.txt` (the fan's discreteness and the flight's
+rounding), L1's unequal arms.
+
+**The derivation.** A pixel at the height y of the screen receives one
+row from each opening at `y = +-s / 2` when the fans hold the directions
+`(D, y -+ s / 2)` (the limit of every direction, Huygens'). Each row's
+age at the click is its Euclidean path over c, `tau_i = L_i / c` with `L_i
+= sqrt(D^2 + (y -+ s / 2)^2)` (section 4.1: the cone is Euclidean), and
+its path phase is `(n / d) tau_i` steps; the cell's weight at the pixel
+is `|e^(i phi_1) + e^(i phi_2)|^2 = 2 + 2 cos(2 pi (n / (d N)) (L_1 - L_2)
+/ c)`. With `L_1 - L_2 = y s / D` to first order in `s / D` and `y / D`
+the weight is periodic in y with the spacing
+
+    delta_y = lambda D / s,   lambda = c N d / n Links   (the wavelength: N d / n intervals at c Links per interval),
+
+Young's law. On `slits_low`: `lambda = 8 intervals x 0.5818 = 4.654
+Links`, `delta_y = 4.654 x 44 / 10 = 20.5` pixels, the spacing record 156
+pins with the screen's fan (bright at y = 35 .. 38, 59 .. 61, 82 .. 85,
+Pearson 0.963 with the cosine, the visibility 0.96 over 4096 births).
+**Reached in the limit of every direction**, with the exact phase at the
+click. The registered check of the two-path rule itself is L1's unequal
+arms: arm 2 longer by two intervals at the pair form 0, `[8, 1]` and
+`[16, 1]` reads D1/D2 `64/0`, `32/32`, `0/64`: the phase difference `(n /
+d) delta_tau = 0, 16, 32` steps of 64 gives `cos^2` of 0, a quarter turn,
+a half turn, integer by integer (the register's L1).
+
+**Where the lattice departs, in order of size** (record 156's order: the
+wheel, the fan, the phase):
+1. The birth wheel of period N (section 6.2): `slits_low` as registered
+   lands 15 screen clicks on 14 pixels for ever (64 clicks: wall 34,
+   screen 15, faces 15), whatever the run's length; the bit-reversed wheel
+   W resolves every prefix.
+2. The fan's discreteness: an opening's fan of K directions reaches a
+   pixel from one opening only where its digital line lands there and the
+   other's does not; with K = 91 only 27 of 75 pixels see both openings
+   (the register), and the correlation with the cosine grows with K: 0.45
+   at 91, 0.84 at 361, 0.90 from 721 on (the paper's check, every pixel
+   seeing both from K = 721); the registered fan of 91 is the opening's
+   comb (68, 115, 68 at y = 59, 60, 61 where rows of ONE opening on
+   neighbouring directions meet), no fringes under any click.
+3. The arrival at a whole interval: the phase is read at the whole age of
+   the last Link while the exact time is `made x T_d / (S_1 Q)`, an
+   error of up to one interval, an eighth of the wavelength at `lambda =
+   8 intervals` (the correlation 0.93 with the exact pattern at lambda 8,
+   0.995 at 32, the paper's check: vanishing as `lambda / interval`
+   grows); the exact phase from the row's two accumulators (record 156,
+   section 1.3 item 14) removes it, and turns the wheel-alone staircase
+   (Pearson 0.904) into the cosine (0.963).
+4. The isqrt of `T_d` per direction (1.35 % in c, one step in 234 on the
+   cone), vanishing as Q grows; and the envelope of the fan's density
+   (section 3.2), a declaration.
+
+### 7.2 Bohr's levels
+
+**The operations.** The push (B, section 3.4: the electric column
+against the proton's crowd), the step (D) and the turn by momentum
+(`engine.py:637-645`: at the Link stepped on an axis the phase turns by
+`by_clock(k0, |p_axis| N, h)`, the world's `action` h), the release of
+the electron's rays with its phase, the faces' `wave` records (E). The
+register: series H (`examples/events/bohr/`: the proton of content 1836
+on the 2616-direction shell, the electron of content 1836 and charge
+-15 on a set of three Nodes, `width` 45120, r = 2 .. 16), its re-reads
+under the step drive and the signed drive.
+
+**The closure.** Over one orbit the phase turns by `(N / h) x sum over the
+Links stepped of |p_axis|`, the floors telescoping at a constant `|p|`.
+For a circle of radius r stepped on the lattice with p tangent and
+constant, the sum over the x-Links of `|p_x|` is `integral of p |sin
+theta| x r |sin theta| d theta = pi p r` and the y-Links give the same:
+
+    sum over the Links of |p_axis| = 2 pi p r = the action  integral of p . dl,
+
+exactly in the limit of small Links (the arithmetic check of this
+section on lattice circles: `2.010, 2.003, 2.0004, 2.0001 x pi r` at r =
+8, 16, 64, 256). The phase closes on itself when
+
+    2 pi p r = j h,   j whole:   Bohr's quantization of the action, exactly, with h the world's `action`.
+
+With the push `p^2 / (Q S M r) = M k / r^2` of section 3.4 (a circular
+orbit under the inverse square, `p ~ 1 / sqrt r`) the closing radii are
+
+    r_j = j^2 h^2 / (4 pi^2 Q S M x (M k)),   r_j ~ j^2:
+
+Bohr's ladder of radii, **reached in form**, the constants the world's
+(`action`, `width`, the charges' product). Two corrections to the
+register's design on the way: (i) the Bohr README derives the closure as
+`4 p r = j h` ("the Manhattan weighting of the path, 4 r against the
+circle's 2 pi r"); the sum over the Links of the component on the
+stepped axis is the action `2 pi p r` and not `4 p r`, so with `h = 16
+p(8)` the design's `j = 2.000` at r = 8 is `j = pi = 3.14`, and the
+table's j are `pi / 2` times larger (r = 2: 1.49; 4: 2.30; 6: 2.71; 8:
+3.14; 12: 4.01; 15: 4.51; 16: 5.10): the whole values fall at r = 12 (j
+= 4) and near r = 2 (j = 1.5, between), not at r = 8; in the step-drive
+re-read r = 12 closed five times with every return within `r / 4` and r
+= 8 four times, and the phase's turn per orbit at r = 8 read 0.75 to 0.83
+of a circle beyond whole circles, which is what `j = 3.14` on an
+eccentric loop gives sooner than the design's 0; the r = 12 world's
+fraction is the reading to take (the register's re-read tables, not read
+here). (ii) The turn as built re-prices `k0 |p| N / h` at the current
+`|p|` (section 1.3 item 6), and on an orbit `|p_axis|` changes at every
+interval, so the closure is exact only under the accumulator form
+ordered by record 155.
+
+**The levels and the lines.** Bohr's energies `E_j ~ -1 / j^2` and the
+Rydberg lines `1 / j^2 - 1 / k^2` need an energy of the orbit and a
+transition between orbits; the law has neither: no energy is defined for
+a body, and nothing makes the electron leave one closed orbit for
+another (no rule of the GameBoard reads a closure). What a detector reads
+of a closed orbit is the phase of the electron's rays, turning per
+interval by `(N / h) p v` on the average, the orbital frequency `nu_j =
+p_j v_j / h ~ 1 / j^3`: the classical radiation frequency of the orbit
+(Bohr's correspondence limit), not the difference of two levels.
+**Not reached** for the levels and the lines; **reached in form** for the
+quantization condition and the ladder of radii. Registered: no orbit
+closed by the series' criterion on the base (the whole kicks: 84 lumps of
+4.3 degrees per orbit at r = 8 from the fan of 2616 directions every 10
+intervals, and the close pass), the mean inward push 40 600 against the
+derived 39 660 (1.02: the mean flux is the derived one, the orbit is
+broken by the lumps); under the step drive r = 8 and r = 12 closed four
+and five times and the coherence `C(4) = 1.01` against 2.0; under the
+signed drive r = 8 twice, r = 12 none. The limit that closes the orbit is
+the one of section 3.2: every direction and a smooth push (the ring flux
+`r^-1.83` of the 2616-direction fan against `r^-2`); Bohr's lines then
+still need what the law lacks, an energy and a transition.
+
+### 7.3 The verdict of target 7
+
+| Formula | Verdict | The place |
+| --- | --- | --- |
+| Young's spacing `lambda D / s` | **reached in the limit of every direction** with the exact phase at the click (record 156's 20.5 pixels; L1's `64/0, 32/32, 0/64` the two-path rule registered) | the wheel, the fan's comb, the arrival's floor, the isqrt |
+| Bohr's condition `2 pi p r = j h` | **reached** exactly in the limit of small Links (the sum of `|p_axis|` over the Links is the action) | the design's `4 p r` corrected; the accumulator form for a changing p |
+| Bohr's radii `r_j ~ j^2` | **reached in form** under the inverse square | no closed orbit registered on the base; r = 12 (j = 4.01) the closing radius under the true sum |
+| Bohr's energies and the Rydberg lines | **not reached**: no energy, no transition; the detector reads the orbital frequency `~ 1 / j^3` | a different law of the spectrum |
+
+## 8. The verdicts of round 9 in one table
+
+| Target | Reached | Different law | Not reached |
+| --- | --- | --- | --- |
+| 1 the inventory | every rule one of six operations or a declared rounding; the flight one Manhattan accumulator with a deficit ladder | | fourteen items for the implementer, four new (two dropped events at the step, the meeting's rounding and its root) |
+| 2 Doppler | `1 +- v / c` on the axis under the crossing rule; the source's `1 / (1 -+ v / c)` | the transverse 1; the Manhattan flux on a fan direction; two formulas at `v^2` | on `main`, the reader's Doppler (k per k) |
+| 3 Newton and Coulomb | Gauss exactly; the inverse square in the shell mean; `G = K (n / d) / (4 pi S)`; `k_C = G`, the ratio `-rho_A rho_B` | | per Node without the limit of every direction |
+| 4 special relativity | the light cone and `omega = c k`; the Lorentz symmetry of the rows' limit | the moving reader's `c -+ v`; the clock at 1; `v = p / (m + p)`; the cap 1 above c | velocity addition, `E = m c^2`, the moving mass |
+| 5 general relativity | Poisson and the retarded wave equation of the delay field; the redshift at first order; Newton's geodesics; the general flux | the redshift at second order, no horizon; the meeting's delay `~ M / b` | Einstein's equation; light on `main`; the post-Newtonian terms |
+| 6 the information cost | Holevo; Born and Tsirelson as limits; the visibility of two rows; `E = (h N) f` | the partial read (a step) | Landauer |
+| 7 Young and Bohr | Young's spacing in the limit of every direction; Bohr's `2 pi p r = j h` and `r_j ~ j^2` | the spectrum at the orbital frequency | the levels' energies and the Rydberg lines |
