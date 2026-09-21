@@ -3790,6 +3790,38 @@ entropy at all.
 
 ### 14.2 Production at the click, the cancel and the discarded remainders
 
+**The observation map, stated once** (issue #586, the owner's testing
+agent, 2026-09-21; the paper's 2096 to 2097 and 2542 to 2547). Two
+records exist at a click. The run's record (the `gather` line of
+`amplitude.py` and the click line's fields `record`, `u`, `born`, `share`,
+`age`, `exact`, `remainder`, `window`) is the host's diagnostic record
+(record 281: a GameBoard reading): it keeps the record's identity and its
+birth coordinate u, and nothing below deletes them. The observable
+output is the click's OUTCOME: the cell the click fell in (the pixel,
+the port, a setting's outcome) and its tick, what a detector in nature
+reads; the outcome list K is what section 14 counts against. The count
+of this section is the number of birth coordinates consistent with the
+outcome list, and its identity
+
+    H(K) + H(U | K) = H(U) = log2 N     (U uniform over the wheel, K = f(U) the cells' partition of it)
+
+is Shannon's chain rule for a uniform source and a deterministic
+partition, an identity about that coarse graining of the record: `H(U |
+K)` is the freedom of u the outcome does not report, not a deletion of
+u from the run's record, where `H(U | C) = 0` for the complete record C
+that carries u. It is not an H-theorem and not a thermodynamic second
+law: nothing in it supplies a temperature or a heat (16.4, 25.8), and
+14.3's monotone streams are counts that only grow. The one list of what
+leaves the STATE (the GameBoard's state vector, not the run's record),
+with its bits: (1) the click, the record's vector deleted, `log2 N - H`
+bits of u not reported by the outcome; (2) the cancel under the amplitude
+key, two amounts, `log2` of their range; (3) the escape at a face, a
+row's position and phase, at most `log2 (extent x N)`; (4) the discarded
+remainders on `main`, at most `log2 d` each. "Only the click deletes"
+(14.1, 25.1's F3) means that among the law's steps between events the
+click is the one non-bijective step on the state; the cancel and the
+escape stand beside it in this list, each at its own rule.
+
 **The click.** A record's vector **f** (its amounts per phase per end
 Node and label) is deleted at the completion and one cell is read (the
 ladder, `amplitude.py:681-776`): the state vectors consistent with the
@@ -3855,7 +3887,9 @@ x N)` bits per row at most; a periodic world has no such term.
 Three monotone streams, each a line of the books:
 
 1. **The click list grows** and never shrinks: the world's entropy in the
-   sense above is non-decreasing, by `log2 N - H` per record clicked (6 bits
+   sense above (the count against the outcome list, 14.2's observation
+   map; a count, not a thermodynamic law) is non-decreasing, by `log2 N -
+   H` per record clicked (6 bits
    for `mz_equal`, whose click is certain and reports nothing of u; 2.6
    for `slits_low`, whose click reports 3.4 of u's 6 bits), by the cancels
    and by the leaks. The arrow of time is the click list (the paper's row
@@ -7008,9 +7042,12 @@ component of the momentum is handed to the occupant (momentum
 conserved, the pair's kinetic energy not: inelastic), under `rerelease`
 it is returned doubled (an elastic wall, the occupant unmoved), under
 `pass` nothing; there is no rule by which two free bodies exchange their
-momenta elastically. (F3) The click is the one non-bijective step (14.1,
-14.2): between clicks the count of states is constant (the lattice's
-Liouville theorem), at a click `log2 N - H` bits are erased.
+momenta elastically. (F3) The click is the one non-bijective step among the law's steps
+between events (14.1, 14.2; the cancel and the escape beside it in
+14.2's one list): between clicks the count of states is constant (the
+lattice's Liouville theorem), at a click `log2 N - H` bits of the birth
+coordinate are not reported by the outcome (the run's record keeps u,
+14.2's observation map).
 
 | # | The formula | On the GameBoard: the reading that shows it (kind) | Standing | The pin (the closed form or integer; the world that would read it) | Verdict |
 | --- | --- | --- | --- | --- | --- |
