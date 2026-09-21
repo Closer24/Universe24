@@ -1665,6 +1665,26 @@ states "exactly" and means integer equality at every tick.
   outward as the push it reads (C 1.3 to 1.5 times the ring mean, as on
   every registration) drives it. The field's burst and the fan's grain
   remain what they were. The registered verdicts stand as history ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+- **Re-read under the crossing rule (2026-09-21; measured, nothing
+  pinned).** The two re-reads above describe the tree before the
+  crossing rule (the step before the law, a row and a body met once;
+  [migration](MIGRATION.md#the-crossing-rule-on-2026-09-21-the-step-before-the-law-a-row-and-a-body-met-once-the-key-doppler-and-the-grain-deleted);
+  [VALIDATION's crossing-rule table](VALIDATION.md#the-crossing-rule-the-gate-set-and-the-movers-replayed-against-no-tables-2bbc5a64---2026-09-21)
+  records the orbit worlds' events moved). Under it, the auditor's round
+  9 at main e42c49e5 and the architect's own run of
+  `tools/orbit_readings.py` on the two shipped worlds (unchanged, sha256
+  27c40ef0 and 68e4e681) read the same: `s32_r12` closes the angle once
+  (T 525, the return (-11, 0), heading kept, the mean radius 17.90, C
+  1.87) and leaves through face:-x at 932 (three closings at 363, 482,
+  622 and the exit at 2004 under the signed drive); `s32_r24` closes the
+  angle once (T 932, the return (+8, 0), heading kept, the mean radius
+  34.16, C 1.29) and leaves through face:-x at 1239 (bound for the whole
+  run of 4000 under the signed drive); T(24)^2 / T(12)^2 from the first
+  turns 932 and 525 = 3.15 against the expected 4 (3.73 before); no orbit
+  closes by the criterion; the record checks 0 failed. By kind: T, the
+  returns, the radii and C are GAMEBOARD readings (the probe's `step` and
+  `read` records, the host's view); the exits are DETECTOR readings (the
+  face detectors' clicks). No pin moved, no world changed.
 
 
 ### A10, the width of an opening and the spread behind it, under the Beam Law (2026-09-20)

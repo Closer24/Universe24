@@ -614,7 +614,11 @@ is formed and refused naming the Node (the load-time ceiling multiplies
 the declared `weights`, `rotate` and `gate` factors alone and no longer
 a plain `rerelease`'s, since a path's count of re-emissions is not known
 at load: a bound moved from load to run, so a world may run before the
-split's own check refuses it); refused on a rule
+split's own check refuses it; two guards, then: the static path ceiling
+at load, an acyclic count of the splits, rotations and gates on a path,
+and the run-time bound at the split, a cycle among re-emitters, two
+openings feeding each other, caught by the run-time bound alone and
+outside the register's ceiling); refused on a rule
 other than `rerelease` and on a free family's entry; a split is not a
 click: a `rerelease` entry takes every arriving row of its
 family on its own, with no pointer gate and no window, the amount gate
