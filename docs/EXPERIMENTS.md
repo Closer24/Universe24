@@ -8533,3 +8533,12 @@ the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
   (the W thrown and measured one Link and one interval later), run as
   declared; the trigger ticks and counts of the runs beside the
   register's, J1, J2 and P cited from the register.
+- [The collision](pages/gallery/collision.html): six declared rows on an
+  open 9^3 cube of free space, the head-on pair parking on the rest slots,
+  turning to another axis and leaving, the triple's odd unit going on, the
+  diagonal unit a spectator; the slots occupied per interval (the
+  demonstration world `collision`).
+- [High-energy rows](pages/gallery/energy.html): series K under the
+  meeting, `mass_meeting` beside `control`, run as declared: the beam bent
+  toward the mass, the screen's centroid, the rows the mass took and the
+  books' turned line of the runs beside the register's.

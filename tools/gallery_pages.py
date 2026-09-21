@@ -478,9 +478,17 @@ class Cube:
             order = np.argsort(rows.z, kind="stable")
             for k in order:
                 x, y, z = int(rows.x[k]), int(rows.y[k]), int(rows.z[k])
-                cx, cy = self.project(x, y, z)
                 colour = phase_colour(int(rows.phase[k]), self.phase_steps)
                 d = self.directions[int(rows.direction[k])]
+                # The disc displaced a third of a Link toward its heading (a
+                # rest slot sideways by its index) so that the rows of one
+                # Node stay apart.
+                shift = (
+                    (0.3 * d[0], 0.3 * d[1], 0.3 * d[2])
+                    if any(d)
+                    else ((-0.2, 0.0, 0.0) if int(rows.direction[k]) == 0 else (0.2, 0.0, 0.0))
+                )
+                cx, cy = self.project(x + shift[0], y + shift[1], z + shift[2])
                 draw.ellipse(
                     [cx - radius, cy - radius, cx + radius, cy + radius],
                     fill=colour,
@@ -2105,6 +2113,361 @@ terms. No W reaches the border <code>lifetime</code>. The exchange is complete a
         page(
             "The decay",
             "Series J: a neutron family becoming another by the transformation become, the products' flight to the shell, the W exchange at one Link.",
+            body,
+        ),
+    )
+
+
+def slot_name(direction: tuple[int, int, int], index: int) -> str:
+    names = {
+        (1, 0, 0): "+x",
+        (-1, 0, 0): "-x",
+        (0, 1, 0): "+y",
+        (0, -1, 0): "-y",
+        (0, 0, 1): "+z",
+        (0, 0, -1): "-z",
+    }
+    if direction == (0, 0, 0):
+        return "rest a" if index == 0 else "rest b"
+    return names.get(direction, f"spectator {direction}")
+
+
+@register("collision")
+def page_collision(out: Path, runs: Path | None) -> Path:
+    """(5) The collision: rows meeting at a Node of free space permuted by
+    the collision table, on a small cube; the slot states per interval."""
+    world = GALLERY_WORLDS / "collision.json"
+    record_dir = runner_record(world, runs)
+    record = read_json(record_dir / "run.json")
+    replay = Replay(world)
+    ticks = list(range(0, replay.ticks + 1))
+    frames = replay.run(ticks)
+    cube = Cube(tuple(replay.world.shape), 22, replay.world.phase_steps, replay.directions)
+    meetings = [(4, 4, 4), (4, 4, 1)]
+    images = [cube.image(frame) for frame in frames]
+    readings = []
+    for frame in frames:
+        rows = frame.rows[0]
+        lines: dict[str, str] = {
+            "rows on the GameBoard (GameBoard reading)": num(int(rows.amount.size)),
+        }
+        for node in meetings:
+            here = [
+                slot_name(replay.directions[int(rows.direction[k])], int(rows.direction[k]))
+                for k in range(rows.amount.size)
+                if (int(rows.x[k]), int(rows.y[k]), int(rows.z[k])) == node
+            ]
+            lines[f"the slots occupied at {node}"] = ", ".join(sorted(here)) or "none"
+        lines["every row (Node, direction, age)"] = (
+            "; ".join(
+                f"({int(rows.x[k])}, {int(rows.y[k])}, {int(rows.z[k])}) {slot_name(replay.directions[int(rows.direction[k])], int(rows.direction[k]))} age {int(rows.age[k])}"
+                for k in range(rows.amount.size)
+            )
+            or "none: every row has left through a face"
+        )
+        readings.append(lines)
+    player = Player(
+        "collision",
+        images,
+        ticks,
+        readings,
+        "The open cube of 9 x 9 x 9 in an oblique projection, 22 pixels per Link (x to the right, y upward, z "
+        "receding); every row a disc coloured by its phase with a bar toward its heading (no bar: a rest "
+        "slot); one frame per interval.",
+        duration_ms=400,
+    )
+    faces = {
+        d["name"]: int(d["families"]["light"]["clicks"])
+        for d in record["detectors"]
+        if str(d["name"]).startswith("face")
+    }  # type: ignore[index]
+    body = f"""
+{demonstration_note(world)}
+<h2>The GameBoard</h2>
+<p>An open cube of 9 x 9 x 9 Nodes with no measured event on it: free space only, so the collision table acts
+at every Node. Six rows of the paid family <code>light</code> are declared in transit, all of the number 1, the
+amount 1 and the content 1, at the age 0: a <b>head-on pair</b> on the x axis, from (1, 4, 4) on +x and from
+(7, 4, 4) on -x, meeting at (4, 4, 4); a <b>triple</b> on the plane z = 1, from (1, 4, 1) on +x, (7, 4, 1) on
+-x and (4, 1, 1) on +y, meeting at (4, 4, 1); and a <b>lone unit</b> from (0, 0, 7) on the diagonal (1, 1, 0),
+a declared direction beyond the six headings. The faces are open: a row that leaves clicks on its face.</p>
+{legend([("a row, coloured by its phase (all born at the phase 0)", '<i class="wheel"></i>')])}
+<h2>Why this page</h2>
+<p>The owner asked to see "how something hits something". On the GameBoard two rows never touch: a Node holds
+eight single-occupancy slots, the six headings and two rest slots, and when single units of one number and
+content occupy several slots at a Node of free space in one interval, the collision table permutes them: the
+slot state's class (the crowd mask, the number of singles and their vector sum) is kept, and inside a class
+the forward map is the cyclic shift by one, so the table is a bijection with an inverse (BEAM_LAW section 4).
+Amount and momentum are conserved by construction; a row on a fan direction is a spectator and passes
+untouched.</p>
+<h2>The moving picture</h2>
+{player.html()}
+<p>What to see. The head-on pair (the class of "+x -x", four members: +x -x, +y -y, +z -z and the rest pair,
+the shift +x -x to rest a rest b to +z -z to +y -y to +x -x) reaches (4, 4, 4) at the interval 5 and parks:
+both rows on the rest slots, no momentum to trade; at 6 the rest pair becomes +z -z; the flight table does
+not step them in that interval, so at 7 the table acts again and +z -z becomes +y -y; from 8 the pair walks
+apart along y and leaves through the faces at 13 and 14. The triple at (4, 4, 1) is the class "+x -x +y"
+(three members, the shift to "+y rest a rest b"): the head-on pair parks and the odd unit keeps its heading,
+then the parked pair turns and goes. The lone diagonal unit is a spectator of the table, straight and
+unchanged, and leaves through a face. Every class is an orbit of the permutation, the invariants written on
+it: the same n and the same vector sum before and after.</p>
+<h2>The readings</h2>
+<table>
+<tr><th>Reading</th><th>Kind</th><th>Value</th><th>Source</th></tr>
+<tr><td>rows declared; rows on the GameBoard at the end</td><td>GameBoard (the books)</td><td class="num">{
+        num(int(record["audit"][0]["families"]["light"]["transit"]["initial"]))
+    }; {
+        num(int(record["audit"][-1]["families"]["light"]["transit"]["current"]))
+    }</td><td><code>run.json</code>, <code>audit</code>, the transit line of <code>light</code></td></tr>
+<tr><td>the clicks per face</td><td>detector (the faces)</td><td>{
+        ", ".join(f"{k} {v}" for k, v in faces.items())
+    }</td><td><code>run.json</code>, <code>detectors</code></td></tr>
+<tr><td>the books balanced at every interval</td><td>GameBoard</td><td class="num">{
+        record["conserved_at_every_completed_tick"]
+    }</td><td><code>run.json</code></td></tr>
+</table>
+<p>The table's classes and the 20 orbits of the six-heading patterns under the cube's 48 signed axis
+permutations are pinned in <code>tests/test_nature_beam_collision.py</code>
+(<a href="../../TEST_EXPECTATIONS.md#the-collision-table">the test expectations</a>); this page draws the
+table's action on two of them.</p>
+{
+        sources(
+            [
+                ("the world", f"<code>{relative(world)}</code> (a demonstration world)"),
+                (
+                    "the run",
+                    f"<code>run.json</code> and <code>events.jsonl</code> made by <code>python -m event_universe --init {relative(world)}</code>, {record['completed_ticks']} intervals",
+                ),
+                ("the source fingerprint", fingerprint_line(record)),
+                (
+                    "the frames",
+                    "the world replayed in process through <code>NatureBeamSimulation</code>, the stores read at every interval (a GameBoard reading: the rows' Nodes, directions and ages)",
+                ),
+                (
+                    "the law",
+                    '<a href="../../BEAM_LAW.md">the Beam Law</a>, section 4 (the collision table)',
+                ),
+            ]
+        )
+    }
+"""
+    return write_page(
+        out,
+        "collision",
+        page(
+            "The collision",
+            "Rows meeting at a Node of free space, permuted by the collision table: the head-on pair parks, turns and leaves.",
+            body,
+        ),
+    )
+
+
+def lensing_player(
+    key: str,
+    world: Path,
+    runs: Path | None,
+    caption: str,
+) -> tuple[Player, dict[str, object], dict[str, list[dict[str, object]]]]:
+    """A series K world replayed as the x-y projection, the beam's rows on
+    top of the mass's dimmed crowd; per frame the beam in flight, the
+    screen's and the mass's clicks of light and the books' turned line."""
+    record_dir = runner_record(world, runs)
+    record = read_json(record_dir / "run.json")
+    clicks = [
+        line
+        for line in scan_events(record_dir / "events.jsonl", ["click"])["click"]
+        if line.get("family") == "light"
+    ]
+    screen = by_tick([c for c in clicks if str(c.get("detector", "")).startswith("screen")])
+    taken = by_tick([c for c in clicks if c.get("detector") is None])
+    faces = by_tick([c for c in clicks if str(c.get("detector", "")).startswith("face")])
+    replay = Replay(world)
+    ticks = frame_ticks(replay.ticks)
+    frames = replay.run(ticks)
+    plane = plane_for(replay, scale=6)
+    plane.largest = largest_amounts(frames)
+    plane.floor = 0.12
+    plane.weights = {"m": 0.3}
+    plane.on_top = "light"
+    plane.body_slice_z = int(replay.world.measured[0].position[2])
+    plane.body_radius = 0.9
+    plane.body_labels = False
+    audit = record["audit"]
+    assert isinstance(audit, list)
+    images = [plane.image(frame) for frame in frames]
+    readings = []
+    for frame in frames:
+        t = frame.tick
+        light = next(r for r in frame.rows if r.family == "light")
+        lines = {
+            "rows of the beam in flight (GameBoard reading)": num(int(light.amount.sum())),
+            "the screen's clicks so far (click lines)": num(
+                sum(int(c["amount"]) for k, v in screen.items() if k <= t for c in v)
+            ),  # type: ignore[arg-type]
+            "rows of light the mass took so far (click lines)": num(
+                sum(int(c["amount"]) for k, v in taken.items() if k <= t for c in v)
+            ),  # type: ignore[arg-type]
+            "rows of light on the faces so far": num(
+                sum(int(c["amount"]) for k, v in faces.items() if k <= t for c in v)
+            ),  # type: ignore[arg-type]
+        }
+        if 1 <= t <= len(audit):
+            lines["the books' turned line of light (run.json, audit)"] = str(
+                tuple(audit[t - 1]["families"]["light"].get("turned", (0, 0, 0)))
+            )
+        readings.append(lines)
+    player = Player(key, images, ticks, readings, caption, 100)
+    events = {
+        "screen": [c for v in screen.values() for c in v],
+        "taken": [c for v in taken.values() for c in v],
+        "faces": [c for v in faces.values() for c in v],
+    }
+    return player, record, events
+
+
+def centroid_y(clicks: Sequence[dict[str, object]], first: int) -> tuple[float, int]:
+    """The amount-weighted mean y of the screen's clicks from the interval
+    `first` on, and their count (the register's window)."""
+    total = 0
+    weighted = 0.0
+    for c in clicks:
+        if int(c["tick"]) >= first:  # type: ignore[arg-type]
+            amount = int(c["amount"])  # type: ignore[arg-type]
+            total += amount
+            weighted += amount * float(c["node"][1])  # type: ignore[index]
+    return (weighted / total if total else float("nan")), total
+
+
+@register("energy")
+def page_energy(out: Path, runs: Path | None) -> Path:
+    """(6) High-energy rows: series K under the meeting, a beam of light
+    passing a mass and bent toward it, the mass measuring the most turned
+    rows; the control beside it."""
+    folder = WORLDS / "lensing"
+    mass, mass_record, mass_events = lensing_player(
+        "mass_meeting",
+        folder / "mass_meeting.json",
+        runs,
+        "`mass_meeting`: the x-y projection of the 57 x 41 x 41 box, 6 pixels per Node; the lamp at (2, 26, 20), "
+        "the mass m at the centre (28, 20, 20) with its crowd of 290 directions dimmed, the beam's rows on top "
+        "coloured by their phase, the screen at x = 54 (the green column); one frame per 3.4 intervals.",
+    )
+    control, control_record, control_events = lensing_player(
+        "control",
+        folder / "control.json",
+        runs,
+        "`control`: the same box without the mass; the beam goes straight.",
+    )
+    world = folder / "mass_meeting.json"
+    entry_url = "../../EXPERIMENTS.md#k-under-the-meeting-2026-09-20"
+    m_y, m_n = centroid_y(mass_events["screen"], 110)
+    c_y, c_n = centroid_y(control_events["screen"], 110)
+    body = f"""
+{registered_note(world, "K under the meeting (2026-09-20)", entry_url)}
+<p class="demo">Also registered here and run as declared: <code>examples/events/lensing/control.json</code> (series K's
+control without the mass).</p>
+<h2>The GameBoard</h2>
+<p>An open box of 57 x 41 x 41 Nodes, the centre c = (28, 20, 20), K = 2^30, N = 64, the world key
+<code>meeting</code> true (the identity <code>meeting-v1</code>). <b>The lamp</b> at (2, 26, 20), a fixed measured
+event of the paid family <code>light</code> (the turn 8 steps per self-creation), releases one unit per
+self-creation on five directions within 5 degrees of +x: a narrow beam at the impact distance b = 6 above
+the mass's line. <b>The mass</b> at c, a fixed measured event of the free, phase-less family <code>m</code> of
+content M = 2^12, releases one row per direction of the 290 primitive directions with |a| + |b| + |c| at
+most 6 per interval: its crowd. <b>The screen</b> at x = 54 is 1681 fixed events of <code>wall</code>, each a
+one-Node <code>wave</code> detector <code>screen_&lt;y&gt;_&lt;z&gt;</code> with the age moment on the click
+record. Under the meeting every paid unit of the beam reads the mass's free crowd at each free-space Node
+it shares with it and turns toward the mass by one grain step of the direction table per N = 64 crowd units
+met, the count kept on its phase register, the crowd untouched.</p>
+{
+        legend(
+            family_legend(Replay(world))
+            + [
+                ("the lamp and the mass (bodies)", swatch(BODY_COLOURS["light"])),
+                ("a pixel of the screen (a wall event)", swatch(BODY_COLOURS["wall"])),
+            ]
+        )
+    }
+<h2>Why this page</h2>
+<p>The owner asked for "high-energy photons, all kinds of things that break them apart". In this law a row's
+energy is its phase rate and its momentum label (E = h f; the label amount x content x <b>u</b>_d), and a row
+in flight is moved by the flight table alone: the physicist's entry 2 predicted that light is neither bent
+nor delayed by a mass, and series K measured exactly that (0.000 pixel, 0.00 interval). Under the meeting, the
+owner's decision of 2026-09-20 ("an event in transit reads the crowd as a body does, a report, not a
+balance"), the beam is bent toward the mass with the sign of gravity and the M / b form, at the grain of the
+fan: this page shows that run beside its control. What the mass does to the rows that reach it is the
+other half of the story: it measures them (the click), and the most turned rows end there.</p>
+<h2>The beam beside the mass, under the meeting</h2>
+{mass.html()}
+<h2>The control: no mass</h2>
+{control.html()}
+<p>What to see: in the control the five rows of every record fly straight to the screen at y = 26 (the
+centroid {c_y:.3f} over {num(c_n)} clicks from the interval 110); under the meeting the beam bends toward
+the mass as it passes (the phase register counting the crowd met, the direction turned one grain step per
+64 units), the arrivals land lower (the centroid {m_y:.3f}, a shift of {m_y - c_y:+.3f} pixels over
+{num(m_n)} clicks), and {
+        num(sum(int(c["amount"]) for c in mass_events["taken"]))
+    } rows of the beam, the most
+turned, reach the mass's own Node and click there: the mass measures the light that reaches it. The books'
+<code>turned</code> line of light reports what the meetings moved the transit momentum by: the y component
+toward the mass.</p>
+<h2>The readings</h2>
+<table>
+<tr><th>Reading</th><th>Kind</th><th>This run</th><th>The register (2026-09-20)</th></tr>
+<tr><td>the screen's centroid in y from the interval 110, the mass world (the control)</td><td>detector</td><td class="num">{
+        m_y:.3f} ({c_y:.3f}); the shift {
+        m_y
+        - c_y:+.3f}</td><td class="num">-1.790 (26.000): the sign toward the mass, expected -3.0</td></tr>
+<tr><td>the screen's clicks from the interval 110, the mass world (the control)</td><td>detector</td><td class="num">{
+        num(m_n)
+    } ({num(c_n)})</td><td class="num">1350 (1455)</td></tr>
+<tr><td>rows of light the mass took over the run</td><td>detector</td><td class="num">{
+        num(sum(int(c["amount"]) for c in mass_events["taken"]))
+    }</td><td class="num">122</td></tr>
+<tr><td>rows of light on the faces over the run</td><td>detector</td><td class="num">{
+        num(sum(int(c["amount"]) for c in mass_events["faces"]))
+    }</td><td class="num">0</td></tr>
+<tr><td>the books' turned line of light at the end</td><td>GameBoard (the books)</td><td class="num">{
+        tuple(mass_record["audit"][-1]["families"]["light"]["turned"])
+    }</td><td class="num">(-8016, -85088, 0)</td></tr>
+<tr><td>the books balanced at every interval (the mass world, the control)</td><td>GameBoard</td><td class="num">{
+        mass_record["conserved_at_every_completed_tick"]
+    }, {control_record["conserved_at_every_completed_tick"]}</td><td>yes</td></tr>
+</table>
+<p>The register's run was made on 2026-09-20 at the fingerprint of that day; the law's counts changed since
+(the fraction-free law, the step drive), so a number of this run that differs from the register's is the
+present engine's reading, not a re-registration: nothing is moved here. The register also holds the
+<code>heavy</code> (M = 2^13), <code>near</code> (b = 3) and <code>lens</code> (two beams) worlds; the delay in
+time is none in every world (the mean ages the bent path's), and the grain of the fan, 2.4 degrees, is 10^4
+times nature's angle at the Sun's limb, so the value is not claimed.</p>
+{
+        sources(
+            [
+                (
+                    "the worlds",
+                    "<code>examples/events/lensing/mass_meeting.json</code> and <code>control.json</code> (series K under the meeting, registered), run as declared for 400 intervals",
+                ),
+                (
+                    "the runs",
+                    "<code>run.json</code> and <code>events.jsonl</code> of each, made by <code>tools/run_series.py</code>",
+                ),
+                ("the source fingerprint", fingerprint_line(mass_record)),
+                (
+                    "the register",
+                    f'<a href="{entry_url}">K under the meeting (2026-09-20)</a> and <a href="../../EXPERIMENTS.md#k-light-beside-a-mass-2026-09-20">K, light beside a mass (2026-09-20)</a>; <a href="../../../examples/events/lensing/README.md">the series README</a>',
+                ),
+                (
+                    "the frames",
+                    "each world replayed in process through <code>NatureBeamSimulation</code>, the stores read at the drawn intervals (a GameBoard reading); the beam's rows drawn on top of the crowd",
+                ),
+            ]
+        )
+    }
+"""
+    return write_page(
+        out,
+        "energy",
+        page(
+            "High-energy rows",
+            "Series K under the meeting: a beam of light passing a mass, bent toward it; the mass measuring the most turned rows.",
             body,
         ),
     )
