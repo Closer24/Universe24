@@ -21,12 +21,13 @@ this document alone, seconds each; they are not engine runs and establish
 nothing about the engine. Nothing here is tuned: a formula that does not
 return is a result, stated with the place it fails.
 
-The verdict of each section uses DERIVATIONS.md's three words. **Reached**:
+The verdict of each section uses DERIVATIONS.md's words. **Reached**:
 the known law follows from the rules in the stated limit, exactly or up to a
 constant that is named. **Different law**: the rules give a definite law of
 another form, stated, with the registered integer or the run that shows the
 difference. **Not reached**: the rules as declared do not determine the
-quantity, and what would is stated plainly.
+quantity, and what would is stated plainly. **New** marks a formula the
+GameBoard gives that has no counterpart in known physics.
 
 The reference tree is `main` at `f89884f0` (the law as landed on 2026-09-20,
 BEAM_LAW notes 1 to 40); where the fraction-free branch
@@ -111,7 +112,7 @@ checked against:
 | linear | the crossing count of a row's line with a body's, `n (c +- v) tau + O(1)` | the receiver's Doppler `1 +- v / c` | record 158's 45, 58, 19, 38, 183, 311; the bar's 96.9 .. 303.1 | 2.2 |
 | linear | the merge, `Z[Z_N]` at one Node | the coherent sum within one Node | L1's `mz_equal` 41 of multiplicity 1682 | 6.3 |
 | linear | the evaluation at `zeta_N` and the norm | `S(N, Q) -> 2 sqrt 2`; Born to `1 / (2 N)` | `176 / 64`, `2896 / 1024`, `11584 / 4096`; the dark port 0 of 64 | 6.2 |
-| linear | two rows' phases at a pixel, `(n / d)(L_1 - L_2) / c` | Young's `lambda D / s`, from the fan's angular measure (record 160's Farey weights `3 Q^2 / (T_d T_d')` per direction) | L1's unequal arms 64/0, 32/32, 0/64; record 156's spacing 20.5 | 7.1 |
+| linear | two rows' phases at a pixel, `(n / d)(L_1 - L_2) / c` | Young's fringes at `L_1 - L_2 = +- j lambda` (paraxially `lambda D / s`), from the fan's angular measure (record 160's Farey weights `3 Q^2 / (T_d T_d')` per direction) | L1's unequal arms 64/0, 32/32, 0/64; record 156's bands 23.5 apart against the exact 23.3 | 7.1 |
 | linear | the split's norm `sum w_i^2 / m_i = w^2 / m` | the conservation of a record's norm | L1's (3, 4) split 63/1 | 6.1 |
 | feedback | the push, `p_{t+1} = p_t + C a_t`, `a_t` the flow at the body's Node | `dp / dt = -M grad(A)`: Newton's and Coulomb's `1 / r^2` in the shell mean | series C's nine ring readings `r / N(r)`; item 7's `-1`, `-1 / 4` | 3.2 .. 3.4 |
 | feedback | the drive, `x_{t+1} = x_t + [drive >= D]`, `v = p / (Q S M + p)` | the dispersion `v(p)`, saturating at 1 | the bar's speeds 0.30, 0.45, 0.75 exact | 4.4 |
@@ -256,7 +257,7 @@ listed again in section 1.3 with what replaces it. Every line is `main` at
 | --- | --- | --- | --- |
 | The collision: per (Node, number, content) class the single units in the eight slots permuted; the class `(crowd mask, n, S)`, its members sorted as 8-tuples, the forward map the cyclic shift | `nature_beam.py:2293-2335` (`collide`), `677-705` (the table generated from its rule) | (P): a permutation of the joint state, fixed on the class invariants (amount and the labels' sum conserved) | a torus operation; the table of `3^8` codes at `2321` is the cache of the rule "sort, then shift"; its tie (the sorted order is Port order) is the one undeclared breaking of the 48 (BEAM_LAW section 4, FORM.md section 3): a stated limit, not a discard |
 | The meeting (`meeting-v1`, under the key): the crowd's flow (B), `kappa` the column sum (B, a rational), the target `t = sum kappa V` | `meeting.py:244-279, 214-226, 325-342` | (B) | a torus operation |
-| The meeting's norm `abs(t) = isqrt(t . t)` | `meeting.py:351-358` | an integer square root at run time | **NOT**: a rounding whose remainder (the fractional part of the root) no record owns; the one non-rational function evaluated on the lattice per interval |
+| The meeting's norm `abs(t) = isqrt(t . t)`, then `norm //= denominator` over the columns' common denominator | `meeting.py:351-358` | an integer square root at run time, then a floor | **NOT** twice: a root whose fractional part no record owns, the one non-rational function evaluated on the lattice per interval; and the floor of the norm over the common denominator (exact only at denominator 1, every registered meeting world) |
 | The meeting's register `adv = (abs(t) + Q/2) // Q`, `total = phase + adv`, `k = total // N`, `phase' = total mod N` | `meeting.py:229-241`, `364-367` | (T)/(D) on `Z_N` with the carry k into the turn: a torus operation in `phase`; but `adv` rounds `abs(t) / Q` to the nearest each interval | **NOT** in `adv`: the crowd met below `Q / 2` in an interval is dropped and above it rounded up, nothing accumulated (the exact form: `acc += abs(t)` on `Z_{N Q}`, the carry per Q, no rounding) |
 | The arc permutation `pi_t^k` (the sectors about t, sorted by the exact angle, shifted by k) | `meeting.py:161-211`, `369-380` | (P) built by comparisons (cross-multiplied angle keys; ties by index) | a torus operation; the permutation per target is cached (`132-144`), a cache of a rule, not a table of the law |
 
@@ -293,7 +294,7 @@ listed again in section 1.3 with what replaces it. Every line is `main` at
 | The split: `(w a_i, m A, p + t_i)` per direction, `A = sum a_i^2` | `nature_beam.py:3596-3695` | a linear map over Z with an integer matrix; (T) on `Z_N` by `t_i`; the multiplicity times the norm | a torus operation (the isometry of the paper's Theorem 1) |
 | The rotation of a label bit: the amounts `w C'`, `w S'` of the half-angle tables of 2N, the multiplicity `x 65536` | `nature_beam.py:1848-1916`, `amplitude.py:125-140` | a linear map whose entries are the tables' rounded cosines | a declared rounding (the same tables as the click) applied ON the lattice, the one place besides the meeting's root where a rounded constant multiplies a row in flight: stated, lawful under record 155 (6) |
 | The gate (CNOT): the joint labels permuted from the control's bit | `nature_beam.py:1769-1845`, `amplitude.py:393-488` | (P) | a torus operation |
-| The apportioning of a row over the directions or over a body's Nodes: the floors, the units left to the largest remainders, ties from `age mod n` | `core/integer.py:88-113`, `nature_beam.py:3727`, `3866` | (D) exact (the shares sum to the total) with a tie by comparison; the tie's start a rotation (P) | a torus operation per birth; record 155 (3) orders the leftover onto the giver's record as an accumulator, which gives the same integers wherever the shares are equal weights (each direction takes the leftover once per n births either way) |
+| The apportioning of a row over the directions or over a body's Nodes: the floors, the units left to the largest remainders, ties from `age mod n` | `core/integer.py:100-116`, `nature_beam.py:3727`, `3866` | (D) exact (the shares sum to the total) with a tie by comparison; the tie's start a rotation (P) | a torus operation per birth; record 155 (3) orders the leftover onto the giver's record as an accumulator, which gives the same integers wherever the shares are equal weights (each direction takes the leftover once per n births either way) |
 | The recoil: the momentum less the born rows' labels (their shares under a record) | `nature_beam.py:3888-3921` | (B) then (T) | a torus operation; the share's remainder as above |
 | The right-hand rule: `sign(A . u_d)` against the product's hand | `world.py:1612-1620`, `nature_beam.py:3709-3719` | (B) and a comparison | a torus operation |
 
@@ -389,9 +390,13 @@ options, stated so that the list is complete.
    worlds where a contact is declared `read` on a paid family (none on the
    gate set by the default; to be listed by the implementer from the
    worlds' `contact` keys).
-9. **A rounding per interval: the meeting's register.** `meeting.py:232`,
-   `adv = (abs(t) + Q // 2) // Q`. The crowd met is rounded to whole units
-   of Q every interval and the rest dropped. The torus form: `acc += abs(t)`
+9. **A rounding per interval: the meeting's register, twice.** `meeting.py:232`,
+   `adv = (abs(t) + Q // 2) // Q`: the crowd met is rounded to whole units
+   of Q every interval and the rest dropped; and `meeting.py:357-358`,
+   `norm //= denominator`: where the crowd's families have several column
+   denominators the target is formed over their common denominator and
+   its norm floored back per interval, a second discarded remainder
+   (exact where the denominator is 1, every registered meeting world). The torus form: `acc += abs(t)`
    on `Z_{N Q}` (the phase in units of `1 / Q`), the carry k per `N Q`; the
    same phase to within one grain at every interval and exact in the sum.
    Under the key only (`meeting-v1`, off by default; series K under the
@@ -446,10 +451,13 @@ section, on the formulas alone), and record 144's cone: at age 29, `m = 17`
 Links on the axis (`T = 110`) and `24` on the plane diagonal (`T = 156`),
 the registered arrival of both rows at age 29. The per-axis accumulator that
 record 155 (2) names ("the flight table as the position's accumulator per
-axis") is NOT this form: on `(1,1,0)` two independent axis accumulators at
-the rate `64 / 156` fire at the same intervals (2, 4, 7, 9, ...), two Links
-in one interval, and the sum of the per-axis floors at age 29 is 22, not
-24. The torus form of the flight is the one above: one count of Manhattan
+axis") is NOT this form. Its one natural reading: axis i carries an
+accumulator at the rate `abs(v_i) Q` with the wall `T_d`, so that the
+Links made on axis i by the age tau are `floor(tau abs(v_i) Q / T_d)`. On
+`(1, 1, 0)` the two axes then share the rate `64 / 156`, fire at the same
+intervals (2, 4, 7, 9, ...), two Links in one interval, and their total
+by age 29 is `2 x floor(29 x 64 / 156) = 22` against `m(29) = 24` (one
+floor of the sum with the half start against two floors without it). The torus form of the flight is the one above: one count of Manhattan
 steps and the line's deficits, which the age holds whole. The implementer
 retiring the table keeps the age and computes the step from it, or carries
 the two accumulators; either is bit-identical, the per-axis form is not.
@@ -465,7 +473,39 @@ identical under the two forms, the others are not. Items 7 and 8 have no
 registered integer of their own yet; their pins are the orbit worlds (D, H)
 and the diagonal stars (G2), to be re-read once when the fix lands.
 
-### 1.5 The verdict of target 1
+### 1.5 Every integer division of the source, by class
+
+Every `//` of `src/event_universe` outside docstrings and comments, on
+`main` at `f89884f0`, with its class: **G** a guard (a bound tested by
+division before a product is formed; no state changes), **A** an
+addressing or an index division, exact by construction (the flat Node
+index, the Port's axis, the arm of a way), **P** a period or a reduction
+by a gcd or an lcm, exact, **R** a declared rounding (at load: the tables,
+`u_d`, `T_d`, the half circle, the parser's ceilings; at the click: the
+rungs), **E** an exact division whose remainder is kept or is zero
+(`reduced`, the give, the apportioning's floors with the remainders
+distributed in the same call, the carry of an accumulator), **C** a cap
+or a comparison (a quotient read as a count of what can be paid, section
+1.3 item 13), and **D** a discarded remainder at run time (the items of
+section 1.3).
+
+| Class | The lines |
+| --- | --- |
+| G | `measured.py:112`; `meeting.py:194, 336`; `nature_beam.py:838, 841, 868, 950, 964, 1808, 1871, 2056, 2118, 2140, 2213, 2216, 3634, 3645`, `2034` (the bound quoted in the guard's message); `world.py:1528, 1767, 2485, 2648, 2668, 2682`, `1698` (the parser's static budgets and the label bound at load, the last in its message) |
+| A | `game_board.py:59` (the Port's axis); `nature_beam.py:1082, 1084` (the flat index's coordinates), `3784, 3828` (the ways per arm and the arm of a way, the parser refusing an uneven split); `world.py:1324` (the span's half, the span odd by the parser) |
+| P | `nature_beam.py:610, 611, 612` (the flight's period `L_d`); `meeting.py:328, 333` (the columns' common denominator); `amplitude.py:153, 167, 184, 194, 650, 697` (lcm, gcd, the common denominator of two multiplicities, the reduced pair, the multiplicity over the arm's norm) |
+| R at load | `core/integer.py:34, 36` (`integer_root`, Newton's iteration: the exact floor of a root, used at load for `T_d` and `u_d` and at run time by the meeting, item 10); `core/phase.py:28, 33, 34, 43, 48, 49, 63, 66, 83, 88` (the tables C and S from the fixed-point series, rounded to the nearest at the scale 256); `amplitude.py:132, 139` (the half-angle table's index, refused where it is not whole); `nature_beam.py:575` (`u_d`), `508` (the window's half width), `1125, 1221, 1883, 2599` and `world.py:1656` (the half circle `N // 2`, exact for every N of the law); `world.py:474, 1303, 1304` (ceilings of the budgets and the flight bound) |
+| R at the click | `amplitude.py:192` (the rung `(2 N C_k + T) // (2 T)`, the nearest integer, once per record; the comparison form on the branch), `215` (the Node's rung within the cell) |
+| E | `core/integer.py:45` (`reduced`, by the gcd), `108` (the apportioning's floors, the remainders given out in the same call, nothing left); `engine.py:800` (the give, `held // h` with `held mod h` kept on the giver); `meeting.py:233, 240` (the register's carry `total // N` with the residue kept as the phase, and its inverse); `nature_beam.py:553` (`m(tau)`, the Manhattan count: the age holds the residue, section 1.4); `nature_beam.py:492` and `core/integer.py:67` where the rate is constant (the constant-rate identity, FORM.md section 1: the phase per interval of age, the lamp's rate, `ages_at_key`) |
+| C | `nature_beam.py:3774, 3789, 3799` (the units a lamp can pay, `held // cost`, a comparison and the cap `min` of item 13) |
+| D | `core/integer.py:67` and `nature_beam.py:492` where the rate changes (the turn, the owed count, the release, the columns: items 1 to 4; the branch's `by_drive` replaces them); `nature_beam.py:853` (`share_of`, item 12); `2057` (the speed's grain, item 5); `meeting.py:232, 239` (the crowd met to the nearest Q, item 9) and `358` (the norm over the common denominator, item 9); and `core/integer.py:67` again through `by_clock` (`58-67`, called at `engine.py:644`: the turn under `action`, item 6) |
+
+Every line of the source with a `//` is in one row above; no division
+is unclassified. The `%` of the wrap on a periodic axis
+(`nature_beam.py:2404, 2373`) and of the phase (`2501`) are the torus's
+own reductions, exact (T).
+
+### 1.6 The verdict of target 1
 
 **Reached** for the audit: every rule of `beam-v1` on `main` is one of the
 six operations, or a declared rounding at load or at the click, except the
@@ -640,8 +680,9 @@ a face diagonal against `1 + 1.22 / k`. Both are rationals of the table:
 `(1, 1, 0)`. The second is the formula above in a world of full extent
 (the Manhattan and the Euclidean flux coincide on the face diagonal, the
 ratio 1). The first is the same count on a world whose y axis has the
-extent 1: there a row's y-step is a self-Link (`game_board.py:48-49`) that
-crosses no world line and is no arrival, so the stream's Manhattan speed
+extent 1: there a row's y-step is a self-Link (the wrap `nature_beam.py:2403-2405`;
+the adjacency's self-Link `game_board.py:57-62`) that crosses no world
+line and is no arrival, so the stream's Manhattan speed
 on the real axes is `S_1' Q / T_d` with `S_1' = 1`, `c_1 = 64 / 156 =
 0.41` on x, the rows stand `2.44` per Link and the count reads `1 + v x
 156 / 64`: the correct Doppler of a stream that moves at 0.41 along the
@@ -671,9 +712,14 @@ the count over a period). **Reached.** The registered check: series G2's
 hubble_stars README's per-star table), where the detector's z per star is
 `1 + z = (1 + k)(1 + v / c)` with k = 0: s_my1 declared `v / c = 0.1146`
 reads z = 0.1146, s_pz2 0.2483 reads 0.2478, s_mz2 0.2674 reads 0.2636,
-s_px1 0.0573 reads 0.0611, every star within the grain of the digital
-step (0.003 in z, the README's), and the crowd fits the Milne form with
-`q = 0.000`, `H (t_0 + T_0) = 1.000` (record 138 and the README).
+s_px1 0.0573 reads 0.0611: every star within 0.004 in z of `v / c`
+(the README's grain of the digital step is 0.003; s_mz2 and s_px1 are
+0.0038 off, a grain and a third); and the crowd's registered free fit is
+`q = -0.108` in the late window (-0.22, -0.08, -0.11 over the three
+windows), `H (t_0 + T_0) = 1.026`, rms 0.0019 in z, inside the coasting
+bracket `q = 0 +- 0.25` (the README's table, record 138). The tool's `q =
+0.000`, `H = 1.000` is its validation of the exact Milne form at the
+worlds' own taus, not the fit, and is not the check.
 
 ### 2.6 The two Doppler formulas and nature's one
 
@@ -949,8 +995,9 @@ is series G2's `coasting_none` (section 2.5): the star's light carries `1
 + z = (1 + k)(1 + v / c)` with `k = 0` (no crowd, no slowing); had the
 lamp's clock carried nature's `gamma`, the fastest coasting star (s_mz2,
 `v / c = 0.2674`, `gamma = 1.0378`) would read `z = 1.0378 x 1.2674 - 1 =
-0.315`, and the register reads `0.2636` against the classical `0.2674`,
-within the grain 0.003 and fifty grains from the relativistic value. The
+0.315`, and the register reads `0.2636`: 0.0038 below the classical
+`0.2674` (a grain and a third of the README's 0.003) and 0.051 below the
+relativistic value, 17 grains. The
 absence of `gamma` is registered, not only derived. Under the crossing
 rule a moving clock inside a crowd reads a count that depends on its
 direction of motion relative to the crowd (record 158: in the `_scalar`
@@ -979,8 +1026,9 @@ and both saturate, the lattice's at the Link speed 1 and not at the
 flight's `c = 1 / sqrt 3`. Two invariant speeds cannot share a Lorentz
 group: the walk's bound 1 (one Link per interval for rows and bodies
 alike) is the causal speed, and light's `1 / sqrt 3` is below it, so a
-body of `p > 0.73 Q S M` outruns its own family's rows (the bar's
-outrunning body at 0.75, section 2.2, registered). Nature's light is at
+body of `p > 1.39 Q S M` (`v > 32 / 55`; 1.37 at `1 / sqrt 3`) outruns
+its own family's rows (the bar's outrunning body at `v = 0.75`, section
+2.2, registered). Nature's light is at
 the causal bound; the lattice's is at `1 / sqrt 3` of it, the owner's
 "phase velocity the wave on the mesh had" (BEAM_LAW section 3), so that
 no direction crosses two Links in one interval.
@@ -992,7 +1040,7 @@ no direction crosses two Links in one interval.
 | The isotropic light cone, `omega = c k` | **reached** (the rows; the cone of record 144) | `c = 1 / sqrt 3` in the lattice's frame |
 | Lorentz covariance of the free rows' limit | **reached** as the symmetry of the wave equation the rows converge to, not as a symmetry of the lattice (the cubic 48 and the translations only) | the ties of FORM.md section 3 break even the 48 |
 | The invariance of c for a moving reader | **different law**: a moving reader counts `c -+ v` (Galilean); an isotropic crowd hides it two-way exactly, a one-way count shows it | the crossing count |
-| The moving clock's `gamma` | **different law**: the rate is 1 at every v (HYPOTHESES 21); G2's fastest coasting star reads `z = 0.2636` where `gamma` would give 0.315 | the clock's frame; the only slowing is the crowd's |
+| The moving clock's `gamma` | **different law**: the rate is 1 at every v (HYPOTHESES 21); G2's fastest coasting star reads `z = 0.2636`, 0.0038 from the classical 0.2674 and 0.051 (17 grains) from `gamma`'s 0.315 | the clock's frame; the only slowing is the crowd's |
 | The dispersion `v(p)` | **different law**: `p / (m + p)` in place of `p / sqrt(m^2 + p^2)`; the cap 1 above c | the step rule |
 | Velocity addition, `E = m c^2`, the mass of a moving body | **not reached**: no operation carries a body's speed into its content or its clock; content is invariant, the momentum unbounded | the law has no energy of motion (target 6 for the release's E = h f) |
 | A preferred frame | the lattice's, and inside a crowd the crowd's: measurable one-way, hidden two-way | 4.2, 4.3 |
@@ -1203,11 +1251,17 @@ its cost in content per record, against the bits the one click reports,
 
 | World | units born | units at the ends (the record's rows) | cells | bits out per click | units per bit |
 | --- | --- | --- | --- | --- | --- |
-| Mach-Zehnder, the (20, 21) splitter | 2 | `2 + 2 + 2 x 41 = 86` (the two mirrors re-emit 1 each, the splitter 41 per input unit) | 2 | 1 | 86 |
+| Mach-Zehnder, the (20, 21) splitter | 2 | `2 x 41 = 82` (each mirror re-emits its unit whole, the splitter 41 per input unit; after the merge's cancel 42 remain, the registered rows of amount 41 toward D1 and 1 toward D2 of `mz_equal`, L1) | 2 | 1 | 82 |
 | the pair | 4 | 4 | 4 | 2 | 2 |
 | GHZ | 6 | 6 | 8 | 3 | 2 |
-| GHZ by one gate of three parties | (the Boss's tally of the register: 729; not re-derived here) | 729 | 8 | 3 | 243 |
-| the two slits (`slits_low`, the fans of 91) | 5 | `5 + 2 x 91 = 187` | 80 sets | 6.3 | 30 |
+| the two slits (`slits_low`, the fans of 91) | 5 | `2 x 91 + 3 = 185` (two rows reach the openings and are re-emitted on 91 each; three end at the wall) | 80 sets | 6.3 | 29 |
+
+The units at the ends are derived from the worlds' declarations by the
+formula below; the registered integers that check the arithmetic are the
+merged amounts `41` and `1` of `mz_equal` (L1: `20 + 21` in phase, `21 -
+20` in antiphase) and `slits_low`'s 64 clicks, reproduced by record 156's
+map row by row from the same five rows and two fans; the totals 82 and
+185 are not registered as such.
 
 The cost is discrete and grows with the apparatus, not with the
 information: a splitter of weights `(a, b)` costs `a + b` units per unit
@@ -1305,8 +1359,8 @@ correlation goes from the interference form to the product form,
     E(a, b) = cos 2a cos 2b   in place of   cos 2(a - b),
 
 so at the CHSH labels `E x 64 = 44, -44, 0, 0` and `S = 88 / 64` (L3's
-`path_*` worlds, registered) where the unread pair reads `44, 44, 44, 44`
-and `S = 176 / 64`; and a read on one arm at any tick before the counter
+`path_*` worlds, registered) where the unread pair reads `44, -44, 44, 44`
+(`S = E(0, 8) - E(0, 24) + E(16, 8) + E(16, 24) = 176 / 64`); and a read on one arm at any tick before the counter
 gives the same (`path_16_24_far`, Bob 116 Links farther: `E x 64 = 0`).
 The law has no partial read: a read factor selects a label whole, so the
 visibility of an interference between two labels is a step,
@@ -1353,12 +1407,12 @@ follow its frequency in flight.
 
 | Formula | Verdict | The place |
 | --- | --- | --- |
-| The cost per record, `k x prod (sum_i a_i)` units against `log2 (cells)` bits | **stated**: 86, 4, 6, 187 units for 1, 2, 3, 6.3 bits; the cost the apparatus's product of weights, the information the Holevo bound | the split creates content on the released line; the norm `w^2 / m` is what is kept |
+| The cost per record, `k x prod (sum_i a_i)` units against `log2 (cells)` bits | **New** (a formula with no counterpart in known physics): 82, 4, 6, 185 units for 1, 2, 3, 6.3 bits; the cost the apparatus's product of weights, the information the Holevo bound | the split creates content on the released line; the norm `w^2 / m` is what is kept |
 | The Holevo bound | **reached** as an identity (`log2 d` per click; GHZ's 2 bits of 3) | Definition 3 of the click |
 | Born's rule | **reached as a limit**: `|P - W/T| <= 1 / (2 N)`; the rule itself the click's definition (imported) | the rung; the dark port 0 of 64 at `1 / 1682` |
 | Tsirelson's bound | **reached as a limit**: `S(N, Q) -> 2 sqrt 2`, 2.75, 2.8125, 2.828125 registered at 64, 1024, 4096; two-sided at finite N | the rungs and the tables |
 | The visibility | **reached** for two rows at a Node, `2 w_1 w_2 / (w_1^2 + w_2^2)`; **different law** for a partial read: a step `[reads = 0]`, S from 176/64 to 88/64 | the read factor selects a label whole |
-| The classical-quantum boundary | **stated as a quantity**: two rows at one Node and no read before it | record 77's density of clicks = the density of reads |
+| The classical-quantum boundary | **New**, a quantity of the law: two rows at one Node and no read before it | record 77's density of clicks = the density of reads |
 | E = h f | **reached** as the release's identity, `E = h s = (h N) f` | Planck's constant `h N`; in flight the frequency and the content are untied |
 | Landauer's heat | **not a formula of the law** (record 140) | |
 
@@ -1386,17 +1440,22 @@ age at the click is its Euclidean path over c, `tau_i = L_i / c` with `L_i
 = sqrt(D^2 + (y -+ s / 2)^2)` (section 4.1: the cone is Euclidean), and
 its path phase is `(n / d) tau_i` steps; the cell's weight at the pixel
 is `|e^(i phi_1) + e^(i phi_2)|^2 = 2 + 2 cos(2 pi (n / (d N)) (L_1 - L_2)
-/ c)`. With `L_1 - L_2 = y s / D` to first order in `s / D` and `y / D`
-the weight is periodic in y with the spacing
-
-    delta_y = lambda D / s,   lambda = c N d / n Links   (the wavelength: N d / n intervals at c Links per interval),
-
-Young's law. On `slits_low`: `lambda = 8 intervals x 0.5818 = 4.654
-Links`, `delta_y = 4.654 x 44 / 10 = 20.5` pixels, the spacing record 156
-pins with the screen's fan (bright at y = 35 .. 38, 59 .. 61, 82 .. 85,
-Pearson 0.963 with the cosine, the visibility 0.96 over 4096 births).
-**Reached in the limit of every direction**, with the exact phase at the
-click. The registered check of the two-path rule itself is L1's unequal
+/ c)`. The bright pixels are where `L_1 - L_2 = +- j lambda`, `lambda = c N d
+/ n` Links (the wavelength: `N d / n` intervals at c Links per interval),
+and only in the paraxial limit `s, y << D` does that become the spacing
+`delta_y = lambda D / s`, Young's small-angle law. On `slits_low` the
+angle is not small (`y / D` is 0.5 at the first fringe): `lambda = 8
+intervals x 32 / 55 = 4.654` Links, the paraxial spacing would be `4.654
+x 44 / 10 = 20.5` pixels, and the exact condition `sqrt(D^2 + (y +
+5)^2) - sqrt(D^2 + (y - 5)^2) = lambda` at `D = 44` puts the first bright
+fringes at `abs(y) = 23.3` about the centre, the pixels 36.7 and 83.3.
+Record 156 pins the bright bands at y = 35 .. 38, 59 .. 61, 82 .. 85 with
+the screen's fan (Pearson 0.963 with the cosine, the visibility 0.96 over
+4096 births): their centres 36.5, 60, 83.5, 23.5 apart, the exact law's
+23.3 within the pixel; the paraxial 20.5 is three pixels off and is not
+the check. **Reached in the limit of every direction**, with the exact
+phase at the click, as the exact two-path law; Young's `lambda D / s` is
+its paraxial form. The registered check of the two-path rule itself is L1's unequal
 arms: arm 2 longer by two intervals at the pair form 0, `[8, 1]` and
 `[16, 1]` reads D1/D2 `64/0`, `32/32`, `0/64`: the phase difference `(n /
 d) delta_tau = 0, 16, 32` steps of 64 gives `cos^2` of 0, a quarter turn,
@@ -1470,11 +1529,14 @@ table's j are `pi / 2` times larger (r = 2: 1.49; 4: 2.30; 6: 2.71; 8:
 3.14; 12: 4.01; 15: 4.51; 16: 5.10): the whole values fall at r = 12 (j
 = 4) and near r = 2 (j = 1.5, between), not at r = 8; in the step-drive
 re-read r = 12 closed five times with every return within `r / 4` and r
-= 8 four times, and the phase's turn per orbit at r = 8 read 0.75 to 0.83
-of a circle beyond whole circles, which is what `j = 3.14` on an
-eccentric loop gives sooner than the design's 0; the r = 12 world's
-fraction is the reading to take (the register's re-read tables, not read
-here). (ii) The turn as built re-prices `k0 |p| N / h` at the current
+= 8 four times. The registered fractions of the phase's turn beyond
+whole circles at r = 8 (0.234 on the base over one pair of closings, 0.75
+to 0.83 under the step drive, 0.969 under the signed drive) are read on
+eccentric loops (r from 3 to 28) and check neither form: on a circle `j
+= pi` would give 0.14, and no registered loop is a circle. The reading
+that would decide is the r = 12 world's fraction under the step drive
+(near 0 under `2 pi p r`, near 0.55 under `4 p r`), not taken here:
+unchecked. (ii) The turn as built re-prices `k0 |p| N / h` at the current
 `|p|` (section 1.3 item 6), and on an orbit `|p_axis|` changes at every
 interval, so the closure is exact only under the accumulator form
 ordered by record 155.
@@ -1505,7 +1567,7 @@ still need what the law lacks, an energy and a transition.
 
 | Formula | Verdict | The place |
 | --- | --- | --- |
-| Young's spacing `lambda D / s` | **reached in the limit of every direction** with the exact phase at the click (record 156's 20.5 pixels; L1's `64/0, 32/32, 0/64` the two-path rule registered) | the wheel, the fan's comb, the arrival's floor, the isqrt |
+| Young's fringes, `L_1 - L_2 = +- j lambda` (the paraxial `lambda D / s`) | **reached in the limit of every direction** with the exact phase at the click (record 156's bright bands 23.5 apart against the exact law's 23.3; L1's `64/0, 32/32, 0/64` the two-path rule registered) | the wheel, the fan's comb, the arrival's floor, the isqrt |
 | Bohr's condition `2 pi p r = j h` | **reached** exactly in the limit of small Links (the sum of `|p_axis|` over the Links is the action) | the design's `4 p r` corrected; the accumulator form for a changing p |
 | Bohr's radii `r_j ~ j^2` | **reached in form** under the inverse square | no closed orbit registered on the base; r = 12 (j = 4.01) the closing radius under the true sum |
 | Bohr's energies and the Rydberg lines | **not reached**: no energy, no transition; the detector reads the orbital frequency `~ 1 / j^3` | a different law of the spectrum |
@@ -1519,8 +1581,8 @@ still need what the law lacks, an energy and a transition.
 | 3 Newton and Coulomb | Gauss exactly; the inverse square in the shell mean; `G = K (n / d) / (4 pi S)`; `k_C = G`, the ratio `-rho_A rho_B` | | per Node without the limit of every direction |
 | 4 special relativity | the light cone and `omega = c k`; the Lorentz symmetry of the rows' limit | the moving reader's `c -+ v`; the clock at 1; `v = p / (m + p)`; the cap 1 above c | velocity addition, `E = m c^2`, the moving mass |
 | 5 general relativity | Poisson and the retarded wave equation of the delay field; the redshift at first order; Newton's geodesics; the general flux | the redshift at second order, no horizon; the meeting's delay `~ M / b` | Einstein's equation; light on `main`; the post-Newtonian terms |
-| 6 the information cost | Holevo; Born and Tsirelson as limits; the visibility of two rows; `E = (h N) f` | the partial read (a step) | Landauer |
-| 7 Young and Bohr | Young's spacing in the limit of every direction; Bohr's `2 pi p r = j h` and `r_j ~ j^2` | the spectrum at the orbital frequency | the levels' energies and the Rydberg lines |
+| 6 the information cost | Holevo; Born and Tsirelson as limits; the visibility of two rows; `E = (h N) f`; **New**: the cost per record and the boundary as quantities | the partial read (a step) | Landauer |
+| 7 Young and Bohr | Young's fringes in the limit of every direction (the exact two-path law, `lambda D / s` its paraxial form); Bohr's `2 pi p r = j h` and `r_j ~ j^2` | the spectrum at the orbital frequency | the levels' energies and the Rydberg lines |
 
 ## 9. The law of information on the GameBoard: the inventory restated as one law, and its cases derived
 
