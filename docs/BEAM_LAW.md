@@ -30,7 +30,16 @@ the clock ([the engine](ENGINE.md)).
 dataclass `NatureBeam`; the law is the single function `nature_beam(...)`, which
 performs a Node's whole interval for the rays present. No other function holds
 a piece of the ray's law; helpers exist only as pure tables that `nature_beam`
-reads (the flight rule, the collision table). The repository's rule that a
+reads (the flight rule, the collision table). Since 2026-09-21 (the model
+owner's order, "optimization and simplify") `nature_beam` reads as the six
+steps it names, each step a function of the same module called by
+`nature_beam` alone, over the frame `Interval` that `interval_frame` reads
+once per interval: `_walk`, `_collide`, `_measure` (with `_measured_arrays`,
+`_family_plan`, `_apply_plans` and `_apply_plan`), `_release` (with
+`_release_family`), `_border`, `_merge` and `_inverse_interval`; the law is
+still the one function, its text moved and not changed (bit-exact;
+[MIGRATION](MIGRATION.md#the-interval-in-named-steps-on-2026-09-21-host-only-bit-exact)).
+The repository's rule that a
 name states a component's responsibility (AGENTS.md) yields to the owner's
 explicit name for this one component; this exception is recorded here and in
 Highlights 5.4, and applies to nothing else.
@@ -260,7 +269,13 @@ nature_beam(store: NatureBeamStore, world: NatureBeamWorld, tables: NatureBeamTa
            tick: int, record: Record, inverse: bool = False) -> Books
 ```
 
-and nothing else with law in it. `NatureBeamTables` holds the two pure tables,
+and nothing else with law in it; since 2026-09-21 its six steps are the
+named functions of the module listed in section 1 ("The owner's name"),
+called by `nature_beam` alone, over the frame `Interval` (the world's
+constants, the measured events in number order and the crossing marks of
+note 48, read once by `interval_frame`) and, in step 4, `MeasuredArrays`
+(the measured events' tables in array form, read once by
+`_measured_arrays`). `NatureBeamTables` holds the two pure tables,
 computed once at load from the world's direction set and N: the flight rule
 and the collision table (section 4). `engine.py` keeps the interval's frame
 (the tick, the books, the record, the measured events' clocks by `by_clock`,

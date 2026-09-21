@@ -87,7 +87,7 @@ cited as orders, not as code.
 
 Section 0 states the law as one operator with its two blocks and places
 every result under its block (the owner's second pass, record 167 as the
-Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass); section 17 answers the owner's direction of 2026-09-21 (the law above Newton and Einstein: the theorem of covariant readings); section 18 answers records 264 and 265 (the three structural failures of the register under one logic); section 19 answers the owner's direction of 2026-09-21 on the masses (a bound set's mass as its total content, the nucleon as a chain of three on the bipartite lattice); section 20 answers record 270 (the periodic universe against the measured numbers); section 21 is the derivation map for the paper (every formula with its premises, script, run, the pin before the run, the order of the expansion, the error term and status; 21.4 the Einstein map; 21.5 the standard of record 300 and the new rows); section 22 answers records 291 and 292 (the uncertainty relation from the six verbs, and Bell); section 23 answers record 331 (Schrodinger's equation and the massive row, massive-rows-v1, reached only in part); section 24 answers record 337 (the inputs ledger, the bilinear rate forced, the Delta P table and the one prediction, S = 181 / 64). The
+Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass); section 17 answers the owner's direction of 2026-09-21 (the law above Newton and Einstein: the theorem of covariant readings); section 18 answers records 264 and 265 (the three structural failures of the register under one logic); section 19 answers the owner's direction of 2026-09-21 on the masses (a bound set's mass as its total content, the nucleon as a chain of three on the bipartite lattice); section 20 answers record 270 (the periodic universe against the measured numbers); section 21 is the derivation map for the paper (every formula with its premises, script, run, the pin before the run, the order of the expansion, the error term and status; 21.4 the Einstein map; 21.5 the standard of record 300 and the new rows); section 22 answers records 291 and 292 (the uncertainty relation from the six verbs, and Bell); section 23 answers record 331 (Schrodinger's equation and the massive row, massive-rows-v1, reached only in part); section 24 answers record 337 (the inputs ledger, the bilinear rate forced, the Delta P table and the one prediction, S = 181 / 64); section 25 answers record 343 (the big formulas of the continuum: flow, heat, temperature, the inventory of round 1). The
 targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
@@ -2552,7 +2552,7 @@ release's or the lamp's accumulator, and the lamp's discard (note 41
 (iii): a self-creation of turn 0 or outside the window releases nothing
 and loses the count) happens at a carry of the lamp's accumulator and
 nowhere else (`3599-3606`). (iii) The one rule that acts on rows that made
-no Link is the collision: `collide` (`2345-2390`) permutes every single
+no Link is the collision: `_collide` permutes every single
 unit on a heading or a rest slot at a free Node, arrived this interval or
 not (`eligible` is not filtered by `moved`), and on the table every
 moving state lies on a cycle: 2132 of the 6561 slot states move, and none
@@ -6689,3 +6689,110 @@ build),
 three are below reach, four are open, and one is a prediction within
 reach: `S = 181 / 64`, three parts in ten thousand below Tsirelson's
 bound (24.4). No run; nothing enters the law.
+
+## 25. The big formulas of the continuum: flow, heat, temperature and the rest, what the GameBoard has of each
+
+**The owner's order** (record 343, 2026-09-21, translated: "check whether
+it is possible to reach also the formulas of flow, the formulas of
+temperature if there are any, and more big formulas that people brought
+with them"). Two rounds under the six-point standard (21.5): round 1,
+this inventory, every formula with what it is on the GameBoard (the
+reading that shows it, DETECTOR or GAMEBOARD, record 281), its standing
+(reached exactly, in the limit, in form, or not reached with what is
+missing named as an identity if a rule is needed), its pin (the derived
+integer or closed form and the world that would read it) and its verdict;
+round 2, the derivations of what round 1 finds reachable now, one formula
+per subsection with its error term. Nothing enters the law; no run (a
+pin that needs one is the experimenter's, on the Boss's order). The
+three tests apply to any rule a formula would need beyond the law:
+generic, vector, local (skills/workflow.md, record 202).
+
+**Notation, once.** rho the density of rows or bodies per Node; **j** the
+flux (rows crossing a face per interval); **u** a mean velocity in Links
+per interval; P the pressure (the momentum crossing a face per interval
+per Node of the face, label units); Theta the temperature reading defined
+in 25.1 row 8 (label units squared per unit of content); nu the kinematic
+viscosity and D_diff the diffusion coefficient (Links squared per
+interval); kappa the thermal conductivity; H Boltzmann's H (bits, section
+14); the other symbols as in the sections cited.
+
+### 25.1 The inventory
+
+**Three facts of the law that decide most rows, stated once.** (F1) Rows
+in flight are ballistic on their lines (input 7 of 24.1: the flight blind
+to the crowd) and collide only on the six-heading gas of ONE number and
+content (BEAM_LAW section 4: eight slots, the six headings and two rest
+slots; a fan direction is a spectator; the table permutes the single
+units of one (number, content) class, conserving amount and momentum;
+the head-on pair parks and cycles through the three axes); rows of two
+emitters never collide. (F2) Bodies interact only at the contact (a step
+refused by an occupant, `engine.py` `_contact`): under `measure` the axis
+component of the momentum is handed to the occupant (momentum
+conserved, the pair's kinetic energy not: inelastic), under `rerelease`
+it is returned doubled (an elastic wall, the occupant unmoved), under
+`pass` nothing; there is no rule by which two free bodies exchange their
+momenta elastically. (F3) The click is the one non-bijective step (14.1,
+14.2): between clicks the count of states is constant (the lattice's
+Liouville theorem), at a click `log2 N - H` bits are erased.
+
+| # | The formula | On the GameBoard: the reading that shows it (kind) | Standing | The pin (the closed form or integer; the world that would read it) | Verdict |
+| --- | --- | --- | --- | --- | --- |
+| 1 | the continuity equation `d rho / dt + div(j) = 0` | the books: every unit born, absorbed, escaped or in transit is on a ledger line at every tick (BEAM_LAW section 5; `measured + transit + escaped` constant); the flux through a face the face's escaped line (GAMEBOARD) and its clicks (DETECTOR) | reached EXACTLY at every instant on the lattice (5.5, row 47): the amount crossing a closed surface per interval is the release inside it | series E's `k_s r^2 = 41.5` (the flux through the square within 2 percent of q, series C item 5); round 2 derives the equation from the ledger's identity | reached exactly |
+| 2 | Euler's equation `rho (d u / dt + u . grad u) = -grad P` | the six-heading gas of one number under the collision table (F1): the mean flux per Node over a coarse cell (GAMEBOARD) | the classical lattice-gas route (Frisch, Hasslacher and Pomeau 1986; Wolfram 1986): the collision conserves mass and momentum and the Chapman-Enskog expansion gives Euler's form at first order in the gradient; but on the cubic six-Link lattice with two rest slots the momentum flux tensor is not isotropic at fourth rank (the HPP obstacle: the square and cubic lattices carry `sum_i c_i c_i c_i c_i` off the isotropic form; FHP's hexagon cures it in two dimensions, the FCHC projection in three) and the Galilean factor `g(rho) != 1` multiplies the convective term | the collision table's `g(rho)` and the stress tensor's anisotropy computed from the table's 20 orbits (round 2, an integer host map), the pin a shear flow on the six-heading gas reading the momentum flux per face | reached IN FORM with the known obstacle: Euler's form with an anisotropic momentum flux and `g(rho)`; the isotropic Euler NOT reached on the six-Link lattice (a fan-wide collision would be an identity, `fan-collision-v1`, not designed) |
+| 3 | Navier-Stokes, `+ nu Laplacian(u)` | the same gas; the viscous stress from the collision's relaxation of the momentum flux (GAMEBOARD) | the same route at second order: a viscosity from the table's relaxation, with the same anisotropy of the fourth-rank tensor; the six-heading gas of one number only (F1), so a fluid of many emitters' rows does not mix by collision at all | `nu` from the table by the Chapman-Enskog integer map (round 2); the pin the decay of a shear wave on the gas | reached IN FORM on a single-number gas with the obstacle; NOT reached as the isotropic Navier-Stokes |
+| 4 | Bernoulli, `P + rho u^2 / 2 = const` along a streamline | follows from Euler on a steady flow | as Euler's: in form with the `g(rho)` factor (`P + g rho u^2 / 2`) | the same shear world's pressure against its mean flux | reached in form as Euler's corollary; the constant's factor the table's |
+| 5 | the diffusion equation `d rho / dt = D_diff Laplacian(rho)` and Fick's law `j = -D_diff grad(rho)` | a tagged row of the six-heading gas scattered by the collision (F1): its displacement's second moment per interval (GAMEBOARD); a row on a fan direction is ballistic and never diffuses | the lattice-gas route: the tagged unit's walk is a Markov chain on the six headings with the table's scattering probabilities at the local density, so its second moment grows linearly and the density obeys the diffusion equation at second order in the gradient; the second-rank tensor IS isotropic on the cube (the only isotropic rank-2 tensor on the 48 is the identity), so the diffusion equation is isotropic where Navier-Stokes is not | `D_diff = c^2 tau_c / 3` with `tau_c` the mean intervals between collisions from the table at the density (round 2's integer map); the pin a pulse of rows on the six headings in a periodic cube, its second moment per interval | reached IN FORM for the six-heading gas of one number; a fan-direction row does not diffuse (ballistic, F1) |
+| 6 | the heat equation `d T / dt = (kappa / rho c_v) Laplacian(T)` and Fourier's law `q = -kappa grad(T)` | the content carried by the diffusing rows (each row's content `h s`, 6.4) as the energy that diffuses (GAMEBOARD); a detector's content per click (DETECTOR) | Fourier's law is Fick's law on the content current where the rows diffuse (row 5), with `kappa = D_diff x rho x (content per row)`; a temperature enters only through row 8's definition | the same pulse world with two families' contents; the content current per face against the content's gradient | reached IN FORM as Fick's law on content; the coefficient the table's |
+| 7 | temperature | no rule of its own on the GameBoard (no rate reads a temperature; 16.4's last row); TWO readings: GAMEBOARD, the mean squared momentum per unit of content over a set's bodies per axis, `Theta_a = (1 / n) sum over the set of p_a^2 / (Q S M)`, in label units squared per unit of content; DETECTOR, a detector's histogram of the content per click against its energy ladder `E = h s` (the click record's `content`), a temperature only if the histogram is exponential (Boltzmann's factor), which nothing in the law makes it (F2: no thermalisation) | a reading exists (GAMEBOARD) and a measurement exists (DETECTOR); a temperature as an equilibrium's parameter does not: no rule brings a set of bodies to one Theta (F2), and the entropy's count (section 14) gives `1 / T = dS / dE` only when the count is a function of the energy alone (row 12) | the definition, with `k_B` the conversion of 16.1; the pin the reading on series G2's 24 stars (`Theta_x` from their declared momenta, an identity of the declaration) | reached as a READING (a definition, not a law); not reached as an equilibrium's parameter |
+| 8 | the ideal gas law `P V = N k T` | the pressure as the books' momentum flux through a face: the face's escaped momentum per interval (`face_momentum`, `engine.py`, GAMEBOARD) or the momentum the face's clicks carry (DETECTOR) per Node of the face; N the bodies of the set; T row 7's Theta | the kinetic identity `P_a = n <p_a v_a> = n Theta_a` per axis for free bodies with elastic face reflections (`rerelease` at a face: the component returned doubled, F2) holds as an identity of the readings, exact in the mean, needing no equilibrium; `P V = N Theta` per axis | a periodic-in-two-axes bar of n free bodies at declared momenta with `rerelease` faces: the face's momentum per interval against `n Theta_x` (an integer identity of the declared momenta and the flight's whole steps; round 2) | reached IN FORM as an identity of two readings (`P V = N k Theta` per axis); the equation of state of a real gas (the interactions) not reached |
+| 9 | equipartition, `<E_a> = k T / 2` per degree of freedom | the mean of `p_a^2 / (2 Q S M)` over a set per axis (GAMEBOARD) | an identity per axis by row 7's definition; the CONTENT of equipartition, that the three axes share one Theta and every body the same, needs elastic exchange between bodies, which the law lacks (F2): an identity `elastic-contact-v1` (the one-dimensional elastic exchange of the axis components between two bodies of contents `m_1`, `m_2` at a refused step, `p_1' = ((m_1 - m_2) p_1 + 2 m_1 p_2) / (m_1 + m_2)` as one `by_drive` with its remainder, momentum exact, the energy to the remainder) is named, not designed; its three tests: generic (no name), vector (T, B), local (the two records) pass on paper | none until the identity | NOT reached (the equality of the axes' Theta); the identity named |
+| 10 | the Maxwell-Boltzmann distribution | the histogram of a set's `p_a` (GAMEBOARD) | needs the same exchange (row 9) and many contacts; under `measure` contacts (inelastic) the momenta drain to zero, under `rerelease` they are reflected off unmoved occupants: no relaxation to a distribution on `main` | none until `elastic-contact-v1`; then the pin the histogram of n bodies in a periodic box after `10^4` contacts against `exp(-p^2 / (2 m Theta))` to the rung | NOT reached; the identity named |
+| 11 | Boltzmann's entropy `S = k log W` | section 14's count of state vectors consistent with the click list (a host reading of the register's click counts; `mz_equal` 0 / 6, `slits_low` 3.425 / 2.575) | reached EXACTLY as the count (row 53) | the registered counts | reached exactly |
+| 12 | the H-theorem, `d S / dt >= 0` | 14.1 and 14.2 under the bijection (F3): the count is constant between clicks (Liouville on the lattice) and drops by `log2 N - H` bits erased at each click, so the world's entropy in 14's sense changes only at clicks, and the click list only grows | reached in the law's own terms (14.3's verdict): the second law located at the click; Boltzmann's kinetic H (a coarse-grained count over the gas's cells) would decrease under the collision table's mixing on the six-heading gas as in every lattice gas, a GAMEBOARD reading not made | the click-count identity of section 14; for the kinetic H a coarse-grained count on the pulse world of row 5 | reached in form (at the click, exactly; the kinetic form a reading not made) |
+| 13 | temperature from entropy, `1 / T = dS / dE` | the count of 14 as a function of the set's energy (the content per click, the bodies' `E'`) | the derivative exists only where the count depends on the energy alone; the law's count depends on the click list, not on an energy: a temperature from entropy needs an ensemble of worlds at one energy, which the law does not have (one world, one click list) | none in sight | NOT reached (no ensemble) |
+| 14 | Planck's law, Wien, Stefan-Boltzmann | the release `E = h s` per unit at the lamp's turn (6.4, row 51, exact); a detector's histogram of the content per click (DETECTOR) | the spectrum of a crowd is the lamps' declared rates; a black body needs lamps at every rate weighted by `1 / (e^(h f / k T) - 1)`, which no rule produces (rows 7, 10): the shape is an input | none: a world declaring Planck's weights would read them back (an identity of the declaration, not a law) | NOT reached; the spectrum an INPUT (24.1 row 18's `n / d`) |
+| 15 | Maxwell's equations | 21.5's rows 47 to 50 by reference: Gauss exact, the wave equation reached, Faraday and Ampere-Maxwell under `source-velocity-v1` | as there | as there | as 21.5 |
+| 16 | the wave equation (the linear block) | 4.1, 5.1, row 48 | reached (second order in the Link, the anisotropic term named) | series K's 89.40 | reached |
+| 17 | Dirac's equation | the hand is a pseudoscalar bit on the row (hand-v1, the 48's action); a massive row's dispersion is the exact square (23) | the spinor structure (two components mixed by the momentum, the first-order form) is not in the law: the hand is a bit, not a spinor, and the massive row's block is scalar (23.2); an identity would carry a two-component label turned by the direction (`spinor-rows-v1`), not designed; the three tests on paper: generic, vector (P on a two-state label), local | none | NOT reached; the identity named |
+| 18 | Hooke's law `F = -k x` | binding-v1's bond (the give at the contact, a bound pair a fixed point `p = 0` at one Link, 0's class I) | the bound pair is a hard bond: the force is the columns' `1 / r^2` in flight and the contact's hand-over at one Link, no term linear in a displacement; a Hooke oscillator would need a restoring push proportional to the separation, which no column gives (the columns are bilinear in the flow, 24.2) | none | NOT reached: the law's bonds are hard (a fixed point), not springs; a chain of hard bonds has no small-oscillation mode |
+| 19 | Ohm's law `j = sigma E` | a charged body pushed by a field's flow through a crowd of other bodies: its momentum accumulates the push per interval and nothing drains it (F2: contacts hand over or reflect, no drag) | a steady drift needs a drag; the law's crowd slows a body's CLOCK (the owed count, 5.2), not its momentum; on `main` a pushed body accelerates without bound (row 22 of 24.3) | none until a drag: `elastic-contact-v1` (row 9) gives a mean free path and a drift at `sigma = n q^2 tau_c / m`, the Drude form, if built | NOT reached; the identity named (Drude's form follows from it in form) |
+| 20 | Newton's cooling `d Q / dt = -h (T - T_env)` | a body's held content released at its rate `M n / d` per self-creation (the release, 3.3) and absorbed from the crowd's rows (the click) | the release alone is an exponential decay of the held content, `M(t) = M_0 (1 - n / d)^t` (an identity of the accumulator); the "environment's temperature" is the crowd's arriving content, so the balance `dM / dt = -(n / d) M + (absorbed per interval)` is linear and relaxes exponentially to the crowd's supply: Newton's form with the content in place of the temperature | series J's lamps (the paid content falling at every birth, 6.4) and any free body's release accumulator: an identity of the declared rate | reached IN FORM for the content (the "temperature" the content's, row 7) |
+| 21 | Stokes' drag and the mean free path | a body through the six-heading gas: rows arriving push it (the flow), none scatter off it | no drag on `main` (row 19) | none until `elastic-contact-v1` | NOT reached |
+| 22 | the sound speed `c_s^2 = dP / d rho` | the six-heading gas: a density pulse's pace (GAMEBOARD) | the lattice gas's `c_s = c / sqrt 3`-type constant from the table (HPP: `1 / sqrt 2` on the square; the cubic value the round-2 map's) | the pulse's front per interval on the gas | reached in form (the table's constant) |
+| 23 | the second law and Landauer | 14; Landauer out (record 140): the click erases at no energy | as 22.1 and row 54 | | reached (the entropy identity); Landauer D |
+
+### 25.2 What round 2 derives, and what it does not
+
+Reachable now, one subsection each in round 2 with its error term: (i)
+the continuity equation from the ledger's identity (row 1, exact); (ii)
+the lattice-gas limit of the six-heading collision (rows 2, 3, 22): the
+Chapman-Enskog expansion on the table's 20 orbits as an integer host map,
+the Galilean factor `g(rho)`, the momentum flux tensor and its
+anisotropy on the cube, the viscosity and the sound speed, with the
+obstacle stated as the finding; (iii) the diffusion equation from the
+tagged unit's scattering (row 5) and Fourier's law on the content (row
+6); (iv) temperature as a reading with the ideal gas law and
+equipartition as identities of the readings (rows 7, 8, 9's identity
+part); (v) temperature from entropy: why the count of 14 gives no `d S /
+d E` without an ensemble (row 13), in one page; (vi) Newton's cooling as
+the release's exponential (row 20). Not derivable without a rule: the
+isotropic Navier-Stokes (a fan-wide collision), the Maxwell-Boltzmann
+distribution, equipartition's equality of the axes, Ohm's and Stokes'
+drag (all through `elastic-contact-v1`, one identity named for four
+rows), Planck's spectrum (an input), Dirac (`spinor-rows-v1`), Hooke (the
+bonds are hard).
+
+### 25.3 The verdict of round 1
+
+Of twenty-three formulas: reached exactly, three (the continuity
+equation, Boltzmann's count, the second law at the click); reached in
+form on the six-heading gas of one number, six (Euler and Navier-Stokes
+with the HPP obstacle and the Galilean factor, Bernoulli, diffusion and
+Fick, Fourier, the sound speed); reached as identities of readings,
+three (temperature as a reading, the ideal gas law per axis, Newton's
+cooling of the content); by reference, two (Maxwell's, the wave
+equation); not reached, nine (the isotropic Navier-Stokes,
+equipartition's equality, Maxwell-Boltzmann, temperature from entropy,
+Planck's spectrum, Dirac, Hooke, Ohm, Stokes), of which five fall to one
+identity, `elastic-contact-v1`, whose three tests pass on paper and whose
+design is not this section's. Nothing enters the law.
