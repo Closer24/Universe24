@@ -3469,20 +3469,27 @@ records"), and the digital line of a direction **D** makes exactly `S_1 =
 |D|_1` Links per period, the least number of Links any lattice path from
 the Node to the Node at **D** can make (the L1 distance): the least
 computation per Euclidean progress, one carry per Link. What K does not
-give: the value `1 / sqrt 3`. One Link per interval on every direction
-would let a heading row fly at 1 Link per interval and a cube-diagonal
-row at `sqrt 3` per interval; the same Euclidean pace in every direction
-(the flight table's isotropy, `T_D = isqrt(3 |D|^2 Q^2)`) is a second
-axiom, and it fixes the pace at the diagonal's, `1 / sqrt 3`, the largest
-isotropic pace that crosses at most one Link per interval on every line
-(`S_1 Q <= T_D`, Cauchy-Schwarz with equality on the diagonals: c is the
-operator norm of the flight, record 186). The flight table's sitting AT
-that supremum, `1 / sqrt 3` and not below it, is a third statement of
-the design beside locality and straightness, since a slower isotropic
-pace obeys both (the paper's finding, round 7; the second axiom above
-in the paper's words). **Partial**: K fixes the bound
+give: the value `1 / sqrt 3`. One Link per interval on every line is
+anisotropic: a heading row advances 1 Link per interval, while a
+cube-diagonal row needs three Links for the displacement `sqrt 3` and
+advances `1 / sqrt 3` per interval (a row stepping on all three axes in
+one interval would advance `sqrt 3`, and K forbids it: one carry per
+interval). An isotropic pace is therefore bounded by the slowest line,
+the cube diagonal's: `c <= 1 / sqrt 3` (`S_1 Q <= T_D`, Cauchy-Schwarz
+with equality on the diagonals: c is the operator norm of the flight,
+record 186). The same Euclidean pace in every direction (the flight
+table's isotropy, `T_D = isqrt(3 |D|^2 Q^2)`) is a second axiom, and it
+gives the inequality, not the value; the equality, the flight table's
+sitting AT that supremum and not below it, is a third statement of the
+design beside locality and straightness, since a slower isotropic pace
+obeys both (the owner's finding, record 262; the paper's, record 253).
+In the owner's terms: what is derived is the largest uniform pace the
+GameBoard allows under locality and straightness; that the rows realise
+it (the third statement) and what a detector in motion reads of it
+(section 4.2, the one-way count `c -+ v`) are stated, not derived.
+**Partial**: K fixes the bound
 (one carry per interval, the Manhattan count as the least computation),
-isotropy fixes the number; the count against K is the walk's 16
+isotropy bounds the number and the third statement fixes it; the count against K is the walk's 16
 operations per row per interval, and 1 carry per `T_D / (S_1 Q)`
 intervals (1.72 on a heading, 1.22 on a face diagonal, 1 on a cube
 diagonal).
