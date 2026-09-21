@@ -17,8 +17,16 @@ formula gives, a run proves; the template `tests/test_amplitude_cone.py`).
     pair at one Link (u u 4896, d d 2448, u d 0) from the binding condition
     G_A G_B + M_A M_B > Q_A Q_B on the rows' charges.
 
-No number of a 3000-interval run is pinned here: the fates are the
-register's readings (`tools/quarks_readings.py`).
+(e) the register's `replay` block of every world (2026-09-21, after the
+    crossing rule moved the fate readings): the engine's record of the
+    first `cap` intervals by kind (the steps with their Nodes and the
+    hand-overs, GAMEBOARD; the face clicks of the bodies that left,
+    DETECTOR), written from the engine by `replay_register.py` and
+    replayed here bit-exact, so the register cannot drift from the tree
+    again; the fate's `engine_first_step` is the replay's first step.
+
+No number of a 3000-interval run is pinned here: the 3000-interval fates
+are the register's readings (`tools/quarks_readings.py`).
 """
 
 from __future__ import annotations
@@ -32,6 +40,7 @@ from pathlib import Path
 import pytest
 
 from event_universe.events import parse_nature_beam_world
+from event_universe.events.run import execute_nature_beam_run
 
 ROOT = Path(__file__).resolve().parents[1]
 WORLDS = ROOT / "examples" / "events" / "quarks"
@@ -63,7 +72,13 @@ def numbers():
 def register() -> dict[str, object]:
     found = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
     assert found["format"] == "quarks-expectations-v1"
-    assert set(found["derivations"]) == {"pushes", "border_rows_per_interval", "read_mass", "fate"}
+    assert set(found["derivations"]) == {
+        "pushes",
+        "border_rows_per_interval",
+        "read_mass",
+        "fate",
+        "replay",
+    }
     return found
 
 
@@ -138,3 +153,27 @@ def test_the_least_strong_value_that_binds_each_pair(numbers):
     assert least == {"uu": 4896, "ud": 0, "dd": 2448}
     assert rows["u"]["units"] == 4 and rows["d"]["units"] == 9
     assert rows["u"]["rho"] == (1224, 1) and rows["d"]["rho"] == (-272, 1)
+
+
+@pytest.fixture(scope="module")
+def readings_tool():
+    return load("quarks_readings_tool", ROOT / "tools" / "quarks_readings.py")
+
+
+@pytest.mark.parametrize("name", NAMES)
+def test_the_replay_of_every_world_reads_as_registered(
+    name: str, register, readings_tool, tmp_path: Path
+):
+    """(e)."""
+    pinned = register["worlds"][name]
+    replay = pinned["replay"]
+    cap = int(replay["cap"])
+    source = (WORLDS / f"{name}.json").read_bytes()
+    out = tmp_path / "run"
+    out.mkdir()
+    execute_nature_beam_run(parse_nature_beam_world(json.loads(source)), source, out, name, cap)
+    assert readings_tool.replay_block(out, cap) == replay
+    steps = replay["steps"]
+    first = min((ticks[0][0] for ticks in steps.values() if ticks), default=None)
+    assert pinned["fate"]["engine_first_step"] == first
+    assert "step_every_about" not in pinned["fate"]

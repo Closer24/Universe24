@@ -638,6 +638,32 @@ binary states 202 move, as rays2 found). The table is generated and checked
 at load from this rule (`nature_beam_tables.py` is the reference; the implementation
 ports `collision_table()` and `class_key()` into `NatureBeamTables`).
 
+**Four declared facts of the collision** (2026-09-21; the derivation
+mathematician's section 25, round 2, and the auditor's round 3; no rule
+change, the facts read from `_collide` and the table). (1) The assignment
+by rank at a moving state: the single units of a class are taken in slot
+order (+x, -x, +y, -y, +z, -z, here a, here b) and the k-th single goes to
+the k-th occupied slot of the image, so on the head-on pair's cycle
+`+x -x -> ha hb -> +z -z -> +y -y -> +x -x` the unit that came on +x
+leaves on +z and the one on -x on -z: a head-on meeting turns the pair's
+axis `x -> z -> y -> x`, a three-fold rotation about the cube's diagonal,
+always the same way (the Port-order tie's chirality). (2) The parity of
+the rest count is conserved by every class, so a gas born on the headings
+holds its rest units in pairs at every Node and never one alone; the rest
+pair is one slot of two units. (3) The tie's reach, measured (the
+auditor's round 3): on a world of two transit singles meeting head-on (an
+open 15^3, one at (4, 7, 7) on +x, one at (10, 7, 7) on -x, no body, 30
+intervals; the world's sha256 2d86c73f) the record mapped back through
+g^-1 equals the base under exactly 16 of the 48 (the identity axis
+permutation and the cyclic permutation (1, 2, 0), with every sign) and
+differs under 32, 16 of them proper rotations, the difference reaching
+the detector: the base leaves on +y and -y and clicks at tick 20; 16
+images leave on the z faces at tick 20, 8 on the y faces and 8 on the z
+faces at tick 19. (4) A parked pair (`+x -x -> ha hb`) is permuted again
+at every interval it dwells and dwells until its next Link falls, so the
+collision's outcome is coupled to the flight's Link timing (the age at
+which the fourth Link falls).
+
 **The 20 orbits.** The six-heading occupation patterns with a "here" flag fall
 into 20 orbits under the 48 signed axis permutations (10 x 2; no handedness:
 the group includes reflections). The table respects them: two states in one

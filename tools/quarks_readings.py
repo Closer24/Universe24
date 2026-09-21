@@ -141,6 +141,41 @@ def read_run(folder: Path, push_tick: int) -> Reading:
     return reading
 
 
+def replay_block(folder: Path, cap: int) -> dict[str, object]:
+    """The engine's record of the first `cap` intervals of a series R run,
+    by kind, as the register's `replay` block pins it (2026-09-21; the
+    register re-read under the crossing rule): per body number its steps
+    ([tick, x, y, z] of the Node stepped to; GAMEBOARD), per occupant its
+    hand-overs (the `contact` ticks; GAMEBOARD) and the face clicks of the
+    bodies that left ([tick, number, detector]; DETECTOR). Written by
+    `examples/events/quarks/replay_register.py` from the engine's run and
+    replayed bit-exact by `tests/test_quarks_expectations.py` (e)."""
+    steps: dict[str, list[list[int]]] = {}
+    contacts: dict[str, list[int]] = {}
+    face_clicks: list[list[object]] = []
+    with (folder / "events.jsonl").open(encoding="utf-8") as events:
+        for line in events:
+            event = json.loads(line)
+            tick = int(event["tick"])
+            if tick > cap:
+                continue
+            kind = event["event"]
+            if kind == "step":
+                to = [int(c) for c in event["to"]]
+                steps.setdefault(str(int(event["number"])), []).append([tick, *to])
+            elif kind == "contact":
+                contacts.setdefault(str(int(event["occupant"])), []).append(tick)
+            elif kind == "click" and event.get("measured") is not None:
+                face_clicks.append([tick, int(event["measured"]), str(event["detector"])])
+    return {
+        "cap": cap,
+        "kinds": {"steps": GAMEBOARD, "contacts": GAMEBOARD, "face_clicks": DETECTOR},
+        "steps": steps,
+        "contacts": contacts,
+        "face_clicks": face_clicks,
+    }
+
+
 def spread_of(positions: dict[int, Vector]) -> float:
     numbers = list(positions)
     if len(numbers) < 2:

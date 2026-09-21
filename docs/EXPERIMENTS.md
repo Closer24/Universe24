@@ -3808,6 +3808,35 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   `mz_unequal_f8` 32 / 32, `mz_unequal_f16` D2 64 included; 68 gathers
   each); the unequal arms' weights and totals moved (eight distinct totals
   per world as before), the equal arms bit-identical. DETECTOR.
+- **The (3, 4) split at N = 32 and 128, the power window of
+  [DERIVATIONS_BEAM 6.5](DERIVATIONS_BEAM.md#65-the-uniqueness-of-the-clicks-square-a-lattice-gleason)
+  pinned from above (2026-09-21; the Boss's order on the auditor's round
+  4; [the README's section](../examples/events/amplitude/README.md#the-3-4-split-at-n--32-and-128-the-power-window-of-65-pinned-from-above);
+  `expectations.json` under `mz_345_n`).** Pinned before the run from the
+  engine's own tables and ladder (`core/phase.py`, `amplitude.rungs`,
+  `amplitude.cell_of`) on the rows the world's turns put at the ports (7 at
+  u + N / 4 toward D1, 1 at u + N / 2 toward D2; the offers 49/50 and
+  1/50): `mz_345_n32` (`mz_345` scaled to N = 32, the wheel [1, 32], the
+  turns 8; 80 intervals) D1 31, D2 1 with u = 31 to D2, the rungs 31, 32;
+  `mz_345_n128` (N = 128, the turns 32; 150 intervals) D1 125, D2 3 with
+  u = 125, 126, 127, the rungs 125, 128; each rung the exact offers'
+  (2 N x 49 + 50) // 100, unmoved by the tables' rounding; the window on
+  the power k per N (the cells b / (N - b) hold iff 7^k / (7^k + 1) lies
+  in [(b - 1/2) / N, (b + 1/2) / N)) [1.548, 2.129) at 32, [1.917, 2.489)
+  at 64, [1.835, 2.012) at 128, whose intersection with the pair's
+  [1.784, 2.054) is [1.917, 2.012). Run (2026-09-21, main c8edd50f, the
+  source sha256 `5d254c8544aadc88...`, headless one world at a time,
+  completed and conserved at every tick; DETECTOR, the gathers of the
+  first W records by ordinal): every pin met exactly, 31 / 1 from u = 31
+  and 125 / 3 from u = 125, 126, 127, the rungs one list on every gather,
+  5 and 16 distinct totals (the tables' rounding by u), 32 of 32 and 128
+  of 128 gathered (79 born, 68 gathered, 11 open at the end at N = 32;
+  149, 138, 11 at 128); the host 0.48 s and 0.63 s of wall per world
+  apart from the model's cost. PASS, no number moved: the window of 6.5
+  is pinned from above at 2.012 by the register (its text still states
+  N = 64's [1.917, 2.489)); `tests/test_amplitude_mz_345_n.py` derives
+  the pin and replays both worlds bit-exact against the registered
+  readings.
 
 **L2, the two slits at a low rate (the design's test 2).**
 

@@ -19,6 +19,9 @@ DOCUMENT_KINDS = ("beam",)
 
 @dataclass(frozen=True)
 class ValidationIssue:
+    """One finding of a document's validation: its code, the document, the message and the
+    place."""
+
     code: str
     document: str
     message: str
@@ -28,6 +31,9 @@ class ValidationIssue:
 
 @dataclass(frozen=True)
 class ValidationReport:
+    """The result of validating one document: its kind, whether it is valid, a summary and the
+    issues."""
+
     kind: str
     valid: bool
     summary: dict[str, object]

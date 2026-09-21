@@ -36,6 +36,30 @@ form under the key), the catalog gained the definition `muon` (`mu`).
 The readings tool is `tools/covariant_readings.py`; the pins and the run
 blocks are in `examples/events/covariant/expectations.json`.
 
+## Series R re-registered under the crossing rule, on 2026-09-21 (the register's replay blocks; no rule change)
+
+The crossing rule (BEAM_LAW note 48, PR #468, merged 2026-09-21 07:24Z)
+moved the engine's fate readings of series R after its register was
+written at 05:21Z (the bisect of the architect, the Boss's order of
+11:47Z): the kicked u of `q6_proton_kick` steps at 6, 12, 19, 25, 32, 38,
+45, 51, 58 (6 and 7 intervals alternating) and clicks through `face:-x`
+at tick 64, where before the rule it stepped every 7 (6, 13, ..., 62) and
+clicked at 69; the first hand-over of `q1_proton_line` is at tick 18 (17
+before), of `q2_neutron_line` at 23 (22), of `q7_proton_dressed` at 17
+(16); the pushes at the reference tick are unchanged. No test replayed the
+fate lines, so the register drifted from the tree. Now every world of
+`examples/events/quarks/expectations.json` carries a `replay` block, the
+engine's record of its first 100 intervals by kind (the steps with their
+Nodes and the hand-overs, GAMEBOARD; the face clicks of the bodies that
+left, DETECTOR), written from the engine as shipped by
+`examples/events/quarks/replay_register.py` (no number typed by hand) and
+replayed bit-exact by `tests/test_quarks_expectations.py` (e); the fate's
+`engine_first_step` is the replay's first step and the reading
+`step_every_about` is retired (the exact ticks are in the replay). The
+toy's numbers (`toy_first_step`, `toy_spread`, `toy_escape_tick`,
+`first_hand_over_about`) are the design's and stay as written. The
+physicist's pins of the design (the pushes) do not move.
+
 ## The register's verification map, on 2026-09-21 (docs and the schema only)
 
 The owner's rule of 2026-09-21 through the paper coordinator (record 353:

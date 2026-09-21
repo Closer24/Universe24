@@ -335,7 +335,9 @@ integer K is [1, K]) each unit a lamp releases costs it
 `quantum` x s x u_d along its direction (u_d the unit vector at the scale
 Q = 64), and gives it to the
 measured event that measures it; a turn of 0 releases nothing; a free
-family's release costs nothing and its rows carry no content. The recoil of
+family's release costs nothing and its rows carry no content, and it goes
+whole on every declared direction (n directions, n rows of `release x
+amount` each; a paid family's release is apportioned whole over them). The recoil of
 a release is the negative of the momentum released, summed over the
 directions. What comes home (the own number's arrivals) is taken whole and
 created again at the next self-creation on the declared directions with

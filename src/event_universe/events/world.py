@@ -1047,6 +1047,7 @@ class NatureBeamWorld:
 
     @property
     def phase_mask(self) -> int:
+        """The mask of the phase circle, N - 1."""
         return self.phase_steps - 1
 
     def turn(self, age: int, content: int) -> int:

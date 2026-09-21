@@ -1915,3 +1915,158 @@ row 23's two reasons; "the HPP obstacle of the cubic lattice gas" on
 bibitem's commas. Reported as the tree's: section 25's header cites
 record 343, which is on no log at HEAD.
 
+## Wave 14 (2026-09-21): every formula with its route; where the law's form stands above (record 352)
+
+The owner's order through the Boss (record 352): for every formula of
+nature the paper carries, the route from the law or one line on how it
+is reached, never a bare "derived"; where the law's form stands above
+the known one, one sentence with what the law adds and what the
+derivation holds; formulas not needed leave; formulas wanted and
+lacking listed to the Boss. Done: the table's legend names the record
+appendix as the route of every DERIVED row; the appendix gains the two
+rows it lacked (the source's Doppler, 2.5 with series G2's coasting
+stars; Newton's geodesics, 5.3, the form proved and open for the run);
+a paragraph at the end of the table section, "Where the law's form
+stands above the known one", six places each with the derivation's
+section: the exact square above Einstein's E^2 = E_0^2 + p^2 c^2 (17's
+theorem: true of the linear block and of what is built from it, for a
+body as far as its readings are covariant; the covariant readings a
+hypothesis, not built), the CHSH value at finite N above the bound
+(6.2), Born's rule to the rung (6.2), the uncertainty relation exact on
+Z_N (22), the entropy's accounting at the click (14), Gauss exact at
+every instant (5.5). Removed: no formula (every row of the tables is
+either routed, one-lined or marked not reached; the candidates for the
+owner's word are the continuum rows not reached, Hooke, Ohm, Stokes,
+which the inventory he ordered carries). Wanted and lacking, sent to
+the Boss: the time-dependent Schrodinger equation, the Lorentz
+contraction and the books' balance, Kepler's precession on the
+GameBoard, the isotropic Navier-Stokes, Planck's spectrum, Dirac,
+Bohr's levels, Einstein's field equation, the strong ratio's remainder,
+the weak forms' memorylessness. Referee round 34 pending.
+
+Folded into wave 14 after main at 6a59ee04 and e0282b6a: the Bell run
+of 24.4 (S = 1448 / 512 and 11584 / 4096, both 181 / 64 exactly, the
+marginals W / 2, PASS on eight worlds) as "pinned and run, once,
+awaiting its replication"; section 25's round 2 (rows 2, 3, 5 and 22 of
+Table tab:continuum at round 2's standing: the Galilean factor and the
+sound speed in closed form, the one-axis Navier-Stokes with the shear
+frozen, diffusion as one tensor law anisotropic along the cube's
+diagonal, round 1's isotropy withdrawn); the law's two declared ties
+named as BEAM_LAW note 39 has them (the digital line's axis order, the
+collision's Port order), the apportioning's the derivation's; the log
+bibitem adds 341 to 348; records 349 to 357 not yet on main, the
+owner's replication rule cited by date until 353 lands.
+
+## Referee round 34 (2026-09-21): wave 14, applied
+
+Thirteen findings, six major, all applied: the nature section's tally
+to five PASS (each measured once), two NOT YET, row 9's restatement at
+71e15626 named; nine worlds with another clock pair (row 9 flagged
+since 71e15626); the owner's rule cited by date until its record is on
+the log, the replications file named as being written; the exact
+square's integer condition filed as the covariant readings' (a
+hypothesis, not built), not the law's; quantum mechanics gives one
+value and the bound; 181/64 at every power of two from 512; the
+source's Doppler row's pin the register's (Milne's q = 0 +- 0.25), the
+per-star form a host reading after the run; the entropy item without
+"beyond Boltzmann", the click as the one read-out with the cancel and
+the leaks beside it; Gauss "after the front" with the two Gauss rows;
+the legend's route sentence with its three exceptions; "run once, met
+exactly" in the abstract; the plane's "measured once (awaiting
+replication)". The abstract at 1902 plain characters.
+
+## Referee round 35 (2026-09-21): the late additions, applied
+
+Fifteen findings, four major, all applied: the register pointer to the
+Bell 24.4 block and its test named; the replication parenthesis
+sourced to the paper's own convention (the caption) until the record
+lands; the N = 512 worlds written by the generator for the run,
+1448/512 in the registered list; rows 4, 6 and 8 of Table
+tab:continuum brought to round 2 (Bernoulli's factor g(1 - c_s^2),
+Fourier as one tensor law with row 5, the ideal gas law's identity
+exact in the mean with the drive's saturation -v_a as the error), the
+caption "rows 2 to 6, 8 and 22"; d the density per heading and d_p the
+parked pair's; the ideal gas law and equipartition's half in the prose;
+the ties cited to note 39 and section 4, the apportioning's tie said
+to break no axis symmetry; a comma in the log bibitem. Reported as the
+tree's: 24.4 still says the run at N = 4096 "is the pin's run" in the
+future tense after the run was made.
+
+## Wave 15 (2026-09-21): records 349, 352, 353 and 356 cited by number
+
+Main merged at e2259ef6 (PRs #541, #543, #545 and #546 among others; records 349 to 357
+on the log). The paper's citations by date or by "its record to be
+cited once it is on the log" become citations by number: the record
+appendix's caption (the replication rule, record 353; the replications
+document named as record 353 orders it, no line on the tree yet), the
+prediction paragraph (record 353), the stands-above paragraph (the
+owner's order, record 352), the symmetries paragraph (the first tie as
+record 349 read it on the GameBoard: the label, the momentum and the
+hand covariant under all 48, the Nodes crossed and the exit face only
+under the 8 that keep the axis order), the log bibitem (349, 352, 353,
+356 and three missing commas), the Reproducibility caveat's main commit.
+No number changes. Referee round 36 (four findings, all applied): the
+record-349 sentence had severed the invariance list, now placed after
+it; the readings are the faces' detectors', not a GameBoard reading;
+"the momentum" is the row's momentum by the auditor's verdict, the
+mapped-back escaped momentum equal to the base under the 8 alone; the
+comma after 336's gloss. The referee's caution kept: the run's five
+directions carry no heading, so "exact on the headings" is the pin's
+host analysis and series P's test, not this run; the paper says "exact
+on every untied direction" for the run.
+
+## Wave 16 (2026-09-21): the families' appendix (record 358), record 359's readings, the crowd's clock, the replicated map
+
+The owner's word through the physicist's session (record 358): the
+tables of the masses, the groups, the sets and the vectors of all the
+families in the paper; the mathematician's audit (PR #547) found the
+schema carried and the rows never. Done: a new appendix before the
+glossary, "the families, the sets, the groups and the vectors", with
+F1 (the 75 families in their 28 entities, every declared key; the 24
+thrown sources and the 24 Hubble stars one row each), F1b (the 21
+declarations of the worlds that differ from the definitions, said once
+to be the register's declared variants and not a second law), F2 (the
+content every family carries on the worlds' measured events, per
+series; the held content), F3 (the group per declared quantity, per
+family of the physics, PREDICTIONS 26's rule) and F4 (the state vector
+per kind, the six verbs); every number an input of the register, none
+a measurement; the tables generated from the tree's script over the
+one source (families.json and the worlds) by a scratch script, so the
+crowd-clock worlds landed since the audit are in F2. Pointers: P8, the
+masses row of Table 1 (F1, F2), "The state" (F4), the symmetries (F3).
+The audit's answers: all the families (question 1); the variants said
+once (2); the masses row cites F2 (3); F3 in the appendix with a
+pointer beside the symmetries (4). Record 359: the second tie's
+reading beside the first's (16 of 48, the difference reaching the
+detector); the pace bound read again on all 290 directions in the c
+row of the record appendix; the crowd's clock in the clock's-redshift
+paragraph (the tree's worlds, pinned before the run, run twice on
+main 119fd9b, the entry drafted and not registered; series Q landed
+on main at 33330d59 during the wave and is cited beside it, the
+cluster at rest and thrown as one, the sum against the product, its
+entry drafted and not registered), measured once. Series R
+re-registered under the crossing rule (PR #554): the masses row and
+the record appendix give the kicked u's exit at 63 in the registered
+3000-interval run before the rule and at 64 in the replay under it. Record 360: the register's
+replicated map in the record appendix's caption. The log bibitem to
+360; two bibitems (the audit, the crowd's clock). Reported to the Boss
+as the tree's: the audit's prose says 27 entities and 23 inline
+declarations where its output counts 28 and 21; TERMINOLOGY gives the
+lifetime in intervals and the audit in Links (the paper says the age);
+the quarks' README table and its prose disagree on the kicked u's exit
+before the crossing rule (the table's 3000-interval run: reaches the
+face at 62, leaves at 63; the prose and MIGRATION: clicked at 69).
+Referee round 37 (four findings, all applied): the unset circle is the
+engine's default, a circle, and the caption names every difference
+(m, the coupling p, the Hubble mass, e in the gallery, beta's hand);
+the crowd-clock content is s_px1's alone in F2; at k = 0.005 the
+reading 1.000/1.006 is inside the pin by its tolerance, not exact, the
+four higher rungs exact; a comma in the log bibitem. The referee's
+notes kept: the second window's 1.271 not printed; the test pins the
+presence 4F on a short run, not the series' readings. Referee round 38
+on the additions after main moved to 33330d59 (series Q, series R's
+replay): no FAIL; his wording note applied (a cluster's dispersion a
+spread of clocks); his note kept for the Boss: the quarks' README run
+row says the kicked u left at 63 before the crossing rule and the
+README's prose and MIGRATION say 69.
+
