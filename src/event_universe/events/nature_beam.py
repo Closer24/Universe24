@@ -99,6 +99,7 @@ from __future__ import annotations
 import functools
 import itertools
 from collections.abc import Callable
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -117,10 +118,12 @@ from event_universe.events.amplitude import (
     LABEL_BITS,
     LABEL_MASK,
     Layer,
+    LiveRecord,
     arm_of,
     branch_of,
     half_angle,
     label_of,
+    node_choice,
 )
 from event_universe.events.measured import (
     CountTable,
@@ -142,6 +145,7 @@ from event_universe.events.world import (
     FIXED_DIRECTIONS,
     HEADING_OFFSET,
     LIFETIME_NAME,
+    MASSIVE_ROWS_RULE,
     MOMENTUM_BOUND,
     NO_HAND,
     PRESENCE_WORD,
@@ -157,6 +161,7 @@ from event_universe.events.world import (
     default_reads,
     default_rule,
     default_width,
+    scaled_label,
 )
 
 Record = Callable[[dict[str, object]], None]
@@ -257,12 +262,26 @@ class NatureBeam:
     share_x: int = 0
     share_y: int = 0
     share_z: int = 0
+    # The turn's accumulator (`massive-rows-v1`, 2026-09-21; the design's
+    # section 2): ONE accumulator over the axes on which the row's phase
+    # turns at every axis Link it crosses by its family's turn table,
+    # `by_drive_rows(acc_turn, numerator[direction, axis], denominator)`,
+    # the count to the phase and the remainder kept here, so that the phase
+    # at a Node is the plane wave's to one remainder over the whole path; a
+    # family without the flag has the numerator `phase_per_link` over 1
+    # (the count per Link as it was, the remainder 0 at every step), so the
+    # column is 0 on every row of every world without the key. An identity
+    # field of the merge (two rows with different remainders are two rows).
+    acc_turn: int = 0
 
-    def record_line(self, vectors: np.ndarray, handed: bool = False) -> dict[str, object]:
+    def record_line(
+        self, vectors: np.ndarray, handed: bool = False, massive: bool = False
+    ) -> dict[str, object]:
         """The row as `state.json` writes it, the direction as its vector;
         a row of a record with its columns, a row of no record without
         them; in a world that declares a hand with its `hand`; a row that
-        holds an undelivered share with its `share`."""
+        holds an undelivered share with its `share`; in a world that
+        declares `massive_rows` with its `acc_turn`."""
         line: dict[str, object] = {
             "direction": [int(v) for v in vectors[self.direction]],
             "age": self.age,
@@ -280,6 +299,8 @@ class NatureBeam:
             line["hand"] = self.hand
         if self.share_x or self.share_y or self.share_z:
             line["share"] = [self.share_x, self.share_y, self.share_z]
+        if massive:
+            line["acc_turn"] = self.acc_turn
         return line
 
 
@@ -798,6 +819,173 @@ def direction_flight(vectors: tuple[tuple[int, int, int], ...]) -> Flight:
     )
 
 
+# -- the family's tables: the flight, the turn, the label, the completion -----------
+
+
+@dataclass(frozen=True)
+class FamilyFlight:
+    """The tables of ONE family over the world's directions, formed at load
+    beside `Flight` and read by value at run time (`massive-rows-v1`, the
+    model owner's yes of 2026-09-21, record 332; the design's section 2,
+    the value form: no flag is read at run time, the special case is a
+    value). Per direction D: the flight triple, the rate `rate` the
+    accumulator gains per interval against the wall `wall` from the start
+    `start` (`walk_step`: the same verb as `Flight.walk_step`, `by_drive_rows`
+    on the row's residue, the count the interval's Manhattan step); the
+    LABEL of one unit of amount per unit of content (`labels`, (directions,
+    3)), what `momentum_labels` multiplies by the weight; and the turn's
+    numerator per axis (`turn`, (directions, 3)) over the one denominator
+    `turn_denominator`, what `by_drive_rows` on the row's `acc_turn` counts
+    at the Link crossed on that axis. Then the completion's pair: the
+    placed fraction `placed` (f_F) of an arrival and the completion's
+    quantum `quantum` (q_F), and `content`, the content of one row the
+    tables were formed for (0 where the tables read no content).
+
+    A family without the flag `massive` carries Flight's numbers by value:
+    the rate 2 S_1 Q, the wall 2 T_D, the start T_D (the accumulator of
+    BEAM_LAW note 41 (viii), integer for integer), the labels u_D at the
+    scale Q, the turn `phase_per_link` on every direction and axis over 1
+    (the count per Link crossed as it was, the remainder 0 at every step)
+    and the pair (1, 0): the click as built. A massive family carries, from
+    its keys, the labels p_D (`scaled_label` at the scale p, the lamp's
+    `momentum_magnitude`), the rate 2 |p_D|_1, the wall 2 E'_D and the
+    start E'_D with E'_D = isqrt(E'_0^2 + 3 p_D . p_D) and E'_0 = Q S M
+    (M the family's `quantum`, S the world's `width`; one integer root per
+    direction at load, in the class of T_D's), the turn |p_{D,a}| N over
+    the world's `action` h (de Broglie's turn per axis Link) and the pair
+    (0, M): one quantum placed at the record's completion. The massless
+    case E'_0 = 0 with the flight vector Q D in place of p_D gives Flight's
+    pair on every direction (the primitive's identity, the design's
+    section 1): the photon's table is Flight's by value, never by a
+    branch; the walk reads no name and no flag."""
+
+    rate: np.ndarray
+    wall: np.ndarray
+    start: np.ndarray
+    manhattan: np.ndarray
+    lines: np.ndarray
+    labels: np.ndarray
+    turn: np.ndarray
+    turn_denominator: int
+    placed: int
+    quantum: int
+    content: int
+
+    def accumulator(self, direction: np.ndarray, age: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+        """The position's accumulator of a row of direction d at age tau
+        by the family's triple: (the count of Manhattan steps made by the
+        age, the residue toward the next), the constant-rate identity of
+        `by_drive_rows` applied tau times from the start (`Flight.accumulator`
+        with the family's rate, wall and start in place of Flight's)."""
+        held = age * self.rate[direction] + self.start[direction]
+        denominator = self.wall[direction]
+        return held // denominator, held % denominator
+
+    def walk_step(self, direction: np.ndarray, age: np.ndarray) -> np.ndarray:
+        """The Link a row of direction d crosses at age tau by the family's
+        triple: the residue gains the rate over the wall (`by_drive_rows`,
+        the one verb; the rate within the wall, so the count is 0 or 1),
+        and the step is the m-th unit step of the direction's line, m the
+        count made before it (`Flight.walk_step` on the family's numbers)."""
+        rate = self.rate[direction]
+        made, residue = self.accumulator(direction, age)
+        moved, _ = by_drive_rows(residue, rate, self.wall[direction])
+        s1 = self.manhattan[direction]
+        place = np.where(s1 > 0, made % np.maximum(s1, 1), 0)
+        result: np.ndarray = self.lines[direction, place] * moved[:, None]
+        return result
+
+    def turned(
+        self, accumulator: np.ndarray, direction: np.ndarray, axis: np.ndarray
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """The phase steps rows gain at the Link they cross on `axis` and
+        their accumulators after: `by_drive_rows(acc_turn, turn[direction,
+        axis], turn_denominator)`, the count to the phase, the remainder
+        kept on the row. At the numerator `phase_per_link` over 1 the
+        count is `phase_per_link` and the remainder 0, as it was."""
+        return by_drive_rows(accumulator, self.turn[direction, axis], self.turn_denominator)
+
+
+def flight_triple(labels: np.ndarray, rest_energy: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """The flight triple (rate, wall, start) per direction of a family whose
+    rows carry the flight vector `labels` (directions, 3) at the rest
+    energy E'_0: the rate 2 |p_D|_1, the wall 2 E'_D and the start E'_D
+    with E'_D = isqrt(E'_0^2 + 3 p_D . p_D), one integer root per
+    direction at load; at E'_0 = 0 with the vector Q D the photon's (2 S_1
+    Q, 2 T_D, T_D) exactly (T_D = isqrt(3 |D|^2 Q^2)). A rest direction
+    (the zero vector) has the rate 0: a row on it never moves. The rate is
+    within the wall on every direction (|p|_1^2 <= 3 p . p <= E'^2), so the
+    walk's count is 0 or 1 as the flight's is."""
+    count = labels.shape[0]
+    rate = np.zeros(count, dtype=np.int64)
+    wall = np.ones(count, dtype=np.int64)
+    start = np.zeros(count, dtype=np.int64)
+    square = rest_energy * rest_energy
+    for index in range(count):
+        vector = [int(v) for v in labels[index]]
+        energy = integer_root(square + 3 * sum(c * c for c in vector))
+        rate[index] = 2 * sum(abs(c) for c in vector)
+        wall[index] = 2 * energy
+        start[index] = energy
+    return rate, wall, start
+
+
+def family_flight(
+    definition: FamilyDefinition,
+    flight: Flight,
+    width: int,
+    modulus: int,
+    action: int | None,
+) -> FamilyFlight:
+    """The family's tables from its keys and the world's flight (`FamilyFlight`):
+    a family without the flag `massive` takes Flight's numbers by value and
+    the pair (1, 0); a massive family its labels p_D at the scale p, its
+    triple from E'_0 = Q S M, its turn |p_{D,a}| N over h and the pair (0,
+    M). Formed once at load (`nature_beam_tables`)."""
+    count = flight.vectors.shape[0]
+    if not definition.massive:
+        turn = np.full((count, DIMENSIONS), definition.phase_per_link, dtype=np.int64)
+        return FamilyFlight(
+            2 * flight.manhattan * Q,
+            2 * flight.resolution,
+            flight.resolution.copy(),
+            flight.manhattan,
+            flight.lines,
+            flight.labels,
+            turn,
+            1,
+            1,
+            0,
+            0,
+        )
+    if action is None:
+        raise ValueError(
+            f"{BEAM_LAW}: the massive family {definition.name!r} needs the world's `action` "
+            f"({MASSIVE_ROWS_RULE})"
+        )
+    scale = definition.momentum_magnitude
+    labels = np.array(
+        [scaled_label((int(v[0]), int(v[1]), int(v[2])), scale) for v in flight.vectors],
+        dtype=np.int64,
+    ).reshape(count, DIMENSIONS)
+    rest = Q * width * definition.quantum
+    rate, wall, start = flight_triple(labels, rest)
+    turn = np.abs(labels) * modulus
+    return FamilyFlight(
+        rate,
+        wall,
+        start,
+        flight.manhattan,
+        flight.lines,
+        labels,
+        turn,
+        action,
+        0,
+        definition.quantum,
+        definition.quantum,
+    )
+
+
 # -- the collision table ---------------------------------------------------------
 
 
@@ -901,11 +1089,16 @@ class NatureBeamTables:
     # The arc permutations of the direction table (the meeting, 2026-09-20;
     # `meeting.ArcTable`): built per target on demand and cached.
     arcs: ArcTable
+    # Per family its tables over the directions (`FamilyFlight`, the value
+    # form of `massive-rows-v1`): the flight triple, the labels, the turn
+    # and the completion's pair; Flight's numbers by value for a family
+    # without the flag.
+    family_flights: tuple[FamilyFlight, ...] = ()
 
 
 def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
     """Build a world's tables once at load (`NatureBeamTables`): the flight per direction, the
-    collision table and the phase circle of N."""
+    collision table, the phase circle of N and every family's tables."""
     circle = phase_circle(world.phase_steps)
     flight = direction_flight(world.directions)
     return NatureBeamTables(
@@ -915,10 +1108,195 @@ def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
         np.array(circle.cosines, dtype=np.int64),
         np.array(circle.sines, dtype=np.int64),
         arc_table(flight.labels),
+        tuple(
+            family_flight(definition, flight, world.width, world.phase_steps, world.action)
+            for definition in world.families
+        ),
     )
 
 
 # -- the store -------------------------------------------------------------------
+
+# The host's threads for the store's gathers (`NatureBeamStore.take`), four (a
+# constant of the host, not read from the machine: the engine imports no
+# system module); numpy's
+# `take` releases the interpreter's lock, so the fields of a large store are
+# gathered in parallel; a small store is gathered in the caller's thread. The
+# result of every gather is one field's alone, so the threads change nothing
+# in the numbers (`massive-rows-fast`, 2026-09-21).
+_GATHER_THREADS = 4
+_GATHER_ROWS = 1 << 16
+_gather_pool: ThreadPoolExecutor | None = None
+
+
+def _gather(fields: list[np.ndarray], order: np.ndarray) -> list[np.ndarray]:
+    """`np.take(field, order)` for every field, on the threads for a large order."""
+    global _gather_pool
+    if order.shape[0] < _GATHER_ROWS or _GATHER_THREADS < 2:
+        return [np.take(field, order) for field in fields]
+    return list(_pool().map(lambda field: np.take(field, order), fields))
+
+
+def _walk_rows(
+    table: FamilyFlight,
+    store: NatureBeamStore,
+    periodic: tuple[bool, bool, bool] | list[bool],
+    extents: tuple[int, int, int] | list[int] | np.ndarray,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """The walk's per-row arithmetic (step 1 of BEAM_LAW section 3): the
+    Link each row crosses at its age by the family's flight (`walk_step`),
+    whether it moved, its coordinates after the step (the wrap on a periodic
+    axis) and whether it left through an open face. Row by row the same
+    integers as the block in `_walk` was; a large store is cut into chunks
+    of rows computed on the host's threads and joined (`massive-rows-fast`,
+    2026-09-21)."""
+
+    def rows(lo: int, hi: int) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+        step = table.walk_step(store.direction[lo:hi], store.age[lo:hi])
+        moved = step.any(axis=1)
+        x, y, z = store.coordinates(store.node[lo:hi])
+        coordinates = np.stack([x, y, z], axis=1) + step
+        escaped = np.zeros(hi - lo, dtype=bool)
+        for axis in range(3):
+            if periodic[axis]:
+                coordinates[:, axis] %= extents[axis]
+            else:
+                escaped |= (coordinates[:, axis] < 0) | (coordinates[:, axis] >= extents[axis])
+        return step, moved, coordinates, escaped
+
+    size = store.size
+    if size < _GATHER_ROWS or _GATHER_THREADS < 2:
+        return rows(0, size)
+    bounds = [k * size // _GATHER_THREADS for k in range(_GATHER_THREADS + 1)]
+    chunks = list(
+        _pool().map(lambda lo_hi: rows(*lo_hi), list(zip(bounds[:-1], bounds[1:], strict=True)))
+    )
+    step = np.concatenate([chunk[0] for chunk in chunks])
+    moved = np.concatenate([chunk[1] for chunk in chunks])
+    coordinates = np.concatenate([chunk[2] for chunk in chunks])
+    escaped = np.concatenate([chunk[3] for chunk in chunks])
+    return step, moved, coordinates, escaped
+
+
+def _pool() -> ThreadPoolExecutor:
+    """The host's thread pool for the store's slabs and gathers."""
+    global _gather_pool
+    if _gather_pool is None:
+        _gather_pool = ThreadPoolExecutor(max_workers=_GATHER_THREADS)
+    return _gather_pool
+
+
+def _pack_words(columns: list[np.ndarray], size: int) -> list[np.ndarray]:
+    """`NatureBeamStore.merge_words` on columns of `size` rows."""
+    lows = [int(column.min()) for column in columns]
+    widths = [(int(column.max()) - low).bit_length() for column, low in zip(columns, lows, strict=True)]
+    words: list[np.ndarray] = []
+    word = np.zeros(size, dtype=np.int64)
+    used = 0
+    for column, low, width in zip(columns, lows, widths, strict=True):
+        if used and used + width > 62:
+            words.append(word)
+            word = np.zeros(size, dtype=np.int64)
+            used = 0
+        word = (word << width) + (column - low)
+        used += width
+    words.append(word)
+    return words
+
+
+def _merge_rows(
+    fields: dict[str, np.ndarray], modulus: int
+) -> tuple[dict[str, np.ndarray], dict[tuple[int, int, int], int]]:
+    """`NatureBeamStore.merge` on one slab of rows (the fields as arrays or
+    views, every field of `FIELDS`): the merged fields as new arrays and
+    what the cancel removed. The body of the merge as it was, row for row
+    (the docstring of `merge`), on a slab: the identity columns and the
+    sign of the cancel (`identity_columns`), the words (`merge_words`), the
+    order (a stable sort of one word or the lexsort of the words), the
+    same-row test on the words, the amounts and the undelivered shares
+    summed per group in the sorted order, every other field gathered once
+    at the first row of each group, then the cancel."""
+    size = fields["node"].shape[0]
+    removed: dict[tuple[int, int, int], int] = {}
+    columns = [fields[name] for name in IDENTITY_FIELDS]
+    sign = np.ones(size, dtype=np.int64)
+    if modulus:
+        recorded = fields["record"] != NO_RECORD
+        if recorded.any():
+            half = modulus // 2
+            far = recorded & (fields["phase"] >= half)
+            columns[PHASE_FIELD] = np.where(recorded, fields["phase"] % half, fields["phase"])
+            sign = np.where(far, -1, 1)
+    words = _pack_words(columns, size)
+    if len(words) == 1:
+        order = np.argsort(words[0], kind="stable")
+    else:
+        order = np.lexsort(tuple(reversed(words)))
+    same = np.zeros(size, dtype=bool)
+    same[1:] = True
+    for word in words:
+        word = np.take(word, order)
+        same[1:] &= word[1:] == word[:-1]
+    starts = np.flatnonzero(~same)
+    kept = np.take(order, starts)
+    amount_sorted = np.take(fields["amount"], order)
+    # The merged amounts are exact: in the register when no group's sum
+    # can leave it, in Python integers otherwise, and bounded.
+    signed = amount_sorted if not modulus else amount_sorted * np.take(sign, order)
+    if int(amount_sorted.max()) * size <= MOMENTUM_BOUND:
+        amount = np.add.reduceat(signed, starts)
+        whole = np.add.reduceat(amount_sorted, starts) if modulus else amount
+    else:
+        merged = np.add.reduceat(signed.astype(object), starts)
+        if max(abs(int(v)) for v in merged) > MOMENTUM_BOUND:
+            raise OverflowError(
+                f"{BEAM_LAW}: the amount of a merged row exceeds the integer bound {MOMENTUM_BOUND}"
+            )
+        amount = merged.astype(np.int64)
+        whole = (
+            np.add.reduceat(amount_sorted.astype(object), starts).astype(np.int64) if modulus else amount
+        )
+    # The undelivered shares of merged rows add (the momentum a row has
+    # not yet delivered is the group's); bounded like the amounts.
+    out: dict[str, np.ndarray] = {}
+    for name in ("share_x", "share_y", "share_z"):
+        column = fields[name]
+        if column.any():
+            summed = np.add.reduceat(np.take(column, order).astype(object), starts)
+            if max(abs(int(v)) for v in summed) > MOMENTUM_BOUND:
+                raise OverflowError(
+                    f"{BEAM_LAW}: the undelivered share of a merged row exceeds the integer "
+                    f"bound {MOMENTUM_BOUND}"
+                )
+            out[name] = summed.astype(np.int64)
+    for name in FIELDS:
+        if name != "amount" and name not in out:
+            out[name] = np.take(fields[name], kept)
+    if modulus:
+        # The cancel: the signed sum's magnitude stays, at the phase of
+        # the larger side (the half-circle phase of the group, plus the
+        # half circle when the far side was larger, which a lone row on
+        # the far half is); an empty group leaves, its units booked per
+        # (record, direction).
+        half = modulus // 2
+        cancelled = whole - np.abs(amount)
+        for k in np.flatnonzero(cancelled > 0).tolist():
+            slot = (int(out["record"][k]), int(out["direction"][k]), int(out["content"][k]))
+            removed[slot] = removed.get(slot, 0) + int(cancelled[k])
+        recorded = out["record"] != NO_RECORD
+        base = np.where(recorded, out["phase"] % half, out["phase"])
+        out["phase"] = np.where(recorded & (amount < 0), base + half, base)
+        out["amount"] = np.abs(amount)
+        out["arrival"] = np.full(out["amount"].shape[0], NO_ARRIVAL, dtype=np.int64)
+        alive = out["amount"] > 0
+        if not alive.all():
+            living = np.flatnonzero(alive)
+            out = {name: np.take(value, living) for name, value in out.items()}
+        return out, removed
+    out["amount"] = amount
+    out["arrival"] = np.full(amount.shape[0], NO_ARRIVAL, dtype=np.int64)
+    return out, removed
+
 
 FIELDS = (
     "node",
@@ -937,13 +1315,17 @@ FIELDS = (
     "share_x",
     "share_y",
     "share_z",
+    "acc_turn",
 )
 # The fields that make two rows identical (the amount is what the merge
 # adds); since `amplitude-v1` the record, the branch and the multiplicity
 # too (constant 0, 0, 1 on a row of no record, so the packed key and the order of
-# the merge are what they were), and since `hand-v1` the hand (constant 0
+# the merge are what they were), since `hand-v1` the hand (constant 0
 # without a declaration, a width of 0 bits in the packed key: two rows of
-# opposite hands are two rows and never merge or cancel).
+# opposite hands are two rows and never merge or cancel), and since
+# `massive-rows-v1` the turn's accumulator `acc_turn` (constant 0 on every
+# row of a family without the flag, a width of 0 bits in the packed key
+# as the hand: two rows of different remainders never merge or cancel).
 IDENTITY_FIELDS = (
     "node",
     "direction",
@@ -955,6 +1337,7 @@ IDENTITY_FIELDS = (
     "branch",
     "multiplicity",
     "hand",
+    "acc_turn",
 )
 # The three columns of the amplitude law as a row of no record carries them.
 NO_RECORD = 0
@@ -963,7 +1346,14 @@ ONE_PATH = 1
 NO_RECORD_COLUMNS = {"record": NO_RECORD, "branch": NO_BRANCH, "multiplicity": ONE_PATH, "birth": 0}
 # The columns a caller may leave out of `append`: the record's four and
 # the hand (a row without a declaration has none).
-COLUMN_DEFAULTS = {**NO_RECORD_COLUMNS, "hand": NO_HAND, "share_x": 0, "share_y": 0, "share_z": 0}
+COLUMN_DEFAULTS = {
+    **NO_RECORD_COLUMNS,
+    "hand": NO_HAND,
+    "share_x": 0,
+    "share_y": 0,
+    "share_z": 0,
+    "acc_turn": 0,
+}
 # The place of `phase` in the identity fields: the merge of a record's rows
 # reads it modulo the half circle with a sign (the cancel).
 PHASE_FIELD = IDENTITY_FIELDS.index("phase")
@@ -1027,6 +1417,31 @@ def label_overflow_rows(
     reach = np.abs(np.asarray(unit, dtype=np.int64)).max(axis=1)
     result: np.ndarray = ~fits | ((reach > 0) & (weight > MOMENTUM_BOUND // np.maximum(reach, 1)))
     return result
+
+
+def born_recoil(labels: np.ndarray, born: list[BornRow]) -> list[int]:
+    """The recoil of a paid re-creation over its born rows: per row and axis
+    the share `share_of(label, amount, multiplicity)` for a row of a record,
+    the label whole for a row of no record, summed exactly per axis. The
+    same integers as the row-by-row loop: the products `label x amount`
+    are formed in the register when their extremes fit it and in Python
+    integers otherwise (`massive-rows-fast`, 2026-09-21)."""
+    amount = np.array([b[1] for b in born], dtype=np.int64)
+    multiplicity = np.array([b[7] for b in born], dtype=np.int64)
+    recorded = np.array([b[5] != NO_RECORD for b in born], dtype=bool)
+    widest_label = int(np.abs(labels).max(initial=0))
+    widest_amount = int(amount.max(initial=0))
+    if widest_label and widest_amount and widest_label > MAX_WORK_INT // widest_amount:
+        recoil = [0, 0, 0]
+        for k, b in enumerate(born):
+            for axis in range(3):
+                label = int(labels[k, axis])
+                recoil[axis] += share_of(label, b[1], b[7])[0] if b[5] != NO_RECORD else label
+        return recoil
+    total = labels * amount[:, None]
+    whole = np.abs(total) // multiplicity[:, None]
+    share = np.where(total < 0, -whole, whole)
+    return exact_column_sums(np.where(recorded[:, None], share, labels))
 
 
 def share_of(label: int, amount: int, multiplicity: int, accumulator: int = 0) -> tuple[int, int]:
@@ -1298,6 +1713,7 @@ class NatureBeamStore:
         self.share_x: np.ndarray
         self.share_y: np.ndarray
         self.share_z: np.ndarray
+        self.acc_turn: np.ndarray
 
     @property
     def size(self) -> int:
@@ -1333,24 +1749,29 @@ class NatureBeamStore:
             for name, default in COLUMN_DEFAULTS.items():
                 if name not in columns:
                     columns[name] = np.full(count, default, dtype=np.int64)
-        for name in FIELDS:
-            setattr(
-                self,
-                name,
-                np.concatenate(
-                    [getattr(self, name), *[columns[name].astype(np.int64) for columns in batches]]
-                ),
-            )
+        joined = [
+            [getattr(self, name), *[columns[name].astype(np.int64) for columns in batches]]
+            for name in FIELDS
+        ]
+        if self.size >= _GATHER_ROWS and _GATHER_THREADS > 1:
+            values = list(_pool().map(np.concatenate, joined))
+        else:
+            values = [np.concatenate(pieces) for pieces in joined]
+        for name, value in zip(FIELDS, values, strict=True):
+            setattr(self, name, value)
 
     def keep(self, mask: np.ndarray) -> None:
         """Keep the rows the mask selects, in every field."""
-        for name in FIELDS:
-            setattr(self, name, getattr(self, name)[mask])
+        self.take(np.flatnonzero(mask))
 
     def take(self, order: np.ndarray) -> None:
-        """Reorder the rows by the index order given, in every field."""
-        for name in FIELDS:
-            setattr(self, name, getattr(self, name)[order])
+        """Reorder the rows by the index order given, in every field (a
+        gather per field, the fields on the host's threads for a large
+        store: each gather is one field's, the result the same in any
+        order; `massive-rows-fast`, 2026-09-21)."""
+        fields = [getattr(self, name) for name in FIELDS]
+        for name, taken in zip(FIELDS, _gather(fields, order), strict=True):
+            setattr(self, name, taken)
 
     def sort(self) -> None:
         """Sort the rows by Node, stably."""
@@ -1383,30 +1804,41 @@ class NatureBeamStore:
         to its least value, so that the keys order the rows exactly as the
         lexsort of the fields does and equal keys are identical rows; None
         when the fields' ranges do not fit the register (62 bits), the
-        lexsort then taking the same total order. The three columns of the
-        amplitude law are constant on rows of no record (a width of 0 bits each)
-        and leave the key and the order what they were."""
+        merge then taking the same total order on the words of
+        `merge_words`. The three columns of the amplitude law are constant
+        on rows of no record (a width of 0 bits each) and leave the key and
+        the order what they were."""
+        words = self.merge_words(columns)
+        return words[0] if len(words) == 1 else None
+
+    def merge_words(self, columns: list[np.ndarray] | None = None) -> list[np.ndarray]:
+        """The identity fields (`columns` in the order of `IDENTITY_FIELDS`,
+        the fields themselves by default) packed into as few integer words
+        per row as their widths need (`_pack_words`): the first word the
+        most significant, each field offset to its least value, the Node
+        first and no field split across two words, so that the words in
+        order sort the rows exactly as the lexsort of the fields does and
+        equal words are identical rows. One word is `merge_key`'s key; the
+        merge takes the words where the one key does not fit (a world whose
+        records and multiplicities carry 32 bits each, the massive rows'
+        pin), a lexsort over two or three words in place of one over the
+        eleven fields (the same total order; `massive-rows-fast`,
+        2026-09-21). A lone field wider than 62 bits is a word of its own."""
         if columns is None:
             columns = [getattr(self, name) for name in IDENTITY_FIELDS]
-        lows = [int(column.min()) for column in columns]
-        widths = [
-            (int(column.max()) - low).bit_length() for column, low in zip(columns, lows, strict=True)
-        ]
-        if sum(widths) > 62:
-            return None
-        key = np.zeros(self.size, dtype=np.int64)
-        for column, low, width in zip(columns, lows, widths, strict=True):
-            key = (key << width) + (column - low)
-        return key
+        return _pack_words(columns, self.size)
 
     def merge(self, modulus: int = 0) -> dict[tuple[int, int, int], int]:
         """Identical rows (equal in every field but the amount) merged, the
         amounts added, the rows in the total order of the identity fields,
         the Node first (so no second sort by Node is needed). A bijection: a
         permutation of rows and a sum of interchangeable units. The order
-        is taken by the one packed key (`merge_key`) where the fields fit
-        the register, by the lexsort of the fields otherwise: the same
-        total order either way.
+        is taken on the packed words of the identity fields (`merge_words`:
+        one word, the packed key, where the fields fit the register; the
+        lexsort of two or three words otherwise), the same total order as
+        the lexsort of the fields, the same rows in the same order; when no
+        two rows are identical the sorted store is the result and nothing
+        else is touched.
 
         Under the amplitude key (`modulus` the circle's N; BEAM_LAW note 37)
         the merge is the design's normal form: two rows of one record equal
@@ -1424,80 +1856,61 @@ class NatureBeamStore:
         removed: dict[tuple[int, int, int], int] = {}
         if self.size == 0:
             return removed
-        columns, sign = self.identity_columns(modulus)
-        key = self.merge_key(columns)
-        same = np.zeros(self.size, dtype=bool)
-        if key is None:
-            order = np.lexsort(tuple(reversed(columns)))
-            self.take(order)
-            columns = [column[order] for column in columns]
-            sign = sign[order]
-            same[1:] = True
-            for column in columns:
-                same[1:] &= column[1:] == column[:-1]
-        else:
-            order = np.argsort(key, kind="stable")
-            self.take(order)
-            sign = sign[order]
-            key = key[order]
-            same[1:] = key[1:] == key[:-1]
-        starts = np.flatnonzero(~same)
-        # The merged amounts are exact: in the register when no group's sum
-        # can leave it, in Python integers otherwise, and bounded.
-        signed = self.amount if not modulus else self.amount * sign
-        if int(self.amount.max()) * self.size <= MOMENTUM_BOUND:
-            amount = np.add.reduceat(signed, starts)
-            whole = np.add.reduceat(self.amount, starts) if modulus else amount
-        else:
-            merged = np.add.reduceat(signed.astype(object), starts)
-            if max(abs(int(v)) for v in merged) > MOMENTUM_BOUND:
-                raise OverflowError(
-                    f"{BEAM_LAW}: the amount of a merged row exceeds the integer bound {MOMENTUM_BOUND}"
+        # The merge per Node-aligned slab (`massive-rows-fast`, 2026-09-21):
+        # rows of different Nodes never merge and the Node is the order's
+        # first field, so the total order is the slabs' orders in sequence;
+        # a large store's slabs are merged on the host's threads (the sort,
+        # the reductions and the gathers release the interpreter's lock)
+        # and their rows joined; a small store is one slab.
+        fields = {name: getattr(self, name) for name in FIELDS}
+        slabs: list[dict[str, np.ndarray]] = [fields]
+        if self.size >= _GATHER_ROWS and _GATHER_THREADS > 1:
+            # The store at the merge is the walk's Node-sorted rows followed
+            # by the interval's releases (appended, in no order): the slabs
+            # cut the sorted prefix at Node values, and every appended row
+            # joins the slab of its Node value after the prefix's rows, so
+            # each slab holds whole Nodes in the store's own order.
+            node = self.node
+            breaks = np.flatnonzero(node[1:] < node[:-1])
+            prefix = int(breaks[0]) + 1 if breaks.shape[0] else self.size
+            cuts = [0]
+            thresholds: list[int] = []
+            for k in range(1, _GATHER_THREADS):
+                at = k * prefix // _GATHER_THREADS
+                cut = int(np.searchsorted(node[:prefix], node[at], side="left"))
+                if cut > cuts[-1]:
+                    cuts.append(cut)
+                    thresholds.append(int(node[at]))
+            cuts.append(prefix)
+            if len(cuts) > 2:
+                of_slab = np.searchsorted(
+                    np.array(thresholds, dtype=np.int64), node[prefix:], side="right"
                 )
-            amount = merged.astype(np.int64)
-            whole = (
-                np.add.reduceat(self.amount.astype(object), starts).astype(np.int64)
-                if modulus
-                else amount
-            )
-        # The undelivered shares of merged rows add (the momentum a row has
-        # not yet delivered is the group's); bounded like the amounts.
-        shares_summed: dict[str, np.ndarray] = {}
-        for name in ("share_x", "share_y", "share_z"):
-            column = getattr(self, name)
-            if column.any():
-                summed = np.add.reduceat(column.astype(object), starts)
-                if max(abs(int(v)) for v in summed) > MOMENTUM_BOUND:
-                    raise OverflowError(
-                        f"{BEAM_LAW}: the undelivered share of a merged row exceeds the integer "
-                        f"bound {MOMENTUM_BOUND}"
-                    )
-                shares_summed[name] = summed.astype(np.int64)
-        self.keep(~same)
-        for name, summed in shares_summed.items():
-            setattr(self, name, summed)
-        if modulus:
-            # The cancel: the signed sum's magnitude stays, at the phase of
-            # the larger side (the half-circle phase of the group, plus the
-            # half circle when the far side was larger, which a lone row on
-            # the far half is); an empty group leaves, its units booked per
-            # (record, direction).
-            half = modulus // 2
-            cancelled = whole - np.abs(amount)
-            for k in np.flatnonzero(cancelled > 0).tolist():
-                slot = (int(self.record[k]), int(self.direction[k]), int(self.content[k]))
-                removed[slot] = removed.get(slot, 0) + int(cancelled[k])
-            recorded = self.record != NO_RECORD
-            base = np.where(recorded, self.phase % half, self.phase)
-            self.phase = np.where(recorded & (amount < 0), base + half, base)
-            self.amount = np.abs(amount)
-            self.arrival[:] = NO_ARRIVAL
-            alive = self.amount > 0
-            if not alive.all():
-                self.keep(alive)
-            return removed
-        self.amount = amount
-        self.arrival[:] = NO_ARRIVAL
+                slabs = []
+                for k, (lo, hi) in enumerate(zip(cuts[:-1], cuts[1:], strict=True)):
+                    extra = prefix + np.flatnonzero(of_slab == k)
+                    if extra.shape[0]:
+                        slabs.append(
+                            {
+                                name: np.concatenate((field[lo:hi], np.take(field, extra)))
+                                for name, field in fields.items()
+                            }
+                        )
+                    else:
+                        slabs.append({name: field[lo:hi] for name, field in fields.items()})
+        if len(slabs) == 1:
+            parts = [_merge_rows(slabs[0], modulus)]
+        else:
+            parts = list(_pool().map(lambda slab: _merge_rows(slab, modulus), slabs))
+            joined = _pool().map(lambda name: np.concatenate([part[0][name] for part in parts]), FIELDS)
+            for name, value in zip(FIELDS, joined, strict=True):
+                setattr(self, name, value)
+        if len(parts) == 1:
+            for name in FIELDS:
+                setattr(self, name, parts[0][0][name])
+        for _, part_removed in parts:
+            for slot, units in part_removed.items():
+                removed[slot] = removed.get(slot, 0) + units
         return removed
 
     def slice(self, flat: int) -> tuple[int, int]:
@@ -1528,6 +1941,7 @@ class NatureBeamStore:
                 int(self.share_x[i]),
                 int(self.share_y[i]),
                 int(self.share_z[i]),
+                int(self.acc_turn[i]),
             )
             for k, i in enumerate(range(lo, stop))
         ]
@@ -1985,6 +2399,14 @@ class FamilyPlan:
     g_total: list[int] = field(default_factory=list)
     g_content: list[int] = field(default_factory=list)
     g_moment: list[list[int]] = field(default_factory=list)
+    # The part of each group that belongs to the rows of a record (the
+    # units, the content, the shares' sum, the labels' sum): what the
+    # placed fraction f_F of the family scales at a click (`massive-rows-v1`;
+    # a row of no record has no completion and is placed whole).
+    g_recorded_total: list[int] = field(default_factory=list)
+    g_recorded_content: list[int] = field(default_factory=list)
+    g_recorded_moment: list[list[int]] = field(default_factory=list)
+    g_recorded_label: list[list[int]] = field(default_factory=list)
     readings: dict[str, list[object]] = field(default_factory=dict)
     t_amount: list[int] = field(default_factory=list)
     t_content: list[int] = field(default_factory=list)
@@ -2408,6 +2830,9 @@ class Interval:
     flight: Flight
     collision: CollisionTable
     unit: np.ndarray
+    # Per family its tables (`FamilyFlight`): the flight triple, the labels,
+    # the turn and the completion's pair, read by value at every step.
+    family_flights: tuple[FamilyFlight, ...]
     modulus: int
     handed: bool
     nodes: int
@@ -2457,9 +2882,12 @@ def interval_frame(
     # The columns' common denominators, the accumulators' (`push_form`).
     scales = world.column_scales
     flight, collision = tables.flight, tables.collision
-    # The unit vectors of the directions at the scale Q: what every label
-    # and every vector or tensor moment of the reading is taken on.
+    # The unit vectors of the directions at the scale Q: what the
+    # GameBoard's diagnostics are taken on; every family's labels and
+    # moments are taken on its own label table (`family_flights`, u_D by
+    # value for a family without the flag `massive`).
     unit = flight.labels
+    family_flights = tables.family_flights
     modulus = world.phase_steps
     # Whether the world declares a hand anywhere (`hand-v1`): the lines of
     # the record then carry `hand`, and only then.
@@ -2541,6 +2969,7 @@ def interval_frame(
         flight=flight,
         collision=collision,
         unit=unit,
+        family_flights=family_flights,
         modulus=modulus,
         handed=handed,
         nodes=nodes,
@@ -2609,7 +3038,7 @@ def nature_beam(
     _border(frame)
     _merge(frame)
     if layer is not None:
-        gather_records(layer, tick, frame.entries, measured, frame.families, record)
+        gather_records(frame)
     return readings
 
 
@@ -2676,6 +3105,12 @@ def _inverse_interval(frame: Interval) -> GameBoardDiagnostics:
         raise ValueError(
             f"{BEAM_LAW}: the inverse interval is defined on a GameBoard without measured events"
         )
+    if world.massive_rows:
+        raise ValueError(
+            f"{BEAM_LAW}: the inverse interval is refused on a world that declares `massive_rows` "
+            f"({MASSIVE_ROWS_RULE}): the inverse of the turn on the row's accumulator is exact per "
+            "Link but is not built (as the border `lifetime` has no inverse)"
+        )
     for definition in families:
         if definition.lifetime is not None:
             raise ValueError(
@@ -2736,7 +3171,7 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
     layer = frame.layer
     families = frame.families
     flight = frame.flight
-    unit = frame.unit
+    family_flights = frame.family_flights
     modulus = frame.modulus
     handed = frame.handed
     extents = frame.extents
@@ -2747,18 +3182,17 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
         if store.size == 0:
             arrivals.append(ArrivalRows.empty())
             continue
+        # The family's tables (`FamilyFlight`, the value form): the flight
+        # triple, the labels, the turn and the placed fraction f_F, Flight's
+        # numbers and (1, 0) for a family without the flag `massive`.
+        table = family_flights[family]
+        unit = table.labels
+        placed = table.placed
+        kept = 1 - placed
         # The flight's rule at the row's age: the position's accumulator
-        # per direction, off the age (the rate constant over the flight).
-        step = flight.walk_step(store.direction, store.age)
-        moved = step.any(axis=1)
-        x, y, z = store.coordinates(store.node)
-        coordinates = np.stack([x, y, z], axis=1) + step
-        escaped = np.zeros(store.size, dtype=bool)
-        for axis in range(3):
-            if world.periodic[axis]:
-                coordinates[:, axis] %= extents[axis]
-            else:
-                escaped |= (coordinates[:, axis] < 0) | (coordinates[:, axis] >= extents[axis])
+        # per direction, off the age (the rate constant over the flight),
+        # by the family's triple.
+        step, moved, coordinates, escaped = _walk_rows(table, store, world.periodic, extents)
         # The Port of the Link crossed (a diagnostic of the walk, and the
         # face a ray leaves through) and the direction the ray arrived on.
         port = np.full(store.size, -1, dtype=np.int64)
@@ -2766,6 +3200,7 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
         arrival = np.where(moved, store.direction, NO_ARRIVAL)
         if escaped.any():
             gone = np.flatnonzero(escaped)
+            x, y, z = store.coordinates(store.node)
             labels = store.labels(gone, unit, definition.free)
             for face in ledger.open_faces:
                 on_face = port[gone] == face
@@ -2778,8 +3213,7 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
                 # phases) and its square, exact Python integers (a report,
                 # never refused; the face's record is one sum per face).
                 total = int(exact_sum(amounts))
-                ledger.face_amount[face][family] += total
-                ledger.face_content[face][family] += int(exact_sum(amounts * store.content[through]))
+                carried = int(exact_sum(amounts * store.content[through]))
                 face_x, face_y = coherent_pointer(
                     amounts,
                     (store.phase[through] - store.birth[through]) % modulus,
@@ -2789,13 +3223,33 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
                 )
                 ledger.face_record[face][family] += face_x[0] * face_x[0] + face_y[0] * face_y[0]
                 escaped_momentum = exact_column_sums(labels[on_face])
-                ledger.face_momentum[face][family] = [
-                    a + b
-                    for a, b in zip(ledger.face_momentum[face][family], escaped_momentum, strict=True)
-                ]
                 ledger.transit_momentum = [
                     a - b for a, b in zip(ledger.transit_momentum, escaped_momentum, strict=True)
                 ]
+                # The placed fraction f_F of the escape (`massive-rows-v1`,
+                # the value form): f_F x the units, the content and the
+                # labels leave on the face's lines as they did; the rest,
+                # of the rows of a record alone (a row of no record has no
+                # completion and leaves whole), waits in the record's offer
+                # under the books' `absorbed` line until its completion.
+                recorded = store.record[through] != NO_RECORD
+                waiting_units = kept * int(exact_sum(amounts[recorded]))
+                waiting_content = kept * int(exact_sum((amounts * store.content[through])[recorded]))
+                waiting_momentum = [kept * v for v in exact_column_sums(labels[on_face][recorded])]
+                ledger.face_amount[face][family] += total - waiting_units
+                ledger.face_content[face][family] += carried - waiting_content
+                ledger.face_momentum[face][family] = [
+                    a + b - w
+                    for a, b, w in zip(
+                        ledger.face_momentum[face][family],
+                        escaped_momentum,
+                        waiting_momentum,
+                        strict=True,
+                    )
+                ]
+                ledger.transit_absorbed[family] += waiting_units
+                ledger.content_absorbed[family] += waiting_content
+                ledger.wait(family, waiting_units, waiting_content, waiting_momentum)
             # The phase at the exact time of the Link the row leaves through
             # (BEAM_LAW note 45): the row is read before this walk's advance,
             # so its phase holds `age` intervals and its last Link is the
@@ -2828,6 +3282,8 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
                             node=(int(gone_x[k]), int(gone_y[k]), int(gone_z[k])),
                             content=int(store.amount[row_index] * store.content[row_index]),
                             momentum=[int(v) for v in labels[k]],
+                            placed=placed,
+                            direction=int(store.direction[row_index]),
                         )
             if record is not None:
                 for k, index in enumerate(gone):
@@ -2863,11 +3319,23 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
         # alphabet, whose line it resumes when a collision moves it); a
         # moving ray's age advances by one, whole.
         resting = store.direction < REST_DIRECTIONS
-        # The phase per Link crossed (the integer `phase_per_link`) and,
-        # under the amplitude law, the phase per interval of age (the pair
-        # form: `by_clock(age, n, d)` at every walk that advances the age,
-        # the one primitive of every rate, carried through a re-emission).
-        turned = definition.phase_per_link * moved
+        # The phase per Link crossed by the family's turn table on the
+        # axis of the Link (`FamilyFlight.turned`: `by_drive_rows` on the
+        # row's `acc_turn`, the numerator `phase_per_link` over 1 for a
+        # family without the flag, the count per Link as it was; |p_a| N
+        # over h for a massive family, de Broglie's turn, the remainder
+        # kept on the row) and, under the amplitude law, the phase per
+        # interval of age (the pair form: `by_clock(age, n, d)` at every
+        # walk that advances the age, the one primitive of every rate,
+        # carried through a re-emission; None for a massive family).
+        turned = np.zeros(store.size, dtype=np.int64)
+        if moved.any():
+            crossed_rows = np.flatnonzero(moved)
+            count, after = table.turned(
+                store.acc_turn[crossed_rows], store.direction[crossed_rows], port[crossed_rows] >> 1
+            )
+            turned[crossed_rows] = count
+            store.acc_turn[crossed_rows] = after
         if definition.phase_per_age is not None:
             rate_n, rate_d = definition.phase_per_age
             turned = turned + np.where(resting, 0, by_clock_rows(store.age, rate_n, rate_d))
@@ -3031,8 +3499,13 @@ def _family_plan(
     tables = frame.tables
     families = frame.families
     free_of = frame.free_of
+    # The family's tables: its labels (u_D by value for a family without
+    # the flag `massive`, p_D for a massive one) are what its moments and
+    # labels are taken on, its flight triple what its rows' steps are read
+    # by (the crossing rule reads a row's last steps).
+    table = frame.family_flights[family]
+    unit = table.labels
     flight = frame.flight
-    unit = frame.unit
     modulus = frame.modulus
     entries = frame.entries
     events = frame.events
@@ -3080,8 +3553,7 @@ def _family_plan(
     if swap.shape[0]:
         ev_swap = trail_events[np.searchsorted(trail_nodes, store.node[swap])]
         backward = (
-            flight.walk_step(store.arrival[swap], np.maximum(store.age[swap] - 1, 0))
-            == -ev_step[ev_swap]
+            table.walk_step(store.arrival[swap], np.maximum(store.age[swap] - 1, 0)) == -ev_step[ev_swap]
         ).all(axis=1) & (store.number[swap] != ev_number[ev_swap])
         swap, ev_swap = swap[backward], ev_swap[backward]
         at = np.concatenate((at, swap))
@@ -3126,10 +3598,10 @@ def _family_plan(
     # without a step reads its arrivals as before the rule.
     e_rows = ev_step[ev]
     stepped = e_rows.any(axis=1)
-    s_1 = flight.walk_step(arrival, np.maximum(age_at - 1, 0))
+    s_1 = table.walk_step(arrival, np.maximum(age_at - 1, 0))
     with_step = stepped & (s_1 == e_rows).all(axis=1)
     e_last = ev_last[ev]
-    rested = (age_at >= 2) & ~flight.walk_step(arrival, np.maximum(age_at - 2, 0)).any(axis=1)
+    rested = (age_at >= 2) & ~table.walk_step(arrival, np.maximum(age_at - 2, 0)).any(axis=1)
     leapfrog = ~stepped & e_last.any(axis=1) & (s_1 == e_last).all(axis=1) & rested
     against = (unit[direction] * e_rows).sum(axis=1) < 0
     crossing = (arrived & ~with_step & ~leapfrog) | (
@@ -3418,9 +3890,9 @@ def _family_plan(
             rows_ev = np.concatenate((ev[others], ev[split]))
     if rows_w.shape[0] == 0:
         return plan
-    table = moment_table(rows_v, rows_w, rows_age)
-    np.add.at(presence[family], rows_ev, table[:, 0] + table[:, 1])
-    np.add.at(age_moment[family], rows_ev, table[:, AGE_COLUMN] + table[:, AGE_COLUMN + 1])
+    moments = moment_table(rows_v, rows_w, rows_age)
+    np.add.at(presence[family], rows_ev, moments[:, 0] + moments[:, 1])
+    np.add.at(age_moment[family], rows_ev, moments[:, AGE_COLUMN] + moments[:, AGE_COLUMN + 1])
     if admitted is None:
         return plan
     # The rows that click after the pairing (every taken row without
@@ -3457,7 +3929,7 @@ def _family_plan(
     overflow = first_reading_overflow(of_row, groups, a_t, v_arrival, age_t)
     if overflow is not None:
         fail(overflow[0], 2, overflow[1])
-    admitted_rows = table[position[taken]]
+    admitted_rows = moments[position[taken]]
     reading = moments_of_groups(admitted_rows, g_starts)
     for key in {entries[e].reads[family] for e in set(g_ev.tolist())}:
         plan.readings[key] = reading.component(key).tolist()
@@ -3509,6 +3981,15 @@ def _family_plan(
     ]
     plan.t_share = shares
     carried_t = a_t * c_t
+    # The rows of a record within each group: their units, content, shares
+    # and labels summed (what f_F scales at a click).
+    recorded_rows = record_t != NO_RECORD
+    for s_k, e_k in zip(g_starts.tolist(), g_ends, strict=True):
+        members = [k for k in range(s_k, e_k) if recorded_rows[k]]
+        plan.g_recorded_total.append(sum(int(a_t[k]) for k in members))
+        plan.g_recorded_content.append(sum(int(carried_t[k]) for k in members))
+        plan.g_recorded_moment.append([sum(shares[k][axis] for k in members) for axis in range(3)])
+        plan.g_recorded_label.append([sum(int(labels[k, axis]) for k in members) for axis in range(3)])
     plan.g_number = num_t[g_starts].tolist()
     plan.g_start = g_starts.tolist()
     plan.g_end = (g_starts + g_sizes).tolist()
@@ -3633,6 +4114,11 @@ def _apply_plan(
         return
     name = families[family].name
     free = free_of[family]
+    # The family's placed fraction f_F (`massive-rows-v1`, the value form):
+    # 1 for a family without the flag `massive` (the click as built), 0 for
+    # a massive family, whose rows' units, content and labels wait in the
+    # record's offer until its completion.
+    kept = 1 - frame.family_flights[family].placed
     # The rule as the interval's plan read it (a `become` entry
     # consumed by a transformation of this interval is applied
     # as the plan made it: the click).
@@ -3758,8 +4244,13 @@ def _apply_plan(
             # The flow is the rows' shares (a record's row
             # pushes by its share of the label, stage (vii)
             # step 3; a row of no record's share is its label),
-            # as `g_moment` is.
-            moment = plan.g_moment[gi]
+            # as `g_moment` is; at a click the shares of the rows
+            # of a record scaled by the placed fraction f_F (the
+            # rest waits with the record).
+            waits = kept if rule in (MEASURE_RULE_NAME, BECOME_RULE) else 0
+            moment = [
+                a - waits * b for a, b in zip(plan.g_moment[gi], plan.g_recorded_moment[gi], strict=True)
+            ]
             push = push_form(
                 free,
                 moment,
@@ -3821,10 +4312,18 @@ def _apply_plan(
             ledger.transit_absorbed[family] += group_total
             ledger.content_absorbed[family] += group_content
             # The labels of an absorbed group beyond the shares
-            # matter took, to the books' `remainder` line.
+            # matter took, to the books' `remainder` line (at a
+            # click the recorded rows' part scaled by f_F, the
+            # whole labels of the rest waiting with the record).
             ledger.remainder_momentum[family] = [
-                a + b
-                for a, b in zip(ledger.remainder_momentum[family], plan.g_remainder[gi], strict=True)
+                a + b - waits * (c - d)
+                for a, b, c, d in zip(
+                    ledger.remainder_momentum[family],
+                    plan.g_remainder[gi],
+                    plan.g_recorded_label[gi],
+                    plan.g_recorded_moment[gi],
+                    strict=True,
+                )
             ]
             k0, k1 = plan.g_start[gi], plan.g_end[gi]
             if rule == "rerelease":
@@ -3900,10 +4399,25 @@ def _apply_plan(
                         group_line["hand"] = group_hand(plan, k0, k1)
                     record(group_line)
                 continue
-            # The click: the content joins, one click per unit.
-            entry.held[family] = bounded(entry.held[family] + group_content, entry, "content")
-            entry.clicks[family] += group_total
-            ledger.held_measured[family] += group_content
+            # The click: the content joins, one click per unit; under
+            # the pair (f_F, q_F) the placed fraction f_F of the rows of
+            # a record (1 for a family without the flag `massive`: the
+            # click as built), the rest waiting in the record's offer
+            # under the `absorbed` line until the record's completion
+            # (`gather_records`), where the chosen set takes q_F.
+            waiting_total = waits * plan.g_recorded_total[gi]
+            waiting_content = waits * plan.g_recorded_content[gi]
+            entry.held[family] = bounded(
+                entry.held[family] + group_content - waiting_content, entry, "content"
+            )
+            entry.clicks[family] += group_total - waiting_total
+            ledger.held_measured[family] += group_content - waiting_content
+            ledger.wait(
+                family,
+                waiting_total,
+                waiting_content,
+                [waits * v for v in plan.g_recorded_label[gi]],
+            )
             if handed:
                 # The books' `left` and `right` lines: the units
                 # clicked of each hand (a report).
@@ -3927,6 +4441,8 @@ def _apply_plan(
                             node=(node[0], node[1], node[2]),
                             content=plan.t_carried[k],
                             momentum=list(plan.t_label[k]),
+                            placed=1 - waits,
+                            direction=plan.t_arrival[k],
                         )
             if record is not None:
                 for k in range(k0, k1):
@@ -4075,11 +4591,7 @@ def _measure(frame: Interval) -> None:
     per set, the rules per group, the records and the side effects in the
     order of the records (BEAM_LAW section 5)."""
     stores = frame.stores
-    measured = frame.measured
-    tick = frame.tick
-    record = frame.record
     layer = frame.layer
-    families = frame.families
     entries = frame.entries
     events = frame.events
     # 4. The measured events' tables and the detectors, the same rule at
@@ -4106,7 +4618,7 @@ def _measure(frame: Interval) -> None:
         if not keep[family].all():
             store.keep(keep[family])
     if layer is not None:
-        gather_records(layer, tick, entries, measured, families, record)
+        gather_records(frame)
 
 
 def covariant_release(entry: Measured, denominator: int) -> list[int]:
@@ -4174,7 +4686,10 @@ def _release_family(
     families = frame.families
     free_of = frame.free_of
     flight = frame.flight
-    unit = frame.unit
+    # The family's tables: its labels (the recoil and the transit line),
+    # and the content its tables were formed for (a massive family's M).
+    table = frame.family_flights[family]
+    unit = table.labels
     modulus = frame.modulus
     handed = frame.handed
     definition = families[family]
@@ -4397,6 +4912,18 @@ def _release_family(
         )
     ):
         cost = definition.quantum * turn
+        if table.content and cost != table.content:
+            # The tables of a family formed for one content per row (a
+            # massive family's rest energy E'_0 = Q S M, M the quantum)
+            # birth rows of that content alone: a born row's content is
+            # quantum x turn, so the lamp's turn is 1 (`massive-rows-v1`,
+            # the design's M3; the pin's lamp at held K turns 1).
+            raise ValueError(
+                f"{BEAM_LAW}: the lamp of measured event {entry.number} at {list(entry.position)} "
+                f"births rows of {definition.name!r} at the turn {turn} (the content {cost} per "
+                f"row), where the family's tables are formed for the content {table.content} "
+                f"(the rest energy Q S M): a massive birth needs the turn 1 ({MASSIVE_ROWS_RULE})"
+            )
         # Under the amplitude law a lamp's release is the birth of
         # records: per self-creation as many records as the rate
         # says units per direction (`lamp_count`, the count the
@@ -4540,11 +5067,7 @@ def _release_family(
         recoil = list(born_momentum)
         born_records = [k for k, b in enumerate(born) if b[5] != NO_RECORD]
         if born_records:
-            recoil = [0, 0, 0]
-            for k, b in enumerate(born):
-                for axis in range(3):
-                    label = int(labels[k, axis])
-                    recoil[axis] += share_of(label, b[1], b[7])[0] if b[5] != NO_RECORD else label
+            recoil = born_recoil(labels, born)
             ledger.remainder_momentum[family] = [
                 a - (whole - taken)
                 for a, whole, taken in zip(
@@ -4727,7 +5250,7 @@ def _border(frame: Interval) -> None:
     layer = frame.layer
     families = frame.families
     flight = frame.flight
-    unit = frame.unit
+    family_flights = frame.family_flights
     modulus = frame.modulus
     handed = frame.handed
     # 6. The border `lifetime` (the model owner, 2026-09-20: "the event
@@ -4752,11 +5275,13 @@ def _border(frame: Interval) -> None:
         if gone.shape[0] == 0:
             continue
         definition = families[family]
-        labels = store.labels(gone, unit, definition.free)
+        table = family_flights[family]
+        placed = table.placed
+        kept = 1 - placed
+        labels = store.labels(gone, table.labels, definition.free)
         amounts = store.amount[gone]
         total = int(exact_sum(amounts))
-        ledger.lifetime_amount[family] += total
-        ledger.lifetime_content[family] += int(exact_sum(amounts * store.content[gone]))
+        carried = int(exact_sum(amounts * store.content[gone]))
         border_x, border_y = coherent_pointer(
             amounts,
             (store.phase[gone] - store.birth[gone]) % modulus,
@@ -4766,10 +5291,24 @@ def _border(frame: Interval) -> None:
         )
         ledger.lifetime_record[family] += border_x[0] * border_x[0] + border_y[0] * border_y[0]
         left = exact_column_sums(labels)
-        ledger.lifetime_momentum[family] = [
-            a + b for a, b in zip(ledger.lifetime_momentum[family], left, strict=True)
-        ]
         ledger.transit_momentum = [a - b for a, b in zip(ledger.transit_momentum, left, strict=True)]
+        # The placed fraction f_F (`massive-rows-v1`): f_F x the units, the
+        # content and the labels on the border's lines as they were; the
+        # rest, of the rows of a record alone, waits in the record's offer
+        # under the `absorbed` line until the completion.
+        recorded = store.record[gone] != NO_RECORD
+        waiting_units = kept * int(exact_sum(amounts[recorded]))
+        waiting_content = kept * int(exact_sum((amounts * store.content[gone])[recorded]))
+        waiting_momentum = [kept * v for v in exact_column_sums(labels[recorded])]
+        ledger.lifetime_amount[family] += total - waiting_units
+        ledger.lifetime_content[family] += carried - waiting_content
+        ledger.lifetime_momentum[family] = [
+            a + b - w
+            for a, b, w in zip(ledger.lifetime_momentum[family], left, waiting_momentum, strict=True)
+        ]
+        ledger.transit_absorbed[family] += waiting_units
+        ledger.content_absorbed[family] += waiting_content
+        ledger.wait(family, waiting_units, waiting_content, waiting_momentum)
         # The phase at the exact time of the row's last Link (BEAM_LAW note
         # 42): read after the walk, its phase holds `age` intervals and its
         # Links are the count m(age).
@@ -4801,6 +5340,8 @@ def _border(frame: Interval) -> None:
                         node=(int(gone_x[k]), int(gone_y[k]), int(gone_z[k])),
                         content=int(store.amount[row_index] * store.content[row_index]),
                         momentum=[int(v) for v in labels[k]],
+                        placed=placed,
+                        direction=int(store.direction[row_index]),
                     )
         if record is not None:
             x, y, z = store.coordinates(store.node[gone])
@@ -4847,7 +5388,7 @@ def _merge(frame: Interval) -> None:
     families = frame.families
     free_of = frame.free_of
     flight = frame.flight
-    unit = frame.unit
+    family_flights = frame.family_flights
     modulus = frame.modulus
     # Merge identical rows; sort by Node. A row whose age passed the
     # world's bound refuses the run: the store's promise of fixed storage
@@ -4884,7 +5425,7 @@ def _merge(frame: Interval) -> None:
                 ledger.cancelled_amount[family] += amount
                 ledger.cancelled_content[family] += carried
                 label = momentum_labels(
-                    unit,
+                    family_flights[family].labels,
                     np.array([direction], dtype=np.int64),
                     np.array([amount], dtype=np.int64),
                     np.array([per_unit], dtype=np.int64),
@@ -4903,22 +5444,33 @@ def _merge(frame: Interval) -> None:
             )
 
 
-def gather_records(
-    layer: Layer,
-    tick: int,
-    entries: list[Measured],
-    measured: dict[int, Measured],
-    families: tuple[FamilyDefinition, ...],
-    record: Record | None,
-) -> None:
+def gather_records(frame: Interval) -> None:
     """The layer's completions (the ladder, the world's row): every record
     whose units all ended; the `gather` line, per `sum` set with an offer
     of the record the set's record (the bilinear form f^T G f of the
     record's counts per label, the pointer's square without the pointer,
     accumulated; the pointer E f reported on the line) with a `record`
-    line, and the pending rows of the
-    record at a chosen re-emitter marked for their rebirth as a new
-    record."""
+    line, the pending rows of the record at a chosen re-emitter marked for
+    their rebirth as a new record, and, since `massive-rows-v1` (the
+    design's section 3, the identity's own rule in the value form), the
+    completion's placement: the chosen end takes the family's quantum q_F
+    (0 for a family without the flag `massive`: today's bytes) into its
+    measured event's `held`, its `clicks` by one unit and q_F x the label
+    of the chosen row's direction into its momentum (a chosen face or the
+    border takes them on its escaped lines as a body's escape does, no
+    body formed), and every other waiting of the record (the units, the
+    content and the labels its rows brought where they ended, kept in its
+    offers) goes to the books' `cancelled` lines. The chosen row among the
+    rows that ended at the chosen Node is read by the same rungs as the
+    Node was read within the cell (`node_choice` over the waiting units per
+    direction at the Node, in the direction table's order, by u's position
+    within the Node's rung), the ladder's third level and no draw."""
+    layer = frame.layer
+    assert layer is not None
+    tick = frame.tick
+    measured = frame.measured
+    families = frame.families
+    record = frame.record
     for live in layer.complete(tick):
         identity, family = live.identity, live.family
         gather = live.gather
@@ -4966,5 +5518,101 @@ def gather_records(
                         for k, row in enumerate(pending):
                             if row.record == identity and row.split:
                                 pending[k] = row._replace(rebirth=True)
+        _place_completion(frame, live, gather)
         if record is not None:
             record(dict(gather))
+
+
+def _place_completion(frame: Interval, live: LiveRecord, gather: dict[str, object]) -> None:
+    """The completion's placement of one record under its family's pair
+    (f_F, q_F) (`gather_records`): q_F and the one label to every chosen
+    end (one per arm: each arm a quantum), the rest of the record's
+    waiting to the cancelled lines; the `gather` line's `content` and
+    `momentum` f_F x what the chosen rows brought plus what was placed.
+    At (1, 0) nothing waits and nothing moves: the line as it was."""
+    layer = frame.layer
+    assert layer is not None
+    ledger = frame.ledger
+    measured = frame.measured
+    family = live.family
+    table = frame.family_flights[family]
+    placed, quantum = table.placed, table.quantum
+    waiting_units = waiting_content = 0
+    waiting_momentum = [0, 0, 0]
+    for offer in live.offers.values():
+        waiting_units += sum(offer.waiting_units.values())
+        waiting_content += sum(offer.waiting_content.values())
+        for vector in offer.waiting_momentum.values():
+            waiting_momentum = [a + b for a, b in zip(waiting_momentum, vector, strict=True)]
+    placed_units = placed_content = 0
+    placed_momentum = [0, 0, 0]
+    absorbed_units = absorbed_content = 0
+    for offer, node in live.chosen_ends:
+        available = offer.waiting_content.get(node, 0)
+        if available == 0:
+            # Nothing waits at this end: the click as built placed it at
+            # the arrival (f_F = 1), or a re-emitter's content flies on.
+            continue
+        if available < quantum:
+            raise ValueError(
+                f"{BEAM_LAW}: the record {live.identity} completes at {layer.names[offer.set_index]} "
+                f"with {available} waiting at {list(node)}, less than its quantum {quantum}"
+            )
+        by_direction = sorted(offer.waiting_directions.get(node, {}).items())
+        direction = by_direction[
+            node_choice([units for _, units in by_direction], live.chosen_width, live.chosen_position)
+        ][0]
+        label = [quantum * int(v) for v in table.labels[direction]]
+        key = layer.keys[offer.set_index]
+        if key[0] == "set":
+            holder = measured[layer.sets[key[1]].nodes[node]]
+            holder.held[family] = bounded(holder.held[family] + quantum, holder, "content")
+            holder.clicks[family] += 1
+            holder.momentum = [
+                bounded(a + b, holder, "momentum") for a, b in zip(holder.momentum, label, strict=True)
+            ]
+            holder.pushed = [
+                bounded(a + b, holder, "push taken") for a, b in zip(holder.pushed, label, strict=True)
+            ]
+            ledger.held_measured[family] += quantum
+            absorbed_units += 1
+            absorbed_content += quantum
+        elif key[0] == "face":
+            port = key[1]
+            ledger.face_amount[port][family] += 1
+            ledger.face_content[port][family] += quantum
+            ledger.face_momentum[port][family] = [
+                a + b for a, b in zip(ledger.face_momentum[port][family], label, strict=True)
+            ]
+        else:
+            ledger.lifetime_amount[family] += 1
+            ledger.lifetime_content[family] += quantum
+            ledger.lifetime_momentum[family] = [
+                a + b for a, b in zip(ledger.lifetime_momentum[family], label, strict=True)
+            ]
+        placed_units += 1
+        placed_content += quantum
+        placed_momentum = [a + b for a, b in zip(placed_momentum, label, strict=True)]
+    if live.chosen_ends:
+        gather["content"] = placed * int(gather["content"]) + placed_content  # type: ignore[call-overload]
+        momentum = gather["momentum"]
+        assert isinstance(momentum, list)
+        gather["momentum"] = [
+            placed * int(m) + q for m, q in zip(momentum or [0, 0, 0], placed_momentum, strict=True)
+        ]
+    if not waiting_units and not waiting_content and not any(waiting_momentum):
+        return
+    # The waiting resolved: what was placed at an entry stays absorbed (now
+    # measured), what was placed at a face or the border leaves the
+    # absorbed line for the escaped, the rest leaves it for the cancelled.
+    rest_units = waiting_units - placed_units
+    rest_content = waiting_content - placed_content
+    rest_momentum = [a - b for a, b in zip(waiting_momentum, placed_momentum, strict=True)]
+    ledger.wait(family, -waiting_units, -waiting_content, [-v for v in waiting_momentum])
+    ledger.transit_absorbed[family] -= waiting_units - absorbed_units
+    ledger.content_absorbed[family] -= waiting_content - absorbed_content
+    ledger.cancelled_amount[family] += rest_units
+    ledger.cancelled_content[family] += rest_content
+    ledger.cancelled_momentum[family] = [
+        a + b for a, b in zip(ledger.cancelled_momentum[family], rest_momentum, strict=True)
+    ]

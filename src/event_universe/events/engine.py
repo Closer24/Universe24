@@ -1101,7 +1101,12 @@ class NatureBeamSimulation:
             amount_column = np.array([units], dtype=np.int64)
             content_column = np.array([definition.quantum], dtype=np.int64)
             labels = momentum_labels(
-                self.tables.flight.labels, direction_column, amount_column, content_column, False, origin
+                self.tables.family_flights[family].labels,
+                direction_column,
+                amount_column,
+                content_column,
+                False,
+                origin,
             )
             born = exact_column_sums(labels)
             entry.momentum = [
@@ -1190,7 +1195,9 @@ class NatureBeamSimulation:
             content.append(int(exact_sum(store.amount * store.content)))
             if store.size:
                 definition = self.families[family]
-                labels = store.labels(np.arange(store.size), self.tables.flight.labels, definition.free)
+                labels = store.labels(
+                    np.arange(store.size), self.tables.family_flights[family].labels, definition.free
+                )
                 momentum = [a + b for a, b in zip(momentum, exact_column_sums(labels), strict=True)]
         return {"transit": units, "content": content, "momentum": momentum}
 
@@ -1217,6 +1224,10 @@ class NatureBeamSimulation:
         # record and no line.
         recorded = self.world.recorded
         handed = self.world.handed
+        # The `waiting` lines (`massive-rows-v1`) are written in a world
+        # that declares `massive_rows` alone (zero without it: every family
+        # places at the arrival, and the lines as they were).
+        massive = self.world.massive_rows
         # One pass over the measured events: what they hold per family,
         # their momentum and their charge (rho x content of the free
         # families and, since 2026-09-20 (D-1), the paid families' whole
@@ -1275,6 +1286,11 @@ class NatureBeamSimulation:
             # only (zero without it, the lines as they were).
             if recorded:
                 in_transit["cancelled"] = ledger.cancelled_amount[index]
+            if massive:
+                # The part of `absorbed` waiting with the open records for
+                # their completion (the units; the content and the labels
+                # below).
+                in_transit["waiting"] = ledger.waiting_amount[index]
             in_transit["balanced"] = in_transit["initial"] + in_transit["released"] == (
                 in_transit["current"]
                 + in_transit["escaped"]
@@ -1303,6 +1319,8 @@ class NatureBeamSimulation:
             }
             if recorded:
                 content["cancelled"] = ledger.cancelled_content[index]
+            if massive:
+                content["waiting"] = ledger.waiting_content[index]
             content["balanced"] = content["initial"] + content["released"] == (
                 content["current"]
                 + content["escaped"]
@@ -1330,6 +1348,9 @@ class NatureBeamSimulation:
                 # The labels of a record's rows beyond the shares matter took
                 # (the push by share, stage (vii) step 3).
                 lines["remainder"] = list(ledger.remainder_momentum[index])
+            if massive:
+                # The labels waiting with the family's open records.
+                lines["waiting"] = list(ledger.waiting_momentum[index])
             families[family.name] = lines
         momentum: dict[str, object] = {
             "measured": held_momentum,
@@ -1340,6 +1361,8 @@ class NatureBeamSimulation:
         if recorded:
             momentum["cancelled"] = ledger.cancelled_momentum_total()
             momentum["remainder"] = ledger.remainder_momentum_total()
+        if massive:
+            momentum["waiting"] = ledger.waiting_momentum_total()
         return {
             "tick": self.tick,
             "families": families,
@@ -1517,6 +1540,9 @@ class NatureBeamSimulation:
         # state's write of w27_beam at 30 intervals from 251.9 s to 9.7 s,
         # the bytes identical).
         handed = self.world.handed
+        # A row's `acc_turn` is written in a world that declares
+        # `massive_rows` alone (0 on every row without it).
+        massive = self.world.massive_rows
         for flat in nodes:
             x, y, z = self.stores[0].coordinates(np.array([flat]))
             entry: dict[str, object] = {"position": [int(x[0]), int(y[0]), int(z[0])], "families": []}
@@ -1526,6 +1552,6 @@ class NatureBeamSimulation:
                 lo, hi = store.slice(flat)
                 if hi == lo:
                     continue
-                beams = [beam.record_line(vectors, handed) for beam in store.rows(lo, hi)]
+                beams = [beam.record_line(vectors, handed, massive) for beam in store.rows(lo, hi)]
                 families.append({"family": family.name, "rays": beams})
             yield entry

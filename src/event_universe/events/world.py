@@ -302,11 +302,17 @@ family or a content that is not a positive integer.
 from __future__ import annotations
 
 from collections.abc import Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from functools import cached_property
 
 from event_universe.core.game_board import MAX_VALUE, PORT_HEADINGS, Address3
-from event_universe.core.integer import bounded_gcd, by_clock, integer_root, rational_sum
+from event_universe.core.integer import (
+    MAX_WORK_INT,
+    bounded_gcd,
+    by_clock,
+    integer_root,
+    rational_sum,
+)
 from event_universe.core.phase import MAX_PHASE_STEPS
 
 BEAM_LAW = "beam-v1"
@@ -400,6 +406,7 @@ WORLD_KEYS = {
     "age_bound",
     "action",
     "meeting",
+    "massive_rows",
     # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
     # object, absent by default (`COVARIANT_KEYS`).
     "covariant_readings",
@@ -491,6 +498,30 @@ class CovariantDeclaration:
         return self.c2[1]
 
 
+def scaled_label(vector: Vector, scale: int) -> Vector:
+    """The integer vector nearest `scale x D / |D|`, in integers only: the
+    physics-rule reviewer's exact rule of 2026-09-19 for the unit vector at
+    the scale Q (`nature_beam.unit_label`, this function at the scale Q),
+    with n = |D|^2, each component |a| rounded as k(|a|) = (isqrt((2 scale
+    |a|)^2 // n) + 1) // 2 and the sign restored, so that the label of -D
+    is minus the label of D exactly and the 48 signed axis permutations
+    carry over (k depends on |a| and n alone). The zero vector gives the
+    zero vector. The massive rows (`massive-rows-v1`) form their momentum
+    label p_D per direction here at the scale p (the lamp's
+    `momentum_magnitude`), one load-time rounding per direction in the
+    class of u_D's; a scale of 0 gives the zero vector on every direction
+    (a row at rest, the primitive's p = 0 case)."""
+    n = sum(c * c for c in vector)
+    if n == 0 or scale == 0:
+        return (0, 0, 0)
+    found = []
+    for a in vector:
+        t = 2 * scale * abs(a)
+        k = (integer_root(t * t // n) + 1) // 2
+        found.append(k if a >= 0 else -k)
+    return found[0], found[1], found[2]
+
+
 # The identity of the turn by momentum, a physical hypothesis beside the
 # law (the model owner's decision of 2026-09-20 on Bohr): the record carries
 # it when the world declares `action`.
@@ -535,6 +566,22 @@ NO_HAND = 0
 # engine's fact); no registered world does either, and every world without
 # one reads as it did, byte for byte.
 BINDING_RULE = "binding-v1"
+# The identity of the massive rows (`massive-rows-v1`; the model owner's yes
+# of 2026-09-21, record 332 of docs/LOG_2026-09-20.md; the mathematician's
+# design docs/designs/massive_rows/DESIGN.md, the physics-rule review's
+# three rounds): under the world key `massive_rows` a paid family may be
+# declared `massive`, its rows flying at the pace |p| / E' of the rest
+# energy E'_0 = Q S M (M the family's `quantum`, S the world's `width`)
+# and the momentum label p_D per direction at the scale p (the lamp's
+# `momentum_magnitude`), turning de Broglie's |p_a| N / h at every axis
+# Link over the world's `action` h, and completing by handing ONE quantum
+# (M and the one label) to the chosen set at the record's completion (the
+# placed fraction f_F = 0, the completion's quantum q_F = M). Every family
+# carries the same tables by value (a family without the flag Flight's
+# numbers, (phase_per_link, 1) and the pair (1, 0)), so a world without the
+# key reads as it did, byte for byte. Absent (false by default), no family
+# may be declared massive.
+MASSIVE_ROWS_RULE = "massive-rows-v1"
 # The two built-in columns of every family: the first, gravity, has the
 # value [1, 1] on every unit of content and the sign minus (like contents
 # pull together); the second, charge, the family's `charge` per unit of
@@ -552,7 +599,17 @@ COLUMN_KEYS = {"value", "sign"}
 COLUMN_LIMIT = 8
 # The span of a measured event on one Node (the default): a body of one.
 ONE_NODE: tuple[int, int, int] = (1, 1, 1)
-FAMILY_KEYS = {"name", "quantum", "charge", "columns", "lifetime", "phase", "phase_per_link", "hand"}
+FAMILY_KEYS = {
+    "name",
+    "quantum",
+    "charge",
+    "columns",
+    "lifetime",
+    "phase",
+    "phase_per_link",
+    "hand",
+    "massive",
+}
 # The border every event in transit of a family with a lifetime clicks on
 # when its age reaches the lifetime: named like a face detector in the
 # records, the books' escaped lines summing it with the faces'; a declared
@@ -596,6 +653,7 @@ LAMP_KEYS = {
     "branches",
     "arms",
     "hand",
+    "momentum_magnitude",
 }
 # A table entry's object form: the rule, a window on any rule but `pass`
 # with its width, the reading's component the record carries, on a
@@ -728,6 +786,16 @@ class FamilyDefinition:
     # family as `charge` is: the neutrino is left-handed once, not per
     # world.
     hand: int = NO_HAND
+    # The massive rows (`massive-rows-v1`, 2026-09-21; the family key
+    # `massive`, admitted under the world key `massive_rows` alone): a paid
+    # family whose rows are records of massive rows, flying at the pace
+    # |p| / E' with the rest energy E'_0 = Q S M (M the `quantum`) and the
+    # momentum label p_D at the scale `momentum_magnitude` (the lamp's key,
+    # one value per family, resolved by the parser from the family's lamps),
+    # turning de Broglie's |p_a| N / h per axis Link; its click hands one
+    # quantum at the record's completion. False for every family until then.
+    massive: bool = False
+    momentum_magnitude: int = 0
 
     @property
     def declared_phase_per_link(self) -> int | list[int]:
@@ -859,6 +927,11 @@ class LampDefinition:
     # column, and its family may declare one or the other, never both.
     hand: int = NO_HAND
     label_hands: tuple[int, int] | None = None
+    # The magnitude p of the momentum label of a massive family's rows
+    # (`massive-rows-v1`; a scalar in label units, named by its kind:
+    # `momentum` on a measured event is a vector): required on a lamp of a
+    # massive family, refused on any other lamp; None without.
+    momentum_magnitude: int | None = None
 
 
 @dataclass(frozen=True)
@@ -1035,6 +1108,11 @@ class NatureBeamWorld:
     # transit reads the free crowd at every free-space Node after the
     # collision and turns toward it by its phase register (`events/meeting.py`).
     meeting: bool = False
+    # The massive rows (the world key `massive_rows`, false by default): a
+    # paid family may then be declared `massive` (`massive-rows-v1`); the
+    # record carries the identity under `hypotheses`, the books the
+    # `waiting` lines and the rows' record `acc_turn`.
+    massive_rows: bool = False
     # The covariant readings (the world key `covariant_readings`, absent by
     # default): the declaration, or None (`covariant-readings-v1`).
     covariant: CovariantDeclaration | None = None
@@ -1159,7 +1237,8 @@ class NatureBeamWorld:
         column beyond `charge`, or a lifetime: a force of nature in this
         law is a column with a sign and a range), `weak-v1` for the
         transformation `become` (the weak force in the world's terms),
-        `meeting-v1` and `amplitude-v1` for their keys,
+        `meeting-v1` and `amplitude-v1` for their keys, `massive-rows-v1`
+        for the world key `massive_rows` (the massive rows beside the law),
         `hand-v1` when the world declares a hand or an axis,
         `covariant-readings-v1` when the world declares `covariant_readings`
         and, last,
@@ -1177,6 +1256,8 @@ class NatureBeamWorld:
             found.append(MEETING_RULE)
         if self.recorded:
             found.append(AMPLITUDE_RULE)
+        if self.massive_rows:
+            found.append(MASSIVE_ROWS_RULE)
         if self.handed:
             found.append(HAND_RULE)
         if self.covariant is not None:
@@ -1549,7 +1630,11 @@ def _lifetime(value: object, label: str, age_bound: int) -> int | None:
 
 
 def _families(
-    value: object, phase_steps: int, age_bound: int = AMOUNT_BOUND
+    value: object,
+    phase_steps: int,
+    age_bound: int = AMOUNT_BOUND,
+    massive_rows: bool = False,
+    action: int | None = None,
 ) -> tuple[FamilyDefinition, ...]:
     if not isinstance(value, list) or not value:
         raise ValueError(f"{BEAM_LAW}: families must be a nonempty list")
@@ -1633,6 +1718,7 @@ def _families(
             raise ValueError(f"{BEAM_LAW}: {turn_key} is refused for a family without a phase circle")
         lifetime = _lifetime(obj.get("lifetime"), f"families[{index}].lifetime", age_bound)
         hand = _hand(obj["hand"], f"families[{index}].hand") if "hand" in obj else NO_HAND
+        massive = _massive(obj, f"families[{index}]", massive_rows, action, quantum, phase, name)
         found.append(
             FamilyDefinition(
                 name,
@@ -1643,6 +1729,7 @@ def _families(
                 lifetime=lifetime,
                 phase_per_age=per_age,
                 hand=hand,
+                massive=massive,
             )
         )
         declared.append(columns)
@@ -1670,9 +1757,63 @@ def _families(
             family.lifetime,
             family.phase_per_age,
             family.hand,
+            family.massive,
         )
         for family, columns in zip(found, declared, strict=True)
     )
+
+
+def _massive(
+    obj: dict[str, object],
+    label: str,
+    massive_rows: bool,
+    action: int | None,
+    quantum: int,
+    phase: bool,
+    name: str,
+) -> bool:
+    """The family key `massive` (`massive-rows-v1`): true or false, false
+    by default. Refused, naming the key: without the world key
+    `massive_rows`; with `phase_per_link` in either form (a massive row
+    turns per axis Link by de Broglie's rule, never per Link count or per
+    interval of age); on a free family (a free family's rows are a body's
+    field, never massive) or on a family without a phase circle (there is
+    no phase to turn); without the world's `action` (the turn's h)."""
+    if "massive" not in obj:
+        return False
+    massive = obj["massive"]
+    if type(massive) is not bool:
+        raise ValueError(f"{BEAM_LAW}: {label}.massive must be true or false")
+    if not massive:
+        return False
+    if not massive_rows:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.massive is refused without the world key `massive_rows` "
+            f"(the identity {MASSIVE_ROWS_RULE} beside the law, absent by default)"
+        )
+    if "phase_per_link" in obj:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.massive is refused with phase_per_link (the integer or the "
+            f"pair): a massive row turns |p_a| x N / h at every axis Link it crosses, by "
+            "de Broglie, never per Link count and never per interval of age"
+        )
+    if quantum == FREE_QUANTUM:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.massive is refused on the free family {name!r} (quantum 0): a "
+            "free family's rows are a body's field; a massive family is paid, its quantum the "
+            "content M of one row"
+        )
+    if not phase:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.massive is refused on the family {name!r} without a phase "
+            "circle: a massive row turns its phase by its momentum at every axis Link"
+        )
+    if action is None:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.massive needs the world's `action` (the quantum h of the "
+            "turn, |p_a| x N over h per axis Link), which the world does not declare"
+        )
+    return True
 
 
 def _window(value: object, label: str, phase_steps: int) -> int:
@@ -1780,18 +1921,24 @@ def _width(obj: dict[str, object], label: str, phase_steps: int, phased: bool, r
 
 
 def _label_bound(
-    amount: int, content: int, table: tuple[Vector, ...], directions: tuple[int, ...], label: str
+    amount: int,
+    content: int,
+    table: tuple[Vector, ...],
+    directions: tuple[int, ...],
+    label: str,
+    scale: int = LABEL_SCALE,
 ) -> None:
     """The momentum label of a release or a declared ray, `content x amount x
     u_d` with u_d the unit vector of the direction at the scale Q (no
     component beyond Q), must fit the bound on every component: Q x content
-    x amount within 2^62 - 1, that is content x amount below 2^56."""
+    x amount within 2^62 - 1, that is content x amount below 2^56; a
+    massive family's rows at their scale p where it is the larger."""
     for direction in directions:
-        if LABEL_SCALE * content * amount > MOMENTUM_BOUND:
+        if scale * content * amount > MOMENTUM_BOUND:
             raise ValueError(
-                f"{BEAM_LAW}: {label}: the momentum label {LABEL_SCALE} x {content} x {amount} = "
-                f"{LABEL_SCALE * content * amount} along {list(table[direction])} exceeds the "
-                f"integer bound {MOMENTUM_BOUND} (content x amount at most {MOMENTUM_BOUND // LABEL_SCALE})"
+                f"{BEAM_LAW}: {label}: the momentum label {scale} x {content} x {amount} = "
+                f"{scale * content * amount} along {list(table[direction])} exceeds the "
+                f"integer bound {MOMENTUM_BOUND} (content x amount at most {MOMENTUM_BOUND // scale})"
             )
 
 
@@ -1805,6 +1952,7 @@ def _lamp(
     amount: int,
     turn_rate: tuple[int, int],
     family_hand: int = NO_HAND,
+    massive: bool = False,
 ) -> LampDefinition:
     obj = _object(value, label, LAMP_KEYS, {"rate", "wheel"})
     rate = _ratio(obj["rate"], f"{label}.rate", zero=True)
@@ -1863,10 +2011,30 @@ def _lamp(
             f"{'lamp' if hand else 'family'} declares a hand: a family carries its hand as the "
             "row's column or as the meaning of a label bit, never both"
         )
+    # The momentum label's magnitude p of a massive family's rows
+    # (`massive-rows-v1`): required on the lamp of a massive family (its
+    # rows' label p_D per direction is formed at the scale p), refused on
+    # any other lamp, an integer from 1 (a row at rest is not a massive
+    # row's birth).
+    momentum_magnitude: int | None = None
+    if "momentum_magnitude" in obj:
+        if not massive:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.momentum_magnitude belongs to the lamp of a massive family "
+                "(the family key `massive` under the world key `massive_rows`); this family is "
+                "not massive"
+            )
+        momentum_magnitude = _integer(obj["momentum_magnitude"], f"{label}.momentum_magnitude", 1)
+    elif massive:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} lacks keys: momentum_magnitude (the lamp of a massive family "
+            "declares the magnitude p of its rows' momentum label, in label units)"
+        )
     # The largest label a release can carry: the rate's numerator units at
     # the largest turn the content allows (the whole part of amount x n / d
     # at the clock's rate [n, d]); for a record the largest weight of a
-    # branch is the amount of a row.
+    # branch is the amount of a row; a massive family's label at the scale
+    # p in place of Q where p is the larger.
     largest_turn = max(1, amount * turn_rate[0] // turn_rate[1])
     largest_weight = max(weight for _, weight in branches)
     _label_bound(
@@ -1875,6 +2043,7 @@ def _lamp(
         table,
         directions,
         f"{label} (the release)",
+        scale=max(LABEL_SCALE, momentum_magnitude or 0),
     )
     return LampDefinition(
         rate,
@@ -1887,6 +2056,7 @@ def _lamp(
         arms,
         hand=hand,
         label_hands=label_hands,
+        momentum_magnitude=momentum_magnitude,
     )
 
 
@@ -2618,6 +2788,7 @@ def _measured(
                 amount,
                 turn_rate,
                 family_hand=families[family].hand,
+                massive=families[family].massive,
             )
         found.append(
             MeasuredDefinition(
@@ -2963,6 +3134,86 @@ def _held_of(entry: MeasuredDefinition) -> dict[int, int]:
     return {family: content for family, content in enumerate(entry.held) if content}
 
 
+def _massive_families(
+    families: tuple[FamilyDefinition, ...],
+    measured: tuple[MeasuredDefinition, ...],
+    table: tuple[Vector, ...],
+    width: int,
+    phase_steps: int,
+    action: int | None,
+) -> tuple[FamilyDefinition, ...]:
+    """The magnitude p of every massive family's momentum label, resolved
+    from its lamps (`momentum_magnitude`; one table per family, so every
+    lamp of the family declares the one value, and a massive family without
+    a lamp is refused: nothing else births its rows), and the ceilings of
+    its tables at load (`massive-rows-v1`, the design's section 1): the
+    rest energy E'_0 = Q S M and, on every direction D of the world's table
+    with the label p_D at the scale p (`scaled_label`), the square E'_D^2 =
+    E'_0^2 + 3 p_D . p_D and the turn's rate |p_{D,a}| x N per axis, each
+    within 2^62 - 1, refused naming the family and the direction. Returns
+    the families with the magnitude on each massive one."""
+    found = list(families)
+    for index, family in enumerate(families):
+        if not family.massive:
+            continue
+        magnitudes = sorted(
+            {
+                entry.lamp.momentum_magnitude
+                for entry in measured
+                if entry.family == index
+                and entry.lamp is not None
+                and entry.lamp.momentum_magnitude is not None
+            }
+        )
+        if not magnitudes:
+            raise ValueError(
+                f"{BEAM_LAW}: the massive family {family.name!r} has no lamp: its momentum label's "
+                "magnitude p is its lamp's `momentum_magnitude`, one table per family"
+            )
+        if len(magnitudes) > 1:
+            raise ValueError(
+                f"{BEAM_LAW}: the lamps of the massive family {family.name!r} declare two "
+                f"momentum_magnitude values {magnitudes}: one table per family, one p"
+            )
+        p = magnitudes[0]
+        assert action is not None
+        # The label's rounding forms (2 p |a|)^2 in the working register
+        # (`scaled_label`, one integer root per direction): bounded here
+        # before it is formed, naming the key.
+        reach_table = max((abs(c) for vector in table for c in vector), default=1)
+        if (2 * p * reach_table) ** 2 > MAX_WORK_INT:
+            raise ValueError(
+                f"{BEAM_LAW}: the massive family {family.name!r}: momentum_magnitude {p} forms "
+                f"(2 p |a|)^2 = (2 x {p} x {reach_table})^2 beyond the working register "
+                f"{MAX_WORK_INT} in the label's rounding (p at most {integer_root(MAX_WORK_INT) // (2 * reach_table)})"
+            )
+        rest = LABEL_SCALE * width * family.quantum
+        if rest * rest > MOMENTUM_BOUND:
+            raise ValueError(
+                f"{BEAM_LAW}: the massive family {family.name!r}: the rest energy E'_0 = Q S M = "
+                f"{LABEL_SCALE} x {width} x {family.quantum} = {rest} has a square beyond the "
+                f"integer bound {MOMENTUM_BOUND} (the pace wall E'_D is formed from it)"
+            )
+        for vector in table:
+            label = scaled_label(vector, p)
+            square = rest * rest + 3 * sum(c * c for c in label)
+            if square > MOMENTUM_BOUND:
+                raise ValueError(
+                    f"{BEAM_LAW}: the massive family {family.name!r} on the direction "
+                    f"{list(vector)}: E'_D^2 = E'_0^2 + 3 p_D . p_D = {square} exceeds the integer "
+                    f"bound {MOMENTUM_BOUND} (a smaller quantum, width or momentum_magnitude)"
+                )
+            reach = max(abs(c) for c in label)
+            if reach * phase_steps > MOMENTUM_BOUND:
+                raise ValueError(
+                    f"{BEAM_LAW}: the massive family {family.name!r} on the direction "
+                    f"{list(vector)}: the turn's rate |p_a| x N = {reach} x {phase_steps} exceeds "
+                    f"the integer bound {MOMENTUM_BOUND} (a smaller momentum_magnitude or N)"
+                )
+        found[index] = replace(family, momentum_magnitude=p)
+    return tuple(found)
+
+
 def _in_transit(
     value: object,
     shape: Address3,
@@ -3175,6 +3426,19 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     width = _integer(obj.get("width", 1), "width", 1)
     bound = _integer(obj.get("direction_bound", DEFAULT_DIRECTION_BOUND), "direction_bound", 1, 4096)
     table = _direction_table(obj.get("directions", []), bound)
+    # The massive rows (`massive-rows-v1`): true or false, false by default;
+    # with it the world declares its `age_bound` (a massive row's pace is
+    # its family's, |p| / E', not the flight's, so the flight bound is not
+    # its bound).
+    massive_rows = obj.get("massive_rows", False)
+    if type(massive_rows) is not bool:
+        raise ValueError(f"{BEAM_LAW}: massive_rows must be true or false")
+    if massive_rows and "age_bound" not in obj:
+        raise ValueError(
+            f"{BEAM_LAW}: age_bound is required with the world key `massive_rows`: a massive "
+            "row flies at its family's pace |p| / E', below the flight's, so the default bound "
+            "(twice the flight bound) is not its bound; declare the largest age a row may carry"
+        )
     age_bound = _age_bound(obj.get("age_bound"), shape, periodic, table)
     # The quantum of action of the turn by momentum, h: absent by default
     # (nothing turns by momentum), an integer from 1 when declared.
@@ -3192,7 +3456,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             f"{BEAM_LAW}: a lamp is refused with N {phase_steps}: a record's circle holds the "
             f"quarter turn of a reflection, at least {AMPLITUDE_LEAST_STEPS} steps"
         )
-    families = _families(obj["families"], phase_steps, age_bound)
+    families = _families(obj["families"], phase_steps, age_bound, massive_rows, action)
     # The meeting: true or false (false by default); under it a paid family
     # without a phase circle is refused, the phase being the register the
     # meeting reads the crowd into (there is no other on the record).
@@ -3221,6 +3485,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         action,
     )
     _column_budget(families, measured, release)
+    families = _massive_families(families, measured, table, width, phase_steps, action)
     # The covariant readings (`covariant-readings-v1`): the key as declared,
     # its domain and its integers checked at load, None by default.
     covariant = _covariant(obj.get("covariant_readings"), measured, families, width, turn_rate, action)
@@ -3249,6 +3514,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         detectors,
         action,
         meeting=meeting,
+        massive_rows=massive_rows,
         covariant=covariant,
     )
     _record_load_checks(measured, detectors, families, phase_steps)

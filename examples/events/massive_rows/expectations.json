@@ -1,0 +1,744 @@
+{
+ "format": "massive-rows-expectations-v1",
+ "identity": "massive-rows-v1",
+ "design": "docs/designs/massive_rows/DESIGN.md section 4 (the pin, re-derived by the accumulator rule on the engine's own Bresenham lines, the round-2 map docs/designs/massive_rows/massive_rows_round2_map.py); DERIVATIONS_BEAM section 23.3; every number pinned before the run, none moved after it",
+ "integers": {
+  "Q": 64,
+  "S": 1,
+  "M": 64,
+  "h": 1024,
+  "N": 64,
+  "p": 220,
+  "rest_energy": 4096,
+  "energy": 4113,
+  "energy_note": "E' = isqrt(E'_0^2 + 3 p_D . p_D) = 4113 on every direction of the pin's table (abs(p_D) 219.32 to 220.64)",
+  "pace": "220/4113",
+  "pace_links_per_interval": 0.05349,
+  "turn_per_axis_link": "55/4",
+  "wavelength": "1024/220",
+  "wavelength_links": 4.6545,
+  "flight_table_diagonal": {
+   "direction": [
+    1,
+    1,
+    0
+   ],
+   "rate": 624,
+   "wall": 8226,
+   "start": 4113,
+   "label": [
+    156,
+    156,
+    0
+   ],
+   "turn": [
+    9984,
+    9984,
+    0
+   ],
+   "denominator": 1024
+  },
+  "pair": {
+   "matter": [
+    0,
+    64
+   ],
+   "wall": [
+    1,
+    0
+   ]
+  }
+ },
+ "byte_identity": {
+  "note": "the gate of the identity (tests/test_massive_rows.py (a)): the amplitude worlds mz_345, bell_0_8 and slits_low of series L's generator (examples/events/amplitude/make_worlds.py) run through the runner at their declared ticks, the sha256 of state.json, of the books (the audit of run.json, JSON-encoded) and of events.jsonl, registered from the base tree before the build (main 65b65f45, the design's head b1248102) and read after it: every world without the key reads as it did, byte for byte, the pair (f_F, q_F) = (1, 0) on every family and acc_turn omitted from the row's record; a law change re-registers them (the script scratchpad's digests.py, the same runner)",
+  "worlds": {
+   "mz_345": {
+    "ticks": 80,
+    "source_sha256": "074c9a1b47cfc5acb856b2bfaedf402579fb87dc1bc35f50613d06179ef413c9",
+    "state_sha256": "b5b7d98d1a2036c1e151110221ec9c0fa21d19e07e3d11645eb64b1d6032c7a7",
+    "audit_sha256": "17016db799c1ccc8ba18f825280ba86629bd3f7d8aa986f7f1dc4634992473cb",
+    "events_sha256": "e36f23b7fdb1e79bff6551af0e3e7472c15aabff54afccf56be58da1ba0b89e3",
+    "gathers": 68
+   },
+   "bell_0_8": {
+    "ticks": 80,
+    "source_sha256": "f208931e1aae52bcd83019a1855cc4b90287bea54f3155fb5360365176a1e93e",
+    "state_sha256": "7148faee85c71cd9020d54000cc2298b2683e9fbca8133877bf3752c1fef394e",
+    "audit_sha256": "81ee96fe7a225b11036ebc6f6c9d068176564f7ca770aa2204deb3c0d83e6300",
+    "events_sha256": "2cf03a106206f36cc81765989491c8f238840135aa49db69d40e2f92b83fbecf",
+    "gathers": 67
+   },
+   "slits_low": {
+    "ticks": 230,
+    "source_sha256": "55edd5740a2f493a4a79611af7d516a305f3ec384432bd9976a2bdb6ece7ccc3",
+    "state_sha256": "de99eaa493a66f2aa7df0472163f7a878f18512bb4a6a87701bc9a89c458fb5c",
+    "audit_sha256": "18995d0fed793f4a25494ac13c5d26f99c62082aa474326041673337671c9f4b",
+    "events_sha256": "d6c5524c18091ecafd8b4c77ce8426a2fe935509708815d5eac5583ae9c682fa",
+    "gathers": 80
+   }
+  }
+ },
+ "slits_matter": {
+  "world": "slits_matter.json",
+  "births": 4096,
+  "wheel": [
+   2531,
+   4096
+  ],
+  "intervals": 5750,
+  "lamp_leg": {
+   "value": 139,
+   "line": "the age of the 11th Link of the lamp's diagonals (1, +-1, 0) by the accumulator rule, (2 tau x 624 + 4113) // 8226 >= 11; the first birth at tick 1, so the first `rerelease` line at an opening at tick 140 (the photon's 14); GAMEBOARD"
+  },
+  "first_rerelease_tick": 140,
+  "first_click_tick": {
+   "screen_60": {
+    "value": 955,
+    "within": 5,
+    "line": "the first `click` line of `matter` at the detector `screen_60` (a row's arrival, the group pace: 815 intervals after the re-release at 140); DETECTOR"
+   },
+   "screen_37": {
+    "value": 1016,
+    "within": 5,
+    "line": "the first `click` line at `screen_37` (876 after the re-release); DETECTOR"
+   },
+   "screen_83": {
+    "value": 1016,
+    "within": 5,
+    "line": "the first `click` line at `screen_83`; DETECTOR"
+   }
+  },
+  "longest_row": {
+   "value": 1468,
+   "line": "the intervals of the fan's longest row, (17, 26, 0) to the y face at (51, 121), after its re-release; a record born at the tick b completes about b + 139 + 1468; GAMEBOARD"
+  },
+  "bands": {
+   "value": [
+    36.5,
+    60,
+    83.5
+   ],
+   "within": 1,
+   "line": "the bright bands' centres in pixels, the count-weighted means of the gathers' chosen `screen_<y>` over the bands 30..43, 53..67, 77..90 (7.1's exact two-path law at lambda = 4.6545); DETECTOR"
+  },
+  "pearson": {
+   "value": 0.89,
+   "within": 0.03,
+   "line": "Pearson of the gathers' counts per pixel (the chosen `screen_<y>` of the records 1..4096) with the two-source cosine 1 + cos(2 pi (l_2 - l_1) / lambda) over the 121 pixels; the map's 0.886, the registered photon's 0.891 on this fan; DETECTOR"
+  },
+  "visibility": {
+   "value": 0.95,
+   "within": 0.03,
+   "line": "(bright - dark) / (bright + dark) of the mean counts over the cosine's bright pixels 35..38, 59..61, 82..85 and its dark pixels 13..20, 48..50, 70..72, 100..107; the map's weights 0.965; DETECTOR"
+  },
+  "dark": {
+   "min": 0,
+   "max": 3,
+   "line": "every dark pixel's count 0 to 3 (the map's expected 0 to 2.3); DETECTOR"
+  },
+  "refutes": "a band off by more than one pixel (the wavelength not h / p); the centre's first `click` line off by more than 5 intervals of 955 (the pace not p / E'); no fringes (the phase not p . x)",
+  "diagnostics": "the records whose completion the ladder places at a face (about a third on the photon's lines and amounts) or at the wall's own sets (x = 7 and 8) are a GAMEBOARD diagnostic reported beside the pin, not a reading of it; the screen's gathers are the detector reading"
+ },
+ "slits_matter_1024": {
+  "world": "slits_matter_1024.json",
+  "births": 1024,
+  "wheel": [
+   633,
+   1024
+  ],
+  "intervals": 2700,
+  "note": "the run the Boss ordered first (the design's section 7): the same pin read on the 1024 gathers of the records 1..1024, the cells' widths a quarter of the pin's; the timing lines the same (the lamp leg, the first `click` lines, the longest row)",
+  "lamp_leg": 139,
+  "first_rerelease_tick": 140,
+  "first_click_tick": {
+   "screen_60": {
+    "value": 955,
+    "within": 5
+   },
+   "screen_37": {
+    "value": 1016,
+    "within": 5
+   },
+   "screen_83": {
+    "value": 1016,
+    "within": 5
+   }
+  },
+  "bands": {
+   "value": [
+    36.5,
+    60,
+    83.5
+   ],
+   "within": 1
+  },
+  "pearson": {
+   "value": 0.89,
+   "within": 0.03
+  },
+  "visibility": {
+   "value": 0.95,
+   "within": 0.03
+  },
+  "dark": {
+   "min": 0,
+   "max": 3
+  },
+  "run": {
+   "date": "2026-09-21",
+   "source_sha256": "0045f3c5a86b0bc6b32346e63fb79057ca8b9d9b79ab4cc4e4127b22fb66d531",
+   "initialization_sha256": "6124aa5dff438f3aea4ec3130700b8de308143b76b75cb9fc6ec8ca6d00d49f4",
+   "intervals": 2700,
+   "elapsed_seconds": 2468.0,
+   "status": "completed",
+   "conserved": true,
+   "births_read": 1024,
+   "born": 2698,
+   "gathered": 1092,
+   "open": 1606,
+   "DETECTOR": {
+    "screen_counts": [
+     1,
+     1,
+     1,
+     0,
+     2,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     1,
+     2,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     2,
+     0,
+     0,
+     2,
+     2,
+     1,
+     3,
+     3,
+     4,
+     3,
+     6,
+     6,
+     7,
+     6,
+     10,
+     5,
+     10,
+     9,
+     10,
+     6,
+     10,
+     7,
+     7,
+     4,
+     4,
+     2,
+     1,
+     1,
+     0,
+     0,
+     1,
+     2,
+     4,
+     5,
+     8,
+     9,
+     12,
+     13,
+     14,
+     13,
+     14,
+     13,
+     12,
+     10,
+     7,
+     6,
+     3,
+     2,
+     1,
+     0,
+     0,
+     1,
+     1,
+     2,
+     4,
+     4,
+     7,
+     7,
+     10,
+     6,
+     9,
+     10,
+     10,
+     5,
+     10,
+     6,
+     7,
+     6,
+     6,
+     4,
+     3,
+     3,
+     3,
+     1,
+     2,
+     1,
+     1,
+     1,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     0,
+     1,
+     0,
+     1,
+     1,
+     0,
+     1,
+     1,
+     1,
+     1
+    ],
+    "screen_total": 433,
+    "gathers_without_a_choice": 0,
+    "pearson_counts_cosine": 0.88,
+    "visibility": 0.964,
+    "bright_counts": [
+     10,
+     5,
+     10,
+     9,
+     14,
+     13,
+     14,
+     10,
+     10,
+     5,
+     10
+    ],
+    "dark_counts": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "dark_max": 1,
+    "bands": {
+     "left": 37.06,
+     "centre": 59.99,
+     "right": 83.02
+    },
+    "first_click_tick": {
+     "screen_60": 955,
+     "screen_37": 1016,
+     "screen_83": 1016
+    }
+   },
+   "GAMEBOARD": {
+    "wall_completions": 215,
+    "face_completions": {
+     "face:-y": 188,
+     "face:+y": 188
+    },
+    "books_at_end": {
+     "transit": {
+      "initial": 0,
+      "released": 4013392050,
+      "current": 1666484781,
+      "escaped": 401,
+      "absorbed": 634947892,
+      "cancelled": 1711958976,
+      "waiting": 634942081,
+      "balanced": true
+     },
+     "content": {
+      "initial": 0,
+      "released": 256857091200,
+      "current": 106655025984,
+      "escaped": 25664,
+      "absorbed": 40636665088,
+      "cancelled": 109565374464,
+      "waiting": 40636293184,
+      "balanced": true
+     },
+     "waiting": [
+      6823168361600,
+      0,
+      0
+     ]
+    }
+   }
+  }
+ },
+ "slits_matter_small": {
+  "world": "slits_matter_small.json",
+  "births": 8,
+  "intervals": 48,
+  "note": "the register's replay (tests/test_massive_rows.py (f)): the world's gathers, the books at the end and the digests of the run, written by the engine as shipped (replay_register.py, no number typed by hand) and replayed bit-exact",
+  "replay": {
+   "date": "2026-09-21",
+   "source_sha256": "cd68f2a57f69bafbb31f20accbde999d260e58d12e58b05aaa59849819367bd6",
+   "intervals": 48,
+   "conserved": true,
+   "hypotheses": [
+    "bohr-v1",
+    "amplitude-v1",
+    "massive-rows-v1"
+   ],
+   "layer": {
+    "sets": [
+     "measured:1",
+     "measured:2",
+     "measured:3",
+     "measured:4",
+     "measured:5",
+     "measured:6",
+     "measured:7",
+     "measured:8",
+     "measured:9",
+     "measured:10",
+     "measured:11",
+     "measured:12",
+     "measured:13",
+     "measured:14",
+     "measured:15",
+     "measured:16",
+     "measured:17",
+     "measured:18",
+     "measured:19",
+     "measured:20",
+     "measured:21",
+     "measured:22",
+     "screen_0",
+     "screen_1",
+     "screen_2",
+     "screen_3",
+     "screen_4",
+     "screen_5",
+     "screen_6",
+     "screen_7",
+     "screen_8",
+     "screen_9",
+     "screen_10",
+     "screen_11",
+     "screen_12",
+     "screen_13",
+     "screen_14",
+     "screen_15",
+     "screen_16",
+     "screen_17",
+     "screen_18",
+     "screen_19",
+     "screen_20",
+     "face:+x",
+     "face:-x",
+     "face:+y",
+     "face:-y"
+    ],
+    "unit": 288230376151711744,
+    "born": 47,
+    "gathered": 27,
+    "open": 20
+   },
+   "gathers": [
+    {
+     "record": 1,
+     "tick": 21,
+     "u": 0,
+     "chosen": "measured:11",
+     "node": [
+      [
+       4,
+       9,
+       0
+      ]
+     ],
+     "content": 4,
+     "momentum": [
+      1432,
+      -716,
+      0
+     ]
+    },
+    {
+     "record": 2,
+     "tick": 23,
+     "u": 5,
+     "chosen": "screen_7",
+     "node": [
+      [
+       10,
+       7,
+       0
+      ]
+     ],
+     "content": 4,
+     "momentum": [
+      1132,
+      -1132,
+      0
+     ]
+    },
+    {
+     "record": 3,
+     "tick": 24,
+     "u": 2,
+     "chosen": "measured:12",
+     "node": [
+      [
+       4,
+       10,
+       0
+      ]
+     ],
+     "content": 4,
+     "momentum": [
+      1600,
+      0,
+      0
+     ]
+    },
+    {
+     "record": 4,
+     "tick": 25,
+     "u": 7,
+     "chosen": "screen_15",
+     "node": [
+      [
+       10,
+       15,
+       0
+      ]
+     ],
+     "content": 4,
+     "momentum": [
+      1432,
+      716,
+      0
+     ]
+    },
+    {
+     "record": 5,
+     "tick": 26,
+     "u": 4,
+     "chosen": "measured:13",
+     "node": [
+      [
+       4,
+       11,
+       0
+      ]
+     ],
+     "content": 4,
+     "momentum": [
+      1432,
+      716,
+      0
+     ]
+    },
+    {
+     "record": 6,
+     "tick": 27,
+     "u": 1,
+     "chosen": "measured:11",
+     "node": [
+      [
+       4,
+       9,
+       0
+      ]
+     ],
+     "content": 4,
+     "momentum": [
+      1432,
+      -716,
+      0
+     ]
+    },
+    {
+     "record": 7,
+     "tick": 28,
+     "u": 6,
+     "chosen": "screen_11",
+     "node": [
+      [
+       10,
+       11,
+       0
+      ]
+     ],
+     "content": 4,
+     "momentum": [
+      1432,
+      716,
+      0
+     ]
+    },
+    {
+     "record": 8,
+     "tick": 29,
+     "u": 3,
+     "chosen": "measured:13",
+     "node": [
+      [
+       4,
+       11,
+       0
+      ]
+     ],
+     "content": 4,
+     "momentum": [
+      1432,
+      716,
+      0
+     ]
+    }
+   ],
+   "books_at_end": {
+    "measured": {
+     "initial": 1048576,
+     "measured": 108,
+     "became": 0,
+     "current": 1047744,
+     "spent": 940,
+     "escaped": 0,
+     "balanced": true
+    },
+    "transit": {
+     "initial": 0,
+     "released": 645,
+     "current": 153,
+     "escaped": 0,
+     "absorbed": 168,
+     "cancelled": 324,
+     "waiting": 59,
+     "balanced": true
+    },
+    "content": {
+     "initial": 0,
+     "released": 2580,
+     "current": 612,
+     "escaped": 0,
+     "absorbed": 672,
+     "cancelled": 1296,
+     "waiting": 236,
+     "balanced": true
+    },
+    "turned": [
+     0,
+     0,
+     0
+    ],
+    "cancelled": [
+     445704,
+     948,
+     0
+    ],
+    "remainder": [
+     -708476,
+     0,
+     0
+    ],
+    "waiting": [
+     88016,
+     0,
+     0
+    ]
+   },
+   "momentum_at_end": {
+    "measured": [
+     -28476,
+     -948,
+     0
+    ],
+    "transit": [
+     203232,
+     0,
+     0
+    ],
+    "escaped": [
+     0,
+     0,
+     0
+    ],
+    "turned": [
+     0,
+     0,
+     0
+    ],
+    "cancelled": [
+     445704,
+     948,
+     0
+    ],
+    "remainder": [
+     -708476,
+     0,
+     0
+    ],
+    "waiting": [
+     88016,
+     0,
+     0
+    ]
+   },
+   "digests": {
+    "state_sha256": "2e78caac5944cbd5cf70aec7e8f8c3b86c84776716bb6eead640bcc42990dc7b",
+    "audit_sha256": "8d659dce2c671baa4ef0345cbbc6311380d2e576a345fb8bfacdec7f5adf1f02",
+    "events_sha256": "20e2599207a7888903e734db29c043ee473bb83b687cf9bbd2c334394e805c7e"
+   }
+  }
+ },
+ "derivations": {
+  "integers": "the design's section 1 (E'_0 = Q S M, E'_D = isqrt(E'_0^2 + 3 p_D . p_D), p_D by the scaled unit rule) and section 2 (the rate 2 abs(p_D)_1, the wall 2 E'_D, the turn abs(p_a) N over h); the round-2 map's D",
+  "slits_matter.lamp_leg": "the round-2 map's B: the accumulator rule on the engine's Bresenham line of (1, 1, 0) from (2, 60) to the opening (8, 65), 11 Manhattan Links",
+  "slits_matter.first_click_tick": "the round-2 map's B: the first fan row to reach each pixel by the accumulator rule on the engine's lines, plus the re-release at 140",
+  "slits_matter.longest_row": "the round-2 map's B",
+  "slits_matter.bands": "DERIVATIONS_BEAM 7.1, the exact two-path law at lambda = h / p",
+  "slits_matter.pearson": "the round-2 map's C: the massive rows' weights per pixel on the declared Farey fan, 0.886, by the walk that gives the registered photon 0.893 (its registered counts 0.891)",
+  "slits_matter.visibility": "the reviewer's visibility_round2.py on the map's weights: 0.965, the dark pixels 0 to 2.3",
+  "slits_matter_1024": "the same derivations at W = 1024",
+  "slits_matter_small": "measured (the engine as shipped, replayed)",
+  "byte_identity": "measured: the base tree's bytes (the design's head b1248102, main 65b65f45)"
+ },
+ "replicated": {}
+}
