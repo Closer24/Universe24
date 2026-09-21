@@ -883,6 +883,11 @@ ul.pages li { margin: 8px 0; }
 .formula section ol { padding-left: 1.2em; margin: 4px 0; }
 .formula section li { margin: 2px 0; font-size: 0.95rem; }
 .formula section div { font-size: 0.95rem; }
+.formula section pre { font-size: 0.85rem; white-space: pre-wrap; margin: 6px 0; font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; color: var(--accent); }
+table.map td, table.map th { font-size: 0.85rem; }
+td.reached { color: var(--good); white-space: nowrap; }
+td.different { color: #e0b44a; }
+td.missing { color: #f08080; }
 """
 
 
@@ -4259,6 +4264,484 @@ readings above are what its run did.</p>
     )
 
 
+# ---------------------------------------------------------------------------
+# Page 12: the formulas and Einstein (the model owner, 2026-09-21: "send
+# again only my formulas and Einstein, in dark mode, as you sent before").
+# ---------------------------------------------------------------------------
+
+# The Einstein map of DERIVATIONS_BEAM.md section 21.4, one row per result:
+# (number, Einstein's result, the status today, what the six verbs give,
+# what must be added and under which identity, the pin a run would meet).
+# R: reached; D: a different law as declared; N: not reached.
+EINSTEIN_MAP = (
+    (
+        "E1",
+        "Lorentz's symmetry of light, omega = c k, the light cone",
+        "R",
+        "the rows' limit is the wave equation at c (4.1, 5.1)",
+        "nothing",
+        "series K's ages, 89.40 in every world (registered)",
+    ),
+    (
+        "E2",
+        "gamma (the Lorentz factor), the time dilation of a moving clock",
+        "D (the rate 1, 4.3; NATURE 4a)",
+        "no operation carries a body's speed into its clock",
+        "the self-creation gated by the proper-time owed count (17.6 M1), covariant-readings-v1",
+        "J4's world of 17.6 M9: the products' face clicks at 367 and 345 (the decay at 70.9 and 125.2 derived), 391 at rest",
+    ),
+    (
+        "E3",
+        "the contraction 1 / gamma",
+        "D (12b.2: 0.87 to 0.96 by the dispersion, unstable)",
+        "the retarded flux push (12.1); -grad(A) alone gives the rest force along and gamma across (17.6 M4)",
+        "the magnetic part of the push, which needs the source's velocity: source-velocity-v1, named, not designed",
+        "none until then; the geometry when it comes: the thrown orbit at beta 0.43 or above, the extents' ratio 0.903",
+    ),
+    (
+        "E4",
+        "Doppler with gamma, 1 + z = gamma (1 + beta)",
+        "D (the count 1 + beta, 2.2; NATURE 4b)",
+        "the crossing count per interval, exact",
+        "the count charged per self-creation, the cadence of 17.6 M1, covariant-readings-v1",
+        "coasting_none's s_mz2 at its declared momentum: z = 0.369 +- 0.003",
+    ),
+    (
+        "E5",
+        "E = m c^2, the inertia of energy",
+        "N (4.5, 12.4)",
+        "E = h f for a row; the content and the momentum of a body untied",
+        "E'_0 = Q S M forced by the Newtonian limit, W gaining on a change of content, the load-time identity 3 h n = Q S d (17.6 M3, M7), covariant-readings-v1",
+        "a lamp emitting two opposite units keeps its pace, its W falling by the content identity per unit paid",
+    ),
+    (
+        "E6",
+        "the invariant E^2 - p^2 c^2 = E_0^2, v = p c^2 / E, the velocity addition",
+        "D (v = p / (m + p / c), 4.4)",
+        "the drive's rational form, first order off Newton",
+        "W = E'_0^2 + 3 p . p exact and E' by comparisons (17.6 M3); the pace p / E'; form B's directional accumulator without the cap term (M8)",
+        "E'^2 <= W < (E' + 1)^2 at every interval of a pinned run",
+    ),
+    (
+        "E7",
+        "the field of a moving charge (Heaviside), the magnetic term",
+        "D (12.1, 12b.1)",
+        "the age moment is the Lienard-Wiechert potential exactly (12.1); its gradient across the six Ports gives -grad(A) only (17.6 M4)",
+        "the magnetic part: source-velocity-v1, named, not designed",
+        "none until then; under -grad(A) alone the co-moving pair's pushes are the rest force along and gamma times the rest across",
+    ),
+    (
+        "E8",
+        "Poisson's equation, the field of a source",
+        "R (5.1)",
+        "the age moment, sourced by the release",
+        "nothing",
+        "series E: k_a r = 36.1, k_s r^2 = 41.5",
+    ),
+    (
+        "E9",
+        "the gravitational redshift at first order",
+        "R (5.2)",
+        "the owed count on the age moment, 1 / (1 + k_a)",
+        "nothing",
+        "series E's shells",
+    ),
+    (
+        "E10",
+        "Newton's geodesics (the retarded inverse square, the orbit)",
+        "R (3.3, 5.3)",
+        "the push and the drive",
+        "nothing",
+        "series D's orbit; push_m = m push_1",
+    ),
+    (
+        "E11",
+        "the second-order redshift, sqrt(1 - 2 G M / (r c^2))",
+        "D (5.2: 1 / (1 + k) at second order, no horizon)",
+        "a clock slowed by what it reads, linear in the crowd",
+        "the field's self-source: the rows in flight as sources of rows, field-source-v1, not decided",
+        "the strong-field probes k = 2 to 9 of series E re-read",
+    ),
+    (
+        "E12",
+        "the perihelion advance, 6 pi G M / (c^2 a (1 - e^2))",
+        "N (5.6: post-Newtonian terms)",
+        "the retarded push gives the drift and the decay of 12b.2, not a precession",
+        "one sixth from the velocity terms of covariant-readings-v1, five sixths from the field's nonlinearity, field-source-v1",
+        "the thrown orbit's apsidal drift per turn, pi beta_orbit^2 from the readings alone (one sixth of Einstein's)",
+    ),
+    (
+        "E13",
+        "the bending of light, 4 G M / (c^2 b)",
+        "D (5.4; series K's 0.000; the meeting key about M / b)",
+        "the flight blind to the crowd",
+        "a rule on the linear block: the row's wall reading the age moment (optical-v1), giving the delay's half; the space half needs the second-order field",
+        "series K's beam at b = 6: 2 G M / (c^2 b) under the wall alone, 4 G M / (c^2 b) with the field's second order",
+    ),
+    (
+        "E14",
+        "the Shapiro delay",
+        "D (5.4)",
+        "no delay in time on main",
+        "the same optical-v1",
+        "the lensing world's round trip lengthened by (2 G M / c^3) ln(4 r_1 r_2 / b^2)",
+    ),
+    (
+        "E15",
+        "the equivalence principle for a bound body",
+        "D (19.5)",
+        "the source's rows from the held content, M_A cancelling for a free body (3.3, exact)",
+        "the release reading the body's own E' / (Q S) (17.6 M6), inside covariant-readings-v1; the energy in flight, field-source-v1",
+        "a thrown body beside a probe of content 1: the probe's push against the body's drive, 1 at rest and gamma in motion",
+    ),
+    (
+        "E16",
+        "the self-gravitation of the field's content",
+        "N",
+        "the rows carry no source",
+        "field-source-v1 (rows in flight releasing, or the wall reading the presence)",
+        "E11's and E12's numbers",
+    ),
+    (
+        "E17",
+        "the tensor source (the stress as a source)",
+        "D (record 196)",
+        "the reading R returns the traceless second moment",
+        "the push reading the order-2 moment as well, a column of the coupling (tensor-source-v1)",
+        "a moving crowd's push on a probe differing from a static crowd's by the stress term",
+    ),
+    (
+        "E18",
+        "the cosmological term, q_0 = -0.53",
+        "D (15.4: Milne's 0)",
+        "the growing wall at a constant H",
+        "a rising H, a second declared rate under expansion-v1",
+        "the 24 stars' z(tau) with q < 0 against the register's bracket",
+    ),
+    (
+        "E19",
+        "the relativistic dispersion of a massive quantum, E^2 = m^2 c^4 + p^2 c^2 as a wave (Klein-Gordon)",
+        "N (every row flies at c)",
+        "the rows' massless wave equation (4.1, 5.1)",
+        "massive-rows-v1 (section 23): the row's wall E' = isqrt(E'_0^2 + 3 p . p)",
+        "slits_matter's bands at 36.5, 60, 83.5 and the centre's first click at 1 + 828 (23.3)",
+    ),
+)
+
+# Section 17.4: what follows for whoever accepts the covariant readings.
+COVARIANT_ROWS = (
+    (
+        "the Lorentz transformation of the rows' field, omega = c k, the light cone",
+        "the linear block alone",
+        "reached (4.1)",
+        "the same",
+    ),
+    (
+        "E = p c for a row",
+        "the row's content and momentum",
+        "reached, declared per unit (16.1)",
+        "the same",
+    ),
+    (
+        "the Doppler gamma (1 -+ beta), the transverse gamma",
+        "(i) the count per turn",
+        "a different law, 1 -+ beta and 1",
+        "reached",
+    ),
+    (
+        "the field of a moving charge (Heaviside), the magnetic term",
+        "(ii) the gradient of the age moment",
+        "a different law, the flux along n_ret",
+        "reached in the limit",
+    ),
+    (
+        "E = m c^2, the inertia of energy, the mass defect",
+        "(iii) the energy accumulator with the Newtonian limit",
+        "not reached (4.5)",
+        "reached, E_0 = Q S M c^2 forced",
+    ),
+    (
+        "E^2 = p^2 c^2 + m^2 c^4, v = p c^2 / E, the velocity addition",
+        "(iii)",
+        "a different law, p / (m + p / c)",
+        "reached (the invariant kept to 10^-12 in the script)",
+    ),
+    (
+        "the time dilation gamma, the muon's lifetime",
+        "(iv) the turn per proper time",
+        "a different law, 1 (HYPOTHESES 21)",
+        "reached, 70.9 and 125.2",
+    ),
+    (
+        "the contraction 1 / gamma, the bond's period gamma",
+        "(ii) with (iii) and (iv)",
+        "a different law (12b.2: 0.87 to 0.96, 1.31 to 1.43)",
+        "reached (Lorentz's 1904 argument on Heaviside's field)",
+    ),
+    (
+        "the redshift at first order, Poisson's equation",
+        "section 5",
+        "reached at first order",
+        "the same",
+    ),
+    (
+        "the bending of light, the Shapiro delay, the second-order redshift",
+        "the rows reading the crowd",
+        "not reached on main (5.6): the flight is blind to the crowd",
+        "unchanged: these need a rule on the linear block",
+    ),
+)
+
+# Section 17.2: built on Newton.
+NEWTON_ROWS = (
+    (
+        "the first law (inertia)",
+        "the drive: p an accumulator translated by nothing between pushes",
+        "a body with no rows arriving keeps p exactly",
+        "G2's 24 thrown stars, |p(end)| / |p(0)| = 1.0000",
+    ),
+    (
+        "the second law, F = m a",
+        "the push -M_A <V>, the drive v = p / (Q S M + p / c)",
+        "a = push / (Q S M) for p << Q S M c: F = m a with m = Q S M",
+        "series 7's push_m = m x push_1 for m = 1, 4, 16",
+    ),
+    (
+        "the third law",
+        "the apportioning of the rows' momentum at the release",
+        "the two sources' momenta equal and opposite to the grain",
+        "9 612 145 197 056 against -9 612 088 573 952 at rest",
+    ),
+    (
+        "gravitation, G M / r^2",
+        "the shell mean of the flux, G = K (n / d) / (4 pi S); the age moment obeying Poisson's equation",
+        "the inverse square, retarded at c; the equivalence principle exact (M_A cancels)",
+        "series E's k_s r^2 = 41.5, k_a r = 36.1; series D's orbit",
+    ),
+    (
+        "Galilean composition",
+        "the momenta add (the drive reads p)",
+        "velocities add where v is linear in p",
+        "12b.2's shear at 0.21 c is the departure",
+    ),
+)
+
+
+def card(title: str, body: str) -> str:
+    return f"<section><h3>{title}</h3><div>{body}</div></section>"
+
+
+def status_class(status: str) -> str:
+    return {"R": "reached", "D": "different", "N": "missing"}[status[0]]
+
+
+@register("einstein")
+def page_einstein(out: Path, runs: Path | None) -> Path:
+    """(12) The formulas and Einstein: the general formula in cards, and
+    the Einstein map, every result of the special and the general theory
+    with its status in the law; no run, no claim added."""
+    del runs
+    formula_cards = "".join(
+        [
+            card(
+                "The one map F",
+                "At every Node at every interval, per component of the integer state vector <b>s</b> with its own "
+                "rate r and wall d:<pre>s &lt;- s + r;   e &lt;- [s &gt;= d];   s &lt;- s - e d</pre>every wall crossing an "
+                "event. The components: a row's Manhattan count (rate 2 S<sub>1</sub> Q, wall 2 T<sub>d</sub>) and "
+                "its three axis deficits, its phase, its age; a body's drive per axis (rate p<sub>a</sub>, wall "
+                "Q S M + |p<sub>a</sub>|), its counts (the turn, the owed count, the release, the push per column); a "
+                "record's birth wheel u; the click's ladder, a wall read once. Everything else is a permutation "
+                "(the collision, the meeting's arc, the gate).",
+            ),
+            card(
+                "The closed form of the rows",
+                "Where the rate is a constant of the world (the flight, the phase, the age) the accumulator has the "
+                "closed form<pre>s(t) = floor(s<sub>0</sub> + r t)</pre>so a row's state at any time is a formula of "
+                "its birth and its age: the linear block. The flight's count "
+                "m(tau) = floor((2 tau S<sub>1</sub> Q + T<sub>d</sub>) / (2 T<sub>d</sub>)) walks the digital line "
+                "at Q / T<sub>d</sub> -&gt; 1 / sqrt 3 Links per interval on every direction; the phase "
+                "floor((n / d) tau) mod N along it gives omega = c k, dispersionless.",
+            ),
+            card(
+                "The feedback block: the bodies",
+                "Where a rate is a function of what arrives there is no closed form and the limit is a differential "
+                "equation ds / dt = r(s): the push p<sub>t+1</sub> = p<sub>t</sub> + <b>C a</b><sub>t</sub> "
+                "(<b>C</b> the coupling matrix of the reader's charges per column, <b>a</b> the arriving label flow: "
+                "bilinear in the state), whose limit is dp / dt = -M grad(A), Newton's and Coulomb's 1 / r<sup>2</sup> in "
+                "the shell mean; the drive x<sub>t+1</sub> = x<sub>t</sub> + [drive &gt;= D] with "
+                "v = p / (Q S M + p); the owed count, the clock at 1 / (1 + k n / d); the turn under action, "
+                "2 pi p r = j h.",
+            ),
+            card(
+                "The six verbs, no seventh",
+                "<ol><li>the translation of an accumulator by its rate, s &lt;- s + r;</li>"
+                "<li>the bilinear form with a declared matrix: the coupling <b>C a</b>, the click's <b>G</b>, the "
+                "moments;</li><li>the group-ring addition in Z[Z<sub>N</sub>]: the merge, an antiphase pair "
+                "cancelling;</li><li>the permutation: the collision table, the gate;</li><li>the evaluation of the "
+                "tables at zeta<sub>N</sub>, the primitive N-th root of unity;</li><li>the Euclidean division with "
+                "the remainder kept: the carry that is the event, and the threshold.</li></ol>A root at run time is "
+                "outside the six.",
+            ),
+            card(
+                "The state: three vectors",
+                "<b>A row</b>: its Node in Z<sub>X</sub> x Z<sub>Y</sub> x Z<sub>Z</sub>, its direction in the fan "
+                "F<sub>P</sub>, its phase on Z<sub>N</sub>, its age, its amount, its number. <b>A record</b>: the vector "
+                "<b>f</b> of Z<sup>N</sup> of the amounts that ended at each phase, an element of Z[Z<sub>N</sub>]. "
+                "<b>A body</b>: its held contents, its momentum vector <b>p</b>, its counts table (s, r, d) per "
+                "count. A Node is an index and holds nothing.",
+            ),
+            card(
+                "The reading R and the click",
+                "Nobody sees the state. A detector reads the moments of the arriving rows: order 0 a scalar (the "
+                "presence), order 1 a vector (the flow), order 2 a tensor (the spread), the age moment: the content "
+                "of the stress-energy tensor <b>T</b>. The click is one bilinear form on the record, "
+                "<b>f</b><sup>T</sup> <b>G f</b> with <b>G</b> = <b>E</b><sup>T</sup> <b>E</b>, then one threshold "
+                "[u &lt; b<sub>k</sub>] against the rungs of the cells' cumulative weights, the comparison "
+                "2 T u + T &lt;= 2 N C<sub>k</sub>: the one read-out, the law's one cost.",
+            ),
+            card(
+                "c from the octahedron",
+                "The six Ports are the vertices of the octahedron |x| + |y| + |z| = 1, one Link per interval; "
+                "the sphere inscribed in it has the radius 1 / sqrt 3 and touches the faces on the cube's "
+                "diagonals: c = 1 / sqrt 3 Links per interval, the largest isotropic pace at which no direction "
+                "crosses two Links in one interval; derived, not declared. Its symmetries are the 48 signed axis "
+                "permutations, 3! x 2<sup>3</sup> = 24 rotations + 24 improper ones, the hand h -&gt; det(g) h; a "
+                "boost is not among them.",
+            ),
+            card(
+                "The three tests of every rule",
+                "<b>Generic</b>: one primitive with declared integers, no family name, the engine branching on no "
+                "name. <b>Vector</b>: one of the six verbs on the state vector, its rate at most bilinear, no root, "
+                "no float. <b>Local</b>: its own record and the six neighbouring Nodes, fixed work for a fixed K, "
+                "nothing kept at a Node. A rule that fails one does not enter the law; a hypothesis that needs more "
+                "is stated under its own identity, outside the law.",
+            ),
+            card(
+                "What is derived, what is input",
+                "Derived from the six verbs and the register's integers: c; Newton and Coulomb from the bilinear "
+                "coupling; Doppler 1 +- v / c from the crossing rule; Born's rule as the unique reading (the lattice "
+                "Gleason); Young's spacing and Bohr's levels; the delay field's equation (Poisson, the retarded wave "
+                "equation); the information cost; special relativity as the symmetry of the limit. Input: the grain "
+                "(N, Q, P, W, G, K and the declared roundings), the family table and the width S, the state and the "
+                "apparatus. Not derived: gamma for a body's own clock (a different law as declared), the masses.",
+            ),
+        ]
+    )
+    einstein_rows = "".join(
+        f'<tr><td class="num">{n}</td><td>{html.escape(result)}</td>'
+        f'<td class="{status_class(status)}">{html.escape(status)}</td><td>{html.escape(gives)}</td>'
+        f"<td>{html.escape(add)}</td><td>{html.escape(pin)}</td></tr>"
+        for n, result, status, gives, add, pin in EINSTEIN_MAP
+    )
+    covariant_rows = "".join(
+        f"<tr><td>{html.escape(a)}</td><td>{html.escape(b)}</td><td>{html.escape(c)}</td><td>{html.escape(d)}</td></tr>"
+        for a, b, c, d in COVARIANT_ROWS
+    )
+    newton_rows = "".join(
+        f"<tr><td>{html.escape(a)}</td><td>{html.escape(b)}</td><td>{html.escape(c)}</td><td>{html.escape(d)}</td></tr>"
+        for a, b, c, d in NEWTON_ROWS
+    )
+    counts = {k: sum(1 for row in EINSTEIN_MAP if row[2].startswith(k)) for k in "RDN"}
+    body = f"""
+<p class="demo"><b>No run and no world</b>: this page states the law's formulas and their standing against
+Einstein's, in the words of <a href="../../HIGHLIGHTS.md">HIGHLIGHTS 5.7</a> and
+<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> (sections 0, 4, 17 and 21.4); every number is the
+register's or the derivation's and is cited; nothing is added and nothing is pinned by this page.</p>
+<h2>I. The formulas</h2>
+<p><b>The statement</b> (the owner, record 181): the state is integer vectors on tori and one tensor; the law
+is one map <b>F</b> at every Node, made of six operations; the GameBoard computes exactly where the formula
+has only a limit; the measurement is the one threshold read out. The paper's sentence, made exact by
+DERIVATIONS_BEAM section 0: the model is one piecewise-linear map on an integer torus, piecewise-linear in
+every component of the rows and with bilinear rates in the bodies, and the measurement is one comparison per
+record against the norm of the linear evaluation, the law's one quadratic step.</p>
+<div class="three formula">{formula_cards}</div>
+<h2>II. Einstein</h2>
+<p><b>The theorem of section 17</b> (the owner's direction: "our formulas are above: whoever accepts our
+formulas, our linearity, can obtain from them E = m c<sup>2</sup> and all the formulas Einstein reached"): the
+linear block's limit is the retarded wave equation at c, whose symmetry is the Poincare group; every quantity
+defined by covariant operations on it transforms as it does, so a body all of whose rules are such readings
+inherits the symmetry and Einstein's kinematics and dynamics follow by the standard argument. Conversely,
+every rule that reads the block in the lattice's frame breaks the symmetry at the order at which the frame
+enters. "Above Einstein" is therefore true of the linear block and of everything built from it alone, and for
+the bodies exactly as far as their four readings (the drive, the turn, the push, the count) are covariant.
+The four covariant readings are one hypothesis, <code>covariant-readings-v1</code>, decided by the owner
+(record 270) to be built beside the law; not built today.</p>
+<h3>Built on Newton (section 17.2): the readings' limit at v &lt;&lt; c, every row registered</h3>
+<table><tr><th>Newton's</th><th>the reading</th><th>the limit</th><th>the registered check</th></tr>{
+        newton_rows
+    }</table>
+<p>Where the law leaves Newton: the drive v = p / (m + p / c), so p = m v / (1 - v / c), departs from
+Newton's m v at first order in v / c (5.3 percent at v / c = 0.05), where nature's p = gamma m v departs at
+second order (0.13 percent); a registered fact of the drive, not of nature; the covariant drive has the
+right order.</p>
+<h3>Tried on Lorentz (section 17.4): formula by formula</h3>
+<table><tr><th>Einstein's formula</th><th>from which reading</th><th>status as declared</th><th>under the covariant readings</th></tr>{
+        covariant_rows
+    }</table>
+<p><b>The verdict of section 17</b>: above, as a theorem, for the linear block; built on Newton, all four
+readings registered; tried on Lorentz, three of the four readings are in the lattice's frame as declared
+and Einstein's 1905 derivation gives no mass defect with the law's Doppler, while the covariant form of each
+exists within the six verbs (the count per turn, the gradient of the age moment across the six Ports, the
+energy as an accumulator of the work with the drive p c<sup>2</sup> / E, the turn per proper time
+E<sub>0</sub> / E, no root anywhere); then E = m c<sup>2</sup> is forced by the Newtonian limit, the invariant
+E<sup>2</sup> - p<sup>2</sup> c<sup>2</sup> is kept by the accumulator, the muon fires at 70.9 and 125.2, and the
+identity h (n / d) = Q S c<sup>2</sup> ties the inputs. What stays outside: the general formulas beyond first
+order, which need the rows to read the crowd.</p>
+<h3>The Einstein map (section 21.4): every result, its status today</h3>
+<p>R: reached from the six verbs as declared ({
+        counts["R"]
+    } rows); D: a different law as declared, the covariant
+or added reading named ({counts["D"]} rows); N: not reached ({counts["N"]} rows). The section numbers are
+DERIVATIONS_BEAM's; the pins are written before any run. Read across: the special theory is one hypothesis
+away (covariant-readings-v1, E2 to E7 and E15); the general theory's first order is reached (E8 to E10) and
+its second order needs the field to be its own source (E11, E12, E16) and the rows to read the field (E13,
+E14). Nothing enters the law by this table.</p>
+<table class="map"><tr><th>#</th><th>Einstein's result</th><th>status</th><th>what the six verbs give</th><th>what must be added, under which identity</th><th>the pin a run would meet</th></tr>{
+        einstein_rows
+    }</table>
+{
+        sources(
+            [
+                (
+                    "the operator F, its two blocks, the closed form, the paper's sentence",
+                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> section 0',
+                ),
+                (
+                    "the statement, the three conversions, the six verbs, the three tests, what is derived and what is input",
+                    '<a href="../../HIGHLIGHTS.md">HIGHLIGHTS 5.7</a> (records 173 to 210)',
+                ),
+                (
+                    "special relativity as the symmetry of the limit; the moving clock's rate 1",
+                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> sections 4.1 to 4.5; HYPOTHESES 21',
+                ),
+                (
+                    "the theorem of covariant readings, Newton's table, Lorentz's table, the verdict",
+                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> sections 17.1 to 17.5, amended by 17.6 (record 297); the owner\'s decision, record 270',
+                ),
+                (
+                    "the Einstein map, E1 to E19",
+                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> section 21.4 (the owner\'s direction, record 291)',
+                ),
+                (
+                    "c, the octahedron and the 48",
+                    '<a href="formula.html">the gallery\'s page 10</a>; records 186, 191, 226, 231',
+                ),
+            ]
+        )
+    }
+"""
+    return write_page(
+        out,
+        "einstein",
+        page(
+            "The formulas and Einstein",
+            "The law's one map of six verbs, and every result of Einstein's with its standing in the law today: "
+            "reached, a different law, or not reached; the covariant readings as the one hypothesis.",
+            body,
+        ),
+    )
+
+
 @register("index")
 def page_index(out: Path, runs: Path | None) -> Path:
     entries = [
@@ -4312,6 +4795,13 @@ def page_index(out: Path, runs: Path | None) -> Path:
             "series R: the proton of three quarks holding in a line, a kicked quark walking off, and a fast "
             "electron thrown at the proton, handing its momentum through the table (two registered worlds and "
             "a demonstration world)",
+        ),
+        (
+            "einstein.html",
+            "The formulas and Einstein",
+            "the law's one map of six verbs in cards, and the Einstein map: every result of the special and the "
+            "general theory with its standing in the law today (reached, a different law, not reached) and the "
+            "covariant readings as the one hypothesis (no run)",
         ),
         (
             "formula.html",

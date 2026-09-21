@@ -8935,6 +8935,13 @@ the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
   its momentum to the first quark through the contact, the momentum passes
   down the line and the far quark walks off through the face +x, the rest
   following; the law binds and does not confine. Nothing registered.
+- [The formulas and Einstein](pages/gallery/einstein.html): no run; the
+  law's one map of six verbs in cards (DERIVATIONS_BEAM section 0,
+  HIGHLIGHTS 5.7) and the Einstein map of DERIVATIONS_BEAM 21.4, every
+  result of the special and the general theory with its status today,
+  what the six verbs give, what must be added under which identity and
+  the pin, with the tables of section 17 (built on Newton, tried on
+  Lorentz); nothing added, nothing pinned.
 - [The octahedron and the 48](pages/gallery/formula.html): no run; one
   Node's six Ports drawn as an octahedron with the sphere of radius
   c = 1 / sqrt 3 inscribed in it, turning; the 48 signed axis permutations
