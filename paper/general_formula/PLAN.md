@@ -2165,3 +2165,94 @@ presence, from the worlds' own README. Done by one scratch script
 (notation.py) with exact anchors, then the leftovers checked by grep.
 Referee round 41 before the commit.
 
+## Wave 20 (2026-09-21): the replications round 1 into the labels; NATURE row 2c restated
+
+docs/REPLICATIONS.md on main (PR #580, the Replicator's round 1): the
+blocks of L1 (the Mach-Zehnder set), L3 (the pair), L6 (the pair at
+N = 512 to 4096), the run of 24.4 and A12 REPLICATED, every registered
+reading equal bit-exact and the four checks met; NATURE 11b
+INCONCLUSIVE (a pin without a run). The paper: the abstract's five
+PASS as "four re-run and checked by a second runner, one a pin without
+its run"; the nature prose names rows 1a, 2b, 2c and 9 as re-run; the
+prediction paragraph "pinned, run and re-run by the second runner";
+the record appendix's rows of Born's rule, the lattice Gleason,
+Tsirelson's bound and Malus "measured and replicated" with the block
+named; the caption's rule restated (a run with its line reads
+"measured and replicated"); a bibitem for the document; Reproducibility
+names the re-runs' tree. NATURE row 2c restated on main (PR #578): the
+paper's row 2c carries [1.917, 2.012) with the split at N = 32 and 128.
+The other "measured once" labels (series C, E, K, G2, L7, H, R, the
+crowd worlds) stay until round 2. Referee round 42, the cleanliness
+round over the whole paper (the Boss's seven items): ten findings,
+all applied: the abstract's "run and replicated"; the Method's "every
+registered run" with the three crowd runs named as drafted; Kepler's
+row 58 restated to its amended pin (784 in [714, 855], 392 in [357,
+428], 24.8 and 12.4, -81 +- 15 under form B's pace; record 347); the
+30 against 31 standard errors of N = 256 stated with both sources (a
+tree disagreement between checks/s_of_n.txt and 24.3/24.4, reported);
+Bohr's energy row to 26.5's standing (an identity of readings, the
+transition not reached); the not-claimed list's "not a prediction of
+nature's S" qualified by the one prediction at a power of two; the
+abstract's "(pinned, not run)" on Kepler alone; the figures'
+fingerprint 731d0f56c9f9 named as figures/summary.json's; the unused
+POSTULATE standing said so; the letters with a second meaning named
+in the head table. PASS on the labels (every replicated label in a
+round-1 block, every "measured once" outside), the commits (19 hexes,
+every one an ancestor of HEAD or a register fingerprint), 60 numbers
+traced, the counts (44 rows of Table 1; 22 differences; 21 nature
+rows; P1 to P10; six places) and section 26 (none of the ten claimed).
+
+## Wave 21 (2026-09-21): series T, the clock's word, both readings and no choice; the series letters; row 3 of the differences
+
+The Boss's orders of 13:25Z to 13:35Z: (b) series T (PR #587, merged
+at afb533a8, the register's entry "T, the clock's word", the physicist's
+pins before the run): one passage in the clock's-redshift paragraph in
+the greats' form and one row (23) in the differences table, labelled
+measured once, both readings and no choice (the presence clock 1.3000
+at 3 and at 6 Links alike; the age clock 2.6517 and 4.1500, the ratio
+1.907 for the pinned 1.909, the continuum's 2.000; the GPS
+ground-to-orbit shift 45.7 us per day against Ashby's 45.7 under the
+age word, 28.3 under the presence word); the clock_age note's bibitem
+back, Ashby 2003 added, the register bibitem names series T. The series
+letters as the Boss fixed them: the reader S, the clock worlds T, the
+lamp in a crowd U and the cluster V (U and V pending their retitling
+PR, said so). Row 3 of the differences reworded as the auditor's round
+6 found (the theorem's own N = 16, 32 and 128 with S = 3, 3 and 23/8;
+the escape "a power of two at or above 512, or 64 or 256"); the round
+itself is not on the tree's log, so it is not cited, and the row cites
+Theorem th:bell. Main moved to 12ff2fb1 during the wave (PR #591):
+NATURE row 12, the clock's field at two distances (series T, both
+words), is the register's row now, so the paper's confrontation table
+carries it as row 12 (PASS under the age word, FAIL under the presence
+word, the law's default; the word the owner's choice), the tallies
+read twenty-two, the abstract carries the row in one clause, and the
+differences' row 23 written first is withdrawn; Pound and Rebka 1960
+added. Referee round 43: one finding (U and V are the clock note's
+letters, not the register's), applied; his note applied ("at first
+order" dropped from the series T passage); everything else PASS; his
+word for the PR body after the fix: CLEAN.
+
+## Wave 22 (2026-09-21): the owner's word on the clock, entered as an assumption
+
+The owner to the coordinator (about 14:00Z, translated): "I said the
+age moment, but this is added to the paper as an assumption, right?"
+Yes: P9 (the rules chosen among few) gains the clock's word, the age
+moment, the potential's form M / r, with the alternative (the presence,
+M / r^2) named and what refutes it on the form (series T on the
+GameBoard; nature's clocks between two heights follow the potential);
+the series T passage says the word was chosen and entered as an
+assumption, not a derivation; row 12's verdict cell reads PASS under
+the age word "by the owner's word (an assumption, P9)", the presence
+word the alternative's FAIL; the abstract's clause "under the clock's
+word assumed, the age moment"; the nature prose and the differences'
+sentence likewise. The record number is cited when it lands; the
+register's row 12 is the physicist's to restate. Referee round 44
+(four findings, all applied): P9 and the series T passage say what the
+law as built counts today (the presence by default, the age moment per
+table entry, BEAM_LAW section 3) and that the owner's word makes the
+age moment the law's word with the engine's default to follow; the
+"What departs" and "What is delayed" passages reconciled to it; P9's
+heading says the ledger does not yet carry the clock's word; the notes
+applied (I4's wording, the comma series). His word after the fixes:
+CLEAN.
+
