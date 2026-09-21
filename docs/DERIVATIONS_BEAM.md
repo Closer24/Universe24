@@ -759,3 +759,118 @@ law (record 106: the masses and charges are the initialisation).
 | The inverse square | **reached** in the shell mean, `<V> = q Q / N(r)`, `N(r) -> 4 pi r^2`; per Node only in the limit of every direction; the nine ring readings of series C are `r / N(r)` and `2 pi r / N(r)` exactly | the Gauss circle problem's ripple `r^(theta - 1)`; a cube fan's `3^(3/2)` |
 | Newton's `a = -G M / r^2` | **reached** in the shell mean with the equivalence principle exact and the third law exact at rest; retarded at c; the speed capped at 1 | `G = K (n / d) / (4 pi S)` |
 | Coulomb's `F = k q_A q_B / r^2` | **reached** in form, `k_C = G`, the ratio `-rho_A rho_B` exact (item 7, series 7) | the hierarchy `rho_p^2 = 1.24 x 10^36` a declaration |
+
+## 4. Special relativity: the symmetry of the continuum limit
+
+**The question.** The flight table's c is isotropic in the lattice's frame
+(section 2.1: `Q / T_d -> 1 / sqrt 3` on every direction). What does a
+moving body read, what is a moving clock's rate, and does the limit have
+a Lorentz-like group or a preferred frame? The operations that answer
+it: the walk (T) for the rows, the crossing count (D) for what a moving
+body reads (section 2), the step (T/D) for a body's speed, the clock's
+frame (`engine.py:418-451`: the age advances at every interval in which
+nothing is owed, whether or not the body steps) and the owed count (D)
+for its rate.
+
+### 4.1 The rows alone: the wave equation's symmetry returns
+
+A family's rows on a fan of every direction, each advancing `Q / T_d ->
+1 / sqrt 3` Links per interval on its line with the phase `k x - omega t`
+along it (`phase_per_link` per Link, or the pair form per interval:
+`omega = c k` for every rate, the paper's second limit), are in the limit
+the plane waves of the massless wave equation with one speed c. That
+equation's symmetry group is the Lorentz group with that c: for the free
+rows the limit is Lorentz-covariant, a property of the equation the
+lattice converges to, not a rule of the lattice. What the lattice adds
+at finite Q: the isqrt's rounding of `T_d` per direction (within 1.35 %,
+one step in 234 on the cone, record 156), the digital line's staircase
+(the arrival at a whole interval), and the cubic group: the operator
+commutes with the 48 signed axis permutations up to the ties named in
+FORM.md section 3 (the collision's Port order, the apportioning's, the
+axes' order x, y, z), and with the lattice's translations and the
+interval's; no boost is among its symmetries. Registered: the cone
+(record 144), both rows at age 29 on the axis (17 Links, `T = 110`) and on
+the plane diagonal (24 Links, `T = 156`) at the same Euclidean distance
+within one percent, the isotropic front. **Reached** for the rows: `omega
+= c k`, the isotropic light cone, and with them the Lorentz symmetry of
+the free wave's limit.
+
+### 4.2 A moving body: what it reads
+
+A body moving at v through a stream reads, under the crossing rule, the
+encounter count of section 2: `1 + v / c` head-on, `1 - v / c` co-moving,
+1 transverse. The rows' speed relative to a moving reader is therefore `c
+-+ v`, not c: the reader's count is Galilean. In an ISOTROPIC crowd (rows
+of every direction at equal density, the ether of the six-heading or the
+fan release) the two senses cancel exactly for `v` below the rows' speed
+on the body's axis: a direction against the motion gives `n (c_1 + v)`,
+the same direction with it gives `n (c_1 - v)` (the rows overtake the body
+from behind), the sum `2 n c_1` at every v below `c_1`. So a body moving
+through an isotropic crowd reads the rest count exactly, to every order in
+v below `c_1`: no two-way measurement inside the crowd detects the
+motion (the lattice's Michelson-Morley null, exact), while a one-way
+count of one stream detects it at first order (section 2). The preferred
+frame is measurable by a one-way count and by nothing two-way.
+
+### 4.3 A moving clock: the rate is one at every speed
+
+A body's clock is the count of its self-creations; `_frame_all` advances
+it at every interval in which nothing is owed, and `_move` steps the body
+after it, so a body thrown at any v ticks at the rate of one at rest
+(HYPOTHESES entry 21, the physicist's finding; TERMINOLOGY corrected).
+The only slowing of the law is the owed count, `owed = by_clock(age, k n,
+d)` with k the crowd the clock reads (the presence, or the age moment),
+`engine.py:475-485`: a clock slows by what it reads, `1 / (1 + k n / d)`,
+never by its speed. Nature's moving clock runs at `sqrt(1 - v^2 / c^2)`.
+**Different law**: the moving clock's factor is 1. The registered check
+is series G2's `coasting_none` (section 2.5): the star's light carries `1
++ z = (1 + k)(1 + v / c)` with `k = 0` (no crowd, no slowing); had the
+lamp's clock carried nature's `gamma`, the fastest coasting star (s_mz2,
+`v / c = 0.2674`, `gamma = 1.0378`) would read `z = 1.0378 x 1.2674 - 1 =
+0.315`, and the register reads `0.2636` against the classical `0.2674`,
+within the grain 0.003 and fifty grains from the relativistic value. The
+absence of `gamma` is registered, not only derived. Under the crossing
+rule a moving clock inside a crowd reads a count that depends on its
+direction of motion relative to the crowd (record 158: in the `_scalar`
+and `_age` worlds the count falls by `v / c` for a star moving with its
+light), an anisotropic slowing by the crowd's frame: a preferred frame
+again, the crowd's.
+
+### 4.4 A body's speed: the step rule's dispersion
+
+The step rule gives `v = p / (Q S M + p)` (label units; `engine.py:85-116`,
+`world.py:447-456`): the speed is a rational function of the momentum
+that saturates at 1 Link per interval. Relativity's is `v = p c /
+sqrt(m^2 c^2 + p^2)`, saturating at c. With `m = Q S M` as the mass and
+the unit of speed the Link per interval:
+
+| `p / m` | the lattice `p / (m + p)` | relativity `p / sqrt(m^2 + p^2)` |
+| --- | --- | --- |
+| 1 / 4 | 0.200 | 0.243 |
+| 1 | 0.500 | 0.707 |
+| 3 | 0.750 | 0.949 |
+| 9 | 0.900 | 0.994 |
+
+**Different law**: the lattice's dispersion is `v = p / (m + p)`, not
+`p / sqrt(m^2 + p^2)`; both are `p / m` at small p (Newton, section 3.3)
+and both saturate, the lattice's at the Link speed 1 and not at the
+flight's `c = 1 / sqrt 3`. Two invariant speeds cannot share a Lorentz
+group: the walk's bound 1 (one Link per interval for rows and bodies
+alike) is the causal speed, and light's `1 / sqrt 3` is below it, so a
+body of `p > 0.73 Q S M` outruns its own family's rows (the bar's
+outrunning body at 0.75, section 2.2, registered). Nature's light is at
+the causal bound; the lattice's is at `1 / sqrt 3` of it, the owner's
+"phase velocity the wave on the mesh had" (BEAM_LAW section 3), so that
+no direction crosses two Links in one interval.
+
+### 4.5 What returns and what does not
+
+| Formula | Verdict | The place |
+| --- | --- | --- |
+| The isotropic light cone, `omega = c k` | **reached** (the rows; the cone of record 144) | `c = 1 / sqrt 3` in the lattice's frame |
+| Lorentz covariance of the free rows' limit | **reached** as the symmetry of the wave equation the rows converge to, not as a symmetry of the lattice (the cubic 48 and the translations only) | the ties of FORM.md section 3 break even the 48 |
+| The invariance of c for a moving reader | **different law**: a moving reader counts `c -+ v` (Galilean); an isotropic crowd hides it two-way exactly, a one-way count shows it | the crossing count |
+| The moving clock's `gamma` | **different law**: the rate is 1 at every v (HYPOTHESES 21); G2's fastest coasting star reads `z = 0.2636` where `gamma` would give 0.315 | the clock's frame; the only slowing is the crowd's |
+| The dispersion `v(p)` | **different law**: `p / (m + p)` in place of `p / sqrt(m^2 + p^2)`; the cap 1 above c | the step rule |
+| Velocity addition, `E = m c^2`, the mass of a moving body | **not reached**: no operation carries a body's speed into its content or its clock; content is invariant, the momentum unbounded | the law has no energy of motion (target 6 for the release's E = h f) |
+| A preferred frame | the lattice's, and inside a crowd the crowd's: measurable one-way, hidden two-way | 4.2, 4.3 |
