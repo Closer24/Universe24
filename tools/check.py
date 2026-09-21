@@ -21,9 +21,11 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
     "examples/events/expectations.json": ("tests/test_nature_beam_worlds.py",),
     "examples/events/bell/expectations.json": ("tests/test_nature_beam_worlds.py",),
     "examples/events/amplitude/expectations.json": (
+        "tests/test_amplitude_bell_24_4.py",
         "tests/test_amplitude_cone.py",
         "tests/test_amplitude_gate.py",
         "tests/test_amplitude_layer.py",
+        "tests/test_amplitude_malus.py",
         "tests/test_amplitude_pair.py",
         "tests/test_amplitude_split.py",
     ),
