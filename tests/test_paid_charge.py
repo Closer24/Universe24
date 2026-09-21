@@ -220,7 +220,7 @@ def test_the_refusals_and_the_record(tmp_path):
         "family": "beta",
         "amount": 4,
         "fixed": True,
-        "lamp": {"rate": [1, 1], "directions": [PLUS_X]},
+        "lamp": {"wheel": [1, 64], "rate": [1, 1], "directions": [PLUS_X]},
     }
     refused(world([PROTON, lamp]), r"measured\[1\]: a lamp of the charged paid family 'beta'")
     parsed = parse_nature_beam_world(world([PROTON, ABSORBER]))

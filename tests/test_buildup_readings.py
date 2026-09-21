@@ -63,7 +63,7 @@ def opening_world(rate: int) -> dict[str, object]:
             "amount": 8 * K + 1000,
             "phase": 0,
             "fixed": True,
-            "lamp": {"rate": [rate, 1], "directions": [[1, 0, 0]]},
+            "lamp": {"wheel": [1, 64], "rate": [rate, 1], "directions": [[1, 0, 0]]},
         }
     ]
     for y in range(HEIGHT):

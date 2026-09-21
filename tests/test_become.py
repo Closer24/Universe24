@@ -471,7 +471,7 @@ def test_the_refusals_name_the_key():
         "family": "light",
         "amount": 20,
         "fixed": True,
-        "lamp": {"rate": [1, 1], "directions": [[1, 0, 0]]},
+        "lamp": {"wheel": [1, 64], "rate": [1, 1], "directions": [[1, 0, 0]]},
         "become": {"at": 10, "into": "w", "products": [["light", 1, 15]]},
     }
     document = world([lamp], ticks=12, K=20)

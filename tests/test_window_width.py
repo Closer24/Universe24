@@ -281,7 +281,7 @@ def lamp_world(lamp: dict[str, object]) -> dict[str, object]:
                 "amount": K_B + 2,
                 "phase": 0,
                 "fixed": True,
-                "lamp": {"rate": [1, 1], "directions": [[1, 0, 0]], **lamp},
+                "lamp": {"wheel": [1, 64], "rate": [1, 1], "directions": [[1, 0, 0]], **lamp},
             },
             {"position": [10, 0, 0], "family": "counter", "amount": 1, "fixed": True},
         ],
