@@ -1,4 +1,4 @@
-"""Write the five worlds of series R, a reader inside a crowd, and the
+"""Write the five worlds of series S, a reader inside a crowd, and the
 expectations before the runs (`expectations.json`).
 
 The model owner, 2026-09-21 (in conversation, translated), after series P

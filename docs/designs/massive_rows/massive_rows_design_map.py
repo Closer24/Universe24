@@ -116,7 +116,7 @@ print(
 print()
 
 print(
-    "4. THE PIN'S ARRIVALS WITH THE LAMP-TO-OPENING FLIGHT COUNTED (section 23.3 counts from the opening)"
+    "4. THE PIN'S ARRIVALS WITH THE LAMP-TO-OPENING FLIGHT COUNTED (section 23.3 counts from the opening) [SUPERSEDED by the round-2 map's B: the leg below is the heading's row, which hits the stop at (7, 60); the diagonals reach the openings at 139]"
 )
 pace = P / integer_root(E0 * E0 + 3 * P * P)
 lamp_x, opening_x, screen_x = lamp["position"][0], 8, 52
