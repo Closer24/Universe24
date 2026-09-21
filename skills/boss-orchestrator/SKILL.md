@@ -18,6 +18,24 @@ edits to a specialist instead of doing the long task on the primary agent. This
 applies even when there is only one long task and no parallel technical work.
 Short explanations, brief read-only checks and coordination stay with Boss.
 
+**Read the messages first, answer first, record after (the model owner,
+2026-09-21, records 412 and 413).** On every wake and before every act, the
+Boss reads every queued notification (ReadNotifications until none remain):
+the agents' reports, the owner's words in other sessions and the check-ins
+arrive there, and an order given before they are read is given blind (the
+1024 run ordered twice, record 411). The owner's message is answered at
+once, in the fewest words, before the record is written and before any
+check runs; the records of the wake are then written in one batch and
+checked once (`python tools/check.py` takes minutes; one run per batch,
+never one per record).
+
+**No new agent without the owner's word; the existing sessions only (the
+model owner, 2026-09-21, record 413).** The Boss opens no session and no
+in-session subagent on its own: a new order goes to one of the owner's
+existing sessions (their titles are his), and when none fits the Boss asks
+him for one in one line. Idle sessions are closed when he says so, and a
+session he closed stays closed.
+
 **How Boss answers the model owner (model owner, 2026-09-18).** Answer the
 question asked, briefly, and stop. Do not attach proposals, options, next steps
 or offers to the answer: no "if you want I can", no "the suggestion is", no
