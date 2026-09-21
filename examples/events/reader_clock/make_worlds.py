@@ -6,7 +6,7 @@ and Q: "start" the test the experimenter proposed of a detector that sits
 inside a crowd itself, as Earth sits inside the Milky Way. Under the law as
 built (BEAM_LAW step 4) a body's clock owes k intervals per self-creation,
 k the presence of other numbers' rows at its Node over the suspension's
-wall; series U and Q read a lamp's slowing at a detector at rest with no
+wall; series U and V read a lamp's slowing at a detector at rest with no
 crowd. A reader inside a crowd of its own is slowed alike, and what it
 reads in ITS OWN clock is the ratio of the two: 1 + z = (1 + k_s)(1 + v / c)
 / (1 + k_r), the source's clock over the reader's. A reader denser than its

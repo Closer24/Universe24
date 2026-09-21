@@ -33,7 +33,7 @@ one import; no run). Nothing here is registered or decided.
   reached at first order). GameBoard readings of probes, not admissible in
   NATURE (record 163 (5)).
 - **Pinned under the presence.** Series U ([a lamp inside a crowd](../crowd_clock/DESIGN.md))
-  and Q ([a cluster of crowds](../cluster_clock/DESIGN.md)): `k = 4 F / 2^16`
+  and V ([a cluster of crowds](../cluster_clock/DESIGN.md)): `k = 4 F / 2^16`
   at the lamp's Node, F the crowd's release per source per interval, the
   detector's `1 + z = 1 + k` (DETECTOR); G2's `gravity_scalar` on main.
 - **The age moment is already the field of the rows' rule.** optical-v1

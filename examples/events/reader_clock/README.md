@@ -1,7 +1,7 @@
 # Series S: a reader inside a crowd
 
 The model owner's word (2026-09-21, in conversation): "start", on the
-experimenter's proposal, after series U and Q, of a detector that sits
+experimenter's proposal, after series U and V, of a detector that sits
 inside a crowd itself, as Earth sits inside the Milky Way. The design with
 the expectation pinned before any run is
 [docs/designs/reader_clock/DESIGN.md](../../../docs/designs/reader_clock/DESIGN.md);

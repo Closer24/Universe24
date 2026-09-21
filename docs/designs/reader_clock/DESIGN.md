@@ -1,7 +1,7 @@
 # Series S, a reader inside a crowd: the design, with the expectation pinned before any run
 
 The G2 experimenter, 2026-09-21, on the model owner's word ("start", after
-series U and Q, on the experimenter's proposal of a detector that sits
+series U and V, on the experimenter's proposal of a detector that sits
 inside a crowd itself). Sections 1 to 6 are written before any run; section
 7 after. Nothing here is registered in
 [docs/EXPERIMENTS.md](../../EXPERIMENTS.md); the register entry is drafted
@@ -15,7 +15,7 @@ crowd), [series V](../cluster_clock/DESIGN.md) (a crowd slowed alike adds:
 
 ## 1. The question, on the board
 
-Series U and Q read a crowd's lamp at a detector with no crowd, and read it
+Series U and V read a crowd's lamp at a detector with no crowd, and read it
 by the lattice's tick. Earth is not such a reader: it sits inside the Milky
 Way's crowd, and it reads by its own clock. Under the law as built the
 reader's clock owes k_r intervals per self-creation exactly as the source's
@@ -117,7 +117,7 @@ term is a ratio of the two crowds, so a reader reads its own kind of crowd
 with no shift, reads denser crowds red and thinner ones blue, and reads the
 lattice's tick nowhere (only through a body at rest with no crowd, which
 Earth is not). It is for the owner's question of the galaxies and the
-clusters (series U and Q): the clock term that Earth would read is
+clusters (series U and V): the clock term that Earth would read is
 (1 + k_galaxy) / (1 + k_here) - 1, which is small for galaxies like ours
 and large for crowds far denser, in either direction. It is also a reading
 of the clock question raised for covariant-readings-v1 (record 344, "which
