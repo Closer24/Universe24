@@ -182,7 +182,7 @@ def young_fringes() -> None:
     phase counts intervals, the flight is Euclidean, and the difference
     is ~ y s / D with fringes spaced lambda D / s."""
     section(
-        "7. Two slits: the integer form (L1 Links) against the pair form (Euclidean intervals); s = 6, D = 44, lambda = 8"
+        "7. Two slits: the integer form (L1 Links) against the pair form (Euclidean intervals); s = 6, D = 44, lambda = 8 (illustrative units: Links here, not the world's intervals)"
     )
     s, distance, wavelength = 6, 44, 8.0
     print("   y   L1 diff  Euclid diff   I_links   I_intervals")

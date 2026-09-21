@@ -220,7 +220,9 @@ $U_{s,t} = \begin{pmatrix} C'[s] & S'[s]\,v(t) \\ -S'[s] & C'[s]\,v(t)\end{pmatr
 with $v(t)$ the turn by $t$ steps on the label-$1$ column; a row of
 label $0$ becomes $(wC'[s], 65536m, p)$ on $+$ and $(wS'[s], 65536m,
 p + N/2)$ on $-$, a row of label $1$ becomes $(wS'[s], 65536m, p + t)$ on
-$+$ and $(wC'[s], 65536m, p + t)$ on $-$. With $t = 0$ this is $U_s$ of
+$+$ and $(wC'[s], 65536m, p + t)$ on $-$ (the row form exact for $t$ a
+multiple of $N/4$, the only turns used here; the archived code multiplies
+the column by the tables' phasor at $t$). With $t = 0$ this is $U_s$ of
 Theorem~\ref{th:isometry}; the GHZ bases below are $X = (s, 0)$ and
 $Y = (s, N/4)$.
 \item[M] Normal form: merge and cancel as in Definition~\ref{def:row}.
@@ -487,14 +489,17 @@ archived code as series L, with its world file, its expectation written
 before the run and the source fingerprint \texttt{ff5c382d672f}
 \cite{register}; the gate worlds (CNOT, the ceiling) were run again after
 the gate's review fixed its bookkeeping, the register recording the same
-integers. The figures were drawn from all 46 worlds run again on the
-paper's tree (the merge \texttt{4ccf65c7} of the main branch's
+integers. The figures were drawn from the 46 worlds of series L run
+again on the paper's tree (the 45 under the key, whose integers the
+summary carries; \texttt{slits\_one}, the reference world without the
+key, read by the generator) (the merge \texttt{4ccf65c7} of the main branch's
 \texttt{d2064195}, fingerprint \texttt{731d0f56c9f9}), every integer
 equal to the register's, the gate worlds included \cite{checks}; the two
 worlds of L7 (the cone) were run later, on the tree that made the record
 form the only click (its head \texttt{725d811f} and the main branch's
 \texttt{0f193fdb}, fingerprint \texttt{4bf55a62e6fd}) \cite{register}. Each
-world is run for one birth per birth phase, $u = 0, \dots, N-1$, and the
+world is run for its first $N$ births, one per $u = 0, \dots, N-1$ (per
+setting bin in the choosers' world), and the
 reading tool of the archive replays each run's register through the
 layer and equals the run's world list on every run; the tool builds the
 same layer the engine built, so this is a consistency check of the log
@@ -506,8 +511,8 @@ $34/15/15$, when the per-Node coherence rule was decided at the review of
 the implementation's third stage; every other row's expectation stood
 from before its first run \cite{register,log}.
 
-\begin{table}[H]\centering\footnotesize
-\begin{tabular}{p{1.45in}p{1.15in}p{1.35in}p{2.15in}}
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{1.4in}p{1.1in}p{1.3in}p{2.1in}}
 \toprule
 World & Reading & Registered & Expected before the run\\
 \midrule
@@ -532,7 +537,7 @@ The pair, $N = 1024$ & $E \times 1024$; $S$ & $724, -724, 724, 724$; $2896/1024$
 The pair, $N = 4096$ & $E \times 4096$; $S$ & $2900, -2900, 2892, 2892$; $11584/4096$ & the same\\
 \bottomrule
 \end{tabular}
-\caption{The measurements of series L. Every row is a count of clicks over one birth per birth phase; the last column is the expectation written into the worlds' expectation file before the run, from the design's check scripts (the two slits from the generator's reading of the reference world).}
+\caption{The measurements of series L. Every row is a count of clicks over the first $N$ births, one per $u$; the last column is the expectation written into the worlds' expectation file before the run, from the design's check scripts (the two slits from the generator's reading of the reference world).}
 \label{tab:measure}
 \end{table}
 
@@ -641,7 +646,7 @@ non-locality stated as one gather of one record from both settings.
 \item Four theorems about that rule, with the tie, the tables' rounding
 and the apparatus's record in their statements, and one exact table
 $S(N)$ that puts the model on both sides of Tsirelson's bound.
-\item Runs recorded before the text, one birth per birth phase, replayed
+\item Runs recorded before the text, the first $N$ births one per $u$, replayed
 from their own registers by the layer alone, and the departures from
 the design's expectations kept as measured.
 \end{itemize}
@@ -711,7 +716,10 @@ density of clicks; a partial which-path device is a different apparatus
 and a different world in this model: a phase window admitting part of
 the circle on one arm of the Mach-Zehnder, a rule outside
 Definition~\ref{def:rules} that reads the row's phase and so $u$,
-computed from the rule \cite{checks}, gives neither the linear nor the quadratic duality
+computed from the rule \cite{checks} on the model as defined here, where
+the row's phase starts at $u$ (the archived code's window reads the path
+phase, phase less $u$, and this computation does not describe it), gives
+neither the linear nor the quadratic duality
 relation between visibility and path knowledge, and an absorber count
 that depends on the arm phase and on the window's centre, because the
 window and the ruler read the same $u$; this is an open problem of the
@@ -794,8 +802,8 @@ with $K$ directions per opening spaced equally in angle (the angular
 measure) gives the correlation with the cosine $0.45$ at $K = 91$ (the
 register's $0.37$ in its own geometry), $0.84$ at $361$ and $0.90$ from
 $721$ on, every pixel seeing both openings from $721$; the lattice's own
-fan of primitive directions with equal weights does not converge ($0.65$
-at the width $64$, a comb) and does with each direction weighted by the
+fan of primitive directions with equal weights has not converged by the
+width $64$ ($0.38$, $0.57$, $0.65$ at the widths $12$, $32$, $64$, a comb) and does with each direction weighted by the
 angle it covers ($0.90$) \cite{log}. Third the flight's rounding to whole
 intervals: $0.07$ in an idealised two-path computation at this
 wavelength, $0.02$ on the world itself. The limit of every direction with

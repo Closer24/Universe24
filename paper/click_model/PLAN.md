@@ -476,3 +476,26 @@ exchanged; the phase window named a rule outside Definition 2 that reads
 u; eq. (joint) shortened and the labels' weights moved to the sentence;
 the measurements table set in p-columns at footnotesize; the double
 citation merged. Round 6 is the confirmation.
+
+## Referee round 6 (2026-09-21): stable
+
+Verdict: minor revision; the referee's line: "stable in its physics,
+integers and proofs; no finding changes a registered integer, a claim's
+truth on the paper's own tree, or a proof". Every round-5 fix verified,
+the E of all eighteen registered pairs, the bounds, the tables' extremes
+and the CNOT-GHZ triples recomputed once more. Nine residual items, all
+applied: the table's column separation (the width was 0.26 in over the
+text); the count of worlds (46 of series L, 45 under the key in the
+summary, slits_one read by the generator); two scope qualifiers (the phase
+window on the model as defined, where the row's phase starts at u, not
+the archived code's path phase; the rotation's row form exact for t a
+multiple of N/4, the only turns used); NUMBERS.md's ceiling row relabelled
+and the 27 sourced to record 156; "the first N births, one per u" in
+three places; the equal-weight fan "has not converged by the width 64"
+with its three values; information_transfer.txt section 7's units marked
+illustrative. The referee rounds stop here: the manuscript is stable;
+what remains is the owner's (the title, the arXiv identifiers, the two
+experimental values against the PDFs, the release tag and version DOI,
+the compile), and the register's re-pin when the fraction-free batch and
+the wheel land, after which the summary is re-run and the numbers
+re-checked in one pass.

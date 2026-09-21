@@ -14,7 +14,7 @@ the register. The runs were reproduced for the figures on the paper's tree, the 
 own is `48a9d1c91661`, the two trees differing by one docstring), every
 integer equal to the register's at `ff5c382d672f` (the gate worlds were
 re-run in the register after the gate's fix with the same integers;
-`figures/summary.json` covers all 46 worlds).
+`figures/summary.json` covers the 45 keyed worlds; `slits_one` is read by the generator).
 
 | Number in the paper | Value | Kind | Where |
 | --- | --- | --- | --- |
@@ -70,7 +70,7 @@ re-run in the register after the gate's fix with the same integers;
 | The two-slit clicks' Pearson with the weights | 0.655 | register (the generator's reading) | `summary.json` two_slits.pearson.histogram_weight |
 | The tables' norm range at N = 64 | -88 to +237 | computation | `checks/tables_norm.txt` |
 | The Mach-Zehnder offers at the equal arms | 1681/1682 and 1/1682 | design | L1; `expectations.json` |
-| The two-slit fan: directions per opening; pixels reached; pixels reached by both openings | 91; 75; 27 | register and map | `expectations.json` two_slits (pixels_with_rows, two_path_pixels); record 160 |
-| The register's ceiling: balanced splits, (20, 21) splits, (1, 2, 2) splits and rotations that fit below 2^62 | 62; 13; 6; 3 (the fourth refused) | design and register | the design's section 10; L5 |
+| The two-slit fan: directions per opening; pixels reached; pixels reached by both openings | 91; 75; 27 | register (the generator's reading) | `expectations.json` two_slits (pixels_with_rows, two_path_pixels); record 156 |
+| The register's ceiling: balanced (1, 1) splits, (3, 4, 5) splits, (20, 21, 29) splits and label rotations that fit below 2^62 | 62; 13; 6; 3 (the fourth refused) | design and register | the design's section 10; L5 |
 | The choosers' periods and the births that cover their common period with N | 3 and 5; 960 = lcm(3, 5, 64) | register (the world file) | `bell_choosers.json`; `make_worlds.py` |
 | The two-slit sets | 80 | register (the generator's reading) | `expectations.json` two_slits.sets |
