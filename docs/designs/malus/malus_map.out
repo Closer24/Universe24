@@ -1,0 +1,37 @@
+1. THE HALF-ANGLE TABLES OF 2N AT N = 256 (SCALE 256), THE SETTINGS OF THE PIN
+   s =   0 (  0.0 degrees): C'[s] =  256, S'[s] =    0, n_s = C'^2 + S'^2 = 65536 (65536 x 1.00000); cos^2 = 1.00000, the table's C'^2 / n_s = 1.00000
+   s =  32 ( 22.5 degrees): C'[s] =  237, S'[s] =   98, n_s = C'^2 + S'^2 = 65773 (65536 x 1.00362); cos^2 = 0.85355, the table's C'^2 / n_s = 0.85398
+   s =  64 ( 45.0 degrees): C'[s] =  181, S'[s] =  181, n_s = C'^2 + S'^2 = 65522 (65536 x 0.99979); cos^2 = 0.50000, the table's C'^2 / n_s = 0.50000
+   s =  96 ( 67.5 degrees): C'[s] =   98, S'[s] =  237, n_s = C'^2 + S'^2 = 65773 (65536 x 1.00362); cos^2 = 0.14645, the table's C'^2 / n_s = 0.14602
+   s = 128 ( 90.0 degrees): C'[s] =    0, S'[s] =  256, n_s = C'^2 + S'^2 = 65536 (65536 x 1.00000); cos^2 = 0.00000, the table's C'^2 / n_s = 0.00000
+
+2. ONE POLARISER: THE ROW BORN ALONG y READ AT A WINDOW s, THE COUNTS OVER W = 256 BIRTHS
+   the cells (+ the pass, - the absorbed), the weights C'^2 and S'^2, the rungs b_k = (2 W C_k + T) // (2 T)
+   s =   0 (  0.0 degrees): weights {'+': 65536, '-': 0}, rungs [0, 256, 256], counts {'+': 256, '-': 0}: the pass 256 of 256 = 1.00000 (Malus cos^2 1.00000, x 256 = 256.00)
+   s =  32 ( 22.5 degrees): weights {'+': 56169, '-': 9604}, rungs [0, 219, 256], counts {'+': 219, '-': 37}: the pass 219 of 256 = 0.85547 (Malus cos^2 0.85355, x 256 = 218.51)
+   s =  64 ( 45.0 degrees): weights {'+': 32761, '-': 32761}, rungs [0, 128, 256], counts {'+': 128, '-': 128}: the pass 128 of 256 = 0.50000 (Malus cos^2 0.50000, x 256 = 128.00)
+   s =  96 ( 67.5 degrees): weights {'+': 9604, '-': 56169}, rungs [0, 37, 256], counts {'+': 37, '-': 219}: the pass 37 of 256 = 0.14453 (Malus cos^2 0.14645, x 256 = 37.49)
+   s = 128 ( 90.0 degrees): weights {'+': 0, '-': 65536}, rungs [0, 0, 256], counts {'+': 0, '-': 256}: the pass 0 of 256 = 0.00000 (Malus cos^2 0.00000, x 256 = 0.00)
+
+3. THE THREE ARRANGEMENTS OF THE PIN (NATURE ROW 9), THE EXACT INTEGERS AT N = W = 256
+   (a) one polariser at 45 degrees: the read at label 0 (the born axis: the polariser at 0 degrees passes the whole) then the window s = 64:
+       weights {'0+': 2147024896, '0-': 2147024896}, counts {'0+': 128, '0-': 128}: the pass cell 0+ = 128 of 256 = 1/2 exactly
+   (b) two crossed: the read at label 0 (the polariser at 0 degrees) then the window s = 128 (90 degrees):
+       weights {'0+': 0, '0-': 4294967296}, counts {'0+': 0, '0-': 256}: the pass cell 0+ = 0 of 256 = 0 exactly
+   (c) a third at 45 degrees between two crossed: the rotate s1 = 64 (45 degrees from y), the read, the window s2 = 64 (45 degrees on: 90 from y):
+       weights {'0+': 1073283121, '0-': 1073283121, '1+': 1073283121, '1-': 1073283121}, counts {'0+': 64, '0-': 64, '1+': 64, '1-': 64}: the pass cell 0+ = 64 of 256 = 1/4 exactly;
+       passed the first (the cells 0+ and 0-): 128 = 1/2 of the births; of those, passed the second: 64 = 1/2 of the polarised: Malus's 1/4
+       (the cells 1+ and 1- are the rows the first polariser absorbed, 64 and 64: they go on to the end and click there, no body sinks them)
+
+4. THE SAME CHAIN AT 22.5-DEGREE STEPS (A12's four-polariser chain is NOT covered: it needs a second read after a rotate)
+   the rotate s1 = 32, the read, the window s2 = 32: weights {'0+': 3154956561, '0-': 539447076, '1+': 92236816, '1-': 539447076}, counts {'0+': 187, '0-': 32, '1+': 5, '1-': 32}:
+   the pass cell 0+ = 187 of 256 = 0.73047 against cos^4(22.5 degrees) = 0.72855 (x 256 = 186.51); the table's (C'[32]^2 / n_32)^2 = 0.72929
+
+5. THE ROBUSTNESS OF THE INTEGERS TO THE WHEEL'S RATE r AND TO THE COUNT u RUNS ON
+   r =   1: u = ordinal x r mod 256 over 256 births covers 256 residues (every one once: True)
+   r = 157: u = ordinal x r mod 256 over 256 births covers 256 residues (every one once: True)
+   r = 159: u = ordinal x r mod 256 over 256 births covers 256 residues (every one once: True)
+   r = 255: u = ordinal x r mod 256 over 256 births covers 256 residues (every one once: True)
+   the chain's rungs [0, 64, 128, 192, 256]: with u over every residue once, the cell k holds b_k - b_(k-1) births whatever r; with u stepping by 2 (a rebirth's count per row, if the rotate counted so), every even residue twice, the same widths [64, 64, 64, 64] since every width is even
+
+6. THE MULTIPLICITY BUDGET: the birth's norm 1 (branches [[0, 1]] by default), the rotate x 65536, the click x 2^32: 2^48 per path, within 2^62 (three rotations fit, four do not: the register's L5)
