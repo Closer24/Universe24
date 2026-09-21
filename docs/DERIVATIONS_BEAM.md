@@ -65,12 +65,15 @@ at its first use. The recurring symbols:
 | phi | scalar | a body's phase |
 | omega | scalar | the angular frequency |
 | rho | scalar | the charge per unit of content, a family's declaration |
+| alpha, `alpha_G`, k (section 16) | scalars | the fine-structure constant; the gravitational coupling `G m_p^2 / (hbar c)`; the electron's count in units of the minimal mass |
+| E, `E_0` (section 17) | scalars | a body's energy as an accumulator of the work; its rest value `Q S M c^2` |
 | kappa | scalar | the meeting's column sum per unit |
 | zeta_N | scalar | the primitive N-th root of unity, `exp(2 pi i / N)` |
 | sigma_j | map | the j-th Galois conjugate of the evaluation `ev` (section 6.5) |
 | Lambda_c | scalar | a column's declared bound on the branch |
 | f | element | a record's rows at a Node as an element of the group ring `Z[Z_N]` |
 | beta, `R_ret`, `n_ret` | scalar, scalar, vector | the speed over the pace of a row `v / c`; the distance from a moving source's retarded position; the unit vector from it (section 12) |
+| `c_1`, `k_p` | scalars | a direction's Manhattan pace `S_1 Q / T_d` in Links per interval (sections 2.4, 12c); the rest count of a partner's rows at a body (section 12c) |
 | a, H | scalars | the growth factor of the flight's wall and its rate per interval, a declared constant of the world (section 15) |
 
 The reference tree is `main` at `f89884f0` (the law as landed on 2026-09-20,
@@ -83,7 +86,7 @@ cited as orders, not as code.
 
 Section 0 states the law as one operator with its two blocks and places
 every result under its block (the owner's second pass, record 167 as the
-Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall). The
+Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass); section 17 answers the owner's direction of 2026-09-21 (the law above Newton and Einstein: the theorem of covariant readings). The
 targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
@@ -3134,6 +3137,269 @@ law for the orbit thrown: contraction 0.87 to 0.96 and slowing 1.31 to
 bond unstable, the registered geometry unbound at both speeds; the
 seventh verb needed for Lorentz's `gamma` and for nothing of the six.
 
+## 12c. The mover's counter under the crossing count and the owed count: route C
+
+**The question** (record 230's three routes to Lorentz: A the six verbs
+alone, B the seventh verb, C the reading budget; the Boss's order of
+03:46Z). Route C: a body's counter is slowed by what it reads (the owed
+count, `by_drive(acc_owed, k n, d)` after every self-creation, k the count
+of the rows at its Node over every number but its own, `engine.py:496-509`;
+section 13.2 (b) read it as the reading's cost over the budget K), and a
+moving body reads by the crossing rule (record 158; sections 2 and 12b.1),
+so its count differs from a rest body's. Does the difference slow the
+mover's counter, by how much against gamma (the Lorentz factor), and at
+what cost? The host script
+[mover_counter.py](designs/derivations_beam/mover_counter.py) with its
+output [mover_counter.out](designs/derivations_beam/mover_counter.out)
+makes every number below on the derivation's own formulas and on the
+registered fan and readings of series E; no run.
+
+### 12c.1 The mover's count through an isotropic crowd at rest
+
+**Four counts, one of them the rule's.** Let a crowd of rows at rest fill
+the GameBoard isotropically: at every Node the rows of every direction
+**n** arrive at the same rate (sources at rest everywhere, their fans
+symmetric). A reader at the velocity **v** (its speed over a row's pace
+`beta = v / c`) counts, per direction, one of four things:
+
+| the count | per direction **n**, over the rest count | its mean over the sphere | what it is |
+| --- | --- | --- | --- |
+| the Euclidean sweep | `abs(n - beta)` (the relative speed) | `1 + beta^2 / 3` | a sphere reader sweeping point rows; the naive count |
+| the Manhattan sweep | `sum_i abs(n_i - beta_i) / sum_i abs(n_i)` | `1 + beta^2 / 3` exactly, whatever the direction of **v** | a cube reader (a Node, six Ports) sweeping point rows |
+| the Euclidean crossing | `1 - n . beta` (the fronts crossed) | 1 exactly | the receiver's Doppler per direction, section 2.2's limit |
+| **the crossing rule** | `1 - sgn(n_e) beta / abs(n)_1` per step on the axis e | 1 exactly | record 158's count, section 2.4's Manhattan flux; `c_1 = c abs(n)_1` the direction's Manhattan pace |
+
+The two sweeps have the same mean because the mean of `abs(n_x - beta)`
+over the sphere is `(1 + beta^2) / 2` and the mean of `abs(n_x)` is `1 /
+2` (the script, table (A): 1.0154, 1.0615, 1.2462 and 4/3 at `beta` =
+0.2148, 0.4297, 0.8594 and 1, on x, on a face diagonal and on the cube
+diagonal alike). The two crossing counts have the mean 1 by the
+reflection `n_e -> -n_e`: the count is odd in the row's component along
+the step, and an isotropic crowd has as many rows against the step as
+with it. Named explicitly, the comparison is between two sphere means:
+the mean of the crossing rule's per-direction factor `1 - n . beta`,
+which is exactly 1, and the mean of the relative speed `abs(n - beta)`,
+the distance from the point **beta** to the unit sphere, which is `1 +
+beta^2 / 3` and is the sweep of point rows that the rule does not make. The sweep exceeds the rule exactly on the rows with `abs(n_e) <
+beta`, the near-transverse ones, which the rule does not meet at a step
+(record 158's C2: a resident row at the destination is met only if it
+moves against the step, `u . e < 0`; a row moving across the step is
+met at the rest rate, section 2.3's "transverse exactly 1", the
+registered form of the difference); their share is `beta^2 / 3` of the
+rest count. **Reached**: the crossing rule's count of a mover through an
+isotropic crowd at rest is the rest count, at every speed to the cap, on
+the sphere and on the lattice.
+
+**On the registered fan** (series E's 290 directions with the integer
+`T_d`, a body stepping on +x at `1 / 8` and `1 / 4` Link per
+self-creation and at the cap `c = 32 / 55`, the script's table (B)): the
+rule's mean over the fan is 1.000000 at the three speeds; the factor
+runs from `1 - v T_d / (Q S_1)` on the co-moving heading (0.7852,
+0.5703, 0 at the cap) to `1 + v T_d / (Q S_1)` head-on (1.2148, 1.4297,
+2); the cube sweep's fan mean is 1.0253, 1.0820, 1.3674. The factor is
+never negative under form B: a body's pace on any direction is at most
+that direction's row pace, `c` on a heading, and the fan's Manhattan
+paces `c_1 = S_1 Q / T_d` run from `c` (the headings) to 1 (the cube
+diagonals), so `v <= c <= c_1` on every direction and no direction is
+outrun. (Today's per-axis drive at one Link per interval, 1.72 c, can
+outrun a heading; there the factor is `abs(1 - v / c_1)` and the mean
+rises above 1: outside form B, not stated further.)
+
+**What the mover does read.** Not a changed total but a dipole: over
+the hemisphere of rows coming toward it, the rule's factor averages `1 +
+0.674 beta` for a step on x (1.145, 1.290, 1.579 at the three speeds),
+and the same below 1 behind. A mover reads the crowd's frame in the
+direction of its rows and not in their number: the ether wind is in
+the reading's first moment (the flow, the push of 12b.1) and absent
+from its zeroth (the presence, the count the counter owes).
+
+### 12c.2 The owed count and the counter: no slowing
+
+**What is charged.** The owed count is charged once per self-creation,
+`by_drive(acc_owed, k n, d)` with k the count of THAT interval
+(`_suspend` after `_frame_all`); the body steps only in an interval in
+which nothing is owed (`_move`), so a step's interval is a self-creating
+interval and its crossing count is charged; the rows arriving during
+the owed intervals are read and not charged. Over one Link at `v_free`
+Links per self-creation (`1 / v_free` self-creations per Link), the
+charged count is `(1 / v_free) x rest x (1 -+ v_free / c_1)` per
+direction: the crossing rule's factor with the FREE pace, whatever the
+owed intervals between the self-creations. A body in a crowd steps at
+`v_free / (1 + k n / d)` Links per interval: route C slows a body's
+motion by the same factor as its counter, isotropically, its momentum
+untouched (a viscous crowd; section 9.2's wait).
+
+**Through an isotropic crowd at rest.** The charged count's mean is the
+rest count (12c.1), so the counter's rate is `1 / (1 + k n / d)` at
+every speed to the cap: the mover's owed count does not grow and its
+counter does not slow. Against Lorentz at small `beta`:
+
+| the counter's rate over the rest rate | the coefficient of `beta^2` | near the cap |
+| --- | --- | --- |
+| the crossing rule (the law) | 0 | 1 in the mean, 0 to 2 by direction |
+| the sweep (not the rule) | `-(k n / d) / (3 (1 + k n / d))`, at most 1/3 | `(1 + k n / d) / (1 + 4 k n / d / 3)`, at least 3/4 |
+| nature, `1 / gamma` | `-1 / 2` | 0 |
+
+**Different law**, in three structural ways before any number. (i) Any
+slowing of route C is proportional to the crowd, `k n / d`: in an empty
+world none (J4's bar, 12c.4), in series E's shells `k = 41.5 / r^2` at
+rest; Lorentz's is the same in an empty world and in a crowd. (ii) It is
+bounded: the largest count in any direction is `2 x rest` (head-on at
+the cap), so the mover's rate over the rest rate is never below `(1 + k n
+/ d) / (1 + 2 k n / d) > 1 / 2` whatever the crowd; gamma is unbounded
+at the cap (29.3 for the CERN muon). (iii) Its sign follows the crowd's
+frame: a body moving WITH the rows it reads counts fewer, owes less and
+runs FASTER than a body at rest in the same crowd (record 158's
+consequence for G2: "in `_scalar` and `_age` the clock's count now falls
+by `v / c`"); only against the rows does it run slower, by `(1 + beta)`
+at most. So route C gives no isotropic slowing, an anisotropic one in
+the crowd's frame with the wrong sign for a body moving with its light,
+and nothing a body carries into an empty world.
+
+### 12c.3 The bond under route C: no contraction, a stretch or a speeding
+
+The registered orbit worlds (series D, `s32_r24` and its five siblings)
+have `suspension` 0: route C does nothing to 12b.2's orbit as
+registered. In a world with a suspension, the pair's two counters read
+each other's rows by section 12's exchange rates as counts (the script's
+table (C)): without the aberration the leading body counts `(1 - beta)^2`
+of the rest count of its partner's rows (0.617 at `beta` 0.2148, 0.325 at
+0.4297) and the trailing body `(1 + beta)^2` (1.476, 2.044); with the
+aberration both count `(1 - beta^2)^2` (0.910, 0.665); a transverse
+partner `(1 - beta^2)` (0.954, 0.815). At the partner's rest count `k_p`
+with `n / d = 1`:
+
+| `beta` | `k_p` | rest rate | leading | trailing | both, aberrated | Lorentz `1 / gamma` |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0.2148 | 1 | 0.500 | 0.619 (1.237 x rest) | 0.404 (0.808) | 0.524 (1.047) | 0.977 |
+| 0.2148 | 0.1 | 0.909 | 0.942 (1.036) | 0.871 (0.959) | 0.917 (1.008) | 0.977 |
+| 0.4297 | 1 | 0.500 | 0.755 (1.509) | 0.329 (0.657) | 0.601 (1.201) | 0.903 |
+| 0.4297 | 0.1 | 0.909 | 0.969 (1.065) | 0.830 (0.913) | 0.938 (1.031) | 0.903 |
+
+**Different law** in the direction. Without the aberration the two
+counters of one pair split at first order in `beta` (the leading faster,
+the trailing slower, `4 beta k_p / (1 + k_p)` of the rest rate apart): since a body steps
+only when nothing is owed, the leading body also steps faster and the
+trailing slower, so the pair STRETCHES along its motion at the rate of
+that split (a self-force again, 12.2's `4 beta` in the counters instead
+of the pushes) and no contraction is available. With the aberration
+both counters run faster than at rest, `(1 - beta^2)^2` of the partner's
+rows reaching them: fewer rows, less owed, a SPEEDING by about `2
+beta^2 k_p / (1 + k_p)`, the sign opposite to Lorentz's slowing. The
+isotropic crowd at rest around the pair adds a common factor to both
+counters and both paces (12c.2) and changes neither the shape nor the
+period's ratio to the rest. So route C neither contracts nor slows a
+bond: it stretches an unaberrated pair and speeds an aberrated one, in
+proportion to the partner's rows and to nothing in an empty world.
+
+### 12c.4 The muon of J4 re-read under route C
+
+HYPOTHESES 21's J4: muons of content 207 with `become` at 64, a key on
+the body's own self-creation count (`ages_at_key`, the clock's trigger,
+`nature_beam.py:1455-1460`), in an open bar with no crowd (`release` `[1,
+2^20]`), one at rest and one thrown at `1 / 4` and `1 / 2` Link per
+interval (0.43 c and 0.86 c). With no crowd `k = 0` at every Node: route
+C charges nothing, the moving muon's 64th self-creation is at tick 64 as
+at rest, its range `64 v` Links (16 and 32); the entry's prediction
+stands unchanged. In a crowd at rest at `k n / d = 1` (the script's
+table (D)): the rest muon fires at tick 128; the moving one at 128 in
+the isotropic mean, at 100 (0.43 c) or 73 (0.86 c) moving with the
+crowd's rows, at 156 or 183 against them. Nature: 2.197 microseconds at
+rest, 64.4 in the CERN ring (gamma 29.3); lorentz-v1's comparison
+(FORM.md section 4): ticks 71 and 126 at the two speeds (`64 gamma` =
+70.9, 125.2). Route C's lifetime in flight lengthens at most by `(1 +
+beta) < 2` over the rest lifetime in the same crowd, and only against
+the crowd's rows; with them it shortens. **Different law** on the
+number, the bound and the sign. A key on the Links moved in place of the
+age (a range rule: the decay at a distance `L` whatever the pace) would
+give a lifetime of `L / v` intervals, no decay at rest and no `gamma`
+either: a range is not a clock, and nature's range `gamma beta c tau` is
+a clock's range.
+
+### 12c.5 What the mechanism needs, and the three tests
+
+**What it needs.** (a) A crowd at rest everywhere at one presence, so
+that every body has the same rest slowing `1 / (1 + k_0 n / d)`: a
+declaration of a world, not a rule (the register's open worlds have the
+crowd falling as `1 / r^2` from each source; a static periodic world
+fills without bound and every counter slows toward zero, section 15.5's
+Seeliger item and 14.3's third stream; under the growing wall the
+presence settles, 0.000765 of `q dwell` per source at L = 301, and a
+counter has a steady rest slowing). (b) A count that is not the crossing
+rule: only the sweep of the near-transverse residents gives a `beta^2`
+term at all, `beta^2 / 3`, and the sweep is refuted by the registered
+transverse count of 1 (record 158's tests, section 2.3). (c) Even with
+both, a slowing proportional to `k_0 n / d`, bounded above by 4/3 in the
+factor, and read in the crowd's frame (the dipole of 12c.1: a preferred
+frame, the crowd's, in the reading's first moment). Nothing of (a) to
+(c) gives `1 / gamma`.
+
+**The three tests.** Route C proposes no rule: the crossing rule (D on
+the body's two last Links, record 158) and the owed count (one
+`by_drive` on the body's record) are the law already, generic (no name),
+vector (a comparison and a translation) and local (the body's own
+record, the six Ports, nothing at a Node). What fails is the number, not
+a test. The variant with a crowd everywhere passes the tests as a world
+declaration; the sweep variant would change record 158's C2 and is
+refuted by the register.
+
+### 12c.6 The pins for a run under form B and the crossing rule
+
+Series E's `scalar` world (`examples/events/redshift/scalar.json`:
+the source of content 4096 at the centre on the 290-direction fan, one
+row per direction per interval, `suspension` `[1, 1]`) with one probe
+added, a free measured event of content 1 with the `pass` entry (no
+push), on the +x axis, thrown along x under form B: `p = 10` label units
+(`v_free` = 0.1232 Link per self-creation, the crossing factor `v T_d /
+(Q S_1)` = 0.2117) and `p = 28` (0.2497, 0.4292), outward from r = 4 and
+inward from r = 14, read over the 10 Links r = 4 .. 14 by the `step`
+records and the owed counts. The rest reading of the axis probe is the
+register's: 2.03 at r = 6 .. 12 and 1.00 at r = 4 and 14 (the heading's
+dwell pattern), the mean over a path of Links `55 / 32` = 1.72; under the
+rule a body at rest reads as built (record 158). The pins (the script's
+table (E); the counts at the registered 2.03 first, at the path mean
+second):
+
+| throw | count over the rest count | the count | self-creations per 1000 intervals (rest 330; 368) | intervals for the 10 Links (rest 246; 221 at `p` 10, 121; 109 at `p` 28) |
+| --- | --- | --- | --- | --- |
+| `p` 10 outward | 0.788 | 1.60; 1.36 | 385; 425 | 211; 191 |
+| `p` 10 inward | 1.212 | 2.46; 2.08 | 289; 324 | 281; 250 |
+| `p` 28 outward | 0.571 | 1.16; 0.98 | 463; 505 | 86; 79 |
+| `p` 28 inward | 1.429 | 2.90; 2.46 | 256; 289 | 156; 138 |
+
+Tolerance: the boundary row per Link (section 2.2, at most one row
+per Link) and the dwell pattern's sampling by the self-creating
+intervals, about 5 % on the counts. The isotropic pin needs no new
+world: the outward and inward counts average to the rest count within
+the tolerance (an isotropic term `beta^2 / 3` would put the mean at
+1.015 and 1.061 of the rest count); the transverse pin is registered
+already (record 158's transverse 1; the doppler bar's tests). **What
+refutes 12c**: a mean of the outward and inward counts above the rest
+count by more than the tolerance at either momentum; a transverse count
+other than 1; a counter of a moving probe in an empty world other than
+the rest counter's.
+
+### 12c.7 The verdict of section 12c
+
+**Route C gives no slowing**: the crossing rule's count of a mover
+through an isotropic crowd at rest is the rest count exactly, on the
+sphere and on the registered fan, at every speed to the cap, so the
+owed count's mean and the counter's rate are the rest ones. **The
+number against Lorentz's**: the coefficient of `beta^2` is 0 where
+Lorentz's is 1/2; the naive 1/3 is the sweep of point rows, not the
+rule, and is refuted by the registered transverse count. **Its form**:
+proportional to the crowd, bounded by 2 in the most anisotropic case,
+in the crowd's frame, faster for a body moving with its rows; it
+stretches or speeds a bond and never contracts one; the muon of J4
+fires at 64 in its empty bar at every speed. **Its cost**: nothing new,
+the crossing rule's comparisons and the owed count's one `by_drive` are
+in the law and in section 13's count (26 per row read plus 5); a crowd
+everywhere is a world's declaration. **The seventh verb** stands where
+12b.3 left it: routes A and C give a slowing of their own (the bond's,
+12b; none, 12c), neither Lorentz's; gamma enters the law's periods
+through the flight table's root at load and a body's own counter
+through nothing of the six.
+
 ## 13. The one constant K: the fixed computation per Node per interval, what it explains, what it bounds, what it leaves free
 
 **The question** (the owner's, 2026-09-21, translated: "can one define
@@ -3210,7 +3476,11 @@ row at `sqrt 3` per interval; the same Euclidean pace in every direction
 axiom, and it fixes the pace at the diagonal's, `1 / sqrt 3`, the largest
 isotropic pace that crosses at most one Link per interval on every line
 (`S_1 Q <= T_D`, Cauchy-Schwarz with equality on the diagonals: c is the
-operator norm of the flight, record 186). **Partial**: K fixes the bound
+operator norm of the flight, record 186). The flight table's sitting AT
+that supremum, `1 / sqrt 3` and not below it, is a third statement of
+the design beside locality and straightness, since a slower isotropic
+pace obeys both (the paper's finding, round 7; the second axiom above
+in the paper's words). **Partial**: K fixes the bound
 (one carry per interval, the Manhattan count as the least computation),
 isotropy fixes the number; the count against K is the walk's 16
 operations per row per interval, and 1 carry per `T_D / (S_1 Q)`
@@ -3726,3 +3996,521 @@ admits the rule. **Different from the throw** in the centre, the bound
 of record 218 is the stepping form's reading of the one constant K over
 a growing board (section 13) and adds nothing to the rule; the periodic
 universe and the rule's entry are the owner's.
+
+## 16. The numbers of nature from the law's structure: what is reached as c was, what is bound or related, what is input
+
+**The question** (the owner, records 239 and 243, translated: "try all
+the things, all the numbers they measured; try to derive them yourself
+from the groups, like big G, and other numbers known in nature; try to
+reach them yourself, as you reached c"; "so maybe mass is not a free
+parameter: the minimal mass"; the Boss's order). The host script
+[nature_numbers.py](designs/derivations_beam/nature_numbers.py) with its
+output [nature_numbers.out](designs/derivations_beam/nature_numbers.out)
+makes every number below; no run.
+
+**The rule against numerology, stated first and applied throughout.** A
+number of nature is reached only by a path from the law's structure
+(16.3) that passes the three tests (generic, vector, local) and yields
+the number as c was yielded: as the value of a defined quantity in the
+law's own units, with no search. A match found by searching combinations
+of the structure's integers is a coincidence, reported with the chance
+of finding one at that tolerance in a set of that size, never a result.
+"Not reachable from the structure" is a valid and expected answer for
+most of the list, and no constant enters PREDICTIONS.md as derived
+unless its path passes the three tests. 16.4 applies the rule to the
+one near-match the search finds.
+
+### 16.1 What c had, and what a constant must have to be reached the same way
+
+c is a property of the lattice alone: the flight's Manhattan accumulator
+(rate `2 S_1 Q`, wall `2 T_D`) crosses at most one Link per interval on
+every line, and the largest isotropic pace with that property is the
+cube diagonal's, `S_1 Q <= T_D` by Cauchy-Schwarz with equality on the
+diagonals (section 13.2 (a); record 186). So c is DIMENSIONLESS in the
+law's units, `1 / sqrt 3` Links per interval, fixed by locality and
+straightness on the cube, and its SI value, 299 792 458 metres per
+second, is a unit conversion: a ruler-and-clock reading between two
+detectors (Highlights 5.7's dictionary, record 191). What c had: a
+quantity defined by the law (the operator norm of the flight), a
+structure that fixes it (the cube, the six Ports, one carry per
+interval), and no declared number in it.
+
+**The consequence for every constant that carries units.** In the law's
+units a Link, an interval, a unit of content and a phase step are the
+units, so every dimensional constant of nature is one of three things:
+1 or a ratio of the grain (c; the age per Link `sqrt 3`; the dwell `55 /
+32`), a declared column of the world (G is the width, `G = K (n / d) /
+(4 pi S)`, section 3.3; h is the world's `action`; e is `rho M`, the
+charge per unit of content times the content; the Coulomb constant is G
+itself, section 3.4), or absent (k_B: the law has no temperature;
+section 14's entropy is in bits, and Boltzmann's constant is the
+conversion of bits to joules per kelvin, a unit). None of them can be
+reached as c was, because none of them is dimensionless: G, h, e and c
+in SI are the dictionary's four conversions, as physics itself says of
+its units. What can be reached, in principle, are the DIMENSIONLESS
+numbers of nature. The list, with one source each (CODATA 2022: Mohr,
+Newell, Taylor and Tiesinga, Rev. Mod. Phys. 2025; PDG 2024: Navas et
+al., Phys. Rev. D 110, 030001; Planck 2018: Aghanim et al., A&A 641, A6,
+2020):
+
+| the number | the measured value | source |
+| --- | --- | --- |
+| the fine-structure constant `alpha = e^2 / (4 pi epsilon_0 hbar c)` | `1 / 137.035999177(21)` | CODATA 2022 |
+| `m_p / m_e` | 1836.152673426(32) | CODATA 2022 |
+| `m_mu / m_e` | 206.7682827(46) | CODATA 2022 |
+| `m_n / m_p` | 1.00137841946(40) | CODATA 2022 |
+| `m_tau / m_e` | 3477.23(23) | PDG 2024 |
+| the gravitational coupling `alpha_G = G m_p^2 / (hbar c)` | `5.906 x 10^-39` | from CODATA 2022's G, `m_p`, hbar, c |
+| the strong coupling `alpha_s(M_Z)` | 0.1180(9) | PDG 2024 |
+| the weak coupling: `G_F / (hbar c)^3` and the Weinberg angle `sin^2 theta_W` (MS-bar at `M_Z`) | `1.1663788(6) x 10^-5 GeV^-2`; 0.23122(4) | CODATA 2022; PDG 2024 |
+| the electron's anomaly `a_e = (g - 2) / 2` | `1.15965218 x 10^-3` (the last digits at 1 part in 10^10) | CODATA 2022 |
+| the deceleration `q_0 = Omega_m / 2 - Omega_Lambda` | -0.53 (from `Omega_m` = 0.315(7), `Omega_Lambda` = 0.685) | Planck 2018 |
+| the density ratios `Omega_b`, `Omega_c`, `Omega_Lambda` | 0.049, 0.265, 0.685 | Planck 2018 |
+| the photons per baryon `1 / eta` | `1.63 x 10^9` (`eta = 6.12 x 10^-10`) | Planck 2018 (PDG 2024's BBN review) |
+
+### 16.2 The minimal mass: a theorem of the law, and what follows from it
+
+**The theorem.** In the law a body's mass is its content M, and M is a
+whole number of units: the amounts of the state vector are integers (a
+row's amount, a body's `content`, `1 <= M`, the masses design's bound
+`M <= K_clock (N / 2 - 1)`), and every place the mass acts reads that
+integer linearly, the inertial mass in the drive's wall `Q S M` (form B:
+`Q S M S_1 Q + |p|_1 T_D`), the passive gravitational mass in the push
+`M_A (rho_A rho_B - 1) V` and the active one in the release, `content x
+n / d` rows per direction per self-creation (the turn's rate). So the
+smallest mass of the law is ONE UNIT, `M = 1`, and every mass is a whole
+multiple of it: fixed by the integer form of the state, not declared,
+as c is fixed by the lattice; a mass between 0 and 1 unit, or between 1
+and 2, does not exist in the law. **Reached, with its scope stated**:
+the theorem fixes the existence of a least mass and the integrality of
+every mass ratio; it does not fix the unit's size against any body's
+mass (the electron may be one unit or a million), because every map of
+the law on the amounts is linear or homogeneous (PREDICTIONS 26: no
+number of the law selects a mass), so the unit is the least count and
+not a scale.
+
+**(a) The ratios as rationals, and the electron's count.** If the
+electron is k units, the proton is `k x 1836.152673426` units to the
+measured precision, a whole number only for some k. The script's table
+(A), at CODATA 2022's uncertainties:
+
+| the ratios required whole | the smallest k (the electron's units) | the counts |
+| --- | --- | --- |
+| `m_p / m_e` alone | 4526 | the proton 8 310 427 |
+| `m_mu / m_e` alone | 889 | the muon 183 817 |
+| `m_p / m_e` and `m_mu / m_e` | 13 840 | the proton 25 412 353, the muon 2 861 673 (the masses design's k at CODATA 2018, unchanged) |
+| with `m_n / m_e` | 45 129 | the proton 82 863 734, the neutron 82 977 955, the muon 9 331 246 |
+
+At `k = 1` (the electron one unit, the catalog's 1836) the proton's
+count is off by 0.152673 units, `8.3 x 10^-5` of the ratio and `4.8 x
+10^6` standard deviations: **the electron is not the minimal mass**, or
+the unit is finer than the electron by at least the factor 4526 (the
+proton's ratio alone) and 13 840 (with the muon). But this is the
+arithmetic of a fine grid, as the masses design said: any k above the
+inverse precision fits, 989 567 of the k below 3 000 000 fit the proton
+and the muon together, and the law fixes no k. So the theorem BOUNDS
+the unit (`m_unit <= m_e / 4526`) and relates the ratios (all rational);
+it derives none of them. **Bound and related, not reached.**
+
+**(b) The second definition of mass, from the computation.** Section 13
+counts the cost: a body's own accumulators cost 5 operations each per
+interval whatever M (the drive, the turn, the owed count), so a body's
+INERTIAL mass costs nothing per unit; what M costs is its RELEASE, `12
+P` operations per row born times `content x n / d` births per direction
+per self-creation, linear in M; and the wait it causes in every reader,
+`26 k / K` intervals per self-creation for the k rows read (13.2 (b)),
+reads that release count. So the computational definition of mass is
+the rows a body puts on the GameBoard per interval over its rate `n /
+d`, and it agrees with the first definition as an identity: it is the
+same integer M read at the release instead of at the drive. The
+agreement is the equivalence principle of section 3.3 (the source's
+rows `content x n / d`, the reader's response `1 / (Q S M)`, `M_A`
+cancelling) and adds no number: the unit of content costs `12 P n / d`
+operations per interval to hold on the board and 26 to read, both
+functions of the widths and not of nature's masses.
+
+**(c) The unit in kilograms.** A conversion of the dictionary and
+nothing the structure fixes: the law's mass unit is `m_e / k` with k the
+electron's count, bounded below by (a) and otherwise free; the only
+mass a structure could fix would be a combination of the law's
+constants, and `sqrt(hbar c / G)` in the law's units is `sqrt(h (4 pi
+S) / (sqrt 3 x 2 pi K (n / d)))`, two declared columns (the width S and
+the action h) and the fan's count: declared, not structural. **Input**,
+with the theorem's bound.
+
+**(d) The smallest mass per kind** (the owner, record 256, translated:
+"maybe several masses must be derived: the electron may be the
+smallest and the quark the smallest, and the quark composes the
+protons and neutrons; try to reach the smallest mass by kind from our
+conditions"; the host script
+[smallest_mass.py](designs/derivations_beam/smallest_mass.py) with its
+output [smallest_mass.out](designs/derivations_beam/smallest_mass.out)).
+The law's own condition that fixes a floor is the charge line: a
+family's charge per unit of content is a reduced pair `rho = [n, d]`
+and a body's charge is `rho x M`, so `rho x M` is a whole number if and
+only if d divides M. **Theorem**: the smallest content of a family
+whose bodies carry a whole charge is its reduced denominator d. The
+law does not impose the whole charge (the masses design, section 4:
+nothing forbids `rho = 1 / 7`); nature does (every free body's charge
+a multiple of e), so the theorem is conditional on that fact and
+exact under it. The floors on the register and the quark design: the
+electron `[-15, 1]` and the proton `[1, 1]` one unit, the up quark
+`[2, 3]` and the down quark `[-1, 3]` (records 249, 251) three units
+each, a family declared at `[-5, 69]` sixty-nine. Confronted:
+
+- **(a) with the electron's bound.** The theorem gives the electron's
+  floor as 1 unit and 16.2 (a) gives its count as at least 4526 by the
+  proton's ratio: no contradiction, the count is a multiple of the
+  floor (any multiple of 1); the theorem fixes floors, the ratios fix
+  multiples, and neither fixes the other. The smallest counts that
+  meet CODATA 2022 stay 4526 (the proton alone) and 13 840 (with the
+  muon).
+- **(b) with the quarks as the base.** At the floors the proton `u u
+  d` is 9 units of charge `2 / 3 + 2 / 3 - 1 / 3 = 1` and the neutron
+  `u d d` 9 units of charge 0: `m_n / m_p = 1` exactly against nature's
+  1.00138, and `m_p / m_e = 9` at the electron's floor against 1836.15:
+  the floors are not the masses, refuted at once, so the counts are
+  multiples of the floors. If the binding carries no held content
+  (today's law: a free family's rows carry none), a nucleon's count is
+  a sum of quark counts and hence a multiple of 3: the smallest
+  electron count with the proton's count a multiple of 3 within CODATA
+  is 4657 (the proton 8 550 963), with the neutron's too 32 206 (the
+  proton 59 135 133, the neutron 59 216 646), with the muon 74 512; at
+  16.2 (a)'s 4526 the proton's count is `8 310 427 = 1 mod 3`, not a sum
+  of quark floors. Under binding-v1 (record 115, candidate (b): the
+  strong family's rows paid, the exchange as content in flight, the
+  read mass the held part) the constraint lapses and the read mass is
+  the parts' sum LESS the content in flight: a bound set lighter than
+  its parts, the sign of the deuteron's defect; nature's nucleon is
+  HEAVIER than its quarks by a hundredfold (the current masses 2.2,
+  2.2, 4.7 MeV against 938.3), so a tower whose quark contents are
+  nature's current masses gives the wrong sign, and the tower's quark
+  contents would have to be the constituent masses (about a third of
+  the nucleon each): a statement for the quarks physicist's design, not
+  a derivation.
+- **(c) the kinds of the law and the smallest member of each.** Rows
+  of a free family: content 0, no floor to fix. Rows of a paid family:
+  `quantum x s` at the turn s, the smallest the family's h at `s = 1`,
+  fixed by the declaration h and by nothing structural. Bodies with a
+  charge: the floor d of the theorem, conditional on the whole charge.
+  Bodies with sigma only (the strong family, no charge line): the floor
+  1 of 16.2's theorem, no further condition (the strong column is a
+  value per unit with no denominator that must divide). Passed families
+  with a phase window (`pass` with `phase_window`): their content enters
+  no rule that divides, the floor 1. So the conditions of the law fix
+  exactly one floor beyond the unit, the charged body's d, and fix no
+  count: the electron's, the quarks' and the nucleons' masses stay
+  inputs with the floors 1, 3, 3 and the multiples of (b).
+
+**(e) G, the width, and what a rule fixing it would have to be.** In
+the law's units `G = K (n / d) / (4 pi S)` (section 3.3: the release
+rate per unit of content per direction, times the fan's count, over
+`4 pi` and the width), and with the one constant `k_C = G` (3.4)
+`alpha_G = alpha / rho_p^2` (16.4). A rule fixing S from the structure
+would have to make S a count of the structure times declared columns,
+and two candidates can be stated so that they can be chosen: `S = K
+(n / d) / (4 pi)`, which is "G = 1 in Links per unit of content per
+interval squared" (Newton's constant one, the natural-units choice:
+generic, a constant at load, local), and `S = sqrt 3 K (n / d) / (2
+h)`, which is "the unit of content is the Planck mass" (`sqrt(hbar c /
+G)` = 1 unit, 16.2 (c)). The second is refuted at once: `alpha_G = (m_p
+/ m_Planck)^2` would then be `M_p^2 >= 1` against `5.9 x 10^-39`, so
+the unit must lie below the proton by at least `1 / sqrt(alpha_G) =
+1.3 x 10^19`. The first moves the number instead of deriving it: with
+`G = 1`, `alpha_G = 2 pi sqrt 3 M_p^2 / h` puts `10^38 M_p^2` into the
+action h. Either way the hierarchy `alpha / alpha_G = rho_p^2 = 1.2 x
+10^36` must be carried by a declaration, and no count of the structure
+(the largest 6561, the wheel 4096) carries it: **none in sight**; the
+choice of S is a choice of units, and `alpha_G` stays the width's
+input.
+
+### 16.3 The law's structural numbers: what a derivation may use
+
+The only things a derivation may use, each a count of the law's form
+and not a declaration of a world:
+
+| kind | the numbers | where |
+| --- | --- | --- |
+| the cube | 3 axes, 6 Ports, 2 hands; the group of the Ports of order `48 = 2^3 x 3!` (the signed permutations of the axes), its 24 rotations and 24 reflections (the determinant the hand) | record 226; `core.game_board` |
+| the flight | `c = 1 / sqrt 3`; the age per Link `sqrt 3`; on the register's grain `T_d = 110, 156, 192` at `Q = 64` (the heading, the face and the cube diagonal), the dwell `55 / 32` | sections 1.4, 13.2 (a) |
+| the collision table | `3^8 = 6561` slot states (8 slots: six headings and two rest slots, each empty, single or crowd), 5440 classes, 4429 fixed states, 2132 moving, the cycle lengths 1, 2, 3, 4, 6 (4429, 933, 52, 23, 3 classes) | `ladder.out` A; section 11.3 |
+| the samplings, declared per world | N (the circle of phases, 64 on the register), W (the wheel, 4096), Q (the pace's grain, 64), P and the fan (5 and 290 directions; 16 and 1423; the Bohr shell 2616), `K_clock` (`2^20`, `2^22`), the width S | Highlights 5.7 (1); section 13.3 |
+| the operations | the six verbs; the Gram form of rank 2 with its eight totals `65448 .. 65773 / 65536` (the rounding at 1 / 256); the one threshold; the wait `26 k / K`; the push's columns (gravity, charge, strong) with one constant `k_C = G` | sections 0, 6.5, 13.1, 3.4 |
+| the limits they reach | `2 sqrt 2` (the Bell bound, 6.2); the Gleason power 2; `log2 N = 6` bits per record; `4 pi` (the shell); Milne's `q = 0` | sections 6, 14, 15 |
+
+Everything else in a world file is an input: the family table (content,
+the cost h, rho, sigma, the lifetime, the phase rate, the hand), the
+width, the state and the apparatus (Highlights 5.7's three kinds).
+
+### 16.4 Each number of nature against the structure
+
+| the number | the path, if any | what it yields | verdict | what would have to be added, named as a hypothesis |
+| --- | --- | --- | --- | --- |
+| `alpha` | In the law `alpha_law = k_C q_e^2 / (hbar c)` with `k_C = G = K (n / d) / (4 pi S)`, `q_e = rho_e M_e`, `hbar = h / (2 pi)`, `c = 1 / sqrt 3`: `alpha_law = sqrt 3 K (n / d) (rho_e M_e)^2 / (2 S h)`; equivalently the electron's speed over c on Bohr's first orbit, `2 pi sqrt 3 M k / h` (7.2's closure), the width, the charges and the action all declared. The search over the structure (the script's (C): 3360 products and quotients of two structural numbers with the exponents 1 and 2): the nearest is `3^8 / 48 = 136.6875`, 0.25 % below `1 / alpha`; the set has 136 values within a factor `e^(1/2)` of 137, so 0.82 hits within 0.3 % are expected and 1 is found: a coincidence at the expected rate, reported and not a result | a ratio of three declarations | **input** | a rule tying `rho^2 S` to `h`: charge quantised in units of `sqrt(h c / G)` times a number the structure fixes (none is in sight; `charge-v1`, not built) |
+| `m_p / m_e`, `m_mu / m_e`, `m_n / m_p`, `m_tau / m_e` | the family table's contents, rational by 16.2's theorem; the electron's count bounded below (4526; 13 840; 45 129); the search: nearest `5440 / 3 = 1813` (1.2 % off) and `24^2 / (2 sqrt 2) = 203.6` (1.5 %), 0 hits within 0.3 % where 0.7 are expected | rationals with a bound on the unit | **bound and related, not reached** | a nonlinear closure on amounts (a binding that costs content, issue #369; the masses design section 6's smallest rule) under its own identity |
+| `alpha_G` | `alpha_G,law = G M_p^2 / (hbar c) = sqrt 3 K (n / d) M_p^2 / (2 S h)`: declared. With `alpha` it is RELATED by the one constant `k_C = G` (3.4): `alpha / alpha_G = (q_p / M_p)^2 = rho_p^2`, so nature's two couplings declare one number of the family table, `rho_p = sqrt(alpha / alpha_G) = 1.11 x 10^18` per unit of content (e in units of `sqrt G m_p`), and the neutrality of matter gives `rho_e = -rho_p m_p / m_e = -2.04 x 10^21`; the register's [1, 1] and -15 are a scale chosen for the runs (the masses design 4); the ratio of the electric to the gravitational force on the electron-proton pair is then `alpha m_p / (alpha_G m_e) = 2.27 x 10^39`, an identity of the form | one declared rho for two of nature's numbers | **related, not reached** | the same as alpha's: a rule fixing rho; nothing in the structure carries `10^18` (the largest structural number is 6561; W is 4096) |
+| `alpha_s` | the strong column, `sigma = 10 000` with the sign -1 and the lifetime 3 on the register, a declared value per unit; the law's couplings do not run (every rule linear or homogeneous in the amounts, no scale in the coefficients): `alpha_s(M_Z)` = 0.118 against `alpha_s` about 1 at 1 GeV is a running the law has not | a declared column | **input**, the running absent | a coupling that depends on the momentum transfer: outside the six verbs as a rate at most bilinear in the state; a hypothesis named, not built |
+| the weak coupling, `sin^2 theta_W` | the law's weak rule is `become` at a key on the age with a lifetime L (HYPOTHESES 21, series J): a transformation at a count, not a rate proportional to a coupling; no second gauge coupling and no mixing between two, so no angle | nothing | **absent** | two couplings and their mixing: a structure the law does not have |
+| `a_e = (g - 2) / 2` | the law has no spin and no magnetic moment: a body's readings are the moments of the arriving rows (order 0, 1, 2 and the age), its hand a `Z_2` (the determinant of the cube's group) with no coupling; g is undefined | nothing | **absent** | a spin and a magnetic coupling, both outside the reading operator as it stands |
+| `q_0` | section 15: the growing wall at a constant H gives Milne, `q = 0`, exactly; the register's throws `q = -0.108 +- 0.25`; nature's -0.53 +- 0.05 (Planck 2018) is outside both | 0, a bracket | **reached for the form (0), not for nature's number** | a rising H (a second rate on the wall under `expansion-v1`), giving `q < 0`: a hypothesis, the register cannot pin it (section 15.4's identity of the throw and the wall) |
+| `Omega_b`, `Omega_c`, `Omega_Lambda` | the contents placed in the initial state (Highlights 5.7 (3)); no rule of the law fixes a ratio of contents (16.2's theorem: linear in the amounts) | nothing | **input** (the state) | none within the law: the initial state is the third kind of input |
+| the photons per baryon | the law's counterpart is the rows per unit of held content on the GameBoard: `P x (n / d) x t` rows per unit released over t intervals from a free family's rate, unbounded in time (no absorption balances the release; a linear law has no equilibrium of rows and bodies, no temperature); section 6's units per bit (82, 2, 2, 29) are the apparatus's, section 14's `log2 N` bits per record the click's; none is `1.6 x 10^9` | a number of the world's age and rate | **absent** | an equilibrium between the release and the absorption (a thermal state), which needs a nonlinear rule |
+
+### 16.5 What the search says, and the rule applied
+
+The one near-match, `3^8 / 48 = 136.6875` against 137.036, is 0.25 %
+off, and 0.82 hits at 0.3 % are expected from the set's own density:
+its chance is of order one, and it has no path (no rule of the law
+divides the collision table's slot states by the cube's group, and the
+quotient would be a count of orbits, an integer, not a coupling).
+Reported as a coincidence. The masses find no hit at 0.3 % where 0.7
+are expected. The search confirms the rule's expectation: with about
+twenty-five structural numbers and their pairwise products, a match at
+a few parts in a thousand to any given target is expected about once,
+and none of the matches has a path.
+
+### 16.6 The verdict of section 16
+
+**Reached as c was**: nothing on the list, and the reason is stated:
+every constant with units is a conversion of the dictionary (G the
+width, h the action, e the charge per unit of content times the
+content, k_B absent), and the dimensionless numbers of nature are ratios
+of those declarations or of the initial state, none a count of the
+structure. **Bound or related**: the minimal mass, one unit, a theorem
+of the integer form, with every mass ratio rational and the electron at
+least 4526 units (13 840 with the muon) so that the unit is below the
+electron's mass by that factor at least; `alpha` and `alpha_G` related
+through the one constant `k_C = G` to one declared number, `rho_p =
+sqrt(alpha / alpha_G) = 1.11 x 10^18` per unit of content, and the
+neutrality of matter giving `rho_e` from it; `q = 0` reached for the
+form and nature's -0.53 not. **Input**: `alpha` (three declarations),
+the mass ratios (the family table), `alpha_G` (the width), `alpha_s`
+(the strong column, no running), the density ratios (the state).
+**Absent**: the weak coupling and the Weinberg angle (a key, not a
+coupling; no mixing), `g - 2` (no spin), the photons per baryon (no
+equilibrium). **What each would need**, named and not built: a rule
+fixing rho against h and S (charge quantised in `sqrt(h c / G)`), a
+nonlinear closure on the amounts for the masses, a running coupling
+for the strong column, two couplings and a mixing for the weak, a spin
+for `g`, a thermal balance for the photons, a rising H for `q`. **The
+rule against numerology** held: one coincidence at the expected rate,
+no path, no entry in PREDICTIONS.md.
+
+## 17. The law above Newton and Einstein: the theorem of covariant readings, built on Newton and tried on Lorentz
+
+**The owner's direction** (2026-09-21, in conversation, translated: "I
+want to show that our formulas are above: that whoever accepts our
+formulas, our linearity, and what you wrote, can obtain from them E =
+m c^2 and all the formulas Einstein reached"; then: "build it correctly
+on Newton too, and try on Lorentz"). No new rule is proposed here. The
+section states what "above" means as a theorem, proves it for the
+linear block, builds it on Newton (where the law already stands) and
+tries it on Lorentz (where the law does not), naming for each rule of a
+body the reading that would inherit the symmetry, within the six verbs,
+as a candidate and not a build. The host script
+[covariant_readings.py](designs/derivations_beam/covariant_readings.py)
+with its output
+[covariant_readings.out](designs/derivations_beam/covariant_readings.out)
+makes the numbers; no run.
+
+### 17.1 The theorem, and what "above" means
+
+**The two blocks** (section 0). The linear block is the rows: the
+flight at the pace c on the digital lines, the merge in `Z[Z_N]`, the
+evaluation at `zeta_N`; its continuum limit is the retarded scalar wave
+equation at c (section 5.1: the age moment is the Lienard-Wiechert
+potential, the presence its flux, both sourced by the release), and the
+symmetry of that limit is the Poincare group, Lorentz's boosts with the
+translations (section 4.1: "reached as the symmetry of the wave
+equation the rows converge to, not as a symmetry of the lattice"). The
+feedback block is the bodies: a body is its content M, its momentum
+vector **p** and its counts table, and it acts on the linear block
+through four READINGS, each a rule declared in the lattice's frame: the
+drive (**p** into a pace, the wall `Q S M`), the turn (the content into
+phase steps per self-creation, `content x n / d`), the push (the first
+moment of the arriving rows into a change of **p**) and the count (the
+rows met, by the crossing rule, into the owed count).
+
+**The theorem.** Every quantity defined by covariant operations on the
+linear block's limit (the retarded potential and its derivatives, the
+crossings of world lines, the proper time along a world line, the sums
+of the rows' energy-momentum vectors) transforms as the block does; so
+a body ALL of whose rules are such readings inherits the block's
+symmetry, and for it Einstein's kinematics and dynamics follow by the
+standard argument (a Lorentz-covariant dynamics with a conserved
+energy-momentum vector gives the Lorentz transformations of its
+clocks and rods, `E^2 = p^2 c^2 + m^2 c^4`, `E_0 = m c^2`, the
+relativistic Doppler and the velocity addition). Conversely, every
+rule that reads the block in the lattice's frame (per interval, per
+Link, along the lattice's axes) breaks the symmetry at the order at
+which the frame enters. So "our formulas are above Einstein's" is
+TRUE of the linear block and of everything built from it alone, and,
+for the bodies, exactly as true as their four readings are covariant.
+The content of this section is therefore the checklist: for each of
+the four readings, whether it is covariant as declared, and if not
+what its covariant form within the six verbs would be. **Reached** as a
+theorem for the linear block (the wave equation's symmetry, section
+4.1, is the whole proof); the rest is the checklist.
+
+### 17.2 Built on Newton: what the readings give at v << c, and where the law leaves Newton
+
+Newton's laws are the readings' limit at small momentum, and every one
+is registered:
+
+| Newton's | the reading | the limit | the registered check |
+| --- | --- | --- | --- |
+| the first law (inertia) | the drive: **p** an accumulator translated by nothing between pushes (T) | a body with no rows arriving keeps **p** exactly | G2's 24 thrown stars, `abs(p(end)) / abs(p(0))` = 1.0000 (section 11.4) |
+| the second law `F = m a` | the push `-M_A <V>` (B), the drive `v = p / (Q S M + p / c)` | `a = push / (Q S M)` for `p << Q S M c`: `F = m a` with `m = Q S M` | series 7's `push_m = m x push_1` for m = 1, 4, 16 (section 3.3, item 1) |
+| the third law | the apportioning of the rows' momentum at the release (the free family's release takes no recoil, section 12.4) | the two sources' momenta equal and opposite to the grain | `9612145197056` against `-9612088573952` at rest (section 3.3, item 2) |
+| gravitation `G M / r^2` | the shell mean of the flux, `G = K (n / d) / (4 pi S)` (3.3); the age moment obeying Poisson's equation (5.1) | the inverse square, retarded at c; the equivalence principle exact (`M_A` cancels) | series E's `k_s r^2 = 41.5`, `k_a r = 36.1`; series D's orbit |
+| Galilean composition | the momenta add (the drive reads `p`) | velocities add where `v` is linear in `p` | 12b.2's shear at `0.21 c` is the departure |
+
+**Where the law leaves Newton, and in what order.** Under form B the
+drive is `v = p / (m + p / c)`, so `p = m v / (1 - v / c)`: the law's
+momentum departs from Newton's `m v` at FIRST order in `v / c` (the
+script's table (B): 5.3 %, 11 % and 25 % at `v / c` = 0.05, 0.1 and
+0.2), where nature's `p = gamma m v` departs at second order (0.13 %,
+0.5 %, 2.1 %). The register's throws use the first-order form
+(HYPOTHESES 21's `p = S M v / (1 - v)`, the hubble stars at 0.6 c, G2's
+at 0.5 c). So "built on Newton" is exact at `v << c` and the law's own
+correction is one order too early: a body at a twentieth of c carries 5
+% more momentum per unit speed than Newton's, a registered fact of the
+drive and not of nature. The covariant drive of 17.3 (iii) has the
+right order. The same check on the other three readings: the turn per
+interval, the push as the flux and the count per interval are all
+Newton's at rest and at `v << c`, with no correction at first order in
+the isotropic case (12c: the count's dipole averages to 0), so Newton
+stands on all four; only the drive's cap enters at first order.
+
+### 17.3 Tried on Lorentz: the four readings against the checklist
+
+**Einstein's 1905 argument as the test of the count.** A body at rest
+emits two pulses of energy `L / 2` forward and back; in a frame moving
+at `beta` their energies are `(L / 2) gamma (1 -+ beta)`, the sum `gamma
+L`, so the moving body's kinetic energy fell by `(gamma - 1) L`, the
+inertia lost `L / c^2`: `E = m c^2`. The law's reader counts the rows
+by the crossing rule, `(1 -+ beta)` without the `1 / gamma` (12b.1: the
+number one factor short), so the two pulses sum to `(L / 2)(1 - beta) +
+(L / 2)(1 + beta) = L` exactly (the script's (A)), the difference is 0
+and no inertia is lost: `Delta m = 0`. The missing `1 / gamma` of the
+count IS the missing `E = m c^2`: the reading that breaks Einstein's
+first derivation is the count per interval, and nothing else in it.
+
+**(i) The count.** A crossing of two world lines is an event, and the
+number of crossings along a segment of the body's line is a Lorentz
+invariant: the crossing rule's NUMBER is covariant (12b.1: it is
+Maxwell's magnetic term's number), and 12c showed it exact. What is
+not covariant is its RATE: the count is divided by the lattice's
+interval and not by the body's proper time. The covariant reading:
+the count per TURN of the body (its self-creations under (iv)
+below), which is `gamma (1 - n . beta)` times the rest count, the
+relativistic Doppler exactly (the script's (D): head-on 1.583 and
+3.637 at `0.43 c` and `0.86 c` against today's 1.430 and 1.859; across
+`gamma` = 1.108 and 1.956 against today's 1, Ives and Stilwell's
+transverse Doppler). No new verb: the same comparisons (D), charged per
+turn instead of per interval.
+
+**(ii) The push.** The law reads the retarded FLUX along `n_ret`
+(section 12.1: `q / (4 pi R_ret^2)` on the co-moving pair, `(1 -+
+beta)^2` and `(1 - beta^2)`, one factor of `1 / gamma` short of
+Maxwell's and along `n_ret` where Maxwell's is along the present
+separation). Section 12.1 proved that the age moment IS the
+Lienard-Wiechert scalar potential, whose equipotentials are
+Heaviside's ellipsoids; the covariant reading of the force is
+therefore the GRADIENT of the age moment across the six Ports (the
+finite difference of the neighbouring Nodes' age moments: the body
+reads its six neighbours, LOCALITY-1's allowance, nothing kept at a
+Node), with the flow's age-weighted moment as the vector potential
+(`A = beta phi` for a moving source) and its time difference as the
+induction term. A linear combination of the readings (B), local, no
+name: Maxwell's field of a moving charge exactly in the limit, the
+Heaviside compression `gamma / d^2` across the motion, the `1 /
+gamma` the flux lacked. Under it a bound pair in motion is Lorentz's
+pair of 1904: contracted by `1 / gamma` along the motion, its period
+`gamma` times the rest, no self-force (12.2's `4 beta` was the flux
+form's).
+
+**(iii) The drive.** `v = p / (Q S M + abs(p) / c)`: a rational
+function declared in the lattice's frame, first order off Newton
+(17.2) and never Lorentz's. The covariant dispersion is `v = p c^2 /
+E` with `E^2 = p^2 c^2 + E_0^2`, which as a closed form needs the root
+(the seventh verb, records 186 and 197). It does not need it as an
+OPERATION: carry E as an accumulator of the body's record whose rate is
+the work, `dE = c^2 (p . dp) / E` (the bilinear form `p . dp` over the
+state's own wall E: one `by_drive` with the remainder kept, the same
+verb as the flight against `T_D` and section 15's wall as a function
+of the read state), and the drive `v = p c^2 / E`: a translation at a
+rate, no root anywhere. The script's (C) integrates it from rest under
+pushes: `E^2 - c^2 p^2` stays `E_0^2` to `5 x 10^-12` after 40 000
+steps (the invariant kept by the accumulator's form; whether the
+remainder closes it exactly is the implementer's), `E / E_0` = 1.2166 =
+`gamma` at `v = 0.57 c`. **And then E = m c^2 is forced**: the
+accumulator's rest value `E_0` is fixed by the Newtonian limit, since
+`v = p c^2 / E_0` at small p must be Newton's `p / (Q S M)`, so `E_0 =
+Q S M c^2 = Q S M / 3` in the law's units, with no freedom; the
+inertia of energy follows: a body that pays content `h s` for a row
+loses the row's energy from its accumulator E, so its inertia `E / c^2`
+falls by that energy over `c^2` (Einstein's 1905 conclusion as an
+identity of the accumulator), and a bound pair's `E` is the sum
+of its parts' less the exchange's, a mass defect (the deuteron's 0.119
+% of the masses design becomes a quantity the exchange sets, not an
+absence). The first-order departure of 17.2 becomes nature's
+second-order one (the script's (B): 0.13 % at `0.05 c`).
+
+**(iv) The clock.** The turn `content x n / d` per self-creation and
+one self-creation per interval owed nothing: the rate 1 at every speed
+(section 4.3, HYPOTHESES 21). The covariant reading: the turn per
+proper time, `dtau = dt E_0 / E`, one `by_drive` whose rate is `content
+x n x E_0` and whose wall is `d x E` (the wall a function of the read
+state, section 15.2's form): the clock at `1 / gamma` exactly, no root
+(`E_0 / E` is a ratio of two accumulators). The muon of J4 fires its
+64th turn at 70.9 and 125.2 (the script's (D); lorentz-v1's 71 and 126
+by the root at `2^20`): the same numbers, from the accumulator instead
+of the seventh verb. And the two readings of E become one: the click
+reads `E = h f` with f the turn rate, the drive reads `E_0 = Q S M
+c^2`; at rest one E requires `h (n / d) = Q S c^2 = Q S / 3` (21.33 at
+Q = 64, S = 1), the identity of 12.4's "coincidence of declared
+constants" turned into the condition that the family table's h and
+`n / d` and the world's width describe one energy: a constraint on the
+inputs, derived, and not a new rule.
+
+### 17.4 What follows for whoever accepts the readings, formula by formula
+
+| Einstein's formula | from which reading | status as declared | status under the covariant readings |
+| --- | --- | --- | --- |
+| the Lorentz transformation of the rows' field, `omega = c k`, the light cone | the linear block alone | **reached** (4.1) | the same |
+| `E = p c` for a row | the row's content and momentum (`quantum x s` both) | **reached**, declared per unit (16.1) | the same |
+| the Doppler `gamma (1 -+ beta)`, the transverse `gamma` | (i) the count per turn | different law, `1 -+ beta` and 1 | reached |
+| the field of a moving charge (Heaviside), the magnetic term | (ii) the gradient of the age moment | different law, the flux along `n_ret` | reached in the limit |
+| `E = m c^2`, the inertia of energy, the mass defect | (iii) the energy accumulator with the Newtonian limit | not reached (4.5) | reached, `E_0 = Q S M c^2` forced |
+| `E^2 = p^2 c^2 + m^2 c^4`, `v = p c^2 / E`, the velocity addition | (iii) | different law, `p / (m + p / c)` | reached (the invariant kept to `10^-12`) |
+| the time dilation `gamma`, the muon's lifetime | (iv) the turn per proper time | different law, 1 (HYPOTHESES 21) | reached, 70.9 and 125.2 |
+| the contraction `1 / gamma`, the bond's period `gamma` | (ii) with (iii) and (iv) | different law (12b.2: 0.87 to 0.96, 1.31 to 1.43) | reached (Lorentz's 1904 argument on Heaviside's field) |
+| the general formulas: the redshift at first order, Poisson's equation | section 5 | reached at first order | the same |
+| the bending of light, the Shapiro delay, the second-order redshift | the rows reading the crowd | not reached on `main` (5.6): the flight is blind to the crowd | unchanged: these need a rule on the LINEAR block (a row's pace read off the field), outside this theorem, which reads only the bodies |
+
+### 17.5 The verdict of section 17
+
+**Above, as a theorem**: the linear block's limit carries Lorentz's
+symmetry, so every formula of Einstein's special theory holds for
+whatever is built from it alone, and for a body exactly as far as its
+four readings are covariant. **Built on Newton**: all four readings
+give Newton's laws at `v << c`, registered (inertia 1.0000, `F = m a`,
+the third law to the grain, `G M / r^2` with one G); the law's own
+correction to Newton is the drive's, first order in `v / c` where
+nature's is second. **Tried on Lorentz**: as declared, three of the
+four readings are in the lattice's frame and Einstein's 1905
+derivation gives `Delta m = 0` with the law's Doppler; the covariant
+form of each exists within the six verbs, the count per turn, the
+gradient of the age moment across the six Ports, the energy as an
+accumulator of the work with the drive `p c^2 / E`, the turn per proper
+time `E_0 / E`, no root anywhere; and then `E = m c^2` is forced by the
+Newtonian limit, the invariant `E^2 - p^2 c^2` is kept by the
+accumulator, the muon fires at 70.9 and 125.2, and the identity `h (n /
+d) = Q S c^2` ties the inputs. **What stays outside**: the general
+formulas beyond first order, which need the rows to read the crowd,
+not the bodies. **For the owner and the Boss**: the four covariant
+readings are named as one hypothesis, `covariant-readings-v1`, four
+rules that pass the three tests on paper and change every moving
+body's register; not built here; the seventh verb is not needed for
+any of them.

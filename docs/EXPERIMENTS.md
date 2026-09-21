@@ -34,7 +34,10 @@ not in reality. A comparison with nature (section A) uses detector readings
 only; a GameBoard reading describes the mechanism, checks the books or
 draws the picture. Where an entry of the past registered a GameBoard reading
 as the measurement, it says so from this date, and the detector form is
-added when the entry is re-run.
+added when the entry is re-run. Every quantity the record exposes, by type
+(scalar, vector, tensor, pair) with its line, unit and kind, is the table
+[the detector's readings by type](ENGINE.md#the-detectors-readings-by-type)
+(2026-09-21, record 205: an entry names the vector it will read from it).
 
 **The rule of every entry.** Before its run, an entry names the features it
 needs (numbers 1 to 12 below), the GameBoard, the families, the Detector marks
@@ -8554,3 +8557,31 @@ sign rule, and its other couplings are catalog entries.
   [validation entry](VALIDATION.md#external-detector-definition-with-a-periodic-return---2026-09-19).
   This is a compact graph demonstration, not arbitrary 3D equivalence or a
   derivation of quantum measurement laws.
+
+### E15. The click of one record, shown (2026-09-21)
+
+- **The page** [examples/events/amplitude/pages/click.html](../examples/events/amplitude/pages/click.html)
+  (visualisation requested by the model owner, 2026-09-21; built by
+  `examples/events/amplitude/pages/build_pages.py` from the registered
+  world `slits_low` of L2, the runner's `run.json` and `events.jsonl`, the
+  frames the same engine stepped in-process with its gathers checked
+  against the run): the record born at tick 43 with the birth phase
+  u = 41 followed from its birth to its click, its rows on the GameBoard
+  with their phases (GAMEBOARD picture), its offers and its ladder growing
+  at the absorbers, the screen and the faces, the click at the pixel
+  (52, 60) at tick 192 (the cell `screen_60`, the rungs 41 to 42 of 64,
+  the cell's weight 0.0264 of the total; DETECTOR) and the deletion of its
+  126 offers in the same interval, no row of it left on the GameBoard; a
+  demonstration of the registered L2 run, no new reading, nothing moved.
+
+### E16. The pair's two clicks, shown (2026-09-21)
+
+- **The page** [examples/events/amplitude/pages/bell.html](../examples/events/amplitude/pages/bell.html)
+  (the same builder; the registered worlds `bell_0_8`, `bell_0_24`,
+  `bell_16_8`, `bell_16_24` of L3): the first record (u = 0) born as one
+  record with two arms, its rows ending at `alice_plus` at tick 6 and at
+  `bob_plus` at tick 13, the four cells 27 / 5 / 5 / 27 of 64 and the two
+  clicks from one cell at tick 13 (DETECTOR); the register's correlations
+  E x 64 = 44, -44, 44, 44 and S = 176 / 64 = 2.75 against the bounds 2
+  and 2 sqrt 2 = 2.83, the runs' gathers equal to the register on every
+  world; a demonstration of the registered L3 runs, no new reading.
