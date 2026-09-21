@@ -77,6 +77,7 @@ kept, their pins the law of events').
 | `test_step_drive.py` | The step drive (2026-09-20, BEAM_LAW note 17 as amended): the count of Links as the whole part of the distance the momentum has driven, one bounded integer per axis on the body's record: the identity at a constant momentum with `by_clock(n - 1, \|p\|, D)` over 4000 self-creations and twelve momenta; the identity on two axes (the coincident step lost as before); the integrated distance under a halving momentum (38 within 1, 37 to 39, where the rule as it was made 1); never two Links in one interval under a random momentum over 10 000 intervals with the drive in [0, 2 D - 1); the record (`drive`, `axis_steps`, the `step` line) and a declared `drive` refused; the turn by momentum unchanged; the signed drive under a reversal (no Link until the drive cancels and reaches -D) and the bound pair under a suspension holding for 3000 intervals ([below](#the-step-drive)) | new (2026-09-20, series G2's finding, record 107; the owner's decision, record 108); the drive signed the same day (record 126) |
 | `test_crossing.py` | The crossing rule (2026-09-21, BEAM_LAW note 48; the model owner's record 158 of 2026-09-20, the physicist's design docs/designs/crossing/DESIGN.md): the experimenter's streams read as counts, 45 in 32 and 58 in 48 toward, 19 in 32 and 38 in 48 away with the windows of each step, 48 in 48 at rest, no row twice (the `measure` counts equal), the probe pair -2880 = 64 x 45 and the key `doppler` refused; the streams beyond the axis on a plane of lines, 32, 24 and 36 in 32; one row met once (a `read` line at tick 12, 3, 1 in three worlds); the sums over a period 183, 311, 74, 202; the fast steps reported (18 and 6 at the momentum 96, 20 and 10 at 128, 15 and 0 at 64) ([below](#the-crossing-rule)) | new (2026-09-21; the pins of (c) from the rule transcribed on the lines' geometry, docs/designs/crossing/crossing_2d.py, before the run) |
 | `test_crowd_clock.py` | Series P, a lamp inside a crowd, still and moving (`examples/events/crowd_clock/`, docs/designs/crowd_clock/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced with the moving bodies at 0.2 c by the drive's rule; the presence at the still lamp's Node once the crowd's rows arrive is 4 F (328 for F = 82) and the k = 1 lamp births once in two intervals (40 of 80 within 2); the algebra (z = 1 needs a slowed clock for v < c, a still lamp at k = 1 and 2 reads z = 1 and 2, the lag k v t / (1 + k) and the exit from a fan of reach 4 at 69 intervals for k = 1); the expected values in the module's docstring ([below](#a-lamp-inside-a-crowd-series-p)) | new (2026-09-21, series P; design and pins, the run in the design's section 7) |
+| `test_cluster_clock.py` | Series Q, a cluster of crowds read by one detector (`examples/events/cluster_clock/`, docs/designs/cluster_clock/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced, the five lamps at numbers 2, 3, 6, 9, 12 with the momenta of 0.2 c and their sources' of 0.2 c / (1 + k) by the drive's rule; the presence at every lamp of a crowd is 4 F after twelve intervals and the bare lamp's at most 8; the algebra of the sum 1 + k + v / c against the product (1 + k)(1 + v / c) and the pinned dispersion 0.363 around 0.4; the expected values in the module's docstring ([below](#a-cluster-of-crowds-series-q)) | new (2026-09-21, series Q; design and pins, the run in the design's section 7) |
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
@@ -3705,6 +3706,31 @@ of `examples/events/crowd_clock/` by `make_worlds.py`):
   k v t / (1 + k) and the exit from a fan of reach 4 comes at
   4 (1 + k) / (k v), 69 intervals for k = 1 at v = 0.2 c, later for
   k = 0.3.
+
+## A cluster of crowds (series Q)
+
+`tests/test_cluster_clock.py` (docs/designs/cluster_clock/DESIGN.md; the
+worlds of `examples/events/cluster_clock/` by `make_worlds.py`, which
+imports series P's generator):
+
+- (a) the shipped worlds equal `make_worlds.worlds()` document for document,
+  parse under the law and run ten intervals balanced; the detector is number
+  1 at x = 3, the five lamps (`s_px1`) numbers 2, 3, 6, 9, 12 at x = 40, 60,
+  80, 100, 120 with two `mass` sources each but the bare first, at
+  F = 0, 1638, 4915, 9830, 16384 (k = 0, 0.1, 0.3, 0.6, 1); at rest every
+  body fixed; moving, every lamp at the momentum of 0.2 c and each member's
+  sources at 0.2 c / (1 + k) by the drive's rule within 1e-6;
+  `expectations.json` declares `cluster-clock-expectations-v1`, the window
+  [250, 500], the members' numbers, at rest 1 + z = 1.0, 1.1, 1.3, 1.6, 2.0
+  and moving as one 1.2, 1.3, 1.5, 1.8, 2.2 (the product form 1.2, 1.32,
+  1.56, 1.92, 2.4).
+- (b) after twelve intervals of `cluster_rest` the presence at every lamp of
+  a crowd is 4 F (6552, 19660, 39320, 65536) and the bare lamp's at most 8
+  (the other lamps' light passing).
+- (c) the algebra: (1 + k)(1 + (v / (1 + k)) / c) = 1 + k + v / c exactly for
+  every k; the product (1 + k)(1 + v / c) exceeds it by k v / c, 0.2 at
+  k = 1 and v = 0.2 c; the dispersion of the five k is 0.363 and their mean
+  0.4.
 
 ## One reading set
 
