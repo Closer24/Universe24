@@ -6434,6 +6434,22 @@ levels are reached in form (7.2), or (b) a standing record of rows under
 V (23.4), not designed and not pinned. Until then the law has both, and
 this section names the seam.
 
+**The owner's yes, and two words defined** (record 332, translated:
+"with the electron this is the right thing to do; it works exactly by
+the system's tools; a free quantum, when it is free, does not
+replicate"). What "a free quantum replicates" means in the law's words:
+at its birth it is a record of rows over the fan, as a lamp's birth is
+(one release at the lamp's self-creation, the content and the momentum
+apportioned over the rows, the birth phase stamped by the wheel); in
+flight it does NOT replicate: a record's rows are born once and fly on
+their lines, no row re-emits, no self-creation and no release per
+interval happen to a record (a body releases its rows at every
+self-creation; a record is the rows themselves), and the click gathers
+it into one body. What a bound electron is under the hypothesis: a body,
+as series H has it (content 1836 on a set of Nodes, pushed, stepping,
+releasing per self-creation), until a design says otherwise; 23.4's
+standing record of rows is that design's name and not its content.
+
 ### 23.6 The verdict of section 23
 
 **Reached only in part.** The time-independent free Schrodinger equation
