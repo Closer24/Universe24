@@ -1638,3 +1638,87 @@ the referee: every number of row 2a against NATURE.md, 0.026 the
 register's own prose, the tally unchanged, the G row in the symbols
 table at 6d57c7a2 (53 rows), nothing of records 329 to 332 cited.
 
+## Wave 10 (2026-09-21): from the Node to the 48, the 24 and the pace; the order of the laws; Kepler, Compton and Malus pinned
+
+The owner's order through the Visualiser, relayed by the Boss (the
+record in PR #500, not yet on main, so not cited): one place that
+explains, from the six-Port Node, the 48 signed permutations, the
+determinant's 24 rotations and 24 improper maps, the hand as that
+determinant, the octahedron of the six Ports and its inscribed sphere
+c = 1 / sqrt 3, and then every law of the paper from Eq. (1) in order
+with how each was reached. Part I gains the paragraph "From the Node
+to the group, the octahedron and the pace" (records 142, 226 and 231
+cited; Theorem th:group, Proposition prop:pace and Figure
+fig:octahedron referenced, nothing re-proved) and the paragraph "What
+follows from Eq. (1), in order" becomes a numbered list in the Boss's
+order (Gauss, Newton and Coulomb, Doppler, the delay field, Born and
+the uncertainty relation, Young, Bohr, the information law, the
+redshift, then the masses, Kepler and Compton), each with its operation
+and how it was reached (limit, pin, run), the derivation record
+appendix holding the numbers. Main at 10f00c94 taken: the derivation's
+rows 58 (Kepler) and 59 (Compton), pinned and not run, enter the table
+of consequences and the derivation record; the Malus note
+(docs/designs/malus/NOTE.md, 70a39d6b) enters as a design from the
+entries in force with the pin 128, 0, 64 of 256 exact, NATURE row 9
+kept NOT YET with the pin named; the introduction's "in the limit only"
+list adds Kepler's laws; the derivations bibitem names 21.5's rows 58
+and 59; a malus bibitem; the log bibitem adds 142. The Visualiser's
+page 10 is not on the tree and is not cited. Referee round 26 pending.
+
+## Referee round 26 (2026-09-21): wave 10, major revision, applied
+
+Fifteen findings, three major, all applied: the pace stated as a bound
+(the value c = 1/sqrt 3 the design's third statement, assumed, as
+tab:recorda says), 48 and 24 counts of the figure and 1/sqrt 3 its
+bound, the constants listed with the fan's grain G and the roundings;
+the Kepler pin said to stand on form B, decided and not built (under the
+drive as built the host's period 687), with s32_r12_lamp named; the
+Compton row saying the law as built gives a different law (the released
+row takes the re-emitter's turn, no shift, the derivation's D on main);
+the parity worlds' qualifier "with an axis"; the duplicated sentence on
+the stand-in cut and "before any rate" corrected; Gauss from the release
+(operation 6) and the walk (operation 1); the source's Doppler read on
+G2 added; Bohr's levels open; Milne's q = 0 read inside; the masses'
+runs not called "not run"; "pin:" prefixed on the three new status
+cells; NATURE row 9's reading cell back to "no polariser built", the pin
+in the verdict cell, the caption naming it with the register's row
+unchanged; the read at a sum set with its cells clicked; the derivations
+bibitem's locator 21.2 with the blocks in 21.5; the log bibitem's 142 in
+order; the introduction's Kepler "(pinned, not run)".
+
+## The owner's review of abdf1115 (2026-09-21), handled
+
+The owner's own review of main at abdf1115 (the paper at 411667c5),
+relayed in conversation: the Doppler of a moving detector along an axis
+built (the crossing rule in the engine, 1 +- v/c, the relativistic
+factor missing); the discrete design of the energy and the clock
+complete, the condition E'^2 <= W < (E'+1)^2 checked by him over 40 000
+small momentum changes (an arithmetic check of the design, not an
+engine run; his check is not on the tree and is not cited); still open:
+(1) the design and the drive with the cap at c not in the main engine,
+(2) the domain, about 0.866 c along an axis, (3) the contraction and the
+energy balance at emission and absorption, (4) no demonstration that a
+moving detector reads the same c in every direction. The paper carried
+(1) and (3) already (not built, not run; the contraction not derived;
+the books' balance withdrawn); the Lorentz section now states the four
+in one sentence at the end of the covariant-readings passage and adds
+beta at most 0.866 to the domain; the integer form of the invariant was
+already in the section (the open item of the floating-point check
+closed) and in Figure fig:square.
+
+## Referee round 27 (2026-09-21): the Lorentz open list, rewritten
+
+Seven findings, three major, all applied: form B is "decided and in
+build, not on main" (HIGHLIGHTS 5.4, record 301), not "not built", at
+every place the paper said so (Part I's special case, the state, the
+Newton section, the Kepler rows); the domain parenthesis once, "gamma at
+most 2, beta at most 0.866, on a heading"; the books "withdrawn until
+derived" in the source's words, not renamed "the energy balance"; a
+moving detector's c stated by the three quantities the derivation keeps
+apart (the one-way count 1 -+ beta, the two-way count of an isotropic
+crowd the rest count exactly, the round-trip time gamma^2 along and
+gamma across, row 5b FAIL (pinned)), the wrong "its pin withdrawn"
+removed; the floating-point sentence dropped as a duplicate of the
+section's own sentence and the figure's caption; the passage reduced to
+one sentence so that nothing in the section is said twice.
+
