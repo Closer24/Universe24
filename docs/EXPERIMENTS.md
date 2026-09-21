@@ -3973,6 +3973,26 @@ and 9).**
   2.828125); the births counted by the record's ordinal (a lamp's clock
   skips a step as the births spend its content: 4096 births take 4099
   intervals); the reading tool's replay equals `run.json`'s `world`.
+- **Bell at N = 512 and 4096 under the click and the wheel, the pin of
+  [DERIVATIONS_BEAM 24.4](DERIVATIONS_BEAM.md#244-the-one-prediction-the-paper-can-carry)
+  (2026-09-21; the Boss's order under the model owner's record 337;
+  [the README's section](../examples/events/amplitude/README.md#bell-at-n--512-and-4096-under-the-click-and-the-wheel-the-pin-of-244);
+  `expectations.json` under `bell_24_4`).** Pinned before the run: S =
+  181 / 64 exactly at N = 512 (`bell_n512_*`, added by the generator, 532
+  intervals, every other shipped world byte-identical) and at N = 4096
+  (the registered `bell_n4096_*`), the marginals W / 2 exactly, every
+  count over the W births within one of W x its cell's weight over the
+  total; what refutes, any count outside its rung by more than one. Run
+  (2026-09-21, main a625ec9f, the source sha256 `47fffbefe2d222b7...`,
+  headless one world at a time, completed and conserved at every tick;
+  DETECTOR, the gathers of the first W records): every pin met on the
+  eight worlds, S = 1448 / 512 and 11584 / 4096 (both 181 / 64), E x W
+  364, -364, 360, 360 and 2900, -2900, 2892, 2892, the marginals 256 / 512
+  and 2048 / 4096 on every world, every count equal to its pinned count
+  and within one of its width, the rungs one list on every gather; the
+  host 1.5 s and 9.4 s of wall per world apart from the model's cost.
+  PASS, no number moved; `tests/test_amplitude_bell_24_4.py` derives the
+  pin and replays the worlds bit-exact against the registered counts.
 
 **L7, the cone: which length a row's phase counts (the paper session's
 question, issue #376; the Boss's approval of 2026-09-20).**
