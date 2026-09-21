@@ -516,6 +516,41 @@ def by_clock_rows(age: np.ndarray, numerator: np.ndarray | int, denominator: int
     return result
 
 
+def by_drive_rows(
+    drive: np.ndarray,
+    rate: np.ndarray | int,
+    denominator: np.ndarray | int,
+    at_most: int = 0,
+) -> tuple[np.ndarray, np.ndarray]:
+    """`core.integer.by_drive` over rows (2026-09-21, the model owner's
+    word on the flight's accumulator, record 299: one count primitive in
+    its two forms, the scalar on a body's record and the array on the
+    rows): each row's accumulator `drive` gains its `rate`, the count is
+    the whole part it then holds in units of its `denominator` (a signed
+    rate counts with its sign, the accumulator the signed sum since the
+    last count), `at_most` caps the count gained when positive, and the
+    remainder stays; returns (the counts gained, the accumulators after),
+    the same integers as `by_drive` row by row (`tests/test_fraction_free.py`
+    (j)). The flight's step reads it at the row's residue
+    (`Flight.walk_step`); `by_clock_rows` is its constant-rate identity.
+    The bound: the accumulator plus the rate must fit the working register
+    (|drive| + |rate| <= 2^63 - 1), checked on the extremes before the sum
+    is formed, as `checked_work` bounds the scalar; a denominator below 1
+    is refused."""
+    denominators = np.asarray(denominator, dtype=np.int64)
+    if denominators.size and int(denominators.min()) < 1:
+        raise ValueError("positive denominator required")
+    rates = np.asarray(rate, dtype=np.int64)
+    if drive.size and int(np.abs(drive).max()) + int(np.abs(rates).max()) > MAX_WORK_INT:
+        raise OverflowError("64-bit intermediate range exceeded")
+    held = drive + rates
+    count = np.abs(held) // denominators
+    if at_most:
+        count = np.minimum(count, at_most)
+    count = np.where(held < 0, -count, count)
+    return count, held - count * denominators
+
+
 def exact_phase(
     phase: int,
     terms: int,
@@ -661,7 +696,10 @@ class Flight:
         click's exact phase reads the residue at an arrival (TWO_SLITS.md
         section 2). A ray's rate never changes over its flight (a
         re-release or a split is a new row at age 0), so both are off the
-        age and the row carries no field for them."""
+        age and the row carries no field for them: the pair is the
+        constant-rate identity of `by_drive_rows` applied tau times from
+        the start T_d (`tests/test_nature_beam_flight.py` (g)), as
+        `by_clock` is of `by_drive`."""
         s1, t = self.manhattan[direction], self.resolution[direction]
         held = age * (2 * s1 * Q) + t
         denominator = 2 * t
@@ -679,7 +717,10 @@ class Flight:
         s1, t = self.manhattan[direction], self.resolution[direction]
         rate = 2 * s1 * Q
         made, residue = self.accumulator(direction, age)
-        moved = (residue + rate) // (2 * t)
+        # The verb itself, once: the residue gains the rate over the wall,
+        # the count gained is the interval's Manhattan step (0 or 1, since
+        # r <= d) and the accumulator after is the next age's residue.
+        moved, _ = by_drive_rows(residue, rate, 2 * t)
         place = np.where(s1 > 0, made % np.maximum(s1, 1), 0)
         result: np.ndarray = self.lines[direction, place] * moved[:, None]
         return result

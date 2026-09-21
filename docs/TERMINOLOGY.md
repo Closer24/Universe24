@@ -183,7 +183,9 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   direction: it starts at T_D, gains 2 S_1 Q per interval against the wall
   2 T_D, and its count picks the unit step of the line; a rest direction
   never moves (BEAM_LAW section 3, the flight rule; the flight table is
-  retired, MIGRATION 2026-09-20).
+  retired, MIGRATION 2026-09-20). The step's count is `by_drive_rows`, the
+  array form of `core.integer.by_drive` over the rows (2026-09-21); nothing
+  written by hand, no field on the row.
 - **Walk**: step 1 of the interval, departures become arrivals: every row
   whose flight counts a Link crosses it whole, its record unchanged
   ([BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam)).
