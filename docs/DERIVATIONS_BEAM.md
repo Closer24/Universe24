@@ -154,7 +154,7 @@ world, and it feeds back where a rate is a function of what arrives:
   labels); and the evaluation `ev: Z[Z_N] -> Z[zeta_N]` at the click
   (zeta_N the primitive N-th root of unity), linear over the group ring. Every component here has the closed form
 
-      s(t) = floor(s_0 + r t)     (the accumulator's whole part at a constant rate; FORM.md section 1),
+      s(t) = floor(s_0 + r t)     (the accumulator's cumulative count at a constant rate, r the rate as a fraction of the wall: the carries made by t; the residual on the torus is `(s_0 + r t) mod 1`; FORM.md section 1),
 
   so a row's state at any time is a formula of its birth and its age, and
   the limits of this document are limits of that formula.
@@ -205,7 +205,9 @@ continuum limit `ds / dt = r(s)`, against the register:
 
 **The classical-quantum boundary as the property of the rate.** A
 component whose rate is a constant of the world has the closed form
-`floor(s_0 + r t)`: its state at the click is a formula of its birth,
+`floor(s_0 + r t)` for its count of carries (the residual its fractional
+part; the external reviewer's F13): its state at the click is a formula
+of its birth,
 exact whatever happened in between, and two such components of one record
 meeting at one Node are compared exactly by the evaluation: that is the
 quantum case, and the interference is the closed form's. A component
@@ -261,9 +263,14 @@ fraction-free branch its counts table, the point `acc` of `Z^n / d Z^n`.
 One operator every interval at every Node. Six operations only:
 
 - **(T) the translation**: `x -> x + r` on `Z^k` or on a torus; the counts'
-  form `acc += r; e = [acc >= d]; acc -= e d`, every wall crossing an
-  event, is the Euclidean division `Z = Z/d x Z` with the remainder kept
-  (`core/integer.py:70-86`, `by_drive`), the one primitive of every count;
+  form `acc += r; e = [acc >= d]; acc -= e d`, every wall crossing an event, is the division with the remainder kept,
+signed and truncating (Eq. (1): the count `sign(s) floor(abs(s) / d)`,
+the remainder with the accumulator's sign in `(-d, d)`, so an
+accumulator at -1 against the wall 2 counts 0 and keeps -1, where the
+Euclidean division would count -1 and keep 1; Euclidean for a
+non-negative accumulator, the case of every unsigned count; the external
+reviewer's F13), the bijection `Z = Z/d x Z` on the pair (`core/integer.py:70-86`,
+`by_drive`), the one primitive of every count;
 - **(B) the bilinear form**: a moment `sum_rows w x u^(x)k` of the
   neighbourhood's rows (k = 0, 1, 2 and the age), and the coupling `r = C
   a` (**C** the coupling matrix, **a** the flow vector), a signed inner
@@ -274,8 +281,7 @@ One operator every interval at every Node. Six operations only:
   turn, the gate, the apportioning's tie;
 - **(E) the evaluation** `ev: Z[Z_N] -> Z[zeta_N]` through the tables C, S
   and the norm `|z|^2` (the click), then the ladder on the wheel;
-- **(D) the Euclidean division with the remainder kept** (the same as (T)'s
-  carry) and **the comparison** (the ladder's cell `2 T u + T <= 2 N C_k`,
+- **(D) the signed truncating division with the remainder kept** (the same as (T)'s carry; Euclidean on a non-negative accumulator) and **the comparison** (the ladder's cell `2 T u + T <= 2 N C_k`,
   an age against a key, a phase against a window, a threshold), itself a
   division whose quotient is 0 or 1 and whose remainder is not read.
 
@@ -1159,10 +1165,15 @@ Let a source release `q(t)` rows per interval on a fan of every direction
 (the limit of section 3.2), each row moving at c and carrying its age.
 The presence at the distance r at the time t is the rows dwelling there,
 
-    P(x, t) = q(t - r / c) x dwell / (4 pi r^2)            (dwell = T_d / Q intervals per Link, 1.72 on a heading),
+    P(x, t) = q(t - r / c) x dwell / (4 pi r^2)            (dwell = T_d / (abs(D) Q) intervals per Euclidean Link along the direction, 1 / c on every direction within the table's grain, 1.72 on a heading),
 
-and the age moment is the presence times the age the rows carry, `r / c`
-(each row's age at r is the light-travel time):
+(the external reviewer's F05, 2026-09-21: per Node on its line a row
+dwells `T_d / (S_1 Q)` intervals, one per Link on the cube diagonal
+where `T_d = 192`, and a line has `S_1 / abs(D)` Nodes per Euclidean
+Link, so the rows' presence per Euclidean length is the isotropic `T_d /
+(abs(D) Q)`; the earlier `T_d / Q` was the heading's case alone) and the
+age moment is the presence times the age the rows carry, `r / c` (each
+row's age at r is the light-travel time):
 
     A(x, t) = q(t - r / c) x dwell / (4 pi c r).
 
@@ -1382,12 +1393,18 @@ formula of the law.
 Three roundings, each declared once, are the whole cost of the click's
 discreteness (sections 1.2 and 1.3): the rung `b_k = (2 N C_k + T) // (2
 T)` at the nearest integer, the tables C, S at the scale 256, and the
-birth wheel `u = ordinal mod N`. What they cost: (i) the probability of a
-cell is `b_k / N`, a multiple of `1 / N`, within `1 / (2 N)` of the Born
-weight `W_k / T` (the paper's row 3, proved from the rung), so a cell of
-weight below `1 / (2 N)` never clicks: the Mach-Zehnder's dark port at
-the offers `1 / 1682 = 0.0006` reads 0 of 64 (Born's 0.04), and `mz_345`
-reads 63 / 1 where the rung moved one u into D2 (L1, registered); (ii) the
+birth wheel `u = ordinal mod N`. What they cost: (i) the CUMULATIVE probability up to a cell is `b_k / N`, a multiple
+of `1 / N`, within `1 / (2 N)` of the cumulative Born weight `C_k / T`
+(the paper's row 3, proved from the rung); a single cell's count `b_k -
+b_(k-1)` is therefore within one of `N W_k / T` and its probability
+within `1 / N` of the Born weight `W_k / T`, and a cell of weight below
+`1 / (2 N)` clicks at most once per wheel, not never (the external
+reviewer's F02, 2026-09-21: at N = 64 the weights 49, 2 and 6349 of
+6400 give the rungs 0, 1 and 64 and the counts 0, 1, 63, the middle
+cell of weight `2 / 6400` clicking once): the Mach-Zehnder's dark port
+at the offers `1 / 1682 = 0.0006` reads 0 of 64 because its rung rounds
+to 64 (Born's 0.04), and `mz_345` reads 63 / 1 where the rung moved one
+u into D2 (L1, registered); (ii) the
 tables' rounding puts a record's total at `65448 / 65536` to `65773 /
 65536` (eight values over the 64 births of L1, within `237 / 65536` of
 1, registered): the norm is kept to a part in 276, the unitarity of the
@@ -1413,8 +1430,10 @@ and `11584 / 4096`, both `181 / 64`), unchanged by Q from 256 to 2^20 at
 these N (the rungs decide), and `S(N, Q) -> 2 sqrt 2` with the bound `8 /
 N + 16 arcsin(sqrt 2 / (2 Q)) -> 0` (the paper's check, `limits.txt`
 section 1); not monotone in N (record 102: 252 of 512 values above `2
-sqrt 2`, the powers of two from 512 exactly `181 / 64`), two-sided within
-the bound. **Reached as a limit**: the finite-N departures are the terms
+sqrt 2`, the powers of two from 512 to 8192 exactly `181 / 64`, the
+plateau, 24.4; above it S oscillates about the tables' `186034 / 65773`
+within `2 x 10^-4`, the external reviewer's F01), two-sided within the
+bound. **Reached as a limit**: the finite-N departures are the terms
 of it, a no-signalling box of the Popescu-Rohrlich kind at finite N, with
 the marginals exact (`32 / 64` in all 4096 setting pairs, record 105).
 
@@ -3762,8 +3781,8 @@ transpose is its inverse up to the normal form, the design's 2.4), the
 rotation (`U_s^T U_s = (C'^2 + S'^2) I`), the gate (a permutation), the
 evaluation (a ring homomorphism on the record, linear); the paper's
 Theorem 1 says the same of the maps between clicks: injective given the
-record. The Euclidean division keeps its remainder (the carry a
-bijection `Z = Z / d x Z`, record 173). So the number of state vectors
+record. The division keeps its remainder (signed and truncating, 1.2
+(T); the carry a bijection `Z = Z / d x Z`, record 173). So the number of state vectors
 consistent with the clicks does not change while no click, cancel or
 discarded remainder happens: the flow on the torus preserves the count,
 the lattice's Liouville theorem, and the linear block produces no
@@ -6410,7 +6429,7 @@ toward 0.886 as L grows.
 Bell's inequality is not derived here because it is already registered
 and derived: 6.2's `S(N, Q)` at the CHSH labels from the rungs and the
 tables, `176 / 64 = 2.75` at N = 64 (NATURE row 1a, PASS at 1.65 standard
-errors), `181 / 64 = 2.828` from N = 512, `S -> 2 sqrt 2` with the bound
+errors), `181 / 64 = 2.828` from N = 512 to 8192 (the plateau, 24.4), `S -> 2 sqrt 2` with the bound
 `8 / N + 16 arcsin(sqrt 2 / (2 Q))`, Tsirelson's bound reached as a
 limit, the marginals exact (`32 / 64` in all 4096 setting pairs, no
 signalling), and the reason it is not a hidden-variable value: the one
@@ -6814,8 +6833,8 @@ changes the row, the row says so; the verdict is `main`'s.
 | # | The difference | The law | Quantum mechanics or relativity | Delta P | The experiment that bounds it | Verdict |
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | Tsirelson's bound reached as a limit only: the CHSH sum at the registered Bell world, N = 256 | `S = 720 / 256 = 2.8125` (bell.txt line 6, the exact cells, unchanged by the tables' scale from 256 to `2^20`) | `2 sqrt 2 = 2.828427` | `-0.0159` (0.56 percent) | Poh, Joshi, Cere, Cabello and Kurtsiefer 2015, Phys. Rev. Lett. 115, 180408: `S = 2.82759 +- 0.00051` (the deficit `0.00084 +- 0.00051`) | REFUTED at N = 256 (30 standard errors: the measured `2.82759` less the law's `2.8125` is `0.0151`, `29.6` times `0.00051`; the `0.0159` of the difference column is the law's deficit from `2 sqrt 2` itself, `31.2` errors, not the distance from the measurement); N = 64's `2.75` likewise |
-| 2 | the same at N a power of two at or above 512 | `S = 181 / 64 = 2.828125` exactly (6.2: the registered `2896 / 1024`, `11584 / 4096`; record 102: every power of two from 512) | `2.828427` | `-3.02 x 10^-4` | the same measurement: the law's deficit is `1.1` standard errors from the measured deficit | OPEN, within reach (24.4) |
-| 3 | the same at N not a power of two, or a power of two below 512 other than 64 and 256 | above `2 sqrt 2` for 252 of the 512 values of N (record 102), and at the powers of two N = 16, 32 and 128, where S = 3, 3 and `23 / 8` (the theorem of record 102; the engine reads `23 / 8 = 2.875` at N = 128, the auditor's round 6 at d17af9b9): a no-signalling box | at most `2 sqrt 2` | up to `+8 / N` (N = 16, 32 and 128 give 3, 3 and `23 / 8`) | the same measurement bounds an excess above `0.001` at two standard errors | REFUTED for those N: the law's N is a power of two at or above 512 (row 2), or 64 or 256 (row 1) |
+| 2 | the same at N = 512, 1024, 2048, 4096 and 8192, the plateau | `S = 181 / 64 = 2.828125` exactly (the registered `1448 / 512`, `2896 / 1024`, `11584 / 4096`; the closed form of 24.4 on the tables' exact correlations, `bell_plateau.py`; record 102's "every power of two from 512" was wrong above 8192, the external reviewer's F01) | `2.828427` | `-3.02 x 10^-4` | the same measurement: the law's deficit is `1.1` standard errors from the measured deficit | OPEN, within reach (24.4) |
+| 3 | the same at N not a power of two, or a power of two outside the plateau | above `2 sqrt 2` for 252 of the 512 values of N (record 102), at the powers of two N = 16, 32 and 128 (S = 3, 3 and `23 / 8`; the engine reads `23 / 8 = 2.875` at N = 128, the auditor's round 6 at d17af9b9) and at N = 16384 and 32768 (`5793 / 2048 = 2.828613`, `+1.9 x 10^-4` above the bound: the rungs of both settings round up together and the plateau ends); N = 65536 gives `11585 / 4096 = 2.828369`, N = 131072 `46341 / 16384 = 2.828430`, `2^20` `370727 / 131072 = 2.828423`, and the limit is the tables' own `186034 / 65773 = 2.828425`, `2.1 x 10^-6` below the bound (24.4's closed form; `bell_plateau.py`): a no-signalling box wherever S is above the bound | at most `2 sqrt 2` | up to `+8 / N` (N = 16, 32, 128: 3, 3, `23 / 8`; 16384 and 32768: `+1.9 x 10^-4`; from 65536 within `6 x 10^-5` of the bound) | the same measurement bounds an excess above `0.001` at two standard errors | REFUTED for N = 16, 32, 128 and the non-powers above the bound by more than `0.001`; N = 16384 and 32768 at `2.0` standard errors from the measurement (the edge, `+0.00102`); the powers from 65536 inside (1.5 to 1.6 errors); the law's N is the plateau's (row 2) or 65536 and above |
 | 4 | the click's rounding to the scale 256: one polariser at 22.5 degrees and the 22.5-degree chain (Malus) | the pass `219 / 256 = 0.85547` and the chain `187 / 256 = 0.73047` at N = W = 256 (malus_map.out, sections 2 and 4) | `cos^2 = 0.85355`, `cos^4 = 0.72855` | `+0.0019` both (0.22 and 0.26 percent) | Malus's law at a polariser, NATURE row 9 (not yet run in the law); a precision Malus test at `10^-3` decides | OPEN at the tables' scale; REFUTED by any test at `10^-3` unless the scale is raised (the cost of input 13 by the owner's word, record 328); the exact form removes it (24.1 row 13) |
 | 5 | the anisotropy of c: the one-way pace per direction at Q = 64 | `32 / 55` on an axis, `64 sqrt 2 / 156` on a face diagonal, `1 / sqrt 3` on the body diagonal: `+0.78`, `+0.49`, `0` percent | isotropic | `7.6 x 10^-3` | Herrmann et al. 2009, Phys. Rev. D 80, 105011 (`10^-17`); Nagel et al. 2015, Nature Communications 6, 8174 (`9.2 +- 10.7 x 10^-19`); NATURE row 5a | REFUTED at Q = 64 by fifteen orders; OPEN only as a bound on the grain, `Q >= 5.8 x 10^17` (NATURE 5a) |
 | 6 | the two arms of a moving laboratory (no contraction on `main`) | the round trip `gamma^2` along and `gamma` across (12.3) | equal (Michelson and Morley) | `beta^2 / 2 = 5 x 10^-9` at the Earth's `10^-4` | the same sources; NATURE row 5b | REFUTED on `main` by nine orders; the contraction not derived under covariant-readings-v1 either (17.6 M4) |
@@ -6839,17 +6858,60 @@ changes the row, the row says so; the verdict is `main`'s.
 ### 24.4 The one prediction the paper can carry
 
 **The candidate.** Of the open rows within reach, the smallest is row 2:
-for N a power of two at or above 512, the law's CHSH sum on the
-maximally entangled pair at the CHSH settings is
+for N on the plateau, N = 512, 1024, 2048, 4096 or 8192, the law's CHSH
+sum on the maximally entangled pair at the CHSH settings is
 
     S_U24 = 181 / 64 = 2.828125 exactly,   Delta S = S_U24 - 2 sqrt 2 = -3.02 x 10^-4,
 
 with the marginals exactly `1 / 2` (no signalling, 6.2), unchanged by the
-tables' scale from 256 to `2^20` and by N from 512 to 4096 (the registered
-`2896 / 1024` and `11584 / 4096`, both `181 / 64`; record 102 for every
-power of two from 512). This is `P_U24 = P_QM + Delta P` computed in
-advance: the deficit of the correlation at each of the four settings is
-`Delta E = -2 sqrt 2 / 4 + 181 / 256 = -7.6 x 10^-5`, the same at each.
+tables' scale from 256 to `2^20` and by N from 512 to 8192 (the
+registered `1448 / 512`, `2896 / 1024` and `11584 / 4096`, all `181 /
+64`). This is `P_U24 = P_QM + Delta P` computed in advance: the sum of
+the four correlations' deficits is `-3.02 x 10^-4`, their split among
+the settings changing with N (at 1024 and 2048 the four are `181 / 256`
+each, at 512 `91 / 128` twice and `45 / 64` twice, at 4096 and 8192 `725 /
+1024` twice and `723 / 1024` twice; the table below).
+
+**The closed form, and the plateau's true domain** (the external
+reviewer's F01, 2026-09-21, verified here with exact integers, the host
+script [bell_plateau.py](designs/derivations_beam/bell_plateau.py) with
+its output [bell_plateau.out](designs/derivations_beam/bell_plateau.out);
+no run). The tables at the scale 256 give the exact correlations `E_1 =
+46565 / 65773` at the settings `(0, N / 8)` and `(0, 3 N / 8)` and `E_2 =
+46452 / 65773` at `(N / 4, N / 8)` and `(N / 4, 3 N / 8)`, independent of
+N; a settings pair's four cells weigh `(1 + E) / 4`, `(1 - E) / 4`, `(1 -
+E) / 4`, `(1 + E) / 4` of the total; the rungs `b_k = floor(N C_k / T + 1
+/ 2)` (6.2) give the counts over the N births, the middle rung exactly
+`N / 2`, and each pair's correlation is `E_N = 4 b_1 / N - 1`, so
+
+    S(N) = 8 [round(N (1 + E_1) / 4) + round(N (1 + E_2) / 4)] / N - 4,   S(N) -> 2 (E_1 + E_2) = 186034 / 65773 = 2.828425 as N -> infinity (the tables' own, 2.1 x 10^-6 below 2 sqrt 2).
+
+`S = 181 / 64` holds exactly when the two roundings sum to `437 N /
+512`, which they do for N = 512 to 8192 (the fractional parts of `N (1
++ E_1) / 4` and `N (1 + E_2) / 4` rounding one up and one down) and not
+at 16384, where both round up (0.83 and 0.79) and the sum exceeds by one:
+
+| N | S(N) exact | decimal | `S - 2 sqrt 2` | the four `E_N` | `(S - 2.82759) / 0.00051` |
+| --- | --- | --- | --- | --- | --- |
+| 512 | `181 / 64` | 2.828125 | `-3.0 x 10^-4` | `91 / 128`, `-91 / 128`, `45 / 64`, `45 / 64` | +1.05 |
+| 1024 | `181 / 64` | 2.828125 | `-3.0 x 10^-4` | `181 / 256` four times (one negative) | +1.05 |
+| 2048 | `181 / 64` | 2.828125 | `-3.0 x 10^-4` | `181 / 256` four times | +1.05 |
+| 4096 | `181 / 64` | 2.828125 | `-3.0 x 10^-4` | `725 / 1024`, `-725 / 1024`, `723 / 1024`, `723 / 1024` | +1.05 |
+| 8192 | `181 / 64` | 2.828125 | `-3.0 x 10^-4` | the same as 4096 | +1.05 |
+| 16384 | `5793 / 2048` | 2.828613 | `+1.9 x 10^-4` | `725 / 1024`, `-725 / 1024`, `2893 / 4096`, `2893 / 4096` | +2.01 |
+| 32768 | `5793 / 2048` | 2.828613 | `+1.9 x 10^-4` | the same as 16384 | +2.01 |
+| 65536 | `11585 / 4096` | 2.828369 | `-5.8 x 10^-5` | `11599 / 16384`, `-11599 / 16384`, `11571 / 16384`, `11571 / 16384` | +1.53 |
+| 131072 | `46341 / 16384` | 2.828430 | `+3.1 x 10^-6` | `23199 / 32768`, `-23199 / 32768`, `11571 / 16384`, `11571 / 16384` | +1.65 |
+| `2^20` | `370727 / 131072` | 2.828423 | `-4.6 x 10^-6` | | +1.63 |
+
+So the headline "`181 / 64` at every power of two from 512" (record
+102; the paper's statement) is FALSE as stated: the plateau is 512 to
+8192, above it S(N) oscillates about the tables' limit within `2 x
+10^-4`, above `2 sqrt 2` at 16384, 32768 and 131072 (a no-signalling
+box at those N, `+1.9 x 10^-4` at most) and below at 65536 and `2^20`.
+The prediction the paper can carry is the plateau's `181 / 64`, five
+values of N, of which the register runs two (512 and 4096; 1024 by the
+design's map).
 
 **What bounds it today.** Poh et al. 2015 measured `S = 2.82759 +-
 0.00051`, a deficit `0.00084 +- 0.00051` from `2 sqrt 2`: the law's
@@ -6880,9 +6942,9 @@ moved.
 below reach; row 4 is a grain the owner has declared an input (the
 tables' scale, record 328) and falls with it, not with the law; row 11 is
 zero; row 20 is a rounding. Row 2 is a number of the law's own structure
-(the rungs of the ladder at a power-of-two N, not the tables), fixed for
-every N the register uses, and one experiment already sits at its
-edge. It is the prediction the paper can carry: a CHSH sum three parts
+(the rungs of the ladder at a power-of-two N on the tables'
+correlations), fixed for the five N of the plateau, which the register
+uses, and one experiment already sits at its edge. It is the prediction the paper can carry: a CHSH sum three parts
 in ten thousand below Tsirelson's bound, exactly `181 / 64`.
 
 ### 24.5 The verdict of section 24
