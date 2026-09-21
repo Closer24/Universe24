@@ -166,6 +166,19 @@ radius outside (C(4) = 1.01 against 2.0, the phase's turn per orbit 0.75
 to 0.83 against 0): the orbit closes and Bohr's condition is not met,
 registered as the finding and not tuned.
 
+## The atoms series
+
+The folder [atoms/](atoms/README.md) holds the two worlds of the atoms
+series under form B, written by `atoms/make_worlds.py` on series H's base:
+`hydrogen_r12`, the one registered radius with a whole closure, with the
+momentum derived under form B's drive, the action re-fixed by series H's
+rule and a `wave` detector on the proton's Node; and `helium_r12`,
+binding-v1's square fixed as the nucleus with two electrons of the
+register's electron point-symmetric about it, each releasing on the fan's
+band so that the partner's rays push it. The pins before the runs are
+[docs/designs/atoms/PINS.md](../../docs/designs/atoms/PINS.md); the runs
+come after form B lands.
+
 ## The nucleus series
 
 The folder [nucleus/](nucleus/README.md) holds the eight worlds of series

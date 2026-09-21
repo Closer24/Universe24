@@ -100,6 +100,7 @@ kept, their pins the law of events').
 | `test_check_scope.py` | The affected-check's selection |
 | `test_coupling_readings.py`, `test_orbit_readings.py`, `test_heisenberg_readings.py`, `test_hubble_readings.py` | The tools read the engine (the architecture review of 2026-09-20; the experimenter skill): each reading of `tools/coupling_readings.py`, `tools/orbit_readings.py`, `tools/heisenberg_readings.py` and `tools/hubble_readings.py` equals the engine's own function on a minimal GameBoard (the front off `manhattan_steps`, the step rule and the release off `by_clock`, the push off `unit_label`, the fan's labels off `flight_table`, the detector records off `DetectorSet`, the declared charge per unit of content; the Hubble tool's c = 32 / 55 and m(age) off `flight_table`, its `record` lines and click ages off the run of a bar of 61 x 1 x 1, its z within the digital step's grain of 1 + v / c); the expected integers are in each module's docstring |
 | `test_hubble_stars_readings.py` | The series G2 tool (`tools/hubble_stars_readings.py`) reads the engine (the experimenter's rule): the shipped worlds of `examples/events/hubble_stars/` equal their generator's, `expectations.json` declares its format, its c is derived from the flight table (Q / T_D) and compared, and its `derivations` map names every entry; on a bar of 61 x 1 x 1 run through the runner (a star of a paid family holding a mass of 2^22 and shining one unit per self-creation toward a detector of one Node, the speed 1 / 2 Link per self-creation) the tool's `record` lines, click ages, steps (30 in 60 intervals), homes (its outward rows taken home, 64 units each) and final momentum are the engine's, z within the digital step's grain of 1 + v / c, the reading's formula within 2 % and the luminosity within 5 %; the fits read the exact coasting form as q = 0 with H (t_0 + T_0) = 1 to 1e-6 and the exact Einstein-de Sitter form as q = +0.5 to 1e-3; the expected integers are in the module's docstring | new (2026-09-20, series G2); the registered fits against the register's own brackets, no literal range (2026-09-21) |
+| `test_two_stars.py` | Series O, two stars moving toward each other, each the detector of the other (`examples/events/two_stars/`, docs/designs/two_stars/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced with the stars' momenta at the declared speeds by the drive's rule; the readings algebra of the two frames (the symmetric frame's 2 / 3 exactly, equal to nature's at the relativistic sum; the rest frame's 1 / 1.4 and 0.6 against nature's 0.6547); the pinned contact ticks 254, 237, 236 and the speeds at the contact; the expected values in the module's docstring | new (2026-09-21, series O; design only, no run) |
 | `test_c_measured.py` | Series Q, c measured behind a detector (`examples/events/c_measured/`): the escape tick of every direction of a fan derived from the closed form of the flight (DERIVATIONS_BEAM.md section 11.1) with the engine's lines and compared with the register written before the run and with the run's clicks on the open faces (the tick, the Node, the face), the pace over the fan against c = 1 / sqrt 3, and the readings tool `tools/c_measured_readings.py` on the runner's record ([below](#c-measured-behind-a-detector)) | new (2026-09-21, the model owner's "go for it", record 236; the template `test_amplitude_cone.py`) |
 | `test_bohr_readings.py` | The series H tool reads the engine (the experimenter's rule, 2026-09-20): the flight time from the centre's plane to a face off `FlightTable.manhattan_steps` (5 Links at the age 8, 6 at 10, 1 at 1), the pointer per turn and the coherence ratio off `nature_beam.coherent_pointer` with the circle's tables ((16384, 0) and (-8192, 0) for two units at phase 0 and one at 32, C = 0.2; 1.8 with the third at 0; the slope of [1, 4, 9] is 2), and `read_run` on a run written by the runner (a proton of `p` at (5, 5, 1) of an 11 x 11 x 3 GameBoard on the four in-plane headings, an electron of `e` of span [1, 1, 3] at (8, 5, 1) with the momentum [0, 320, 0], `pass` for `p`, `action` 65536, 20 intervals: the radius 3, j = 0.05859375, the flights 8, the clicks per face equal to the record's, no read, the steps' phases 5, 5, 5, 6 at the ticks 5, 9, 13, 17, the first -x click at tick 16); the expected integers are in the module's docstring |
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the two integer audits (`core/` integers only; `events/` integer numpy and nothing that leaves the integers, `run.py` outside it), LOCALITY-1 documented without an exception, and the six-read test ([below](#locality-and-bounded-local-work)): a Node reads nothing beyond one Link, a change reaches a Node no sooner than the flight allows |
@@ -115,6 +116,7 @@ kept, their pins the law of events').
 | `test_amplitude_gram.py` | The click without amplitudes (2026-09-21): the Gram matrix of the tables (its eight diagonal values, not circulant, rank 2, the antipodal pairs killed, stored through N = 512), the identity f^T G f = X^2 + Y^2 on random vectors and on `mz_equal`'s record at every u, the layer's cells against the click as it was on synthetic one-arm, read, rotated, pair and GHZ records, the turn as a shift exact at the quarter turns and not at t = 3, the tensor form exact and the convolution not, the ring product ([below](#the-click-without-amplitudes)) | new (2026-09-21; record 188; BEAM_LAW note 37 (xii)) |
 | `test_exact_phase.py` | The exact phase at the click (2026-09-21): the axis and the diagonal at the rate 8 (u + 41 with the remainder 48 / 64, u + 42 with the remainder 0 / 128 where the walk read u + 40), the layer's pointer at it, the integer form without it, a face's row (u + 4 where the walk read u + 56), the numerator beyond the register refused, the primitive `exact_phase` ([below](#the-exact-phase-at-the-click)) | new (2026-09-21; record 163 (2); BEAM_LAW note 45) |
 | `test_birth_wheel.py` | The birth wheel at a declared rate (2026-09-21): the key required on every lamp and refused as a bare integer, a rate 0 or a wheel 0; every world file with a lamp declares it; [1, N] the count of births (the lamp's `acc` `wheel`, the rungs on 64); the golden rate's first ten u and phases, the rungs on 4096; the cell read on the wheel (two equal cells: a, b, a, b, a, a, b, a, b, b against 32 a then 32 b); the replay tool reads the wheel from the lamp ([below](#the-birth-wheel)) | new (2026-09-21; record 180; BEAM_LAW note 46) |
+| `test_amplitude_malus.py` | A12 under the click, Malus's law from the table entries in force (2026-09-21): the pin of `docs/designs/malus/NOTE.md` derived again from the three worlds and the engine's half-angle tables of 2N = 512 (the cells' weights the products of C' and S', the rungs b_k = (2 W C_k + T) // (2 T) over the wheel's 256 births) against the register; the replay of `malus_a`, `malus_b` and `malus_c` (u over every residue once, the registered rungs on every gather, the chosen cells 128 / 128, 0 / 256 and 64 each, the books balanced); the rotate keeps the record's u (every `split` line at the rotation `rebirth` False with the record's identity and its u, two per row; the `rotate` and `read` lines) ([below](#the-amplitude-law-malus)); every number read from `expectations.json` under `malus` | new (2026-09-21; the model owner's go, record 330; the mathematician's note) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -754,6 +756,39 @@ of 2026-09-21; the test holds no literal of a world's number:
   (GAMEBOARD) registered as conserved at every completed tick;
 - (d) S from the registered readings' E equals the derived S of (b): the
   run's S is 181 / 64 at both N.
+
+## The amplitude law: Malus
+
+`tests/test_amplitude_malus.py` (A12 under the click; the mathematician's
+note docs/designs/malus/NOTE.md, sections 2 and 3; the model owner's go,
+record 330 of docs/LOG_2026-09-20.md; docs/BEAM_LAW.md note 46), on the
+worlds `malus_a`, `malus_b` and `malus_c` of series L's generator
+(`examples/events/amplitude/make_worlds.py`, `expectations.json` under
+`malus`: the pin written before the run of 2026-09-21 and the run's
+readings beside it, every count a DETECTOR reading, the books GAMEBOARD).
+The expected integers, written down before the first run:
+
+- (a) the pin derived again from the worlds and the engine's tables: on
+  the half-angle tables of 2N = 512, C'[64] = S'[64] = 181 and C'[128] =
+  0, S'[128] = 256; the cells' weights `malus_a` 0+ 181^2, 0- 181^2;
+  `malus_b` 0+ 0, 0- 256^2; `malus_c` 0+, 0-, 1+ and 1- 181^4 each; the
+  rungs [0, 128, 256], [0, 0, 256] and [0, 64, 128, 192, 256]; the counts
+  128 / 128, 0 / 256 and 64 each, the pass (the cell 0+) 128, 0 and 64 of
+  256, equal to the register's;
+- (b) the replay: 256 gathers of the ordinals 1 .. 256 per world, u =
+  ordinal x 159 mod 256 over every residue once; every gather's cells the
+  registered rungs in the click's order (the read's labels ascending, the
+  channels + before -); the chosen cells as (a), bit-exact, and as the
+  run's reading; over every record gathered by the end (289 of 299 born,
+  10 open, the first gather at tick 11) 145 / 144, 0 / 289 and 73 / 72 /
+  72 / 72; the books balanced;
+- (c) `malus_c`: 592 `split` lines at the rotation, `rebirth` False on
+  every one, the record's own identity and its birth u, two per record
+  (the first at tick 4: absorbed 181, born 181, multiplicity 65536); the
+  `rotate` line setting 64, bit 0, turn 0, 2 rows, the record's units 1
+  to 362; the `read` line's rows the labels 0 and 1 at the multiplicity
+  65536 and the amount 181, the phases 0 and 128 (the set bit a half turn
+  on).
 
 ## The birth wheel
 
@@ -1636,6 +1671,33 @@ DESIGN.md test (f) and section 4.4):
   2026-09-20) stepped a at ticks 2 and 4 in the second order, to (0, 1,
   1); the rule as it was (the count off the clock) at tick 3 in the first
   order and at ticks 2 and 3 in the second.
+
+## Two stars, each the detector of the other (series O)
+
+`tests/test_two_stars.py` (docs/designs/two_stars/DESIGN.md; the worlds of
+`examples/events/two_stars/` by `make_worlds.py`; design only, no run):
+
+- (a) the shipped worlds `symmetric`, `rest_frame`, `symmetric_pass` equal
+  the generator's document for document, load through the loader, and run
+  ten intervals with the books balanced; two fixed lab detectors and two
+  stars, A (`s_px1`) at (70, 1, 1) and B (`s_mx1`) at (130, 1, 1); the
+  momenta's signs the declared speeds' (+, - in `symmetric`; +, 0 in
+  `rest_frame`) and their speeds by the drive's rule v = p / (Q S M + p)
+  within 1e-6 of 0.2 c (0.4 c for the mover of `rest_frame`), c = 32 / 55;
+  `expectations.json` declares the format `two-stars-expectations-v1`, the
+  windows [50, 150) and [150, 250) and the three worlds.
+- (b) the readings algebra (no world's numbers): 1 + z = (1 - v_s / c) /
+  (1 + v_r / c) gives 2 / 3 at v_s = v_r = 0.2 c, equal to nature's
+  sqrt((1 - beta) / (1 + beta)) at beta = 0.4 / 1.04 (the relativistic
+  sum); 1 / 1.4 at v_s = 0, v_r = 0.4 c and 0.6 at v_s = 0.4 c, v_r = 0,
+  against nature's sqrt(0.6 / 1.4) = 0.6547 for both.
+- (c) the derivation pins the first contact at tick 254 in the control
+  (sixty Links closing at 0.4 c = 0.2327 Links per interval to one Link),
+  237 in `symmetric` and 236 in `rest_frame` (the gravity of the line
+  speeds the approach); the speeds at the contact above 0.2 c under gravity
+  and 0.2 c exactly without; the control's mutual 1 + z 2 / 3 in the first
+  window; in `rest_frame` the mover's reading above nature's and the rest
+  star's below it.
 
 ## The binding that costs content
 

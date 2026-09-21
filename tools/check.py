@@ -25,6 +25,7 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
         "tests/test_amplitude_cone.py",
         "tests/test_amplitude_gate.py",
         "tests/test_amplitude_layer.py",
+        "tests/test_amplitude_malus.py",
         "tests/test_amplitude_pair.py",
         "tests/test_amplitude_split.py",
     ),
