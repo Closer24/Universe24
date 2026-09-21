@@ -92,9 +92,12 @@ and note 25](BEAM_LAW.md#3-the-nodes-interval-nature_beam).
   `tools/hubble_stars_readings.py` (the run's world read through
   `world_loading.world_of_run`). Series G2's twelve `hubble_stars` worlds
   moved by their digests but are not re-read: the register's own tool reads
-  NaN for `coasting_none`, a world the word does not touch (the replicator's
-  finding of record 408 on `main`), so their lines carry the digests' move
-  and no number until the tool is repaired, which is outside this branch.
+  NaN for `coasting_none` in its plain mode, a world the word does not
+  touch, and in its record mode +0.384 for `record/gravity_none` against
+  the registered +0.922 (the replicator's finding of record 408 on
+  `main`), so their lines carry the digests' move and no number until the
+  tool and the register agree again, which is outside this branch (the
+  record mode's readings on the head are noted in the register's G2 entry).
 
 ## The covariant readings, on 2026-09-21 (a world key, absent by default)
 

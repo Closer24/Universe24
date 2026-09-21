@@ -2491,10 +2491,20 @@ states "exactly" and means integer equality at every tick.
   (the six base worlds and the six `record/` worlds whose stars' entries
   measure the other stars' light without a word) moved by their digests
   (record 409) and are not re-read here: the register's own tool,
-  `tools/hubble_stars_readings.py`, reads NaN for `coasting_none`, a
-  world the word does not touch (the replicator's finding of record 408
-  on `main`), so no number of this series is re-registered until the tool
-  is repaired; the lines above stand as the presence word's, dated.
+  `tools/hubble_stars_readings.py`, reads NaN for `coasting_none` in its
+  plain mode (a world the word does not touch) and, in its record mode
+  with the register's expectations, +0.384 in the late window for
+  `record/gravity_none` against the registered +0.922 while
+  `record/coasting_none` reads -0.104 for -0.108 (the replicator's
+  finding of record 408 on `main`: the record worlds at head do not
+  reproduce the registered readings), so no number of this series is
+  re-registered until the tool and the register agree again; the lines
+  above stand as the presence word's, dated. For the record, the record
+  mode's late-window q on the head under the age word (DETECTOR, not
+  registered): `record/coasting_scalar` -0.950, `record/gravity_scalar`
+  -0.950, `record/double_scalar` -0.950 (the fit's grid ends at -0.95;
+  their H (t_0 + T_0) 3.42, 3.37, 4.46), the `_age` and `_none` worlds
+  -0.216, +0.258, +0.664 and -0.104, +0.384, +1.116.
 
 ### H, Bohr's lines behind the detector (2026-09-20)
 
