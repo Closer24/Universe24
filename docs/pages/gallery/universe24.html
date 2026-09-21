@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The formula and Einstein</title>
+<title>Universe24</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Math&display=swap">
 <style>
 :root {
   --bg: #f6f4ee; --ink: #1c1b18; --muted: #5f5b52; --line: #d9d4c7; --card: #ffffff;
@@ -74,7 +77,8 @@ pre.formula { font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; color
 .smalls pre.formula { font-size: 1.1rem; }
 .smalls p { font-size: 0.92rem; margin: 4px 0; }
 table.compare td.ours { color: var(--good); }
-math { font-family: "Latin Modern Math", "STIX Two Math", "Cambria Math", "DejaVu Serif", serif; color: var(--accent); }
+math { font-family: "Latin Modern Math", "STIX Two Math", "Cambria Math", "Noto Sans Math", "DejaVu Serif", serif; color: var(--accent); }
+math[display="block"] { padding: 4px 10px; box-sizing: border-box; }
 section.big math { font-size: 2.4rem; margin: 10px 0; }
 section.big .conditions math { font-size: 1.4rem; margin: 4px 0; }
 math[display="block"] { max-width: 100%; overflow-x: auto; }
@@ -107,7 +111,7 @@ section.big.theirs-box math { color: #6cb4ff; font-size: 1.8rem; }
 .deriveds h3 { margin: 0 0 4px; font-size: 1.05rem; }
 .deriveds math { font-size: 1.45rem; margin: 8px 0; }
 .deriveds p { font-size: 0.92rem; margin: 4px 0; }
-@media (max-width: 600px) { section.big math { font-size: 1.35rem; } }
+@media (max-width: 600px) { section.big math { font-size: 1.7rem; } section.big .conditions math { font-size: 1.15rem; } section.big.theirs-box math { font-size: 1.35rem; } }
 details summary { cursor: pointer; color: var(--accent); margin: 12px 0; }
 @media (max-width: 600px) { section.big pre.formula { font-size: 1.5rem; } section.big pre.formula.small-caps { font-size: 1rem; } }
 td.reached { color: var(--good); white-space: nowrap; }
@@ -118,18 +122,18 @@ td.missing { color: #f08080; }
 <body>
 <main>
 <nav class="crumbs"><a href="index.html">The gallery</a> · <a href="../../README.md">The documentation</a></nav>
-<h1>The formula and Einstein</h1>
+<h1>Universe24</h1>
 <p class="lead">Your formula at the top; whose each formula is; and the story of the derivations from it to Newton's, Lorentz's and Einstein's, step by step.</p>
 
 <section class="big">
 <p class="kind"><span class="who law">the law (yours)</span> the exact square of a body's energy, in whole numbers</p>
 <math display="block"><mi>W</mi><mo>=</mo><msup><msub><mi>E</mi><mn>0</mn></msub><mn>2</mn></msup><mo>+</mo><mn>3</mn><mrow><mi mathvariant="bold">p</mi><mo>&sdot;</mo><mi mathvariant="bold">p</mi></mrow></math>
-<div class="conditions"><math display="block"><msup><mi>E</mi><mn>2</mn></msup><mo>&le;</mo><mi>W</mi><mo>&lt;</mo><msup><mrow><mo>(</mo><mi>E</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mn>2</mn></msup><mspace width="1.5em"/><mo>,</mo><mspace width="1.5em"/><msub><mi>E</mi><mn>0</mn></msub><mo>=</mo><mi>Q</mi><mi>S</mi><mi>M</mi></math></div>
+<div class="conditions"><math display="block"><msup><mi>E</mi><mn>2</mn></msup><mo>&le;</mo><mi>W</mi><mo>&lt;</mo><msup><mrow><mo>(</mo><mi>E</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mn>2</mn></msup></math><math display="block"><msub><mi>E</mi><mn>0</mn></msub><mo>=</mo><mi>Q</mi><mi>S</mi><mi>M</mi></math></div>
 <p class="kind">W the state carried, bilinear in the momentum vector p; E the largest integer whose square is at most W, kept by comparisons; E<sub>0</sub> the rest value, the width Q S times the content M; c<sup>2</sup> = 1 / 3 derived from the flight</p>
 </section>
 <section class="big theirs-box">
 <p class="kind"><span class="who einstein">Einstein</span> the same relation in nature's units, 1905 to 1907</p>
-<math display="block"><msup><mi>E</mi><mn>2</mn></msup><mo>=</mo><msup><msub><mi>E</mi><mn>0</mn></msub><mn>2</mn></msup><mo>+</mo><msup><mi>p</mi><mn>2</mn></msup><msup><mi>c</mi><mn>2</mn></msup><mspace width="1.5em"/><mo>,</mo><mspace width="1.5em"/><msup><mi>c</mi><mn>2</mn></msup><mo>=</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></math>
+<math display="block"><msup><mi>E</mi><mn>2</mn></msup><mo>=</mo><msup><msub><mi>E</mi><mn>0</mn></msub><mn>2</mn></msup><mo>+</mo><msup><mi>p</mi><mn>2</mn></msup><msup><mi>c</mi><mn>2</mn></msup></math><math display="block"><msup><mi>c</mi><mn>2</mn></msup><mo>=</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></math>
 </section>
 <h2>What is yours and what is theirs</h2>
 <p>The formula at the top is the law's: its numbers are whole, E is kept by comparisons and never by a root,
