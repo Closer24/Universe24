@@ -13,12 +13,17 @@ the windows carried on them) or GAMEBOARD (the host's view: the world
 replayed for the rows at the counters' Nodes), the experimenter's rule.
 Every criterion is exact, on integers and `fractions.Fraction`.
 
-The reading, per pair (the two releases of one age a of the lamp, both
-stamped with the phase a mod N): A = +1 for a click at `alice_plus`, -1 at
-`alice_minus`, B likewise; the age of a click is its tick less the offset
-of its Node, read off the record itself as in `tools/bell_chsh.py` (every
-click's and pass's phase is its age mod N, so tick - phase mod N is one
-value per Node, the offset). The setting of a side at a pair is the
+The reading, per pair (the two rows of one record of the lamp, one
+birth: the record's identity, the lamp's number x 2^32 + the birth's
+ordinal, is carried on every click and pass line): A = +1 for a click at
+`alice_plus`, -1 at `alice_minus`, B likewise; the AGE of a pair is its
+birth ordinal less one, read off the record on the line, and its phase is
+that age mod N (u, the birth phase), as in `tools/bell_chsh.py`. Since the
+fraction-free law (2026-09-20, BEAM_LAW note 41) a paid lamp's exact clock
+stalls where its content has fallen below K, so the tick of a birth is
+not the age of the lamp's clock and a pair is read by its record, never
+by its tick; the tick offsets (the smallest tick - age at each counter,
+the flight's) are reported. The setting of a side at a pair is the
 centre of the plus counter's window at that pair, carried on the plus
 counter's `click` or `pass` line (`window`; the declared number in a
 control); the minus counter's window must be its exact complement
@@ -188,17 +193,20 @@ def counters_of(world: dict[str, Any]) -> dict[str, CounterEntry]:
     return found
 
 
-def offsets_of(lines: list[dict[str, Any]], modulus: int, checks: Checks, label: str) -> dict[str, int]:
-    """The offset of every counter's Node: tick - phase mod N, one value
-    per Node over its clicks and passes (every ray's phase is its age mod
-    N); a Node with two values fails."""
+def offsets_of(lines: list[dict[str, Any]], base: int, checks: Checks, label: str) -> dict[str, int]:
+    """The tick offset of every counter's Node, a report: the smallest
+    tick - age over its clicks and passes, the flight's (a stall of the
+    lamp's clock puts every later birth a tick on); every line must carry
+    the lamp's record (`base` the lamp's number x 2^32), the age's owner."""
     offsets: dict[str, int] = {}
     for name in sorted(NODES):
-        values = sorted(
-            {(int(e["tick"]) - int(e["phase"])) % modulus for e in lines if e["detector"] == name}
+        at_node = [e for e in lines if e["detector"] == name]
+        checks.equal(
+            f"{label}: every line at {name} carries the lamp's record",
+            all("record" in e and int(e["record"]) > base for e in at_node),
+            True,
         )
-        checks.equal(f"{label}: one offset at {name}", len(values), 1)
-        offsets[name] = values[0] if values else 0
+        offsets[name] = min((int(e["tick"]) - (int(e["record"]) - base - 1) for e in at_node), default=0)
     return offsets
 
 
@@ -230,7 +238,8 @@ def analyse(folder: Path, checks: Checks, pairs: int | None = None) -> Run:
         all(e["number"] == lamp_number and e["amount"] == 1 for e in clicks),
         True,
     )
-    offsets = offsets_of(lines, modulus, checks, label)
+    base = lamp_number << 32
+    offsets = offsets_of(lines, base, checks, label)
     for side, plus, minus in SIDES:
         checks.add(
             f"{label}: {side}'s minus counter later than its plus",
@@ -248,12 +257,22 @@ def analyse(folder: Path, checks: Checks, pairs: int | None = None) -> Run:
         return counter.declared
 
     def age_of(line: dict[str, Any]) -> int:
-        return int(line["tick"]) - offsets[str(line["detector"])]
+        return int(line.get("record", base + 1)) - base - 1
 
     # The warm-up: the ages at which a plus counter had no setting.
     unset = [age_of(e) for e in passes if e["detector"] in PLUS and window_of(e) is None]
     first = 1 + max(unset) if unset else 0
-    last = ticks - max(offsets.values())
+    # The last analysed pair: the last age at which both sides are on the
+    # record (a pair still in flight when the run ends has one side or none).
+    complete = [
+        age
+        for age in {age_of(e) for e in clicks}
+        if all(
+            any(age_of(e) == age and e["detector"].startswith(side) for e in clicks)
+            for side in ("alice", "bob")
+        )
+    ]
+    last = max(complete, default=-1)
     checks.add(f"{label}: the run holds analysed pairs", last >= first, f"first {first}, last {last}")
     if pairs is not None:
         last = min(last, first + pairs - 1)
@@ -462,7 +481,7 @@ def main(argv: list[str] | None = None) -> int:
     for run in runs:
         print(f"DETECTOR  {run.folder.name}: source_sha256 {run.fingerprint}")
         print(
-            "DETECTOR  offsets (tick = age + offset): "
+            "DETECTOR  tick offsets (the smallest tick - age at each counter, the flight's): "
             + ", ".join(f"{k} {v}" for k, v in sorted(run.offsets.items()))
         )
         print(

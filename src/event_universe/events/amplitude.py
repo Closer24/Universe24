@@ -195,10 +195,34 @@ def rungs(weights: list[tuple[int, int]], steps: int) -> tuple[list[int], tuple[
 
 
 def choose(found: list[int], u: int) -> int | None:
-    """The cell of u: the first k with u < b_k (b_{k-1} <= u by the
-    rungs' monotony); None when the ladder is empty."""
+    """The cell of u by the rungs: the first k with u < b_k (b_{k-1} <= u
+    by the rungs' monotony); None when the ladder is empty. The report's
+    form; the click reads `cell_of`, the same cell without the division."""
     for k, b in enumerate(found):
         if u < b:
+            return k
+    return None
+
+
+def cell_of(weights: list[tuple[int, int]], steps: int, u: int) -> int | None:
+    """The cell of u as the comparison of two products (the fraction-free
+    law, 2026-09-20, BEAM_LAW note 41 (v); the mathematician's FORM.md
+    section 5): the first k with 2 T u + T <= 2 N C_k, C_k the cumulative
+    weight over the cells' common denominator and T the total, which is
+    u < b_k for the rung b_k = (2 N C_k + T) // (2 T) at the nearest
+    integer, no division and no rounding, the same integers as `choose`
+    on `rungs`; None when the ladder is empty (T = 0)."""
+    denominator = 1
+    for _, m in weights:
+        denominator = lcm(denominator, m)
+    total = sum(n * (denominator // m) for n, m in weights)
+    if total == 0:
+        return None
+    threshold = 2 * total * u + total
+    cumulative = 0
+    for k, (n, m) in enumerate(weights):
+        cumulative += n * (denominator // m)
+        if threshold <= 2 * steps * cumulative:
             return k
     return None
 
@@ -675,7 +699,8 @@ class Layer:
             cells = self.cells(found)
             weights = [(numerator, multiplicity) for _, numerator, multiplicity, _ in cells]
             ladder, total = rungs(weights, self.steps)
-            k = choose(ladder, found.u) if total[0] else None
+            # The cell by the comparison of products; the rungs a report.
+            k = cell_of(weights, self.steps, found.u)
             chosen: list[list[object]] | None = None
             weight: list[int] = [0, 1]
             windows: list[list[object]] | None = None

@@ -797,3 +797,17 @@ the features, the run, the result of the first registration, the second and
 the third runs as dated lines, the verdict as first read and its re-read
 after the later runs. This README keeps the records the entry cites: the
 derivation, the criteria, the readings of every run, and what the law lacked.
+
+## Re-read under the fraction-free law (2026-09-20)
+
+Under the fraction-free law ([BEAM_LAW note 41](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+every star's lamp stalls once over the run (9576 births of 9600 in the
+`none` worlds) and the scalar and age clocks read a changing crowd: the
+clock-free worlds keep q and H (t_0 + T_0) to the digit under the record
+click and under `doppler` (-0.108 and 1.026, +0.922 and 0.811, +1.500 and
+0.674; -0.108 and 1.026, +0.345 and 0.916, +1.190 and 0.774), the clocked
+gravity worlds move (record: +0.380 and 0.896, +0.750 and 0.858; doppler:
+-0.125 and 1.006, +0.170 and 0.972); 1362 readings inside and 6 outside
+on the nine record worlds, 1358 and 10 on the nine `doppler` worlds. The
+verdicts as re-read stand; the register entry has the numbers
+([migration](../../../docs/MIGRATION.md#the-fraction-free-law-on-2026-09-20-every-count-an-accumulator-on-the-bodys-record)).

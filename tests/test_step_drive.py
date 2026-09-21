@@ -145,14 +145,23 @@ def test_the_identity_at_a_constant_momentum(momentum, content, width):
         assert drive == -((n * momentum) % reach), n
     # The count primitive itself (record 108): the same identity, and at a
     # rate beyond the denominator (7 against 3) 2 or 3 per self-creation as
-    # by_clock gains them, the drive the remainder.
+    # by_clock gains them, the drive the remainder (the whole part, the
+    # fraction-free law's default since 2026-09-20); with `at_most` 1, the
+    # step's rule, one per self-creation and the residual kept (30 x 7 -
+    # 30 x 3 = 120 after thirty).
     drive = 0
     for n in range(1, 401):
         fired, drive = by_drive(drive, momentum, reach)
         assert fired == by_clock(n - 1, momentum, reach) and drive == (n * momentum) % reach, n
     drive, gained = 0, []
-    for _ in range(30):
+    for n in range(1, 31):
         fired, drive = by_drive(drive, 7, 3)
+        gained.append(fired)
+        assert fired == by_clock(n - 1, 7, 3) and drive == (7 * n) % 3, n
+    assert gained[:6] == [2, 2, 3, 2, 2, 3] and sum(gained) == 70 and drive == 0
+    drive, gained = 0, []
+    for _ in range(30):
+        fired, drive = by_drive(drive, 7, 3, at_most=1)
         gained.append(fired)
     assert set(gained) == {1} and drive == 30 * 7 - 30 * 3
     with pytest.raises(ValueError, match="positive denominator"):
@@ -160,6 +169,11 @@ def test_the_identity_at_a_constant_momentum(momentum, content, width):
     drive, gained = 0, []
     for _ in range(30):
         fired, drive = by_drive(drive, -7, 3)
+        gained.append(fired)
+    assert gained[:6] == [-2, -2, -3, -2, -2, -3] and sum(gained) == -70 and drive == 0
+    drive, gained = 0, []
+    for _ in range(30):
+        fired, drive = by_drive(drive, -7, 3, at_most=1)
         gained.append(fired)
     assert set(gained) == {-1} and drive == -(30 * 7 - 30 * 3)
 

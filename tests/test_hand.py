@@ -842,7 +842,8 @@ def test_the_bell_pair_with_the_hand_as_the_labels_meaning():
             simulation.step()
             assert simulation.stores[0].size == 0 or set(simulation.stores[0].hand.tolist()) == {0}
         assert simulation.layer is not None
-        gathers = [g for g in simulation.layer.gathers if 1 <= int(g["born"]) <= 64]  # type: ignore[call-overload]
+        first = (1 << 32) + 1
+        gathers = [g for g in simulation.layer.gathers if first <= int(g["record"]) < first + 64]  # type: ignore[call-overload]
         assert len(gathers) == 64
         counts = dict(Counter(outcome(g) for g in gathers))
         assert sum(v for k, v in counts.items() if k[0] == "+") == 32
@@ -894,8 +895,15 @@ def filtered_pair(rotations: bool) -> Json:
 
 
 def chosen_sets(simulation: NatureBeamSimulation) -> list[tuple[str, ...]]:
+    """The chosen sets of the lamp's first 64 records, by birth ordinal (the
+    record's identity; since the fraction-free law of 2026-09-20 a paid
+    lamp's exact clock stalls, so a tick window is not a count of births)."""
     assert simulation.layer is not None
-    gathers = [g for g in simulation.layer.gathers if 1 <= int(g["born"]) <= 64]  # type: ignore[call-overload]
+    first = (1 << 32) + 1
+    gathers = sorted(
+        (g for g in simulation.layer.gathers if first <= int(g["record"]) < first + 64),  # type: ignore[call-overload]
+        key=lambda g: int(g["record"]),  # type: ignore[call-overload]
+    )
     assert len(gathers) == 64
     return [tuple(str(item[0]) for item in g["chosen"]) for g in gathers]  # type: ignore[union-attr]
 

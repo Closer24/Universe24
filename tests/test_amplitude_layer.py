@@ -7,8 +7,10 @@ clicks), on the worlds of series L (`examples/events/amplitude/make_worlds.py`).
 The expected integers of docs/TEST_EXPECTATIONS.md ("The amplitude law: the
 layer"), written down before the first run:
 
-(a) the design's tests 1 and 3: over the 64 births of the ticks 1 .. 64 the
-    gathers per port equal the design's table (`mz_equal` D1 64, D2 0;
+(a) the design's tests 1 and 3: over the lamp's first 64 records (by birth
+    ordinal, the record's identity; born in the ticks 1 .. 65 since the
+    fraction-free law of 2026-09-20, the exact clock stalling once at
+    tick 2) the gathers per port equal the design's table (`mz_equal` D1 64, D2 0;
     `mz_half` 0, 64; `mz_quarter` 32, 32; `mz_balanced` 64, 0; `mz_345` 63,
     1; `mz_unequal_f0` 64, 0; `mz_unequal_f8` 32, 32; `mz_unequal_f16` 0,
     64; `ev_29` absorber 32, D1 17, D2 15; `ev_169` 32, 16, 16), one gather
@@ -40,7 +42,8 @@ layer"), written down before the first run:
     the cross terms of paths meeting at one Node; a face of 24 Nodes hit
     sums its Nodes' squares, coherent within a Node and incoherent across
     Nodes, the decision of 2026-09-20 on the owner's point 5); every one
-    of the 64 births gathers by tick 213; the clicks per set over the 64
+    of the 64 births gathers by tick 214 (213 until the fraction-free law
+    of 2026-09-20: the 64th record is born at tick 65); the clicks per set over the 64
     births equal the reading's on every one of the 80 sets: the wall's
     three Nodes 11, 12 and 11 (34, the share 0.528), fourteen pixels
     (15, 0.244; screen_61 twice), the faces 8 and 7 (15, 0.228); the
@@ -176,9 +179,17 @@ def observed(world: dict[str, object]) -> tuple[NatureBeamSimulation, list[dict[
 
 
 def births(simulation: NatureBeamSimulation) -> list[dict[str, object]]:
-    """The gathers of the records born in the ticks 1 .. 64."""
+    """The gathers of the lamp's first 64 records, by birth ordinal (the
+    record's identity, number 1's records 2^32 + 1 .. 2^32 + 64): since the
+    fraction-free law of 2026-09-20 a paid lamp's exact clock stalls (on
+    these worlds once, at tick 2), so the 64 births span the ticks 1 .. 65
+    and a tick window is not a count of births."""
     assert simulation.layer is not None
-    return [g for g in simulation.layer.gathers if int(g["born"]) <= BIRTHS]  # type: ignore[call-overload]
+    first = (1 << 32) + 1
+    return sorted(
+        (g for g in simulation.layer.gathers if first <= int(g["record"]) < first + BIRTHS),  # type: ignore[call-overload]
+        key=lambda g: int(g["record"]),  # type: ignore[call-overload]
+    )
 
 
 def clicks(gathers: list[dict[str, object]]) -> dict[str, int]:
@@ -293,7 +304,10 @@ def test_the_two_slits_at_a_low_rate_against_the_reading_of_one_birth():
     simulation = run_world(GENERATOR.two_slits_low())
     gathers = births(simulation)
     assert len(gathers) == BIRTHS
-    assert max(int(g["tick"]) for g in gathers) == 213  # type: ignore[call-overload]
+    # The 64th record is born at tick 65 (the exact clock's stall at tick
+    # 3) and gathers at 214 (213 for a birth at tick 64 until the
+    # fraction-free law of 2026-09-20).
+    assert max(int(g["tick"]) for g in gathers) == 214  # type: ignore[call-overload]
     first = gathers[0]
     assert first["u"] == 0 and first["born"] == 1
     names = [cell[0][0][0] for cell in first["cells"]]  # type: ignore[index]
