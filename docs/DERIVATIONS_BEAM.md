@@ -69,6 +69,7 @@ at its first use. The recurring symbols:
 | sigma_j | map | the j-th Galois conjugate of the evaluation `ev` (section 6.5) |
 | Lambda_c | scalar | a column's declared bound on the branch |
 | f | element | a record's rows at a Node as an element of the group ring `Z[Z_N]` |
+| beta, `R_ret`, `n_ret` | scalar, scalar, vector | the speed over the pace of a row `v / c`; the distance from a moving source's retarded position; the unit vector from it (section 12) |
 
 The reference tree is `main` at `f89884f0` (the law as landed on 2026-09-20,
 BEAM_LAW notes 1 to 40); where the fraction-free branch
@@ -80,7 +81,7 @@ cited as orders, not as code.
 
 Section 0 states the law as one operator with its two blocks and places
 every result under its block (the owner's second pass, record 167 as the
-Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events). The
+Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field). The
 targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
@@ -2620,3 +2621,309 @@ evaluation at `zeta_N`. **Not removable**: the events and their order
 (LOCALITY-1), and the feedback block's iteration (record 181), the linear
 block's closed form being the case of no event. The count on the
 register is the table of 11.4.
+
+## 12. Lorentz from the delay field, without a seventh verb
+
+**The question** (the owner's, 2026-09-21, translated: "so how do we solve
+Lorentz?"; the Boss's item, record 200). **The claim to prove or refute**:
+gamma (the Lorentz factor) is not an operation of the law but the limit
+of a quantity the GameBoard computes in the feedback block, from three
+things already decided (c as the cap of every body's drive, record 186;
+the push retarded at c, section 5; the pair in motion of section 10) and
+one vector operation to add, the aberration of a moving body's fan. The
+host script beside this document,
+[lorentz_field.py](designs/derivations_beam/lorentz_field.py) with its
+output [lorentz_field.out](designs/derivations_beam/lorentz_field.out),
+makes every check below on the engine's own flight table (the register's
+deuteron fan), a host computation and no run. Throughout, beta (the
+speed over the pace of a row, `v / c`) is the body's speed as a fraction
+of the rows' pace, `R_ret` the distance from the retarded position of
+the source (where it was when the rows now arriving were released), and
+`n_ret` the unit vector from that position.
+
+### 12.1 The field of a moving source: the law's push in the continuum limit
+
+**(1) c as the cap.** Under form B (record 186, light_speed/FORM.md
+section 3) a body walks the digital line of its momentum's direction at
+the Manhattan pace `|p|_1 S_1 Q / (Q S M S_1 Q + |p|_1 T_D)`, a fraction
+of a row's pace on that line, never above it: `beta = |p|_1 T_D / (Q S M
+S_1 Q + |p|_1 T_D)`, an exact rational of the state. A body moving at
+`1 / k` Links per interval on a heading has `beta = (1 / k) / (32 / 55)`:
+0.4297 at k = 4, 0.2148 at k = 8 (section 10.2's cases).
+
+**(2) The retarded field of a moving source.** Let a source of the law
+move uniformly at the velocity **v** and release q rows per interval on a
+fan of every direction (the limit of section 3.2), each row flying at c
+on its line and carrying its age. As built the fan is released
+isotropically in the lattice's frame whatever the body's momentum (the
+directions are the table's, `nature_beam.py:3628-3644`), and the release
+rate is the same at every speed (the counter, HYPOTHESES 21, section
+4.3). The rows released at the time `t'` from the position `v t'` are, at
+the time t, on the sphere of radius `c (t - t')` about that position; the
+shells of successive `t'` are not concentric, and at a point **x** their
+spacing along the ray is `c (1 - n_ret . beta) dt'` (the derivative of
+`c (t - t') - |x - v t'|` in `t'`), so the rows dwelling at **x** are
+
+    P(x, t) = q dwell / (4 pi R_ret^2 (1 - n_ret . beta)),   R_ret = c (t - t_ret),   |x - v t_ret| = R_ret,
+
+the presence of section 5.1 with the retardation factor of a moving
+source, and the age they carry is `R_ret / c`, so the age moment is
+
+    A(x, t) = P x R_ret / c = q dwell / (4 pi c (1 - n_ret . beta) R_ret).
+
+That is the Lienard-Wiechert scalar potential of a uniformly moving point
+source: the law's retarded potential of section 5.1 (the retarded
+Green's function of the wave operator, `A` obeying `(1 / c^2) d^2 A /
+dt^2 - Laplacian(A) = (dwell / c) q delta(x - v t)`) evaluated on a
+moving source. With the classical identity, checked in the script on a
+thousand random points and speeds to `10^-15`,
+
+    (1 - n_ret . beta) R_ret = sqrt(x_par^2 + (1 - beta^2) x_perp^2)      (x from the PRESENT position, x_par along the motion),
+
+the equal-age-moment surfaces are the ellipsoids `x_par^2 + (1 - beta^2)
+x_perp^2 = const`, contracted along the motion by `sqrt(1 - beta^2)`:
+Heaviside's ellipsoid, exactly, in the continuum limit of the law's own
+readings. **Reached** for the potential: the delay field of a moving
+source is the retarded field of the wave equation at c, and its
+equipotentials are contracted by `1 / gamma`. The equal-PRESENCE surfaces
+are not ellipsoids (`(1 - n_ret . beta) R_ret^2` is no quadric): the
+question's "equal-presence surfaces" holds for the age moment, the
+potential, and not for the presence, the flux.
+
+**The push is not the classical force.** The flow a body reads is the
+arriving rows' labels per interval, along `n_ret` (the rows come from
+the retarded position) with the magnitude of the presence times the
+encounter rate; a partner co-moving with the source meets the rows at
+the rate `(1 - n_ret . beta)` times their density (under the `doppler`
+key exactly, `flux_pair`, `nature_beam.py:2075-2103`; without the key
+through the count of arrivals at its Node per interval), so it reads
+
+    rows received per interval = q a^2 / (4 pi R_ret^2)   along n_ret,   a the Link,
+
+the plain inverse square of the RETARDED distance. The classical field
+of a uniformly moving charge is `E = q (n_ret - beta) / (4 pi eps (1 -
+n_ret . beta)^3 R_ret^2)`, which points from the present position and
+carries the magnetic term; the law's push has no `- beta` term and no
+cube of the retardation factor: it points to the retarded position. For
+a co-moving pair at the separation d along the motion the retarded
+distances are `d / (1 - beta)` to the front body and `d / (1 + beta)` to
+the rear one, so the two internal pushes are
+
+    forward (on the front body)  (1 - beta)^2 x the rest rate,   backward (on the rear body)  (1 + beta)^2 x the rest rate:
+
+0.325 and 2.044 at beta = 0.4297, 0.617 and 1.476 at 0.2148. An
+attracting pair in motion pulls its rear body forward harder than its
+front body back: a net push on the pair of `4 beta` times the rest push
+along the motion, at first order in beta, and the field's momentum that
+would balance it is not booked (a free release takes no recoil,
+`nature_beam.py:3958-3962`: "a free release is the field and takes
+none"), so the momentum of bodies and field is not conserved for a pair
+in motion. Transverse, at the separation d across the motion, `R_ret =
+gamma d` and the rate is `(1 - beta^2)` times the rest rate (0.815 and
+0.954), the push along `n_ret`, tilted backward by the angle whose sine
+is beta: a drag on a transverse pair of `beta` times the push, at first
+order. The classical field gives the longitudinal force `(1 - beta^2)`
+and the transverse `1 / gamma` (0.903 and 0.977), both along the present
+separation, no net force and no drag. **Different law** for the force
+between co-moving bodies: the retarded flux, first-order asymmetric and
+dragging, where the classical field is symmetric.
+
+**The bound pair's separation.** Every column of the law is an inverse
+square with the one constant G (section 3.4: the ratio of two columns'
+pushes is `-rho_A rho_B` at every r), so two bodies have no equilibrium
+separation from their pushes: they attract or repel at every distance,
+and a bound pair is held by the contact (one Link, the refused step,
+section 10.2) or by a family's lifetime L (whole Links). There is no
+force balance to contract: the question "does the equilibrium separation
+contract by `1 / gamma`" has no object in the law. **Refuted** for the
+contraction, by absence: the bond is a whole Link.
+
+**Where the law differs from the classical field, named.** (i) The push
+reads the retarded flux along `n_ret`, not the gradient of the retarded
+potentials with the vector potential: no magnetic term, no `(n_ret -
+beta)`. (ii) The fan is isotropic in the lattice's frame: the preferred
+frame is the frame of emission. (iii) The flight is Manhattan on the
+lattice, Euclidean to `T_D`'s 1.35 percent per direction, and the fan's
+grain (290 directions on the register) sets the angular resolution of
+`n_ret`. (iv) The counter's rate is one at every speed.
+
+### 12.2 Aberration: the missing vector operation, its integer form, and what it costs
+
+**The rule.** A moving body's released direction is the fan's direction
+plus its velocity, brought to the table's nearest direction by the exact
+comparison. With the row's velocity `(Q / T_D) D` on the direction **D**
+(BEAM_LAW note 38) and the body's velocity **v** `= p S_1 Q / (Q S M S_1
+Q + |p|_1 T_(D_p))` under form B (a rational vector: the numerator vector
+`N_v = p S_1 Q`, the denominator `W`), the aberrated vector is the
+integer vector
+
+    w = Q W D + T_D N_v,        D' = the table's direction nearest to w: (w . D')^2 |D''|^2 >= (w . D'')^2 |D'|^2 for every D'', w . D' > 0,
+
+no root (FORM.md section 3's choice of the drive's line, with w in place
+of **p**; w shifted to components within `2^20` as that choice shifts
+**p**, since `Q W` reaches `2^58` on the register's contents), a
+translation (T) and a comparison (D): one of the six. At the register's
+speeds `v = 1 / k` on a heading, `w = k Q D + T_D e_x`.
+
+**In the continuum limit.** The map `n -> (n + beta e_x) / |n + beta
+e_x|` (the Galilean aberration; the rows still fly at c on the new
+direction) changes the fan's density per steradian by the Jacobian `J =
+(1 + 2 beta cos theta + beta^2)^(3/2) / (1 + beta cos theta)` at the fan
+angle theta that maps to the arrival direction: `(1 + beta)^2` forward,
+`(1 - beta)^2` backward, `(1 + beta^2)^(3/2)` near the transverse. The
+co-moving exchange rates become
+
+    forward (1 + beta)^2 (1 - beta)^2 = (1 - beta^2)^2,   backward the same,   transverse J (1 - beta^2):
+
+0.910, 0.910, 1.023 at beta = 0.2148 and 0.665, 0.665, 1.083 at 0.4297,
+against the classical `(1 - beta^2)` = 0.954, 0.815 and `1 / gamma` =
+0.977, 0.903. The first-order self-force of 12.1 vanishes (the two
+internal pushes are equal); the transverse drag stays (the push is still
+along `n_ret`); the longitudinal rate is the square of the classical
+one, the transverse above one where the classical is below. **Lossless
+in the limit** in the sense asked: every row aimed at the partner's
+arrival point reaches it, the fall of the rate being the geometry of the
+retarded distance, not a miss, and the fan's grain the only loss.
+
+**On the lattice at one Link** (the register's bond), by the flight table
+at k = 4 and 8, the exchange counted as in section 10.2 (the script
+reproduces 10.2 first: 57 first-Link directions, 4 and 13 rows to Node 2
+at ages 2 and 3, 188 and 416 forward per cycle, 152 and 340 transverse),
+then with every direction replaced by its aberrated one:
+
+| k | `v / c` | first-Link +x directions (rest 57) | rows to Node 2 at age 2 / 3 (rest 4 / 13) | forward received per cycle (rest 188, 416) | backward: first-Link -x directions (rest 57), received per cycle (rest 228, 456) | transverse: first-Link +y (rest 47), to (1, 1, 0) at age 2 / 3 (rest 10 / 1), received (rest 152, 340) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 4 | 0.4297 | 93 | 8 / 17 | 304 | 29; 116 | 45; 22 / 0; 157 |
+| 8 | 0.2148 | 73 | 8 / 17 | 536 | 41; 328 | 47; 18 / 0; 347 |
+
+At one Link the aim is all-or-nothing on the first Link (the on-axis
+partner is hit by the first Link alone), and the whole fan tilts forward:
+the forward exchange gains (304 of the rest 228 sent per cycle at k = 4)
+and the backward one is starved (116 of 228; 29 first-Link -x directions
+of 57). The lattice's exchange under the rule is not lossless and not
+symmetric: it is asymmetric the other way, by the first-Link rule, not
+by the continuum's geometry. The rest counts stand on the register (the
+push from tick 2, 0 steps); the aberrated ones are pinned in 12.4.
+
+**The recoil.** A paid emitter takes as its recoil the momentum less
+the born rows' labels (`nature_beam.py:3958-3966`); at rest the fan's
+labels sum to 0, and the aberrated fan's sum to `5156` (k = 4) and
+`2980` (k = 8) label units on +x per unit of amount on each direction
+born (the continuum's `(2 / 3) K beta Q` = 5317 and 2658). So a lamp in
+motion takes a recoil against its motion at every birth: momentum is
+conserved between the lamp and its rows exactly, and the lamp is slowed
+by its own light unless the content it pays per birth lowers its wall
+`Q S M` in the same proportion, which happens only if `h s S c = 2 / 3`,
+a coincidence of declared constants (the content and the momentum of a
+body are untied, section 6.4: the law has no `E = m c^2`). A free
+family's release takes no recoil, so an aberrated field carries net
+momentum forward, created and unbooked, the first-order asymmetry of
+12.1 replaced by an unbalanced field. The rule costs momentum
+conservation between bodies and field in one form or the other; the
+choice of which is the owner's, not derivable.
+
+### 12.3 The bond clock under (1) to (3)
+
+**The continuum.** The exchange's transits along the motion are `d / (c
+- v)` forward and `d / (c + v)` back, the round trip `2 d c / (c^2 -
+v^2) = gamma^2 x 2 d / c`; across the motion the retarded distance is
+`gamma d` each way, the round trip `gamma x 2 d / c`: the ether light
+clock, `gamma^2` along and `gamma` across, with or without the aberration
+(the aberration changes which rows arrive, not when). Lorentz's own
+argument makes the two equal by contracting the longitudinal arm by `1 /
+gamma`, and 12.1 finds no object to contract: the bond is a whole Link.
+So under (1) to (3) the bond clock slows anisotropically, `gamma^2`
+along and `gamma` across, and the body's own counter does not slow at
+all (section 4.3). At beta = 0.4297: 1.226 along, 1.107 across; at
+0.2148: 1.048 and 1.024.
+
+**On the lattice** (the script, k = 4 and 8): the round trip along the
+motion is `1.375` and `1.175` times the rest value with the aberration
+(1.383 and 1.173 as built, section 10.2), the transverse mean transit
+`1.140` and `1.052` (1.079 and 1.035 as built): farther from `gamma` than
+the continuum's ether clock, by the whole-Link steps and the first-Link
+rule, as section 10.2 found; the aberration moves the transverse period
+away from `gamma` (its rows arrive at age 2 in place of 1).
+
+**The root.** `gamma` appears in the transverse period, `2 gamma d / c`,
+and in the law it appears there without a seventh verb: the row aimed at
+the transverse co-moving partner flies the direction `(beta, sqrt(1 -
+beta^2))`, whose Euclidean length the flight table holds as `T_D =
+isqrt(3 |D|^2 Q^2)`, the root taken once at load (section 1.5, class R
+at load), and the digital line's Links realise it interval by interval.
+The root is in the closed form of the transit and in the table's
+constant, never an operation at run time: the point section 10.4 made
+for the contraction holds here in the other direction, for a period. What
+the board iterates the pair to is not a contracted equilibrium (there is
+none) but the anisotropic ether clock.
+
+**Section 10 reconciled.** The rigid-bond result stands: 1.383 at 0.43 c
+as built, 1.375 with the aberration, against `gamma` 1.107 and `gamma^2`
+1.226. The contraction is a root of the state in the exact sense that a
+rule imposing it needs the seventh verb (lorentz-v1); the transverse
+exchange shows `gamma` without the verb because the root sits in the
+flight table; and no quantity of the feedback block converges to
+`gamma` as an isotropic slowing of a body's own clock.
+
+### 12.4 The pins for the run, written before it
+
+The physicist's pair in motion (section 10.5) under form B and the
+aberration rule of 12.2: the geometry of `deuteron_1_kick`, both
+nucleons kicked +x, the crossing rule and form B built, the aberration
+rule as stated, 200 intervals. Under form B the momentum that gives `v =
+1 / k` on a heading is `|p| = Q S M x Q / (k Q - T_D)` with `T_D = 110`:
+`1.383 x 10^13` at k = 4 and `5.03 x 10^12` at k = 8 (`Q S M = 3.156 x
+10^13`); the counts below are integers of the flight table (no
+tolerance), the continuum comparisons carry the flight's 1.35 percent
+on c (`beta` 0.424 to 0.436 at k = 4, `gamma` 1.104 to 1.110, `gamma^2`
+1.219 to 1.233).
+
+| k | `v / c` | separation | ticks per cycle per body | forward received per cycle | backward received per cycle | transverse received per cycle | mean forward transit | round trip, x rest | lost per cycle on the border, forward |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 4 | 0.4297 | 1 Link for k - 1 ticks, 2 for one (mean 1.25) | 4 (the counter) | 304 (188 as built) | 116 (228) | 157 (152) | 1.750 (1.766) | 1.375 (1.383) | the 93 first-Link rows of tick 0 less the 25 that reach: 68 |
+| 8 | 0.2148 | 1 Link for k - 1 ticks, 2 for one (mean 1.125) | 8 | 536 (416) | 328 (456) | 347 (340) | 1.351 (1.346) | 1.175 (1.173) | 73 - 25 = 48 |
+
+What refutes 12.2 and 12.3: a forward count at k = 4 other than 304 (the
+rule as stated and the pair moving front-then-rear as in 10.2; the
+leapfrog of 10.5 (3) is the pinned alternative), a backward count other
+than 116, a transverse count other than 157, or a body's tick count
+other than 4 per cycle (which would refute section 4.3 first). What
+refutes 12.1's continuum: a pair whose separation, held at two Links or
+more by a lifetime, shows a net push along its motion other than `4
+beta` times the rest push at first order (the doppler key off), or a
+transverse pair with no drag.
+
+**The muon of J4 as a bond clock.** The muon of HYPOTHESES 21 is one
+body with no partner: no exchange, no bond clock; under (1) to (3) its
+`become` at 64 turns fires at tick 64 at every speed (the counter), and
+it reads `gamma` (ticks 71 and 126 at `f_c` 0.43 and 0.86) only under
+lorentz-v1's seventh verb. Read as a bond clock it would need a partner
+exchanging rows and would then slow by the exchange, `gamma^2` along
+and `gamma` across in the limit (`1 + 2 / k` on the lattice at one
+Link), anisotropically: nature's muon slows by `gamma` isotropically,
+which is not a bond clock's slowing in this law.
+
+### 12.5 The verdict of section 12
+
+**Partial**, in these lines. (i) **Reached**: the age moment of a moving
+source is the Lienard-Wiechert potential, the retarded field of the wave
+equation at c whose equipotentials are Heaviside's ellipsoids contracted
+by `1 / gamma`, from the law's own readings in the limit. (ii)
+**Different law**: the push is the retarded flux to the retarded
+position with no magnetic term, so the pushes between co-moving bodies
+are `(1 -+ beta)^2` asymmetric as built (a self-force of `4 beta` on a
+moving pair, the field's momentum unbooked) and `(1 - beta^2)^2`
+symmetric with the aberration, never the classical `(1 - beta^2)` and
+`1 / gamma`; a transverse pair is dragged. (iii) **Refuted** for the
+contraction: no equilibrium separation exists to contract, the bond
+being a whole Link of the contact or a lifetime. (iv) The aberration
+rule is one of the six (a translation, then the comparison), lossless
+in the limit; at one Link it starves the backward exchange (116 of 228
+at k = 4) and gives a lamp a recoil of 5156 label units per unit born.
+(v) The bond clock slows by `gamma^2` along and `gamma` across in the
+limit and by 1.375 and 1.140 at k = 4 on the lattice; `gamma` enters the
+transverse period through the flight table's root at load, in the
+closed form and never as an operation. (vi) The seventh verb is not
+needed for `gamma` to appear in a period; it is needed for `gamma` to
+slow a body's own counter or to contract its bond (lorentz-v1), which
+nothing of the six derives.
