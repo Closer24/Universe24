@@ -167,6 +167,7 @@ def expectations() -> Json:
                 "delay_bracket": DELAY_BRACKET,
                 "lamp_rate": pin["lamp_rate"],
             }
+    out["run_2026_09_21"] = RUN_2026_09_21
     for name, pin in PINS.items():
         out["ratios"][name] = {
             "shift_f2_over_f1": pin["shift"][2] / pin["shift"][1],
@@ -175,6 +176,42 @@ def expectations() -> Json:
             "bracket": RATIO_BRACKET,
         }
     return out
+
+
+# The run of 2026-09-21 on branch optical-v1 (the README's measured section;
+# DETECTOR unless marked), typed from the readings tools, the register's
+# convention for a run block: the centroid's shift in pixels and the delay
+# in intervals against the control, and the chief physicist's reading of
+# record 483 (the rule and the pins unchanged).
+RUN_2026_09_21: dict[str, object] = {
+    "branch": "optical-v1",
+    "read_by": "tools/lensing_readings.py --no-replay (DETECTOR); tools/optical_readings.py (GAMEBOARD)",
+    "worlds": {
+        "mass_g0": {"shift": -1.607, "delay": 2.89, "clicks": 1396, "taken_by_the_mass": 0},
+        "mass_g1": {"shift": -3.812, "delay": 5.87, "clicks": 1385, "taken_by_the_mass": 0},
+        "near_g0": {"shift": -2.992, "delay": 2.40, "clicks": 1456, "taken_by_the_mass": 0},
+        "near_g1": {"shift": -4.654, "delay": 4.97, "clicks": 1122, "taken_by_the_mass": 398},
+    },
+    "ratios": {
+        "mass": {"shift_f2_over_f1": 2.37, "delay_f2_over_f1": 2.03},
+        "near": {"shift_f2_over_f1": 1.56, "delay_f2_over_f1": 2.07},
+    },
+    "gameboard_mean_transverse_angle_degrees": {
+        "mass_g0": -4.181,
+        "mass_g1": -8.680,
+        "near_g0": -6.854,
+        "near_g1": -11.955,
+    },
+    "note": (
+        "the chief physicist's reading (record 483): the wall's factor read as Shapiro's (the "
+        "delays' ratios inside 2.00 +- 0.25); the shifts inside 0.5 pixel in three of four, near "
+        "at f = 1 missed by 0.07 by the beam's width at b = 3 (the pin one line); the shifts' ratio "
+        "not read at this fan (the teeth 2.39 / 4.76 / 11.31 degrees, the bisectors 3.58 / 8.04; the "
+        "ratio's bracket 0.25 not derivable from the shifts' 0.5 pixel, the propagated 0.58 / 0.46, "
+        "a fact of the pin as written, which stays and is refuted at 0.25); the near f = 2 shift a "
+        "survivors' reading (398 taken); verb 3's form the model owner's decision on his return"
+    ),
+}
 
 
 def main() -> None:

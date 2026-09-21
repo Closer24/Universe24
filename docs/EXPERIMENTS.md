@@ -6697,23 +6697,35 @@ sequential gates on an entangled record, the full register replay.
   reaching the screen and 398 of the beam's clicks taken by the mass
   (the beam bent into it); the ratios f = 2 over f = 1: the delays 2.03
   (`mass`) and 2.07 (`near`), the pinned 2.00 within 0.25; the shifts
-  2.37 (`mass`) and 1.56 (`near`), outside the bracket. What the run
-  decides: the delay's factor 2 is reached at both impact parameters (the
-  wall's coefficient 1 + gamma read as Shapiro's), and the shift's factor
-  is not read to 0.25 at this fan (a single row turns whole fan steps
-  when its momentum crosses a bisector, the note's verb 3; the centroid
-  of a beam of five directions moves in the fan's comb, the light-bending
-  note's section 4), the mean of the four shifts inside the pins to 0.5
-  pixel; the widths of the arrival grow with f (0.514 / 0.833 and 1.371 /
-  2.326 pixels rms). Not decided by the run: whether the fan's grain is
-  the design's to widen (a denser fan, the note's second pin) or the
-  turn's to dither (the earlier design's wheel), a question for the
-  physicist through the Boss. The readings with every column in
-  [the worlds' README](../examples/events/optical/README.md); the gate
-  set byte identical without the key.
-- **Verdict.** The wall's factor reached (the delay 2.03 and 2.07 for
-  2.00); the turn's factor not reached at this grain (2.37 and 1.56 for
-  2.00 within 0.25): a hypothesis under its own identity, nothing of it
+  2.37 (`mass`) and 1.56 (`near`), outside the bracket. Read by the chief
+  physicist (record 483; the rule and the pins unchanged, no second run),
+  in this order: the wall's factor is read as Shapiro's (the delays'
+  ratios inside 2.00 +- 0.25, DETECTOR); the shifts are inside 0.5 pixel
+  in three of four, `near` at f = 1 missed by 0.07 with the beam's width
+  at b = 3 as the cause (the pin one line, the beam's five directions
+  passing the mass at b + (0, +-1.08, +-2.17) Links); the shifts' ratio
+  is not read at this fan, the teeth 2.39 / 4.76 / 11.31 degrees and the
+  bisectors 3.58 / 8.04 named (the pinned angles 4.25 and 8.48 degrees at
+  b = 6 beside the bisectors, `mass` a mixture of rows ending at 2.39 and
+  4.76 at f = 1 and at 4.76 and 11.31 at f = 2: the ratio 2.37 the comb's,
+  right and not a bug), and the bracket's inconsistency named as a fact
+  of the pin (0.25 against the propagated 0.58 / 0.46 from the shifts'
+  0.5 pixel each; the pin stays as written and refuted at 0.25); the
+  `near` shift at f = 2 a survivors' reading (398 taken). The bounded
+  diagnostic (GAMEBOARD, `tools/optical_readings.py`): the mean transverse
+  angle of **P** before the screen -4.181 / -8.680 degrees (`mass`, the
+  ratio 2.076) and -6.854 / -11.955 (`near`, 1.744, the survivors), verb
+  2's arithmetic read back to itself, nothing about where the light
+  arrives. The design decision on verb 3's form (the label's Bresenham on
+  the line of **P**, the physicist's recommendation, or a denser fan) is
+  on the model owner's return list; nothing of it built. The readings with
+  every column in [the worlds' README](../examples/events/optical/README.md);
+  the gate set byte identical without the key.
+- **Verdict.** The wall's factor reached (the delays 2.03 and 2.07 for
+  2.00); the turn bends the beam toward the mass at every f with the shifts
+  inside 0.5 pixel in three of four; the shifts' ratio not read at this
+  fan (2.37 and 1.56 for 2.00 within 0.25, the comb's, inside the
+  propagated bracket): a hypothesis under its own identity, nothing of it
   in the law, gamma an input of the world.
 
 ### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
