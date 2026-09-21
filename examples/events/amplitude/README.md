@@ -287,6 +287,94 @@ the click (2026-09-21, BEAM_LAW note 45) the pair form's click lines carry
 23 mod 64 at both as the walk's 3 x 29, the remainders 42 / 64 and 96 / 128
 (`expectations.json` under `cone.exact`); the integer form writes none.
 
+## A12 under the click: Malus's law from the table entries in force
+
+**The order.** The model owner's go on Malus (record 330 of
+docs/LOG_2026-09-20.md, on the programs of record 300, item 11); the
+mathematician's note [docs/designs/malus/NOTE.md](../../../docs/designs/malus/NOTE.md)
+(the verdict: a polariser is built from the entries in force, no feature
+11; the three worlds of its section 2; the pin of its section 3 from its
+`malus_map.py`) is the pin. No `src/` change, no new key; the register's
+entry is [A12](../../../docs/EXPERIMENTS.md#a12-maluss-law-and-the-three-polarizer-chain-after-feature-11).
+
+**The worlds** (the note's section 2; the generator's `malus_worlds`):
+one bar `[7, 1, 1]`, N = 256 (the half-angle tables of 2N = 512 exist), K
+and the lamp's content as `rotations_3`'s (2^50), `release` [0, 1], 300
+intervals (256 births at the rate [1, 1], six Links of flight, the
+completions). The lamp at x = 0: `light`, the rate [1, 1], the wheel
+[159, 256] (159 the odd integer nearest to 0.618 x 256; u = ordinal x 159
+mod 256 runs over every residue once), the direction +x, no `branches`
+(every row born on the label 0, along y). World `malus_c` alone: at x = 2
+a measured event of `light` with `{light: {rule: rerelease, rotate:
+{setting: 64}}}` on +x, the first polariser at 45 degrees (in `malus_a`
+and `malus_b` the polariser at 0 degrees is the born axis). At x = 4 a
+counter with `{light: {rule: read}}` and the detector `first` reading
+`sum`: the projection, the pass label 0 and the absorbed label 1, whose
+rows go on to the end and click in their own cells (no body sinks them;
+the detector counts them). At x = 6 a counter with `{light:
+{phase_window: s}}` and the detector `second` reading `sum`, the last
+polariser: s = 64 in `malus_a` (one polariser at 45 degrees), 128 in
+`malus_b` (two crossed), 64 in `malus_c` (a third at 45 degrees between
+two crossed). A chain of rotations without a read composes to one
+rotation (`rotations_3`); the read is what carries the intermediate angle.
+
+**The reading, named before the run.** The `gather` lines' `chosen`
+[set, arm, channel] per record: the cell named by the read's label and
+the end's channel (`0+`, `0-`, `1+`, `1-`), the pass the cell `0+`; the
+counts over the records of the ordinals 1 .. 256 (DETECTOR). The books
+(GAMEBOARD) at every interval. The `split` lines at x = 2 in `malus_c`,
+for whether the rotate keeps the record's u or counts a rebirth (BEAM_LAW
+note 46): the re-emitter's record lines.
+
+**Pinned before the run** (the note's section 3; `expectations.json`
+under `malus`, the cells' weights the products of the tables' entries,
+C'[64] = S'[64] = 181, C'[128] = 0, S'[128] = 256, the counts the click's
+rungs b_k = (2 W C_k + T) // (2 T) over W = 256 births, the amount and
+the read's factor cancelling in the rungs):
+
+| world | the entries | the cells' weights | the rungs | the counts (DETECTOR, expected) | Malus |
+| --- | --- | --- | --- | --- | --- |
+| `malus_a` | the read, the window 64 | 0+ 181^2, 0- 181^2 | 0, 128, 256 | 0+ 128, 0- 128 | 1/2: 128 of 256, exact |
+| `malus_b` | the read, the window 128 | 0+ 0, 0- 256^2 | 0, 0, 256 | 0+ 0, 0- 256 | 0: exact |
+| `malus_c` | the rotate 64, the read, the window 64 | 0+, 0-, 1+, 1- 181^4 each | 0, 64, 128, 192, 256 | 0+ 64, 0- 64, 1+ 64, 1- 64 | 1/4 of the births, 1/2 of the 128 the first passed: exact |
+
+The fail clauses, A12's as the note states them: `malus_c` passing 0 or
+128 in the cell 0+ (the intermediate angle not carried); `malus_a`
+passing other than 128; `malus_b` passing other than 0; any cell off its
+rung width; the books not conserved at every tick; a `split` line off
+the design's two rows per row.
+
+**Run (2026-09-21, each world once through the runner, 300 intervals,
+1.4 to 1.7 s each, the source `e81a378ceec0b7f8...`, the initializations
+`eab7bb354b3459ac...`, `1075554cf04a7ee2...`, `f6a2dc74887ffdb5...`;
+completed and conserved at every tick).**
+
+    PYTHONPATH=src python -m event_universe --init examples/events/amplitude/malus_a.json --output artifacts/malus_a
+
+and the same for `malus_b` and `malus_c`; the run's `world` holds the
+gathers. DETECTOR: over the records 1 .. 256 (u over every residue once in
+each world; one cell list per world, the registered rungs on every
+gather) `malus_a` 0+ 128, 0- 128; `malus_b` 0+ 0, 0- 256; `malus_c` 0+
+64, 0- 64, 1+ 64, 1- 64: every pin met exactly, none moved; over every
+record gathered by the end (299 born, 289 gathered, 10 open at the end;
+the first gather at tick 11) 145 / 144, 0 / 289 and 73 / 72 / 72 / 72,
+every cell within its rung width. GAMEBOARD: the books balanced at every
+one of the 300 intervals. The u question: the rotate keeps the record's
+u and counts no rebirth; the 592 `split` lines at x = 2 of `malus_c` (two
+per arriving row, 296 records) carry `rebirth` False, the record's own
+identity and its birth u; the `rotate` line 2 rows, the record's units 1
+to 362 (181 + 181 at the multiplicity 65536); the `read` line at x = 4
+sees the record's two rows, the labels 0 and 1 at the amount 181, the
+phases 0 and 128 (the set bit a half turn on). Note 46's rebirth is a
+re-emitter chosen by a click, not a rotate on the GameBoard. **Verdict:
+PASS** on every clause in the three worlds. **The limit:** one which-path
+read per arm with a rotation before it; the four-polariser chain of A12
+at 22.5-degree steps needs a second read after a rotate and is not
+covered (the note's section 1); the tables' rounding shows at 22.5
+degrees (219 of 256 against cos^2 = 0.8536, the note's section 3), not
+run here. `tests/test_amplitude_malus.py` derives the pin from the worlds
+and the engine's tables and replays the three worlds against the register.
+
 ## The pages with a moving picture (2026-09-21)
 
 The folder `pages/` holds two pages for the model owner (visualisation

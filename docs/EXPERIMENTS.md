@@ -6069,6 +6069,60 @@ sequential gates on an entangled record, the full register replay.
   once on the feature's commit and once more on the merge with `main`
   (PRs #246 to #248, records byte for byte the same in every number that
   the analysis reads), and the second run is the one recorded.
+- **Re-run under the click, from the table entries in force (2026-09-21;
+  the model owner's go, record 330 of the log of 2026-09-20; the
+  mathematician's note [docs/designs/malus/NOTE.md](designs/malus/NOTE.md),
+  the physicist's pin; the experimenter).** The crowd-form run above is
+  history (its feature `ray-polarization-v1` is deleted; NATURE row 9 read
+  NOT YET). The note's verdict: a polariser is built from the entries in
+  force, no feature 11: the rotation of the row's label bit by a declared
+  setting (`rotate` on the GameBoard, or a `sum` set's window at the end)
+  followed by the which-path `read` at a `sum` set, the entries the Bell
+  counters and the which-path world of L3 use; the absorbed rows click in
+  their own cells, no body sinks them. **The worlds** (`malus_a`,
+  `malus_b`, `malus_c`, written by the generator of series L;
+  [the README](../examples/events/amplitude/README.md#a12-under-the-click-maluss-law-from-the-table-entries-in-force)):
+  one bar of 7, N = 256, the lamp at x = 0 on the wheel [159, 256] with no
+  `branches` (every row born on the label 0), the rotate 64 at x = 2
+  (`malus_c` alone), the `read` at x = 4 (the detector `first`), the
+  window s at x = 6 (the detector `second`; s = 64, 128, 64), 300
+  intervals. **Pinned before the run** (the note's section 3; DETECTOR
+  expected: the cells named by the read's label and the end's channel,
+  the pass the cell 0+, the counts over 256 births by the click's rungs
+  on the tables' products; `expectations.json` under `malus`): (a) one
+  polariser at 45 degrees, 0+ 128, 0- 128, Malus's 1/2 exact; (b) two
+  crossed, 0+ 0, 0- 256, 0 exact; (c) a third at 45 degrees between two
+  crossed, 0+ 64, 0- 64, 1+ 64, 1- 64, the pass 1/4 of the births and
+  1/2 of the 128 the first polariser passed, exact. The fail clauses: (c)
+  passing 0 or 128 in the cell 0+; (a) other than 128; (b) other than 0;
+  any cell off its rung width; the books not conserved at every tick; a
+  `split` line off two rows per row. **Run (2026-09-21, each world once
+  through the runner, 300 intervals, 1.4 to 1.7 s each, the source
+  `e81a378ceec0b7f8`, the initializations `eab7bb354b3459ac`,
+  `1075554cf04a7ee2`, `f6a2dc74887ffdb5`; completed and conserved at
+  every tick).** DETECTOR: over the records 1 .. 256 (u = ordinal x 159
+  mod 256 over every residue once) (a) 0+ 128, 0- 128; (b) 0+ 0, 0- 256;
+  (c) 0+ 64, 0- 64, 1+ 64, 1- 64: every pin met exactly, none moved; over
+  all 289 records gathered by the end (299 born, 10 open) 145 / 144, 0 /
+  289 and 73 / 72 / 72 / 72, every cell within its rung width. The u
+  question of the note's section 2: the rotate keeps the record's u and
+  counts no rebirth (the 592 `split` lines of (c) at x = 2 carry
+  `rebirth` False, the record's own identity and its birth u, two per
+  arriving row; the `rotate` line 2 rows, the record's units 1 to 362;
+  note 46's rebirth is a re-emitter chosen by a click). GAMEBOARD: the
+  books balanced at every one of the 300 intervals. **Outcome: PASS**,
+  every clause in the three worlds: the click as built reads Malus's
+  fractions exactly at 45 and 90 degrees (the tables 181 = 181, 0 and
+  256, no rounding; the rounding shows at 22.5 degrees, 219 of 256
+  against 0.8536, the note's section 3, not run). **The limit:** one
+  which-path read per arm with a rotation before it; the four-polariser
+  chain y, 22.5, 45, 67.5, 90 degrees of the plan above needs a second
+  read after a rotate and is not covered (the note's section 1); a
+  polariser here is a rotation and a which-path read whose absorbed rows
+  click in their own cells, not a body with a sink. Nothing enters the
+  law: no identity, no key, no rule. The test
+  `tests/test_amplitude_malus.py` derives the pin from the worlds and the
+  engine's tables and replays the three worlds against the register.
 
 ### A13. Bell test with polarization settings (after feature 11)
 
