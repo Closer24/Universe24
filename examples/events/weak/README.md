@@ -335,10 +335,18 @@ new, every line labelled:
   of 64 at the pinned 524 to 529 and up to 3 after), the counts read
   171027 to 303435; the shell's clicks 8 within the run (was 64), the
   median 634, the width 0.0110 (was 0.038); the content 3.
-- `j3_deuteron`: the transformation at 577 as registered (the proton's rows
-  at one Link are at the age 1, their age moment their presence), the count
-  read at the trigger 152471 (was 128590); one beta click at 590, the pair
-  holding after, every attempted step a hand-over.
+- `j3_deuteron`: the transformation at 577 (568 on main's engine, the
+  register's tick under the fraction-free law; 577 was the first stage's),
+  the count read at the trigger 152471 (was 128590): the trigger moved 9
+  intervals under the word, and the count moved with it because the
+  proton's fan at the neutron's Node is not all at the age 1: at tick 100
+  it holds 57 lines at age 1 and 13 dwelling a second interval at age 2,
+  the presence 70 x 1837 = 128590 and the age moment 152471, the excess
+  23881 the register's own warm-up low count (the physics-rule review of
+  1716b922, docs/designs/clock_age/REVIEW_1716B922.md: the stretch per
+  self-creation 1.1226 against 1.1454, 9 intervals read while the fan
+  fills); one beta click at 590, the pair holding after, every attempted
+  step a hand-over.
 - `j3_deuteron_crowd`: no transformation in 700 intervals, the count above
   the gate 65536 at every pulse, no beta click: unchanged in its reading.
 - `j3_neutron_free`: the transformation at 512 exactly, its clock counting

@@ -26,7 +26,7 @@ intervals, 42.9 s; the state `e1b1fc8b...`, the events `296bce62...`), every
 run completed with the books balanced at every tick; the digests, the
 source sha and the readings are the run blocks of
 `examples/events/covariant/expectations.json` (`runs`), and the cap of 60
-intervals of the coasting world (`runs_at_the_cap`, the state `775ce3ba...`)
+intervals of the coasting world (`runs_at_the_cap`, the state `79f8479c...`, re-pinned under clock-age-v1 on 2026-09-21 (775ce3ba... until the word))
 is what `tests/test_covariant_readings.py` (f) replays with the three J4
 worlds. The OFF replay: `hubble_stars/coasting_none` without the key run
 on the base tree (main `f5417ab3`, the fingerprint `5d254c85...`) and on the

@@ -3796,7 +3796,10 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   (was 64 at 522 to 525), the shell's clicks 20 within the run (was 64),
   the width over the median 0.0265 (was 0.036); `j1_source` 32 of 64 at
   607 to 641, 8 clicks, the width 0.0110 (was 0.038); `j3_deuteron` at 577
-  as registered (the proton's rows at one Link at the age 1); the gated
+  (568 on main's engine under the fraction-free law; the count 152471
+  where the register read 128590: the proton's fan at the neutron's Node
+  holds 57 lines at age 1 and 13 at age 2, the excess the warm-up's, the
+  review of 1716b922); the gated
   and the free neutron unchanged; 13 readings inside and 5 outside (the
   registered 36 and 0). NATURE row 8a keeps its FAIL in form (a step
   against 3.17) but its numbers were read on 64 clicks and the age word's
