@@ -1,0 +1,166 @@
+(A) The binary slot gas: 2^8 = 256 states of the eight slots (six headings in Port
+    order, two rest slots), the table's forward map restricted to them.
+  states 256, moving 202, fixed 54
+  the map is a bijection of the 256 (checked) and keeps the class (the crowd mask,
+  the number of singles n, the vector sum S of their headings) of every state (checked):
+  n and S_x, S_y, S_z are conserved at every Node, hence on every line of Nodes
+  along an axis a the sum of S_a is conserved by the flight and the table together
+  (a unit with p_a != 0 moves along its own line and never leaves it).
+  The parity of the rest count is conserved (checked on the 256): a gas born on the
+  headings holds its rest units in pairs at every Node, never one alone.
+  the head-on pair's cycle: +x -x -> ha hb -> +z -z -> +y -y -> ...
+  the unit's assignment (`collide`, nature_beam.py): the k-th single in slot order
+  goes to the k-th occupied slot of the image, so +x -> ha -> +z -> +y -> +x: a
+  head-on meeting turns the pair's axis x -> z -> y -> x, one axis per two intervals.
+
+(B) The invariant measure. A product measure over the slots with the weight
+    w(s) = exp(-eta n(s) - q . S(s)), n counting every unit, gives every state of one
+    class the same weight; the table permutes the class, so the measure is unchanged
+    by the collision at every Node, exactly, for every (eta, q): the Fermi-Dirac family
+    f_i = 1 / (1 + exp(eta + q . c_i)) on the headings; and on the law's sector the rest
+    PAIR at f_p = 1 / (1 + exp(2 eta)) = d^2 / (d^2 + (1 - d)^2), d = 1 / (1 + exp(eta)).
+    (Semi-detailed balance holds trivially: the map is a permutation of each class.)
+
+(C) The momentum flux tensor Pi_ab = sum_i c_ia c_ib f_i to second order in the
+    velocity u (lattice units: one Link per step on a heading). Derived in 25.5:
+    Pi_ab = delta_ab [2 d + g(d) rho u_a^2] + O(u^4) at a fixed eta (d = F(eta) the heading's
+    rest density, rho = 6 d + 2 d_p, g(d) = rho (1 - 2 d) / (4 d (1 - d))); in terms of the
+    local density, delta_ab [P(rho) + g rho (u_a^2 - c_s^2 u^2)]; Pi_ab = 0 off the
+    diagonal for EVERY state (the headings are axis-aligned). Checked at d = 1/4 (eta = ln 3):
+  eps 0.01: |u| 0.00266, residual of Pi_aa 1.939e-11 (the O(u^4) term), off-diagonal 0.0e+00
+  eps 0.005: |u| 0.00133, residual of Pi_aa 1.212e-12 (the O(u^4) term), off-diagonal 0.0e+00
+  d = 1/4: d_p = 1/10, rho = 17/10, g = 1.133333 = 17/15
+
+(D) The linearized collision operator A_ij = d Delta_i / d f_j at the equilibrium at
+    rest (the Boltzmann level: the product measure over the model's groups at every
+    Node). Left null vectors: the mass (the units per group) and the momentum c_a;
+    right null vectors: the tangents of the equilibrium family (checked). The
+    relaxing modes span the annihilator of the conserved functionals; A on it as a
+    block B, with its eigenvalues (decimal check).
+     pair, d = 1/16: eigenvalues of B -1.00064, -0.19799, -0.19799
+  product, d = 1/16: eigenvalues of B -2.00000, -0.22893, -0.13909, -0.13909
+     pair, d = 1/8: eigenvalues of B -1.00644, -0.41155, -0.41155
+  product, d = 1/8: eigenvalues of B -2.00000, -0.42294, -0.29893, -0.29893
+     pair, d = 1/4: eigenvalues of B -1.07984, -0.83371, -0.83371
+  product, d = 1/4: eigenvalues of B -2.00000, -0.73070, -0.62635, -0.62635
+     pair, d = 1/2: eigenvalues of B -1.46921, -1.27363, -1.13216
+  product, d = 1/2: eigenvalues of B -2.00000, -1.17005, -0.92002, -0.84743
+  the pair model's block at d = 1/4 (an orthogonal basis of the three relaxing modes):
+    [      -387/512,       897/5120,       231/2560]
+    [     -117/1280,     -1897/2560,      1727/5120]
+    [         -9/32,      -321/1280,     -3201/2560]
+    mode     -1     -1      1      1      0      0      0
+    mode   -1/2   -1/2   -1/2   -1/2      1      1      0
+    mode   -1/3   -1/3   -1/3   -1/3   -1/3   -1/3      1
+
+(E) A plane wave along x, exp(i k x), on the linearized lattice Boltzmann map
+    L(k) = diag(exp(-i k c_ix)) (I + A), reduced to the conserved modes to O(k^2):
+    M = P + k P L1 P + k^2 [P L2 P + P L1 Q (I - L0)^-1 Q L1 P], L1 = -i C (I + A),
+    L2 = -(1/2) C^2 (I + A), C = diag(c_ix). Coordinates a = delta rho, b = delta j_x:
+      a' = a - i k b + k^2 m_aa a;   b' = b - i k c_s^2 a + k^2 m_bb b  (m_ab = m_ba = 0),
+    the modes ln lambda = -+ i c_s k - Gamma k^2 with Gamma = -(m_aa + m_bb) / 2 - c_s^2 / 2,
+    the longitudinal viscosity nu_L = 2 Gamma (25.5). The transverse modes (b_y, b_z)
+    have lambda = 1 exactly: no shear viscosity.
+  the law's sector (pair):
+  d = 1/16: c_s^2 = 12769/40227 = 0.31742, m_aa = -0.15871, m_bb = -2.65624, Gamma = 627408342668955582003127/502422857784501490925110 = 1.24877, nu_L = 627408342668955582003127/251211428892250745462555 = 2.49753 (lattice units)
+           in Links and intervals: c_s = 0.56340 c = 0.32780 Links per interval, nu_L = 0.84545 Links^2 per interval; a sound wave of 64 Links falls to 1/e in 245 intervals
+  d = 1/8: c_s^2 = 625/2099 = 0.29776, m_aa = -0.14888, m_bb = -1.31540, Gamma = 2406998078751207829/4126793689427576034 = 0.58326, nu_L = 2406998078751207829/2063396844713788017 = 1.16652 (lattice units)
+           in Links and intervals: c_s = 0.54567 c = 0.31748 Links per interval, nu_L = 0.39488 Links^2 per interval; a sound wave of 64 Links falls to 1/e in 525 intervals
+  d = 1/4: c_s^2 = 25/99 = 0.25253, m_aa = -0.12626, m_bb = -0.64538, Gamma = 78334203127/301800056382 = 0.25956, nu_L = 78334203127/150900028191 = 0.51911 (lattice units)
+           in Links and intervals: c_s = 0.50252 c = 0.29237 Links per interval, nu_L = 0.17573 Links^2 per interval; a sound wave of 64 Links falls to 1/e in 1181 intervals
+  d = 1/2: c_s^2 = 1/5 = 0.20000, m_aa = -0.10000, m_bb = -0.38720, Gamma = 12461/86775 = 0.14360, nu_L = 24922/86775 = 0.28720 (lattice units)
+           in Links and intervals: c_s = 0.44721 c = 0.26020 Links per interval, nu_L = 0.09722 Links^2 per interval; a sound wave of 64 Links falls to 1/e in 2134 intervals
+  the classical closure (product; the rest slots independent):
+  d = 1/16: c_s^2 = 1/4 = 0.25000, Gamma = 37808474260673493/25422106952788880 = 1.48723, nu_L = 37808474260673493/12711053476394440 = 2.97446 (lattice units); in Links^2 per interval 1.00689
+  d = 1/8: c_s^2 = 1/4 = 0.25000, Gamma = 2402680430189/3244652802832 = 0.74050, nu_L = 2402680430189/1622326401416 = 1.48101 (lattice units); in Links^2 per interval 0.50134
+  d = 1/4: c_s^2 = 1/4 = 0.25000, Gamma = 154966681/412032208 = 0.37610, nu_L = 154966681/206016104 = 0.75221 (lattice units); in Links^2 per interval 0.25463
+  d = 1/2: c_s^2 = 1/4 = 0.25000, Gamma = 9743/39856 = 0.24446, nu_L = 9743/19928 = 0.48891 (lattice units); in Links^2 per interval 0.16550
+  a decimal check of the reduction: the eigenvalues of the full L(k) at a small k
+  against -+ i c_s k - Gamma k^2 (the sound pair) and 1 (the two shear modes):
+     pair, d = 1/16, k = 0.01: ln lambda = -1.2495e-04 +0.0056344 i against -1.2488e-04 +0.0056340 i; modes at exactly 1: 2
+     pair, d = 1/16, k = 0.005: ln lambda = -3.1224e-05 +0.0028171 i against -3.1219e-05 +0.0028170 i; modes at exactly 1: 2
+     pair, d = 1/8, k = 0.01: ln lambda = -5.8333e-05 +0.0054568 i against -5.8326e-05 +0.0054567 i; modes at exactly 1: 2
+     pair, d = 1/8, k = 0.005: ln lambda = -1.4582e-05 +0.0027284 i against -1.4582e-05 +0.0027284 i; modes at exactly 1: 2
+     pair, d = 1/4, k = 0.01: ln lambda = -2.5956e-05 +0.0050252 i against -2.5956e-05 +0.0050252 i; modes at exactly 1: 2
+     pair, d = 1/4, k = 0.005: ln lambda = -6.4890e-06 +0.0025126 i against -6.4889e-06 +0.0025126 i; modes at exactly 1: 2
+     pair, d = 1/2, k = 0.01: ln lambda = -1.4360e-05 +0.0044721 i against -1.4360e-05 +0.0044721 i; modes at exactly 1: 2
+     pair, d = 1/2, k = 0.005: ln lambda = -3.5900e-06 +0.0022361 i against -3.5900e-06 +0.0022361 i; modes at exactly 1: 2
+  product, d = 1/16, k = 0.01: ln lambda = -1.4884e-04 +0.0049992 i against -1.4872e-04 +0.0050000 i; modes at exactly 1: 2
+  product, d = 1/16, k = 0.005: ln lambda = -3.7188e-05 +0.0024999 i against -3.7181e-05 +0.0025000 i; modes at exactly 1: 2
+  product, d = 1/8, k = 0.01: ln lambda = -7.4065e-05 +0.0049999 i against -7.4050e-05 +0.0050000 i; modes at exactly 1: 2
+  product, d = 1/8, k = 0.005: ln lambda = -1.8513e-05 +0.0025000 i against -1.8513e-05 +0.0025000 i; modes at exactly 1: 2
+  product, d = 1/4, k = 0.01: ln lambda = -3.7612e-05 +0.0050000 i against -3.7610e-05 +0.0050000 i; modes at exactly 1: 2
+  product, d = 1/4, k = 0.005: ln lambda = -9.4027e-06 +0.0025000 i against -9.4026e-06 +0.0025000 i; modes at exactly 1: 2
+  product, d = 1/2, k = 0.01: ln lambda = -2.4446e-05 +0.0050000 i against -2.4446e-05 +0.0050000 i; modes at exactly 1: 2
+  product, d = 1/2, k = 0.005: ln lambda = -6.1114e-06 +0.0025000 i against -6.1114e-06 +0.0025000 i; modes at exactly 1: 2
+
+(F) The tagged unit on the law's sector: from a heading, the other five headings
+    each held with probability d and the rest pair with d_p; from a rest slot, its
+    partner present with certainty (the pair) and the headings at d. The new slot by
+    the table's rule (the k-th single in slot order to the k-th occupied slot of the
+    image). Transition matrix T_ij(d) on the eight slots; the equilibrium occupation
+    (d per heading, d_p per rest slot) is stationary (checked). The diffusion tensor
+    D_ab = c^2 [C_0^ab / 2 + sum_{k >= 1} (C_k^ab + C_k^ba) / 2], C_k^ab = <e_a(0) e_b(k)>.
+  d = 1/16 (d_p = 1/226):
+    turning probability per interval, +x -x +y -y +z -z: 0.0620, 0.0620, 0.0695, 0.0695, 0.0706, 0.0706
+    parking probability (into the rest pair):          0.0481, 0.0609, 0.0103, 0.0111, 0.0052, 0.0052
+    D (lattice units), rows x, y, z:
+      [  7.83026,   4.99242,   4.70809]
+      [  4.99242,   7.58435,   5.06897]
+      [  4.70809,   5.06897,   7.60462]
+    in Links^2 per interval: diagonal 2.65064, 2.56740, 2.57426; off-diagonal xy, xz, yz 1.69000, 1.59375, 1.71591
+    principal values 0.83536, 1.02614, 5.93080 Links^2 per interval; the mean D = tr / 3 = 2.59743; the memoryless 1 / (3 p_turn) at +x would be 1.81967
+  d = 1/8 (d_p = 1/50):
+    turning probability per interval, +x -x +y -y +z -z: 0.1210, 0.1210, 0.1497, 0.1497, 0.1575, 0.1575
+    parking probability (into the rest pair):          0.0718, 0.1128, 0.0352, 0.0415, 0.0245, 0.0245
+    D (lattice units), rows x, y, z:
+      [  2.80021,   1.22086,   0.95549]
+      [  1.22086,   2.40250,   1.20215]
+      [  0.95549,   1.20215,   2.40074]
+    in Links^2 per interval: diagonal 0.94791, 0.81328, 0.81268; off-diagonal xy, xz, yz 0.41328, 0.32344, 0.40694
+    principal values 0.38879, 0.56150, 1.62357 Links^2 per interval; the mean D = tr / 3 = 0.85795; the memoryless 1 / (3 p_turn) at +x would be 0.93227
+    exact at d = 1/8, lattice units: D_xx = 2351023883219248967561353925/839587813509987177007788794, D_xz = 4412188552615998167418880000/4617732974304929473542838367
+  d = 1/4 (d_p = 1/10):
+    turning probability per interval, +x -x +y -y +z -z: 0.2171, 0.2171, 0.3155, 0.3155, 0.3604, 0.3604
+    parking probability (into the rest pair):          0.0712, 0.1661, 0.0949, 0.1318, 0.1090, 0.1090
+    D (lattice units), rows x, y, z:
+      [  1.27940,   0.33897,   0.12461]
+      [  0.33897,   0.84470,   0.27273]
+      [  0.12461,   0.27273,   0.81011]
+    in Links^2 per interval: diagonal 0.43309, 0.28594, 0.27423; off-diagonal xy, xz, yz 0.11475, 0.04218, 0.09232
+    principal values 0.17575, 0.29382, 0.52369 Links^2 per interval; the mean D = tr / 3 = 0.33109; the memoryless 1 / (3 p_turn) at +x would be 0.51977
+  d = 1/2 (d_p = 1/2):
+    turning probability per interval, +x -x +y -y +z -z: 0.2344, 0.2344, 0.4219, 0.4219, 0.5312, 0.5312
+    parking probability (into the rest pair):          0.0156, 0.0781, 0.0938, 0.1875, 0.2500, 0.2500
+    D (lattice units), rows x, y, z:
+      [  1.06086,   0.22175,   0.00400]
+      [  0.22175,   0.52985,   0.10399]
+      [  0.00400,   0.10399,   0.46497]
+    in Links^2 per interval: diagonal 0.35912, 0.17936, 0.15740; off-diagonal xy, xz, yz 0.07506, 0.00135, 0.03520
+    principal values 0.12172, 0.18703, 0.38712 Links^2 per interval; the mean D = tr / 3 = 0.23196; the memoryless 1 / (3 p_turn) at +x would be 0.48144
+
+(G) Theta_a = (1 / n) sum p_a^2 / (Q S M) on series G2's 24 stars (the declared
+    momenta of examples/events/hubble_stars/coasting_none.json; S = 2^20, M = 2^22,
+    Q S M = 2^48), and the kinetic form (1 / n) sum p_a v_a, v_a = |p_a| / (Q S M + |p_a|).
+  axis x: Theta / (Q S M) = 0.013166 (the mean of (p_a / Q S M)^2), the kinetic mean over Q S M 0.010439, the ratio 0.79284; paces 0.0334 .. 0.2446
+          Theta = 8345040649276907533416759669/2251799813685248 = 3705942508104.0 label^2 per content unit
+  axis y: Theta / (Q S M) = 0.017468 (the mean of (p_a / Q S M)^2), the kinetic mean over Q S M 0.013534, the ratio 0.77475; paces 0.0556 .. 0.2669
+          Theta = 11071951586596038659549220307/2251799813685248 = 4916934231589.6 label^2 per content unit
+  axis z: Theta / (Q S M) = 0.022764 (the mean of (p_a / Q S M)^2), the kinetic mean over Q S M 0.017215, the ratio 0.75624; paces 0.0778 .. 0.2891
+          Theta = 14428700797173580139251795619/2251799813685248 = 6407630336179.8 label^2 per content unit
+
+(H) One free body of content M on a bar of L Links along x between two fixed
+    occupants declaring `rerelease`: the impulse per bounce 2 |p|, the bounces per
+    interval v / (2 L), the mean force on one wall p v / L, so P V = p v exactly
+    in the mean, against Theta = p^2 / (Q S M): the ratio 1 - v (25.7). At Q S M = 4096:
+  p = 220: v = 55/1079 = 0.05097, p v = 12100/1079 = 11.214, p^2 / (Q S M) = 3025/256 = 11.816, ratio 1024/1079 = 0.94903
+  p = 1024: v = 1/5 = 0.20000, p v = 1024/5 = 204.800, p^2 / (Q S M) = 256, ratio 4/5 = 0.80000
+  p = 4096: v = 1/2 = 0.50000, p v = 2048, p^2 / (Q S M) = 4096, ratio 1/2 = 0.50000
+
+(I) The lamp's content under its own release: the turn accumulator gains M(t) x n
+    per self-creation and pays h b s_t, s_t its whole part in units of d (engine.py
+    `_frame_all`, by_drive). The Bell lamp (examples/events/bell): M_0 = K + 2,
+    K = 2^20 = [1, K], h = 1, b = 2 directions; registered: one stall, at tick 4,
+    159 births in 160.
+  the recurrence: births 159, stalls at ticks [4], content after 160 ticks 1048260
+  |M(t) - M_0 (1 - r)^t| over the run at most 1.999992 < h b = 2 (25.9's bound)

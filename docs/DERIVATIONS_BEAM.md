@@ -49,6 +49,9 @@ at its first use. The recurring symbols:
 | **G**, **P**, **E** | matrix, matrix, matrix | the click's Gram matrix (`G = E^T E` in 6.7), the rotation of the phase as a signed permutation (section 6.5), the `2 x N` matrix of the tables C and S; `U_s` the label rotation matrix of the half-angle tables |
 | **p**, `p_x` | vector, component | a body's momentum and its component on an axis |
 | psi, **k** | scalar field, vector | the wave function of the continuum limit (section 23; a field of the limit, never a state of the lattice) and its wave vector `k = 2 pi p / h` |
+| d, `d_p`, eta, **q** (section 25) | scalars, vector | the six-heading gas's density per heading slot and per rest pair at rest, and the Fermi-Dirac parameters of its invariant measure |
+| g, `c_s`, `nu_L`, Gamma, **D**, **A** (section 25) | scalars, tensor, operator | the Galilean factor, the sound speed, the longitudinal viscosity, a sound wave's damping rate, the diffusion tensor of the tagged unit, the linearized collision operator |
+| Theta, r (section 25) | scalars | the temperature reading `(1 / n) sum p_a^2 / (Q S M)` per axis, and a lamp's cooling rate `h b n / d` per self-creation |
 | **v**, v | vector, scalar | a body's velocity and its speed in Links per interval |
 | **V** (the code's `V`) | vector | the label flow read at a Node, the vector moment of the arriving rows (written `V` in formulas as the code writes it) |
 | **D**, `u_d`, `T_d`, `S_1` | vector, vector, scalar, scalar | a direction of the world's table, its unit vector at the scale Q, its period `isqrt(3 abs(D)^2 Q^2)`, its Manhattan length |
@@ -6702,7 +6705,11 @@ reading that shows it, DETECTOR or GAMEBOARD, record 281), its standing
 missing named as an identity if a rule is needed), its pin (the derived
 integer or closed form and the world that would read it) and its verdict;
 round 2, the derivations of what round 1 finds reachable now, one formula
-per subsection with its error term. Nothing enters the law; no run (a
+per subsection with its error term, the host map
+[lattice_gas.py](designs/derivations_beam/lattice_gas.py) with its output
+[lattice_gas.out](designs/derivations_beam/lattice_gas.out) (the collision
+table imported as law data, exact rationals, decimal only for checks)
+making round 2's numbers. Nothing enters the law; no run (a
 pin that needs one is the experimenter's, on the Boss's order). The
 three tests apply to any rule a formula would need beyond the law:
 generic, vector, local (skills/workflow.md, record 202).
@@ -6761,6 +6768,12 @@ Liouville theorem), at a click `log2 N - H` bits are erased.
 | 22 | the sound speed `c_s^2 = dP / d rho` | the six-heading gas: a density pulse's pace (GAMEBOARD) | the lattice gas's `c_s = c / sqrt 3`-type constant from the table (HPP: `1 / sqrt 2` on the square; the cubic value the round-2 map's) | the pulse's front per interval on the gas | reached in form (the table's constant) |
 | 23 | the second law and Landauer | 14; Landauer out (record 140): the click erases at no energy | as 22.1 and row 54 | | reached (the entropy identity); Landauer D |
 
+**Amended per round 2** (25.10): rows 2, 3, 5 and 22 carry their round-2
+results there (the Galilean factor's closed form, the shear viscosity
+exactly zero with the per-line invariants, the diffusion tensor not
+isotropic, the sound speed's closed form); the rows above stand as the
+record of round 1.
+
 ### 25.2 What round 2 derives, and what it does not
 
 Reachable now, one subsection each in round 2 with its error term: (i)
@@ -6796,3 +6809,484 @@ equipartition's equality, Maxwell-Boltzmann, temperature from entropy,
 Planck's spectrum, Dirac, Hooke, Ohm, Stokes), of which five fall to one
 identity, `elastic-contact-v1`, whose three tests pass on paper and whose
 design is not this section's. Nothing enters the law.
+
+### 25.4 The continuity equation from the books (row 1)
+
+**(1) The rule.** The flight (T on the position: a unit crosses one Link
+at the ages its direction's accumulator fires, 2.1, never two in one
+interval), the collision (P on the directions at a free Node: the count
+at the Node unchanged), the merge and the split (the amount conserved),
+the release (the births at a lamp or a holder), the click, the face and
+the cancel (the sinks), and the books that hold every unit on a ledger
+line at every interval (BEAM_LAW section 5: units are moved, not copied;
+per family, in amount, initial + released = current + escaped +
+absorbed, exact at every tick). **(2) The limit.** A coarse cell of L^3
+Nodes and tau intervals, many rows. **(3) The order.** The lattice
+identity is exact; the continuum form is second order in the Link over
+the cell. **(4) The symmetry.** None is needed: a first-rank identity
+(the divergence of an integer flux). **(5) and (6)** below.
+
+**The derivation.** Let `n(x, t)` be the amount of one family at Node
+**x** at the end of interval t and `J_a(x, t)` the signed amount that
+crossed the Link from **x** to **x + e_a** during interval t (the units
+that crossed toward +a less those that crossed toward -a); `b(x, t)` the
+amount born at **x** in the interval (the release, the re-emission, what
+came home) and `q(x, t)` the amount absorbed there (the click, the
+cancel; an escape is the crossing of a face Link with no Node beyond).
+Every unit at **x** at the end of the interval was at **x** or at a
+neighbour at its start, or was born, and every unit that was at **x** is
+at **x** or at a neighbour or absorbed: so, at every Node and interval,
+
+    n(x, t + 1) - n(x, t) = - sum_a [J_a(x, t) - J_a(x - e_a, t)] + b(x, t) - q(x, t),
+
+the discrete continuity equation, an identity of the ledger in integers
+with no remainder. Summed over a region it is the books' line for that
+region, and over the GameBoard the books themselves (the transit line);
+in a steady state summed over a region it is 5.5's statement that the
+amount crossing a closed surface per interval is the release inside it.
+With `rho` the amount per Node and `j_a` the crossing per face per
+interval, both averaged over the cell, and the flux placed at the face
+(the half Link), the centred differences give
+
+    d rho / dt + div(j) = b - q + epsilon,   epsilon = (1 / 24) [d^3 rho / dt^3 + sum_a d^3 j_a / dx_a^3] + ...
+
+in Link and interval units: **(5) the error term** is second order in the
+Link over a feature's width (a feature of width `ell` Links carries a
+relative error of order `(1 / ell)^2`), and the flux of rows of one
+direction is `j = rho x (Q / T_d) v` exactly in the mean with the
+staircase's remainder below one Link per unit at any time (2.1), which
+the cell divides by L. On a fan the same identity holds direction by
+direction (the rows ballistic, F1). **(6) The pin.** Series E's flux
+through the square, `k_s r^2 = 41.5`, within 2 percent of the release q
+(series C item 5), and every registered run's books "conserved at every
+tick" (the c_measured record, EXPERIMENTS.md), which is this identity
+summed over the GameBoard. **Reached exactly.**
+
+### 25.5 The lattice-gas limit of the six-heading collision: Euler's form, the sound speed, the longitudinal viscosity and the frozen shear (rows 2, 3, 4, 22)
+
+**(1) The rule.** The collision (P: the permutation of the single units
+within a class at every free Node and interval, the class conserving the
+number n of units and the vector sum **S** of their headings, BEAM_LAW
+section 4) and the flight on the headings (T). The gas is of rows of one
+number and content and amount 1 (the crowd of two units of one class on
+one heading at one Node is a wall the table does not enter: the
+lattice gas's exclusion is not a rule here but the low-density regime,
+the crowd fraction per slot of order d). The unit's assignment when a
+state moves, read from the implementation (`collide`,
+nature_beam.py:2456-2497, not stated in BEAM_LAW section 4): the k-th
+single in slot order goes to the k-th occupied slot of the image; so on
+the head-on pair's cycle `+x -x -> ha hb -> +z -z -> +y -y -> +x -x` the
+unit that came on +x leaves on +z two intervals later, the one on -x on
+-z: a head-on meeting turns the pair's axis `x -> z -> y -> x`, a
+three-fold rotation about the cube's diagonal, always the same way (the
+tie by Port order, section 4's "one undeclared breaking"). Three
+premises, stated because each carries an error term: (a) the flight's
+staircase is replaced by its mean, c = 32 / 55 Links per interval on a
+heading (2.1; the remainder below one Link per unit); the table acts at
+every interval a unit spends at a free Node, so the lattice gas's time
+step is the interval and its unit speed is c; (b) the Boltzmann level:
+the state at a Node is drawn from the product measure of its slots'
+densities, the classical lattice gas's closure (Frisch, d'Humieres,
+Hasslacher, Lallemand, Pomeau and Rivet 1987, Complex Systems 1, 649),
+whose error is the correlation the propagation builds, not bounded here;
+(c) the law's own sector: the parity of the rest count is conserved by
+every class (checked on the 256 binary states, [lattice_gas.py](designs/derivations_beam/lattice_gas.py)
+(A)), so a gas born on the headings holds its rest units in pairs at
+every Node and never one alone; the rest pair is one slot of two units
+with its own density, not two independent slots (the classical closure
+with independent rest slots is carried beside it for comparison).
+**(2) The limit.** Small velocity **u** (Links per interval, below
+c), long waves (the wavenumber k in 1 / Link small), the Chapman-Enskog
+order. **(3) The order.** Second order in u for the flux, second order
+in k for the modes. **(4) The symmetry.** The cube's: `sum_i c_ia c_ib =
+2 delta_ab` (a second-rank tensor is isotropic) but `sum_i c_ia c_ib
+c_ic c_id = 2 delta_abcd`, nonzero only when all four indices are equal
+(the fourth-rank tensor of the cubic lattice is not isotropic: the HPP
+obstacle, which the hexagon cures in two dimensions and the FCHC
+projection in three; here it is not an approximate anisotropy but the
+absence of every off-diagonal term); and beyond it the table's own
+breaking of the 48 by Port order.
+
+**(a) The invariant measure, exact.** Let `w(s) = exp(-eta n(s) - q .
+S(s))` be a weight on the slot states with eta a scalar and **q** a
+vector (four parameters). It is constant on every class, and the
+collision permutes the class; so the product measure with
+
+    f_i = 1 / (1 + exp(eta + q . c_i))   on the six headings,   f_p = 1 / (1 + exp(2 eta))   for the rest pair,
+
+**c**_i the unit vector of heading i, is unchanged by the collision at
+every Node, for every (eta, **q**), and unchanged by the streaming when
+uniform: the Fermi-Dirac family of every lattice gas with semi-detailed
+balance, here with the balance trivial (a permutation). At rest (**q** =
+0) the heading's density is `d = 1 / (1 + exp(eta))` and the pair's `d_p
+= d^2 / (d^2 + (1 - d)^2)` (a pair weighs two units), the density per
+Node `rho = 6 d + 2 d_p`.
+
+**(b) The momentum flux to second order in u.** With `F(x) = 1 / (1 +
+exp(x))`, `F' = -d (1 - d)`, `F'' = d (1 - d) (1 - 2 d)` at eta, the
+expansion of `f_i = F(eta + q . c_i)` summed with the cube's tensors gives
+
+    rho = 6 d + 2 d_p + F'' q^2,   rho u_a = 2 F' q_a,   Pi_ab = sum_i c_ia c_ib f_i = delta_ab (2 d + F'' q_a^2),   all + O(q^4);
+
+eliminating **q**,
+
+    Pi_ab = delta_ab [2 d + g(d) rho u_a^2] + O(u^4),   g(d) = rho (1 - 2 d) / (4 d (1 - d)),
+
+at a fixed eta, and in terms of the local density `Pi_ab = delta_ab
+[P(rho) + g rho (u_a^2 - c_s^2 u^2)]` with `P(rho) = 2 d(rho)` the rest
+pressure at that density and `c_s^2 = dP / d rho` below. Off the
+diagonal `Pi_ab = 0` for every distribution whatever, since every
+heading is axis-aligned (`c_ia c_ib = 0` for `a != b`): there is no shear
+stress on the six headings at any order. Checked at d = 1 / 4 (script
+part (C)): the residual of the diagonal is `1.9 x 10^-11` at `|u| =
+0.0027` and falls sixteen-fold when u halves (the `O(u^4)` term), the
+off-diagonal 0; `g(1 / 4) = 17 / 15`.
+
+**(c) Euler's form (row 2) and Bernoulli (row 4).** The momentum's
+ledger identity (25.4's with the labels: **S** conserved at the Node, the
+momentum crossing a face per interval `Pi` per Node of the face) gives,
+to second order in u,
+
+    d (rho u_a) / dt + d/dx_a [P(rho) + g(d) rho (u_a^2 - c_s^2 u^2)] = 0,   P(rho) = 2 d,   rho = 6 d + 2 d_p(d),
+
+against Euler's `d (rho u_a) / dt + sum_b d/dx_b (P delta_ab + rho u_a
+u_b) = 0`. Three differences, each the cube's or the table's: (i) the
+convective term `d/dx_b (rho u_a u_b)` keeps only its diagonal `d/dx_a
+(rho u_a^2)`, the cross terms absent (the fourth-rank tensor); (ii) it
+carries the Galilean factor g(d), `17 / 15` at d = 1 / 4 and `3 / 2` as d
+-> 0, not 1 (the same `(1 - 2 d) / (1 - d)` factor the hexagonal gas
+carries, with the cube's own prefactor: Galilean invariance broken, as
+in every lattice gas); (iii) the pressure carries the isotropic
+correction `-g rho c_s^2 u^2`. Bernoulli along a steady flow on one
+axis, `u = u_a e_a`: `P + g (1 - c_s^2) rho u_a^2 = const`, the classical
+`rho u^2 / 2` replaced by `g (1 - c_s^2) rho u_a^2` (about `rho u^2` at
+low density, twice Bernoulli's). **Reached in form** with the two
+factors named; the isotropic Euler not reached (round 1's verdict
+stands).
+
+**(d) The sound speed (row 22).** From the rest equation of state,
+
+    c_s^2 = dP / d rho = 2 d (1 - d) / (6 d (1 - d) + 4 d_p (1 - d_p))   (lattice units),   c_s -> c / sqrt 3 as d -> 0,   c / sqrt 5 at d = 1 / 2;
+
+in Links per interval `c_s = 0.3278` at d = 1 / 16, `0.3175` at 1 / 8,
+`0.2924` at 1 / 4, `0.2602` at 1 / 2 (`c_s^2 = 12769 / 40227`, `625 /
+2099`, `25 / 99`, `1 / 5` lattice units; the classical closure with
+independent rest slots gives `1 / 4` at every density, `c / 2`). Isotropic
+in the direction of the wave (the second-rank tensor is), density
+dependent through the pair: at low density the rest pair is rare and the
+gas is the six-heading gas whose `c_s = c / sqrt 3`, the sound speed of
+radiation.
+
+**(e) The viscosity (row 3): the linearized table and the plane wave.**
+Let **A** be the linearized collision operator, `A_ij = d Delta_i / d
+f_j` at the rest equilibrium (part (D): a 7 x 7 matrix of rationals at
+every rational d, from the 128 states of the sector). **A** annihilates
+the tangents of the equilibrium family on the right and the conserved
+functionals (the mass, the momentum) on the left, and acts on the three
+relaxing modes (the two differences of the axis pairs, `e_1 = (x pair) -
+(y pair)`, `e_2 = (x, y pairs) - 2 (z pair)`; the exchange between the
+headings and the pair, r) with the eigenvalues, at d = 1 / 16, 1 / 8,
+1 / 4, 1 / 2: the pair `-0.198`, `-0.412`, `-0.834`, `-1.13` and
+`-1.27` (degenerate up to d = 1 / 4 to the decimal shown, split at 1 / 2
+by the Port-order tie), the exchange `-1.00`, `-1.01`, `-1.08`, `-1.47`:
+the stress relaxes in one to five intervals. For a plane wave `exp(i k
+x)` along x the one-step map is `L(k) = diag(exp(-i k c_ix)) (I + A)`;
+reduced to the conserved modes to second order in k with the spectral
+projector **P** on them and **Q** = I - **P**,
+
+    M(k) = P + k P L_1 P + k^2 [P L_2 P + P L_1 Q (I - L_0)^-1 Q L_1 P],   L_1 = -i C (I + A),   L_2 = -(1 / 2) C^2 (I + A),   C = diag(c_ix),
+
+which in the coordinates `delta rho`, `delta j_x` reads
+
+    delta rho' = delta rho - i k delta j_x + k^2 m_aa delta rho,   delta j_x' = delta j_x - i k c_s^2 delta rho + k^2 m_bb delta j_x,
+
+with `m_aa = -c_s^2 / 2` exactly and `m_bb` the table's (the cross terms
+vanish). The modes are `ln lambda = -+ i c_s k - Gamma k^2` with `Gamma =
+-(m_aa + m_bb) / 2 - c_s^2 / 2`, so the wave obeys, to second order,
+
+    d j_x / dt + c_s^2 d rho / dx = nu_L d^2 j_x / dx^2,   nu_L = 2 Gamma,
+
+the one-axis Navier-Stokes with the longitudinal viscosity, a rational
+function of d from the table:
+
+| d | `c_s^2` (lattice) | `Gamma` (lattice) | `nu_L` (lattice) | `nu_L` (Links^2 per interval, `x c^2`) | a 64-Link sound wave falls to 1 / e in |
+| --- | --- | --- | --- | --- | --- |
+| 1 / 16 | 12769 / 40227 | 1.2488 | 2.4975 | 0.8455 | 245 intervals |
+| 1 / 8 | 625 / 2099 | 0.5833 | 1.1665 | 0.3949 | 525 |
+| 1 / 4 | 25 / 99 | 0.2596 | 0.5191 | 0.1757 | 1181 |
+| 1 / 2 | 1 / 5 | 0.1436 | 0.2872 | 0.0972 | 2134 |
+
+(the exact rationals in [lattice_gas.out](designs/derivations_beam/lattice_gas.out)
+(E); the classical closure gives 0.50 Links^2 per interval at d = 1 / 8
+against the sector's 0.39: the pairing matters at the ten-percent
+level). **(6) The check.** The eigenvalues of the full `L(k)` at `k =
+0.01` and `0.005` (decimal) agree with `-+ i c_s k - Gamma k^2` to four
+figures at every d, and two eigenvalues are exactly 1 at every k: the
+transverse modes. **The shear is frozen, exactly.** `C c_y = 0` and `(I
++ A) c_y = c_y`, so `L(k) c_y = c_y` for every k: a shear wave `u_y(x)`
+neither propagates nor decays at the Boltzmann level; and in the law
+itself, without any closure, the sum of `S_y` over every line of Nodes
+along y is conserved (part (A): `S_a` is conserved at every Node and a
+unit with `p_a != 0` moves along its own line), so the profile `u_y(x)`
+is an exact invariant. The shear viscosity is not small; it is zero, and
+the per-line sums are an extensive family of conserved quantities beyond
+mass and momentum (the spurious invariants of the square gas, HPP's,
+here in three dimensions, not removed by the rest pair). **Reached in
+form** as the one-axis longitudinal equation with `nu_L(d)` and
+`c_s(d)`; the isotropic Navier-Stokes **not reached**, and the obstacle
+is exact. **(5) The error terms.** `O(u^4)` in the flux and `O(k^3)` in
+the modes; the crowd fraction of order d per slot; the staircase's one
+Link per unit; the Boltzmann closure (unbounded here); the per-line
+invariants, which make every line its own conserved system. **(6) The
+pin, before any run.** On a periodic bar of one number's rows at density
+d = 1 / 8 per heading: a density pulse's front at `0.3175` Links per
+interval (the grain `1 / 55`); a sound wave of 64 Links falling to `1 /
+e` in 525 intervals (the closure's error unbounded: a reading within a
+factor 2 would confirm the form, not the number); a shear profile
+`u_y(x)` unchanged after any number of intervals (an integer identity:
+zero decay, exactly).
+
+### 25.6 Diffusion and Fick's law from the tagged unit, Fourier's law on the content (rows 5, 6)
+
+**(1) The rule.** The same table with the same unit assignment, followed
+for one tagged unit. **(2) The limit.** Many intervals; the
+displacement's second moment. **(3) The order.** Second order in the
+gradient (the diffusion equation); the Markov chain of the tagged unit
+is summed exactly (all its memory), at the Boltzmann level. **(4) The
+symmetry.** The chain's velocities are axis-aligned, but the table is not
+equivariant under the 48 (the tie by Port order, BEAM_LAW section 4), so
+the cube's isotropy of a second-rank tensor is not available to the
+diffusion tensor: round 1's row 5 assumed an equivariant table and is
+corrected here.
+
+**The derivation.** The tagged unit's slot i is a Markov chain on the
+eight slots: from a heading, the other five headings are each held with
+probability d and the rest pair with `d_p`; from a rest slot, the partner
+is present with certainty (the pair, premise (c)) and the headings at d;
+the image state and the assignment give the new slot. The transition
+matrix `T_ij(d)` is a polynomial in d (part (F)); the equilibrium
+occupation (d per heading, `d_p` per rest slot) is its stationary law
+(checked exactly at every d: the consistency of the chain with the
+sector's measure). With `e_a(t)` the unit's velocity component (lattice
+units) and `C_k^ab = <e_a(0) e_b(k)>` under the stationary law, the
+displacement's covariance over T intervals is `T [C_0^ab + sum_{k >= 1}
+(C_k^ab + C_k^ba)] + O(1)`, so
+
+    D_ab = c^2 [C_0^ab / 2 + (1 / 2) sum_{k >= 1} (C_k^ab + C_k^ba)],   sum_{k >= 1} T^k e_a = T (I - T)^-1 e_a on the mean-zero subspace,
+
+an exact rational at every rational d, and the density of tagged units
+obeys `d rho / dt = sum_ab D_ab d^2 rho / dx_a dx_b` with Fick's `j_a = -
+sum_b D_ab d rho / dx_b`. The values (Links^2 per interval, `c^2 = 1024 /
+3025`):
+
+| d | `d_p` | turning probability per interval on +x, +y, +z | **D** diagonal xx, yy, zz | **D** off-diagonal xy, xz, yz | principal values | the memoryless `c^2 / (3 p_turn)` |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 / 16 | 1 / 226 | 0.062, 0.070, 0.071 | 2.651, 2.567, 2.574 | 1.690, 1.594, 1.716 | 0.835, 1.026, 5.931 | 1.820 |
+| 1 / 8 | 1 / 50 | 0.121, 0.150, 0.158 | 0.948, 0.813, 0.813 | 0.413, 0.323, 0.407 | 0.389, 0.562, 1.624 | 0.932 |
+| 1 / 4 | 1 / 10 | 0.217, 0.316, 0.360 | 0.433, 0.286, 0.274 | 0.115, 0.042, 0.092 | 0.176, 0.294, 0.524 | 0.520 |
+| 1 / 2 | 1 / 2 | 0.234, 0.422, 0.531 | 0.359, 0.179, 0.157 | 0.075, 0.001, 0.035 | 0.122, 0.187, 0.387 | 0.481 |
+
+**The finding.** The diffusion tensor is symmetric and positive but far
+from isotropic, and its anisotropy is not the cube's: at low density the
+only two-unit collision is the head-on pair (every other pair of headings
+is a fixed class), and the pair leaves on the next axis of the cycle `x
+-> z -> y -> x` with the sign kept (+x to +z), so a unit's velocity
+correlates positively with its later velocity on the next axis; the
+off-diagonal `D_ab` are as large as the diagonal at d = 1 / 16 and the
+largest principal axis is the cube's diagonal (1, 1, 1) with a value
+seven times the two others. The `d rho / dt = D Laplacian(rho)` of row 5
+is reached only as the tensor form; the scalar D would be the mean `tr(D)
+/ 3` (2.60, 0.86, 0.33, 0.23 Links^2 per interval at the four
+densities), and the naive `c ell / 3` with `ell = c / p_turn`
+underestimates it at low density and overestimates it at high (the
+parking and the cycle are memory the chain keeps). **(5) The error
+terms.** The Boltzmann closure; the staircase; the crowd fraction; the
+density is that of one number and content (rows of two emitters never
+collide, F1). **(6) The pin, before any run.** A pulse of one number's
+rows on the eight slots at d = 1 / 8 in a periodic cube: the covariance
+of the tagged units' displacements grows per interval by `2 D_ab` with
+the tensor of the table's row above (0.948, 0.813, 0.813 on the diagonal;
+0.413, 0.323, 0.407 off it); the ratio of the largest principal growth to
+the smallest `4.18`. **Fourier's law (row 6).** Every row of one number
+and content carries the content `h s` its lamp paid (6.4), fixed in
+flight; the content current is the unit current times `h s`, so
+Fourier's `q = - kappa grad(T)` is Fick's law on the content, `q_a = - h s
+sum_b D_ab d rho / dx_b`, with the same tensor and the same error terms;
+the heat equation is the diffusion equation of the content. A
+temperature enters only by 25.7's definition. **Reached in form** (Fick
+and Fourier as one tensor law); the isotropic diffusion equation **not
+reached**.
+
+### 25.7 Temperature as a reading, the ideal gas law and equipartition's identity (rows 7, 8, 9)
+
+**(1) The rule.** The drive (`by_drive` on the body's accumulator: a
+Link at `+-D`, `D = Q S M + abs(p_a)`, so `v_a = abs(p_a) / (Q S M +
+abs(p_a))` Links per interval, 4.4) and the contact under `rerelease`
+(the axis component returned doubled to a fixed occupant, `_contact`,
+engine.py; the occupant's momentum label accumulates the impulse).
+**(2) No limit**: identities of readings, exact in the mean over T
+intervals. **(3) The order.** The ratio `1 - v_a` per body, exact.
+**(4) No symmetry.**
+
+**The temperature reading (row 7).** `Theta_a = (1 / n) sum over the set
+of p_a^2 / (Q S M)`, in label units squared per unit of content; `k_B`
+is the conversion of 16.1 (the law has no temperature of its own; 16.4).
+On series G2's 24 stars (the declared momenta of `coasting_none.json`; Q
+S M = 2^48), an identity of the declaration, part (G): `Theta_x / (Q S M)
+= 0.013166`, `Theta_y / (Q S M) = 0.017468`, `Theta_z / (Q S M) =
+0.022764` (the mean of `(p_a / Q S M)^2`, the mean squared pace at first
+order; the exact rationals in the output). The three differ by the
+throw's design and no rule of the law brings them together (F2): a
+reading exists, an equilibrium's parameter does not.
+
+**The ideal gas law as an identity (row 8).** One free body of content M
+and momentum `p_x` on a bar of L Links along x, periodic on y and z,
+between two fixed occupants that declare `rerelease` for the body's
+family: at each wall the step is refused, the body's component reversed
+and the occupant's label raised by `2 abs(p_x)` (the impulse). The body
+crosses a Link every `D / abs(p_x)` intervals, so a round trip of 2 L
+Links takes `2 L D / abs(p_x)` intervals and the mean force on one wall
+is `2 abs(p_x) x abs(p_x) / (2 L D) = p_x v_x / L`; with P the force per
+Node of the wall and V = L per Node of the cross-section,
+
+    P_x V = p_x v_x = p_x^2 / (Q S M + abs(p_x)),   and over n bodies on their own lines   P_x V = sum_i p_ix v_ix = n <p_x v_x>,
+
+the kinetic identity of a gas of free bodies with elastic walls, exact in
+the mean, needing no equilibrium (relativity's `P V = N <p v>`). Against
+the temperature reading, `p_x v_x = (p_x^2 / (Q S M)) (1 - v_x)`:
+
+    P_x V = n Theta_x - n <p_x^2 v_x / (Q S M)>,
+
+the ideal gas law per axis with **(5) the error term** `-v_x` per body
+(the drive's saturation, the lattice's `p / (m + p)` for relativity's
+`p c^2 / E`, 4.4), plus the remainder of one bounce per body in the
+wall's label (`2 abs(p_x)`, the reading's O(1)) and the drive's
+hesitation at a reversal (the signed accumulator must be driven from its
+remainder to `-D`: below `D / abs(p_x)` intervals per bounce, one Link's
+time, a relative `1 / L`). **(6) The pin** (part (H)): at Q S M = 4096
+(the slits_matter units), `p = 220`: `p v = 12100 / 1079 = 11.214`
+against `Theta = 3025 / 256 = 11.816`, the ratio `1024 / 1079`; `p =
+1024`: `204.8` against 256, the ratio `4 / 5`; `p = 4096`: 2048 against
+4096, the ratio `1 / 2`. On G2's stars the kinetic mean is `0.793`,
+`0.775`, `0.756` of `Theta_a` on the three axes (the paces up to 0.29).
+**Reached as an identity** of two readings, with its error term.
+
+**Equipartition's identity part (row 9).** The exact square (17.6 M3),
+`E'^2 = E'_0^2 + 3 p . p` with `E'_0 = Q S M` and `E' = E / c^2` in the
+identity's units, gives the kinetic part `c^2 (E' - E'_0) = p . p / (2 Q
+S M) - 3 (p . p)^2 / (8 (Q S M)^3) + ...`, so per axis
+
+    <K_a> = Theta_a / 2 + O(Theta_a^2 / (Q S M)),
+
+"k T / 2 per degree of freedom" with `k T = Theta_a` by the definition:
+an identity, the error term the relativistic correction. The content of
+equipartition (one `Theta` for the three axes and for every body) needs
+the elastic exchange the law lacks (F2): `elastic-contact-v1` of round
+1, named, not designed. **Reached as an identity; not reached as a law.**
+
+### 25.8 Temperature from entropy: why the count of section 14 gives no `dS / dE` (row 13)
+
+`S = log2 W` with W the number of state vectors consistent with the
+click list (14.1, 14.2) is exact and registered (`mz_equal` 0 / 6,
+`slits_low` 3.425 / 2.575 bits read / erased). A temperature from it,
+`1 / T = dS / dE`, needs W as a function of an energy E that can vary
+while everything else is held: the microcanonical count of a subsystem
+at the energy its contact with a reservoir gives it. The law has three
+reasons that no such function exists. (i) One world, one click list: W
+is a function of the click list, which is a function of the world's
+history; there is no ensemble of worlds over which an energy varies,
+and in a closed world the content's total is a constant of the books
+(the content line, BEAM_LAW section 5), not a variable. (ii) Within a
+world, the freedom the click erases is the birth phase u (14.2), and
+every record of one lamp carries the same content `h s` (6.4): along the
+one variable W counts, the energy does not change; W(E) is supported on
+one value of E and has no derivative. (iii) No subsystem exchanges
+content reversibly with another: the exchanges are the click (F3, not a
+bijection, no reverse step) and the hand-over at a contact (F2,
+inelastic), so no part of the world has a count that is a function of
+its own energy alone, which is what a reservoir gives. What would supply
+it is the same identity as row 9's, `elastic-contact-v1`, with many
+contacts; its three tests pass on paper (generic, vector, local) and its
+design is not this section's. The one ratio the law does have is the
+click's: `log2 N - H` bits erased per record of content `h s`, a bits-
+per-content number of the detector (6 bits per record of content 1 on
+`mz_equal`), which is not `dS / dE` (nothing is held fixed against a
+varying E) and is not called a temperature here. **Not reached; the
+identity named; nothing enters the law.**
+
+### 25.9 Newton's cooling as the release's exponential (row 20)
+
+**(1) The rule.** The turn accumulator (T on the lamp's record: it gains
+`M(t) x n` at every self-creation, M(t) the content the frame reads
+before the birth pays, the clock's rate `K = [n, d]`; the turn `s_t` is
+the whole part in units of d and the remainder stays: `by_drive`,
+`_frame_all`, engine.py; BEAM_LAW note 41) and the cost `h s_t` per unit
+born, b units per self-creation (the directions times the rate's count;
+`cost = quantum x turn`, nature_beam.py). **(2) No limit**: an identity
+of the accumulator. **(3) The order.** Exact recurrence; the smooth
+solution's error bounded. **(4) No symmetry.**
+
+**The derivation.** `M(t + 1) = M(t) - h b s_t`, and because the
+accumulator keeps its remainder the turns sum to a whole part exactly:
+`sum_{tau < t} s_tau = floor(Phi(t))` with `Phi(t) = sum_{tau < t} M(tau)
+n / d`. So `M(t) = M_0 - h b Phi(t) + h b theta_t` with `theta_t` in `[0,
+1)`. Let `r = h b n / d` and `u(t) = M_0 - h b Phi(t)`; then `u(t + 1) =
+u(t) - r M(t) = (1 - r) u(t) - r h b theta_t`, whence `u(t) = M_0 (1 -
+r)^t - r h b sum_{tau < t} (1 - r)^(t - 1 - tau) theta_tau`, the sum in
+`[0, 1 / r)`. Therefore
+
+    M(t) = M_0 (1 - r)^t + epsilon_t,   abs(epsilon_t) < h b,   r = h b n / d,
+
+the exponential decay of the lamp's content at the rate r per
+self-creation, **(5) the error term** below one birth's cost at every t,
+for every M_0 and every rate. The lamp's frequency is its turn, `f = s /
+N` (6.4), so the frequency falls with the content (record 148, "a paid
+lamp's frequency falls at every birth"): `f(t) = f_0 (1 - r)^t` to the
+same error over N. With an environment, the content the lamp's Node
+absorbs from arriving paid rows (the measured line's clicks, `A_t` per
+interval), `M(t + 1) = M(t) - h b s_t + A_t`, a linear balance that
+relaxes to `M* = A / r` at the rate r: Newton's `dM / dt = -r (M - A /
+r)`, with the content in place of the temperature and the crowd's supply
+in place of the environment's, the error the same `h b`. **(6) The
+pin** (part (I)): the Bell lamp, `M_0 = K + 2` at `K = 2^20`, h = 1, b =
+2: the recurrence stalls once, at tick 4, and makes 159 births in 160
+(the registered facts, the bell README), its content after 160 ticks `K
++ 2 - 318 = 1048260`, and `abs(M(t) - M_0 (1 - r)^t)` stays below
+`1.99999 < h b = 2` over the run. **Reached in form** for the content
+(row 7's reading; the "temperature" is the content's).
+
+### 25.10 The verdict of round 2, and the amendments to round 1
+
+| Formula | Derived in round 2 | The error term | The pin (before any run) |
+| --- | --- | --- | --- |
+| the continuity equation (row 1) | exact on the lattice from the ledger; the continuum form at second order in the Link | `(1 / 24) (d^3 rho / dt^3 + sum d^3 j / dx^3)`; the staircase's one Link per unit | series E's 41.5; the books conserved at every tick |
+| Euler's form (row 2), Bernoulli (row 4) | `d (rho u_a) / dt + d/dx_a [P + g rho (u_a^2 - c_s^2 u^2)] = 0`, the convective term diagonal only, `g = rho (1 - 2 d) / (4 d (1 - d))` | `O(u^4)`; the crowd fraction; the Boltzmann closure | a periodic bar of one number's rows |
+| the sound speed (row 22) | `c_s^2 = 2 d (1 - d) / (6 d (1 - d) + 4 d_p (1 - d_p))`, `c / sqrt 3` at low density, `c / sqrt 5` at d = 1 / 2 | the same | a density pulse's front at 0.3175 Links per interval at d = 1 / 8 |
+| Navier-Stokes (row 3) | the one-axis longitudinal equation with `nu_L(d)` from the table (0.39 Links^2 per interval at d = 1 / 8); the shear viscosity zero exactly; the per-line sums of `S_a` conserved | `O(k^3)`; the closure, unbounded | a 64-Link sound wave to 1 / e in 525 intervals; a shear profile unchanged, exactly |
+| diffusion and Fick (row 5), Fourier (row 6) | the tensor form with **D** from the tagged chain, anisotropic along the cube's diagonal by the head-on cycle `x -> z -> y`; Fourier as Fick on the content `h s` | the closure; the staircase | the covariance's growth `2 D_ab` per interval at d = 1 / 8 |
+| temperature (row 7), the ideal gas law (row 8), equipartition (row 9) | `Theta_a` a reading; `P_a V = n <p_a v_a> = n Theta_a (1 - v)` an identity; `<K_a> = Theta_a / 2` an identity | `-v_a` per body; one bounce; the relativistic `O(Theta^2)` | G2's `Theta_a / (Q S M)` = 0.0132, 0.0175, 0.0228; `p = 220`: 11.214 against 11.816 |
+| temperature from entropy (row 13) | not reached: no ensemble, no reversible exchange; the identity named | | none |
+| Newton's cooling (row 20) | `M(t) = M_0 (1 - r)^t + epsilon`, `abs(epsilon) < h b`, `r = h b n / d` | below one birth's cost | the Bell lamp's stall at tick 4, 159 births in 160 |
+
+**The amendments to round 1's rows** (25.1; the rows stand as the
+record): row 2's pin (a shear flow) is replaced by the pulse and the
+frozen shear, and the Galilean factor is now the closed form; row 3's
+"viscosity from the table" is the longitudinal `nu_L(d)` alone, the shear
+viscosity being exactly zero and the per-line invariants exact (the
+obstacle is exact, not approximate); row 5's "the second-rank tensor IS
+isotropic on the cube" is withdrawn: the table is not equivariant under
+the 48 (BEAM_LAW section 4) and the diffusion tensor's largest axis is
+the cube's diagonal, seven times the others at d = 1 / 16; row 22's
+"`c / sqrt 3`-type constant" is the closed form above, `c / sqrt 3` at
+low density only. Two facts of the implementation entered the
+derivations and are stated in BEAM_LAW section 4 nowhere: the unit's
+assignment by rank at a moving state (the cycle's chirality) and the
+parity of the rest count (the pairing); both are read from `collide` and
+the table, and a change of either would change 25.5's `nu_L` and 25.6's
+**D**, not the exact results (25.4, the invariant measure, the frozen
+shear, 25.7, 25.9). Of round 2's six items: two exact (the continuity
+equation; Newton's cooling within one birth's cost), three in form with
+their coefficients from the table (Euler's, the sound speed, the one-axis
+Navier-Stokes; diffusion, Fick and Fourier as one tensor law), two
+identities of readings (the ideal gas law, equipartition's half), one not
+reached (temperature from entropy). Nothing enters the law; no run.
