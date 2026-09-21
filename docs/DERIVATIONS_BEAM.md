@@ -1043,3 +1043,199 @@ equation; **reached** for its weak-field flux form and its retardation.
 | The Shapiro delay | **not reached** on `main` (0.00); under the key **different law**: a phase `~ M / b` from the flow, not `M ln(4 r_1 r_2 / b^2)` from the potential, and no delay in time | the meeting reads the flow |
 | The general flux | **reached**: Gauss's law of the field exact at every instant, the continuity equation | the weak-field flux form of the field equation |
 | Einstein's equation | **not reached**: no tensor source, no self-gravitation, no metric for light, no cosmological term (`q > 0` registered) | the law's gravity is scalar and linear |
+
+## 6. The information cost: units created per record against bits out, the click's discrete cost, and the classical-quantum boundary as a quantity
+
+**The operations.** The birth (T: a lamp of quantum h at the turn s pays
+`cost = h s` per unit born, `nature_beam.py:3762, 3844-3847`), the split
+(a linear map: a row `(w, m, p)` becomes `(w a_i, m A, p + t_i)` on the
+directions, `A = sum a_i^2`, `nature_beam.py:3596-3695`), the rotation
+(the half-angle tables, `1848-1916`), the gate (P, `1769-1845`), the merge
+with the cancel (G, `1153-1237`), the click (E: the offers' pointers, the
+cells' norms, the rungs, the cell of u; `amplitude.py:490-752`). The
+register: series L (`examples/events/amplitude/`: L1 the Mach-Zehnder, L2
+the two slits, L3 the pair and the which-path worlds, L4 GHZ, L5 the
+gate, L6 the pair at N = 1024 and 4096), the paper's checks
+(`paper/click_model/checks/`, on the branch `claude/paper-click-model`:
+formulas evaluated from the rules, not runs).
+
+### 6.1 What a record costs and what it pays back
+
+A record is born as k rows of one unit (one per direction, one per label:
+the Mach-Zehnder 2, the pair `2 arms x 2 labels = 4`, GHZ `3 x 2 = 6`,
+the two slits' lamp 5), each unit costing the lamp `h s` of content. A
+split multiplies units: `w -> w sum_i a_i` (the (20, 21) splitter makes 41
+of 1, the fan of 91 makes 91 of 1), and the content per unit is kept, so
+the content in transit grows at every split and is booked as released
+(`nature_beam.py:3665`: `content_released += w a_i x content`; note 37
+(ii): "the units a split creates enter `released` as every re-creation
+does"). The books balance because the created content is on the released
+line; what is conserved through the split is not the content but the
+norm `sum w_i^2 / m_i = w^2 / m` (the paper's Theorem 2, the isometry). At
+the completion every offer's rows have already clicked at their sets
+(`held += content` at each `measure`, `3384-3388`), the ladder chooses one
+cell, and the record with its other offers is deleted from the layer
+(`amplitude.py:749`). The units a record carries to its ends are therefore
+its cost in content per record, against the bits the one click reports,
+`log2 (cells)` at most (the paper's row 5):
+
+| World | units born | units at the ends (the record's rows) | cells | bits out per click | units per bit |
+| --- | --- | --- | --- | --- | --- |
+| Mach-Zehnder, the (20, 21) splitter | 2 | `2 + 2 + 2 x 41 = 86` (the two mirrors re-emit 1 each, the splitter 41 per input unit) | 2 | 1 | 86 |
+| the pair | 4 | 4 | 4 | 2 | 2 |
+| GHZ | 6 | 6 | 8 | 3 | 2 |
+| GHZ by one gate of three parties | (the Boss's tally of the register: 729; not re-derived here) | 729 | 8 | 3 | 243 |
+| the two slits (`slits_low`, the fans of 91) | 5 | `5 + 2 x 91 = 187` | 80 sets | 6.3 | 30 |
+
+The cost is discrete and grows with the apparatus, not with the
+information: a splitter of weights `(a, b)` costs `a + b` units per unit
+for one bit, and every rotation of a label bit costs `C' + S'` units per
+unit (362 at a quarter turn on the tables of 128) with the multiplicity
+`x 65536`, so a chain of rotations reaches the register's ceiling at the
+fourth (L5: `rotations_4` refused at load). What the record pays back at
+the click is the deletion of every combination but one (`gather`'s
+`before` and `after`: `labels x channels` combinations to 1, record 80:
+"the one operation that changes the possibilities") and the content of
+the chosen offer joined to the world's list; the content of the unchosen
+offers stayed where their rows clicked. **The formula**: per record,
+
+    cost (units of content h s) = sum over the ends of the rows' amounts = k x product over the path's splits of (sum_i a_i),
+    information out <= log2 (cells)  bits,
+
+the first a product of the declared weights along the paths (the host's
+`2^n`, principle 9 of record 74), the second the Holevo bound of a
+d-level system read once (`log2 d`), an identity of the model with
+quantum mechanics (the paper's row 5: GHZ XXX's 4 of 8 triples, 2 bits,
+the third bit the law's). **Reached** for Holevo, as an identity; the cost
+per bit is the apparatus's and has no counterpart formula in nature (the
+units are amplitudes in integers, and nature's amplitudes cost nothing to
+carry). Landauer's heat per click (record 140: "Landauer out") is not a
+formula of the law.
+
+### 6.2 The click's discrete cost: the rung, the tables and the wheel
+
+Three roundings, each declared once, are the whole cost of the click's
+discreteness (sections 1.2 and 1.3): the rung `b_k = (2 N C_k + T) // (2
+T)` at the nearest integer, the tables C, S at the scale 256, and the
+birth wheel `u = ordinal mod N`. What they cost: (i) the probability of a
+cell is `b_k / N`, a multiple of `1 / N`, within `1 / (2 N)` of the Born
+weight `W_k / T` (the paper's row 3, proved from the rung), so a cell of
+weight below `1 / (2 N)` never clicks: the Mach-Zehnder's dark port at
+the offers `1 / 1682 = 0.0006` reads 0 of 64 (Born's 0.04), and `mz_345`
+reads 63 / 1 where the rung moved one u into D2 (L1, registered); (ii) the
+tables' rounding puts a record's total at `65448 / 65536` to `65773 /
+65536` (eight values over the 64 births of L1, within `237 / 65536` of
+1, registered): the norm is kept to a part in 276, the unitarity of the
+click's map to that precision, and `S(N, Q)`'s second term `16 arcsin(sqrt
+2 / (2 Q))` is its trace (0.044 at Q = 256); (iii) the wheel's period N
+repeats the same cells for ever (record 156: `slits_low`'s 19 cells for
+2^30 births), so a run of B births resolves the Born weights to `1 / N`
+and not to `1 / B`; the bit-reversed wheel W of record 156 resolves every
+prefix to `1 / 2W`.
+
+**Born as a limit.** `|P(o) - W_o / T| <= 1 / (2 N)` with `T = sum W_k`:
+as N grows the click's probabilities converge to the squared sums, at the
+rate `1 / N` (the paper's check: within `7.8 x 10^-3` at N = 64, `4.9 x
+10^-4` at 1024, `7.6 x 10^-6` at 65536). **Reached as a limit**, the
+squared sum itself the click's definition (E and the norm, the one
+imported law of physics, BEAM_LAW section 5), so what the limit returns
+is the precision, not the rule.
+
+**Tsirelson as a limit.** The pair's `S(N, Q)` at the CHSH labels, from
+the rungs and the tables: 2.75 at N = 64 (the registered `176 / 64`),
+2.8125 at 256, 2.828125 at 1024 and 4096 (the registered `2896 / 1024`
+and `11584 / 4096`, both `181 / 64`), unchanged by Q from 256 to 2^20 at
+these N (the rungs decide), and `S(N, Q) -> 2 sqrt 2` with the bound `8 /
+N + 16 arcsin(sqrt 2 / (2 Q)) -> 0` (the paper's check, `limits.txt`
+section 1); not monotone in N (record 102: 252 of 512 values above `2
+sqrt 2`, the powers of two from 512 exactly `181 / 64`), two-sided within
+the bound. **Reached as a limit**: the finite-N departures are the terms
+of it, a no-signalling box of the Popescu-Rohrlich kind at finite N, with
+the marginals exact (`32 / 64` in all 4096 setting pairs, record 105).
+
+### 6.3 The boundary between classical and quantum, as a quantity
+
+Record 77: "classical and quantum are the same GameBoard at a different
+density of clicks". The quantity the law gives is per record: its rows
+at one Node and its reads before its merge.
+
+**Rows per record.** A record of one row (a lamp of one direction and one
+label, a free release, a row of no record) is a classical particle: its
+ladder has one cell wherever it ends, the click lands where the row is,
+u chooses nothing. A record of two or more rows that meet at one Node is
+the quantum case: the cell's weight there is `|w_1 e^(i p_1) + w_2
+e^(i p_2)|^2` (coherent within one Node, record 96), so the weight of that
+Node oscillates with the phase difference with the visibility
+
+    V = 2 w_1 w_2 / (w_1^2 + w_2^2)      (1 for equal rows; the classical formula of two amplitudes),
+
+and across Nodes the weights add (incoherent: rows at different Nodes
+never meet, `amplitude.py:625-643`). Registered: the Mach-Zehnder's 64/0,
+0/64, 32/32 at the phase 0, a half turn, a quarter turn (L1); the `(3,
+4)` split's 63/1.
+
+**Reads per record.** A `read` at a `sum` set puts a which-path factor on
+the record: one residual per label present, the identity entry
+(`amplitude.py:524-527`), so every cell of the ladder is one label's and
+the cross terms between labels vanish from every weight. For the pair the
+correlation goes from the interference form to the product form,
+
+    E(a, b) = cos 2a cos 2b   in place of   cos 2(a - b),
+
+so at the CHSH labels `E x 64 = 44, -44, 0, 0` and `S = 88 / 64` (L3's
+`path_*` worlds, registered) where the unread pair reads `44, 44, 44, 44`
+and `S = 176 / 64`; and a read on one arm at any tick before the counter
+gives the same (`path_16_24_far`, Bob 116 Links farther: `E x 64 = 0`).
+The law has no partial read: a read factor selects a label whole, so the
+visibility of an interference between two labels is a step,
+
+    V(reads) = [reads = 0] x 2 w_1 w_2 / (w_1^2 + w_2^2),
+
+not the continuous trade-off `V^2 + D^2 <= 1` of a partial which-path
+measurement (Englert); a filter on a hand or a label is a full read
+(hand-v1: the filter the label's which-path factor). **Different law** for
+the partial case, **reached** for the two ends of it (V = 1 unread, V = 0
+read; S = 176 / 64 and 88 / 64 registered). The boundary as a quantity:
+a record is quantum where it has at least two rows at one Node and no
+read on its labels before that Node; it is classical otherwise; the
+density of clicks of record 77 is the density of reads along the rows'
+paths.
+
+### 6.4 E = h f from the release
+
+A lamp of quantum h whose clock turns s phase steps per self-creation
+(`s = by_clock(age, content x n, d)` at `K = [n, d]`, note 33 (2): the
+turn is the release at the rate [1, K], "E = h f as a rate") pays `h s`
+per unit born (`cost = definition.quantum * turn`, `nature_beam.py:3762`).
+Its frequency is `f = s / N` cycles per self-creation, so the content of
+one unit of light is
+
+    E = h s = (h N) f,
+
+Planck's constant the declared quantum times the circle, `h N`, and the
+frequency the lamp's own turn: a unit carries the content its lamp's
+frequency says, exactly, at every birth. **Reached**, as an identity of
+the release. Registered: the Bell lamps of content `K + 2` pay 2 per
+birth and stall once at tick 4 when their content falls below K (note 41
+(vii), record 148: "a paid lamp's frequency falls at every birth, the cost
+quantum x turn"); the L1 lamp of content 2^20 at K = 2^20 turns 1 per
+self-creation and pays 1 per unit. What does not return: the frequency of
+a row in flight is its family's `phase_per_link` or its pair form, a
+declaration, while its content per unit is `h s` from its lamp: the two
+are tied at the birth (the lamp's phase stamped on the row) and not
+afterwards, so a row re-emitted at a re-emitter keeps its content and
+takes the re-emitter's declared turn: no rule makes the content of a row
+follow its frequency in flight.
+
+### 6.5 The verdict of target 6
+
+| Formula | Verdict | The place |
+| --- | --- | --- |
+| The cost per record, `k x prod (sum_i a_i)` units against `log2 (cells)` bits | **stated**: 86, 4, 6, 187 units for 1, 2, 3, 6.3 bits; the cost the apparatus's product of weights, the information the Holevo bound | the split creates content on the released line; the norm `w^2 / m` is what is kept |
+| The Holevo bound | **reached** as an identity (`log2 d` per click; GHZ's 2 bits of 3) | Definition 3 of the click |
+| Born's rule | **reached as a limit**: `|P - W/T| <= 1 / (2 N)`; the rule itself the click's definition (imported) | the rung; the dark port 0 of 64 at `1 / 1682` |
+| Tsirelson's bound | **reached as a limit**: `S(N, Q) -> 2 sqrt 2`, 2.75, 2.8125, 2.828125 registered at 64, 1024, 4096; two-sided at finite N | the rungs and the tables |
+| The visibility | **reached** for two rows at a Node, `2 w_1 w_2 / (w_1^2 + w_2^2)`; **different law** for a partial read: a step `[reads = 0]`, S from 176/64 to 88/64 | the read factor selects a label whole |
+| The classical-quantum boundary | **stated as a quantity**: two rows at one Node and no read before it | record 77's density of clicks = the density of reads |
+| E = h f | **reached** as the release's identity, `E = h s = (h N) f` | Planck's constant `h N`; in flight the frequency and the content are untied |
+| Landauer's heat | **not a formula of the law** (record 140) | |
