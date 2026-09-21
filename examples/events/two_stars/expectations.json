@@ -1,0 +1,120 @@
+{
+ "format": "two-stars-expectations-v1",
+ "c": 0.5818181818181818,
+ "ticks": 500,
+ "windows": [
+  [
+   50,
+   150
+  ],
+  [
+   150,
+   250
+  ]
+ ],
+ "grain_in_z": 0.003,
+ "worlds": {
+  "symmetric": {
+   "rows_per_direction": 64.0,
+   "contact_tick": 237,
+   "windows": {
+    "50-150": {
+     "t0": 100.0,
+     "v_a_over_c": 0.2123442206576231,
+     "v_b_over_c": -0.2123442206576231,
+     "gap": 36.00301394424473,
+     "A_reads_B": 0.6496964854710334,
+     "B_reads_A": 0.6496964854710334,
+     "lab_left_reads_A": 1.2123442206576232,
+     "lab_right_reads_B": 1.2123442206576232,
+     "natures_mutual": 0.6496964854710335,
+     "natures_lab": 1.2406370346095295
+    },
+    "150-250": {
+     "t0": 200.0,
+     "v_a_over_c": 0.22480640183085562,
+     "v_b_over_c": -0.22480640183085562,
+     "gap": 10.562700379121551,
+     "A_reads_B": 0.6329111253912255,
+     "B_reads_A": 0.6329111253912255,
+     "lab_left_reads_A": 1.2248064018308555,
+     "lab_right_reads_B": 1.2248064018308555,
+     "natures_mutual": 0.6329111253912254,
+     "natures_lab": 1.2569807741463772
+    }
+   },
+   "speeds_at_contact": {
+    "v_a_over_c": 0.22932212542265776,
+    "v_b_over_c": -0.22932212542265776
+   }
+  },
+  "rest_frame": {
+   "rows_per_direction": 64.0,
+   "contact_tick": 236,
+   "windows": {
+    "50-150": {
+     "t0": 100.0,
+     "v_a_over_c": 0.4086918460346532,
+     "v_b_over_c": -0.01758382797880231,
+     "gap": 35.95667333293321,
+     "A_reads_B": 0.6973960804746724,
+     "B_reads_A": 0.5810903610170823,
+     "lab_left_reads_A": 1.4086918460346531,
+     "lab_right_reads_B": 1.0175838279788023,
+     "natures_mutual": 0.6365926014139069,
+     "natures_lab": 1.5434802135458014
+    },
+    "150-250": {
+     "t0": 200.0,
+     "v_a_over_c": 0.4174786293196312,
+     "v_b_over_c": -0.03536868695247654,
+     "gap": 10.375898627101762,
+     "A_reads_B": 0.6805261773227103,
+     "B_reads_A": 0.5626221635067727,
+     "lab_left_reads_A": 1.417478629319631,
+     "lab_right_reads_B": 1.0353686869524765,
+     "natures_mutual": 0.6187722603739576,
+     "natures_lab": 1.5599200083845566
+    }
+   },
+   "speeds_at_contact": {
+    "v_a_over_c": 0.42057716101465104,
+    "v_b_over_c": -0.0416407264374668
+   }
+  },
+  "symmetric_pass": {
+   "rows_per_direction": 0.0,
+   "contact_tick": 254,
+   "windows": {
+    "50-150": {
+     "t0": 100.0,
+     "v_a_over_c": 0.2,
+     "v_b_over_c": -0.2,
+     "gap": 36.72727272727376,
+     "A_reads_B": 0.6666666666666667,
+     "B_reads_A": 0.6666666666666667,
+     "lab_left_reads_A": 1.2,
+     "lab_right_reads_B": 1.2,
+     "natures_mutual": 0.6666666666666667,
+     "natures_lab": 1.2247448713915892
+    },
+    "150-250": {
+     "t0": 200.0,
+     "v_a_over_c": 0.2,
+     "v_b_over_c": -0.2,
+     "gap": 13.454545454547755,
+     "A_reads_B": 0.6666666666666667,
+     "B_reads_A": 0.6666666666666667,
+     "lab_left_reads_A": 1.2,
+     "lab_right_reads_B": 1.2,
+     "natures_mutual": 0.6666666666666667,
+     "natures_lab": 1.2247448713915892
+    }
+   },
+   "speeds_at_contact": {
+    "v_a_over_c": 0.2,
+    "v_b_over_c": -0.2
+   }
+  }
+ }
+}

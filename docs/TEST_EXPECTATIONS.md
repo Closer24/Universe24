@@ -101,6 +101,7 @@ kept, their pins the law of events').
 | `test_check_scope.py` | The affected-check's selection |
 | `test_coupling_readings.py`, `test_orbit_readings.py`, `test_heisenberg_readings.py`, `test_hubble_readings.py` | The tools read the engine (the architecture review of 2026-09-20; the experimenter skill): each reading of `tools/coupling_readings.py`, `tools/orbit_readings.py`, `tools/heisenberg_readings.py` and `tools/hubble_readings.py` equals the engine's own function on a minimal GameBoard (the front off `manhattan_steps`, the step rule and the release off `by_clock`, the push off `unit_label`, the fan's labels off `flight_table`, the detector records off `DetectorSet`, the declared charge per unit of content; the Hubble tool's c = 32 / 55 and m(age) off `flight_table`, its `record` lines and click ages off the run of a bar of 61 x 1 x 1, its z within the digital step's grain of 1 + v / c); the expected integers are in each module's docstring |
 | `test_hubble_stars_readings.py` | The series G2 tool (`tools/hubble_stars_readings.py`) reads the engine (the experimenter's rule): the shipped worlds of `examples/events/hubble_stars/` equal their generator's, `expectations.json` declares its format, its c is derived from the flight table (Q / T_D) and compared, and its `derivations` map names every entry; on a bar of 61 x 1 x 1 run through the runner (a star of a paid family holding a mass of 2^22 and shining one unit per self-creation toward a detector of one Node, the speed 1 / 2 Link per self-creation) the tool's `record` lines, click ages, steps (30 in 60 intervals), homes (its outward rows taken home, 64 units each) and final momentum are the engine's, z within the digital step's grain of 1 + v / c, the reading's formula within 2 % and the luminosity within 5 %; the fits read the exact coasting form as q = 0 with H (t_0 + T_0) = 1 to 1e-6 and the exact Einstein-de Sitter form as q = +0.5 to 1e-3; the expected integers are in the module's docstring | new (2026-09-20, series G2); the registered fits against the register's own brackets, no literal range (2026-09-21) |
+| `test_two_stars.py` | Series O, two stars moving toward each other, each the detector of the other (`examples/events/two_stars/`, docs/designs/two_stars/DESIGN.md): the shipped worlds equal their generator's and run ten intervals balanced with the stars' momenta at the declared speeds by the drive's rule; the readings algebra of the two frames (the symmetric frame's 2 / 3 exactly, equal to nature's at the relativistic sum; the rest frame's 1 / 1.4 and 0.6 against nature's 0.6547); the pinned contact ticks 254, 237, 236 and the speeds at the contact; the expected values in the module's docstring | new (2026-09-21, series O; design only, no run) |
 | `test_c_measured.py` | Series Q, c measured behind a detector (`examples/events/c_measured/`): the escape tick of every direction of a fan derived from the closed form of the flight (DERIVATIONS_BEAM.md section 11.1) with the engine's lines and compared with the register written before the run and with the run's clicks on the open faces (the tick, the Node, the face), the pace over the fan against c = 1 / sqrt 3, and the readings tool `tools/c_measured_readings.py` on the runner's record ([below](#c-measured-behind-a-detector)) | new (2026-09-21, the model owner's "go for it", record 236; the template `test_amplitude_cone.py`) |
 | `test_bohr_readings.py` | The series H tool reads the engine (the experimenter's rule, 2026-09-20): the flight time from the centre's plane to a face off `FlightTable.manhattan_steps` (5 Links at the age 8, 6 at 10, 1 at 1), the pointer per turn and the coherence ratio off `nature_beam.coherent_pointer` with the circle's tables ((16384, 0) and (-8192, 0) for two units at phase 0 and one at 32, C = 0.2; 1.8 with the third at 0; the slope of [1, 4, 9] is 2), and `read_run` on a run written by the runner (a proton of `p` at (5, 5, 1) of an 11 x 11 x 3 GameBoard on the four in-plane headings, an electron of `e` of span [1, 1, 3] at (8, 5, 1) with the momentum [0, 320, 0], `pass` for `p`, `action` 65536, 20 intervals: the radius 3, j = 0.05859375, the flights 8, the clicks per face equal to the record's, no read, the steps' phases 5, 5, 5, 6 at the ticks 5, 9, 13, 17, the first -x click at tick 16); the expected integers are in the module's docstring |
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the two integer audits (`core/` integers only; `events/` integer numpy and nothing that leaves the integers, `run.py` outside it), LOCALITY-1 documented without an exception, and the six-read test ([below](#locality-and-bounded-local-work)): a Node reads nothing beyond one Link, a change reaches a Node no sooner than the flight allows |
@@ -1641,6 +1642,33 @@ DESIGN.md test (f) and section 4.4):
   2026-09-20) stepped a at ticks 2 and 4 in the second order, to (0, 1,
   1); the rule as it was (the count off the clock) at tick 3 in the first
   order and at ticks 2 and 3 in the second.
+
+## Two stars, each the detector of the other (series O)
+
+`tests/test_two_stars.py` (docs/designs/two_stars/DESIGN.md; the worlds of
+`examples/events/two_stars/` by `make_worlds.py`; design only, no run):
+
+- (a) the shipped worlds `symmetric`, `rest_frame`, `symmetric_pass` equal
+  the generator's document for document, load through the loader, and run
+  ten intervals with the books balanced; two fixed lab detectors and two
+  stars, A (`s_px1`) at (70, 1, 1) and B (`s_mx1`) at (130, 1, 1); the
+  momenta's signs the declared speeds' (+, - in `symmetric`; +, 0 in
+  `rest_frame`) and their speeds by the drive's rule v = p / (Q S M + p)
+  within 1e-6 of 0.2 c (0.4 c for the mover of `rest_frame`), c = 32 / 55;
+  `expectations.json` declares the format `two-stars-expectations-v1`, the
+  windows [50, 150) and [150, 250) and the three worlds.
+- (b) the readings algebra (no world's numbers): 1 + z = (1 - v_s / c) /
+  (1 + v_r / c) gives 2 / 3 at v_s = v_r = 0.2 c, equal to nature's
+  sqrt((1 - beta) / (1 + beta)) at beta = 0.4 / 1.04 (the relativistic
+  sum); 1 / 1.4 at v_s = 0, v_r = 0.4 c and 0.6 at v_s = 0.4 c, v_r = 0,
+  against nature's sqrt(0.6 / 1.4) = 0.6547 for both.
+- (c) the derivation pins the first contact at tick 254 in the control
+  (sixty Links closing at 0.4 c = 0.2327 Links per interval to one Link),
+  237 in `symmetric` and 236 in `rest_frame` (the gravity of the line
+  speeds the approach); the speeds at the contact above 0.2 c under gravity
+  and 0.2 c exactly without; the control's mutual 1 + z 2 / 3 in the first
+  window; in `rest_frame` the mover's reading above nature's and the rest
+  star's below it.
 
 ## The binding that costs content
 

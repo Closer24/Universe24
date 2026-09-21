@@ -1,9 +1,17 @@
-# Paper draft
+# Papers
 
-`main.tex` is the manuscript draft for Reality Theory (Universe24). It cites
-only measurements recorded in [validation](../docs/VALIDATION.md) and the
-experiment reports under [examples](../examples). Build with `pdflatex main.tex`
-twice. The draft is not part of the simulator package and no test reads it.
+The one paper of the project is `general_formula/main.tex`, on the general
+formula (the owner's decision of 2026-09-21; the paragraph on it below). The
+two manuscripts beside it, `main.tex` and `redshift/main.tex`, are the
+archived v0.3.1 manuscripts of the earlier engine (the release notes and
+`arxiv_metadata.md` name them as papers 1 and 2): they are historical, kept as
+scoped history, not the current paper, and they are not changed by it.
+
+`main.tex` is the archived v0.3.1 manuscript of the earlier engine (paper 1).
+It cites only measurements recorded in [validation](../docs/VALIDATION.md)
+and the experiment reports under [examples](../examples). Build with
+`pdflatex main.tex` twice. It is not part of the simulator package and no
+test reads it.
 
 `figures.py` draws the seven figures from recorded summary files only (the
 interference, phased-ray Bell, crossing-null, bonded-probe and bonded-sweep
@@ -20,8 +28,8 @@ PYTHONPATH=src python paper/figures.py --interference artifacts/causal-interfere
   --bond-sweep artifacts/bell-chsh/summary-bond-sweep.json --output paper/figures
 ```
 
-`redshift/main.tex` is the second manuscript, on the redshift from delay
-growth; its two figures come from `redshift/figures.py` with the sweep
+`redshift/main.tex` is the archived v0.3.1 manuscript on the redshift from
+delay growth (paper 2), historical as `main.tex` is; its two figures come from `redshift/figures.py` with the sweep
 summary and the Hubble fit written by `examples/relativity-probes/redshift_sweep.py`
 and `redshift_hubble.py` (the latter needs the public Pantheon+ table,
 `Pantheon+SH0ES.dat`, which is not in the repository).
@@ -30,10 +38,10 @@ and `redshift_hubble.py` (the latter needs the public Pantheon+ table,
 characters) and category choices for both manuscripts, and
 `release_notes_0.3.1.md` the notes for the matching GitHub release; both
 are kept here so that a submission can be rebuilt from the repository
-alone. The packages to upload are `main.tex` with `figures/` and
-`redshift/main.tex` with `redshift/figures/`.
+alone. The packages of the two archived manuscripts were `main.tex` with
+`figures/` and `redshift/main.tex` with `redshift/figures/`.
 
-`general_formula/` is the third manuscript, the paper on the general
+`general_formula/` is the paper, the one current manuscript, on the general
 formula (the owner's decision of 2026-09-21: one paper only, on the map
 **F** of the integer torus, every result as its consequence, the click
 model as its measurement chapter; it was begun on 2026-09-20 as the
@@ -44,12 +52,17 @@ decisions and the referee rounds; `RECORD.md` the long form of the first
 plan; `NUMBERS.md` every number and its source; `checks/` the paper's own
 computations from the designs' formulas with the repository's tables
 (computations and not runs, their outputs beside them); `figures.py` and
-`octahedron.py` the figure scripts. Every run the paper cites is in the
+`octahedron.py` the figure scripts; `figures/the_48.png` is written by
+the visual gallery's tool,
+`python tools/gallery_pages.py --figures paper/general_formula/figures`
+(the 48 signed axis permutations from the definitions, no run; the
+command also writes `octahedron.png`, which the paper does not use: its
+octahedron is `octahedron.pdf` from `octahedron.py`). Every run the paper cites is in the
 [experiments register](../docs/EXPERIMENTS.md); every formula is the
 derivation's ([DERIVATIONS_BEAM.md](../docs/DERIVATIONS_BEAM.md)) with its
 section number; papers 1 and 2 are not changed by it.
 
-The figures of the third manuscript are drawn from the runs of series L
+The figures of the paper are drawn from the runs of series L
 only: run the worlds, summarise them, draw.
 
 ```sh
