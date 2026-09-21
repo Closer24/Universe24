@@ -13,14 +13,18 @@ matter can be closed in one thing, maybe something connected to the
 clicks in the far galaxy, where there is no sensing, where all the
 possibilities still exist, so we see only the space of possibilities; I
 want to explain why one sees a constant velocity"), stated in the law's
-terms without the life assumption (record 277) and tested on paper. Written by
+terms without the life assumption (record 277) and tested on paper; and
+(E) the owner's next idea (translated: "maybe solve it through the fixed
+computation in space: at the edge of a galaxy that is a crazy bound, a
+lack?"), the one constant K of section 13 at a galaxy's edge, in three
+forms. Written by
 the mathematician, read-only, on the law as it stands on main; the pins
 before the numbers; every number made by the host script
 [s_and_a0_map.py](s_and_a0_map.py) with its output
 [s_and_a0_map.out](s_and_a0_map.out); no run, no fit, no rule proposed.
 Notation per record 184; rows and bodies, not light and matter.
 
-**The three verdicts in one sentence each.** (A) None of the candidates
+**The four verdicts in one sentence each.** (A) None of the candidates
 derives S: the two of section 16.2 (e) are a choice of units and a
 refuted one, the budget form leaves `K_budget` unfixed, and a budget tied
 to the wall's H moves the input from S to H if H is the declared constant
@@ -34,7 +38,14 @@ which no spread of the unclicked offers' labels or phases moves; a spread
 fixed at birth is bounded by the Solar System's planets read from the
 same detector, a spread growing with distance by the Tully-Fisher
 relation's independence of distance, and a cluster's dispersion is of
-the centres of many sources' lines, not a width.
+the centres of many sources' lines, not a width. (E) REFUTED per form:
+a budget capping the release weakens the far field where it acts, keeps
+the `1 / r^2` shape, makes the flat speed independent of the mass and
+acts on no galaxy; a budget capping the forwarding conserves the flux by
+the books and leaves Newton at the edge, changing only the centre's
+timing; and no verb of the six makes a sparse Node push more than the
+crowd it reads, while a floor by comparison rises as r and the flat curve
+needs a root.
 
 ## 0. The pins, before any number
 
@@ -261,9 +272,100 @@ for the Sun. Of the three, the law can carry today only the first, as an
 input family of unseen content (record 283): the second needs the
 seventh verb (a root) and the third is refuted by the law's own reading.
 
+## E. The fixed computation K at a galaxy's edge (the owner's idea, item E)
+
+The pins are section 0's: the radial acceleration relation's sign and
+onset (the far field STRONGER than Newton's below `a_0`), the
+Tully-Fisher slope 4 and its independence of distance, Cassini's bound,
+the Bullet Cluster. The constant K is section 13's: the fixed computation
+per Node per interval, the budget equation of 13.3 (`K >= 16 r + 26 a +
+... + 12 P` at a release), the budget reading of 13.2 (b) (`[n_s, d_s] =
+[26, K_budget]`, the wait `26 k / K` intervals for k rows read) and 16.2
+(f) (`S = K_budget / 26`, `G_clock` through the suspension). Three forms,
+each with its sign and its shape:
+
+**(1) The budget as a cap on the release at the source.** A release
+births P rows at one Node in one interval at 12 operations each, so a
+Node births at most `K / 12` rows per interval (13.3): 833 at K = `10^4`,
+83 333 at `10^6`. Where the cap acts (a source whose release exceeds it)
+the far field is the cap's for every larger mass: below `M / r^2`, the
+wrong sign against the relation, which asks for MORE than Newton at the
+edge; the field's shape stays `1 / r^2`, Keplerian, with no flat part;
+and the flat speed of a source 10 or 100 times the cap is the same as the
+cap's, a Tully-Fisher slope of infinity against 4. Where it does not act,
+nothing changes. Two more facts close it: the register's series C source
+releases `6 x 2^17 = 786 432` rows per interval and series 7's
+coefficients are linear in the source's content up to `2^24`, so a
+budget that is a law sits at `K >= 9.4 x 10^6` and above every registered
+source; and a galaxy is `10^11` source Nodes each under its own budget,
+whose fields add (5.1: the theory is linear), so the sum stays linear in
+their number and the cap acts on no galaxy unless the whole galaxy sits
+at one Node. **Refuted**: the wrong sign, the Keplerian shape, the
+infinite slope, and no action on a galaxy.
+
+**(2) The budget as a cap on the forwarding at a dense Node.** Rows that
+exceed a Node's budget are queued or suspended, none destroyed: the
+books' balance (I5, section 9) holds `released = in transit + absorbed +
+escaped` exactly at every tick, a queue being "in transit". In the
+steady state the flux through any closed surface is the release inside
+it (Gauss's law of the stream, 3.1 and 5.5), so the far field is
+Newton's; what changes is the timing, the delay field of 5.1 (the
+presence and the age moment near the dense Nodes), the clock's
+suspension of 5.2 (series E's `k_s r^2 = 41.5`, the clock at `1 / (1 + k
+n / d)`) and the bodies' steps delayed with their self-creations by the
+owed count. At the edge the crowd is far below the budget: with series
+E's constant the presence is `k = 39.7 / r^2` rows per interval, `4 x
+10^-3` at r = 100 Links and `4 x 10^-5` at 1000, and the budget spent on
+reading it, `26 k / K`, is `10^-5` of an interval at r = 100 and `10^-7`
+at 1000 for K = `10^4`; the
+delay's gradient falls as `M / r^3`, a factor `1 / r` below Newton's `M
+/ r^2` and steeper, the wrong shape. **Nothing survives at the edge**:
+the forwarding cap changes the centre's timing and leaves Newton where
+the crowd is sparse. Refuted for the edge.
+
+**(3) The suspension read as a floor at a sparse Node.** A Node at the
+edge reads fewer rows than its budget. Does any rule of the six make it
+push MORE than the crowd it reads? No: the push is `p += C a`, the
+coupling matrix times the arriving flow, bilinear in the coupling and
+the flow and homogeneous of degree 1 in the rows (3.3; LAW.md section 3),
+so a Node reading half the rows pushes half; the six verbs (the
+translation, the bilinear form, the group-ring addition, the
+permutation, the evaluation, the division with the remainder kept) add
+to a push nothing that is not in the rows, the law's constants being
+rates and walls declared at load, none affine in the flow. If a form did,
+it would be a rule outside the six under its own identity, and what it
+would have to add is named: a declared acceleration `a_0` and either a
+floor by comparison, `a = max(a_N, a_floor)` along the flow (verb D with
+a declared constant), or the relation's own form `a = sqrt(a_N a_0)`, a
+root (the seventh verb). The comparison form is silent in the Solar
+System (the Sun's pull at Saturn is `6.5 x 10^-5 m s^-2`, `5 x 10^5`
+times `a_0`, so Cassini's `gamma - 1 = (2.1 +- 2.3) x 10^-5` is
+untouched) but gives `v^2 = r a_floor` rising as r beyond the onset, not
+flat, with v independent of M (an infinite Tully-Fisher slope): the
+script's table at `a_floor = 0.25` in push units, `v^2` = 12.5, 25, 50 at
+r = 50, 100, 200 against MOND's flat 5.0. The root form gives the flat
+curve and the slope 4 by construction and fails the vector test; and
+either form moves the field of the visible content only, so the Bullet
+Cluster's bending would follow the gas (section 0). **Refuted** within
+the six; a hypothesis outside them, named and not proposed.
+
+**Where K acts instead.** At the centre, not at the edge: as the clock's
+suspension and the dwell, the budget spent on reading the crowd (13.2
+(b)), series E's `k_s r^2 = 41.5` and `k_a r = 36.1`, the clock at `1 /
+(1 + k n / d)`, the gravitational redshift `M / r` at first order (5.2).
+A galaxy's edge is where K is least spent.
+
+**Verdict (E): REFUTED**, per form: (1) the release cap weakens the far
+field where it acts, keeps the Keplerian shape, gives an infinite slope
+and acts on no galaxy; (2) the forwarding cap conserves the flux by the
+books and leaves Newton at the edge, changing only the centre's timing;
+(3) no verb makes a sparse Node push more than it reads, a floor by
+comparison rises as r, and the flat curve needs a root. No run is written,
+since no pin is met on paper.
+
 ## C. What stays
 
-All three items fail, so the dark sector stays as record 283 and
+All four items fail, so the dark sector stays as record 283 and
 [DARK_SECTOR.md](DARK_SECTOR.md) say: no rule of the six derives or needs
 dark energy (the far lamp's `q_eff = +1`, [BRIGHTNESS.md](BRIGHTNESS.md)),
 unseen content is admitted as an input family and not derived, the flat
@@ -272,7 +374,7 @@ was.
 
 ## D. Links
 
-- The width and G: [DERIVATIONS_BEAM.md](../../DERIVATIONS_BEAM.md) sections 3.3, 3.4, 13.2 (b), 13.3, 13.4, 16.2 (e) and (f), 16.4; the growing wall and `expansion-v1`: 15, 20.4; the push's form and its divisions: [designs/vector_form/LAW.md](../vector_form/LAW.md) sections 3 and 6; the inventory of what is not one of the six: section 1.
+- The width and G: [DERIVATIONS_BEAM.md](../../DERIVATIONS_BEAM.md) sections 3.3, 3.4, 13.2 (b), 13.3, 13.4, 16.2 (e) and (f), 16.4; the delay field, the clock and the general flux: 5.1, 5.2, 5.5; the books' balance: 9 (I5); the growing wall and `expansion-v1`: 15, 20.4; the push's form and its divisions: [designs/vector_form/LAW.md](../vector_form/LAW.md) sections 3 and 6; the inventory of what is not one of the six: section 1.
 - The click model and the readings: [designs/amplitude-v1/CLICK_SQUARE.md](../amplitude-v1/CLICK_SQUARE.md); the click without amplitudes: DERIVATIONS_BEAM.md 6.7; the moments and the crossing rule: sections 2 and 5.7 of [HIGHLIGHTS.md](../../HIGHLIGHTS.md); the meeting: DERIVATIONS_BEAM.md 5.4.
 - The dark sector: [DARK_SECTOR.md](DARK_SECTOR.md); the far lamp: [BRIGHTNESS.md](BRIGHTNESS.md).
 - The map: [s_and_a0_map.py](s_and_a0_map.py), [s_and_a0_map.out](s_and_a0_map.out).

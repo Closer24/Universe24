@@ -280,3 +280,79 @@ print()
 print(
     "   (4) VERDICT D: REFUTED: the read velocity is the arrival count, which no spread of labels or phases moves; a spread fixed at birth is bounded by the Solar System at a part in 2 x 10^5 of the edge speed, a spread growing with distance by Tully-Fisher's independence of distance; the cluster's dispersion is of centres, not widths"
 )
+
+# E. The fixed computation K at a galaxy's edge (the owner, item E).
+print()
+print(
+    "E. THE FIXED COMPUTATION K AT A GALAXY'S EDGE: THREE FORMS AGAINST THE RADIAL ACCELERATION RELATION AND TULLY-FISHER"
+)
+print(
+    "   (1) the budget as a cap on the release at the source: a Node births at most K / 12 rows per interval (13.3, 12 operations per row born)"
+)
+for k_budget in (1e4, 1e6, 9.4e6):
+    print(f"       K = {k_budget:.1e}: at most {k_budget / 12:.0f} rows per interval per source Node")
+release_c = 6 * 2**17
+print(
+    f"       the register's series C source releases {release_c} rows per interval (q = 6 x 2^17), so a budget that is a law sits at K >= {12 * release_c:.1e}; series 7's coefficients are linear in the source's content up to 2^24"
+)
+print(
+    "       above the cap the far field is the same for every larger mass: v_flat^2 = r a with a = q_cap / (4 pi S r^2) x Q, so"
+)
+for m_ratio in (1, 10, 100):
+    print(
+        f"       a source {m_ratio:3d} times the cap: the far field x {1:.0f} (the cap's), v_flat x {1:.0f}: the Tully-Fisher slope above the cap is infinite (nature's 4), and the field's shape stays 1 / r^2 (Keplerian, no flat part)"
+    )
+print(
+    "       and a galaxy is 10^11 source Nodes each under its own budget: the sum stays linear in their number; the cap acts on no galaxy, and where it acts it weakens the field (the wrong sign)"
+)
+print()
+print(
+    "   (2) the budget as a cap on the forwarding at a dense Node: rows queued, none destroyed (the books' balance I5: released = in transit + absorbed + escaped, exact);"
+)
+print(
+    "       in the steady state the flux through any closed surface is the release inside it (Gauss's law of the stream, 3.1, 5.5): the far field is Newton's; only the timing changes."
+)
+print(
+    "       at the edge the crowd against the budget (series E's presence k = 39.7 / r^2 rows per interval, q dwell / (4 pi) = 39.7):"
+)
+for r in (10, 100, 1000):
+    k_presence = 39.7 / r**2
+    print(
+        f"       r = {r:5d} Links: k = {k_presence:.2e} rows per interval; the budget spent on reading them, 26 k / K at K = 10^4: {26 * k_presence / 1e4:.1e} of an interval; the delay's gradient M / r^3 against Newton's M / r^2: {1 / r:.1e}"
+    )
+print(
+    "       nothing survives at the edge: the delay field (5.1) and the clock's suspension (5.2) act where the crowd is dense, and their gradient falls faster than Newton's"
+)
+print()
+print(
+    "   (3) the suspension read as a floor at a sparse Node: the push is p += C a, bilinear in the coupling and the arriving flow, homogeneous of degree 1 in the rows (3.3, LAW.md section 3):"
+)
+print(
+    "       a Node reading half the rows pushes half; no verb of the six adds to a push what is not in the rows (the constants of the law are rates and walls declared at load, none affine in the flow)."
+)
+print(
+    "       if a floor were added by a comparison, a = max(a_N, a_floor) along the flow (verb D with a declared a_floor), what it gives against the pins:"
+)
+gm_si, saturn_m, a0 = 1.327e20, 1.43e12, 1.2e-10
+print(
+    f"       the Solar System: the Sun's pull at Saturn {gm_si / saturn_m**2:.1e} m s^-2, {gm_si / saturn_m**2 / a0:.1e} times a_0: the max form is silent there (Cassini's gamma - 1 = (2.1 +- 2.3) x 10^-5 untouched)"
+)
+print(
+    "       r (Links) | a_N = 100 / r^2 | max(a_N, a_floor = 0.25) | v^2 = r a (the max form) | v^2 MOND (sqrt(a_N a_0), a_0 = 0.25)"
+)
+for r in (10, 20, 50, 100, 200):
+    a_n = 100 / r**2
+    a_max = max(a_n, 0.25)
+    a_mond = math.sqrt(a_n * 0.25) if a_n < 0.25 else a_n
+    print(f"       {r:9d} | {a_n:15.4f} | {a_max:24.4f} | {r * a_max:24.2f} | {r * a_mond:10.2f}")
+print(
+    "       the max form's v^2 rises as r beyond the onset: not flat, and v independent of M (the Tully-Fisher slope infinite); the flat curve needs a = sqrt(a_N a_0), a root: the seventh verb, and a declared a_0"
+)
+print()
+print(
+    "   where K acts instead: at the centre, as the clock's suspension and the dwell (5.2, 13.2 (b)): series E's k_s r^2 = 41.5 and k_a r = 36.1, the clock at 1 / (1 + k n / d), the redshift M / r at first order"
+)
+print()
+print(
+    "   VERDICT E: REFUTED per form: (1) the release cap weakens the far field where it acts, keeps the 1 / r^2 shape, gives an infinite Tully-Fisher slope and acts on no galaxy; (2) the forwarding cap conserves the flux (the books) and leaves Newton at the edge, only the centre's timing; (3) no verb makes a sparse Node push more than it reads, and a floor by comparison rises as r, not flat; the deep law needs a root"
+)
