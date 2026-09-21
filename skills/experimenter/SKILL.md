@@ -43,7 +43,7 @@ the records of the things in the world:
 A detector learns of a distant Node in two ways only, both the physicists'
 own: it receives what the thing there releases by itself, or a lamp shoots
 a beam at the thing and the detector reads what comes back or comes through.
-A detector keeps nothing of the ray it sent; everything it learns is on the
+A detector keeps nothing of the row it sent; everything it learns is on the
 returning event (its age is the flight time since the re-release, its phase
 and number the mirror's). Looking is never free: a paid unit costs the
 sender `quantum` x s, and when the thing measures it, its momentum pushes it.
@@ -54,7 +54,7 @@ Every number the experiment prints or registers is labelled one of two kinds
 | Kind | What it is | What it may be used for |
 | --- | --- | --- |
 | detector reading | a record of a detector's set or of a measured event in the world | the measurement; every comparison with nature |
-| GameBoard reading | the host's view of the deterministic GameBoard: a ray's position, the count or flow at a Node, a body's steps, shell means, the books | the mechanism's description, the bookkeeping checks, the picture |
+| GameBoard reading | the host's view of the deterministic GameBoard: a row's position, the count or flow at a Node, a body's steps, shell means, the books | the mechanism's description, the bookkeeping checks, the picture |
 
 The readings tool of an experiment reads the engine's own functions
 (`NatureBeamSimulation`, `parse_nature_beam_world`, `read_arrivals`, `unit_label`,
@@ -100,8 +100,10 @@ replays a rule of the engine, and it prints the kind of every line.
   pushes or opens a pull request; commits in its own worktree.
 - Never pins an example world's numbers in a test; never tunes a world to
   its expectation; never smooths a failed run.
-- Never introduces `Site` or a wave at a Node: on the GameBoard there are
-  only events; what is called a ray is the record of an event in transit.
+- Never introduces `Site` or a wave at a Node, and never a retired word for
+  an active thing ([the glossary](../../docs/TERMINOLOGY.md), "Retired words"):
+  on the GameBoard there are only events; a row is the record of an event in
+  transit, a body a measured event ("ray" is retired, record 183).
 
 ## Hand back
 
@@ -128,4 +130,4 @@ Before any run: the expectation derived from the law's operations (the derivatio
 
 ## The observed value is the reading (the owner, 2026-09-21, record 210)
 
-Every observable of an experiment (a distance, a time, a speed, a mass, an energy, an angle, a probability) is produced by a detector declared in the world file through its named transformation (HIGHLIGHTS 5.7's dictionary), never read from the host's state; a board quantity is never compared with nature directly.
+Every observable of an experiment (a distance, a time, a speed, a mass, an energy, an angle, a probability) is produced by a detector declared in the world file through its named transformation (HIGHLIGHTS 5.7's dictionary), never read from the host's state; a GameBoard quantity is never compared with nature directly.
