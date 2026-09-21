@@ -308,6 +308,13 @@ def test_the_form_on_the_reviewers_world_its_sign_and_the_uncharged_probe():
             "share_x",
             "share_y",
             "share_z",
+            # optical-v1's accumulators (2026-09-21): the flight's (made,
+            # residue) and the push's, constant 0 without the key `optical`.
+            "made",
+            "residue",
+            "push_x",
+            "push_y",
+            "push_z",
             # The turn's remainder of the massive rows (`massive-rows-v1`,
             # 2026-09-21), which no push reads.
             "acc_turn",

@@ -85,12 +85,29 @@ host cost: about 5.3 hours on the host that ran `slits_huygens` in 1334
 s, the rows in flight about 11 times the photon's; the record about 4.6
 GB of `click` lines).
 
-**Run.** The 1024-birth run was started on 2026-09-21 (through the
+**Run.** The 1024-birth run completed on 2026-09-21 (through the
 runner, `python -m event_universe --init
-examples/events/massive_rows/slits_matter_1024.json --output <dir>`);
-its reading by `read_run.py` goes here and into `expectations.json`
-under `slits_matter_1024.run` when it completes, every number labelled
-DETECTOR or GAMEBOARD, inside or outside the pin, none moved.
+examples/events/massive_rows/slits_matter_1024.json --output <dir>
+--ticks 2700`): run by N check on the branch's heads 70df6514 and
+e6de713d and by the architect on 40faf848 (the same engine sources), the
+same `events.jsonl` and `state.json` byte for byte on all three (sha256
+f561aedb... and afe643aa...), 2700 intervals completed, the books
+balanced at every interval. Its reading by `read_run.py` is registered
+under `slits_matter_1024.run` in `expectations.json`, every number
+labelled; the pin's numbers are not moved. DETECTOR (the screen's
+gathers and the first `click` lines): the first `click` line at
+`screen_60` at tick 955 and at `screen_37` and `screen_83` at tick 1016
+(the pin 955 and 1016 within 5: inside); the bands' centres 37.06,
+59.99 and 83.02 (the pin 36.5, 60 and 83.5 within 1: inside); Pearson
+of the 121 pixels' counts with the two-source cosine 0.88 (the pin 0.89
+within 0.03: inside); the visibility 0.964 (0.95 within 0.03: inside);
+the dark maximum 1 (the pin 0 to 3: inside); 433 clicks over the 121
+pixels, the bright counts 10, 5, 10, 9, 14, 13, 14, 10, 10, 5, 10; every
+pinned number inside its bracket, the run PASSES. GAMEBOARD (a
+diagnostic beside the pin): 1024 births read, 2698 records born, 1092
+gathered and 1606 open at the end; the wall's completions 215, the two
+faces' 188 and 188; the transit and content lines balanced at the end
+(the waiting lines of the open records beside them).
 
 ## The small world of the replay: `slits_matter_small`
 

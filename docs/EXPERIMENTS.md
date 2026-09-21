@@ -1272,6 +1272,16 @@ states "exactly" and means integer equality at every tick.
   body and read the same (the record's new fields aside) ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
 
 
+- **Item 6 re-read under `clock-age-v1` (2026-09-21; record 394; the head
+  of branch `clock-age-v1`).** The probes' clocks count the age moment: the
+  identity holds, (age, waited, owed) equal to the replay of the age
+  moment read at all nine radii, the ages at the front's arrival unchanged
+  (8, 11, 14, 21, 28, 35, 42, 52, 69) and the count then owed the beam's
+  age moment, 917312 to 8912765 intervals at r = 4 to 40 (the presence's
+  130880 to 130941, the same at every r): on the axis the age moment grows
+  with r as the rows' age; GameBoard readings, the tool's item 6 replaying
+  the age moment since this day ([the worlds' README](../examples/events/coupling/README.md#re-read-under-clock-age-v1-2026-09-21)).
+
 ### D, the orbit under the Beam Law, on the plane (2026-09-19)
 
 - **Confronts.** Whether a light free probe closes an orbit about a heavy
@@ -2063,6 +2073,16 @@ states "exactly" and means integer equality at every tick.
   denominator or a smaller q) is the follow-up for the model owner.
   Nothing was tuned.
 
+- **Re-read under `clock-age-v1` (2026-09-21; the model owner's word of
+  record 394, the age moment the clock's default; the head of branch
+  `clock-age-v1`).** The `scalar` world's probes count the age moment at
+  [1, 1]: its k x r is the constant now, 67.4 to 81.3 over r = 6 to 14, the
+  mean 72.19 (k x r^2 was 39.0 to 44.8, the mean 41.5), 2.00 times the
+  `age` world's 36.18, the two widths' ratio; the `age` world is
+  byte-identical (record 409); GameBoard readings, 11 inside and 3 outside
+  as registered; the table with the old values beside the new in
+  [the worlds' README](../examples/events/redshift/README.md#re-read-under-clock-age-v1-2026-09-21).
+
 ### G, the Hubble diagram behind the detector (2026-09-20)
 
 - **Confronts.** The model owner's question (2026-09-20, Highlights 5.4,
@@ -2288,6 +2308,17 @@ states "exactly" and means integer equality at every tick.
   reading's formula 288 of 288 inside 2 %. The verdict and the follow-up
   stand as read; the numbers above are kept as history.
 
+- **Re-read under `clock-age-v1` (2026-09-21; record 394; the head of
+  branch `clock-age-v1`).** The two `scalar` worlds' sources count the
+  age moment of one another's light: `coasting_scalar`'s near-fit H t_0
+  reads 1.0346, 1.2685, 1.5693 in the three windows and 1.3700 in the late
+  half (0.8718, 0.9667, 1.0123 and 0.9938 under the presence word on
+  `main`'s engine by the same tool), `pushing_scalar`'s 4.6923, 7.0505,
+  9.1890 and 8.1459 (1.1820, 1.3220, 1.3900 and 1.3499); the two `age`
+  worlds byte-identical (record 409); DETECTOR readings, 303 inside and 33
+  outside over the four; the table with the forms and the detectors' own
+  clocks in [the worlds' README](../examples/events/hubble/README.md#re-read-under-clock-age-v1-2026-09-21).
+
 ### G2, the Hubble diagram with stars behind the detector (2026-09-20)
 
 - **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**
@@ -2455,6 +2486,25 @@ states "exactly" and means integer equality at every tick.
   star steps (VALIDATION, the dated table of the change); the run of the
   series under the rule, with its expectations pinned first, is the G2
   session's, not this change's.
+
+- **Under `clock-age-v1` (2026-09-21; record 394).** The twelve worlds
+  (the six base worlds and the six `record/` worlds whose stars' entries
+  measure the other stars' light without a word) moved by their digests
+  (record 409) and are not re-read here: the register's own tool,
+  `tools/hubble_stars_readings.py`, reads NaN for `coasting_none` in its
+  plain mode (a world the word does not touch) and, in its record mode
+  with the register's expectations, +0.384 in the late window for
+  `record/gravity_none` against the registered +0.922 while
+  `record/coasting_none` reads -0.104 for -0.108 (the replicator's
+  finding of record 408 on `main`: the record worlds at head do not
+  reproduce the registered readings), so no number of this series is
+  re-registered until the tool and the register agree again; the lines
+  above stand as the presence word's, dated. For the record, the record
+  mode's late-window q on the head under the age word (DETECTOR, not
+  registered): `record/coasting_scalar` -0.950, `record/gravity_scalar`
+  -0.950, `record/double_scalar` -0.950 (the fit's grid ends at -0.95;
+  their H (t_0 + T_0) 3.42, 3.37, 4.46), the `_age` and `_none` worlds
+  -0.216, +0.258, +0.664 and -0.104, +0.384, +1.116.
 
 ### H, Bohr's lines behind the detector (2026-09-20)
 
@@ -3739,6 +3789,24 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   law"); `tests/test_weak_readings.py` (e) replays the generator's warm run
   on the shipped worlds against the register.
 
+- **Re-read under `clock-age-v1` (2026-09-21; record 394; the head of
+  branch `clock-age-v1`).** The neutrons' clocks count the age moment and
+  the `become` at 512 fires later wherever a crowd is read: `j1_lattice` 56
+  of 64 transformed within 650 intervals at the trigger ticks 602 to 642
+  (was 64 at 522 to 525), the shell's clicks 20 within the run (was 64),
+  the width over the median 0.0265 (was 0.036); `j1_source` 32 of 64 at
+  607 to 641, 8 clicks, the width 0.0110 (was 0.038); `j3_deuteron` at 577
+  (568 on main's engine under the fraction-free law; the count 152471
+  where the register read 128590: the proton's fan at the neutron's Node
+  holds 57 lines at age 1 and 13 at age 2, the excess the warm-up's, the
+  review of 1716b922); the gated
+  and the free neutron unchanged; 13 readings inside and 5 outside (the
+  registered 36 and 0). NATURE row 8a keeps its FAIL in form (a step
+  against 3.17) but its numbers were read on 64 clicks and the age word's
+  on 20 and 8, the rest firing at or after the run's end: whether the row
+  is re-read on a longer run is the model owner's question, flagged
+  ([the worlds' README](../examples/events/weak/README.md#re-read-under-clock-age-v1-2026-09-21)).
+
 ### L, the amplitude law (2026-09-20)
 
 - **Confronts.** The model owner's decision of 2026-09-20 (Highlights 5.4,
@@ -3797,8 +3865,9 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   0.2 s each; the readings by `tools/amplitude_path.py --check`, whose
   replay equals `run.json`'s `world` on every run; DETECTOR unless
   said).** The
-  gathers over the 64 births of the ticks 1 .. 64 (the design's table
-  reproduced on every world):
+  gathers over the first 64 births by ordinal (at tick 1 and ticks 3 to
+  65: the lamp pays a unit per birth and its clock stalls once at tick 2;
+  issue #533) (the design's table reproduced on every world):
 
   | world | D1 | D2 | absorber | the design |
   | --- | --- | --- | --- | --- |
@@ -4243,8 +4312,13 @@ sequential gates on an entangled record, the full register replay.
   gathers); the run 5750 intervals for every record of 4096 births, first
   at 1024 births (`slits_matter_1024`, 2700 intervals); the faces' and
   the wall's completions a GAMEBOARD diagnostic beside it.
-- **Run.** In the series README as run (the 1024-birth run first, the
-  4096-birth pin when the host allows).
+- **Run.** The 1024-birth run (`slits_matter_1024`, 2700 intervals)
+  completed on 2026-09-21 and PASSES, every pinned number inside its
+  bracket (DETECTOR: the first `click` lines at ticks 955 and 1016, the
+  bands' centres 37.06, 59.99 and 83.02, Pearson 0.88, the visibility
+  0.964, the dark maximum 1, 433 clicks); the reading in the series README
+  and under `slits_matter_1024.run` in its register, the same digests on
+  the three heads that ran it. The 4096-birth pin when the host allows.
 
 ### N, the binding that costs content (2026-09-20)
 
@@ -6500,14 +6574,15 @@ sequential gates on an entangled record, the full register replay.
   2.5.3); the source fingerprint `24e0c1ba...`; the J4 runs 0.3 s each, the
   coasting run 42.9 s (41.0 s without the key on the same head); every run
   completed with the books balanced at every tick; the tool: 0 record
-  checks failed, 24 readings inside, 1 outside, nothing moved
+  checks failed, 24 readings inside, 1 outside, nothing moved; the one
+  outside is outside the continuum's number alone and inside the design's own integer pin 124 (DERIVATIONS_BEAM 17.6 M2: the 64th self-creation "at the integers 70 and 124 by the primitive's own count"; the continuum's 64 gamma = 125.2 is the limit, one gamma - 1 above the cadence from an empty accumulator; the physics-rule review REVIEW_3, must-fix 3: a relabel, nothing moved)
   ([the page](../examples/events/covariant/README.md#what-was-measured-2026-09-21)).
 
   | World | Expected | Measured | Verdict |
   | --- | --- | --- | --- |
   | `j4_muon_rest` | E' 13 248; the `become` at 64 at x = 10; the `beta` click at 391 +- 2 (derived 392); the invariant | 13 248; tick 64 at x = 10; the click at 392, content 207; 420 lines, 0 failures; 0 intervals owed | inside (7 of 7) |
   | `j4_muon_3640` | E' 14 671; the `become` at 70.9 +- 1 (derived 70 at x = 27); the click at 367 +- 2 (derived 369); the invariant | 14 671; tick 70 at x = 27; the click at 369 (the decay derived back 70); 0 failures; 6 intervals owed to proper time | inside (7 of 7) |
-  | `j4_muon_12856` | E' 25 910; the `become` at 125.2 +- 1 (derived 124 at x = 72); the click at 345 +- 2 (derived 345); the invariant | 25 910; tick 124 at x = 72: **OUTSIDE the design's pin by 0.2**, inside the derived (the discrete count from an empty accumulator lies one gamma - 1 = 0.96 below 64 gamma; the reviewer's own re-derivation of record 314 gives 124); the click at 345 (the decay derived back 124); 0 failures; 61 intervals owed | 6 of 7 inside, 1 outside (reported, not moved) |
+  | `j4_muon_12856` | E' 25 910; the `become` at 125.2 +- 1 (derived 124 at x = 72); the click at 345 +- 2 (derived 345); the invariant | 25 910; tick 124 at x = 72: inside the design's integer pin 124 exactly (17.6 M2; relabelled, REVIEW_3 must-fix 3), 0.2 beyond the continuum's 125.2 +- 1, inside the derived (the discrete count from an empty accumulator lies one gamma - 1 = 0.96 below 64 gamma; the reviewer's own re-derivation of record 314 gives 124); the click at 345 (the decay derived back 124); 0 failures; 61 intervals owed | 6 of 7 inside by the tool's count, 1 outside the continuum's number and inside the design's integer pin (reported, not moved) |
   | `coasting_none_covariant` | `s_mz2` z = 0.369 +- 0.003; E' / g 1 128 171 883 over 1 074 790 400 (gamma 1.04967); the pace 0.1755; the invariant | z = 0.3674; 1 128 171 883 over 1 074 790 400; 18 steps in the late window's 100 intervals (0.180); 9567 lines, 0 failures; `s_mz2` owed 18 intervals of 400; 25 paid families off 3 h n = Q S d reported, no refusal | inside (4 of 4) |
 
 - **Verdict (S).** The formula stands on the run: on every `energy` line of
@@ -6518,9 +6593,10 @@ sequential gates on an entangled record, the full register replay.
   derives from that clock (392, 369, 345 against the design's 391, 367,
   345), and the moving star's light read z = 0.3674 at the identity's beta
   0.3040 where the law without the key read 0.2636 and nature's gamma (1 +
-  beta) gives 0.369. The one reading outside is the discrete cadence's
-  offset of gamma - 1 below the continuum's 64 gamma at gamma 1.96,
-  reported with its integer. The OFF replay of `coasting_none` on the base
+  beta) gives 0.369. The one reading the tool counted outside is the discrete
+  cadence's offset of gamma - 1 below the continuum's 64 gamma at gamma
+  1.96, reported with its integer, and it is inside the design's own
+  integer pin 124 (17.6 M2; REVIEW_3 must-fix 3). The OFF replay of `coasting_none` on the base
   and the head is byte for byte equal, the gate set's digests unchanged.
   Nothing was tuned; NATURE rows 4a and 4b are re-read under both
   identities; the law's FAIL rows stand beside the identity, as record 270
@@ -6558,7 +6634,10 @@ sequential gates on an entangled record, the full register replay.
   measuring `s_px1` with `reads: "age"`, the bar 121 x 9 x 9 at 3 Links
   and 121 x 15 x 15 at 6, 500 intervals; four worlds, the lamp's `mass`
   entry `pass` (the presence word) or `{"rule": "pass", "reads": "age"}`
-  (the age word), at 3 and at 6. On the lattice only the two headings' rows
+  (the age word), at 3 and at 6 (since clock-age-v1, 2026-09-21, the
+  presence word is declared, `{"rule": "pass", "reads": "presence"}`, the
+  age moment being the law's default; the worlds read as they did, the
+  register's replay test holding). On the lattice only the two headings' rows
   dwell at the lamp's Node, each for two intervals (the map checks the nine
   lines of each source), so the presence is 4 F at both distances and the
   flow the push would read the same; the age moment is 22 F at 3 (the ages
@@ -6623,6 +6702,104 @@ sequential gates on an entangled record, the full register replay.
   dwelling ages give it (22 : 42, the form `M / r` up to the lattice's
   grain); the choice of the word is the owner's, the readings that would
   move with it listed in NOTE.md section 2; it establishes no physical law.
+
+### optical-v1's pin worlds, light beside a mass under the key (2026-09-21)
+
+- **Confronts.** The bending and the delay of light beside a mass, the
+  time part and the space part (PPN gamma) of the weak-field metric:
+  nature's (1 + gamma) 2 G M / (b c^2) with gamma = 1 (1.751 arcsec at the
+  Sun; VLBI's 0.99992 +- 0.00012) and Shapiro's (1 + gamma) 2 G M / c^3
+  times the logarithm (Cassini, 2 x 10^-5). The design
+  [docs/designs/one_wall/NOTE.md](designs/one_wall/NOTE.md) (12423748) with
+  REVIEW_3 (docs/designs/optical_v1/REVIEW_3.md on branch claude/optical-v1-review-3, 81b72bfb) and the light-bending note's
+  section 5; the build on branch `optical-v1` (2026-09-21).
+- **Model prediction, pinned before the run** (the one-wall note's
+  section 6, from the lattice's lines; DETECTOR, the bracket 0.5 pixel and
+  1 interval): series K's `mass` (M = 2^16, b = 6) and `near` (2^16,
+  b = 3) at the pair [1, 16384] under `optical` at gamma 0 (f = 1) and
+  gamma 1 (f = 2): the centroid's shift on the screen -1.93 / -3.86 pixels
+  (`mass`) and -2.42 / -4.83 (`near`), the delay 2.68 / 5.36 and 2.17 /
+  4.34 intervals; the number the run reads: the ratio of the two shifts
+  2.00 within 0.25 (the space part doubling the time part); the register
+  `examples/events/optical/expectations.json`.
+- **Run.** 2026-09-21 on branch `optical-v1` (`tools/run_series.py --jobs
+  2`, 400 intervals, the six worlds in two folders by gamma with a control
+  each, 26 to 41 s per world), read by `tools/lensing_readings.py
+  --no-replay` against each folder's control (DETECTOR; its verdict
+  lines are series K's own pins, not this entry's): `mass` at f = 1 the
+  centroid's shift -1.607 pixels (pinned -1.93: inside 0.5) and the delay
+  +2.89 intervals (2.68: inside 1); at f = 2 -3.812 (pinned -3.86: inside)
+  and +5.87 (5.36: inside); `near` at f = 1 -2.992 (pinned -2.42: outside
+  by 0.07) and +2.40 (2.17: inside); at f = 2 -4.654 (pinned -4.83:
+  inside) and +4.97 (4.34: inside), 1122 of the control's 1455 clicks
+  reaching the screen and 398 of the beam's clicks taken by the mass
+  (the beam bent into it); the ratios f = 2 over f = 1: the delays 2.03
+  (`mass`) and 2.07 (`near`), the pinned 2.00 within 0.25; the shifts
+  2.37 (`mass`) and 1.56 (`near`), outside the bracket. Read by the chief
+  physicist (record 483; the rule and the pins unchanged, no second run),
+  in this order: the wall's factor is read as Shapiro's (the delays'
+  ratios inside 2.00 +- 0.25, DETECTOR); the shifts are inside 0.5 pixel
+  in three of four, `near` at f = 1 missed by 0.07 with the beam's width
+  at b = 3 as the cause (the pin one line, the beam's five directions
+  passing the mass at b + (0, +-1.08, +-2.17) Links); the shifts' ratio
+  is not read at this fan, the teeth 2.39 / 4.76 / 11.31 degrees and the
+  bisectors 3.58 / 8.04 named (the pinned angles 4.25 and 8.48 degrees at
+  b = 6 beside the bisectors, `mass` a mixture of rows ending at 2.39 and
+  4.76 at f = 1 and at 4.76 and 11.31 at f = 2: the ratio 2.37 the comb's,
+  right and not a bug), and the bracket's inconsistency named as a fact
+  of the pin (0.25 against the propagated 0.58 / 0.46 from the shifts'
+  0.5 pixel each; the pin stays as written and refuted at 0.25); the
+  `near` shift at f = 2 a survivors' reading (398 taken). The bounded
+  diagnostic (GAMEBOARD, `tools/optical_readings.py`): the mean transverse
+  angle of **P** before the screen -4.181 / -8.680 degrees (`mass`, the
+  ratio 2.076) and -6.854 / -11.955 (`near`, 1.744, the survivors), verb
+  2's arithmetic read back to itself, nothing about where the light
+  arrives. The design decision on verb 3's form (the label's Bresenham on
+  the line of **P**, the physicist's recommendation, or a denser fan) is
+  on the model owner's return list; nothing of it built. The readings with
+  every column in [the worlds' README](../examples/events/optical/README.md);
+  the gate set byte identical without the key.
+- **Re-read after M1 of the physics-rule review** (2026-09-21; the review
+  of 408cf719, record 494, found the walk's count capped after the
+  primitive with the residue of the uncapped count kept and the residue
+  carried unscaled across a turn; the fixed head caps by the primitive's
+  own `at_most` with the surplus kept and rescales the residue at a turn
+  as the time of the last Link, s' = (s x S_new) // S_old, the chief
+  physicist's word of record 496; `tests/test_optical.py` (g) and (h);
+  the same tools, 400 intervals, the controls byte identical). DETECTOR,
+  the first run's value beside: `mass` at f = 1 the shift -1.622 (was
+  -1.607) and the delay +2.97 (was +2.89); at f = 2 -3.805 (was -3.812)
+  and +5.88 (was +5.87); `near` at f = 1 -3.000 (was -2.992) and +2.40
+  (was +2.40); at f = 2 -3.274 (was -4.654) and +4.51 (was +4.97), 1001
+  clicks (was 1122) and 547 taken by the mass (was 398); the delays'
+  ratios 1.98 and 1.88 (were 2.03 and 2.07), inside 2.00 +- 0.25; the
+  shifts' 2.35 and 1.09 (were 2.37 and 1.56), outside. One line of the
+  reading turns: the shifts are inside 0.5 pixel in two of the four
+  worlds, not three, `near` at f = 2 now outside by 1.06 pixel, the
+  survivors' reading with the mass taking 547; the wall's factor, the comb
+  and the bracket's fact stand as read; the reviewer's counterexample (the
+  residue scaled by T_new / T_old) had moved the four by hundredths; the
+  physicist's S ratio differs from the T ratio by 3.3 per cent in the
+  plane's near fan where every turn of this world happens ((1, 0, 0) to
+  (24, +-1, 0)), and the pixel's move is a capture count, the capture
+  threshold its cause (record 505; DETECTOR: 547 taken, 94 per cent of
+  the two inner directions' 582, against 415, 1.4 directions, under the
+  T ratio), not a sensitivity of the deflection to the residue rule.
+  GAMEBOARD: the mean transverse angle of **P**
+  -4.203 / -8.976 degrees (`mass`, the ratio 2.136; was 2.076) and -6.993
+  / -8.277 (`near`, 1.184; was 1.744, 80 survivors' rows for 99). The
+  rule and the pins unchanged; the readings with every column in the
+  worlds' README. The key is refused at load beside the key
+  `massive_rows` (the composed flight of massive rows under the optical
+  key is not reviewed, record 510; a world declares one of the two).
+- **Verdict.** The wall's factor reached (the delays 1.98 and 1.88 for
+  2.00 after the review's M1; 2.03 and 2.07 before it); the turn bends the
+  beam toward the mass at every f with the shifts inside 0.5 pixel in two
+  of four (three of four before M1; `near` at f = 2 a survivors' reading);
+  the shifts' ratio not read at this fan (2.35 and 1.09 for 2.00 within
+  0.25, the comb's and the survivors'; 2.37 and 1.56 before M1): a
+  hypothesis under its own identity, nothing of it in the law, gamma an
+  input of the world.
 
 ### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
 

@@ -109,5 +109,43 @@
    }
   },
   "z_shift_of_every_member": 0.2
+ },
+ "clock_age_v1": {
+  "derivation": "the members' k under the age word (clock-age-v1, 2026-09-21): 5.5 times the presence word's (the age moment 22 F against the presence 4 F on the fan at 3 Links, series T's map); at rest 1 + z = 1 + k, moving as one 1 + k + v / c (DETECTOR)",
+  "age_moment_over_presence": 5.5,
+  "cluster_rest": {
+   "m0": {
+    "one_plus_z": 1.0
+   },
+   "m01": {
+    "one_plus_z": 1.55
+   },
+   "m03": {
+    "one_plus_z": 2.65
+   },
+   "m06": {
+    "one_plus_z": 4.3
+   },
+   "m1": {
+    "one_plus_z": 6.5
+   }
+  },
+  "cluster_moving": {
+   "m0": {
+    "one_plus_z_additive": 1.2
+   },
+   "m01": {
+    "one_plus_z_additive": 1.75
+   },
+   "m03": {
+    "one_plus_z_additive": 2.85
+   },
+   "m06": {
+    "one_plus_z_additive": 4.5
+   },
+   "m1": {
+    "one_plus_z_additive": 6.7
+   }
+  }
  }
 }

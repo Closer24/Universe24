@@ -407,7 +407,10 @@ def test_the_crowds_count_is_the_sum_over_the_owed_intervals():
     """(e)."""
     document = bar_world(200, ticks=80, extra={"suspension": [1, 8]})
     document["families"].append({"name": "c", "quantum": 0, "charge": 0, "phase": False})  # type: ignore[attr-defined]
-    document["measured"][0]["table"] = {"c": "pass"}  # type: ignore[index]
+    # The rule under test is the charging of the crowd's count, whatever the
+    # clock counts; the presence word (clock-age-v1, 2026-09-21) keeps the
+    # count the one the integers below were written for.
+    document["measured"][0]["table"] = {"c": {"rule": "pass", "reads": "presence"}}  # type: ignore[index]
     document["measured"].append(  # type: ignore[attr-defined]
         {
             "position": [30, 0, 0],

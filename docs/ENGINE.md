@@ -214,9 +214,17 @@ interval, a diagnostic of the walk for Gauss's flux); the frame turns the
 phases of the measured events that
 self-created, reads the owed count as the count of the body's accumulator
 `acc_owed` at the rate k x n over d from what the clock
-counted (`_suspend`, `count_owed`; the same integers as `by_clock(age, k x n, d)` at a constant crowd, k the presence, or for a
-family whose table entry reads `age` the age moment `sum amount x age`
-over the same set, `measured.count_component`, `Measured.counted`;
+counted (`_suspend`, `count_owed`; the same integers as `by_clock(age, k x n, d)` at a constant crowd from age 0, k the age moment
+`sum amount x age` over the same set since `clock-age-v1` (2026-09-21, the
+model owner's word, record 394), or for a family whose table entry reads
+`presence` the presence, `measured.count_component`, `Measured.counted`;
+the age word's shape one wall function of the crowd, `core.integer.age_wall`,
+the rate r x d against the wall w x (d + c k n) over the declared set
+`measured.AGE_WALL_SET` of accumulators with a coefficient c each, today the
+clock alone at c = 1, the owed count the excess of its stretched wall over
+its stretched rate in units of d, integer for integer as before; the flight
+joins under optical-v1's key at its own coefficient by a declaration in the
+set, the phase per age never (`AGE_WALL_NEVER`);
 [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 note 25) and books the interval. The step of a measured event
 by its momentum (`_move`, before the law: on an axis whose momentum component is p in
@@ -467,7 +475,33 @@ free-space Node after the collision and turns toward it by its phase
 register, [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam)
 step 3 and note 35; refused with a paid family without a phase circle,
 and refused when it is not true or false; the record carries it and the
-identity `meeting-v1` under `hypotheses` when it is true); the amplitude law
+identity `meeting-v1` under `hypotheses` when it is true); `optical`
+(since 2026-09-21, `optical-v1` in its generic form, the model owner's
+"go" of record 303 and "clearly, in the generic form", records 421 to
+428; docs/designs/one_wall/NOTE.md; absent by default: gamma, the
+post-Newtonian parameter, a non-negative integer, nature's 1; under it
+the row's flight joins the age wall's declared set at the coefficient
+f = 1 + gamma (`measured.age_wall_set`: the rate 2 S_1 Q d against the
+wall 2 T_D (d + f n A), A the crowd's age moment at the row's Node read
+before step 1, one interval retarded, the accumulator a field of the row
+with its residue, `nature_beam.optical_walk_step`, one Link per interval
+by the primitive's own cap with the surplus kept; the click's exact
+phase reads the stored accumulator), and after the collision every row
+of content in free space is pushed by the interval's arrival flow at its
+Node (the interval's own arrivals, read after the walk and the
+collision, the crossing rule's set), **W** -= n (1 + gamma) content e_D
+**V**, and turns to the fan's neighbour nearest its whole momentum
+Q d content **u**_D + **W**, the momentum conserved across the turn and
+the flight's residue rescaled to the new direction's rate, s' = (s x
+S_new) // S_old, the time of the row's last Link (records 494 and 496;
+`nature_beam.optical_turn`, the books' `turned` line); refused with `suspension` 0, with `meeting` (one
+turn verb per row), with a direction that has no neighbour within a right
+angle, with gamma out of range, and with the key `massive_rows` (the
+composed flight of massive rows under the optical key is not reviewed,
+record 510: declare one of the two); the inverse interval refused under
+it; the record carries the block `optical` {gamma, flight_coefficient}
+and the identity `optical-v1` under `hypotheses`; without the key every
+world reads as it did, byte for byte); the amplitude law
 (`amplitude-v1`, [BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation); the record form is the law since stage (vii)
 step 4, the one click, MIGRATION (vii-4), and the world key `amplitude`
 of stages (i) to (vii-3) is deleted, a world that declares it refused
@@ -830,7 +864,8 @@ D beyond the rest vectors and the headings; per family its `quantum`,
 `phase_by_momentum` and, since 2026-09-20, `become`, the clock trigger as
 declared, by names, or None; the measured events' states carry `span` too, as
 `state.json` does), `action` (h, or None), `meeting` (the key as declared,
-false by default), `fast_steps` (since the crossing rule of 2026-09-21,
+false by default), `optical` (since 2026-09-21, under the key alone:
+`gamma` and `flight_coefficient` 1 + gamma), `fast_steps` (since the crossing rule of 2026-09-21,
 [BEAM_LAW note 48](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
 the count of Links a body crossed in the interval right after another of
 its Links, where the rule's one-per-crossing count is not proved; a
@@ -1015,7 +1050,7 @@ things themselves, one row each in the three worlds, are in
 
 | The reading | Type and symbol | Where the record carries it | Unit | Kind |
 | --- | --- | --- | --- | --- |
-| the clicks | scalar | `clicks` per family on a `detectors` entry of `run.json`, summed over the set's Nodes; the `click` lines of `events.jsonl` (`amount` per row group; on a face, the face's name as `detector`); `events` of a measured event's state. Under a lamp (a recorded world) a detector entry's `clicks` counts the units of every row that ended at the set, the offers, while the record's one click is the gather's `chosen` in the `world` list of `run.json` (one entry per record at its completion): the two differ (a lamp on an open face reads `clicks` 88 on `face:-x` and 81 on D against 32 and 49 gathers; `mz_345` reads D1 476 and D2 68 against the registered 63 and 1); the record's click is the `world` list's | units of amount | detector |
+| the clicks | scalar | `clicks` per family on a `detectors` entry of `run.json`, summed over the set's Nodes; the `click` lines of `events.jsonl` (`amount` per row group; on a face, the face's name as `detector`); `events` of a measured event's state. A face keeps two kinds of escape on two lines: a row's escape is a click booked on the face's `clicks`, `content` and `record`, while a measured event's escape by its step is booked on the face's `measured_content` and `momentum` and on the books' `measured.escaped`, never on `clicks` or `record`, and its `click` line writes `amount` = its content beside `measured` (its number) and `held` (issue #614; `tests/test_face_click_summary.py`). Under a lamp (a recorded world) a detector entry's `clicks` counts the units of every row that ended at the set, the offers, while the record's one click is the gather's `chosen` in the `world` list of `run.json` (one entry per record at its completion): the two differ (a lamp on an open face reads `clicks` 88 on `face:-x` and 81 on D against 32 and 49 gathers; `mz_345` reads D1 476 and D2 68 against the registered 63 and 1); the record's click is the `world` list's | units of amount | detector |
 | the amount measured | scalar | `measured` per family on a `detectors` entry (the units taken by `measure`); `measured` in a measured event's state (per rule) | units of amount | detector |
 | the record (the square) | scalar, the norm of the pointer | `record` per family on the set (`wave`: X^2 + Y^2 of the coherent pointer, accumulated; `beam`: the count clicked); `record` on the `record` line at each click; the same square on a face and the border `lifetime` | (32 x 256)^2 per unit of amount squared (X = sum 32 x amount x C[phase], C on the circle at the scale 256) | detector |
 | the pointer (X, Y) | a vector of the phase plane (Z^2), not of the GameBoard | `pointer` on the `record` line of a one-Node `wave` set, and per label on the `sum` set's `record` line at a gather | 32 x 256 per unit of amount | detector |

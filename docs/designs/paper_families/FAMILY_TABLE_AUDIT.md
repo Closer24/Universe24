@@ -40,7 +40,7 @@ the gap; their content is section 3, from the one source.
 ## 2. What the paper lacks
 
 1. **The family table's instance.** The 75 families of the shipped
-   definitions in their 27 entities (the sets), each with its quantum,
+   definitions in their 28 entities (the sets), each with its quantum,
    charge, columns, lifetime, phase circle and hand; and the 23
    declarations the worlds make inline beyond them (the nucleus's proton
    at the charge 4; the quarks' `d` at -272; the coupling series'
@@ -62,7 +62,7 @@ the gap; their content is section 3, from the one source.
    lives on the scale is free), and the paper carries it in words; the
    table that applies it family by family (the content on the scale; the
    charge a winding on the circle, `Z`; the phase on `Z_N`; the strong
-   column a signed scalar per unit; the lifetime in Links, `Z`; the
+   column a signed scalar per unit; the lifetime in intervals (the age counts intervals), `Z`; the
    hand in `Z_2`; the directions on the fan under the 48) is not there.
 4. **The sets.** The entities of the definitions (a photon, an electron,
    a proton, a neutron, the strong family, the bond family, the up
@@ -81,8 +81,8 @@ the gap; their content is section 3, from the one source.
 The script prints them; the writer takes what the paper needs.
 
 - **Table F1, the family table's instance**: [family_table.out](family_table.out)
-  section A (the shipped definitions: 75 families in 27 entities, every
-  declared key) and section B (the 23 inline declarations with their
+  section A (the shipped definitions: 75 families in 28 entities, every
+  declared key) and section B (the 21 inline declarations with their
   worlds).
 - **Table F2, the masses as declared**: section C (the content every
   family carries on the worlds' measured events, per series, with the

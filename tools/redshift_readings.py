@@ -97,9 +97,13 @@ class Reading:
 
     @property
     def power(self) -> int:
-        """The power of r whose product with k is expected constant: 2 for
-        the presence (the shell's Nodes), 1 for the age reading."""
-        return 1 if self.kind == "age" else 2
+        """The power of r whose product with k is expected constant: 1 for
+        the age moment, which every clock counts since clock-age-v1 (the
+        model owner's word of 2026-09-21, record 394; the `scalar` world's
+        probes count it at [1, 1], twice the `age` world's count at [1, 2]);
+        until then 2 for the `scalar` world, whose clock counted the
+        presence (the shell's Nodes)."""
+        return 1
 
     def single(self, label: str, radius: int) -> Probe | None:
         """The probe of the shell nearest to the direction's line: the
@@ -222,7 +226,9 @@ def print_singles(readings: list[Reading]) -> None:
         "GAMEBOARD (a host reading of the GameBoard, the probes' counts) the single probes "
         "(the window; the granularity of the fan: a probe on a line reads its beam)"
     )
-    print("| r | direction | Node | k scalar | k age | k scalar x r^2 | k age x r |")
+    print(
+        "| r | direction | Node | k scalar | k age | k scalar x r (k x r^2 until clock-age-v1) | k age x r |"
+    )
     print("| --- | --- | --- | --- | --- | --- | --- |")
     by_kind = {r.kind: r for r in readings}
     scalar, age = by_kind.get("scalar"), by_kind.get("age")
@@ -238,7 +244,7 @@ def print_singles(readings: list[Reading]) -> None:
             ks, ka = s.mean(True), a.mean(True)
             print(
                 f"| {radius} | {label} | {list(s.position)} | {ks:.3f} | {ka:.3f} | "
-                f"{ks * radius**2:.2f} | {ka * radius:.2f} |"
+                f"{ks * radius**scalar.power:.2f} | {ka * radius**age.power:.2f} |"
             )
     print()
 

@@ -658,6 +658,9 @@ class Replay:
     nodes: dict[int, int]
     count_at: dict[int, list[int]]
     presence_at: dict[int, list[int]]
+    # The age moment at the same Nodes, sum amount x age over the rows there
+    # after the interval: what a clock counts since clock-age-v1 (2026-09-21).
+    age_moment_at: dict[int, list[int]]
     ring: dict[str, dict[int, float]]
     cube: dict[int, float]
     escape: float
@@ -698,6 +701,8 @@ def replay_world_5(run: Run, window: int) -> Replay:
     nodes = {r: int(shell_readings(simulation, 0, CENTRE, r)["nodes"]) for r in FAR_RADII}
     count_at: dict[int, list[int]] = {r: [] for r in FAR_RADII}
     presence_at: dict[int, list[int]] = {r: [] for r in FAR_RADII}
+    age_moment_at: dict[int, list[int]] = {r: [] for r in FAR_RADII}
+    store = simulation.stores[0]
     keys = ("count", "flow", "presence")
     sums: dict[str, dict[int, float]] = {key: dict.fromkeys(FAR_RADII, 0.0) for key in keys}
     cube: dict[int, float] = dict.fromkeys(CUBE_HALVES, 0.0)
@@ -711,11 +716,15 @@ def replay_world_5(run: Run, window: int) -> Replay:
             node = at("+x", r)
             count_at[r].append(int(simulation.arrived[0][node]))
             presence_at[r].append(int(simulation.presence[0][node]))
+            flat = node[0] * store.strides[0] + node[1] * store.strides[1] + node[2]
+            here = store.node == flat
+            age_moment_at[r].append(int((store.amount[here] * store.age[here]).sum()))
         if tick >= first:
             for r in FAR_RADII:
                 reading = shell_readings(simulation, 0, CENTRE, r)
                 for key in keys:
-                    sums[key][r] += reading[key]
+                    # the diagnostic names the count of arrivals `arrived`
+                    sums[key][r] += reading["arrived" if key == "count" else key]
             for h in CUBE_HALVES:
                 cube[h] += square_flux(simulation, h)
     ring = {key: {r: value / window for r, value in per_r.items()} for key, per_r in sums.items()}
@@ -726,6 +735,7 @@ def replay_world_5(run: Run, window: int) -> Replay:
         nodes,
         count_at,
         presence_at,
+        age_moment_at,
         ring,
         {h: v / window / Q for h, v in cube.items()},
         escape,
@@ -878,7 +888,7 @@ def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
     lines += [
         "",
         f"the source: age {int(source['age'])}, waited {int(source['waited'])} (its own number's returns through the stub are home, not read)",
-        "the clock: age(200) replayed from the presence read (k_t = the rays of the source's number at the probe's Node at each self-creation, owed = count_owed(acc, k_t, [1, 1]), the accumulator of the fraction-free law)",
+        "the clock: age(200) replayed from the age moment read (k_t = sum amount x age over the rays of the source's number at the probe's Node at each self-creation, the count of a clock since clock-age-v1, 2026-09-21; until then the presence, the rays alone; owed = count_owed(acc, k_t, [1, 1]), the accumulator of the fraction-free law)",
         "",
     ]
     lines.append(
@@ -893,9 +903,10 @@ def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
         # The clock's frame as the engine keeps it (`NatureBeamSimulation._frame_all`
         # and `_suspend`, ENGINE.md): an interval owed is paid by one, else
         # the event self-creates, its age advances and it owes the count
-        # its owed accumulator gains, `count_owed(acc, presence, [n, d])`
-        # (the fraction-free law, BEAM_LAW note 41), on the presence the
-        # replay read at its Node.
+        # its owed accumulator gains, `count_owed(acc, counted, [n, d])`
+        # (the fraction-free law, BEAM_LAW note 41), on what the clock
+        # counts at its Node as the replay read it: the age moment since
+        # clock-age-v1 (2026-09-21; the presence until then).
         age, waited, owed, accumulator = 0, 0, 0, 0
         age_60 = 0
         for tick in range(1, run.ticks + 1):
@@ -904,7 +915,7 @@ def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
                 waited += 1
             else:
                 owed, accumulator = count_owed(
-                    accumulator, replay.presence_at[r][tick - 1], (numerator, denominator)
+                    accumulator, replay.age_moment_at[r][tick - 1], (numerator, denominator)
                 )
                 age += 1
             if tick == 60:
@@ -912,7 +923,7 @@ def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
         found = (int(probe["age"]), int(probe["waited"]), int(probe["owed"]))
         checks.equal(f"6: age + waited = 200 at r = {r}", found[0] + found[1], run.ticks)
         checks.equal(
-            f"6: (age, waited, owed) at r = {r} equal the replay of the presence read",
+            f"6: (age, waited, owed) at r = {r} equal the replay of the age moment read (clock-age-v1)",
             found,
             (age, waited, owed),
         )
@@ -930,7 +941,7 @@ def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
             expected_k / (expected_k + 1),
         )
         first, last = run.ticks - FAR_WINDOW + 1, run.ticks
-        k_mean = sum(replay.presence_at[r][first - 1 : last]) / FAR_WINDOW * numerator / denominator
+        k_mean = sum(replay.age_moment_at[r][first - 1 : last]) / FAR_WINDOW * numerator / denominator
         lost = 1 - found[0] / run.ticks
         lost_by_r.append(lost)
         lines.append(

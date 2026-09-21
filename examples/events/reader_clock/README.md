@@ -51,3 +51,25 @@ presence 4 F at the reader and the source, and the algebra of the ratio.
   1.333, 1.1; in the lattice's 2.0000, 1.0000, 2.0000, 2.0000, 2.2111 for
   2, 1, 2, 2, 2.2; a waiting reader clicks at every crossing (no ordinal
   missing); the crowd's term is the ratio (1 + k_s) / (1 + k_r).
+- **Re-read under `clock-age-v1` (2026-09-21; record 394: a clock counts
+  the age moment by default).** The five worlds run again on the head of
+  branch `clock-age-v1` (`tools/run_series.py --jobs 2`, 500 intervals) and
+  read by the same method in the window 250 to 500 (the reader reproduced
+  the registered readings on `main` first). DETECTOR, the lattice's 1 + z
+  and the reader's clock's, the age word's pins from the register's block
+  `clock_age_v1` (each k 5.5 times the presence word's) and the presence
+  word's registered reading beside them: `control` 6.5011 and 6.5011 (6.5
+  and 6.5; was 2.0000 and 2.0000); `reader_dense` 1.0000 and 0.1539 (1 and
+  0.1538; was 1.0000 and 0.5000); `alike` 6.5011 and 1.0000 (6.5 and 1;
+  was 2.0000 and 1.0000); `reader_half` 6.5011 and 1.7353 (6.5 and 1.7333;
+  was 2.0000 and 1.3333): the eight readings at rest inside the tolerance,
+  the crowd's term the ratio (1 + k_s) / (1 + k_r) under the age word as
+  under the presence word (two bodies in crowds alike read no shift at
+  k = 5.5 as at k = 1); the reader's births 499, 81, 81, 137 against the
+  source's 81, 499, 81, 81; every ordinal arrived. `alike_receding`, a
+  research reading: the receding source's crowd was emulated at 0.2 c /
+  (1 + k) for the presence word's k, so under the age word the slowed
+  source falls behind it and reads less of it: the lattice's 2.2239 and
+  the reader's clock 0.3408 (was 2.2111 and 1.1054 for 2.2 and 1.1); the
+  age word's pin (1 + k_s + v / c) / (1 + k_r) = 1.0308 is not read until
+  the emulation is re-declared, the design's to do.

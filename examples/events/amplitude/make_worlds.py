@@ -10,9 +10,12 @@ section 3.4, the acceptance tests 1, 3 and 8). A plane of 5 x 5 with z
 periodic, K 2^20, N 64, `release` [0, 1], `suspension` 0, `amplitude`
 true, 80 intervals. The source at (0, 0), a lamp of `light` of content
 2^20 (its turn 1 phase step per self-creation for far more births than
-the run holds, so the birth phase u of the record born at tick t is
-t - 1: the 64 births of the ticks 1 .. 64 span the circle once and
-complete by tick 76, the records born after are open at the end) releasing
+the run holds; the lamp pays one unit per birth, so its clock stalls once,
+at tick 2, and the first 64 births fall at tick 1 and ticks 3 to 65, 63 of
+them in the ticks 1 .. 64, the birth phase u of the record of ordinal n
+being n - 1: the first 64 records, read by ordinal, span the circle once
+and complete by tick 76, the records born after are open at the end;
+issue #533) releasing
 one record per self-creation on +x (arm 1) and +y (arm 2, the
 reflection's quarter turn 16 on the row: the source's own splitter),
 two rows of amount 1 with the multiplicity 2 (one quantum on two paths).
@@ -57,8 +60,10 @@ shipped world `examples/events/two_slits.json` (60 x 121, K 2^30, N 64, a
 lamp at (2, 60) on five directions, the wall at x = 8 with the openings at
 y = 55 and 65 re-emitting on 91 directions, the screen at x = 52 of 121
 one-Node pixels) under the key, the lamp's rate [1, 1] and its content K
-(one phase step per interval: the birth at tick t has u = t mod 64, the
-64 births of the ticks 1 .. 64 span the circle once), the family's
+(one phase step per interval; the lamp pays one unit per birth, so its
+clock stalls once at tick 2 and the first 64 births fall at tick 1 and
+ticks 3 to 65, the record of ordinal n with u = (n - 1) mod 64: the first
+64 records, read by ordinal, span the circle once), the family's
 `phase_per_link` the pair [8591334592, 2^30] (the shipped lamp's turn per
 interval, 8 + 1400000 / 2^30, the design's frequency), the pixels reading
 `sum`, and the geometry the design asks for: the wall's Nodes within 6 of

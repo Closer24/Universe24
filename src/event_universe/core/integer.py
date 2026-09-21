@@ -115,6 +115,43 @@ def by_drive(drive: int, rate: int, denominator: int, at_most: int = 0) -> tuple
     return count, drive - count * denominator
 
 
+def age_wall(
+    rate: int, wall: int, coefficient: int, age_moment: int, suspension: tuple[int, int]
+) -> tuple[int, int]:
+    """The one wall function of the crowd (`clock-age-v1`, the model owner's
+    word of 2026-09-21, record 394, and the generic shape of records 421,
+    422 and 428 of docs/LOG_2026-09-20.md; BEAM_LAW section 3 step 5 and
+    note 25): the crowd of other numbers at a Node, read by the body as its
+    age moment a_tau (the sum of amount x age over those rays), stretches
+    the wall of every accumulator of a declared set (`measured.AGE_WALL_SET`,
+    a coefficient c per member) by one factor: a count at the rate `rate`
+    against the wall `wall` becomes the count at the rate `rate x d` against
+    the wall `wall x (d + c x a_tau x n)`, [n, d] the world's `suspension`.
+    Returns (the stretched rate, the stretched wall); with no crowd the pair
+    (rate x d, wall x d), the same count. Today the set is the body's clock
+    alone, c = 1: the self-creation, one per interval (the rate 1 against
+    the wall 1), becomes one per (d + a_tau n) / d intervals, and the
+    excess of the stretched wall over the stretched rate in units of d,
+    c a_tau n / d per self-creation, is what the body owes after each
+    (`engine.count_owed`, the accumulator `acc_owed` keeping the
+    remainder: the same integers as the owed count until this day). A
+    second member (the row's flight under optical-v1's key, its coefficient
+    1 + gamma, gamma the post-Newtonian parameter) joins by a declaration
+    in the set and nothing else moving; the phase per age of a row is never
+    a member (a stretched phase per age would redshift light in transit).
+    Exact in Python integers, no bound of its own (the age moment is bounded
+    by the reading, the products by the caller's register). A denominator
+    below 1, a coefficient below 1 and a negative age moment are refused."""
+    numerator, denominator = suspension
+    if denominator < 1:
+        raise ValueError("positive denominator required")
+    if coefficient < 1:
+        raise ValueError("the age wall's coefficient is a positive integer")
+    if age_moment < 0 or numerator < 0:
+        raise ValueError("the age moment and the width are not negative")
+    return rate * denominator, wall * (denominator + coefficient * age_moment * numerator)
+
+
 def signed_inner(
     left: Sequence[int], right: Sequence[int], signs: Sequence[int], bound: int | None = None
 ) -> int:
