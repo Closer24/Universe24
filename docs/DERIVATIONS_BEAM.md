@@ -86,7 +86,7 @@ cited as orders, not as code.
 
 Section 0 states the law as one operator with its two blocks and places
 every result under its block (the owner's second pass, record 167 as the
-Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass); section 17 answers the owner's direction of 2026-09-21 (the law above Newton and Einstein: the theorem of covariant readings); section 18 answers records 264 and 265 (the three structural failures of the register under one logic). The
+Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass); section 17 answers the owner's direction of 2026-09-21 (the law above Newton and Einstein: the theorem of covariant readings); section 18 answers records 264 and 265 (the three structural failures of the register under one logic); section 19 answers the owner's direction of 2026-09-21 on the masses (a bound set's mass as its total content, the nucleon as a chain of three on the bipartite lattice). The
 targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
@@ -4784,3 +4784,154 @@ record cannot, the crowd can), one closes in form and stays short by a
 factor the lattice's geometry cannot supply, and one stays open; nothing
 claimed beyond that, and every closure is a hypothesis with its pins,
 not a build.
+
+## 19. The masses generically: a bound set's mass as its total content, the nucleon as a chain of three on the bipartite lattice, from the electron to the quarks
+
+**The owner's direction** (2026-09-21, in conversation, translated:
+"solve the masses generically too: you reached the electron, and from
+the electron perhaps the proton, and from the proton the quarks, and
+close the whole family; and understand how the quarks bind, the
+binding law, generically"). What the structure gives is stated as
+derived, what it does not as input, with the numbers against nature
+(PDG 2024, CODATA 2022) from the host script
+[masses_chain.py](designs/derivations_beam/masses_chain.py) with its
+output [masses_chain.out](designs/derivations_beam/masses_chain.out);
+no run. The quarks' design (records 249, 251) is the physicist's and
+is not on `main`; this section states what any design must satisfy
+and what it may not expect.
+
+### 19.1 The generic statement: the mass of a bound set is its total content
+
+Under binding-v1's generic form ("the field is content in flight,
+every family paid", its design's section 7) and section 17's energy
+accumulator, the mass a detector reads of a bound set is the set's
+TOTAL content: what its bodies hold plus what is in flight between
+them, less what has escaped (the escape click's content, the released
+binding). Three consequences, each a form and not a number:
+
+- **The current and the constituent mass.** A body's held content at
+  the moment of a reading is its current mass; its share of the
+  content in flight is the rest of its constituent mass; the set's mass
+  is the sum of both, and neither part is a rung of any ladder
+  (PREDICTIONS 26 stands: nothing selects the held counts).
+- **The bond's content in flight is blind to charge and to the held
+  content.** The strong column reads `sigma` per unit with one sign for
+  every family that carries it, never the charge line (3.4: the charge
+  column is a separate column) and never the family's name; so in a
+  steady exchange between three bodies the content in flight F is a
+  property of the bond (the rate, the contacts, the round trip), the
+  same for `u u d` and `u d d`.
+- **The steady state.** With H the held content, `n / d` the strong
+  family's release rate per unit per self-creation and tau the rows'
+  round trip in intervals, the content in flight is `F = H (n / d) tau`
+  (each unit released stays in flight tau intervals), so the fraction in
+  flight is `(n / d) tau / (1 + (n / d) tau)`, a number of the family
+  table and the geometry.
+
+### 19.2 From the electron to the proton to the quarks: what closes and what stays input
+
+**The electron to the proton.** Nothing generic: the electron's count k
+is at least 4526 units (16.2 (a)) and the proton's `1836.15 k` is the
+family table's (16.2 (d)); the sentence stands.
+
+**The proton from the quarks: the bond's number.** With nature's
+current masses (`m_u = 2.16`, `m_d = 4.70` MeV) the proton's held part
+is `2 m_u + m_d = 9.02` MeV and its bond's content in flight `F = 938.27
+- 9.02 = 929.25` MeV, 0.990 of the mass: the proton is one percent held
+content and ninety-nine percent content in flight, exactly the
+distribution record 248 named, and F is a number the family table's
+`(n / d) tau = F / H = 103` must give (30 per self-creation at one
+Link's round trip, `tau = 2 x 55 / 32`): **an input**, one number for
+the whole bond.
+
+**The neutron from the proton: a prediction with its number.** Since F
+is the same for `u d d`, the neutron's mass is `m_u + 2 m_d + F` and
+the difference is the held difference alone:
+
+    m_n - m_p = m_d - m_u = 2.54 +- 0.41 MeV      (measured 1.293 MeV).
+
+**Different by the electric part**: lattice QCD splits the measured
+difference into 2.52 MeV from the quark masses and -1.00 MeV from the
+proton's electric self-energy (Borsanyi et al., Science 347, 1452,
+2015); the law's electric rows are free rows that carry no content
+(section 3.4's column, 16.4), so the law as declared predicts the QCD
+part alone, 2.54 against 1.29, and the electric part is exactly the
+content in flight of a PAID electric family (binding-v1's "every
+family paid"): a uniform sphere of the proton's charge radius holds `(3
+/ 5) alpha hbar c / r_p = 1.03` MeV, and `2.54 - 1.03 = 1.51` against
+1.29 (lattice QCD's 1.51 +- 0.28). So the neutron-proton difference
+closes in form under two readings the law already names (the bond's
+content in flight blind to charge; the electric column paid), with the
+number at the quark masses' uncertainty; **reached in form, the number
+within the inputs' uncertainty**, and it is a prediction: a design in
+which the strong exchange read the charge would break it.
+
+**The quarks' held counts** at `k = 4526`: `u` 19 131 +- 3543, `d` 41
+629 +- 620 units, the bond `8.2 x 10^6` per nucleon; both compatible
+with the floor 3 within the uncertainties, and nothing selects them.
+
+### 19.3 How the quarks bind, generically: the chain on the bipartite lattice
+
+**The binding law is the one the nucleons have.** Record 251: no new
+force unless the mathematics forces it; the quarks bind through the
+strong column `sigma` with their own value as the family key, one give
+per contact Link (18.3), the lifetime L as the range. The mathematics
+forces one thing, and it is geometry: the cubic lattice is BIPARTITE
+(a Link joins a Node of even coordinate sum to one of odd), so it has no
+triangle, and three bodies at adjacent Nodes cannot all touch: three
+quarks form a CHAIN, a line or an L, with one quark at the centre bound
+to both ends and the ends not bound to each other. Two consequences,
+one of them a number:
+
+- **Which quark sits at the centre is fixed by the charge radius.** The
+  mean square charge radius of a chain of three at one Link about its
+  charge centroid (the script's (B)): `u d u` (the d at the centre)
+  `+4 / 3 L^2`, `u u d` (the d at an end) `-2 / 3 L^2`; the proton's is
+  measured positive (`r_p^2 = 0.707` fm^2), so the proton is `u d u`,
+  the odd quark at the centre. Then the neutron, by the same rule, is
+  `d u d`, and its mean square charge radius is `-2 / 3 L^2`: NEGATIVE,
+  as nature's is (`r_n^2 = -0.1155` fm^2, the neutron's charge
+  distribution positive at the centre and negative outside). **The sign
+  is a parameter-free consequence of the bipartite chain**; the
+  magnitude is not: with L from the proton, `L = r_p sqrt(3 / 4) = 0.73`
+  fm, the chain gives `-0.35` fm^2, three times nature's, the point
+  charges at the chain's ends against nature's spread (the content in
+  flight carries the charge along the rows, which a chain of point
+  bodies does not read). **Reached in sign, short in magnitude by 3.**
+- **The colour of the law is the parity.** The lattice's two classes of
+  Nodes are the only "colour" a bond on the six Ports knows: a contact
+  is always between the two classes, and a set of three has two of one
+  class and one of the other, the centre. A third class does not exist
+  on the lattice; a design that needs three colours needs a hypothesis
+  outside the six Ports (record 251's "colour only as a stated
+  hypothesis if sigma alone cannot hold three events at adjacent
+  Nodes": on the cubic lattice sigma alone cannot hold three at
+  MUTUALLY adjacent Nodes, since there are none, and holds them as a
+  chain).
+- **Confinement is not in the law.** The lifetime L gives the strong
+  rows a range and the escape click releases their content; a quark
+  moved beyond L Links from its partner loses the exchange and is a
+  free body of its held content: the law has a range, not a
+  confinement, and a free quark is admissible in it. **Absent**, stated.
+
+### 19.4 The three tests and the verdict of section 19
+
+The readings used pass the three tests as they stand: the bound set's
+mass as its total content (a sum over the record and the rows, B and
+T, no name), the strong column blind to charge (one primitive per
+column), the chain (the six Ports, local). **Derived**: the mass of a
+bound set as held plus in flight less escaped (form); the
+neutron-proton difference as the held difference with the electric
+part named (`2.54`, `1.51` with the paid electric column, against
+1.29); the nucleon as a chain with the odd quark at the centre and the
+neutron's negative charge radius squared (sign). **Input**: the
+electron's count, the held counts of the quarks (the current masses),
+the bond's content in flight (`(n / d) tau = 103`). **Absent**:
+confinement; a third colour. **For the quarks physicist's design**,
+the pins before any run: three bodies at adjacent Nodes bind as a
+chain and never as a triangle; the read mass of the set is the held
+sum plus the content in flight, the same F for `u u d` and `u d d`
+within the grain; `m_n - m_p` equal to the held difference; the escape
+click's content the released binding; and, if the electric family is
+paid, the proton heavier than the strong reading by about one part in
+a thousand of its mass (1.0 MeV of 938).
