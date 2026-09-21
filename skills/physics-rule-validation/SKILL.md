@@ -142,7 +142,7 @@ Boss must not mark the physics change complete until the required checks pass.
 
 ## Emergence check (2026-09-20, record 151)
 
-When a change adds a rule or a world key for an effect that relative motion, a varying rate or a meeting could produce by itself, require the emergence test in the review: the same world with the key absent, the expectation pinned before the run (for a reader stepping one Link per k intervals through a stream of one row per interval: k + 1 rows per k intervals toward, k - 1 away, if the step reads the Link it crosses). A rule that reproduces what the flight, the step and the meeting already give is not admissible; a step that misses the effect is the defect to name, fixed in the step, not beside it. Record which case held and cite the file:line of the step and of the read.
+When a change adds a rule or a world key for an effect that relative motion, a varying rate or a meeting could produce by itself, require the emergence test in the review: the same world with the key absent, the expectation pinned before the run (for a reader stepping one Link per k intervals through a stream of one row per interval: k + 55/32 rows per k intervals toward and k - 55/32 away, the step reading the Link it crosses, c = 32/55; BEAM_LAW note 48, the crossing rule, pinned in tests/test_crossing.py over 32 and 48 intervals: the earlier reading k + 1 of record 151 was the estimate before the rule was built). A rule that reproduces what the flight, the step and the meeting already give is not admissible; a step that misses the effect is the defect to name, fixed in the step, not beside it. Record which case held and cite the file:line of the step and of the read.
 
 ## The main course (the owner, 2026-09-21, records 176 and 177)
 
