@@ -1473,3 +1473,47 @@ beamlaw bibitem; Weyl's edition and Schrodinger's fourth communication;
 the closing list with Einstein and Born as a limit; the introduction
 names the section, not table rows; the harmonic constants pinned by a
 host map.
+
+## Wave 6 (2026-09-21, after the merge of main at 5fdf38e5: the click at 7e523c55, PR #492, PR #486, #489, the records to 325)
+
+The click landed (record 324; BEAM_LAW notes 45 and 46): Part I's
+components name the birth wheel as a lamp's declared rate (u = ordinal
+x r_w mod W, one row of the counts table, 4096 at the golden rate on the
+registered two-slit world) and the exact phase at the click (one
+Euclidean division from the row's two counts), both built; "decided,
+not built" removed for the wheel everywhere. The two-slit world
+re-registered at 4096 births under the wheel and the exact phase (L2b):
+the dark pixels 0 to 3 as pinned, the counts' correlation with the
+cosine 0.891 against the weights' 0.895, the visibility 0.966 against
+0.954, every cell within 2 of its rung; the bright pixels 19 to 51
+against the map's 28 to 29, the map's fan the screen's and not this
+world's (reported as outside): Young's row, the Gleason paragraph, the
+nature table's row 2a (the register's row predates the re-registration:
+0.966 against 0.98, FAIL by 0.014 in the clicks, reported to the Boss
+for the physicist's update of NATURE.md), Part III's Young paragraph
+and the appendix's Young row. The Doppler row cites 2.7 again (restated
+by PR #492); 21.4 names optical-v1 (the parenthesis dropped); the
+bending row and the delay-field sentence: reviewed twice, buildable
+after form B, not yet built (record 323, REVIEW_ROUND2.md). The log
+bibitem: 320, 322, 323, 324; the beamlaw bibitem: notes 45, 46. The
+paper-writer skill folded into paper-coordinator on the Boss's word
+(record 309): the file deleted, the route removed, one MIGRATION line.
+Referee round 22 pending.
+
+## Referee round 22 (2026-09-21): wave 6, major revision, applied
+
+Nine findings, four major, all applied: the two-slit pin before the run
+was the counts' correlation about 0.96, not a visibility, and it was
+missed (0.891), the register's reason being that the pin was the
+screen's fan's and not this world's: stated so in Part III, in Young's
+row and in the appendix (the pin column now the three pins, the reading
+column the misses and the reason); the Gleason paragraph no longer says
+no registered click pattern tests the kernel; row 2a's clicks marked as
+this paper's addition and its FAIL by 0.014 as this paper's reading
+(NATURE.md still reads NOT YET; reported to the Boss); the appendix's
+Young row names slits_huygens (L2b), not slits_low (L2); the wheel
+written as the rate r_w per birth against the wall W with u, r_w and
+the ordinal named and [2531, 4096] given; the exact phase as the
+click's one division with its remainder kept; the read-out sentence
+compares the wheel's coordinate; "within 2 where the pin said within
+one, the rungs per record"; the beamlaw bibitem's notes in order.
