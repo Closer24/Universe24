@@ -57,9 +57,13 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   application of the interval's map **F**; `tick` in every record key and
   identifier, "interval" the prose noun (Highlights 5.6, item 9).
 - **The cube group**: the 48 signed axis permutations about a Node, 24
-  rotations and 24 reflections, under which every rule is covariant
-  (`core.game_board.cube_symmetries`); its hand is its pseudoscalar, +1 on a
-  rotation and -1 on a reflection (record 191 of [the log](LOG_2026-09-20.md)).
+  rotations and 24 reflections, under which every rule is covariant up to
+  the two declared ties, the digital line's axis order (x before y before z,
+  which moves the Nodes crossed and the exit face of a tied direction under
+  the 40 axis permutations; the label, the momentum and the hand covariant)
+  and the collision's Port order (`core.game_board.cube_symmetries`; records
+  191 and 349 of [the log](LOG_2026-09-20.md)); its hand is its pseudoscalar,
+  +1 on a rotation and -1 on a reflection.
 - **The phase circle**: the world's one circle of N steps, the cyclic group
   Z_N of the phase, with its unit vectors at the scale 256 (`core.phase.PhaseCircle`,
   the tables C and S).
