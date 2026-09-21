@@ -1,5 +1,7 @@
 # Derivations of the known laws from the couplings
 
+The Beam Law (`beam-v1`, since 2026-09-19) is derived in [DERIVATIONS_BEAM.md](DERIVATIONS_BEAM.md), round 9 onward, by the same method and the same three-word verdicts; the rounds below derived the laws before it.
+
 The model owner's question of 2026-09-18: from the simple laws and the
 declared couplings alone, with limits and continuum arguments, which known
 formulas can be reached, at least Newton's and Einstein's, and which
