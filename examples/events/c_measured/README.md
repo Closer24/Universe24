@@ -17,7 +17,13 @@ never moved. Every number is one of two kinds
 ([the register](../../../docs/EXPERIMENTS.md), "Two kinds of readings"): a
 DETECTOR reading (a face's click: its tick, its Node, its face; the
 lamp's birth record) or a FORMULA number (the closed form's integer,
-written before the run); no GameBoard reading is used.
+written before the run); no GameBoard reading is used. The six faces
+are detectors at rest on the GameBoard: this run's claim is the pace a
+detector at rest reads; what a detector in motion reads is another claim
+([DERIVATIONS_BEAM 4.2 and 4.5](../../../docs/DERIVATIONS_BEAM.md#42-a-moving-body-what-it-reads):
+a moving reader's one-way count is `c -+ v`, the two-way count null, the
+two-way time not; NATURE.md rows 4a, 4b, 5b), not made here (record 304
+of the day's log).
 
 Notation (the owner's rule, record 184): every symbol is named at its
 first use; a scalar is plain (c the pace of a row, Q the label's scale,
