@@ -4138,6 +4138,92 @@ S) / (sqrt 3 x 2 pi K (n / d)))`, two declared columns (the width S and
 the action h) and the fan's count: declared, not structural. **Input**,
 with the theorem's bound.
 
+**(d) The smallest mass per kind** (the owner, record 256, translated:
+"maybe several masses must be derived: the electron may be the
+smallest and the quark the smallest, and the quark composes the
+protons and neutrons; try to reach the smallest mass by kind from our
+conditions"; the host script
+[smallest_mass.py](designs/derivations_beam/smallest_mass.py) with its
+output [smallest_mass.out](designs/derivations_beam/smallest_mass.out)).
+The law's own condition that fixes a floor is the charge line: a
+family's charge per unit of content is a reduced pair `rho = [n, d]`
+and a body's charge is `rho x M`, so `rho x M` is a whole number if and
+only if d divides M. **Theorem**: the smallest content of a family
+whose bodies carry a whole charge is its reduced denominator d. The
+law does not impose the whole charge (the masses design, section 4:
+nothing forbids `rho = 1 / 7`); nature does (every free body's charge
+a multiple of e), so the theorem is conditional on that fact and
+exact under it. The floors on the register and the quark design: the
+electron `[-15, 1]` and the proton `[1, 1]` one unit, the up quark
+`[2, 3]` and the down quark `[-1, 3]` (records 249, 251) three units
+each, a family declared at `[-5, 69]` sixty-nine. Confronted:
+
+- **(a) with the electron's bound.** The theorem gives the electron's
+  floor as 1 unit and 16.2 (a) gives its count as at least 4526 by the
+  proton's ratio: no contradiction, the count is a multiple of the
+  floor (any multiple of 1); the theorem fixes floors, the ratios fix
+  multiples, and neither fixes the other. The smallest counts that
+  meet CODATA 2022 stay 4526 (the proton alone) and 13 840 (with the
+  muon).
+- **(b) with the quarks as the base.** At the floors the proton `u u
+  d` is 9 units of charge `2 / 3 + 2 / 3 - 1 / 3 = 1` and the neutron
+  `u d d` 9 units of charge 0: `m_n / m_p = 1` exactly against nature's
+  1.00138, and `m_p / m_e = 9` at the electron's floor against 1836.15:
+  the floors are not the masses, refuted at once, so the counts are
+  multiples of the floors. If the binding carries no held content
+  (today's law: a free family's rows carry none), a nucleon's count is
+  a sum of quark counts and hence a multiple of 3: the smallest
+  electron count with the proton's count a multiple of 3 within CODATA
+  is 4657 (the proton 8 550 963), with the neutron's too 32 206 (the
+  proton 59 135 133, the neutron 59 216 646), with the muon 74 512; at
+  16.2 (a)'s 4526 the proton's count is `8 310 427 = 1 mod 3`, not a sum
+  of quark floors. Under binding-v1 (record 115, candidate (b): the
+  strong family's rows paid, the exchange as content in flight, the
+  read mass the held part) the constraint lapses and the read mass is
+  the parts' sum LESS the content in flight: a bound set lighter than
+  its parts, the sign of the deuteron's defect; nature's nucleon is
+  HEAVIER than its quarks by a hundredfold (the current masses 2.2,
+  2.2, 4.7 MeV against 938.3), so a tower whose quark contents are
+  nature's current masses gives the wrong sign, and the tower's quark
+  contents would have to be the constituent masses (about a third of
+  the nucleon each): a statement for the quarks physicist's design, not
+  a derivation.
+- **(c) the kinds of the law and the smallest member of each.** Rows
+  of a free family: content 0, no floor to fix. Rows of a paid family:
+  `quantum x s` at the turn s, the smallest the family's h at `s = 1`,
+  fixed by the declaration h and by nothing structural. Bodies with a
+  charge: the floor d of the theorem, conditional on the whole charge.
+  Bodies with sigma only (the strong family, no charge line): the floor
+  1 of 16.2's theorem, no further condition (the strong column is a
+  value per unit with no denominator that must divide). Passed families
+  with a phase window (`pass` with `phase_window`): their content enters
+  no rule that divides, the floor 1. So the conditions of the law fix
+  exactly one floor beyond the unit, the charged body's d, and fix no
+  count: the electron's, the quarks' and the nucleons' masses stay
+  inputs with the floors 1, 3, 3 and the multiples of (b).
+
+**(e) G, the width, and what a rule fixing it would have to be.** In
+the law's units `G = K (n / d) / (4 pi S)` (section 3.3: the release
+rate per unit of content per direction, times the fan's count, over
+`4 pi` and the width), and with the one constant `k_C = G` (3.4)
+`alpha_G = alpha / rho_p^2` (16.4). A rule fixing S from the structure
+would have to make S a count of the structure times declared columns,
+and two candidates can be stated so that they can be chosen: `S = K
+(n / d) / (4 pi)`, which is "G = 1 in Links per unit of content per
+interval squared" (Newton's constant one, the natural-units choice:
+generic, a constant at load, local), and `S = sqrt 3 K (n / d) / (2
+h)`, which is "the unit of content is the Planck mass" (`sqrt(hbar c /
+G)` = 1 unit, 16.2 (c)). The second is refuted at once: `alpha_G = (m_p
+/ m_Planck)^2` would then be `M_p^2 >= 1` against `5.9 x 10^-39`, so
+the unit must lie below the proton by at least `1 / sqrt(alpha_G) =
+1.3 x 10^19`. The first moves the number instead of deriving it: with
+`G = 1`, `alpha_G = 2 pi sqrt 3 M_p^2 / h` puts `10^38 M_p^2` into the
+action h. Either way the hierarchy `alpha / alpha_G = rho_p^2 = 1.2 x
+10^36` must be carried by a declaration, and no count of the structure
+(the largest 6561, the wheel 4096) carries it: **none in sight**; the
+choice of S is a choice of units, and `alpha_G` stays the width's
+input.
+
 ### 16.3 The law's structural numbers: what a derivation may use
 
 The only things a derivation may use, each a count of the law's form
