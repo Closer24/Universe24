@@ -1,0 +1,70 @@
+{
+ "format": "reader-clock-expectations-v1",
+ "c": 0.5818181818181818,
+ "ticks": 500,
+ "window": [
+  250,
+  500
+ ],
+ "tolerance": 0.02,
+ "reader": 1,
+ "source": 2,
+ "speed_over_c_moving": 0.2,
+ "worlds": {
+  "control": {
+   "k_reader": 0.0,
+   "k_source": 1.0,
+   "flux_reader": 0,
+   "flux_source": 16384,
+   "moving": false,
+   "one_plus_z_lattice": 2.0,
+   "one_plus_z_readers_clock": 2.0,
+   "clicks_per_interval": 0.5,
+   "clicks_per_reader_birth": 0.5
+  },
+  "reader_dense": {
+   "k_reader": 1.0,
+   "k_source": 0.0,
+   "flux_reader": 16384,
+   "flux_source": 0,
+   "moving": false,
+   "one_plus_z_lattice": 1.0,
+   "one_plus_z_readers_clock": 0.5,
+   "clicks_per_interval": 1.0,
+   "clicks_per_reader_birth": 2.0
+  },
+  "alike": {
+   "k_reader": 1.0,
+   "k_source": 1.0,
+   "flux_reader": 16384,
+   "flux_source": 16384,
+   "moving": false,
+   "one_plus_z_lattice": 2.0,
+   "one_plus_z_readers_clock": 1.0,
+   "clicks_per_interval": 0.5,
+   "clicks_per_reader_birth": 1.0
+  },
+  "reader_half": {
+   "k_reader": 0.5,
+   "k_source": 1.0,
+   "flux_reader": 8192,
+   "flux_source": 16384,
+   "moving": false,
+   "one_plus_z_lattice": 2.0,
+   "one_plus_z_readers_clock": 1.3333333333333333,
+   "clicks_per_interval": 0.5,
+   "clicks_per_reader_birth": 0.75
+  },
+  "alike_receding": {
+   "k_reader": 1.0,
+   "k_source": 1.0,
+   "flux_reader": 16384,
+   "flux_source": 16384,
+   "moving": true,
+   "one_plus_z_lattice": 2.2,
+   "one_plus_z_readers_clock": 1.1,
+   "clicks_per_interval": 0.45454545454545453,
+   "clicks_per_reader_birth": 0.9090909090909091
+  }
+ }
+}
