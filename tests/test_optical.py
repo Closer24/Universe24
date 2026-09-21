@@ -79,6 +79,23 @@ default). One rule per case, the integers written before the run:
     before the fix carried 172160 unscaled against 14520 (a raw count of
     12) and kept the residue of the uncapped count, 6112: twelve walls of
     paid credit destroyed;
+(i) verb 3's form, the label by Bresenham along the line of **P** (the
+    model owner's GO of record 536, the chief physicist's recommendation
+    of record 483): the row's error accumulator **c** = the sum over its
+    walked Links **h** of **h** x **P** (the integer cross product, read
+    from the first push on), and the label chosen among D and its fan
+    neighbours as the one whose next Link keeps |**c** + **h** x **P**|^2
+    smallest, ties to D. A bar of 230 x 16 x 1 at [1, 56], `optical` 1,
+    the fan the twelve diagonals with (24, +-1, 0) and (12, +-1, 0) (the
+    teeth 2.39 and 4.76 degrees, the bisector 3.58): a row of `light` at
+    (1, 1, 0) on +x pushed once at (2, 1, 0) by an m row arriving from +y,
+    **W** = (0, 14080, 0), **P** = (229376, 14080, 0) at 3.51 degrees,
+    below the bisector, so the nearest-tooth verb kept (24, 1, 0) and
+    reached y = 1 + 8.3 at x = 201; along **P** the row reaches y >= 12 at
+    x = 201 and
+    stays within two Links of **P**'s line (|e x P| <= 2 |P_x|), **P**
+    conserved at every interval, the walked Links' angle 3.51 and not the
+    tooth's 2.39; the fields `cross` are 0 on every row without the key;
 (h) S1 of the same review: the push accumulator's sums are tested against
     the working register before they are formed. The turn world of (b)
     with the light row's **W** preset: W_x = 2^63 - 1 - 14080 takes the
@@ -422,7 +439,7 @@ def test_byte_identity_without_the_key_and_the_declared_set():
     for _ in range(20):
         simulation.step()
     for store in simulation.stores:
-        for name in ("made", "residue", "push_x", "push_y", "push_z"):
+        for name in ("made", "residue", "push_x", "push_y", "push_z", "cross_x", "cross_y", "cross_z"):
             assert not getattr(store, name).any(), name
     lines = [
         ray
@@ -430,7 +447,7 @@ def test_byte_identity_without_the_key_and_the_declared_set():
         for family in node["families"]
         for ray in family["rays"]
     ]
-    assert lines and not any("flight" in ray or "push" in ray for ray in lines)
+    assert lines and not any("flight" in ray or "push" in ray or "cross" in ray for ray in lines)
     assert age_wall_set(None) == AGE_WALL_SET == (("owed", 1),)
     assert age_wall_set(0) == (("owed", 1), ("flight", 1)) and age_wall_set(1) == (
         ("owed", 1),
@@ -561,3 +578,39 @@ def test_the_push_accumulators_sums_are_tested_at_the_register():
     simulation.stores[0].push_y[0] = -(MAX_WORK_INT - push)
     with pytest.raises(OverflowError, match="turn"):
         simulation.step()
+
+
+def bresenham_world() -> dict[str, object]:
+    document = fan_world(PLUS_X, 0, [2, 2, 0], MINUS_Y)
+    document["shape"] = [230, 16, 1]
+    document["ticks"] = 400
+    document["suspension"] = [1, 56]
+    document["directions"] = [*FAN, [12, 1, 0], [12, -1, 0]]
+    document["measured"][1]["position"] = [229, 1, 0]  # type: ignore[index]
+    return document
+
+
+def test_a_pushed_row_walks_along_the_line_of_its_momentum_not_the_nearest_tooth():
+    """(i)."""
+    simulation = NatureBeamSimulation(parse_nature_beam_world(bresenham_world()))
+    unit = simulation.tables.flight.labels
+    momentum = [64 * 56 * 64, 14080, 0]
+    x = y = 1
+    for tick in range(1, 401):
+        simulation.step()
+        assert simulation.books()["balanced"], tick
+        light = simulation.stores[0]
+        assert light.size == 1, tick
+        whole = Q * 56 * int(light.amount[0]) * int(light.content[0])
+        held = [int(light.push_x[0]), int(light.push_y[0]), int(light.push_z[0])]
+        if tick >= 1:
+            assert [whole * int(u) + w for u, w in zip(unit[int(light.direction[0])], held, strict=True)] == momentum, tick
+        x, y, _ = (int(c[0]) for c in light.coordinates(light.node[:1]))
+        if x >= 201:
+            break
+    assert x == 201 and tick < 400
+    ex, ey = x - 2, y - 1  # from the push at (2, 1, 0)
+    assert abs(ex * momentum[1] - ey * momentum[0]) <= 2 * momentum[0], (ex, ey)
+    assert ey >= 11, (ex, ey)  # the tooth (24, 1, 0) reaches 8.3
+    cross = (int(light.cross_x[0]), int(light.cross_y[0]), int(light.cross_z[0]))
+    assert cross != (0, 0, 0)

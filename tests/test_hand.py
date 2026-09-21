@@ -761,7 +761,18 @@ def test_a_world_without_a_declaration_reads_as_it_did(tmp_path):
     # `optical` (optical-v1, 2026-09-21) and `acc_turn`, the massive rows'
     # remainder (massive-rows-v1, the same day), follow it, each constant 0
     # without its key (a width of 0 bits when constant as here).
-    assert IDENTITY_FIELDS[-7:] == ("hand", "made", "residue", "push_x", "push_y", "push_z", "acc_turn")
+    assert IDENTITY_FIELDS[-10:] == (
+        "hand",
+        "made",
+        "residue",
+        "push_x",
+        "push_y",
+        "push_z",
+        "cross_x",
+        "cross_y",
+        "cross_z",
+        "acc_turn",
+    )
     with_hand = store.merge_key()
     without = store.merge_key([getattr(store, name) for name in IDENTITY_FIELDS if name != "hand"])
     assert with_hand is not None and without is not None and with_hand.tolist() == without.tolist()

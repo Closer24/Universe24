@@ -281,6 +281,16 @@ class NatureBeam:
     push_x: int = 0
     push_y: int = 0
     push_z: int = 0
+    # optical-v1's verb 3 by Bresenham along the line of **P** (the model
+    # owner's GO of record 536): the row's error accumulator **c** (three
+    # integers), the sum over its walked Links **h** of the cross product
+    # **h** x **P**, read from the first push on; the label is chosen among
+    # D and its fan neighbours as the one whose next Link keeps
+    # |**c** + **h** x **P**|^2 smallest (`optical_turn`). (0, 0, 0) on
+    # every row of a world without the key and on every row never pushed.
+    cross_x: int = 0
+    cross_y: int = 0
+    cross_z: int = 0
     # The turn's accumulator (`massive-rows-v1`, 2026-09-21; the design's
     # section 2): ONE accumulator over the axes on which the row's phase
     # turns at every axis Link it crosses by its family's turn table,
@@ -302,7 +312,7 @@ class NatureBeam:
         holds an undelivered share with its `share`; in a world that
         declares `massive_rows` with its `acc_turn`; under `optical` its
         flight accumulator `flight` [made, residue] and, when it holds one,
-        its push accumulator `push`."""
+        its push accumulator `push` and its error accumulator `cross`."""
         line: dict[str, object] = {
             "direction": [int(v) for v in vectors[self.direction]],
             "age": self.age,
@@ -326,6 +336,8 @@ class NatureBeam:
             line["flight"] = [self.made, self.residue]
         if self.push_x or self.push_y or self.push_z:
             line["push"] = [self.push_x, self.push_y, self.push_z]
+        if self.cross_x or self.cross_y or self.cross_z:
+            line["cross"] = [self.cross_x, self.cross_y, self.cross_z]
         return line
 
 
@@ -1434,6 +1446,9 @@ FIELDS = (
     "push_x",
     "push_y",
     "push_z",
+    "cross_x",
+    "cross_y",
+    "cross_z",
     "acc_turn",
 )
 # The fields that make two rows identical (the amount is what the merge
@@ -1461,6 +1476,9 @@ IDENTITY_FIELDS = (
     "push_x",
     "push_y",
     "push_z",
+    "cross_x",
+    "cross_y",
+    "cross_z",
     "acc_turn",
 )
 # The three columns of the amplitude law as a row of no record carries them.
@@ -1481,6 +1499,9 @@ COLUMN_DEFAULTS = {
     "push_x": 0,
     "push_y": 0,
     "push_z": 0,
+    "cross_x": 0,
+    "cross_y": 0,
+    "cross_z": 0,
     "acc_turn": 0,
 }
 # The place of `phase` in the identity fields: the merge of a record's rows
@@ -1847,6 +1868,9 @@ class NatureBeamStore:
         self.push_x: np.ndarray
         self.push_y: np.ndarray
         self.push_z: np.ndarray
+        self.cross_x: np.ndarray
+        self.cross_y: np.ndarray
+        self.cross_z: np.ndarray
         self.acc_turn: np.ndarray
 
     @property
@@ -2080,6 +2104,9 @@ class NatureBeamStore:
                 int(self.push_x[i]),
                 int(self.push_y[i]),
                 int(self.push_z[i]),
+                int(self.cross_x[i]),
+                int(self.cross_y[i]),
+                int(self.cross_z[i]),
                 int(self.acc_turn[i]),
             )
             for k, i in enumerate(range(lo, stop))
@@ -3469,6 +3496,29 @@ def optical_walk_step(
     step: np.ndarray = flight.lines[store.direction, place] * moved[:, None]
     store.residue = residue
     store.made = store.made + moved
+    # Verb 3's error accumulator (record 536): on the rows that hold a
+    # push, c += h x P for the Link h walked, P = Q d content u_D + W the
+    # row's whole momentum before this interval's push; the sum tested
+    # against the register before it is formed.
+    held = np.flatnonzero(moved & ((store.push_x != 0) | (store.push_y != 0) | (store.push_z != 0)))
+    if held.shape[0]:
+        whole = Q * denominator * (store.amount[held] * store.content[held])
+        momentum = whole[:, None] * flight.labels[store.direction[held]] + np.stack(
+            [store.push_x[held], store.push_y[held], store.push_z[held]], axis=1
+        )
+        cross = np.stack([store.cross_x[held], store.cross_y[held], store.cross_z[held]], axis=1)
+        if int(np.abs(cross).max(initial=0)) + int(np.abs(momentum).max(initial=0)) > MAX_WORK_INT:
+            raise OverflowError(
+                f"{BEAM_LAW}: optical-v1's error accumulator |c| + |P| = "
+                f"{int(np.abs(cross).max())} + {int(np.abs(momentum).max())} exceeds the "
+                f"working register {MAX_WORK_INT}"
+            )
+        cross = cross + np.cross(step[held], momentum)
+        store.cross_x[held], store.cross_y[held], store.cross_z[held] = (
+            cross[:, 0],
+            cross[:, 1],
+            cross[:, 2],
+        )
     rates = rate
 
     def last_link(index: int, age_after: int) -> tuple[int, int]:
@@ -3544,8 +3594,6 @@ def optical_turn(frame: Interval) -> None:
     crowd = CrowdMoments(frame.stores, unit)
     numerator, denominator = world.suspension
     coefficient = age_wall_coefficient(FLIGHT_MEMBER, world.optical)
-    vectors = flight.vectors
-    norms = [int(sum(int(c) * int(c) for c in v)) for v in vectors.tolist()]
     for family, store in enumerate(frame.stores):
         if store.size == 0:
             continue
@@ -3575,10 +3623,18 @@ def optical_turn(frame: Interval) -> None:
             )
         turn = turn - numerator * weight[:, None] * flow
         store.push_x[rows], store.push_y[rows], store.push_z[rows] = turn[:, 0], turn[:, 1], turn[:, 2]
-        # The nearest of the fan for the rows that hold a push.
+        # Verb 3 by Bresenham along the line of P (record 536), for the rows
+        # that hold a push: among D and its fan neighbours, the label whose
+        # next Link h (its line's step at the row's place) keeps
+        # |c + h x P|^2 smallest among the Links that advance along P
+        # (h . P > 0), in Python integers; ties keep D, then the first of
+        # the fan's order; a row none of whose candidates advances keeps D;
+        # P conserved by W below.
         held = np.flatnonzero(turn.any(axis=1))
         if held.shape[0] == 0:
             continue
+        lines = flight.lines
+        manhattan = flight.manhattan
         chosen: list[int] = []
         turned: list[int] = []
         for k in held.tolist():
@@ -3587,20 +3643,23 @@ def optical_turn(frame: Interval) -> None:
             label = Q * denominator * int(content[k])
             u = unit[d].tolist()
             momentum = [label * int(u[a]) + int(turn[k, a]) for a in range(3)]
-            v = vectors[d].tolist()
-            dot = sum(momentum[a] * int(v[a]) for a in range(3))
-            best, best_dot, best_norm = d, dot, norms[d]
-            for other in flight.neighbours[d].tolist():
-                if other < 0:
+            c = [int(store.cross_x[index]), int(store.cross_y[index]), int(store.cross_z[index])]
+            made = int(store.made[index])
+            best, best_error = d, -1
+            for candidate in [d, *flight.neighbours[d].tolist()]:
+                if candidate < 0:
                     break
-                w = vectors[other].tolist()
-                dot_other = sum(momentum[a] * int(w[a]) for a in range(3))
-                if dot_other <= 0:
-                    continue
-                if dot_other * dot_other * best_norm > best_dot * best_dot * norms[other] or (
-                    best_dot <= 0
-                ):
-                    best, best_dot, best_norm = other, dot_other, norms[other]
+                h = lines[candidate, made % int(manhattan[candidate])].tolist()
+                if h[0] * momentum[0] + h[1] * momentum[1] + h[2] * momentum[2] <= 0:
+                    continue  # a Link that does not advance along P is no candidate
+                e = [
+                    c[0] + h[1] * momentum[2] - h[2] * momentum[1],
+                    c[1] + h[2] * momentum[0] - h[0] * momentum[2],
+                    c[2] + h[0] * momentum[1] - h[1] * momentum[0],
+                ]
+                error = e[0] * e[0] + e[1] * e[1] + e[2] * e[2]
+                if best_error < 0 or error < best_error:
+                    best, best_error = candidate, error
             if best != d:
                 chosen.append(index)
                 turned.append(best)
