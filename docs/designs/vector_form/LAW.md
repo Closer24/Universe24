@@ -3,16 +3,19 @@
 On the owner's word "everything moves to vectors and operations,
 including c" (record 182) and the Boss's item B. This is the document
 from which BEAM_LAW would be rewritten on the owner's word; nothing is
-rewritten here. Its skeleton is the derivation's operator F
+rewritten here. Its skeleton is the derivation's operator **F** (the
+interval's map)
 (`origin/claude/derivations-beam`, DERIVATIONS_BEAM.md section 0, at
 e3d839e): one piecewise-linear map on the integer torus with a linear
 block and a feedback block, the six operations (T) (B) (G) (P) (E) (D)
-its only verbs; this document does not restate F, it fills its table
+its only verbs; this document does not restate **F**, it fills its table
 rule by rule and says in one line where it differs. File and line are
 `main` at f1ee278 as merged into `claude/series-m-masses` at 2b17dca
 (the derivation cites f89884f0; where a line moved, the current one is
 given). The registered integer that checks each rule is the one the
 register or a map of this branch holds.
+
+Notation (the owner's rule, record 184): every symbol is named in English at its first use and a Greek letter is written as a word (gamma, tau, phi, zeta); a scalar is plain (c, M, N, Q, gamma), a vector is bold lowercase (**p** the momentum vector, **s** the state vector on the torus, **r** the rate vector, **e** the step's unit vector), a matrix or an operator is bold uppercase (**F** the interval's map, **C** the coupling matrix), and a component is plain with its index (p_a); the direction vector keeps its uppercase letter D as in BEAM_LAW, where T_D is its resolution, the one exception, and inside code spans and code blocks every symbol is plain.
 
 ## 1. The state: three vectors and nothing at a Node
 
@@ -20,19 +23,22 @@ register or a map of this branch holds.
 | --- | --- | --- | --- |
 | **a row** (a message in flight) | `Z_X x Z_Y x Z_Z` (the Node; a periodic axis a circle, an open axis a segment with the face as its border) `x D x Z x Z_N x Z^+ x Z^+` | its Node, its direction (an index of the world's table D = F_P), its age, its phase (in the pair form a point of `Z_{N d}` whose whole part is the phase and whose residue the age holds), its number, its amount, its content; under a record its identity, branch (arm and label), multiplicity, birth phase u and hand | `nature_beam.py:195-240`, the store `1045-1280` |
 | **a record** (one message of the apparatus, the unit the click reads) | `Z[Z_N]^{(end Node, label)}`, the group ring over the cells | one coefficient per phase per (end Node, label): the amounts of its rows that ended there at that phase; the rows in flight are its terms carried apart; the layer is its ledger, the memory no Node keeps | `amplitude.py:296-360`, TWO_SLITS.md section 1 |
-| **a body** (a measured event) | `Z^F x Z^3 x Z_N x Z^+ x (Z / d Z)^n` | its held content per family, its momentum p, its phase, its clock age, and its counts table `acc` (one accumulator per count with its rate and wall: the drive per direction, the turn, the owed count, the release, the lamp, the push per column, the doppler flow while it exists) | `measured.py:205-353`; the table on the fraction-free branch (note 41) |
+| **a body** (a measured event) | `Z^F x Z^3 x Z_N x Z^+ x (Z / d Z)^n` | its held content per family, its momentum vector **p**, its phase, its clock age, and its counts table `acc` (one accumulator per count with its rate and wall: the drive per direction, the turn, the owed count, the release, the lamp, the push per column, the doppler flow while it exists) | `measured.py:205-353`; the table on the fraction-free branch (note 41) |
 
 A Node is an index: it holds no register, no table, no remainder
 (`nature_beam.py:2285-2291` is the host's index of which body is where,
 read and not written). Everything below is a map on these three vectors.
 
-## 2. The verbs: F's six, and the two non-linear places
+## 2. The verbs: the six of **F**, and the two non-linear places
 
-The whole law is `s <- s + r; e <- [s >= d]; s <- s - e d` on every
+The whole law is `s <- s + r; e <- [s >= d]; s <- s - e d` (**s** the
+state vector on the torus, **r** the rate vector, d the wall of the
+component, a scalar, e the event bit; plain in the code span) on every
 component of the state at every interval, with the six verbs of the
 derivation's section 1: **(T)** the translation, **(B)** the bilinear
 form, **(G)** the group-ring addition, **(P)** a permutation of the joint
-state, **(E)** the evaluation `Z[Z_N] -> Z[zeta_N]` and the norm, **(D)**
+state, **(E)** the evaluation `Z[Z_N] -> Z[zeta_N]` (zeta_N the primitive N-th
+root of unity) and the norm, **(D)**
 the Euclidean division with the remainder kept and the comparison. Two
 places are not linear, and they are the only two:
 
@@ -51,12 +57,12 @@ places are not linear, and they are the only two:
 Everything else in the rows is linear (the flight, the phase, the age,
 the merge, the split, the rotation, the gate, the evaluation), and
 everything in the bodies is linear at a fixed content with bilinear
-rates (the push, the drive, the turn, the owed count: F's feedback
-block). Where this document differs from F's statement, in one line: F
-lists a body's drive "per axis" (rate `p_a`, wall `Q S M + |p_a|`); under
-the owner's yes to c in matter it is one drive on the momentum's
+rates (the push, the drive, the turn, the owed count: the feedback block
+of **F**). Where this document differs from the statement of **F**, in one
+line: **F** lists a body's drive "per axis" (rate `p_a`, wall `Q S M + |p_a|`); under
+the owner's yes to c in the bodies it is one drive on the momentum's
 direction, the flight's own Manhattan accumulator at a fraction
-(section 4, the drive), and the six deficit ladders of light and matter
+(section 4, the drive), and the six deficit ladders of rows and bodies
 are one.
 
 ## 3. c as the norm of the flight operator
@@ -69,7 +75,7 @@ in the limit, is `Q |D| / T_D -> 1 / sqrt 3` on every direction: **c is
 the operator norm of the flight**, the largest isotropic speed at which
 the operator makes at most one Link per interval in every direction
 (`S_1 Q <= T_D` is Cauchy-Schwarz, equality on the cube diagonals;
-light_speed/FORM.md section 1, checked on 1 780 418 directions). Matter's
+light_speed/FORM.md section 1, checked on 1 780 418 directions). A body's
 drive is the same operator at a fraction (section 4), so c bounds every
 motion of the law with one constant; the constants beside it are the
 widths of the samplings: N (the circle of phases), P (the sphere of
@@ -89,10 +95,10 @@ is proposed and waits for his word.
 
 | Rule | Vector form | Integer form | File and line | The registered check |
 | --- | --- | --- | --- | --- |
-| The flight (the walk) | (T) on the Manhattan count along D, one Link per carry; the deficits (D) choose the axis | `m(tau) = (2 tau S_1 Q + T_D) // (2 T_D)`; the accumulator started at `T_D`, rate `2 S_1 Q`, wall `2 T_D`; the line by `abs(v_i)(j + 1) - S_1 abs(pos_i)` maximal, x before y before z | `nature_beam.py:559-563` (the count), `590-602` (the line), `605-660` (the table, an exact cache), `2389-2510` (the walk) | record 144's cone: 17 Links on the axis and 24 on the staircase at age 29; the derivation's 1.4 on seven directions over 600 intervals |
+| The flight (the walk) | (T) on the Manhattan count along the direction vector D, one Link per carry; the deficits (D) choose the axis | `m(tau) = (2 tau S_1 Q + T_D) // (2 T_D)` (tau the age, m the Manhattan count); the accumulator started at `T_D`, rate `2 S_1 Q`, wall `2 T_D`; the line by `abs(v_i)(j + 1) - S_1 abs(pos_i)` maximal, x before y before z | `nature_beam.py:559-563` (the count), `590-602` (the line), `605-660` (the table, an exact cache), `2389-2510` (the walk) | record 144's cone: 17 Links on the axis and 24 on the staircase at age 29; the derivation's 1.4 on seven directions over 600 intervals |
 | The phase per Link | (T) on `Z_N` by `phase_per_link` per Link crossed | `phase = (phase + k x moved) mod N` | `nature_beam.py:2496, 2501` | L7's 51 and 8 mod 64 (record 144) |
 | The phase per interval of age (the pair form) | (T) on `Z_{N d}` at the rate n per interval, the whole part read | `by_clock(age, n, d)` at every walk (the constant-rate identity: the age holds the residue) | `nature_beam.py:486-499, 2497-2499` | L7's 23 and 23; slits_low's 8 per interval (`two_slits_map.out`) |
-| The exact phase at the click (**decided**) | (E) reads the row's two accumulators once: `phi = (n / d) x made x T_D / (S_1 Q)`, one floor on the table | the numerator `n x made x T_D` within 2^53, the denominator `d S_1 Q` | TWO_SLITS.md section 2 | slits_low's 64 clicks become wall 34, screen 16, faces 14; the cone's 41.75 and 42.00 |
+| The exact phase at the click (**decided**) | (E) reads the row's two accumulators once: `phi = (n / d) x made x T_D / (S_1 Q)` (phi the phase, made the Links made), one floor on the table | the numerator `n x made x T_D` within 2^53, the denominator `d S_1 Q` | TWO_SLITS.md section 2 | slits_low's 64 clicks become wall 34, screen 16, faces 14; the cone's 41.75 and 42.00 |
 | The age | (T) on `Z` at rate 1 (a rest row keeps it) | `age += 1` | `nature_beam.py:2500` | every world |
 | The wrap, the face, the border `lifetime` | (T) on the circle `Z_extent`; the face a click (E); the border a comparison (D) of the age against a key | `ages_at_key(age, L)` | `nature_beam.py:2403-2405, 2413-2483, 519-527, 3993-4061` | the faces' 15 clicks of slits_low; the border's rows at age 3 in the deuteron (the derivation's 10.2) |
 | The merge (the normal form) | (G): the addition in `Z[Z_N]` of identical rows at one Node, `[p + N/2] = -[p]` on a record's rows | the packed identity key, the lexsort, the sum; an antiphase pair leaves nothing | `nature_beam.py:1120-1129, 1163-1237` | `mz_balanced` 64 / 0 with D2's rows cancelled on the GameBoard (L1) |
@@ -100,7 +106,7 @@ is proposed and waits for his word.
 | The split (a re-emission with weights) | a linear map with an integer matrix: `w -> w a_i`, `m -> m A`, `A = sum a_i^2`; (T) on `Z_N` by the turn `t_i` | the rows `(w a_i, m A, p + t_i)`; the multiplicity within 2^62 (the load ceiling `prod A`) | `nature_beam.py:3596-3695`, `world.py:2095-2137` | `mz_345` 63 / 1; the (20, 21) splitter's 1681 / 1682 |
 | The fan by angle (**decided**: P as a width of the law) | the split whose matrix is the measure of each direction's Voronoi cell on the sphere, `F_P` the set | the plane: `a_D = floor(G (3 Q^2 / (T_D- T_D) + 3 Q^2 / (T_D T_D+)) / 2)`; space: the circumcentres at 2^24, the areas by Van Oosterom-Strackee at S = 2^14 and G = 2^5, the weights at 2^15 | TWO_SLITS.md sections 7 and 10; `fan_sphere_map.py` | slits_huygens: Pearson 0.895, visibility 0.954, every pin reproduced; the 290 fan's weights 483 to 2588 |
 | The rotation of a label bit (a window) | a linear map with the half-angle tables' entries, applied on the lattice once per window | the amounts `w C'`, `w S'` of 2N at the scale 256, the multiplicity `x 65536` | `nature_beam.py:1848-1916`, `amplitude.py:125-140` | L3's S = 176 / 64; the marginals 32 / 64 |
-| The label rotation per Link (**design**) | (T) on an angle index `Z_{2N}` per Link, the tables once at the click | `sigma += s mod 2N`; `U_{sigma + a}` at the click | label_rotation/FORM.md | the two-label counts (35, 29), (1, 63), (32, 32), (0, 64) at L = 5, 10, 16, 32 |
+| The label rotation per Link (**design**) | (T) on an angle index `Z_{2N}` per Link, the tables once at the click | `sigma += s mod 2N` (sigma the angle index, s the setting); `U_{sigma + a}` (**U** the rotation matrix) at the click | label_rotation/FORM.md | the two-label counts (35, 29), (1, 63), (32, 32), (0, 64) at L = 5, 10, 16, 32 |
 | The gate (CNOT) | (P): the joint labels permuted from the control's bit | the permutation of the product of the label sets | `nature_beam.py:1769-1845`, `amplitude.py:417-488` | the GHZ worlds' cells (L4) |
 | The hand | a pseudoscalar bit on the row, `h -> det(g) h`; the hemisphere rule `sign(a . d) = -h` (B) and a comparison | one int8; `a . d` a lookup | `nature_beam.py:1966-1992, 3709-3719`, `world.py:1612-1620` | hand_map.out on 48 x 6 x 124 vectors; wu's counts |
 
@@ -121,10 +127,10 @@ is proposed and waits for his word.
 | Rule | Vector form | Integer form | File and line | The registered check |
 | --- | --- | --- | --- | --- |
 | The readings (the moments) | (B): `sum_rows w x u^(x)k`, k = 0, 1, 2, and the age moment, over the set; the traceless tensor a linear map | exact integers; the bound a refusal | `nature_beam.py:358-475, 319-327` | series E's `k_a r = 36.1` |
-| The push (the coupling) | (B) then (T): `p += C a`, the reader's charges per column times the arriving label flow, one signed inner product per column | `epsilon_c sign(V E_c n_c) by_clock(age_A, abs(V E_c n_c), D_c d_c)`; the branch's `acc_push` per column and axis where `D_c d_c > 1` | `nature_beam.py:2180-2254, 3236-3252` | series C's nine ring readings; the deuteron's `310 967 280 640` per interval |
+| The push (the coupling) | (B) then (T): `p += C a` (**p** the momentum vector, **C** the coupling matrix, **a** the arriving label flow vector), the reader's charges per column times the arriving label flow, one signed inner product per column | `epsilon_c sign(V E_c n_c) by_clock(age_A, abs(V E_c n_c), D_c d_c)`; the branch's `acc_push` per column and axis where `D_c d_c > 1` | `nature_beam.py:2180-2254, 3236-3252` | series C's nine ring readings; the deuteron's `310 967 280 640` per interval |
 | The push by share (a record's row) | (D): `label x amount // m`, the residue on the giver's record (record 155 (3)) | `share_of`; today the rest on the books' `remainder` line | `nature_beam.py:855`, the record 155 order | the share world's 1536 and 1760 (record 136) |
 | The drive (today) | (T)/(D) per axis: `drive += p_a`; a Link at `+-D_a`, `D_a = Q S M + abs(p_a)` | `by_drive(drive, p_a, D_a, at_most = 1)`, x before y before z, a coincident fire dropped | `core/integer.py:77`, `engine.py:95-126, 509-600`, `world.py:447-455` | the bar's speeds 0.30, 0.45, 0.75 exact; record 153's reader at v = 1 / 4 |
-| The drive on the momentum's direction (**decided**: c in matter) | the flight operator at a fraction: (T) on the Manhattan count along the direction D nearest to p, the same deficits as light's | `by_drive(abs(p)_1 S_1 Q, Q S M S_1 Q + abs(p)_1 T_D, at_most = 1)` on the Bresenham line of D (form B); light the case `Q S M = 0` | light_speed/FORM.md section 3; `light_speed_map.py` D | the flight table's row and the drive at M = 0 at the same Node over 300 intervals on three directions; the k = 4 reader 84 for 100 Links |
+| The drive on the momentum's direction (**decided**: c in the bodies) | the flight operator at a fraction: (T) on the Manhattan count along the direction D nearest to **p**, the same deficits as a row's | `by_drive(abs(p)_1 S_1 Q, Q S M S_1 Q + abs(p)_1 T_D, at_most = 1)` on the Bresenham line of D (form B); a row the case `Q S M = 0` | light_speed/FORM.md section 3; `light_speed_map.py` D | the flight table's row and the drive at M = 0 at the same Node over 300 intervals on three directions; the k = 4 reader 84 for 100 Links |
 | The contact and the give | (T): a refused step hands the axis component to the occupant (`measure`), the share over several by content (P); the give `held // h` with the remainder kept (D) | `apportion_whole`; `units = held // h` | `engine.py:685-838` | the deuteron's label 0 after each hand-over; the give's 27 / 24 (binding) |
 | The turn (the clock's phase) | (T) on `Z_N` by the whole part of the accumulated rate content x n over d | main: `by_clock(clock_age, content x n, d)` (a-historical, drifts at a falling content); the branch: `acc_turn` | `engine.py:456-473`; note 41 (i) | a0_b0's 159 births for 160 (record 147); the cavity clicks 5 and 6 (PREDICTIONS 24) |
 | The owed count (the clock's slowing by messages) | (T) on the accumulator at the rate k n over d, k the presence or the age moment; the clock's rate `1 / (1 + k n / d)` | main: `by_clock(clock_age, counted x n, d)`; the branch: `acc_owed` | `engine.py:119-131, 475-485`; note 41 | the deuteron's 69 waits for 80 (record 154); series E's `k_s r^2 = 41.5` |
@@ -132,11 +138,11 @@ is proposed and waits for his word.
 | The apportioning of a row over directions or Nodes | (D) exact (the floors, the leftovers to the largest remainders) with a tie by comparison from `age mod n` (P) | `apportion_whole(total, weights, first)` | `core/integer.py:116-135`, `nature_beam.py:3727, 3866` | every fan world; the tie's break of the 48 (FORM.md section 3) |
 | The recoil, the right-hand rule | (B) then (T): the momentum less the born rows' labels; `sign(A . u_d)` against the product's hand | exact integers | `nature_beam.py:3888-3921, 3709-3719` | the wu world's hemispheres |
 | The transformation `become` | (D) comparisons (the age against `at`, the crowd against its key); (T) on the held vector | `ages_at_key`; the products pend to the next self-creation | `nature_beam.py:1413-1510, 3455-3457, 3528-3535` | j1's 522 .. 524 pinned; j3's 574 |
-| The meeting (`meeting-v1`, under the key) | (B): the crowd's flow and the column sum; (P): the arc permutation toward the target by k steps read off the phase; (T)/(D) on `Z_N` with the carry | `t = sum kappa V`; `adv = (abs(t) + Q // 2) // Q`; `k = (phase + adv) // N`; the sectors by cross-multiplied angle keys | `meeting.py:161-241, 282-380` | series K's readings under the key (record 114's table) |
+| The meeting (`meeting-v1`, under the key) | (B): the crowd's flow and the column sum; (P): the arc permutation pi_t toward the target vector **t** by k steps read off the phase; (T)/(D) on `Z_N` with the carry | `t = sum kappa V` (kappa the column sum, **V** the crowd's flow vector); `adv = (abs(t) + Q // 2) // Q`; `k = (phase + adv) // N`; the sectors by cross-multiplied angle keys | `meeting.py:161-241, 282-380` | series K's readings under the key (record 114's table) |
 | The meeting's norm (**the one root at run time**) | not one of the six: `abs(t) = isqrt(t . t)` per interval, its fraction discarded | the derivation's 1.3 item 10; the exact form would count `t . t` against `(k Q)^2` by a comparison ladder | `meeting.py:351-358` | none registered beyond series K |
 | The crossing rule (**decided**, record 158) | a body in motion meets a row once at the crossing of their world lines: (D) comparisons on the body's own last two Links and the row's last two steps | C1 the rows that crossed its Link the other way, C2 the rows resident at the destination moving against it, not C2', C3', C3'' | the design `crossing/DESIGN.md` (to be copied); `nature_beam.py:2741` today (the arrival) | 45, 58, 19, 38 reads on the experimenter's streams; 183 and 311 over 32 Links |
 | The turn by momentum under `action` | (T) on `Z_N` by the whole part of `abs(p) N` over h per Link stepped (record 155: an accumulator; today a floor re-pricing the history) | `by_clock(k0, abs(p) N, h)` today; `acc_action += abs(p) N` per Link, the carry per h ordered | `engine.py:637-645` | Bohr's r = 8 and 12 closing under the step drive (H) |
-| lorentz-v1 (**design**) | the clock rows' rates multiplied by `sqrt(1 - f_c^2)`, `f_c` the drive's rate over light's on its line: a rate with one root at a declared grain, a seventh verb | `f_hat = floor(G f_c)`, `gamma_inv = isqrt(G^2 - f_hat^2)`, G = 2^20; the turn's rate `(content x n x gamma_inv, d G)` | light_speed/FORM.md section 4 | the muon's pins: ticks 71 and 126 for 64 |
+| lorentz-v1 (**design**) | the clock rows' rates multiplied by `sqrt(1 - f_c^2)`, `f_c` the drive's rate over a row's on its line (gamma the Lorentz factor): a rate with one root at a declared grain, a seventh verb | `f_hat = floor(G f_c)`, `gamma_inv = isqrt(G^2 - f_hat^2)`, G = 2^20; the turn's rate `(content x n x gamma_inv, d G)` | light_speed/FORM.md section 4 | the muon's pins: ticks 71 and 126 for 64 |
 | The balance (the books) | (T) on the ledger: `released = in transit + absorbed + escaped (+ cancelled)` per family, exact at every tick; the momentum balance per paid message | the audit per tick | `engine.py:880-1025` | conserved at every tick on every registered run |
 
 ## 5. The two non-linear places, named once more, and the classical-quantum boundary
@@ -161,7 +167,7 @@ from the six; the owner names them or leaves them.
 
 | Constant | What it rounds | Where |
 | --- | --- | --- |
-| C, S (the tables of N) | `cos, sin(2 pi k / N)` to the nearest 1 / 256 | `core/phase.py:57-90` |
+| C, S (the tables of N) | `cos, sin(2 pi k / N)` (pi the circle's constant) to the nearest 1 / 256 | `core/phase.py:57-90` |
 | C', S' (the half-angle tables of 2N) | the same at the half angle, for the rotations | `amplitude.py:125-140` |
 | `u_d` | the unit vector `Q D / abs(D)` to the nearest integer vector (exact under the 48) | `nature_beam.py:567-587` |
 | `T_D` | `sqrt 3 abs(D) Q` rounded down by isqrt (the flight's resolution; within 1 / T_D of the isotropic pace) | `nature_beam.py:605-660` |
@@ -176,10 +182,10 @@ roundings; every table read at run time (`flight.steps`, `flight.lines`,
 `collision.forward`, the arcs' cache) is an exact cache of a rule above
 and can be replaced by the rule integer by integer.
 
-## 7. What differs from the derivation's F, in one line each
+## 7. What differs from the derivation's **F**, in one line each
 
 1. The drive is one accumulator on the momentum's direction, the flight's
-   own, not one per axis (section 4.3; the owner's yes to c in matter).
+   own, not one per axis (section 4.3; the owner's yes to c in the bodies).
 2. The fan is an operator with the angular measure as its matrix, not a
    per-world list (section 4.1; the owner's yes to P).
 3. The birth wheel is `Z_W` at the golden rate, not `Z_N` at rate 1
@@ -188,8 +194,8 @@ and can be replaced by the rule integer by integer.
    time of its last Link, not at the whole age (section 4.1; the owner's
    yes).
 5. lorentz-v1 and the meeting's norm are named as the two roots, a
-   seventh verb if admitted (section 5); F lists the meeting's root among
+   seventh verb if admitted (section 5); **F** lists the meeting's root among
    its exceptions and does not name the seventh verb.
 
 Nothing else differs: the state, the six verbs, the two blocks, the
-threshold and the tables are F's.
+threshold and the tables are those of **F**.

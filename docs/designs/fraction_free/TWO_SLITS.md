@@ -422,7 +422,7 @@ world is forced to 3362 rows per release.
 
 ## 10. The 3D integer form of the fan law on the register's 290 fan (read-only, the map, 2026-09-21)
 
-On the Boss's bounded item after the owner's yes to P. Every integer is
+On the Boss's bounded item after the owner's yes to P. Notation (the owner's rule, record 184): every symbol is named in English at its first use and a Greek letter is written as a word (gamma, tau, phi, zeta); a scalar is plain (c, M, N, Q, gamma), a vector is bold lowercase (**q** the vertex vector, **s** the state vector on the torus, **r** the rate vector, **e** the step's unit vector), a matrix or an operator is bold uppercase (**F** the interval's map, **C** the coupling matrix), and a component is plain with its index (p_a); the direction vector keeps its uppercase letter D as in BEAM_LAW, where T_D is its resolution, the one exception, and inside code spans and code blocks every symbol is plain. Every integer is
 from `fan_sphere_map.py` beside this file (`fan_sphere_map.out`, 2 s; the
 Delaunay triangles from the convex hull of the unit points, `scipy`, a
 host computation at load; everything else in integers).
@@ -432,7 +432,7 @@ directions on the sphere is `D1 x D2 + D2 x D3 + D3 x D1` only when the
 three have EQUAL length (the plane through three integer points is not
 the plane through the three unit points); in general it is
 
-    c = (D1 x D2) |D3| + (D2 x D3) |D1| + (D3 x D1) |D2|
+    q = (D1 x D2) |D3| + (D2 x D3) |D1| + (D3 x D1) |D2|      (q the vertex, the circumcentre vector; D1, D2, D3 the three directions)
 
 with the lengths by isqrt at a grain G_C, and G_C must be large: on a
 small triangle the three cross products nearly cancel (on ((5,1,0),
@@ -441,14 +441,18 @@ result of about 1), so G_C = 2^12 leaves the vertex 0.03 degrees off and
 the cell's area 1.4 percent off; at G_C = 2^24 (a load-time host integer
 of at most 2^30, computed once) the vertex is exact to 2^-14 and every
 cell's area is within 5.3 x 10^-4 of the exact spherical area. The
-vertex's direction alone matters, so before the area formula every
+vertex vector's direction alone matters, so before the area formula every
 vector of a triangle (D and its two vertices) is brought to the length
 S = 2^14 by one isqrt with a symmetric rounding (the same under every
 sign flip and permutation), and the area is Van Oosterom-Strackee at the
 grain G = 2^5 on those vectors with tan x = x:
 
-    Omega(a, b, c) = 2 G^3 |a . (b x c)| / (L_a L_b L_c + G^2 ((a . b) L_c + (a . c) L_b + (b . c) L_a)),   L_v = isqrt(G^2 v . v)
-    w(D) = floor(G_w x sum_i Omega(D, c_i, c_{i+1})),   G_w = 2^15
+    Omega(u, v, w) = 2 G^3 |u . (v x w)| / (L_u L_v L_w + G^2 ((u . v) L_w + (u . w) L_v + (v . w) L_u)),   L_x = isqrt(G^2 x . x)
+    weight(D) = floor(G_w x sum_i Omega(D, q_i, q_{i+1})),   G_w = 2^15
+
+(Omega the solid angle of the triangle with the vertices u, v, w; L_x the
+length of x at the grain G; q_i the vertices of the cell of D in angular
+order)
 
 (the numerator within 2^54, the denominator within 2^60, a length
 within 2^20: every product within the register's ceiling; the small-angle
@@ -471,7 +475,8 @@ the 290 fan by direction class (`fan_sphere_map.out`):
 | (4, 1, 1) | 24 | 1316 | 0.00320 | x 0.93 | 0.04017 |
 | (5, 1, 0) | 24 | 991 | 0.00241 | x 0.70 | 0.03028 |
 
-The sum of the weights is 411 634 (4 pi x G_w = 411 774: the floor per
+The sum of the weights is 411 634 (4 pi x G_w = 411 774, pi the circle's
+constant: the floor per
 cell loses 140), the minimum 483 and the maximum 2588, max / min 5.36;
 A = the sum of squares 644 972 354 (2^30), within 2^31, so two such
 re-emitters on one world pass the load-time ceiling (A^2 within 2^62) at
