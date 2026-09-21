@@ -159,3 +159,7 @@ A rule enters the law only if it is generic (one primitive with declared integer
 ## The derivation before the numbers (the owner, 2026-09-21, record 205)
 
 An experiment's review checks the derived expectation and its section first, then the numbers; a pinned number without a formula where one exists is a finding; skills/workflow.md, "The main course".
+
+## The observed value is the reading (the owner, 2026-09-21, record 210)
+
+A claim that a run reproduces a value of nature is checked through the transformation that produced it (HIGHLIGHTS 5.7's dictionary): a Link count compared with a distance, or an interval count with a time, without the reading between them, is a finding.

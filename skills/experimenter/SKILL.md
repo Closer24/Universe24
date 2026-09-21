@@ -125,3 +125,7 @@ A rule enters the law only if it is generic (one primitive with declared integer
 ## A formula gives, a run proves; the vector after the detector (the owner, 2026-09-21, record 205)
 
 Before any run: the expectation derived from the law's operations (the derivation mathematician's targets are its source) and the vector or tensor the detector will read named with its form; the run compares; a run without a derived expectation is a research run and says so; the register entry carries the formula's section beside the number; skills/workflow.md, "The main course".
+
+## The observed value is the reading (the owner, 2026-09-21, record 210)
+
+Every observable of an experiment (a distance, a time, a speed, a mass, an energy, an angle, a probability) is produced by a detector declared in the world file through its named transformation (HIGHLIGHTS 5.7's dictionary), never read from the host's state; a board quantity is never compared with nature directly.

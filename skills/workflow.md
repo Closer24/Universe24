@@ -420,6 +420,14 @@ will read after the detector and its form (the readings by type in
 ENGINE.md): a scalar, an integer 3-vector in a declared unit (**p**, **f**),
 the traceless second-moment tensor **T**, or the record's phase-count vector.
 
+(6) The observed value is the reading, not the board's number (the owner,
+2026-09-21, record 210): a distance, a time, a speed, a mass, an energy, a
+force, an angle or a probability is produced from the board's Links,
+intervals, contents, phase steps and weights only through a named reading
+(HIGHLIGHTS 5.7's dictionary); an experiment's observable comes from a
+detector declared in the world file, never from the host's state, and a
+board quantity is never compared with nature directly.
+
 ## The generic vector form first (the model owner's ask, 2026-09-21, record 177)
 
 Every new rule of the law is sought and stated first in its generic vector
