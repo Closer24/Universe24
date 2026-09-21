@@ -37,7 +37,11 @@ digests of `gate_set.json` unchanged (`tests/test_amplitude_click.py`
 the byte, which the replay shows; under it the muon's clock at E'_0 / E'
 and the moving star's z at gamma (1 + beta) - 1, which the readings show
 (24 inside, 1 outside: the 64th self-creation at 124 against the design's
-125.2 +- 1, the discrete cadence's offset).
+125.2 +- 1, the discrete cadence's offset). After the merge of main
+`8dd743db` into the branch (the host's batches and memos, bit-exact) the
+source fingerprint is `7a5072eb...`; the three J4 worlds and the coasting
+cap replay to the registered digests on it (`tests/test_covariant_readings.py`
+(f), 9 passed), so the run blocks stand as made.
 
 ## The crossing rule: the gate set and the movers replayed against no-tables 2bbc5a64 - 2026-09-21
 

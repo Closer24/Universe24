@@ -187,7 +187,9 @@ branch) and on the head: the state `1a385429...`, the books `33cf0ac7...` and
 the events `f75ca182...` equal on both (`expectations.json`, `off_replay`);
 the gate set's digests of `gate_set.json` unchanged
 (`tests/test_amplitude_click.py` (d), `tests/test_covariant_readings.py`
-(a)).
+(a)). After the merge of main `8dd743db` into the branch the source
+fingerprint is `7a5072eb...` and the registered digests replay on it
+(`tests/test_covariant_readings.py` (f)).
 
 **What the run says for the owner's formula.** W = E_0^2 + 3 **p** . **p**
 stands on the run: on every one of the 10 827 `energy` lines of the four
