@@ -46,7 +46,7 @@ at its first use. The recurring symbols:
 | **F** | operator | the interval's map, one piecewise-linear map of the state (section 0) |
 | **s**, **r**, d | vector, vector, scalar per component | the state on the torus, its rate, its wall (the accumulator `s += r; e = [s >= d]; s -= e d`) |
 | **C**, **a** | matrix, vector | the coupling matrix (the reader's charges per column) and the label flow vector of the arriving rows; the push `r = C a` |
-| **G**, **P** | matrix, matrix | the click's Gram matrix and the rotation of the phase as a signed permutation (section 6.5); `U_s` the label rotation matrix of the half-angle tables |
+| **G**, **P**, **E** | matrix, matrix, matrix | the click's Gram matrix (`G = E^T E` in 6.7), the rotation of the phase as a signed permutation (section 6.5), the `2 x N` matrix of the tables C and S; `U_s` the label rotation matrix of the half-angle tables |
 | **p**, `p_x` | vector, component | a body's momentum and its component on an axis |
 | **v**, v | vector, scalar | a body's velocity and its speed in Links per interval |
 | **V** (the code's `V`) | vector | the label flow read at a Node, the vector moment of the arriving rows (written `V` in formulas as the code writes it) |
@@ -1671,11 +1671,130 @@ Mach-Zehnder and pair world of the register is blind to them.
 | The Holevo bound | **reached** as an identity (`log2 d` per click; GHZ's 2 bits of 3) | Definition 3 of the click |
 | Born's rule | **reached as a limit** for the precision, `|P - W/T| <= 1 / (2 N)`; the form of the rule **reached** in 6.5 (a positive quadratic form, forced), its harmonic constants pinned by the register | the rung; the dark port 0 of 64 at `1 / 1682` |
 | The click's square, its uniqueness (the lattice Gleason) | **reached** for the form: the rotation, the balanced splitter's conservation for every two inputs and the counts force a positive quadratic form, the power 2 (63 / 1 pins k to [1.917, 2.489); 27, 5, 5, 27 to [1.784, 2.054)) and `A = sum a_i^2`; **not reached** from the algebra: the harmonic constants `c_j`, Gleason's free state, pinned to the fundamental by record 156's bands alone | 6.5: the balanced splitter's conservation is the parallelogram law on `Z[zeta_N]`; the MZ and pair worlds are blind to the harmonics |
+| The click without amplitudes | **reached**: the weight is `f^T G f`, `G = E^T E` the Gram matrix of the tables (rank 2, kills the antipodal pairs exactly, near-circulant to 237), bit-identical to `cells` for one arm and for the tensor form of several; the registered 64 / 0, the 64 clicks of `slits_low` and the pair's 27, 5, 5, 27 reproduced on the Gram weights; **corrected**: the ring convolution of several arms is the exact law, not bit-identical to the built `cmul` | 6.7; the amplitudes one factorisation of **G** |
 | Tsirelson's bound | **reached as a limit**: `S(N, Q) -> 2 sqrt 2`, 2.75, 2.8125, 2.828125 registered at 64, 1024, 4096; two-sided at finite N | the rungs and the tables |
 | The visibility | **reached** for two rows at a Node, `2 w_1 w_2 / (w_1^2 + w_2^2)`; **different law** for a partial read: a step `[reads = 0]`, S from 176/64 to 88/64 | the read factor selects a label whole |
 | The classical-quantum boundary | **New**, a quantity of the law: two rows at one Node and no read before it | record 77's density of clicks = the density of reads |
 | E = h f | **reached** as the release's identity, `E = h s = (h N) f` | Planck's constant `h N`; in flight the frequency and the content are untied |
 | Landauer's heat | **not a formula of the law** (record 140) | |
+
+### 6.7 The click without amplitudes: one bilinear form on the record's integer vector
+
+**The question** (the owner's, 2026-09-21: "is there a vector operation
+that replaces the amplitudes?"; the Boss's answer, proved and corrected
+here). The map script beside this document,
+[click_gram.py](designs/derivations_beam/click_gram.py) with its output
+[click_gram.out](designs/derivations_beam/click_gram.out), makes every
+check below on the engine's own tables, a host computation and no run.
+
+**(1) One arm.** A record's rows at one end Node and label are the
+integer vector **f** in `Z^N`, `f_p` the amount at the phase p (the
+group-ring element of section 6.5 before the cancel, written as a
+vector). The click's pointer is `(X, Y) = E f` with **E** the `2 x N`
+integer matrix whose rows are the tables C and S (`core/phase.py`:
+`cos, sin(2 pi p / N) x 256`, rounded to the nearest integer), the
+amounts carrying the scale 32 (`amplitude.py:562-565`: `weight x (C[p],
+S[p])` summed over the rows). The cell's weight is
+
+    X^2 + Y^2 = (E f)^T (E f) = f^T G f,   G = E^T E,   G_jk = C_j C_k + S_j S_k,
+
+**Theorem** (bit-identity): on integers, `(E f)^T (E f)` and `f^T (E^T
+E) f` are the same sum of the same products in a different order
+(associativity and distributivity in `Z`; no rounding after the tables),
+so the weight `real^2 + imaginary^2` of `amplitude.py:641` equals `f^T G
+f` exactly, for every f. Checked on 200 random vectors of `Z^64`, then on
+the register: `mz_equal`'s ports (41 rows in phase toward D1 at `u +
+16`, the cancel's 1 toward D2 at `u + 32`, multiplicity 1682) give the
+same integer both ways at all 64 birth phases, the offers `1681 / 1682`
+and `1 / 1682` exactly at every u (the two ports' phases differ by a
+quarter turn, where `C^2 + S^2` repeats), the clicks 64 / 0; `slits_low`'s
+126 sets (3 wall Nodes, 121 pixels, 2 faces; 80 with rows) give the same
+integer both ways on every (set, Node, u), and the ladder on the Gram
+weights returns the registered 64 clicks, wall 11, 12, 11, the fifteen
+screen clicks on the fourteen registered pixels (two at 61), faces 8, 7.
+The amplitudes are one factorisation of **G**, not a step of the law:
+the law's step is the bilinear form, and `E` is its square root.
+
+**What G is.** Symmetric, of rank 2 (two rows of **E**), non-negative
+(`f^T G f = |E f|^2 >= 0`), and it kills every antipodal pair `e_p +
+e_(p + N/2)` exactly, because the tables are exactly antisymmetric
+(`C[p + N/2] = -C[p]`, `S[p + N/2] = -S[p]`: "opposite phases of equal
+amounts exactly zero"), so the Gram form factors through the cancel of
+section 6.5 exactly. It is near-circulant and not circulant: `G_jk`
+deviates from `65536 cos(2 pi (j - k) / N)` by at most 237 (the tables'
+rounding, section 6.2 (ii)), and `G_(j+1)(k+1) != G_jk` on 3696 of the
+4096 entries at N = 64; its diagonal takes the eight values 65448, 65501,
+65522, 65533, 65536, 65650, 65717, 65773 (the eight totals over the 64
+births of L1), so `e_p^T G e_p` differs from 65536 at 60 of the 64 phases.
+That is the built click's violation of the rotation invariance (a) of
+6.5, a part in 276, and nothing else: **G** is the Gram matrix of the
+lattice Gleason's form at `c_1 = 1` (the fundamental alone), on `Z^N`
+before the cancel, to the tables' rounding.
+
+**(2) Several arms** (the pair, GHZ). As built (`amplitude.py:614-679`):
+each arm's rows at an end are evaluated to a pointer, the set's rotation
+multiplies the pointer by its entry (a complex integer of the half-angle
+tables: `cmul`), the arms' residuals are multiplied in `Z[i]` (`cmul`),
+the labels' products are added, and the sum's square is the weight;
+within one Node tuple coherent, across Node tuples added. The Boss's
+statement "the product of the arms' complex residuals is the
+multiplication in the group ring `Z[Z_N]`" is the exact algebra
+(`ev(f * g) = ev(f) ev(g)` for the exact root of unity, the product of
+two arms' elements the convolution, the label sum the ring addition) and
+it is **not bit-identical** to the built click: on the rounded tables
+**E** is not a ring homomorphism, `E(e_1)^2 = (64400, 12750)` against
+`256 E(e_2) = (64256, 12800)`, so "convolve in the ring, then evaluate
+once" and "evaluate each arm, then multiply in `Z[i]`" differ by the
+rounding. On the pair's CHSH cells the difference is invisible to the
+ladder, because at the turn 0 the two arms' pointers sit at one phase u
+and the factor `|E e_u|^4` against `256^2 |E e_(2u)|^2` is common to the
+four cells and cancels in the rungs: both forms return `27, 5, 5, 27` at
+(0, 8), (16, 8), (16, 24) and `5, 27, 27, 5` at (0, 24), `E x 64 = 44,
+-44, 44, 44`, `S = 176 / 64`, the registered integers, while the weights
+themselves are bit-different at every u. The form that IS bit-identical
+with several arms is one bilinear form on the tensor product: with the
+record's block vector `F = (+)_labels (x)_arms f^arm_label` in
+`Z^(N^arms)` per label, and `A` the `2 x N^arms` integer matrix "the
+entries' scalars, then `E` on each arm, then the product map of `Z[i]`
+(`(x_1, y_1, x_2, y_2) -> (x_1 x_2 - y_1 y_2, x_1 y_2 + y_1 x_2)`)", the
+weight is `F^T (A^T A) F` exactly, again by associativity: checked on the
+pair's four cells at u = 5, settings (16, 8). So the whole click is:
+additions in the ring (the merge, the label sum), the arms' product
+(a convolution exactly, a `Z[i]` product as built), then ONE bilinear
+form with a block-diagonal Gram matrix (one block per Node tuple, the
+incoherent sum), then the threshold `2 T u + T <= 2 N C_k` (`cell_of`,
+the comparison of two products since `amplitude.py:208`). The Boss's
+form stands with one correction: the ring convolution is the exact law,
+the built law is its evaluation arm by arm.
+
+**(3) The cost, and whether `Z[i]` can leave.** Per cell of k rows at one
+Node the pointer costs 2k products and two squares; `f^T G f` costs `k^2`
+products on the sparse **f** (`N^2 = 4096` dense at N = 64), the same
+integers; the tensor form of two arms `N^2 x N^2` dense, `N^3` at three
+(262144), on a vector of `2^arms` non-zero entries per label. For one arm
+`Z[i]` can leave the code entirely: `f^T G f` is an integer bilinear form
+and the pointer `(X, Y)` is a report. For several arms it can leave in
+two ways, at a price each: the tensor Gram form (bit-identical, the size
+`N^arms`), or the ring convolution then one form (exact arithmetic, not
+bit-identical: the registered cells unchanged on the pair, the weights
+changed at every u). The two places the rounding differs if **G** were
+built from `cos(j - k)` instead of `E^T E`: (i) a product of two rounded
+entries is not the rounding of the product (`C_j C_k + S_j S_k` against
+`round(65536 cos)`: up to 237 apart); (ii) `E^T E` is not circulant (its
+diagonal varies with the phase, 3696 entries move under `j, k -> j + 1, k
++ 1`), so a **G** built from `j - k` alone would restore the rotation
+invariance the tables break and change the eight totals of L1 to one. The
+build must use `E^T E` for bit-identity, and a **G** from the cosine is
+the exact law's Gram matrix (section 6.5 at `c_1 = 1`), a change of the
+law's integers by a part in 276 wherever a record's total is read.
+
+**(4) The tie to 6.5.** `f^T G f` with `G = E^T E` is the quadratic form
+of the lattice Gleason at the fundamental, `R(f) = |sigma_1(f)|^2`, to the
+tables' rounding; its rank 2 is the one complex embedding; its kernel on
+the antipodal pairs is the cancel; its failure of rotation invariance is
+the rounding's and nothing of the law's. **Reached**, bit-identical for
+one arm and for the tensor form of several; **corrected** for the ring
+form of several arms, which is the exact law and not the built one.
 
 ## 7. Young's spacing from the click in the limit of every direction, and Bohr's levels from the turn under `action`
 
@@ -1847,7 +1966,7 @@ still need what the law lacks, an energy and a transition.
 | 3 Newton and Coulomb | Gauss exactly; the inverse square in the shell mean; `G = K (n / d) / (4 pi S)`; `k_C = G`, the ratio `-rho_A rho_B` | | per Node without the limit of every direction |
 | 4 special relativity | the light cone and `omega = c k`; the Lorentz symmetry of the rows' limit | the moving reader's `c -+ v`; the clock at 1; `v = p / (m + p)`; the cap 1 above c | velocity addition, `E = m c^2`, the moving mass |
 | 5 general relativity | Poisson and the retarded wave equation of the delay field; the redshift at first order; Newton's geodesics; the general flux | the redshift at second order, no horizon; the meeting's delay `~ M / b` | Einstein's equation; the rows' bending on `main`; the post-Newtonian terms |
-| 6 the information cost | Holevo; Born and Tsirelson as limits; the click's square as a positive quadratic form with the power 2 and `sum a_i^2` derived (the lattice Gleason, 6.5); the visibility of two rows; `E = (h N) f`; **New**: the cost per record and the boundary as quantities | the partial read (a step) | Landauer; the click's harmonic constants `c_j` (Gleason's free state), register-pinned to the fundamental |
+| 6 the information cost | Holevo; Born and Tsirelson as limits; the click's square as a positive quadratic form with the power 2 and `sum a_i^2` derived (the lattice Gleason, 6.5); the click without amplitudes, `f^T G f` on the tables' Gram matrix, bit-identical (6.7); the visibility of two rows; `E = (h N) f`; **New**: the cost per record and the boundary as quantities | the partial read (a step) | Landauer; the click's harmonic constants `c_j` (Gleason's free state), register-pinned to the fundamental |
 | 7 Young and Bohr | Young's fringes in the limit of every direction (the exact two-path law, `lambda D / s` its paraxial form); Bohr's `2 pi p r = j h` and `r_j ~ j^2` | the spectrum at the orbital frequency | the levels' energies and the Rydberg lines |
 
 ## 9. The law of information on the GameBoard: the inventory restated as one law, and its cases derived
