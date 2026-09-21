@@ -1,0 +1,16 @@
+l_Planck 1.6163e-35 m, m_Planck 2.1764e-08 kg
+the mass bound m_unit <= m_e / 4526 = 2.013e-34 kg gives G_law / hbar_law <= 4.94e-53
+
+(A) The three cases
+  both 1 (the Planck choice): Link 7.09e-36 m, interval 1.37e-44 s, unit 2.86e-08 kg = 3.14e+22 m_e; the universe 1.2e+62 Links across, 3.2e+61 intervals old
+  the bound, h = 2 pi: Link 1.01e-09 m, interval 1.94e-18 s, unit 2.01e-34 kg = 2.21e-04 m_e; the universe 8.7e+35 Links across, 2.2e+35 intervals old
+  the bound, hbar_law = 10^6: Link 1.01e-12 m, interval 1.94e-21 s, unit 2.01e-37 kg = 2.21e-07 m_e; the universe 8.7e+38 Links across, 2.2e+38 intervals old
+
+(B) The computation in G: G = 26 K_fan (n / d) / (4 pi K_budget) with hbar_law = 1
+  K_fan 290, n / d 2.44e-04: K_budget >= 3.0e+51 operations per Node per interval
+  K_fan 290, n / d 1.00e+00: K_budget >= 1.2e+55 operations per Node per interval
+  K_fan 6, n / d 1.00e+00: K_budget >= 2.5e+53 operations per Node per interval
+
+(C) A constant total computation over a growing board, K_budget ~ 1 / a^3, G ~ a^3, Milne a ~ t
+  Gdot / G = 3 H = 2.1e-10 per year; lunar laser ranging's bound about 1e-13 per year (Hofmann and Muller 2018)
+  under the growing wall (15.1 (b)) X^3 and K are fixed, the total is constant, G is constant, c_0 / a varies

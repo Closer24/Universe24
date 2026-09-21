@@ -64,6 +64,16 @@ Two fast cases pin the tool to the engine's record:
     rows born by `ticks` less its own arrival age that no reader's window
     admits (a reader's click takes the row out of the flight, a pass leaves
     it). The five worlds of the register and no other; each entry equal.
+(e) the register of series J1 and J3 (`become`) replayed from the shipped
+    worlds by the generator's warm run (the re-pin under the fraction-free
+    law, 2026-09-21; the register's `derivations`): for `j1_lattice`,
+    `j1_source`, `j3_deuteron` and `j3_neutron_free` the range of the count
+    each neutron's clock reads over the dwell period (the ticks 61 to 120
+    of a warm run of 120 intervals without the `become` keys), the trigger
+    ticks at both ends of the range by the clock's rule at + floor(at x c
+    / 2^20), the earliest and the latest, the slack, the dwell and the warm
+    length equal to the register entry by entry; `j3_deuteron_crowd`'s
+    `never` entry the generator's constant. About 25 s per J1 world.
 """
 
 from __future__ import annotations
@@ -80,6 +90,7 @@ from event_universe.events import parse_nature_beam_world
 from event_universe.events.nature_beam import direction_flight, window_admits
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import default_width
+from event_universe.world_loading import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("weak_readings_tool", ROOT / "tools" / "weak_readings.py")
@@ -208,6 +219,12 @@ def test_read_run_reads_a_transformation_and_the_shells_curve(tmp_path):
     assert TOOL.curve_shape(reading.shell_clicks) == (6, 6, 6, 0.0)
     pinned = {"become": {"j1_lattice": {"ticks": {"1": 3}, "slack": 0, "counts": {"1": 0}}}}
     criteria = TOOL.expectations(reading, pinned)
+    # A pinned tick as a range [lo, hi] (the re-pin of 2026-09-21): the
+    # tick 3 inside [2, 3] and inside [3, 4], outside [4, 5] and [1, 2].
+    assert TOOL.tick_range(3) == (3, 3) and TOOL.tick_range([2, 3]) == (2, 3)
+    for pair, inside in (([2, 3], True), ([3, 4], True), ([4, 5], False), ([1, 2], False)):
+        ranged = {"become": {"j1_lattice": {"ticks": {"1": pair}, "slack": 0}}}
+        assert TOOL.expectations(reading, ranged)[0][1] is inside, pair
     assert [ok for _, ok, _ in criteria] == [True, True, True, True]
     assert [kind for _, _, kind in criteria] == [
         TOOL.GAMEBOARD,
@@ -323,3 +340,32 @@ def test_the_j2_register_is_derived_from_the_worlds_and_the_flight_rule():
             ),
         }
     assert derived == registered["j2"]
+
+
+def test_the_j1_and_j3_register_is_the_generators_warm_run_on_the_shipped_worlds():
+    """(e)."""
+    folder = ROOT / "examples" / "events" / "weak"
+    registered = json.loads((folder / "expectations.json").read_text(encoding="utf-8"))
+    spec = importlib.util.spec_from_file_location("weak_make_worlds", folder / "make_worlds.py")
+    assert spec is not None and spec.loader is not None
+    generator = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(generator)
+    assert (
+        registered["become"]["j3_deuteron_crowd"]
+        == generator.become_expectations({"j3_deuteron_crowd": {}})["j3_deuteron_crowd"]
+    )
+    for name in ("j1_lattice", "j1_source", "j3_deuteron", "j3_neutron_free"):
+        path = folder / f"{name}.json"
+        loaded = load_world(path.read_bytes(), base_dir=path.parent, root=path.parent.parent)
+        shipped = json.loads(loaded.expanded_source)
+        derived = generator.become_expectations({name: shipped})[name]
+        assert derived == registered["become"][name], name
+        assert (
+            derived["dwell"] == list(generator.DWELL) and derived["warm_ticks"] == generator.WARM_TICKS
+        )
+        for number, (low, high) in derived["counts"].items():
+            assert low <= high
+            assert derived["ticks"][number] == [
+                generator.trigger_tick(low),
+                generator.trigger_tick(high),
+            ]

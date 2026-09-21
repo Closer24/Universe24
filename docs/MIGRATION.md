@@ -11,7 +11,7 @@ python -m pip install -e '.[render,dev]'
 The model owner's record 158 of 2026-09-20 ("the step reads the crossed
 Link") on the experimenter's finding of record 151; the physicist's design
 [docs/designs/crossing/DESIGN.md](designs/crossing/DESIGN.md); the branch
-`crossing`; [BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
+`crossing`; [BEAM_LAW note 47](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
 The identity `beam-v1` is kept.
 
 - The order of the interval: the frame, the measured events' steps
@@ -66,13 +66,43 @@ The identity `beam-v1` is kept.
   the two marks, the events' and the books' where a body stepped or fired
   under a push). `run.json` gains `fast_steps`, the Links crossed right
   after another of the same body (the rule's count not proved there, note
-  43: a report). The registered worlds with a
+  47: a report). The registered worlds with a
   completed step or a fire under a push move (VALIDATION, the dated
   table of this change): series G2 (the run under the rule is the G2
   session's), the hubble worlds, D, H, the catalog's `sun_planet`, the
   nucleus, binding and weak pairs; every world whose measured events are
   all fixed reads the same records, and its `state.json` differs by the
   two marks alone.
+
+## The weak register re-pinned under the fraction-free law, on 2026-09-21 (host only, no law change)
+
+The architect's root cause (record 254) of the J1 `become` counts: the
+fraction-free law's batch (241fc7ac, PR #412) re-read the runs of series
+J in the weak README and left `examples/events/weak/expectations.json`'s
+`become` entries as the first registration's warm run had written them
+(the first commit whose warm run differs is e7ba13c6, the owed count on
+its accumulator, BEAM_LAW note 41; a law reviewed and decided, records
+148 and 174). The re-pin is its owed consequence; no rule changes.
+
+- `examples/events/weak/make_worlds.py`: `count_ranges` in place of
+  `steady_counts`: the warm run is `WARM_TICKS` = 120 intervals and the
+  count of each neutron's clock is pinned as its range over the dwell
+  period `DWELL` = (61, 120) (the lesson of the first registration: the
+  count a clock reads under a fan's dwells is not one number over its
+  history); the register's `become` entries carry `counts` and `ticks` as
+  pairs [lo, hi], `earliest`, `latest`, `slack`, `dwell` and `warm_ticks`,
+  and `derivations.become` states the dwell period and the range's source.
+- `tools/weak_readings.py`: `tick_range`; the trigger criterion reads a
+  pinned tick as a range [lo, hi] or as one integer (lo = hi), inside when
+  the neutron fires within it or up to `slack` intervals before.
+- `tests/test_weak_readings.py` (e): the generator's warm run on the
+  shipped J1 and J3 worlds against the register entry by entry;
+  `tools/check.py` names the test as the consumer of the weak generator
+  and register.
+- The old integers are history in `examples/events/weak/README.md`
+  ("Re-pinned under the fraction-free law"); the rule's sentence in
+  `docs/TEST_EXPECTATIONS.md` (a law change re-registers every register
+  its runs feed, every generator has its comparing test).
 
 ## The readings by type and the registers' derivations, on 2026-09-21 (host only, no law change)
 

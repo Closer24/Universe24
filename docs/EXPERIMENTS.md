@@ -2418,7 +2418,7 @@ states "exactly" and means integer equality at every tick.
   definitions those files reference and was not re-run. The verdicts as
   re-read stand; the numbers above are kept as history.
 - **The key `doppler` deleted (2026-09-21; the crossing rule, [BEAM_LAW
-  note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  note 47](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
   the model owner's records 151 and 158 of 2026-09-20).** The nine worlds
   `hubble_stars/doppler/` and their flux expectations are deleted with the
   key ([MIGRATION](MIGRATION.md#the-crossing-rule-on-2026-09-21-the-step-before-the-law-a-row-and-a-body-met-once-the-key-doppler-and-the-grain-deleted));
@@ -3688,6 +3688,30 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   and 2 outside over the eleven worlds. `j3_neutron_free` (512 exactly),
   `w_exchange` and the five J2 worlds are identical. The digests of the
   four moved worlds; the numbers above are kept as history.
+- **Re-pinned under the fraction-free law (2026-09-21; the re-registration
+  record 254 ordered; no run moved).** The batch above re-read the runs
+  and left `expectations.json`'s `become` entries as the first
+  registration's warm run had written them (the count at tick 100 of the
+  engine before note 41; the architect's root cause, the first differing
+  commit e7ba13c6, the owed count on its accumulator). The generator now
+  pins, for every neutron, the range of the count over the dwell period
+  (the ticks 61 to 120 of a 120-interval warm run) and the trigger ticks
+  at both ends of the range (the owed accumulator gains between the least
+  and the greatest count per interval once the crowd is steady): `j1_lattice`
+  517 to 525 (the corners 520 to 525), `j1_source` 522 to 529,
+  `j3_deuteron` 523 to 574, `j3_neutron_free` 512, the gate as it was.
+  Against the runs at `main` (the same runs: 522 to 524, 523 to 528, 568,
+  never, 512) every neutron fires within its range with no slack needed.
+  `tools/weak_readings.py`: 0 record checks failed, 36 readings inside and
+  0 outside over the eleven worlds: the two readings outside since the
+  first registration, `j1_lattice`'s trigger criterion (the corners at 524
+  against the one-tick pin 522) and `j3_deuteron`'s (568 against 574),
+  moved inside under the range pin of the re-registration, the range's own
+  consequence under the fraction-free law; nothing else moved. The old
+  integers are kept as history in the series' README
+  (`examples/events/weak/README.md`, "Re-pinned under the fraction-free
+  law"); `tests/test_weak_readings.py` (e) replays the generator's warm run
+  on the shipped worlds against the register.
 
 ### L, the amplitude law (2026-09-20)
 
@@ -8541,3 +8565,31 @@ sign rule, and its other couplings are catalog entries.
   [validation entry](VALIDATION.md#external-detector-definition-with-a-periodic-return---2026-09-19).
   This is a compact graph demonstration, not arbitrary 3D equivalence or a
   derivation of quantum measurement laws.
+
+### E15. The click of one record, shown (2026-09-21)
+
+- **The page** [examples/events/amplitude/pages/click.html](../examples/events/amplitude/pages/click.html)
+  (visualisation requested by the model owner, 2026-09-21; built by
+  `examples/events/amplitude/pages/build_pages.py` from the registered
+  world `slits_low` of L2, the runner's `run.json` and `events.jsonl`, the
+  frames the same engine stepped in-process with its gathers checked
+  against the run): the record born at tick 43 with the birth phase
+  u = 41 followed from its birth to its click, its rows on the GameBoard
+  with their phases (GAMEBOARD picture), its offers and its ladder growing
+  at the absorbers, the screen and the faces, the click at the pixel
+  (52, 60) at tick 192 (the cell `screen_60`, the rungs 41 to 42 of 64,
+  the cell's weight 0.0264 of the total; DETECTOR) and the deletion of its
+  126 offers in the same interval, no row of it left on the GameBoard; a
+  demonstration of the registered L2 run, no new reading, nothing moved.
+
+### E16. The pair's two clicks, shown (2026-09-21)
+
+- **The page** [examples/events/amplitude/pages/bell.html](../examples/events/amplitude/pages/bell.html)
+  (the same builder; the registered worlds `bell_0_8`, `bell_0_24`,
+  `bell_16_8`, `bell_16_24` of L3): the first record (u = 0) born as one
+  record with two arms, its rows ending at `alice_plus` at tick 6 and at
+  `bob_plus` at tick 13, the four cells 27 / 5 / 5 / 27 of 64 and the two
+  clicks from one cell at tick 13 (DETECTOR); the register's correlations
+  E x 64 = 44, -44, 44, 44 and S = 176 / 64 = 2.75 against the bounds 2
+  and 2 sqrt 2 = 2.83, the runs' gathers equal to the register on every
+  world; a demonstration of the registered L3 runs, no new reading.

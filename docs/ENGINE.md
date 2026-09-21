@@ -200,7 +200,7 @@ release rate, its lamp's rate and window, its owed count) and its content
 (`frame_content`, read once before the law: M_A of the interval's push,
 the same whatever the order in which the families' clicks join `held`
 within the interval; [BEAM_LAW note 27](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
-are read; since the crossing rule (2026-09-21; [BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+are read; since the crossing rule (2026-09-21; [BEAM_LAW note 47](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 the model owner's record 158) the measured events then STEP by their
 momentum (`_move`, below: a body's departure becomes its arrival as a
 row's does in the walk, so the law reads a body at its destination and
@@ -274,7 +274,7 @@ reads its arrivals over the set (one moment table per family over the
 rows at the set, the presence and the age moment its zeroth and age
 moments over the present rows, the record's component and the push's flow
 its moments over the admitted rows; since the crossing rule the admitted
-rows are the crossings, [BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+rows are the crossings, [BEAM_LAW note 47](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
 the arrivals but for a row that came over the body's own Link behind it,
 the entered Nodes' residents against the step and the rows that crossed
 the trailing face's Links the other way, each read on its own direction)
@@ -481,7 +481,7 @@ world without a lamp reads as it did before the law, byte for byte
 their caps against their pinned digests); `doppler` (the reading's
 weight at the relative speed of 2026-09-20, `doppler-v1`, deleted on
 2026-09-21 with the crossing rule,
-[BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+[BEAM_LAW note 47](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
 a moving reader's Doppler is the count of the rows it crosses; a world
 that declares the key is refused as an unknown key, MIGRATION); the keys of the hand (since 2026-09-20, `hand-v1`,
 [BEAM_LAW note 39](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
@@ -784,7 +784,7 @@ D beyond the rest vectors and the headings; per family its `quantum`,
 declared, by names, or None; the measured events' states carry `span` too, as
 `state.json` does), `action` (h, or None), `meeting` (the key as declared,
 false by default), `fast_steps` (since the crossing rule of 2026-09-21,
-[BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+[BEAM_LAW note 47](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
 the count of Links a body crossed in the interval right after another of
 its Links, where the rule's one-per-crossing count is not proved; a
 report, no refusal), `hypotheses` (`bohr-v1` when `action` is

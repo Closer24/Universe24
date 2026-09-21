@@ -36,7 +36,11 @@ the Links, the age at the click and the path phases derived from the two
 worlds and the flight table; the Bell plus offset, the star worlds' c and
 the register of series J2 the same). A run without a derived expectation
 is a research run and its register says so (`measured`). A review checks
-the derivation before the numbers.
+the derivation before the numbers. A law change re-registers every
+register its runs feed, and every generator has its comparing test (the
+lesson of 2026-09-21: the fraction-free batch re-read the weak README and
+left its register's warm-run counts, which no test compared;
+`tests/test_weak_readings.py` (e) since).
 
 ## Suite inventory of 2026-09-19: one engine, the Beam Law
 
@@ -60,7 +64,7 @@ kept, their pins the law of events').
 | `test_columns.py` | The one coupling as a signed inner product over the columns: the two built-in columns equal to the landed form integer by integer and refusal by refusal on a grid, at the register's scale and on the replay of the series 7 worlds' `read` records; a third column with the sign minus giving the design's integers and the sign as a key; the refusals and the alignment; the bounds at parsing and at the push; every column floored on its own ([below](#the-columns)) | new (2026-09-20, the model owner's "one mechanism for all the laws on the GameBoard"; the mathematician's verified form) |
 | `test_lifetime.py` | The lifetime of a family and the held content: the click on the border `lifetime` booked as a face books an escape (the record 2^26, the ledger lines, the run's record), a ray read at the age L and then booked, the reach of L = 1, 2, 3 on the flight table (the six neighbours, the face diagonals, the cube diagonals and two Links), the inverse refused, the refusals; a measured event holding content of two families (the charges as rational sums, the push, the release of both, the record) and the register's proton ([below](#the-lifetime-and-the-held-content)) | new (2026-09-20, the model owner's "the strong force's range is a lifetime, L"; the physicist's D-1) |
 | `test_binding.py` | The binding that costs content (`binding-v1`): the give at the first hand-over of a contact under `measure` (the pair of the six headings with `bond` 2 on the mover: one row of amount 2, content 1 on -x, the recoil +128, the border click three ticks later with content 2, the books exact at every tick, `given` 2 then 0), the remainder (`bond` 3 at the quantum 2: one unit given, 1 kept), the give taken by a body on its line (`measured` +2, no border click; `pass` lets it on), a body that carries nothing (the contact records of `test_contact.py` without `given`, a paid body's own content never given), the fact of the run (a body that takes a declared paid row gives it at its next contact, `given` and `binding-v1` from that give on) ([below](#the-binding-that-costs-content)) | new (2026-09-20, the model owner's records 115 and 137 on the physicist's design; (f) after the physics-rule review) |
-| `test_contact.py` | The contact through the table: the design's pair on the six headings (+128 per interval; under the step drive and the crossing rule's order the labels 128, 256, 384, 128, 128, 256, 128 and the hand-overs 384, -128, 256, -256, 128, ... from tick 5, the sum 0, no step; at three Links the pair separates at tick 8), the isolated hand-over under `measure`, `rerelease`, `read` and `pass` and the derived default, the apportioning over the occupants of a body's set, the register's proton and neutron over 1000 intervals (997 hand-overs from tick 4, the first 621 934 561 280, the rest 310 967 280 640, the labels +-310 967 280 640 at the end), the frame's order as a declared tie ([below](#the-contact-through-the-table)) | new (2026-09-20, the model owner on the physicist's design, section 4.4); (a), (d), (e) re-registered on 2026-09-20 under the step drive; (a), (d) re-pinned on 2026-09-21 under the crossing rule's order (the step before the law, BEAM_LAW note 43), the old integers kept as history |
+| `test_contact.py` | The contact through the table: the design's pair on the six headings (+128 per interval; under the step drive and the crossing rule's order the labels 128, 256, 384, 128, 128, 256, 128 and the hand-overs 384, -128, 256, -256, 128, ... from tick 5, the sum 0, no step; at three Links the pair separates at tick 8), the isolated hand-over under `measure`, `rerelease`, `read` and `pass` and the derived default, the apportioning over the occupants of a body's set, the register's proton and neutron over 1000 intervals (997 hand-overs from tick 4, the first 621 934 561 280, the rest 310 967 280 640, the labels +-310 967 280 640 at the end), the frame's order as a declared tie ([below](#the-contact-through-the-table)) | new (2026-09-20, the model owner on the physicist's design, section 4.4); (a), (d), (e) re-registered on 2026-09-20 under the step drive; (a), (d) re-pinned on 2026-09-21 under the crossing rule's order (the step before the law, BEAM_LAW note 47), the old integers kept as history |
 | `test_nucleus_readings.py` | The nucleus readings tool (series I) reads the runner's record: on the design's pair on the six headings, run through the runner, the pushes per body (128, 0, 0) from the `p` rows' -7936 and the `g` rows' +8064, the hand-overs 384 at tick 5, -128 at 6, 256 at 8, -256 at 10 and 128 at 11 under the step drive and the crossing rule's order (one interval earlier under the step drive alone; 256, 128, 640 by p1 alone as the rule was), the border `lifetime` clicking 12 rows per interval from tick 4, no step, the separation 1.00, pinned to the events file | new (2026-09-20, series I); re-registered on 2026-09-20 under the step drive; re-pinned on 2026-09-21 under the crossing rule's order |
 | `test_nature_beam_label.py` | The label along the unit vector of the direction at the flight table's scale: the table u_d by the exact integer rule (the pinned vectors, the length within 1.35 % of Q, antisymmetry, equivariance under the 48, no tie, the float agreement over every primitive direction within the bound), every label content x u_d with the recoil, the transit line and the books closing through clicks, a mirror and the open faces, the bound at Q x content x amount ([below](#the-label-along-the-unit-vector)) | new (2026-09-19, the model owner's decision on the physics-rule reviewer's verdict; every momentum pin of the suite re-pinned x 64, listed in its section) |
 | `test_nature_beam_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the orbits of the six-heading patterns under the cube's group as properties (since 2026-09-21: the orbit-stabilizer and Burnside counts in place of the counted sizes), a head-on pair parking and a crowd passing; no collision at a Node that holds a measured event ([below](#the-collision-table)) | new |
@@ -71,13 +75,13 @@ kept, their pins the law of events').
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder (since the step drive of 2026-09-20 the same integers, the remainder now the drive on the body's record); the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
 | `test_fraction_free.py` | The fraction-free counts (2026-09-20, BEAM_LAW note 41): every count of a body an accumulator on its record, `by_drive`'s count; the identity at a constant rate on every count over 10^4 intervals, the accumulators carried in `state.json` and a resumed run identical, the bound below the denominator at every tick, a column whose Lambda_c^2 leaves the register refused at load ([below](#the-fraction-free-counts)) | new (2026-09-20, the mathematician's FORM.md, the physics-rule reviewer's REVIEW_COUNTS.md, records 147 and 148) |
 | `test_step_drive.py` | The step drive (2026-09-20, BEAM_LAW note 17 as amended): the count of Links as the whole part of the distance the momentum has driven, one bounded integer per axis on the body's record: the identity at a constant momentum with `by_clock(n - 1, \|p\|, D)` over 4000 self-creations and twelve momenta; the identity on two axes (the coincident step lost as before); the integrated distance under a halving momentum (38 within 1, 37 to 39, where the rule as it was made 1); never two Links in one interval under a random momentum over 10 000 intervals with the drive in [0, 2 D - 1); the record (`drive`, `axis_steps`, the `step` line) and a declared `drive` refused; the turn by momentum unchanged; the signed drive under a reversal (no Link until the drive cancels and reaches -D) and the bound pair under a suspension holding for 3000 intervals ([below](#the-step-drive)) | new (2026-09-20, series G2's finding, record 107; the owner's decision, record 108); the drive signed the same day (record 126) |
-| `test_crossing.py` | The crossing rule (2026-09-21, BEAM_LAW note 43; the model owner's record 158 of 2026-09-20, the physicist's design docs/designs/crossing/DESIGN.md): the experimenter's streams read as counts, 45 in 32 and 58 in 48 toward, 19 in 32 and 38 in 48 away with the windows of each step, 48 in 48 at rest, no row twice (the `measure` counts equal), the probe pair -2880 = 64 x 45 and the key `doppler` refused; the streams beyond the axis on a plane of lines, 32, 24 and 36 in 32; one row met once (a `read` line at tick 12, 3, 1 in three worlds); the sums over a period 183, 311, 74, 202; the fast steps reported (18 and 6 at the momentum 96, 20 and 10 at 128, 15 and 0 at 64) ([below](#the-crossing-rule)) | new (2026-09-21; the pins of (c) from the rule transcribed on the lines' geometry, docs/designs/crossing/crossing_2d.py, before the run) |
+| `test_crossing.py` | The crossing rule (2026-09-21, BEAM_LAW note 47; the model owner's record 158 of 2026-09-20, the physicist's design docs/designs/crossing/DESIGN.md): the experimenter's streams read as counts, 45 in 32 and 58 in 48 toward, 19 in 32 and 38 in 48 away with the windows of each step, 48 in 48 at rest, no row twice (the `measure` counts equal), the probe pair -2880 = 64 x 45 and the key `doppler` refused; the streams beyond the axis on a plane of lines, 32, 24 and 36 in 32; one row met once (a `read` line at tick 12, 3, 1 in three worlds); the sums over a period 183, 311, 74, 202; the fast steps reported (18 and 6 at the momentum 96, 20 and 10 at 128, 15 and 0 at 64) ([below](#the-crossing-rule)) | new (2026-09-21; the pins of (c) from the rule transcribed on the lines' geometry, docs/designs/crossing/crossing_2d.py, before the run) |
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
 | `test_paid_charge.py` | A paid family's charge per unit of amount (D-1): the books' charge line conserved through the click of a charged paid row, its escape, its home and the escape of the body that holds it; the push untouched (the label alone, with the charge -1 and 0 alike); the refusals and the record ([below](#a-paid-familys-charge)) | new (2026-09-20, the model owner's "go on everything", item (2)) |
 | `test_window_width.py` | The width of a window, `phase_width`: the one floor `window_admits` equal to the half circle at the default width on every pair, the admitted fraction w / N against the source's stride (10, 20, 40, 320 of 640; the stride 2's coset), `beam`'s pairing arc, a lamp's width, the refusals ([below](#the-width-of-a-window)) | new (2026-09-20, the model owner's "go on everything", the neutrino first) |
-| `test_weak_readings.py` | The weak-force readings tool (series J) reads the runner's record and the flight table: on a short bar run through the runner, the first reader's 3 clicks of 192 arrivals, the far detector's 151, the first-arrival ages 13 and 51; on the toy of the transformation with a shell of 62 readers, the `become` line and the shell's one click ([below](#the-width-of-a-window), [the transformation](#the-transformation)); (d) the register of series J2 (`examples/events/weak/expectations.json`) derived from the five shipped worlds and the flight table and compared entry by entry | new (2026-09-20, series J2; (b) with series J1); (d) 2026-09-21 |
+| `test_weak_readings.py` | The weak-force readings tool (series J) reads the runner's record and the flight table: on a short bar run through the runner, the first reader's 3 clicks of 192 arrivals, the far detector's 151, the first-arrival ages 13 and 51; on the toy of the transformation with a shell of 62 readers, the `become` line and the shell's one click ([below](#the-width-of-a-window), [the transformation](#the-transformation)); (d) the register of series J2 (`examples/events/weak/expectations.json`) derived from the five shipped worlds and the flight table and compared entry by entry; (e) the register of J1 and J3 replayed by the generator's warm run on the shipped worlds (the range of each clock's count over the dwell period, the trigger ticks at its ends) | new (2026-09-20, series J2; (b) with series J1); (d) and (e) 2026-09-21 |
 | `test_become.py` | The transformation `become`, `weak-v1`: the clock trigger at the self-creation whose clock reaches `at`, the products born as a re-release is with the recoil over all of them, the `became` line and the charge line exact; the click trigger within a window and the entry consumed; the crowd slowing the trigger and the gate holding it; the charge line through the click of the product; the refusals and the run refused when the event cannot pay ([below](#the-transformation)) | new (2026-09-20, the model owner's "go on everything", item (1)) |
 | `test_w_world.py` | The W world, the exchange at one Link: the W (paid, charge -7344 per unit, lifetime 1) thrown at the neutron's key and measured by the proton one interval later, its content and charge a neutron's; the W into empty space on the border; the click trigger on the proton refused with the design's sketch and balanced with a positive product; the refusals ([below](#the-w-world)) | new (2026-09-20, the model owner's "go on everything", item (3)) |
 | `test_nature_beam_window_reads.py` | A table entry's window read from a reading (`phase_window` `{"reads": ..., "offset": ...}`): the centre the setting ray's phase plus the offset, a ray inside clicking with the `window` on its record and a ray outside passing with `window` and `reads`; the edge case of no setting ray (a `pass` naming `window` None) and of an antiphase pair; the parsing and the refusals ([below](#a-window-read-from-a-reading)) | new (2026-09-20, issue #363) |
@@ -1303,7 +1307,7 @@ DESIGN.md test (f) and section 4.4):
   (2026-09-20, [below](#the-step-drive): D = 320 + |p| on the content 5,
   the drive gaining p at every self-creation, signed since record 126,
   one sign here) and the crossing rule's order (2026-09-21, [BEAM_LAW
-  note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+  note 47](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
   the step before the law, the drive of a self-creation advanced by the
   momentum after the PREVIOUS interval's push) the momentum of p1 over
   ticks 2 .. 8 reads 128, 256, 384, 128, 128, 256, 128 (the mirror on
@@ -1416,7 +1420,7 @@ DESIGN.md test (f) and section 4.4):
 
 ## The binding that costs content
 
-Since the crossing rule (2026-09-21, [BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+Since the crossing rule (2026-09-21, [BEAM_LAW note 47](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
 the step, its contact and its give precede the interval's law: a fire
 under a push falls one interval later than it did, and a row given at a
 contact makes its first Link in the interval of the give (so its border
@@ -1536,7 +1540,7 @@ the first run (the design's section 5, tests (a) to (d)):
   1, amount 16, phase 1 (K 16; the body escapes in the interval of its
   second self-creation, before that interval's clock turn: the step
   precedes the law since the crossing rule of 2026-09-21, BEAM_LAW note
-  43; phase 2 until then), momentum (1024, 0, 0), `held` [16, 0],
+  47; phase 2 until then), momentum (1024, 0, 0), `held` [16, 0],
   `home` [0, 0], the measured line's escaped 16.
 - (c) home: a lamp's ray (content 1, phase 7) returning to its lamp on a
   periodic 4 x 1 x 1 bar is home after 4 Links (the intervals 7, 14, ...)
@@ -1649,7 +1653,7 @@ expected integers, written down before the first run:
   anchor of content 1 at x = 11) at rest on x = 3 to 7 owes one interval
   after every self-creation (age after interval n is ceil(n / 2), waited
   floor(n / 2)); since the crossing rule (2026-09-21, [BEAM_LAW note
-  43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+  47](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
   the step before the law, the drive advanced at the self-creation itself)
   the step of the ages 9, 18, 27 lands on the self-creation, the intervals
   17, 35, 53: x after intervals 17, 18, 35, 36, 53, 54, 60 is 4, 4, 5, 5,
@@ -1930,7 +1934,7 @@ flight's (14 and 16 on A2's bar; 6, 11, 13, 14 on the choosers' bar).
 
 ## The crossing rule
 
-`tests/test_crossing.py` (docs/BEAM_LAW.md section 3 step 4 and note 43;
+`tests/test_crossing.py` (docs/BEAM_LAW.md section 3 step 4 and note 47;
 the model owner's record 158 of 2026-09-20, "the step reads the crossed
 Link"; the physicist's design docs/designs/crossing/DESIGN.md on the
 experimenter's finding of record 151): a row and a body meet ONCE, at the
@@ -2488,6 +2492,24 @@ the half circle): 16, 16, 512, 32, 0; the far detector's clicks the rows
 born by 1037 less its own arrival age (326), 711, that no reader's window
 admits: 699, 0, 352, 688, 711. The derived register equals the shipped one
 entry by entry.
+
+`tests/test_weak_readings.py` (e), the register of J1 and J3 replayed (the
+re-pin under the fraction-free law, 2026-09-21; the Boss's order on the
+architect's root cause, record 254): the generator's warm run on each
+shipped world (`j1_lattice`, `j1_source`, `j3_deuteron`,
+`j3_neutron_free`: the world without its `become` keys for 120 intervals)
+gives, per neutron, the range of the count its clock reads over the ticks
+61 to 120 and the trigger ticks at + floor(at x c / 2^20) at both ends;
+the counts, the ticks, the earliest, the latest, the slack 3, the dwell
+[61, 120] and the warm length equal the register's entry by entry, and
+`j3_deuteron_crowd`'s `never` entry is the generator's constant. The
+tool reads a pinned tick as a range [lo, hi] or as one integer (test (b):
+the tick 3 inside [2, 3] and [3, 4], outside [4, 5] and [1, 2]). The
+registered ranges: `j1_lattice` the counts 11034 .. 27585 in four ranges,
+the ticks 517 .. 525; `j1_source` 20647 .. 36195, 522 .. 529;
+`j3_deuteron` 23881 .. 128590, 523 .. 574; `j3_neutron_free` 0, 512 (the
+first registration's one count at tick 100 and its ticks 522 .. 524, 524
+.. 529, 574 and 512 kept as history in the series' README).
 
 ## The hand
 

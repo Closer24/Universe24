@@ -456,7 +456,7 @@ order with each step's inverse:
    `charge` (rho, the sign plus: its term is the electric part below), and
    a declared column (the strong force, the sign minus) is a third term of
    the same sum, not a term of the code. Since the crossing rule
-   (2026-09-21, note 43; the model owner's record 158 of 2026-09-20) the
+   (2026-09-21, note 47; the model owner's record 158 of 2026-09-20) the
    rows a reader meets are the crossings of its world line: its arrivals
    and, in the interval of a step, the rows on its Link against it and
    the rows at the Node it entered moving against it, never a row that
@@ -2719,7 +2719,7 @@ implementation's part of the contract. The design above is unchanged.
     owner, 2026-09-20, record 119; the world key `doppler`, the flux of a
     row's stream through a moving body at its speed quantised to the grain
     G = 2^12, off the reader's clock before the columns, `weighted_flow`):
-    deleted on 2026-09-21 with the crossing rule (note 43; the model
+    deleted on 2026-09-21 with the crossing rule (note 47; the model
     owner's record 158, "in both cases the key leaves the code": a moving
     reader's Doppler is the count of the rows it crosses, no weight, no
     grain). The note's text, the key, the grain, `quantised_speed`,
@@ -3073,7 +3073,7 @@ implementation's part of the contract. The design above is unchanged.
     mod N as before), the push per column and axis `acc_push` (below
     Lambda_c^2, (iv)) and the step's `drive` as note 17 built it (the
     doppler weight's rows per direction and axis, `acc_flow`, left with
-    the key on 2026-09-21, note 43). `by_clock(age, n, d)` is the constant-rate identity: from
+    the key on 2026-09-21, note 47). `by_clock(age, n, d)` is the constant-rate identity: from
     an empty accumulator at age 0 and a rate of one sign the two give the
     same integers at every self-creation and the accumulator holds `(age
     n) mod d` (FORM.md section 1, proved; test (a) on every count over
@@ -3161,7 +3161,7 @@ implementation's part of the contract. The design above is unchanged.
     tests (b), (e); the weighted flow's rows under `doppler`, `acc_flow`
     at the denominator G Q |v_d|^2, one per direction, and their tests on
     the doppler bar, 396672 for 396673 off the clock, left with the key on
-    2026-09-21, note 43).
+    2026-09-21, note 47).
     (v) **The ladder at the click.** The cell of a record's u is the first
     k with `2 T u + T <= 2 N C_k`, the comparison of two products
     (`amplitude.cell_of`), which is `u < b_k` with the rung `b_k = (2 N
@@ -3282,7 +3282,7 @@ implementation's part of the contract. The design above is unchanged.
     `width // 2` (constants of N and the width); the speed at the grain G
     (`quantised_speed`, `G |p| // D`, the remainder below 1 / G by
     declaration, note 38 as it was) left with the crossing rule on
-    2026-09-21 (note 43).
+    2026-09-21 (note 47).
     (4) a guard or an addressing: every `MOMENTUM_BOUND // x` and
     `AMOUNT_BOUND // x` (a bound tested by division before a product is
     formed: `measured.column_charges`, `engine._frame_all`,
@@ -3359,7 +3359,69 @@ implementation's part of the contract. The design above is unchanged.
     tests state the properties (closure, inverse, the orbit-stabilizer and
     Burnside counts, one cycle per class) in place of the counted orbits
     (`tests/test_group_structure.py`; `test_nature_beam_collision.py` (b)).
-43. **The crossing rule: a row and a body meet once, at the crossing of
+43. **The mass of a bound set is its total content** (2026-09-21; the
+    owner's direction, record 273, "about the masses and the quarks, what
+    you found: put it into the generic law, on the group";
+    [DERIVATIONS_BEAM 19.1](DERIVATIONS_BEAM.md#191-the-generic-statement-the-mass-of-a-bound-set-is-its-total-content),
+    binding-v1's read mass of record 115 with section 17's energy carried
+    as the state; no rule changed, no run moved): the mass a detector
+    reads of any bound set is the set's total content, M = H + F - E, with
+    H the content its bodies hold (the `held` and `content` of their
+    records), F the content of its rows in flight between them (the sum of
+    amount x content per unit over the set's rows in transit) and E the
+    content escaped (the escape click at the lifetime L: the released
+    binding). It is a reading of the state vector, an addition over the
+    record and its rows, and it passes the three tests of record 202 in
+    one sentence each: generic, one sum with declared integers over any
+    family, every family paid and the strong column read per unit with
+    one sign (19.1: the bond's content in flight is blind to the charge
+    and to the held content, the same F for `u u d` and `u d d`); vector,
+    the group-ring addition on the record's held content and its rows'
+    content, no root, no float; local, the record and its rows at the six
+    neighbours, nothing kept at a Node, the sum over the set a host reading
+    of the books labelled so. The part in force today is the held content,
+    binding-v1's read mass (note 40; the deuteron of series B1 with the
+    `bond` family: the held sum 3673 of the 3677 declared, the 4 escaped
+    the binding energy, `examples/events/binding/README.md`, "What was
+    measured"); the in-flight part enters with covariant-readings-v1
+    (record 270). The register: the binding series has no
+    `expectations.json`, the B1 row of its README carries the read mass
+    ("the state `held` and the mass read") and no test derives it
+    (`tests/test_binding.py` tests the give on its own worlds), so the
+    derive-and-compare test is missing: a `read_mass` entry beside the
+    world (the held sum off the record's `measured`, the in-flight content
+    off the books' transit line, the escaped off `escaped`, M = H + F - E
+    at the cap) and the test that derives it from the run and compares,
+    for the Boss to order.
+44. **The parity, the group's two classes** (2026-09-21; record 273;
+    [DERIVATIONS_BEAM 19.3](DERIVATIONS_BEAM.md#193-how-the-quarks-bind-generically-the-chain-on-the-bipartite-lattice)
+    and 18.3, the give per contact Link): the GameBoard's translation
+    group has two cosets under the six steps, the Nodes of even and of odd
+    x + y + z (the lattice is bipartite: a step on any Port changes the
+    parity of the coordinate sum; on a periodic axis of odd extent the seam
+    joins the two classes and the statement holds on the open GameBoards
+    and on the even periods, which every registered world has), so a Link
+    always joins the two classes and no three Nodes are pairwise adjacent:
+    three bodies at adjacent Nodes bind as a chain, a line or an L, the
+    centre of one class and the two ends of the other, never as a
+    triangle; four bind at most as a square (the lattice's 4-cycle), the
+    form series I's alpha took and lost (the line held, the square
+    dispersed). The parity is the law's only colour: a contact is always
+    between the two classes, a set of three has two of one class and one
+    of the other, and a third class does not exist on the six Ports (a
+    design that needs three colours is a hypothesis outside the law, record
+    251). It passes the three tests in one sentence each: generic, a
+    statement on the group with no family name; vector, the comparison of
+    x + y + z modulo 2, a Euclidean division with the remainder kept, the
+    same verb the flight's accumulator uses; local, a Node's class is its
+    own and its six neighbours' is the other. The formula in its three
+    places (record 248): this note; DERIVATIONS_BEAM 19.3 with the sign it
+    gives (the neutron's negative mean square charge radius from the chain
+    `d u d`); in the code the six headings of `core/game_board.py`, each
+    one unit on one axis, so that the parity check is a property of the
+    Ports and its test (every heading flips the parity; no three headings
+    sum to zero) is missing, for the Boss to order.
+47. **The crossing rule: a row and a body meet once, at the crossing of
     their world lines** (the model owner's record 158 of 2026-09-20, "the
     step reads the crossed Link"; the physicist's design
     `docs/designs/crossing/DESIGN.md` on the experimenter's finding of
