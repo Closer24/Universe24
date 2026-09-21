@@ -135,3 +135,50 @@ and the tick, the `age`) and the reader's and the source's `birth` lines
 and its sources (the lag). `tests/test_reader_clock.py` pins the shipped
 worlds to the generator, the presence 4 F at the reader and the source,
 and the algebra of the ratio.
+
+## 7. Measured (2026-09-21, one run on main d8cb46e, after the pins above)
+
+The run is `tools/run_series.py --jobs 3` over the five worlds (about two
+seconds each, the books balanced, 500 intervals), read by the
+experimenter's script in the window 250 to 500: the source's birth ordinal
+at the reader's clicks against the click's tick (i) and against the reader's
+own birth ordinal at the click (ii). Every one of the ten readings inside
+the tolerance of 0.02, most to the fourth digit; no birth ordinal missing
+in any world; the age 103 at rest, 117 to 139 in `alike_receding`; the
+receding source within one Link of its emulated crowd through the run.
+
+| World | k_r | k_s | (i) lattice 1 + z (pinned) | (ii) reader's clock 1 + z (pinned) | clicks per interval | clicks per reader birth (pinned) | reader births / source births |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `control` | 0 | 1 | 2.0000 (2.000) | 2.0000 (2.000) | 0.500 | 0.500 (0.500) | 499 / 252 |
+| `reader_dense` | 1 | 0 | 1.0000 (1.000) | **0.5000** (0.500) | 1.000 | 2.000 (2.000) | 252 / 499 |
+| `alike` | 1 | 1 | 2.0000 (2.000) | **1.0000** (1.000) | 0.500 | 1.000 (1.000) | 252 / 252 |
+| `reader_half` | 0.5 | 1 | 2.0000 (2.000) | 1.3333 (1.333) | 0.500 | 0.749 (0.750) | 335 / 252 |
+| `alike_receding` | 1 | 1 | 2.2111 (2.200) | 1.1054 (1.100) | 0.452 | 0.904 (0.909) | 252 / 251 |
+
+**What the run decides.**
+
+1. **The crowd's term is a ratio of the two crowds.** In the reader's own
+   clock 1 + z = (1 + k_s) / (1 + k_r) to the fourth digit: a reader denser
+   than its source reads it blue (0.5000), two bodies in crowds alike read
+   no shift at all (1.0000) while the lattice's tick reads 2.0000 for both.
+   The lattice's tick is read by no body inside a crowd; it is the reading
+   of a body at rest with no crowd (`control`, where the two clocks agree).
+2. **A waiting reader clicks at every crossing.** Clicks per lattice
+   interval 1 / (1 + k_s) whatever the reader's crowd, no ordinal missing;
+   the reader's waits change its own count of them, not their arrival.
+3. **The sum divides as the product does.** `alike_receding` read 1.1054
+   for the pinned (1 + k_s + v / c) / (1 + k_r) = 1.100, and 2.2111 in the
+   lattice's tick (series Q's 2.2147 for the same source); the excess of
+   0.005 to 0.011 is series Q's, the moving lamp's slightly higher k.
+4. **The clock question.** The click's tick is the lattice's; the reader's
+   clock is the count of its own self-creations, and a reading in it is a
+   ratio of two counts. This is the form in which "which clock the click's
+   tick belongs to" (record 344) has an answer on the engine as built.
+
+**For the owner's galaxies.** What Earth would read of a galaxy under the
+law as built is (1 + k_galaxy)(1 + v / c) / (1 + k_here) (the sum form over
+1 + k_here when the galaxy's crowd is slowed alike): a galaxy in a crowd
+like ours shows no clock term, a denser one shows red, a thinner one blue;
+the cluster dispersion of series Q is divided by 1 + k_here but not
+removed; and the absolute k of series P is not what any reader inside a
+crowd sees. The mapping of units is still missing (section 5).

@@ -45,4 +45,9 @@ presence 4 F at the reader and the source, and the algebra of the ratio.
   over 1 + k_r for a crowd slowed alike): a denser reader reads blue
   (0.500), crowds alike read no shift (1.000), the lattice's tick reads the
   source's slowing alone; a waiting reader clicks at every crossing.
-- **Run.** Section 7 of the design, when done.
+- **Run.** 2026-09-21 on main d8cb46e (the design's section 7): all ten
+  readings inside the tolerance, most to the fourth digit: in the reader's
+  clock 2.0000, 0.5000, 1.0000, 1.3333, 1.1054 for the pinned 2, 0.5, 1,
+  1.333, 1.1; in the lattice's 2.0000, 1.0000, 2.0000, 2.0000, 2.2111 for
+  2, 1, 2, 2, 2.2; a waiting reader clicks at every crossing (no ordinal
+  missing); the crowd's term is the ratio (1 + k_s) / (1 + k_r).
