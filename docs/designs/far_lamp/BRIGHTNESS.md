@@ -129,7 +129,14 @@ Sitter. **The stand-in is a model, not the data**: the number that closes
 this row is the residual of `ln(1 + z) sqrt(1 + z)` against the Pantheon+
 distance moduli themselves, a host computation on the published table,
 which this note leaves to the next step; no plausible reading of those data
-moves a 0.34 mag rms shape residual inside their errors.
+moves a 0.34 mag rms shape residual inside their errors. The register
+already holds one such computation on an earlier form of the same idea:
+[HYPOTHESES.md](../../HYPOTHESES.md) entry 7 (the closed row under a
+growing load, before `beam-v1`) fitted the Pantheon+ sample (1,580
+Hubble-flow lamps, full covariance, one free offset) and found the coasting
+form disfavoured by `delta chi^2 = 106` against flat Lambda-CDM and "the
+reading in which only the arrival rate is redshifted" (this note's one
+factor) "behind at every exponent": the same verdict, on the data.
 
 ## 5. Two more readings after a detector
 
