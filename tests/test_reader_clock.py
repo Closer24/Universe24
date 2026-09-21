@@ -1,4 +1,4 @@
-"""Series R, a reader inside a crowd (`examples/events/reader_clock/`,
+"""Series S, a reader inside a crowd (`examples/events/reader_clock/`,
 docs/designs/reader_clock/DESIGN.md). The expected values of
 docs/TEST_EXPECTATIONS.md ("A reader inside a crowd"), written down first:
 
