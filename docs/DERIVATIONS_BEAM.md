@@ -1521,3 +1521,167 @@ still need what the law lacks, an energy and a transition.
 | 5 general relativity | Poisson and the retarded wave equation of the delay field; the redshift at first order; Newton's geodesics; the general flux | the redshift at second order, no horizon; the meeting's delay `~ M / b` | Einstein's equation; light on `main`; the post-Newtonian terms |
 | 6 the information cost | Holevo; Born and Tsirelson as limits; the visibility of two rows; `E = (h N) f` | the partial read (a step) | Landauer |
 | 7 Young and Bohr | Young's spacing in the limit of every direction; Bohr's `2 pi p r = j h` and `r_j ~ j^2` | the spectrum at the orbital frequency | the levels' energies and the Rydberg lines |
+
+## 9. The law of information on the GameBoard: the inventory restated as one law, and its cases derived
+
+The owner's request (record 166, through the G2 session, as the Boss
+relayed it): "a generic information law in the system", not a rule per
+case. Section 1's inventory restated as that law; then the wait, the
+moving detector and the crossing rule derived from it as its cases, and
+what it forbids.
+
+### 9.1 The law, in five statements
+
+- **(I1) A message is a row.** It is created at exactly one event, a
+  self-creation of a body (a release, a lamp's birth, a re-emission, a
+  give; `nature_beam.py:3507-3955`, `engine.py:768-838`), and it ends at
+  exactly one event: a read that absorbs it (a click at a body's table, a
+  home, a re-emission's take), an escape through a face, or the border
+  `lifetime`; or it has not ended yet. Between the two it is in transit,
+  a row of the store, and nothing else exists: no Node holds a message
+  that is not in transit (section 1.1). What it carries is its record:
+  direction, age, phase, number, amount, content, and under a record its
+  identity, label, multiplicity, birth phase and hand.
+- **(I2) A Node transmits per interval the rows that step out of it**,
+  each through one Port, one Link, at the flight table's pace (section
+  1.2 step 1); it holds nothing back, delays nothing, copies nothing (the
+  merge adds identical rows, the split creates units on the released
+  line: section 6.1). A Node's whole activity in an interval is the
+  translation of the rows on it and, in free space, their permutation
+  (the collision, the meeting).
+- **(I3) A body receives the rows of other numbers that reach it, and
+  emits only at its self-creations.** At rest a row reaches it when it
+  arrives at its Node (`nature_beam.py:2741`); in motion, under the
+  crossing rule (record 158), when their world lines cross, once. It
+  emits its release, its lamp's birth and its re-emissions at its
+  self-creation and at no other interval (`entry.creating`,
+  `nature_beam.py:3514`); its own rows that return are taken home and
+  re-emitted at the next self-creation.
+- **(I4) A clock's rate is the reciprocal of one plus what it reads.**
+  A body's clock counts its self-creations; after each it owes `by_clock(age,
+  k n, d)` intervals, k the messages present at its Node in that interval
+  (the presence) or their age-weighted sum (the age moment), n / d the
+  world's width: the rate `1 / (1 + k n / d)`. A clock is slowed by
+  messages and by nothing else (sections 4.3 and 5.2).
+- **(I5) The balance.** Every message released is on exactly one line of
+  the books at every interval: `released = in transit + absorbed +
+  escaped (+ cancelled)` per family, in amount and in content, exact at
+  every tick (`engine.py:880-1025`); this is the message balance, the
+  conservation of information as a count. The momentum balance is a
+  statement about messages: a PAID message carries its label out of its
+  emitter at birth (the recoil, `nature_beam.py:3888-3921`) and into its
+  reader at its end (the click's push, the label), so for paid messages
+  `sum of momenta on bodies + in transit + escaped` is conserved exactly
+  and the third law holds message by message. A FREE message (a free
+  family's row, the field) carries no recoil at birth (section 3.3: a
+  free release costs nothing) and pushes its reader by its label times the
+  reader's content: for free messages the third law is not a balance per
+  message but a symmetry between two readers, `M_A V_B = M_B V_A`, exact
+  only while both read the same number of each other's messages (series
+  C item 2: 1.0000 at rest).
+
+### 9.2 The wait, derived
+
+Record 139's open question: in an interval in which a body's clock owes,
+messages arrive at its Node. Three readings of I3: (a) the body is absent
+in both directions (rule (a), record 128: neither emits nor reads); (b)
+it is a receiver only (`main`: it reads and takes pushes, releases
+nothing); (c) the wait is a matter of the count alone (the clock's phase
+stops, the messages continue both ways).
+
+What I5 says of each, for a pair A, B of free readers with A waiting one
+interval at t (B's messages take one interval to A, A's to B):
+
+- Under (b), A takes B's push at t and sends nothing at t; B misses A's
+  push at t + 1. The pair gains one net push per wait, on A's side
+  (record 126: "one push net per wait"). I5's symmetry is broken by
+  exactly the message A did not send.
+- Under (a), A misses B's push at t and B misses A's at t + 1: one each,
+  balanced per single wait. The imbalance record 139 measured (`-12 P`
+  in 500 intervals on the register's deuteron, two steps) is the pair's
+  waits falling in the same interval or one apart at every cycle: the
+  two clocks read each other's releases and lock, and when B's wait falls
+  at t + 1 it removes an empty read (nothing arrived) and one real
+  release. So under (a) the balance fails not by the rule but by the
+  locked clocks; I5 says why no rule at the waiting body alone closes it:
+  a free message has no recoil, so a missed read is a lost push with no
+  partner, and only the symmetry of the two readers' counts balances the
+  pair. The form that closes every case is the one record 132's section
+  7 names, a recoil at the free release, which makes I5's paid-message
+  balance hold for the field too; it is a change of the law for the
+  owner, not derived here.
+- Under (c), messages neither stop nor are missed; I5's symmetry is
+  untouched by a wait and the third law holds as at rest. What changes:
+  the release no longer stops with the clock, so a lamp in a crowd emits
+  at the interval's rate and its light carries the clock's slowing only
+  in its phase, not in its count; the register's luminosity reading of
+  series G and G2 (the click rate `1 / (1 + k)` times the Doppler, the
+  hubble_stars README) would move by `(1 + k)`. A different law with a
+  registered consequence, stated so that it can be chosen.
+
+The two sub-questions. (i) Does a body count the messages it did not
+read while waiting? Under I4 the count is read at the self-creation from
+the messages present at that interval (`engine.py:475-485`,
+`Measured.counted` set by the law's step 4 in that interval): the rows
+that passed during the wait are not counted, and the rows resting at the
+Node at the next self-creation are (record 139's "the probe of k = 8
+counts 16 and owes 4"), a bounded feedback and not a register. The
+owner's principle "a message enters only at a self-creation" is I3 and
+I4 together: it is read and counted at the self-creation and neither at
+any other interval. (ii) Does its own returning message enter it while
+it waits? On `main` the home rows are taken whatever the clock owes
+(`nature_beam.py:2664-2727`, record 139's note). I1 and I3 leave two
+lawful readings: the home rows are taken (a body's own message is not a
+message from another, so I3's "receives" does not govern it), or they are
+not taken and walk on as rows of the body's own number (leaving with
+their content, an emission during a wait, which I3 forbids). What is NOT
+lawful is the third: the rows held at the Node until the body creates
+(section 9.4). The first reading is the one the law has, and the one
+I3 permits.
+
+### 9.3 The moving detector and the crossing rule, as cases
+
+**The moving detector** is I3's second clause with I1: a message ends at
+exactly one event, so a body and a row meet at most once, and they meet
+when their world lines cross. On `main` the reading is at the Node after
+the walk and before the step (`engine.py:378-401`), which misses the rows
+resident at the destination when the body enters (never read: 1.72 per
+step toward the lamp, record 153) and reads again the rows it left
+behind that catch it up (the leapfrog): two violations of I1, one a lost
+message and one a message read twice, which cancel in the count (k per k
+in both senses) and not in the physics. **The crossing rule** (record
+158) is I1 applied to a stepping body: it meets the rows that crossed its
+own Link the other way and the rows resident at its destination moving
+against it, and not the rows moving with it, behind it, or already met.
+Its count is section 2's `1 +- v / c` on the axis, the Manhattan flux on
+a fan direction, exactly 1 transverse: every one a consequence of "once"
+and of the flight table, with no weight and no key. The reading's weight
+of doppler-v1 was a factor standing in for the missing crossings (section
+2.2: the key's `374784 / 262144` is `1 + 55 / 128`); under I1 it is
+redundant, as record 151 said.
+
+### 9.4 What the law forbids
+
+- **A message waiting for a closed body.** A row held at a Node until the
+  body there self-creates is a register at the Node (a Node holds nothing
+  but the rows in transit, I2), so under a wait a row is read at the
+  crossing or it goes on; it is never queued.
+- **A message read twice or by two bodies.** I1: one end. The leapfrog
+  re-read of `main` and the self-Link re-arrival (section 2.4) are the
+  two places the engine does it today; the crossing rule removes both.
+- **A message without a sender**, and content created outside a
+  self-creation: the split's units are booked on the released line at
+  the re-emitter's self-creation (I5), a lamp's birth costs its content;
+  nothing else creates a row (the give is a self-creation's act at the
+  contact).
+- **A weight on a message**: a body counts messages; it does not scale
+  them by its own state (I3, I4). The one weight the law had, the flux of
+  doppler-v1, is deleted with the crossing rule.
+- **A rate that reads what is not at the Node**: I4's k is the messages
+  present, never a field, a total or a history (LOCALITY-1).
+
+What the law does not decide, and says so: the third law of free
+messages is a symmetry and not a balance (I5), so a bound pair whose
+clocks lock can drift under any rule at the waiting body; the balance
+per message needs a recoil at the free release, the owner's question of
+record 132's section 7.
