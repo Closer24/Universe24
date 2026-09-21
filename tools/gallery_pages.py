@@ -945,6 +945,255 @@ else; nothing spreads sideways, and no Node holds anything between intervals.</p
     )
 
 
+def ladder_html(gather: dict[str, object]) -> str:
+    """The ladder of one record's click as a bar: the cells in order with
+    their rungs (cumulative, out of N), and the wheel value u marked."""
+    cells = gather["cells"]
+    assert isinstance(cells, list)
+    total = int(cells[-1][1])
+    parts = []
+    previous = 0
+    for cell, rung in cells:
+        name = html.escape(str(cell[0][0]))
+        width = 100.0 * (int(rung) - previous) / total
+        parts.append(
+            f'<div style="flex: 0 0 {width:.2f}%; border-right: 1px solid var(--line); padding: 2px 4px; '
+            f'overflow: hidden; white-space: nowrap; font-size: 0.8rem">{name}<br>&lt; {int(rung)}</div>'
+        )
+        previous = int(rung)
+    u = int(gather["u"])  # type: ignore[arg-type]
+    marker = 100.0 * (u + 0.5) / total
+    chosen = html.escape(str(gather["chosen"][0][0]))  # type: ignore[index]
+    return (
+        f'<div style="position: relative; display: flex; border: 1px solid var(--line); border-radius: 6px; '
+        f'background: var(--card)">{"".join(parts)}'
+        f'<div style="position: absolute; left: {marker:.2f}%; top: -6px; bottom: -6px; width: 2px; '
+        f'background: var(--accent)"></div></div>'
+        f'<p class="kind">the record {gather["record"]} completed at the interval {gather["tick"]}: '
+        f"u = {u}, the cell whose rung u falls under is {chosen}, the click lands there; the rungs are "
+        f"b_k = (2 N C_k + T) // (2 T) over the cells' cumulative weights C_k, N = {total}</p>"
+    )
+
+
+@register("clicks")
+def page_clicks(out: Path, runs: Path | None) -> Path:
+    """(2) The clicks: a plate of pixels on the far side of a narrow beam,
+    every record's one click landing on one pixel by the ladder and the
+    wheel value u; the click list growing."""
+    world = GALLERY_WORLDS / "clicks_plate.json"
+    record_dir = runner_record(world, runs)
+    record = read_json(record_dir / "run.json")
+    events = scan_events(record_dir / "events.jsonl", ["gather", "birth", "record"])
+    gathers = events["gather"]
+    births = events["birth"]
+    replay = Replay(world)
+    ticks = frame_ticks(replay.ticks)
+    frames = replay.run(ticks)
+    plane = plane_for(replay, scale=10)
+    plane.largest = largest_amounts(frames)
+    pixels = [str(d.name) for d in replay.world.detectors]
+    pixel_node = {str(d.name): tuple(int(c) for c in d.positions[0]) for d in replay.world.detectors}
+    clicks_by_pixel_total = {name: 0 for name in pixels}
+    for gather in gathers:
+        clicks_by_pixel_total[str(gather["chosen"][0][0])] += 1  # type: ignore[index]
+    largest_clicks = max(1, max(clicks_by_pixel_total.values()))
+    pointer_by_tick: dict[tuple[int, str], tuple[int, int]] = {}
+    for line in events["record"]:
+        name = line.get("detector")
+        if name is not None and "pointer" in line:
+            pointer_by_tick[(int(line["tick"]), str(name))] = tuple(line["pointer"])  # type: ignore[arg-type]
+
+    def decorate_for(tick: int) -> Callable[[ImageDraw.ImageDraw], None]:
+        counts = {name: 0 for name in pixels}
+        for gather in gathers:
+            if int(gather["tick"]) <= tick:  # type: ignore[arg-type]
+                counts[str(gather["chosen"][0][0])] += 1  # type: ignore[index]
+
+        def decorate(draw: ImageDraw.ImageDraw) -> None:
+            half = plane.scale / 2
+            for name, node in pixel_node.items():
+                cx, cy = plane.pixel(node[0], node[1])
+                level = counts[name] / largest_clicks
+                fill = (int(40 + 200 * level), int(120 + 120 * level), int(90 + 60 * level))
+                if counts[name]:
+                    draw.rectangle(
+                        [cx - half + 1, cy - half + 1, cx + half - 2, cy + half - 2], fill=fill
+                    )
+                    draw.text(
+                        (cx + half + 3, cy),
+                        str(counts[name]),
+                        fill=(230, 230, 230),
+                        font=font(9),
+                        anchor="lm",
+                    )
+
+        return decorate
+
+    images = [plane.image(frame, decorate_for(frame.tick)) for frame in frames]
+    readings = []
+    for frame in frames:
+        t = frame.tick
+        done = [g for g in gathers if int(g["tick"]) <= t]  # type: ignore[arg-type]
+        born = sum(1 for b in births if int(b["tick"]) <= t)  # type: ignore[arg-type]
+        lines = {
+            "records born (events.jsonl, birth lines)": num(born),
+            "records completed, the clicks (events.jsonl, gather lines)": num(len(done)),
+            "rows in flight (GameBoard reading)": num(int(frame.rows[0].amount.sum())),
+        }
+        if done:
+            last = done[-1]
+            lines["the last click"] = (
+                f"record {last['record']}, u = {last['u']}, at {html.escape(str(last['chosen'][0][0]))} "  # type: ignore[index]
+                f"(interval {last['tick']})"
+            )
+            counts = {}
+            for g in done:
+                name = str(g["chosen"][0][0])  # type: ignore[index]
+                counts[name] = counts.get(name, 0) + 1
+            lines["clicks per pixel so far"] = ", ".join(f"{k} {v}" for k, v in sorted(counts.items()))
+        pointers = [
+            (name, pointer_by_tick[(t, name)]) for name in pixels if (t, name) in pointer_by_tick
+        ]
+        if pointers:
+            lines["the pointer (X, Y) per pixel this interval (record lines)"] = "; ".join(
+                f"{name} ({x}, {y})" for name, (x, y) in pointers
+            )
+        readings.append(lines)
+    player = Player(
+        "clicks",
+        images,
+        ticks,
+        readings,
+        "The x-y plane, y upward, 10 pixels per Node; the rows of the beam coloured by their phase (the "
+        "record's birth phase u) and their amount; the plate's pixels outlined in green, each filled and "
+        "numbered by the clicks that landed on it so far (a detector reading, the gather lines).",
+        duration_ms=100,
+    )
+    clicks_rows = "".join(
+        f"<tr><td><code>{html.escape(name)}</code> at {pixel_node[name][:2]}</td>"
+        f'<td class="num">{num(clicks_by_pixel_total[name])}</td>'
+        f'<td class="num">{num(int(next(d for d in record["detectors"] if d["name"] == name)["families"]["light"]["clicks"]))}</td>'
+        f'<td class="num">{num(int(next(d for d in record["detectors"] if d["name"] == name)["families"]["light"]["record"]))}</td></tr>'
+        for name in pixels
+        if clicks_by_pixel_total[name]
+        or next(d for d in record["detectors"] if d["name"] == name)["families"]["light"]["clicks"]
+    )
+    click_list = "".join(
+        f'<tr><td class="num">{g["tick"]}</td><td class="num">{g["record"]}</td><td class="num">{g["u"]}</td>'
+        f"<td>{html.escape(str(g['chosen'][0][0]))} at {tuple(g['node'][0][:2])}</td>"  # type: ignore[index]
+        f'<td class="num">{g["content"]}</td><td class="num">{tuple(g["momentum"])}</td></tr>'  # type: ignore[arg-type]
+        for g in gathers
+    )
+    N = replay.world.phase_steps
+    body = f"""
+{demonstration_note(world)}
+<h2>The GameBoard</h2>
+<p>An open plane of {replay.world.shape[0]} x {
+        replay.world.shape[1]
+    } Nodes. A <b>lamp</b> of the paid family
+<code>light</code> at Node (1, 5), the measured event number 1, content {num(1 << 25)} at K = {
+        num(replay.world.K)
+    }
+(the turn 8 steps of N = {
+        N
+    } per self-creation; every unit costs 8 content, E = h f), releasing one unit per
+self-creation on five directions within 5 degrees of +x: the heading (1, 0, 0) and (24, +-1, 0), (12, +-1, 0),
+series K's narrow beam. Each self-creation births <b>one record</b> of five rows (one per direction, the
+multiplicity 5), the record's birth phase u the lamp's count of births less one, modulo N. A <b>plate</b> of
+eleven measured events of the paid family <code>apparatus</code> at x = 29, y = 0 .. 10, each declared as the
+one-Node detector <code>plate_&lt;y&gt;</code> reading <code>wave</code> with the threshold 1: the pixels. A
+paid arrival at a pixel is measured (the table the keys give): the row ends there and the record offers
+that cell. The faces are open and take nothing here: every row of the beam ends on the plate.</p>
+{
+        legend(
+            [
+                ("a row of the beam, coloured by its record's birth phase u", '<i class="wheel"></i>'),
+                ("the lamp (measured event 1)", swatch(BODY_COLOURS["light"])),
+                (
+                    "a pixel of the plate (a measured event of apparatus, a one-Node wave detector)",
+                    swatch(BODY_COLOURS["apparatus"]),
+                ),
+            ]
+        )
+    }
+<h2>Why this page</h2>
+<p>"In our system there is something that spreads, the beam, and there are clicks, nothing else." The first page
+showed the beam; this one shows the clicks: what a detector on the far side reads as records arrive, one click
+per record, the list growing interval by interval and never shrinking. The arrow of time on the GameBoard is
+this list: the flight and the collision are a bijection (the inverse interval exists), the click is the one
+one-way step, a record that clicked is gone from everywhere and the list has one more line.</p>
+<h2>The moving picture</h2>
+{player.html()}
+<p>What to see: the five rows of every record fly on their digital lines and reach the plate 28 Links away
+after 48 intervals (the flight table: 32 Links in 55 intervals on the heading), ending on five neighbouring
+pixels. The record is then complete and its one click is decided: the cells' weights are the squares of the
+pointers of what ended at each pixel (equal here, one row per cell), the rungs are the cumulative weights
+scaled to N = {
+        N
+    }, and the wheel value u, written on the record at its birth, selects the cell whose rung it
+falls under. Since u advances by one per birth, the clicks walk over the five pixels in turn, and the counts
+grow together: the Born weights, one click at a time.</p>
+<h2>The threshold and the ladder of the first record</h2>
+{ladder_html(gathers[0]) if gathers else "<p>No record completed.</p>"}
+<p>The threshold of every pixel is T = 1 (the world file's <code>threshold</code>): the smallest amount arriving
+over the set in one interval that the set responds to. The ladder above is the click's own threshold, the
+one read-out of the law: the record's weight per cell, the rungs and u, from the <code>gather</code> line of
+<code>events.jsonl</code>.</p>
+<h2>The readings</h2>
+<table>
+<tr><th>Pixel</th><th>Clicks that landed here (gather lines)</th><th>Rows that ended here (<code>clicks</code> on the detector, run.json)</th><th>The cumulative record (X^2 + Y^2, run.json)</th></tr>
+{clicks_rows}
+</table>
+<p>Every number in the table is a detector reading. The middle column counts the rows that ended at the pixel
+(each record offers all five pixels); the first column counts the records whose one click landed there. The
+records born over the run: {num(len(births))} (<code>birth</code> lines); completed: {
+        num(len(gathers))
+    }; the rest
+are in flight at the end. The books balanced at every interval: {
+        record["conserved_at_every_completed_tick"]
+    }.</p>
+<h2>The click list, the arrow of time</h2>
+<table>
+<tr><th>Interval</th><th>Record</th><th>u</th><th>Where the click landed</th><th>Content taken</th><th>Momentum **p** given (label units)</th></tr>
+{click_list}
+</table>
+<p>For comparison, the catalog's placement world <code>examples/events/catalog/lamp_mirror_screen.json</code>
+(a laser, a mirror, a wall with a slit, a screen of nineteen pixels; not an experiment) run as declared for 50
+intervals completes 52 records, of which 25 click at the wall Node (10, 13) beside the slit, 25 at (12, 13)
+and 2 at the screen pixel <code>screen_9</code>: the slit's fan offers the wall's neighbours first and with the
+largest weight, so the far screen is rarely chosen there (its run's <code>gather</code> lines).</p>
+{
+        sources(
+            [
+                ("the world", f"<code>{relative(world)}</code> (a demonstration world)"),
+                (
+                    "the run",
+                    f"<code>run.json</code> and <code>events.jsonl</code> made by <code>python -m event_universe --init {relative(world)}</code>, {record['completed_ticks']} intervals",
+                ),
+                ("the source fingerprint", fingerprint_line(record)),
+                (
+                    "the frames",
+                    "the world replayed in process through <code>NatureBeamSimulation</code>, the stores read at every interval (a GameBoard reading)",
+                ),
+                (
+                    "the law",
+                    '<a href="../../BEAM_LAW.md">the Beam Law</a>, section 5 (the detector record) and note 37 (the one click); <a href="../../HIGHLIGHTS.md">Highlights</a> 5.7 (from a reading to a bit)',
+                ),
+            ]
+        )
+    }
+"""
+    return write_page(
+        out,
+        "clicks",
+        page(
+            "The clicks",
+            "A plate on the far side of a beam clicking as records arrive: one click per record, the list growing.",
+            body,
+        ),
+    )
+
+
 @register("index")
 def page_index(out: Path, runs: Path | None) -> Path:
     entries = [

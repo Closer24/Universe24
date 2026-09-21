@@ -8511,3 +8511,8 @@ the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
 - [The beam](pages/gallery/beam.html): a lamp's rows spreading on the
   digital lines of its fan, the phase as colour, the front against the
   circle of c and the L1 bound (the demonstration world `beam_fan`).
+- [The clicks](pages/gallery/clicks.html): a plate of pixels on the far
+  side of a narrow beam, every record's one click landing on one pixel by
+  the ladder's rungs and its wheel value u, the click list growing one
+  line per record (the demonstration world `clicks_plate`; the catalog's
+  optical bench cited beside it).

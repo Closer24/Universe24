@@ -415,13 +415,14 @@ tests things on them later.
 
 ## The visual gallery's demonstration worlds
 
-The folder [gallery/](gallery/README.md) holds the two worlds of the
+The folder [gallery/](gallery/README.md) holds the three worlds of the
 visual gallery (`docs/pages/gallery/`, the model owner's request of
 2026-09-21) where no registered world shows the story, written by
 `gallery/make_worlds.py`: `beam_fan.json`, a lamp of `light` on a plane
 releasing on the 48 primitive in-plane directions with |a| + |b| <= 6
-(the beam spreading on the digital lines of its fan), and
-`collision.json`, six declared rows of one number and content meeting at
+(the beam spreading on the digital lines of its fan), `clicks_plate.json`,
+a narrow beam onto a plate of eleven pixels (every record's one click by
+the ladder and the wheel), and `collision.json`, six declared rows of one number and content meeting at
 two Nodes of free space (the collision table's permutation). They are
 demonstrations, not experiments: nothing read off them is registered or
 pinned. `tools/gallery_pages.py` writes the pages from these worlds and

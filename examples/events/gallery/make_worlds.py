@@ -1,6 +1,6 @@
 """The demonstration worlds of the visual gallery (`docs/pages/gallery/`).
 
-Two small worlds of the one engine, written for the pages of the gallery
+Three small worlds of the one engine, written for the pages of the gallery
 where no registered world shows the story (the model owner's request of
 2026-09-21 for the visualisation pages). They are demonstrations: nothing
 here is a registered experiment and no number read off them enters the
@@ -13,6 +13,14 @@ register; a page made from one says so.
   turn 8 steps of 64 per self-creation, every unit costing 8 content:
   E = h f), 60 intervals: the rows spread on the digital lines of the fan,
   the phase as the lamp's clock at the release.
+- `clicks_plate.json` (the page "The clicks"): an open plane of 31 x 11, a
+  lamp of `light` at (1, 5) releasing one unit per self-creation on five
+  directions within 5 degrees of +x (the heading and (24, +-1, 0),
+  (12, +-1, 0): a narrow beam, series K's), content 2^25 at K = 2^22, and
+  a plate at x = 29 of eleven measured events of the paid family
+  `apparatus` declared as the one-Node `wave` detectors `plate_<y>` (the
+  pixels), 110 intervals: every record's rows end on the plate and its one
+  click lands on one pixel by the ladder's rungs and its wheel value u.
 - `collision.json` (the page "The collision"): an open cube of 9 x 9 x 9
   with no measured event, six declared rows of `light` of one number and
   content: a head-on pair on the x axis meeting at (4, 4, 4), and a triple
@@ -75,6 +83,46 @@ def beam_fan() -> dict[str, object]:
     }
 
 
+def clicks_plate() -> dict[str, object]:
+    beam = [[1, 0, 0], [24, 1, 0], [24, -1, 0], [12, 1, 0], [12, -1, 0]]
+    plate_x = 29
+    return {
+        "law": "beam",
+        "model_id": "gallery-clicks-plate-demonstration-v1",
+        "shape": [31, 11, 1],
+        "boundary": {"z": "periodic"},
+        "ticks": 110,
+        "K": 1 << 22,
+        "N": 64,
+        "release": [0, 1],
+        "suspension": 0,
+        "directions": beam[1:],
+        "entity_definitions": FAMILIES,
+        "entities": [
+            {"name": "photon", "definition": "photon", "position": [0, 0, 0]},
+            {"name": "apparatus_material", "definition": "apparatus_material", "position": [0, 0, 0]},
+        ],
+        "measured": [
+            {
+                "position": [1, 5, 0],
+                "family": "light",
+                "amount": 1 << 25,
+                "phase": 0,
+                "fixed": True,
+                "lamp": {"rate": [1, 1], "directions": beam},
+            }
+        ]
+        + [
+            {"position": [plate_x, y, 0], "family": "apparatus", "amount": 1, "fixed": True}
+            for y in range(11)
+        ],
+        "detectors": [
+            {"name": f"plate_{y}", "positions": [[plate_x, y, 0]], "threshold": 1, "reading": "wave"}
+            for y in range(11)
+        ],
+    }
+
+
 def collision() -> dict[str, object]:
     def row(position: list[int], direction: list[int]) -> dict[str, object]:
         return {
@@ -118,7 +166,11 @@ def collision() -> dict[str, object]:
 
 
 def main() -> None:
-    for name, world in (("beam_fan", beam_fan()), ("collision", collision())):
+    for name, world in (
+        ("beam_fan", beam_fan()),
+        ("clicks_plate", clicks_plate()),
+        ("collision", collision()),
+    ):
         (HERE / f"{name}.json").write_text(json.dumps(world) + "\n", encoding="utf-8")
         print(name)
 
