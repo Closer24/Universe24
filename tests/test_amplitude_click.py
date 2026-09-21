@@ -29,7 +29,9 @@ down before the first run:
     of the gate set (`examples/events/gate_set.json`) without a lamp, run
     at its `cap`, gives the `state.json`, the books (`audit` of
     `run.json`) and the `events.jsonl` of the base tree before the law,
-    pinned by their sha256 (the trimming's fast pass on 2026-09-20; the
+    pinned by their sha256 in `gate_set.json`, each world's `digests`,
+    the register the test reads since 2026-09-21 (the trimming's fast
+    pass on 2026-09-20; the
     `state.json` digests re-pinned twice under the fraction-free law of
     the same day, BEAM_LAW note 41: `acc` joins the record with the
     counts' accumulators, and at stage 2 `acc.push` per column, with the
@@ -267,76 +269,15 @@ def test_the_columns_are_written_only_where_a_record_is(tmp_path: Path):
     assert all(k in ((False,) * 4, (True,) * 4) for k in keyed)
 
 
-# The gate set's worlds without a lamp at their caps: the digests (sha256)
-# of `state.json`, of the books (`audit` of `run.json` as `json.dumps`
-# writes it) and of `events.jsonl` on the base tree before the amplitude
-# law's one click (main at d768f831, after the signed drive, and hand/wu at
-# 4f94a86f, hand-v1; the fast pass,
-# `tools/run_series.py --list --fast`, 2026-09-20): the design's test 7 as
-# a pin, since the key that switched the law off is deleted. Under the
-# fraction-free law (2026-09-20, BEAM_LAW note 41) every `state.json`
-# carries the accumulators (`acc`), so every state digest is that law's
-# (the state without the key byte-identical on eight worlds); the books and
-# the events of eight worlds are the base tree's, and `j3_deuteron`'s
-# moved (its owed counts under a changing crowd at `suspension` [1,
-# 2^20]: the proton and the neutron waited 69 intervals of 700 in place of
-# 80, their steps 31 in place of 29), re-registered by its dated line.
-PINNED_DIGESTS: dict[str, tuple[int, str, str, str]] = {
-    "weak/j3_deuteron.json": (
-        700,
-        "ea32b17fefcdb2df2218804709959dd14c91a73a1073887cd08d9ffbdc6b555d",
-        "9f286fe9bb10790e0522237cf5384d5824e9ab75da4c0d81ee57fbdddca4d5d1",
-        "4638b98e16b8274a759e13634f8ec84b1566a5e519d1f26e48256689de1eda26",
-    ),
-    "bohr/r2.json": (
-        689,
-        "a48ba880411bc8971b1e43aea64a2a1bdded1e72365b77b5939ba0f193949ec5",
-        "d830bd8e0e27193fc91810374e8e55298673007da97e3d717d05044c866cd05d",
-        "35f5c6c3503e315de6885dfe4a1c5618d57069a1c43c0de11e19a8c54d4ed812",
-    ),
-    "detector/grouped_12_nodes.json": (
-        2,
-        "ab7bc500cbdb30404ec8e08083100b1943cbdbd00141bda8d875486b5d240633",
-        "975863cdb72c13719aa21397c178434501fd81de11cda2ab6037ea959e9cc9f8",
-        "4b4994530f291bb5dbe986b532ffd3c9f8e8bcd585ca986ee4369e768ff749f9",
-    ),
-    "weak/j2_ladder.json": (
-        1,
-        "5684eec9f321da7459d0bd0fcacf714dc6745baaf914abfc286368bed6ae6675",
-        "9f16ab276ee061317098eaef3abe18df5a4979b173596e750a63bf46883f3137",
-        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    ),
-    "weak/j3_deuteron_crowd.json": (
-        1,
-        "701ebdb2489763bec689b9ef79454c2a9e492999430dfea115de3b002bff5811",
-        "9a55af2c075019704c10922fd5dce8397b1d77fe63ce7ab3e570c2f8a9b6b72e",
-        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    ),
-    "nucleus/alpha_square.json": (
-        180,
-        "be034bcdfc619737a507d14977b8ef0fad61fd8717efc4ccb07ebff53aee8349",
-        "15fceb127a2f1cb60a8d618d81536e752a38ea3e8d42bb1497c999b2bc3a7eac",
-        "ea432ba27eaca89281ccbd8a86ed7b679ffa621116c18369bc2e128ec14c0f4b",
-    ),
-    "hubble/pushing_age.json": (
-        1,
-        "60ddede6051fd848405ee9312fefd862ccff3a84f89b2bcc414a8fd8234f9067",
-        "7e219a1d03c8caddc617ccf2a69b34543912c3e09646cec7ae7a8d1fc454dc71",
-        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    ),
-    "hand/wu.json": (
-        23,
-        "8a84a189f93cec359a2c65e71221a25e77c98d11003ed74dcca6f531627b1c38",
-        "4d746dbe6084c30c6cd034c175f0efb1931d9fa2aa2c608783f928d611db645e",
-        "d4d927fb55cdfa9a1330eea3818edb6275d14c1c460ea6e0d3e34a12c0f38988",
-    ),
-    "coupling/1b_m16.json": (
-        25,
-        "87c7a42691bedf4c6697d762b2ac4d4f085c21e9c650a20da34e3bfe17fe50b3",
-        "8830f84aef5dcd112c58e0aa304b174c8734b493a3ff9f09f7951098b05b0493",
-        "20aa2b23913e97ffa3aa13205a7d606962f4f4d8db313f5ebf72180c3fe9498a",
-    ),
-}
+# The digests of the worlds without a lamp at their caps are the gate set's
+# register (`examples/events/gate_set.json`, each world's `digests`: the
+# state's under the fraction-free law of 2026-09-20, the books' and the
+# events' the base tree's before the one click, `j3_deuteron`'s moved at
+# the fraction-free stage 1); since 2026-09-21 the test reads them there
+# (the trimming's part 2: a test reads a world's numbers from the register).
+def gate_entry(path: str) -> dict[str, object]:
+    document = json.loads(GATE_SET.read_text(encoding="utf-8"))
+    return next(entry for entry in document["worlds"] if entry["path"] == path)
 
 
 def gate_worlds_without_a_lamp() -> list[tuple[str, int]]:
@@ -361,11 +302,15 @@ def test_a_gate_world_without_a_lamp_reads_as_it_did_before_the_law(tmp_path: Pa
     execute_nature_beam_run(loaded.world, source, out, "test", cap)
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert "amplitude" not in record and "amplitude-v1" not in record["hypotheses"]
-    pinned_cap, state, audit, events = PINNED_DIGESTS[path]
-    assert cap == pinned_cap
-    assert hashlib.sha256((out / "state.json").read_bytes()).hexdigest() == state
-    assert hashlib.sha256(json.dumps(record["audit"]).encode("utf-8")).hexdigest() == audit
-    assert hashlib.sha256((out / "events.jsonl").read_bytes()).hexdigest() == events
+    entry = gate_entry(path)
+    digests = entry["digests"]
+    assert isinstance(digests, dict) and cap == entry["cap"]
+    assert hashlib.sha256((out / "state.json").read_bytes()).hexdigest() == digests["state_sha256"]
+    assert (
+        hashlib.sha256(json.dumps(record["audit"]).encode("utf-8")).hexdigest()
+        == digests["audit_sha256"]
+    )
+    assert hashlib.sha256((out / "events.jsonl").read_bytes()).hexdigest() == digests["events_sha256"]
 
 
 def window_bar() -> dict[str, object]:

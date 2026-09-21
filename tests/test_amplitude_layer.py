@@ -39,7 +39,7 @@ layer"), written down before the first run:
     80 sets of the reading in the layer's order with the reading's rungs;
     its chosen cell's weight and its total equal the reading's fractions
     (the total 4834019/4259840 since the exact phase at the click of
-    2026-09-21, BEAM_LAW note 42, 847181/745472 under the phase of the
+    2026-09-21, BEAM_LAW note 43, 847181/745472 under the phase of the
     whole intervals: the wall's three rows 3/5, the fans 2/5 and the cross
     terms of paths meeting at one Node; a face of 24 Nodes hit sums its
     Nodes' squares, coherent within a Node and incoherent across Nodes,
@@ -213,26 +213,29 @@ def test_the_mach_zehnder_and_elitzur_vaidman_worlds_click_as_the_design_says():
         found = clicks(gathers)
         wanted = {k: v for k, v in expected[name]["clicks"].items() if v}
         assert found == wanted, (name, found, wanted)
-        assert max(int(g["tick"]) for g in gathers) <= 76, name  # type: ignore[call-overload]
+        assert max(int(g["tick"]) for g in gathers) <= expected["gathered_by_tick"], name  # type: ignore[call-overload]
         totals = {
             Fraction(int(gather["total"][0]), int(gather["total"][1]) * UNIT)  # type: ignore[index]
             for gather in gathers
         }
-        assert len(totals) == 8 and min(totals) == Fraction(65448, 65536), name
-        assert max(totals) == Fraction(65773, 65536), name
+        assert len(totals) == expected["totals"]["distinct"], name
+        assert min(totals) == Fraction(expected["totals"]["least"]), name
+        assert max(totals) == Fraction(expected["totals"]["most"]), name
         assert all(abs(total - 1) <= MEASURED_TOTAL_BOUND for total in totals), name
     simulation = run_world(GENERATOR.mach_zehnder("mz_equal"))
     first = births(simulation)[0]
+    registered = expected["mz_equal"]["first_gather"]
     assert first["family"] == "light" and first["record"] == (1 << 32) + 1 and first["u"] == 0
-    assert first["chosen"] == [["D1", 0, "0"]]
+    assert first["chosen"] == [registered["chosen"]]
     assert first["unit"] == UNIT == 1 << 58
     weight = first["weight"]
+    offer = Fraction(expected["mz_equal"]["offers"]["D1"])
     assert isinstance(weight, list) and Fraction(*weight) == Fraction(  # type: ignore[arg-type]
-        int(first["total"][0]) * 1681,
-        int(first["total"][1]) * 1682,  # type: ignore[index]
+        int(first["total"][0]) * offer.numerator,
+        int(first["total"][1]) * offer.denominator,  # type: ignore[index]
     )
-    assert [cell[1] for cell in first["cells"]] == [64, 64]  # type: ignore[index]
-    assert [cell[0][0][0] for cell in first["cells"]] == ["D1", "D2"]  # type: ignore[index]
+    assert [cell[1] for cell in first["cells"]] == registered["rungs"]  # type: ignore[index]
+    assert [cell[0][0][0] for cell in first["cells"]] == list(expected["mz_equal"]["clicks"])  # type: ignore[index]
 
 
 def test_every_total_is_the_tables_formula():
@@ -240,15 +243,21 @@ def test_every_total_is_the_tables_formula():
     the tables' formula (the reviewer), pinned exactly for every u."""
     cosines, sines = phase_cosines(N), phase_sines(N)
     q = [cosines[p] ** 2 + sines[p] ** 2 for p in range(N)]
+    registered = EXPECTATIONS["mach_zehnder"]["mz_equal"]
+    # The offers of the register (D1 1681/1682, D2 1/1682) weight the
+    # tables' C^2 + S^2 at the two arms' phases, u + 16 and u + 32.
+    d1, d2 = Fraction(registered["offers"]["D1"]), Fraction(registered["offers"]["D2"])
     gathers = births(run_world(GENERATOR.mach_zehnder("mz_equal")))
     for gather in gathers:
         u = int(gather["u"])  # type: ignore[call-overload]
         total = Fraction(int(gather["total"][0]), int(gather["total"][1]) * UNIT)  # type: ignore[index]
-        assert total == Fraction(1681 * q[(u + 16) % N] + q[(u + 32) % N], 1682 * 65536), u
+        assert total == (d1 * q[(u + 16) % N] + d2 * q[(u + 32) % N]) / 65536, u
         assert abs(total - 1) <= MEASURED_TOTAL_BOUND
     first = gathers[0]
-    assert first["content"] == 41 and first["momentum"] == [2624, 0, 0]
-    assert first["node"] == [[4, 3, 0]]
+    gather_registered = registered["first_gather"]
+    assert first["content"] == gather_registered["content"]
+    assert first["momentum"] == gather_registered["momentum"]
+    assert first["node"] == [gather_registered["node"]]
 
 
 def test_the_same_world_twice_gives_the_same_list_and_a_moved_rung_moves_u():
@@ -257,10 +266,12 @@ def test_the_same_world_twice_gives_the_same_list_and_a_moved_rung_moves_u():
     twice = births(run_world(GENERATOR.mach_zehnder("mz_equal")))
     assert once == twice
     moved = births(run_world(GENERATOR.mach_zehnder("mz_345", splitter=GENERATOR.PYTHAGOREAN_5)))
+    registered = EXPECTATIONS["mach_zehnder"]["mz_345"]["pythagorean_5"]
     by_u = {int(g["u"]): g["chosen"][0][0] for g in moved}  # type: ignore[call-overload, index]
-    assert by_u[63] == "D2" and by_u[62] == "D1"
-    assert {int(g["u"]): g["chosen"][0][0] for g in once}[63] == "D1"  # type: ignore[call-overload, index]
-    assert [cell[1] for cell in moved[0]["cells"]] == [63, 64]  # type: ignore[index]
+    assert by_u[registered["u_to_D2"]] == "D2" and by_u[registered["u_to_D1"]] == "D1"
+    by_u_once = {int(g["u"]): g["chosen"][0][0] for g in once}  # type: ignore[call-overload, index]
+    assert by_u_once[registered["u_to_D2"]] == "D1"
+    assert [cell[1] for cell in moved[0]["cells"]] == registered["first_rungs"]  # type: ignore[index]
 
 
 def splitter_number(world: dict[str, object]) -> int:
@@ -274,7 +285,8 @@ def splitter_number(world: dict[str, object]) -> int:
 
 def test_a_split_is_not_a_click_and_takes_no_pointer_gate():
     """(c)."""
-    for name, tick_of_two in (("mz_quarter", 11), ("mz_unequal_f8", 11)):
+    for name in ("mz_quarter", "mz_unequal_f8"):
+        tick_of_two = EXPECTATIONS["mach_zehnder"][name]["two_splits_tick"]
         world = GENERATOR.mach_zehnder_worlds()[name]
         splitter = splitter_number(world)
         _, lines = observed(world)
@@ -285,12 +297,15 @@ def test_a_split_is_not_a_click_and_takes_no_pointer_gate():
             line for line in at_splitter if line["event"] == "split" and line["tick"] == tick_of_two
         ]
         assert len(splits) == 2, (name, splits)
-        assert [s["absorbed"] for s in splits] == [1, 1] and [s["born"] for s in splits] == [41, 41]
+        born = EXPECTATIONS["mach_zehnder"]["mz_equal"]["split"]["born_per_split"]
+        assert [s["absorbed"] for s in splits] == [1, 1] and [s["born"] for s in splits] == [born, born]
         records = {s["record"] for s in splits}
         assert len(records) == (1 if name == "mz_quarter" else 2), (name, records)
         if name == "mz_quarter":
             arrivals = [
-                line for line in at_splitter if line["event"] == "rerelease" and line["tick"] == 11
+                line
+                for line in at_splitter
+                if line["event"] == "rerelease" and line["tick"] == tick_of_two
             ]
             phases = sorted(row[4] for line in arrivals for row in line["rows"])  # type: ignore[union-attr]
             assert (phases[1] - phases[0]) % N == N // 2, phases
@@ -313,31 +328,33 @@ def test_the_two_slits_at_a_low_rate_against_the_reading_of_one_birth():
     # The 64th record is born at tick 65 (the exact clock's stall at tick
     # 3) and gathers at 214 (213 for a birth at tick 64 until the
     # fraction-free law of 2026-09-20).
-    assert max(int(g["tick"]) for g in gathers) == 214  # type: ignore[call-overload]
+    assert max(int(g["tick"]) for g in gathers) == reading["last_gather_tick"]  # type: ignore[call-overload]
     first = gathers[0]
-    assert first["u"] == 0 and first["born"] == 1
+    assert first["u"] == 0 and first["born"] == reading["first"]["born"]
     names = [cell[0][0][0] for cell in first["cells"]]  # type: ignore[index]
-    assert len(names) == reading["sets"] == 80
+    assert len(names) == reading["sets"]
     assert names == [name for name in simulation.layer.names if name in reading["weights"]]  # type: ignore[union-attr]
     # A click of a face lands at one of its Nodes, chosen within the cell.
     faces = [g for g in gathers if str(g["chosen"][0][0]).startswith("face:")]  # type: ignore[index]
-    assert len(faces) == 15 and all(abs(g["node"][0][1] - 60) >= 60 for g in faces)  # type: ignore[index]
+    assert len(faces) == reading["face_gathers"]
+    assert all(abs(g["node"][0][1] - 60) >= 60 for g in faces)  # type: ignore[index]
     cumulative, rungs = 0, []
     for name in names:
         cumulative += reading["clicks"].get(name, 0)
         rungs.append(cumulative)
     assert [cell[1] for cell in first["cells"]] == rungs  # type: ignore[index]
     chosen = first["chosen"][0][0]  # type: ignore[index]
-    assert chosen == "measured:223"
+    assert chosen == reading["first"]["chosen"]
     weight = Fraction(int(first["weight"][0]), int(first["weight"][1]) * UNIT)  # type: ignore[index]
     assert weight == Fraction(reading["weights"][chosen])
     total = Fraction(int(first["total"][0]), int(first["total"][1]) * UNIT)  # type: ignore[index]
     assert total == Fraction(reading["total"])
-    assert reading["clicks_by_kind"] == {"wall": 34, "screen": 15, "faces": 15}
-    assert reading["face_nodes"] == {"face:+y": 24, "face:-y": 24}
-    assert total == Fraction(4834019, 4259840)
+    assert sum(reading["clicks_by_kind"].values()) == BIRTHS
+    assert reading["clicks_by_kind"]["faces"] == reading["face_gathers"]
     assert clicks(gathers) == reading["clicks"]
-    assert first["node"] == [[7, 58, 0]] and first["content"] == 1
+    assert (
+        first["node"] == [reading["first"]["node"]] and first["content"] == reading["first"]["content"]
+    )
     distinct = {json.dumps(g["cells"]) for g in gathers}
     assert len(distinct) == 4
     assert sum(1 for g in gathers if g["cells"] == first["cells"]) == 44

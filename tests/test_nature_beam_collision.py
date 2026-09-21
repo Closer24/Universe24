@@ -48,7 +48,7 @@ import itertools
 
 import numpy as np
 
-from event_universe.core.game_board import PORT_HEADINGS
+from event_universe.core.game_board import PORT_HEADINGS, cube_symmetries
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import class_key, collision_table, slot_heading, state_code
 
@@ -86,38 +86,38 @@ def test_the_table_is_a_bijection_inside_invariant_classes():
     assert table.singles[state_code((1, 1, 0, 0, 0, 0, 0, 0))].tolist() == [0, 1, -1, -1, -1, -1, -1, -1]
 
 
-def cube_group():
-    maps = []
-    for perm in itertools.permutations(range(3)):
-        for signs in itertools.product((1, -1), repeat=3):
-            image = []
-            for port in range(6):
-                axis, forward = port >> 1, (port & 1) == 0
-                sign = (1 if forward else -1) * signs[axis]
-                image.append(2 * perm[axis] + (0 if sign > 0 else 1))
-            maps.append(tuple(image))
-    return maps
+def test_the_orbits_of_the_cube_group_and_the_named_rows():
+    """(b): the six-heading patterns under the cube's group of 48
+    (`core.game_board.cube_symmetries`), as properties in place of the
+    counted sizes (2026-09-21): every orbit's size times its stabilizer's
+    is 48 (the orbit-stabilizer theorem), and the number of orbits is
+    Burnside's count, the mean over the group of the patterns each
+    symmetry fixes; the here flag is untouched by the group, so the
+    orbits with here 1 are those with here 0 again; then the named rows."""
+    group = cube_symmetries()
 
+    def act(image: tuple[int, ...], bits: int) -> int:
+        mapped = 0
+        for port in range(6):
+            if bits >> port & 1:
+                mapped |= 1 << image[port]
+        return mapped
 
-def test_the_twenty_orbits_and_the_named_rows():
-    """(b)."""
-    group = cube_group()
-    seen: set[tuple[int, int]] = set()
-    sizes = []
-    for here in (0, 1):
-        for bits in range(64):
-            if (bits, here) in seen:
-                continue
-            orbit = set()
-            for image in group:
-                mapped = 0
-                for port in range(6):
-                    if bits >> port & 1:
-                        mapped |= 1 << image[port]
-                orbit.add((mapped, here))
-            seen |= orbit
-            sizes.append(len(orbit))
-    assert len(sizes) == 20 and sizes == [1, 6, 3, 12, 12, 3, 8, 12, 6, 1] * 2
+    orbits: list[set[int]] = []
+    seen: set[int] = set()
+    for bits in range(64):
+        if bits in seen:
+            continue
+        orbit = {act(image, bits) for image in group}
+        stabilizer = sum(1 for image in group if act(image, bits) == bits)
+        assert len(orbit) * stabilizer == len(group), bits
+        orbits.append(orbit)
+        seen |= orbit
+    fixed = sum(sum(1 for bits in range(64) if act(image, bits) == bits) for image in group)
+    assert fixed % len(group) == 0 and fixed // len(group) == len(orbits)
+    assert sum(len(orbit) for orbit in orbits) == 64
+    with_here = {(bits, here) for orbit in orbits for bits in orbit for here in (0, 1)}
+    assert len(with_here) == 2 * 64
     table = collision_table()
 
     def forward(state: tuple[int, ...]) -> tuple[int, ...]:

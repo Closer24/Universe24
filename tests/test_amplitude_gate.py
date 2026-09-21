@@ -134,6 +134,12 @@ def correlation(counts: dict[str, int]) -> int:
     return sum(v if k[-2] == k[-1] else -v for k, v in counts.items())
 
 
+def registered_rows(rows: list[list[object]]) -> list[tuple[object, ...]]:
+    """The register's rows (direction, arm, label, amount, phase,
+    multiplicity) in `rows_of`'s form."""
+    return sorted((tuple(row[0]), *row[1:]) for row in rows)  # type: ignore[misc]
+
+
 def rows_of(simulation: NatureBeamSimulation, record: int) -> list[tuple[object, ...]]:
     vectors = simulation.world.directions
     return sorted(
@@ -162,20 +168,22 @@ def test_the_hadamard_and_the_cnot_on_the_game_board():
             (line for line in lines if line.get("event") == "gate" and line["survivor"] == FIRST), None
         )
         assert simulation.tick < 40
+    # The register's lines and rows (`gate.rotate_line`, `gate.gate_line`,
+    # `gate.pair_rows`): the Hadamard's amount is C[16] = S[16] of the
+    # 128-step tables, read off the tables here and registered there.
     rotate = next(line for line in lines if line.get("event") == "rotate")
-    assert rotate["setting"] == 16 and rotate["bit"] == 0 and rotate["rows"] == 2
-    assert gate_line["kind"] == "cnot" and gate_line["arms"] == 2 and gate_line["rows"] == 4
-    assert gate_line["labels"] == [[0, 1], [3, 1]]
-    assert len(gate_line["joined"]) == 1 and gate_line["joined"][0] >> 32 == 4  # type: ignore[index]
-    c = phase_cosines(2 * N)[16]
-    assert c == 181 == phase_sines(2 * N)[16]
-    assert rows_of(simulation, FIRST) == [
-        ((0, -1, 0), 1, 0, 1, 0, 2),
-        ((0, -1, 0), 1, 3, 1, 0, 2),
-        ((0, 1, 0), 0, 0, c, 0, 65536),
-        ((0, 1, 0), 0, 3, c, 32, 65536),
-    ]
-    assert GATE["pair"] == {"00": [3036676096, 0], "11": [-3036676096, 0]}
+    assert {k: rotate[k] for k in ("setting", "bit", "rows")} == GATE["rotate_line"]
+    registered_gate = GATE["gate_line"]
+    assert gate_line["kind"] == "cnot" and gate_line["arms"] == registered_gate["arms"]
+    assert gate_line["rows"] == registered_gate["rows"]
+    assert gate_line["labels"] == registered_gate["labels"]
+    assert len(gate_line["joined"]) == 1  # type: ignore[arg-type]
+    assert gate_line["joined"][0] >> 32 == registered_gate["joined_number"]  # type: ignore[index]
+    c = phase_cosines(2 * N)[GATE["rotate_line"]["setting"]]
+    assert c == phase_sines(2 * N)[GATE["rotate_line"]["setting"]]
+    assert rows_of(simulation, FIRST) == registered_rows(GATE["pair_rows"]["rows"])
+    assert all(row[3] == c for row in GATE["pair_rows"]["rows"] if row[5] != 2)
+    assert GATE["pair"]["00"][0] == c * (1 << 24) and GATE["pair"]["11"][0] == -c * (1 << 24)
 
 
 def test_the_pair_by_the_gate_at_the_chsh_labels():
@@ -187,11 +195,10 @@ def test_the_pair_by_the_gate_at_the_chsh_labels():
         assert counts == GATE["chsh"][f"{a}_{b}"]["counts"], (a, b)
         correlations[f"{a}_{b}"] = correlation(counts)
         assert sum(v for k, v in counts.items() if k[0] == "+") == N // 2
-    assert correlations == {"0_8": 44, "0_24": -44, "16_8": 44, "16_24": 44}
+    assert correlations == {key: entry["E"] for key, entry in GATE["chsh"].items()}
     assert (
         correlations["0_8"] - correlations["0_24"] + correlations["16_8"] + correlations["16_24"]
         == GATE["chsh_S"]
-        == 176
     )
 
 
@@ -206,17 +213,12 @@ def test_cnot_twice_is_the_identity():
         gates = [line for line in lines if line.get("event") == "gate" and line["survivor"] == FIRST]
         second = gates[1] if len(gates) == 3 else None
         assert simulation.tick < 60
-    assert [g["joined"] for g in gates[1:]] == [[], []]
-    assert [g["labels"] for g in gates[1:]] == [[[0, 1], [1, 1]]] * 2
-    assert {g["node"][0] for g in gates[1:]} == {11, 8}
-    c = phase_cosines(2 * N)[16]
-    assert rows_of(simulation, FIRST) == [
-        ((0, 1, 0), 0, 0, c, 0, 65536),
-        ((0, 1, 0), 0, 1, c, 32, 65536),
-        ((0, 1, 0), 1, 0, 1, 0, 2),
-        ((0, 1, 0), 1, 1, 1, 0, 2),
-    ]
-    assert GATE["twice"] is True
+    later = GATE["twice"]["later_gates"]
+    assert [g["joined"] for g in gates[1:]] == [later["joined"]] * 2
+    assert [g["labels"] for g in gates[1:]] == [later["labels"]] * 2
+    assert {g["node"][0] for g in gates[1:]} == set(later["nodes"])
+    assert rows_of(simulation, FIRST) == registered_rows(GATE["twice"]["rows"])
+    assert GATE["twice"]["identity"] is True
     finished, _ = run(world)
     assert len(gathers_of(finished)) == N
 
@@ -230,10 +232,11 @@ def test_ghz_by_one_gate_of_three_parties():
         assert counts == expected["counts"], basis
         assert sorted({1 if k.count("-") % 2 == 0 else -1 for k in counts}) == expected["products"]
         gate_line = next(line for line in lines if line.get("event") == "gate")
-        assert gate_line["labels"] == [[0, 1], [7, 1]] and gate_line["arms"] == 3
-        assert gate_line["rows"] == 6 <= 3 * 2**3
-    assert GATE["ghz"]["xxx"]["products"] == [-1]
-    assert all(GATE["ghz"][k]["products"] == [1] for k in ("xyy", "yxy", "yyx"))
+        registered_line = GATE["ghz_gate_line"]
+        assert gate_line["labels"] == registered_line["labels"]
+        assert gate_line["arms"] == registered_line["arms"]
+        arms = registered_line["arms"]
+        assert gate_line["rows"] == registered_line["rows"] <= arms * 2**arms
 
 
 def test_the_register_ceiling_of_the_rotations():
@@ -243,8 +246,7 @@ def test_the_register_ceiling_of_the_rotations():
     click = next(
         line for line in lines if line.get("event") == "click" and line.get("detector") == "end"
     )
-    assert click["multiplicity"] == 65536**3 == 1 << 48
-    assert GATE["rotations_within_bound"] == 3
+    assert click["multiplicity"] == GATE["rotation_multiplicity"] ** GATE["rotations_within_bound"]
     with pytest.raises(
         ValueError, match=r"reaches 18446744073709551616 at measured\[4\] at \[8, 0, 0\]"
     ):
@@ -390,9 +392,9 @@ def test_the_pair_at_n_1024():
         correlations.append(e)
         assert e == expected["pairs"][f"{a}_{b}"]["E"]
         assert abs(e / n - math.cos(2 * math.pi * (a - b) / n)) <= 1 / n
-    assert correlations == [724, -724, 724, 724]
-    assert correlations[0] - correlations[1] + correlations[2] + correlations[3] == expected["S"] == 2896
-    assert PAIR_N["design_S_1024"] == 2896
+    assert correlations == [entry["E"] for entry in expected["pairs"].values()]
+    assert correlations[0] - correlations[1] + correlations[2] + correlations[3] == expected["S"]
+    assert expected["S"] == PAIR_N["design_S_1024"]
 
 
 def test_the_pair_at_n_4096():
@@ -402,9 +404,11 @@ def test_the_pair_at_n_4096():
     simulation, _ = run(GENERATOR.pair_n_worlds()[f"bell_n{n}_0_512"])
     counts = counts_of(gathers_of(simulation, n))
     assert counts == expected["pairs"]["0_512"]["counts"]
-    assert correlation(counts) == expected["pairs"]["0_512"]["E"] == 2900
-    assert expected["S"] == 11584 and 11584 / 4096 < 2 * math.sqrt(2)
-    assert [v["E"] for v in expected["pairs"].values()] == [2900, -2900, 2892, 2892]
+    assert correlation(counts) == expected["pairs"]["0_512"]["E"]
+    # Tsirelson's bound on the registered sum.
+    assert expected["S"] / n < 2 * math.sqrt(2)
+    e = [v["E"] for v in expected["pairs"].values()]
+    assert e[0] - e[1] + e[2] + e[3] == expected["S"]
 
 
 @pytest.mark.xfail(

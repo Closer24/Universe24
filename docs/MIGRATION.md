@@ -6,6 +6,131 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The readings by type and the registers' derivations, on 2026-09-21 (host only, no law change)
+
+The owner's two principles of the experiments (record 205: "a formula
+gives, a run proves"; "after the detector, name the vector to read"),
+built as documentation and register annotation; no run moved, every
+registered number unchanged.
+
+- `docs/ENGINE.md` gains the table "The detector's readings by type":
+  every quantity the record exposes, by type (scalar, vector, tensor,
+  pair) with its line or field, its unit and its kind (detector or
+  GameBoard); `docs/EXPERIMENTS.md` points to it from the two kinds of
+  readings. The coherent pointer (X, Y) was already on the `record` line;
+  nothing new is exposed.
+- Every register (`examples/events/expectations.json`, `bell/`,
+  `amplitude/`, `hubble_stars/` and its `record/` and `doppler/`,
+  `weak/`) gains a `derivations` map, one entry per key: the formula or
+  the section of `docs/DERIVATIONS_BEAM.md`, or `measured` with the
+  target. The generators (`amplitude/make_worlds.py`,
+  `hubble_stars/make_worlds.py`, `weak/make_worlds.py`) write it; the
+  amplitude generator also reproduces the register split's hand-added
+  entries (`REGISTERED_RUN_READINGS`), so the shipped file equals the
+  generator's again. The rule is in `docs/TEST_EXPECTATIONS.md` beside the
+  register rule.
+- Three tests derive and compare where a closed form exists:
+  `tests/test_nature_beam_worlds.py` (b) the Bell plus offset (the first
+  birth's tick plus the flight table's age at 8 Links),
+  `tests/test_hubble_stars_readings.py` (a) the star worlds' c (Q / T_D
+  off the flight table) and the new `tests/test_weak_readings.py` (d),
+  the register of series J2 from the five shipped worlds, the flight table
+  and `window_admits`.
+- `docs/THREE_WORLDS.md`'s software column corrected against `main`
+  (`Moments` for `Reading`, `execute_nature_beam_run` for `execute_run`,
+  `core/game_board.py` for a `GameBoard` class, the `hand` column int64,
+  the flight table for an accumulator, the `Split` row for a fan's
+  weights, the Count rows for `acc_turn` and `acc_owed`, `met` marked as
+  not on `main`, `apply_gate` and `rotate_rows` named) with the modules
+  added; the rows of the reading, the click and the record point to the
+  readings table.
+
+## The group structure named, on 2026-09-21 (host only, no law change)
+
+The architect's item 3 of the proposal on the runs (record 203; the vector
+program, record 191, "everything represented in vectors and matrices, from
+group theory"): the three group objects of the law named and typed, bit-exact
+under the gate set; BEAM_LAW note 42. No rule changed; every registered
+integer the same.
+
+- `core.game_board.cube_symmetries()`: the cube's group of 48 (the signed
+  axis permutations as images of the six Ports), with `IDENTITY_SYMMETRY`,
+  `compose_symmetries`, `inverse_symmetry` and `symmetry_hand` (+1 a
+  rotation, -1 a reflection). The collision test's local `cube_group()`
+  is deleted; it enumerated the same 48 maps.
+- `core.phase.PhaseCircle` and `phase_circle(N)`: the world's circle of N
+  steps as the cyclic group of the phase (`turn`, `difference`,
+  `opposite`, `mask`, `half`) with its unit vectors (`vector`, the tables'
+  (C, S)) and the tables themselves (`cosines`, `sines`). The engine's
+  tables carry it (`NatureBeamTables.circle`, a new field; `cosines` and
+  `sines` stay as arrays), the engine's two scalar turns read it
+  (`circle.turn` in place of `& phase_mask`, the same integers for N a
+  power of two), and the layer holds it (`Layer.circle`, with `steps`,
+  `cosines` and `sines` as before).
+- `nature_beam.CollisionTable` gains `orbit` (the class index per code)
+  and `period` (the class's size per code) and the method `act(code,
+  backward)`, the shift the engine's collision step calls; `forward`,
+  `inverse`, `singles` and `powers` are unchanged.
+- `tests/test_nature_beam_collision.py` (b) states the orbits as
+  properties (the orbit-stabilizer and Burnside counts) in place of the
+  counted sizes; `tests/test_group_structure.py` is new (the group, the
+  circle, the action). TERMINOLOGY gains the cube group, the phase circle
+  and the collision action; ARCHITECTURE's and the README's rows for
+  `core/game_board` and `core/phase` name them.
+
+## The trimming's part 2, the register split, on 2026-09-21 (host only, no law change)
+
+The Boss's decision under the owner's rule (records 169 and 184 of
+2026-09-20 and 2026-09-21; the architect's audit item 10): a test reads a
+world's numbers from the register. Every number a test pinned of a shipped
+world (a world file of `examples/events/` or one its generator writes)
+moved to the register beside the world, one source per number, and the
+test asserts equality with the value read from there; no test body holds
+a literal of a world's number. The gate set stays the replay mechanism;
+the numbers themselves are unchanged (bit-exact: no run moved).
+
+- `examples/events/gate_set.json`: each lamp-free world carries `digests`
+  (`state_sha256`, `audit_sha256`, `events_sha256` at its cap), the table
+  `PINNED_DIGESTS` of `tests/test_amplitude_click.py` (d), deleted there.
+- `examples/events/bell/expectations.json` (new, `bell-expectations-v1`):
+  the ten A2 worlds read by `tools/bell_chsh.py` under the one click (the
+  criteria, the count failed, the tick offsets, the CHSH sum, the primed
+  sum, three correlations), the literals of
+  `tests/test_nature_beam_worlds.py` (b).
+- `examples/events/expectations.json` (new,
+  `root-worlds-expectations-v1`): `two_contents`'s face records at its
+  20th interval, the literals of `tests/test_nature_beam_worlds.py` (e).
+- `examples/events/amplitude/expectations.json`: under `mach_zehnder` the
+  gathers' last tick and the totals' spread, `mz_equal`'s `birth`,
+  `split` and `first_gather`, `mz_balanced`'s `split`, `mz_345`'s
+  `pythagorean_5`, the two splits' tick of `mz_quarter` and
+  `mz_unequal_f8`; under `two_slits` the last gather's tick, the face
+  gathers and the first gather; under `pair` the `birth`, the
+  `choosers_early` records and `far_min_flight`; under `gate` the
+  `rotate_line`, the `gate_line`, the `pair_rows`, `twice` (an object now:
+  `identity`, `later_gates`, `rows`; it was `true`), the `ghz_gate_line`
+  and the `rotation_multiplicity`. The literals of
+  `tests/test_amplitude_split.py`, `test_amplitude_layer.py`,
+  `test_amplitude_pair.py` and `test_amplitude_gate.py` read there; a
+  register value restated as a literal beside its read (the CHSH sum 176,
+  the sums 88, 2896 and 11584, the correlations 724 and 2900, the total
+  847181/745472, the clicks by kind) is dropped, the read alone remaining.
+- `tests/test_amplitude_cone.py`: the register's pins (the Links, the age
+  at the click, the path phases) are derived from the two worlds and the
+  flight table and compared, the literals gone.
+- `tests/test_hubble_stars_readings.py`: the literal ranges on the
+  registered fits (0.85 .. 0.87, 0.24 .. 0.25) are the register's own
+  `q_bracket` of each run.
+- Left, with the reason: a test's own minimal world keeps its expected
+  integers in the test (the owner's rule of 2026-09-17): the two-slit
+  world `tests/test_nature_beam_worlds.py` (a) builds, the Bell choosers'
+  fixed-phase case of `tests/test_bell_choosers.py`, the K record world of
+  `tests/test_amplitude_click.py` (f) (the registered `lensing/mass_meeting`
+  altered by the test: the lamp's turns 0, every pixel reading `sum`, 300
+  intervals) and the bars of the twelve `*_readings` modules, which read
+  no shipped world. Whether those reproduce a known experiment is the
+  owner's question (the audit's item 10, Q5), untouched.
+- `tools/check.py`'s resource map names the registers' readers.
 ## The architecture audit's three items, on 2026-09-21 (host only, no law change)
 
 The architect's audit of genericity and locality (the model owner's request
@@ -44,7 +169,7 @@ pull request), bit-exact by construction: no physical function changed.
 
 The model owner's decision, record 180 of 2026-09-20's log (on record 163
 (3)); the mathematician's [TWO_SLITS.md section 8](designs/fraction_free/TWO_SLITS.md);
-[BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
+[BEAM_LAW note 44](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
 The identity `beam-v1` is kept.
 
 - Every lamp declares `wheel` [r, W] (`LampDefinition.wheel`, required, no
@@ -71,7 +196,7 @@ The identity `beam-v1` is kept.
 
 The model owner's decision, record 163 (2) of 2026-09-20's log; the
 mathematician's [TWO_SLITS.md section 2](designs/fraction_free/TWO_SLITS.md);
-[BEAM_LAW note 42](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
+[BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
 The identity `beam-v1` is kept; the pins that moved were re-registered once.
 
 - A record's row ends (a click, a `sum` re-emitter, a face, the border) at
@@ -90,7 +215,7 @@ The identity `beam-v1` is kept; the pins that moved were re-registered once.
   0.655 (`expectations.json` under `two_slits`, regenerated; the reference
   world `slits_one` now declares the frequency and the reading takes each
   row's `exact`). The design's map expected wall 34, screen 16, faces 14
-  (note 42 says why the engine differs).
+  (note 43 says why the engine differs).
 - The Mach-Zehnder worlds (L1) keep every click; the unequal arms' weights
   and totals moved. The cone worlds (L7) keep their pins; `expectations.json`
   under `cone` gains `exact`. Bell, GHZ and the gate are bit-identical.

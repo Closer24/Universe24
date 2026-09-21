@@ -106,7 +106,7 @@ from event_universe.core.integer import (
     checked_work,
     integer_root,
 )
-from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
+from event_universe.core.phase import PHASE_COSINE_SCALE, PhaseCircle, phase_circle
 from event_universe.events.amplitude import (
     AMPLITUDE_SCALE,
     LABEL_BITS,
@@ -232,7 +232,7 @@ class NatureBeam:
     # The birth phase u of the row's record (stage (vii), the K finding of
     # 2026-09-20): the record's own field beside the running phase, the
     # lamp's count of births on its birth wheel (mod N under [1, N];
-    # BEAM_LAW note 43), uniform over births whatever the lamp's turn;
+    # BEAM_LAW note 44), uniform over births whatever the lamp's turn;
     # every rule of the GameBoard that reads a record row's phase reads the
     # path phase, phase - u mod N, and the click alone reads u (the
     # ladder, on the wheel W). 0 on a row of no record.
@@ -515,7 +515,7 @@ def exact_phase(
 ) -> tuple[int, int, int]:
     """The phase of a row at the exact time of its last Link (the model
     owner's decision of 2026-09-21, record 163 (2) of the log of 2026-09-20;
-    the mathematician's TWO_SLITS.md section 2; BEAM_LAW note 42), read at
+    the mathematician's TWO_SLITS.md section 2; BEAM_LAW note 43), read at
     the click from the row's two counts: its phase per interval of age, the
     pair form n / d (`rate`, `phase_per_age`), and the flight table's count
     of Links on its direction, made = m(made_at) = (2 made_at S_1 Q + T_d)
@@ -556,7 +556,7 @@ def exact_phase(
 def birth_coordinate(entry: Measured, modulus: int) -> tuple[int, int]:
     """The coordinate u of a record born at this body and the wheel W it is
     read on (the birth wheel; the model owner's decision of 2026-09-21,
-    record 180 of the log of 2026-09-20; BEAM_LAW note 43): on a lamp, u is
+    record 180 of the log of 2026-09-20; BEAM_LAW note 44): on a lamp, u is
     the accumulator of the `wheel` row of its counts table before this
     birth advances it by the declared rate r over W (u = ordinal x r mod
     W, the ordinal from 0; the count's whole part, a full turn, is
@@ -730,13 +730,28 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
 
 @dataclass(frozen=True)
 class CollisionTable:
-    """The permutation of the 3^8 slot states: `forward[code]`, `inverse[code]`
-    and, per code, its single slots in order (`singles`, padded with -1)."""
+    """The collision as a group action (named on 2026-09-21, the vector
+    program, record 191): the cyclic group acts on the 3^8 slot states by
+    the shift `forward` (its inverse `inverse`), and the orbits of the
+    action are the classes of section 4 (a crowd mask, a number of singles
+    and their headings' sum: the invariants of every move). Per code:
+    `orbit`, the index of its class; `period`, the size of its class, the
+    least power of the shift that returns the code; `singles`, its single
+    slots in order (padded with -1). `act(code)` is one step of the
+    action."""
 
     forward: np.ndarray
     inverse: np.ndarray
     singles: np.ndarray
     powers: np.ndarray
+    orbit: np.ndarray
+    period: np.ndarray
+
+    def act(self, code: np.ndarray, backward: bool = False) -> np.ndarray:
+        """One step of the action on slot-state codes: the shift, or its
+        inverse under `backward`."""
+        result: np.ndarray = (self.inverse if backward else self.forward)[code]
+        return result
 
 
 def slot_heading(slot: int) -> tuple[int, int, int]:
@@ -770,33 +785,41 @@ def collision_table() -> CollisionTable:
     forward = np.zeros(size, dtype=np.int64)
     inverse = np.zeros(size, dtype=np.int64)
     singles = np.full((size, COLLISION_SLOTS), -1, dtype=np.int64)
-    for members in classes.values():
+    orbit = np.zeros(size, dtype=np.int64)
+    period = np.zeros(size, dtype=np.int64)
+    for index, members in enumerate(classes.values()):
         members.sort()
         count = len(members)
         for i, state in enumerate(members):
             target = members[(i + 1) % count]
             forward[state_code(state)] = state_code(target)
             inverse[state_code(target)] = state_code(state)
+            orbit[state_code(state)] = index
+            period[state_code(state)] = count
     for state in itertools.product(range(SLOT_STATES), repeat=COLLISION_SLOTS):
         code = state_code(state)
         found = [i for i, s in enumerate(state) if s == 1]
         singles[code, : len(found)] = found
     powers = SLOT_STATES ** np.arange(COLLISION_SLOTS, dtype=np.int64)
-    for array in (forward, inverse, singles, powers):
+    for array in (forward, inverse, singles, powers, orbit, period):
         array.setflags(write=False)
-    return CollisionTable(forward, inverse, singles, powers)
+    return CollisionTable(forward, inverse, singles, powers, orbit, period)
 
 
 @dataclass(frozen=True)
 class NatureBeamTables:
     """The two pure tables of a world and the circle's tables: the flight
-    table of its direction set, the collision table and the cosines and
-    sines at 1/256. The window is not a table but the one floor
-    `window_admits` of a distance against a width (since 2026-09-20; until
-    then a table over the distances of the half circle)."""
+    table of its direction set, the collision table (the group action of
+    the shift on the slot states), the phase circle (`circle`, the cyclic
+    group of N steps with its unit vectors) and its cosines and sines at
+    1/256 as arrays for the vectorized readings. The window is not a table
+    but the one floor `window_admits` of a distance against a width (since
+    2026-09-20; until then a table over the distances of the half
+    circle)."""
 
     flight: FlightTable
     collision: CollisionTable
+    circle: PhaseCircle
     cosines: np.ndarray
     sines: np.ndarray
     # The arc permutations of the direction table (the meeting, 2026-09-20;
@@ -805,13 +828,14 @@ class NatureBeamTables:
 
 
 def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
-    modulus = world.phase_steps
+    circle = phase_circle(world.phase_steps)
     flight = flight_table(world.directions)
     return NatureBeamTables(
         flight,
         collision_table(),
-        np.array(phase_cosines(modulus), dtype=np.int64),
-        np.array(phase_sines(modulus), dtype=np.int64),
+        circle,
+        np.array(circle.cosines, dtype=np.int64),
+        np.array(circle.sines, dtype=np.int64),
         arc_table(flight.labels),
     )
 
@@ -2445,7 +2469,7 @@ def nature_beam(
         )
         state = np.where(counts == 0, 0, np.where((counts == 1) & (heavy == 0), 1, 2))
         code = (state.reshape(groups, COLLISION_SLOTS) * collision.powers).sum(axis=1)
-        target = (collision.inverse if backward else collision.forward)[code]
+        target = collision.act(code, backward)
         moving = target != code
         if not moving.any():
             return
@@ -2570,7 +2594,7 @@ def nature_beam(
                     a - b for a, b in zip(ledger.transit_momentum, escaped_momentum, strict=True)
                 ]
             # The phase at the exact time of the Link the row leaves through
-            # (BEAM_LAW note 42): the row is read before this walk's advance,
+            # (BEAM_LAW note 43): the row is read before this walk's advance,
             # so its phase holds `age` intervals and its last Link is the
             # step at that age, the count m(age + 1).
             face_exact = {
@@ -3163,7 +3187,7 @@ def nature_beam(
             plan.t_age = age_t.tolist()
             plan.t_arrival = arrival[taken].tolist()
             # The phase at the exact time of the row's last Link, read once
-            # here for the click, the ends and the lines (BEAM_LAW note 42).
+            # here for the click, the ends and the lines (BEAM_LAW note 43).
             plan.t_exact = [
                 exact_phase(
                     int(ph),

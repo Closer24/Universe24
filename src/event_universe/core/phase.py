@@ -12,6 +12,7 @@ no float enters a physical module.
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from functools import lru_cache
 
 from event_universe.core.integer import checked_work
@@ -112,3 +113,49 @@ def phase_cosines(phase_steps: int) -> tuple[int, ...]:
         scaled = checked_work(cosine * PHASE_COSINE_SCALE + _FIXED // 2) // _FIXED
         entries.append(-scaled if flip else scaled)
     return tuple(entries)
+
+
+@dataclass(frozen=True)
+class PhaseCircle:
+    """The world's one circle of N steps, the cyclic group of the phase
+    (the integers modulo N: a turn adds, a difference subtracts, the
+    opposite phase is half a turn away) with its unit vectors at the scale
+    256 (`vector`: (C[phase], S[phase])). Named on 2026-09-21 (the vector
+    program, record 191); the operations are the ones every rule of the
+    Beam Law performed on the phase, now in one place."""
+
+    steps: int
+    cosines: tuple[int, ...]
+    sines: tuple[int, ...]
+
+    @property
+    def mask(self) -> int:
+        """N - 1: the mask of a phase (N a power of two)."""
+        return self.steps - 1
+
+    @property
+    def half(self) -> int:
+        """N / 2: the half turn."""
+        return self.steps // 2
+
+    def turn(self, phase: int, by: int) -> int:
+        """The phase after a turn of `by` steps (negative steps turn back)."""
+        return (phase + by) % self.steps
+
+    def difference(self, phase: int, from_phase: int) -> int:
+        """The steps from `from_phase` to `phase` around the circle, 0 .. N - 1."""
+        return (phase - from_phase) % self.steps
+
+    def opposite(self, phase: int) -> int:
+        """The phase half a turn away (the one that cancels this one)."""
+        return (phase + self.half) % self.steps
+
+    def vector(self, phase: int) -> tuple[int, int]:
+        """The unit vector of a phase at the scale 256: (cosine, sine)."""
+        return self.cosines[phase % self.steps], self.sines[phase % self.steps]
+
+
+@lru_cache(maxsize=16)
+def phase_circle(phase_steps: int) -> PhaseCircle:
+    """The circle of N steps with its tables, cached per N."""
+    return PhaseCircle(phase_steps, phase_cosines(phase_steps), phase_sines(phase_steps))

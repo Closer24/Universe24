@@ -34,7 +34,10 @@ not in reality. A comparison with nature (section A) uses detector readings
 only; a GameBoard reading describes the mechanism, checks the books or
 draws the picture. Where an entry of the past registered a GameBoard reading
 as the measurement, it says so from this date, and the detector form is
-added when the entry is re-run.
+added when the entry is re-run. Every quantity the record exposes, by type
+(scalar, vector, tensor, pair) with its line, unit and kind, is the table
+[the detector's readings by type](ENGINE.md#the-detectors-readings-by-type)
+(2026-09-21, record 205: an entry names the vector it will read from it).
 
 **The rule of every entry.** Before its run, an entry names the features it
 needs (numbers 1 to 12 below), the GameBoard, the families, the Detector marks
@@ -3724,7 +3727,7 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   reading 32/32 by coincidence); on `mz_unequal_f8` the rows of two
   records reach it together and both split.
 - **Re-read under the exact phase at the click (2026-09-21, the branch
-  `click`; [BEAM_LAW note 42](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  `click`; [BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
   Every port's clicks stand on the ten worlds (`mz_unequal_f0` D1 64,
   `mz_unequal_f8` 32 / 32, `mz_unequal_f16` D2 64 included; 68 gathers
   each); the unequal arms' weights and totals moved (eight distinct totals
@@ -3771,7 +3774,7 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   the 64 births, 32 with u = 0's (the tables' rounding by u, no rung
   moved); the reading tool's replay equals `run.json`'s `world`.
 - **Re-registered under the exact phase at the click (2026-09-21, the
-  branch `click`; [BEAM_LAW note 42](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  branch `click`; [BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
   `tests/test_amplitude_layer.py` (d)).** The reference `slits_one` declares
   the frequency and the reading takes each row's phase from the `exact` of
   its click line; the reading and the run of `slits_low` agree on every one
@@ -3929,7 +3932,7 @@ question, issue #376; the Boss's approval of 2026-09-20).**
   declare the pair form; the pair, GHZ and the gate declare no phase per
   Link. Which form nature's light is, the model does not say.
 - **Re-read under the exact phase at the click (2026-09-21, the branch
-  `click`; [BEAM_LAW note 42](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  `click`; [BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
   Both worlds keep their pins (the age 29, the path phases 51 / 8 and
   23 / 23); `cone_intervals`'s click lines carry the exact phase, 3 x 17 x
   110 = 5610 = 87 x 64 + 42 at the axis and 3 x 24 x 156 = 11232 = 87 x
@@ -3978,7 +3981,7 @@ records 160 and 163).**
 
 - **Re-registered under the birth wheel (2026-09-21, the branch `click`;
   the model owner's decision, [record 180](LOG_2026-09-20.md#180-the-wheel-as-the-generic-vector-form-the-owner-2026-09-21-about-0105z-the-owners-words-translated-the-wheel-was-also-turned-into-a-generic-vector-wasnt-it-the-bosss-yes-taken-as-the-decision-on-record-163-3-the-birth-wheel-is-one-row-of-the-counts-table-on-the-lamps-record-acc--2531-acc-mod-4096-the-translation-on-the-torus-z--4096-that-every-count-is-the-lamp-writes-the-rows-value-on-the-record-at-birth-as-u-at-the-click-the-cells-cumulative-weights-are-sums-the-rungs-2-w-c_k--t--2-t-one-declared-rounding-and-the-choice-u--b_k-the-wall-test-so-the-whole-click-is-a-multiplication-by-declared-matrices-an-addition-an-inner-product-and-a-threshold-no-step-of-its-own-the-map-record-164-showed-the-same-clicks-as-the-bit-reversed-ordinal-within-one-click-at-4096-births-physically-the-lamps-phase-at-the-moment-of-birth-at-a-rate-incommensurate-with-its-birth-rate-built-as-item-3-of-the-click-pull-request-after-the-exact-phase);
-  [BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  [BEAM_LAW note 44](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
   the run that shows the wheel).** `slits_huygens` declares the golden
   rate `wheel` [2531, 4096] and runs 4300 intervals for 4096 births under
   the exact phase at the click. Pinned before the run: as ordered, the

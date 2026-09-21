@@ -14,7 +14,7 @@ through the apparatus's Port events, the births, the splits, the ends and
 the cancels the merge reports), chooses one offer by the record's birth
 coordinate u on the ladder of the offers' weights, normalised by their
 sum, the rungs at the nearest integer on the record's wheel W (the owner's
-decision (a); the birth wheel of 2026-09-21, BEAM_LAW note 43: W the
+decision (a); the birth wheel of 2026-09-21, BEAM_LAW note 44: W the
 denominator of the lamp's declared rate [r, W], u = ordinal x r mod W,
 W = N under [1, N]):
 
@@ -88,6 +88,7 @@ from event_universe.core.phase import (
     GRAM_STORED_STEPS,
     MAX_PHASE_STEPS,
     PHASE_COSINE_SCALE,
+    phase_circle,
     phase_cosines,
     phase_gram,
     phase_sines,
@@ -405,9 +406,11 @@ class Layer:
         self.set_index = {key[1]: index for index, key in enumerate(keys) if key[0] == "set"}
         self.face_index = {key[1]: index for index, key in enumerate(keys) if key[0] == "face"}
         self.border_index = next((index for index, key in enumerate(keys) if key[0] == "border"), -1)
-        self.steps = phase_steps
-        self.cosines = phase_cosines(phase_steps)
-        self.sines = phase_sines(phase_steps)
+        # The phase circle (the cyclic group of N steps) with its tables.
+        self.circle = phase_circle(phase_steps)
+        self.steps = self.circle.steps
+        self.cosines = self.circle.cosines
+        self.sines = self.circle.sines
         # The Gram matrix G = E^T E of the tables, the one-arm click's
         # declared matrix, built once per N at load (note 37 (xii)); None
         # beyond GRAM_STORED_STEPS, where `gram_entry` forms an entry.

@@ -1,0 +1,28 @@
+THE CLICK WITHOUT AMPLITUDES: f^T G f against (E f)^2, integer by integer
+
+1. THE IDENTITY (E f)_x^2 + (E f)_y^2 = f^T G f, G = E^T E
+  200 random integer vectors of Z^64: identical True
+  G symmetric: True; rank 2 (E has two rows); diagonal values [65448, 65501, 65522, 65533, 65536, 65650, 65717, 65773] (256^2 = 65536)
+  deviation from 65536 cos(2 pi (j - k) / N): at most 237; entries not circulant (G[j+1][k+1] != G[j][k]): 3696 of 4096
+  G kills every antipodal pair e_p + e_(p+32) exactly (C[p+32] = -C[p], S[p+32] = -S[p]): True
+  rotation invariance broken by the rounding: e_p^T G e_p differs from 65536 at 60 of 64 phases (the eight values over the births)
+  E is not a ring homomorphism on the rounded tables: E(e_1)^2 = (64400, 12750), 256 E(e_2) = (64256, 12800)
+
+2. mz_equal (L1): D1 = 41 rows in phase at u + 16, D2 = 1 at u + 32, multiplicity 1682
+  f^T G f == (E f)^2 at every u: True; clicks D1 64, D2 0 (registered 64, 0)
+  the offers over the total: (Fraction(1681, 1682), Fraction(1, 1682)) .. (Fraction(1681, 1682), Fraction(1, 1682)) (1 distinct values; 1681/1682 and 1/1682 registered as the design's integers, exact where C^2 + S^2 = 65536)
+
+3. slits_low (L2): the 80 sets' cells via f^T G f against the pointers, and the 64 clicks
+  126 sets; f^T G f == (E f)^2 on every (set, Node, u): True
+  clicks by the Gram form: wall (11, 12, 11), screen {11: 1, 29: 1, 36: 1, 43: 1, 50: 1, 56: 1, 59: 1, 60: 1, 61: 2, 70: 1, 77: 1, 82: 1, 90: 1, 107: 1}, faces (8, 7)
+  registered: wall (11, 12, 11), screen {11: 1, 29: 1, 36: 1, 43: 1, 50: 1, 56: 1, 59: 1, 60: 1, 61: 2, 70: 1, 77: 1, 82: 1, 90: 1, 107: 1}, faces (8, 7); reproduced: True
+
+4. THE PAIR (L3): the cells (c_A, c_B) as built (cmul on the evaluated residuals), as one bilinear form on f_A (x) f_B, and by the ring convolution
+  settings (0, 8): built [27, 5, 5, 27] E x 64 = 44; ring convolution [27, 5, 5, 27] E x 64 = 44; the weights bit-identical at every u: False; registered (27, 5, 5, 27), E 44
+  settings (0, 24): built [5, 27, 27, 5] E x 64 = -44; ring convolution [5, 27, 27, 5] E x 64 = -44; the weights bit-identical at every u: False; registered (5, 27, 27, 5), E -44
+  settings (16, 8): built [27, 5, 5, 27] E x 64 = 44; ring convolution [27, 5, 5, 27] E x 64 = 44; the weights bit-identical at every u: False; registered (27, 5, 5, 27), E 44
+  settings (16, 24): built [27, 5, 5, 27] E x 64 = 44; ring convolution [27, 5, 5, 27] E x 64 = 44; the weights bit-identical at every u: False; registered (27, 5, 5, 27), E 44
+  S x 64: built 176, ring 176, registered 176
+  the tensor form F^T G2 F (G2 of size N^2 x N^2, rank 2) equals the built weight on the four cells at u = 5, settings (16, 8): True
+
+5. THE COST per cell of k rows at one Node: the pointer 2k products and 2 squares; f^T G f k^2 products on the sparse f (N^2 = 4096 dense); the tensor form N^arms (4096 at two arms, 262144 at three)

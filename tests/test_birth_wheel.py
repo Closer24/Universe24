@@ -1,7 +1,7 @@
 """The birth wheel at a declared rate (2026-09-21; the model owner's decision,
 record 180 of docs/LOG_2026-09-20.md on record 163 (3); the mathematician's
 docs/designs/fraction_free/TWO_SLITS.md section 8 with `wheel_map.py`;
-BEAM_LAW note 43): the wheel is one `Count` row of the lamp's counts table,
+BEAM_LAW note 44): the wheel is one `Count` row of the lamp's counts table,
 declared on the lamp as `wheel` [r, W]; u = ordinal x r mod W is written on
 the record at birth (the accumulator before the birth advances it); the
 rungs at the click are (2 W C_k + T) // (2 T) and the cell [u < b_k]. The

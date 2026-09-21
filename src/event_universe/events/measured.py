@@ -328,7 +328,7 @@ def counts_table(
     the turn, the owed count, the release per family (its rate 0 on a paid
     family: it releases nothing freely), the lamp's rate where the body is
     a lamp and its birth wheel (`wheel`, the rate [r, W] of the record's
-    coordinate u on the ladder, BEAM_LAW note 43; no cap), the drive per
+    coordinate u on the ladder, BEAM_LAW note 44; no cap), the drive per
     axis (the step's divisor handed to the loop, the cap 1, idle at a
     momentum of 0), the push per column and axis over Lambda_c^2, and,
     under `doppler`, the flow per direction of the world's table and axis
@@ -462,7 +462,7 @@ class Measured:
     # and `run.json` carry the accumulators under `acc` by name, beside
     # `drive`; a declared accumulator is refused with the key. Every one
     # starts at 0 with the age. Since 2026-09-21 a lamp's table holds its
-    # birth wheel too, `wheel` (BEAM_LAW note 43): the row at the rate
+    # birth wheel too, `wheel` (BEAM_LAW note 44): the row at the rate
     # [r, W] the lamp declares, advanced at every birth of a record, its
     # accumulator before the advance the record's coordinate u.
     counts: CountTable = field(default_factory=lambda: CountTable([]))
@@ -670,7 +670,7 @@ class Measured:
         `push` per column by its name (the three axes' remainders), under
         `doppler` `flow` per direction of the world's table (aligned with
         the record's `directions`) and axis, and on a lamp `wheel`, its
-        birth wheel's accumulator (note 43); what `state.json` and
+        birth wheel's accumulator (note 44); what `state.json` and
         `run.json` carry under `acc`, beside `drive`; a resumed run
         continues from them."""
         found: dict[str, object] = {

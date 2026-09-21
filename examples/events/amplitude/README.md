@@ -76,9 +76,17 @@ the rows toward D2 cancel entirely. **What the world reads** (DETECTOR):
 the clicks per port over the 64 births in the table above, the ladder at
 each record's completion normalised by the sum of its offers with the
 rungs at the nearest integer, `b_k = (2 N C_k + Total) // (2 Total)`
-(`expectations.json` under `mach_zehnder`). The runs and their readings
+(`expectations.json` under `mach_zehnder`). Since 2026-09-21 (the
+trimming's part 2: a test holds no literal of a world's number) the same
+file registers what the tests read of the GameBoard and of the layer: the
+birth's and the split's rows with the cancels, the first gather, the last
+tick of the gathers and the totals' spread under `mach_zehnder`; the first
+gather and the last tick under `two_slits`; the pair's birth, the
+choosers' early records and the far worlds' least flight under `pair`;
+the rotate and gate lines, the rows after the gates and the rotation's
+multiplicity under `gate`. The runs and their readings
 are in the register's L1 entry. **Under the exact phase at the click
-(2026-09-21, [BEAM_LAW note 42](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):**
+(2026-09-21, [BEAM_LAW note 43](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):**
 every port's clicks in the table stand (the unequal arms 64 / 0, 32 / 32
 and 0 / 64 included); the unequal arms' records read their two paths at
 the exact time of their last Links, so their weights and totals moved
@@ -108,7 +116,7 @@ set: a face is one cell of the sum of its Nodes' squares), the ladder's
 clicks over the 64 births, the shares, the pixels and the correlations
 (the register's L2 entry has the numbers and the run). **Under the exact
 phase at the click (2026-09-21,
-[BEAM_LAW note 42](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):**
+[BEAM_LAW note 43](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):**
 the reference declares the frequency and the reading takes each row's
 phase from the `exact` of its click line; the reading and the run agree on
 every one of the 80 sets: wall 34 (11, 12, 11), screen 15 on fourteen
@@ -167,11 +175,11 @@ weights and not in the clicks: TWO_SLITS.md section 7, the page
 <https://claude.ai/artifact/6pyy8C62muHshZ7iMDCUx9>.
 
 **Re-registered under the birth wheel (2026-09-21; the model owner's
-decision, record 180; [BEAM_LAW note 43](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+decision, record 180; [BEAM_LAW note 44](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 the run that shows the wheel).** The world declares the golden rate
 `wheel` [2531, 4096] (u = ordinal x 2531 mod 4096, the rungs on 4096;
 every other registered lamp [1, N]) and runs 4300 intervals for 4096
-births, under the exact phase at the click (note 42). **Pinned before the
+births, under the exact phase at the click (note 43). **Pinned before the
 run:** as ordered, the map's section 8 at 4096 births (the screen's fan of
 121 directions with the wheel and the exact phase): the bright pixels
 about 28 to 29 clicks, the dark 0 to 3, the Pearson of the counts with the
@@ -271,7 +279,7 @@ the age 29; the path phase at the click is 51 and 8 under the integer form
 (`expectations.json` under `cone`; the register's L7 entry). The question
 of issue #376 (the paper session): the cone is Euclidean by the flight
 table; the phase's metric is the declared form's. Under the exact phase at
-the click (2026-09-21, BEAM_LAW note 42) the pair form's click lines carry
+the click (2026-09-21, BEAM_LAW note 43) the pair form's click lines carry
 `exact` and `remainder`: 3 x 17 x 110 = 5610 = 87 x 64 + 42 at the axis and
 3 x 24 x 156 = 11232 = 87 x 128 + 96 at the diagonal, the whole part 87 =
 23 mod 64 at both as the walk's 3 x 29, the remainders 42 / 64 and 96 / 128

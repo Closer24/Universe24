@@ -1,6 +1,6 @@
 """The exact phase at the click (2026-09-21; the model owner's decision,
 record 163 (2) of docs/LOG_2026-09-20.md; the mathematician's
-docs/designs/fraction_free/TWO_SLITS.md section 2; BEAM_LAW note 42): a
+docs/designs/fraction_free/TWO_SLITS.md section 2; BEAM_LAW note 43): a
 row's phase is read at its click at the exact time of its last Link,
 phi = (n / d) x made x T_d / (S_1 Q) from the row's two counts (the phase
 per interval of age, the pair form, and the flight table's count of Links),

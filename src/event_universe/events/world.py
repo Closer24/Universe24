@@ -149,7 +149,7 @@ the model owner, 2026-09-19):
   component; an entry equal to the default is accepted and changes nothing)
   and, for a measured event of a paid family, its `lamp` (`wheel` `[r, W]`, the
   birth wheel's rate, required: u = ordinal x r mod W the record's coordinate on
-  the ladder, [1, N] the count of births mod N, BEAM_LAW note 43; `rate` `[n, d]` units
+  the ladder, [1, N] the count of births mod N, BEAM_LAW note 44; `rate` `[n, d]` units
   per self-creation per direction, `directions` the directions it releases
   on, the six headings by default, and optionally its `phase_window`); and,
   since 2026-09-20 (the weak force, `weak-v1`: the model owner's "go on
@@ -808,7 +808,7 @@ class LampDefinition:
 
     rate: tuple[int, int]
     # The birth wheel (`wheel`, [r, W]; the model owner's decision of
-    # 2026-09-21, record 180 of the log of 2026-09-20; BEAM_LAW note 43):
+    # 2026-09-21, record 180 of the log of 2026-09-20; BEAM_LAW note 44):
     # the rate of one row of the lamp's counts table, advanced by r over W
     # at every birth, whose accumulator before the advance is the record's
     # coordinate u on the ladder, u = ordinal x r mod W; the rungs of the

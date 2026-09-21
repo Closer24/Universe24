@@ -16,7 +16,7 @@ law: the cone"), written down before the run:
     both under the pair form (3 x 29 mod 64);
 (c) one gather per record, one cell each, as many at each counter; the
     expectation file's pins equal the flight formula's;
-(d) the exact phase at the click (2026-09-21, BEAM_LAW note 42): under the
+(d) the exact phase at the click (2026-09-21, BEAM_LAW note 43): under the
     pair form the click line's `exact` less u is the whole part of
     3 x made x T_d over S_1 Q modulo N with its `remainder` over S_1 Q,
     3 x 17 x 110 = 5610 = 87 x 64 + 42 at the axis (23, [42, 64]) and
@@ -31,9 +31,12 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
+from event_universe.events.nature_beam import nature_beam_tables
+from event_universe.events.world import LABEL_SCALE
 
 ROOT = Path(__file__).resolve().parents[1]
 WORLDS = ROOT / "examples" / "events" / "amplitude"
@@ -83,13 +86,65 @@ def test_the_age_and_the_path_phase_at_the_click(name: str, expectation: dict) -
 
 
 def test_the_pins_are_the_flight_formula(expectation: dict) -> None:
-    assert expectation["same_age"] is True
-    assert expectation["age_at_click"] == {"axis": 29, "diagonal": 29}
-    assert expectation["links"] == {"axis": 17, "diagonal": 24}
-    assert expectation["cone_links"]["path_phase"] == {"axis": 51, "diagonal": 8}
-    assert expectation["cone_intervals"]["path_phase"] == {"axis": 23, "diagonal": 23}
-    assert expectation["exact"]["cone_intervals"] == {  # (d)
-        "path_phase": {"axis": 23, "diagonal": 23},
-        "remainder": {"axis": [42, 64], "diagonal": [96, 128]},
+    """The register's numbers derived from the worlds and the flight table
+    (since 2026-09-21 no literal of a world's number here): per detector
+    the Manhattan Links from its lamp, the first age at which the lamp's
+    direction has walked them (the flight table), one age for both; the
+    path phase (phase per Link x Links) mod N under the integer form and
+    (phase per interval x age) mod N under the pair form."""
+    worlds = {
+        name: json.loads((WORLDS / f"{name}.json").read_text(encoding="utf-8"))
+        for name in ("cone_links", "cone_intervals")
     }
-    assert expectation["exact"]["cone_links"]["path_phase"] == {"axis": 51, "diagonal": 8}
+    parsed = parse_nature_beam_world(worlds["cone_links"])
+    flight = nature_beam_tables(parsed).flight
+    world = worlds["cone_links"]
+    lamps = [event for event in world["measured"] if "lamp" in event]
+    detectors = {detector["name"]: detector["positions"][0] for detector in world["detectors"]}
+    links: dict[str, int] = {}
+    ages: dict[str, int] = {}
+    headings: dict[str, int] = {}
+    for name, position in detectors.items():
+        # The lamp whose one direction's line reaches the detector: the
+        # offset is a positive multiple of the direction.
+        for lamp in lamps:
+            direction = lamp["lamp"]["directions"][0]
+            offset = [position[axis] - lamp["position"][axis] for axis in range(3)]
+            axis = next(a for a in range(3) if direction[a])
+            multiple = offset[axis] // direction[axis]
+            if multiple >= 1 and offset == [multiple * c for c in direction]:
+                break
+        else:
+            raise AssertionError(name)
+        links[name] = sum(abs(c) for c in offset)
+        heading = parsed.directions.index(tuple(direction))
+        headings[name] = heading
+        candidates = np.arange(1, 200, dtype=np.int64)
+        walked = flight.manhattan_steps(np.full(candidates.shape, heading, dtype=np.int64), candidates)
+        ages[name] = int(candidates[walked >= links[name]][0])
+    assert expectation["links"] == links
+    assert expectation["age_at_click"] == ages
+    assert expectation["same_age"] is (len(set(ages.values())) == 1)
+    per_link = worlds["cone_links"]["families"][0]["phase_per_link"]
+    assert expectation["cone_links"]["path_phase"] == {
+        name: (per_link * links[name]) % N for name in detectors
+    }
+    numerator, denominator = worlds["cone_intervals"]["families"][0]["phase_per_link"]
+    assert expectation["cone_intervals"]["path_phase"] == {
+        name: (ages[name] * numerator // denominator) % N for name in detectors
+    }
+    # (d) The exact phase at the click (BEAM_LAW note 44): under the pair
+    # form the whole part and the remainder of n x Links x T_d over
+    # d x S_1 x Q (the flight table's resolution and Manhattan length, the
+    # label scale Q), the whole part mod N; the integer form's `exact` the
+    # path phase itself with the remainder 0 over 1.
+    exact = expectation["exact"]
+    assert exact["cone_links"]["path_phase"] == expectation["cone_links"]["path_phase"]
+    assert exact["cone_links"]["remainder"] == {name: [0, 1] for name in detectors}
+    for name in detectors:
+        heading = headings[name]
+        s1 = int(flight.manhattan[heading])
+        resolution = int(flight.resolution[heading])
+        whole, rest = divmod(numerator * links[name] * resolution, denominator * s1 * LABEL_SCALE)
+        assert exact["cone_intervals"]["path_phase"][name] == whole % N
+        assert exact["cone_intervals"]["remainder"][name] == [rest, s1 * LABEL_SCALE]
