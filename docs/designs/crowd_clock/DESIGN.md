@@ -1,4 +1,4 @@
-# Series P, a lamp inside a crowd: the design, with the expectation pinned before any run
+# Series U, a lamp inside a crowd: the design, with the expectation pinned before any run
 
 The G2 experimenter, 2026-09-21, on the model owner's word after the
 two-stars run ([series O](../two_stars/DESIGN.md)). The owner (in
@@ -255,7 +255,7 @@ the oblique directions' crossing Nodes, as the bracket allowed.
    ((1 + k) c)) = 1 + k + v / c whether or not the crowd keeps pace. Series
    Q decides between the two forms with a comoving crowd (2.2147 read for
    the sum's 2.200 against the product's 2.400): the sum. The excess of
-   0.004 to 0.007 over the sum here is series Q's too (the moving lamp's
+   0.004 to 0.007 over the sum here is series V's too (the moving lamp's
    slightly higher k).
 4. **A slowed lamp cannot travel with an unslowed crowd.** It moves at
    v / (1 + k) (the step drive counts Links only at a self-creation), falls
@@ -266,7 +266,7 @@ the oblique directions' crossing Nodes, as the bracket allowed.
    moves at v / (1 + k), and the detector reads
    1 + z = (1 + k)(1 + v / ((1 + k) c)) = 1 + k + v / c, the two terms
    adding, not multiplying. The same holds for the lamp left behind: its
-   own speed is v / (1 + k) too (item 3). Series Q runs the comoving case.
+   own speed is v / (1 + k) too (item 3). Series V runs the comoving case.
 5. **The first run's lesson.** A lamp's own spending reads as a k of the
    order of births / K; a clock experiment needs a reservoir far beyond the
    run's births, or a lamp of the fraction-free kind whose wheel does not

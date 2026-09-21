@@ -1,7 +1,7 @@
 # The clock's word: the presence or the age moment (the mathematician, read-only, 2026-09-21)
 
 The Boss's order of 2026-09-21 (about 12:08Z), relaying the G2 session's
-proposal after series P and Q: the law's clock term as built, the rate
+proposal after series U and V: the law's clock term as built, the rate
 `1 / (1 + k)` with k the presence (a scalar sum that falls as `M / r^2`),
 fails the FORM of nature's clocks (the Earth's ground-to-orbit ratio 0.058
 where the potential gives 0.24; GPS, Pound and Rebka, the eccentric Galileo
@@ -32,7 +32,7 @@ one import; no run). Nothing here is registered or decided.
   ([DERIVATIONS_BEAM 5.2](../../DERIVATIONS_BEAM.md#52-the-clock-the-gravitational-redshift),
   reached at first order). GameBoard readings of probes, not admissible in
   NATURE (record 163 (5)).
-- **Pinned under the presence.** Series P ([a lamp inside a crowd](../crowd_clock/DESIGN.md))
+- **Pinned under the presence.** Series U ([a lamp inside a crowd](../crowd_clock/DESIGN.md))
   and Q ([a cluster of crowds](../cluster_clock/DESIGN.md)): `k = 4 F / 2^16`
   at the lamp's Node, F the crowd's release per source per interval, the
   detector's `1 + z = 1 + k` (DETECTOR); G2's `gravity_scalar` on main.
@@ -59,7 +59,7 @@ becomes the `age` world's at [1, 1]); G2's `coasting_scalar`,
 `gravity_scalar`, `double_scalar` (the branch's second run read `gravity_age`
 at q = +0.461 against `gravity_scalar`'s +0.749; the first registration on
 main read +1.19 against -0.22: the sign of the move is not stable between
-runs); series P's eight worlds and Q's two (k = 22 F / 2^16 in place of
+runs); series U's eight worlds and V's two (k = 22 F / 2^16 in place of
 4 F / 2^16 at 3 Links, section 6); the catalog's neutron star (five
 presence probes); the bound clock of record 123. A name is what lets those
 readings be re-registered against a stated hypothesis and not silently.
@@ -130,12 +130,12 @@ pair sets the scale, the word sets the form.
 
 ## 6. The pin of the two-crowd test, before any run
 
-**The worlds** (series P's generator with the sources' distance a
+**The worlds** (series U's generator with the sources' distance a
 parameter; the bar's cross-section 15 x 15 for the sources at 6 Links, the
 lamp at (x, 4, 4)): the lamp `s_px1` at rest, two `mass` sources at 3 or
 at 6 Links on +y and +z, each releasing F = 4915 units per interval on
-series P's fan of nine toward the lamp's line, `suspension` [1, 2^16], the
-detector at x = 110 measuring `s_px1` with `reads: "age"` as in series P;
+series U's fan of nine toward the lamp's line, `suspension` [1, 2^16], the
+detector at x = 110 measuring `s_px1` with `reads: "age"` as in series U;
 four worlds: the lamp's entry for `mass` `pass` (the presence word) or
 `{"rule": "pass", "reads": "age"}` (the age word), at 3 and at 6 Links.
 The same F at both distances is the same push: on the lattice only the two
@@ -147,7 +147,7 @@ and 11).
 
 | World | Reading (DETECTOR: the lamp's light at x = 110, `1 + z` = the birth rate over the click rate in the window) | Expected | Refutes the read if |
 | --- | --- | --- | --- |
-| the presence word, 3 Links | `1 + z` | 1.300 (k = 4 F / 2^16 = 0.300; series P's `still_3` reading) | outside 1.30 +- 0.02 |
+| the presence word, 3 Links | `1 + z` | 1.300 (k = 4 F / 2^16 = 0.300; series U's `still_3` reading) | outside 1.30 +- 0.02 |
 | the presence word, 6 Links | `1 + z` | 1.300, the same: the presence clock cannot tell the two distances apart at one F | the two worlds differ by more than the grain (0.02) |
 | the age word, 3 Links | `1 + z` | 2.650 (k = 22 F / 2^16 = 1.650) | outside 2.65 +- 0.05 |
 | the age word, 6 Links | `1 + z` | 4.150 (k = 42 F / 2^16 = 3.150); the ratio of the two k 1.909 (nature's potential at the same push: 2.000; the lattice's dwelling ages 5, 6 and 10, 11) | the ratio outside 1.91 +- 0.05 |
@@ -178,7 +178,7 @@ where the presence word fails two of the three readings that decide the
 form. It is a rule change under its own identity because registered
 readings move with it. The order of work I recommend: the four worlds of
 section 6 first, under beam-v1 as declared and with no change under `src/`
-(a run of series P's size); then the owner's word; if the word is the age
+(a run of series U's size); then the owner's word; if the word is the age
 moment, `clock-age-v1` as one default in `count_component`, the sentence
 of step 5, ENGINE.md, the catalog's clock row and the readings of section
 2 re-registered with the identity on their lines. The choice is the owner's.
@@ -188,7 +188,7 @@ of step 5, ENGINE.md, the catalog's clock row and the readings of section
 [BEAM_LAW section 3](../../BEAM_LAW.md#3-the-nodes-interval-nature_beam)
 (step 5), note 25 and note 41;
 [DERIVATIONS_BEAM section 5](../../DERIVATIONS_BEAM.md#5-general-relativity-the-equation-of-the-delay-field);
-[series E](../../../examples/events/redshift/README.md); [series P](../crowd_clock/DESIGN.md);
-[series Q](../cluster_clock/DESIGN.md); [optical-v1](../gr_rows/DESIGN.md);
+[series E](../../../examples/events/redshift/README.md); [series U](../crowd_clock/DESIGN.md);
+[series V](../cluster_clock/DESIGN.md); [optical-v1](../gr_rows/DESIGN.md);
 [NATURE](../../NATURE.md) rows 3, 4a, 4b and 11a;
 [the three tests](../../../skills/workflow.md#the-three-tests-of-every-rule-generic-vector-local-the-model-owner-2026-09-21-record-202).

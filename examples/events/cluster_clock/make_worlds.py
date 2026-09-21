@@ -1,19 +1,19 @@
-"""Write the two worlds of series Q, a cluster of crowds read by one
+"""Write the two worlds of series V, a cluster of crowds read by one
 detector, at rest and moving as one, and the expectations before the runs
 (`expectations.json`).
 
-The model owner, 2026-09-21 (in conversation, translated), after series P
+The model owner, 2026-09-21 (in conversation, translated), after series U
 (a lamp inside a crowd, docs/designs/crowd_clock/DESIGN.md): "so is it
 possible that this is the matter with galaxy clusters that look as if at a
 constant speed when they should have flown apart?", and then "start the
 additional test you proposed". The test: five members of a "cluster", each
 a lamp inside its own crowd of a different density (k = 0, 0.1, 0.3, 0.6,
-1 by the pinned k = 4 F / 2^16 of series P), all at rest before one fixed
+1 by the pinned k = 4 F / 2^16 of series U), all at rest before one fixed
 detector. The detector reads a spread of 1 + z = 1 + k_i with nothing
 moving: what a reader would call a velocity dispersion. Then the same five
 members thrown together at 0.2 c away from the detector, each crowd's
 sources thrown at v / (1 + k_i) so that they keep pace with their lamp,
-which waits (series P's finding: a slowed lamp moves at v / (1 + k)): the
+which waits (series U's finding: a slowed lamp moves at v / (1 + k)): the
 emulation of a crowd slowed alike. The law then reads 1 + z_i =
 (1 + k_i)(1 + v / ((1 + k_i) c)) = 1 + k_i + v / c, the two terms adding,
 against the product (1 + k_i)(1 + v / c) of a lamp behind an unslowed
@@ -23,7 +23,7 @@ The world: a bar of 201 x 9 x 9 Nodes (open), the detector at x = 3
 (`detector`, fixed, `reads: "age"` of `s_px1`), five lamps of `s_px1` at
 x = 40, 60, 80, 100, 120 shining -x to it (2^20 units, one unit per
 self-creation, the wheel [1, 64]), each with two `mass` sources three
-Links up +y and +z sending series P's fan of nine directions across its
+Links up +y and +z sending series U's fan of nine directions across its
 line at F_i units per interval (the member of k = 0 has none). Every lamp
 lets the crowd's rows and the other lamps' light pass; the sources let the
 light pass. `suspension` [1, 2^16], `release` [1, 2^16], `width` 2^20,
@@ -45,7 +45,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 
 def _crowd_clock():
-    """Series P's generator, the one copy of the fan, the speeds and the
+    """Series U's generator, the one copy of the fan, the speeds and the
     pinned k."""
     path = HERE.parent / "crowd_clock" / "make_worlds.py"
     spec = importlib.util.spec_from_file_location("crowd_clock_make_worlds", path)

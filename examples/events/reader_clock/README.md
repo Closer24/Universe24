@@ -1,12 +1,12 @@
 # Series S: a reader inside a crowd
 
 The model owner's word (2026-09-21, in conversation): "start", on the
-experimenter's proposal, after series P and Q, of a detector that sits
+experimenter's proposal, after series U and Q, of a detector that sits
 inside a crowd itself, as Earth sits inside the Milky Way. The design with
 the expectation pinned before any run is
 [docs/designs/reader_clock/DESIGN.md](../../../docs/designs/reader_clock/DESIGN.md);
 this folder holds the five worlds it declares, written by `make_worlds.py`
-(which imports series P's generator, `../crowd_clock/make_worlds.py`), and
+(which imports series U's generator, `../crowd_clock/make_worlds.py`), and
 `expectations.json`. Nothing is registered.
 
 ## The worlds
@@ -14,7 +14,7 @@ this folder holds the five worlds it declares, written by `make_worlds.py`
 A reader (`s_px1`, fixed at x = 10, measuring `s_px1` with `reads: "age"`,
 with a lamp of its own on -x so that its births are its own clock) and a
 source (`s_px1` at x = 70, a lamp shining -x to the reader), each with or
-without series P's crowd (two `mass` sources, the fan of nine directions,
+without series U's crowd (two `mass` sources, the fan of nine directions,
 k = 4 F / 2^16), on a bar of 121 x 9 x 9.
 
 | World | k_r | k_s | the source | pinned 1 + z in the reader's clock | in the lattice's |

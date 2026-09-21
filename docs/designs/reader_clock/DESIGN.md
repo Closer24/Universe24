@@ -1,21 +1,21 @@
 # Series S, a reader inside a crowd: the design, with the expectation pinned before any run
 
 The G2 experimenter, 2026-09-21, on the model owner's word ("start", after
-series P and Q, on the experimenter's proposal of a detector that sits
+series U and Q, on the experimenter's proposal of a detector that sits
 inside a crowd itself). Sections 1 to 6 are written before any run; section
 7 after. Nothing here is registered in
 [docs/EXPERIMENTS.md](../../EXPERIMENTS.md); the register entry is drafted
 in the folder's [README](../../../examples/events/reader_clock/README.md)
 for the owner's word.
 
-Sources: [series P](../crowd_clock/DESIGN.md) (k = 4 F / 2^16 exact; a
+Sources: [series U](../crowd_clock/DESIGN.md) (k = 4 F / 2^16 exact; a
 lamp inside a crowd reads (1 + k)(1 + v / c) at a detector at rest with no
-crowd), [series Q](../cluster_clock/DESIGN.md) (a crowd slowed alike adds:
+crowd), [series V](../cluster_clock/DESIGN.md) (a crowd slowed alike adds:
 1 + k + v / c), [BEAM_LAW](../../BEAM_LAW.md) step 4 and notes 17, 41, 48.
 
 ## 1. The question, on the board
 
-Series P and Q read a crowd's lamp at a detector with no crowd, and read it
+Series U and Q read a crowd's lamp at a detector with no crowd, and read it
 by the lattice's tick. Earth is not such a reader: it sits inside the Milky
 Way's crowd, and it reads by its own clock. Under the law as built the
 reader's clock owes k_r intervals per self-creation exactly as the source's
@@ -41,7 +41,7 @@ lamp of the reader's own.
 
 ## 2. The worlds
 
-`examples/events/reader_clock/make_worlds.py` (importing series P's
+`examples/events/reader_clock/make_worlds.py` (importing series U's
 generator) writes five worlds on a bar of 121 x 9 x 9 Nodes (open),
 `ticks` 500, `suspension` [1, 2^16], `release` [1, 2^16], `width` 2^20,
 N = 64.
@@ -49,14 +49,14 @@ N = 64.
 - **The reader**, number 1, `s_px1`, fixed at x = 10, 2^20 units, a lamp of
   one unit per self-creation on -x into the near face (its births are its
   own clock), measuring `s_px1` with `reads: "age"` and letting `mass` pass;
-  its crowd, when it has one, is series P's pair of `mass` sources three
+  its crowd, when it has one, is series U's pair of `mass` sources three
   Links up +y and +z with the fan of nine directions at F_r units per
   interval (k_r = 4 F_r / 2^16).
 - **The source**, number 2, `s_px1`, at x = 70, the same lamp shining -x to
   the reader (a flight of 60 Links, 103 intervals), letting `mass` and
   `s_px1` pass; its crowd at F_s. In `alike_receding` the source is thrown
   at 0.2 c along +x and its sources at 0.2 c / (1 + k_s), the pace of the
-  waiting lamp (series Q's emulation of a crowd slowed alike).
+  waiting lamp (series V's emulation of a crowd slowed alike).
 
 | World | k_r | k_s | the source | model id |
 | --- | --- | --- | --- | --- |
@@ -106,7 +106,7 @@ stays within one Link of its sources through the run.
 - Clicks fewer than the source's births one flight earlier: a waiting
   reader misses rows (the probe says it does not).
 - `alike_receding` reading other than 1.100 in the reader's clock: the sum
-  of series Q does not divide by the reader's clock as the product does.
+  of series V does not divide by the reader's clock as the product does.
 
 ## 5. What the run cannot decide, and what it is for
 
@@ -117,7 +117,7 @@ term is a ratio of the two crowds, so a reader reads its own kind of crowd
 with no shift, reads denser crowds red and thinner ones blue, and reads the
 lattice's tick nowhere (only through a body at rest with no crowd, which
 Earth is not). It is for the owner's question of the galaxies and the
-clusters (series P and Q): the clock term that Earth would read is
+clusters (series U and Q): the clock term that Earth would read is
 (1 + k_galaxy) / (1 + k_here) - 1, which is small for galaxies like ours
 and large for crowds far denser, in either direction. It is also a reading
 of the clock question raised for covariant-readings-v1 (record 344, "which
@@ -168,8 +168,8 @@ receding source within one Link of its emulated crowd through the run.
    the reader's waits change its own count of them, not their arrival.
 3. **The sum divides as the product does.** `alike_receding` read 1.1054
    for the pinned (1 + k_s + v / c) / (1 + k_r) = 1.100, and 2.2111 in the
-   lattice's tick (series Q's 2.2147 for the same source); the excess of
-   0.005 to 0.011 is series Q's, the moving lamp's slightly higher k.
+   lattice's tick (series V's 2.2147 for the same source); the excess of
+   0.005 to 0.011 is series V's, the moving lamp's slightly higher k.
 4. **The clock question.** The click's tick is the lattice's; the reader's
    clock is the count of its own self-creations, and a reading in it is a
    ratio of two counts. This is the form in which "which clock the click's
@@ -179,6 +179,6 @@ receding source within one Link of its emulated crowd through the run.
 law as built is (1 + k_galaxy)(1 + v / c) / (1 + k_here) (the sum form over
 1 + k_here when the galaxy's crowd is slowed alike): a galaxy in a crowd
 like ours shows no clock term, a denser one shows red, a thinner one blue;
-the cluster dispersion of series Q is divided by 1 + k_here but not
-removed; and the absolute k of series P is not what any reader inside a
+the cluster dispersion of series V is divided by 1 + k_here but not
+removed; and the absolute k of series U is not what any reader inside a
 crowd sees. The mapping of units is still missing (section 5).

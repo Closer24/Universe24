@@ -6385,7 +6385,7 @@ sequential gates on an entangled record, the full register replay.
   ([the folder](../examples/events/clock_word/README.md),
   `examples/events/clock_word/expectations.json` with its `derivations`
   map, written by `make_worlds.py`; the `replicated` map absent: measured
-  once, awaiting replication).** Series P's geometry: the lamp `s_px1` at
+  once, awaiting replication).** Series U's geometry: the lamp `s_px1` at
   rest at x = 10 (2^20 units, one unit per self-creation on +x, the wheel
   [1, 64]), two `mass` sources at 3 or at 6 Links on +y and +z each
   releasing F = 4915 units per interval on the fan of nine toward the
