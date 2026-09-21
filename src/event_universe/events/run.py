@@ -109,6 +109,10 @@ def execute_nature_beam_run(
         # `hypotheses` when a measured event holds a paid family at load or
         # gave one during the run (no key; `NatureBeamSimulation.hypotheses`).
         "hypotheses": simulation.hypotheses,
+        # The crossing rule's report (2026-09-21, BEAM_LAW note 42): the
+        # Links a body crossed in the interval right after another of its
+        # Links, where the rule's one-per-crossing count is not proved.
+        "fast_steps": simulation.fast_steps,
         # The world's columns in order, (name, sign): gravity, charge, the
         # declared names; every family's `columns` below is aligned with it.
         "columns": [{"name": name, "sign": sign} for name, sign in world.columns],

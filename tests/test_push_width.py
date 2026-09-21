@@ -27,16 +27,18 @@ momenta below are the first pins times 64 and every position is unchanged
 (c) the step is counted off the clock with no stored remainder: with
     `suspension` [1, 4] and a crowd of 4 rays of another number at rest on
     every Node it visits, the probe of (b) owes one interval after every
-    self-creation (age after interval n is ceil(n / 2)); the step of the
-    ages 9, 18, 27 lands on the interval that pays the count (a measured
-    event steps only when it owes nothing, the engine's frame), the
-    intervals 18, 36, 54 (x after intervals 17, 18, 35, 36, 53, 54, 60: 3,
-    4, 4, 5, 5, 6, 6; age 30 and waited 30 after 60), and after every
-    paying interval `steps` is the whole part of age x 1024 / 9216 (= age
-    x 16 / 144), after every self-creation that of (age - 1) x 16 / 144,
-    nothing carried
-    (the first run corrected the interval of the step from 17 to 18: the
-    order of the frame, not the rule);
+    self-creation (age after interval n is ceil(n / 2)); since the
+    crossing rule (2026-09-21, BEAM_LAW note 42: the step before the law,
+    the drive advanced at the self-creation itself) the step of the ages
+    9, 18, 27 lands on the self-creation, the intervals 17, 35, 53 (x
+    after intervals 17, 18, 35, 36, 53, 54, 60: 4, 4, 5, 5, 6, 6, 6; age 30
+    and waited 30 after 60), and after every interval `steps` is the whole
+    part of age x 1024 / 9216 (= age x 16 / 144), nothing carried (with the
+    step after the law and the count owed, until the crossing rule, the
+    drive advanced in the interval that paid the count and the steps fell
+    at 18, 36, 54, `steps` the whole part of (age - 1) x 16 / 144 after a
+    self-creation; the first run corrected the interval of the step from
+    17 to 18: the order of the frame, not the rule);
 (d) a world without `width` parses to 1; `width` 8 parses to 8 and the
     runner's record carries it; 0, -1, a string and a fraction are refused
     naming `width`.
@@ -142,11 +144,13 @@ def test_the_step_is_counted_off_the_clock_with_no_remainder():
         simulation.step()
         assert simulation.books()["balanced"], tick
         assert entry.age == (tick + 1) // 2 and entry.waited == tick // 2, tick
-        counted = entry.age if tick % 2 == 0 else entry.age - 1
-        assert entry.steps == counted * 1024 // 9216 == counted * 16 // 144, tick
+        # The drive advances at the self-creation (the step before the law,
+        # the crossing rule of 2026-09-21): the count is the whole part of
+        # age x 1024 / 9216 after every interval, odd and even alike.
+        assert entry.steps == entry.age * 1024 // 9216 == entry.age * 16 // 144, tick
         assert entry.momentum == [1024, 0, 0]
         xs[tick] = entry.position[0]
-    assert [xs[t] for t in (17, 18, 35, 36, 53, 54, 60)] == [3, 4, 4, 5, 5, 6, 6]
+    assert [xs[t] for t in (17, 18, 35, 36, 53, 54, 60)] == [4, 4, 5, 5, 6, 6, 6]
     assert entry.age == 30 and entry.waited == 30 and entry.steps == 3
 
 

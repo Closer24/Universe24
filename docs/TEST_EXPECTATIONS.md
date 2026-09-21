@@ -1477,7 +1477,10 @@ the first run (the design's section 5, tests (a) to (d)):
   the ray at x = 0; a measured event of `m` (content 16, momentum
   (1024, 0, 0) [was (16, 0, 0)]: one unit of net flow in label units) at
   x = 2 steps off at interval 2: one `click` on `face:+x` with `measured`
-  1, amount 16, phase 2 (K 16), momentum (1024, 0, 0), `held` [16, 0],
+  1, amount 16, phase 1 (K 16; the body escapes in the interval of its
+  second self-creation, before that interval's clock turn: the step
+  precedes the law since the crossing rule of 2026-09-21, BEAM_LAW note
+  42; phase 2 until then), momentum (1024, 0, 0), `held` [16, 0],
   `home` [0, 0], the measured line's escaped 16.
 - (c) home: a lamp's ray (content 1, phase 7) returning to its lamp on a
   periodic 4 x 1 x 1 bar is home after 4 Links (the intervals 7, 14, ...)

@@ -174,6 +174,13 @@ class NatureBeamSimulation:
         # on every `contact` record carries `given` and the run's record the
         # identity `binding-v1` (`hypotheses`).
         self.binding = world.binding
+        # The crossing rule's report (BEAM_LAW note 42, "not proved"): the
+        # count of Links crossed in the interval right after another Link
+        # of the same body (a body faster than one Link per two intervals,
+        # |p_a| > Q S M, possible under pushes), where the one-interval
+        # mark cannot tell a leapfrog of lag two from a first arrival; the
+        # run's record carries it as `fast_steps`, no refusal.
+        self.fast_steps = 0
         self.open_faces = tuple(port for port in range(6) if not world.periodic[port >> 1])
         self.ledger = Ledger(count, self.open_faces)
         # The detectors at run time: the declared ones first, in their
@@ -692,6 +699,8 @@ class NatureBeamSimulation:
         self._place(entry, nodes)
         entry.position = destination
         entry.step_port = port
+        if entry.last_step_port >= 0:
+            self.fast_steps += 1
         if entry.phase_by_momentum and self.world.action is not None:
             # The turn of the Link crossed: the `action` row's count of
             # this self-creation (the same integer as `by_clock(k0, |p| N,

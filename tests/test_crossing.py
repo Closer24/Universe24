@@ -92,12 +92,24 @@ rule"), written down before the first run:
     + 1 = 202, the one extra the row co-located with the reader at the
     first interval (a boundary of the window, not of the rule): the rate
     1 + v / c toward and 1 - v / c away with v = 1 / k and c = 32 / 55,
-    as a count.
+    as a count;
+(f) the report of the fast steps (the design's section 2, "not proved"):
+    a body faster than one Link per two intervals, |p| > Q S M, can cross
+    a Link in the interval right after another; the engine counts those
+    Links (`NatureBeamSimulation.fast_steps`, `run.json`'s `fast_steps`),
+    no refusal. Content 1, width 1 (Q S M = 64), no rows: at the momentum
+    96 (D = 160, the drive 96 per self-creation) the Links fall at the
+    self-creations 2, 4, 5, 7, 9, 10, ..., every fifth one right after
+    another: 18 Links in 30 intervals and 6 fast; at 128 (D = 192) at 2,
+    3, 5, 6, ...: 20 Links and 10 fast; at 64 (D = 128, one Link per two
+    intervals exactly) 15 Links and 0 fast; at 32 (D = 96) 10 and 0; the
+    runner's record carries the count.
 """
 
 from __future__ import annotations
 
 import copy
+import json
 
 import numpy as np
 import pytest
@@ -105,6 +117,7 @@ import pytest
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import direction_flight
 from event_universe.events.world import LABEL_SCALE, step_divisor
+from event_universe.runner import run_initialization
 
 Q = LABEL_SCALE
 T_HEADING = 110
@@ -454,3 +467,43 @@ def test_the_sum_over_a_period(case):
         assert expected == ticks + 55
     else:
         assert expected == ticks - 55 + 1
+
+
+# -- (f) ---------------------------------------------------------------------------
+
+
+def lone(momentum: int, ticks: int) -> dict[str, object]:
+    return {
+        "law": "beam",
+        "model_id": "crossing-fast-steps-test",
+        "shape": [64, 1, 1],
+        "boundary": {"y": "periodic", "z": "periodic"},
+        "ticks": ticks,
+        "K": 1 << 20,
+        "N": 64,
+        "release": [0, 1],
+        "suspension": 0,
+        "width": 1,
+        "families": [{"name": "body", "quantum": 0, "charge": 0, "phase": False}],
+        "measured": [
+            {"position": [4, 0, 0], "family": "body", "amount": 1, "momentum": [momentum, 0, 0]}
+        ],
+    }
+
+
+@pytest.mark.parametrize(
+    ("momentum", "links", "fast"), [(96, 18, 6), (128, 20, 10), (64, 15, 0), (32, 10, 0)]
+)
+def test_the_fast_steps_are_reported(momentum, links, fast, tmp_path):
+    """(f)."""
+    simulation, records = run(lone(momentum, 30))
+    ticks = steps_of(records, 1)
+    assert len(ticks) == links and simulation.measured[1].steps == links
+    assert sum(1 for a, b in zip(ticks, ticks[1:], strict=False) if b == a + 1) == fast
+    assert simulation.fast_steps == fast
+    if momentum == 96:
+        assert ticks[:8] == [2, 4, 5, 7, 9, 10, 12, 14]
+    path = tmp_path / "world.json"
+    path.write_text(json.dumps(lone(momentum, 30)), encoding="utf-8")
+    record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
+    assert record["fast_steps"] == fast and record["status"] == "completed"
