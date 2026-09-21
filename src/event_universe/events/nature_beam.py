@@ -2296,18 +2296,18 @@ def nature_beam(
             ev_last[which] = PORT_HEADINGS[entry.last_step_port]
         if entry.step_port < 0:
             continue
-        port = entry.step_port
-        ev_step[which] = PORT_HEADINGS[port]
-        held = set(entry.nodes)
-        for member in held:
-            ahead = adjacent_node(member, port, shape, world.periodic)
-            if ahead is None or ahead not in held:
-                entered_nodes.append(int(stores[0].flat(member)))
-            origin = adjacent_node(member, port ^ 1, shape, world.periodic)
-            if origin is not None and origin not in held:
-                flat = int(stores[0].flat(origin))
-                if not occupied[flat]:
-                    trail_pairs.append((flat, which))
+        step_link_port = entry.step_port
+        ev_step[which] = PORT_HEADINGS[step_link_port]
+        set_nodes = set(entry.nodes)
+        for member_node in set_nodes:
+            ahead_node = adjacent_node(member_node, step_link_port, shape, world.periodic)
+            if ahead_node is None or ahead_node not in set_nodes:
+                entered_nodes.append(int(stores[0].flat(member_node)))
+            origin_node = adjacent_node(member_node, step_link_port ^ 1, shape, world.periodic)
+            if origin_node is not None and origin_node not in set_nodes:
+                origin_index = int(stores[0].flat(origin_node))
+                if not occupied[origin_index]:
+                    trail_pairs.append((origin_index, which))
     entered = np.array(sorted(entered_nodes), dtype=np.int64)
     trail_pairs.sort()
     trail_nodes = np.array([flat for flat, _ in trail_pairs], dtype=np.int64)
