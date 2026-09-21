@@ -8984,6 +8984,15 @@ the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
   its momentum to the first quark through the contact, the momentum passes
   down the line and the far quark walks off through the face +x, the rest
   following; the law binds and does not confine. Nothing registered.
+- [The clock's word](pages/gallery/clock.html): for the owner's decision on
+  what a body's clock counts (the presence or the age moment; the physicist's
+  note `docs/designs/clock_age/NOTE.md`, PR #567): series P's registered
+  `crowd_clock/still_3` and a demonstration world with the crowd's sources
+  at six Links, replayed; the presence at the lamp's Node 4 F at both
+  distances and the age moment 22 F and 42 F (GameBoard readings), the
+  detector's 1 + z under each word as the physicist's pins beside series P's
+  registered 1.300, nature's clocks' table; the owner's word pending, the
+  run in progress. Nothing pinned by the page.
 - [Universe24](pages/gallery/universe24.html): no run; the owner's formula
   W = E_0^2 + 3 p . p at the top (E by comparisons, E_0 = Q S M, c^2 = 1 / 3
   derived; the identity of covariant-readings-v1, DERIVATIONS_BEAM 17.6),

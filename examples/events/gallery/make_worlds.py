@@ -38,6 +38,14 @@ register; a page made from one says so.
   intervals: what a fast electron does to a proton of three quarks under
   the law as it is (the contact through the table hands its momentum to
   the quark it hits; nothing confines).
+- `clock_6.json` (the page "The clock's word"): series P's registered
+  `crowd_clock/still_3` (a lamp at rest at (10, 4, 4) inside a crowd of two
+  `mass` sources three Links away on +y and +z, F = 4915 units per interval
+  each on the fan of nine, the detector at x = 110) with the two sources
+  moved to six Links, (10, 10, 4) and (10, 4, 10), on a bar of 121 x 15 x 15;
+  30 intervals: the presence and the age moment of the crowd's rows at the
+  lamp's Node read off the GameBoard at the two distances (the physicist's
+  two-crowd pin, docs/designs/clock_age/NOTE.md section 6).
 
 Run `python examples/events/gallery/make_worlds.py` to write them again.
 """
@@ -208,12 +216,31 @@ ELECTRON_CHARGE = 7344
 ELECTRON_KICK = 2 * 10**13
 
 
+def clock_6() -> dict[str, object]:
+    """Series P's still_3 with the crowd's two sources at six Links."""
+    base = json.loads((HERE.parent / "crowd_clock" / "still_3.json").read_text(encoding="utf-8"))
+    world = dict(base)
+    world["model_id"] = "gallery-clock_6-demonstration-v1"
+    world["shape"] = [base["shape"][0], 15, 15]
+    world["ticks"] = 30
+    measured = []
+    for entry in base["measured"]:
+        entry = dict(entry)
+        if entry["family"] == "mass":
+            x, y, z = entry["position"]
+            entry["position"] = [x, 4 + (y - 4) * 2, 4 + (z - 4) * 2]
+        measured.append(entry)
+    world["measured"] = measured
+    return world
+
+
 def main() -> None:
     for name, world in (
         ("beam_fan", beam_fan()),
         ("clicks_plate", clicks_plate()),
         ("collision", collision()),
         ("proton_electron", proton_electron()),
+        ("clock_6", clock_6()),
     ):
         (HERE / f"{name}.json").write_text(json.dumps(world) + "\n", encoding="utf-8")
         print(name)
