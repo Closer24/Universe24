@@ -65,8 +65,9 @@ one unit of amount, the existing key) with the flag `massive: true`:
 | the momentum label's magnitude p | the lamp's key `momentum_magnitude` (new; a scalar, named by its kind: `momentum` on a measured event is a vector, S1) | 220 | `p_D` per direction at load |
 
 Refused at load, naming the key: `massive` without `massive_rows`;
-`massive` with `phase_per_link` (a massive row turns per Link, never per
-interval: 23.2's reason, the temporal turn's fringes below the Link);
+`massive` with `phase_per_link` in either form, the integer or the pair
+(a massive row turns per Link, never per interval: 23.2's reason, the
+temporal turn's fringes below the Link; its per-age turn is None, S11);
 `massive` on a family without a phase circle or with `quantum` 0 (a free
 family is never massive: its rows are a body's field, section 4);
 `massive` without the world's `action`; a lamp of a massive family
@@ -151,11 +152,14 @@ The pin's photon (`slits_huygens`'s `light`) has the pair form
 :1536-1551): its turn table is (0, 1), and its turn per interval of age
 (`by_clock_rows` at :2869-2870, carried through a re-emission) stays as
 it is, outside the turn table, which covers the per-Link part alone
-(S11). `acc_turn` is constant 0 on every row of a family without the
+(S11); the per-age turn stays as today for every family and is None
+for the massive family. `acc_turn` is constant 0 on every row of a family without the
 flag, so it takes a width of 0 bits in the packed merge key (:1390-1396)
 and leaves the key and the merge's order what they were, as the hand
 does (:941-944). The inverse interval (`_inverse_interval`, :2657-2722,
-used by seven test modules on worlds without the flag) is refused on a
+used by the tests of the inverse run, `test_amplitude_split`,
+`test_group_structure`, `test_hand`, `test_lifetime` and `test_meeting`,
+on worlds without the flag) is refused on a
 world that declares `massive_rows`, naming the key, as it is refused on a
 GameBoard with a `lifetime` detector (ENGINE.md) (S9): the inverse of the
 turn's `by_drive` is exact per Link but is not built.
@@ -335,8 +339,9 @@ of 1326 directions and the heading with the angle weights, the screen at
 x = 52 (D = 44) read by 121 `sum` detectors on the wall's own Nodes), the
 world key `massive_rows: true`, `width` 1, `action` 1024, the family
 `matter` (`quantum` 64, a phase circle, `massive: true`, no
-`phase_per_link`) in place of `light` on the lamp and in the openings'
-and the screen's tables, the lamp at (2, 60, 0) with `rate` [1, 1], the
+`phase_per_link`) in place of `light` in `families`, on the lamp and in
+the openings' table key (the screen's events carry no table: the paid
+arrival's default `measure`, ENGINE.md), the lamp at (2, 60, 0) with `rate` [1, 1], the
 wheel [2531, 4096], its five directions, `momentum_magnitude` 220, held
 2^30 (the turn 1), 4096 births; the run 5750 intervals (below). The
 integers: `E'_0 = 4096`, `E' = 4113` (`gamma = 1.0042`), the pace `220 /
@@ -401,7 +406,9 @@ the registered photon's registration carried. The records whose
 completion the ladder places at a face (section 3, item 6; about a third
 on the photon's lines and amounts) write their quantum and label on the
 escaped lines by Port, a GAMEBOARD diagnostic reported beside the pin,
-not a reading of it.
+not a reading of it; the completions at the wall's own sets (x = 7 and
+8) are the same diagnostic class; the screen's gathers are the detector
+reading.
 
 ## 5. The three tests, on paper
 
@@ -434,8 +441,11 @@ not a reading of it.
   operation, now moving state and named as the identity's price
   (section 3, item 4). Nothing is kept at a Node beyond the events
   there; fixed work per row per interval (one `by_drive_rows` for the
-  flight, one for the turn), fixed storage (one int64 per row, the
-  tables O(directions) per family), the host's completion cost apart.
+  flight, one for the turn), fixed storage per row (one int64, the
+  tables O(directions) per family); the record's waiting, O(open
+  records x ended Nodes), is in the host's completion class with the
+  offers it lives in (S8), apart from the per-row storage, as the
+  completion's cost is.
 
 ## 6. What waits, in order: the build's places, and what it must not touch
 
@@ -501,7 +511,8 @@ and the packed key's width (`acc_turn`); `_inverse_interval` (:2657, the
 refusal on a world with the key); the `measure` entry's placement, the
 face's `Layer.end` and the gather's report (the completion's rule with
 the pair `(f_F, q_F)`); the books' `cancelled` line (its meaning widened)
-and the `waiting` sub-line; the tests above.
+and the `waiting` sub-line; ENGINE.md's readings table (the waiting
+named, S10) and its books section; the tests above.
 
 **What it must not touch.** `Flight` and `direction_flight` themselves
 (the photon's numbers are copied by value into its table, never changed)
