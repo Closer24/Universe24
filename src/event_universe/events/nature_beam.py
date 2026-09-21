@@ -144,6 +144,7 @@ from event_universe.events.world import (
     LIFETIME_NAME,
     MOMENTUM_BOUND,
     NO_HAND,
+    PRESENCE_WORD,
     REST_DIRECTIONS,
     FamilyDefinition,
     Gate,
@@ -348,8 +349,9 @@ class Moments:
         return result
 
     def component(self, key: str) -> np.ndarray:
-        """The scalar reading of order 0 by its key (`scalar` the presence, `outside`, `here`)."""
-        if key == "scalar":
+        """The scalar reading of order 0 by its key (`scalar` the presence, `outside`,
+        `here`; `presence`, the clock's word for the presence, carries it too)."""
+        if key == "scalar" or key == PRESENCE_WORD:
             return self.presence
         if key == "outside":
             return self.outside

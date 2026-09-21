@@ -215,3 +215,27 @@ ticks 22 to 32 in place of 21 to 31) and hand their x component over from
 tick 33 (168 `contact` records in place of 169 from tick 32); the reads
 are the same; the eighteen other worlds have no free body and read the same (the
 record's new fields aside). The register entry has the momenta ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under clock-age-v1 (2026-09-21)
+
+The model owner's word of record 394: a clock counts the age moment by
+default, and item 6's probes (`pass` for the source's family, no word)
+count it. The series run again through `tools/run_series.py` on the head of
+branch `clock-age-v1` and read by `tools/coupling_readings.py`, whose item
+6 now replays the age moment at the probe's Node (`sum amount x age` over
+the source's rows there after the interval, `Replay.age_moment_at`) as the
+count a clock reads, and whose ring keys follow the diagnostic's name
+`arrived` (the tool did not run on `main` since that rename). Item 6's
+identity holds under the age word: (age, waited, owed) equal to the replay
+at all nine radii; the clock counts until the front's arrival as before,
+age(200) = 8, 11, 14, 21, 28, 35, 42, 52, 69 at r = 4 to 40, unchanged, and
+is then owed the beam's age moment for the rest of the run, 917312, 1310531,
+1703750, 2621261, 3538772, 4456283, 5373794, 6684524, 8912765 intervals at
+r = 4 to 40 (the beam's presence 130880 to 130941 under the presence word,
+the same at every r): on the axis the age moment grows with r as the rows'
+age does, where the presence did not fall; the source's clock unslowed (age
+200, waited 0); GameBoard readings. The twenty other worlds of the series
+have `suspension` 0 and read as they did (their digests, record 409); the
+tool's three FAIL lines on 1b's first step (tick 23 where its line says
+22) and its item 5 readings outside are not the word's (those worlds read
+no clock) and stand as the tool left them on `main`.

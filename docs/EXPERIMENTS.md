@@ -1272,6 +1272,16 @@ states "exactly" and means integer equality at every tick.
   body and read the same (the record's new fields aside) ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
 
 
+- **Item 6 re-read under `clock-age-v1` (2026-09-21; record 394; the head
+  of branch `clock-age-v1`).** The probes' clocks count the age moment: the
+  identity holds, (age, waited, owed) equal to the replay of the age
+  moment read at all nine radii, the ages at the front's arrival unchanged
+  (8, 11, 14, 21, 28, 35, 42, 52, 69) and the count then owed the beam's
+  age moment, 917312 to 8912765 intervals at r = 4 to 40 (the presence's
+  130880 to 130941, the same at every r): on the axis the age moment grows
+  with r as the rows' age; GameBoard readings, the tool's item 6 replaying
+  the age moment since this day ([the worlds' README](../examples/events/coupling/README.md#re-read-under-clock-age-v1-2026-09-21)).
+
 ### D, the orbit under the Beam Law, on the plane (2026-09-19)
 
 - **Confronts.** Whether a light free probe closes an orbit about a heavy
@@ -2063,6 +2073,16 @@ states "exactly" and means integer equality at every tick.
   denominator or a smaller q) is the follow-up for the model owner.
   Nothing was tuned.
 
+- **Re-read under `clock-age-v1` (2026-09-21; the model owner's word of
+  record 394, the age moment the clock's default; the head of branch
+  `clock-age-v1`).** The `scalar` world's probes count the age moment at
+  [1, 1]: its k x r is the constant now, 67.4 to 81.3 over r = 6 to 14, the
+  mean 72.19 (k x r^2 was 39.0 to 44.8, the mean 41.5), 2.00 times the
+  `age` world's 36.18, the two widths' ratio; the `age` world is
+  byte-identical (record 409); GameBoard readings, 11 inside and 3 outside
+  as registered; the table with the old values beside the new in
+  [the worlds' README](../examples/events/redshift/README.md#re-read-under-clock-age-v1-2026-09-21).
+
 ### G, the Hubble diagram behind the detector (2026-09-20)
 
 - **Confronts.** The model owner's question (2026-09-20, Highlights 5.4,
@@ -2288,6 +2308,17 @@ states "exactly" and means integer equality at every tick.
   reading's formula 288 of 288 inside 2 %. The verdict and the follow-up
   stand as read; the numbers above are kept as history.
 
+- **Re-read under `clock-age-v1` (2026-09-21; record 394; the head of
+  branch `clock-age-v1`).** The two `scalar` worlds' sources count the
+  age moment of one another's light: `coasting_scalar`'s near-fit H t_0
+  reads 1.0346, 1.2685, 1.5693 in the three windows and 1.3700 in the late
+  half (0.8718, 0.9667, 1.0123 and 0.9938 under the presence word on
+  `main`'s engine by the same tool), `pushing_scalar`'s 4.6923, 7.0505,
+  9.1890 and 8.1459 (1.1820, 1.3220, 1.3900 and 1.3499); the two `age`
+  worlds byte-identical (record 409); DETECTOR readings, 303 inside and 33
+  outside over the four; the table with the forms and the detectors' own
+  clocks in [the worlds' README](../examples/events/hubble/README.md#re-read-under-clock-age-v1-2026-09-21).
+
 ### G2, the Hubble diagram with stars behind the detector (2026-09-20)
 
 - **Re-run under the one click (2026-09-20, stage (vii) step 4; the verdict to be re-read).**
@@ -2455,6 +2486,25 @@ states "exactly" and means integer equality at every tick.
   star steps (VALIDATION, the dated table of the change); the run of the
   series under the rule, with its expectations pinned first, is the G2
   session's, not this change's.
+
+- **Under `clock-age-v1` (2026-09-21; record 394).** The twelve worlds
+  (the six base worlds and the six `record/` worlds whose stars' entries
+  measure the other stars' light without a word) moved by their digests
+  (record 409) and are not re-read here: the register's own tool,
+  `tools/hubble_stars_readings.py`, reads NaN for `coasting_none` in its
+  plain mode (a world the word does not touch) and, in its record mode
+  with the register's expectations, +0.384 in the late window for
+  `record/gravity_none` against the registered +0.922 while
+  `record/coasting_none` reads -0.104 for -0.108 (the replicator's
+  finding of record 408 on `main`: the record worlds at head do not
+  reproduce the registered readings), so no number of this series is
+  re-registered until the tool and the register agree again; the lines
+  above stand as the presence word's, dated. For the record, the record
+  mode's late-window q on the head under the age word (DETECTOR, not
+  registered): `record/coasting_scalar` -0.950, `record/gravity_scalar`
+  -0.950, `record/double_scalar` -0.950 (the fit's grid ends at -0.95;
+  their H (t_0 + T_0) 3.42, 3.37, 4.46), the `_age` and `_none` worlds
+  -0.216, +0.258, +0.664 and -0.104, +0.384, +1.116.
 
 ### H, Bohr's lines behind the detector (2026-09-20)
 
@@ -3738,6 +3788,24 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   (`examples/events/weak/README.md`, "Re-pinned under the fraction-free
   law"); `tests/test_weak_readings.py` (e) replays the generator's warm run
   on the shipped worlds against the register.
+
+- **Re-read under `clock-age-v1` (2026-09-21; record 394; the head of
+  branch `clock-age-v1`).** The neutrons' clocks count the age moment and
+  the `become` at 512 fires later wherever a crowd is read: `j1_lattice` 56
+  of 64 transformed within 650 intervals at the trigger ticks 602 to 642
+  (was 64 at 522 to 525), the shell's clicks 20 within the run (was 64),
+  the width over the median 0.0265 (was 0.036); `j1_source` 32 of 64 at
+  607 to 641, 8 clicks, the width 0.0110 (was 0.038); `j3_deuteron` at 577
+  (568 on main's engine under the fraction-free law; the count 152471
+  where the register read 128590: the proton's fan at the neutron's Node
+  holds 57 lines at age 1 and 13 at age 2, the excess the warm-up's, the
+  review of 1716b922); the gated
+  and the free neutron unchanged; 13 readings inside and 5 outside (the
+  registered 36 and 0). NATURE row 8a keeps its FAIL in form (a step
+  against 3.17) but its numbers were read on 64 clicks and the age word's
+  on 20 and 8, the rest firing at or after the run's end: whether the row
+  is re-read on a longer run is the model owner's question, flagged
+  ([the worlds' README](../examples/events/weak/README.md#re-read-under-clock-age-v1-2026-09-21)).
 
 ### L, the amplitude law (2026-09-20)
 
@@ -6531,7 +6599,10 @@ sequential gates on an entangled record, the full register replay.
   measuring `s_px1` with `reads: "age"`, the bar 121 x 9 x 9 at 3 Links
   and 121 x 15 x 15 at 6, 500 intervals; four worlds, the lamp's `mass`
   entry `pass` (the presence word) or `{"rule": "pass", "reads": "age"}`
-  (the age word), at 3 and at 6. On the lattice only the two headings' rows
+  (the age word), at 3 and at 6 (since clock-age-v1, 2026-09-21, the
+  presence word is declared, `{"rule": "pass", "reads": "presence"}`, the
+  age moment being the law's default; the worlds read as they did, the
+  register's replay test holding). On the lattice only the two headings' rows
   dwell at the lamp's Node, each for two intervals (the map checks the nine
   lines of each source), so the presence is 4 F at both distances and the
   flow the push would read the same; the age moment is 22 F at 3 (the ages

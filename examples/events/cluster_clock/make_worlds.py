@@ -207,6 +207,23 @@ def expectations() -> Json:
             "members": moving,
             "z_shift_of_every_member": v,
         },
+        # clock-age-v1 (2026-09-21, record 394): every member's crowd is at 3
+        # Links on series U's fan, so under the age word each k is 22 / 4 = 5.5
+        # times the presence word's (series T's map); the pins above are the
+        # presence word's (the run on main d8cb46e), the README carries the
+        # re-read under the identity.
+        "clock_age_v1": {
+            "derivation": (
+                "the members' k under the age word (clock-age-v1, 2026-09-21): 5.5 times the presence "
+                "word's (the age moment 22 F against the presence 4 F on the fan at 3 Links, series "
+                "T's map); at rest 1 + z = 1 + k, moving as one 1 + k + v / c (DETECTOR)"
+            ),
+            "age_moment_over_presence": 5.5,
+            "cluster_rest": {name: {"one_plus_z": 1 + 5.5 * k} for name, (_, k) in MEMBERS.items()},
+            "cluster_moving": {
+                name: {"one_plus_z_additive": 1 + 5.5 * k + v} for name, (_, k) in MEMBERS.items()
+            },
+        },
     }
 
 

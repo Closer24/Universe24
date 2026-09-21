@@ -327,9 +327,13 @@ CONTACT_DEFAULT = "measure"
 FREE_QUANTUM = 0
 # The components of the one reading a table entry may select for its record;
 # `age` is the age moment, the reading aid of the measured event (the
-# external thing) that also decides what its clock counts.
+# external thing). Since clock-age-v1 (the model owner's word of
+# 2026-09-21, record 394) the clock counts the age moment by default on
+# every entry; the word `presence` selects the presence for the clock (its
+# record then carries the presence, the zeroth moment, as `scalar` does).
 AGE_READS = "age"
-READS = ("scalar", "outside", "here", "vector", "tensor", AGE_READS)
+PRESENCE_WORD = "presence"
+READS = ("scalar", "outside", "here", "vector", "tensor", AGE_READS, PRESENCE_WORD)
 # The one scale Q of the law (BEAM_LAW sections 2 and 3): the time resolution
 # of the flight, where the turn of a direction is T_d = isqrt(3 |v|^2
 # Q^2) and a ray makes S_1 Manhattan steps per T_d / Q intervals in the mean,

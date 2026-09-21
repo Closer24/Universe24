@@ -294,10 +294,10 @@
   "coasting_none_covariant": {
    "source_sha256": "24e0c1bacec8e5b82fc602b1fc4580a234d420e922bbc1e9223df64d0eb60c3d",
    "completed_ticks": 60,
-   "state_sha256": "775ce3ba1aabd94e3d3287e70642514ab0be62278a1879bcbaae49c6273ec4ac",
+   "state_sha256": "79f8479c52b9cc2ec1247c3dc173cfe0ed46b6ca2e9cfcfb83ef42ce80724320",
    "audit_sha256": "59c0e5d86786bb000137c6ac722d3d36232ee53c8fc5c51c080d3c0a9f605238",
    "events_sha256": "f74024ccc54af6db17f5a16484d42595068a5d4cbb2fb72d4301ca896044be02",
-   "note": "the cap replayed by tests/test_covariant_readings.py (f); the full run above is registered once"
+   "note": "the cap replayed by tests/test_covariant_readings.py (f); the full run above is registered once; the state's digest re-pinned under clock-age-v1 (2026-09-21, record 394: the stars' clocks count the age moment of the other stars' light, their owed accumulators moved; the books and the events at the cap unchanged, 775ce3ba... the state's digest until the word)"
   }
  },
  "off_replay": {

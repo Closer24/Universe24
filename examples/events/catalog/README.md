@@ -89,3 +89,21 @@ tick; `clock_near_mass` is unchanged in its events and books (its bodies
 release nothing; the claims 0 in its `state.json`); `lamp_mirror_screen`
 and `neutron_star` are identical. The old integers are history
 ([migration](../../../docs/MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded)).
+
+Re-read under `clock-age-v1` (2026-09-21; the model owner's word of record
+394: a clock counts the age moment by default; `clock_near_mass.json` and
+`neutron_star.json` run again on the head of branch `clock-age-v1` through
+`tools/run_series.py`, GameBoard readings of `run.json`, the old integers
+beside the new): in `clock_near_mass` the clock at r = 5 (number 2) ends at
+age 10, waited 40, owed 21 (was age 18, waited 32, owed 1) and the clock at
+r = 9 (number 3) at age 16, waited 34, owed 11 (was 30, 20, 2); the ratio of
+the two rates 10 / 16 = 0.625 (was 18 / 30 = 0.600), the nearer clock still
+the slower; the mass owes nothing, as before. In `neutron_star` the eight
+neutrons end at age 30, waited 10 (was 32, 8): their clocks count each
+other's rows, and a row at one Link is at the age 1, its age moment its
+presence, so the star moves by its rows of later ages alone; the six probes
+at radius 8 all end at age 23, waited 17, owed 2 (the five presence probes
+were at 37, 3, 0 and the -x probe reading `age` at 22, 18, 0): under the age
+word the five count what the sixth counted, and the probe reading `age`
+moves by one interval with the star's slowed release. The books balance at
+every tick in both.

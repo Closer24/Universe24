@@ -16,6 +16,7 @@ from event_universe.events.world import (
     CHARGE_INDEX,
     MOMENTUM_BOUND,
     NO_HAND,
+    PRESENCE_WORD,
     SUM_READING,
     Gate,
     Rotation,
@@ -30,6 +31,9 @@ __all__ = [
     "Measured",
     "PendingRow",
     "column_charges",
+    "AGE_WALL_NEVER",
+    "AGE_WALL_SET",
+    "age_wall_coefficient",
     "count_component",
     "rational_sum",
     "reduced",
@@ -128,16 +132,18 @@ def column_charges(
 
 def count_component(reads: str) -> str:
     """The component of the one reading a measured event's clock counts for
-    a family, selected by its table entry's `reads` key: the age moment
-    (`age`, sum amount x age over every ray of another number at its Node)
-    on an entry that reads `age`, the presence (`scalar`) on every other
-    entry, whose key names only what its record carries. A reading aid of
-    the measured event, the external thing (the model owner, 2026-09-19,
-    "it must be checked in the detector and not on the GameBoard"): it only
-    helps the detector's computation of its count and changes nothing of
-    the GameBoard; the GameBoard's rules (the flight, the collision) never read the
-    age whole."""
-    return AGE_READS if reads == AGE_READS else PRESENCE_READS
+    a family, selected by its table entry's `reads` key. Since clock-age-v1
+    (the model owner's word of 2026-09-21, record 394; BEAM_LAW section 3
+    step 5 and note 25): the age moment (`age`, sum amount x age over every
+    ray of another number at its Node) on every entry, whatever its record
+    carries, unless the entry reads `presence`, which selects the presence
+    (`scalar`, the zeroth moment) for the clock as the law counted it
+    before the word. A reading aid of the measured event, the external
+    thing (the model owner, 2026-09-19, "it must be checked in the detector
+    and not on the GameBoard"): it only helps the detector's computation of
+    its count and changes nothing of the GameBoard; the GameBoard's rules
+    (the flight, the collision) never read the age whole."""
+    return PRESENCE_READS if reads == PRESENCE_WORD else AGE_READS
 
 
 @dataclass
@@ -318,6 +324,37 @@ class CountTable:
             raise ValueError(f"the count '{name}' has {len(rows)} rows, {len(values)} values given")
         for row, value in zip(rows, values, strict=True):
             row.accumulator = value
+
+
+# The declared set of the age wall (`core.integer.age_wall`; BEAM_LAW
+# section 3 step 5 and note 25, the identity `clock-age-v1`; the generic
+# shape of records 421, 422 and 428 of docs/LOG_2026-09-20.md): the counts of
+# a body's table whose wall the crowd's age moment stretches, each with its
+# declared coefficient c, as (name, c). Today the body's clock alone, c = 1
+# (the owed count: the excess of its stretched wall, `engine.count_owed`).
+# The row's flight joins under optical-v1's key with its own coefficient
+# 1 + gamma (gamma the post-Newtonian parameter; the physicist's note of
+# record 428), by a declaration here with nothing else moving. Never a
+# member: the phase per age (`turn`, the turn by momentum `action`, a row's
+# `phase_per_link`), since a stretched phase per age would redshift light in
+# transit; `AGE_WALL_NEVER` names them and `age_wall_coefficient` refuses
+# them whatever the set declares.
+AGE_WALL_SET: tuple[tuple[str, int], ...] = (("owed", 1),)
+AGE_WALL_NEVER: tuple[str, ...] = ("turn", "action")
+
+
+def age_wall_coefficient(name: str) -> int:
+    """The declared coefficient c of a member of the age wall's set, by the
+    count's name in the body's table of counts; a count that is no member
+    is refused (nothing outside the set is stretched), a count the law
+    keeps out of the set (`AGE_WALL_NEVER`) is refused before the set is
+    read."""
+    if name in AGE_WALL_NEVER:
+        raise ValueError(f"the count '{name}' is never a member of the age wall's set")
+    for member, coefficient in AGE_WALL_SET:
+        if member == name:
+            return coefficient
+    raise ValueError(f"the count '{name}' is not a member of the age wall's set")
 
 
 def counts_table(
