@@ -99,6 +99,7 @@ kept, their pins the law of events').
 | `test_check_scope.py` | The affected-check's selection |
 | `test_coupling_readings.py`, `test_orbit_readings.py`, `test_heisenberg_readings.py`, `test_hubble_readings.py` | The tools read the engine (the architecture review of 2026-09-20; the experimenter skill): each reading of `tools/coupling_readings.py`, `tools/orbit_readings.py`, `tools/heisenberg_readings.py` and `tools/hubble_readings.py` equals the engine's own function on a minimal GameBoard (the front off `manhattan_steps`, the step rule and the release off `by_clock`, the push off `unit_label`, the fan's labels off `flight_table`, the detector records off `DetectorSet`, the declared charge per unit of content; the Hubble tool's c = 32 / 55 and m(age) off `flight_table`, its `record` lines and click ages off the run of a bar of 61 x 1 x 1, its z within the digital step's grain of 1 + v / c); the expected integers are in each module's docstring |
 | `test_hubble_stars_readings.py` | The series G2 tool (`tools/hubble_stars_readings.py`) reads the engine (the experimenter's rule): the shipped worlds of `examples/events/hubble_stars/` equal their generator's, `expectations.json` declares its format, its c is derived from the flight table (Q / T_D) and compared, and its `derivations` map names every entry; on a bar of 61 x 1 x 1 run through the runner (a star of a paid family holding a mass of 2^22 and shining one unit per self-creation toward a detector of one Node, the speed 1 / 2 Link per self-creation) the tool's `record` lines, click ages, steps (30 in 60 intervals), homes (its outward rows taken home, 64 units each) and final momentum are the engine's, z within the digital step's grain of 1 + v / c, the reading's formula within 2 % and the luminosity within 5 %; the fits read the exact coasting form as q = 0 with H (t_0 + T_0) = 1 to 1e-6 and the exact Einstein-de Sitter form as q = +0.5 to 1e-3; the expected integers are in the module's docstring | new (2026-09-20, series G2); the registered fits against the register's own brackets, no literal range (2026-09-21) |
+| `test_c_measured.py` | Series Q, c measured behind a detector (`examples/events/c_measured/`): the escape tick of every direction of a fan derived from the closed form of the flight (DERIVATIONS_BEAM.md section 11.1) with the engine's lines and compared with the register written before the run and with the run's clicks on the open faces (the tick, the Node, the face), the pace over the fan against c = 1 / sqrt 3, and the readings tool `tools/c_measured_readings.py` on the runner's record ([below](#c-measured-behind-a-detector)) | new (2026-09-21, the model owner's "go for it", record 236; the template `test_amplitude_cone.py`) |
 | `test_bohr_readings.py` | The series H tool reads the engine (the experimenter's rule, 2026-09-20): the flight time from the centre's plane to a face off `FlightTable.manhattan_steps` (5 Links at the age 8, 6 at 10, 1 at 1), the pointer per turn and the coherence ratio off `nature_beam.coherent_pointer` with the circle's tables ((16384, 0) and (-8192, 0) for two units at phase 0 and one at 32, C = 0.2; 1.8 with the third at 0; the slope of [1, 4, 9] is 2), and `read_run` on a run written by the runner (a proton of `p` at (5, 5, 1) of an 11 x 11 x 3 GameBoard on the four in-plane headings, an electron of `e` of span [1, 1, 3] at (8, 5, 1) with the momentum [0, 320, 0], `pass` for `p`, `action` 65536, 20 intervals: the radius 3, j = 0.05859375, the flights 8, the clicks per face equal to the record's, no read, the steps' phases 5, 5, 5, 6 at the ticks 5, 9, 13, 17, the first -x click at tick 16); the expected integers are in the module's docstring |
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the two integer audits (`core/` integers only; `events/` integer numpy and nothing that leaves the integers, `run.py` outside it), LOCALITY-1 documented without an exception, and the six-read test ([below](#locality-and-bounded-local-work)): a Node reads nothing beyond one Link, a change reaches a Node no sooner than the flight allows |
 | `test_group_structure.py` | The group structure named on 2026-09-21: the cube's group of 48 (closed, the identity, every inverse, the hand +1 on 24 rotations and -1 on 24 reflections, multiplicative), the phase circle as the cyclic group with its unit vectors (a turn, a difference, the opposite phase; equal phases 65536, opposite phases its negative, C^2 + S^2 within 361 of 65536), the collision as a group action (the period the class's size, one cycle per class, the inverse undoing the shift, the invariants constant along a cycle) ([below](#the-group-structure)) | new (2026-09-21; the vector program, record 191; BEAM_LAW note 42) |
@@ -694,6 +695,38 @@ register's L7 entry), written before the run: Since 2026-09-21 the test derives 
 - (c) one gather per record, one cell each, as many at each counter; the
   file's pins equal the flight formula's (the ages 29 and 29, `same_age`
   true, the Links 17 and 24).
+
+## c measured behind a detector
+
+`tests/test_c_measured.py`, on `examples/events/c_measured/c_measured.json`
+(series Q, `expectations.json` beside it, written before the run by
+`make_world.py`; the register's Q entry): the test derives the register's
+pins from the world and the closed form of the flight
+(DERIVATIONS_BEAM.md section 11.1: the Links made by the age tau on the
+direction D, m_D(tau) = floor((2 tau S_1 Q + T_D) / (2 T_D)), S_1 the
+direction's Manhattan length, T_D its resolution, Q = 64 the label's
+scale, so the k-th Link falls at tau_k = ceil((2 k - 1) T_D / (2 S_1 Q)))
+with the engine's flight table's lines as line_D, and compares; it holds
+no literal of a world's number.
+
+- (a) the register is the closed form: per direction of the lamp's fan the
+  first Link k off the GameBoard, its age tau_k, the click's tick birth +
+  tau_k, its Node after k - 1 Links, its face, the displacement after k
+  Links and the pace |x_k - x_0|_2 / tau_k, equal to the register row by
+  row; the totals (the pace's min, max, mean over the fan; the asymptotic
+  Q |D| / T_D) and the classes (the 6 axes, the 12 face diagonals, the 8
+  body diagonals, the rest by the direction's magnitudes) recomputed; the
+  world's `ticks` past the last escape;
+- (b) the run in process: one birth at the registered tick with the fan's
+  units, one click per direction on a face at the derived tick, Node and
+  face (the direction off the engine's label table from the click's
+  momentum), every direction once, one gather, the books balanced, the
+  escaped amount the clicks;
+- (c) the readings tool reads the runner's record (the world run into a
+  temporary folder): the registered births and clicks, no unmatched
+  click, every escape at its row, the pace totals the register's, the
+  verdict inside; the edge: one registered tick moved by one reads that
+  direction as differing and the verdict outside.
 
 ## The meeting
 
