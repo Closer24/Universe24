@@ -1,0 +1,183 @@
+{
+ "format": "crowd-clock-expectations-v1",
+ "c": 0.5818181818181818,
+ "ticks": 500,
+ "dwell": 2,
+ "fan_reach": 4,
+ "speed_over_c_moving": 0.2,
+ "still_windows": [
+  [
+   200,
+   350
+  ],
+  [
+   350,
+   500
+  ]
+ ],
+ "moving_windows": [
+  [
+   100,
+   250
+  ],
+  [
+   250,
+   400
+  ]
+ ],
+ "worlds": {
+  "still_005": {
+   "flux": 82,
+   "k": 0.0050048828125,
+   "k_bracket": [
+    0.0040039062500000005,
+    0.0060058593749999995
+   ],
+   "clock_rate": 0.9950200412972185,
+   "one_plus_z": 1.0050048828125,
+   "clicks_per_interval": 0.9950200412972185,
+   "moving": false
+  },
+  "still_08": {
+   "flux": 1311,
+   "k": 0.08001708984375,
+   "k_bracket": [
+    0.064013671875,
+    0.0960205078125
+   ],
+   "clock_rate": 0.9259112743712913,
+   "one_plus_z": 1.08001708984375,
+   "clicks_per_interval": 0.9259112743712913,
+   "moving": false
+  },
+  "still_3": {
+   "flux": 4915,
+   "k": 0.29998779296875,
+   "k_bracket": [
+    0.239990234375,
+    0.3599853515625
+   ],
+   "clock_rate": 0.7692379923940091,
+   "one_plus_z": 1.29998779296875,
+   "clicks_per_interval": 0.7692379923940091,
+   "moving": false
+  },
+  "still_1": {
+   "flux": 16384,
+   "k": 1.0,
+   "k_bracket": [
+    0.8,
+    1.2
+   ],
+   "clock_rate": 0.5,
+   "one_plus_z": 2.0,
+   "clicks_per_interval": 0.5,
+   "moving": false
+  },
+  "still_2": {
+   "flux": 32768,
+   "k": 2.0,
+   "k_bracket": [
+    1.6,
+    2.4
+   ],
+   "clock_rate": 0.3333333333333333,
+   "one_plus_z": 3.0,
+   "clicks_per_interval": 0.3333333333333333,
+   "moving": false
+  },
+  "moving_08": {
+   "flux": 1311,
+   "k": 0.08001708984375,
+   "k_bracket": [
+    0.0200042724609375,
+    0.08001708984375
+   ],
+   "clock_rate": 0.9259112743712913,
+   "exit_tick_bracket": [
+    463.97072845156373,
+    1752.757913806255
+   ],
+   "one_plus_z_in_the_crowd": 1.2960205078125,
+   "one_plus_z_doppler_only": 1.2,
+   "flight": 63.59375,
+   "windows": {
+    "100-250": {
+     "one_plus_z_bracket": [
+      1.224005126953125,
+      1.2960205078125
+     ]
+    },
+    "250-400": {
+     "one_plus_z_bracket": [
+      1.224005126953125,
+      1.2960205078125
+     ]
+    }
+   },
+   "moving": true
+  },
+  "moving_3": {
+   "flux": 4915,
+   "k": 0.29998779296875,
+   "k_bracket": [
+    0.0749969482421875,
+    0.29998779296875
+   ],
+   "clock_rate": 0.7692379923940091,
+   "exit_tick_bracket": [
+    148.962995930824,
+    492.7269837232961
+   ],
+   "one_plus_z_in_the_crowd": 1.5599853515625,
+   "one_plus_z_doppler_only": 1.2,
+   "flight": 63.59375,
+   "windows": {
+    "100-250": {
+     "one_plus_z_bracket": [
+      1.2,
+      1.5599853515625
+     ]
+    },
+    "250-400": {
+     "one_plus_z_bracket": [
+      1.2,
+      1.5599853515625
+     ]
+    }
+   },
+   "moving": true
+  },
+  "moving_1": {
+   "flux": 16384,
+   "k": 1.0,
+   "k_bracket": [
+    0.25,
+    1.0
+   ],
+   "clock_rate": 0.5,
+   "exit_tick_bracket": [
+    68.75,
+    171.875
+   ],
+   "one_plus_z_in_the_crowd": 2.4,
+   "one_plus_z_doppler_only": 1.2,
+   "flight": 63.59375,
+   "windows": {
+    "100-250": {
+     "one_plus_z_bracket": [
+      1.2,
+      2.4
+     ]
+    },
+    "250-400": {
+     "one_plus_z_bracket": [
+      1.2,
+      1.2
+     ]
+    }
+   },
+   "moving": true
+  }
+ }
+}
