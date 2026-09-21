@@ -15,6 +15,7 @@
 \hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
 \newcommand{\Z}{\mathbb{Z}}
@@ -165,6 +166,103 @@ $d$, at most one Link per interval, and Euclidean speed $Q_f|d|/T_d$ with
 $T_d = \lfloor\sqrt{3|d|^2Q_f^2}\rfloor$ and the flight scale $Q_f = 64$:
 within $0.8$ percent of $1/\sqrt3$ for every $d$, exact on $(1,1,1)$
 \cite{beamlaw}.
+
+\paragraph{The pace of the rows, and the octahedron.} Two rules are the
+whole kinematics of a row: it crosses at most one Link per interval (the
+locality of the GameBoard), and it follows the digital line of its
+direction, so that after one period of $S_1 = |d_x| + |d_y| + |d_z|$
+Links its displacement is the vector $d$ itself (straightness). The Nodes
+one interval away from a Node are the six neighbours at the ends of its
+Links, the vertices of the octahedron $|x| + |y| + |z| \le 1$
+(Figure~\ref{fig:octahedron}); the octahedron scaled by the age is the
+causal front, inside which every row stays. A row's mean Euclidean pace
+lies within $1/T_d$ of the octahedron's inscribed sphere
+(Proposition~\ref{prop:pace}), so the vertex's pace, one Link per
+interval along a heading, is reached by no row's mean pace: the front is
+a bound and not a signal.
+
+\begin{proposition}[The pace]\label{prop:pace}
+For every primitive direction $d$, $S_1 Q_f \le T_d$: the Manhattan pace
+$S_1 Q_f/T_d$ is at most one Link per interval on every digital line, and
+$S_1 = \sqrt3\,|d|$ exactly when $|d_x| = |d_y| = |d_z|$. A pace $v$ that
+is the same in every direction and at most one Link per interval on every
+line satisfies $v \le |d|/S_1$ for every $d$, hence $v \le 1/\sqrt3$, the
+radius of the octahedron's inscribed sphere; and the table's Euclidean
+pace obeys $1/\sqrt3 \le Q_f|d|/T_d < (1/\sqrt3)(1 + 1/T_d)$ for every $d$.
+\end{proposition}
+\begin{proof}
+$S_1^2 = (|d_x| + |d_y| + |d_z|)^2 \le 3(d_x^2 + d_y^2 + d_z^2)$ is the
+Cauchy--Schwarz inequality against $(1, 1, 1)$, an equality exactly when
+the three sizes are equal; so $S_1 Q_f \le \sqrt{3|d|^2Q_f^2}$, and since
+$S_1 Q_f$ is an integer, $S_1 Q_f \le \lfloor\sqrt{3|d|^2Q_f^2}\rfloor =
+T_d$. A row at the Euclidean pace $v$ on the line of $d$ makes $S_1$
+Links per length $|d|$, so $vS_1/|d|$ Links per interval on average, and
+at most one Link per interval bounds this by $1$: $v \le |d|/S_1$. The
+least of $|d|/S_1$ over directions is $1/\sqrt3$, on the cube diagonals
+($1/\sqrt n$ in $n$ dimensions). $T_d \le \sqrt3\,Q_f|d| < T_d + 1$ gives
+the pace's interval.
+\end{proof}
+
+So $c = 1/\sqrt3$ Links per interval is the largest isotropic pace the two
+rules allow, and the table sits at it; that it sits at the supremum and
+not below is a third statement of the design (assumed), not a consequence
+of the two, so the value rests on three statements: locality,
+straightness and the supremum. Over the $1\,780\,418$ primitive
+directions with components within $64$ the bound holds on every one, with
+the integer equality $S_1 Q_f = T_d$ on $2072$: the $8$ cube diagonals,
+and $2064$ directions near them where the floor closes a gap below
+$1/Q_f$ (the shortest $(22, 21, 21)$, $S_1 = 64$, $\sqrt3|d| = 64.016$);
+on all of these the row crosses exactly one Link per interval
+(computation, \texttt{light\_speed.txt}; the design's map counts the same
+$1\,780\,418$ and $2072$ and describes the $2072$ as cube diagonals, which
+is corrected here \cite{lightspeed}). The pace is $64/110 = 0.5818$ on a
+heading, $0.77$ percent above $1/\sqrt3$, $0.49$ percent above on the
+plane diagonal, exact on the cube diagonal; the anisotropy is the table's
+rounding, below $1/T_d$ in every direction and so of order $1/(\sqrt3
+Q_f)$; a measured bound on the anisotropy of $c$ in the lattice's frame
+puts $Q_f$ at or above its inverse, of order $5.8 \times 10^{17}$ for
+$10^{-18}$ \cite{nagel2015} (a two-arm interferometer at rest with both
+arms on headings sees nothing, the two paces being equal by the $48$; the
+rotating resonators of \cite{nagel2015} would see the cubic pattern to the
+same order; what the law says of a laboratory in motion is
+Section~\ref{sec:lorentz}). Nothing measured enters the value. The number
+is known on the cubic lattice: the Courant condition of the standard
+second-order scheme for the wave equation, $c\,\Delta t/\Delta x \le
+1/\sqrt n$ \cite{cfl1928}, whose necessity is this same argument (the
+sphere of radius $c\,\Delta t$ inside the stencil's octahedron), and the
+lattice Boltzmann sound speed $c_s^2 = 1/3$, from the isotropy of the
+lattice tensor \cite{qian1992}. What the paper adds is the exact integer
+table sitting at the bound, its rounding's anisotropy as a bound on the
+grain, and the program's intent of one operator for rows and bodies (a
+body's drive as the same operator at a fraction: decided and in build,
+not run \cite{log}); it claims no novelty for the number
+(Section~\ref{sec:lit}). The symmetry of the octahedron and of the flight
+is the group of the $48$ signed permutations of the axes ($3! \times 2^3$;
+$24$ of determinant $+1$, the rotations, and $24$ of $-1$, the
+reflections), the lattice's stand-in for the rotation group: $T_d$ and
+$S_1$ are invariant under all $48$, the digital line's tie by axis order
+is not (on $(1, 1, 0)$, for half of the $48$, the line of $gd$ and $g$
+applied to the line of $d$ differ at the odd Links and agree at every
+whole period; on $(1, 0, 0)$ and $(2, 1, 0)$ they agree everywhere
+\cite{checks}), so the flight commutes with the $48$ at the periods and
+not between them. No body moves in the worlds of this paper.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.5\textwidth]{figures/octahedron.pdf}
+\caption{\label{fig:octahedron}The Nodes one interval from a Node. The six
+neighbours at the ends of the six Links (the Ports $\pm x$, $\pm y$,
+$\pm z$) are the vertices of the octahedron $|x| + |y| + |z| \le 1$, the
+causal front of one interval. Its inscribed sphere, of radius $1/\sqrt3$,
+touches the eight faces on the cube diagonals at $(\pm1, \pm1, \pm1)/3$
+and is the rows' pace $c$, the largest isotropic pace under one Link per
+interval (Proposition~\ref{prop:pace}); a row's mean pace lies within
+$1/T_d$ of the sphere and never at a vertex.
+The faint cube shares the octahedron's symmetry, the $48$ signed
+permutations of the axes, $3! \times 2^3$, $24$ rotations and $24$
+reflections told apart by the determinant, the lattice's stand-in for the
+rotation group. Drawn by \texttt{octahedron.py} from the definitions; no
+run.}
+\end{figure}
 
 \begin{definition}[Row and record]\label{def:row}
 A \emph{row} is $(x, d, \tau, p, e, h, r, \ell, w, m)$: Node, direction,
@@ -666,10 +764,16 @@ $65536$, the rotation is an isometry only up
 to that, and the record's total over $u$ takes eight values.
 \item Not a fixed $N$, hence not a prediction of nature's $S$: a
 constraint on $N$ under stated assumptions.
+\item Not a new number for $c$, and not $c$ from two rules: $1/\sqrt3$
+Links per interval is the Courant bound of the cubic lattice, reached by
+the same argument, and the lattice Boltzmann sound speed; the table's
+sitting at the supremum is a third statement of the design.
+Proposition~\ref{prop:pace} adds the exact integer table at the bound and
+the grain's anisotropy as a bound on $Q_f$.
 \item Not a continuum limit of the model as a whole (Section~\ref{sec:limits}
 states the computed limits), not spin or polarization (the labels are
 abstract), not bosons or fermions, not Lorentz invariance (one speed for
-every direction, no boost), not the classical limit as click density
+every direction, no boost; Section~\ref{sec:lorentz}), not the classical limit as click density
 (proposed, not run), not a treatment of noise or detector inefficiency.
 \item Not the tree of the archive's latest version: the runs are the
 tree named in Section~\ref{sec:measure}; the later code made the record
@@ -772,7 +876,8 @@ finite-$N$ departures of Section~\ref{sec:bell} are the terms of this
 limit, not a second law.
 
 \paragraph{The light cone and the wavelength.} The flight table moves
-every direction at $1/\sqrt3$ Links per interval within $1/T_d$: $0.8$
+every direction at $1/\sqrt3$ Links per interval within $1/T_d$
+(Proposition~\ref{prop:pace}): $0.8$
 percent fast on an axis, $0.5$ on the plane diagonal, exact on the body
 diagonal (the register's L7: a row of $17$ Links on an axis and a row of
 $24$ Links on the plane diagonal, at the same Euclidean distance to one
@@ -831,7 +936,9 @@ not a result here; what the limit inherits is the two exact conservations.
 are a rest frame. The front is isotropic to $0.8$ percent in that frame; nothing in the
 definitions says that a moving body reads the same $c$, so Lorentz
 invariance is not a limit of this model but a property it must show or
-lack, on worlds with moving clocks (the program's, not this paper's). The
+lack, on worlds with moving clocks (the program's, not this paper's;
+Section~\ref{sec:lorentz} states what the program's derivation has found
+and the decision that is open). The
 field equations of gravitation are not reachable from a model without
 mass: the program's rule that held content delays the flight would give,
 in the limit, an optical metric and its geodesics, not the equation the
@@ -839,6 +946,98 @@ delay field obeys; that derivation is open and listed in
 Section~\ref{sec:hyp}. The paper claims the two limits, the partial third
 up to its plateau, and the two conservations above, and neither of these
 two.
+
+\section{Lorentz: an open question of the theory}\label{sec:lorentz}
+
+The worlds of this paper have no body and no clock in motion, so nothing
+in Sections~\ref{sec:model} to \ref{sec:limits} depends on this section;
+it is here because a model with one pace in a rest frame owes the reader
+its position on Lorentz invariance, and the position is open. The
+statements below are the program's derivation on the same GameBoard with
+its law of bodies (a body's drive; the push of a body by the rows it
+reads), made on paper and in host scripts from that law's definitions,
+not run \cite{derivations}; each carries its section there. Notation:
+$\beta$ (beta) is a body's speed as a fraction of $c$, $\gamma$ (gamma)
+$= 1/\sqrt{1 - \beta^2}$ the Lorentz factor, $\mathbf n$ the unit vector
+from the retarded position of a source, $\boldsymbol\beta$ the velocity
+vector in units of $c$.
+
+\paragraph{What the operations give.} (i) One pace for every row
+(Proposition~\ref{prop:pace}) and, under the decided rule that a body's
+drive is the flight at a fraction of the same operator, one cap for rows
+and bodies (decided, in build, not run). (ii) The free rows converge to
+the wave equation at $c$ (asserted there, not among this paper's computed
+limits), whose symmetry group is Lorentz's: the covariance is the limit
+equation's, not the lattice's, whose symmetries are the translations and
+the $48$ (section 4.1). (iii) A body moving through a crowd of rows of
+every direction at equal density reads, by the crossing rule, the rest
+count exactly, the two senses cancelling, for every speed below the rows'
+pace on its axis, while a one-way count of one stream reads $1 \mp
+\beta$: the crossing count is null two-way and shows the preferred frame
+one-way (section 4.2); a two-way light clock is not null, (vi). (iv) The
+age moment of a source in uniform motion is the Li\'enard--Wiechert
+potential of the wave equation at $c$, its equipotentials Heaviside's
+ellipsoids contracted by $1/\gamma$ (section 12.1; the classical identity
+behind it checked to $10^{-15}$ in a host script). (v) The crossing
+rule's factor $1 - \mathbf n \cdot \boldsymbol\beta$ per direction is the
+number of the magnetic term, $1 - \beta^2$ on a transverse co-moving pair
+(section 12b.1). (vi) A bond kept by rows exchanged at $c$ slows by
+$\gamma^2$ along the motion and by $\gamma$ across it in the limit, the
+classical ether's light clock, and the derivation finds no object to
+contract by $1/\gamma$ to make the two equal (section 12.3).
+
+\paragraph{What they do not give.} (i) The push between moving bodies is
+the retarded flux along the retarded direction, one factor of $1/\gamma$
+short of the field that the magnetic factor multiplies in Maxwell's
+theory (section 12b.1). (ii) A bound orbit thrown at $0.21c$, in the
+Newtonian regime, contracts along the motion by $0.87$ to $0.96$ and
+slows by $1.31$ to $1.43$, where Lorentz gives $0.977$ and $1.024$;
+anisotropic, and unstable (section 12b.2, a host integration of the
+limit's equations, its pins for a run stated and the run not made).
+(iii) A body's own counter is not slowed by its speed at all: by the
+counter's rule the program's muon world would read its $64$th turn at the
+interval $64$ at every speed (section 4.3; the design's map; the world
+defined and not run), and the fastest coasting star of its Hubble world
+reads $z = 0.2636$ where the classical value is $0.2674$ and $\gamma$'s
+$0.315$ (registered in the program's series G2 \cite{register}). (iv)
+The dispersion is $v = p/(m + p/c)$ under the decided cap, not
+$p/\sqrt{m^2c^2 + p^2}$: $0.632c$ against $0.864c$ at $p = m$ in the
+map's units, the momentum at which Newton's pace is one Link per
+interval \cite{lightspeed}.
+
+\paragraph{Where nature has measured $\gamma$.} The muon's lifetime in
+flight at $\gamma = 29.3$ \cite{bailey1977}, the electron's speed against
+its kinetic energy \cite{bertozzi1964}, time dilation on stored ions at
+$0.34c$ to $2 \times 10^{-9}$ \cite{botermann2014}, and the isotropy of
+$c$ to $10^{-18}$ \cite{nagel2015}. Against these the law of the
+operations, as it stands, predicts differently on the muon and the stored
+ions (no slowing of a body's own counter, (iii) above); reaches no
+prediction for the electron's energy, since the law has no energy of
+motion (section 4.5); and on the isotropy of $c$ predicts, by (vi), the
+classical ether's two-way anisotropy of order $\beta^2/2$ for a
+laboratory moving through the lattice, of order $10^{-8}$ at the Earth's
+orbital speed and reversing over the year, which the $10^{-18}$ bound
+refutes unless the laboratory is at rest in the lattice's frame, which
+its annual change of velocity forbids; the grain bound of
+Proposition~\ref{prop:pace} is a second, weaker consequence on top of
+that.
+
+\paragraph{The open decision, three routes.} (A) The operations alone:
+the law predicts against those measurements, the isotropy of $c$ among
+them by (vi), unless a reading on the detector's side gives $\gamma$
+where the GameBoard's count does not. (B)
+A seventh operation, an integer root at a declared grain, under a
+hypothesis identity of its own outside the law (in the design's map the
+muon's $64$th turn moves to the intervals $71$ and $126$ at $0.43c$ and
+$0.86c$ \cite{lightspeed}). (C) A reading budget: a moving body's owed
+count grows with the rows it meets at their relative speed
+$|\mathbf n - \boldsymbol\beta|$, whose isotropic mean over the sphere is
+$1 + \beta^2/3$, a slowing of the operations' own order and not
+Lorentz's number (ordered on 2026-09-21 as the derivation's section 12c,
+in preparation). The choice is open in
+the program and the paper records it so; whichever route is taken, the
+results of Sections~\ref{sec:theorems} to \ref{sec:bell} are unchanged,
+since no row of this paper's worlds carries a mass or a clock in motion.
 
 \section{Literature and positioning}\label{sec:lit}
 
@@ -862,7 +1061,15 @@ the collapse; here one lattice, one record with rows, one click with an
 exact integer rule and finite tables whose consequences are computed.
 Lattice gases \cite{hpp1976,fhp1986} are exact integer dynamics with the
 continuum law in the limit; the GameBoard is of that kind, with the
-click's reading of one record added. Quantum cellular automata and
+click's reading of one record added. Its pace $1/\sqrt3$ is the cubic
+lattice's known number, the Courant bound of the discretised wave
+equation \cite{cfl1928}, reached in Proposition~\ref{prop:pace} by the
+Courant condition's own domain-of-dependence argument, and the sound
+speed of the lattice Boltzmann models \cite{qian1992}, which stream every
+population with one operator as the flight does; what the proposition
+adds is the exact integer table at the bound, whose rounding's
+anisotropy is a bound on the grain of the kind every lattice model of
+light owes to the isotropy measurements \cite{nagel2015}. Quantum cellular automata and
 quantum lattice gases \cite{bialynicki1994,meyer1996,arrighi2019} are
 local unitary rules on complex amplitudes; here no complex number is on
 the lattice, the split is an exact integer isometry, and the tables'
@@ -896,7 +1103,7 @@ fan's spots.
 The code, the worlds of series L with their expectation file written
 before the runs, the reading tool that replays a run's register into its
 world list, the check scripts of the exact computations with their
-outputs, the runs' summary and the figure script are archived
+outputs, the runs' summary and the two figure scripts are archived
 \cite{zenodo}; the register entry of series L carries every run's world,
 duration and source fingerprint, and a table beside the manuscript maps
 each number of this paper to its source. The project's declared
@@ -924,9 +1131,11 @@ submission.]
 \bibitem{paper2} A. Gonen, Redshift from delay growth on a closed integer GameBoard: the law, its kinematic correspondence to a scale factor, and the supernova test (2026), arXiv preprint.
 \bibitem{beamlaw} The Beam Law and its implementation notes (note 37, the amplitude law), \texttt{docs/BEAM\_LAW.md} of the archived code \cite{zenodo}.
 \bibitem{design} The design of \texttt{amplitude-v1} and its check outputs, \texttt{docs/designs/amplitude-v1/} of the archived code \cite{zenodo}.
-\bibitem{register} The experiments register, series L, \texttt{docs/EXPERIMENTS.md} of the archived code \cite{zenodo}, with the worlds \texttt{examples/events/amplitude/}, their \texttt{expectations.json} and the reading tool \texttt{tools/amplitude\_path.py}.
-\bibitem{checks} \texttt{paper/click\_model/checks/s\_of\_n.py}, \texttt{which\_path\_window.py}, \texttt{tables\_norm.py}, \texttt{information\_transfer.py} and \texttt{limits.py} with their outputs, \texttt{figures/summary.json} and \texttt{NUMBERS.md}, in the archived code \cite{zenodo}.
-\bibitem{log} The dated log of 2026-09-20, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}, records 96 (coherence within one Node), 101 (the landing), 102 (the checks of this paper), 105 (the review of the pair and the gate: the marginals re-read over all 4096 setting pairs, the arms' order), 144 (the cone, L7), 156 (the two slits: the wheel, the exact phase, the 18 intervals) and 160 (the fan's angular weights).
+\bibitem{register} The experiments register, series L (and, for Section~\ref{sec:lorentz}, series G2), \texttt{docs/EXPERIMENTS.md} of the archived code \cite{zenodo}, with the worlds \texttt{examples/events/amplitude/}, their \texttt{expectations.json} and the reading tool \texttt{tools/amplitude\_path.py}.
+\bibitem{checks} \texttt{paper/click\_model/checks/s\_of\_n.py}, \texttt{which\_path\_window.py}, \texttt{tables\_norm.py}, \texttt{information\_transfer.py}, \texttt{limits.py} and \texttt{light\_speed.py} with their outputs, \texttt{figures/summary.json} and \texttt{NUMBERS.md}, in the archived code \cite{zenodo}.
+\bibitem{log} The dated log of 2026-09-20, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}, records 96 (coherence within one Node), 101 (the landing), 102 (the checks of this paper), 105 (the review of the pair and the gate: the marginals re-read over all 4096 setting pairs, the arms' order), 144 (the cone, L7), 156 (the two slits: the wheel, the exact phase, the 18 intervals), 160 (the fan's angular weights) and, for the pace and Section~\ref{sec:lorentz}, records 186 and 191 (c as the flight's norm; the one operator for rows and bodies), 213, 224 and 228 (the derivation's sections 12, 13 and 12b), 226 (the group of 48); the three routes of Section~\ref{sec:lorentz} are the day's item of 2026-09-21 that ordered the derivation's section 12c, not yet a record.
+\bibitem{lightspeed} c in the vector law, \texttt{docs/designs/light\_speed/FORM.md} with the map \texttt{light\_speed\_map.py} and its output, of the archived code \cite{zenodo}.
+\bibitem{derivations} The derivations of the beam law, \texttt{docs/DERIVATIONS\_BEAM.md} of the archived code \cite{zenodo}, sections 4 (special relativity as the limit's symmetry), 12 and 12b (Lorentz from the delay field) and 13 (the one constant).
 \bibitem{bell1964} J. S. Bell, Physics 1, 195 (1964).
 \bibitem{chsh1969} J. F. Clauser, M. A. Horne, A. Shimony and R. A. Holt, Phys. Rev. Lett. 23, 880 (1969).
 \bibitem{jarrett1984} J. P. Jarrett, No\^us 18, 569 (1984).
@@ -937,6 +1146,12 @@ submission.]
 \bibitem{gorard2020} J. Gorard, Complex Systems 29, 537 (2020).
 \bibitem{hpp1976} J. Hardy, O. de Pazzis and Y. Pomeau, Phys. Rev. A 13, 1949 (1976).
 \bibitem{fhp1986} U. Frisch, B. Hasslacher and Y. Pomeau, Phys. Rev. Lett. 56, 1505 (1986).
+\bibitem{cfl1928} R. Courant, K. Friedrichs and H. Lewy, Math. Ann. 100, 32 (1928).
+\bibitem{qian1992} Y. H. Qian, D. d'Humi\`eres and P. Lallemand, Europhys. Lett. 17, 479 (1992).
+\bibitem{nagel2015} M. Nagel, S. R. Parker, E. V. Kovalchuk, P. L. Stanwix, J. G. Hartnett, E. N. Ivanov, A. Peters and M. E. Tobar, Nature Commun. 6, 8174 (2015).
+\bibitem{bailey1977} J. Bailey et al., Nature 268, 301 (1977).
+\bibitem{bertozzi1964} W. Bertozzi, Am. J. Phys. 32, 551 (1964).
+\bibitem{botermann2014} B. Botermann et al., Phys. Rev. Lett. 113, 120405 (2014).
 \bibitem{bialynicki1994} I. Bialynicki-Birula, Phys. Rev. D 49, 6920 (1994).
 \bibitem{meyer1996} D. A. Meyer, J. Stat. Phys. 85, 551 (1996).
 \bibitem{arrighi2019} P. Arrighi, Natural Computing 18, 885 (2019).

@@ -499,3 +499,113 @@ experimental values against the PDFs, the release tag and version DOI,
 the compile), and the register's re-pin when the fraction-free batch and
 the wheel land, after which the summary is re-run and the numbers
 re-checked in one pass.
+
+## The c judgement, the Lorentz section and the octahedron (2026-09-21, the owner's directions through the Boss, records 217, 219, 220, 226, 230)
+
+The owner: "go in the direction of c in the paper if it is a breakthrough";
+"summarise the decision to be made on Lorentz; put it in the paper";
+"the octahedron is needed, a picture of it in the paper"; the architect's
+four abstractions to be used after a referee round. The Boss's three
+conditions for "a breakthrough": (i) the value of c in Links per interval
+follows from locality and straightness alone with no measured input; (ii)
+a prediction absent from physics that a measurement can refute (the
+finite-grain anisotropy); (iii) it survives the known lattice bounds.
+
+The judgement, after referee round 7: **not a breakthrough by the three
+conditions; c is a section** (a proposition with the figure in the model
+section, and a sentence each in "what is not claimed" and the
+positioning). (i) Fails as posed: the two rules give the supremum
+1 / sqrt 3 of isotropic paces (Cauchy-Schwarz, the proof in the paper),
+and the flight table's sitting at the supremum is a third statement of
+the design, not a consequence (a slower isotropic pace obeys both rules;
+DERIVATIONS_BEAM 13.2 (a) says the same: isotropy at the diagonal's pace
+is a second axiom beside the causal bound); no measured input enters, but
+the value rests on three statements, not two. (ii) Holds in kind and not
+in novelty: the anisotropy is the rounding's, below 1 / T_d, of order
+1 / (sqrt 3 Q_f) (0.77 percent on a heading at Q_f = 64), and an isotropy
+bound of 1e-18 puts Q_f at or above 5.8e17 in order; but a lattice
+anisotropy of c bounded by the isotropy experiments is what every lattice
+model of light predicts in kind, so the prediction is a bound on the
+grain, not a number physics lacks; and, worse for the law, its own bond
+clock (the derivation's 12.3, gamma^2 along and gamma across, nothing to
+contract) predicts the classical ether's two-way anisotropy of order
+beta^2 / 2, 1e-8 at the Earth's orbital speed and reversing over the
+year, which the same 1e-18 refutes for route (A) whatever the lattice's
+frame. (iii) Fails: 1 / sqrt 3 in lattice units is the Courant bound of
+the discretised wave equation on the cubic grid (1 / sqrt n), whose
+necessity half is this very argument (the sphere of radius c dt inside
+the stencil's octahedron), and the lattice Boltzmann sound speed c_s^2 =
+1 / 3, whose models also stream every population with one operator; what
+the paper adds is the exact integer table at the bound, its rounding's
+anisotropy as a bound on the grain, and the intent of one operator for
+rows and bodies (form B: decided, in build, not on main), a design intent
+and not a result. A finding for the design: FORM.md section 1 says the 2072
+equalities are "the cube diagonals"; 8 are, and 2064 are directions near
+them where isqrt's floor closes a gap below 1 / Q_f (the shortest
+(22, 21, 21)); the bound and the pace's interval are unaffected.
+
+Written: the paragraph "The pace of the rows, and the octahedron" with
+Proposition 1 (the pace) and Figure 1 (`octahedron.py`,
+`figures/octahedron.pdf`) after the flight table's sentence in the model
+section; the architect's "Four abstractions" paragraph was drafted after
+"In one sentence" and cut on the referee's finding (M8 below); the
+section "Lorentz: an open question of the theory" before the literature
+(what the operations give, what they do not, where nature measured
+gamma, the three routes A, B, C); the check `checks/light_speed.py`;
+seven references (CFL 1928, Qian 1992, Nagel 2015, Bailey 1977, Bertozzi
+1964, Botermann 2014; the design's FORM.md and the derivation as
+repository sources); NUMBERS.md rows. The title and the abstract are
+unchanged (the abstract has ten characters of room; a sentence on c would
+need the owner's cut elsewhere).
+
+## Referee round 7 (2026-09-21): the c material and the Lorentz section, major revision, applied
+
+Verdict: major revision; nine majors and eleven minors, every one verified
+against main at 88d843ef (FORM.md, the map's output, LAW.md, the
+derivation's sections 4, 12, 12b, 13, the log's records 186 to 228, the
+engine's `_bresenham`), the check re-run byte-identical and the figure
+re-rendered. Applied the same day. M1: the isotropy measurement does not
+merely bound the grain; by the law's own bond clock (12.3) a moving
+laboratory's two-way light clock shows the classical ether's anisotropy
+of order beta^2 / 2 (1e-8 at the Earth's orbital speed, annual), which
+1e-18 refutes for route (A): rewritten in "Where nature has measured" and
+in route (A). M2: "Michelson-Morley null two-way" was the crossing count
+of an isotropic crowd at equal density below the rows' pace on the axis,
+not a light clock: (iii) rewritten with the apparatus and the condition,
+and "a two-way light clock is not null, (vi)". M3: the dispersion's 0.632
+against 0.864 is the map's row p = m in label units (Newton's pace one
+Link per interval), not p = m c: relabelled in the text and NUMBERS.md.
+M4: the muon world J4 is defined and not run: "would read", with the
+source. M5: route (C)'s 1 + beta^2 / 3 is the sphere mean of the relative
+speed |n - beta| (the mean of the crossing factor 1 - n . beta is 1):
+the quantity named, and record 230 no longer cited (not yet in any log;
+"the item of 2026-09-21 that ordered section 12c"). M6: "a bound no row
+reaches" was false (2072 directions cross one Link per interval; the
+(1, 1, 1) row rides the front at every period): rewritten in terms of the
+mean pace within 1 / T_d of the inscribed sphere, the vertex's pace
+reached by no row's mean pace; caption likewise. M7: "reached by another
+road" was not accurate, the Courant condition's necessity being the same
+domain-of-dependence argument: the text, "what is not claimed", the
+positioning sentence, the check's section 5 and the judgement above say
+so, and "the road" is no longer claimed. M8: the "Four abstractions"
+paragraph asserted a Noether-type claim the paper does not have (the
+split's isometry is not an invariant of a group action; no collision
+acts in these worlds) and used six symbols before their definitions: cut.
+M9: Bertozzi's speed against kinetic energy is not "predicted
+differently" but not reached (the law has no energy of motion, 4.5).
+Minors: the proof's missing step v <= |d| / S_1 added; the map's
+description of the 2072 as cube diagonals said to be corrected here; the
+grain bound "of order", with the fixed two-arm null on headings and the
+rotating resonators' cubic pattern; "the crossing rule's factor"; the
+1e-15 as the classical identity's check; (ii) "asserted there"; the tie
+"for half of the 48"; the angular-momentum clause cut (none is defined
+here); the caption's vertices as the six neighbours at the Ports' ends
+and the label overlap moved; "beta" written at first use; "the standard
+second-order scheme"; NUMBERS.md's rows for J4 and record 230 corrected;
+the check's "the mathematician's map" made "the design's map". The
+literature coordinates (CFL 1928, Qian 1992, Bailey 1977, Bertozzi 1964,
+Botermann 2014, Nagel 2015) confirmed by the referee. Not applied: none.
+Two findings go to the Boss: FORM.md section 1's "2072 cube diagonals"
+(8 are; 2064 are near ones where isqrt's floor closes a gap below
+1 / Q_f), and the Lorentz section's reading that the law's bond clock
+predicts a Michelson-Morley signal a moving laboratory does not see.

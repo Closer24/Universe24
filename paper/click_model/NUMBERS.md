@@ -8,7 +8,11 @@ fingerprint), **design** (the check outputs of
 the repository's tables, not an engine run), and **map** (the mathematician's
 `two_slits_map.py` of `docs/designs/fraction_free/` on the merged tree, records
 156 and 160; record 160's width sweep is a scratch map not in the repository,
-labelled so). Literature values are their own kind, cited by the paper. The paper cites a run only from
+labelled so). For the pace and the Lorentz section the design kind also names
+`docs/designs/light_speed/` (FORM.md and `light_speed_map.out`) and the
+derivation `docs/DERIVATIONS_BEAM.md` with its host scripts (sections 4, 12,
+12b, 13), all on main at 88d843ef; the register kind there is series G2.
+Literature values are their own kind, cited by the paper. The paper cites a run only from
 the register. The runs were reproduced for the figures on the paper's tree, the merge
 `4ccf65c7` of main's `d2064195` (source fingerprint `731d0f56c9f9`; main's
 own is `48a9d1c91661`, the two trees differing by one docstring), every
@@ -74,3 +78,17 @@ re-run in the register after the gate's fix with the same integers;
 | The register's ceiling: balanced (1, 1) splits, (3, 4, 5) splits, (20, 21, 29) splits and label rotations that fit below 2^62 | 62; 13; 6; 3 (the fourth refused) | design and register | the design's section 10; L5 |
 | The choosers' periods and the births that cover their common period with N | 3 and 5; 960 = lcm(3, 5, 64) | register (the world file) | `bell_choosers.json`; `make_worlds.py` |
 | The two-slit sets | 80 | register (the generator's reading) | `expectations.json` two_slits.sets |
+| The primitive directions with components within 64; the integer equality S_1 Q_f = T_d; the cube diagonals among them; the near ones; the shortest near one | 1,780,418; 2072; 8; 2064; (22, 21, 21) with S_1 = 64 and sqrt 3 |d| = 64.016 | computation (the map's 1,780,418 and 2072 agree; FORM.md's "all cube diagonals" does not, reported) | `checks/light_speed.txt` section 1; `light_speed_map.out` A |
+| The pace on a heading, the plane diagonal, the cube diagonal at Q_f = 64 | 64/110 = 0.5818 (0.77 percent above 1/sqrt 3); 0.49 percent above; exact | computation | `checks/light_speed.txt` section 2 |
+| The anisotropy's scale; the bound on Q_f from an isotropy of c to 1e-18 | 1/(sqrt 3 Q_f); Q_f >= 5.8e17 | computation (the 1e-18 is literature, Nagel et al. 2015) | `checks/light_speed.txt` section 2 |
+| The supremum of isotropic paces under one Link per interval in n = 1, 2, 3 | 1, 1/sqrt 2, 1/sqrt 3 | computation (Cauchy-Schwarz; the proof in the paper) | `checks/light_speed.txt` section 3 |
+| The group of the octahedron: signed axis permutations; rotations; reflections | 48 = 3! x 2^3; 24; 24 | computation (main's `core.game_board.cube_symmetries` names the same 48) | `checks/light_speed.txt` section 4; record 226 |
+| The digital line under the 48 over two periods: positions differing on (1, 1, 0) and (5, 2, 1); on (1, 0, 0) and (2, 1, 0); at whole periods | 48 of 192 and 48 of 768; 0; 0 | computation (the line rule of LAW.md 4.1) | `checks/light_speed.txt` section 4 |
+| The Courant bound in n dimensions; the lattice Boltzmann sound speed | 1/sqrt n; c_s^2 = 1/3 | literature (Courant, Friedrichs and Lewy 1928; Qian, d'Humieres and Lallemand 1992) | `checks/light_speed.txt` section 5 |
+| Lorentz: the thrown orbit at 0.21 c, contraction and slowing, against Lorentz's | 0.87 to 0.96 and 1.31 to 1.43; 0.977 and 1.024 | design (the derivation's host integration, section 12b.2) | DERIVATIONS_BEAM.md 12b.2; record 228 |
+| Lorentz: the muon's 64th turn at every speed (series J4, defined and not run); under lorentz-v1 at 0.43 c and 0.86 c | 64; 71 and 126 | design (FORM.md section 4; the map's section E; HYPOTHESES entry 21) | `light_speed_map.out` E; record 186 |
+| Lorentz: the fastest coasting star's z, the classical value, gamma's | 0.2636; 0.2674; 0.315 | register (series G2, `coasting_none`) and design (the derivation's 4.3) | DERIVATIONS_BEAM.md 4.3 |
+| Lorentz: the dispersion under form B against relativity at p = m in the map's units (Newton's pace one Link per interval; c = 32/55 on a heading) | 0.632 c; 0.864 c | design (the map's table B) | `light_speed_map.out` B; FORM.md section 2 |
+| Lorentz: the classical identity behind Heaviside's ellipsoids checked; the bond clock's factors in the limit; the isotropic mean of the relative speed \|n - beta\| over the sphere | 1e-15; gamma^2 along and gamma across; 1 + beta^2/3 | design (the derivation's 12.1, 12.3); the mean is the Boss's item of 2026-09-21 ordering section 12c, not yet in the log (referee round 7, M5) | record 213; the item of 2026-09-21 |
+| Lorentz: nature's measurements | gamma = 29.3 (Bailey 1977); 0.34 c to 2e-9 (Botermann 2014); isotropy 1e-18 (Nagel 2015); Bertozzi 1964 | literature | the paper's bibliography |
+| Lorentz: the classical ether's two-way anisotropy for a laboratory at the Earth's orbital speed | of order beta^2/2 = 1e-8 at 1e-4 c | computation (from (vi), the derivation's 12.3) | referee round 7, M1 |

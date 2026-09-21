@@ -1,0 +1,37 @@
+
+== 1. S_1 Q_f <= T_d on every primitive direction with components within 64, Q_f = 64
+  primitive directions: 1780418; S_1 Q_f <= T_d on every one (asserted)
+  equality S_1 Q_f = T_d on 2072 directions: the 8 cube diagonals (+-1, +-1, +-1), where S_1 = sqrt 3 |d| exactly, and 2064 directions near them where isqrt's floor closes a gap below 1 / Q_f (the shortest (-22, -21, -21): S_1 = 64, sqrt 3 |d| = 64.0156); on all of them the row crosses exactly one Link per interval and its Euclidean pace |d| / S_1 exceeds 1 / sqrt 3 by less than 1 / T_d
+  the Euclidean pace Q_f |d| / T_d: slowest 0.5774 on (-61, -61, -19), fastest 0.5818 on (1, 0, 0); 1 / sqrt 3 = 0.5774
+
+== 2. The pace per direction and the anisotropy's scale 1 / (sqrt 3 Q_f)
+   Q_f        (1, 0, 0)    (1, 1, 0)    (1, 1, 1)    (2, 1, 0)    (3, 1, 0)    (5, 2, 1)   bound 1/(sqrt3 Q_f)
+        64     0.581818     0.580190     0.577350     0.579386     0.578245     0.577500   9.02e-03
+       256     0.577878     0.577414     0.577350     0.577632     0.577420     0.577500   2.26e-03
+      4096     0.577389     0.577357     0.577350     0.577377     0.577369     0.577351   1.41e-04
+   1048576     0.577351     0.577350     0.577350     0.577350     0.577350     0.577350   5.51e-07
+  at Q_f = 64 the heading's pace is 64 / 110 = 0.5818, 0.77 percent above 1 / sqrt 3; the plane diagonal 0.49 percent; the cube diagonal exact
+  a measured anisotropy of c below 1e-09 (in the lattice's frame) needs Q_f >= 1 / (sqrt 3 x 1e-09) = 5.8e+08
+  a measured anisotropy of c below 1e-17 (in the lattice's frame) needs Q_f >= 1 / (sqrt 3 x 1e-17) = 5.8e+16
+  a measured anisotropy of c below 1e-18 (in the lattice's frame) needs Q_f >= 1 / (sqrt 3 x 1e-18) = 5.8e+17
+  the anisotropy is the table's rounding on the heading, both ways along the line; a bound of order 1e-18 (Nagel et al. 2015) puts Q_f above 5.8e17 if the laboratory is the lattice's frame
+
+== 3. The supremum of isotropic paces under one Link per interval: min |d| / S_1 over directions
+  n = 1: the cube diagonal (1,) gives |d| / S_1 = 1.0000 = 1 / sqrt 1
+  n = 2: the cube diagonal (1, 1) gives |d| / S_1 = 0.7071 = 1 / sqrt 2
+  n = 3: the cube diagonal (1, 1, 1) gives |d| / S_1 = 0.5774 = 1 / sqrt 3
+  every other direction gives more (Cauchy-Schwarz), so 1 / sqrt 3 is the largest pace the same in every direction that crosses at most one Link per interval on every digital line; a slower isotropic pace also obeys both rules: the flight table's choice of the supremum is a third statement, not a consequence of the two
+
+== 4. The octahedron of one interval, its inscribed sphere and the group of 48
+  the L1 unit ball |x| + |y| + |z| <= 1: vertices the six Ports, faces x +- y +- z = +-1 at the distance 0.5774 = 1 / sqrt 3 from the Node, touched at (+-1, +-1, +-1) / 3 on the cube diagonals
+  signed axis permutations: 48 = 3! x 2^3; determinant +1 (rotations) 24, -1 (reflections) 24
+  (1, 0, 0): T_d and S_1 invariant under all 48: True; the digital line of g d against g applied to the line of d over two periods (2 Links): 0 of 96 Node positions differ (the tie by axis order), 0 of them at a whole period
+  (1, 1, 0): T_d and S_1 invariant under all 48: True; the digital line of g d against g applied to the line of d over two periods (4 Links): 48 of 192 Node positions differ (the tie by axis order), 0 of them at a whole period
+  (2, 1, 0): T_d and S_1 invariant under all 48: True; the digital line of g d against g applied to the line of d over two periods (6 Links): 0 of 288 Node positions differ (the tie by axis order), 0 of them at a whole period
+  (5, 2, 1): T_d and S_1 invariant under all 48: True; the digital line of g d against g applied to the line of d over two periods (16 Links): 48 of 768 Node positions differ (the tie by axis order), 0 of them at a whole period
+
+== 5. The known lattice numbers to tell apart
+  the Courant bound of the wave equation on the cubic grid in 1 dimension(s): c dt / dx <= 1 / sqrt 1 = 1.0000
+  the Courant bound of the wave equation on the cubic grid in 2 dimension(s): c dt / dx <= 1 / sqrt 2 = 0.7071
+  the Courant bound of the wave equation on the cubic grid in 3 dimension(s): c dt / dx <= 1 / sqrt 3 = 0.5774
+  the lattice Boltzmann sound speed on D3Q19 (and D2Q9): c_s^2 = 1 / 3 of the lattice speed squared, c_s = 0.5774 in lattice units; in the click model the same number by the Courant condition's own domain-of-dependence argument (the sphere of radius c dt inside the stencil's octahedron), on an exact integer table
