@@ -80,7 +80,7 @@ def world(width: int, reading: str) -> dict[str, object]:
             "amount": TURN * K + 1400000,
             "phase": 0,
             "fixed": True,
-            "lamp": {"rate": [F, 1], "directions": [[1, 0, 0]]},
+            "lamp": {"rate": [F, 1], "wheel": [1, N], "directions": [[1, 0, 0]]},
         }
         for y in lit
     ]

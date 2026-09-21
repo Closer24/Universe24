@@ -12,13 +12,16 @@ click at a set, an open face, the border `lifetime`) and, at the record's
 COMPLETION (every unit of the record ended: its live count reaches 0
 through the apparatus's Port events, the births, the splits, the ends and
 the cancels the merge reports), chooses one offer by the record's birth
-phase u on the ladder of the offers' weights, normalised by their sum, the
-rungs at the nearest integer (the owner's decision (a)):
+coordinate u on the ladder of the offers' weights, normalised by their
+sum, the rungs at the nearest integer on the record's wheel W (the owner's
+decision (a); the birth wheel of 2026-09-21, BEAM_LAW note 43: W the
+denominator of the lamp's declared rate [r, W], u = ordinal x r mod W,
+W = N under [1, N]):
 
-    b_k = (2 N C_k + Total) // (2 Total),   b_0 = 0, b_K = N,
+    b_k = (2 W C_k + Total) // (2 Total),   b_0 = 0, b_K = W,
 
 the click the cell k with b_{k-1} <= u < b_k. No draw at the detector: the
-randomness is the clock of the birth; over births, Born. The GameBoard never
+randomness is the count of the birth; over births, Born. The GameBoard never
 reads the layer, and the layer reads the GameBoard only through the
 apparatus's events (principle 5: the only non-local operation, at the
 one-way border, owned by the apparatus).
@@ -231,10 +234,11 @@ def common_denominator(held: int, arriving: int) -> tuple[int, int, int]:
 def rungs(weights: list[tuple[int, int]], steps: int) -> tuple[list[int], tuple[int, int]]:
     """The ladder (the design's section 3.3): the cells' weights as pairs
     (numerator, multiplicity), the cumulative C_k over the common
-    denominator D and the rungs b_k = (2 N C_k + Total) // (2 Total) at
-    the nearest integer, b_K = N; returns the rungs and the total as the
-    reduced pair. Every u = 0 .. N - 1 falls in exactly one cell; an offer
-    below Total / 2N may get an empty cell."""
+    denominator D and the rungs b_k = (2 W C_k + Total) // (2 Total) at
+    the nearest integer on the wheel `steps` = W (N under [1, N]), b_K =
+    W; returns the rungs and the total as the reduced pair. Every u = 0 ..
+    W - 1 falls in exactly one cell; an offer below Total / 2W may get an
+    empty cell."""
     denominator = 1
     for _, m in weights:
         denominator = lcm(denominator, m)
@@ -343,7 +347,8 @@ class Offer:
 @dataclass
 class LiveRecord:
     """The layer's table entry of one record (the design's section 1.2):
-    its identity, its family, the birth phase u, the tick of the birth,
+    its identity, its family, the birth coordinate u and its wheel W (the
+    rungs' modulus, N under [1, N]), the tick of the birth,
     the birth norm T = sum of the branches' weights squared (a report; the
     ladder is normalised by the total of the offers), the joint labels
     (the set, with the declared weights of the birth as a report: the rows
@@ -353,6 +358,7 @@ class LiveRecord:
     identity: int
     family: int
     u: int
+    wheel: int
     born: int
     norm: int
     labels: dict[int, int]
@@ -437,12 +443,15 @@ class Layer:
         labels: dict[int, int],
         arms: int,
         units: int,
+        wheel: int,
     ) -> LiveRecord:
-        """A new record: u, its labels and weights, its arms, its live count
-        (the units born; a rebirth births once with 0 and the splits that
-        re-create its rows add theirs)."""
+        """A new record: u on its wheel W, its labels and weights, its arms,
+        its live count (the units born; a rebirth births once with 0 and the
+        splits that re-create its rows add theirs)."""
         norm = sum(w * w for w in labels.values())
-        found = LiveRecord(identity, family, u, tick, norm, dict(labels), arms, [norm] * arms, units)
+        found = LiveRecord(
+            identity, family, u, wheel, tick, norm, dict(labels), arms, [norm] * arms, units
+        )
         self.records[identity] = found
         self.born += 1
         if units <= 0:
@@ -841,9 +850,10 @@ class Layer:
             self.completed += 1
             cells = self.cells(found)
             weights = [(numerator, multiplicity) for _, numerator, multiplicity, _ in cells]
-            ladder, total = rungs(weights, self.steps)
-            # The cell by the comparison of products; the rungs a report.
-            k = cell_of(weights, self.steps, found.u)
+            # The ladder on the record's wheel W (N under [1, N]); the cell
+            # by the comparison of products, the rungs a report.
+            ladder, total = rungs(weights, found.wheel)
+            k = cell_of(weights, found.wheel, found.u)
             chosen: list[list[object]] | None = None
             weight: list[int] = [0, 1]
             windows: list[list[object]] | None = None

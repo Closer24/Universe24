@@ -429,7 +429,7 @@ def test_a_lamp_short_of_one_quantum_per_direction_is_refused():
                     "family": "light",
                     "amount": content,
                     "fixed": True,
-                    "lamp": {"rate": [1, 1], "directions": [[1, 0, 0], [0, 1, 0]]},
+                    "lamp": {"wheel": [1, N], "rate": [1, 1], "directions": [[1, 0, 0], [0, 1, 0]]},
                 }
             ],
         }
@@ -476,7 +476,7 @@ def rebirth_world() -> dict[str, object]:
                 "family": "light",
                 "amount": 1 << 20,
                 "fixed": True,
-                "lamp": {"rate": [1, 1], "directions": [[1, 0, 0]]},
+                "lamp": {"wheel": [1, N], "rate": [1, 1], "directions": [[1, 0, 0]]},
             },
             {
                 "position": [2, 0, 0],

@@ -147,7 +147,9 @@ the model owner, 2026-09-19):
   the rays going on, a paid family measured, the click, and a world declares
   only the entries that differ: a window, a rule off the default, a `reads`
   component; an entry equal to the default is accepted and changes nothing)
-  and, for a measured event of a paid family, its `lamp` (`rate` `[n, d]` units
+  and, for a measured event of a paid family, its `lamp` (`wheel` `[r, W]`, the
+  birth wheel's rate, required: u = ordinal x r mod W the record's coordinate on
+  the ladder, [1, N] the count of births mod N, BEAM_LAW note 43; `rate` `[n, d]` units
   per self-creation per direction, `directions` the directions it releases
   on, the six headings by default, and optionally its `phase_window`); and,
   since 2026-09-20 (the weak force, `weak-v1`: the model owner's "go on
@@ -567,7 +569,17 @@ MEASURED_KEYS = {
     # right-hand rule reads at every product of the event's `become`.
     "axis",
 }
-LAMP_KEYS = {"rate", "directions", "phase_window", "phase_width", "turns", "branches", "arms", "hand"}
+LAMP_KEYS = {
+    "rate",
+    "wheel",
+    "directions",
+    "phase_window",
+    "phase_width",
+    "turns",
+    "branches",
+    "arms",
+    "hand",
+}
 # A table entry's object form: the rule, a window on any rule but `pass`
 # with its width, the reading's component the record carries, on a
 # `become` entry the transformation's `into` and `products`, and the parity
@@ -795,6 +807,14 @@ class LampDefinition:
     the half circle centred on it."""
 
     rate: tuple[int, int]
+    # The birth wheel (`wheel`, [r, W]; the model owner's decision of
+    # 2026-09-21, record 180 of the log of 2026-09-20; BEAM_LAW note 43):
+    # the rate of one row of the lamp's counts table, advanced by r over W
+    # at every birth, whose accumulator before the advance is the record's
+    # coordinate u on the ladder, u = ordinal x r mod W; the rungs of the
+    # click are on W. [1, N] is the lamp's count of births mod N as built;
+    # declared on every lamp, no default.
+    wheel: tuple[int, int]
     directions: tuple[int, ...]
     window: int | None
     # The window's width in steps (`phase_width`), None for the default
@@ -1753,8 +1773,15 @@ def _lamp(
     turn_rate: tuple[int, int],
     family_hand: int = NO_HAND,
 ) -> LampDefinition:
-    obj = _object(value, label, LAMP_KEYS, {"rate"})
+    obj = _object(value, label, LAMP_KEYS, {"rate", "wheel"})
     rate = _ratio(obj["rate"], f"{label}.rate", zero=True)
+    if not isinstance(obj["wheel"], list):
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.wheel must be [r, W], the rate of the birth wheel (the record's "
+            "coordinate u on the ladder advances by r over W at every birth; [1, N] the count of "
+            "births mod N)"
+        )
+    wheel = _ratio(obj["wheel"], f"{label}.wheel", zero=False)
     directions = _directions(
         obj.get("directions", list(range(HEADING_OFFSET, FIXED_DIRECTIONS))),
         f"{label}.directions",
@@ -1817,7 +1844,16 @@ def _lamp(
         f"{label} (the release)",
     )
     return LampDefinition(
-        rate, directions, window, width, turns, branches, arms, hand=hand, label_hands=label_hands
+        rate,
+        wheel,
+        directions,
+        window,
+        width,
+        turns,
+        branches,
+        arms,
+        hand=hand,
+        label_hands=label_hands,
     )
 
 

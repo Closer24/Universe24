@@ -78,6 +78,7 @@ kept, their pins the law of events').
 | `test_amplitude_click.py` | The one click (stage (vii)): a lamp's rate births as many records as it says with the ordinals and the birth phases in order, two multiplicities of one record at one offer take the common denominator or are refused, the columns are written only where a record is, and every gate-set world without a lamp reads as it did before the law at its cap (its pinned digests); step 2: u the record's own field (a narrow window admits every record's row, the K record world's clicks within one rung of its offers); step 3: the push by share (the mass's momentum the sum of the shares, the remainder line, the unkeyed bar as it was) ([below](#the-amplitude-law-the-one-click)) | new (2026-09-20; the design's sections 2.1, 2.5 and 6; the K finding) |
 | `test_amplitude_gram.py` | The click without amplitudes (2026-09-21): the Gram matrix of the tables (its eight diagonal values, not circulant, rank 2, the antipodal pairs killed, stored through N = 512), the identity f^T G f = X^2 + Y^2 on random vectors and on `mz_equal`'s record at every u, the layer's cells against the click as it was on synthetic one-arm, read, rotated, pair and GHZ records, the turn as a shift exact at the quarter turns and not at t = 3, the tensor form exact and the convolution not, the ring product ([below](#the-click-without-amplitudes)) | new (2026-09-21; record 188; BEAM_LAW note 37 (xii)) |
 | `test_exact_phase.py` | The exact phase at the click (2026-09-21): the axis and the diagonal at the rate 8 (u + 41 with the remainder 48 / 64, u + 42 with the remainder 0 / 128 where the walk read u + 40), the layer's pointer at it, the integer form without it, a face's row (u + 4 where the walk read u + 56), the numerator beyond the register refused, the primitive `exact_phase` ([below](#the-exact-phase-at-the-click)) | new (2026-09-21; record 163 (2); BEAM_LAW note 42) |
+| `test_birth_wheel.py` | The birth wheel at a declared rate (2026-09-21): the key required on every lamp and refused as a bare integer, a rate 0 or a wheel 0; every world file with a lamp declares it; [1, N] the count of births (the lamp's `acc` `wheel`, the rungs on 64); the golden rate's first ten u and phases, the rungs on 4096; the cell read on the wheel (two equal cells: a, b, a, b, a, a, b, a, b, b against 32 a then 32 b); the replay tool reads the wheel from the lamp ([below](#the-birth-wheel)) | new (2026-09-21; record 180; BEAM_LAW note 43) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -632,6 +633,41 @@ register's L7 entry), written before the run:
   part as the walk's 3 x 29 = 87 at the rate 3 (the design's 41.75 and
   42.00 are the rate 8's, `test_exact_phase`); under the integer form no
   `exact` is written; the file's pins under `cone.exact`.
+
+## The birth wheel
+
+`tests/test_birth_wheel.py` (2026-09-21; the model owner's decision, record
+180 of docs/LOG_2026-09-20.md on record 163 (3); the mathematician's
+TWO_SLITS.md section 8 with `wheel_map.py`; docs/BEAM_LAW.md note 43): the
+wheel is one `Count` row of the lamp's counts table, declared on the lamp
+as `wheel` [r, W]; u = ordinal x r mod W is written on the record at birth;
+the rungs at the click are (2 W C_k + T) // (2 T) and the cell [u < b_k].
+The expected integers, written down before the first run:
+
+- (a) the parse: a lamp without `wheel` is refused naming the key (lacks
+  keys: wheel); a bare integer, [0, 64] and [1, 0] are refused naming
+  `lamp.wheel`; [2531, 4096] parses to (2531, 4096) and [1, 64] to (1,
+  64); every world file of the register that declares a lamp declares its
+  wheel, the entity definitions included;
+- (b) the case [1, N]: a lamp of [1, 64] on +x to a counter 10 Links away,
+  40 intervals: the birth lines' u are 0, 1, 2, ... (the ordinal less
+  one), the rows' `birth` the same, every gather's last rung 64, the
+  lamp's `acc` carrying `wheel` = its births mod 64 and the counter's
+  `acc` none;
+- (c) the golden rate [2531, 4096] on the same bar: the first ten births'
+  u are 0, 2531, 966, 3497, 1932, 367, 2898, 1333, 3864, 2299, the rows'
+  `birth` the same and their phase at the click u mod 64 (0, 35, 6, 41,
+  12, 47, 18, 53, 24, 59), every gather's last rung 4096 and its u the
+  birth's, the `acc` `wheel` = (births x 2531) mod 4096;
+- (d) the cell by the wheel: a lamp on +x and -x (one quantum, two paths)
+  to two counters `a` and `b` 5 Links away, two cells of equal weight, the
+  rungs [2048, 4096]: the first ten records click a, b, a, b, a, a, b, a,
+  b, b (u < 2048 for the ordinals 0, 2, 4, 5, 7), where the same lamp
+  under [1, 64] (the rungs [32, 64]) sends the first 32 records to a and
+  the next 32 to b;
+- (e) the replay: `tools/amplitude_path.replay` on the runner's run of (d)
+  under [2531, 4096] returns `run.json`'s `world`, the wheel read from the
+  world's lamp, every gather's last rung 4096.
 
 ## The exact phase at the click
 

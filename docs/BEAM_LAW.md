@@ -3438,3 +3438,56 @@ implementation's part of the contract. The design above is unchanged.
     and 42.00 being the rate 8's, pinned in `tests/test_exact_phase.py`
     (the axis u + 41 with the remainder 48 / 64, the diagonal u + 42 with
     the remainder 0, a face u + 4 where the walk read u + 56, the bound).
+
+43. **The birth wheel at a declared rate: u one row of the lamp's counts
+    table** (the model owner's decision of 2026-09-21, record 180 of the
+    log of 2026-09-20, "the wheel was also turned into a generic vector,
+    wasn't it?", the decision on record 163 (3); the mathematician's design,
+    [TWO_SLITS.md section 8](designs/fraction_free/TWO_SLITS.md) with
+    `wheel_map.py`; the branch `click`). A lamp declares `wheel` [r, W], a
+    rate like every rate of the world, no default: one `Count` row of its
+    counts table (`measured.counts_table`, the name `wheel`, the source the
+    lamp's own rate, no cap), advanced by r over W at every birth of a
+    record as every count is (`by_drive`); the accumulator before the
+    advance is the record's coordinate u on the ladder, u = ordinal x r mod
+    W (the ordinal from 0), written on the record and its rows at birth
+    (`nature_beam.birth_coordinate`; the `birth` column, the `birth`, `click`
+    and `gather` lines' `u`), the rows' birth phase u mod N, and its
+    remainder carried in `state.json` under `acc` as `wheel`. The click's
+    rungs are on W, b_k = (2 W C_k + T) // (2 T), b_K = W, the cell the
+    first k with u < b_k (`amplitude.Layer.complete`, `LiveRecord.wheel`,
+    `rungs`, `cell_of`); N stays the phase circle (the tables, the merge's
+    cancel) and W is the click's own grain. [1, N] is the count of births
+    mod N as built: every registered lamp declares it (a mechanical edit of
+    the world files through their generators, the entity definitions and
+    the tests' lamps; `tools/amplitude_path.py` reads the wheel from the
+    world's lamp), and every such world is bit-identical in its events,
+    its `state.json` gaining the row's accumulator; a rebirth at a
+    re-emitter that is no lamp keeps u = its count of births less one mod N
+    and the rungs on N (the built rule, no key of its own; a re-emitter
+    that is a lamp reads its wheel). The golden rate [2531, 4096], the
+    nearest odd integer to 0.618 x 4096 over W = 4096 (the Weyl sequence,
+    every prefix equidistributed by the three-distance theorem), is the
+    generic wheel the map chose against the bit-reversed ordinal (section
+    8: the same clicks within one at 4096 births, the same cells filled by
+    1024): `slits_huygens` (L2b) declares it and is re-registered as the run
+    that shows the wheel (its entry in the register). Pinned before the run
+    from the map's section 8 at 4096 births: the bright pixels about 28 to
+    29 clicks, the dark 0 to 3, the Pearson of the counts with the
+    two-source cosine about 0.96 (the map's 0.963 with the exact phase on
+    a table of 4096; the engine's on the tables of 64). The run (the L2b
+    entry of the register): the dark pixels 0 to 3 as pinned; the bright
+    19 to 51, the mean 39, since the map's 28 to 29 was the screen's fan of
+    121 directions (the screen share 0.35) where this world's Farey fan
+    puts 0.418 of the total on the screen with its peak at 0.012; the
+    counts' Pearson with the cosine 0.891, the weights' own 0.895; and the
+    wheel's own statement exact, every cell's count over the 4096 births
+    within 2 of 4096 x its weight over the total, the histogram's Pearson
+    with the first record's rungs 1.000 over the 126 cells: the wheel
+    turns the weights into counts. Refused: a lamp
+    without the key, a bare integer, a rate of 0 and a wheel of 0
+    (`tests/test_birth_wheel.py`); the first ten u under the golden rate 0,
+    2531, 966, 3497, 1932, 367, 2898, 1333, 3864, 2299 with the phases 0,
+    35, 6, 41, 12, 47, 18, 53, 24, 59, and the cell read on the wheel
+    (two equal cells, the rungs [2048, 4096]: a, b, a, b, a, a, b, a, b, b,
+    where [1, 64] sends the first 32 to a and the next 32 to b).

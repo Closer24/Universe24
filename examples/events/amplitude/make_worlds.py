@@ -296,6 +296,7 @@ def mach_zehnder(
             "fixed": True,
             "lamp": {
                 "rate": [1, 1],
+                "wheel": [1, N],
                 "directions": [PLUS_X, PLUS_Y],
                 "turns": [0, (QUARTER + arm_turn) % N],
             },
@@ -445,6 +446,7 @@ def two_slits_low() -> dict[str, object]:
     lamp = world["measured"][0]
     lamp["amount"] = world["K"]
     lamp["lamp"]["rate"] = [1, 1]
+    lamp["lamp"]["wheel"] = [1, N]
     for family in world["families"]:
         if family["name"] == "light":
             family["phase_per_link"] = FREQUENCY
@@ -472,7 +474,12 @@ HUYGENS_WIDTH = 48
 # A within 2^31); at 2^18 the weights run 123 .. 5619 and A = 7.1 x 10^8.
 HUYGENS_GRAIN = 1 << 18
 HUYGENS_SLOPE = 2 * FREED_HALF_WIDTH + 1
-HUYGENS_TICKS = 420
+# The birth wheel of L2b under the golden rate (the model owner's decision,
+# record 180 of 2026-09-20's log; TWO_SLITS.md section 8; BEAM_LAW note 43):
+# r / W = 2531 / 4096, the nearest odd integer to 0.618 W over W = 4096;
+# 4096 births at one per interval and the last rows' flight within 4300.
+HUYGENS_WHEEL = [2531, 4096]
+HUYGENS_TICKS = 4300
 
 
 def flight_resolution(vector: tuple[int, int]) -> int:
@@ -511,6 +518,7 @@ def two_slits_huygens() -> dict[str, object]:
     world = two_slits_low()
     world["model_id"] = "beam-amplitude-slits_huygens-v1"
     world["ticks"] = HUYGENS_TICKS
+    world["measured"][0]["lamp"]["wheel"] = HUYGENS_WHEEL
     admitted, weights = huygens_fan()
     # The world's direction table names every vector of the fan (the six
     # headings are the world's own); the registered 90 are among them.
@@ -773,6 +781,7 @@ def ghz(name: str, basis: str) -> dict[str, object]:
             "fixed": True,
             "lamp": {
                 "rate": [1, 1],
+                "wheel": [1, N],
                 "directions": [direction for _, direction in arms],
                 "arms": 3,
                 "branches": GHZ_TRIPLE,
@@ -825,7 +834,7 @@ def lamp(position: list[int], direction: list[int]) -> dict[str, object]:
         "family": "light",
         "amount": GATE_CLOCK,
         "fixed": True,
-        "lamp": {"rate": [1, 1], "directions": [direction]},
+        "lamp": {"rate": [1, 1], "wheel": [1, N], "directions": [direction]},
     }
 
 
@@ -999,6 +1008,10 @@ def bell_n(name: str, n: int, a: int, b: int) -> dict[str, object]:
     """The pair at the CHSH labels at N = n on the A2 board, one birth per u."""
     world = bell(name, (a, b))
     world["N"] = n
+    # The birth wheel [1, N] with this world's N (the count of births mod N).
+    for entry in world["measured"]:
+        if "lamp" in entry:
+            entry["lamp"]["wheel"] = [1, n]
     world["ticks"] = n + 20
     return world
 
@@ -1071,14 +1084,14 @@ def cone(name: str, per_age: bool) -> dict[str, object]:
             "family": "light",
             "amount": SOURCE_CONTENT,
             "fixed": True,
-            "lamp": {"rate": [1, 1], "directions": [PLUS_X]},
+            "lamp": {"rate": [1, 1], "wheel": [1, N], "directions": [PLUS_X]},
         },
         {
             "position": diagonal_start,
             "family": "light",
             "amount": SOURCE_CONTENT,
             "fixed": True,
-            "lamp": {"rate": [1, 1], "directions": [DIAGONAL_XY]},
+            "lamp": {"rate": [1, 1], "wheel": [1, N], "directions": [DIAGONAL_XY]},
         },
         {"position": axis_end, "family": "light", "amount": 1, "fixed": True},
         {"position": diagonal_end, "family": "light", "amount": 1, "fixed": True},

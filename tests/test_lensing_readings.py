@@ -69,7 +69,7 @@ def beam_world(name: str, *, mass: bool) -> dict[str, object]:
             "amount": 8 * K + 1000,
             "phase": 0,
             "fixed": True,
-            "lamp": {"rate": [1, 1], "directions": [[1, 0, 0]]},
+            "lamp": {"wheel": [1, 64], "rate": [1, 1], "directions": [[1, 0, 0]]},
             "table": {"m": "pass"},
         }
     ]

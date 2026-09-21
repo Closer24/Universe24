@@ -231,10 +231,11 @@ class NatureBeam:
     multiplicity: int = 1
     # The birth phase u of the row's record (stage (vii), the K finding of
     # 2026-09-20): the record's own field beside the running phase, the
-    # lamp's count of births mod N at the birth, uniform over births
-    # whatever the lamp's turn; every rule of the GameBoard that reads a
-    # record row's phase reads the path phase, phase - u, and the click
-    # alone reads u (the ladder). 0 on a row of no record.
+    # lamp's count of births on its birth wheel (mod N under [1, N];
+    # BEAM_LAW note 43), uniform over births whatever the lamp's turn;
+    # every rule of the GameBoard that reads a record row's phase reads the
+    # path phase, phase - u mod N, and the click alone reads u (the
+    # ladder, on the wheel W). 0 on a row of no record.
     birth: int = 0
 
     # The hand (`hand-v1`, 2026-09-20; BEAM_LAW note 39): the sense in which
@@ -550,6 +551,25 @@ def exact_phase(
     divisor = denominator * s1 * Q
     whole, rest = divmod(product, divisor)
     return (phase - (terms * numerator) // denominator + whole) % modulus, rest, divisor
+
+
+def birth_coordinate(entry: Measured, modulus: int) -> tuple[int, int]:
+    """The coordinate u of a record born at this body and the wheel W it is
+    read on (the birth wheel; the model owner's decision of 2026-09-21,
+    record 180 of the log of 2026-09-20; BEAM_LAW note 43): on a lamp, u is
+    the accumulator of the `wheel` row of its counts table before this
+    birth advances it by the declared rate r over W (u = ordinal x r mod
+    W, the ordinal from 0; the count's whole part, a full turn, is
+    nothing), W the declared denominator; on a body without a lamp (a
+    rebirth at a re-emitter) u is its count of births less one mod N and W
+    is N, the case [1, N] as built. The ladder's rungs are on W
+    (`amplitude.Layer.complete`); the row's `birth` column and the phase
+    of its birth carry u (its phase mod N)."""
+    if entry.lamp_wheel is not None:
+        u = entry.counts.one("wheel")
+        entry.counts.advance("wheel")
+        return u, entry.lamp_wheel[1]
+    return (entry.births - 1) % modulus, modulus
 
 
 def window_admits(
@@ -3789,7 +3809,7 @@ def nature_beam(
                             if reborn == NO_RECORD:
                                 entry.births += 1
                                 reborn = record_identity(entry.number, entry.births)
-                                reborn_birth = (entry.births - 1) % modulus
+                                reborn_birth, reborn_wheel = birth_coordinate(entry, modulus)
                             row_record, row_branch, row_multiplicity = reborn, NO_BRANCH, 1
                             row_birth = reborn_birth
                         table_split = entry.splits[family]
@@ -3846,7 +3866,9 @@ def nature_beam(
                                 # rebirth (with 0 units), every row's units
                                 # added by its split.
                                 if layer.resolve(row_record) is None:
-                                    layer.birth(tick, row_record, family, row_birth, {0: 1}, 1, 0)
+                                    layer.birth(
+                                        tick, row_record, family, row_birth, {0: 1}, 1, 0, reborn_wheel
+                                    )
                                 layer.split(row_record, 0, born_units)
                             else:
                                 layer.split(row_record, 0 if row.offered else row.amount, born_units)
@@ -3974,12 +3996,14 @@ def nature_beam(
                     for _ in range(count):
                         entry.births += 1
                         record_id = record_identity(entry.number, entry.births)
-                        # The birth phase: the lamp's count of births mod N
-                        # (the record's own field, unread by the GameBoard),
-                        # uniform over births whatever the lamp's turn.
-                        u = (entry.births - 1) % modulus
+                        # The birth coordinate: the lamp's birth wheel (the
+                        # count of births mod N under [1, N]), the record's
+                        # own field, unread by the GameBoard, uniform over
+                        # births whatever the lamp's turn; its phase mod N
+                        # the rows' birth phase.
+                        u, wheel = birth_coordinate(entry, modulus)
                         if layer is not None:
-                            layer.birth(tick, record_id, family, u, dict(branches), arms, quanta)
+                            layer.birth(tick, record_id, family, u, dict(branches), arms, quanta, wheel)
                         if record is not None:
                             record(
                                 {

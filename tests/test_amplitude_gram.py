@@ -205,7 +205,9 @@ def former_residuals(
 
 
 def feed(layer: Layer, rows: list[Row], labels: dict[int, int], arms: int) -> None:
-    layer.birth(1, 1, 0, 0, labels, arms, sum(a for _, _, _, a, _, _, _, absorbed in rows if absorbed))
+    layer.birth(
+        1, 1, 0, 0, labels, arms, sum(a for _, _, _, a, _, _, _, absorbed in rows if absorbed), N
+    )
     for set_index, arm, label, amount, phase, node, rotation, absorbed in rows:
         layer.end(
             2,
@@ -360,7 +362,7 @@ def test_the_ring_product():
     }
     assert ring_product({5: 1}, {60: 1}, N) == {1: 1}
     layer = layer_of()
-    layer.birth(1, 1, 0, 0, {0: 1}, 1, 2)
+    layer.birth(1, 1, 0, 0, {0: 1}, 1, 2, N)
     layer.end(2, 0, 1, 0, 1, 1, 9, node=(1, 0, 0))
     layer.end(2, 0, 1, 0, 1, 1, 9, node=(1, 0, 0))
     offer = layer.records[1].offers[(0, 0)]

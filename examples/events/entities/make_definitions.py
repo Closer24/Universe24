@@ -134,7 +134,10 @@ def apparatus() -> dict[str, object]:
             "families": light(),
             "measured": [
                 measured(
-                    "light", origin, amount=SOURCE_CONTENT, lamp={"rate": [1, 1], "directions": [RIGHT]}
+                    "light",
+                    origin,
+                    amount=SOURCE_CONTENT,
+                    lamp={"rate": [1, 1], "wheel": [1, 64], "directions": [RIGHT]},
                 )
             ],
             "detectors": [],
@@ -147,7 +150,7 @@ def apparatus() -> dict[str, object]:
                     "light",
                     origin,
                     amount=SOURCE_CONTENT,
-                    lamp={"rate": [1, 1], "directions": [RIGHT], "phase_window": 16},
+                    lamp={"rate": [1, 1], "wheel": [1, 64], "directions": [RIGHT], "phase_window": 16},
                 )
             ],
             "detectors": [],
@@ -215,6 +218,7 @@ def apparatus() -> dict[str, object]:
                     amount=SOURCE_CONTENT,
                     lamp={
                         "rate": [1, 1],
+                        "wheel": [1, 64],
                         "directions": [LEFT, RIGHT],
                         "arms": 2,
                         "branches": [[0, 1], [3, 1]],
@@ -233,6 +237,7 @@ def apparatus() -> dict[str, object]:
                     amount=SOURCE_CONTENT,
                     lamp={
                         "rate": [1, 1],
+                        "wheel": [1, 64],
                         "directions": [LEFT, RIGHT, UP],
                         "arms": 3,
                         "branches": [[0, 1], [7, 1]],

@@ -357,7 +357,7 @@ def test_the_giving_a_family_a_lamp_a_transit_row_and_the_right_hand_rule():
         "family": "light",
         "amount": 1 << 10,
         "fixed": True,
-        "lamp": {"rate": [1, 1], "directions": [PLUS_X], "hand": 1},
+        "lamp": {"wheel": [1, 64], "rate": [1, 1], "directions": [PLUS_X], "hand": 1},
     }
     simulation, _, _ = run(bar([lamp], [light()], ticks=3, K=64))
     assert simulation.stores[0].size == 3 and set(simulation.stores[0].hand.tolist()) == {1}
@@ -776,7 +776,7 @@ def test_the_refusals_name_the_key():
         "family": "light",
         "amount": 1 << 10,
         "fixed": True,
-        "lamp": {"rate": [1, 1], "directions": [PLUS_X], "hand": 1},
+        "lamp": {"wheel": [1, 64], "rate": [1, 1], "directions": [PLUS_X], "hand": 1},
     }
     with pytest.raises(ValueError, match=r"lamp\.hand \+1 differs from the family's hand -1"):
         parse_nature_beam_world(bar([lamp], [light(hand=-1)], ticks=1, K=64))

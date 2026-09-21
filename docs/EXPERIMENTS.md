@@ -3976,6 +3976,31 @@ records 160 and 163).**
   bit-reversed ordinal within one click at 4096 births
   ([record 164](LOG_2026-09-20.md#164-the-fan-by-angle-run-on-main-slits_huygens-l2b-the-mathematician-no-src-change-pr-410-the-page-httpsclaudeaiartifact6pyy8c62muhshz7imdcux9-every-pin-reproduced-the-records-screen-weights-carry-youngs-fringes-at-the-euclidean-spacing-pearson-0895-with-the-two-source-cosine-visibility-0954-the-peak-at-y--59-from-the-farey-fan-of-width-48-with-the-angle-weights-alone-under-the-built-phase-the-clicks-cannot-show-them-27-screen-cells-of-121-32-cells-in-all-fixed-for-the-whole-run-u-repeating-with-the-period-64-the-evidence-for-p-as-a-width-of-the-law-decided-record-163-and-for-the-wheel-as-what-turns-weights-into-counts-the-golden-rate-wheel-checked-with-the-map-two_slitsmd-section-8-the-same-clicks-as-the-bit-reversed-ordinal-within-one-click-at-4096-births-the-same-cells-filled-by-1024-the-golden-rate-the-generic-wheel-as-one-row-of-the-counts-table-the-wheels-form-for-the-owner)).
 
+- **Re-registered under the birth wheel (2026-09-21, the branch `click`;
+  the model owner's decision, [record 180](LOG_2026-09-20.md#180-the-wheel-as-the-generic-vector-form-the-owner-2026-09-21-about-0105z-the-owners-words-translated-the-wheel-was-also-turned-into-a-generic-vector-wasnt-it-the-bosss-yes-taken-as-the-decision-on-record-163-3-the-birth-wheel-is-one-row-of-the-counts-table-on-the-lamps-record-acc--2531-acc-mod-4096-the-translation-on-the-torus-z--4096-that-every-count-is-the-lamp-writes-the-rows-value-on-the-record-at-birth-as-u-at-the-click-the-cells-cumulative-weights-are-sums-the-rungs-2-w-c_k--t--2-t-one-declared-rounding-and-the-choice-u--b_k-the-wall-test-so-the-whole-click-is-a-multiplication-by-declared-matrices-an-addition-an-inner-product-and-a-threshold-no-step-of-its-own-the-map-record-164-showed-the-same-clicks-as-the-bit-reversed-ordinal-within-one-click-at-4096-births-physically-the-lamps-phase-at-the-moment-of-birth-at-a-rate-incommensurate-with-its-birth-rate-built-as-item-3-of-the-click-pull-request-after-the-exact-phase);
+  [BEAM_LAW note 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  the run that shows the wheel).** `slits_huygens` declares the golden
+  rate `wheel` [2531, 4096] and runs 4300 intervals for 4096 births under
+  the exact phase at the click. Pinned before the run: as ordered, the
+  map's section 8 (the screen's fan): bright about 28 to 29, dark 0 to 3,
+  Pearson about 0.96; and the wheel's own statement, every cell within one
+  click of 4096 x its weight over the total. The run (the run, 4300 intervals in 1334 s (0.31 s per interval), completed and
+conserved at every tick, 4299 records born, 4150 gathered and 149 open at the
+end, every one of the records 1 to 4096 gathered): dark
+  0 to 3 as pinned (the mean 0.68); bright 19 to 51 (the mean 39.3), the
+  map's 28 to 29 being the screen's fan's (the screen share 0.35) where
+  this world's Farey fan puts 0.418 on the screen with its peak at 0.012 of
+  the total (51 clicks at y = 59, 60, 61); the counts' Pearson with the
+  cosine 0.891 against the weights' 0.895, the visibility 0.966; against
+  the first record's rungs the histogram's Pearson 1.000 over the 126
+  cells, every count within 2 of its width; wall 882, screen 1711 on 107
+  pixels, faces 1503; the first 64 births wall 14, screen 27, faces 23 with
+  32 distinct cells, 69 by 256, 101 by 1024. Verdict: the wheel turns the
+  weights into counts, the fringes in the clicks as in the weights; the
+  0.96 pin was the screen's fan's, not this world's. The numbers beside the
+  world in [its README](../examples/events/amplitude/README.md#l2-the-two-slits-at-a-low-rate).
+  DETECTOR.
+
 **L, open items (2026-09-20, after (v)).** The one click (the design's
 section 6) is not landed: the record form as the default changes worlds
 outside the crowd-threshold series on the gate set

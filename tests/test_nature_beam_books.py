@@ -56,7 +56,11 @@ def world_of_every_way() -> dict[str, object]:
                 "family": "light",
                 "amount": 1 << 23,
                 "fixed": True,
-                "lamp": {"rate": [3, 1], "directions": [[1, 0, 0], [2, 1, 0], [0, 1, 0]]},
+                "lamp": {
+                    "wheel": [1, 64],
+                    "rate": [3, 1],
+                    "directions": [[1, 0, 0], [2, 1, 0], [0, 1, 0]],
+                },
             },
             {
                 "position": [5, 0, 1],

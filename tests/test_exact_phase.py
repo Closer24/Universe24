@@ -73,7 +73,7 @@ def world(
                 "family": "light",
                 "amount": K,
                 "fixed": True,
-                "lamp": {"rate": [1, 1], "directions": lamp_directions},
+                "lamp": {"wheel": [1, N], "rate": [1, 1], "directions": lamp_directions},
             },
             *(
                 {"position": position, "family": "light", "amount": 1, "fixed": True}

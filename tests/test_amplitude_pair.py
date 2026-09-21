@@ -287,7 +287,12 @@ def test_the_refusals_of_the_pair_keys():
         world = GENERATOR.bell("refusals", (0, 8))
         measured = world["measured"]
         assert isinstance(measured, list)
-        measured[0]["lamp"] = {"rate": [1, 1], "directions": [[-1, 0, 0], [1, 0, 0]], **lamp}
+        measured[0]["lamp"] = {
+            "rate": [1, 1],
+            "wheel": [1, N],
+            "directions": [[-1, 0, 0], [1, 0, 0]],
+            **lamp,
+        }
         return world
 
     with pytest.raises(ValueError, match=r"lamp\.arms must be an integer from 1 through 2"):

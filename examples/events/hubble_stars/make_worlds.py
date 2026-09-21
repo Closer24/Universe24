@@ -265,7 +265,7 @@ def world(crowd: str, clock: str, record: bool = False, doppler: bool = False) -
                 "momentum": star["momentum_vector"],
                 "held": {"mass": mass},
                 "directions": star["axis_headings"],
-                "lamp": {"rate": LAMP_RATE, "directions": star["inward"]},
+                "lamp": {"rate": LAMP_RATE, "wheel": [1, N], "directions": star["inward"]},
                 "table": table,
             }
         )

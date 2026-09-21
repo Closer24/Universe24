@@ -335,7 +335,7 @@ def test_a_paid_ray_pushes_by_its_label_and_the_paid_momentum_book_closes():
         "family": "light",
         "amount": 1 << 23,
         "fixed": True,
-        "lamp": {"rate": [1, 1], "directions": [PLUS_X]},
+        "lamp": {"wheel": [1, 64], "rate": [1, 1], "directions": [PLUS_X]},
     }
     reader = probe(table={"light": "read"})
     world = bar([lamp, reader], release=[0, 1])
@@ -430,7 +430,7 @@ def test_the_click_the_re_emission_and_the_home_move_the_one_label():
         "amount": 8,
         "fixed": True,
         "directions": [PLUS_X],
-        "lamp": {"rate": [0, 1], "directions": [PLUS_X]},
+        "lamp": {"wheel": [1, 64], "rate": [0, 1], "directions": [PLUS_X]},
     }
     unit = {
         "position": [0, 0, 0],
@@ -496,7 +496,7 @@ def test_the_push_reads_the_content_the_frame_read_whatever_the_family_order():
             "family": "B",
             "amount": 4000,
             "fixed": True,
-            "lamp": {"rate": [1, 1], "directions": [[-1, 0, 0]]},
+            "lamp": {"wheel": [1, 64], "rate": [1, 1], "directions": [[-1, 0, 0]]},
         },
     ]
     expected = [

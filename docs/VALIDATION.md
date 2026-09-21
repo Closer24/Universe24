@@ -11,6 +11,45 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The click branch: the gate set of sixteen worlds replayed against main fd59f01e - 2026-09-21
+
+The branch `click` at its fourth commit, the birth wheel, on b1e2ab4c (the
+exact phase), the tree of the commit that carries this section (the click's
+weight as the inner product,
+the click without amplitudes, the exact phase at the click and the birth
+wheel: [BEAM_LAW notes 37 (xi) and (xii), 42 and 43](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[MIGRATION](MIGRATION.md)) against main `fd59f01e`'s tree: the sixteen worlds
+of `examples/events/gate_set.json` replayed on both trees at their caps
+(`tools/run_series.py --list --fast --jobs 2 --wall-seconds 1800 --memory-mb
+6144`), `events.jsonl`, `state.json` and the books (`audit` of `run.json`)
+digested (the first 12 hexadecimal digits of the sha256; `w27_beam` beyond
+the wall of 1800 s on both trees at its cap of 200 intervals, not compared,
+as in the fraction-free entry). No gate world
+declares the pair form of `phase_per_link`, so no click line gains `exact`;
+every lamp world's `state.json` gains the birth wheel's accumulator under
+`acc` as `wheel` and nothing else moves. The last column is the comparison
+with the new report keys dropped (`wheel` under `acc`; `exact` and
+`remainder` on click lines): the physics of every world identical.
+
+| world | what moved | events.jsonl | state.json | books | with the new keys dropped |
+| --- | --- | --- | --- | --- | --- |
+| `1b_m16` | byte-identical | `20aa2b23913e` | `87c7a42691be` | `8830f84aef5d` | identical |
+| `a0_b0` | `state.json` alone | `f62fe63bd87d` | `f8daa51b0ddd` (was `c16b8829f65f`) | `e52b8d0aa384` | identical |
+| `alpha_square` | byte-identical | `ea432ba27eac` | `be034bcdfc61` | `15fceb127a2f` | identical |
+| `fixed` | `state.json` alone | `13b9afa28162` | `54596bee45a3` (was `0f6c7ff36b30`) | `7364e3cf3872` | identical |
+| `grouped_12_nodes` | byte-identical | `4b4994530f29` | `ab7bc500cbdb` | `975863cdb72c` | identical |
+| `heavy_meeting` | `state.json` alone | `5b33f4d85380` | `3577f590a4ed` (was `1e44459125e7`) | `86e3ef8e18a0` | identical |
+| `j2_ladder` | byte-identical | `e3b0c44298fc` | `5684eec9f321` | `9f16ab276ee0` | identical |
+| `j3_deuteron` | byte-identical | `4638b98e16b8` | `ea32b17fefcd` | `9f286fe9bb10` | identical |
+| `j3_deuteron_crowd` | byte-identical | `e3b0c44298fc` | `701ebdb24897` | `9a55af2c0750` | identical |
+| `lamp_mirror_screen` | `state.json` alone | `588ce119eeb1` | `8b28facb12d6` (was `99c2238d962b`) | `8ac486c8c9ad` | identical |
+| `pushing_age` | byte-identical | `e3b0c44298fc` | `60ddede6051f` | `7e219a1d03c8` | identical |
+| `r2` | byte-identical | `35f5c6c3503e` | `a48ba880411b` | `d830bd8e0e27` | identical |
+| `sun_planet` | `state.json` alone | `364c375f4232` | `b9c58c783d2f` (was `d14d83a91dc1`) | `2dfec0c224d0` | identical |
+| `w1_beam` | `state.json` alone | `56f9cb190070` | `9008662fb1b6` (was `8b7abe69fbfe`) | `465f5b4e0bd2` | identical |
+| `w27_beam` | not compared: not completed: wall 1800 s on main, not completed: wall 1800 s on the branch | | | | |
+| `wu` | byte-identical | `d4d927fb55cd` | `8a84a189f93c` | `4d746dbe6084` | identical |
+
 ## The fraction-free law: the register replayed once on the branch against the base a2120413 - 2026-09-20
 
 The branch `fraction-free` ([BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);

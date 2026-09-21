@@ -244,7 +244,7 @@ def test_what_comes_home_is_created_again_with_its_phase_and_content():
         "amount": 8,
         "fixed": True,
         "directions": [[1, 0, 0]],
-        "lamp": {"rate": [0, 1], "directions": [[1, 0, 0]]},
+        "lamp": {"wheel": [1, 64], "rate": [0, 1], "directions": [[1, 0, 0]]},
     }
     beam = {
         "position": [0, 0, 0],

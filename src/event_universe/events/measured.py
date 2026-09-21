@@ -207,7 +207,7 @@ class Count:
     owner's table of 2026-09-20): the count's `name`; the `source` of its
     numerator (`content` the body's content, `crowd` what its clock
     counted, `held` the content held of the row's family, `rate` the
-    lamp's own rate, `momentum` the momentum on the row's axis, `column`
+    lamp's own rate or its birth wheel's, `momentum` the momentum on the row's axis, `column`
     the column's lifted numerator on the axis, `flow` the flux-weighted
     flow of the direction on the axis); `index` the family, the column or
     the direction the row belongs to and `axis` its axis (0 where the count
@@ -322,14 +322,17 @@ def counts_table(
     lamp_rate: tuple[int, int] | None,
     column_scales: tuple[int, ...],
     directions: int,
+    lamp_wheel: tuple[int, int] | None = None,
 ) -> CountTable:
     """A body's table of counts from the world's rates (BEAM_LAW note 41):
     the turn, the owed count, the release per family (its rate 0 on a paid
     family: it releases nothing freely), the lamp's rate where the body is
-    a lamp, the drive per axis (the step's divisor handed to the loop, the
-    cap 1, idle at a momentum of 0), the push per column and axis over
-    Lambda_c^2, and, under `doppler`, the flow per direction of the world's
-    table and axis (the flux's denominator handed to the loop)."""
+    a lamp and its birth wheel (`wheel`, the rate [r, W] of the record's
+    coordinate u on the ladder, BEAM_LAW note 43; no cap), the drive per
+    axis (the step's divisor handed to the loop, the cap 1, idle at a
+    momentum of 0), the push per column and axis over Lambda_c^2, and,
+    under `doppler`, the flow per direction of the world's table and axis
+    (the flux's denominator handed to the loop)."""
     rows = [
         Count("turn", "content", 0, 0, turn_rate[0], turn_rate[1]),
         Count("owed", "crowd", 0, 0, suspension[0], suspension[1]),
@@ -340,6 +343,8 @@ def counts_table(
     )
     if lamp_rate is not None:
         rows.append(Count("lamp", "rate", 0, 0, lamp_rate[0], lamp_rate[1]))
+    if lamp_wheel is not None:
+        rows.append(Count("wheel", "rate", 0, 0, lamp_wheel[0], lamp_wheel[1]))
     rows.extend(Count("drive", "momentum", 0, axis, 1, 1, 1, True) for axis in range(3))
     rows.extend(
         Count("push", "column", column, axis, 1, scale * scale)
@@ -456,7 +461,10 @@ class Measured:
     # `acc_flow` and `drive` below read and write the table; `state.json`
     # and `run.json` carry the accumulators under `acc` by name, beside
     # `drive`; a declared accumulator is refused with the key. Every one
-    # starts at 0 with the age.
+    # starts at 0 with the age. Since 2026-09-21 a lamp's table holds its
+    # birth wheel too, `wheel` (BEAM_LAW note 43): the row at the rate
+    # [r, W] the lamp declares, advanced at every birth of a record, its
+    # accumulator before the advance the record's coordinate u.
     counts: CountTable = field(default_factory=lambda: CountTable([]))
     taken: list[dict[str, int]] = field(default_factory=list)
     clicks: list[int] = field(default_factory=list)
@@ -468,6 +476,9 @@ class Measured:
     # declared against the keys leave the labels as they are), and per
     # family the hand-overs taken.
     contact: tuple[str, ...] = ()
+    # The lamp's birth wheel [r, W] (`wheel`), None on a body that is no
+    # lamp (its rebirths keep the count of births mod N, the case [1, N]).
+    lamp_wheel: tuple[int, int] | None = None
     contacts: list[int] = field(default_factory=list)
     # The windows read from a reading (issue #363, 2026-09-20): per family
     # the (family, offset) whose rows at the set give the entry's centre,
@@ -656,9 +667,10 @@ class Measured:
     def accumulators(self) -> dict[str, object]:
         """The accumulators of the table of counts by the count's name
         (BEAM_LAW note 41): `owed`, `release` per family, `lamp`, `turn`,
-        `push` per column by its name (the three axes' remainders) and,
-        under `doppler`, `flow` per direction of the world's table (aligned
-        with the record's `directions`) and axis; what `state.json` and
+        `push` per column by its name (the three axes' remainders), under
+        `doppler` `flow` per direction of the world's table (aligned with
+        the record's `directions`) and axis, and on a lamp `wheel`, its
+        birth wheel's accumulator (note 43); what `state.json` and
         `run.json` carry under `acc`, beside `drive`; a resumed run
         continues from them."""
         found: dict[str, object] = {
@@ -672,6 +684,8 @@ class Measured:
         }
         if self.acc_flow:
             found["flow"] = [list(axes) for axes in self.acc_flow]
+        if self.counts.of("wheel"):
+            found["wheel"] = self.counts.one("wheel")
         return found
 
     def state(self) -> dict[str, object]:
