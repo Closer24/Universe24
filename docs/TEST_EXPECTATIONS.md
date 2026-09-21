@@ -494,7 +494,8 @@ click), on the worlds of series L (`examples/events/amplitude/make_worlds.py`,
 `expectations.json` written by the generator before the runs). The
 expected integers, written down before the first run:
 
-- (a) tests 1 and 3: over the 64 births of the ticks 1 .. 64 the gathers
+- (a) tests 1 and 3: over the first 64 births by ordinal (at tick 1 and
+  ticks 3 to 65, the lamp's clock stalling once at tick 2; issue #533) the gathers
   per port are the design's table (`mz_equal` D1 64, D2 0; `mz_half` 0,
   64; `mz_quarter` 32, 32; `mz_balanced` 64, 0; `mz_345` 63, 1;
   `mz_unequal_f0` 64, 0; `mz_unequal_f8` 32, 32; `mz_unequal_f16` 0, 64;
