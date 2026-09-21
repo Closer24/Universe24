@@ -6703,6 +6703,104 @@ sequential gates on an entangled record, the full register replay.
   grain); the choice of the word is the owner's, the readings that would
   move with it listed in NOTE.md section 2; it establishes no physical law.
 
+### optical-v1's pin worlds, light beside a mass under the key (2026-09-21)
+
+- **Confronts.** The bending and the delay of light beside a mass, the
+  time part and the space part (PPN gamma) of the weak-field metric:
+  nature's (1 + gamma) 2 G M / (b c^2) with gamma = 1 (1.751 arcsec at the
+  Sun; VLBI's 0.99992 +- 0.00012) and Shapiro's (1 + gamma) 2 G M / c^3
+  times the logarithm (Cassini, 2 x 10^-5). The design
+  [docs/designs/one_wall/NOTE.md](designs/one_wall/NOTE.md) (12423748) with
+  REVIEW_3 (docs/designs/optical_v1/REVIEW_3.md on branch claude/optical-v1-review-3, 81b72bfb) and the light-bending note's
+  section 5; the build on branch `optical-v1` (2026-09-21).
+- **Model prediction, pinned before the run** (the one-wall note's
+  section 6, from the lattice's lines; DETECTOR, the bracket 0.5 pixel and
+  1 interval): series K's `mass` (M = 2^16, b = 6) and `near` (2^16,
+  b = 3) at the pair [1, 16384] under `optical` at gamma 0 (f = 1) and
+  gamma 1 (f = 2): the centroid's shift on the screen -1.93 / -3.86 pixels
+  (`mass`) and -2.42 / -4.83 (`near`), the delay 2.68 / 5.36 and 2.17 /
+  4.34 intervals; the number the run reads: the ratio of the two shifts
+  2.00 within 0.25 (the space part doubling the time part); the register
+  `examples/events/optical/expectations.json`.
+- **Run.** 2026-09-21 on branch `optical-v1` (`tools/run_series.py --jobs
+  2`, 400 intervals, the six worlds in two folders by gamma with a control
+  each, 26 to 41 s per world), read by `tools/lensing_readings.py
+  --no-replay` against each folder's control (DETECTOR; its verdict
+  lines are series K's own pins, not this entry's): `mass` at f = 1 the
+  centroid's shift -1.607 pixels (pinned -1.93: inside 0.5) and the delay
+  +2.89 intervals (2.68: inside 1); at f = 2 -3.812 (pinned -3.86: inside)
+  and +5.87 (5.36: inside); `near` at f = 1 -2.992 (pinned -2.42: outside
+  by 0.07) and +2.40 (2.17: inside); at f = 2 -4.654 (pinned -4.83:
+  inside) and +4.97 (4.34: inside), 1122 of the control's 1455 clicks
+  reaching the screen and 398 of the beam's clicks taken by the mass
+  (the beam bent into it); the ratios f = 2 over f = 1: the delays 2.03
+  (`mass`) and 2.07 (`near`), the pinned 2.00 within 0.25; the shifts
+  2.37 (`mass`) and 1.56 (`near`), outside the bracket. Read by the chief
+  physicist (record 483; the rule and the pins unchanged, no second run),
+  in this order: the wall's factor is read as Shapiro's (the delays'
+  ratios inside 2.00 +- 0.25, DETECTOR); the shifts are inside 0.5 pixel
+  in three of four, `near` at f = 1 missed by 0.07 with the beam's width
+  at b = 3 as the cause (the pin one line, the beam's five directions
+  passing the mass at b + (0, +-1.08, +-2.17) Links); the shifts' ratio
+  is not read at this fan, the teeth 2.39 / 4.76 / 11.31 degrees and the
+  bisectors 3.58 / 8.04 named (the pinned angles 4.25 and 8.48 degrees at
+  b = 6 beside the bisectors, `mass` a mixture of rows ending at 2.39 and
+  4.76 at f = 1 and at 4.76 and 11.31 at f = 2: the ratio 2.37 the comb's,
+  right and not a bug), and the bracket's inconsistency named as a fact
+  of the pin (0.25 against the propagated 0.58 / 0.46 from the shifts'
+  0.5 pixel each; the pin stays as written and refuted at 0.25); the
+  `near` shift at f = 2 a survivors' reading (398 taken). The bounded
+  diagnostic (GAMEBOARD, `tools/optical_readings.py`): the mean transverse
+  angle of **P** before the screen -4.181 / -8.680 degrees (`mass`, the
+  ratio 2.076) and -6.854 / -11.955 (`near`, 1.744, the survivors), verb
+  2's arithmetic read back to itself, nothing about where the light
+  arrives. The design decision on verb 3's form (the label's Bresenham on
+  the line of **P**, the physicist's recommendation, or a denser fan) is
+  on the model owner's return list; nothing of it built. The readings with
+  every column in [the worlds' README](../examples/events/optical/README.md);
+  the gate set byte identical without the key.
+- **Re-read after M1 of the physics-rule review** (2026-09-21; the review
+  of 408cf719, record 494, found the walk's count capped after the
+  primitive with the residue of the uncapped count kept and the residue
+  carried unscaled across a turn; the fixed head caps by the primitive's
+  own `at_most` with the surplus kept and rescales the residue at a turn
+  as the time of the last Link, s' = (s x S_new) // S_old, the chief
+  physicist's word of record 496; `tests/test_optical.py` (g) and (h);
+  the same tools, 400 intervals, the controls byte identical). DETECTOR,
+  the first run's value beside: `mass` at f = 1 the shift -1.622 (was
+  -1.607) and the delay +2.97 (was +2.89); at f = 2 -3.805 (was -3.812)
+  and +5.88 (was +5.87); `near` at f = 1 -3.000 (was -2.992) and +2.40
+  (was +2.40); at f = 2 -3.274 (was -4.654) and +4.51 (was +4.97), 1001
+  clicks (was 1122) and 547 taken by the mass (was 398); the delays'
+  ratios 1.98 and 1.88 (were 2.03 and 2.07), inside 2.00 +- 0.25; the
+  shifts' 2.35 and 1.09 (were 2.37 and 1.56), outside. One line of the
+  reading turns: the shifts are inside 0.5 pixel in two of the four
+  worlds, not three, `near` at f = 2 now outside by 1.06 pixel, the
+  survivors' reading with the mass taking 547; the wall's factor, the comb
+  and the bracket's fact stand as read; the reviewer's counterexample (the
+  residue scaled by T_new / T_old) had moved the four by hundredths; the
+  physicist's S ratio differs from the T ratio by 3.3 per cent in the
+  plane's near fan where every turn of this world happens ((1, 0, 0) to
+  (24, +-1, 0)), and the pixel's move is a capture count, the capture
+  threshold its cause (record 505; DETECTOR: 547 taken, 94 per cent of
+  the two inner directions' 582, against 415, 1.4 directions, under the
+  T ratio), not a sensitivity of the deflection to the residue rule.
+  GAMEBOARD: the mean transverse angle of **P**
+  -4.203 / -8.976 degrees (`mass`, the ratio 2.136; was 2.076) and -6.993
+  / -8.277 (`near`, 1.184; was 1.744, 80 survivors' rows for 99). The
+  rule and the pins unchanged; the readings with every column in the
+  worlds' README. The key is refused at load beside the key
+  `massive_rows` (the composed flight of massive rows under the optical
+  key is not reviewed, record 510; a world declares one of the two).
+- **Verdict.** The wall's factor reached (the delays 1.98 and 1.88 for
+  2.00 after the review's M1; 2.03 and 2.07 before it); the turn bends the
+  beam toward the mass at every f with the shifts inside 0.5 pixel in two
+  of four (three of four before M1; `near` at f = 2 a survivors' reading);
+  the shifts' ratio not read at this fan (2.35 and 1.09 for 2.00 within
+  0.25, the comb's and the survivors'; 2.37 and 1.56 before M1): a
+  hypothesis under its own identity, nothing of it in the law, gamma an
+  input of the world.
+
 ### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
 
 - **Confronts:** the single-graviton detector proposed by Tobar, Manikandan, Beitel and Pikovski (Nature Communications 15, 7229, 2024; construction begun in 2026): a massive acoustic resonator cooled to its ground state, weakly monitored, whose single quantum jump to its first level during a passing gravitational wave is one graviton absorbed, a gravito-phononic photoelectric effect; the key is to read individual transitions, since the mean energy is always consistent with a classical wave.

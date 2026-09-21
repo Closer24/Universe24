@@ -157,6 +157,88 @@ and note 25](BEAM_LAW.md#3-the-nodes-interval-nature_beam).
   tool and the register agree again, which is outside this branch (the
   record mode's readings on the head are noted in the register's G2 entry).
 
+## optical-v1 in its generic form, on 2026-09-21 (a world key, absent by default)
+
+The model owner's "go" of 2026-09-21 (record 303) in the generic form of
+his word "clearly, in the generic form" (records 421 to 428; the design
+[docs/designs/one_wall/NOTE.md](designs/one_wall/NOTE.md) at 12423748 with
+REVIEW_3's four must-fixes and the physicist's fifth): the rows' rule at a
+Node for general relativity's formulas, built beside the law under the
+world key `optical: gamma` (gamma the post-Newtonian parameter, a
+non-negative integer, nature's 1), absent by default. A world without the
+key parses, runs and records as it did, byte for byte (the gate set of
+`examples/events/gate_set.json` replayed at its caps against the
+clock-age-v1 head: every world identical in state, books and events;
+`tests/test_optical.py` (e); the row's new fields constant 0 and unwritten
+without the key). Under the key:
+
+- Verb 1: the row's flight accumulator joins the age wall's declared set
+  (`measured.age_wall_set(optical)`: the clock at 1 as the law has it, the
+  flight at f = 1 + gamma) through the one wall function
+  `core.integer.age_wall`: the rate 2 S_1 Q d against the wall
+  2 T_D (d + f n A), A the crowd's age moment at the row's Node (every
+  ray of another number, read once before step 1 from the rows present at
+  the end of the interval before); the accumulator becomes a field of the
+  row with its residue (`made`, `residue`, written to `state.json` as
+  `flight`), started from the flight's off-age pair at the row's age
+  scaled by d (the same integers as the flight without the key at A = 0);
+  the click's exact phase reads the stored accumulator
+  (`exact_phase`'s `last_link`, the last Link at the fraction 1 - s / r of
+  its interval). The phase per age is never in the set.
+- Verbs 2 and 3: after the collision, every row of content in free space
+  is pushed by the interval's arrival flow **V** at its Node (less its own
+  number's; the crossing rule's set): **W** -= n x (1 + gamma) x content
+  x e_D x **V** (e_D = isqrt(3 **u**_D . **u**_D), 110 or 111 on every
+  direction, a table at load, never T_D; content the row's amount times
+  its content per unit, so a free family's row never turns), and when a
+  neighbour D' of its direction on the fan (the up-to-six nearest moving
+  directions within a right angle, a table at load) is nearer to its whole
+  momentum **P** = Q d content **u**_D + **W** than D (the exact comparison
+  of cosines in Python integers), the label moves to D' and **W** += Q d
+  content (**u**_D - **u**_D'): **P** is conserved, the books' `turned`
+  line takes the label's change. The push's accumulator is `push` on the
+  row (`push_x`, `push_y`, `push_z`; not massive-rows' `acc_turn`, the
+  phase's turn count, a different thing that is never in the set). The note's Q S content **u**_D + **w**
+  with S = d / n is built cleared of n (**W** = n **w**), so that the turn's
+  arithmetic is exact in integers for any pair.
+- The junction of verb 1 and verb 3 (the physics-rule review of 408cf719,
+  docs/designs/optical_v1/REVIEW_408CF719.md, record 494, M1; the chief
+  physicist's word on the residue's units, record 496): the walk's count
+  is capped at one Link by the primitive's own `at_most` with the surplus
+  kept (the head before the fix capped the count after the primitive and
+  kept the residue of the uncapped count, destroying up to 24 walls of
+  paid credit at a turn), and the turn rescales the row's residue to the
+  new direction's rate, s' = (s x S_new) // S_old, the time of the last
+  Link age - s / r conserved, exact from a heading and truncated under
+  one unit of the accumulator between two off-heading directions (the one
+  place the flight's time is not exact, bounded by one unit per turn;
+  whether that remainder is carried at the price of a denominator per
+  row is the model owner's footnote on his return). The push
+  accumulator's sums **W** + n weight **V** and **W** + Q d content
+  (**u**_D - **u**_D') are tested against the working register before
+  they are formed (S1). `tests/test_optical.py` (g) and (h); the pin
+  worlds re-run on the fixed head and the entry re-read with the old
+  value beside the new.
+- A body's push and drive are untouched (its weight keyed off until form B,
+  REVIEW_3 must-fix 2 and 3): the body's drive is not a member of the set
+  on `main`.
+- Refused at load, naming the rule: the key with `suspension` 0; with
+  `meeting` (one turn verb per row); with a direction that has no
+  neighbour within a right angle (the six headings alone); gamma not a
+  non-negative integer. The inverse interval is refused under the key (a
+  row's wall reads the crowd of the interval before, which the after-state
+  does not hold). The bounds (the wall, the push n x weight x |V|, the
+  age moment's products) are tested by division before the products are
+  formed.
+- The record: `run.json` gains `optical` {gamma, flight_coefficient} and
+  the identity `optical-v1` under `hypotheses`; `state.json`'s rows gain
+  `flight` [made, residue] and, when held, `push`.
+- The pin worlds: `examples/events/optical/` (series K's `mass` and `near`
+  at [1, 16384] with the mass x 16, at gamma 0 and 1, with the controls),
+  their pins in `expectations.json` before the run and the run's readings
+  in the README and the register's entry; `tests/test_optical.py` (a) to
+  (h).
+
 ## The covariant readings, on 2026-09-21 (a world key, absent by default)
 
 The model owner's decision of 2026-09-21 (record 270 of the log of

@@ -596,7 +596,15 @@ order with each step's inverse:
    stretched rate in units of d is the owed count above, integer for
    integer: `engine.count_owed`); the row's flight joins under optical-v1's
    key with its own coefficient 1 + gamma (gamma the post-Newtonian
-   parameter) by a declaration in the set and nothing else moving; the
+   parameter) by a declaration in the set and nothing else moving (the
+   key reads the crowd twice, both at the row's own Node and less its own
+   number: the wall's age moment before step 1, one interval retarded,
+   and the turn's flow after the walk and the collision, the interval's
+   own arrivals, the crossing rule's set; the flight's residue crosses
+   the key's turn as the time of the row's last Link, s' = (s x S_new) //
+   S_old, S the Manhattan length, and the count at the new wall is capped
+   at one Link by the primitive with the surplus kept: the review of
+   record 494 and the chief physicist's word of record 496); the
    phase per age of a row (the turn, the turn by momentum, `phase_per_link`)
    is never a member, since a stretched phase per age would redshift light
    in transit (the physicist's note of record 428). Every new ray:

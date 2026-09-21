@@ -33,7 +33,9 @@ __all__ = [
     "column_charges",
     "AGE_WALL_NEVER",
     "AGE_WALL_SET",
+    "FLIGHT_MEMBER",
     "age_wall_coefficient",
+    "age_wall_set",
     "count_component",
     "rational_sum",
     "reduced",
@@ -341,17 +343,34 @@ class CountTable:
 # them whatever the set declares.
 AGE_WALL_SET: tuple[tuple[str, int], ...] = (("owed", 1),)
 AGE_WALL_NEVER: tuple[str, ...] = ("turn", "action")
+# The member the key `optical` adds (optical-v1, 2026-09-21): the row's
+# flight accumulator, its coefficient f = 1 + gamma, gamma the world's
+# declared post-Newtonian parameter (`NatureBeamWorld.optical`).
+FLIGHT_MEMBER = "flight"
 
 
-def age_wall_coefficient(name: str) -> int:
-    """The declared coefficient c of a member of the age wall's set, by the
-    count's name in the body's table of counts; a count that is no member
-    is refused (nothing outside the set is stretched), a count the law
-    keeps out of the set (`AGE_WALL_NEVER`) is refused before the set is
-    read."""
+def age_wall_set(optical: int | None = None) -> tuple[tuple[str, int], ...]:
+    """The age wall's declared set of a world: the law's (`AGE_WALL_SET`,
+    the clock at 1, with or without any key) and, under the world key
+    `optical: gamma`, the row's flight at 1 + gamma (`FLIGHT_MEMBER`); the
+    body's drive is not a member on `main` (its pin waits on form B,
+    REVIEW_3 must-fix 2 and 3), the release and the lamp's count never
+    (per self-creation, gated by the clock's wall already), the phase per
+    age never (`AGE_WALL_NEVER`)."""
+    if optical is None:
+        return AGE_WALL_SET
+    return (*AGE_WALL_SET, (FLIGHT_MEMBER, 1 + optical))
+
+
+def age_wall_coefficient(name: str, optical: int | None = None) -> int:
+    """The declared coefficient c of a member of the age wall's set
+    (`age_wall_set`, the law's members and the key's), by the count's
+    name; a count that is no member is refused (nothing outside the set is
+    stretched), a count the law keeps out of the set (`AGE_WALL_NEVER`) is
+    refused before the set is read."""
     if name in AGE_WALL_NEVER:
         raise ValueError(f"the count '{name}' is never a member of the age wall's set")
-    for member, coefficient in AGE_WALL_SET:
+    for member, coefficient in age_wall_set(optical):
         if member == name:
             return coefficient
     raise ValueError(f"the count '{name}' is not a member of the age wall's set")
