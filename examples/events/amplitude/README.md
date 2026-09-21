@@ -85,7 +85,12 @@ gather and the last tick under `two_slits`; the pair's birth, the
 choosers' early records and the far worlds' least flight under `pair`;
 the rotate and gate lines, the rows after the gates and the rotation's
 multiplicity under `gate`. The runs and their readings
-are in the register's L1 entry.
+are in the register's L1 entry. **Under the exact phase at the click
+(2026-09-21, [BEAM_LAW note 45](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):**
+every port's clicks in the table stand (the unequal arms 64 / 0, 32 / 32
+and 0 / 64 included); the unequal arms' records read their two paths at
+the exact time of their last Links, so their weights and totals moved
+(eight totals per world as before); the equal arms are bit-identical.
 
 ## L2: the two slits at a low rate
 
@@ -109,7 +114,19 @@ runs it in-process and reads it by the design's `slits_read.py` into
 weights per set (coherent within a Node, incoherent across the Nodes of a
 set: a face is one cell of the sum of its Nodes' squares), the ladder's
 clicks over the 64 births, the shares, the pixels and the correlations
-(the register's L2 entry has the numbers and the run).
+(the register's L2 entry has the numbers and the run). **Under the exact
+phase at the click (2026-09-21,
+[BEAM_LAW note 45](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):**
+the reference declares the frequency and the reading takes each row's
+phase from the `exact` of its click line; the reading and the run agree on
+every one of the 80 sets: wall 34 (11, 12, 11), screen 15 on fourteen
+pixels (y = 11, 29, 36, 40, 50, 56, 59, 60 twice, 61, 70, 77, 84, 90, 107),
+faces 15 (8, 7); the total 4834019/4259840, the shares 0.529 / 0.244 /
+0.227, the weights' Pearson with the two-source cosine 0.382 (0.368 under
+the phase of the whole intervals), the histogram's with the weights 0.722
+(0.655); the design's map (wall 34, screen 16, faces 14) carried the lamp
+leg's exact fraction across the re-emission and evaluated on a table of
+4096 floats, which the engine does not.
 
 **The fan by angle** `slits_huygens` (L2b; the mathematician's
 [TWO_SLITS.md section 7](../../../docs/designs/fraction_free/TWO_SLITS.md),
@@ -156,6 +173,47 @@ births and 32 in all 271 (every u clicked its one cell at every birth);
 the histogram's Pearson 0.493 at 271. The fringes are in the record's
 weights and not in the clicks: TWO_SLITS.md section 7, the page
 <https://claude.ai/artifact/6pyy8C62muHshZ7iMDCUx9>.
+
+**Re-registered under the birth wheel (2026-09-21; the model owner's
+decision, record 180; [BEAM_LAW note 46](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+the run that shows the wheel).** The world declares the golden rate
+`wheel` [2531, 4096] (u = ordinal x 2531 mod 4096, the rungs on 4096;
+every other registered lamp [1, N]) and runs 4300 intervals for 4096
+births, under the exact phase at the click (note 45). **Pinned before the
+run:** as ordered, the map's section 8 at 4096 births (the screen's fan of
+121 directions with the wheel and the exact phase): the bright pixels
+about 28 to 29 clicks, the dark 0 to 3, the Pearson of the counts with the
+two-source cosine about 0.96; and, for this world's own fan, the wheel's
+own statement, every cell's count within one click of 4096 x its weight
+over the total, the rungs being the first record's (the tables' eight
+totals at u mod 64, a part in 276, note 37 (xii), move a rung by at most
+one more). **Run (2026-09-21, `slits_huygens`, the run, 4300 intervals in 1334 s (0.31 s per interval), completed and
+conserved at every tick, 4299 records born, 4150 gathered and 149 open at the
+end, every one of the records 1 to 4096 gathered; the
+branch `click`; DETECTOR):** over the records 1 to 4096 the clicks are
+wall 882, screen 1711 on 107 pixels, faces 1503, on 112 of the 116 cells
+with weight; at the cosine's dark pixels 0 to 3 (3, 1, 0, 0, 0, 0, 0, 0,
+3, 0, 1, 1, 0, 3, 0, 0, 0, 0, 0, 1, 0, 2; the mean 0.68), as pinned; at
+its bright pixels 41, 19, 42, 38, 51, 49, 51, 39, 42, 20, 40 (the mean
+39.3), not the map's 28 to 29: the map's number is the screen's fan's,
+whose screen share is 0.35 with a flatter peak, where this world's Farey
+fan puts 0.418 of the total on the screen with its peak at y = 59 to 61
+at 0.012 (51 clicks each), and the two bright pixels at 19 and 20 (y = 36
+and 84) are the weights' own widths 20 and 21 (the digital line's landing);
+the counts' Pearson with the cosine 0.891 against the weights' registered
+0.895, the visibility 0.966 (the weights' 0.954); against the first
+record's own rungs (its cells' widths in 1/4096 of the total, the expected
+counts) the histogram's Pearson is 1.000 over the 126 cells and 0.998 over
+the screen, every cell's count within 2 of its width (within 2 and not one: the rungs are per record, the tables' eight totals at u mod 64, a part in 276, note 37 (xii), so the counts are compared with the first record's rungs): the wheel turns the
+weights into counts, and the counts y = 40 .. 80 are 29 41 28 27 19 15 8 6
+3 0 1 5 7 15 18 20 36 45 51 51 49 51 51 45 36 20 18 15 7 5 1 0 3 6 9 14 19
+26 29 42 28. The first 64 births: wall 14, screen 27 on 27 pixels, faces
+23, 32 distinct cells (as under [1, 64]); by 256 births 69 distinct cells,
+by 1024 101. Verdict: Young's fringes are in the clicks as they were in
+the weights (the Pearson 0.891 against 0.895, the fan's own discreteness,
+TWO_SLITS.md section 7); the map's 0.96 was the screen's fan's and is not
+this world's pin. The run's record: `run.json` source sha256
+aa52ecb3168d4353..., initialization sha256 b75b611959ec3dfe...
 
 ## L3: the pair, the which-path world and no maintenance
 
@@ -222,7 +280,12 @@ the age 29; the path phase at the click is 51 and 8 under the integer form
 (the Links) and 23 and 23 under the pair form (the intervals)
 (`expectations.json` under `cone`; the register's L7 entry). The question
 of issue #376 (the paper session): the cone is Euclidean by the flight
-table; the phase's metric is the declared form's.
+table; the phase's metric is the declared form's. Under the exact phase at
+the click (2026-09-21, BEAM_LAW note 45) the pair form's click lines carry
+`exact` and `remainder`: 3 x 17 x 110 = 5610 = 87 x 64 + 42 at the axis and
+3 x 24 x 156 = 11232 = 87 x 128 + 96 at the diagonal, the whole part 87 =
+23 mod 64 at both as the walk's 3 x 29, the remainders 42 / 64 and 96 / 128
+(`expectations.json` under `cone.exact`); the integer form writes none.
 
 ## The pages with a moving picture (2026-09-21)
 

@@ -507,7 +507,7 @@ def test_the_books_balance_with_a_set_that_releases():
         "amount": 24,
         "fixed": True,
         "span": [3, 1, 1],
-        "lamp": {"rate": [1, 1], "directions": [[0, 1, 0]]},
+        "lamp": {"wheel": [1, 64], "rate": [1, 1], "directions": [[0, 1, 0]]},
     }
     simulation = NatureBeamSimulation(
         parse_nature_beam_world(world(shape=[3, 6, 1], K=24, measured=[lamp]))
