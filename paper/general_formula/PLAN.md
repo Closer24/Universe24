@@ -1605,3 +1605,36 @@ theirs); "fixed-point transforms" narrowed to "signal processing"; the
 sentence split in two; Part III's "third input" tied to its own list
 of three and to Part I's declaration; PLAN.md's "reverted" corrected
 to "closed unmerged" and the verification claim made concrete.
+
+## Wave 9 (2026-09-21): main at 8c4a9754 taken (row 2a restated, the fan's grain G in the glossary)
+
+Main merged (PRs #502 and #503). NATURE row 2a is restated to the
+clicks under the birth wheel (d66ac8b6): FAIL, 0.966 against 0.98,
+0.014 below the measured and 0.034 below the ideal, the cause named
+(the fan's grain); the paper's row 2a drops "this paper's reading" and
+the register-predates-it note, and the count of this paper's additions
+to the register falls from three cells to two (rows 4a and 5b). The
+glossary's symbols table gains the fan's grain G as a constant of the
+law beside N, Q, P, W and K, distinct from the retired grain of
+doppler-v1 (6d57c7a2); the paper's glossary appendix, its caption and
+the terminology bibitem now cite 6d57c7a2, and the G row's wording
+follows the glossary's. The reproducibility caveat names main at
+8c4a9754. Records 329 to 332 (Kepler, Compton and Malus ordered; the
+Schrodinger question and the owner's yes to massive-rows-v1, PR #500)
+and the derivation's rows 58 and 59 (PR #504) are not on main yet and
+are not cited; the paper keeps Schrodinger "not reached" until the
+derivation is on the tree. Referee round 25 pending.
+
+## Referee round 25 (2026-09-21): wave 9, minor revision, applied
+
+Four findings, all applied: the register's provenance in the paragraph
+and in the caption names row 2a's restatement at d66ac8b6, as
+NUMBERS.md does; the change-history sentence on row 2a replaced by
+"the register's own reading"; the G row's list of constants says whose
+letters they are (the glossary's N, Q, P, W and K, this paper's N, Q_f,
+P, W and eta); row 2a's verdict cell carries the register's correlation
+miss (0.96 pinned, 0.891 read, the pin the screen's fan's). Verified by
+the referee: every number of row 2a against NATURE.md, 0.026 the
+register's own prose, the tally unchanged, the G row in the symbols
+table at 6d57c7a2 (53 rows), nothing of records 329 to 332 cited.
+

@@ -1235,7 +1235,7 @@ reading and its run is not made, the verdict is given from the pin and
 says so, and the row is also a NOT YET for the run. The register's
 twenty-one rows (its base \texttt{88d843ef}; row 8c added at
 \texttt{d1fe2712}, rows 11a to 11c at \texttt{8b13ceeb}, merged at
-\texttt{01bb782a}; four
+\texttt{01bb782a}; row 2a restated at \texttt{d66ac8b6}; four
 PASS, twelve FAIL, of which four are pinned and one is a refutation of a
 declared input, two BOUND, three NOT YET), are
 Table~\ref{tab:nature}; nine of the published values are marked in the
@@ -1247,11 +1247,11 @@ register as to be verified against their sources before submission
 \cite{blondin2008} and \cite{lubin2001}) and are printed here as the
 register prints them; the
 dimensional constants, which need the dictionary's conversion fixed
-once, are not in this pass. Three cells are this paper's additions to
-the register, marked so in the table: row 2a's clicks under the wheel
-(registered in the experiments register, not yet in this one) and the
-covariant readings of Section~\ref{sec:lorentz} in rows 4a and 5b, which
-the register predates.
+once, are not in this pass. Two cells are this paper's additions to
+the register, marked so in the table: the covariant readings of
+Section~\ref{sec:lorentz} in rows 4a and 5b, which the register
+predates. Row 2a's clicks under the wheel are the register's own
+reading \cite{nature}.
 
 \begin{table}[H]\centering\footnotesize
 \setlength{\tabcolsep}{4pt}
@@ -1261,7 +1261,7 @@ Row & Observable and nature's value & The law's registered reading & Verdict \\
 \midrule
 1a & The CHSH sum of a pair: $2.42 \pm 0.20$ \cite{hensen2015}; the quantum bound $2.828$ & $S = 2.75$ at $N = 64$, series L & PASS: $1.65$ standard errors above the measured, $0.078$ below the bound \\
 1b & The same, the phase-form window & $S = 2$ exactly & FAIL: the local bound, $2.1$ standard errors below \\
-2a & Two-slit visibility of one quantum at a time: $0.98$ \cite{grangier1986} & $0.954$ in the record's weights (L2b); $0.966$ in the clicks under the birth wheel, $4096$ births (L2b re-registered; the register's row predates it) & FAIL by $0.026$ in the weights and, this paper's reading, by $0.014$ in the clicks; the fan's grain named \\
+2a & Two-slit visibility of one quantum at a time: $0.98$ \cite{grangier1986} & $0.954$ in the record's weights (L2b); $0.966$ in the clicks under the birth wheel, $4096$ births (L2b re-registered; the register's row restated to the clicks) & FAIL by $0.026$ in the weights and by $0.014$ in the clicks ($0.034$ below the ideal $1$); the cause named, the fan's grain; the correlation pin $0.96$ missed at $0.891$, the pin the screen's fan's \\
 2b & Mach-Zehnder visibility: $0.98$ & the offers $1681/1682$, the clicks $64/0$ & PASS: $0.9988$ \\
 2c & The power of the click's form: the Sorkin parameter of third-order interference $\kappa = 0.0064 \pm 0.0119$ \cite{sinha2010} & the power pinned to $[1.917, 2.054)$ by $63/1$ and $27, 5, 5, 27$ & PASS: contains $2$ \\
 3 & The deceleration parameter $q_0 = -0.53 \pm 0.01$ \cite{planck2018,riess1998,perlmutter1999} & $-0.108$ coasting; the gravity and double crowds $+0.35$ to $+1.5$ & FAIL: no term with $q < 0$ \\
@@ -1282,7 +1282,7 @@ Row & Observable and nature's value & The law's registered reading & Verdict \\
 11c & Tolman's surface brightness, $(1 + z)^{-4}$ \cite{tolman1930}, measured as $(1 + z)^{-n}$ with $n$ between $2.3$ and $3.1$ before correction \cite{lubin2001} & the same pin: the Nodes and the fan's lines fixed under the wall, a ruler of $l$ Nodes at $r$ subtends $l/r$, the flux $(1 + z)^{-1}$: $n = 1$ & FAIL (pinned): $n = 1$ against $4$ ($2.3$ at the least); at $z = 1$ the ratio $0.500$ against $0.062$; the run not made \\
 \bottomrule
 \end{tabular}
-\caption{\label{tab:nature}The confrontation register \cite{nature} (base \texttt{88d843ef}; row 8c added at \texttt{d1fe2712}, rows 11a to 11c at \texttt{8b13ceeb}, merged at \texttt{01bb782a}): twenty-one dimensionless readings against nature under one parameter set (eight worlds with another clock pair, on which no verdict depends). Each row's arithmetic and caveat are in the register; the published sources are cited here.}
+\caption{\label{tab:nature}The confrontation register \cite{nature} (base \texttt{88d843ef}; row 8c added at \texttt{d1fe2712}, rows 11a to 11c at \texttt{8b13ceeb}, merged at \texttt{01bb782a}; row 2a restated at \texttt{d66ac8b6}): twenty-one dimensionless readings against nature under one parameter set (eight worlds with another clock pair, on which no verdict depends). Each row's arithmetic and caveat are in the register; the published sources are cited here.}
 \end{table}
 
 The register's three structural failures are read under one logic in
@@ -2670,7 +2670,7 @@ Schr\"odinger for a free particle & the pair (flight, phase) of the linear block
 
 The terms and symbols of this paper are those of the program's one
 glossary, \texttt{docs/TERMINOLOGY.md} at the commit
-\texttt{e6b76725} \cite{terminology}, which names every canonical term
+\texttt{6d57c7a2} \cite{terminology}, which names every canonical term
 once with the note, section or record that owns it, lists the
 identities (the law and the hypotheses beside it) and the retired
 words; where this paper spells a symbol differently from the glossary
@@ -2700,7 +2700,7 @@ written plain.
 Symbol & Name & Kind & Where \\
 \midrule
 $\mathbf F$; $s$, $r$, $b$, $e$ & the interval's map; one accumulator of the state, its rate, its wall (the glossary's $d$), the event bit: one component each of the glossary's $\mathbf s$ and $\mathbf r$ (the letter $r$ also a distance where so named) & operator; scalars & Eq.~(\ref{eq:map}) \\
-$N$, $Q_f$, $P$, $W$, $r_w$, $G$ & the phase circle's width (not the shell's Node count $\mathcal N(r)$); the flight's grain (the glossary's $Q$, $64$, so written in $S(N, Q)$); the sphere of directions; the birth wheel's width and rate (not Boltzmann's $W$ nor the exact square $W_E$); the fan's grain of the archived code (the glossary retires the deleted grain $G$ of the doppler key, a different constant) & scalars & Section~\ref{sec:law} \\
+$N$, $Q_f$, $P$, $W$, $r_w$, $G$ & the phase circle's width (not the shell's Node count $\mathcal N(r)$); the flight's grain (the glossary's $Q$, $64$, so written in $S(N, Q)$); the sphere of directions; the birth wheel's width and rate (not Boltzmann's $W$ nor the exact square $W_E$); the fan's grain (the glossary's row of that name, a constant of the law beside the glossary's $N$, $Q$, $P$, $W$ and $K$, this paper's $N$, $Q_f$, $P$, $W$ and $\eta$; not the retired grain $G$ of the doppler key, a different constant) & scalars & Section~\ref{sec:law} \\
 $K$, $\eta = n/d$, $S$ & the number of directions of a fan (not the glossary's $K$, the clock's pair); the release rate per unit of content per direction (the glossary's clock's pair, the world key $K = [n, d]$); the world's width (not the CHSH sum $S$ nor Boltzmann's $S$) & scalars & Sections~\ref{sec:newton}, \ref{sec:law} \\
 $c$, $T_d$, $S_1$, $d$, $\mathbf u_d$ & the pace of a row, $1/\sqrt3$; a direction's wall (the glossary's $T_D$); its Manhattan length; a direction, a primitive integer vector written plain (the glossary's $\mathbf D$); its unit vector at the scale $Q_f$ & scalars; vectors & Sections~\ref{sec:law}, \ref{sec:model} \\
 $\tau$, $m(\tau)$, $\tau_L$ & the age of a row; its Links made by the age; the dwell, the intervals a row spends per Link, $T_d/Q_f$ & scalars & Sections~\ref{sec:model}, \ref{sec:delay} \\
@@ -2720,7 +2720,7 @@ $\mathbf g$, $\rho$, $\mathbf j$, $\mathbf E$, $\mathbf B$, $\mu_0$, $\mathbf J$
 $\alpha_G$, $m_p$, $\hbar$, $\lambda$, $k$, $\omega$ & nature's gravitational coupling of the proton; the proton's mass; Planck's constant over $2\pi$, $hN/(2\pi)$ in the law; a wavelength; a wavenumber (the register's $k$ is a presence read); an angular frequency & scalars & Sections~\ref{sec:table}, \ref{sec:newton}, \ref{sec:qm} \\
 \bottomrule
 \end{tabular}
-\caption{\label{tab:glossary}The symbols of this paper with their names and kinds, after the program's glossary at \texttt{e6b76725} \cite{terminology}. Where two symbols share a letter the table says which is which; the glossary's own spelling is given where the paper's differs.}
+\caption{\label{tab:glossary}The symbols of this paper with their names and kinds, after the program's glossary at \texttt{6d57c7a2} \cite{terminology}. Where two symbols share a letter the table says which is which; the glossary's own spelling is given where the paper's differs.}
 \end{table}
 
 \section*{Reproducibility}
@@ -2742,7 +2742,7 @@ merge, one tree whose history holds the three trees named above and the
 log records this paper cites; it replaces the concept DOI below, and its
 code no longer has the world key. Every record, note, design and
 register row this text cites is on the tree it was written on (main
-merged at \texttt{aa4cabf0}); the far lamp's rows 11a to 11c rest on a
+merged at \texttt{8c4a9754}); the far lamp's rows 11a to 11c rest on a
 pin whose run is not made.
 
 \section*{Use of AI tools}
@@ -2765,7 +2765,7 @@ submission.]
 \bibitem{lawvector} The law as one vector algebra: every rule in force as a vector operation, with its integer form beside it, \texttt{docs/designs/vector\_form/LAW.md} of the archived code \cite{zenodo}: the six operations, $c$ as the norm of the flight operator, every declared rounding at load as a constant of the law.
 \bibitem{architecture} The architecture and its local integer operation contract, \texttt{docs/ARCHITECTURE.md} of the archived code \cite{zenodo}: generic operations and law ownership (names are data and select no hidden equation; the engine owns no force, energy, momentum or field equation; payloads carry bounded state values and declared identifiers, never formula strings, expression trees or callbacks).
 \bibitem{highlights} The project's decisions and dictionary, \texttt{docs/HIGHLIGHTS.md} of the archived code \cite{zenodo}, section 5.4 (``The Detector'': the law and the owner's decisions, one line each; its subsection ``Decisions of 2026-09-21'') and section 5.7 (the conversions, the six operations, what is derived and what is input).
-\bibitem{terminology} The canonical terminology, \texttt{docs/TERMINOLOGY.md} of the archived code \cite{zenodo} at the commit \texttt{e6b76725}: the one glossary of the law (the location, the state, the rule, the readings, the widths), the identities, the symbols and the retired words.
+\bibitem{terminology} The canonical terminology, \texttt{docs/TERMINOLOGY.md} of the archived code \cite{zenodo} at the commit \texttt{6d57c7a2}: the one glossary of the law (the location, the state, the rule, the readings, the widths), the identities, the symbols and the retired words.
 \bibitem{derivations} The derivations of the beam law, \texttt{docs/DERIVATIONS\_BEAM.md} of the archived code \cite{zenodo}, sections 0 (the operator and its two blocks), 2 (Doppler), 3 (Newton and Coulomb), 4 (special relativity as the limit's symmetry), 5 (the delay field), 6 (the information cost and the click's square), 7 (Young and Bohr), 9 (the law of information), 12, 12b and 12c (Lorentz from the delay field; the mover's counter), 13 (the one constant), 14 (entropy), 15 (the growing wall), 16 (the numbers of nature), 17 (the theorem of covariant readings), 18 (the three structural failures under one logic), 19 (the masses generically), 20 (the periodic universe against the measured numbers), 21 (the derivation map, its Einstein map and the six-point standard) and 22 (the uncertainty relation, Bell beside it).
 \bibitem{nature} The confrontation register, \texttt{docs/NATURE.md} of the archived code \cite{zenodo}: twenty-one dimensionless detector readings against nature under one parameter set, with each row's arithmetic, source and caveat.
 \bibitem{predictions} The predictions register, \texttt{docs/PREDICTIONS.md} of the archived code \cite{zenodo}, entry 26 (the masses).
