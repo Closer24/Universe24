@@ -3304,3 +3304,18 @@ implementation's part of the contract. The design above is unchanged.
     alone, the same integers read by ordinal on both counts (the
     reviewer's `pair_by_ordinal.py`; `tools/bell_chsh.py`,
     `tools/bell_choosers.py`, `tests/test_amplitude_pair.py`).
+
+42. **The group structure named** (2026-09-21; the vector program, record
+    191; the architect's item 3; names and types only, no rule changed and
+    every registered integer the same): the collision table is the action
+    of the cyclic group on the slot states by the shift, its orbits the
+    classes of section 4 (`CollisionTable.act`, `orbit`, `period`); the
+    world's circle of N steps is the cyclic group of the phase with its
+    unit vectors (`core.phase.PhaseCircle`, carried by the tables as
+    `circle`; the two scalar turns of the engine and the layer's tables
+    read it); the 48 signed axis permutations are the cube's group with
+    its hand as the pseudoscalar (`core.game_board.cube_symmetries`,
+    `symmetry_hand`), the same 48 maps the collision test enumerated. The
+    tests state the properties (closure, inverse, the orbit-stabilizer and
+    Burnside counts, one cycle per class) in place of the counted orbits
+    (`tests/test_group_structure.py`; `test_nature_beam_collision.py` (b)).
