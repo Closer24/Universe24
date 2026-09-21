@@ -57,3 +57,14 @@ GAMEBOARD): `cavity_unequal` (20806, 20035) at 6000, `cavity_equal`
 (20420, 20420) at 600, the books balanced at every tick, the content per
 click (the partner's turn, E = h f read at the receiver) 8 and 2 at the
 start of the unequal world and 5 at its end on both sides.
+
+## Re-read under the fraction-free law (2026-09-20)
+
+Under the fraction-free law ([BEAM_LAW note 41](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+each cavity's lamps turn by their accumulators (a lamp paying at every
+birth): `cavity_unequal` reads (21072, 19768) at 6000 intervals ((20806,
+20035) off the clock), the content per click 2 and 8 at the start and 5
+and 5 at the end on both sides as before, the books balanced at every
+tick; `cavity_equal` is identical, (20420, 20420) at 600 (an equal split
+stays a fixed point). The design's verdict (not derivable in this law) is
+untouched ([migration](../../../docs/MIGRATION.md#the-fraction-free-law-on-2026-09-20-every-count-an-accumulator-on-the-bodys-record)).

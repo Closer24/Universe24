@@ -10,18 +10,23 @@ Law (2026-09-19)" in docs/EXPERIMENTS.md is checked and a failed
 criterion exits nonzero. Every expectation is exact: the arithmetic is on
 integers and `fractions.Fraction`, no float anywhere in a criterion.
 
-The reading: a pair is the two releases of one age a of the lamp (the ray
-on -X toward Alice and the ray on +X toward Bob, both stamped with the
-phase a mod N); A = +1 for a click at `alice_plus`, -1 at `alice_minus`,
-B likewise; the age of a click is its tick less the offset of its Node,
-read off the record itself (the earliest click at a Node is the smallest
-age its window admits, whose phase is that age, so the offset is that
-click's tick less its phase; under the Beam Law a ray flies at 1 / sqrt 3,
-so a minus Node's offset exceeds its plus Node's by the flight table's
-ninth Link, two intervals); the first `PAIRS` ages are analysed and the
-later ones, still in flight when the run ends, are excluded. E is
-(same - different) / PAIRS, expected 1 - 4 k / N with d = (a - b) mod N and
-k = min(d, N - d): the triangle of a deterministic local window.
+The reading: a pair is the two rows of one record of the lamp (the row
+on -X toward Alice and the row on +X toward Bob, one birth: the record's
+identity is the lamp's number x 2^32 + the birth's ordinal, carried on
+every click and pass line); A = +1 for a click at `alice_plus`, -1 at
+`alice_minus`, B likewise; the AGE of a pair is its birth ordinal less
+one, read off the record on the line itself, and its phase is that age
+mod N (u, the birth phase). Since the fraction-free law (2026-09-20,
+BEAM_LAW note 41) a paid lamp's exact clock stalls where its content has
+fallen below K (on these worlds once, at tick 4), so the tick of a birth
+is not the age of the lamp's clock and a pair is read by its record, never
+by its tick: the tick offsets (the smallest tick - age at each Node, the
+flight's) are reported, and the correlations do not depend on the
+alignment (the physics-rule reviewer's reading by ordinal, record 148).
+The first `PAIRS` ages are analysed and the later ones, still in flight
+when the run ends, are excluded. E is (same - different) / PAIRS, expected
+1 - 4 k / N with d = (a - b) mod N and k = min(d, N - d): the triangle of a
+deterministic local window.
 
     python tools/bell_chsh.py artifacts/bell
     python tools/bell_chsh.py artifacts/bell/a0_b8 artifacts/bell/a0_b24 ...
@@ -163,19 +168,27 @@ def analyse(folder: Path, checks: Checks) -> Run:
         ),
         True,
     )
-    # The offsets: the earliest click at a Node is the smallest age its
-    # window admits, and that age is its phase.
+    # The age of a pair: its birth ordinal less one, off the record the
+    # line carries (the lamp's number x 2^32 + the ordinal).
+    base = lamp_number << 32
+    lines = clicks + passes
+    checks.equal(
+        f"{label}: every click and pass carries the lamp's record",
+        all("record" in event and int(event["record"]) > base for event in lines),
+        True,
+    )
+
+    def age_of(event: dict[str, Any]) -> int:
+        return int(event.get("record", base + 1)) - base - 1
+
+    # The tick offsets, a report: the smallest tick - age at each Node is
+    # the flight's (a stall of the lamp's clock puts every later birth a
+    # tick on, so the offset is not one value per Node).
     offsets: dict[str, int] = {}
     for node in sorted(NODES):
         at_node = [event for event in clicks if event["detector"] == node]
         checks.add(f"{label}: clicks at {node}", bool(at_node), f"{len(at_node)} clicks")
-        if not at_node:
-            # A Node without a click (the record form of the lamp, stage
-            # (vii) step 4): no offset to read, the check above fails.
-            offsets[node] = 0
-            continue
-        first = min(at_node, key=lambda e: int(e["tick"]))
-        offsets[node] = int(first["tick"]) - int(first["phase"])
+        offsets[node] = min((int(e["tick"]) - age_of(e) for e in at_node), default=0)
     checks.equal(f"{label}: the plus offsets agree", offsets["alice_plus"], offsets["bob_plus"])
     checks.equal(f"{label}: the minus offsets agree", offsets["alice_minus"], offsets["bob_minus"])
     checks.add(
@@ -183,32 +196,32 @@ def analyse(folder: Path, checks: Checks) -> Run:
         offsets["alice_minus"] > offsets["alice_plus"],
         f"plus {offsets['alice_plus']}, minus {offsets['alice_minus']}",
     )
-    checks.equal(
-        f"{label}: the run lets the last analysed pair complete",
-        ticks >= PAIRS - 1 + max(offsets.values()),
-        True,
-    )
     phase_rule = True
     window_rule = True
     outcomes: dict[str, dict[int, list[int]]] = {"alice": {}, "bob": {}}
     node_ages: dict[str, set[int]] = {node: set() for node in NODES}
     for event in clicks:
         node = str(event["detector"])
-        age = int(event["tick"]) - offsets[node]
+        age = age_of(event)
         phase = int(event["phase"])
-        phase_rule = phase_rule and age >= 0 and phase == age % N
+        phase_rule = phase_rule and age >= 0 and phase == age % N == int(event.get("u", -1))
         window_rule = window_rule and in_window(phase, setting_of[node])
         if age < PAIRS:
             side = "alice" if node.startswith("alice") else "bob"
             outcomes[side].setdefault(age, []).append(1 if node in PLUS else -1)
             node_ages[node].add(age)
-    checks.equal(f"{label}: every click's phase is its age mod N", phase_rule, True)
+    checks.equal(f"{label}: every click's phase is its age mod N, the record's u", phase_rule, True)
     checks.equal(f"{label}: every click inside its window", window_rule, True)
+    checks.equal(
+        f"{label}: the run holds the last analysed pair",
+        all(PAIRS - 1 in outcomes[side] for side in ("alice", "bob")),
+        True,
+    )
     pass_rule = all(
         event["detector"] in PLUS
         and event["number"] == lamp_number
         and event["amount"] == 1
-        and int(event["phase"]) == (int(event["tick"]) - offsets[str(event["detector"])]) % N
+        and int(event["phase"]) == age_of(event) % N
         and int(event["window"]) == setting_of[str(event["detector"])]
         and not in_window(int(event["phase"]), int(event["window"]))
         for event in passes
@@ -217,11 +230,7 @@ def analyse(folder: Path, checks: Checks) -> Run:
         f"{label}: every pass at a plus Node, outside its window, phase its age mod N", pass_rule, True
     )
     for plus, minus in SIDES:
-        passed = {
-            int(e["tick"]) - offsets[plus]
-            for e in passes
-            if e["detector"] == plus and int(e["tick"]) - offsets[plus] < PAIRS
-        }
+        passed = {age_of(e) for e in passes if e["detector"] == plus and age_of(e) < PAIRS}
         checks.equal(f"{label}: what passes {plus} clicks at {minus}", passed, node_ages[minus])
     for side in ("alice", "bob"):
         checks.equal(
@@ -327,7 +336,7 @@ def main(argv: list[str] | None = None) -> int:
     offsets = {tuple(sorted(run.offsets.items())) for run in runs}
     checks.equal("the same tick offsets in every run", len(offsets), 1)
     print(
-        "tick offsets (tick = age + offset):",
+        "tick offsets (the smallest tick - age at each Node, the flight's):",
         ", ".join(f"{k} {v}" for k, v in sorted(runs[0].offsets.items())),
     )
     for name, quadruple, expected in (("S", CHSH, Fraction(2)), ("S'", PRIME, Fraction(3, 2))):

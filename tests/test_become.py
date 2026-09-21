@@ -82,12 +82,16 @@ reader, gravity -M_A x 64 per unit (a free ray's label never joins).
     self-creation (`release` [1, 1]) and `n` fixed at (2, 2, 2) with `at`
     3 and `suspension` [1, 128]: the `n` counts 64 at tick 2 (the arrivals
     born at tick 1) and 128 from tick 3 on (64 arriving, 64 dwelling at
-    m(2) = m(1)), owes 1 after every self-creation from tick 2 (the
-    self-creations at the ticks 1, 2, 4, 6, ...), and fires at tick 4 (the
-    age 3), against tick 3 for the free `n` alone; the `become` record's
-    `counted` 128. With `crowd` 64 it never fires in 40 intervals (the
-    count 128 at every self-creation from tick 4, the ages 3, 6, 9, ...);
-    with `crowd` 129 at tick 4;
+    m(2) = m(1)); its owed count is the count of its owed accumulator (the
+    fraction-free law, 2026-09-20): 64 at tick 2 owes nothing, 64 + 128 =
+    192 at tick 3 owes 1 (the remainder 64), and 1 after every
+    self-creation from then on (the self-creations at the ticks 1, 2, 3,
+    5, 7, ...), so it fires at tick 3 (the age 3), as the free `n` alone
+    does; the `become` record's `counted` 128 (until the fraction-free law
+    the whole part off the clock at the age 1, `by_clock(1, 64, 128)` = 1,
+    owed 1 at tick 2 and the trigger fired at tick 4). With `crowd` 64 it
+    never fires in 40 intervals (the count 128 at every self-creation
+    from tick 3, the ages 3, 6, 9, ...); with `crowd` 129 at tick 3;
 (e) the charge line through the click of the beta product: the world of
     (a) with a fixed absorber `w` (content 1) at (2, 4, 2), its entry for
     `beta` the keys' `measure`: the beta row clicks there at tick 6 (the
@@ -356,15 +360,16 @@ def test_the_crowd_slows_the_trigger_and_the_gate_holds_it():
     """(c)."""
     simulation, records, _ = run(crowded(BECOME), 12)
     become = [r for r in records if r["event"] == "become"]
-    assert [(r["tick"], r["counted"]) for r in become] == [(4, 128)]
+    assert [(r["tick"], r["counted"]) for r in become] == [(3, 128)]
     assert simulation.measured[2].age == 7 and simulation.measured[2].waited == 5
+    assert simulation.measured[2].acc_owed == 64
     free, free_records, _ = run(world([neutron()], suspension=[1, 128]), 12)
     assert [r["tick"] for r in free_records if r["event"] == "become"] == [3]
     held, held_records, _ = run(crowded({**BECOME, "crowd": 64}, ticks=40), 40)
     assert [r for r in held_records if r["event"] == "become"] == []
     assert held.measured[2].held == [7, 0, 0, 0, 0] and held.measured[2].become is not None
     gated, gated_records, _ = run(crowded({**BECOME, "crowd": 129}), 12)
-    assert [(r["tick"], r["counted"]) for r in gated_records if r["event"] == "become"] == [(4, 128)]
+    assert [(r["tick"], r["counted"]) for r in gated_records if r["event"] == "become"] == [(3, 128)]
 
 
 # -- (e) ---------------------------------------------------------------------------

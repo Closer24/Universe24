@@ -461,3 +461,16 @@ forms in 8 of the 12 windows (10 of 12), `pushing_age` reading q = 0 the
 nearest in its first two; 309 readings inside and 27 outside (310 and
 26). The verdict stands as read. The register entry has every number
 ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under the fraction-free law (2026-09-20)
+
+Under the fraction-free law ([BEAM_LAW note 41](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+the two coasting worlds are identical to the registered runs and the two
+pushing worlds move by little (their clocks read a changing crowd): the
+near fit's H t_0 in the three windows and the late one reads 1.176,
+1.302, 1.324, 1.301 in `pushing_scalar` (1.144, 1.182, 1.305, 1.292 under
+the signed drive) and 0.848, 1.018, 1.086, 1.035 in `pushing_age` (0.866,
+0.932, 1.057, 1.036); q = -0.55 the nearest of the three forms in 9 of
+the 12 windows (8 of 12); 310 readings inside and 26 outside (309 and 27).
+The verdict stands as read. The register entry has every number
+([migration](../../../docs/MIGRATION.md#the-fraction-free-law-on-2026-09-20-every-count-an-accumulator-on-the-bodys-record)).

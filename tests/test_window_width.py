@@ -55,7 +55,10 @@ the first run:
     1, one ray per self-creation on +x) with `phase_window` 8 and
     `phase_width` 4 releases at the self-creations whose clock phase falls
     in [6, 10): over the first 64 intervals 4 rays, at the phases 6, 7, 8
-    and 9, against 32 with the width absent;
+    and 9, against 31 with the width absent (the lamp's exact clock, the
+    count of its turn accumulator since the fraction-free law of
+    2026-09-20, stalls once at tick 6: 63 phases walked in 64 intervals;
+    32 under the whole part off the clock until then);
 (e) the refusals, naming the key: `phase_width` 0, 65 (at N = 64), 1.5 and
     "4" (an integer from 1 through N); on `pass`; for a family without a
     phase circle; without `phase_window` (a width is the width of a
@@ -303,10 +306,20 @@ def test_a_lamps_window_has_the_same_width():
     # u = 0 .. 3 (re-run under the one click (stage (vii) step 4); the verdict to be re-read; until stage (vii) step 4 the rows carried 6 .. 9).
     assert released == [0, 1, 2, 3] and simulation.ledger.transit_released == [4, 0]
     assert source.held == [K_B + 2 - 4, 0] and source.momentum == [-256, 0, 0]
+    # Without the width the half circle admits 32 phases of 64; the lamp
+    # (content K + 2 paying 1 per release) stalls its exact clock once, at
+    # the self-creation of tick 6 (the fraction-free law, 2026-09-20), so
+    # 63 phases are walked in 64 intervals and 31 releases fall in the
+    # window (32 until then, the whole part off the clock at the current
+    # content never stalling within 64 intervals).
     wide = NatureBeamSimulation(parse_nature_beam_world(lamp_world({"phase_window": 8})))
-    for _ in range(64):
+    stalls = []
+    for tick in range(1, 65):
         wide.step()
-    assert wide.ledger.transit_released == [32, 0] and wide.measured[1].lamp_width is None
+        if wide.measured[1].turn == 0:
+            stalls.append(tick)
+    assert stalls == [6] and wide.measured[1].turned == 63
+    assert wide.ledger.transit_released == [31, 0] and wide.measured[1].lamp_width is None
 
 
 def refused(document: dict[str, object], text: str) -> None:
