@@ -41,8 +41,8 @@ docs/TEST_EXPECTATIONS.md ("The worlds of the Beam Law"), written down first:
     gate set (`examples/events/gate_set.json`, the worlds replayed at every
     commit of an integration; the model owner, 2026-09-20) exists, parses as
     one, is listed once, at its declared `ticks`, with a `cap` no longer than
-    them and a line saying what it covers (a structural check, no pinned
-    number);
+    them and a line saying what it covers, and carries its three `digests`
+    exactly when it has no lamp (a structural check, no pinned number);
 (e) `two_contents` (the two contents 8 Links apart on the open 21^3 GameBoard)
     for 20 intervals: not refused (the night's bound refused it at the 20th
     interval, when the two +y beams of 2^17 click face:+y together, 2^18 in
@@ -228,25 +228,25 @@ def test_the_bell_worlds_read_the_triangle_and_the_chsh_bound(tmp_path):
     # moves no correlation: 118 of 340 under the one click read by tick;
     # until stage (vii) step 4 the triangle: 0 failed, S = 2, S' = 3/2,
     # E(0, 16) = 0).
-    assert bell.main([str(tmp_path)]) == 1
+    # The numbers are the register's (`examples/events/bell/expectations.json`,
+    # since 2026-09-21: a test reads a world's numbers from the register).
+    registered = json.loads(
+        (ROOT / "examples" / "events" / "bell" / "expectations.json").read_text(encoding="utf-8")
+    )
+    assert registered["format"] == "bell-expectations-v1"
+    assert bell.main([str(tmp_path)]) == registered["tool_exit"]
     checks = bell.Checks()
     runs = {
         run.setting: run
         for run in (bell.analyse(folder, checks) for folder in sorted(tmp_path.iterdir()))
     }
-    assert checks.failed == 115 and len(checks.rows) == 350
-    assert runs[(0, 0)].offsets == {
-        "alice_plus": 14,
-        "bob_plus": 14,
-        "alice_minus": 0,
-        "bob_minus": 0,
-    }
-    assert bell.chsh(runs, bell.CHSH) == 2 and bell.chsh(runs, bell.PRIME) == 2
-    assert (
-        runs[(0, 0)].correlation == 1
-        and runs[(0, 32)].correlation == -1
-        and runs[(0, 16)].correlation == 1
-    )
+    assert checks.failed == registered["failed"] and len(checks.rows) == registered["criteria"]
+    assert runs[(0, 0)].offsets == registered["offsets_0_0"]
+    assert bell.chsh(runs, bell.CHSH) == registered["chsh_sum"]
+    assert bell.chsh(runs, bell.PRIME) == registered["primed_sum"]
+    for key, correlation in registered["correlations"].items():
+        a, b = (int(v) for v in key.split("_"))
+        assert runs[(a, b)].correlation == correlation, key
 
 
 def test_one_content_streams_outward_with_the_books_closed():
@@ -307,11 +307,19 @@ def test_every_gate_set_world_exists_and_parses_as_a_nature_beam_world():
     assert document["format"] == "gate-set-v1" and document["worlds"]
     names = []
     for entry in document["worlds"]:
-        assert set(entry) == {"path", "ticks", "cap", "covers"}, entry
+        assert set(entry) - {"digests"} == {"path", "ticks", "cap", "covers"}, entry
         path = gate.parent / entry["path"]
         assert path.is_file(), entry["path"]
         source = json.loads(path.read_text(encoding="utf-8"))
         loaded = load_world(path.read_bytes(), base_dir=path.parent)
+        # The digests at the cap (the register `test_amplitude_click` (d)
+        # reads, 2026-09-21) on every world without a lamp and on no other.
+        lamp_free = all(event.lamp is None for event in loaded.world.measured)
+        assert ("digests" in entry) == lamp_free, entry["path"]
+        if lamp_free:
+            digests = entry["digests"]
+            assert set(digests) == {"state_sha256", "audit_sha256", "events_sha256"}, entry["path"]
+            assert all(len(d) == 64 and int(d, 16) >= 0 for d in digests.values()), entry["path"]
         assert source["law"] == "beam" and loaded.world.model_id == source["model_id"]
         assert entry["ticks"] == source["ticks"], entry["path"]
         assert 1 <= entry["cap"] <= entry["ticks"], entry["path"]
@@ -324,13 +332,18 @@ def test_two_contents_is_not_refused_and_its_face_records_are_exact():
     """(e)."""
     path = ROOT / "examples" / "events" / "two_contents.json"
     document = json.loads(load_world(path.read_bytes(), base_dir=path.parent).expanded_source)
+    # The numbers are the register's (`examples/events/expectations.json`,
+    # since 2026-09-21: a test reads a world's numbers from the register).
+    registered = json.loads((path.parent / "expectations.json").read_text(encoding="utf-8"))
+    assert registered["format"] == "root-worlds-expectations-v1"
+    expected = registered["two_contents"]
     records: list[dict[str, object]] = []
     simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
     cosines, sines = phase_cosines(document["N"]), phase_sines(document["N"])
     before: dict[str, int] = {}
     faces: dict[str, int] = {}
     clicked: dict[str, list[tuple[int, int]]] = {}
-    for tick in range(1, 21):
+    for tick in range(1, int(expected["ticks"]) + 1):
         simulation.step()
         assert simulation.books()["balanced"], tick
         faces = {str(d["name"]): int(d["families"]["m"]["record"]) for d in simulation.face_detectors()}
@@ -346,11 +359,12 @@ def test_two_contents_is_not_refused_and_its_face_records_are_exact():
             y = sum(32 * amount * sines[phase] for amount, phase in rows)
             assert record - before.get(name, 0) == x * x + y * y, (tick, name)
         before = faces
-    assert clicked["face:+y"] == [(1 << 17, 0), (1 << 17, 0)]
-    assert faces["face:+y"] == (1 << 62) == MOMENTUM_BOUND + 1
-    assert faces["face:+x"] == faces["face:-x"] == (1 << 63)
+    assert clicked["face:+y"] == [tuple(pair) for pair in expected["face_plus_y"]["clicks_at_last_tick"]]
+    assert faces["face:+y"] == expected["face_plus_y"]["record"] == MOMENTUM_BOUND + 1
+    assert faces["face:+x"] == expected["face_plus_x"]["record"]
+    assert faces["face:-x"] == expected["face_minus_x"]["record"] > MOMENTUM_BOUND
     report = {d["name"]: d for d in json.loads(json.dumps(simulation.detectors()))}
-    assert report["face:+x"]["families"]["m"]["record"] == (1 << 63)
+    assert report["face:+x"]["families"]["m"]["record"] == expected["face_plus_x"]["record"]
     first, second = simulation.measured[1], simulation.measured[2]
     assert first.pushed[0] > 0 and first.pushed == [-second.pushed[0], 0, 0]
     assert second.pushed[1:] == [0, 0] and first.momentum == first.pushed

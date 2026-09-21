@@ -1,6 +1,6 @@
 {
  "format": "gate-set-v1",
- "description": "The gate set (the model owner's decision of 2026-09-20, Highlights 5.4, record 87 of docs/LOG_2026-09-20.md; chosen by measured coverage on 2026-09-20, the trimming plan, record 91): the worlds replayed at every commit of an integration through tools/run_series.py --list. Together they declare every key, table rule and family kind of the register, write every record kind, and execute every engine line any registered world reaches. The whole register replays only under --full or on demand. A new key or rule adds the first world that declares it, with the line it covers. ticks is the world's declared duration; cap is the interval by which the world's coverage is complete (the fast pass, --list --fast).",
+ "description": "The gate set (the model owner's decision of 2026-09-20, Highlights 5.4, record 87 of docs/LOG_2026-09-20.md; chosen by measured coverage on 2026-09-20, the trimming plan, record 91): the worlds replayed at every commit of an integration through tools/run_series.py --list. Together they declare every key, table rule and family kind of the register, write every record kind, and execute every engine line any registered world reaches. The whole register replays only under --full or on demand. A new key or rule adds the first world that declares it, with the line it covers. ticks is the world's declared duration; cap is the interval by which the world's coverage is complete (the fast pass, --list --fast). A world without a lamp carries `digests`: the sha256 of its state.json, of the books (the audit of run.json, JSON-encoded) and of events.jsonl at its cap, the register of the replay's expected bytes that tests/test_amplitude_click.py (d) reads (since 2026-09-21; before, the test's own table): the state's under the fraction-free law of 2026-09-20 (BEAM_LAW note 41), the books and the events the base tree's before the one click, j3_deuteron's moved at the fraction-free stage 1.",
  "worlds": [
   {
    "path": "bell/a0_b0.json",
@@ -12,13 +12,23 @@
    "path": "weak/j3_deuteron.json",
    "ticks": 700,
    "cap": 700,
-   "covers": "become by the clock (weak-v1), held, lifetime, columns with a sign, a paid family's charge"
+   "covers": "become by the clock (weak-v1), held, lifetime, columns with a sign, a paid family's charge",
+   "digests": {
+    "state_sha256": "ea32b17fefcdb2df2218804709959dd14c91a73a1073887cd08d9ffbdc6b555d",
+    "audit_sha256": "9f286fe9bb10790e0522237cf5384d5824e9ab75da4c0d81ee57fbdddca4d5d1",
+    "events_sha256": "4638b98e16b8274a759e13634f8ec84b1566a5e519d1f26e48256689de1eda26"
+   }
   },
   {
    "path": "bohr/r2.json",
    "ticks": 3000,
    "cap": 689,
-   "covers": "action (bohr-v1), phase_by_momentum, charge as a pair, span"
+   "covers": "action (bohr-v1), phase_by_momentum, charge as a pair, span",
+   "digests": {
+    "state_sha256": "a48ba880411bc8971b1e43aea64a2a1bdded1e72365b77b5939ba0f193949ec5",
+    "audit_sha256": "d830bd8e0e27193fc91810374e8e55298673007da97e3d717d05044c866cd05d",
+    "events_sha256": "35f5c6c3503e315de6885dfe4a1c5618d57069a1c43c0de11e19a8c54d4ed812"
+   }
   },
   {
    "path": "catalog/lamp_mirror_screen.json",
@@ -36,7 +46,12 @@
    "path": "detector/grouped_12_nodes.json",
    "ticks": 4,
    "cap": 2,
-   "covers": "entity definitions, in_transit, a detector set with a threshold"
+   "covers": "entity definitions, in_transit, a detector set with a threshold",
+   "digests": {
+    "state_sha256": "ab7bc500cbdb30404ec8e08083100b1943cbdbd00141bda8d875486b5d240633",
+    "audit_sha256": "975863cdb72c13719aa21397c178434501fd81de11cda2ab6037ea959e9cc9f8",
+    "events_sha256": "4b4994530f291bb5dbe986b532ffd3c9f8e8bcd585ca986ee4369e768ff749f9"
+   }
   },
   {
    "path": "bell/fixed.json",
@@ -48,13 +63,23 @@
    "path": "weak/j2_ladder.json",
    "ticks": 1037,
    "cap": 1,
-   "covers": "phase_width on a table entry"
+   "covers": "phase_width on a table entry",
+   "digests": {
+    "state_sha256": "5684eec9f321da7459d0bd0fcacf714dc6745baaf914abfc286368bed6ae6675",
+    "audit_sha256": "9f16ab276ee061317098eaef3abe18df5a4979b173596e750a63bf46883f3137",
+    "events_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   }
   },
   {
    "path": "weak/j3_deuteron_crowd.json",
    "ticks": 700,
    "cap": 1,
-   "covers": "become by the crowd"
+   "covers": "become by the crowd",
+   "digests": {
+    "state_sha256": "701ebdb2489763bec689b9ef79454c2a9e492999430dfea115de3b002bff5811",
+    "audit_sha256": "9a55af2c075019704c10922fd5dce8397b1d77fe63ce7ab3e570c2f8a9b6b72e",
+    "events_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   }
   },
   {
    "path": "heisenberg/w27_beam.json",
@@ -66,19 +91,34 @@
    "path": "nucleus/alpha_square.json",
    "ticks": 3000,
    "cap": 180,
-   "covers": "the lifetime's escape of a crowd, the contact of bound bodies"
+   "covers": "the lifetime's escape of a crowd, the contact of bound bodies",
+   "digests": {
+    "state_sha256": "be034bcdfc619737a507d14977b8ef0fad61fd8717efc4ccb07ebff53aee8349",
+    "audit_sha256": "15fceb127a2f1cb60a8d618d81536e752a38ea3e8d42bb1497c999b2bc3a7eac",
+    "events_sha256": "ea432ba27eaca89281ccbd8a86ed7b679ffa621116c18369bc2e128ec14c0f4b"
+   }
   },
   {
    "path": "hubble/pushing_age.json",
    "ticks": 400,
    "cap": 1,
-   "covers": "suspension as a pair, the age moment, a body owing intervals while pushed"
+   "covers": "suspension as a pair, the age moment, a body owing intervals while pushed",
+   "digests": {
+    "state_sha256": "60ddede6051fd848405ee9312fefd862ccff3a84f89b2bcc414a8fd8234f9067",
+    "audit_sha256": "7e219a1d03c8caddc617ccf2a69b34543912c3e09646cec7ae7a8d1fc454dc71",
+    "events_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   }
   },
   {
    "path": "coupling/1b_m16.json",
    "ticks": 200,
    "cap": 25,
-   "covers": "a phase-less family's push on the plane"
+   "covers": "a phase-less family's push on the plane",
+   "digests": {
+    "state_sha256": "87c7a42691bedf4c6697d762b2ac4d4f085c21e9c650a20da34e3bfe17fe50b3",
+    "audit_sha256": "8830f84aef5dcd112c58e0aa304b174c8734b493a3ff9f09f7951098b05b0493",
+    "events_sha256": "20aa2b23913e97ffa3aa13205a7d606962f4f4d8db313f5ebf72180c3fe9498a"
+   }
   },
   {
    "path": "heisenberg/w1_beam.json",
@@ -96,7 +136,12 @@
    "path": "hand/wu.json",
    "ticks": 40,
    "cap": 23,
-   "covers": "hand on a family (hand-v1), axis and the right-hand rule in become, the parity filter and the pass by hand, hand on the click, become and face lines, left/right in the books"
+   "covers": "hand on a family (hand-v1), axis and the right-hand rule in become, the parity filter and the pass by hand, hand on the click, become and face lines, left/right in the books",
+   "digests": {
+    "state_sha256": "8a84a189f93cec359a2c65e71221a25e77c98d11003ed74dcca6f531627b1c38",
+    "audit_sha256": "4d746dbe6084c30c6cd034c175f0efb1931d9fa2aa2c608783f928d611db645e",
+    "events_sha256": "d4d927fb55cdfa9a1330eea3818edb6275d14c1c460ea6e0d3e34a12c0f38988"
+   }
   }
  ]
 }
