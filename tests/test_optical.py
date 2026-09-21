@@ -37,8 +37,10 @@ default). One rule per case, the integers written before the run:
     equals Q d content **u**_D' + **W** after, the row's amount, content,
     number and phase untouched;
 (d) the refusals at load, naming the rule: `optical` with `suspension` 0,
-    with `meeting`, gamma -1, true, "2" or 1.5, and the six headings alone
-    (a direction without a neighbour within a right angle); a world with the key carries the identity `optical-v1` and
+    with `meeting`, gamma -1, true, "2" or 1.5, the six headings alone
+    (a direction without a neighbour within a right angle), and the key
+    `massive_rows` beside it (the composed flight of massive rows under
+    the optical key is not reviewed, record 510; each key alone parses); a world with the key carries the identity `optical-v1` and
     `run.json`'s block {"gamma", "flight_coefficient"};
 (e) byte identity without the key: a world without `optical` has every
     row's `made`, `residue` and turn fields 0 through its run and its
@@ -399,6 +401,14 @@ def test_the_refusals_and_the_identity():
             parse_nature_beam_world(turn_world(bad))  # type: ignore[arg-type]
     with pytest.raises(ValueError, match=r"direction \[1, 0, 0\] has no neighbour"):
         parse_nature_beam_world({**turn_world(), "directions": []})
+    # the two keys together (the reviewer's correction on f4138855, record
+    # 510): the composed flight of massive rows under the optical key is
+    # not reviewed; each key alone parses ((d) here, test_massive_rows (a))
+    with pytest.raises(ValueError, match="composed flight of massive rows under the key optical"):
+        parse_nature_beam_world({**turn_world(), "massive_rows": True, "age_bound": 64})
+    assert parse_nature_beam_world(
+        {**turn_world(None), "massive_rows": True, "age_bound": 64}
+    ).massive_rows
     parsed = parse_nature_beam_world(turn_world(1))
     assert (
         parsed.hypotheses[-1] == OPTICAL_RULE and parsed.optical == 1 and parsed.flight_coefficient == 2

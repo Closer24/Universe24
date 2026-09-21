@@ -6789,7 +6789,9 @@ sequential gates on an entangled record, the full register replay.
   -4.203 / -8.976 degrees (`mass`, the ratio 2.136; was 2.076) and -6.993
   / -8.277 (`near`, 1.184; was 1.744, 80 survivors' rows for 99). The
   rule and the pins unchanged; the readings with every column in the
-  worlds' README.
+  worlds' README. The key is refused at load beside the key
+  `massive_rows` (the composed flight of massive rows under the optical
+  key is not reviewed, record 510; a world declares one of the two).
 - **Verdict.** The wall's factor reached (the delays 1.98 and 1.88 for
   2.00 after the review's M1; 2.03 and 2.07 before it); the turn bends the
   beam toward the mass at every f with the shifts inside 0.5 pixel in two

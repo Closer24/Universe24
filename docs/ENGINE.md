@@ -496,7 +496,9 @@ the flight's residue rescaled to the new direction's rate, s' = (s x
 S_new) // S_old, the time of the row's last Link (records 494 and 496;
 `nature_beam.optical_turn`, the books' `turned` line); refused with `suspension` 0, with `meeting` (one
 turn verb per row), with a direction that has no neighbour within a right
-angle, and with gamma out of range; the inverse interval refused under
+angle, with gamma out of range, and with the key `massive_rows` (the
+composed flight of massive rows under the optical key is not reviewed,
+record 510: declare one of the two); the inverse interval refused under
 it; the record carries the block `optical` {gamma, flight_coefficient}
 and the identity `optical-v1` under `hypotheses`; without the key every
 world reads as it did, byte for byte); the amplitude law

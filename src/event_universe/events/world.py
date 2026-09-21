@@ -3374,7 +3374,11 @@ def _detectors(
 
 
 def _optical(
-    value: object, suspension: tuple[int, int], meeting: bool, table: tuple[Vector, ...]
+    value: object,
+    suspension: tuple[int, int],
+    meeting: bool,
+    table: tuple[Vector, ...],
+    massive_rows: bool = False,
 ) -> int | None:
     """The world key `optical` (`optical-v1`, 2026-09-21; docs/designs/one_wall/NOTE.md
     section 2, the declarations and the refusals once): gamma, a
@@ -3387,9 +3391,14 @@ def _optical(
     and would add on every row); with a direction table in which a moving
     direction has no neighbour (no other moving direction within a right
     angle: the six headings alone, for one, whose neighbours are all
-    orthogonal; a row on such a direction would have no fan to turn on). The other refusals of the note (a wall, a weight or a momentum
-    beyond the register) are the run's, tested by division before the
-    product is formed."""
+    orthogonal; a row on such a direction would have no fan to turn on);
+    with the key `massive_rows` (the physics-rule review of f4138855,
+    record 510: under both keys the walk would take every family's step
+    from the world's flight under the age wall while a massive family
+    walks by its own triple, a composed flight not reviewed; declare one
+    of the two). The other refusals of the note (a wall, a weight or a
+    momentum beyond the register) are the run's, tested by division
+    before the product is formed."""
     if value is None:
         return None
     if type(value) is not int or value < 0:
@@ -3408,6 +3417,13 @@ def _optical(
             f"{BEAM_LAW}: the key optical is refused with the key meeting: one turn verb per row "
             "(the two turns, the meeting's at its grain constant and optical-v1's at the flow's "
             "weight, act on the same headings from the same flow and would add on every row)"
+        )
+    if massive_rows:
+        raise ValueError(
+            f"{BEAM_LAW}: the key optical is refused with the key massive_rows: the composed "
+            "flight of massive rows under the key optical is not reviewed (a massive family walks "
+            "by its own triple, the optical walk by the world's flight under the age wall); "
+            "declare one of the two"
         )
     moving = [v for v in table if any(v)]
     for vector in moving:
@@ -3571,7 +3587,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
     )
     detectors = _detectors(obj.get("detectors", []), shape, periodic, measured)
-    optical = _optical(obj.get("optical"), suspension, meeting, table)
+    optical = _optical(obj.get("optical"), suspension, meeting, table, massive_rows)
     world = NatureBeamWorld(
         model_id,
         shape,

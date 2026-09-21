@@ -54,7 +54,10 @@ PYTHONPATH=src python tools/lensing_readings.py artifacts/optical_g1 --no-replay
 
 `tests/test_optical.py` pins the rule (the wall, the push and the turn,
 the conservation of the momentum, the refusals, the byte identity without
-the key) and the shipped worlds to the generator and the register.
+the key) and the shipped worlds to the generator and the register. The
+key is refused at load beside the key `massive_rows`: the composed flight
+of massive rows under the optical key is not reviewed (the physics-rule
+review of f4138855, record 510); a world declares one of the two.
 
 ## Measured (2026-09-21, the first run on branch optical-v1, after the pins above; the re-read after the review's M1 below)
 
