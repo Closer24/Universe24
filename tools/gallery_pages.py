@@ -895,6 +895,17 @@ pre.formula { font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; color
 .smalls pre.formula { font-size: 1.1rem; }
 .smalls p { font-size: 0.92rem; margin: 4px 0; }
 table.compare td.ours { color: var(--good); }
+math { font-family: "Latin Modern Math", "STIX Two Math", "Cambria Math", "DejaVu Serif", serif; color: var(--accent); }
+section.big math { font-size: 2.4rem; margin: 10px 0; }
+section.big .conditions math { font-size: 1.4rem; margin: 4px 0; }
+math[display="block"] { max-width: 100%; overflow-x: auto; }
+.scroll { overflow-x: auto; }
+.deriveds { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.deriveds section { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.deriveds h3 { margin: 0 0 4px; font-size: 1.05rem; }
+.deriveds math { font-size: 1.45rem; margin: 8px 0; }
+.deriveds p { font-size: 0.92rem; margin: 4px 0; }
+@media (max-width: 600px) { section.big math { font-size: 1.35rem; } }
 details summary { cursor: pointer; color: var(--accent); margin: 12px 0; }
 @media (max-width: 600px) { section.big pre.formula { font-size: 1.5rem; } section.big pre.formula.small-caps { font-size: 1rem; } }
 td.reached { color: var(--good); white-space: nowrap; }
@@ -4623,21 +4634,308 @@ def small_formula_html(entry: tuple[str, str, str, str, str]) -> str:
     )
 
 
+def m(*items: str) -> str:
+    """A MathML formula (block): the items are MathML elements."""
+    return '<math display="block">' + "".join(items) + "</math>"
+
+
+def mi(x: str, bold: bool = False) -> str:
+    return f'<mi mathvariant="bold">{x}</mi>' if bold else f"<mi>{x}</mi>"
+
+
+def mn(x: str) -> str:
+    return f"<mn>{x}</mn>"
+
+
+def mo(x: str) -> str:
+    return f"<mo>{x}</mo>"
+
+
+def msub(base: str, sub: str) -> str:
+    return f"<msub>{base}{sub}</msub>"
+
+
+def msup(base: str, sup: str) -> str:
+    return f"<msup>{base}{sup}</msup>"
+
+
+def mfrac(a: str, b: str) -> str:
+    return f"<mfrac>{a}{b}</mfrac>"
+
+
+def msqrt(a: str) -> str:
+    return f"<msqrt>{a}</msqrt>"
+
+
+def mrow(*items: str) -> str:
+    return "<mrow>" + "".join(items) + "</mrow>"
+
+
+E0 = msub(mi("E"), mn("0"))
+P = mi("p", bold=True)
+C2 = msup(mi("c"), mn("2"))
+
+# The main formula: the exact square of the energy, the invariant of
+# covariant-readings-v1 (DERIVATIONS_BEAM 17.6 M3): W = E_0^2 + 3 p . p in
+# the law's whole units (c^2 declared as the pair [1, 3]), E kept as the
+# largest integer with E^2 <= W by comparisons, E_0 = Q S M.
+mspace = '<mspace width="1.5em"/>'
+MAIN_FORMULA = m(mi("W"), mo("="), msup(E0, mn("2")), mo("+"), mn("3"), mrow(P, mo("&sdot;"), P))
+MAIN_CONDITIONS = m(
+    msup(mi("E"), mn("2")),
+    mo("&le;"),
+    mi("W"),
+    mo("&lt;"),
+    msup(mrow(mo("("), mi("E"), mo("+"), mn("1"), mo(")")), mn("2")),
+    mspace,
+    mo(","),
+    mspace,
+    E0,
+    mo("="),
+    mi("Q"),
+    mi("S"),
+    mi("M"),
+)
+NATURE_FORMULA = m(
+    msup(mi("E"), mn("2")),
+    mo("="),
+    msup(E0, mn("2")),
+    mo("+"),
+    msup(mi("p"), mn("2")),
+    C2,
+    mspace,
+    mo(","),
+    mspace,
+    C2,
+    mo("="),
+    mfrac(mn("1"), mn("3")),
+)
+
+# The derived formulas: (name, MathML, explanation, where).
+DERIVED = (
+    (
+        "The rest energy is the content",
+        m(
+            E0,
+            mo("="),
+            mi("m"),
+            C2,
+            mspace,
+            mo("&LeftRightArrow;"),
+            mspace,
+            E0,
+            mo("="),
+            mi("Q"),
+            mi("S"),
+            mi("M"),
+        ),
+        "the energy at rest is the width times the content, forced by the Newtonian limit: E = m c^2, with the "
+        "law's E' = 3 E in whole units",
+        "17.3 (iii), 17.6 M3",
+    ),
+    (
+        "The invariant, kept exactly",
+        m(msup(mi("E"), mn("2")), mo("&minus;"), msup(mi("p"), mn("2")), C2, mo("="), msup(E0, mn("2"))),
+        "the state carried is the square W, bilinear in p with the identity matrix, no drift; E rises or falls by "
+        "one while the comparison says so, at most three comparisons per interval: no root, the sixth verb",
+        "17.6 M3",
+    ),
+    (
+        "The pace",
+        m(
+            mi("v"),
+            mo("="),
+            mfrac(mrow(mi("p"), C2), mi("E")),
+            mspace,
+            mo("="),
+            mspace,
+            mfrac(mi("p"), msup(mi("E"), mo("&prime;"))),
+        ),
+        "in Links per interval: the drive's Newtonian rate p / (Q S M) per self-creation times the "
+        "self-creation's cadence E_0 / E, the covariant pace exactly, capped at c = 1 / sqrt 3 as p grows",
+        "17.6 M1",
+    ),
+    (
+        "The Lorentz factor and proper time",
+        m(
+            mi("&gamma;"),
+            mo("="),
+            mfrac(mi("E"), E0),
+            mo("="),
+            mfrac(mn("1"), msqrt(mrow(mn("1"), mo("&minus;"), mfrac(msup(mi("v"), mn("2")), C2)))),
+        ),
+        "one self-creation per gamma intervals by the owed count by_drive(acc_tau, E - E_0, E_0): the age, the "
+        "turn, the crowd's count and the decay follow proper time at once. The muon of J4: gamma 1.1074 and "
+        "1.9558, its 64th self-creation at 70.9 and 125.2 intervals against 64 at rest",
+        "17.6 M1, M2",
+    ),
+    (
+        "The momentum",
+        m(P, mo("="), mi("&gamma;"), mi("m"), mi("v", bold=True)),
+        "from v = p c^2 / E and gamma = E / E_0: nature's momentum, second order off Newton's m v, where the "
+        "law as declared (v = p / (m + p / c)) is first order off",
+        "17.2, 17.6 M1",
+    ),
+    (
+        "Doppler with gamma",
+        m(
+            mn("1"),
+            mo("+"),
+            mi("z"),
+            mo("="),
+            mi("&gamma;"),
+            mrow(
+                mo("("),
+                mn("1"),
+                mo("&minus;"),
+                mi("n", bold=True),
+                mo("&sdot;"),
+                mi("&beta;", bold=True),
+                mo(")"),
+            ),
+        ),
+        "the crossing count charged per self-creation: gamma (1 - n . beta), the transverse gamma; the coasting "
+        "star s_mz2 at beta 0.3042 reads z = 0.3691 (the pin 0.369 +- 0.003)",
+        "17.6 M1, M2",
+    ),
+    (
+        "The Newtonian limit",
+        m(
+            mi("E"),
+            mo("&asymp;"),
+            mi("m"),
+            C2,
+            mo("+"),
+            mfrac(msup(mi("p"), mn("2")), mrow(mn("2"), mi("m"))),
+            mspace,
+            mo(","),
+            mspace,
+            mi("F"),
+            mo("="),
+            mi("m"),
+            mi("a"),
+        ),
+        "at p much smaller than Q S M c: the kinetic energy p^2 / 2 m, F = m a with m = Q S M (series 7's "
+        "push_m = m push_1), inertia exact (G2's stars 1.0000), the third law to the grain",
+        "17.2",
+    ),
+    (
+        "The cost of a row, and the identity of the inputs",
+        m(
+            mi("E"),
+            mo("="),
+            mi("h"),
+            mi("f"),
+            mspace,
+            mo(","),
+            mspace,
+            mn("3"),
+            mi("h"),
+            mi("n"),
+            mo("="),
+            mi("Q"),
+            mi("S"),
+            mi("d"),
+        ),
+        "a row's energy is its cost per phase step; the books of an exchange balance only if 3 h n = Q S d for "
+        "every paid family (checked at load under the identity): the mass defect of a bound set is then the "
+        "escaped rows' energy",
+        "6.4, 17.6 M7",
+    ),
+    (
+        "A change of content",
+        m(
+            mi("&Delta;"),
+            mi("W"),
+            mo("="),
+            mi("Q"),
+            mi("S"),
+            mrow(mo("("), mn("2"), E0, mo("+"), mi("Q"), mi("S"), mi("&Delta;"), mi("M"), mo(")")),
+            mi("&Delta;"),
+            mi("M"),
+        ),
+        "on a click, a release, a give or a become the rest part follows the content and the kinetic part is "
+        "kept: the identity (E_0 + Q S dM)^2 - E_0^2, bilinear, exact",
+        "17.6 M7",
+    ),
+    (
+        "What the identity does not give",
+        m(
+            mfrac(mn("1"), mi("&gamma;")),
+            mspace,
+            mo("("),
+            mtext_c := "<mtext>the contraction</mtext>",
+            mo(")"),
+        ),
+        "the gradient of the age moment across the six Ports gives -grad(A) only: the rest force along the "
+        "motion and gamma times it across, not Maxwell's 1 - beta^2 and 1 / gamma; the magnetic term needs a "
+        "row carrying its source's momentum, source-velocity-v1, named and not designed",
+        "17.6 M4, M5",
+    ),
+)
+
+
+def derived_html(entry: tuple[str, str, str, str]) -> str:
+    name, formula, explanation, where = entry
+    return (
+        f'<section class="derived"><h3>{html.escape(name)}</h3>{formula}'
+        f"<p>{explanation}.</p>"
+        f'<p class="note">DERIVATIONS_BEAM.md {html.escape(where)}</p></section>'
+    )
+
+
 @register("einstein")
 def page_einstein(out: Path, runs: Path | None) -> Path:
-    """(12) The formula and Einstein: the big formula at the top, the small
-    formulas below it with their explanations, then the comparison with
-    Newton, Lorentz and Einstein; no run, no claim added."""
+    """(12) The formula and Einstein: the main formula at the top, the
+    formulas derived from it below, then the comparison with Newton,
+    Lorentz and Einstein; no run, no claim added."""
     del runs
+    derived = "".join(derived_html(entry) for entry in DERIVED)
     smalls = "".join(small_formula_html(entry) for entry in SMALL_FORMULAS)
     comparison = "".join(
         f"<tr><th>{html.escape(q)}</th><td>{html.escape(n)}</td><td>{html.escape(lo)}</td>"
         f'<td>{html.escape(e)}</td><td class="ours">{html.escape(us)}</td></tr>'
         for q, n, lo, e, us in COMPARISON
     )
+    einstein_rows = "".join(
+        f'<tr><td class="num">{n}</td><td>{html.escape(result)}</td>'
+        f'<td class="{status_class(status)}">{html.escape(status)}</td><td>{html.escape(gives)}</td>'
+        f"<td>{html.escape(add)}</td><td>{html.escape(pin)}</td></tr>"
+        for n, result, status, gives, add, pin in EINSTEIN_MAP
+    )
     body = f"""
 <section class="big">
-<p class="kind">The big formula: the one map F at every Node, every interval</p>
+<p class="kind">The main formula: the exact square of a body's energy, in the law's whole units</p>
+{MAIN_FORMULA}
+<div class="conditions">{MAIN_CONDITIONS}</div>
+<p class="kind">W the state carried, bilinear in the momentum vector p; E the largest integer whose square is at most W, kept by comparisons; E<sub>0</sub> the rest value, the width Q S times the content M; c<sup>2</sup> declared as the pair [1, 3]</p>
+<p class="kind">in nature's units</p>
+{NATURE_FORMULA}
+</section>
+<p><b>Where it stands</b>: this is the identity of <code>covariant-readings-v1</code>, the four covariant readings
+of a body (the drive, the turn, the push, the count) named in DERIVATIONS_BEAM section 17, reviewed by the
+physics-rule reviewer (record 297, admissible with must-fixes, the integer forms of 17.6) and decided by the
+owner (record 270) to be built beside the law; it is not built today, and the law as declared keeps the
+drive v = p / (m + p / c) and a clock's rate 1 at every speed. Everything below is derived from the main
+formula on paper, with the pins a run would meet written before it; nothing is added here.</p>
+<h2>The formulas derived from it</h2>
+<div class="deriveds">{derived}</div>
+<h2>The comparison: Newton, Lorentz, Einstein, and the law</h2>
+<p>The Boss's summary of the owner's question (record 231): Newton's absolute space and time are the law's
+low-speed regime; Lorentz explained the null ether-wind measurement by a mechanism, matter contracting and
+clocks slowing under the ether; Einstein kept the same transformations and dropped the mechanism, two
+postulates making the contraction and the slowing properties of space and time. The law has a derivation
+where Einstein has a postulate (c from locality and straightness) and a mechanism where Lorentz has the ether
+(the retarded flux and the crossing rule). The theorem of section 17: the linear block's limit carries
+Lorentz's symmetry, so every formula of the special theory holds for what is built from it alone, and for a
+body exactly as far as its four readings are covariant: the main formula above is that covariance, written
+in integers.</p>
+<div class="scroll"><table class="map compare"><tr><th>The quantity</th><th>Newton</th><th>Lorentz</th><th>Einstein</th><th>The law (its status today)</th></tr>{
+        comparison
+    }</table></div>
+<details><summary>The one map of six verbs and its small formulas (the law as declared)</summary>
+<section class="big">
+<p class="kind">The one map F at every Node, every interval</p>
 <pre class="formula">
 s &lt;- s + r
 e &lt;- [s &gt;= d]
@@ -4645,75 +4943,47 @@ s &lt;- s - e d
 </pre>
 <p class="kind">the state s an integer vector on the torus, r its rates, d its walls; every wall crossing an event</p>
 <pre class="formula small-caps">click k where  2 T u + T &lt;= 2 N C<sub>k</sub>,   C<sub>k</sub> = <b>f</b><sup>T</sup> <b>G f</b></pre>
-<p class="kind">the one read-out: one comparison per record against the norm of the linear evaluation</p>
 </section>
-<p><b>The statement</b> (the owner, record 181, HIGHLIGHTS 5.7): the state is integer vectors on tori and one
-tensor; the law is one map <b>F</b> at every Node, made of six operations, the translation of an accumulator by
-its rate, the bilinear form with a declared matrix, the group-ring addition, the permutation, the evaluation
-at the root of unity and the Euclidean division with the remainder kept; the GameBoard computes exactly where
-the formula has only a limit; the measurement is the one threshold read out. Where a rate is a constant of the
-world the accumulator has the closed form s(t) = floor(s<sub>0</sub> + r t), a formula of the birth and the
-age (the rows, the linear block); where a rate reads what arrives (the bodies, the feedback block) there is no
-closed form and the limit is the differential equation ds / dt = r(s). No root, no float, no seventh verb.</p>
-<h2>The small formulas: the components of the one map, and what each derives to</h2>
+<p>The statement (the owner, record 181, HIGHLIGHTS 5.7): the state is integer vectors on tori and one
+tensor; the law is one map <b>F</b> at every Node, made of six operations; the GameBoard computes exactly
+where the formula has only a limit; the measurement is the one threshold read out.</p>
 <div class="smalls">{smalls}</div>
-<h2>The comparison: Newton, Lorentz, Einstein, and the law</h2>
-<p>The Boss's summary of the owner's question (record 231): Newton's absolute space and time are the law's
-low-speed regime; Lorentz explained the null ether-wind measurement by a mechanism, matter contracting and
-clocks slowing under the ether; Einstein kept the same transformations and dropped the mechanism, two
-postulates making the contraction and the slowing properties of space and time. The law has a derivation
-where Einstein has a postulate (c from locality and straightness) and a mechanism where Lorentz has the ether
-(the retarded flux and the crossing rule), so it stands nearer to Lorentz than to Einstein; what it has not
-yet given as declared is Lorentz's number. The theorem of section 17: the linear block's limit carries
-Lorentz's symmetry, so every formula of the special theory holds for what is built from it alone, and for a
-body exactly as far as its four readings (the drive, the turn, the push, the count) are covariant; their
-covariant forms exist within the six verbs and are one hypothesis, covariant-readings-v1, decided by the owner
-(record 270), not built today.</p>
-<table class="map compare"><tr><th>The quantity</th><th>Newton</th><th>Lorentz</th><th>Einstein</th><th>The law, derived from the small formulas (its status today)</th></tr>{
-        comparison
-    }</table>
-<p>The count over the Einstein map of DERIVATIONS_BEAM 21.4 (nineteen results of the special and the general
-theory): {sum(1 for r in EINSTEIN_MAP if r[2].startswith("R"))} reached from the six verbs as declared,
-{sum(1 for r in EINSTEIN_MAP if r[2].startswith("D"))} a different law as declared with the reading that
-would reach it named, {sum(1 for r in EINSTEIN_MAP if r[2].startswith("N"))} not reached. The special
-theory is one hypothesis away (covariant-readings-v1); the general theory's first order is reached and its
-second order needs the field to be its own source and the rows to read the field. Nothing enters the law by
-this page.</p>
-<details><summary>The full Einstein map, E1 to E19 (DERIVATIONS_BEAM 21.4)</summary>
-<table class="map"><tr><th>#</th><th>Einstein's result</th><th>status</th><th>what the six verbs give</th><th>what must be added, under which identity</th><th>the pin a run would meet</th></tr>{
-        "".join(
-            f'<tr><td class="num">{n}</td><td>{html.escape(result)}</td>'
-            f'<td class="{status_class(status)}">{html.escape(status)}</td><td>{html.escape(gives)}</td>'
-            f"<td>{html.escape(add)}</td><td>{html.escape(pin)}</td></tr>"
-            for n, result, status, gives, add, pin in EINSTEIN_MAP
-        )
-    }</table></details>
+</details>
+<details><summary>The full Einstein map, E1 to E19 (DERIVATIONS_BEAM 21.4): {
+        sum(1 for r in EINSTEIN_MAP if r[2].startswith("R"))
+    } reached as declared, {sum(1 for r in EINSTEIN_MAP if r[2].startswith("D"))} a different law, {
+        sum(1 for r in EINSTEIN_MAP if r[2].startswith("N"))
+    } not reached</summary>
+<div class="scroll"><table class="map"><tr><th>#</th><th>Einstein's result</th><th>status</th><th>what the six verbs give</th><th>what must be added, under which identity</th><th>the pin a run would meet</th></tr>{
+        einstein_rows
+    }</table></div>
+</details>
 {
         sources(
             [
                 (
+                    "the main formula W = E_0^2 + 3 p . p, E by comparisons, the pace p / E, the proper-time cadence, the identity 3 h n = Q S d, the muon's 70.9 and 125.2, the star's z = 0.369",
+                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> section 17.6 (M1 to M9, record 297; the host script amended_pins.py)',
+                ),
+                (
+                    "the theorem of covariant readings, built on Newton, tried on Lorentz, the verdict",
+                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> sections 17.1 to 17.5; the owner\'s decision, record 270',
+                ),
+                (
                     "the operator F, its two blocks, the closed form, the components and their limits",
-                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> section 0 (its table of every result under its block)',
+                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> section 0; sections 2 to 7',
                 ),
                 (
                     "the statement, the six verbs, what is derived and what is input",
-                    '<a href="../../HIGHLIGHTS.md">HIGHLIGHTS 5.7</a> (records 173 to 210)',
-                ),
-                (
-                    "c, Doppler, Newton and Coulomb, special and general relativity, the click, Young and Bohr",
-                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> sections 2 to 7',
+                    '<a href="../../HIGHLIGHTS.md">HIGHLIGHTS 5.7</a>',
                 ),
                 (
                     "Newton, Lorentz and Einstein in the owner's question",
                     '<a href="../../LOG_2026-09-20.md">record 231</a> of the log of 2026-09-20',
                 ),
                 (
-                    "the theorem of covariant readings, built on Newton, tried on Lorentz",
-                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> section 17 (amended by 17.6, record 297); the owner\'s decision, record 270',
-                ),
-                (
                     "the Einstein map, E1 to E19",
-                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> section 21.4 (the owner\'s direction, record 291)',
+                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> section 21.4 (record 291)',
                 ),
             ]
         )
@@ -4724,8 +4994,8 @@ this page.</p>
         "einstein",
         page(
             "The formula and Einstein",
-            "The one map at the top, its small formulas below with what each derives to, and the comparison "
-            "with Newton, Lorentz and Einstein, quantity by quantity.",
+            "The main formula at the top, the exact square of a body's energy; the formulas derived from it "
+            "below; then the comparison with Newton, Lorentz and Einstein, quantity by quantity.",
             body,
         ),
     )
@@ -4788,8 +5058,9 @@ def page_index(out: Path, runs: Path | None) -> Path:
         (
             "einstein.html",
             "The formula and Einstein",
-            "the one map at the top, its small formulas below with what each derives to, and the comparison with "
-            "Newton, Lorentz and Einstein quantity by quantity, the Einstein map beneath (no run)",
+            "the main formula at the top (the exact square of a body's energy, W = E_0^2 + 3 p . p), the "
+            "formulas derived from it, and the comparison with Newton, Lorentz and Einstein quantity by "
+            "quantity; the one map and the Einstein map beneath (no run)",
         ),
         (
             "formula.html",
