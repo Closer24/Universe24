@@ -386,7 +386,10 @@ print(
     "   'nature would capture the beam'); the width S is the world's one lever on the push (the drive's Q S M), the pair [1, S]"
 )
 print(
-    "   keeps the wall's constant equal to the push's. The pin this note recommends: S = 256, the pair [1, 256], M = 2^12, b = 6 and 3:"
+    "   keeps the wall's constant equal to the push's. The table at S = 256, the pair [1, 256], M = 2^12, b = 6 and 3 (the bracket's"
+)
+print(
+    "   far end, the strong-field regime; the pin is the light-bending note's at [1, 16384], the design note's section 6):"
 )
 for b in (6, 3):
     control, wall, push, both = RESULTS[(256, 1, 256, b)]
