@@ -47,7 +47,7 @@ kept, their pins the law of events').
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder (since the step drive of 2026-09-20 the same integers, the remainder now the drive on the body's record); the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
 | `test_fraction_free.py` | The fraction-free counts (2026-09-20, BEAM_LAW note 41): every count of a body an accumulator on its record, `by_drive`'s count; the identity at a constant rate on every count over 10^4 intervals, the accumulators carried in `state.json` and a resumed run identical, the bound below the denominator at every tick, a column whose Lambda_c^2 leaves the register refused at load ([below](#the-fraction-free-counts)) | new (2026-09-20, the mathematician's FORM.md, the physics-rule reviewer's REVIEW_COUNTS.md, records 147 and 148) |
 | `test_step_drive.py` | The step drive (2026-09-20, BEAM_LAW note 17 as amended): the count of Links as the whole part of the distance the momentum has driven, one bounded integer per axis on the body's record: the identity at a constant momentum with `by_clock(n - 1, \|p\|, D)` over 4000 self-creations and twelve momenta; the identity on two axes (the coincident step lost as before); the integrated distance under a halving momentum (38 within 1, 37 to 39, where the rule as it was made 1); never two Links in one interval under a random momentum over 10 000 intervals with the drive in [0, 2 D - 1); the record (`drive`, `axis_steps`, the `step` line) and a declared `drive` refused; the turn by momentum unchanged; the signed drive under a reversal (no Link until the drive cancels and reaches -D) and the bound pair under a suspension holding for 3000 intervals ([below](#the-step-drive)) | new (2026-09-20, series G2's finding, record 107; the owner's decision, record 108); the drive signed the same day (record 126) |
-| `test_crossing.py` | The crossing rule (2026-09-21, BEAM_LAW note 42; the model owner's record 158 of 2026-09-20, the physicist's design docs/designs/crossing/DESIGN.md): the experimenter's streams read as counts, 45 in 32 and 58 in 48 toward, 19 in 32 and 38 in 48 away with the windows of each step, 48 in 48 at rest, no row twice (the `measure` counts equal), the probe pair -2880 = 64 x 45 and the key `doppler` refused; the streams beyond the axis on a plane of lines, 32, 24 and 36 in 32; one row met once (a `read` line at tick 12, 3, 1 in three worlds); the sums over a period 183, 311, 74, 202 ([below](#the-crossing-rule)) | new (2026-09-21; the pins of (c) from the rule transcribed on the lines' geometry, docs/designs/crossing/crossing_2d.py, before the run) |
+| `test_crossing.py` | The crossing rule (2026-09-21, BEAM_LAW note 42; the model owner's record 158 of 2026-09-20, the physicist's design docs/designs/crossing/DESIGN.md): the experimenter's streams read as counts, 45 in 32 and 58 in 48 toward, 19 in 32 and 38 in 48 away with the windows of each step, 48 in 48 at rest, no row twice (the `measure` counts equal), the probe pair -2880 = 64 x 45 and the key `doppler` refused; the streams beyond the axis on a plane of lines, 32, 24 and 36 in 32; one row met once (a `read` line at tick 12, 3, 1 in three worlds); the sums over a period 183, 311, 74, 202; the fast steps reported (18 and 6 at the momentum 96, 20 and 10 at 128, 15 and 0 at 64) ([below](#the-crossing-rule)) | new (2026-09-21; the pins of (c) from the rule transcribed on the lines' geometry, docs/designs/crossing/crossing_2d.py, before the run) |
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
@@ -1592,12 +1592,17 @@ expected integers, written down before the first run:
   `suspension` [1, 4] and a crowd of 4 rays of another number (a fixed
   anchor of content 1 at x = 11) at rest on x = 3 to 7 owes one interval
   after every self-creation (age after interval n is ceil(n / 2), waited
-  floor(n / 2)); the step of the ages 9, 18, 27 lands on the interval that
-  pays the count (a measured event steps only in an interval where it owes
-  nothing), the intervals 18, 36, 54: x after intervals 17, 18, 35, 36,
-  53, 54, 60 is 3, 4, 4, 5, 5, 6, 6; age 30, waited 30, `steps` 3 after
-  60; after every paying interval `steps` = age x 1024 // 9216 (= age x 16
-  // 144) and after every self-creation (age - 1) x 16 // 144; the momentum
+  floor(n / 2)); since the crossing rule (2026-09-21, [BEAM_LAW note
+  42](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+  the step before the law, the drive advanced at the self-creation itself)
+  the step of the ages 9, 18, 27 lands on the self-creation, the intervals
+  17, 35, 53: x after intervals 17, 18, 35, 36, 53, 54, 60 is 4, 4, 5, 5,
+  6, 6, 6; age 30, waited 30, `steps` 3 after 60; after every interval
+  `steps` = age x 1024 // 9216 (= age x 16 // 144) (with the step after
+  the law and the count owed, until the crossing rule, the drive advanced
+  in the interval that paid the count: the steps at 18, 36, 54, x 3, 4,
+  4, 5, 5, 6, 6, and `steps` (age - 1) x 16 // 144 after a self-creation);
+  the momentum
   (1024, 0, 0) untouched; the books
   balanced at every interval. (The first run corrected the interval of the
   step from 17 to 18: the order of the frame, not the rule.)
@@ -1957,6 +1962,17 @@ first run:
   the rule); 32 `step` lines and the reader at 368 or 432: the rate 1 +
   v / c toward and 1 - v / c away with v = 1 / k and c = 32 / 55, as a
   count.
+- (f) the report of the fast steps (the design's section 2, "not proved":
+  a body faster than one Link per two intervals, |p| > Q S M, can cross a
+  Link in the interval right after another, where the one-interval mark
+  cannot tell a leapfrog of lag two from a first arrival): the engine
+  counts those Links, `NatureBeamSimulation.fast_steps`, and the runner's
+  record carries `fast_steps`, no refusal. A lone body of content 1 at
+  width 1 (Q S M = 64), no rows, 30 intervals: at the momentum 96 (D =
+  160, the drive 96 per self-creation) the Links fall at the
+  self-creations 2, 4, 5, 7, 9, 10, 12, 14, ..., 18 Links and 6 right
+  after another; at 128 (D = 192) 20 Links and 10 fast; at 64 (D = 128,
+  one Link per two intervals exactly) 15 and 0; at 32 (D = 96) 10 and 0.
 
 ## The age
 

@@ -781,7 +781,11 @@ D beyond the rest vectors and the headings; per family its `quantum`,
 `phase_by_momentum` and, since 2026-09-20, `become`, the clock trigger as
 declared, by names, or None; the measured events' states carry `span` too, as
 `state.json` does), `action` (h, or None), `meeting` (the key as declared,
-false by default), `hypotheses` (`bohr-v1` when `action` is
+false by default), `fast_steps` (since the crossing rule of 2026-09-21,
+[BEAM_LAW note 42](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+the count of Links a body crossed in the interval right after another of
+its Links, where the rule's one-per-crossing count is not proved; a
+report, no refusal), `hypotheses` (`bohr-v1` when `action` is
 declared, the identity of the turn by momentum beside the law;
 `columns-v1` when a column beyond `charge` or a lifetime is declared,
 the identity of the one mechanism of the columns and their range;

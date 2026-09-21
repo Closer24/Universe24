@@ -57,7 +57,16 @@ The identity `beam-v1` is kept.
 - Re-pinned under the order (the old integers kept as history in each
   test's docstring): `test_contact` (a) and (d), `test_nucleus_readings`,
   `test_binding` (a), (b), (c), (d), (f), `test_paid_charge` (d),
-  `test_nature_beam_body` (a) and (d); the registered worlds with a
+  `test_nature_beam_body` (a) and (d), `test_nature_beam_reemission` (b)
+  (the escaping body's phase before its interval's clock turn),
+  `test_push_width` (c) (the step at the self-creation under a
+  suspension), `test_orbit_readings` (c) (a probe that crosses the stream;
+  the one on +y from (7, 4, 0) met nothing under the rule) and the gate
+  set's digests of every lamp-free world (`gate_set.json`: the state's for
+  the two marks, the events' and the books' where a body stepped or fired
+  under a push). `run.json` gains `fast_steps`, the Links crossed right
+  after another of the same body (the rule's count not proved there, note
+  42: a report). The registered worlds with a
   completed step or a fire under a push move (VALIDATION, the dated
   table of this change): series G2 (the run under the rule is the G2
   session's), the hubble worlds, D, H, the catalog's `sun_planet`, the

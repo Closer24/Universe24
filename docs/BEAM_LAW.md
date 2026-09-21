@@ -3452,7 +3452,9 @@ implementation's part of the contract. The design above is unchanged.
     step twice in a row, and the one-interval mark cannot tell a leapfrog
     of lag two from a first arrival: the rule stays local and generic
     there, the one-per-crossing count is not proved (the design's section
-    2); a row whose direction a collision changed at the origin while it
+    2), and the engine reports the count of such Links once per run,
+    `fast_steps` in `run.json` (`tests/test_crossing.py` (f)), no refusal;
+    a row whose direction a collision changed at the origin while it
     rested there reads **s_2** off its new direction (the flight rule's
     lookup, the design's choice, nothing kept). The registered worlds
     with a completed step or a fire under a push re-pin (VALIDATION, the
