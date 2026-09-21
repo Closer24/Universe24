@@ -909,3 +909,29 @@ derivation's grounds detached from the decision's sentence; the pins of
 caveat in the manuscript's submission note that record 270 and its
 decision line are not yet in the archive's log (PLAN.md is not read by a
 referee), and 18.1 added to the derivations bibitem.
+
+## Referee round 11 (2026-09-21): the Newton and Coulomb section, major revision, applied
+
+The first written-out row group of Part II ("Newton and Coulomb from the
+bilinear coupling", from the derivation's section 3 and series C).
+Eighteen findings, every registered number confirmed and every statement
+around them tightened: Newton's equation displayed in the plane form
+beside the space form (the registered check is the plane's 1 / r, the
+1 / r^2 unrun); the outrunning body named a test fixture, not a
+registered world; six operations of three kinds, not "five"; the release
+as a count against a wall with the carry; the release rate given its own
+symbol eta = n / d (nu stays the phase rate) and named, the table's G row
+in the same symbol; Gauss's conditions stated (a free unit, no periodic
+axis crossing the surface, no absorbing reader, within the lifetime) and
+the periodic axis's home-and-release mechanism that makes q = 6 x 2^17;
+the world's two sources of the third-law world and the probes' contents
+per radius; the fingerprint whose integers are quoted named, the unit-
+vector re-read's factor 64; the register's flow defined as the label
+flow over Q_f; the misses of item 5 attributed per criterion (the flow
+at 12, 16, 20; the count at 16 and in the ripple; the ring counts 68,
+112, 112); the equivalence identity for m = 4, 16 against the probe of
+1; the speed formula per interval for a clock owing nothing, with |p_a|;
+the front's arrival as the flight table's first age; u_d, S, theta, e,
+epsilon_0, m_p named, Huxley 2003 cited; which body owns which
+coefficient; the accumulator on the branch labelled; the delay-field
+pointer to the table's row; "in form, the ratio exact at r = 12".
