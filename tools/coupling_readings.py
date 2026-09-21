@@ -59,6 +59,7 @@ import numpy as np
 
 from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.core.integer import by_clock
+from event_universe.diagnostics.shell_readings import shell_readings
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.engine import count_owed
 from event_universe.events.engine import step_axis as rule_step
@@ -694,9 +695,9 @@ def replay_world_5(run: Run, window: int) -> Replay:
     simulation = NatureBeamSimulation(world)
     ticks = world.ticks
     first = ticks - window + 1
-    # The ring's Nodes are the engine's shell (`shell_readings`: the Nodes at
+    # The ring's Nodes are the diagnostic's shell (`shell_readings`: the Nodes at
     # Euclidean distance within a half Link of r from the centre).
-    nodes = {r: int(simulation.shell_readings(0, CENTRE, r)["nodes"]) for r in FAR_RADII}
+    nodes = {r: int(shell_readings(simulation, 0, CENTRE, r)["nodes"]) for r in FAR_RADII}
     count_at: dict[int, list[int]] = {r: [] for r in FAR_RADII}
     presence_at: dict[int, list[int]] = {r: [] for r in FAR_RADII}
     keys = ("count", "flow", "presence")
@@ -714,7 +715,7 @@ def replay_world_5(run: Run, window: int) -> Replay:
             presence_at[r].append(int(simulation.presence[0][node]))
         if tick >= first:
             for r in FAR_RADII:
-                reading = simulation.shell_readings(0, CENTRE, r)
+                reading = shell_readings(simulation, 0, CENTRE, r)
                 for key in keys:
                     sums[key][r] += reading[key]
             for h in CUBE_HALVES:

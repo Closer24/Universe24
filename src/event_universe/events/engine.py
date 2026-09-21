@@ -1141,31 +1141,6 @@ class NatureBeamSimulation:
             )
         return found
 
-    def shell_readings(self, family: int, centre: Address3, radius: int) -> dict[str, float]:
-        """The shell means at one radius of the last interval's readings: the
-        Nodes at Euclidean distance within a half Link of `radius` from the
-        centre, their number, the mean count (the amount that arrived per
-        Node), the mean radial flow (amount x the arrival's unit vector at
-        the scale Q projected on the radial unit vector, summed per Node: Q
-        per unit of amount moving radially) and the mean presence (every
-        ray at the Node)."""
-        node_offsets = np.indices(self.shape).reshape(3, -1).T - np.array(centre)
-        distance = np.sqrt((node_offsets * node_offsets).sum(axis=1))
-        chosen = np.abs(distance - radius) < 0.5
-        chosen &= distance > 0
-        positions = node_offsets[chosen]
-        radial = positions / distance[chosen][:, None]
-        cells = tuple((positions + np.array(centre)).T)
-        arrived = self.readings.arrived[family][cells]
-        flow = self.readings.flow[family][cells]
-        presence = self.readings.presence[family][cells]
-        return {
-            "nodes": float(chosen.sum()),
-            "arrived": float(arrived.mean()),
-            "flow": float((flow * radial).sum(axis=1).mean()),
-            "presence": float(presence.mean()),
-        }
-
     def cube_flux(self, family: int, centre: Address3, half: int) -> int:
         """The net outward flow through the closed surface between the cube of
         half-width `half` about the centre and its neighbours, this interval:
