@@ -308,6 +308,13 @@ def test_the_form_on_the_reviewers_world_its_sign_and_the_uncharged_probe():
             "share_x",
             "share_y",
             "share_z",
+            # optical-v1's accumulators (2026-09-21): the flight's (made,
+            # residue) and the push's, constant 0 without the key `optical`.
+            "made",
+            "residue",
+            "push_x",
+            "push_y",
+            "push_z",
         )
         assert not hasattr(store, "charge") and not hasattr(store, "mass")
         assert simulation.measured[1].charge == (3, 1) if source_charge[0] > 0 else (-3, 1)
