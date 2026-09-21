@@ -4652,6 +4652,222 @@ body's register; not built here; the seventh verb is not needed for
 any of them. The owner decided (record 270) that covariant-readings-v1
 is built beside the law in place of lorentz-v1.
 
+### 17.6 Amended per the physics-rule review of covariant-readings-v1 (record 297): the nine must-fixes, the integer forms, the should-fixes
+
+The review (docs/designs/derivations_beam/REVIEW_COVARIANT_READINGS.md,
+the physics-rule reviewer, 2026-09-21; ADMISSIBLE WITH MUST-FIXES) found
+nine design sentences of 17.3 wrong, absent or unreachable on the engine
+of `main`. Nothing above is rewritten; each fix below replaces the
+sentence it names, marked M1 to M9, with the integers from the host
+script [amended_pins.py](designs/derivations_beam/amended_pins.py) and
+its output [amended_pins.out](designs/derivations_beam/amended_pins.out).
+Notation, once (S2): **p** the momentum vector and p its magnitude,
+**dp** the push of one interval (the integer `pushed` of the record),
+**n** a row's unit direction, beta the speed over c, gamma the Lorentz
+factor, `E'` the energy accumulator in the identity's units (below), `W`
+its exact square, `E'_0` its rest value.
+
+**M1, the counter the identity gates: the self-creation itself, by an
+owed count.** The proper-time accumulator gates the SELF-CREATION, not
+the phase turn: after every self-creation the body owes
+`by_drive(acc_tau, E' - E'_0, E'_0)` further intervals (a second owed
+count on the record, beside the crowd's; at rest 0), so self-creations
+come one per `E' / E'_0 = gamma` intervals and everything counted per
+self-creation follows proper time at once: the age (and so `become`,
+which reads the age, nature_beam.py:3649), the turn (the phase per
+self-creation, unchanged), the crowd's owed count, the release, the
+lamp's count, and the crossing count of (i), which is charged per
+self-creation as `_suspend` charges it today and is therefore `gamma (1
+- n . beta)` per self-creation with no separate rule: (i) is the cadence
+of (iv). The drive is NOT decoupled and does not need to be: `_move`
+keeps stepping at self-creations (engine.py:522), and its rate per
+self-creation is Newton's, `p / (Q S M)` on the momentum's direction
+(form B's directional accumulator `by_drive(drive, abs(p)_1 S_1 Q, Q S M
+S_1 Q)` WITHOUT its cap term `abs(p)_1 T_D`), so the pace per lattice
+interval is the product of the two gates, `(p / (Q S M)) x (E'_0 / E')
+= p / E'` Links per interval, which is the covariant `v = p c^2 / E`
+exactly, with the cap `1 / sqrt 3` as p grows: the second slowing the
+review feared is the covariant pace itself. The six counts and their
+cadence under the identity: the turn, the owed count, the release, the
+lamp, `become`, the drive's gain: all per self-creation (proper time);
+the reading of arrivals and the crossing count: per interval, charged
+per self-creation. A consequence to own (S5): a moving body in a crowd
+is charged `gamma` times the rest count per self-creation, so its
+crowd's owed count grows with speed; pinned below on 12c.6's probe.
+
+**M2, the pins on declared momenta.** With `c^2` declared as the pair
+`[1, 3]` (M3): the muon of J4 (`Q S M = 13248`) at `p = 3640` and `12
+856` label units has `E'` at load 14 671 and 25 910, `gamma = E' / E'_0
+= 1.1074` and `1.9558`, beta read back 0.4297 and 0.8594, the 64th
+self-creation at 70.9 and 125.2 (FORM.md section 4's 5815 and 47 349,
+form B's momenta, give 0.605 and 0.987 under the identity, the 64th at
+80 and 401: not the pinned speeds). `coasting_none`'s `s_mz2` at its
+declared `p_z = 51 901 289 008 505` (`Q S M = 2^48`) has beta 0.3042 and
+`z = gamma (1 + beta) - 1 = 0.3691`; the momentum that keeps beta 0.2674
+is 45 097 270 682 765 (z = 0.3153). The pin is on the REGISTERED world:
+`z = 0.369 +- 0.003`; a re-declared world would pin 0.315.
+
+**M3, the integers of E.** `c^2 = [1, 3]` declared by the identity (the
+flight table's per-direction `(Q S_1 / T_D)^2`, 0.3385 on a heading, is
+the alternative and shifts the muon's 64th by 0.7 tick at 0.86 c; one
+pair, declared once). The energy in whole units: `E' = 3 E`, `E'_0 = Q S
+M` (whole on every register), the invariant `E'^2 - 3 p . p = E'_0^2`,
+the pace `p / E'`. The state carried is NOT an accumulator of the work
+but the exact square, `W = E'_0^2 + 3 p . p` (bilinear in **p**, the
+identity matrix declared, no drift), and `E'` is kept as the largest
+integer with `E'^2 <= W` by comparisons only: at every interval `E'`
+rises by one while `(E' + 1)^2 <= W` and falls by one while `E'^2 > W`
+(the comparison verb, at most `ceil(sqrt 3 abs(dp)) + 1` comparisons
+per interval for a push of `abs(dp)` label units, since `dE' / dp <
+sqrt 3`); the script's (C): 40 000 unit pushes from rest, the invariant
+`E'^2 <= W < (E' + 1)^2` at every step, at most 3 comparisons per step,
+`E'` equal to `isqrt(W)` at the end. The initial `E'` of a thrown body:
+`isqrt(E'_0^2 + 3 p . p)` at load, a declared load-time rounding of
+`T_D`'s class (the three tests allow it), stated once for the identity;
+a world may declare `E'` instead, refused if below `E'_0` or off the
+invariant by more than 1. The widths: the identity declares a grain `g`
+(a power of two) and carries `E'_0 / g`, `p / g` and `W / g^2` (the
+momentum's bits below g do not enter E; the drive keeps the full **p**),
+tested by division before the product is formed as `push_form` does;
+on `coasting_none` `g = 2^18` puts `W / g^2 = 1.27 x 10^18` within
+`MOMENTUM_BOUND` (`2^16` does not), `E' / g = 1 127 172 967`; on J4 `g =
+1`. The proper-time owed count's rate `E' - E'_0` and wall `E'_0` are of
+the order of `E'_0 / g`: no product, no overflow (the earlier form
+"rate content x n x E_0, wall d x E" is withdrawn with M1).
+
+**M4, the push's vector potential: withdrawn; (ii) restated as the
+gradient alone, and its integer form.** The sentence "the flow's
+age-weighted moment as the vector potential" is wrong (the review's
+counterexample: for a source at rest that moment is the age moment
+times the radial unit vector, nonzero, while the vector potential is
+0; for a moving source it is `A n_ret`, not `beta A`), and the
+induction term needs the source's velocity, which no row carries and no
+reading of a Node or its six neighbours gives. (ii) is restated as
+`-grad(A)` alone: the push per axis is the difference of the age
+moments at the two neighbouring Nodes of that axis, `pushed_a = C x
+(A_(-a) - A_(+a))` with C the column's coupling as a declared pair
+applied by one `by_drive` with its remainder (the factor 2 of the
+central difference into the pair), the six neighbours' age moments read
+as their records' presence-and-age line (a NEW reading set, keyed by the
+identity, with the reading bound `reading_fits` applied per neighbour),
+no previous-interval component (with no vector potential there is no
+time difference to take). What `-grad(A)` alone gives on a co-moving
+pair, from 12.1's potential: the rest force along the motion, `gamma`
+times the rest across (Maxwell's are `1 - beta^2` and `1 / gamma`):
+**Lorentz's 1904 pair is NOT derived from (ii)**, and rows E3 and E7 of
+21.4 and the 5b pin of 18.1 are withdrawn from this identity. What a
+local reading of the vector potential would need is stated so that it
+can be designed: a row carrying its source's momentum label at release
+(one more declared component of the row's record, local to the row,
+generic), from which `A = beta A` is a bilinear reading at the Node;
+named `source-velocity-v1`, not designed here.
+
+**M5, the 5b pin's geometry.** 12.4's pair is a one-Link contact pair
+and no push contracts it; the pin is unreachable on that geometry
+under any reading. With M4 the contraction is not derived from this
+identity at all, so the pin is withdrawn from 18.1 rather than moved;
+when `source-velocity-v1` supplies the magnetic term, the pin's
+geometry is 12b.2's thrown orbit in the Newtonian regime (S = 512 or
+8192), where the extents along over across at `1 / gamma` is 0.977 at
+beta 0.2148, 0.6 Link on a 26-Link radius, BELOW the grain (one Link),
+so the pin needs beta at or above 0.43 (0.903, 2.5 Links on 26, "within
+the grain" meaning within one Link of the 26-Link extent and within 2
+percent of the rest period in intervals).
+
+**M6, the release's E: units and owner.** 19.5's "E in place of
+content" is restated: the release's rate reads the content-equivalent
+of the body's OWN energy, `E' / (Q S)` in place of M, as one
+`by_drive(acc_release, E' x n, Q S x d)` with the remainder kept, whole
+integers; each body reads its own `E'` and never "the set's" (the chain
+of 19.3 has its ends two Links apart; the local test allows the record
+and its six neighbours). The energy in flight between the bodies of a
+bound set is in rows, not in any body's `E'`, so this identity makes a
+body's field its own energy's (rest plus kinetic) and leaves the
+binding fraction to `field-source-v1` (21.4, E16). The world and the
+detector reading that pin it: a free body thrown in an empty bar with a
+probe of content 1 at rest beside its path reading the push (the active
+mass from the probe's `pushed` line) against the body's drive under a
+declared kick (the inertial mass from its `step` lines): the ratio 1 at
+rest and `gamma` in motion under the identity, both to the grain;
+Nordtvedt's `10^-4` is nature's number and stays in 19.5 as such.
+
+**M7, E on a change of content.** On every change of the held content
+by dM (a click's `held += content`, a release's cost `h s`, a give, a
+`become`): `E'_0` is read as `Q S M` at the frame (no state), and `W`
+gains `Q S (2 E'_0 + Q S dM) dM` (the identity `(E'_0 + Q S dM)^2 -
+E'_0^2`, bilinear, exact), so the kinetic part `E' - E'_0` is kept and
+the rest part follows the content. The exchange's rows carry their
+energy as rows (their momentum `h s` along their direction, their energy
+`3 h s c = 96 h s / 55` in `E'` units, a declared pair on the row), out
+of the emitter's `W` by the same identity at the release and into the
+absorber's at the click: the books balance only if `3 h n = Q S d` for
+every paid family (17.3 (iv)'s identity), which the engine CHECKS AT
+LOAD and refuses otherwise under the identity key (S10; none of the
+register's lamps as declared satisfies it at Q = 64, S = 1: 21.33). The
+deuteron's mass defect is then the escaped rows' energy, 17.3's claim
+made exact.
+
+**M8, the base and the order.** The identity is built on form B (record
+186, decided, not on `main`): its drive is form B's directional
+accumulator without the cap term (M1), and on the per-axis `step_axis`
+of `main` it has no magnitude and no direction. Form B lands and
+re-registers its 47 moving-body worlds first; the identity's OFF
+baseline is that register, and its pull request shows the crossing
+rule's validation table unchanged to the byte with the key absent (S8's
+test 5).
+
+**M9, the pins as detector readings.** The muon's pin is restated as the
+products' face clicks on a J4 world file, to be written before the run
+(none exists, NATURE 4a). It declares: an open bar `[220, 1, 1]`, the
+identity key with `c2 = [1, 3]` and `grain = 1`, the muon family
+(content 207, no charge line beyond the catalog's, `become` at 64 into
+the electron family with the products of the catalog and the charges
+balanced), one muon at x = 10 with `momentum = [3640, 0, 0]` (a second
+world at 12 856, a third at rest), `width` 1, and the two faces as
+detectors reading the products' clicks. The reading: the electron
+product's click on the +x face at tick 367 for `p = 3640` (the decay at
+70.9 at x = 27.6, the flight 172.4 Links at 55 / 32 intervals per
+Link), 345 for 12 856 (125.2, x = 72.1) and 391 at rest (64, x = 10); the
+decay tick is derived back from the click by the flight table and
+named as derived; the tolerance one tick on the decay, two on the click.
+Pin (b) is withdrawn (M5). Pin (c) is `coasting_none`'s detector `z`,
+the pointer's `Delta t / Delta Phi` at the centre, `0.369 +- 0.003` on
+the declared momentum. E and the six-Port gradient reading enter
+ENGINE.md's readings by type with their kind at the build (S6): `E'` a
+scalar of the measured event's state (the `step` line carries it as it
+carries `drive`), the gradient a vector.
+
+**The should-fixes.** S1 done above (the rate is `3 p . dp` with **dp**
+the record's push integer, bilinear; with W exact no rate is
+accumulated at all). S2 the notation line above. S3 the key
+`covariant_readings` in `WORLD_KEYS` beside `action` and `meeting`, one
+object: `c2`, `grain`, and per measured event an optional `E`. S4 the
+key with `action` is refused until the composition of the turn by
+momentum per Link with the proper-time cadence is designed. S5 pinned
+in 18.1's amendment. S6 in M9. S7 rows 38, 39 and 44 of 21.2 restated
+below with their integer forms and world files. S8 the design's tests:
+(1) a body at rest under the key, `E' = E'_0`, every registered integer
+of the world unchanged; (2) a thrown free body in an empty bar, `W`
+constant, the 64th self-creation at the declared momentum's `gamma`
+within one tick (J4's world above); (3) `E'^2 <= W < (E' + 1)^2` at
+every interval under pushes, with the count of comparisons; (4) the
+edge `p = 0` with one push (`E'` rises from `E'_0` only when `3 dp^2 >=
+2 E'_0 + 1`, the remainder in W); (5) the OFF test of M8. S9 record 291
+is on `main` now and is cited above in place of the paraphrase. S10 the
+load-time check refuses. S11 the counts per self-creation are per
+direction of the flight table: `gamma (1 - v T_d / (Q S_1))` on a
+heading, the Manhattan factor of 2.4 on a fan direction, not the
+continuum's `gamma (1 - n . beta)`; 17.3 (i)'s numbers are the
+continuum's limit.
+
+**Buildable, in this reading**: yes for (iii) and (iv) as amended (one
+exact square, one comparison loop, one owed count, the drive's rate
+without its cap term, the load-time root and the load-time identity
+check), with the J4 world and `coasting_none` as the two pinned runs;
+NOT for (ii) beyond `-grad(A)`, whose magnetic part waits for
+`source-velocity-v1`; the special theory's clock, Doppler and energy
+close under the amended identity, its contraction does not.
+
 ## 18. The three structural failures of the register under one logic
 
 **The question** (the owner, records 264 and 265, translated: "explain
@@ -4700,6 +4916,26 @@ axes), so the symmetry is the LIMIT's, the wave equation's, and c enters
 the bodies through the drive `v = p c^2 / E` and nowhere else. **Closed
 on paper**, as `covariant-readings-v1`, which the owner decided (record
 270) is built beside the law in place of lorentz-v1; the run decides.
+
+**Amended per the review (record 297; 17.6).** The pins of this
+subsection are restated on the declared integers and as detector
+readings: (a) the muon of J4 on the world file 17.6's M9 declares, `p =
+3640` and `12 856` label units at `c^2 = [1, 3]`: the electron product's
+click on the +x face at tick 367 and 345 (391 at rest), the decay's tick
+70.9 and 125.2 derived back by the flight table, one tick's tolerance
+on the decay; (b) the pair's round trips: WITHDRAWN from this identity
+(M4: the magnetic part of the push is not a local reading; M5: 12.4's
+one-Link pair cannot contract), so 5b stays the law's FAIL beside the
+identity until `source-velocity-v1`; (c) `coasting_none`'s `s_mz2` at its
+declared momentum: `z = 0.369 +- 0.003` (0.315 only on a re-declared
+momentum, 45 097 270 682 765); (d) S5's consequence, 12c.6's probe under
+the identity (`E'_0 = 64`): at `p = 10` the pace `p / E' = 0.1515` Link
+per interval (the law's form B 0.1232), gamma 1.031, the counts per
+self-creation outward 0.763 and inward 1.300 of the rest count (the
+law's 0.788 and 1.212); at `p = 28` the pace 0.350 (0.250), gamma 1.250,
+outward 0.498 and inward 2.002 (0.571 and 1.429). "Closed on paper"
+above now reads: the clock, the Doppler and the energy close under the
+amended identity; the contraction does not.
 
 ### 18.2 The weak forms (rows 8a, 8b): what the click can and cannot give
 
@@ -5098,6 +5334,21 @@ the same `by_drive` with E in place of `content`: generic, vector,
 local), or the equivalence principle fails for every bound body by the
 binding fraction, 99 % for a nucleon against nature's `10^-4`.
 
+**Amended per the review (record 297; 17.6's M6 and M7).** "E in place
+of content" is restated with its units and its owner: the release's
+rate reads the content-equivalent of the body's OWN energy, `E' / (Q
+S)`, as one `by_drive(acc_release, E' x n, Q S x d)` with the remainder
+kept; a body reads its own `E'` and never the set's (the chain's ends
+are two Links apart), so this identity gives a bound body a field equal
+to its own rest and kinetic energy and leaves the binding fraction, the
+energy in flight between the bodies, to `field-source-v1` (21.4, E16):
+the 99 percent of a nucleon is E16's number, not this identity's. The
+pin is a reading of the law, not Nordtvedt's: a free body thrown in an
+empty bar beside a probe of content 1 at rest, the probe's `pushed` line
+(the active mass) against the body's `step` lines under a declared kick
+(the inertial mass), the ratio 1 at rest and `gamma` in motion to the
+grain.
+
 **The hadrons.** Under "one content in flight per contact" (19.1, 18.3)
 the pion, a pair with one contact, holds 6.86 MeV and carries 132.7 in
 flight; the nucleon on the chain holds 9.02 and carries 929.2 over two
@@ -5335,13 +5586,13 @@ world whose README carries the number; "script" the host arithmetic in
 | 35 | G from the computation | one G for the clock and the push, the budget reading | `S = K_budget / 26`, `G = 26 K_fan (n / d) / (4 pi K_budget)` | 16.2 (f) | `units_from_g.py` | series E's S = 1 and [1, 1] | B (two named assumptions) |
 | 36 | not G but the pace varies | lunar laser ranging | `Gdot / G = 3 H` refuted; under the wall G and K constant | 16.2 (f) | `units_from_g.py` | | R |
 | 37 | the theorem of covariant readings | the wave equation's symmetry | Einstein's formulas for whatever is built from the linear block | 17.1 | `covariant_readings.py` | | R |
-| 38 | E = m c^2 | E as an accumulator of the work, the Newtonian limit | `E_0 = Q S M c^2` forced; `E^2 - p^2 c^2` kept to `10^-12` | 17.3 (iii) | `covariant_readings.py` | pins: the muon at 70.9 and 125.2 | H (covariant-readings-v1, decided built, record 270) |
-| 39 | the time dilation, the Doppler with gamma, the contraction | the turn per proper time, the count per turn, the gradient push | `E_0 / E`, `gamma (1 - n . beta)`, Lorentz's 1904 pair | 17.3, 18.1 | `covariant_readings.py` | pins: z = 0.315, the arms equal | H |
+| 38 | E = m c^2 | the exact square `W = E'_0^2 + 3 p . p` on the record (B), `E'` the largest integer with `E'^2 <= W` by comparisons (D), the proper-time owed count `by_drive(acc_tau, E' - E'_0, E'_0)` (T), the drive `p / (Q S M)` per self-creation without the cap term; the Newtonian limit | `E'_0 = Q S M` forced (`E_0 = Q S M c^2`); the pace `p / E'` Links per interval; the invariant exact | 17.3 (iii), 17.6 M1, M3, M7 | `covariant_readings.py` (a floating-point check), `amended_pins.py` (the integers) | the J4 world of 17.6's M9 (to be written): the products' face clicks at 367 and 345, the rest 391 | H (covariant-readings-v1, decided built, record 270; amended per record 297) |
+| 39 | the time dilation, the Doppler with gamma, the contraction | the self-creation gated by the proper-time owed count (17.6 M1), the crossing count charged per self-creation, `-grad(A)` across the six Ports | the 64th self-creation at `64 E' / E'_0`; the count per self-creation `gamma (1 - v T_d / (Q S_1))` per direction; the contraction NOT derived (`-grad(A)` alone: the rest force along, `gamma` across) | 17.3, 17.6 M1, M4, M5 | `amended_pins.py` | J4 at p = 3640 and 12 856 (70.9, 125.2); `coasting_none` at the declared momentum, z = 0.369; the contraction unpinned | H for the dilation and the Doppler; the contraction open until `source-velocity-v1` |
 | 40 | the weak forms | the click against the record: bounded; against the crowd: memoryless as far as it mixes | the width over the median 2.1 against 3.17; the rate the family's | 18.2 | `decay_click.py`, `crowd_decay.py` | pins on J1, J2; Voyager and MESSENGER as nature's | H (decay-by-crowd-v1, restated) |
 | 41 | the strong ratio | the give per contact pair on the bipartite lattice | 4.0 (6.0) against 12.72 | 18.3 | | `alpha_square_bond`'s 2.0 | F |
 | 42 | a bound set's mass | held + in flight - escaped | the proton 1 % held, 99 % in flight; `m_n - m_p = m_d - m_u = 2.54`, 1.51 with the electric part | 19.1, 19.2 | `masses_chain.py` | pins for the quarks design | F (the number within the inputs' uncertainty) |
 | 43 | the nucleon's chain, the neutron's charge radius | the lattice bipartite, one bond per contact | `+4 / 3 L^2`, `-2 / 3 L^2` (the sign) | 19.3 | `masses_chain.py`, `periodic_images.py` | pins for the quarks design | R in sign, D by 3 in magnitude |
-| 44 | the equivalence principle for a bound body | the release must read E | a condition on covariant-readings-v1 with binding-v1 | 19.5 | `rest_of_masses.py` | Nordtvedt's `10^-4` | H (a pin) |
+| 44 | the equivalence principle for a bound body | the release reads the body's own `E' / (Q S)` (17.6 M6); the energy in flight is the rows' | `by_drive(acc_release, E' x n, Q S x d)`; the field of a body equal to its own rest plus kinetic energy; the binding fraction E16's | 19.5, 17.6 M6 | `rest_of_masses.py` | a thrown body beside a probe of content 1: the probe's push against the body's drive, 1 at rest and `gamma` in motion | H for the body's own energy; the binding part `field-source-v1` (E16) |
 | 45 | the hadrons, the leptons, the neutrino | no rule selects a count | inputs; Koide a coincidence; the massless neutrino refuted | 19.5, 16.2 (g) | `rest_of_masses.py` | | I, X |
 | 46 | the periodic universe | the two boards under the wall against the measured bounds | open; `L / (2 chi_rec) > 0.97` | 20 | `periodic_images.py` | pins for a periodic world under the wall | B (a convention today) |
 
@@ -5375,12 +5626,12 @@ meet, written before it.
 | # | Einstein's result | status today | what the six verbs give | what must be added, under which identity | the pin a run would meet |
 | --- | --- | --- | --- | --- | --- |
 | E1 | Lorentz's symmetry of light, `omega = c k`, the light cone | R | the rows' limit is the wave equation at c (4.1, 5.1) | nothing | series K's ages, 89.40 in every world (registered) |
-| E2 | `gamma`, the time dilation of a moving clock | D (the rate 1, 4.3; NATURE 4a) | no operation carries a body's speed into its clock | the turn per proper time `E_0 / E` (17.3 (iv)), covariant-readings-v1 | J4's muon: the 64th turn at 71 and 125 (`64 gamma` = 70.9, 125.2), one tick's tolerance |
-| E3 | the contraction `1 / gamma` | D (12b.2: 0.87 .. 0.96 by the dispersion, unstable) | the retarded flux push (12.1), the flux one `1 / gamma` short | the gradient of the age moment across the six Ports (17.3 (ii)), covariant-readings-v1 | the thrown `s32_r24`: the extents' ratio `1 / gamma` = 0.977 at 1 / 8, the round trips equal along and across within the grain |
-| E4 | Doppler with `gamma`, `1 + z = gamma (1 + beta)` | D (the count `1 + beta`, 2.2; NATURE 4b) | the crossing count per interval, exact | the count per turn (17.3 (i)), covariant-readings-v1 | `coasting_none`'s `s_mz2`: `z = 0.315 +- 0.003` (today 0.2636) |
-| E5 | `E = m c^2`, the inertia of energy | not reached (4.5, 12.4) | `E = h f` for a row; the content and the momentum of a body untied | E as an accumulator of the work, `E_0 = Q S M c^2` forced by the Newtonian limit (17.3 (iii)), covariant-readings-v1 | a lamp emitting two opposite units keeps its speed (12.4's recoil balanced, `h s S c` free), its wall falling by the rows' E over `c^2` |
-| E6 | the invariant `E^2 - p^2 c^2 = E_0^2`, `v = p c^2 / E`, the velocity addition | D (`v = p / (m + p / c)`, 4.4) | the drive's rational form, first order off Newton | the same accumulator; the EXACT DISCRETE form in integers with the remainder kept, to be proved (17.1's note; the host script is a floating-point check) | the invariant constant to the grain over 40 000 pushes in integers; the composition of two throws by momenta reproducing Einstein's addition within the grain |
-| E7 | the field of a moving charge (Heaviside), the magnetic term | D (12.1, 12b.1: the flux along `n_ret`; the count's number right, the field short) | the age moment is the Lienard-Wiechert potential exactly (12.1) | the gradient push (17.3 (ii)), covariant-readings-v1 | the co-moving pair's transverse push `1 / gamma` of rest (not `1 / gamma^2`), the deuteron fan at k = 4: `(1 - beta^2) / (1 - beta^2 sin^2 theta)^(3/2)` along the present separation |
+| E2 | `gamma`, the time dilation of a moving clock | D (the rate 1, 4.3; NATURE 4a) | no operation carries a body's speed into its clock | the self-creation gated by the proper-time owed count `by_drive(acc_tau, E' - E'_0, E'_0)` (17.6 M1), covariant-readings-v1 | J4's world of 17.6's M9: the products' face clicks at 367 and 345 (the decay at 70.9 and 125.2 derived), 391 at rest, one tick's tolerance on the decay |
+| E3 | the contraction `1 / gamma` | D (12b.2: 0.87 .. 0.96 by the dispersion, unstable) | the retarded flux push (12.1); `-grad(A)` alone gives the rest force along and `gamma` across (17.6 M4) | the magnetic part of the push, which needs the source's velocity: `source-velocity-v1` (a row carrying its source's momentum label), named, not designed; NOT in covariant-readings-v1 | none until then; the geometry when it comes: 12b.2's thrown orbit at beta 0.43 or above, the extents' ratio 0.903 within one Link on 26 (17.6 M5) |
+| E4 | Doppler with `gamma`, `1 + z = gamma (1 + beta)` | D (the count `1 + beta`, 2.2; NATURE 4b) | the crossing count per interval, exact | the count charged per self-creation, the cadence of 17.6's M1 (no separate rule), covariant-readings-v1 | `coasting_none`'s `s_mz2` at its declared momentum: `z = 0.369 +- 0.003` (0.315 on a re-declared momentum, 17.6 M2) |
+| E5 | `E = m c^2`, the inertia of energy | not reached (4.5, 12.4) | `E = h f` for a row; the content and the momentum of a body untied | `E'_0 = Q S M` forced by the Newtonian limit, `W` gaining `Q S (2 E'_0 + Q S dM) dM` on a change of content, the load-time identity `3 h n = Q S d` (17.6 M3, M7), covariant-readings-v1 | a lamp emitting two opposite units keeps its pace, its `W` falling by the rows' energy; the identity check refusing a world off `3 h n = Q S d` |
+| E6 | the invariant `E^2 - p^2 c^2 = E_0^2`, `v = p c^2 / E`, the velocity addition | D (`v = p / (m + p / c)`, 4.4) | the drive's rational form, first order off Newton | `W = E'_0^2 + 3 p . p` exact and `E'` by comparisons (17.6 M3): the discrete form is exact by construction, the open item of 17.1's note closed; the pace `p / E'`; form B's directional accumulator without the cap term (M8) | `E'^2 <= W < (E' + 1)^2` at every interval of a pinned run; the composition of two throws by momenta within the grain |
+| E7 | the field of a moving charge (Heaviside), the magnetic term | D (12.1, 12b.1: the flux along `n_ret`; the count's number right, the field short) | the age moment is the Lienard-Wiechert potential exactly (12.1); its gradient across the six Ports gives `-grad(A)` only (17.6 M4) | the magnetic part: `source-velocity-v1`, named, not designed; NOT in covariant-readings-v1 | none until then; under `-grad(A)` alone the co-moving pair's pushes are the rest force along and `gamma` times the rest across, pinned as such |
 | E8 | Poisson's equation, the field of a source | R (5.1) | the age moment, sourced by the release | nothing | series E: `k_a r = 36.1`, `k_s r^2 = 41.5` |
 | E9 | the gravitational redshift at first order | R (5.2) | the owed count on the age moment, `1 / (1 + k_a)` | nothing | series E's shells |
 | E10 | Newton's geodesics (the retarded inverse square, the orbit) | R (3.3, 5.3) | the push and the drive | nothing | series D's orbit; `push_m = m push_1` |
@@ -5388,7 +5639,7 @@ meet, written before it.
 | E12 | the perihelion advance, `6 pi G M / (c^2 a (1 - e^2))` | not reached (5.6: post-Newtonian terms) | the retarded push gives the drift and the decay of 12b.2, not a precession | one sixth from the velocity terms of covariant-readings-v1 (the special-relativistic advance), five sixths from the field's nonlinearity, `field-source-v1` | the thrown orbit's apsidal drift per turn in the Newtonian regime: `pi beta_orbit^2` per turn from the readings alone (one sixth of Einstein's), the rest after the self-source |
 | E13 | the bending of light, `4 G M / (c^2 b)` | D (5.4, NATURE: series K's 0.000; the meeting key `~ M / b`) | the flight blind to the crowd | a rule on the LINEAR block: the row's wall reading the age moment (`flight-in-field-v1`), giving the delay's half, `2 G M / (c^2 b)`; the space half needs the second-order field | series K's beam at b = 6: a deflection of `2 G M / (c^2 b)` under the wall alone, `4 G M / (c^2 b)` with the field's second order |
 | E14 | the Shapiro delay | D (5.4) | no delay in time on `main` | the same `flight-in-field-v1` | the lensing world's round trip lengthened by `(2 G M / c^3) ln(4 r_1 r_2 / b^2)` |
-| E15 | the equivalence principle for a bound body | D (19.5: the release reads the held content) | the source's rows from the held content, `M_A` cancelling for a free body (3.3, exact) | the release reading the energy accumulator E (19.5), inside covariant-readings-v1 with binding-v1 | a bound pair's field equal to its total energy's; Nordtvedt's `eta` below `10^-4` |
+| E15 | the equivalence principle for a bound body | D (19.5: the release reads the held content) | the source's rows from the held content, `M_A` cancelling for a free body (3.3, exact) | the release reading the body's OWN `E' / (Q S)` (17.6 M6), inside covariant-readings-v1; the energy in flight `field-source-v1` | a thrown body beside a probe of content 1: the probe's push against the body's drive, 1 at rest and `gamma` in motion; the binding fraction E16's |
 | E16 | the self-gravitation of the field's content | not reached | the rows carry no source | `field-source-v1` (rows in flight releasing, or the wall reading the presence) | E11's and E12's numbers |
 | E17 | the tensor source (the stress as a source) | D (record 196: the order-2 moment is read, the push uses the flow) | the reading **R** returns the traceless second moment | the push reading the order-2 moment as well, a column of the coupling (`tensor-source-v1`) | a moving crowd's push on a probe differing from a static crowd's by the stress term |
 | E18 | the cosmological term, `q_0 = -0.53` | D (15.4: Milne's 0) | the growing wall at a constant H | a rising H, a second declared rate under `expansion-v1` | the 24 stars' `z(tau)` with `q < 0` against the register's bracket |
