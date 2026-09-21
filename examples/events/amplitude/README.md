@@ -76,7 +76,15 @@ the rows toward D2 cancel entirely. **What the world reads** (DETECTOR):
 the clicks per port over the 64 births in the table above, the ladder at
 each record's completion normalised by the sum of its offers with the
 rungs at the nearest integer, `b_k = (2 N C_k + Total) // (2 Total)`
-(`expectations.json` under `mach_zehnder`). The runs and their readings
+(`expectations.json` under `mach_zehnder`). Since 2026-09-21 (the
+trimming's part 2: a test holds no literal of a world's number) the same
+file registers what the tests read of the GameBoard and of the layer: the
+birth's and the split's rows with the cancels, the first gather, the last
+tick of the gathers and the totals' spread under `mach_zehnder`; the first
+gather and the last tick under `two_slits`; the pair's birth, the
+choosers' early records and the far worlds' least flight under `pair`;
+the rotate and gate lines, the rows after the gates and the rotation's
+multiplicity under `gate`. The runs and their readings
 are in the register's L1 entry.
 
 ## L2: the two slits at a low rate
