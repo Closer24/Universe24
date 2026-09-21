@@ -173,7 +173,17 @@ shipped wall absorbs 88 of the 182 fan rows beside the openings; freed,
 every fan row leaves the plane) and the lamp's three rows that miss the
 openings absorbed by wall Nodes at (7, 58), (7, 60), (7, 62) on their
 paths (a lamp row and a fan row at one set would carry the multiplicities
-5 and 455, refused). 230 intervals. **The reference** `slits_one`: one
+5 and 455, refused). The generator's freed half-width (`FREED_HALF_WIDTH`,
+6 for both slit worlds) must be at least the fan's number of leading
+y-steps before its first x-step on the engine's digital line: 5 for the
+fan of 91 (its steepest direction (1, 11, 0)) and 6 for the Huygens fan
+of 1327 ((1, 13, 0)); and two openings must be farther apart than that
+number, at least 6 and 7 Links, or a row of one opening walks along the
+plane to the other opening's Node and meets the lamp's row there with the
+multiplicities 5 and 5 x 91 or 5 x 1327, whose ratio is not a square, and
+the load is refused (the auditor's round 7, 2026-09-21: openings 6 and 8
+apart pass; 4 apart, and 6 apart under the Huygens fan, are refused, the
+geometry's refusals and not the law's). 230 intervals. **The reference** `slits_one`: one
 birth through the same geometry without the key, the lamp's five rows
 declared as rays of amount 91 (one row per direction at each opening's
 re-emission, m = 5 x 91 = 455), the screen reading the age; the generator
