@@ -1534,9 +1534,11 @@ section cites Fine 1982 as 22.3 restated (PR #498 at 31cb7926): a
 joint distribution over the four outcomes exists exactly when the CHSH
 inequalities hold, so the registered 176 / 64 has none; the withdrawn
 phrase is not repeated. The highlights bibitem names 5.4's "Decisions
-of 2026-09-21"; the log bibitem adds 326. The exact circle (record 327,
-"go with the beautiful solution") waits for its design to land before
-the paper's one sentence. Referee round 23 pending.
+of 2026-09-21"; the log bibitem adds 326. The exact circle of record
+327 ("go with the beautiful solution") was withdrawn by the owner's
+correction, record 328: the existing tables at 1/256 stay and are
+declared an input of the law; the paper's one sentence follows in
+wave 8. Referee round 23 pending.
 
 ## Referee round 23 (2026-09-21): the glossary appendix, major revision, applied
 
@@ -1563,3 +1565,43 @@ theorem stated as a joint distribution of the four observables
 returning the pair distributions as marginals; the highlights bibitem
 with 5.4's title and subsection; the log bibitem's 326 wording and a
 missing comma; the table narrowed to 6.15 in; the Where cells.
+
+## Wave 8 (2026-09-21): the circle's rounding declared an input, record 328
+
+Part I's "What is put in" gains one sentence: the tables of cos and sin
+of every phase step, scaled by 256 and rounded to the nearest integer,
+computed once at load from integer series, law data and not a register
+at a Node, read at the click through the Gram matrix G = E^T E and,
+at 2N, at the label rotation (the half-angle tables), are declared an
+input of the law with the standing of N and Q_f and kept (record 328),
+as signal processing takes a rounding of the circle as the definition
+and keeps it, with the four precedents the Boss found, each checked
+by the coordinator for journal, volume, first page and year against
+the publisher's record: Malvar, Hallapuro, Karczewicz and Kerofsky 2003 (IEEE Trans.
+Circuits Syst. Video Technol. 13, 598; the H.264/AVC integer
+transform), Welch 1969 (IEEE Trans. Audio Electroacoust. 17, 151; the
+fixed-point FFT), Mathews 1963 (Science 142, 553; the stored waveform
+table) and Goodman and Silvestri 1970 (IBM J. Res. Dev. 14, 478; the
+phase quantized to N levels). The appendix's caveat on the cosine table
+names it a declared input. The log bibitem adds 327 and 328. A
+duplicated bibitem (fhp1986, entered twice) removed. The exact circle
+(PR #501, exact-circle-v1) is closed unmerged and is not cited.
+Referee round 24 pending.
+
+## Referee round 24 (2026-09-21): the circle's rounding declared, major revision, applied
+
+Eleven findings, two major, all applied: the tables are read not only
+at the click but also, at 2N, at the label rotation (the half-angle
+tables of Part III), as the paper's own appendix caveat says, so "read
+only at the click" (record 328's phrase) is replaced by the tree's
+fact; the bold E and G named at their first appearance (E the 2 x N
+matrix of the tables, G the click's Gram matrix, not the fan's grain
+G of the same paragraph); "beside Q_f, S and N" replaced by "with the
+standing of N and Q_f" (S is a physical input in the paragraph's own
+taxonomy); the precedents' wording tightened (Malvar's cosines
+replaced by small integers, not rounded; Welch bounds the error, not
+the factors; "the first digital instrument" dropped; Goodman's N is
+theirs); "fixed-point transforms" narrowed to "signal processing"; the
+sentence split in two; Part III's "third input" tied to its own list
+of three and to Part I's declaration; PLAN.md's "reverted" corrected
+to "closed unmerged" and the verification claim made concrete.
