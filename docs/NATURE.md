@@ -1,0 +1,472 @@
+# The confrontation register: detector readings against nature
+
+The physicist's register of 2026-09-21, on the model owner's fourth gap
+(record 241 of [the day's log](LOG_2026-09-20.md), translated: "detector
+readings must also be compared with real experiments, with the same
+parameters and without re-fitting per experiment"). One row per registered
+detector reading that has a dimensionless counterpart in nature; nothing
+run for this register, nothing recomputed: every model number is a
+registered value with its world file and its register key, every published
+number has one source. The base is `origin/main` at `88d843ef`
+(2026-09-21). The register is the first pass; the second pass, the
+dimensional constants through the dictionary's conversion, is the closing
+table.
+
+Notation ([the workflow's rule](../skills/workflow.md#notation-every-symbol-named-its-kind-shown-the-model-owner-2026-09-21-record-184)):
+a scalar plain, a vector in bold lowercase (**p** the momentum vector), a
+matrix or an operator in bold uppercase (**G** the click's Gram matrix), a
+Greek letter written as a word and named at its first use (gamma, the
+Lorentz factor). A quantum of light is a row (a message in flight) and a
+particle with content is a body (a measured event); the words photon,
+electron, muon, neutron and star name nature's objects in the detector's
+world, not things on the GameBoard.
+
+## The rules of the register
+
+- **(a) One parameter set for every row.** The grain as the registered
+  worlds declare it and the registered family table; no width, clock or
+  charge is moved to meet an experiment. The one set is stated in the
+  next section; a row whose registered world declares another value says
+  so in its "grain" column and is marked "not under the one set", with
+  the differing key named. A flag on K records a declared clock (the
+  lamp's phase rate with its content, E = h f with E the energy, h the cost
+  of one phase step and f the frequency), set per world before any
+  comparison and never after one; the flag is kept because the rule asks
+  for it, and no verdict below depends on K.
+- **(b) Dimensionless comparisons only** in this pass: a ratio, a
+  correlation, a visibility, a fraction, a deceleration parameter, a
+  bound. A comparison that needs a unit (metres, seconds, kilograms,
+  joules, coulombs) needs the dictionary's conversion fixed once
+  ([HIGHLIGHTS 5.7](HIGHLIGHTS.md#57-from-the-world-we-see-to-the-vector-world-the-conversions-the-principles-what-is-derived-and-what-is-input-2026-09-21))
+  and is listed at the end under "What needs the conversion".
+- **(c) One source per published value**: author, year, journal or arXiv
+  identifier. Where the exact figure could not be checked against the
+  source from this checkout, the value is given as known and marked "to
+  verify against the source"; no precision is invented.
+- **(d) Every model reading with its world file, its register key and its
+  registered value**, nothing recomputed. A dimensionless ratio formed
+  from two registered integers shows its arithmetic in the row's note.
+  The reading is a detector reading (a click, a gather, a record's
+  weight, a body's own `read` or `contact` record), never a GameBoard
+  reading (record 163 (5); [the experiments register](EXPERIMENTS.md),
+  "Two kinds of readings"), except where a row says the number is a
+  derivation's pin whose run is not yet registered.
+- **(e) One verdict per row**: PASS (within the stated uncertainty), FAIL
+  (outside, with the number of the discrepancy), BOUND (the comparison
+  bounds a free parameter, with the bound) or NOT YET (the reading is
+  not registered, with the reading that would be needed). A FAIL is a
+  result of the theory and not a defect of the register, and is stated
+  with the same care as a pass; nothing is tuned after a verdict
+  ([the physics comparison method](../skills/workflow.md#physics-comparison-method)).
+  Where a derivation has pinned the reading and its run is not yet made,
+  the verdict is given from the pin and says so ("pinned; the run not
+  made"), under the owner's rule that a formula gives and a run proves
+  (record 205): such a row is also a NOT YET for the run.
+
+## The one set
+
+The values every row is read under, as `origin/main` at `88d843ef`
+declares them (the world-file keys in
+[HIGHLIGHTS 5.6](HIGHLIGHTS.md#world-file-keys-eventsworldpy-parse_ray_world)):
+
+| Width | Value in the one set | Where it is declared | Rows that declare another value |
+| --- | --- | --- | --- |
+| N, the phase circle | 64 | the world key `N` | the Bell resolution check at N = 1024 and 4096 (row 1a's note) |
+| Q, the pace's grain and the label's scale | 64 | `events/world.py`, `Q = 64` (`LABEL_SCALE`), one constant for every world | none |
+| P, the fan's width | a declaration per fan (record 175): the Farey fan of width 48 for the two slits, the 290 primitive directions with \|a\| + \|b\| + \|c\| <= 6 for the nucleus, the weak and the binding worlds, the 2616-direction shell for Bohr, one heading per arm on the bars | each world's `directions` (the bound `direction_bound`, 64 by default) | none: the fan is the apparatus, stated per row |
+| W, the birth wheel | the birth ordinal mod N on `main` (u = t - 1); W = 4096 decided (records 163 and 180), in build on the click branch | the lamp's record | rows 2a and 2b say what the wheel changes |
+| K, the clock's pair [1, K] | 2^20 | the world key `K` | the Bell pair lamps 15 x 2^20 (rows 1a, 1b); `slits_huygens`, Bohr and Heisenberg 2^30 (rows 2a, 6, 10); J2 4096 (row 8b); the Hubble stars 4 198 400 (rows 3, 4b) |
+| S, the width of the push (what physics calls Newton's constant; an input of kind 2, record 189) | a world input, stated per row: 2^28 (the nucleus, J3, the binding), 45120 (Bohr), 2^20 (the Hubble stars), 1 (the bars, the default) | the world key `width` | not a grain; listed for completeness |
+| The family table | each world's `entity_definitions` (the catalog's families): the proton of content 1836 with the charge 4 per unit, the neutron 1839, the strong column 10000 with the lifetime 3, the beta -7344 per unit of amount, a paid `light` of quantum 1 | [the entity catalog](ENTITY_CATALOG.md) | none: the same families wherever they appear |
+
+The declared roundings at load (the tables at 1/256, T_D by `isqrt`, u_d)
+are part of the one set (record 189, kind 1).
+
+## The rows
+
+The table gives the verdicts; the notes below give each row's arithmetic,
+caveat and what would change it. "Pinned" in the verdict column means a
+derivation's expectation whose run is not yet registered (rule (e)).
+
+| Row | The dimensionless observable | Nature's value and its one source | The model's registered reading (world; register key; value) | Grain | Verdict, with the number |
+| --- | --- | --- | --- | --- | --- |
+| 1a | The CHSH sum S of a pair read at two detectors, the record's pair | S = 2.42 +- 0.20, Hensen et al. 2015, Nature 526, 682; the quantum bound 2 sqrt 2 = 2.828, Cirel'son 1980, Lett. Math. Phys. 4, 93 | `examples/events/amplitude/bell_*.json`; `amplitude/expectations.json` `pair.chsh_S` = 176 in the unit 64: S = 2.75; `pair.chsh.*.E` = 44, -44, 44, 44 | N = 64; K = 15 x 2^20: not under the one set (K) | PASS: 0.33 above the measured, 1.65 of its standard error; 0.078 below the quantum bound |
+| 1b | The CHSH sum S under the phase-form window (the crowd form's Bell test) | the same | `examples/events/bell/a*_b*.json`; `bell/expectations.json` `chsh_sum` = 2, `primed_sum` = 2 | N = 64; K = 15 x 2^20: not under the one set (K) | FAIL: S = 2 exactly, 0.42 below the measured, 2.1 standard errors; the local bound, the model's registered limit for the window form |
+| 2a | The two-slit fringe visibility of one quantum at a time, (I_max - I_min) / (I_max + I_min) | 98 percent for single-photon two-path interference, Grangier, Roger and Aspect 1986, Europhys. Lett. 1, 173 (to verify against the source); the ideal for equal paths 1 | `examples/events/amplitude/slits_huygens.json`; the register entry L2b of [EXPERIMENTS](EXPERIMENTS.md#l-the-amplitude-law-2026-09-20) and record 164: the record's screen weights, visibility 0.954, Pearson 0.895 with the two-source cosine | N = 64; P = 48; K = 2^30: not under the one set (K); the clicks need the wheel | FAIL: 0.954 against 0.98, 0.026 below the measured and 0.046 below the ideal; the cause named (the fan's grain), the clicks NOT YET |
+| 2b | The Mach-Zehnder visibility of one quantum at a time (the dark port's fraction) | the same 98 percent, the same source | `examples/events/amplitude/mz_equal.json`; `mach_zehnder.mz_equal.offers` D1 = 1681/1682, D2 = 1/1682; `clicks` D1 = 64, D2 = 0 | N = 64; K = 2^20 | PASS: the offers' visibility (1681 - 1) / 1682 = 0.9988 above the measured 0.98; the clicks 64 / 0 over 64 births |
+| 2c | The power of the click's form (Born's exponent 2; nature's counterpart the absence of third-order interference) | the Sorkin parameter kappa = 0.0064 +- 0.0119 (consistent with 0, the quadratic form), Sinha et al. 2010, Science 329, 418 (to verify against the source) | `mz_345.json` `mach_zehnder.mz_345.clicks` 63 / 1 and `bell_16_24.json`, `bell_16_24_far.json` `pair.chsh.16_24.counts` 27, 5, 5, 27 (`pair.far.bell_16_24` = 44); [DERIVATIONS_BEAM 6.5](DERIVATIONS_BEAM.md#65-the-uniqueness-of-the-clicks-square-a-lattice-gleason): the power k pinned to [1.917, 2.489) and [1.784, 2.054) | N = 64; K = 2^20 (mz_345), 15 x 2^20 (the pair) | PASS: the intersection [1.917, 2.054) contains 2; the bracket's width is the register's resolution at N = 64 |
+| 3 | The deceleration parameter q of the Hubble diagram | q_0 = Omega_m / 2 - Omega_Lambda = -0.53 +- 0.01 from Omega_m = 0.315 +- 0.007 (flat), Planck 2018, Aghanim et al. 2020, A&A 641, A6; the discovery of q_0 < 0: Riess et al. 1998, AJ 116, 1009, and Perlmutter et al. 1999, ApJ 517, 565 | `examples/events/hubble_stars/record/coasting_none.json` and `doppler/coasting_none.json`; the register entry G2 (the second and third runs): q = -0.108 inside the coasting bracket -0.25 .. +0.25, H (t_0 + T_0) = 1.026; the gravity crowd +0.922 (record) and +0.345 (doppler), the double +1.500 and +1.190; [section 15](DERIVATIONS_BEAM.md#154-the-milne-case-and-the-registers-24-stars-at-rest)'s growing wall q = 0 (Milne) | N = 64; K = 4 198 400 and S = 2^20: not under the one set (K); the `doppler` worlds carry the key `doppler-v1`, the coasting reading identical with and without it | FAIL: the coasting -0.108 is 0.42 above nature's -0.53 (1.7 times the register's bracket); every gravitating reading is 0.87 to 2.0 above; the law has no term with q < 0 |
+| 4a | The muon's lifetime in flight over its lifetime at rest | gamma = 29.33 at the CERN storage ring, the dilation confirmed as gamma to a fractional error of about 2 x 10^-3 at 95 percent confidence (the brief's 0.1 percent; to verify against the source), Bailey et al. 1977, Nature 268, 301 | series J4 ([HYPOTHESES 21](HYPOTHESES.md#21-a-moving-bodys-clock-the-engines-rate-is-one-at-every-speed-natures-gamma-a-limit-stated-so-that-it-can-fail), [light_speed/FORM.md section 4](designs/light_speed/FORM.md#4-lorentz-v1-stated-so-that-it-can-fail)): the `become` at tick 64 at every speed, the ratio 1; no world file, not run; lorentz-v1 would read 71 and 126 at 0.43 and 0.86 of c | the pinned world: N = 64, K = 2^20, S = 1 | FAIL (pinned; the run not made): the ratio 1 against 29.33, a factor 29.33; the open decision of record 230, routes A, B, C |
+| 4b | The redshift z of a moving lamp against its speed (the Doppler with the clock's factor) | 1 + z = gamma (1 + beta) along the motion, the time-dilation factor confirmed to 2.3 x 10^-9 at beta = 0.338, Botermann et al. 2014, Phys. Rev. Lett. 113, 120405 (to verify against the source); the classic Ives and Stilwell 1938, J. Opt. Soc. Am. 28, 215 | `hubble_stars/coasting_none.json`, the star `s_mz2` at beta = 0.2674 ([the README's table](../examples/events/hubble_stars/README.md#the-readings-2026-09-20-measured-against-expected)): z = 0.2636; [DERIVATIONS_BEAM 4.3](DERIVATIONS_BEAM.md#43-a-moving-clock-the-rate-is-one-at-every-speed): nature's 0.315 at that beta, the classical 0.2674 | N = 64; K = 4 198 400: not under the one set (K) | FAIL: 0.2636 against 0.315, 0.051 below in z (17 grains of 0.003); the clock's factor gamma = 1.0378 absent |
+| 5a | The anisotropy of c by direction, delta c / c, from the grain | delta c / c below about 10^-17, Herrmann et al. 2009, Phys. Rev. D 80, 105011, and 9.2 +- 10.7 x 10^-19, Nagel et al. 2015, Nature Communications 6, 8174 (both to verify against the source) | the flight table at Q = 64: the Euclidean pace Q \|D\| / T_D from 0.5774 to 0.5818 over the 1 780 418 primitive directions within 64 ([light_speed/FORM.md section 1](designs/light_speed/FORM.md#1-the-statement-of-c-completed)); the run-time check record 144's cone (17 and 24 Links at age 29, `amplitude/expectations.json` `cone`) | Q = 64 | BOUND on Q: the registered 7.6 x 10^-3 falls as 1 / (sqrt 3 Q); below 10^-17 needs Q >= 5.8 x 10^16 (2^56), below 10^-18 needs Q >= 5.8 x 10^17 (2^59); beyond the 64-bit word at the register's fan radius 48 (13.3's bound Q \|D\| <= 2^61 / sqrt 3) |
+| 5b | The anisotropy of c between a laboratory's two arms when the laboratory moves through the lattice's frame | the same bounds, the same sources; the Earth's orbital speed 30 km/s, beta = 10^-4 (Michelson and Morley 1887, Am. J. Sci. 34, 333, the first null) | [DERIVATIONS_BEAM 12.3](DERIVATIONS_BEAM.md#123-the-bond-clock-under-1-to-3): the round trip gamma^2 along the motion and gamma across, no contraction (12.1), the ether light clock; on the register's flight table 1.375 along and 1.140 across at beta = 0.4297 (the host script, no run) | the register's flight table at Q = 64 | FAIL (pinned; the pair in motion of 12.4 not run): the arms differ by gamma - 1 = beta^2 / 2 = 5 x 10^-9 at beta = 10^-4, eight to nine orders above the bound; only a contraction (route B or C of record 230) would remove it |
+| 6 | Bohr's line ratio nu(H beta) / nu(H alpha) of the Balmer series | 1.3500: 656.279 nm / 486.135 nm (NIST Atomic Spectra Database, Kramida et al.; to verify at the fifth digit); Balmer's formula (1 / 4 - 1 / 16) / (1 / 4 - 1 / 9) = 27 / 20 = 1.35 exactly | series H, `examples/events/bohr/r*.json`: no line registered (the register entry H: "Bohr's lines were not read behind the detector, neither for nor against"); [DERIVATIONS_BEAM 7.2](DERIVATIONS_BEAM.md#72-bohrs-levels): the condition and the radii reached in form, the levels and the lines not reached | N = 64; K = 2^30 and S = 45120: not under the one set (K) | NOT YET: needed, the phase rate of the faces' `wave` record of two orbits closing with whole j (two closing radii), read as a ratio, and a transition between them, which the law lacks |
+| 7a | The deuteron's binding energy as a fraction of its nucleons' mass | E_B / (m_p + m_n) = 2.2246 MeV / 1877.84 MeV = 0.1185 percent, AME2020, Wang et al. 2021, Chinese Physics C 45, 030003 | `examples/events/binding/deuteron_bond.json`; the register entry N (B1) and [the worlds' README](../examples/events/binding/README.md): the `bond` clicks on the border `lifetime`, escaped content 4 of the declared 3677 = 0.109 percent; the mass a detector reads 3673 | N = 64, K = 2^20, S = 2^28 | BOUND on the held `bond` per nucleon (a declared input, record 106: the law derives no binding energy): 2 units per nucleon gives 0.109 percent, 8 percent below nature; nature's 0.1185 percent is 4.35 units of 3677, between the whole gives 4 (0.109) and 5 (0.136) |
+| 7b | The alpha's binding energy over the deuteron's | 28.296 MeV / 2.2246 MeV = 12.72, the same source | `examples/events/binding/alpha_square_bond.json`; the register entry N (B3): four `bond` clicks, escaped content 8, the ratio to the deuteron 2.0 | the same | FAIL: 2.0 against 12.72, a factor 6.4; stated before the run as the law's failure (the give is once per body, so the binding is linear in the nucleons) |
+| 8a | The shape of the neutron's decay curve: the 10th-to-90th-percentile width of the decay times over their median | ln 9 / ln 2 = 3.17 for a memoryless (exponential) survival, the form of every lifetime measurement, e.g. the bottle measurement of Gonzalez et al. 2021, Phys. Rev. Lett. 127, 162501 (tau_n, the neutron's lifetime, 877.75 +- 0.28 s; to verify against the source) | `examples/events/weak/j1_lattice.json` and `j1_source.json`; the register entry J1 and [the worlds' README](../examples/events/weak/README.md): the shell's 64 beta clicks, the width over the median 0.036 and 0.038; every click the content 3 (a line) | N = 64, K = 2^20 | FAIL: 0.036 against 3.17, a factor 88 (a step where nature has an exponential; PREDICTIONS entry 10); the line against nature's continuous beta spectrum a second FAIL without a number |
+| 8b | The neutrino's passage: the count of an identical detector placed behind the first, over the first's count | about 1: the cross-section of a MeV neutrino, of order 10^-43 cm^2 (Formaggio and Zeller 2012, Rev. Mod. Phys. 84, 1307), attenuates a beam by less than a part in 10^16 per metre of ordinary matter, so two identical detectors in line read the same count | `examples/events/weak/j2_filter.json`; `weak/expectations.json` `j2.j2_filter.first_clicks` = 16 of 1024, the 127 readers behind it 0 (the ladder `j2_ladder`: each residue's reader 16, nothing behind the 64th) | N = 64; K = 4096: not under the one set (K) | FAIL: 0 against about 1 (a filter set by the window's residue, not an attenuation set by the depth; PREDICTIONS entries 7 and 8) |
+| 9 | Malus's law, the fraction transmitted through a polariser at 45 degrees | 1 / 2 (cos^2 of 45 degrees; a third polariser at 45 degrees between two crossed ones passes 1 / 4 of the polarised intensity), Malus 1809 (to verify the citation) | none: the entry A12 of [EXPERIMENTS](EXPERIMENTS.md#a12-maluss-law-and-the-three-polarizer-chain-after-feature-11) is planned, after feature 11 (polarisation), not built | the entry's N = 2^8 | NOT YET: needed, a polariser as a coupling table on a two-state label of the row and the three-polariser chain's fractions |
+| 10 | The single-opening spread, w x Delta(sin theta) / lambda (w the opening's width, theta the angle behind it, lambda the wavelength) | 0.886 (the full width at half maximum of the Fraunhofer single-slit pattern), verified with fullerene molecules by Nairz, Arndt and Zeilinger 2002, Phys. Rev. A 65, 032109 (to verify against the source) | `examples/events/heisenberg/w27_wave.json`; the register entry A10: the product 4.99 at w = 27 with lambda = 4.619 Links, 4.99 / 4.619 = 1.08; the crowd form's number, kept as history; the record form's re-run of `w27_beam` did not complete | N = 64; K = 2^30: not under the one set (K) | NOT YET under the one click: the last registered value 1.08 against 0.886 is 22 percent above (the Fresnel number 1.46 named as the cause); the smaller widths unread |
+
+## The notes to the rows
+
+**1a, the record's pair.** The reading is the click of one record at two
+counters (series L3; the design's `bell.py`), the cells over 64 births
+(the birth phase u = 0 .. 63) at the CHSH labels (0, 8), (0, 24), (16, 8),
+(16, 24) on the circle of N = 64: E (the correlation at one pair of
+settings) x 64 = 44, -44, 44, 44, S = 176 / 64 = 2.75, every marginal 32 / 64 (no-signalling exact). Against Hensen 2015:
+(2.75 - 2.42) / 0.20 = 1.65 standard errors, within two, so PASS by rule
+(e); and a measured S is the ideal S times the apparatus's own visibility,
+so the measured value is a lower bound on what an ideal apparatus would
+read, which the law's 2.75 satisfies. Against the quantum bound: 2.75 is
+2 sqrt 2 - 0.078 at N = 64 (the design's epsilon(N), registered as not
+meeting 4 / N at this N); at N = 1024 and 4096 the register reads S =
+2896 / 1024 and 11584 / 4096 = 2.828125 (`pair_n`), 0.0003 below the
+bound and 2.04 standard errors above the measured. The choosers on the
+GameBoard (`bell_choosers.json`, `pair.registered_S` = 156 / 64 = 2.4375
+on the ordered quadruple (0, 25) x (8, 29)) read within 0.09 standard
+errors of Hensen's value, but on a quadruple that is not the CHSH optimum,
+so the row's number is 2.75. The reading needs no wheel: both arms carry
+the one u.
+
+**1b, the phase-form window.** Under the one click the ten A2 worlds read
+S = 2 exactly (every pair of a world in one cell, E = +1 or -1 by the
+settings' half circles), the register's `chsh_sum` = 2 and `primed_sum` =
+2, with 115 of the tool's 350 crowd-form criteria failing as registered.
+S = 2 is the local bound: a window that reads each row's own phase against
+its own setting is a local deterministic response, and A2's registered
+verdict is "the model's limit, S = 2 against nature's 2.4 to 2.7". The
+row is kept because the reading is registered; the law's Bell reading is
+the record's pair (1a), which reads the one record at two places.
+
+**2a, the two-slit visibility.** The registered visibility is of the
+record's screen WEIGHTS (the Gram weight per cell, a detector reading:
+the cell's share of the click), between the two-source cosine's bright
+pixels (y = 35 to 38, 59 to 61, 82 to 85; 23.5 pixels apart, the exact
+two-path law's 23.3, [DERIVATIONS_BEAM 7.1](DERIVATIONS_BEAM.md#71-youngs-fringes))
+and its dark ones, from the Farey fan of width 48 with the angle weights,
+under the built phase; the clicks cannot show the fringes on `main`
+because u repeats with the period 64 (32 cells fixed after the 64th
+birth). The comparison with an experiment counts clicks, so in the clicks
+the row is NOT YET until the wheel W = 4096 lands; the map's clicks at
+4096 births under the exact phase read the same 0.954 (record 164,
+TWO_SLITS.md section 8). The published value: Grangier, Roger and Aspect
+1986 read a visibility of 98 percent with one photon at a time in a
+Mach-Zehnder interferometer, the same two-path observable in another
+geometry; the two-slit build-ups with single electrons (Tonomura et al.
+1989, Am. J. Phys. 57, 117; Bach et al. 2013, New J. Phys. 15, 033018) show
+the fringes without a published visibility figure, which is the caveat.
+Nature's ideal for two equal openings is 1, and the measured 0.98 is a
+lower bound on it, so the law's 0.954 is short by 0.026 of the measured
+and 0.046 of the ideal: FAIL, with the cause registered (the fan's grain:
+the scratch map of record 160 gives 0.94 at P = 32, 0.97 at P = 48 and 0.96
+at P = 64 in the weights, the run 0.954 at P = 48); whether a wider fan or
+a finer weight grain closes the gap is not registered.
+
+**2b, the Mach-Zehnder.** `mz_equal`'s split is the Pythagorean (20, 21)
+pair, whose offers at the two ports are 1681 / 1682 and 1 / 1682 (the
+design's table; the (1, 1) balanced split of `mz_balanced` gives 1 and 0
+with the dark port's rows cancelled on the GameBoard); the visibility of
+the offers is (1681 - 1) / 1682 = 0.9988 and the clicks over 64 births are
+64 and 0. Against Grangier 1986's 98 percent: above the measured lower
+bound, PASS. The 1 / 1682 is the register's own departure from the ideal,
+the (20, 21) split's imbalance, a declared table and not a fit.
+
+**2c, the power of the click.** [DERIVATIONS_BEAM 6.5](DERIVATIONS_BEAM.md#65-the-uniqueness-of-the-clicks-square-a-lattice-gleason)
+reads the power k of the click's form off two registered click lists:
+`mz_345`'s 63 / 1 holds iff 7^k lies in [125 / 3, 127), k in [1.917,
+2.489), and the far pair's cells 27, 5, 5, 27 iff k in [1.784, 2.054); the
+intersection [1.917, 2.054) contains 2 and excludes 1 and 3. Nature's
+counterpart of "the power is 2" is the vanishing of the third-order
+interference term, Sorkin's parameter, read as kappa = 0.0064 +- 0.0119 by
+Sinha et al. 2010 in a three-slit experiment: consistent with the
+quadratic form. PASS, with the bracket's width the register's resolution
+at N = 64 (a three-opening world would read kappa itself; not registered).
+
+**3, the deceleration parameter.** The register's q is the second-order
+coefficient of the Hubble diagram read by the detector at the centre: z
+(the redshift) from each star's record against the light's age tau (the
+light-travel time), H (the Hubble rate) free, over the late window 300 to
+400 (`registered_window`); the coasting crowd (no gravity) reads -0.108,
+inside the bracket -0.25 .. +0.25 of the exact Milne form q = 0, and H (t_0
++ T_0) = 1.026 (the Hubble rate times the age of the throw at the reading,
+1 for the exact Milne form); the gravity crowd +0.922 under the source rule and +0.345
+under the flux weight, the double crowd +1.500 and +1.190; the growing
+wall of section 15 is the Milne case exactly, q = 0, the same z(tau) as
+the throw. Nature's q_0 = Omega_m / 2 - Omega_Lambda (Omega_m the matter
+density parameter, Omega_Lambda the dark-energy density parameter): with
+Planck 2018's Omega_m = 0.315 +- 0.007 and a flat universe, -0.527 +-
+0.011 (the register's design used -0.55, the round Omega_m = 0.3). The
+discrepancy: -0.108 - (-0.53) = +0.42 for the coasting reading, 1.7 times
+the register's own bracket; +0.87 to +2.0 for the gravitating readings.
+FAIL, as G2's verdict says in its own words: "the law has no term that
+gives q < 0: nothing here removes dark energy and nothing mimics it".
+Two caveats on the observable: the supernova q_0 is read from luminosity
+distances and the law has no luminosity distance (a beam does not dilute,
+G2's open item), so the register's q is read against the light-travel
+time, the second-order coefficient of the same diagram in another
+distance; and q_0 is nature's value today, while the register's is the
+crowd's over one window.
+
+**4a, the muon.** HYPOTHESES 21 states the law's clock in motion: a body's
+clock is the count of its self-creations, advanced at every interval in
+which it owes nothing, so a body thrown at any speed ticks at the rate of
+one at rest, and its `become` at 64 turns fires at tick 64 at every speed
+(the ratio of the lifetime in flight to the lifetime at rest, 1);
+[DERIVATIONS_BEAM 4.3](DERIVATIONS_BEAM.md#43-a-moving-clock-the-rate-is-one-at-every-speed),
+[12.4](DERIVATIONS_BEAM.md#124-the-pins-for-the-run-written-before-it) and
+[12b.3](DERIVATIONS_BEAM.md#12b3-the-seventh-verb-after-1-and-2) derive
+the same: none of the six verbs carries gamma (the Lorentz factor) into a
+body's own counter, and the bond clock of 12.3 slows anisotropically
+(gamma^2 along, gamma across), which is not the muon's isotropic gamma.
+The run J4 is defined (FORM.md section 4 pins the ticks under form B:
+today's law 64 at every speed; lorentz-v1 71 and 126 at 0.43 and 0.86 of
+c) and not made; no world file exists. Bailey et al. 1977 read the
+lifetime of muons at gamma = 29.33 in the CERN storage ring dilated by
+gamma, the dilation confirmed to a fractional error of about 2 x 10^-3 at
+95 percent confidence (the Boss's brief gives 0.1 percent; the figure is
+to verify against the source). FAIL by the factor 29.33, pinned; the open
+decision is record 230's: (A) the six alone, the law predicting against
+the measurement unless a detector-side reading gives gamma; (B) the
+seventh verb, a root at a declared grain under lorentz-v1; (C) the
+reading budget, the mover's owed count under the crossing count (section
+12c ordered). The row is also the NOT YET of the run.
+
+**4b, the moving lamp's clock.** The one registered reading of a clock in
+motion is G2's coasting star: `s_mz2`, thrown at beta = 0.2674 (beta the
+speed as a fraction of c), whose light the detector reads at z = 0.2636
+(the README's per-star table, the clock-free world; the coasting clicks
+identical in the second and third runs). 4.3 gives the comparison: the
+classical Doppler 0.2674, and nature's 1 + z = gamma (1 + beta) with gamma
+= 1.0378, z = 0.315; the register's reading is 0.0038 below the
+classical (a grain and a third of the README's 0.003) and 0.051 below the
+relativistic, 17 grains: "the absence of gamma is registered, not only
+derived". The published value: the Ives-Stilwell experiment and its
+successors read the time-dilation factor in the Doppler shifts of a moving
+emitter; Botermann et al. 2014 at beta = 0.338 (near the register's star)
+confirm gamma to 2.3 x 10^-9 (to verify against the source). FAIL by 0.051
+in z. Row 4a and this row are one finding, a body's clock at rate 1,
+read once as a pin and once as a click.
+
+**5a, the grain's anisotropy.** The pace of a row on the direction D (D
+the direction vector, |D| its Euclidean length, T_D = isqrt(3 |D|^2 Q^2)
+its resolution, the root taken once at load) is Q |D| / T_D Links per
+interval; FORM.md section 1 checked it over every primitive direction
+within 64 at Q = 64: from 0.5774 (exact on the cube diagonals, where 3
+|D|^2 Q^2 is a square) to 0.5818 (64 / 110 on a heading), so the fractional
+anisotropy is (0.5818 - 0.5774) / 0.5774 = 7.6 x 10^-3. The scaling with Q
+is not written in FORM.md as a formula and is elementary from the floor:
+T_D loses less than one unit to isqrt, so a direction's pace exceeds
+1 / sqrt 3 by less than 1 / T_D = 1 / (sqrt 3 |D| Q) of itself, largest on
+the headings (|D| = 1), never below 1 / sqrt 3, and "vanishing as Q
+grows" ([DERIVATIONS_BEAM 3.5](DERIVATIONS_BEAM.md#35-what-departs-and-where),
+item 4): the anisotropy is bounded by 1 / (sqrt 3 Q - 1) = 9.1 x 10^-3 at
+Q = 64, the registered 7.6 x 10^-3 being 0.84 of the bound (the heading's
+110.85 rounded to 110). Under the bound 10^-17 the grain must satisfy sqrt 3
+Q >= 10^17, Q >= 5.8 x 10^16, the first power of two 2^56 (7.2 x 10^16,
+anisotropy 8 x 10^-18); under 10^-18, Q >= 5.8 x 10^17, 2^59 (1.0 x
+10^-18) or 2^60. Against the word width ([DERIVATIONS_BEAM 13.3](DERIVATIONS_BEAM.md#133-the-grain-from-k-the-budget-equation-and-the-registers-widths):
+Q |D|_max <= 2^61 / sqrt 3): at the register's fan radius |D| <= 48 the
+largest Q is 2.8 x 10^16 (2^54.6), whose worst-case anisotropy is 2.1 x
+10^-17, above the bound; the bound is reachable within 64 bits only with
+the fan restricted to |D| = 1 (Q up to 1.3 x 10^18, anisotropy 4 x 10^-19)
+or with a wider word. BOUND, on Q, and a statement of what the word
+allows. The caveat of the dictionary: a resonator experiment compares two
+arms whose lengths are themselves light-clock readings (5.7's distance
+row), so how a rotated resonator reads on the lattice depends on that
+reading; the row states the pace per direction as the flight table gives
+it, which is what an arm of a declared Euclidean length would read.
+
+**5b, the frame's anisotropy.** Section 12 finds the law's rows retarded
+at c in the lattice's frame with nothing to contract (12.1: the bond is a
+whole Link), so a light clock in motion at beta is the classical ether
+clock, its round trip gamma^2 x 2 d / c along the motion and gamma x 2 d /
+c across (d the arm's length; 12.3; on the register's flight table 1.375 and 1.140 at beta =
+0.4297 by the host script, farther from gamma by the whole-Link steps).
+Two arms of one length at right angles then differ in their round-trip
+time by the factor gamma, a fractional anisotropy gamma - 1 = beta^2 / 2:
+the quantity Michelson and Morley 1887 sought and did not find, and that
+the resonator experiments bound at 10^-17 to 10^-18 today. A laboratory on
+the Earth moves at 30 km/s (beta = 10^-4) around the Sun, so relative to
+any frame fixed in space its speed is at least of that order for part of
+the year (5 x 10^-9), and relative to the frame of the cosmic background
+370 km/s (7.6 x 10^-7); a null at 10^-17 needs the laboratory below 1.3
+m/s in the lattice's frame all year. FAIL by eight to twelve orders of
+magnitude (5 x 10^-9 to 7.6 x 10^-7 against 10^-17 to 10^-18), pinned
+by 12.3 (the pair in motion of 12.4 is the run, not made); what would
+remove it is a contraction of the arm along the motion by 1 / gamma,
+which is route B or C of record 230 and not the six verbs (12.5 (vi)).
+The row is the second reading of one finding with row 4a: the law stands
+nearer to Lorentz's ether than to Einstein's postulates (record 231) and
+has not given Lorentz's number.
+
+**6, Bohr's lines.** Series H registers the orbit, not a line: on the
+base no orbit closed by the criterion; under the step drive r = 8 closed
+four times and r = 12 five (r the radius in Links) with the coherence C(4)
+= 1.01 against the expected 2.0; under the signed drive the loops precess out; and 7.2 finds
+the design's closure 4 p r = j h to be the action 2 pi p r = j h (p the
+momentum's magnitude, h the world's action, j the whole number of the
+closure, pi the circle's ratio; r = 12 the one registered radius with a
+whole j) and the levels and the Rydberg
+lines not reached: the law has no energy of an orbit and no transition
+between orbits, and what a detector reads of a closed orbit is its
+orbital frequency, about 1 / j^3. NOT YET. The dimensionless target is
+Balmer's ratio nu(H beta) / nu(H alpha) = 27 / 20 (nu the frequency), 1.3500
+from the measured wavelengths 656.279 and 486.135 nm (the reduced mass and
+the fine structure cancel in the ratio at this precision). The reading
+that would be needed: the phase rate of the faces' `wave` record (the
+click phases' slope) of two orbits at closing radii with whole j, as a
+ratio, and a rule by which the electron leaves one closed orbit for
+another, which the law does not have.
+
+**7a and 7b, the deuteron and the alpha.** Series N's rule (binding-v1)
+is one condition on one verb: at its first contact a nucleon gives its
+held paid family `bond` (quantum 1, lifetime 3, held 2 per nucleon) to
+the flight away from its partner, and the border `lifetime` clicks the
+rows two Links away with their content, the released binding energy
+read as clicks. B1 `deuteron_bond`: two `bond` clicks of content 2 each at
+tick 19, the escaped content 4 of the declared 3677, 0.109 percent, the
+mass a detector reads 3673; nature's E_B (the binding energy) over m_p +
+m_n (the proton's and the neutron's masses) is 2.2246 / 1877.84 = 0.1185
+percent (AME2020). The register itself pins 0.109 against nature's 0.1185.
+The give is a declared width and not a derivation ("the law derives no
+binding energy": the size of the give is the held `bond` per nucleon, an
+input as record 106 makes every content an input), so the comparison is
+a BOUND on that input: at the register's contents nature's fraction is
+4.35 units of 3677, which no whole give reaches (4 units give 0.109, 5
+give 0.136), the registered 2 per nucleon being the nearest below, 8
+percent short. B3 `alpha_square_bond`: the give is once per body, so four
+nucleons give 8 and the binding is linear in the nucleon count, the ratio
+to the deuteron 2.0 where nature has 28.296 / 2.2246 = 12.72: FAIL by the
+factor 6.4, stated before the run as the law's failure and not tuned; a
+give that grows with the number of bonds a body makes is not the rule as
+built. The square's dispersal (series I: the line p n n p holds, the
+square shears apart) is the same finding without a number.
+
+**8a, the decay curve.** J1 reads the shell's 64 beta clicks of 64
+neutrons of one clock: a step, the 10th-to-90th-percentile width of the
+click ticks over their median 0.036 (`j1_lattice`, the median 549) and
+0.038 (`j1_source`), against 3.17 for a memoryless survival (the 10th and
+90th percentiles of an exponential at ln(10 / 9) and ln 10 lifetimes over
+the median's ln 2: (ln 10 - ln(10 / 9)) / ln 2 = ln 9 / ln 2 = 3.17, an
+identity of the exponential form; the form itself is what every neutron
+lifetime measurement fits, the bottle measurement of Gonzalez et al. 2021
+among them). FAIL by the factor 88: the law's `become` fires at a clock
+count, one tick for one clock, and a population of one clock decays at
+once (PREDICTIONS entry 10, the exponential needing the declared bath of
+the design, not built). The second reading of the same world, every beta
+click at the one content 3 against nature's continuous beta spectrum, is
+a FAIL of the same kind with no single number to put in the table.
+
+**8b, the neutrino's filter.** J2's window admits the w consecutive steps
+of the circle about its setting (w the window's width), so a reader
+behind a source of stride coprime to N admits exactly w / N of its rows
+(`j2_filter`: 16 of 1024 at w = 1) and an identical reader behind it,
+reading the same residue, finds nothing (0 at every one of the 127 behind;
+the ladder of 64 centres exhausts the beam and 64 more read nothing).
+Nature's counterpart: two identical detectors in line read the same
+neutrino rate, since a beam of MeV neutrinos is attenuated by less than a part in
+10^16 per metre of ordinary matter at a cross-section of order 10^-43
+cm^2 (Formaggio and Zeller 2012), so the ratio is 1 to that precision. FAIL:
+0 against 1; the register's own words, "a filter set by the spread of its
+centres, not an attenuation set by its depth" (PREDICTIONS entry 8), and a
+fraction flat in the emitter's rate where nature's cross-section rises
+with the energy (entry 7). The stride-2 worlds (`j2_stride2` 32 of 1024,
+`j2_stride2_odd` 0) show the fraction to be the residue's and not the
+rate's.
+
+**9, Malus.** Feature 11 (polarisation, a two-state label on the row) is
+not built and A12 is planned; nothing registered. NOT YET: needed, the
+polariser as a coupling table and the three-polariser chain's fractions
+(1 / 2 at 45 degrees, 0 crossed, 1 / 4 of the polarised intensity with the
+third between), read as clicks.
+
+**10, the single opening.** A10 read the `wave` record behind one opening
+of w Nodes: the product w x FWHM(sin theta) reaches 0.886 lambda within 22
+percent at w = 27 (4.99 against 4.09 in Links, 1.08 against 0.886 in units
+of lambda), the Fresnel number 1.46 there named as the cause, and is not
+read at w = 3 and 9, where the sparse fan does not form the lobe. Those
+numbers are the crowd form's, kept as history since the one click; the
+record form's `w27_beam` did not complete on the host. NOT YET under the
+one click, with the crowd form's 22 percent as the last reading. Nature's
+0.886 is the Fraunhofer constant of a single slit, read with molecules by
+Nairz, Arndt and Zeilinger 2002 as the verification of the uncertainty
+relation.
+
+## Readings with a counterpart in quantum theory but no published dimensionless figure at hand
+
+Not tabulated, so that no source is invented: the Elitzur-Vaidman
+fractions (`ev_29`: the absorber 1 / 2, D1 441 / 1682, D2 200 / 841 against
+the ideal 1 / 2, 1 / 4, 1 / 4; Kwiat et al. 1995, Phys. Rev. Lett. 74, 4763,
+made the measurement, its figure to be taken from the paper); GHZ's
+products +1 and -1 exactly (`ghz_*`; the measured correlations of Pan et
+al. 2000, Nature 403, 515, likewise); the neutrality of the neutron become
+proton (the W world's charge [0, 1], the beta's -7344 against 4 x 1836: a
+declared balance of the family table at load, not a prediction, against
+nature's bound on the atom's neutrality). No Compton reading is
+registered (the mass ladder A10 of section A is planned). Coulomb's and
+Newton's inverse square are registered as shell means of the presence
+(series E, k_s x r^2 constant within 7 percent over r = 6 to 14), which
+are GameBoard readings of probes and not admissible here (record 163 (5));
+the detector form is the push a body reads at two distances, not yet
+registered as a pair.
+
+## The tally
+
+| Verdict | Rows |
+| --- | --- |
+| PASS | 1a (Bell, the record's pair, 1.65 standard errors), 2b (the Mach-Zehnder, 0.9988), 2c (the power 2 in [1.917, 2.054)) |
+| FAIL | 1b (the window form, S = 2), 2a (the two-slit visibility 0.954), 3 (q = -0.108 against -0.53), 4a (the muon, a factor 29.33, pinned), 4b (the moving lamp, 0.052 in z), 5b (the frame, eight to twelve orders, pinned), 7b (the alpha, a factor 6.4), 8a (the decay's step, a factor 88), 8b (the filter, 0 against 1) |
+| BOUND | 5a (Q >= 2^56 for 10^-17, beyond the word at the register's fan), 7a (the give per nucleon: 4 to 5 units of 3677 about nature's 4.35) |
+| NOT YET | 6 (Bohr's ratio), 9 (Malus), 10 (the single opening under the one click); the runs of 4a and 5b |
+
+What the tally says, in the register's terms: the click's form (Born,
+the pair, the power) passes; the grain shows at the second digit of a
+visibility; every reading that depends on a body's clock in motion fails
+by nature's gamma, which is one finding read four ways (4a, 4b, 5b and the
+absence of contraction), the open decision of record 230; the strong
+binding fails in its ratio and bounds its input; the weak force fails in
+its forms (a step, a line, a filter); the expansion fails in its sign. A
+FAIL here is a prediction of the law stated so that it fails, as
+[PREDICTIONS](PREDICTIONS.md) asks, never a number to move.
+
+## Values marked "to verify against the source"
+
+Grangier, Roger and Aspect 1986 (98 percent); Sinha et al. 2010 (kappa =
+0.0064 +- 0.0119); Bailey et al. 1977 (the fractional error 2 x 10^-3 at 95
+percent, against the brief's 0.1 percent); Botermann et al. 2014 (2.3 x
+10^-9 at beta = 0.338); Herrmann et al. 2009 (10^-17) and Nagel et al. 2015
+(9.2 +- 10.7 x 10^-19); the NIST wavelengths at the fifth digit; Gonzalez
+et al. 2021 (877.75 +- 0.28 s); Nairz, Arndt and Zeilinger 2002 (the
+figure of the paper); Malus 1809 (the citation); Formaggio and Zeller 2012
+(the cross-section's order; the attenuation per metre in row 8b is an
+order-of-magnitude estimate from it, not a figure of the paper). The values not marked
+(Hensen 2015's 2.42 +- 0.20, Cirel'son's 2 sqrt 2, Planck 2018's Omega_m,
+AME2020's binding energies, Michelson and Morley 1887, the exponential's
+ln 9 / ln 2, Balmer's 27 / 20) are known to the precision stated.
+
+## What needs the conversion
+
+The second pass compares dimensional values, which needs the dictionary's
+conversion fixed once for the whole register and never per experiment:
+one Link in metres, one interval in seconds, one unit of content in
+kilograms, the cost h of one phase step in joules, one charge step in
+coulombs ([HIGHLIGHTS 5.7](HIGHLIGHTS.md#57-from-the-world-we-see-to-the-vector-world-the-conversions-the-principles-what-is-derived-and-what-is-input-2026-09-21),
+the transformation from the GameBoard to the observed values, record 210;
+[DERIVATIONS_BEAM](DERIVATIONS_BEAM.md) section 16, in preparation on the
+owner's word of record 239, tries every dimensionless number of nature
+against the structure, which is where the ratios below come from before
+any unit is chosen).
+
+| The constant | Its place on the GameBoard (5.7's dictionary) | What the conversion needs | The dimensionless ratio that comes first (section 16) |
+| --- | --- | --- | --- |
+| c in metres per second | 1 / sqrt 3 Links per interval, the norm of the flight operator (record 191); a ruler-and-clock reading between two detectors | the Link in metres and the interval in seconds, fixed together by one reading (a unit conversion, record 191) | none: c is the unit's definition; its isotropy (rows 5a, 5b) is the dimensionless test |
+| G, Newton's constant | the width S, the push per unit of content per unit of flow (record 189, kind 2); the push a body reads (target 3) | the unit of content in kilograms and the Link and interval above | the gravitational coupling of two bodies of one content against their electric one at the same distance: the register's `Q^2 - G^2 - M^2` at the nucleus (series I, the threshold G = 7111) against nature's 10^36 between two protons |
+| h, Planck's constant | the cost h of one phase step, E = h f (the family's `quantum`); the click's amount | the interval in seconds and the unit of content in joules | the fine-structure constant alpha = 1 / 137.036, the charge's square over h c, which section 16 must form from the register's charge per unit of content (4 on the proton, 15 on Bohr's electron), the cost h and c before any unit is chosen |
+| e, the elementary charge | a whole number of phase steps per Link, a winding number (PREDICTIONS 26) | the charge step in coulombs, with h above | the same ratio; the neutrality of the atom exact by the family table |
+| the masses | the content M, on the non-compact scale, free (PREDICTIONS 26); the minimal mass one unit (record 243) | the unit of content in kilograms | the mass ratios: m_p / m_e = 1836.153 against the register's 1836 / 1 (Bohr) or the ladder of the masses design, which found no ratio derived; the smallest unit count reproducing the ratio to the measured precision (record 243) |
+| the muon's lifetime, the neutron's lifetime, the deuteron's binding in MeV | the `become` key `at` in turns; the escaped content of the give | the interval in seconds; the unit of content in joules | the ratios of rows 4a, 7a and 8a, which need no unit |
+
+Until the conversion is fixed, every row of this register stands as
+written: a dimensionless comparison under the one set, a verdict each,
+and nothing moved to meet it.
