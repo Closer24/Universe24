@@ -189,7 +189,12 @@ def replay(trace: Trace, family_name: str, ticks: list[int]) -> None:
         total = (0, 1)
         if live is not None:
             for (set_index, _), offer in sorted(live.offers.items()):
-                pointers[layer.names[set_index]] = dict(offer.pointers)
+                # The layer keeps phase-count vectors (the click without
+                # amplitudes, 2026-09-21, BEAM_LAW note 37 (xii)); the
+                # pointer is their evaluation, a report.
+                pointers[layer.names[set_index]] = {
+                    key: layer.evaluate(counts) for key, counts in offer.counts.items()
+                }
             cells = layer.cells(live)
             weights = [
                 (
@@ -201,7 +206,8 @@ def replay(trace: Trace, family_name: str, ticks: list[int]) -> None:
                 )
                 for factors, numerator, multiplicity, _ in cells
             ]
-            ladder, total = rungs([(n, m) for _, n, m in weights], layer.steps)
+            # The rungs on the record's wheel (N under [1, N]; note 46).
+            ladder, total = rungs([(n, m) for _, n, m in weights], live.wheel)
         gathered = [
             e for e in events[start:] if e["event"] == "gather" and e["record"] == trace.identity
         ]
@@ -242,7 +248,9 @@ def offers_from_ends(
         label = int(e["branch"]) & 0xFFFFFFFF
         X, Y = found.setdefault(set_name, {}).get((node, label), (0, 0))
         weight = AMPLITUDE_SCALE * int(e["amount"])
-        phase = int(e["phase"])
+        # The phase the layer reads at an end: the exact phase at the row's
+        # last Link where the click line carries it (note 45), else the walk's.
+        phase = int(e.get("exact", e["phase"]))
         found[set_name][(node, label)] = (X + weight * cosines[phase], Y + weight * sines[phase])
     return found
 

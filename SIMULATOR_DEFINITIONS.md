@@ -3,7 +3,7 @@
 ## The Beam Law: RAYS-1 (2026-09-19)
 
 A world selecting `"law": "beam"` runs the Beam Law
-([docs/BEAM_LAW.md](docs/BEAM_LAW.md)): a ray with a record on the digital line
+([docs/BEAM_LAW.md](docs/BEAM_LAW.md)): a row with a record on the digital line
 of its momentum at one speed, the collision table a bijection inside its
 invariant classes, the detector's record the squared coherent sum of what it
 clicked, the click the one one-way border. Coverage (a detector's Nodes), the

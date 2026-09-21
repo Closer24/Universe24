@@ -2716,6 +2716,82 @@ implementation's part of the contract. The design above is unchanged.
     read by the ladder, and its clicks are the records' (the register's
     re-run worlds, EXPERIMENTS, marked "re-run under the one click; the
     verdict to be re-read", the old numbers kept as dated history).
+    **(xi) The click's weight as the inner product** (2026-09-21, the model
+    owner's order "not a square in the code but a vector operation", record
+    173 of the log of 2026-09-20; the branch `click`). The click's weight is
+    the inner product of the pointer with itself, through the coupling's
+    primitive: `core.integer.signed_inner((X, Y), (X, Y), (1, 1))` in
+    `amplitude.cells`, a vector, a declared diagonal matrix of +1 and -1, a
+    vector, the same class of operation as the coupling's signed inner
+    product over the columns and as the reading's order-2 moment; nothing is
+    squared as a step of its own; the layer passes no bound, its weights
+    being the host's reports (2^116 on a pair, 2^174 on a GHZ triple, beyond
+    the register), and the ladder's rungs stay a comparison. The coupling's
+    own sum, `nature_beam.push_form`, is left untouched and does not call
+    the primitive, for a precise reason: its term per column is the whole
+    part off the reader's clock, `by_clock(age, |V E_c n_c|, D_c d_c)`, a
+    floor taken between the product and the sum, so the push is the signed
+    sum over the columns of the columns' whole parts and equals the inner
+    product of E and n under the declared signs, times V, only where every
+    denominator D_c d_c is 1; written through the primitive it would be the
+    inner product of the whole parts with a vector of ones, a sum disguised
+    as a product, and its refusals name the measured event and the column
+    before each product is formed and after each column's sum (pinned in
+    `test_columns`), which a shared call would not. Bit-identical: the gate
+    set's sixteen worlds and the full check unchanged (VALIDATION).
+    **(xii) The click without amplitudes: one bilinear form with a declared
+    Gram matrix** (2026-09-21, the model owner's decision, record 188 of the
+    log of 2026-09-20, "yes, if it cleans a non-vector operation off the
+    GameBoard"; the derivation mathematician's proof, DERIVATIONS_BEAM.md
+    section 6.7 with `click_gram.py`; the branch `click`). The record's rows
+    at an end Node and label are the phase-count vector **f** in Z^N, f_p
+    the amount at the phase p at the amplitude scale 32 (the record's
+    group-ring element written as a vector), and the layer keeps that
+    vector and no pointer (`amplitude.Offer.counts` and `residuals`; the
+    `Counts` type). The click's weight is ONE bilinear form with a declared
+    matrix, **f**^T **G** **f**, **G** = **E**^T **E** the Gram matrix of the
+    tables, **E** the 2 x N matrix whose rows are the tables C and S and
+    G_jk = C_j C_k + S_j S_k over those rounded entries themselves, never
+    the cosine of j - k, built once per N at load (`core.phase.phase_gram`,
+    stored through N = 512, an entry formed from the tables beyond it):
+    symmetric, of rank 2, not circulant (its diagonal takes the eight
+    values 65448 .. 65773 that were the eight totals over the births of
+    series L; 3696 of its 4096 entries at N = 64 differ from their
+    diagonal neighbour). For one arm the form is evaluated explicitly
+    through the primitive (`Layer.gram_form`: G's rows on the support of f
+    against f, then f against that image) and the complex pair (X, Y) is
+    never formed; for several arms (the pair, GHZ) the weight is the same
+    bilinear form on the tensor product of the arms' vectors, whose matrix
+    G^(k) = E^(k)^T E^(k), E^(k) the 2 x N^k matrix of the products of the
+    tables' entries, is not materialised (N^6 for a triple) but evaluated
+    through its rank-2 factorisation, the product in Z[i] of the arms'
+    pointers **E f** (`Layer.evaluate`, `cmul`) summed over the labels and
+    taken with itself (`signed_inner`, (xi)): the same integer by the
+    associativity of integer arithmetic. The rotation's entries act on the
+    counts as scalars (C' x 256 and S' x 256 in 1/256^2) and the entry's
+    turn v(t) as the shift of the phases by t (`Layer.rotation`), the
+    group ring's multiplication by e_t; a read's factor is the multiple
+    256^2 of the ring's identity e_0, and an arm's factors multiply in
+    Z[Z_N] (`ring_product`). The convolution form ACROSS arms is the exact
+    law's statement and not the built click's: the rounded evaluation E is
+    not a ring homomorphism (E(e_1)^2 = (64400, 12750) against 256 E(e_2) =
+    (64256, 12800) at N = 64), so the built click multiplies the arms'
+    pointers, as the tensor form says, and convolves nothing across arms.
+    Bit-identical on every registered cell (`tests/test_amplitude_gram.py`
+    and the click tests unchanged): mz_equal's 1681 / 1682 at all 64 u and
+    its 64 / 0, slits_low's 64 clicks (wall 11, 12, 11, the screen's 15 on
+    fourteen pixels, the faces 8, 7), the pair's 27, 5, 5, 27 and S = 176 /
+    64, GHZ, the cone; the `record` line of a `sum` set adds the same form
+    of the record's counts (`gather_records`) and reports the pointer.
+    Two precise statements for the reviewer: (1) the turn's shift equals
+    the former product (C_t, S_t)(C_p, S_p) exactly where the tables turn
+    exactly, at t a multiple of N / 4 (every registered turn is 0 or 16 at
+    N = 64), and differs at any other turn by the tables' rounding (at t =
+    3, the entry 181, the phase 1 and the weight 7: (76811875, 31668665)
+    formerly, (76871424, 31786496) now, one rounding in place of two; no
+    registered world declares such a turn); (2) the amplitude scale 32 on
+    the amounts and the identity 256^2 of a plain set stay as scalars on
+    the counts, the unit 2^58 of a weight unchanged.
 
 38. **The reading's weight at the relative speed, `doppler-v1`** (the model
     owner, 2026-09-20, record 119; the world key `doppler`, the flux of a
@@ -3424,6 +3500,126 @@ implementation's part of the contract. The design above is unchanged.
     one unit on one axis, so that the parity check is a property of the
     Ports and its test (every heading flips the parity; no three headings
     sum to zero) is missing, for the Boss to order.
+45. **The exact phase at the click: the phase at the exact time of the
+    row's last Link** (the model owner's decision of 2026-09-21, record 163
+    (2) of the log of 2026-09-20, "YES, the exact phase at the click from
+    the row's two accumulators"; the mathematician's design,
+    [TWO_SLITS.md section 2](designs/fraction_free/TWO_SLITS.md) with
+    `two_slits_map.py`; the branch `click`). A row of a family with the
+    pair form of `phase_per_link`, n / d steps per interval of age, turns by
+    `by_clock_rows` at every walk that moves it, so its phase column holds
+    floor(age x n / d), the phase of the whole intervals; the flight table
+    moves it by whole Links at whole intervals, m(tau) = (2 tau S_1 Q + T_d)
+    // (2 T_d) Links by the age tau, so the row arrives at its click at a
+    whole age while the exact time of its last Link is made x T_d / (S_1 Q)
+    intervals, a rational, `made` the Links the table counts on the row's
+    direction. The click reads the phase at that time from the row's two
+    counts, the phase per interval and the Links made (`nature_beam.exact_phase`):
+
+        phi = phase - floor(terms n / d) + floor(n made T_d / (d S_1 Q))   (mod N),
+
+    `terms` the intervals the phase holds. Three Euclidean divisions are
+    taken here and no other, each named with its class (the standard of
+    record 155 (b) for note 41 (viii)): (1) made = (2 made_at S_1 Q + T_d)
+    // (2 T_d), the flight's own count of Links m(tau) re-read off the age
+    (its remainder is the flight's, derivable from the age and the world's
+    constants, never held on the row); (2) floor(terms n / d), the walk's
+    whole part re-read to peel it off the phase column (its remainder the
+    walk's own, derivable the same way; nothing kept on the row is lost);
+    (3) the one division of the click, the numerator n made T_d by the
+    denominator d S_1 Q, the numerator within the working register (refused
+    beyond it naming the place; on every registered world below 2^53), a
+    `divmod` whose remainder is kept and reported. So no division at run
+    time discards a remainder the row held: the click line of every row of
+    such a family carries
+    `exact`, phi, and `remainder`, [the remainder, d S_1 Q]; the row's
+    `phase` stays the walk's, the GameBoard's own, and a re-emission carries
+    it as before (the phase finer than N across a re-emission is the one
+    need beyond this, record 165, not built). Where it is read: a click at a
+    measured event and a `sum` re-emitter's end (`terms` = `made_at` = the
+    age after the walk, `plan.t_exact`), an open face (the row read before
+    that walk's turn: `terms` its age, its last Link the step at that age,
+    m(age + 1)) and the border `lifetime` (after the walk). The layer's
+    pointer of every end is at the exact phase (`Layer.end`); the crowd's
+    readings, the windows, the meeting and the faces' ledger records read
+    the path phase as before. A family without the pair form, or a row on
+    a rest slot, reads its phase as it is; a row whose direction a
+    collision changed reads its age on its present line, as the table does
+    for its next step. What moved, re-registered once
+    ([MIGRATION](MIGRATION.md#the-exact-phase-at-the-click-on-2026-09-21-the-phase-read-at-the-exact-time-of-the-rows-last-link)):
+    `slits_low`'s 64 clicks stay wall 34 (11, 12, 11), screen 15 and faces
+    15 (8, 7) but land on other pixels (y = 11, 29, 36, 40, 50, 56, 59, 60
+    twice, 61, 70, 77, 84, 90, 107; the reading's total 4834019/4259840 in
+    place of 847181/745472, its Pearson with the two-source cosine 0.382 in
+    place of 0.368), the reading of one birth agreeing with the run on every
+    one of the 80 sets; the design's map expected wall 34, screen 16, faces
+    14 because it carried the lamp leg's exact fraction across the
+    re-emission and evaluated on a 4096-entry table of floats, where the
+    engine floors once on the tables of N = 64 with the re-emission's whole
+    phase, as this note says. The Mach-Zehnder worlds with unequal arms keep
+    their clicks (64 / 0, 32 / 32, 0 / 64) with their weights and totals
+    moved; the equal arms, Bell, GHZ and the gate are bit-identical (equal
+    paths have equal overshoots; the label click reads u and the label); the
+    cone worlds keep their pins (the pair form at the rate 3: the exact
+    whole parts 87 at the axis and the diagonal, the remainders 42 / 64 and
+    96 / 128, `expectations.json` under `cone.exact`), the design's 41.75
+    and 42.00 being the rate 8's, pinned in `tests/test_exact_phase.py`
+    (the axis u + 41 with the remainder 48 / 64, the diagonal u + 42 with
+    the remainder 0, a face u + 4 where the walk read u + 56, the bound).
+
+46. **The birth wheel at a declared rate: u one row of the lamp's counts
+    table** (the model owner's decision of 2026-09-21, record 180 of the
+    log of 2026-09-20, "the wheel was also turned into a generic vector,
+    wasn't it?", the decision on record 163 (3); the mathematician's design,
+    [TWO_SLITS.md section 8](designs/fraction_free/TWO_SLITS.md) with
+    `wheel_map.py`; the branch `click`). A lamp declares `wheel` [r, W], a
+    rate like every rate of the world, no default: one `Count` row of its
+    counts table (`measured.counts_table`, the name `wheel`, the source the
+    lamp's own rate, no cap), advanced by r over W at every birth of a
+    record as every count is (`by_drive`); the accumulator before the
+    advance is the record's coordinate u on the ladder, u = ordinal x r mod
+    W (the ordinal from 0), written on the record and its rows at birth
+    (`nature_beam.birth_coordinate`; the `birth` column, the `birth`, `click`
+    and `gather` lines' `u`), the rows' birth phase u mod N, and its
+    remainder carried in `state.json` under `acc` as `wheel`. The click's
+    rungs are on W, b_k = (2 W C_k + T) // (2 T), b_K = W, the cell the
+    first k with u < b_k (`amplitude.Layer.complete`, `LiveRecord.wheel`,
+    `rungs`, `cell_of`); N stays the phase circle (the tables, the merge's
+    cancel) and W is the click's own grain. [1, N] is the count of births
+    mod N as built: every registered lamp declares it (a mechanical edit of
+    the world files through their generators, the entity definitions and
+    the tests' lamps; `tools/amplitude_path.py` reads the wheel from the
+    world's lamp), and every such world is bit-identical in its events,
+    its `state.json` gaining the row's accumulator; a rebirth at a
+    re-emitter that is no lamp keeps u = its count of births less one mod N
+    and the rungs on N (the built rule, no key of its own; a re-emitter
+    that is a lamp reads its wheel). The golden rate [2531, 4096], the
+    nearest odd integer to 0.618 x 4096 over W = 4096 (the Weyl sequence,
+    every prefix equidistributed by the three-distance theorem), is the
+    generic wheel the map chose against the bit-reversed ordinal (section
+    8: the same clicks within one at 4096 births, the same cells filled by
+    1024): `slits_huygens` (L2b) declares it and is re-registered as the run
+    that shows the wheel (its entry in the register). Pinned before the run
+    from the map's section 8 at 4096 births: the bright pixels about 28 to
+    29 clicks, the dark 0 to 3, the Pearson of the counts with the
+    two-source cosine about 0.96 (the map's 0.963 with the exact phase on
+    a table of 4096; the engine's on the tables of 64). The run (the L2b
+    entry of the register): the dark pixels 0 to 3 as pinned; the bright
+    19 to 51, the mean 39, since the map's 28 to 29 was the screen's fan of
+    121 directions (the screen share 0.35) where this world's Farey fan
+    puts 0.418 of the total on the screen with its peak at 0.012; the
+    counts' Pearson with the cosine 0.891, the weights' own 0.895; and the
+    wheel's own statement exact, every cell's count over the 4096 births
+    within 2 of 4096 x its weight over the total (within 2 and not one: the rungs are per record, the tables' eight totals at u mod 64, a part in 276, note 37 (xii), so the counts are compared with the first record's rungs), the histogram's Pearson
+    with the first record's rungs 1.000 over the 126 cells: the wheel
+    turns the weights into counts. Refused: a lamp
+    without the key, a bare integer, a rate of 0 and a wheel of 0
+    (`tests/test_birth_wheel.py`); the first ten u under the golden rate 0,
+    2531, 966, 3497, 1932, 367, 2898, 1333, 3864, 2299 with the phases 0,
+    35, 6, 41, 12, 47, 18, 53, 24, 59, and the cell read on the wheel
+    (two equal cells, the rungs [2048, 4096]: a, b, a, b, a, a, b, a, b, b,
+    where [1, 64] sends the first 32 to a and the next 32 to b).
+
 47. **The crowd audit: what every rule in force reads of its own record
     and of the crowd** (2026-09-21; the owner's question, record 276, "are
     you checking the crowd everywhere?"; the architect's audit of `main`

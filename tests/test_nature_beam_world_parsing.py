@@ -104,7 +104,7 @@ def test_the_world_refuses_by_name():
         {
             **world,
             "families": [light],
-            "measured": [{**lamp, "lamp": {"rate": 1, "headings": [[1, 0, 0]]}}],
+            "measured": [{**lamp, "lamp": {"rate": 1, "wheel": [1, 64], "headings": [[1, 0, 0]]}}],
         },
         "declares headings",
     )
@@ -131,7 +131,11 @@ def test_the_world_refuses_by_name():
         {**world, "measured": [{**world["measured"][0], "directions": [[1, 1, 0]]}]}, "does not declare"
     )  # type: ignore[index]
     refused(
-        {**world, "families": [light], "measured": [{**lamp, "lamp": {"rate": 1, "directions": [0]}}]},
+        {
+            **world,
+            "families": [light],
+            "measured": [{**lamp, "lamp": {"rate": 1, "wheel": [1, 64], "directions": [0]}}],
+        },
         "must not be a rest direction",
     )
     refused(
@@ -161,7 +165,7 @@ def test_the_world_refuses_by_name():
             "K": 1,
             "N": 4096,
             "families": [{**light, "quantum": (1 << 30) - 1}],
-            "measured": [{**lamp, "amount": 2000, "lamp": {"rate": [1 << 33, 1]}}],
+            "measured": [{**lamp, "amount": 2000, "lamp": {"rate": [1 << 33, 1], "wheel": [1, 4096]}}],
         },
         "exceeds the integer bound",
     )
@@ -193,7 +197,14 @@ def test_the_world_refuses_by_name():
     refused(
         {
             **world,
-            "measured": [{"position": [1, 1, 1], "family": "m", "amount": 4, "lamp": {"rate": 1}}],
+            "measured": [
+                {
+                    "position": [1, 1, 1],
+                    "family": "m",
+                    "amount": 4,
+                    "lamp": {"rate": 1, "wheel": [1, 64]},
+                }
+            ],
         },
         "a lamp is a measured event of a paid family",
     )

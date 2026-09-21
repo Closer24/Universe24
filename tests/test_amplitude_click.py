@@ -118,7 +118,7 @@ def lamp(directions: list[list[int]], rate: list[int]) -> dict[str, object]:
         "family": "light",
         "amount": 1 << 20,
         "fixed": True,
-        "lamp": {"rate": rate, "directions": directions},
+        "lamp": {"wheel": [1, N], "rate": rate, "directions": directions},
     }
 
 
@@ -428,7 +428,7 @@ def share_world() -> dict[str, object]:
                 "family": "light",
                 "amount": 1 << 20,
                 "fixed": True,
-                "lamp": {"rate": [1, 1], "directions": [[1, 0, 0]]},
+                "lamp": {"wheel": [1, N], "rate": [1, 1], "directions": [[1, 0, 0]]},
             },
             {
                 "position": [3, 1, 0],

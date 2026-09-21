@@ -113,7 +113,7 @@ def bar_world() -> dict[str, object]:
                 "momentum": [MOMENTUM, 0, 0],
                 "held": {"mass": MASS},
                 "directions": [[1, 0, 0], [-1, 0, 0]],
-                "lamp": {"rate": [1, 1], "directions": [[-1, 0, 0]]},
+                "lamp": {"wheel": [1, 64], "rate": [1, 1], "directions": [[-1, 0, 0]]},
             },
         ],
         "detectors": [{"name": "centre", "positions": [[20, 0, 0]], "threshold": 1, "reading": "wave"}],

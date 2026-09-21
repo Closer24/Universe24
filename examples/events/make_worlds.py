@@ -91,6 +91,7 @@ def slits(name: str, openings: list[int]) -> dict[str, object]:
         "fixed": True,
         "lamp": {
             "rate": [64, 1],
+            "wheel": [1, 64],
             "directions": [[1, 0, 0], [1, 1, 0], [1, -1, 0], [2, 1, 0], [2, -1, 0]],
         },
     }
