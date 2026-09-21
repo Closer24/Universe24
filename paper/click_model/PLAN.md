@@ -640,7 +640,7 @@ momentum p and the mass m named at first use in the section); its caveat
 stands: the citations of records 245 and 249 dangle until the Boss's
 records pull request lands, so the manuscript is not merged before it.
 
-## The claim on c a referee cannot call taken (2026-09-21, the owner's request after the verdict)
+## The claim on c a referee cannot call taken (2026-09-21, the owner's request after the verdict; superseded by referee round 8 below: the text described here was rewritten, Proposition 2 became Remark 1, the universal claim on lattice waves and the "2e4 times" comparison were withdrawn)
 
 The owner (translated): "try something a referee will not say you took
 or derived from elsewhere; a founded claim". The candidate, written into
@@ -703,4 +703,13 @@ owner's question, recorded: the bare no-dispersion fact can be
 dismissed as the trivial shift; the pair with the isotropy cannot, and
 its weakest point is its price, no wave on the lattice and the energy
 entering by an assumed reading. The "What is new" bullet states the pair
-and the price.
+and the price. The re-verification at eef31b7c
+(the same referee): minor, eight residuals, applied: the interval's
+length written Delta t (tau is the age), the reading as the fraction
+E Delta t / h of the circle with the alias bound E Delta t / h < 1/2;
+the reason in Remark 1 restated as a polynomial equation in
+e^{i omega Delta t} and e^{i k_j a} (omega(k) periodic up to 2 pi /
+Delta t); the automata cited by key; the redshift z named; the
+fourth-order term marked an order of magnitude; NUMBERS.md's symbol
+Lambda; this entry's predecessor marked superseded; the birth added to
+Remark 1's rule list.

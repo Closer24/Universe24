@@ -261,8 +261,9 @@ as definite as what it does.
 \begin{remark}[The pace is the direction's]\label{rem:nodispersion}
 By Definition~\ref{def:rules} the flight table is indexed by $(d, \tau)$,
 the phase is a separate accumulator, and no rule of the interval (the
-flight, the split, the rotation, the merge; the archived collision
-table reads no phase) carries the phase into the pace. So a row's pace
+flight, the birth, the split, the rotation, the merge; the archived
+collision table reads no phase) reads a phase into a direction or a
+step. So a row's pace
 is $Q_f|d|/T_d$ at every phase rate up to the alias bound of $N/2$
 steps per interval (a turn every two intervals, $1.15$ to $1.16$ Links),
 and the anisotropy of Proposition~\ref{prop:pace} is the same at every
@@ -273,16 +274,20 @@ trivial is the pair with Proposition~\ref{prop:pace}: a transport on
 $\Z^3$ that is isotropic within $1/T_d$ in every direction and free of
 dispersion in every direction, while the carried phase interferes at the
 click. No local linear wave scheme on the lattice can be both: its
-dispersion relation $\omega(k)$, $\omega$ the frequency and $k$ the wave
-vector, is a trigonometric polynomial in $ka$ ($a$ the Link), and
-$c|k|$ is not periodic, so $\omega = c|k|$ holds on no open set of $k$.
+dispersion relation, $\omega$ the frequency and $k$ the wave vector, is
+a polynomial equation in $e^{i\omega\Delta t}$ and $e^{ik_ja}$ ($a$ the
+Link, $\Delta t$ the interval's length), so every branch $\omega(k)$ is
+periodic in $k$ up to multiples of $2\pi/\Delta t$ while $c|k|$ is not,
+and $\omega = c|k|$ holds on no open set of $k$.
 \end{remark}
 
 The price is stated with it: the model carries no wave on the lattice
 (the interference is summed in the record, Definition~\ref{def:click}),
 and no row carries an energy, so a photon enters only by a reading:
-a photon of energy $E$ is read as a family whose phase turns $E\tau/h$
-per interval, $\tau$ the interval and $h$ Planck's constant (assumed).
+a photon of energy $E$ is read as a family whose phase turns the
+fraction $E\,\Delta t/h$ of the circle per interval, $N E\,\Delta t/h$
+steps of $\Z_N$, $h$ Planck's constant (assumed); the alias bound is then
+$E\,\Delta t/h < 1/2$.
 Under that reading the model's light has one speed at every energy, the
 null of continuum physics, which distinguishes it among lattice
 transports only; one measured energy dependence of $c$ refutes the
@@ -299,12 +304,14 @@ direction: the standard second-order scheme at the Courant number
 $1/\sqrt3$ has, on an axis, the group velocity $v_g = c\,(1 - (ka)^2/12
 + \dots)$ and $v_g = 0$ at the band edge $ka = \pi$, and is exactly
 dispersionless on the cube diagonal; one photon of $31$ GeV arriving
-within $0.83$ s of the trigger of a burst at $z = 0.903$ \cite{abdo2009},
+within $0.83$ s of the trigger of a burst at the redshift $z = 0.903$
+\cite{abdo2009},
 over the comoving distance $9.5 \times 10^{25}$ m of that paper's
 cosmology without the cosmological weighting (conservative), needs
 $|v_g - c|/c < 2.6 \times 10^{-18}$, which puts that scheme's Link on an
-axis below $3.6 \times 10^{-26}$ m and a fourth-order scheme's, with
-$(ka)^4/100$, below $8 \times 10^{-22}$ m. The two bounds come from two
+axis below $3.6 \times 10^{-26}$ m and a fourth-order scheme's, taking
+$(ka)^4/100$ for its leading term (an order of magnitude, not a scheme's
+coefficient), below $8 \times 10^{-22}$ m. The two bounds come from two
 instruments, and a lattice wave obeys both.
 
 \begin{figure}[H]\centering
@@ -950,7 +957,8 @@ percent, reach their counters at the same age $29$). That anisotropy is
 set by the flight scale $Q_f = 64$ and does not shrink with the Link or
 the age; every declared direction's speed reaches $1/\sqrt3$ only as $Q_f$
 grows, a second parameter beside the tables' $Q$ (the front's shape is
-the fan's, a third), and then $c = a/(\tau\sqrt3)$. A family whose
+the fan's, a third), and then $c = a/(\Delta t\sqrt3)$, $\Delta t$ the
+interval's length. A family whose
 phase turns $n/d$ steps per interval gives two paths of one record a
 phase difference of $n/d$ times their difference in age, so a record's
 interference wavelength is $cNd/n$ Links along the flight; a plane wave
@@ -1154,7 +1162,8 @@ anisotropy is a bound on the grain of the kind every lattice model of
 light owes to the isotropy measurements \cite{nagel2015}. Where the
 GameBoard parts from a discretised wave equation is dispersion: a wave
 on the lattice has a group velocity that falls with the wave number and
-a band edge, and the three-dimensional automata cited above are
+a band edge, and the three-dimensional automata of
+\cite{bialynicki1994,arrighi2019} are
 dispersive with $v_g \to c$ only as $k \to 0$, while a row here is the
 pure-shift case, a walker on a digital line with one pace at every
 phase rate (Remark~\ref{rem:nodispersion}), so the time-of-flight tests
