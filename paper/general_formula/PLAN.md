@@ -1992,3 +1992,26 @@ to break no axis symmetry; a comma in the log bibitem. Reported as the
 tree's: 24.4 still says the run at N = 4096 "is the pin's run" in the
 future tense after the run was made.
 
+## Wave 15 (2026-09-21): records 349, 352, 353 and 356 cited by number
+
+Main merged at e2259ef6 (PRs #541, #543, #545 and #546 among others; records 349 to 357
+on the log). The paper's citations by date or by "its record to be
+cited once it is on the log" become citations by number: the record
+appendix's caption (the replication rule, record 353; the replications
+document named as record 353 orders it, no line on the tree yet), the
+prediction paragraph (record 353), the stands-above paragraph (the
+owner's order, record 352), the symmetries paragraph (the first tie as
+record 349 read it on the GameBoard: the label, the momentum and the
+hand covariant under all 48, the Nodes crossed and the exit face only
+under the 8 that keep the axis order), the log bibitem (349, 352, 353,
+356 and three missing commas), the Reproducibility caveat's main commit.
+No number changes. Referee round 36 (four findings, all applied): the
+record-349 sentence had severed the invariance list, now placed after
+it; the readings are the faces' detectors', not a GameBoard reading;
+"the momentum" is the row's momentum by the auditor's verdict, the
+mapped-back escaped momentum equal to the base under the 8 alone; the
+comma after 336's gloss. The referee's caution kept: the run's five
+directions carry no heading, so "exact on the headings" is the pin's
+host analysis and series P's test, not this run; the paper says "exact
+on every untied direction" for the run.
+
