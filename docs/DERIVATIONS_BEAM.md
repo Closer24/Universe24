@@ -90,7 +90,7 @@ cited as orders, not as code.
 
 Section 0 states the law as one operator with its two blocks and places
 every result under its block (the owner's second pass, record 167 as the
-Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass); section 17 answers the owner's direction of 2026-09-21 (the law above Newton and Einstein: the theorem of covariant readings); section 18 answers records 264 and 265 (the three structural failures of the register under one logic); section 19 answers the owner's direction of 2026-09-21 on the masses (a bound set's mass as its total content, the nucleon as a chain of three on the bipartite lattice); section 20 answers record 270 (the periodic universe against the measured numbers); section 21 is the derivation map for the paper (every formula with its premises, script, run, the pin before the run, the order of the expansion, the error term and status; 21.4 the Einstein map; 21.5 the standard of record 300 and the new rows); section 22 answers records 291 and 292 (the uncertainty relation from the six verbs, and Bell); section 23 answers record 331 (Schrodinger's equation and the massive row, massive-rows-v1, reached only in part); section 24 answers record 337 (the inputs ledger, the bilinear rate forced, the Delta P table and the one prediction, S = 181 / 64); section 25 answers record 343 (the big formulas of the continuum: flow, heat, temperature, the inventory of round 1). The
+Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall); section 16 answers records 239 and 243 (the numbers of nature from the law's structure, the minimal mass); section 17 answers the owner's direction of 2026-09-21 (the law above Newton and Einstein: the theorem of covariant readings); section 18 answers records 264 and 265 (the three structural failures of the register under one logic); section 19 answers the owner's direction of 2026-09-21 on the masses (a bound set's mass as its total content, the nucleon as a chain of three on the bipartite lattice); section 20 answers record 270 (the periodic universe against the measured numbers); section 21 is the derivation map for the paper (every formula with its premises, script, run, the pin before the run, the order of the expansion, the error term and status; 21.4 the Einstein map; 21.5 the standard of record 300 and the new rows); section 22 answers records 291 and 292 (the uncertainty relation from the six verbs, and Bell); section 23 answers record 331 (Schrodinger's equation and the massive row, massive-rows-v1, reached only in part); section 24 answers record 337 (the inputs ledger, the bilinear rate forced, the Delta P table and the one prediction, S = 181 / 64); section 25 answers record 343 (the big formulas of the continuum: flow, heat, temperature, the inventory of round 1 and the derivations of round 2); section 26 answers the paper coordinator's list under record 352 (the ten formulas the paper wants and the derivation lacks, each with its standing, the identity or program and the pin). The
 targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
@@ -7461,3 +7461,152 @@ their coefficients from the table (Euler's, the sound speed, the one-axis
 Navier-Stokes; diffusion, Fick and Fourier as one tensor law), two
 identities of readings (the ideal gas law, equipartition's half), one not
 reached (temperature from entropy). Nothing enters the law; no run.
+
+## 26. What the paper wants and the derivation lacks: the ten, each with its standing, the identity or program that would reach it, and the pin
+
+**The order** (the owner's rule of record 352, through the Boss: a
+formula the paper wants and the derivation lacks is listed to the Boss,
+who orders it; the paper coordinator's list of 2026-09-21). Ten items,
+in section 25's form: EXACT, IN FORM, IDENTITY OF READINGS or NOT
+REACHED with the identity that would reach it named under its three
+tests; the pin before any number and the reading that would test it; a
+derivation written where it is one page, a program named and stopped
+where it is one. No experiment for nothing. Nothing enters the law.
+
+| # | The formula | Standing today | What would reach it | The pin before any number | The reading that tests it |
+| --- | --- | --- | --- | --- | --- |
+| 1 | the time-dependent Schrodinger equation | NOT REACHED (23.6): the stationary form is reached (Helmholtz with de Broglie's k, the exact square's dispersion, Born at the click); in flight a row carries no frequency and a record has one momentum, so nothing spreads | `packet-rows-v1`, a program (26.1) | the two-momentum record of 26.1: the centre pixel's first clicks at 863 +- 2 and 1033 +- 2 | the click ticks per pixel, bimodal (DETECTOR) |
+| 2 | the Lorentz contraction; the books' balance under the identity | NOT REACHED: the contraction needs the magnetic part of the push (17.6 M4, 21.4 E3), the balance was withdrawn (N5: a row's energy `sqrt 3 h s` is no integer on the pair, a gap no (h, n, d) closes) | `source-velocity-v1` (a row carrying its source's momentum label at release; named in M4, not designed); the balance a program (26.2) | 12b.2's thrown orbit at beta 0.43: the extents' ratio 0.903 along over across, 2.5 Links on 26 (M5) | the orbit's extents from the step lines (GAMEBOARD) and the source's click list (DETECTOR) |
+| 3 | Kepler's precession on the GameBoard | IN FORM on the plane: the 1 / r force's apsidal angle under the pace's exponent, `psi = pi / sqrt(1 + e)` (21.5 row 58 as amended): `-105.4` degrees per radial period at the Newtonian pace, `-79.8` under form B's; NOT REACHED beyond the continuum: the lattice's own precession (the fan's kicks, the polygon) is a GameBoard reading no closed form gives (12b.2's 9 percent margin); in space the continuum's precession is 0 and the relativistic advance needs item 8 | the lamp worlds' run (row 58), a run already ordered; the lattice's own part a reading, not a formula | `-81 +- 15` degrees per radial period on `s32_r24_lamp` and `s32_r12_lamp`, T 784 and 392 | the source's click list: the age's minimum advancing per radial period (DETECTOR) |
+| 4 | the isotropic Navier-Stokes | NOT REACHED (25.5): the six-heading gas has no shear stress and conserves the momentum on every line; the longitudinal equation reached | `fan-collision-v1`, a program (26.3) | a shear wave `u_y(x)` of 64 Links on the fan gas decaying at a rate to be derived from the fan's table; on the six headings zero, exactly | the momentum per face over a coarse cell (GAMEBOARD) |
+| 5 | Planck's spectrum | NOT REACHED (25.1 row 14): the spectrum is the lamps' declared rates, an input (24.1 row 18) | `elastic-contact-v1` (25.1 row 9) with rerelease walls, a program (26.4) | none until the identity; then a detector's content histogram against `E / (exp(E / Theta) - 1)` at 25.7's Theta | the content per click (DETECTOR) |
+| 6 | Dirac's equation | NOT REACHED (25.1 row 17): the hand is a pseudoscalar bit, the massive row's block scalar | `spinor-rows-v1`, a two-component label turned by the direction; the three tests on paper (generic, P on a two-state label, local); not designed | none until the identity; the first pin would be the doublet's split under a field on one row | the click's label per pixel (DETECTOR) |
+| 7 | Bohr's levels | IN FORM for the condition and the radii (7.2: `2 pi p r = j h` exact in the limit, `r_j ~ j^2` under the inverse square); the ENERGY reached here as an IDENTITY OF READINGS (26.5): `E_j = K + q A` with A the age moment at the body's Node, `E_j ~ -1 / j^2` in form; the TRANSITION NOT REACHED: no rule releases the difference of two levels | `level-release-v1`, named in 26.5, not designed | the ratio of the energy readings on the closed orbits at r = 12 and r = 3 of series H's geometry, 1 / 16 within the radii's grain | the body's step line (its K) and its pushed line (its A) at the closure (GAMEBOARD); the transition's photon would be a click (DETECTOR) |
+| 8 | Einstein's field equation | NOT REACHED (5.5): the weak-field flux form and its retardation reached; the field's self-gravitation (E16) and the tensor source (E17) missing | `field-source-v1` and `tensor-source-v1` (21.4), named, not designed; a program of two identities | E11's and E12's numbers (the deflection and the delay of light past a mass) under the first; a moving crowd's push under the second | the rows' arrival directions past a mass (DETECTOR); the push per interval (GAMEBOARD) |
+| 9 | the strong ratio's remainder | IN FORM, SHORT IN NUMBER (18.3): 4.0 (6.0 with the diagonals) against 12.72; the remainder a factor 2 to 3 that no count of the lattice's geometry gives | none within the six: the give per contact pair as a declared coupling (`sigma_s`, 19.1) makes the ratio an input; stated as such | none: an input has no pin | the escaped content per contact pair (GAMEBOARD, the books) |
+| 10 | the weak forms' memorylessness | HALF (18.2): against the body's own record refuted (a bounded first passage, a ramp against the exponential); against the crowd's rung memoryless exactly as far as the crowd mixes | `decay-by-crowd-v1` (18.2), named, its three tests passing, not built; its pin the beam-and-bottle of 18.2's addendum | 18.2's addendum: the beam and the bottle reading one lifetime under the background crowd, two without it | the `become` clicks' ticks (DETECTOR) |
+
+### 26.1 The packet, a program (item 1)
+
+The time-dependent equation's content is the spreading of a packet, a
+sum over momenta of `exp(i (p . x - E t / hbar))`. Under
+`massive-rows-v1` a record has ONE momentum p on every row (the design,
+PR #539: the label `p_D` the unit vector of D at the scale p), so the
+record is a monochromatic wave and its temporal phase a global factor
+that the click cannot see (23.2). The program: a lamp declaring a list
+of momenta with weights, the record born with one row per (direction,
+momentum), each row flying at its own `p / E'_D` with its own turn per
+Link (the design's columns unchanged) and, the one addition, turning
+per interval by its own energy, `E'_D N / h_t` with a declared temporal
+quantum `h_t` (one `by_drive` on the row's `acc_turn` at every
+interval; generic, vector, local: the three tests on paper); the rows
+of different momenta then arrive at different ticks and their phases
+differ by `(E'_1 - E'_2) t N / h_t`, which the click reads. The pin
+before any number, on `slits_matter`'s geometry with the two momenta
+200 and 240 in one record (the design's `E'` 4110 and 4117, the paces
+0.04866 and 0.05829, the wavelengths 5.120 and 4.267 Links): the centre
+pixel's first clicks at `1 + 112 + 920 = 1033 +- 2` and `1 + 112 + 750
+= 863 +- 2` (the paths 50.28 Links), the bright bands of each momentum
+at `23.3 x lambda / 4.6545` from the centre, and, with the temporal
+turn, a beat of the two momenta of wavelength `h / (p_1 - p_2) = 25.6`
+Links across the screen. What refutes the program: one arrival time for
+both momenta (the pace not `p / E'`). Stopped here: the program is the
+physicist's design to extend, the derivation the same as 23.2 with a
+sum over momenta.
+
+### 26.2 The books' balance under the identity, a program (item 2)
+
+N5 withdrew the balance because a row's energy on the pair `c^2 = [1,
+3]` is `sqrt 3 h s` in the identity's units, no integer, while the
+emitter's exact square is an integer. The program that closes it without
+a root: the exact-square bookkeeping. A row carries the square of its
+energy, `3 (h s)^2`, and its momentum `h s` along its direction; at a
+release the emitter's square W falls by the cross term and the row's
+square, `W' = W - 2 E' sqrt 3 h s + 3 (h s)^2`, whose middle term is
+irrational unless the identity declares the rounding of `sqrt 3 h s` to
+the pair (`h s x 26 / 15`, the pair `[26, 15]` within `2 x 10^-4`, or a
+finer pair), a declared rounding that needs the owner's word (the same
+class as `T_D` at load). With it the books close to the pair's error per
+unit, `2 x 10^-4 h s`, bounded and not accumulating beyond the count of
+units. Stopped here: the choice of the pair is the owner's, the check
+the implementer's, the pin then E5's lamp world (21.4).
+
+### 26.3 The fan collision, a program (item 4)
+
+The isotropic Navier-Stokes needs a collision whose fourth-rank tensor
+`sum_i c_ia c_ib c_ic c_id` is isotropic, which the six headings' is not
+(the cube's `delta_abcd`, 25.5) and which the fan's is in the limit of
+many directions (the fan within the bound P covers the sphere within its
+grain; the tensor's anisotropic part falls with the grain). The program:
+a table over the fan's directions as slots (their count grows with P,
+fixed for a fixed P: the local test passes), a permutation within each
+class of (crowd mask, n, **S**) as the six-heading table is, generated
+lazily per class (the members of a class over hundreds of slots cannot
+be enumerated as the 3^8 states are: a program of its own), the class
+conserving amount and momentum by construction; then the per-line
+invariants of 25.5 break (a fan direction crosses lines) and a shear
+stress exists. The three tests: generic, vector (P on the slots), local.
+The pin before any number: the shear wave `u_y(x)` of 64 Links on the
+fan gas at density d per slot decays at `nu_shear k^2` with `nu_shear`
+from the fan table's linearized operator by 25.5's reduction, a number
+the map gives once the table exists; on the six headings it is zero,
+exactly (25.5). Stopped here.
+
+### 26.4 Planck's spectrum, a program (item 5)
+
+A black body's spectrum needs a crowd in equilibrium with its walls: the
+rows' contents exchanged at contacts until the histogram is Boltzmann's,
+then the cavity's modes counted. The law has neither exchange (F2) nor a
+thermal wall (a `rerelease` wall returns the row's content unchanged).
+The program: `elastic-contact-v1` (25.1 row 9) extended to rows, a wall
+that at a click re-releases a unit whose content is drawn from its own
+held content by the turn accumulator (25.9's release with the wall's
+content as the temperature's proxy), and the reading of 25.7. The pin
+comes only after the identity: a cavity of such walls at one Theta reads
+a content histogram per click against `E / (exp(E / Theta) - 1)` within
+the rung. Stopped here; the spectrum is an input until then (24.1 row
+18).
+
+### 26.5 Bohr's energy as an identity of readings, and the transition not reached (item 7)
+
+Two readings a bound body has on the GameBoard: its kinetic energy from
+its momentum, `K = p . p / (2 Q S M)` at first order (25.7, the exact
+square's kinetic part), and the potential of the crowd at its Node, the
+age moment A (12.1: the Lienard-Wiechert scalar potential exactly) times
+its coupling q. Their sum on a closed orbit is the level's energy as an
+identity of readings, `E_j = K + q A`, and under the inverse square on a
+circle the virial gives `K = -q A / 2`, so `E_j = -K = -q A / 2 ~ -1 /
+r_j`, and with 7.2's `r_j ~ j^2` the Rydberg form `E_j ~ -1 / j^2` IN
+FORM. The derivation is 7.2's condition (the action per orbit `j h`)
+with the circular condition `p v = q A / r` (12b.2's), one page in 7.2
+already; what is new is only that the energy is read, not that a rule
+gives it. The pin before any number: on series H's geometry (the
+electron of content 1836 on the proton's crowd), the ratio of `K + q A`
+on the closed orbits at r = 12 (j = 4.01, 7.2) and at the radius of j =
+1 is `1 / 16` within the radii's grain (one Link on 12: 17 percent),
+read from the body's step line (p) and its pushed line (A at its Node)
+at the closure. The transition, a body leaving one level for another and
+a unit of content `h f = E_j - E_k` released, is NOT REACHED: no rule
+changes a body's orbit but the push, and the lamp's release is the
+clock's (a rate, not a difference of levels). The identity that would
+reach it, named and not designed: `level-release-v1`, a bound body
+releasing at a `become`-like trigger one unit whose content is the
+difference of its own energy readings before and after a push, its
+three tests on paper (generic: a difference of two readings of its own
+record; vector: T on the release count; local). Its first pin would be
+the Rydberg ratio of two such units' contents, `1 / 4 : 1 / 9`, read as
+clicks on a detector (DETECTOR); none until the identity.
+
+### 26.6 The verdict of section 26
+
+Of the ten: none exact; two in form (Kepler's precession on the plane,
+Bohr's condition and radii) with one reading added (the level's energy
+as an identity); one half (the weak forms, against the crowd); one short
+in number and stated as an input (the strong ratio); six not reached,
+each with its identity or program named and its pin stated where the
+identity fixes a number (the packet's 863 and 1033; the contraction's
+0.903; the fan gas's zero on the headings; Bohr's 1 / 16) or deferred
+where it does not (Planck, Dirac, Einstein's equation). Four programs
+are stopped at their statement (the packet, the books, the fan
+collision, the cavity), each the physicist's or the implementer's after
+the owner's word. Nothing enters the law; no run.
