@@ -355,3 +355,67 @@ nothing the bit reversal has that a run can read: the same counts at
 click; the bit reversal's one advantage, an exactly stratified prefix at
 every power of two, is a property no click reads. The words for the
 owner: u is the lamp's count on the wheel W at the golden rate.
+
+## 9. Which registered worlds move under P as the rule of every fan (read-only, the map, 2026-09-21)
+
+On the Boss's bounded read after the owner's decision (record 163: P as a
+width of the law with the angle weights, yes). Every lamp, re-emitter,
+free release and `become` of the 134 world files under `examples/events/`
+was inventoried by a scan of the loaded worlds (their fans, the world's
+direction table and its bound, the shape). The rule as read here: P
+applies where a FAN is declared, a lamp or a re-emission on two or more
+directions with no arm structure; a beam of one direction (a throw, a
+collimated lamp, a mirror's reflection) and a splitter or a pair source
+(`arms`, `branches`, `turns`, `inputs` with weights) are the apparatus's
+own maps and are not fans. A fan under the rule is the full primitive fan
+within P in the world's own dimension, weighted by the angle it covers,
+and "P at the world's direction bound" is the largest P whose fan fits
+the direction table (4096 vectors, components within 64): in the plane
+P = 48 for a full-plane fan (2848 directions) and P = 64 for a half-plane
+fan (2519); in space P = 14 for a full sphere (3362) and P = 19 for a
+half-space (3937); on a line the fan is the two headings at any P.
+
+**The counts.** Identical: 95 worlds. Moved: 39 worlds. Not readable on
+the map: the size of the move on the 3D fans (the solid-angle weights
+have no Farey formula; the spread is measured below, the pins' shift is
+not), 31 of the 39.
+
+| worlds (count) | the fan today | under P at the bound | pins | cost (rows per record or per release) |
+| --- | --- | --- | --- | --- |
+| bell/* (17), amplitude/bell_*, path_*, cnot_pair_*, ghz_* (28), the choosers' sources | a lamp on +x and -x (a line world), or `arms` with `branches` | on a line the full fan is the two headings, equal angle; the arms are a source, not a fan | identical | unchanged |
+| amplitude/mz_*, ev_* (10), cnot_* gates, rotations_3 | the source's two arms with turns; mirrors on one direction; the splitter with `inputs` and weights | maps of the apparatus | identical | unchanged |
+| amplitude/cone_* (2), masses/cavity_* (2), catalog lamp_mirror_screen's lamp, buildup and heisenberg lamps (31 per world), hubble_stars' 24 throws x 27 worlds, hubble's 30 throws x 4, hand and weak j2 releases on one direction, w_hand and w_exchange on the line | one direction each | a beam, not a fan | identical | unchanged |
+| detector/* (4), slits_one's transit rows | declared `in_transit` rows | not a fan | identical | unchanged |
+| slits_low, slits_huygens, two_slits, one_slit (4) | the lamp's 5 directions toward the openings; the openings' 91 (the half-plane P = 12 with equal weights) or 1327 with angle weights | the lamp's full-plane fan P = 48 (2848), the openings' half-plane P = 64 (2519, or within the freed band's slope 13: about 2400) with angle weights | moved: the openings receive a small share of the lamp's fan (most rows end at the wall at x = 8), the screen's share per birth falls by about an order; the weights' fringes stay (they are the openings' re-emission), the visibility and Pearson of section 7 within a few hundredths; the click counts per birth fall with the share | 2848 + 2 x 2519 rows per record against 5 + 2 x 1327 |
+| heisenberg/w1, w3, w9, w27 (8), buildup/w27_* (3) | the openings re-emit on 47 directions (bound 11, not a Farey fan: 43 at P = 8 plus 4), equal weights, the angle share max / min about 10 | half-plane P = 64 with angle weights | moved: the diffraction pattern of the opening changes shape (the comb of 47 becomes the uniform Huygens fan), the beam / wave readings of the register re-register; direction: the far field smoother, the near-axis excess of the comb gone | 2519 rows per re-emission against 47, times the openings (27 on w27: about 68 000 rows per record; w27 already exceeds the host's time budget at 47) |
+| catalog/lamp_mirror_screen (the screen's re-emitter of 11), sun_planet (the lamp's 9 and the planet's 4) (2) | small plane fans, equal weights | full-plane P = 48 (2848) | moved; the catalog's readings are demonstrations, re-registered with their lines | 2848 against 11, 9, 4 |
+| orbit/* (6), catalog/sun_planet's sun | a free release on 120 directions in the plane (bound 7, equal weights) | full-plane P = 48 (2848) with angle weights | moved: the gravity flux becomes isotropic per angle in place of per direction; the orbit readings (the closure, the period) shift by the anisotropy of the 120 fan; not readable on the map to the Link | 2848 against 120 per release |
+| nucleus/* (8), binding/* (3), weak/j1_source, j3_* (4), redshift/* (2), lensing masses (7), catalog/clock_near_mass (the 98 = P 4) | the free release on 290 directions = the FULL primitive sphere at P = 6 with EQUAL weights (clock_near_mass at P = 4, 98) | the same sphere at P = 6 with solid-angle weights (the fan's set unchanged), or P = 14 (3362) at the bound | moved by the weights alone if P = 6 is kept: the solid angle per direction of the 290 fan runs from 0.34 to 1.82 times the equal share (max / min 5.4: the headings x 0.90, the face diagonals x 1.46, the cube diagonals x 1.82, (5, 1, 0) x 0.70), so equal weights over-count the fan's dense regions and under-count the diagonals; the flux per solid angle becomes isotropic, the M / r and push readings shift by that anisotropy (the pins move; the size not readable on the map without the engine's push); the 48 symmetries hold under both | unchanged at P = 6 (290); x 11.6 at P = 14 |
+| bohr/* (7) | a free release on 2622 directions (bound 32; not an L1 fan) and a second on 4 | at the bound P = 14 (3362) with solid-angle weights | moved (the weights and the fan's set); the radii selection of bohr-v1 re-read | 3362 against 2622 per release |
+| lensing lamps (9: control, heavy, mass, near and their meeting forms, lens_meeting's two) | the lamp's 5 directions (1, 0, 0), (1, +-1, 0), (1, 0, +-1) in space (bound 24) | half-space P = 19 (3937) or full sphere P = 14 (3362) | moved: the five rays become a cone; the lensing reading per ray (the deflection of one row against the control) has no single-ray counterpart under the rule; the reading must become a per-direction one (the record's weights per screen Node); not readable on the map | 3937 against 5 per record |
+| weak/j1_lattice (become 64 on the 290 fan) | products on the parent's 290 directions | the same sphere weighted by solid angle | moved by the weights, as the 290 releases | unchanged at P = 6 |
+
+**What the table says.** (i) The register's two large fans are already
+the rule's SETS: 290 is the full primitive sphere at P = 6, 91 the full
+half-plane at P = 12; what the rule changes there is the weights alone
+(equal to angular), and on the sphere that is a spread of 5.4 between
+the least and most covered direction. (ii) The 3D weights need the solid
+angle of each direction's Voronoi cell on the sphere: no Farey formula;
+computable once per fan at load (a fine sphere sample or the exact
+spherical polygon areas), a declared grain, then `apportion_whole` as
+today; this integer form is not written yet. (iii) The worlds that keep
+their fan's set (the 290 and 91 fans) can keep P as declared and move by
+the weights only; the worlds with small ad-hoc fans (5, 9, 11, 47, 120)
+move by the set as well, and among them the heisenberg and buildup
+openings are the ones whose registered readings are ABOUT the fan's
+shape. (iv) The cost is the rows: unchanged where the set is kept, 2519
+per opening in the plane at P = 64, 3362 per sphere at P = 14.
+
+**Recommendation for the rule's text.** P is the width of a fan's
+DECLARATION, not one number for every world: a fan declares its width P
+(the register's 290 keeps P = 6, the slits keep 48, a new world takes
+what its screen needs), the law fixes the set (every primitive direction
+within P) and the weights (the angle covered); the bound 4096 caps P per
+dimension as above. Then the 290-fan worlds re-register once by their
+weights, the slits and the small plane fans by set and weights, and no
+world is forced to 3362 rows per release.
