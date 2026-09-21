@@ -5233,7 +5233,7 @@ count? Today it counts what it reads at its Node: the <b>presence</b> a<sub>r</s
 rows dwelling there, or, on a table entry that says <code>reads: "age"</code>, the <b>age moment</b> A, each
 dwelling row's amount times its age, the Links it has walked. One word of BEAM_LAW step 5, under its own
 identity, <code>clock-age-v1</code>. <b>The owner's word pending; the run in progress</b> (the four worlds of
-the physicist's pin are being run by the G2 session; PR #567).</p>
+the physicist's pin are being run by the G2 session; the note is on main, PR #567).</p>
 {
         registered_note(
             registered,
@@ -5309,7 +5309,7 @@ the catalog's neutron star, the bound clock of record 123); nothing moves before
                 ),
                 (
                     "the physicist's read, the three tests, nature's table, the two-crowd pin (F = 4915, the presence 4 F, the age moment 22 F and 42 F, the ratio 1.909, the pins 1.300, 1.300, 2.650, 4.150)",
-                    "<code>docs/designs/clock_age/NOTE.md</code> on the branch <code>claude/clock-age</code> (PR #567, head 40d4e7c0), with <code>clock_age_map.py</code> and its output",
+                    '<a href="../../designs/clock_age/NOTE.md">docs/designs/clock_age/NOTE.md</a> (PR #567, merged), with <code>clock_age_map.py</code> and its output',
                 ),
                 (
                     "series P's still_3, its F and its registered 1 + z = 1.300",
