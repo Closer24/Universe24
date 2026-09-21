@@ -82,7 +82,7 @@ cited as orders, not as code.
 
 Section 0 states the law as one operator with its two blocks and places
 every result under its block (the owner's second pass, record 167 as the
-Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; section 13 answers record 209 (the one constant K, the computation per Node per interval). The
+Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy). The
 targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
@@ -3390,3 +3390,138 @@ stands. **Free** (K leaves): the family table, the width S, the initial
 state, and the number `1 / sqrt 3` itself. The statement passes the
 three tests in its per-Node form and fails the local test as a global
 total.
+
+## 14. Entropy on the GameBoard: the count of state vectors consistent with the click list, where it grows, and where the system goes
+
+**The definition** (the owner's question of 2026-09-21, "how is entropy
+defined in our system, vectorially, and where does such a system go";
+records 214 and 215; the Boss's order). The state is one integer vector
+**s** on the product torus (section 11.2), and what leaves the board is
+the click list (the world is the list of clicks, BEAM_LAW; the click the
+one read-out, section 0). The entropy of the world at a time is
+
+    S = log2 of the number of state vectors s on the product torus consistent with the click list up to that time,
+
+a count of points on the torus, no continuum measure. The host script
+[entropy_clicks.py](designs/derivations_beam/entropy_clicks.py) with its
+output [entropy_clicks.out](designs/derivations_beam/entropy_clicks.out)
+evaluates it on the register's click counts; no run.
+
+### 14.1 No production between events
+
+Between two events the state advances linearly, `s(t) = s(t_0) + (t -
+t_0) r` (section 11.3 (i)), a bijection of the torus onto itself, and
+every rule of the linear block is one too: the walk (a translation), the
+phase (a translation), the merge to the normal form (the multiset of rows
+summed, invertible on the multiset), the split (the integer matrix whose
+transpose is its inverse up to the normal form, the design's 2.4), the
+rotation (`U_s^T U_s = (C'^2 + S'^2) I`), the gate (a permutation), the
+evaluation (a ring homomorphism on the record, linear); the paper's
+Theorem 1 says the same of the maps between clicks: injective given the
+record. The Euclidean division keeps its remainder (the carry a
+bijection `Z = Z / d x Z`, record 173). So the number of state vectors
+consistent with the clicks does not change while no click, cancel or
+discarded remainder happens: the flow on the torus preserves the count,
+the lattice's Liouville theorem, and the linear block produces no
+entropy at all.
+
+### 14.2 Production at the click, the cancel and the discarded remainders
+
+**The click.** A record's vector **f** (its amounts per phase per end
+Node and label) is deleted at the completion and one cell is read (the
+ladder, `amplitude.py:681-776`): the state vectors consistent with the
+clicks multiply by the number of records that would have given that
+cell. On the register's apparatus a record's vector is a function of its
+birth phase u alone (the paths, the splits and the phases are the
+world's; u is the one thing that differs from record to record, the
+wheel `ordinal mod N`), so the freedom the click erases is u's, `log2 N`
+bits per record, of which the click reports `H` bits, the Shannon
+entropy of the cell distribution over the wheel, and erases the rest:
+
+    bits read = H = - sum_k (w_k / N) log2 (w_k / N),   bits erased about u = log2 N - H = sum_k (w_k / N) log2 w_k,
+
+`w_k = b_k - b_(k-1)` the cell's width in u (the rungs), so that **bits
+read + bits erased = log2 N per record**, an identity of the ladder (the
+cells partition the wheel). On the register (N = 64):
+
+| World | the cells (the registered clicks over 64 births) | bits read H | bits erased about u | `log2 (cells)` (6.1's bound) | units at the ends (6.1's cost) |
+| --- | --- | --- | --- | --- | --- |
+| `mz_equal` (L1) | 64, 0 | 0 | 6 | 1 | 82 |
+| `mz_quarter` (L1) | 32, 32 | 1 | 5 | 1 | 82 |
+| `mz_345` (L1) | 63, 1 | 0.116 | 5.884 | 1 | 14 |
+| the pair at (16, 24) (L3) | 27, 5, 5, 27 | 1.625 | 4.375 | 2 | 4 |
+| the pair read at (16, 24) (L3) | 2, 14, 2, 14, 14, 2, 14, 2 | 2.544 | 3.456 | 3 | 4 |
+| `slits_low` (L2) | 11, 12, 11; fourteen pixels of 1 and one of 2; 8, 7 | 3.425 | 2.575 | 4.25 | 185 |
+
+The Boss's candidate formula, `log2 (prod (sum a_i)^k) - log2 (cells)`
+(the units of 6.1 as bits), is the COST read as information, and on the
+register it overcounts: `mz_equal`'s 82 units are one function of u, not
+82 free amounts, and its click erases 6 bits, not `log2 (41^2) - 1 =
+9.7`; `slits_low`'s 185 units erase 2.6 bits, not `log2 (91^2 x 5) - 4.25
+= 11.1`. The units are what the apparatus pays per record (6.1, the cost
+column); the entropy is what the click erases of the record's freedom,
+and the record's freedom on a fixed apparatus is its wheel. Where the
+record's rows carry more freedom (a lamp with several labels, records
+that met other records at a gate), the erased bits are `log2` of the
+number of joint states the cell admits, bounded by `log2 (N x the
+labels' branches)`; the identity `read + erased = log2 (the record's
+states)` holds by the same partition.
+
+**The cancel.** Under the amplitude key two rows of one record at a
+phase difference of exactly `N / 2` cancel at the merge and their units
+leave to the ledger's `cancelled` lines (`nature_beam.py:4149-4170`): the
+two amounts are erased (`log2` of their range per cancelled pair), the
+ledger keeping their sum only. On `mz_balanced` D2's rows cancel entirely
+(the register: "D2's rows cancel on the GameBoard").
+
+**The discarded remainders of section 1.3** (on `main`; the fraction-free
+law keeps every count's remainder): the meeting's `isqrt` and its floor
+over the common denominator (items 9 and 10), the doppler floors (item
+5), the lamp's discarded count at a stall (note 41 (iii)), the turn under
+`action` (item 6): each a floor over a divisor d erases at most `log2 d`
+bits per interval per count, bounded, the law's small leaks beside the
+click's.
+
+**The escape.** A row leaving through an open face clicks there and
+leaves the board (its amount, content and label booked on the face's
+lines): its position and phase are erased from the state, `log2 (extent
+x N)` bits per row at most; a periodic world has no such term.
+
+### 14.3 Where such a system goes
+
+Three monotone streams, each a line of the books:
+
+1. **The click list grows** and never shrinks: the world's entropy in the
+   sense above is non-decreasing, by `log2 N - H` per record clicked (6 bits
+   for `mz_equal`, whose click is certain and reports nothing of u; 2.6
+   for `slits_low`, whose click reports 3.4 of u's 6 bits), by the cancels
+   and by the leaks. The arrow of time is the click list (the paper's row
+   8) and the ledger's `cancelled` and `escaped` lines.
+2. **The paid content flows out.** A lamp pays `h s` per unit born and
+   stalls once its content falls below `K_clock` (6.4: the Bell lamps at
+   tick 4); the free field is born at content 0 and costs nothing. So the
+   finite resource of a world is the paid families' content, which drains
+   into `absorbed` and `escaped`; when every lamp has stalled no record
+   is born and the click list stops growing.
+3. **The free field accumulates or leaves.** In an open world the rows
+   leave through the faces and the board empties. In a periodic world the
+   rows of a family without a lifetime never leave: the presence k at
+   every Node grows linearly with time and every clock owes more, its
+   rate `1 / (1 + k n / d)` falling toward 0 (Seeliger's accumulation in
+   integers, section 15.6); a family with a lifetime L bounds its crowd
+   at the sources' rate times L and the periodic world is steady. The
+   end state of a periodic world without lifetimes is not a uniform
+   temperature but a board of stalled lamps and clocks that owe, full of
+   rows nobody reads; of an open one, an empty board with the ledger
+   holding what escaped.
+
+**Verdict.** **New** (a quantity of the law with a counterpart's name):
+the entropy as the log of the torus points consistent with the click
+list, produced only at the click, the cancel and the leaks, with the
+identity `bits read + bits erased = log2 N` per record checked on six
+registered worlds; the Boss's units-as-bits formula corrected to the
+wheel's bits; **reached** for the second law in the law's own terms (the
+click list and the ledger's lines monotone, the linear block a bijection
+that produces nothing); where the system goes stated as the three
+streams, the periodic world's end the accumulation of section 15.6 unless
+a lifetime or a growing wall bounds it.
