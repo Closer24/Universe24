@@ -336,8 +336,9 @@ integer K is [1, K]) each unit a lamp releases costs it
 Q = 64), and gives it to the
 measured event that measures it; a turn of 0 releases nothing; a free
 family's release costs nothing and its rows carry no content, and it goes
-whole on every declared direction (n directions, n rows of `release x
-amount` each; a paid family's release is apportioned whole over them). The recoil of
+whole on every declared direction (n directions, n rows each of the count
+the family's release accumulator gained; a paid family's pending rows are
+apportioned whole over them). The recoil of
 a release is the negative of the momentum released, summed over the
 directions. What comes home (the own number's arrivals) is taken whole and
 created again at the next self-creation on the declared directions with
@@ -952,7 +953,7 @@ things themselves, one row each in the three worlds, are in
 
 | The reading | Type and symbol | Where the record carries it | Unit | Kind |
 | --- | --- | --- | --- | --- |
-| the clicks | scalar | `clicks` per family on a `detectors` entry of `run.json`, summed over the set's Nodes; the `click` lines of `events.jsonl` (`amount` per row group; on a face, the face's name as `detector`); `events` of a measured event's state | units of amount | detector |
+| the clicks | scalar | `clicks` per family on a `detectors` entry of `run.json`, summed over the set's Nodes; the `click` lines of `events.jsonl` (`amount` per row group; on a face, the face's name as `detector`); `events` of a measured event's state. Under a lamp (a recorded world) a detector entry's `clicks` counts the units of every row that ended at the set, the offers, while the record's one click is the gather's `chosen` in the `world` list of `run.json` (one entry per record at its completion): the two differ (a lamp on an open face reads `clicks` 88 on `face:-x` and 81 on D against 32 and 49 gathers; `mz_345` reads D1 476 and D2 68 against the registered 63 and 1); the record's click is the `world` list's | units of amount | detector |
 | the amount measured | scalar | `measured` per family on a `detectors` entry (the units taken by `measure`); `measured` in a measured event's state (per rule) | units of amount | detector |
 | the record (the square) | scalar, the norm of the pointer | `record` per family on the set (`wave`: X^2 + Y^2 of the coherent pointer, accumulated; `beam`: the count clicked); `record` on the `record` line at each click; the same square on a face and the border `lifetime` | (32 x 256)^2 per unit of amount squared (X = sum 32 x amount x C[phase], C on the circle at the scale 256) | detector |
 | the pointer (X, Y) | a vector of the phase plane (Z^2), not of the GameBoard | `pointer` on the `record` line of a one-Node `wave` set, and per label on the `sum` set's `record` line at a gather | 32 x 256 per unit of amount | detector |
