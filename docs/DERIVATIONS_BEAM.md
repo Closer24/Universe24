@@ -5051,6 +5051,83 @@ click's content the released binding; and, if the electric family is
 paid, the proton heavier than the strong reading by about one part in
 a thousand of its mass (1.0 MeV of 938).
 
+### 19.5 The rest of the masses, as readings after a detector
+
+**The owner's direction** (2026-09-21, in conversation, translated:
+"try to understand the rest of the masses and reach on your own the
+masses measured in nature, which are of course measured after
+detectors"). The host script
+[rest_of_masses.py](designs/derivations_beam/rest_of_masses.py) with its
+output [rest_of_masses.out](designs/derivations_beam/rest_of_masses.out)
+makes the numbers (PDG 2024); no run.
+
+**How a detector reads a mass in the law, and the one condition it
+imposes.** A mass is never clicked; it is read four ways, and every
+measured mass of nature is one of them: (a) the push a body's rows
+exert on a reader, the source's release `content x n / d` rows per
+direction (3.3: the active gravitational mass); (b) the momentum a
+body needs per Link, the drive's wall `Q S M` or, under section 17,
+`E / c^2` (the inertial mass); (c) the turn rate a click reads as `E =
+h f` (the rest energy); (d) for a bound set, the total content, held
+plus in flight less escaped (19.1). Nature's equivalence principle says
+(a) and (b) agree for bound bodies too: the binding energy gravitates
+(the Nordtvedt test by lunar laser ranging, `eta = (-3.0 +- 5.0) x
+10^-4`, Hofmann and Muller 2018, Class. Quantum Grav. 35, 035015), so
+the proton's field is its 938 MeV's, not its held 9. In the law as
+declared the release reads the HELD content (a body releases; rows in
+flight release nothing), so a bound set's (a) is one percent of its
+(b) under section 17's drive: **the condition**, derived and pinned for
+covariant-readings-v1 with binding-v1: a bound body's release must
+read the set's energy accumulator E, not its held content (one rule,
+the same `by_drive` with E in place of `content`: generic, vector,
+local), or the equivalence principle fails for every bound body by the
+binding fraction, 99 % for a nucleon against nature's `10^-4`.
+
+**The hadrons.** Under "one content in flight per contact" (19.1, 18.3)
+the pion, a pair with one contact, holds 6.86 MeV and carries 132.7 in
+flight; the nucleon on the chain holds 9.02 and carries 929.2 over two
+contacts, 464.6 per contact (309.8 on the triangle): the pion's F per
+contact is 0.29 of the nucleon's, and a nucleon at the pion's F would
+weigh 274 MeV against 938; under the steady-state form with one `(n /
+d) tau` the pion would weigh 714 against 139.6; and the rho, the same
+pair at the same contact, weighs 775 (an excited state the law has no
+second value for). **Not reached**: the content in flight is not one
+number per contact nor one rate for all bonds; nature's lightness of
+the pion (the Goldstone boson of chiral symmetry) and the hadrons'
+excitations are dynamics the six verbs do not have, and every F is an
+input per bond.
+
+**The leptons.** Free families, no bond, no reading but the declared
+content: `m_mu / m_e = 206.768`, `m_tau / m_e = 3477.4` are inputs (16.2,
+16.4). Koide's relation, `(m_e + m_mu + m_tau) / (sqrt m_e + sqrt m_mu +
+sqrt m_tau)^2 = 2 / 3` to `3 x 10^-6`, is on record as a coincidence of
+that precision with no path from the structure (the rule of section
+16: the law has no square root of a content and no rule on three
+families).
+
+**The neutrino.** The law's `nu` is a free family with the content 0
+on the register; nature's oscillations give squared mass differences
+`7.4 x 10^-5` and `2.5 x 10^-3` eV^2 (PDG 2024), so at least one neutrino
+has a mass above 0.05 eV and below 0.8 eV (KATRIN 2022, Nature Physics
+18, 160): **a massless neutrino is refuted**, a content above 0 is an
+input, at least `10^-7` of the electron's, and the oscillation itself
+(a family turning into another with the flight) is `become` at a phase,
+outside this section.
+
+**The carriers.** The `w` family (charge `-7344`, lifetime 1) and any
+Z or Higgs are paid carriers whose content is declared; no reading of
+the law fixes them.
+
+**Reached, bound, input**, for the whole family of masses: reached in
+form, a bound set's mass as its total content and the condition that
+its release read E; reached in sign, the neutron's charge radius (19.3);
+reached within the inputs' uncertainty, `m_n - m_p`; bound, the floors
+(1, 3, h) and the electron's count; input, every count and every F per
+bond; refuted as declared, the massless neutrino. The masses that
+nature measures after its detectors are, in the law, the counts and the
+bonds' contents in flight, and the law's structure fixes the readings,
+the floors and the relations between them, not the numbers.
+
 ## 20. The periodic universe against the measured numbers
 
 **The owner's decision** (record 270, translated: "a periodic universe
