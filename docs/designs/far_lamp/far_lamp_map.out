@@ -1,0 +1,43 @@
+1. THE STREAM OF A LAMP AT REST UNDER THE TICK WALL, READ BY A DETECTOR AT REST (integers of section 15)
+   the lamp releases one row per interval, each of content 5 (h s stamped at birth); the detector counts clicks per interval and content per interval
+   d =  50 Links: 1 + z = 1.241 (e^(H d / c_0) = 1.240); clicks per interval 0.8061 = 1 / (1 + z) -> 0.8067; content per interval 4.0303 = 5 / (1 + z) -> 4.0333; content per click 5 (unchanged)
+   d = 100 Links: 1 + z = 1.539 (e^(H d / c_0) = 1.537); clicks per interval 0.6498 = 1 / (1 + z) -> 0.6507; content per interval 3.2492 = 5 / (1 + z) -> 3.2536; content per click 5 (unchanged)
+   d = 200 Links: 1 + z = 2.366 (e^(H d / c_0) = 2.362); clicks per interval 0.4227 = 1 / (1 + z) -> 0.4234; content per interval 2.1133 = 5 / (1 + z) -> 2.1171; content per click 5 (unchanged)
+   d = 300 Links: 1 + z = 3.639 (e^(H d / c_0) = 3.629); clicks per interval 0.2748 = 1 / (1 + z) -> 0.2755; content per interval 1.3740 = 5 / (1 + z) -> 1.3776; content per click 5 (unchanged)
+   one factor 1 / (1 + z) on the count and one on the content, the same factor: the click's content does not fall with the redshift (6.4)
+
+2. THE CLOSED FORMS (units of the Hubble length c / H) AND THE EFFECTIVE DECELERATION NUMBER q read from the second order, d_L = (c / H)(z + (1 - q) z^2 / 2 + ...)
+   the law, one factor (the rule as stated)                   d_L = (c_0 / H) ln(1 + z) sqrt(1 + z)        q_eff = +1.00;  z = 0.10: 0.1000  z = 0.50: 0.4966  z = 1.00: 0.9803  z = 1.50: 1.4488
+   the hypothetical second factor (not in the six)            d_L = (c_0 / H) (1 + z) ln(1 + z)            q_eff = +0.00;  z = 0.10: 0.1048  z = 0.50: 0.6082  z = 1.00: 1.3863  z = 1.50: 2.2907
+   Milne (empty, coasting, curved)                            d_L = (c / H)(z + z^2 / 2)                   q_eff = -0.00;  z = 0.10: 0.1050  z = 0.50: 0.6250  z = 1.00: 1.5000  z = 1.50: 2.6250
+   flat Lambda-CDM, Omega_m = 0.3 (the measured curve's stand-in) d_L = (1 + z)(c / H) int dz / E(z)           q_eff = -0.55;  z = 0.10: 0.1075  z = 0.50: 0.6615  z = 1.00: 1.5429  z = 1.50: 2.5473
+   Einstein-de Sitter (matter only)                           d_L = 2 (c / H)(1 + z)(1 - 1 / sqrt(1 + z))  q_eff = +0.50;  z = 0.10: 0.1024  z = 0.50: 0.5505  z = 1.00: 1.1716  z = 1.50: 1.8377
+   the law's series: ln(1 + z) sqrt(1 + z) = z - z^3 / 24 + ...: the z^2 term is zero, so the brightness reads q_eff = +1 although the flight's z(d) is Milne's (q = 0, 15.4);
+   the missing energy factor is the whole difference: with it the law would be the flat coasting form (q_eff = 0), without it the lamp is brighter by (1 + z)
+
+3. THE SHAPE OF THE HUBBLE DIAGRAM, mu = 5 log10 d_L + const, the constant free as in the supernova fits (the lamp's absolute content and H are one number)
+   against flat Lambda-CDM at Omega_m = 0.3 (positive = the model's lamp fainter than the stand-in at that z after the intercept is fitted):
+   the law, one factor (the rule as stated)                   rms 0.339 mag, worst +0.745 mag;  z = 0.1: +0.604  z = 0.5: +0.139  z = 1.0: -0.223  z = 1.5: -0.464
+   the hypothetical second factor (not in the six)            rms 0.063 mag, worst +0.180 mag;  z = 0.1: +0.132  z = 0.5: +0.004  z = 1.0: -0.046  z = 1.5: -0.045
+   Milne (empty, coasting, curved)                            rms 0.055 mag, worst +0.128 mag;  z = 0.1: +0.012  z = 0.5: -0.061  z = 1.0: +0.001  z = 1.5: +0.128
+   flat Lambda-CDM, Omega_m = 0.3 (the measured curve's stand-in) rms 0.000 mag, worst +0.000 mag;  z = 0.1: +0.000  z = 0.5: +0.000  z = 1.0: +0.000  z = 1.5: +0.000
+   Einstein-de Sitter (matter only)                           rms 0.194 mag, worst +0.455 mag;  z = 0.1: +0.361  z = 0.5: +0.067  z = 1.0: -0.132  z = 1.5: -0.243
+   the supernova compilations pin the shape to about 0.02 mag per bin over this range (Pantheon+, 1701 lamps); Milne is excluded by them at many sigma, the law's one-factor form lies farther from the stand-in than Milne and on the same side (too bright at high z)
+
+   the reading that needs no fit: the lamp at z = 0.5 against the lamp at z = 0.05 (a ratio of two fluxes, the intercept cancels)
+   the law, one factor (the rule as stated)                   mu(0.5) - mu(0.05) = 4.985 mag
+   the hypothetical second factor (not in the six)            mu(0.5) - mu(0.05) = 5.373 mag
+   Milne (empty, coasting, curved)                            mu(0.5) - mu(0.05) = 5.431 mag
+   flat Lambda-CDM, Omega_m = 0.3 (the measured curve's stand-in) mu(0.5) - mu(0.05) = 5.527 mag
+   Einstein-de Sitter (matter only)                           mu(0.5) - mu(0.05) = 5.183 mag
+
+4. TWO MORE READINGS AFTER A DETECTOR
+   (a) the stretch of a lamp's stream: a stream of 400 rows released over 400 intervals arrives over 1452 intervals at 300 Links, the factor 3.639 = 1 + z;
+       nature: the supernova light curves are stretched by (1 + z)^(0.97 +- 0.10) (Blondin and others 2008): the law gives the same factor exactly, a reading it passes
+   (b) the surface brightness of a resolved source (the flux over the angular area): the board's Nodes are fixed and the fan's lines are fixed (15.5), so a ruler of l Nodes at the distance d subtends l / d,
+       the angular-diameter distance is d = (c_0 / H) ln(1 + z) and the surface brightness falls as (1 + z)^-1; the relativistic form gives (1 + z)^-4 (Tolman), the measured exponent between 2.3 and 3.1 in the bands before any correction, consistent with 4 once the sources' own brightening with look-back time is removed (Lubin and Sandage 2001)
+       z = 0.1: the law's angular-diameter distance 0.095, flat Lambda-CDM's 0.089 (units c / H): the law's ruler looks 0.93 times as large; the surface brightness (1 + z)^-1 = 0.909 against (1 + z)^-4 = 0.683
+       z = 0.5: the law's angular-diameter distance 0.405, flat Lambda-CDM's 0.294 (units c / H): the law's ruler looks 0.73 times as large; the surface brightness (1 + z)^-1 = 0.667 against (1 + z)^-4 = 0.198
+       z = 1.0: the law's angular-diameter distance 0.693, flat Lambda-CDM's 0.386 (units c / H): the law's ruler looks 0.56 times as large; the surface brightness (1 + z)^-1 = 0.500 against (1 + z)^-4 = 0.062
+
+5. THE VERDICT: after a detector the gap does not close, it widens: the lamp's brightness reads q_eff = +1 (the rule as stated) against the measured -0.55, and the one rule that would bring it to q_eff = 0 (the content following the frequency in flight) is not one of the six (6.4); the stretch of the stream is the one reading the law passes exactly

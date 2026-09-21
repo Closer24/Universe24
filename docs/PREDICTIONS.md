@@ -139,3 +139,52 @@ this file holds the entries added after them.
   agreement and not a fitted one; what it does not give, as nature's
   theories do not either, is the mass numbers themselves. Status:
   registered, not tuned.
+
+## 27. A far lamp under the growing wall is read at 1 / (1 + z) of its rate with its birth content per click: its brightness reads q_eff = +1, its stream is stretched by 1 + z
+
+- **Statement (the mathematician, 2026-09-21, on the model owner's order
+  of record 280, [designs/far_lamp/BRIGHTNESS.md](designs/far_lamp/BRIGHTNESS.md);
+  received as record 282).** Under the growing wall of
+  [DERIVATIONS_BEAM.md](DERIVATIONS_BEAM.md) section 15 (`expansion-v1`, H
+  declared) a lamp at rest at the distance d releases rows at its own
+  rate and a detector at rest reads them `1 + z` times slower, `1 + z =
+  e^(H d / c_0)`, each click carrying the content its lamp stamped at
+  birth (section 6.4: no rule makes the content of a row follow its
+  frequency in flight). So the brightness the detector reads is `L / (4
+  pi d^2 (1 + z))` with `d = (c_0 / H) ln(1 + z)`, one factor of `1 / (1
+  + z)` where the expanding form has two; the effective luminosity
+  distance `(c_0 / H) ln(1 + z) sqrt(1 + z) = (c_0 / H)(z - z^3 / 24 +
+  ...)` has no `z^2` term, so the Hubble diagram's second order reads
+  `q_eff = +1` although the flight's `z(d)` is Milne's (`q = 0`). The
+  stream's stretch is `1 + z` exactly. The surface brightness of a
+  resolved source falls as `(1 + z)^-1`, the board's Nodes and the fan's
+  lines being fixed under the wall.
+- **The detector reading.** The pin on section 15's integers (H = 1 / 400,
+  `T_D = 110`, `S_1 Q = 64`): at 100 and 300 Links `1 + z` = 1.539 and
+  3.639, clicks per interval 0.650 and 0.275, the content per click
+  unchanged; 400 rows released over 400 intervals arrive over 1452 at
+  300 Links (`far_lamp_map.out`). The run is not made (`expansion-v1` not
+  built); the reading it must give is the click count and the content
+  per click of a lamp of rate 1 at those two distances.
+- **What would refute it.** Within the law: a click whose content falls
+  with the redshift (a rule that ties a row's content to its frequency in
+  flight, which section 6.4 finds absent), or a run under `expansion-v1`
+  whose click rate at 300 Links is not 0.275 of the lamp's. Against
+  nature: nothing; the entry is stated so that it fails against nature,
+  and it does.
+- **Against nature.** The stretch: the supernova light curves and
+  spectra age slower by `(1 + z)^(0.97 +- 0.10)` (Blondin et al. 2008),
+  PASS. The brightness: nature's Hubble diagram reads `q_0 = -0.53 +-
+  0.01` (Planck 2018), FAIL by 1.53, on the decelerating side of
+  Einstein-de Sitter; against flat Lambda-CDM as the stand-in for the
+  measured curve with the intercept free the shape residual is 0.339 mag
+  rms (Milne 0.055), and the register's own Pantheon+ fit
+  ([HYPOTHESES 7](HYPOTHESES.md#7-redshift-without-recession-and-no-dark-energy))
+  found the one-factor reading behind at every exponent. The surface
+  brightness: `(1 + z)^-4` (Tolman; Lubin and Sandage 2001), FAIL by
+  three powers. The dark sector: no rule of the six derives or needs dark
+  energy, and the far lamp says the law is short of it, not free of it;
+  unseen content is admitted as an input family and not derived
+  ([designs/far_lamp/DARK_SECTOR.md](designs/far_lamp/DARK_SECTOR.md),
+  record 283). Status: registered as the law's limit, [NATURE.md](NATURE.md)
+  rows 11a to 11c; not tuned.

@@ -1,0 +1,30 @@
+1. THE DETECTOR READING A GALAXY'S EDGE: THE LAW'S DOPPLER OF A SLOW SOURCE
+   v =    80 km/s: beta = 2.67e-04; the receiver's ratio 1.000267, the source's 1.000267, the transverse exactly 1, the moving reader's factor 0.999733: every departure from the classical Doppler is of order beta^2 = 7.1e-08
+   v =   150 km/s: beta = 5.00e-04; the receiver's ratio 1.000500, the source's 1.000501, the transverse exactly 1, the moving reader's factor 0.999500: every departure from the classical Doppler is of order beta^2 = 2.5e-07
+   v =   220 km/s: beta = 7.34e-04; the receiver's ratio 1.000734, the source's 1.000734, the transverse exactly 1, the moving reader's factor 0.999266: every departure from the classical Doppler is of order beta^2 = 5.4e-07
+   the flat curves are read at the edge to a few km/s out of 100 to 250; the law's readings differ from the classical Doppler by parts in 10^6: no reading through a detector makes a Keplerian edge look flat
+
+2. THE ONE MECHANISM IN THE LAW FOR A FLAT CURVE WITHOUT UNSEEN CONTENT: A PERIODIC SHORT DIMENSION (HYPOTHESES 6)
+   the shell mean of the field is q Q / N(r) (section 3.2); N(r) counted on the lattice; the exponent p of the mean between successive radii, r^p (open board -2, a line of images -1)
+   open board         N(r) = [210, 450, 762, 1814, 3338, 7130, 12606];  p: r 4-6: -1.88  r 6-8: -1.83  r 8-12: -2.14  r 12-16: -2.12  r 16-24: -1.87  r 24-32: -1.98
+   slab, thickness 3  N(r) = [80, 120, 136, 204, 320, 432, 564];  p: r 4-6: -1.00  r 6-8: -0.44  r 8-12: -1.00  r 12-16: -1.56  r 16-24: -0.74  r 24-32: -0.93
+   slab, thickness 9  N(r) = [210, 336, 432, 660, 920, 1360, 1756];  p: r 4-6: -1.16  r 6-8: -0.87  r 8-12: -1.05  r 12-16: -1.15  r 16-24: -0.96  r 24-32: -0.89
+   slab, thickness 27 N(r) = [210, 450, 762, 1814, 2832, 3992, 5300];  p: r 4-6: -1.88  r 6-8: -1.83  r 8-12: -2.14  r 12-16: -1.55  r 16-24: -0.85  r 24-32: -0.99
+   beyond the thickness the shell is a cylinder, N(r) -> 2 pi r x thickness and the mean falls as 1 / r (HYPOTHESES 6's measured -0.97 in the period-3 slab, -2.04 on the open cube): the flat part begins at a radius set by the thickness, one length for every source
+
+3. WHAT THE SLAB PREDICTS FOR THE FLAT SPEED AGAINST NATURE'S TULLY-FISHER RELATION
+   under a 1 / r force beyond the thickness L, v^2 = r F / m is constant with r at v^2 proportional to M / L: the flat speed squared grows with the content, v^4 proportional to M^2;
+   nature (the baryonic Tully-Fisher relation, McGaugh 2012): M_b = 47 M_sun (v / km s^-1)^4, the slope 3.9 +- 0.2: v^4 proportional to M
+   anchored at M = 1e11 M_sun where both give v = 215 km/s:
+   M = 1e+08 M_sun: nature's flat speed   38.2 km/s, the slab's    6.8 km/s, the ratio 0.18
+   M = 1e+09 M_sun: nature's flat speed   67.9 km/s, the slab's   21.5 km/s, the ratio 0.32
+   M = 1e+10 M_sun: nature's flat speed  120.8 km/s, the slab's   67.9 km/s, the ratio 0.56
+   M = 1e+11 M_sun: nature's flat speed  214.8 km/s, the slab's  214.8 km/s, the ratio 1.00
+   a dwarf of 1e9 M_sun rotates at 60 to 70 km/s in nature and would rotate at 22 under the slab: the slab's slope is 2 where nature's is 4, a factor 3 in speed at the low end
+
+4. THE SLAB'S OWN SKY
+   a periodic third dimension of 1 kpc: every source, the Milky Way included, is seen again at 1, 2, 3 kpc along that axis, a sky that repeats;
+   a periodic third dimension of 10 kpc: every source, the Milky Way included, is seen again at 10, 20, 30 kpc along that axis, a sky that repeats;
+   the flat parts of the curves begin between 1 and 10 kpc, so the slab that makes them needs a thickness of that order, and nature's sky does not repeat at any such spacing (the nearest large galaxy at 780 kpc, one of it)
+
+5. THE VERDICT: the reading through a detector adds nothing at beta ~ 10^-3; the law's field is Newton's in the shell mean on the open board; the one in-law route to a flat curve, the short periodic dimension, gives one flattening length for every source, the Tully-Fisher slope 2 against 4 and a repeating sky: not a hypothesis that closes; unseen content as an input family (a charge column 0, no lamp) is what the law admits, as nature's model does
