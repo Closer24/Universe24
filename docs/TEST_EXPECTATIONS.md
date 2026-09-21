@@ -140,7 +140,7 @@ kept, their pins the law of events').
 | `test_amplitude_gram.py` | The click without amplitudes (2026-09-21): the Gram matrix of the tables (its eight diagonal values, not circulant, rank 2, the antipodal pairs killed, stored through N = 512), the identity f^T G f = X^2 + Y^2 on random vectors and on `mz_equal`'s record at every u, the layer's cells against the click as it was on synthetic one-arm, read, rotated, pair and GHZ records, the turn as a shift exact at the quarter turns and not at t = 3, the tensor form exact and the convolution not, the ring product ([below](#the-click-without-amplitudes)) | new (2026-09-21; record 188; BEAM_LAW note 37 (xii)) |
 | `test_exact_phase.py` | The exact phase at the click (2026-09-21): the axis and the diagonal at the rate 8 (u + 41 with the remainder 48 / 64, u + 42 with the remainder 0 / 128 where the walk read u + 40), the layer's pointer at it, the integer form without it, a face's row (u + 4 where the walk read u + 56), the numerator beyond the register refused, the primitive `exact_phase` ([below](#the-exact-phase-at-the-click)) | new (2026-09-21; record 163 (2); BEAM_LAW note 45) |
 | `test_birth_wheel.py` | The birth wheel at a declared rate (2026-09-21): the key required on every lamp and refused as a bare integer, a rate 0 or a wheel 0; every world file with a lamp declares it; [1, N] the count of births (the lamp's `acc` `wheel`, the rungs on 64); the golden rate's first ten u and phases, the rungs on 4096; the cell read on the wheel (two equal cells: a, b, a, b, a, a, b, a, b, b against 32 a then 32 b); the replay tool reads the wheel from the lamp ([below](#the-birth-wheel)) | new (2026-09-21; record 180; BEAM_LAW note 46) |
-| `test_amplitude_malus.py` | A12 under the click, Malus's law from the table entries in force (2026-09-21): the pin of `docs/designs/malus/NOTE.md` derived again from the three worlds and the engine's half-angle tables of 2N = 512 (the cells' weights the products of C' and S', the rungs b_k = (2 W C_k + T) // (2 T) over the wheel's 256 births) against the register; the replay of `malus_a`, `malus_b` and `malus_c` (u over every residue once, the registered rungs on every gather, the chosen cells 128 / 128, 0 / 256 and 64 each, the books balanced); the rotate keeps the record's u (every `split` line at the rotation `rebirth` False with the record's identity and its u, two per row; the `rotate` and `read` lines) ([below](#the-amplitude-law-malus)); every number read from `expectations.json` under `malus` | new (2026-09-21; the model owner's go, record 330; the mathematician's note) |
+| `test_amplitude_malus.py` | A12 under the click, Malus's law from the table entries in force (2026-09-21): the pin of `docs/designs/malus/NOTE.md` derived again from the three worlds and the engine's half-angle tables of 2N = 512 (the cells' weights the products of C' and S', the rungs b_k = (2 W C_k + T) // (2 T) over the wheel's 256 births) against the register; the replay of `malus_a`, `malus_b` and `malus_c` (u over every residue once, the registered rungs on every gather, the chosen cells 128 / 128, 0 / 256 and 64 each, the books balanced) and, since the auditor's round 10 part 2, of `malus_22_5`, `malus_67_5` and `malus_chain_22_5` (219 / 37, 37 / 219 and 187 / 32 / 5 / 32; the tables' rounding, DERIVATIONS_BEAM 24.3 row 4); the rotate keeps the record's u on every world with a rotation (every `split` line at the rotation `rebirth` False with the record's identity and its u, two per row; the `rotate` and `read` lines) ([below](#the-amplitude-law-malus)); every number read from `expectations.json` under `malus` | new (2026-09-21; the model owner's go, record 330; the mathematician's note); the three worlds at 22.5 degrees added the same day |
 | `test_register_map.py` | The register's `replicated` map carried through a regeneration (2026-09-21, the replicator's round 1): a register file absent or without the map leaves the regenerated register as it is; a file with the map gives it entry by entry, detached; a regenerated block keeps its entry and so does a block the generator no longer writes; the shipped amplitude register equals its generator's output with the map; another generator (two_stars) carries a map present and leaves a bare register as it is ([below](#the-registers-verification-map-carried-through-a-regeneration)) | new (2026-09-21) |
 | `test_host_batches.py` | The host's batches and memos (2026-09-21, the model owner's order "optimization and simplify"): the store's `extend` over batches equal to one `append` per batch in the same order, the defaults filled, an empty batch nothing; a body's `charges` memo equal to a fresh computation on every body of the shipped J3 world after 3 intervals and following a change of what is held and of the units clicked; the world's `handed` read once ([below](#the-hosts-batches-and-memos)) | new (2026-09-21) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
@@ -863,6 +863,24 @@ The expected integers, written down before the first run:
   to 362; the `read` line's rows the labels 0 and 1 at the multiplicity
   65536 and the amount 181, the phases 0 and 128 (the set bit a half turn
   on).
+- The three worlds at 22.5 degrees (the auditor's round 10 part 2,
+  2026-09-21; one setting changed each; the tables C'[32] = 237, S'[32]
+  = 98, C'[96] = 98, S'[96] = 237): (a) `malus_22_5` (the window 32) the
+  weights 0+ 237^2, 0- 98^2, the rungs [0, 219, 256], the counts 219 /
+  37; `malus_67_5` (the window 96) 0+ 98^2, 0- 237^2, [0, 37, 256], 37 /
+  219; `malus_chain_22_5` (the rotate 32, the window 32) 0+ 237^4, 0-
+  (237 x 98)^2, 1+ 98^4, 1- (98 x 237)^2, [0, 187, 219, 224, 256], 187 /
+  32 / 5 / 32; the pass 219, 37 and 187 of 256 (DERIVATIONS_BEAM 24.3 row
+  4: 219 / 256 = 0.85547 against cos^2 22.5 degrees = 0.85355, 187 / 256
+  = 0.73047 against cos^4 = 0.72855, the map's pins first, the engine's
+  counts second, the difference zero); (b) the replay as above, over
+  every record gathered by the end (289 of 299, 10 open, the first gather
+  at tick 11) 247 / 42, 42 / 247 and 212 / 35 / 6 / 36; (c)
+  `malus_chain_22_5`: 592 `split` lines, `rebirth` False, two per record
+  (the first at tick 4: absorbed 237, born 237, multiplicity 65536); the
+  `rotate` line setting 32, bit 0, turn 0, 2 rows, the units 1 to 335;
+  the `read` line's rows the labels 0 and 1 at the multiplicity 65536,
+  the amounts 237 and 98, the phases 0 and 128.
 
 ## The birth wheel
 

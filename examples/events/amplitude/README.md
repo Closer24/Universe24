@@ -173,7 +173,17 @@ shipped wall absorbs 88 of the 182 fan rows beside the openings; freed,
 every fan row leaves the plane) and the lamp's three rows that miss the
 openings absorbed by wall Nodes at (7, 58), (7, 60), (7, 62) on their
 paths (a lamp row and a fan row at one set would carry the multiplicities
-5 and 455, refused). 230 intervals. **The reference** `slits_one`: one
+5 and 455, refused). The generator's freed half-width (`FREED_HALF_WIDTH`,
+6 for both slit worlds) must be at least the fan's number of leading
+y-steps before its first x-step on the engine's digital line: 5 for the
+fan of 91 (its steepest direction (1, 11, 0)) and 6 for the Huygens fan
+of 1327 ((1, 13, 0)); and two openings must be farther apart than that
+number, at least 6 and 7 Links, or a row of one opening walks along the
+plane to the other opening's Node and meets the lamp's row there with the
+multiplicities 5 and 5 x 91 or 5 x 1327, whose ratio is not a square, and
+the load is refused (the auditor's round 7, 2026-09-21: openings 6 and 8
+apart pass; 4 apart, and 6 apart under the Huygens fan, are refused, the
+geometry's refusals and not the law's). 230 intervals. **The reference** `slits_one`: one
 birth through the same geometry without the key, the lamp's five rows
 declared as rays of amount 91 (one row per direction at each opening's
 re-emission, m = 5 x 91 = 455), the screen reading the age; the generator
@@ -461,6 +471,9 @@ the read's factor cancelling in the rungs):
 | `malus_a` | the read, the window 64 | 0+ 181^2, 0- 181^2 | 0, 128, 256 | 0+ 128, 0- 128 | 1/2: 128 of 256, exact |
 | `malus_b` | the read, the window 128 | 0+ 0, 0- 256^2 | 0, 0, 256 | 0+ 0, 0- 256 | 0: exact |
 | `malus_c` | the rotate 64, the read, the window 64 | 0+, 0-, 1+, 1- 181^4 each | 0, 64, 128, 192, 256 | 0+ 64, 0- 64, 1+ 64, 1- 64 | 1/4 of the births, 1/2 of the 128 the first passed: exact |
+| `malus_22_5` (2026-09-21, the auditor's round 10 part 2) | the read, the window 32 | 0+ 237^2, 0- 98^2 | 0, 219, 256 | 0+ 219, 0- 37 | 219 / 256 = 0.85547 against cos^2 22.5 degrees = 0.85355: the tables' rounding, DERIVATIONS_BEAM 24.3 row 4 |
+| `malus_67_5` (the same) | the read, the window 96 | 0+ 98^2, 0- 237^2 | 0, 37, 256 | 0+ 37, 0- 219 | 37 / 256 against sin^2 22.5 degrees |
+| `malus_chain_22_5` (the same) | the rotate 32, the read, the window 32 | 0+ 237^4, 0- (237 x 98)^2, 1+ 98^4, 1- (98 x 237)^2 | 0, 187, 219, 224, 256 | 0+ 187, 0- 32, 1+ 5, 1- 32 | 187 / 256 = 0.73047 against cos^4 = 0.72855: the chain at 22.5-degree steps, 24.3 row 4 |
 
 The fail clauses, A12's as the note states them: `malus_c` passing 0 or
 128 in the cell 0+ (the intermediate angle not carried); `malus_a`
@@ -495,9 +508,29 @@ PASS** on every clause in the three worlds. **The limit:** one which-path
 read per arm with a rotation before it; the four-polariser chain of A12
 at 22.5-degree steps needs a second read after a rotate and is not
 covered (the note's section 1); the tables' rounding shows at 22.5
-degrees (219 of 256 against cos^2 = 0.8536, the note's section 3), not
-run here. `tests/test_amplitude_malus.py` derives the pin from the worlds
-and the engine's tables and replays the three worlds against the register.
+degrees (219 of 256 against cos^2 = 0.8536, the note's section 3), run
+below. `tests/test_amplitude_malus.py` derives the pin from the worlds
+and the engine's tables and replays the six worlds against the register.
+
+**At 22.5 degrees (2026-09-21, the auditor's round 10 part 2; the three
+worlds above with one setting changed each, written by the generator,
+each once through the runner, 300 intervals, 1.1 to 1.5 s each, the
+source `c0911671e6431575...`, the initializations `4267f8f2e4160240...`,
+`a2bcd5ed820b51d0...`, `86bc2c74ac725517...`; completed and conserved at
+every tick; the register's `malus.run_22_5` and the three worlds' blocks).**
+The map's pins first (the note's sections 3 and 4; DERIVATIONS_BEAM 24.3
+row 4), the engine's counts second: DETECTOR, over the records 1 .. 256,
+`malus_22_5` 0+ 219, 0- 37; `malus_67_5` 0+ 37, 0- 219;
+`malus_chain_22_5` 0+ 187, 0- 32, 1+ 5, 1- 32; the difference zero; over
+every record gathered by the end (289 of 299, 10 open, the first gather
+at tick 11) 247 / 42, 42 / 247 and 212 / 35 / 6 / 36. GAMEBOARD: the
+books balanced at every interval. The chain keeps the record's u as
+`malus_c` does (592 `split` lines, `rebirth` False; the `rotate` line 2
+rows, the units 1 to 335, 237 + 98 at the multiplicity 65536; the `read`
+line's rows at the amounts 237 and 98). The rounding of the tables at
+the scale 256 is what 24.3 row 4 states: 219 / 256 = 0.85547 against
+cos^2 22.5 degrees = 0.85355 and 187 / 256 = 0.73047 against cos^4 =
+0.72855, +0.0019 both; a run of the law now, not a map alone.
 
 ## The pages with a moving picture (2026-09-21)
 
