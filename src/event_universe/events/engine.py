@@ -1389,7 +1389,12 @@ class NatureBeamSimulation:
         the units that clicked there (`measured`, `clicks`), the `content`
         they carried, their `record` (the same square) and the
         `measured_content` of the measured events that stepped off; and the
-        `momentum` that left; then, when a family declares a lifetime, the
+        `momentum` that left. Two kinds of escape on two lines: a row's
+        escape in the walk is booked on `clicks`, `content` and `record`, a
+        measured event's escape by its step on `measured_content` and
+        `momentum` (and on the books' `measured.escaped`), never on `clicks`
+        or `record`, its `click` line writing `amount` = its content (issue
+        #614; `tests/test_face_click_summary.py`). Then, when a family declares a lifetime, the
         border `lifetime` with the same fields (no Nodes: the border is
         wherever an event's age reaches its family's lifetime)."""
         found: list[dict[str, object]] = []

@@ -36,8 +36,9 @@ digests of `gate_set.json` unchanged (`tests/test_amplitude_click.py`
 (d)). What the key predicts (17.6): a world without it reads as it did to
 the byte, which the replay shows; under it the muon's clock at E'_0 / E'
 and the moving star's z at gamma (1 + beta) - 1, which the readings show
-(24 inside, 1 outside: the 64th self-creation at 124 against the design's
-125.2 +- 1, the discrete cadence's offset). After the merge of main
+(24 inside, 1 outside by the tool's count: the 64th self-creation at 124
+against the continuum's 125.2 +- 1, the discrete cadence's offset, and
+inside the design's own integer pin 124 (DERIVATIONS_BEAM 17.6 M2: the 64th self-creation "at the integers 70 and 124 by the primitive's own count"; the continuum's 64 gamma = 125.2 is the limit, one gamma - 1 above the cadence from an empty accumulator; the physics-rule review REVIEW_3, must-fix 3: a relabel, nothing moved)). After the merge of main
 `8dd743db` into the branch (the host's batches and memos, bit-exact) the
 source fingerprint is `7a5072eb...`; the three J4 worlds and the coasting
 cap replay to the registered digests on it (`tests/test_covariant_readings.py`

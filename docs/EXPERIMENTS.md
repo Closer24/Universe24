@@ -3862,8 +3862,9 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   0.2 s each; the readings by `tools/amplitude_path.py --check`, whose
   replay equals `run.json`'s `world` on every run; DETECTOR unless
   said).** The
-  gathers over the 64 births of the ticks 1 .. 64 (the design's table
-  reproduced on every world):
+  gathers over the first 64 births by ordinal (at tick 1 and ticks 3 to
+  65: the lamp pays a unit per birth and its clock stalls once at tick 2;
+  issue #533) (the design's table reproduced on every world):
 
   | world | D1 | D2 | absorber | the design |
   | --- | --- | --- | --- | --- |
@@ -6535,14 +6536,15 @@ sequential gates on an entangled record, the full register replay.
   2.5.3); the source fingerprint `24e0c1ba...`; the J4 runs 0.3 s each, the
   coasting run 42.9 s (41.0 s without the key on the same head); every run
   completed with the books balanced at every tick; the tool: 0 record
-  checks failed, 24 readings inside, 1 outside, nothing moved
+  checks failed, 24 readings inside, 1 outside, nothing moved; the one
+  outside is outside the continuum's number alone and inside the design's own integer pin 124 (DERIVATIONS_BEAM 17.6 M2: the 64th self-creation "at the integers 70 and 124 by the primitive's own count"; the continuum's 64 gamma = 125.2 is the limit, one gamma - 1 above the cadence from an empty accumulator; the physics-rule review REVIEW_3, must-fix 3: a relabel, nothing moved)
   ([the page](../examples/events/covariant/README.md#what-was-measured-2026-09-21)).
 
   | World | Expected | Measured | Verdict |
   | --- | --- | --- | --- |
   | `j4_muon_rest` | E' 13 248; the `become` at 64 at x = 10; the `beta` click at 391 +- 2 (derived 392); the invariant | 13 248; tick 64 at x = 10; the click at 392, content 207; 420 lines, 0 failures; 0 intervals owed | inside (7 of 7) |
   | `j4_muon_3640` | E' 14 671; the `become` at 70.9 +- 1 (derived 70 at x = 27); the click at 367 +- 2 (derived 369); the invariant | 14 671; tick 70 at x = 27; the click at 369 (the decay derived back 70); 0 failures; 6 intervals owed to proper time | inside (7 of 7) |
-  | `j4_muon_12856` | E' 25 910; the `become` at 125.2 +- 1 (derived 124 at x = 72); the click at 345 +- 2 (derived 345); the invariant | 25 910; tick 124 at x = 72: **OUTSIDE the design's pin by 0.2**, inside the derived (the discrete count from an empty accumulator lies one gamma - 1 = 0.96 below 64 gamma; the reviewer's own re-derivation of record 314 gives 124); the click at 345 (the decay derived back 124); 0 failures; 61 intervals owed | 6 of 7 inside, 1 outside (reported, not moved) |
+  | `j4_muon_12856` | E' 25 910; the `become` at 125.2 +- 1 (derived 124 at x = 72); the click at 345 +- 2 (derived 345); the invariant | 25 910; tick 124 at x = 72: inside the design's integer pin 124 exactly (17.6 M2; relabelled, REVIEW_3 must-fix 3), 0.2 beyond the continuum's 125.2 +- 1, inside the derived (the discrete count from an empty accumulator lies one gamma - 1 = 0.96 below 64 gamma; the reviewer's own re-derivation of record 314 gives 124); the click at 345 (the decay derived back 124); 0 failures; 61 intervals owed | 6 of 7 inside by the tool's count, 1 outside the continuum's number and inside the design's integer pin (reported, not moved) |
   | `coasting_none_covariant` | `s_mz2` z = 0.369 +- 0.003; E' / g 1 128 171 883 over 1 074 790 400 (gamma 1.04967); the pace 0.1755; the invariant | z = 0.3674; 1 128 171 883 over 1 074 790 400; 18 steps in the late window's 100 intervals (0.180); 9567 lines, 0 failures; `s_mz2` owed 18 intervals of 400; 25 paid families off 3 h n = Q S d reported, no refusal | inside (4 of 4) |
 
 - **Verdict (S).** The formula stands on the run: on every `energy` line of
@@ -6553,9 +6555,10 @@ sequential gates on an entangled record, the full register replay.
   derives from that clock (392, 369, 345 against the design's 391, 367,
   345), and the moving star's light read z = 0.3674 at the identity's beta
   0.3040 where the law without the key read 0.2636 and nature's gamma (1 +
-  beta) gives 0.369. The one reading outside is the discrete cadence's
-  offset of gamma - 1 below the continuum's 64 gamma at gamma 1.96,
-  reported with its integer. The OFF replay of `coasting_none` on the base
+  beta) gives 0.369. The one reading the tool counted outside is the discrete
+  cadence's offset of gamma - 1 below the continuum's 64 gamma at gamma
+  1.96, reported with its integer, and it is inside the design's own
+  integer pin 124 (17.6 M2; REVIEW_3 must-fix 3). The OFF replay of `coasting_none` on the base
   and the head is byte for byte equal, the gate set's digests unchanged.
   Nothing was tuned; NATURE rows 4a and 4b are re-read under both
   identities; the law's FAIL rows stand beside the identity, as record 270
