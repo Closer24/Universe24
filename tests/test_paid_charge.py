@@ -46,11 +46,14 @@ m(tau) = (128 tau + 110) // 220: x = 2 at the ages 1, 2; 3 at 3, 4; 4 at 5,
 (d) a body that holds clicked units leaves the GameBoard: the world of (a)
     with the absorber free (not fixed): after the click its content is 2
     and its momentum (64, 0, 0), so it steps one Link per (64 x 2 + 64) /
-    64 = 3 self-creations off its drive (the step drive of 2026-09-20: the
-    drive 64 at the click's interval 5, 192 = D at 7): the steps at the
-    ticks 7, 10 and 13 (x = 5, 6, off the bar), the click on `face:+x` at
-    tick 13 with its `held` [0, 1, 1] (the rule as it was, the count off
-    the clock `by_clock(age - 1, 64, 192)`, stepped at 6, 9, 12); the
+    64 = 3 self-creations off its drive (the step drive of 2026-09-20,
+    advanced since the crossing rule of 2026-09-21 by the momentum after
+    the previous interval, the step preceding the law: the drive 64 at the
+    interval after the click, 6, and 192 = D at 8): the steps at the
+    ticks 8, 11 and 14 (x = 5, 6, off the bar), the click on `face:+x` at
+    tick 14 with its `held` [0, 1, 1] (7, 10, 13 under the order as it
+    was; the rule as it was, the count off the clock `by_clock(age - 1,
+    64, 192)`, stepped at 6, 9, 12); the
     ledger's `units_escaped` [0, 1, 0]; the charge line [0, 1] at every
     tick of 15;
 (e) the refusals and the record: `charge` [-1, 2] on a paid family
@@ -194,9 +197,9 @@ def test_a_body_that_holds_clicked_units_leaves_the_game_board():
     simulation, records, lines = run(world([PROTON, body], ticks=15), 15)
     assert lines == [[0, 1]] * 15
     steps = [(r["tick"], r["to"]) for r in records if r["event"] == "step"]
-    assert steps == [(7, [5, 0, 0]), (10, [6, 0, 0])]
+    assert steps == [(8, [5, 0, 0]), (11, [6, 0, 0])]
     escapes = [r for r in records if r["event"] == "click" and r["detector"] == "face:+x"]
-    assert [(r["tick"], r["measured"], r["held"]) for r in escapes] == [(13, 2, [0, 1, 1])]
+    assert [(r["tick"], r["measured"], r["held"]) for r in escapes] == [(14, 2, [0, 1, 1])]
     assert 2 not in simulation.measured and simulation.ledger.units_escaped == [0, 1, 0]
     assert simulation.ledger.held_escaped == [0, 1, 1]
 

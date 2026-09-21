@@ -98,6 +98,38 @@
    "detectors": []
   },
   {
+   "name": "up_quark",
+   "families": [
+    {
+     "name": "u",
+     "quantum": 0,
+     "charge": 1224,
+     "phase": false
+    }
+   ],
+   "measured": [],
+   "detectors": []
+  },
+  {
+   "name": "glue_family",
+   "families": [
+    {
+     "name": "glue",
+     "quantum": 0,
+     "columns": {
+      "strong": {
+       "value": 10000,
+       "sign": -1
+      }
+     },
+     "lifetime": 3,
+     "phase": false
+    }
+   ],
+   "measured": [],
+   "detectors": []
+  },
+  {
    "name": "neutrino",
    "families": [
     {

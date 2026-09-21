@@ -1,13 +1,14 @@
-"""Write the worlds of the quark design (QUARKS.md section 4) under
-`worlds/` beside this file: nucleons that are three free quark bodies at
+"""Write the worlds of series R, the quarks (the physicist's design
+`docs/designs/quarks/QUARKS.md` section 4), beside this file: nucleons that are three free quark bodies at
 adjacent Nodes, each holding one unit of the strong family `glue` (the
 same binding the register's nucleons use: the strong column sigma 10000
 per unit with the sign minus, the lifetime 3 as the range; BEAM_LAW note
 31), bound or not by the one coupling over the columns and the contact
 through the table; read at the bodies themselves (their `read` and
-`contact` records, their steps, the border's clicks). Not a registered
-series: the worlds wait for the model owner's go (record 249); nothing
-here is run beyond the smoke test the design reports.
+`contact` records, their steps, the border's clicks). Registered as series R on
+the model owner's standing go (record 264); the expectations beside the
+worlds (`expectations.json`) are derived by the design's `quark_numbers.py`
+and compared by `tests/test_quarks_expectations.py`.
 
 The base is series I's (`examples/events/nucleus/make_worlds.py`): an
 open cube of 21^3 Nodes, K 2^20, N 64, `release` [1, 1], `suspension` 0,
@@ -31,7 +32,7 @@ holds 606 or 607 units of `glue` per quark at the value [10000, 606] and S = 2^3
 | `q6_proton_kick` | q1 with the end quark u kicked outward by 10^13 label units (what the law does not confine) |
 | `q7_proton_dressed` | q1 with the glue 606, 607, 606 held at the value [10000, 606] (the read mass 1836 by declaration, the strong charge 10000 per body as in q1), width 2^30 |
 
-    python docs/designs/quarks/make_worlds.py [--out DIR]
+    python examples/events/quarks/make_worlds.py [--out DIR]
 """
 
 from __future__ import annotations
@@ -177,7 +178,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    parser.add_argument("--out", type=Path, default=HERE / "worlds")
+    parser.add_argument("--out", type=Path, default=HERE)
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     print(

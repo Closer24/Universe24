@@ -6,6 +6,97 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The quark families defined once, on 2026-09-21 (host only, no law change)
+
+The families `u` (`quantum` 0, `charge` 1224, `phase` false) and `glue`
+(`quantum` 0, `columns` `{"strong": {"value": 10000, "sign": -1}}`,
+`lifetime` 3, `phase` false) that the seven worlds of series R declare
+([the quarks](../examples/events/quarks/README.md), the design
+[QUARKS.md](designs/quarks/QUARKS.md)) are defined once in
+`examples/events/entities/families.json` (written by `make_definitions.py`:
+the definitions `up_quark` and `glue_family`, the rows of
+[the catalog](ENTITY_CATALOG.md#the-family-names-of-the-register)), so
+that `tests/test_entity_definitions.py` (v2-f), every family of the
+register defined once, holds again on main after the series' registration
+(PR #463). The worlds keep their families inline as before, and the two
+whose keys differ stay so (the down quark `d` shares its name with the
+detector material's `d`, whose definition `detector_material_d` stays; the
+dressed world's `glue` is at the pair `[10000, 606]`); no world file and
+no law changed.
+
+## The crossing rule, on 2026-09-21: the step before the law, a row and a body met once, the key `doppler` and the grain deleted
+
+The model owner's record 158 of 2026-09-20 ("the step reads the crossed
+Link") on the experimenter's finding of record 151; the physicist's design
+[docs/designs/crossing/DESIGN.md](designs/crossing/DESIGN.md); the branch
+`crossing`; [BEAM_LAW note 48](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
+The identity `beam-v1` is kept.
+
+- The order of the interval: the frame, the measured events' steps
+  (`_move`), the law, the clocks' turn and count (until then the frame,
+  the law, the turn and count, the steps). The step at a self-creation
+  advances the drive by the momentum after the previous interval's push;
+  under a suspension the step no longer waits for the interval that pays
+  the count owed (`_move` runs at every self-creation, before this
+  interval's owed count: a timing of the step changed, stated in note 48
+  and in note 17; `test_push_width` (c)'s steps 18, 36, 54
+  became 17, 35, 53); a contact, a give and an escape happen before the
+  law. What moves: a
+  fire under a push falls one interval later than it did (the contact
+  pairs, the binding worlds, a body pushed by a click), a given row makes
+  its first Link in the interval of the give, the rows released in the
+  interval of a step carry the phase turned at the Link (`action`), a
+  body escaping in the interval of its self-creation carries the phase
+  before that interval's clock turn, and a body reads its own rows home
+  at its destination in the interval of the step. At a constant momentum
+  the Links fall at the same self-creations.
+- `Measured.step_port` and `last_step_port` (the body's own two last
+  Links, -1 without) in `state.json` beside `drive` and on the `step`
+  line (`step_port`, `last_step_port`): `state.json` of every world with
+  a measured event gains the two keys; a test-level resume restores them.
+- The reading (step 4): `met` is the crossing (C1 the swap on the body's
+  Link, C2 the entered Node's residents against the step, C3 the
+  arrivals, with the exclusions C2', C3' and C3''); a met row is read on
+  its own direction; the presence stays the rows at the set plus the
+  swap rows. A body at rest and a fixed body read as before, to the byte.
+- Deleted: the world key `doppler` (`DOPPLER_KEY`, `DOPPLER_RULE`
+  `doppler-v1`, `NatureBeamWorld.doppler`, the parse, the identity under
+  `hypotheses`, `run.json`'s `doppler`; a world that declares the key is
+  refused, "unknown keys: doppler"), the grain G (`world.SPEED_GRAIN`),
+  `nature_beam.quantised_speed`, `flux_pair`, `weighted_flow`,
+  `flux_bound_error`, `speed_bound_error`, `world.weighted_flow_factor`
+  and `_column_budget`'s factor, `Measured.frame_momentum`, the `flow`
+  rows of `counts_table` (its `directions` argument) and
+  `Measured.acc_flow` (`acc.flow` in the record), the nine worlds
+  `examples/events/hubble_stars/doppler/*.json` with `expectations.json`
+  (the third run's readings stay as history in EXPERIMENTS, VALIDATION
+  and the series README), `make_worlds.py --doppler`, `doppler_worlds`
+  and `quantised`, `tools/hubble_stars_readings.py`'s `under_doppler` and
+  `doppler/` prefix, `tests/test_doppler.py` (its (a) and (c) live on as
+  `test_crossing` (b) and the contact tests, its (b), (f), (g), (h) as
+  counts in `test_crossing` (a) and (c) and in the G2 session's run; (d)
+  and (e) went with the key), BEAM_LAW note 38 (a tombstone stays),
+  ENGINE's paragraph on the key and TEST_EXPECTATIONS' section.
+- Re-pinned under the order (the old integers kept as history in each
+  test's docstring): `test_contact` (a) and (d), `test_nucleus_readings`,
+  `test_binding` (a), (b), (c), (d), (f), `test_paid_charge` (d),
+  `test_nature_beam_body` (a) and (d), `test_nature_beam_reemission` (b)
+  (the escaping body's phase before its interval's clock turn),
+  `test_push_width` (c) (the step at the self-creation under a
+  suspension), `test_orbit_readings` (c) (a probe that crosses the stream;
+  the one on +y from (7, 4, 0) met nothing under the rule) and the gate
+  set's digests of every lamp-free world (`gate_set.json`: the state's for
+  the two marks, the events' and the books' where a body stepped or fired
+  under a push). `run.json` gains `fast_steps`, the Links crossed right
+  after another of the same body (the rule's count not proved there, note
+  48: a report). The registered worlds with a
+  completed step or a fire under a push move (VALIDATION, the dated
+  table of this change): series G2 (the run under the rule is the G2
+  session's), the hubble worlds, D, H, the catalog's `sun_planet`, the
+  nucleus, binding and weak pairs; every world whose measured events are
+  all fixed reads the same records, and its `state.json` differs by the
+  two marks alone.
+
 ## The weak register re-pinned under the fraction-free law, on 2026-09-21 (host only, no law change)
 
 The architect's root cause (record 254) of the J1 `become` counts: the

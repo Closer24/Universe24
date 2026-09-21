@@ -23,8 +23,10 @@ Boss's pull request and are cited by number; on this base
 `src/` is edited and no law changes: a read-only design. Its evidence is
 beside it: `quark_numbers.py` (every integer below, recomputed from the
 engine's own flight table and the law's push form; its printed output
-`quark_numbers.out`), `make_worlds.py` (the seven world files under
-`worlds/`, for the run on the owner's go), and a smoke test of the seven
+`quark_numbers.out`), the seven world files of series R under
+[`examples/events/quarks/`](../../../examples/events/quarks/README.md)
+(their generator `make_worlds.py` and their pins `expectations.json`
+beside them), and a smoke test of the seven
 worlds for 24 intervals each (section 4.6), which is the only run made.
 Read: [BEAM_LAW](../../BEAM_LAW.md) sections 2 to 5 and its notes 31, 36,
 39, 40 and 41; [ENTITY_CATALOG](../../ENTITY_CATALOG.md) (the rows on the
@@ -660,10 +662,10 @@ the line.
 
 ### 4.6 The worlds and the smoke test
 
-The seven worlds (`make_worlds.py`, under `worlds/`; series I's base: an
-open cube of 21^3, K 2^20, N 64, `release` [1, 1], `suspension` 0, the
-290 fan, 3000 intervals; the model ids `beam-quarks-<name>-space-v1`;
-not registered, waiting for the owner's go):
+The seven worlds (`examples/events/quarks/make_worlds.py`; series I's
+base: an open cube of 21^3, K 2^20, N 64, `release` [1, 1], `suspension`
+0, the 290 fan, 3000 intervals; the model ids `beam-quarks-<name>-space-v1`;
+registered as series R on the owner's standing go, record 264):
 
 | World | What |
 | --- | --- |
@@ -716,6 +718,13 @@ its pin is reported with its numbers and never moved.
 | q6 | the kicked u's steps (GAMEBOARD); its push (DETECTOR); the face (DETECTOR) | steps -x at tick 6 and every seven intervals; its push falling to the electric residual (-3.8 x 10^9 at three Links, below 10^9 beyond); it leaves through `face:-x` at about tick 70 to 90 (the toy's 78 at nine Links) with its momentum and its charge 2/3 e; the other two stay a pair (d u at one Link, bound electrically and by the glue) | the kicked u returning; the pair d u separating |
 | q7 | the push on each end at tick 20; the read mass | 418 547 308 612 or 613 (the accumulator's unit); 1836 at every tick | a read mass other than 1836; a step |
 | all | the books | initial = current + spent + escaped per family at every tick; the momentum line closed through every hand-over | any imbalance |
+
+Read on the engine on 2026-09-21 as series R (the page
+[the quarks](../../../examples/events/quarks/README.md), the register's
+entry R): every push exact, the lines hold, the triangle and the
+rectangle shear, the line of six holds, the kicked u leaves at tick 63
+and the pair it leaves breaks at about 1190 (two pins outside, reported),
+the read mass the sum in every world.
 
 **What refutes the design as a whole:** a line that does not hold (then
 the contact rule's bound or the delivery is wrong and the strong design's

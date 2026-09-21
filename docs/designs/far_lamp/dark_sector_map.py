@@ -31,7 +31,7 @@ for v in (80.0, 150.0, 220.0):
         f" every departure from the classical Doppler is of order beta^2 = {beta * beta:.1e}"
     )
 print(
-    "   the flat curves are read at the edge to a few km/s out of 100 to 250; the law's readings differ from the classical Doppler by parts in 10^6: no reading through a detector makes a Keplerian edge look flat"
+    "   the flat curves are read at the edge to a few km/s out of 100 to 250; the law's readings differ from the classical Doppler by parts in 10^4 of the shift (parts in 10^7 of the reading): no reading through a detector makes a Keplerian edge look flat"
 )
 print()
 

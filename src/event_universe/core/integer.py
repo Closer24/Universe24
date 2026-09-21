@@ -92,7 +92,7 @@ def by_drive(drive: int, rate: int, denominator: int, at_most: int = 0) -> tuple
     cancels what it had accumulated the other way and counts nothing until
     the sum reaches the denominator on the new side; an unsigned rate
     (every other count: the owed count, the release, the lamp, the turn,
-    the push per column, the doppler weight) keeps the accumulator in
+    the push per column) keeps the accumulator in
     [0, denominator). `at_most`, when positive, caps the count gained at
     one self-creation and keeps the rest in the accumulator, the step's
     rule (one Link per interval: a drive earned at a larger momentum fires
