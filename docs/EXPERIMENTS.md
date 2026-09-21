@@ -3797,8 +3797,9 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   0.2 s each; the readings by `tools/amplitude_path.py --check`, whose
   replay equals `run.json`'s `world` on every run; DETECTOR unless
   said).** The
-  gathers over the 64 births of the ticks 1 .. 64 (the design's table
-  reproduced on every world):
+  gathers over the first 64 births by ordinal (at tick 1 and ticks 3 to
+  65: the lamp pays a unit per birth and its clock stalls once at tick 2;
+  issue #533) (the design's table reproduced on every world):
 
   | world | D1 | D2 | absorber | the design |
   | --- | --- | --- | --- | --- |
