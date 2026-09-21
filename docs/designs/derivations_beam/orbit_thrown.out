@@ -1,0 +1,20 @@
+THE ORBIT AS THE BOND, THROWN (the registered s32_r24: S = 32, r = 24, p = 576, q = 12; the plane's 1 / r push)
+at rest: periods [743, 718] (the derived 2 pi r / v = 795; the registered closing 623), extents along / across 22.66 / 23.82, centre 1.33, -2.39
+thrown at v = 1/8 (beta 0.2148, gamma 1.024), no aberration: periods [857], extents along / across 31.38 / 25.93 (ratio 1.210; Lorentz would give 0.977), centre's offset from the source -7.40, +0.85, period over rest 1.153 (Lorentz: gamma 1.024); after 2161 intervals at r = 200.0
+thrown at v = 1/8 (beta 0.2148, gamma 1.024), aberrated  : periods [], extents along / across 37.10 / 30.29 (ratio 1.225; Lorentz would give 0.977), centre's offset from the source -13.12, -7.51, period over rest nan (Lorentz: gamma 1.024); after 1074 intervals at r = 0.9
+thrown at v = 1/4 (beta 0.4297, gamma 1.107), no aberration: periods [], extents along / across 92.73 / 93.62 (ratio 0.990; Lorentz would give 0.903), centre's offset from the source +43.08, +53.42, period over rest nan (Lorentz: gamma 1.107); after 2353 intervals at r = 200.2
+thrown at v = 1/4 (beta 0.4297, gamma 1.107), aberrated  : periods [], extents along / across 59.00 / 139.11 (ratio 0.424; Lorentz would give 0.903), centre's offset from the source -32.48, +41.36, period over rest nan (Lorentz: gamma 1.107); after 5204 intervals at r = 200.1
+the dispersion's asymmetry at v = 1/8: the probe's speed relative to the source, forward +0.1257, backward -0.2259 Links per interval (at rest +-0.1896)
+the dispersion's asymmetry at v = 1/4: the probe's speed relative to the source, forward +0.0717, backward -0.1263 Links per interval (at rest +-0.1896)
+
+S = 512, p = 2063 (n = 32.24), orbital speed 0.0568 Links per interval (0.098 c): at rest periods [2557, 2516, 2600], extents 23.65 / 23.63
+  thrown at v = 1/8 (beta 0.2148, gamma 1.024), no aberration: periods [3338, 3518, 5285], extents along / across 27.57 / 29.98 (ratio 0.920; Lorentz 0.977), centre -3.57, -2.08, period over rest 1.305 (Lorentz gamma 1.024); 12141 intervals, r = 12.1
+  thrown at v = 1/8 (beta 0.2148, gamma 1.024), aberrated  : periods [3646, 10833], extents along / across 30.44 / 31.66 (ratio 0.962; Lorentz 0.977), centre -6.44, -7.08, period over rest 1.426 (Lorentz gamma 1.024); 30223 intervals, r = 200.0
+  thrown at v = 1/4 (beta 0.4297, gamma 1.107), no aberration: periods [], extents along / across 103.84 / 163.62 (ratio 0.635; Lorentz 0.903), centre +27.56, -36.07, period over rest nan (Lorentz gamma 1.107); 28466 intervals, r = 200.1
+  thrown at v = 1/4 (beta 0.4297, gamma 1.107), aberrated  : periods [], extents along / across 131.46 / 104.28 (ratio 1.261; Lorentz 0.903), centre -68.46, +5.44, period over rest nan (Lorentz gamma 1.107); 53947 intervals, r = 200.0
+
+S = 8192, p = 8067 (n = 126.04), orbital speed 0.0150 Links per interval (0.026 c): at rest periods [9959, 9932, 9981], extents 23.92 / 23.89
+  thrown at v = 1/8 (beta 0.2148, gamma 1.024), no aberration: periods [13243, 11873, 15847], extents along / across 26.21 / 30.06 (ratio 0.872; Lorentz 0.977), centre -2.21, -3.13, period over rest 1.330 (Lorentz gamma 1.024); 40963 intervals, r = 14.5
+  thrown at v = 1/8 (beta 0.2148, gamma 1.024), aberrated  : periods [14271, 16578, 17918], extents along / across 28.65 / 31.64 (ratio 0.905; Lorentz 0.977), centre -4.65, -7.85, period over rest 1.433 (Lorentz gamma 1.024); 48767 intervals, r = 2.3
+  thrown at v = 1/4 (beta 0.4297, gamma 1.107), no aberration: periods [], extents along / across 50.11 / 57.14 (ratio 0.877; Lorentz 0.903), centre +18.47, +15.38, period over rest nan (Lorentz gamma 1.107); 51016 intervals, r = 1.0
+  thrown at v = 1/4 (beta 0.4297, gamma 1.107), aberrated  : periods [], extents along / across 56.47 / 68.43 (ratio 0.825; Lorentz 0.903), centre -26.50, +9.59, period over rest nan (Lorentz gamma 1.107); 200000 intervals, r = 89.9
