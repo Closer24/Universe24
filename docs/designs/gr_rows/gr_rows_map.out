@@ -8,10 +8,10 @@
    the beam's own age moment A_beam = 45 to 77 per Node (a GameBoard reading of the README): the crowd's rows inside the beam read it, k_beam = A_beam / d_s, their pace 1 / (1 + f k_beam), their presence and age moment there up by the inverse: the back-reaction on what the beam reads
    k_beam = 0.0110 to 0.0188; the crowd's pace inside the beam 0.978 to 0.964; the back-reaction factor on A read by the beam 1.022 to 1.038
 
-   world | M | b | k_a(b) (derived) | the deflection 2 f k_a(b), radians (derived) | the centroid's shift, pixels, DETECTOR (the bracket 0.5) | the same with the back-reaction | the delay, intervals (derived) | the mean age, DETECTOR (89.40 registered; the bracket 1) | with the back-reaction | the lamp's clock rate at r = 26, GAMEBOARD | the count ratio, DETECTOR (the bracket 1 percent) | the phase rate, DETECTOR (8 registered)
-   mass  | 2^16 | 6 | 0.0445 | 0.1781 | -4.63 | -4.73 to -4.81 | 3.97 | 93.37 | 93.45 to 93.52 | 0.9898 | 0.990 | 7.919
-   heavy | 2^17 | 6 | 0.0887 | 0.3547 | -9.22 | -9.42 to -9.57 | 7.90 | 97.30 | 97.47 to 97.60 | 0.9799 | 0.980 | 7.840
-   near  | 2^16 | 3 | 0.0887 | 0.3547 | -9.22 | -9.42 to -9.57 | 5.22 | 94.62 | 94.73 to 94.81 | 0.9899 | 0.990 | 7.919
+   world | M | b | k_a(b) (derived) | the deflection 2 f k_a(b), radians (derived) | the centroid's shift, pixels, DETECTOR (the bracket 0.5) | the same with the back-reaction | the delay, intervals (derived) | the mean age, DETECTOR (89.40 registered; the bracket 1) | with the back-reaction | the lamp's clock rate at r = sqrt(26^2 + b^2), GAMEBOARD | the count ratio, DETECTOR (the bracket 1 percent) | the phase rate, DETECTOR (8 registered)
+   mass  | 2^16 | 6 | 0.0445 | 0.1781 | -4.63 | -4.73 to -4.81 | 3.97 | 93.37 | 93.45 to 93.52 | 0.9901 | 0.990 | 7.921
+   heavy | 2^17 | 6 | 0.0887 | 0.3547 | -9.22 | -9.42 to -9.57 | 7.90 | 97.30 | 97.47 to 97.60 | 0.9805 | 0.980 | 7.844
+   near  | 2^16 | 3 | 0.0887 | 0.3547 | -9.22 | -9.42 to -9.57 | 5.22 | 94.62 | 94.73 to 94.81 | 0.9899 | 0.990 | 7.920
    the sign: the turn accumulator w takes -V (the flux points away from the source, 5.1), so the step is toward the mass, negative in y on the screen (the README's convention)
    the factor: with optical: 1 (Newton's index) every shift and every delay above is halved; Cassini reads the factor as 2 to 2 x 10^-5
    the count ratio: the lamp's entry declares reads: age for the mass's family, so its self-creations are slowed by 1 / (1 + k_lamp) and its births with them (series E's reading): outside series K's 1 percent bracket in heavy, by the pin world's own declaration and not by the rows' rule
