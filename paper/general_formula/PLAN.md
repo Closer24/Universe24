@@ -1424,3 +1424,52 @@ comparisons; the caption's algebra (division by 9, E' the root to the
 remainder); the figure's table narrowed; Q_f, S, M, T_d, S_1, N named
 at first use in the reordered section; "among them" for the roundings
 with the click's rung added; the log bibitem's punctuation.
+
+## The quantum-mechanics section (2026-09-21, the owner's direction of about 08:50Z)
+
+The owner (translated): "Let us look at what the very first paper on
+quantum mechanics was. We need somehow to put this in, because the one
+who gives me the endorsement is also from quantum mechanics ... how we
+see it, how it connects ... some formula, Schrodinger or something."
+Applied as one section before the confrontation, "Quantum mechanics in
+the law: the founding formulas, one by one": how the law sees it in one
+sentence (the record's vector in Z[Z_N] where the wavefunction sits,
+the evaluation the Fourier transform, the click the measurement); then
+Planck 1900 (E = h f an identity of the release, R), Einstein 1905 (the
+row is the quantum, the law's definition), Bohr 1913 (in form), de
+Broglie 1924 (the turn by momentum, an identity), Heisenberg 1925 (the
+law's kinematics a matrix mechanics on Z_N: the Weyl relation exact,
+the Gram form; Weyl 1931 and Schwinger 1960 the cousins), Schrodinger
+1926 (NOT reached, stated plainly: omega = c k, a body one record, the
+dispersion named), Born 1926 (a limit, forced in form), Heisenberg 1927
+(exact on the circle, Kennard the limit), Dirac 1928 (not reached: no
+spin), Bell 1964 and Tsirelson 1980 (measured and proved); a closing
+paragraph; Weyl and Schwinger in the literature; the founding papers'
+bibitems. No claim that the law is quantum mechanics. Referee round 21
+(a quantum physicist's reading) pending.
+
+## Referee round 21 (2026-09-21): the quantum-mechanics section, a quantum physicist's reading, major revision, applied
+
+Twelve findings, six major, all applied: the rung's bound cited to
+Definition def:click and 6.2, not to the isometry theorem, with the
+paper's own rung symbol; the single opening's pin placed in the Gleason
+section and row 10 named as not yet run with its last registered 1.08;
+"the one founding formula the law gives a different answer to" replaced
+by "the one equation of motion the law does not reach" (Dirac and
+Bohr's levels are not reached either; row 57 is not reached, not a
+different answer); Heisenberg 1925 restated honestly: the arrays
+between levels are not reached (no stationary states), what is reached
+is the kinematics in Weyl's form, the commutator credited to Born and
+Jordan, the continuum commutator as the contraction of the Weyl
+relation; the Bell paragraph: a deterministic rule whose value is not a
+LOCAL hidden-variable value, the joint Gram weight and no-signalling,
+the unproved "same Fourier fact" dropped; Einstein 1905 with 6.4's
+caveat (content and turn part at a re-emission; the relation at the
+absorber not derived). Minor: "closes no orbit on the base"; the
+digital-circle numbers as the derivation's arithmetic; the symbols
+(f the record vector and f the frequency separated by s_h; zeta for the
+root, omega and k named; W_k, T, the rung named); note 39 in the
+beamlaw bibitem; Weyl's edition and Schrodinger's fourth communication;
+the closing list with Einstein and Born as a limit; the introduction
+names the section, not table rows; the harmonic constants pinned by a
+host map.
