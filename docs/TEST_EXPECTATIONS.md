@@ -83,6 +83,7 @@ kept, their pins the law of events').
 | `test_columns.py` | The one coupling as a signed inner product over the columns: the two built-in columns equal to the landed form integer by integer and refusal by refusal on a grid, at the register's scale and on the replay of the series 7 worlds' `read` records; a third column with the sign minus giving the design's integers and the sign as a key; the refusals and the alignment; the bounds at parsing and at the push; every column floored on its own ([below](#the-columns)) | new (2026-09-20, the model owner's "one mechanism for all the laws on the GameBoard"; the mathematician's verified form) |
 | `test_lifetime.py` | The lifetime of a family and the held content: the click on the border `lifetime` booked as a face books an escape (the record 2^26, the ledger lines, the run's record), a ray read at the age L and then booked, the reach of L = 1, 2, 3 on the flight table (the six neighbours, the face diagonals, the cube diagonals and two Links), the inverse refused, the refusals; a measured event holding content of two families (the charges as rational sums, the push, the release of both, the record) and the register's proton ([below](#the-lifetime-and-the-held-content)) | new (2026-09-20, the model owner's "the strong force's range is a lifetime, L"; the physicist's D-1) |
 | `test_binding.py` | The binding that costs content (`binding-v1`): the give at the first hand-over of a contact under `measure` (the pair of the six headings with `bond` 2 on the mover: one row of amount 2, content 1 on -x, the recoil +128, the border click three ticks later with content 2, the books exact at every tick, `given` 2 then 0), the remainder (`bond` 3 at the quantum 2: one unit given, 1 kept), the give taken by a body on its line (`measured` +2, no border click; `pass` lets it on), a body that carries nothing (the contact records of `test_contact.py` without `given`, a paid body's own content never given), the fact of the run (a body that takes a declared paid row gives it at its next contact, `given` and `binding-v1` from that give on) ([below](#the-binding-that-costs-content)) | new (2026-09-20, the model owner's records 115 and 137 on the physicist's design; (f) after the physics-rule review) |
+| `test_covariant_readings.py` | The covariant readings (`covariant-readings-v1`, the world key `covariant_readings`): the key absent computes nothing (every registered world outside `covariant/` parses without it, the gate world `detector/grouped_12_nodes` replays to its digests byte for byte, no `energy` line, no `covariant` block, `step_divisor` with its cap term); the integer forms against the host on a thrown body (E' at load isqrt(320^2 + 3 x 200^2) = 471, W = E'_0^2 + 3 p . p and E' = isqrt(W) on every line, the k-th self-creation at k + floor((k - 1) x 151 / 320), 41 self-creations and 19 owed in 60 intervals, 25 Links at the pace p / E'); the edge p = 0 with a push (E' rises from E'_0 at 14 grains, at most 4 comparisons per frame, the ceiling refusing at `grain` 1); the refusals (the domain, `E`, `c2`, the grain, `action`, `books`, the bound) and the release at rest the law's; the crowd's count the sum over the owed intervals; the registered runs of series S replayed bit-exact ([below](#the-covariant-readings)) | new (2026-09-21, the model owner's record 270; the design 17.6 after records 297 and 314) |
 | `test_contact.py` | The contact through the table: the design's pair on the six headings (+128 per interval; under the step drive and the crossing rule's order the labels 128, 256, 384, 128, 128, 256, 128 and the hand-overs 384, -128, 256, -256, 128, ... from tick 5, the sum 0, no step; at three Links the pair separates at tick 8), the isolated hand-over under `measure`, `rerelease`, `read` and `pass` and the derived default, the apportioning over the occupants of a body's set, the register's proton and neutron over 1000 intervals (997 hand-overs from tick 4, the first 621 934 561 280, the rest 310 967 280 640, the labels +-310 967 280 640 at the end), the frame's order as a declared tie ([below](#the-contact-through-the-table)) | new (2026-09-20, the model owner on the physicist's design, section 4.4); (a), (d), (e) re-registered on 2026-09-20 under the step drive; (a), (d) re-pinned on 2026-09-21 under the crossing rule's order (the step before the law, BEAM_LAW note 48), the old integers kept as history |
 | `test_nucleus_readings.py` | The nucleus readings tool (series I) reads the runner's record: on the design's pair on the six headings, run through the runner, the pushes per body (128, 0, 0) from the `p` rows' -7936 and the `g` rows' +8064, the hand-overs 384 at tick 5, -128 at 6, 256 at 8, -256 at 10 and 128 at 11 under the step drive and the crossing rule's order (one interval earlier under the step drive alone; 256, 128, 640 by p1 alone as the rule was), the border `lifetime` clicking 12 rows per interval from tick 4, no step, the separation 1.00, pinned to the events file | new (2026-09-20, series I); re-registered on 2026-09-20 under the step drive; re-pinned on 2026-09-21 under the crossing rule's order |
 | `test_nature_beam_label.py` | The label along the unit vector of the direction at the flight table's scale: the table u_d by the exact integer rule (the pinned vectors, the length within 1.35 % of Q, antisymmetry, equivariance under the 48, no tie, the float agreement over every primitive direction within the bound), every label content x u_d with the recoil, the transit line and the books closing through clicks, a mirror and the open faces, the bound at Q x content x amount ([below](#the-label-along-the-unit-vector)) | new (2026-09-19, the model owner's decision on the physics-rule reviewer's verdict; every momentum pin of the suite re-pinned x 64, listed in its section) |
@@ -1809,6 +1810,70 @@ the first run (the design's section 5, tests (a) to (d)):
   `hypotheses` gain `binding-v1` and the runner's `run.json` carries it,
   its `contact` records `given` 2 then 0; the momentum lines sum to
   (-384, 0, 0), the declared row's label and the body's, at every tick.
+
+## The covariant readings
+
+`tests/test_covariant_readings.py` (`covariant-readings-v1`, the world key
+`covariant_readings`; [DERIVATIONS_BEAM 17.6](DERIVATIONS_BEAM.md#176-amended-per-the-physics-rule-review-of-covariant-readings-v1-record-297-the-nine-must-fixes-the-integer-forms-the-should-fixes);
+the model owner's record 270 of the log of 2026-09-20; the physics-rule
+reviews, records 297 and 314). The expected integers, written down before
+the first run:
+
+- (a) the key absent computes nothing: every registered world under
+  `examples/events/` outside `covariant/` parses with `covariant` None, the
+  identity absent from its hypotheses and no `E`; the gate set's
+  `detector/grouped_12_nodes` at its cap 2 replays to `gate_set.json`'s
+  digests byte for byte, its record without an `energy` line, its state and
+  run without a `covariant` block or `acc.tau`, its steps without `energy`;
+  `step_divisor(200, 5, 1)` = 320 + 200, with `cap` false 320;
+- (b) a free body of content 5 at x = 5 of an open bar of 41 x 1 x 1 (K
+  2^20, N 64, `release` [1, 2^20], `suspension` 0, `width` 1, the key with
+  `c2` [1, 3] and `grain` 1) thrown at p = 200 (Q S M = 320): E' at load
+  isqrt(320^2 + 3 x 200^2) = 471 (gamma 1.472); on every `energy` line of 60
+  intervals E'_0 = 320, W = 320^2 + 3 p . p, E' = isqrt(W) by the host and
+  E'^2 <= W < (E' + 1)^2, at most 4 comparisons; the k-th self-creation at
+  tick k + floor((k - 1) x 151 / 320) (1, 2, 3, 5, 6, 8, 9, 11, ...), 41
+  self-creations and 19 intervals owed in 60; the drive's wall 320 without
+  the cap term: a Link at the self-creations where floor(k x 200 / 320)
+  rises (the 2nd, 4th, 5th, 7th, ...), 25 Links, within one of 60 x 200 /
+  471 = 25.5 (the pace p / E'), the body at x = 30; `acc.tau` the replay of
+  `by_drive(acc, 151, 320)` over 41 self-creations; the `step` line's
+  `energy` 471; through the runner `hypotheses` [`covariant-readings-v1`],
+  the `covariant_readings` block with `waited` {"1": 19};
+- (c) the edge p = 0 with a push: a reader of content 1 at x = 18 of a bar of
+  21 x 1 x 1 (far enough from the source not to reach it within the run) at `width` 1024 (Q S M = 65536) under `grain` 256, a fixed
+  source of the free family `f` (content 1024, `release` [1, 1024], one row
+  of amount 1 per self-creation on +x) at x = 2: every arriving row pushes
+  the reader by -64 (toward the source; two or three at once at a step of
+  the reader); E' / g = E'_0 / g = 256 until the
+  momentum reaches 14 grains (3 x 14^2 = 588 >= 2 x 256 + 1), then 257 at
+  the next frame; `energy_root(256, 256^2 + 3 x 14^2)` = (257, 3) and at 13
+  grains (256, 2); at most 4 comparisons per frame; the same world at
+  `grain` 1 refused at the first push naming the ceiling of one grain;
+- (d) refused as stated: |p|_1 = 321 above Q S M = 320 at load; `E` without
+  the key; `E` 319, 469 or 473 (below E'_0 or off the root 471 by more than
+  one), while 470, 471 and 472 load and read 471 from the first frame; `c2`
+  [2, 3]; `grain` 3 and 128 (not a power of two; not dividing Q S = 64);
+  the key with `action`; an unknown key of the object; `books` true with a
+  paid family `h` of quantum 1 off 3 h n = Q S d (the gap 3 - 2^26,
+  reported without `books`); the coasting world at `grain` 1 beyond the
+  integer bound; a free body at rest with `release` [1, 4] clicks the same
+  rows on the faces with and without the key over 20 intervals;
+- (e) the body of (b) at p = 200 in a crowd (`suspension` [1, 8], a fixed
+  source of a passed family at x = 30 releasing on -x, `release` [1, 512]):
+  after every self-creation the owed accumulator equals the host's
+  `by_drive(acc, sum, 8)` with the sum of `counted` since the last
+  self-creation, this one's included, and `counted_sum` 0; on an owed
+  interval `counted_sum` the running sum;
+- (f) the registered runs of series S (`examples/events/covariant/
+  expectations.json`, `runs` and `runs_at_the_cap`): the three J4 worlds
+  through the runner at 420 intervals give the registered digests of
+  `state.json`, the books and `events.jsonl`, the `become` tick (64, 70,
+  124), the `beta` click on `face:+x` (392, 369, 345) and the intervals
+  owed to proper time (0, 6, 61); `coasting_none_covariant` at the cap of
+  60 intervals its registered digests, the fixed detector without a
+  `covariant` block and every star with one; the shipped worlds equal the
+  generator's.
 
 ## The re-emission
 

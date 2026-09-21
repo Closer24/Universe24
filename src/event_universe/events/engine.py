@@ -46,10 +46,11 @@ from collections.abc import Iterator
 import numpy as np
 
 from event_universe.core.game_board import Address3, adjacent_node
-from event_universe.core.integer import apportion_whole, by_drive
+from event_universe.core.integer import apportion_whole, by_drive, integer_root
 from event_universe.events.amplitude import Layer
 from event_universe.events.measured import (
     TALLIES,
+    CovariantReadings,
     DetectorSet,
     Ledger,
     Measured,
@@ -79,6 +80,7 @@ from event_universe.events.world import (
     CONTACT_DEFAULT,
     DETECTOR_READINGS,
     FACE_NAMES,
+    LABEL_SCALE,
     LIFETIME_NAME,
     MOMENTUM_BOUND,
     NO_CHARGE,
@@ -86,10 +88,28 @@ from event_universe.events.world import (
     MeasuredDefinition,
     NatureBeamWorld,
     body_nodes,
+    covariant_square,
     step_divisor,
 )
 
-__all__ = ["TALLIES", "Measured", "NatureBeamSimulation", "count_owed", "step_axis"]
+__all__ = [
+    "TALLIES",
+    "Measured",
+    "NatureBeamSimulation",
+    "count_owed",
+    "covariant_frame",
+    "energy_root",
+    "step_axis",
+]
+
+# The safety bound of the energy root's comparisons at one frame under
+# `covariant-readings-v1`: the loop of DERIVATIONS_BEAM 17.6 M3 rises or
+# falls by one per comparison until the invariant holds, at most three per
+# frame under the push ceiling (N3) and up to (Q S / g) |dM| at a change of
+# content by dM (a lamp's cost, a click, a give, a `become`: M7), every
+# count reported on the record; beyond this bound the run is refused as a
+# defect (the bounded integers cannot move E' / g that far in one frame).
+ROOT_COMPARISONS = 1 << 24
 
 
 def step_axis(drive: int, momentum: int, content: int, width: int) -> tuple[int | None, int]:
@@ -143,6 +163,85 @@ def count_owed(accumulator: int, counted: int, suspension: tuple[int, int]) -> t
     if not numerator:
         return 0, accumulator
     return by_drive(accumulator, counted * numerator, denominator)
+
+
+def energy_root(energy: int, square: int) -> tuple[int, int]:
+    """The energy E' kept as the largest integer with `E'^2 <= W` by the
+    comparison verb alone (`covariant-readings-v1`, DERIVATIONS_BEAM 17.6
+    M3; the model owner: the square compared, never rooted): from the
+    last frame's E' the root rises by one while `(E' + 1)^2 <= W` and
+    falls by one while `E'^2 > W`, and the invariant `E'^2 <= W < (E' +
+    1)^2` is checked after. Returns (E' after, the comparisons made): at
+    most three under the push ceiling of one grain per interval and no
+    change of content (N3), and about (Q S / g) |dM| in the frame after a
+    change of content by dM (the rest energy moved by that much), the
+    count a reading of the record (`energy` lines, `comparisons`). The
+    products are within the bound since W is (`covariant_square`)."""
+    comparisons = 0
+    while comparisons < ROOT_COMPARISONS:
+        comparisons += 1
+        if (energy + 1) * (energy + 1) <= square:
+            energy += 1
+        else:
+            break
+    while comparisons < ROOT_COMPARISONS:
+        comparisons += 1
+        if energy * energy > square:
+            energy -= 1
+        else:
+            break
+    if not energy * energy <= square < (energy + 1) * (energy + 1):
+        raise ValueError(
+            f"{BEAM_LAW}: covariant-readings-v1: the energy's root {energy} is off the invariant "
+            f"E'^2 <= W < (E' + 1)^2 at W = {square} after {comparisons} comparisons"
+        )
+    return energy, comparisons
+
+
+def covariant_frame(
+    readings: CovariantReadings,
+    content: int,
+    momentum: list[int],
+    pushed: list[int],
+    width: int,
+    number: int,
+    position: Address3,
+    tick: int,
+) -> None:
+    """The frame's reading of a body's energy under `covariant-readings-v1`
+    (DERIVATIONS_BEAM 17.6 M1 to M3, N2, N3; `_frame_all` calls it for every
+    measured event before the owed count is paid): the rest energy `E'_0 /
+    g = (Q S / g) x M` read from the content at the frame (M7: a change of
+    content re-reads it, the kinetic part E' - E'_0 kept), the exact square
+    `W / g^2` from the record's own momentum (`covariant_square`, bilinear,
+    no drift), the domain `|p|_1 <= Q S M` (N2; refused at the frame with a
+    diagnostic naming the record) and the push ceiling `|dp|_1 <= g` on the
+    push the record took since the last frame (`pushed`, the rows' push of
+    the interval; N3; refused likewise; a recoil, a hand-over or a click's
+    label is not a push and moves E' by more, counted), then E' by the
+    comparison loop (`energy_root`). A body of no content (its whole content
+    left as products) has E'_0 = 0: its readings are formed, its clock is
+    not gated (the wall would be 0), and it never steps."""
+    label = f"measured event {number} at {list(position)} at tick {tick}"
+    manhattan = sum(abs(component) for component in momentum)
+    wall = LABEL_SCALE * width * content
+    if content > 0 and manhattan > wall:
+        raise ValueError(
+            f"{BEAM_LAW}: covariant-readings-v1: {label}: |p|_1 = {manhattan} exceeds Q x S x M "
+            f"= {wall}, the domain of the pace p / E' (DERIVATIONS_BEAM 17.6 N2)"
+        )
+    push = sum(abs(a - b) for a, b in zip(pushed, readings.previous, strict=True))
+    if push > readings.grain:
+        raise ValueError(
+            f"{BEAM_LAW}: covariant-readings-v1: {label}: the push taken since the last frame, "
+            f"|dp|_1 = {push}, is beyond the ceiling of one grain {readings.grain} per interval "
+            "(DERIVATIONS_BEAM 17.6 N3: the root's comparisons are fixed work only under it)"
+        )
+    readings.previous = list(pushed)
+    readings.rest = wall // readings.grain
+    readings.square = covariant_square(content, momentum, width, readings.factor, readings.grain, label)
+    readings.energy, readings.comparisons = energy_root(readings.energy, readings.square)
+    readings.most_comparisons = max(readings.most_comparisons, readings.comparisons)
 
 
 class NatureBeamSimulation:
@@ -208,6 +307,34 @@ class NatureBeamSimulation:
         for index, definition in enumerate(world.measured):
             entry = self._measured(index + 1, definition)
             self.measured[entry.number] = entry
+            if world.covariant is not None and not definition.fixed:
+                # The covariant readings at load (`covariant-readings-v1`):
+                # the exact square from the declared momentum and content,
+                # and E' its root by `integer_root` once (the declared
+                # load-time rounding of DERIVATIONS_BEAM 17.6 M3, of T_D's
+                # class) or the world's `E` over the grain; the frame keeps
+                # it by comparisons from then on. The readings are a body's
+                # (its drive, its clock): a `fixed` measured event, an
+                # apparatus held in place whose momentum line is the push it
+                # took and never a motion, carries none and keeps the
+                # lattice's clock (the laboratory's).
+                readings = CovariantReadings(world.covariant.grain, world.covariant.square_factor)
+                readings.previous = list(entry.pushed)
+                readings.rest = LABEL_SCALE * world.width * entry.content // readings.grain
+                readings.square = covariant_square(
+                    entry.content,
+                    entry.momentum,
+                    world.width,
+                    readings.factor,
+                    readings.grain,
+                    f"measured event {entry.number}",
+                )
+                readings.energy = (
+                    integer_root(readings.square)
+                    if definition.energy is None
+                    else definition.energy // readings.grain
+                )
+                entry.covariant = readings
         self.held_initial = [sum(m.held[f] for m in self.measured.values()) for f in range(count)]
         self.transit_initial = [0] * count
         self.content_initial = [0] * count
@@ -356,6 +483,7 @@ class NatureBeamSimulation:
                 self.world.phase_steps,
                 len(nodes),
                 lamp_wheel=None if definition.lamp is None else definition.lamp.wheel,
+                covariant=self.world.covariant is not None,
             ),
             taken=[dict.fromkeys(TALLIES, 0) for _ in range(count)],
             clicks=[0] * count,
@@ -443,6 +571,29 @@ class NatureBeamSimulation:
                 entry.phase = self.tables.circle.turn(entry.phase, entry.turn)
                 entry.turned += entry.turn
                 self._suspend(entry)
+            elif entry.covariant is not None:
+                # An owed interval under `covariant-readings-v1`: the clock's
+                # reading of the interval is summed on the record for the
+                # count charged at the next self-creation (17.6 N1).
+                entry.covariant.counted_sum += entry.counted
+            if entry.covariant is not None and self.record is not None:
+                # The body's energy readings of the interval (a GameBoard
+                # reading, ENGINE.md's readings by type): E', E'_0 and W at
+                # the grain, the intervals the proper-time gate charged.
+                self.record(
+                    {
+                        "event": "energy",
+                        "tick": self.tick,
+                        "number": entry.number,
+                        "node": list(entry.position),
+                        "energy": entry.covariant.energy,
+                        "rest": entry.covariant.rest,
+                        "square": entry.covariant.square,
+                        "creating": entry.creating,
+                        "owed": entry.covariant.owed_tau,
+                        "comparisons": entry.covariant.comparisons,
+                    }
+                )
 
     def inverse_step(self) -> None:
         """The inverse interval on a GameBoard without measured events: the
@@ -483,6 +634,22 @@ class NatureBeamSimulation:
             # after it).
             entry.frame_content = entry.content
             entry.frame_charges = entry.charges(for_push=True)
+            if entry.covariant is not None:
+                # The energy readings of the frame (`covariant-readings-v1`):
+                # E'_0 from the content read here, W from the record's
+                # momentum, E' by comparisons; before the owed count is paid,
+                # so that every interval reads them.
+                entry.covariant.owed_tau = 0
+                covariant_frame(
+                    entry.covariant,
+                    entry.frame_content,
+                    entry.momentum,
+                    entry.pushed,
+                    self.world.width,
+                    entry.number,
+                    entry.position,
+                    self.tick,
+                )
             if entry.owed > 0:
                 entry.owed -= 1
                 entry.waited += 1
@@ -516,10 +683,32 @@ class NatureBeamSimulation:
         selection is `measured.count_component`), times the width n / d, as
         the whole part its owed accumulator gains, `by_drive(acc_owed, k x
         n, d)` (`count_owed`), written once and paid one per interval before
-        the next."""
-        if not self.world.suspension[0]:
-            return
-        (entry.owed,) = entry.counts.advance("owed", values=[entry.counted])
+        the next; under `covariant-readings-v1` the sum of the readings since
+        the last self-creation (N1) and then the proper-time count (M1)."""
+        readings = entry.covariant
+        if self.world.suspension[0]:
+            counted = entry.counted
+            if readings is not None:
+                # The count charged per self-creation is the sum of the
+                # readings since the last one (17.6 N1): the owed intervals'
+                # readings summed on the record, this interval's added.
+                counted += readings.counted_sum
+                readings.counted_sum = 0
+            (entry.owed,) = entry.counts.advance("owed", values=[counted])
+        if readings is not None and readings.rest > 0:
+            # The proper-time gate (`covariant-readings-v1`, 17.6 M1): after
+            # every self-creation the body owes `by_drive(acc_tau, E' - E'_0,
+            # E'_0)` further intervals at the grain, added to the crowd's
+            # (the two owed counts compose as intervals: the body waits for
+            # both), so its self-creations come one per E' / E'_0 intervals
+            # in the mean and every count per self-creation follows its
+            # proper time; a body of no content (E'_0 = 0) owes none.
+            (owed_tau,) = entry.counts.advance(
+                "tau", values=[readings.energy - readings.rest], denominators=[readings.rest]
+            )
+            entry.owed += owed_tau
+            readings.owed_tau = owed_tau
+            readings.waited_tau += owed_tau
 
     def _move(self, entry: Measured) -> None:
         """The step by the momentum, at most one per interval, at a
@@ -608,10 +797,15 @@ class NatureBeamSimulation:
         # crossed, the rule's count `axis_steps` raised): the frame's rule
         # as it was, one Link per interval, x before y before z.
         fired: tuple[int, int, int] | None = None
+        # Under `covariant-readings-v1` the wall's cap term |p_a| is keyed
+        # off (`step_divisor`, DERIVATIONS_BEAM 17.6 M1 and M8): the drive's
+        # rate per self-creation is Newton's, and the pace per lattice
+        # interval, the product with the proper-time gate, is p / E'.
+        cap = self.world.covariant is None
         counts = entry.counts.advance(
             "drive",
             values=entry.momentum,
-            denominators=[step_divisor(p, content, self.world.width) for p in entry.momentum],
+            denominators=[step_divisor(p, content, self.world.width, cap) for p in entry.momentum],
         )
         turns = [0, 0, 0]
         for axis in range(3):
@@ -722,6 +916,9 @@ class NatureBeamSimulation:
                     "drive": list(entry.drive),
                     "step_port": port,
                     "last_step_port": entry.last_step_port,
+                    # The energy E' at the grain (`covariant-readings-v1`),
+                    # under the key alone (17.6 S6).
+                    **({} if entry.covariant is None else {"energy": entry.covariant.energy}),
                 }
             )
         return
@@ -915,6 +1112,35 @@ class NatureBeamSimulation:
         if self.binding and BINDING_RULE not in found:
             found.append(BINDING_RULE)
         return found
+
+    def covariant_report(self) -> dict[str, object] | None:
+        """The run's report of `covariant-readings-v1` (`run.json`), None
+        without the key: the declaration (the pair c^2, the grain, `books`),
+        the paid families off the identity d h n = Q S d_K with their gap
+        (a diagnostic, 17.6 N5), the largest count of comparisons one frame
+        took (N3) and, per measured event, the intervals owed to proper time
+        and its energy at the end; the invariant E'^2 <= W < (E' + 1)^2 held
+        at every frame of every completed interval (`energy_root` refuses
+        otherwise)."""
+        declaration = self.world.covariant
+        if declaration is None:
+            return None
+        return {
+            "c2": list(declaration.c2),
+            "grain": declaration.grain,
+            "books": declaration.books,
+            "off_identity": [{"family": name, "gap": gap} for name, gap in declaration.off_identity],
+            "invariant": "E'^2 <= W < (E' + 1)^2 at every frame of every completed interval",
+            "comparisons": max(
+                (m.covariant.most_comparisons for m in self.measured.values() if m.covariant),
+                default=0,
+            ),
+            "waited": {
+                str(number): self.measured[number].covariant.waited_tau  # type: ignore[union-attr]
+                for number in sorted(self.measured)
+                if self.measured[number].covariant is not None
+            },
+        }
 
     # -- the books -------------------------------------------------------------
 

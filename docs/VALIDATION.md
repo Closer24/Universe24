@@ -11,6 +11,34 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series S, the covariant readings: four runs and the OFF replay against main f5417ab3 - 2026-09-21
+
+The branch `covariant-readings` from main `f5417ab3` (`covariant-readings-v1`,
+the world key `covariant_readings`; [MIGRATION](MIGRATION.md#the-covariant-readings-on-2026-09-21-a-world-key-absent-by-default),
+[the register entry](EXPERIMENTS.md#s-the-covariant-readings-2026-09-21)).
+The four worlds of `examples/events/covariant/` run once through
+`tools/run_series.py` on the head (the source fingerprint
+`24e0c1bacec8...` of `run.json`; Python 3.14.0rc2, numpy 2.5.3, headless,
+two jobs): `j4_muon_rest`, `j4_muon_3640`, `j4_muon_12856` (420 intervals,
+0.3 s each; the state `24516f20...`, `211f7fc7...`, `1db7fbd7...`; the events
+`b5edd2d2...`, `0675fdfb...`, `985f4fdc...`) and `coasting_none_covariant` (400
+intervals, 42.9 s; the state `e1b1fc8b...`, the events `296bce62...`), every
+run completed with the books balanced at every tick; the digests, the
+source sha and the readings are the run blocks of
+`examples/events/covariant/expectations.json` (`runs`), and the cap of 60
+intervals of the coasting world (`runs_at_the_cap`, the state `775ce3ba...`)
+is what `tests/test_covariant_readings.py` (f) replays with the three J4
+worlds. The OFF replay: `hubble_stars/coasting_none` without the key run
+on the base tree (main `f5417ab3`, the fingerprint `5d254c85...`) and on the
+head: the state `1a385429...`, the books `33cf0ac7...` and the events
+`f75ca182...` equal on both (`off_replay` of the same file); the gate set's
+digests of `gate_set.json` unchanged (`tests/test_amplitude_click.py`
+(d)). What the key predicts (17.6): a world without it reads as it did to
+the byte, which the replay shows; under it the muon's clock at E'_0 / E'
+and the moving star's z at gamma (1 + beta) - 1, which the readings show
+(24 inside, 1 outside: the 64th self-creation at 124 against the design's
+125.2 +- 1, the discrete cadence's offset).
+
 ## The crossing rule: the gate set and the movers replayed against no-tables 2bbc5a64 - 2026-09-21
 
 The branch `crossing` (the step before the law, the two marks, the reading

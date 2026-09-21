@@ -214,7 +214,26 @@ Node after the collision and turns toward it by its phase register,
 section 3 step 3; refused with a paid family without a phase circle,
 which has no register; the record carries `meeting` as declared and the
 identity `meeting-v1` under `hypotheses` when it is true; absent, no world
-changes by a byte).
+changes by a byte). Added on 2026-09-21 (the model owner's record 270 of
+the log of 2026-09-20; a hypothesis beside the law, not a rule of it): the
+world key `covariant_readings`, one object `{"c2": [1, d], "grain": g,
+"books": false}` (absent by default; refused with `action`), the identity
+`covariant-readings-v1` of [DERIVATIONS_BEAM section 17 as amended in
+17.6](DERIVATIONS_BEAM.md#176-amended-per-the-physics-rule-review-of-covariant-readings-v1-record-297-the-nine-must-fixes-the-integer-forms-the-should-fixes):
+under it every body that is not `fixed` carries its energy readings (the
+exact square W = E'_0^2 + d **p** . **p** with E'_0 = Q S M, E' the largest
+integer with E'^2 <= W by comparisons, the load-time root once; a measured
+event may declare `E`), its self-creations are gated by a second owed count
+`by_drive(acc_tau, E' - E'_0, E'_0)`, the drive's wall loses its cap term
+(`step_divisor` with `cap` false: Q S M alone, so the pace per lattice
+interval is p / E' in the mean), the crowd's count is charged with the sum
+of the readings since the last self-creation, and the free release runs
+per lattice interval at the rate held x E' over E'_0 x d; the domain |p|_1
+<= Q S M and the push ceiling of one grain per interval are refused; the
+record carries the `energy` lines and the key's block
+([ENGINE.md, the readings by type](ENGINE.md#the-detectors-readings-by-type));
+absent, nothing of it is computed and no world changes by a byte (series
+S, [examples/events/covariant/README.md](../examples/events/covariant/README.md)).
 Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
 `suspension`, `families`, `measured` (`table` with `read`, `measure`,
 `rerelease`, `pass` and `phase_window`, since 2026-09-20 with its width

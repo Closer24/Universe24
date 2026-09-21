@@ -798,7 +798,12 @@ the identity of the one mechanism of the columns and their range;
 `weak-v1` when a measured event declares `become` or a table entry's rule
 is `become`, the identity of the transformation; `meeting-v1` when
 `meeting` is true, after it; `amplitude-v1` when a lamp is declared (a
-recorded world); `hand-v1` when a hand or an axis is declared anywhere,
+recorded world); `hand-v1` when a hand or an axis is declared anywhere;
+`covariant-readings-v1` when the world declares `covariant_readings`
+(2026-09-21, the model owner's record 270; the record then carries the
+key's block `covariant_readings`: the pair `c2`, the `grain`, `books`, the
+paid families off 3 h n = Q S d as `off_identity`, the most `comparisons`
+one frame took and `waited`, the intervals each body owed to proper time),
 last; `[]` without any; in a world with a hand every family carries
 its `hand` and every number its `axis`, the heading's vector or None),
 `columns` (the
@@ -963,6 +968,7 @@ things themselves, one row each in the three worlds, are in
 | the net flow **f** | vector, 3 components | `reading` on a `click` or `read` line when the entry reads `vector`: sum amount x **u**_d over the arrivals, on the unit vectors of the directions | Q = 64 per unit of amount along a heading | detector |
 | the traceless second moment **T** | tensor, 3 x 3 symmetric of trace zero | `reading` on a `click` or `read` line when the entry reads `tensor`: 3 sum amount x **u**_d **u**_d^T less its trace on the diagonal | Q^2 per unit of amount | detector |
 | the momentum **p** of a measured event | vector | `momentum` of its state (`measured` of `run.json` and `state.json`); `pushed` (the push taken, summed) and `drive` (the drive's count per axis) beside it | label units: Q = 64 per unit of amount along a heading | detector |
+| the energy E' of a body (`covariant-readings-v1`, the world key `covariant_readings`; DERIVATIONS_BEAM 17.6) | scalars: E' / g the energy, E'_0 / g = (Q S / g) M the rest energy, W / g^2 = (E'_0 / g)^2 + d (**p** / g) . (**p** / g) its exact square, at the identity's grain g and the declared c^2 = [1, d] | the `energy` line of `events.jsonl` per body per interval (`energy`, `rest`, `square`, `creating`, `owed` the intervals the proper-time gate charged, `comparisons`); `energy` on the `step` line beside `drive`; the `covariant` block of a body's state (`energy`, `rest`, `square`, `waited` the intervals owed to proper time, `counted_sum`, `comparisons` the most in one frame) and `acc.tau` its proper-time accumulator; the run's `covariant_readings` block (the declaration, the paid families off 3 h n = Q S d, the comparisons, `waited` per body); written under the key alone, on bodies that are not `fixed` | E' in units of Q S per unit of content (E' = 3 E at c^2 = 1 / 3), at the grain g | GameBoard (a diagnostic: the host's view of the body's record; the detector's readings under the identity are the products' face clicks and the centre's pointer, series S) |
 | the label **p** of a row | vector | `push` on a `click` or `read` line (the row group's label, what the reader took); `momentum` on a face `click`; `momentum` on a `gather` line (what the chosen rows gave); `recoil` on a `become` line; `momentum` per family on a face and the border | label units | detector |
 | the share of a record's row | vector | `share` on the `click` line of a record's row: the row's push on matter, label x amount // m | label units | detector |
 | a Node as a position | vector of Links (x, y, z) | `node` on every line; `position` of a measured event's state; `to` on a `step` line | Links | GameBoard |

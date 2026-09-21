@@ -1,0 +1,320 @@
+{
+ "format": "covariant-expectations-v1",
+ "identity": "covariant-readings-v1",
+ "c2": [
+  1,
+  3
+ ],
+ "worlds": {
+  "j4_muon_rest": {
+   "momentum": 0,
+   "rest_energy": 13248,
+   "energy_at_load": 13248,
+   "gamma": 1.0,
+   "beta": 0.0,
+   "pace": 0.0,
+   "decay": {
+    "kind": "GAMEBOARD",
+    "line": "become",
+    "design": 64.0,
+    "tolerance": 1.0,
+    "derived_tick": 64,
+    "derived_node": [
+     10,
+     0,
+     0
+    ]
+   },
+   "click": {
+    "kind": "DETECTOR",
+    "line": "click on face:+x of the product beta",
+    "design": 391,
+    "tolerance": 2,
+    "derived_tick": 392,
+    "steps_to_the_face": 191
+   },
+   "invariant": {
+    "kind": "GAMEBOARD",
+    "line": "energy",
+    "holds": true
+   }
+  },
+  "j4_muon_3640": {
+   "momentum": 3640,
+   "rest_energy": 13248,
+   "energy_at_load": 14671,
+   "gamma": 1.1074124396135265,
+   "beta": 0.429736550988393,
+   "pace": 0.24810851339377002,
+   "decay": {
+    "kind": "GAMEBOARD",
+    "line": "become",
+    "design": 70.9,
+    "tolerance": 1.0,
+    "derived_tick": 70,
+    "derived_node": [
+     27,
+     0,
+     0
+    ]
+   },
+   "click": {
+    "kind": "DETECTOR",
+    "line": "click on face:+x of the product beta",
+    "design": 367,
+    "tolerance": 2,
+    "derived_tick": 369,
+    "steps_to_the_face": 174
+   },
+   "invariant": {
+    "kind": "GAMEBOARD",
+    "line": "energy",
+    "holds": true
+   }
+  },
+  "j4_muon_12856": {
+   "momentum": 12856,
+   "rest_energy": 13248,
+   "energy_at_load": 25910,
+   "gamma": 1.9557669082125604,
+   "beta": 0.8594073786995556,
+   "pace": 0.4961790814357391,
+   "decay": {
+    "kind": "GAMEBOARD",
+    "line": "become",
+    "design": 125.2,
+    "tolerance": 1.0,
+    "derived_tick": 124,
+    "derived_node": [
+     72,
+     0,
+     0
+    ]
+   },
+   "click": {
+    "kind": "DETECTOR",
+    "line": "click on face:+x of the product beta",
+    "design": 345,
+    "tolerance": 2,
+    "derived_tick": 345,
+    "steps_to_the_face": 129
+   },
+   "invariant": {
+    "kind": "GAMEBOARD",
+    "line": "energy",
+    "holds": true
+   }
+  },
+  "coasting_none_covariant": {
+   "star": "s_mz2",
+   "momentum": 51901289008505,
+   "content": 4198400,
+   "rest_energy": 281749854617600,
+   "rest_energy_at_the_grain": 1074790400,
+   "energy_at_load_at_the_grain": 1128171883,
+   "grain": 262144,
+   "gamma": 1.0496668773744164,
+   "pace": 0.17549427374193555,
+   "z": {
+    "kind": "DETECTOR",
+    "line": "record (the centre's pointer), the late window",
+    "window": [
+     300,
+     400
+    ],
+    "pin": [
+     0.366,
+     0.372
+    ],
+    "design": 0.369,
+    "centre_continuum": 0.3687288682423657,
+    "centre_heading": 0.36627871947967794,
+    "registered_without_the_key": 0.2636
+   },
+   "invariant": {
+    "kind": "GAMEBOARD",
+    "line": "energy",
+    "holds": true
+   }
+  }
+ },
+ "derivations": {
+  "energy_at_load": "isqrt(E'_0^2 + 3 p . p), E'_0 = Q S M (DERIVATIONS_BEAM 17.6 M3: the declared load-time root); gamma = E' / E'_0; the pace p / E' Links per interval (17.6 M1)",
+  "decay": "the design's 64 gamma (17.6 M2, 18.1 (a)) with one tick's tolerance; the derived tick the k-th self-creation under the proper-time gate from an empty accumulator, k + floor((k - 1) (E' - E'_0) / E'_0) (BEAM_LAW note 41's by_drive at the rate E' - E'_0 over the wall E'_0, charged after each self-creation), which is 64 gamma less (gamma - 1) to within one; the decay's Node 10 + floor(64 p / (Q S M)) (the drive without its cap term at 64 self-creations)",
+  "click": "the design's 391, 367, 345 (17.6 M9; N6: 390.6, 368.2, 345.2) with two ticks' tolerance; the derived tick the decay's tick plus the least age at which the engine's flight table has a heading row make 201 - x steps (the row born at the decay's Node x at age 0 leaves the bar through x = 200; Flight.manhattan_steps)",
+  "z": "the design's 0.369 +- 0.003 on the registered momentum (17.6 M2, N5; 18.1 (c)); the centres gamma (1 + beta) - 1 with beta = sqrt 3 p / E' (the continuum) and beta = (p / E') / c on the heading, c = 32 / 55 (17.6 S11); read by tools/hubble_stars_readings.py's window_point on the late window",
+  "invariant": "E'^2 <= W < (E' + 1)^2 on every `energy` line (17.6 M3)"
+ },
+ "runs": {
+  "coasting_none_covariant": {
+   "source_sha256": "24e0c1bacec8e5b82fc602b1fc4580a234d420e922bbc1e9223df64d0eb60c3d",
+   "completed_ticks": 400,
+   "elapsed_seconds": 42.9,
+   "hypotheses": [
+    "amplitude-v1",
+    "covariant-readings-v1"
+   ],
+   "state_sha256": "e1b1fc8b23bd38eca2abc866d723881b3d478a2f06fcb908981828438ae619e9",
+   "audit_sha256": "9f8d91e1b85d22dae9fb6fdd6d4bd27708bc2e63e0e94c5980d0bea5454c7da5",
+   "events_sha256": "296bce62351826477fd976749398cb95a918c129dc1297b9582c14f9358d7a7c",
+   "readings": {
+    "z": 0.3674194742687893,
+    "energy_at_load_at_the_grain": 1128171883,
+    "rest_energy_at_the_grain": 1074790400,
+    "pace_in_the_late_window": 0.18,
+    "energy_lines": 9567,
+    "most_comparisons": 258,
+    "waited": {
+     "2": 0,
+     "3": 1,
+     "4": 2,
+     "5": 3,
+     "6": 4,
+     "7": 5,
+     "8": 7,
+     "9": 9,
+     "10": 11,
+     "11": 13,
+     "12": 16,
+     "13": 18,
+     "14": 22,
+     "15": 25,
+     "16": 29,
+     "17": 33,
+     "18": 37,
+     "19": 41,
+     "20": 46,
+     "21": 51,
+     "22": 56,
+     "23": 61
+    }
+   },
+   "inside": 4,
+   "of": 4
+  },
+  "j4_muon_12856": {
+   "source_sha256": "24e0c1bacec8e5b82fc602b1fc4580a234d420e922bbc1e9223df64d0eb60c3d",
+   "completed_ticks": 420,
+   "elapsed_seconds": 0.3,
+   "hypotheses": [
+    "weak-v1",
+    "covariant-readings-v1"
+   ],
+   "state_sha256": "1db7fbd7bad897c0684f53742be9eb7304ae09e575a4cccca7b8224a75cd5285",
+   "audit_sha256": "3a2a77159619fa786b4b70039e8abd1b664ae7286d086847a2a2309b5fae5205",
+   "events_sha256": "985f4fdc3727102eee5f6d3d46f8a40ef894884f70b13f75c23c2e96506831e0",
+   "readings": {
+    "energy_at_load": 25910,
+    "rest_energy": 13248,
+    "become_tick": 124,
+    "become_node": [
+     72,
+     0,
+     0
+    ],
+    "beta_click_tick": 345,
+    "beta_click_content": 207,
+    "decay_tick_derived_back_from_the_click": 124,
+    "energy_lines": 420,
+    "most_comparisons": 25123,
+    "waited": {
+     "1": 61
+    }
+   },
+   "inside": 6,
+   "of": 7
+  },
+  "j4_muon_3640": {
+   "source_sha256": "24e0c1bacec8e5b82fc602b1fc4580a234d420e922bbc1e9223df64d0eb60c3d",
+   "completed_ticks": 420,
+   "elapsed_seconds": 0.3,
+   "hypotheses": [
+    "weak-v1",
+    "covariant-readings-v1"
+   ],
+   "state_sha256": "211f7fc7536ccc7ca92bdcdd8f591d6eeae4b4296af9705bfdaae85a1765dd2e",
+   "audit_sha256": "1bf82725f23910114151b91ec9ecc0a6dc6978d5c90fc31c9532e3e5588cd158",
+   "events_sha256": "0675fdfbca515e48471e193caaf76f5d0f6abcd5444fd489f84431acd6a4d25a",
+   "readings": {
+    "energy_at_load": 14671,
+    "rest_energy": 13248,
+    "become_tick": 70,
+    "become_node": [
+     27,
+     0,
+     0
+    ],
+    "beta_click_tick": 369,
+    "beta_click_content": 207,
+    "decay_tick_derived_back_from_the_click": 70,
+    "energy_lines": 420,
+    "most_comparisons": 2083,
+    "waited": {
+     "1": 6
+    }
+   },
+   "inside": 7,
+   "of": 7
+  },
+  "j4_muon_rest": {
+   "source_sha256": "24e0c1bacec8e5b82fc602b1fc4580a234d420e922bbc1e9223df64d0eb60c3d",
+   "completed_ticks": 420,
+   "elapsed_seconds": 0.4,
+   "hypotheses": [
+    "weak-v1",
+    "covariant-readings-v1"
+   ],
+   "state_sha256": "24516f20393220aa259a1915e35c9bbd2b6251c88692622f7dffec690bd4e59e",
+   "audit_sha256": "ebc3bbc79e67b3b7e6d53b4c558f3b1f12a74bd0771fc2212ed48abbbdee97cc",
+   "events_sha256": "b5edd2d25f8a17ac64e8813d7ea57a280ff87e014248df1a66920fa8d6a5228e",
+   "readings": {
+    "energy_at_load": 13248,
+    "rest_energy": 13248,
+    "become_tick": 64,
+    "become_node": [
+     10,
+     0,
+     0
+    ],
+    "beta_click_tick": 392,
+    "beta_click_content": 207,
+    "decay_tick_derived_back_from_the_click": 64,
+    "energy_lines": 420,
+    "most_comparisons": 9811,
+    "waited": {
+     "1": 0
+    }
+   },
+   "inside": 7,
+   "of": 7
+  }
+ },
+ "runs_at_the_cap": {
+  "coasting_none_covariant": {
+   "source_sha256": "24e0c1bacec8e5b82fc602b1fc4580a234d420e922bbc1e9223df64d0eb60c3d",
+   "completed_ticks": 60,
+   "state_sha256": "775ce3ba1aabd94e3d3287e70642514ab0be62278a1879bcbaae49c6273ec4ac",
+   "audit_sha256": "59c0e5d86786bb000137c6ac722d3d36232ee53c8fc5c51c080d3c0a9f605238",
+   "events_sha256": "f74024ccc54af6db17f5a16484d42595068a5d4cbb2fb72d4301ca896044be02",
+   "note": "the cap replayed by tests/test_covariant_readings.py (f); the full run above is registered once"
+  }
+ },
+ "off_replay": {
+  "hubble_stars/coasting_none": {
+   "base": {
+    "source_sha256": "5d254c8544aadc8826cee940024a36e88430135b08ba7719c7ae2eba4aabbbd3",
+    "state_sha256": "1a385429c9489545ab69c3dd085226837d2f44fee160b0ef4dd9ff7e0eb0b9bd",
+    "audit_sha256": "33cf0ac763ce6254f94a7cd7ba401c95b36d53ce168b43c50976ae074d19abbd",
+    "events_sha256": "f75ca18274d2bd0b6c8926a9d2707ca3d1f884e6517fd1c84a24af21e3c8e2af"
+   },
+   "head": {
+    "source_sha256": "24e0c1bacec8e5b82fc602b1fc4580a234d420e922bbc1e9223df64d0eb60c3d",
+    "state_sha256": "1a385429c9489545ab69c3dd085226837d2f44fee160b0ef4dd9ff7e0eb0b9bd",
+    "audit_sha256": "33cf0ac763ce6254f94a7cd7ba401c95b36d53ce168b43c50976ae074d19abbd",
+    "events_sha256": "f75ca18274d2bd0b6c8926a9d2707ca3d1f884e6517fd1c84a24af21e3c8e2af"
+   },
+   "identical": true,
+   "note": "the registered world without the key, run on the base (origin/main f5417ab3) and on the head: the state, the books and the events byte for byte equal (a research replay, recorded once)"
+  }
+ }
+}

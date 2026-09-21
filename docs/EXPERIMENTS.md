@@ -6335,6 +6335,90 @@ sequential gates on an entangled record, the full register replay.
   with these readings.
 
 
+### S, the covariant readings (2026-09-21)
+
+- **Confronts.** The model owner's decision of 2026-09-21 (record 270 of
+  the log of 2026-09-20, on the derivation mathematician's section 17:
+  "Yes, that is what comes out right, no?"; today's order, about 11:52Z,
+  translated: "you said covariant-readings-v1 is needed to confirm the
+  formula or to run it; have them do it, urgently"): the formula at the top
+  of the owner's page, W = E_0^2 + 3 **p** . **p** (the exact square of a
+  body's energy, compared and never rooted; E_0 = Q S M; c^2 = 1 / 3),
+  must stand on a run. The hypothesis `covariant-readings-v1`
+  ([DERIVATIONS_BEAM 17.6](DERIVATIONS_BEAM.md#176-amended-per-the-physics-rule-review-of-covariant-readings-v1-record-297-the-nine-must-fixes-the-integer-forms-the-should-fixes),
+  the physics-rule reviews of records 297 and 314; [HYPOTHESES 25](HYPOTHESES.md#25-the-covariant-readings-a-bodys-energy-as-an-exact-square-compared-and-never-rooted-its-clock-gated-by-e_0--e-stated-so-that-it-can-fail)),
+  a world key beside the law: every body's record carries W and E' (the
+  largest integer with E'^2 <= W, by comparisons), a second owed count
+  gates its self-creations at E'_0 / E', the drive's wall loses its cap
+  term (the pace p / E'), the crowd's count is charged with the sum over
+  the owed intervals, the free release runs per lattice interval. Against
+  nature's rows 4a and 4b of [NATURE](NATURE.md): the muon's lifetime in
+  flight (gamma), the moving lamp's z = gamma (1 + beta) - 1. Read at the
+  +x face of the J4 bar (the products' clicks, DETECTOR) and at the centre
+  of the coasting world (the pointer's z, DETECTOR); the `become` lines and
+  the `energy` lines GAMEBOARD.
+- **Model prediction, pinned before the run
+  ([the expectations](../examples/events/covariant/README.md#the-expectations-pinned-before-the-runs-expectationsjson);
+  `examples/events/covariant/expectations.json`, derived by the generator
+  from the engine's own rules beside the design's numbers).** The muon
+  (content 207, Q S M = 13 248) at rest, at p = 3640 and at 12 856 (E' at
+  load 13 248, 14 671, 25 910; gamma 1, 1.1074, 1.9558): the 64th
+  self-creation at the design's 64, 70.9 and 125.2 within one tick and at
+  the derived 64, 70 and 124 (k + floor((k - 1) (E' - E'_0) / E'_0)); the
+  electron product's click on the +x face at the design's 391, 367 and 345
+  within two ticks and at the derived 392, 369 and 345 (the flight table's
+  steps from the decay's Node 10, 27, 72); `coasting_none`'s `s_mz2` at
+  its declared momentum z = 0.369 +- 0.003 (gamma 1.04967, the pace 0.1755;
+  the register's 0.2636 without the key); E'^2 <= W < (E' + 1)^2 on every
+  `energy` line of every run.
+- **Features.** The world key `covariant_readings` (`c2` [1, 3], `grain` g)
+  and the identity `covariant-readings-v1` ([BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file),
+  [ENGINE.md's readings by type](ENGINE.md#the-detectors-readings-by-type));
+  no rule of the six verbs changed; the catalog's `muon`; reading (ii),
+  the gradient push, not built (17.6 M4: not Lorentz's pair), the pair's
+  round trips withdrawn (17.6 M5); the base `main`'s per-axis drive (form
+  B, record 342, BLOCKED in review, record 348, not on `main`; on the two
+  pinned worlds every momentum lies on one axis, where the two drives
+  without their cap term are one count); a `fixed` measured event (the
+  apparatus) carries no readings.
+- **Run.** `examples/events/covariant/` (the four worlds written by
+  `make_worlds.py`), `tools/run_series.py --jobs 2`, 420 and 400
+  intervals, headless; the readings by `tools/covariant_readings.py`
+  (every line DETECTOR or GAMEBOARD). The worktree `covariant_readings`
+  from main `f5417ab3`, the project's environment (Python 3.14.0rc2, numpy
+  2.5.3); the source fingerprint `24e0c1ba...`; the J4 runs 0.3 s each, the
+  coasting run 42.9 s (41.0 s without the key on the same head); every run
+  completed with the books balanced at every tick; the tool: 0 record
+  checks failed, 24 readings inside, 1 outside, nothing moved
+  ([the page](../examples/events/covariant/README.md#what-was-measured-2026-09-21)).
+
+  | World | Expected | Measured | Verdict |
+  | --- | --- | --- | --- |
+  | `j4_muon_rest` | E' 13 248; the `become` at 64 at x = 10; the `beta` click at 391 +- 2 (derived 392); the invariant | 13 248; tick 64 at x = 10; the click at 392, content 207; 420 lines, 0 failures; 0 intervals owed | inside (7 of 7) |
+  | `j4_muon_3640` | E' 14 671; the `become` at 70.9 +- 1 (derived 70 at x = 27); the click at 367 +- 2 (derived 369); the invariant | 14 671; tick 70 at x = 27; the click at 369 (the decay derived back 70); 0 failures; 6 intervals owed to proper time | inside (7 of 7) |
+  | `j4_muon_12856` | E' 25 910; the `become` at 125.2 +- 1 (derived 124 at x = 72); the click at 345 +- 2 (derived 345); the invariant | 25 910; tick 124 at x = 72: **OUTSIDE the design's pin by 0.2**, inside the derived (the discrete count from an empty accumulator lies one gamma - 1 = 0.96 below 64 gamma; the reviewer's own re-derivation of record 314 gives 124); the click at 345 (the decay derived back 124); 0 failures; 61 intervals owed | 6 of 7 inside, 1 outside (reported, not moved) |
+  | `coasting_none_covariant` | `s_mz2` z = 0.369 +- 0.003; E' / g 1 128 171 883 over 1 074 790 400 (gamma 1.04967); the pace 0.1755; the invariant | z = 0.3674; 1 128 171 883 over 1 074 790 400; 18 steps in the late window's 100 intervals (0.180); 9567 lines, 0 failures; `s_mz2` owed 18 intervals of 400; 25 paid families off 3 h n = Q S d reported, no refusal | inside (4 of 4) |
+
+- **Verdict (S).** The formula stands on the run: on every `energy` line of
+  the four runs (10 827 lines) E'^2 <= W < (E' + 1)^2 held with E' kept by
+  comparisons alone after the load-time root; the muon's clock ran at
+  E'_0 / E' (64 self-creations in 70 and 124 intervals against 64 at rest),
+  its electron product reached the face at the ticks the flight table
+  derives from that clock (392, 369, 345 against the design's 391, 367,
+  345), and the moving star's light read z = 0.3674 at the identity's beta
+  0.3040 where the law without the key read 0.2636 and nature's gamma (1 +
+  beta) gives 0.369. The one reading outside is the discrete cadence's
+  offset of gamma - 1 below the continuum's 64 gamma at gamma 1.96,
+  reported with its integer. The OFF replay of `coasting_none` on the base
+  and the head is byte for byte equal, the gate set's digests unchanged.
+  Nothing was tuned; NATURE rows 4a and 4b are re-read under both
+  identities; the law's FAIL rows stand beside the identity, as record 270
+  decided. Not built: the contraction (reading (ii)); the host cost apart
+  from the model's is the comparison walk at a change of content (at most
+  258 per frame on the coasting world, up to 25 123 at the muon's
+  `become`), reported on the record.
+
+
 ### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
 
 - **Confronts:** the single-graviton detector proposed by Tobar, Manikandan, Beitel and Pikovski (Nature Communications 15, 7229, 2024; construction begun in 2026): a massive acoustic resonator cooled to its ground state, weakly monitored, whose single quantum jump to its first level during a passing gravitational wave is one graviton absorbed, a gravito-phononic photoelectric effect; the key is to read individual transitions, since the mean energy is always consistent with a classical wave.
