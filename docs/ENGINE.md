@@ -514,7 +514,43 @@ declares a lamp (`NatureBeamWorld.recorded`); a lamp is refused with N
 below 4 (a record's circle holds the quarter turn of a reflection); a
 world without a lamp reads as it did before the law, byte for byte
 (`tests/test_amplitude_click.py` (d): the gate set's lamp-free worlds at
-their caps against their pinned digests); `doppler` (the reading's
+their caps against their pinned digests); the massive rows (since
+2026-09-21, `massive-rows-v1`, [BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file);
+the model owner's yes, record 332; the design
+docs/designs/massive_rows/DESIGN.md): the world key `massive_rows` (true
+or false, false by default; `age_bound` declared with it), the family key
+`massive` under it (a paid family with a phase circle and no
+`phase_per_link`) and the lamp key `momentum_magnitude` (p, an integer
+from 1, required on the lamp of a massive family and refused elsewhere);
+every family gets at load, beside `Flight`, its tables over the world's
+directions (`nature_beam.FamilyFlight`, `NatureBeamTables.family_flights`):
+the flight triple (the rate, the wall, the start) read by `walk_step` in
+place of Flight's pair, the labels `momentum_labels` multiplies, the
+turn's numerator per direction and axis over one denominator read by
+`by_drive_rows` on the row's `acc_turn` at every Link crossed, and the
+completion's pair (f_F, q_F); a family without the flag carries Flight's
+numbers, u_D, (`phase_per_link`, 1) and (1, 0) by value, a massive family
+p_D, (2 abs(p_D)_1, 2 E'_D, E'_D), (abs(p_{D,a}) N, h) and (0, M); at an
+end (a `measure` click, a face, the border) f_F x the units, the content
+and the labels go where they went and (1 - f_F) x them wait in the
+record's offer (`amplitude.Offer.waiting_*`) under the books' `absorbed`
+line, and at the record's completion (`nature_beam.gather_records`, after
+step 4 and after the merge) every chosen end takes q_F into the measured
+event's `held` at the chosen Node, one unit into its `clicks` and q_F x
+the label-table entry of the chosen row's direction into its momentum (a
+chosen face or the border: the face's `clicks`, `content` and `momentum`,
+no body formed), the chosen row read by the ladder's rungs over the
+waiting units per direction at the Node (`amplitude.node_choice`, the
+same rungs that chose the Node within the cell), and the rest of the
+record's waiting goes to the `cancelled` lines; a row of no record has no
+completion and is placed at its arrival; the `gather` line's `content`
+and `momentum` are f_F x what the chosen rows brought plus q_F and the
+one label, the `click` line as today; a massive birth whose turn is not 1
+is refused naming the lamp; the inverse interval is refused with the key;
+`run.json` carries `massive_rows` as declared, the identity under
+`hypotheses` when it is true and per family `massive` and
+`momentum_magnitude` only then; without the key every world reads as it
+did, byte for byte (`tests/test_massive_rows.py`); `doppler` (the reading's
 weight at the relative speed of 2026-09-20, `doppler-v1`, deleted on
 2026-09-21 with the crossing rule,
 [BEAM_LAW note 48](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
@@ -838,7 +874,8 @@ the identity of the one mechanism of the columns and their range;
 `weak-v1` when a measured event declares `become` or a table entry's rule
 is `become`, the identity of the transformation; `meeting-v1` when
 `meeting` is true, after it; `amplitude-v1` when a lamp is declared (a
-recorded world); `hand-v1` when a hand or an axis is declared anywhere;
+recorded world); `massive-rows-v1` when the world declares
+`massive_rows`, after it; `hand-v1` when a hand or an axis is declared anywhere;
 `covariant-readings-v1` when the world declares `covariant_readings`
 (2026-09-21, the model owner's record 270; the record then carries the
 key's block `covariant_readings`: the pair `c2`, the `grain`, `books`, the
@@ -917,7 +954,8 @@ electric push being the family's charge per unit of content,
 [BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
 and note 28; a row of a record also its `record`, `branch`,
 `multiplicity` and `u`, written on the rows of a record alone: a row of
-no record carries none; in a world that
+no record carries none; in a world that declares `massive_rows`
+also the row's `acc_turn`, the turn's remainder, written only then; in a world that
 declares a hand or an axis (`hand-v1`) also the row's `hand`, written
 only then, and the `click`, `pass`, `read`, `rerelease` and face lines
 carry `hand`, the `become` line's products a fifth entry, the product's
@@ -939,6 +977,21 @@ under `momentum.cancelled`): initial + released = current + escaped +
 absorbed + cancelled, the identity as it was where nothing cancels; the
 units a split creates, sum (a_i - 1) w per row, enter `released` as every
 re-creation does (the design's `split` line is not a line of the books).
+In a world that declares `massive_rows` (`massive-rows-v1`) the transit
+and content lines gain the sub-line `waiting` under `absorbed` and the
+momentum lines the `waiting` line (per family under
+`families[<name>].waiting` and the world's total under
+`momentum.waiting`; `Ledger.waiting_amount`, `waiting_content`,
+`waiting_momentum`): what the open records' rows brought where they
+ended and was not placed at the arrival, (1 - f_F) x the units, the
+content and the labels, kept in the records' offers; an arrival moves
+them from `current` to `waiting` (f_F = 0) or to `measured` (f_F = 1), a
+completion moves q_F from `waiting` to `measured` (or to `escaped` at a
+face or the border) and the rest to `cancelled`, so that `absorbed` =
+what the clicks placed + `waiting` on a world without a re-emitter, and
+measured + transit + escaped + cancelled + remainder + waiting moves only
+by the pushes, the turns and the escapes; absent (every f_F 1) the lines
+are zero and not written.
 In a recorded world the record gains the lines of the layer
 (`events/amplitude.py`, the design's sections 3 and 5): `birth` (a lamp's
 record: `record`, `u`, `labels`, `arms`, `units`, `multiplicity`), the
@@ -1011,6 +1064,8 @@ things themselves, one row each in the three worlds, are in
 | the energy E' of a body (`covariant-readings-v1`, the world key `covariant_readings`; DERIVATIONS_BEAM 17.6) | scalars: E' / g the energy, E'_0 / g = (Q S / g) M the rest energy, W / g^2 = (E'_0 / g)^2 + d (**p** / g) . (**p** / g) its exact square, at the identity's grain g and the declared c^2 = [1, d] | the `energy` line of `events.jsonl` per body per interval (`energy`, `rest`, `square`, `creating`, `owed` the intervals the proper-time gate charged, `comparisons`); `energy` on the `step` line beside `drive`; the `covariant` block of a body's state (`energy`, `rest`, `square`, `waited` the intervals owed to proper time, `counted_sum`, `comparisons` the most in one frame) and `acc.tau` its proper-time accumulator; the run's `covariant_readings` block (the declaration, the paid families off 3 h n = Q S d, the comparisons, `waited` per body); written under the key alone, on bodies that are not `fixed` | E' in units of Q S per unit of content (E' = 3 E at c^2 = 1 / 3), at the grain g | GameBoard (a diagnostic: the host's view of the body's record; the detector's readings under the identity are the products' face clicks and the centre's pointer, series S) |
 | the label **p** of a row | vector | `push` on a `click` or `read` line (the row group's label, what the reader took); `momentum` on a face `click`; `momentum` on a `gather` line (what the chosen rows gave); `recoil` on a `become` line; `momentum` per family on a face and the border | label units | detector |
 | the share of a record's row | vector | `share` on the `click` line of a record's row: the row's push on matter, label x amount // m | label units | detector |
+| the placed quantum of a completion | scalar M and a vector | `content` and `momentum` on a `gather` line: under `massive-rows-v1` the family's q_F (its `quantum`, M) and q_F x the label-table entry of the chosen row's direction, what the chosen set took at the completion (for every other family what the chosen rows brought, as before; the `click` line reports what arrived, `content` and `push`, for both); after it `held`, `events` and `momentum` of the measured event at the chosen Node, or a face's `content`, `clicks` and `momentum` | units of content; label units | detector |
+| the waiting | scalars and a vector | the `waiting` sub-line under `absorbed` of the transit and content lines and the `waiting` line of the momentum block (`audit` of `run.json`), in a world that declares `massive_rows`: what the open records' rows brought where they ended and was not placed at the arrival ((1 - f_F) x the units, the content and the labels), resolved at the completion (q_F placed, the rest cancelled) | units, units of content, label units | GameBoard |
 | a Node as a position | vector of Links (x, y, z) | `node` on every line; `position` of a measured event's state; `to` on a `step` line | Links | GameBoard |
 | the step of a measured event | scalars and a vector | `steps` and `axis_steps` of its state; the `step` line | Links | GameBoard |
 | the charge | a reduced pair (n, d) | `charge` of a measured event's state (rho x content, reduced) and `charges` per column by name; the `charge` line of the books | the family's charge per unit of content (a paid family: a whole charge per unit of amount) | detector (the state); GameBoard (the books) |

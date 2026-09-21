@@ -4285,6 +4285,41 @@ sequential gates on an entangled record, the full register replay.
   none moved. The digests of 47 of the 48 worlds moved; the numbers
   above are kept as history.
 
+### W, the massive rows (2026-09-21)
+
+- **Confronts.** The model owner's yes of 2026-09-21 (record 332 of
+  docs/LOG_2026-09-20.md: "with the electron this is the right thing to
+  do; it works exactly by the system's tools") on the mathematician's
+  design docs/designs/massive_rows/DESIGN.md (ADMISSIBLE in the
+  physics-rule review's three rounds; [HYPOTHESES section 26](HYPOTHESES.md#26-the-free-particle-as-a-record-of-massive-rows-de-broglies-fringes-from-h--p-stated-so-that-it-can-fail)):
+  a free quantum of matter as a record of massive rows over the fan, the
+  momentum label p_D, the content M, the pace p / E' by the flight's one
+  accumulator, de Broglie's turn per axis Link, the click gathering one
+  quantum to one Node. The claim: de Broglie's wavelength h / p and the
+  two-slit fringes of matter from the same law and apparatus as light's.
+- **Model prediction, pinned before the run
+  ([the expectations](../examples/events/massive_rows/README.md),
+  `examples/events/massive_rows/expectations.json`; the design's section
+  4, re-derived by the accumulator rule on the engine's own lines).**
+  `slits_matter`: `slits_huygens`' plane and Farey fan with `matter` (M
+  64, p 220, S 1, h 1024: E' = 4113, the pace 0.0926 c, the wavelength
+  4.6545 Links); the lamp leg 139 (the photon's 13), the first `click`
+  line at `screen_60` about the tick 955 within 5 and at `screen_37`,
+  `screen_83` about 1016 (DETECTOR, the group pace); the bright bands at
+  the pixels 36.5, 60, 83.5 within one, Pearson of the gathers' counts
+  with the two-source cosine 0.89 +- 0.03 on the declared Farey fan, the
+  visibility 0.95 +- 0.03, the dark pixels 0 to 3 (DETECTOR, the
+  gathers); the run 5750 intervals for every record of 4096 births, first
+  at 1024 births (`slits_matter_1024`, 2700 intervals); the faces' and
+  the wall's completions a GAMEBOARD diagnostic beside it.
+- **Run.** The 1024-birth run (`slits_matter_1024`, 2700 intervals)
+  completed on 2026-09-21 and PASSES, every pinned number inside its
+  bracket (DETECTOR: the first `click` lines at ticks 955 and 1016, the
+  bands' centres 37.06, 59.99 and 83.02, Pearson 0.88, the visibility
+  0.964, the dark maximum 1, 433 clicks); the reading in the series README
+  and under `slits_matter_1024.run` in its register, the same digests on
+  the three heads that ran it. The 4096-birth pin when the host allows.
+
 ### N, the binding that costs content (2026-09-20)
 
 - **Confronts.** Whether one condition on one verb, the give at the

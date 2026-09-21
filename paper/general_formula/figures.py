@@ -187,11 +187,11 @@ def figure_pair(summary: dict, checks, output: Path) -> None:
 
 
 def figure_s_of_n(summary: dict, checks, output: Path) -> None:
-    ns = list(range(8, 4097, 8))
+    ns = [64, 256, 512, 1024, 2048, 4096, 8192]  # the registered and computed powers of two only
     values = [float(checks.chsh(n)[0]) for n in ns]
     runs = [(int(n), entry["S_float"]) for n, entry in summary["pair"].items()]
     fig, (ax, zoom) = plt.subplots(1, 2, figsize=(7.2, 3.2), gridspec_kw={"width_ratios": [1.15, 1]})
-    for axis, lo, hi, ylim in ((ax, 8, 4096, (2.6, 3.05)), (zoom, 512, 4096, (2.820, 2.837))):
+    for axis, lo, hi, ylim in ((ax, 64, 8192, (2.70, 2.86)), (zoom, 512, 8192, (2.820, 2.837))):
         axis.axhline(TSIRELSON, color=INK, linewidth=1.0, linestyle="--", label="2 sqrt 2")
         axis.axhspan(
             POH_S - 3 * POH_SIGMA,
@@ -225,8 +225,8 @@ def figure_s_of_n(summary: dict, checks, output: Path) -> None:
         axis.set_xlabel("N (the circle's steps)")
         style(axis)
     ax.set_ylabel("S at the CHSH labels")
-    ax.legend(frameon=False, fontsize=7, loc="upper right")
-    zoom.set_title("N from 512 to 4096", fontsize=9, color=INK)
+    ax.legend(frameon=False, fontsize=7, loc="lower right")
+    zoom.set_title("N from 512 to 8192", fontsize=9, color=INK)
     fig.tight_layout()
     fig.savefig(output / "s_of_n.pdf")
     plt.close(fig)

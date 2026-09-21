@@ -839,6 +839,106 @@ number:
   records the register's (79, 68, 11 and 149, 138, 11) and its books
   balanced at the end.
 
+## The massive rows (series W)
+
+`tests/test_massive_rows.py` (`massive-rows-v1`, 2026-09-21; the model
+owner's yes, record 332 of docs/LOG_2026-09-20.md; the mathematician's
+design docs/designs/massive_rows/DESIGN.md, ADMISSIBLE in the physics-rule
+review's three rounds; docs/BEAM_LAW.md section 2), on its own small worlds
+(a lamp of the massive family `matter`, quantum 4 and p 400 at S 1, h 1024,
+N 64: E'_0 = 256, E' = 738 on a heading, the pace 400 / 738) and on the
+worlds and the register of `examples/events/massive_rows/` (the pin
+`slits_matter`, the 1024-birth run and the small replay world
+`slits_matter_small`, written by `make_worlds.py`; `expectations.json`
+pinned before the run). The expected integers, written down before the
+first run:
+
+- (a) the gate: every lamp-free world of the gate set reads at its cap the
+  three digests `gate_set.json` registers, and `mz_345`, `bell_0_8` and
+  `slits_low` read at their ticks the digests registered from the base
+  tree (the design's head b1248102, main 65b65f45) under `byte_identity`:
+  state, books and events byte identical without the key; the pair (f_F,
+  q_F) is (1, 0) on every family of every gate world (the turn's numerator
+  `phase_per_link` over 1, the content 0), `massive_rows` false, the
+  identity absent from `hypotheses`, no row's line carries `acc_turn` and
+  no books line `waiting`;
+- (b) the tables by value: the wall's table is Flight's (the rate 2 S_1 Q,
+  the wall 2 T_D, the start T_D, the labels u_D, the turn 0 over 1, the
+  pair (1, 0)) and its walk Flight's integer for integer over 500 ages;
+  the massive table is the host's computation of the design's section 1
+  on every direction (p_D by the scaled unit rule, E'_D = isqrt(256^2 + 3
+  p_D . p_D), the rate 2 abs(p_D)_1 within the wall 2 E'_D, the start
+  E'_D, the turn abs(p_{D,a}) x 64 over 1024, the pair (0, 4)); on the
+  heading the wall 1476 = 2 x 738, the label (400, 0, 0) and 1600 Links
+  in 2952 intervals by the one verb (the count 0 or 1); the primitive's
+  identity on the pin world's 1332 moving directions: at E'_0 = 0 with Q D
+  the triple is Flight's on 1332 of 1332, with u_D on the six headings
+  alone; `scaled_label` at the scale 64 equals `unit_label` on every
+  direction; at the pin's p = 220 and E'_0 = 4096, E' = 4113 on every
+  direction and abs(p_D) within 219.3 .. 220.7;
+- (c) the edges: the primitive at p = 0 (the labels zero, E'_0 = 256) has
+  the rate 0, the wall 512 and the start 256 on every direction, no step
+  over 2000 ages and the turn 0 with the remainder 0; `momentum_magnitude`
+  0 is refused naming the key; a lamp at (5, 5, 0) on +x and -x toward the
+  open faces (no detector) completes every record at one face: the faces'
+  clicks together equal the gathers, their content 4 per gather, every
+  gather's `content` 4 and `momentum` (+-1600, 0, 0) by its face, the
+  faces' momentum 1600 x their clicks with the sign, the cancelled lines
+  one unit and 4 per gather and the labels of the other face, two face
+  `click` lines per record of content 4, nothing measured, the escaped
+  content 4 per gather, `absorbed` = `waiting` and the waiting units two
+  per open record;
+- (d) the refusals, naming the key: `massive` without `massive_rows`, with
+  `phase_per_link` 3 and with [8, 1], with `phase` false, without
+  `action`, on the free family; `momentum_magnitude` on a lamp of a
+  family that is not massive, absent on a massive lamp; `age_bound` absent
+  with the key; a quantum 2^29 (the rest energy 2^35, its square beyond
+  2^62 - 1) and p 2^57 (the turn's rate 2^57 x 64 beyond it); two lamps
+  of one family at 400 and 300; a massive family without a lamp;
+  `massive_rows` 1 and `massive` "yes"; at the birth a lamp of held 2 K
+  (the turn 2) refused at its first step naming measured event 1 at [1,
+  5, 0] and the turn 2; the inverse interval refused on a world that
+  declares the key (a bar of one declared row, `hypotheses`
+  ["massive-rows-v1"]);
+- (e) the books on the screen world over 60 intervals: balanced at every
+  tick; the content line's `absorbed` = the measured line's `measured` +
+  `waiting`, the transit line's `absorbed` = the clicks + its `waiting`;
+  measured + transit + escaped + cancelled + remainder + waiting = 0 on
+  every axis; at least 8 completions, each `gather` with `content` 4 and
+  `momentum` 4 x a label of the table at its chosen `screen_<y>`, the
+  pixel's `held` up by 4 and `clicks` by one per gather there and its
+  momentum moved; per tick with a gather, the cancelled content moved =
+  the waiting content moved + the content arrived - 4 x the gathers;
+  every `click` line of `matter` with `content` 4 and a nonzero `push`;
+  the turn: the heading's row of the first record after k Links holds the
+  phase (k x 400 x 64 // 1024 + u) mod 64 and `acc_turn` = k x 400 x 64
+  mod 1024; the merge: two rows of `acc_turn` 3 and 5, equal elsewhere,
+  stay two rows and a third of `acc_turn` 3 merges into the first (the
+  amounts 2 and 1);
+- (f) `slits_matter_small` (a lamp of quantum 4 and p 400 at (1, 10, 0)
+  on five directions, the wall at x = 4 with the openings at y = 8 and 12
+  re-releasing on five directions with equal weights, 21 `sum` pixels at
+  x = 10, the wheel [5, 8], 48 intervals): the digests of state, books
+  and events, the gathers of the records 1 .. 8 (the tick, the chosen
+  set, the Node, the content 4 and the one label), the books and the
+  momentum block at the end, the layer's line and `hypotheses`
+  ["bohr-v1", "amplitude-v1", "massive-rows-v1"], as `replay_register.py`
+  wrote them, bit-exact; the shipped world equals the generator's; the
+  state's rows carry `acc_turn`;
+- (g) the pin derived from `slits_matter.json` and the engine's tables:
+  the world's `hypotheses`, ticks 5750, width 1, action 1024; the pair (0,
+  64) on `matter` and (1, 0) on `wall`; the diagonal (1, 1, 0)'s entry
+  (624, 8226, 4113), the label (156, 156, 0), the turn (9984, 9984, 0)
+  over 1024; E' = 4113 on every moving direction; the turn 55 / 4 per
+  axis Link and the wavelength 1024 / 220; on the engine's Bresenham
+  lines by the family's triple the lamp's diagonals reach the openings
+  after 11 Links at the age 139 (the photon's 13) and the other three
+  rows the stops; the fan's 1327 directions from each opening reach the
+  centre pixel first 815 intervals after the re-release at 140 (the tick
+  955) and the pixels 37 and 83 at 876 (1016), the longest row 1468; the
+  run 5750 holds 4096 + 139 + 1468 and the 1024 world's 2700 holds 1024 +
+  139 + 1468; the 1024 world's wheel [633, 1024].
+
 ## The amplitude law: Malus
 
 `tests/test_amplitude_malus.py` (A12 under the click; the mathematician's

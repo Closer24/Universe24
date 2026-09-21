@@ -508,7 +508,7 @@ def register_family_names() -> set[str]:
 
 
 def test_the_shipped_definitions_are_the_generators_and_define_every_family_once():
-    """(v2-f): the files equal `make_definitions.py`'s documents; the 48 names once."""
+    """(v2-f): the files equal `make_definitions.py`'s documents; the 49 names once."""
     path = ENTITIES / "make_definitions.py"
     spec = importlib.util.spec_from_file_location("entities_make_definitions", path)
     module = importlib.util.module_from_spec(spec)
@@ -547,6 +547,10 @@ def test_every_shipped_definition_places_parses_and_runs(reference):
     intervals with the books balanced."""
     for entity in shipped_definitions(Path(reference).name)["entities"]:
         world = entity_world(reference, entity["name"], [4, 4, 1])
+        if any(family.get("massive") for family in entity["families"]):
+            # The world that places a massive family declares the identity
+            # (`massive-rows-v1`): the world key, `action` and `age_bound`.
+            world.update({"massive_rows": True, "action": 1024, "age_bound": 4096})
         loaded = load_world(json.dumps(world).encode("utf-8"), base_dir=EXAMPLES)
         names = [family.name for family in loaded.world.families]
         assert names[0] == "light" and len(names) == len(set(names)), entity["name"]

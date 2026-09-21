@@ -25,17 +25,20 @@ section [How the team works now](../workflow.md#how-the-team-works-now-the-model
 - The owner-only items stay with the owner: the arXiv identifiers, the values
   checked against the PDFs, the compile, the release tag, the version DOI.
 
-## The referee
+## The referee (retired)
 
-The coordinator activates a second reader for every round of the manuscript
-(the owner, 2026-09-21, record 309): the referee reads the round against the
-tree, each citation resolved at its commit, each integer against the register,
-each formula against its section, each status (R, H, F; PASS, FAIL, BOUND,
-NOT YET) against NATURE.md and the map 21.2; its findings are numbered per
-round (major and minor), applied in the manuscript where the manuscript is
-wrong, and sent to the Boss where the tree is wrong. A round is closed when
-its findings are applied or dispatched; the next round starts on the next
-head of main the coordinator merges.
+The hostile-referee rounds are retired by the model owner's word of
+2026-09-21 (record 454; translated): "There is no referee. Cancel it.
+Shorten the paper to forty pages. Understand what is most right to keep
+and what not. Keep what is certain." No further round runs and no reply
+is made to a review as a reply; a correct finding is a bug fixed in the
+text, an incorrect one is left. The rounds already held stay in PLAN.md
+as history. What stays in a passage is decided by one criterion: a rule
+of the law as the repository states it, a derivation closed in
+DERIVATIONS_BEAM with its row cited, a registered run with its
+fingerprint and its detector readings, or a declared hypothesis or a
+stated non-claim; everything else stays in the repository and leaves the
+paper.
 
 ## Reporting
 
