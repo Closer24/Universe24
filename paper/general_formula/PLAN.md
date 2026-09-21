@@ -2136,3 +2136,32 @@ one wave with a notation table at the paper's head. Referee round 40:
 one finding (a comma in the log bibitem), applied; his soft points
 applied (the lemma cites rounds 4 and 4b, not 4b alone).
 
+## Wave 19 (2026-09-21): the notation wave (record 362; the Boss's decision on NOTATION.md)
+
+The Boss's decision (his message of 12:45Z under record 362, on the
+mathematician's docs/designs/notation/NOTATION.md): every formula in
+physics' letters (E^2 = E_0^2 + p^2 c^2 with c^2 = 1/3, v = p c^2 / E,
+E_0 = m c^2); the integer form (E / c^2)^2 = m^2 + 3 p . p kept as the
+exact square, never rooted, its integer root written floor(E / c^2)
+(the macro \Eint); the prime of E' dropped; the grain family as the
+one rule (N_phi the circle, N_l the label's scale, N_w the width, N_D
+the direction bound, N_theta the fan's grain, N_u the wheel; this
+paper adds N_t for the cosine tables' scale, 256, on the same rule),
+the definition line m = N_l N_w M with the one note that the law's
+documents write Q, S and N; the cheap renames: the four W's to
+E^2/c^4, R(f) and R_k, d_p and N_u; bold F to bold Phi; the fan's G to
+N_theta; P to N_D; the ladder's T to C_K; the presence k to a_r and
+the age moment's k_a to a_tau; bold V to bold a; c_1 the heading's
+pace; the direction D with T_D and u_D and Eq. (1)'s wall d (the
+ladder's rungs b_k unchanged); the multiplicity and the Links made by
+the age in code font (\mathtt m); Young's D and s to z_s and a_s
+(the direction's letter taken). A notation table at the paper's head
+(Table tab:notation, after the Method paragraph) and the glossary
+appendix restated to it; a bibitem for the proposal and the decision.
+Also under the Boss's order of 12:45Z: the clock's-word sentence and
+its bibitem removed (nothing of it cited until the owner's word and
+the run); the crowd paragraph keeps one clause that its k is the
+presence, from the worlds' own README. Done by one scratch script
+(notation.py) with exact anchors, then the leftovers checked by grep.
+Referee round 41 before the commit.
+
