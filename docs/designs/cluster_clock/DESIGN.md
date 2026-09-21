@@ -1,6 +1,6 @@
-# Series Q, a cluster of crowds read by one detector: the design, with the expectation pinned before any run
+# Series V, a cluster of crowds read by one detector: the design, with the expectation pinned before any run
 
-The G2 experimenter, 2026-09-21, on the model owner's word after series P
+The G2 experimenter, 2026-09-21, on the model owner's word after series U
 ([a lamp inside a crowd](../crowd_clock/DESIGN.md)). The owner (in
 conversation, translated): "so is it possible that this is the matter with
 galaxy clusters that look as if at a constant speed when they should have
@@ -11,7 +11,7 @@ run; section 7 after. Nothing here is registered in
 in the folder's [README](../../../examples/events/cluster_clock/README.md)
 for the owner's word.
 
-Sources: series P's design and measured section (k = 4 F / 2^16 exact to
+Sources: series U's design and measured section (k = 4 F / 2^16 exact to
 the rung; a slowed lamp moves at v / (1 + k) and falls behind an unslowed
 crowd; 1 + z = (1 + k)(1 + v / c) at a detector for a lamp inside a crowd);
 [BEAM_LAW](../../BEAM_LAW.md) step 4 and notes 17, 41, 48.
@@ -24,7 +24,7 @@ argument: the spread is too large for the visible mass to bind, so the
 cluster should have flown apart. Under the law as built a member's reading
 has a second term that is no speed: 1 + z = (1 + k)(1 + v / c) with k the
 presence of its own crowd's rows at its Node over the suspension's wall
-(series P). Members of different densities have different k, so a cluster
+(series U). Members of different densities have different k, so a cluster
 of members at rest reads a spread of z with nothing moving. The two
 questions this series pins:
 
@@ -34,14 +34,14 @@ questions this series pins:
   the spread is one-sided (k >= 0: a member is never bluer than the
   cluster's frame).
 - **Moving as one.** The same five thrown together at 0.2 c away from the
-  detector. Series P found that a slowed lamp moves at v / (1 + k) and its
+  detector. Series U found that a slowed lamp moves at v / (1 + k) and its
   unslowed crowd leaves it behind. A crowd slowed alike (every star in the
   crowd of all the others) moves at v / (1 + k) as a whole; the law then
   reads 1 + z = (1 + k)(1 + v / ((1 + k) c)) = 1 + k + v / c, the clock's
   term and the Doppler adding, so every member's z shifts by the same
   v / c and the spread is untouched by the motion. The alternative form,
   the product (1 + k)(1 + v / c), is what a clock slowed without its
-  motion slowed would read (series P's pin (d) wrote it; its moving lamp
+  motion slowed would read (series U's pin (d) wrote it; its moving lamp
   read between the two, inside the tolerance of both); under it the
   spread grows with v. This series emulates the crowd slowed alike:
   the sources of each member are thrown at v / (1 + k_i), the speed their
@@ -53,7 +53,7 @@ questions this series pins:
 
 ## 2. The worlds
 
-`examples/events/cluster_clock/make_worlds.py` (importing series P's
+`examples/events/cluster_clock/make_worlds.py` (importing series U's
 generator for the fan, the speeds and the pinned k) writes two worlds on a
 bar of 201 x 9 x 9 Nodes (open), `ticks` 500, `suspension` [1, 2^16],
 `release` [1, 2^16], `width` 2^20, N = 64.
@@ -62,7 +62,7 @@ bar of 201 x 9 x 9 Nodes (open), `ticks` 500, `suspension` [1, 2^16],
 - **Five members**, each a lamp of `s_px1` (2^20 units, one unit per
   self-creation on -x toward the detector, the wheel [1, 64], letting the
   crowd's rows and the other lamps' light pass) with two `mass` sources
-  three Links up +y and +z sending series P's fan of nine directions
+  three Links up +y and +z sending series U's fan of nine directions
   across its line at F units per interval (the sources let the light
   pass):
 
@@ -191,7 +191,7 @@ dispersion 0.3683 against 0.3633 at rest.
 3. **The emulation held.** The sources at v / (1 + k) kept within one Link
    of their waiting lamp for 500 intervals at every k: a body that waits k
    intervals per self-creation moves at v / (1 + k) on the GameBoard, as
-   series P found, to the Link.
+   series U found, to the Link.
 4. **The control.** The bare member read 1.0000 and 1.2007: series O's lab
    reading, the Doppler alone.
 

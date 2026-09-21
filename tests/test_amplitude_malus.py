@@ -3,7 +3,11 @@ mathematician's note docs/designs/malus/NOTE.md; the model owner's go,
 record 330 of docs/LOG_2026-09-20.md; the run of 2026-09-21), on the three
 worlds `malus_a`, `malus_b` and `malus_c` of series L's generator
 (`examples/events/amplitude/make_worlds.py`, `expectations.json` under
-`malus`, the pin written before the run and the run's readings beside it).
+`malus`, the pin written before the run and the run's readings beside it)
+and, since the auditor's round 10 part 2 of 2026-09-21, on the three at
+22.5 degrees, `malus_22_5`, `malus_67_5` and `malus_chain_22_5` (one
+setting changed each; the tables' rounding, DERIVATIONS_BEAM 24.3 row 4:
+219 / 256 against cos^2 22.5 degrees and 187 / 256 against cos^4).
 The expected integers of docs/TEST_EXPECTATIONS.md ("The amplitude law:
 Malus"), every number read from the register and none a literal here:
 
@@ -20,11 +24,14 @@ Malus"), every number read from the register and none a literal here:
     cells carry the register's rungs in the click's order, and the chosen
     cells (the read's label, the end's channel) count as the register's
     pin and as the run's reading, bit-exact (`malus_a` 0+ 128 and 0- 128,
-    `malus_b` 0+ 0 and 0- 256, `malus_c` 0+, 0-, 1+ and 1- 64 each; the
-    counts over every record gathered by the end as the run's); the books
-    balanced at the end;
+    `malus_b` 0+ 0 and 0- 256, `malus_c` 0+, 0-, 1+ and 1- 64 each;
+    `malus_22_5` 0+ 219 and 0- 37, `malus_67_5` 0+ 37 and 0- 219,
+    `malus_chain_22_5` 0+ 187, 0- 32, 1+ 5 and 1- 32; the counts over
+    every record gathered by the end as the run's); the books balanced at
+    the end;
 (c) the rotate keeps the record's u (the u question of the note's section
-    2): on `malus_c` every `split` line at the rotation carries `rebirth`
+    2): on every world with a rotation (`malus_c`, `malus_chain_22_5`)
+    every `split` line at the rotation carries `rebirth`
     False, the record's own identity and its birth u, two per arriving row;
     the `rotate` line's setting, bit, turn and rows with the record's units
     before and after; the `read` line's two rows of the record (the labels
@@ -39,6 +46,8 @@ import json
 import sys
 from collections import Counter
 from pathlib import Path
+
+import pytest
 
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
@@ -185,9 +194,9 @@ def test_the_replay_counts_as_registered():
         assert simulation.books(recount=True)["balanced"], name
 
 
-def test_the_rotate_keeps_the_record_u():
+@pytest.mark.parametrize("name", [n for n in NAMES if MALUS[n]["rotate"] is not None])
+def test_the_rotate_keeps_the_record_u(name: str):
     """(c)."""
-    name = next(n for n in NAMES if MALUS[n]["rotate"] is not None)
     registered = MALUS[name]["measured"]
     _, lines = run(WORLDS[name])
     births = {int(line["record"]): int(line["u"]) for line in lines if line.get("event") == "birth"}

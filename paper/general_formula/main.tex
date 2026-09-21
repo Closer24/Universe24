@@ -38,33 +38,29 @@
 \maketitle
 
 \begin{abstract}
-One piecewise-linear map on an integer torus is the law; we state it and
-report what follows from it. The state of the universe is a vector of
+One piecewise-linear map on an integer torus is the law. The state of the universe is a vector of
 bounded integers on the GameBoard; the law is one
 map applied at every Node at every interval, per component with a rate
 and a wall: translate, count the walls it holds (capped at one for the
 drive), subtract them; every wall counted is an event. Its rates are constant for a message in
 transit and bilinear in the state for a body reading what arrives; the
 one read-out that deletes is the click, one comparison of a birth phase
-against a record's squared integer sum. From this law, its
+against a record's integer square. From this law, its
 tables and the declared families follow: Gauss's law exactly, Newton's and
-Coulomb's inverse square in the shell mean, the rows' pace $c = 1/\sqrt3$
-Links per interval (a body's pace not bounded by it as declared), the
-click's weight forced to a positive
-quadratic form of power $2$, Tsirelson's bound as a limit, the
-uncertainty relation exact on the phase circle and Poisson's equation
-for the delay field; in form, a bound set's mass; and, in the limit,
-Doppler, Young's spacing, Bohr's condition (its deciding reading
-unchecked) and Kepler's laws (pinned, not run).
+Coulomb's inverse square, the rows' pace $c = 1/\sqrt3$
+Links per interval (a body's pace not bounded by it as declared), the click's weight a positive
+quadratic form of power $2$ under the splitter's conservation, Tsirelson's bound as a limit, the
+uncertainty relation exact on the phase circle and Poisson's equation; in form, a bound set's mass; and, in the limit,
+Doppler, Young's spacing, Bohr's condition (unchecked) and Kepler's laws (pinned, not run).
 What does not follow: Newton's constant and the masses are inputs;
 Einstein's field equation is not reached; the Lorentz factor is not in
 the law as declared, which predicts an unslowed clock in motion; the
 covariant readings beside it give it on paper. Twenty-two
 dimensionless readings meet nature: five pass
 (four replicated, one a pin, unrun), twelve fail (seven the law's,
-four pinned and unrun, one an input refuted), one passes under the
-age word of the clock and fails under the presence word, the law's
-default; two bound a parameter, two await a run. One prediction: $S = 181/64$, inside Poh et al. at $1.1$ standard errors, run and replicated, met exactly. Every claim is measured, proved, assumed or
+four pinned, one an input), one passes under the
+clock's word assumed, the age moment, and fails under the presence
+word; two bound a parameter, two await a run. One prediction: $S = 181/64$ at the powers of two $512$ to $8192$, run and replicated at $512$ and $4096$, inside Poh et al. at $1.1$ standard errors; at $16384$ the rule gives $5793/2048$, a function of the grains, not a constant. Every claim is measured, proved, assumed or
 open.
 \end{abstract}
 
@@ -90,7 +86,9 @@ gives its immediate special cases before any derivation; the paper
 refers back to Eq.~(\ref{eq:map}) thereafter. What is new here, it
 seems, is not any formula recovered but the form of the law that
 recovers them, one map of bounded integers with no real number
-anywhere, and the ledger beside it that marks each recovery; whether
+anywhere, with its supplied structures stored as integers (the tables,
+the pair's joint contraction; the energy's square is the covariant readings'), and the ledger
+beside it that marks each recovery; whether
 that form is nature's is what the rows of Section~\ref{sec:nature} and
 the one prediction of Section~\ref{sec:differs} put to measurement
 (the precedents of the great papers, read for this \cite{precedents}).
@@ -198,7 +196,10 @@ the standing column of Table~\ref{tab:consequences}
 \item[(P1)] \emph{Bounded integers.} Every quantity of the state is a
 bounded integer and every operation on it is integer arithmetic; there
 is no real number, no root and no floating point at run time, and the
-roundings declared at load are P7's constants.
+roundings declared at load are P7's constants; a world whose counts
+would exceed the declared bounds is refused at load where the static
+budget covers it and refused loudly at the step that would exceed a
+bound otherwise; nothing wraps or clamps.
 \item[(P2)] \emph{The GameBoard.} Space is a cubic array of Nodes, each
 joined to six neighbours by Links through directional Ports; a Node's
 complete local information is its NodeState, and time is a sequence of
@@ -219,7 +220,11 @@ bound $1/\sqrt3$ on an isotropic pace follow
 flight's declared wall $T_D$ (P9); given the wall, $c = 1/\sqrt3$ is
 the flight operator's norm (the derivation's 24.1, row 9).
 \item[(P6)] \emph{The click.} A record is read out once, by one
-comparison, at the click; it is the one step that deletes. A
+comparison, at the click; it is the one step that deletes. The click
+of a pair is one gather of one record from both settings, the law's
+one non-local operation (Section~\ref{sec:causal}), whose state (the
+record's live count and its offers) is kept in the apparatus's list
+and not at a Node. A
 measurement is a detector's reading, a click, a record's moments or an
 external thing's reading, as the world file declares; only a
 measurement is compared with nature.
@@ -238,14 +243,23 @@ the state and the apparatus of a world (the box with its boundaries,
 the bodies with their momenta and contents, the lamps, the detectors,
 the splitters, the gates).
 \item[(P9)] \emph{Rules chosen among few (the ledger's rows 7, 20 and
-21).} The flight is blind
+21, and the clock's word, which the ledger does not yet carry).} The flight is blind
 to the crowd: a row's rate in transit is constant, its wall the
 direction's $T_D$ (the alternative, a wall reading the age moment, is
 optical-v1, a hypothesis beside the law); a body's drive is the flight
 at the fraction its momentum earns (form B, decided and in build, not
 on main; Newton's limit fixes its small-momentum form); and the
 collision's permutation is the cyclic shift (conservation forces a
-bijection of the slots, the shift is the choice).
+bijection of the slots, the shift is the choice). A fourth rule is the
+clock's word: the law as built counts, per table entry, the presence
+of the rows at a body's Node by default and their age moment on an
+entry that reads the age (\cite{beamlaw}, section 3); the owner's word
+of 2026-09-21 (its record to follow) makes the age moment, the
+potential's form $M/r$, the law's word, the engine's default to
+follow. It is an assumption, not a derivation: the alternative, the
+presence, $M/r^2$, reads a flat field at two distances on the
+GameBoard (series T) where nature's clocks between two heights follow
+the potential.
 \item[(P10)] \emph{One imported member of a derived family.} The
 click's weight is forced to the family $\sum_j c_j|\sigma_j(f)|^2$
 (Theorem~\ref{th:gleason}); Born's member, $c_1 = 1$ and the other
@@ -280,7 +294,7 @@ primitive's \texttt{at\_most} $= 0$); and $e$ the event count: every
 unit of $e$ is an event (a Link crossed, a phase step taken, a count
 completed, a birth, a push), and nothing else happens; a reversed rate
 first cancels what was accumulated the other way. For a count without
-cap the third step is the Euclidean division with its remainder kept;
+cap the third step is the division toward zero with its signed remainder kept, the Euclidean division for $s \ge 0$;
 under the cap the residual above the wall is kept and fires one event
 at each following interval until spent. The cap $a = 1$ is the
 drive's alone, one Link per interval (form B's directional drive the
@@ -308,11 +322,12 @@ opposite phases cancel);
 \item the evaluation of the record at the $\Nphi$th root of unity, $\Z[\Z_{\Nphi}]
 \to \Z[\zeta_{\Nphi}]$ ($\Nphi$ the phase circle's width), and its norm (the
 click's one quadratic step);
-\item the Euclidean division with the remainder kept, and the
+\item the division toward zero with the remainder kept (the Euclidean
+division for a non-negative accumulator), and the
 comparison (the carry that is the event; the cap; the threshold).
 \end{enumerate}
 Two places are not linear and there is no third: the carry, a bijection
-$\Z \to \Z/d \times \Z$ that loses nothing, and the click's threshold,
+$s \mapsto (e, s - ed)$ with $|s - ed| < d$ and the remainder's sign that of $s$, which loses nothing, and the click's threshold,
 the one comparison read out per record, whose remainder is not read:
 the one place the law deletes by design. The cap and the sign are
 operation 6's comparison, $\min(\lfloor |s|/d \rfloor, 1) = [|s| \ge
@@ -463,7 +478,7 @@ on the shells (series E).
 \item Born's rule as a limit, the lattice Gleason and the uncertainty
 relation, from the evaluation at the root of unity and its norm
 (operation 5; Section~\ref{sec:gleason}; 6, 22); reached by the limit
-$1/(2\Nphi)$ and the pinned counts $64/0$, $63/1$ (series L), the form
+($1/\Nphi$ per cell, $1/(2\Nphi)$ per cumulative rung) and the pinned counts $64/0$, $63/1$ (series L), the form
 proved.
 \item Young's spacing, from the fan's angular measure and the click
 (7.1); reached in the limit of every direction, the clicks under the
@@ -526,7 +541,7 @@ constants of the world and feeds back where a rate is a function of what
 arrives. The linear block is the rows in flight: the flight, the phase
 and the age at constant rates, the merge, the integer matrices of a
 split, a rotation or a gate, and the evaluation at the click. Every
-component of it has the closed form $s(t) = \lfloor s_0 + rt \rfloor$, so
+component of it has the closed form of its unwrapped count, $\lfloor s_0 + rt \rfloor$ (the accumulator itself is that count's remainder by the wall), so
 a row's state at any interval is a formula of its birth and its age, and
 the limits of Part~II are limits of that formula. The feedback block is
 the bodies: the push, whose rate is the reader's content times the flow
@@ -567,8 +582,9 @@ the flight's pace, holding nothing back and copying nothing. (I3) A body
 receives the rows of other numbers that reach it and emits only at its
 self-creations. (I4) A clock's rate is the reciprocal of one plus what
 it reads: a body's clock counts its self-creations and owes after each
-an interval count proportional to the messages present, so it is slowed
-by messages and by nothing else. (I5) The balance: every message
+an interval count proportional to what it reads of the messages (their
+presence or their age moment, P9), so it is slowed by messages and by
+nothing else. (I5) The balance: every message
 released is on exactly one line of the books at every interval,
 released equals in transit plus absorbed plus escaped plus cancelled,
 per family, in amount and in content, exact at every interval; a paid
@@ -730,8 +746,8 @@ DERIVED & The receiver's Doppler $1 \pm v/c$ on the axis & reached under the cro
 DERIVED & The source's Doppler $1/(1 \mp v/c)$ & reached & 2.5 & series G2, coasting stars \\
 DERIVED & $c = 1/\sqrt3$ Links per interval & the bound proved (the largest uniform pace); the value the flight operator's norm given the declared wall $T_D$ (24.1, row 9; the Highlights call it derived, records 186 and 191), the wall the design's choice among few (P9) & this paper, Prop.~\ref{prop:pace}; 13.2, 11.1 & series L7: the cone, both rows at the age $29$; series Q: $290$ of $290$ face clicks at the derived interval, Node and face, the pace $0.5718$ to $0.5893$ (mean $0.5810$; the asymptotic $0.5774$ to $0.5818$) \\
 DERIVED & Planck's $E = hf$ and de Broglie's $\lambda = h/p$ & reached as identities: the release pays $h$ per phase step, $E = hs = (h\Nphi)f$; the turn by momentum makes a circle every $h/|p|$ Links; exact, the error one step per Link ($1/\Nphi$) & 6.4, 7.2, 21.5 & the Bell lamps' $2$ per birth; series H's closure on the digital circle, $2.041$ to $2.000$ \\
-DERIVED & The uncertainty relation & reached: exact on the circle $\Z_{\Nphi}$ in its support form ($|\mathrm{supp}\,f|\,|\mathrm{supp}\,\hat f| \ge \Nphi$) and its entropic form (the two entropies summing to at least $\log_2 \Nphi$), the Weyl relation exact; Kennard's variance form $\Delta x\,\Delta p \ge \hbar/2$ as the limit $\Nphi \to \infty$ with $\hbar = h\Nphi/(2\pi)$; the one read-out per record is what makes it an uncertainty (Section~\ref{sec:gleason}) & 22 & the evaluation's supports at $\Nphi = 64$ on the register's records, $64, 32, 8, 57$ for $1, 2, 8, 8$ phases (the products $64, 64, 64, 456$; the comb the equality case; host); the far-screen pin $0.92 \pm 0.03$ at the width $27$, not run \\
-DERIVED & The click's weight as a positive quadratic form of power $2$ & reached for the form, Born's member $c_1 = 1$ the one imported law (P10; 24.1, row 12) (the lattice Gleason: rotation invariance, the balanced splitter's conservation and the counts force it); not reached from the algebra: the harmonic constants, consistent with the fundamental by record 156's host map and pinned by no run & 6.5, 6.6 & series L: $63/1$ pins the power to $[1.917, 2.489)$, the far pair's $27, 5, 5, 27$ to $[1.784, 2.054)$; the split at $\Nphi = 32$ and $128$ ($31/1$, $125/3$, pinned before the run) to $[1.548, 2.129)$ and $[1.835, 2.012)$, the intersection $[1.917, 2.012)$ (record 363) \\
+DERIVED & The uncertainty relation & reached as the transform's identities on the phase circle, the reading of the circle as position and of its transform as momentum an identification assumed (22): exact on the circle $\Z_{\Nphi}$ in its support form ($|\mathrm{supp}\,f|\,|\mathrm{supp}\,\hat f| \ge \Nphi$) and its entropic form (the two entropies summing to at least $\log_2 \Nphi$), the Weyl relation exact; Kennard's variance form $\Delta x\,\Delta p \ge \hbar/2$ as the limit $\Nphi \to \infty$ with $\hbar = h\Nphi/(2\pi)$; the one read-out per record is what makes it an uncertainty (Section~\ref{sec:gleason}) & 22 & the evaluation's supports at $\Nphi = 64$ on the register's records, $64, 32, 8, 57$ for $1, 2, 8, 8$ phases (the products $64, 64, 64, 456$; the comb the equality case; host); the far-screen pin $0.92 \pm 0.03$ at the width $27$, not run \\
+DERIVED & The click's weight as a positive quadratic form of power $2$ & reached for the form, Born's member $c_1 = 1$ the one imported law (P10; 24.1, row 12) (the lattice Gleason: under rotation invariance, the balanced splitter's conservation for every pair, a measurement axiom beyond the six operations, and the counts; the built tables break phase invariance by their rounding, so the theorem is the exact form's and the built form is within the rounding); not reached from the algebra: the harmonic constants, consistent with the fundamental by record 156's host map and pinned by no run & 6.5, 6.6 & series L: $63/1$ pins the power to $[1.917, 2.489)$, the far pair's $27, 5, 5, 27$ to $[1.784, 2.054)$; the split at $\Nphi = 32$ and $128$ ($31/1$, $125/3$, pinned before the run) to $[1.548, 2.129)$ and $[1.835, 2.012)$, the intersection $[1.917, 2.012)$ (record 363) \\
 DERIVED & Tsirelson's bound as a limit, $S(\Nphi, N_t) \to 2\sqrt2$ & reached as a limit; two-sided at finite $\Nphi$ & 6.2; Thm.~\ref{th:bell} & series L: $176/64$, $2896/1024$, $11584/4096$ \\
 DERIVED & Young's spacing $\Lambda z_s/a_s$ & reached in the limit of every direction; the fringes in the clicks under the birth wheel and the exact phase, as in the weights & 7.1; \cite{beamlaw} notes 45, 46 & L2b re-registered at $4096$ births: the dark pixels $0$ to $3$ as pinned; the counts' correlation with the two-source cosine $0.891$ against the pinned $0.96$ (the pin the screen's fan's, not this world's) and against the weights' $0.895$; the visibility $0.966$ against the weights' $0.954$; every cell's count within $2$ of its rung (the pin within one; the rungs per record); the bright pixels $19$ to $51$, the map's $28$ to $29$ being the screen's fan's \\
 DERIVED & Bohr's condition $2\pi p r = jh$ and $r_j \sim j^2$ & reached in form; the deciding reading unchecked & 7.2, 7.3 & series H: no orbit closes (record 131); $j = 4.01$ at $r = 12$ is the derivation's arithmetic on the registered momentum \\
@@ -744,7 +760,7 @@ HYPOTHESIS & Faraday's and Amp\`ere--Maxwell's equations, the Lorentz force $q(\
 DERIVED & The gravitational redshift & reached at first order; different law at second order, no horizon & 5.2 & series E: the $1/r$ form at the strong field $a_\tau = 2$ to $9$; the weak-field run named, not pinned \\
 DERIVED & Newton's geodesics, retarded & reached in the limit; the post-Newtonian terms not & 5.3 & no registered orbit confirms it (series D closes none, record 131); the push law is checked by series C \\
 DERIVED & The information cost per record and the classical-quantum boundary & new, a quantity of the law & 6.1, 6.3 & series L: $82, 4, 6, 185$ units for $1, 2, 3, 6.3$ bits \\
-DERIVED & The entropy as the count of torus points consistent with the click list, produced only at the click, the cancel and the leaks; the second law & new; the second law reached in the law's terms & 14 & six registered worlds: bits read plus bits erased $= \log_2 \Nphi$ per record \\
+DERIVED & The entropy as the count of torus points consistent with the click list, produced only at the click, the cancel and the leaks; the second law not reached (an identity, no ensemble) & new & 14 & six registered worlds: bits read plus bits not read of $u$ $= \log_2 \Nphi$ per record \\
 DERIVED & Boltzmann's $S = k\log W$ and Shannon's $H$ \cite{shannon1948}; Landauer's bound \cite{landauer1961} & reached: $S = \log_2 W$ bits with $k_B$ the conversion; bits read plus bits erased $= \log_2 \Nphi$ per record, exact; Landauer's $kT\ln 2$ a different law, the law having no temperature & 14, 6.1, 21.5 & \texttt{mz\_equal} $0/6$, \texttt{slits\_low} $3.425/2.575$ (host) \\
 HYPOTHESIS & The expansion as a growing wall of the flight: $c\,a = c_0$, $1 + z = a(t_r)/a(t_e)$ ($a$ the wall's scale, $H$ its growth rate, $c_0$ the pace at $a = 1$), the Milne case $q = 0$ & reached for the form under expansion-v1, a declared assumption (record 279); nature's $q_0 = -0.53$ not reached (Table~\ref{tab:nature}, rows 3 and 11a); whether the wall reads the tick locally is the open decision & 15 & series G2's $24$ thrown stars re-read at rest under the wall, rms $0.0044$ (host); $q = -0.108$ coasting, registered \\
 HYPOTHESIS & Hubble's law $z = Hd/c$ & reached for the form under expansion-v1, a declared assumption (record 279), $H$ an input: $z = Hd/c_0$ at first order, $1 + z = e^{Hd/c_0}$ in full; the error $(Hd/c_0)^2/2$ and the accumulator's part in $400$ & 15.2, 20.4, 21.5 & the $24$ stars, rms $0.0044$ at $T = 440$ (host) \\
@@ -799,20 +815,23 @@ covariant readings are a hypothesis beside the law, not built.
 about $2\sqrt2$, where quantum mechanics gives one value, $2\sqrt2$, and
 the bound (the derivation's 6.2; Theorem~\ref{th:bell}); the one
 prediction of Section~\ref{sec:differs}, $181/64$, is this value at
-every power of two from $512$.
+the powers of two from $512$ through $8192$; at $16384$ and $32768$ the
+same rule gives $5793/2048$, and with the tables fixed the limit in
+$\Nphi$ is $186034/65773$ (\cite{checks}, \texttt{s\_powers\_of\_two}).
 \item Born's rule to the rung: a cell's probability a multiple of $1/\Nphi$,
-within $1/(2\Nphi)$ of the squared amplitude, the continuum's rule its limit
+within $1/\Nphi$ of the squared amplitude (each cumulative rung within
+$1/(2\Nphi)$ of its cumulative weight), the continuum's rule its limit
 (6.2; Definition~\ref{def:click}).
 \item The uncertainty relation exact on the circle $\Z_{\Nphi}$ in its support
 and entropic forms, Kennard's variance form the limit (22;
 Section~\ref{sec:gleason}).
 \item The entropy's accounting at the click: bits read plus bits erased
-equal $\log_2 \Nphi$ per record (14), the second law located at the click,
+equal $\log_2 \Nphi$ per record (14), an identity of the outcome's coarse graining, the one non-bijective read located at the click,
 the one read-out, with the cancel and the leaks of 14.2 beside it
 (Theorem~\ref{th:bijection}; 25.1, rows 11 and 12), Boltzmann's count
 reached exactly as the count, the kinetic $H$-theorem a reading not
 made.
-\item Gauss's law exact at every instant on the GameBoard, not only in the
+\item Gauss's law exact at every instant for a steady source on the GameBoard, not only in the
 continuum: the amount crossing a closed surface per interval is the
 release inside it, after the front (3.1 and 5.5; the two Gauss rows of
 Table~\ref{tab:consequences}; Section~\ref{sec:continuum}, row 1, for
@@ -995,9 +1014,9 @@ fall, and off it is zero; the shell's Node count against $2\pi r$ and
 $4\pi r^2$; a cube fan's corner-to-face density, the declaration's; the
 flow's $|\mathbf u_D|$ within $1.35$ percent of $N_l$, the integer square
 root at load, vanishing as $N_l$ grows; the field retarded at $c$ and the
-body's speed capped above it; the clock's count reading the presence,
-which on a beam does not fall with $r$ (the potential's $1/r$ is the age
-moment's reading, the delay field's row of Table~\ref{tab:consequences},
+body's speed capped above it; the clock's count under the presence word,
+the engine's default, which on a beam does not fall with $r$ (the
+potential's $1/r$ is the age moment's reading, the clock's word by P9, the delay field's row of Table~\ref{tab:consequences},
 the derivation's 5.1 and series E); and the charge column's floor per
 interval where $\rho_A\rho_B$ is not whole, exact in the sum over a
 period only under an accumulator that is decided and not in the
@@ -1026,8 +1045,9 @@ fingerprint in the register; and, for the bending, series K.
 by the flight table at one pace, blind to the crowd (series K,
 registered: the mean age $89.40$ in every world, the difference $0.00$).
 What a crowd delays is a clock. A body reads at its Node the presence
-of every row of another number (or, on an entry that reads the age, the
-age moment) and owes after each self-creation the whole part of $a_r\,n_c/d_c$
+of every row of another number (the engine's default) or, on an entry
+that reads the age, their age moment (the clock's word by P9, the
+registered clock worlds below reading it so) and owes after each self-creation the whole part of $a_r\,n_c/d_c$
 intervals before the next, $a_r$ what it read and $[n_c, d_c]$ the clock's
 pair of Part~I ($[1, 1]$ in the scalar world, $[1, 2]$ in the age
 world), so that its rate is $1/(1 + a_r\,n_c/d_c)$; its push reads the
@@ -1046,8 +1066,14 @@ moment $\mathcal A$ is the presence times the age they carry, $r/c$:
 \Pi(\mathbf x, t) = \frac{q(t - r/c)\,\tau_L}{4\pi r^2}, \qquad
 \mathcal A(\mathbf x, t) = \frac{q(t - r/c)\,\tau_L}{4\pi c\,r},
 \end{equation}
-$\tau_L = T_D/N_l$ the dwell, the intervals a row spends per Link
-($1.72$ on a heading). The presence is the retarded flux of a conserved
+$\tau_L$ the radial residence factor, the intervals a row spends per
+unit of Euclidean distance, $T_D/(N_l|D|) = 1/v_D$ ($1.72$ on a
+heading, $\sqrt3$ in the limit of every direction); the intervals per
+lattice Link along a row's staircase are $T_D/(S_1 N_l)$, a different
+factor ($1$ on a body diagonal), and a finite shell's coefficient
+depends on its digital geometry, so the coefficient of
+\eqref{eq:fields} is the heading's on a beam and the limit's on the
+sphere. The presence is the retarded flux of a conserved
 stream; the age moment is the retarded potential of the source, since
 $f(t - r/c)/(4\pi r)$ is the retarded Green's function of the wave
 operator, so $\mathcal A$ obeys the inhomogeneous scalar wave equation
@@ -1080,7 +1106,7 @@ content, with the shell's ripple as in Section~\ref{sec:newton}.
 C_a M/r$, $C_a$ the constant of Eq.~\eqref{eq:fields} times the clock's
 pair, runs at $1/(1 + a_\tau)$; general relativity's clock at the potential runs
 at $\sqrt{1 - 2GM/rc^2} = 1 - GM/rc^2 - \tfrac12 (GM/rc^2)^2 - \dots$.
-With $a_\tau = GM/rc^2$ the two agree at first order: the redshift between
+Under the calibration $a_\tau = GM/rc^2$, assumed (the clock's pair and the width do not fix it), the two agree at first order: the redshift between
 two clocks, $1 - a_r(r_1) + a_r(r_2)$, is the $1/r$ law. Reached at first
 order. At second order the GameBoard reads $1 - a_r + a_r^2$ against $1 - a_r -
 a_r^2/2$, and its rate never reaches zero at a finite $a_r$: a different law
@@ -1149,9 +1175,13 @@ In the precedents' form of words: the law as declared reads either
 word per table entry; under the age word the clock's shift follows the
 potential's form, the physicist's map putting the GPS
 ground-to-orbit shift at $45.7$ microseconds per day against Ashby's
-$45.7$ \cite{ashby2003}, where the presence word gives $28.3$; which
-word is the law's default is the owner's decision, pending, and no
-identity is built. What the runs cannot say is
+$45.7$ \cite{ashby2003}, where the presence word gives $28.3$. The
+owner's word of 2026-09-21 chose the age moment as the clock's word,
+entered as an assumption of the law (P9) and not as a derivation,
+where the law as built counts the presence by default and the age
+moment on an entry that reads the age, the default to follow the word;
+the presence word stays in the record as the alternative refuted on
+the form; the second runner's round is pending. What the runs cannot say is
 whether a galaxy's redshift is such a clock or a cluster's dispersion a
 spread of such clocks; they say what the law as built makes of a
 crowd.
@@ -1408,7 +1438,7 @@ records (one phase gives all $64$ roots, the antiphase pair $32$, a comb
 of every eighth phase $8$, the equality case). The entropic bound: the
 two Shannon entropies sum to at least $\log_2 \Nphi$ \cite{maassen1988},
 of the same form as the identity of Section~\ref{sec:table}'s entropy
-row, bits read plus bits erased $= \log_2 \Nphi$ per record, read for the
+row, bits read plus bits not read of $u$ ($H(u \mid K)$ for the outcome $K$) $= \log_2 \Nphi$ per record, the outcome's coarse graining ($u$ stays in the world's list as a GameBoard diagnostic), read for the
 conjugate pair. The algebra: the Weyl relation of the shift and the phase
 multiplication holds exactly, the finite commutator in place of
 $i\hbar$. Kennard's variance form $\Delta x\,\Delta p \ge \hbar/2$
@@ -1616,10 +1646,14 @@ potential is open, and the potential's form is named (the eikonal of
 23.4) and not derived further.
 
 \paragraph{Born, 1926: the rule \cite{born1926}.} Reached as a limit
-and forced in form: a cell's probability is $\rung_k/\Nphi$ with $\rung_k$
-the cell's rung, within $1/(2\Nphi)$ of the Born weight $R_k/C_K$ ($R_k$ the
-cell's weight, $C_K$ the total; Definition~\ref{def:click}; the
-derivation's 6.2), and the weight is a positive quadratic form of the
+and forced in form: a cell's probability is $(\rung_k - \rung_{k-1})/\Nphi$,
+the difference of two cumulative rungs each within $1/(2\Nphi)$ of its
+cumulative weight, so within $1/\Nphi$ of the Born weight $R_k/C_K$
+($R_k$ the cell's weight, $C_K$ the total; $\rung_k/\Nphi$ is the
+cumulative probability; a cell of weight below $1/(2\Nphi)$ can still
+click, and three equal weights at $\Nphi = 64$ give the counts $21, 22,
+21$, the middle one not the nearest integer to $64/3$;
+Definition~\ref{def:click}; the derivation's 6.2), and the weight is a positive quadratic form of the
 record forced by the rotation, the balanced splitter's conservation and
 the counts alone, with the power $2$ pinned by the registered $63/1$
 and $27, 5, 5, 27$ (the lattice Gleason, Theorem~\ref{th:gleason}); the
@@ -1732,7 +1766,7 @@ fan-collision-v1. Nothing enters the law; no run.
 \toprule
 \# & The formula & What the GameBoard has of it & Standing \\
 \midrule
-1 & the continuity equation $\partial_t\rho + \nabla\cdot\mathbf j = 0$ & the books: every unit born, absorbed, escaped or in transit on a ledger line at every interval; the flux through a face its escaped line & DERIVED, exactly at every instant \\
+1 & the continuity equation $\partial_t\rho + \nabla\cdot\mathbf j = 0$ & the books: every unit born, absorbed, escaped or in transit on a ledger line at every interval; the flux through a face its escaped line & DERIVED, exactly at every Node and interval for every source (25.4, the row amount its density); the flux-equals-release form for a steady source after the front \\
 2 & Euler's equation & the six-heading gas of one number under the collision table; the invariant measure exact, the momentum flux to second order, the convective term diagonal only, with the Galilean factor $g = \rho(1 - 2d)/(4d(1 - d))$ in closed form ($d$ the density per heading; round 2, 25.5) & DERIVED in form with the obstacle (the momentum flux tensor not isotropic at fourth rank, exact and not approximate); the isotropic Euler NOT REACHED on six Links (a fan-wide collision an identity, fan-collision-v1, not designed) \\
 3 & Navier--Stokes & the same gas at second order: the one-axis longitudinal equation with the longitudinal viscosity $\nu_L(d)$ from the table ($0.39$ Links$^2$ per interval at $d = 1/8$); the shear viscosity exactly zero, the per-line sums conserved, a shear profile frozen (25.5) & DERIVED in form on the one-number gas, one axis; NOT REACHED as the isotropic Navier--Stokes \\
 4 & Bernoulli & Euler's corollary on one axis, $P + g(1 - c_s^2)\rho u_a^2$ constant, the classical $\rho u^2/2$ replaced by $g(1 - c_s^2)\rho u_a^2$, about $\rho u^2$ at low density (25.5) & DERIVED in form, the factor the table's \\
@@ -1743,11 +1777,11 @@ fan-collision-v1. Nothing enters the law; no run.
 9 & equipartition & an identity per axis by row 7's definition; the equality of the three axes needs an elastic exchange between bodies, which the law lacks & NOT REACHED (the equality of the axes); elastic-contact-v1 named \\
 10 & the Maxwell--Boltzmann distribution & needs the same exchange and many contacts; under contacts as built the momenta drain or reflect, no relaxation & NOT REACHED; elastic-contact-v1 named \\
 11 & Boltzmann's entropy $S = k\log W$ & the count of torus points consistent with the click list (Table~\ref{tab:consequences}'s entropy row; the derivation's 14) & DERIVED, exactly as the count \\
-12 & the H-theorem & the count constant between clicks and dropping by the bits erased at each click: the second law at the click; the kinetic $H$ of the gas a reading not made & DERIVED in form (at the click, exactly; the kinetic $H$ a reading not made) \\
+12 & the H-theorem & the count constant between clicks and dropping by the bits not read at each click: an identity of counts at the click, a second law only under an ensemble, not built; the kinetic $H$ of the gas a reading not made & DERIVED in form (at the click, exactly; the kinetic $H$ a reading not made) \\
 13 & temperature from entropy, $1/T = \partial S/\partial E$ & the count depends on the click list, not on an energy; an ensemble of worlds at one energy the law does not have & NOT REACHED (no ensemble) \\
 14 & Planck's law, Wien, Stefan--Boltzmann & the release $E = hs$ per unit exact; a black body needs lamps at every rate with Planck's weights, which no rule produces & NOT REACHED; the spectrum an INPUT (the family table's rates) \\
 15 & Maxwell's equations & Table~\ref{tab:consequences}'s rows & DERIVED (Gauss exact, the wave equation); HYPOTHESIS (Faraday and Amp\`ere--Maxwell under source-velocity-v1) \\
-16 & the wave equation & the linear block's limit (Section~\ref{sec:delay}) & DERIVED \\
+16 & the wave equation & the linear block's limit (Section~\ref{sec:delay}) & DERIVED for a plane-wave stream (4.1); for arbitrary row data the limit is a hypothesis (17.1 conditional) \\
 17 & Dirac's equation & the hand a pseudoscalar bit, not a spinor; the massive row's block scalar (Section~\ref{sec:qm}) & NOT REACHED; spinor-rows-v1 named \\
 18 & Hooke's law & the bonds are hard, a fixed point at one Link, no term linear in a displacement & NOT REACHED \\
 19 & Ohm's law & a pushed body accelerates without drag; the crowd slows a clock, not a momentum & NOT REACHED; elastic-contact-v1 named (Drude's form follows from it in form) \\
@@ -1757,7 +1791,7 @@ fan-collision-v1. Nothing enters the law; no run.
 23 & the second law and Landauer & the entropy identity; Landauer's bound a different law (the click erases at no energy) & DERIVED (the identity); DIFFERENT (Landauer: the law has no temperature and the click erases at no energy; the row of Table~\ref{tab:consequences}) \\
 \bottomrule
 \end{tabular}
-\caption{\label{tab:continuum}The formulas of flow, heat and temperature, the inventory of the derivation's 25.1 \cite{derivations}: what the GameBoard has of each and its standing in the words of Table~\ref{tab:consequences}'s first column. Rows 2 to 6, 8 and 22 carry round 2's standing (25.5 to 25.10), the rest round 1's; nothing here is a run.}
+\caption{\label{tab:continuum}The formulas of flow, heat and temperature, the inventory of the derivation's 25.1 (every row of the gas reached ``in form'' rests on the product-measure closure of 25.5, whose error is not bounded: a conditional kinetic result, not a consequence of the six operations alone) \cite{derivations}: what the GameBoard has of each and its standing in the words of Table~\ref{tab:consequences}'s first column. Rows 2 to 6, 8 and 22 carry round 2's standing (25.5 to 25.10), the rest round 1's; nothing here is a run.}
 \end{table}
 
 \section{The confrontation with nature}\label{sec:nature}
@@ -1781,7 +1815,7 @@ says so, and the row is also a NOT YET for the run. The register's
 twenty-two rows (its base and its restatements by commit in
 Reproducibility; five
 PASS (four re-run and checked by the second runner under record 353's rule, rows 1a, 2b, 2c and 9 \cite{replications}; row 11b a pin without its run), twelve FAIL, of which four are pinned and one is a refutation of a
-declared input, one row (12, the clock's word, series T) PASS under the age word and FAIL under the presence word, the law's default, two BOUND, two NOT YET), are
+declared input, one row (12, the clock's word, series T) PASS under the age word (the clock's word by the owner's assumption) and FAIL under the presence word (the alternative); two BOUND; two NOT YET), are
 Table~\ref{tab:nature}; nine of the published values are marked in the
 register as to be verified against their sources before submission
 (the visibility of \cite{grangier1986}, the Sorkin parameter of
@@ -1807,7 +1841,7 @@ Row & Observable and nature's value & The law's registered reading & Verdict \\
 1b & The same, the phase-form window & $S = 2$ exactly & FAIL: the local bound, $2.1$ standard errors below \\
 2a & Two-slit visibility of one quantum at a time: $0.98$ \cite{grangier1986} & $0.954$ in the record's weights (L2b); $0.966$ in the clicks under the birth wheel, $4096$ births (L2b re-registered; the register's row restated to the clicks) & FAIL by $0.026$ in the weights and by $0.014$ in the clicks ($0.034$ below the ideal $1$); the cause named, the fan's grain; the correlation pin $0.96$ missed at $0.891$, the pin the screen's fan's \\
 2b & Mach-Zehnder visibility: $0.98$ & the offers $1681/1682$, the clicks $64/0$ & PASS: $0.9988$ \\
-2c & The power of the click's form: the Sorkin parameter of third-order interference $\kappa = 0.0064 \pm 0.0119$ \cite{sinha2010} & the power pinned to $[1.917, 2.012)$ by $63/1$, $27, 5, 5, 27$ and the split at $\Nphi = 32$ and $128$ ($31/1$, $125/3$) & PASS: contains $2$ \\
+2c & The power of the click's form: the Sorkin parameter of third-order interference $\kappa = 0.0064 \pm 0.0119$ \cite{sinha2010} & the power pinned to $[1.917, 2.012)$ by $63/1$, $27, 5, 5, 27$ and the split at $\Nphi = 32$ and $128$ ($31/1$, $125/3$) & PASS on the power: the window contains $2$; Sinha et al.'s $\kappa$ is an eight-configuration observable the law does not compute here (Table~\ref{tab:differs}, row 20): compatible, not the same observable \\
 3 & The deceleration parameter $q_0 = -0.53 \pm 0.01$ \cite{planck2018,riess1998,perlmutter1999} & $-0.108$ coasting; the gravity and double crowds $+0.35$ to $+1.5$ & FAIL: no term with $q < 0$ \\
 4a & The muon's lifetime in flight, $\gamma = 29.33$ \cite{bailey1977} & the counter's ratio $1$ (a pin, J4 not run) & FAIL (pinned): a factor $29.33$ as declared; $\gamma$ exactly under the covariant readings, decided for the build (the amended pins of 17.6 on a J4 world to be written: the products' face clicks at $367$ and $345$ against $391$ at rest, the decay at $70.9$ and $125.2$ derived back, at $0.43c$ and $0.86c$; this paper's addition) \\
 4b & A moving lamp's redshift with the clock's factor \cite{botermann2014} & $z = 0.2636$ at $\beta = 0.2674$ & FAIL: $0.315$ expected, $17$ grains below \\
@@ -1818,13 +1852,13 @@ Row & Observable and nature's value & The law's registered reading & Verdict \\
 7b & The alpha's binding over the deuteron's, $12.72$ \cite{ame2020} & $2.0$ (series N) & FAIL: a factor $6.4$; the give once per body \\
 8a & The neutron's decay curve (exponential, width over median $3.17$; the lifetime of \cite{gonzalez2021}) & $0.036$, a step (series J1) & FAIL: a factor $88$ \\
 8b & The neutrino's passage through a second detector, about $1$ & $0$ (series J2, a window) & FAIL \\
-8c & The lightest massive neutrino over the electron's mass: at least $1 \times 10^{-7}$ from the oscillations' squared mass differences \cite{pdg2024}, at most $1.6 \times 10^{-6}$ from the direct bound \cite{katrin2022} & the \texttt{nu} family with no content, massless as declared (19.5) & FAIL (a declared input refuted): $0$ against at least $10^{-7}$; a content above $0$ is an input the register does not declare; the oscillation itself, a family turning into another in flight, is not modelled \\
+8c & A neutrino mass over the electron's: the heavier state of the atmospheric splitting at least $1 \times 10^{-7}$ from the oscillations' squared mass differences (the lightest eigenstate unbounded below) \cite{pdg2024}; the effective beta-decay mass at most $1.6 \times 10^{-6}$ \cite{katrin2022} & the \texttt{nu} family with no content, massless as declared (19.5) & FAIL (a declared input refuted): $0$ for every state against at least one state at $10^{-7}$ or more; a content above $0$ is an input the register does not declare; the oscillation itself, a family turning into another in flight, is not modelled \\
 9 & Malus's law at $45$ degrees, $1/2$ & $128$ of $256$, exact, on the three worlds of the note (A12 under the click \cite{register}; the run of 2026-09-21) & PASS: $128$ of $256 = 1/2$ exactly at $45$ degrees, $0$ of $256$ crossed, $64$ of $256$ with the third between; the tables carry no rounding at $45$ and $90$ degrees; the $22.5$-degree chain not run \\
 10 & The single-opening spread $0.886$ \cite{nairz2002} & $1.08$, the crowd form's (series A10) & NOT YET under the one click \\
 11a & The deceleration parameter read from the brightness of a far lamp, $q_0 = -0.53 \pm 0.01$ as in row 3 (the discovery of $q_0 < 0$ \cite{riess1998,perlmutter1999}) & the lamp at rest under the growing wall, read at $1/(1 + z)$ of its rate, each click delivering the row's birth content (the derivation's 6.4; were the content to follow the frequency in flight, the power would be two and $q_{\mathrm{eff}} = 0$, a rule 6.4 finds not among the six): the flux $L_{\mathrm{lamp}}/(4\pi r^2 (1 + z))$ with $r = (c_0/H)\ln(1 + z)$, the luminosity distance $(c_0/H)\ln(1 + z)\sqrt{1 + z}$, $q_{\mathrm{eff}} = +1$ (a pin \cite{farlamp}) & FAIL (pinned): $+1$ against $-0.53$; after a detector the gap widens, the shape residual against the flat model with a cosmological constant $0.339$ mag rms (Milne's $0.055$); the law carries no dark energy \\
-11b & The stretch of a far lamp's stream, $(1 + z)^{\beta_s}$ with the exponent $\beta_s = 0.97 \pm 0.10$ \cite{blondin2008} & the same pin: $400$ rows released over $400$ intervals arrive over $1452$ at $300$ Links, the factor $3.639$ against $e^{Hr/c_0} = 3.629$; $\beta_s = 1$ & PASS (pinned): $\beta_s = 1$ within the measured; the run not made \\
+11b & The stretch of a far lamp's stream, $(1 + z)^{\beta_s}$ with the exponent $\beta_s = 0.97 \pm 0.10$ \cite{blondin2008} & the same pin: $400$ rows released over $400$ intervals arrive over $1452$ at $300$ Links, the factor $3.639$ against $e^{Hr/c_0} = 3.629$; $\beta_s = 1$ & PASS (pinned): $\beta_s = 1$ within the measured; a compatibility from the pin, the run not made, so not a measurement \\
 11c & Tolman's surface brightness, $(1 + z)^{-4}$ \cite{tolman1930}, measured as $(1 + z)^{-n}$ with $n$ between $2.3$ and $3.1$ before correction \cite{lubin2001} & the same pin: the Nodes and the fan's lines fixed under the wall, a ruler of $l$ Nodes at $r$ subtends $l/r$, the flux $(1 + z)^{-1}$: $n = 1$ & FAIL (pinned): $n = 1$ against $4$ ($2.3$ at the least); at $z = 1$ the ratio $0.500$ against $0.062$; the run not made \\
-12 & The clock's field at two distances from a crowd at the same push: the ratio of the two clocks' shifts, the potential's form $2.00$ at $6$ and $3$ (nature's clocks between two heights follow the potential: the GPS gravitational term $45.7$ microseconds per day \cite{ashby2003}, Pound and Rebka \cite{pound1960}, the Galileo satellites \cite{delva2018}; a flux form would read $0.62$ of the GPS term) & series T (measured once): the presence clock $1.000$, flat; the age clock $1.907$ (pinned $1.91 \pm 0.05$) & PASS under the age word ($1.907$ against $2.00$); FAIL under the presence word, the law's default ($1.000$ against $2.00$); the word the owner's choice \\
+12 & The clock's field at two distances from a crowd at the same push: the ratio of the two clocks' shifts, the potential's form $2.00$ at $6$ and $3$ (nature's clocks between two heights follow the potential: the GPS gravitational term $45.7$ microseconds per day \cite{ashby2003}, Pound and Rebka \cite{pound1960}, the Galileo satellites \cite{delva2018}; a flux form would read $0.62$ of the GPS term) & series T (measured once): the presence clock $1.000$, flat; the age clock $1.907$ (pinned $1.91 \pm 0.05$) & PASS under the age word, the clock's word by the owner's word of 2026-09-21 (an assumption, P9): $1.907$ against $2.00$; the presence word, the alternative, FAIL on the form ($1.000$ against $2.00$); the register's row to be restated under the word \\
 \bottomrule
 \end{tabular}
 \caption{\label{tab:nature}The confrontation register \cite{nature} (its base and its restatements by commit in Reproducibility; row 12 added with series T): twenty-two dimensionless readings against nature under one parameter set (nine worlds with another clock pair, on which no verdict depends). Each row's arithmetic and caveat are in the register; the published sources are cited here.}
@@ -2243,7 +2277,7 @@ of them. Definition~\ref{def:click} \emph{is} the Born rule: the weight is
 the squared length of the summed pointer, and the ruler over $u$ is
 inverse-transform sampling of a uniform variable, so over births with $u$
 uniform on $\Z_{\Nphi}$ the count in channel $k$ is $\rung_k - \rung_{k-1}$, the
-nearest integer to $\Nphi R_k/C_K$, Born to the resolution $1/\Nphi$. No principle
+difference of two cumulative rungs, Born to the resolution $1/\Nphi$ per cell. No principle
 below the square is offered. The uniformity of $u$ is an assumption about
 the source: $u = (b - 1) \bmod \Nphi$ is uniform over $\Nphi$ consecutive births,
 which is how every run below is made (one birth per $u$), and its
@@ -2307,7 +2341,7 @@ statement is the algebraic one with the record.
 
 \begin{theorem}[The split is an isometry whose conjugate transpose inverts it]\label{th:isometry}
 The split $(w, \mathtt m, p) \mapsto ((wa_i, \mathtt m A, p + t_i))_i$ preserves
-$\sum w^2/\mathtt m$ for every integer vector $(a_i)$, and the conjugate
+$\sum w^2/\mathtt m$ for every nonzero integer vector $(a_i)$, and the conjugate
 transpose of the table (the same weights with the turns reversed)
 applied to its outputs, followed by the normal form, returns the input up
 to the scaling $(kw, k^2\mathtt m)$ with $k = A$. The rotation satisfies
@@ -2427,8 +2461,14 @@ tables' term in \eqref{eq:ebound} does not shrink with $\Nphi$; it is the
 resolution $1/256$ of the circle's tables. At the CHSH labels the tables'
 entries are the same at every $\Nphi$ ($237, 98$ and $181, 181$), so
 $E(0, \Nphi/8) = 46565/65773$ and $E(\Nphi/4, \Nphi/8) = 46452/65773$ exactly at every
-$\Nphi$ before the rounding of the cells, which is why the powers of two from
-512 all give $181/64$ \cite{checks,register}. At a tie $c_{--} = c_{++} - 1$ and
+$\Nphi$ before the rounding of the cells; the rounding gives $181/64$ at
+the powers of two from $512$ through $8192$ and $5793/2048 = 2.828613$
+at $16384$ and $32768$, where the second pair of settings rounds to
+$2893/4096$ (\cite{checks}, \texttt{s\_powers\_of\_two}; the
+tables' bound $2\Nphi \le 65536$ stops the computation there); with the
+tables fixed the limit in $\Nphi$ is $2(46565 + 46452)/65773 =
+186034/65773 = 2.828425$, and $2\sqrt2$ is the joint limit in $\Nphi$
+and $N_t$ alone \cite{checks,register}. At a tie $c_{--} = c_{++} - 1$ and
 $E_{\Nphi}$ drops by $2/\Nphi$; no tie occurs at the CHSH labels up to $4096$.
 
 \section{The measurements}\label{sec:measure}
@@ -2538,7 +2578,7 @@ while at $\Nphi = 64$ the maximum over all quadruples is $11/4$, so that
 exclusion stands whatever the settings \cite{checks}. Under the three,
 the photon-pair value $S = 2.82759 \pm 0.00051$ \cite{poh2015} is
 incompatible with $\Nphi = 64$ (152 standard deviations) and $\Nphi = 256$ ($30$ by the paper's check, $31$ by the derivation's 24.4),
-compatible with the powers of two from 512 (one standard deviation
+compatible with the powers of two from 512 through 8192 (one standard deviation
 above), admits its first $\Nphi$ at 184, and excludes 136 of the 512 values
 up to 4096 at five standard deviations, the largest 3016 \cite{checks};
 the archived engine declares $\Nphi$ a power of two, so the other multiples
@@ -2619,9 +2659,9 @@ $-351$ to $+361$ of $65536$ per row for the powers of two through
 $65536$, the rotation is an isometry only up
 to that, and the record's total over $u$ takes eight values.
 \item Not a fixed $\Nphi$, hence not a prediction of nature's $S$ at
-every $\Nphi$: at $\Nphi$ a power of two from $512$ it is $181/64$
-(Section~\ref{sec:differs}); elsewhere a constraint on $\Nphi$ under
-stated assumptions.
+every $\Nphi$: at the powers of two from $512$ through $8192$ it is
+$181/64$ and at $16384$ and $32768$ $5793/2048$ (Section~\ref{sec:differs});
+elsewhere a constraint on $\Nphi$ under stated assumptions.
 \item Not a new number for $c$, and not $c$ from two rules: $1/\sqrt3$
 Links per interval is the Courant bound of the cubic lattice, reached by
 the same argument, and the lattice Boltzmann sound speed; the table's
@@ -2659,7 +2699,7 @@ click chooses one path among all. The only computed quantity near that
 reading is the entropy of the derivation's section 14, the base-two
 logarithm of the count of torus points consistent with the click list,
 produced only at the click, the cancel and the leaks, with the identity
-that the bits read plus the bits erased are $\log_2 \Nphi$ per record,
+that the bits read plus the bits not read of $u$ are $\log_2 \Nphi$ per record (the outcome $K$ the observation, $u$ kept in the world's list as a diagnostic),
 checked on six registered worlds \cite{derivations}; the quantity is
 computed, the reading is not derived from it, and what would prove or
 refute the reading is not defined here.
@@ -2755,8 +2795,8 @@ the theory's, the size, the experiment that bounds it today and the
 verdict on main (Table~\ref{tab:differs}); where a hypothesis beside
 the law (the covariant readings of Section~\ref{sec:lorentz},
 optical-v1) changes a row, the row says so, and the verdict stays the
-law's as built. Twelve of the register's twenty-two readings fail and
-one more under the law's default word of the clock
+law's as built. Twelve of the register's twenty-two readings fail and one more under the presence word of the clock, the alternative to
+the assumed age word
 (Section~\ref{sec:nature}); this table is what those failures look
 like once each difference is stated as a number a measurement can
 refute, and it names the one difference that is open and within reach.
@@ -2768,8 +2808,8 @@ refute, and it names the one difference that is open and within reach.
 \# & The difference & The law & QM or relativity & $\Delta P$ & Bounded today by & Verdict \\
 \midrule
 1 & Tsirelson's bound reached as a limit: the CHSH sum at $\Nphi = 256$ (the design's host map; the registered worlds are $\Nphi = 64$, $1024$ and $4096$) & $S = 720/256 = 2.8125$, the exact cells & $2\sqrt2 = 2.828427$ & $-0.0159$ & \cite{poh2015}: $S = 2.82759 \pm 0.00051$, the deficit $0.00084 \pm 0.00051$ & REFUTED at $\Nphi = 256$ ($30$ standard errors by the paper's check, record 102; $31$ by the derivation's 24.4); $\Nphi = 64$'s $2.75$ likewise \\
-2 & the same at $\Nphi$ a power of two from $512$ through $4096$ (run under the click and the wheel at $512$ and $4096$: $1448/512$, $11584/4096$), stated for every higher power of two (6.2) & $S = 181/64 = 2.828125$ exactly & $2.828427$ & $-3.02 \times 10^{-4}$ & the same measurement: the law's deficit $1.1$ standard errors from the measured one & OPEN, within reach (below) \\
-3 & the same at $\Nphi$ not a power of two, or a power of two below $512$ other than $64$ and $256$ ($\Nphi = 16$, $32$ and $128$ give $3$, $3$ and $23/8$; Theorem~\ref{th:bell}) & above $2\sqrt2$ for $252$ of $512$ values of $\Nphi$ (a no-signalling box) & at most $2\sqrt2$ & up to $+8/\Nphi$ & the same measurement bounds an excess above $0.001$ at two standard errors & REFUTED for those $\Nphi$: the law's $\Nphi$ is a power of two at or above $512$, or $64$ or $256$ \\
+2 & the same at $\Nphi$ a power of two from $512$ through $8192$ (run under the click and the wheel at $512$ and $4096$: $1448/512$, $11584/4096$; computed exactly at $2048$ and $8192$); at $16384$ and $32768$ the rule gives $5793/2048 = 2.828613$, above $2\sqrt2$ by $1.9 \times 10^{-4}$, and with the tables fixed the limit is $186034/65773$ (\cite{checks}); the value is a function of $\Nphi$ and $N_t$, not a constant & $S = 181/64 = 2.828125$ exactly at $512$ to $8192$ & $2.828427$ & $-3.02 \times 10^{-4}$ & the same measurement: the law's deficit $1.1$ standard errors from the measured one & OPEN, within reach (below) \\
+3 & the same at $\Nphi$ not a power of two, or a power of two below $512$ other than $64$ and $256$ ($\Nphi = 16$, $32$ and $128$ give $3$, $3$ and $23/8$; Theorem~\ref{th:bell}) & above $2\sqrt2$ for $252$ of $512$ values of $\Nphi$ (a no-signalling box) & at most $2\sqrt2$ & up to $+8/\Nphi$ & the same measurement bounds an excess above $0.001$ at two standard errors & REFUTED for $136$ of them, the rest surviving the comparison; the law's $\Nphi$ is a power of two by declaration, at or above $512$, or $64$ or $256$ \\
 4 & the click's rounding at the scale $256$: one polariser at $22.5$ degrees and the $22.5$-degree chain (Malus) & the pass $219/256 = 0.85547$, the chain $187/256 = 0.73047$ at $\Nphi = N_u = 256$ \cite{malus} & $\cos^2 = 0.85355$, $\cos^4 = 0.72855$ & $+0.0019$ both & a Malus test at $10^{-3}$ (Table~\ref{tab:nature}, row 9: $45$ and $90$ degrees run and exact, $22.5$ not run) & OPEN at the tables' scale; REFUTED by any test at $10^{-3}$ unless the scale is raised (an input, record 328) \\
 5 & the anisotropy of $c$: the one-way pace per direction at $N_l = 64$ & $32/55$ on an axis, $64\sqrt2/156$ on a face diagonal, $1/\sqrt3$ on a body diagonal: $+0.77$, $+0.49$, $0$ percent & isotropic & $7.6 \times 10^{-3}$ & \cite{herrmann2009} ($10^{-17}$); \cite{nagel2015} ($(9.2 \pm 10.7) \times 10^{-19}$); row 5a & REFUTED at $N_l = 64$ by fifteen orders; OPEN only as a bound on the grain, $N_l \ge 5.8 \times 10^{17}$ for $10^{-18}$ \\
 6 & the two arms of a moving laboratory (no contraction on main) & the round trip $\gamma^2$ along, $\gamma$ across & equal & $\beta^2/2 = 5 \times 10^{-9}$ at the Earth's $10^{-4}$ & the same sources; row 5b & REFUTED on main by nine orders; the contraction not derived under the covariant readings either \\
@@ -2782,11 +2822,11 @@ refute, and it names the one difference that is open and within reach.
 13 & the perihelion advance & $0$: the bilinear push has no post-Newtonian term & $43$ arcseconds per century for Mercury & $43$ arcseconds per century & \cite{clemence1947}; the modern ephemerides & REFUTED on main \\
 14 & the bending of light & $0$ on main (series K) & $1.75$ arcseconds at the Sun's limb & $1.75$ arcseconds & \cite{dyson1920}; VLBI to $10^{-4}$ \cite{shapiro2004} & REFUTED on main; optical-v1 gives $\sim M/b$ toward the mass, the constant a grain \\
 15 & the deceleration parameter & $q = 0$ (Milne) under the wall; $+0.35$ to $+0.92$ with gravity & $-0.53 \pm 0.01$ & $0.53$ to $1.45$ & \cite{planck2018,riess1998,perlmutter1999}; rows 3 and 11a & REFUTED \\
-16 & the neutrino's mass & $0$: a free row of a family without content & at least $1 \times 10^{-7}$ of the electron's & the mass itself & the oscillations and KATRIN \cite{katrin2022}; row 8c & REFUTED \\
+16 & the neutrino's mass & $0$: a free row of a family without content & at least $1 \times 10^{-7}$ of the electron's for the heavier state of the atmospheric splitting & the mass itself & the oscillations and KATRIN \cite{katrin2022}; row 8c & REFUTED \\
 17 & the weak force's two forms & the decay curve's width over its median bounded by the record; the passage through an identical detector a filter & memoryless: $\ln 9/\ln 2 = 3.17$; the passage about $1$ & the form & rows 8a and 8b & REFUTED as declared \\
 18 & the strong ratio & the alpha's binding over the deuteron's $2.0$ (series N) & $12.72$ & a factor $6.4$ & AME2020 \cite{ame2020}; row 7b & REFUTED \\
 19 & the growing wall's brightness and Tolman's test & $q_{\mathrm{eff}} = +1$; three powers of $1 + z$ short & $-0.53$; $(1 + z)^{-4}$ & as rows 11a, 11c & Pantheon+ \cite{pantheonplus}; \cite{lubin2001} & REFUTED \\
-20 & Born's rule to the rung $1/(2\Nphi)$ & the cell's probability a multiple of $1/\Nphi$ & the squared amplitude & $0.0078$ at $\Nphi = 64$, $1.2 \times 10^{-4}$ at $\Nphi = 4096$ & \cite{sinha2010} (the Sorkin parameter $0.0064 \pm 0.0119$, a different observable); row 2c & OPEN at $\Nphi = 4096$ (below the tests' $10^{-2}$); the rounding is not the Sorkin term \\
+20 & Born's rule to the rung, $1/\Nphi$ per cell & the cell's probability a multiple of $1/\Nphi$ & the squared amplitude & up to $1/\Nphi$: $0.0156$ at $\Nphi = 64$ ($0.0104$ on three equal weights), $2.4 \times 10^{-4}$ at $\Nphi = 4096$; a cumulative rung within $0.0078$ and $1.2 \times 10^{-4}$ & \cite{sinha2010} (the Sorkin parameter $0.0064 \pm 0.0119$, a different observable); row 2c & OPEN at $\Nphi = 4096$ (below the tests' $10^{-2}$); the rounding is not the Sorkin term \\
 21 & the axis preference of the drive as declared on main (the per-axis step, the first axis whose rule fires, $x$ before $y$ when two fire in one interval) & equal momentum on two axes: $26$ Nodes on $x$, none on $y$ (the owner's runs, record 340) & isotropic motion, $45$ degrees & the direction off by $45$ degrees & any measurement of a free body's track & REFUTED on main as declared; closed under form B's directional drive, in build \\
 22 & a body's pace not bounded by $c$ on main & $0.925$ Nodes per interval against the rows' $0.582$ on an axis (the same runs); the cap one Link per interval in all (the engine's one step per interval, the first axis whose rule fires), $T_D/N_l = 1.72$ times the rows' pace on a heading, $\sqrt3\,c$ & nothing outruns light & up to $\sqrt3\,c$ & the bounds on superluminal matter: for neutrinos the absence of vacuum pair emission \cite{cohenglashow2011}, for charged bodies the absence of vacuum Cherenkov radiation & REFUTED on main as declared; closed under form B (the cap on the line) and the covariant readings ($pc^2/E \le 1/\sqrt3$) \\
 \bottomrule
@@ -2806,18 +2846,30 @@ with the marginals exactly $1/2$ (no signalling, Theorem~\ref{th:marginals}),
 unchanged by the tables' scale from $256$ to $2^{20}$ and by $\Nphi$ from
 $512$ to $4096$ (the registered $2896/1024$, $11584/4096$ and, from
 this run, $1448/512$, all $181/64$; record 102 \cite{log} for the powers of two from $512$
-through $4096$): a
-prediction computed in advance, the deficit of the correlation at each
-of the four settings $\Delta E = -7.6 \times 10^{-5}$, the same at
-each. What bounds it today: \cite{poh2015} measured $S = 2.82759 \pm
+through $4096$, the check \texttt{s\_powers\_of\_two} \cite{checks}
+through $32768$: $181/64$ holds through $8192$ and not beyond, the rule
+giving $5793/2048$ at $16384$ and $32768$, so the prediction is the
+exact function of $\Nphi$ and $N_t$ and this row is its value on the
+registered range): a
+prediction computed in advance; the correlations at the two pairs of
+settings differ, $725/1024$ and $723/1024$ at $\Nphi = 4096$, above
+and below $1/\sqrt2$ by $9.0 \times 10^{-4}$ and $1.05 \times 10^{-3}$,
+their mean $7.6 \times 10^{-5}$ below it. What bounds it today: \cite{poh2015} measured $S = 2.82759 \pm
 0.00051$, a deficit $0.00084 \pm 0.00051$ from $2\sqrt2$; the law's
 deficit $0.00030$ is inside at $1.1$ standard errors, and the same
-measurement excludes the law's $\Nphi = 256$ (row 1) and every $\Nphi$ that is
-not a power of two (row 3). What refutes it: a CHSH measurement on a
+measurement excludes the law's $\Nphi = 256$ (row 1) and, under the
+comparison's identification, $136$ of the $512$ multiples of $8$ of
+row 3 (Section~\ref{sec:bell}: $\Nphi = 184$ and others survive it);
+the engine's power of two is a declaration, not an experimental
+exclusion. What refutes it: a CHSH measurement on a
 maximally entangled pair with an uncertainty below $1 \times 10^{-4}$
 reading a deficit below $2 \times 10^{-4}$ ($S$ above $2.8282$), or
-any deficit above $4 \times 10^{-4}$ outside its error; three times
-that experiment's precision decides. What the law owes before the pin
+any deficit above $4 \times 10^{-4}$ outside its error; an uncertainty
+five times smaller than that experiment's, below $1 \times 10^{-4}$,
+decides, with the settings and the detection model stated
+(\cite{poh2015} optimized its settings rather than the canonical
+labels and discusses setting-dependent detection; the comparison
+assumes the identification of Section~\ref{sec:bell}). What the law owes before the pin
 is final: the Bell worlds at $\Nphi = 512$ (written by the generator for
 this run) and the registered $\Nphi = 4096$ worlds run under the one click and the birth
 wheel on the registered geometry (the values above are the design's
@@ -2838,15 +2890,16 @@ the worlds bit-exact. The prediction
 stands pinned, run and re-run by the second runner, who read $S \times
 \Nphi = 1448$ and $11584$ again from the register's worlds and checked
 them from the four directions (\cite{replications}, the block of 24.4:
-REPLICATED; record 353 \cite{log}); what remains is nature's measurement at three times the
+REPLICATED; record 353 \cite{log}); what remains is nature's measurement at five times the
 precision of \cite{poh2015}. Why this one: rows 5 to 9 and 13 to 19
 are refuted on main or below reach; row 4 is a grain the owner has
 declared an input (the tables' scale, record 328) and falls with it,
 not with the law; row 11 is zero; row 20 is a rounding. Row 2 is a
 number of the law's own structure, the rungs of the ladder at a
-power-of-two $\Nphi$ and not the tables, fixed for every $\Nphi$ the register
-uses, and one experiment already sits at its edge: a CHSH sum three
-parts in ten thousand below Tsirelson's bound, exactly $181/64$.
+power-of-two $\Nphi$ and not the tables, the same at every $\Nphi$ the
+register uses and a different number at $16384$, and one experiment
+already sits at its edge: a CHSH sum three parts in ten thousand below
+Tsirelson's bound, exactly $181/64$ on the registered range.
 
 \part{What returns, what does not, and the decision on Lorentz}\label{part:limits}
 
@@ -3298,7 +3351,7 @@ The periodic universe & the two GameBoards under the wall & open; $L_{\mathrm{bo
 \toprule
 The formula & The operations and the premise & The limit and the closed form & The pin, written before the run & The reading; the label \\
 \midrule
-Born's rule & evaluation, the norm, the rung & $|P - R_k/C_K| \le 1/(2\Nphi)$ ($P$ the click's probability, $R_k/C_K$ the weight over the total) & \texttt{mz\_equal} $64/0$, \texttt{mz\_345} $63/1$ (series L) & inside; measured and replicated (\cite{replications}, the block of L1), as a limit \\
+Born's rule & evaluation, the norm, the rung & $|P - R_k/C_K| \le 1/\Nphi$ per cell, $1/(2\Nphi)$ per cumulative rung ($P$ the click's probability, $R_k/C_K$ the weight over the total) & \texttt{mz\_equal} $64/0$, \texttt{mz\_345} $63/1$ (series L) & inside; measured and replicated (\cite{replications}, the block of L1), as a limit \\
 The lattice Gleason & rotation, the balanced splitter's conservation, non-negativity & $R(f) = \sum_{j\ \mathrm{odd}} c_j|\sigma_j(f)|^2$; the power $2$ in $[1.917, 2.054)$, the intersection of the windows of $63/1$ and of $27$; $[1.917, 2.012)$ with the split at $\Nphi = 32$ and $128$ (record 363) & $63/1$ and the first cell $27$ (series L); the power's window derived after the runs from them & the form proved; the counts $63/1$ and $27$ measured and replicated (\cite{replications}, the blocks of L1 and L3), the window derived from them after the runs; the constants open \\
 Tsirelson's bound & evaluation on the pair & $S(\Nphi, N_t) \to 2\sqrt2$ & $176/64$, $2896/1024$, $11584/4096$ (series L) & inside; measured and replicated (\cite{replications}, the blocks of L3 and L6), as a limit, proved (Theorem~\ref{th:bell}) \\
 Young's spacing & the fan's angular measure, the click & the fringes at the wavelength times the distance over the opening & \texttt{slits\_huygens} under the wheel, $4096$ births (L2b): the dark $0$ to $3$, the bright about $28$ to $29$, the correlation about $0.96$, every cell within one click of its weight & the dark $0$ to $3$ inside; the correlation $0.891$ against $0.96$ and the bright $19$ to $51$, the map's $28$ to $29$ being the screen's fan's and not this world's pin; the cells within $2$; measured once in the limit of every direction, the clicks measured once with the pin's fan named \\
@@ -3307,7 +3360,7 @@ Kepler's three laws & the push in the shell mean (bilinear), the drive on the mo
 Compton & the exact square (bilinear), the momentum's conservation at a click then a re-release, the turn by division & $1/k' - 1/k = \sqrt3(1 - \cos\theta)/(N_l N_w M)$, exact on the pair; first order in $(k - k')/k$ at a heading's $32/55$ & the six faces' phase rates: $16$, $11$, $8$, $14$, $9$ to one step (the \texttt{compton} world, 21.5 row 59) & not built, not run; a hypothesis under the covariant readings, a different law on main (no shift); the identity proved, the pin assumed \\
 Malus & the label's rotation by the half-angle tables (a $2 \times 2$ integer matrix), the which-path read at a sum set, its cells clicked & $\cos^2\theta$ at the tables' rounding; exact at $45$ and $90$ degrees & the cells' rungs on $N_u = 256$ births: $128$, $0$ and $64$ of $256$ for the three arrangements, exact (\cite{malus}, section 3) & $128/128$, $0/256$, $64/64/64/64$ over the records $1$ to $256$, every pin met exactly (A12 under the click); measured and replicated (\cite{replications}, the block of A12) \\
 The information law, the click's cost & the one non-bijective read & units per record against bits out; $\log_2(\mathrm{cells})$ per click at most & no pin; a host reading of the registered runs & the four worlds' units per bit $82, 2, 2, 29$; a result of the derivation on recorded runs, proved for the bound, the numbers assumed \\
-Entropy & the count of torus points consistent with the click list & bits read plus bits erased $= \log_2 \Nphi$ per record & no pin; a host reading of the registered runs & \texttt{mz\_equal} $0/6$, \texttt{slits\_low} $3.425/2.575$; proved (the identity), the numbers assumed \\
+Entropy & the count of torus points consistent with the click list (the outcomes $K$; $u$ a diagnostic) & bits read plus bits not read of $u$ $= \log_2 \Nphi$ per record, the outcome's coarse graining & no pin; a host reading of the registered runs & \texttt{mz\_equal} $0/6$, \texttt{slits\_low} $3.425/2.575$; proved (the identity), the numbers assumed \\
 The moving clock's rate & the frame (translation) & $1$ at every speed; only the crowd slows a clock & the $64$th turn at $64$ (J4, a world defined and not run) & J4 not run; \texttt{s\_mz2} at $z = 0.2636$ against nature's $0.315$ (row 4b); the law's formula stated, its number open \\
 $E = mc^2$, the dispersion & the exact square $E^2/c^4 = m^2 + 3\,\mathbf p\cdot\mathbf p$ on the record ($\Eint$ the energy in mass units, an integer; $m$ its rest value), $\Eint$ by comparisons, the self-creation gated by the proper-time owed count, the drive per self-creation; the Newtonian limit & $m = N_l N_w M$ forced; the pace $pc^2/E$; the invariant exact & the muon of J4 at $p = 3640$ and $12\,856$: the products' face clicks at $367$ and $345$ ($391$ at rest), the decay at $70.9$ and $125.2$ derived back & not built, not run (the J4 world to be written); assumed \\
 The time dilation, the Doppler with $\gamma$; the contraction & the self-creation per $\gamma$ intervals, the crossing count charged per self-creation; $-\nabla\mathcal A$ across the six Ports & the $64$th self-creation at $64\Eint/m$; the count per self-creation $\gamma(1 - \mathbf n\cdot\boldsymbol\beta)$ in the limit, per direction of the flight table on the GameBoard; the contraction not derived (the rest force along, $\gamma$ across) & $z = 0.369 \pm 0.003$ at the declared momentum; the arms' pin withdrawn & not built, not run; assumed for the clock and the Doppler; open for the contraction \\
@@ -3324,7 +3377,7 @@ The strong ratio & the give per contact Link on the bipartite lattice & $4.0$ ($
 \toprule
 The formula & The operations and the premise & The closed form & The order of the expansion & The error term & The pin, the reading; the label \\
 \midrule
-Gauss's law and the continuity of the field & the release, the flight, the presence; the books & $\nabla\cdot\mathbf g = -4\pi G\rho$; $\partial_t\rho + \nabla\cdot\mathbf j = 0$ & exact at every instant; the shell mean's leading term & the fan's grain ($r^{-1.83}$); the shell ripple & series E's $a_r r^2$ within $\pm 15$ percent; $41.5$; measured once \\
+Gauss's law and the continuity of the field & the release, the flight, the presence; the books & $\nabla\cdot\mathbf g = -4\pi G\rho$; $\partial_t\rho + \nabla\cdot\mathbf j = 0$ & exact at every instant for a steady source after the front (a varying source carries the transit term of the rows in flight, 25.4's continuity with the row amount as its density); the shell mean's leading term & the fan's grain ($r^{-1.83}$); the shell ripple & series E's $a_r r^2$ within $\pm 15$ percent; $41.5$; measured once \\
 The wave equation of the field & the flight at $c$, the age moment & the retarded scalar wave equation at $c$ & second order in the Link & the cube's anisotropic term at $(k\,\mathrm{Link})^2$; the pace $1.5$ percent off on a heading & series K's mean age within one interval; $89.40$; measured once \\
 Faraday, Amp\`ere--Maxwell, the moving charge's field & the age moment as the scalar potential; the vector potential from a carried source velocity & Jefimenko's retarded fields \cite{jefimenko1966} from both potentials & the potentials' order & the age's integer; the fan's grain & the potential to $10^{-15}$ (host); no pin, no run; assumed (source-velocity-v1) \\
 The Lorentz force and Biot--Savart & $-\nabla\mathcal A$ across the six Ports; the magnetostatic vector potential & $q(\mathbf E + \mathbf v\times\mathbf B)$; $\mathbf B = (\mu_0/4\pi)\int \mathbf J\times\mathbf r/r^3$ & first order in the Link & the central difference's $\mathrm{Link}^2$ term & the deuteron fan at $k = 4$: $1/\gamma$ across, $1 - \beta^2$ along, only with the vector potential; assumed \\
@@ -3517,7 +3570,7 @@ Nodes.
 \item The six verbs on these, the six operations of P3: the
 translation, the bilinear form, the group-ring addition on $\Z[\Z_{\Nphi}]$,
 the permutation (the $48$), the evaluation (the tables) and the
-Euclidean division with the remainder kept.
+division toward zero with the remainder kept (Euclidean for a non-negative accumulator).
 \end{itemize}
 
 \section*{Appendix: glossary and symbols}\label{sec:glossary}
@@ -3556,7 +3609,7 @@ $\bPhi$; $s$, $r$, $d$, $a$, $e$ & the interval's map; one accumulator of the st
 $\Nphi$, $N_l$, $N_w$, $N_D$, $N_\theta$, $N_u$, $N_t$, $r_w$ & the phase circle; the label's scale ($64$); the world's width; the direction bound; the fan's angular grain; the birth wheel and its rate; the cosine tables' scale ($256$): the grains, inputs of the world file & scalars & Section~\ref{sec:law}, Part~III \\
 $K$, $\eta = n/d$ & the number of directions of a fan; the release rate per unit of content per direction & scalars & Sections~\ref{sec:newton}, \ref{sec:delay} \\
 $c$, $c_h$, $T_D$, $S_1$, $D$, $\mathbf u_D$, $\mathcal F$ & the pace of a row, $1/\sqrt3$; a direction's Manhattan pace ($32/55$ on a heading; not Born's $c_1$); a direction's resolution, its Manhattan length, the direction, its unit vector at the scale $N_l$; the fan of primitive directions & scalars, vectors, a set & Sections~\ref{sec:law}, \ref{sec:model} \\
-$\tau$, $\mathtt m(\tau)$, $\tau_L$ & the age of a row; the Links made by the age; the dwell & scalars & Sections~\ref{sec:model}, \ref{sec:delay} \\
+$\tau$, $\mathtt m(\tau)$, $\tau_L$ & the age of a row; the Links made by the age; the radial residence factor $T_D/(N_l|D|)$ (the intervals per Link along the staircase are $T_D/(S_1 N_l)$) & scalars & Sections~\ref{sec:model}, \ref{sec:delay} \\
 $\mathbf p$, $p$, $M$, $\mathbf v$, $\beta$, $\gamma$ & a body's momentum and its magnitude; its content, a count of units; its velocity; $v/c$; the Lorentz factor & vectors, scalars & Sections~\ref{sec:law}, \ref{sec:lorentz} \\
 $E$, $E_0$, $m$, $E^2/c^4$, $\Eint$ & the energy; the rest energy $mc^2$; the mass $N_l N_w M$ in label units; the exact square $m^2 + 3\,\mathbf p\cdot\mathbf p$, never rooted; its integer root & scalars & Section~\ref{sec:lorentz} \\
 $h$, $f$, $s_h$ & a family's quantum; a lamp's frequency; its turn per self-creation & scalars & Section~\ref{sec:qm} \\
@@ -3598,7 +3651,7 @@ merge, one tree whose history holds the three trees named above and the
 log records this paper cites; it replaces the concept DOI below, and its
 code no longer has the world key. Every record, note, design and
 register row this text cites is on the tree it was written on (main
-merged at \texttt{35b88a82}); the far lamp's rows 11a to 11c rest on a
+merged at \texttt{6b707a53}); the far lamp's rows 11a to 11c rest on a
 pin whose run is not made. The commits the body refers to here (the
 precedents' counsel: the record in the appendix, not in the captions
 \cite{precedents}): the confrontation register at its base
@@ -3625,7 +3678,7 @@ submission.]
 \bibitem{beamlaw} The Beam Law and its implementation notes, \texttt{docs/BEAM\_LAW.md} of the archived code \cite{zenodo}: note 37 (the amplitude law), 39 (the hand: a pseudoscalar bit per row, no spin dynamics), 43 (the mass of a bound set as its total content), 44 (the parity, the group's two classes), 45 (the exact phase at the click), 46 (the birth wheel as a lamp's declared rate), 47 (the crowd audit: what every rule in force reads of its own record and of the crowd) and 48 (the crossing rule: the step before the law, a row and a body met once; the key \texttt{doppler} and the grain deleted).
 \bibitem{design} The design of \texttt{amplitude-v1} and its check outputs, \texttt{docs/designs/amplitude-v1/} of the archived code \cite{zenodo}.
 \bibitem{register} The experiments register, \texttt{docs/EXPERIMENTS.md} of the archived code \cite{zenodo}: series T (the clock's word, the four worlds \texttt{examples/events/clock\_word/} with \texttt{expectations.json} and \texttt{readings.json}, run on main \texttt{583bf0e}, the register's entry at \texttt{afb533a8}), series L (the click chapter, with the worlds \texttt{examples/events/amplitude/}, their \texttt{expectations.json}, the block ``Bell at $\Nphi = 512$ and $4096$ under the click and the wheel, the pin of 24.4'' with \texttt{expectations.json} under \texttt{bell\_24\_4} and \texttt{tests/test\_amplitude\_bell\_24\_4.py}, and the reading tool \texttt{tools/amplitude\_path.py}), L2b and L7, and, for Table~\ref{tab:consequences}, series C, D, E, G2, H, J, K, N, Q (c measured behind a detector) and R (the quarks, seven worlds); every entry carries its expectation written before the run and its source fingerprint.
-\bibitem{checks} \texttt{paper/general\_formula/checks/s\_of\_n.py}, \texttt{which\_path\_window.py}, \texttt{tables\_norm.py}, \texttt{information\_transfer.py}, \texttt{limits.py} and \texttt{light\_speed.py} with their outputs, \texttt{figures/summary.json} and \texttt{NUMBERS.md}, in the archived code \cite{zenodo}.
+\bibitem{checks} \texttt{paper/general\_formula/checks/s\_of\_n.py}, \texttt{s\_powers\_of\_two.py} (the pair's $S$ and its four correlations at the powers of two from $512$ to $32768$ with the tables fixed), \texttt{which\_path\_window.py}, \texttt{tables\_norm.py}, \texttt{information\_transfer.py}, \texttt{limits.py} and \texttt{light\_speed.py} with their outputs, \texttt{figures/summary.json} and \texttt{NUMBERS.md}, in the archived code \cite{zenodo}.
 \bibitem{log} The dated log of 2026-09-20, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}, records 96 (coherence within one Node), 101 (the landing), 102 (the checks of this paper), 105 (the review of the pair and the gate: the marginals re-read over all 4096 setting pairs, the arms' order), 142 (the hand built: a pseudoscalar column on the row, the parity test over all 48), 144 (the cone, L7), 156 (the two slits: the wheel, the exact phase, the 18 intervals), 160 (the fan's angular weights) and, for the pace and Section~\ref{sec:lorentz}, records 186 and 191 (c as the flight's norm; the one operator for rows and bodies), 213, 224 and 228 (the derivation's sections 12, 13 and 12b), 225 and 226 (the group of 48 and its conservation up to the lattice), 230 (the three routes), 231 (a boost not among the 48), 245 (section 12c closes route C), 249 (the first decision: A and B), 259, 260 and 264 (the covariant readings recommended in place of the root; one paper on the general formula), 261, 262 (the owner's finding on 13.2 (a)), 266, 270 (the three decisions: colour-v1 to be tried, the covariant readings in place of the build of lorentz-v1, the periodic universe open), 271 and 278 (one quantum of mass and the crowd addendum ordered; the addendum delivered), 273 and 276 (the masses on the group; the crowd audit), 272, 274 and 275 (the title and the closure), 277 and 281 (the GameBoard reached only through detectors; only a detector's reading is a measurement), 267, 273 and 275 (the quarks' design delivered, the run ordered and registered as series R; its record is the register's entry), 280 and 282 (the far lamp through a detector), 291, 292 and 294 (the directions: all of Einstein; Heisenberg, the uncertainty relation and Bell; the general formulas through the formula at a Node), 297 (the physics-rule review of the covariant readings, admissible with must-fixes), 298 (the dark sector for the paper), 300 (the further formulas and the six-point standard), 302 and 303 (the rows' rule at a Node reachable in form; the go to its build after review), 305 (the method in plain words: the infinite limit derives the form, the run confirms the number, the pin orders the first before the second), 306 (the nine must-fixes amended in 17.6), 312 (the physics-rule review of optical-v1, admissible with eight must-fixes), 314 and 317 (the second round of the covariant readings, buildable with must-fixes; the six fixes delivered), 316 (the derivation record per formula, the owner's direction through this paper), 318 (optical-v1 amended per its review), 320 (the general formula first, in the standard place), 322 (the cosine table and the referee's findings assigned), 323 (optical-v1 buildable, the second review), 324 (the click landed on main: the exact phase, the wheel, the Gram form), 326 (the owner's direction through the paper coordinator: a quantum-mechanics section for the endorser), 327 and 328 (the cosine table: the owner's word ``go with the beautiful solution'' and his correction, the existing tables at $1/256$ stay and are declared an input of the law, with the four precedents), 330 (the owner's go on Kepler, Compton and Malus, the pin before the run), 331 and 332 (the question whether Schr\"odinger's equation can be reached, the route proposed; the owner's yes to the electron as rows in flight), 333 (the atoms' pins ordered; everything on main), 334 (the owner through the Visualiser: the octahedron and the $48$ as what follows from the formula; the paper to explain the $24$ rotations and every law in order), 335 (the Kepler and Compton pins landed; the Malus note buildable from the entries in force), 336 (Schr\"odinger's equation under massive-rows-v1 reached only in part; the design of the free particle ordered), 337 (the owner's review of the paper as a theory: the physics must come out of the law and not go in as input; the postulates first, the standing of every formula, the differences as predictions), 338 (the owner through the Visualiser: the octahedron and the $48$ to the paper; page 10 landed), 339 (section 24 landed; Malus A12 PASS; the Bell run for the pin of 24.4 ordered), 340 (the owner's second review: the missing hypothesis of the lattice Gleason theorem, the empty reads zero and some input reads; his eight runs on main, the axis preference and a body's pace above the rows'; the high-rate series $0, 2, 5, 7, 10$), 342 and 348 (form B built and its physics-rule review, blocked on the drive's unit), 343 and 345 (the formulas of flow, heat and temperature ordered and the inventory delivered), 346 (the auditor's first round: the Gleason gap and Eq.~(1)'s count confirmed on the integers), 347 (series D's lamp worlds under form B with row 58's pins restated before any run, the precession $-81 \pm 15$ under form B's pace), 349 (the auditor's second round: the fixes of record 340 verified; the line's tie read under the $48$ on a fan, the label, the row's momentum and the hand covariant by the auditor's verdict, the Nodes crossed and the exit face not on a tied direction), 352 (the owner's order for this paper: every formula with how the law derives or reaches it, where its form stands above the known one said so, the unneeded left out), 353 (the owner's rule for every run the paper relies on: two runners and a check from every direction, the replications document ordered, ``measured once'' until its line exists), 356 (the owner's order to read how the great papers present the formulas their authors reach against the ones derived from their own, the precedents study for this paper), 358 (the owner's word through the physicist's session: the tables of the masses, the groups, the sets and the vectors of all the families in the paper; the mathematician's audit), 359 (the auditor's third round: the pace bound read on all $290$ directions; the collision's tie under the $48$ on two singles, $16$ of $48$; the crowd's clock read, $z = 1$ and $2$ from a lamp at rest), 360 (the landings; the register's \texttt{replicated} map beside \texttt{derivations}), 361 (the physics-rule review of the massive-rows-v1 design, admissible with corrections), 362 (the owner's words through four sessions: the paper's notation without clashes, one symbol table for the program's decision; covariant-readings-v1 urgent; a different paper for arXiv and for the journal), 363 (the auditor's rounds 4 and 4b: the $(3, 4)$ split at $\Nphi = 32$ and $128$ as pinned, the power window sharpened to $[1.917, 2.012)$; the empty cell), 364 (series R's fate readings re-registered under the crossing rule with a replay test), 365 (the owner's question whether the law's units can be mapped to nature's, put to the physicist) and 366 (the precedents study delivered).
 \bibitem{gallery} The visual gallery's page on the octahedron and the $48$, \texttt{docs/pages/gallery/formula.html} of the archived code \cite{zenodo}, and its tool \texttt{tools/gallery\_pages.py} (\texttt{--figures} writes \texttt{the\_48.png} for this paper, and \texttt{octahedron.png}, which the paper does not use; \texttt{tests/test\_gallery\_pages.py} checks the $24$ and $24$); the page reads no run and no world, pins nothing and enters nothing in the register.
 \bibitem{precedents} The precedents study, \texttt{paper/general\_formula/PRECEDENTS.md} of the archived code \cite{zenodo}: fourteen of the great papers read for how they state a new formula, recover the old ones, mark their inputs and meet experiment (Newton, Maxwell, Boltzmann, Planck, Lorentz, Einstein 1905 and 1916, Bohr, de Broglie, Heisenberg, Schr\"odinger, Dirac, Feynman), the pattern they share and this paper against it, with its five verdict lines applied here (the owner's order, record 356; delivered, record 366 \cite{log}).
