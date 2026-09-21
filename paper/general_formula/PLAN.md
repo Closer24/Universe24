@@ -1827,3 +1827,17 @@ fig:the48 after the group paragraph; the paper's own octahedron.pdf
 stays; the gallery bibitem; paper/README.md names the two files and
 the command. Referee round 31 pending.
 
+## Referee round 31 (2026-09-21): the 48 figure, applied
+
+Eight findings, two major, all applied (in the commit after the
+figure's, which went out before the findings were in): the figure set
+by height (0.72 of the text height) so the block with its caption fits
+one page under [H]; the caption says the matrices and indices are
+legible on the page, not in print; the builder's order named;
+"checks", not "pins", for the test; the hand as a row's pseudoscalar
+column with record 142; the duplicated sentence folded into the
+paragraph; the README and the bibitem say the paper uses the_48.png
+only (octahedron.png written and not used, not committed); the bibitem
+quotes the page's own words. Main merged at bd74c49a (records 338 and
+339; the log bibitem adds them).
+
