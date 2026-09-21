@@ -813,3 +813,74 @@ rates in the bodies); British spelling throughout. The referee's closing
 line, recorded: the frame is defensible in principle; the measurement
 chapter is the only part yet confirmed end to end, and the table must say
 so row by row, which it now does.
+
+## The second wave (2026-09-21): the symmetries, the table's new rows, the confrontation table, Lorentz on section 17
+
+Read from main at 2f6a44c5: records 259 to 265 (the owner: "maybe
+Lorentz is not needed here"; "everything in one paper"; the GO for one
+paper on the big formula broken into the small formulas; "not a paper
+about a simulator"; the three failures under one logic), section 16
+(the numbers of nature: c reached; G the width, a choice of units, no
+rule for the hierarchy in sight; the smallest mass per kind a theorem of
+the charge line, the floors 1 and 3, the counts inputs), section 17 (the
+theorem of covariant readings: the linear block's limit carries
+Lorentz's symmetry; a body inherits it as far as its four readings are
+covariant; the covariant forms within the six verbs; E = m c^2 forced,
+the muon 70.9 and 125.2; covariant-readings-v1 on paper, not built), and
+NATURE.md (the confrontation register, seventeen rows, 3 PASS, 9 FAIL, 2
+BOUND, 3 NOT YET). Written: the paragraph "The symmetries" in Part I
+(the translations, the 48 with the hand, Z_N, the families; a boost not
+among the 48, record 231; conserved up to the lattice, record 225); the
+table's rows for entropy (14), the growing wall (15), the smallest mass
+per kind (16.2 (d)), G with 16.2 (e), Heisenberg's spread (NATURE row
+10, A10), the Lorentz row with the covariant readings; the section "The
+confrontation with nature" with the seventeen rows; the Lorentz section
+rewritten on section 17 (the theorem, built on Newton, tried on Lorentz,
+the covariant readings, the decision: A and B as recorded in 249, the
+derivation's hypothesis named, the choice between the root and the
+readings recorded as the program's next decision, since the owner's word
+on replacing B is not yet in the log). The c row waits for series Q's
+register entry (263: 290 of 290 face clicks at the derived interval).
+Referee round 10 on this wave before it stays.
+
+## Referee round 10 (2026-09-21): the second wave, major revision, applied
+
+Twenty-four findings, all verified; the numbers of the seventeen rows,
+the tally, the muon's 70.9 and 125.2, the floors, the hierarchy and the
+48 checked out; what did not: (1) the sources cited (NATURE.md, sections
+16 and 17, records 259 to 265) were not on the branch's tree: main
+merged again (a6a18c2d, 970a81d5), "at the tree of this paper" replaced
+by the register's own commit 88d843ef; (2) to (4) the Lorentz section's
+opening and decision paragraph had written the recommended replacement
+of B as if decided and attributed the recommendation to the derivation:
+now the decided hypothesis is the seventh operation (record 249), the
+covariant readings the derivation's second candidate, the program's
+recommendation cited (records 259, 260, 264), the choice pending; the
+root's content stated as the record has it (the clock and the
+contraction by declaration, no energy of motion); (5), (6) the table and
+the section agree: three of the four readings in the lattice's frame,
+the E = m c^2 row "not reached as declared; reached under the covariant
+readings"; the abstract carries the hypothesis and the confrontation's
+tally; (7) series D not cited as confirming G M / r^2; (8), (9) "only
+under them" deleted, the invariant "kept to 1e-12 in a host integration,
+the exact closure open", the contraction "by Lorentz's 1904 argument,
+not integrated"; (10) the one set's qualifier (eight worlds with another
+clock pair, no verdict depending on it); (11), (12) seven published
+sources added to the bibliography (Sinha 2010, Planck 2018, Riess 1998,
+Perlmutter 1999, AME2020, Gonzalez 2021, Nairz 2002), the Sorkin
+parameter attributed to Sinha's measurement, the register's "to verify
+against the source" carried; (13), (14) rows 4a and 5b: the covariant
+readings' entries marked as this paper's additions, "nine orders", the
+lattice-frame qualifier, the register's own route wording noted; (15)
+row 3's crowds named, the two pinned failures counted as NOT YET for the
+run; (16) the growing-wall row owns nature's q_0 as not reached and
+names G2's re-read at rest a host reading; (17) to (19) the quark
+design's quarks, alpha and alpha_G named with alpha_G = alpha / rho_p^2,
+w, theta and Lambda named; (20) the symmetries paragraph: the three ties
+named, the interval's translation, the families with their columns,
+"angular momentum only up to the lattice; no Noether theorem for the map
+claimed"; (21) the wave-equation hedge restored; (22) E, E_0, m, nu
+named, gamma = 29.33 once, Q_f written Q in the register; (23) the
+lattice-frame qualifier in "Tried on Lorentz", route C's closure in one
+clause; (24) the two role words of the click chapter replaced. The
+abstract re-fitted under 1920 characters.
