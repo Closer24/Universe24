@@ -1096,3 +1096,41 @@ mass "in form". Verified without change by the referee: the 48 / 24 / 24
 and record 226; note 47's 23 / 13 / 10; series Q's numbers; the tally;
 row 8c; the strong ratio; the periodic row; the host check's 10^-12;
 the column counts; the four theorems of the measurement chapter.
+
+## The far lamp on the tree, the records on the tree (2026-09-21, after the merge of main at 01bb782a)
+
+PR #455 (records 267 to 282 and the 5.4 lines) and PR #464 (the far
+lamp's note BRIGHTNESS.md with far_lamp_map.out, DARK_SECTOR.md, the
+register's rows 11a to 11c) are on main and merged into the branch. The
+paper's row 3b is replaced by the register's own rows 11a (q_eff = +1,
+FAIL pinned), 11b (the stretch 1 + z, PASS pinned: 400 rows over 400
+intervals arrive over 1452 at 300 Links, 3.639 against 3.629) and 11c
+(the surface brightness (1 + z)^-1 against Tolman's -4, FAIL pinned; at
+z = 1 the ratio 0.500 against 0.062); the two numbers previously marked
+unverified (0.339 / 0.055 mag rms; 0.97 +- 0.10) are now read from the
+note's lines 114, 116 and 146 and the register, Blondin 2008 and Lubin
+and Sandage 2001 carried with the register's "to verify" flag (eight
+values now). The register: twenty-one rows, four PASS, twelve FAIL (four
+pinned, one a refutation of a declared input), two BOUND, three NOT YET.
+The submission caveat reduces to one sentence: every source cited is on
+the tree; the far lamp's rows rest on a pin, series R is not registered.
+The log bibitem cites records 270 to 282 by number, no longer "in the
+Boss's open pull request". Abstract 1880 characters.
+
+## Referee round 14 (2026-09-21): the far lamp's rows 11a to 11c, minor revision, applied
+
+Nine findings, all applied: the log bibitem's records corrected (281 is
+the owner's rule, not the far lamp; 270 "in place of the build of
+lorentz-v1"; 271 the addendum ordered, 278 the addendum delivered); nine
+values marked "to verify" (Gonzalez 2021 was undercounted before this
+round); rows 11a to 11c added at 8b13ceeb, merged at 01bb782a; row 11a's
+parenthetical no longer contradicts its own row ("were the content to
+follow the frequency in flight, the power would be two and q_eff = 0, a
+rule 6.4 finds not among the six"); the stretch exponent renamed beta_s
+(b is the rung); the post-table sentence separates the Hubble diagram's
+widening gap (11a) from the surface brightness's three powers (11c);
+row 5b marked "this paper's addition" as row 4a is. Verified without
+change: every number of rows 11a to 11c against NATURE.md and
+BRIGHTNESS.md (0.339 / 0.055; 3.639 / 3.629; 1452; 0.500 / 0.062; "no
+such rule among the six"); the tally; the caveat's series R; the 5.4
+lines of records 277 and 281.
