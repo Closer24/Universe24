@@ -47,6 +47,14 @@ PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/clock_word ex
 PYTHONPATH=src python examples/events/clock_word/read_runs.py artifacts/clock_word
 ```
 
+**Measured (2026-09-21, one run, `readings.json` beside the worlds; measured
+once, awaiting replication).** Every pin met: DETECTOR 1 + z 1.3000 /
+1.3000 (presence, 3 Links), 1.3000 / 1.3000 (presence, 6), 2.6517 / 2.6514
+(age, 3), 4.1500 / 4.1506 (age, 6) in the two windows; the ratio of the two
+k under the age word 1.907 (pinned 1.909); GAMEBOARD, on a replay, the
+clock counts from tick 6 and 11 with the first row's count alone, then
+4 F, 4 F, 22 F, 42 F; no light lost. The register's entry carries the run.
+
 `tests/test_clock_word.py` pins the shipped worlds to the generator, the
 lamp's count under each word at each distance (4 F, 4 F, 22 F, 42 F; the
 first counting tick 6 and 11) and the algebra of the pin.

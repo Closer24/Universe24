@@ -6422,8 +6422,42 @@ sequential gates on an entangled record, the full register replay.
   balanced; the lamp's count under each word at each distance and the
   first counting tick; the algebra of the pin), the template
   `tests/test_crowd_clock.py`.
-- **Run.** Not yet run at the time of this entry; the run's paragraph
-  follows in the same pull request.
+- **Run (2026-09-21, `tools/run_series.py --jobs 2` on main 583bf0e, headless,
+  500 intervals each, the four worlds completed and conserved at every tick;
+  the readings by `examples/events/clock_word/read_runs.py`, shipped as
+  `examples/events/clock_word/readings.json`, no number typed by hand;
+  DETECTOR unless said; measured once, awaiting replication).** The
+  detector's `1 + z` in the two windows: the presence word 1.3000 and
+  1.3000 at 3 Links, 1.3000 and 1.3000 at 6 (the pin 1.300 +- 0.02; the two
+  distances read alike to the fourth digit); the age word 2.6517 and 2.6514
+  at 3 (the pin 2.650 +- 0.05), 4.1500 and 4.1506 at 6 (the pin 4.150
+  +- 0.05); the ratio of the two k under the age word 3.1503 / 1.6516 =
+  1.907 (the pin 1.909 +- 0.05; the continuum's 2.000 outside it, as the
+  lattice's dwelling ages say), under the presence word 1.000 (the pin
+  1.000). The click rate 0.767 per interval at both distances under the
+  presence word, 0.380 / 0.373 and 0.240 under the age word; the age read
+  172 in every world (the flight of 100 Links); no birth ordinal missing
+  in any world (the light escapes whole); the lamp's k from its births
+  0.293 / 0.304, 0.293 / 0.304, 1.679 / 1.632, 3.167 / 3.054. The first
+  interval with the crowd's rows at the lamp, on a replay of each world
+  (GAMEBOARD): tick 6 at 3 Links and tick 11 at 6 in both words, the count
+  then the first row's alone (2 F = 9830 under the presence word; 2 F x 5
+  = 49150 and 2 F x 10 = 98300 under the age word) and from the next
+  interval the pinned 4 F = 19660, 4 F, 22 F = 108130, 42 F = 206430; the
+  first birth the lamp misses after the rows (DETECTOR) tick 10, 15, 8, 12
+  (under the presence word the owed count reaches one after four counting
+  self-creations, under the age word after one). **Verdict per world:
+  `presence_3` met, `presence_6` met, `age_3` met, `age_6` met**; every
+  pin of the entry met, nothing moved, nothing failed. The host's cost,
+  apart from the readings: 1.6 to 2.0 s per world, 49 to 51 MB peak; the
+  events' fingerprints 25f2ec3f6bd4, d1f8afa422bb, f50997eb6cc7,
+  1d73b0d9cd73 (the full sha256 in `readings.json`). What the run
+  establishes: on the engine as built the presence clock reads the same
+  count at 3 and at 6 Links from the same release (the form `M / r^2` on
+  a fan line, flat with r) and the age clock reads the distance as the
+  dwelling ages give it (22 : 42, the form `M / r` up to the lattice's
+  grain); the choice of the word is the owner's, the readings that would
+  move with it listed in NOTE.md section 2; it establishes no physical law.
 
 ### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
 
