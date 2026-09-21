@@ -139,3 +139,8 @@ Separate tested finite cases, analytic arguments and unestablished physics. A
 passing candidate does not resolve a failing baseline. For a blocker, preserve
 the smallest reproducible case and hand it to its implementation owner and tests;
 Boss must not mark the physics change complete until the required checks pass.
+
+## Emergence check (2026-09-20, record 151)
+
+When a change adds a rule or a world key for an effect that relative motion, a varying rate or a meeting could produce by itself, require the emergence test in the review: the same world with the key absent, the expectation pinned before the run (for a reader stepping one Link per k intervals through a stream of one row per interval: k + 1 rows per k intervals toward, k - 1 away, if the step reads the Link it crosses). A rule that reproduces what the flight, the step and the meeting already give is not admissible; a step that misses the effect is the defect to name, fixed in the step, not beside it. Record which case held and cite the file:line of the step and of the read.
+

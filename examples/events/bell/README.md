@@ -28,8 +28,10 @@ paid (`quantum` 1; the kind follows from the quantum), every measured event
 - The lamp of `light` at x = 10: content K + 2 = 1048578 (the smallest
   content that turned once per self-creation over the run under the count
   off the clock; since the fraction-free law of 2026-09-20, BEAM_LAW note
-  41, a paid lamp keeps one birth per interval over T intervals with the
-  content K + 2 (T - 1) or more, K + 318 here, and this lamp's exact
+  41 (vii), a paid lamp paying 2 per birth keeps one birth per interval
+  over T intervals from the least content K + T - 1, K + 159 here, the
+  frame reading the content before the birth pays (K + 2 (T - 1), K + 318,
+  suffices and is twice the least addition), and this lamp's exact
   clock, paying 2 per birth, stalls once, at tick 4: 159 births in 160
   intervals, the age of a pair its birth ordinal read off the record),
   `phase` 0, one ray per self-creation on +X and on -X

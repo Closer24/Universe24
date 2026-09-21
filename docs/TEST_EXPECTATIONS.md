@@ -42,7 +42,7 @@ kept, their pins the law of events').
 | `test_nature_beam_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_nature_beam_clock.py` | The clock under the Beam Law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-beam-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder (since the step drive of 2026-09-20 the same integers, the remainder now the drive on the body's record); the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
-| `test_fraction_free.py` | The fraction-free counts (2026-09-20, BEAM_LAW note 41): every count of a body an accumulator on its record, `by_drive`'s count; the identity at a constant rate on every count over 10^4 intervals, the accumulators carried in `state.json` and a resumed run identical, the bound below the denominator at every tick ([below](#the-fraction-free-counts)) | new (2026-09-20, the mathematician's FORM.md, the physics-rule reviewer's REVIEW_COUNTS.md, records 147 and 148) |
+| `test_fraction_free.py` | The fraction-free counts (2026-09-20, BEAM_LAW note 41): every count of a body an accumulator on its record, `by_drive`'s count; the identity at a constant rate on every count over 10^4 intervals, the accumulators carried in `state.json` and a resumed run identical, the bound below the denominator at every tick, a column whose Lambda_c^2 leaves the register refused at load ([below](#the-fraction-free-counts)) | new (2026-09-20, the mathematician's FORM.md, the physics-rule reviewer's REVIEW_COUNTS.md, records 147 and 148) |
 | `test_step_drive.py` | The step drive (2026-09-20, BEAM_LAW note 17 as amended): the count of Links as the whole part of the distance the momentum has driven, one bounded integer per axis on the body's record: the identity at a constant momentum with `by_clock(n - 1, \|p\|, D)` over 4000 self-creations and twelve momenta; the identity on two axes (the coincident step lost as before); the integrated distance under a halving momentum (38 within 1, 37 to 39, where the rule as it was made 1); never two Links in one interval under a random momentum over 10 000 intervals with the drive in [0, 2 D - 1); the record (`drive`, `axis_steps`, the `step` line) and a declared `drive` refused; the turn by momentum unchanged; the signed drive under a reversal (no Link until the drive cancels and reaches -D) and the bound pair under a suspension holding for 3000 intervals ([below](#the-step-drive)) | new (2026-09-20, series G2's finding, record 107; the owner's decision, record 108); the drive signed the same day (record 126) |
 | `test_doppler.py` | The reading's weight at the relative speed (`doppler-v1`, 2026-09-20, BEAM_LAW note 38; the flux at the grain G = 2^12): a fixed body and a free body at rest reading byte-identically with and without the key over 200 intervals (the same records, the same books); the bar of the finding (a fixed source's steady beam, a free body of content 2^20 at an exact speed, the push the weighted flow in label units) reading 200 rows in every case and taking 12800 at rest, 6204 receding at 0.30, 2901 receding at 0.45, 19395 approaching at 0.30, 0 co-moving at c, 3700 outrunning at 0.75 (the map's rates 96.9, 45.3, 303.1, 0, 57.8 rows to the label unit); the bar with rows of 64 running; the third law on two fixed bodies unchanged; the refusals, the weighted flow's R1 and the budget's factor; the grain, the pair on the headings and the fan (0.5938, 0.7771, 0.8666) and the record; the fan over three intervals (5130 of 8640 on the face diagonal at 1/3; 4326, 8504 on (1, 2, 0) and 2828, 8485, 5656 on (1, 3, 2) at the star's speed; the heading 5249 of 12288; the transverse exact) and the fan reader at rest byte-identical; a body on a set reading two groups from the one frame snapshot; a registered G2 star world running 20 intervals under the key ([below](#the-readings-weight-at-the-relative-speed)) | new (2026-09-20, the model owner's record 119; the mathematician's form, record 110, and GRAIN.md after the physics-rule review) |
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
@@ -1735,7 +1735,21 @@ primitive). The integers, written first:
   `test_columns` (a) re-pinned: the column's count over the one
   denominator Lambda^2 with the accumulator seeded as `age` reads leave
   it, the same integers, and a refusal of its own where the lifted product
-  does not fit the register (coprime denominators of 30 bits).
+  does not fit the register (coprime denominators of 30 bits);
+- (g) the bound of the push's denominator at load (the physics-rule review
+  of the branch, `docs/designs/fraction_free/REVIEW.md` section 4): a
+  world whose column scale Lambda_c (`world.column_scales`) has a square
+  beyond the integer bound 2^62 - 1 is refused at the parse naming the
+  column and the bound, before any body's table is formed; the ceiling of
+  Lambda_c is 2^31 - 1 = 2147483647, the integer root of the bound, a
+  prime beyond one value's bound 2^30 - 1: the free families `m` at [1, 2]
+  and `w` at [1, 2^30 - 1] in the column `s` load with Lambda_c = 2^31 - 2
+  = 2147483646, the largest two declared values can form under the
+  ceiling (its square 2^62 - 2^33 + 4); `m` at [1, 2^30 - 1] alone loads
+  with Lambda_c = 2^30 - 1; `m` at [1, 3] and `w` at [1, 715827883] (3 x
+  715827883 = 2^31 + 1, the smallest two values can form above the
+  ceiling) are refused with Lambda_c = 2147483649; the run's refusal of
+  the lifted product (`test_columns` (a)) stands beside it.
 
 Re-pinned under the exact count, the old integers kept as history in each
 module's docstring (the whole part off the clock at the current rate
@@ -1767,14 +1781,14 @@ share (9, 0, 0), the mirror's second reflection at the share (7, 5, 0);
 the turn 3 and the content 3 on every row until then).
 
 **No remainder discarded (record 155 of 2026-09-20; note 41 (viii)).**
-`tests/test_fraction_free.py` (g): on 2000 random labels, amounts and
+`tests/test_fraction_free.py` (h): on 2000 random labels, amounts and
 multiplicities the shares of a row pushed k times sum to the whole part of
 k x label x amount over m exactly with the accumulator below m, the floor
 per push alone short by up to k - 1 units; on a bar of a lamp of records
 (three rows per record) and four readers at x = 4 .. 7 the readers' pushes
 sum to the read lines' pushes, strictly between 21 and 22 per unit read
 (the +x row's label 64 over m = 3, the remainder carried), the state
-writing `share` on a row that holds one; (h) `place_over_nodes` on random
+writing `share` on a row that holds one; (i) `place_over_nodes` on random
 amounts over 2 to 7 Nodes places every amount whole, the claims summing to
 zero within the number of Nodes and every Node within one unit of its
 equal share; `test_nature_beam_body` (c) re-pinned (6, 5, 5 and 5, 6, 5 for

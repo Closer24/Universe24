@@ -93,3 +93,49 @@ this file holds the entries added after them.
   clock constant at all.
 - **Status.** Registered, not tuned; a limit of the law that follows from
   E = h f read off a whole-step clock, and from nothing else.
+
+## 26. The law quantises exactly what lives on a compact group, and leaves free what lives on a scale: charge, phase and direction have numbers, mass has none
+
+- **Statement (the mathematician, 2026-09-21, from the vector form of the
+  law, [TWO_SLITS.md](designs/fraction_free/TWO_SLITS.md) and the masses
+  design; registered on the model owner's word, "write the sentence in
+  PREDICTIONS").** The law's own numbers are of two kinds. The widths N,
+  P, Q, W, G and K are the sizes of finite samplings of compact manifolds
+  (N the circle of phases, P the sphere of directions, W the wheel of
+  births, Q and K the clocks), and every observable that lives on such a
+  manifold is quantised by them: a phase is a whole number of steps mod
+  N, a direction one of F_P, a charge a whole number of steps per Link (a
+  winding number on the circle), the content of a click h times a whole
+  turn (E = h f with f whole steps per interval). The amounts of the state
+  vector, contents and masses, live on the non-compact scale, and every
+  map of the law on the state vector (flight, fan, splitter, rotation,
+  the click's norm) is linear or homogeneous in it, so **no number of the
+  law selects a mass: a linear law is scale-free in its coefficients, and
+  a mass ratio can arise only from a nonlinear closure on amounts, which
+  the law does not have** (the model owner, record 106: the masses and
+  charges are the initialisation). The division is a theorem of the
+  form, not a reading: the quantised observables are the windings and
+  the samplings, the free ones are the coefficients.
+- **The detector reading.** Every registered quantised reading is of the
+  first kind and every free one of the second: the contents of clicks in
+  whole turns (`designs/masses/cavity_click.out`, entries 24 and 25),
+  the charges as whole steps per Link, the directions of every fan as
+  primitive vectors; against them the masses of the catalog, declared
+  amounts with no ratio the law reproduces (the harmonic ladder refuted,
+  the masses design section 6). A run that finds a mass selected by the
+  law would refute the statement; none exists.
+- **What would refute it.** Within the law: a map on the amounts that is
+  not homogeneous (a binding that costs content, issue #369, if it is
+  ever built, would make masses selectable, and then this entry is
+  superseded by that model's identity). Against nature: a quantised
+  observable of nature that lives on a scale, or a free one that lives
+  on a compact group.
+- **Against nature.** Nature's numbers divide the same way: charge, spin,
+  angular momentum and the winding numbers are quantised; the masses,
+  the mixing angles and the couplings are free parameters, in the
+  standard model the eigenvalues of coupling matrices declared by hand.
+  The law reproduces this division exactly and for the same reason (the
+  compact groups are sampled, the scale is not), which is a structural
+  agreement and not a fitted one; what it does not give, as nature's
+  theories do not either, is the mass numbers themselves. Status:
+  registered, not tuned.

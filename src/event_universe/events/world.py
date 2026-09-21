@@ -1050,13 +1050,32 @@ class NatureBeamWorld:
         so the push's rate V x E_c n_c / (D_c d_c) is a whole numerator
         over the one denominator Lambda_c^2 of the column's accumulator
         (`nature_beam.push_form`). 1 on gravity and on every column whose
-        values are whole, where the push was exact already."""
+        values are whole, where the push was exact already. Lambda_c^2,
+        the denominator of the column's rows in every body's table of
+        counts (`measured.counts_table`), is tested by division here,
+        where Lambda_c is formed: a column whose square leaves the
+        register is refused naming the column and the bound, at load
+        (`parse_nature_beam_world` reads the scales once) and not at the
+        first push (the physics-rule review of the branch,
+        `docs/designs/fraction_free/REVIEW.md` section 4; the run's
+        refusal of the lifted product, `nature_beam.column_bound_error`,
+        stands beside it)."""
         found = []
         for column in range(len(self.families[0].columns)):
             scale = 1
             for family in self.families:
                 denominator = family.columns[column].value[1]
                 scale = scale * denominator // bounded_gcd(scale, denominator)
+            if scale > MOMENTUM_BOUND // scale:
+                name = self.families[0].columns[column].name
+                raise ValueError(
+                    f"{BEAM_LAW}: the column {name!r}: Lambda_c = {scale}, the least common "
+                    "multiple of the families' value denominators in the column, has a square "
+                    f"beyond the integer bound {MOMENTUM_BOUND}, the ceiling of the push's "
+                    "accumulator over Lambda_c^2 (BEAM_LAW note 41 (iv)); the column's value "
+                    f"denominators must have a least common multiple of at most "
+                    f"{integer_root(MOMENTUM_BOUND)}"
+                )
             found.append(scale)
         return tuple(found)
 
@@ -3011,4 +3030,9 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         doppler=doppler,
     )
     _record_load_checks(measured, detectors, families, phase_steps)
+    # The push's denominator per column, Lambda_c^2 (`measured.counts_table`),
+    # tested where Lambda_c is formed (`column_scales`): a world whose column
+    # scales leave the register is refused here, at load, not at its first
+    # push (the physics-rule review of the branch, REVIEW.md section 4).
+    _ = world.column_scales
     return world

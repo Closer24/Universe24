@@ -107,7 +107,13 @@ primitive in place of two.
   gravity and on charge wherever the charges are whole, so no registered
   push moves at this stage (the nine gate worlds' audit and events
   unchanged); the lifted product is tested by division and refused naming
-  the column where it does not fit (`tests/test_columns.py` (a)). Under
+  the column where it does not fit (`tests/test_columns.py` (a)); since
+  the physics-rule review of the branch (`docs/designs/fraction_free/REVIEW.md`,
+  section 4) a column whose Lambda_c^2 leaves the register (Lambda_c
+  above 2^31 - 1) is refused at load naming the column and the bound
+  (`tests/test_fraction_free.py` (g)), where before it loaded and was
+  refused at its first push; no registered world reaches it (every
+  Lambda_c is 1 or a few tens). Under
   `doppler` the weighted flow is counted per direction at G Q |v_d|^2.
 - The counts are ONE table on the body's record (the model owner's table
   of 2026-09-20): `Measured.counts`, a `CountTable` of `Count` rows built
