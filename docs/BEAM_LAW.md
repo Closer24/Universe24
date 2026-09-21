@@ -455,13 +455,14 @@ order with each step's inverse:
    value 1, the sign minus: its term is `-M_A V_B` exactly), the second
    `charge` (rho, the sign plus: its term is the electric part below), and
    a declared column (the strong force, the sign minus) is a third term of
-   the same sum, not a term of the code. Under the world key `doppler`
-   (`doppler-v1`, since 2026-09-20, absent by default, note 38) a free
-   reader in motion takes each direction's flow at the rate at which it
-   and the rows meet, the flux `1 - (v_body . c_d) / |c_d|^2` of the
-   rows through it at its speed quantised to the grain G = 2^12, off its
-   clock before the columns (`weighted_flow`); at rest the weight is 1
-   by an exact division and the line above is unchanged.
+   the same sum, not a term of the code. Since the crossing rule
+   (2026-09-21, note 48; the model owner's record 158 of 2026-09-20) the
+   rows a reader meets are the crossings of its world line: its arrivals
+   and, in the interval of a step, the rows on its Link against it and
+   the rows at the Node it entered moving against it, never a row that
+   came over its Link behind it; a moving reader's Doppler is the count
+   of the rows it crosses (the world key `doppler` of 2026-09-20, the
+   flux weight at the grain G, note 38 as it was, is deleted with it).
    On the two built-in columns this
    is the form landed the same day, integer by integer (the mathematician:
    11 945 pushes of the registered worlds, 0 unequal): **ONE bilinear
@@ -1066,9 +1067,11 @@ implementation's part of the contract. The design above is unchanged.
     per 9 self-creations. Kept as they were: at most one Link per interval,
     x before y before z (an axis whose step coincides with an earlier
     axis's step in one interval loses it, nothing carried); a measured
-    event steps only in an interval where it owes nothing, so the step of
-    a self-creation whose count is owed lands on the interval that pays
-    the count; the momentum is untouched by the step; `run.json` records
+    event's drive advances at every self-creation, before the interval's
+    owed count is paid (the crossing rule, note 48, 2026-09-21; until then
+    a step waited for the interval that paid the count: `test_push_width`
+    (c) 18, 36, 54 became 17, 35, 53); the momentum is untouched by the
+    step; `run.json` records
     `width`. The parser refuses 0, a negative width, a string and a
     fraction naming the key (`tests/test_push_width.py`; the experiment
     that uses it is series D in EXPERIMENTS.md). **Amended on 2026-09-20,
@@ -2714,150 +2717,19 @@ implementation's part of the contract. The design above is unchanged.
     re-run worlds, EXPERIMENTS, marked "re-run under the one click; the
     verdict to be re-read", the old numbers kept as dated history).
 
-38. **The reading's weight at the relative speed, `doppler-v1`: the flux
-    at the grain** (the model owner, 2026-09-20, record 119: "a body TAKES
-    a message at the rate at which it and the message meet"; the
-    mathematician's admissible form, `docs/designs/push_relative_speed/
-    FORM.md` section 6 on the branch `claude/series-m-masses`, record 110,
-    and after the physics-rule review of the first build (`e916e115`) its
-    grain and flux form, `GRAIN.md` sections 1 and 2 beside it with
-    `grain_map.py` the integers; on series G2's finding, RULES.md section
-    2 and record 107: a body reads exactly 1.000 row per interval from a
-    fixed beam at rest, receding at 0.30 and 0.45 and approaching at
-    0.30, so its own motion never Dopplers what it reads, since step 4
-    counts the rows that stepped into its Node and a dwelling row is
-    re-read after a leapfrog while a head-on row whose Node the body
-    steps onto is missed; the PRESENCE form of RULES.md was refused,
-    record 110: the dwell of the Node moves the rest reading by x 0.582
-    or x 1.164). **The rule, in the owner's frame.** A body takes a
-    message at the rate at which it and the message meet: the flux of the
-    message's stream through the body along the message's direction,
-    `1 - (v_body . c_d) / |c_d|^2` of the stream's own rate, a transverse
-    motion changing nothing (the body leaves one line of the fan and
-    enters another), a co-moving one taking less, a head-on one more.
-    Under the world key `doppler` (true or false, false by default; the
-    record carries it and the identity `doppler-v1` under `hypotheses`),
-    when a free measured event reads the rows that ARRIVED at its Node
-    this interval for the push of step 4, each direction's label flow
-    counts with that flux, one scalar per (direction, body), and the
-    columns then read the weighted flow exactly as they read the flow
-    today. **G, the grain.** `SPEED_GRAIN` G = 2^12 is a constant of the
-    law beside Q = 64, not a key: the body's speed on an axis is read
-    once per interval from its own record as `w_a = G x |p_a| // D_a`,
-    `s_a = sign(p_a)`, with D_a = Q S M + |p_a| the step rule's divisor
-    (`world.step_divisor`, the one function the step and the weight read;
-    `nature_beam.quantised_speed` on the momentum and content the frame
-    read, `frame_momentum` and `frame_content`, one speed for every group
-    of the interval whatever the family order); the speed's remainder
-    `(G |p_a|) mod D_a` is discarded each interval, a declared grain of
-    1 / G Links per interval like S and Q, nothing accumulating: the
-    quantised speed is below |p_a| / D_a by less than 1 / G = 2.4 x 10^-4
-    Links per interval, so the weight is biased toward 1 by less than
-    T_d / (G N_d) = 4.2 x 10^-4 of the rate on a heading (a receding body
-    reads at most that much too much, an approaching one too little; on
-    the G2 stars 7 x 10^-5 to 1.9 x 10^-4 in v, `grain_map.out` 1), and a
-    body slower than 1 / G Links per interval on an axis reads there as
-    at rest. **The integer form** (`nature_beam.flux_pair`,
-    `weighted_flow`; `push_form` untouched): with v = (a, b, c) the
-    direction's vector, T_d its resolution from the flight rule (its
-    velocity is (Q / T_d) v per axis, the Bresenham line's pace) and |v|^2
-    its squared length, per direction d present in the group,
-
-        f_d  = (|G Q |v|^2 - T_d x sum_a s_a w_a v_a|, G Q |v|^2),
-        V'_d = sign(V_d) x by_clock(age_A, |V_d| x num_d, G Q |v|^2)   per component,
-        push_A = the columns of step 4 on sum_d V'_d,
-
-    V_d the label flow of the group's rows of direction d (the sum of
-    their labels, `amount x u_d`); the numerator in absolute value since
-    the take is a count, never negative: 1 at rest (w = 0, the division
-    exact), (c - v) / c receding, (c + v) / c approaching, exactly 1 for
-    a transverse motion (the sum is 0; a zero component contributes no
-    term), 0 for a body moving with the rows at their own speed, and
-    |c - v| / c for one outrunning them (a reader faster than the message
-    takes it from behind at |c - v|, and the push keeps the sign of the
-    flow: the message still points from its source). On a heading it is
-    `(|G Q - T_d s w|, G Q)`, FORM.md section 6's pair at the quantised
-    speed, the same integers where G p_a / D_a is whole. The per-axis
-    pair of the first build, `(|N_d D_a - T_d s p_a|, N_d D_a)` per
-    (direction, axis), was exact on a heading and wrong on every fan
-    direction (GRAIN.md section 2: it overstated the Doppler term by
-    |v|^2 / a^2 per axis term, x 2 on a face diagonal, x 3 on a cube
-    diagonal, x 5 on (1, 2, 0), and went negative on the slanted
-    directions at the stars' own speed, -0.11 on (1, 2, 0) and -0.87 on
-    (1, 3, 2) at v = 0.289 where the flux reads 0.78 and 0.87), and its
-    "per-direction floors only on an axis where the reader moves" rule is
-    deleted with it: the flux form needs none. Two remainders, both
-    stated: the speed's above, and the flow's floor `(|V_d| x num_d) mod
-    (G Q |v|^2)`, read off the reader's clock by `by_clock`, exact on
-    average and below one label unit per direction and component per
-    interval, the same kind as every column's. **The bounds.** The
-    speed's intermediate G x |p_a| is tested by division before it is
-    formed and refused naming the body, its Node and the axis (|p_a| at
-    most 2^50, the register's bound over G); |V_d| x num_d is tested by
-    division before it is formed and refused naming the body and the
-    direction (R1; a numerator of 0 forms nothing); the product of the
-    clock age with |V_d| x num_d inside `by_clock` is the host's, the
-    columns' convention for every count off the clock; the weighted flow
-    is bounded per component (R2) and then the columns' own tests run as
-    today. The numerator is at most G (Q |v|^2 + T_d
-    S_1), 2^33.6 on the widest direction of a table, so |V_d| x num_d
-    fits the register for an amount up to 2^22 per direction per
-    interval; no load-time bound is new: the weighted flow is at most
-    (Q |v|^2 + T_d S_1) / (Q |v|^2) times the flow, 2.72 on a heading, 4
-    on a cube diagonal, and the parser's static budget of the columns
-    (`_column_budget`) takes the largest release flow times the ceiling
-    of that factor over the table under the key (`weighted_flow_factor`);
-    the first build's pair budget `(N + T) x D_a` at load is gone with the
-    pair. **The stars fit as registered.** On a G2 star (content 2^22 +
-    4096 at width 2^20, D_a = 2^48, one mass row of amount 64 on a
-    heading) the weighted flow's product is 2^29 and today's push on it
-    2^34, against the pair's 2^87 (`grain_map.out` 1); a registered star
-    world parses under the key and runs (`tests/test_doppler.py` (h), a
-    headings-only table: the stars' fit, not the fan's integers), and the
-    review's B1 is moot. **What is bit-identical.** A fixed body
-    has no speed and reads at the weight 1 whatever momentum its record
-    books (its momentum is the push it took, not a motion); a free body
-    at rest has w = 0 on every axis, the pair `(G Q |v|^2, G Q |v|^2)`
-    and by_clock gives |V_d| exactly, on a fan as on a heading: every
-    registered push of a fixed body (series C's identities, record 35's
-    11 945 pushes, the third law, item 7) and every free body at rest
-    read the same integers with and without the key, and every world
-    without the key is byte-identical (the gate set's fifteen worlds
-    replayed identical on 2026-09-20). The weight is on the push's read
-    of the arrivals alone: the clock's count is not weighted (it counts
-    the presence at the Node, a number of rows there, not a flux through
-    the body), the size and the threshold readings, the meeting, the
-    emitter's side and the Node are untouched; a paid family's ray pushes
-    by its label at the click as before. **What it gives** (the bar of
-    the finding on the engine, `tests/test_doppler.py` (b): a fixed
-    source releasing one row per interval on +x, a free body of content
-    2^20 whose width and momentum make its speed exact, the push the
-    weighted flow itself in label units, 64 per row): over 200 intervals
-    the body reads 200 rows in every case and takes, under the key, 12800
-    at rest (200 rows), 6204 receding at 0.30 (96.94), 2901 receding at
-    0.45 (45.33), 19395 approaching at 0.30 (303.05), 0 co-moving at c
-    and 3700 outrunning at 0.75 (57.81), against the map's 200, 97, 45,
-    303, 0, 58 and its exact rates 96.9, 45.3, 303.1, 0, 57.8 (FORM.md
-    section 4): the flux times the arrivals to the label unit, the
-    crossing rate (c - v) / c the finding asked for. On a fan (`(f)`, one
-    row of amount 64 per interval over three intervals, the reader's
-    clock ages 0 to 2): the face diagonal (1, 1, 0) at v = 1 / 3 reads
-    5130 of 8640 on each component (0.594, the flux; the per-axis form
-    read 0.19), (1, 2, 0) at the star's speed 0.289 reads 4326 of 5568
-    and 8504 of 10944 (0.777), (1, 3, 2) 2828, 8485, 5656 of 3264, 9792,
-    6528 (0.866), the heading 5249 of 12288 (0.427) and the transverse
-    heading exactly 12288 of 12288. Not given: an exact crossing count
-    (the leapfrog and the miss stay, only their mean is corrected), and
-    nothing for a body on a set beyond the sum over its Nodes, each of
-    its groups weighted from the one frame snapshot (`(g)`). **What
-    re-registers.** Nothing: the key is absent in every shipped world and
-    nothing is re-run under the key in this change. A moving pushed body
-    under the key reads differently from its first step on (the orbit
-    series D, Bohr's H, the planet, series G and G2's stars, the contact
-    worlds once a body holds momentum); the second G2 run (record 119
-    (6)) is the G2 session's, with the acoustic expectations re-derived
-    on this form first, registered with dated lines then, never here.
-
+38. **The reading's weight at the relative speed, `doppler-v1`** (the model
+    owner, 2026-09-20, record 119; the world key `doppler`, the flux of a
+    row's stream through a moving body at its speed quantised to the grain
+    G = 2^12, off the reader's clock before the columns, `weighted_flow`):
+    deleted on 2026-09-21 with the crossing rule (note 48; the model
+    owner's record 158, "in both cases the key leaves the code": a moving
+    reader's Doppler is the count of the rows it crosses, no weight, no
+    grain). The note's text, the key, the grain, `quantised_speed`,
+    `flux_pair`, `weighted_flow`, the nine worlds `hubble_stars/doppler/`
+    and `tests/test_doppler.py` are in the repository's history before the
+    branch `crossing` (MIGRATION, "The crossing rule, on 2026-09-21"); the
+    third run of series G2 under the key stays as a dated record in
+    EXPERIMENTS, VALIDATION and the series README.
 39. **The hand, `hand-v1`** (the model owner, 2026-09-20, record 128 of
     [the log](LOG_2026-09-20.md), "the hand's three choices confirmed";
     the physicist's design hand/DESIGN.md, record 122, read against the
@@ -3179,8 +3051,9 @@ implementation's part of the contract. The design above is unchanged.
     a constant rate); the physics-rule reviewer's read-only
     `docs/designs/fraction_free/REVIEW_COUNTS.md`; `core.integer.by_drive`,
     `engine.count_owed`, `engine._frame_all`, `engine._suspend`,
-    `nature_beam.push_form`, `nature_beam.weighted_flow`, the lamp and the
-    release in `nature_beam`, `amplitude.cell_of`; `Measured.acc_*`;
+    `nature_beam.push_form`, `nature_beam.weighted_flow` (deleted by note
+    48, 2026-09-21), the lamp and the release in `nature_beam`,
+    `amplitude.cell_of`; `Measured.acc_*`;
     `tests/test_fraction_free.py` (a) to (f); the register re-registered
     in one batch, MIGRATION "The fraction-free law"). No new identity: an
     integer form of the same counts under `beam-v1`.
@@ -3201,9 +3074,9 @@ implementation's part of the contract. The design above is unchanged.
     `acc_lamp` (below d of `rate`), the turn `acc_turn` (the rate
     `content x n` at K = [n, d], below d; the phase is the turn's count
     mod N as before), the push per column and axis `acc_push` (below
-    Lambda_c^2, (iv)), the doppler weight per direction and axis
-    `acc_flow` (below G Q |v_d|^2, (iv)) and the step's `drive` as note
-    17 built it. `by_clock(age, n, d)` is the constant-rate identity: from
+    Lambda_c^2, (iv)) and the step's `drive` as note 17 built it (the
+    doppler weight's rows per direction and axis, `acc_flow`, left with
+    the key on 2026-09-21, note 48). `by_clock(age, n, d)` is the constant-rate identity: from
     an empty accumulator at age 0 and a rate of one sign the two give the
     same integers at every self-creation and the accumulator holds `(age
     n) mod d` (FORM.md section 1, proved; test (a) on every count over
@@ -3217,8 +3090,8 @@ implementation's part of the contract. The design above is unchanged.
     hands the whole parts to the count's consumer at the stage of the
     interval where its numerator exists (the frame for the turn, step 5
     for the release and the lamp, `_suspend` for the owed count, `_move`
-    for the drive, the reading for the push and the doppler weight): a
-    future count is a new row, not new code. What remains read off an age is a key (`ages_at_key`:
+    for the drive, the reading for the push): a future count is a new
+    row, not new code. What remains read off an age is a key (`ages_at_key`:
     the lifetime, the age bound, the clock trigger; a comparison, no
     rate) and the rows' phase per interval of age (`by_clock_rows`: a
     ray's rate is its family's `phase_per_link`, a constant over its
@@ -3266,7 +3139,7 @@ implementation's part of the contract. The design above is unchanged.
     off the clock was unread at such a self-creation; not banked for a
     later self-creation (a window is a gate on the clock's phase, not a
     queue; a declared choice, `nature_beam` at the lamp's count).
-    (iv) **The push and the doppler weight.** Per column c the rate `V x
+    (iv) **The push.** Per column c the rate `V x
     E_c n_c / (D_c d_c)` is lifted to the column's one denominator
     Lambda_c^2, Lambda_c the least common multiple of the families'
     value denominators in the column (`world.column_scales`: every
@@ -3284,17 +3157,14 @@ implementation's part of the contract. The design above is unchanged.
     register (Lambda_c above 2^31 - 1) is refused at load naming the
     column and the bound, not at its first push (`world.column_scales`;
     test (g); the physics-rule review of the branch,
-    `docs/designs/fraction_free/REVIEW.md` section 4). Under `doppler` the weighted flow of
-    each direction is counted on `acc_flow[d][axis]` at the denominator G
-    Q |v_d|^2 (one accumulator per direction: the directions' denominators
-    have no common multiple within the register on a fan of a few hundred
-    directions), so the split over the directions is a sum of whole parts
-    each exact on its own record. Per interval the count differs from the
-    floor off the clock by at most one label unit per column, axis and
-    interval, and the sum over any period is the whole part of the sum of
-    the numerators exactly (FORM.md section 2; tests (b), (d), (e): 396672
-    on the doppler bar for 396673, the remainder below G Q at every tick;
-    the fan at rest bit-identical to the unweighted push).
+    `docs/designs/fraction_free/REVIEW.md` section 4). Per interval the
+    count differs from the floor off the clock by at most one label unit
+    per column, axis and interval, and the sum over any period is the
+    whole part of the sum of the numerators exactly (FORM.md section 2;
+    tests (b), (e); the weighted flow's rows under `doppler`, `acc_flow`
+    at the denominator G Q |v_d|^2, one per direction, and their tests on
+    the doppler bar, 396672 for 396673 off the clock, left with the key on
+    2026-09-21, note 48).
     (v) **The ladder at the click.** The cell of a record's u is the first
     k with `2 T u + T <= 2 N C_k`, the comparison of two products
     (`amplitude.cell_of`), which is `u < b_k` with the rung `b_k = (2 N
@@ -3413,18 +3283,17 @@ implementation's part of the contract. The design above is unchanged.
     `node_choice`: the cell is the comparison of products, the rung a
     report); the half circle `modulus // 2` and a window's half width
     `width // 2` (constants of N and the width); the speed at the grain G
-    (`nature_beam.quantised_speed`, `G |p| // D`: the remainder below 1 /
-    G by declaration, note 38; the rule leaves with the crossing rule,
-    record 158).
+    (`quantised_speed`, `G |p| // D`, the remainder below 1 / G by
+    declaration, note 38 as it was) left with the crossing rule on
+    2026-09-21 (note 48).
     (4) a guard or an addressing: every `MOMENTUM_BOUND // x` and
     `AMOUNT_BOUND // x` (a bound tested by division before a product is
     formed: `measured.column_charges`, `engine._frame_all`,
     `world.column_scales`, `_families`, `_column_budget`,
     `meeting.arc_shift` and `meet`, `nature_beam.label_overflow_rows`,
     `label_weights`, `coherent_pointer` and its `POINTER_STEP_BOUND`,
-    `apply_gate`, `quantised_speed`, `weighted_flow`, `push_form` and
-    the lamp's births), the parser's ceilings (`world.weighted_flow_factor`,
-    `flight_bound`, `_lamp`, `_measured`, `_column_budget`: the largest
+    `apply_gate`, `push_form` and the lamp's births), the parser's
+    ceilings (`flight_bound`, `_lamp`, `_measured`, `_column_budget`: the largest
     values a run can form), a body's span half (`world.body_nodes`) and
     the store's strides (`NatureBeamStore.coordinates`). The `//` of
     `core/phase.py` (the cosine and sine tables of the circle, a declared
@@ -3575,7 +3444,7 @@ implementation's part of the contract. The design above is unchanged.
     | the collision | the row's slot (its direction) and its (number, content) class | the single units of the same number and content in the eight slots of a free Node: its own crowd only, never another number's | `collide`, nature_beam.py:2460; step 3 at 2685 |
     | the meeting (`meeting-v1`, the world key `meeting`) | the paid row's label and number | the free crowd's labels at its Node less its own number (`crowd_flow`), the arc permutation toward the target | `meet`, meeting.py:282; `crowd_flow`, meeting.py:244; called at 2693 |
     | the coupling (the push over the columns) | the reader's content and charges as the frame read them (`frame_content`, `frame_charges`), its push accumulators | the label flow V_B of the group of arriving rays, per column | `push_form`, nature_beam.py:2295; called at 3429; the frame `_frame_all`, engine.py:445 |
-    | the reading's weight under `doppler` (note 38) | the reader's momentum as the frame read it (`frame_momentum`), its flow accumulators | the arriving rows' directions and labels per direction | `weighted_flow`, nature_beam.py:2219; called at 3421 |
+    | the reading's weight under `doppler` (note 38; deleted by note 48 on 2026-09-21, the row kept as the audit's record) | the reader's momentum as the frame read it (`frame_momentum`), its flow accumulators | the arriving rows' directions and labels per direction | `weighted_flow`, nature_beam.py:2219; called at 3421 |
     | the click's admission (the threshold, the window) | the set's threshold and its window's setting and width (declared), the set's phase | the arriving rows: the amount summed over the set against the threshold, each row's phase against the window | nature_beam.py:2905 to 2977 |
     | the click's choice at a `sum` set (the one click) | the record's own cells' weights and its u: the cell as a comparison of two products | nothing: the ladder is the record's own | `Layer.complete`, amplitude.py:684; `cell_of`, amplitude.py:208, called at 706 |
     | the re-emission (`rerelease`, the split) | the entry's declared weights and turns; the one arriving row re-emitted (its direction, record, branch, multiplicity) | the one row it re-emits, never the set | nature_beam.py:3502 |
@@ -3614,3 +3483,130 @@ implementation's part of the contract. The design above is unchanged.
     face, the border `lifetime`, the rotation, the re-emission and the
     click's choice no derivation names a crowd: they stay "no crowd", for
     the owner to decide, nothing invented.
+48. **The crossing rule: a row and a body meet once, at the crossing of
+    their world lines** (the model owner's record 158 of 2026-09-20, "the
+    step reads the crossed Link"; the physicist's design
+    `docs/designs/crossing/DESIGN.md` on the experimenter's finding of
+    record 151, that a reader read k rows per k intervals toward and away
+    alike, because step 4 counted the rows that stepped into its Node and
+    the step came after the reading; built on 2026-09-21 on the branch
+    `crossing`). The symbols, named once: **e** the heading of the Link a
+    body crossed this interval (the zero vector without a step) and
+    **e'** the heading of the Link it crossed the interval before;
+    **s_1** the step a row made this interval and **s_2** the one before,
+    off the flight rule at the row's age (`Flight.walk_step`; nothing kept
+    on the row); **u** the unit vector of the row's direction at the scale
+    Q (`unit_label`); X a Node of the body's set after its step and O the
+    origin of that Node, O = X - **e**. **The order of the interval** (the
+    engine's `step`): the frame, then every measured event's step
+    (`_move`, in number order), then the law, then the clocks' turn and
+    the count owed: a body's departure becomes its arrival as a row's
+    does in the walk, so the reading of an interval finds the body at its
+    destination and reads there what it met by the step itself; until
+    then the step was the interval's last act and the destination was
+    read one interval later. The step at a self-creation uses the
+    momentum after the previous interval's push (the drive advances by
+    it): at a constant momentum the same Links at the same
+    self-creations; under a push a fire can fall one interval later than
+    it did (the pinned pairs of `test_contact`, `test_binding` and
+    `test_paid_charge` moved so; the design's "an adjacent pair that only
+    contacts keeps its integers" holds at a constant momentum only). **A
+    timing changed with the order**: under a suspension the step no
+    longer waits for the interval that pays the count owed; `_move` runs
+    at every self-creation (`creating` its only guard) before this
+    interval's owed count, so the drive advances at the self-creation
+    itself, where until then a self-creation whose count was owed
+    stepped in the interval that paid it (`test_push_width` (c): the
+    steps 18, 36, 54 became 17, 35, 53, `steps` the whole part of age x
+    16 / 144 after every interval for (age - 1) x 16 / 144 after a
+    self-creation; note 17's sentence amended, MIGRATION). A
+    contact, a give and an escape happen inside the step, before the law:
+    a row given at a contact makes its first Link in the interval of the
+    give, the rows a body releases in the interval of a step are born at
+    its destination with the phase turned at the Link (`action`), a body
+    reads its own rows home at its destination in that interval, and a
+    body that escapes in the interval of its self-creation carries the
+    phase before that interval's clock turn. **The marks**:
+    `Measured.step_port` and `last_step_port`, the Ports of the body's
+    own two last Links (-1 without a step: no fire, a refused step, an
+    escape), set by `_move` at its entry for every measured event and
+    read by step 4 as **e** and **e'**; in `state.json` beside `drive`
+    and on the `step` line. The same kind of one-interval fact as a row's
+    `arrival`; no memory of any row at any Node. **The rule** (step 4,
+    `nature_beam`, the one `met`), per row of another number at a table
+    entry that is not `pass`:
+
+        C1   (the swap)             e != 0, the row at O, s_1 = -e             -> met
+        C2   (the entered)          e != 0, the row at X, s_1 = 0, u . e < 0   -> met
+        C2'  (with the step)        e != 0, the row at X, s_1 = 0, u . e >= 0  -> not met
+        C3   (the arrival)          the row at X, s_1 != 0                     -> met, unless
+        C3'  (over the body's Link) e != 0, s_1 = e                            -> not met
+        C3'' (the leapfrog)         e = 0, e' != 0, s_1 = e', s_2 = 0          -> not met
+
+    C3 with **e** = 0 and no C3'' is the reading as built: a body at rest
+    and a fixed body read their arrivals as before, to the byte. A rest
+    row (**u** = 0) is met by nobody's step. A row younger than two
+    intervals made no step before, so C3'' never excludes it. A body on a
+    set applies the rule per Node of its moved set with **e** the set's
+    step: C1 on the trailing face only (an origin Node not in the new
+    set, of free space: a row at a Node held by another body is that
+    body's arrival), C2 on the entered Nodes only (a Node whose neighbour
+    along **e** is not in the set), C3' and C3'' at every Node of the set.
+    The swap rows join the group of the event (gathered with the rows at
+    the set; the reading's bound `first_reading_overflow` over the larger
+    group, at most the rows at one more Node per Node of the set: fixed
+    work). A met row is read on its own direction: an arrival's the
+    direction it arrived on (at a body's Node its direction, no collision
+    acting there; a swap row's the direction it crossed the Link on), a
+    resident row met by the step its own direction (its label along its
+    motion); a resident row not met keeps the zero vector (`here`). The
+    presence, what the clock counts, stays the rows at the set (rest and
+    moving alike) plus the swap rows; the threshold, the window, the click
+    and the push read the same `met`. Own-number rows (home), the
+    collision, the walk and the meeting are untouched; the reading was
+    the one-way border before and is after. **Locality**: the body's own
+    two last Links and the rows' own last two steps off the flight rule,
+    the Link's traffic this interval (what crossed it, the walk's own
+    fact) and the entered Node's residents: nothing kept at a Node, fixed
+    work per row. **What it gives** (`tests/test_crossing.py`; the
+    experimenter's streams of record 151, a heading stream of one row per
+    interval and a reader stepping one Link per k intervals): toward, k +
+    55 / 32 rows per k intervals as a COUNT (45 in 32 at k = 4, the
+    windows 5, 6, 6, 5, 6, 6, 6, 5; 58 in 48 at k = 8), away k - 55 / 32
+    (19 in 32; 38 in 48), at rest k (48 in 48), no row twice and none
+    missed; over a period of 32 Links 183 = 128 + 55 and 311 = 256 + 55
+    exactly, 74 and 202 away (the one extra the row co-located with the
+    reader at the first interval, a boundary of the window): the rate 1 +
+    v / c toward and 1 - v / c away with c = 32 / 55, the Doppler of a
+    moving reader as the count of the rows it crosses, no weight, no
+    grain; a transverse heading stream at exactly the rest rate (32 in
+    32); a face-diagonal stream moving with the step at 24 in 32 and
+    against it at 36 in 32 on a plane of lines (the lattice's own
+    encounter count on a fan direction, not the continuum flux: the
+    design's "at exactly the rest rate" and "2 or 3 residents at every
+    step" for the diagonals were the physicist's estimate; the pinned
+    integers are the rule's, transcribed on the lines' geometry in
+    `docs/designs/crossing/crossing_2d.py` before the run). **Deleted with
+    it** (record 151, "in both cases the key leaves the code"; MIGRATION):
+    the world key `doppler` and `doppler-v1` (note 38 as it was; a world
+    that declares the key is refused as an unknown key), the grain G =
+    2^12 (`SPEED_GRAIN`), `quantised_speed`, `flux_pair`, `weighted_flow`
+    and its bounds, `weighted_flow_factor` and the budget's factor,
+    `frame_momentum`, the `flow` rows of the table of counts and
+    `acc_flow`, `run.json`'s `doppler`, the nine worlds
+    `hubble_stars/doppler/` with their flux expectations, and
+    `tests/test_doppler.py`. **Not proved, stated**: a body faster than
+    one Link per two intervals (|p_a| > Q S M, possible under pushes) can
+    step twice in a row, and the one-interval mark cannot tell a leapfrog
+    of lag two from a first arrival: the rule stays local and generic
+    there, the one-per-crossing count is not proved (the design's section
+    2), and the engine reports the count of such Links once per run,
+    `fast_steps` in `run.json` (`tests/test_crossing.py` (f)), no refusal;
+    a row whose direction a collision changed at the origin while it
+    rested there reads **s_2** off its new direction (the flight rule's
+    lookup, the design's choice, nothing kept). The registered worlds
+    with a completed step or a fire under a push re-pin (VALIDATION, the
+    dated table): series G2 (the run under the rule is the G2 session's),
+    the hubble worlds, D, H, the catalog's `sun_planet`, the nucleus,
+    binding and weak pairs; every world whose measured events are all
+    fixed reads the same records.

@@ -15,7 +15,9 @@ reference is moved to tick 3 for the test: body 1 reads (128, 0, 0), the
 the hand-overs of body 1 at ticks 3 (256), 4 (128) and 9 (640), three in
 all, the first at tick 3, the largest 640, the label 0 after each; body 2
 none; no step; the border `lifetime` clicking 12 rows per interval from
-tick 4 (6 per body); the pair's separation 1.00 throughout; the run
+tick 4 (6 per body); the pair's separation 1.00 throughout (the
+hand-overs since the step drive and the crossing rule are the ones
+`test_contact.py` (a) pins, cited at the assertion); the run
 completed and balanced over 12 ticks; the `g` reads per body 11 (one per
 interval from tick 2); the criteria of a world outside the register's
 eight are none.
@@ -80,18 +82,20 @@ def test_read_run_reads_the_runners_record(tmp_path, monkeypatch):
     assert (first.family, first.start, first.kick) == ("p", (3, 4, 4), (0, 0, 0))
     assert first.push == (128, 0, 0) and second.push == (-128, 0, 0)
     assert first.push_by_family == {"p": (-7936, 0, 0), "g": (8064, 0, 0)}
-    # The step drive (2026-09-20): p1 hands at ticks 4 (384), 7 (256) and
-    # 10 (128), p2 back at 5 (-128) and 9 (-256); test_contact (a) derives
-    # them (the rule as it was: 3, 3, 640 and p2 never handing).
+    # Since the crossing rule (2026-09-21, the step before the law): p1
+    # hands at ticks 5 (384), 8 (256) and 11 (128), p2 back at 6 (-128) and
+    # 10 (-256); test_contact (a) derives them (under the step drive of
+    # 2026-09-20 one interval earlier, 4, 7, 10 and 5, 9; the rule as it
+    # was: 3, 3, 640 and p2 never handing).
     assert (first.contacts, first.first_contact, first.largest_handed, first.handed_to_zero) == (
         3,
-        4,
+        5,
         384,
         True,
     )
     assert (second.contacts, second.first_contact, second.largest_handed, second.handed_to_zero) == (
         2,
-        5,
+        6,
         256,
         True,
     )
@@ -106,11 +110,11 @@ def test_read_run_reads_the_runners_record(tmp_path, monkeypatch):
         events = [json.loads(line) for line in stream if line.strip()]
     handed = [e for e in events if e["event"] == "contact"]
     assert [(e["tick"], e["component"]) for e in handed] == [
-        (4, 384),
-        (5, -128),
-        (7, 256),
-        (9, -256),
-        (10, 128),
+        (5, 384),
+        (6, -128),
+        (8, 256),
+        (10, -256),
+        (11, 128),
     ]
     border = [e for e in events if e["event"] == "click" and e["detector"] == "lifetime"]
     assert len(border) == sum(reading.lifetime_clicks.values()) == 12 * 9
