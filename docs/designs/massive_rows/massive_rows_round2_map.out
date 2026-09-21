@@ -1,0 +1,32 @@
+A. THE PRIMITIVE'S IDENTITY ON THE PIN WORLD'S TABLE (the review's F1, M4)
+   the massive rule at E'_0 = 0 with p = Q D (the flight vector): the rate 2 |Q D|_1 = 2 S_1 Q and the wall 2 isqrt(3 |Q D|^2) = 2 T_D on 1332 of 1332 directions
+   with the photon's LABEL u_D (unit_label, |u_D| = Q within the rounding) in place of Q D: the same pair on 6 of 1332 (the six headings alone): the photon uses two vectors, the flight vector Q D and the label u_D; the massive row one, p_D
+
+B. THE ARRIVALS BY THE ACCUMULATOR RULE ON THE ENGINE'S OWN BRESENHAM LINES (the review's F7, M5 a-c)
+   the lamp's direction (1, 0, 0): wall at (7, 60) after 5 Manhattan Links; the age of that Link: massive 85, the photon 8
+   the lamp's direction (1, 1, 0): opening at (8, 65) after 11 Manhattan Links; the age of that Link: massive 139, the photon 13
+   the lamp's direction (1, -1, 0): opening at (8, 55) after 11 Manhattan Links; the age of that Link: massive 139, the photon 13
+   the lamp's direction (2, 1, 0): wall at (7, 62) after 7 Manhattan Links; the age of that Link: massive 91, the photon 9
+   the lamp's direction (2, -1, 0): wall at (7, 58) after 7 Manhattan Links; the age of that Link: massive 91, the photon 9
+   the rows that reach an opening: [(1, -1, 0), (1, 1, 0)]; the lamp leg 139 intervals (massive) and 13 (the photon); the first birth at tick 1, so the first re-release at the tick 140 (the photon's 14: the run's 14)
+
+   the screen pixel 60: the first row's arrival 815 intervals after the re-release, the first `click` line at screen_60 about the tick 955 (26 rows land there)
+   the screen pixel 37: the first row's arrival 876 intervals after the re-release, the first `click` line at screen_37 about the tick 1016 (18 rows land there)
+   the screen pixel 83: the first row's arrival 876 intervals after the re-release, the first `click` line at screen_83 about the tick 1016 (18 rows land there)
+   the screen pixel 36: the first row's arrival 884 intervals after the re-release, the first `click` line at screen_36 about the tick 1024 (8 rows land there)
+   the screen pixel 84: the first row's arrival 884 intervals after the re-release, the first `click` line at screen_84 about the tick 1024 (8 rows land there)
+   the longest row of a record: 1468 intervals, (17, 26, 0) to the face at (51, 121); a record born at the tick b completes about b + 139 + 1468: the 4096th birth about 5703, so every record of 4096 births gathers within about 5753 intervals (section 23.3's 5100 counted from the opening; the design's first round 5250)
+   the same count for the photon: the longest 136 after the re-release at 14: the registered run's records open at 4300 are those born after about 4150 (149 registered)
+
+C. PEARSON WITH THE TWO-SOURCE COSINE ON THE DECLARED FAREY FAN (the review's M5 d): the weights per pixel from the rows that land there, the phases on the table of 64
+   de Broglie's lambda = h / p = 4.6545 Links; the photon's at its rate 8591334592 / 1073741824 steps per interval of age at the pace 1 / sqrt 3: 4.6180
+   massive: Pearson over the 121 pixels with rows 0.886, over the 117 two-path pixels 0.886; the brightest pixels [58, 59, 60, 61, 62, 63]
+   the photon: Pearson over the 121 pixels with rows 0.893, over the 117 two-path pixels 0.893; the brightest pixels [57, 58, 59, 60, 61, 62]
+   the registered photon on this fan: the weights' 0.895, the counts' 0.891 (L2b); the design's first-round 0.96 +- 0.02 was the screen fan's map number and is withdrawn
+
+D. THE BOUNDS (the review's section 3)
+   max p_D . p_D over the table 48682; E'^2 = 16916769; the flight accumulator below 2 E' + 2 |p|_1 = 8850; acc_turn below h + max |p_a| N = 15104; the label per row amount x |p_D| at most 5619 x 221; all within 2^62
+
+E. THE HOST COST WITH THE CORRECTED RUN (host numbers)
+   a record's longest row lives 1608 intervals from its birth against the photon's 150 (10.7 times); slits_huygens ran 4300 intervals in 1334 s; slits_matter at 4096 births and 5753 intervals: about 5.3 hours; at 1024 births and 2681 intervals: about 2.5 hours
+   the lamp's births: its clock reads its held content (by_clock over K = 2^30), 320 units spent per birth, so about 4096 x 4096 x 320 / (2 x 2^30) = 2.5 self-creations fewer by the 4096th interval: 4096 births take about 4099 intervals (the review's S4, about 5)

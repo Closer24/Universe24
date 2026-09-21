@@ -5130,6 +5130,258 @@ s &lt;- s - e d
     )
 
 
+# ---------------------------------------------------------------------------
+# Page 13: the clock's word (the Boss, 2026-09-21, for the owner's decision
+# on the GameBoard: what a body's clock counts, the presence or the age
+# moment; docs/designs/clock_age/NOTE.md).
+# ---------------------------------------------------------------------------
+
+CLOCK_FLUX = 4915  # F, series P's still_3: the units each source releases per interval
+CLOCK_LAMP = (10, 4, 4)
+CLOCK_WIDTH = 1 << 16  # the suspension's width: the clock's count k = a_r / 2^16
+CLOCK_WINDOW = 31  # the Nodes of the bar shown, from x = 0: the lamp at 10 and its crowd
+
+
+def crowd_at_lamp(frame: Frame, node: tuple[int, int, int]) -> tuple[int, int]:
+    """The crowd's rows dwelling at the lamp's Node in the frame: the
+    presence a_r (the sum of their amounts) and the age moment A (the sum of
+    amount times age), both GameBoard readings of the stores."""
+    presence = moment = 0
+    for rows in frame.rows:
+        if rows.family != "mass":
+            continue
+        here = (rows.x == node[0]) & (rows.y == node[1]) & (rows.z == node[2])
+        presence += int(rows.amount[here].sum())
+        moment += int((rows.amount[here] * rows.age[here]).sum())
+    return presence, moment
+
+
+def clock_player(
+    key: str, world: Path, ticks: Sequence[int], caption: str
+) -> tuple[Player, list[tuple[int, int, int]]]:
+    replay = Replay(world)
+    frames = replay.run(ticks)
+    plane = plane_for(replay, scale=14, slice_z=CLOCK_LAMP[2])
+    plane.largest = largest_amounts(frames)
+    plane.floor = 0.15
+    plane.weights = {"mass": 0.7, "s_px1": 0.5}
+    plane.copies = False
+    # The bar is 121 Nodes long for the detector at x = 110; the story is at
+    # the lamp's Node, so the frames show the first CLOCK_WINDOW Nodes.
+    right = int(plane.pixel(CLOCK_WINDOW, 0)[0])
+    images = []
+    for frame in frames:
+        whole = plane.image(frame)
+        images.append(whole.crop((0, 0, right, whole.height)))
+    readings = []
+    counts = []
+    for frame in frames:
+        presence, moment = crowd_at_lamp(frame, CLOCK_LAMP)
+        counts.append((frame.tick, presence, moment))
+        readings.append(
+            {
+                "the presence a_r at the lamp's Node (GameBoard)": f"{num(presence)} = {presence / CLOCK_FLUX:.0f} F",
+                "the age moment A at the lamp's Node (GameBoard)": f"{num(moment)} = {moment / CLOCK_FLUX:.0f} F",
+                "the presence clock's count, k = a_r / 2^16": f"{presence / CLOCK_WIDTH:.3f}",
+                "the age clock's count, k = A / 2^16": f"{moment / CLOCK_WIDTH:.3f}",
+            }
+        )
+    return Player(key, images, list(ticks), readings, caption, 200), counts
+
+
+@register("clock")
+def page_clock(out: Path, runs: Path | None) -> Path:
+    """(13) The clock's word: what a body's clock counts, the presence or the
+    age moment, on the GameBoard of series P's lamp inside a crowd at three
+    Links and at six; the physicist's pins; the owner's word pending."""
+    del runs
+    registered = WORLDS / "crowd_clock" / "still_3.json"
+    demo = GALLERY_WORLDS / "clock_6.json"
+    ticks = list(range(0, 25))
+    near, near_counts = clock_player(
+        "crowd_3",
+        registered,
+        ticks,
+        "Series U's `still_3` (formerly series P), registered: the plane z = 4 of the bar 121 x 9 x 9, its first 31 Nodes shown at 14 pixels per Node (the detector at x = 110 lies beyond); the lamp "
+        "s_px1 at (10, 4, 4) shining +x to the detector at (110, 4, 4); the crowd's two mass sources three Links "
+        "away, at (10, 7, 4) (in this plane) and (10, 4, 7) (above it), each releasing F = 4915 units per "
+        "interval on its fan of nine toward the lamp's line. One frame per interval: the rows arrive at the "
+        "lamp's Node at the interval 6 and from 7 on two of them dwell there, one from each source, for two "
+        "intervals each: the presence 4 F, the age moment 22 F (the ages 5 and 6).",
+    )
+    far, far_counts = clock_player(
+        "crowd_6",
+        demo,
+        ticks,
+        "The same lamp with the two sources six Links away, `clock_6` (a demonstration world written from "
+        "`still_3`: the bar 121 x 15 x 15, the sources at (10, 10, 4) and (10, 4, 10), the same F): the rows "
+        "arrive at the interval 11; the presence at the lamp's Node is again 4 F, the age moment 42 F (the "
+        "ages 10 and 11): the presence cannot tell six Links from three, the age moment can.",
+    )
+
+    def settled(counts: Sequence[tuple[int, int, int]]) -> tuple[int, int, int]:
+        """The first interval with rows at the lamp, and the settled presence
+        and age moment (the last frame's)."""
+        first = next((t for t, a, _ in counts if a > 0), -1)
+        return first, counts[-1][1], counts[-1][2]
+
+    first_3, a_3, m_3 = settled(near_counts)
+    first_6, a_6, m_6 = settled(far_counts)
+    clock_rows = "".join(
+        f'<tr><th>{label}</th><td class="num">{near_cell}</td><td class="num">{far_cell}</td></tr>'
+        for label, near_cell, far_cell in (
+            (
+                "The reading",
+                "3 Links (`still_3`, registered; series T's world at 3)",
+                "6 Links (`clock_6`, demonstration; series T's world at 6)",
+            ),
+            (
+                "the first interval with the crowd's rows at the lamp (GAMEBOARD); the lamp's clock starts "
+                "counting (DETECTOR, series T: 6 and 11, the pin met)",
+                str(first_3),
+                str(first_6),
+            ),
+            (
+                "the presence a<sub>r</sub> at the lamp's Node (GAMEBOARD)",
+                f"{num(a_3)} = {a_3 / CLOCK_FLUX:.0f} F",
+                f"{num(a_6)} = {a_6 / CLOCK_FLUX:.0f} F",
+            ),
+            (
+                "the age moment A at the lamp's Node (GAMEBOARD)",
+                f"{num(m_3)} = {m_3 / CLOCK_FLUX:.0f} F",
+                f"{num(m_6)} = {m_6 / CLOCK_FLUX:.0f} F",
+            ),
+            (
+                "the presence word: k = a<sub>r</sub> / 2<sup>16</sup>; the detector's 1 + z = 1 + k, the run "
+                "(DETECTOR, series T)",
+                f"k = {a_3 / CLOCK_WIDTH:.3f}; the run reads 1 + z = 1.3000 (series U registered 1.300)",
+                f"k = {a_6 / CLOCK_WIDTH:.3f}; the run reads 1 + z = 1.3000: it cannot tell the distances apart",
+            ),
+            (
+                "the age word: k = A / 2<sup>16</sup>; the detector's 1 + z = 1 + k, the run (DETECTOR, series T)",
+                f"k = {m_3 / CLOCK_WIDTH:.3f}; the run reads 1 + z = 2.6517 (the pin 2.65 +- 0.05)",
+                f"k = {m_6 / CLOCK_WIDTH:.3f}; the run reads 1 + z = 4.1500 (the pin 4.15)",
+            ),
+            (
+                "the ratio of the two k, 6 Links over 3",
+                "the presence word 1.000: it cannot tell the distances apart",
+                f"the age word {m_6 / m_3:.3f} on the GameBoard, the run 1.907 (the pin 1.909; nature's potential "
+                "at the same push 2.000; the lattice's dwelling ages 5, 6 and 10, 11)",
+            ),
+            (
+                "the click rate at the detector (DETECTOR, series T)",
+                "the presence word 0.767; the age word 0.380",
+                "the presence word 0.767; the age word 0.240",
+            ),
+        )
+    )
+    body = f"""
+<p class="demo"><b>The question for the owner</b>, on the GameBoard first (record 329): what does a body's clock
+count? Today it counts what it reads at its Node: the <b>presence</b> a<sub>r</sub>, the amount of the crowd's
+rows dwelling there, or, on a table entry that says <code>reads: "age"</code>, the <b>age moment</b> A, each
+dwelling row's amount times its age, the Links it has walked. One word of BEAM_LAW step 5, under its own
+identity, <code>clock-age-v1</code>. <b>The run done, every pin met; the owner's word pending (the age word or the
+presence word as the law's default); no identity built</b> (series T, the clock worlds, run by the G2 session,
+PR #587; the physicist's note on main, PR #567).</p>
+{
+        registered_note(
+            registered,
+            "U, a lamp inside a crowd (2026-09-21; formerly series P)",
+            "../../../examples/events/crowd_clock/README.md",
+        )
+    }
+{demonstration_note(demo)}
+<h2>The GameBoard: the crowd at three Links and at six</h2>
+{
+        legend(
+            [
+                ("the mass rows (the crowd)", swatch(FAMILY_COLOURS[1])),
+                ("the lamp's rows s_px1", swatch(FAMILY_COLOURS[2])),
+                ("the lamp, the sources and the detector (bodies)", swatch((230, 230, 230))),
+            ]
+        )
+    }
+{near.html()}
+{far.html()}
+<h2>The two clocks side by side</h2>
+<p>The same push at both distances: on the lattice only the two heading rows of the crowd dwell at the lamp's
+Node, two intervals each, whatever the distance, so the presence is 4 F at three Links and at six; the age
+moment is what those rows have walked, 22 F at three and 42 F at six. Read off the GameBoard above at the
+settled frame (the physicist's map gives the same integers):</p>
+<table>
+{clock_rows}
+</table>
+<p>The detector's 1 + z is a DETECTOR reading of the lamp's light at x = 110 (the birth rate over the click
+rate in the window). The run's numbers are series T's, the four clock worlds run by the G2 session (PR #587,
+merging on green): every pin of the physicist's note met. Series U (formerly P) registered 1.300 for
+`still_3` under the presence word. The presence and the age moment above are GameBoard readings of the
+stores, the host's view; the two worlds replayed here are series U's registered one and the gallery's
+demonstration at six Links, drawn for the picture; series T's own worlds are the run's.</p>
+<h2>Nature's clocks: the form of the potential</h2>
+<p>One height fixes the one constant under either word; two heights decide the form. Nature's k is
+G M / (r c<sup>2</sup>), the potential's 1 / r; the presence falls as 1 / r<sup>2</sup>, the age moment as
+1 / r (the physicist's map, section 4 of the note; the sources as the note names them, to be verified
+against the papers as NATURE's rows say):</p>
+<table>
+<tr><th>The reading</th><th>Nature</th><th>the presence word, k ~ M / r<sup>2</sup></th><th>the age word, k ~ M / r</th></tr>
+<tr><th>Pound and Rebka 1960, 22.5 m at the ground</th><td>g h / c<sup>2</sup> = 2.46 x 10<sup>-15</sup></td><td>the same (one reading fixes the constant)</td><td>the same</td></tr>
+<tr><th>k(orbit) / k(ground), the GPS radius 26 560 km over 6 371 km</th><td class="num">0.240</td><td class="num">0.0575</td><td class="num">0.2399</td></tr>
+<tr><th>the ground-to-orbit shift per day (the gravitational part, Ashby 2003)</th><td class="num">45.7 us</td><td class="num">28.3 us (0.62 of nature's)</td><td class="num">45.7 us</td></tr>
+<tr><th>an eccentric orbit, e = 0.162 (Galileo 5 and 6, Delva et al. 2018): the modulation of k, peak to peak over the mean</th><td class="num">0.333</td><td class="num">0.631 (twice)</td><td class="num">0.333</td></tr>
+</table>
+<p>The scale is not the word's: nature's k is 7 x 10<sup>-10</sup> at the Earth's surface; the registered
+crowds read k = 0.026 to 2. The world's <code>suspension</code> pair sets the scale, the word sets the form.
+What moves with the word is listed in the note (series E's scalar world, G2's gravity crowds, series U and V,
+formerly P and Q, the catalog's neutron star, the bound clock of record 123); nothing moves before the
+owner's word. The series letters: S the reader inside a crowd, T the clock worlds, U the lamp inside a crowd,
+V the cluster of crowds.</p>
+{
+        sources(
+            [
+                (
+                    "what the clock counts today, the two words",
+                    '<a href="../../BEAM_LAW.md">BEAM_LAW.md</a> section 3 step 5, note 25; <code>measured.count_component(reads)</code>',
+                ),
+                (
+                    "the physicist's read, the three tests, nature's table, the two-crowd pin (F = 4915, the presence 4 F, the age moment 22 F and 42 F, the ratio 1.909, the pins 1.300, 1.300, 2.650, 4.150)",
+                    '<a href="../../designs/clock_age/NOTE.md">docs/designs/clock_age/NOTE.md</a> (PR #567, merged), with <code>clock_age_map.py</code> and its output',
+                ),
+                (
+                    "series U's (formerly P) still_3, its F and its registered 1 + z = 1.300",
+                    '<a href="../../../examples/events/crowd_clock/README.md">examples/events/crowd_clock/README.md</a> (the run of 2026-09-21 on main 119fd9b, the second run)',
+                ),
+                (
+                    "the demonstration world at six Links",
+                    f"<code>{relative(demo)}</code>, written by <code>examples/events/gallery/make_worlds.py</code> from <code>still_3.json</code>",
+                ),
+                (
+                    "the presence and the age moment per frame",
+                    "the replay's stores at the lamp's Node (the rows of the family mass at (10, 4, 4): the sum of the amounts, the sum of amount times age)",
+                ),
+                (
+                    "series T, the clock worlds' run: 1 + z 1.3000 and 1.3000 under the presence word, 2.6517 and 4.1500 under the age word, the ratio 1.907, the clock starting at 6 and 11, the click rates",
+                    "the G2 session's run, PR #587 (merging on green), as the Boss reported it on 2026-09-21 at 13:25Z; the register's entry T once on main",
+                ),
+                (
+                    "the gravitational redshift at first order under the age reading",
+                    '<a href="../../DERIVATIONS_BEAM.md">DERIVATIONS_BEAM.md</a> section 5.2; series E, <code>examples/events/redshift/</code>',
+                ),
+            ]
+        )
+    }
+"""
+    return write_page(
+        out,
+        "clock",
+        page(
+            "The clock's word",
+            "What a body's clock counts, the presence or the age moment: the same crowd at three Links and "
+            "at six, the two clocks' readings side by side; the run done, every pin met; the owner's word pending.",
+            body,
+        ),
+    )
+
+
 @register("index")
 def page_index(out: Path, runs: Path | None) -> Path:
     entries = [
@@ -5183,6 +5435,15 @@ def page_index(out: Path, runs: Path | None) -> Path:
             "series R: the proton of three quarks holding in a line, a kicked quark walking off, and a fast "
             "electron thrown at the proton, handing its momentum through the table (two registered worlds and "
             "a demonstration world)",
+        ),
+        (
+            "clock.html",
+            "The clock's word",
+            "what a body's clock counts, the presence or the age moment: series U's lamp inside a crowd at "
+            "three Links and at six, the presence 4 F at both and the age moment 22 F and 42 F read off the "
+            "GameBoard, the two clocks' readings side by side against the physicist's pins and nature's "
+            "clocks; the run done (series T), every pin met, the owner's word pending (a registered world and a "
+            "demonstration world)",
         ),
         (
             "universe24.html",

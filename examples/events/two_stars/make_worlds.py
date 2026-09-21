@@ -62,6 +62,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from event_universe.core.game_board import PORT_HEADINGS  # noqa: E402
 from event_universe.events.nature_beam import direction_flight  # noqa: E402
 from event_universe.events.world import HEADING_OFFSET, LAW_VALUE, Q  # noqa: E402
+from event_universe.register_map import carry_replicated  # noqa: E402
 
 LENGTH = 201
 SHAPE = [LENGTH, 3, 3]
@@ -315,7 +316,10 @@ def main() -> None:
         path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
         print(path.relative_to(ROOT))
     expected = expectations()
-    (HERE / "expectations.json").write_text(json.dumps(expected, indent=1) + "\n", encoding="utf-8")
+    (HERE / "expectations.json").write_text(
+        json.dumps(carry_replicated(HERE / "expectations.json", expected), indent=1) + "\n",
+        encoding="utf-8",
+    )
     for name, entry in expected["worlds"].items():
         print(
             f"{name}: contact at tick {entry['contact_tick']}, speeds at contact {entry['speeds_at_contact']}"

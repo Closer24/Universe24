@@ -6447,6 +6447,100 @@ sequential gates on an entangled record, the full register replay.
   258 per frame on the coasting world, up to 25 123 at the muon's
   `become`), reported on the record.
 
+### T, the clock's word (2026-09-21)
+
+- **Confronts.** The physicist's pin of 2026-09-21
+  ([docs/designs/clock_age/NOTE.md](designs/clock_age/NOTE.md) section 6,
+  the numbers from `clock_age_map.py` beside it; the Boss's order of 12:45Z
+  to the G2 experimenter as a rule-353 experiment, a second pair of hands
+  on the pin, the replicator to run it again): the clock's word. BEAM_LAW
+  section 3 step 5 counts the presence of other numbers' rows at a body's
+  Node, or on a table entry that reads `age` the age moment
+  `sum amount x age` (note 25); the G2 session's proposal (record 365, the
+  mapping of units to nature's clocks) is that the age word is the
+  potential's form, `M / r`, the one GPS, Pound and Rebka and the eccentric
+  Galileo satellites measure at two heights, where the presence word reads
+  `M / r^2`. The pin that decides on the GameBoard: two crowds of the same
+  release at two distances are the same push, and only the age clock reads
+  the distance. Run under beam-v1 as declared (`reads: "age"` is a world
+  key, series E's precedent); no change under `src/`.
+- **Model prediction, pinned before the run
+  ([the folder](../examples/events/clock_word/README.md),
+  `examples/events/clock_word/expectations.json` with its `derivations`
+  map, written by `make_worlds.py`; the `replicated` map absent: measured
+  once, awaiting replication).** Series P's geometry: the lamp `s_px1` at
+  rest at x = 10 (2^20 units, one unit per self-creation on +x, the wheel
+  [1, 64]), two `mass` sources at 3 or at 6 Links on +y and +z each
+  releasing F = 4915 units per interval on the fan of nine toward the
+  lamp's line, `suspension` [1, 2^16], the detector fixed at x = 110
+  measuring `s_px1` with `reads: "age"`, the bar 121 x 9 x 9 at 3 Links
+  and 121 x 15 x 15 at 6, 500 intervals; four worlds, the lamp's `mass`
+  entry `pass` (the presence word) or `{"rule": "pass", "reads": "age"}`
+  (the age word), at 3 and at 6. On the lattice only the two headings' rows
+  dwell at the lamp's Node, each for two intervals (the map checks the nine
+  lines of each source), so the presence is 4 F at both distances and the
+  flow the push would read the same; the age moment is 22 F at 3 (the ages
+  5 and 6 per source) and 42 F at 6 (10 and 11). DETECTOR, the lamp's light
+  at x = 110, `1 + z` the inverse slope of the birth ordinal against the
+  click's tick in the windows 200 to 350 and 350 to 500: the presence word
+  1.300 at 3 AND at 6 (k = 4 F / 2^16 = 0.300; the presence clock cannot
+  tell the two distances apart), refuted outside 1.30 +- 0.02 or if the
+  two worlds differ by more than 0.02; the age word 2.650 at 3
+  (k = 22 F / 2^16 = 1.650) and 4.150 at 6 (k = 3.150), refuted outside
+  +- 0.05; the ratio of the two k under the age word 42 / 22 = 1.909
+  (the continuum's potential at the same push 2.000), refuted outside
+  1.91 +- 0.05. The first interval with the crowd's rows at the lamp: tick
+  6 at 3 Links and tick 11 at 6 (the first row's age 5 and 10 at that
+  Link), read on a replay of the world as the first interval the lamp's
+  clock counts (GAMEBOARD) and from the lamp's `birth` lines as the first
+  birth it misses after the rows (DETECTOR); the dwelling ages 5, 6 per
+  source at 3 and 10, 11 at 6; the count the lamp owes per self-creation
+  4 F, 4 F, 22 F, 42 F. The engine writes no `owed` line; the lamp's clock
+  is read from its births and from the replay's count.
+- **Features.** The clock's count per table entry (`count_component`,
+  `counts_age` in `nature_beam`), the free family's release on every
+  direction of the fan, the lamp's births as the clock's record, the
+  record form's click line with `age`; `examples/events/clock_word/read_runs.py`;
+  `tests/test_clock_word.py` (the shipped worlds the generator's and run
+  balanced; the lamp's count under each word at each distance and the
+  first counting tick; the algebra of the pin), the template
+  `tests/test_crowd_clock.py`.
+- **Run (2026-09-21, `tools/run_series.py --jobs 2` on main 583bf0e, headless,
+  500 intervals each, the four worlds completed and conserved at every tick;
+  the readings by `examples/events/clock_word/read_runs.py`, shipped as
+  `examples/events/clock_word/readings.json`, no number typed by hand;
+  DETECTOR unless said; measured once, awaiting replication).** The
+  detector's `1 + z` in the two windows: the presence word 1.3000 and
+  1.3000 at 3 Links, 1.3000 and 1.3000 at 6 (the pin 1.300 +- 0.02; the two
+  distances read alike to the fourth digit); the age word 2.6517 and 2.6514
+  at 3 (the pin 2.650 +- 0.05), 4.1500 and 4.1506 at 6 (the pin 4.150
+  +- 0.05); the ratio of the two k under the age word 3.1503 / 1.6516 =
+  1.907 (the pin 1.909 +- 0.05; the continuum's 2.000 outside it, as the
+  lattice's dwelling ages say), under the presence word 1.000 (the pin
+  1.000). The click rate 0.767 per interval at both distances under the
+  presence word, 0.380 / 0.373 and 0.240 under the age word; the age read
+  172 in every world (the flight of 100 Links); no birth ordinal missing
+  in any world (the light escapes whole); the lamp's k from its births
+  0.293 / 0.304, 0.293 / 0.304, 1.679 / 1.632, 3.167 / 3.054. The first
+  interval with the crowd's rows at the lamp, on a replay of each world
+  (GAMEBOARD): tick 6 at 3 Links and tick 11 at 6 in both words, the count
+  then the first row's alone (2 F = 9830 under the presence word; 2 F x 5
+  = 49150 and 2 F x 10 = 98300 under the age word) and from the next
+  interval the pinned 4 F = 19660, 4 F, 22 F = 108130, 42 F = 206430; the
+  first birth the lamp misses after the rows (DETECTOR) tick 10, 15, 8, 12
+  (under the presence word the owed count reaches one after four counting
+  self-creations, under the age word after one). **Verdict per world:
+  `presence_3` met, `presence_6` met, `age_3` met, `age_6` met**; every
+  pin of the entry met, nothing moved, nothing failed. The host's cost,
+  apart from the readings: 1.6 to 2.0 s per world, 49 to 51 MB peak; the
+  events' fingerprints 25f2ec3f6bd4, d1f8afa422bb, f50997eb6cc7,
+  1d73b0d9cd73 (the full sha256 in `readings.json`). What the run
+  establishes: on the engine as built the presence clock reads the same
+  count at 3 and at 6 Links from the same release (the form `M / r^2` on
+  a fan line, flat with r) and the age clock reads the distance as the
+  dwelling ages give it (22 : 42, the form `M / r` up to the lattice's
+  grain); the choice of the word is the owner's, the readings that would
+  move with it listed in NOTE.md section 2; it establishes no physical law.
 
 ### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
 
@@ -9068,6 +9162,17 @@ the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
   its momentum to the first quark through the contact, the momentum passes
   down the line and the far quark walks off through the face +x, the rest
   following; the law binds and does not confine. Nothing registered.
+- [The clock's word](pages/gallery/clock.html): for the owner's decision on
+  what a body's clock counts (the presence or the age moment; the physicist's
+  note `docs/designs/clock_age/NOTE.md`, PR #567): series U's (formerly P)
+  registered `crowd_clock/still_3` and a demonstration world with the crowd's sources
+  at six Links, replayed; the presence at the lamp's Node 4 F at both
+  distances and the age moment 22 F and 42 F (GameBoard readings), the
+  detector's 1 + z under each word from series T's run (the G2 session, PR
+  #587: 1.3000 and 1.3000 under the presence word, 2.6517 and 4.1500 under
+  the age word, the ratio 1.907, every pin met) beside series U's registered
+  1.300, nature's clocks' table; the owner's word pending. Nothing pinned by
+  the page.
 - [Universe24](pages/gallery/universe24.html): no run; the owner's formula
   W = E_0^2 + 3 p . p at the top (E by comparisons, E_0 = Q S M, c^2 = 1 / 3
   derived; the identity of covariant-readings-v1, DERIVATIONS_BEAM 17.6),

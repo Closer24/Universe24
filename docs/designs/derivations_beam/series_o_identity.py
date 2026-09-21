@@ -4,10 +4,10 @@ run (read-only, the derivation mathematician, 2026-09-21; DERIVATIONS_BEAM
 18.6). Exact rationals from the declared momenta of the three world files;
 decimal only for display. No run.
 
-The identity's rules used: a body's self-creations come one per E' / E'_0
+The identity's rules used: a body's self-creations come one per E / (m c^2)
 = gamma lattice intervals (M1); the lamp's count is per self-creation, so a
 moving lamp emits per proper time (N4); the drive's rate per self-creation
-is Newton's p / (Q S M), so the pace per lattice interval is p / E' (M1, on
+is Newton's p / (Q S M), so the pace per lattice interval is p c^2 / E (M1, on
 the domain |p|_1 <= Q S M, N2); the crossing count is read per interval and
 charged per self-creation (N1); c^2 = [1, 3] (M3), the rows on a heading at
 c_h = 32 / 55 Links per interval (2.1).
@@ -44,7 +44,7 @@ class Star:
         self.qsm = Q * width * content
         self.v_law = Fr(abs(self.p), self.qsm + abs(self.p))  # the law's drive (4.4)
         w = self.qsm * self.qsm + 3 * self.p * self.p
-        self.e = math.isqrt(w)  # E' (17.6 M3)
+        self.e = math.isqrt(w)  # E / c^2 (17.6 M3)
         self.gamma = Fr(self.e, self.qsm)
         self.v = Fr(abs(self.p), self.e)  # the identity's pace per lattice interval
         self.sign = 1 if self.p > 0 else -1 if self.p < 0 else 0
@@ -94,8 +94,8 @@ for name in ("symmetric_pass", "symmetric", "rest_frame"):
         print(
             f"  {s.name} at x = {s.x}: p = {s.p:+d} ({dec(Fr(abs(s.p), s.qsm), 5)} of Q S M);"
             f" the law's pace {dec(s.v_law, 5)} Links per interval = {dec(s.v_law / C_H, 4)} c_h;"
-            f" E' = {s.e}, gamma = E' / E'_0 = {dec(s.gamma, 5)};"
-            f" the identity's pace p / E' = {dec(s.v, 5)} = {dec(s.beta_h, 4)} c_h, beta = {s.beta_id:.4f} on c = 1 / sqrt 3"
+            f" E / c^2 = {s.e}, gamma = E / (m c^2) = {dec(s.gamma, 5)};"
+            f" the identity's pace p c^2 / E = {dec(s.v, 5)} = {dec(s.beta_h, 4)} c_h, beta = {s.beta_id:.4f} on c = 1 / sqrt 3"
         )
     # A moves toward +x (toward B), B toward -x (toward A) or at rest.
     va, vb = a.sign * a.v, -b.sign * b.v  # each star's speed TOWARD the other
@@ -161,7 +161,7 @@ print(
 )
 
 print()
-print("The momenta that would keep the design's speeds under the identity (p / E' = v, so")
+print("The momenta that would keep the design's speeds under the identity (p c^2 / E = v, so")
 print("p = Q S M v / sqrt(1 - 3 v^2), rounded), beside the declared ones (the pin is on the")
 print("registered worlds, M2's rule):")
 for v_c in (Fr(2, 10), Fr(4, 10)):
@@ -169,5 +169,5 @@ for v_c in (Fr(2, 10), Fr(4, 10)):
     p_re = round(a.qsm * float(v) / math.sqrt(1 - 3 * float(v) ** 2))
     e_re = math.isqrt(a.qsm * a.qsm + 3 * p_re * p_re)
     print(
-        f"  {dec(v_c, 1)} c_h: p = {p_re} (p / E' = {dec(Fr(p_re, e_re), 5)} = {dec(Fr(p_re, e_re) / C_H, 4)} c_h)"
+        f"  {dec(v_c, 1)} c_h: p = {p_re} (p c^2 / E = {dec(Fr(p_re, e_re), 5)} = {dec(Fr(p_re, e_re) / C_H, 4)} c_h)"
     )

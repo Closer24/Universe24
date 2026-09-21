@@ -1,4 +1,4 @@
-"""Write the five worlds of series R, a reader inside a crowd, and the
+"""Write the five worlds of series S, a reader inside a crowd, and the
 expectations before the runs (`expectations.json`).
 
 The model owner, 2026-09-21 (in conversation, translated), after series P
@@ -52,6 +52,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 sys.path.insert(0, str(ROOT / "src"))
+from event_universe.register_map import carry_replicated  # noqa: E402
 
 
 def _crowd_clock():
@@ -199,7 +200,10 @@ def main() -> None:
         path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
         print(path.relative_to(ROOT))
     expected = expectations()
-    (HERE / "expectations.json").write_text(json.dumps(expected, indent=1) + "\n", encoding="utf-8")
+    (HERE / "expectations.json").write_text(
+        json.dumps(carry_replicated(HERE / "expectations.json", expected), indent=1) + "\n",
+        encoding="utf-8",
+    )
     for name, e in expected["worlds"].items():
         print(
             f"{name}: k_r = {e['k_reader']}, k_s = {e['k_source']}{', receding' if e['moving'] else ''}: "
