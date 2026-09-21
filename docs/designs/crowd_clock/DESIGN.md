@@ -65,7 +65,10 @@ recovers. A crowd carries a slow clock only when the crowd is slowed alike
 of 121 x 9 x 9 Nodes (open), `ticks` 500, `suspension` [1, 2^16],
 `release` [1, 2^16], `width` 2^20, N = 64.
 
-- **The lamp** `s_px1` (series G2's light family), 8192 units, a lamp of one
+- **The lamp** `s_px1` (series G2's light family), 8192 units (amended
+  after the first run to 2^20 units, section 7: a lamp's wheel turns by its
+  content over K and the first run read the lamp's own spending as a k of
+  0.03 to 0.04 by the second window), a lamp of one
   unit per self-creation on one direction (+x to the detector when still,
   -x when moving away from it), the birth wheel [1, 64]; its table lets the
   crowd's rows pass (`mass: pass`), so the coupling is off and only the
@@ -177,3 +180,95 @@ The readings are the lamp's `birth` lines (its clock), the detector's
 the `age`), and the `step` lines of the lamp and its two sources (the lag).
 `tests/test_crowd_clock.py` pins the shipped worlds to the generator, the
 presence 4 F after the rows arrive, and the algebra of section 1.
+
+## 7. Measured (2026-09-21, two runs on main 119fd9b, after the pins above)
+
+The runs are `tools/run_series.py --jobs 3` over the eight worlds (about two
+seconds each, the books balanced, 500 intervals); the readings are the
+lamp's `birth` lines, the detector's `click` lines (the birth ordinal
+against the tick) and the `step` lines of the lamp and its sources, read by
+the experimenter's script in windows of 150 intervals (the lamp's clock in
+the intervals whose light the window sees, one flight earlier).
+
+**The first run, the lamp of 8192 units.** Every reading of the first
+window inside the pins: the still lamp's 1 + z at the detector 1.009, 1.089,
+1.304, 2.000, 3.000 for the pinned 1.005, 1.08, 1.3, 2, 3; `moving_08`
+1.293 (pinned 1.224 to 1.296), `moving_3` 1.419, `moving_1` 1.854; the
+exits at ticks 198 (`moving_3`, pinned 149 to 493) and 86 (`moving_1`,
+pinned 69 to 172), none in `moving_08` (pinned none before 464). The second
+window outside at six rungs: the lamp's k read from its births rose by 0.03
+to 0.04 between the windows at every rung below 2 (`still_005` 0.007 to
+0.042, `still_1` 1.000 to 1.027), and the detector's 1 + z with it (1.0375,
+1.112, 1.330, 2.041 for the pinned 1.005, 1.08, 1.3, 2). The cause is not
+the crowd: the lamp's births per 50 intervals fell from 50 to 47 in
+`still_005` with two waits in the whole run. It is the lamp's own spending,
+known from the register (a lamp's wheel turns by its content over K, and
+the content falls by one unit per birth): 8192 - 483 units by the end, a
+wheel 6 % slow. The design did not foresee it; the worlds were amended to a
+reservoir of 2^20 units (a spending of 0.05 %) and run again. Nothing else
+changed.
+
+**The second run, the lamp of 2^20 units.** Every one of the 32 readings
+inside the pins (the k read from the lamp's births within its bracket or
+within 0.02; the detector's 1 + z within its bracket or within 0.02; the
+exits within their brackets; the light escaping whole):
+
+| World | pinned k | k read (window 1, window 2) | 1 + z read at the detector (window 1, window 2) | pinned 1 + z | click rate | age read | light escaped | lag at the end; the exit |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `still_005` | 0.005 | 0.000, 0.007 | 1.0000, 1.0064 | 1.005 | 1.000, 0.993 | 172 | 326 of 326, no ordinal missing | - |
+| `still_08` | 0.08 | 0.079, 0.079 | 1.0802, 1.0800 | 1.08 | 0.927 | 172 | 304 of 304 | - |
+| `still_3` | 0.3 | 0.293, 0.304 | 1.3000, 1.3000 | 1.3 | 0.767 | 172 | 253 of 253 | - |
+| `still_1` | 1 | 1.000, 1.000 | 2.0000, 2.0000 | 2.0 | 0.500 | 172 | 166 of 166 | - |
+| `still_2` | 2 | 2.000, 2.000 | 3.0000, 3.0000 | 3.0 | 0.333 | 172 | 112 of 112 | - |
+| `moving_08` | 0.08 | 0.079, 0.064 | 1.2827, 1.2714 | 1.224 to 1.296 both | 0.773, 0.793 | 80, 104 | 344 of 344 | 4 Links; no exit (pinned none before 464) |
+| `moving_3` | 0.3 | 0.240, 0.181 | 1.4152, 1.4768 | 1.2 to 1.56 both | 0.700, 0.680 | 78, 99 | 314 of 314 | 8 Links; the exit at tick 181 (pinned 149 to 493) |
+| `moving_1` | 1 | 0.442, 0.007 | 1.8514, 1.2058 | 1.2 to 2.4, then 1.2 | 0.567, 0.833 | 75, 96 | 312 of 312 | 8 Links; the exit at tick 86 (pinned 69 to 172) |
+
+The windows are 200 to 350 and 350 to 500 for the still worlds, 100 to 250
+and 250 to 400 for the moving ones; the age read is the flight, 172
+intervals fixed for the still lamp and growing for the receding one. The
+k read in `moving_1`'s second window is out of the in-crowd bracket because
+the lamp is out of its crowd, as pinned: 0.007 is one wait in 150
+intervals, a residual of the fan's edge (the digital line of (-4, -3, 0)
+visits three Nodes of the lamp's plane, x - 3 to x - 5, so the fan reaches
+five Links, not four; the lag settles at 7 to 8 Links and creeps by the
+residual). The k read of a moving lamp inside its fan is below the pin
+(0.24 and 0.18 for 0.3; 0.44 for 1) because it sits behind the heading, on
+the oblique directions' crossing Nodes, as the bracket allowed.
+
+**What the runs decide.**
+
+1. **The crowd's clock is k = 4 F / 2^16, exact to the rung and linear over
+   a factor of 400 in F.** A lamp at rest inside a crowd reads z = 1 at
+   F = 16384 and z = 2 at F = 32768, and the count is unbounded: the law as
+   built has a redshift that is no speed.
+2. **The light escapes whole.** Every birth ordinal up to the last click
+   arrived, at every rung; the crowd slows the clock and takes nothing from
+   the light (the rows `pass`; the coupling is off by the world's word, so
+   this is the clock alone).
+3. **The two factors multiply at the detector.** `moving_08` read 1.283 and
+   1.271 where (1 + k read)(1 + 0.2) is 1.295 and 1.277: the clock's excess
+   over the Doppler 1.200 is the crowd's, within 0.012.
+4. **A slowed lamp cannot travel with an unslowed crowd.** It moves at
+   v / (1 + k) (the step drive counts Links only at a self-creation), falls
+   behind at the pinned rate, leaves the fan within the pinned bracket, and
+   reads the Doppler alone thereafter (1.85 to 1.21 in `moving_1`). A
+   crowd carries a slow clock only when the crowd is slowed alike, as every
+   star of a galaxy is in the crowd of all the others: then the whole crowd
+   moves at v / (1 + k), and the detector reads
+   1 + z = (1 + k)(1 + v / ((1 + k) c)) = 1 + k + v / c, the two terms
+   adding, not multiplying. This last line is derived, not run.
+5. **The first run's lesson.** A lamp's own spending reads as a k of the
+   order of births / K; a clock experiment needs a reservoir far beyond the
+   run's births, or a lamp of the fraction-free kind whose wheel does not
+   spend.
+
+**For the owner's remark.** Under the law as built a distant crowd's lamp
+reads 1 + z = 1 + k with the crowd at rest, k the presence of the crowd's
+rows at its Node over the suspension's wall, with no bound and no speed;
+here k = 1 took a presence of 65536 = d at one Node, two sources of 16384
+units per interval each, about 500 G2 stars' worth of release (64 units per
+interval each) through one Node. Whether nature's z is of this kind the run
+cannot say (section 5); what it says is that the law's clock term is a
+candidate that reads z >= 1 from a body at rest, escapes whole and is
+additive with the Doppler for a crowd slowed alike.

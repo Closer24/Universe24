@@ -15,8 +15,9 @@ the light escapes at the slowed rate, and how z splits between the clock and
 the motion when the whole crowd moves.
 
 The world: a bar of 121 x 9 x 9 Nodes (open). THE LAMP (`s_px1`, the G2
-star's light family, 8192 units, a lamp of one unit per self-creation toward
-the detector, the birth wheel [1, 64]) sits at the centre of its crowd. THE
+star's light family, 2^20 units so that its spending over the run is 0.05 %
+of its wheel's rate, a lamp of one unit per self-creation toward the
+detector, the birth wheel [1, 64]) sits at the centre of its crowd. THE
 CROWD: two fixed bodies of the free family `mass` three Links from the lamp
 on +y and +z, each releasing `release` x amount = F units per self-creation
 on every direction of a fan of nine toward the lamp's line, (dx, -3, 0) and
@@ -62,7 +63,12 @@ Y0, Z0 = 4, 4
 N = 64
 TICKS = 500
 WIDTH = 1 << 20
-LIGHT = 1 << 13
+# The lamp's reservoir, far beyond the run's births: a lamp's wheel turns by
+# its content over K (the register's lamps spend, TEST_EXPECTATIONS "the
+# lamp's turn ... falls as it spends"); the first run of 2026-09-21 with
+# 2^13 units read the spending as a k of 0.03 to 0.04 by the second window
+# (the design's section 7), so the reservoir is 2^20 and the spending 0.05 %.
+LIGHT = 1 << 20
 LAMP_RATE = [1, 1]
 RELEASE = [1, 1 << 16]
 SUSPENSION = [1, 1 << 16]
