@@ -56,3 +56,7 @@ allowed within the assigned scope; changing physics or weakening a requirement i
 not a way to fix a red gate. Keep original acceptance failures visible even when
 a different candidate passes. Hand behavior failures to fields/architecture,
 unexpected physical drift to regression-check, and the final evidence to Boss/PR review.
+
+## Notation (the owner, 2026-09-21, record 184)
+
+Every symbol is named in English at its first use (never a Greek letter alone: "gamma (the Lorentz factor)"), and its kind is shown by its type: a scalar plain, a vector in bold lowercase (**p**), a tensor, matrix or operator in bold uppercase (**C**); skills/workflow.md, "Notation".

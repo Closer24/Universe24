@@ -48,3 +48,7 @@ Preserve current work when refreshing a branch. Verify the resulting main commit
 and PR state, then hand Boss the merged/closed items, tested evidence and remaining
 blockers. This skill does not provide authorization for unrelated messages or
 repository administration.
+
+## Notation (the owner, 2026-09-21, record 184)
+
+Every symbol is named in English at its first use (never a Greek letter alone: "gamma (the Lorentz factor)"), and its kind is shown by its type: a scalar plain, a vector in bold lowercase (**p**), a tensor, matrix or operator in bold uppercase (**C**); skills/workflow.md, "Notation".

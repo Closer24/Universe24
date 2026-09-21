@@ -109,3 +109,11 @@ The commit hashes, the design choices (families, GameBoard, detectors, probes,
 lamps), the table expected against measured with the kind of each reading,
 the verdict in plain words, the path of the page and its GIF, and what the
 law lacked.
+
+## The main course (the owner, 2026-09-21, record 176)
+
+No run of a constant-rate world without its pinned formula (the expectation is the formula's integer); a run of a state-dependent world reports beside the limit's formula (skills/workflow.md).
+
+## Notation (the owner, 2026-09-21, record 184)
+
+Every symbol is named in English at its first use (never a Greek letter alone: "gamma (the Lorentz factor)"), and its kind is shown by its type: a scalar plain, a vector in bold lowercase (**p**), a tensor, matrix or operator in bold uppercase (**C**); skills/workflow.md, "Notation".
