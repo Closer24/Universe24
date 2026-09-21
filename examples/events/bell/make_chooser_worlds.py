@@ -201,7 +201,7 @@ def base(
                 "amount": K + 2,
                 "phase": 0,
                 "fixed": True,
-                "lamp": {"rate": [1, 1], "directions": [[1, 0, 0], [-1, 0, 0]]},
+                "lamp": {"rate": [1, 1], "wheel": [1, N], "directions": [[1, 0, 0], [-1, 0, 0]]},
                 "table": passes,
             },
             counter(ALICE_PLUS, windows[ALICE_PLUS], passes),

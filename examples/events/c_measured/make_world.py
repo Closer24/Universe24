@@ -252,7 +252,7 @@ def world(register: Json) -> Json:
                 "family": "light",
                 "amount": len(directions),
                 "fixed": True,
-                "lamp": {"rate": [1, 1], "directions": [list(v) for v in directions]},
+                "lamp": {"rate": [1, 1], "wheel": [1, N], "directions": [list(v) for v in directions]},
             }
         ],
     }

@@ -145,7 +145,7 @@ def world(
             "amount": LAMP_CONTENT,
             "phase": 0,
             "fixed": True,
-            "lamp": {"rate": [1, 1], "directions": BEAM},
+            "lamp": {"rate": [1, 1], "wheel": [1, N], "directions": BEAM},
             "table": {"m": "pass"},
         }
         for b in (impacts if impacts is not None else (impact,))

@@ -3802,6 +3802,12 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   pointer gate would have passed them (130 passes, a which-path device
   reading 32/32 by coincidence); on `mz_unequal_f8` the rows of two
   records reach it together and both split.
+- **Re-read under the exact phase at the click (2026-09-21, the branch
+  `click`; [BEAM_LAW note 45](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  Every port's clicks stand on the ten worlds (`mz_unequal_f0` D1 64,
+  `mz_unequal_f8` 32 / 32, `mz_unequal_f16` D2 64 included; 68 gathers
+  each); the unequal arms' weights and totals moved (eight distinct totals
+  per world as before), the equal arms bit-identical. DETECTOR.
 
 **L2, the two slits at a low rate (the design's test 2).**
 
@@ -3843,6 +3849,24 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   15; a face's click at a Node of its edge); 3 distinct cell lists over
   the 64 births, 32 with u = 0's (the tables' rounding by u, no rung
   moved); the reading tool's replay equals `run.json`'s `world`.
+- **Re-registered under the exact phase at the click (2026-09-21, the
+  branch `click`; [BEAM_LAW note 45](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  `tests/test_amplitude_layer.py` (d)).** The reference `slits_one` declares
+  the frequency and the reading takes each row's phase from the `exact` of
+  its click line; the reading and the run of `slits_low` agree on every one
+  of the 80 sets: wall 34 (11, 12, 11), screen 15 on fourteen pixels (y =
+  11, 29, 36, 40, 50, 56, 59, 60 twice, 61, 70, 77, 84, 90, 107; until then
+  11, 29, 36, 43, 50, 56, 59, 60, 61 twice, 70, 77, 82, 90, 107), faces 15
+  (8, 7); the first record's total 4834019/4259840 (847181/745472 until
+  then), the shares 0.529 / 0.244 / 0.227, the weights' Pearson with the
+  two-source cosine 0.382 (0.368), the histogram's 0.722 (0.655); 80
+  gathers, the 64th by tick 214, 19 distinct cells over the 64 births as
+  before, 4 distinct cell lists with 44 records sharing the first record's
+  (3 and 32 until then). The design's map (TWO_SLITS.md section 5) expected wall 34, screen
+  16, faces 14: it carried the lamp leg's exact fraction across the
+  re-emission and evaluated on a table of 4096 floats, where the engine
+  floors once on the tables of N = 64 with the re-emission's whole phase.
+  DETECTOR.
 
 **L3, the pair with the choosers, the CHSH labels, the which-path world
 and no maintenance (the design's section 4; the acceptance tests 4, 6
@@ -3983,6 +4007,15 @@ question, issue #376; the Boss's approval of 2026-09-20).**
   registered worlds, the Mach-Zehnder with unequal arms and the two slits
   declare the pair form; the pair, GHZ and the gate declare no phase per
   Link. Which form nature's light is, the model does not say.
+- **Re-read under the exact phase at the click (2026-09-21, the branch
+  `click`; [BEAM_LAW note 45](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  Both worlds keep their pins (the age 29, the path phases 51 / 8 and
+  23 / 23); `cone_intervals`'s click lines carry the exact phase, 3 x 17 x
+  110 = 5610 = 87 x 64 + 42 at the axis and 3 x 24 x 156 = 11232 = 87 x
+  128 + 96 at the diagonal, the whole part 87 = 23 mod 64 at both as the
+  walk's 3 x 29, the remainders 42 / 64 and 96 / 128 (`expectations.json`
+  under `cone.exact`, `tests/test_amplitude_cone.py` (d)); the design's
+  41.75 and 42.00 are the rate 8's (`tests/test_exact_phase.py`). DETECTOR.
 
 **L2b, the two slits with the fan by angle (Huygens on the lattice; the
 mathematician's run of 2026-09-20 under the Boss's standing authorization,
@@ -4021,6 +4054,31 @@ records 160 and 163).**
   golden-rate count on the lamp's record gives the same clicks as the
   bit-reversed ordinal within one click at 4096 births
   ([record 164](LOG_2026-09-20.md#164-the-fan-by-angle-run-on-main-slits_huygens-l2b-the-mathematician-no-src-change-pr-410-the-page-httpsclaudeaiartifact6pyy8c62muhshz7imdcux9-every-pin-reproduced-the-records-screen-weights-carry-youngs-fringes-at-the-euclidean-spacing-pearson-0895-with-the-two-source-cosine-visibility-0954-the-peak-at-y--59-from-the-farey-fan-of-width-48-with-the-angle-weights-alone-under-the-built-phase-the-clicks-cannot-show-them-27-screen-cells-of-121-32-cells-in-all-fixed-for-the-whole-run-u-repeating-with-the-period-64-the-evidence-for-p-as-a-width-of-the-law-decided-record-163-and-for-the-wheel-as-what-turns-weights-into-counts-the-golden-rate-wheel-checked-with-the-map-two_slitsmd-section-8-the-same-clicks-as-the-bit-reversed-ordinal-within-one-click-at-4096-births-the-same-cells-filled-by-1024-the-golden-rate-the-generic-wheel-as-one-row-of-the-counts-table-the-wheels-form-for-the-owner)).
+
+- **Re-registered under the birth wheel (2026-09-21, the branch `click`;
+  the model owner's decision, [record 180](LOG_2026-09-20.md#180-the-wheel-as-the-generic-vector-form-the-owner-2026-09-21-about-0105z-the-owners-words-translated-the-wheel-was-also-turned-into-a-generic-vector-wasnt-it-the-bosss-yes-taken-as-the-decision-on-record-163-3-the-birth-wheel-is-one-row-of-the-counts-table-on-the-lamps-record-acc--2531-acc-mod-4096-the-translation-on-the-torus-z--4096-that-every-count-is-the-lamp-writes-the-rows-value-on-the-record-at-birth-as-u-at-the-click-the-cells-cumulative-weights-are-sums-the-rungs-2-w-c_k--t--2-t-one-declared-rounding-and-the-choice-u--b_k-the-wall-test-so-the-whole-click-is-a-multiplication-by-declared-matrices-an-addition-an-inner-product-and-a-threshold-no-step-of-its-own-the-map-record-164-showed-the-same-clicks-as-the-bit-reversed-ordinal-within-one-click-at-4096-births-physically-the-lamps-phase-at-the-moment-of-birth-at-a-rate-incommensurate-with-its-birth-rate-built-as-item-3-of-the-click-pull-request-after-the-exact-phase);
+  [BEAM_LAW note 46](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  the run that shows the wheel).** `slits_huygens` declares the golden
+  rate `wheel` [2531, 4096] and runs 4300 intervals for 4096 births under
+  the exact phase at the click. Pinned before the run: as ordered, the
+  map's section 8 (the screen's fan): bright about 28 to 29, dark 0 to 3,
+  Pearson about 0.96; and the wheel's own statement, every cell within one
+  click of 4096 x its weight over the total. The run (the run, 4300 intervals in 1334 s (0.31 s per interval), completed and
+conserved at every tick, 4299 records born, 4150 gathered and 149 open at the
+end, every one of the records 1 to 4096 gathered): dark
+  0 to 3 as pinned (the mean 0.68); bright 19 to 51 (the mean 39.3), the
+  map's 28 to 29 being the screen's fan's (the screen share 0.35) where
+  this world's Farey fan puts 0.418 on the screen with its peak at 0.012 of
+  the total (51 clicks at y = 59, 60, 61); the counts' Pearson with the
+  cosine 0.891 against the weights' 0.895, the visibility 0.966; against
+  the first record's rungs the histogram's Pearson 1.000 over the 126
+  cells, every count within 2 of its width (within 2 and not one: the rungs are per record, the tables' eight totals at u mod 64, a part in 276, note 37 (xii), so the counts are compared with the first record's rungs); wall 882, screen 1711 on 107
+  pixels, faces 1503; the first 64 births wall 14, screen 27, faces 23 with
+  32 distinct cells, 69 by 256, 101 by 1024. Verdict: the wheel turns the
+  weights into counts, the fringes in the clicks as in the weights; the
+  0.96 pin was the screen's fan's, not this world's. The numbers beside the
+  world in [its README](../examples/events/amplitude/README.md#l2-the-two-slits-at-a-low-rate).
+  DETECTOR.
 
 **L, open items (2026-09-20, after (v)).** The one click (the design's
 section 6) is not landed: the record form as the default changes worlds
