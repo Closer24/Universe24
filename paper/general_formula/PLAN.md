@@ -2590,3 +2590,17 @@ only the first half of rem:nodispersion (no rule reads a phase into a
 step); the remark attributes "no local linear wave scheme is both" to
 Meyer's theorem. The PDF: 38 pages.
 
+### Wave 30, the physicist's four corrections on 6abe65ce (record 477; the mathematician agreed with none)
+
+(1) The differs head counts the eight registered FAILs (1b, 2a, 3, 4b,
+7b, 8a, 8b, 8c), the four by a pin without its run (4a, 5b, 11a, 11c;
+the physicist's line named three, 11a is the fourth "FAIL (pinned)"
+row) and the one under the presence word (12). (2) Row 11b's verdict
+reads "not run; the pin's exponent within the measured", no PASS; the
+tallies follow: four PASS (all replicated), twelve FAIL, two BOUND, two
+NOT YET, one pin without its run (the abstract and the register
+paragraph). (3) P8: the 23 inline declarations, 21 of them differing
+from the shipped definitions or naming a family the definitions lack.
+(4) The assumptions table's uncertainty row: "an identity on the
+circle; the physical identification a stated hypothesis (22, assumed)".
+
