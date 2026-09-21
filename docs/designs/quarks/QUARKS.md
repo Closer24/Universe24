@@ -23,8 +23,10 @@ Boss's pull request and are cited by number; on this base
 `src/` is edited and no law changes: a read-only design. Its evidence is
 beside it: `quark_numbers.py` (every integer below, recomputed from the
 engine's own flight table and the law's push form; its printed output
-`quark_numbers.out`), `make_worlds.py` (the seven world files under
-`worlds/`, for the run on the owner's go), and a smoke test of the seven
+`quark_numbers.out`), the seven world files of series R under
+[`examples/events/quarks/`](../../../examples/events/quarks/README.md)
+(their generator `make_worlds.py` and their pins `expectations.json`
+beside them), and a smoke test of the seven
 worlds for 24 intervals each (section 4.6), which is the only run made.
 Read: [BEAM_LAW](../../BEAM_LAW.md) sections 2 to 5 and its notes 31, 36,
 39, 40 and 41; [ENTITY_CATALOG](../../ENTITY_CATALOG.md) (the rows on the
@@ -660,10 +662,10 @@ the line.
 
 ### 4.6 The worlds and the smoke test
 
-The seven worlds (`make_worlds.py`, under `worlds/`; series I's base: an
-open cube of 21^3, K 2^20, N 64, `release` [1, 1], `suspension` 0, the
-290 fan, 3000 intervals; the model ids `beam-quarks-<name>-space-v1`;
-not registered, waiting for the owner's go):
+The seven worlds (`examples/events/quarks/make_worlds.py`; series I's
+base: an open cube of 21^3, K 2^20, N 64, `release` [1, 1], `suspension`
+0, the 290 fan, 3000 intervals; the model ids `beam-quarks-<name>-space-v1`;
+registered as series R on the owner's standing go, record 264):
 
 | World | What |
 | --- | --- |
