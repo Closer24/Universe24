@@ -217,7 +217,11 @@ class Count:
     the cap on the count gained at one self-creation (1 on the drive, 0
     otherwise); `idle_at_zero` whether a numerator of 0 leaves the row as it
     is (the step's rule: a momentum of 0 never steps); and `accumulator`,
-    the remainder's owner, one bounded integer."""
+    the remainder's owner, one bounded integer. The `place` rows of a body
+    on a set (the Nodes' claims on its releases) are the one kind not run
+    through `advance`: `nature_beam.place_over_nodes` is their rule (an
+    argmax carry on the claims, BEAM_LAW note 41 (viii)), and
+    `advance("place")` is never called."""
 
     name: str
     source: str

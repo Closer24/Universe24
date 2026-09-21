@@ -285,10 +285,12 @@ local work: every per-Node step below is a bounded loop over that Node's
 rows. The host cost is the total rows times about 0.1 to 1 us (section 9).
 
 **The flight rule** (one world constant, the owner's 1 / sqrt 3, "the phase
-velocity the wave on the mesh had"): for a direction v = (a, b, c) with
-S_1 = |a| + |b| + |c| and Q = 64, `T_d = isqrt(3 (a^2 + b^2 + c^2) Q^2)`; the
-Manhattan steps made by age tau are `m(tau) = (2 tau S_1 Q + T_d) // (2 T_d)`
-and the ray at age tau is at the m(tau)-th point of the Bresenham line of v
+velocity the wave on the mesh had"): for a direction **v** = (a, b, c) (the
+direction vector) with S_1 = |a| + |b| + |c| (its Manhattan length) and Q = 64
+(the label's scale), `T_d = isqrt(3 (a^2 + b^2 + c^2) Q^2)` (the direction's
+resolution); the Manhattan steps made by age tau (the age) are `m(tau) = (2
+tau S_1 Q + T_d) // (2 T_d)` and the ray at age tau is at the m(tau)-th point
+of the Bresenham line of **v**
 (`line_d`, the S_1 unit steps of one period of the direction's line, the
 axis furthest behind first: a world constant per direction like u_d),
 `position(tau) = (m // S_1) v + line_d[0 .. m mod S_1]`. m(tau) is the whole
@@ -3334,23 +3336,36 @@ implementation's part of the contract. The design above is unchanged.
     derivation mathematician's inventory, `docs/DERIVATIONS_BEAM.md`
     section 1.3, whose items 1 to 6 this note and the branch `no-tables`
     replace and whose items 7 to 14 are listed below as found). The
-    flight: the Link a ray crosses at an age is `Flight.walk_step`, one
-    Manhattan accumulator started at T_d, gaining 2 S_1 Q per interval
-    over 2 T_d, the interval's step e = [acc + r >= d], and the step is
-    the m-th unit step of the direction's line, whose axis is the
-    Bresenham choice (at Manhattan step j the axis maximising |v_i| (j +
-    1) - S_1 |pos_i|, the lowest on a tie: the deficits' argmax carry,
-    periodic in S_1, computed once from the vectors at load, `lines`);
-    a ray's rate never changes over its flight, so both counts are read
-    off the whole age and the row carries no field (the inventory's 1.4:
+    symbols, named once for this note: **v** = (a, b, c) the direction
+    vector of a ray's flight, S_1 = |a| + |b| + |c| its Manhattan length,
+    Q = 64 the label's scale, T_d = isqrt(3 |**v**|^2 Q^2) the direction's
+    resolution, tau the age of a row, m(tau) the count of Manhattan steps
+    made by the age, r = 2 S_1 Q the position accumulator's rate and d = 2
+    T_d its wall, e the Manhattan step of one interval (0 or 1), p_a the
+    momentum's component on an axis, N the steps of the phase circle and
+    h the world's `action`. The flight: the Link a ray crosses at an age
+    is `Flight.walk_step`, one Manhattan accumulator started at T_d,
+    gaining r per interval over d, the interval's step e = [acc + r >=
+    d], and the step is the m-th unit step of the direction's line, whose
+    axis is the Bresenham choice (at Manhattan step j the axis maximising
+    |v_i| (j + 1) - S_1 |pos_i|, v_i the vector's and pos_i the position's
+    component on the axis, the lowest axis on a tie: the deficits' argmax
+    carry, periodic in S_1, computed once from the vectors at load,
+    `lines`); the pair (m(tau), the residue (tau r + T_d) mod d) is formed
+    in one place, `Flight.accumulator(direction, age)`, which `walk_step`
+    reads for the step and the click's exact phase reads for the residue
+    at an arrival (TWO_SLITS.md section 2; test (f) of the flight); a
+    ray's rate never changes over its flight, so both counts are read off
+    the whole age and the row carries no field (the inventory's 1.4:
     "keeps the age and computes the step from it"; a per-axis position
     accumulator is NOT this form, two Links in one interval on (1, 1, 0)
     and 22 for 24 at age 29, and was not built). A row's phase is a point
     of Z_N on the record, and of Z_{N d} only through the age (nothing
     discarded). The push by a record row's share: `share_of` keeps the
     remainder on the row (`share_x`, `share_y`, `share_z`: the part of
-    the row's push on matter not yet delivered, below m, summed at a
-    merge, carried from reader to reader so that a row read at every
+    the row's push on a body not yet delivered, below the record's
+    multiplicity, summed at a merge, carried from reader to reader so
+    that a row read at every
     interval of a passage pushes the exact sum; it leaves with the row
     when the row is absorbed, to the books' `remainder` line with the
     rest of the label, or escapes: the `remainder` line then reads what
@@ -3366,46 +3381,56 @@ implementation's part of the contract. The design above is unchanged.
     and `events/` at run time, so that the claim "no division at run
     time discards a remainder" is checkable; every one is of a class
     below or is `by_drive`:
-    (1) the primitive: `by_drive` (`integer.py`, `abs(drive) //
-    denominator`); its constant-rate identity `by_clock` (`integer.py`,
+    (1) the primitive: `by_drive` (`core.integer`, `abs(drive) //
+    denominator`); its constant-rate identity `by_clock` (`core.integer`;
     `by_clock_rows` in `nature_beam`: a ray's phase per interval of age
     at its family's `phase_per_link`, a constant over the flight; the
     age against a key); the flight's counts off the age
-    (`manhattan_steps`, `walk_step`: `held // denominator`, `(accumulator
+    (`Flight.manhattan_steps` and `Flight.accumulator`: `held //
+    denominator` and `held % denominator`; `Flight.walk_step`: `(residue
     + rate) // denominator`); `share_of` (`abs(total) // multiplicity`,
     the remainder on the row); `place_over_nodes` (`divmod(amount,
     ways)`, the leftover to the claims).
     (2) an exact division by a common divisor, no remainder: `reduced`
-    and every `// common`, `// gcd`, `// bounded_gcd` (`integer.py`,
-    `amplitude.py` 153, 167, 194, 722, `meeting.py` 328, `world.py`
-    1059, the periods 659 to 661 of `nature_beam`); the lifts by a least
-    common multiple (`amplitude.py` 184, 218, 224 `denominator // m`,
-    `meeting.py` 333 `denominator // d`, `nature_beam` 2337 `scale //
-    denominator`); the columns' Lambda lift; the arms' partition of the
-    directions (`ways // arms`, `way // paths`, exact by the parser's
-    refusal); the whole quanta a lamp or a give can pay (`held // cost`,
-    `held // quantum`: the remainder stays held as content, `nature_beam`
-    3947 to 3972, `engine.py` 835); the half-angle tables' step (`2 *
-    steps // size`, `index //= factor`, exact by the refusal of an odd
-    setting); a record's multiplicity over a split's norm (`amplitude.py`
-    674, exact by construction).
+    and every `// common`, `// gcd`, `// bounded_gcd` (`core.integer`;
+    `amplitude.lcm`, `common_denominator`, `rungs`, `complete`;
+    `meeting.meet`; `world.column_scales`; the periods in
+    `nature_beam.direction_flight`); the lifts by a least common multiple
+    (`amplitude.rungs` and `cell_of`, `denominator // m`; `meeting.meet`,
+    `denominator // d`; `nature_beam.push_form`, `scale // denominator`);
+    the columns' Lambda lift; the arms' partition of the directions
+    (`ways // arms`, `way // paths` at the lamp's births in
+    `nature_beam`, exact by the parser's refusal); the whole quanta a
+    lamp or a give can pay (`held // cost` at the lamp's births, `held //
+    quantum` in `engine._give`: the remainder stays held as content);
+    the half-angle tables' step (`amplitude.half_angle`: `2 * steps //
+    size`, `index //= factor`, exact by the refusal of an odd setting); a
+    record's multiplicity over a split's norm (the layer's `cells` in
+    `amplitude`, exact by construction).
     (3) a declared rounding computed once from the keys or once per
     record: T_d by `integer_root` and u_d by `unit_label` (at load);
-    the ladder's rungs at the nearest integer (`amplitude.py` 192, 239:
-    the cell is the comparison of products, the rung a report); the
-    half circle `modulus // 2` and a window's half width `width // 2`
-    (constants of N and the width); the speed at the grain G
-    (`quantised_speed`, `nature_beam` 2152, `G |p| // D`: the remainder
-    below 1 / G by declaration, note 38; the rule leaves with the
-    crossing rule, record 158).
+    the ladder's rungs at the nearest integer (`amplitude.rungs`,
+    `node_choice`: the cell is the comparison of products, the rung a
+    report); the half circle `modulus // 2` and a window's half width
+    `width // 2` (constants of N and the width); the speed at the grain G
+    (`nature_beam.quantised_speed`, `G |p| // D`: the remainder below 1 /
+    G by declaration, note 38; the rule leaves with the crossing rule,
+    record 158).
     (4) a guard or an addressing: every `MOMENTUM_BOUND // x` and
     `AMOUNT_BOUND // x` (a bound tested by division before a product is
-    formed: `measured.py` 112, `engine.py` 485, `world.py` 1552, 2692,
-    2706, `meeting.py` 194, 336, `nature_beam` 870, 873, 938, 1020,
-    1034, 1903, 1966, 2151, 2229, 2250, 2334, 2338, 2344, 3808, 3819),
-    the parser's ceilings (`world.py` 474, 1327, 1328, 1791, 2509, 2672,
-    the largest values a run can form), a body's span half (`world.py`
-    1348) and the store's strides (`nature_beam` 1155, 1157).
+    formed: `measured.column_charges`, `engine._frame_all`,
+    `world.column_scales`, `_families`, `_column_budget`,
+    `meeting.arc_shift` and `meet`, `nature_beam.label_overflow_rows`,
+    `label_weights`, `coherent_pointer` and its `POINTER_STEP_BOUND`,
+    `apply_gate`, `quantised_speed`, `weighted_flow`, `push_form` and
+    the lamp's births), the parser's ceilings (`world.weighted_flow_factor`,
+    `flight_bound`, `_lamp`, `_measured`, `_column_budget`: the largest
+    values a run can form), a body's span half (`world.body_nodes`) and
+    the store's strides (`NatureBeamStore.coordinates`). The `//` of
+    `core/phase.py` (the cosine and sine tables of the circle, a declared
+    rounding at load) are outside this list's scope on purpose: a table
+    of the circle's constants, not a count of the law. The functions are
+    cited, not the lines, so that a merge does not move the citations.
     (5) an exact apportioning within one event (`apportion_whole`,
     `integer.py` 124): the whole is distributed, the units left going to
     the largest remainders with the ties by a rotation; nothing of the
@@ -3415,15 +3440,16 @@ implementation's part of the contract. The design above is unchanged.
     (6) **a remainder discarded at the meeting**, to become an
     accumulator on the row under the meeting verbs (record 155 step 5;
     not changed on `no-tables`): `adv = (|t| + Q // 2) // Q`
-    (`meeting.py` 232, 239: the crowd met rounded to the nearest whole
-    unit of Q every interval, the rest dropped; the inventory's item 9)
-    and `norm //= denominator` after the `integer_root` per interval
-    (`meeting.py` 358; item 10: the one root evaluated on the lattice per
-    interval on a varying t, whose discards do not telescope; a change of
-    the meeting's law, for the owner); `total // modulus` (`meeting.py`
-    233) is the torus reduction with the remainder kept as the phase,
-    lawful, and `(advance - after + modulus - 1) // modulus` (240) the
-    whole turns of the same advance.
+    (`meeting.register` and `register_inverse`: the crowd met rounded to
+    the nearest whole unit of Q every interval, the rest dropped; the
+    inventory's item 9) and `norm //= denominator` after the
+    `integer_root` per interval (`meeting.meet`; item 10: the one root
+    evaluated on the lattice per interval on a varying t, whose discards
+    do not telescope; a change of the meeting's law, for the owner);
+    `total // modulus` (`meeting.register`) is the torus reduction with
+    the remainder kept as the phase, lawful, and `(advance - after +
+    modulus - 1) // modulus` (`register_inverse`) the whole turns of the
+    same advance.
     **Found by the inventory and left as built** (to be pinned before
     any change): (7) a coincident drive fire on a later axis in one
     self-creation pays its D and crosses no Link (`engine._move`: one
@@ -3434,7 +3460,21 @@ implementation's part of the contract. The design above is unchanged.
     kicked deuteron); (8) a refused step under a `read` or `pass`
     contact loses its drive's D with nothing handed (`engine._move`,
     `_contact`; the torus form adds D back; no registered world declares
-    such a contact on the gate set). And the wording of note 30 (ii) as
-    amended above: a step lost or refused adds nothing to the phase, the
-    `action` row's count of it discarded as `k0`'s increment was skipped
-    (the inventory's item 6, "a second discard inside the first").
+    such a contact on the gate set); (9) the `action` row's whole part at
+    a Link not crossed (a Link lost to an earlier axis's step in the same
+    self-creation, or refused at a contact) is discarded at run time: the
+    row gains |p_a| N on every axis whose drive fired and the whole part
+    over h is delivered only on the axis whose Link was crossed
+    (`engine._move`), the residue kept, so no remainder is lost but a
+    whole count is, as the retired rule's `k0` skipped it (the wording of
+    note 30 (ii) as amended above: a step lost or refused adds nothing to
+    the phase; the inventory's item 6, "a second discard inside the
+    first"); the torus form of item 7 would remove the lost Link's
+    discard; pinned before any change by `tests/test_step_drive.py` (e):
+    the coincidence body of (a) (content 1, the momentum (64, 64, 0), D =
+    128 on both axes) under `action` 7 at N = 64 holds, after 10
+    intervals, `acc.action` [5, 5, 0] (the residue of five counts of 4096
+    = 7 x 585 + 1 on each axis) and the phase 45 = 5 x 585 mod 64 from
+    the x row alone, the y row's five whole parts, 2925, never delivered
+    (the phase would read 26 with them; the physics-rule review of
+    2026-09-21, item 2).

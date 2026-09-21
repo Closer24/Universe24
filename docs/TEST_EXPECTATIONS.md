@@ -231,6 +231,16 @@ one Link per interval, the age modulo the direction's period.
 - (e) `adjacent_node` on (3, 2, 1) with x and z periodic (re-pinned from
   `test_event_boundaries`): (2, 1, 0) +X -> (0, 1, 0), (0, 1, 0) -X ->
   (2, 1, 0), (1, 1, 0) +Y -> None, +Z and -Z -> (1, 1, 0) itself.
+- (f) the flight accumulator read in one place (`Flight.accumulator`,
+  the pair (m, the residue); the physics-rule review of no-tables,
+  2026-09-21, item 5; BEAM_LAW note 41 (viii)): on the heading (1, 0, 0)
+  (T_d 110, the rate r = 128 over the wall d = 220) the pairs at the ages
+  0 to 3 are (0, 110), (1, 18), (1, 146), (2, 54); on (1, 1, 0) (T_d 156,
+  r 256, d 312) (0, 156), (1, 100), (2, 44), (2, 300); over 600 ages on
+  every direction of the test's table m equals `manhattan_steps`, the
+  residue equals (tau r + T_d) mod d and stays in [0, d), and
+  `walk_step` is the line's (m mod S_1)-th unit step times [residue + r
+  >= d]; a rest direction holds (0, 1) at every age.
 
 ## The collision table
 
@@ -1641,7 +1651,18 @@ expected integers, written down before the first run:
 - (e) the turn by momentum at a constant momentum: content 16, momentum
   320, `action` 7, phase 5: the turns at the first five Links 2925, 2926,
   2926, 2925, 2926 (mod 64) as `test_nature_beam_body` (d) pins, and
-  `axis_steps` [5, 0, 0] after 24 intervals.
+  `axis_steps` [5, 0, 0] after 24 intervals; and the `action` row's whole
+  part at a Link not crossed, pinned before any change (BEAM_LAW note 41
+  (viii), the owner's item 9; the physics-rule review of no-tables,
+  2026-09-21, item 2): the coincidence body of (a) (content 1, the
+  momentum (64, 64, 0), D = 128 on both axes, x stepping at the even
+  self-creations and y losing every one of its Links) under `action` 7 at
+  N = 64, phase 0, holds after 10 intervals `acc.action` [5, 5, 0] (the
+  residue of five counts of |p| N = 4096 = 7 x 585 + 1 on each axis, in
+  `state.json` too), the drives (0, 0, 0), `axis_steps` [5, 5, 0], `steps`
+  5, the position (9, 4, 0) and the phase 45 = 5 x 585 mod 64 from the x
+  row alone: the y row's five whole parts, 2925, were never delivered
+  (the phase would read 26 with them).
 - (f) the signed drive under a reversal (record 126): content 16, width 8,
   D = 9216, the momentum +1024 for eight self-creations (the drive 8192,
   no Link) and -1024 from the ninth: the first form stepped -x at the
