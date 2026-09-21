@@ -4,14 +4,15 @@ Universe24 implements **Reality Theory (Universe24)**: one discrete world of
 Nodes and Links, bounded integer arithmetic and local rules. Since 2026-09-19
 the model is the Beam Law ([Highlights](docs/HIGHLIGHTS.md) section
 5.4, the model owner, "DECIDED: the law of the ray"; the design
-[docs/BEAM_LAW.md](docs/BEAM_LAW.md)): the Node holds no wave; a unit is a beam
-(the record of an event in transit, `NatureBeam`; "ray" is its informal name)
+[docs/BEAM_LAW.md](docs/BEAM_LAW.md)): the Node holds no wave; a unit is a row
+(the record of an event in transit, `NatureBeam` in the code; the system has
+rows and bodies, the model owner, 2026-09-21; [the glossary](docs/TERMINOLOGY.md))
 moving along the digital line of its momentum at one speed for
-every direction; rays that meet at a Node are permuted by the collision
+every direction; rows that meet at a Node are permuted by the collision
 table; the interval is a bijection and the click its only one-way border; a
 measured event is created here without end, its clock the count of its
 self-creations, and what is seen is measured events through detectors of a
-declared sensitivity, whose record is the squared pointer of the rays
+declared sensitivity, whose record is the squared pointer of the rows
 they clicked; nothing is kept at a Node, no register, no remainder, no draw.
 There is one engine, the engine of that law (`beam-v1`, the one function
 `nature_beam`); the engines before it, the law of events of the same day
@@ -158,7 +159,7 @@ active contracts, explicit experiments and revision-specific evidence.
 | Path | Responsibility |
 | --- | --- |
 | `src/event_universe/events/world.py` | The world file: its keys, their bounds and the refusals, named |
-| `src/event_universe/events/nature_beam.py` | The Beam Law (`beam-v1`): the record `NatureBeam`, the one reading `read_arrivals`, the flight table, the collision table, the store of records per family and the one function `nature_beam`, a Node's whole interval (the walk, the reading, the collision, the measured event's table, the detector's record, the self-creations, the merge) |
+| `src/event_universe/events/nature_beam.py` | The Beam Law (`beam-v1`): the record `NatureBeam`, the one reading `read_arrivals`, the flight rule, the collision table, the store of records per family and the one function `nature_beam`, a Node's whole interval (the walk, the reading, the collision, the measured event's table, the detector's record, the self-creations, the merge) |
 | `src/event_universe/events/meeting.py` | The meeting (`meeting-v1`, the world key `meeting`): the arc permutation of the direction table, a paid unit's reading of the free crowd at a free-space Node, its turn by its phase register and the inverse |
 | `src/event_universe/events/measured.py` | The measured event's record (`Measured`) and the ledger of an interval |
 | `src/event_universe/events/engine.py` | The frame around the law: the clocks, the owed count off the clock, the steps by the momentum, the books, the readings, the inverse interval, the snapshot; it computes no physics |
