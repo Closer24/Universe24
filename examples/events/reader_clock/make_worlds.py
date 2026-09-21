@@ -191,6 +191,29 @@ def expectations() -> Json:
             "clicks_per_interval": 1 / lattice,
             "clicks_per_reader_birth": (1 + k_r) / lattice,
         }
+    # clock-age-v1 (2026-09-21, record 394): both crowds are at 3 Links on
+    # series U's fan, so under the age word each k is 22 / 4 = 5.5 times the
+    # presence word's (series T's map); the pins above are the presence
+    # word's (the run on main d8cb46e), the README carries the re-read.
+    out["clock_age_v1"] = {
+        "derivation": (
+            "the two k under the age word (clock-age-v1, 2026-09-21): 5.5 times the presence word's "
+            "(the age moment 22 F against the presence 4 F on the fan at 3 Links, series T's map); "
+            "the lattice's 1 + z = (1 + k_s)(1 + v / c) at rest, 1 + k_s + v / c receding; the "
+            "reader's clock the lattice's over 1 + k_r (DETECTOR)"
+        ),
+        "age_moment_over_presence": 5.5,
+        "worlds": {},
+    }
+    for name, (k_r, k_s, moving) in WORLDS.items():
+        a_r, a_s = 5.5 * k_r, 5.5 * k_s
+        lattice = 1 + a_s if not moving else 1 + a_s + SPEED_OVER_C
+        out["clock_age_v1"]["worlds"][name] = {
+            "k_reader": a_r,
+            "k_source": a_s,
+            "one_plus_z_lattice": lattice,
+            "one_plus_z_readers_clock": lattice / (1 + a_r),
+        }
     return out
 
 

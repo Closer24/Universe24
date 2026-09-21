@@ -75,3 +75,33 @@ presence 4 F at the lamp's Node once the rows arrive, and the algebra.
   product (1.295), and falls behind it,
   leaving the fan at ticks 181 and 86 within the pinned brackets and reading
   the Doppler alone thereafter (1.85 then 1.21).
+- **Re-read under `clock-age-v1` (2026-09-21; the model owner's word of
+  record 394: a clock counts the age moment by default).** The eight worlds
+  run again through `tools/run_series.py --jobs 2` (500 intervals) on the
+  head of branch `clock-age-v1` and read by the same method (the birth
+  ordinal against the click's tick in the windows, the lamp's k from its
+  births one flight earlier; the reader reproduced every registered reading
+  on `main` first, 1.3000 at `still_3`, 2.0000 at `still_1`). The pins
+  under the age word are the register's block `clock_age_v1` (k = 22 F /
+  2^16, the age moment of the two sources' rows dwelling at the ages 5 and
+  6, 5.5 times the presence word's 4 F / 2^16; series T's map). DETECTOR,
+  1 + z in the two windows, the presence word's registered reading beside
+  it: `still_005` 1.0284, 1.0283 (pinned 1.0275; was 1.0000, 1.0064 for
+  1.005); `still_08` 1.4400, 1.4401 (1.4401; was 1.0802, 1.0800 for 1.08);
+  `still_3` 2.6517, 2.6514 (2.65; was 1.3000, 1.3000 for 1.3); `still_1`
+  6.5002, 6.5002 (6.5; was 2.0000, 2.0000 for 2); `still_2` 12.0000,
+  12.0000 (12; was 3.0000, 3.0000 for 3): every still reading inside 0.02
+  of the age word's pin, the k read from the lamp's births 0.027, 0.442,
+  1.63 to 1.68, 5.25 to 5.52, 10.5 to 11.5, the light escaping whole (319,
+  229, 127, 55, 32 ordinals, none missing). The moving worlds, a research
+  reading: their sources' pace 0.2 c / (1 + k) was emulated for the
+  presence word's k, so under the age word the slowed lamp falls behind
+  its crowd sooner and reads the Doppler alone after: `moving_08` 1.6145,
+  1.2822 (was 1.2827, 1.2714), the exit at tick 138 (was none before 464);
+  `moving_3` 1.6871, 1.1978 (was 1.4152, 1.4768), the exit at 69 (was
+  181); `moving_1` 1.3540, 1.1981 (was 1.8514, 1.2058), the exit at 52
+  (was 86); the lag 8 Links at the end in all three, every ordinal
+  arrived. What the re-read decides: a still lamp's clock reads the age
+  moment, linear in F over the same factor of 400; the moving worlds
+  decide nothing until their emulation is re-declared for the age word's
+  k, which is the design's to do, not the run's.

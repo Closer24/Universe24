@@ -50,3 +50,24 @@ presence 4 F at every lamp, the emulated pace and the algebra.
   pinned 1.2, 1.3, 1.5, 1.8, 2.2 (the product form, 2.4 at k = 1, refuted),
   the dispersion 0.368; every lamp within one Link of its emulated sources;
   no light lost.
+- **Re-read under `clock-age-v1` (2026-09-21; record 394: a clock counts
+  the age moment by default).** The two worlds run again on the head of
+  branch `clock-age-v1` (`tools/run_series.py --jobs 2`, 500 intervals) and
+  read by the same method in the window 250 to 500 per lamp number (the
+  reader reproduced the registered readings on `main` first). DETECTOR, at
+  rest 1 + z = 1.0000, 1.5510, 2.6502, 4.2992, 6.4990 for the age word's
+  pins 1, 1.55, 2.65, 4.3, 6.5 (the register's block `clock_age_v1`, each
+  k 5.5 times the presence word's; the presence word read 1.0000, 1.0999,
+  1.3001, 1.6000, 2.0000 for 1, 1.1, 1.3, 1.6, 2): every member inside the
+  tolerance of 0.02, the k read from the lamps' births 0, 0.543, 1.660,
+  3.310, 5.579; the z mean 2.1999 (was 0.4000), the dispersion 1.9977 (was
+  0.3633), the minimum 0.0000; every ordinal arrived. Moving as one, a
+  research reading: the members' sources were emulated at 0.2 c / (1 + k)
+  for the presence word's k, so under the age word every slowed lamp but
+  the bare one falls behind its crowd: 1.2007, 1.4717, 1.5585, 2.0127,
+  3.3219 (was 1.2007, 1.3022, 1.5066, 1.8092, 2.2147), the k read from
+  the lamps' births 0, 0.250, 0.437, 0.969, 2.049 against the age word's
+  0, 0.55, 1.65, 3.3, 5.5 at rest; the z mean 0.9131 (was 0.6067), the
+  dispersion 0.7514 (was 0.3683). The sum form is not re-decided by this
+  run: the emulation holds for the presence word's k alone, and its
+  re-declaration is the design's.

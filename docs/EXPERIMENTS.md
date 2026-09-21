@@ -1272,6 +1272,16 @@ states "exactly" and means integer equality at every tick.
   body and read the same (the record's new fields aside) ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
 
 
+- **Item 6 re-read under `clock-age-v1` (2026-09-21; record 394; the head
+  of branch `clock-age-v1`).** The probes' clocks count the age moment: the
+  identity holds, (age, waited, owed) equal to the replay of the age
+  moment read at all nine radii, the ages at the front's arrival unchanged
+  (8, 11, 14, 21, 28, 35, 42, 52, 69) and the count then owed the beam's
+  age moment, 917312 to 8912765 intervals at r = 4 to 40 (the presence's
+  130880 to 130941, the same at every r): on the axis the age moment grows
+  with r as the rows' age; GameBoard readings, the tool's item 6 replaying
+  the age moment since this day ([the worlds' README](../examples/events/coupling/README.md#re-read-under-clock-age-v1-2026-09-21)).
+
 ### D, the orbit under the Beam Law, on the plane (2026-09-19)
 
 - **Confronts.** Whether a light free probe closes an orbit about a heavy
@@ -2062,6 +2072,16 @@ states "exactly" and means integer equality at every tick.
   means; a weak-field confrontation (k << 1: a larger `suspension`
   denominator or a smaller q) is the follow-up for the model owner.
   Nothing was tuned.
+
+- **Re-read under `clock-age-v1` (2026-09-21; the model owner's word of
+  record 394, the age moment the clock's default; the head of branch
+  `clock-age-v1`).** The `scalar` world's probes count the age moment at
+  [1, 1]: its k x r is the constant now, 67.4 to 81.3 over r = 6 to 14, the
+  mean 72.19 (k x r^2 was 39.0 to 44.8, the mean 41.5), 2.00 times the
+  `age` world's 36.18, the two widths' ratio; the `age` world is
+  byte-identical (record 409); GameBoard readings, 11 inside and 3 outside
+  as registered; the table with the old values beside the new in
+  [the worlds' README](../examples/events/redshift/README.md#re-read-under-clock-age-v1-2026-09-21).
 
 ### G, the Hubble diagram behind the detector (2026-09-20)
 
@@ -3738,6 +3758,21 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   (`examples/events/weak/README.md`, "Re-pinned under the fraction-free
   law"); `tests/test_weak_readings.py` (e) replays the generator's warm run
   on the shipped worlds against the register.
+
+- **Re-read under `clock-age-v1` (2026-09-21; record 394; the head of
+  branch `clock-age-v1`).** The neutrons' clocks count the age moment and
+  the `become` at 512 fires later wherever a crowd is read: `j1_lattice` 56
+  of 64 transformed within 650 intervals at the trigger ticks 602 to 642
+  (was 64 at 522 to 525), the shell's clicks 20 within the run (was 64),
+  the width over the median 0.0265 (was 0.036); `j1_source` 32 of 64 at
+  607 to 641, 8 clicks, the width 0.0110 (was 0.038); `j3_deuteron` at 577
+  as registered (the proton's rows at one Link at the age 1); the gated
+  and the free neutron unchanged; 13 readings inside and 5 outside (the
+  registered 36 and 0). NATURE row 8a keeps its FAIL in form (a step
+  against 3.17) but its numbers were read on 64 clicks and the age word's
+  on 20 and 8, the rest firing at or after the run's end: whether the row
+  is re-read on a longer run is the model owner's question, flagged
+  ([the worlds' README](../examples/events/weak/README.md#re-read-under-clock-age-v1-2026-09-21)).
 
 ### L, the amplitude law (2026-09-20)
 
