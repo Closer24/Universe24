@@ -2165,3 +2165,40 @@ presence, from the worlds' own README. Done by one scratch script
 (notation.py) with exact anchors, then the leftovers checked by grep.
 Referee round 41 before the commit.
 
+## Wave 20 (2026-09-21): the replications round 1 into the labels; NATURE row 2c restated
+
+docs/REPLICATIONS.md on main (PR #580, the Replicator's round 1): the
+blocks of L1 (the Mach-Zehnder set), L3 (the pair), L6 (the pair at
+N = 512 to 4096), the run of 24.4 and A12 REPLICATED, every registered
+reading equal bit-exact and the four checks met; NATURE 11b
+INCONCLUSIVE (a pin without a run). The paper: the abstract's five
+PASS as "four re-run and checked by a second runner, one a pin without
+its run"; the nature prose names rows 1a, 2b, 2c and 9 as re-run; the
+prediction paragraph "pinned, run and re-run by the second runner";
+the record appendix's rows of Born's rule, the lattice Gleason,
+Tsirelson's bound and Malus "measured and replicated" with the block
+named; the caption's rule restated (a run with its line reads
+"measured and replicated"); a bibitem for the document; Reproducibility
+names the re-runs' tree. NATURE row 2c restated on main (PR #578): the
+paper's row 2c carries [1.917, 2.012) with the split at N = 32 and 128.
+The other "measured once" labels (series C, E, K, G2, L7, H, R, the
+crowd worlds) stay until round 2. Referee round 42, the cleanliness
+round over the whole paper (the Boss's seven items): ten findings,
+all applied: the abstract's "run and replicated"; the Method's "every
+registered run" with the three crowd runs named as drafted; Kepler's
+row 58 restated to its amended pin (784 in [714, 855], 392 in [357,
+428], 24.8 and 12.4, -81 +- 15 under form B's pace; record 347); the
+30 against 31 standard errors of N = 256 stated with both sources (a
+tree disagreement between checks/s_of_n.txt and 24.3/24.4, reported);
+Bohr's energy row to 26.5's standing (an identity of readings, the
+transition not reached); the not-claimed list's "not a prediction of
+nature's S" qualified by the one prediction at a power of two; the
+abstract's "(pinned, not run)" on Kepler alone; the figures'
+fingerprint 731d0f56c9f9 named as figures/summary.json's; the unused
+POSTULATE standing said so; the letters with a second meaning named
+in the head table. PASS on the labels (every replicated label in a
+round-1 block, every "measured once" outside), the commits (19 hexes,
+every one an ancestor of HEAD or a register fingerprint), 60 numbers
+traced, the counts (44 rows of Table 1; 22 differences; 21 nature
+rows; P1 to P10; six places) and section 26 (none of the ten claimed).
+
