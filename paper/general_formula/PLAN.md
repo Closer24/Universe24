@@ -2613,3 +2613,14 @@ entry 27, each with its condition, what closes it and what refutes it;
 DERIVATIONS_BEAM 24.5 links to it. The paper is unchanged: it carries
 them as HYPOTHESIS or OPEN rows without a number since wave 30.
 
+### The bijection theorem restated on the GameBoard alone (the owner's word, 2026-09-21, about 23:50Z)
+
+The owner's question: why lean on the apparatus's record if only a
+detector measures? Theorem th:bijection and its proof no longer lean on
+the engine's event record (a host diagnostic read by no rule): the
+interval is injective on the rows' weights, multiplicities and phases,
+the GameBoard's state alone; a row's age is its count since its last
+event by Definition def:rules, so a split, an event, restarts it at 0
+by definition and loses nothing; the click is the one deletion. The
+read-out paragraph of Part I says the same. No number moved; 38 pages.
+

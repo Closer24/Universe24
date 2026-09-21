@@ -491,8 +491,9 @@ forced in form by Section~\ref{sec:gleason} and free in its constants),
 lays the cells on a ladder by those squared sums, and compares the
 record's coordinate $u$, the wheel's, with the ladder's rungs; the cell
 whose rung $u$ falls under is the click, and the record is done. Between a birth and a
-click every step of the linear block is injective given the apparatus's
-record (Theorem~\ref{th:bijection}); the click is the one deletion.
+click every step of the linear block is injective on the rows'
+weights, multiplicities and phases, the GameBoard's state alone
+(Theorem~\ref{th:bijection}); the click is the one deletion.
 
 \paragraph{The law in five statements.} (I1) A message is a row: created
 at exactly one event, a self-creation of a body, ended at exactly one
@@ -1662,23 +1663,27 @@ moved and the integers of series L kept as recorded \cite{beamlaw,register}.
 \begin{theorem}[The interval is injective between clicks]\label{th:bijection}
 For an interval without a click, an end at a face or the border, or a
 collision, $M \circ R \circ S \circ F$ is an injective $\Z$-linear map from $\bigoplus_r M_r$ to
-$\bigoplus_r M_r$ paired with the apparatus's record of the rows the
-splitters and rotators absorbed in that interval; the GameBoard's state
-at any interval between two clicks, together with that record,
-determines the state at the birth. Without the record the split forgets
-the arriving age. A collision, where it acts, is a bijection of the
-GameBoard's states that is not linear; none acts in the worlds of this
-paper.
+$\bigoplus_r M_r$ on the rows' weights, multiplicities and phases, the
+GameBoard's state alone: no rule of the interval deletes them, and the
+state at any interval between two clicks determines them at the birth.
+A row's age is its count of intervals since its last event
+(Definition~\ref{def:rules}), so a split, an event, restarts it at $0$
+by that definition; the age before the event is read by no rule and is
+no part of the state after it. The click is the one deletion. A
+collision, where it acts, is a bijection of the GameBoard's states that
+is not linear; none acts in the worlds of this paper.
 \end{theorem}
 \begin{proof}
 $F$ maps a basis element to a basis element and is injective because the
 age is kept whole: $(D, \tau) \mapsto (D, \tau+1)$ is injective and the
-Node offset is a function of $(D, \tau)$. $S$ absorbs the arriving row,
-whose age, phase and amount are written on the apparatus's click line,
-and re-emits at age $0$; given that line it is injective on the
-amplitudes by Theorem~\ref{th:isometry}, and without it two rows
-differing only in age have the same image: the split is inverted only
-because the click line records what it absorbed. $R$ is injective
+Node offset is a function of $(D, \tau)$. $S$ absorbs the arriving row
+and re-emits its weight, multiplicity and phase on its outputs at age
+$0$, an event; on the weights, multiplicities and phases it is injective
+by Theorem~\ref{th:isometry} (the conjugate transpose inverts it), and
+the age it restarts is, by definition, the count since this event. (The
+engine's record of the event, a host diagnostic read by no rule and
+compared with nothing, keeps the age the row arrived with for the books
+and the replay; the statement does not use it.) $R$ is injective
 because $U_{s,t} = U_s\,\mathrm{diag}(1, v(t))$, the turn a bijection and
 $U_s^{\mathsf T}U_s = n_s I$. $M$ replaces a
 representative by the normal form of the same element of $M_r$, the
@@ -1688,7 +1693,7 @@ at a Node as a function of the whole set present \cite{beamlaw}, a
 bijection of states and not a linear map, which is why it is excluded
 from the linear statement. The engine's inverse interval is the witness
 on worlds without a measured event \cite{beamlaw}; with splitters the
-statement is the algebraic one with the record.
+statement is the algebraic one above.
 \end{proof}
 
 \begin{theorem}[The split is an isometry whose conjugate transpose inverts it]\label{th:isometry}
