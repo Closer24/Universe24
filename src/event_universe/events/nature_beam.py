@@ -3552,13 +3552,24 @@ def optical_turn(frame: Interval) -> None:
     therefore never turns), gravity's sign (**W** -= n weight **V**); then
     the row's whole momentum **P** = Q d content **u**_D + **W** (the
     note's Q S content **u**_D + **w** with S = d / n, cleared of n) is
-    compared with the fan's neighbours of its direction, and when a
-    neighbour D' is nearer to **P** than D (the exact comparison of cosines
-    in Python integers, (**P** . D')^2 |D|^2 > (**P** . D)^2 |D'|^2 with
-    **P** . D' > 0, the nearest of the neighbours taken) the direction
-    label moves to D' and **W** += Q d content (**u**_D - **u**_D'), so
-    that **P** is conserved across the turn; the row's label changes and
-    the books' `turned` line takes the difference, as the meeting's does.
+    the line the row's label follows by Bresenham (verb 3's form, the
+    model owner's GO of record 536 on the chief physicist's
+    recommendation of record 483): the row's error accumulator **c** (the
+    fields `cross`, the sum over its walked Links **h** of **h** x **P**,
+    kept by `optical_walk_step` from the first push on) is read against
+    the next Link of D and of each of its fan neighbours (the line's step
+    at the row's place, `made mod S_1`), and among the Links that advance
+    along **P** (**h** . **P** > 0) the label whose Link keeps
+    |**c** + **h** x **P**|^2 smallest is chosen, in Python integers, ties
+    to D and then to the fan's order (a row none of whose Links advances
+    keeps D); when the label moves to D', **W** += Q d content (**u**_D -
+    **u**_D'), so that **P** is conserved across the turn; the row's label
+    changes and the books' `turned` line takes the difference, as the
+    meeting's does. The mean direction of the walked Links converges to
+    **P**'s as a Bresenham line does, the error bounded by one Link about
+    the line, so a screen reads **P**'s angle and not the fan's nearest
+    tooth (the nearest-neighbour form of the note's section 2, which read
+    the comb's teeth in the pin worlds, is replaced by this one).
     Bounds: n x weight x |V| tested by division before the product, and
     the sums the accumulator takes, W + n weight V and W + Q d content
     (u_D - u_D'), tested against the working register before they are

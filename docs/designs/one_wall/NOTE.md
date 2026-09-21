@@ -416,6 +416,35 @@ at one Node against the map's flight, (c) **P** conserved across a turn,
 (d) the refusals, the two-key world among them, (e) byte identity without
 the key, (f) the pin world's four runs against section 6.
 
+## 9a. Verb 3's form: the label by Bresenham along the line of **P** (the model owner's GO of 2026-09-21, record 536)
+
+The pin worlds' first run (the register's entry) read the fan's comb in
+the shifts' ratio (2.35 in `mass` for the law's 2.00): section 2's verb 3
+hands the conserved momentum **P** to the label D chosen among the fan's
+neighbours, so the difference between the walked path and **P**'s line
+grows with every Link and is remembered nowhere. The model owner's
+decision (record 536, on the chief physicist's recommendation of record
+483): the flight's own primitive, an error accumulator on the row's
+record, **c** = the sum over the row's walked Links **h** of the integer
+cross product **h** x **P** (three integers, `cross`, kept from the first
+push on), and at the turn the label chosen among D and its fan neighbours
+as the one whose next Link **h** (its line's step at the row's place)
+advances along **P** (**h** . **P** > 0) and keeps |**c** + **h** x
+**P**|^2 smallest, ties to D and then to the fan's order; **W** += Q d
+content (**u**_D - **u**_D') as before, **P** conserved, the residue
+rescaled as record 496 has it. Generic (one primitive on the row's
+record, no family name), vector (the cross product and its square, no
+root, no float), local (the row's own accumulator, the fan's table at
+load). Why it works: the mean direction of the walked Links converges to
+**P**'s as a Bresenham line does, the error bounded about the line, so
+the screen reads **P**'s angle and not the nearest tooth; the reading
+that shows it is the shifts' ratio 2.00 +- 0.25 in the `mass` world, the
+readings that refute it a delays' ratio leaving 2.00 +- 0.25 or **P** not
+conserved. The nearest-neighbour form of section 2 is replaced; the
+cosine table at 1/256 is untouched; the key off by default guards the
+gates. `tests/test_optical.py` (i), and (b), (c), (g) re-derived under
+the form.
+
 ## 10. Questions for the owner, through the Boss, stated on the GameBoard first
 
 1. **On the pair**: the rule makes the world's suspension pair the

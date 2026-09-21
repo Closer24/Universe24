@@ -490,8 +490,13 @@ phase reads the stored accumulator), and after the collision every row
 of content in free space is pushed by the interval's arrival flow at its
 Node (the interval's own arrivals, read after the walk and the
 collision, the crossing rule's set), **W** -= n (1 + gamma) content e_D
-**V**, and turns to the fan's neighbour nearest its whole momentum
-Q d content **u**_D + **W**, the momentum conserved across the turn and
+**V**, and its label follows the line of its whole momentum **P** =
+Q d content **u**_D + **W** by Bresenham (the model owner's GO of record
+536): the row's error accumulator **c** = the sum of **h** x **P** over
+its walked Links (the fields `cross`, read from the first push on), the
+label chosen among D and its fan neighbours as the one whose next Link
+**h** advances along **P** and keeps |**c** + **h** x **P**|^2 smallest,
+ties to D, the momentum conserved across the turn and
 the flight's residue rescaled to the new direction's rate, s' = (s x
 S_new) // S_old, the time of the row's last Link (records 494 and 496;
 `nature_beam.optical_turn`, the books' `turned` line); refused with `suspension` 0, with `meeting` (one
