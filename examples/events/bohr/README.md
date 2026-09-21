@@ -196,3 +196,13 @@ faces' coherence: `r4` C(2) = 0.49 (0.51), `r8` C(2) = 1.24 (0.99, now
 inside the closing criterion); 2 readings inside, 0 outside (1 and 1).
 Bohr's lines are still not read and the verdict stands. The register entry
 has every number ([migration](../../../docs/MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded)).
+
+## Re-read under the Nodes' claims (2026-09-20)
+
+The electron's field rows are placed over its three Nodes by the Nodes'
+claims (`place_over_nodes`, record 155 (3); [BEAM_LAW note 41](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+(viii)) in place of the leftover unit to the Node `age mod 3`: the events
+and the books of the seven worlds move, the readings do not (every
+orbit, closing, phase at a closing and C(2) as under the action row; 2
+readings inside, 0 outside). The verdict stands; the register entry has
+the line ([migration](../../../docs/MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded)).

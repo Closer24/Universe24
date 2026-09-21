@@ -55,21 +55,27 @@ set and the turn by momentum"), written down first:
     (content 16) of span [1, 1, 3] at (3, 1, 2) of an open 7 x 3 x 5
     GameBoard at `release` [1, 4] on the four headings +-X, +-Y (so that no
     ray of its own enters its set): 4 units per heading per self-creation
-    apportioned whole over the three Nodes, [2, 1, 1] at the age 0
-    (the leftover to the Node `age mod 3`), [1, 2, 1] at the age 1,
-    [1, 1, 2] at the age 2: the rows born at the first interval sum to
-    8, 4, 4 units at (3, 1, 1), (3, 1, 2), (3, 1, 3), 16 in all, at the
-    second 4, 8, 4; the books balance at every one of 20 intervals and
+    placed whole over the three Nodes, 1 to every Node and the unit left
+    to the Node of the largest claim (the `place` rows of the body's
+    table, record 155 of 2026-09-20: the claims (1, 1, 1) -> (-2, 1, 1)
+    -> (-1, -1, 2) -> (0, 0, 0) over the four headings, then again), so
+    the rows born at the first interval sum to 6, 5, 5 units at (3, 1, 1),
+    (3, 1, 2), (3, 1, 3), 16 in all, at the second 5, 6, 5 (until then
+    the leftover went to the Node `age mod 3` on every row: 8, 4, 4 and
+    4, 8, 4); the books balance at every one of 20 intervals and
     equal their recount; a lamp of `light` (content 24, K 24, rate
     [1, 1]) on +Y of span [3, 1, 1] at (1, 0, 0) of a 3 x 6 x 1 GameBoard
     releases its one unit at the self-creations whose turn is 1, at the
-    Node counted from the age mod 3: since the fraction-free law
-    (2026-09-20) the turn is the count of the turn's accumulator, 24 gives
-    1 at the age 0 (the unit at x = 0 costs 1), 23 gives 0 at the age 1
-    (no release), 23 + 23 = 46 gives 1 at the age 2 (the remainder 22, the
-    unit at x = 2 with the phase 1): after 3 intervals the rows (0, 1, 0)
-    age 2 phase 0 and (2, 0, 0) age 0 phase 1, the content 22, the
-    momentum (0, -128, 0) and the transit line (0, 128, 0) (until then
+    Node of the largest claim (record 155: x = 0, x = 1, x = 2 in turn,
+    whatever the ages; until then the Node counted from the age mod 3):
+    since the fraction-free law (2026-09-20) the turn is the count of the
+    turn's accumulator, 24 gives 1 at the age 0 (the unit at x = 0 costs
+    1), 23 gives 0 at the age 1 (no release), 23 + 23 = 46 gives 1 at the
+    age 2 (the remainder 22, the unit at x = 1 with the phase 1; at x = 2
+    under the age mod 3): after 3 intervals the rows (0, 1, 0) age 2
+    phase 0 and (1, 0, 0) age 0 phase 1, the content 22, the momentum
+    (0, -128, 0), the transit line (0, 128, 0) and the claims (-1, -1, 2)
+    (until then
     the whole part off the clock at the current content, `by_clock(age,
     content, 24)`, gave 1 at every age: the rows (0, 1, 0) age 2
     phase 0, (1, 1, 0) age 1 phase 1, (2, 0, 0) age 0 phase 2, held
@@ -467,14 +473,26 @@ def test_the_books_balance_with_a_set_that_releases():
         books = simulation.books()
         assert books["balanced"], tick
         assert simulation.books(recount=True) == books, tick
+        # The placement by the Nodes' claims (`place_over_nodes`, record
+        # 155 of 2026-09-20): each heading's 4 units give 1 to every Node
+        # and the unit left to the Node of the largest claim, the claims
+        # (1, 1, 1) -> (-2, 1, 1) -> (-1, -1, 2) -> (0, 0, 0) -> (1, 1, 1)
+        # over the four headings, so the first interval places 6, 5, 5
+        # and the second 5, 6, 5 (8, 4, 4 and 4, 8, 4 until then, the
+        # leftover to the Node `age mod 3` on every row).
         if tick == 1:
-            assert born_by_node(simulation, M) == dict(zip(nodes, (8, 4, 4), strict=True))
+            assert born_by_node(simulation, M) == dict(zip(nodes, (6, 5, 5), strict=True))
             assert simulation.ledger.transit_released[M] == 16 and store.size == 12
+            assert simulation.measured[1].counts.values("place") == [-2, 1, 1]
         if tick == 2:
-            assert born_by_node(simulation, M) == dict(zip(nodes, (4, 8, 4), strict=True))
+            assert born_by_node(simulation, M) == dict(zip(nodes, (5, 6, 5), strict=True))
             assert simulation.ledger.transit_released[M] == 32
+            assert simulation.measured[1].counts.values("place") == [-1, -1, 2]
     assert simulation.measured[1].momentum == [0, 0, 0]
-    # A lamp on a set: one unit per self-creation at the Nodes in turn.
+    # A lamp on a set: one unit per self-creation at the Nodes in turn of
+    # their claims (`place_over_nodes`: x = 0, then x = 1, then x = 2,
+    # whatever the ages of the self-creations that release; until record
+    # 155 the Node counted from the age mod 3).
     lamp = {
         "position": [1, 0, 0],
         "family": "light",
@@ -492,11 +510,12 @@ def test_the_books_balance_with_a_set_that_releases():
         assert simulation.books()["balanced"], tick
     assert rows(simulation, LIGHT) == [
         (store.flat((0, 1, 0)), 4, 2, 0, 1, 1),
-        (store.flat((2, 0, 0)), 4, 0, 1, 1, 1),
+        (store.flat((1, 0, 0)), 4, 0, 1, 1, 1),
     ]
     entry = simulation.measured[1]
     assert entry.held == [0, 22] and entry.momentum == [0, -128, 0]
     assert entry.turned == 2 and entry.acc_turn == 22
+    assert entry.counts.values("place") == [-1, -1, 2]
     assert simulation.transit_momentum() == [0, 128, 0]
 
 

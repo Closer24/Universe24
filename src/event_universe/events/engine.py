@@ -349,6 +349,7 @@ class NatureBeamSimulation:
                 len(self.world.directions) if self.world.doppler else 0,
                 self.world.action if definition.phase_by_momentum else None,
                 self.world.phase_steps,
+                len(nodes),
             ),
             taken=[dict.fromkeys(TALLIES, 0) for _ in range(count)],
             clicks=[0] * count,

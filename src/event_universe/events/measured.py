@@ -324,6 +324,7 @@ def counts_table(
     directions: int,
     action: int | None = None,
     phase_steps: int = 1,
+    nodes: int = 1,
 ) -> CountTable:
     """A body's table of counts from the world's rates (BEAM_LAW note 41):
     the turn, the owed count, the release per family (its rate 0 on a paid
@@ -359,6 +360,10 @@ def counts_table(
     )
     if action is not None:
         rows.extend(Count("action", "momentum", axis, axis, phase_steps, action) for axis in range(3))
+    if nodes > 1:
+        # A body on a set: the claim of every Node on the body's releases,
+        # in units of 1 / nodes (`nature_beam.place_over_nodes`).
+        rows.extend(Count("place", "amount", node, 0, 1, nodes) for node in range(nodes))
     return CountTable(rows)
 
 
@@ -461,7 +466,9 @@ class Measured:
     # under the world key `doppler`, `flow` per direction and axis (the
     # flux-weighted flow over G Q |v_d|^2, `nature_beam.weighted_flow`) and
     # under `action` the turn by momentum `action` per axis (|p_a| N per
-    # Link the step rule counts on the axis, over h; record 155).
+    # Link the step rule counts on the axis, over h; record 155), and on
+    # a body on a set the `place` row per Node, the Node's claim on the
+    # body's releases in units of 1 / nodes (`nature_beam.place_over_nodes`).
     # `acc_owed`, `acc_release`, `acc_lamp`, `acc_turn`, `acc_push`,
     # `acc_flow` and `drive` below read and write the table; `state.json`
     # and `run.json` carry the accumulators under `acc` by name, beside
@@ -684,6 +691,8 @@ class Measured:
             found["flow"] = [list(axes) for axes in self.acc_flow]
         if self.counts.of("action"):
             found["action"] = self.counts.values("action")
+        if self.counts.of("place"):
+            found["place"] = self.counts.values("place")
         return found
 
     def state(self) -> dict[str, object]:

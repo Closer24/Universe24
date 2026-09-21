@@ -243,11 +243,20 @@ class NatureBeam:
     # identity field of the merge. The flight, the collision, the push and
     # every moment never read it; a table entry's parity filter does.
     hand: int = 0
+    # The share's accumulators (the model owner's record 155 of 2026-09-20,
+    # "no remainder discarded"; BEAM_LAW note 41 (viii)): per axis the part
+    # of the row's push on matter not yet delivered, `share_of`; 0 on a row
+    # of no record and on every row that never pushed; summed at a merge;
+    # left with the row when it is absorbed or escapes.
+    share_x: int = 0
+    share_y: int = 0
+    share_z: int = 0
 
     def record_line(self, vectors: np.ndarray, handed: bool = False) -> dict[str, object]:
         """The row as `state.json` writes it, the direction as its vector;
         a row of a record with its columns, a row of no record without
-        them; in a world that declares a hand with its `hand`."""
+        them; in a world that declares a hand with its `hand`; a row that
+        holds an undelivered share with its `share`."""
         line: dict[str, object] = {
             "direction": [int(v) for v in vectors[self.direction]],
             "age": self.age,
@@ -263,6 +272,8 @@ class NatureBeam:
             line["u"] = self.birth
         if handed:
             line["hand"] = self.hand
+        if self.share_x or self.share_y or self.share_z:
+            line["share"] = [self.share_x, self.share_y, self.share_z]
         return line
 
 
@@ -768,6 +779,9 @@ FIELDS = (
     "multiplicity",
     "birth",
     "hand",
+    "share_x",
+    "share_y",
+    "share_z",
 )
 # The fields that make two rows identical (the amount is what the merge
 # adds); since `amplitude-v1` the record, the branch and the multiplicity
@@ -794,7 +808,7 @@ ONE_PATH = 1
 NO_RECORD_COLUMNS = {"record": NO_RECORD, "branch": NO_BRANCH, "multiplicity": ONE_PATH, "birth": 0}
 # The columns a caller may leave out of `append`: the record's four and
 # the hand (a row without a declaration has none).
-COLUMN_DEFAULTS = {**NO_RECORD_COLUMNS, "hand": NO_HAND}
+COLUMN_DEFAULTS = {**NO_RECORD_COLUMNS, "hand": NO_HAND, "share_x": 0, "share_y": 0, "share_z": 0}
 # The place of `phase` in the identity fields: the merge of a record's rows
 # reads it modulo the half circle with a sign (the cancel).
 PHASE_FIELD = IDENTITY_FIELDS.index("phase")
@@ -860,16 +874,54 @@ def label_overflow_rows(
     return result
 
 
-def share_of(label: int, amount: int, multiplicity: int) -> int:
+def share_of(label: int, amount: int, multiplicity: int, accumulator: int = 0) -> tuple[int, int]:
     """A record row's push on matter along one axis (stage (vii) step 3,
     the K finding of 2026-09-20): its share amount^2 / m of the quantum's
     unit label (the record's norm is in m: the shares of a record's rows
-    sum to one), `label x amount // m` floored toward zero on the row's
-    label `label` (amount x content x u_d), exact on the host's integers;
-    the rest of the label, label - share, is the books' `remainder`. A
-    row of no record (m 1, the label its own) pushes by its label."""
-    whole = abs(label) * amount // multiplicity
-    return -whole if label < 0 else whole
+    sum to one), the whole part of `accumulator + label x amount` in units
+    of m toward zero (`label` the row's label, amount x content x u_d) and
+    the remainder kept: since the model owner's record 155 of 2026-09-20
+    (BEAM_LAW note 41 (viii)) the row's own accumulator, the part of its
+    push not yet delivered, so that a row read at every interval of its
+    passage pushes the exact sum over the passage and nothing is
+    discarded while the row lives; the remainder leaves with the row when
+    it is absorbed (to the books' `remainder` line with the rest of the
+    label, label - share) or escapes. Returns (the share, the accumulator
+    after). A row of no record (m 1, the label its own) pushes by its
+    label."""
+    total = accumulator + label * amount
+    whole = abs(total) // multiplicity
+    share = -whole if total < 0 else whole
+    return share, total - share * multiplicity
+
+
+def place_over_nodes(counts: CountTable, amount: int, ways: int) -> list[int]:
+    """`amount` whole units placed over the `ways` Nodes of a body on a
+    set (BEAM_LAW note 41 (viii); the model owner's record 155): every
+    Node's `place` row of the body's table gains the amount, the whole
+    part `amount // ways` goes to every Node and is taken off every row,
+    and the `amount mod ways` units left go one each to the Nodes whose
+    row holds the largest claim (ties to the lower Node), each taking
+    `ways` off its row; the rows sum to zero after every placement and
+    each stays within `ways` of zero, so every Node is within one unit of
+    its equal share of everything the body has ever released, and no
+    remainder is discarded: the claim carries to the next row and the
+    next self-creation. Until record 155 the leftover units went to the
+    Nodes counted from `age mod ways`, an exact apportioning within the
+    row whose ties were reset at every row (`apportion_whole`)."""
+    rows = counts.of("place")
+    if len(rows) != ways:
+        raise ValueError(f"{BEAM_LAW}: a body of {ways} Nodes has {len(rows)} place rows")
+    base, left = divmod(amount, ways)
+    shares = [base] * ways
+    for row in rows:
+        row.accumulator += amount - base * ways
+    if left:
+        order = sorted(range(ways), key=lambda k: (-rows[k].accumulator, k))
+        for k in order[:left]:
+            shares[k] += 1
+            rows[k].accumulator -= ways
+    return shares
 
 
 def label_weights(amount: np.ndarray, content: np.ndarray, free: bool) -> np.ndarray:
@@ -1088,6 +1140,9 @@ class NatureBeamStore:
         self.multiplicity: np.ndarray
         self.birth: np.ndarray
         self.hand: np.ndarray
+        self.share_x: np.ndarray
+        self.share_y: np.ndarray
+        self.share_z: np.ndarray
 
     @property
     def size(self) -> int:
@@ -1229,7 +1284,22 @@ class NatureBeamStore:
                 if modulus
                 else amount
             )
+        # The undelivered shares of merged rows add (the momentum a row has
+        # not yet delivered is the group's); bounded like the amounts.
+        shares_summed: dict[str, np.ndarray] = {}
+        for name in ("share_x", "share_y", "share_z"):
+            column = getattr(self, name)
+            if column.any():
+                summed = np.add.reduceat(column.astype(object), starts)
+                if max(abs(int(v)) for v in summed) > MOMENTUM_BOUND:
+                    raise OverflowError(
+                        f"{BEAM_LAW}: the undelivered share of a merged row exceeds the integer "
+                        f"bound {MOMENTUM_BOUND}"
+                    )
+                shares_summed[name] = summed.astype(np.int64)
         self.keep(~same)
+        for name, summed in shares_summed.items():
+            setattr(self, name, summed)
         if modulus:
             # The cancel: the signed sum's magnitude stays, at the phase of
             # the larger side (the half-circle phase of the group, plus the
@@ -1279,6 +1349,9 @@ class NatureBeamStore:
                 int(self.multiplicity[i]),
                 int(self.birth[i]),
                 int(self.hand[i]),
+                int(self.share_x[i]),
+                int(self.share_y[i]),
+                int(self.share_z[i]),
             )
             for k, i in enumerate(range(lo, stop))
         ]
@@ -2749,9 +2822,15 @@ def nature_beam(
                     home_record = store.record[at[home]]
                     home_shares = home_labels.tolist()
                     for k in np.flatnonzero(home_record != NO_RECORD).tolist():
-                        m = int(store.multiplicity[at[home[k]]])
+                        i = int(at[home[k]])
+                        m = int(store.multiplicity[i])
                         home_shares[k] = [
-                            share_of(int(v), int(amount[home[k]]), m) for v in home_labels[k].tolist()
+                            share_of(int(v), int(amount[home[k]]), m, int(acc[i]))[0]
+                            for v, acc in zip(
+                                home_labels[k].tolist(),
+                                (store.share_x, store.share_y, store.share_z),
+                                strict=True,
+                            )
                         ]
                     taken_in = np.array(
                         [
@@ -3044,9 +3123,19 @@ def nature_beam(
             # without a record.
             record_t = store.record[at[taken]]
             shares = labels.tolist()
+            columns = (store.share_x, store.share_y, store.share_z)
             for k in np.flatnonzero(record_t != NO_RECORD).tolist():
-                m = int(store.multiplicity[at[taken[k]]])
-                shares[k] = [share_of(int(v), int(a_t[k]), m) for v in labels[k].tolist()]
+                i = int(at[taken[k]])
+                m = int(store.multiplicity[i])
+                found = [
+                    share_of(int(v), int(a_t[k]), m, int(column[i]))
+                    for v, column in zip(labels[k].tolist(), columns, strict=True)
+                ]
+                shares[k] = [share for share, _ in found]
+                if rule_t[k] == READ_RULE:
+                    # The row goes on: the undelivered part stays on it.
+                    for column, (_, rest) in zip(columns, found, strict=True):
+                        column[i] = rest
             g_ends = (g_starts + g_sizes).tolist()
             plan.g_moment = [
                 [sum(shares[k][axis] for k in range(s, e)) for axis in range(3)]
@@ -3932,22 +4021,28 @@ def nature_beam(
             if not born:
                 continue
             # A body on a set of Nodes releases at every Node of the set
-            # with whole units only: each born row's amount is apportioned
-            # whole over the body's Nodes in their fixed order, equal
-            # weights, the leftover units to the Nodes counted from `age mod
-            # w` (the tie rule of the re-emission over the directions), so
-            # that the total released is the content's release whatever the
-            # width, no Node is favoured over w self-creations and the books
-            # balance (the shares sum to the amount, every share keeps the
-            # row's content per unit and phase, the labels' sum is the same
-            # recoil). A body of one Node (every measured event until
-            # 2026-09-20) releases every row at its one Node, unchanged.
+            # with whole units only: each born row's amount is placed whole
+            # over the body's Nodes, `amount // w` at every Node and the
+            # `amount mod w` units left at the Nodes whose claim is largest
+            # (`place_over_nodes`: the claims are the `place` rows of the
+            # body's table of counts, one per Node, the fractional share
+            # each Node is owed carried from row to row and self-creation
+            # to self-creation; the model owner's record 155 of 2026-09-20,
+            # "no remainder discarded"; until then the leftover went to the
+            # Nodes counted from `age mod w`, the tie reset at every row),
+            # so that the total released is the content's release whatever
+            # the width, every Node is within one unit of its equal share
+            # at every row and the books balance (the shares sum to the
+            # amount, every share keeps the row's content per unit and
+            # phase, the labels' sum is the same recoil). A body of one Node
+            # (every measured event until 2026-09-20) releases every row at
+            # its one Node, unchanged.
             body = entry.nodes
             if len(body) > 1:
                 ways = len(body)
                 placed: list[tuple[int, BornRow]] = []
                 for row_born in born:
-                    shares = apportion_whole(row_born[1], [1] * ways, age % ways)
+                    shares = place_over_nodes(entry.counts, row_born[1], ways)
                     placed.extend(
                         (store.flat(node), (row_born[0], share, *row_born[2:]))
                         for node, share in zip(body, shares, strict=True)
@@ -3985,7 +4080,9 @@ def nature_beam(
                     for k, b in enumerate(born):
                         for axis in range(3):
                             label = int(labels[k, axis])
-                            recoil[axis] += share_of(label, b[1], b[7]) if b[5] != NO_RECORD else label
+                            recoil[axis] += (
+                                share_of(label, b[1], b[7])[0] if b[5] != NO_RECORD else label
+                            )
                     ledger.remainder_momentum[family] = [
                         a - (whole - taken)
                         for a, whole, taken in zip(

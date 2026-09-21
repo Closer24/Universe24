@@ -16,7 +16,12 @@ the run and its result recorded with that fingerprint in the
 suite, and no test of the test suite is an experiment: a test pins a contract
 of the code, an experiment asks the model a question it may answer either way.
 A stated acceptance requirement is not a passing test, and a passing run is
-not a law of nature (Highlights 3.21, 5.5).
+not a law of nature (Highlights 3.21, 5.5). Since the model owner's record
+163 of 2026-09-20 the register's pins are detector readings (the clicks
+and the records a run writes), and what the tools read off the GameBoard
+itself (`shell_readings`, the cube flux, the probes' counts and every
+replay of the engine) is a host reading, labelled GAMEBOARD on every line
+a tool prints: it exists for us, not in the model.
 
 **Who decides.** The model owner decides which entries exist, in what order
 they run, what each one pins, and what an outcome means for the model. A
@@ -2744,6 +2749,17 @@ states "exactly" and means integer equality at every tick.
   turns); the verdict as re-read stands: what the law lacks is a stable
   closed orbit under whole kicks. The events of the seven worlds moved
   and their books did not; the numbers above are kept as history.
+- **Re-read under the Nodes' claims (2026-09-20; measured, nothing
+  pinned; record 155 (3), [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (viii)).**
+  The electron is a body on three Nodes, and its field rows are now
+  placed over them by the Nodes' claims (`place_over_nodes`) in place of
+  the leftover unit to the Node `age mod 3`: the events and the books of
+  all seven worlds move (where a row is born on the set), and nothing of
+  the readings: every orbit, closing, period, return, mean radius, escape
+  and phase at a closing, `r4`'s turn per orbit 0.609 and C(2) = 0.49,
+  `r8`'s 0.969 and C(2) = 1.24, are the action-row re-read's to the
+  digit; 0 record checks failed, 2 readings inside, 0 outside. The
+  verdict stands.
 
 ### I, the nucleus (2026-09-20)
 

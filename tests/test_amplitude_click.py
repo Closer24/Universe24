@@ -38,7 +38,10 @@ down before the first run:
     `j3_deuteron`'s audit and events moved at stage 1, the owed count;
     `bohr/r2`'s events and state re-pinned once more when the turn by
     momentum joined the table as the `action` row, record 155 of
-    2026-09-20: the electron's phase moves, its books do not);
+    2026-09-20: the electron's phase moves, its books do not; and once
+    more when a set's release over its Nodes became the Nodes' claims on
+    the body's table, `place_over_nodes`, the same record: the electron
+    is a body on three Nodes);
 (e) step 2, u the record's own field: on a bar with a lamp at the stride
     1 (K 2^20, content 2^20) and a counter whose `measure` entry has the
     window 0 of width 8, every record's row clicks (the window reads the
@@ -293,9 +296,9 @@ PINNED_DIGESTS: dict[str, tuple[int, str, str, str]] = {
     ),
     "bohr/r2.json": (
         689,
-        "993022e43665ebb1081425c929604357871c8e8e98c0e033ce018f40184e0d4b",
-        "d830bd8e0e27193fc91810374e8e55298673007da97e3d717d05044c866cd05d",
-        "c83d24f40b573bcc7efc30d79ec92fcac7044e29c699f3c9f49aefb6daa0c91c",
+        "2ee691100a37bb828f974476b356f0940fad1fc1e055cf3a48177c4708de6a22",
+        "8550f55fb4ca93390808bd27cb8dcb615051740b1be69f673557799b73afcd0e",
+        "b7dbdfd5faee68dd87d894e19af41f0a07a77a51ec3526813323347b3cec3c10",
     ),
     "detector/grouped_12_nodes.json": (
         2,

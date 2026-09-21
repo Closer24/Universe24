@@ -1766,6 +1766,21 @@ the unit vector, the screen's pushes (128, 0, 0) and (128, 12, 0) with the
 share (9, 0, 0), the mirror's second reflection at the share (7, 5, 0);
 the turn 3 and the content 3 on every row until then).
 
+**No remainder discarded (record 155 of 2026-09-20; note 41 (viii)).**
+`tests/test_fraction_free.py` (g): on 2000 random labels, amounts and
+multiplicities the shares of a row pushed k times sum to the whole part of
+k x label x amount over m exactly with the accumulator below m, the floor
+per push alone short by up to k - 1 units; on a bar of a lamp of records
+(three rows per record) and four readers at x = 4 .. 7 the readers' pushes
+sum to the read lines' pushes, strictly between 21 and 22 per unit read
+(the +x row's label 64 over m = 3, the remainder carried), the state
+writing `share` on a row that holds one; (h) `place_over_nodes` on random
+amounts over 2 to 7 Nodes places every amount whole, the claims summing to
+zero within the number of Nodes and every Node within one unit of its
+equal share; `test_nature_beam_body` (c) re-pinned (6, 5, 5 and 5, 6, 5 for
+8, 4, 4 and 4, 8, 4; the lamp on a set at x = 1 for x = 2 with the claims
+(-1, -1, 2)); `bohr/r2`'s gate digests re-pinned (a body on three Nodes).
+
 **The turn by momentum as the `action` row (record 155 of 2026-09-20).**
 `test_nature_beam_body` (d) and `test_step_drive` (e) are unchanged: at a
 constant momentum the row's count at each Link is `by_clock(k0, |p| N, h)`

@@ -36,6 +36,38 @@ Nodes, no tables") on the fraction-free law below; the branch
   replayed: 17 of 17 identical, VALIDATION). The name "flight table" is
   retired in the code and in BEAM_LAW, ENGINE and TERMINOLOGY ("the flight
   rule"); the readings tools and the generators import `direction_flight`.
+- No remainder discarded at run time (record 155 (3); [BEAM_LAW note
+  41 (viii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  `nature_beam.share_of` keeps a record row's undelivered push on the row
+  (the store columns `share_x`, `share_y`, `share_z`, 0 on every row that
+  never pushed, summed at a merge, written to `state.json` as `share` on
+  a row that holds one), so a row read at every interval of a passage
+  pushes the exact sum and the books' `remainder` line reads only what
+  left with absorbed rows; a set's release over its Nodes is placed by the
+  Nodes' claims, the `place` rows of the body's table of counts
+  (`nature_beam.place_over_nodes`, `acc.place` in the record), every Node
+  within one unit of its equal share of all the body has released, in
+  place of the leftover to the Node `age mod w` reset at every row. The
+  other two uses of `apportion_whole` (a re-release over the admitted
+  directions, the contact's hand-over over the occupants) are exact within
+  their event and keep their declared tie rule. The candidate worlds
+  replayed in one batch (VALIDATION, the register's dated lines): of the
+  95 (the 48 of L, the 9 of K, the 7 of H, the 4 of the catalog, the 27
+  of G2) only the set worlds moved, series H and the catalog's
+  `sun_planet` (`clock_near_mass` in its `state.json` alone, the `place`
+  claims of a body that releases nothing); every world whose record rows
+  are read on their way (K under the record click, the which-path worlds
+  of L, G2's age worlds) is identical, a row being read once or twice
+  before it leaves, fewer times than its remainder needs to make a unit;
+  record 144's cone and every fan world are identical (the flight's form
+  above checked on them too). Note 41 (viii) lists every remaining `//` of
+  the law's runtime with its class, and the inventory's findings 7 to 10
+  left as built.
+- The register's pins are detector readings; the tools label every host
+  reading of the GameBoard (the shell readings, the cube flux, the probes'
+  counts) GAMEBOARD (record 163 (2)): the heads of EXPERIMENTS and of
+  `examples/events/README.md`, `tools/coupling_readings.py`,
+  `tools/redshift_readings.py`.
 
 ## The fraction-free law, on 2026-09-20: every count an accumulator on the body's record
 

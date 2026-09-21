@@ -743,7 +743,7 @@ def item_5(
     )
     first, last = replay.window
     lines = [
-        f"item 5, the far field (world {label}, the source alone, the ring means over ticks {first}-{last}; q = {Q}; the flow in label units divided by Q_label = {LABEL_SCALE})"
+        f"GAMEBOARD (a host reading of the GameBoard: `shell_readings` and the cube flux) item 5, the far field (world {label}, the source alone, the ring means over ticks {first}-{last}; q = {Q}; the flow in label units divided by Q_label = {LABEL_SCALE})"
         + ("" if pinned else " (supplementary, not pinned)"),
         "",
     ]
@@ -834,7 +834,7 @@ def axis_probes(run: Run, replay: Replay, checks: Checks, label: str) -> list[st
     last = run.ticks
     first = last - FAR_WINDOW + 1
     lines = [
-        f"{label}: the probes on +x, the axis readings over ticks {first}-{last} (the beam's Nodes)",
+        f"GAMEBOARD (a host reading of the GameBoard, the probes' counts) {label}: the probes on +x, the axis readings over ticks {first}-{last} (the beam's Nodes)",
         "",
     ]
     lines.append(
