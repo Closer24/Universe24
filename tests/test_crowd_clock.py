@@ -114,12 +114,10 @@ def test_the_presence_at_the_lamp_is_four_times_the_flux_and_the_clock_owes_it()
     assert lamp.presence == 4 * 82 == 328
     births: list[int] = []
     sim = NatureBeamSimulation(
-        load_world(
-            (WORLDS / "still_1.json").read_bytes(), base_dir=WORLDS, root=WORLDS.parent
-        ).world,
-        lambda e: births.append(e["tick"])
-        if e["event"] == "birth" and e.get("measured") == LAMP
-        else None,
+        load_world((WORLDS / "still_1.json").read_bytes(), base_dir=WORLDS, root=WORLDS.parent).world,
+        lambda e: (
+            births.append(e["tick"]) if e["event"] == "birth" and e.get("measured") == LAMP else None
+        ),
     )
     for _ in range(100):
         sim.step()

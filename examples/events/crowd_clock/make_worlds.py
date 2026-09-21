@@ -316,7 +316,9 @@ def main() -> None:
                 f"{exits[1]:.0f}, windows {seen}"
             )
         else:
-            print(f"{name}: F = {e['flux']}, pinned k = {e['k']:.4f}, clock rate {e['clock_rate']:.4f}, 1 + z = {e['one_plus_z']:.4f}")
+            print(
+                f"{name}: F = {e['flux']}, pinned k = {e['k']:.4f}, clock rate {e['clock_rate']:.4f}, 1 + z = {e['one_plus_z']:.4f}"
+            )
 
 
 if __name__ == "__main__":
