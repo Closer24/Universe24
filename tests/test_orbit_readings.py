@@ -32,7 +32,7 @@ engine"), written down first:
     `click` of the probe on a face, or the Node beside the source reached;
     here neither: the least radius 3 at (7, 4, 0)), the run completed and
     balanced. The probe's `read` lines, derived under the crossing rule
-    (2026-09-21, BEAM_LAW note 47; the probe steps +y at the ticks 2, 4,
+    (2026-09-21, BEAM_LAW note 48; the probe steps +y at the ticks 2, 4,
     6, 8, 10, 12, at (7, 4, 0) from tick 6 and (7, 6, 0) from tick 10; the
     source's +x row born at tick k at x = 4 + m(t - k), m = 0, 1, 1, 2, 2,
     3, 3, ..., its (1, 1, 0) row on the line (5, 4), (5, 5), (6, 5), (6, 6),

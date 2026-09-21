@@ -41,7 +41,7 @@ order, each a bijection on the GameBoard's state except the border:
 4. the measured events' tables and the detectors: a measured event meets
    the rays that arrived this interval at its Node, of every number but its
    own, and, since the crossing rule (the model owner's record 158 of
-   2026-09-20; docs/BEAM_LAW.md note 47), the rays it meets by its own
+   2026-09-20; docs/BEAM_LAW.md note 48), the rays it meets by its own
    step (the rows that crossed its Link the other way and the rows at the
    Node it entered moving against it), never again a row that came over
    its Link behind it (a row and a body meet once, at the crossing of
@@ -2299,7 +2299,7 @@ def nature_beam(
                 node_event[stores[0].flat(member_node)] = which_of[number]
     occupied = node_event >= 0
     # The crossing rule (the model owner's record 158 of 2026-09-20; BEAM_LAW
-    # note 47): a row and a body meet once, at the crossing of their world
+    # note 48): a row and a body meet once, at the crossing of their world
     # lines. Per measured event the heading e of the Link its body crossed
     # this interval (the zero vector without a step) and e' of the interval
     # before, off its own record (`Measured.step_port`, `last_step_port`,
@@ -2666,7 +2666,7 @@ def nature_beam(
             found = node_event[store.node]
             at = np.flatnonzero(found >= 0)
             ev = found[at]
-            # The swap (C1 of the crossing rule, note 47): the rows of
+            # The swap (C1 of the crossing rule, note 48): the rows of
             # another number at a trailing Node of a stepping body that
             # crossed its Link the other way this interval (their step
             # this interval -e, off the flight's rule at their age),
@@ -2710,7 +2710,7 @@ def nature_beam(
             read_at = read_hands(hand_at, record_at, store.branch[at], entries)
             own = number == ev_number[ev]
             arrived = arrival != NO_ARRIVAL
-            # The crossing (note 47), per row: the step it made this
+            # The crossing (note 48), per row: the step it made this
             # interval s_1 and the one before s_2, off its arrival
             # direction and its age by the flight's rule (nothing kept),
             # and the headings e and e' of its measured event's step this

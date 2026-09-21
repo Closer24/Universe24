@@ -35,7 +35,7 @@ below is in label units.
     phase 1 (K 16: the body escapes in the interval of its second
     self-creation, before that interval's clock turn, since the step
     precedes the law under the crossing rule of 2026-09-21, BEAM_LAW note
-    47; phase 2 until then, the step after the turn), momentum (1024, 0,
+    48; phase 2 until then, the step after the turn), momentum (1024, 0,
     0), `held` [16, 0], `home` [0, 0], the measured line's escaped 16;
 (c) home: the own number's arrivals are taken and created again at the next
     self-creation on the declared directions with the arriving phase and

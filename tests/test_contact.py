@@ -31,7 +31,7 @@ physicist's DESIGN.md, test (f), and the integers of its section 4.4); K
     under the contact (no rule declared: `measure`), the step drive
     (2026-09-20, BEAM_LAW note 17 as amended: D = 320 + |p| on a content
     of 5, the drive gaining |p| at every self-creation) and the crossing
-    rule's order (2026-09-21, note 47: the step before the law, so the
+    rule's order (2026-09-21, note 48: the step before the law, so the
     drive of a self-creation advances by the momentum after the PREVIOUS
     interval's push) the momentum of p1 over ticks 2 .. 8 reads 128, 256,
     384, 128, 128, 256, 128 (the mirror on p2): p1's drive 128 at tick 3,
@@ -216,7 +216,7 @@ def test_the_pair_on_the_six_headings():
             [] if tick == 1 else [(1, "p", -7936), (1, "g", 8064), (2, "p", 7936), (2, "g", -8064)]
         )
         assert reads == expected, tick
-    # Since the crossing rule (2026-09-21; BEAM_LAW note 47) the step
+    # Since the crossing rule (2026-09-21; BEAM_LAW note 48) the step
     # precedes the law, so the drive of a self-creation advances by the
     # momentum after the PREVIOUS interval's push and every fire of the
     # pair falls one interval later than under the order as it was (the

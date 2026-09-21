@@ -109,7 +109,7 @@ def execute_nature_beam_run(
         # `hypotheses` when a measured event holds a paid family at load or
         # gave one during the run (no key; `NatureBeamSimulation.hypotheses`).
         "hypotheses": simulation.hypotheses,
-        # The crossing rule's report (2026-09-21, BEAM_LAW note 47): the
+        # The crossing rule's report (2026-09-21, BEAM_LAW note 48): the
         # Links a body crossed in the interval right after another of its
         # Links, where the rule's one-per-crossing count is not proved.
         "fast_steps": simulation.fast_steps,

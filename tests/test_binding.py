@@ -12,7 +12,7 @@ takes them under the keys' `measure`). The expected integers of
 docs/TEST_EXPECTATIONS.md ("The binding that costs content"), written
 down before the first run; K 2^20, N 64, `suspension` 0, `width` 1, every
 family without a phase circle. Since the crossing rule (2026-09-21;
-BEAM_LAW note 47) the step, its contact and its give precede the
+BEAM_LAW note 48) the step, its contact and its give precede the
 interval's law: a fire under a push falls one interval later than it did
 (the drive of a self-creation advances by the momentum after the previous
 interval's push) and a row given at a contact makes its first Link in the

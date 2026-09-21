@@ -174,7 +174,7 @@ class NatureBeamSimulation:
         # on every `contact` record carries `given` and the run's record the
         # identity `binding-v1` (`hypotheses`).
         self.binding = world.binding
-        # The crossing rule's report (BEAM_LAW note 47, "not proved"): the
+        # The crossing rule's report (BEAM_LAW note 48, "not proved"): the
         # count of Links crossed in the interval right after another Link
         # of the same body (a body faster than one Link per two intervals,
         # |p_a| > Q S M, possible under pushes), where the one-interval
@@ -411,7 +411,7 @@ class NatureBeamSimulation:
         """One interval: the clocks' frame, the measured events' steps, the
         law, then the clocks' turn and count. The step comes before the
         law since the crossing rule (the model owner's record 158 of
-        2026-09-20; BEAM_LAW note 47): a body's departure becomes its
+        2026-09-20; BEAM_LAW note 48): a body's departure becomes its
         arrival as a row's does in the walk, so the reading of the interval
         finds the body at its destination and reads there what it met by
         the step itself; until then the step was the interval's last act
@@ -587,7 +587,7 @@ class NatureBeamSimulation:
         declared momentum whose product with `ticks` x N could pass the
         bound).
 
-        The crossing rule's marks (record 158; BEAM_LAW note 47): at its
+        The crossing rule's marks (record 158; BEAM_LAW note 48): at its
         entry, for every measured event, the Port of the Link crossed the
         interval before becomes `last_step_port` and `step_port` is -1
         until a Link is crossed below (no fire, a refused step and an

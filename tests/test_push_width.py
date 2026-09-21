@@ -28,7 +28,7 @@ momenta below are the first pins times 64 and every position is unchanged
     `suspension` [1, 4] and a crowd of 4 rays of another number at rest on
     every Node it visits, the probe of (b) owes one interval after every
     self-creation (age after interval n is ceil(n / 2)); since the
-    crossing rule (2026-09-21, BEAM_LAW note 47: the step before the law,
+    crossing rule (2026-09-21, BEAM_LAW note 48: the step before the law,
     the drive advanced at the self-creation itself) the step of the ages
     9, 18, 27 lands on the self-creation, the intervals 17, 35, 53 (x
     after intervals 17, 18, 35, 36, 53, 54, 60: 4, 4, 5, 5, 6, 6, 6; age 30

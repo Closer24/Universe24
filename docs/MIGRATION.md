@@ -11,7 +11,7 @@ python -m pip install -e '.[render,dev]'
 The model owner's record 158 of 2026-09-20 ("the step reads the crossed
 Link") on the experimenter's finding of record 151; the physicist's design
 [docs/designs/crossing/DESIGN.md](designs/crossing/DESIGN.md); the branch
-`crossing`; [BEAM_LAW note 47](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
+`crossing`; [BEAM_LAW note 48](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
 The identity `beam-v1` is kept.
 
 - The order of the interval: the frame, the measured events' steps
@@ -66,7 +66,7 @@ The identity `beam-v1` is kept.
   the two marks, the events' and the books' where a body stepped or fired
   under a push). `run.json` gains `fast_steps`, the Links crossed right
   after another of the same body (the rule's count not proved there, note
-  47: a report). The registered worlds with a
+  48: a report). The registered worlds with a
   completed step or a fire under a push move (VALIDATION, the dated
   table of this change): series G2 (the run under the rule is the G2
   session's), the hubble worlds, D, H, the catalog's `sun_planet`, the
