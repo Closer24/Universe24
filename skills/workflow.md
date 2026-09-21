@@ -366,6 +366,140 @@ visible output separately from total duration. Keep preview queues bounded,
 preserve all canonical frames and physical failure evidence, and verify worker
 cleanup plus the final replay handoff. Disclose unverified browser behavior.
 
+## The main course: equations first, runs as confirmation (the model owner, 2026-09-21)
+
+The law is one piecewise-linear map on an integer torus: every interval
+translates the state vector by a rate, thresholds it and subtracts (the
+events are what crossed), multiplies by a declared integer matrix (a split,
+a rotation) and adds (the merge). The measurement is the one threshold read
+out; its weight is the inner product of the pointer with itself, through the
+coupling's primitive (docs/LOG_2026-09-20.md records 167, 171, 173). Four
+consequences govern how every role works.
+
+1. Where the rate is constant (rows between clicks: the flight, the phase,
+   the split, the merge) the map has a closed form, the floor of a linear
+   function, and every number is computed from the formulas before any run.
+   A run of such a world confirms a formula and is never the source of a
+   number: the expectation is the formula's integer, pinned before the run,
+   and a run that differs refutes the formula or finds a rule the formula
+   forgot (the spread of a record's paths, the arrival's rounding). No world
+   of this class is run without its formula.
+2. Where the rate depends on the state (a body pushed by its crowd, a
+   collision, bound bodies exchanging content, a windowed detector on a
+   branched record) the map is a difference equation with no closed form.
+   Its solutions are the iteration (the engine, the exact integers) and the
+   continuum limit (many intervals, a small rate: the differential equation
+   where Newton, Coulomb, Doppler and Bohr appear or fail to). The derivation
+   gives the limit's formula; the register gives the integers; a run is
+   needed for the integers and for what the lattice does that the continuum
+   does not.
+3. Every derived formula meets known physics twice: in the limit (the known
+   formula returns, or the derivation says where the lattice differs: the L1
+   count, the encounter comb, isqrt's anisotropy) and at finite resolution
+   (the registered integer against the experiment). A paper, a design or a
+   record with only the equations is mathematics; one with only runs is
+   simulation; the work is the pairing, one formula per registered integer.
+4. The boundary between the classical and the quantum is the property of
+   the rate (constant or state-dependent), measured as rows per record and
+   clicks per record; the program's advantage is there, and every design
+   states on which side its world lies.
+
+**Refined by the model owner on 2026-09-21 (record 205): a formula gives, a
+run proves; and after the detector, the vector.** (1) A register entry
+carries the formula, or the derivation's section, beside its number, and
+where a formula exists the test derives and compares rather than reads a
+pinned number (`tests/test_amplitude_cone.py` is the template). (2) A run
+without a derived expectation is a research run and says so in its page
+and its record. (3) The derivation mathematician's targets
+(DERIVATIONS_BEAM.md) are the source of every series' expectations; a
+target not reached marks a quantity a run may only measure. (4) The
+register's `expectations.json` entries carry a `derivation` field, and the
+review of an experiment's pull request checks the derivation before the
+numbers. (5) An experiment names, before the run, the vector or tensor it
+will read after the detector and its form (the readings by type in
+ENGINE.md): a scalar, an integer 3-vector in a declared unit (**p**, **f**),
+the traceless second-moment tensor **T**, or the record's phase-count vector.
+
+(6) The observed value is the reading, not the board's number (the owner,
+2026-09-21, record 210): a distance, a time, a speed, a mass, an energy, a
+force, an angle or a probability is produced from the board's Links,
+intervals, contents, phase steps and weights only through a named reading
+(HIGHLIGHTS 5.7's dictionary); an experiment's observable comes from a
+detector declared in the world file, never from the host's state, and a
+board quantity is never compared with nature directly.
+
+**A formula lives in three places (the model owner, 2026-09-21, [record 248](../docs/LOG_2026-09-20.md#248-the-owner-the-quarks-and-every-such-formula-must-be-in-the-paper-in-git-and-in-the-code-when-and-how-did-you-reach-it-the-owner-2026-09-21-about-0425z-translated-and-then-how-does-it-work-with-the-quarks-are-the-quarks-dividers-of-the-masses-or-a-group-that-composes-the-masses-they-too-have-masses-every-such-formula-you-must-put-in-the-paper-and-in-git-and-in-the-code-when-did-you-reach-the-formula-how-did-you-reach-the-formula-these-formulas-are-critical-the-bosss-answers-and-the-rule-1-the-quarks-today-not-modelled-the-nucleon-is-a-family-the-owners-decision-of-2026-09-20-entity_catalogmds-rows-on-the-six-quarks-the-proton-and-confinement-hypothesesmd-13-issue-169-if-they-enter-they-are-families-that-compose-a-nucleon-a-group-not-dividers-three-measured-events-bound-by-the-strong-column-at-adjacent-nodes-with-the-rational-charges-2-3-and--1-3-each-with-its-own-content-in-units-and-the-decisive-physical-fact-the-protons-measured-mass-is-about-one-percent-the-quarks-rest-masses-and-about-ninety-nine-percent-the-binding-the-strong-fields-energy-which-the-law-already-expresses-as-the-mass-a-detector-reads-of-a-bound-body-record-115-binding-v1-the-read-mass-of-a-bound-set-is-not-the-sum-of-its-parts-units-so-under-the-minimal-mass-reading-record-243-the-unit-is-at-most-the-lightest-quarks-content-and-a-composites-mass-is-the-bound-sets-reading-a-derivation-for-section-16-2-2-when-and-how-the-mass-formula-was-reached-mass--content-in-units-of-the-quantum-the-minimal-mass-one-unit-the-content-as-an-integer-amount-of-units-since-the-law-of-the-ray-the-code-era-code_to_formulas-1-the-drives-step-rule-with-the-mass-one-link-per-q-s-m--p-of-drive-the-label-along-the-unit-vector-at-q--64-with-the-physicists-corrections-2026-09-20-beam_laws-step-rule-the-coupling-and-the-charge-per-unit-of-content-the-one-mechanism-the-columns-2026-09-20-e--h-f-as-the-cost-of-a-release-per-unit-and-the-statement-that-the-minimal-mass-is-one-unit-and-not-free-reached-today-from-the-owners-question-record-243-its-theorem-status-and-the-mass-ratios-assigned-to-section-16-2-the-chronology-written-into-code_to_formulasmd-section-6-3-the-rule-the-owners-durable-every-formula-the-law-reaches-lives-in-three-places-and-code_to_formulasmd-records-when-and-how-it-was-reached-in-git-its-derivation-section-and-its-line-in-beam_law-or-formmdlawmd-in-the-code-the-docstring-of-the-function-that-computes-it-naming-the-section-and-a-derive-and-compare-test-or-a-derivations-entry-of-the-register-and-in-the-paper-the-paper-agent-adds-it-under-the-paper-writer-skill-when-the-section-lands-written-into-skillsworkflowmd-under-the-main-course-the-minimal-mass-and-the-mass-ratios-go-to-the-paper-with-section-16)).** Every formula the law reaches is written (1) in git, in its derivation section and its line of the law's document; (2) in the code, in the docstring of the function that computes it, naming the section, and in a derive-and-compare test or a `derivations` entry of the register; (3) in the paper, under the paper-writer skill, when its section lands. [docs/CODE_TO_FORMULAS.md](../docs/CODE_TO_FORMULAS.md) records for each formula when and how it was reached. A formula in one place only is not yet a result.
+
+## The generic vector form first (the model owner's ask, 2026-09-21, record 177)
+
+Every new rule of the law is sought and stated first in its generic vector
+form, dimension-free and world-free: the set it acts on, the measure or map
+it applies, the invariance it keeps; only then in its integer form per
+dimension and its declaration per world. A rule that has no such form is a
+world's declaration and not a law. The fan of directions is the case: three
+per-world lists (91, 5, 290) each hid an equal-weights choice that the vector
+form (the primitive directions within a width, each weighted by the measure
+of its cell on the sphere) shows to be wrong by up to 5.4 on the sphere.
+
+## Notation: every symbol named, its kind shown (the model owner, 2026-09-21, record 184)
+
+Every symbol is named in English at its first use in a document, a message
+or a record, so that the owner can type and search it: "gamma (the Lorentz
+factor)", "c (the pace of a row)", "rho (the charge per unit of content)".
+A Greek letter never stands alone: write its name in Latin letters and the
+quantity's name beside it. The kind of a quantity is shown by its type,
+in every document and every message to the owner: a scalar in plain text
+(`c`, `M`, `N`, `gamma`); a vector in bold lowercase (`**p**` the momentum
+vector, `**s**` the state vector on the torus, `**r**` the rate vector);
+a tensor, a matrix or an operator in bold uppercase (`**C**` the coupling
+matrix, `**G**` the click's Gram matrix, `**F**` the interval's map). A
+component of a vector is a scalar and is written plain with its index
+(`p_x`). In code the identifier's name says the kind where it matters
+(`momentum` a vector of three integers, `count_table` a table). Every
+role's skill points here; a review checks it as it checks the language.
+
+## The three tests of every rule: generic, vector, local (the model owner, 2026-09-21, record 202)
+
+A rule enters the law only if it passes all three, and every role applies
+them: the implementer before writing it, the reviewer before admitting it,
+the mathematician when stating its form, the Boss when ordering it.
+
+1. **Generic.** One primitive with declared integers (a rate, a wall, a
+   matrix, a table) and no family name or kind; the same primitive serves
+   every family; its special cases are values, not branches (a row is a
+   body of no content); the engine branches on no name.
+2. **Vector.** One of the six verbs on the state vector: the translation of
+   an accumulator by its rate, the bilinear form with a declared matrix, the
+   group-ring addition, the permutation, the evaluation, the Euclidean
+   division with the remainder kept; its rate at most bilinear in the
+   state; no root, no float, no rounding at run time beyond the ones
+   declared at load.
+3. **Local.** It reads only its own record and the six neighbouring Nodes
+   (LOCALITY-1); fixed work and storage for a fixed K; nothing kept at a
+   Node; every host reading labelled host.
+
+A rule that fails one test does not enter the law. A hypothesis that needs
+more (a seventh verb, a root at a declared grain) is stated under its own
+identity, outside the law, until it passes or the owner admits the verb.
+State the three verdicts, one line each, in the design, the review and the
+pull request.
+Why the three tests give the least computation in the large system (the
+owner's question, 2026-09-21, record 206): the cost of an exact run is the
+number of events times a constant, with nothing that grows with the
+GameBoard's size or the number of families; local bounds the work per Node
+(six neighbours), vector makes each step a fixed number of bounded-integer
+operations with no iteration inside it and gives the rows a closed form,
+generic makes one primitive serve every family (one code path, one table,
+one verification). The number of events is the floor of any exact
+computation. And it follows that a generic system is ruled by small
+conditions: the only free numbers are the family table's declared integers,
+the width and the initial state; a large system has no rule of its own
+scale, every known formula is the limit of the small local rule, and a
+change of one small condition moves the registered integers everywhere,
+exactly: a wrong small condition is caught by the large system's pins.
+ Form B of the body's drive was the first rule read against
+the three (record 201 of the log of 2026-09-20).
+
 ## Tools and authority
 
 The user has given standing authorization to publish requested Universe24 work

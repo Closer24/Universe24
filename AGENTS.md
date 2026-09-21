@@ -93,6 +93,12 @@ write the surrounding explanation in English. This instruction update does not
 authorize bulk translation of existing files or Google Docs; edit only the
 content authorized by the current task.
 
+Every symbol is named in English at its first use and never stands alone as a
+Greek letter ("gamma (the Lorentz factor)"), and its kind is shown by its type:
+a scalar plain, a vector in bold lowercase (**p**), a tensor, a matrix or an
+operator in bold uppercase (**C**); see [skills/workflow.md](skills/workflow.md),
+"Notation" (the model owner, 2026-09-21).
+
 Before submitting a change, translate any non-English prose it introduces and run
 `tests/test_repository_language.py`. The script check catches the legacy Hebrew
 text and several other non-Latin scripts; it does not prove that Latin-script prose
@@ -137,6 +143,13 @@ responsibilities. Keep renames, consumers, migration notes and the
 - A behavior change needs a dedicated test with inputs, an expected result and an
   edge case. Preserve current physical contract coverage. A new physical
   hypothesis needs an explicit model identity.
+- Every rule passes the three tests before it enters the law: generic (one
+  primitive with declared integers, no family name or kind), vector (one of
+  the six verbs on the state vector, no root, no float) and local (its own
+  record and the six neighbours, nothing kept at a Node); a hypothesis that
+  needs more is stated under its own identity, outside the law (the model
+  owner, 2026-09-21; [skills/workflow.md](skills/workflow.md), "The three
+  tests of every rule").
 - Run `python tools/check.py` before delivery. Inspect metadata/events for runs
   and inspect visual artifacts only when visualization was requested. Static
   checks are partial enforcement, not proof of locality or correct physics.

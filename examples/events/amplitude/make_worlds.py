@@ -185,7 +185,12 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
-from event_universe.world_loading import load_world  # noqa: E402
+from event_universe.world_loading import families_by_definition, load_world  # noqa: E402
+
+# The shipped definitions the world's families come from where they equal
+# them (the model owner's decision of 2026-09-20, record 113).
+FAMILY_DEFINITIONS = "../entities/families.json"
+DEFINITIONS_SOURCE = (HERE.parent / "entities" / "families.json").read_bytes()
 
 N = 64
 QUARTER = N // 4
@@ -448,6 +453,75 @@ def two_slits_low() -> dict[str, object]:
     return world
 
 
+# L2b: the openings' fan by angle (Huygens on the lattice; the
+# mathematician's TWO_SLITS.md section 7, 2026-09-20): every primitive
+# direction (a, b, 0) with a >= 1 and a + |b| <= HUYGENS_WIDTH, ordered by
+# angle (consecutive directions are Farey neighbours, |a b' - a' b| = 1),
+# each carrying as its split weight the angle it covers, half the gap to
+# each neighbour, the gap between D and D' being 3 Q^2 / (T_D T_D') in the
+# flight table's own resolution T_D = isqrt(3 |D|^2 Q^2) (the exact
+# 1 / (|D| |D'|) for Farey neighbours), at the grain HUYGENS_GRAIN. The
+# freed band admits at most FREED_HALF_WIDTH steps along the wall's plane
+# before a row's first step in x, that is |b| <= (2 FREED_HALF_WIDTH + 1) a;
+# the steeper directions are left out (they would walk into the wall or
+# through the other opening), their angle lost at the fan's edges.
+FLIGHT_Q = 64
+HUYGENS_WIDTH = 48
+# The grain keeps the load-time ceiling: the check multiplies every
+# re-emitter's sum of squares A on the world (two openings: A^2 within 2^62,
+# A within 2^31); at 2^18 the weights run 123 .. 5619 and A = 7.1 x 10^8.
+HUYGENS_GRAIN = 1 << 18
+HUYGENS_SLOPE = 2 * FREED_HALF_WIDTH + 1
+HUYGENS_TICKS = 420
+
+
+def flight_resolution(vector: tuple[int, int]) -> int:
+    """T_D = isqrt(3 |D|^2 Q^2), the flight table's resolution of D."""
+    return math.isqrt(3 * (vector[0] ** 2 + vector[1] ** 2) * FLIGHT_Q * FLIGHT_Q)
+
+
+def huygens_fan() -> tuple[list[tuple[int, int]], dict[tuple[int, int], int]]:
+    """The full primitive fan within HUYGENS_WIDTH in angle order and the
+    integer angle weight of every direction; the admitted directions are
+    those within HUYGENS_SLOPE."""
+    full = [
+        (a, b)
+        for a in range(1, HUYGENS_WIDTH + 1)
+        for b in range(-HUYGENS_WIDTH, HUYGENS_WIDTH + 1)
+        if a + abs(b) <= HUYGENS_WIDTH and math.gcd(a, b) == 1
+    ]
+    full.sort(key=lambda v: math.atan2(v[1], v[0]))
+    weights: dict[tuple[int, int], int] = {}
+    for i, v in enumerate(full):
+        neighbours = [full[j] for j in (i - 1, i + 1) if 0 <= j < len(full)]
+        gaps = [
+            Fraction(3 * FLIGHT_Q * FLIGHT_Q, flight_resolution(v) * flight_resolution(w))
+            for w in neighbours
+        ]
+        if len(gaps) == 1:
+            gaps = gaps * 2
+        weights[v] = int(HUYGENS_GRAIN * sum(gaps) / 2)
+    admitted = [v for v in full if abs(v[1]) <= HUYGENS_SLOPE * v[0]]
+    return admitted, weights
+
+
+def two_slits_huygens() -> dict[str, object]:
+    """L2b's world: `slits_low` with each opening's fan the Farey fan of
+    width HUYGENS_WIDTH weighted by angle (the split's `weights`)."""
+    world = two_slits_low()
+    world["model_id"] = "beam-amplitude-slits_huygens-v1"
+    world["ticks"] = HUYGENS_TICKS
+    admitted, weights = huygens_fan()
+    # The world's direction table names every vector of the fan (the six
+    # headings are the world's own); the registered 90 are among them.
+    world["directions"] = [[a, b, 0] for a, b in admitted if (a, b) != (1, 0)]
+    for entry in world["measured"]:
+        if entry.get("table") == {"light": "rerelease"}:
+            entry["table"] = {"light": {"rule": "rerelease", "weights": [weights[v] for v in admitted]}}
+            entry["directions"] = [[a, b, 0] for a, b in admitted]
+    return world
+
+
 def two_slits_one() -> dict[str, object]:
     """The design's reference: one birth through L2's geometry without the
     key, the lamp's five rows declared as rays of amount 91."""
@@ -640,7 +714,11 @@ def two_slits_reading() -> dict[str, object]:
 
 
 def two_slits_worlds() -> dict[str, dict[str, object]]:
-    return {"slits_low": two_slits_low(), "slits_one": two_slits_one()}
+    return {
+        "slits_low": two_slits_low(),
+        "slits_one": two_slits_one(),
+        "slits_huygens": two_slits_huygens(),
+    }
 
 
 def bell(
@@ -1326,18 +1404,166 @@ def ghz_expectations() -> dict[str, object]:
     return found
 
 
+# The GameBoard and layer readings the register split registered beside the
+# design's expectations on 2026-09-21 (the trimming's part 2, PR #422: a test
+# reads a world's numbers from the register, never a literal of its own): the
+# births' and the splits' rows with the cancels, the first gathers, the
+# gathers' last ticks, the totals' spread, the pair's birth and early records,
+# the gate's lines and rows. Keyed by the path of the entry they extend.
+REGISTERED_RUN_READINGS: dict[str, dict[str, object]] = {
+    "mach_zehnder.mz_equal": {
+        "birth": {
+            "tick": 1,
+            "rows": [[[0, 0, 0], 2, 0, 0, 1, 1, 0, 2], [[0, 0, 0], 4, 0, 16, 1, 1, 0, 2]],
+            "rows_columns": "node, direction index, age, phase, amount, content, branch, multiplicity",
+            "second": {
+                "tick": 3,
+                "phases": [1, 17],
+                "accumulator_after_tick_2": 1048574,
+                "note": "no birth at tick 2: the exact "
+                "clock of the content 2^20 - 2 "
+                "turns 0 (the fraction-free "
+                "law, 2026-09-20)",
+            },
+        },
+        "split": {
+            "tick": 11,
+            "rows": [[[3, 3, 0], 2, 0, 16, 41, 1, 0, 1682], [[3, 3, 0], 4, 0, 32, 1, 1, 0, 1682]],
+            "born_per_split": 41,
+            "cancelled_amount": 40,
+            "cancelled_content": 40,
+            "cancelled_momentum": [0, 2560, 0],
+        },
+        "first_gather": {
+            "chosen": ["D1", 0, "0"],
+            "rungs": [64, 64],
+            "content": 41,
+            "momentum": [2624, 0, 0],
+            "node": [4, 3, 0],
+        },
+    },
+    "mach_zehnder.mz_quarter": {"two_splits_tick": 11},
+    "mach_zehnder.mz_balanced": {
+        "split": {
+            "tick": 11,
+            "rows": [[[3, 3, 0], [1, 0, 0], 16, 2, 4]],
+            "rows_columns": "node, direction, phase, amount, multiplicity",
+            "cancelled": 2,
+        }
+    },
+    "mach_zehnder.mz_345": {
+        "pythagorean_5": {
+            "u_to_D2": 63,
+            "u_to_D1": 62,
+            "first_rungs": [63, 64],
+            "note": "the (3, 4) split sends u = 63 to D2 where the (20, 21) split sends it to D1",
+        }
+    },
+    "mach_zehnder.mz_unequal_f8": {"two_splits_tick": 11},
+    "mach_zehnder": {
+        "gathered_by_tick": 76,
+        "totals": {
+            "distinct": 8,
+            "least": "65448/65536",
+            "most": "65773/65536",
+            "note": "every record's total in the unit 2^58, one of "
+            "eight values on every world (the tables' "
+            "rounding by u); the design's bound 0.0019 holds "
+            "for u = 0 alone",
+        },
+    },
+    "two_slits": {
+        "last_gather_tick": 214,
+        "face_gathers": 15,
+        "first": {"born": 1, "chosen": "measured:223", "node": [7, 58, 0], "content": 1},
+    },
+    "pair": {
+        "birth": {
+            "tick": 1,
+            "node": [10, 0, 0],
+            "arms": 2,
+            "units": 4,
+            "multiplicity": 2,
+            "arm_directions": [[-1, 0, 0], [1, 0, 0]],
+        },
+        "choosers_early": {
+            "count": 6,
+            "born": [1, 2, 4, 5, 6, 7],
+            "note": "the records born before choosers_first meet no "
+            "setting and click at alice_minus; the lamp's "
+            "exact clock stalls once, at tick 3",
+        },
+        "far_min_flight": 200,
+    },
+    "gate": {
+        "twice": {
+            "identity": True,
+            "later_gates": {"joined": [], "labels": [[0, 1], [1, 1]], "nodes": [11, 8]},
+            "rows": [
+                [[0, 1, 0], 0, 0, 181, 0, 65536],
+                [[0, 1, 0], 0, 1, 181, 32, 65536],
+                [[0, 1, 0], 1, 0, 1, 0, 2],
+                [[0, 1, 0], 1, 1, 1, 0, 2],
+            ],
+        },
+        "rotate_line": {"setting": 16, "bit": 0, "rows": 2},
+        "gate_line": {"arms": 2, "rows": 4, "labels": [[0, 1], [3, 1]], "joined_number": 4},
+        "pair_rows": {
+            "rows": [
+                [[0, -1, 0], 1, 0, 1, 0, 2],
+                [[0, -1, 0], 1, 3, 1, 0, 2],
+                [[0, 1, 0], 0, 0, 181, 0, 65536],
+                [[0, 1, 0], 0, 3, 181, 32, 65536],
+            ],
+            "rows_columns": "direction, arm, label, amount, phase, multiplicity",
+            "amount_source": "181 = C[16] = S[16] of the 128-step tables; "
+            "the amplitude 3036676096 = 181 x 2^24",
+        },
+        "ghz_gate_line": {"labels": [[0, 1], [7, 1]], "arms": 3, "rows": 6},
+        "rotation_multiplicity": 65536,
+    },
+}
+
+# The source of every registered entry (the owner's principle of 2026-09-21,
+# record 205: a formula gives, a run proves): the formula or the section of
+# docs/DERIVATIONS_BEAM.md that gives the number, or "measured" with the
+# target that would give it; the derivation mathematician's targets are the
+# source, nothing is invented here.
+DERIVATIONS: dict[str, str] = {
+    "births": "declared: the lamp's first 64 records read by their birth ordinal (the design); no formula gives the count",
+    "mach_zehnder": "the offers by the click's bilinear form f^T G f on the splitter's rows (DERIVATIONS_BEAM 6.7: mz_equal's 1681/1682 and 1/1682 exact at every u); the clicks by the ladder's rungs b_k = (2 N C_k + Total) // (2 Total) on the offers (BEAM_LAW note 37; DERIVATIONS_BEAM 6.2); the totals' spread the tables' rounding (6.7); the births' and the splits' rows and ticks measured (the design's mz.py, the run)",
+    "two_slits": "the weights and the total by the click computed at the click time from the flight's closed form and the Gram form (DERIVATIONS_BEAM 11.1 and 6.7, which reproduced the 64 registered clicks); the fringe's paraxial form 7.1; the first gather and the last tick measured",
+    "pair": "measured (target 6: Born and Tsirelson reached as limits, DERIVATIONS_BEAM 6.3 and 6.5; the finite-N cells the design's bell.py on the windows' half circles; the CHSH sum 176/64 the ladder's value at N = 64)",
+    "ghz": "measured (target 6; the design's bell.py: the allowed triples and their products)",
+    "gate": "the Hadamard's amount C[16] = S[16] = 181 of the 128-step tables (core/phase.py; the amplitude 181 x 2^24); the cells and the correlations measured (target 6)",
+    "pair_n": "measured (target 6: |E - cos| <= 1/N the design's bound at N = 1024, failing at 4096 by the tables' rounding; 2896/1024 the design's sum)",
+    "cone": "DERIVATIONS_BEAM 11.1: the flight's closed form m_D(tau) and tau_k = ceil((2 k - 1) T_D / (2 S_1 Q)), the phase k m_D(tau) under the integer form and floor(tau n / d) under the pair form; derived from the worlds and compared by tests/test_amplitude_cone.py",
+}
+
+
 def expectations() -> dict[str, object]:
-    return {
-        "format": "amplitude-expectations-v1",
-        "births": N,
-        "mach_zehnder": MACH_ZEHNDER_EXPECTATIONS,
-        "two_slits": two_slits_reading(),
-        "pair": pair_expectations(),
-        "ghz": ghz_expectations(),
-        "gate": gate_expectations(),
-        "pair_n": pair_n_expectations(),
-        "cone": cone_expectations(),
-    }
+    found: dict[str, object] = copy.deepcopy(
+        {
+            "format": "amplitude-expectations-v1",
+            "births": N,
+            "mach_zehnder": MACH_ZEHNDER_EXPECTATIONS,
+            "two_slits": two_slits_reading(),
+            "pair": pair_expectations(),
+            "ghz": ghz_expectations(),
+            "gate": gate_expectations(),
+            "pair_n": pair_n_expectations(),
+            "cone": cone_expectations(),
+        }
+    )
+    for path, entries in REGISTERED_RUN_READINGS.items():
+        target: object = found
+        for key in path.split("."):
+            assert isinstance(target, dict)
+            target = target[key]
+        assert isinstance(target, dict)
+        target.update(entries)
+    found["derivations"] = DERIVATIONS
+    return found
 
 
 def main() -> None:
@@ -1349,7 +1575,8 @@ def main() -> None:
         if name in UNSHIPPED:
             continue
         path = args.out / f"{name}.json"
-        path.write_text(json.dumps(world) + "\n", encoding="utf-8")
+        shipped = families_by_definition(world, FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
+        path.write_text(json.dumps(shipped) + "\n", encoding="utf-8")
         print(
             f"{path.relative_to(ROOT) if path.is_relative_to(ROOT) else path}: {world['ticks']} intervals"
         )

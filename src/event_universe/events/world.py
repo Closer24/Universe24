@@ -411,7 +411,7 @@ WORLD_KEYS = {
 # The identity of the amplitude law (`amplitude-v1`; the model owner,
 # 2026-09-20, Highlights 5.4, "DECIDED: `amplitude-v1` is built"; the
 # physicist's and the mathematician's design, docs/designs/amplitude-v1/DESIGN.md;
-# docs/BEAM_LAW.md note 37): under the world key `amplitude` an event in
+# docs/BEAM_LAW.md note 37): in a recorded world (a lamp declared) an event in
 # transit is a record with rows (the store's columns `record`, `branch` and
 # `multiplicity`), a re-emission may split a row by integer weights, rows of
 # one record in antiphase cancel at the merge, and the click's reading `sum`
@@ -423,7 +423,7 @@ AMPLITUDE_RULE = "amplitude-v1"
 # (vii) step 4 (the one click): the record form is the law; a world that
 # declares it is refused naming MIGRATION.
 DELETED_AMPLITUDE_KEY = "amplitude"
-# The circle must hold the quarter turn of a reflection under the key
+# The circle must hold the quarter turn of a reflection in a recorded world
 # (`phase` + N / 4 exact on the tables): N below 4 is refused with it.
 AMPLITUDE_LEAST_STEPS = 4
 # The identity of the reading's weight at the relative speed (`doppler-v1`;
@@ -590,12 +590,12 @@ TABLE_ENTRY_KEYS = {
 }
 # The split (the amplitude law, 2026-09-20, the owner's unification (2):
 # the split is `rerelease` with a vector of integer weights and the
-# multiplicity, one rule): on a `rerelease` entry under the key, `weights`
+# multiplicity, one rule): on a `rerelease` entry, `weights`
 # (one integer from 0 per declared direction of the measured event, at
 # least one positive) and `turns` (a phase step per direction, 0 by
 # default): an arriving row (w, m, p) is re-emitted as the rows (w a_i,
 # m x A, p + t_i) with A = sum a_i^2; without `weights` every weight is 1,
-# the equal k-way split. Refused without the key, on a rule other than
+# the equal k-way split. Refused on a rule other than
 # `rerelease` and on a free family's entry (free families never branch).
 SPLIT_KEYS = ("inputs", "weights", "turns")
 TRANSFORM_KEYS = {"into", "products"}
@@ -614,10 +614,10 @@ DETECTOR_KEYS = {"name", "positions", "threshold", "reading"}
 # since 2026-09-20 (the model owner: "on the GameBoard a ray, in the world a
 # wave"; `beam` was the default from 2026-09-19 to 2026-09-20).
 DETECTOR_READINGS = ("wave", "beam")
-# The third reading, under the amplitude key alone (the design, section
+# The third reading, of a record's rows (the design, section
 # 0): the set reads the sum of the rows of one record and one label that
 # arrived at its Nodes, squared, accumulated over the record's lifetime;
-# the crowd's pointer threshold is its gate as under `wave`, and a window
+# the crowd's pointer gives the set's phase as under `wave`, and a window
 # on its entry is the rotation of the record's labels, not a gate.
 SUM_READING = "sum"
 # The keys of the deleted `reversible-detector-v1`, refused by name.
@@ -888,7 +888,7 @@ class MeasuredDefinition:
     transforms: tuple[Transformation | None, ...] = ()
     window_reads: tuple[tuple[int, int] | None, ...] = ()
     # The split per family (the amplitude law, `Split`): None where the
-    # entry declares none (an equal split under the key, the apportioning
+    # entry declares none (an equal split of a record's row, the apportioning
     # without it).
     splits: tuple[Split | None, ...] = ()
     # The turn of each entry's rotation on a `sum` set (`turn`, the label
@@ -1018,10 +1018,14 @@ class NatureBeamWorld:
 
     def turn(self, age: int, content: int) -> int:
         """The turn of a measured event's phase at the self-creation from
-        `age`: `by_clock(age, content x n, d)` phase steps at the clock's
-        rate `turn_rate` = (n, d), the free release's own form at the rate
-        [1, K] (the four unifications (2), BEAM_LAW note 33); the frame
-        refuses a turn of half the circle or more."""
+        `age` at a CONSTANT content from age 0: `by_clock(age, content x
+        n, d)` phase steps at the clock's rate `turn_rate` = (n, d), the
+        free release's own form at the rate [1, K] (the four unifications
+        (2), BEAM_LAW note 33). The frame reads the turn as the count the
+        body's turn accumulator gains, `by_drive(acc_turn, content x n,
+        d)` (the fraction-free law, note 41), of which this is the
+        constant-rate identity; the readings tools derive a lamp's turn by
+        it. The frame refuses a turn of half the circle or more."""
         numerator, denominator = self.turn_rate
         return by_clock(age, content * numerator, denominator)
 
@@ -1035,6 +1039,45 @@ class NatureBeamWorld:
     def declared_columns(self) -> tuple[str, ...]:
         """The names of the columns beyond the two built in."""
         return tuple(name for name, _ in self.columns[CHARGE_INDEX + 1 :])
+
+    @property
+    def column_scales(self) -> tuple[int, ...]:
+        """Per column the common denominator of its values over the
+        families, Lambda_c = lcm of the d_f^c (the fraction-free push,
+        2026-09-20, BEAM_LAW note 41): every reader's charge in the
+        column, the reduced sum of n_f^c M_f / d_f^c over what it holds,
+        has a denominator dividing it, and so has every arriving value,
+        so the push's rate V x E_c n_c / (D_c d_c) is a whole numerator
+        over the one denominator Lambda_c^2 of the column's accumulator
+        (`nature_beam.push_form`). 1 on gravity and on every column whose
+        values are whole, where the push was exact already. Lambda_c^2,
+        the denominator of the column's rows in every body's table of
+        counts (`measured.counts_table`), is tested by division here,
+        where Lambda_c is formed: a column whose square leaves the
+        register is refused naming the column and the bound, at load
+        (`parse_nature_beam_world` reads the scales once) and not at the
+        first push (the physics-rule review of the branch,
+        `docs/designs/fraction_free/REVIEW.md` section 4; the run's
+        refusal of the lifted product, `nature_beam.column_bound_error`,
+        stands beside it)."""
+        found = []
+        for column in range(len(self.families[0].columns)):
+            scale = 1
+            for family in self.families:
+                denominator = family.columns[column].value[1]
+                scale = scale * denominator // bounded_gcd(scale, denominator)
+            if scale > MOMENTUM_BOUND // scale:
+                name = self.families[0].columns[column].name
+                raise ValueError(
+                    f"{BEAM_LAW}: the column {name!r}: Lambda_c = {scale}, the least common "
+                    "multiple of the families' value denominators in the column, has a square "
+                    f"beyond the integer bound {MOMENTUM_BOUND}, the ceiling of the push's "
+                    "accumulator over Lambda_c^2 (BEAM_LAW note 41 (iv)); the column's value "
+                    f"denominators must have a least common multiple of at most "
+                    f"{integer_root(MOMENTUM_BOUND)}"
+                )
+            found.append(scale)
+        return tuple(found)
 
     @property
     def lifetimes(self) -> bool:
@@ -1762,7 +1805,7 @@ def _lamp(
         )
     # The largest label a release can carry: the rate's numerator units at
     # the largest turn the content allows (the whole part of amount x n / d
-    # at the clock's rate [n, d]); under the key the largest weight of a
+    # at the clock's rate [n, d]); for a record the largest weight of a
     # branch is the amount of a row.
     largest_turn = max(1, amount * turn_rate[0] // turn_rate[1])
     largest_weight = max(weight for _, weight in branches)
@@ -2536,13 +2579,13 @@ def _measured(
     return tuple(found)
 
 
-def _amplitude_load_checks(
+def _record_load_checks(
     measured: tuple[MeasuredDefinition, ...],
     detectors: tuple[DetectorDefinition, ...],
     families: tuple[FamilyDefinition, ...],
     phase_steps: int,
 ) -> None:
-    """The world's checks under the key that need the measured events and
+    """The world's checks of the record form that need the measured events and
     the detectors together: a `phase_window` on a `rerelease` entry whose
     Node reads no `sum` set is dead (a split takes no gate; a `sum`
     re-emitter's window is its rotation's setting) and refused; the
@@ -2846,8 +2889,9 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         raise ValueError(
             f'{BEAM_LAW}: "law": "rays" is the Beam Law\'s name before 2026-09-20 (rays-v1 is '
             'beam-v1, the same law); a world declares "law": "beam": rewrite it with '
-            'tools/migrate_nature_beam_worlds.py (docs/MIGRATION.md, "The names NatureBeam and '
-            "GameBoard and the glossary's single names, on 2026-09-20\")"
+            "tools/migrate_nature_beam_worlds.py of git before e4b649a0, deleted on 2026-09-20 "
+            "(docs/MIGRATION.md, \"The names NatureBeam and GameBoard and the glossary's single "
+            'names, on 2026-09-20")'
         )
     if document.get("law") != LAW_VALUE:
         raise ValueError(f'{BEAM_LAW}: a world of the Beam Law declares "law": "beam"')
@@ -2916,7 +2960,9 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         for entry in (declared if isinstance(declared, list) else [])
     ):
         # A record's circle holds the quarter turn of a reflection (the
-        # amplitude law; every lamp births records).
+        # amplitude law; every lamp births records). Read off the document
+        # before the measured events are parsed, so that this refusal
+        # precedes theirs (`tests/test_amplitude_record.py` (b)).
         raise ValueError(
             f"{BEAM_LAW}: a lamp is refused with N {phase_steps}: a record's circle holds the "
             f"quarter turn of a reflection, at least {AMPLITUDE_LEAST_STEPS} steps"
@@ -2983,5 +3029,10 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         meeting=meeting,
         doppler=doppler,
     )
-    _amplitude_load_checks(measured, detectors, families, phase_steps)
+    _record_load_checks(measured, detectors, families, phase_steps)
+    # The push's denominator per column, Lambda_c^2 (`measured.counts_table`),
+    # tested where Lambda_c is formed (`column_scales`): a world whose column
+    # scales leave the register is refused here, at load, not at its first
+    # push (the physics-rule review of the branch, REVIEW.md section 4).
+    _ = world.column_scales
     return world

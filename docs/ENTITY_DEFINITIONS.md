@@ -430,11 +430,14 @@ and `nuclear` from the definitions; Hubble: `detector` and `mass` inline);
 a world whose tail no definition matches stays inline whole (the coupling
 series: `m` with a phase circle, the test charges `p` and `q`; in `7_00`
 the `q` that equals its definition precedes the `p` that does not;
-`nucleus/pp_1_weak`: `nuclear` at 7000 last). Deferred to the third pull
-request, after stage (vii) of `amplitude-v1` lands (it re-pins or touches
-them): the amplitude series, the lensing series, the build-up series,
-`catalog/sun_planet`, `catalog/lamp_mirror_screen`, `two_slits`,
-`heisenberg/w3_beam`, and every world under the key `amplitude`. The
+`nucleus/pp_1_weak`: `nuclear` at 7000 last). The third pull request,
+after the one click of `amplitude-v1` landed (PR #395, the key
+`amplitude` deleted), migrated the series it had re-pinned the same way:
+the amplitude series (44 of its 47 worlds; `slits_low` keeps `light`
+inline, its `phase_per_link` a pair, and `mz_unequal_f8` and
+`mz_unequal_f16` stay inline whole for the same reason), the lensing
+series, the build-up series, `catalog/sun_planet`,
+`catalog/lamp_mirror_screen`, `two_slits` and `heisenberg/w3_beam`. The
 detector series keeps its own definitions file (`entities/detectors.json`):
 a world references one file. The check selector names `families.json` as a
 runtime dependency of every test that loads a shipped world

@@ -5,21 +5,25 @@ books, it computes no physics.
 
 The interval (`NatureBeamSimulation.step`): the engine sets every measured event's
 clock frame (whether it owes a count and pays one, or self-creates: its age
-advances by one and its turn is read off its clock, s = `by_clock(age,
-content x n, d)` phase steps at the clock's rate `K` = [n, d], an integer K
-being [1, K] (`NatureBeamWorld.turn`, the free release's own form; the four
-unifications (2), 2026-09-20), refused at half the circle), calls `nature_beam`
+advances by one and its turn is the count its turn accumulator gains, s =
+`by_drive(acc_turn, content x n, d)` phase steps at the clock's rate `K` =
+[n, d], an integer K being [1, K] (the free release's own form; the four
+unifications (2), 2026-09-20; since the fraction-free law of the same day,
+BEAM_LAW note 41, every count of a body is `core.integer.by_drive` on an
+accumulator of its own record, `by_clock` off the age being its
+constant-rate identity), refused at half the circle), calls `nature_beam`
 once for the whole GameBoard (the walk, the readings, the collision, the tables
 and detectors, the releases, the merge), then turns the phase of every
-self-created measured event by its turn, reads the count it owes off its
-clock from what the law read back for the clock (`by_clock(age, k x n, d)`
-at the world's `suspension` `[n, d]`, k the presence, or the age moment for
-a family whose table entry reads `age`: `measured.count_component`), and
+self-created measured event by its turn, reads the count it owes from what
+the law read back for the clock (`by_drive(acc_owed, k x n, d)` at the
+world's `suspension` `[n, d]`, k the presence, or the age moment for a
+family whose table entry reads `age`: `measured.count_component`), and
 steps the free measured events by their
-momentum off the clock (one Link per (Q x S x M + p) / p self-creations on
+momentum (one Link per (Q x S x M + p) / p self-creations on
 an axis whose momentum component is p in label units, M the content, S the
-world's `width` and Q = 64 the label's scale, `by_clock(age, |p|, Q x S x M
-+ |p|)`: one unit of net flow, the label Q x M, gives the speed 1 / (S + 1)
+world's `width` and Q = 64 the label's scale, the step drive `by_drive(drive,
+p, Q x S x M + |p|, at_most=1)`: one unit of net flow, the label Q x M,
+gives the speed 1 / (S + 1)
 for every content, as it did when the label of a heading was the unit; at
 most one Link per interval, x before y before z; a step onto a Node that
 holds a measured event is refused; through an open face the step is a
@@ -44,7 +48,14 @@ import numpy as np
 from event_universe.core.game_board import Address3, adjacent_node
 from event_universe.core.integer import apportion_whole, by_clock, by_drive
 from event_universe.events.amplitude import Layer
-from event_universe.events.measured import TALLIES, DetectorSet, Ledger, Measured, rational_sum
+from event_universe.events.measured import (
+    TALLIES,
+    DetectorSet,
+    Ledger,
+    Measured,
+    counts_table,
+    rational_sum,
+)
 from event_universe.events.nature_beam import (
     NO_ARRIVAL,
     NO_BRANCH,
@@ -56,7 +67,6 @@ from event_universe.events.nature_beam import (
     NatureBeamTables,
     Record,
     bounded,
-    by_clock_rows,
     exact_column_sums,
     exact_sum,
     momentum_labels,
@@ -106,29 +116,34 @@ def step_axis(drive: int, momentum: int, content: int, width: int) -> tuple[int 
     one Link each). A momentum of 0 never steps and leaves the drive as it
     is. The count primitive is `core.integer.by_drive` (the model owner's
     record 108: the whole part of an accumulated rate on the reader's own
-    record, `by_clock` where the rate is constant); the one place the
-    step rule lives, the readings tools read it from here. The divisor D
-    is `world.step_divisor`, which the reading's weight at the relative
-    speed reads too (note 38)."""
+    record, `by_clock` where the rate is constant), with `at_most` 1: the
+    step's own rule of one Link per interval, the residual of a larger
+    momentum kept in the drive; the one place the step rule lives, the
+    readings tools read it from here. The divisor D is
+    `world.step_divisor`, which the reading's weight at the relative speed
+    reads too (note 38)."""
     if momentum == 0:
         return None, drive
-    fired, drive = by_drive(drive, momentum, step_divisor(momentum, content, width))
+    fired, drive = by_drive(drive, momentum, step_divisor(momentum, content, width), at_most=1)
     return (fired or None), drive
 
 
-def count_owed(age: int, counted: int, suspension: tuple[int, int]) -> int:
+def count_owed(accumulator: int, counted: int, suspension: tuple[int, int]) -> tuple[int, int]:
     """The count a measured event owes after its self-creation (ENGINE,
     the frame; `_suspend` calls it): what its clock counted (`counted`, the
     presence or the age moment) times the width n / d of the world's
-    `suspension`, off its clock, `by_clock(age, counted x n, d)` with `age`
-    the age before the self-creation; 0 when the width is 0. The same
-    count as `by_drive` where the rate is constant (record 108): the owed
-    count reads a rate no push changes and keeps the clock's form, as the
-    release and the lamp do."""
+    `suspension`, as the whole part its owed accumulator gains,
+    `by_drive(acc_owed, counted x n, d)` (the fraction-free law, BEAM_LAW
+    note 41: the remainder owned on the body's record, below d, so the
+    count is exact over any period of a changing crowd; at a constant
+    crowd from age 0 the same integers as `by_clock(age, counted x n, d)`
+    read off the clock, the form until then). Returns (the count owed,
+    the accumulator after); (0, the accumulator) when the width is 0. The
+    one place the rule lives; the readings tools replay it from here."""
     numerator, denominator = suspension
     if not numerator:
-        return 0
-    return by_clock(age, counted * numerator, denominator)
+        return 0, accumulator
+    return by_drive(accumulator, counted * numerator, denominator)
 
 
 class NatureBeamSimulation:
@@ -209,7 +224,7 @@ class NatureBeamSimulation:
                 content=np.array([content]),
                 arrival=np.array([NO_ARRIVAL]),
                 # A declared ray is a row of no record: it ends without an
-                # offer under the amplitude key (a record is born by a lamp).
+                # offer in a recorded world (a record is born by a lamp).
                 record=np.array([NO_RECORD]),
                 branch=np.array([NO_BRANCH]),
                 multiplicity=np.array([ONE_PATH]),
@@ -227,7 +242,6 @@ class NatureBeamSimulation:
         # design's order, the measured events outside every declared
         # detector by number, the declared detectors, the faces in Port
         # order and the border.
-        self.layer: Layer | None = None
         keys: list[tuple[str, int]] = []
         names: list[str] = []
         declared = len(world.detectors)
@@ -243,7 +257,7 @@ class NatureBeamSimulation:
         if world.lifetimes:
             keys.append(("border", 0))
             names.append(LIFETIME_NAME)
-        self.layer = Layer(
+        self.layer: Layer = Layer(
             names,
             keys,
             self.detector_sets,
@@ -325,6 +339,15 @@ class NatureBeamSimulation:
             column_names=tuple(name for name, _ in self.world.columns),
             family_values=tuple(family.values for family in self.families),
             pending=[[] for _ in range(count)],
+            counts=counts_table(
+                self.world.turn_rate,
+                self.world.suspension,
+                self.world.release,
+                tuple(family.free for family in self.families),
+                None if definition.lamp is None else definition.lamp.rate,
+                self.world.column_scales,
+                len(self.world.directions) if self.world.doppler else 0,
+            ),
             taken=[dict.fromkeys(TALLIES, 0) for _ in range(count)],
             clicks=[0] * count,
             contact=tuple(definition.contact) + (CONTACT_DEFAULT,) * (count - len(definition.contact)),
@@ -394,7 +417,7 @@ class NatureBeamSimulation:
         for number in sorted(self.measured):
             entry = self.measured[number]
             if entry.creating:
-                entry.phase = (entry.phase + entry.turn) & self.world.phase_mask
+                entry.phase = self.tables.circle.turn(entry.phase, entry.turn)
                 entry.turned += entry.turn
                 self._suspend(entry)
         for number in sorted(self.measured):
@@ -427,12 +450,15 @@ class NatureBeamSimulation:
         whatever the family order, as the charges are);
         one that owes a count pays it by one (no self-creation, no
         release, no turn; `waited` counts the interval); one that owes
-        nothing self-creates: its age advances and its turn is read off its
-        clock, `by_clock(age, content x n, d)` at the clock's rate [n, d]
-        (`NatureBeamWorld.turn`; `by_clock_rows` over the phased events in
-        one array where their products fit the register, the scalar
-        `turn` row by row otherwise), and refused at half the circle."""
-        phased: list[Measured] = []
+        nothing self-creates: its age advances and its turn is the count
+        its turn accumulator gains, `by_drive(acc_turn, content x n, d)` at
+        the clock's rate [n, d] (the fraction-free law, BEAM_LAW note 41:
+        the remainder below d on the body's record, the count exact over
+        any period of a changing content; at a constant content from age 0
+        the same integers as `by_clock(age, content x n, d)` off the clock,
+        `NatureBeamWorld.turn`), the product content x n tested by
+        division before it is formed, and refused at half the circle."""
+        numerator, denominator = self.world.turn_rate
         for entry in self.measured.values():
             entry.turn = 0
             # The content and the charges the frame reads, once, for the
@@ -450,22 +476,16 @@ class NatureBeamSimulation:
             entry.creating = True
             entry.clock_age = entry.age
             entry.age += 1
-            if self._phased[entry.family]:
-                phased.append(entry)
-        if not phased:
-            return
-        numerator, denominator = self.world.turn_rate
-        ages = [entry.clock_age for entry in phased]
-        contents = [entry.frame_content for entry in phased]
-        if (max(ages) + 1) * max(contents) * numerator <= MOMENTUM_BOUND:
-            turns = by_clock_rows(
-                np.array(ages, dtype=np.int64),
-                np.array(contents, dtype=np.int64) * numerator,
-                denominator,
-            ).tolist()
-        else:
-            turns = [self.world.turn(age, content) for age, content in zip(ages, contents, strict=True)]
-        for entry, turn in zip(phased, turns, strict=True):
+            if not self._phased[entry.family]:
+                continue
+            content = entry.frame_content
+            if content > MOMENTUM_BOUND // numerator:
+                raise OverflowError(
+                    f"{BEAM_LAW}: the turn's rate of measured event {entry.number} at "
+                    f"{list(entry.position)} ({content} x {numerator}) exceeds the integer bound "
+                    f"{MOMENTUM_BOUND}"
+                )
+            (turn,) = entry.counts.advance("turn", values=[content])
             if 2 * turn >= self.world.phase_steps:
                 raise ValueError(
                     f"{BEAM_LAW}: measured event {entry.number} turns its phase by half the circle "
@@ -478,12 +498,13 @@ class NatureBeamSimulation:
         its clock counted at its Node over every number but its own, read
         back by the law (`Measured.counted`: the presence k, or for a family
         whose table entry reads `age` the age moment, sum amount x age; the
-        selection is `measured.count_component`), times the width n / d, off
-        its clock, `by_clock(age, k x n, d)`, written once and paid one per
-        interval before the next."""
+        selection is `measured.count_component`), times the width n / d, as
+        the whole part its owed accumulator gains, `by_drive(acc_owed, k x
+        n, d)` (`count_owed`), written once and paid one per interval before
+        the next."""
         if not self.world.suspension[0]:
             return
-        entry.owed = count_owed(entry.clock_age, entry.counted, self.world.suspension)
+        (entry.owed,) = entry.counts.advance("owed", values=[entry.counted])
 
     def _move(self, entry: Measured) -> None:
         """The step by the momentum, at most one per interval, when nothing
@@ -556,16 +577,18 @@ class NatureBeamSimulation:
         # crossed, the rule's count `axis_steps` raised): the frame's rule
         # as it was, one Link per interval, x before y before z.
         fired: tuple[int, int, int] | None = None
+        counts = entry.counts.advance(
+            "drive",
+            values=entry.momentum,
+            denominators=[step_divisor(p, content, self.world.width) for p in entry.momentum],
+        )
         for axis in range(3):
             momentum = entry.momentum[axis]
-            stepped, entry.drive[axis] = step_axis(
-                entry.drive[axis], momentum, content, self.world.width
-            )
-            if stepped is None:
+            if momentum == 0 or counts[axis] == 0:
                 continue
             entry.axis_steps[axis] += 1
             if fired is None:
-                fired = (axis, momentum, stepped)
+                fired = (axis, momentum, counts[axis])
         if fired is None:
             return
         axis, momentum, sign = fired
@@ -643,7 +666,7 @@ class NatureBeamSimulation:
             links = entry.axis_steps[axis] - 1
             bounded((links + 1) * magnitude * self.world.phase_steps, entry, "turn by momentum")
             turn = by_clock(links, magnitude * self.world.phase_steps, self.world.action)
-            entry.phase = (entry.phase + turn) & self.world.phase_mask
+            entry.phase = self.tables.circle.turn(entry.phase, turn)
         if self.record is not None:
             self.record(
                 {
@@ -892,7 +915,7 @@ class NatureBeamSimulation:
         # The `cancelled` and `remainder` lines are written in a recorded
         # world alone (a lamp declared): a world without a lamp has no
         # record and no line.
-        amplitude = self.world.recorded
+        recorded = self.world.recorded
         handed = self.world.handed
         # One pass over the measured events: what they hold per family,
         # their momentum and their charge (rho x content of the free
@@ -948,9 +971,9 @@ class NatureBeamSimulation:
                 "absorbed": ledger.transit_absorbed[index],
             }
             # The `cancelled` line (the amplitude law): what the merge's
-            # cancel removed, on the transit and content lines under the key
+            # cancel removed, on the transit and content lines of a recorded world
             # only (zero without it, the lines as they were).
-            if amplitude:
+            if recorded:
                 in_transit["cancelled"] = ledger.cancelled_amount[index]
             in_transit["balanced"] = in_transit["initial"] + in_transit["released"] == (
                 in_transit["current"]
@@ -978,7 +1001,7 @@ class NatureBeamSimulation:
                 "escaped": ledger.escaped_content(index),
                 "absorbed": ledger.content_absorbed[index],
             }
-            if amplitude:
+            if recorded:
                 content["cancelled"] = ledger.cancelled_content[index]
             content["balanced"] = content["initial"] + content["released"] == (
                 content["current"]
@@ -1001,7 +1024,7 @@ class NatureBeamSimulation:
                 # line by, a report as `pushed` is; zero without `meeting`.
                 "turned": list(ledger.turned_momentum[index]),
             }
-            if amplitude:
+            if recorded:
                 # The labels the cancel removed from the transit momentum line.
                 lines["cancelled"] = list(ledger.cancelled_momentum[index])
                 # The labels of a record's rows beyond the shares matter took
@@ -1014,7 +1037,7 @@ class NatureBeamSimulation:
             "escaped": ledger.escaped_momentum(),
             "turned": ledger.turned_momentum_total(),
         }
-        if amplitude:
+        if recorded:
             momentum["cancelled"] = ledger.cancelled_momentum_total()
             momentum["remainder"] = ledger.remainder_momentum_total()
         return {
@@ -1118,31 +1141,6 @@ class NatureBeamSimulation:
             )
         return found
 
-    def shell_readings(self, family: int, centre: Address3, radius: int) -> dict[str, float]:
-        """The shell means at one radius of the last interval's readings: the
-        Nodes at Euclidean distance within a half Link of `radius` from the
-        centre, their number, the mean count (the amount that arrived per
-        Node), the mean radial flow (amount x the arrival's unit vector at
-        the scale Q projected on the radial unit vector, summed per Node: Q
-        per unit of amount moving radially) and the mean presence (every
-        ray at the Node)."""
-        node_offsets = np.indices(self.shape).reshape(3, -1).T - np.array(centre)
-        distance = np.sqrt((node_offsets * node_offsets).sum(axis=1))
-        chosen = np.abs(distance - radius) < 0.5
-        chosen &= distance > 0
-        positions = node_offsets[chosen]
-        radial = positions / distance[chosen][:, None]
-        cells = tuple((positions + np.array(centre)).T)
-        arrived = self.readings.arrived[family][cells]
-        flow = self.readings.flow[family][cells]
-        presence = self.readings.presence[family][cells]
-        return {
-            "nodes": float(chosen.sum()),
-            "arrived": float(arrived.mean()),
-            "flow": float((flow * radial).sum(axis=1).mean()),
-            "presence": float(presence.mean()),
-        }
-
     def cube_flux(self, family: int, centre: Address3, half: int) -> int:
         """The net outward flow through the closed surface between the cube of
         half-width `half` about the centre and its neighbours, this interval:
@@ -1207,6 +1205,11 @@ class NatureBeamSimulation:
         written as `NatureBeam.record` says."""
         nodes = sorted({int(node) for store in self.stores for node in np.unique(store.node)})
         vectors = self.tables.flight.vectors
+        # The world's `handed` read once: the property scans every measured
+        # event, and a row's line is written once per row (2026-09-21: the
+        # state's write of w27_beam at 30 intervals from 251.9 s to 9.7 s,
+        # the bytes identical).
+        handed = self.world.handed
         for flat in nodes:
             x, y, z = self.stores[0].coordinates(np.array([flat]))
             entry: dict[str, object] = {"position": [int(x[0]), int(y[0]), int(z[0])], "families": []}
@@ -1216,6 +1219,6 @@ class NatureBeamSimulation:
                 lo, hi = store.slice(flat)
                 if hi == lo:
                     continue
-                beams = [beam.record_line(vectors, self.world.handed) for beam in store.rows(lo, hi)]
+                beams = [beam.record_line(vectors, handed) for beam in store.rows(lo, hi)]
                 families.append({"family": family.name, "rays": beams})
             yield entry

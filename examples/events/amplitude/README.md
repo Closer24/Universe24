@@ -6,7 +6,8 @@ The decision, in the model owner's words (Highlights 5.4, 2026-09-20):
 "go for it with the four recommendations and the unifications"; the design
 is the physicist's and the mathematician's `docs/designs/amplitude-v1/DESIGN.md`,
 every integer below from its check scripts (`mz.py`, `mz.txt`), written
-before any run. Under the world key `amplitude` the GameBoard is unchanged
+before any run. In a recorded world (a lamp declared; the key `amplitude` of
+the law's first stages is deleted since the one click) the GameBoard is unchanged
 (the flight, the collision, the meeting, the books over every row), the
 rows carry a record, a branch and a multiplicity, a re-emission may split a
 row by integer weights, antiphase rows of one record cancel at the merge,
@@ -23,12 +24,16 @@ cancel).
 
 **The world** (the design's section 3.4): a plane of 5 x 5 with z periodic,
 K 2^20, N 64, `release` [0, 1], `suspension` 0, `amplitude` true, 80
-intervals. The source at (0, 0), a lamp of `light` of content 2^20 whose
-turn is one phase step per self-creation for far more births than the run
-holds, so the record born at tick t has the birth phase u = t - 1: the 64
-births of the ticks 1 .. 64 span the circle once and complete by tick 76
-(the ports click eleven or twelve intervals after a birth on the flight
-table); the 11 born after are open at the end. Each birth is one record of two rows of
+intervals. The source at (0, 0), a lamp of `light` of content 2^20 at K
+2^20 whose turn is one phase step per self-creation, paying 2 per birth:
+since the fraction-free law (2026-09-20, BEAM_LAW note 41) its exact
+clock stalls once, at tick 2 (the content 2^20 - 2 short of one turn),
+so the record of ordinal n >= 2 is born at tick n + 1 with the birth
+phase u = n - 1 (until then the record born at tick t had u = t - 1):
+the lamp's first 64 records, read by ordinal, span the circle once and
+complete by tick 76 (the ports click eleven or twelve intervals after a
+birth on the flight table); the 11 born after are open at the end. The
+pair lamps of L3 (content 15 x 2^20) stall once at tick 3. Each birth is one record of two rows of
 amount 1 with the multiplicity 2: +x (arm 1) and +y (arm 2, the
 reflection's quarter turn 16 on the row: the source's own splitter).
 Mirror 1 at (3, 0) re-emits +x arrivals on +y and mirror 2 at (0, 3)
@@ -71,7 +76,15 @@ the rows toward D2 cancel entirely. **What the world reads** (DETECTOR):
 the clicks per port over the 64 births in the table above, the ladder at
 each record's completion normalised by the sum of its offers with the
 rungs at the nearest integer, `b_k = (2 N C_k + Total) // (2 Total)`
-(`expectations.json` under `mach_zehnder`). The runs and their readings
+(`expectations.json` under `mach_zehnder`). Since 2026-09-21 (the
+trimming's part 2: a test holds no literal of a world's number) the same
+file registers what the tests read of the GameBoard and of the layer: the
+birth's and the split's rows with the cancels, the first gather, the last
+tick of the gathers and the totals' spread under `mach_zehnder`; the first
+gather and the last tick under `two_slits`; the pair's birth, the
+choosers' early records and the far worlds' least flight under `pair`;
+the rotate and gate lines, the rows after the gates and the rotation's
+multiplicity under `gate`. The runs and their readings
 are in the register's L1 entry.
 
 ## L2: the two slits at a low rate
@@ -97,6 +110,52 @@ weights per set (coherent within a Node, incoherent across the Nodes of a
 set: a face is one cell of the sum of its Nodes' squares), the ladder's
 clicks over the 64 births, the shares, the pixels and the correlations
 (the register's L2 entry has the numbers and the run).
+
+**The fan by angle** `slits_huygens` (L2b; the mathematician's
+[TWO_SLITS.md section 7](../../../docs/designs/fraction_free/TWO_SLITS.md),
+run on the Boss's order of 2026-09-20 under the owner's standing
+authorization, as the evidence for the decision on P as a width of the
+law): `slits_low`'s geometry, lamp and frequency, each opening's
+re-emission the Farey fan of width 48 (every primitive direction (a, b, 0)
+with a >= 1 and a + |b| <= 48, 1423 in angle order, consecutive
+directions Farey neighbours) restricted to |b| <= 13 a by the freed band
+(1327 directions; the 96 steeper ones would walk into the wall or through
+the other opening, 3.5 percent of the angle), each direction's split
+weight the angle it covers (half the gap to each neighbour, the gap
+3 Q^2 / (T_D T_D') at the grain 2^18: the weights 123 to 5619, A = sum
+of squares 714 364 777, the multiplicity 5 A within 2^32; the load-time
+ceiling multiplies both openings' A, so A stays within 2^31), 420
+intervals (at least 256 births completed). **Pinned before the run, from
+`docs/designs/fraction_free/two_slits_map.py`'s walk with these integer
+weights (the built phase, the click as built):** the first record's total
+2.677 of the birth norm (the rows of one opening meet at a pixel nearly
+in phase), the shares wall 0.224, screen 0.410, faces 0.366; the screen
+WEIGHTS with Young's fringes, Pearson 0.895 with the Euclidean two-source
+cosine (the pace 64/110, the wavelength 4.654 Links), visibility 0.954
+between the cosine's bright pixels (y = 35 to 38, 59 to 61, 82 to 85) and
+its dark ones (13 to 20, 48 to 50, 70 to 72, 100 to 107), the peak at y =
+59 to 61 at 0.012 of the total against the rung 1 / 2N = 0.0078; the
+CLICKS over the 64 births of u = 0 .. 63: wall 14 (4, 5, 5), screen 27 on
+27 pixels one each (y = 2, 25, 31, 33, 35, 37, 39, 41, 43, 47, 56, 57, 59,
+60, 61, 63, 64, 74, 77, 79, 81, 83, 85, 87, 89, 97, 119: the cumulative
+rungs fall where the weights are, 7 of the 11 bright pixels hit and none
+of the 22 dark, the histogram's Pearson 0.499 with the cosine), faces 23
+(11, 12); 32 distinct cells over the 64 births and the same cells for
+every later birth (u repeats with the period 64). Refutation: a Pearson of
+the weights below 0.85 or a visibility below 0.9, a click at a dark
+pixel, or a click cell outside the 64-birth list after tick 64.
+
+**Run (2026-09-20, `slits_huygens`, 420 intervals, 76.3 s, main f89884f9,
+completed and conserved; 271 records gathered, 149 open at the end;
+DETECTOR).** Every pinned number reproduced: the first record's total
+2.6771, the shares 0.224 / 0.410 / 0.366, the weights' Pearson 0.895 and
+visibility 0.954 with the peak at y = 59 (0.01204 of the total); the
+first 64 births' clicks wall 14, screen 27 on the pinned 27 pixels, faces
+23; no click at a dark pixel in 271; 32 distinct cells in the first 64
+births and 32 in all 271 (every u clicked its one cell at every birth);
+the histogram's Pearson 0.493 at 271. The fringes are in the record's
+weights and not in the clicks: TWO_SLITS.md section 7, the page
+<https://claude.ai/artifact/6pyy8C62muHshZ7iMDCUx9>.
 
 ## L3: the pair, the which-path world and no maintenance
 

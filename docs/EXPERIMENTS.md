@@ -34,7 +34,10 @@ not in reality. A comparison with nature (section A) uses detector readings
 only; a GameBoard reading describes the mechanism, checks the books or
 draws the picture. Where an entry of the past registered a GameBoard reading
 as the measurement, it says so from this date, and the detector form is
-added when the entry is re-run.
+added when the entry is re-run. Every quantity the record exposes, by type
+(scalar, vector, tensor, pair) with its line, unit and kind, is the table
+[the detector's readings by type](ENGINE.md#the-detectors-readings-by-type)
+(2026-09-21, record 205: an entry names the vector it will read from it).
 
 **The rule of every entry.** Before its run, an entry names the features it
 needs (numbers 1 to 12 below), the GameBoard, the families, the Detector marks
@@ -1041,6 +1044,24 @@ states "exactly" and means integer equality at every tick.
   `bell/fixed` changed. The phase-form Bell test is the crowd form's; the
   record's pair is series L3 and L5 (`branches`, `arms`, the reading
   `sum`: S = 176/64 at N = 64). The numbers above are kept as history.
+- **Re-read under the fraction-free law (2026-09-20; measured, nothing
+  pinned; [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  The pair lamp of content K + 2 pays 2 per birth, so its exact clock
+  (the count of its turn accumulator) stalls once, at tick 4: 159 births
+  in 160 intervals in every one of the ten worlds (160), every birth
+  after tick 3 one tick later, and `tick - phase` is no longer one offset
+  per Node. `tools/bell_chsh.py` pairs a row by its record (the age its
+  birth ordinal less one; `record` and `u` on every click and pass line)
+  and reports the tick offsets as the flight's smallest tick - age (plus
+  14; the minus Nodes silent under the one click): S = 2 and S' = 2 as
+  under the one click, every E the one click's (+1 or -1), 258 criteria
+  passed and 118 failed of 376 (the same reader on the base tree's runs:
+  252 and 124, the six phase-against-age criteria the stall breaks), the
+  books balanced at every tick, nothing escaped, the lamp's momentum
+  [0, 0, 0]. The correlations do not depend on the alignment (record 148:
+  the record form's pair read by ordinal gives S = 176/64 on both counts,
+  series L3). The digests of the ten worlds moved; the numbers above are
+  kept as history.
 
 ### C, the couplings under the Beam Law, on the plane (2026-09-19)
 
@@ -2218,6 +2239,23 @@ states "exactly" and means integer equality at every tick.
   inside and 27 outside (310 and 26); the reading's formula 288 of 288
   inside 2 %. The verdict and the follow-up stand as read ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
 
+- **Re-read under the fraction-free law (2026-09-20; measured, nothing
+  pinned; [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  Every source is a lamp paying at every self-creation, and the pushing
+  worlds' clocks read a crowd that changes; under the accumulator the two
+  coasting worlds are identical to the registered runs (their lamps'
+  contents stay above K and no clock is slowed) and the two pushing
+  worlds move by little: the near fit's H t_0 in the windows [100, 200),
+  [200, 300), [300, 400) and [200, 400) reads 1.176, 1.302, 1.324, 1.301
+  in `pushing_scalar` (1.144, 1.182, 1.305, 1.292 under the signed
+  drive) and 0.848, 1.018, 1.086, 1.035 in `pushing_age` (0.866, 0.932,
+  1.057, 1.036), the coasting worlds 0.877, 0.969, 1.017, 0.996 as under
+  the drive; q = -0.55 is the nearest of the three forms in 9 of the 12
+  windows (8 of 12 under the drive, 10 of 12 registered): `pushing_age`
+  reads q = 0 the nearest in [100, 200) alone. 310 readings inside and 26
+  outside (309 and 27 under the drive; 310 and 26 registered); the
+  reading's formula 288 of 288 inside 2 %. The verdict and the follow-up
+  stand as read; the numbers above are kept as history.
 
 ### G2, the Hubble diagram with stars behind the detector (2026-09-20)
 
@@ -2351,6 +2389,29 @@ states "exactly" and means integer equality at every tick.
   pages in the worlds'
   [README](../examples/events/hubble_stars/README.md).
 
+- **Re-read under the fraction-free law (2026-09-20; measured, nothing
+  pinned; [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  Every star is a lamp paying at every birth, so each stalls once over the
+  run (9576 births of 9600 in the `none` worlds, 24 stars) and the scalar
+  and age clocks read a crowd that changes at every interval. The
+  clock-free worlds keep their readings to the digit: under the record
+  click `coasting_none` q = -0.108 and H (t_0 + T_0) = 1.026, `gravity_none`
+  +0.922 and 0.811, `double_none` +1.500 and 0.674, and under `doppler`
+  -0.108 and 1.026, +0.345 and 0.916, +1.190 and 0.774 (the second and
+  third runs' numbers); the clocked worlds move: under the record click
+  `gravity_scalar` q = +0.380 and H = 0.896 (+0.749 and 0.854),
+  `gravity_age` +0.750 and 0.858 (+0.461 and 0.874); under `doppler`
+  `gravity_scalar` -0.125 and 1.006 (-0.158 and 1.008), `gravity_age`
+  +0.170 and 0.972 (+0.093 and 0.958). `tools/hubble_stars_readings.py` on
+  the nine record worlds: the reading's formula 648 of 648 inside 2 %,
+  the luminosity 648 of 648 inside 5 %, 0 record checks failed, 1362
+  readings inside and 6 outside (the scalar and age clocks' late-window q
+  and nearest form, as in the second run); on the nine `doppler` worlds
+  1358 inside and 10 outside (the same lines and the double crowd's q, as
+  in the third run). The first run's nine worlds moved likewise in their
+  counts (the table in VALIDATION); their reader predates the family
+  definitions those files reference and was not re-run. The verdicts as
+  re-read stand; the numbers above are kept as history.
 
 ### H, Bohr's lines behind the detector (2026-09-20)
 
@@ -3084,6 +3145,22 @@ states "exactly" and means integer equality at every tick.
   the three lamps and the four counters, why it was tested, the moving
   picture with a time control, the readings, the conclusion) is in the
   session's scratchpad, not published.
+- **Re-read under the fraction-free law (2026-09-20; measured, nothing
+  pinned; [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  The pair lamp (content K + 2) stalls once, at tick 4, in `read`,
+  `one_clock`, `fixed` and the four written worlds (1939 births in 1940
+  intervals, 147 in 148, 140 in 141). `tools/bell_choosers.py` reads a
+  pair by its record: the tick offsets reported as the flight's (6, 11,
+  13, 14 in `read`), the warm-up 6 pairs by record (7 by tick: the 7th
+  record is born at tick 8), 1921 pairs analysed in `read` (the ages
+  6..1926) in 15 bins with S = E(0,8) - E(0,29) + E(25,8) + E(25,29) = 2
+  (the triangle 2) and the largest S over the 5 x 3 settings' quadruples
+  2 on (0, 12) x (8, 29); the four written worlds S = 2 on their merged
+  bins; `one_clock` 51 bins and no quadruple; the record kinds and the
+  windows on the record form fail the crowd form's criteria as they did
+  under the one click. Nothing in the verdict moved; the digests of the
+  seven worlds moved.
+
 ### K under the meeting (2026-09-20)
 
 - **Confronts.** The same question, the bending and the delay of light by
@@ -3534,6 +3611,31 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   masses fixing it, the propagator's rise, V-A; registered as the law's
   limits, nothing tuned. The page for the model owner: the scratchpad's
   `weak_impl/weak.html`, published by Boss.
+- **Re-read under the fraction-free law (2026-09-20; measured, nothing
+  pinned; [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  The owed count is the count of each clock's accumulator, exact over
+  the crowd's history (the fan's rows dwell 1 or 2 intervals, so the
+  crowd a nucleon reads changes at every interval; the whole part off the
+  clock at the current crowd had credited the whole age at it).
+  `j3_deuteron`: 69 intervals waited of 700 on both nucleons (80), 33 and
+  31 attempted steps every one a refused contact (33 and 29; the pair
+  holds), 64 contacts (62) in pairs one tick apart from tick 17 (17, 18,
+  35, 36; 17, 21, 38, 44 before: the two clocks wait at the same
+  intervals, reading the same crowd), the neutron firing at 568 (577; the
+  pinned 574 or up to 3 before, outside as before) with the same
+  products and recoil, its beta clicking the shell at 581 (590) with the
+  content 3 at the same Node (13, 16, 6); the verdict BOUND stands.
+  `j3_deuteron_crowd`: never fires, 69 waited on each body (80), 36 and 33
+  attempted. `j1_lattice` and `j1_source`: the 64 neutrons fire at 522
+  to 524 and 523 to 528 (the pinned 522 to 524 and 524 to 529: the
+  lattice's corners at 524 outside as registered, the source's inside
+  now), the shell's 64 beta clicks a step (the median 551.5 and 553.5,
+  the 10th-to-90th-percentile ticks 542 to 562 and 542 to 563, the width
+  over the median 0.036 and 0.038 as registered), every click the content
+  3. `tools/weak_readings.py`: 0 record checks failed, 34 readings inside
+  and 2 outside over the eleven worlds. `j3_neutron_free` (512 exactly),
+  `w_exchange` and the five J2 worlds are identical. The digests of the
+  four moved worlds; the numbers above are kept as history.
 
 ### L, the amplitude law (2026-09-20)
 
@@ -3806,6 +3908,44 @@ question, issue #376; the Boss's approval of 2026-09-20).**
   declare the pair form; the pair, GHZ and the gate declare no phase per
   Link. Which form nature's light is, the model does not say.
 
+**L2b, the two slits with the fan by angle (Huygens on the lattice; the
+mathematician's run of 2026-09-20 under the Boss's standing authorization,
+records 160 and 163).**
+
+- **Model prediction, pinned before the run (the world's README paragraph,
+  from `two_slits_map.py` with the world's weights).** `slits_low`'s
+  geometry, lamp and frequency; each opening's fan the Farey fan of width
+  P = 48 within the freed band (1327 of 1423 primitive directions) with
+  each direction weighted by the angle it covers (half the gap to each
+  Farey neighbour, exactly 1 / (|D| |D'|), integers at the grain 2^18;
+  [TWO_SLITS.md section 7](designs/fraction_free/TWO_SLITS.md)); 420
+  intervals; no src change. Pinned: the record's total 2.677, the shares
+  wall / screen / faces 0.224 / 0.410 / 0.366; the screen WEIGHTS with
+  Young's fringes, Pearson 0.895 with the Euclidean two-source cosine,
+  visibility 0.954, the peak at y = 59 (0.012 of the total); the first 64
+  births' clicks wall 14, screen 27 on 27 named pixels, faces 23; no click
+  at a dark pixel; 32 distinct cells fixed after the 64th birth (u repeats
+  with the period 64); the click histogram's Pearson 0.499.
+- **Run (2026-09-20, `slits_huygens`, 420 intervals in 76.3 s, 0.18 s per
+  interval, 2659 rows per record, completed and conserved at every tick,
+  271 records gathered, 149 open; DETECTOR; the page
+  https://claude.ai/artifact/6pyy8C62muHshZ7iMDCUx9).** Total 2.6771,
+  shares 0.224 / 0.410 / 0.366; Pearson 0.895, visibility 0.954, the peak
+  y = 59 at 0.01204; the first 64 births wall 14, screen 27 on the pinned
+  27 pixels, faces 23; no click at a dark pixel in 271; 32 distinct cells
+  in the first 64 and in all 271, every u clicking its one cell at every
+  birth; the histogram's Pearson 0.493. Every pin reproduced; none of the
+  refutation line's four conditions occurred. Verdict: Young's fringes are
+  in the record's weights from the fan by angle alone, under the built
+  phase; the clicks cannot show them while u repeats with the period 64.
+  The evidence for the fan as a width P of the law with the angle weights
+  (decided, [record 163](LOG_2026-09-20.md#163-decided-the-owner-2355z-on-the-bosss-list-of-six-1-yes-the-fan-as-a-width-p-of-the-law-with-the-angle-weights-as-the-rule-of-every-fan-huygens-on-the-lattice-record-160-2-yes-the-exact-phase-at-the-click-from-the-rows-two-accumulators-record-156-5-yes-the-registers-pins-as-detector-readings-only-6-rule-a-closed-pr-383-record-139-3-the-birth-wheel-and-4-the-fan-direction-doppler-left-with-two-questions-explain-why-doppler-is-needed-when-it-emerges-by-itself-what-is-the-birth-wheel-the-owners-words-translated-the-bosss-answers-nothing-is-added-for-doppler-the-key-and-g-are-deleted-the-crossing-rule-alone-gives-it-the-lattices-own-count-on-a-fan-direction-is-the-laws-statement-so-4-is-closed-by-the-question-itself-and-the-wheel-is-the-lamps-count-written-on-the-record-at-birth-that-the-ladder-reads-at-the-click-in-place-of-a-draw)), and for the wheel as
+  what turns the weights into counts; the wheel's form checked with the
+  map ([TWO_SLITS.md section 8](designs/fraction_free/TWO_SLITS.md)): the
+  golden-rate count on the lamp's record gives the same clicks as the
+  bit-reversed ordinal within one click at 4096 births
+  ([record 164](LOG_2026-09-20.md#164-the-fan-by-angle-run-on-main-slits_huygens-l2b-the-mathematician-no-src-change-pr-410-the-page-httpsclaudeaiartifact6pyy8c62muhshz7imdcux9-every-pin-reproduced-the-records-screen-weights-carry-youngs-fringes-at-the-euclidean-spacing-pearson-0895-with-the-two-source-cosine-visibility-0954-the-peak-at-y--59-from-the-farey-fan-of-width-48-with-the-angle-weights-alone-under-the-built-phase-the-clicks-cannot-show-them-27-screen-cells-of-121-32-cells-in-all-fixed-for-the-whole-run-u-repeating-with-the-period-64-the-evidence-for-p-as-a-width-of-the-law-decided-record-163-and-for-the-wheel-as-what-turns-weights-into-counts-the-golden-rate-wheel-checked-with-the-map-two_slitsmd-section-8-the-same-clicks-as-the-bit-reversed-ordinal-within-one-click-at-4096-births-the-same-cells-filled-by-1024-the-golden-rate-the-generic-wheel-as-one-row-of-the-counts-table-the-wheels-form-for-the-owner)).
+
 **L, open items (2026-09-20, after (v)).** The one click (the design's
 section 6) is not landed: the record form as the default changes worlds
 outside the crowd-threshold series on the gate set
@@ -3845,6 +3985,27 @@ minutes at interval 211 of 350; with the layer releasing gathered
 records' offers, 3.3 GB and interval 136 at 20 minutes) is an open item,
 with the design's items not built: unification (3), Grover, two
 sequential gates on an entangled record, the full register replay.
+- **Re-read under the fraction-free law (2026-09-20; measured, nothing
+  pinned; [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  Every lamp of the series pays at every birth, so its exact clock stalls
+  once within the run: at tick 2 on the lamps of content 2^20 at K 2^20
+  (`mz_*`, `ev_*`, `slits_low`, the `cnot_*`, the cones), at tick 3 on the
+  pair lamps of 15 x 2^20 (`bell_*`, `path_*`, `bell_choosers`, the N =
+  1024 worlds); every such world is one birth short over its run (79 of
+  80, 999 of 1000, 229 of 230; the N = 4096 worlds keep their 4113 births
+  and their counters' clocks move by one turn; `slits_one` identical), so
+  the 64th record of a world is born at tick 65 and the tick of a birth
+  is not its u. The readings take a lamp's first 64 records by ordinal
+  (`tests/test_amplitude_layer.py`, `tests/test_amplitude_pair.py`,
+  TEST_EXPECTATIONS "The fraction-free counts") and every integer of L1
+  to L7 stands: the Mach-Zehnder ports (D1 64 on `mz_equal`, the 64
+  records gathered by tick 76), Elitzur-Vaidman, the two slits' 80 sets
+  (the 64th gather at 214, 213 before), the CHSH cells and S = 176/64,
+  the choosers' fifteen E and S = 156/64 (the 960 records from the 7th,
+  born at tick 8; six before it click at alice_minus, seven before), the
+  which-path S = 88/64, no maintenance, the GHZ triples, CNOT, the cone;
+  none moved. The digests of 47 of the 48 worlds moved; the numbers
+  above are kept as history.
 
 ### N, the binding that costs content (2026-09-20)
 
@@ -3933,6 +4094,16 @@ sequential gates on an entangled record, the full register replay.
   ("opposite to the refused step"), and the runs above are of the
   corrected engine. The runs establish what the rule does on the engine;
   they establish no physical law, for or against.
+- **Re-read under the fraction-free law (2026-09-20; measured, nothing
+  pinned; [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  `proton_bond_lamp` (B2, the control): the I7 lamp (content 2^23 at K
+  2^20, paying its turn per birth) turns by its accumulator, 3000 births
+  in 3000 intervals as before (its content stays above K over the run),
+  the set's 2993 gathers with 2958 of content 8 and 35 of content 7
+  (2961 and 32: the turn 7 at three more self-creations, the whole part
+  of the falling rate), no contact, no `bond` row or click, `held.bond` 2
+  at 3000, the proton's held (1834, 0, 1, 2, 0, 0), no step. B1 and B3
+  are identical (no lamp, no crowd on a fan). The verdict stands.
 
 ### A3. Bell test in phase form, delayed geometry
 

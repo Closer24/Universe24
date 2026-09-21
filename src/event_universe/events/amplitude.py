@@ -63,11 +63,13 @@ product of their sets with the CNOT's permutation (`join`).
 from __future__ import annotations
 
 import itertools
+import math
 from dataclasses import dataclass, field
 
 from event_universe.core.phase import (
     MAX_PHASE_STEPS,
     PHASE_COSINE_SCALE,
+    phase_circle,
     phase_cosines,
     phase_sines,
 )
@@ -85,8 +87,9 @@ NO_NODE: Node = (-1, -1, -1)
 AMPLITUDE_SCALE = 32
 # The identity entry of a plain set's residual: the rotation's entries are
 # in 1/256^2, so a set that rotates nothing scales by 256^2, and every
-# arm's factors are in one unit.
-IDENTITY = PHASE_COSINE_SCALE * PHASE_COSINE_SCALE
+# arm's factors are in one unit (named for the rotation; `nature_beam`'s
+# `IDENTITY` is the 3 x 3 identity of the headings).
+ROTATION_IDENTITY = PHASE_COSINE_SCALE * PHASE_COSINE_SCALE
 # The joint label of a row is its `branch` column: the label in the low
 # 32 bits, the arm it flies on above them.
 LABEL_BITS = 32
@@ -95,7 +98,7 @@ LABEL_MASK = (1 << LABEL_BITS) - 1
 # the identity rotation, (32 x 256 x 256^2)^2 = 2^58; a record's `total`
 # over this unit is its norm as offered (1 up to the tables' rounding and
 # the cross terms of paths meeting at one Node).
-UNIT = (AMPLITUDE_SCALE * PHASE_COSINE_SCALE * IDENTITY) ** 2
+UNIT = (AMPLITUDE_SCALE * PHASE_COSINE_SCALE * ROTATION_IDENTITY) ** 2
 PLUS, MINUS = 0, 1
 CHANNEL_NAMES = {PLUS: "+", MINUS: "-"}
 
@@ -151,19 +154,6 @@ def lcm(a: int, b: int) -> int:
     return a * b // gcd(a, b) if a and b else max(a, b)
 
 
-def isqrt(value: int) -> int:
-    """The integer square root of a nonnegative Python integer (Newton on
-    the host's integers, exact)."""
-    if value < 2:
-        return value
-    x = 1 << ((value.bit_length() + 1) // 2)
-    while True:
-        y = (x + value // x) // 2
-        if y >= x:
-            return x
-        x = y
-
-
 def common_denominator(held: int, arriving: int) -> tuple[int, int, int]:
     """Two multiplicities of one record at one offer (the design's 2.5;
     stage (vii)): the offer's pointers are amplitudes over the square root
@@ -176,7 +166,7 @@ def common_denominator(held: int, arriving: int) -> tuple[int, int, int]:
     refuses: the integer form has no cross term over sqrt(D m))."""
     common = gcd(held, arriving)
     a, b = held // common, arriving // common
-    root_a, root_b = isqrt(a), isqrt(b)
+    root_a, root_b = math.isqrt(a), math.isqrt(b)
     if root_a * root_a != a or root_b * root_b != b:
         return (0, 0, 0)
     return root_b, root_a, held * b
@@ -206,10 +196,34 @@ def rungs(weights: list[tuple[int, int]], steps: int) -> tuple[list[int], tuple[
 
 
 def choose(found: list[int], u: int) -> int | None:
-    """The cell of u: the first k with u < b_k (b_{k-1} <= u by the
-    rungs' monotony); None when the ladder is empty."""
+    """The cell of u by the rungs: the first k with u < b_k (b_{k-1} <= u
+    by the rungs' monotony); None when the ladder is empty. The report's
+    form; the click reads `cell_of`, the same cell without the division."""
     for k, b in enumerate(found):
         if u < b:
+            return k
+    return None
+
+
+def cell_of(weights: list[tuple[int, int]], steps: int, u: int) -> int | None:
+    """The cell of u as the comparison of two products (the fraction-free
+    law, 2026-09-20, BEAM_LAW note 41 (v); the mathematician's FORM.md
+    section 5): the first k with 2 T u + T <= 2 N C_k, C_k the cumulative
+    weight over the cells' common denominator and T the total, which is
+    u < b_k for the rung b_k = (2 N C_k + T) // (2 T) at the nearest
+    integer, no division and no rounding, the same integers as `choose`
+    on `rungs`; None when the ladder is empty (T = 0)."""
+    denominator = 1
+    for _, m in weights:
+        denominator = lcm(denominator, m)
+    total = sum(n * (denominator // m) for n, m in weights)
+    if total == 0:
+        return None
+    threshold = 2 * total * u + total
+    cumulative = 0
+    for k, (n, m) in enumerate(weights):
+        cumulative += n * (denominator // m)
+        if threshold <= 2 * steps * cumulative:
             return k
     return None
 
@@ -326,9 +340,11 @@ class Layer:
         self.set_index = {key[1]: index for index, key in enumerate(keys) if key[0] == "set"}
         self.face_index = {key[1]: index for index, key in enumerate(keys) if key[0] == "face"}
         self.border_index = next((index for index, key in enumerate(keys) if key[0] == "border"), -1)
-        self.steps = phase_steps
-        self.cosines = phase_cosines(phase_steps)
-        self.sines = phase_sines(phase_steps)
+        # The phase circle (the cyclic group of N steps) with its tables.
+        self.circle = phase_circle(phase_steps)
+        self.steps = self.circle.steps
+        self.cosines = self.circle.cosines
+        self.sines = self.circle.sines
         self.records: dict[int, LiveRecord] = {}
         # The identities gathered (their table entries and offers released at
         # the completion; `resolve` finds nothing, the lazy deletion of their
@@ -348,10 +364,6 @@ class Layer:
         while identity in self.aliases:
             identity = self.aliases[identity]
         return self.records.get(identity)
-
-    def origin(self, identity: int) -> int:
-        """The identity a row was born to, as the gate's label map keys it."""
-        return identity
 
     def birth(
         self,
@@ -538,7 +550,7 @@ class Layer:
         offer.last_tick = tick
         if not absorbed:
             # A read: the factor selects the label, once per label present.
-            offer.residuals.setdefault(label, {})[(NO_NODE, label)] = (IDENTITY, 0)
+            offer.residuals.setdefault(label, {})[(NO_NODE, label)] = (ROTATION_IDENTITY, 0)
             return
         at = NO_NODE if node is None else node
         scale = 1
@@ -580,7 +592,7 @@ class Layer:
         offer.pointers[key] = cadd(offer.pointers.get(key, (0, 0)), pointer)
         if rotation is None:
             channel = offer.residuals.setdefault(label, {})
-            channel[key] = cadd(channel.get(key, (0, 0)), cmul((IDENTITY, 0), pointer))
+            channel[key] = cadd(channel.get(key, (0, 0)), cmul((ROTATION_IDENTITY, 0), pointer))
         else:
             offer.rotated = True
             if offer.setting is None:
@@ -690,7 +702,8 @@ class Layer:
             cells = self.cells(found)
             weights = [(numerator, multiplicity) for _, numerator, multiplicity, _ in cells]
             ladder, total = rungs(weights, self.steps)
-            k = choose(ladder, found.u) if total[0] else None
+            # The cell by the comparison of products; the rungs a report.
+            k = cell_of(weights, self.steps, found.u)
             chosen: list[list[object]] | None = None
             weight: list[int] = [0, 1]
             windows: list[list[object]] | None = None

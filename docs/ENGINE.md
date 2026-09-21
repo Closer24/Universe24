@@ -121,9 +121,11 @@ the six faces of the cube of the given half-width around the centre on an
 all-open GameBoard, read off the Links crossed per Port (`per_port`, a
 diagnostic of the walk, not the reading's moments), read-only; on a world
 with any periodic axis it raises `ValueError` (a periodic seam is not a
-face). `shell_readings` gives the shell means of the count (the amount that
+face). `diagnostics.shell_readings.shell_readings(simulation, family, centre,
+radius)` (a host diagnostic outside the engine since 2026-09-21; before, the
+engine's method) gives the shell means of the count (the amount that
 arrived, the zeroth moment outside), the presence (every ray at the Node)
-and the radial flow (the first moment), read-only.
+and the radial flow (the first moment), read-only, in floating point.
 `tools/coupling_readings.py` sums the four in-plane faces itself on the
 plane. A thin periodic GameBoard is a
 compact graph with return Links; it establishes no equivalence with
@@ -182,11 +184,18 @@ moved one after another in number order, a declared tie: when two bodies
 step in one interval and one's destination is the other's Node, the lower
 number steps first, [BEAM_LAW note 31 (ix)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
 for every measured
-event, its clock (its age, the turn `by_clock(age, content x n, d)` at the
-clock's rate `K` = [n, d], an integer K being [1, K] (`NatureBeamWorld.turn`;
-the four unifications (2), 2026-09-20: the turn is the free release's own
-form at the rate [1, K], `by_clock_rows` over the phased events in one
-array), its
+event, its clock (its age, the turn, the count of its accumulator `acc_turn`
+at the rate `content x n` over d, the clock's rate `K` = [n, d], an integer K
+being [1, K] (`NatureBeamWorld.turn`; the four unifications (2), 2026-09-20:
+the turn is the free release's own form at the rate [1, K]; since the
+fraction-free law of the same day, [BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+every count of the clock is `by_drive` on the body's own accumulator, the
+same integers as `by_clock(age, content x n, d)` at a constant content
+from age 0; the counts are one table on the record, `Measured.counts`,
+whose one loop `CountTable.advance` runs every row through `by_drive` and
+hands the whole part to the count's consumer, the turn here, the owed
+count at `_suspend`, the release and the lamp at step 5, the drive at
+`_move`, the push and the doppler weight at the reading), its
 release rate, its lamp's rate and window, its owed count) and its content
 (`frame_content`, read once before the law: M_A of the interval's push,
 the same whatever the order in which the families' clicks join `held`
@@ -196,8 +205,9 @@ are read and handed to `nature_beam` with the stores; `nature_beam` returns the 
 `per_port`, the amount that crossed into each Node through each Port this
 interval, a diagnostic of the walk for Gauss's flux); the frame turns the
 phases of the measured events that
-self-created, reads the owed count off the clock from what the clock
-counted (`_suspend`, `by_clock(age, k x n, d)`, k the presence, or for a
+self-created, reads the owed count as the count of the body's accumulator
+`acc_owed` at the rate k x n over d from what the clock
+counted (`_suspend`, `count_owed`; the same integers as `by_clock(age, k x n, d)` at a constant crowd, k the presence, or for a
 family whose table entry reads `age` the age moment `sum amount x age`
 over the same set, `measured.count_component`, `Measured.counted`;
 [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
@@ -278,10 +288,10 @@ differing key refused naming the family and the key); the parser sees one
 ordinary `families` list and applies every rule above to it. The shipped
 definitions are `examples/events/entities/families.json` and
 `apparatus.json`; since 2026-09-20 the registered worlds of every series
-but the ones stage (vii) of `amplitude-v1` re-pins reference
-`families.json` (`../entities/families.json`, a climb of one level the
-loader admits), their generators writing the reference in place of the
-families it defines.
+reference `families.json` (`../entities/families.json`, a climb of one
+level the loader admits), their generators writing the reference in place
+of the families it defines; a world whose family differs from its
+definition keeps that family inline.
 
 ### A release costs the emitter by its phase rate
 
@@ -877,6 +887,49 @@ host's work and memory per interval follow the open records, not every
 record born.
 `tools/amplitude_path.py` replays a run's register through the layer and
 checks it against `world`. `tools/run_series.py` runs these worlds as any.
+
+### The detector's readings by type
+
+The model owner, 2026-09-21 (record 205): "after the detector, name the
+vector to read": an experiment names, before its run, the quantity of the
+record it will read and its type. This table lists every quantity the
+record (`run.json`, `events.jsonl`, `state.json`) exposes, by type, with
+the symbol of the notation rule (record 184: a scalar plain, a vector in
+bold lowercase, a tensor in bold uppercase, a component plain with its
+index), the line or field that carries it, its unit, and its kind under
+[the two kinds of readings](EXPERIMENTS.md): a **detector** reading is the
+record of a detector's set or of a measured event, the only kind reality
+has; a **GameBoard** reading is the host's view of the deterministic
+GameBoard. Every value is an integer or a reduced pair of integers; no
+formula is applied on the way out. The coherent pointer (X, Y) is already
+on the `record` line (a `wave` set's line under `pointer`, and the `sum`
+set's line at a gather, per label); nothing further is exposed. The
+things themselves, one row each in the three worlds, are in
+[THREE_WORLDS.md](THREE_WORLDS.md).
+
+| The reading | Type and symbol | Where the record carries it | Unit | Kind |
+| --- | --- | --- | --- | --- |
+| the clicks | scalar | `clicks` per family on a `detectors` entry of `run.json`, summed over the set's Nodes; the `click` lines of `events.jsonl` (`amount` per row group; on a face, the face's name as `detector`); `events` of a measured event's state | units of amount | detector |
+| the amount measured | scalar | `measured` per family on a `detectors` entry (the units taken by `measure`); `measured` in a measured event's state (per rule) | units of amount | detector |
+| the record (the square) | scalar, the norm of the pointer | `record` per family on the set (`wave`: X^2 + Y^2 of the coherent pointer, accumulated; `beam`: the count clicked); `record` on the `record` line at each click; the same square on a face and the border `lifetime` | (32 x 256)^2 per unit of amount squared (X = sum 32 x amount x C[phase], C on the circle at the scale 256) | detector |
+| the pointer (X, Y) | a vector of the phase plane (Z^2), not of the GameBoard | `pointer` on the `record` line of a one-Node `wave` set, and per label on the `sum` set's `record` line at a gather | 32 x 256 per unit of amount | detector |
+| the phase | scalar on the circle Z_N | `phase` on the set at its last click; `phase` on a `click`, `record`, `home` or `rerelease` line; `phase` of a measured event's state | steps of the circle (N per turn) | detector |
+| the wheel value u | scalar on the circle Z_N | `u` on a `birth` line ((births - 1) mod N at the lamp) and on the `click`, `read`, `rerelease` and `split` lines of a record's rows | steps of the circle | detector |
+| the age of a row | scalar | `age` on the `click` line of a record's row; the age moment `reading` when the entry reads `age` (sum amount x age) | intervals (the moment: units x intervals) | detector (read whole only by a measured event) |
+| the content | scalar M | `content` on a `click`, `read`, `home` or `rerelease` line (amount x content per unit); `content` and `held` of a measured event's state; `content` and `measured_content` on a face | units of content | detector |
+| the clock of a measured event | scalars | `age` (its intervals), `phase_steps` (its turns), `owed` (the count owed in a crowd), `waited`, `steps` of its state | intervals, steps, units | detector |
+| the reading of the moments, order 0 | scalar | `reading` on a `click` or `read` line when the entry reads `scalar` (the presence), `outside` (the rays that arrived) or `here` (the rays that did not step) | units of amount | detector |
+| the net flow **f** | vector, 3 components | `reading` on a `click` or `read` line when the entry reads `vector`: sum amount x **u**_d over the arrivals, on the unit vectors of the directions | Q = 64 per unit of amount along a heading | detector |
+| the traceless second moment **T** | tensor, 3 x 3 symmetric of trace zero | `reading` on a `click` or `read` line when the entry reads `tensor`: 3 sum amount x **u**_d **u**_d^T less its trace on the diagonal | Q^2 per unit of amount | detector |
+| the momentum **p** of a measured event | vector | `momentum` of its state (`measured` of `run.json` and `state.json`); `pushed` (the push taken, summed) and `drive` (the drive's count per axis) beside it | label units: Q = 64 per unit of amount along a heading | detector |
+| the label **p** of a row | vector | `push` on a `click` or `read` line (the row group's label, what the reader took); `momentum` on a face `click`; `momentum` on a `gather` line (what the chosen rows gave); `recoil` on a `become` line; `momentum` per family on a face and the border | label units | detector |
+| the share of a record's row | vector | `share` on the `click` line of a record's row: the row's push on matter, label x amount // m | label units | detector |
+| a Node as a position | vector of Links (x, y, z) | `node` on every line; `position` of a measured event's state; `to` on a `step` line | Links | GameBoard |
+| the step of a measured event | scalars and a vector | `steps` and `axis_steps` of its state; the `step` line | Links | GameBoard |
+| the charge | a reduced pair (n, d) | `charge` of a measured event's state (rho x content, reduced) and `charges` per column by name; the `charge` line of the books | the family's charge per unit of content (a paid family: a whole charge per unit of amount) | detector (the state); GameBoard (the books) |
+| the gather's weight and total | reduced pairs | `weight` and `total` on a `gather` line, `T` the norm, `cells` the rungs | the unit 2^58 (`unit`) | detector (the one click) |
+| the books | scalars and vectors, exact at every tick | `audit` of `run.json` per completed tick: per family the sums, the `momentum` block (`measured`, `transit`, `escaped`, `turned`), the `charge` line, `balanced` | units, label units, pairs | GameBoard |
+| the flow and the counts at a Node, the shell means | scalars and vectors | `state.json` Node by Node (the rows' columns); `diagnostics/shell_readings.py` | units, label units | GameBoard |
 
 ## The law of events (`events-v1`)
 

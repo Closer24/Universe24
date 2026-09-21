@@ -124,3 +124,12 @@ was corrected to the step's sign ([BEAM_LAW note 40](../../../docs/BEAM_LAW.md#1
 The runs establish what the rule does on the engine (the give once, the
 clicks with the content, the pair stable, the books exact, the alpha at
 2.0 x); they establish no physical law, for or against.
+
+## Re-read under the fraction-free law (2026-09-20)
+
+`proton_bond_lamp` (B2, the control) moves under the fraction-free law
+([BEAM_LAW note 41](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+its I7 lamp turns by its accumulator, 3000 births as before, the set's
+2993 gathers with 2958 of content 8 and 35 of content 7 (2961 and 32),
+no contact, no `bond` row or click, `held.bond` 2, no step; B1 and B3
+are identical. The verdict stands ([migration](../../../docs/MIGRATION.md#the-fraction-free-law-on-2026-09-20-every-count-an-accumulator-on-the-bodys-record)).

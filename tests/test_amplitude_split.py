@@ -9,9 +9,11 @@ amplitude law: the split"), written down before the first run:
 (a) the birth: the source of `mz_equal` (content 2^20 at K 2^20, one row
     per self-creation on +x and +y, the turn 16 on +y) births at tick 1 one
     record, 2^32 + 1, of two rows at (0, 0): (+x, age 0, phase 0, amount 1,
-    content 1, branch 0, multiplicity 2) and (+y, phase 16); at tick 2 the
-    record 2^32 + 2 with the phases 1 and 17 (u the clock's phase); the
-    lamp's `births` 2; the same lamp without the key (its `turns` dropped,
+    content 1, branch 0, multiplicity 2) and (+y, phase 16); at tick 3 the
+    record 2^32 + 2 with the phases 1 and 17 (u the clock's phase; no
+    birth at tick 2, where the exact clock of the content 2^20 - 2 turns
+    0, the fraction-free law of 2026-09-20; the whole part off the clock
+    put it at tick 2 until then); the lamp's `births` 2; the same lamp without the key (its `turns` dropped,
     which the key alone admits) births rows of record 0, multiplicity 1
     and phase 0 on both directions;
 (b) the split: on `mz_equal` (the (20, 21) splitter) the store at tick 11
@@ -72,6 +74,17 @@ def load_generator():
     return module
 
 
+EXPECTATIONS = json.loads(
+    (ROOT / "examples" / "events" / "amplitude" / "expectations.json").read_text("utf-8")
+)
+
+
+def registered_rows(rows: list[list[object]]) -> list[tuple[object, ...]]:
+    """The register's rows (node, direction index, age, phase, amount,
+    content, branch, multiplicity) in `rows_at`'s form."""
+    return [(tuple(row[0]), *row[1:]) for row in rows]  # type: ignore[misc]
+
+
 GENERATOR = load_generator()
 
 
@@ -89,38 +102,48 @@ def test_the_birth_of_a_record_by_a_lamp():
     simulation = NatureBeamSimulation(parse_nature_beam_world(world))
     simulation.step()
     first = (1 << 32) + 1
-    assert rows_at(simulation, first) == [
-        ((0, 0, 0), 2, 0, 0, 1, 1, 0, 2),
-        ((0, 0, 0), 4, 0, 16, 1, 1, 0, 2),
-    ]
-    simulation.step()
+    registered = EXPECTATIONS["mach_zehnder"]["mz_equal"]["birth"]
+    assert rows_at(simulation, first) == registered_rows(registered["rows"])
+    # The lamp's turn is the count of its accumulator (the fraction-free
+    # law, 2026-09-20): the content 2^20 - 2 gives 0 at tick 2 (no birth)
+    # and 2^21 - 4 gives 1 at tick 3, the second record born there (at
+    # tick 2 under the whole part off the clock until then); the
+    # register's `second`.
+    second_registered = registered["second"]
+    for _ in range(1, second_registered["tick"] - 1):
+        simulation.step()
     second = (1 << 32) + 2
-    assert [r[3] for r in rows_at(simulation, second)] == [1, 17]
+    assert rows_at(simulation, second) == [] and simulation.measured[1].births == 1
+    assert simulation.measured[1].acc_turn == second_registered["accumulator_after_tick_2"]
+    simulation.step()
+    assert [r[3] for r in rows_at(simulation, second)] == second_registered["phases"]
     assert simulation.measured[1].births == 2
 
 
 def test_the_split_at_the_splitter_and_the_cancel_on_the_game_board(tmp_path: Path):
     """(b)."""
-    world = GENERATOR.mach_zehnder("mz_equal", ticks=11)
+    registered = EXPECTATIONS["mach_zehnder"]["mz_equal"]["split"]
+    tick = int(registered["tick"])
+    world = GENERATOR.mach_zehnder("mz_equal", ticks=tick)
     simulation = NatureBeamSimulation(parse_nature_beam_world(world))
-    for _ in range(11):
+    for _ in range(tick):
         simulation.step()
         assert simulation.books(recount=True)["balanced"]
     first = (1 << 32) + 1
-    assert rows_at(simulation, first) == [
-        ((3, 3, 0), 2, 0, 16, 41, 1, 0, 1682),
-        ((3, 3, 0), 4, 0, 32, 1, 1, 0, 1682),
-    ]
+    assert rows_at(simulation, first) == registered_rows(registered["rows"])
     ledger = simulation.ledger
-    assert ledger.cancelled_amount[0] == 40 and ledger.cancelled_content[0] == 40
-    assert ledger.cancelled_momentum[0] == [0, 2560, 0]
+    assert ledger.cancelled_amount[0] == registered["cancelled_amount"]
+    assert ledger.cancelled_content[0] == registered["cancelled_content"]
+    assert ledger.cancelled_momentum[0] == registered["cancelled_momentum"]
     books = simulation.books()
-    assert books["families"]["light"]["transit"]["cancelled"] == 40
-    assert books["momentum"]["cancelled"] == [0, 2560, 0]
-    balanced = GENERATOR.mach_zehnder("mz_balanced", splitter=(1, 1), ticks=11)
+    assert books["families"]["light"]["transit"]["cancelled"] == registered["cancelled_amount"]
+    assert books["momentum"]["cancelled"] == registered["cancelled_momentum"]
+    balanced_registered = EXPECTATIONS["mach_zehnder"]["mz_balanced"]["split"]
+    tick = int(balanced_registered["tick"])
+    balanced = GENERATOR.mach_zehnder("mz_balanced", splitter=(1, 1), ticks=tick)
     out = tmp_path / "balanced"
     out.mkdir()
-    execute_nature_beam_run(parse_nature_beam_world(balanced), b"{}", out, "test", 11)
+    execute_nature_beam_run(parse_nature_beam_world(balanced), b"{}", out, "test", tick)
     state = json.loads((out / "state.json").read_text())
     rows = [
         (
@@ -135,10 +158,11 @@ def test_the_split_at_the_splitter_and_the_cancel_on_the_game_board(tmp_path: Pa
         for ray in f["rays"]
         if ray["record"] == first
     ]
-    assert rows == [((3, 3, 0), (1, 0, 0), 16, 2, 4)]
+    assert rows == [(tuple(row[0]), tuple(row[1]), *row[2:]) for row in balanced_registered["rows"]]
     record = json.loads((out / "run.json").read_text())
     assert record["conserved_at_every_completed_tick"]
-    assert record["audit"][-1]["families"]["light"]["transit"]["cancelled"] == 2
+    cancelled = record["audit"][-1]["families"]["light"]["transit"]["cancelled"]
+    assert cancelled == balanced_registered["cancelled"]
     # A row from a side the splitter's inputs do not name.
     one_sided = GENERATOR.mach_zehnder("one_sided", ticks=11)
     one_sided["measured"][3]["table"]["light"]["inputs"] = [[0, 1, 0]]

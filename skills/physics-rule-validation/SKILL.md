@@ -139,3 +139,27 @@ Separate tested finite cases, analytic arguments and unestablished physics. A
 passing candidate does not resolve a failing baseline. For a blocker, preserve
 the smallest reproducible case and hand it to its implementation owner and tests;
 Boss must not mark the physics change complete until the required checks pass.
+
+## Emergence check (2026-09-20, record 151)
+
+When a change adds a rule or a world key for an effect that relative motion, a varying rate or a meeting could produce by itself, require the emergence test in the review: the same world with the key absent, the expectation pinned before the run (for a reader stepping one Link per k intervals through a stream of one row per interval: k + 1 rows per k intervals toward, k - 1 away, if the step reads the Link it crosses). A rule that reproduces what the flight, the step and the meeting already give is not admissible; a step that misses the effect is the defect to name, fixed in the step, not beside it. Record which case held and cite the file:line of the step and of the read.
+
+## The main course (the owner, 2026-09-21, records 176 and 177)
+
+A review checks the pairing: the formula with its registered integer and with the experiment, in the limit and at finite resolution; and that a new rule was stated first in its generic vector form before its integer form (skills/workflow.md).
+
+## Notation (the owner, 2026-09-21, record 184)
+
+Every symbol is named in English at its first use (never a Greek letter alone: "gamma (the Lorentz factor)"), and its kind is shown by its type: a scalar plain, a vector in bold lowercase (**p**), a tensor, matrix or operator in bold uppercase (**C**); skills/workflow.md, "Notation".
+
+## The three tests of every rule (the owner, 2026-09-21, record 202)
+
+A rule enters the law only if it is generic (one primitive with declared integers, no family name or kind), vector (one of the six verbs on the state vector, its rate at most bilinear, no root, no float) and local (its own record and the six neighbours, fixed work, nothing kept at a Node); state the three verdicts, one line each; skills/workflow.md, "The three tests of every rule".
+
+## The derivation before the numbers (the owner, 2026-09-21, record 205)
+
+An experiment's review checks the derived expectation and its section first, then the numbers; a pinned number without a formula where one exists is a finding; skills/workflow.md, "The main course".
+
+## The observed value is the reading (the owner, 2026-09-21, record 210)
+
+A claim that a run reproduces a value of nature is checked through the transformation that produced it (HIGHLIGHTS 5.7's dictionary): a Link count compared with a distance, or an interval count with a time, without the reading between them, is a finding.

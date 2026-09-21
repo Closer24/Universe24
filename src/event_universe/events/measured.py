@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 from typing import NamedTuple
 
 from event_universe.core.game_board import Address3
-from event_universe.core.integer import rational_sum, reduced
+from event_universe.core.integer import by_drive, rational_sum, reduced
 from event_universe.events.world import (
     AGE_READS,
     BEAM_LAW,
@@ -62,8 +62,8 @@ class PendingRow(NamedTuple):
     # The amplitude law's columns the row carries into its re-creation (the
     # record, the branch and the multiplicity of the arriving row; 0, 0, 1
     # for a row of no record) and `split`, whether the re-creation is the
-    # split by the entry's weights (a `rerelease` under the key) or the
-    # apportioning as it was (a home, a product, every row without the key).
+    # split by the entry's weights (a record's row at a `rerelease`) or the
+    # apportioning as it was (a home, a product, every row of no record).
     record: int = 0
     branch: int = 0
     multiplicity: int = 1
@@ -87,9 +87,6 @@ class PendingRow(NamedTuple):
     # rotation, a gate); a product's is its family's, read against the
     # parent's axis at its birth.
     hand: int = NO_HAND
-
-
-Pending = PendingRow
 
 
 def column_charges(
@@ -180,9 +177,10 @@ class DetectorSet:
     nodes: dict[Address3, int] = field(default_factory=dict)
 
     @property
-    def wave(self) -> bool:
-        """The pointer's reading, at either scope: `wave` and, under the
-        amplitude law, `sum` (the set's phase as under `wave`)."""
+    def pointer(self) -> bool:
+        """A reading of the crowd's pointer, at either scope: `wave` and
+        `sum` (the set's phase from the pointer under both; the record per
+        interval under `wave`, the layer's per record under `sum`)."""
         return self.reading in ("wave", SUM_READING)
 
     @property
@@ -201,6 +199,159 @@ class DetectorSet:
         if self.reading == SUM_READING:
             return "record"
         return "crowd" if self.reading == "wave" else None
+
+
+@dataclass
+class Count:
+    """One row of a body's table of counts (BEAM_LAW note 41, the model
+    owner's table of 2026-09-20): the count's `name`; the `source` of its
+    numerator (`content` the body's content, `crowd` what its clock
+    counted, `held` the content held of the row's family, `rate` the
+    lamp's own rate, `momentum` the momentum on the row's axis, `column`
+    the column's lifted numerator on the axis, `flow` the flux-weighted
+    flow of the direction on the axis); `index` the family, the column or
+    the direction the row belongs to and `axis` its axis (0 where the count
+    has none); `numerator` the rate's own factor n (1 where the loop is
+    handed the whole numerator); `denominator` d (the last one used where
+    the loop is handed it, the step's divisor and the flux's); `at_most`
+    the cap on the count gained at one self-creation (1 on the drive, 0
+    otherwise); `idle_at_zero` whether a numerator of 0 leaves the row as it
+    is (the step's rule: a momentum of 0 never steps); and `accumulator`,
+    the remainder's owner, one bounded integer."""
+
+    name: str
+    source: str
+    index: int
+    axis: int
+    numerator: int
+    denominator: int
+    at_most: int = 0
+    idle_at_zero: bool = False
+    accumulator: int = 0
+
+
+class CountTable:
+    """A body's table of counts and the ONE loop that advances its rows
+    (BEAM_LAW note 41): `advance` runs every row of a count through
+    `core.integer.by_drive(accumulator, numerator, denominator, at_most)`
+    and returns the whole parts in row order, which the count's consumer
+    delivers (the frame to the phase, `_suspend` to the count owed, step 5
+    to the rows born and the records the lamp births, `_move` to the Link,
+    `push_form` to the momentum, `weighted_flow` to the flow). A future
+    count is a new row, not new code."""
+
+    def __init__(self, rows: list[Count]) -> None:
+        self.rows = rows
+        self._of: dict[str, list[Count]] = {}
+        for row in rows:
+            self._of.setdefault(row.name, []).append(row)
+
+    def of(self, name: str, index: int | None = None) -> list[Count]:
+        """The rows of a count, or those of one index of it (a column, a
+        direction), in row order."""
+        rows = self._of.get(name, [])
+        return rows if index is None else [row for row in rows if row.index == index]
+
+    def advance(
+        self,
+        name: str,
+        *,
+        index: int | None = None,
+        values: list[int] | None = None,
+        denominators: list[int] | None = None,
+    ) -> list[int]:
+        """The one loop: every row of the count `name` (of one `index` when
+        given) gains its rate, `row.numerator x values[k]` (`values` per
+        row in row order: the content, the count the clock read, the held
+        content per family, the momentum per axis, the column's or the
+        direction's numerator per axis; the row's own numerator alone when
+        None), over its denominator (`denominators[k]` when the caller
+        hands it: the step's divisor, the flux's), and the count gained is
+        the whole part the accumulator then holds, capped at `at_most`; a
+        row idle at zero is left as it is by a rate of 0. Returns the counts
+        gained in row order."""
+        rows = self.of(name, index)
+        found: list[int] = []
+        for k, row in enumerate(rows):
+            rate = row.numerator if values is None else row.numerator * values[k]
+            denominator = row.denominator if denominators is None else denominators[k]
+            if row.idle_at_zero and rate == 0:
+                found.append(0)
+                continue
+            count, row.accumulator = by_drive(row.accumulator, rate, denominator, row.at_most)
+            row.denominator = denominator
+            found.append(count)
+        return found
+
+    def one(self, name: str) -> int:
+        rows = self.of(name)
+        return rows[0].accumulator if rows else 0
+
+    def values(self, name: str) -> list[int]:
+        return [row.accumulator for row in self.of(name)]
+
+    def grid(self, name: str) -> list[list[int]]:
+        """The accumulators of a per-index, per-axis count as a list per
+        index of the three axes' values."""
+        found: list[list[int]] = []
+        for row in self.of(name):
+            while len(found) <= row.index:
+                found.append([0, 0, 0])
+            found[row.index][row.axis] = row.accumulator
+        return found
+
+    def set(self, name: str, values: list[int]) -> None:
+        """The accumulators of a count written in row order (a resumed run,
+        a test seeding a row)."""
+        rows = self.of(name)
+        if not rows and not any(values):
+            # A count the body has no row of (a lamp's rate on a body that
+            # is no lamp): 0 is its only value.
+            return
+        if len(rows) != len(values):
+            raise ValueError(f"the count '{name}' has {len(rows)} rows, {len(values)} values given")
+        for row, value in zip(rows, values, strict=True):
+            row.accumulator = value
+
+
+def counts_table(
+    turn_rate: tuple[int, int],
+    suspension: tuple[int, int],
+    release: tuple[int, int],
+    free: tuple[bool, ...],
+    lamp_rate: tuple[int, int] | None,
+    column_scales: tuple[int, ...],
+    directions: int,
+) -> CountTable:
+    """A body's table of counts from the world's rates (BEAM_LAW note 41):
+    the turn, the owed count, the release per family (its rate 0 on a paid
+    family: it releases nothing freely), the lamp's rate where the body is
+    a lamp, the drive per axis (the step's divisor handed to the loop, the
+    cap 1, idle at a momentum of 0), the push per column and axis over
+    Lambda_c^2, and, under `doppler`, the flow per direction of the world's
+    table and axis (the flux's denominator handed to the loop)."""
+    rows = [
+        Count("turn", "content", 0, 0, turn_rate[0], turn_rate[1]),
+        Count("owed", "crowd", 0, 0, suspension[0], suspension[1]),
+    ]
+    rows.extend(
+        Count("release", "held", family, 0, release[0] if is_free else 0, release[1])
+        for family, is_free in enumerate(free)
+    )
+    if lamp_rate is not None:
+        rows.append(Count("lamp", "rate", 0, 0, lamp_rate[0], lamp_rate[1]))
+    rows.extend(Count("drive", "momentum", 0, axis, 1, 1, 1, True) for axis in range(3))
+    rows.extend(
+        Count("push", "column", column, axis, 1, scale * scale)
+        for column, scale in enumerate(column_scales)
+        for axis in range(3)
+    )
+    rows.extend(
+        Count("flow", "flow", direction, axis, 1, 1)
+        for direction in range(directions)
+        for axis in range(3)
+    )
+    return CountTable(rows)
 
 
 @dataclass
@@ -282,13 +433,31 @@ class Measured:
     waited: int = 0
     turned: int = 0
     steps: int = 0
-    # The step drive (2026-09-20; BEAM_LAW note 17 as amended, records 107 and 108):
-    # per axis the distance the momentum has driven since the last step, in
-    # label units, signed, `|drive_a| < Q S M + |p_a|`, one bounded integer on the
-    # body's own record (as its age is) and nothing at a Node; and per axis
-    # the Links stepped, the k0 of the turn by momentum.
-    drive: list[int] = field(default_factory=lambda: [0, 0, 0])
+    # Per axis the Links stepped, the k0 of the turn by momentum (the step
+    # drive itself, BEAM_LAW note 17 as amended, is the `drive` rows of the
+    # table of counts below: per axis the signed distance the momentum has
+    # driven since the last step, `|drive_a| < Q S M + |p_a|`).
     axis_steps: list[int] = field(default_factory=lambda: [0, 0, 0])
+    # The table of the body's counts (the fraction-free law, 2026-09-20;
+    # BEAM_LAW note 41; the model owner's table of 2026-09-20): one row per
+    # count, `CountTable`, every row advanced by the one loop
+    # `CountTable.advance` through `core.integer.by_drive`, its accumulator
+    # the remainder's owner below the count's denominator, one bounded
+    # integer on the body's own record (as its age is) and nothing at a
+    # Node. The rows: `turn` (the rate `content x n` at the clock's rate K =
+    # [n, d]), `owed` (`counted x n` at `suspension` [n, d]), `release` per
+    # family (`held x n` at `release` [n, d]; 0 on a paid family), `lamp`
+    # (the lamp's rate [n, d]), `drive` per axis (the momentum over the
+    # step's divisor D, the cap `at_most` 1), `push` per column and axis
+    # (the column's lifted numerator over Lambda_c^2, `nature_beam.push_form`)
+    # and, under the world key `doppler`, `flow` per direction and axis
+    # (the flux-weighted flow over G Q |v_d|^2, `nature_beam.weighted_flow`).
+    # `acc_owed`, `acc_release`, `acc_lamp`, `acc_turn`, `acc_push`,
+    # `acc_flow` and `drive` below read and write the table; `state.json`
+    # and `run.json` carry the accumulators under `acc` by name, beside
+    # `drive`; a declared accumulator is refused with the key. Every one
+    # starts at 0 with the age.
+    counts: CountTable = field(default_factory=lambda: CountTable([]))
     taken: list[dict[str, int]] = field(default_factory=list)
     clicks: list[int] = field(default_factory=list)
     pushed: list[int] = field(default_factory=lambda: [0, 0, 0])
@@ -434,6 +603,77 @@ class Measured:
     def pending_thrown_content(self, family: int) -> int:
         return sum(row.amount * row.content for row in self.pending[family] if row.thrown)
 
+    # -- the table of counts read and written by the count's name --------------
+
+    @property
+    def acc_owed(self) -> int:
+        return self.counts.one("owed")
+
+    @acc_owed.setter
+    def acc_owed(self, value: int) -> None:
+        self.counts.set("owed", [value])
+
+    @property
+    def acc_turn(self) -> int:
+        return self.counts.one("turn")
+
+    @acc_turn.setter
+    def acc_turn(self, value: int) -> None:
+        self.counts.set("turn", [value])
+
+    @property
+    def acc_lamp(self) -> int:
+        return self.counts.one("lamp")
+
+    @acc_lamp.setter
+    def acc_lamp(self, value: int) -> None:
+        self.counts.set("lamp", [value])
+
+    @property
+    def acc_release(self) -> list[int]:
+        return self.counts.values("release")
+
+    @acc_release.setter
+    def acc_release(self, values: list[int]) -> None:
+        self.counts.set("release", values)
+
+    @property
+    def drive(self) -> list[int]:
+        return self.counts.values("drive")
+
+    @drive.setter
+    def drive(self, values: list[int]) -> None:
+        self.counts.set("drive", values)
+
+    @property
+    def acc_push(self) -> list[list[int]]:
+        return self.counts.grid("push")
+
+    @property
+    def acc_flow(self) -> list[list[int]]:
+        return self.counts.grid("flow")
+
+    def accumulators(self) -> dict[str, object]:
+        """The accumulators of the table of counts by the count's name
+        (BEAM_LAW note 41): `owed`, `release` per family, `lamp`, `turn`,
+        `push` per column by its name (the three axes' remainders) and,
+        under `doppler`, `flow` per direction of the world's table (aligned
+        with the record's `directions`) and axis; what `state.json` and
+        `run.json` carry under `acc`, beside `drive`; a resumed run
+        continues from them."""
+        found: dict[str, object] = {
+            "owed": self.acc_owed,
+            "release": list(self.acc_release),
+            "lamp": self.acc_lamp,
+            "turn": self.acc_turn,
+            "push": {
+                name: list(axes) for name, axes in zip(self.column_names, self.acc_push, strict=True)
+            },
+        }
+        if self.acc_flow:
+            found["flow"] = [list(axes) for axes in self.acc_flow]
+        return found
+
     def state(self) -> dict[str, object]:
         charges = self.charges()
         return {
@@ -461,6 +701,7 @@ class Measured:
             "steps": self.steps,
             "drive": list(self.drive),
             "axis_steps": list(self.axis_steps),
+            "acc": self.accumulators(),
             "measured": [dict(entry) for entry in self.taken],
             "events": list(self.clicks),
             "pushed": list(self.pushed),
@@ -528,9 +769,9 @@ class Ledger:
     # The `cancelled` lines (the amplitude law, 2026-09-20; BEAM_LAW note
     # 37): per family the units the merge's cancel removed (two rows of one
     # record in antiphase), the content they carried and their labels, so
-    # that the transit, content and momentum lines close under the key:
+    # that the transit, content and momentum lines close in a recorded world:
     # initial + released = current + escaped + absorbed + cancelled. Zero
-    # without the key (no row carries a record).
+    # in a world without a lamp (no row carries a record).
     cancelled_amount: list[int] = field(default_factory=list)
     cancelled_content: list[int] = field(default_factory=list)
     cancelled_momentum: list[list[int]] = field(default_factory=list)

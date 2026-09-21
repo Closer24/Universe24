@@ -9,15 +9,20 @@ carries the phase 20 and every `sb` row the phase 44; the offsets 0 and,
 on the minus counters, 32), 64 pairs analysed after the design's warm-up
 of 7. Expected, written down first:
 
-(a) the offsets the tool reads off the record (tick - phase mod N, one
-    value per counter) equal 1 + the flight age at which the pair ray
-    reaches each counter, `FlightTable.manhattan_steps` (the +X heading:
-    3 Links by the age 5, 6 by 10, 7 by 12, 8 by 13): 6, 11, 13, 14;
-(b) one bin, (20, 44): n = 64 (the ages 7..70, every phase of the circle
-    once), E = 1 - 4 x 24 / 64 = -1/2 with the counts 8, 24, 24, 8 (the
-    same, the different), both marginals 1/2, the triangle's own value the
-    same, the warm-up 7, every criterion passed (the complement, the
-    windows, one outcome per side per age, the escapes of the warm-up);
+(a) the tick offsets the tool reports (the smallest tick - age at each
+    counter, the age a pair's birth ordinal less one off the record on
+    the line; since the fraction-free law of 2026-09-20 the pair is read
+    by its record, the lamp's exact clock stalling once at tick 4 on this
+    lamp) equal 1 + the flight age at which the pair ray reaches each
+    counter, `FlightTable.manhattan_steps` (the +X heading: 3 Links by
+    the age 5, 6 by 10, 7 by 12, 8 by 13): 6, 11, 13, 14;
+(b) one bin, (20, 44): n = 64 (the ages 6..69 by record: the six records
+    born before tick 8 meet no setting, the design's warm-up of 7 by
+    tick; every phase of the circle once), E = 1 - 4 x 24 / 64 = -1/2
+    with the counts 8, 24, 24, 8 (the same, the different), both
+    marginals 1/2, the triangle's own value the same, the warm-up 6,
+    every criterion passed (the complement, the windows, one outcome per
+    side per age, the escapes of the warm-up);
 (c) the same design with the windows written in the file (20 and 44, the
     complements 52 and 12) gives the same bin, counts and E; the two runs
     merged (`merged`) give one bin of 128;
@@ -128,7 +133,12 @@ def test_the_tool_reads_the_fixed_setting_streams_off_the_engine(tmp_path):
     # counters' windows read the path phase, and every pair lands in
     # (-1, -1): the crowd form's triangle (8, 24, 24, 8 and E = -1/2, the
     # tool's expectation) is the old law's (re-run under the one click (stage (vii) step 4); the verdict to be re-read).
-    assert read.first == m.FIRST and read.warm_up == m.FIRST and read.pairs == PAIRS
+    # The warm-up by record: the pairs of the ages 0 .. 5 (six records)
+    # meet no setting at Alice's plus counter; the design's FIRST = 7 is
+    # the first age BY TICK, and the lamp's exact clock (the fraction-free
+    # law, 2026-09-20) stalls once at tick 4, so the 7th record, born at
+    # tick 8, is the first with a setting: its age 6.
+    assert read.first == m.FIRST - 1 == 6 and read.warm_up == 6 and read.pairs == PAIRS
     assert set(read.bins) == {(ALICE, BOB)}
     item = read.bins[(ALICE, BOB)]
     assert item.counts == {(1, 1): 0, (1, -1): 0, (-1, 1): 0, (-1, -1): 64}

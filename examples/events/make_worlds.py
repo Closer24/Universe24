@@ -11,9 +11,8 @@ The fan: every primitive direction `[x, y, 0]` with x from 1 to 11 and
 
 Since 2026-09-20 (the model owner's decision, record 113) a world's
 families come from the shipped definitions where they equal them
-(`families_by_definition`): `one_content`, `two_contents` and `one_slit`
-reference `entities/families.json`; `two_slits` is written inline until
-stage (vii) of `amplitude-v1` lands (the Boss's scope of the migration).
+(`families_by_definition`): the four reference `entities/families.json`
+(`two_slits` since the one click of `amplitude-v1` landed).
 
     python examples/events/make_worlds.py
 """
@@ -31,7 +30,6 @@ sys.path.insert(0, str(HERE.parents[1] / "src"))
 from event_universe.world_loading import families_by_definition  # noqa: E402
 
 DEFINITIONS = "entities/families.json"
-INLINE = ("two_slits",)
 MASS = {"name": "m", "quantum": 0, "charge": 0, "phase": False}
 CONTENT = 1 << 24
 FAN_REACH = 12
@@ -126,8 +124,7 @@ def worlds() -> dict[str, dict[str, object]]:
     }
     source = (HERE / DEFINITIONS).read_bytes()
     return {
-        name: document if name in INLINE else families_by_definition(document, DEFINITIONS, source)
-        for name, document in inline.items()
+        name: families_by_definition(document, DEFINITIONS, source) for name, document in inline.items()
     }
 
 

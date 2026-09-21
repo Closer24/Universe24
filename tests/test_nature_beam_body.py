@@ -62,8 +62,16 @@ set and the turn by momentum"), written down first:
     second 4, 8, 4; the books balance at every one of 20 intervals and
     equal their recount; a lamp of `light` (content 24, K 24, rate
     [1, 1]) on +Y of span [3, 1, 1] at (1, 0, 0) of a 3 x 6 x 1 GameBoard
-    releases its one unit per self-creation at the Nodes x = 0, 1, 2 in
-    turn (the ages 0, 1, 2): after 3 intervals the rows (0, 1, 0) age 2
+    releases its one unit at the self-creations whose turn is 1, at the
+    Node counted from the age mod 3: since the fraction-free law
+    (2026-09-20) the turn is the count of the turn's accumulator, 24 gives
+    1 at the age 0 (the unit at x = 0 costs 1), 23 gives 0 at the age 1
+    (no release), 23 + 23 = 46 gives 1 at the age 2 (the remainder 22, the
+    unit at x = 2 with the phase 1): after 3 intervals the rows (0, 1, 0)
+    age 2 phase 0 and (2, 0, 0) age 0 phase 1, the content 22, the
+    momentum (0, -128, 0) and the transit line (0, 128, 0) (until then
+    the whole part off the clock at the current content, `by_clock(age,
+    content, 24)`, gave 1 at every age: the rows (0, 1, 0) age 2
     phase 0, (1, 1, 0) age 1 phase 1, (2, 0, 0) age 0 phase 2, held
     [0, 21], the recoil (0, -192, 0), the transit momentum (0, 192, 0);
 (d) the turn: a free body of `m` (content 16, phase 5, K 2^20: the
@@ -484,12 +492,12 @@ def test_the_books_balance_with_a_set_that_releases():
         assert simulation.books()["balanced"], tick
     assert rows(simulation, LIGHT) == [
         (store.flat((0, 1, 0)), 4, 2, 0, 1, 1),
-        (store.flat((1, 1, 0)), 4, 1, 1, 1, 1),
-        (store.flat((2, 0, 0)), 4, 0, 2, 1, 1),
+        (store.flat((2, 0, 0)), 4, 0, 1, 1, 1),
     ]
     entry = simulation.measured[1]
-    assert entry.held == [0, 21] and entry.momentum == [0, -192, 0]
-    assert simulation.transit_momentum() == [0, 192, 0]
+    assert entry.held == [0, 22] and entry.momentum == [0, -128, 0]
+    assert entry.turned == 2 and entry.acc_turn == 22
+    assert simulation.transit_momentum() == [0, 128, 0]
 
 
 # -- (d) ---------------------------------------------------------------------------

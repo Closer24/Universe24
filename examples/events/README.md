@@ -32,10 +32,14 @@ emitter by its phase rate (E = h f) and a click measures that content.
 | `one_slit.json` | The same with one opening | The control: the record without the two-source term |
 
 The four are written by `make_worlds.py` beside them; since 2026-09-20
-`one_content`, `two_contents` and `one_slit` take their families from
-`entities/families.json` (the world's `entity_definitions` and `entities`
-in place of `families`), `two_slits` inline until stage (vii) of
-`amplitude-v1` lands.
+they take their families from `entities/families.json` (the world's
+`entity_definitions` and `entities` in place of `families`). Since
+2026-09-21 (the trimming's part 2: a test holds no literal of a world's
+number) `expectations.json` beside them registers what a test reads of a
+root world (`two_contents`'s face records at its 20th interval,
+`tests/test_nature_beam_worlds.py` (e)), and `gate_set.json` carries each
+lamp-free gate world's `digests` at its cap (the sha256 of its state, its
+books and its events; `tests/test_amplitude_click.py` (d)).
 
 Run one:
 
@@ -379,7 +383,9 @@ arms, a half and a quarter turn on one arm, the balanced (1, 1) split, the
 (3, 4) split, arms unequal by two intervals at three phases per interval,
 and Elitzur-Vaidman's absorber on one arm; L2, the two slits at a low
 rate (the shipped two-slit world under the key with the wall freed beside
-the openings, and its one-birth reference); L3, the pair on the A2 world
+the openings, and its one-birth reference; L2b, the two slits with the
+fan by angle, the Huygens fan of width 48 with the angle weights, whose
+weights carry Young's fringes); L3, the pair on the A2 world
 with the choosers, at the CHSH labels, with a which-path read and with
 Bob's counters far; L4, GHZ; L5, the gate between records (the CNOT
 pair, CNOT twice, GHZ by one gate, the register's ceiling); L6, the pair

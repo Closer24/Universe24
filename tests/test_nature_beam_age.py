@@ -35,14 +35,23 @@ docs/TEST_EXPECTATIONS.md ("The age"), written down first:
     x = 3 whose entry reads `age` at `suspension` [1, 4]: a ray born at
     tick b is at x = 3 at the ages 5 and 6 (ticks b + 5 and b + 6), so
     from tick 7 the reader counts the age moment 5 + 6 = 11 over a
-    presence of 2 (5 over 1 at tick 6) and owes `by_clock(age, 11, 4)`, 3,
-    3, 2, 3, 3 at the self-creations of the ages 6 through 10: its age
-    after the intervals 1 to 24 is 1, 2, 3, 4, 5, 6, 6, 7, 7, 7, 7, 8, 8,
-    8, 8, 9, 9, 9, 10, 10, 10, 10, 11, 11 (owed 1 at the age 5 from the
-    moment 5); a reader without the key counts the presence 2 and owes
-    `by_clock(age, 2, 4)`: 1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 10, 11, 12,
-    12, 13, 14, 14, 15, 16, 16, 17, 18, 18 (unchanged); the `read` records
-    of the age reader carry the reading 5 (the arrival's age moment);
+    presence of 2 (5 over 1 at tick 6) and owes the count its owed
+    accumulator gains (the fraction-free law, 2026-09-20; `count_owed`):
+    the moment 5 at the age 5 gives 1 (the remainder 1), then 11 per
+    self-creation gives 3, 2, 3, 3, 3 at the ages 6 through 10 (the
+    accumulator 12, 11, 14, 13, 12 before the count; exact over the
+    history: 5 + 5 x 11 = 60 = 15 x 4 owed in all): its age after the
+    intervals 1 to 24 is 1, 2, 3, 4, 5, 6, 6, 7, 7, 7, 7, 8, 8, 8, 9, 9,
+    9, 9, 10, 10, 10, 10, 11, 11 (until the fraction-free law the whole
+    part off the clock at the current moment, `by_clock(age, 11, 4)` = 3,
+    3, 2, 3, 3, put the 2 one self-creation later: 1, 2, 3, 4, 5, 6, 6, 7,
+    7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 11, 11); a reader without
+    the key counts the presence 2 and owes 0 at the presence 1 (the
+    accumulator 1), 0 (3), 1 (5 -> 1), then 0, 1 alternately: 1, 2, 3, 4,
+    5, 6, 7, 8, 8, 9, 10, 10, 11, 12, 12, 13, 14, 14, 15, 16, 16, 17, 18,
+    18 (the same ages as `by_clock(age, 2, 4)` off the clock); the `read`
+    records of the age reader carry the reading 5 (the arrival's age
+    moment);
 (d) the parsing: `flight_bound` of an open 11^3 GameBoard over the six
     headings is 54 (D = 31 Links, ceil(31 x 110 / 64)) and 111 with the
     direction (1, 0, 64) declared (T 7095, one period, ceil(7095 / 64));
@@ -70,8 +79,9 @@ import numpy as np
 import pytest
 
 from event_universe.core.game_board import PORT_HEADINGS
+from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.engine import by_clock
+from event_universe.events.engine import count_owed
 from event_universe.events.measured import count_component
 from event_universe.events.nature_beam import Q, read_arrivals
 from event_universe.events.world import READS, flight_bound
@@ -294,9 +304,17 @@ def ages_of_the_reader(
 
 def test_the_clock_counts_the_age_moment_on_an_entry_that_reads_age():
     """(c)."""
+    # The owed counts by the accumulator over the moments 5, 11, 11, ...
+    owed, accumulator = [], 0
+    for moment in (0, 0, 0, 0, 0, 5, 11, 11, 11, 11, 11):
+        count, accumulator = count_owed(accumulator, moment, (1, 4))
+        owed.append(count)
+    assert owed == [0, 0, 0, 0, 0, 1, 3, 2, 3, 3, 3] and accumulator == 0
+    # The whole part off the clock at the current moment, the form until
+    # the fraction-free law: 3, 3, 2, 3, 3 (history).
     assert by_clock(5, 5, 4) == 1 and [by_clock(age, 11, 4) for age in range(6, 11)] == [3, 3, 2, 3, 3]
     ages, readings, read = ages_of_the_reader(clock_world({"m": {"reads": "age"}}))
-    expected = [1, 2, 3, 4, 5, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 11, 11]
+    expected = [1, 2, 3, 4, 5, 6, 6, 7, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11]
     assert ages == expected
     assert readings[5] == (6, 1, 5) and readings[6] == (8, 2, 11)
     assert all((presence, counted) == (2, 11) for tick, presence, counted in readings if tick >= 7)

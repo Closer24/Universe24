@@ -6,7 +6,442 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The readings by type and the registers' derivations, on 2026-09-21 (host only, no law change)
+
+The owner's two principles of the experiments (record 205: "a formula
+gives, a run proves"; "after the detector, name the vector to read"),
+built as documentation and register annotation; no run moved, every
+registered number unchanged.
+
+- `docs/ENGINE.md` gains the table "The detector's readings by type":
+  every quantity the record exposes, by type (scalar, vector, tensor,
+  pair) with its line or field, its unit and its kind (detector or
+  GameBoard); `docs/EXPERIMENTS.md` points to it from the two kinds of
+  readings. The coherent pointer (X, Y) was already on the `record` line;
+  nothing new is exposed.
+- Every register (`examples/events/expectations.json`, `bell/`,
+  `amplitude/`, `hubble_stars/` and its `record/` and `doppler/`,
+  `weak/`) gains a `derivations` map, one entry per key: the formula or
+  the section of `docs/DERIVATIONS_BEAM.md`, or `measured` with the
+  target. The generators (`amplitude/make_worlds.py`,
+  `hubble_stars/make_worlds.py`, `weak/make_worlds.py`) write it; the
+  amplitude generator also reproduces the register split's hand-added
+  entries (`REGISTERED_RUN_READINGS`), so the shipped file equals the
+  generator's again. The rule is in `docs/TEST_EXPECTATIONS.md` beside the
+  register rule.
+- Three tests derive and compare where a closed form exists:
+  `tests/test_nature_beam_worlds.py` (b) the Bell plus offset (the first
+  birth's tick plus the flight table's age at 8 Links),
+  `tests/test_hubble_stars_readings.py` (a) the star worlds' c (Q / T_D
+  off the flight table) and the new `tests/test_weak_readings.py` (d),
+  the register of series J2 from the five shipped worlds, the flight table
+  and `window_admits`.
+- `docs/THREE_WORLDS.md`'s software column corrected against `main`
+  (`Moments` for `Reading`, `execute_nature_beam_run` for `execute_run`,
+  `core/game_board.py` for a `GameBoard` class, the `hand` column int64,
+  the flight table for an accumulator, the `Split` row for a fan's
+  weights, the Count rows for `acc_turn` and `acc_owed`, `met` marked as
+  not on `main`, `apply_gate` and `rotate_rows` named) with the modules
+  added; the rows of the reading, the click and the record point to the
+  readings table.
+
+## The group structure named, on 2026-09-21 (host only, no law change)
+
+The architect's item 3 of the proposal on the runs (record 203; the vector
+program, record 191, "everything represented in vectors and matrices, from
+group theory"): the three group objects of the law named and typed, bit-exact
+under the gate set; BEAM_LAW note 42. No rule changed; every registered
+integer the same.
+
+- `core.game_board.cube_symmetries()`: the cube's group of 48 (the signed
+  axis permutations as images of the six Ports), with `IDENTITY_SYMMETRY`,
+  `compose_symmetries`, `inverse_symmetry` and `symmetry_hand` (+1 a
+  rotation, -1 a reflection). The collision test's local `cube_group()`
+  is deleted; it enumerated the same 48 maps.
+- `core.phase.PhaseCircle` and `phase_circle(N)`: the world's circle of N
+  steps as the cyclic group of the phase (`turn`, `difference`,
+  `opposite`, `mask`, `half`) with its unit vectors (`vector`, the tables'
+  (C, S)) and the tables themselves (`cosines`, `sines`). The engine's
+  tables carry it (`NatureBeamTables.circle`, a new field; `cosines` and
+  `sines` stay as arrays), the engine's two scalar turns read it
+  (`circle.turn` in place of `& phase_mask`, the same integers for N a
+  power of two), and the layer holds it (`Layer.circle`, with `steps`,
+  `cosines` and `sines` as before).
+- `nature_beam.CollisionTable` gains `orbit` (the class index per code)
+  and `period` (the class's size per code) and the method `act(code,
+  backward)`, the shift the engine's collision step calls; `forward`,
+  `inverse`, `singles` and `powers` are unchanged.
+- `tests/test_nature_beam_collision.py` (b) states the orbits as
+  properties (the orbit-stabilizer and Burnside counts) in place of the
+  counted sizes; `tests/test_group_structure.py` is new (the group, the
+  circle, the action). TERMINOLOGY gains the cube group, the phase circle
+  and the collision action; ARCHITECTURE's and the README's rows for
+  `core/game_board` and `core/phase` name them.
+
+## The trimming's part 2, the register split, on 2026-09-21 (host only, no law change)
+
+The Boss's decision under the owner's rule (records 169 and 184 of
+2026-09-20 and 2026-09-21; the architect's audit item 10): a test reads a
+world's numbers from the register. Every number a test pinned of a shipped
+world (a world file of `examples/events/` or one its generator writes)
+moved to the register beside the world, one source per number, and the
+test asserts equality with the value read from there; no test body holds
+a literal of a world's number. The gate set stays the replay mechanism;
+the numbers themselves are unchanged (bit-exact: no run moved).
+
+- `examples/events/gate_set.json`: each lamp-free world carries `digests`
+  (`state_sha256`, `audit_sha256`, `events_sha256` at its cap), the table
+  `PINNED_DIGESTS` of `tests/test_amplitude_click.py` (d), deleted there.
+- `examples/events/bell/expectations.json` (new, `bell-expectations-v1`):
+  the ten A2 worlds read by `tools/bell_chsh.py` under the one click (the
+  criteria, the count failed, the tick offsets, the CHSH sum, the primed
+  sum, three correlations), the literals of
+  `tests/test_nature_beam_worlds.py` (b).
+- `examples/events/expectations.json` (new,
+  `root-worlds-expectations-v1`): `two_contents`'s face records at its
+  20th interval, the literals of `tests/test_nature_beam_worlds.py` (e).
+- `examples/events/amplitude/expectations.json`: under `mach_zehnder` the
+  gathers' last tick and the totals' spread, `mz_equal`'s `birth`,
+  `split` and `first_gather`, `mz_balanced`'s `split`, `mz_345`'s
+  `pythagorean_5`, the two splits' tick of `mz_quarter` and
+  `mz_unequal_f8`; under `two_slits` the last gather's tick, the face
+  gathers and the first gather; under `pair` the `birth`, the
+  `choosers_early` records and `far_min_flight`; under `gate` the
+  `rotate_line`, the `gate_line`, the `pair_rows`, `twice` (an object now:
+  `identity`, `later_gates`, `rows`; it was `true`), the `ghz_gate_line`
+  and the `rotation_multiplicity`. The literals of
+  `tests/test_amplitude_split.py`, `test_amplitude_layer.py`,
+  `test_amplitude_pair.py` and `test_amplitude_gate.py` read there; a
+  register value restated as a literal beside its read (the CHSH sum 176,
+  the sums 88, 2896 and 11584, the correlations 724 and 2900, the total
+  847181/745472, the clicks by kind) is dropped, the read alone remaining.
+- `tests/test_amplitude_cone.py`: the register's pins (the Links, the age
+  at the click, the path phases) are derived from the two worlds and the
+  flight table and compared, the literals gone.
+- `tests/test_hubble_stars_readings.py`: the literal ranges on the
+  registered fits (0.85 .. 0.87, 0.24 .. 0.25) are the register's own
+  `q_bracket` of each run.
+- Left, with the reason: a test's own minimal world keeps its expected
+  integers in the test (the owner's rule of 2026-09-17): the two-slit
+  world `tests/test_nature_beam_worlds.py` (a) builds, the Bell choosers'
+  fixed-phase case of `tests/test_bell_choosers.py`, the K record world of
+  `tests/test_amplitude_click.py` (f) (the registered `lensing/mass_meeting`
+  altered by the test: the lamp's turns 0, every pixel reading `sum`, 300
+  intervals) and the bars of the twelve `*_readings` modules, which read
+  no shipped world. Whether those reproduce a known experiment is the
+  owner's question (the audit's item 10, Q5), untouched.
+- `tools/check.py`'s resource map names the registers' readers.
+## The architecture audit's three items, on 2026-09-21 (host only, no law change)
+
+The architect's audit of genericity and locality (the model owner's request
+of 2026-09-21; the Boss's assignment of its three host-only items as one
+pull request), bit-exact by construction: no physical function changed.
+
+- `NatureBeamSimulation.shell_readings` (the shell means of the readings,
+  the one floating-point calculation of the package) is moved out of the
+  engine class to `diagnostics/shell_readings.py`: `simulation.shell_readings(
+  family, centre, radius)` -> `shell_readings(simulation, family, centre,
+  radius)` from `event_universe.diagnostics.shell_readings`, the same
+  dictionary. Its readers moved: `tests/test_nature_beam_worlds.py` (c) and
+  `tools/coupling_readings.py`. `cube_flux` (integers) stays on the engine.
+- The static numeric audit covers both physical layers
+  (`diagnostics.numeric_audit.audit_physical_modules`): `core/` by
+  `static_integer_audit` as before (integers only, no numeric library) and
+  `events/` by the new `static_events_audit` (integer numpy permitted;
+  refused: a float or complex literal, true division, a float dtype or
+  constant, `sqrt`, the means, the transcendental functions and the modules
+  `cmath`, `decimal`, `fractions`, `random`, `scipy`). `events/run.py`, the
+  artifacts' writer (path joins with `/`, no physics), is outside it as the
+  import gate exempts it. `tests/test_architecture.py` asserts both layers
+  audited and clean; SIMULATOR_DEFINITIONS' gate line says what each audit
+  checks. `tools/check.py` selects `test_architecture.py` for every change
+  under `src/`, as before.
+- `tests/test_locality.py` runs the six-read test (LOCALITY-1's executable
+  form, gone since the scalar candidate's deletion on 2026-09-17): on a bar
+  of 13 x 1 x 1, rows placed beyond one Link of a Node change nothing of
+  its interval (its rows, its readings, the collision there, the click and
+  the push at a detector), and a change at k Links reaches a Node no sooner
+  than the flight's first arrival (1, 3, 5 intervals for k = 1, 2, 3). The
+  layer of `amplitude-v1` is outside the claim (the one non-local operation
+  the model owner decided, records 72 and 74 of 2026-09-20).
+
+## The fraction-free law, on 2026-09-20: every count an accumulator on the body's record
+
+The model owner's records 147 and 148 of 2026-09-20 on the mathematician's
+read-only [FORM.md](designs/fraction_free/FORM.md) and the physics-rule
+reviewer's read-only [REVIEW_COUNTS.md](designs/fraction_free/REVIEW_COUNTS.md);
+[BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
+The identity `beam-v1` is kept: an integer form of the same counts, one
+primitive in place of two.
+
+- `core.integer.by_drive` is the count of every count of a body: the owed
+  count (`engine.count_owed`), the free release per family, a lamp's rate,
+  the turn, the push per column and axis, the doppler weight per direction
+  and axis, and the step's drive as built. Each is one bounded integer on
+  the body's record, `Measured.acc_owed`, `acc_release`, `acc_lamp`,
+  `acc_turn`, `acc_push`, `acc_flow` and `drive`, gaining the count's rate
+  at the self-creation and keeping the remainder below the denominator:
+  the remainder owner the local integer operation contract asks for.
+  `by_clock` stays in `core.integer` as the constant-rate identity of a
+  count (from an empty accumulator at age 0 the two give the same integers,
+  `tests/test_fraction_free.py` (a)) and for the reads of an age against a
+  key (`nature_beam.ages_at_key`: the lifetime, the age bound, the clock
+  trigger); the turn by momentum under `action` (note 30) still reads
+  `by_clock(k0, |p| N, h)` off the Links stepped, named in note 41 as the
+  one count of a changing rate left as built.
+- Why the count moves where the rate changes (the reviewer, record 148):
+  the whole part off the clock at the current rate re-prices the whole
+  age at today's rate; a paid lamp pays at every birth, so its turn's rate
+  falls, and a clock on a fan reads a crowd that changes at every
+  interval, so on the register every lamp world and every crowd world
+  moves, and the accumulator's count is the law's under E = h f (the
+  integral of the rate). FORM.md's "the constant-rate worlds are
+  bit-identical" describes the primitive, not the register's worlds.
+- The push per column is counted over the column's one denominator
+  Lambda_c^2 (`NatureBeamWorld.column_scales`, the least common multiple
+  of the families' value denominators in the column); Lambda is 1 on
+  gravity and on charge wherever the charges are whole, so no registered
+  push moves at this stage (the nine gate worlds' audit and events
+  unchanged); the lifted product is tested by division and refused naming
+  the column where it does not fit (`tests/test_columns.py` (a)); since
+  the physics-rule review of the branch (`docs/designs/fraction_free/REVIEW.md`,
+  section 4) a column whose Lambda_c^2 leaves the register (Lambda_c
+  above 2^31 - 1) is refused at load naming the column and the bound
+  (`tests/test_fraction_free.py` (g)), where before it loaded and was
+  refused at its first push; no registered world reaches it (every
+  Lambda_c is 1 or a few tens). Under
+  `doppler` the weighted flow is counted per direction at G Q |v_d|^2.
+- The counts are ONE table on the body's record (the model owner's table
+  of 2026-09-20): `Measured.counts`, a `CountTable` of `Count` rows built
+  by `measured.counts_table` from the world's rates (per row the name, the
+  numerator's source, the index and axis, the rate's factor, the
+  denominator, the cap `at_most`, 1 on the drive, and the accumulator),
+  and one loop, `CountTable.advance`, runs the rows of a count through
+  `by_drive` and hands the whole parts to the count's consumer at the
+  stage where its numerator exists (the frame, `_suspend`, step 5,
+  `_move`, the reading); `Measured.acc_owed`, `acc_release`, `acc_lamp`,
+  `acc_turn`, `acc_push`, `acc_flow` and `drive` read and write that
+  table, and `engine.step_axis` and `engine.count_owed` remain as the
+  readings tools' forms of the same rule. Bit-identical to the law before
+  the table on every test and on the gate set (the digests of the
+  register replay above unchanged).
+- `run.json` and `state.json` carry the accumulators per measured event
+  under `acc` by name (`owed`, `release`, `lamp`, `turn`, `push` per
+  column, `flow` under the key), beside `drive`; a declared `acc` in a
+  world file is refused as an unknown key; a run resumed from a state is
+  the unbroken run (`tests/test_fraction_free.py` (c)). Every digest of a
+  `state.json` moves for the new field.
+- The readers by record. A paid lamp's exact clock stalls where its
+  content has fallen below K (the Bell lamps of content K + 2, paying 2
+  per birth, once at tick 4; the L worlds' lamps of 2^20 at tick 2 and its pair lamps at tick 3), so the tick of a
+  birth is not the age of the lamp's clock: the `pass` line carries
+  `record` and `u` as the `click` line does; `tools/bell_chsh.py` and
+  `tools/bell_choosers.py` pair a row by its record (the age its birth
+  ordinal less one) and report the tick offsets as the flight's, the
+  smallest tick - age at each Node; `tests/test_amplitude_pair.py`,
+  `tests/test_amplitude_layer.py` and `tests/test_hand.py` take a lamp's
+  first 64 records by ordinal. Every correlation is alignment-independent
+  (S = 176/64 and 156/64, the cells, the ports, the GHZ triples read by
+  ordinal on both counts). A lamp keeps one birth per interval over T
+  intervals with the content K + c (T - 1) or more, c its cost per birth.
+- The ladder at the click is spelled as the comparison of products
+  (`amplitude.cell_of`: the first k with 2 T u + T <= 2 N C_k), the same
+  integers as the rungs' cell, the rungs a report (`tests/test_fraction_free.py` (f)).
+- The register, re-registered once in one batch on the head of the branch
+  against the base a2120413's tree (the scratchpad driver: every world run
+  with `--wall-seconds 1200 --memory-mb 4096`, one run per worker at a
+  time, its digests and counts kept; `heisenberg/w27_beam` skipped as
+  ordered, and `heisenberg/w27_wave`, `buildup/w27_rate1`, `w27_rate47`,
+  `w27_rate8` not compared: beyond the wall on both trees): what moved and
+  by how much, the old integers kept as history in the READMEs and the
+  dated lines of EXPERIMENTS; nothing tuned.
+
+| world | what moved | births | waits | steps | clicks | ages |
+| --- | --- | --- | --- | --- | --- | --- |
+| `amplitude/bell_0_24.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/bell_0_8.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/bell_16_24.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/bell_16_24_far.json` | events, books | 300 -> 299 | 0 | 0 | 768 -> 764 | same |
+| `amplitude/bell_16_8.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/bell_choosers.json` | events, books | 1000 -> 999 | 0 | 0 | 5894 -> 5890 | same |
+| `amplitude/bell_n1024_0_128.json` | events, books | 1044 -> 1043 | 0 | 0 | 4142 -> 4138 | same |
+| `amplitude/bell_n1024_0_384.json` | events, books | 1044 -> 1043 | 0 | 0 | 4142 -> 4138 | same |
+| `amplitude/bell_n1024_256_128.json` | events, books | 1044 -> 1043 | 0 | 0 | 4142 -> 4138 | same |
+| `amplitude/bell_n1024_256_384.json` | events, books | 1044 -> 1043 | 0 | 0 | 4142 -> 4138 | same |
+| `amplitude/bell_n4096_0_1536.json` | events, books | 4113 | 0 | 0 | 16418 | same |
+| `amplitude/bell_n4096_0_512.json` | events, books | 4113 | 0 | 0 | 16418 | same |
+| `amplitude/bell_n4096_1024_1536.json` | events, books | 4113 | 0 | 0 | 16418 | same |
+| `amplitude/bell_n4096_1024_512.json` | events, books | 4113 | 0 | 0 | 16418 | same |
+| `amplitude/cnot_ghz_xxx.json` | events, books | 270 -> 267 | 0 | 0 | 484 -> 478 | same |
+| `amplitude/cnot_ghz_xyy.json` | events, books | 270 -> 267 | 0 | 0 | 484 -> 478 | same |
+| `amplitude/cnot_ghz_yxy.json` | events, books | 270 -> 267 | 0 | 0 | 484 -> 478 | same |
+| `amplitude/cnot_ghz_yyx.json` | events, books | 270 -> 267 | 0 | 0 | 484 -> 478 | same |
+| `amplitude/cnot_pair_0_24.json` | events, books | 180 -> 178 | 0 | 0 | 300 -> 296 | same |
+| `amplitude/cnot_pair_0_8.json` | events, books | 180 -> 178 | 0 | 0 | 300 -> 296 | same |
+| `amplitude/cnot_pair_16_24.json` | events, books | 180 -> 178 | 0 | 0 | 300 -> 296 | same |
+| `amplitude/cnot_pair_16_8.json` | events, books | 180 -> 178 | 0 | 0 | 300 -> 296 | same |
+| `amplitude/cnot_twice.json` | events, books | 180 -> 178 | 0 | 0 | 284 -> 280 | same |
+| `amplitude/cone_intervals.json` | events, books | 192 -> 190 | 0 | 0 | 134 -> 132 | same |
+| `amplitude/cone_links.json` | events, books | 192 -> 190 | 0 | 0 | 134 -> 132 | same |
+| `amplitude/ev_169.json` | events, books | 80 -> 79 | 0 | 0 | 213 -> 210 | same |
+| `amplitude/ev_29.json` | events, books | 80 -> 79 | 0 | 0 | 213 -> 210 | same |
+| `amplitude/ghz_xxx.json` | events, books | 80 -> 79 | 0 | 0 | 450 -> 444 | same |
+| `amplitude/ghz_xyy.json` | events, books | 80 -> 79 | 0 | 0 | 450 -> 444 | same |
+| `amplitude/ghz_yxy.json` | events, books | 80 -> 79 | 0 | 0 | 450 -> 444 | same |
+| `amplitude/ghz_yyx.json` | events, books | 80 -> 79 | 0 | 0 | 450 -> 444 | same |
+| `amplitude/ghz_yyy.json` | events, books | 80 -> 79 | 0 | 0 | 450 -> 444 | same |
+| `amplitude/mz_345.json` | events, books | 80 -> 79 | 0 | 0 | 138 -> 136 | same |
+| `amplitude/mz_balanced.json` | events, books | 80 -> 79 | 0 | 0 | 69 -> 68 | same |
+| `amplitude/mz_equal.json` | events, books | 80 -> 79 | 0 | 0 | 138 -> 136 | same |
+| `amplitude/mz_half.json` | events, books | 80 -> 79 | 0 | 0 | 138 -> 136 | same |
+| `amplitude/mz_quarter.json` | events, books | 80 -> 79 | 0 | 0 | 276 -> 272 | same |
+| `amplitude/mz_unequal_f0.json` | events, books | 80 -> 79 | 0 | 0 | 280 -> 276 | same |
+| `amplitude/mz_unequal_f16.json` | events, books | 80 -> 79 | 0 | 0 | 280 -> 276 | same |
+| `amplitude/mz_unequal_f8.json` | events, books | 80 -> 79 | 0 | 0 | 280 -> 276 | same |
+| `amplitude/path_0_24.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/path_0_8.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/path_16_24.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/path_16_24_far.json` | events, books | 300 -> 299 | 0 | 0 | 768 -> 764 | same |
+| `amplitude/path_16_8.json` | events, books | 80 -> 79 | 0 | 0 | 286 -> 282 | same |
+| `amplitude/rotations_3.json` | events, books | 110 -> 109 | 0 | 0 | 196 -> 194 | same |
+| `amplitude/slits_low.json` | events, books | 230 -> 229 | 0 | 0 | 22302 -> 22117 | same |
+| `bell/a0_b0.json` | events, books | 160 -> 159 | 0 | 0 | 294 -> 292 | same |
+| `bell/a0_b12.json` | events, books | 160 -> 159 | 0 | 0 | 294 -> 292 | same |
+| `bell/a0_b16.json` | events, books | 160 -> 159 | 0 | 0 | 294 -> 292 | same |
+| `bell/a0_b24.json` | events, books | 160 -> 159 | 0 | 0 | 292 -> 290 | same |
+| `bell/a0_b32.json` | events, books | 160 -> 159 | 0 | 0 | 292 -> 290 | same |
+| `bell/a0_b8.json` | events, books | 160 -> 159 | 0 | 0 | 294 -> 292 | same |
+| `bell/a16_b24.json` | events, books | 160 -> 159 | 0 | 0 | 292 -> 290 | same |
+| `bell/a16_b8.json` | events, books | 160 -> 159 | 0 | 0 | 294 -> 292 | same |
+| `bell/a4_b12.json` | events, books | 160 -> 159 | 0 | 0 | 294 -> 292 | same |
+| `bell/a4_b8.json` | events, books | 160 -> 159 | 0 | 0 | 294 -> 292 | same |
+| `bell/fixed.json` | events, books | 148 -> 147 | 0 | 0 | 503 -> 501 | same |
+| `bell/one_clock.json` | events, books | 1940 -> 1939 | 0 | 0 | 7671 -> 7669 | same |
+| `bell/read.json` | events, books | 1940 -> 1939 | 0 | 0 | 7669 -> 7667 | same |
+| `bell/written_a0_b29.json` | events, books | 141 -> 140 | 0 | 0 | 474 -> 472 | same |
+| `bell/written_a0_b8.json` | events, books | 141 -> 140 | 0 | 0 | 475 -> 473 | same |
+| `bell/written_a25_b29.json` | events, books | 141 -> 140 | 0 | 0 | 469 -> 467 | same |
+| `bell/written_a25_b8.json` | events, books | 141 -> 140 | 0 | 0 | 470 -> 468 | same |
+| `binding/proton_bond_lamp.json` | events, books | 3000 | 0 | 0 | 1735769 | same |
+| `catalog/lamp_mirror_screen.json` | events, books | 104 | 0 | 0 | 636 -> 668 | same |
+| `catalog/neutron_star.json` | events, books | 0 | 109 -> 97 | 176 -> 186 | 684 -> 708 | 14 of 14 bodies, by -1 to 1 |
+| `catalog/sun_planet.json` | events, books | 50 | 0 | 10 | 209 | same |
+| `hubble/pushing_age.json` | events, books | 0 | 145 -> 146 | 1429 -> 1426 | 8351 -> 8358 | 25 of 31 bodies, by -3 to 3 |
+| `hubble/pushing_scalar.json` | events, books | 0 | 639 -> 617 | 1408 -> 1411 | 8200 -> 8204 | 24 of 31 bodies, by -4 to 8 |
+| `hubble_stars/coasting_age.json` | events, books | 9538 -> 9521 | 62 -> 55 | 1521 -> 1525 | 15389 -> 15405 | 18 of 25 bodies, by -2 to 4 |
+| `hubble_stars/coasting_none.json` | events, books | 9600 -> 9576 | 0 | 1536 | 15483 -> 15459 | same |
+| `hubble_stars/coasting_scalar.json` | events, books | 9517 -> 9504 | 97 -> 90 | 1524 -> 1523 | 15355 | 22 of 25 bodies, by -4 to 6 |
+| `hubble_stars/doppler/coasting_age.json` | events, books | 9538 -> 9521 | 62 -> 55 | 1521 -> 1525 | 15389 -> 15405 | 18 of 25 bodies, by -2 to 4 |
+| `hubble_stars/doppler/coasting_none.json` | events, books | 9600 -> 9576 | 0 | 1536 | 15483 -> 15459 | same |
+| `hubble_stars/doppler/coasting_scalar.json` | events, books | 9517 -> 9504 | 97 -> 90 | 1524 -> 1523 | 15355 | 22 of 25 bodies, by -4 to 6 |
+| `hubble_stars/doppler/double_age.json` | events, books | 9485 -> 9464 | 115 -> 112 | 1281 -> 1277 | 15248 | 17 of 25 bodies, by -3 to 5 |
+| `hubble_stars/doppler/double_none.json` | events, books | 9600 -> 9576 | 0 | 1296 | 15388 -> 15364 | same |
+| `hubble_stars/doppler/double_scalar.json` | events, books | 9435 -> 9410 | 200 -> 195 | 1281 | 15141 -> 15138 | 19 of 25 bodies, by -4 to 7 |
+| `hubble_stars/doppler/gravity_age.json` | events, books | 9558 -> 9523 | 42 -> 53 | 1420 -> 1418 | 15377 -> 15347 | 19 of 25 bodies, by -2 to 3 |
+| `hubble_stars/doppler/gravity_none.json` | events, books | 9600 -> 9576 | 0 | 1426 | 15419 -> 15395 | same |
+| `hubble_stars/doppler/gravity_scalar.json` | events, books | 9526 -> 9504 | 94 -> 90 | 1415 | 15316 -> 15303 | 20 of 25 bodies, by -3 to 2 |
+| `hubble_stars/double_age.json` | events, books | 9474 -> 9469 | 126 -> 107 | 1070 -> 1069 | 15276 -> 15256 | 18 of 25 bodies, by -3 to 6 |
+| `hubble_stars/double_none.json` | events, books | 9600 -> 9576 | 0 | 1082 | 15387 -> 15362 | same |
+| `hubble_stars/double_scalar.json` | events, books | 9449 -> 9408 | 179 -> 197 | 1072 -> 1070 | 15156 -> 15144 | 18 of 25 bodies, by -3 to 3 |
+| `hubble_stars/gravity_age.json` | events, books | 9534 -> 9525 | 66 -> 51 | 1310 -> 1314 | 15345 -> 15339 | 15 of 25 bodies, by -2 to 5 |
+| `hubble_stars/gravity_none.json` | events, books | 9600 -> 9576 | 0 | 1319 | 15403 -> 15379 | same |
+| `hubble_stars/gravity_scalar.json` | events, books | 9512 -> 9504 | 107 -> 90 | 1311 -> 1312 | 15295 -> 15284 | 22 of 25 bodies, by -1 to 4 |
+| `hubble_stars/record/coasting_age.json` | events, books | 9538 -> 9521 | 62 -> 55 | 1521 -> 1525 | 15389 -> 15405 | 18 of 25 bodies, by -2 to 4 |
+| `hubble_stars/record/coasting_none.json` | events, books | 9600 -> 9576 | 0 | 1536 | 15483 -> 15459 | same |
+| `hubble_stars/record/coasting_scalar.json` | events, books | 9517 -> 9504 | 97 -> 90 | 1524 -> 1523 | 15355 | 22 of 25 bodies, by -4 to 6 |
+| `hubble_stars/record/double_age.json` | events, books | 9474 -> 9469 | 126 -> 107 | 1070 -> 1069 | 15276 -> 15256 | 18 of 25 bodies, by -3 to 6 |
+| `hubble_stars/record/double_none.json` | events, books | 9600 -> 9576 | 0 | 1082 | 15387 -> 15362 | same |
+| `hubble_stars/record/double_scalar.json` | events, books | 9449 -> 9408 | 179 -> 197 | 1072 -> 1070 | 15156 -> 15144 | 18 of 25 bodies, by -3 to 3 |
+| `hubble_stars/record/gravity_age.json` | events, books | 9534 -> 9525 | 66 -> 51 | 1310 -> 1314 | 15345 -> 15339 | 15 of 25 bodies, by -2 to 5 |
+| `hubble_stars/record/gravity_none.json` | events, books | 9600 -> 9576 | 0 | 1319 | 15403 -> 15379 | same |
+| `hubble_stars/record/gravity_scalar.json` | events, books | 9512 -> 9504 | 107 -> 90 | 1311 -> 1312 | 15295 -> 15284 | 22 of 25 bodies, by -1 to 4 |
+| `masses/cavity_equal.json` | events, books | 1200 | 0 | 0 | 1176 | same |
+| `masses/cavity_unequal.json` | events, books | 12000 | 0 | 0 | 11976 | same |
+| `weak/j1_lattice.json` | events, books | 0 | 1592 -> 1536 | 0 | 231224 -> 231008 | 56 of 4234 bodies, by 1 to 1 |
+| `weak/j1_source.json` | events, books | 0 | 2848 -> 2708 | 0 | 405620 -> 406292 | 220 of 4235 bodies, by -2 to 4 |
+| `weak/j3_deuteron.json` | events, books | 0 | 1110 -> 1149 | 62 -> 64 | 707078 -> 718743 | 115 of 764 bodies, by -2 to 11 |
+| `weak/j3_deuteron_crowd.json` | events, books | 0 | 1111 -> 1149 | 66 -> 69 | 705380 -> 718741 | 115 of 764 bodies, by -2 to 12 |
+
+- The re-pinned tests, the old integers kept as history in each module's
+  docstring: TEST_EXPECTATIONS "The fraction-free counts".
+- Nothing deleted: `by_clock`, `by_clock_rows` and every key stay.
+
+## The series the one click re-pinned reference the family definitions, on 2026-09-20 (host only, no law change)
+
+The third pull request of the model owner's decision of 2026-09-20
+(record 113; the built form in
+[entity definitions](ENTITY_DEFINITIONS.md#families-in-definitions-event-entities-v2-2026-09-20)),
+after the one click of `amplitude-v1` landed (PR #395):
+
+- The amplitude series (44 of 47 worlds), the lensing series (9), the
+  build-up series (3), `catalog/sun_planet`, `catalog/lamp_mirror_screen`,
+  `two_slits` and `heisenberg/w3_beam` reference
+  `../entities/families.json` (the root world `entities/families.json`),
+  written by their generators through `families_by_definition`; the two
+  inline exceptions of the root and Heisenberg generators are gone.
+  `amplitude/slits_low` keeps `light` inline (its `phase_per_link` a pair,
+  the definition's an integer), `amplitude/mz_unequal_f8` and
+  `mz_unequal_f16` stay inline whole for the same reason.
+- Every migrated world's expanded document equals its former inline
+  document and its `events.jsonl`, `state.json` and books are identical
+  (the 62 worlds in scope replayed on `main` at e4b649a0 and on the branch,
+  the long ones capped at 200 intervals, `two_slits`, the build-up and the
+  N = 4096 Bell worlds at 40).
+- No world of the register declares `families` for a family the
+  definitions define; the catalog's rows are unchanged.
+- Nothing deleted.
+
 ## The binding that costs content, on 2026-09-20 (`binding-v1`, no key)
+## The architecture cleanup, phase 2: removals after the one click, on 2026-09-20 (host only, no law change)
+
+The architect's phase 2 ([the plan](designs/architecture_2026-09-20/PLAN_PHASE2.md),
+the Boss's assignment under record 137), bit-exact on the gate set against
+`main` at e4b649a0 (the one click merged). Deleted, each with its reader
+moved or gone:
+
+- `tools/migrate_nature_beam_worlds.py` (242 lines): the rewrite of the
+  first NatureBeam worlds to the form of 2026-09-20; no world declares
+  `"law": "rays"` or a family `kind`. The parser's refusal of `"law":
+  "rays"` still names the tool, in git before e4b649a0. Its row in the
+  README's tool table removed; the catalog README's sentence dated.
+- `nature_beam.pointer_units` and `POINTER_UNIT`: the `wave` threshold on
+  the pointer's square, deleted at the one click; no caller was left. The
+  assertions of `tests/test_nature_beam_detector.py` (i) and (j) on them
+  removed; the one integer kept as `26 x (32 x 256)^2`.
+- `amplitude.isqrt` (Newton's integer square root): `math.isqrt`, the
+  same integers.
+- `Layer.origin` (an identity function with one caller, which now reads
+  the row's record) and the alias `measured.Pending` (no reader).
+- `AMPLITUDE_SCALE` defined once (`events/amplitude`, imported by
+  `events/nature_beam`); `amplitude.IDENTITY` renamed `ROTATION_IDENTITY`
+  (the rotation's 256^2; `nature_beam.IDENTITY` is the 3 x 3 identity).
+- Renamed for what they are: `nature_beam.AMPLITUDE_DEFAULTS` ->
+  `NO_RECORD_COLUMNS`; `world._amplitude_load_checks` ->
+  `_record_load_checks`; `DetectorSet.wave` -> `DetectorSet.pointer`
+  (true for `wave` and `sum`, the readings of the crowd's pointer) with
+  `st_wave` -> `st_pointer` and `wave_rows` -> `pointer_rows` in
+  `nature_beam`; the books' local `amplitude` -> `recorded`. Twenty-four
+  comments and docstrings naming the deleted world key as live now say a
+  record's row, a recorded world or a row of no record.
+- `NatureBeamSimulation.layer` is typed `Layer` (always built);
+  `run.json`'s `world`, `open` and `layer` are written for a recorded
+  world (`world.recorded`), the layer guard being dead. The `layer:
+  Layer | None` of `nature_beam` and `rotate_rows` and their guards stay:
+  the engine's inverse pass (`nature_beam(..., inverse=True)`, the check
+  of the bijective steps) runs without a layer.
+- ARCHITECTURE's dependency table gains the rows `events/amplitude` and
+  `events/meeting` and names them in `events/nature_beam`'s and
+  `events/engine`'s; TERMINOLOGY's record, branch, multiplicity, layer
+  and click's-Node entries, the amplitude README and the catalog's photon
+  row no longer say "under the key".
+- Kept, with the reason in the plan: the raw-document lamp scan at parse
+  (its place gives the lamp's refusal precedence over the measured
+  events'); `world.event_charges` (the import direction: `events/measured`
+  imports `events/world`); the two derivations scripts and the four
+  world-pinning tests (the owner's and the test owner's call, Q5);
+  `amplitude/expectations.json` beside its worlds; the optimizations
+  (O1 to O4) and the unifications (U2, U3, U5) of phase 1, not removals.
+
 
 binding-v1 (2026-09-20): at a contact under `measure` the refused body gives
 its held paid content to the flight on the reversed heading; `contact`

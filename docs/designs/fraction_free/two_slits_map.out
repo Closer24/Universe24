@@ -1,0 +1,89 @@
+slits_low: phase_per_link 8591334592/1073741824 = 8.0013038516 steps per interval; fan 91; N 64
+by_clock at that rate over 300 intervals: values [8]
+
+1. THE LAMP'S FIVE ROWS (born at phase u; the walk from (2, 60))
+  (1, 0): wall at (7, 60), age 8, steps 5, phase 0 (+u), exact 4.761
+  (1, 1): opening at (8, 65), age 13, steps 11, phase 40 (+u), exact 43.267
+  (1, -1): opening at (8, 55), age 13, steps 11, phase 40 (+u), exact 43.267
+  (2, 1): wall at (7, 62), age 9, steps 7, phase 8 (+u), exact 8.053
+  (2, -1): wall at (7, 58), age 9, steps 7, phase 8 (+u), exact 8.053
+
+2. THE TWO FANS OF 91 (re-released at the opening at age 0 with the leg's phase)
+  ends: {'screen': 108, 'face': 74}
+  pixels with rows 75, with two paths 27: [22, 29, 30, 36, 39, 43, 46, 48, 49, 50, 51, 55, 59, 60, 61, 65, 69, 70, 71, 72, 74, 77, 81, 84, 90, 91, 98]
+  screen rows whose exact phase is whole: 0 of 108; the arrival's rounding per row, exact - built, in steps:
+    min 0.45, max 9.19, |mean| 4.76 (one interval = 8 steps = 45 degrees)
+
+3. THE SCREEN'S WEIGHTS PER PIXEL (x 455, a birth's norm 1), built phase against exact phase
+  the wavelength 4.6538 Links (8 intervals at 0.5818 Links per interval); the openings 10 apart, the screen 44 away: the fringe spacing 20.48 pixels
+  Pearson over the 75 pixels with rows: built vs cosine 0.390, built vs incoherent 0.716
+    exact (table 64) vs cosine 0.400, exact (table 4096) vs cosine 0.407, exact vs incoherent 0.703
+  over the 27 two-path pixels alone: built vs cosine 0.645, exact vs cosine 0.669
+  the two-path pixels (y, exact phase difference in steps of 64, built difference, cosine, built weight, exact weight):
+     22: exact  22.51  built 24  cos 0.185  built 0.586  exact 0.809
+     29: exact  15.81  built 16  cos 1.100  built 2.000  exact 2.037
+     30: exact  13.75  built 16  cos 1.268  built 2.000  exact 2.438
+     36: exact  63.54  built  0  cos 1.988  built 4.000  exact 3.998
+     39: exact  60.89  built 56  cos 1.881  built 3.414  exact 3.908
+     43: exact  51.59  built 56  cos 1.129  built 3.414  exact 2.691
+     46: exact  40.80  built 40  cos 0.402  built 0.586  exact 0.701
+     48: exact  35.40  built 40  cos 0.076  built 0.586  exact 0.110
+     49: exact  33.97  built 40  cos 0.007  built 0.586  exact 0.037
+     50: exact   6.60  built  8  cos 0.014  built 3.414  exact 3.594
+     51: exact   4.36  built  0  cos 0.100  built 2.171  exact 1.909
+     55: exact  21.53  built 24  cos 1.056  built 0.586  exact 0.967
+     59: exact   4.36  built  0  cos 1.954  built 8.998  exact 8.661
+     60: exact   6.60  built  8  cos 2.000  built 13.655  exact 14.374
+     61: exact  59.92  built  0  cos 1.954  built 8.998  exact 8.661
+     65: exact  42.47  built 40  cos 1.056  built 0.586  exact 0.967
+     69: exact  37.26  built 40  cos 0.100  built 2.171  exact 1.909
+     70: exact   6.60  built  8  cos 0.014  built 3.414  exact 3.594
+     71: exact  30.03  built 24  cos 0.007  built 0.586  exact 0.037
+     72: exact  28.60  built 24  cos 0.076  built 0.586  exact 0.110
+     74: exact  23.20  built 24  cos 0.402  built 0.586  exact 0.701
+     77: exact  12.41  built  8  cos 1.129  built 3.414  exact 2.691
+     81: exact   3.11  built  8  cos 1.881  built 3.414  exact 3.908
+     84: exact   0.46  built  0  cos 1.988  built 4.000  exact 3.998
+     90: exact  50.25  built 48  cos 1.268  built 2.000  exact 2.438
+     91: exact  48.19  built 48  cos 1.100  built 2.000  exact 2.037
+     98: exact  41.49  built 40  cos 0.185  built 0.586  exact 0.809
+
+4. THE LADDER AS BUILT (N = 64, u = 0 .. 63): the clicks per set against the register
+  wall 34 (11, 12, 11), screen 15 {11: 1, 29: 1, 36: 1, 43: 1, 50: 1, 56: 1, 59: 1, 60: 1, 61: 2, 70: 1, 77: 1, 82: 1, 90: 1, 107: 1}, faces 15 (8, 7)
+  the register: wall 34 (11, 12, 11), screen 15 {11: 1, 29: 1, 36: 1, 43: 1, 50: 1, 56: 1, 59: 1, 60: 1, 61: 2, 70: 1, 77: 1, 82: 1, 90: 1, 107: 1}, faces 15 (8, 7)
+  reproduced: True
+  the record's total 1.1364 of the birth norm; shares wall 0.528, screen 0.244, faces 0.228
+  the rung 1 / 2N = 0.00781 of the total; the largest screen cell 0.02641 at y = 60; screen cells above the rung: 3 of 75
+  cells landed over the 64 births: 19 distinct; every later birth repeats them (u = ordinal mod 64, the offers the same for every record)
+
+5. THE CLICKS UNDER A FINER WHEEL (u the bit-reversed ordinal on a wheel W) AND THE EXACT PHASE
+  built phase, W = 64, 64 births: wall 34, screen 15 on 14 pixels, faces 15; two-path pixels [0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 2, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0]; single-path pixels min 0 max 1
+  built phase, W = 4096, 256 births: wall 136, screen 62 on 43 pixels, faces 58; two-path pixels [0, 1, 1, 2, 1, 2, 0, 1, 0, 2, 1, 0, 5, 6, 5, 0, 1, 2, 0, 0, 1, 1, 2, 2, 1, 1, 0]; single-path pixels min 0 max 1
+  built phase, W = 4096, 4096 births: wall 2162, screen 1001 on 75 pixels, faces 933; two-path pixels [4, 16, 16, 32, 27, 27, 4, 5, 5, 27, 17, 4, 72, 108, 71, 4, 17, 27, 5, 5, 5, 27, 27, 32, 16, 16, 5]; single-path pixels min 7 max 8
+    Pearson(two-path counts, cosine) 0.645; visibility over the two-path pixels (max - min) / (max + min) = 0.929
+    screen counts y = 40 .. 80: 8 8 0 27 8 8 4 0 5 5 27 17 0 8 8 4 8 0 8 72 108 71 8 0 8 4 8 8 0 17 27 5 5 0 5 8 8 27 0 7 8
+  exact phase, W = 64, 64 births: wall 34, screen 16 on 15 pixels, faces 14; two-path pixels [0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 2, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0]; single-path pixels min 0 max 1
+  exact phase, W = 4096, 256 births: wall 136, screen 63 on 44 pixels, faces 57; two-path pixels [0, 1, 2, 2, 1, 2, 0, 0, 0, 2, 1, 0, 5, 7, 4, 1, 1, 1, 0, 0, 1, 1, 2, 2, 1, 1, 1]; single-path pixels min 0 max 1
+  exact phase, W = 4096, 4096 births: wall 2168, screen 1001 on 74 pixels, faces 927; two-path pixels [7, 16, 19, 32, 31, 21, 5, 1, 1, 28, 15, 8, 68, 115, 68, 8, 15, 29, 0, 1, 5, 22, 31, 32, 19, 16, 7]; single-path pixels min 7 max 8
+    Pearson(two-path counts, cosine) 0.668; visibility over the two-path pixels (max - min) / (max + min) = 1.000
+    screen counts y = 40 .. 80: 8 8 0 21 8 8 5 0 1 1 28 15 0 8 8 8 8 0 8 68 115 68 8 0 8 8 8 8 0 15 29 0 1 0 5 8 8 22 0 7 8
+
+6. THE SCREEN'S FAN: (44, y - opening) per pixel from each opening, 121 directions, multiplicity 5 x 121 = 605
+  the isotropy of the flight table on these directions: T_d / (Q sqrt 3 |D|) over the 121 directions within 0.00018 of 1
+  directions landing on their own pixel 174 of 242 (the others enter x = 52 one Node short, the digital line's last step in y); pixels with two rows 115, with one 0, with none 2
+  Pearson with the Euclidean two-source cosine over the 121 pixels: built phase 0.906, exact phase on the table of 64 0.961, exact on 4096 0.963
+  the built difference against the exact difference per pixel: at most 6.99 steps, median 2.14 (one interval = 8 steps)
+  weights x 605 per pixel, y = 40 .. 80 (built / exact / 2 (1 + cos)):
+    built 4.0 3.4 3.4 2.0 2.0 2.0 0.6 0.6 0.6 0.0 0.0 0.0 0.6 0.6 2.0 2.0 2.0 3.4 3.4 3.4 4.0 3.4 3.4 3.4 2.0 2.0 2.0 0.6 0.6 0.0 0.0 0.0 0.6 0.6 0.6 2.0 2.0 2.0 3.4 3.4 4.0
+    exact 3.5 3.2 2.8 2.3 1.8 1.3 0.9 0.5 0.2 0.0 0.0 0.2 0.5 1.0 1.5 2.1 2.7 3.2 3.6 3.9 4.0 3.9 3.6 3.2 2.7 2.1 1.5 1.0 0.5 0.2 0.0 0.0 0.2 0.5 0.9 1.3 1.8 2.3 2.8 3.2 3.5
+    cos   3.5 3.2 2.7 2.3 1.8 1.3 0.8 0.4 0.2 0.0 0.0 0.2 0.5 1.0 1.5 2.1 2.7 3.2 3.6 3.9 4.0 3.9 3.6 3.2 2.7 2.1 1.5 1.0 0.5 0.2 0.0 0.0 0.2 0.4 0.8 1.3 1.8 2.3 2.7 3.2 3.5
+  built phase, W = 64, 64 births: wall 41, screen 23 on 23 pixels; Pearson(counts, cosine) 0.363
+  built phase, W = 4096, 4096 births: wall 2629, screen 1467 on 99 pixels; Pearson(counts, cosine) 0.904
+    counts y = 40 .. 80: 29 25 24 15 14 15 4 5 4 0 0 0 4 4 15 14 15 25 24 25 29 25 24 25 15 14 15 4 4 0 0 0 4 5 4 15 14 14 25 25 29
+    at the cosine's bright pixels [35, 36, 37, 38, 59, 60, 61, 82, 83, 84, 85]: [29, 29, 29, 25, 25, 29, 25, 24, 29, 29, 29]; at its dark pixels [13, 14, 15, 16, 17, 18, 19, 20, 48, 49, 50, 70, 71, 72, 100, 101, 102, 103, 104, 105, 106, 107]: [4, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 4]
+  exact phase, W = 64, 64 births: wall 41, screen 23 on 23 pixels; Pearson(counts, cosine) 0.361
+  exact phase, W = 4096, 4096 births: wall 2654, screen 1442 on 107 pixels; Pearson(counts, cosine) 0.963
+    counts y = 40 .. 80: 26 23 21 17 13 10 6 4 1 0 0 1 4 7 11 15 20 23 27 29 29 28 27 23 20 15 11 7 4 1 0 0 2 3 6 10 13 17 21 24 25
+    at the cosine's bright pixels [35, 36, 37, 38, 59, 60, 61, 82, 83, 84, 85]: [28, 29, 29, 29, 29, 29, 28, 29, 29, 29, 28]; at its dark pixels [13, 14, 15, 16, 17, 18, 19, 20, 48, 49, 50, 70, 71, 72, 100, 101, 102, 103, 104, 105, 106, 107]: [2, 2, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 1, 1, 3]
+
+7. The cosine at the isotropic pace 1 / sqrt 3 (wavelength 4.6188): built vs cosine over the 75 pixels 0.389 (the register's 0.368 is the reading tool's own cosine; the number here is this map's)

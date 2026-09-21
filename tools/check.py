@@ -13,7 +13,20 @@ ROOT = Path(__file__).resolve().parents[1]
 # Every row names a kept test; main() still skips a selected test that does not exist.
 RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
     "examples/events/README.md": ("tests/test_nature_beam_worlds.py",),
-    "examples/events/gate_set.json": ("tests/test_nature_beam_worlds.py",),
+    # The registers a test reads a world's numbers from (2026-09-21).
+    "examples/events/gate_set.json": (
+        "tests/test_nature_beam_worlds.py",
+        "tests/test_amplitude_click.py",
+    ),
+    "examples/events/expectations.json": ("tests/test_nature_beam_worlds.py",),
+    "examples/events/bell/expectations.json": ("tests/test_nature_beam_worlds.py",),
+    "examples/events/amplitude/expectations.json": (
+        "tests/test_amplitude_cone.py",
+        "tests/test_amplitude_gate.py",
+        "tests/test_amplitude_layer.py",
+        "tests/test_amplitude_pair.py",
+        "tests/test_amplitude_split.py",
+    ),
     "examples/events/detector/entities/detectors.json": (
         "tests/test_entity_definitions.py",
         "tests/test_configuration_validation.py",
@@ -28,6 +41,8 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
         "tests/test_nature_beam_worlds.py",
         "tests/test_bell_choosers.py",
         "tests/test_entity_loading_consumers.py",
+        "tests/test_amplitude_layer.py",
+        "tests/test_amplitude_click.py",
     ),
     "examples/events/entities/apparatus.json": ("tests/test_entity_definitions.py",),
 }

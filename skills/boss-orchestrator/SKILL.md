@@ -197,3 +197,24 @@ One agent may use several skills. Exploration normally uses one owner unless par
 Do not turn one-off exploration findings into Skills. For integration work, review Boss and affected Skills for demonstrated reusable improvements and persist only authorized durable changes. Prefer simplifying or replacing obsolete guidance over accumulating exceptions. Record temporary task state in Issues/PRs, not in Skills.
 
 Report PR state separately from physical conclusions. Do not call a hypothesis successful because software checks are green. No skill or agent is assumed to keep running after a turn ends.
+
+### Emergence before a rule (the owner, 2026-09-20, record 151)
+
+Before assigning a new rule or a world key for an observed effect (a Doppler, an aberration, a redshift, a drift), first assign the one-world test that asks whether the effect already follows from the rules the law has (the flight of one Link per interval, the meeting, the step, the click), with the proposed key absent and the expectation pinned before the run. If it emerges, no rule is built. If it does not, the hole is in the generic step that misses it (a reader that does not read the Link it crosses, a count that re-prices its whole age at today's rate) and is fixed there, once and for every family, never by a weighted rule beside the generic one. A key that supplies what a step misses is a patch; when its test exists, it leaves the code. Doppler-v1 was such a key (record 134); the reader's Doppler test of record 151 decides whether the step or the key was wrong. The same check applies to a count: a rate that is not whole per interval needs its phase, not a re-evaluation of its age (records 147, 148).
+
+
+### The main course (the owner, 2026-09-21, record 176)
+
+Assign the formula before the run for a constant-rate world, and the limit's derivation beside the run for a state-dependent one (skills/workflow.md, "The main course"); assign every new rule first in its generic vector form (record 177).
+
+## Notation (the owner, 2026-09-21, record 184)
+
+Every symbol is named in English at its first use (never a Greek letter alone: "gamma (the Lorentz factor)"), and its kind is shown by its type: a scalar plain, a vector in bold lowercase (**p**), a tensor, matrix or operator in bold uppercase (**C**); skills/workflow.md, "Notation".
+
+## The three tests of every rule (the owner, 2026-09-21, record 202)
+
+A rule enters the law only if it is generic (one primitive with declared integers, no family name or kind), vector (one of the six verbs on the state vector, its rate at most bilinear, no root, no float) and local (its own record and the six neighbours, fixed work, nothing kept at a Node); state the three verdicts, one line each; skills/workflow.md, "The three tests of every rule".
+
+## A formula gives, a run proves (the owner, 2026-09-21, record 205)
+
+No run is ordered without its derived expectation and the named vector it will read; the register entry carries the derivation's section; a run without one is a research run and is ordered as such; skills/workflow.md, "The main course".

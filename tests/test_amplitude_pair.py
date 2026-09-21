@@ -12,7 +12,11 @@ pair"), written down before the first run:
     (10, 0, 0), the labels 0 and 3 on arm 0 (-x, Alice) and on arm 1
     (+x, Bob), the branch arm x 2^32 + label; the `birth` line carries the
     labels [[0, 1], [3, 1]], 2 arms, 4 units, the multiplicity 2;
-(b) the design's test 4 at the CHSH labels: over the 64 births the cells
+(b) the design's test 4 at the CHSH labels: over the lamp's first 64
+    records (by birth ordinal, the record's identity: born in the ticks
+    1 .. 65 since the fraction-free law of 2026-09-20, the exact clock of
+    the paid lamp stalling once at tick 3; a tick window is not a count
+    of births, and S does not depend on the alignment) the cells
     (oA, oB) of `bell_0_8` count 27, 5, 5, 27 (E x 64 = 44), `bell_0_24`
     5, 27, 27, 5 (-44), `bell_16_8` and `bell_16_24` 27, 5, 5, 27 (44),
     S = 176/64; Alice's outcome is + for u < 32 and - for u >= 32 on every
@@ -20,9 +24,12 @@ pair"), written down before the first run:
     settings of its two clicks (`windows` [alice_plus, a, 0], [bob_plus,
     b, 0]); the counters alice_minus and bob_minus receive nothing;
 (c) the design's test 4 with the choosers (`bell_choosers`, the 960
-    births from tick 8, when the choosers' rows have reached both
-    counters; the 7 born before click at alice_minus, the first counter
-    the chooser's rows reach): the gathers grouped by the settings give the 15
+    records from the 7th, born at tick 8, when the choosers' rows have
+    reached both counters; the 6 born before (the ticks 1, 2, 4, 5, 6, 7:
+    the exact clock's one stall at tick 3) click at alice_minus, the first
+    counter the chooser's rows reach; the bins are read by record, and
+    each holds every u once whatever the alignment of the births with the
+    streams): the gathers grouped by the settings give the 15
     pairs (0, 12, 25, 38, 51) x (8, 29, 51), 64 records each with every
     u, the counts per pair the reading's and E x 64 = 44, -60, 20, 60, -8,
     -48, -8, 60, -52, -64, 40, 20, -28, -36, 64 in that order; every
@@ -90,13 +97,20 @@ def run(world: dict[str, object]) -> tuple[NatureBeamSimulation, list[dict[str, 
 def gathers_of(
     simulation: NatureBeamSimulation, births: int = N, first: int = 1
 ) -> list[dict[str, object]]:
-    """The gathers of the records born in the ticks first .. first + births - 1."""
+    """The gathers of the lamp's records of the birth ordinals first ..
+    first + births - 1 (the record's identity, number 1's 2^32 + ordinal;
+    since the fraction-free law of 2026-09-20 a paid lamp's exact clock
+    stalls, so a tick window is not a count of births), in their order."""
     assert simulation.layer is not None
-    found = [
-        g
-        for g in simulation.layer.gathers
-        if first <= int(g["born"]) < first + births  # type: ignore[call-overload]
-    ]
+    base = 1 << 32
+    found = sorted(
+        (
+            g
+            for g in simulation.layer.gathers
+            if base + first <= int(g["record"]) < base + first + births  # type: ignore[call-overload]
+        ),
+        key=lambda g: int(g["record"]),  # type: ignore[call-overload]
+    )
     assert len(found) == births
     return found
 
@@ -131,16 +145,23 @@ def test_the_birth_of_a_pair():
         for r in simulation.stores[0].rows()
         if r.record == first
     )
-    minus_x, plus_x = 3, 2
-    assert rows == [
-        ((10, 0, 0), plus_x, 1, 2, (1 << 32) | 0, 0),
-        ((10, 0, 0), plus_x, 1, 2, (1 << 32) | 3, 0),
-        ((10, 0, 0), minus_x, 1, 2, 0, 0),
-        ((10, 0, 0), minus_x, 1, 2, 3, 0),
+    # The register's birth (`pair.birth`, `pair.labels`): one row per
+    # (arm, label) at the lamp's Node, the branch arm x 2^32 + label.
+    registered = PAIR["birth"]
+    node = tuple(registered["node"])
+    labels = [label for label, _ in PAIR["labels"]]
+    directions = [
+        simulation.world.directions.index(tuple(vector)) for vector in registered["arm_directions"]
     ]
+    assert rows == sorted(
+        (node, directions[arm], 1, registered["multiplicity"], (arm << 32) | label, 0)
+        for arm in range(registered["arms"])
+        for label in labels
+    )
     birth = next(line for line in lines if line.get("event") == "birth")
-    assert birth["record"] == first and birth["labels"] == [[0, 1], [3, 1]]
-    assert birth["arms"] == 2 and birth["units"] == 4 and birth["multiplicity"] == 2
+    assert birth["record"] == first and birth["labels"] == PAIR["labels"]
+    assert birth["arms"] == registered["arms"] and birth["units"] == registered["units"]
+    assert birth["multiplicity"] == registered["multiplicity"]
 
 
 def test_the_pair_at_the_chsh_labels():
@@ -167,17 +188,26 @@ def test_the_pair_at_the_chsh_labels():
         + correlations["bell_16_8"]
         + correlations["bell_16_24"]
     )
-    assert s == PAIR["chsh_S"] == 176
-    assert correlations == {"bell_0_8": 44, "bell_0_24": -44, "bell_16_8": 44, "bell_16_24": 44}
+    assert s == PAIR["chsh_S"]
+    assert correlations == {f"bell_{key}": entry["E"] for key, entry in PAIR["chsh"].items()}
 
 
 def test_the_pair_with_the_choosers_reads_the_registered_quadruple():
     """(c)."""
     simulation, _ = run(WORLDS["bell_choosers"])
-    gathers = gathers_of(simulation, GENERATOR.CHOOSERS_BIRTHS, GENERATOR.CHOOSERS_FIRST)
     assert simulation.layer is not None
+    # The records born before tick CHOOSERS_FIRST meet no setting at
+    # Alice's plus counter and click at alice_minus: 6 records (the
+    # lamp's exact clock stalls once, at tick 3, so the 7th record is born
+    # at tick 8; 7 records in 7 ticks until the fraction-free law of
+    # 2026-09-20); the 960 records from the next one, by ordinal, are
+    # analysed.
     early = [g for g in simulation.layer.gathers if int(g["born"]) < GENERATOR.CHOOSERS_FIRST]  # type: ignore[call-overload]
-    assert len(early) == 7 and all(g["chosen"][0][0] == "alice_minus" for g in early)  # type: ignore[index]
+    registered_early = PAIR["choosers_early"]
+    assert len(early) == registered_early["count"]
+    assert all(g["chosen"][0][0] == "alice_minus" for g in early)  # type: ignore[index]
+    assert sorted(int(g["born"]) for g in early) == registered_early["born"]  # type: ignore[call-overload]
+    gathers = gathers_of(simulation, GENERATOR.CHOOSERS_BIRTHS, len(early) + 1)
     by_settings: dict[tuple[int, int], list[dict[str, object]]] = defaultdict(list)
     for gather in gathers:
         by_settings[settings_of(gather)].append(gather)
@@ -192,21 +222,7 @@ def test_the_pair_with_the_choosers_reads_the_registered_quadruple():
         assert sum(v for k, v in counts.items() if k[1] == "+") == N // 2
         correlations[(a, b)] = correlation(counts)
     assert [correlations[(a, b)] for a in a_settings for b in b_settings] == [
-        44,
-        -60,
-        20,
-        60,
-        -8,
-        -48,
-        -8,
-        60,
-        -52,
-        -64,
-        40,
-        20,
-        -28,
-        -36,
-        64,
+        PAIR["choosers"][f"{a}_{b}"]["E"] for a in a_settings for b in b_settings
     ]
     (a1, a2), (b1, b2) = GENERATOR.REGISTERED_QUADRUPLE
     s = correlations[(a1, b1)] - correlations[(a1, b2)] + correlations[(a2, b1)] + correlations[(a2, b2)]
@@ -224,14 +240,16 @@ def test_the_which_path_read_makes_the_joint_a_product():
         counts = counts_of(gathers)
         assert counts == PAIR["which_path"][f"{a}_{b}"]["counts"], name
         correlations[name] = correlation(counts)
-    assert [correlations[f"path_{a}_{b}"] for a, b in GENERATOR.CHSH] == [44, -44, 0, 0]
+    assert [correlations[f"path_{a}_{b}"] for a, b in GENERATOR.CHSH] == [
+        PAIR["which_path"][f"{a}_{b}"]["E"] for a, b in GENERATOR.CHSH
+    ]
     s = (
         correlations["path_0_8"]
         - correlations["path_0_24"]
         + correlations["path_16_8"]
         + correlations["path_16_24"]
     )
-    assert s == PAIR["which_path_S"] == 88
+    assert s == PAIR["which_path_S"]
 
 
 def test_no_maintenance_over_a_long_flight():
@@ -240,7 +258,8 @@ def test_no_maintenance_over_a_long_flight():
         simulation, _ = run(WORLDS[f"{name}_far"])
         gathers = gathers_of(simulation)
         assert correlation(counts_of(gathers)) == expected, name
-        assert min(int(g["tick"]) - int(g["born"]) for g in gathers) >= 200, name  # type: ignore[call-overload]
+        flown = min(int(g["tick"]) - int(g["born"]) for g in gathers)  # type: ignore[call-overload]
+        assert flown >= PAIR["far_min_flight"], name
 
 
 def test_ghz_allows_four_triples_per_basis_with_the_products():
