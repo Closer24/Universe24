@@ -2111,3 +2111,28 @@ protons' ratio enters as an input)"; the Courant sentence's grammar.
 His caveat kept: the abstract folds the hypothesis rows (3; 8a, 8b)
 into "the law's as declared", the finer sorting in sec:nature.
 
+## Wave 18 (2026-09-21): records 361 to 366 by number, the split at N = 32 and 128, the derivation's section 26, the clock's word
+
+Main merged at d17af9b9, PR #566 merged (the Boss's merge of main into this branch for
+PR #566's CI taken as a merge commit; PRs #552, #559, #562, #563, #567).
+The log bibitem to 366; the precedents by records 356 and 366; series
+R's replay by record 364; the lemma's T = 0 by record 363. The (3, 4)
+split at N = 32 and 128 (PR #563, the register's mz_345_n block): the
+power window sharpened to [1.917, 2.012) in the "Against the registered
+integers" paragraph, the click's-weight row of Table 1, the record
+appendix and the Gleason section's closing sentence; Table tab:nature's
+row 2c left as the register's row (the physicist restates it). The
+derivation's section 26 (the ten formulas the paper wants and the
+derivation lacks, record 352) cited at the end of the stands-above
+paragraph, none claimed. Record 365 and the mathematician's note on the
+clock's word: the crowd-clock worlds' k is the presence (M / r^2), the
+series E clock the age moment (M / r); the presence's clock mapped to
+nature fails in form (0.058 against 0.24) and in scale (1e-5 against
+1e-3); the owner's decision pending; one sentence in the clock's
+paragraph, a bibitem for the note. The notation (record 362,
+docs/designs/notation/NOTATION.md, the mathematician's proposal): no
+rename in the paper until the Boss's decision is in TERMINOLOGY; then
+one wave with a notation table at the paper's head. Referee round 40:
+one finding (a comma in the log bibitem), applied; his soft points
+applied (the lemma cites rounds 4 and 4b, not 4b alone).
+
