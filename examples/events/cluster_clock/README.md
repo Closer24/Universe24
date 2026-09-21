@@ -1,13 +1,13 @@
-# Series Q: a cluster of crowds read by one detector, at rest and moving as one
+# Series V: a cluster of crowds read by one detector, at rest and moving as one
 
-The model owner's question (2026-09-21, in conversation after series P,
+The model owner's question (2026-09-21, in conversation after series U,
 translated): "so is it possible that this is the matter with galaxy
 clusters that look as if at a constant speed when they should have flown
 apart?", then "start the additional test you proposed". The design with the
 expectation pinned before any run is
 [docs/designs/cluster_clock/DESIGN.md](../../../docs/designs/cluster_clock/DESIGN.md);
 this folder holds the two worlds it declares, written by `make_worlds.py`
-(which imports series P's generator, `../crowd_clock/make_worlds.py`, for
+(which imports series U's generator, `../crowd_clock/make_worlds.py`, for
 the fan, the speeds and the pinned k), and `expectations.json`. Nothing is
 registered.
 
@@ -15,7 +15,7 @@ registered.
 
 Five members before one fixed detector (x = 3, `reads: "age"`), each a lamp
 of `s_px1` (2^20 units, one unit per self-creation toward the detector)
-inside its own crowd of two `mass` sources (series P's fan, F per source
+inside its own crowd of two `mass` sources (series U's fan, F per source
 per interval) at k = 4 F / 2^16 = 0, 0.1, 0.3, 0.6, 1, the lamps at
 x = 40, 60, 80, 100, 120 on a bar of 201 x 9 x 9.
 

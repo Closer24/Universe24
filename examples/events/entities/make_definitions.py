@@ -42,6 +42,10 @@ def families() -> dict[str, object]:
         family_definition("photon", [{"name": "light", **inert}]),
         family_definition("electron", [{"name": "e", "quantum": 0, "charge": -15, "phase": True}]),
         family_definition("electron_born_by_become", [{"name": "beta", "quantum": 1, "charge": -7344}]),
+        # The muon (series S, 2026-09-21): a free family of content 207 per
+        # measured event with the electron's whole charge -7344 over its
+        # 207 units (the catalog's row "the muon, the tau": [n_e, 207 d_e]).
+        family_definition("muon", [{"name": "mu", "quantum": 0, "charge": [-7344, 207], "phase": True}]),
         family_definition("proton", [{"name": "p", "quantum": 0, "charge": [1, 1], "phase": False}]),
         family_definition("neutron", [{"name": "n", "quantum": 0, "phase": False}]),
         family_definition(

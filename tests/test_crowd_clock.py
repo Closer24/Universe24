@@ -1,4 +1,4 @@
-"""Series P, a lamp inside a crowd, still and moving
+"""Series U, a lamp inside a crowd, still and moving
 (`examples/events/crowd_clock/`, docs/designs/crowd_clock/DESIGN.md). The
 expected values of docs/TEST_EXPECTATIONS.md ("A lamp inside a crowd"),
 written down first:

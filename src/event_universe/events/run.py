@@ -117,6 +117,10 @@ def execute_nature_beam_run(
         # Links a body crossed in the interval right after another of its
         # Links, where the rule's one-per-crossing count is not proved.
         "fast_steps": simulation.fast_steps,
+        # The covariant readings (2026-09-21, `covariant-readings-v1`): the
+        # key's declaration and the run's report, written only under the
+        # key (every other record byte for byte as it was).
+        **({} if world.covariant is None else {"covariant_readings": simulation.covariant_report()}),
         # The world's columns in order, (name, sign): gravity, charge, the
         # declared names; every family's `columns` below is aligned with it.
         "columns": [{"name": name, "sign": sign} for name, sign in world.columns],

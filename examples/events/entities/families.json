@@ -38,6 +38,22 @@
    "detectors": []
   },
   {
+   "name": "muon",
+   "families": [
+    {
+     "name": "mu",
+     "quantum": 0,
+     "charge": [
+      -7344,
+      207
+     ],
+     "phase": true
+    }
+   ],
+   "measured": [],
+   "detectors": []
+  },
+  {
    "name": "proton",
    "families": [
     {
