@@ -4203,8 +4203,10 @@ def gather_records(
 ) -> None:
     """The layer's completions (the ladder, the world's row): every record
     whose units all ended; the `gather` line, per `sum` set with an offer
-    of the record the set's record (the square of the record's pointer per
-    label, accumulated) with a `record` line, and the pending rows of the
+    of the record the set's record (the bilinear form f^T G f of the
+    record's counts per label, the pointer's square without the pointer,
+    accumulated; the pointer E f reported on the line) with a `record`
+    line, and the pending rows of the
     record at a chosen re-emitter marked for their rebirth as a new
     record."""
     for live in layer.complete(tick):
@@ -4218,8 +4220,9 @@ def gather_records(
             detector_set = layer.sets[key[1]]
             if not detector_set.sum:
                 continue
-            for label, (x, y) in sorted(offer.pointers.items()):
-                square = x * x + y * y
+            for label, counts in sorted(offer.counts.items()):
+                x, y = layer.evaluate(counts)
+                square = layer.gram_form(counts)
                 detector_set.record[family] += square
                 if record is not None:
                     record(

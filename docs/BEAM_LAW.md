@@ -2720,6 +2720,59 @@ implementation's part of the contract. The design above is unchanged.
     before each product is formed and after each column's sum (pinned in
     `test_columns`), which a shared call would not. Bit-identical: the gate
     set's sixteen worlds and the full check unchanged (VALIDATION).
+    **(xii) The click without amplitudes: one bilinear form with a declared
+    Gram matrix** (2026-09-21, the model owner's decision, record 188 of the
+    log of 2026-09-20, "yes, if it cleans a non-vector operation off the
+    GameBoard"; the derivation mathematician's proof, DERIVATIONS_BEAM.md
+    section 6.7 with `click_gram.py`; the branch `click`). The record's rows
+    at an end Node and label are the phase-count vector **f** in Z^N, f_p
+    the amount at the phase p at the amplitude scale 32 (the record's
+    group-ring element written as a vector), and the layer keeps that
+    vector and no pointer (`amplitude.Offer.counts` and `residuals`; the
+    `Counts` type). The click's weight is ONE bilinear form with a declared
+    matrix, **f**^T **G** **f**, **G** = **E**^T **E** the Gram matrix of the
+    tables, **E** the 2 x N matrix whose rows are the tables C and S and
+    G_jk = C_j C_k + S_j S_k over those rounded entries themselves, never
+    the cosine of j - k, built once per N at load (`core.phase.phase_gram`,
+    stored through N = 512, an entry formed from the tables beyond it):
+    symmetric, of rank 2, not circulant (its diagonal takes the eight
+    values 65448 .. 65773 that were the eight totals over the births of
+    series L; 3696 of its 4096 entries at N = 64 differ from their
+    diagonal neighbour). For one arm the form is evaluated explicitly
+    through the primitive (`Layer.gram_form`: G's rows on the support of f
+    against f, then f against that image) and the complex pair (X, Y) is
+    never formed; for several arms (the pair, GHZ) the weight is the same
+    bilinear form on the tensor product of the arms' vectors, whose matrix
+    G^(k) = E^(k)^T E^(k), E^(k) the 2 x N^k matrix of the products of the
+    tables' entries, is not materialised (N^6 for a triple) but evaluated
+    through its rank-2 factorisation, the product in Z[i] of the arms'
+    pointers **E f** (`Layer.evaluate`, `cmul`) summed over the labels and
+    taken with itself (`signed_inner`, (xi)): the same integer by the
+    associativity of integer arithmetic. The rotation's entries act on the
+    counts as scalars (C' x 256 and S' x 256 in 1/256^2) and the entry's
+    turn v(t) as the shift of the phases by t (`Layer.rotation`), the
+    group ring's multiplication by e_t; a read's factor is the multiple
+    256^2 of the ring's identity e_0, and an arm's factors multiply in
+    Z[Z_N] (`ring_product`). The convolution form ACROSS arms is the exact
+    law's statement and not the built click's: the rounded evaluation E is
+    not a ring homomorphism (E(e_1)^2 = (64400, 12750) against 256 E(e_2) =
+    (64256, 12800) at N = 64), so the built click multiplies the arms'
+    pointers, as the tensor form says, and convolves nothing across arms.
+    Bit-identical on every registered cell (`tests/test_amplitude_gram.py`
+    and the click tests unchanged): mz_equal's 1681 / 1682 at all 64 u and
+    its 64 / 0, slits_low's 64 clicks (wall 11, 12, 11, the screen's 15 on
+    fourteen pixels, the faces 8, 7), the pair's 27, 5, 5, 27 and S = 176 /
+    64, GHZ, the cone; the `record` line of a `sum` set adds the same form
+    of the record's counts (`gather_records`) and reports the pointer.
+    Two precise statements for the reviewer: (1) the turn's shift equals
+    the former product (C_t, S_t)(C_p, S_p) exactly where the tables turn
+    exactly, at t a multiple of N / 4 (every registered turn is 0 or 16 at
+    N = 64), and differs at any other turn by the tables' rounding (at t =
+    3, the entry 181, the phase 1 and the weight 7: (76811875, 31668665)
+    formerly, (76871424, 31786496) now, one rounding in place of two; no
+    registered world declares such a turn); (2) the amplitude scale 32 on
+    the amounts and the identity 256^2 of a plain set stay as scalars on
+    the counts, the unit 2^58 of a weight unchanged.
 
 38. **The reading's weight at the relative speed, `doppler-v1`: the flux
     at the grain** (the model owner, 2026-09-20, record 119: "a body TAKES

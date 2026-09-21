@@ -76,6 +76,7 @@ kept, their pins the law of events').
 | `test_amplitude_pair.py` | The pair, the which-path world, no maintenance and GHZ: a lamp's `branches` and `arms` (the birth of four rows on two arms with the labels 0 and 3), the CHSH labels (E x 64 = 44, -44, 44, 44; S = 176/64; the marginals 32/64), the choosers (the 15 setting pairs' E; S = 156/64 on the registered quadruple), the which-path `read` (E = 44, -44, 0, 0; S = 88/64), Bob's counters 116 Links farther (E unchanged), GHZ's allowed triples and products, the refusals ([below](#the-amplitude-law-the-pair)) | new (2026-09-20; the design's section 4 and its `bell.py`) |
 | `test_amplitude_gate.py` | The gate between records and the pair at N = 1024 and 4096: the Hadamard and the CNOT on the GameBoard (|00> - |11>), the pair by the gate at the CHSH labels (S = 176/64), CNOT twice the identity, GHZ by one gate of three parties, the register's ceiling (three rotations run, four refused at load), the refusals, S = 2896/1024 with |E - cos| <= 1/N, S = 11584/4096 with the bound failing at the tables' rounding; the review of (v): the gate's copies booked on the live count (every gathered record at live 0), a record with an offer or units elsewhere refused at the gate, the control by its declared arrival direction (the `measured` list reversed gives the same outcomes), the control's refusals ([below](#the-amplitude-law-the-gate)) | new (2026-09-20; the design's section 10 and its `gate.py`; the owner's paper numbers; the review of (v)) |
 | `test_amplitude_click.py` | The one click (stage (vii)): a lamp's rate births as many records as it says with the ordinals and the birth phases in order, two multiplicities of one record at one offer take the common denominator or are refused, the columns are written only where a record is, and every gate-set world without a lamp reads as it did before the law at its cap (its pinned digests); step 2: u the record's own field (a narrow window admits every record's row, the K record world's clicks within one rung of its offers); step 3: the push by share (the mass's momentum the sum of the shares, the remainder line, the unkeyed bar as it was) ([below](#the-amplitude-law-the-one-click)) | new (2026-09-20; the design's sections 2.1, 2.5 and 6; the K finding) |
+| `test_amplitude_gram.py` | The click without amplitudes (2026-09-21): the Gram matrix of the tables (its eight diagonal values, not circulant, rank 2, the antipodal pairs killed, stored through N = 512), the identity f^T G f = X^2 + Y^2 on random vectors and on `mz_equal`'s record at every u, the layer's cells against the click as it was on synthetic one-arm, read, rotated, pair and GHZ records, the turn as a shift exact at the quarter turns and not at t = 3, the tensor form exact and the convolution not, the ring product ([below](#the-click-without-amplitudes)) | new (2026-09-21; record 188; BEAM_LAW note 37 (xii)) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -616,6 +617,62 @@ register's L7 entry), written before the run:
 - (c) one gather per record, one cell each, as many at each counter; the
   file's pins equal the flight formula's (the ages 29 and 29, `same_age`
   true, the Links 17 and 24).
+
+## The click without amplitudes
+
+`tests/test_amplitude_gram.py` (2026-09-21; the model owner's decision,
+record 188 of docs/LOG_2026-09-20.md; docs/BEAM_LAW.md note 37 (xii); the
+derivations' section 6.7). The record's cell is the phase-count vector
+**f** (the amount per phase step at the amplitude scale 32), the click's
+weight the one bilinear form **f**^T **G** **f** with the Gram matrix
+**G** = **E**^T **E** of the tables (**E** the 2 x N matrix of the tables C
+and S), for one arm evaluated explicitly and for several arms through the
+matrix's rank-2 factorisation, the pointer **E f**. The expected integers,
+written down before the first run:
+
+- (a) the Gram matrix at N = 64: G_jk = C_j C_k + S_j S_k over the rounded
+  tables themselves (never the cosine of j - k), symmetric; its diagonal
+  the eight values 65448, 65501, 65522, 65533, 65536, 65650, 65717, 65773
+  (the eight totals over the births of series L); not circulant,
+  G_(j+1)(k+1) differing from G_jk on 3696 of the 4096 entries (G_11 =
+  65650, G_01 = 65280, G_12 = 65255); of rank 2 (the 3 x 3 minors on the
+  phases (0, 1, 2) and (0, 5, 17) are 0); every antipodal pair e_p +
+  e_(p+32) killed exactly; stored through N = 512 (`phase_gram`; N = 1024
+  refused as not stored, a float and a boolean refused) and formed from
+  the tables beyond it (a layer at N = 4096 holds no matrix, its entry
+  (5, 1000) the tables' product);
+- (b) the identity f^T G f = X^2 + Y^2 with (X, Y) = E f: on 200 random
+  sparse integer vectors of Z^64 (entries -5 .. 5, a phase present with
+  probability 0.3), on 50 vectors of 6 phases at N = 4096 through the
+  formed entries, and on the registered shape of `mz_equal`'s record at
+  every u (41 rows of amount 1 at u + 16 and the cancel's 1 at u + 32, the
+  amplitude scale 32 and the identity 256^2, the multiplicity 1682): the
+  weights 1681 x 2^42 x q[u + 16] and 2^42 x q[u + 32] with q[p] = C[p]^2
+  + S[p]^2, the ladder's cell 0 at all 64 u (the registered 64 / 0);
+- (c) the layer's `cells` against the click as it was, on synthetic records
+  fed through `end`: one arm at two Nodes with two labels and a face (3
+  cells), one arm with a which-path read factor (4 cells), a rotated set
+  at the settings (8, 0) and (8, 16) with both bits (2 cells), two arms at
+  rotated sets, the pair's form (4 cells), and three arms with the turn 16
+  on two of them, GHZ's form (8 cells): every cell's every Node tuple
+  weighs exactly what the former evaluation gave (the pointer 32 w (C[p],
+  S[p]) per row, the residual the rotation's complex entry times the
+  pointer, the labels' products summed, the square) and every cell's
+  numerator is its tuples' sum;
+- (d) the turn as a shift: the bit 1's entry at the setting 8 and the turn
+  t is (S' x 256, t); the count at p + t gives the same pointer as the
+  former product (C_t, S_t)(C_p, S_p) at every phase and every entry for t
+  in {0, 16, 32, 48} (the register's turns 0 and 16) and not at t = 3,
+  where the entry 181 at the phase 1 with the weight 7 gave (76811875,
+  31668665) and gives (76871424, 31786496), one rounding in place of two;
+- (e) the several-arm product is not the ring convolution: E(e_1)^2 =
+  (64400, 12750) against 256 E(e_2) = (64256, 12800); the tensor form is
+  exact: the product of two arms' pointers equals the sum over the phase
+  pairs of f_p g_q times the product of the tables' entries, on 100 random
+  pairs of vectors;
+- (f) the ring product: 256^2 e_0 times {3: 5, 10: -2} is the vector times
+  256^2, e_5 times e_60 is e_1 at N = 64; two rows of amount 1 at the phase
+  9 at one Node are the count 64 at 9 and the residual 64 x 256^2.
 
 ## The meeting
 

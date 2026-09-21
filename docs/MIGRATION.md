@@ -40,6 +40,32 @@ pull request), bit-exact by construction: no physical function changed.
   layer of `amplitude-v1` is outside the claim (the one non-local operation
   the model owner decided, records 72 and 74 of 2026-09-20).
 
+## The click without amplitudes, on 2026-09-21: the layer keeps phase-count vectors
+
+The model owner's decision, record 188 of 2026-09-20's log; the derivation
+mathematician's proof (DERIVATIONS_BEAM.md section 6.7);
+[BEAM_LAW note 37 (xii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
+The identity `beam-v1` is kept: the same integers on every registered cell.
+
+- `events.amplitude.Offer.pointers` (the complex pointer per Node and
+  label) is `Offer.counts`, the phase-count vector **f** per Node and label
+  (`Counts`, a sparse map from the phase step to the count at the amplitude
+  scale 32); `Offer.residuals` holds vectors of the same kind per channel in
+  place of complex residuals. The pointer is a report, `Layer.evaluate(f)`
+  (the `record` line's `pointer`, `run.json`'s open records), and the click's
+  weight is `Layer.gram_form(f)`, the bilinear form with the Gram matrix of
+  the tables (`core.phase.phase_gram`, new; `GRAM_STORED_STEPS` its storage
+  bound), for one arm; for several arms the pointers' product as before.
+- `events.amplitude.cadd` is deleted (the counts add, `add_counts`);
+  `Layer.rotation` returns per channel (a scalar, a shift) in place of a
+  complex entry; `ring_product`, `add_count`, `add_counts`, `scale_counts`
+  and `Layer.arm_element` are new. `cmul` stays as the several-arm
+  factorisation's product.
+- The turn of a rotation's bit 1 is a shift of the phases: the same integers
+  as the former product of table entries at a turn that is a multiple of
+  N / 4 (every registered turn), one rounding in place of two at any other
+  turn (`tests/test_amplitude_gram.py` (d)); no registered pin moves.
+
 ## The fraction-free law, on 2026-09-20: every count an accumulator on the body's record
 
 The model owner's records 147 and 148 of 2026-09-20 on the mathematician's

@@ -18,6 +18,9 @@ from event_universe.core.integer import checked_work
 
 MAX_PHASE_STEPS = 65536
 PHASE_COSINE_SCALE = 256
+# The Gram matrix of the tables is stored (N^2 entries) for N up to this
+# bound; beyond it an entry is formed from the tables where it is read.
+GRAM_STORED_STEPS = 512
 # pi in fixed point: integer arithmetic only, as every physical module requires.
 _PI_FIXED = 3141592654
 _FIXED = 1000000000
@@ -51,6 +54,27 @@ def _fixed_sine(angle: int) -> int:
             return total
         sign = -sign
     raise OverflowError("phase table sine did not converge within its fixed bound")
+
+
+@lru_cache(maxsize=4)
+def phase_gram(phase_steps: int) -> tuple[tuple[int, ...], ...]:
+    """The Gram matrix **G** = **E**^T **E** of the tables (the click without
+    amplitudes, 2026-09-21, BEAM_LAW note 37 (xii); the derivations' section
+    6.7): **E** is the 2 x N matrix whose rows are the tables C and S, and
+    G_jk = C_j C_k + S_j S_k over those rounded entries themselves, never
+    the cosine of j - k, so that f^T G f equals |E f|^2 for every integer
+    vector **f** by the associativity of integer arithmetic. Symmetric,
+    of rank 2, not circulant (the tables' rounding); immutable law data
+    built once per N. Stored for N through GRAM_STORED_STEPS; beyond it
+    `events.amplitude.Layer.gram_entry` forms an entry from the tables, the
+    same integers."""
+    if type(phase_steps) is not int or not 2 <= phase_steps <= GRAM_STORED_STEPS:
+        raise ValueError(f"the Gram matrix is stored for phase_steps from 2 through {GRAM_STORED_STEPS}")
+    cosines, sines = phase_cosines(phase_steps), phase_sines(phase_steps)
+    return tuple(
+        tuple(checked_work(cosines[j] * cosines[k] + sines[j] * sines[k]) for k in range(phase_steps))
+        for j in range(phase_steps)
+    )
 
 
 @lru_cache(maxsize=16)

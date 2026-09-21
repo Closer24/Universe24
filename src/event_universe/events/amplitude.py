@@ -24,28 +24,42 @@ apparatus's events (principle 5: the only non-local operation, at the
 one-way border, owned by the apparatus).
 
 An offer is a (set, arm) of the record: per Node of the set and per label
-the accumulated pointer, `(X, Y) += sum 32 w (C[p], S[p])` over the rows of
-that label that ended at that Node (the same first moment over the circle
-as `coherent_pointer`, the scope one record and label in place of the
-crowd: the owner's unification (4)), and the RESIDUAL per channel, Node
-and label after the set's reading: a plain set offers one channel per
-label (the which-path click), a `sum` set with a window rotates the arm's
-bit of the joint label by the half-angle tables of 2N at its setting s
-(`U_s = [[C', S' v(t)], [-S', C' v(t)]]` in 1/256^2, t the entry's turn)
+the PHASE-COUNT VECTOR **f** of the rows of that label that ended at that
+Node, `f[p] += 32 w` per row of amount w at the phase p (the record's
+element of the group ring Z[Z_N] written as a vector, sparse; the click
+without amplitudes, 2026-09-21, BEAM_LAW note 37 (xii): the layer keeps
+counts and no pointer), and the RESIDUAL per channel, Node and label
+after the set's reading, a vector of the same kind: a plain set offers
+one channel per label (the which-path click) with the counts scaled by
+the identity 256^2; a `sum` set with a window rotates the arm's bit of
+the joint label by the half-angle tables of 2N at its setting s (`U_s =
+[[C', S' v(t)], [-S', C' v(t)]]` in 1/256^2, t the entry's turn: each
+entry a scalar on the counts and, for v(t), a shift of the phases by t)
 and offers the channels + and - (the label click, section 4.1); a `read`
 at a `sum` set is a which-path reading whose rows go on, a factor that
-selects the label without a pointer. Interference is coherent within one
-Node only (the decision of 2026-09-20 on the owner's point 5, "on the
-detector every Node has |Sigma|^2"): the joint amplitude of a cell (one
-channel per read factor and one (end, channel) per arm) at one Node per
-end is `sum_l prod_k residual_k[c_k][node_k, l]`, complex integers, and
-the cell's weight is the SUM over the ends' Node tuples of `|amplitude|^2`
-(incoherent across Nodes: rows at different Nodes never meet), over m the
-product of the arms' multiplicities over the birth norms they share; the
-click lands in the set at the Node tuple that u's position within the cell
-selects by the same rungs over the tuples, `c_j = (2 W D_j + T) // (2 T)`
-with W the cell's width, D_j the cumulative Node weight and T the cell's
-weight. The cells are in the lexicographic order of the arms (each arm's
+selects the label, the multiple 256^2 of the ring's identity e_0.
+Interference is coherent within one Node only (the decision of 2026-09-20
+on the owner's point 5, "on the detector every Node has |Sigma|^2"): an
+arm's element at a label and its end's Node is the product in Z[Z_N] of
+its factors' residuals (its reads', then its end's, `ring_product`); for
+ONE arm the cell's weight at a Node is the bilinear form `f^T G f` of the
+sum over the labels of that element, **G** = **E**^T **E** the Gram
+matrix of the tables (`core.phase.phase_gram`, G_jk = C_j C_k + S_j S_k,
+built once from the rounded tables), through the primitive
+`core.integer.signed_inner`, and no pointer is formed; for SEVERAL arms
+the weight is the same bilinear form on the tensor product of the arms'
+elements, evaluated through its rank-2 factorisation, the product in Z[i]
+of the arms' pointers `E f` (`evaluate`, `cmul`) summed over the labels
+and taken with itself (`signed_inner`), the same integer by associativity
+(the ring convolution across arms is the exact law's statement and not
+the built click's: the rounded tables' evaluation is not a ring
+homomorphism, the derivations' section 6.7). The cell's weight is the SUM
+over the ends' Node tuples (incoherent across Nodes: rows at different
+Nodes never meet), over m the product of the arms' multiplicities over
+the birth norms they share; the click lands in the set at the Node tuple
+that u's position within the cell selects by the same rungs over the
+tuples, `c_j = (2 W D_j + T) // (2 T)` with W the cell's width, D_j the
+cumulative Node weight and T the cell's weight. The cells are in the lexicographic order of the arms (each arm's
 read factors in the sets' order, then its ends in the sets' order, the
 channels + before - and the labels ascending); the sets in the design's
 order (the measured events outside every declared detector by number, the
@@ -68,14 +82,24 @@ from dataclasses import dataclass, field
 
 from event_universe.core.integer import signed_inner
 from event_universe.core.phase import (
+    GRAM_STORED_STEPS,
     MAX_PHASE_STEPS,
     PHASE_COSINE_SCALE,
     phase_cosines,
+    phase_gram,
     phase_sines,
 )
 from event_universe.events.measured import DetectorSet
 
+# The pointer **E f** of a phase-count vector, (X, Y): a report (the first
+# moment of the record's counts over the circle) and the factor of the
+# several-arm form's rank-2 factorisation; the one-arm click forms none.
 Complex = tuple[int, int]
+# The phase-count vector **f**: the count at each phase step of the circle,
+# sparse (a phase absent counts 0), an element of the group ring Z[Z_N]
+# written as a vector; the counts carry the amplitude scale 32 and, in a
+# residual, the rotation's entry in 1/256^2.
+Counts = dict[int, int]
 Node = tuple[int, int, int]
 # The Node of a read factor (a reading is not a click site) and of an end
 # whose Node the engine did not name.
@@ -104,11 +128,43 @@ CHANNEL_NAMES = {PLUS: "+", MINUS: "-"}
 
 
 def cmul(a: Complex, b: Complex) -> Complex:
+    """The product in Z[i] of two arms' pointers: the several-arm weight's
+    rank-2 factorisation (note 37 (xii)), the bilinear form on the tensor
+    product of the arms' vectors evaluated as the product of their
+    pointers, the same integer by associativity."""
     return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
 
 
-def cadd(a: Complex, b: Complex) -> Complex:
-    return (a[0] + b[0], a[1] + b[1])
+def add_count(into: Counts, phase: int, count: int) -> None:
+    into[phase] = into.get(phase, 0) + count
+
+
+def add_counts(into: Counts, counts: Counts) -> None:
+    """The group-ring addition of two phase-count vectors."""
+    for phase, count in counts.items():
+        into[phase] = into.get(phase, 0) + count
+
+
+def scale_counts(counts: Counts, factor: int) -> Counts:
+    return {phase: count * factor for phase, count in counts.items()}
+
+
+def ring_product(left: Counts, right: Counts, steps: int) -> Counts:
+    """The product in the group ring Z[Z_N] of two phase-count vectors, the
+    cyclic convolution over the circle of N steps: an arm's factors are
+    multiplied here before the arm is evaluated (a read's factor is the
+    multiple 256^2 of the identity e_0, so the product is that scalar
+    multiple, the same integers as the click before 2026-09-21). Across
+    arms the built click does not use it (the derivations' section 6.7:
+    the rounded tables' evaluation is not a ring homomorphism, E(e_1)^2 =
+    (64400, 12750) against 256 E(e_2) = (64256, 12800) at N = 64), the
+    arms' pointers being multiplied in Z[i] instead (`cmul`)."""
+    found: Counts = {}
+    for p, a in left.items():
+        for q, b in right.items():
+            r = (p + q) % steps
+            found[r] = found.get(r, 0) + a * b
+    return found
 
 
 def arm_of(branch: int) -> int:
@@ -246,9 +302,12 @@ def node_choice(weights: list[int], width: int, position: int) -> int:
 class Offer:
     """One offer of a record: the rows of the record that ended at one set
     on one arm (`read` False), or were read there and went on (`read`
-    True, a which-path factor). `pointers` the accumulated pointer per
-    (Node, label) (Python integers); `residuals` per channel the complex
-    residual per (Node, label) after the set's reading; `multiplicity` the
+    True, a which-path factor). `counts` the phase-count vector per (Node,
+    label) of the rows that ended there (Python integers, the amplitude
+    scale 32 on the amounts); `residuals` per channel the phase-count
+    vector per (Node, label) after the set's reading (the rotation's
+    entries as scalars and shifts; a read's the multiple 256^2 of e_0 at
+    (NO_NODE, label) under the channel label); `multiplicity` the
     rows' m at the set (the common denominator of the rows' multiplicities,
     which differ by square factors or are refused, `common_denominator`);
     `rotated` whether the set rotated the labels (the channels + and -),
@@ -262,8 +321,8 @@ class Offer:
     rotated: bool = False
     setting: tuple[int, int] | None = None
     multiplicity: int | None = None
-    pointers: dict[tuple[Node, int], Complex] = field(default_factory=dict)
-    residuals: dict[int, dict[tuple[Node, int], Complex]] = field(default_factory=dict)
+    counts: dict[tuple[Node, int], Counts] = field(default_factory=dict)
+    residuals: dict[int, dict[tuple[Node, int], Counts]] = field(default_factory=dict)
     units: int = 0
     units_at: dict[Node, int] = field(default_factory=dict)
     content: dict[Node, int] = field(default_factory=dict)
@@ -278,7 +337,7 @@ class Offer:
 
     def nodes(self) -> list[Node]:
         """The Nodes of the set the offer's rows ended at, in order."""
-        return sorted({node for node, _ in self.pointers}) or [NO_NODE]
+        return sorted({node for node, _ in self.counts}) or [NO_NODE]
 
 
 @dataclass
@@ -343,6 +402,12 @@ class Layer:
         self.steps = phase_steps
         self.cosines = phase_cosines(phase_steps)
         self.sines = phase_sines(phase_steps)
+        # The Gram matrix G = E^T E of the tables, the one-arm click's
+        # declared matrix, built once per N at load (note 37 (xii)); None
+        # beyond GRAM_STORED_STEPS, where `gram_entry` forms an entry.
+        self.gram: tuple[tuple[int, ...], ...] | None = (
+            phase_gram(phase_steps) if phase_steps <= GRAM_STORED_STEPS else None
+        )
         self.records: dict[int, LiveRecord] = {}
         # The identities gathered (their table entries and offers released at
         # the completion; `resolve` finds nothing, the lazy deletion of their
@@ -548,7 +613,7 @@ class Layer:
         offer.last_tick = tick
         if not absorbed:
             # A read: the factor selects the label, once per label present.
-            offer.residuals.setdefault(label, {})[(NO_NODE, label)] = (ROTATION_IDENTITY, 0)
+            offer.residuals.setdefault(label, {})[(NO_NODE, label)] = {0: ROTATION_IDENTITY}
             return
         at = NO_NODE if node is None else node
         scale = 1
@@ -569,11 +634,11 @@ class Layer:
                     "product; the design's section 2.5)"
                 )
             if held_scale != 1:
-                offer.pointers = {
-                    key: (x * held_scale, y * held_scale) for key, (x, y) in offer.pointers.items()
+                offer.counts = {
+                    key: scale_counts(value, held_scale) for key, value in offer.counts.items()
                 }
                 offer.residuals = {
-                    channel: {key: (x * held_scale, y * held_scale) for key, (x, y) in entries.items()}
+                    channel: {key: scale_counts(value, held_scale) for key, value in entries.items()}
                     for channel, entries in offer.residuals.items()
                 }
             offer.multiplicity = common
@@ -584,45 +649,109 @@ class Layer:
             held = offer.momentum.setdefault(at, [0] * len(momentum))
             for axis, value in enumerate(momentum):
                 held[axis] += value
+        # The count of the rows at their phase, the amplitude scale on the
+        # amount; the residual per channel the count times the entry's
+        # scalar at the phase shifted by the entry's turn (no pointer).
         weight = AMPLITUDE_SCALE * amount * scale
-        pointer: Complex = (weight * self.cosines[phase], weight * self.sines[phase])
         key = (at, label)
-        offer.pointers[key] = cadd(offer.pointers.get(key, (0, 0)), pointer)
+        add_count(offer.counts.setdefault(key, {}), phase, weight)
         if rotation is None:
             channel = offer.residuals.setdefault(label, {})
-            channel[key] = cadd(channel.get(key, (0, 0)), cmul((ROTATION_IDENTITY, 0), pointer))
+            add_count(channel.setdefault(key, {}), phase, ROTATION_IDENTITY * weight)
         else:
             offer.rotated = True
             if offer.setting is None:
                 offer.setting = rotation
-            for channel_index, entry in enumerate(self.rotation(rotation, (label >> arm) & 1)):
+            for channel_index, (entry, shift) in enumerate(self.rotation(rotation, (label >> arm) & 1)):
                 channel = offer.residuals.setdefault(channel_index, {})
-                channel[key] = cadd(channel.get(key, (0, 0)), cmul(entry, pointer))
+                add_count(channel.setdefault(key, {}), (phase + shift) % self.steps, entry * weight)
 
-    def rotation(self, setting: tuple[int, int], bit: int) -> tuple[Complex, Complex]:
+    def rotation(self, setting: tuple[int, int], bit: int) -> tuple[tuple[int, int], tuple[int, int]]:
         """The column `bit` of U_s = [[C', S' v(t)], [-S', C' v(t)]] on the
-        half-angle tables of 2N at the setting s with the turn t: the
-        entries for the channels + and -, complex integers in 1/256^2."""
+        half-angle tables of 2N at the setting s with the turn t, as the
+        group ring reads it: per channel (+, -) the entry's scalar in
+        1/256^2 and its shift of the phase in steps, v(t) = e_t the turn by
+        t. Bit 0: (C' x 256, 0) and (-S' x 256, 0); bit 1: (S' x 256, t)
+        and (C' x 256, t). Until 2026-09-21 the click multiplied the pointer
+        by the evaluated turn (C_t, S_t) in Z[i]; the shift gives the same
+        integers where the tables turn exactly, at t a multiple of N / 4
+        (the register's turns, 0 and 16 at N = 64), and one rounding in
+        place of two at any other turn (note 37 (xii))."""
         s, t = setting
         c, sn = half_angle(s, self.steps)
-        turn: Complex = (self.cosines[t % self.steps], self.sines[t % self.steps])
+        shift = t % self.steps
         if bit == 0:
             return (c * PHASE_COSINE_SCALE, 0), (-sn * PHASE_COSINE_SCALE, 0)
-        return cmul((sn, 0), turn), cmul((c, 0), turn)
+        return (sn * PHASE_COSINE_SCALE, shift), (c * PHASE_COSINE_SCALE, shift)
+
+    # -- the record's vectors: the evaluation and the bilinear form --------------
+
+    def evaluate(self, counts: Counts) -> Complex:
+        """The pointer **E f** of a phase-count vector: the counts against the
+        tables' rows C and S, two inner products through the primitive (the
+        evaluation of the record's element at the circle; a report's first
+        moment, and the factor of the several-arm form's factorisation)."""
+        phases = list(counts)
+        values = [counts[p] for p in phases]
+        ones = (1,) * len(phases)
+        return (
+            signed_inner(values, [self.cosines[p] for p in phases], ones),
+            signed_inner(values, [self.sines[p] for p in phases], ones),
+        )
+
+    def gram_entry(self, j: int, k: int) -> int:
+        """G_jk = C_j C_k + S_j S_k of the Gram matrix **G** = **E**^T **E**:
+        the stored matrix (`core.phase.phase_gram`, built once per N at
+        load) or, beyond GRAM_STORED_STEPS, the entry formed from the
+        tables where it is read, the same integer."""
+        if self.gram is not None:
+            return self.gram[j][k]
+        return self.cosines[j] * self.cosines[k] + self.sines[j] * self.sines[k]
+
+    def gram_form(self, counts: Counts) -> int:
+        """The weight **f**^T **G** **f** of a phase-count vector, one bilinear
+        form with the declared matrix G through the primitive: G's rows on
+        the support of f against f, then f against that image. The same
+        integer as the pointer's inner product with itself, (E f)^T (E f),
+        by the associativity of integer arithmetic, and no pointer is
+        formed (the click without amplitudes, note 37 (xii))."""
+        phases = list(counts)
+        values = [counts[p] for p in phases]
+        ones = (1,) * len(phases)
+        image = [signed_inner([self.gram_entry(p, q) for q in phases], values, ones) for p in phases]
+        return signed_inner(values, image, ones)
+
+    def arm_element(self, factors: list[tuple[Offer, int]], node: Node, label: int) -> Counts:
+        """An arm's element of the group ring at a label and its end's Node:
+        the product in Z[Z_N] of its factors' residuals, the reads' (at no
+        Node) and the end's at the Node; empty where a factor has none
+        there (the read selects another label; no row of the label ended
+        at the Node)."""
+        element: Counts | None = None
+        for offer, channel in factors:
+            residual = offer.residuals.get(channel, {}).get((NO_NODE if offer.read else node, label))
+            if not residual:
+                return {}
+            element = dict(residual) if element is None else ring_product(element, residual, self.steps)
+        return element or {}
 
     # -- the completion: the ladder ---------------------------------------------
 
     def cells(self, found: LiveRecord) -> list[Cell]:
         """The cells of a record in the ladder's order: per cell the (offer,
-        channel) chosen per factor, its weight's numerator (the sum over the
-        ends' Node tuples of |amplitude|^2, each the inner product of the
-        tuple's pointer with itself through the law's one bilinear
-        primitive, `signed_inner`, nothing squared as a step of its own:
-        the model owner's order of 2026-09-21, record 173 of the log of
-        2026-09-20, BEAM_LAW note 37 (xi); no bound is passed, the layer's
-        weights being the host's reports, exact and unbounded, 2^116 on a
-        pair and 2^174 on a GHZ triple), its multiplicity and the Node
-        tuples with their weights in order."""
+        channel) chosen per factor, its weight's numerator (the sum over
+        the ends' Node tuples of the tuple's weight: for one arm the
+        bilinear form f^T G f of the record's vector at the Node, no
+        pointer formed; for several arms the same form on the tensor
+        product of the arms' vectors through its factorisation, the
+        product of the arms' pointers summed over the labels and taken
+        with itself through `signed_inner`; nothing squared as a step of
+        its own: the model owner's orders of 2026-09-21, records 173 and
+        188 of the log of 2026-09-20, BEAM_LAW note 37 (xi) and (xii); no
+        bound is passed, the layer's weights being the host's reports,
+        exact and unbounded, 2^116 on a pair and 2^174 on a GHZ triple),
+        its multiplicity and the Node tuples with their weights in
+        order."""
         per_arm: list[list[list[tuple[Offer, int]]]] = []
         for arm in range(found.arms):
             offers = sorted(
@@ -641,8 +770,6 @@ class Layer:
         cells: list[Cell] = []
         for choice in itertools.product(*per_arm):
             factors_chosen = [item for arm_choice in choice for item in arm_choice]
-            read_factors = [(o, c) for o, c in factors_chosen if o.read]
-            end_factors = [(o, c) for o, c in factors_chosen if not o.read]
             tuples: list[tuple[tuple[Node, ...], int]] = []
             numerator = 0
             present = sorted(
@@ -653,23 +780,32 @@ class Layer:
                     for _, label in channel
                 }
             )
-            for nodes in itertools.product(*[o.nodes() for o, _ in end_factors]):
-                real, imaginary = 0, 0
-                for label in present:
-                    product: Complex = (1, 0)
-                    for offer, channel in read_factors:
-                        residual = offer.residuals.get(channel, {}).get((NO_NODE, label), (0, 0))
-                        product = cmul(product, residual)
-                        if product == (0, 0):
-                            break
-                    for (offer, channel), node in zip(end_factors, nodes, strict=True):
-                        if product == (0, 0):
-                            break
-                        residual = offer.residuals.get(channel, {}).get((node, label), (0, 0))
-                        product = cmul(product, residual)
-                    real += product[0]
-                    imaginary += product[1]
-                weight = signed_inner((real, imaginary), (real, imaginary), (1, 1))
+            for nodes in itertools.product(*[arm_choice[-1][0].nodes() for arm_choice in choice]):
+                if len(choice) == 1:
+                    # One arm: the record's vector at the Node, the sum over
+                    # the labels of the arm's element, and its weight the
+                    # bilinear form with the Gram matrix; no pointer.
+                    vector: Counts = {}
+                    for label in present:
+                        add_counts(vector, self.arm_element(choice[0], nodes[0], label))
+                    weight = self.gram_form(vector)
+                else:
+                    # Several arms: the form on the tensor product of the
+                    # arms' elements through its rank-2 factorisation, the
+                    # product of the arms' pointers in Z[i] summed over the
+                    # labels and taken with itself.
+                    real, imaginary = 0, 0
+                    for label in present:
+                        product: Complex = (1, 0)
+                        for arm_choice, node in zip(choice, nodes, strict=True):
+                            element = self.arm_element(arm_choice, node, label)
+                            if not element:
+                                product = (0, 0)
+                                break
+                            product = cmul(product, self.evaluate(element))
+                        real += product[0]
+                        imaginary += product[1]
+                    weight = signed_inner((real, imaginary), (real, imaginary), (1, 1))
                 tuples.append((nodes, weight))
                 numerator += weight
             multiplicity = 1
@@ -803,8 +939,8 @@ class Layer:
                             "units": offer.units,
                             "multiplicity": offer.multiplicity,
                             "pointers": {
-                                f"{list(node)}:{label}": list(value)
-                                for (node, label), value in sorted(offer.pointers.items())
+                                f"{list(node)}:{label}": list(self.evaluate(value))
+                                for (node, label), value in sorted(offer.counts.items())
                             },
                         }
                         for offer in entry.offers.values()
