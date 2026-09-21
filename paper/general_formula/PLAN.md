@@ -1517,3 +1517,49 @@ the ordinal named and [2531, 4096] given; the exact phase as the
 click's one division with its remainder kept; the read-out sentence
 compares the wheel's coordinate; "within 2 where the pin said within
 one, the rungs per record"; the beamlaw bibitem's notes in order.
+
+## Wave 7 (2026-09-21, after the merge of main at b09fbc24): the glossary, Fine 1982, record 326
+
+The glossary audit landed (record 321, PR #494 at e6b76725): the
+paper's glossary and symbols table are taken from TERMINOLOGY.md at
+that commit, as its top sentence orders, into an appendix before the
+Reproducibility section: the terms in one paragraph (Node, GameBoard,
+Link, Port, row, body, record, click, family, crowd, pin; "lattice" in
+this paper the mathematical Z^3, the lattice gases and the lattice
+Gleason, the physical board being the GameBoard), and a table of the
+paper's symbols with name, kind under the notation rule and place,
+the glossary's spelling given where the paper's differs (Q_f for Q,
+T_d for T_D, d for D). The Bell paragraph of the quantum-mechanics
+section cites Fine 1982 as 22.3 restated (PR #498 at 31cb7926): a
+joint distribution over the four outcomes exists exactly when the CHSH
+inequalities hold, so the registered 176 / 64 has none; the withdrawn
+phrase is not repeated. The highlights bibitem names 5.4's "Decisions
+of 2026-09-21"; the log bibitem adds 326. The exact circle (record 327,
+"go with the beautiful solution") waits for its design to land before
+the paper's one sentence. Referee round 23 pending.
+
+## Referee round 23 (2026-09-21): the glossary appendix, major revision, applied
+
+Nineteen findings, four major, all applied: Delta is the Gleason
+kernel's argument (the phase difference of two rows), not "the meeting
+key's offset"; J is the pair's joint sum with W = J^2 the weight; the
+paper's K (a fan's direction count) named as not the glossary's K (the
+clock's pair, the world key), and eta = n / d as that pair; the fan's
+grain G named as the archived code's, distinct from the retired grain
+of the doppler key; every duplicated letter given its "not the ..."
+(q, a, b, r, S, H, m, w, s, k, f, rho, N, Q, Lambda and lambda, E);
+the prose follows the glossary's own words for the row, the click (the
+record's read-out being Part III's click by Definition def:click), the
+crowd (the six neighbours the crowd audit's, not the glossary's crowd);
+"board" removed as a retired word; the word "lattice" kept only for Z^3
+as a mathematical object, the cubic and bipartite lattice of the
+derivation, the lattice gases and schemes of the literature and the
+lattice Gleason, and about forty uses as the noun for the physical
+thing renamed to the GameBoard (the GameBoard's frame, on the
+GameBoard, through the GameBoard, the GameBoard's stand-in for the
+rotation group, ...); the notation rule's exceptions stated (U, V, d, f
+written plain; s, r one component of the glossary's vectors); Fine's
+theorem stated as a joint distribution of the four observables
+returning the pair distributions as marginals; the highlights bibitem
+with 5.4's title and subsection; the log bibitem's 326 wording and a
+missing comma; the table narrowed to 6.15 in; the Where cells.
