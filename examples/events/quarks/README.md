@@ -67,7 +67,21 @@ mass are derived (290 rows of glue per body per interval; the exact sum of
 the declared contents), the fates are the strong design's toy (the fan's
 steady delivery with the step drive and the contact rule over 3000
 intervals: a line holds, a corner, a triangle and a side-by-side rectangle
-shear), which the engine decides.
+shear), which the engine decides. Since 2026-09-21 every world's `replay`
+block pins the engine's record of its first 100 intervals by kind (the
+steps with their Nodes and the hand-overs, GAMEBOARD; the face clicks of
+the bodies that left, DETECTOR), written from the engine as shipped by
+`replay_register.py` and replayed bit-exact by
+`tests/test_quarks_expectations.py` (e); the fate's `engine_first_step`
+is the replay's first step. The crossing rule (BEAM_LAW note 48, PR #468)
+moved these readings after the register was written: the kicked u of
+`q6_proton_kick` steps at 6, 12, 19, 25, 32, 38, 45, 51, 58 (6 and 7
+intervals alternating; before the rule every 7: 6, 13, ..., 62) and clicks
+through `face:-x` at tick 64 (69 before); the first hand-over of
+`q1_proton_line` is at tick 18 (17 before), of `q2_neutron_line` at 23
+(22), of `q7_proton_dressed` at 17 (16); the pushes at the reference tick
+are unchanged ([MIGRATION](../../../docs/MIGRATION.md)). The 3000-interval
+readings of the table below are of the run before the rule.
 
 | World | Expected (kind) |
 | --- | --- |
@@ -76,7 +90,7 @@ shear), which the engine decides.
 | `q3_proton_triangle` | the pushes at tick 20 (-46 833 992 744, -55 544 787 168, 126 813 807 239), (148 740 759 524, -116 576 861 778, -66 677 616 293), (-101 906 766 780, 172 121 648 946, -60 136 190 946) (DETECTOR); disperses: the first step by tick 25 to 60, the three beyond three Links of each other (GAMEBOARD); 870 rows; the read mass 20 |
 | `q4_deuteron_rectangle` | the pushes at tick 20 (514 900 489 024, 384 064 524 729, 0), (0, 486 661 618 356, 0), (-514 900 489 024, 384 064 524 729, 0), (550 101 777 180, -402 779 816 516, 0), (0, -449 231 033 022, 0), (-550 101 777 180, -402 779 816 516, 0); the sum over the proton's three 1 254 790 667 814 on y (DETECTOR); disperses: the first step at about tick 160 (GAMEBOARD); 1740 rows; the read mass 45 |
 | `q5_deuteron_line` | the pushes 419 551 209 892, 101 923 625 280, 3 787 403 148, -3 787 401 568, -81 931 883 236, -439 542 951 616 on x; the sum over a triple +-525 262 238 320 (DETECTOR); no step, about 950 hand-overs (GAMEBOARD); 1740 rows; the read mass 45 |
-| `q6_proton_kick` | the push at tick 2 on the ends +-336 852 257 664 (the one-Link lines alone; DETECTOR); the kicked u steps -x at tick 6 and about every seven intervals, its push falling to the electric residual beyond the reach, out through `face:-x` at about tick 70 to 90 (GAMEBOARD, DETECTOR); the other two a bound pair; 870 rows per interval from tick 4; the read mass 20 |
+| `q6_proton_kick` | the push at tick 2 on the ends +-336 852 257 664 (the one-Link lines alone; DETECTOR); the kicked u steps -x at tick 6 and then every 6 or 7 intervals (the replay's exact ticks), its push falling to the electric residual beyond the reach, out through `face:-x` at tick 64 (the toy's about 70 to 90; GAMEBOARD, DETECTOR); the other two a bound pair; 870 rows per interval from tick 4; the read mass 20 |
 | `q7_proton_dressed` | the ends 418 547 308 612 (or 613, the accumulator's one unit on the d's non-whole strong charge); no step; the read mass 1836 |
 
 The criteria of the readings tool (`tools/quarks_readings.py`): a record
