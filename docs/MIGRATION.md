@@ -6,6 +6,24 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The quark families defined once, on 2026-09-21 (host only, no law change)
+
+The families `u` (`quantum` 0, `charge` 1224, `phase` false) and `glue`
+(`quantum` 0, `columns` `{"strong": {"value": 10000, "sign": -1}}`,
+`lifetime` 3, `phase` false) that the seven worlds of series R declare
+([the quarks](../examples/events/quarks/README.md), the design
+[QUARKS.md](designs/quarks/QUARKS.md)) are defined once in
+`examples/events/entities/families.json` (written by `make_definitions.py`:
+the definitions `up_quark` and `glue_family`, the rows of
+[the catalog](ENTITY_CATALOG.md#the-family-names-of-the-register)), so
+that `tests/test_entity_definitions.py` (v2-f), every family of the
+register defined once, holds again on main after the series' registration
+(PR #463). The worlds keep their families inline as before, and the two
+whose keys differ stay so (the down quark `d` shares its name with the
+detector material's `d`, whose definition `detector_material_d` stays; the
+dressed world's `glue` is at the pair `[10000, 606]`); no world file and
+no law changed.
+
 ## The crossing rule, on 2026-09-21: the step before the law, a row and a body met once, the key `doppler` and the grain deleted
 
 The model owner's record 158 of 2026-09-20 ("the step reads the crossed
