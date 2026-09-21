@@ -51,7 +51,8 @@ def run(name: str, relative: str):
     started = time.perf_counter()
     ticks_run = 0
     momentum_before = {n: list(e.momentum) for n, e in sim.measured.items()}
-    steps_before = {n: e.steps for n, e in sim.measured.items()}
+    steps_before = {n: e.steps - sum(e.contacts) for n, e in sim.measured.items()}
+    momentum_initial = {n: list(e.momentum) for n, e in sim.measured.items()}
     owed_before = {n: e.owed for n, e in sim.measured.items()}
     quiet = 0
     last_events = 0
@@ -76,8 +77,10 @@ def run(name: str, relative: str):
             if list(e.momentum) != momentum_before.get(n):
                 totals["pushes"] += 1
             momentum_before[n] = list(e.momentum)
-            totals["links_bodies"] += e.steps - steps_before.get(n, 0)
-            steps_before[n] = e.steps
+            # A fire of the drive refused by an occupant is a contact, not a Link.
+            made = e.steps - sum(e.contacts)
+            totals["links_bodies"] += made - steps_before.get(n, 0)
+            steps_before[n] = made
             if e.turn > 0:
                 totals["turns"] += 1
             if e.owed > 0 and owed_before.get(n, 0) == 0:
@@ -104,7 +107,7 @@ def run(name: str, relative: str):
         f"\n{name}: shape {list(world.shape)} ({all_nodes} Nodes), {ticks_run} of {world.ticks} intervals run in {elapsed:.0f} s"
     )
     print(
-        f"  per interval: rows' Links {totals['links_rows'] / ticks_run:.1f}, bodies' Links {totals['links_bodies'] / ticks_run:.3f}, clicks {totals['clicks'] / ticks_run:.2f}, births {totals['births'] / ticks_run:.2f}, pushes {totals['pushes'] / ticks_run:.2f}, turns {totals['turns'] / ticks_run:.2f}, waits begun {totals['owed_starts'] / ticks_run:.3f}"
+        f"  per interval: rows' Links {totals['links_rows'] / ticks_run:.1f}, bodies' Links {totals['links_bodies'] / ticks_run:.3f}, clicks {totals['clicks'] / ticks_run:.2f}, births {totals['births'] / ticks_run:.2f}, momentum changes (pushes, recoils) {totals['pushes'] / ticks_run:.2f}, turns {totals['turns'] / ticks_run:.2f}, waits begun {totals['owed_starts'] / ticks_run:.3f}"
     )
     print(
         f"  active Nodes per interval {active_sum / ticks_run:.1f} of {all_nodes}; intervals with no Link, click, birth or push: {quiet} of {ticks_run}"
@@ -115,7 +118,7 @@ def run(name: str, relative: str):
     print(
         f"  interactions (clicks + births + pushes) {interactions}: {interactions / max(active_sum, 1):.3f} per active Node-interval; the record's events {dict(kinds)}"
     )
-    return sim, events
+    return sim, events, momentum_initial
 
 
 if __name__ == "__main__":
@@ -126,8 +129,9 @@ if __name__ == "__main__":
 
     expectations = json.loads((ROOT / "amplitude" / "expectations.json").read_text())
     for name, relative in WORLDS:
-        sim, events = run(name, relative)
-        gathers = [e for e in events if e["event"] == "gather"]
+        sim, events, momentum_initial = run(name, relative)
+        # The register reads the first 64 births (u spanning the circle once; the lamps stall once).
+        gathers = sorted((e for e in events if e["event"] == "gather"), key=lambda e: e["born"])[:64]
         if relative.endswith("cone_links.json"):
             ages = sorted({e["arrived"] - e["born"] for e in gathers})
             print(
@@ -156,10 +160,12 @@ if __name__ == "__main__":
             )
         if relative.endswith("deuteron_1_kick.json"):
             print(
-                f"  registered check: bodies' Links {[e.steps for e in sim.measured.values()]} (the register: no step); contacts {[e.contacts for e in sim.measured.values()]}"
+                f"  registered check: the drive fired {[e.steps for e in sim.measured.values()]} times and {[sum(e.contacts) for e in sim.measured.values()]} were refused, every fire a contact and no Link (the register: no step, the first refused step of each body toward the other)"
             )
         if relative.endswith("coasting_none.json"):
-            unchanged = sum(1 for e in sim.measured.values() if e.momentum == e.frame_momentum)
+            unchanged = sum(
+                1 for n, e in sim.measured.items() if list(e.momentum) == momentum_initial[n]
+            )
             print(
-                f"  registered check: {len(sim.measured)} bodies, every momentum unchanged over the run (no gravity, the coasting control): {unchanged}"
+                f"  registered check: {len(sim.measured)} bodies; momentum at the end equal to the momentum declared, the README's p(end) / p(0) = 1.000 on the coasting control: {unchanged} of {len(sim.measured)}"
             )
