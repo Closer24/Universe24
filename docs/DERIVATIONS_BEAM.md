@@ -7020,6 +7020,8 @@ in ten thousand below Tsirelson's bound, exactly `181 / 64`.
 
 ### 24.5 The verdict of section 24
 
+**The conditional derivations of this document** (record 398's CONDITIONAL list, with the passages the paper's cut removed) are each a declared hypothesis outside the law, [HYPOTHESES 27](HYPOTHESES.md), with the condition, what closes it and what refutes it; no line of this document claims them as the law's (the owner's GO of 2026-09-21, about 23:28Z, its record to follow).
+
 The physics of the law lives in seven grains, two rules chosen among
 few, one imported member of a derived family, the apparatus's
 declarations and two inputs no postulate replaces (24.1); the bilinear

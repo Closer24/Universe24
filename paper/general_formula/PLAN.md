@@ -2604,3 +2604,12 @@ from the shipped definitions or naming a family the definitions lack.
 (4) The assumptions table's uncertainty row: "an identity on the
 circle; the physical identification a stated hypothesis (22, assumed)".
 
+### After the merge (2026-09-21, about 23:30Z): the conditional derivations the cut removed are hypotheses on the tree
+
+The Boss's assignment under the owner's GO (its record to follow): every
+conditional derivation the cut removed (record 454's criterion) has one
+status on the tree, a declared hypothesis outside the law, docs/HYPOTHESES.md
+entry 27, each with its condition, what closes it and what refutes it;
+DERIVATIONS_BEAM 24.5 links to it. The paper is unchanged: it carries
+them as HYPOTHESIS or OPEN rows without a number since wave 30.
+
