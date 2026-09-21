@@ -5,7 +5,7 @@ The one engine of Universe24 is the engine of the Beam Law (`beam-v1`;
 ray", the model owner, 2026-09-19). Its design and implementation contract is
 [the Beam Law](BEAM_LAW.md): the beam (the record of an event in transit;
 "ray" is its informal name) `NatureBeam`, the one
-function `nature_beam`, the flight table at 1 / sqrt 3, the eight-slot
+function `nature_beam`, the flight rule at 1 / sqrt 3, the eight-slot
 collision table and its inverse, the detector's squared record, the
 re-emission, the deletions and the expectations. This document is the
 bookkeeping around that law as implemented: the code, the GameBoard, the frame of
@@ -18,7 +18,7 @@ evening of 2026-09-19; the law of the shadow; the law of the bit) are in git
 The code: `src/event_universe/events/` (`world.py` the world file and its
 refusals, `measured.py` the measured event's record and the ledger,
 `nature_beam.py` the law (the record, the one reading `read_arrivals`, the
-flight table, the collision table, the store of records per family and the
+flight rule, the collision table, the store of records per family and the
 function `nature_beam`), `meeting.py` the meeting (since 2026-09-20: the arc
 permutation of the direction table, the reading of the free crowd by a paid
 unit in transit, the turn by its phase register and the inverse, under the
@@ -53,7 +53,7 @@ the one provider of adjacency: for a Port, add its signed unit heading on
 its axis; an in-range target is the ordinary neighbour; a coordinate that
 exits a periodic axis wraps to 0 after the positive face or to `extent - 1`
 after the negative face; `None` only for a transfer through an open outer
-face. It neither reads state nor advances time. The flight table decides
+face. It neither reads state nor advances time. The flight rule decides
 when a ray crosses a Link (at most one per interval; BEAM_LAW section 3) and
 `adjacent_node` says where the Link leads; the ray crosses it whole, its
 record unchanged, so with an extent of 1 a ray on a periodic axis lands on
@@ -142,14 +142,14 @@ whole), a phase (a step of the circle of N), a number (the
 last emitter), an amount (whole units) and a content per unit; its momentum
 is not stored, it is amount x content x u_d for a paid family and
 amount x u_d for a free one (its unit carries no content), u_d the unit
-vector of the direction at the flight table's scale Q = 64 (the integer
+vector of the direction at the flight's scale Q = 64 (the integer
 vector nearest Q D / |D|, exactly Q e_d on a heading; the model owner's
 decision of 2026-09-19, [BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
 and note 23), so every momentum of the record is in label units, Q per
 unit of amount along a heading. The Node holds nothing
 between intervals but the rays present at it and the measured event there.
 The law of one interval at one Node is `nature_beam` ([BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam)):
-the walk by the flight table, the one reading, the collision by the table
+the walk by the flight rule, the one reading, the collision by the table
 (at the Nodes of free space: none at a Node that holds a measured event),
 the measured event's table (`read`, `measure`, `rerelease`, `pass` and,
 since 2026-09-20, `become`, the transformation, each
@@ -324,7 +324,7 @@ the pushes taken, the labels of what clicked or came home and the recoils,
 the transit line the sum over the store of the one label of every row
 (`nature_beam.momentum_labels`: amount x content x u_d for a paid family,
 amount x u_d for a free family, whose unit carries no content; u_d the
-unit vector of the direction at the scale Q, the flight table's
+unit vector of the direction at the scale Q, the flight's
 `labels`), the escaped line the faces' sums, every line in label units, and, since
 2026-09-20, the `turned` line (`Ledger.turned_momentum`, per family under
 `families[<name>].turned` and the world's total under `momentum.turned`):
@@ -506,7 +506,7 @@ one floor at the click when d = 1 and within one step per segment
 otherwise; the default stays the integer 0, not the lamp's own turn: a
 family that turns in transit declares it); the integer form turns per
 Link crossed as it did, and on the
-flight table the two are not the same number: a heading crosses 32 Links
+flight rule the two are not the same number: a heading crosses 32 Links
 in 55 intervals; refused on a family without a phase
 circle; the record carries the key as declared)); `measured`
 (`position`, `family`, `amount`, `phase`, `momentum`, `fixed`, `span`

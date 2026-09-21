@@ -59,7 +59,7 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe.events.nature_beam import flight_table
+from event_universe.events.nature_beam import direction_flight
 from event_universe.world_loading import world_of_run
 
 MODEL_PREFIX = "beam-weak-"
@@ -153,7 +153,7 @@ class Reading:
 def first_arrival_age(distance: int) -> int:
     """The age at which a heading ray first reaches `distance` Links, off
     the engine's flight table (GAMEBOARD: the expectation's computation)."""
-    table = flight_table(((0, 0, 0), (0, 0, 0), (1, 0, 0)))
+    table = direction_flight(((0, 0, 0), (0, 0, 0), (1, 0, 0)))
     ages = np.arange(1, 4 * distance + 64, dtype=np.int64)
     steps = table.manhattan_steps(np.full(ages.shape, 2, dtype=np.int64), ages)
     return int(ages[np.flatnonzero(steps >= distance)[0]])

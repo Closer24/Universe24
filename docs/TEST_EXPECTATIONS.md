@@ -201,7 +201,11 @@ derived from `quantum`).
 every direction, 1 / sqrt 3, on the digital line of the momentum, at most
 one Link per interval, the age modulo the direction's period.
 
-- (a) the flight table: for every direction T_d >= S_1 Q and m(tau + 1) -
+- (a) the flight rule (the position's accumulator per direction off the
+  age, `Flight.walk_step`, record 155 of 2026-09-20; until then a step
+  table per direction over its period built from the same rule; the
+  step at tau checked as the m(tau)-th unit step of the line when the
+  count moves): for every direction T_d >= S_1 Q and m(tau + 1) -
   m(tau) in {0, 1}; the periods (1, 0, 0) T 110, L 55; (1, 1, 0) T 156,
   L 39; (1, 1, 1) T 192, L 3; (3, 1, 0) T 350, L 175; a rest direction never
   moves; the first arrival of a heading ray at m Links, m = 1..11, in the

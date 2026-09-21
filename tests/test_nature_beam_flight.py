@@ -6,8 +6,12 @@ and unchanged; the GameBoard's faces open or
 periodic (the wrap, the stub of extent 1). The expected integers of
 docs/TEST_EXPECTATIONS.md ("The flight"), written down first:
 
-(a) the flight table: for every direction T_d >= S_1 Q and m(tau + 1) -
-    m(tau) in {0, 1}; the periods (1, 0, 0) T 110, L 55; (1, 1, 0) T 156,
+(a) the flight rule (the position's accumulator per direction off the
+    age, `Flight.walk_step`; the model owner's record 155 of 2026-09-20:
+    until then a step table per direction over its period, built from the
+    same rule): for every direction T_d >= S_1 Q and m(tau + 1) - m(tau)
+    in {0, 1}, the step at tau the m(tau)-th unit step of the line when
+    the count moves; the periods (1, 0, 0) T 110, L 55; (1, 1, 0) T 156,
     L 39; (1, 1, 1) T 192, L 3; (3, 1, 0) T 350, L 175; a rest direction
     never moves; the first arrival of a heading ray at m Links, m = 1..11,
     in the intervals 1, 3, 5, 7, 8, 10, 12, 13, 15, 17, 19;
@@ -42,7 +46,7 @@ from event_universe.configuration_validation import validate_configuration
 from event_universe.core.game_board import PORT_HEADINGS, adjacent_node
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.nature_beam import Q, flight_table
+from event_universe.events.nature_beam import Flight, Q, direction_flight
 from event_universe.events.run import execute_nature_beam_run
 
 SLIT_DIRECTIONS = [[1, 1, 0], [1, -1, 0], [2, 1, 0], [2, -1, 0], [3, 1, 0], [3, -1, 0]]
@@ -56,35 +60,46 @@ TABLE = (
 )
 
 
-def test_the_flight_table_steps_at_most_one_link_and_has_the_periods_of_the_design():
+def step_at(table: Flight, index: int, tau: int) -> np.ndarray:
+    """The Link a ray of the direction crosses at age tau, by the rule."""
+    return table.walk_step(np.array([index]), np.array([tau]))[0]
+
+
+def test_the_flight_rule_steps_at_most_one_link_and_has_the_periods_of_the_design():
     """(a)."""
-    table = flight_table(TABLE)
+    table = direction_flight(TABLE)
     for index, vector in enumerate(TABLE):
         s1 = sum(abs(c) for c in vector)
         assert int(table.manhattan[index]) == s1
-        if s1 == 0:
-            assert int(table.period[index]) == 1 and not table.steps[index].any()
-            continue
-        assert int(table.resolution[index]) >= s1 * Q
         ages = np.arange(2 * int(table.period[index]) + 5)
         direction = np.full(ages.shape, index)
+        steps = table.walk_step(direction, ages)
+        if s1 == 0:
+            assert int(table.period[index]) == 1 and not steps.any()
+            continue
+        assert int(table.resolution[index]) >= s1 * Q
         m = table.manhattan_steps(direction, ages)
         assert set((m[1:] - m[:-1]).tolist()) <= {0, 1}
-        # The step table over one period walks a whole number of periods of
-        # the line: a multiple of v.
-        walked = table.steps[index, : int(table.period[index])].sum(axis=0)
+        # The rule's step at tau is the m(tau)-th unit step of the line when
+        # the count moves, and zero otherwise.
+        for tau in range(len(ages) - 1):
+            expected = table.lines[index, int(m[tau]) % s1] if m[tau + 1] > m[tau] else np.zeros(3)
+            assert steps[tau].tolist() == expected.tolist(), (vector, tau)
+        # Over one period the rule walks a whole number of periods of the
+        # line: a multiple of v.
+        walked = steps[: int(table.period[index])].sum(axis=0)
         largest = max(range(3), key=lambda axis: abs(vector[axis]))
         multiple = int(walked[largest]) // vector[largest]
         assert walked.tolist() == [c * multiple for c in vector] and multiple >= 1
     periods = {(1, 0, 0): (110, 55), (1, 1, 0): (156, 39), (1, 1, 1): (192, 3), (3, 1, 0): (350, 175)}
-    plus_one = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS, (1, 1, 0), (1, 1, 1), (3, 1, 0)))
+    plus_one = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS, (1, 1, 0), (1, 1, 1), (3, 1, 0)))
     for vector, (t, period) in periods.items():
         index = plus_one.vectors.tolist().index(list(vector))
         assert (int(plus_one.resolution[index]), int(plus_one.period[index])) == (t, period), vector
     position = np.zeros(3, dtype=np.int64)
     arrivals: dict[int, int] = {}
     for tau in range(20):
-        position = position + plus_one.steps[2, tau % 55]
+        position = position + step_at(plus_one, 2, tau)
         arrivals.setdefault(int(abs(position).sum()), tau + 1)
     assert [arrivals[m] for m in range(1, 12)] == [1, 3, 5, 7, 8, 10, 12, 13, 15, 17, 19]
 
@@ -112,7 +127,7 @@ def periodic_cube(directions: list[list[int]], per_link: int = 0) -> dict[str, o
 def test_a_lone_unit_is_straight_on_its_digital_line_and_unchanged():
     """(b)."""
     world = periodic_cube(SLIT_DIRECTIONS)
-    table = flight_table(parse_nature_beam_world(world).directions)
+    table = direction_flight(parse_nature_beam_world(world).directions)
     vectors = [list(v) for v in PORT_HEADINGS] + SLIT_DIRECTIONS
     for vector in vectors:
         seeded = {
@@ -133,7 +148,7 @@ def test_a_lone_unit_is_straight_on_its_digital_line_and_unchanged():
         index = table.vectors.tolist().index(vector)
         expected = np.array([30, 30, 30])
         for tau in range(150):
-            expected = (expected + table.steps[index, tau % int(table.period[index])]) % 61
+            expected = (expected + step_at(table, index, tau)) % 61
             simulation.step()
             assert store.size == 1 and int(store.amount[0]) == 1
             x, y, z = store.coordinates(store.node)
@@ -158,18 +173,18 @@ def test_a_lone_unit_is_straight_on_its_digital_line_and_unchanged():
         simulation.step()
     store = simulation.stores[0]
     index = table.vectors.tolist().index([3, 1, 0])
-    links = sum(int(table.steps[index, tau % 175].any()) for tau in range(150))
+    links = sum(int(step_at(table, index, tau).any()) for tau in range(150))
     assert int(store.phase[0]) == (3 * links) % 64 and links > 0
 
 
 def test_the_flight_is_isotropic_at_one_over_root_three():
     """(c)."""
-    table = flight_table(TABLE)
+    table = direction_flight(TABLE)
     for vector in ((1, 0, 0), (1, 1, 0), (1, 1, 1), (3, 1, 0), (5, 2, 1)):
         index = table.vectors.tolist().index(list(vector))
         position = np.zeros(3, dtype=np.int64)
         for tau in range(1000):
-            position = position + table.steps[index, tau % int(table.period[index])]
+            position = position + step_at(table, index, tau)
         distance = int((position * position).sum())
         assert abs(distance * 3 / 1000**2 - 1) < 0.02, (vector, distance)
 

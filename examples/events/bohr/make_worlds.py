@@ -37,7 +37,7 @@ clock's own turn 0 within a run), N 64.
 The derivation, written before the runs (README.md): the flux the fan's
 lines deliver to the body at radius r on the ring of the plane z = c is
 E_body(r) entries per shell, the sum over its three Nodes of the entries
-per Node counted from the engine's own flight lines (`flight_table`, the
+per Node counted from the engine's own flight lines (`direction_flight`, the
 same Bresenham lines the walk takes), averaged around the ring; the push
 per interval is F = (1 + RATIO) M_e Q E_body(r) / SHELL; with the width S
 the speed is v = p / (Q S M_e + p), and a circular orbit needs p v / r = F,
@@ -81,7 +81,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[2] / "src"))
 
-from event_universe.events.nature_beam import flight_table  # noqa: E402
+from event_universe.events.nature_beam import direction_flight  # noqa: E402
 from event_universe.world_loading import families_by_definition  # noqa: E402
 
 # The shipped definitions the world's families come from where they equal
@@ -144,9 +144,9 @@ def entries_per_node(
 ) -> dict[tuple[int, int, int], int]:
     """The entries per shell each Node within `reach` of the source receives
     from the fan's digital lines: the engine's own flight lines
-    (`flight_table`: S_1 unit steps per period of the Bresenham line of
+    (`direction_flight`: S_1 unit steps per period of the Bresenham line of
     every direction), walked from the source until they pass `reach`."""
-    table = flight_table(tuple(directions))
+    table = direction_flight(tuple(directions))
     count: dict[tuple[int, int, int], int] = {}
     for index in range(len(directions)):
         steps = int(table.manhattan[index])

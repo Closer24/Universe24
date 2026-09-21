@@ -92,7 +92,7 @@ from event_universe.events.meeting import (
     register,
     register_inverse,
 )
-from event_universe.events.nature_beam import flight_table
+from event_universe.events.nature_beam import direction_flight
 from event_universe.events.run import execute_nature_beam_run
 from tests.test_nature_beam_bijection import WORLD as BIJECTION_WORLD
 from tests.test_nature_beam_bijection import fixed_beams
@@ -134,7 +134,7 @@ COLUMNS = (("gravity", -1), ("charge", 1))
 
 def test_the_arc_permutation_on_the_table_of_series_k():
     """(a)."""
-    table = arc_table(flight_table(K_TABLE).labels)
+    table = arc_table(direction_flight(K_TABLE).labels)
     assert table.units.shape == (296, 3) and not table.moving[0] and not table.moving[1]
     labels = [tuple(int(v) for v in table.units[i]) for i in range(2, 296)]
     targets: list[tuple[int, int, int]] = [
@@ -176,7 +176,7 @@ def test_the_arc_permutation_on_the_table_of_series_k():
     assert table.cache[(0, -64, 0)] is not table.cache[(0, -1, 0)]
     # On the six headings alone +x is a sector of one under t = -y, fixed;
     # the on-line pair +y, -y swaps; the rest directions stay.
-    headings = arc_table(flight_table((*REST, *PORT_HEADINGS)).labels)
+    headings = arc_table(direction_flight((*REST, *PORT_HEADINGS)).labels)
     six = arc_shift(headings, (0, -1, 0), 1)
     assert six.tolist() == [0, 1, 2, 3, 5, 4, 6, 7]
 
@@ -305,7 +305,7 @@ def test_the_sign_of_the_turn_and_the_turned_line(tmp_path):
     assert column_sum(paid, ((1, 1), (3, 1)), COLUMNS) == (-1, 1)
     assert column_sum(((1, 1), (2, 1)), ((1, 1), (1, 1)), COLUMNS) == (1, 1)
     assert column_sum(((1, 1), (1, 2)), ((1, 1), (1, 3)), COLUMNS) == (-5, 6)
-    table = arc_table(flight_table(K_TABLE).labels)
+    table = arc_table(direction_flight(K_TABLE).labels)
     forward, _ = table.permutation((0, 64, 0))
     assert K_TABLE[int(forward[K_TABLE.index((1, 0, 0))])] == (24, 1, 0)
     # The record of a run.

@@ -12,7 +12,7 @@ border. The law is ONE generic
 function (the owner's name): `nature_beam` performs the interval's steps in
 order, each a bijection on the GameBoard's state except the border:
 
-1. the walk: every ray whose flight table steps this interval is created at
+1. the walk: every ray whose flight rule steps this interval is created at
    the neighbour along its step (the wrap on a periodic axis; through an
    open face it clicks on the face detector), its age advanced by one (the
    age is the count of intervals since the measured event that created the
@@ -74,16 +74,16 @@ order, each a bijection on the GameBoard's state except the border:
 
 Every momentum the law reads or moves is the one label of the rows,
 `momentum_labels` (content x amount x u_d for a paid family, amount x u_d
-for a free one, u_d the unit vector of the direction at the flight table's
+for a free one, u_d the unit vector of the direction at the flight's
 scale Q = 64: the integer vector nearest Q D / |D|, `unit_label`, one
-world constant per direction on the flight table, exactly Q e_d on a
+world constant per direction of the flight, exactly Q e_d on a
 heading; the model owner's decision of 2026-09-19 on the physics-rule
 reviewer's verdict, BEAM_LAW section 2 and note 23): the push's moment, the
 click's momentum, the face click's, the recoil at a release or a
 re-emission and the transit line of the books; no momentum is read off a
 Port, and the reading's vector and tensor moments are taken on u_d as
 well, so a fan's flow reads Q per unit of amount direction-blind. No other
-function holds a piece of the law: `flight_table`, `collision_table` and
+function holds a piece of the law: `direction_flight`, `collision_table` and
 `read_arrivals` are the pure tables and the one reading it takes;
 `NatureBeamStore` is the structure of arrays it moves. Integers only. The engine
 (`engine.py`) schedules and books; it computes no physics.
@@ -156,7 +156,7 @@ from event_universe.events.world import (
 
 Record = Callable[[dict[str, object]], None]
 # The one scale of the law is the world's constant `world.Q`: the time
-# resolution of the flight table, T_d = isqrt(3 |v|^2 Q^2), and the length of
+# resolution of the flight, T_d = isqrt(3 |v|^2 Q^2), and the length of
 # a unit's momentum label, u_d the integer vector nearest Q D / |D|
 # (`world.LABEL_SCALE` is the same number); the parser derives the age bound
 # from it.
@@ -532,35 +532,63 @@ def ages_at_key(age: np.ndarray, key: int) -> np.ndarray:
     return result
 
 
-# -- the flight table ------------------------------------------------------------
+# -- the flight ------------------------------------------------------------------
 
 
 @dataclass(frozen=True)
-class FlightTable:
-    """One world constant per direction: v, S_1 = |a| + |b| + |c|,
-    T_d = isqrt(3 |v|^2 Q^2), the Bresenham line of v (S_1 unit steps), the
-    least period L_d of the flight phase, the step table (the Link a ray of
-    direction d crosses at age tau: a heading, or zero for no move) and
+class Flight:
+    """The flight of a direction set, one world constant per direction: v,
+    S_1 = |a| + |b| + |c|, T_d = isqrt(3 |v|^2 Q^2), the Bresenham line of
+    v (its S_1 unit steps, `lines`), the least period L_d of the flight's
+    phase (a fact about the rate, which the readers use for c) and
     `labels`, the unit vector u_d of each direction at the scale Q
     (`unit_label`; (0, 0, 0) for a rest direction): the momentum label of
     one unit of amount along d, the same length within sqrt 3 / (2 Q) for
-    every direction and exactly Q e_d on a heading. The reading's weight
-    at the relative speed (BEAM_LAW note 38) reads `vectors` and
-    `resolution` alone: a direction's velocity is (Q / T_d) v per axis."""
+    every direction and exactly Q e_d on a heading. The Link a ray crosses
+    at an age is the position's accumulator rule (`walk_step`; the model
+    owner's record 155 of 2026-09-20, "no tables": until then a step table
+    per direction over its period, built from the same rule at load). The
+    reading's weight at the relative speed (BEAM_LAW note 38) reads
+    `vectors` and `resolution` alone: a direction's velocity is (Q / T_d)
+    v per axis."""
 
     vectors: np.ndarray
     manhattan: np.ndarray
     resolution: np.ndarray
     period: np.ndarray
     lines: np.ndarray
-    steps: np.ndarray
     labels: np.ndarray
 
     def manhattan_steps(self, direction: np.ndarray, age: np.ndarray) -> np.ndarray:
         """m(tau) = (2 tau S_1 Q + T_d) // (2 T_d): the Manhattan steps made
-        by age tau."""
+        by age tau, the whole count of the position's accumulator (below)
+        over the ages 0 .. tau - 1."""
         s1, t = self.manhattan[direction], self.resolution[direction]
         result: np.ndarray = (2 * age * s1 * Q + t) // (2 * t)
+        return result
+
+    def walk_step(self, direction: np.ndarray, age: np.ndarray) -> np.ndarray:
+        """The Link a ray of direction d crosses at age tau (a heading, or
+        zero for no move), by the position's accumulator on the row, the
+        one count rule of the law (BEAM_LAW note 41 (viii); the digital
+        line of the flight): the accumulator gains r = 2 S_1 Q at every
+        interval over d = 2 T_d from the start T_d, e = [acc + r >= d] is
+        the Manhattan step of the interval (r <= d, so e is 0 or 1), and
+        the step is the m-th unit step of the direction's line, m the
+        count made before it. A ray's rate never changes over its flight
+        (a re-release or a split is a new row at age 0), so the
+        accumulator at the age is (tau r + T_d) mod d and the count made
+        is m(tau), both off the age (FORM.md section 1 (i)): the row
+        carries no field for them."""
+        s1, t = self.manhattan[direction], self.resolution[direction]
+        rate = 2 * s1 * Q
+        denominator = 2 * t
+        held = age * rate + t
+        accumulator = held % denominator
+        made = held // denominator
+        moved = (accumulator + rate) // denominator
+        place = np.where(s1 > 0, made % np.maximum(s1, 1), 0)
+        result: np.ndarray = self.lines[direction, place] * moved[:, None]
         return result
 
 
@@ -602,8 +630,8 @@ def _bresenham(vector: tuple[int, int, int]) -> list[tuple[int, int, int]]:
     return line
 
 
-def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
-    """The flight table of a direction set, computed once at load."""
+def direction_flight(vectors: tuple[tuple[int, int, int], ...]) -> Flight:
+    """The flight of a direction set, its constants computed once at load."""
     count = len(vectors)
     manhattan = np.zeros(count, dtype=np.int64)
     resolution = np.ones(count, dtype=np.int64)
@@ -626,31 +654,11 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
     for index, line in enumerate(lines_list):
         for j, step in enumerate(line):
             lines[index, j] = step
-    # The label table: the unit vector of every direction at the scale Q.
+    # The labels: the unit vector of every direction at the scale Q.
     labels = np.array([unit_label(vector) for vector in vectors], dtype=np.int64).reshape(count, 3)
-    table = FlightTable(
-        np.array(vectors, dtype=np.int64).reshape(count, 3),
-        manhattan,
-        resolution,
-        period,
-        lines,
-        np.zeros(0),
-        labels,
+    return Flight(
+        np.array(vectors, dtype=np.int64).reshape(count, 3), manhattan, resolution, period, lines, labels
     )
-    longest_period = int(period.max(initial=1))
-    # The step table is small integers (a heading or zero): one byte each.
-    steps = np.zeros((count, longest_period, 3), dtype=np.int8)
-    for index in range(count):
-        s1 = int(manhattan[index])
-        if s1 == 0:
-            continue
-        ages = np.arange(int(period[index]), dtype=np.int64)
-        direction = np.full(ages.shape, index, dtype=np.int64)
-        m0 = table.manhattan_steps(direction, ages)
-        m1 = table.manhattan_steps(direction, ages + 1)
-        moved = m1 > m0
-        steps[index, : len(ages)] = np.where(moved[:, None], lines[index, m0 % s1], 0)
-    return FlightTable(table.vectors, manhattan, resolution, period, lines, steps, labels)
 
 
 # -- the collision table ---------------------------------------------------------
@@ -717,13 +725,13 @@ def collision_table() -> CollisionTable:
 
 @dataclass(frozen=True)
 class NatureBeamTables:
-    """The two pure tables of a world and the circle's tables: the flight
-    table of its direction set, the collision table and the cosines and
-    sines at 1/256. The window is not a table but the one floor
+    """The constants of a world's law: the flight of its direction set (the
+    position's accumulator rule per direction, `Flight`), the collision
+    table and the cosines and sines at 1/256. The window is not a table but the one floor
     `window_admits` of a distance against a width (since 2026-09-20; until
     then a table over the distances of the half circle)."""
 
-    flight: FlightTable
+    flight: Flight
     collision: CollisionTable
     cosines: np.ndarray
     sines: np.ndarray
@@ -734,7 +742,7 @@ class NatureBeamTables:
 
 def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
     modulus = world.phase_steps
-    flight = flight_table(world.directions)
+    flight = direction_flight(world.directions)
     return NatureBeamTables(
         flight,
         collision_table(),
@@ -893,7 +901,7 @@ def momentum_labels(
 ) -> np.ndarray:
     """The one momentum label of rows of rays, (rows, 3): the label weight
     (`label_weights`) along the unit vector of the direction at the scale
-    Q (`labels`, the flight table's `labels`), content x amount x u_d for
+    Q (`labels`, the flight's `labels`), content x amount x u_d for
     a paid family, amount x u_d for a free one. The product is checked
     BEFORE it is formed, per row, weight x max|u_d| within 2^62 - 1
     (`label_overflow_rows`); the first row beyond it is refused loudly
@@ -1277,7 +1285,7 @@ class NatureBeamStore:
 
     def labels(self, rows: np.ndarray, unit: np.ndarray, free: bool) -> np.ndarray:
         """The momentum labels of the given rows (`momentum_labels`, the one
-        label of the law) along the unit vectors `unit` (the flight table's
+        label of the law) along the unit vectors `unit` (the flight's
         `labels`)."""
         return momentum_labels(
             unit,
@@ -1346,7 +1354,7 @@ class GameBoardDiagnostics:
 
     def __init__(self, shape: Address3, vectors: np.ndarray, rows: list[ArrivalRows]) -> None:
         self.shape = shape
-        # The unit vectors of the directions (the flight table's `labels`).
+        # The unit vectors of the directions (the flight's `labels`).
         self.vectors = vectors
         self.rows = rows
         self._moments: tuple[list[np.ndarray], list[np.ndarray], list[np.ndarray]] | None = None
@@ -2080,7 +2088,7 @@ def flux_pair(
     message meet over the message's own rate, one scalar per (direction,
     body) as a pair (numerator, denominator): with the direction's
     velocity (Q / T_d) v per axis (v = (a, b, c) the vector, T_d its
-    resolution from the flight table, |v|^2 its squared length) and the
+    resolution from the flight, |v|^2 its squared length) and the
     body's quantised speed w_a / G per axis (`quantised_speed`), the
     factor 1 - (v_body . c_d) / |c_d|^2 in integers,
 
@@ -2102,7 +2110,7 @@ def flux_pair(
 
 
 def weighted_flow(
-    flight: FlightTable,
+    flight: Flight,
     arrivals: list[int],
     labels: list[list[int]],
     entry: Measured,
@@ -2409,14 +2417,14 @@ def nature_beam(
             collide(store, backward=True)
             resting = store.direction < REST_DIRECTIONS
             # The age back by one (whole; a rest ray keeps its age); the
-            # flight table is read modulo the period. A ray at age 0 is at
-            # its birth, which has no inverse.
+            # Link crossed at that age by the flight's rule. A ray at age 0
+            # is at its birth, which has no inverse.
             back = np.where(resting, store.age, store.age - 1)
             if (back < 0).any():
                 raise ValueError(
                     f"{BEAM_LAW}: the inverse walk of a ray at age 0 (its birth has no inverse)"
                 )
-            step = flight.steps[store.direction, back % flight.period[store.direction]].astype(np.int64)
+            step = flight.walk_step(store.direction, back)
             moved = step.any(axis=1)
             x, y, z = store.coordinates(store.node)
             coordinates = np.stack([x, y, z], axis=1) - step
@@ -2445,9 +2453,9 @@ def nature_beam(
         if store.size == 0:
             arrivals.append(ArrivalRows.empty())
             continue
-        # The flight reads the age modulo the direction's period, its
-        # place on the digital line; the age itself is kept whole.
-        step = flight.steps[store.direction, store.age % flight.period[store.direction]].astype(np.int64)
+        # The flight's rule at the row's age: the position's accumulator
+        # per direction, off the age (the rate constant over the flight).
+        step = flight.walk_step(store.direction, store.age)
         moved = step.any(axis=1)
         x, y, z = store.coordinates(store.node)
         coordinates = np.stack([x, y, z], axis=1) + step
@@ -2645,9 +2653,9 @@ def nature_beam(
                 tables.sines,
                 modulus,
             )
-            for set_index, step in enumerate(steps_of):
-                if step is not None:
-                    settings[named, set_index] = step
+            for set_index, chosen_step in enumerate(steps_of):
+                if chosen_step is not None:
+                    settings[named, set_index] = chosen_step
         half = modulus // 2
         presence = np.zeros((count, events), dtype=np.int64)
         # The age moment over the same set, the measured event's reading of

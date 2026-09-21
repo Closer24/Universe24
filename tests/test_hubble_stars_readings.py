@@ -52,7 +52,7 @@ import numpy as np
 from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.nature_beam import flight_table
+from event_universe.events.nature_beam import direction_flight
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import HEADING_OFFSET, Q
 from event_universe.world_loading import load_world
@@ -265,7 +265,7 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
 
 def test_the_fits_read_the_exact_forms():
     """(c)."""
-    table = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
+    table = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
     heading = np.array([HEADING_OFFSET])
     assert int(table.period[HEADING_OFFSET]) == 55
     assert int(table.manhattan_steps(heading, np.array([55]))[0]) == 32

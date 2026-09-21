@@ -22,6 +22,20 @@ Nodes, no tables") on the fraction-free law below; the branch
   `state.json` carry `acc.action` (three integers) on a turning body.
   Series H re-read: the register's dated line. The parser's bound on
   `ticks x |p| x N` stays as declared; at run time only |p| N is formed.
+- The flight table is retired: `nature_beam.Flight` (was `FlightTable`;
+  `direction_flight(vectors)` was `flight_table`) keeps the direction
+  set's constants (v, S_1, T_d, the direction's line, the period L_d, the
+  labels) and the Link a ray crosses at an age is `Flight.walk_step`, the
+  position's accumulator on the row written out (the accumulator starts at
+  T_d, gains 2 S_1 Q per interval over 2 T_d; the count m(tau) picks the
+  unit step of the line): a ray's rate never changes over its flight, so
+  the accumulator and the count are read off the age and the row carries
+  no new field. The per-direction step table over the period and the age
+  read modulo the period are gone; `period` stays as the fact the readers
+  use for c. Bit-identical on every registered world (the gate set
+  replayed: 17 of 17 identical, VALIDATION). The name "flight table" is
+  retired in the code and in BEAM_LAW, ENGINE and TERMINOLOGY ("the flight
+  rule"); the readings tools and the generators import `direction_flight`.
 
 ## The fraction-free law, on 2026-09-20: every count an accumulator on the body's record
 

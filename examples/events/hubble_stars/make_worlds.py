@@ -93,7 +93,7 @@ ROOT = HERE.parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
 from event_universe.core.game_board import PORT_HEADINGS  # noqa: E402
-from event_universe.events.nature_beam import flight_table  # noqa: E402
+from event_universe.events.nature_beam import direction_flight  # noqa: E402
 from event_universe.events.world import HEADING_OFFSET, LAW_VALUE, Q  # noqa: E402
 from event_universe.world_loading import families_by_definition  # noqa: E402
 
@@ -160,7 +160,7 @@ Json = dict[str, object]
 
 def beam_speed() -> float:
     """The ray's speed on a heading, read off the flight table."""
-    table = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
+    table = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
     heading = np.array([HEADING_OFFSET])
     period = int(table.period[HEADING_OFFSET])
     return int(table.manhattan_steps(heading, np.array([period]))[0]) / period

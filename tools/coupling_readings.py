@@ -62,7 +62,7 @@ from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.engine import count_owed
 from event_universe.events.engine import step_axis as rule_step
-from event_universe.events.nature_beam import flight_table, unit_label
+from event_universe.events.nature_beam import direction_flight, unit_label
 from event_universe.events.world import BEAM_LAW, HEADING_OFFSET, LABEL_SCALE, NatureBeamWorld
 from event_universe.events.world import Q as FLIGHT_SCALE
 from event_universe.world_loading import world_of_run
@@ -71,7 +71,7 @@ from event_universe.world_loading import world_of_run
 # functions (the architecture review of 2026-09-20, Highlights 5.4: a tool
 # is a reader of the record, never a second owner of a rule): the clock
 # `core.integer.by_clock` (the primitive the engine's frame, release and
-# step call), the flight table `nature_beam.flight_table` and its
+# step call), the flight table `nature_beam.direction_flight` and its
 # `manhattan_steps`, the label `nature_beam.unit_label`, the scale
 # `world.LABEL_SCALE`, the world's keys through `parse_nature_beam_world` and a
 # measured event's charge through `Measured.charge`.
@@ -90,7 +90,7 @@ RELEASE_PER_HEADING = by_clock(0, SOURCE * RELEASE[0], RELEASE[1])
 Q = len(PORT_HEADINGS) * RELEASE_PER_HEADING
 # The flight table of the six headings (the two rest slots first, as the
 # world's table has them): the front and the mean stay are read off it.
-HEADING_TABLE = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
+HEADING_FLIGHT = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
 FAR_RADII = (4, 6, 8, 12, 16, 20, 24, 30, 40)
 FAR_FIELD = tuple(r for r in FAR_RADII if r >= 8)
 FAR_WINDOW = 50
@@ -106,8 +106,8 @@ PROBE_CHARGE = 2
 # T_d = isqrt(3 |v|^2 Q^2): the design's 1 / sqrt 3 rounded to the table's
 # integers, 110 / 64 on a heading; until 2026-09-20 the tool printed the
 # unrounded 1 / (1 / sqrt 3)).
-STAY = int(HEADING_TABLE.resolution[HEADING_OFFSET]) / (
-    int(HEADING_TABLE.manhattan[HEADING_OFFSET]) * FLIGHT_SCALE
+STAY = int(HEADING_FLIGHT.resolution[HEADING_OFFSET]) / (
+    int(HEADING_FLIGHT.manhattan[HEADING_OFFSET]) * FLIGHT_SCALE
 )
 AXES = {
     "+x": (1, 0, 0),
@@ -181,12 +181,12 @@ def steps_by_rule(reads: Reads, m: int, first: int, last: int, width: int = 1) -
 def first_arrivals(links: int) -> dict[int, int]:
     """The flight table's first arrival at m Links of a heading ray, by m:
     the least age at which the table's Manhattan steps m(tau) reach m
-    (`FlightTable.manhattan_steps`, the function the step table is built
+    (`Flight.manhattan_steps`, the function the step table is built
     from), counted from the ray's first walk (a ray at age 0 walks at its
     first interval)."""
     ages = np.arange(1, 4 * links + 1, dtype=np.int64)
     heading = np.full(ages.shape, HEADING_OFFSET, dtype=np.int64)
-    reached = HEADING_TABLE.manhattan_steps(heading, ages)
+    reached = HEADING_FLIGHT.manhattan_steps(heading, ages)
     found: dict[int, int] = {}
     for age, steps in zip(ages.tolist(), reached.tolist(), strict=True):
         found.setdefault(int(steps), int(age))

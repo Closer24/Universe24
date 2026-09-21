@@ -11,6 +11,20 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## No tables: the gate set under the flight rule - 2026-09-20
+
+The branch `no-tables` after its second item (the flight table retired:
+`Flight.walk_step`, the position's accumulator per direction off the age;
+[MIGRATION](MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded)):
+the seventeen worlds of the gate set (`examples/events/gate_set.json`) run
+at their registered length under the guards, `events.jsonl`, `state.json`
+and the books digested and compared with the same worlds on the tree
+before the item (`bohr/r2` against the action-row tree of the first item,
+the sixteen others against the head of `fraction-free`, the digests of
+the register replay below): 17 of 17 identical in events, state and
+books. The step table per direction over its period was built from the
+same rule at load, so nothing could move; the replay is the proof.
+
 ## No tables: series H under the action row - 2026-09-20
 
 The branch `no-tables` ([MIGRATION](MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded);

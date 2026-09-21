@@ -119,7 +119,7 @@ def frame(target: Target) -> tuple[Target, Target]:
 @dataclass
 class ArcTable:
     """The arc permutations of one direction table: the unit vectors u_d of
-    the directions (the flight table's `labels`), their squared lengths, the
+    the directions (the flight's `labels`), their squared lengths, the
     moving directions (a rest direction has the zero vector and is a fixed
     point of every permutation) and the permutations built so far, per
     target, forward and inverse."""

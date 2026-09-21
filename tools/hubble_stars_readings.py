@@ -17,7 +17,7 @@ distance from the ages of the arriving light on the click records
 (`reading` = the age moment, amount x age, under `reads: "age"`; the
 light-travel time tau = the age and the distance d = m(tau) Links, m the
 Manhattan steps of the flight table read through the engine's own
-`flight_table`, whose period also gives c), and the luminosity, the click
+`direction_flight`, whose period also gives c), and the luminosity, the click
 rate of the star's light per detector interval (expected 1 / (1 + z) of
 the lamp's rate: a beam does not dilute, so the click rate carries no
 distance beyond the redshift; README.md there).
@@ -71,7 +71,7 @@ import numpy as np
 
 from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.events import parse_nature_beam_world
-from event_universe.events.nature_beam import flight_table
+from event_universe.events.nature_beam import direction_flight
 from event_universe.events.world import HEADING_OFFSET, Q
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -96,15 +96,15 @@ KIND_DETECTOR = "[DETECTOR]"
 KIND_BOARD = "[GAMEBOARD]"
 # The flight table of the six headings (the two rest vectors first): m(age)
 # and c are the same on every heading.
-HEADINGS_TABLE = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
+HEADINGS_FLIGHT = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
 
 
 def beam_speed() -> float:
     """c, the Links a ray makes on a heading in one period over the period
     (32 / 55 = 0.58182 per interval), off the flight table."""
     heading = np.array([HEADING_OFFSET])
-    period = int(HEADINGS_TABLE.period[HEADING_OFFSET])
-    return int(HEADINGS_TABLE.manhattan_steps(heading, np.array([period]))[0]) / period
+    period = int(HEADINGS_FLIGHT.period[HEADING_OFFSET])
+    return int(HEADINGS_FLIGHT.manhattan_steps(heading, np.array([period]))[0]) / period
 
 
 def milne(x: float) -> float:
@@ -280,7 +280,7 @@ def read_run(folder: Path) -> Run:
     # reading is the same; the stars' pushes are weighted on the GameBoard.
     under_doppler = "doppler" in parts[:-2]
     crowd, clock = parts[-2], parts[-1]
-    table = flight_table(tuple(tuple(v) for v in record["directions"]))
+    table = direction_flight(tuple(tuple(v) for v in record["directions"]))
     heading = np.array([HEADING_OFFSET])
     period = int(table.period[HEADING_OFFSET])
     c = int(table.manhattan_steps(heading, np.array([period]))[0]) / period
@@ -383,7 +383,7 @@ def links(ages: list[float]) -> np.ndarray:
     table (a group's mean age to the nearest interval)."""
     direction = np.full(len(ages), HEADING_OFFSET, dtype=np.int64)
     whole = np.asarray([round(age) for age in ages], dtype=np.int64)
-    return HEADINGS_TABLE.manhattan_steps(direction, whole)
+    return HEADINGS_FLIGHT.manhattan_steps(direction, whole)
 
 
 def window_point(run: Run, star: Star, window: tuple[int, int]) -> Point | None:

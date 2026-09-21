@@ -3,7 +3,7 @@ flight table and nothing else (the experimenter's rule, 2026-09-20: a
 readings tool never replays a rule of the engine; `tools/weak_readings.py`
 reads the things' `events`, `age`, `waited`, `steps` and `contacts` off
 `run.json`, their `pass`, `become` and the shell's `click` lines off
-`events.jsonl`, and the first-arrival age off `nature_beam.flight_table`).
+`events.jsonl`, and the first-arrival age off `nature_beam.direction_flight`).
 Two fast cases pin the tool to the engine's record:
 
 (a) J2: a bar of 40 x 1 x 1, K 4096, N 64, `release` [1, 4096], a fixed
