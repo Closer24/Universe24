@@ -1,0 +1,23 @@
+1. THE AGE MOMENT OF A MOVING SOURCE: kappa R_ret against sqrt(x_par^2 + (1 - beta^2) x_perp^2)
+  1000 random points and speeds: the identity holds to 2.3e-15; the age moment A = q dwell / (4 pi c kappa R_ret)
+  has the level sets x_par^2 + (1 - beta^2) x_perp^2 = const, ellipsoids contracted along the motion by sqrt(1 - beta^2);
+  the presence P = q dwell / (4 pi kappa R_ret^2) has not (kappa R_ret^2 is no quadric).
+
+2. THE EXCHANGE BETWEEN CO-MOVING BODIES, THE CONTINUUM LIMIT (rows received per interval over the rest rate)
+  beta | forward, no aberration (1-b)^2 | backward (1+b)^2 | transverse (1-b^2) | Galilean aberration: forward | backward | transverse (J (1-b^2)) | classical E: longitudinal (1-b^2) | transverse 1/gamma | transverse drag component beta
+  0.2148 | 0.617 | 1.476 | 0.954 | 0.910 | 0.910 | 1.023 | 0.954 | 0.977 | 0.215
+  0.4297 | 0.325 | 2.044 | 0.815 | 0.665 | 0.665 | 1.083 | 0.815 | 0.903 | 0.430
+  the round trips of the exchange (transit forward + back, over the rest 2 d / c): longitudinal d/(c-v) + d/(c+v) = gamma^2 x rest, transverse 2 gamma d / c = gamma x rest, with or without aberration;
+    beta 0.2148: gamma 1.024, gamma^2 1.048
+    beta 0.4297: gamma 1.107, gamma^2 1.226
+
+3. THE DEUTERON FAN (deuteron_1_kick, 290 directions) AT k = 4 AND 8: section 10.2's counts, then with the aberration rule
+  fan of 290 directions; T_D of the heading 110
+  k = 4 (v / c = 0.4297, gamma 1.107, gamma^2 1.226), as built : first-Link +x directions 57, reaching Node 2 at age 2 / 3: 4 / 13; forward received per cycle 188 of 228, mean forward transit 1.766, round trip 2.766 = 1.383 x rest; backward received 228 of 228 (first-Link -x directions 57); transverse: first-Link +y 47, reaching (1, 1, 0) at age 2 / 3: 10 / 1, received 152 of 188, mean transit 1.079
+  k = 4 (v / c = 0.4297, gamma 1.107, gamma^2 1.226), aberrated: first-Link +x directions 93, reaching Node 2 at age 2 / 3: 8 / 17; forward received per cycle 304 of 228, mean forward transit 1.750, round trip 2.750 = 1.375 x rest; backward received 116 of 228 (first-Link -x directions 29); transverse: first-Link +y 45, reaching (1, 1, 0) at age 2 / 3: 22 / 0, received 157 of 188, mean transit 1.140
+  k = 8 (v / c = 0.2148, gamma 1.024, gamma^2 1.048), as built : first-Link +x directions 57, reaching Node 2 at age 2 / 3: 4 / 13; forward received per cycle 416 of 456, mean forward transit 1.346, round trip 2.346 = 1.173 x rest; backward received 456 of 456 (first-Link -x directions 57); transverse: first-Link +y 47, reaching (1, 1, 0) at age 2 / 3: 10 / 1, received 340 of 376, mean transit 1.035
+  k = 8 (v / c = 0.2148, gamma 1.024, gamma^2 1.048), aberrated: first-Link +x directions 73, reaching Node 2 at age 2 / 3: 8 / 17; forward received per cycle 536 of 456, mean forward transit 1.351, round trip 2.351 = 1.175 x rest; backward received 328 of 456 (first-Link -x directions 41); transverse: first-Link +y 47, reaching (1, 1, 0) at age 2 / 3: 18 / 0, received 347 of 376, mean transit 1.052
+
+4. THE RECOIL OF THE ABERRATED FAN (the labels' sum over the fan, per unit of amount on each direction)
+  k = 4: the fan's labels sum at rest [0, 0, 0], aberrated [5156, 0, 0] (label units; the continuum estimate (2/3) K beta Q = 5317 on x): a lamp in motion takes the recoil [-5156, 0, 0] per unit of amount per direction born
+  k = 8: the fan's labels sum at rest [0, 0, 0], aberrated [2980, 0, 0] (label units; the continuum estimate (2/3) K beta Q = 2658 on x): a lamp in motion takes the recoil [-2980, 0, 0] per unit of amount per direction born

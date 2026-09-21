@@ -121,9 +121,11 @@ the six faces of the cube of the given half-width around the centre on an
 all-open GameBoard, read off the Links crossed per Port (`per_port`, a
 diagnostic of the walk, not the reading's moments), read-only; on a world
 with any periodic axis it raises `ValueError` (a periodic seam is not a
-face). `shell_readings` gives the shell means of the count (the amount that
+face). `diagnostics.shell_readings.shell_readings(simulation, family, centre,
+radius)` (a host diagnostic outside the engine since 2026-09-21; before, the
+engine's method) gives the shell means of the count (the amount that
 arrived, the zeroth moment outside), the presence (every ray at the Node)
-and the radial flow (the first moment), read-only.
+and the radial flow (the first moment), read-only, in floating point.
 `tools/coupling_readings.py` sums the four in-plane faces itself on the
 plane. A thin periodic GameBoard is a
 compact graph with return Links; it establishes no equivalence with

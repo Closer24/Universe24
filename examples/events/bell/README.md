@@ -112,7 +112,11 @@ verdict; a failed criterion exits nonzero. Every expectation is exact: a
 deviation is a defect of the engine, the width or the bookkeeping, to be
 reproduced minimally and reported, never tuned away. `tests/test_nature_beam_worlds.py`
 (b) runs the ten worlds through the same tool as a check that the engine
-does what the law says.
+does what the law says; its expected numbers (the tool's criteria and the
+count failed under the one click, the tick offsets, the CHSH sum, the
+primed sum and three correlations) are `expectations.json` beside the
+worlds, the register the test reads since 2026-09-21 (the trimming's part
+2: a test holds no literal of a world's number).
 
 ## Result under the Beam Law (2026-09-19)
 

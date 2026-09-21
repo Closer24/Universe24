@@ -1,0 +1,29 @@
+F_6 in space: 290 directions; the vectors at the scale S = 2^14, the grains G = 2^5 (lengths), G_C = 2^24 (the circumcentre), G_w = 2^15 (weights)
+cell vertices per direction: [4, 6, 8, 9]; the vertex vectors' largest component 33305001
+the cells' exact areas sum to 12.566371 sr (4 pi = 12.566371): the cells tile the sphere
+the integer form against the exact spherical areas: within 5.32e-04 of 1 on every direction
+
+class | members | weight (integer, the same on every member) | share of the sum | x equal share | exact area (sr)
+(1, 0, 0) |  6 |   1273 | 0.00309 | x0.90 | 0.03884
+(1, 1, 0) | 12 |   2073 | 0.00504 | x1.46 | 0.06326
+(1, 1, 1) |  8 |   2588 | 0.00629 | x1.82 | 0.07900
+(2, 1, 0) | 24 |   1366 | 0.00332 | x0.96 | 0.04171
+(2, 1, 1) | 24 |   1550 | 0.00377 | x1.09 | 0.04732
+(3, 1, 0) | 24 |    970 | 0.00236 | x0.68 | 0.02962
+(2, 2, 1) | 24 |   1955 | 0.00475 | x1.38 | 0.05967
+(3, 1, 1) | 24 |   1318 | 0.00320 | x0.93 | 0.04022
+(3, 2, 0) | 24 |   1419 | 0.00345 | x1.00 | 0.04334
+(4, 1, 0) | 24 |    483 | 0.00117 | x0.34 | 0.01476
+(3, 2, 1) | 48 |   1783 | 0.00433 | x1.26 | 0.05442
+(4, 1, 1) | 24 |   1316 | 0.00320 | x0.93 | 0.04017
+(5, 1, 0) | 24 |    991 | 0.00241 | x0.70 | 0.03028
+
+sum of the weights 411634 (4 pi x G_w = 411774); min 483 max 2588; max / min 5.36
+A = sum of squares 644972354 (2^30); 2^31 = 2147483648: within the load-time ceiling for two re-emitters True
+equal weights within every class under the 48 symmetries: True
+the integer sizes at load: a length at most 524300 (2^20), a denominator at most 2^60, the numerator 2 G^3 |a . (b x c)| at most 2^54
+
+the great circle z = 0: the plane fan F_6, the angle between Farey neighbours by the 3D cross product against 3 Q^2 / (T_d T_d')
+  23 directions on the half circle, 22 Farey gaps; the 3D angle atan2(|D x D'|, D . D') equals the exact arcsin(1 / (|D| |D'|)) identically (|D x D'| = 1 in the plane), and the plane form 3 Q^2 / (T_d T_d') is within 0.0026 of it (isqrt's rounding of T_d): the plane form is the 3D form's restriction
+
+a sphere sample of 400000 points: the integer weights' shares within 0.012 of the sampled cells (the sample's own noise)

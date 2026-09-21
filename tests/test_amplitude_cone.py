@@ -23,9 +23,11 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
+from event_universe.events.nature_beam import nature_beam_tables
 
 ROOT = Path(__file__).resolve().parents[1]
 WORLDS = ROOT / "examples" / "events" / "amplitude"
@@ -69,8 +71,48 @@ def test_the_age_and_the_path_phase_at_the_click(name: str, expectation: dict) -
 
 
 def test_the_pins_are_the_flight_formula(expectation: dict) -> None:
-    assert expectation["same_age"] is True
-    assert expectation["age_at_click"] == {"axis": 29, "diagonal": 29}
-    assert expectation["links"] == {"axis": 17, "diagonal": 24}
-    assert expectation["cone_links"]["path_phase"] == {"axis": 51, "diagonal": 8}
-    assert expectation["cone_intervals"]["path_phase"] == {"axis": 23, "diagonal": 23}
+    """The register's numbers derived from the worlds and the flight table
+    (since 2026-09-21 no literal of a world's number here): per detector
+    the Manhattan Links from its lamp, the first age at which the lamp's
+    direction has walked them (the flight table), one age for both; the
+    path phase (phase per Link x Links) mod N under the integer form and
+    (phase per interval x age) mod N under the pair form."""
+    worlds = {
+        name: json.loads((WORLDS / f"{name}.json").read_text(encoding="utf-8"))
+        for name in ("cone_links", "cone_intervals")
+    }
+    parsed = parse_nature_beam_world(worlds["cone_links"])
+    flight = nature_beam_tables(parsed).flight
+    world = worlds["cone_links"]
+    lamps = [event for event in world["measured"] if "lamp" in event]
+    detectors = {detector["name"]: detector["positions"][0] for detector in world["detectors"]}
+    links: dict[str, int] = {}
+    ages: dict[str, int] = {}
+    for name, position in detectors.items():
+        # The lamp whose one direction's line reaches the detector: the
+        # offset is a positive multiple of the direction.
+        for lamp in lamps:
+            direction = lamp["lamp"]["directions"][0]
+            offset = [position[axis] - lamp["position"][axis] for axis in range(3)]
+            axis = next(a for a in range(3) if direction[a])
+            multiple = offset[axis] // direction[axis]
+            if multiple >= 1 and offset == [multiple * c for c in direction]:
+                break
+        else:
+            raise AssertionError(name)
+        links[name] = sum(abs(c) for c in offset)
+        heading = parsed.directions.index(tuple(direction))
+        candidates = np.arange(1, 200, dtype=np.int64)
+        walked = flight.manhattan_steps(np.full(candidates.shape, heading, dtype=np.int64), candidates)
+        ages[name] = int(candidates[walked >= links[name]][0])
+    assert expectation["links"] == links
+    assert expectation["age_at_click"] == ages
+    assert expectation["same_age"] is (len(set(ages.values())) == 1)
+    per_link = worlds["cone_links"]["families"][0]["phase_per_link"]
+    assert expectation["cone_links"]["path_phase"] == {
+        name: (per_link * links[name]) % N for name in detectors
+    }
+    numerator, denominator = worlds["cone_intervals"]["families"][0]["phase_per_link"]
+    assert expectation["cone_intervals"]["path_phase"] == {
+        name: (ages[name] * numerator // denominator) % N for name in detectors
+    }

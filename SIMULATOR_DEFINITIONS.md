@@ -9,7 +9,8 @@ invariant classes, the detector's record the squared coherent sum of what it
 clicked, the click the one one-way border. Coverage (a detector's Nodes), the
 threshold and the `reads` component are independent data. No audit record or
 whole-GameBoard sum supplies memory, routing or a physical result; the readings
-of the engine (`shell_readings`, `cube_flux`) are read-only. The
+of the engine (`cube_flux`) and of the host (`diagnostics/shell_readings`, the
+shell means, outside the engine since 2026-09-21) are read-only. The
 `reversible-detector-v1` candidate of the same day is absorbed and deleted
 ([migration](docs/MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1));
 quantum uncertainty and Born behavior remain separate unproved goals.
@@ -391,7 +392,13 @@ and external; JSONL recording streams it to disk.
 
 - Exact signed division and remainder accumulation at denominators 1, 12 and 64.
 - Invalid input, physical-register and working-register overflow rejection.
-- Static numeric audit over every physical module and import-boundary checks.
+- Static numeric audit over every physical module (`diagnostics/numeric_audit`,
+  `tests/test_architecture.py`): `core/` integers only, no numeric library;
+  `events/` integer numpy permitted and nothing that leaves the integers (a
+  float literal or dtype, true division, the square root, the means, the
+  transcendental functions and constants), beside its runtime bounds; the
+  artifacts' writer `events/run.py` (path joins, no physics) outside it as
+  the import gate exempts it; and import-boundary checks.
 - Explicit numerical expectations in `docs/TEST_EXPECTATIONS.md` for every
   active contract.
 

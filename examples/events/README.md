@@ -37,7 +37,13 @@ emitter by its phase rate (E = h f) and a click measures that content.
 
 The four are written by `make_worlds.py` beside them; since 2026-09-20
 they take their families from `entities/families.json` (the world's
-`entity_definitions` and `entities` in place of `families`).
+`entity_definitions` and `entities` in place of `families`). Since
+2026-09-21 (the trimming's part 2: a test holds no literal of a world's
+number) `expectations.json` beside them registers what a test reads of a
+root world (`two_contents`'s face records at its 20th interval,
+`tests/test_nature_beam_worlds.py` (e)), and `gate_set.json` carries each
+lamp-free gate world's `digests` at its cap (the sha256 of its state, its
+books and its events; `tests/test_amplitude_click.py` (d)).
 
 Run one:
 
