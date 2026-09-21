@@ -25,8 +25,13 @@ set and the turn by momentum"), written down first:
     0, 0), the record 37348285440 at phase 5; 152 clicks, 20 record lines,
     5 steps, 5 homes (the body stepping onto its own +x ray); the pair's
     clicks on face:-z (phase 40) and face:+z (phase 3) at tick 6; 25 rows
-    of 101 units in the store; the transit line 2 + 740 = 101 + 522 + 119;
-    the same integers with `span` [1, 1, 1] declared, every record equal;
+    of 102 units in the store; the transit line 2 + 740 = 102 + 521 + 119
+    (since the crossing rule of 2026-09-21 the step precedes the law, so
+    the body reads its own +x ray home in the interval of the step, one
+    interval earlier, and one unit fewer leaves through the faces:
+    73, 111, 112, 113, 112 through -x, +y, -y, +z, -z; 101 units, 522 escaped and 74,
+    111, 111, 113, 113 until then); the same integers with `span` [1, 1,
+    1] declared, every record equal;
 (b) a set of three Nodes: a fixed body of `light` (content 4) at (4, 0, 1)
     of an open 9 x 1 x 3 bar with span [1, 1, 3] (the Nodes (4, 0, 0),
     (4, 0, 1), (4, 0, 2)) measuring `m` in the `wave` detector `d` of
@@ -84,8 +89,11 @@ set and the turn by momentum"), written down first:
     clock's turn 0) of momentum [1024, 0, 0] at x = 20 of an open
     40 x 1 x 1 bar steps at the ages 2, 4, 6, ... (k = age // 2): with
     `action` 65536 (|p| N / h = 1 per Link) its phase after 12 intervals
-    is 5 + 6 = 11 and the rays born at tick 3 carry 6, those born at
-    tick 2 carry 5 (`release` [1, 16] on -X, away from the body's path);
+    is 5 + 6 = 11 and the rays born at tick 2 and at tick 3 carry 6
+    (`release` [1, 16] on -X, away from the body's path; since the
+    crossing rule of 2026-09-21 the step and its turn precede the law, so
+    the release of the interval of a step carries the phase turned at the
+    Link: 5 at tick 2 until then);
     with `action` 4096 (16 per Link) 5 + 96 mod 64 =
     37; with momentum [320, 0, 0] and `action` 7 (a remainder each step:
     the steps at the intervals 5, 9, 13, 17, 21, the floors of k x 20480
@@ -297,23 +305,23 @@ def test_a_set_of_one_node_is_todays_measured_event():
     ]
     assert pair == [(6, "face:-z", 40), (6, "face:+z", 3)]
     store = simulation.stores[M]
-    assert store.size == 25 and int(store.amount.sum()) == 101
+    assert store.size == 25 and int(store.amount.sum()) == 102
     transit = simulation.books()["families"]["m"]["transit"]
     assert transit == {
         "initial": 2,
         "released": 740,
-        "current": 101,
-        "escaped": 522,
+        "current": 102,
+        "escaped": 521,
         "absorbed": 119,
         "balanced": True,
     }
     assert {port: units[M] for port, units in simulation.ledger.face_amount.items()} == {
         0: 0,
-        1: 74,
+        1: 73,
         2: 111,
-        3: 111,
+        3: 112,
         4: 113,
-        5: 113,
+        5: 112,
     }
     # The span declared as one Node: every record equal, every row equal.
     declared, declared_records, declared_xs = run_one_node({**BODY_OF_ONE, "span": [1, 1, 1]})
@@ -559,7 +567,7 @@ def test_a_body_turns_its_phase_by_its_momentum_at_every_link_it_steps():
     assert xs == [20 + (tick // 2) for tick in range(1, 13)] and xs[-1] == 26
     assert turned == [5 + (tick // 2) for tick in range(1, 13)] and turned[-1] == 11
     store = simulation.stores[M]
-    born_at = {2: 5, 3: 6}
+    born_at = {2: 6, 3: 6}
     for tick, phase in born_at.items():
         age = 12 - tick
         assert set(store.phase[store.age == age].tolist()) == {phase}, tick

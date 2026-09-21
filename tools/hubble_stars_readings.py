@@ -235,7 +235,6 @@ class Run:
     crowd: str
     clock: str
     under_record: bool
-    under_doppler: bool
     ticks: int
     completed: bool
     balanced: bool
@@ -251,9 +250,10 @@ class Run:
 
     @property
     def prefix(self) -> str:
-        """The folder of the world: `doppler/` under the key `doppler` (with
-        `amplitude`), `record/` under `amplitude` alone, none otherwise."""
-        return "doppler/" if self.under_doppler else "record/" if self.under_record else ""
+        """The folder of the world: `record/` under the record click, none
+        otherwise (the `doppler/` folder of the third run left with the key
+        `doppler` on 2026-09-21, MIGRATION)."""
+        return "record/" if self.under_record else ""
 
     @property
     def name(self) -> str:
@@ -275,10 +275,6 @@ def read_run(folder: Path) -> Run:
     # `rays-hubble-stars-record-<crowd>-<clock>-space-v1`) the `record`
     # lines are per record and the reading comes from the gather lines.
     under_record = parts[0] == "record"
-    # Under the key `doppler` as well (doppler-v1, the model id
-    # `rays-hubble-stars-record-doppler-<crowd>-<clock>-space-v1`) the
-    # reading is the same; the stars' pushes are weighted on the GameBoard.
-    under_doppler = "doppler" in parts[:-2]
     crowd, clock = parts[-2], parts[-1]
     table = direction_flight(tuple(tuple(v) for v in record["directions"]))
     heading = np.array([HEADING_OFFSET])
@@ -346,7 +342,6 @@ def read_run(folder: Path) -> Run:
         crowd=crowd,
         clock=clock,
         under_record=under_record,
-        under_doppler=under_doppler,
         ticks=int(record["completed_ticks"]),
         completed=record["status"] == "completed",
         balanced=bool(record["conserved_at_every_completed_tick"]),
@@ -569,7 +564,7 @@ def find_runs(root: Path) -> list[Run]:
     clocks = {"none": 0, "scalar": 1, "age": 2}
     return sorted(
         found,
-        key=lambda r: (r.under_record, r.under_doppler, order.get(r.crowd, 9), clocks.get(r.clock, 9)),
+        key=lambda r: (r.under_record, order.get(r.crowd, 9), clocks.get(r.clock, 9)),
     )
 
 
@@ -717,7 +712,7 @@ def judge_fit(
 
 def print_bends(runs: list[Run], window: tuple[int, int]) -> None:
     by_name = {r.name: r for r in runs}
-    for prefix in ("", "record/", "doppler/"):
+    for prefix in ("", "record/"):
         for crowd in ("coasting", "gravity", "double"):
             scalar, age = by_name.get(f"{prefix}{crowd}_scalar"), by_name.get(f"{prefix}{crowd}_age")
             if scalar is None or age is None:
@@ -917,9 +912,7 @@ def main(argv: list[str] | None = None) -> int:
         print_bends(runs, window)
     ordering = expected.get("ordering")
     if isinstance(ordering, dict):
-        for prefix, clock in [
-            (p, c) for p in ("", "record/", "doppler/") for c in ("none", "scalar", "age")
-        ]:
+        for prefix, clock in [(p, c) for p in ("", "record/") for c in ("none", "scalar", "age")]:
             by_crowd = {
                 run.crowd: run.fits[REGISTERED_WINDOW].q_fit
                 for run in runs
@@ -954,7 +947,6 @@ def main(argv: list[str] | None = None) -> int:
                     "crowd": run.crowd,
                     "clock": run.clock,
                     "under_record": run.under_record,
-                    "under_doppler": run.under_doppler,
                     "completed": run.completed,
                     "balanced": run.balanced,
                     "elapsed": run.elapsed,

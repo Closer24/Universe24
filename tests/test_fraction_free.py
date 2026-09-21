@@ -643,7 +643,7 @@ def test_a_sets_release_is_placed_by_the_nodes_claims():
     draw = random.Random(155)
     for _ in range(300):
         ways = draw.randrange(2, 8)
-        counts = counts_table((1, 1), (0, 1), (0, 1), (True,), None, (1,), 0, None, 1, ways)
+        counts = counts_table((1, 1), (0, 1), (0, 1), (True,), None, (1,), None, 1, ways)
         assert isinstance(counts, CountTable)
         placed = [0] * ways
         total = 0

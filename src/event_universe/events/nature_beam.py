@@ -40,7 +40,12 @@ order, each a bijection on the GameBoard's state except the border:
    moved unit keeps it;
 4. the measured events' tables and the detectors: a measured event meets
    the rays that arrived this interval at its Node, of every number but its
-   own, as one set (the threshold on the set), then each ray by its own
+   own, and, since the crossing rule (the model owner's record 158 of
+   2026-09-20; docs/BEAM_LAW.md note 42), the rays it meets by its own
+   step (the rows that crossed its Link the other way and the rows at the
+   Node it entered moving against it), never again a row that came over
+   its Link behind it (a row and a body meet once, at the crossing of
+   their world lines), as one set (the threshold on the set), then each ray by its own
    phase (the window), then the rule: `read` (the push, the rays go on),
    `measure` (the click: the content joins, the border; the detector's
    record is the square of the first moment of the same reading taken over
@@ -98,7 +103,7 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
-from event_universe.core.game_board import PORT_HEADINGS, Address3
+from event_universe.core.game_board import PORT_HEADINGS, Address3, adjacent_node
 from event_universe.core.integer import (
     apportion_whole,
     bounded_gcd,
@@ -131,7 +136,6 @@ from event_universe.events.world import (
     BECOME_RULE,
     CHARGE_INDEX,
     CONTACT_DEFAULT,
-    DOPPLER_KEY,
     FACE_NAMES,
     FIXED_DIRECTIONS,
     HEADING_OFFSET,
@@ -139,7 +143,6 @@ from event_universe.events.world import (
     MOMENTUM_BOUND,
     NO_HAND,
     REST_DIRECTIONS,
-    SPEED_GRAIN,
     FamilyDefinition,
     Gate,
     NatureBeamWorld,
@@ -151,7 +154,6 @@ from event_universe.events.world import (
     default_reads,
     default_rule,
     default_width,
-    step_divisor,
 )
 
 Record = Callable[[dict[str, object]], None]
@@ -558,10 +560,8 @@ class Flight:
     every direction and exactly Q e_d on a heading. The Link a ray crosses
     at an age is the position's accumulator rule (`walk_step`; the model
     owner's record 155 of 2026-09-20, "no tables": until then a step table
-    per direction over its period, built from the same rule at load). The
-    reading's weight at the relative speed (BEAM_LAW note 38) reads
-    `vectors` and `resolution` alone: a direction's velocity is (Q / T_d)
-    v per axis."""
+    per direction over its period, built from the same rule at load). A
+    direction's velocity is (Q / T_d) v per axis."""
 
     vectors: np.ndarray
     manhattan: np.ndarray
@@ -2107,157 +2107,6 @@ def column_bound_error(entry: Measured, name: str, moment: int, factor: int) -> 
     )
 
 
-def flux_bound_error(entry: Measured, direction: int, moment: int, factor: int) -> OverflowError:
-    """The refusal of a weighted flow |V_d| x |num_d| that would leave the
-    register, naming the measured event, its Node and the direction (the
-    mathematician's R1 on the reading's weight at the relative speed)."""
-    return OverflowError(
-        f"{BEAM_LAW}: the weighted flow of measured event {entry.number} at {list(entry.position)} "
-        f"exceeds the integer bound {MOMENTUM_BOUND} against the direction {direction} under "
-        f"{DOPPLER_KEY}: |V_d| x |G Q |D|^2 - T_d sum s_a w_a D_a| = {abs(moment)} x {factor}"
-    )
-
-
-def speed_bound_error(entry: Measured, axis: int, momentum: int) -> OverflowError:
-    """The refusal of a speed's register intermediate G x |p_a| that would
-    leave the register, naming the measured event, its Node and the axis
-    (the physics-rule review's S1: tested by division before it is formed,
-    as R1 tests the weighted flow)."""
-    return OverflowError(
-        f"{BEAM_LAW}: the speed of measured event {entry.number} at {list(entry.position)} on "
-        f"axis {axis} under {DOPPLER_KEY} exceeds the integer bound {MOMENTUM_BOUND}: "
-        f"|p_a| = {abs(momentum)} is above {MOMENTUM_BOUND // SPEED_GRAIN} = bound / G"
-    )
-
-
-def quantised_speed(momentum: list[int], content: int, width: int) -> tuple[tuple[int, int], ...]:
-    """A body's speed per axis at the grain G (`world.SPEED_GRAIN`; BEAM_LAW
-    note 38; GRAIN.md section 1), read once per interval from its own
-    record: (w_a, s_a) with w_a = G x |p_a| // D_a, D_a = Q S M + |p_a| the
-    step rule's divisor (`world.step_divisor`), s_a the sign of p_a (0 at
-    rest). w_a is a whole number below G; the remainder (G |p_a|) mod D_a
-    is discarded each interval, a declared grain of 1 / G Links per
-    interval like S and Q: the quantised speed is below |p_a| / D_a by
-    less than 1 / G, nothing accumulates, and a body slower than 1 / G
-    Links per interval on an axis reads there as at rest. The register
-    intermediate G x |p_a| is tested by division before it is formed
-    (`weighted_flow` refuses it naming the body, its Node and the axis,
-    `speed_bound_error`); here it is asserted."""
-    found = []
-    for p in momentum:
-        if p == 0:
-            found.append((0, 0))
-            continue
-        assert abs(p) <= MOMENTUM_BOUND // SPEED_GRAIN, "the caller tests the speed's intermediate"
-        found.append((SPEED_GRAIN * abs(p) // step_divisor(p, content, width), 1 if p > 0 else -1))
-    return tuple(found)
-
-
-def flux_pair(
-    vector: tuple[int, int, int], resolution: int, speeds: tuple[tuple[int, int], ...]
-) -> tuple[int, int]:
-    """The flux of the rows of one direction through a body (GRAIN.md
-    section 2; BEAM_LAW note 38), the rate at which the body and the
-    message meet over the message's own rate, one scalar per (direction,
-    body) as a pair (numerator, denominator): with the direction's
-    velocity (Q / T_d) v per axis (v = (a, b, c) the vector, T_d its
-    resolution from the flight, |v|^2 its squared length) and the
-    body's quantised speed w_a / G per axis (`quantised_speed`), the
-    factor 1 - (v_body . c_d) / |c_d|^2 in integers,
-
-        (|G Q |v|^2 - T_d x sum_a s_a w_a v_a|, G Q |v|^2),
-
-    the absolute value since the body TAKES the message at the meeting
-    rate, a count: 1 at rest (w = 0, the division exact), less for a body
-    moving with the rows, more for one moving against them, exactly 1 for
-    a transverse motion (the sum is 0; a zero component contributes no
-    term), 0 for a body moving with the rows at their own speed, and
-    |c - v| / c for one outrunning them (taken from behind; the push keeps
-    the flow's sign). On a heading it is (|G Q - T_d s w|, G Q), the pair
-    of FORM.md section 6 at the quantised speed. The numerator is at most
-    G (Q |v|^2 + T_d S_1), 2^33.6 on the widest direction of a table."""
-    length = sum(component * component for component in vector)
-    denominator = SPEED_GRAIN * Q * length
-    met = sum(sign * w * component for (w, sign), component in zip(speeds, vector, strict=True))
-    return abs(denominator - resolution * met), denominator
-
-
-def weighted_flow(
-    flight: Flight,
-    arrivals: list[int],
-    labels: list[list[int]],
-    entry: Measured,
-    width: int,
-    counts: CountTable,
-) -> list[int]:
-    """One group's label flow under `doppler` (BEAM_LAW note 38; since the
-    fraction-free push of 2026-09-20, note 41, on the body's flow
-    accumulators): the rows' labels summed per direction present
-    (`arrivals` the direction of each taken row, `labels` its label), each
-    direction's flow V_d weighted by its `flux_pair` on the body's
-    accumulator of that direction and component,
-
-        V'_d,a = the count `by_drive(acc_flow[d][a], V_d,a x num_d, G Q |v_d|^2)` gains,
-
-    the whole part the accumulator then holds with the flow's sign (the
-    drive's rule), the remainder kept on the body's record below G Q
-    |v_d|^2 in magnitude, and summed over the directions: the flow the
-    columns then read (`push_form`). Per direction the weighted flow is
-    exact over any period (the sum of the counts within one label unit of
-    the sum of the fluxes at every interval; until then `sign(V_d) x
-    by_clock(age_A, |V_d| x num_d, G Q |v_d|^2)`, a floor off the clock
-    whose remainder was discarded); the accumulators are per direction
-    because the directions' denominators G Q |v_d|^2 have no common
-    multiple within the register on a fan table (the least common
-    multiple of |v|^2 over a fan of a few hundred directions passes
-    2^63), so the split over the directions stays a sum of whole parts,
-    each exact on its own record, and one bounded integer per moving
-    direction and axis is the body's storage under the key, a world
-    constant. The body's speed is `quantised_speed` of the momentum and
-    content the frame read (`frame_momentum`, `frame_content`: one speed
-    for every group of the interval whatever the family order), S the
-    world's `width`; the speed's intermediate G x |p_a| is tested by
-    division before it is formed and refused naming the body, its Node
-    and the axis. |V_d| x num_d is tested by division before it is formed
-    and refused naming the body and the direction (R1); a numerator of 0
-    (a body moving with the rows at their own speed) forms nothing; the
-    sum is bounded per component (R2). At w = 0 on every axis the pair is
-    (G Q |v|^2, G Q |v|^2) and the count is V_d exactly, the accumulator
-    untouched: the flow as without the key, bit for bit, on a fan as on a
-    heading."""
-    for axis, momentum in enumerate(entry.frame_momentum):
-        if abs(momentum) > MOMENTUM_BOUND // SPEED_GRAIN:
-            raise speed_bound_error(entry, axis, momentum)
-    speeds = quantised_speed(entry.frame_momentum, entry.frame_content, width)
-    moments: dict[int, list[int]] = {}
-    for direction, label in zip(arrivals, labels, strict=True):
-        found = moments.setdefault(direction, [0, 0, 0])
-        for axis in range(3):
-            found[axis] += label[axis]
-    flow = [0, 0, 0]
-    for direction in sorted(moments):
-        vector = (
-            int(flight.vectors[direction, 0]),
-            int(flight.vectors[direction, 1]),
-            int(flight.vectors[direction, 2]),
-        )
-        numerator, denominator = flux_pair(vector, int(flight.resolution[direction]), speeds)
-        if numerator == 0:
-            continue
-        rates = []
-        for axis in range(3):
-            v = moments[direction][axis]
-            if v and abs(v) > MOMENTUM_BOUND // numerator:
-                raise flux_bound_error(entry, direction, v, numerator)
-            rates.append(v * numerator)
-        # The direction's three rows of the table gain V_d,a x num_d over
-        # the flux's denominator in one loop.
-        wholes = counts.advance("flow", index=direction, values=rates, denominators=[denominator] * 3)
-        for axis in range(3):
-            flow[axis] = bounded(flow[axis] + wholes[axis], entry, "weighted flow")
-    return flow
-
-
 def push_form(
     free: bool,
     moment: list[int],
@@ -2312,14 +2161,7 @@ def push_form(
     each column's product |V| x |E_c n_c| x Lambda_c^2 / (D_c d_c) is
     tested by division BEFORE it is formed and refused naming the column;
     the partial sum is bounded after every column (`bounded`); the caller
-    bounds the momentum it joins.
-
-    Under the world key `doppler` (`doppler-v1`, BEAM_LAW note 38) the
-    caller weights the group's flow by the flux of its rows through the
-    reader before this function (`weighted_flow`: the moment it passes is
-    the weighted flow); nothing here changes, and the clock's count, the
-    size and the threshold readings, the emitter's side and a paid
-    family's click are untouched."""
+    bounds the momentum it joins."""
     if not free:
         return [bounded(moment[axis], entry, "push") for axis in range(3)]
     push = [0, 0, 0]
@@ -2422,6 +2264,38 @@ def nature_beam(
             for member_node, number in detector_set.nodes.items():
                 node_event[stores[0].flat(member_node)] = which_of[number]
     occupied = node_event >= 0
+    # The crossing rule (the model owner's record 158 of 2026-09-20; BEAM_LAW
+    # note 42): a row and a body meet once, at the crossing of their world
+    # lines. Per measured event the heading e of the Link its body crossed
+    # this interval (the zero vector without a step) and e' of the interval
+    # before, off its own record (`Measured.step_port`, `last_step_port`,
+    # set by `_move` before the law); per Node whether a body ENTERED it
+    # this interval (the leading face of its moved set: its neighbour along
+    # e is not in the set) and, on the trailing face (an origin Node the
+    # moved set left, of free space), the event whose Link ends there. A
+    # body without a step this interval marks nothing; the step of a body
+    # on a set is the set's, each Node with its own origin.
+    ev_step = np.zeros((events, DIMENSIONS), dtype=np.int64)
+    ev_last = np.zeros((events, DIMENSIONS), dtype=np.int64)
+    entered = np.zeros(nodes, dtype=bool)
+    trail_event = np.full(nodes, -1, dtype=np.int64)
+    for which, entry in enumerate(entries):
+        if entry.last_step_port >= 0:
+            ev_last[which] = PORT_HEADINGS[entry.last_step_port]
+        if entry.step_port < 0:
+            continue
+        port = entry.step_port
+        ev_step[which] = PORT_HEADINGS[port]
+        held = set(entry.nodes)
+        for member in held:
+            ahead = adjacent_node(member, port, shape, world.periodic)
+            if ahead is None or ahead not in held:
+                entered[stores[0].flat(member)] = True
+            origin = adjacent_node(member, port ^ 1, shape, world.periodic)
+            if origin is not None and origin not in held:
+                flat = stores[0].flat(origin)
+                if not occupied[flat]:
+                    trail_event[flat] = which
 
     def collide(store: NatureBeamStore, backward: bool) -> None:
         """Step 3: at every Node of free space, per (number, content) class,
@@ -2751,9 +2625,26 @@ def nature_beam(
                 return None
             found = node_event[store.node]
             at = np.flatnonzero(found >= 0)
+            ev = found[at]
+            # The swap (C1 of the crossing rule, note 42): the rows of
+            # another number at a trailing Node of a stepping body that
+            # crossed its Link the other way this interval (their step
+            # this interval -e, off the flight's rule at their age),
+            # gathered with the rows at the set into the group of the
+            # event; the reading's bound covers the larger group, at most
+            # the rows at one more Node per Node of the set.
+            swap = np.flatnonzero(trail_event[store.node] >= 0)
+            if swap.shape[0]:
+                ev_swap = trail_event[store.node[swap]]
+                backward = (
+                    flight.walk_step(store.arrival[swap], np.maximum(store.age[swap] - 1, 0))
+                    == -ev_step[ev_swap]
+                ).all(axis=1) & (store.number[swap] != ev_number[ev_swap])
+                swap, ev_swap = swap[backward], ev_swap[backward]
+                at = np.concatenate((at, swap))
+                ev = np.concatenate((ev, ev_swap))
             if at.shape[0] == 0:
                 return None
-            ev = found[at]
             order = np.argsort(ev, kind="stable")
             at, ev = at[order], ev[order]
             number = store.number[at]
@@ -2775,6 +2666,39 @@ def nature_beam(
             read_at = read_hands(hand_at, record_at, store.branch[at], entries)
             own = number == ev_number[ev]
             arrived = arrival != NO_ARRIVAL
+            # The crossing (note 42), per row: the step it made this
+            # interval s_1 and the one before s_2, off its arrival
+            # direction and its age by the flight's rule (nothing kept),
+            # and the headings e and e' of its measured event's step this
+            # interval and the one before. A row that stepped in is met
+            # (C3) unless it came over the body's own Link with the body
+            # (C3': s_1 = e) or, in the interval after a step, comes over
+            # that Link having rested at the origin during the step (C3'':
+            # e = 0, s_1 = e', s_2 = 0, the leapfrog; a row younger than
+            # two intervals made no step before); a row resident at a Node
+            # the body entered this interval is met when its motion is
+            # against the step (C2: u . e < 0), not when with it (C2') and
+            # not when at rest (u = 0); a swap row (C1, gathered above)
+            # stepped in against e and is met by the same line. A body
+            # without a step reads its arrivals as before the rule.
+            e_rows = ev_step[ev]
+            stepped = e_rows.any(axis=1)
+            s_1 = flight.walk_step(arrival, np.maximum(age_at - 1, 0))
+            with_step = stepped & (s_1 == e_rows).all(axis=1)
+            e_last = ev_last[ev]
+            rested = (age_at >= 2) & ~flight.walk_step(arrival, np.maximum(age_at - 2, 0)).any(axis=1)
+            leapfrog = ~stepped & e_last.any(axis=1) & (s_1 == e_last).all(axis=1) & rested
+            against = (unit[direction] * e_rows).sum(axis=1) < 0
+            crossing = (arrived & ~with_step & ~leapfrog) | (
+                ~arrived & stepped & against & entered[store.node[at]]
+            )
+            # The direction a row is read on: an arrival's the direction it
+            # arrived on (at a body's Node its direction, no collision
+            # acting there; a swap row's the direction it crossed the Link
+            # on), a resident row met by the step (C2) its own direction
+            # (met at the crossing, its label along its motion), a resident
+            # row not met the zero vector (`here`, as before the rule).
+            read_on = np.where(arrived, arrival, np.where(crossing, direction, NO_ARRIVAL))
             plan = FamilyPlan()
             # The rows of the one reading over the set: every row at the set
             # of another number, rest and moving alike, on the unit vector of
@@ -2784,7 +2708,7 @@ def nature_beam(
             # ages among them; the bound of the table checked in bulk here,
             # the table itself taken once below with the admitted rows.
             others = np.flatnonzero(~own)
-            v_others = unit[arrival[others]]
+            v_others = unit[read_on[others]]
             if others.shape[0]:
                 overflow = first_reading_overflow(
                     ev[others], events, amount[others], v_others, age_at[others]
@@ -2873,11 +2797,12 @@ def nature_beam(
                 that click (after `beam`'s pairing), the units the pairing
                 keeps, the rules, the sets and the windows used; None when
                 nothing is met."""
-                # Met: the arrivals of every other number at a table that is
-                # not `pass`, ordered by detector set (then measured event,
-                # then row): the threshold on the amount summed over the set.
+                # Met: the crossings of every other number at a table that
+                # is not `pass`, ordered by detector set (then measured
+                # event, then row): the threshold on the amount summed over
+                # the set.
                 rule = ev_rule[ev, family]
-                met = np.flatnonzero(~own & arrived & (rule != PASS_RULE))
+                met = np.flatnonzero(~own & crossing & (rule != PASS_RULE))
                 if met.shape[0] == 0:
                     return None
                 met = met[np.argsort(ev_set[ev[met]], kind="stable")]
@@ -3052,7 +2977,7 @@ def nature_beam(
                 parts = np.flatnonzero(cancelled_all > 0)
                 if parts.shape[0]:
                     split = taken_all[parts]
-                    rows_v = np.concatenate((v_others, unit[arrival[split]]))
+                    rows_v = np.concatenate((v_others, unit[read_on[split]]))
                     rows_w = np.concatenate((present_weight, cancelled_all[parts]))
                     rows_age = np.concatenate((age_at[others], age_at[split]))
                     rows_ev = np.concatenate((ev[others], ev[split]))
@@ -3087,7 +3012,7 @@ def nature_beam(
 
             c_t, ph_t, path_t = content[taken], phase[taken], path[taken]
             age_t = age_at[taken]
-            v_arrival = unit[arrival[taken]]
+            v_arrival = unit[read_on[taken]]
             # The admitted rows of the one table (their arrival's unit vector
             # weighted by the amount that clicks, the age moment among them;
             # the measured event reads the age whole), summed per group: the
@@ -3163,7 +3088,7 @@ def nature_beam(
             plan.t_birth = store.birth[at[taken]].tolist()
             plan.t_hand = hand_at[taken].tolist()
             plan.t_age = age_t.tolist()
-            plan.t_arrival = arrival[taken].tolist()
+            plan.t_arrival = read_on[taken].tolist()
             e_ends = np.append(e_starts[1:], groups)
             g_events = g_ev[e_starts].tolist()
             e_lo, e_hi = e_starts.tolist(), e_ends.tolist()
@@ -3375,23 +3300,11 @@ def nature_beam(
                         # fraction-free push, note 41; until then floored at
                         # the reader's clock age).
                         k0, k1 = plan.g_start[gi], plan.g_end[gi]
-                        # Under `doppler` a free body reads the group's
-                        # flow per direction at the flux of its rows
-                        # through it (`weighted_flow`; a fixed body has no
-                        # speed: the weight 1, the flow as it is). The flow
-                        # is the rows' shares (a record's row pushes by its
-                        # share of the label, stage (vii) step 3; a row of
-                        # no record's share is its label), as `g_moment` is.
+                        # The flow is the rows' shares (a record's row
+                        # pushes by its share of the label, stage (vii)
+                        # step 3; a row of no record's share is its label),
+                        # as `g_moment` is.
                         moment = plan.g_moment[gi]
-                        if world.doppler and free and not entry.fixed:
-                            moment = weighted_flow(
-                                flight,
-                                plan.t_arrival[k0:k1],
-                                plan.t_share[k0:k1],
-                                entry,
-                                world.width,
-                                entry.counts,
-                            )
                         push = push_form(
                             free,
                             moment,

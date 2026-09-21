@@ -2047,10 +2047,13 @@ expected integers, written down before the first run:
   stepping onto its own +x ray in the same interval); 28, 28, 27, 27 and
   18 clicks on face:-z, face:+z, face:-y, face:+y and face:-x, 24 clicks
   and 20 record lines at `d`; the pair's clicks at tick 6 on face:-z
-  (phase 40) and face:+z (phase 3); 25 rows of 101 units in the store;
-  the transit line 2 + 740 = 101 + 522 + 119 with 74, 111, 111, 113,
-  113 units through the faces -x, +y, -y, +z, -z; every record, every
-  row and both states equal with `span` [1, 1, 1] declared.
+  (phase 40) and face:+z (phase 3); 25 rows of 102 units in the store;
+  the transit line 2 + 740 = 102 + 521 + 119 with 73, 111, 112, 113,
+  112 units through the faces -x, +y, -y, +z, -z (since the crossing rule
+  of 2026-09-21 the step precedes the law and the body reads its own +x
+  ray home in the interval of the step: 101 units, 522 escaped and 74,
+  111, 111, 113, 113 until then); every record, every row and both
+  states equal with `span` [1, 1, 1] declared.
 - (b) a set of three Nodes: a fixed body of `light` (content 4) at
   (4, 0, 1) of an open 9 x 1 x 3 bar with `span` [1, 1, 3] (the Nodes
   (4, 0, 0), (4, 0, 1), (4, 0, 2), all held by number 1 in `at`)
@@ -2104,9 +2107,11 @@ expected integers, written down before the first run:
   40 x 1 x 1 bar steps at the ages 2, 4, 6, ... (k = age // 2, x = 20 +
   k): with `action` 65536 (|p| N / h = 1 per Link) its phase after the
   intervals 1 to 12 is 5 + tick // 2, 11 after 12, and at `release`
-  [1, 16] on -X (away from its path) the rays born at tick 3 carry the
-  phase 6 and those born at tick 2 the phase 5 (the release of an interval
-  carries the phase before its step); with `action` 4096 (16 per Link)
+  [1, 16] on -X (away from its path) the rays born at tick 2 and at tick
+  3 carry the phase 6 (since the crossing rule of 2026-09-21 the step and
+  its turn precede the law, so the release of the interval of a step
+  carries the phase turned at the Link; 5 at tick 2 until then, the
+  release before the step); with `action` 4096 (16 per Link)
   the phase after 12 intervals is (5 + 96) mod 64 = 37; with the momentum
   [320, 0, 0] and `action` 7 (`by_clock(k, 20480, 7)` = 2925, 2926, 2926,
   2925, 2926 for k = 0 .. 4: a remainder each step; the steps at the

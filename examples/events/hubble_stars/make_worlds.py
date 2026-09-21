@@ -74,7 +74,6 @@ moment grows with the star's distance from the others.
 
     python examples/events/hubble_stars/make_worlds.py            # the worlds and expectations.json
     python examples/events/hubble_stars/make_worlds.py --record   # also record/<world>.json reading `sum` (the record click) and record/expectations.json (the source rule)
-    python examples/events/hubble_stars/make_worlds.py --doppler  # also doppler/<world>.json under the key `doppler`, reading `sum`, and doppler/expectations.json (the flux rule)
     python examples/events/hubble_stars/make_worlds.py --after    # derivation_after_the_runs.json only
 """
 
@@ -82,7 +81,6 @@ from __future__ import annotations
 
 import importlib.util
 import json
-import math
 import sys
 from pathlib import Path
 
@@ -143,13 +141,6 @@ AXES = ("px", "mx", "py", "my", "pz", "mz")
 # push from the clocks: `suspension` 0, no clock counts, k = 0 exactly; the
 # same brackets).
 CLOCKS = {"none": 0, "scalar": [1, 1 << 16], "age": [1, 1 << 23]}
-# The grain of a reader's speed, G = 2^12, a constant of the law beside Q
-# (BEAM_LAW note 38, record 130): under the world key `doppler` a free body
-# reads the rows arriving at its Node at the flux of their stream through
-# it, its speed per axis read once per interval as G |p_a| // D_a and the
-# remainder discarded; the derivation with the reading rule `flux` below
-# quantises the reader's speed the same way.
-SPEED_GRAIN = 1 << 12
 # The crowds: the mass held (F = mass / 2^16) and whether the mass rows
 # push (`read`) or pass.
 CROWDS = {"coasting": (MASS, "pass"), "gravity": (MASS, "read"), "double": (2 * MASS, "read")}
@@ -210,7 +201,7 @@ def stars(mass: int) -> list[Json]:
     return found
 
 
-def world(crowd: str, clock: str, record: bool = False, doppler: bool = False) -> Json:
+def world(crowd: str, clock: str, record: bool = False) -> Json:
     """One world; with `record` the same world reading `sum` at the centre
     (the record click of amplitude-v1, docs/designs/hubble_stars/DESIGN.md
     section 2.4; since the one click of stage (vii) every lamp births
@@ -218,12 +209,10 @@ def world(crowd: str, clock: str, record: bool = False, doppler: bool = False) -
     `record` worlds differ from the base worlds by the detector's reading
     alone): every unit of a star's light is born as one record of one row,
     the detector reads `sum` (the record's scope) and every reading is
-    taken from the gather lines, one click per record. With `doppler`
-    (which implies `record`) the same world under the key `doppler` as
-    well (doppler-v1, BEAM_LAW note 38): every star reads the
-    mass rows arriving at its Node at the flux of their stream through it,
-    the grain flux form at G = 2^12; the light and the detector unchanged."""
-    record = record or doppler
+    taken from the gather lines, one click per record. The nine worlds
+    under the key `doppler` (doppler-v1, the third run) left with the key
+    on 2026-09-21 (the crossing rule, MIGRATION): a moving star's Doppler
+    is the count of the rows it crosses."""
     mass, mass_rule = CROWDS[crowd]
     content = mass + LIGHT
     thrown = stars(mass)
@@ -271,10 +260,7 @@ def world(crowd: str, clock: str, record: bool = False, doppler: bool = False) -
         )
     document: Json = {
         "law": LAW_VALUE,
-        "model_id": (
-            f"rays-hubble-stars-{'record-' if record else ''}{'doppler-' if doppler else ''}"
-            f"{crowd}-{clock}-space-v1"
-        ),
+        "model_id": (f"rays-hubble-stars-{'record-' if record else ''}{crowd}-{clock}-space-v1"),
         "shape": list(SHAPE),
         "boundary": "open",
         "ticks": TICKS,
@@ -294,8 +280,6 @@ def world(crowd: str, clock: str, record: bool = False, doppler: bool = False) -
             }
         ],
     }
-    if doppler:
-        document["doppler"] = True
     return document
 
 
@@ -303,7 +287,7 @@ def referenced(document: Json) -> Json:
     """The world as shipped: its families instances of the definitions of
     `entities/families.json` (`detector_material`, `mass` and the stars as
     one instance of `hubble_stars`; the loader expands it to the inline
-    world, key by key). The worlds of `record/` and `doppler/` stay inline:
+    world, key by key). The worlds of `record/` stay inline:
     a reference climbs one level only, and every world of the record click
     is deferred to the third pull request of record 113."""
     return families_by_definition(document, FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
@@ -316,14 +300,6 @@ def worlds() -> dict[str, Json]:
 def record_worlds() -> dict[str, Json]:
     """The same nine worlds under the record click, written to `record/`."""
     return {f"{crowd}_{clock}": world(crowd, clock, record=True) for crowd in CROWDS for clock in CLOCKS}
-
-
-def doppler_worlds() -> dict[str, Json]:
-    """The same nine worlds under the record click and the key `doppler`
-    (the reading's weight at the relative speed), written to `doppler/`."""
-    return {
-        f"{crowd}_{clock}": world(crowd, clock, doppler=True) for crowd in CROWDS for clock in CLOCKS
-    }
 
 
 # -- The derivation before the runs -------------------------------------------
@@ -340,12 +316,6 @@ def load_tool():
     return module
 
 
-def quantised(speed: float) -> float:
-    """A speed read at the grain G: the whole part of G |v| over G with the
-    sign of v (the engine's `w_a = G |p_a| // D_a`, BEAM_LAW note 38)."""
-    return math.copysign(math.floor(SPEED_GRAIN * abs(speed)) / SPEED_GRAIN, speed)
-
-
 def throw_derivation(crowd: str, reading_rule: str = "acoustic") -> dict[str, object]:
     """The continuum derivation of the throw under the crowd's push (a
     GameBoard expectation, written before the runs): on each line (an axis,
@@ -359,12 +329,11 @@ def throw_derivation(crowd: str, reading_rule: str = "acoustic") -> dict[str, ob
     a body reads the rows that step into its Node, and its own motion
     neither adds nor removes any, so the rate is the beam's density times
     c, F c / (c - u_s), the emitter's Doppler alone) the reader's factor
-    (c - u_r) is dropped; with the `reading_rule` "flux" (the world key
-    `doppler`, doppler-v1: the reader takes the arrivals at the flux of
-    their stream through it, on a heading (c - u_r) / c of the rate, the
-    reader's speed read at the grain 1 / G) the reader's factor is (c -
-    u_r) with u_r quantised toward zero at 1 / G, the acoustic rule up to
-    the grain (below 2.4e-4 in v, a bias toward 1 of the factor);
+    (c - u_r) is dropped (the `reading_rule` "flux" of the deleted key
+    `doppler`, the reader's factor at the grain 1 / G, left with the key
+    on 2026-09-21; the crossing rule of that day counts the rows a moving
+    reader crosses, 1 + v / c toward and 1 - v / c away on an axis: the
+    acoustic rule's factor as a count, no grain);
     the outward rows of a moving star are partly taken home (a star that
     steps into the Node of the row it just released, the fraction |v|,
     re-created half inward, half outward: the outward beam (1 - |v|) / (1
@@ -407,8 +376,6 @@ def throw_derivation(crowd: str, reading_rule: str = "acoustic") -> dict[str, ob
                     g = (1 - vl) / (1 - vl / 2) if outward else 1 / (1 - vl / 2)
                     if reading_rule == "acoustic":
                         reader = C - u_r
-                    elif reading_rule == "flux":
-                        reader = C - quantised(u_r)
                     else:
                         reader = C
                     rate = F * g * reader / (C - u_s)
@@ -488,11 +455,9 @@ def expectations(reading_rule: str = "acoustic") -> Json:
     the step drive of 2026-09-20 (`record/expectations.json`), where the
     continuum derivation's flagged omission of the step rule's grain is
     no longer an omission (the drive follows the momentum's history) and
-    the burst of the step rule is pinned at 1 Link per interval; "flux"
-    the derivation under the world key `doppler` (doppler-v1, the flux at
-    the grain: the reader's factor (c - u_r) restored at the grain 1 / G),
-    pinned for the run under the key and the signed drive
-    (`doppler/expectations.json`, docs/designs/hubble_stars/EXPECTATION_2.md).
+    the burst of the step rule is pinned at 1 Link per interval (the "flux" rule
+    of the deleted key `doppler`, the reader's factor at the grain 1 / G, left
+    with the key on 2026-09-21: MIGRATION, the crossing rule).
 
     The brackets, with their reasons: (i) the reading's formula 1 + z =
     (1 + k)(1 + v / c) within 2 % and the luminosity 1 / (1 + z) within
@@ -562,7 +527,7 @@ def expectations(reading_rule: str = "acoustic") -> Json:
         )
     found["exact_coasting_form"] = exact_by_window
     q_exact = float(exact_by_window["300-400"]["q_fit"])
-    if reading_rule in ("source", "flux"):
+    if reading_rule == "source":
         # The step drive (BEAM_LAW note 17 as amended, 2026-09-20): a body
         # steps at most one Link per interval by construction, so the
         # longest burst of the step rule over any window is 1 (GameBoard).
@@ -688,30 +653,6 @@ def main() -> None:
             ratios = [p["momentum_ratio"] for p in entry["derived"]["300-400"]]
             print(
                 f"record/{crowd} (the source rule, pinned): derived at t_0 = 350: q = {fit['q_fit']:+.3f}, "
-                f"H (t_0 + T_0) = {fit['hubble_time']:.4f}, the nearest form {fit['nearest']}, the farthest "
-                f"{fit['farthest']}; |p(end)| / p(0) from {min(ratios):.4f} to {max(ratios):.4f}; brackets: q "
-                f"{entry['q_bracket'][0]:+.3f} .. {entry['q_bracket'][1]:+.3f}, H (t_0 + T_0) "
-                f"{entry['hubble_bracket'][0]:.3f} .. {entry['hubble_bracket'][1]:.3f}, |p(end)| / p(0) "
-                f"{entry['momentum_ratio_bracket'][0]:.3f} .. {entry['momentum_ratio_bracket'][1]:.3f}"
-            )
-    if "--doppler" in sys.argv[1:]:
-        # The worlds under the key `doppler` (reading `sum`): written on
-        # request; the base engine before doppler-v1 refuses the key.
-        (HERE / "doppler").mkdir(exist_ok=True)
-        for name, document in doppler_worlds().items():
-            path = HERE / "doppler" / f"{name}.json"
-            path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
-            print(path.relative_to(ROOT))
-        pinned = expectations("flux")
-        (HERE / "doppler" / "expectations.json").write_text(
-            json.dumps(pinned, indent=1) + "\n", encoding="utf-8"
-        )
-        print((HERE / "doppler" / "expectations.json").relative_to(ROOT))
-        for crowd, entry in pinned["crowds"].items():
-            fit = entry["derived_fits"]["300-400"]
-            ratios = [p["momentum_ratio"] for p in entry["derived"]["300-400"]]
-            print(
-                f"doppler/{crowd} (the flux rule, pinned): derived at t_0 = 350: q = {fit['q_fit']:+.3f}, "
                 f"H (t_0 + T_0) = {fit['hubble_time']:.4f}, the nearest form {fit['nearest']}, the farthest "
                 f"{fit['farthest']}; |p(end)| / p(0) from {min(ratios):.4f} to {max(ratios):.4f}; brackets: q "
                 f"{entry['q_bracket'][0]:+.3f} .. {entry['q_bracket'][1]:+.3f}, H (t_0 + T_0) "

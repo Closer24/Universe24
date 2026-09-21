@@ -105,10 +105,6 @@ def execute_nature_beam_run(
         # The meeting (2026-09-20): the world key as declared, false by
         # default; `meeting-v1` under `hypotheses` when it is true.
         "meeting": world.meeting,
-        # The reading's weight at the relative speed (2026-09-20): the world
-        # key as declared, false by default; `doppler-v1` under `hypotheses`
-        # when it is true.
-        "doppler": world.doppler,
         # The binding that costs content (2026-09-20): `binding-v1` under
         # `hypotheses` when a measured event holds a paid family at load or
         # gave one during the run (no key; `NatureBeamSimulation.hypotheses`).

@@ -28,21 +28,28 @@ physicist's DESIGN.md, test (f), and the integers of its section 4.4); K
     each reads per interval the `p` row of amount 4 as -7936 (gravity
     +1280, electric -9216) and the `g` row as +8064 (gravity +320, strong
     +7744), the push +128 toward the other, `(Q^2 - G^2 - M^2) x (-64)`;
-    under the contact (no rule declared: `measure`) and the step drive
+    under the contact (no rule declared: `measure`), the step drive
     (2026-09-20, BEAM_LAW note 17 as amended: D = 320 + |p| on a content
-    of 5, the drive gaining |p| at every self-creation) the momentum of p1
-    over ticks 2 .. 8 reads 128, 256, 0, 0, 128, 0, 128 (the mirror on
-    p2): p1's drive 128, 384, 768 >= 704 fires at tick 4 and hands 384;
-    p2, pushed the other way since tick 2 (its drive 128, 384, then 0 at
-    tick 4 when its label is 0 at its turn), fires at tick 5 with 512 >=
-    448 and hands -128 back; the hand-overs over 30 intervals at ticks 4
-    (384), 5 (-128), 7 (256), 9 (-256), 10 (128), 13 (384), 14 (-128), 16
-    (256), 18 (-256), 19 (128), 22 (384), 23 (-128), 24 (128), 27 (384),
-    28 (-128) and 30 (256), each a `contact` record (the family `p`, the
-    rule `measure`, the axis 0, the component; p1's from (3, 4, 4) to
-    (4, 4, 4), p2's the other way), 10 by p1 and 6 by p2, no step in 30
-    intervals, the largest component 384 (after a tick no label is beyond
-    256), the sum of the two momenta 0 after every tick, the books
+    of 5, the drive gaining |p| at every self-creation) and the crossing
+    rule's order (2026-09-21, note 42: the step before the law, so the
+    drive of a self-creation advances by the momentum after the PREVIOUS
+    interval's push) the momentum of p1 over ticks 2 .. 8 reads 128, 256,
+    384, 128, 128, 256, 128 (the mirror on p2): p1's drive 128 at tick 3,
+    384 at 4, 768 >= 704 at tick 5, when it fires and hands 384; p2,
+    pushed the other way since tick 2, fires at tick 6 and hands -128
+    back; the hand-overs over 30 intervals at ticks 5 (384), 6 (-128), 8
+    (256), 10 (-256), 11 (128), 14 (384), 15 (-128), 17 (256), 19 (-256),
+    20 (128), 23 (384), 24 (-128), 25 (128), 28 (384) and 29 (-128), each
+    a `contact` record (the family `p`, the rule `measure`, the axis 0,
+    the component; p1's from (3, 4, 4) to (4, 4, 4), p2's the other way),
+    9 by p1 and 6 by p2, no step in 30 intervals, the largest component
+    384 (the largest momentum after a tick, before the fire that hands
+    it), the sum of the two momenta 0 after every tick (with the step
+    after the law, until the crossing rule: 128, 256, 0, 0, 128, 0, 128,
+    the fires one interval earlier, at 4 (384), 5 (-128), 7 (256), 9
+    (-256), 10 (128), 13 (384), 14 (-128), 16 (256), 18 (-256), 19 (128),
+    22 (384), 23 (-128), 24 (128), 27 (384), 28 (-128) and 30 (256), 10 by
+    p1 and 6 by p2), the books
     balanced (the rule as it was, the count off the clock, read 128, 0, 0,
     128, 256, 384, 512, the hand-overs at ticks 3 (256), 4 (128), 9 (640),
     13 (512), 14 (128), 16 (256), 18 (256), 21 (384), 23 (256), 25 (256),
@@ -52,11 +59,13 @@ physicist's DESIGN.md, test (f), and the integers of its section 4.4); K
     and the `g` rows alone push, 8064 x (tick - 1). At three
     Links (x 2 and x 5) no `g` row reaches either body (the border takes
     it at the age 3), the `p` row's -7936 is read at ticks 6 and 7 (at
-    tick 6 the drive 7936 is below D = 8256 and the body stands), and at
-    tick 7 p1 steps to x 1 with (-15872, 0, 0) and p2 to x 6 with (15872,
-    0, 0), the drive -7616 and +7616 (the signed drive of record 126:
-    23808 - 16192 with the momentum's sign; the rule as it was stepped
-    them at tick 6 with 7936): the pair separates, no contact;
+    tick 7 the drive 7936, by the momentum after tick 6, is below D =
+    8256 and the body stands), and at tick 8 p1 steps to x 1 with
+    (-15872, 0, 0) and p2 to x 6 with (15872, 0, 0), the drive -7616 and
+    +7616 (the signed drive of record 126: 23808 - 16192 with the
+    momentum's sign; at tick 7 with the step after the law, until the
+    crossing rule; the rule as it was stepped them at tick 6 with 7936):
+    the pair separates, no contact;
 (b) the isolated hand-over (`release` [0, 1], no rays): p1 of `p`, content
     5, momentum (256, 0, 0) at (1, 2, 2) and p2 of `q`, content 5, fixed,
     at (2, 2, 2) on an open 5^3 GameBoard: the step rule fires at tick 3
@@ -207,25 +216,31 @@ def test_the_pair_on_the_six_headings():
             [] if tick == 1 else [(1, "p", -7936), (1, "g", 8064), (2, "p", 7936), (2, "g", -8064)]
         )
         assert reads == expected, tick
-    assert [momenta[t] for t in range(2, 9)] == [128, 256, 0, 0, 128, 0, 128]
+    # Since the crossing rule (2026-09-21; BEAM_LAW note 42) the step
+    # precedes the law, so the drive of a self-creation advances by the
+    # momentum after the PREVIOUS interval's push and every fire of the
+    # pair falls one interval later than under the order as it was (the
+    # momenta 128, 256, 0, 0, 128, 0, 128 and the hand-overs at 4, 5, 7, 9,
+    # 10, 13, 14, 16, 18, 19, 22, 23, 24, 27, 28, 30 until then, kept as
+    # history in the module docstring).
+    assert [momenta[t] for t in range(2, 9)] == [128, 256, 384, 128, 128, 256, 128]
     handed = [(r["tick"], r["number"], r["component"]) for r in contacts(records)]
     assert handed == [
-        (4, 1, 384),
-        (5, 2, -128),
-        (7, 1, 256),
-        (9, 2, -256),
-        (10, 1, 128),
-        (13, 1, 384),
-        (14, 2, -128),
-        (16, 1, 256),
-        (18, 2, -256),
-        (19, 1, 128),
-        (22, 1, 384),
-        (23, 2, -128),
-        (24, 1, 128),
-        (27, 1, 384),
-        (28, 2, -128),
-        (30, 1, 256),
+        (5, 1, 384),
+        (6, 2, -128),
+        (8, 1, 256),
+        (10, 2, -256),
+        (11, 1, 128),
+        (14, 1, 384),
+        (15, 2, -128),
+        (17, 1, 256),
+        (19, 2, -256),
+        (20, 1, 128),
+        (23, 1, 384),
+        (24, 2, -128),
+        (25, 1, 128),
+        (28, 1, 384),
+        (29, 2, -128),
     ]
     forward = (2, "p", "measure", 0, [3, 4, 4], [4, 4, 4])
     back = (1, "p", "measure", 0, [4, 4, 4], [3, 4, 4])
@@ -235,22 +250,23 @@ def test_the_pair_on_the_six_headings():
         for r in contacts(records)
     )
     # The largest component is the 384 of three intervals' pushes (the
-    # drive reaches D = 704 at tick 4); after a tick no label is beyond 256.
+    # drive reaches D = 704 at tick 5, with the momentum of tick 4); the
+    # momentum after a tick is at most that 384.
     assert max(abs(int(str(r["component"]))) for r in contacts(records)) == 384
-    assert max(abs(v) for v in momenta.values()) == 256
+    assert max(abs(v) for v in momenta.values()) == 384
     assert not [r for r in records if r["event"] == "step"]
-    assert p2.contacts == [10, 0] and p1.contacts == [6, 0]
+    assert p2.contacts == [9, 0] and p1.contacts == [6, 0]
     assert p1.state()["contacts"] == [6, 0]
     # `read` declared for `p` is the keys' own rule: it declares nothing,
     # and the hand-overs are the same.
-    simulation, records = run(pair_world(1, "read"), 4)
+    simulation, records = run(pair_world(1, "read"), 5)
     assert simulation.measured[1].contact == ("measure", "measure")
-    assert [(r["tick"], r["component"]) for r in contacts(records)] == [(4, 384)]
+    assert [(r["tick"], r["component"]) for r in contacts(records)] == [(5, 384)]
     # `pass` passes the `p` rays too: the `g` rows alone push.
     simulation, records = run(pair_world(1, "pass"), 4)
     assert simulation.measured[1].momentum == [8064 * 3, 0, 0] and not contacts(records)
     # Three Links: the border takes the `g` rows, the pair separates.
-    simulation, records = run(pair_world(3), 7)
+    simulation, records = run(pair_world(3), 8)
     reads = [
         (r["tick"], r["measured"], r["family"], r["push"][0]) for r in records if r["event"] == "read"
     ]
@@ -261,8 +277,8 @@ def test_the_pair_on_the_six_headings():
         if r["event"] == "step"
     ]
     assert steps == [
-        (7, 1, [1, 4, 4], [-15872, 0, 0], [-7616, 0, 0]),
-        (7, 2, [6, 4, 4], [15872, 0, 0], [7616, 0, 0]),
+        (8, 1, [1, 4, 4], [-15872, 0, 0], [-7616, 0, 0]),
+        (8, 2, [6, 4, 4], [15872, 0, 0], [7616, 0, 0]),
     ]
     assert not contacts(records)
 
@@ -456,11 +472,16 @@ def test_the_register_pair_over_a_thousand_intervals():
     assert len(FAN) == 284
     simulation, records = run(nucleon_pair(1000), 1000)
     proton, neutron = simulation.measured[1], simulation.measured[2]
-    assert proton.momentum == [0, 0, 0] and neutron.momentum == [0, 0, 0]
+    # Since the crossing rule (2026-09-21) the step precedes the law: the
+    # first hand-over falls at tick 4 (the drive of tick 3 advanced by one
+    # push, of tick 4 by two), 997 in all, and the push of the last
+    # interval is on the labels at the end (998 from tick 3 and the labels
+    # 0 until then, kept as history).
+    assert proton.momentum == [PUSH_PAIR, 0, 0] and neutron.momentum == [-PUSH_PAIR, 0, 0]
     assert proton.position == (2, 2, 2) and neutron.position == (3, 2, 2)
     handed = contacts(records)
-    assert len(handed) == 998 and [r["tick"] for r in handed] == list(range(3, 1001))
-    assert [int(str(r["component"])) for r in handed] == [2 * PUSH_PAIR] + [PUSH_PAIR] * 997
+    assert len(handed) == 997 and [r["tick"] for r in handed] == list(range(4, 1001))
+    assert [int(str(r["component"])) for r in handed] == [2 * PUSH_PAIR] + [PUSH_PAIR] * 996
     assert all(r["number"] == 1 for r in handed)
     assert not [r for r in records if r["event"] == "step"]
     pushes = {
