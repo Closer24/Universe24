@@ -2537,8 +2537,11 @@ page made from a registered world says so and changes nothing in it; a page made
 world says so and registers nothing. The quarks are not modelled today (the nucleon is a family,
 <a href="../../ENTITY_CATALOG.md">the entity catalog</a>); a design is in preparation.</p>
 <ul class="pages">{items}</ul>
-<p>Two more pages are made on the Boss's machine and will be linked here when they are on main: how a
-click looks (one record spreading, the click, the deletion) and Bell on the board.</p>
+<p>Two pages of the same request, made beside the amplitude series and on main (the register's E15 and
+E16): <a href="../../../examples/events/amplitude/pages/click.html">the click of one record</a> (one record
+spreading, its ladder growing, the click, the deletion of its offers) and
+<a href="../../../examples/events/amplitude/pages/bell.html">the pair's two clicks</a> (Bell on the board,
+S = 176 / 64 = 2.75 against the bounds 2 and 2.83).</p>
 <p>The pages are written by <code>tools/gallery_pages.py</code> (<code>--page all</code> rewrites them
 from the worlds and the runs); the demonstration worlds are in
 <code>examples/events/gallery/</code>.</p>

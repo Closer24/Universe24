@@ -223,3 +223,22 @@ the age 29; the path phase at the click is 51 and 8 under the integer form
 (`expectations.json` under `cone`; the register's L7 entry). The question
 of issue #376 (the paper session): the cone is Euclidean by the flight
 table; the phase's metric is the declared form's.
+
+## The pages with a moving picture (2026-09-21)
+
+The folder `pages/` holds two pages for the model owner (visualisation
+requested, 2026-09-21), each one file with its frame player and its GIF
+inside: `click.html`, one record of `slits_low` from its birth to its
+click and its deletion ([E15](../../../docs/EXPERIMENTS.md#e15-the-click-of-one-record-shown-2026-09-21)),
+and `bell.html`, the pair of the four CHSH worlds with the register's
+correlations and S ([E16](../../../docs/EXPERIMENTS.md#e16-the-pairs-two-clicks-shown-2026-09-21)).
+`pages/build_pages.py` rebuilds them: it runs the registered worlds with
+the runner, steps them again in-process for the frames (the rows of one
+record and its offers in the layer, read through the engine's own
+`Layer.cells` and `rungs`), checks the replay's gathers against the run
+and writes the pages beside itself:
+
+    PYTHONPATH=src python examples/events/amplitude/pages/build_pages.py --runs artifacts/pages
+
+Every number on a page is the run's or the register's, and the page names
+its source; the runs stay outside the tree.
