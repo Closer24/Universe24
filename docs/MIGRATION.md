@@ -138,8 +138,9 @@ without the key). Under the key:
   momentum **P** = Q d content **u**_D + **W** than D (the exact comparison
   of cosines in Python integers), the label moves to D' and **W** += Q d
   content (**u**_D - **u**_D'): **P** is conserved, the books' `turned`
-  line takes the label's change. The turn's accumulator is `turn` on the
-  row (`turn_x`, `turn_y`, `turn_z`). The note's Q S content **u**_D + **w**
+  line takes the label's change. The push's accumulator is `push` on the
+  row (`push_x`, `push_y`, `push_z`; not massive-rows' `acc_turn`, the
+  phase's turn count, a different thing that is never in the set). The note's Q S content **u**_D + **w**
   with S = d / n is built cleared of n (**W** = n **w**), so that the turn's
   arithmetic is exact in integers for any pair.
 - A body's push and drive are untouched (its weight keyed off until form B,
@@ -155,7 +156,7 @@ without the key). Under the key:
   formed.
 - The record: `run.json` gains `optical` {gamma, flight_coefficient} and
   the identity `optical-v1` under `hypotheses`; `state.json`'s rows gain
-  `flight` [made, residue] and, when held, `turn`.
+  `flight` [made, residue] and, when held, `push`.
 - The pin worlds: `examples/events/optical/` (series K's `mass` and `near`
   at [1, 16384] with the mass x 16, at gamma 0 and 1, with the controls),
   their pins in `expectations.json` before the run and the run's readings

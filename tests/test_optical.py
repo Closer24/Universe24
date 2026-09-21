@@ -41,7 +41,7 @@ default). One rule per case, the integers written before the run:
     `run.json`'s block {"gamma", "flight_coefficient"};
 (e) byte identity without the key: a world without `optical` has every
     row's `made`, `residue` and turn fields 0 through its run and its
-    state's rows carry no `flight` or `turn` key (the gate set's digests
+    state's rows carry no `flight` or `push` key (the gate set's digests
     are `tests/test_amplitude_click.py` (d)); the set of the age wall is
     the law's without the key and gains ("flight", 1 + gamma) with it, the
     phase per age never a member;
@@ -254,11 +254,11 @@ def test_the_push_turns_a_row_to_the_fans_nearest_direction():
     light, crowd = simulation.stores[0], simulation.stores[1]
     assert light.size == 1 and crowd.size == 1
     assert vectors[int(light.direction[0])].tolist() == [1, -1, 0]
-    assert (int(light.turn_x[0]), int(light.turn_y[0]), int(light.turn_z[0])) == (4864, -2560, 0)
+    assert (int(light.push_x[0]), int(light.push_y[0]), int(light.push_z[0])) == (4864, -2560, 0)
     assert (int(light.made[0]), int(light.residue[0])) == (1, 72)
     assert light.coordinates(light.node[:1])[0][0] == 2 and light.coordinates(light.node[:1])[1][0] == 1
     assert books["momentum"]["turned"] == [-19, -45, 0] and books["momentum"]["transit"] == [45, 19, 0]
-    assert (int(crowd.turn_x[0]), int(crowd.turn_y[0]), int(crowd.turn_z[0])) == (0, 0, 0)
+    assert (int(crowd.push_x[0]), int(crowd.push_y[0]), int(crowd.push_z[0])) == (0, 0, 0)
     assert vectors[int(crowd.direction[0])].tolist() == [0, 1, 0]
     # the same world without the key: the row keeps +x and no turn line
     plain = NatureBeamSimulation(parse_nature_beam_world(turn_world(None)))
@@ -275,9 +275,9 @@ def test_the_whole_momentum_is_conserved_across_the_turn():
     simulation.step()
     light = simulation.stores[0]
     after = Q * 4 * 1 * unit[int(light.direction[0])] + [
-        int(light.turn_x[0]),
-        int(light.turn_y[0]),
-        int(light.turn_z[0]),
+        int(light.push_x[0]),
+        int(light.push_y[0]),
+        int(light.push_z[0]),
     ]
     # before the turn W = (0, -14080, 0) was the push of the interval
     assert (before + [0, -14080, 0]).tolist() == after.tolist() == [16384, -14080, 0]
@@ -313,7 +313,7 @@ def test_byte_identity_without_the_key_and_the_declared_set():
     for _ in range(20):
         simulation.step()
     for store in simulation.stores:
-        for name in ("made", "residue", "turn_x", "turn_y", "turn_z"):
+        for name in ("made", "residue", "push_x", "push_y", "push_z"):
             assert not getattr(store, name).any(), name
     lines = [
         ray
@@ -321,7 +321,7 @@ def test_byte_identity_without_the_key_and_the_declared_set():
         for family in node["families"]
         for ray in family["rays"]
     ]
-    assert lines and not any("flight" in ray or "turn" in ray for ray in lines)
+    assert lines and not any("flight" in ray or "push" in ray for ray in lines)
     assert age_wall_set(None) == AGE_WALL_SET == (("owed", 1),)
     assert age_wall_set(0) == (("owed", 1), ("flight", 1)) and age_wall_set(1) == (
         ("owed", 1),

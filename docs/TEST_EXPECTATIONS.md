@@ -1930,7 +1930,7 @@ default), the integers written before the run:
   coefficient 2; absent without the key.
 - (e) byte identity without the key: the bar's rows keep `made`, `residue`
   and the turn fields at 0 over twenty intervals and the state's rows
-  carry no `flight` or `turn` key; `age_wall_set(None)` is the law's
+  carry no `flight` or `push` key; `age_wall_set(None)` is the law's
   (("owed", 1),), `age_wall_set(0)` adds ("flight", 1) and
   `age_wall_set(1)` ("flight", 2); no never-member in the set.
 - (f) the pin worlds: the six shipped worlds of `examples/events/optical/`

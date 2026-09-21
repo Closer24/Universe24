@@ -265,15 +265,17 @@ class NatureBeam:
     # residue, `made` the Links made on its line and `residue` what the
     # accumulator holds toward the next, in the units of the stretched
     # wall (the rate 2 S_1 Q d against the wall 2 T_D (d + f n A)); and the
-    # turn's accumulator **W** = n **w** (three integers), the crowd's push
-    # on the row not yet turned into a change of its direction. (0, 0) and
+    # push's accumulator **W** = n **w** (three integers), the crowd's push
+    # on the row not yet turned into a change of its direction (the note's
+    # turn accumulator; named `push` so that it never collides with
+    # massive-rows' `acc_turn`, the phase's turn count, a different thing). (0, 0) and
     # (0, 0, 0) on every row of a world without the key, where the flight
     # is off the age (`Flight.accumulator`) and nothing turns.
     made: int = 0
     residue: int = 0
-    turn_x: int = 0
-    turn_y: int = 0
-    turn_z: int = 0
+    push_x: int = 0
+    push_y: int = 0
+    push_z: int = 0
 
     def record_line(self, vectors: np.ndarray, handed: bool = False) -> dict[str, object]:
         """The row as `state.json` writes it, the direction as its vector;
@@ -301,8 +303,8 @@ class NatureBeam:
             line["share"] = [self.share_x, self.share_y, self.share_z]
         if self.made or self.residue:
             line["flight"] = [self.made, self.residue]
-        if self.turn_x or self.turn_y or self.turn_z:
-            line["turn"] = [self.turn_x, self.turn_y, self.turn_z]
+        if self.push_x or self.push_y or self.push_z:
+            line["push"] = [self.push_x, self.push_y, self.push_z]
         return line
 
 
@@ -1042,14 +1044,14 @@ FIELDS = (
     "share_y",
     "share_z",
     # optical-v1 (2026-09-21): the flight's accumulator (made, residue) and
-    # the turn's accumulator, identity fields (two rows at different points
+    # the push's accumulator, identity fields (two rows at different points
     # of their walls are two rows), constant 0 without the key (a width of
     # 0 bits in the packed key: the merge and its order as they were).
     "made",
     "residue",
-    "turn_x",
-    "turn_y",
-    "turn_z",
+    "push_x",
+    "push_y",
+    "push_z",
 )
 # The fields that make two rows identical (the amount is what the merge
 # adds); since `amplitude-v1` the record, the branch and the multiplicity
@@ -1070,9 +1072,9 @@ IDENTITY_FIELDS = (
     "hand",
     "made",
     "residue",
-    "turn_x",
-    "turn_y",
-    "turn_z",
+    "push_x",
+    "push_y",
+    "push_z",
 )
 # The three columns of the amplitude law as a row of no record carries them.
 NO_RECORD = 0
@@ -1089,9 +1091,9 @@ COLUMN_DEFAULTS = {
     "share_z": 0,
     "made": 0,
     "residue": 0,
-    "turn_x": 0,
-    "turn_y": 0,
-    "turn_z": 0,
+    "push_x": 0,
+    "push_y": 0,
+    "push_z": 0,
 }
 # The place of `phase` in the identity fields: the merge of a record's rows
 # reads it modulo the half circle with a sign (the cancel).
@@ -1429,9 +1431,9 @@ class NatureBeamStore:
         self.share_z: np.ndarray
         self.made: np.ndarray
         self.residue: np.ndarray
-        self.turn_x: np.ndarray
-        self.turn_y: np.ndarray
-        self.turn_z: np.ndarray
+        self.push_x: np.ndarray
+        self.push_y: np.ndarray
+        self.push_z: np.ndarray
 
     @property
     def size(self) -> int:
@@ -1664,9 +1666,9 @@ class NatureBeamStore:
                 int(self.share_z[i]),
                 int(self.made[i]),
                 int(self.residue[i]),
-                int(self.turn_x[i]),
-                int(self.turn_y[i]),
-                int(self.turn_z[i]),
+                int(self.push_x[i]),
+                int(self.push_y[i]),
+                int(self.push_z[i]),
             )
             for k, i in enumerate(range(lo, stop))
         ]
@@ -3100,9 +3102,9 @@ def optical_turn(frame: Interval) -> None:
                 f"{widest} on the family {families[family].name!r} exceeds the working register "
                 f"{MAX_WORK_INT}"
             )
-        turn = np.stack([store.turn_x[rows], store.turn_y[rows], store.turn_z[rows]], axis=1)
+        turn = np.stack([store.push_x[rows], store.push_y[rows], store.push_z[rows]], axis=1)
         turn = turn - numerator * weight[:, None] * flow
-        store.turn_x[rows], store.turn_y[rows], store.turn_z[rows] = turn[:, 0], turn[:, 1], turn[:, 2]
+        store.push_x[rows], store.push_y[rows], store.push_z[rows] = turn[:, 0], turn[:, 1], turn[:, 2]
         # The nearest of the fan for the rows that hold a push.
         held = np.flatnonzero(turn.any(axis=1))
         if held.shape[0] == 0:
@@ -3157,9 +3159,9 @@ def optical_turn(frame: Interval) -> None:
         # W += Q d content (u_D - u_D'): P conserved across the turn.
         whole = Q * denominator * (store.amount[chosen_rows] * store.content[chosen_rows])
         shift = whole[:, None] * (unit[store.direction[chosen_rows]] - unit[new_direction])
-        store.turn_x[chosen_rows] += shift[:, 0]
-        store.turn_y[chosen_rows] += shift[:, 1]
-        store.turn_z[chosen_rows] += shift[:, 2]
+        store.push_x[chosen_rows] += shift[:, 0]
+        store.push_y[chosen_rows] += shift[:, 1]
+        store.push_z[chosen_rows] += shift[:, 2]
         store.direction[chosen_rows] = new_direction
 
 
