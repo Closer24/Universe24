@@ -47,7 +47,7 @@ kept, their pins the law of events').
 | `test_contact.py` | The contact through the table: the design's pair on the six headings (+128 per interval; under the step drive the labels 128, 256, 0, 0, 128, 0, 128 and the hand-overs 384, -128, 256, -256, 128, ..., the sum 0, no step; at three Links the pair separates at tick 7), the isolated hand-over under `measure`, `rerelease`, `read` and `pass` and the derived default, the apportioning over the occupants of a body's set, the register's proton and neutron over 1000 intervals (998 hand-overs from tick 3, the first 621 934 561 280, the rest 310 967 280 640, the labels 0), the frame's order as a declared tie ([below](#the-contact-through-the-table)) | new (2026-09-20, the model owner on the physicist's design, section 4.4); (a), (d), (e) re-registered on 2026-09-20 under the step drive, the old integers kept as history |
 | `test_nucleus_readings.py` | The nucleus readings tool (series I) reads the runner's record: on the design's pair on the six headings, run through the runner, the pushes per body (128, 0, 0) from the `p` rows' -7936 and the `g` rows' +8064, the hand-overs 384 at tick 4, -128 at 5, 256 at 7, -256 at 9 and 128 at 10 under the step drive (256, 128, 640 by p1 alone as the rule was), the border `lifetime` clicking 12 rows per interval from tick 4, no step, the separation 1.00, pinned to the events file | new (2026-09-20, series I); re-registered on 2026-09-20 under the step drive |
 | `test_nature_beam_label.py` | The label along the unit vector of the direction at the flight table's scale: the table u_d by the exact integer rule (the pinned vectors, the length within 1.35 % of Q, antisymmetry, equivariance under the 48, no tie, the float agreement over every primitive direction within the bound), every label content x u_d with the recoil, the transit line and the books closing through clicks, a mirror and the open faces, the bound at Q x content x amount ([below](#the-label-along-the-unit-vector)) | new (2026-09-19, the model owner's decision on the physics-rule reviewer's verdict; every momentum pin of the suite re-pinned x 64, listed in its section) |
-| `test_nature_beam_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing; no collision at a Node that holds a measured event ([below](#the-collision-table)) | new |
+| `test_nature_beam_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the orbits of the six-heading patterns under the cube's group as properties (since 2026-09-21: the orbit-stabilizer and Burnside counts in place of the counted sizes), a head-on pair parking and a crowd passing; no collision at a Node that holds a measured event ([below](#the-collision-table)) | new |
 | `test_nature_beam_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact; the merge by one packed key and by the lexsort alike ([below](#the-bijection)) | new |
 | `test_nature_beam_detector.py` | The detector's record: two rays in phase and in antiphase (the antiphase pair passing since 2026-09-20); the threshold gating a receiver and a re-emitter over the set (under `wave` on the pointer's square in units of one ray since 2026-09-20, (i)); a release reading no threshold; the record exact and never refused (the pointer in the register up to its bound, the square in Python integers); the detector a set of Nodes with one record (the record, the threshold and the window over the set); the phase returned to the set's events after a click; the `beam` reading (the pairing by opposite phase, the count) ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
 | `test_nature_beam_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
@@ -80,6 +80,7 @@ kept, their pins the law of events').
 | `test_hubble_stars_readings.py` | The series G2 tool (`tools/hubble_stars_readings.py`) reads the engine (the experimenter's rule): the shipped worlds of `examples/events/hubble_stars/` equal their generator's and `expectations.json` declares its format; on a bar of 61 x 1 x 1 run through the runner (a star of a paid family holding a mass of 2^22 and shining one unit per self-creation toward a detector of one Node, the speed 1 / 2 Link per self-creation) the tool's `record` lines, click ages, steps (30 in 60 intervals), homes (its outward rows taken home, 64 units each) and final momentum are the engine's, z within the digital step's grain of 1 + v / c, the reading's formula within 2 % and the luminosity within 5 %; the fits read the exact coasting form as q = 0 with H (t_0 + T_0) = 1 to 1e-6 and the exact Einstein-de Sitter form as q = +0.5 to 1e-3; the expected integers are in the module's docstring | new (2026-09-20, series G2); the registered fits against the register's own brackets, no literal range (2026-09-21) |
 | `test_bohr_readings.py` | The series H tool reads the engine (the experimenter's rule, 2026-09-20): the flight time from the centre's plane to a face off `FlightTable.manhattan_steps` (5 Links at the age 8, 6 at 10, 1 at 1), the pointer per turn and the coherence ratio off `nature_beam.coherent_pointer` with the circle's tables ((16384, 0) and (-8192, 0) for two units at phase 0 and one at 32, C = 0.2; 1.8 with the third at 0; the slope of [1, 4, 9] is 2), and `read_run` on a run written by the runner (a proton of `p` at (5, 5, 1) of an 11 x 11 x 3 GameBoard on the four in-plane headings, an electron of `e` of span [1, 1, 3] at (8, 5, 1) with the momentum [0, 320, 0], `pass` for `p`, `action` 65536, 20 intervals: the radius 3, j = 0.05859375, the flights 8, the clicks per face equal to the record's, no read, the steps' phases 5, 5, 5, 6 at the ticks 5, 9, 13, 17, the first -x click at tick 16); the expected integers are in the module's docstring |
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the two integer audits (`core/` integers only; `events/` integer numpy and nothing that leaves the integers, `run.py` outside it), LOCALITY-1 documented without an exception, and the six-read test ([below](#locality-and-bounded-local-work)): a Node reads nothing beyond one Link, a change reaches a Node no sooner than the flight allows |
+| `test_group_structure.py` | The group structure named on 2026-09-21: the cube's group of 48 (closed, the identity, every inverse, the hand +1 on 24 rotations and -1 on 24 reflections, multiplicative), the phase circle as the cyclic group with its unit vectors (a turn, a difference, the opposite phase; equal phases 65536, opposite phases its negative, C^2 + S^2 within 361 of 65536), the collision as a group action (the period the class's size, one cycle per class, the inverse undoing the shift, the invariants constant along a cycle) ([below](#the-group-structure)) | new (2026-09-21; the vector program, record 191; BEAM_LAW note 42) |
 | `test_meeting.py` | The meeting: the arc permutation of the direction table (a permutation for 1034 targets on K's table, the rest fixed, the chain from +x, the k-fold shift), the phase register (61, 62, 63, 0, 1, 2 with the turn at the fourth; the inverse), the sign of the turn and the `turned` line, the crowd and the record untouched, the bijection with the meeting (50 forward, 50 inverse) and the refusals ([below](#the-meeting)) | new (2026-09-20, the model owner's "DECIDED: the meeting, M-R"; the physicist's and the mathematician's design) |
 | `test_amplitude_record.py` | The record on the row (`amplitude-v1`): the world key `amplitude` deleted and refused, the identity `amplitude-v1` on a world with a lamp alone; the four columns `record`, `branch`, `multiplicity` and `birth` at their defaults on every row of no record and the merge's packed key unchanged by them; the merge's normal form, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
 | `test_amplitude_split.py` | The split, the birth of a record and the phase per interval of age: a lamp's birth of one record of k rows with the multiplicity k and the identity number x 2^32 + ordinal; the (20, 21) splitter's rows (41 in phase toward D1, 1 in antiphase toward D2, the multiplicity 1682) and the balanced split's cancel on the GameBoard with the `cancelled` lines; the pair form of `phase_per_link` (40 at [8, 1], 26 at [16, 3], 24 at the integer 8 after 5 intervals; the inverse bit-exact); the refusals ([below](#the-amplitude-law-the-split)); the birth's and the split's rows and cancels read from `expectations.json` under `mach_zehnder` (2026-09-21) | new (2026-09-20; the design's sections 2.1, 2.3, 3.1 and 3.4; the owner's unifications (1) and (2)) |
@@ -248,10 +249,15 @@ shift by +1 and the inverse by -1, generated from the rule.
   binary states; INV[FWD[s]] = s for every state; the class of FWD[s] is
   the class of s; a crowd slot never changes; the amount and the heading sum
   are conserved by every move.
-- (b) the 20 orbits of the (six-heading pattern, here flag) under the 48
-  signed axis permutations, with the sizes 1, 6, 3, 12, 12, 3, 8, 12, 6, 1
-  (here 0) and the same with here 1; a lone unit is fixed; the head-on pair
-  +x -x parks in the two rest slots, and ha hb becomes +z -z.
+- (b) the orbits of the six-heading patterns under the cube's group of 48
+  (`core.game_board.cube_symmetries`; since 2026-09-21 as properties in
+  place of the counted sizes 1, 6, 3, 12, 12, 3, 8, 12, 6, 1): every
+  orbit's size times its stabilizer's is 48 (the orbit-stabilizer
+  theorem), the number of orbits is Burnside's count (the mean over the
+  group of the patterns each symmetry fixes), the orbits cover the 64
+  patterns, and the here flag, untouched by the group, doubles them; a
+  lone unit is fixed; the head-on pair +x -x parks in the two rest slots,
+  and ha hb becomes +z -z.
 - (c) on the GameBoard: two rays of amount 1 meeting head-on at the middle Node
   of a 5 x 1 x 1 bar (x and z periodic) become the two rest rays at that
   Node in the interval they meet, and stay; two rays of amount 2 (a crowd)
@@ -275,6 +281,32 @@ shift by +1 and the inverse by -1, generated from the rule.
   the unit vector), the ray at phase 0 passes and goes on to x = 5, the
   transit line is (64, 0, 0) and no ray is stranded at rest; measured +
   transit = (0, 0, 0), the labels' sum before the interval.
+
+## The group structure
+
+`tests/test_group_structure.py` (2026-09-21; the vector program, record 191;
+BEAM_LAW note 42): the three group objects of the law named and typed, no
+rule changed. Properties, not counts, written down first:
+
+- (a) the cube's group (`core.game_board.cube_symmetries`): 48 symmetries,
+  each a permutation of the six Ports mapping opposite Ports to opposite
+  Ports; closed under `compose_symmetries`, `IDENTITY_SYMMETRY` among them,
+  `inverse_symmetry` in the group and undoing its symmetry on both sides;
+  `symmetry_hand` +1 on 24 (the rotations) and -1 on 24 (the reflections),
+  multiplicative under composition, +1 on the identity.
+- (b) the phase circle (`core.phase.PhaseCircle`) at N = 64, 2 and 4096: a
+  turn of N steps returns and a turn of -phase reaches 0; a turn of 5 then
+  -5 returns; the difference of a phase turned by 7 from the phase is 7
+  mod N; the opposite phase is half a turn away and opposite twice returns;
+  the unit vectors at the scale 256: (256, 0) at phase 0, the same at phase
+  N, C^2 + S^2 within 361 of 65536, and the inner product of a vector with
+  its opposite's exactly the negative of its own square.
+- (c) the collision action (`nature_beam.CollisionTable`): `period` equals
+  the class's size (the count of codes with the same `orbit`); the shift
+  `act` applied `period` times returns every code and no earlier; the
+  inverse undoes the shift on both sides; the shift is a bijection of the
+  3^8 codes; on every seventh state the cycle from it visits exactly
+  `period` codes, all of its orbit, all of its class key.
 
 ## The bijection
 

@@ -69,6 +69,7 @@ from dataclasses import dataclass, field
 from event_universe.core.phase import (
     MAX_PHASE_STEPS,
     PHASE_COSINE_SCALE,
+    phase_circle,
     phase_cosines,
     phase_sines,
 )
@@ -339,9 +340,11 @@ class Layer:
         self.set_index = {key[1]: index for index, key in enumerate(keys) if key[0] == "set"}
         self.face_index = {key[1]: index for index, key in enumerate(keys) if key[0] == "face"}
         self.border_index = next((index for index, key in enumerate(keys) if key[0] == "border"), -1)
-        self.steps = phase_steps
-        self.cosines = phase_cosines(phase_steps)
-        self.sines = phase_sines(phase_steps)
+        # The phase circle (the cyclic group of N steps) with its tables.
+        self.circle = phase_circle(phase_steps)
+        self.steps = self.circle.steps
+        self.cosines = self.circle.cosines
+        self.sines = self.circle.sines
         self.records: dict[int, LiveRecord] = {}
         # The identities gathered (their table entries and offers released at
         # the completion; `resolve` finds nothing, the lazy deletion of their

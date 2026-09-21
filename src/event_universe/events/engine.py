@@ -417,7 +417,7 @@ class NatureBeamSimulation:
         for number in sorted(self.measured):
             entry = self.measured[number]
             if entry.creating:
-                entry.phase = (entry.phase + entry.turn) & self.world.phase_mask
+                entry.phase = self.tables.circle.turn(entry.phase, entry.turn)
                 entry.turned += entry.turn
                 self._suspend(entry)
         for number in sorted(self.measured):
@@ -666,7 +666,7 @@ class NatureBeamSimulation:
             links = entry.axis_steps[axis] - 1
             bounded((links + 1) * magnitude * self.world.phase_steps, entry, "turn by momentum")
             turn = by_clock(links, magnitude * self.world.phase_steps, self.world.action)
-            entry.phase = (entry.phase + turn) & self.world.phase_mask
+            entry.phase = self.tables.circle.turn(entry.phase, turn)
         if self.record is not None:
             self.record(
                 {
