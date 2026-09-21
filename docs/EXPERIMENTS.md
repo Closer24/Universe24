@@ -6364,6 +6364,67 @@ sequential gates on an entangled record, the full register replay.
   with these readings.
 
 
+### S, the clock's word (2026-09-21)
+
+- **Confronts.** The physicist's pin of 2026-09-21
+  ([docs/designs/clock_age/NOTE.md](designs/clock_age/NOTE.md) section 6,
+  the numbers from `clock_age_map.py` beside it; the Boss's order of 12:45Z
+  to the G2 experimenter as a rule-353 experiment, a second pair of hands
+  on the pin, the replicator to run it again): the clock's word. BEAM_LAW
+  section 3 step 5 counts the presence of other numbers' rows at a body's
+  Node, or on a table entry that reads `age` the age moment
+  `sum amount x age` (note 25); the G2 session's proposal (record 365, the
+  mapping of units to nature's clocks) is that the age word is the
+  potential's form, `M / r`, the one GPS, Pound and Rebka and the eccentric
+  Galileo satellites measure at two heights, where the presence word reads
+  `M / r^2`. The pin that decides on the GameBoard: two crowds of the same
+  release at two distances are the same push, and only the age clock reads
+  the distance. Run under beam-v1 as declared (`reads: "age"` is a world
+  key, series E's precedent); no change under `src/`.
+- **Model prediction, pinned before the run
+  ([the folder](../examples/events/clock_word/README.md),
+  `examples/events/clock_word/expectations.json` with its `derivations`
+  map, written by `make_worlds.py`; the `replicated` map absent: measured
+  once, awaiting replication).** Series P's geometry: the lamp `s_px1` at
+  rest at x = 10 (2^20 units, one unit per self-creation on +x, the wheel
+  [1, 64]), two `mass` sources at 3 or at 6 Links on +y and +z each
+  releasing F = 4915 units per interval on the fan of nine toward the
+  lamp's line, `suspension` [1, 2^16], the detector fixed at x = 110
+  measuring `s_px1` with `reads: "age"`, the bar 121 x 9 x 9 at 3 Links
+  and 121 x 15 x 15 at 6, 500 intervals; four worlds, the lamp's `mass`
+  entry `pass` (the presence word) or `{"rule": "pass", "reads": "age"}`
+  (the age word), at 3 and at 6. On the lattice only the two headings' rows
+  dwell at the lamp's Node, each for two intervals (the map checks the nine
+  lines of each source), so the presence is 4 F at both distances and the
+  flow the push would read the same; the age moment is 22 F at 3 (the ages
+  5 and 6 per source) and 42 F at 6 (10 and 11). DETECTOR, the lamp's light
+  at x = 110, `1 + z` the inverse slope of the birth ordinal against the
+  click's tick in the windows 200 to 350 and 350 to 500: the presence word
+  1.300 at 3 AND at 6 (k = 4 F / 2^16 = 0.300; the presence clock cannot
+  tell the two distances apart), refuted outside 1.30 +- 0.02 or if the
+  two worlds differ by more than 0.02; the age word 2.650 at 3
+  (k = 22 F / 2^16 = 1.650) and 4.150 at 6 (k = 3.150), refuted outside
+  +- 0.05; the ratio of the two k under the age word 42 / 22 = 1.909
+  (the continuum's potential at the same push 2.000), refuted outside
+  1.91 +- 0.05. The first interval with the crowd's rows at the lamp: tick
+  6 at 3 Links and tick 11 at 6 (the first row's age 5 and 10 at that
+  Link), read on a replay of the world as the first interval the lamp's
+  clock counts (GAMEBOARD) and from the lamp's `birth` lines as the first
+  birth it misses after the rows (DETECTOR); the dwelling ages 5, 6 per
+  source at 3 and 10, 11 at 6; the count the lamp owes per self-creation
+  4 F, 4 F, 22 F, 42 F. The engine writes no `owed` line; the lamp's clock
+  is read from its births and from the replay's count.
+- **Features.** The clock's count per table entry (`count_component`,
+  `counts_age` in `nature_beam`), the free family's release on every
+  direction of the fan, the lamp's births as the clock's record, the
+  record form's click line with `age`; `examples/events/clock_word/read_runs.py`;
+  `tests/test_clock_word.py` (the shipped worlds the generator's and run
+  balanced; the lamp's count under each word at each distance and the
+  first counting tick; the algebra of the pin), the template
+  `tests/test_crowd_clock.py`.
+- **Run.** Not yet run at the time of this entry; the run's paragraph
+  follows in the same pull request.
+
 ### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
 
 - **Confronts:** the single-graviton detector proposed by Tobar, Manikandan, Beitel and Pikovski (Nature Communications 15, 7229, 2024; construction begun in 2026): a massive acoustic resonator cooled to its ground state, weakly monitored, whose single quantum jump to its first level during a passing gravitational wave is one graviton absorbed, a gravito-phononic photoelectric effect; the key is to read individual transitions, since the mean energy is always consistent with a classical wave.
