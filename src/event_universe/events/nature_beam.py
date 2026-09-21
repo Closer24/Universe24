@@ -3000,11 +3000,18 @@ def optical_walk_step(
 ) -> tuple[np.ndarray, Callable[[int, int], tuple[int, int]]]:
     """Step 1 under `optical`: the row's stored accumulator gains the
     stretched rate against the wall the crowd's age moment stretches
-    (`optical_rate_and_wall`), the count gained (0 or 1: the rate never
-    exceeds the wall) is the interval's Manhattan step on the row's line at
-    the place `made mod S_1`, and the accumulator after is kept on the row
-    with the count made. A row whose accumulator is empty (a row born or
-    declared before this interval, (0, 0)) starts from the flight's off-age
+    (`optical_rate_and_wall`), the count gained, capped at one Link by the
+    primitive's own `at_most` with the surplus kept in the accumulator
+    (the rate never exceeds a row's own wall, so a row on its own direction
+    counts 0 or 1 with nothing to keep; a residue carried across a turn is
+    rescaled by `optical_turn` to the new direction's rate, record 496,
+    and may then exceed the new wall by up to 3.3 per cent in the pin
+    worlds' fan, a Link already paid, which the cap counts once and keeps:
+    the review of record 494, M1), is the interval's Manhattan step on the
+    row's line at the place `made mod S_1`, and the accumulator after is
+    kept on the row with the count made. A row whose accumulator is empty
+    (a row born or declared before this interval, (0, 0)) starts from the
+    flight's off-age
     pair at its age scaled to the stretched units (`Flight.accumulator`
     times d): the same integers as the flight without the key at A = 0.
     Returns the step and a function giving the time of the last Link of a
@@ -3020,8 +3027,7 @@ def optical_walk_step(
         store.residue[fresh] = residue0 * denominator
     age_moment = frame.crowd.age_moment(store.node, store.number)
     rate, wall = optical_rate_and_wall(flight, world, store.direction, age_moment)
-    moved, residue = by_drive_rows(store.residue, rate, wall)
-    moved = np.minimum(moved, 1)
+    moved, residue = by_drive_rows(store.residue, rate, wall, at_most=1)
     s1 = flight.manhattan[store.direction]
     place = np.where(s1 > 0, store.made % np.maximum(s1, 1), 0)
     step: np.ndarray = flight.lines[store.direction, place] * moved[:, None]
@@ -3067,8 +3073,25 @@ def optical_turn(frame: Interval) -> None:
     label moves to D' and **W** += Q d content (**u**_D - **u**_D'), so
     that **P** is conserved across the turn; the row's label changes and
     the books' `turned` line takes the difference, as the meeting's does.
-    Bounds: n x weight x |V| tested by division before the product; the
-    row's phase, amount, content, number and record untouched."""
+    Bounds: n x weight x |V| tested by division before the product, and
+    the sums the accumulator takes, W + n weight V and W + Q d content
+    (u_D - u_D'), tested against the working register before they are
+    formed (the review of record 494, S1); the row's phase, amount,
+    content, number and record untouched. The residue s of the row's
+    flight accumulator crosses the turn as the time of its last Link
+    (the chief physicist's word of record 496 on the review's M1, record
+    494): the accumulator is the row's age paid at its direction's rate
+    r = 2 S_1 Q d (`Flight.accumulator`, note 41 (viii)) and the click
+    reads the last Link's time as age - s / r (`optical_last_link`), so
+    the residue in the new direction's units is s' = (s x S_new) // S_old,
+    exact from a heading (S_old = 1); at a turn between two off-heading
+    directions the remainder under one unit of the accumulator (1 / (2 Q d
+    S_new) of an interval) is dropped, the one truncation of the flight's
+    time, bounded by one unit per turn (the exact form carries a
+    denominator that grows with every turn, refused by the bounded local
+    record). The rescaled residue may exceed the new wall by up to
+    T_old S_new / (S_old T_new), 3.3 per cent in the pin worlds' fan, a
+    Link already paid, which the walk's cap counts once and keeps."""
     assert frame.crowd is not None
     world = frame.world
     flight = frame.flight
@@ -3103,6 +3126,15 @@ def optical_turn(frame: Interval) -> None:
                 f"{MAX_WORK_INT}"
             )
         turn = np.stack([store.push_x[rows], store.push_y[rows], store.push_z[rows]], axis=1)
+        # The sum W + n weight V tested against the register before it is
+        # formed, as `by_drive_rows` tests the accumulator plus the rate.
+        largest = int(np.abs(turn).max(initial=0))
+        if largest + numerator * heaviest * widest > MAX_WORK_INT:
+            raise OverflowError(
+                f"{BEAM_LAW}: optical-v1's push accumulator |W| + n x weight x V = {largest} + "
+                f"{numerator} x {heaviest} x {widest} on the family {families[family].name!r} "
+                f"exceeds the working register {MAX_WORK_INT}"
+            )
         turn = turn - numerator * weight[:, None] * flow
         store.push_x[rows], store.push_y[rows], store.push_z[rows] = turn[:, 0], turn[:, 1], turn[:, 2]
         # The nearest of the fan for the rows that hold a push.
@@ -3159,9 +3191,29 @@ def optical_turn(frame: Interval) -> None:
         # W += Q d content (u_D - u_D'): P conserved across the turn.
         whole = Q * denominator * (store.amount[chosen_rows] * store.content[chosen_rows])
         shift = whole[:, None] * (unit[store.direction[chosen_rows]] - unit[new_direction])
+        largest = int(np.abs(turn[np.isin(rows, chosen_rows)]).max(initial=0))
+        if largest + int(np.abs(shift).max(initial=0)) > MAX_WORK_INT:
+            raise OverflowError(
+                f"{BEAM_LAW}: optical-v1's turn |W| + Q d content |u_D - u_D'| = {largest} + "
+                f"{int(np.abs(shift).max())} on the family {families[family].name!r} exceeds "
+                f"the working register {MAX_WORK_INT}"
+            )
         store.push_x[chosen_rows] += shift[:, 0]
         store.push_y[chosen_rows] += shift[:, 1]
         store.push_z[chosen_rows] += shift[:, 2]
+        # The flight's residue rescaled to the new direction's rate,
+        # s' = (s x S_new) // S_old (the chief physicist's word, record 496):
+        # the time of the row's last Link, age - s / r, is what the row
+        # carries across the turn; the product tested before it is formed.
+        s_old = flight.manhattan[store.direction[chosen_rows]]
+        s_new = flight.manhattan[new_direction]
+        residue = store.residue[chosen_rows]
+        if int(residue.max(initial=0)) > MAX_WORK_INT // max(1, int(s_new.max(initial=1))):
+            raise OverflowError(
+                f"{BEAM_LAW}: optical-v1's turn rescales the residue {int(residue.max())} by "
+                f"S_new {int(s_new.max())} beyond the working register {MAX_WORK_INT}"
+            )
+        store.residue[chosen_rows] = residue * s_new // s_old
         store.direction[chosen_rows] = new_direction
 
 

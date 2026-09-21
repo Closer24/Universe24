@@ -168,6 +168,7 @@ def expectations() -> Json:
                 "lamp_rate": pin["lamp_rate"],
             }
     out["run_2026_09_21"] = RUN_2026_09_21
+    out["run_2026_09_21_m1"] = RUN_2026_09_21_M1
     for name, pin in PINS.items():
         out["ratios"][name] = {
             "shift_f2_over_f1": pin["shift"][2] / pin["shift"][1],
@@ -210,6 +211,72 @@ RUN_2026_09_21: dict[str, object] = {
         "ratio's bracket 0.25 not derivable from the shifts' 0.5 pixel, the propagated 0.58 / 0.46, "
         "a fact of the pin as written, which stays and is refuted at 0.25); the near f = 2 shift a "
         "survivors' reading (398 taken); verb 3's form the model owner's decision on his return"
+    ),
+}
+
+# The re-read of 2026-09-21 on the head that carries M1 of the physics-rule
+# review of 408cf719 (record 494: the walk's count capped by the primitive
+# with the surplus kept, the residue rescaled at a turn as the time of the
+# last Link, s' = (s x S_new) // S_old, the chief physicist's word of record
+# 496); the first run's value beside each as "was"; DETECTOR unless marked.
+RUN_2026_09_21_M1: dict[str, object] = {
+    "branch": "optical-v1",
+    "after": "M1 of docs/designs/optical_v1/REVIEW_408CF719.md (records 494 and 496)",
+    "read_by": "tools/lensing_readings.py --no-replay (DETECTOR); tools/optical_readings.py (GAMEBOARD)",
+    "worlds": {
+        "mass_g0": {
+            "shift": -1.622,
+            "delay": 2.97,
+            "clicks": 1398,
+            "taken_by_the_mass": 0,
+            "was": {"shift": -1.607, "delay": 2.89, "clicks": 1396, "taken_by_the_mass": 0},
+        },
+        "mass_g1": {
+            "shift": -3.805,
+            "delay": 5.88,
+            "clicks": 1389,
+            "taken_by_the_mass": 0,
+            "was": {"shift": -3.812, "delay": 5.87, "clicks": 1385, "taken_by_the_mass": 0},
+        },
+        "near_g0": {
+            "shift": -3.000,
+            "delay": 2.40,
+            "clicks": 1455,
+            "taken_by_the_mass": 0,
+            "was": {"shift": -2.992, "delay": 2.40, "clicks": 1456, "taken_by_the_mass": 0},
+        },
+        "near_g1": {
+            "shift": -3.274,
+            "delay": 4.51,
+            "clicks": 1001,
+            "taken_by_the_mass": 547,
+            "was": {"shift": -4.654, "delay": 4.97, "clicks": 1122, "taken_by_the_mass": 398},
+        },
+    },
+    "ratios": {
+        "mass": {
+            "shift_f2_over_f1": 2.35,
+            "delay_f2_over_f1": 1.98,
+            "was": {"shift_f2_over_f1": 2.37, "delay_f2_over_f1": 2.03},
+        },
+        "near": {
+            "shift_f2_over_f1": 1.09,
+            "delay_f2_over_f1": 1.88,
+            "was": {"shift_f2_over_f1": 1.56, "delay_f2_over_f1": 2.07},
+        },
+    },
+    "gameboard_mean_transverse_angle_degrees": {
+        "mass_g0": -4.203,
+        "mass_g1": -8.976,
+        "near_g0": -6.993,
+        "near_g1": -8.277,
+        "was": {"mass_g0": -4.181, "mass_g1": -8.680, "near_g0": -6.854, "near_g1": -11.955},
+    },
+    "note": (
+        "the controls byte identical to the first run; the delays' ratios inside 2.00 +- 0.25 as "
+        "before; the shifts inside 0.5 pixel in two of four (three before M1): near at f = 2 now "
+        "outside by 1.06, a survivors' reading with 547 taken; the shifts' ratio outside as before; "
+        "the rule and the pins unchanged"
     ),
 }
 

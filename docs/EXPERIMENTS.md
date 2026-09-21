@@ -6724,12 +6724,40 @@ sequential gates on an entangled record, the full register replay.
   on the model owner's return list; nothing of it built. The readings with
   every column in [the worlds' README](../examples/events/optical/README.md);
   the gate set byte identical without the key.
-- **Verdict.** The wall's factor reached (the delays 2.03 and 2.07 for
-  2.00); the turn bends the beam toward the mass at every f with the shifts
-  inside 0.5 pixel in three of four; the shifts' ratio not read at this
-  fan (2.37 and 1.56 for 2.00 within 0.25, the comb's, inside the
-  propagated bracket): a hypothesis under its own identity, nothing of it
-  in the law, gamma an input of the world.
+- **Re-read after M1 of the physics-rule review** (2026-09-21; the review
+  of 408cf719, record 494, found the walk's count capped after the
+  primitive with the residue of the uncapped count kept and the residue
+  carried unscaled across a turn; the fixed head caps by the primitive's
+  own `at_most` with the surplus kept and rescales the residue at a turn
+  as the time of the last Link, s' = (s x S_new) // S_old, the chief
+  physicist's word of record 496; `tests/test_optical.py` (g) and (h);
+  the same tools, 400 intervals, the controls byte identical). DETECTOR,
+  the first run's value beside: `mass` at f = 1 the shift -1.622 (was
+  -1.607) and the delay +2.97 (was +2.89); at f = 2 -3.805 (was -3.812)
+  and +5.88 (was +5.87); `near` at f = 1 -3.000 (was -2.992) and +2.40
+  (was +2.40); at f = 2 -3.274 (was -4.654) and +4.51 (was +4.97), 1001
+  clicks (was 1122) and 547 taken by the mass (was 398); the delays'
+  ratios 1.98 and 1.88 (were 2.03 and 2.07), inside 2.00 +- 0.25; the
+  shifts' 2.35 and 1.09 (were 2.37 and 1.56), outside. One line of the
+  reading turns: the shifts are inside 0.5 pixel in two of the four
+  worlds, not three, `near` at f = 2 now outside by 1.06 pixel, the
+  survivors' reading with the mass taking 547; the wall's factor, the comb
+  and the bracket's fact stand as read; the reviewer's counterexample (the
+  residue scaled by T_new / T_old) had moved the four by hundredths, and
+  the physicist's S ratio differs from the T ratio by 1.72 at a turn from
+  a heading to a diagonal. GAMEBOARD: the mean transverse angle of **P**
+  -4.203 / -8.976 degrees (`mass`, the ratio 2.136; was 2.076) and -6.993
+  / -8.277 (`near`, 1.184; was 1.744, 80 survivors' rows for 99). The
+  rule and the pins unchanged; the readings with every column in the
+  worlds' README.
+- **Verdict.** The wall's factor reached (the delays 1.98 and 1.88 for
+  2.00 after the review's M1; 2.03 and 2.07 before it); the turn bends the
+  beam toward the mass at every f with the shifts inside 0.5 pixel in two
+  of four (three of four before M1; `near` at f = 2 a survivors' reading);
+  the shifts' ratio not read at this fan (2.35 and 1.09 for 2.00 within
+  0.25, the comb's and the survivors'; 2.37 and 1.56 before M1): a
+  hypothesis under its own identity, nothing of it in the law, gamma an
+  input of the world.
 
 ### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
 

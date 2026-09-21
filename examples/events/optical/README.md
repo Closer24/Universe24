@@ -16,6 +16,21 @@ fan, the beam and the screen), the pins before any run in
 lines), the readings by `tools/lensing_readings.py` against each folder's
 control.
 
+The key reads the crowd twice, both at the row's own Node and less its
+own number (the physics-rule review of 408cf719, record 494, S3): the
+wall's age moment A before step 1, one interval retarded, and the turn's
+flow **V** after the walk and the collision, the interval's own arrivals,
+the crossing rule's set. The row's flight residue crosses a turn as the
+time of its last Link, s' = (s x S_new) // S_old with S the Manhattan
+length (the chief physicist's word, record 496), exact from a heading
+(every first turn in these worlds); between two off-heading directions
+the remainder under one unit of the accumulator, 1 / (2 Q d S_new) of an
+interval (about 4 x 10^-8 here), is dropped: the one place the flight's
+time is not exact, bounded by one unit per turn (whether that remainder
+is carried at the price of a denominator per row is the model owner's
+footnote on his return, not a blocker). The count at the new wall is
+capped at one Link by the primitive's `at_most` with the surplus kept.
+
 | World | gamma | f | M | b | pinned shift, pixels (DETECTOR) | pinned delay, intervals (DETECTOR) |
 | --- | --- | --- | --- | --- | --- | --- |
 | `control_g0.json`, `control_g1.json` | 0, 1 | 1, 2 | - | - | 0 | 0 |
@@ -41,7 +56,7 @@ PYTHONPATH=src python tools/lensing_readings.py artifacts/optical_g1 --no-replay
 the conservation of the momentum, the refusals, the byte identity without
 the key) and the shipped worlds to the generator and the register.
 
-## Measured (2026-09-21, one run on branch optical-v1, after the pins above)
+## Measured (2026-09-21, the first run on branch optical-v1, after the pins above; the re-read after the review's M1 below)
 
 DETECTOR, the screen's late window, each world against its folder's
 control (the tool's own verdict columns compare with series K's pins and
@@ -115,3 +130,57 @@ saying nothing about where the light arrives; per row the angle of **P**
 against the label's, the mean +0.55 / -0.29 degrees (`mass`) and +0.57 /
 +0.08 (`near`), the largest 3.0 to 4.2 degrees: the position's error the
 comb leaves on a row.
+
+## Re-read after M1 of the physics-rule review (2026-09-21, the fixed head)
+
+The review of 408cf719 (docs/designs/optical_v1/REVIEW_408CF719.md,
+record 494) found the junction of verb 1 and verb 3 undeclared: the walk
+capped its count after the primitive and kept the residue of the uncapped
+count, and the turn carried the residue in the old direction's units. The
+fixed head caps the count by the primitive's own `at_most` with the surplus
+kept and rescales the residue at a turn as the time of the last Link,
+s' = (s x S_new) // S_old (the chief physicist's word, record 496;
+`tests/test_optical.py` (g) and (h)). The six worlds run again on it
+(`tools/run_series.py --jobs 2`, 400 intervals) and read by the same tools;
+the two controls byte identical to the first run (no crowd, no turn; the
+state 96d9aa366dce), the four mass worlds moved. DETECTOR, the first run's
+value beside each new one as "was":
+
+| World | f | clicks in the window (control 1455) | centroid y, shift | width rms y, delta | mean age, delay | count ratio | light the mass took | pinned shift / delay | inside |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `mass_g0` | 1 | 1398 (was 1396) | 24.378, -1.622 (was -1.607) | 3.330, +0.502 (was +0.514) | 92.37, +2.97 (was +2.89) | 0.9608 (was 0.9595) | 0 (was 0) | -1.93 / 2.68 | yes / yes |
+| `mass_g1` | 2 | 1389 (was 1385) | 22.195, -3.805 (was -3.812) | 3.665, +0.836 (was +0.833) | 95.28, +5.88 (was +5.87) | 0.9546 (was 0.9519) | 0 (was 0) | -3.86 / 5.36 | yes / yes |
+| `near_g0` | 1 | 1455 (was 1456) | 20.000, -3.000 (was -2.992) | 4.195, +1.367 (was +1.371) | 91.80, +2.40 (was +2.40) | 1.0000 (was 1.0007) | 0 (was 0) | -2.42 / 2.17 | no (by 0.08; was by 0.07) / yes |
+| `near_g1` | 2 | 1001 (was 1122) | 19.726, -3.274 (was -4.654) | 4.467, +1.638 (was +2.326) | 93.91, +4.51 (was +4.97) | 0.6880 (was 0.7711) | 547 (was 398) | -4.83 / 4.34 | no (by 1.06; was yes) / yes |
+
+The ratios f = 2 over f = 1: the delays 1.98 (`mass`, was 2.03) and 1.88
+(`near`, was 2.07), both inside the pinned 2.00 +- 0.25; the shifts 2.35
+(`mass`, was 2.37) and 1.09 (`near`, was 1.56), outside. The centroid in z
+20.000 in every world, as before.
+
+Against the physicist's four items above: (1) the delays' ratios stay
+inside the bracket, the wall's factor still read as Shapiro's; (2) the
+shifts are inside 0.5 pixel in two of the four worlds, not three: `mass`
+at both f as before, `near` at f = 1 outside by 0.08 (was 0.07, the beam's
+width at b = 3 as before), and `near` at f = 2 now outside by 1.06 pixel
+(was inside by 0.18); (3) the shifts' ratio stays unread at this fan
+(`mass` 2.35, the comb's; `near` 1.09, the survivors'); (4) `near` at
+f = 2 is the survivors' reading more than before: the mass takes 547 of
+the beam's clicks (was 398), the survivors the outer beam, its centroid
+less deflected. The four `mass` readings and `near` at f = 1 moved by
+hundredths, as the reviewer's counterexample tree had them (his residue
+scaled by T_new / T_old: -1.622 / -3.806 and -3.000 / -4.408 pixels, the
+delays 2.96 / 6.04 and 2.60 / 5.15); `near` at f = 2 moved by more than a
+pixel under the physicist's rule, S_new / S_old, which differs from the
+T ratio by 1.72 at a turn from a heading to a diagonal, in the world where
+the beam turns most and the mass takes most. No pin was changed and no
+second rule entered; the reading is recorded as it is.
+
+The bounded diagnostic re-read (GAMEBOARD, `tools/optical_readings.py`,
+the first run's value as "was"): the mean transverse angle of **P**
+`mass` -4.203 / -8.976 degrees (was -4.181 / -8.680; the ratio 2.136, was
+2.076), `near` -6.993 / -8.277 (was -6.854 / -11.955; the ratio 1.184,
+was 1.744; 80 rows at f = 2 for 122 at f = 1, was 99 for 122); per row
+the angle of **P** against the label's, the mean +0.53 / -0.52 degrees
+(`mass`, was +0.55 / -0.29) and +0.48 / -0.35 (`near`, was +0.57 /
++0.08), the largest 1.7 to 3.6 degrees (was 3.0 to 4.2).

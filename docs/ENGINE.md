@@ -484,13 +484,17 @@ the row's flight joins the age wall's declared set at the coefficient
 f = 1 + gamma (`measured.age_wall_set`: the rate 2 S_1 Q d against the
 wall 2 T_D (d + f n A), A the crowd's age moment at the row's Node read
 before step 1, one interval retarded, the accumulator a field of the row
-with its residue, `nature_beam.optical_walk_step`; the click's exact
+with its residue, `nature_beam.optical_walk_step`, one Link per interval
+by the primitive's own cap with the surplus kept; the click's exact
 phase reads the stored accumulator), and after the collision every row
 of content in free space is pushed by the interval's arrival flow at its
-Node, **W** -= n (1 + gamma) content e_D **V**, and turns to the fan's
-neighbour nearest its whole momentum Q d content **u**_D + **W**, the
-momentum conserved across the turn (`nature_beam.optical_turn`, the
-books' `turned` line); refused with `suspension` 0, with `meeting` (one
+Node (the interval's own arrivals, read after the walk and the
+collision, the crossing rule's set), **W** -= n (1 + gamma) content e_D
+**V**, and turns to the fan's neighbour nearest its whole momentum
+Q d content **u**_D + **W**, the momentum conserved across the turn and
+the flight's residue rescaled to the new direction's rate, s' = (s x
+S_new) // S_old, the time of the row's last Link (records 494 and 496;
+`nature_beam.optical_turn`, the books' `turned` line); refused with `suspension` 0, with `meeting` (one
 turn verb per row), with a direction that has no neighbour within a right
 angle, and with gamma out of range; the inverse interval refused under
 it; the record carries the block `optical` {gamma, flight_coefficient}

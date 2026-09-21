@@ -131,7 +131,7 @@ kept, their pins the law of events').
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the two integer audits (`core/` integers only; `events/` integer numpy and nothing that leaves the integers, `run.py` outside it), LOCALITY-1 documented without an exception, and the six-read test ([below](#locality-and-bounded-local-work)): a Node reads nothing beyond one Link, a change reaches a Node no sooner than the flight allows |
 | `test_group_structure.py` | The group structure named on 2026-09-21: the cube's group of 48 (closed, the identity, every inverse, the hand +1 on 24 rotations and -1 on 24 reflections, multiplicative), the phase circle as the cyclic group with its unit vectors (a turn, a difference, the opposite phase; equal phases 65536, opposite phases its negative, C^2 + S^2 within 361 of 65536), the collision as a group action (the period the class's size, one cycle per class, the inverse undoing the shift, the invariants constant along a cycle) ([below](#the-group-structure)) | new (2026-09-21; the vector program, record 191; BEAM_LAW note 42) |
 | `test_meeting.py` | The meeting: the arc permutation of the direction table (a permutation for 1034 targets on K's table, the rest fixed, the chain from +x, the k-fold shift), the phase register (61, 62, 63, 0, 1, 2 with the turn at the fourth; the inverse), the sign of the turn and the `turned` line, the crowd and the record untouched, the bijection with the meeting (50 forward, 50 inverse) and the refusals ([below](#the-meeting)) | new (2026-09-20, the model owner's "DECIDED: the meeting, M-R"; the physicist's and the mathematician's design) |
-| `test_optical.py` | optical-v1 in its generic form (2026-09-21, the world key `optical: gamma`, absent by default; docs/designs/one_wall/NOTE.md): the flight's wall stretched by the crowd's age moment at f = 1 + gamma integer for integer with `by_drive` by hand (one Link per 12 intervals on a crowd of A = 12 at [1, 4], f = 2; the flight off the age without the key); the push and the turn of one row (**W** = (0, -14080, 0) then the label to (1, -1, 0) and **W** = (4864, -2560, 0), the books' `turned` line (-19, -45, 0)); **P** conserved across the turn; the refusals (suspension 0, meeting, gamma out of range, a direction without a neighbour) and the identity; byte identity without the key and the declared set; the six pin worlds parse, run balanced and carry their pins ([below](#optical-v1-in-its-generic-form)) | new (2026-09-21, optical-v1) |
+| `test_optical.py` | optical-v1 in its generic form (2026-09-21, the world key `optical: gamma`, absent by default; docs/designs/one_wall/NOTE.md): the flight's wall stretched by the crowd's age moment at f = 1 + gamma integer for integer with `by_drive` by hand (one Link per 12 intervals on a crowd of A = 12 at [1, 4], f = 2; the flight off the age without the key); the push and the turn of one row (**W** = (0, -14080, 0) then the label to (1, -1, 0) and **W** = (4864, -2560, 0), the books' `turned` line (-19, -45, 0)); **P** conserved across the turn; the refusals (suspension 0, meeting, gamma out of range, a direction without a neighbour) and the identity; byte identity without the key and the declared set; the six pin worlds parse, run balanced and carry their pins; the residue across a turn rescaled to the new direction's rate, s' = (s x S_new) // S_old, and the count capped at one Link by the primitive with the surplus kept (records 494 and 496; the chains (3, 348800), (4, 202216), (5, 66280), (5, 271080) and (3, 6886), (4, 558), (4, 8750), (5, 2862)); the push accumulator's sums tested at the register ([below](#optical-v1-in-its-generic-form)) | new (2026-09-21, optical-v1) |
 | `test_amplitude_record.py` | The record on the row (`amplitude-v1`): the world key `amplitude` deleted and refused, the identity `amplitude-v1` on a world with a lamp alone; the four columns `record`, `branch`, `multiplicity` and `birth` at their defaults on every row of no record and the merge's packed key unchanged by them; the merge's normal form, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
 | `test_amplitude_split.py` | The split, the birth of a record and the phase per interval of age: a lamp's birth of one record of k rows with the multiplicity k and the identity number x 2^32 + ordinal; the (20, 21) splitter's rows (41 in phase toward D1, 1 in antiphase toward D2, the multiplicity 1682) and the balanced split's cancel on the GameBoard with the `cancelled` lines; the pair form of `phase_per_link` (40 at [8, 1], 26 at [16, 3], 24 at the integer 8 after 5 intervals; the inverse bit-exact); the refusals ([below](#the-amplitude-law-the-split)); the birth's and the split's rows and cancels read from `expectations.json` under `mach_zehnder` (2026-09-21) | new (2026-09-20; the design's sections 2.1, 2.3, 3.1 and 3.4; the owner's unifications (1) and (2)) |
 | `test_amplitude_layer.py` | The layer: the reading `sum` at the record's scope, the offers, the ladder at completion and the gathers, on series L: the ten Mach-Zehnder and Elitzur-Vaidman worlds click as the design's table over the 64 births (tests 1, 3), the same list twice and the moved rung (8), a split takes no click gate (the review's B1), the two slits at a low rate against the generator's reading of one birth (2: 78 of 80 sets exact, one rung moved by the tables' rounding), the gate set parses without the key (7), the reading tool's replay equals `run.json`'s `world` (10), the pair form bounded at the parse (S1), the cancel booked per content (S3), a lamp short of one quantum per direction refused (S4), the `record` line's scope ([below](#the-amplitude-law-the-layer)); every number of the series read from `expectations.json` (2026-09-21) | new (2026-09-20; the design's sections 3, 5 and 7; the decision on the split's gate) |
@@ -1917,7 +1917,8 @@ default), the integers written before the run:
   **W** = -(1 x 2 x 1 x 110) x (0, 64, 0) = (0, -14080, 0), its **P** =
   (16384, -14080, 0) nearer to (1, -1, 0) than to +x (30464^2 x 1 >
   16384^2 x 2), the label moves and **W** += 256 x (19, 45, 0) =
-  (4864, -2560, 0); the books' `turned` line of `light` (-19, -45, 0), the
+  (4864, -2560, 0), its residue 72 in the heading's units rescaled to 144
+  in the diagonal's (S_1 2 over 1, (g)); the books' `turned` line of `light` (-19, -45, 0), the
   transit momentum (45, 19, 0), balanced; the m row (content 0) untouched;
   without the key the row keeps +x and the line is 0.
 - (c) **P** = Q d content **u**_D + **W** before the turn equals it after,
@@ -1940,6 +1941,32 @@ default), the integers written before the run:
   and -2.42 / -4.83 pixels, the delays 2.68 / 5.36 and 2.17 / 4.34, the
   ratio 2.00 with the bracket 0.5 pixel; the inverse interval refused
   under the key.
+- (g) the residue across a turn (M1 of the physics-rule review of
+  408cf719, record 494; the chief physicist's word of record 496): a
+  GameBoard of 8 x 3 x 1 at [1, 64] and `optical` 1, the fan the twelve
+  edge diagonals with (24, +-1, 0) (T_D 2662, S_1 25, the label
+  (64, 3, 0); the heading's T_D 110, S_1 1); a row of `light` at
+  (1, 1, 0) pushed by a row of `m` arriving at its Node. From (1, 0, 0) at
+  age 5 (the pair (3, 90 x 64)) to (24, 1, 0): the residue 13952 after
+  the first walk rescaled 25 x 13952 = 348800, above the long wall
+  340736 by 2.4 per cent (a Link already paid), the last Link's time
+  13952 / 8192 = 348800 / 204800 unchanged; the chain of (made, residue)
+  after each interval (3, 348800), (4, 202216), (5, 66280), (5, 271080)
+  against the walls 351384 (A = 1), 340736, 340736, one Link in each of
+  the second and third intervals, integer for integer with `by_drive` at
+  `at_most` 1. From (24, 1, 0) at age 4 (the pair (2, 4814 x 64)) to
+  (1, 0, 0): the residue 172160 after the first walk becomes 172160 //
+  25 = 6886 (the remainder 10 dropped, the time within 1 / 8192 of an
+  interval), then (4, 558), (4, 8750), (5, 2862) against the heading's
+  walls 14520, 14080, 14080; the head before the fix measured 172160
+  unscaled against 14520 (a raw count of 12) and kept 6112, the residue
+  of the uncapped count.
+- (h) the push accumulator's sums at the register (S1 of the same
+  review): the turn world of (b) with the light row's **W** preset:
+  W_x = 2^63 - 1 - 14080 takes the push 14080 at the bound (no turn, the
+  row keeps +x, **W** = (2^63 - 1 - 14080, -14080, 0)); W_x one more
+  refuses ("push accumulator"); W_y = -(2^63 - 1 - 14080) takes the push
+  at the bound and the turn's shift is refused ("turn").
 
 ## The covariant readings
 

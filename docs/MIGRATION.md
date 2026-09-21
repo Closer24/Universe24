@@ -143,6 +143,24 @@ without the key). Under the key:
   phase's turn count, a different thing that is never in the set). The note's Q S content **u**_D + **w**
   with S = d / n is built cleared of n (**W** = n **w**), so that the turn's
   arithmetic is exact in integers for any pair.
+- The junction of verb 1 and verb 3 (the physics-rule review of 408cf719,
+  docs/designs/optical_v1/REVIEW_408CF719.md, record 494, M1; the chief
+  physicist's word on the residue's units, record 496): the walk's count
+  is capped at one Link by the primitive's own `at_most` with the surplus
+  kept (the head before the fix capped the count after the primitive and
+  kept the residue of the uncapped count, destroying up to 24 walls of
+  paid credit at a turn), and the turn rescales the row's residue to the
+  new direction's rate, s' = (s x S_new) // S_old, the time of the last
+  Link age - s / r conserved, exact from a heading and truncated under
+  one unit of the accumulator between two off-heading directions (the one
+  place the flight's time is not exact, bounded by one unit per turn;
+  whether that remainder is carried at the price of a denominator per
+  row is the model owner's footnote on his return). The push
+  accumulator's sums **W** + n weight **V** and **W** + Q d content
+  (**u**_D - **u**_D') are tested against the working register before
+  they are formed (S1). `tests/test_optical.py` (g) and (h); the pin
+  worlds re-run on the fixed head and the entry re-read with the old
+  value beside the new.
 - A body's push and drive are untouched (its weight keyed off until form B,
   REVIEW_3 must-fix 2 and 3): the body's drive is not a member of the set
   on `main`.
@@ -161,7 +179,7 @@ without the key). Under the key:
   at [1, 16384] with the mass x 16, at gamma 0 and 1, with the controls),
   their pins in `expectations.json` before the run and the run's readings
   in the README and the register's entry; `tests/test_optical.py` (a) to
-  (f).
+  (h).
 
 ## The covariant readings, on 2026-09-21 (a world key, absent by default)
 
