@@ -1700,8 +1700,11 @@ register.
   birth phases (6.2 (ii)), the tables' violation of (a), a part in 276;
   the theorem's R is the exact form the design checks as the inverse
   (2.4), and the design's 2.5 (the ladder normalised by the record's
-  total, not by T at birth) is the rule that keeps one click per record
-  under that violation.
+  total, not by T at birth) is the rule that keeps one click per record under that violation (one
+click per record, `b_K = N`, every u in exactly one cell, rests on `T >
+0`, which the isometry theorem supplies for a record born with a
+nonzero row whose every end is an offer; at `T = 0` the engine's guard
+gathers nowhere, the auditor's round 4b).
 
 **The limit.** As `N = 2^k` grows the admissible readings are the same
 family with `N / 4` constants; for two rows at the angle `theta = 2 pi D
@@ -5915,7 +5918,7 @@ column.
 | 57 | Schrodinger for a free particle | the pair (flight, phase) of the linear block; a body's phase per Link | none: the rows' dispersion is `omega = c k`, a body is one record | 21.5 |  | none | no run | not applicable | not applicable | not reached (D); `dispersion-v1` named; section 23 checks the route as `massive-rows-v1` (row 60) |
 | 58 | Kepler's three laws | the push `p += -M_A V(x)` in the shell mean (B), the drive on the momentum's direction, form B (T) | the ellipse, equal areas, `T = 2 pi r^(3/2) sqrt(4 pi S / q)` with `G M_B = q / (4 pi S)`; on the plane `T = 2 pi r (Q S m + abs(p) / c) / abs(p)`, `T ~ r` | 3.3, 12b.2, 21.5 | `kepler_compton.py` | series D's `s32_r24` (the plane); `s32_r24_lamp` and `s32_r12_lamp` to be written | pinned, not run, on the lamp worlds `s32_r24_lamp` and `s32_r12_lamp` under form B's pace (decided and in build; the physicist's `lamp_orbits_map.py`, the circular momenta re-derived under the directional drive, n = 10 at S = 32, 640 label units per unit of content): T 784 (714 to 855) at r = 24 and 392 (357 to 428) at r = 12, the mean radius `24.8 +- 1` and `12.4 +- 1`, the age's minimum advancing `-81 +- 15` degrees per radial period at both radii (the closed form `psi = pi / sqrt(1 + e)`, `e = d ln v / d ln p = 0.651` at n = 10: 140.1 degrees, `-79.8`; `kepler_compton.py` (D)), `T(24) / T(12) = 2.00 +- 0.15`; the earlier `-105 +- 15` the Newtonian pace's (e = 1) and the earlier 795 form B's period at the kept momentum 576, both kept as the record (21.5 row 58) | first order in `Link / r` and in `v / c` | form B's first-order slowing `1 / (1 - v / c)`; the fan's grain (`r^-1.83` on the 2616 shell); the lattice's own precession not derived | R in the limit (space); the plane's exponent 1 (F); the lattice's precession D |
 | 59 | Compton, `lambda' - lambda = (h / (M c)) (1 - cos theta)` | the exact square (B) and the momentum's conservation at a `measure` then a `rerelease` (17.6 M7, N5), the released turn `floor(k' / h)` (T) | `1 / k' - 1 / k = sqrt 3 (1 - cos theta) / (Q S M)`, `lambda = h / k` Links, `c = 1 / sqrt 3` | 17.6 M7, N5, 21.5 | `kepler_compton.py` | the `compton` world (to be written), after covariant-readings-v1 is built | pinned, not run: the faces' turns 16 (+x), 11 (+-y, +-z), 8 (-x), 14 and 9 on the face diagonals, from k = 16 at `Q S M = 64` (21.5 row 59) | exact on the pair `c^2 = [1, 3]`; first order in `(k - k') / k` at the heading's c | the residual `(gamma^2 - 3) (k - k')^2 / (2 E'_0 gamma)`, `gamma^2 - 3 = 141 / 3025`; the floor of `k' / h` (one step); the fan's grain | H under covariant-readings-v1 with the exchange's accounting (`books`, N5); D on `main` |
-| 60 | Schrodinger for a free particle, `massive-rows-v1` | the massive row: the flight's wall `E' = isqrt(E'_0^2 + 3 p . p)` (the photon its `E'_0 = 0` case, `T_D`), the turn `abs(p_a) N / h` per axis Link (7.2), no turn per interval | the phase `(N / h) p . x` on the Nodes; the Helmholtz equation `Laplacian(psi) + k^2 psi = 0`, `k = 2 pi p / h`: the time-independent Klein-Gordon form exactly, Schrodinger's at small p; the time-dependent form not reached | 23 | `massive_rows.py` | the `slits_matter` world (to be written) | pinned, not run: the bright bands at the pixels 36.5, 60, 83.5 within one, Pearson `0.96 +- 0.02`, the centre's first click at `1 + 828` within 2 (23.3) | exact on the Nodes for the phase; the dispersion within a part in `E'`; Schrodinger's at second order in `p / E'_0` | the fan's grain, the floor of `E'` (a part in 4113), the temporal phase dropped (a global factor per record) | reached only in part (the time-independent form); H, `massive-rows-v1` named, not built |
+| 60 | Schrodinger for a free particle, `massive-rows-v1` | the massive row: the flight's wall `E' = isqrt(E'_0^2 + 3 p . p)` (the photon its `E'_0 = 0` case, `T_D`), the turn `abs(p_a) N / h` per axis Link (7.2), no turn per interval | the phase `(N / h) p . x` on the Nodes; the Helmholtz equation `Laplacian(psi) + k^2 psi = 0`, `k = 2 pi p / h`: the time-independent Klein-Gordon form exactly, Schrodinger's at small p; the time-dependent form not reached | 23 | `massive_rows.py` | the `slits_matter` world (to be written) | pinned, not run: the bright bands at the pixels 36.5, 60, 83.5 within one, Pearson `0.96 +- 0.02`, the centre's first click at 941 within 2 (23.3, the lamp's flight to the opening counted) | exact on the Nodes for the phase; the dispersion within a part in `E'`; Schrodinger's at second order in `p / E'_0` | the fan's grain, the floor of `E'` (a part in 4113), the temporal phase dropped (a global factor per record) | reached only in part (the time-independent form); H, `massive-rows-v1` named, not built |
 
 ### 21.3 How to read the map for the paper
 
@@ -6556,8 +6559,11 @@ label units along each fan direction, so that `E' = isqrt(16 922 416) =
 h / p = 256 / 55 = 4.6545` Links (the photon world's `4.654`, which is
 the point: the same fringes from de Broglie's `h / p` in place of `c N d
 / n`), the pace `p / E' = 220 / 4113 = 0.05349` Links per interval
-(`0.0926 c`; the photon's 0.5818); 5100 intervals (the last birth's
-arrivals by 4096 + 978).
+(`0.0926 c`; the photon's 0.5818); 5250 intervals (the last birth's
+arrivals by `4096 + 112 + 978 = 5186`: the lamp at x = 2 shoots 6 Links
+to the openings at x = 8, 112 intervals at this pace, then the
+opening's re-release; the count corrected by the physicist's design,
+PR #539, and verified here, 5100 before it).
 
 **The DETECTOR reading, pinned** (the screen's clicks per pixel over
 the 4096 births): the bright bands centred at the pixels 36.5, 60 and
@@ -6568,11 +6574,13 @@ Pearson with the two-source cosine `0.96 +- 0.02` and the visibility
 `0.95 +- 0.03` over the 4096 births on the screen's fan (record 156's
 0.963 and 0.96 for the photon at the same lambda; `slits_huygens`
 registered 0.891 and 0.966 on its Farey fan), dark pixels 0 to 3; the
-group pace: the first click at the centre pixel at the tick `1 + 828`
-within 2 (the path 44.28 Links over `220 / 4113`; the photon's 76), the
-first-fringe pixels' first clicks between 891 and 978 (the map's (C)).
+group pace: the first click at the centre pixel at the tick `1 + 112 +
+828 = 941` within 2 (the lamp's 6 Links to the opening, then the path
+44.28 Links, both over `220 / 4113`; the photon's `1 + 10 + 76`), the
+first-fringe pixels' first clicks between 1004 and 1091 (the map's (C)
+plus the 112 of the lamp's flight).
 What refutes: a band off by more than one pixel (the wavelength not `h /
-p`), the centre's first click off by more than 5 intervals (the pace
+p`), the centre's first click off by more than 5 intervals of 941 (the pace
 not `p / E'`), or no fringes (the phase not `p . x`).
 
 **The confrontation** (dimensionless, the form and not the units):
@@ -6714,7 +6722,7 @@ difference: **refuted**, **open**, **below reach**.
 | 24 | the exact phase at the click (note 45) | 11.1 | DERIVED | a function of the row's age and direction at a constant rate |
 
 So the physics that is NOT in **F** is short: seven grains (1, 5, 13,
-14, 15, 16, 17), two rules chosen among few (7, 20, 21 with them), one
+14, 15, 16, 17), three rules chosen among few (7, 20, 21), one
 imported member of a derived family (12's `c_1 = 1`), the apparatus (23),
 and the two inputs no postulate replaces (18, 19). Everything else in the
 referee's list (the bilinear form, the matrices, c, the factor 3, the
@@ -6814,14 +6822,20 @@ that is not a power of two (an excess above `0.001`). **What refutes**: a
 CHSH measurement on a maximally entangled pair with an uncertainty below
 `1 x 10^-4` reading a deficit below `2 x 10^-4` (S above 2.8282), or any
 deficit above `4 x 10^-4` outside its error; three times Poh's
-precision decides. **What the law owes before the pin is final**: the
-registered Bell worlds at N = 512 and 4096 run under the one click and
-the wheel `[r, W]` on the registered geometry (the values above are the
-design's host map, bell.txt, at N = 64, 256 and 1024 and 6.2's statement
-for the rest; the run at N = 4096 is the pin's run, no number moved). The
-pin before that run: `11584 / 4096` at every quadruple of the CHSH
-settings, the marginals `2048 / 4096`, the counts over `W` births within
-one of `W x` their rungs.
+precision decides. **The pin's run, made** (PR #528, merged at 84d7e5b7; until it the
+values above were the design's host map, bell.txt, at N = 64, 256 and
+1024 and 6.2's statement for the rest). The pin before the run: `11584
+/ 4096` at every quadruple of the CHSH settings, the marginals `2048 /
+4096`, the counts over `W` births within one of `W x` their rungs. The
+run: the registered Bell worlds at N = 512 and 4096 under the one click
+and the wheel `[r, W]` on the registered geometry read `S = 1448 / 512`
+and `11584 / 4096`, both exactly `181 / 64`, the marginals `256 / 256`
+and `2048 / 2048`, every count equal to its pinned count (N = 512: 219 /
+37 / 37 / 219, 37 / 219 / 219 / 37, 218 / 38 / 38 / 218 twice; N = 4096:
+1749 / 299 / 299 / 1749, 299 / 1749 / 1749 / 299, 1747 / 301 / 301 /
+1747 twice), PASS on all eight worlds; the register's block
+`bell_24_4` and the test `tests/test_amplitude_bell_24_4.py`. No number
+moved.
 
 **Why this one.** Rows 5 to 9 and 13 to 19 are refuted on `main` or
 below reach; row 4 is a grain the owner has declared an input (the
