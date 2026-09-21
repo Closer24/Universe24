@@ -3174,7 +3174,11 @@ implementation's part of the contract. The design above is unchanged.
     then holds in units of the count's denominator, that much is
     subtracted, and the remainder stays below the denominator, its one
     owner (the local integer operation contract's "declare the remainder
-    owner"), nothing at a Node. The counts and their records: the owed
+    owner"), nothing at a Node. The residue is the phase of the count
+    within its cycle, what the clock has already made toward its next
+    whole count (the model owner's reading, record 150 of
+    docs/LOG_2026-09-20.md), which is why the record carries it ((vi):
+    a run resumed without it is another run). The counts and their records: the owed
     count `acc_owed` (the rate `counted x n` at `suspension` [n, d],
     below d; `count_owed`), the free release `acc_release` per family
     (the rate `held x n` at `release` [n, d], below d), a lamp's rate
@@ -3188,7 +3192,8 @@ implementation's part of the contract. The design above is unchanged.
     same integers at every self-creation and the accumulator holds `(age
     n) mod d` (FORM.md section 1, proved; test (a) on every count over
     10^4 self-creations). The counts are one table on the body's record
-    (`Measured.counts`, a `CountTable` of `Count` rows built by
+    (the model owner's direction, "where is the table?", record 150 of
+    docs/LOG_2026-09-20.md: `Measured.counts`, a `CountTable` of `Count` rows built by
     `measured.counts_table` from the world's rates: the name, the source of
     the numerator, the index and axis, the rate's factor, the denominator,
     the cap `at_most` and the accumulator), and one loop,
@@ -3247,7 +3252,12 @@ implementation's part of the contract. The design above is unchanged.
     product is tested by division before it is formed and refused naming
     the column (`test_columns` (a): a refusal of its own where |V E n|
     Lambda^2 / (D d) does not fit the register with coprime denominators
-    of 30 bits, never elsewhere). Under `doppler` the weighted flow of
+    of 30 bits, never elsewhere); Lambda_c^2 itself is tested by division
+    where Lambda_c is formed, and a column whose square leaves the
+    register (Lambda_c above 2^31 - 1) is refused at load naming the
+    column and the bound, not at its first push (`world.column_scales`;
+    test (g); the physics-rule review of the branch,
+    `docs/designs/fraction_free/REVIEW.md` section 4). Under `doppler` the weighted flow of
     each direction is counted on `acc_flow[d][axis]` at the denominator G
     Q |v_d|^2 (one accumulator per direction: the directions' denominators
     have no common multiple within the register on a fan of a few hundred
@@ -3271,8 +3281,17 @@ implementation's part of the contract. The design above is unchanged.
     beside `drive`; a run resumed from a state is the unbroken run in
     every record (test (c)); a declared `acc` in a world file is refused.
     (vii) **The alignment of a lamp's births with the ticks.** A paid lamp
-    of content K + c (T - 1) or more keeps one birth per interval over T
-    intervals; below that its exact clock stalls where its content has
+    paying c per birth keeps one birth per interval over T intervals from
+    the least content K + c (T - 1) / 2 rounded up, K + T - 1 at c = 2
+    (K + 159 for the Bell lamps' 160 births): the frame reads the content
+    before the birth pays, so the k-th self-creation adds M0 - c (k - 1)
+    to the turn's accumulator, which after T of them holds T M0 - c T
+    (T - 1) / 2 less the K of each turn (the physics-rule review of the
+    branch, `docs/designs/fraction_free/REVIEW.md` section 5, and its
+    replay: K + 159 gives 160 births of 160, K + 2 the stall at tick 4);
+    K + c (T - 1), the bound stated first (REVIEW_COUNTS section 2 (b),
+    MIGRATION), is sufficient and not the least; below the least content
+    its exact clock stalls where its content has
     fallen below K (the Bell lamps of content K + 2, paying 2 per birth,
     once at tick 4; the L worlds' lamps of 2^20 at tick 2 and its pair
     lamps at tick 3), so the tick of a birth is

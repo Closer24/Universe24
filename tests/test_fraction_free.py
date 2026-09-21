@@ -68,7 +68,24 @@ fraction-free counts"), written down first:
     ladders (up to 8 cells, weights up to 2^20 over multiplicities up to
     64, N 64 and 256; an empty ladder None) and on every gather of
     `mz_equal`, `mz_345`, `bell_0_8` and `slits_low` (the chosen cell's
-    index in the gather's `cells` the comparison's).
+    index in the gather's `cells` the comparison's);
+(g) the bound of the push's denominator at load (the physics-rule review of
+    the branch, docs/designs/fraction_free/REVIEW.md section 4): a world
+    whose column scale Lambda_c (`world.column_scales`, the least common
+    multiple of the families' value denominators in the column) has a
+    square beyond the integer bound 2^62 - 1 is refused at the parse
+    naming the column and the bound, before any body's table is formed;
+    the run's refusal of the lifted product (`test_columns` (a)) stands
+    beside it. The ceiling of Lambda_c is 2^31 - 1 = 2147483647, the
+    integer root of the bound, a prime beyond one value's bound 2^30 - 1:
+    the free families `m` at the value [1, 2] and `w` at [1, 2^30 - 1] in
+    the column `s` load with Lambda_c = 2^31 - 2 = 2147483646, the largest
+    two declared values can form under the ceiling (its square 2^62 -
+    2^33 + 4, below the bound by 8589934587); `m` at [1, 2^30 - 1] alone
+    loads with Lambda_c = 2^30 - 1; `m` at [1, 3] and `w` at [1,
+    715827883] (3 x 715827883 = 2^31 + 1, the smallest two values can
+    form above the ceiling) are refused with Lambda_c = 2147483649 (its
+    square above the bound by 2^32 + 1).
 """
 
 from __future__ import annotations
@@ -83,13 +100,14 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from event_universe.core.game_board import MAX_VALUE
 from event_universe.core.integer import by_clock, by_drive
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.amplitude import cell_of, choose, rungs
 from event_universe.events.engine import count_owed, step_axis
 from event_universe.events.nature_beam import NO_ARRIVAL
 from event_universe.events.run import execute_nature_beam_run
-from event_universe.events.world import LABEL_SCALE, body_nodes
+from event_universe.events.world import LABEL_SCALE, MOMENTUM_BOUND, body_nodes
 from event_universe.snapshot_writer import write_snapshot
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -468,3 +486,48 @@ def test_the_ladders_cell_is_the_comparison_of_products():
             chosen = [k for k, cell in enumerate(cells) if cell[0] == gather["chosen"]]
             assert len(chosen) == 1, (name, gather["record"])
             assert choose(ladder, int(gather["u"])) == chosen[0], (name, gather["record"])
+
+
+# -- (g) ---------------------------------------------------------------------------
+
+
+def scaled_world(m_value: list[int], w_value: list[int] | None) -> dict[str, object]:
+    """The bar with the column `s` on the free family `m` at `m_value` and,
+    when given, on a second free family `w` at `w_value` (a paid family
+    carries no column value); the source of `m` its one measured event."""
+    families: list[dict[str, object]] = [
+        {"name": "m", "quantum": 0, "phase": False, "columns": {"s": {"value": m_value, "sign": -1}}},
+        {"name": "light", "quantum": 1},
+    ]
+    if w_value is not None:
+        families.append(
+            {"name": "w", "quantum": 0, "phase": False, "columns": {"s": {"value": w_value, "sign": -1}}}
+        )
+    return bar([SOURCE], families=families)
+
+
+def test_a_column_whose_lifted_denominator_leaves_the_register_is_refused_at_load():
+    """(g)."""
+    assert MOMENTUM_BOUND == (1 << 62) - 1 and MAX_VALUE == (1 << 30) - 1
+    # The largest Lambda_c two declared values can form under the ceiling
+    # 2^31 - 1 (the integer root of the bound, a prime beyond one value's
+    # bound): 2 x (2^30 - 1), its square below the bound, loads.
+    ceiling = (1 << 31) - 1
+    assert ceiling * ceiling <= MOMENTUM_BOUND < (ceiling + 1) * (ceiling + 1)
+    largest = ceiling - 1
+    loaded = parse_nature_beam_world(scaled_world([1, 2], [1, MAX_VALUE]))
+    assert loaded.column_scales == (1, 1, largest)
+    # One value at the register's bound alone.
+    alone = parse_nature_beam_world(scaled_world([1, MAX_VALUE], None))
+    assert alone.column_scales == (1, 1, MAX_VALUE)
+    # The smallest Lambda_c two values can form above the ceiling, 2^31 + 1
+    # = 3 x 715827883 (2^31 itself is beyond one value's bound): refused at
+    # the parse, naming the column and the bound, with no body's table formed.
+    above = (1 << 31) + 1
+    assert 3 * 715827883 == above and above * above > MOMENTUM_BOUND
+    with pytest.raises(ValueError) as refusal:
+        parse_nature_beam_world(scaled_world([1, 3], [1, 715827883]))
+    message = str(refusal.value)
+    assert f"the column 's': Lambda_c = {above}," in message
+    assert f"beyond the integer bound {MOMENTUM_BOUND}" in message
+    assert f"at most {(1 << 31) - 1}" in message
