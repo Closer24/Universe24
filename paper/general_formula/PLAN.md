@@ -2285,3 +2285,42 @@ The owner's independent testing agent reviewed main.tex at d17af9b9 (issue #577'
 
 The check checks/s_powers_of_two.py is added with its output; NUMBERS.md carries the new numbers. Referee round 45 (six findings, all applied: the differences' row 20's departure per cell; the entropy row's one standing; P1's overflow rule as the engine has it, refused at load where the static budget covers it and loudly at the step otherwise; the abstract's "at the powers of two"; row 3's 136 of 512 excluded under the identification, the rest surviving, the power of two a declaration; the Bell section's phrase bounded through 8192; his notes applied: the continuity identity holds for every source, the flux-equals-release form for a steady one; the energy's square the covariant readings'; Poh's angles not on the tree, dropped). His word after the fixes: CLEAN WITH NOTES. Then one reply per focused issue with the disposition and the commit.
 
+## Wave 24 (2026-09-21): the Boss's three messages that crossed wave 23 (14:16Z, 14:22Z, 14:26Z)
+
+(1) The click definition says what a non-absorbing read is (a deferred
+offer keyed by the labels, gathered at the record's one click) and that
+a read, a rotation and a second read taken as two outcomes in time is
+not modelled (issue 584, the architect's disposition). (2) The Bohr
+paragraph says a transition is one-shot (`become`, once, no product
+change of its own) and that an excited state that relaxes has no hook
+(issue 585). (3) The orbit's inward push: the physicist's note
+(docs/designs/orbit_read/NOTE.md, on the tree at 75efe7b5) in Kepler's
+row of the table, the differences' prose list and the record appendix,
+with its bibitem: the fan's Manhattan mean 1.287 (4 / pi uniform), series
+C's C = 1 on the six headings, the same form and a different constant.
+(4) The mathematician's exact numbers for F01 (PR 594, pending on main):
+the check extended with the closed form on the fixed correlations beyond
+the tables' bound, 11585/4096 at 65536, 46341/16384 at 131072,
+370727/131072 at 2^20, the distances from Poh (+1.05 on the plateau,
++2.01 at 16384 and 32768, +1.5 to +1.65 beyond), the same values the
+mathematician reports; the prediction paragraph and the Bell section
+carry them. Not done, waiting on the tree: "record 394" for the owner's
+word on the clock (cited by date until PR 581 lands, per the rule);
+NATURE row 8c's 9.8e-8 (PR 598); Malus at 22.5 degrees run (A12's
+registration and 24.3 row 4's turn to "run"). Referee round 46 before
+the commit.
+Referee round 46: FAIL on three lines, fixed: the closed form cited to
+the check alone (24.4 on the tree lacks it); the distance from Poh one
+number, 1.05 standard errors, in the abstract, the 24.4 paragraph, the
+prediction paragraph and NUMBERS (the Bell section keeps its local
+"standard deviations" beside the 152 and 30, a pre-existing mix of the
+two words across sections, noted); the orbit note's 1.29 labelled host
+arithmetic, no run, "registered" kept for the orbits alone. His notes
+applied: the auditor's pin 1.00 +- 0.15 apart from the register's
+C = 1.00 +- 0.10 on a fan (the refuted one); the push constant as the
+register's letter in typewriter (plain C is the cosine table's entry);
+the ring means 1.13 to 1.43 at r = 8 to 28; the read's selector keyed
+by the labels at the read and applied at the gather to the labels as
+the rotation left them; `become` turns the event into the `into`
+family, its products released, the key consumed. CLEAN WITH NOTES.
+
