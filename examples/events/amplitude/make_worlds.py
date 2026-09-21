@@ -196,6 +196,24 @@ half-angle tables' entries: `malus_a` 0+ 128, 0- 128; `malus_b` 0+ 0, 0-
 256; `malus_c` 0+ 64, 0- 64, 1+ 64, 1- 64; exact at 45 and 90 degrees
 (181 = 181, 0 and 256), no rounding.
 
+L1 at N = 32 and N = 128, the (3, 4) split (2026-09-21; the Boss's order
+on the auditor's round 4: the power window of DERIVATIONS_BEAM 6.5 pinned
+from above): `mz_345_n32` and `mz_345_n128`, the world `mz_345` scaled to N
+as `bell_n` scales the pair (the lamp's wheel [1, N], its turn N / 4 on
+arm 2, the splitter's turns N / 4; 80 and 150 intervals, every birth of
+the circle completed). The pin (`expectations.json` under `mz_345_n`),
+written before the run from the engine's own tables and ladder
+(`core.phase`, `amplitude.rungs`, `amplitude.cell_of`) on the rows the
+world's declared turns put at the ports (7 at u + N / 4 toward D1, 1 at
+u + N / 2 toward D2; the design's offers 49/50 and 1/50): the rung b_1 =
+(2 N x 49 + 50) // 100, 31 at N = 32 and 125 at N = 128, unmoved by the
+tables' rounding at any u, so D1 31 and D2 1 with u = 31 to D2, and D1 125
+and D2 3 with u = 125, 126, 127 to D2; and the window on the power k of
+the click's square that each N's cells admit (6.5: the cells b / (N - b)
+hold iff 7^k / (7^k + 1) lies in [(b - 1/2) / N, (b + 1/2) / N)), [1.548,
+2.129) at 32, the registered [1.917, 2.489) at 64, [1.835, 2.012) at 128,
+whose intersection with the pair's [1.784, 2.054) is [1.917, 2.012).
+
     python examples/events/amplitude/make_worlds.py [--out DIR]
 """
 
@@ -286,6 +304,18 @@ PYTHAGOREAN_29 = (20, 21)
 PYTHAGOREAN_169 = (119, 120)
 BALANCED = (1, 1)
 PYTHAGOREAN_5 = (3, 4)
+# The (3, 4) split at N = 32 and N = 128 (2026-09-21; the Boss's order on
+# the auditor's round 4: the power window of DERIVATIONS_BEAM 6.5 pinned
+# from above): `mz_345` scaled to N, the lamp's wheel [1, N], its turn N / 4
+# and the splitter's turns N / 4; per N the intervals that hold every birth
+# of the circle and its completion (the ports click eleven or twelve
+# intervals after a birth; the lamp's clock stalls as the births spend its
+# content).
+MZ_345_N: dict[int, int] = {32: 80, 128: 150}
+# The pair's window on the power from its registered cells 27, 5, 5, 27
+# (`bell_16_24_far`; DERIVATIONS_BEAM 6.5, stated there and not derived
+# here): the split's windows per N are intersected with it.
+PAIR_POWER_WINDOW = (1.784, 2.054)
 # A12 under the click, Malus's law (docs/designs/malus/NOTE.md, section 2):
 # one bar of 7 at N = 256 (the half-angle tables of 2N = 512 exist), the
 # lamp at x = 0 on the golden wheel [159, 256] (159 the odd integer nearest
@@ -329,14 +359,17 @@ def mach_zehnder(
     frequency: list[int] | None = None,
     absorber: bool = False,
     ticks: int = MZ_TICKS,
+    n: int = N,
 ) -> dict[str, object]:
     """The Mach-Zehnder world of the design's section 3.4 (the docstring's
     table): `splitter` the pair (a, b), `arm_turn` the phase added to arm
     2's row at the birth beyond the reflection's quarter turn, `unequal`
     the two pass-through re-emitters on arm 1, `frequency` the pair form
     of `phase_per_link`, `absorber` Elitzur-Vaidman's absorber in place of
-    mirror 2."""
+    mirror 2, `n` the circle N (64 by default): the lamp's wheel [1, N],
+    its quarter turn and the splitter's scale with it."""
     a, b = splitter
+    quarter = n // 4
     family: dict[str, object] = {"name": "light", "quantum": 1}
     if frequency is not None:
         family["phase_per_link"] = list(frequency)
@@ -348,9 +381,9 @@ def mach_zehnder(
             "fixed": True,
             "lamp": {
                 "rate": [1, 1],
-                "wheel": [1, N],
+                "wheel": [1, n],
                 "directions": [PLUS_X, PLUS_Y],
-                "turns": [0, (QUARTER + arm_turn) % N],
+                "turns": [0, (quarter + arm_turn) % n],
             },
         },
         mirror([3, 0, 0], PLUS_Y),
@@ -373,7 +406,7 @@ def mach_zehnder(
                     "rule": "rerelease",
                     "inputs": [PLUS_Y, PLUS_X],
                     "weights": [[b, a], [a, b]],
-                    "turns": [[QUARTER, 0], [0, QUARTER]],
+                    "turns": [[quarter, 0], [0, quarter]],
                 }
             },
             "directions": [PLUS_X, PLUS_Y],
@@ -393,12 +426,20 @@ def mach_zehnder(
         "boundary": {"z": "periodic"},
         "ticks": ticks,
         "K": CLOCK,
-        "N": N,
+        "N": n,
         "release": [0, 1],
         "suspension": 0,
         "families": [family],
         "measured": measured,
         "detectors": detectors,
+    }
+
+
+def mz_345_n_worlds() -> dict[str, dict[str, object]]:
+    """The (3, 4) split at N = 32 and N = 128: `mz_345` scaled to N."""
+    return {
+        f"mz_345_n{n}": mach_zehnder(f"mz_345_n{n}", splitter=PYTHAGOREAN_5, ticks=ticks, n=n)
+        for n, ticks in MZ_345_N.items()
     }
 
 
@@ -1268,6 +1309,7 @@ def worlds() -> dict[str, dict[str, object]]:
     found.update(pair_n_worlds())
     found.update(cone_worlds())
     found.update(malus_worlds())
+    found.update(mz_345_n_worlds())
     return found
 
 
@@ -1646,6 +1688,187 @@ def malus_expectations() -> dict[str, object]:
             "pass": counts["0+"],
         }
     return found
+
+
+def mach_zehnder_ports(
+    world: dict[str, object],
+) -> tuple[int, int, dict[str, list[tuple[int, int]]], int]:
+    """N, the wheel W, the rows a record born at u = 0 puts at each port
+    as (amount, phase) in the detectors' order, and the record's
+    multiplicity after the split, read off the world file: each arm is
+    born on a lamp direction with the lamp's turn, meets the mirror on its
+    ray (the one-direction `rerelease` there) and arrives at the splitter
+    along the mirror's direction, whose `inputs` row gives the weight and
+    the turn on every output direction, and an output direction names the
+    port whose Node is one Link from the splitter; the multiplicity is the
+    birth's rows times the sum of the squared weights of the row taken, A
+    = a^2 + b^2 on every input row of the one splitter (BEAM_LAW note 37
+    (ii); the registered (20, 21) split's 2 x 841 = 1682). A record born
+    at u has every phase advanced by u; nothing else of the flight turns a
+    row (`phase_per_link` 0)."""
+    measured = world["measured"]
+    detectors = world["detectors"]
+    assert isinstance(measured, list) and isinstance(detectors, list)
+    lamp = next(entry for entry in measured if "lamp" in entry)
+    assert list(lamp["lamp"]["rate"]) == [1, 1]
+    rate, wheel = lamp["lamp"]["wheel"]
+    assert rate == 1
+    n = int(world["N"])  # type: ignore[call-overload]
+    splitter = next(
+        entry
+        for entry in measured
+        if isinstance(entry.get("table", {}).get("light"), dict) and "weights" in entry["table"]["light"]
+    )
+    table = splitter["table"]["light"]
+    origin, node = list(lamp["position"]), list(splitter["position"])
+    port_of = {
+        tuple(v - w for v, w in zip(detector["positions"][0], node, strict=True)): str(detector["name"])
+        for detector in detectors
+    }
+    ports: dict[str, list[tuple[int, int]]] = {str(d["name"]): [] for d in detectors}
+    norms: set[int] = set()
+    for direction, turn in zip(lamp["lamp"]["directions"], lamp["lamp"]["turns"], strict=True):
+        mirror = next(
+            entry
+            for entry in measured
+            if entry.get("table") == {"light": "rerelease"}
+            and len(entry["directions"]) == 1
+            and all(
+                (p - o) * d >= 0 and (p - o) * (1 - abs(d)) == 0
+                for p, o, d in zip(entry["position"], origin, direction, strict=True)
+            )
+        )
+        arrival = table["inputs"].index(mirror["directions"][0])
+        weights, turns = table["weights"][arrival], table["turns"][arrival]
+        norms.add(sum(int(w) * int(w) for w in weights))
+        for out, weight, split_turn in zip(splitter["directions"], weights, turns, strict=True):
+            ports[port_of[tuple(out)]].append((int(weight), (int(turn) + int(split_turn)) % n))
+    (norm,) = norms
+    return n, int(wheel), ports, len(lamp["lamp"]["directions"]) * norm
+
+
+def mach_zehnder_pin(world: dict[str, object]) -> dict[str, object]:
+    """The clicks per port over the W births on the engine's own tables and
+    ladder (`core.phase`, `amplitude.rungs`, `amplitude.cell_of`; the pin
+    of `mz_345_n`, written before the run): per u the ports' pointers
+    (X, Y) = sum 32 x amount x (C[p + u], S[p + u]) over the rows of
+    `mach_zehnder_ports` (the coherent sum on the tables is what the
+    GameBoard's merge and cancel leave, C[p + N / 2] = -C[p] exactly),
+    the weights X^2 + Y^2 over the multiplicity, the rungs b_k = (2 W C_k
+    + T) // (2 T) on the wheel and the cell of u; the counts per port,
+    the u of every click at the last port, the rungs (one list when every
+    u gives the same, else the lists), and the totals' spread (the tables'
+    rounding by u, note 37 (xii))."""
+    from event_universe.core.phase import phase_cosines, phase_sines
+    from event_universe.events.amplitude import cell_of, rungs
+
+    n, wheel, ports, multiplicity = mach_zehnder_ports(world)
+    cosines, sines = phase_cosines(n), phase_sines(n)
+    names = list(ports)
+    counts = dict.fromkeys(names, 0)
+    to_last: list[int] = []
+    ladders: list[list[int]] = []
+    totals: set[Fraction] = set()
+    for u in range(wheel):
+        weights: list[tuple[int, int]] = []
+        for name in names:
+            x = sum(32 * amount * cosines[(phase + u) % n] for amount, phase in ports[name])
+            y = sum(32 * amount * sines[(phase + u) % n] for amount, phase in ports[name])
+            weights.append((x * x + y * y, multiplicity))
+        ladder, total = rungs(weights, wheel)
+        if ladder not in ladders:
+            ladders.append(ladder)
+        totals.add(Fraction(*total))
+        cell = cell_of(weights, wheel, u)
+        assert cell is not None
+        counts[names[cell]] += 1
+        if cell == len(names) - 1:
+            to_last.append(u)
+    return {
+        "N": n,
+        "W": wheel,
+        "ports": {name: [list(row) for row in rows] for name, rows in ports.items()},
+        "multiplicity": multiplicity,
+        "counts": counts,
+        f"u_to_{names[-1]}": to_last,
+        "rungs": ladders[0] if len(ladders) == 1 else ladders,
+        "distinct_totals": len(totals),
+    }
+
+
+def power_window(n: int, rung: int, ratio: Fraction) -> dict[str, object]:
+    """The window on the power k of the click's square that the cells
+    rung / (N - rung) admit (DERIVATIONS_BEAM 6.5): the ports' single rows
+    read `ratio` against 1 (7 = (a + b) / (b - a) on the (3, 4) split), so
+    a power k reads ratio^k against 1, and the first rung is b iff
+    ratio^k / (ratio^k + 1) lies in [(2 b - 1) / (2 N), (2 b + 1) / (2 N)),
+    that is ratio^k in [(2 b - 1) / (2 N - 2 b + 1), (2 b + 1) / (2 N - 2 b
+    - 1)); the bounds of ratio^k exact, k's to three decimals (a host
+    reading, as 6.5 states them)."""
+    low = Fraction(2 * rung - 1, 2 * n - 2 * rung + 1)
+    high = Fraction(2 * rung + 1, 2 * n - 2 * rung - 1)
+    return {
+        "cells": f"{rung} / {n - rung}",
+        "ratio_power_k_in": [str(low), str(high)],
+        "k_in": [round(math.log(low) / math.log(ratio), 3), round(math.log(high) / math.log(ratio), 3)],
+    }
+
+
+def mz_345_n_expectations() -> dict[str, object]:
+    """The pin of `mz_345_n` (2026-09-21, written before the run): per
+    world the counts, the u of every click at D2, the rungs and the totals'
+    spread from `mach_zehnder_pin` on the engine's tables and ladder, the
+    rung of the design's exact offers (a + b)^2 / T and (b - a)^2 / T
+    beside it (the tables' rounding moves it or not), and the power window
+    per N with the registered `mz_345` at N = 64 derived the same way and
+    equal to L1's register; the windows' intersection with the pair's."""
+    a, b = PYTHAGOREAN_5
+    ratio = Fraction(a + b, b - a)
+    total = (a + b) ** 2 + (b - a) ** 2
+    worlds: dict[str, object] = {}
+    windows: dict[str, object] = {}
+    lows: list[tuple[float, str]] = [(PAIR_POWER_WINDOW[0], "the pair")]
+    highs: list[tuple[float, str]] = [(PAIR_POWER_WINDOW[1], "the pair")]
+    registered = mach_zehnder("mz_345", splitter=PYTHAGOREAN_5)
+    for name, world in [("mz_345", registered), *mz_345_n_worlds().items()]:
+        pin = mach_zehnder_pin(world)
+        n = int(pin["N"])  # type: ignore[call-overload]
+        exact = (2 * n * (a + b) ** 2 + total) // (2 * total)
+        rungs_found = pin["rungs"]
+        assert rungs_found == [exact, n], (name, rungs_found, exact)
+        if name == "mz_345":
+            assert pin["counts"] == MACH_ZEHNDER_EXPECTATIONS[name]["clicks"]
+        else:
+            worlds[name] = {
+                **pin,
+                "wheel": [1, n],
+                "ticks": world["ticks"],
+                "births": n,
+                "rung_of_the_exact_offers": exact,
+            }
+        window = power_window(n, exact, ratio)
+        windows[str(n)] = {"world": name, "rung": exact, **window}
+        low, high = window["k_in"]  # type: ignore[misc]
+        lows.append((low, f"N = {n}"))
+        highs.append((high, f"N = {n}"))
+    low, low_from = max(lows)
+    high, high_from = min(highs)
+    return {
+        "reference": "DERIVATIONS_BEAM 6.5 (the power window) and 6.2 (the rung), the pin written before the run",
+        "splitter": list(PYTHAGOREAN_5),
+        "offers": dict(MACH_ZEHNDER_EXPECTATIONS["mz_345"]["offers"]),  # type: ignore[call-overload]
+        "ratio": str(ratio),
+        "pair_power_window": list(PAIR_POWER_WINDOW),
+        "power_windows": windows,
+        "intersection": {
+            "k_in": [round(low, 3), round(high, 3)],
+            "lower_bound_from": low_from,
+            "upper_bound_from": high_from,
+            "contains": [2],
+            "excludes": [1, 3],
+        },
+        "worlds": worlds,
+    }
 
 
 # The GameBoard and layer readings the register split registered beside the
@@ -2042,6 +2265,77 @@ REGISTERED_RUN_READINGS: dict[str, dict[str, object]] = {
             "read_rows_columns": "label, multiplicity, amount, phase (the two rows of a record at the read, the set bit a half turn on)",
         }
     },
+    # The (3, 4) split at N = 32 and N = 128: the run of 2026-09-21 (the
+    # experimenter, on the Boss's order on the auditor's round 4), each
+    # world once through the runner, its readings by kind and its run block
+    # (the README's section and the register's L1 entry); read by
+    # tests/test_amplitude_mz_345_n.py. Every pin met exactly, none moved.
+    "mz_345_n": {
+        "run": {
+            "date": "2026-09-21",
+            "order": "the power window of DERIVATIONS_BEAM 6.5 pinned from above; the Boss's order on the auditor's round 4",
+            "runner": "python -m event_universe --init <world> --output <dir> --ticks <intervals>, headless, one world at a time",
+            "main": "c8edd50f",
+            "package_version": "0.3.1",
+            "source_sha256": "5d254c8544aadc8826cee940024a36e88430135b08ba7719c7ae2eba4aabbbd3",
+            "families_sha256": "438444b1cec9eb47263ac6b4203a1028b94ef9e97819aceadf860e7680ce15ca",
+            "readings_by_kind": "DETECTOR: the gathers of the first W records by ordinal (the counts per port, the u of every click at D2, the rungs and the totals on the gather lines, the last gather's tick, the counts over every gather); GAMEBOARD: the books and the layer's counts (born, gathered, open), a diagnostic",
+            "host_cost": "the runner's wall time per world on a loaded host, apart from the model's cost: the plane's 25 Nodes at fixed local work per interval over the world's intervals, one record's offers held at the layer until its completion",
+            "verdict": "PASS: every pin met on both worlds, no number moved",
+            "worlds": {
+                "mz_345_n32": {
+                    "initialization_sha256": "b6e203013ac62a3f183ab9e08fcd1d5a85fd48a82850d12268aa045cf23b673c",
+                    "expanded_sha256": "aee5468bcc81d923b69d1fe82f142e632616c0bc9f39d19718754a16ae70985d",
+                    "completed_ticks": 80,
+                    "elapsed_seconds": 0.25,
+                    "host_wall_seconds": 0.48,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"D1": 31, "D2": 1},
+                            "u_to_D2": [31],
+                            "gathered_of_W": 32,
+                            "rungs_on_every_gather": [31, 32],
+                            "distinct_totals": 5,
+                            "last_gather_tick": 44,
+                            "counts_over_every_gather": {"D1": 66, "D2": 2},
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 79,
+                            "gathered": 68,
+                            "open": 11,
+                        },
+                    },
+                },
+                "mz_345_n128": {
+                    "initialization_sha256": "cef1d39dd4c6aeeb1d669a2ceb042f3fe607b4d1cf47d50f8dd08d9c82a83265",
+                    "expanded_sha256": "1b53b7da832bd3b69d142df2febbfe05a0973955931ae02085e0b706065b7cd3",
+                    "completed_ticks": 150,
+                    "elapsed_seconds": 0.41,
+                    "host_wall_seconds": 0.63,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"D1": 125, "D2": 3},
+                            "u_to_D2": [125, 126, 127],
+                            "gathered_of_W": 128,
+                            "rungs_on_every_gather": [125, 128],
+                            "distinct_totals": 16,
+                            "last_gather_tick": 140,
+                            "counts_over_every_gather": {"D1": 135, "D2": 3},
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 149,
+                            "gathered": 138,
+                            "open": 11,
+                        },
+                    },
+                },
+            },
+        },
+    },
 }
 
 # The source of every registered entry (the owner's principle of 2026-09-21,
@@ -2060,6 +2354,7 @@ DERIVATIONS: dict[str, str] = {
     "bell_24_4": "DERIVATIONS_BEAM 24.4 and 6.2: S = 181 / 64 exactly from the rungs b_k = (2 W C_k + T) // (2 T) of the ladder on the wheel W = N over the design's joint weights (bell.py, the half-angle tables of 2N), the marginals W / 2, every count within one of W x its weight over the total; the counts per cell under pair_n; the readings measured, the run of 2026-09-21, no number moved",
     "cone": "DERIVATIONS_BEAM 11.1: the flight's closed form m_D(tau) and tau_k = ceil((2 k - 1) T_D / (2 S_1 Q)), the phase k m_D(tau) under the integer form and floor(tau n / d) under the pair form; `exact` the phase at the exact time of the last Link, the whole part and the remainder of n x Links x T_D over d x S_1 x Q (BEAM_LAW note 45); derived from the worlds and compared by tests/test_amplitude_cone.py",
     "malus": "docs/designs/malus/NOTE.md section 3 (the mathematician's pin before the run): the cells' weights the products of the half-angle tables' entries of 2N = 512 (core/phase.py: C'[64] = S'[64] = 181, C'[128] = 0, S'[128] = 256; the rotation the design's 2.2, the window's channels 4.1), the counts the click's rungs b_k = (2 W C_k + T) // (2 T) over W = 256 births on the wheel [159, 256] (BEAM_LAW note 46; DERIVATIONS_BEAM 6.2), Malus's cos^2 exact at 45 and 90 degrees; derived from the worlds and compared by tests/test_amplitude_malus.py; the split lines' rebirth, the gathers and the books measured (the run of 2026-09-21)",
+    "mz_345_n": "DERIVATIONS_BEAM 6.5 and 6.2: the (3, 4) split's rows at the ports by the world's declared turns, 7 at u + N / 4 toward D1 and 1 at u + N / 2 toward D2 (the design's offers 49/50 and 1/50), their weights on core/phase.py's tables and the rungs b_k = (2 W C_k + T) // (2 T) of amplitude.rungs on the wheel W = N, the cell of u by amplitude.cell_of (the rung 31 at N = 32 and 125 at N = 128, the rung of the exact offers (2 N x 49 + 50) // 100, unmoved by the tables' rounding at any u); the power window per N from the rung, 7^k in [(2 b - 1) / (2 N - 2 b + 1), (2 b + 1) / (2 N - 2 b - 1)), intersected with the pair's [1.784, 2.054) of 6.5 (stated, not derived here); derived from the worlds and compared by tests/test_amplitude_mz_345_n.py; the gathers and the books measured (the run of 2026-09-21)",
 }
 
 
@@ -2077,6 +2372,7 @@ def expectations() -> dict[str, object]:
             "bell_24_4": bell_24_4_expectations(),
             "cone": cone_expectations(),
             "malus": malus_expectations(),
+            "mz_345_n": mz_345_n_expectations(),
         }
     )
     for path, entries in REGISTERED_RUN_READINGS.items():
