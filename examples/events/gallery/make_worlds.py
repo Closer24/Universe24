@@ -77,7 +77,7 @@ def beam_fan() -> dict[str, object]:
                 "amount": 1 << 25,
                 "phase": 0,
                 "fixed": True,
-                "lamp": {"rate": [1, 1], "directions": fan},
+                "lamp": {"rate": [1, 1], "wheel": [1, 64], "directions": fan},
             }
         ],
     }
@@ -109,7 +109,7 @@ def clicks_plate() -> dict[str, object]:
                 "amount": 1 << 25,
                 "phase": 0,
                 "fixed": True,
-                "lamp": {"rate": [1, 1], "directions": beam},
+                "lamp": {"rate": [1, 1], "wheel": [1, 64], "directions": beam},
             }
         ]
         + [

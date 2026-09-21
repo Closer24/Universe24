@@ -207,13 +207,13 @@ class Count:
     owner's table of 2026-09-20): the count's `name`; the `source` of its
     numerator (`content` the body's content, `crowd` what its clock
     counted, `held` the content held of the row's family, `rate` the
-    lamp's own rate, `momentum` the momentum on the row's axis, `column`
-    the column's lifted numerator on the axis); `index` the family, the
-    column or, for the turn by momentum, the axis the row belongs to, and
-    `axis` its axis (0 where the count has none); `numerator` the rate's
-    own factor n (1 where the loop is handed the whole numerator);
-    `denominator` d (the last one used where the loop is handed it, the
-    step's divisor); `at_most`
+    lamp's own rate or its birth wheel's, `momentum` the momentum on the
+    row's axis, `column` the column's lifted numerator on the axis);
+    `index` the family, the column or, for the turn by momentum, the axis
+    the row belongs to, and `axis` its axis (0 where the count has none);
+    `numerator` the rate's own factor n (1 where the loop is handed the
+    whole numerator); `denominator` d (the last one used where the loop is
+    handed it, the step's divisor); `at_most`
     the cap on the count gained at one self-creation (1 on the drive, 0
     otherwise); `idle_at_zero` whether a numerator of 0 leaves the row as it
     is (the step's rule: a momentum of 0 never steps); and `accumulator`,
@@ -328,6 +328,7 @@ def counts_table(
     action: int | None = None,
     phase_steps: int = 1,
     nodes: int = 1,
+    lamp_wheel: tuple[int, int] | None = None,
 ) -> CountTable:
     """A body's table of counts from the world's rates (BEAM_LAW note 41):
     the turn, the owed count, the release per family (its rate 0 on a paid
@@ -338,7 +339,8 @@ def counts_table(
     axis (the model
     owner's record 155 of 2026-09-20, "no exception": the rate |p_a| x N at
     every Link the step rule counts on the axis, over h; its index the
-    axis)."""
+    axis), and on a lamp its birth wheel (`wheel`, the rate [r, W] of the record's
+    coordinate u on the ladder, BEAM_LAW note 46; no cap)."""
     rows = [
         Count("turn", "content", 0, 0, turn_rate[0], turn_rate[1]),
         Count("owed", "crowd", 0, 0, suspension[0], suspension[1]),
@@ -349,6 +351,8 @@ def counts_table(
     )
     if lamp_rate is not None:
         rows.append(Count("lamp", "rate", 0, 0, lamp_rate[0], lamp_rate[1]))
+    if lamp_wheel is not None:
+        rows.append(Count("wheel", "rate", 0, 0, lamp_wheel[0], lamp_wheel[1]))
     rows.extend(Count("drive", "momentum", 0, axis, 1, 1, 1, True) for axis in range(3))
     rows.extend(
         Count("push", "column", column, axis, 1, scale * scale)
@@ -478,7 +482,10 @@ class Measured:
     # `drive` below read and write the table; `state.json`
     # and `run.json` carry the accumulators under `acc` by name, beside
     # `drive`; a declared accumulator is refused with the key. Every one
-    # starts at 0 with the age.
+    # starts at 0 with the age. Since 2026-09-21 a lamp's table holds its
+    # birth wheel too, `wheel` (BEAM_LAW note 46): the row at the rate
+    # [r, W] the lamp declares, advanced at every birth of a record, its
+    # accumulator before the advance the record's coordinate u.
     counts: CountTable = field(default_factory=lambda: CountTable([]))
     taken: list[dict[str, int]] = field(default_factory=list)
     clicks: list[int] = field(default_factory=list)
@@ -490,6 +497,9 @@ class Measured:
     # declared against the keys leave the labels as they are), and per
     # family the hand-overs taken.
     contact: tuple[str, ...] = ()
+    # The lamp's birth wheel [r, W] (`wheel`), None on a body that is no
+    # lamp (its rebirths keep the count of births mod N, the case [1, N]).
+    lamp_wheel: tuple[int, int] | None = None
     contacts: list[int] = field(default_factory=list)
     # The windows read from a reading (issue #363, 2026-09-20): per family
     # the (family, offset) whose rows at the set give the entry's centre,
@@ -668,10 +678,11 @@ class Measured:
 
     def accumulators(self) -> dict[str, object]:
         """The accumulators of the table of counts by the count's name
-        (BEAM_LAW note 41): `owed`, `release` per family, `lamp`, `turn`
-        and `push` per column by its name (the three axes' remainders);
-        what `state.json` and `run.json` carry under `acc`, beside `drive`;
-        a resumed run continues from them."""
+        (BEAM_LAW note 41): `owed`, `release` per family, `lamp`, `turn`,
+        `push` per column by its name (the three axes' remainders) and on
+        a lamp `wheel`, its birth wheel's accumulator (note 46); what
+        `state.json` and `run.json` carry under `acc`, beside `drive`; a
+        resumed run continues from them."""
         found: dict[str, object] = {
             "owed": self.acc_owed,
             "release": list(self.acc_release),
@@ -685,6 +696,8 @@ class Measured:
             found["action"] = self.counts.values("action")
         if self.counts.of("place"):
             found["place"] = self.counts.values("place")
+        if self.counts.of("wheel"):
+            found["wheel"] = self.counts.one("wheel")
         return found
 
     def state(self) -> dict[str, object]:

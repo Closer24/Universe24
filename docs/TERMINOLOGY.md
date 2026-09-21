@@ -105,7 +105,8 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
 - **Phase**: a step of the circle of N: on a row, stamped by the emitter's
   clock at birth and turned by the family's `phase_per_link` at every Link
   crossed; on a body, the turns of its clock (BEAM_LAW section 2). A record
-  row's rules read its path phase, the phase less its birth phase u (note 37).
+  row's rules read its path phase, the phase less its birth phase u
+  (note 37); at its end the row is read at the exact phase (below).
 - **Age**: on a row, the count of intervals since the event that created it,
   a birth or a re-emission, kept whole on the record; the flight reads it
   modulo the direction's period, a body reads it whole as the age moment
@@ -218,8 +219,27 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   phase is read, one click per unit; the click is the only one-way border of
   the law (BEAM_LAW section 5). **Gather** is the click of a record: when
   its live units are 0 the layer reads its ladder at u and the record clicks
-  at the chosen set and Node, its weight the Gram form **f**^T **G** **f**
-  (note 37; record 188).
+  at the chosen set, arm, channel and Node, with the content and the momentum
+  the chosen rows carried; each Node's weight is the bilinear form
+  **f**^T **G** **f** of its own phase-count vector, no pointer formed,
+  coherent within one Node only (record 188; note 37 (xii); on main at
+  7e523c55).
+- **Exact phase at the click**: the phase a record's row is read at when it
+  ends (a click, a `sum` re-emitter, an open face, the border), the phase at
+  the exact time of its last Link, phi = phase - floor(terms n / d) +
+  floor(n made T_D / (d S_1 Q)) mod N from the row's two counts, the phase
+  per interval of age n / d and the Links made on its direction, one floor
+  at the click with the remainder kept (`nature_beam.exact_phase`; the click
+  line's `exact` and `remainder`); the row's `phase` column stays the
+  walk's (the model owner, record 163 (2); note 45).
+- **Offer, ladder**: what a record's rows put at a `sum` set's Node when the
+  set ends them, the phase-count vector per label and Node (`Offer.counts`),
+  the residual units, the content and the momentum they carried; a set's
+  weight in the cells is the sum over its Nodes of the bilinear form of the
+  sum over the labels. The ladder is the record's cells in the order of its
+  offers, each cell's rung b_k = (2 W C_k + Total) // (2 Total) on the
+  record's wheel W, and u falls in the cell whose rung it is below: Born's
+  rule read as a count over the wheel (note 37 (iii) and (xii); note 46).
 - **Release**: what a body's self-creation creates: at a turn s each unit a
   lamp releases costs it h x s content, carries that content and the
   momentum h x s **u**_d along its direction, E = h f; a free family's
@@ -230,10 +250,15 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   0 for a family without a phase circle; a release is priced by it (the
   model owner, 2026-09-19). The **turn by momentum**, under `action`
   (`bohr-v1`), adds |p_a| x N over h at every Link stepped on the axis.
-- **Wheel**: the lamp's count whose value is written on the record at birth
-  as u, the record's coordinate on the ladder that the click reads; today
-  (births - 1) mod N (note 37 (ix)); decided as one counts row at the golden
-  rate 2531 / 4096, W = 4096, in build (record 180).
+- **Wheel (the birth wheel)**: a lamp's declared rate `wheel` [r, W], no
+  default: one `Count` row of the lamp's counts table advanced by r over W
+  at every birth, its accumulator before the advance the record's
+  coordinate u = ordinal x r mod W on the ladder, written on the record and
+  its rows at birth, the rows' birth phase u mod N; [1, N] the count of
+  births mod N as built before, [2531, 4096] the golden rate of
+  `slits_huygens` (the model owner, record 180; note 46; on main at
+  7e523c55). A rebirth at a re-emitter that is no lamp keeps u = its count
+  of births less one mod N.
 - **Lifetime**: the family key `lifetime`, an integer L from 1: a row of the
   family whose whole age reaches L clicks on the border `lifetime`, a
   detector without Nodes booked as an open face books an escape; the range
@@ -280,7 +305,8 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   section 5).
 - **Lamp**: a body's declared source: at its self-creations it births rows
   of its family with its amount, phase and wheel value, in a recorded world
-  one record per birth (the world's `lamp` key; BEAM_LAW section 5).
+  one record per birth, at its declared `rate` and `wheel` (the world's
+  `lamp` key; BEAM_LAW section 5, note 46).
 - **Detector**: a declared set of measured events (`detectors[].positions`)
   with one record; a click says "here, in one of these", the set's extent
   the position's uncertainty; a measured event outside every declared
@@ -329,9 +355,11 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
   phase; the `record` line and the run's cumulative `record`; the set's
   phase is returned to every body of the set (BEAM_LAW section 5). The
   reading `sum` accumulates one record's rows for the record's click.
-- **Pointer**: (X, Y), the coherent sum over the clicked rows, the image
-  **E** **f** of the record's phase-count vector; its square the record and
-  the Gram form (record 188).
+- **Pointer**: (X, Y), the coherent sum over the clicked rows, the
+  evaluation **E** **f** of a phase-count vector at the circle; the `wave`
+  record of a detector set is its square, while the click of a record forms
+  no pointer, its weight being the Gram form (`Layer.evaluate`, a report;
+  record 188; note 37 (xii)).
 - **Books**: the ledger per family, exact at every interval: the measured,
   transit, content and charge lines and the momentum on the bodies, in
   transit, escaped and turned; a GameBoard reading (ENGINE.md).
@@ -369,7 +397,9 @@ the known formulas (Highlights 5.7).
   declared direction has its components in -P .. P.
 - **K = [n, d]**: the clock's pair, the world key `K`: the turn per
   self-creation is content x n / d; an integer K is [1, K].
-- **W = 4096**: the circle of the birth wheel; decided, in build (record 180).
+- **W**: the circle of a lamp's birth wheel, the lamp key `wheel` [r, W],
+  the click's own grain beside N: 4096 under the golden rate, N under [1, N]
+  (record 180; note 46).
 - **c**: the pace of a row, Q / T_D = 32 / 55 Links per interval on an axis
   and 1 / sqrt 3 in the limit of the grain; derived from locality and
   straightness, the norm of the flight operator, never declared (record 191).
@@ -395,7 +425,8 @@ stated so that it can fail and never enters the law by its list.
 | `optical-v1` | the rows' rule at a Node for the bending, the Shapiro delay, the second-order redshift and Snell ([the design](designs/gr_rows/DESIGN.md)) | decided as a hypothesis, not built |
 | `colour-v1` | a Z_3 label on the quarks ([the design](designs/quarks/QUARKS.md)) | decided (record 270), not built |
 | `expansion-v1` | the growing wall of the flight with the rate H declared, absent by default | a declared assumption (record 279), not built |
-| the click without amplitudes, the golden wheel, the scheduler | records 188, 180 and 191 | decided, in build |
+| the click without amplitudes; the birth wheel at a declared rate; the exact phase at the click | the Gram form on the phase-count vector (record 188, note 37 (xii)); the lamp key `wheel` (record 180, note 46); phi at the row's end (record 163 (2), note 45) | built, on main at 7e523c55 (PR #457); rules of `beam-v1`, no identity of their own |
+| the scheduler | the GameBoard as one vector map between events, the jump to the next carry (record 191 (3)) | decided, in build |
 
 ## The symbols
 
@@ -410,7 +441,7 @@ is the one stated here.
 | N | the steps of the phase circle (`N`) | scalar | phase steps per turn | BEAM_LAW section 2 |
 | P | the direction bound (`direction_bound`) | scalar | Links (a component) | BEAM_LAW section 2 |
 | K, n / d | the clock's pair (`K`), the turn per unit of content per self-creation | scalar, a pair | phase steps per unit of content per interval | ENGINE, a release costs the emitter |
-| W | the circle of the birth wheel, 4096 | scalar | wheel steps | record 180 |
+| W, r | the circle of a lamp's birth wheel and its rate, the lamp key `wheel` [r, W] | scalars | wheel steps, wheel steps per birth | BEAM_LAW note 46 |
 | c | the pace of a row | scalar | Links per interval | record 191; DERIVATIONS_BEAM 2.4 |
 | T_D | the direction's period constant, isqrt(3 abs(**D**)^2 Q^2), the flight's wall over 2 | scalar | label units x Links | BEAM_LAW section 3 |
 | S_1 | the Manhattan length of a direction, abs(a) + abs(b) + abs(c) | scalar | Links | BEAM_LAW section 3 |
@@ -434,19 +465,20 @@ is the one stated here.
 | kappa | the meeting's column sum of a family against the crowd's | scalar | dimensionless | BEAM_LAW note 35 |
 | **V** | the label flow at a Node, the order-1 reading with the labels as weights (the derivation's **a**) | vector | label units | BEAM_LAW section 3 step 2 |
 | **f** | the net flow, the order-1 reading on the unit vectors | vector | Q per unit of amount along a heading | ENGINE, the readings by type |
-| **f** (of a record) | the phase-count vector of a record in Z^N, the record's element of Z[Z_N] | vector | units of amount per phase step | record 188; DERIVATIONS_BEAM 6.7 |
+| **f** (of a record) | the phase-count vector of a record's rows at one end Node and label, f_p the amount at the phase p at the amplitude scale 32 (`amplitude.Counts`), the record's element of Z[Z_N] | vector | 32 per unit of amount, per phase step | record 188; BEAM_LAW note 37 (xii) |
 | **T** | the traceless second moment, 3 sum amount **u**_d **u**_d^T less its trace | tensor, 3 x 3 symmetric | Q^2 per unit of amount | ENGINE, the readings by type |
 | **C** | the coupling matrix, the reader's charges per column | matrix | charge per unit of content | DERIVATIONS_BEAM section 0 |
-| **G** | the click's Gram matrix, **E**^T **E** | matrix | (32 x 256)^2 | record 188; DERIVATIONS_BEAM 6.7 |
-| **E** | the 2 x N matrix of the tables C and S | matrix | 256 per unit | DERIVATIONS_BEAM section 6 |
+| **G** | the click's Gram matrix, **E**^T **E**, G_jk = C_j C_k + S_j S_k over the rounded tables (`core.phase.phase_gram`); the weight of a cell **f**^T **G** **f** | matrix | 256^2 | record 188; BEAM_LAW note 37 (xii) |
+| **E** | the 2 x N matrix whose rows are the tables C and S; the pointer **E** **f** its evaluation at the circle (`Layer.evaluate`, a report) | matrix | 256 per unit | BEAM_LAW note 37 (xii); DERIVATIONS_BEAM section 6 |
 | **F** | the interval's map, one piecewise-linear map of the state | operator | none | DERIVATIONS_BEAM section 0 |
 | **s**, **r**, d | the state vector on the torus, its rate vector, its wall per component | vector, vector, scalar | mixed, per row of the counts table | designs/vector_form/LAW.md |
 | (X, Y) | the pointer, the coherent sum of a set's clicked rows | a vector of the phase plane Z^2 | 32 x 256 per unit of amount | BEAM_LAW section 5 |
-| u | the birth phase of a record, the wheel's value | scalar on Z_N | phase steps | BEAM_LAW note 37 (ix) |
+| u | the record's coordinate on the ladder, the birth wheel's value ordinal x r mod W; the rows' birth phase u mod N | scalar on Z_W | wheel steps | BEAM_LAW notes 37 (ix) and 46 |
+| phi, terms, made | the exact phase at the click and the row's two counts it is read from, the intervals the phase holds and the Links made on its direction | scalars | phase steps; intervals; Links | BEAM_LAW note 45 |
 | m | the multiplicity of a record's row | scalar | dimensionless | BEAM_LAW note 37 (i) |
 | A | the norm of a split, the sum of the squares of its weights | scalar | dimensionless | BEAM_LAW note 37 (ii) |
 | **A** | the axis of a body (`axis`) | vector | one heading | BEAM_LAW note 39 |
-| b_k, C_k, T | a rung of the ladder, a cell's cumulative weight, the total | scalars | the unit 2^58 | BEAM_LAW note 37 (iii) |
+| b_k, C_k, T | a rung of the ladder on the record's wheel W, a cell's cumulative weight, the total | scalars | wheel steps; the unit 2^58 | BEAM_LAW notes 37 (iii) and 46 |
 | w | the width of a window (`phase_width`) | scalar | phase steps | BEAM_LAW note 36 (i) |
 | **v**, v | a body's velocity and its speed | vector, scalar | Links per interval | DERIVATIONS_BEAM |
 | beta | the speed over the pace of a row, v / c | scalar | dimensionless | DERIVATIONS_BEAM section 12 |

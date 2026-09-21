@@ -621,9 +621,12 @@ until it re-creates them, and a `rerelease` entry on a `sum` set ends
 them there with an offer, the re-creation a new record when the record
 chose that set; a row of a record taken home is re-created with its
 columns and its multiplicity kept, apportioned whole as a row of no
-record is, no split at the home); `lamp` `{rate: [n, d],
+record is, no split at the home); `lamp` `{rate: [n, d], wheel: [r, W],
 directions, phase_window, phase_width}` on a measured event of a paid
-family, its window a number; also `turns`, a phase step
+family, its window a number, its `wheel` the birth wheel's rate (required
+since 2026-09-21, [BEAM_LAW note 46](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+u = ordinal x r mod W the record's coordinate on the ladder, [1, N] the
+count of births mod N); also `turns`, a phase step
 per direction the born row carries beyond the clock's phase; a
 self-creation with a release births as many records as the rate says
 units per direction (`by_clock(age, n, d)`, the crowd form's count, as
