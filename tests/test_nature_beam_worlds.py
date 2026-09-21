@@ -109,6 +109,7 @@ def slits(openings: tuple[int, ...]) -> dict[str, object]:
             "phase": 0,
             "fixed": True,
             "lamp": {
+                "wheel": [1, 64],
                 "rate": [64, 1],
                 "directions": [[1, 0, 0], [1, 1, 0], [1, -1, 0], [2, 1, 0], [2, -1, 0]],
             },

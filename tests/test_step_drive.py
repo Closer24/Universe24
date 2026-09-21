@@ -419,7 +419,7 @@ def deuteron_under_a_suspension() -> dict[str, object]:
         "amount": 8388608,
         "phase": 0,
         "fixed": True,
-        "lamp": {"rate": [1, 1], "directions": [[0, 1, 0]], "turns": [8]},
+        "lamp": {"wheel": [1, 64], "rate": [1, 1], "directions": [[0, 1, 0]], "turns": [8]},
         "table": {"p": "pass", "n": "pass", "nuclear": "pass", "counter": "pass"},
     }
     document["measured"].append({**lamp, "position": [10, 11, 10], "family": "light"})

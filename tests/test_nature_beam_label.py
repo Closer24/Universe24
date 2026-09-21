@@ -204,7 +204,11 @@ def test_every_label_is_content_times_the_unit_vector_and_the_books_close():
         "family": "light",
         "amount": CONTENT * CLOCK,
         "fixed": True,
-        "lamp": {"rate": [1, 1], "directions": [list(d) for d in (*PORT_HEADINGS, *FAN)]},
+        "lamp": {
+            "wheel": [1, 64],
+            "rate": [1, 1],
+            "directions": [list(d) for d in (*PORT_HEADINGS, *FAN)],
+        },
     }
     screen = {"position": [21, 15, 15], "family": "m", "amount": 1, "fixed": True}
     mirror = {

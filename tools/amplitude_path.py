@@ -85,6 +85,16 @@ def replay(run: Path, quiet: bool = True) -> tuple[Layer, list[dict[str, Any]]]:
     assert layer is not None
     family_index = {name: index for index, name in enumerate(layer.families)}
     by_number = sets_by_number(layer)
+
+    def wheel_of(record: int) -> int:
+        # The record's wheel W: its emitter's declared birth wheel, the
+        # emitter the high bits of the identity (`record_identity`); N at
+        # an emitter without a lamp (a rebirth).
+        entry = simulation.measured.get(record >> 32)
+        if entry is None or entry.lamp_wheel is None:
+            return world.phase_steps
+        return entry.lamp_wheel[1]
+
     tick = 0
     completed_before_creations = False
 
@@ -120,6 +130,7 @@ def replay(run: Path, quiet: bool = True) -> tuple[Layer, list[dict[str, Any]]]:
                     labels,
                     int(line["arms"]),
                     int(line["units"]),
+                    wheel_of(int(line["record"])),
                 )
             elif event == "click":
                 record = int(line.get("record", 0))
@@ -171,7 +182,14 @@ def replay(run: Path, quiet: bool = True) -> tuple[Layer, list[dict[str, Any]]]:
                     # One birth per rebirth, every row's units by its split.
                     if layer.resolve(record) is None:
                         layer.birth(
-                            tick, record, family_index[str(line["family"])], int(line["u"]), {0: 1}, 1, 0
+                            tick,
+                            record,
+                            family_index[str(line["family"])],
+                            int(line["u"]),
+                            {0: 1},
+                            1,
+                            0,
+                            wheel_of(record),
                         )
                     layer.split(record, 0, int(line["born"]))
                 else:

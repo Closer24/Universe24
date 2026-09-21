@@ -199,6 +199,7 @@ def test_the_parsing_and_the_refusals():
         parse_nature_beam_world(phaseless)
     lamp = world({"s": "pass"}, [])
     lamp["measured"][0]["lamp"] = {
+        "wheel": [1, 64],
         "rate": [1, 1],
         "directions": [[1, 0, 0]],
         "phase_window": {"reads": "s"},

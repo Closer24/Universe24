@@ -195,7 +195,7 @@ def counting_world() -> dict[str, object]:
         "family": "light",
         "amount": 1 << 21,
         "fixed": True,
-        "lamp": {"rate": [1, 1], "directions": [[1, 0, 0]]},
+        "lamp": {"wheel": [1, 64], "rate": [1, 1], "directions": [[1, 0, 0]]},
     }
     probe = {
         "position": [1, 0, 0],
@@ -209,7 +209,7 @@ def counting_world() -> dict[str, object]:
         "family": "light",
         "amount": 1 << 21,
         "fixed": True,
-        "lamp": {"rate": [1, 3], "directions": [[1, 0, 0]]},
+        "lamp": {"wheel": [1, 64], "rate": [1, 3], "directions": [[1, 0, 0]]},
     }
     declared = {
         "position": [0, 0, 0],
@@ -607,7 +607,11 @@ def test_a_record_rows_push_keeps_its_remainder_on_the_row():
                 "family": "light",
                 "amount": 1 << 20,
                 "fixed": True,
-                "lamp": {"rate": [1, 1], "directions": [[1, 0, 0], [0, 1, 0], [0, 0, 1]]},
+                "lamp": {
+                    "wheel": [1, 64],
+                    "rate": [1, 1],
+                    "directions": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+                },
             },
             *(
                 {

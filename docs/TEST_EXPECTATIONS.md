@@ -111,6 +111,9 @@ kept, their pins the law of events').
 | `test_amplitude_pair.py` | The pair, the which-path world, no maintenance and GHZ: a lamp's `branches` and `arms` (the birth of four rows on two arms with the labels 0 and 3), the CHSH labels (E x 64 = 44, -44, 44, 44; S = 176/64; the marginals 32/64), the choosers (the 15 setting pairs' E; S = 156/64 on the registered quadruple), the which-path `read` (E = 44, -44, 0, 0; S = 88/64), Bob's counters 116 Links farther (E unchanged), GHZ's allowed triples and products, the refusals ([below](#the-amplitude-law-the-pair)); every number of the series read from `expectations.json` under `pair` and `ghz` (2026-09-21) | new (2026-09-20; the design's section 4 and its `bell.py`) |
 | `test_amplitude_gate.py` | The gate between records and the pair at N = 1024 and 4096: the Hadamard and the CNOT on the GameBoard (|00> - |11>), the pair by the gate at the CHSH labels (S = 176/64), CNOT twice the identity, GHZ by one gate of three parties, the register's ceiling (three rotations run, four refused at load), the refusals, S = 2896/1024 with |E - cos| <= 1/N, S = 11584/4096 with the bound failing at the tables' rounding; the review of (v): the gate's copies booked on the live count (every gathered record at live 0), a record with an offer or units elsewhere refused at the gate, the control by its declared arrival direction (the `measured` list reversed gives the same outcomes), the control's refusals ([below](#the-amplitude-law-the-gate)); every number of the series read from `expectations.json` under `gate` and `pair_n` (2026-09-21) | new (2026-09-20; the design's section 10 and its `gate.py`; the owner's paper numbers; the review of (v)) |
 | `test_amplitude_click.py` | The one click (stage (vii)): a lamp's rate births as many records as it says with the ordinals and the birth phases in order, two multiplicities of one record at one offer take the common denominator or are refused, the columns are written only where a record is, and every gate-set world without a lamp reads as it did before the law at its cap (its pinned digests); step 2: u the record's own field (a narrow window admits every record's row, the K record world's clicks within one rung of its offers); step 3: the push by share (the mass's momentum the sum of the shares, the remainder line, the unkeyed bar as it was) ([below](#the-amplitude-law-the-one-click)); the gate worlds' digests read from `gate_set.json` (2026-09-21) | new (2026-09-20; the design's sections 2.1, 2.5 and 6; the K finding) |
+| `test_amplitude_gram.py` | The click without amplitudes (2026-09-21): the Gram matrix of the tables (its eight diagonal values, not circulant, rank 2, the antipodal pairs killed, stored through N = 512), the identity f^T G f = X^2 + Y^2 on random vectors and on `mz_equal`'s record at every u, the layer's cells against the click as it was on synthetic one-arm, read, rotated, pair and GHZ records, the turn as a shift exact at the quarter turns and not at t = 3, the tensor form exact and the convolution not, the ring product ([below](#the-click-without-amplitudes)) | new (2026-09-21; record 188; BEAM_LAW note 37 (xii)) |
+| `test_exact_phase.py` | The exact phase at the click (2026-09-21): the axis and the diagonal at the rate 8 (u + 41 with the remainder 48 / 64, u + 42 with the remainder 0 / 128 where the walk read u + 40), the layer's pointer at it, the integer form without it, a face's row (u + 4 where the walk read u + 56), the numerator beyond the register refused, the primitive `exact_phase` ([below](#the-exact-phase-at-the-click)) | new (2026-09-21; record 163 (2); BEAM_LAW note 45) |
+| `test_birth_wheel.py` | The birth wheel at a declared rate (2026-09-21): the key required on every lamp and refused as a bare integer, a rate 0 or a wheel 0; every world file with a lamp declares it; [1, N] the count of births (the lamp's `acc` `wheel`, the rungs on 64); the golden rate's first ten u and phases, the rungs on 4096; the cell read on the wheel (two equal cells: a, b, a, b, a, a, b, a, b, b against 32 a then 32 b); the replay tool reads the wheel from the lamp ([below](#the-birth-wheel)) | new (2026-09-21; record 180; BEAM_LAW note 46) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -484,13 +487,19 @@ expected integers, written down before the first run:
 - (d) test 2 on `slits_low`: the first record's cells are the reading's 80
   sets in the layer's order with the reading's rungs, its chosen cell
   (`measured:223`, the Node (7, 58, 0), the content 1) has the reading's
-  weight and its `total` the reading's 847181/745472 (a face of 24 Nodes
+  weight and its `total` the reading's 4834019/4259840 (847181/745472
+  until the exact phase at the click of 2026-09-21, BEAM_LAW note 45; the
+  reading takes each row's phase from the `exact` of its click line on the
+  reference run; a face of 24 Nodes
   hit sums its Nodes' squares: coherent within a Node, incoherent across
-  Nodes); the 64 births gather by tick 213; the clicks per set equal the
+  Nodes); the 64 births gather by tick 214; the clicks per set equal the
   reading's on every one of the 80 sets: the wall 11, 12, 11 (34), fourteen
-  pixels (15, screen_61 twice), the faces 8, 7 (15, each click at a Node
-  of the face's edge); 3 distinct cell lists, 32 records with u = 0's (the
-  tables' rounding by u, no rung moved);
+  pixels (15, screen_60 twice: y = 11, 29, 36, 40, 50, 56, 59, 60, 61, 70,
+  77, 84, 90, 107; until the exact phase screen_61 twice at y = 11, 29, 36,
+  43, 50, 56, 59, 60, 61, 70, 77, 82, 90, 107), the faces 8, 7 (15, each
+  click at a Node of the face's edge); 4 distinct cell lists, 44 records
+  with u = 0's (3 and 32 until the exact phase; the tables' rounding by
+  u, no rung moved);
 - (e) test 7: the seventeen worlds of the gate set parse with the key
   deleted, the identity `amplitude-v1` on the lamp worlds alone;
 - (f) test 10: `tools/amplitude_path.replay` on 30-interval runs of
@@ -706,7 +715,141 @@ register's L7 entry), written before the run: Since 2026-09-21 the test derives 
   mod 64); 23 at both under the pair form [3, 1] (3 x 29 mod 64);
 - (c) one gather per record, one cell each, as many at each counter; the
   file's pins equal the flight formula's (the ages 29 and 29, `same_age`
-  true, the Links 17 and 24).
+  true, the Links 17 and 24);
+- (d) the exact phase at the click (2026-09-21, BEAM_LAW note 45): under
+  the pair form the click line's `exact` less u is the whole part of
+  3 x made x T_d over S_1 Q mod N with its `remainder` over S_1 Q, 3 x 17 x
+  110 = 5610 = 87 x 64 + 42 at the axis (23, [42, 64]) and 3 x 24 x 156 =
+  11232 = 87 x 128 + 96 at the diagonal (23, [96, 128]), the same whole
+  part as the walk's 3 x 29 = 87 at the rate 3 (the design's 41.75 and
+  42.00 are the rate 8's, `test_exact_phase`); under the integer form no
+  `exact` is written; the file's pins under `cone.exact`.
+
+## The birth wheel
+
+`tests/test_birth_wheel.py` (2026-09-21; the model owner's decision, record
+180 of docs/LOG_2026-09-20.md on record 163 (3); the mathematician's
+TWO_SLITS.md section 8 with `wheel_map.py`; docs/BEAM_LAW.md note 46): the
+wheel is one `Count` row of the lamp's counts table, declared on the lamp
+as `wheel` [r, W]; u = ordinal x r mod W is written on the record at birth;
+the rungs at the click are (2 W C_k + T) // (2 T) and the cell [u < b_k].
+The expected integers, written down before the first run:
+
+- (a) the parse: a lamp without `wheel` is refused naming the key (lacks
+  keys: wheel); a bare integer, [0, 64] and [1, 0] are refused naming
+  `lamp.wheel`; [2531, 4096] parses to (2531, 4096) and [1, 64] to (1,
+  64); every world file of the register that declares a lamp declares its
+  wheel, the entity definitions included;
+- (b) the case [1, N]: a lamp of [1, 64] on +x to a counter 10 Links away,
+  40 intervals: the birth lines' u are 0, 1, 2, ... (the ordinal less
+  one), the rows' `birth` the same, every gather's last rung 64, the
+  lamp's `acc` carrying `wheel` = its births mod 64 and the counter's
+  `acc` none;
+- (c) the golden rate [2531, 4096] on the same bar: the first ten births'
+  u are 0, 2531, 966, 3497, 1932, 367, 2898, 1333, 3864, 2299, the rows'
+  `birth` the same and their phase at the click u mod 64 (0, 35, 6, 41,
+  12, 47, 18, 53, 24, 59), every gather's last rung 4096 and its u the
+  birth's, the `acc` `wheel` = (births x 2531) mod 4096;
+- (d) the cell by the wheel: a lamp on +x and -x (one quantum, two paths)
+  to two counters `a` and `b` 5 Links away, two cells of equal weight, the
+  rungs [2048, 4096]: the first ten records click a, b, a, b, a, a, b, a,
+  b, b (u < 2048 for the ordinals 0, 2, 4, 5, 7), where the same lamp
+  under [1, 64] (the rungs [32, 64]) sends the first 32 records to a and
+  the next 32 to b;
+- (e) the replay: `tools/amplitude_path.replay` on the runner's run of (d)
+  under [2531, 4096] returns `run.json`'s `world`, the wheel read from the
+  world's lamp, every gather's last rung 4096.
+
+## The exact phase at the click
+
+`tests/test_exact_phase.py` (2026-09-21; the model owner's decision, record
+163 (2) of docs/LOG_2026-09-20.md; the mathematician's TWO_SLITS.md section
+2; docs/BEAM_LAW.md note 45): a row's phase is read at its click at the
+exact time of its last Link, phi = (n / d) x made x T_d / (S_1 Q) from the
+row's two counts, one floor at the click, a Euclidean division with the
+remainder kept on the click line (`exact`, `remainder`), no float. The
+expected integers, written down before the first run:
+
+- (a) the axis: a lamp of the pair form [8, 1] on +x to a counter 17 Links
+  away (T_d = 110, S_1 = 1, Q = 64): every record's row clicks at the age
+  29 with the phase u + 40 as the walk turned it (8 x 29 mod 64) and the
+  exact phase u + 41 with the remainder [48, 64] (8 x 17 x 110 = 14960 =
+  233 x 64 + 48, 233 = 41 mod 64: the 41.75 of the design's cone), on the
+  click line and read by the layer (the `record` line's pointer at u + 41);
+- (b) the diagonal (1, 1, 0) to a counter 24 Links along the staircase
+  (T_d = 156, S_1 = 2): the age 29, the walk's phase u + 40, the exact
+  phase u + 42 with the remainder [0, 128] (8 x 24 x 156 = 29952 = 234 x
+  128 exactly, the edge of a whole exact phase);
+- (c) the integer form (3 per Link crossed, no pair form): no `exact` and
+  no `remainder` on the click line, the path phase 51;
+- (d) a face: a lamp of [8, 1] on +x five Links from the open face +x: the
+  row leaves at the walk of the age 7 (m(8) = 5), read before that walk's
+  turn with the phase u + 56, and its exact phase is u + 4 with the
+  remainder [48, 64] (8 x 5 x 110 = 4400 = 68 x 64 + 48, 68 = 4 mod 64);
+- (e) the bound: the pair form [2^55, 1] loads on a bar of age bound 100
+  and the click 17 Links away is refused naming the exact phase, the
+  counter (measured event 1) and the numerator 2^55 x 17 x 110 beyond the
+  working register 2^63 - 1;
+- (f) the primitive `exact_phase` on the flight table of +x and (1, 1, 0)
+  gives (a), (b) and (d) from the phase, the terms and the age of the last
+  Link; a rest slot and a family without the pair form return the phase
+  with the remainder 0 over 1.
+
+## The click without amplitudes
+
+`tests/test_amplitude_gram.py` (2026-09-21; the model owner's decision,
+record 188 of docs/LOG_2026-09-20.md; docs/BEAM_LAW.md note 37 (xii); the
+derivations' section 6.7). The record's cell is the phase-count vector
+**f** (the amount per phase step at the amplitude scale 32), the click's
+weight the one bilinear form **f**^T **G** **f** with the Gram matrix
+**G** = **E**^T **E** of the tables (**E** the 2 x N matrix of the tables C
+and S), for one arm evaluated explicitly and for several arms through the
+matrix's rank-2 factorisation, the pointer **E f**. The expected integers,
+written down before the first run:
+
+- (a) the Gram matrix at N = 64: G_jk = C_j C_k + S_j S_k over the rounded
+  tables themselves (never the cosine of j - k), symmetric; its diagonal
+  the eight values 65448, 65501, 65522, 65533, 65536, 65650, 65717, 65773
+  (the eight totals over the births of series L); not circulant,
+  G_(j+1)(k+1) differing from G_jk on 3696 of the 4096 entries (G_11 =
+  65650, G_01 = 65280, G_12 = 65255); of rank 2 (the 3 x 3 minors on the
+  phases (0, 1, 2) and (0, 5, 17) are 0); every antipodal pair e_p +
+  e_(p+32) killed exactly; stored through N = 512 (`phase_gram`; N = 1024
+  refused as not stored, a float and a boolean refused) and formed from
+  the tables beyond it (a layer at N = 4096 holds no matrix, its entry
+  (5, 1000) the tables' product);
+- (b) the identity f^T G f = X^2 + Y^2 with (X, Y) = E f: on 200 random
+  sparse integer vectors of Z^64 (entries -5 .. 5, a phase present with
+  probability 0.3), on 50 vectors of 6 phases at N = 4096 through the
+  formed entries, and on the registered shape of `mz_equal`'s record at
+  every u (41 rows of amount 1 at u + 16 and the cancel's 1 at u + 32, the
+  amplitude scale 32 and the identity 256^2, the multiplicity 1682): the
+  weights 1681 x 2^42 x q[u + 16] and 2^42 x q[u + 32] with q[p] = C[p]^2
+  + S[p]^2, the ladder's cell 0 at all 64 u (the registered 64 / 0);
+- (c) the layer's `cells` against the click as it was, on synthetic records
+  fed through `end`: one arm at two Nodes with two labels and a face (3
+  cells), one arm with a which-path read factor (4 cells), a rotated set
+  at the settings (8, 0) and (8, 16) with both bits (2 cells), two arms at
+  rotated sets, the pair's form (4 cells), and three arms with the turn 16
+  on two of them, GHZ's form (8 cells): every cell's every Node tuple
+  weighs exactly what the former evaluation gave (the pointer 32 w (C[p],
+  S[p]) per row, the residual the rotation's complex entry times the
+  pointer, the labels' products summed, the square) and every cell's
+  numerator is its tuples' sum;
+- (d) the turn as a shift: the bit 1's entry at the setting 8 and the turn
+  t is (S' x 256, t); the count at p + t gives the same pointer as the
+  former product (C_t, S_t)(C_p, S_p) at every phase and every entry for t
+  in {0, 16, 32, 48} (the register's turns 0 and 16) and not at t = 3,
+  where the entry 181 at the phase 1 with the weight 7 gave (76811875,
+  31668665) and gives (76871424, 31786496), one rounding in place of two;
+- (e) the several-arm product is not the ring convolution: E(e_1)^2 =
+  (64400, 12750) against 256 E(e_2) = (64256, 12800); the tensor form is
+  exact: the product of two arms' pointers equals the sum over the phase
+  pairs of f_p g_q times the product of the tables' entries, on 100 random
+  pairs of vectors;
+- (f) the ring product: 256^2 e_0 times {3: 5, 10: -2} is the vector times
+  256^2, e_5 times e_60 is e_1 at N = 64; two rows of amount 1 at the phase
+  9 at one Node are the count 64 at 9 and the residual 64 x 256^2.
 
 ## c measured behind a detector
 
@@ -3182,8 +3325,21 @@ refuses one beyond and a boolean); the exact integer square root
 input; a negative value, a float and an overflow are refused); the bounded gcd
 (`bounded_gcd`: 12 and 18 give 6, 0 and 5 give 5, 5 and 0 give 5, -4 and 6
 give 2, 0 and 0 give 0, 2^63 - 1 and 1 give 1; an overflow and a boolean are
-refused). `by_clock` and `apportion_whole` are pinned where the clock uses
-them (`test_nature_beam_clock`, `test_nature_beam_readings`).
+refused); the signed inner product (`signed_inner`, since 2026-09-21 the
+law's one bilinear operation, the click's weight the pointer's inner product
+with itself: (3, 4) with itself under (+1, +1) gives 25, as does (-3, 4);
+(5, 3) with itself under (+1, -1) gives 16; (2, 3, 5) with (7, 11, 13) under
+(+1, -1, +1) gives 46; (0, 9) with (9, 0) gives 0; empty vectors 0; 2^100 with
+itself plus 1 gives 2^200 + 1 exactly without a bound; at the coupling's bound
+2^62 - 1 passed by the caller, the bound with 1 gives the bound and its
+negative under -1, two components at the bound under (+1, -1) give 0,
+(2^31 - 1, 1) with (2^31, 1) gives 2^62 - 2^31 + 1, and 2^31 x 2^31 is refused
+before the product is formed, the bound plus 1 as a sum is refused after the
+second component, a component beyond the bound is refused against 0;
+vectors of different lengths, a sign of 0 or 2, a boolean or float
+component or sign and a bound of 0 or `True` are refused). `by_clock` and
+`apportion_whole` are pinned where the clock uses them
+(`test_nature_beam_clock`, `test_nature_beam_readings`).
 
 The fraction-free primitive (2026-09-20; the mathematician's
 `docs/designs/fraction_free/FORM.md` section 1; `by_drive` takes the whole

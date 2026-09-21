@@ -508,6 +508,61 @@ exactly: a wrong small condition is caught by the large system's pins.
  Form B of the body's drive was the first rule read against
 the three (record 201 of the log of 2026-09-20).
 
+## How the team works now (the model owner, 2026-09-21, record 309)
+
+The owner's instruction: the Skills describe the team as he builds it now. The
+roles, as they run today, one writer per document:
+
+| Role | Writes | Does not write |
+| --- | --- | --- |
+| The Boss (the orchestrator) | the day's log, Highlights 5.4, the Skills, the records of every word of the owner; opens and merges the pull requests | any design, derivation or manuscript |
+| The physicist | the designs under `docs/designs/` (a hypothesis, a candidate, a verdict on the dark sector, item by item), FULL_PICTURE, the far-lamp notes | DERIVATIONS_BEAM, BEAM_LAW, the paper |
+| The derivation mathematician | DERIVATIONS_BEAM (every formula as a limit of one rule; the map 21.2 with its status, order and error term) | the designs, the law's text |
+| The architect | BEAM_LAW's text, the genericity probe, the host-only unifications | the derivations, the designs |
+| The paper coordinator | the manuscript, with its referee ([paper-coordinator](paper-coordinator/SKILL.md)) | the tree's documents; it reports what reaches the tree with its status |
+| The Visualiser | the gallery pages under `docs/pages/` | any number of the register |
+| The physics-rule reviewer, the implementers, the experimenter | one bounded assignment each, as agents of the Boss: a review file, a branch, a registered run | the shared documents beyond their assignment |
+
+The order and the report (the owner's rules of the day, in one place):
+
+1. Every assignment is one bounded order sent by Routine into the role's own
+   session: the question, the pins written BEFORE any number, the deliverable's
+   file, the bound in time, the verdict as one of three (reached or derived;
+   a hypothesis under its own identity naming what must be added; refuted or
+   not reachable, with why). The report is one paragraph with the head SHA;
+   the Boss opens the pull request when the writer's tool refuses, and merges
+   on green. Nothing enters the law by an order alone.
+2. No experiment for nothing: a run is ordered only with its expected number
+   written first (record 205); a differing run refutes and never moves the
+   number without its cause; every reported number is a detector reading or
+   a GameBoard reading, named so (record 281).
+3. The method (record 305, the six-point standard of record 300): the
+   infinite limit derives the form, the run confirms the number, and the pin
+   only orders that the first be written before the second; every derived
+   formula carries its rule, the limit taken, the order of the expansion, the
+   symmetry it needs, its error term and its check against a pinned value;
+   a limit that differs from nature is a FAIL in the same font as a PASS.
+4. The gate before a build: a design is read by the physics-rule reviewer
+   (the three tests, LOCALITY-1, the measurement rule, bit-exactness with the
+   identity off, the world-file declarations); the verdict is admissible,
+   admissible with must-fixes (the writer amends, one bounded order) or not;
+   the build starts on the verdict and the owner's go; the reviewer reads the
+   head again before the merge when registered integers move.
+5. An external review brought by the owner is checked point by point against
+   the current main, with the commit each fixed point landed in; what is
+   right and missing in the tree is added where it belongs, by its writer,
+   and nothing else moves (records 293, 304).
+6. Every word of the owner is recorded at once, translated and marked so, with
+   the next record number; a decision of his is one line in Highlights 5.4;
+   a question of his is answered from the tree, no run, and recorded with the
+   answer. A deadline he sets is reported honestly at its hour: what landed,
+   what did not, what stays with him (record 289).
+7. The paper's referee: the coordinator activates a second reader who checks
+   every round of the manuscript against the tree (each citation, integer,
+   formula and status); its findings are applied in the manuscript or sent
+   through the Boss to the file's writer as one bounded fix; the paper never
+   changes the tree, and the tree's writers never write the paper.
+
 ## Tools and authority
 
 The user has given standing authorization to publish requested Universe24 work

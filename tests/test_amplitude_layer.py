@@ -38,18 +38,24 @@ layer"), written down before the first run:
     `two_slits`, written before the run): the first record's cells are the
     80 sets of the reading in the layer's order with the reading's rungs;
     its chosen cell's weight and its total equal the reading's fractions
-    (the total 847181/745472: the wall's three rows 3/5, the fans 2/5 and
-    the cross terms of paths meeting at one Node; a face of 24 Nodes hit
-    sums its Nodes' squares, coherent within a Node and incoherent across
-    Nodes, the decision of 2026-09-20 on the owner's point 5); every one
-    of the 64 births gathers by tick 214 (213 until the fraction-free law
-    of 2026-09-20: the 64th record is born at tick 65); the clicks per set over the 64
-    births equal the reading's on every one of the 80 sets: the wall's
-    three Nodes 11, 12 and 11 (34, the share 0.528), fourteen pixels
-    (15, 0.244; screen_61 twice), the faces 8 and 7 (15, 0.228); the
-    tables' rounding (C^2 + S^2 within 361 of 65536) makes the weights
-    depend on u by parts in 10^3 (32 of the 64 records share the record
-    u = 0's cells, 3 distinct cell lists) without moving a rung here;
+    (the total 4834019/4259840 since the exact phase at the click of
+    2026-09-21, BEAM_LAW note 45, 847181/745472 under the phase of the
+    whole intervals: the wall's three rows 3/5, the fans 2/5 and the cross
+    terms of paths meeting at one Node; a face of 24 Nodes hit sums its
+    Nodes' squares, coherent within a Node and incoherent across Nodes,
+    the decision of 2026-09-20 on the owner's point 5); every one of the
+    64 births gathers by tick 214 (213 until the fraction-free law of
+    2026-09-20: the 64th record is born at tick 65); the clicks per set
+    over the 64 births equal the reading's on every one of the 80 sets:
+    the wall's three Nodes 11, 12 and 11 (34, the share 0.529), fourteen
+    pixels (15, 0.244; screen_60 twice: y = 11, 29, 36, 40, 50, 56, 59,
+    60, 61, 70, 77, 84, 90, 107; until the exact phase screen_61 twice at
+    y = 11, 29, 36, 43, 50, 56, 59, 60, 61, 70, 77, 82, 90, 107), the
+    faces 8 and 7 (15, 0.227); the tables' rounding (C^2 + S^2 within 361
+    of 65536) makes the weights depend on u by parts in 10^3 (44 of the
+    64 records share the record u = 0's cells, 4 distinct cell lists;
+    32 and 3 under the phase of the whole intervals) without moving a
+    rung here;
     the design's "wall 3/5, screen 2/5" is not this geometry's reading:
     the freed fans reach the open faces in y;
 (e) the design's test 7, the gate set: the seventeen registered worlds
@@ -350,8 +356,8 @@ def test_the_two_slits_at_a_low_rate_against_the_reading_of_one_birth():
         first["node"] == [reading["first"]["node"]] and first["content"] == reading["first"]["content"]
     )
     distinct = {json.dumps(g["cells"]) for g in gathers}
-    assert len(distinct) == 3
-    assert sum(1 for g in gathers if g["cells"] == first["cells"]) == 32
+    assert len(distinct) == 4
+    assert sum(1 for g in gathers if g["cells"] == first["cells"]) == 44
 
 
 def test_the_gate_set_parses_with_the_key_deleted():
@@ -440,7 +446,7 @@ def test_a_lamp_short_of_one_quantum_per_direction_is_refused():
                     "family": "light",
                     "amount": content,
                     "fixed": True,
-                    "lamp": {"rate": [1, 1], "directions": [[1, 0, 0], [0, 1, 0]]},
+                    "lamp": {"wheel": [1, N], "rate": [1, 1], "directions": [[1, 0, 0], [0, 1, 0]]},
                 }
             ],
         }
@@ -487,7 +493,7 @@ def rebirth_world() -> dict[str, object]:
                 "family": "light",
                 "amount": 1 << 20,
                 "fixed": True,
-                "lamp": {"rate": [1, 1], "directions": [[1, 0, 0]]},
+                "lamp": {"wheel": [1, N], "rate": [1, 1], "directions": [[1, 0, 0]]},
             },
             {
                 "position": [2, 0, 0],
