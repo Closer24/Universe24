@@ -177,7 +177,11 @@ and failure analysis to the test owner; Boss coordinates the returned results.
 | A real experiment, measured behind a detector or at an external thing | [experimenter](../experimenter/SKILL.md) |
 | Regression | [regression-check](../regression-check/SKILL.md) |
 | PR review/merge | [pr-review-and-merge](../pr-review-and-merge/SKILL.md) |
-| A paper from the register's integers and the design's formulas, with a hostile referee round before any material enters | [paper-writer](../paper-writer/SKILL.md) |
+| The manuscript, with its referee | [paper-coordinator](../paper-coordinator/SKILL.md) |
+| A design, a hypothesis or a verdict on physics (item by item) | the physicist's session, by Routine; a review file by [physics-rule-validation](../physics-rule-validation/SKILL.md) before its build |
+| A derivation, the map's status, order and error term | the derivation mathematician's session, by Routine ([the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309)) |
+| The law's text, the genericity probe, a host-only unification | the architect's session, by Routine |
+| A gallery page | the Visualiser's session, by Routine |
 
 One agent may use several skills. Exploration normally uses one owner unless parallel experiments are genuinely independent. Do not create idle agents to match the routing table.
 
@@ -191,6 +195,17 @@ One agent may use several skills. Exploration normally uses one owner unless par
 6. In integration, coordinate the required rule review, tests, simulator run, regression and documentation, then reconcile on current main.
    Keep the integration short per [the cost of an integration](../workflow.md#the-cost-of-an-integration-kept-short-the-model-owner-2026-09-20): the gate set of worlds and not the register, one full check at the end, one writer per document, agents on different sources, the pages and the reviews in parallel with the second half.
 7. Apply the PR skill only to integration, or when the user explicitly requests a PR for a candidate.
+
+## The order by Routine (the owner, 2026-09-21, record 309)
+
+Every assignment to a role's own session is one bounded order: the question,
+the pins before any number, the deliverable's file, the bound in time, the
+verdict as one of three, the report in one paragraph with the head SHA; the
+Boss opens the pull request when the writer's tool refuses and merges on
+green; one writer per document; the physics-rule reviewer before a build and
+on the head before a merge that moves registered integers; every word of the
+owner recorded at once. The list is in
+[the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-21-record-309).
 
 ## Persistence and self-improvement
 
