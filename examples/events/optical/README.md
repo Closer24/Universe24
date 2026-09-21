@@ -37,10 +37,61 @@ capped at one Link by the primitive's `at_most` with the surplus kept.
 | `mass_g0.json` | 0 | 1 | 2^16 | 6 | -1.93 +- 0.5 | 2.68 +- 1 |
 | `mass_g1.json` | 1 | 2 | 2^16 | 6 | -3.86 +- 0.5 | 5.36 +- 1 |
 | `near_g0.json` | 0 | 1 | 2^16 | 3 | -2.42 +- 0.5 | 2.17 +- 1 |
-| `near_g1.json` | 1 | 2 | 2^16 | 3 | -4.83 +- 0.5 | 4.34 +- 1 |
+| `near_g1.json` | 1 | 2 | 2^16 | 3 | -4.83 +- 0.5 (re-declared a capture reading, record 505 and 540: 582 +- 146 of the control's 1455 clicks taken by the mass, DETECTOR; no deflection pin) | 4.34 +- 1 |
+| `far_g0.json` | 0 | 1 | 2^16 | 8 | -1.69 +- 0.5 | 2.15 +- 1 |
+| `far_g1.json` | 1 | 2 | 2^16 | 8 | -3.37 +- 0.5 | 4.29 +- 1 |
 
 The number the run reads: the ratio of the two shifts (f = 2 over f = 1),
-2.00 within 0.25.
+2.00 within 0.25 (`mass`; the chief physicist's remark of record 540: the
+bracket propagated in quadrature from the shifts' 0.5 pixel each is 0.83
+at b = 6, met by the delays' 2.03 / 1.98, and the 0.25 was set by fiat; a
+change of a registered pin is the model owner's, so 0.25 stays as
+registered with the remark beside it) and, at b = 8, 2.00 within 0.66
+(the shifts) and 2.00 within 1.04 (the delays), both propagated in
+quadrature from the brackets above.
+
+**The second pin at b = 8 (2026-09-21, records 505 and 540; the chief
+physicist's word and his correction, the owner's re-declaration).** `near`
+at f = 2 is not a pin world of the deflection: on the GameBoard the beam's
+five directions pass the one-Node mass at 3, 4.08, 1.92, 5.17 and 0.83
+Links, and at f = 2 the two inner directions are turned into the mass's
+Node and absorbed, 547 taken (DETECTOR) being 94 per cent of their 582
+clicks, two fifths of the beam; a number that moves a pixel for a 3.3 per
+cent change of a residue is a count of what was taken, not a deflection.
+Its row stays as a capture reading: expected 582 of 1455 taken (2 x 291,
+the two inner directions), the bracket one half direction, +- 146, since
+the direction at 1.92 Links captures or not by the last units of its pace
+(the S rule's 547 inside, the T rule's 415 outside); its centroid the
+survivors' (the three outer lines at 3, 4.08 and 5.17 Links), no
+deflection pin. The deflection's second pin moves to `far_g0.json` and
+`far_g1.json` at b = 8 (the lamp at y = 28, b = 8 from the mass at y = 20;
+the same M = 2^16, the same pair [1, 16384] and the same crowd; generated
+with the other worlds by `make_worlds.py` over series K's generator): no
+capture (the innermost direction at 5.83 Links, beyond the `mass` world's
+3.83 where nothing was taken at either f) and every pin at least 2.2
+brackets from zero. The physicist's map at [1, 16384], M = 2^16, per
+impact b (the shift at f = 1 / f = 2 in pixels, the delay at f = 1 / f = 2
+in intervals; the one-line form, the note's section E, GAMEBOARD
+arithmetic before any run): b = 7 -2.20 / -4.39, 1.95 / 3.90; b = 8 -1.69
+/ -3.37, 2.15 / 4.29; b = 9 -1.50 / -3.01, 1.55 / 3.11; b = 10 -1.90 /
+-3.81, 1.85 / 3.71; b = 11 -1.63 / -3.27, 1.75 / 3.51; b = 12 -1.64 /
+-3.27, 2.16 / 4.31: the lattice's comb is not monotonic in b (b = 10 reads
+more than 9; b = 9 is a weak line, its delay at f = 1 only 1.5 brackets
+above zero), hence b = 8 and not record 505's 9. THE PINS AT b = 8
+(DETECTOR when run): the shift -1.69 +- 0.5 (f = 1) and -3.37 +- 0.5
+(f = 2); the delay 2.15 +- 1 (f = 1) and 4.29 +- 1 (f = 2); the shifts'
+ratio 2.00 +- 0.66 and the delays' ratio 2.00 +- 1.04, propagated in
+quadrature from those brackets (record 483's fact). For the record and
+not the pin, the beam's width: the five-line mean over y = b - 2 .. b + 2
+is -1.84 / -3.69 and 2.04 / 4.07 at b = 8; at b = 6 it is -2.02 / -4.04
+and 2.55 / 5.10 against the one-line pin -1.93 / -3.86 and 2.68 / 5.36
+and the measured -1.62 / -3.81 and 2.97 / 5.88, the one-line form the
+closer, so it stays the pin's form. What the Bresenham head reads on
+these: the shifts' ratio within its propagated bracket is the test of the
+label's Bresenham itself (the comb removed), the delays as before; a shift
+outside by more than the comb's tooth (1.08 pixel) refutes the Bresenham,
+not the wall. The worlds are NOT RUN before that head stands (record
+483's label).
 
 ## Run and read
 

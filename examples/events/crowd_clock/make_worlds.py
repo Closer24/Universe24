@@ -248,6 +248,44 @@ def exit_tick(k: float) -> float:
     return FAN_REACH * (1 + k) / (k * SPEED_OVER_C * C)
 
 
+def moving_entry(flux: int, k: float) -> Json:
+    """A moving world's expectation at the crowd's k: the same rule for the
+    presence word's k and for the age word's (clock-age-v1, 2026-09-21)."""
+    flight = (MOVING_LAMP_X - MOVING_DETECTOR_X) / C
+    doppler = 1 + SPEED_OVER_C
+    # The lamp behind its crowd sits on the oblique directions' crossing
+    # Nodes, which carry fewer rows than the heading (the probe of
+    # 2026-09-21: two Links behind, half the presence): k falls with the
+    # lag, between K_LOW k and k, and the exit comes between the two.
+    exits = [exit_tick(k), exit_tick(K_LOW * k)]
+    windows: Json = {}
+    for lo, hi in MOVING_WINDOWS:
+        # The detector sees the lamp's clock as it was one flight earlier;
+        # a window entirely before the exit reads the slowed clock, one
+        # entirely after it the Doppler alone (the lamp out of its crowd
+        # steps every interval again), a window across the exit between.
+        seen_lo, seen_hi = lo - flight, hi - flight
+        if seen_hi <= exits[0]:
+            bracket = [(1 + K_LOW * k) * doppler, (1 + k) * doppler]
+        elif seen_lo >= exits[1]:
+            bracket = [doppler, doppler]
+        else:
+            bracket = [doppler, (1 + k) * doppler]
+        windows[f"{lo}-{hi}"] = {"one_plus_z_bracket": bracket}
+    return {
+        "flux": flux,
+        "k": k,
+        "k_bracket": [K_LOW * k, k],
+        "clock_rate": 1 / (1 + k),
+        "exit_tick_bracket": exits,
+        "one_plus_z_in_the_crowd": (1 + k) * doppler,
+        "one_plus_z_doppler_only": doppler,
+        "flight": flight,
+        "windows": windows,
+        "moving": True,
+    }
+
+
 def expectations() -> Json:
     out: Json = {
         "format": EXPECTATIONS_FORMAT,
@@ -271,41 +309,8 @@ def expectations() -> Json:
             "clicks_per_interval": 1 / (1 + k),
             "moving": False,
         }
-    flight = (MOVING_LAMP_X - MOVING_DETECTOR_X) / C
-    doppler = 1 + SPEED_OVER_C
     for name, flux in MOVING.items():
-        k = pinned_k(flux)
-        # The lamp behind its crowd sits on the oblique directions' crossing
-        # Nodes, which carry fewer rows than the heading (the probe of
-        # 2026-09-21: two Links behind, half the presence): k falls with the
-        # lag, between K_LOW k and k, and the exit comes between the two.
-        exits = [exit_tick(k), exit_tick(K_LOW * k)]
-        windows: Json = {}
-        for lo, hi in MOVING_WINDOWS:
-            # The detector sees the lamp's clock as it was one flight earlier;
-            # a window entirely before the exit reads the slowed clock, one
-            # entirely after it the Doppler alone (the lamp out of its crowd
-            # steps every interval again), a window across the exit between.
-            seen_lo, seen_hi = lo - flight, hi - flight
-            if seen_hi <= exits[0]:
-                bracket = [(1 + K_LOW * k) * doppler, (1 + k) * doppler]
-            elif seen_lo >= exits[1]:
-                bracket = [doppler, doppler]
-            else:
-                bracket = [doppler, (1 + k) * doppler]
-            windows[f"{lo}-{hi}"] = {"one_plus_z_bracket": bracket}
-        out["worlds"][name] = {
-            "flux": flux,
-            "k": k,
-            "k_bracket": [K_LOW * k, k],
-            "clock_rate": 1 / (1 + k),
-            "exit_tick_bracket": exits,
-            "one_plus_z_in_the_crowd": (1 + k) * doppler,
-            "one_plus_z_doppler_only": doppler,
-            "flight": flight,
-            "windows": windows,
-            "moving": True,
-        }
+        out["worlds"][name] = moving_entry(flux, pinned_k(flux))
     out["clock_age_v1"] = {
         "derivation": (
             "the pins of the still worlds under the age word (clock-age-v1, 2026-09-21, record 394): "
@@ -323,6 +328,28 @@ def expectations() -> Json:
                 "clicks_per_interval": 1 / (1 + pinned_k(flux) * AGE_MOMENT_OVER_PRESENCE),
             }
             for name, flux in STILL.items()
+        },
+        # The moving worlds re-declared at the age word's k (2026-09-21,
+        # Far 2's flag of record 463 (ii), the Replicator's re-read on main
+        # e531de5c): the same bracket rule as the presence word's block at
+        # k = 5.5 times the presence word's; the shipped worlds pace their
+        # sources at 0.2 c / (1 + k) for the PRESENCE word's k (the world
+        # files unchanged), which the entry says, so the lamp falls out of
+        # its crowd sooner and the windows' brackets read that.
+        "moving_worlds": {
+            name: {
+                **moving_entry(flux, pinned_k(flux) * AGE_MOMENT_OVER_PRESENCE),
+                "k_presence_word": pinned_k(flux),
+                "sources_emulated_for_k": pinned_k(flux),
+                "emulation": (
+                    "the sources' pace 0.2 c / (1 + k) is the world's declaration for the presence "
+                    "word's k; under the age word the lamp's own pace is 0.2 c / (1 + 5.5 k), so it "
+                    "leaves its crowd within the exit bracket above (the age word's k), and the "
+                    "brackets are the block's rule at that k; a re-declaration of the emulation for "
+                    "the age word's k is the design's, not this register's"
+                ),
+            }
+            for name, flux in MOVING.items()
         },
     }
     return out

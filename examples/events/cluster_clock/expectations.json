@@ -1,5 +1,10 @@
 {
  "format": "cluster-clock-expectations-v1",
+ "replicated": {
+  "cluster_rest": "docs/REPLICATIONS.md#cluster_clock-v-five-members-before-one-detector",
+  "cluster_moving": "docs/REPLICATIONS.md#cluster_clock-v-five-members-before-one-detector",
+  "clock_age_v1": "docs/REPLICATIONS.md#cluster_clock-v-five-members-before-one-detector"
+ },
  "c": 0.5818181818181818,
  "ticks": 500,
  "window": [
@@ -132,19 +137,39 @@
   },
   "cluster_moving": {
    "m0": {
-    "one_plus_z_additive": 1.2
+    "one_plus_z_additive": 1.2,
+    "k": 0.0,
+    "k_presence_word": 0.0,
+    "sources_emulated_for_k": 0.0,
+    "pin_readable_in_the_shipped_world": true
    },
    "m01": {
-    "one_plus_z_additive": 1.75
+    "one_plus_z_additive": 1.75,
+    "k": 0.55,
+    "k_presence_word": 0.1,
+    "sources_emulated_for_k": 0.1,
+    "pin_readable_in_the_shipped_world": false
    },
    "m03": {
-    "one_plus_z_additive": 2.85
+    "one_plus_z_additive": 2.85,
+    "k": 1.65,
+    "k_presence_word": 0.3,
+    "sources_emulated_for_k": 0.3,
+    "pin_readable_in_the_shipped_world": false
    },
    "m06": {
-    "one_plus_z_additive": 4.5
+    "one_plus_z_additive": 4.5,
+    "k": 3.3,
+    "k_presence_word": 0.6,
+    "sources_emulated_for_k": 0.6,
+    "pin_readable_in_the_shipped_world": false
    },
    "m1": {
-    "one_plus_z_additive": 6.7
+    "one_plus_z_additive": 6.7,
+    "k": 5.5,
+    "k_presence_word": 1.0,
+    "sources_emulated_for_k": 1.0,
+    "pin_readable_in_the_shipped_world": false
    }
   }
  }

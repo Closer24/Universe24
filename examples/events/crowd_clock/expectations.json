@@ -1,5 +1,9 @@
 {
  "format": "crowd-clock-expectations-v1",
+ "replicated": {
+  "worlds": "docs/REPLICATIONS.md#crowd_clock-u-a-lamp-inside-a-crowd",
+  "clock_age_v1": "docs/REPLICATIONS.md#crowd_clock-u-a-lamp-inside-a-crowd"
+ },
  "c": 0.5818181818181818,
  "ticks": 500,
  "dwell": 2,
@@ -213,6 +217,110 @@
     "k": 11.0,
     "one_plus_z": 12.0,
     "clicks_per_interval": 0.08333333333333333
+   }
+  },
+  "moving_worlds": {
+   "moving_08": {
+    "flux": 1311,
+    "k": 0.440093994140625,
+    "k_bracket": [
+     0.11002349853515625,
+     0.440093994140625
+    ],
+    "clock_rate": 0.6943991184386191,
+    "exit_tick_bracket": [
+     112.48331426392066,
+     346.80825705568265
+    ],
+    "one_plus_z_in_the_crowd": 1.7281127929687499,
+    "one_plus_z_doppler_only": 1.2,
+    "flight": 63.59375,
+    "windows": {
+     "100-250": {
+      "one_plus_z_bracket": [
+       1.2,
+       1.7281127929687499
+      ]
+     },
+     "250-400": {
+      "one_plus_z_bracket": [
+       1.2,
+       1.7281127929687499
+      ]
+     }
+    },
+    "moving": true,
+    "k_presence_word": 0.08001708984375,
+    "sources_emulated_for_k": 0.08001708984375,
+    "emulation": "the sources' pace 0.2 c / (1 + k) is the world's declaration for the presence word's k; under the age word the lamp's own pace is 0.2 c / (1 + 5.5 k), so it leaves its crowd within the exit bracket above (the age word's k), and the brackets are the block's rule at that k; a re-declaration of the emulation for the age word's k is the design's, not this register's"
+   },
+   "moving_3": {
+    "flux": 4915,
+    "k": 1.649932861328125,
+    "k_bracket": [
+     0.41248321533203125,
+     1.649932861328125
+    ],
+    "clock_rate": 0.37736805131689566,
+    "exit_tick_bracket": [
+     55.20918107833164,
+     117.71172431332656
+    ],
+    "one_plus_z_in_the_crowd": 3.1799194335937497,
+    "one_plus_z_doppler_only": 1.2,
+    "flight": 63.59375,
+    "windows": {
+     "100-250": {
+      "one_plus_z_bracket": [
+       1.2,
+       3.1799194335937497
+      ]
+     },
+     "250-400": {
+      "one_plus_z_bracket": [
+       1.2,
+       1.2
+      ]
+     }
+    },
+    "moving": true,
+    "k_presence_word": 0.29998779296875,
+    "sources_emulated_for_k": 0.29998779296875,
+    "emulation": "the sources' pace 0.2 c / (1 + k) is the world's declaration for the presence word's k; under the age word the lamp's own pace is 0.2 c / (1 + 5.5 k), so it leaves its crowd within the exit bracket above (the age word's k), and the brackets are the block's rule at that k; a re-declaration of the emulation for the age word's k is the design's, not this register's"
+   },
+   "moving_1": {
+    "flux": 16384,
+    "k": 5.5,
+    "k_bracket": [
+     1.375,
+     5.5
+    ],
+    "clock_rate": 0.15384615384615385,
+    "exit_tick_bracket": [
+     40.625,
+     59.375
+    ],
+    "one_plus_z_in_the_crowd": 7.8,
+    "one_plus_z_doppler_only": 1.2,
+    "flight": 63.59375,
+    "windows": {
+     "100-250": {
+      "one_plus_z_bracket": [
+       1.2,
+       7.8
+      ]
+     },
+     "250-400": {
+      "one_plus_z_bracket": [
+       1.2,
+       1.2
+      ]
+     }
+    },
+    "moving": true,
+    "k_presence_word": 1.0,
+    "sources_emulated_for_k": 1.0,
+    "emulation": "the sources' pace 0.2 c / (1 + k) is the world's declaration for the presence word's k; under the age word the lamp's own pace is 0.2 c / (1 + 5.5 k), so it leaves its crowd within the exit bracket above (the age word's k), and the brackets are the block's rule at that k; a re-declaration of the emulation for the age word's k is the design's, not this register's"
    }
   }
  }
