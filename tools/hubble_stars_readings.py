@@ -73,6 +73,7 @@ from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.events import parse_nature_beam_world
 from event_universe.events.nature_beam import direction_flight
 from event_universe.events.world import HEADING_OFFSET, Q
+from event_universe.world_loading import world_of_run
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_PREFIX = "rays-hubble-stars-"
@@ -268,7 +269,10 @@ def axis_of(momentum: list[int]) -> tuple[int, int]:
 
 def read_run(folder: Path) -> Run:
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
-    document = json.loads((folder / "initialization.json").read_text(encoding="utf-8"))
+    # The world as the engine read it (`resolved_initialization.json` where
+    # the run resolved entity definitions, since the shipped worlds take
+    # their families from `entities/families.json`).
+    document = world_of_run(folder)
     model = str(record["model"])
     parts = model[len(MODEL_PREFIX) : -len(MODEL_SUFFIX)].split("-")
     # Under the record click (the world key `amplitude`, the model id

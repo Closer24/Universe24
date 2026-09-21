@@ -19,6 +19,22 @@ as its default and the step's cap `at_most`), the integers written first:
     2^20) an unsigned accumulator stays in [0, d) and a signed one in
     (-d, d), with the cap and without, the count in {-1, 0, 1} for a rate
     below the denominator; a denominator below 1 is refused.
+
+The age wall (2026-09-21, `clock-age-v1`, the generic shape of records 421,
+422 and 428 of docs/LOG_2026-09-20.md; `age_wall`, the one wall function of
+the crowd), the integers written first:
+(c) a count at the rate r against the wall w becomes the count at the rate
+    r x d against the wall w x (d + c a_tau n) at the suspension [n, d], c
+    the member's coefficient and a_tau the age moment: the clock's member
+    (1, 1) at c = 1 with a_tau = 11 and [1, 4] gives (4, 15), the excess
+    15 - 4 = 11 = a_tau n the owed count's rate; the flight's form
+    (2 S_1 Q, 2 T_d) = (128, 192) at c = 2, a_tau = 11, [1, 4] gives
+    (512, 192 x 26 = 4992), the pace 512 / 4992 = (128 / 192) / (1 + 2 x
+    11 / 4); with no crowd (r d, w d), the same count; the count from an
+    empty accumulator at the rate 4 against the wall 15 fires 4 in 15
+    self-creations, one more than 15 / (1 + 11 / 4) rounds down; a
+    denominator below 1, a coefficient below 1, a negative age moment and a
+    negative width are refused.
 """
 
 import random
@@ -27,6 +43,7 @@ import pytest
 
 from event_universe.core.integer import (
     MAX_WORK_INT,
+    age_wall,
     bounded_gcd,
     by_clock,
     by_drive,
@@ -220,3 +237,30 @@ def test_by_drive_keeps_the_accumulator_below_the_denominator(denominator):
         assert -denominator < signed < denominator and count in (-1, 0, 1)
         count, capped = by_drive(capped, signed_rate, denominator, at_most=1)
         assert -denominator < capped < denominator and count in (-1, 0, 1)
+
+
+# -- the age wall --------------------------------------------------------------------
+
+
+def test_the_age_wall_stretches_the_wall_by_the_crowd():
+    """(c)."""
+    assert age_wall(1, 1, 1, 11, (1, 4)) == (4, 15)
+    rate, wall = age_wall(1, 1, 1, 11, (1, 4))
+    assert wall - rate == 11 * 1
+    assert age_wall(128, 192, 2, 11, (1, 4)) == (512, 192 * (4 + 2 * 11 * 1))
+    assert age_wall(128, 192, 2, 11, (1, 4)) == (512, 4992)
+    assert age_wall(128, 192, 2, 0, (1, 4)) == (512, 768)
+    assert age_wall(3, 5, 1, 0, (0, 7)) == (21, 35)
+    fired, accumulator = 0, 0
+    for _ in range(15):
+        count, accumulator = by_drive(accumulator, 4, 15)
+        fired += count
+    assert fired == 4 and accumulator == 0
+    with pytest.raises(ValueError, match="positive denominator"):
+        age_wall(1, 1, 1, 11, (1, 0))
+    with pytest.raises(ValueError, match="coefficient is a positive integer"):
+        age_wall(1, 1, 0, 11, (1, 4))
+    with pytest.raises(ValueError, match="not negative"):
+        age_wall(1, 1, 1, -1, (1, 4))
+    with pytest.raises(ValueError, match="not negative"):
+        age_wall(1, 1, 1, 11, (-1, 4))

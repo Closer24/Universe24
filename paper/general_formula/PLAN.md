@@ -2390,3 +2390,217 @@ diff is colours, hatches, markers and a --png preview option). The PDF
 compiled here with pdflatex (three passes, clean) is 80 pages, not the
 105 of the word-count estimate; the Boss told.
 
+## Wave 28 (2026-09-21): the one non-local operation and no-signalling's scope in the abstract (the reviewer's point 3, the owner's "make sure it is resolved")
+
+The reviewer: P6 and the causal section state the pair's gather from
+both settings (transparent), the title should reflect the exception,
+and no-signalling is proved for equal weights only. In the paper: P6
+names the one non-local operation (wave 23); the theorem's scope
+paragraph and the "What is not claimed" item say no-signalling is
+proved for the equal-weight pair and open beyond it; the abstract now
+says both in one sentence ("Local at every Node, the law has one
+non-local operation, the click of a pair, a gather of one record from
+both settings; no-signalling is proved for equal weights, open
+beyond"), with cuts to stay under 1920 plain characters (1917): the
+pace's parenthesis, "run and replicated at 512 and 4096" (the
+replication stays in "four replicated"), the closing "every claim is
+measured, proved, assumed or open", two shortenings. The title is the
+owner's decision (record 275) and is not changed by the writer; the
+question is put to him with a variant. Referee round 50.
+Referee round 50: CLEAN WITH NOTES; applied: "on paper" restored for the
+covariant readings, "the rule gives" for 5793/2048, "From this law"; the
+abstract at 1917 plain characters. His reading of the title: the
+abstract's fourth sentence states the exception, so title and abstract
+together do not mislead; alone, the title lacks the qualifier, and the
+title is the owner's (record 275).
+Wave 28 extended on the owner's issue 621 (the first-reader review of the
+compiled PDF, six points) and the Boss's order of 16:10Z: (1) a paragraph
+and Table tab:assumptions after the postulates, what Eq. (1) determines
+and what its rates and tables supply, per main recovery the assumptions
+that force it and the freedom left, identities apart from predictions;
+(2) the scope table's four rows carried in that table (c a bound and a
+chosen wall; Born the splitter axiom and the harmonic freedom; Newton a
+shell mean, the spatial run unrun; the uncertainty relation conditional
+on the identification); (3) the abstract's sentence (above); (4) after
+the register paragraph: every verdict the law's beam-v1 at the merge
+commit unless a hypothesis's identity is named, a hypothesis's PASS
+never changing the law's FAIL, incompatible predictions apart from
+capabilities not reached, PASS counts no evidence against a decisive
+FAIL; covariant-readings-v1 built and run (series S) in rows 4a, 4b,
+the Lorentz section and the consequences' rows, the law's rows FAIL,
+the identity's PASS on its domain; (5) the prediction paragraph's
+domain at its first occurrence with the grains, the settings and the
+prepared state, the allowed family, the compatibility not an advantage,
+a rejection criterion at five standard errors, no new physical data;
+(6) every table a longtable with repeated headers (16 tables): the
+compiled PDF 94 pages, no overfull vertical box (the 80-page build lost
+6051 points of the consequences table and the foot of the register).
+Also P10 restated by the Boss's decision (record 435; the Born note's
+line), series G2's status by date (record 408 to follow). The title is
+the owner's; put to him. Referee round 51.
+
+## Wave 29 (2026-09-21): the cut to 40 pages (the owner's word, "shorten the paper to 40 pages; keep what is certain"; no referee)
+
+The owner's word supersedes record 373's arXiv-first full paper and
+cancels the referee rounds. The manuscript is cut from the long form
+(commit c15c1174, 97 pages) to what is proved, measured and, where the
+second runner's line exists, replicated: Part I the law (the postulates,
+the assumptions table, Eq. (1) and its operations, the group, the
+state, the components, the two blocks, the read-out, the five
+statements, the inputs, the symmetries and the theorem of the 24);
+Part II the table of consequences in short (standing, formula,
+derivation, check; the status column left to the long form), Newton and
+Coulomb, the delay field (Poisson, the retarded wave equation, the
+clock's redshift with series T replicated, the crowd worlds in one
+passage, light in one paragraph), the lattice Gleason and the
+confrontation register; Part III the click model (without the
+plain-words and history paragraphs and the time-of-flight bounds), the
+four theorems, the measurements (the table, the two-slit and S(N)
+figures), the Bell value, the causal anatomy, what is new, what is not
+claimed, the hypotheses in one paragraph; Part IV the one prediction
+(the differences' table left to the derivation's 24.3), the limits
+(without Young's fan paragraph), Lorentz (the theorem, Newton, the
+built hypothesis with series S, the figure, the decision), the
+literature, Reproducibility (naming the long form's commit), the AI
+line. Dropped to the tree: the special cases, "what follows in order",
+the figure of the 48, "where the law's form stands above", the dark
+sector, the founding formulas one by one, flow and heat, the
+differences' table, the record appendix, the families' appendix, the
+glossary; the repository bibitems shortened to one line and the uncited
+ones removed. Compiled: 40 pages at 11pt, no overflow, no undefined
+reference; every number kept is one the long form carries with its
+source in NUMBERS.md. The full text stays in git at c15c1174.
+The Boss's procedure for the same word (record 454): the referee retired
+in skills/paper-coordinator/SKILL.md in one paragraph; the cut by one
+criterion, (a) a rule of the law as the repository states it, (b) a
+derivation closed in DERIVATIONS_BEAM with its row cited, (c) a
+registered run with its fingerprint and detector readings, (d) a
+declared hypothesis or a stated non-claim; three further cuts under it:
+the Lorentz decision paragraph (a decision under review), the causal
+anatomy section (an interpretation), the literature essay to one
+paragraph; the uncited bibitems removed (72 remain). Where the cut
+departs from the Boss's first reading: the confrontation register is
+kept in full (its FAIL rows are registered detector readings, criterion
+(c), and the owner's "certain" includes the failures); the one
+prediction is kept (a derivation, 24.4, with registered and replicated
+runs at 512 and 4096); the founding formulas one by one are not kept as
+a section (their closed rows are in the table and the Gleason section);
+the glossary is not kept (the notation table stands). 40 pages.
+
+## Wave 30 (2026-09-21): the Boss's twelve items on the cut, from the chief physicist's and the mathematician's certainty lists (record 457's order)
+
+The criterion of the cut (record 454, on the owner's "keep what is
+certain"): a passage stays only as (a) a rule of the law as the
+repository states it, (b) a derivation closed in DERIVATIONS_BEAM with
+its row cited, (c) a registered run with its fingerprint and detector
+readings, or (d) a declared hypothesis or a stated non-claim. Done on
+the cut: (1) no conditional derivation remains (the flow rows to one
+NOT REACHED line; Compton and E = mc^2 one line each under
+covariant-readings-v1; the built identity stays as (d) with series S's
+readings and its one-axis domain, an orbit refused); (2) form B out
+everywhere (P9 states the drive as built on main, per axis; the
+table's legend, the Newton paragraph, the click model's parenthetical,
+the Lorentz domain); (3) optical-v1 one line, designed and reviewed,
+not built; the bending keeps the registered 0.000 against nature's
+1.75 arcseconds, cited to the derivation's 24.3 row 14 (the cut's
+"the register's row 14" was the long form's table row: a citation
+slip, fixed); (4) the table of consequences: every pinned or
+unchecked row is one non-claim line without a number (Bohr's
+condition, Kepler, Compton, Newton's geodesics, Bradley, Schroedinger,
+the single-opening spread, the periodic universe), the HYPOTHESIS rows
+one line with the identity's name and status (source-velocity-v1,
+expansion-v1, optical-v1, covariant-readings-v1, massive-rows-v1),
+Heisenberg's arrays and Dirac's spin added as NOT REACHED; (5) the
+register's pinned rows (4a's law reading, 5b, 6, 10, 11a to 11c)
+carry "not run" in the reading column and no number, every FAIL a
+FAIL, the BOUND rows and 4b's 0.2636 unchanged; (6) Planck and de
+Broglie cite 24.1 row 25 (one constant h = h_q N = h_A); Bohr's
+energies, Heisenberg's arrays, Schroedinger and Dirac one non-claim
+line in "What is not claimed"; Born, Young (L2b) and Tsirelson stay
+with their fingerprints; (7) the uncertainty relation: the circle as
+position and its transform as momentum a stated identification, the
+finite-Fourier bounds mathematics on Z_N, the Weyl relation an
+identity, the single opening's 0.886 out (a pin, not run); the row
+HYPOTHESIS; (8) Lorentz: the theorem restricted to the plane-wave
+stream (a hypothesis for arbitrary row data), the decision in one
+sentence (record 270), the law's three rows stated (4a a pin, not
+run; 4b registered; the pace on main), the seventh-operation narrative
+and the round-trip pins out, the contraction one line; (9) no general
+push constant is stated (C = 1 only as series C's reading in the long
+form; the cut states none); (10) no trace of the dark sector's
+"missing content"; (11) "What is new" item 4 kept, restated to what
+Remark rem:nodispersion proves (the periodicity of a local linear
+scheme's dispersion relation), the coordinator's call for the
+mathematician; (12) the optical-metric limit sentence and the Young
+"partial third" out. The families' tables and the glossary stay on
+the tree, cited by path (the families' audit; TERMINOLOGY through the
+notation table). The Boss's "J4's registered numbers" for the law's
+FAIL rows: the register's J4 worlds are series S's, run under the key;
+under the law the muon in flight is a pin (row 4a), so the row carries
+no number; the dispersion the Boss wrote, v = p / (m + p / c), is form
+B's, and the law on main reads |p_a| / (N_l N_w M + |p_a|) per axis.
+The Boss's "Young's fringes (series L2, 36.5 / 60 / 83.5)": those
+integers are the slits_matter pin under massive-rows-v1, not L2's
+readings; L2b's registered fringes stay (the bright pixels 19 to 51,
+the dark 0 to 3). Main b6ab1bb3 merged (records 367 to 453 on the
+tree: the owner's clock word cited as record 394, series G2's
+replication FAIL as record 408). The PDF: 38 pages.
+
+### Wave 30, addenda 1 and 2 (records 458 and 459): the physicist's five and the mathematician's five
+
+(13) Series T stays "replicated": REPLICATIONS.md on main at b6ab1bb3
+carries the Replicator's block for series T (afb533a, every world
+bit-exact); NATURE row 12's own label ("measured once, the replicator's
+round pending") lags the block. (14) The crowd-clock worlds are cited
+by their pages' titles (Series U: a lamp inside a crowd, still and
+moving; Series V: a cluster of crowds read by one detector; Series S:
+a reader inside a crowd), their register entries drafted and not
+registered; the covariant readings by the register's entry "S, the
+covariant readings" everywhere (the letter alone nowhere). (15) The
+S(N) figure shows the powers of two 64 to 8192 only (figures.py; the
+runs at 64, 1024, 4096 as open circles); the Bell section and the
+prediction lose the multiples-of-8 statements (91/32, 181,152, 184,
+136 of 512, 3016, S = 3 at 16 and 32); Theorem th:bell keeps its
+exact count of the multiples of 8, a proved statement. (16) The
+assumptions table checked row by row: every row's "assumptions that
+force it" is a postulate, a declared input, a theorem of the paper or
+a section of the derivation (P1, P4, P9; P3, P5; 24.2, P8; th:gleason,
+P10; N_t and the labels; 22's identification, assumed; P8, P9, 24.1
+row 25; the calibration assumed; the coarse graining); the five
+statements are the law's rules (I1 to I5); both kept. (17) fig:square's
+caption names covariant-readings-v1 and says "a hypothesis beside the
+law". (g1) meeting-v1 one line in the hypotheses paragraph as a
+registered hypothesis (K under the meeting: the centroid -1.790,
+-4.359, -2.301 pixel, DETECTOR), not coupled to optical-v1. (g2) The
+rows' pace untouched. (g3) The DERIVED rows keep their series and
+keys; the FAIL rows their registered readings. (g4) The notation
+table kept; the glossary cited by path (docs/TERMINOLOGY.md). The
+families: P8 says every world's families are the shipped definitions
+(75 families in 27 entities, examples/events/entities/families.json)
+plus the 23 inline declarations (the audit's count; the Boss's
+addendum said 21), cited to the audit with family_table.out. (18) The
+three labels: Kepler and Bohr's condition OPEN, the single-opening
+spread OPEN without the 0.886, Compton one line without numbers (as in
+the wave). (19) Form B's last two mentions in Part I out (the
+components paragraph, the cap sentence). (20) th:bell's statement
+"through 8192" with the run and computed N named. (21) Row 4a's
+reading keeps J4's registered rest reading (the 64th self-creation at
+64, j4_muon_rest); in flight a pin. (22) "What is new" item 4 claims
+only the first half of rem:nodispersion (no rule reads a phase into a
+step); the remark attributes "no local linear wave scheme is both" to
+Meyer's theorem. The PDF: 38 pages.
+
+### Wave 30, the physicist's four corrections on 6abe65ce (record 477; the mathematician agreed with none)
+
+(1) The differs head counts the eight registered FAILs (1b, 2a, 3, 4b,
+7b, 8a, 8b, 8c), the four by a pin without its run (4a, 5b, 11a, 11c;
+the physicist's line named three, 11a is the fourth "FAIL (pinned)"
+row) and the one under the presence word (12). (2) Row 11b's verdict
+reads "not run; the pin's exponent within the measured", no PASS; the
+tallies follow: four PASS (all replicated), twelve FAIL, two BOUND, two
+NOT YET, one pin without its run (the abstract and the register
+paragraph). (3) P8: the 23 inline declarations, 21 of them differing
+from the shipped definitions or naming a family the definitions lack.
+(4) The assumptions table's uncertainty row: "an identity on the
+circle; the physical identification a stated hypothesis (22, assumed)".
+

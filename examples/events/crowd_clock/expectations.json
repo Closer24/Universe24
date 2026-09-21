@@ -179,5 +179,41 @@
    },
    "moving": true
   }
+ },
+ "clock_age_v1": {
+  "derivation": "the pins of the still worlds under the age word (clock-age-v1, 2026-09-21, record 394): k = 22 F / 2^16, the age moment of the two sources' rows dwelling at the ages 5 and 6 (series T's map), 5.5 times the presence word's 4 F / 2^16; 1 + z = 1 + k at the detector (DETECTOR); a moving lamp's k under the age word is not pinned (its lag puts it on older rows of the crossing Nodes), its re-read is a research reading, in the README",
+  "age_moment_over_presence": 5.5,
+  "worlds": {
+   "still_005": {
+    "flux": 82,
+    "k": 0.02752685546875,
+    "one_plus_z": 1.02752685546875,
+    "clicks_per_interval": 0.9732105732105732
+   },
+   "still_08": {
+    "flux": 1311,
+    "k": 0.440093994140625,
+    "one_plus_z": 1.440093994140625,
+    "clicks_per_interval": 0.6943991184386191
+   },
+   "still_3": {
+    "flux": 4915,
+    "k": 1.649932861328125,
+    "one_plus_z": 2.649932861328125,
+    "clicks_per_interval": 0.37736805131689566
+   },
+   "still_1": {
+    "flux": 16384,
+    "k": 5.5,
+    "one_plus_z": 6.5,
+    "clicks_per_interval": 0.15384615384615385
+   },
+   "still_2": {
+    "flux": 32768,
+    "k": 11.0,
+    "one_plus_z": 12.0,
+    "clicks_per_interval": 0.08333333333333333
+   }
+  }
  }
 }

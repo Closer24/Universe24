@@ -6,7 +6,8 @@ that created the ray (a birth or a re-emission; a collision keeps it), kept
 whole on the record; the flight reads it modulo the direction's period and
 the collision never reads it; a measured event, the external thing, reads
 it whole as the age moment of the one reading (sum amount x age, `reads:
-"age"`), which its clock counts in place of the presence. The GameBoard's step
+"age"`), which its clock counts; since clock-age-v1 (2026-09-21) by default
+on every entry, the presence on an entry that reads `presence`. The GameBoard's step
 is unchanged by the whole age. The expected integers of
 docs/TEST_EXPECTATIONS.md ("The age"), written down first:
 
@@ -28,8 +29,9 @@ docs/TEST_EXPECTATIONS.md ("The age"), written down first:
     48 signed axis permutations fix it; the keyed form over Nodes equals
     the readings Node by Node; without ages the moment is 0; an amount x
     age beyond 2^62 - 1 is refused before any product is formed;
-    `count_component` selects `age` for `age` and `scalar` for every other
-    key;
+    `count_component` selects `age` for every key but `presence`, which
+    selects `scalar` (clock-age-v1, 2026-09-21; until then `age` for `age`
+    and `scalar` for every other key);
 (c) the clock: a source of `m` (content 1) at x = 0 of an open 5 x 1 x 1
     bar at `release` [1, 1] and a fixed reader of `light` (content 1) at
     x = 3 whose entry reads `age` at `suspension` [1, 4]: a ray born at
@@ -45,8 +47,11 @@ docs/TEST_EXPECTATIONS.md ("The age"), written down first:
     9, 9, 10, 10, 10, 10, 11, 11 (until the fraction-free law the whole
     part off the clock at the current moment, `by_clock(age, 11, 4)` = 3,
     3, 2, 3, 3, put the 2 one self-creation later: 1, 2, 3, 4, 5, 6, 6, 7,
-    7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 11, 11); a reader without
-    the key counts the presence 2 and owes 0 at the presence 1 (the
+    7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 11, 11); since
+    clock-age-v1 (2026-09-21) a reader without the key counts the age
+    moment too, with the same ages, its `read` record carrying the flow;
+    a reader whose entry reads `presence` (until clock-age-v1 every reader
+    without the key) counts the presence 2 and owes 0 at the presence 1 (the
     accumulator 1), 0 (3), 1 (5 -> 1), then 0, 1 alternately: 1, 2, 3, 4,
     5, 6, 7, 8, 8, 9, 10, 10, 11, 12, 12, 13, 14, 14, 15, 16, 16, 17, 18,
     18 (the same ages as `by_clock(age, 2, 4)` off the clock); the `read`
@@ -268,8 +273,10 @@ def test_the_age_moment_is_the_amount_weighted_age_and_the_symmetries_fix_it():
     with pytest.raises(OverflowError, match="moments of a reading"):
         read_arrivals(np.array([[1, 0, 0]]), np.array([1 << 40]), ages=np.array([1 << 23]))
     read_arrivals(np.array([[1, 0, 0]]), np.array([1 << 40]), ages=np.array([(1 << 22) - 1]))
-    assert count_component("age") == "age"
-    assert [count_component(key) for key in READS if key != "age"] == ["scalar"] * 5
+    # clock-age-v1 (2026-09-21): the age moment on every entry but the one
+    # that reads `presence`, the clock's word for the count before the word.
+    assert count_component("age") == "age" and count_component("presence") == "scalar"
+    assert [count_component(key) for key in READS if key not in ("age", "presence")] == ["age"] * 5
 
 
 def clock_world(reader_table: dict[str, object]) -> dict[str, object]:
@@ -319,11 +326,19 @@ def test_the_clock_counts_the_age_moment_on_an_entry_that_reads_age():
     assert readings[5] == (6, 1, 5) and readings[6] == (8, 2, 11)
     assert all((presence, counted) == (2, 11) for tick, presence, counted in readings if tick >= 7)
     assert read == [5] * 19
+    # clock-age-v1 (the model owner's word of 2026-09-21, record 394): a
+    # reader without the key counts the age moment too (the same ages as
+    # the `age` reader) while its `read` record still carries the flow; the
+    # presence is the clock's count only on an entry that reads `presence`.
     ages, readings, read = ages_of_the_reader(clock_world({"m": "read"}))
+    assert ages == expected
+    assert all((presence, counted) == (2, 11) for tick, presence, counted in readings if tick >= 7)
+    assert read == [[Q, 0, 0]] * len(read)
+    ages, readings, read = ages_of_the_reader(clock_world({"m": {"rule": "read", "reads": "presence"}}))
     assert ages == [1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 10, 11, 12, 12, 13, 14, 14, 15, 16, 16, 17, 18, 18]
     assert all(presence == counted for _, presence, counted in readings)
-    # the scalar reader's record carries the vector moment on u_d, Q per unit
-    assert read == [[Q, 0, 0]] * len(read)
+    # the presence reader's record carries the presence, the zeroth moment
+    assert read == [1] * len(read)
 
 
 def test_the_age_bound_is_derived_declared_or_required(tmp_path):

@@ -16,8 +16,11 @@ once for the whole GameBoard (the walk, the readings, the collision, the tables
 and detectors, the releases, the merge), then turns the phase of every
 self-created measured event by its turn, reads the count it owes from what
 the law read back for the clock (`by_drive(acc_owed, k x n, d)` at the
-world's `suspension` `[n, d]`, k the presence, or the age moment for a
-family whose table entry reads `age`: `measured.count_component`), and
+world's `suspension` `[n, d]`, k the age moment since `clock-age-v1`,
+2026-09-21, or the presence for a family whose table entry reads
+`presence`: `measured.count_component`; the excess of the age wall,
+`core.integer.age_wall`, over the clock, the first member of its declared
+set `measured.AGE_WALL_SET`: `count_owed`), and
 steps the free measured events by their
 momentum (one Link per (Q x S x M + p) / p self-creations on
 an axis whose momentum component is p in label units, M the content, S the
@@ -46,7 +49,7 @@ from collections.abc import Iterator
 import numpy as np
 
 from event_universe.core.game_board import Address3, adjacent_node
-from event_universe.core.integer import apportion_whole, by_drive, integer_root
+from event_universe.core.integer import age_wall, apportion_whole, by_drive, integer_root
 from event_universe.events.amplitude import Layer
 from event_universe.events.measured import (
     TALLIES,
@@ -54,6 +57,7 @@ from event_universe.events.measured import (
     DetectorSet,
     Ledger,
     Measured,
+    age_wall_coefficient,
     counts_table,
     rational_sum,
 )
@@ -149,20 +153,30 @@ def step_axis(drive: int, momentum: int, content: int, width: int) -> tuple[int 
 
 def count_owed(accumulator: int, counted: int, suspension: tuple[int, int]) -> tuple[int, int]:
     """The count a measured event owes after its self-creation (ENGINE,
-    the frame; `_suspend` calls it): what its clock counted (`counted`, the
-    presence or the age moment) times the width n / d of the world's
-    `suspension`, as the whole part its owed accumulator gains,
+    the frame; `_suspend` calls it): the body's clock is the first member
+    of the age wall's declared set (`measured.AGE_WALL_SET`, the
+    coefficient 1; `clock-age-v1`, BEAM_LAW section 3 step 5): what its
+    clock counted (`counted`, the age moment a_tau by default, the presence
+    on an entry that reads `presence`) stretches the wall of its
+    self-creation, one per interval, to one per (d + a_tau n) / d
+    intervals (`core.integer.age_wall(1, 1, 1, counted, [n, d])` = (d, d +
+    a_tau n)), and the excess of the stretched wall over the stretched
+    rate, in units of d, is what the body owes, as the whole part its owed
+    accumulator gains, `by_drive(acc_owed, (d + a_tau n) - d, d)` =
     `by_drive(acc_owed, counted x n, d)` (the fraction-free law, BEAM_LAW
     note 41: the remainder owned on the body's record, below d, so the
     count is exact over any period of a changing crowd; at a constant
     crowd from age 0 the same integers as `by_clock(age, counted x n, d)`
-    read off the clock, the form until then). Returns (the count owed,
-    the accumulator after); (0, the accumulator) when the width is 0. The
-    one place the rule lives; the readings tools replay it from here."""
+    read off the clock, the form until then; the same integers as the
+    owed count before the wall function was named). Returns (the count
+    owed, the accumulator after); (0, the accumulator) when the width is
+    0. The one place the rule lives; the readings tools replay it from
+    here."""
     numerator, denominator = suspension
     if not numerator:
         return 0, accumulator
-    return by_drive(accumulator, counted * numerator, denominator)
+    rate, wall = age_wall(1, 1, age_wall_coefficient("owed"), counted, suspension)
+    return by_drive(accumulator, wall - rate, denominator)
 
 
 def energy_root(energy: int, square: int) -> tuple[int, int]:
@@ -1398,7 +1412,12 @@ class NatureBeamSimulation:
         the units that clicked there (`measured`, `clicks`), the `content`
         they carried, their `record` (the same square) and the
         `measured_content` of the measured events that stepped off; and the
-        `momentum` that left; then, when a family declares a lifetime, the
+        `momentum` that left. Two kinds of escape on two lines: a row's
+        escape in the walk is booked on `clicks`, `content` and `record`, a
+        measured event's escape by its step on `measured_content` and
+        `momentum` (and on the books' `measured.escaped`), never on `clicks`
+        or `record`, its `click` line writing `amount` = its content (issue
+        #614; `tests/test_face_click_summary.py`). Then, when a family declares a lifetime, the
         border `lifetime` with the same fields (no Nodes: the border is
         wherever an event's age reaches its family's lifetime)."""
         found: list[dict[str, object]] = []

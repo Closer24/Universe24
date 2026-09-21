@@ -312,3 +312,52 @@ corners and the deuteron, are inside under the range, 36 readings inside
 and 0 outside; nothing else moves. `tests/test_weak_readings.py` (e)
 replays the generator's warm run on the shipped worlds against the
 register.
+
+## Re-read under clock-age-v1 (2026-09-21)
+
+The model owner's word of record 394: a clock counts the age moment by
+default, and the neutrons' clocks (their entries for the other families
+without a word) count it, so the `become` at the count 512 fires later
+wherever a crowd is read. The five worlds run again on the head of branch
+`clock-age-v1` (`tools/run_series.py --jobs 2`) and read by
+`tools/weak_readings.py` (13 readings inside, 5 outside; the registered
+36 inside under the range estimator); the registered reading beside the
+new, every line labelled:
+
+- `j1_lattice` (GAMEBOARD): 56 of 64 neutrons transformed within the 650
+  intervals, the trigger ticks 602 to 642 (was 64 of 64 at 522 to 525 for
+  the pinned 517 to 525), the counts read at the trigger 154476 to 338172
+  (was the warm counts 22068 to 27585); DETECTOR: the shell's beta clicks
+  20 within the run (was 64), from tick 629 to 646, the median 641, the
+  10th-to-90th-percentile width over the median 0.0265 (was 0.036); every
+  click the content 3.
+- `j1_source`: 32 of 64 transformed, the trigger ticks 607 to 641 (was 64
+  of 64 at the pinned 524 to 529 and up to 3 after), the counts read
+  171027 to 303435; the shell's clicks 8 within the run (was 64), the
+  median 634, the width 0.0110 (was 0.038); the content 3.
+- `j3_deuteron`: the transformation at 577 (568 on main's engine, the
+  register's tick under the fraction-free law; 577 was the first stage's),
+  the count read at the trigger 152471 (was 128590): the trigger moved 9
+  intervals under the word, and the count moved with it because the
+  proton's fan at the neutron's Node is not all at the age 1: at tick 100
+  it holds 57 lines at age 1 and 13 dwelling a second interval at age 2,
+  the presence 70 x 1837 = 128590 and the age moment 152471, the excess
+  23881 the register's own warm-up low count (the physics-rule review of
+  1716b922, docs/designs/clock_age/REVIEW_1716B922.md: the stretch per
+  self-creation 1.1226 against 1.1454, 9 intervals read while the fan
+  fills); one beta click at 590, the pair holding after, every attempted
+  step a hand-over.
+- `j3_deuteron_crowd`: no transformation in 700 intervals, the count above
+  the gate 65536 at every pulse, no beta click: unchanged in its reading.
+- `j3_neutron_free`: the transformation at 512 exactly, its clock counting
+  nothing, one beta click at 526 with the content 3: unchanged.
+
+Against nature's rows ([NATURE row 8a](../../../docs/NATURE.md)): the
+survival is still a step, the width 0.0265 and 0.0110 against the
+memoryless 3.17, so the row's FAIL stands in form; but the row's registered
+numbers 0.036 and 0.038 were read on 64 clicks and the age word's on 20 and
+8, the rest of the population firing at or after the run's end (the
+trigger 602 to 642 plus the flight to the shell, against 650 intervals).
+Whether the row is re-read on a longer run or the J1 worlds re-declared for
+the age word's count is a question for the model owner, flagged to the Boss
+with this re-registration; nothing in NATURE moved on this branch.

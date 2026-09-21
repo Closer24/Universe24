@@ -213,3 +213,40 @@ pinned 15 %-of-shift criterion at three radii by the ripple of the shell
 means; the weak-field line needs a weak field. The grain of the fan is as
 predicted: a single probe reads its line's beam, and the laws are the
 shell means.
+
+## Re-read under clock-age-v1 (2026-09-21)
+
+The model owner's word of record 394: a clock counts the age moment by
+default, so the `scalar` world's probes (`read` entries without a word,
+their records still the presence) now count the age moment at
+`suspension` [1, 1], twice the `age` world's count at [1, 2] for the same
+rays; the `age` world is byte-identical (record 409). Both run again on the
+head of branch `clock-age-v1` (`tools/run_series.py --jobs 2`, 300
+intervals) and read by `tools/redshift_readings.py`, whose power of r is
+now 1 for both worlds (k x r the expected constant; k x r^2 for the
+`scalar` world until the word). GameBoard readings, the shell means of the
+owed count per self-creation in the window 100 to 300, the registered
+value beside the new:
+
+| r | probes | k, `scalar` world (was, the presence) | k x r (was k x r^2) | k, `age` world | k x r |
+| --- | --- | --- | --- | --- | --- |
+| 4 | 210 | 17.268 (2.521) | 69.07 (40.34) | 8.629 | 34.52 |
+| 6 | 450 | 11.366 (1.092) | 68.20 (39.30) | 5.711 | 34.27 |
+| 8 | 762 | 10.166 (0.700) | 81.33 (44.82) | 4.904 | 39.23 |
+| 10 | 1250 | 7.123 (0.416) | 71.23 (41.56) | 3.657 | 36.57 |
+| 12 | 1814 | 6.065 (0.297) | 72.78 (42.74) | 3.141 | 37.69 |
+| 14 | 2498 | 4.815 (0.199) | 67.41 (38.99) | 2.366 | 33.12 |
+
+- The `scalar` world's k x r is constant within the ripple, 67.4 to 81.3
+  over r = 6 to 14, the mean 72.19, inside at every r >= 6: the same rays
+  read M / r under both worlds now, and 72.19 / 36.18 = 2.00 is the ratio
+  of the two widths ([1, 1] against [1, 2]). The pair of readings of
+  section 8 (k_s x r^2 = 41.5 and k_a x r = 36.1 from one run, Einstein's
+  pair from the presence and the age moment) is now read by the record's
+  components, the presence on the `scalar` world's `read` records and the
+  age moment on the `age` world's, not by the two clocks; a clock reading
+  the presence declares `reads: "presence"` since the word.
+- The redshift ratio of the age clocks (the `age` world, unchanged): 11
+  readings inside and 3 outside as registered (the tool's exit 1 is that
+  count); the `age` world's numbers here are the head's, equal to `main`'s
+  by the digests of record 409.

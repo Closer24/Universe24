@@ -445,53 +445,60 @@ stated so that it can fail and never enters the law by its list.
 
 Every symbol the documents use, its English name, its kind, its unit in the
 law and where it is defined. In a code span every letter is plain; its kind
-is the one stated here.
+is the one stated here. Under record 369 (the notation decision of
+2026-09-21) the table carries the letters the paper, HIGHLIGHTS 5.7 and the
+page use, with the spelling the law's documents still use in parentheses
+until their writers' next pass; code identifiers and world keys keep their
+names everywhere.
 
 | Symbol | Name | Kind | Unit | Defined in |
 | --- | --- | --- | --- | --- |
-| Q | the label's scale, the flight's grain, 64 | scalar | label units per unit of amount | BEAM_LAW section 2 |
-| S | the width of the push (`width`) | scalar | dimensionless | BEAM_LAW note 17 |
-| N | the steps of the phase circle (`N`) | scalar | phase steps per turn | BEAM_LAW section 2 |
-| P | the direction bound (`direction_bound`) | scalar | Links (a component) | BEAM_LAW section 2 |
+| N_l (Q in the law's documents until their next pass) | the label's scale, the flight's grain, 64 | scalar | label units per unit of amount | BEAM_LAW section 2; record 369 |
+| N_w (S in the law's documents until their next pass) | the width of the push (`width`) | scalar | dimensionless | BEAM_LAW note 17; record 369 |
+| N_phi (N in the law's documents until their next pass) | the steps of the phase circle (`N`) | scalar | phase steps per turn | BEAM_LAW section 2; record 369 |
+| N_D (P in the law's documents until their next pass) | the direction bound (`direction_bound`) | scalar | Links (a component) | BEAM_LAW section 2; record 369 |
 | K, n / d | the clock's pair (`K`), the turn per unit of content per self-creation | scalar, a pair | phase steps per unit of content per interval | ENGINE, a release costs the emitter |
-| W, r | the circle of a lamp's birth wheel and its rate, the lamp key `wheel` [r, W] | scalars | wheel steps, wheel steps per birth | BEAM_LAW note 46 |
-| c | the pace of a row | scalar | Links per interval | record 191; DERIVATIONS_BEAM 2.4 |
+| N_u, r (W in the law's documents until their next pass) | the circle of a lamp's birth wheel and its rate, the lamp key `wheel` [r, W] | scalars | wheel steps, wheel steps per birth | BEAM_LAW note 46; record 369 |
+| c, c_h | c the limit pace of the law, 1 / sqrt 3 Links per interval (c^2 = 1 / 3), the pace of a row on the diagonals; c_h = S_1 Q / T_D the Manhattan pace of a direction (64 / 110 on a heading; the paper's and DERIVATIONS_BEAM 18.6's letter; c_1 is Born's harmonic constant in the paper, so record 369's c_1 is withdrawn) | scalars | Links per interval | record 191; DERIVATIONS_BEAM 2.4; records 369 and 379 |
 | T_D | the direction's period constant, isqrt(3 abs(**D**)^2 Q^2), the flight's wall over 2 | scalar | label units x Links | BEAM_LAW section 3 |
 | S_1 | the Manhattan length of a direction, abs(a) + abs(b) + abs(c) | scalar | Links | BEAM_LAW section 3 |
 | L_d | the period of a direction's line | scalar | intervals | BEAM_LAW section 3 |
 | **D** | a direction of the world's table, a primitive integer vector | vector | Links | BEAM_LAW section 2 |
 | **u**_d | the unit vector of a direction at the scale Q | vector | label units | BEAM_LAW section 2, note 23 |
 | tau | the age of a row | scalar | intervals | BEAM_LAW section 2 |
-| m(tau) | the flight's count at the age, the row's place on its line | scalar | unit steps of the line | BEAM_LAW section 3 |
+| `m(tau)` (a row's field) | the flight's count at the age, the row's place on its line, in code font, never in a formula beside the mass m | scalar | unit steps of the line | BEAM_LAW section 3; record 369 |
 | **p**, p_x | a body's momentum vector and its component on an axis | vector, scalar | label units | BEAM_LAW section 2 |
 | abs(**p**)_1 | the Manhattan norm of the momentum | scalar | label units | designs/light_speed/FORM.md, form B |
-| M | a body's content, its mass | scalar | units of content | BEAM_LAW section 2 |
+| M | a body's content, a count of units | scalar | units of content | BEAM_LAW section 2 |
+| m | the mass in label units, m = N_l N_w M (Q S M in the law's documents), the rest energy E_0 = m c^2 | scalar | label units | DERIVATIONS_BEAM 17.6; record 369 |
 | h | a family's quantum (`quantum`), the content of one unit per phase step of the emitter's turn | scalar | units of content per phase step | ENGINE, a release costs the emitter |
 | h (under `action`) | the quantum of action, the world key `action` | scalar | label units x Links | BEAM_LAW note 30 |
 | f (in E = h f) | the frequency, the turn per self-creation | scalar | phase steps per interval | ENGINE, a release costs the emitter |
-| E, E_0 | a body's energy as an accumulator of the work, its rest value | scalar | units of content x c^2 | DERIVATIONS_BEAM section 17 (`covariant-readings-v1`) |
+| E, E_0 | a body's energy as an accumulator of the work, its rest value E_0 = m c^2; the paper's E^2 = E_0^2 + p^2 c^2 with the exact square (E / c^2)^2 = m^2 + 3 p . p kept as an integer and never rooted (`energy_square`); no prime on E | scalar | units of content x c^2 | DERIVATIONS_BEAM section 17 (`covariant-readings-v1`); record 369 |
 | s | the turn of a clock at a self-creation | scalar | phase steps | BEAM_LAW section 3 step 5 |
-| k | the presence a body read, the count the owed count reads | scalar | units of amount | BEAM_LAW section 3 step 2 |
+| a_r (k in the law's documents until their next pass) | the presence a body read, the count the owed count reads | scalar | units of amount | BEAM_LAW section 3 step 2; record 369 |
+| a_tau (k_a in the law's documents until their next pass) | the age moment a body read, the sum over the rows dwelling at its Node of amount x age, the count on a table entry that reads `age` | scalar | units of amount x intervals | BEAM_LAW section 3 step 5; record 379 |
 | n, d | the suspension pair (`suspension`) | scalars | dimensionless | ENGINE, the world |
 | rho | the charge per unit of content of a family (`charge`) | scalar, rational | charge per unit of content | BEAM_LAW section 2 |
 | L | the lifetime of a family (`lifetime`) | scalar | intervals | BEAM_LAW note 31 (vii) |
 | kappa | the meeting's column sum of a family against the crowd's | scalar | dimensionless | BEAM_LAW note 35 |
-| **V** | the label flow at a Node, the order-1 reading with the labels as weights (the derivation's **a**) | vector | label units | BEAM_LAW section 3 step 2 |
+| **a** (**V** in the law's documents until their next pass) | the label flow at a Node, the order-1 reading with the labels as weights | vector | label units | BEAM_LAW section 3 step 2; record 369 |
 | **f** | the net flow, the order-1 reading on the unit vectors | vector | Q per unit of amount along a heading | ENGINE, the readings by type |
 | **f** (of a record) | the phase-count vector of a record's rows at one end Node and label, f_p the amount at the phase p at the amplitude scale 32 (`amplitude.Counts`), the record's element of Z[Z_N] | vector | 32 per unit of amount, per phase step | record 188; BEAM_LAW note 37 (xii) |
 | **T** | the traceless second moment, 3 sum amount **u**_d **u**_d^T less its trace | tensor, 3 x 3 symmetric | Q^2 per unit of amount | ENGINE, the readings by type |
 | **C** | the coupling matrix, the reader's charges per column | matrix | charge per unit of content | DERIVATIONS_BEAM section 0 |
 | **G** | the click's Gram matrix, **E**^T **E**, G_jk = C_j C_k + S_j S_k over the rounded tables (`core.phase.phase_gram`); the weight of a cell **f**^T **G** **f** | matrix | 256^2 | record 188; BEAM_LAW note 37 (xii) |
 | **E** | the 2 x N matrix whose rows are the tables C and S; the pointer **E** **f** its evaluation at the circle (`Layer.evaluate`, a report) | matrix | 256 per unit | BEAM_LAW note 37 (xii); DERIVATIONS_BEAM section 6 |
-| **F** | the interval's map, one piecewise-linear map of the state | operator | none | DERIVATIONS_BEAM section 0 |
+| N_t | the cosine tables' scale, 256, the unit of the tables C and S of **E** (the paper's letter, needed for S(N, Q)) | scalar | table units per unit | BEAM_LAW note 37 (xii); record 379 |
+| **Phi** (**F** in the law's documents until their next pass) | the interval's map, one piecewise-linear map of the state | operator | none | DERIVATIONS_BEAM section 0; record 369 |
 | **s**, **r**, d | the state vector on the torus, its rate vector, its wall per component | vector, vector, scalar | mixed, per row of the counts table | designs/vector_form/LAW.md |
 | (X, Y) | the pointer, the coherent sum of a set's clicked rows | a vector of the phase plane Z^2 | 32 x 256 per unit of amount | BEAM_LAW section 5 |
 | u | the record's coordinate on the ladder, the birth wheel's value ordinal x r mod W; the rows' birth phase u mod N | scalar on Z_W | wheel steps | BEAM_LAW notes 37 (ix) and 46 |
 | phi, terms, made | the exact phase at the click and the row's two counts it is read from, the intervals the phase holds and the Links made on its direction | scalars | phase steps; intervals; Links | BEAM_LAW note 45 |
-| m | the multiplicity of a record's row | scalar | dimensionless | BEAM_LAW note 37 (i) |
-| A | the norm of a split, the sum of the squares of its weights | scalar | dimensionless | BEAM_LAW note 37 (ii) |
-| **A** | the axis of a body (`axis`) | vector | one heading | BEAM_LAW note 39 |
-| b_k, C_k, T | a rung of the ladder on the record's wheel W, a cell's cumulative weight, the total | scalars | wheel steps; the unit 2^58 | BEAM_LAW notes 37 (iii) and 46 |
+| `m` (a row's field) | the multiplicity of a record's row, in code font, never in a formula beside the mass m | scalar | dimensionless | BEAM_LAW note 37 (i); record 369 |
+| (the norm of a split) | the sum of the squares of a split's weights, written out; its shares' letter BEAM_LAW's writer's (A until its next pass; not a) | scalar | dimensionless | BEAM_LAW note 37 (ii); record 369 |
+| **e**_A (**A** in the law's documents until their next pass) | the axis of a body (`axis`), a unit vector | vector | one heading | BEAM_LAW note 39; record 369 |
+| b_k, C_k, C_K (T in the law's documents until their next pass) | a rung of the ladder on the record's wheel N_u, a cell's cumulative weight, the total (the last cumulative weight) | scalars | wheel steps; the unit 2^58 | BEAM_LAW notes 37 (iii) and 46; record 369 |
 | w | the width of a window (`phase_width`) | scalar | phase steps | BEAM_LAW note 36 (i) |
 | **v**, v | a body's velocity and its speed | vector, scalar | Links per interval | DERIVATIONS_BEAM |
 | beta | the speed over the pace of a row, v / c | scalar | dimensionless | DERIVATIONS_BEAM section 12 |
@@ -500,8 +507,12 @@ is the one stated here.
 | H, a | the growing wall's rate per interval and growth factor (`expansion-v1`) | scalars | dimensionless | DERIVATIONS_BEAM section 15 |
 | lambda, theta | the wavelength, an angle | scalars | Links, radians | DERIVATIONS_BEAM |
 | zeta_N | the primitive N-th root of unity | scalar | none | DERIVATIONS_BEAM 6.5 |
-| G (the fan's grain) | the grain of the fan's angular weights: each direction of the fan within P carries the angle it covers, half the gap to each Farey neighbour, gap(D, D') = 3 Q^2 / (T_D T_D'), as the integer a_D = floor(G x (gap(D^-, D) + gap(D, D^+)) / 2), G = 2^18 in the plane (2^24, 2^14 and 2^5 in the sphere's form); a constant of the law beside N, Q, P, W and K; a different constant from the retired grain of `doppler-v1` below, kept | scalar | dimensionless, a resolution of the angle | [TWO_SLITS.md](designs/fraction_free/TWO_SLITS.md) sections 7 and 10; [LAW.md](designs/vector_form/LAW.md); Highlights 5.7; the fan of record 160 decided and not built, so BEAM_LAW has no owning note yet |
+| N_theta (G in the law's documents until their next pass) | the fan's angular grain, the grain of the fan's angular weights: each direction of the fan within P carries the angle it covers, half the gap to each Farey neighbour, gap(D, D') = 3 Q^2 / (T_D T_D'), as the integer a_D = floor(G x (gap(D^-, D) + gap(D, D^+)) / 2), G = 2^18 in the plane (2^24, 2^14 and 2^5 in the sphere's form); a constant of the law beside N, Q, P, W and K; a different constant from the retired grain of `doppler-v1` below, kept | scalar | dimensionless, a resolution of the angle | [TWO_SLITS.md](designs/fraction_free/TWO_SLITS.md) sections 7 and 10; [LAW.md](designs/vector_form/LAW.md); Highlights 5.7; the fan of record 160 decided and not built, so BEAM_LAW has no owning note yet |
 | G (the grain of `doppler-v1`) | the deleted grain of the reading's weight at the relative speed | retired | none | MIGRATION 2026-09-21 |
+| R(f) | the click's reading, the weight of a cell **f**^T **G** **f** (W in DERIVATIONS_BEAM 6.5 to 6.7 until its next pass; code `gram_form`) | scalar | the unit of **G** times the unit of **f** squared | DERIVATIONS_BEAM 6.5; record 369 |
+| d_p | the drive's wall, the wall of the momentum's accumulator (W in designs/light_speed/FORM.md 3 until its next pass; code `wall`) | scalar | as FORM.md 3 states | designs/light_speed/FORM.md 3; record 369 |
+| sigma_s | the strong coupling per unit of content, the strong column (G in BEAM_LAW note 40 until its next pass; the column key keeps its name) | scalar | per unit of content, as the column declares | BEAM_LAW note 40; record 369 |
+| **D**_diff | the diffusion tensor of the crowd (written D_diff in prose; distinct from a direction **D**) | tensor, 3 x 3 | as DERIVATIONS_BEAM 25.6 states | DERIVATIONS_BEAM 25.6; record 369 |
 
 ## Retired words
 

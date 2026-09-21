@@ -26,7 +26,9 @@ momenta below are the first pins times 64 and every position is unchanged
     is the same for every content);
 (c) the step is counted off the clock with no stored remainder: with
     `suspension` [1, 4] and a crowd of 4 rays of another number at rest on
-    every Node it visits, the probe of (b) owes one interval after every
+    every Node it visits (at the age 1, so that the age moment the clock
+    counts since clock-age-v1, 2026-09-21, is the presence's 4), the probe
+    of (b) owes one interval after every
     self-creation (age after interval n is ceil(n / 2)); since the
     crossing rule (2026-09-21, BEAM_LAW note 48: the step before the law,
     the drive advanced at the self-creation itself) the step of the ages
@@ -132,8 +134,18 @@ def test_width_eight_steps_once_per_nine_self_creations():
 def test_the_step_is_counted_off_the_clock_with_no_remainder():
     """(c)."""
     anchor = {"position": [11, 0, 0], "family": "m", "amount": 1, "fixed": True}
+    # The crowd's rows at the age 1: since clock-age-v1 (2026-09-21) the clock
+    # counts the age moment, 4 x 1 = 4, the presence's integers.
     crowds = [
-        {"position": [x, 0, 0], "family": "m", "number": 2, "direction": REST, "amount": 4, "phase": 0}
+        {
+            "position": [x, 0, 0],
+            "family": "m",
+            "number": 2,
+            "direction": REST,
+            "amount": 4,
+            "phase": 0,
+            "age": 1,
+        }
         for x in range(3, 8)
     ]
     world = bar([mover(16, 1024, x=3), anchor], width=8, suspension=[1, 4], in_transit=crowds, ticks=60)

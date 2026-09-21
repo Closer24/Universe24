@@ -216,6 +216,18 @@ def worlds() -> dict[str, Json]:
     return found
 
 
+# clock-age-v1 (the model owner's word of 2026-09-21, record 394): the clock
+# counts the age moment by default, and on series U's fan at 3 Links the
+# two headings' rows dwell at the lamp's Node at the ages 5 and 6 per source
+# (series T's map, docs/designs/clock_age/clock_age_map.py section B): the
+# age moment 22 F where the presence is 4 F, so a still lamp's pinned k under
+# the age word is 22 / 4 = 5.5 times the presence word's. The pins above are
+# the presence word's (the run of 2026-09-21 on main 119fd9b); the block
+# `clock_age_v1` of the register carries the age word's pins, derived, and
+# the README's re-read of the same worlds under the identity.
+AGE_MOMENT_OVER_PRESENCE = 22 / 4
+
+
 def pinned_k(flux: int) -> float:
     """k = the presence times the width: two sources, F units per interval on
     the one direction of each that passes the lamp's Node, each unit present
@@ -294,6 +306,25 @@ def expectations() -> Json:
             "windows": windows,
             "moving": True,
         }
+    out["clock_age_v1"] = {
+        "derivation": (
+            "the pins of the still worlds under the age word (clock-age-v1, 2026-09-21, record 394): "
+            "k = 22 F / 2^16, the age moment of the two sources' rows dwelling at the ages 5 and 6 "
+            "(series T's map), 5.5 times the presence word's 4 F / 2^16; 1 + z = 1 + k at the "
+            "detector (DETECTOR); a moving lamp's k under the age word is not pinned (its lag puts it "
+            "on older rows of the crossing Nodes), its re-read is a research reading, in the README"
+        ),
+        "age_moment_over_presence": AGE_MOMENT_OVER_PRESENCE,
+        "worlds": {
+            name: {
+                "flux": flux,
+                "k": pinned_k(flux) * AGE_MOMENT_OVER_PRESENCE,
+                "one_plus_z": 1 + pinned_k(flux) * AGE_MOMENT_OVER_PRESENCE,
+                "clicks_per_interval": 1 / (1 + pinned_k(flux) * AGE_MOMENT_OVER_PRESENCE),
+            }
+            for name, flux in STILL.items()
+        },
+    }
     return out
 
 

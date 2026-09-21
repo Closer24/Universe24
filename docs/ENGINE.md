@@ -214,9 +214,17 @@ interval, a diagnostic of the walk for Gauss's flux); the frame turns the
 phases of the measured events that
 self-created, reads the owed count as the count of the body's accumulator
 `acc_owed` at the rate k x n over d from what the clock
-counted (`_suspend`, `count_owed`; the same integers as `by_clock(age, k x n, d)` at a constant crowd, k the presence, or for a
-family whose table entry reads `age` the age moment `sum amount x age`
-over the same set, `measured.count_component`, `Measured.counted`;
+counted (`_suspend`, `count_owed`; the same integers as `by_clock(age, k x n, d)` at a constant crowd from age 0, k the age moment
+`sum amount x age` over the same set since `clock-age-v1` (2026-09-21, the
+model owner's word, record 394), or for a family whose table entry reads
+`presence` the presence, `measured.count_component`, `Measured.counted`;
+the age word's shape one wall function of the crowd, `core.integer.age_wall`,
+the rate r x d against the wall w x (d + c k n) over the declared set
+`measured.AGE_WALL_SET` of accumulators with a coefficient c each, today the
+clock alone at c = 1, the owed count the excess of its stretched wall over
+its stretched rate in units of d, integer for integer as before; the flight
+joins under optical-v1's key at its own coefficient by a declaration in the
+set, the phase per age never (`AGE_WALL_NEVER`);
 [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 note 25) and books the interval. The step of a measured event
 by its momentum (`_move`, before the law: on an axis whose momentum component is p in
@@ -1015,7 +1023,7 @@ things themselves, one row each in the three worlds, are in
 
 | The reading | Type and symbol | Where the record carries it | Unit | Kind |
 | --- | --- | --- | --- | --- |
-| the clicks | scalar | `clicks` per family on a `detectors` entry of `run.json`, summed over the set's Nodes; the `click` lines of `events.jsonl` (`amount` per row group; on a face, the face's name as `detector`); `events` of a measured event's state. Under a lamp (a recorded world) a detector entry's `clicks` counts the units of every row that ended at the set, the offers, while the record's one click is the gather's `chosen` in the `world` list of `run.json` (one entry per record at its completion): the two differ (a lamp on an open face reads `clicks` 88 on `face:-x` and 81 on D against 32 and 49 gathers; `mz_345` reads D1 476 and D2 68 against the registered 63 and 1); the record's click is the `world` list's | units of amount | detector |
+| the clicks | scalar | `clicks` per family on a `detectors` entry of `run.json`, summed over the set's Nodes; the `click` lines of `events.jsonl` (`amount` per row group; on a face, the face's name as `detector`); `events` of a measured event's state. A face keeps two kinds of escape on two lines: a row's escape is a click booked on the face's `clicks`, `content` and `record`, while a measured event's escape by its step is booked on the face's `measured_content` and `momentum` and on the books' `measured.escaped`, never on `clicks` or `record`, and its `click` line writes `amount` = its content beside `measured` (its number) and `held` (issue #614; `tests/test_face_click_summary.py`). Under a lamp (a recorded world) a detector entry's `clicks` counts the units of every row that ended at the set, the offers, while the record's one click is the gather's `chosen` in the `world` list of `run.json` (one entry per record at its completion): the two differ (a lamp on an open face reads `clicks` 88 on `face:-x` and 81 on D against 32 and 49 gathers; `mz_345` reads D1 476 and D2 68 against the registered 63 and 1); the record's click is the `world` list's | units of amount | detector |
 | the amount measured | scalar | `measured` per family on a `detectors` entry (the units taken by `measure`); `measured` in a measured event's state (per rule) | units of amount | detector |
 | the record (the square) | scalar, the norm of the pointer | `record` per family on the set (`wave`: X^2 + Y^2 of the coherent pointer, accumulated; `beam`: the count clicked); `record` on the `record` line at each click; the same square on a face and the border `lifetime` | (32 x 256)^2 per unit of amount squared (X = sum 32 x amount x C[phase], C on the circle at the scale 256) | detector |
 | the pointer (X, Y) | a vector of the phase plane (Z^2), not of the GameBoard | `pointer` on the `record` line of a one-Node `wave` set, and per label on the `sum` set's `record` line at a gather | 32 x 256 per unit of amount | detector |

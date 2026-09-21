@@ -41,8 +41,11 @@ docs/TEST_EXPECTATIONS.md ("The one reading"), written down first:
 (c) the presence counts every ray at the Node of another number, rest and
     moving alike, and never the own number: a measured event at `suspension`
     [1, 4] beside 64 rays of number 2 that arrived and 16 rays of number 3
-    at rest owes `by_clock(0, 80 x 1, 4)` = 20 after its first self-creation;
-    with 8 of its own number among the arrivals still 20 (the own excluded);
+    at rest reads the presence 80 and, since clock-age-v1 (2026-09-21), its
+    clock counts the age moment 64 x 1 + 16 x 0 = 64 and owes
+    `by_clock(0, 64, 4)` = 16 after its first self-creation (the presence
+    80 and 20 until the word); with 8 of its own number among the arrivals
+    still 80, 64 and 16 (the own excluded);
 (d) a detector's threshold reads the set of every number but its own and
     the window each ray's own phase: a receiver at threshold 3 met by 2 rays
     (since 2026-09-20 the threshold under `wave` reads the pointer's
@@ -264,7 +267,12 @@ def test_the_presence_counts_rest_and_moving_rays_of_other_numbers_and_never_the
         simulation.step()
         assert simulation.books()["balanced"]
         entry = simulation.measured[1]
-        assert entry.presence == 80 and entry.owed == by_clock(0, 80, 4) == 20
+        # clock-age-v1 (2026-09-21): the presence is 80 and the count the
+        # clock read is the age moment, 64 x 1 (the arrivals at age 1) +
+        # 16 x 0 (the rays at rest at age 0) = 64, owed by_clock(0, 64, 4)
+        # = 16 (20 on the presence until the word).
+        assert entry.presence == 80 and entry.counted == 64
+        assert entry.owed == by_clock(0, 64, 4) == 16
         assert entry.age == 1 and entry.held == [1]
 
 

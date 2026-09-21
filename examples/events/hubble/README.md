@@ -474,3 +474,37 @@ the signed drive) and 0.848, 1.018, 1.086, 1.035 in `pushing_age` (0.866,
 the 12 windows (8 of 12); 310 readings inside and 26 outside (309 and 27).
 The verdict stands as read. The register entry has every number
 ([migration](../../../docs/MIGRATION.md#the-fraction-free-law-on-2026-09-20-every-count-an-accumulator-on-the-bodys-record)).
+
+## Re-read under clock-age-v1 (2026-09-21)
+
+The model owner's word of record 394: a clock counts the age moment by
+default, and the two `scalar` worlds' sources (their entries for the other
+sources' light without a word) count it; the two `age` worlds are
+byte-identical (record 409). The four worlds run again on the head of
+branch `clock-age-v1` (`tools/run_series.py --jobs 2`, 400 intervals) and
+read by `tools/hubble_readings.py`; the two `scalar` worlds also run on
+`main`'s engine and read by the same tool for the old value (the register's
+lines above read them with the tool of their day: 0.877, 0.969, 1.017,
+0.996 and 1.176, 1.302, 1.324, 1.301). DETECTOR, the near fit's H t_0 in
+the windows [100, 200), [200, 300), [300, 400) and the late half [200,
+400), the old value beside the new:
+
+| World | H t_0 under the age word | H t_0 under the presence word (main's engine, the same tool) | the nearest of the three forms (age word; presence word) | the detector's own clock, self-creations per interval (age; presence) |
+| --- | --- | --- | --- | --- |
+| `coasting_scalar` | 1.0346, 1.2685, 1.5693; 1.3700 | 0.8718, 0.9667, 1.0123; 0.9938 | q = -0.55 in all three windows; q = 0 then q = -0.55 twice | 0.8375; 0.8375 |
+| `pushing_scalar` | 4.6923, 7.0505, 9.1890; 8.1459 | 1.1820, 1.3220, 1.3900; 1.3499 | none (the free quadratic's q_eff -2.1, the forms' rms infinite); q = -0.55 in all three | 0.4325; 0.2950 |
+| `coasting_age` | 0.8718, 0.9667, 1.0123; 0.9938 (unchanged) | the same | q = 0, q = -0.55, q = -0.55 | 1.0000 |
+| `pushing_age` | 0.8449, 1.0133, 1.0860 (unchanged) | the same | q = 0, q = -0.55, q = -0.55 | 0.9775 |
+
+The tool's count over the four worlds on the head: 303 readings inside
+and 33 outside (the two `scalar` worlds alone on `main`'s engine: 153
+inside, 15 outside); `coasting_scalar`'s H t_0 = 1 within 10 % holds in the
+first window only under the age word (the sources' clocks slowed by the
+age moment of one another's light, the far sources' 1 + z growing with the
+window), and `pushing_scalar`'s H t_0 leaves 1 by a factor 5 to 9 (its
+sources' clocks slowed by a crowd of F = 16 whose age moment is many times
+its presence). What the re-read decides: under the age word the crowd's
+clock term is no longer small beside the Doppler in these worlds, whose
+F was chosen for the presence word; the `age` worlds carry the age word's
+reading as registered, and the `scalar` worlds' lines are history unless
+the design re-declares their F for the age word.

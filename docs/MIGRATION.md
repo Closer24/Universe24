@@ -64,6 +64,98 @@ The worlds of the pin, `slits_matter` (4096 births) and `slits_matter_1024`,
 and the small replay world are in `examples/events/massive_rows/`
 ([README](../examples/events/massive_rows/README.md)); the identity's entry is
 [HYPOTHESES section 26](HYPOTHESES.md#26-the-free-particle-as-a-record-of-massive-rows-de-broglies-fringes-from-h--p-stated-so-that-it-can-fail).
+## The clock's word, on 2026-09-21: clock-age-v1, the age moment as the clock's default
+
+The model owner's decision of 2026-09-21 (record 394; the age word chosen
+on the G2 session's mapping of the two words to nature's clocks, records
+362 and 363, and the physicist's two-crowd pin,
+[docs/designs/clock_age/NOTE.md](designs/clock_age/NOTE.md), run as series T
+with every pin met, [the register](EXPERIMENTS.md#t-the-clocks-word-2026-09-21)).
+The identity `clock-age-v1` beside `beam-v1`; [BEAM_LAW section 3 step 5
+and note 25](BEAM_LAW.md#3-the-nodes-interval-nature_beam).
+
+- The default of `measured.count_component`: the clock counts the age
+  moment `sum amount x age` over the rays of another number at its Node
+  on every table entry, whatever the entry's record carries; until this
+  day it counted the presence unless the entry read `age`.
+- The word `presence`, new in `reads`, selects the presence for the clock
+  (the count of the law until this day); its record carries the presence,
+  the zeroth moment, as `scalar` does. `age` still selects the age moment.
+  Nothing else moves: the push, the flight, the release, the turn and the
+  `become` trigger keep their readings; the record's component (`scalar`,
+  `outside`, `here`, `vector`, `tensor`, `age`) is untouched by the word.
+- What moves: every world whose clock reads a crowd without `reads: "age"`
+  or `reads: "presence"`, under a nonzero `suspension`. The register's
+  lines re-read on this day, the old value kept beside the new with the
+  date: series E's `scalar` world, series C's item 6 (`coupling/6`), series
+  G's `coasting_scalar` and `pushing_scalar`, series G2's `coasting_scalar`,
+  `gravity_scalar` and `double_scalar` (the base and the `record` worlds),
+  series J's J1 and J3 worlds, series U, V and S, the catalog's
+  `neutron_star` (its five presence probes) and `clock_near_mass`; series
+  T's presence worlds declare the word (`{"rule": "pass", "reads":
+  "presence"}`) and read as they did; the worlds that read no clock are
+  byte-identical (the gate set replayed, `examples/events/gate_set.json`).
+  The bound clock of record 123 (`binding/proton_bond_lamp`, `suspension`
+  0) owes nothing under either word and does not move.
+- The shape (records 421, 422 and 428 of the log of 2026-09-21, the
+  owner's generic-solution rule): the age word enters the engine as ONE
+  wall function of the crowd, `core.integer.age_wall(r, w, c, k, [n, d])`
+  = (r x d, w x (d + c k n)), over the declared set `measured.AGE_WALL_SET`
+  of (count, coefficient) pairs; today `("owed", 1)` alone: the body's
+  self-creation, one per interval, becomes one per (d + k n) / d
+  intervals, and `engine.count_owed` owes the excess of the stretched
+  wall over the stretched rate in units of d, `by_drive(acc_owed, (d + k
+  n) - d, d)`, the same integers as the owed count before the function
+  was named (no world moves by the shape). The row's flight joins under
+  optical-v1's key with its own coefficient 1 + gamma (gamma the
+  post-Newtonian parameter) by a declaration in the set and nothing else
+  moving; the phase per age (`turn`, `action`, a row's `phase_per_link`)
+  is never a member (`measured.AGE_WALL_NEVER`, refused before the set is
+  read): a stretched phase per age would redshift light in transit (the
+  physicist's note, record 428).
+- `tests/test_clock_age.py` (the default, the presence word, the edges,
+  the shape); `tests/test_nature_beam_age.py` (b) and (c) amended;
+  `tests/test_integer_arithmetic.py` (c) the wall function's integers.
+  `tests/test_clock_word.py`'s guard `assert "replicated" not in expected`
+  replaced by its complement (the Boss's decision of record 402: the
+  register's `replicated` map points at
+  [docs/REPLICATIONS.md#clock_word-t](REPLICATIONS.md#clock_word-t) for
+  `one_plus_z`, `first_row_tick` and `ratio_6_over_3`; the generator
+  carries the map through a regeneration, `register_map.carry_replicated`).
+- The replay (record 409, confirmed on this branch after the merge of
+  `main`): the gate set (`examples/events/gate_set.json` through
+  `tools/run_series.py --list --fast`) byte-identical on 15 of its 16
+  worlds against `main`'s engine (state, books and events), `weak/
+  j3_deuteron` moved (its neutron's clock reads the proton's rows without
+  a word) and its digests re-pinned. The re-registrations, each with the
+  old value beside the new and the date, every number labelled DETECTOR
+  or GAMEBOARD: series E's `scalar` world (its k x r the constant now,
+  the mean 72.19, twice the `age` world's 36.18; [the README](../examples/events/redshift/README.md#re-read-under-clock-age-v1-2026-09-21)),
+  series C item 6 (the identity replayed on the age moment; [the README](../examples/events/coupling/README.md#re-read-under-clock-age-v1-2026-09-21)),
+  series G's two `scalar` worlds ([the README](../examples/events/hubble/README.md#re-read-under-clock-age-v1-2026-09-21)),
+  series J's five ([the README](../examples/events/weak/README.md#re-read-under-clock-age-v1-2026-09-21);
+  the J1 decay ticks move from 522 to 525 to 602 to 642 and beyond the
+  run, NATURE row 8a's FAIL standing in form, its population truncated:
+  a question for the model owner), series U's eight, V's two and S's five
+  (the still readings at the age word's derived pins, 5.5 times the
+  presence word's k; the moving worlds' emulated crowds declared for the
+  presence word's k, a research reading until re-declared; the READMEs of
+  [U](../examples/events/crowd_clock/README.md), [V](../examples/events/cluster_clock/README.md)
+  and [S](../examples/events/reader_clock/README.md), the age word's pins
+  in each register's block `clock_age_v1`), the catalog's `clock_near_mass`
+  and `neutron_star` ([the README](../examples/events/catalog/README.md)).
+  The readings tools amended with the word: `tools/coupling_readings.py`
+  (item 6 replays the age moment; the ring keys follow the diagnostic's
+  `arrived`), `tools/redshift_readings.py` (k x r for both worlds),
+  `tools/hubble_stars_readings.py` (the run's world read through
+  `world_loading.world_of_run`). Series G2's twelve `hubble_stars` worlds
+  moved by their digests but are not re-read: the register's own tool reads
+  NaN for `coasting_none` in its plain mode, a world the word does not
+  touch, and in its record mode +0.384 for `record/gravity_none` against
+  the registered +0.922 (the replicator's finding of record 408 on
+  `main`), so their lines carry the digests' move and no number until the
+  tool and the register agree again, which is outside this branch (the
+  record mode's readings on the head are noted in the register's G2 entry).
 
 ## The covariant readings, on 2026-09-21 (a world key, absent by default)
 
