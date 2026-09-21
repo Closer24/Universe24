@@ -2966,7 +2966,7 @@ states "exactly" and means integer equality at every tick.
   0 (no clock slowed: the flight alone is read); a control without the
   mass, the mass at b = 6, twice the mass at b = 6, the mass at b = 3.
   Derived: the collision acts per family's store and per (number,
-  content) class (`nature_beam.collide`), so a ray of the beam and a ray
+  content) class (`nature_beam._collide`), so a ray of the beam and a ray
   of the mass never enter one slot state and the table's mean deflection
   of a beam ray meeting a radial ray is exactly 0 (the rule does not act;
   were they one class, "+x +y" is fixed and only a head-on pair moves,
