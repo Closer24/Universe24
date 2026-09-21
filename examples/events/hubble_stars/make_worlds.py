@@ -93,6 +93,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from event_universe.core.game_board import PORT_HEADINGS  # noqa: E402
 from event_universe.events.nature_beam import direction_flight  # noqa: E402
 from event_universe.events.world import HEADING_OFFSET, LAW_VALUE, Q  # noqa: E402
+from event_universe.register_map import carry_replicated  # noqa: E402
 from event_universe.world_loading import families_by_definition  # noqa: E402
 
 # The shipped definitions the worlds' families come from where they equal
@@ -661,7 +662,8 @@ def main() -> None:
             print(path.relative_to(ROOT))
         pinned = expectations("source")
         (HERE / "record" / "expectations.json").write_text(
-            json.dumps(pinned, indent=1) + "\n", encoding="utf-8"
+            json.dumps(carry_replicated(HERE / "record" / "expectations.json", pinned), indent=1) + "\n",
+            encoding="utf-8",
         )
         print((HERE / "record" / "expectations.json").relative_to(ROOT))
         for crowd, entry in pinned["crowds"].items():
@@ -676,7 +678,10 @@ def main() -> None:
                 f"{entry['momentum_ratio_bracket'][0]:.3f} .. {entry['momentum_ratio_bracket'][1]:.3f}"
             )
     expected = expectations()
-    (HERE / "expectations.json").write_text(json.dumps(expected, indent=1) + "\n", encoding="utf-8")
+    (HERE / "expectations.json").write_text(
+        json.dumps(carry_replicated(HERE / "expectations.json", expected), indent=1) + "\n",
+        encoding="utf-8",
+    )
     print((HERE / "expectations.json").relative_to(ROOT))
     for key, fit in expected["exact_coasting_form"].items():
         print(
