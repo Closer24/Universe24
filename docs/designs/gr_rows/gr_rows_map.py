@@ -138,3 +138,27 @@ print()
 print(
     "6. THE VERDICT: REACHABLE IN FORM for the bending and the delay (one identity, optical-v1: the flight's wall and the turn read the crowd's age moment and flow at the row's Node with the clock's pair and the factor 2), the pin series K at [1, 256]; the second-order redshift a companion term on the clock's rate, not the rows'; the run waits on the owner's go and the physics-rule review"
 )
+
+# 7. Snell's law at a boundary of two crowds (the owner's addition, record 300).
+print()
+print(
+    "7. SNELL'S LAW AT A BOUNDARY OF TWO CROWDS: n = 1 + 2 k_a the pace ratio; the rule's turn across the boundary is Delta theta = -(n_2 - n_1) tan theta_1 (Fermat's ray equation at n near 1); Snell's n_1 sin theta_1 = n_2 sin theta_2"
+)
+print(
+    "   the pin before the numbers: the rule gives Snell to first order in n_2 - n_1 = 2 (k_2 - k_1), the residual of order (n_2 - n_1)^2; the sign toward the denser crowd"
+)
+for k2 in (1 / 256, 1 / 64, 1 / 16):
+    n2 = 1 + 2 * k2
+    for theta1_deg in (30.0, 60.0):
+        theta1 = math.radians(theta1_deg)
+        theta2_snell = math.asin(math.sin(theta1) / n2)
+        theta2_rule = theta1 - (n2 - 1) * math.tan(theta1)
+        print(
+            f"   k_2 = 1/{round(1 / k2):d} (n_2 = {n2:.5f}), theta_1 = {theta1_deg:.0f} deg: Snell's theta_2 = {math.degrees(theta2_snell):.3f} deg, the rule's {math.degrees(theta2_rule):.3f} deg, the difference {math.degrees(theta2_rule - theta2_snell):+.3f} deg (order (n_2 - 1)^2 = {(n2 - 1) ** 2:.1e})"
+        )
+print(
+    "   on the fan: the turn is whole steps (2.4 degrees at the light's directions of series K), the wheel's dither making the mean exact over a beam; a pin reads a beam's centroid, not one row"
+)
+print(
+    "   Fermat's least time: the rule is the ray equation d theta / dl = grad_perp(2 k_a), Fermat's Euler-Lagrange form at n near 1; the fan's choice of direction (the Huygens fan of TWO_SLITS section 7) gives the least-time path as the click's stationary phase only if the row's phase advances per interval (a clock, the slits' declaration), not per Link"
+)

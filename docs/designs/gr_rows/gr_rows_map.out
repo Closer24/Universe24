@@ -34,3 +34,14 @@
    the store per row: two integers (the turn accumulators); nothing at the Node (the moments are readings of the rows present, recomputed per interval)
 
 6. THE VERDICT: REACHABLE IN FORM for the bending and the delay (one identity, optical-v1: the flight's wall and the turn read the crowd's age moment and flow at the row's Node with the clock's pair and the factor 2), the pin series K at [1, 256]; the second-order redshift a companion term on the clock's rate, not the rows'; the run waits on the owner's go and the physics-rule review
+
+7. SNELL'S LAW AT A BOUNDARY OF TWO CROWDS: n = 1 + 2 k_a the pace ratio; the rule's turn across the boundary is Delta theta = -(n_2 - n_1) tan theta_1 (Fermat's ray equation at n near 1); Snell's n_1 sin theta_1 = n_2 sin theta_2
+   the pin before the numbers: the rule gives Snell to first order in n_2 - n_1 = 2 (k_2 - k_1), the residual of order (n_2 - n_1)^2; the sign toward the denser crowd
+   k_2 = 1/256 (n_2 = 1.00781), theta_1 = 30 deg: Snell's theta_2 = 29.744 deg, the rule's 29.742 deg, the difference -0.002 deg (order (n_2 - 1)^2 = 6.1e-05)
+   k_2 = 1/256 (n_2 = 1.00781), theta_1 = 60 deg: Snell's theta_2 = 59.239 deg, the rule's 59.225 deg, the difference -0.015 deg (order (n_2 - 1)^2 = 6.1e-05)
+   k_2 = 1/64 (n_2 = 1.03125), theta_1 = 30 deg: Snell's theta_2 = 29.003 deg, the rule's 28.966 deg, the difference -0.036 deg (order (n_2 - 1)^2 = 9.8e-04)
+   k_2 = 1/64 (n_2 = 1.03125), theta_1 = 60 deg: Snell's theta_2 = 57.117 deg, the rule's 56.899 deg, the difference -0.218 deg (order (n_2 - 1)^2 = 9.8e-04)
+   k_2 = 1/16 (n_2 = 1.12500), theta_1 = 30 deg: Snell's theta_2 = 26.388 deg, the rule's 25.865 deg, the difference -0.523 deg (order (n_2 - 1)^2 = 1.6e-02)
+   k_2 = 1/16 (n_2 = 1.12500), theta_1 = 60 deg: Snell's theta_2 = 50.336 deg, the rule's 47.595 deg, the difference -2.741 deg (order (n_2 - 1)^2 = 1.6e-02)
+   on the fan: the turn is whole steps (2.4 degrees at the light's directions of series K), the wheel's dither making the mean exact over a beam; a pin reads a beam's centroid, not one row
+   Fermat's least time: the rule is the ray equation d theta / dl = grad_perp(2 k_a), Fermat's Euler-Lagrange form at n near 1; the fan's choice of direction (the Huygens fan of TWO_SLITS section 7) gives the least-time path as the click's stationary phase only if the row's phase advances per interval (a clock, the slits' declaration), not per Link

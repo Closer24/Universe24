@@ -1,4 +1,4 @@
-# The rows reading the crowd: a rule at one Node for the bending of light, the Shapiro delay and the second-order redshift
+# The rows reading the crowd: a rule at one Node for the bending of light, the Shapiro delay, Snell's law and the second-order redshift
 
 **Verdict, stated at the top: REACHABLE IN FORM** for the bending of light
 and the Shapiro delay, by one rule on the rows under its own hypothesis
@@ -9,6 +9,8 @@ would meet is series K's four worlds re-run with the clock's pair at `[1,
 256]` (section 4). The second-order redshift is not the rows' to give (a
 static crowd stretches no stream); it is reachable by one bilinear term
 on the clock's owed rate, a companion under the same identity (section 5).
+Snell's law at a boundary of two crowds is one more pin of the same rule,
+reached to first order in the pace ratio's departure from 1 (section 5b).
 The build waits on the owner's go and a physics-rule review; nothing here
 is a rule of the law.
 
@@ -63,6 +65,13 @@ One source per number.
   the pin is the formula's). The law today: the clock at `1 / (1 + k)`
   (5.2), so `1 + z = 1 + k` exactly, no second-order term (the lattice
   reads `1 - k + k^2` for the rate against `1 - k - k^2 / 2`).
+- **Snell's law** (the owner's addition, record 300). Nature: at a
+  boundary of two media `n_1 sin theta_1 = n_2 sin theta_2` with n the
+  pace ratio (Snell 1621, published by Descartes 1637; Fermat's least
+  time 1662). In the law a medium is a crowd: n is `1 + 2 k_a` under the
+  rule, and the boundary is where the age moment changes. The pin: the
+  rule must turn a row crossing the boundary toward the denser crowd by
+  Snell's angle, to first order in `n_2 - n_1 = 2 (k_2 - k_1)`.
 - **What must not change.** Series C's field pair (the presence `M / r^2`
   and the age moment `M / r` from the same rays, `k_s r^2 = 41.5`, `k_a r
   = 36.1`), the equivalence principle (`push_m = m x push_1`), Gauss's
@@ -223,6 +232,50 @@ GR has no value and the lattice's rate never reaches 0, 5.2). Under the
 same identity or its own; the three tests pass as for the owed count
 today (13.2 (b)), the cost one multiply more.
 
+## 5b. Snell's law and Fermat's least time
+
+**The pin from the rule's integers, before the numbers.** The turn per
+interval is `2 (n_s / d_s)(T_D / Q^2) |V_perp|` and, by 5.1's `V = -(Q c /
+dwell) grad(A)`, `|V_perp|` is the transverse gradient of the age moment,
+so along a path the rule is the ray equation `d theta / dl = grad_perp(2
+k_a) = grad_perp(n)` at n near 1: Fermat's Euler-Lagrange form. Across a
+boundary where n jumps by `n_2 - n_1` a row at the angle `theta_1` to
+the normal turns by `Delta theta = -(n_2 - n_1) tan theta_1` (the
+gradient's transverse part `(dn / dx) sin theta` integrated over `dx /
+cos theta`), which is Snell's `n_1 sin theta_1 = n_2 sin theta_2`
+differentiated at `n_1 = 1`: Snell to first order in `n_2 - n_1 = 2 (k_2
+- k_1)`, toward the denser crowd, the residual of order `(n_2 - n_1)^2`.
+The numbers (the script): at `k_2 = 1 / 256` (`n_2` = 1.0078) and
+`theta_1 = 30` degrees Snell gives 29.744 and the rule 29.742; at `k_2 = 1
+/ 16` (`n_2` = 1.125) and 30 degrees, 26.388 against 25.865, the
+difference 0.5 degrees at `(n_2 - 1)^2 = 1.6 x 10^-2`; at 60 degrees and
+`1 / 16`, 50.34 against 47.60. On the fan the turn is whole steps (2.4
+degrees at series K's directions) and the wheel's dither makes the mean
+over a beam exact: the pin is a beam's centroid past a slab of denser
+crowd, not one row. **Reached in form** to first order; the exact Snell
+(the `1 / n` in the ray equation, `d theta / dl = grad_perp(ln n)`) would
+need the turn's rate divided by the wall's factor `d_s + 2 n_s A`, a
+division with the remainder kept (verb 6) that the design leaves out
+until a strong crowd asks for it.
+
+**Fermat's least time and the fan's choice of direction.** The ray rule
+above is the local form of Fermat's principle (its Euler-Lagrange
+equation), so a single row follows the least-time path between the
+Nodes it passes, to the fan's grain. The wave form, the least-time path
+as the path of stationary phase, is the fan's: at a re-emitter the fan by
+angle (TWO_SLITS.md section 7) sends a row on every direction within P
+with the angular measure as its weight, and the click reads the exact
+phase of each path; the stationary-phase path dominates the click (that
+is Young's spacing, section 7 of DERIVATIONS_BEAM.md). It follows from
+the fan's choice only if the phase a row gains along its path measures
+the TIME of the path, that is if the family's phase advances per
+interval (a clock, the slits' declaration `[n, 2^30]` per interval) and
+not per Link (the `phase_per_link` form, under which a slowed row gains
+the same phase per Link and the stationary path is the shortest, not the
+least-time, one). So: Fermat's ray form follows from the rule; Fermat's
+wave form follows from the fan and the rule together, for families
+whose phase is a clock.
+
 ## 6. The map at one Node
 
 | What the row reads | What it does | Verb | Cost per row per interval (13.1's counts) |
@@ -282,5 +335,6 @@ row reads nothing of the crowd.
 
 - The delay field and the clock: [DERIVATIONS_BEAM.md](../../DERIVATIONS_BEAM.md) sections 5.1, 5.2, 5.4, 5.5; the covariant readings' limit: 17.4; the growing wall's feedback form: 15.2, 15.6; the derivation map: 21.2.
 - The meeting key: [BEAM_LAW.md](../../BEAM_LAW.md) note 35; the register: [the lensing README](../../../examples/events/lensing/README.md), [EXPERIMENTS.md](../../EXPERIMENTS.md) series K.
+- The fan by angle and the exact phase at the click: [designs/fraction_free/TWO_SLITS.md](../fraction_free/TWO_SLITS.md) sections 2 and 7.
 - The vector form and the six verbs: [designs/vector_form/LAW.md](../vector_form/LAW.md); the three tests: [skills/workflow.md](../../../skills/workflow.md).
 - The map: [gr_rows_map.py](gr_rows_map.py), [gr_rows_map.out](gr_rows_map.out).
