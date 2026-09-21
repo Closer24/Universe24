@@ -1,7 +1,7 @@
 """The coupling readings tool reads the engine's own functions (Highlights
 5.4, the architecture review of 2026-09-20: the tools replayed three rules
 of the engine, a second owner; `tools/coupling_readings.py` now reads
-`engine.by_clock`, `nature_beam.flight_table` with its `manhattan_steps`,
+`engine.by_clock`, `nature_beam.direction_flight` with its `manhattan_steps`,
 `nature_beam.unit_label`, `world.LABEL_SCALE` and the parsed world). Each
 reading of the tool is checked against the engine on a minimal GameBoard; the
 expected integers of docs/TEST_EXPECTATIONS.md ("The tools read the

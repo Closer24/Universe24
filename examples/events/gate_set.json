@@ -25,9 +25,9 @@
    "cap": 689,
    "covers": "action (bohr-v1), phase_by_momentum, charge as a pair, span",
    "digests": {
-    "state_sha256": "a48ba880411bc8971b1e43aea64a2a1bdded1e72365b77b5939ba0f193949ec5",
-    "audit_sha256": "d830bd8e0e27193fc91810374e8e55298673007da97e3d717d05044c866cd05d",
-    "events_sha256": "35f5c6c3503e315de6885dfe4a1c5618d57069a1c43c0de11e19a8c54d4ed812"
+    "state_sha256": "2ee691100a37bb828f974476b356f0940fad1fc1e055cf3a48177c4708de6a22",
+    "audit_sha256": "8550f55fb4ca93390808bd27cb8dcb615051740b1be69f673557799b73afcd0e",
+    "events_sha256": "b7dbdfd5faee68dd87d894e19af41f0a07a77a51ec3526813323347b3cec3c10"
    }
   },
   {

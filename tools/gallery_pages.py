@@ -566,8 +566,9 @@ class Player:
         }
         return f"""
 <figure class="player" id="{self.key}">
-  <canvas width="{w}" height="{h}" aria-label="the moving picture"></canvas>
-  <div class="controls">
+  <img class="gif" alt="the moving picture" src="{data_url(gif, "image/gif")}">
+  <canvas width="{w}" height="{h}" aria-label="the moving picture" hidden></canvas>
+  <div class="controls" hidden>
     <button class="play" type="button">Play</button>
     <input class="slider" type="range" min="0" max="{len(self.images) - 1}" value="0">
     <span class="tick">interval 0</span>
@@ -575,10 +576,10 @@ class Player:
   <dl class="readings"></dl>
   <div class="three"></div>
   <figcaption>{self.caption} <a class="gif" download="{self.key}.gif">The GIF</a> (the frames at
-  {self.duration_ms} ms; {len(self.images)} frames).</figcaption>
+  {self.duration_ms} ms; {len(self.images)} frames; the GIF plays by itself, the player with its slider needs
+  scripts enabled).</figcaption>
   <script type="application/json" class="frames">{json.dumps(data)}</script>
   <img class="sheet" alt="" src="{data_url(png, "image/png")}" hidden>
-  <a hidden class="gifdata" href="{data_url(gif, "image/gif")}"></a>
 </figure>
 """
 
@@ -594,7 +595,8 @@ document.querySelectorAll('figure.player').forEach(function (figure) {
   var tick = figure.querySelector('span.tick');
   var readings = figure.querySelector('dl.readings');
   var panels = figure.querySelector('div.three');
-  figure.querySelector('a.gif').href = figure.querySelector('a.gifdata').href;
+  var gif = figure.querySelector('img.gif');
+  figure.querySelector('a.gif').href = gif.src;
   var frame = 0, timer = null;
   function show(k) {
     frame = k;
@@ -623,7 +625,13 @@ document.querySelectorAll('figure.player').forEach(function (figure) {
     if (timer) { clearInterval(timer); timer = null; button.textContent = 'Play'; }
     show(parseInt(slider.value, 10));
   });
-  if (sheet.complete) { show(0); } else { sheet.addEventListener('load', function () { show(0); }); }
+  function start() {
+    gif.hidden = true;
+    canvas.hidden = false;
+    figure.querySelector('div.controls').hidden = false;
+    show(0);
+  }
+  if (sheet.complete) { start(); } else { sheet.addEventListener('load', start); }
 });
 """
 
@@ -652,6 +660,7 @@ p, li, dd, dt, td, th { font-size: 1rem; }
 a { color: var(--accent); }
 nav.crumbs { font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
 figure.player { margin: 16px 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+figure.player img.gif { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 4px; image-rendering: pixelated; }
 figure.player canvas { display: block; max-width: 100%; height: auto; margin: 0 auto; background: var(--board); border-radius: 4px; image-rendering: pixelated; }
 figure.player .controls { display: flex; gap: 12px; align-items: center; margin: 10px 0 4px; }
 figure.player input.slider { flex: 1; }

@@ -29,6 +29,7 @@ p, li, dd, dt, td, th { font-size: 1rem; }
 a { color: var(--accent); }
 nav.crumbs { font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
 figure.player { margin: 16px 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+figure.player img.gif { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 4px; image-rendering: pixelated; }
 figure.player canvas { display: block; max-width: 100%; height: auto; margin: 0 auto; background: var(--board); border-radius: 4px; image-rendering: pixelated; }
 figure.player .controls { display: flex; gap: 12px; align-items: center; margin: 10px 0 4px; }
 figure.player input.slider { flex: 1; }
@@ -101,7 +102,8 @@ document.querySelectorAll('figure.player').forEach(function (figure) {
   var tick = figure.querySelector('span.tick');
   var readings = figure.querySelector('dl.readings');
   var panels = figure.querySelector('div.three');
-  figure.querySelector('a.gif').href = figure.querySelector('a.gifdata').href;
+  var gif = figure.querySelector('img.gif');
+  figure.querySelector('a.gif').href = gif.src;
   var frame = 0, timer = null;
   function show(k) {
     frame = k;
@@ -130,7 +132,13 @@ document.querySelectorAll('figure.player').forEach(function (figure) {
     if (timer) { clearInterval(timer); timer = null; button.textContent = 'Play'; }
     show(parseInt(slider.value, 10));
   });
-  if (sheet.complete) { show(0); } else { sheet.addEventListener('load', function () { show(0); }); }
+  function start() {
+    gif.hidden = true;
+    canvas.hidden = false;
+    figure.querySelector('div.controls').hidden = false;
+    show(0);
+  }
+  if (sheet.complete) { start(); } else { sheet.addEventListener('load', start); }
 });
 </script>
 </body>

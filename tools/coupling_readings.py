@@ -19,7 +19,7 @@ q = 6 x 2^17 per interval at the fixed point. Under the Beam Law
 headings, a ballistic stream at 1 / sqrt 3: the items read the identities of
 a stream of rays. Since 2026-09-19 the momentum label of a unit along a
 heading is Q e_d with Q = `LABEL_SCALE` = 64 (the label along the unit
-vector of the direction at the flight table's scale, BEAM_LAW section 2 and
+vector of the direction at the flight rule's scale, BEAM_LAW section 2 and
 note 23), so every push, momentum and flow of the record is in label units:
 where the tool compares a push or a flow with the emission q (a count of
 units) or with an amount it divides the label by Q, and the registered
@@ -32,7 +32,7 @@ refused, no merge); 2 the
 third law (the pushes of A on B and of B on A equal and opposite at every
 tick: each reads the other's lone beam, exact); 3 superposition (exact,
 rays of different numbers never interact); 4 retardation (the first read at
-r is the flight table's first arrival at r Links, one interval after the
+r is the flight rule's first arrival at r Links, one interval after the
 release, with the whole front 2^17); 5 the far field (the ring means of the
 count and the presence, the flow through the ring, Gauss's flux through the
 square); 6 the clock (`suspension` 1: the count owed is the presence read,
@@ -63,7 +63,7 @@ from event_universe.diagnostics.shell_readings import shell_readings
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.engine import count_owed
 from event_universe.events.engine import step_axis as rule_step
-from event_universe.events.nature_beam import flight_table, unit_label
+from event_universe.events.nature_beam import direction_flight, unit_label
 from event_universe.events.world import BEAM_LAW, HEADING_OFFSET, LABEL_SCALE, NatureBeamWorld
 from event_universe.events.world import Q as FLIGHT_SCALE
 from event_universe.world_loading import world_of_run
@@ -72,7 +72,7 @@ from event_universe.world_loading import world_of_run
 # functions (the architecture review of 2026-09-20, Highlights 5.4: a tool
 # is a reader of the record, never a second owner of a rule): the clock
 # `core.integer.by_clock` (the primitive the engine's frame, release and
-# step call), the flight table `nature_beam.flight_table` and its
+# step call), the flight's constants `nature_beam.direction_flight` and its
 # `manhattan_steps`, the label `nature_beam.unit_label`, the scale
 # `world.LABEL_SCALE`, the world's keys through `parse_nature_beam_world` and a
 # measured event's charge through `Measured.charge`.
@@ -89,9 +89,9 @@ RELEASE_PER_HEADING = by_clock(0, SOURCE * RELEASE[0], RELEASE[1])
 # release on the six headings (2^17 each), the two z headings' rays coming
 # home and created again over the six.
 Q = len(PORT_HEADINGS) * RELEASE_PER_HEADING
-# The flight table of the six headings (the two rest slots first, as the
+# The flight's constants of the six headings (the two rest slots first, as the
 # world's table has them): the front and the mean stay are read off it.
-HEADING_TABLE = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
+HEADING_FLIGHT = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
 FAR_RADII = (4, 6, 8, 12, 16, 20, 24, 30, 40)
 FAR_FIELD = tuple(r for r in FAR_RADII if r >= 8)
 FAR_WINDOW = 50
@@ -102,13 +102,13 @@ PROBE_X = (CENTRE[0] + PROBE_RADIUS, CENTRE[1], CENTRE[2])
 WINDOW = 50
 CHARGE = 1 << 23
 PROBE_CHARGE = 2
-# The mean stay of a heading ray at a Node over the flight table's period,
+# The mean stay of a heading ray at a Node over the flight rule's period,
 # T_d / (S_1 Q) intervals per Link (the table's mean speed S_1 Q / T_d with
 # T_d = isqrt(3 |v|^2 Q^2): the design's 1 / sqrt 3 rounded to the table's
 # integers, 110 / 64 on a heading; until 2026-09-20 the tool printed the
 # unrounded 1 / (1 / sqrt 3)).
-STAY = int(HEADING_TABLE.resolution[HEADING_OFFSET]) / (
-    int(HEADING_TABLE.manhattan[HEADING_OFFSET]) * FLIGHT_SCALE
+STAY = int(HEADING_FLIGHT.resolution[HEADING_OFFSET]) / (
+    int(HEADING_FLIGHT.manhattan[HEADING_OFFSET]) * FLIGHT_SCALE
 )
 AXES = {
     "+x": (1, 0, 0),
@@ -180,14 +180,14 @@ def steps_by_rule(reads: Reads, m: int, first: int, last: int, width: int = 1) -
 
 
 def first_arrivals(links: int) -> dict[int, int]:
-    """The flight table's first arrival at m Links of a heading ray, by m:
+    """The flight rule's first arrival at m Links of a heading ray, by m:
     the least age at which the table's Manhattan steps m(tau) reach m
-    (`FlightTable.manhattan_steps`, the function the step table is built
-    from), counted from the ray's first walk (a ray at age 0 walks at its
+    (`Flight.manhattan_steps`, the position accumulator's count off the
+    age), counted from the ray's first walk (a ray at age 0 walks at its
     first interval)."""
     ages = np.arange(1, 4 * links + 1, dtype=np.int64)
     heading = np.full(ages.shape, HEADING_OFFSET, dtype=np.int64)
-    reached = HEADING_TABLE.manhattan_steps(heading, ages)
+    reached = HEADING_FLIGHT.manhattan_steps(heading, ages)
     found: dict[int, int] = {}
     for age, steps in zip(ages.tolist(), reached.tolist(), strict=True):
         found.setdefault(int(steps), int(age))
@@ -200,7 +200,7 @@ ARRIVALS = first_arrivals(64)
 def front(radius: int) -> tuple[int, int]:
     """The first read (tick, amount) of a probe at `radius` on an axis: the
     source's first release at tick 1 walks from tick 2, so the front of 2^17
-    whole arrives at tick 1 + the flight table's first arrival at r Links."""
+    whole arrives at tick 1 + the flight rule's first arrival at r Links."""
     return (1 + ARRIVALS[radius], RELEASE_PER_HEADING)
 
 
@@ -488,7 +488,7 @@ def item_1(runs: dict[str, Run], checks: Checks) -> list[str]:
     first_step = min(int(e["tick"]) for e in base_steps) if base_steps else None
     lines.append("")
     lines.append(
-        f"the first read at tick {base_tick} with amount {base[base_tick][0]} (the front of the flight table); the "
+        f"the first read at tick {base_tick} with amount {base[base_tick][0]} (the front of the flight); the "
         f"first step at tick {first_step} (the rule off the clock: by_clock(t - 1, |p|, Q m + |p|) on the cumulative push in label units); "
         "the steps onto the source refused, the probe beside it (no merge since 2026-09-19)"
     )
@@ -611,9 +611,7 @@ def first_read(run: Run, reader: int) -> tuple[int, int, Vector]:
 
 def item_4(runs: dict[str, Run], checks: Checks) -> list[str]:
     lines = ["item 4, retardation (the first read of each probe)", ""]
-    lines.append(
-        "world | axis | r | Node | found (tick, amount, push) | the flight table (tick, amount)"
-    )
+    lines.append("world | axis | r | Node | found (tick, amount, push) | the flight rule (tick, amount)")
     lines.append(" | ".join("---" for _ in range(6)))
     rows: list[tuple[str, str, int, int]] = [
         ("4", axis, r, k + 2) for k, (axis, r) in enumerate(RETARDATION_PROBES)
@@ -635,14 +633,14 @@ def item_4(runs: dict[str, Run], checks: Checks) -> list[str]:
             label_push(heading, found[1], int(probe["content"])),
         )
         checks.equal(
-            f"{name}: the first read of the probe at r = {r} on {axis} is the flight table's front, whole",
+            f"{name}: the first read of the probe at r = {r} on {axis} is the flight rule's front, whole",
             found[:2],
             expected,
         )
         lines.append(f"{name} | {axis} | {r} | {at(axis, r)} | {found} | {expected}")
     lines.append("")
     lines.append(
-        "the front: 2^17 whole (a ray does not spread), at tick 1 + the flight table's first arrival at r Links"
+        "the front: 2^17 whole (a ray does not spread), at tick 1 + the flight rule's first arrival at r Links"
     )
     return lines
 
@@ -744,7 +742,7 @@ def item_5(
     )
     first, last = replay.window
     lines = [
-        f"item 5, the far field (world {label}, the source alone, the ring means over ticks {first}-{last}; q = {Q}; the flow in label units divided by Q_label = {LABEL_SCALE})"
+        f"GAMEBOARD (a host reading of the GameBoard: `shell_readings` and the cube flux) item 5, the far field (world {label}, the source alone, the ring means over ticks {first}-{last}; q = {Q}; the flow in label units divided by Q_label = {LABEL_SCALE})"
         + ("" if pinned else " (supplementary, not pinned)"),
         "",
     ]
@@ -780,7 +778,7 @@ def item_5(
     lines.append(
         "the six beams: the ring's Nodes off the four in-plane axes are empty, so a ring mean is the axial Node's "
         f"reading over the ring (count x r / q = r / Nodes, about 1 / (2 pi) = {1 / (2 * math.pi):.4f}); presence / count "
-        f"is the mean stay of a ray at a Node, 1 / c = {STAY:.4f} over the flight table's period"
+        f"is the mean stay of a ray at a Node, 1 / c = {STAY:.4f} over the flight rule's period"
     )
     if pinned:
         for key, name in (("count", "count x r / q"), ("presence", "presence x r / q")):
@@ -835,7 +833,7 @@ def axis_probes(run: Run, replay: Replay, checks: Checks, label: str) -> list[st
     last = run.ticks
     first = last - FAR_WINDOW + 1
     lines = [
-        f"{label}: the probes on +x, the axis readings over ticks {first}-{last} (the beam's Nodes)",
+        f"GAMEBOARD (a host reading of the GameBoard, the probes' counts) {label}: the probes on +x, the axis readings over ticks {first}-{last} (the beam's Nodes)",
         "",
     ]
     lines.append(

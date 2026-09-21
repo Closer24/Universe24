@@ -46,7 +46,7 @@ from collections.abc import Iterator
 import numpy as np
 
 from event_universe.core.game_board import Address3, adjacent_node
-from event_universe.core.integer import apportion_whole, by_clock, by_drive
+from event_universe.core.integer import apportion_whole, by_drive
 from event_universe.events.amplitude import Layer
 from event_universe.events.measured import (
     TALLIES,
@@ -347,6 +347,9 @@ class NatureBeamSimulation:
                 None if definition.lamp is None else definition.lamp.rate,
                 self.world.column_scales,
                 len(self.world.directions) if self.world.doppler else 0,
+                self.world.action if definition.phase_by_momentum else None,
+                self.world.phase_steps,
+                len(nodes),
             ),
             taken=[dict.fromkeys(TALLIES, 0) for _ in range(count)],
             clicks=[0] * count,
@@ -582,17 +585,28 @@ class NatureBeamSimulation:
             values=entry.momentum,
             denominators=[step_divisor(p, content, self.world.width) for p in entry.momentum],
         )
+        turns = [0, 0, 0]
         for axis in range(3):
             momentum = entry.momentum[axis]
             if momentum == 0 or counts[axis] == 0:
                 continue
             entry.axis_steps[axis] += 1
+            if entry.phase_by_momentum and self.world.action is not None:
+                # The turn by momentum, the `action` row of the axis (record
+                # 155: one rule, no exception): the row gains |p| x N at
+                # every Link the step rule counts on the axis, whether the
+                # Link is crossed, lost to an earlier axis's step or refused
+                # at a contact, and the whole part over h is delivered to
+                # the phase only at a Link crossed below (a count at a Link
+                # not crossed is discarded, as the count off the Links
+                # stepped skipped it: note 30 (ii)).
+                bounded(abs(momentum) * self.world.phase_steps, entry, "turn by momentum")
+                (turns[axis],) = entry.counts.advance("action", index=axis, values=[abs(momentum)])
             if fired is None:
                 fired = (axis, momentum, counts[axis])
         if fired is None:
             return
         axis, momentum, sign = fired
-        magnitude = abs(momentum)
         entry.steps += 1
         origin = entry.position
         port = 2 * axis + (0 if sign > 0 else 1)
@@ -659,14 +673,11 @@ class NatureBeamSimulation:
         self._place(entry, nodes)
         entry.position = destination
         if entry.phase_by_momentum and self.world.action is not None:
-            # k0, the Links stepped on this axis before this one: the
-            # step rule's count, read off the body's record since the
-            # step drive (the same count as the floor at a constant
-            # momentum).
-            links = entry.axis_steps[axis] - 1
-            bounded((links + 1) * magnitude * self.world.phase_steps, entry, "turn by momentum")
-            turn = by_clock(links, magnitude * self.world.phase_steps, self.world.action)
-            entry.phase = self.tables.circle.turn(entry.phase, turn)
+            # The turn of the Link crossed: the `action` row's count of
+            # this self-creation (the same integer as `by_clock(k0, |p| N,
+            # h)` off the Links stepped, k0, at a constant momentum; the
+            # exact sum of the momentum's history where it changes).
+            entry.phase = self.tables.circle.turn(entry.phase, turns[axis])
         if self.record is not None:
             self.record(
                 {

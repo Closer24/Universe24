@@ -140,5 +140,7 @@ def test_player_embeds_the_frames_the_gif_and_the_intervals(world_path: Path) ->
     assert "data:image/gif;base64," in document and "data:image/png;base64," in document
     assert '"ticks": [0, 1, 2, 3]' in document and '"count": 4' in document
     assert '<button class="play"' in document and 'input class="slider"' in document
+    # The GIF is a visible image of the page: the picture moves without scripts.
+    assert '<img class="gif" alt="the moving picture" src="data:image/gif;base64,' in document
     gif = gallery_pages.gif_bytes(images, 100)
     assert gif[:6] in (b"GIF87a", b"GIF89a")

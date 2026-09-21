@@ -1,6 +1,6 @@
 """The grain form of doppler-v1 and the oblique weight, on the G2 star
 worlds' numbers (the mathematician, 2026-09-20, read-only; standalone
-integers, the flight table's pace from the engine's `flight_table`, the
+integers, the flight table's pace from the engine's `direction_flight`, the
 one import). Output beside this file: `grain_map.out`.
 
 The star of `examples/events/hubble_stars/gravity_none.json` on
@@ -17,7 +17,7 @@ from __future__ import annotations
 import math
 from fractions import Fraction
 
-from event_universe.events.nature_beam import flight_table
+from event_universe.events.nature_beam import direction_flight
 
 Q = 64
 S = 2**20
@@ -82,7 +82,7 @@ print(
 section("3. The oblique weight: per axis against the flux, a body moving on x")
 headings = ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
 fan = ((1, 1, 0), (1, 1, 1), (2, 1, 0), (3, 1, 0), (5, 1, 0), (1, 2, 0), (0, 1, 1), (1, 3, 2))
-table = flight_table(((0, 0, 0), (0, 0, 0)) + headings + fan)
+table = direction_flight(((0, 0, 0), (0, 0, 0)) + headings + fan)
 v_test = Fraction(1, 3)  # the review's test speed on the fan diagonal (0.1875 against 0.594)
 v_star = Fraction(114460878438400, Q * S * M + 114460878438400)
 print(
