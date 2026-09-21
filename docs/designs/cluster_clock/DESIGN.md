@@ -39,9 +39,11 @@ questions this series pins:
   crowd of all the others) moves at v / (1 + k) as a whole; the law then
   reads 1 + z = (1 + k)(1 + v / ((1 + k) c)) = 1 + k + v / c, the clock's
   term and the Doppler adding, so every member's z shifts by the same
-  v / c and the spread is untouched by the motion. The alternative, a
-  lamp behind an unslowed crowd, reads the product (1 + k)(1 + v / c) and
-  the spread grows with v. This series emulates the crowd slowed alike:
+  v / c and the spread is untouched by the motion. The alternative form,
+  the product (1 + k)(1 + v / c), is what a clock slowed without its
+  motion slowed would read (series P's pin (d) wrote it; its moving lamp
+  read between the two, inside the tolerance of both); under it the
+  spread grows with v. This series emulates the crowd slowed alike:
   the sources of each member are thrown at v / (1 + k_i), the speed their
   lamp has on the GameBoard while it waits, so that they keep pace with it
   and the lamp stays on the heading of its fan. The emulation is by
