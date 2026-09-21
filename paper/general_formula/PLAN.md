@@ -1841,3 +1841,46 @@ only (octahedron.png written and not used, not committed); the bibitem
 quotes the page's own words. Main merged at bd74c49a (records 338 and
 339; the log bibitem adds them).
 
+## Record 340 (2026-09-21): the owner's second review, from main at 119fd9b8
+
+Eq. (1) written as the count primitive implements it (the derivation's
+section 0 restated, PR #525): e = sign(s) min(floor(|s|/b), a) with
+the signed rate and the remainder kept, the cap a = 1 the drive's
+alone, every other count firing the whole part (the owner's high-rate
+series 0, 2, 5, 7, 10), and one sentence on where the 0/1 form holds
+(the flight, the drive by its cap, the wheel, a slow clock). The
+lattice Gleason's hypotheses (d) the empty reads zero and (e) some
+input reads, as 6.5 states them (record 340). The abstract's pace
+qualified: the rows' pace c, the largest uniform one, a body's pace
+not bounded by it under the law as declared. The axis preference and a
+body's pace above the rows' stated where the drive is stated (the
+owner's eight runs: 26 Nodes on x and none on y; 0.925 against 0.582;
+the cap one Link per interval, 1.72 c, the engine's rule that one axis
+steps per interval) and as rows 21 and 22 of the differing table (24.3),
+both refuted on main as declared and closed under form B's directional
+drive, in build (PR #526 in review). A duplicated ame2020 bibitem
+removed. Referee round 32 pending.
+
+## Referee round 32 (2026-09-21): record 340's round, applied
+
+Twelve findings, four major, all applied: under the cap the residual
+above the wall is kept and fires one event at each following interval
+(not a Euclidean remainder); the cap and the sign named as operation
+6's comparison, the capped carry an injection that loses nothing, so
+still no third non-linear place; the abstract's and the introduction's
+summaries in the count form ("count the walls it holds, capped at one
+for the drive; every wall counted is an event"), the glossary's e the
+event count with a its cap; a = infinity where no cap is declared; the
+drive's form with the sign; the axis preference in the engine's words
+(the first axis whose rule fires, x before y before z when two fire in
+one interval); a body's cap one Link per interval in all, T_d / Q_f =
+1.72 times the rows' pace on a heading (sqrt 3 c), not "up to sqrt 3
+Nodes per interval, 3 c" as 24.3 row 22 has it (the tree's error,
+reported: the engine's _move steps one axis per interval; FORM.md's
+1.72 c agrees); row 22 closed also under the covariant readings; the
+Cohen-Glashow bound named as the neutrinos', the charged bodies' the
+vacuum Cherenkov one; (d) excludes the constant reading and (e) the
+zero detector, said so; "form B in build" in the abstract. The
+abstract at 1921 plain characters after the measurement-chapter
+sentence was cut for the prediction's.
+
