@@ -528,6 +528,12 @@ def two_slits_one() -> dict[str, object]:
     world = two_slits_geometry()
     world["model_id"] = "beam-amplitude-slits_one-v1"
     world["ticks"] = SLITS_ONE_TICKS
+    # The frequency declared as in `slits_low`: the engine turns the rows and
+    # writes the phase at the exact time of each row's last Link on its click
+    # line (`exact`; BEAM_LAW note 42), which the reading takes.
+    for family in world["families"]:
+        if family["name"] == "light":
+            family["phase_per_link"] = FREQUENCY
     lamp = world["measured"][0]
     directions = lamp["lamp"]["directions"]
     del lamp["lamp"]
@@ -582,7 +588,10 @@ def two_slits_reading() -> dict[str, object]:
     """The design's reading of one birth (`slits_read.py`), on the
     reference world run in-process: the weights per set, the ladder's
     clicks over the 64 births, the shares, the pixels and the Pearson
-    correlations; written before the run of `slits_low`."""
+    correlations; written before the run of `slits_low`. Since the exact
+    phase at the click (2026-09-21, BEAM_LAW note 42) every row's phase is
+    the `exact` of its click line, the phase at the exact time of its last
+    Link, which the reference run forms as `slits_low` does."""
     from event_universe.core.phase import phase_cosines, phase_sines
     from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 
@@ -594,14 +603,6 @@ def two_slits_reading() -> dict[str, object]:
     assert all(store.size == 0 for store in simulation.stores), "a row of the birth is still in flight"
     order = list(NatureBeamSimulation(parse_nature_beam_world(two_slits_low())).layer.names)
     cosines, sines = phase_cosines(N), phase_sines(N)
-    numerator, denominator = FREQUENCY
-
-    def turn(age: int, tick: int) -> int:
-        return (tick * numerator) // denominator - ((tick - age) * numerator) // denominator
-
-    re_emitted = {
-        int(line["measured"]): int(line["tick"]) for line in lines if line.get("event") == "rerelease"
-    }
     # The rows per set and per Node of the set: coherent within a Node,
     # incoherent across the Nodes of one set (the decision of 2026-09-20
     # on the owner's point 5).
@@ -612,27 +613,14 @@ def two_slits_reading() -> dict[str, object]:
             continue
         detector = line["detector"]
         name = str(detector) if detector is not None else f"measured:{line['measured']}"
-        tick, phase = int(line["tick"]), int(line["phase"])
+        phase = int(line["exact"])
         node = tuple(int(v) for v in line["node"])
-        if int(line["number"]) == 1:
-            # A lamp row: the amount 91 stands for one unit at m = 5, its
-            # age its flight from the birth at tick 0.
-            row = (1, LAMP_ROWS, (phase + turn(tick, tick)) % N)
-            rows.setdefault(name, []).append(row)
-            at_node.setdefault(name, {}).setdefault(node, []).append(row)
-        else:
-            # A fan row: its flight is the lamp row's to the opening (the
-            # re-emission tick, from the birth at tick 0) and its own since.
-            opened = re_emitted[int(line["number"])]
-            age = tick - opened
-            if name.startswith("face:"):
-                # A face click records the row as it stepped out, before the
-                # turn of that interval (the engine's walk: the escaped rows
-                # leave, the rows that stay turn).
-                age, tick = age - 1, tick - 1
-            row = (1, LAMP_ROWS * FAN_WAYS, (phase + turn(opened, opened) + turn(age, tick)) % N)
-            rows.setdefault(name, []).append(row)
-            at_node.setdefault(name, {}).setdefault(node, []).append(row)
+        # A lamp row (the amount 91 stands for one unit at m = 5) or a fan
+        # row (m = 5 x 91), at the phase of its last Link.
+        multiplicity = LAMP_ROWS if int(line["number"]) == 1 else LAMP_ROWS * FAN_WAYS
+        row = (1, multiplicity, phase)
+        rows.setdefault(name, []).append(row)
+        at_node.setdefault(name, {}).setdefault(node, []).append(row)
     weights: dict[str, Fraction] = {}
     incoherent: dict[str, Fraction] = {}
     for name, found in rows.items():
@@ -1126,10 +1114,31 @@ def cone_expectations() -> dict[str, object]:
     per interval of age), the same for every record."""
     axis_age = flight_age(PLUS_X, CONE_AXIS_LINKS)
     diagonal_age = flight_age(DIAGONAL_XY, 2 * CONE_DIAGONAL)
+    # The exact phase at the click (BEAM_LAW note 42): under the pair form
+    # the whole part and the remainder of n x made x T_d over d x S_1 x Q
+    # (the flight table's T_d = isqrt(3 |D|^2 Q^2)), the path phase its
+    # whole part mod N; under the integer form the phase as it is.
+    exact: dict[str, dict[str, object]] = {"cone_links": {"path_phase": {}, "remainder": {}}}
+    exact["cone_links"]["path_phase"] = dict(
+        axis=CONE_STEP * CONE_AXIS_LINKS % N, diagonal=CONE_STEP * 2 * CONE_DIAGONAL % N
+    )
+    exact["cone_links"]["remainder"] = {"axis": [0, 1], "diagonal": [0, 1]}
+    intervals: dict[str, dict[str, object]] = {"path_phase": {}, "remainder": {}}
+    for detector, vector, links in (
+        ("axis", PLUS_X, CONE_AXIS_LINKS),
+        ("diagonal", DIAGONAL_XY, 2 * CONE_DIAGONAL),
+    ):
+        s1 = sum(abs(c) for c in vector)
+        resolution = math.isqrt(3 * sum(c * c for c in vector) * FLIGHT_Q * FLIGHT_Q)
+        whole, rest = divmod(CONE_STEP * links * resolution, 1 * s1 * FLIGHT_Q)
+        intervals["path_phase"][detector] = whole % N
+        intervals["remainder"][detector] = [rest, s1 * FLIGHT_Q]
+    exact["cone_intervals"] = intervals
     return {
         "links": {"axis": CONE_AXIS_LINKS, "diagonal": 2 * CONE_DIAGONAL},
         "age_at_click": {"axis": axis_age, "diagonal": diagonal_age},
         "same_age": axis_age == diagonal_age,
+        "exact": exact,
         "cone_links": {
             "path_phase": {
                 "axis": CONE_STEP * CONE_AXIS_LINKS % N,

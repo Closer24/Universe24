@@ -3380,3 +3380,61 @@ implementation's part of the contract. The design above is unchanged.
     alone, the same integers read by ordinal on both counts (the
     reviewer's `pair_by_ordinal.py`; `tools/bell_chsh.py`,
     `tools/bell_choosers.py`, `tests/test_amplitude_pair.py`).
+
+42. **The exact phase at the click: the phase at the exact time of the
+    row's last Link** (the model owner's decision of 2026-09-21, record 163
+    (2) of the log of 2026-09-20, "YES, the exact phase at the click from
+    the row's two accumulators"; the mathematician's design,
+    [TWO_SLITS.md section 2](designs/fraction_free/TWO_SLITS.md) with
+    `two_slits_map.py`; the branch `click`). A row of a family with the
+    pair form of `phase_per_link`, n / d steps per interval of age, turns by
+    `by_clock_rows` at every walk that moves it, so its phase column holds
+    floor(age x n / d), the phase of the whole intervals; the flight table
+    moves it by whole Links at whole intervals, m(tau) = (2 tau S_1 Q + T_d)
+    // (2 T_d) Links by the age tau, so the row arrives at its click at a
+    whole age while the exact time of its last Link is made x T_d / (S_1 Q)
+    intervals, a rational, `made` the Links the table counts on the row's
+    direction. The click reads the phase at that time from the row's two
+    counts, the phase per interval and the Links made (`nature_beam.exact_phase`):
+
+        phi = phase - floor(terms n / d) + floor(n made T_d / (d S_1 Q))   (mod N),
+
+    `terms` the intervals the phase holds, ONE floor at the click, a
+    Euclidean division of the numerator n made T_d by the denominator
+    d S_1 Q, the numerator within the working register (refused beyond it
+    naming the place; on every registered world below 2^53) and the
+    remainder kept: the click line of every row of such a family carries
+    `exact`, phi, and `remainder`, [the remainder, d S_1 Q]; the row's
+    `phase` stays the walk's, the GameBoard's own, and a re-emission carries
+    it as before (the phase finer than N across a re-emission is the one
+    need beyond this, record 165, not built). Where it is read: a click at a
+    measured event and a `sum` re-emitter's end (`terms` = `made_at` = the
+    age after the walk, `plan.t_exact`), an open face (the row read before
+    that walk's turn: `terms` its age, its last Link the step at that age,
+    m(age + 1)) and the border `lifetime` (after the walk). The layer's
+    pointer of every end is at the exact phase (`Layer.end`); the crowd's
+    readings, the windows, the meeting and the faces' ledger records read
+    the path phase as before. A family without the pair form, or a row on
+    a rest slot, reads its phase as it is; a row whose direction a
+    collision changed reads its age on its present line, as the table does
+    for its next step. What moved, re-registered once
+    ([MIGRATION](MIGRATION.md#the-exact-phase-at-the-click-on-2026-09-21-the-phase-read-at-the-exact-time-of-the-rows-last-link)):
+    `slits_low`'s 64 clicks stay wall 34 (11, 12, 11), screen 15 and faces
+    15 (8, 7) but land on other pixels (y = 11, 29, 36, 40, 50, 56, 59, 60
+    twice, 61, 70, 77, 84, 90, 107; the reading's total 4834019/4259840 in
+    place of 847181/745472, its Pearson with the two-source cosine 0.382 in
+    place of 0.368), the reading of one birth agreeing with the run on every
+    one of the 80 sets; the design's map expected wall 34, screen 16, faces
+    14 because it carried the lamp leg's exact fraction across the
+    re-emission and evaluated on a 4096-entry table of floats, where the
+    engine floors once on the tables of N = 64 with the re-emission's whole
+    phase, as this note says. The Mach-Zehnder worlds with unequal arms keep
+    their clicks (64 / 0, 32 / 32, 0 / 64) with their weights and totals
+    moved; the equal arms, Bell, GHZ and the gate are bit-identical (equal
+    paths have equal overshoots; the label click reads u and the label); the
+    cone worlds keep their pins (the pair form at the rate 3: the exact
+    whole parts 87 at the axis and the diagonal, the remainders 42 / 64 and
+    96 / 128, `expectations.json` under `cone.exact`), the design's 41.75
+    and 42.00 being the rate 8's, pinned in `tests/test_exact_phase.py`
+    (the axis u + 41 with the remainder 48 / 64, the diagonal u + 42 with
+    the remainder 0, a face u + 4 where the walk read u + 56, the bound).

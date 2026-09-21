@@ -3723,6 +3723,12 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   pointer gate would have passed them (130 passes, a which-path device
   reading 32/32 by coincidence); on `mz_unequal_f8` the rows of two
   records reach it together and both split.
+- **Re-read under the exact phase at the click (2026-09-21, the branch
+  `click`; [BEAM_LAW note 42](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  Every port's clicks stand on the ten worlds (`mz_unequal_f0` D1 64,
+  `mz_unequal_f8` 32 / 32, `mz_unequal_f16` D2 64 included; 68 gathers
+  each); the unequal arms' weights and totals moved (eight distinct totals
+  per world as before), the equal arms bit-identical. DETECTOR.
 
 **L2, the two slits at a low rate (the design's test 2).**
 
@@ -3764,6 +3770,24 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   15; a face's click at a Node of its edge); 3 distinct cell lists over
   the 64 births, 32 with u = 0's (the tables' rounding by u, no rung
   moved); the reading tool's replay equals `run.json`'s `world`.
+- **Re-registered under the exact phase at the click (2026-09-21, the
+  branch `click`; [BEAM_LAW note 42](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  `tests/test_amplitude_layer.py` (d)).** The reference `slits_one` declares
+  the frequency and the reading takes each row's phase from the `exact` of
+  its click line; the reading and the run of `slits_low` agree on every one
+  of the 80 sets: wall 34 (11, 12, 11), screen 15 on fourteen pixels (y =
+  11, 29, 36, 40, 50, 56, 59, 60 twice, 61, 70, 77, 84, 90, 107; until then
+  11, 29, 36, 43, 50, 56, 59, 60, 61 twice, 70, 77, 82, 90, 107), faces 15
+  (8, 7); the first record's total 4834019/4259840 (847181/745472 until
+  then), the shares 0.529 / 0.244 / 0.227, the weights' Pearson with the
+  two-source cosine 0.382 (0.368), the histogram's 0.722 (0.655); 80
+  gathers, the 64th by tick 214, 19 distinct cells over the 64 births as
+  before, 4 distinct cell lists with 44 records sharing the first record's
+  (3 and 32 until then). The design's map (TWO_SLITS.md section 5) expected wall 34, screen
+  16, faces 14: it carried the lamp leg's exact fraction across the
+  re-emission and evaluated on a table of 4096 floats, where the engine
+  floors once on the tables of N = 64 with the re-emission's whole phase.
+  DETECTOR.
 
 **L3, the pair with the choosers, the CHSH labels, the which-path world
 and no maintenance (the design's section 4; the acceptance tests 4, 6
@@ -3904,6 +3928,15 @@ question, issue #376; the Boss's approval of 2026-09-20).**
   registered worlds, the Mach-Zehnder with unequal arms and the two slits
   declare the pair form; the pair, GHZ and the gate declare no phase per
   Link. Which form nature's light is, the model does not say.
+- **Re-read under the exact phase at the click (2026-09-21, the branch
+  `click`; [BEAM_LAW note 42](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).**
+  Both worlds keep their pins (the age 29, the path phases 51 / 8 and
+  23 / 23); `cone_intervals`'s click lines carry the exact phase, 3 x 17 x
+  110 = 5610 = 87 x 64 + 42 at the axis and 3 x 24 x 156 = 11232 = 87 x
+  128 + 96 at the diagonal, the whole part 87 = 23 mod 64 at both as the
+  walk's 3 x 29, the remainders 42 / 64 and 96 / 128 (`expectations.json`
+  under `cone.exact`, `tests/test_amplitude_cone.py` (d)); the design's
+  41.75 and 42.00 are the rate 8's (`tests/test_exact_phase.py`). DETECTOR.
 
 **L2b, the two slits with the fan by angle (Huygens on the lattice; the
 mathematician's run of 2026-09-20 under the Boss's standing authorization,

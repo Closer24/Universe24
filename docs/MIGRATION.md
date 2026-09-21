@@ -40,7 +40,34 @@ pull request), bit-exact by construction: no physical function changed.
   layer of `amplitude-v1` is outside the claim (the one non-local operation
   the model owner decided, records 72 and 74 of 2026-09-20).
 
-## The click without amplitudes, on 2026-09-21: the layer keeps phase-count vectors
+## The exact phase at the click, on 2026-09-21: the phase read at the exact time of the row's last Link
+
+The model owner's decision, record 163 (2) of 2026-09-20's log; the
+mathematician's [TWO_SLITS.md section 2](designs/fraction_free/TWO_SLITS.md);
+[BEAM_LAW note 42](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
+The identity `beam-v1` is kept; the pins that moved were re-registered once.
+
+- A record's row ends (a click, a `sum` re-emitter, a face, the border) at
+  the phase of the exact time of its last Link, `nature_beam.exact_phase`,
+  from its phase per interval (the pair form) and the Links the flight
+  table counts; the click line of every row of a family with the pair form
+  carries `exact` and `remainder` (new keys; the row's `phase` unchanged).
+  `FamilyPlan.t_exact` is new.
+- `slits_low` (L2) re-registered: the 64 clicks stay wall 34 (11, 12, 11),
+  screen 15, faces 15 (8, 7); the fifteen screen clicks land at y = 11, 29,
+  36, 40, 50, 56, 59, 60 (twice), 61, 70, 77, 84, 90, 107 in place of 11,
+  29, 36, 43, 50, 56, 59, 60, 61 (twice), 70, 77, 82, 90, 107; the reading's
+  total 4834019/4259840 in place of 847181/745472, the shares 0.529 / 0.244
+  / 0.227 in place of 0.528 / 0.244 / 0.228, the weights' Pearson with the
+  cosine 0.382 in place of 0.368 and the histogram's 0.722 in place of
+  0.655 (`expectations.json` under `two_slits`, regenerated; the reference
+  world `slits_one` now declares the frequency and the reading takes each
+  row's `exact`). The design's map expected wall 34, screen 16, faces 14
+  (note 42 says why the engine differs).
+- The Mach-Zehnder worlds (L1) keep every click; the unequal arms' weights
+  and totals moved. The cone worlds (L7) keep their pins; `expectations.json`
+  under `cone` gains `exact`. Bell, GHZ and the gate are bit-identical.
+
 
 The model owner's decision, record 188 of 2026-09-20's log; the derivation
 mathematician's proof (DERIVATIONS_BEAM.md section 6.7);

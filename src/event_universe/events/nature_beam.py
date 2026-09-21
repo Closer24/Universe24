@@ -100,8 +100,10 @@ import numpy as np
 
 from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import (
+    MAX_WORK_INT,
     apportion_whole,
     bounded_gcd,
+    checked_work,
     integer_root,
 )
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
@@ -498,6 +500,56 @@ def by_clock_rows(age: np.ndarray, numerator: np.ndarray | int, denominator: int
         raise ValueError("positive denominator required")
     result: np.ndarray = ((age + 1) * numerator) // denominator - (age * numerator) // denominator
     return result
+
+
+def exact_phase(
+    phase: int,
+    terms: int,
+    made_at: int,
+    direction: int,
+    flight: FlightTable,
+    rate: tuple[int, int] | None,
+    modulus: int,
+    where: str,
+) -> tuple[int, int, int]:
+    """The phase of a row at the exact time of its last Link (the model
+    owner's decision of 2026-09-21, record 163 (2) of the log of 2026-09-20;
+    the mathematician's TWO_SLITS.md section 2; BEAM_LAW note 42), read at
+    the click from the row's two counts: its phase per interval of age, the
+    pair form n / d (`rate`, `phase_per_age`), and the flight table's count
+    of Links on its direction, made = m(made_at) = (2 made_at S_1 Q + T_d)
+    // (2 T_d), `made_at` the age whose count holds the last Link (the age
+    after the walk that crossed it). The row's phase column holds `terms`
+    whole intervals of that rate, floor(terms x n / d) (`by_clock_rows` at
+    every walk that moved it); the exact time of the made-th Link is
+    made x T_d / (S_1 Q) intervals, so
+
+        phi = phase - floor(terms n / d) + floor(n made T_d / (d S_1 Q))   (mod N),
+
+    ONE floor at the click: a Euclidean division of the numerator n made T_d
+    (within the working register, refused beyond it naming the place) by
+    the denominator d S_1 Q, the remainder kept. Returns (phi, the
+    remainder, the denominator). A family without the pair form, or a row
+    on a rest slot, reads its phase as it is (the remainder 0 over 1); the
+    phase per Link crossed (the integer form) is exact per Link already. A
+    row whose direction a collision changed reads its age on its present
+    line, as the flight table does for its next step."""
+    s1 = int(flight.manhattan[direction])
+    if rate is None or s1 == 0:
+        return phase % modulus, 0, 1
+    numerator, denominator = rate
+    resolution = int(flight.resolution[direction])
+    made = (2 * made_at * s1 * Q + resolution) // (2 * resolution)
+    try:
+        product = checked_work(checked_work(numerator * made) * resolution)
+    except OverflowError as error:
+        raise OverflowError(
+            f"{BEAM_LAW}: the exact phase at {where}: the numerator n x made x T_d = "
+            f"{numerator} x {made} x {resolution} exceeds the working register {MAX_WORK_INT}"
+        ) from error
+    divisor = denominator * s1 * Q
+    whole, rest = divmod(product, divisor)
+    return (phase - (terms * numerator) // denominator + whole) % modulus, rest, divisor
 
 
 def window_admits(
@@ -1725,6 +1777,9 @@ class FamilyPlan:
     t_amount: list[int] = field(default_factory=list)
     t_content: list[int] = field(default_factory=list)
     t_phase: list[int] = field(default_factory=list)
+    # The exact phase of every taken row at its last Link, its remainder
+    # and the denominator (`exact_phase`; the click reads the phase here).
+    t_exact: list[tuple[int, int, int]] = field(default_factory=list)
     t_carried: list[int] = field(default_factory=list)
     t_label: list[list[int]] = field(default_factory=list)
     # The window used per taken row, for the entries whose window is read
@@ -2494,6 +2549,23 @@ def nature_beam(
                 ledger.transit_momentum = [
                     a - b for a, b in zip(ledger.transit_momentum, escaped_momentum, strict=True)
                 ]
+            # The phase at the exact time of the Link the row leaves through
+            # (BEAM_LAW note 42): the row is read before this walk's advance,
+            # so its phase holds `age` intervals and its last Link is the
+            # step at that age, the count m(age + 1).
+            face_exact = {
+                int(index): exact_phase(
+                    int(store.phase[index]),
+                    int(store.age[index]),
+                    int(store.age[index]) + 1,
+                    int(store.direction[index]),
+                    flight,
+                    definition.phase_per_age,
+                    modulus,
+                    FACE_NAMES[int(port[index])],
+                )
+                for index in gone.tolist()
+            }
             if layer is not None:
                 gone_x, gone_y, gone_z = store.coordinates(store.node[gone])
                 for k, row_index in enumerate(gone.tolist()):
@@ -2505,7 +2577,7 @@ def nature_beam(
                             int(store.branch[row_index]),
                             int(store.multiplicity[row_index]),
                             int(store.amount[row_index]),
-                            int(store.phase[row_index]),
+                            face_exact[row_index][0],
                             node=(int(gone_x[k]), int(gone_y[k]), int(gone_z[k])),
                             content=int(store.amount[row_index] * store.content[row_index]),
                             momentum=[int(v) for v in labels[k]],
@@ -2525,6 +2597,9 @@ def nature_beam(
                         "momentum": [int(v) for v in labels[k]],
                         "content": int(store.amount[index] * store.content[index]),
                     }
+                    if definition.phase_per_age is not None:
+                        face_line["exact"] = face_exact[int(index)][0]
+                        face_line["remainder"] = list(face_exact[int(index)][1:])
                     if store.record[index] != NO_RECORD:
                         face_line["record"] = int(store.record[index])
                         face_line["branch"] = int(store.branch[index])
@@ -3067,6 +3142,23 @@ def nature_beam(
             plan.t_hand = hand_at[taken].tolist()
             plan.t_age = age_t.tolist()
             plan.t_arrival = arrival[taken].tolist()
+            # The phase at the exact time of the row's last Link, read once
+            # here for the click, the ends and the lines (BEAM_LAW note 42).
+            plan.t_exact = [
+                exact_phase(
+                    int(ph),
+                    int(ag),
+                    int(ag),
+                    int(ar),
+                    flight,
+                    families[family].phase_per_age,
+                    modulus,
+                    f"measured event {int(e)}",
+                )
+                for ph, ag, ar, e in zip(
+                    ph_t.tolist(), age_t.tolist(), arrival[taken].tolist(), ev_t.tolist(), strict=True
+                )
+            ]
             e_ends = np.append(e_starts[1:], groups)
             g_events = g_ev[e_starts].tolist()
             e_lo, e_hi = e_starts.tolist(), e_ends.tolist()
@@ -3333,7 +3425,7 @@ def nature_beam(
                                             plan.t_branch[k],
                                             plan.t_multiplicity[k],
                                             plan.t_amount[k],
-                                            plan.t_phase[k],
+                                            plan.t_exact[k][0],
                                             absorbed=False,
                                         )
                             if record is not None:
@@ -3405,7 +3497,7 @@ def nature_beam(
                                             plan.t_branch[k],
                                             plan.t_multiplicity[k],
                                             plan.t_amount[k],
-                                            plan.t_phase[k],
+                                            plan.t_exact[k][0],
                                             rotation=entry_rotation(
                                                 plan, detector_set, entry.label_turns[family], k
                                             ),
@@ -3467,7 +3559,7 @@ def nature_beam(
                                         plan.t_branch[k],
                                         plan.t_multiplicity[k],
                                         plan.t_amount[k],
-                                        plan.t_phase[k],
+                                        plan.t_exact[k][0],
                                         rotation=entry_rotation(
                                             plan, detector_set, entry.label_turns[family], k
                                         ),
@@ -3491,6 +3583,12 @@ def nature_beam(
                                     "content": plan.t_carried[k],
                                     "reading": reading_value,
                                 }
+                                if families[family].phase_per_age is not None:
+                                    # The phase at the exact time of the last
+                                    # Link, the click's, with its remainder
+                                    # over the denominator d S_1 Q.
+                                    click_line["exact"] = plan.t_exact[k][0]
+                                    click_line["remainder"] = list(plan.t_exact[k][1:])
                                 if window_read is not None:
                                     click_line["window"] = plan.t_window[k]
                                 if plan.t_record[k] != NO_RECORD:
@@ -4092,6 +4190,22 @@ def nature_beam(
             a + b for a, b in zip(ledger.lifetime_momentum[family], left, strict=True)
         ]
         ledger.transit_momentum = [a - b for a, b in zip(ledger.transit_momentum, left, strict=True)]
+        # The phase at the exact time of the row's last Link (BEAM_LAW note
+        # 42): read after the walk, its phase holds `age` intervals and its
+        # Links are the count m(age).
+        border_exact = {
+            int(index): exact_phase(
+                int(store.phase[index]),
+                int(store.age[index]),
+                int(store.age[index]),
+                int(store.direction[index]),
+                flight,
+                definition.phase_per_age,
+                modulus,
+                LIFETIME_NAME,
+            )
+            for index in gone.tolist()
+        }
         if layer is not None:
             gone_x, gone_y, gone_z = store.coordinates(store.node[gone])
             for k, row_index in enumerate(gone.tolist()):
@@ -4103,7 +4217,7 @@ def nature_beam(
                         int(store.branch[row_index]),
                         int(store.multiplicity[row_index]),
                         int(store.amount[row_index]),
-                        int(store.phase[row_index]),
+                        border_exact[row_index][0],
                         node=(int(gone_x[k]), int(gone_y[k]), int(gone_z[k])),
                         content=int(store.amount[row_index] * store.content[row_index]),
                         momentum=[int(v) for v in labels[k]],
@@ -4124,6 +4238,9 @@ def nature_beam(
                     "momentum": [int(v) for v in labels[k]],
                     "content": int(store.amount[index] * store.content[index]),
                 }
+                if definition.phase_per_age is not None:
+                    border_line["exact"] = border_exact[int(index)][0]
+                    border_line["remainder"] = list(border_exact[int(index)][1:])
                 if store.record[index] != NO_RECORD:
                     border_line["record"] = int(store.record[index])
                     border_line["branch"] = int(store.branch[index])

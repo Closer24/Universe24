@@ -77,7 +77,12 @@ the clicks per port over the 64 births in the table above, the ladder at
 each record's completion normalised by the sum of its offers with the
 rungs at the nearest integer, `b_k = (2 N C_k + Total) // (2 Total)`
 (`expectations.json` under `mach_zehnder`). The runs and their readings
-are in the register's L1 entry.
+are in the register's L1 entry. **Under the exact phase at the click
+(2026-09-21, [BEAM_LAW note 42](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):**
+every port's clicks in the table stand (the unequal arms 64 / 0, 32 / 32
+and 0 / 64 included); the unequal arms' records read their two paths at
+the exact time of their last Links, so their weights and totals moved
+(eight totals per world as before); the equal arms are bit-identical.
 
 ## L2: the two slits at a low rate
 
@@ -101,7 +106,19 @@ runs it in-process and reads it by the design's `slits_read.py` into
 weights per set (coherent within a Node, incoherent across the Nodes of a
 set: a face is one cell of the sum of its Nodes' squares), the ladder's
 clicks over the 64 births, the shares, the pixels and the correlations
-(the register's L2 entry has the numbers and the run).
+(the register's L2 entry has the numbers and the run). **Under the exact
+phase at the click (2026-09-21,
+[BEAM_LAW note 42](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):**
+the reference declares the frequency and the reading takes each row's
+phase from the `exact` of its click line; the reading and the run agree on
+every one of the 80 sets: wall 34 (11, 12, 11), screen 15 on fourteen
+pixels (y = 11, 29, 36, 40, 50, 56, 59, 60 twice, 61, 70, 77, 84, 90, 107),
+faces 15 (8, 7); the total 4834019/4259840, the shares 0.529 / 0.244 /
+0.227, the weights' Pearson with the two-source cosine 0.382 (0.368 under
+the phase of the whole intervals), the histogram's with the weights 0.722
+(0.655); the design's map (wall 34, screen 16, faces 14) carried the lamp
+leg's exact fraction across the re-emission and evaluated on a table of
+4096 floats, which the engine does not.
 
 **The fan by angle** `slits_huygens` (L2b; the mathematician's
 [TWO_SLITS.md section 7](../../../docs/designs/fraction_free/TWO_SLITS.md),
@@ -214,4 +231,9 @@ the age 29; the path phase at the click is 51 and 8 under the integer form
 (the Links) and 23 and 23 under the pair form (the intervals)
 (`expectations.json` under `cone`; the register's L7 entry). The question
 of issue #376 (the paper session): the cone is Euclidean by the flight
-table; the phase's metric is the declared form's.
+table; the phase's metric is the declared form's. Under the exact phase at
+the click (2026-09-21, BEAM_LAW note 42) the pair form's click lines carry
+`exact` and `remainder`: 3 x 17 x 110 = 5610 = 87 x 64 + 42 at the axis and
+3 x 24 x 156 = 11232 = 87 x 128 + 96 at the diagonal, the whole part 87 =
+23 mod 64 at both as the walk's 3 x 29, the remainders 42 / 64 and 96 / 128
+(`expectations.json` under `cone.exact`); the integer form writes none.
