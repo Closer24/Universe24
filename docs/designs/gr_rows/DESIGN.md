@@ -146,8 +146,13 @@ records, their arrivals of that interval); verb 1's wall at the walk of
 step 1 reads that A; verb 2's turn acts at the meeting's place, after the
 collision in step 3, on the rows present after the walk, reading the same
 **V**; nothing is carried on the row between intervals but its own
-accumulators. So a row's wall in interval t is the crowd of t - 1 at its
-Node, one interval retarded, as a body's push is.
+accumulators. Rows born in the engine's `_move` of the same interval (a
+release at a body's step, a contact's give) are at age 0 without an
+arrival and contribute 0 to A and the zero vector to **V**, so the
+reading before step 1 equals the reading of the rows present at the end
+of the interval before, and the build has no choice to make. So a row's
+wall in interval t is the crowd of t - 1 at its Node, one interval
+retarded, as a body's push is.
 
 **Verb 1, the wall of the flight reads the age moment** (the translation
 whose wall is a count, F's feedback block, as the growing wall of 15.2):
@@ -163,7 +168,16 @@ state it cannot be), the residue's owner the row's record; and the exact
 phase at the click (LAW.md 4.1, `phi = (n / d) x made x T_D / (S_1 Q)`;
 TWO_SLITS.md section 2) reads the row's stored accumulator for the
 fraction of the last Link, since the Links made no longer give the time:
-one read at the click, no extra cost per interval. Under form B the
+with (m, s) the stored accumulator after this interval's carry (m the
+Links made, s the residue) and `r = 2 S_1 Q d_s` the rate, the last Link
+was crossed at the fraction `1 - s / r` of the interval, the time of the
+last Link is `age - s / r`, and the exact phase is
+
+    phi = floor(n (age r - s) / (d r)) mod N,
+
+still one division at the click with its remainder kept (note 45's
+form), the numerator `n (age r - s)` within the register; one read at the
+click, no extra cost per interval. Under form B the
 body's drive carries `T_D` as its wall (15.5), so the same rule scales a
 body's drive by the same factor at the cap term: a moving body slows in
 the potential in Nodes per interval as a row does, at the order of its
@@ -184,7 +198,9 @@ plane, the Voronoi neighbours on the sphere, TWO_SLITS.md sections 7 and
 10), and **t**`(D, D')` the transverse unit vector from D toward D' at
 the scale Q, both built once at load from the direction table (a rounding
 at load like `T_D` and `u_d`, to be listed in LAW.md section 6 when the
-design lands); W the wheel; u the record's wheel value.
+design lands); W the law's wheel, a power of two (N on main today, `u =
+(births - 1) mod N`; `2^12` under note 46 on the click branch); u the
+record's wheel value.
 
     per interval:   w -= f n_s T_D G (Q^2 V - (V . u) u)          (the turn accumulator w, three integers; the minus is V's direction: the flux points away from the source, the turn is toward it)
     per neighbour:  p = w . t(D, D');                              (the projection on the arc toward D')
@@ -195,8 +211,8 @@ The units are one: `|w|` grows by `G d_s Q^4` times the angle turned per
 interval, `f (n_s / d_s)(T_D / Q^2) |V_perp|` radians (the reviewer's
 re-derivation, section 1 (b) of the review), and the wall along **t** is
 `G d_s Q^4` times the neighbour's angle; the wall's division by W is
-exact because `Q^5 = 2^30` is a multiple of `W = 2^12`, so no remainder is
-discarded at birth; the row's own wall `(W - u) / W` of the full one is
+exact because `Q^5 = 2^30` is a multiple of W for either wheel (`2^6` on
+main, `2^12` under note 46), so no remainder is discarded at birth; the row's own wall `(W - u) / W` of the full one is
 the rung's dither, as the click's, so that a turn smaller than one step
 is made by the right fraction of the records and the mean over a beam is
 exact, while a single row turns whole steps. The u is the record's, so
@@ -206,7 +222,10 @@ mean exact over records), and the same u decides the click's cell in a
 series K's `wave` reading, to be named and tested at the build, or the
 turn seeded from the wheel's next value `(u + 2531) mod W`. Along the
 whole path the turn integrates to `2 f k_a(b)` (the arithmetic of section
-4). The rest direction (**u** = 0) has no transverse part and is skipped.
+4). After a step **w** keeps a component along **u** (the part of the
+subtraction not on **t**), which no later projection on a transverse
+**t** reads; it is bounded and second order in the step's angle. The rest
+direction (**u** = 0) has no transverse part and is skipped.
 The bound: `f n_s T_D G Q^2 |V|` and `d_s Q^5 THETA_G` within `2^62 - 1`,
 tested by division before the product and refused naming the Node, as
 the meeting's (iv); at `n_s = 1` the rate's bound is `|V| <= 7.8 x 10^7`
@@ -256,7 +275,9 @@ transverse mechanism as the arc permutation toward the fan's neighbour
 with **t** and `THETA_G` at load; (3) the key `optical: f`, the factor the
 world's integer, the refusals; (4) the position accumulator a field of the
 row, the click's exact phase reading it; (5) the step of the interval and
-the set; should-fixes 2, 6, 11, 12.
+the set; should-fixes 2, 6, 11, 12. *Per the second round*: A (W the law's
+wheel), B (the click's formula), D (the newborn rows), G (the along-**u**
+component).
 
 ## 4. What the integers give for each pin
 
@@ -265,7 +286,10 @@ exist there and the register stands. **The pin world**: the same four
 worlds with the key `optical: 2`, the pair `[1, 4096]`, the mass sixteen
 times the registered (M = 2^16 and 2^17: `by_clock(age, M, 2^12)` gives 16
 and 32 rays per direction per self-creation, q = 4640 and 9280 rows per
-interval; the host cost about sixteen times series K's, to be measured),
+interval; the host cost at most sixteen times series K's, an upper
+bound, since sixteen rays per direction born in one interval with one
+phase merge into one row of amount 16 and the rows may be near series
+K's; to be measured),
 and the lamp's entry for the mass's family declared `{"rule": "pass",
 "reads": "age"}` so that its clock counts the age moment (today `{"m":
 "pass"}` counts the presence). The re-scale keeps `k_a(b)` at the values
@@ -277,7 +301,11 @@ crowd's rows inside the beam are slowed by `1 / (1 + 2 k_beam)` = 0.978 to
 0.964 and the A the beam reads there is 1.022 to 1.038 times the static
 crowd's: a back-reaction of 2 to 4 percent, carried below as a range (at
 `[1, 256]` it was 0.6 to 0.7 in pace, tens of percent in the pins, which
-is why the world is re-scaled).
+is why the world is re-scaled). The range is a first-order estimate from
+a GameBoard reading (the beam's age moment in the README); the run's own
+reading of the beam's age moment at the mass's plane, a diagnostic
+labelled so, replaces it; the detector pin is the static number, with
+the range as the bracket's share.
 
 With the README's age moment at the beam's impact distance scaled by 16
 (182 per Node at (2^16, 6); 363 at (2^17, 6) and (2^16, 3)), `k_a(b) = A /
@@ -286,11 +314,11 @@ Links past the mass; the delay `(f k_a(b) b / c) ln(4 r_1 r_2 / b^2)` with
 `r_1 = r_2 = 26` Links (the weak-field integral, 0.6 percent below the
 exact `2 asinh(26 / b)` at b = 6). Each column by its kind (record 281):
 
-| World | M | b | `k_a(b)` (derived) | the deflection, radians (derived) | the centroid's shift, pixels, DETECTOR (the bracket 0.5) | with the back-reaction | the delay, intervals (derived) | the mean age, DETECTOR (89.40 registered; the bracket 1) | with the back-reaction | the lamp's clock rate at r = 26, GAMEBOARD | the count ratio, DETECTOR (the bracket 1 percent) | the phase rate, DETECTOR (8 registered) |
+| World | M | b | `k_a(b)` (derived) | the deflection, radians (derived) | the centroid's shift, pixels, DETECTOR (the bracket 0.5) | with the back-reaction | the delay, intervals (derived) | the mean age, DETECTOR (89.40 registered; the bracket 1) | with the back-reaction | the lamp's clock rate at r = 26.7 (26.2 in `near`), GAMEBOARD | the count ratio, DETECTOR (the bracket 1 percent) | the phase rate, DETECTOR (8 registered) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `mass` | 2^16 | 6 | 0.0445 | 0.178 | -4.63 | -4.73 to -4.81 | 3.97 | 93.37 | 93.45 to 93.52 | 0.9898 | 0.990 | 7.919 |
-| `heavy` | 2^17 | 6 | 0.0887 | 0.355 | -9.22 | -9.42 to -9.57 | 7.90 | 97.30 | 97.47 to 97.60 | 0.9799 | 0.980 | 7.840 |
-| `near` | 2^16 | 3 | 0.0887 | 0.355 | -9.22 | -9.42 to -9.57 | 5.22 | 94.62 | 94.73 to 94.81 | 0.9899 | 0.990 | 7.919 |
+| `mass` | 2^16 | 6 | 0.0445 | 0.178 | -4.63 | -4.73 to -4.81 | 3.97 | 93.37 | 93.45 to 93.52 | 0.9901 | 0.990 | 7.921 |
+| `heavy` | 2^17 | 6 | 0.0887 | 0.355 | -9.22 | -9.42 to -9.57 | 7.90 | 97.30 | 97.47 to 97.60 | 0.9805 | 0.980 | 7.844 |
+| `near` | 2^16 | 3 | 0.0887 | 0.355 | -9.22 | -9.42 to -9.57 | 5.22 | 94.62 | 94.73 to 94.81 | 0.9899 | 0.990 | 7.920 |
 
 Every shift and every delay is outside series K's bracket, toward the mass
 and later, and the two grow together with `k_a(b)` as one number: that is
@@ -316,12 +344,16 @@ in `near` it passes at 0.8 and is lowered by 0.5, so one fifth of the
 rays may enter the mass's Node and the centroid's bracket there must
 allow it. What else the pin world changes and the run must read: the
 lamp's self-creations slowed by `1 / (1 + k_lamp)` with `k_lamp` the age
-moment at r = 26 over 4096 (a GameBoard number, 0.9898 and 0.9799), and
+moment at the lamp's distance from the mass, `sqrt(26^2 + b^2)` = 26.7
+Links (26.2 in `near`), over 4096 (a GameBoard number, 0.9901, 0.9805 and
+0.9899; the pins unchanged at three decimals), and
 with them its births, so the count ratio at the screen is 0.990, 0.980,
 0.990 (DETECTOR), outside series K's 1 percent bracket in `heavy` by the
 pin world's own declaration (series E's clock slowing, on by `reads:
 age`) and not by the rows' rule; the phase rate read at the screen 7.92
-and 7.84 against 8 (DETECTOR); the light on the faces unchanged (the turn
+and 7.84 against 8 (DETECTOR); a slowed one-Node detector's clicks equal
+to an unslowed one's, the build's test to pin (the owed count gates only
+the self-creation's acts); the light on the faces unchanged (the turn
 is 10 to 20 degrees, the beam still clears the box); whether the screen's
 1681 clocks, slowed by the same crowd at the same pair, change the click's
 timing (on main the readings and the clicks are per interval and the owed
@@ -331,7 +363,9 @@ confirm, not assumed here.
 *Amended per the review*: (6) the lamp's reads declared and the count
 ratio pinned; (7) the pin world re-scaled to M x 16 at `[1, 4096]` with
 the back-reaction carried as a range; (8) every column labelled by kind;
-should-fix 10.
+should-fix 10. *Per the second round*: E (the lamp's distance 26.7, the
+map re-run), F (the back-reaction a first-order estimate), H (the host
+cost an upper bound).
 
 ## 5. The second-order redshift: a companion term on the clock, not the rows
 
@@ -491,7 +525,10 @@ declares it:
 ## 8. What waits, in order
 
 1. Form B on main (record 301, in build on `directional-drive`): the
-   body's case of verb 1 needs the flight primitive's `T_D` in the drive.
+   body's case of verb 1 needs the flight primitive's `T_D` in the drive;
+   with it, the places the build stands on that form B's merge carries:
+   PR #457 (note 45's `exact_phase`, note 46's wheel) and record 299's
+   `by_drive_rows` (the architect's array-form primitive).
 2. The owner's go on the identity `optical-v1` (record 303, given for the
    amended design) and the reviewer's re-read of this text.
 3. The build: the key's parser (`optical: f`; refused with `suspension` 0,
@@ -510,6 +547,8 @@ declares it:
 
 Until then the law stands as 5.4 states it: a row reads nothing of the
 crowd.
+
+*Per the second round*: C (PR #457 and record 299 named).
 
 ## 9. Links
 

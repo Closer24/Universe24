@@ -78,7 +78,7 @@ print(
 )
 print()
 print(
-    "   world | M | b | k_a(b) (derived) | the deflection 2 f k_a(b), radians (derived) | the centroid's shift, pixels, DETECTOR (the bracket 0.5) | the same with the back-reaction | the delay, intervals (derived) | the mean age, DETECTOR (89.40 registered; the bracket 1) | with the back-reaction | the lamp's clock rate at r = 26, GAMEBOARD | the count ratio, DETECTOR (the bracket 1 percent) | the phase rate, DETECTOR (8 registered)"
+    "   world | M | b | k_a(b) (derived) | the deflection 2 f k_a(b), radians (derived) | the centroid's shift, pixels, DETECTOR (the bracket 0.5) | the same with the back-reaction | the delay, intervals (derived) | the mean age, DETECTOR (89.40 registered; the bracket 1) | with the back-reaction | the lamp's clock rate at r = sqrt(26^2 + b^2), GAMEBOARD | the count ratio, DETECTOR (the bracket 1 percent) | the phase rate, DETECTOR (8 registered)"
 )
 PIN_ROWS = []
 for name, m_content, b_links, a_registered in REGISTERED:
@@ -88,7 +88,10 @@ for name, m_content, b_links, a_registered in REGISTERED:
     deflection = 2 * F * k_b
     shift = deflection * (X_SCREEN - X_MASS)
     delay = F * k_b * b_links / C0 * math.log(4 * (X_MASS - X_LAMP) * (X_SCREEN - X_MASS) / b_links**2)
-    k_lamp = k_b * b_links / (X_MASS - X_LAMP)  # A falls as 1 / r: the lamp at r = 26 from the mass
+    r_lamp = math.sqrt(
+        (X_MASS - X_LAMP) ** 2 + b_links**2
+    )  # the lamp at [2, 20 + b, 20], the mass at [28, 20, 20]: 26.7 and 26.2 Links
+    k_lamp = k_b * b_links / r_lamp  # A falls as 1 / r
     rate_lamp = 1 / (1 + k_lamp)
     PIN_ROWS.append((name, m_pin, b_links, k_b, deflection, shift, delay, rate_lamp))
     print(
