@@ -66,6 +66,7 @@ import itertools
 import math
 from dataclasses import dataclass, field
 
+from event_universe.core.integer import signed_inner
 from event_universe.core.phase import (
     MAX_PHASE_STEPS,
     PHASE_COSINE_SCALE,
@@ -590,7 +591,13 @@ class Layer:
     def cells(self, found: LiveRecord) -> list[Cell]:
         """The cells of a record in the ladder's order: per cell the (offer,
         channel) chosen per factor, its weight's numerator (the sum over the
-        ends' Node tuples of |amplitude|^2), its multiplicity and the Node
+        ends' Node tuples of |amplitude|^2, each the inner product of the
+        tuple's pointer with itself through the law's one bilinear
+        primitive, `signed_inner`, nothing squared as a step of its own:
+        the model owner's order of 2026-09-21, record 173 of the log of
+        2026-09-20, BEAM_LAW note 37 (xi); no bound is passed, the layer's
+        weights being the host's reports, exact and unbounded, 2^116 on a
+        pair and 2^174 on a GHZ triple), its multiplicity and the Node
         tuples with their weights in order."""
         per_arm: list[list[list[tuple[Offer, int]]]] = []
         for arm in range(found.arms):
@@ -638,7 +645,7 @@ class Layer:
                         product = cmul(product, residual)
                     real += product[0]
                     imaginary += product[1]
-                weight = real * real + imaginary * imaginary
+                weight = signed_inner((real, imaginary), (real, imaginary), (1, 1))
                 tuples.append((nodes, weight))
                 numerator += weight
             multiplicity = 1

@@ -2689,6 +2689,29 @@ implementation's part of the contract. The design above is unchanged.
     read by the ladder, and its clicks are the records' (the register's
     re-run worlds, EXPERIMENTS, marked "re-run under the one click; the
     verdict to be re-read", the old numbers kept as dated history).
+    **(xi) The click's weight as the inner product** (2026-09-21, the model
+    owner's order "not a square in the code but a vector operation", record
+    173 of the log of 2026-09-20; the branch `click`). The click's weight is
+    the inner product of the pointer with itself, through the coupling's
+    primitive: `core.integer.signed_inner((X, Y), (X, Y), (1, 1))` in
+    `amplitude.cells`, a vector, a declared diagonal matrix of +1 and -1, a
+    vector, the same class of operation as the coupling's signed inner
+    product over the columns and as the reading's order-2 moment; nothing is
+    squared as a step of its own; the layer passes no bound, its weights
+    being the host's reports (2^116 on a pair, 2^174 on a GHZ triple, beyond
+    the register), and the ladder's rungs stay a comparison. The coupling's
+    own sum, `nature_beam.push_form`, is left untouched and does not call
+    the primitive, for a precise reason: its term per column is the whole
+    part off the reader's clock, `by_clock(age, |V E_c n_c|, D_c d_c)`, a
+    floor taken between the product and the sum, so the push is the signed
+    sum over the columns of the columns' whole parts and equals the inner
+    product of E and n under the declared signs, times V, only where every
+    denominator D_c d_c is 1; written through the primitive it would be the
+    inner product of the whole parts with a vector of ones, a sum disguised
+    as a product, and its refusals name the measured event and the column
+    before each product is formed and after each column's sum (pinned in
+    `test_columns`), which a shared call would not. Bit-identical: the gate
+    set's sixteen worlds and the full check unchanged (VALIDATION).
 
 38. **The reading's weight at the relative speed, `doppler-v1`: the flux
     at the grain** (the model owner, 2026-09-20, record 119: "a body TAKES

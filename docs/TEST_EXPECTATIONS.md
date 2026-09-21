@@ -2798,8 +2798,21 @@ refuses one beyond and a boolean); the exact integer square root
 input; a negative value, a float and an overflow are refused); the bounded gcd
 (`bounded_gcd`: 12 and 18 give 6, 0 and 5 give 5, 5 and 0 give 5, -4 and 6
 give 2, 0 and 0 give 0, 2^63 - 1 and 1 give 1; an overflow and a boolean are
-refused). `by_clock` and `apportion_whole` are pinned where the clock uses
-them (`test_nature_beam_clock`, `test_nature_beam_readings`). The component arithmetic of the
+refused); the signed inner product (`signed_inner`, since 2026-09-21 the
+law's one bilinear operation, the click's weight the pointer's inner product
+with itself: (3, 4) with itself under (+1, +1) gives 25, as does (-3, 4);
+(5, 3) with itself under (+1, -1) gives 16; (2, 3, 5) with (7, 11, 13) under
+(+1, -1, +1) gives 46; (0, 9) with (9, 0) gives 0; empty vectors 0; 2^100 with
+itself plus 1 gives 2^200 + 1 exactly without a bound; at the coupling's bound
+2^62 - 1 passed by the caller, the bound with 1 gives the bound and its
+negative under -1, two components at the bound under (+1, -1) give 0,
+(2^31 - 1, 1) with (2^31, 1) gives 2^62 - 2^31 + 1, and 2^31 x 2^31 is refused
+before the product is formed, the bound plus 1 as a sum is refused after the
+second component, a component beyond the bound is refused against 0;
+vectors of different lengths, a sign of 0 or 2, a boolean or float
+component or sign and a bound of 0 or `True` are refused). `by_clock` and
+`apportion_whole` are pinned where the clock uses them
+(`test_nature_beam_clock`, `test_nature_beam_readings`). The component arithmetic of the
 deleted engines (signed and ceiling division, ordered sums, component addition
 and subtraction, dot and cross products, reduced ratios) was deleted with its
 pins on 2026-09-19

@@ -1,6 +1,8 @@
 """Domain-neutral integer arithmetic: the working-register bound and the Beam
 Law's integer primitives; callers own payload bounds and operation costs."""
 
+from collections.abc import Sequence
+
 MAX_WORK_INT = (1 << 63) - 1
 
 
@@ -95,6 +97,49 @@ def by_drive(drive: int, rate: int, denominator: int) -> tuple[int, int]:
     if drive <= -denominator:
         return -1, drive + denominator
     return 0, drive
+
+
+def signed_inner(
+    left: Sequence[int], right: Sequence[int], signs: Sequence[int], bound: int | None = None
+) -> int:
+    """The signed inner product of two integer vectors, the sum over k of
+    signs[k] x left[k] x right[k]: a vector, a declared diagonal matrix of
+    +1 and -1, a vector (the bilinear operation of the law; the model
+    owner's order of 2026-09-21, "not a square in the code but a vector
+    operation", record 173 of the log of 2026-09-20). The click's weight
+    is the pointer's inner product with itself, `signed_inner((X, Y), (X,
+    Y), (1, 1))`, and nothing is squared as a step of its own. Python
+    integers, exact; a boolean, a float, vectors of different lengths and
+    a sign other than +1 or -1 are refused. With a `bound` (the caller's
+    register; the coupling's bound is MOMENTUM_BOUND) every component is
+    within +-bound, every product is tested by division before it is
+    formed and every partial sum is within the bound after every
+    component, refused beyond it as the law's other bounds are; without a
+    bound the sum is exact and unbounded (the apparatus's layer, whose
+    weights are the host's reports: a pair's pass 2^116 and a GHZ
+    triple's 2^174)."""
+    if not len(left) == len(right) == len(signs):
+        raise ValueError("signed inner product of vectors of different lengths")
+    if bound is not None and (type(bound) is not int or bound < 1):
+        raise ValueError("positive integer bound required")
+    total = 0
+    for index, (a, b, sign) in enumerate(zip(left, right, signs, strict=True)):
+        if type(a) is not int or type(b) is not int or type(sign) is not int:
+            raise TypeError(f"integer components and signs required at component {index}")
+        if sign != 1 and sign != -1:
+            raise ValueError(f"a declared sign is +1 or -1, not {sign} at component {index}")
+        if bound is not None:
+            if abs(a) > bound or abs(b) > bound:
+                raise OverflowError(f"component {index} exceeds the integer bound {bound}")
+            # The product tested by division before it is formed.
+            if b and abs(a) > bound // abs(b):
+                raise OverflowError(
+                    f"the product at component {index} exceeds the integer bound {bound}"
+                )
+        total += sign * a * b
+        if bound is not None and abs(total) > bound:
+            raise OverflowError(f"the sum through component {index} exceeds the integer bound {bound}")
+    return total
 
 
 def apportion_whole(total: int, weights: list[int], first: int) -> list[int]:

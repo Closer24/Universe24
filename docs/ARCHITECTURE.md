@@ -66,6 +66,38 @@ declared identifiers, never copied expression trees, formula strings, Python
 callbacks or executable code. Read-only diagnostics may calculate global
 measurements but cannot supply a physical update or repair conservation.
 
+### The operations of the law
+
+Since the model owner's statement of 2026-09-21 (record 167 of
+[the log of 2026-09-20](LOG_2026-09-20.md); the derivation mathematician's
+inventory, record 168), every rule of the Beam Law is one of six operations on
+bounded integers, or a declared rounding at load or at the click:
+
+1. A translation by a rate with a threshold: `core.integer.by_clock` and
+   `by_drive` (the flight, the phase per interval, every count of a clock).
+2. A bilinear form, an inner product with a declared matrix:
+   `core.integer.signed_inner`, a vector, a diagonal matrix of +1 and -1, a
+   vector. The click's weight sits here: the pointer's inner product with
+   itself, `signed_inner((X, Y), (X, Y), (1, 1))` in `amplitude.cells`,
+   nothing squared as a step of its own (record 173 of the same log;
+   [BEAM_LAW note 37 (xi)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).
+   The coupling, `nature_beam.push_form`, is the signed sum over the columns
+   of the columns' whole parts, each floored off the reader's clock between
+   its product and the sum, and keeps its own loop; note 37 (xi) states why
+   it is not the primitive's call.
+3. The group-ring addition: the merge's signed sum by magnitude with its
+   cancel (`nature_beam`), the pointers' accumulation.
+4. A permutation: the collision's six-heading table, the meeting's arc, the
+   gate's relabelling of a record's rows.
+5. The evaluation: the pointer over the tables of the circle
+   (`coherent_pointer`, the offers' pointers).
+6. The Euclidean division: the ladder's rungs, `apportion_whole`, the
+   reduced pairs and every whole part.
+
+A new physical rule is written as one of these six, composed from the world's
+tables, or as a declared rounding named where it is taken; a square, a root or
+a float is not an operation of the law.
+
 ### Integers, vectors and tensors
 
 All physical numeric inputs, registers, intermediate results and transmitted
@@ -182,13 +214,13 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 
 | Module | Allowed dependencies |
 | --- | --- |
-| `core/integer` | Standard-library types; owns the working-register bound (`checked_work`) and the Beam Law's integer primitives (`bounded_gcd`, `integer_root`, `by_clock`, `apportion_whole`) |
+| `core/integer` | Standard-library types; owns the working-register bound (`checked_work`) and the Beam Law's integer primitives (`bounded_gcd`, `integer_root`, `by_clock`, `by_drive`, `signed_inner`, `apportion_whole`) |
 | `core/game_board` | `core/integer` (`checked_work`); the GameBoard's addresses, the six Port headings in Port order (`PORT_HEADINGS`, `adjacent_node`) and the bound of a declared charge and quantum (`MAX_VALUE`) |
 | `core/phase` | `core/integer`; the phase circle's cosine and sine tables from fixed-point series, cached per N |
 | `events/world` | `core/integer`, `core/game_board`; the world file of the Beam Law, its keys, defaults, bounds and refusals (`parse_nature_beam_world`, `NatureBeamWorld`), the constants `Q`, `LABEL_SCALE`, `FACE_NAMES`; no execution |
 | `events/measured` | `core/integer`, `core/game_board`, `events/world`; the records the engine keeps beside the rays (`Measured`, `DetectorSet`, `Ledger`, the reduced rational pairs); no law |
 | `events/nature_beam` | `core/integer`, `core/game_board`, `core/phase`, `events/amplitude`, `events/measured`, `events/meeting`, `events/world` and numpy; the Beam Law, one function over the whole GameBoard (the flight table, the one reading, the collision table, the push, the detector's record, the releases, the store) |
-| `events/amplitude` | `core/phase`, `events/measured`; the apparatus's layer of the amplitude law (`Layer`: the records' offers, the ladder, the gathers), host integers, no GameBoard state |
+| `events/amplitude` | `core/integer` (`signed_inner`), `core/phase`, `events/measured`; the apparatus's layer of the amplitude law (`Layer`: the records' offers, the ladder, the gathers), host integers, no GameBoard state |
 | `events/meeting` | `core/integer`, `events/world` and numpy; the meeting of a paid unit with the free crowd (`meet`, the arc table), the turn read off the phase register |
 | `events/engine` | `core/integer`, `core/game_board`, `events/amplitude`, `events/measured`, `events/nature_beam`, `events/world` and numpy; the interval's frame, the clocks, the steps, the books and the snapshot (`NatureBeamSimulation`); no output or storage |
 | `events/run` | `events/engine`, `events/world`, the package version, `snapshot_writer` and the standard library; the artifacts of a run (the one physical module allowed to write files) |
