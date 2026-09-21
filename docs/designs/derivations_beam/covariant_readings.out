@@ -1,0 +1,24 @@
+(A) Einstein 1905: a body at rest emits two pulses of energy L / 2 forward and back
+  beta 0.2148: the pulses' energy in the moving frame over L: the law's Doppler 1.0000 (the difference 0: no inertia lost), the covariant 1.0239 = gamma (the difference 0.0239 L = (gamma - 1) L: the inertia lost L / c^2)
+  beta 0.4297: the pulses' energy in the moving frame over L: the law's Doppler 1.0000 (the difference 0: no inertia lost), the covariant 1.1075 = gamma (the difference 0.1075 L = (gamma - 1) L: the inertia lost L / c^2)
+
+(B) The dispersion in the units of section 4.4 (m = Q S M, the cap 1 Link per interval)
+p / m    today p/(m+p)   covariant p/sqrt(m^2+p^2)   Newton p/m
+0.25     0.200           0.243                       0.250
+1.0      0.500           0.707                       1.000
+3.0      0.750           0.949                       3.000
+9.0      0.900           0.994                       9.000
+the departure from Newton's p = m v at small v / c:
+v / c    today p = m v / (1 - v/c): excess   covariant p = gamma m v: excess
+0.05     0.0526                                 0.0013
+0.1      0.1111                                 0.0050
+0.2      0.2500                                 0.0206
+
+(C) The energy accumulator under pushes: dE = c^2 p . dp / E (midpoint), from rest
+  4000 steps of dp = 0.0001: p / (m c) = 0.693, E / E_0 = 1.216553 (gamma 1.216553), v / c = 0.569495, (E^2 - c^2 p^2) / E_0^2 - 1 = -5.08e-10
+  40000 steps of dp = 1e-05: p / (m c) = 0.693, E / E_0 = 1.216553 (gamma 1.216553), v / c = 0.569495, (E^2 - c^2 p^2) / E_0^2 - 1 = -5.52e-12
+
+(D) The proper-time clock E_0 / E = 1 / gamma, and the count per turn
+  beta 0.4297: gamma 1.1075; the muon's 64th turn at tick 70.9 (lorentz-v1: 71, 126); the count per turn head-on gamma (1 + beta) = 1.5833, behind 0.6316, across gamma = 1.1075; today's per interval 1 + beta = 1.4297, 0.5703, 1
+  beta 0.8594: gamma 1.9558; the muon's 64th turn at tick 125.2 (lorentz-v1: 71, 126); the count per turn head-on gamma (1 + beta) = 3.6366, behind 0.2750, across gamma = 1.9558; today's per interval 1 + beta = 1.8594, 0.1406, 1
+  E = h f and E = m c^2 as one E at rest: h (n / d) = Q S c^2 = Q S / 3 (21.333 at Q = 64, S = 1)

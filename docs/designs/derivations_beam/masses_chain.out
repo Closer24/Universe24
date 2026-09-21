@@ -1,0 +1,20 @@
+(A) The nucleon as held plus in flight (MeV)
+  the proton's held part 2 m_u + m_d = 9.02, the bond's content in flight F = 929.25 (0.990 of the mass)
+  the neutron's held part m_u + 2 m_d = 11.56; with the same F: 940.81 against 939.57
+  m_n - m_p = m_d - m_u = 2.54 +- 0.41 against the measured 1.293
+  the electric self-energy of a uniform sphere of radius r_p: (3 / 5) alpha hbar c / r_p = 1.03
+  the difference less the self-energy: 1.51 (lattice QCD's split, Borsanyi et al. 2015: 2.52 QCD, -1.00 QED, 1.51 total)
+  the steady state F = H (n / d) tau: (n / d) tau = F / H = 103.0; at one Link's round trip tau = 2 dwell = 3.44, n / d = 30.0 per self-creation
+
+(B) The chain on the bipartite lattice, one Link between neighbours (charge radius^2 in Link^2)
+  u-d-u (the proton, the d at the centre): r^2 = +1.3333 L^2
+  u-u-d (the proton, the d at an end): r^2 = -0.6667 L^2
+  d-u-d (the neutron, the u at the centre): r^2 = -0.6667 L^2
+  d-d-u (the neutron, the u at an end): r^2 = +0.3333 L^2
+  measured: r_p^2 = 0.7071 fm^2, r_n^2 = -0.1155 fm^2, the ratio -0.163; the chain's ratio -1/2
+  the Link from the proton's chain, L = r_p sqrt(3/4) = 0.728 fm; the neutron predicted -(2/3) L^2 = -0.354 fm^2 against -0.1155
+
+(C) The held counts at the electron's count k = 4526 (units of the minimal mass)
+  u: 19131 +- 3543 (a multiple of the floor 3 within the uncertainty)
+  d: 41629 +- 620 (a multiple of the floor 3 within the uncertainty)
+  the bond's content in flight per nucleon: 8.231e+06 units
