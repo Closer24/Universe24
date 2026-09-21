@@ -301,6 +301,7 @@ family or a content that is not a positive integer.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 from functools import cached_property
 
@@ -395,6 +396,9 @@ WORLD_KEYS = {
     "age_bound",
     "action",
     "meeting",
+    # The covariant readings (`covariant-readings-v1`, 2026-09-21): one
+    # object, absent by default (`COVARIANT_KEYS`).
+    "covariant_readings",
     "directions",
     "direction_bound",
     "families",
@@ -428,13 +432,59 @@ AMPLITUDE_LEAST_STEPS = 4
 # unknown key (MIGRATION).
 
 
-def step_divisor(momentum: int, content: int, width: int) -> int:
+def step_divisor(momentum: int, content: int, width: int, cap: bool = True) -> int:
     """D_a = Q x S x M + |p_a|, the divisor of the step rule on one axis
     (BEAM_LAW section 3 step 5 and note 17: one Link per D_a / |p_a|
     self-creations; `engine.step_axis` reads it), the denominator of the
     body's speed |p_a| / D_a in Links per interval: M the content, S the
-    world's `width`, Q the label's scale."""
-    return LABEL_SCALE * width * content + abs(momentum)
+    world's `width`, Q the label's scale. Under `covariant-readings-v1`
+    (`cap` false; DERIVATIONS_BEAM 17.6 M1 and M8) the wall's second term
+    |p_a| is keyed off and the divisor is Q x S x M alone: the drive's rate
+    per self-creation is Newton's p_a / (Q S M), and with the self-creations
+    gated by the proper-time count the pace per lattice interval is
+    p / E' (the one primitive with one term selected off, not a copy)."""
+    return LABEL_SCALE * width * content + (abs(momentum) if cap else 0)
+
+
+# The identity of the covariant readings, a hypothesis beside the law (the
+# model owner's decision of 2026-09-21, record 270 of the log of 2026-09-20;
+# DERIVATIONS_BEAM section 17 as amended in 17.6 per the physics-rule
+# reviews, records 297 and 314): under the world key `covariant_readings`
+# every measured event carries its energy readings (the exact square
+# W = E'_0^2 + d p . p at the declared c^2 = [1, d], E'_0 = Q S M, and E'
+# the largest integer with E'^2 <= W, kept by comparisons), its
+# self-creations are gated by a second owed count (one self-creation per
+# E' / E'_0 intervals in the mean), the drive's wall loses its cap term and
+# the release runs per lattice interval. Absent, nothing of it is computed
+# and every world reads as it did, byte for byte.
+COVARIANT_READINGS_RULE = "covariant-readings-v1"
+COVARIANT_KEYS = {"c2", "grain", "books"}
+
+
+@dataclass(frozen=True)
+class CovariantDeclaration:
+    """The world key `covariant_readings` as declared (`covariant-readings-v1`,
+    DERIVATIONS_BEAM 17.6): `c2` the pair of c^2, [1, d] (the design's
+    [1, 3]: c = 1 / sqrt 3 Links per interval in the limit), so that the
+    exact square is `W = E'_0^2 + d p . p` with `E'_0 = Q S M` whole;
+    `grain` g, a power of two dividing Q S, the unit the readings are
+    carried in (`E'_0 / g`, the momentum's whole part over g, `W / g^2`:
+    the bits of the momentum below g do not enter E', the drive keeps the
+    full momentum); `books` whether the world declares the exchange's
+    accounting, under which a paid family off the identity `d h n = Q S d_K`
+    (h the family's quantum, [n, d_K] the clock's rate) is refused at load
+    (17.6 N5); and `off_identity`, the paid families off it with their gap
+    `d h n - Q S d_K`, a diagnostic line of the record."""
+
+    c2: tuple[int, int]
+    grain: int
+    books: bool
+    off_identity: tuple[tuple[str, int], ...]
+
+    @property
+    def square_factor(self) -> int:
+        """d of the pair [1, d]: the factor of p . p in W."""
+        return self.c2[1]
 
 
 # The identity of the turn by momentum, a physical hypothesis beside the
@@ -528,6 +578,9 @@ MEASURED_KEYS = {
     # The axial record (`hand-v1`): one of the six headings, the axis the
     # right-hand rule reads at every product of the event's `become`.
     "axis",
+    # The energy E' a thrown body declares under `covariant_readings`
+    # (`covariant-readings-v1`; refused without the world key).
+    "E",
 }
 LAMP_KEYS = {
     "rate",
@@ -886,6 +939,9 @@ class MeasuredDefinition:
     # hand as before).
     axis: int | None = None
     hands: tuple[int, ...] = ()
+    # The energy E' declared under `covariant_readings` (`E`, whole units of
+    # the identity), None for the load-time root `isqrt(E'_0^2 + d p . p)`.
+    energy: int | None = None
 
     def __post_init__(self) -> None:
         if not self.hands:
@@ -975,6 +1031,9 @@ class NatureBeamWorld:
     # transit reads the free crowd at every free-space Node after the
     # collision and turns toward it by its phase register (`events/meeting.py`).
     meeting: bool = False
+    # The covariant readings (the world key `covariant_readings`, absent by
+    # default): the declaration, or None (`covariant-readings-v1`).
+    covariant: CovariantDeclaration | None = None
 
     @property
     def recorded(self) -> bool:
@@ -1097,7 +1156,9 @@ class NatureBeamWorld:
         law is a column with a sign and a range), `weak-v1` for the
         transformation `become` (the weak force in the world's terms),
         `meeting-v1` and `amplitude-v1` for their keys,
-        `hand-v1` when the world declares a hand or an axis and, last,
+        `hand-v1` when the world declares a hand or an axis,
+        `covariant-readings-v1` when the world declares `covariant_readings`
+        and, last,
         `binding-v1` when a measured event holds a paid family (`binding`;
         the engine appends it at the same place from the first give of a
         run, `NatureBeamSimulation.hypotheses`)."""
@@ -1114,6 +1175,8 @@ class NatureBeamWorld:
             found.append(AMPLITUDE_RULE)
         if self.handed:
             found.append(HAND_RULE)
+        if self.covariant is not None:
+            found.append(COVARIANT_READINGS_RULE)
         if self.binding:
             found.append(BINDING_RULE)
         return found
@@ -2499,6 +2562,9 @@ def _measured(
         # a handed product of the event's transformations must have a
         # direction on its side of it.
         axis = _axis(obj["axis"], f"{label}.axis") if "axis" in obj else None
+        # The energy declared under `covariant_readings` (checked against
+        # the world key and the invariant by `_covariant`).
+        energy = _integer(obj["E"], f"{label}.E", 1) if "E" in obj else None
         _handed_products(
             [
                 *([(f"{label}.become", become)] if become is not None else []),
@@ -2576,9 +2642,158 @@ def _measured(
                 tuple(gates),
                 axis=axis,
                 hands=tuple(hands),
+                energy=energy,
             )
         )
     return tuple(found)
+
+
+def _covariant(
+    value: object,
+    measured: tuple[MeasuredDefinition, ...],
+    families: tuple[FamilyDefinition, ...],
+    width: int,
+    turn_rate: tuple[int, int],
+    action: int | None,
+) -> CovariantDeclaration | None:
+    """The world key `covariant_readings` (`covariant-readings-v1`,
+    DERIVATIONS_BEAM 17.6): absent, None, and a measured event's `E` is
+    refused. Declared: `c2` the pair [1, d] (d from 1; the design's [1, 3]),
+    `grain` a power of two dividing Q S, `books` true or false (false by
+    default); refused with `action` (17.6 S4: the turn by momentum per Link
+    and the proper-time cadence do not compose on one phase until designed).
+    Per measured event that is not `fixed` (an apparatus carries no readings
+    and may declare no `E`): the momentum on one axis (the base is `main`'s
+    per-axis drive, `step_axis`, where the pace p / E' holds on one axis;
+    refused otherwise until form B lands), the domain `|p|_1 <= Q S M` (17.6
+    N2: above it the drive's one Link per self-creation gives a pace that
+    falls with p);
+    `W / g^2 = (E'_0 / g)^2 + d (p / g) . (p / g)` within the integer bound,
+    tested by division before the product is formed; a declared `E` at or
+    above `E'_0` and within one of the load-time root `isqrt(W)` (17.6 M3).
+    Every paid family off the identity `d h n = Q S d_K` is listed with its
+    gap as a diagnostic (17.6 N5), a refusal only under `books`."""
+    declared = [index for index, entry in enumerate(measured) if entry.energy is not None]
+    if value is None:
+        if declared:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{declared[0]}].E is refused without the world key "
+                "covariant_readings (the energy E' is a reading of covariant-readings-v1)"
+            )
+        return None
+    label = "covariant_readings"
+    obj = _object(value, label, COVARIANT_KEYS, {"c2", "grain"})
+    if action is not None:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} is refused with `action`: the turn by momentum per Link stepped "
+            "and the turn per proper time do not compose on one phase until designed "
+            "(DERIVATIONS_BEAM 17.6 S4)"
+        )
+    c2 = _ratio(obj["c2"], f"{label}.c2", zero=False)
+    if c2[0] != 1:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.c2 must be the pair [1, d] (c^2 = 1 / d; the design's [1, 3]), "
+            f"not {list(c2)}: the exact square is W = E'_0^2 + d p . p with E'_0 = Q S M whole"
+        )
+    factor = c2[1]
+    grain = _integer(obj["grain"], f"{label}.grain", 1)
+    if grain & (grain - 1):
+        raise ValueError(f"{BEAM_LAW}: {label}.grain must be a power of two, not {grain}")
+    if (LABEL_SCALE * width) % grain:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.grain {grain} must divide Q x S = {LABEL_SCALE * width} so that "
+            "E'_0 / g = (Q S / g) x M is whole for every content"
+        )
+    books = obj.get("books", False)
+    if type(books) is not bool:
+        raise ValueError(f"{BEAM_LAW}: {label}.books must be true or false")
+    for index, entry in enumerate(measured):
+        if entry.fixed:
+            # An apparatus held in place carries no readings (its momentum
+            # line is the push it took, never a motion): no domain, no `E`.
+            if entry.energy is not None:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{index}].E is refused on a fixed measured event: an "
+                    "apparatus held in place carries no readings under covariant_readings"
+                )
+            continue
+        content = sum(entry.held)
+        axes = [axis for axis, component in enumerate(entry.momentum) if component]
+        if len(axes) > 1:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{index}]: the momentum {list(entry.momentum)} has components "
+                f"on more than one axis; under {label} a body's momentum lies on one axis (the base "
+                "is the per-axis drive of BEAM_LAW note 17, `step_axis`, where the pace p / E' holds "
+                "on one axis; form B's directional drive, record 342, has not landed)"
+            )
+        manhattan = sum(abs(component) for component in entry.momentum)
+        if manhattan > LABEL_SCALE * width * content:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{index}]: |p|_1 = {manhattan} exceeds Q x S x M = "
+                f"{LABEL_SCALE * width * content}, the domain of the pace p / E' under "
+                f"{label} (DERIVATIONS_BEAM 17.6 N2: beyond it the drive gives one Link per "
+                "self-creation and the pace falls with p)"
+            )
+        square = covariant_square(content, entry.momentum, width, factor, grain, f"measured[{index}]")
+        root = integer_root(square)
+        if entry.energy is not None:
+            rest = LABEL_SCALE * width * content // grain
+            declared_energy = entry.energy // grain
+            if declared_energy < rest or abs(declared_energy - root) > 1:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{index}].E = {entry.energy}: at the grain {grain} "
+                    f"E' / g = {declared_energy} must be at or above E'_0 / g = {rest} and within "
+                    f"one of the root {root} of W / g^2 = {square} (DERIVATIONS_BEAM 17.6 M3)"
+                )
+    numerator, denominator = turn_rate
+    off: list[tuple[str, int]] = []
+    for family in families:
+        if family.quantum == FREE_QUANTUM:
+            continue
+        gap = factor * family.quantum * numerator - LABEL_SCALE * width * denominator
+        if gap:
+            off.append((family.name, gap))
+    if books and off:
+        name, gap = off[0]
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.books declares the exchange's accounting, and the paid family "
+            f"{name!r} is off the identity d x h x n = Q x S x d_K by {gap} (DERIVATIONS_BEAM "
+            "17.6 M7 and N5: the click's energy per content and the drive's rest energy per "
+            "content must be one number)"
+        )
+    return CovariantDeclaration(c2, grain, books, tuple(off))
+
+
+def covariant_square(
+    content: int, momentum: Sequence[int], width: int, factor: int, grain: int, label: str
+) -> int:
+    """`W / g^2 = (E'_0 / g)^2 + d (p / g) . (p / g)` (DERIVATIONS_BEAM 17.6
+    M3): the exact square of a body's energy in the identity's units at the
+    grain g, `E'_0 = Q S M` the rest energy, the momentum's whole part over
+    g per component (the bits below g do not enter), d the factor of the
+    declared c^2 = [1, d]. Every product is tested by division before it is
+    formed and refused beyond the integer bound naming the record."""
+    rest = LABEL_SCALE * width * content // grain
+    if rest > MOMENTUM_BOUND // max(rest, 1):
+        raise OverflowError(
+            f"{BEAM_LAW}: {label}: (E'_0 / g)^2 = {rest}^2 exceeds the integer bound "
+            f"{MOMENTUM_BOUND} at the grain {grain} (a larger grain)"
+        )
+    square = rest * rest
+    for axis, component in enumerate(momentum):
+        part = abs(component) // grain
+        if part > MOMENTUM_BOUND // max(part, 1) or part * part > MOMENTUM_BOUND // factor:
+            raise OverflowError(
+                f"{BEAM_LAW}: {label}: d x (p_{axis} / g)^2 = {factor} x {part}^2 exceeds the "
+                f"integer bound {MOMENTUM_BOUND} at the grain {grain} (a larger grain)"
+            )
+        square += factor * part * part
+        if square > MOMENTUM_BOUND:
+            raise OverflowError(
+                f"{BEAM_LAW}: {label}: W / g^2 exceeds the integer bound {MOMENTUM_BOUND} at the "
+                f"grain {grain} (a larger grain)"
+            )
+    return square
 
 
 def _record_load_checks(
@@ -3002,6 +3217,9 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         action,
     )
     _column_budget(families, measured, release)
+    # The covariant readings (`covariant-readings-v1`): the key as declared,
+    # its domain and its integers checked at load, None by default.
+    covariant = _covariant(obj.get("covariant_readings"), measured, families, width, turn_rate, action)
     in_transit = _in_transit(
         obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
     )
@@ -3027,6 +3245,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         detectors,
         action,
         meeting=meeting,
+        covariant=covariant,
     )
     _record_load_checks(measured, detectors, families, phase_steps)
     # The push's denominator per column, Lambda_c^2 (`measured.counts_table`),
