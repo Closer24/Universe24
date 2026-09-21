@@ -1,0 +1,51 @@
+(A) The isotropic crowd at rest: the mover's count over the rest count, sphere means
+beta      dir     sweep_E   sweep_M   rule_E    rule_M    rule_M toward-hemisphere   1+beta^2/3
+0.2148    x       1.0154    1.0154    1.0000    1.0000    1.1448                     1.0154
+0.2148    xy      1.0154    1.0154    1.0000    1.0000    1.0512                     1.0154
+0.2148    xyz     1.0154    1.0154    1.0000    1.0000    1.0323                     1.0154
+0.4297    x       1.0615    1.0615    1.0000    1.0000    1.2897                     1.0615
+0.4297    xy      1.0615    1.0615    1.0000    1.0000    1.1024                     1.0615
+0.4297    xyz     1.0615    1.0615    1.0000    1.0000    1.0646                     1.0615
+0.8594    x       1.2462    1.2462    1.0000    1.0000    1.5794                     1.2462
+0.8594    xy      1.2462    1.2462    1.0000    1.0000    1.2049                     1.2462
+0.8594    xyz     1.2462    1.2462    1.0000    1.0000    1.1292                     1.2462
+1.0000    x       1.3333    1.3333    1.0000    1.0000    1.6742                     1.3333
+1.0000    xy      1.3333    1.3333    1.0000    1.0000    1.2384                     1.3333
+1.0000    xyz     1.3333    1.3333    1.0000    1.0000    1.1503                     1.3333
+the sweep minus the rule, Euclidean, from the rows with |n_x| < beta: beta^2/3 x rest;
+the rule's mean is 1 by the reflection n_e -> -n_e; the sweep's 1 + beta^2/3 on the
+sphere or the cube alike (mean |n_x - beta| = (1 + beta^2) / 2, mean |n_x| = 1 / 2).
+
+(B) The registered fan (series E's 290 directions, integer T_d), a body stepping on +x
+v = 1/8: rule mean 1.000000 (min 0.7852 on the co-moving heading, max 1.2148 head-on); cube sweep mean 1.0253
+v = 1/4: rule mean 1.000000 (min 0.5703 on the co-moving heading, max 1.4297 head-on); cube sweep mean 1.0820
+v = c = 32/55 (the cap): rule mean 1.000000 (min 0.0000 on the co-moving heading, max 2.0000 head-on); cube sweep mean 1.3674
+the fan's Manhattan paces c_1 = S_1 Q / T_d from 0.5818 (headings) to 1.0000
+
+(C) The co-moving pair (section 12's exchange rates as counts at the partner)
+beta     leading (1-b)^2  trailing (1+b)^2  mean   aberrated (1-b^2)^2  transverse 1-b^2
+0.2148   0.6165           1.4757            1.0461 0.9099               0.9539
+0.4297   0.3252           2.0440            1.1846 0.6648               0.8154
+0.8594   0.0198           3.4574            1.7386 0.0683               0.2614
+the counters of a pair at the partner's count k_p (n / d = 1): rate 1 / (1 + k_p f)
+beta 0.2148, k_p 1.0: rest 0.5000, leading 0.6186 (1.237 x rest), trailing 0.4039 (0.808), aberrated both 0.5236 (1.047); Lorentz 1 / gamma = 0.9767
+beta 0.2148, k_p 0.1: rest 0.9091, leading 0.9419 (1.036 x rest), trailing 0.8714 (0.959), aberrated both 0.9166 (1.008); Lorentz 1 / gamma = 0.9767
+beta 0.4297, k_p 1.0: rest 0.5000, leading 0.7546 (1.509 x rest), trailing 0.3285 (0.657), aberrated both 0.6007 (1.201); Lorentz 1 / gamma = 0.9030
+beta 0.4297, k_p 0.1: rest 0.9091, leading 0.9685 (1.065 x rest), trailing 0.8303 (0.913), aberrated both 0.9377 (1.031); Lorentz 1 / gamma = 0.9030
+
+(D) The muon of J4 (become at 64; v = 1/4 and 1/2 Link per interval = 0.43 c and 0.86 c)
+beta 0.4297: gamma 1.107, lorentz-v1's tick 71; route C in J4's empty bar: 64; in a crowd at k n / d = 1: rest 128, with the crowd's rows 100, against them 156; the isotropic mean 128
+beta 0.8594: gamma 1.956, lorentz-v1's tick 125; route C in J4's empty bar: 64; in a crowd at k n / d = 1: rest 128, with the crowd's rows 73, against them 183; the isotropic mean 128
+the bound: (1 + k (n/d) (1 + beta)) / (1 + k n/d) < 1 + beta <= 2 for every crowd and direction; nature's CERN muon 29.3
+
+(E) The pins: series E's scalar world, the +x axis probe thrown along x under form B
+v 1/8: p = 10 label units, v = 0.1232 Link per self-creation, v T_d / (Q S_1) = 0.2117
+  outward  at r = 6 .. 12 (the registered 2.03): count 1.600 of rest 2.030; self-creations per 1000 intervals 385 against 330 at rest; the 10 Links r = 4 .. 14 in 211 intervals (81 self-creations) against 246
+  inward   at r = 6 .. 12 (the registered 2.03): count 2.460 of rest 2.030; self-creations per 1000 intervals 289 against 330 at rest; the 10 Links r = 4 .. 14 in 281 intervals (81 self-creations) against 246
+  outward  at the path mean 55/32: count 1.355 of rest 1.719; self-creations per 1000 intervals 425 against 368 at rest; the 10 Links r = 4 .. 14 in 191 intervals (81 self-creations) against 221
+  inward   at the path mean 55/32: count 2.083 of rest 1.719; self-creations per 1000 intervals 324 against 368 at rest; the 10 Links r = 4 .. 14 in 250 intervals (81 self-creations) against 221
+v 1/4: p = 28 label units, v = 0.2497 Link per self-creation, v T_d / (Q S_1) = 0.4292
+  outward  at r = 6 .. 12 (the registered 2.03): count 1.159 of rest 2.030; self-creations per 1000 intervals 463 against 330 at rest; the 10 Links r = 4 .. 14 in 86 intervals (40 self-creations) against 121
+  inward   at r = 6 .. 12 (the registered 2.03): count 2.901 of rest 2.030; self-creations per 1000 intervals 256 against 330 at rest; the 10 Links r = 4 .. 14 in 156 intervals (40 self-creations) against 121
+  outward  at the path mean 55/32: count 0.981 of rest 1.719; self-creations per 1000 intervals 505 against 368 at rest; the 10 Links r = 4 .. 14 in 79 intervals (40 self-creations) against 109
+  inward   at the path mean 55/32: count 2.456 of rest 1.719; self-creations per 1000 intervals 289 against 368 at rest; the 10 Links r = 4 .. 14 in 138 intervals (40 self-creations) against 109

@@ -71,6 +71,7 @@ at its first use. The recurring symbols:
 | Lambda_c | scalar | a column's declared bound on the branch |
 | f | element | a record's rows at a Node as an element of the group ring `Z[Z_N]` |
 | beta, `R_ret`, `n_ret` | scalar, scalar, vector | the speed over the pace of a row `v / c`; the distance from a moving source's retarded position; the unit vector from it (section 12) |
+| `c_1`, `k_p` | scalars | a direction's Manhattan pace `S_1 Q / T_d` in Links per interval (sections 2.4, 12c); the rest count of a partner's rows at a body (section 12c) |
 | a, H | scalars | the growth factor of the flight's wall and its rate per interval, a declared constant of the world (section 15) |
 
 The reference tree is `main` at `f89884f0` (the law as landed on 2026-09-20,
@@ -83,7 +84,7 @@ cited as orders, not as code.
 
 Section 0 states the law as one operator with its two blocks and places
 every result under its block (the owner's second pass, record 167 as the
-Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall). The
+Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; 12c answers record 230 (the mover's counter under the crossing count and the owed count, route C); section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall). The
 targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
@@ -3133,6 +3134,265 @@ law for the orbit thrown: contraction 0.87 to 0.96 and slowing 1.31 to
 1.43 at `0.21 c` in the Newtonian regime against 0.977 and 1.024, the
 bond unstable, the registered geometry unbound at both speeds; the
 seventh verb needed for Lorentz's `gamma` and for nothing of the six.
+
+## 12c. The mover's counter under the crossing count and the owed count: route C
+
+**The question** (record 230's three routes to Lorentz: A the six verbs
+alone, B the seventh verb, C the reading budget; the Boss's order of
+03:46Z). Route C: a body's counter is slowed by what it reads (the owed
+count, `by_drive(acc_owed, k n, d)` after every self-creation, k the count
+of the rows at its Node over every number but its own, `engine.py:496-509`;
+section 13.2 (b) read it as the reading's cost over the budget K), and a
+moving body reads by the crossing rule (record 158; sections 2 and 12b.1),
+so its count differs from a rest body's. Does the difference slow the
+mover's counter, by how much against gamma (the Lorentz factor), and at
+what cost? The host script
+[mover_counter.py](designs/derivations_beam/mover_counter.py) with its
+output [mover_counter.out](designs/derivations_beam/mover_counter.out)
+makes every number below on the derivation's own formulas and on the
+registered fan and readings of series E; no run.
+
+### 12c.1 The mover's count through an isotropic crowd at rest
+
+**Four counts, one of them the rule's.** Let a crowd of rows at rest fill
+the GameBoard isotropically: at every Node the rows of every direction
+**n** arrive at the same rate (sources at rest everywhere, their fans
+symmetric). A reader at the velocity **v** (its speed over a row's pace
+`beta = v / c`) counts, per direction, one of four things:
+
+| the count | per direction **n**, over the rest count | its mean over the sphere | what it is |
+| --- | --- | --- | --- |
+| the Euclidean sweep | `abs(n - beta)` (the relative speed) | `1 + beta^2 / 3` | a sphere reader sweeping point rows; the naive count |
+| the Manhattan sweep | `sum_i abs(n_i - beta_i) / sum_i abs(n_i)` | `1 + beta^2 / 3` exactly, whatever the direction of **v** | a cube reader (a Node, six Ports) sweeping point rows |
+| the Euclidean crossing | `1 - n . beta` (the fronts crossed) | 1 exactly | the receiver's Doppler per direction, section 2.2's limit |
+| **the crossing rule** | `1 - sgn(n_e) beta / abs(n)_1` per step on the axis e | 1 exactly | record 158's count, section 2.4's Manhattan flux; `c_1 = c abs(n)_1` the direction's Manhattan pace |
+
+The two sweeps have the same mean because the mean of `abs(n_x - beta)`
+over the sphere is `(1 + beta^2) / 2` and the mean of `abs(n_x)` is `1 /
+2` (the script, table (A): 1.0154, 1.0615, 1.2462 and 4/3 at `beta` =
+0.2148, 0.4297, 0.8594 and 1, on x, on a face diagonal and on the cube
+diagonal alike). The two crossing counts have the mean 1 by the
+reflection `n_e -> -n_e`: the count is odd in the row's component along
+the step, and an isotropic crowd has as many rows against the step as
+with it. The sweep exceeds the rule exactly on the rows with `abs(n_e) <
+beta`, the near-transverse ones, which the rule does not meet at a step
+(record 158's C2: a resident row at the destination is met only if it
+moves against the step, `u . e < 0`; a row moving across the step is
+met at the rest rate, section 2.3's "transverse exactly 1", the
+registered form of the difference); their share is `beta^2 / 3` of the
+rest count. **Reached**: the crossing rule's count of a mover through an
+isotropic crowd at rest is the rest count, at every speed to the cap, on
+the sphere and on the lattice.
+
+**On the registered fan** (series E's 290 directions with the integer
+`T_d`, a body stepping on +x at `1 / 8` and `1 / 4` Link per
+self-creation and at the cap `c = 32 / 55`, the script's table (B)): the
+rule's mean over the fan is 1.000000 at the three speeds; the factor
+runs from `1 - v T_d / (Q S_1)` on the co-moving heading (0.7852,
+0.5703, 0 at the cap) to `1 + v T_d / (Q S_1)` head-on (1.2148, 1.4297,
+2); the cube sweep's fan mean is 1.0253, 1.0820, 1.3674. The factor is
+never negative under form B: a body's pace on any direction is at most
+that direction's row pace, `c` on a heading, and the fan's Manhattan
+paces `c_1 = S_1 Q / T_d` run from `c` (the headings) to 1 (the cube
+diagonals), so `v <= c <= c_1` on every direction and no direction is
+outrun. (Today's per-axis drive at one Link per interval, 1.72 c, can
+outrun a heading; there the factor is `abs(1 - v / c_1)` and the mean
+rises above 1: outside form B, not stated further.)
+
+**What the mover does read.** Not a changed total but a dipole: over
+the hemisphere of rows coming toward it, the rule's factor averages `1 +
+0.674 beta` for a step on x (1.145, 1.290, 1.579 at the three speeds),
+and the same below 1 behind. A mover reads the crowd's frame in the
+direction of its rows and not in their number: the ether wind is in
+the reading's first moment (the flow, the push of 12b.1) and absent
+from its zeroth (the presence, the count the counter owes).
+
+### 12c.2 The owed count and the counter: no slowing
+
+**What is charged.** The owed count is charged once per self-creation,
+`by_drive(acc_owed, k n, d)` with k the count of THAT interval
+(`_suspend` after `_frame_all`); the body steps only in an interval in
+which nothing is owed (`_move`), so a step's interval is a self-creating
+interval and its crossing count is charged; the rows arriving during
+the owed intervals are read and not charged. Over one Link at `v_free`
+Links per self-creation (`1 / v_free` self-creations per Link), the
+charged count is `(1 / v_free) x rest x (1 -+ v_free / c_1)` per
+direction: the crossing rule's factor with the FREE pace, whatever the
+owed intervals between the self-creations. A body in a crowd steps at
+`v_free / (1 + k n / d)` Links per interval: route C slows a body's
+motion by the same factor as its counter, isotropically, its momentum
+untouched (a viscous crowd; section 9.2's wait).
+
+**Through an isotropic crowd at rest.** The charged count's mean is the
+rest count (12c.1), so the counter's rate is `1 / (1 + k n / d)` at
+every speed to the cap: the mover's owed count does not grow and its
+counter does not slow. Against Lorentz at small `beta`:
+
+| the counter's rate over the rest rate | the coefficient of `beta^2` | near the cap |
+| --- | --- | --- |
+| the crossing rule (the law) | 0 | 1 in the mean, 0 to 2 by direction |
+| the sweep (not the rule) | `-(k n / d) / (3 (1 + k n / d))`, at most 1/3 | `(1 + k n / d) / (1 + 4 k n / d / 3)`, at least 3/4 |
+| nature, `1 / gamma` | `-1 / 2` | 0 |
+
+**Different law**, in three structural ways before any number. (i) Any
+slowing of route C is proportional to the crowd, `k n / d`: in an empty
+world none (J4's bar, 12c.4), in series E's shells `k = 41.5 / r^2` at
+rest; Lorentz's is the same in an empty world and in a crowd. (ii) It is
+bounded: the largest count in any direction is `2 x rest` (head-on at
+the cap), so the mover's rate over the rest rate is never below `(1 + k n
+/ d) / (1 + 2 k n / d) > 1 / 2` whatever the crowd; gamma is unbounded
+at the cap (29.3 for the CERN muon). (iii) Its sign follows the crowd's
+frame: a body moving WITH the rows it reads counts fewer, owes less and
+runs FASTER than a body at rest in the same crowd (record 158's
+consequence for G2: "in `_scalar` and `_age` the clock's count now falls
+by `v / c`"); only against the rows does it run slower, by `(1 + beta)`
+at most. So route C gives no isotropic slowing, an anisotropic one in
+the crowd's frame with the wrong sign for a body moving with its light,
+and nothing a body carries into an empty world.
+
+### 12c.3 The bond under route C: no contraction, a stretch or a speeding
+
+The registered orbit worlds (series D, `s32_r24` and its five siblings)
+have `suspension` 0: route C does nothing to 12b.2's orbit as
+registered. In a world with a suspension, the pair's two counters read
+each other's rows by section 12's exchange rates as counts (the script's
+table (C)): without the aberration the leading body counts `(1 - beta)^2`
+of the rest count of its partner's rows (0.617 at `beta` 0.2148, 0.325 at
+0.4297) and the trailing body `(1 + beta)^2` (1.476, 2.044); with the
+aberration both count `(1 - beta^2)^2` (0.910, 0.665); a transverse
+partner `(1 - beta^2)` (0.954, 0.815). At the partner's rest count `k_p`
+with `n / d = 1`:
+
+| `beta` | `k_p` | rest rate | leading | trailing | both, aberrated | Lorentz `1 / gamma` |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0.2148 | 1 | 0.500 | 0.619 (1.237 x rest) | 0.404 (0.808) | 0.524 (1.047) | 0.977 |
+| 0.2148 | 0.1 | 0.909 | 0.942 (1.036) | 0.871 (0.959) | 0.917 (1.008) | 0.977 |
+| 0.4297 | 1 | 0.500 | 0.755 (1.509) | 0.329 (0.657) | 0.601 (1.201) | 0.903 |
+| 0.4297 | 0.1 | 0.909 | 0.969 (1.065) | 0.830 (0.913) | 0.938 (1.031) | 0.903 |
+
+**Different law** in the direction. Without the aberration the two
+counters of one pair split at first order in `beta` (the leading faster,
+the trailing slower, `4 beta k_p / (1 + k_p)` of the rest rate apart): since a body steps
+only when nothing is owed, the leading body also steps faster and the
+trailing slower, so the pair STRETCHES along its motion at the rate of
+that split (a self-force again, 12.2's `4 beta` in the counters instead
+of the pushes) and no contraction is available. With the aberration
+both counters run faster than at rest, `(1 - beta^2)^2` of the partner's
+rows reaching them: fewer rows, less owed, a SPEEDING by about `2
+beta^2 k_p / (1 + k_p)`, the sign opposite to Lorentz's slowing. The
+isotropic crowd at rest around the pair adds a common factor to both
+counters and both paces (12c.2) and changes neither the shape nor the
+period's ratio to the rest. So route C neither contracts nor slows a
+bond: it stretches an unaberrated pair and speeds an aberrated one, in
+proportion to the partner's rows and to nothing in an empty world.
+
+### 12c.4 The muon of J4 re-read under route C
+
+HYPOTHESES 21's J4: muons of content 207 with `become` at 64, a key on
+the body's own self-creation count (`ages_at_key`, the clock's trigger,
+`nature_beam.py:1455-1460`), in an open bar with no crowd (`release` `[1,
+2^20]`), one at rest and one thrown at `1 / 4` and `1 / 2` Link per
+interval (0.43 c and 0.86 c). With no crowd `k = 0` at every Node: route
+C charges nothing, the moving muon's 64th self-creation is at tick 64 as
+at rest, its range `64 v` Links (16 and 32); the entry's prediction
+stands unchanged. In a crowd at rest at `k n / d = 1` (the script's
+table (D)): the rest muon fires at tick 128; the moving one at 128 in
+the isotropic mean, at 100 (0.43 c) or 73 (0.86 c) moving with the
+crowd's rows, at 156 or 183 against them. Nature: 2.197 microseconds at
+rest, 64.4 in the CERN ring (gamma 29.3); lorentz-v1's comparison
+(FORM.md section 4): ticks 71 and 126 at the two speeds (`64 gamma` =
+70.9, 125.2). Route C's lifetime in flight lengthens at most by `(1 +
+beta) < 2` over the rest lifetime in the same crowd, and only against
+the crowd's rows; with them it shortens. **Different law** on the
+number, the bound and the sign. A key on the Links moved in place of the
+age (a range rule: the decay at a distance `L` whatever the pace) would
+give a lifetime of `L / v` intervals, no decay at rest and no `gamma`
+either: a range is not a clock, and nature's range `gamma beta c tau` is
+a clock's range.
+
+### 12c.5 What the mechanism needs, and the three tests
+
+**What it needs.** (a) A crowd at rest everywhere at one presence, so
+that every body has the same rest slowing `1 / (1 + k_0 n / d)`: a
+declaration of a world, not a rule (the register's open worlds have the
+crowd falling as `1 / r^2` from each source; a static periodic world
+fills without bound and every counter slows toward zero, section 15.5's
+Seeliger item and 14.3's third stream; under the growing wall the
+presence settles, 0.000765 of `q dwell` per source at L = 301, and a
+counter has a steady rest slowing). (b) A count that is not the crossing
+rule: only the sweep of the near-transverse residents gives a `beta^2`
+term at all, `beta^2 / 3`, and the sweep is refuted by the registered
+transverse count of 1 (record 158's tests, section 2.3). (c) Even with
+both, a slowing proportional to `k_0 n / d`, bounded above by 4/3 in the
+factor, and read in the crowd's frame (the dipole of 12c.1: a preferred
+frame, the crowd's, in the reading's first moment). Nothing of (a) to
+(c) gives `1 / gamma`.
+
+**The three tests.** Route C proposes no rule: the crossing rule (D on
+the body's two last Links, record 158) and the owed count (one
+`by_drive` on the body's record) are the law already, generic (no name),
+vector (a comparison and a translation) and local (the body's own
+record, the six Ports, nothing at a Node). What fails is the number, not
+a test. The variant with a crowd everywhere passes the tests as a world
+declaration; the sweep variant would change record 158's C2 and is
+refuted by the register.
+
+### 12c.6 The pins for a run under form B and the crossing rule
+
+Series E's `scalar` world (`examples/events/redshift/scalar.json`:
+the source of content 4096 at the centre on the 290-direction fan, one
+row per direction per interval, `suspension` `[1, 1]`) with one probe
+added, a free measured event of content 1 with the `pass` entry (no
+push), on the +x axis, thrown along x under form B: `p = 10` label units
+(`v_free` = 0.1232 Link per self-creation, the crossing factor `v T_d /
+(Q S_1)` = 0.2117) and `p = 28` (0.2497, 0.4292), outward from r = 4 and
+inward from r = 14, read over the 10 Links r = 4 .. 14 by the `step`
+records and the owed counts. The rest reading of the axis probe is the
+register's: 2.03 at r = 6 .. 12 and 1.00 at r = 4 and 14 (the heading's
+dwell pattern), the mean over a path of Links `55 / 32` = 1.72; under the
+rule a body at rest reads as built (record 158). The pins (the script's
+table (E); the counts at the registered 2.03 first, at the path mean
+second):
+
+| throw | count over the rest count | the count | self-creations per 1000 intervals (rest 330; 368) | intervals for the 10 Links (rest 246; 221 at `p` 10, 121; 109 at `p` 28) |
+| --- | --- | --- | --- | --- |
+| `p` 10 outward | 0.788 | 1.60; 1.36 | 385; 425 | 211; 191 |
+| `p` 10 inward | 1.212 | 2.46; 2.08 | 289; 324 | 281; 250 |
+| `p` 28 outward | 0.571 | 1.16; 0.98 | 463; 505 | 86; 79 |
+| `p` 28 inward | 1.429 | 2.90; 2.46 | 256; 289 | 156; 138 |
+
+Tolerance: the boundary row per Link (section 2.2, at most one row
+per Link) and the dwell pattern's sampling by the self-creating
+intervals, about 5 % on the counts. The isotropic pin needs no new
+world: the outward and inward counts average to the rest count within
+the tolerance (an isotropic term `beta^2 / 3` would put the mean at
+1.015 and 1.061 of the rest count); the transverse pin is registered
+already (record 158's transverse 1; the doppler bar's tests). **What
+refutes 12c**: a mean of the outward and inward counts above the rest
+count by more than the tolerance at either momentum; a transverse count
+other than 1; a counter of a moving probe in an empty world other than
+the rest counter's.
+
+### 12c.7 The verdict of section 12c
+
+**Route C gives no slowing**: the crossing rule's count of a mover
+through an isotropic crowd at rest is the rest count exactly, on the
+sphere and on the registered fan, at every speed to the cap, so the
+owed count's mean and the counter's rate are the rest ones. **The
+number against Lorentz's**: the coefficient of `beta^2` is 0 where
+Lorentz's is 1/2; the naive 1/3 is the sweep of point rows, not the
+rule, and is refuted by the registered transverse count. **Its form**:
+proportional to the crowd, bounded by 2 in the most anisotropic case,
+in the crowd's frame, faster for a body moving with its rows; it
+stretches or speeds a bond and never contracts one; the muon of J4
+fires at 64 in its empty bar at every speed. **Its cost**: nothing new,
+the crossing rule's comparisons and the owed count's one `by_drive` are
+in the law and in section 13's count (26 per row read plus 5); a crowd
+everywhere is a world's declaration. **The seventh verb** stands where
+12b.3 left it: routes A and C give a slowing of their own (the bond's,
+12b; none, 12c), neither Lorentz's; gamma enters the law's periods
+through the flight table's root at load and a body's own counter
+through nothing of the six.
 
 ## 13. The one constant K: the fixed computation per Node per interval, what it explains, what it bounds, what it leaves free
 
