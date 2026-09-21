@@ -14,19 +14,24 @@ engine on a minimal GameBoard; the expected values of docs/TEST_EXPECTATIONS.md
     `detector` at x = 20 declared as the detector `centre` reading `wave`
     with the entry `{"rule": "measure", "reads": "age"}` for the source
     family `px1`; a free source `px1` of content 64 at x = 25 with the
-    momentum [2^32, 0, 0] (the speed p / (Q S M + p) = 1 / 2 Link per
-    self-creation, `by_clock(age, p, 2^32 + p)`: a step at every second
-    self-creation) releasing one row per self-creation on (-1, 0, 0) with
-    its clock's phase (the turn `by_clock(age, 64, 64)` = 1). The reading:
-    the crowd `coasting` and the clock `scalar` off the model name, rho =
-    1, c = 32 / 55, the source's declared speed 1 / 2 and its initial
-    distance 5, its `record` lines the engine's detector set's (one per
-    interval with a click, the phase the pointer's step), its clicks' age
-    moments the engine's (amount 1, the reading the age), its steps the
-    engine's `step` records (30 in 60 intervals), completed and balanced;
-    the window [20, 60): the pointer's turn reads 1 + z = 1 + v / c with
-    v = 1 / 2 within the grain of the digital step (0.05 in z), k = 0 (no
-    suspension) and the reading's formula within 2 %.
+    momentum [2^32, 0, 0] (since the directional drive of 2026-09-21,
+    BEAM_LAW note 49, the speed |p| Q / (Q S M Q + |p| T_D) = 64 / 174 =
+    0.3678 Links per self-creation on the heading, read off the engine's
+    `drive_rate_and_wall` by the tool's `declared_speed`; until then p /
+    (Q S M + p) = 1 / 2, `by_clock(age, p, 2^32 + p)`, a step at every
+    second self-creation) releasing one row per self-creation on (-1, 0,
+    0) with its clock's phase (the turn `by_clock(age, 64, 64)` = 1). The
+    reading: the crowd `coasting` and the clock `scalar` off the model
+    name, rho = 1, c = 32 / 55, the source's declared speed 64 / 174 and
+    its initial distance 5, its `record` lines the engine's detector set's
+    (one per interval with a click, the phase the pointer's step), its
+    clicks' age moments the engine's (amount 1, the reading the age), its
+    steps the engine's `step` records (22 in 60 intervals, floor(60 x 64 /
+    174); 30 until 2026-09-21), completed and balanced; the window [20,
+    60): the pointer's turn reads 1 + z = 1 + v / c with v = 64 / 174
+    within the grain of the digital step (0.05 in z; v = 1 / 2 until
+    2026-09-21), k = 0 (no suspension) and the reading's formula within
+    2 %.
 """
 
 from __future__ import annotations
@@ -43,7 +48,7 @@ from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import direction_flight
 from event_universe.events.run import execute_nature_beam_run
-from event_universe.events.world import HEADING_OFFSET, Q
+from event_universe.events.world import HEADING_OFFSET, Q, drive_rate_and_wall
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
@@ -56,7 +61,7 @@ SPEC.loader.exec_module(TOOL)
 TICKS = 60
 WIDTH = 1 << 20
 CONTENT = 64
-MOMENTUM = Q * WIDTH * CONTENT  # v = p / (Q S M + p) = 1 / 2
+MOMENTUM = Q * WIDTH * CONTENT  # v = p Q / (Q S M Q + p T_D) = 64 / 174 (1 / 2 until 2026-09-21)
 
 
 def bar_world() -> dict[str, object]:
@@ -116,9 +121,10 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     assert list(run.sources) == ["px1"]
     source = run.sources["px1"]
     assert (source.number, source.content, source.momentum) == (2, CONTENT, MOMENTUM)
-    assert source.declared_speed == 0.5 and source.initial_distance == 5
-    assert by_clock(0, MOMENTUM, Q * WIDTH * CONTENT + MOMENTUM) == 0
-    assert by_clock(1, MOMENTUM, Q * WIDTH * CONTENT + MOMENTUM) == 1
+    assert source.declared_speed == 64 / 174 and source.initial_distance == 5
+    rate, wall = drive_rate_and_wall([MOMENTUM, 0, 0], CONTENT, WIDTH, 1, 110)
+    assert (rate, wall) == (MOMENTUM * 64, MOMENTUM * 174) and source.declared_speed == rate / wall
+    assert [by_clock(age, rate, wall) for age in range(3)] == [0, 0, 1]
     simulation = NatureBeamSimulation(world)
     steps: list[int] = []
     turns: list[tuple[int, int]] = []
@@ -134,7 +140,7 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
         if detector_set.record[1] != record_before:
             assert detector_set.phase[1] is not None
             turns.append((tick, detector_set.phase[1]))
-    assert source.steps == steps and len(steps) == 30
+    assert source.steps == steps and len(steps) == 22 == TICKS * 64 // 174
     assert source.turns == turns and len(turns) > 20
     for tick, rows in source.clicks.items():
         assert len(rows) == 1 and rows[0][0] == 1
@@ -147,9 +153,9 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     assert [r.name for r in TOOL.find_runs(tmp_path)] == ["coasting_scalar"]
     point = TOOL.window_point(run, source, (20, TICKS))
     assert point is not None and point.k == 0.0
-    assert abs(point.z - 0.5 / run.c) < 0.05
+    assert abs(point.z - (64 / 174) / run.c) < 0.05
     assert abs((1.0 + point.z) / (1.0 + point.predicted) - 1.0) <= TOOL.FORMULA_TOLERANCE
-    assert point.declared == 0.5 / run.c
+    assert point.declared == (64 / 174) / run.c
     assert point.initial_distance == 5.0
 
 

@@ -67,8 +67,8 @@ import numpy as np
 
 from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.nature_beam import direction_flight
-from event_universe.events.world import HEADING_OFFSET, Q
+from event_universe.events.nature_beam import direction_flight, direction_resolution
+from event_universe.events.world import HEADING_OFFSET, drive_rate_and_wall
 from event_universe.world_loading import world_of_run
 
 MODEL_PREFIX = "rays-hubble-"
@@ -220,6 +220,18 @@ class Run:
         return f"{self.crowd}_{self.clock}"
 
 
+def declared_speed(momentum: int, content: int, width: int) -> float:
+    """A source's speed on a heading from its declared momentum, off the
+    engine's own rule (`world.drive_rate_and_wall`, the directional drive
+    of 2026-09-21, BEAM_LAW note 49): rate / wall = |p| Q / (Q S M Q + |p|
+    T_D) Links per self-creation, T_D = 110 the heading's resolution
+    (until then |p| / (Q S M + |p|), the per-axis rule)."""
+    rate, wall = drive_rate_and_wall(
+        [momentum, 0, 0], content, width, 1, direction_resolution((1, 0, 0))
+    )
+    return rate / wall
+
+
 def read_run(folder: Path) -> Run:
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
     document = world_of_run(folder)
@@ -243,7 +255,7 @@ def read_run(folder: Path) -> Run:
         p = max(abs(int(v)) for v in declared["momentum"])
         centre = document["measured"][0]["position"]
         distance = sum(abs(int(a) - int(b)) for a, b in zip(declared["position"], centre, strict=True))
-        sources[family] = Source(family, number, content, p, p / (Q * width * content + p), distance)
+        sources[family] = Source(family, number, content, p, declared_speed(p, content, width), distance)
     by_number = {source.number: source for source in sources.values()}
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         for line in stream:

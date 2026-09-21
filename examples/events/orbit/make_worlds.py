@@ -43,6 +43,17 @@ amount x D, L = 5.194, p = 11, 15, 23) are in git at the D1 and the
 one-form commits.
 
     python examples/events/orbit/make_worlds.py
+
+Since the directional drive of 2026-09-21 (BEAM_LAW note 49; the model
+owner's records 191 and 301) the probe walks the line of its momentum at
+the speed n Q / (Q S + n T_D) per unit of its content, 64 n / (64 S + 110
+n) on a heading (the rows' 64 / 110 the cap), in place of n / (S + n): the
+worlds keep the momenta registered above (192, 320, 576), under which
+the speeds read 0.4873, 0.3013, 0.1896 Links per interval and the derived
+periods T(12) = 155, 250, 398, T(24) twice those; the circular-orbit
+condition under the rule, n x 64 n / (64 S + 110 n) = A, gives n = 3.79,
+5.88, 9.63 (the momenta 256, 384, 640), for a registration the owner
+orders; nothing is re-derived here (the README's re-read of 2026-09-21).
 """
 
 from __future__ import annotations

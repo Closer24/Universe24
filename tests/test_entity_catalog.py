@@ -14,7 +14,17 @@ so this module pins no number of any world (the model owner's rule of
     `quantum` on every family and `reading` on every declared detector,
     and runs 20 to 50 intervals;
 (b) each runs its declared intervals headless with the books balanced at
-    every interval;
+    every interval; since the directional drive of 2026-09-21 (BEAM_LAW
+    note 49) `neutron_star` runs six and is refused at the seventh: its
+    eight neutrons of content 2^26 take the gravity column's push of 3 x
+    2^50 label units per interval (the placement's "the largest a short
+    run allows" was set by the per-axis rule's bound on a component), so
+    by tick 6 a neutron's |p|_1 is 5 x 2^51 on the direction (3, 2, 5),
+    whose resolution T_D = 683 puts the drive's wall Q S M S_1 Q + |p|_1
+    T_D beyond 2^62 - 1, the rule's bound (the FORM's "larger momenta are
+    refused"; the world's re-placement at a smaller content is the
+    catalog's, not this rule's); the refusal is the `OverflowError` naming
+    the wall, the books balanced through tick 6;
 (c) the readings the catalog names exist: every declared detector appears
     in the run's detector report with an integer `record` per family, at
     least one declared detector of a world that declares detectors wrote a
@@ -42,6 +52,10 @@ from event_universe.world_loading import load_world
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "examples" / "events" / "catalog"
 WORLDS = ("sun_planet", "neutron_star", "lamp_mirror_screen", "clock_near_mass")
+# The interval at which a world's run is refused by the drive's bound (the
+# directional drive of 2026-09-21, BEAM_LAW note 49): the neutron star's
+# momenta pass 2^62 / T_D at tick 7 (docstring (b)).
+REFUSED_AT = {"neutron_star": 7}
 
 
 def load_generator():
@@ -91,10 +105,15 @@ def test_every_catalog_world_runs_with_the_books_balanced_and_its_readings_exist
     lines: list[dict[str, object]] = []
     simulation = NatureBeamSimulation(world, lines.append)
     ticks = int(document["ticks"])
+    refused_at = REFUSED_AT.get(name)
     for tick in range(1, ticks + 1):
+        if tick == refused_at:
+            with pytest.raises(OverflowError, match="the drive's wall"):
+                simulation.step()
+            break
         simulation.step()
         assert simulation.books()["balanced"], (name, tick)
-    assert simulation.tick == ticks
+    assert simulation.tick == (ticks if refused_at is None else refused_at)
     # The declared detectors: one record per family each, exact integers.
     reports = {str(entry["name"]): entry for entry in simulation.detectors()}
     declared = [str(detector["name"]) for detector in document.get("detectors", [])]
@@ -117,7 +136,7 @@ def test_every_catalog_world_runs_with_the_books_balanced_and_its_readings_exist
         assert probes, name
     for probe in probes:
         state = probe.state()
-        assert state["age"] + state["waited"] == ticks, (name, probe.number)
+        assert state["age"] + state["waited"] == simulation.tick, (name, probe.number)
         assert isinstance(state["owed"], int) and state["owed"] >= 0
 
 

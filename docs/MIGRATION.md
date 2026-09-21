@@ -45,6 +45,15 @@ The identity `beam-v1` is kept.
   `direction_flight` reads too), `Measured.line` (the three deficits, the
   `line` rows of the table of counts), `Measured.line_direction` and the
   cache `NatureBeamSimulation._line`.
+- The bound: the drive's wall Q S M S_1 Q + |p|_1 T_D within 2^62 - 1,
+  refused at the step beyond it (`OverflowError` naming the wall): a
+  momentum within the per-axis rule's bound on a component can be beyond
+  it by the factor T_D. The catalog's `neutron_star` (content 2^26 under
+  the gravity column's push of 3 x 2^50 per interval) reaches |p|_1 = 5 x
+  2^51 on (3, 2, 5) by tick 6 and is refused at tick 7, where it ran its
+  40 intervals until then; `tests/test_entity_catalog.py` (b) pins the
+  refusal, the world's re-placement at a smaller content being the
+  catalog's (the physicist's) and not this rule's.
 - The record: `Measured.drive` is one integer (a list of three until
   then); `state.json` and `run.json` carry `drive` (one integer), `line`
   (the three deficits) and `direction` (the line's D) per measured event
@@ -52,9 +61,19 @@ The identity `beam-v1` is kept.
   `direction`; a declared `drive` or `line` is refused as an unknown key.
   A test-level resume restores the three (`tests/test_fraction_free.py`).
 - The readings tools: `tools/coupling_readings.py`'s `steps_by_rule`
-  replays `engine.step_line`; `tools/hubble_stars_readings.py` reads a
-  star's declared speed off `drive_rate_and_wall` (`declared_speed`, 64 /
-  174 at p = Q S M on a heading, 1 / 2 until then).
+  replays `engine.step_line`; `tools/hubble_stars_readings.py` and
+  `tools/hubble_readings.py` read a star's or a source's declared speed
+  off `drive_rate_and_wall` (`declared_speed`, 64 / 174 at p = Q S M on a
+  heading, 1 / 2 until then); the generators
+  `examples/events/hubble_stars/make_worlds.py` and
+  `examples/events/hubble/make_worlds.py` read the speed a registered
+  momentum gives off the same function (`speed`), their `momentum` the
+  registered inverse of the per-axis rule kept (the world files
+  byte-identical), the derived readings of `hubble_stars/expectations.json`
+  and `record/expectations.json` regenerated (a star's speed and v / c
+  0.83 of the design's throw at the kept momenta; the throw derivation's
+  push per row (1 - v T_D / Q)^2 a / S and its momentum ratio by the
+  rule's inverse).
 - The new test `tests/test_directional_drive.py` (the pins derived from
   floor(n rate / wall) and the flight's own line before the first run;
   (d)'s tick-by-tick pin against the row's accumulator not met, the
@@ -81,8 +100,10 @@ The identity `beam-v1` is kept.
   drive 115602 for 8193 and 1807, (c) the resumed drive 11424 for 1616;
   `test_coupling_readings` (b) the ticks 3, 6, 9 for 2, 4, 6, 8, 10 and
   5, 10 for 4, 8, the diagonal walk 2, 4, 6, 7, 9 on x, y, x, y, x for 2,
-  4, 6, 8, 10 on x; `test_hubble_stars_readings` (b) the speed 64 / 174
-  and 22 steps in 60 for 1 / 2 and 30; `test_contact` (a) the pair's
+  4, 6, 8, 10 on x; `test_hubble_stars_readings` (b) and
+  `test_hubble_readings` (b) the speed 64 / 174 and 22 steps in 60 for 1
+  / 2 and 30 (the tools' `declared_speed` off `drive_rate_and_wall`);
+  `test_contact` (a) the pair's
   momenta 128, 256, 384, 512, 128, 128, 256 and the first hand-over at
   tick 6 with 512 for 128, 256, 384, 128, 128, 256, 128 and tick 5 with
   384, the fourteen hand-overs 8 by p1 and 6 by p2 for fifteen 9 and 6,

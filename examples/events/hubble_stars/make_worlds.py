@@ -25,8 +25,13 @@ r_0 / T_0 Links per interval, T_0 = THROW_AGE intervals, as if every star
 left the centre at the time -T_0 (r_0 = 3 .. 26 Links, one integer per
 star, dealt round-robin over the six axes in Port order, so no star ever
 overtakes another on its axis); the momentum is the label p = Q S M_total v
-/ (1 - v) (BEAM_LAW section 3 step 5; M_total the light plus the mass held,
-the content the step rule reads). The star's clock turns ONE step of the
+/ (1 - v), the registered inverse of the per-axis rule (BEAM_LAW note 17;
+M_total the light plus the mass held, the content the step rule reads),
+kept as the worlds' declared momenta since the directional drive of
+2026-09-21 (note 49), under which the registered speed a momentum gives
+is |p| Q / (Q S M Q + |p| T_D) on a heading (`speed`, off the engine's
+`drive_rate_and_wall`: 0.83 of the design's v at the register's
+momenta, the same factor on z). The star's clock turns ONE step of the
 circle of N per self-creation (K = M_total: the turn `by_clock(age,
 content, K)` = 1 while the light spent, at most TICKS units, is small
 against the mass).
@@ -91,8 +96,8 @@ ROOT = HERE.parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
 from event_universe.core.game_board import PORT_HEADINGS  # noqa: E402
-from event_universe.events.nature_beam import direction_flight  # noqa: E402
-from event_universe.events.world import HEADING_OFFSET, LAW_VALUE, Q  # noqa: E402
+from event_universe.events.nature_beam import direction_flight, direction_resolution  # noqa: E402
+from event_universe.events.world import HEADING_OFFSET, LAW_VALUE, Q, drive_rate_and_wall  # noqa: E402
 from event_universe.world_loading import families_by_definition  # noqa: E402
 
 # The shipped definitions the worlds' families come from where they equal
@@ -160,15 +165,36 @@ def beam_speed() -> float:
 C = beam_speed()
 
 
+# The heading's resolution T_D = isqrt(3 Q^2) = 110, the wall of the flight
+# on a heading and of a body's drive at its momentum's fraction (note 49).
+T_HEADING = direction_resolution((1, 0, 0))
+
+
 def momentum(v: float, content: int) -> int:
-    """The momentum p (label units) that gives the speed v (Links per
-    interval) to a free measured event of content `content`: v = p / (Q S
-    M + p)."""
+    """The momentum p (label units) registered for the design speed v
+    (Links per interval) of a free measured event of content `content`
+    under the per-axis rule, v = p / (Q S M + p) (BEAM_LAW note 17): the
+    worlds' declared momenta, kept as they are under the directional
+    drive of 2026-09-21 (note 49), whose speed at this momentum is
+    `speed(p, content)`."""
     return round(Q * WIDTH * content * v / (1 - v))
 
 
 def speed(p: int, content: int) -> float:
-    return p / (Q * WIDTH * content + p)
+    """The speed a momentum gives on a heading, off the engine's own rule
+    (`world.drive_rate_and_wall`, the directional drive, BEAM_LAW note
+    49): rate / wall = |p| Q / (Q S M Q + |p| T_D) Links per self-creation
+    (until 2026-09-21 |p| / (Q S M + |p|), the per-axis rule)."""
+    rate, wall = drive_rate_and_wall([p, 0, 0], content, WIDTH, 1, T_HEADING)
+    return rate / wall
+
+
+def momentum_of_speed(v: float, content: int) -> float:
+    """The momentum (label units, not rounded) at which the directional
+    drive gives the speed v on a heading: the inverse of `speed`, p = Q S
+    M Q v / (Q - T_D v); the continuum derivation's momentum ratio reads
+    it (the per-axis rule's inverse was p = Q S M v / (1 - v))."""
+    return Q * WIDTH * content * Q * v / (Q - T_HEADING * v)
 
 
 def stars(mass: int) -> list[Json]:
@@ -320,8 +346,12 @@ def throw_derivation(crowd: str, reading_rule: str = "acoustic") -> dict[str, ob
     """The continuum derivation of the throw under the crowd's push (a
     GameBoard expectation, written before the runs): on each line (an axis,
     both chains) every star releases F rows per direction per interval; a
-    row of amount a passing a star moves its speed by (1 - |v|)^2 a / S
-    toward the emitter; the rows of a star l reach a star j at the acoustic
+    row of amount a passing a star moves its speed by (1 - |v| T_D / Q)^2
+    a / S toward the emitter (the directional drive of 2026-09-21, BEAM_LAW
+    note 49: v = |p| Q / (Q S M Q + |p| T_D), so dv / dp = (Q - T_D v)^2 /
+    (Q^3 S M) and the push of a row, Q M a label units, moves v by (1 - v
+    T_D / Q)^2 a / S; under the per-axis rule until then (1 - |v|)^2 a /
+    S); the rows of a star l reach a star j at the acoustic
     rate F (c - u_r) / (c - u_s) (u the two speeds along the row's
     heading; `reading_rule` "acoustic", the rule pinned before the runs)
     once the first row has crossed the distance between them; with the
@@ -379,7 +409,7 @@ def throw_derivation(crowd: str, reading_rule: str = "acoustic") -> dict[str, ob
                     else:
                         reader = C
                     rate = F * g * reader / (C - u_s)
-                    push -= s * rate * (1 - abs(speeds[j])) ** 2 / WIDTH
+                    push -= s * rate * (1 - abs(speeds[j]) * T_HEADING / Q) ** 2 / WIDTH
                 new_v[j] = speeds[j] + push
         speeds = new_v
         positions = [x + v for x, v in zip(positions, speeds, strict=True)]
@@ -412,8 +442,8 @@ def throw_derivation(crowd: str, reading_rule: str = "acoustic") -> dict[str, ob
                     "z": abs(at(history_v[j], te)) / C,
                     "tau": t0 - te,
                     "d": abs(at(history_x[j], te)),
-                    "momentum_ratio": (abs(speeds[j]) / (1 - abs(speeds[j])))
-                    / (abs(history_v[j][0]) / (1 - abs(history_v[j][0]))),
+                    "momentum_ratio": momentum_of_speed(abs(speeds[j]), 1)
+                    / momentum_of_speed(abs(history_v[j][0]), 1),
                 }
             )
         windows[f"{lo}-{hi}"] = points
@@ -502,7 +532,7 @@ def expectations(reading_rule: str = "acoustic") -> Json:
             "ticks": "declared",
             "windows": "declared (the reading windows)",
             "registered_window": "declared",
-            "stars": "the speed declared by the design (the throw's fractions of c); the momentum from it by the drive's rule v = p / (Q S M + p) (DERIVATIONS_BEAM 2.1) at the grain; the distances declared",
+            "stars": "the momentum registered for the design's throw (r_0 / T_0, the fractions of c) by the per-axis rule v = p / (Q S M + p) at the grain (DERIVATIONS_BEAM 2.1), kept; the speed and v / c the directional drive gives at that momentum, |p| Q / (Q S M Q + |p| T_D) on a heading (BEAM_LAW note 49, off the engine's drive_rate_and_wall; 0.83 of the design's throw at these momenta); the distances declared",
             "crowds": "measured (target 5: the gravitational redshift reached at first order, the second order a different law, DERIVATIONS_BEAM 5.2; the brackets the design's)",
             "exact_coasting_form": "the coasting form 1 + z = 1 + v / c, the receiver's Doppler (DERIVATIONS_BEAM 2.2): q = 0, h the throw's rate; the fit of the exact form",
             "ordering": "declared (the design's ordering criterion)",

@@ -1665,6 +1665,30 @@ states "exactly" and means integer equality at every tick.
   outward as the push it reads (C 1.3 to 1.5 times the ring mean, as on
   every registration) drives it. The field's burst and the fan's grain
   remain what they were. The registered verdicts stand as history ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+- **Re-read under the directional drive, S = 1 first (2026-09-21;
+  measured, the period derived before the run).** Under the directional
+  drive ([BEAM_LAW note 49](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  form B of the mathematician's FORM.md; the model owner's records 191
+  and 301) the S = 1 probes move at 192 x 64 / (64 x 64 + 192 x 110) =
+  0.4873 Links per interval = 0.838 c at their declared momentum (0.750 =
+  1.29 c under the per-axis rule), below the rows' 0.582: the derived
+  T(12) = 155 and T(24) = 309 at that speed, no circular orbit expected
+  (the derivation of p was made for the per-axis speed; under form B the
+  condition n x 64 n / (64 S + 110 n) = A gives n = 3.79, 5.88, 9.63, the
+  momenta 256, 384, 640, for a future run; the worlds keep 192, 320,
+  576). Re-run as they are on the branch `directional-drive` (source
+  fingerprint `6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`,
+  `tools/run_series.py --jobs 2`, 7.4 and 7.9 s, the books balanced, 4
+  record checks passed): `s1_r12` no longer outruns the field, reads the
+  fan 19 times (2601 label units), is turned through 0.87 of a turn, in
+  to r = 1.4 and out to 82.8, and leaves through face:-y at tick 414 (82
+  with no read before); `s1_r24` reads one shell (84 units), 0.19 of a
+  turn, and leaves through face:+y at tick 128 (82). No orbit closes
+  (measured = expected at this momentum); `fast_steps` 117 on `s1_r12`
+  (a host reading, note 48) and 0 on `s1_r24`. The four other worlds of
+  the series are re-registered with the register in the branch's second
+  stage ([the series README](../examples/events/orbit/README.md#re-read-under-the-directional-drive-at-s--1-2026-09-21);
+  [migration](MIGRATION.md#form-b-the-bodies-drive-on-the-momentums-line-2026-09-21)).
 
 
 ### A10, the width of an opening and the spread behind it, under the Beam Law (2026-09-20)

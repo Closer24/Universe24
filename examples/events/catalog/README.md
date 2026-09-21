@@ -89,3 +89,24 @@ tick; `clock_near_mass` is unchanged in its events and books (its bodies
 release nothing; the claims 0 in its `state.json`); `lamp_mirror_screen`
 and `neutron_star` are identical. The old integers are history
 ([migration](../../../docs/MIGRATION.md#no-registers-at-nodes-no-tables-on-2026-09-20-the-last-counts-join-the-table-the-flight-as-the-positions-accumulator-no-remainder-discarded)).
+
+## Re-read under the directional drive (2026-09-21)
+
+Under the directional drive ([BEAM_LAW note 49](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+the model owner's records 191 and 301) a body walks the line of its
+momentum at the pace |p|_1 S_1 Q / (Q S M S_1 Q + |p|_1 T_D), the rows'
+pace the cap, and its drive's wall must stay within 2^62 - 1.
+`neutron_star` no longer runs its 40 intervals: its eight neutrons of
+content 2^26 take the gravity column's push of 3 x 2^50 label units per
+interval (the placement's "the largest a short run allows" was set by the
+per-axis rule's bound on a component, which the new bound undercuts by
+the direction's resolution T_D), so by tick 6 a neutron's |p|_1 is 5 x
+2^51 on the direction (3, 2, 5), T_D = 683, and the run is refused at tick
+7 with the books balanced through tick 6 (`tests/test_entity_catalog.py`
+(b)); its re-placement at a content within the bound is a catalog change
+for the physicist, not this rule's. `sun_planet` moves (the planet at
+0.1648 Links per interval for the derived 0.1869 at its momentum 7713621;
+the branch's VALIDATION table has its digests), `lamp_mirror_screen` and
+`clock_near_mass` read the same records (no moving body), their
+`state.json` differing by the record's new fields alone.
+

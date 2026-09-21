@@ -237,7 +237,13 @@ def circular_orbit(flux: float, radius: int, width: int, content: int) -> tuple[
     M + p), and p v / r = push gives, with p = n M, the real root n of
     n^2 / (Q S + n) = A with A = Q x E_body x r / SHELL, independent of M
     (the equivalence principle); the whole p (label units) and the speed
-    it gives."""
+    it gives. The registered derivation, kept (the world's momentum is
+    this p): since the directional drive of 2026-09-21 (BEAM_LAW note 49)
+    the planet walks the line of its momentum at n Q / (Q S + n T_D), 64 n
+    / (64 S + 110 n) on a heading, 0.1648 Links per interval for the
+    0.1869 derived here (the period 305 for 269); the momentum that
+    closes the circle under the rule is a registration the owner orders
+    (the README's re-read of 2026-09-21)."""
     a = Q * flux * radius / SHELL
     reach = Q * width
     n = (a + math.sqrt(a * a + 4 * reach * a)) / 2

@@ -46,6 +46,16 @@ so with n = p / M_e and A = (1 + RATIO) Q E_body(r) r / SHELL
     n^2 / (Q S + n) = A,  n = (A + sqrt(A^2 + 4 Q S A)) / 2,  T = 2 pi r / v.
 
 The width S is chosen so that v = SPEED on the orbit of REFERENCE_RADIUS.
+Since the directional drive of 2026-09-21 (BEAM_LAW note 49) the electron
+walks the line of its momentum at the speed n Q / (Q S + n T_D), 64 n /
+(64 S + 110 n) on a heading, in place of n / (Q S + n): the worlds keep
+the momenta, the width, the action and the intervals derived above (the
+registered design), under which the speed at every radius is 0.93 to 0.97
+of the derived v (r = 2: 0.1000 for 0.1077, T 126 for 117; r = 8: 0.0575
+for 0.0600, T 874 for 838; r = 16: 0.0476 for 0.0493, T 2113 for 2040) and
+the closure condition moves by the same factors; the momenta that close a
+circle under the rule are a registration the owner orders, nothing is
+re-derived here (the README's re-read of 2026-09-21).
 The turn by momentum turns the phase by |p_axis| N / h per Link stepped
 on an axis, so over one orbit of a circle of radius r stepped on the
 GameBoard the phase turns by (N / h) x sum over the Links of |p_axis| = (N /

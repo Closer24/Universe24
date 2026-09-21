@@ -13,11 +13,16 @@ axes: on every axis a chain of CHAIN sources of ranks i = 1 .. CHAIN at the
 initial distances r_0 = 1 + SPACING x i, the faster the farther (no source
 ever overtakes another: a step onto an occupied Node would be refused). A
 source is a free measured event of content M with the momentum p along its
-axis; it steps one Link per (Q S M + p) / p self-creations (BEAM_LAW section
-3 step 5, Q = 64, S the world's `width`), so its speed is v = p / (Q S M +
-p) Links per interval, and p is chosen for the speed ladder v = c x V(axis)
-x (2 i - 1) / (2 CHAIN - 1) with V from 0.35 to 0.6: the twenty-four speeds
-span 0.05 c to 0.6 c, c the ray's speed on a heading read off the flight
+axis; since the directional drive of 2026-09-21 (BEAM_LAW note 49) it
+walks the line of its momentum at the speed |p| Q / (Q S M Q + |p| T_D)
+Links per interval on a heading (`speed`, off the engine's
+`drive_rate_and_wall`; until then one Link per (Q S M + p) / p
+self-creations, v = p / (Q S M + p), the per-axis rule of note 17), and
+p is the momentum registered for the speed ladder v = c x V(axis) x (2 i
+- 1) / (2 CHAIN - 1) with V from 0.35 to 0.6 under the per-axis rule
+(`momentum`, kept as the worlds' declared momenta): the twenty-four
+registered speeds spanned 0.05 c to 0.6 c under that rule and read 0.05 c
+to 0.5 c under the directional drive, c the ray's speed on a heading read off the flight
 table (`direction_flight`: m(L) Links per period L, 32 / 55 = 0.5818 per
 interval). Every source releases at every self-creation one row of F rays
 on the heading toward the centre alone (`release` [1, 64]: `by_clock(age,
@@ -96,8 +101,8 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[2] / "src"))
 
 from event_universe.core.game_board import PORT_HEADINGS  # noqa: E402
-from event_universe.events.nature_beam import direction_flight  # noqa: E402
-from event_universe.events.world import HEADING_OFFSET, Q  # noqa: E402
+from event_universe.events.nature_beam import direction_flight, direction_resolution  # noqa: E402
+from event_universe.events.world import HEADING_OFFSET, Q, drive_rate_and_wall  # noqa: E402
 from event_universe.world_loading import families_by_definition  # noqa: E402
 
 # The shipped definitions the world's families come from where they equal
@@ -149,15 +154,27 @@ def beam_speed() -> float:
 C = beam_speed()
 
 
+# The heading's resolution T_D = isqrt(3 Q^2) = 110 (note 49).
+T_HEADING = direction_resolution((1, 0, 0))
+
+
 def momentum(fraction: float, content: int) -> int:
-    """The momentum p (in label units) that gives the speed `fraction` x c
-    to a free source of content `content`: v = p / (Q S M + p)."""
+    """The momentum p (in label units) registered for the speed `fraction`
+    x c of a free source of content `content` under the per-axis rule, v =
+    p / (Q S M + p) (BEAM_LAW note 17): the worlds' declared momenta, kept
+    under the directional drive of 2026-09-21 (note 49), whose speed at
+    this momentum is `speed(p, content)`."""
     v = fraction * C
     return round(Q * WIDTH * content * v / (1 - v))
 
 
 def speed(p: int, content: int) -> float:
-    return p / (Q * WIDTH * content + p)
+    """The speed a momentum gives on a heading, off the engine's own rule
+    (`world.drive_rate_and_wall`, the directional drive, BEAM_LAW note
+    49): |p| Q / (Q S M Q + |p| T_D) Links per self-creation (until
+    2026-09-21 |p| / (Q S M + |p|))."""
+    rate, wall = drive_rate_and_wall([p, 0, 0], content, WIDTH, 1, T_HEADING)
+    return rate / wall
 
 
 def sources(factor: int) -> list[tuple[str, tuple[int, int, int], list[int], int]]:

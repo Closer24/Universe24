@@ -243,3 +243,47 @@ probe is bound for the whole run of 4000 intervals (four turns of 701 to
 five times and leaves at 917, `s32_r12` three times and leaves at 2004,
 `s8_r24` does not turn. The register entry has every number and the
 verdict re-read ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under the directional drive at S = 1 (2026-09-21)
+
+The directional drive (the model owner's records 191 and 301; form B of
+[docs/designs/light_speed/FORM.md](../../../docs/designs/light_speed/FORM.md)
+section 3; [BEAM_LAW note 49](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+a body walks the digital line of its momentum's direction at the pace
+|p|_1 S_1 Q / (Q S M S_1 Q + |p|_1 T_D), the rows' pace the cap, so the
+S = 1 probes, which outran the field at 0.750 Links per interval (1.29 c)
+under the per-axis rule, now move at 192 x 64 / (64 x 64 + 192 x 110) =
+0.4873 Links per interval = 0.838 c at their declared momentum and below
+the rows' 0.582. The derived period at that speed, written before the
+run: T(12) = 2 pi 12 / 0.4873 = 155, T(24) = 309; a circular orbit is not
+expected (the derivation of p above was made for the per-axis speed: under
+form B the circular-orbit condition n x 64 n / (64 S + 110 n) = A = q L C /
+(2 pi) gives n = 3.79, 5.88, 9.63 at S = 1, 8, 32, the nearest whole
+momenta 256, 384, 640 label units, for a future run; the registered worlds
+keep their declared 192, 320, 576). The two worlds re-run as they are,
+`tools/run_series.py --jobs 2` on the branch `directional-drive` (source
+fingerprint
+`6a3381a556a02e8e60ecea8dfba889a2197c4fa3750e9ee4c7a7066bb3c9a5e9`, Python
+3.14, headless, two of four cores), every run completed in 7.4 and 7.9 s
+with the books balanced at every tick, `tools/orbit_readings.py`: 4 record
+checks passed, 0 failed, exit 0 (the digests, state / audit / events:
+`s1_r12` `0a6db33e6454` / `537a8ce20ed1` / `e71c17464b0a`, `s1_r24`
+`03ea1882cbdb` / `a20fe181fcc4` / `c3cb0f61df56`):
+
+| World | S | r | p | Closed (expected) | T (derived) | Turns | r min .. max | Reads / units | C | End |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `s1_r12` | 1 | 12 | 192 | no turn (no) | - (155) | 0.87 | 1.4 .. 82.8 | 19 / 2601 | 0.36 (the run) | escaped through face:-y at tick 414 |
+| `s1_r24` | 1 | 24 | 192 | no turn (no) | - (309) | 0.19 | 24.0 .. 64.3 | 1 / 84 | 0.01 (the run) | escaped through face:+y at tick 128 |
+
+What changed against every registration before: the probe at r = 12 no
+longer outruns the field. It reads the fan 19 times (2601 label units)
+where it read nothing at 1.29 c, is turned through 0.87 of a turn, falls
+in to r = 1.4 and swings out to 82.8 before leaving through -y at tick
+414 (82 under the per-axis rule); the probe at r = 24 reads one shell (84
+units, one kick of 11 degrees on a momentum of 192) and leaves through
++y at tick 128 (82). No orbit closes, as expected at this momentum; the
+host reading `fast_steps` is 117 on `s1_r12` (its momentum grows under
+the kicks to above the one-Link-per-two-intervals mark; note 48's
+report) and 0 on `s1_r24`. The four other worlds are re-registered with
+the register in the second stage of the branch.
+

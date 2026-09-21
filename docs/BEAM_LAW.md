@@ -3916,7 +3916,18 @@ implementation's part of the contract. The design above is unchanged.
     a declared `drive` or `line` is refused as an unknown key. **The
     bound**: the wall |p|_1 T_D + Q S M S_1 Q within 2^62 - 1 (|p|_1 up to
     2^47 at T_D up to 2^14), refused at the step beyond it as the push's
-    bound refuses a momentum. **The three tests on the rule as built**:
+    bound refuses a momentum; no exact re-scaling of the rate and the
+    wall exists (a common divisor would round the residue at run time),
+    so a momentum within the per-axis rule's bound on a component can be
+    beyond this one by the factor T_D. On the register the catalog's
+    `neutron_star` (eight neutrons of content 2^26 under the gravity
+    column's push of 3 x 2^50 per interval, its content set by the
+    per-axis bound, "the largest a short run allows") reaches |p|_1 = 5 x
+    2^51 on the direction (3, 2, 5) by tick 6 and is refused at tick 7
+    (`tests/test_entity_catalog.py` (b) pins the refusal; its
+    re-placement at a content within the bound is the catalog's, not this
+    rule's); every other registered world's momenta are within 2^47.
+    **The three tests on the rule as built**:
     generic (one primitive with declared integers, the rate and the wall,
     no family name or kind, a row the body of no content: the same
     accumulator as the flight's at the momentum's fraction of its rate);
@@ -3953,10 +3964,22 @@ implementation's part of the contract. The design above is unchanged.
     crossing marks on a diagonal walk, one Port per Link, met. **The
     hubble stars' z** (the FORM's section 3): a star's speed in units of c
     at the declared momentum is read off the rule by
-    `tools/hubble_stars_readings.py` (`declared_speed` = rate / wall over
-    c), so the bar of `tests/test_hubble_stars_readings.py` (b) at p = Q S
-    M reads v = 64 / 174 and v / c = 110 / 174 = 0.6322 (1 / 2 and 0.859
-    until the rule), 22 Links in 60 intervals for 30. **Re-pinned under
+    `tools/hubble_stars_readings.py` and `tools/hubble_readings.py`
+    (`declared_speed` = rate / wall over c), so the bars of
+    `tests/test_hubble_stars_readings.py` (b) and
+    `tests/test_hubble_readings.py` (b) at p = Q S M read v = 64 / 174 and
+    v / c = 110 / 174 = 0.6322 (1 / 2 and 0.859 until the rule), 22 Links
+    in 60 intervals for 30; the register's generators
+    (`hubble_stars/make_worlds.py`, `hubble/make_worlds.py`) read the
+    speed a registered momentum gives off the same function and keep the
+    momenta they registered by the per-axis rule's inverse, so every world
+    file is byte-identical and the derived readings move: at the kept
+    momenta a star's speed is v / (1 + 0.72 v) of the design's throw v =
+    r_0 / T_0, no longer proportional to r_0, and the coasting derivation
+    at F = 0 reads q = -0.297 against the exact Hubble flow's 0 (the
+    momenta that realize the design's throw under the rule, p = Q S M Q v
+    / (Q - T_D v), are the generators' `momentum_of_speed`, for a
+    registration the owner orders; nothing re-derived here). **Re-pinned under
     the rule** (MIGRATION, "Form B, the bodies' drive on the momentum's
     line, 2026-09-21", the old and new integers with their cause;
     TEST_EXPECTATIONS): every test whose body moves by its momentum, the
