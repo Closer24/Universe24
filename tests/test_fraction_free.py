@@ -87,7 +87,7 @@ fraction-free counts"), written down first:
     form above the ceiling) are refused with Lambda_c = 2147483649 (its
     square above the bound by 2^32 + 1);
 (h) no remainder discarded at run time (the model owner's record 155 of
-    2026-09-20; note 41 (viii)): a record row's push on matter keeps its
+    2026-09-20; note 41 (viii)): a record row's push on a body keeps its
     remainder on the row (`share_of` with the row's accumulator, the
     columns `share_x/y/z`): on random labels, amounts and multiplicities
     the shares of a row pushed k times sum to the whole part of k x label

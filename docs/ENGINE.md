@@ -260,16 +260,25 @@ The turn by momentum (the world key `action`, h, and the measured-event
 key `phase_by_momentum`; [BEAM_LAW note 30 (ii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 the model owner's decision of 2026-09-20 on Bohr, "put it as parameters
 outside the GameBoard like the age") is applied in `_move` at the Link a
-body steps: its phase turns by `by_clock(k0, |p| x N, h)` with k0 the
-count of the step rule's fires on that axis before this one (the
-record's `axis_steps`, a lost or refused step counted, since the step
-drive; at a constant momentum the count the step rule gave at its age
-before the self-creation), the
-difference of two floors of k x |p| x N / h, no
-register anywhere; the axes compose; the product is bounded before it is
-formed; without `action` nothing turns. A rule of the measured event, the
-external thing, read from its own record; the rays' flight and collision
-are untouched.
+body steps: since the model owner's record 155 of 2026-09-20 (no tables;
+[BEAM_LAW note 41 (i) and (viii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+it is the `action` row of the body's table of counts, one row per axis:
+at every Link the step rule counts on an axis whose momentum component is
+p (a Link crossed, a Link lost to an earlier axis's step in the same
+self-creation, a Link refused at a contact) the row gains |p| x N (N the
+phase circle's steps) over h (the world's `action`), and the whole part
+the row then holds turns the phase at the Link crossed; at a Link not
+crossed that whole part is discarded and the residue kept (note 41
+(viii), the owner's item 9, pinned by `tests/test_step_drive.py` (e)); at
+a constant momentum the same integers as the retired `by_clock(k0, |p| x
+N, h)`, the difference of two floors at k0 the count of the rule's fires
+on the axis, and the exact sum of the momentum's history where it
+changes; the axes compose; the product |p| x N is bounded before it is
+formed; without `action` there are no rows and nothing turns. `run.json`
+and `state.json` carry the three accumulators as `acc.action` beside
+`drive` and `axis_steps`. A rule of the measured event, the external
+thing, read from its own record; the rays' flight and collision are
+untouched.
 `inverse_step` runs the
 inverse collision and the inverse walk on a GameBoard without a measured event
 (the bijection of [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam);
@@ -334,19 +343,30 @@ momentum line by, `weight x (u_d' - u_d)` summed over the turns
 the meeting under the world key `meeting`; zero without it), and, since
 stage (vii) step 3 of the amplitude law (the K finding of 2026-09-20),
 the `remainder` line in a recorded world (`Ledger.remainder_momentum`,
-per family and under `momentum.remainder`): a record's row pushes matter
+per family and under `momentum.remainder`): a record's row pushes a body
 with its share amount^2 / m of the quantum's unit label (the record's
-norm in m, a record's shares summing to one), the integer form label x
-amount // m floored toward zero (`nature_beam.share_of`), at its
-absorption (the click's push, the entry's momentum; the `share` beside
-the `push` on the click line), at a home, at the push of a `read` and
-at the recoil of a paid re-creation (the born rows' shares, a lamp's
-birth and a split alike), while the transit line carries the rows' whole
-labels; the remainder line takes the labels less the shares at an
-absorption or a home and gives the born labels less the recoil at a
-re-creation, so that measured + transit + escaped + cancelled +
-remainder moves only by the pushes, the turns and the escapes; a row of
-no record pushes by its label as it did. For a paid family the three
+norm in m, a record's shares summing to one), since the model owner's
+record 155 of 2026-09-20 ([BEAM_LAW note 41 (viii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+the whole part of the row's own accumulator plus label x amount in units
+of m, toward zero, with the remainder kept on the row
+(`nature_beam.share_of`; the store's `share_x`, `share_y`, `share_z`,
+written as `share` on the row's line of `state.json`), so that a row
+read at every interval of a passage pushes the exact sum over the
+passage and the push of a `read` moves the remainder line by nothing;
+the residue leaves with the row when it is absorbed (the click's push,
+the entry's momentum; the `share` beside the `push` on the click line)
+or comes home, to the remainder line with the rest of the label, and the
+line gives the born labels less the recoil at the recoil of a paid
+re-creation (the born rows' shares, a lamp's birth and a split alike),
+while the transit line carries the rows' whole labels; so measured +
+transit + escaped + cancelled + remainder moves only by the pushes, the
+turns and the escapes, and the remainder line reads what left with
+absorbed rows and homes, nothing of a row that lives; a row of no record
+pushes by its label as it did. A body on a set of Nodes places its
+releases over its Nodes by their claims, the `place` rows of its table of
+counts (`nature_beam.place_over_nodes`, every Node within one unit of its
+equal share of all the body has released; `acc.place` in `run.json` and
+`state.json`). For a paid family the three
 lines close over the click, the re-emission and the home (measured +
 transit + escaped constant; a `read` of a paid ray is a report of its
 label, the ray going on), and under the meeting the transit line moves
@@ -856,7 +876,7 @@ In a recorded world the record gains the lines of the layer
 (`events/amplitude.py`, the design's sections 3 and 5): `birth` (a lamp's
 record: `record`, `u`, `labels`, `arms`, `units`, `multiplicity`), the
 `click`, `read` and `rerelease` lines carry the rows' `record`, `branch`,
-`multiplicity`, `u`, `share` (the row's push on matter) and `age` where
+`multiplicity`, `u`, `share` (the row's push on a body) and `age` where
 the row is a record's (`rows` on a group
 line, the rows of a record among the group's, absent where none is;
 `window` and `turn` at a rotated `sum` set), `split` (per re-created row: `absorbed`, `born`,

@@ -247,7 +247,7 @@ class NatureBeam:
     hand: int = 0
     # The share's accumulators (the model owner's record 155 of 2026-09-20,
     # "no remainder discarded"; BEAM_LAW note 41 (viii)): per axis the part
-    # of the row's push on matter not yet delivered, `share_of`; 0 on a row
+    # of the row's push on a body not yet delivered, `share_of`; 0 on a row
     # of no record and on every row that never pushed; summed at a merge;
     # left with the row when it is absorbed or escapes.
     share_x: int = 0
@@ -578,26 +578,36 @@ class Flight:
         result: np.ndarray = (2 * age * s1 * Q + t) // (2 * t)
         return result
 
+    def accumulator(self, direction: np.ndarray, age: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+        """The position's accumulator of a ray of direction d at age tau,
+        formed in this one place (BEAM_LAW note 41 (viii)): the pair (m,
+        the residue), m = m(tau) the count of Manhattan steps made by the
+        age and the residue (tau r + T_d) mod d what the accumulator holds
+        toward the next step, r = 2 S_1 Q its rate and d = 2 T_d its wall
+        (T_d the direction's resolution, S_1 its Manhattan length, Q the
+        label's scale). `walk_step` reads it for the interval's step; the
+        click's exact phase reads the residue at an arrival (TWO_SLITS.md
+        section 2). A ray's rate never changes over its flight (a
+        re-release or a split is a new row at age 0), so both are off the
+        age and the row carries no field for them."""
+        s1, t = self.manhattan[direction], self.resolution[direction]
+        held = age * (2 * s1 * Q) + t
+        denominator = 2 * t
+        return held // denominator, held % denominator
+
     def walk_step(self, direction: np.ndarray, age: np.ndarray) -> np.ndarray:
         """The Link a ray of direction d crosses at age tau (a heading, or
         zero for no move), by the position's accumulator on the row, the
         one count rule of the law (BEAM_LAW note 41 (viii); the digital
         line of the flight): the accumulator gains r = 2 S_1 Q at every
-        interval over d = 2 T_d from the start T_d, e = [acc + r >= d] is
-        the Manhattan step of the interval (r <= d, so e is 0 or 1), and
-        the step is the m-th unit step of the direction's line, m the
-        count made before it. A ray's rate never changes over its flight
-        (a re-release or a split is a new row at age 0), so the
-        accumulator at the age is (tau r + T_d) mod d and the count made
-        is m(tau), both off the age (FORM.md section 1 (i)): the row
-        carries no field for them."""
+        interval over d = 2 T_d from the start T_d (`accumulator`), e =
+        [acc + r >= d] is the Manhattan step of the interval (r <= d, so e
+        is 0 or 1), and the step is the m-th unit step of the direction's
+        line, m the count made before it (FORM.md section 1 (i))."""
         s1, t = self.manhattan[direction], self.resolution[direction]
         rate = 2 * s1 * Q
-        denominator = 2 * t
-        held = age * rate + t
-        accumulator = held % denominator
-        made = held // denominator
-        moved = (accumulator + rate) // denominator
+        made, residue = self.accumulator(direction, age)
+        moved = (residue + rate) // (2 * t)
         place = np.where(s1 > 0, made % np.maximum(s1, 1), 0)
         result: np.ndarray = self.lines[direction, place] * moved[:, None]
         return result
@@ -875,7 +885,7 @@ def label_overflow_rows(
 
 
 def share_of(label: int, amount: int, multiplicity: int, accumulator: int = 0) -> tuple[int, int]:
-    """A record row's push on matter along one axis (stage (vii) step 3,
+    """A record row's push on a body along one axis (stage (vii) step 3,
     the K finding of 2026-09-20): its share amount^2 / m of the quantum's
     unit label (the record's norm is in m: the shares of a record's rows
     sum to one), the whole part of `accumulator + label x amount` in units
@@ -1768,7 +1778,7 @@ class FamilyPlan:
     t_multiplicity: list[int] = field(default_factory=list)
     h_birth: list[int] = field(default_factory=list)
     t_birth: list[int] = field(default_factory=list)
-    # The shares of the taken rows (their push on matter, `share_of`; the
+    # The shares of the taken rows (their push on a body, `share_of`; the
     # label itself on a row of no record), the remainder per group (the
     # labels less the shares of an absorbed group, to the books) and the
     # remainder per measured event of the home rows.
@@ -3042,7 +3052,7 @@ def nature_beam(
                 fail(overflow[0], 4, overflow[1])
             flow = admitted_rows[:, 2 : 2 + DIMENSIONS]
             labels = flow if free else flow * c_t[:, None]
-            # The push of a record's row on matter is its share of the
+            # The push of a record's row on a body is its share of the
             # quantum's label (stage (vii) step 3, `share_of`); a row of no
             # record pushes by its label, so the moments are what they were
             # without a record.

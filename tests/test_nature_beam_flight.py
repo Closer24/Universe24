@@ -32,7 +32,16 @@ docs/TEST_EXPECTATIONS.md ("The flight"), written down first:
     +X escapes on `face:+x`; the refusals of the boundary and the record;
 (e) `adjacent_node` on (3, 2, 1) with x and z periodic (from
     `test_event_boundaries`): (2, 1, 0) +X -> (0, 1, 0), (0, 1, 0) -X ->
-    (2, 1, 0), (1, 1, 0) +Y -> None, +Z and -Z -> (1, 1, 0) itself.
+    (2, 1, 0), (1, 1, 0) +Y -> None, +Z and -Z -> (1, 1, 0) itself;
+(f) the flight accumulator read in one place (`Flight.accumulator`, the
+    physics-rule review of no-tables, 2026-09-21, item 5): on the heading
+    (1, 0, 0) (T_d 110, the rate 128 over the wall 220) the pairs (m, the
+    residue) at the ages 0 to 3 are (0, 110), (1, 18), (1, 146), (2, 54);
+    on (1, 1, 0) (T_d 156, the rate 256 over 312) (0, 156), (1, 100),
+    (2, 44), (2, 300); over 600 ages on every direction of the table m
+    equals `manhattan_steps`, the residue equals (tau r + T_d) mod d and
+    stays in [0, d), and `walk_step` is the line's m-th unit step times
+    [residue + r >= d]; a rest direction holds (0, 1) at every age.
 """
 
 from __future__ import annotations
@@ -344,3 +353,33 @@ def test_adjacent_node_has_the_declared_signed_links(position, port, expected):
     assert adjacent_node(position, port, (3, 2, 1), (True, False, True)) == expected
     if expected is not None:
         assert adjacent_node(expected, port ^ 1, (3, 2, 1), (True, False, True)) == position
+
+
+# -- (f) ---------------------------------------------------------------------------
+
+
+def test_the_flight_accumulator_is_read_in_one_place():
+    """(f)."""
+    flight = direction_flight(TABLE)
+    heading, diagonal = TABLE.index((1, 0, 0)), TABLE.index((1, 1, 0))
+    ages = np.arange(4)
+    made, residue = flight.accumulator(np.full(4, heading), ages)
+    assert made.tolist() == [0, 1, 1, 2] and residue.tolist() == [110, 18, 146, 54]
+    made, residue = flight.accumulator(np.full(4, diagonal), ages)
+    assert made.tolist() == [0, 1, 2, 2] and residue.tolist() == [156, 100, 44, 300]
+    ages = np.arange(600)
+    for index, vector in enumerate(TABLE):
+        directions = np.full(600, index)
+        s1 = sum(abs(c) for c in vector)
+        t = int(flight.resolution[index])
+        rate, wall = 2 * s1 * Q, 2 * t
+        made, residue = flight.accumulator(directions, ages)
+        assert made.tolist() == flight.manhattan_steps(directions, ages).tolist()
+        assert residue.tolist() == [(tau * rate + t) % wall for tau in range(600)]
+        assert int(residue.min()) >= 0 and int(residue.max()) < wall
+        moved = (residue + rate) // wall
+        place = made % s1 if s1 else np.zeros(600, dtype=np.int64)
+        expected = flight.lines[index, place] * moved[:, None]
+        assert (flight.walk_step(directions, ages) == expected).all()
+        if s1 == 0:
+            assert set(made.tolist()) == {0} and set(residue.tolist()) == {1}

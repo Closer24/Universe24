@@ -16,7 +16,7 @@ lines over Delta t detector intervals (a least-squares slope), the
 distance from the ages of the arriving light on the click records
 (`reading` = the age moment, amount x age, under `reads: "age"`; the
 light-travel time tau = the age and the distance d = m(tau) Links, m the
-Manhattan steps of the flight table read through the engine's own
+Manhattan steps of the flight rule read through the engine's own
 `direction_flight`, whose period also gives c), and the luminosity, the click
 rate of the star's light per detector interval (expected 1 / (1 + z) of
 the lamp's rate: a beam does not dilute, so the click rate carries no
@@ -94,14 +94,14 @@ LCDM_A = math.asinh(math.sqrt(OMEGA_L / OMEGA_M))
 Form = Callable[[float], float]
 KIND_DETECTOR = "[DETECTOR]"
 KIND_BOARD = "[GAMEBOARD]"
-# The flight table of the six headings (the two rest vectors first): m(age)
+# The flight's constants of the six headings (the two rest vectors first): m(age)
 # and c are the same on every heading.
 HEADINGS_FLIGHT = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
 
 
 def beam_speed() -> float:
     """c, the Links a ray makes on a heading in one period over the period
-    (32 / 55 = 0.58182 per interval), off the flight table."""
+    (32 / 55 = 0.58182 per interval), off the flight rule."""
     heading = np.array([HEADING_OFFSET])
     period = int(HEADINGS_FLIGHT.period[HEADING_OFFSET])
     return int(HEADINGS_FLIGHT.manhattan_steps(heading, np.array([period]))[0]) / period
@@ -813,7 +813,7 @@ def main(argv: list[str] | None = None) -> int:
         left = [f"{s.name} at {s.left}" for s in run.stars.values() if s.left is not None]
         homes = sum(s.homes for s in run.stars.values())
         print(
-            f"{KIND_DETECTOR} {run.name}: c = {run.c:.5f} Links per interval (the flight table), rho = "
+            f"{KIND_DETECTOR} {run.name}: c = {run.c:.5f} Links per interval (the flight rule), rho = "
             f"{run.rho:g} step per self-creation; the detector's own clock over the run {run.detector_rate:.4f} "
             f"self-creations per interval; stars that left the GameBoard: {', '.join(left) if left else 'none'}; "
             f"{KIND_BOARD} rows taken home over the run: {homes}; source fingerprint {run.fingerprint}"
