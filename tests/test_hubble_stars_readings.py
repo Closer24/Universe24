@@ -165,7 +165,11 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_declare_a_fo
     # the wall of the position's accumulator over its rate.
     table = direction_flight(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
     assert expectations["c"] == Q / int(table.resolution[HEADING_OFFSET])
-    assert set(expectations["derivations"]) == set(expectations) - {"format", "derivations"}
+    assert set(expectations["derivations"]) == set(expectations) - {
+        "format",
+        "derivations",
+        "replicated",
+    }
     # The record-click worlds (reading `sum` at the centre; the key
     # `amplitude` deleted by the one click of stage (vii), MIGRATION
     # (vii-4): every lamp births records) and the expectations pinned for
