@@ -42,7 +42,11 @@ hand (the orders standing at the last record that lists them) is closed: the
 Boss orders no new item, run, review or design beyond it on its own; a new
 need is put to the owner in one line, with the solution the Boss proposes and
 what it costs, and starts on his word. A correction inside an existing order
-(a must-fix of a review, a conflict, a re-push) is not new work. And whenever
+(a must-fix of a review, a conflict, a re-push) is not new work, and a bug
+is fixed without asking (the owner, 2026-09-21, record 439: "fix bugs, yes;
+do not open new development without approval"): a bug is a behaviour the
+tree's own contract, test or record says is wrong, fixed by its owner with a
+test, never a new rule, key, design or run. And whenever
 the Boss brings the owner a question or a problem, it brings the solution it
 recommends beside it, in one sentence, marked as a proposal; a question
 without a proposed answer is not sent.
