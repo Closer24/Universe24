@@ -2154,5 +2154,17 @@
    "double"
   ],
   "minimum_gap": 0.1
+ },
+ "replicated": {
+  "reading_rule": "docs/REPLICATIONS.md#hubble_stars-g2-the-record-worlds-and-the-base-worlds",
+  "c": "docs/REPLICATIONS.md#hubble_stars-g2-the-record-worlds-and-the-base-worlds",
+  "throw_age": "docs/REPLICATIONS.md#hubble_stars-g2-the-record-worlds-and-the-base-worlds",
+  "ticks": "docs/REPLICATIONS.md#hubble_stars-g2-the-record-worlds-and-the-base-worlds",
+  "windows": "docs/REPLICATIONS.md#hubble_stars-g2-the-record-worlds-and-the-base-worlds",
+  "registered_window": "docs/REPLICATIONS.md#hubble_stars-g2-the-record-worlds-and-the-base-worlds",
+  "stars": "docs/REPLICATIONS.md#hubble_stars-g2-the-record-worlds-and-the-base-worlds",
+  "crowds": "docs/REPLICATIONS.md#hubble_stars-g2-the-record-worlds-and-the-base-worlds",
+  "exact_coasting_form": "docs/REPLICATIONS.md#hubble_stars-g2-the-record-worlds-and-the-base-worlds",
+  "ordering": "docs/REPLICATIONS.md#hubble_stars-g2-the-record-worlds-and-the-base-worlds"
  }
 }

@@ -1146,5 +1146,10 @@
     1
    ]
   }
+ },
+ "replicated": {
+  "j2": "docs/REPLICATIONS.md#weak-j1-j2-and-the-w-exchange",
+  "become": "docs/REPLICATIONS.md#weak-j1-j2-and-the-w-exchange",
+  "w": "docs/REPLICATIONS.md#weak-j1-j2-and-the-w-exchange"
  }
 }
