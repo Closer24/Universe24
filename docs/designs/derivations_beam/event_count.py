@@ -19,6 +19,7 @@ Run from the repository root with PYTHONPATH=src:
 
 from __future__ import annotations
 
+import math
 import time
 from collections import Counter
 from pathlib import Path
@@ -159,13 +160,18 @@ if __name__ == "__main__":
                 f"  registered check: the 64 clicks by kind {dict(kinds)} (the register: {expectations['two_slits']['clicks_by_kind']})"
             )
         if relative.endswith("deuteron_1_kick.json"):
+            fires = [e.steps for e in sim.measured.values()]
+            contacts = sum(sum(e.contacts) for e in sim.measured.values())
             print(
-                f"  registered check: the drive fired {[e.steps for e in sim.measured.values()]} times and {[sum(e.contacts) for e in sim.measured.values()]} were refused, every fire a contact and no Link (the register: no step, the first refused step of each body toward the other)"
+                f"  registered check: the drive fired {fires} times, {sum(fires)} in all, and {contacts} contacts were booked on the occupants: every fire refused, no Link (the register: no step, the first refused step of each body toward the other)"
             )
         if relative.endswith("coasting_none.json"):
-            unchanged = sum(
-                1 for n, e in sim.measured.items() if list(e.momentum) == momentum_initial[n]
-            )
+            ratios = [
+                math.sqrt(sum(v * v for v in e.momentum))
+                / math.sqrt(sum(v * v for v in momentum_initial[n]))
+                for n, e in sim.measured.items()
+                if any(momentum_initial[n])
+            ]
             print(
-                f"  registered check: {len(sim.measured)} bodies; momentum at the end equal to the momentum declared, the README's p(end) / p(0) = 1.000 on the coasting control: {unchanged} of {len(sim.measured)}"
+                f"  registered check: {len(sim.measured)} bodies; |p(end)| / |p(0)| from {min(ratios):.4f} to {max(ratios):.4f} on the {len(ratios)} thrown stars (the README's p(end) / p(0) = 1.000 on the coasting control)"
             )
