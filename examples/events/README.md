@@ -459,7 +459,7 @@ pins; the register entry is
 
 ## The hand series
 
-The folder [hand/](hand/README.md) holds the worlds of series P, the hand
+The folder [hand/](hand/README.md) holds the worlds of series U, the hand
 (`hand-v1`, the model owner's decision of 2026-09-20, record 128 of the
 log; [BEAM_LAW note 39](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
 written by `hand/make_worlds.py`: `w_hand`, the W world with a second
@@ -502,7 +502,7 @@ at N = 1024 and 4096. The register entry is
 ## The c series
 
 The folder [c_measured/](c_measured/README.md) holds the one world of
-series Q, c measured behind a detector, written by `c_measured/make_world.py`
+series V, c measured behind a detector, written by `c_measured/make_world.py`
 with its register (`expectations.json` and `derived.csv`: the closed form's
 escape of every direction, DERIVATIONS_BEAM.md section 11.1, written before
 the run): an open cube of 65^3 whose six faces are the detectors, one lamp

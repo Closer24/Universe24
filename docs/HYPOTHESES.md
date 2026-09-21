@@ -925,7 +925,14 @@ couplings.
   which-path world and the CNOT, with no draw and no signal: the outcome
   of a pair is the one u of the one record. Not claimed: that quantum
   mechanics is solved; the circle's N, the tables' 1/256 grain and the
-  ladder's rounding are the law's own and give the departures below.
+  ladder's rounding are the law's own and give the departures below. A
+  non-absorbing read is a deferred offer, not an outcome: the layer keeps
+  a selector keyed by the record's current label set and the click
+  gathers at the record's far completion, a later rotation replacing that
+  label set; a read followed by a rotation and a second read is not a
+  sequential measurement and is out of the register's contract
+  (sequential-instrument use is unsupported under `amplitude-v1`; issue
+  #584, 2026-09-21).
 - **The reading (series L, run on 2026-09-20, the fingerprint
   `ff5c382d672f`; [EXPERIMENTS](EXPERIMENTS.md), "L, the amplitude
   law").** Every acceptance integer of the design reproduced: the

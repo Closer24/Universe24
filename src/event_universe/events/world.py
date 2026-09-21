@@ -1299,17 +1299,29 @@ def _signed_ratio(value: object, label: str) -> tuple[int, int]:
 def _address(value: object, label: str, shape: Address3) -> Address3:
     if not isinstance(value, list) or len(value) != 3:
         raise ValueError(f"{BEAM_LAW}: {label} must be three integers")
-    found = tuple(
-        _integer(item, label, 0, extent - 1) for item, extent in zip(value, shape, strict=True)
-    )
-    return found[0], found[1], found[2]
+    components: list[int] = []
+    for item, extent in zip(value, shape, strict=True):
+        if type(item) is not int or item < 0 or item >= extent:
+            raise ValueError(
+                f"{BEAM_LAW}: {label} components must be integers on the GameBoard, from 0 "
+                f"through the extent less one on each axis of the shape {list(shape)}"
+            )
+        components.append(item)
+    return components[0], components[1], components[2]
 
 
 def _vector(value: object, label: str, bound: int) -> Vector:
     """A primitive integer vector with every component in -bound .. bound."""
     if not isinstance(value, list) or len(value) != 3:
         raise ValueError(f"{BEAM_LAW}: {label} must be three integers")
-    found = tuple(_integer(item, label, -bound, bound) for item in value)
+    components: list[int] = []
+    for item in value:
+        if type(item) is not int or item < -bound or item > bound:
+            raise ValueError(
+                f"{BEAM_LAW}: {label} components must be integers from {-bound} through {bound}"
+            )
+        components.append(item)
+    found = (components[0], components[1], components[2])
     if found == (0, 0, 0):
         raise ValueError(
             f"{BEAM_LAW}: {label} must not be the zero vector (the rest slots are the table's)"
@@ -2798,7 +2810,15 @@ def _record_load_checks(
     (each split's norm, each rotation's 65536, each gate's parties as the
     copies) is bounded by 2^62 - 1 in the product, refused at load before
     any row is formed (a sufficient bound: a path meets every re-emitter
-    at most once; the run refuses a longer one at the split)."""
+    at most once; the run refuses a longer one at the split). Two guards,
+    then: this static path ceiling at load, an acyclic count of the
+    splits, rotations and gates on a path, and the run-time bound at the
+    split (`nature_beam._release_family`, the row's multiplicity times the
+    split's norm against the same bound); a cycle among re-emitters (two
+    openings feeding each other, as the two slits 6 Links apart under the
+    Huygens fan) is outside the acyclic count and is caught by the
+    run-time bound alone, so the register's ceiling is a contract on
+    acyclic paths (the auditor's round 8, 2026-09-21)."""
     sum_nodes = {
         position
         for detector in detectors
