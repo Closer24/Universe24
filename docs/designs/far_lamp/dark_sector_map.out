@@ -2,7 +2,7 @@
    v =    80 km/s: beta = 2.67e-04; the receiver's ratio 1.000267, the source's 1.000267, the transverse exactly 1, the moving reader's factor 0.999733: every departure from the classical Doppler is of order beta^2 = 7.1e-08
    v =   150 km/s: beta = 5.00e-04; the receiver's ratio 1.000500, the source's 1.000501, the transverse exactly 1, the moving reader's factor 0.999500: every departure from the classical Doppler is of order beta^2 = 2.5e-07
    v =   220 km/s: beta = 7.34e-04; the receiver's ratio 1.000734, the source's 1.000734, the transverse exactly 1, the moving reader's factor 0.999266: every departure from the classical Doppler is of order beta^2 = 5.4e-07
-   the flat curves are read at the edge to a few km/s out of 100 to 250; the law's readings differ from the classical Doppler by parts in 10^6: no reading through a detector makes a Keplerian edge look flat
+   the flat curves are read at the edge to a few km/s out of 100 to 250; the law's readings differ from the classical Doppler by parts in 10^4 of the shift (parts in 10^7 of the reading): no reading through a detector makes a Keplerian edge look flat
 
 2. THE ONE MECHANISM IN THE LAW FOR A FLAT CURVE WITHOUT UNSEEN CONTENT: A PERIODIC SHORT DIMENSION (HYPOTHESES 6)
    the shell mean of the field is q Q / N(r) (section 3.2); N(r) counted on the lattice; the exponent p of the mean between successive radii, r^p (open board -2, a line of images -1)
