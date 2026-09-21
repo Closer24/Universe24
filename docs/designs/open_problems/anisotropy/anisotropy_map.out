@@ -1,0 +1,32 @@
+A. THE ANISOTROPY, CLOSED (two arms of one length d at right angles, the rows at one pace c in the lattice's frame)
+   beta | along: 2 d / (c (1 - beta^2)) over 2 d / c = gamma^2 | across: gamma | the fractional difference gamma - 1 | beta^2 / 2
+   4.2970e-01 | 1.2264552631 | 1.1074544068 | 1.075e-01 | 9.232e-02
+   2.1480e-01 | 1.0483708234 | 1.0238998112 | 2.390e-02 | 2.307e-02
+   1.0740e-01 | 1.0116693633 | 1.0058177585 | 5.818e-03 | 5.767e-03
+   1.0000e-04 | 1.0000000100 | 1.0000000050 | 5.000e-09 | 5.000e-09
+   1.2300e-03 | 1.0000015129 | 1.0000007565 | 7.565e-07 | 7.564e-07
+   the Earth's orbital speed 30 km/s (beta 1.0e-4): 5.0e-9; the cosmic background's 370 km/s (1.23e-3): 7.6e-7; the resonator bounds 1e-17 (Herrmann et al. 2009) and 9.2 +- 10.7 x 1e-19 (Nagel et al. 2015): FAIL by nine to twelve orders unless the laboratory is at rest in the lattice's frame to 1.3 m/s all year
+
+B. A RIGID ARM IS A CONTACT BOND OF WHOLE LINKS: nothing of the six verbs shortens a Link (the position accumulator carries one Link per carry; the contact refuses a step onto an occupant); the round trips of A are exact on it
+
+C. A PUSH-BOUND ARM IN MOTION (the continuum, floating point, labelled: the relative orbit of a light probe about a heavy source both at beta along x; the relativistic dispersion; the rest orbit circular at r0 = 100, v_orb = 0.1 c, its period 2 pi r0 / v_orb)
+   beta | the push | the extents along / across over the rest diameter 2 | their ratio (Lorentz: 1 / gamma) | the period over the rest period (Lorentz: gamma) | the orbit's end
+   0.2148 | Lorentz's force (Maxwell's field of the moving source) | 0.9818 / 1.0051 | 0.9768 (1 / gamma = 0.9767) | 1.0344 (gamma = 1.0239) | bound after 3.1 rest periods
+   0.2148 | -grad A alone (covariant-readings-v1's (ii) as amended) | 1.0182 / 0.9594 | 1.0612 (1 / gamma = 0.9767) | 0.9649 (gamma = 1.0239) | bound after 3.1 rest periods
+   0.4297 | Lorentz's force (Maxwell's field of the moving source) | 0.9078 / 1.0051 | 0.9031 (1 / gamma = 0.9030) | 1.1188 (gamma = 1.1075) | bound after 3.3 rest periods
+   0.4297 | -grad A alone (covariant-readings-v1's (ii) as amended) | 0.9574 / 0.8425 | 1.1364 (1 / gamma = 0.9030) | 0.8276 (gamma = 1.1075) | bound after 3.3 rest periods
+   0.6000 | Lorentz's force (Maxwell's field of the moving source) | 0.8042 / 1.0052 | 0.8001 (1 / gamma = 0.8000) | 1.2628 (gamma = 1.2500) | bound after 3.8 rest periods
+   0.6000 | -grad A alone (covariant-readings-v1's (ii) as amended) | 0.7927 / 0.7257 | 1.0923 (1 / gamma = 0.8000) | 0.7107 (gamma = 1.2500) | fell in after 2.8 rest periods
+   under Lorentz's force the thrown orbit is the rest orbit contracted by 1 / gamma along the motion with the period gamma (Lorentz 1904); under -grad A alone the force is gamma^2 times Lorentz's on every Node of the co-moving orbit (the identity of the note's section 3), a stiffer orbit, not the contracted one
+
+D. THE SOURCE'S VELOCITY IS ENCODED LOCALLY: the flow along the retarded direction n_ret, the gradient of A from the present position; the angle between them at the Node (x, y) from the present position
+   beta | (x, y) | n_ret (the flow's direction) | -grad A's direction | the angle between them, degrees | asin(beta) for comparison at x = 0
+   0.2148 | (+0.0, +1.0) | (+0.2148, +0.9767) | (+0.0000, +1.0000) |  12.40 |  12.40
+   0.2148 | (+1.0, +1.0) | (+0.8063, +0.5915) | (+0.7236, +0.6902) |   7.38 |  12.40
+   0.2148 | (-1.0, +1.0) | (-0.5915, +0.8063) | (-0.7236, +0.6902) |  10.09 |  12.40
+   0.2148 | (+0.5, +2.0) | (+0.4394, +0.8983) | (+0.2535, +0.9673) |  11.38 |  12.40
+   0.4297 | (+0.0, +1.0) | (+0.4297, +0.9030) | (+0.0000, +1.0000) |  25.45 |  25.45
+   0.4297 | (+1.0, +1.0) | (+0.8885, +0.4588) | (+0.7750, +0.6319) |  11.88 |  25.45
+   0.4297 | (-1.0, +1.0) | (-0.4588, +0.8885) | (-0.7750, +0.6319) |  23.50 |  25.45
+   0.4297 | (+0.5, +2.0) | (+0.6249, +0.7807) | (+0.2931, +0.9561) |  21.63 |  25.45
+   two readings of one Node (the first moment and the six-Port difference of the age moment) disagree in direction by the source's aberration: a road to the magnetic term without a label on the row, named for source-velocity-v1's designer; at series K's fan the Port difference is not a field (the light-bending note, section 4), so the road needs the dense fan

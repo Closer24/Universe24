@@ -385,8 +385,8 @@ definition.
 `make_definitions.py` beside them; `tests/test_entity_definitions.py`
 (v2-f) checks the files against the generator and places every
 definition): `families.json`, one definition per family the registered
-worlds declare (the 48 names since `hand-v1` added the antineutrino `nubar`, each once, in the catalog's canonical form:
-the photon `light`, the electron `e`, the electron born by `become` `beta`,
+worlds declare (the 49 names since series S added the muon `mu` on 2026-09-21, 48 since `hand-v1` added the antineutrino `nubar`, each once, in the catalog's canonical form:
+the photon `light`, the electron `e`, the electron born by `become` `beta`, the muon `mu`,
 the proton `p` in the atom's units, the neutron `n`, the strong family
 `nuclear`, the neutrino `nu`, the W `w`, the seven inert materials, the
 five free masses, the test charge `q`, the choosers `sa` and `sb`, the 24
