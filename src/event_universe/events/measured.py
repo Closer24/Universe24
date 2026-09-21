@@ -208,12 +208,12 @@ class Count:
     numerator (`content` the body's content, `crowd` what its clock
     counted, `held` the content held of the row's family, `rate` the
     lamp's own rate, `momentum` the momentum on the row's axis, `column`
-    the column's lifted numerator on the axis, `flow` the flux-weighted
-    flow of the direction on the axis); `index` the family, the column,
-    the direction or, for the turn by momentum, the axis the row belongs
-    to, and `axis` its axis (0 where the count has none); `numerator` the rate's own factor n (1 where the loop is
-    handed the whole numerator); `denominator` d (the last one used where
-    the loop is handed it, the step's divisor and the flux's); `at_most`
+    the column's lifted numerator on the axis); `index` the family, the
+    column or, for the turn by momentum, the axis the row belongs to, and
+    `axis` its axis (0 where the count has none); `numerator` the rate's
+    own factor n (1 where the loop is handed the whole numerator);
+    `denominator` d (the last one used where the loop is handed it, the
+    step's divisor); `at_most`
     the cap on the count gained at one self-creation (1 on the drive, 0
     otherwise); `idle_at_zero` whether a numerator of 0 leaves the row as it
     is (the step's rule: a momentum of 0 never steps); and `accumulator`,
@@ -241,8 +241,8 @@ class CountTable:
     and returns the whole parts in row order, which the count's consumer
     delivers (the frame to the phase, `_suspend` to the count owed, step 5
     to the rows born and the records the lamp births, `_move` to the Link,
-    `push_form` to the momentum, `weighted_flow` to the flow). A future
-    count is a new row, not new code."""
+    `push_form` to the momentum). A future count is a new row, not new
+    code."""
 
     def __init__(self, rows: list[Count]) -> None:
         self.rows = rows
@@ -267,10 +267,10 @@ class CountTable:
         """The one loop: every row of the count `name` (of one `index` when
         given) gains its rate, `row.numerator x values[k]` (`values` per
         row in row order: the content, the count the clock read, the held
-        content per family, the momentum per axis, the column's or the
-        direction's numerator per axis; the row's own numerator alone when
-        None), over its denominator (`denominators[k]` when the caller
-        hands it: the step's divisor, the flux's), and the count gained is
+        content per family, the momentum per axis, the column's numerator
+        per axis; the row's own numerator alone when None), over its
+        denominator (`denominators[k]` when the caller hands it: the step's
+        divisor), and the count gained is
         the whole part the accumulator then holds, capped at `at_most`; a
         row idle at zero is left as it is by a rate of 0. Returns the counts
         gained in row order."""
@@ -325,7 +325,6 @@ def counts_table(
     free: tuple[bool, ...],
     lamp_rate: tuple[int, int] | None,
     column_scales: tuple[int, ...],
-    directions: int,
     action: int | None = None,
     phase_steps: int = 1,
     nodes: int = 1,
@@ -335,9 +334,8 @@ def counts_table(
     family: it releases nothing freely), the lamp's rate where the body is
     a lamp, the drive per axis (the step's divisor handed to the loop, the
     cap 1, idle at a momentum of 0), the push per column and axis over
-    Lambda_c^2, under `doppler` the flow per direction of the world's
-    table and axis (the flux's denominator handed to the loop), and under
-    the world key `action` the turn by momentum per axis (the model
+    Lambda_c^2, and under the world key `action` the turn by momentum per
+    axis (the model
     owner's record 155 of 2026-09-20, "no exception": the rate |p_a| x N at
     every Link the step rule counts on the axis, over h; its index the
     axis)."""
@@ -355,11 +353,6 @@ def counts_table(
     rows.extend(
         Count("push", "column", column, axis, 1, scale * scale)
         for column, scale in enumerate(column_scales)
-        for axis in range(3)
-    )
-    rows.extend(
-        Count("flow", "flow", direction, axis, 1, 1)
-        for direction in range(directions)
         for axis in range(3)
     )
     if action is not None:
@@ -455,6 +448,16 @@ class Measured:
     # table of counts below: per axis the signed distance the momentum has
     # driven since the last step, `|drive_a| < Q S M + |p_a|`).
     axis_steps: list[int] = field(default_factory=lambda: [0, 0, 0])
+    # The crossing rule (the model owner's record 158 of 2026-09-20; BEAM_LAW
+    # note 48): the Port of the Link the body crossed this interval
+    # (`step_port`, -1 without a step: none fired, a refused step, an
+    # escape) and the one it crossed the interval before (`last_step_port`),
+    # the body's own two last Links, set by `_move` at the start of every
+    # interval and read by the reading of step 4 (the heading e of this
+    # interval's step and e' of the previous one's). The same kind of
+    # one-interval fact as a row's `arrival`; no memory of any row.
+    step_port: int = -1
+    last_step_port: int = -1
     # The table of the body's counts (the fraction-free law, 2026-09-20;
     # BEAM_LAW note 41; the model owner's table of 2026-09-20): one row per
     # count, `CountTable`, every row advanced by the one loop
@@ -466,15 +469,13 @@ class Measured:
     # family (`held x n` at `release` [n, d]; 0 on a paid family), `lamp`
     # (the lamp's rate [n, d]), `drive` per axis (the momentum over the
     # step's divisor D, the cap `at_most` 1), `push` per column and axis
-    # (the column's lifted numerator over Lambda_c^2, `nature_beam.push_form`)
-    # under the world key `doppler`, `flow` per direction and axis (the
-    # flux-weighted flow over G Q |v_d|^2, `nature_beam.weighted_flow`) and
+    # (the column's lifted numerator over Lambda_c^2, `nature_beam.push_form`),
     # under `action` the turn by momentum `action` per axis (|p_a| N per
     # Link the step rule counts on the axis, over h; record 155), and on
     # a body on a set the `place` row per Node, the Node's claim on the
     # body's releases in units of 1 / nodes (`nature_beam.place_over_nodes`).
-    # `acc_owed`, `acc_release`, `acc_lamp`, `acc_turn`, `acc_push`,
-    # `acc_flow` and `drive` below read and write the table; `state.json`
+    # `acc_owed`, `acc_release`, `acc_lamp`, `acc_turn`, `acc_push` and
+    # `drive` below read and write the table; `state.json`
     # and `run.json` carry the accumulators under `acc` by name, beside
     # `drive`; a declared accumulator is refused with the key. Every one
     # starts at 0 with the age.
@@ -535,11 +536,6 @@ class Measured:
     turn: int = 0
     frame_content: int = 0
     frame_charges: list[Pair] = field(default_factory=list)
-    # The momentum the frame read (the p_a of the reading's weight at the
-    # relative speed under the world key `doppler`, BEAM_LAW note 38): the
-    # body's own record at the start of the interval, so the weight of an
-    # interval's every group is read at one speed, as the charges are.
-    frame_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
     presence: int = 0
     counted: int = 0
 
@@ -670,18 +666,12 @@ class Measured:
     def acc_push(self) -> list[list[int]]:
         return self.counts.grid("push")
 
-    @property
-    def acc_flow(self) -> list[list[int]]:
-        return self.counts.grid("flow")
-
     def accumulators(self) -> dict[str, object]:
         """The accumulators of the table of counts by the count's name
-        (BEAM_LAW note 41): `owed`, `release` per family, `lamp`, `turn`,
-        `push` per column by its name (the three axes' remainders) and,
-        under `doppler`, `flow` per direction of the world's table (aligned
-        with the record's `directions`) and axis; what `state.json` and
-        `run.json` carry under `acc`, beside `drive`; a resumed run
-        continues from them."""
+        (BEAM_LAW note 41): `owed`, `release` per family, `lamp`, `turn`
+        and `push` per column by its name (the three axes' remainders);
+        what `state.json` and `run.json` carry under `acc`, beside `drive`;
+        a resumed run continues from them."""
         found: dict[str, object] = {
             "owed": self.acc_owed,
             "release": list(self.acc_release),
@@ -691,8 +681,6 @@ class Measured:
                 name: list(axes) for name, axes in zip(self.column_names, self.acc_push, strict=True)
             },
         }
-        if self.acc_flow:
-            found["flow"] = [list(axes) for axes in self.acc_flow]
         if self.counts.of("action"):
             found["action"] = self.counts.values("action")
         if self.counts.of("place"):
@@ -726,6 +714,10 @@ class Measured:
             "steps": self.steps,
             "drive": list(self.drive),
             "axis_steps": list(self.axis_steps),
+            # The crossing rule's two marks (BEAM_LAW note 48): the Port of
+            # the Link crossed this interval and the interval before.
+            "step_port": self.step_port,
+            "last_step_port": self.last_step_port,
             "acc": self.accumulators(),
             "measured": [dict(entry) for entry in self.taken],
             "events": list(self.clicks),

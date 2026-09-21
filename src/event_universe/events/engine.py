@@ -120,8 +120,7 @@ def step_axis(drive: int, momentum: int, content: int, width: int) -> tuple[int 
     step's own rule of one Link per interval, the residual of a larger
     momentum kept in the drive; the one place the step rule lives, the
     readings tools read it from here. The divisor D is
-    `world.step_divisor`, which the reading's weight at the relative speed
-    reads too (note 38)."""
+    `world.step_divisor`."""
     if momentum == 0:
         return None, drive
     fired, drive = by_drive(drive, momentum, step_divisor(momentum, content, width), at_most=1)
@@ -175,6 +174,13 @@ class NatureBeamSimulation:
         # on every `contact` record carries `given` and the run's record the
         # identity `binding-v1` (`hypotheses`).
         self.binding = world.binding
+        # The crossing rule's report (BEAM_LAW note 48, "not proved"): the
+        # count of Links crossed in the interval right after another Link
+        # of the same body (a body faster than one Link per two intervals,
+        # |p_a| > Q S M, possible under pushes), where the one-interval
+        # mark cannot tell a leapfrog of lag two from a first arrival; the
+        # run's record carries it as `fast_steps`, no refusal.
+        self.fast_steps = 0
         self.open_faces = tuple(port for port in range(6) if not world.periodic[port >> 1])
         self.ledger = Ledger(count, self.open_faces)
         # The detectors at run time: the declared ones first, in their
@@ -346,7 +352,6 @@ class NatureBeamSimulation:
                 tuple(family.free for family in self.families),
                 None if definition.lamp is None else definition.lamp.rate,
                 self.world.column_scales,
-                len(self.world.directions) if self.world.doppler else 0,
                 self.world.action if definition.phase_by_momentum else None,
                 self.world.phase_steps,
                 len(nodes),
@@ -403,10 +408,23 @@ class NatureBeamSimulation:
     # -- the interval ----------------------------------------------------------
 
     def step(self) -> None:
-        """One interval: the clocks' frame, the law, the clocks' count and
-        the measured events' steps."""
+        """One interval: the clocks' frame, the measured events' steps, the
+        law, then the clocks' turn and count. The step comes before the
+        law since the crossing rule (the model owner's record 158 of
+        2026-09-20; BEAM_LAW note 48): a body's departure becomes its
+        arrival as a row's does in the walk, so the reading of the interval
+        finds the body at its destination and reads there what it met by
+        the step itself; until then the step was the interval's last act
+        and the destination was read one interval later. The step uses the
+        momentum after the previous interval's push and the drive advanced
+        at this interval's self-creation: the same Links at the same
+        self-creations; the rows the body releases in the interval of a
+        step are born at its destination, after the crossing."""
         self.tick += 1
         self._frame_all()
+        for number in sorted(self.measured):
+            if number in self.measured:
+                self._move(self.measured[number])
         self.readings = nature_beam(
             self.stores,
             self.world,
@@ -423,9 +441,6 @@ class NatureBeamSimulation:
                 entry.phase = self.tables.circle.turn(entry.phase, entry.turn)
                 entry.turned += entry.turn
                 self._suspend(entry)
-        for number in sorted(self.measured):
-            if number in self.measured:
-                self._move(self.measured[number])
 
     def inverse_step(self) -> None:
         """The inverse interval on a GameBoard without measured events: the
@@ -445,12 +460,8 @@ class NatureBeamSimulation:
     def _frame_all(self) -> None:
         """The clocks' frame, every measured event at once: its content is
         read once into `frame_content` (M_A of the interval's push, BEAM_LAW
-        step 4), its charge in every column into `frame_charges` (the
-        reader's side of the push over the columns, gravity's the content)
-        and its momentum into `frame_momentum` (the p_a of the reading's
-        weight at the relative speed under `doppler`, note 38: the speed
-        the body had over this interval, the same for every group of rays
-        whatever the family order, as the charges are);
+        step 4) and its charge in every column into `frame_charges` (the
+        reader's side of the push over the columns, gravity's the content);
         one that owes a count pays it by one (no self-creation, no
         release, no turn; `waited` counts the interval); one that owes
         nothing self-creates: its age advances and its turn is the count
@@ -470,7 +481,6 @@ class NatureBeamSimulation:
             # after it).
             entry.frame_content = entry.content
             entry.frame_charges = entry.charges(for_push=True)
-            entry.frame_momentum = list(entry.momentum)
             if entry.owed > 0:
                 entry.owed -= 1
                 entry.waited += 1
@@ -510,8 +520,13 @@ class NatureBeamSimulation:
         (entry.owed,) = entry.counts.advance("owed", values=[entry.counted])
 
     def _move(self, entry: Measured) -> None:
-        """The step by the momentum, at most one per interval, when nothing
-        is owed: on an axis whose momentum component is p (in label units),
+        """The step by the momentum, at most one per interval, at a
+        self-creation (an interval in which nothing was owed at the frame,
+        `creating`; since the crossing rule the step precedes the law and
+        this interval's owed count, so the drive advances at every
+        self-creation, where until then it advanced in the interval after
+        the count owed was paid off): on an axis whose momentum component
+        is p (in label units),
         one Link per (Q x S x M + p) / p self-creations, since 2026-09-20 by
         the step drive (`step_axis`, BEAM_LAW note 17 as amended: the
         body's record carries per axis the distance the momentum has
@@ -563,13 +578,24 @@ class NatureBeamSimulation:
         turns at the Links stepped on each (a step lost to an earlier
         axis's step in the same interval turns nothing: no Link was
         crossed). It changes nothing of the rays' flight or collision; the
-        rays the body releases carry its phase as before (the clock's turn
-        by content over K is added at the self-creation as always, this
-        turn at the step after it); without `action` there is no turn. The
-        product k1 x |p| x N is bounded before it is formed (`bounded`;
-        the parser refused a declared momentum whose product with `ticks`
-        x N could pass the bound)."""
-        if entry.fixed or entry.owed > 0:
+        rays the body releases carry its phase (the turn at the step comes
+        first since the crossing rule, the step preceding the law, so the
+        rows born in the interval of a step carry the phase turned at the
+        Link; the clock's turn by content over K is added after the law as
+        always); without `action` there is no turn. The product k1 x |p| x
+        N is bounded before it is formed (`bounded`; the parser refused a
+        declared momentum whose product with `ticks` x N could pass the
+        bound).
+
+        The crossing rule's marks (record 158; BEAM_LAW note 48): at its
+        entry, for every measured event, the Port of the Link crossed the
+        interval before becomes `last_step_port` and `step_port` is -1
+        until a Link is crossed below (no fire, a refused step and an
+        escape leave it -1); the reading of step 4 reads the two as the
+        headings e and e' of the body's own two last Links."""
+        entry.last_step_port = entry.step_port
+        entry.step_port = -1
+        if entry.fixed or not entry.creating:
             return
         content = entry.content
         if content <= 0:
@@ -672,6 +698,9 @@ class NatureBeamSimulation:
             return
         self._place(entry, nodes)
         entry.position = destination
+        entry.step_port = port
+        if entry.last_step_port >= 0:
+            self.fast_steps += 1
         if entry.phase_by_momentum and self.world.action is not None:
             # The turn of the Link crossed: the `action` row's count of
             # this self-creation (the same integer as `by_clock(k0, |p| N,
@@ -689,6 +718,8 @@ class NatureBeamSimulation:
                     "momentum": list(entry.momentum),
                     "phase": entry.phase,
                     "drive": list(entry.drive),
+                    "step_port": port,
+                    "last_step_port": entry.last_step_port,
                 }
             )
         return

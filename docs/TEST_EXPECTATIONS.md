@@ -64,8 +64,8 @@ kept, their pins the law of events').
 | `test_columns.py` | The one coupling as a signed inner product over the columns: the two built-in columns equal to the landed form integer by integer and refusal by refusal on a grid, at the register's scale and on the replay of the series 7 worlds' `read` records; a third column with the sign minus giving the design's integers and the sign as a key; the refusals and the alignment; the bounds at parsing and at the push; every column floored on its own ([below](#the-columns)) | new (2026-09-20, the model owner's "one mechanism for all the laws on the GameBoard"; the mathematician's verified form) |
 | `test_lifetime.py` | The lifetime of a family and the held content: the click on the border `lifetime` booked as a face books an escape (the record 2^26, the ledger lines, the run's record), a ray read at the age L and then booked, the reach of L = 1, 2, 3 on the flight table (the six neighbours, the face diagonals, the cube diagonals and two Links), the inverse refused, the refusals; a measured event holding content of two families (the charges as rational sums, the push, the release of both, the record) and the register's proton ([below](#the-lifetime-and-the-held-content)) | new (2026-09-20, the model owner's "the strong force's range is a lifetime, L"; the physicist's D-1) |
 | `test_binding.py` | The binding that costs content (`binding-v1`): the give at the first hand-over of a contact under `measure` (the pair of the six headings with `bond` 2 on the mover: one row of amount 2, content 1 on -x, the recoil +128, the border click three ticks later with content 2, the books exact at every tick, `given` 2 then 0), the remainder (`bond` 3 at the quantum 2: one unit given, 1 kept), the give taken by a body on its line (`measured` +2, no border click; `pass` lets it on), a body that carries nothing (the contact records of `test_contact.py` without `given`, a paid body's own content never given), the fact of the run (a body that takes a declared paid row gives it at its next contact, `given` and `binding-v1` from that give on) ([below](#the-binding-that-costs-content)) | new (2026-09-20, the model owner's records 115 and 137 on the physicist's design; (f) after the physics-rule review) |
-| `test_contact.py` | The contact through the table: the design's pair on the six headings (+128 per interval; under the step drive the labels 128, 256, 0, 0, 128, 0, 128 and the hand-overs 384, -128, 256, -256, 128, ..., the sum 0, no step; at three Links the pair separates at tick 7), the isolated hand-over under `measure`, `rerelease`, `read` and `pass` and the derived default, the apportioning over the occupants of a body's set, the register's proton and neutron over 1000 intervals (998 hand-overs from tick 3, the first 621 934 561 280, the rest 310 967 280 640, the labels 0), the frame's order as a declared tie ([below](#the-contact-through-the-table)) | new (2026-09-20, the model owner on the physicist's design, section 4.4); (a), (d), (e) re-registered on 2026-09-20 under the step drive, the old integers kept as history |
-| `test_nucleus_readings.py` | The nucleus readings tool (series I) reads the runner's record: on the design's pair on the six headings, run through the runner, the pushes per body (128, 0, 0) from the `p` rows' -7936 and the `g` rows' +8064, the hand-overs 384 at tick 4, -128 at 5, 256 at 7, -256 at 9 and 128 at 10 under the step drive (256, 128, 640 by p1 alone as the rule was), the border `lifetime` clicking 12 rows per interval from tick 4, no step, the separation 1.00, pinned to the events file | new (2026-09-20, series I); re-registered on 2026-09-20 under the step drive |
+| `test_contact.py` | The contact through the table: the design's pair on the six headings (+128 per interval; under the step drive and the crossing rule's order the labels 128, 256, 384, 128, 128, 256, 128 and the hand-overs 384, -128, 256, -256, 128, ... from tick 5, the sum 0, no step; at three Links the pair separates at tick 8), the isolated hand-over under `measure`, `rerelease`, `read` and `pass` and the derived default, the apportioning over the occupants of a body's set, the register's proton and neutron over 1000 intervals (997 hand-overs from tick 4, the first 621 934 561 280, the rest 310 967 280 640, the labels +-310 967 280 640 at the end), the frame's order as a declared tie ([below](#the-contact-through-the-table)) | new (2026-09-20, the model owner on the physicist's design, section 4.4); (a), (d), (e) re-registered on 2026-09-20 under the step drive; (a), (d) re-pinned on 2026-09-21 under the crossing rule's order (the step before the law, BEAM_LAW note 48), the old integers kept as history |
+| `test_nucleus_readings.py` | The nucleus readings tool (series I) reads the runner's record: on the design's pair on the six headings, run through the runner, the pushes per body (128, 0, 0) from the `p` rows' -7936 and the `g` rows' +8064, the hand-overs 384 at tick 5, -128 at 6, 256 at 8, -256 at 10 and 128 at 11 under the step drive and the crossing rule's order (one interval earlier under the step drive alone; 256, 128, 640 by p1 alone as the rule was), the border `lifetime` clicking 12 rows per interval from tick 4, no step, the separation 1.00, pinned to the events file | new (2026-09-20, series I); re-registered on 2026-09-20 under the step drive; re-pinned on 2026-09-21 under the crossing rule's order |
 | `test_nature_beam_label.py` | The label along the unit vector of the direction at the flight table's scale: the table u_d by the exact integer rule (the pinned vectors, the length within 1.35 % of Q, antisymmetry, equivariance under the 48, no tie, the float agreement over every primitive direction within the bound), every label content x u_d with the recoil, the transit line and the books closing through clicks, a mirror and the open faces, the bound at Q x content x amount ([below](#the-label-along-the-unit-vector)) | new (2026-09-19, the model owner's decision on the physics-rule reviewer's verdict; every momentum pin of the suite re-pinned x 64, listed in its section) |
 | `test_nature_beam_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the orbits of the six-heading patterns under the cube's group as properties (since 2026-09-21: the orbit-stabilizer and Burnside counts in place of the counted sizes), a head-on pair parking and a crowd passing; no collision at a Node that holds a measured event ([below](#the-collision-table)) | new |
 | `test_nature_beam_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact; the merge by one packed key and by the lexsort alike ([below](#the-bijection)) | new |
@@ -75,7 +75,7 @@ kept, their pins the law of events').
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder (since the step drive of 2026-09-20 the same integers, the remainder now the drive on the body's record); the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
 | `test_fraction_free.py` | The fraction-free counts (2026-09-20, BEAM_LAW note 41): every count of a body an accumulator on its record, `by_drive`'s count; the identity at a constant rate on every count over 10^4 intervals, the accumulators carried in `state.json` and a resumed run identical, the bound below the denominator at every tick, a column whose Lambda_c^2 leaves the register refused at load ([below](#the-fraction-free-counts)) | new (2026-09-20, the mathematician's FORM.md, the physics-rule reviewer's REVIEW_COUNTS.md, records 147 and 148) |
 | `test_step_drive.py` | The step drive (2026-09-20, BEAM_LAW note 17 as amended): the count of Links as the whole part of the distance the momentum has driven, one bounded integer per axis on the body's record: the identity at a constant momentum with `by_clock(n - 1, \|p\|, D)` over 4000 self-creations and twelve momenta; the identity on two axes (the coincident step lost as before); the integrated distance under a halving momentum (38 within 1, 37 to 39, where the rule as it was made 1); never two Links in one interval under a random momentum over 10 000 intervals with the drive in [0, 2 D - 1); the record (`drive`, `axis_steps`, the `step` line) and a declared `drive` refused; the turn by momentum unchanged; the signed drive under a reversal (no Link until the drive cancels and reaches -D) and the bound pair under a suspension holding for 3000 intervals ([below](#the-step-drive)) | new (2026-09-20, series G2's finding, record 107; the owner's decision, record 108); the drive signed the same day (record 126) |
-| `test_doppler.py` | The reading's weight at the relative speed (`doppler-v1`, 2026-09-20, BEAM_LAW note 38; the flux at the grain G = 2^12): a fixed body and a free body at rest reading byte-identically with and without the key over 200 intervals (the same records, the same books); the bar of the finding (a fixed source's steady beam, a free body of content 2^20 at an exact speed, the push the weighted flow in label units) reading 200 rows in every case and taking 12800 at rest, 6204 receding at 0.30, 2901 receding at 0.45, 19395 approaching at 0.30, 0 co-moving at c, 3700 outrunning at 0.75 (the map's rates 96.9, 45.3, 303.1, 0, 57.8 rows to the label unit); the bar with rows of 64 running; the third law on two fixed bodies unchanged; the refusals, the weighted flow's R1 and the budget's factor; the grain, the pair on the headings and the fan (0.5938, 0.7771, 0.8666) and the record; the fan over three intervals (5130 of 8640 on the face diagonal at 1/3; 4326, 8504 on (1, 2, 0) and 2828, 8485, 5656 on (1, 3, 2) at the star's speed; the heading 5249 of 12288; the transverse exact) and the fan reader at rest byte-identical; a body on a set reading two groups from the one frame snapshot; a registered G2 star world running 20 intervals under the key ([below](#the-readings-weight-at-the-relative-speed)) | new (2026-09-20, the model owner's record 119; the mathematician's form, record 110, and GRAIN.md after the physics-rule review) |
+| `test_crossing.py` | The crossing rule (2026-09-21, BEAM_LAW note 48; the model owner's record 158 of 2026-09-20, the physicist's design docs/designs/crossing/DESIGN.md): the experimenter's streams read as counts, 45 in 32 and 58 in 48 toward, 19 in 32 and 38 in 48 away with the windows of each step, 48 in 48 at rest, no row twice (the `measure` counts equal), the probe pair -2880 = 64 x 45 and the key `doppler` refused; the streams beyond the axis on a plane of lines, 32, 24 and 36 in 32; one row met once (a `read` line at tick 12, 3, 1 in three worlds); the sums over a period 183, 311, 74, 202; the fast steps reported (18 and 6 at the momentum 96, 20 and 10 at 128, 15 and 0 at 64) ([below](#the-crossing-rule)) | new (2026-09-21; the pins of (c) from the rule transcribed on the lines' geometry, docs/designs/crossing/crossing_2d.py, before the run) |
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
@@ -1341,34 +1341,44 @@ DESIGN.md test (f) and section 4.4):
   other, (Q^2 - G^2 - M^2) x (-64); under the contact and the step drive
   (2026-09-20, [below](#the-step-drive): D = 320 + |p| on the content 5,
   the drive gaining p at every self-creation, signed since record 126,
-  one sign here) the momentum of p1 over
-  ticks 2 .. 8 reads 128, 256, 0, 0, 128, 0, 128 (the mirror on p2): p1's
-  drive 128, 384, 768 >= 704 fires at tick 4 and hands 384; p2's drive
-  128, 384, then nothing at tick 4 (its label 0 at its turn), 512 >= 448
-  at tick 5, when it hands -128 back; the hand-overs over 30 intervals at
-  ticks 4 (384), 5 (-128), 7 (256), 9 (-256), 10 (128), 13 (384), 14
-  (-128), 16 (256), 18 (-256), 19 (128), 22 (384), 23 (-128), 24 (128),
-  27 (384), 28 (-128) and 30 (256), each a `contact` record (the family
-  `p`, the rule `measure`, the axis 0; p1's from (3, 4, 4) to (4, 4, 4)
-  and p2's the other way), 10 by p1 and 6 by p2 (p2's `contacts` [10, 0],
-  p1's [6, 0]), no step in 30 intervals, the largest component 384 (after
-  a tick no label is beyond 256), the sum of the two momenta 0 after
-  every tick, the books balanced. The rule as it was (the count off the
+  one sign here) and the crossing rule's order (2026-09-21, [BEAM_LAW
+  note 48](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+  the step before the law, the drive of a self-creation advanced by the
+  momentum after the PREVIOUS interval's push) the momentum of p1 over
+  ticks 2 .. 8 reads 128, 256, 384, 128, 128, 256, 128 (the mirror on
+  p2): p1's drive 128 at tick 3, 384 at 4, 768 >= 704 at tick 5, when it
+  fires and hands 384; p2, pushed the other way since tick 2, fires at
+  tick 6 and hands -128 back; the hand-overs over 30 intervals at ticks
+  5 (384), 6 (-128), 8 (256), 10 (-256), 11 (128), 14 (384), 15 (-128),
+  17 (256), 19 (-256), 20 (128), 23 (384), 24 (-128), 25 (128), 28 (384)
+  and 29 (-128), each a `contact` record (the family `p`, the rule
+  `measure`, the axis 0; p1's from (3, 4, 4) to (4, 4, 4) and p2's the
+  other way), 9 by p1 and 6 by p2 (p2's `contacts` [9, 0], p1's [6, 0]),
+  no step in 30 intervals, the largest component 384 (the largest
+  momentum after a tick, before the fire that hands it), the sum of the
+  two momenta 0 after every tick, the books balanced. With the step after
+  the law (the step drive alone, 2026-09-20, kept as history): 128, 256,
+  0, 0, 128, 0, 128, the fires one interval earlier, at ticks 4 (384), 5
+  (-128), 7 (256), 9 (-256), 10 (128), 13 (384), 14 (-128), 16 (256), 18
+  (-256), 19 (128), 22 (384), 23 (-128), 24 (128), 27 (384), 28 (-128)
+  and 30 (256), 10 by p1 and 6 by p2. The rule as it was (the count off the
   clock, registered on 2026-09-20 and kept as history): the labels 128,
   0, 0, 128, 256, 384, 512, the hand-overs at ticks 3 (256), 4 (128), 9
   (640), 13 (512), 14 (128), 16 (256), 18 (256), 21 (384), 23, 25, 27
   (256), 28 (128) and 30 (256), all by p1, the largest 640, p2's
   `contacts` [13, 0]. With `read` declared for `p` on both, the keys' own
-  rule, the same hand-overs (384 at tick 4 in four intervals); with
+  rule, the same hand-overs (384 at tick 5 in five intervals); with
   `pass` declared the `p` rows are passed too and the `g` rows alone
   push, 8064 x (tick - 1). At three Links (x 2 and x 5) no `g` row
   reaches either body (the border takes it at the age 3), the `p` row's
-  -7936 is read at ticks 6 and 7 (at tick 6 the drive 7936 is below D =
-  8256 and the body stands), and at tick 7 p1 steps to x 1 with (-15872,
-  0, 0) and p2 to x 6 with (15872, 0, 0), the drive 23808 - 16192 = 7616
-  on the `step` line with the momentum's sign, -7616 and +7616 (the
-  signed drive of record 126; the rule as it was stepped them at tick 6
-  with 7936): the pair separates, no contact.
+  -7936 is read at ticks 6 and 7 (at tick 7 the drive 7936, by the
+  momentum after tick 6, is below D = 8256 and the body stands), and at
+  tick 8 p1 steps to x 1 with (-15872, 0, 0) and p2 to x 6 with (15872,
+  0, 0), the drive 23808 - 16192 = 7616 on the `step` line with the
+  momentum's sign, -7616 and +7616 (the signed drive of record 126; at
+  tick 7 with the step after the law, until the crossing rule; the rule
+  as it was stepped them at tick 6 with 7936): the pair separates, no
+  contact.
 - (b) the isolated hand-over (`release` [0, 1], no rays): p1 of `p`,
   content 5, momentum (256, 0, 0) at (1, 2, 2) and p2 of `q`, content 5,
   fixed, at (2, 2, 2) on an open 5^3 GameBoard: the step rule fires at
@@ -1405,14 +1415,18 @@ DESIGN.md test (f) and section 4.4):
   10000 x 3008 + 1837 x 3008), the sum 310 967 280 640; on the neutron
   10 161 745 920 (1840 x 1836 x 3008) and 300 805 534 720 (300 800 000
   000 + 1840 x 3008), the same sum, the mirror; under the contact and
-  the step drive the labels after 1000 intervals (0, 0, 0) and (0, 0, 0),
-  998 hand-overs by the proton at the ticks 3 to 1000 (its drive of one
-  interval's push is below D = 64 x 1836 + |p| at tick 2 and at or beyond
-  it at tick 3 and at every interval after), the first of two intervals'
-  pushes, 621 934 561 280, the largest, every later one 310 967 280 640,
-  the neutron never handing (its label 0 at its turn), no step, the books
-  balanced at every tick (the rule as it was: 999 hand-overs from tick 2,
-  the largest one interval's push); with `pass` declared on each for the
+  the step drive and the crossing rule's order the labels after 1000
+  intervals (310 967 280 640, 0, 0) and (-310 967 280 640, 0, 0), the last
+  interval's push not yet handed, 997 hand-overs by the proton at the
+  ticks 4 to 1000 (its drive advanced by the momentum after the previous
+  interval, one push at tick 3, below D = 64 x 1836 + |p|, two at tick 4
+  and at or beyond it there and at every interval after), the first of
+  two intervals' pushes, 621 934 561 280, the largest, every later one
+  310 967 280 640, the neutron never handing (its label 0 at its turn),
+  no step, the books balanced at every tick (with the step after the law,
+  2026-09-20: 998 from tick 3 and the labels 0 at the end; the rule as it
+  was: 999 hand-overs from tick 2, the largest one interval's push); with
+  `pass` declared on each for the
   other's family (that family's rows passed too, the `nuclear` rows alone
   read) the labels after 40 intervals 39 x 300 805 525 696 =
   11 731 415 502 144 on the proton and -39 x 300 805 534 720 =
@@ -1441,6 +1455,13 @@ DESIGN.md test (f) and section 4.4):
 
 ## The binding that costs content
 
+Since the crossing rule (2026-09-21, [BEAM_LAW note 48](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+the step, its contact and its give precede the interval's law: a fire
+under a push falls one interval later than it did, and a row given at a
+contact makes its first Link in the interval of the give (so its border
+click and its take fall one interval earlier); the ticks below are
+re-pinned so, the previous ticks kept where they are named.
+
 `tests/test_binding.py` (docs/BEAM_LAW.md, section 10 note 40; the model
 owner's records 115 and 137 of 2026-09-20 on the physicist's design
 `docs/designs/binding_v1/DESIGN.md`, candidate A): at a contact under
@@ -1457,18 +1478,20 @@ the first run (the design's section 5, tests (a) to (d)):
   7 = 4 `p` + 1 `g` + 2 `bond`): from tick 2 p1 reads p2's `p` row as
   -7424 and its `g` row as +8192 (its gravity charge 7), the push 768; p2
   reads -7936 and +8064 as before (p1's rows carry no `bond`). p1's drive
-  768, then 2304 >= D = 448 + 1536 at tick 3: refused, it hands 1536 and
+  768, then 2304 >= D = 448 + 1536 at tick 4 (tick 3 until the crossing
+  rule): refused, it hands 1536 and
   gives its 2 units as one row of amount 2, content 1, on -x (direction
   index 3) at (3, 4, 4), the label (-128, 0, 0), the recoil +128 (p1's
   momentum (128, 0, 0) after the contact), its held (4, 1, 0), the
   record's `given` 2; the row clicks on the border `lifetime` at tick 6 at
   (1, 4, 4) with amount 2, content 2 and momentum (-128, 0, 0); p1's
-  second contact at tick 4 hands 256 with `given` 0; the `bond` books at
+  second contact at tick 5 hands 896 with `given` 0 (at tick 4, 256, until
+  the crossing rule); the `bond` books at
   every tick (measured initial 2 = current + spent 2; the content released
   2 in transit until tick 6, escaped after; the row's label on the transit
   line until the border books it); `binding-v1` under the hypotheses after
   `columns-v1`. The toy's pair separates under the 1536 handed to p2 (a
-  step at tick 4): the rule's claim is the give, the recoil, the click and
+  step at tick 5): the rule's claim is the give, the recoil, the click and
   the books, not the toy's binding;
 - (b) the remainder: p1 of `p` (content 5, momentum (256, 0, 0)) at
   (3, 3, 3) holding `bond` 3 at the quantum 2, a fixed occupant at
@@ -1476,7 +1499,8 @@ the first run (the design's section 5, tests (a) to (d)):
   tick 3 and is refused; p1 hands 256, gives 3 // 2 = 1 unit of content 2
   (the row amount 1, content 2, label (-128, 0, 0)), keeps 3 mod 2 = 1
   (`held` (5, 0, 0, 1)), takes the recoil (128, 0, 0), `given` 2; the
-  border click at tick 6 at (1, 3, 3) with amount 1, content 2; the second
+  border click at tick 5 at (1, 3, 3) with amount 1, content 2 (tick 6
+  until the crossing rule); the second
   contact at tick 7 (the drive 64, 192, 320, 448, 576 >= D = 384 + 128)
   hands 128 with `given` 0; the books: measured initial 3 = current 1 +
   spent 2, transit released 1 = escaped 1, content released 2 = escaped 2,
@@ -1484,14 +1508,15 @@ the first run (the design's section 5, tests (a) to (d)):
   at the quantum 2 gives nothing, `given` 0, no row;
 - (c) the take: (b) at the quantum 1 with `bond` 2 and a third fixed body
   of `q` (content 5) at (2, 3, 3) on the line behind p1: the row given on
-  -x arrives at (2, 3, 3) at age 1 (tick 4) and the third body's entry for
-  `bond`, `measure` by the keys, takes it: one `click` record at tick 4
+  -x arrives at (2, 3, 3) at age 1 (tick 3; tick 4 until the crossing
+  rule) and the third body's entry for
+  `bond`, `measure` by the keys, takes it: one `click` record at tick 3
   (measured 3, family `bond`, number 1, amount 2, content 2, the push
   (-128, 0, 0)), the third body's held (0, 5, 0, 2), its clicks (0, 0, 0,
   2), its momentum (-128, 0, 0), the `bond` books measured +2 (initial 2 +
   measured 2 = current 2 + spent 2), transit released 2 = absorbed 2, no
   border click over seven intervals; with `pass` declared on the third
-  body for `bond` the row goes on and clicks on the border at tick 6 at
+  body for `bond` the row goes on and clicks on the border at tick 5 at
   (1, 3, 3) with content 2, the third body untouched;
 - (d) a body that carries no paid content: the worlds of `test_contact.py`
   (a) to (e) write their `contact` records without the `given` key and
@@ -1512,8 +1537,8 @@ the first run (the design's section 5, tests (a) to (d)):
   -768, -1152 beyond D = 448 + 384), refused: the body hands -384 and gives
   the 2 units it took on +x (the recoil -128: momentum (-128, 0, 0)), the
   engine raises the fact at that give, the record carries `given` 2, the
-  border click at tick 6 at (5, 3, 3) with content 2 and momentum (128, 0,
-  0), the next contact at tick 4 (the drive -320 left after the fire, then
+  border click at tick 5 at (5, 3, 3) with content 2 and momentum (128, 0,
+  0), the next contact at tick 5 (the drive -320 left after the fire, then
   -448 = -D at the content 5) with `given` 0; the simulation's
   `hypotheses` gain `binding-v1` and the runner's `run.json` carries it,
   its `contact` records `given` 2 then 0; the momentum lines sum to
@@ -1547,7 +1572,10 @@ the first run (the design's section 5, tests (a) to (d)):
   the ray at x = 0; a measured event of `m` (content 16, momentum
   (1024, 0, 0) [was (16, 0, 0)]: one unit of net flow in label units) at
   x = 2 steps off at interval 2: one `click` on `face:+x` with `measured`
-  1, amount 16, phase 2 (K 16), momentum (1024, 0, 0), `held` [16, 0],
+  1, amount 16, phase 1 (K 16; the body escapes in the interval of its
+  second self-creation, before that interval's clock turn: the step
+  precedes the law since the crossing rule of 2026-09-21, BEAM_LAW note
+  48; phase 2 until then), momentum (1024, 0, 0), `held` [16, 0],
   `home` [0, 0], the measured line's escaped 16.
 - (c) home: a lamp's ray (content 1, phase 7) returning to its lamp on a
   periodic 4 x 1 x 1 bar is home after 4 Links (the intervals 7, 14, ...)
@@ -1659,12 +1687,17 @@ expected integers, written down before the first run:
   `suspension` [1, 4] and a crowd of 4 rays of another number (a fixed
   anchor of content 1 at x = 11) at rest on x = 3 to 7 owes one interval
   after every self-creation (age after interval n is ceil(n / 2), waited
-  floor(n / 2)); the step of the ages 9, 18, 27 lands on the interval that
-  pays the count (a measured event steps only in an interval where it owes
-  nothing), the intervals 18, 36, 54: x after intervals 17, 18, 35, 36,
-  53, 54, 60 is 3, 4, 4, 5, 5, 6, 6; age 30, waited 30, `steps` 3 after
-  60; after every paying interval `steps` = age x 1024 // 9216 (= age x 16
-  // 144) and after every self-creation (age - 1) x 16 // 144; the momentum
+  floor(n / 2)); since the crossing rule (2026-09-21, [BEAM_LAW note
+  48](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+  the step before the law, the drive advanced at the self-creation itself)
+  the step of the ages 9, 18, 27 lands on the self-creation, the intervals
+  17, 35, 53: x after intervals 17, 18, 35, 36, 53, 54, 60 is 4, 4, 5, 5,
+  6, 6, 6; age 30, waited 30, `steps` 3 after 60; after every interval
+  `steps` = age x 1024 // 9216 (= age x 16 // 144) (with the step after
+  the law and the count owed, until the crossing rule, the drive advanced
+  in the interval that paid the count: the steps at 18, 36, 54, x 3, 4,
+  4, 5, 5, 6, 6, and `steps` (age - 1) x 16 // 144 after a self-creation);
+  the momentum
   (1024, 0, 0) untouched; the books
   balanced at every interval. (The first run corrected the interval of the
   step from 17 to 18: the order of the frame, not the rule.)
@@ -1804,21 +1837,17 @@ primitive). The integers, written first:
   (`acc_owed` = age mod 4, the age 8000 and 2000 intervals waited), a lamp
   at rate [1, 3] (`acc_lamp` = age mod 3, 3333 births);
 - (b) the sum over a period equal to the whole part of the sum of the
-  numerators on a varying flow (stage 2, the push and the doppler weight):
-  `tests/test_doppler.py` (b), the bar as posed with rows of 64 under the
-  key gives 396672 over 200 reads (396673 off the clock, the sum of 200
-  floors each with its remainder discarded), the body's flow accumulator
-  below G Q at every tick and G Q x 396672 + the accumulator equal to the
-  sum of the 200 fluxes exactly, the push's accumulators 0 (gravity and
-  charge at Lambda 1, the probe column's rate whole); and
-  `tests/test_nature_beam_push.py` (k), the reader's charge accumulator at
+  numerators on a varying flow (stage 2, the push; the doppler weight's
+  bar, 396672 over 200 reads for 396673 off the clock, left with the key
+  `doppler` on 2026-09-21, MIGRATION): `tests/test_nature_beam_push.py`
+  (k), the reader's charge accumulator at
   Lambda = lcm(5, 4) = 20: by_clock(tick - 8, 1280, 25) per read from the
   empty accumulator at its first read and 1177 = floor(23 x 1280 / 25)
   over the 23 reads (1178 off the clock from the age 7), the accumulator
   23 x 1280 x 16 mod 400 at the end;
 - (c) the accumulators in `state.json` and `run.json` under `acc` by name
-  (`owed`, `release` per family, `lamp`, `turn`, `push` per column, `flow`
-  per direction under `doppler`) beside `drive`: on a bar of
+  (`owed`, `release` per family, `lamp`, `turn`, `push` per column)
+  beside `drive`: on a bar of
   a source of `m` (content 3, 3 units per self-creation on +X), a probe of
   `light` (content 1) measuring them at `suspension` [1, 4], a turning body
   of `light` (content 3, K = [3, 8]) and a mover of `light` (content 16,
@@ -1831,18 +1860,13 @@ primitive). The integers, written first:
   the unbroken one at every one of the ticks 21 to 40 in every state and
   record; resumed with the accumulators emptied it differs; a declared
   `acc` refused as an unknown key;
-- (d) the per-direction split equal to the whole on a fan at rest:
-  `tests/test_doppler.py` (f), the fan reader at rest under the key reads
-  the same records as without it and its flow accumulators stay 0; at
-  w_y = 1 (the momentum (11648, 19584, 4352) after two reads of 64) the
-  third read's count is each direction's whole part from the empty
-  accumulator, (5821, 9787, 2175) (9788 on y off the clock at the age 2),
-  every accumulator the remainder below its denominator;
+- (d) the per-direction split equal to the whole on a fan at rest (the
+  doppler weight's rows, `tests/test_doppler.py` (f)): left with the key
+  `doppler` on 2026-09-21 (MIGRATION);
 - (e) the bound at every one of 2000 ticks on the worlds of (a): `acc_owed`
   below 4, `acc_release` below 10, `acc_lamp` below 3, `acc_turn` below 8,
-  the drive below D; the push's accumulators below Lambda_c^2 and the
-  flow's below G Q |v_d|^2 at every tick (`test_doppler` (b), (f),
-  `test_nature_beam_push` (k)); `count_owed` on 10^4 random presences keeps
+  the drive below D; the push's accumulators below Lambda_c^2 at every
+  tick (`test_nature_beam_push` (k)); `count_owed` on 10^4 random presences keeps
   its accumulator in [0, d); the step's drive under a momentum reversing at
   random stays within D;
 - (f) the ladder at the click as the comparison of products
@@ -1943,123 +1967,107 @@ failing under the one click (340 and 118 read by tick), and the tools
 report the tick offsets as the smallest tick - age at each Node, the
 flight's (14 and 16 on A2's bar; 6, 11, 13, 14 on the choosers' bar).
 
-## The reading's weight at the relative speed
+## The crossing rule
 
-`tests/test_doppler.py` (docs/BEAM_LAW.md section 3 step 4 and note 38;
-the model owner's record 119; the mathematician's admissible form, FORM.md
-section 6 of docs/designs/push_relative_speed/ on branch
-`claude/series-m-masses`, record 110, and its grain and flux form GRAIN.md
-after the physics-rule review of the first build; series G2's finding,
-RULES.md section 2, record 107). Under the world key `doppler` a free
-measured event reads the rows that arrived at its Node for the push with
-each direction's label flow V_d weighted by the flux of its rows through
-the body, (|G Q |v|^2 - T_d sum_a s_a w_a v_a|, G Q |v|^2), w_a = G |p_a|
-// D_a the body's speed at the grain G = 2^12, D_a = Q S M + |p_a|, v the
-direction's vector and T_d its resolution; V'_d = sign(V_d) x
-by_clock(age_A, |V_d| x num_d, G Q |v|^2) per component, summed over the
-directions, then the columns as today. The expected integers, written down
-before the first run:
+`tests/test_crossing.py` (docs/BEAM_LAW.md section 3 step 4 and note 48;
+the model owner's record 158 of 2026-09-20, "the step reads the crossed
+Link"; the physicist's design docs/designs/crossing/DESIGN.md on the
+experimenter's finding of record 151): a row and a body meet ONCE, at the
+crossing of their world lines. The body's step precedes the law, so the
+reading of an interval finds the body at its destination; a body reads
+every arrival at its Nodes as before and, in the interval of a step, the
+rows that crossed its Link the other way (C1) and the rows resident at the
+Node it entered moving against the step (C2), never a row that came over
+its Link behind it in that interval (C3') or the next after a rest at the
+origin (C3''), nor a resident row moving with it (C2'). The world key
+`doppler` and the grain G of `doppler-v1` are deleted with it (the section
+"The reading's weight at the relative speed" that stood here, with
+`tests/test_doppler.py`, is in the repository's history before the branch
+`crossing`; MIGRATION). The expected integers, written down before the
+first run:
 
-- (a) a fixed body reads byte-identically with and without the key on the
-  bar of (b) over 200 intervals (the same records line by line, the same
-  books, the same momentum and push taken, 12800 label units); a free body
-  at rest whose push the charge column cancels (rho 1 on both families, no
-  third column) the same, its push 0.
-- (b) the bar of the finding: a fixed source at x = 0 on a bar of 400
-  Nodes releasing one row per interval on +x, the steady beam declared in
-  transit (the row of age tau at the Node m(tau) = (2 tau Q + 110) // 220),
-  a free body of content 2^20 with `width` S and momentum p, reading the
-  beam (`read`) with a third column `probe` (the value 1 on the beam, [1,
-  2^20] on the body, the sign plus, the divisor 1) so that each read's push
-  is the weighted flow itself, 64 label units per row: over 200 intervals
-  the body reads 200 rows in every case (the finding) and takes, under the
-  key, at rest (S 1, p 0) 12800; receding at 0.30 (S 7, p 3 x 2^26, D 10 x
-  2^26, w 1228, the pair 127064 / 262144) 6204; receding at 0.45 (S 11, p
-  9 x 2^26, w 1843, 59414 / 262144) 2901; approaching at 0.30 (S 7, p -3 x
-  2^26, from x = 200, 397224 / 262144) 19395; co-moving at c = 32 / 55 (S
-  23, p 2^31, w 2383, 14 / 262144: below one label unit per row) 0;
-  outrunning at 0.75 (S 1, p 3 x 2^26, w 3072, 75776 / 262144, the
-  absolute value) 3700; in rows 200, 96.94, 45.33, 303.05, 0, 57.81
-  against FORM.md's map 200, 97, 45, 303, 0, 58 and its exact rates 96.9,
-  45.3, 303.1, 0, 57.8; without the key 12800 in every case. The bar as
-  posed, rows of amount 64: runs under the key, receding at 0.30 the push
-  396673 (96.84 rows of 4096 units), within a row of the amount-1 line.
-- (c) the third law on two fixed bodies (the mirror world of
-  `test_columns.py` (b), `p` of content 3 and `q` of content 5 with the
-  charge [1, 3] and the strong value [2, 3], `doppler` true): the same
-  records as without the key, equal and opposite pushes at the ticks 6 to
-  12, 960 - by_clock(tick - 1, 320, 3) + by_clock(tick - 1, 1280, 3) on
-  `p`, the push taken opposite; `hypotheses` ["columns-v1", "doppler-v1"].
-- (d) the refusals: `doppler` 1, "true", null or [true] refused "must be
-  true or false"; `weighted_flow` on one +x label of 64 at the outrunning
-  speed 0.75 of a body of content 2^20 at width 1 (w 3072, the pair 75776
-  / 262144) gives 18 (by_clock(0, 64 x 75776, 262144)), on a label of 2^50
-  at the same pair it is refused naming measured event 2, its Node and
-  the direction 2 under doppler;
-  `weighted_flow_factor` 3 on the six headings, 1 on a table of rest
-  directions, 4 with (1, 1, 1); a free reader of content 2^30 releasing on
-  -x met by a fixed source of content 2^25 releasing on +x (charge 0 on
-  both) parses without the key (each budget 2^61) and is refused under it
-  naming "x 3 the largest label flow ... times the largest weight of
-  doppler".
-- (e) `quantised_speed`: (1365, 1) at p 2^25 on a body of content 2^20 at
-  width 1 (v = 1 / 3), (1183, 1) at p 26 x 2^20 (v = 26 / 90 = 0.28889,
-  the G2 star's), (0, 0) at rest, (1365, -1) on -y, (1365, 1) for content 1
-  at p 32; `flux_pair`: on +x (262144, 262144) at rest, (111994, 262144)
-  at 1 / 3, on -x (262144 + 110 x 1365, 262144), on +y at a motion on x
-  (262144, 262144); co-moving (S 23, p 2^31: w 2383) (14, 262144); on
-  (1, 1, 0) (T 156) at 1 / 3 (311348, 524288) = 0.5938; on (1, 2, 0) (T
-  247) at the star's speed (1018519, 1310720) = 0.7771; on (1, 3, 2) (T
-  414) (3180254, 3670016) = 0.8666 (GRAIN.md section 2's flux against the
-  per-axis form's 0.1875, -0.11 and -0.87); the flight table's resolutions
-  110, 156, 247, 414. The record: `run.json` carries `doppler` true and
-  `hypotheses` ["columns-v1", "doppler-v1"] on the bar. The gate set's
-  fifteen worlds parse with `doppler` false and without the identity.
-- (f) the fan over three intervals: a free reader of content 2^20 at
-  (4, 6, 4) of a 9 x 12 x 9 open GameBoard with the three declared directions
-  (1, 1, 0), (1, 2, 0), (1, 3, 2), the push the weighted flow as in (b);
-  one row of amount 64 of the direction placed on the flight table's line
-  to step into the reader's Node at each of the ticks 1, 2, 3 from number
-  2; the reader's clock ages 0, 1, 2, its first step after the third
-  reading (its drive fires at the third self-creation at 1 / 3, so it
-  stands at (5, 6, 4) after the third interval, and at the fourth at 26 /
-  90, still at (4, 6, 4)): on (1, 1, 0) at 1 / 3 (p 2^25) the sum of the
-  pushes (5130, 5130, 0) of the flow (8640, 8640, 0); on (1, 2, 0) at 26 /
-  90 (p 26 x 2^20) (4326, 8504, 0) of (5568, 10944, 0); on (1, 3, 2) at
-  26 / 90 (2828, 8485, 5656) of (3264, 9792, 6528); on +x at 1 / 3 (5249,
-  0, 0) of (12288, 0, 0); on +y at 1 / 3 (0, 12288, 0) exactly; the reader
-  stays at (4, 6, 4) through the third reading; without the key the flow
-  itself. The three fan directions together at 1 / 3, one row of each per
-  interval in one group of number 2 (the reads of amount 192): (5130 +
-  4135 + 2761, 5130 + 8128 + 8284, 5522), each direction's flow at its
-  own pair ((1, 2, 0) at 1 / 3 the pair 973565 / 1310720 = 0.743, (1, 3,
-  2) 3104906 / 3670016 = 0.846). The same fan reader at rest with rows of
-  amount 1: the same records with and without the key over the three
-  intervals, the pushes the flows (273, 459, 102) (the unit labels (45,
-  45, 0), (29, 57, 0), (17, 51, 34) per read), its momentum after them
-  below D / G = 16384 (it still reads as at rest); with rows of 64 the
-  first two reads identical and the third apart, the momentum after two
-  reads (11648, 19584, 4352) past D / G on y (w_y = 1, the grain): (5821,
-  9788, 2175) against the flow (5824, 9792, 2176).
-- (g) a body on a set: `span` [1, 1, 3] at (4, 0, 1) of an 8 x 1 x 3
-  periodic bar, content 1, the momentum (32, 0, 0) (D = 96, w = 1365, the
-  pair 111994 / 262144), met at tick 1 by one +x row of amount 1 at
-  (4, 0, 0) from number 2 and one at (4, 0, 2) from number 3: two `read`
-  lines, each pushing (-27, 0, 0) (by_clock(0, 64 x 111994, 262144); the
-  live momentum after the first group, 5, w 296, would give 56), the
-  momentum after the interval -22, the set (4, 0, 0), (4, 0, 1),
-  (4, 0, 2); without the key -64 each.
-- (h) the registered G2 star world
-  `examples/events/hubble_stars/gravity_scalar.json` (the example's own
-  path; the reviewer's temporary copy `tests/data/g2_gravity_scalar.json`
-  was deleted when series G2 merged doppler-v1, MIGRATION: 24 free stars of
-  content 2^22 + 4096 at width 2^20, one detector) parses with `doppler`
-  true and the identity
-  and runs 20 intervals without a refusal, its books balanced and a star
-  pushed. Its table is the eight headings, where the flux equals the
-  heading pair, so (h) is the stars' fit and not the fan's integers,
-  which rest on (f); the temporary copy is gone since series G2's merge
-  of doppler-v1 (one canonical copy per world).
+- (a) the experimenter's streams: a lamp at x = 0 of a bar of 64 releasing
+  one row of amount 1 per interval on +x, the stream pre-filled (the row
+  of age tau at m(tau) = (2 tau Q + 110) // 220), a reader of content M =
+  21 x 2^16 at x = 40 stepping one Link per k intervals exactly (|p| = Q S
+  M / 3 at k = 4, Q S M / 7 at k = 8; the sign minus toward the lamp),
+  `read` on the beam, the charges cancelling the push: toward at k = 4 the
+  reader reads 45 rows in 32 intervals, the windows of k intervals ending
+  at each step [5, 6, 6, 5, 6, 6, 6, 5]; toward at k = 8 58 in 48, [9, 10,
+  10, 9, 10, 10]; away at k = 4 19 in 32, [3, 2, 2, 2, 3, 2, 2, 3]; away
+  at k = 8 38 in 48, [7, 6, 6, 6, 7, 6]; at rest 48 in 48; every `read`
+  line's amount 1, 2 or 3; the steps at the ticks 4, 8, ... and 8, 16,
+  ...; the momentum constant and the books balanced; no row read twice:
+  the same worlds with `measure` click exactly the same counts per tick.
+  The comparison pair: with a third column `probe` (the value 1 on the
+  beam, [1, M] on the reader, the sign minus on both: the push is the
+  flow read, 64 label units per row, toward the lamp) the reader toward
+  at k = 4 reads 45 rows and pushes -2880 = -64 x 45 on x, `pushed`
+  (-2880, 0, 0), with the steps at the same ticks; the same world with
+  `"doppler": true` is refused at parsing, "unknown keys: doppler".
+- (b) a reader at rest is unchanged: the control at rest reads one row per
+  interval, 48 in 48, as the rule as built read it; the gate set replayed
+  byte-identical in `events.jsonl` and the ledger, `state.json` differing
+  by the two marks alone, is the research replay of VALIDATION.
+- (c) beyond the axis, on a GameBoard [64, 64, 1] with every Node (but one
+  corner) on exactly one digital line of the stream's direction, one lamp
+  per line releasing one row per interval, the lines pre-filled off the
+  flight's own rule, the reader at (40, 40, 0) stepping +x at k = 4 for 32
+  intervals; the counts from the rule transcribed on the lines' geometry
+  (docs/designs/crossing/crossing_2d.py, no reading code of the engine):
+  a transverse stream (rows +y, one lamp per column) 32 in 32, one at
+  every interval; the face diagonal (1, 1, 0) moving with the step (the
+  lamps at (x, 0) for even x and (0, y) for even y from 2) 24 in 32 in the
+  pattern 1, 1, 1, 0, 0, 1, 1, 1 per eight intervals (at the steps whose
+  Link the line takes along +x the arrival came over the body's Link with
+  it, C3', and the next interval's arrival rested at the origin during
+  the step, C3''; at the steps whose Link the line takes along +y the
+  arrival is met); the diagonal (-1, 1, 0) against the step (the lamps at
+  (x, 0) for odd x and (63, y) for even y from 2) 36 in 32, one per
+  interval and 2 at the ticks 4, 12, 20, 28 (a row crossed the body's
+  Link the other way, C1); no resident row against the step at any
+  entered Node in these intervals; the reader at (48, 40, 0) after the 8
+  steps; no row twice in any of the three (the `measure` counts per tick
+  equal). The design's "at exactly the rest rate" for (1, 1, 0) and "32 +
+  19 or 20" for (-1, 1, 0) were the physicist's estimates; the rule on
+  the lattice gives 24 and 36.
+- (d) one row met once: a single row of amount 1 in transit on +x at age
+  0 (its Node at tick t the start plus m(t), m(0 .. 13) = 0, 1, 1, 2, 2,
+  3, 3, 4, 5, 5, 6, 6, 7, 8) and the reader of (a) at k = 4, the lamp
+  releasing nothing: toward, the row at 30 and the reader at 40 stepping
+  -x (39, 38, 37 after the ticks 4, 8, 12): at tick 12 the row moves 36
+  -> 37 as the reader enters 37 from 38, C3 with both arrived: one `read`
+  line, at tick 12, amount 1, at the Node (37, 0, 0), nothing at 13; away,
+  the leapfrog after a rest (C3''): the row at 30 and the reader at 32
+  stepping +x: the row arrives at 32 at tick 3, `read` at tick 3 at (32,
+  0, 0); at tick 4 the reader steps 32 -> 33 while the row rests at 32;
+  at tick 5 the row moves 32 -> 33 into the reader's Node with e' = +x
+  and s_2 = 0, not met; at tick 8 the reader steps 33 -> 34 as the row
+  moves 34 -> 35, nothing: exactly one `read` line; away, the entered
+  Node's resident row moving with the step (C2'): the row at 31: it
+  arrives at 32 at tick 1, `read` at tick 1 at (32, 0, 0); it rests at
+  32 at tick 2, moves to 33 at tick 3, rests there at tick 4 as the
+  reader enters 33, u . e > 0, not met: exactly one `read` line; the
+  steps at 4, 8, 12 and 4, 8; each world's books balanced.
+- (e) the sum over a period: the stream pre-filled over a bar of 512, the
+  reader at x = 400 crossing 32 Links in 32 k intervals: toward 128 + 55
+  = 183 reads at k = 4 and 256 + 55 = 311 at k = 8, exactly; away 128 -
+  55 + 1 = 74 and 256 - 55 + 1 = 202 (the one extra the row co-located
+  with the reader at the first interval, a boundary of the window, not of
+  the rule); 32 `step` lines and the reader at 368 or 432: the rate 1 +
+  v / c toward and 1 - v / c away with v = 1 / k and c = 32 / 55, as a
+  count.
+- (f) the report of the fast steps (the design's section 2, "not proved":
+  a body faster than one Link per two intervals, |p| > Q S M, can cross a
+  Link in the interval right after another, where the one-interval mark
+  cannot tell a leapfrog of lag two from a first arrival): the engine
+  counts those Links, `NatureBeamSimulation.fast_steps`, and the runner's
+  record carries `fast_steps`, no refusal. A lone body of content 1 at
+  width 1 (Q S M = 64), no rows, 30 intervals: at the momentum 96 (D =
+  160, the drive 96 per self-creation) the Links fall at the
+  self-creations 2, 4, 5, 7, 9, 10, 12, 14, ..., 18 Links and 6 right
+  after another; at 128 (D = 192) 20 Links and 10 fast; at 64 (D = 128,
+  one Link per two intervals exactly) 15 and 0; at 32 (D = 96) 10 and 0.
 
 ## The age
 
@@ -2163,10 +2171,13 @@ expected integers, written down before the first run:
   stepping onto its own +x ray in the same interval); 28, 28, 27, 27 and
   18 clicks on face:-z, face:+z, face:-y, face:+y and face:-x, 24 clicks
   and 20 record lines at `d`; the pair's clicks at tick 6 on face:-z
-  (phase 40) and face:+z (phase 3); 25 rows of 101 units in the store;
-  the transit line 2 + 740 = 101 + 522 + 119 with 74, 111, 111, 113,
-  113 units through the faces -x, +y, -y, +z, -z; every record, every
-  row and both states equal with `span` [1, 1, 1] declared.
+  (phase 40) and face:+z (phase 3); 25 rows of 102 units in the store;
+  the transit line 2 + 740 = 102 + 521 + 119 with 73, 111, 112, 113,
+  112 units through the faces -x, +y, -y, +z, -z (since the crossing rule
+  of 2026-09-21 the step precedes the law and the body reads its own +x
+  ray home in the interval of the step: 101 units, 522 escaped and 74,
+  111, 111, 113, 113 until then); every record, every row and both
+  states equal with `span` [1, 1, 1] declared.
 - (b) a set of three Nodes: a fixed body of `light` (content 4) at
   (4, 0, 1) of an open 9 x 1 x 3 bar with `span` [1, 1, 3] (the Nodes
   (4, 0, 0), (4, 0, 1), (4, 0, 2), all held by number 1 in `at`)
@@ -2220,9 +2231,11 @@ expected integers, written down before the first run:
   40 x 1 x 1 bar steps at the ages 2, 4, 6, ... (k = age // 2, x = 20 +
   k): with `action` 65536 (|p| N / h = 1 per Link) its phase after the
   intervals 1 to 12 is 5 + tick // 2, 11 after 12, and at `release`
-  [1, 16] on -X (away from its path) the rays born at tick 3 carry the
-  phase 6 and those born at tick 2 the phase 5 (the release of an interval
-  carries the phase before its step); with `action` 4096 (16 per Link)
+  [1, 16] on -X (away from its path) the rays born at tick 2 and at tick
+  3 carry the phase 6 (since the crossing rule of 2026-09-21 the step and
+  its turn precede the law, so the release of the interval of a step
+  carries the phase turned at the Link; 5 at tick 2 until then, the
+  release before the step); with `action` 4096 (16 per Link)
   the phase after 12 intervals is (5 + 96) mod 64 = 37; with the momentum
   [320, 0, 0] and `action` 7 (`by_clock(k, 20480, 7)` = 2925, 2926, 2926,
   2925, 2926 for k = 0 .. 4: a remainder each step; the steps at the
@@ -2662,10 +2675,13 @@ written down before the first run:
   the absorber's momentum (0, 0, 0) and `units` 0 after; `transit_released`
   [0, 1, 0].
 - (d) the absorber free: after the click (content 2, momentum (64, 0, 0))
-  it steps at the ticks 7, 10 and 13 (the step drive, 2026-09-20: the
-  drive 64 at the click's interval 5, 192 = D at 7; the rule as it was,
-  `by_clock(age - 1, 64, 192)`, stepped it at 6, 9 and 12), to x = 5, 6
-  and off the bar: the face click at tick 13 with `held` [0, 1, 1];
+  it steps at the ticks 8, 11 and 14 (the step drive, 2026-09-20, with
+  the crossing rule's order of 2026-09-21, the drive advanced by the
+  momentum after the previous interval: the drive 64 at the interval
+  after the click, 6, and 192 = D at 8; 7, 10 and 13 with the step after
+  the law; the rule as it was, `by_clock(age - 1, 64, 192)`, stepped it
+  at 6, 9 and 12), to x = 5, 6 and off the bar: the face click at tick 14
+  with `held` [0, 1, 1];
   `units_escaped` [0, 1, 0]; `held_escaped` [0, 1, 1]; the line [0, 1] at
   every tick of 15.
 - (e) the refusals, naming the key: `charge` [-1, 2] on a paid family; a
