@@ -1134,3 +1134,35 @@ change: every number of rows 11a to 11c against NATURE.md and
 BRIGHTNESS.md (0.339 / 0.055; 3.639 / 3.629; 1452; 0.500 / 0.062; "no
 such rule among the six"); the tally; the caveat's series R; the 5.4
 lines of records 277 and 281.
+
+## Series R on the tree (2026-09-21, after the merge of main at aa4cabf0)
+
+The quarks' run (PR #463, EXPERIMENTS entry R, the seven worlds of
+examples/events/quarks/ with expectations.json written before the run,
+tools/quarks_readings.py, 16 derive-and-compare tests) is on main and
+merged. The masses row's check column cites it: the push on every body
+the design's integer exactly; the lines hold 3000 intervals, the
+triangle and the rectangle shear (27 and 176 against the toy's 25 and
+161); the read mass the exact sum in every world (20, 25, 20, 45, 45,
+20, 1836); the kicked u leaves at tick 63 (the pin 70 to 90, outside by
+seven, reported and not moved) and its pair breaks at about 1190 (the
+pin "a bound pair", outside): the law binds and does not confine. The
+caveat's "series R not registered" sentence is gone; the register
+bibitem adds R, the log bibitem record 279. Records 283 to 288 (the dark
+sector's three routes refuted, the far system read before any click
+refuted) are on the tree and not cited: the paper carries no dark-sector
+claim, and the register's row for it is not a reading.
+
+## Referee round 15 (2026-09-21): the series R cell, minor revision, applied
+
+Eight findings, all applied: the log bibitem cited record 279 for "the
+quarks' six verdicts", which it is not (no log record carries the run's
+verdicts; the register's entry R does), now records 267, 273 and 275
+(the design delivered, the run ordered and registered); the dressed
+world's one accumulator unit qualifies "exactly"; "the toy" named as the
+design's integer replay; the kicked u "leaves through the face with its
+2/3 e" and "the pair it leaves behind breaks"; 19.4's pins reported as
+met (a chain and never a triangle; m_n - m_p the held difference, 25 - 20
+units; the F pin is not read by the register); LaTeX quotes; the
+compositions spaced as the source writes them. Verified: every number of
+the cell against the register's entry R and the worlds' README.
