@@ -102,9 +102,29 @@ map **F** (the interval's map) applied at every Node at every interval to
 the integer state vector **s**, per component with its own rate **r** and
 wall d:
 
-    s <- s + r;   e <- [s >= d];   s <- s - e d,
+    s <- s + r;   e <- sign(s) x min(floor(abs(s) / d), at_most);   s <- s - e d,       (1)
 
-every wall crossing an event. The components of **s** and their (r, d): a
+every wall crossing an event, `at_most` the cap of that component (the
+count primitive `core.integer.by_drive`, and `by_drive_rows` on the rows'
+arrays, `nature_beam.py:519`): the accumulator gains the signed rate, the
+count is the whole part it then holds in units of the wall, capped at
+`at_most` where a cap is declared and the whole part otherwise
+(`at_most = 0`), that much is subtracted and the remainder stays, the
+sign of a reversed rate first cancelling what was accumulated the other
+way (record 126). Which counts carry the cap: the drive alone, `at_most =
+1` (`engine.py:126`, `step_axis`; form B's directional drive the same,
+one Link per interval on the Bresenham line, 24.3's step cap), the rest
+of a larger count kept and fired one per following self-creation. Every
+other count takes the whole part, `at_most = 0`, and can fire several
+events in one interval: the turn (a lamp at the rate `content x n` over d
+turns s steps per self-creation, 6.4), the owed count, the release, the
+lamp, the push per column, the counts table of `measured.py:232`; the
+owner's high-rate series 0, 2, 5, 7, 10 (record 340: a rate of 5 against
+a wall of 2) is this form and not the 0 / 1 form. The 0 / 1 form `e <-
+[s >= d]` holds exactly where the rate never exceeds the wall: the
+flight (`2 S_1 Q <= 2 T_D`, at most one Link per interval, 1.2 step 1),
+the drive (by its cap), the birth wheel (rate 1, wall W), a clock whose
+rate is below its wall; the paper's Eq. (1) follows this one. The components of **s** and their (r, d): a
 row's Manhattan count (rate `2 S_1 Q`, wall `2 T_d`, started at `T_d`;
 section 1.4) and its three axis deficits (rate `abs(v_i)` per Manhattan
 step, the carry `S_1` from the largest); a row's phase (rate
@@ -1518,13 +1538,16 @@ multiplicity m is the split's bookkeeping of that factor.
   other, with the multiplicity factor `A_2`, and the total is conserved:
   `R(x^{N/4} f + g) + R(f + x^{N/4} g) = A_2 (R(f) + R(g))` for all f, g
   in `Z[zeta_N]`;
-- (c) counts: `R(f) >= 0`.
+- (c) counts: `R(f) >= 0`;
+- (d) the empty reads zero: `R(0) = 0` on the zero count vector (the
+  owner's condition, record 340);
+- (e) some input reads: R is not identically zero (record 340).
 
 Not assumed: continuity, a dimension, the form of R on one row, or
 Theorem 2's `A = sum a_i^2`.
 
-**Theorem (the lattice Gleason).** Under (a), (b), (c), with N a power
-of two,
+**Theorem (the lattice Gleason).** Under (a) to (e), with N a power of
+two,
 
     A_2 = 2,   R(f) = sum over odd j, 1 <= j < N/2, of c_j |sigma_j(f)|^2,   c_j >= 0,
     sigma_j(f) = sum_p f_p exp(2 pi i j p / N)     (the j-th Galois conjugate of ev(f); sigma_1 = ev).
@@ -1543,8 +1566,9 @@ with `K(0) = C`, `K(N/4) = 0`, `K(N/2) = -C` for every admissible R. The
 Born form `|ev(f)|^2` is `c_1 = 1` and the other `c_j = 0`: `K(D) =
 cos(2 pi D / N)`.
 
-**Proof.** (i) g = 0 in (b) with (a): `R(x^{N/4} f) + R(f) = 2 R(f) =
-A_2 R(f)`, so `A_2 = 2` (R not identically 0). (ii) Replace g by
+**Proof.** (i) g = 0 in (b) with (a) and (d): `R(x^{N/4} f) + R(f) = 2
+R(f) = A_2 (R(f) + R(0)) = A_2 R(f)`, so `A_2 = 2` at any f with `R(f) !=
+0`, which (e) supplies. (ii) Replace g by
 `x^{-N/4} g` in (b) and use (a) on the first term, `x^{N/4} f +
 x^{-N/4} g = x^{N/4} (f - g)` since `x^{-N/2} = -1`: `R(f - g) + R(f +
 g) = 2 R(f) + 2 R(g)`, the parallelogram law on the abelian group
@@ -1578,8 +1602,26 @@ x^{N/4} g)` and `2 a b B(g, x^{N/4} f) = 2 a b B(x^{N/4} g, x^{N/2} f) =
 R(g))`; the label rotation's pair `(C' f + S' x^t g, -S' f + C' x^t g)`
 cancels the same way with `C'^2 + S'^2`. (vii) Two rows: `|sigma_j(a +
 b x^D)|^2 = a^2 + b^2 + 2 a b cos(2 pi j D / N)`, and at `D = 0, N/4,
-N/2` the cosine is `1, 0, -1` for every odd j. (Each identity of (vi)
-and (vii) was also checked numerically on random elements at N = 64.)
+N/2` the cosine is `1, 0, -1` for every odd j. (Each identity of (vi) and (vii) was also checked numerically on random
+elements at N = 64.)
+
+**The two conditions added (the owner, record 340: "the conditions
+stated for the theorem allow a detector that always returns 1, so by
+themselves they do not force a quadratic weight").** Without (d) and
+(e) the constant function `R = 1` satisfies (a), (b) and (c) with `A_2 =
+1` (both sides of (b) read 2 at every f, g), so the old statement admitted
+it and its proof used `R(0) = 0` silently at step (i). With (d) and (e):
+step (i) forces `A_2 = 2`, and the constant fails (b) (2 against 4); the
+other function the old conditions admitted, `R = c > 0` on every nonzero
+vector and `R(0) = 0`, passes (i) but fails (b) at `f = -x^{N/4} g`
+(`R(2 g) + R(0) = c` against `A_2 (R(f) + R(g)) = 4 c`); and steps (ii)
+to (vii) run as written, (iii)'s `R(0) = 0` now a hypothesis and not a
+consequence. Why the code satisfies both, in one line: a cell with no
+rows has the zero count vector and the weight `f^T G f = 0` (the click's
+zero on the empty; `amplitude.py`'s `gram_form` over no phases), the
+GameBoard's cancel and the click's zero are one relation (above), and
+one row of amount w alone reads `(32 w)^2 x 256^2 > 0` (BEAM_LAW section
+5), so R is not identically zero.
 
 **What is reached and what is not.** Reached: the reading is a positive
 quadratic form of the record's element, forced by the phase rotation,
@@ -6560,8 +6602,9 @@ the clock the presence or the age moment).
 ### 24.3 The Delta P table: every computable difference from quantum mechanics or relativity, as the law is declared
 
 Each row: the difference, the law's number, nature's or the theory's,
-the size, the experiment that bounds it today (the source as
-NATURE.md's rows carry it, or named here), the verdict. Where
+the size, the experiment that bounds it today (the source as NATURE.md's
+rows carry it, or named here), the verdict; rows 21 and 22 are the two
+the owner's report of record 340 measured on `main` 5cc43ae7. Where
 covariant-readings-v1 (17.6, buildable) or optical-v1 (record 323)
 changes the row, the row says so; the verdict is `main`'s.
 
@@ -6587,6 +6630,8 @@ changes the row, the row says so; the verdict is `main`'s.
 | 18 | the strong ratio (18.3) | the alpha's binding over the deuteron's 2.0 (series N) | 12.72 | a factor 6.4 | AME2020; NATURE row 7b | REFUTED |
 | 19 | the growing wall's brightness (11a) and Tolman (11c) | `q_eff = +1`; three powers of `1 + z` short | `-0.53`; `(1 + z)^-4` | as NATURE 11a, 11c | Pantheon+; Lubin and Sandage 2001 | REFUTED |
 | 20 | Born's rule to the rung `1 / (2 N)` (6.2) | the cell's probability a multiple of `1 / N` | the squared amplitude | `0.0078` at N = 64, `1.2 x 10^-4` at N = 4096 | Sinha et al. 2010, Science 329, 418 (the Sorkin parameter `0.0064 +- 0.0119`, a different observable); NATURE row 2c | OPEN at N = 4096 (below the tests' `10^-2`); the rounding is not the Sorkin term |
+| 21 | the axis preference of the drive as declared on `main` (the per-axis step, `step_axis`, the step on the axis of the largest component, x before y on a tie) | equal momentum on two axes: the body advanced 26 Nodes in x and none in y (the owner's report, eight runs on `main` 5cc43ae7, record 340) | isotropic motion: 45 degrees | the direction of motion off by 45 degrees; the speed per axis `n / (S + n)` | any measurement of a free body's track (the orbit README's "x before y"; series D's polygon) | REFUTED on `main` as declared; the fix form B's directional drive, in build (record 186, 301): one accumulator on the momentum's line, the Euclidean pace `abs(p) / (Q S M)` on every direction |
+| 22 | a body's pace not bounded by c on `main` | a fast body at 0.925 Nodes per interval against the rows' 0.582 on an axis (the same report, record 340); the per-axis drive caps at one Link per interval per axis, `1.72 c` (FORM.md section 2; the register's series D at S = 1 at `1.29 c`, record 186 (2)) | nothing outruns light | up to `sqrt 3` Nodes per interval, 3 c | every bound on superluminal matter (the Cohen-Glashow bound from the absence of vacuum Cherenkov radiation, Phys. Rev. Lett. 107, 181803 (2011)) | REFUTED on `main` as declared; closed under form B (the cap `S_1 Q / T_D` on the line) and the covariant readings (`p / E' <= 1 / sqrt 3` by the exact square, 17.6 M3, 23.1) |
 
 ### 24.4 The one prediction the paper can carry
 
@@ -6636,9 +6681,11 @@ few, one imported member of a derived family, the apparatus's
 declarations and two inputs no postulate replaces (24.1); the bilinear
 rate the referee asked about is forced by additivity in both its
 arguments over the integers (24.2), the choice being the moment's
-order. Of twenty computable differences from quantum mechanics and
-relativity (24.3), twelve are refuted on `main` as declared (five of
-them closed by covariant-readings-v1 or optical-v1 in form, to be run),
+order. Of twenty-two computable differences from quantum mechanics and
+relativity (24.3), fourteen are refuted on `main` as declared (five of
+them closed by covariant-readings-v1 or optical-v1 in form, to be run,
+and two, the axis preference and the unbounded pace, by form B in
+build),
 three are below reach, four are open, and one is a prediction within
 reach: `S = 181 / 64`, three parts in ten thousand below Tsirelson's
 bound (24.4). No run; nothing enters the law.
