@@ -1197,3 +1197,58 @@ the archive's version is confirmed; note 48's own caveat carried (a
 reader faster than one Link per two intervals counted, not proved;
 exact over whole Links, within one row otherwise); the period named (32
 Links at k = 4, 8); the bibitem's gloss left as a gloss.
+
+## The dark sector section (2026-09-21, the owner's word, record 298 pending on main; the physicist's structure approved by the owner, relayed by the Boss at about 08:10Z)
+
+The owner (translated): "Yes, you can pass it to him for the paper: only
+what we tried to do there with dark matter. And you say also a detector
+does not help, a limited number of clicks does not help, nothing; at the
+moment there is no explanation for it." One short section, a sharp
+negative result with the missing content located, never an explanation
+of dark matter: (a) the statement with its one-line reason (Gauss exact,
+the push bilinear and homogeneous of degree 1 in the rows, every
+division keeps its remainder: no rule of the six strengthens a weak
+field, none gives an acceleration below which the field departs from
+1 / r^2); (b) the falsifiable rows in one font (11a FAIL, 11b PASS, 11c
+FAIL, the rotation curve Keplerian with the visible content FAIL as
+stated, not a register row); (c) one table of six routes with the sign
+and the shape each gives and what refutes it (the detector's shift;
+the finite clicks and the read-before-any-click; the short periodic
+dimension; S derived; the rounding floor; the fixed computation at the
+edge); (d) where the missing content sits (an input family with a
+charge column 0 and no lamp; dark energy nowhere; the Bullet Cluster's
+bending needs unseen content); (e) the open question in one line (a
+root of the state and a declared a_0, not one of the six). Placed after
+the delay field, before the lattice Gleason. Sources on the tree:
+DARK_SECTOR.md, S_AND_A0.md (sections A to E), BRIGHTNESS.md, NATURE
+rows 11a to 11c; published: Milgrom 1983, McGaugh 2012, McGaugh, Lelli
+and Schombert 2016, Clowe 2006, Hofmann and Muller 2018. Not written,
+by the Boss's instruction: "the model explains dark matter", "no dark
+energy is needed".
+
+## Referee round 17 (2026-09-21): the dark sector section, major revision, applied
+
+Twelve findings, all applied. MAJOR: the opening was called a theorem
+and said "Newton's exactly"; the sources reach Newton in the shell mean
+with Gauss exact, and the claim that no rule of the six strengthens a
+weak field is argued in the notes, not proved as a theorem: now "The
+statement, with its one-line reason", "Newton's in the shell mean, with
+Gauss's law exact", the push's homogeneity named as a reading of its
+form, the gravity column's divisor 1 and the charge column's remainder
+kept by the accumulator, and "as the notes argue and no source proves
+as a theorem". MINOR: the Doppler departures are parts in 10^4 of the
+shift, not 10^6 (the note's own arithmetic slip, reported to the Boss);
+the slab's exponents quoted in full (-0.7 to -1.0 against -1.8 to
+-2.1); the caption separates the law's numbers (the host map's) from
+nature's pins; n and beta named at first use; the slab's thickness
+written ell_slab (ell_p reads as the Planck length); K_c tied to the
+derivation's section 13 constant; alpha_G named as nature's coupling of
+the proton, not redefined; the planets' bound "of order a part in 10^5"
+(the 1 m/s precision unverified in the note); the slope "about 4" with
+McGaugh 2012 and Lelli 2019 both cited; the open question's logic (a
+root fails the vector test, so it enters outside the law); the budget
+reading S = K_budget / 26 listed with what refutes it, the factors 900
+and 2800 both; the fixed-computation row's three forms labelled with
+their three refutations; "a finite number of clicks" dropped (no such
+route in the note); the rotation curve "this paper's own reading, no
+register row"; "in one list".
