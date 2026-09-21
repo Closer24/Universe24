@@ -639,3 +639,68 @@ choice and not a derivation's result; the redshift z, the pace v, the
 momentum p and the mass m named at first use in the section); its caveat
 stands: the citations of records 245 and 249 dangle until the Boss's
 records pull request lands, so the manuscript is not merged before it.
+
+## The claim on c a referee cannot call taken (2026-09-21, the owner's request after the verdict)
+
+The owner (translated): "try something a referee will not say you took
+or derived from elsewhere; a founded claim". The candidate, written into
+the model section after the pace paragraph as Proposition 2 ("The pace
+is the direction's") with its consequence, a bullet in "What is new" and
+a sentence in the positioning: the pace of a row depends on its
+direction alone, at every phase rate up to the alias bound, so the
+model's light has one speed at every wavelength (no dispersion), where
+every discretised wave equation and lattice Boltzmann model is dispersive
+with a band edge. Consequences with numbers (`checks/light_speed.txt`
+section 6): the Link is bounded only by the shortest wavelength seen
+(LHAASO's 1.4 PeV photon: a <= 7.7e-22 m under the pair form, 4.4e-22 m
+under the integer form) and by nothing of the time-of-flight tests; one
+GRB photon (GRB 090510, 31 GeV within 0.83 s at z = 0.903) bounds a
+lattice wave's Link below 3.6e-26 m, 2e4 times lower; the prediction: no
+energy dependence of c at any precision (as in special relativity), the
+lattice left only in the frequency-independent anisotropy; one measured
+energy dependence refutes the flight. Stated as a property of the
+definitions (the row a walker on a digital line, not a wave), not a
+limit: referee round 3 withdrew a "plane-wave limit" built on the same
+fact, and this entry claims the consequence, not a limit. Referee round
+8 before it stays.
+
+## Referee round 8 (2026-09-21): the no-dispersion claim, major revision, applied
+
+Verdict: major revision, twelve findings, every one verified (the
+archived walk and collision, the scheme's dispersion relation recomputed
+in closed form, the literature numbers recomputed). Applied the same
+day. (1) The universal "every lattice wave equation with a Link above
+1e-25 m is already refuted" was false: the same second-order scheme is
+exactly dispersionless on the cube diagonal at this Courant number, and
+a fourth-order scheme's bound from the same photon is 8e-22 m, above the
+LHAASO bound; the text now bounds "the standard second-order scheme on
+an axis" and gives the fourth-order number, and says a lattice wave
+obeys both bounds. (2) "Energy" is undefined in the model: the reading
+of a photon of energy E as a family turning E tau / h per interval is
+now stated and labelled assumed, and the prediction "no energy
+dependence" carries it. (3) Proposition 2 was a definition's pointer:
+demoted to Remark 1, widened to every rule of the interval (the archived
+collision table reads no phase), and the fact named for what it is, the
+pure-shift case of a lattice automaton (Meyer 1996), a ballistic walker
+with a passenger phase; the claim is the pair with Proposition 1
+(isotropic within 1 / T_d and dispersion-free in every direction while
+the carried phase interferes), which no local linear wave scheme on the
+lattice can be, with the one-line reason (a trigonometric polynomial
+against c |k|). (4) The integer form's bound is lambda / sqrt 2 (two
+Links span sqrt 2 a on a cube diagonal's line), 6.3e-22 m, not lambda /
+2. (5) The wavelength's symbol clashed with Bell's lambda: the photon's
+wavelength is now Lambda; v_g, a, omega, k named at first use. (6) The
+cosmology named (H_0 = 71, Omega_m = 0.27, the comoving distance 9.47e25
+m, Abdo et al. 2009), the weighting's direction stated; the LHAASO
+bound dated ("moves with the record"; the referee notes later LHAASO
+photons to 2.5 PeV, to be verified against the source before
+submission). (7) "This model's bound" corrected: the shortest-wavelength
+bound is every lattice's; the "2e4 times" comparison dropped; the
+positioning sentence restricted to the discretised wave equation and
+the cited three-dimensional automata (no claim about lattice Boltzmann
+carrying light); "the flight as defined". The referee's answer to the
+owner's question, recorded: the bare no-dispersion fact can be
+dismissed as the trivial shift; the pair with the isotropy cannot, and
+its weakest point is its price, no wave on the lattice and the energy
+entering by an assumed reading. The "What is new" bullet states the pair
+and the price.

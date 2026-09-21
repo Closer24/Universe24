@@ -227,12 +227,105 @@ def known_numbers() -> None:
     )
 
 
+def no_dispersion() -> None:
+    """The pace of a row is a function of its direction alone, Q_f |d| / T_d,
+    whatever its phase rate n / d: the flight table has no rate argument and
+    no rule of the interval reads the phase into the pace (the pure-shift
+    case of a lattice automaton, a ballistic walker with a passenger phase).
+    Paired with the isotropy of section 1 this is what no local linear wave
+    scheme on Z^3 can do: its dispersion relation is a trigonometric
+    polynomial in k a, and c |k| is not periodic, so omega = c |k| holds on
+    no open set of k. The numbers: the standard second-order scheme at the
+    Courant number 1 / sqrt 3 on an axis, sin^2(omega dt / 2) = (1/3)
+    sin^2(k a / 2), has the group velocity 1 - (k a)^2 / 12 and zero at the
+    band edge; on the cube diagonal the same scheme is exactly dispersionless;
+    a fourth-order scheme has (k a)^4. Under the reading (assumed) that a
+    photon of energy E is a family whose phase turns E dt / h per interval,
+    the Link is bounded by the shortest wavelength seen (the 1.4 PeV photon of
+    LHAASO 2021; a bound every lattice model shares) and by nothing of the
+    time-of-flight tests, which bound the second-order scheme's Link on an
+    axis through one GRB photon (GRB 090510: 31 GeV within 0.83 s at z =
+    0.903, the comoving distance 9.47e25 m for H_0 = 71 and Omega_m = 0.27,
+    without the cosmological weighting, conservative)."""
+    section("6. No dispersion: the pace is the direction's, at every phase rate")
+    planck_ev_m = 1.23984198e-6  # h c in eV m
+    for direction in ((1, 0, 0), (1, 1, 0), (5, 2, 1)):
+        t_d = resolution(direction, FLIGHT_SCALE)
+        pace = FLIGHT_SCALE * math.sqrt(sum(c * c for c in direction)) / t_d
+        for n, d in ((1, 8), (8, 1), (32, 1)):
+            wavelength_intervals = 64 * d / n
+            print(
+                f"  {direction}: rate {n}/{d} steps per interval at N = 64, a turn every {wavelength_intervals:6.2f} intervals"
+                f" = {wavelength_intervals * pace:6.3f} Links along the line, pace {pace:.4f} (the same at every rate)"
+            )
+    print(
+        "  the shortest turn: the alias bound N / 2 steps per interval, two intervals, 2 / sqrt 3 = 1.1547 Links on the cube"
+        " diagonal, 1.164 on a heading (the pair form); two Links under the integer form, spanning sqrt 2 Links of length on"
+        " a cube diagonal's line"
+    )
+    lhaaso_ev = 1.4e15
+    wavelength = planck_ev_m / lhaaso_ev
+    print(
+        f"  the 1.4 PeV photon (LHAASO 2021), read as a family turning E dt / h per interval (assumed): lambda = {wavelength:.3e} m;"
+        f" the Link a <= lambda sqrt 3 / 2 = {wavelength * math.sqrt(3) / 2:.3e} m under the pair form,"
+        f" a <= lambda / sqrt 2 = {wavelength / math.sqrt(2):.3e} m under the integer form (the weakest direction, the cube diagonal)"
+    )
+    nu2 = 1 / 3
+
+    def omega_axis(ka: float) -> float:
+        return 2 * math.asin(math.sqrt(nu2) * math.sin(ka / 2))  # omega dt on an axis
+
+    def omega_diagonal(ka: float) -> float:
+        # k = (k, k, k) / sqrt 3: sin^2(omega dt / 2) = (1 / 3) x 3 sin^2(k a / (2 sqrt 3))
+        return 2 * math.asin(math.sin(ka / (2 * math.sqrt(3))))
+
+    def group_velocity(omega, ka: float) -> float:
+        h = 1e-6
+        return (omega(ka + h) - omega(ka - h)) / (2 * h) / math.sqrt(nu2)  # over c
+
+    print(
+        "  the standard second-order scheme on the same Link (Courant number 1 / sqrt 3): group velocity over c, on an axis"
+        " and on the cube diagonal"
+    )
+    for ka in (1e-2, 1e-1, 1.0, 2.0, 3.0, math.pi - 1e-9):
+        print(
+            f"    |k| a = {ka:8.4f}: axis {group_velocity(omega_axis, ka):.9f} (1 - (k a)^2 / 12 = {1 - ka * ka / 12:.9f});"
+            f" cube diagonal {group_velocity(omega_diagonal, ka):.9f}"
+        )
+    print(
+        "    the scheme is exactly dispersionless on the cube diagonal at this Courant number, and zero at the axis's band edge"
+    )
+    photon_ev, delay_s, distance_m = 31e9, 0.83, 9.47e25
+    light = 299792458.0
+    dv = delay_s / (distance_m / light)
+    grb_wavelength = planck_ev_m / photon_ev
+    ka_second = math.sqrt(12 * dv)
+    a_second = ka_second * grb_wavelength / (2 * math.pi)
+    alpha = 1 / 100
+    ka_fourth = (dv / alpha) ** 0.25
+    a_fourth = ka_fourth * grb_wavelength / (2 * math.pi)
+    print(
+        f"  GRB 090510: a {photon_ev / 1e9:.0f} GeV photon within {delay_s} s over {distance_m:.2e} m: |v_g - c| / c < {dv:.2e}"
+        f" (lambda = {grb_wavelength:.1e} m); the second-order scheme on an axis needs (k a)^2 / 12 below it: a < {a_second:.1e} m;"
+        f" a fourth-order scheme with (k a)^4 / 100 needs a < {a_fourth:.1e} m; on the cube diagonal the second-order scheme is not bounded at all"
+    )
+    print(
+        "  the model's rows: the pace independent of the rate on every line, so no time-of-flight bound; the Link bounded only by"
+        " the shortest wavelength seen, the bound every lattice shares; one measured energy dependence of c refutes the flight as defined"
+    )
+    print(
+        "  what the lattice leaves: the direction's rounding, below 1 / T_d, the same at every wavelength; the price: no wave on the"
+        " lattice, the interference summed in the record, and the photon's energy entering only by the reading assumed above"
+    )
+
+
 def main() -> None:
     cauchy_schwarz()
     anisotropy()
     supremum()
     octahedron_and_group()
     known_numbers()
+    no_dispersion()
 
 
 if __name__ == "__main__":
