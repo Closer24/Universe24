@@ -874,3 +874,172 @@ no direction crosses two Links in one interval.
 | The dispersion `v(p)` | **different law**: `p / (m + p)` in place of `p / sqrt(m^2 + p^2)`; the cap 1 above c | the step rule |
 | Velocity addition, `E = m c^2`, the mass of a moving body | **not reached**: no operation carries a body's speed into its content or its clock; content is invariant, the momentum unbounded | the law has no energy of motion (target 6 for the release's E = h f) |
 | A preferred frame | the lattice's, and inside a crowd the crowd's: measurable one-way, hidden two-way | 4.2, 4.3 |
+
+## 5. General relativity: the equation of the delay field
+
+**What "held content delays the flight" is in beam-v1.** Nothing in
+flight is delayed: a row moves by the flight table at one speed, blind to
+the crowd (BEAM_LAW section 3; series K, registered: the mean age 89.40
+in every world, the delta 0.00). What a crowd delays is a CLOCK: a body
+reads at its Node the presence of every row of another number (or, on an
+entry that reads `age`, the age moment) and owes `by_clock(age, k n, d)`
+intervals before its next self-creation (`engine.py:475-485`; on the
+branch the accumulator `acc_owed`), so its rate is `1 / (1 + k n / d)`.
+Its push reads the flow of the same rows. The operations: the release
+(T), the walk (T), the reading (B: the zeroth moment, the age moment, the
+first moment), the owed count (D), the coupling (B). The register: series
+E (`examples/events/redshift/`: an open 31^3 cube, a fixed source of
+content 2^12 on the 290-direction fan, `q = 290` per interval, probes on
+the shells r = 4 .. 14; the `scalar` world at `suspension` [1, 1], the
+`age` world at [1, 2]), series K and K under the meeting
+(`examples/events/lensing/`), series G2 (the deceleration q).
+
+### 5.1 The two fields of one stream, and the equation they obey
+
+Let a source release `q(t)` rows per interval on a fan of every direction
+(the limit of section 3.2), each row moving at c and carrying its age.
+The presence at the distance r at the time t is the rows dwelling there,
+
+    P(x, t) = q(t - r / c) x dwell / (4 pi r^2)            (dwell = T_d / Q intervals per Link, 1.72 on a heading),
+
+and the age moment is the presence times the age the rows carry, `r / c`
+(each row's age at r is the light-travel time):
+
+    A(x, t) = q(t - r / c) x dwell / (4 pi c r).
+
+The presence is the retarded flux of a conserved stream, the age moment
+is the retarded potential of the source: `f(t - r / c) / (4 pi r)` is the
+retarded Green's function of the wave operator, so A obeys the
+inhomogeneous scalar wave equation with the release as its source,
+
+    (1 / c^2) d^2 A / dt^2 - Laplacian(A) = (dwell / c) q(t) delta(x),
+
+and in the static limit Poisson's equation, `Laplacian(A) = -(dwell / c) q
+delta(x)`, `A = (dwell q / (4 pi c)) / r`. The moments are sums over rows,
+so the field of many sources is the sum of their fields (additive, note
+25): the theory is linear. The flow the push reads is the stream's flux
+vector, `V = (q Q / (4 pi r^2)) r_hat`, which is `-(Q c / dwell)
+grad(A)` in the static case: the acceleration of a body is minus the
+gradient of the age moment's field. **Reached**: the delay field obeys
+Poisson's equation and, dynamically, the retarded scalar wave equation;
+the push is its gradient. The registered check is series E: `k_s x r^2 =
+41.5` (39.0 to 44.8 over r = 6 .. 14; the design's `q dwell / (4 pi) =
+290 x 1.72 / 12.57 = 39.7`) and `k_a x r = 36.1` (33.1 to 39.2), their
+ratio 0.870 against `sqrt 3 / 2 = 0.866` (the age at r is `r sqrt 3`
+intervals, the `age` world's `[1, 2]` halving it): the presence M / r^2
+and the age moment M / r from the same rays, "Einstein's pair from two
+readings" (note 25), the ripple the shell's Node count as in section 3.2.
+
+### 5.2 The clock: the gravitational redshift
+
+A clock at the age moment `k_a = C M / r` (C the constant above times
+`n / d`) runs at `1 / (1 + k_a)`. General relativity's clock at the
+potential runs at `sqrt(1 - 2 G M / (r c^2)) = 1 - G M / (r c^2) - (1 /
+2)(G M / (r c^2))^2 ...`. With `k_a = G M / (r c^2)` the two agree at
+first order: the gravitational redshift between two clocks, `rate(r_1) /
+rate(r_2) = 1 - k(r_1) + k(r_2)` at first order, is the `1 / r` law.
+**Reached at first order.** At second order the lattice reads `1 - k +
+k^2` against `1 - k - k^2 / 2`, and its rate never reaches 0 at a finite
+k: **different law** in the strong field, no horizon (the crowd only
+slows; nothing stops a clock). Registered: series E's rate ratios `rate(r)
+/ rate(14) = 0.3453, 0.5015, 0.5701, 0.7227, 0.8215` at r = 4 .. 12
+against the 1 / r law's `0.3627, 0.5162, 0.6548, 0.7805, 0.8951`: the
+form is the law's (the nearer clock slower, the shift `1 / r - 1 / 14`),
+inside at r = 6 and outside at 8, 10, 12 by the ripple of the shell mean
+entering `(1 + k_14) / (1 + k_r)` whole, at a strong field (k = 2 .. 9),
+where the first-order line fails as expected; the weak-field
+confrontation (k << 1) is the follow-up the register names. The bound
+clock's reading of record 123 (the lamp beside the nucleus, a deficit of
+0.100 % in the count alone) is the same law at a small k.
+
+### 5.3 Bodies: Newton's geodesics, retarded
+
+A body's push reads the flow, `-M_A V`, and its speed the step rule: the
+acceleration `-G M_B / r^2` of section 3.3 with the field retarded at c.
+In the limit the body follows the geodesics of the Newtonian potential
+`A`, not of a metric: no term of order `v^2 / c^2` or `(G M / r c^2)^2`
+enters the push (the coupling is bilinear in the flow and the content,
+nothing else), so the perihelion advance of general relativity (three
+halves of the Newtonian potential's square in the orbit equation) has no
+source here. **Reached** for Newton's motion; **not reached** for the
+post-Newtonian terms. What the register shows of orbits (series D, record
+131: the flat-curve period ratio 3.73 against 4, no orbit closed by D's
+criterion) is the six-heading shell structure of section 3.2, not a
+precession, and is not read here as either.
+
+### 5.4 Light: no optical metric on main; the meeting's turn as a key
+
+On `main` a row reads nothing of the crowd: light is neither bent nor
+delayed beside a mass, exactly (series K: the deflection 0.000 pixel in y
+and z at `M = 2^12` and `2^13`, `b = 6` and 3, the mean age 89.40 in every
+world, the count and the phase rate the control's, at a crowd where
+nature would capture the beam). **Not reached**: the equivalence principle
+holds for bodies (section 3.3) and not for light; the delay field is a
+metric for clocks and for matter's pushes, not for the flight. The
+paper's statement ("an optical metric and its geodesics") describes a
+rule the law does not have.
+
+Under the world key `meeting` (`meeting-v1`, note 35, off by default) a
+paid row turns toward the crowd's `-V` by one step of the direction table
+per N crowd units met, the count on its phase (section 1.2 step 3). In
+the continuum limit of a fine fan (the step `delta_theta -> 0` with the
+grain `N delta_theta` fixed) a row passing a mass at the impact distance
+b turns by
+
+    theta = integral of (abs(V) / (Q N)) delta_theta dt = (q / (4 pi N)) delta_theta x (pi / (b c)) = q delta_theta / (4 N b c),
+
+the form `M / b` of Newton's and Einstein's deflection with the sign
+toward the mass, the constant a grain of the fan; and its phase gains the
+crowd met, `integral of abs(V) dt / Q`, which is `q / (4 N b c)` too: a
+phase delay `~ M / b`. Nature's deflection is `4 G M / (b c^2)` and its
+Shapiro delay `(2 G M / c^3) ln(4 r_1 r_2 / b^2)`: the delay reads the
+POTENTIAL along the path (M / r integrated, a logarithm), the meeting's
+phase reads the FLOW (M / r^2 integrated, `1 / b`). **Different law** for
+the delay under the key, **reached in form** for the bending with a grain
+constant; and no delay in time under either (the flight table is one
+speed). Registered (K under the meeting): the centroid toward the mass in
+every world (-1.79, -4.36, -2.30 pixels at (2^12, 6), (2^13, 6), (2^12,
+3); the offline flight's -3.0, -4.3, -2.6, the first outside because 122
+of the most turned rays clicked on the mass itself), the mean age moved
+only by the bent path's extra Links (+0.50, +1.24, +0.31 intervals), the
+phase offset per pixel sharp (the resultant 0.92 to 0.98 at the lit
+pixels of `mass`) and tens of steps apart from pixel to pixel: the crowd
+met is per path, an interferometer of two paths reads their difference.
+The smallest step of K's table is 2.4 degrees, `10^4` times nature's 1.75
+arcseconds: the value is out of reach by the grain and is not claimed
+(the register's own words).
+
+### 5.5 The general flux, and what Einstein's equation has that this does not
+
+The owner names "the general flux". The exact statement the lattice has
+is Gauss's law of the stream at every instant (section 3.1): the amount
+crossing any closed surface per interval is the release inside it, after
+the front; in the continuum `div(g) = -4 pi G rho` with `g = -grad(A)`
+the field of 5.1, and dynamically the continuity equation of the rows
+(the paper's fourth limit: the books hold the content exactly, `d rho / dt
++ div(j) = 0`). This is the flux form of the field equation, exact on the
+lattice and linear in the sources. Einstein's equation `G_mu_nu = 8 pi G
+T_mu_nu` reduces to it in the weak static limit and has beyond it: (i) a
+tensor source (pressure and momentum flux gravitate: here only the
+content's release does); (ii) the field's own energy as a source, the
+nonlinearity (here the rows carry content 0, are read by no row, and the
+fields of two sources add exactly: gravity does not gravitate); (iii) the
+metric acting on light and on clocks alike (here on clocks and on
+matter's pushes, not on the flight); (iv) a cosmological term (here none:
+series G2's deceleration `q = +0.345` under the key and `+0.922` under
+the source rule with gravity on, `-0.108` coasting, the law having no term
+that gives `q < 0`, records 124 and 138). **Not reached** for Einstein's
+equation; **reached** for its weak-field flux form and its retardation.
+
+### 5.6 The verdict of target 5
+
+| Formula | Verdict | The place |
+| --- | --- | --- |
+| Poisson's equation for the delay field | **reached**: the age moment is the retarded potential `q(t - r/c) dwell / (4 pi c r)`, the presence its flux; series E's `k_a r = 36.1`, `k_s r^2 = 41.5`, the ratio `sqrt 3 / 2` | linear, additive over sources |
+| The retarded wave equation of the field | **reached** (a scalar field propagating at c, sourced by the release) | no self-source |
+| The gravitational redshift | **reached at first order** (`1 / (1 + k)`, the 1 / r form of series E); **different law** at second order, no horizon | the strong field k = 2 .. 9 registered |
+| Newton's geodesics | **reached**, retarded; the post-Newtonian terms **not reached** | the coupling bilinear |
+| The bending of light | **not reached** on `main` (0.000 registered); under `meeting-v1` **reached in form** `~ M / b` toward the mass, the constant a grain | the flight blind to the crowd |
+| The Shapiro delay | **not reached** on `main` (0.00); under the key **different law**: a phase `~ M / b` from the flow, not `M ln(4 r_1 r_2 / b^2)` from the potential, and no delay in time | the meeting reads the flow |
+| The general flux | **reached**: Gauss's law of the field exact at every instant, the continuity equation | the weak-field flux form of the field equation |
+| Einstein's equation | **not reached**: no tensor source, no self-gravitation, no metric for light, no cosmological term (`q > 0` registered) | the law's gravity is scalar and linear |
