@@ -1765,3 +1765,49 @@ between its LaTeX markers (the plain-text count for arXiv's 1920 is
 taken at submission, arxiv_metadata.md); the Heisenberg single-opening
 row's status without "pin:".
 
+## Record 337 (2026-09-21): the paper as a theory, four parts
+
+The owner's order through the Boss (record 337): the physics must come
+out of the law and not go in as input; a few postulates, one local
+update law, the known phenomena; the referee's question whether the
+physics comes from F or hides in r, b, the family tables, the bilinear
+forms, the matrices and the click rule; the strongest test a
+prediction computed in advance. Four parts, each its own push (on one
+branch, successive heads): (1) paper/README.md: the archived v0.3.1
+manuscripts named historical, general_formula/main.tex the one paper.
+(2) The postulates P1 to P10 at the head of Section sec:law, before
+Eq. (1), from the derivation's inputs ledger (24.1): the bounded
+integers, the GameBoard, the six operations, locality, one Link per
+interval, the click, the grains, the physical inputs, the rules chosen
+among few (the flight blind to the crowd, form B's drive, the
+collision's shift), Born's member c_1 = 1 the one imported law; the
+bilinear rate of a body's reading derived (24.2). With it the owner's
+finding on the lattice Gleason: hypothesis (d), the empty record reads
+zero and R is not identically zero, without which the constant reading
+satisfies (a) to (c); the derivation's 6.5 has the same gap (reported
+to the Boss). (3) The standing column of Table tab:consequences, one
+word per row: DERIVED, HYPOTHESIS, POSTULATE, INPUT, DIFFERENT, NOT
+REACHED, OPEN, the words after the ledger; c = 1/sqrt 3 DERIVED given
+the flight's declared wall (24.1 row 9), the expansion rows HYPOTHESIS
+(expansion-v1 a declared assumption, record 279), the different-law
+rows DIFFERENT. (4) The section "Where the law differs, by how much,
+and what bounds it" from 24.3 (twenty differences with the bounding
+experiment and the verdict on main) and 24.4 (the one prediction: S =
+181/64 = 2.828125 for N a power of two at or above 512, three parts in
+ten thousand below Tsirelson's bound, inside Poh et al. 2015 at 1.1
+standard errors, what refutes it, the run at N = 512 and 4096 pending);
+the twelve failures stay in the abstract. Referee round 29 (eleven
+findings, four major: P4's invented phrases, P6 too narrow, the
+expansion rows, the table's width; the README's leftovers) applied;
+"What is put in" shortened to what P7 and P8 do not say (the circle's
+rounding with its precedents, the program's quotation). Referee round
+30 on P9, P10, the relabelling of c and the differing section pending.
+The references of 24.3 verified against the publishers' records before
+citing: Poh et al. 2015 (PRL 115, 180408), Herrmann et al. 2009 (PRD
+80, 105011), Botermann et al. 2014 (PRL 113, 120405), Bucherer 1909
+(Ann. Phys. 333, 513), Kostelecky and Russell 2011 (Rev. Mod. Phys. 83,
+11), Delva et al. 2018 (PRL 121, 231101), Vessot et al. 1980 (PRL 45,
+2081), Clemence 1947 (Rev. Mod. Phys. 19, 361), Dyson, Eddington and
+Davidson 1920 (Phil. Trans. R. Soc. A 220, 291), Shapiro et al. 2004
+(PRL 92, 121101).
+
