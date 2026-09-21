@@ -98,10 +98,12 @@ Pair = tuple[int, int]
 
 
 def cross(a: Target, b: Target) -> Target:
+    """The cross product of two integer vectors."""
     return (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0])
 
 
 def sign(value: int) -> int:
+    """The sign of an integer: -1, 0 or +1."""
     return (value > 0) - (value < 0)
 
 
@@ -152,6 +154,7 @@ def arc_table(units: np.ndarray) -> ArcTable:
 
 
 def target_bound_error(target: Target, what: str) -> OverflowError:
+    """The refusal of a meeting's target beyond the integer bound."""
     return OverflowError(
         f"{BEAM_LAW}: the meeting's target {list(target)} {what} beyond the integer bound "
         f"{MOMENTUM_BOUND} (a sparser crowd at the Node)"
@@ -197,6 +200,8 @@ def arc_shift(table: ArcTable, target: Target, steps: int) -> np.ndarray:
     norms = table.norms
 
     def compare(i: int, j: int) -> int:
+        """Order two directions by their arc numerators over their norms (integer
+        cross-multiplication), ties by index."""
         left, right = numerators[i] * norms[j], numerators[j] * norms[i]
         if left != right:
             return -1 if left < right else 1
