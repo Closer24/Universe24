@@ -71,6 +71,7 @@ at its first use. The recurring symbols:
 | Lambda_c | scalar | a column's declared bound on the branch |
 | f | element | a record's rows at a Node as an element of the group ring `Z[Z_N]` |
 | beta, `R_ret`, `n_ret` | scalar, scalar, vector | the speed over the pace of a row `v / c`; the distance from a moving source's retarded position; the unit vector from it (section 12) |
+| a, H | scalars | the growth factor of the flight's wall and its rate per interval, a declared constant of the world (section 15) |
 
 The reference tree is `main` at `f89884f0` (the law as landed on 2026-09-20,
 BEAM_LAW notes 1 to 40); where the fraction-free branch
@@ -82,7 +83,7 @@ cited as orders, not as code.
 
 Section 0 states the law as one operator with its two blocks and places
 every result under its block (the owner's second pass, record 167 as the
-Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy). The
+Boss relayed it); sections 9 and 10 answer records 166 and 162; section 11 answers record 190 (the GameBoard as one vector map between events); section 12 answers record 200 (Lorentz from the delay field) and 12b revisits it with the moving reader's count and the orbit as the bond; section 13 answers record 209 (the one constant K, the computation per Node per interval); section 14 answers records 214 and 215 (entropy); section 15 answers records 215 and 218 (the growing wall). The
 targets, in the Boss's order, one section each: 1 the inventory (the
 owner's audit); 2 Doppler from the crossing rule; 3 Newton and Coulomb from
 the bilinear coupling; 4 special relativity, the symmetry of the limit; 5
@@ -3525,3 +3526,203 @@ click list and the ledger's lines monotone, the linear block a bijection
 that produces nothing); where the system goes stated as the three
 streams, the periodic world's end the accumulation of section 15.6 unless
 a lifetime or a growing wall bounds it.
+
+## 15. The growing wall: the expansion as a wall of the flight that grows, its local form, and what it does to the register
+
+**The question** (the owner's reading of the expansion, record 215,
+translated: "what they see is that space itself grows: the computation c
+does not grow, what grows is the number of Nodes between places"; and
+his addendum, record 218: "the universe grows, neither closed nor open,
+but keeps a constant total computation; then c must be tied to the size
+of the universe"; the Boss's order (D)). The host script
+[growing_wall.py](designs/derivations_beam/growing_wall.py) with its
+output [growing_wall.out](designs/derivations_beam/growing_wall.out)
+makes every check below on integer accumulators and the registered
+stars; no run. The periodic universe (no faces) and the rule's entry
+into the law are the owner's decisions, put to him with this section;
+the rule is stated under a hypothesis identity of its own, absent by
+default.
+
+### 15.1 Two forms of "more Nodes between places"
+
+(a) **Inserting Nodes**, `Z_X -> Z_(a X)`: a change of the translation
+group, every index remade, the fan and the lines re-sorted. An
+operation on the GameBoard, not on the state: not one of the six verbs,
+and not stated further. (b) **The growing wall**: the flight of a row is
+the Manhattan accumulator at the rate `2 S_1 Q` against the wall `2 T_D`
+(section 1.4); let the wall grow, `2 T_D a`, with `a >= 1` a growth
+factor that rises at the declared rate H per interval. Every coordinate
+stays (nothing moves that was at rest), the rate stays (c in Links per
+interval is untouched), and a Link takes `a` times as many intervals as
+before: in the original Nodes per interval the pace is `c_0 / a`. The
+owner's "c tied to the size" is this, with the invariant
+
+    c(t) x a(t) = c_0      (the rate of the accumulator, unchanged; c the pace in original Nodes per interval),
+
+a CONSEQUENCE of the wall's form beside c = the operator norm of the
+flight (record 186; section 13.2 (a)): the operator's norm in Links per
+interval is `1 / sqrt 3` at every a, and in original Nodes per interval
+`1 / (sqrt 3 a)`.
+
+### 15.2 The local form: three candidates on one stream, one of them the register's
+
+The Boss's candidate: the wall grown with the row's own age, `2 T_D (1 +
+H age)`, a Count row on the row's record reading the age, local by
+construction. The script runs a stream of 400 rows released one per
+interval on a heading (`T_D = 110`, H = 1 / 400 per interval) through
+three walls, each as integers (the growth factor scaled by 400), and
+reads `1 + z` as the arrival spacing at 100 and 300 Links:
+
+| the wall grown with | `1 + z` at 100 Links | at 300 Links | the closed form |
+| --- | --- | --- | --- |
+| the row's age, `2 T_D (1 + H age)` | 1.000 | 1.000 | 1: every row makes the same flight shifted in time, the spacing is kept: **no redshift** |
+| the row's birth tick, `2 T_D (1 + H t_birth)`, fixed at birth | 1.429 | 2.291 | `1 + H d / c_0` (1.430, 2.289): a redshift linear in d for ever, no Milne form |
+| the tick, `2 T_D (1 + H t)` | 1.539 | 3.639 | `a(t_r) / a(t_e) = e^(H d / c_0)` (1.537, 3.629): `z = tau / (1 / H + t_r - tau)`, the Milne form |
+
+So the age wall, the fully local candidate, gives no redshift: a rule
+that reads only the row's own record makes every row's flight the same
+function of its age, and a stream keeps its spacing. A redshift needs
+the wall to differ between rows released at different times: the
+birth-tick wall (read once, at the release) gives `z = H d / c_0`, right
+at first order and wrong beyond it (15.5: refuted by the far stars); the
+tick wall gives the cosmological `1 + z = a(t_r) / a(t_e)` and, with `a =
+1 + H t`, exactly the Milne relation `z = tau / (T - tau)` with `T = 1 / H
++ t_r`, the form the register fits (15.5). **Corrected**: the local form
+that works reads the tick, not the age.
+
+**What the tick is.** The interval's index, which every Node has: the
+GameBoard steps synchronously (section 11.2: `t*` is an integer, the
+interval global by construction), every event record carries `tick`,
+the frame and the wheel read it. The tick wall reads nothing beyond the
+row's own accumulator and the interval it is in: no field solve, no
+search, no map, no neighbour beyond the six. Whether a count shared by
+every Node is "a global quantity" in LOCALITY-1's sense is the Boss's and
+the owner's call, and the section gives both readings: if the tick is
+admitted, the rule is
+
+    the flight's wall  2 T_D x a,   a = H_den + H_num x tick   (integers; the rate 2 S_1 Q x H_den),
+
+one row of the counts (the wall a function of the read state, F's
+feedback block), H = `[H_num, H_den]` a declared constant of the world
+under the identity `expansion-v1`, absent by default; if the tick is not
+admitted, no local wall gives the register's redshift (the age wall
+gives none, the birth wall the wrong second order), and the expansion
+stays outside the law as a change of the board.
+
+### 15.3 The condition for a redshift, and the two c
+
+The redshift is a difference of rates: the flight slows in Nodes per
+interval while the bodies' turns (the rate `content x n` over d, a row
+of the body's own table, `measured.py:205-316`) keep their rate per
+interval, so a lamp releasing one row per interval sends a stream whose
+spacing at arrival is `a(t_r) / a(t_e)`. If every accumulator slowed
+together (the flight's wall and the turn's wall both scaled by a), the
+lamp would release once per `a` intervals and the spacing at arrival
+would be 1 again: a common scaling of every wall is a relabelling of the
+interval, unobservable. The law already keeps the two apart: the flight
+is the board's table (`flight.steps`), the turn the body's counts table;
+the growing wall touches the first and not the second. The two c: in
+Links per interval unchanged, `1 / sqrt 3` (a ruler made of Links grows
+with the board, every local measurement of c returns it); in original
+Nodes per interval `c_0 / a(t)`; the invariant `c a = c_0`.
+
+### 15.4 The Milne case and the register's 24 stars at rest
+
+A board whose wall grows by one part in `1 / H` per interval, `a = 1 + H
+t`, is the Milne universe: `q = 0`, no acceleration. G2's `coasting_none`
+registers the crowd's fit `q = -0.108` inside the coasting bracket `+-
+0.25`, `H (t_0 + T_0) = 1.026`, rms 0.0019 in z (section 2.5). Under the
+tick wall the 24 thrown stars are AT REST at their places and their z is
+the growth between the light's release and its reading:
+
+    z = tau / (T - tau),   T = 1 / H + t_r,
+
+with tau the light's age at the reading. Against the register's z per
+star (the hubble_stars README's table, tau from 22.6 to 144.5 intervals,
+z from 0.0611 to 0.4922): at `T = 440` (the README's own Milne column)
+the rms is 0.0044 and the worst residual 0.0082 (`s_pz3`), the same
+numbers as the README's column because the formula is the same; the
+register's free fit (q free, H free) reaches 0.0019. **The map is an
+identity, not a test**: a thrown coasting star has `z = v / c` and `tau =
+v (T - tau) / c`, so `z = tau / (T - tau)` too: the coasting throw from a
+point and the growing wall give the SAME `z(tau)` (Milne's equivalence of
+the empty expanding space and the explosion in a static one). The
+birth-tick wall's `z = H tau` at the same H fails the far stars (rms
+0.08, worst 0.155): the second order decides between the local forms,
+not between the two models.
+
+**What separates the two models on the register.** (i) The centre: the
+throw is isotropic from its point only (every other star sees the crowd
+receding one way); the growing wall is isotropic from every Node. (ii)
+The bound: the law's registered Doppler reads `z = v / c` (the README:
+"the redshift the detector reads of a star's light is the Doppler of its
+motion times its clock"), bounded by 1 at the cap; the growing wall's `z
+= e^(H d / c_0) - 1` passes 1 at `d = (c_0 / H) ln 2`: a star with `z >
+1` refutes the throw under the law's Doppler and not the wall. (iii) The
+fields: a thrown star's field moves with it (section 12); a star at rest
+under the wall has a static field, so series K's readings (a row neither
+bent nor delayed) hold unchanged, and the push between two stars at rest
+is the rest push at every a. (iv) The fan's grain does not dilute (15.5).
+
+### 15.5 What the growing wall does to the fan, to the drive, and to Seeliger's accumulation
+
+**The fan's grain.** The directions are the table's, `F_P`, and the
+Bresenham lines are the same at every a: the angular grain of a source's
+fan (section 3.2's shell density `N(r)`, the two slits' 91 or 1423
+directions) is unchanged by the growth; only the pace along each line
+falls. So the far field's discreteness does not dilute: a distant source
+is read on the same lines with rows farther apart along them.
+
+**The drive under form B.** The body's wall `Q S M S_1 Q + |p|_1 T_D`
+carries `T_D`; the consistent rule scales it too, `T_D -> T_D a`: the
+same primitive as the rows' (light the body of no content, record 186),
+the cap `c_0 / a` in Nodes per interval, a body at rest at rest, a
+moving body slowed in Nodes per interval exactly as a row is. One
+change, "`T_D` grows to `T_D a` wherever it is a wall", covers the flight
+and the drive; the turn's wall is untouched (15.3).
+
+**Seeliger.** In a static periodic world an eternal source's field
+accumulates (section 14.3): the light's reach `c_0 t` covers `(2 c_0 t /
+L)^3` periodic images whose fluxes `1 / (4 pi d^2)` sum to about `4 pi
+c_0 t / L^3` beyond the nearest, growing without bound, linearly in t
+(the script, L = 301: 27 images at 1000 intervals, 30 307 at 10 000, the
+presence rising past the nearest image's share after some `10^4`
+intervals). Under the tick wall the reach saturates, `(c_0 / H) ln(1 + H
+t)`, and every image's flux is cut off by `e^(-H d / c_0)` at the Hubble
+length `c_0 / H` (233 Links at H = 1 / 400): 2, 19 and 81 images at
+1000, 3000 and 10 000 intervals, the presence constant at 0.000765 of
+`q dwell` from 1000 intervals on. **Cured**: a periodic world under the
+growing wall does not fill, its clocks do not slow toward zero, and
+section 14.3's third stream ends in a steady presence.
+
+### 15.6 The three tests on the rule "the flight's wall is `2 T_D a`, a rising at H per interval"
+
+- **Generic**: passes. One wall factor for every family and every
+  direction, a declared H, no name; a body's drive the same primitive
+  with the same factor.
+- **Vector**: passes. A translation whose wall is a count (the growth
+  factor an accumulator at the rate H, the wall its value times `2
+  T_D`): F's feedback block with the interval as the read state, the
+  rate untouched, no root, no float, the integers `H_den + H_num t`.
+- **Local**: passes if the row's tick is a local reading (its own
+  interval, which every record carries), and then reads only the row's
+  own accumulator; fails if a count every Node shares is a global
+  quantity. The age form passes the test and gives no redshift; the
+  birth form passes and gives the wrong second order.
+
+### 15.7 The verdict of section 15
+
+**Reached** for the form: the expansion as a growing wall of the flight,
+c in Links per interval unchanged, `c a = c_0` a consequence, the
+redshift `1 + z = a(t_r) / a(t_e)` from the flight's slowing against the
+turns' constant rate, the Milne case `q = 0` inside the register's
+bracket, the 24 stars at rest reproduced by the same Milne relation the
+throw obeys (rms 0.0044 at the README's T), Seeliger's accumulation
+cured. **Corrected**: the local wall read off the row's age gives no
+redshift; the wall must read the tick (or, at the wrong second order,
+the birth tick); whether the tick is a local reading is the decision that
+admits the rule. **Different from the throw** in the centre, the bound
+(`z > 1`) and the fields, not in `z(tau)`. The constant total computation
+of record 218 is the stepping form's reading of the one constant K over
+a growing board (section 13) and adds nothing to the rule; the periodic
+universe and the rule's entry are the owner's.
