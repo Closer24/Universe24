@@ -1590,30 +1590,54 @@ class NatureBeamStore:
         to its least value, so that the keys order the rows exactly as the
         lexsort of the fields does and equal keys are identical rows; None
         when the fields' ranges do not fit the register (62 bits), the
-        lexsort then taking the same total order. The three columns of the
-        amplitude law are constant on rows of no record (a width of 0 bits each)
-        and leave the key and the order what they were."""
+        merge then taking the same total order on the words of
+        `merge_words`. The three columns of the amplitude law are constant
+        on rows of no record (a width of 0 bits each) and leave the key and
+        the order what they were."""
+        words = self.merge_words(columns)
+        return words[0] if len(words) == 1 else None
+
+    def merge_words(self, columns: list[np.ndarray] | None = None) -> list[np.ndarray]:
+        """The identity fields packed into as many integer words per row as
+        their widths need: the fields in the order of `IDENTITY_FIELDS`
+        (the Node first), every field offset to its least value, each word
+        holding at most 62 bits of consecutive fields with the earlier
+        field in the higher bits, a field never split between two words.
+        The words in their order compare as the lexsort of the fields does
+        (the first word the primary key), and rows equal in every word are
+        identical rows: one word is the packed key of `merge_key`, and a
+        world whose widths pass the register takes two or three words in
+        place of the lexsort over every field (the same total order, the
+        host's cost that of the words). A lone field wider than 62 bits is
+        a word of its own."""
         if columns is None:
             columns = [getattr(self, name) for name in IDENTITY_FIELDS]
-        lows = [int(column.min()) for column in columns]
-        widths = [
-            (int(column.max()) - low).bit_length() for column, low in zip(columns, lows, strict=True)
-        ]
-        if sum(widths) > 62:
-            return None
+        words: list[np.ndarray] = []
         key = np.zeros(self.size, dtype=np.int64)
-        for column, low, width in zip(columns, lows, widths, strict=True):
+        used = 0
+        for column in columns:
+            low = int(column.min())
+            width = (int(column.max()) - low).bit_length()
+            if used and used + width > 62:
+                words.append(key)
+                key = np.zeros(self.size, dtype=np.int64)
+                used = 0
             key = (key << width) + (column - low)
-        return key
+            used += width
+        words.append(key)
+        return words
 
     def merge(self, modulus: int = 0) -> dict[tuple[int, int, int], int]:
         """Identical rows (equal in every field but the amount) merged, the
         amounts added, the rows in the total order of the identity fields,
         the Node first (so no second sort by Node is needed). A bijection: a
         permutation of rows and a sum of interchangeable units. The order
-        is taken by the one packed key (`merge_key`) where the fields fit
-        the register, by the lexsort of the fields otherwise: the same
-        total order either way.
+        is taken on the packed words of the identity fields (`merge_words`:
+        one word, the packed key, where the fields fit the register; the
+        lexsort of two or three words otherwise), the same total order as
+        the lexsort of the fields, the same rows in the same order; when no
+        two rows are identical the sorted store is the result and nothing
+        else is touched.
 
         Under the amplitude key (`modulus` the circle's N; BEAM_LAW note 37)
         the merge is the design's normal form: two rows of one record equal
@@ -1632,22 +1656,23 @@ class NatureBeamStore:
         if self.size == 0:
             return removed
         columns, sign = self.identity_columns(modulus)
-        key = self.merge_key(columns)
-        same = np.zeros(self.size, dtype=bool)
-        if key is None:
-            order = np.lexsort(tuple(reversed(columns)))
-            self.take(order)
-            columns = [column[order] for column in columns]
-            sign = sign[order]
-            same[1:] = True
-            for column in columns:
-                same[1:] &= column[1:] == column[:-1]
+        words = self.merge_words(columns)
+        if len(words) == 1:
+            order = np.argsort(words[0], kind="stable")
         else:
-            order = np.argsort(key, kind="stable")
-            self.take(order)
-            sign = sign[order]
-            key = key[order]
-            same[1:] = key[1:] == key[:-1]
+            order = np.lexsort(tuple(reversed(words)))
+        self.take(order)
+        sign = sign[order]
+        same = np.zeros(self.size, dtype=bool)
+        same[1:] = True
+        for word in words:
+            word = word[order]
+            same[1:] &= word[1:] == word[:-1]
+        if not same.any():
+            # No two rows identical: the sorted rows are the merge (a
+            # signed sum over groups of one is the row itself, its phase
+            # and amount as they were).
+            return removed
         starts = np.flatnonzero(~same)
         # The merged amounts are exact: in the register when no group's sum
         # can leave it, in Python integers otherwise, and bounded.
