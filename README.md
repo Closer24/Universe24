@@ -164,8 +164,8 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/events/engine.py` | The frame around the law: the clocks, the owed count off the clock, the steps by the momentum, the books, the readings, the inverse interval, the snapshot; it computes no physics |
 | `src/event_universe/events/run.py` | The artifacts of a run: the input, the events, the state, the record |
 | `src/event_universe/core/integer.py` | Shared bounded integer primitives |
-| `src/event_universe/core/game_board.py` | The GameBoard's addresses, the six Port headings and the bound of a declared charge and quantum |
-| `src/event_universe/core/phase.py` | The phase circle's cosine and sine tables in bounded integers |
+| `src/event_universe/core/game_board.py` | The GameBoard's addresses, the six Port headings, the cube's group of 48 with its hand, and the bound of a declared charge and quantum |
+| `src/event_universe/core/phase.py` | The phase circle, the cyclic group of N steps with its unit vectors, and its cosine and sine tables in bounded integers |
 | `src/event_universe/runner.py` | `python -m event_universe`: a world file to headless artifacts |
 | `src/event_universe/configuration_validation.py` | Read-only preflight of a world file |
 | `src/event_universe/snapshot_writer.py` | `state.json` written Node by Node, byte for byte the snapshot's JSON |
