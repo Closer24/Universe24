@@ -2650,8 +2650,12 @@ def _covariant(
     `grain` a power of two dividing Q S, `books` true or false (false by
     default); refused with `action` (17.6 S4: the turn by momentum per Link
     and the proper-time cadence do not compose on one phase until designed).
-    Per measured event: the domain `|p|_1 <= Q S M` (17.6 N2: above it the
-    drive's one Link per self-creation gives a pace that falls with p);
+    Per measured event that is not `fixed` (an apparatus carries no readings
+    and may declare no `E`): the momentum on one axis (the base is `main`'s
+    per-axis drive, `step_axis`, where the pace p / E' holds on one axis;
+    refused otherwise until form B lands), the domain `|p|_1 <= Q S M` (17.6
+    N2: above it the drive's one Link per self-creation gives a pace that
+    falls with p);
     `W / g^2 = (E'_0 / g)^2 + d (p / g) . (p / g)` within the integer bound,
     tested by division before the product is formed; a declared `E` at or
     above `E'_0` and within one of the load-time root `isqrt(W)` (17.6 M3).
@@ -2692,7 +2696,24 @@ def _covariant(
     if type(books) is not bool:
         raise ValueError(f"{BEAM_LAW}: {label}.books must be true or false")
     for index, entry in enumerate(measured):
+        if entry.fixed:
+            # An apparatus held in place carries no readings (its momentum
+            # line is the push it took, never a motion): no domain, no `E`.
+            if entry.energy is not None:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{index}].E is refused on a fixed measured event: an "
+                    "apparatus held in place carries no readings under covariant_readings"
+                )
+            continue
         content = sum(entry.held)
+        axes = [axis for axis, component in enumerate(entry.momentum) if component]
+        if len(axes) > 1:
+            raise ValueError(
+                f"{BEAM_LAW}: measured[{index}]: the momentum {list(entry.momentum)} has components "
+                f"on more than one axis; under {label} a body's momentum lies on one axis (the base "
+                "is the per-axis drive of BEAM_LAW note 17, `step_axis`, where the pace p / E' holds "
+                "on one axis; form B's directional drive, record 342, has not landed)"
+            )
         manhattan = sum(abs(component) for component in entry.momentum)
         if manhattan > LABEL_SCALE * width * content:
             raise ValueError(

@@ -28,8 +28,11 @@ self-creation; the free release runs per lattice interval at held x E'
 over E'_0 x d; the record gains the `energy` line per body per interval,
 `energy` on the `step` line, the `covariant` block and `acc.tau` of a
 body's state, and the run's `covariant_readings` block; the domain |p|_1
-<= Q S M and the push ceiling of one grain per interval refuse a world at
-load or a run at the frame. No rule of the law, no registered number and
+<= Q S M, the one-axis domain (the base is `main`'s per-axis drive, on which
+the pace p / E' holds for a momentum on one axis; form B has not landed)
+and the push ceiling of one grain per interval refuse a world at load or a
+run at the frame; a `fixed` measured event carries no readings and is
+outside these checks. No rule of the law, no registered number and
 no shipped world moved: the new worlds are `examples/events/covariant/`
 (series S: the three J4 muon worlds and `coasting_none` in its record
 form under the key), the catalog gained the definition `muon` (`mu`).

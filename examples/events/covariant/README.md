@@ -65,7 +65,11 @@ of 17.6:
   interval at the rate held x E' over E'_0 x d (the content-equivalent of
   the body's own energy; at rest the law's count exactly).
 - **the declarations** (17.6 N2, N3, N5): the domain |**p**|_1 <= Q S M
-  (refused at load and at the frame); the push ceiling of one grain per
+  (refused at load and at the frame); the one-axis domain (the base is
+  `main`'s per-axis drive, `step_axis`, on which the pace p / E' holds for a
+  momentum on one axis: a body with momentum on more than one axis is
+  refused at load and at the frame until form B's directional drive lands;
+  a `fixed` apparatus is outside both checks); the push ceiling of one grain per
   interval on the push the record took (refused at the frame: under it
   the root's comparisons are at most three per frame; a change of content
   by dM moves E' by about Q S |dM| / g in that frame, counted and reported
@@ -170,9 +174,15 @@ reviewer's own re-derivation of record 314 (M2) gives 124 too. The
 detector's reading, the electron product's click at 345, is inside the
 design's pin exactly. Nothing was moved.
 
-**The host cost apart from the model's.** Per body per interval one frame
-of the readings: two or three multiplications, three comparisons under the
-push ceiling; where a body's content changes (a lamp's cost of one unit per
+**The host cost apart from the model's.** The host operations the key adds
+per body per interval, all on the body's own record: at the frame one
+product (E'_0 / g)^2, one bilinear form d (**p** / g) . (**p** / g) with its
+sum, the domain and ceiling comparisons and the root's comparisons (three
+under the ceiling), at the self-creation one `by_drive` for the proper-time
+count, at the release one `by_drive` per family with two products, and
+one `energy` line written to the record; no neighbour is read and nothing
+is kept at a Node. In numbers: two or three multiplications, three
+comparisons under the push ceiling; where a body's content changes (a lamp's cost of one unit per
 self-creation on the coasting world, the muon's `become`) the root walks by
 comparisons to the new value: at most 258 comparisons in one frame on the
 coasting world (E'_0 / g moves by 256 per unit of light spent), 2083, 9811

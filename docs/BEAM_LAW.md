@@ -226,7 +226,10 @@ integer with E'^2 <= W by comparisons, the load-time root once; a measured
 event may declare `E`), its self-creations are gated by a second owed count
 `by_drive(acc_tau, E' - E'_0, E'_0)`, the drive's wall loses its cap term
 (`step_divisor` with `cap` false: Q S M alone, so the pace per lattice
-interval is p / E' in the mean), the crowd's count is charged with the sum
+interval is p / E' in the mean; the base is `main`'s per-axis drive of note
+17, `step_axis`, on which the pace holds for a momentum on one axis: a body
+with momentum on more than one axis is refused under the key, at load and
+at the frame, until form B's directional drive lands), the crowd's count is charged with the sum
 of the readings since the last self-creation, and the free release runs
 per lattice interval at the rate held x E' over E'_0 x d; the domain |p|_1
 <= Q S M and the push ceiling of one grain per interval are refused; the

@@ -38,7 +38,9 @@ readings"), written down before the first run:
     remainder in W); the push ceiling holds (64 <= 256) and every frame takes
     at most 4 comparisons; the same world at `grain` 1 is refused at the
     first push naming the ceiling (17.6 N3);
-(d) the declarations refused as stated: |p|_1 above Q S M at load (N2); `E`
+(d) the declarations refused as stated: |p|_1 above Q S M at load (N2); a
+    momentum on two axes (the one-axis base); a fixed apparatus admitted
+    beyond the domain and refused an `E`; `E`
     without the key; `E` below E'_0 or off the root by more than one (M3);
     `c2` other than [1, d]; a grain that is not a power of two or does not
     divide Q S; the key with `action` (S4); `books` with a paid family off
@@ -53,6 +55,23 @@ readings"), written down before the first run:
     every self-creation the owed accumulator equals the host's replay of
     `by_drive(acc, sum x 1, 8)` with the sum of `counted` over the intervals
     since the last self-creation, this one's included;
+(g) the frame-time refusals: a reader of content 1 at `width` 16 (Q S M =
+    1024) at x = 60 of a bar of 81 x 1 x 1 under `grain` 64, thrown at
+    p = -1000, and one declared row of a fixed emitter's free family from
+    x = 2 on +x: the read pushes it by -64 to -1064, beyond Q S M, refused at
+    the next frame naming the record (17.6 N2); at p = -960 the push reaches
+    -1024 = Q S M exactly, inside: one `read`, the run completes with W / g^2
+    = 16^2 + 3 x 16^2 on every later line; a row on +y through the reader's
+    Node (a bar of 81 x 3 x 1, p = -100 on x) pushes it by -64 on y and the
+    next frame refuses the two-axis momentum (the one-axis domain of the
+    per-axis base);
+(h) the release in motion (17.6 M6, N4): a free body of content 8 at
+    `release` [1, 2] on -x, behind its motion on +x (Q S M = 512), at p =
+    296 (E' = 724, gamma 1.414): 339 units released over 60 intervals,
+    floor(60 x 8 x 724 / 1024), one row per lattice interval; at rest 240
+    with and without the key (the law's 4 per self-creation exactly);
+    without the key at p = 296 also 240; the rows leave through the -x face
+    and the content is not spent;
 (f) the registered runs replay bit-exact (`examples/events/covariant/
     expectations.json`, `runs`): the three J4 worlds through the runner at
     their declared 420 intervals give the registered digests of `state.json`,
@@ -326,6 +345,19 @@ def test_the_declarations_are_refused_as_stated(tmp_path):
     with pytest.raises(ValueError, match="exceeds Q x S x M = 320, the domain"):
         parse_nature_beam_world(bar_world(321))
     parse_nature_beam_world(bar_world(320))
+    # The one-axis domain (the per-axis base): two components refused at load.
+    document = bar_world(200)
+    document["measured"][0]["momentum"] = [200, 1, 0]  # type: ignore[index]
+    with pytest.raises(ValueError, match="components on more than one axis"):
+        parse_nature_beam_world(document)
+    # A fixed apparatus carries no readings: no domain check, and `E` refused.
+    document = bar_world(321)
+    document["measured"][0]["fixed"] = True  # type: ignore[index]
+    world = parse_nature_beam_world(document)
+    assert NatureBeamSimulation(world).measured[1].covariant is None
+    document["measured"][0]["E"] = 320  # type: ignore[index]
+    with pytest.raises(ValueError, match="E is refused on a fixed measured event"):
+        parse_nature_beam_world(document)
     document = bar_world(200, key=False)
     document["measured"][0]["E"] = 471  # type: ignore[index]
     with pytest.raises(ValueError, match="E is refused without the world key"):
@@ -404,6 +436,125 @@ def test_the_crowds_count_is_the_sum_over_the_owed_intervals():
         else:
             assert body.covariant is not None and body.covariant.counted_sum == summed
     assert charged > 0 and body.waited >= charged
+
+
+def reader_world(
+    momentum: list[int], row_position: list[int], row_direction: list[int], shape: list[int]
+) -> dict[str, object]:
+    """A reader of content 1 at `width` 16 (Q S M = 1024) under the key at
+    `grain` 64, a fixed emitter of the free family `f` releasing nothing
+    within the run, and one declared row of `f` (amount 1, age 0) whose
+    read pushes the reader once by 64 label units toward the emitter."""
+    return {
+        "law": "beam",
+        "model_id": "covariant-reader",
+        "shape": shape,
+        "boundary": "open",
+        "ticks": 80,
+        "K": 1 << 20,
+        "N": 64,
+        "release": [1, 1 << 20],
+        "suspension": 0,
+        "width": 16,
+        "covariant_readings": {"c2": [1, 3], "grain": 64},
+        "families": [
+            {"name": "q", "quantum": 0, "charge": 0, "phase": False},
+            {"name": "f", "quantum": 0, "charge": 0, "phase": False},
+        ],
+        "measured": [
+            {"position": [60, shape[1] // 2, 0], "family": "q", "amount": 1, "momentum": momentum},
+            {"position": [1, 0, 0], "family": "f", "amount": 1, "fixed": True},
+        ],
+        "in_transit": [
+            {
+                "position": row_position,
+                "family": "f",
+                "number": 2,
+                "direction": row_direction,
+                "amount": 1,
+                "age": 0,
+            }
+        ],
+    }
+
+
+def test_the_frame_refuses_the_domain_and_the_axis_and_admits_the_edge():
+    """(g): the frame-time refusals (17.6 N2 and the one-axis base)."""
+    # The domain by a push: p = -1000 on x, one row from x = 2 on +x pushes
+    # the reader by -64 to -1064 beyond Q S M = 1024, refused at the next
+    # frame naming the record.
+    with pytest.raises(ValueError, match=r"\|p\|_1 = 1064 exceeds Q x S x M = 1024"):
+        run_in_process(reader_world([-1000, 0, 0], [2, 0, 0], [1, 0, 0], [81, 1, 1]), 80)
+    # The edge: p = -960 reaches -1024 = Q S M exactly after the one push,
+    # inside the domain; the run completes with one `read` and the domain's
+    # equality on every later energy line.
+    events, simulation = run_in_process(reader_world([-960, 0, 0], [2, 0, 0], [1, 0, 0], [81, 1, 1]), 80)
+    pushes = [e for e in events if e["event"] == "read" and e["measured"] == 1]
+    assert [e["push"] for e in pushes] == [[-64, 0, 0]]
+    assert simulation.measured[1].momentum == [-1024, 0, 0]
+    later = [e for e in events if e["event"] == "energy" and e["tick"] > pushes[0]["tick"]]
+    assert later and all(e["square"] == 16 * 16 + 3 * 16 * 16 for e in later)
+    # The one-axis domain: a row on +y through the reader's Node pushes it by
+    # -64 on y, and the next frame refuses the two-axis momentum.
+    with pytest.raises(ValueError, match="components on more than one axis"):
+        run_in_process(reader_world([-100, 0, 0], [60, 0, 0], [0, 1, 0], [81, 3, 1]), 80)
+
+
+def release_world(momentum: int, key: bool) -> dict[str, object]:
+    """A free body of content 8 at x = 5 of a bar of 61 x 1 x 1 (`width` 1,
+    Q S M = 512) releasing on -x, behind its motion (a row released ahead is
+    overtaken and comes home, booked twice on the released line), at
+    `release` [1, 2]: 4 units per self-creation at rest."""
+    document: dict[str, object] = {
+        "law": "beam",
+        "model_id": "covariant-release",
+        "shape": [61, 1, 1],
+        "boundary": "open",
+        "ticks": 60,
+        "K": 1 << 20,
+        "N": 64,
+        "release": [1, 2],
+        "suspension": 0,
+        "width": 1,
+        "families": [{"name": "r", "quantum": 0, "charge": 0, "phase": False}],
+        "measured": [
+            {
+                "position": [5, 0, 0],
+                "family": "r",
+                "amount": 8,
+                "momentum": [momentum, 0, 0],
+                "directions": [[-1, 0, 0]],
+            }
+        ],
+    }
+    if key:
+        document["covariant_readings"] = {"c2": [1, 3], "grain": 1}
+    return document
+
+
+def test_the_release_in_motion_is_the_rest_rate_times_gamma_per_lattice_interval():
+    """(h): 17.6 M6 and N4, the release per lattice interval at held x E' over
+    E'_0 x d. At p = 296, E' = isqrt(512^2 + 3 x 296^2) = 724 (gamma 1.414):
+    over 60 intervals floor(60 x 8 x 724 / (512 x 2)) = 339 units released
+    (the law's 4 per self-creation would give about 42 self-creations x 4 =
+    168 under the gate); at rest 240, the law's count exactly, with and
+    without the key; the rows leave through the -x face five Links behind
+    (booked once on the released line, then escaped); the body's content is
+    not spent by a free release."""
+    assert math.isqrt(512 * 512 + 3 * 296 * 296) == 724
+    moving_events, moving = run_in_process(release_world(296, key=True), 60)
+    assert moving.ledger.transit_released[0] == 60 * 8 * 724 // (512 * 2) == 339
+    assert moving.ledger.escaped_amount(0) > 0 and moving.measured[1].content == 8
+    assert moving.measured[1].covariant is not None and moving.measured[1].covariant.energy == 724
+    # The rows born: one per lattice interval (the owed intervals included),
+    # the amount the interval's count, 5 or 6 at the rate 5.656 per interval.
+    born = [e for e in moving_events if e["event"] == "energy"]
+    assert len(born) == 60
+    _, rest_key = run_in_process(release_world(0, key=True), 60)
+    _, rest_law = run_in_process(release_world(0, key=False), 60)
+    assert rest_key.ledger.transit_released[0] == rest_law.ledger.transit_released[0] == 240
+    _, moving_law = run_in_process(release_world(296, key=False), 60)
+    assert moving_law.ledger.transit_released[0] == 240
 
 
 @pytest.mark.parametrize("name", ["j4_muon_rest", "j4_muon_3640", "j4_muon_12856"])

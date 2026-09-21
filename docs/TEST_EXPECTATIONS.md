@@ -1902,8 +1902,10 @@ the first run:
   the next frame; `energy_root(256, 256^2 + 3 x 14^2)` = (257, 3) and at 13
   grains (256, 2); at most 4 comparisons per frame; the same world at
   `grain` 1 refused at the first push naming the ceiling of one grain;
-- (d) refused as stated: |p|_1 = 321 above Q S M = 320 at load; `E` without
-  the key; `E` 319, 469 or 473 (below E'_0 or off the root 471 by more than
+- (d) refused as stated: |p|_1 = 321 above Q S M = 320 at load; a momentum
+  [200, 1, 0] on two axes (the one-axis domain of the per-axis base); a
+  fixed apparatus at |p|_1 = 321 admitted without readings and refused an
+  `E`; `E` without the key; `E` 319, 469 or 473 (below E'_0 or off the root 471 by more than
   one), while 470, 471 and 472 load and read 471 from the first frame; `c2`
   [2, 3]; `grain` 3 and 128 (not a power of two; not dividing Q S = 64);
   the key with `action`; an unknown key of the object; `books` true with a
@@ -1917,6 +1919,27 @@ the first run:
   `by_drive(acc, sum, 8)` with the sum of `counted` since the last
   self-creation, this one's included, and `counted_sum` 0; on an owed
   interval `counted_sum` the running sum;
+- (g) the frame-time refusals: a reader of content 1 at `width` 16 (Q S M =
+  1024) at x = 60 of a bar of 81 x 1 x 1 under `grain` 64, thrown at p =
+  -1000 on x, and one declared row of a fixed emitter's free family from
+  x = 2 on +x (amount 1, age 0): the read pushes the reader by -64 to
+  -1064, beyond Q S M, refused at the next frame naming the record; at p =
+  -960 the push reaches -1024 = Q S M exactly, inside: one `read` line with
+  the push [-64, 0, 0], the run of 80 intervals completes, W / g^2 = 16^2 +
+  3 x 16^2 on every later energy line; a row on +y through the reader's
+  Node (a bar of 81 x 3 x 1, p = -100 on x) pushes it by -64 on y and the
+  next frame refuses the two-axis momentum;
+- (h) the release in motion: a free body of content 8 at x = 5 of a bar of
+  61 x 1 x 1 (`width` 1, Q S M = 512) releasing on -x, behind its motion on
+  +x (a row released ahead is overtaken and comes home, booked twice on the
+  released line), at `release` [1, 2],
+  thrown at p = 296 (E' = isqrt(512^2 + 3 x 296^2) = 724, gamma 1.414):
+  339 units released over 60 intervals, floor(60 x 8 x 724 / (512 x 2)),
+  one row per lattice interval (60 energy lines); at rest 240 units with
+  and without the key (the law's 4 per self-creation exactly); without the
+  key at p = 296 also 240 (the law's count is per self-creation and nothing
+  is owed); the rows leave through the -x face five Links behind and the
+  content stays 8;
 - (f) the registered runs of series S (`examples/events/covariant/
   expectations.json`, `runs` and `runs_at_the_cap`): the three J4 worlds
   through the runner at 420 intervals give the registered digests of

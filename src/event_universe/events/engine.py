@@ -215,7 +215,10 @@ def covariant_frame(
     content re-reads it, the kinetic part E' - E'_0 kept), the exact square
     `W / g^2` from the record's own momentum (`covariant_square`, bilinear,
     no drift), the domain `|p|_1 <= Q S M` (N2; refused at the frame with a
-    diagnostic naming the record) and the push ceiling `|dp|_1 <= g` on the
+    diagnostic naming the record), the one-axis domain (a momentum with
+    components on more than one axis is refused: on `main`'s per-axis drive
+    the pace p / E' holds on one axis, and form B's directional drive has
+    not landed) and the push ceiling `|dp|_1 <= g` on the
     push the record took since the last frame (`pushed`, the rows' push of
     the interval; N3; refused likewise; a recoil, a hand-over or a click's
     label is not a push and moves E' by more, counted), then E' by the
@@ -229,6 +232,12 @@ def covariant_frame(
         raise ValueError(
             f"{BEAM_LAW}: covariant-readings-v1: {label}: |p|_1 = {manhattan} exceeds Q x S x M "
             f"= {wall}, the domain of the pace p / E' (DERIVATIONS_BEAM 17.6 N2)"
+        )
+    if sum(1 for component in momentum if component) > 1:
+        raise ValueError(
+            f"{BEAM_LAW}: covariant-readings-v1: {label}: the momentum {list(momentum)} has "
+            "components on more than one axis, outside the one-axis domain of the per-axis base "
+            "(BEAM_LAW note 17, `step_axis`; form B's directional drive has not landed)"
         )
     push = sum(abs(a - b) for a, b in zip(pushed, readings.previous, strict=True))
     if push > readings.grain:

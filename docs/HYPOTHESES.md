@@ -1083,7 +1083,9 @@ couplings.
   intervals in the mean and everything counted per self-creation (the
   age, `become`, the turn, the lamp, the drive's gain) follows its proper
   time; the drive's wall loses its cap term, so the pace per lattice
-  interval is p / E' = p c^2 / E, the covariant dispersion; the crowd's
+  interval is p / E' = p c^2 / E, the covariant dispersion (on `main`'s
+  per-axis drive, `step_axis`, for a momentum on one axis: the identity's
+  domain until form B's directional drive lands, refused otherwise); the crowd's
   count is charged with the sum of the readings since the last
   self-creation; the free release runs per lattice interval at the
   content-equivalent of the body's own energy. E = m c^2 is then forced by
