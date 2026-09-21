@@ -4231,6 +4231,83 @@ action h. Either way the hierarchy `alpha / alpha_G = rho_p^2 = 1.2 x
 choice of S is a choice of units, and `alpha_G` stays the width's
 input.
 
+**(f) The Link, the interval, the unit and the computation, from c, G
+and hbar** (the owner's three questions in conversation, record 266,
+translated: "extract the lattice's length from G, and then you could
+know the size of the universe"; "bring the computation into S and G and
+try to give these numbers"; "maybe G is the one that varies"; the host
+script [units_from_g.py](designs/derivations_beam/units_from_g.py) with
+its output [units_from_g.out](designs/derivations_beam/units_from_g.out)).
+Three paragraphs, each with its assumptions named.
+
+*The three units from the three conversions.* c, G and hbar are the
+dictionary's three conversions (16.1) and they fix exactly the law's
+three units, the Link L, the interval T and the unit of content M in
+SI, given the law's two declared dimensionless numbers `G_law = K_fan
+(n / d) / (4 pi S)` (`K_fan` the fan's direction count) and `hbar_law =
+h / (2 pi)`: from `c = L / (sqrt 3 T)`, `G = G_law L^3 / (M T^2)` and
+`hbar = hbar_law M L^2 / T`,
+
+    L = l_Planck / sqrt(3 sqrt 3 G_law hbar_law),   T = L / (sqrt 3 c),   M = m_Planck sqrt(sqrt 3 G_law / hbar_law),
+
+equivalently the Link is the gravitational radius of one unit, `G M /
+c^2`, over `3 G_law`; the universe's size in Links is its diameter over
+L and its age in intervals its age over T. **Not derived**, because S
+and h are inputs (16.2 (c), 16.4); what the structure gives is the
+relation and one bound: 16.2 (a)'s `m_unit <= m_e / 4526` forces
+`G_law / hbar_law <= 4.9 x 10^-53`. The cases (the script's (A)): both
+numbers 1, the Planck choice, gives `L = 7 x 10^-36` m, `T = 1.4 x
+10^-44` s, the universe `1.2 x 10^62` Links across and `3 x 10^61`
+intervals old, and is refuted by the mass bound (the unit `3 x 10^22
+m_e`); the bound saturated with `hbar_law = 1` gives `L = 1` nm and `9 x
+10^35` Links; with `hbar_law = 10^6`, `L = 10^-12` m and `9 x 10^38`
+Links. The size in Links is fixed only when the action h and the width
+are: one more number of nature, which the structure does not carry.
+
+*The computation in G.* Two things must be kept apart: the width S (the
+inertia per unit of content) and the GameBoard's extent X (Nodes per
+side); the total computation per interval is `K_budget X^3` (section
+13). The computation enters G through the clock: the redshift's constant
+of 5.2 is `G_clock = K_fan (n_r / d_r) (n_s / d_s) / (4 pi)` (the age
+moment times the suspension pair; `dwell x c = 1`) and the push's of 3.3
+is `G_push = K_fan (n_r / d_r) / (4 pi S)`; nature has one G for the
+redshift and the orbit, so the two are one if and only if `n_s / d_s =
+1 / S`, and with 13.2 (b)'s reading of the suspension as the reading's
+cost over the budget, `[n_s, d_s] = [26, K_budget]`,
+
+    S = K_budget / 26,      G = 26 K_fan (n_r / d_r) / (4 pi K_budget):
+
+the width is the budget over the reading's cost, and gravity's strength
+is the inverse of the computation per Node per interval. **Derived**
+from 3.3, 5.2 and 13.2 (b) under two assumptions named: one G (nature's)
+and the budget reading (13.2 (b), partial); series E has `S = 1` and
+`[1, 1]`, the two G one trivially. With the mass bound, `K_budget >= 26
+K_fan (n / d) hbar_law / (4 pi x 4.9 x 10^-53)`, of order `10^51` to
+`10^55` operations per Node per interval (the script's (B): `K_fan =
+290`, `n / d` from `1 / 4096` to 1, `hbar_law = 1`): gravity is weak
+because the reading of one row costs 26 of a budget of `10^52`; the
+budget is not fixed without `hbar_law`, the same missing number as the
+Link's.
+
+*What varies: not G.* A constant TOTAL computation over a growing board
+(`K_budget X^3` constant with `X ~ a`) gives `K_budget ~ 1 / a^3` and
+hence `G ~ a^3`; under Milne, `a ~ t`, that is `Gdot / G = 3 H = 2 x
+10^-10` per year, against lunar laser ranging's bound of order `10^-13`
+per year (Hofmann and Muller 2018): refuted by three orders, so the
+computation per Node is constant to a part in `10^3` of H, as section 13
+assumed, and a varying G is excluded (Dirac's `G ~ 1 / t`, `-H`, with
+it). The reconciliation is section 15.1 (b): under the growing wall no
+Node is inserted, `X^3` and K are fixed, the total `K X^3` is constant,
+G is constant, and the varying quantity is the pace in the original
+Nodes, `c_0 / a` (the invariant `c a = c_0`), which is the redshift; the
+conflict arises only under 15.1 (a), inserting Nodes. A local
+measurement of G (the Moon's orbit) reads `G_SI` in local units, which
+the wall does not change; a comparison between two places or two
+epochs is made by rows and is the redshift, not G. **Answered**: not G;
+the computation per Node, the width and G are constants of the law, the
+pace in the original Nodes is what the expansion changes, and the three
+numbers above are the two inputs' (h and S), not the structure's.
+
 ### 16.3 The law's structural numbers: what a derivation may use
 
 The only things a derivation may use, each a count of the law's form
