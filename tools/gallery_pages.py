@@ -4312,7 +4312,7 @@ readings above are what its run did.</p>
 
 
 # ---------------------------------------------------------------------------
-# Page 12: the formulas and Einstein (the model owner, 2026-09-21: "my
+# Page 12: Universe24, the formula and its derivations (the model owner, 2026-09-21: "my
 # formula at the top, big; below it the small formulas with their
 # explanation; then the comparison between me and Einstein, Lorentz and
 # Newton, to see the derivations").
@@ -4986,9 +4986,9 @@ def story_html(entry: tuple[str, str, str, str, str, str, str, str]) -> str:
     )
 
 
-@register("einstein")
+@register("universe24")
 def page_einstein(out: Path, runs: Path | None) -> Path:
-    """(12) The formula and Einstein: the owner's formula at the top, whose
+    """(12) Universe24, the formula: the owner's formula at the top, whose
     each formula is, and the story of the derivations from it to Newton's,
     Lorentz's and Einstein's; no run, no claim added."""
     del runs
@@ -5119,9 +5119,9 @@ s &lt;- s - e d
 """
     return write_page(
         out,
-        "einstein",
+        "universe24",
         page(
-            "The formula and Einstein",
+            "Universe24",
             "Your formula at the top; whose each formula is; and the story of the derivations from it to "
             "Newton's, Lorentz's and Einstein's, step by step.",
             body,
@@ -5185,8 +5185,8 @@ def page_index(out: Path, runs: Path | None) -> Path:
             "a demonstration world)",
         ),
         (
-            "einstein.html",
-            "The formula and Einstein",
+            "universe24.html",
+            "Universe24",
             "the owner's formula at the top (the exact square of a body's energy, W = E_0^2 + 3 p . p), whose "
             "each formula is, and the story of the derivations from it to Newton's, Lorentz's and Einstein's; "
             "the comparison table, the one map and the Einstein map beneath (no run)",
