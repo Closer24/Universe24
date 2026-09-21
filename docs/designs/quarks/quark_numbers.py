@@ -43,8 +43,10 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[2] / "src"))
 
+import numpy as np  # noqa: E402
+
 from event_universe.core.integer import by_clock, rational_sum  # noqa: E402
-from event_universe.events.nature_beam import flight_table  # noqa: E402
+from event_universe.events.nature_beam import direction_flight  # noqa: E402
 
 Vector = tuple[int, int, int]
 Pair = tuple[int, int]
@@ -199,18 +201,19 @@ def fan_manhattan(bound: int) -> list[Vector]:
 
 class Fan:
     """The positions of every direction's ray at every age, exact, from the
-    engine's flight table (BEAM_LAW section 3, the walk of step 1)."""
+    engine's own flight (BEAM_LAW section 3, the walk of step 1: the Link a
+    ray crosses at an age is `Flight.walk_step`, the position's accumulator
+    rule of the no-tables law, record 155)."""
 
     def __init__(self, vectors: list[Vector], age_max: int = AGE_MAX) -> None:
         self.vectors = vectors
-        table = flight_table(tuple(vectors))
-        self.labels = [tuple(int(c) for c in table.labels[i]) for i in range(len(vectors))]
+        flight = direction_flight(tuple(vectors))
+        self.labels = [tuple(int(c) for c in flight.labels[i]) for i in range(len(vectors))]
         self.arrivals_at: dict[Vector, list[tuple[int, int]]] = defaultdict(list)
         for i in range(len(vectors)):
-            period = int(table.period[i])
             pos = (0, 0, 0)
             for age in range(age_max):
-                step = tuple(int(c) for c in table.steps[i, age % period])
+                step = tuple(int(c) for c in flight.walk_step(np.array([i]), np.array([age]))[0])
                 if any(step):
                     pos = (pos[0] + step[0], pos[1] + step[1], pos[2] + step[2])
                     self.arrivals_at[pos].append((i, age + 1))

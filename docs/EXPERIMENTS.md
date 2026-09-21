@@ -6100,6 +6100,97 @@ sequential gates on an entangled record, the full register replay.
   helicity of circular light kept at a mirror (nature reverses it at
   normal incidence); no V-A energy dependence; no CP.
 
+### R, the quarks (2026-09-21)
+
+- **Confronts.** The model owner's direction of 2026-09-21 (records 249,
+  251 and 256 of the log of 2026-09-20; the run on the standing go, record
+  264): the quarks as rows of the family table under the generic law, "the
+  same binding we have", and "check how it converges". The physicist's
+  read-only design [the quarks as families of the family table](designs/quarks/QUARKS.md):
+  the up and the down as free families (`u` 4 units of content at the
+  charge 1224 per unit, `d` 9 units at -272, the whole charges 2/3 and
+  -1/3 of the register's proton 7344; PDG 2024 over the electron's mass,
+  the nearest count), each body holding one unit of the strong family
+  `glue` (the column `strong` 10000 with the sign minus, the lifetime 3:
+  series I's `nuclear` at the quark level), bound or not by the one
+  coupling over the columns with the contact through the table
+  ([BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation));
+  nothing added to the law. Whether three quark bodies at adjacent Nodes
+  converge to a bound set and in which shape (a line, a corner, the
+  face-diagonal triangle whose stabiliser in the cube's 48 is S_3),
+  whether two triples bind as series I's nucleons do (the tower's next
+  level), what a kicked quark does (the law binds and does not confine),
+  and what a detector reads as the set's mass (the exact sum of the
+  declared contents, 20 units against nature's 1836; the dressed row 1836
+  by declaration). Read at the bodies (their `read` and `contact` records,
+  their steps) and at the border `lifetime` (the glue's clicks).
+- **Model prediction, pinned before the run
+  ([the expectations](../examples/events/quarks/README.md#the-expectations-pinned-before-the-run-the-designs-section-47-expectationsjson);
+  `examples/events/quarks/expectations.json`, derived by the design's
+  `quark_numbers.py` and compared entry by entry by
+  `tests/test_quarks_expectations.py`).** The push per body at tick 20
+  from the one coupling with the fan's delivery cut at the lifetime (the
+  proton line's ends +-416 530 868 696 on x, the neutron line's
+  +-435 372 008 672, the triangle's three vectors, the rectangle's six and
+  the line of six, the kicked world's +-336 852 257 664 at tick 2); 290
+  glue rows per body per interval on the border; the read mass the sum
+  (20, 25, 20, 45, 45, 20, 1836); the fates from the strong design's toy
+  (the steady delivery with the step drive and the contact rule): the
+  lines u d u, d u d and u d u d u d hold with no step and hand-overs from
+  about tick 16 to 22, the triangle disperses from about tick 25, the
+  side-by-side rectangle from about tick 160, the kicked u steps at tick 6
+  and every seven intervals and leaves through `face:-x` at about tick 70
+  to 90 while the other two stay a pair; the dressed line holds and reads
+  1836.
+- **Features.** The columns, the lifetime, the held content and the
+  contact of note 31; the fraction-free accumulator of note 41 (the one
+  label unit on a non-whole strong charge, the dressed d); no key, no
+  identity beyond `columns-v1`.
+- **Run.** `examples/events/quarks/` (the seven `q*.json` worlds written
+  by `make_worlds.py`, the model ids `beam-quarks-<name>-space-v1`),
+  `tools/run_series.py --jobs 2`, 3000 intervals each, headless; the
+  readings by `tools/quarks_readings.py` (every line DETECTOR or
+  GAMEBOARD). The worktree `quarks-design` from main `25a62924`, the
+  project's environment (Python 3.14.0rc2, numpy 2.5.3), four cores, two
+  jobs.
+
+  Every run completed with the books balanced at every tick; 10 min 37 s
+  of wall time for the seven at two jobs (the runner's seconds per world
+  in the table; the pins committed at `eba635dd` before the run);
+  `tools/quarks_readings.py`: 0 record checks failed, 55 readings inside
+  among the tool's pins, 0 outside; two of the page's pins on the kicked
+  world outside, reported, not moved
+  ([the page](../examples/events/quarks/README.md#what-was-measured-2026-09-21)).
+
+  | World | Expected | Measured | Verdict |
+  | --- | --- | --- | --- |
+  | `q1_proton_line` | the ends +-416 530 868 696, the middle 0; no step; hand-overs from tick 17, the label 0 after each; 870 glue rows, no `u` or `d`; the read mass 20 | the ends +-416 530 868 696 exactly, the middle 0; no step in 3000 intervals; 411 hand-overs (398 from the left u from tick 17, 13 from the right u from tick 242; the toy's 412), the largest 6 664 493 899 136 (the toy's integer); 870 glue rows at tick 20, no other family on the border; the read mass 20; the books balanced; 186 s | inside (7 of 7) |
+  | `q2_neutron_line` | the ends +-435 372 008 672; no step; hand-overs from tick 22; 870 rows; the read mass 25 | +-435 372 008 672 exactly; no step; 318 hand-overs (290 from tick 22, 28 from tick 126; the toy's 319), the largest 9 142 812 182 112 (the toy's); 870 rows; the read mass 25; 183 s | inside (7 of 7) |
+  | `q3_proton_triangle` | the three push vectors of the design; disperses, the first step by tick 25 to 60, the three beyond three Links, out through the faces; 870 rows; the read mass 20 | the three vectors exactly; disperses: the first step at tick 27 (the second u; the toy's 25), 51 steps in all, 4 hand-overs, the largest separation 21.2, all three out through the faces (the board empty by the end, the last on (7, 7, 20), (20, 11, 6), (8, 14, 0)); 870 rows; the read mass 20 with what left through the faces; 20 s | inside (7 of 7) |
+  | `q4_deuteron_rectangle` | the six pushes of the design, the sums +-1 254 790 667 814 on y; disperses, the first step at about tick 160; 1740 rows; the read mass 45 | the six pushes exactly; disperses: the first step at tick 176 (the upper middle u; the toy's 161), 127 steps, 279 hand-overs, the largest separation 25.3, all six out through the faces; 1740 rows; the read mass 45; 123 s | inside (10 of 10) |
+  | `q5_deuteron_line` | the six pushes of the design, the sum over a triple +-525 262 238 320; no step; about 950 hand-overs; 1740 rows; the read mass 45 | the six pushes exactly; no step in 3000 intervals; 963 hand-overs (200, 316, 301 and 146 on the four inner bodies from ticks 17 to 27; the toy's 954), the largest 12 931 222 766 152 (the toy's 13 452 697 595 604); 1740 rows; the read mass 45; 420 s | inside (10 of 10) |
+  | `q6_proton_kick` | the push at tick 2 +-336 852 257 664; the kicked u steps -x at tick 6 and every seven intervals, out through `face:-x` at about tick 70 to 90 with its 2/3 e; the other two a bound pair; 870 rows; the read mass 20 | +-336 852 257 664 exactly at tick 2; the kicked u steps -x at ticks 6, 13, 20, 27, 34, 41, 48, 55 and 62 (every seven exactly), reaches the face at 62 and leaves through `face:-x` at tick 63 with its content 4 + 1 glue (the face's `measured_content`), OUTSIDE the pinned 70 to 90 by seven intervals (the toy's steady delivery begins one tick late and reached nine Links at 78); the other two drift -x as a pair at one Link (the d steps at 358, 618 and 1081, the u follows eleven to thirteen ticks later; 67 hand-overs on the d) and BREAK at about tick 1190 (the d steps +z at 1166, the u then steps -x from 1179 and the separation grows from 1 to 3.2 by tick 1200), the u out through `face:-x` at 1253 and the d through `face:-z` at 1434: OUTSIDE the pin "a bound pair" (a u d pair alone drifts by the third-law gap of unequal contents and breaks off the axis); 870 rows; the read mass 20 with what left; 61 s | inside (5 of 7); OUTSIDE 2 (the exit tick, the remaining pair), reported, not moved |
+  | `q7_proton_dressed` | the ends 418 547 308 612 or 613; no step; the read mass 1836 | 418 547 308 613 (the accumulator's one unit on the d's non-whole strong charge, as pinned); no step; 435 hand-overs (408 from tick 16, 27 from tick 119; the toy's 437), the largest 6 278 209 629 195 (the toy's 6 278 209 629 180); 870 rows; the read mass 1836; 233 s | inside (7 of 7) |
+
+- **Verdict (R).** The formula gave and the run proved: the push on every
+  body at the reference tick is the design's integer exactly in every
+  world (the dressed world to the accumulator's one unit). Three quark
+  bodies under the strong column alone converge to a bound set in a line
+  and in no other shape: u d u and d u d hold 3000 intervals with the
+  toy's hand-over counts and labels; the S_3 triangle shears from tick 27
+  and the side-by-side rectangle from 176 (the toy's 25 and 161), every
+  body out through the faces; the tower composes collinearly (u d u d u d
+  holds, 963 hand-overs). The law binds and does not confine: the kicked
+  u leaves through the face at tick 63 with its 2/3 e (the pin 70 to 90,
+  outside by seven), and the u d pair left behind drifts and breaks at
+  about tick 1190 (the pin "a bound pair", outside: a pair of unequal
+  contents drifts by the third-law gap and breaks off the axis). The read
+  mass is the exact sum in every world (20, 25, 20, 45, 45, 20, 1836):
+  the proton's 99 % binding is not in the law. Nothing was tuned; the
+  design's section 5 stands; the paper takes the quark rows as inputs
+  with these readings.
+
+
 ### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
 
 - **Confronts:** the single-graviton detector proposed by Tobar, Manikandan, Beitel and Pikovski (Nature Communications 15, 7229, 2024; construction begun in 2026): a massive acoustic resonator cooled to its ground state, weakly monitored, whose single quantum jump to its first level during a passing gravitational wave is one graviton absorbed, a gravito-phononic photoelectric effect; the key is to read individual transitions, since the mean energy is always consistent with a classical wave.
