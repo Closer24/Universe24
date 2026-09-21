@@ -233,6 +233,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
+from event_universe.register_map import carry_replicated  # noqa: E402
 from event_universe.world_loading import families_by_definition, load_world  # noqa: E402
 
 # The shipped definitions the world's families come from where they equal
@@ -2358,7 +2359,12 @@ DERIVATIONS: dict[str, str] = {
 }
 
 
-def expectations() -> dict[str, object]:
+def expectations(existing: Path = HERE / "expectations.json") -> dict[str, object]:
+    """The register derived from the worlds and the design, the measured
+    entries of `REGISTERED_RUN_READINGS` and the `derivations` map added;
+    the `replicated` map of the register file at `existing` carried
+    through unchanged (`event_universe.register_map`: the replicator's,
+    never dropped by a regeneration)."""
     found: dict[str, object] = copy.deepcopy(
         {
             "format": "amplitude-expectations-v1",
@@ -2383,7 +2389,7 @@ def expectations() -> dict[str, object]:
         assert isinstance(target, dict)
         target.update(entries)
     found["derivations"] = DERIVATIONS
-    return found
+    return carry_replicated(existing, found)
 
 
 def main() -> None:
@@ -2401,7 +2407,7 @@ def main() -> None:
             f"{path.relative_to(ROOT) if path.is_relative_to(ROOT) else path}: {world['ticks']} intervals"
         )
     (args.out / "expectations.json").write_text(
-        json.dumps(expectations(), indent=1) + "\n", encoding="utf-8"
+        json.dumps(expectations(args.out / "expectations.json"), indent=1) + "\n", encoding="utf-8"
     )
 
 

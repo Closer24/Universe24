@@ -76,6 +76,7 @@ def _prepare_output(initialization: Path, output: Path) -> None:
 
 
 def main() -> None:
+    """Command line: run a world of the Beam Law and write its record."""
     parser = argparse.ArgumentParser(description="Run a world of the Beam Law.")
     parser.add_argument("--init", required=True, type=Path, help="The world file (JSON)")
     parser.add_argument("--output", type=Path, default=Path("artifacts/run"))

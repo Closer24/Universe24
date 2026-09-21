@@ -257,6 +257,7 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 | `events/__init__` | `events/world`; `events/engine` lazily (`Measured`, `NatureBeamSimulation`), so importing the package loads no numpy |
 | `json_documents`, `snapshot_writer`, `retention` | Standard library; host modules with no physics |
 | `world_loading` | `events/world`, `json_documents`; the entity definitions loader and the portable bundle |
+| `register_map` | Standard-library only; the register's `replicated` map (the replicator's, docs/TEST_EXPECTATIONS.md) carried through a regeneration, read by the generators that write a register (`examples/events/amplitude/make_worlds.py`) |
 | `configuration_validation` | `events/world`, `world_loading`; read-only |
 | `runner` | `events/run`, `retention`, `world_loading` |
 | `ui` | `configuration_validation`, `json_documents`, `retention`, `world_loading`; local HTTP and isolated CLI process ownership |

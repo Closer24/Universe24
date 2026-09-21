@@ -140,6 +140,7 @@ def cmul(a: Complex, b: Complex) -> Complex:
 
 
 def add_count(into: Counts, phase: int, count: int) -> None:
+    """Add a count at one phase to a phase-count vector, in place."""
     into[phase] = into.get(phase, 0) + count
 
 
@@ -150,6 +151,7 @@ def add_counts(into: Counts, counts: Counts) -> None:
 
 
 def scale_counts(counts: Counts, factor: int) -> Counts:
+    """A phase-count vector scaled by an integer factor."""
     return {phase: count * factor for phase, count in counts.items()}
 
 
@@ -172,14 +174,17 @@ def ring_product(left: Counts, right: Counts, steps: int) -> Counts:
 
 
 def arm_of(branch: int) -> int:
+    """The arm of a branch code (its high bits)."""
     return branch >> LABEL_BITS
 
 
 def label_of(branch: int) -> int:
+    """The label of a branch code (its low bits)."""
     return branch & LABEL_MASK
 
 
 def branch_of(arm: int, label: int) -> int:
+    """The branch code of an arm and a label."""
     return (arm << LABEL_BITS) | label
 
 
@@ -211,6 +216,7 @@ def gcd(a: int, b: int) -> int:
 
 
 def lcm(a: int, b: int) -> int:
+    """The least common multiple of two integers (the larger one where one is zero)."""
     return a * b // gcd(a, b) if a and b else max(a, b)
 
 
@@ -336,9 +342,11 @@ class Offer:
     last_tick: int = 0
 
     def channels(self) -> list[int]:
+        """The channels the offer's residuals fill, in order."""
         return sorted(self.residuals)
 
     def channel_name(self, channel: int) -> str:
+        """The name of a channel: its letter under a rotation, its index otherwise."""
         return CHANNEL_NAMES[channel] if self.rotated else str(channel)
 
     def nodes(self) -> list[Node]:
@@ -374,6 +382,7 @@ class LiveRecord:
     last_end: int = 0
 
     def offer(self, set_index: int, arm: int, read: bool) -> Offer:
+        """The offer of the record at a set and an arm, made on first use."""
         key = (set_index, arm)
         found = self.offers.get(key)
         if found is None:
@@ -549,6 +558,8 @@ class Layer:
         total_arms = offset
 
         def permute(joint: int) -> int:
+            """Flip the bits of the arms after the first when the first arm's bit is set (the
+            joint label read relative to its first arm)."""
             if joint & 1:
                 for position in range(1, total_arms):
                     joint ^= 1 << position
