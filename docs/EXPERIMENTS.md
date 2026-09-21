@@ -3636,6 +3636,30 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   and 2 outside over the eleven worlds. `j3_neutron_free` (512 exactly),
   `w_exchange` and the five J2 worlds are identical. The digests of the
   four moved worlds; the numbers above are kept as history.
+- **Re-pinned under the fraction-free law (2026-09-21; the re-registration
+  record 254 ordered; no run moved).** The batch above re-read the runs
+  and left `expectations.json`'s `become` entries as the first
+  registration's warm run had written them (the count at tick 100 of the
+  engine before note 41; the architect's root cause, the first differing
+  commit e7ba13c6, the owed count on its accumulator). The generator now
+  pins, for every neutron, the range of the count over the dwell period
+  (the ticks 61 to 120 of a 120-interval warm run) and the trigger ticks
+  at both ends of the range (the owed accumulator gains between the least
+  and the greatest count per interval once the crowd is steady): `j1_lattice`
+  517 to 525 (the corners 520 to 525), `j1_source` 522 to 529,
+  `j3_deuteron` 523 to 574, `j3_neutron_free` 512, the gate as it was.
+  Against the runs at `main` (the same runs: 522 to 524, 523 to 528, 568,
+  never, 512) every neutron fires within its range with no slack needed.
+  `tools/weak_readings.py`: 0 record checks failed, 36 readings inside and
+  0 outside over the eleven worlds: the two readings outside since the
+  first registration, `j1_lattice`'s trigger criterion (the corners at 524
+  against the one-tick pin 522) and `j3_deuteron`'s (568 against 574),
+  moved inside under the range pin of the re-registration, the range's own
+  consequence under the fraction-free law; nothing else moved. The old
+  integers are kept as history in the series' README
+  (`examples/events/weak/README.md`, "Re-pinned under the fraction-free
+  law"); `tests/test_weak_readings.py` (e) replays the generator's warm run
+  on the shipped worlds against the register.
 
 ### L, the amplitude law (2026-09-20)
 
