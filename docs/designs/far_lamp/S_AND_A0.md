@@ -222,8 +222,8 @@ would need a reading that maps a width to a shift, and no moment of the
 law does.
 
 **(3) The pins.** (i) The Solar System: the planets' Doppler is read from
-the same detector as a galaxy's, to 1 m/s (the radial-velocity method's
-precision, to verify against the source), a part in `2 x 10^5` of a
+the same detector as a galaxy's, to 1 m/s (the radial-velocity precision of HARPS,
+Mayor et al. 2003, The Messenger 114, 20), a part in `2 x 10^5` of a
 galaxy's edge speed; a spread fixed at birth is bounded there, and
 Cassini bounds any extra field along the path (`gamma - 1 = (2.1 +-
 2.3) x 10^-5`, Bertotti, Iess and Tortora 2003, Nature 425, 374). (ii)

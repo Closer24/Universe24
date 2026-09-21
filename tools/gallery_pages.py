@@ -66,6 +66,9 @@ MAX_FRAMES = 120
 # at this factor of the size and downsampled: sharp over the blocky board.
 SUPERSAMPLE = 4
 # The accent of the pages: green, in dark mode (the model owner, 2026-09-21).
+# A body's copies fade with their age over this many intervals: the rows
+# just released into the Nodes beside the body are the bright ones.
+AGE_FADE = 40
 ACCENT = (74, 222, 128)
 # Appended to the caption of every picture with bodies (the model owner,
 # 2026-09-21: a body's copies spreading, transparent, and its arrow).
@@ -73,7 +76,11 @@ COPIES_NOTE = (
     "Every body is drawn with the copies, in the owner's word: the body's own rows, the rows carrying its "
     "number that its self-creations release on its directions, drawn as translucent discs in its colour at "
     "their Nodes on the GameBoard; and with the white arrow of its momentum label, the vector p of its record "
-    "(no arrow at p = 0); a product row carries a short arrow along its direction of the fan."
+    "(no arrow at p = 0); a product row carries a short arrow along its direction of the fan. The copies "
+    "fade with their age: the bright ones are the rows just released into the Nodes beside the body, the "
+    "faint ones far along their lines; every particle is a beam, releasing itself at every self-creation. A "
+    "copy looks like its body: a disc with a rim, coloured as the body is (by the row's phase for a family "
+    "with a phase circle): the body radiates itself."
 )
 SQRT3 = math.sqrt(3.0)
 # Each family without a phase circle takes one of these colours, in the
@@ -487,10 +494,11 @@ class Plane:
         directions, drawn as translucent discs in the body's colour at their
         Nodes; what spreads is the body's own record, many times over."""
         nx, ny, _ = self.shape
-        radius = max(self.scale * 0.44, 2.0)
+        base = max(self.scale * 0.46, 2.0)
         for body in frame.bodies:
             colour = BODY_COLOURS.get(body.family, (230, 230, 230))
             total = np.zeros((nx, ny), dtype=np.float64)
+            youngest = np.full((nx, ny), AGE_FADE * 4, dtype=np.float64)
             for rows in frame.rows:
                 mine = rows.number == body.number
                 if self.slice_z is not None:
@@ -498,17 +506,40 @@ class Plane:
                 if not mine.any():
                     continue
                 np.add.at(total, (rows.x[mine], rows.y[mine]), rows.amount[mine].astype(np.float64))
+                np.minimum.at(youngest, (rows.x[mine], rows.y[mine]), rows.age[mine].astype(np.float64))
             if not total.any():
                 continue
             largest = float(total.max())
+            # A copy looks like the body itself: for a family with a phase
+            # circle, the youngest row's phase at the Node gives the copy's
+            # hue, as the body's own disc is coloured by its phase.
+            phase_at: dict[tuple[int, int], int] = {}
+            if self.phased.get(body.family, False):
+                for rows in frame.rows:
+                    mine = rows.number == body.number
+                    if self.slice_z is not None:
+                        mine &= rows.z == self.slice_z
+                    order = np.argsort(rows.age[mine], kind="stable")
+                    xs, ys, phases = rows.x[mine][order], rows.y[mine][order], rows.phase[mine][order]
+                    for x, y, phase in zip(xs.tolist(), ys.tolist(), phases.tolist(), strict=True):
+                        phase_at.setdefault((x, y), phase)
             for i, j in zip(*np.nonzero(total), strict=True):
                 if (int(i), int(j)) == (body.position[0], body.position[1]):
                     continue
-                alpha = int(30 + 100 * math.log2(1.0 + total[i, j]) / math.log2(1.0 + largest))
+                # The rows just released, in the Nodes beside the body, are
+                # bright and large; the rows far along their lines faint.
+                fade = 0.3 + 0.7 * max(0.0, 1.0 - youngest[i, j] / AGE_FADE)
+                alpha = int((30 + 100 * math.log2(1.0 + total[i, j]) / math.log2(1.0 + largest)) * fade)
+                radius = base * (0.72 + 0.38 * fade)
                 cx, cy = self.pixel(int(i), int(j))
+                tint = colour
+                if (int(i), int(j)) in phase_at:
+                    tint = phase_colour(phase_at[(int(i), int(j))], self.phase_steps)
                 over.ellipse(
                     [(cx - radius) * k, (cy - radius) * k, (cx + radius) * k, (cy + radius) * k],
-                    fill=(*colour, alpha),
+                    fill=(*tint, alpha),
+                    outline=(235, 240, 245, min(255, alpha + 70)),
+                    width=max(1, k // 4),
                 )
 
     def draw_momentum(
@@ -1824,11 +1855,12 @@ def page_nucleus(out: Path, runs: Path | None) -> Path:
         "deuteron_1",
         folder / "deuteron_1.json",
         runs,
-        frame_ticks(60, 40),
+        list(range(0, 49)),
         "The deuteron at one Link, `deuteron_1`: the plane z = 10 of the 21^3 cube (the bodies' plane, the rows "
         "in it alone), 10 pixels per Node; the proton p (red) at (10, 10, 10) and the neutron n (blue) at (11, 10, 10); "
         "the `nuclear` rows (gold) reach three Links and click on the border `lifetime`, the `p` and `n` rows "
-        "fly to the faces.",
+        "fly to the faces. One frame per interval: each body releasing its rows into the Nodes beside it at "
+        "every self-creation, the rows walking outward at the pace of the flight table.",
         120,
     )
     free, free_record, free_events = nucleus_player(
@@ -2082,6 +2114,16 @@ def page_decay(out: Path, runs: Path | None) -> Path:
     transformation `become`, the products' flight to the shell, the W
     exchange at one Link; the trigger ticks and counts from the register."""
     folder = WORLDS / "weak"
+    release, _, _ = decay_player(
+        "j3_release",
+        folder / "j3_neutron_free.json",
+        runs,
+        list(range(0, 49)),
+        "The release, `j3_neutron_free` at its first 48 intervals, one frame per interval: the neutron is a "
+        "beam, releasing one row per direction of the 290 into the Nodes beside it at every self-creation, "
+        "the rows walking outward; the shell's ring at r = 8.",
+        120,
+    )
     free_ticks = list(range(0, 501, 50)) + list(range(501, 561, 2))
     free, free_record, free_events = decay_player(
         "j3_neutron_free",
@@ -2168,6 +2210,8 @@ charges balancing at load; the clock is slowed by the count it reads as every cl
 crowd fires later and a neutron alone at the key exactly. The hand of the products (series P, the parity
 test) and the neutrino's phase window (series J2, the filter) are cited below from the register; this page
 shows the transformation itself.</p>
+<h2>The release: a body is a beam</h2>
+{release.html()}
 <h2>The free neutron</h2>
 {free.html()}
 <p>What to see: nothing for 511 intervals but the neutron's own rows; at {fb["tick"] if fb else "?"} the
@@ -2427,6 +2471,7 @@ def lensing_player(
     world: Path,
     runs: Path | None,
     caption: str,
+    ticks: Sequence[int] | None = None,
 ) -> tuple[Player, dict[str, object], dict[str, list[dict[str, object]]]]:
     """A series K world replayed as the x-y projection, the beam's rows on
     top of the mass's dimmed crowd; per frame the beam in flight, the
@@ -2442,7 +2487,7 @@ def lensing_player(
     taken = by_tick([c for c in clicks if c.get("detector") is None])
     faces = by_tick([c for c in clicks if str(c.get("detector", "")).startswith("face")])
     replay = Replay(world)
-    ticks = frame_ticks(replay.ticks, 72)
+    ticks = list(ticks) if ticks is not None else frame_ticks(replay.ticks, 72)
     frames = replay.run(ticks)
     plane = plane_for(replay, scale=6)
     plane.largest = largest_amounts(frames)
@@ -2504,6 +2549,15 @@ def page_energy(out: Path, runs: Path | None) -> Path:
     passing a mass and bent toward it, the mass measuring the most turned
     rows; the control beside it."""
     folder = WORLDS / "lensing"
+    release, _, _ = lensing_player(
+        "mass_release",
+        folder / "mass_meeting.json",
+        runs,
+        "The release, `mass_meeting` at its first 48 intervals, one frame per interval: the mass is a beam, "
+        "releasing one row per direction of the 290 into the Nodes beside it at every self-creation, its "
+        "crowd walking outward; the lamp's first records on their five lines.",
+        list(range(0, 49)),
+    )
     mass, mass_record, mass_events = lensing_player(
         "mass_meeting",
         folder / "mass_meeting.json",
@@ -2556,6 +2610,8 @@ owner's decision of 2026-09-20 ("an event in transit reads the crowd as a body d
 balance"), the beam is bent toward the mass with the sign of gravity and the M / b form, at the grain of the
 fan: this page shows that run beside its control. What the mass does to the rows that reach it is the
 other half of the story: it measures them (the click), and the most turned rows end there.</p>
+<h2>The release: a body is a beam</h2>
+{release.html()}
 <h2>The beam beside the mass, under the meeting</h2>
 {mass.html()}
 <h2>The control: no mass</h2>
@@ -2655,11 +2711,33 @@ def page_atom(out: Path, runs: Path | None) -> Path:
     plane = plane_for(replay, scale=8, slice_z=proton[2])
     plane.largest = largest_amounts(frames)
     plane.floor = 0.1
-    plane.weights = {"p": 0.35, "e": 0.8}
+    plane.weights = {"p": 0.35, "e": 0.0}
     plane.phase_bodies = {"e"}
     plane.body_radius = 0.9
     plane.body_labels = False
     steps = by_tick(events["step"])
+    early = Replay(world).run(list(range(0, 49)))
+    release = Player(
+        "atom_release",
+        [plane.image(frame) for frame in early],
+        list(range(0, 49)),
+        [
+            {
+                "rows of the proton on the GameBoard (GameBoard reading)": num(
+                    int(sum(int(r.amount.sum()) for r in frame.rows if r.family == "p"))
+                ),
+                "rows of the electron on the GameBoard": num(
+                    int(sum(int(r.amount.sum()) for r in frame.rows if r.family == "e"))
+                ),
+            }
+            for frame in early
+        ],
+        "The release, `r8` at its first 48 intervals, one frame per interval: the proton is a beam, releasing "
+        "one row per direction of its shell of 2616 into the Nodes beside it every 10 intervals (the rows in "
+        "the plane z = 22 drawn), the shells walking outward; the electron releasing its rows on its four "
+        "directions at every self-creation. " + COPIES_NOTE,
+        120,
+    )
     images = [plane.image(frame) for frame in frames]
     readings = []
     previous_angle = None
@@ -2740,7 +2818,9 @@ that spread from it at the pace of the flight table), it reads the proton's rows
 coupling (the charge column), its momentum vector <b>p</b> is the white arrow, and its phase, an element of
 Z_64, turns by |<b>p</b>| N over h at every Link it steps, so the disc's colour goes round the circle as it
 orbits. What a detector reads of the atom is on the faces: the coherent record of the electron's rows.</p>
-<h2>The moving picture</h2>
+<h2>The release: a body is a beam</h2>
+{release.html()}
+<h2>The orbit</h2>
 {player.html()}
 <p>What to see: the electron circles the proton, its arrow turning with it and its copies streaming outward;
 the proton's shell of copies pulses every 10 intervals through the plane; the phase colour of the electron
