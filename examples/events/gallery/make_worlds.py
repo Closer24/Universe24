@@ -38,7 +38,7 @@ register; a page made from one says so.
   intervals: what a fast electron does to a proton of three quarks under
   the law as it is (the contact through the table hands its momentum to
   the quark it hits; nothing confines).
-- `clock_6.json` (the page "The clock's word"): series P's registered
+- `clock_6.json` (the page "The clock's word"): series U's (formerly P) registered
   `crowd_clock/still_3` (a lamp at rest at (10, 4, 4) inside a crowd of two
   `mass` sources three Links away on +y and +z, F = 4915 units per interval
   each on the fan of nine, the detector at x = 110) with the two sources
@@ -217,7 +217,7 @@ ELECTRON_KICK = 2 * 10**13
 
 
 def clock_6() -> dict[str, object]:
-    """Series P's still_3 with the crowd's two sources at six Links."""
+    """Series U's (formerly P) still_3 with the crowd's two sources at six Links."""
     base = json.loads((HERE.parent / "crowd_clock" / "still_3.json").read_text(encoding="utf-8"))
     world = dict(base)
     world["model_id"] = "gallery-clock_6-demonstration-v1"

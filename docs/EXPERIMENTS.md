@@ -8986,13 +8986,15 @@ the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
   following; the law binds and does not confine. Nothing registered.
 - [The clock's word](pages/gallery/clock.html): for the owner's decision on
   what a body's clock counts (the presence or the age moment; the physicist's
-  note `docs/designs/clock_age/NOTE.md`, PR #567): series P's registered
-  `crowd_clock/still_3` and a demonstration world with the crowd's sources
+  note `docs/designs/clock_age/NOTE.md`, PR #567): series U's (formerly P)
+  registered `crowd_clock/still_3` and a demonstration world with the crowd's sources
   at six Links, replayed; the presence at the lamp's Node 4 F at both
   distances and the age moment 22 F and 42 F (GameBoard readings), the
-  detector's 1 + z under each word as the physicist's pins beside series P's
-  registered 1.300, nature's clocks' table; the owner's word pending, the
-  run in progress. Nothing pinned by the page.
+  detector's 1 + z under each word from series T's run (the G2 session, PR
+  #587: 1.3000 and 1.3000 under the presence word, 2.6517 and 4.1500 under
+  the age word, the ratio 1.907, every pin met) beside series U's registered
+  1.300, nature's clocks' table; the owner's word pending. Nothing pinned by
+  the page.
 - [Universe24](pages/gallery/universe24.html): no run; the owner's formula
   W = E_0^2 + 3 p . p at the top (E by comparisons, E_0 = Q S M, c^2 = 1 / 3
   derived; the identity of covariant-readings-v1, DERIVATIONS_BEAM 17.6),
