@@ -8,6 +8,8 @@ the rows' flight table, (iii) lorentz-v1 as a hypothesis. Every integer is from
 engine's `by_drive` and its world loader imported, nothing else). Nothing
 built, nothing run, nothing registered; the pins are the map's.
 
+Amended on 2026-09-21 after the physics-rule review of the build (section 3.1: M1 and the correction; the map `drive_residue_map.py` beside `light_speed_map.py`).
+
 Notation (the owner's rule, record 184): every symbol is named in English at its first use and a Greek letter is written as a word (gamma, tau, phi, zeta); a scalar is plain (c, M, N, Q, gamma), a vector is bold lowercase (**p** the momentum vector, **s** the state vector on the torus, **r** the rate vector, **e** the step's unit vector), a matrix or an operator is bold uppercase (**F** the interval's map, **C** the coupling matrix), and a component is plain with its index (p_a); the direction vector keeps its uppercase letter D as in BEAM_LAW, where T_D is its resolution, the one exception, and inside code spans and code blocks every symbol is plain.
 
 ## 1. The statement of c, completed
@@ -155,6 +157,140 @@ local and generic as record 158 says and unproved, to be extended to one
 Link per interval. The contact (a refused step onto an occupant) is the
 line's step refused, as today.
 
+### 3.1 Amended after the physics-rule review of the build (M1): the residue across lines, and the correction
+
+**The finding (M1, the reviewer's, on PR #526 at fe911492; reproduced
+here).** Under form B as built the accumulator's unit is the line's: the
+rate and the wall both carry `S_1` (and `T_D`), so a residue r means
+`r / wall` Links on that line; at a change of D at a constant `|p|_1`
+the residue is kept and read against the new wall, and the distance it
+holds multiplies by `wall_old / wall_new`, between `1 / (3 P)` and `3 P`
+at the bound P (192 at P = 64); a residue of a long line discharges as
+consecutive Links on a short one, one per interval, above the pace the
+momentum earns. Reproduced on the same integers
+([drive_residue_map.py](drive_residue_map.py) (A), its output
+[drive_residue_map.out](drive_residue_map.out)): at `|p|_1 = 6000`, M =
+64, S = 1, the residue 0.585 Link of the (3, 1, 2) line's wall (4056864)
+is 2.575 Links of the heading's (922144): four Links in the first four
+intervals on the heading where the pace earned is 0.416. Over 1000
+intervals at a constant `|p|_1` with the direction cycling through five
+lines (part (B)) the build makes 348 Links for a driven distance of
+512.6, off by 165 Links at some n. So the build breaks its own contract
+(the count the whole part of the distance driven; nothing discarded;
+never above c) and record 301's condition is not met, as the reviewer
+says. **M1b, a second place, found here.** The deficits are in the line's
+unit too (each gains `|D_a|` per Manhattan step and the stepped one loses
+`S_1`); carried across lines they order the Links by the old line: from
+(1, 64, 0) at its x deficit 30 to the momentum (0, 6500, 0), purely along
++y, the body makes 30 Links on -x before its first y Link (the sign rule
+gives -1 on an axis D lacks; part (A)). A correction must close both; a
+re-read of the drive alone leaves M1b.
+
+**Why no accumulator with a line-independent unit carries form B's
+pace.** The intervals per Manhattan Link on D are `Q S M / |p|_1 + T_D /
+(S_1 Q)`, and the second term is the rows' own Manhattan pace on the
+line, which differs per line (110 / 64 on a heading, 156 / 128 on (1, 1,
+0), 1 on the cube diagonal); an accumulator of Manhattan distance with
+form B's cap therefore carries the line's constant in its wall, and the
+lattice has no exact Euclidean unit (`T_D` is already an isqrt). So an
+exact form with form B's Euclidean-isotropic cap and one line-independent
+unit does not exist; the correction changes the cap off the headings.
+
+**The three forms the Boss named, each under the three tests, the pace,
+the cap and the reviewer's pin.**
+
+(a) *A rate and a wall without `S_1`*: `rate = |p|_1 Q`, `wall = Q^2 S M
++ |p|_1 T_h` with `T_h = isqrt(3 Q^2) = 110` the heading's resolution,
+one accumulator on the line of D with the line's deficits. The drive's
+unit is then line-independent and M1 closes, but the deficits keep M1b
+(their exact re-read is a rational with the old `S_1` in the
+denominator, their reset makes a body that changes line every interval
+step on its largest component alone). Not sufficient alone.
+
+(b) *The residue re-read at a change of line*, `r -> r x wall_new /
+wall_old`: exact only as a pair (the numerator `r x wall_new` over the
+denominator `wall_old`), whose denominator compounds at every change
+(`wall_old x wall_old' x ...`): unbounded storage on the record, against
+LOCALITY-1's fixed storage; with a floor, a declared rounding below one
+unit of the new wall per change, below `1 / (Q^2 S M)` Link, accumulating
+to `n / (Q^2 S M)` Links over n changes (a pushed body changes line at
+every self-creation): the owner's word, and the deficits would need the
+same re-read with their own rounding (below `1 / S_1'` of a step per
+axis per change). Stated for his decision; not recommended.
+
+(c) *The residue owned per axis*, RECOMMENDED: three signed accumulators
+`drive_a` on the body's record, the rate `p_a Q` on each, the ONE wall
+
+    W = Q^2 S M + |p|_1 T_h,   T_h = isqrt(3 Q^2) = 110,
+
+every accumulator advancing at every self-creation, one Link per
+interval at most: the axis furthest over the wall steps (the lowest axis
+on a tie), its accumulator loses W with the Link's sign (the
+accumulator's), the others keep their overflow for the following
+intervals; a reversal cancels first (the signed accumulator, record
+126); `p = 0` never steps. No direction read, no bound P, no deficits:
+the per-axis rule of note 17 with one wall in place of three, and the
+Link deferred in place of dropped. The three tests: generic (the
+integers `p_a`, M, S and the constants Q, `T_h`; no family name, no
+kind), vector (T on three accumulators against one wall, a comparison
+for the order; no root, no float), local (the body's own record, fixed
+work). The pace: per axis `|p_a| Q / W`, Manhattan `|p|_1 Q / W`, that
+is `Q S M / |p|_1 + T_h / Q = Q S M / |p|_1 + 1.72` intervals per
+Manhattan Link on every direction; on a heading `|p| Q / (Q^2 S M + 110
+|p|)` is form B's `|p| x 64 / (Q S M x 64 + 110 |p|)` exactly, so
+`1 / (1 + 0.72 v)` survives on a heading and on an axis unchanged, and
+the axial registered worlds read as under form B; off the headings the
+pace is below form B's (part (C): at `p = Q S M`, 0.632 of the rows'
+heading pace under both forms on a heading, 0.501 against 0.631 on (1,
+1, 0), 0.432 against 0.629 on (1, 1, 1)). The cap: the Euclidean pace
+`|p|_2 Q / W <= Q / T_h = 64 / 110`, the rows' pace on a heading, on
+every direction, and on the line of D at most `|D| Q / (S_1 T_h)`
+against the rows' `|D| Q / T_D` there, the ratio at most 1 over the 4034
+primitive directions within 8 with equality on the six headings and
+0.577 on the cube diagonal (part (C)): "never above c" becomes true and
+a body never outruns its family's rows on any line (record 301's
+condition), at the price that the cap is the Manhattan-isotropic 64 /
+110, a fast body on a diagonal slower than its rows by up to `1 / sqrt
+3` (the Euclidean-isotropic cap of form B is not reachable exactly,
+above). Newton's limit `|p|_2 / (Q S M)`, isotropic on every direction,
+unchanged. The reviewer's pins for the re-run, on the map (B): (1) at a
+constant `|p|_1` with a wandering direction the wall is constant, each
+axis's count is exactly `floor(sum_t p_a(t) Q / W)` at every n (the
+signed sum; `by_drive` with a constant wall), and the Links crossed lag
+the count by the deferral only, within 2 at any n (112, 112, 83 Links
+against the whole parts 111, 111, 83 after 1000 intervals of five lines;
+the build 348 against 512.6); (2) a one-interval hand-over transient
+cancelled within the tick leaves at most `|delta_a| Q / W` Link as a
+residue on its own axis and fires nothing (-0.086 Link on y, no Link in
+the 100 intervals after; the build's two re-reads change the distance
+held by +0.60 Link). What changes for the register: the axial movers
+read as under form B; the diagonal and orbit worlds (series D and its
+lamp worlds, sun_planet, bohr, the off-axis hubble throws) move again
+and are re-pinned by the implementer from (c)'s pace (row 58's pins
+under form B carry the heading's pace and stand); a body's path is the
+per-axis staircase within one Link of the digital line (the order by
+overflow), and DERIVATIONS 1.3 item 7 stays closed (nothing dropped, the
+coincident fire deferred). (c) needs no declared rounding: the
+implementer builds it on this PR's SHA; only (b) would need the owner's
+word.
+
+**S1, S2 and S7 of the review.** Under (c) the direction read leaves the
+rule (no shift, no bound P, no read's grain) and 24.1's ledger gains no
+row: the three are closed by removal. Should the owner keep the line ((a)
+or (b)), they are FORM.md's: S1, section 3 declared the shift to
+components within `2^20` and the build reads within `2^k`, `k = 29 - 2
+bits(P) = 15` at P = 64 (note 49): the built value is the one the 64-bit
+comparison admits (`(p' . D)^2 |D'|^2` within `2^63` needs p' within
+`2^15` at |D| up to 3 P), and section 3's `2^20` is amended here to
+`2^15`, a precision `2^-15` against the table's half step `2^-7`; S2, at
+a larger bound the shift shrinks with `k = 29 - 2 bits(P)` while the
+candidates' angular spacing shrinks as `1 / P^2`, so the read tells
+neighbouring candidates apart only while `2^-k <= 1 / (2 P^2)`, that is
+`bits(P) <= 7`, P below 128: the bound stays at 64 unless the comparison
+is widened beyond 64 bits; S7, the read's grain (P and k) is an input of
+the law and would take a row of 24.1's ledger, "the direction read's
+grain, INPUT", to be added there only if the line is kept.
+
 ## 4. lorentz-v1, stated so that it can fail
 
 **The rule.** The rate of a body's clock, its turn and its owed count,
@@ -222,6 +358,10 @@ bond clock is the law's only slowing in motion, at 1 + 2 / k on the axis.
    drive (section 3, form B), which makes every moving body's registered
    speed `1 / (1 + 0.72 v)` of today's and re-registers the 47 worlds with
    a moving body once, the orbit series D at S = 1 (1.29 c today) first.
+   Amended (3.1): the build's residue across lines (M1, and M1b in the
+   deficits) is closed by form (c), three accumulators with one wall
+   `Q^2 S M + |p|_1 T_h`; the pace on a heading unchanged, the cap 64 / 110
+   on every direction, no direction read.
 2. The drive on the momentum's direction is the same accumulator as the
    flight's, one row of the counts table; nothing new in the six verbs.
 3. lorentz-v1 needs a seventh verb (a root at a grain); with it the muon's

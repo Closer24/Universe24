@@ -1,0 +1,113 @@
+{
+ "format": "cluster-clock-expectations-v1",
+ "c": 0.5818181818181818,
+ "ticks": 500,
+ "window": [
+  250,
+  500
+ ],
+ "speed_over_c_moving": 0.2,
+ "lag_bound_links": 2,
+ "tolerance": 0.02,
+ "members": {
+  "m0": {
+   "lamp": 2,
+   "sources": [],
+   "x": 40,
+   "k": 0.0,
+   "flux": 0
+  },
+  "m01": {
+   "lamp": 3,
+   "sources": [
+    4,
+    5
+   ],
+   "x": 60,
+   "k": 0.1,
+   "flux": 1638
+  },
+  "m03": {
+   "lamp": 6,
+   "sources": [
+    7,
+    8
+   ],
+   "x": 80,
+   "k": 0.3,
+   "flux": 4915
+  },
+  "m06": {
+   "lamp": 9,
+   "sources": [
+    10,
+    11
+   ],
+   "x": 100,
+   "k": 0.6,
+   "flux": 9830
+  },
+  "m1": {
+   "lamp": 12,
+   "sources": [
+    13,
+    14
+   ],
+   "x": 120,
+   "k": 1.0,
+   "flux": 16384
+  }
+ },
+ "cluster_rest": {
+  "members": {
+   "m0": {
+    "one_plus_z": 1.0
+   },
+   "m01": {
+    "one_plus_z": 1.1
+   },
+   "m03": {
+    "one_plus_z": 1.3
+   },
+   "m06": {
+    "one_plus_z": 1.6
+   },
+   "m1": {
+    "one_plus_z": 2.0
+   }
+  },
+  "z_mean": 0.4,
+  "z_dispersion": 0.363318042491699,
+  "z_minimum": 0.0
+ },
+ "cluster_moving": {
+  "members": {
+   "m0": {
+    "one_plus_z_additive": 1.2,
+    "one_plus_z_product": 1.2,
+    "speed_over_c_on_the_board": 0.2
+   },
+   "m01": {
+    "one_plus_z_additive": 1.3,
+    "one_plus_z_product": 1.32,
+    "speed_over_c_on_the_board": 0.18181818181818182
+   },
+   "m03": {
+    "one_plus_z_additive": 1.5,
+    "one_plus_z_product": 1.56,
+    "speed_over_c_on_the_board": 0.15384615384615385
+   },
+   "m06": {
+    "one_plus_z_additive": 1.8,
+    "one_plus_z_product": 1.92,
+    "speed_over_c_on_the_board": 0.125
+   },
+   "m1": {
+    "one_plus_z_additive": 2.2,
+    "one_plus_z_product": 2.4,
+    "speed_over_c_on_the_board": 0.1
+   }
+  },
+  "z_shift_of_every_member": 0.2
+ }
+}
