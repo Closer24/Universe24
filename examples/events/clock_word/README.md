@@ -25,7 +25,7 @@ nature's clocks measure at two heights).
 
 ## The worlds
 
-Series P's geometry (`../crowd_clock/make_worlds.py` imported for the fan
+Series U's geometry (`../crowd_clock/make_worlds.py` imported for the fan
 and the speeds): the lamp `s_px1` at rest at x = 10 (2^20 units, one unit
 per self-creation on +x, the wheel [1, 64]); two `mass` sources at 3 or at
 6 Links on +y and +z, each releasing F = 4915 units per interval on the fan

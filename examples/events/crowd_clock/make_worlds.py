@@ -1,4 +1,4 @@
-"""Write the eight worlds of series P, a lamp inside a crowd (a "galaxy"),
+"""Write the eight worlds of series U, a lamp inside a crowd (a "galaxy"),
 still and moving, read by a detector at rest, and the expectations before
 the runs (`expectations.json`).
 
