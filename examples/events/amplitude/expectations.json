@@ -1132,6 +1132,73 @@
   "rotation_multiplicity": 65536
  },
  "pair_n": {
+  "512": {
+   "labels": [
+    [
+     0,
+     64
+    ],
+    [
+     0,
+     192
+    ],
+    [
+     128,
+     64
+    ],
+    [
+     128,
+     192
+    ]
+   ],
+   "pairs": {
+    "0_64": {
+     "counts": {
+      "++": 219,
+      "+-": 37,
+      "-+": 37,
+      "--": 219
+     },
+     "E": 364,
+     "cosine": 0.707107,
+     "within_1_over_N": false
+    },
+    "0_192": {
+     "counts": {
+      "++": 37,
+      "+-": 219,
+      "-+": 219,
+      "--": 37
+     },
+     "E": -364,
+     "cosine": -0.707107,
+     "within_1_over_N": false
+    },
+    "128_64": {
+     "counts": {
+      "++": 218,
+      "+-": 38,
+      "-+": 38,
+      "--": 218
+     },
+     "E": 360,
+     "cosine": 0.707107,
+     "within_1_over_N": false
+    },
+    "128_192": {
+     "counts": {
+      "++": 218,
+      "+-": 38,
+      "-+": 38,
+      "--": 218
+     },
+     "E": 360,
+     "cosine": 0.707107,
+     "within_1_over_N": false
+    }
+   },
+   "S": 1448
+  },
   "1024": {
    "labels": [
     [
@@ -1268,6 +1335,642 @@
   },
   "design_S_1024": 2896
  },
+ "bell_24_4": {
+  "reference": "DERIVATIONS_BEAM section 24.4, the pin written before the run",
+  "S": [
+   181,
+   64
+  ],
+  "S_times_N": {
+   "512": 1448,
+   "4096": 11584
+  },
+  "tolerance": 1,
+  "worlds": {
+   "bell_n512_0_64": {
+    "N": 512,
+    "wheel": [
+     1,
+     512
+    ],
+    "W": 512,
+    "settings": [
+     0,
+     64
+    ],
+    "ticks": 532,
+    "births": 512,
+    "counts_under": "pair_n.512.pairs.0_64.counts",
+    "E": 364,
+    "marginal": 256,
+    "widths": {
+     "++": [
+      14379264,
+      65773
+     ],
+     "+-": [
+      2458624,
+      65773
+     ],
+     "-+": [
+      2458624,
+      65773
+     ],
+     "--": [
+      14379264,
+      65773
+     ]
+    },
+    "rungs": [
+     219,
+     256,
+     293,
+     512
+    ]
+   },
+   "bell_n512_0_192": {
+    "N": 512,
+    "wheel": [
+     1,
+     512
+    ],
+    "W": 512,
+    "settings": [
+     0,
+     192
+    ],
+    "ticks": 532,
+    "births": 512,
+    "counts_under": "pair_n.512.pairs.0_192.counts",
+    "E": -364,
+    "marginal": 256,
+    "widths": {
+     "++": [
+      2458624,
+      65773
+     ],
+     "+-": [
+      14379264,
+      65773
+     ],
+     "-+": [
+      14379264,
+      65773
+     ],
+     "--": [
+      2458624,
+      65773
+     ]
+    },
+    "rungs": [
+     37,
+     256,
+     475,
+     512
+    ]
+   },
+   "bell_n512_128_64": {
+    "N": 512,
+    "wheel": [
+     1,
+     512
+    ],
+    "W": 512,
+    "settings": [
+     128,
+     64
+    ],
+    "ticks": 532,
+    "births": 512,
+    "counts_under": "pair_n.512.pairs.128_64.counts",
+    "E": 360,
+    "marginal": 256,
+    "widths": {
+     "++": [
+      14364800,
+      65773
+     ],
+     "+-": [
+      2473088,
+      65773
+     ],
+     "-+": [
+      2473088,
+      65773
+     ],
+     "--": [
+      14364800,
+      65773
+     ]
+    },
+    "rungs": [
+     218,
+     256,
+     294,
+     512
+    ]
+   },
+   "bell_n512_128_192": {
+    "N": 512,
+    "wheel": [
+     1,
+     512
+    ],
+    "W": 512,
+    "settings": [
+     128,
+     192
+    ],
+    "ticks": 532,
+    "births": 512,
+    "counts_under": "pair_n.512.pairs.128_192.counts",
+    "E": 360,
+    "marginal": 256,
+    "widths": {
+     "++": [
+      14364800,
+      65773
+     ],
+     "+-": [
+      2473088,
+      65773
+     ],
+     "-+": [
+      2473088,
+      65773
+     ],
+     "--": [
+      14364800,
+      65773
+     ]
+    },
+    "rungs": [
+     218,
+     256,
+     294,
+     512
+    ]
+   },
+   "bell_n4096_0_512": {
+    "N": 4096,
+    "wheel": [
+     1,
+     4096
+    ],
+    "W": 4096,
+    "settings": [
+     0,
+     512
+    ],
+    "ticks": 4116,
+    "births": 4096,
+    "counts_under": "pair_n.4096.pairs.0_512.counts",
+    "E": 2900,
+    "marginal": 2048,
+    "widths": {
+     "++": [
+      115034112,
+      65773
+     ],
+     "+-": [
+      19668992,
+      65773
+     ],
+     "-+": [
+      19668992,
+      65773
+     ],
+     "--": [
+      115034112,
+      65773
+     ]
+    },
+    "rungs": [
+     1749,
+     2048,
+     2347,
+     4096
+    ]
+   },
+   "bell_n4096_0_1536": {
+    "N": 4096,
+    "wheel": [
+     1,
+     4096
+    ],
+    "W": 4096,
+    "settings": [
+     0,
+     1536
+    ],
+    "ticks": 4116,
+    "births": 4096,
+    "counts_under": "pair_n.4096.pairs.0_1536.counts",
+    "E": -2900,
+    "marginal": 2048,
+    "widths": {
+     "++": [
+      19668992,
+      65773
+     ],
+     "+-": [
+      115034112,
+      65773
+     ],
+     "-+": [
+      115034112,
+      65773
+     ],
+     "--": [
+      19668992,
+      65773
+     ]
+    },
+    "rungs": [
+     299,
+     2048,
+     3797,
+     4096
+    ]
+   },
+   "bell_n4096_1024_512": {
+    "N": 4096,
+    "wheel": [
+     1,
+     4096
+    ],
+    "W": 4096,
+    "settings": [
+     1024,
+     512
+    ],
+    "ticks": 4116,
+    "births": 4096,
+    "counts_under": "pair_n.4096.pairs.1024_512.counts",
+    "E": 2892,
+    "marginal": 2048,
+    "widths": {
+     "++": [
+      114918400,
+      65773
+     ],
+     "+-": [
+      19784704,
+      65773
+     ],
+     "-+": [
+      19784704,
+      65773
+     ],
+     "--": [
+      114918400,
+      65773
+     ]
+    },
+    "rungs": [
+     1747,
+     2048,
+     2349,
+     4096
+    ]
+   },
+   "bell_n4096_1024_1536": {
+    "N": 4096,
+    "wheel": [
+     1,
+     4096
+    ],
+    "W": 4096,
+    "settings": [
+     1024,
+     1536
+    ],
+    "ticks": 4116,
+    "births": 4096,
+    "counts_under": "pair_n.4096.pairs.1024_1536.counts",
+    "E": 2892,
+    "marginal": 2048,
+    "widths": {
+     "++": [
+      114918400,
+      65773
+     ],
+     "+-": [
+      19784704,
+      65773
+     ],
+     "-+": [
+      19784704,
+      65773
+     ],
+     "--": [
+      114918400,
+      65773
+     ]
+    },
+    "rungs": [
+     1747,
+     2048,
+     2349,
+     4096
+    ]
+   }
+  },
+  "run": {
+   "date": "2026-09-21",
+   "order": "DERIVATIONS_BEAM section 24.4, the run the law owes before the pin is final; the Boss under the model owner's record 337",
+   "runner": "python -m event_universe --init <world> --output <dir>, headless, one world at a time",
+   "main": "a625ec9f",
+   "package_version": "0.3.1",
+   "source_sha256": "47fffbefe2d222b73e448667769667ffc68bc54d75317fb55d9259e1c86d403f",
+   "families_sha256": "438444b1cec9eb47263ac6b4203a1028b94ef9e97819aceadf860e7680ce15ca",
+   "readings_by_kind": "DETECTOR: the gathers of the first W records by ordinal (the counts per cell, E x W, the + counts per party, the rungs and the totals on the gather lines); GAMEBOARD: the books and the layer's counts, a diagnostic",
+   "host_cost": "the runner's wall time per world on a loaded host, apart from the model's cost: the bar's 21 Nodes at fixed local work per interval over the world's intervals, one record's offers held at the layer until its completion",
+   "verdict": "PASS: every pin met on the eight worlds, no number moved",
+   "worlds": {
+    "bell_n512_0_64": {
+     "initialization_sha256": "08c4264ac4b68a174a21a42b6deb92a5d963bae1f7afd028445ed207bf8a5905",
+     "expanded_sha256": "bb5d6a5ccc056eec7f6b206ff2e08bfb94573137f4ef9b84846742951559847f",
+     "completed_ticks": 532,
+     "elapsed_seconds": 1.24,
+     "host_wall_seconds": 1.51,
+     "readings": {
+      "DETECTOR": {
+       "counts": {
+        "++": 219,
+        "+-": 37,
+        "-+": 37,
+        "--": 219
+       },
+       "E": 364,
+       "alice_plus": 256,
+       "bob_plus": 256,
+       "gathered_of_W": 512,
+       "rungs_on_every_gather": [
+        219,
+        256,
+        293,
+        512
+       ],
+       "distinct_totals": 57
+      },
+      "GAMEBOARD": {
+       "conserved_at_every_completed_tick": true,
+       "books_balanced_every_tick": true,
+       "born": 531,
+       "gathered": 519,
+       "open": 12
+      }
+     }
+    },
+    "bell_n512_0_192": {
+     "initialization_sha256": "05748a28cb85ba3f732e78debec8a25690bca49581f88cabf7ac60460999d6cd",
+     "expanded_sha256": "43b824fe37030a7171fc4aa67c1fa953620baf318639037064dd76e812e8d30a",
+     "completed_ticks": 532,
+     "elapsed_seconds": 1.26,
+     "host_wall_seconds": 1.53,
+     "readings": {
+      "DETECTOR": {
+       "counts": {
+        "++": 37,
+        "+-": 219,
+        "-+": 219,
+        "--": 37
+       },
+       "E": -364,
+       "alice_plus": 256,
+       "bob_plus": 256,
+       "gathered_of_W": 512,
+       "rungs_on_every_gather": [
+        37,
+        256,
+        475,
+        512
+       ],
+       "distinct_totals": 57
+      },
+      "GAMEBOARD": {
+       "conserved_at_every_completed_tick": true,
+       "books_balanced_every_tick": true,
+       "born": 531,
+       "gathered": 519,
+       "open": 12
+      }
+     }
+    },
+    "bell_n512_128_64": {
+     "initialization_sha256": "05d8170e360adcb6af675a58aabc1b04e79faeedf774c7a5a4dcc5ea5ac251e2",
+     "expanded_sha256": "bf0f26267efb40215bb00513248f979313989b6cc97622f93f0ece95f9ec78d2",
+     "completed_ticks": 532,
+     "elapsed_seconds": 1.27,
+     "host_wall_seconds": 1.54,
+     "readings": {
+      "DETECTOR": {
+       "counts": {
+        "++": 218,
+        "+-": 38,
+        "-+": 38,
+        "--": 218
+       },
+       "E": 360,
+       "alice_plus": 256,
+       "bob_plus": 256,
+       "gathered_of_W": 512,
+       "rungs_on_every_gather": [
+        218,
+        256,
+        294,
+        512
+       ],
+       "distinct_totals": 57
+      },
+      "GAMEBOARD": {
+       "conserved_at_every_completed_tick": true,
+       "books_balanced_every_tick": true,
+       "born": 531,
+       "gathered": 519,
+       "open": 12
+      }
+     }
+    },
+    "bell_n512_128_192": {
+     "initialization_sha256": "b5fc4bae939f0044afa4645de3cc2cfb1d5b12b49c670e644edcfdcbda6d7b73",
+     "expanded_sha256": "01e8e72f47824f5ee026e95c0a695846da68ef9d245fb101fe3c8bfc7b82ac0d",
+     "completed_ticks": 532,
+     "elapsed_seconds": 1.24,
+     "host_wall_seconds": 1.5,
+     "readings": {
+      "DETECTOR": {
+       "counts": {
+        "++": 218,
+        "+-": 38,
+        "-+": 38,
+        "--": 218
+       },
+       "E": 360,
+       "alice_plus": 256,
+       "bob_plus": 256,
+       "gathered_of_W": 512,
+       "rungs_on_every_gather": [
+        218,
+        256,
+        294,
+        512
+       ],
+       "distinct_totals": 57
+      },
+      "GAMEBOARD": {
+       "conserved_at_every_completed_tick": true,
+       "books_balanced_every_tick": true,
+       "born": 531,
+       "gathered": 519,
+       "open": 12
+      }
+     }
+    },
+    "bell_n4096_0_512": {
+     "initialization_sha256": "ad17507dc57bcd6d5dbce3dfcbedca0f7e4ac3be47451447bfb87d71b6c17a3a",
+     "expanded_sha256": "20338ad6e5b5fd98c5e1df726430f773ae7b9f17a9a69709354c06c50e0a7d29",
+     "completed_ticks": 4116,
+     "elapsed_seconds": 8.82,
+     "host_wall_seconds": 9.4,
+     "readings": {
+      "DETECTOR": {
+       "counts": {
+        "++": 1749,
+        "+-": 299,
+        "-+": 299,
+        "--": 1749
+       },
+       "E": 2900,
+       "alice_plus": 2048,
+       "bob_plus": 2048,
+       "gathered_of_W": 4096,
+       "rungs_on_every_gather": [
+        1749,
+        2048,
+        2347,
+        4096
+       ],
+       "distinct_totals": 139
+      },
+      "GAMEBOARD": {
+       "conserved_at_every_completed_tick": true,
+       "books_balanced_every_tick": true,
+       "born": 4113,
+       "gathered": 4101,
+       "open": 12
+      }
+     }
+    },
+    "bell_n4096_0_1536": {
+     "initialization_sha256": "ae8f717e7eb89f75533dccbff9b6a70542e18dc9ba062e3a2648c30759c38d79",
+     "expanded_sha256": "a13bed2798814e226c23a72079beca18f1b699d4e40379667476b8f7fbfb8d08",
+     "completed_ticks": 4116,
+     "elapsed_seconds": 9.05,
+     "host_wall_seconds": 9.64,
+     "readings": {
+      "DETECTOR": {
+       "counts": {
+        "++": 299,
+        "+-": 1749,
+        "-+": 1749,
+        "--": 299
+       },
+       "E": -2900,
+       "alice_plus": 2048,
+       "bob_plus": 2048,
+       "gathered_of_W": 4096,
+       "rungs_on_every_gather": [
+        299,
+        2048,
+        3797,
+        4096
+       ],
+       "distinct_totals": 139
+      },
+      "GAMEBOARD": {
+       "conserved_at_every_completed_tick": true,
+       "books_balanced_every_tick": true,
+       "born": 4113,
+       "gathered": 4101,
+       "open": 12
+      }
+     }
+    },
+    "bell_n4096_1024_512": {
+     "initialization_sha256": "ae61a322494fc480197fef70b861459ba54dad0e2d5e34d006fd015b21f8cc01",
+     "expanded_sha256": "7b70a2e007ffb22fe12dc7fcee0560b57da8717e09ac7a7e1335fb61a2b299c9",
+     "completed_ticks": 4116,
+     "elapsed_seconds": 8.74,
+     "host_wall_seconds": 9.32,
+     "readings": {
+      "DETECTOR": {
+       "counts": {
+        "++": 1747,
+        "+-": 301,
+        "-+": 301,
+        "--": 1747
+       },
+       "E": 2892,
+       "alice_plus": 2048,
+       "bob_plus": 2048,
+       "gathered_of_W": 4096,
+       "rungs_on_every_gather": [
+        1747,
+        2048,
+        2349,
+        4096
+       ],
+       "distinct_totals": 139
+      },
+      "GAMEBOARD": {
+       "conserved_at_every_completed_tick": true,
+       "books_balanced_every_tick": true,
+       "born": 4113,
+       "gathered": 4101,
+       "open": 12
+      }
+     }
+    },
+    "bell_n4096_1024_1536": {
+     "initialization_sha256": "126f70a97d2128ccd24468730a6f318cfb9fcc81d6ca4ec564b47900a492df91",
+     "expanded_sha256": "c17eeab34bbfb414346d76e4fd9a67fcec79e4ed957bda66f69b3a1ceb8d7318",
+     "completed_ticks": 4116,
+     "elapsed_seconds": 8.84,
+     "host_wall_seconds": 9.44,
+     "readings": {
+      "DETECTOR": {
+       "counts": {
+        "++": 1747,
+        "+-": 301,
+        "-+": 301,
+        "--": 1747
+       },
+       "E": 2892,
+       "alice_plus": 2048,
+       "bob_plus": 2048,
+       "gathered_of_W": 4096,
+       "rungs_on_every_gather": [
+        1747,
+        2048,
+        2349,
+        4096
+       ],
+       "distinct_totals": 139
+      },
+      "GAMEBOARD": {
+       "conserved_at_every_completed_tick": true,
+       "books_balanced_every_tick": true,
+       "born": 4113,
+       "gathered": 4101,
+       "open": 12
+      }
+     }
+    }
+   }
+  }
+ },
  "cone": {
   "links": {
    "axis": 17,
@@ -1333,6 +2036,7 @@
   "ghz": "measured (target 6; the design's bell.py: the allowed triples and their products)",
   "gate": "the Hadamard's amount C[16] = S[16] = 181 of the 128-step tables (core/phase.py; the amplitude 181 x 2^24); the cells and the correlations measured (target 6)",
   "pair_n": "measured (target 6: |E - cos| <= 1/N the design's bound at N = 1024, failing at 4096 by the tables' rounding; 2896/1024 the design's sum)",
+  "bell_24_4": "DERIVATIONS_BEAM 24.4 and 6.2: S = 181 / 64 exactly from the rungs b_k = (2 W C_k + T) // (2 T) of the ladder on the wheel W = N over the design's joint weights (bell.py, the half-angle tables of 2N), the marginals W / 2, every count within one of W x its weight over the total; the counts per cell under pair_n; the readings measured, the run of 2026-09-21, no number moved",
   "cone": "DERIVATIONS_BEAM 11.1: the flight's closed form m_D(tau) and tau_k = ceil((2 k - 1) T_D / (2 S_1 Q)), the phase k m_D(tau) under the integer form and floor(tau n / d) under the pair form; `exact` the phase at the exact time of the last Link, the whole part and the remainder of n x Links x T_D over d x S_1 x Q (BEAM_LAW note 45); derived from the worlds and compared by tests/test_amplitude_cone.py"
  }
 }
