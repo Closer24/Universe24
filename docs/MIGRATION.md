@@ -18,7 +18,12 @@ The identity `beam-v1` is kept.
   (`_move`), the law, the clocks' turn and count (until then the frame,
   the law, the turn and count, the steps). The step at a self-creation
   advances the drive by the momentum after the previous interval's push;
-  a contact, a give and an escape happen before the law. What moves: a
+  under a suspension the step no longer waits for the interval that pays
+  the count owed (`_move` runs at every self-creation, before this
+  interval's owed count: a timing of the step changed, stated in note 48
+  and in note 17; `test_push_width` (c)'s steps 18, 36, 54
+  became 17, 35, 53); a contact, a give and an escape happen before the
+  law. What moves: a
   fire under a push falls one interval later than it did (the contact
   pairs, the binding worlds, a body pushed by a click), a given row makes
   its first Link in the interval of the give, the rows released in the

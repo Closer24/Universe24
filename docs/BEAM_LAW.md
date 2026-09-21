@@ -1067,9 +1067,11 @@ implementation's part of the contract. The design above is unchanged.
     per 9 self-creations. Kept as they were: at most one Link per interval,
     x before y before z (an axis whose step coincides with an earlier
     axis's step in one interval loses it, nothing carried); a measured
-    event steps only in an interval where it owes nothing, so the step of
-    a self-creation whose count is owed lands on the interval that pays
-    the count; the momentum is untouched by the step; `run.json` records
+    event's drive advances at every self-creation, before the interval's
+    owed count is paid (the crossing rule, note 48, 2026-09-21; until then
+    a step waited for the interval that paid the count: `test_push_width`
+    (c) 18, 36, 54 became 17, 35, 53); the momentum is untouched by the
+    step; `run.json` records
     `width`. The parser refuses 0, a negative width, a string and a
     fraction naming the key (`tests/test_push_width.py`; the experiment
     that uses it is series D in EXPERIMENTS.md). **Amended on 2026-09-20,
@@ -3049,8 +3051,9 @@ implementation's part of the contract. The design above is unchanged.
     a constant rate); the physics-rule reviewer's read-only
     `docs/designs/fraction_free/REVIEW_COUNTS.md`; `core.integer.by_drive`,
     `engine.count_owed`, `engine._frame_all`, `engine._suspend`,
-    `nature_beam.push_form`, `nature_beam.weighted_flow`, the lamp and the
-    release in `nature_beam`, `amplitude.cell_of`; `Measured.acc_*`;
+    `nature_beam.push_form`, `nature_beam.weighted_flow` (deleted by note
+    48, 2026-09-21), the lamp and the release in `nature_beam`,
+    `amplitude.cell_of`; `Measured.acc_*`;
     `tests/test_fraction_free.py` (a) to (f); the register re-registered
     in one batch, MIGRATION "The fraction-free law"). No new identity: an
     integer form of the same counts under `beam-v1`.
@@ -3441,7 +3444,7 @@ implementation's part of the contract. The design above is unchanged.
     | the collision | the row's slot (its direction) and its (number, content) class | the single units of the same number and content in the eight slots of a free Node: its own crowd only, never another number's | `collide`, nature_beam.py:2460; step 3 at 2685 |
     | the meeting (`meeting-v1`, the world key `meeting`) | the paid row's label and number | the free crowd's labels at its Node less its own number (`crowd_flow`), the arc permutation toward the target | `meet`, meeting.py:282; `crowd_flow`, meeting.py:244; called at 2693 |
     | the coupling (the push over the columns) | the reader's content and charges as the frame read them (`frame_content`, `frame_charges`), its push accumulators | the label flow V_B of the group of arriving rays, per column | `push_form`, nature_beam.py:2295; called at 3429; the frame `_frame_all`, engine.py:445 |
-    | the reading's weight under `doppler` (note 38) | the reader's momentum as the frame read it (`frame_momentum`), its flow accumulators | the arriving rows' directions and labels per direction | `weighted_flow`, nature_beam.py:2219; called at 3421 |
+    | the reading's weight under `doppler` (note 38; deleted by note 48 on 2026-09-21, the row kept as the audit's record) | the reader's momentum as the frame read it (`frame_momentum`), its flow accumulators | the arriving rows' directions and labels per direction | `weighted_flow`, nature_beam.py:2219; called at 3421 |
     | the click's admission (the threshold, the window) | the set's threshold and its window's setting and width (declared), the set's phase | the arriving rows: the amount summed over the set against the threshold, each row's phase against the window | nature_beam.py:2905 to 2977 |
     | the click's choice at a `sum` set (the one click) | the record's own cells' weights and its u: the cell as a comparison of two products | nothing: the ladder is the record's own | `Layer.complete`, amplitude.py:684; `cell_of`, amplitude.py:208, called at 706 |
     | the re-emission (`rerelease`, the split) | the entry's declared weights and turns; the one arriving row re-emitted (its direction, record, branch, multiplicity) | the one row it re-emits, never the set | nature_beam.py:3502 |
@@ -3507,7 +3510,16 @@ implementation's part of the contract. The design above is unchanged.
     self-creations; under a push a fire can fall one interval later than
     it did (the pinned pairs of `test_contact`, `test_binding` and
     `test_paid_charge` moved so; the design's "an adjacent pair that only
-    contacts keeps its integers" holds at a constant momentum only). A
+    contacts keeps its integers" holds at a constant momentum only). **A
+    timing changed with the order**: under a suspension the step no
+    longer waits for the interval that pays the count owed; `_move` runs
+    at every self-creation (`creating` its only guard) before this
+    interval's owed count, so the drive advances at the self-creation
+    itself, where until then a self-creation whose count was owed
+    stepped in the interval that paid it (`test_push_width` (c): the
+    steps 18, 36, 54 became 17, 35, 53, `steps` the whole part of age x
+    16 / 144 after every interval for (age - 1) x 16 / 144 after a
+    self-creation; note 17's sentence amended, MIGRATION). A
     contact, a give and an escape happen inside the step, before the law:
     a row given at a contact makes its first Link in the interval of the
     give, the rows a body releases in the interval of a step are born at

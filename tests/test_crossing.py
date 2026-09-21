@@ -15,7 +15,10 @@ two steps off the flight rule are the only inputs; nothing is kept at a
 Node. The world key `doppler` and the grain G of `doppler-v1` are deleted
 with it (MIGRATION): a moving reader's Doppler is the COUNT of the rows it
 crosses. The expected integers of docs/TEST_EXPECTATIONS.md ("The crossing
-rule"), written down before the first run:
+rule"), written down before the first run (the step ticks, the positions
+and `fast_steps` are host readings of the runner's record, the model
+owner's record 163 of 2026-09-20, (5); the `read` and `click` counts the
+detector's):
 
 (a) the experimenter's streams (record 151's test, the design's section
     2): a lamp at x = 0 of a bar of 64 releasing one row of amount 1 per
