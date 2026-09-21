@@ -1252,3 +1252,63 @@ and 2800 both; the fixed-computation row's three forms labelled with
 their three refutations; "a finite number of clicks" dropped (no such
 route in the note); the rotation curve "this paper's own reading, no
 register row"; "in one list".
+
+## The owner's direction: the derivation record per formula (2026-09-21, about 08:05Z)
+
+The owner (translated): "For every formula you reach, you also write how
+we reached it: by the pin method, then from the limit in the simulator,
+then in the simulator what the method was by which we derived it, and
+see that it does not depend on the formula itself. All the formulas of
+all the greats, of course." Applied as: three sentences in the Method
+paragraph (the three steps and the independence), and an appendix
+"How every formula was reached" before the Reproducibility section: an
+opening paragraph (the pin from the closed form alone, committed before
+the run; the limit with the order and the error term where stated; the
+run of a world that declares families, grain and initial state and no
+formula, under the architecture's contract; the independence structural;
+the one caveat where the rule is the closed form, the flight table) and
+two tables of the derivation map's rows (the field, gravity, the
+expansion, the masses; the click, the information, the body in motion),
+five columns: the formula, the operations and the premise, the limit
+and the closed form, the pin before the run, the run and its reading
+with the status. Referee round 18 pending on it.
+
+## Referee round 18 (2026-09-21): the derivation record, major revision, applied
+
+Thirteen findings, seven major, all applied; the round did exactly what
+the owner asked the appendix to show. (a) The engine is not free of
+every classical formula: the flight table T_d is the rule itself, and
+the phase circle's cosine table (cos(2 pi d / P) rounded to 1 / 256,
+computed at load as immutable law data) is the rotation of Part III;
+both caveats now stated, "no classical formula" dropped; the collision
+table generated from its class rule holds none. (b) The pin column
+carried post-run readings on ten rows (the third law's momenta,
+Newton's flux and rings, Poisson's 36.1 and 41.5, the plane wave's
+89.40, the bending's 0.000, Bohr's j = 4.01, the wall's re-read, the
+information cost, the entropy, the weak forms' readings, the Gleason
+window): every row now carries the register's expectation from before
+the run in the pin column and the reading in the reading column, or
+says "no pin; a host reading". (c) The labels reduced to the four with
+the caption's rule (a pin without its run, or a number read after the
+run, is assumed or open, never measured); Doppler assumed until the G2
+run under the rule. (d) Newton: the ring means outside the design's
++-10 percent at r = 12, 16, 20, reported. (e) The redshift: the 15
+percent criterion missed at three radii, open; the shells 6 to 14. (f)
+The wall: -0.108 under a key since deleted, inside Milne's +-0.25,
+nature's -0.53 FAIL, the rms 0.0044 a host reading with no run, the
+form assumed until run. (g) The tables' widths reduced to fit 6.5 in
+(6.18 in with 2 pt columns). (h) chi_rec named; d unbolded; the
+expectation "file or the register's paragraph"; the Gleason window
+named as the intersection and the splitter's conservation restored; the
+far lamp's verdicts on the pins stated; "the push in space unrun".
+
+The verification pass on the corrected appendix (the same day): seven
+minor findings, applied: the ring means' attribution (the count's mean
+outside at r = 16 and by its ripple; the flow's at r = 12, 16, 20);
+Coulomb's pin as the register states it (-Qq / (Mm) exactly) with -1
+and -1/4 as the readings; J1's 0.036 moved to the reading column; the
+Gleason window "derived from the measured counts after the runs", not
+"measured"; series N's registered pin (the ratio 2.0, stated to fail)
+in the pin column with the pair give as the unrun crowd form; the
+cosine table's arguments named (d the phase difference, N the circle's
+phases); Born's P named. The pin/reading separation holds on every row.

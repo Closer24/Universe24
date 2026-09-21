@@ -106,10 +106,18 @@ experiments register \cite{register} with its world, its expectation
 written before the run and its source fingerprint; every number of the
 manuscript is mapped to its source in a table beside it \cite{checks}.
 A formula whose confirming run has not been made is stated as a pin, not
-as a result. The GameBoard, the lattice of Nodes with six Ports on which
-the one map is applied per interval, is the instrument of every table
-entry and not the subject of this paper. The archive will be cited at a
-version \cite{zenodo}.
+as a result. Every formula is reached in three steps recorded per
+formula in the appendix: the pin (an expectation derived from the closed
+form alone and written to the register before the run, or the statement
+that none exists), the limit (the
+closed form against the classical formula, with the order and the error
+term where the derivation states them) and the run (a world that
+declares families, grain and initial state and no formula, read by a
+tool that compares with the pin); so the derivation does not depend on
+the formula it reaches. The GameBoard, the lattice of Nodes with six
+Ports on which the one map is applied per interval, is the instrument
+of every table entry and not the subject of this paper. The archive
+will be cited at a version \cite{zenodo}.
 
 \part{The formula}\label{part:formula}
 
@@ -2158,6 +2166,96 @@ measurements of Section~\ref{sec:measure} are named for; none of them is
 reproduced in its own geometry, and the two-slit pattern here is a sparse
 fan's spots.
 
+\section*{Appendix: how every formula was reached}\label{sec:record}
+
+Every formula of this paper was reached in the same three steps, and
+the appendix records them per formula so that a reader can see where a
+step depends on nothing but the law, and where it does not. (1)
+\emph{The pin.} The rule is written as its operations on the state
+(Part~I) and its closed form is taken in the limit named; from the
+closed form, and from nothing else, an expectation is derived by a host
+script or by hand and written to the register before any run (the
+world's expectation file, or the register's paragraph, written first)
+\cite{register}. (2) \emph{The limit.} The closed form is compared with
+the classical formula in the limit (the Link to zero, many rows, large
+$N$, small momentum), the order of the expansion and the grain's error
+term stated where the derivation states them \cite{derivations}. (3)
+\emph{The run.} The simulator runs the world, which declares only the
+family table, the grain and the initial state (the architecture's
+contract forbids a formula string, an expression tree or a callback in
+any payload \cite{architecture}); a reading tool reads the detector's
+record and compares it with the pin, inside or outside, and an outside
+pin is reported and never moved. The independence is structural where
+it holds: the engine contains the six operations and its tables; the
+classical formula lives in the derivation and in the reading tool, not
+in the run. Two places need the caveat. The flight's table $T_d =
+\lfloor\sqrt{3|d|^2 Q_f^2}\rfloor$ is the integer rule itself, so a run
+on it establishes that the engine is its closed form and no physical
+law, as the register says of series Q; and the phase circle's cosine
+table, $\cos(2\pi d/N)$ with $d$ the phase difference in steps and $N$ the
+circle's phases, rounded to $1/256$ and computed once at load as
+immutable law data, is the rotation of Part~III, so the click rows'
+runs carry that ingredient of their closed form. The collision table is
+generated from its class rule at load and holds no formula. Not every
+row has a pin: where a number was read after its run by a host script
+(the information cost, the entropy, the wall's re-read of the thrown
+stars), the tables say so, and the four labels are applied as the
+caption states: a reading inside a pin written first is measured; a
+result of the derivation alone is proved; a pin without its run, or a
+number read after the run, is assumed or open, never measured.
+Tables~\ref{tab:recorda} and~\ref{tab:recordb} are the paper's rows of
+the derivation map (\cite{derivations}, section 21), one row per
+formula.
+
+\begin{table}[H]\centering\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{p{0.98in}p{1.2in}p{1.4in}p{1.3in}p{1.3in}}
+\toprule
+The formula & The operations and the premise & The limit and the closed form & The pin, written before the run & The reading; the label \\
+\midrule
+$c$, the pace of light & translation on the flight's accumulator, one carry per interval; isotropy; the supremum assumed & $c = 1/\sqrt3$ Links per interval; $32/55$ on a heading at $Q_f = 64$ & the escape interval, Node and face of every direction of the fan, from the closed form (series Q's \texttt{derived.csv}) & $290$ of $290$ inside; the engine is its closed form and no physical law; the bound proved, the value assumed \\
+The flight's line and period & the Bresenham deficits & $m(\tau) = \lfloor (2\tau S_1 Q_f + T_d)/(2T_d) \rfloor$ & the cone's two rows at the age $29$ (series L7) & inside; measured \\
+The plane wave, $\omega = ck$ & evaluation on the phase, the flight & the rows' limit is the retarded wave equation at $c$ & the mean age the control's within one interval (the flight table's $89$ and $90$; series K) & $89.40$ in every world; measured \\
+Doppler on the axis & the crossing rule (division) & $1 \pm v/c$ head-on and behind, exactly $1$ across & no registered run; the rule's tests carry record 158's design counts ($45$ in $32$, $58$ in $48$; $183$, $311$ over $32$ Links) & the tests inside; the series G2 run under the rule not made; assumed until run \\
+Newton's inverse square, $G$ & the push (bilinear), the shell mean of the flux & $a = -GM/r^2$, $G = K\eta/(4\pi S)$ & the flux through the square within $2$ percent of $q$; the ring mean $0.15$ to $0.19$; the flow times $2\pi r/q$ at $1.00 \pm 0.10$; the slopes $-1.00 \pm 0.10$; $\mathrm{push}_m = m\,\mathrm{push}_1$ (series C) & the flux $1.0000$ at $h = 4, 8, 12, 20, 40$ and the axial identity inside; the count's ring mean outside at $r = 16$ and by its ripple, the flow times $2\pi r/q$ outside at $r = 12, 16, 20$ (the ring's Node count), reported; the push in space unrun; measured in the plane, open in space \\
+Coulomb with one constant & the push's charge column & $k_C = G$, the ratio $-\rho_A\rho_B$ & the electric over the gravity push $-Qq/(Mm)$ exactly (series C, item 7) & $-1$ and $-1/4$ exactly; measured \\
+The third law at rest & the apportioning at the release & the momenta equal and opposite to the grain & the cumulative ratio $1.0000$ at four decimals (series C) & $9612145197056$ against $-9612088573952$; measured \\
+Poisson and the retarded wave equation & the age moment, the release & $\mathcal A = q\tau_L/(4\pi c r)$; the source $(\tau_L/c)\,q\,\delta$ & $k_s r^2$ constant within $\pm 15$ percent, $k_a r$ constant within $\pm 15$ percent, their ratio $\sqrt3/2$ (series E) & $41.5$, $36.1$, the ratio inside; measured \\
+The gravitational redshift & the owed count on the age moment & $1/(1 + k_a)$ at first order & the clocks' ratio within $15$ percent of the shift on the shells $r = 6$ to $14$ (series E) & the $1/r$ form; the $15$ percent criterion missed at three radii by the shell ripple; the confrontation with nature not made; open \\
+The bending of light & the rows blind to the crowd & none on the archived code; $\sim M/b$ under the meeting key & $0$ within $0.5$ pixel (series K) & $0.000$; the law as declared measured, the bending not reached \\
+The growing wall, the redshift & translation with a growing wall (the feedback block) & $1 + z = a(t_r)/a(t_e)$, Milne's $q = 0$, $c\,a = c_0$ & Milne's $q = 0$ within $\pm 0.25$ (series G2, coasting) & $-0.108$ coasting, under a world key since deleted, inside; the $24$ stars re-read at rest under the wall, rms $0.0044$ at $T = 440$, a host reading with no run; nature's $-0.53$ FAIL (row 3); the wall's form assumed until run \\
+The far lamp through a detector & the wall, the birth content per click & $L_{\mathrm{lamp}}/(4\pi r^2(1+z))$, $q_{\mathrm{eff}} = +1$, the stretch $1 + z$ & $q_{\mathrm{eff}} = +1$; the stretch $3.639$ against $3.629$; the surface brightness $(1+z)^{-1}$ (rows 11a to 11c) & the run not made; on the pin 11a and 11c FAIL, 11b PASS; assumed \\
+The minimal mass and the floors per kind & the integer form; the charge line $[n, d]$ & one unit; the floor $d$ under a whole charge: $1, 1, 3, 3$ & the quarks' contents as multiples of $3$ (series R declares $4$ and $9$) & the floors proved; the counts assumed (inputs) \\
+A bound set's mass & held plus in flight less escaped & $m_n - m_p$ the held difference, $2.54$ ($1.51$ with the electric part) against $1.29$ & the read mass the sum ($20, 25, 20, 45, 45, 20, 1836$); a chain and never a triangle; the kicked $u$ out at $70$ to $90$; the pair left behind bound (series R) & the mass and the shapes inside; the kicked $u$ at $63$ and the pair broken at about $1190$ outside, reported; the form measured, the counts assumed \\
+The periodic universe & the two boards under the wall & open; $L_{\mathrm{box}}/(2\chi_{\mathrm{rec}}) > 0.97$ ($\chi_{\mathrm{rec}}$ the comoving distance to last scattering) & a lamp's second image at the winding distance with the redshift $e^{HL_{\mathrm{box}}/c_0} - 1$ & not run; open \\
+\bottomrule
+\end{tabular}
+\caption{\label{tab:recorda}The derivation record of the formulas of Part~II: the field, the flight, gravity, the expansion and the masses. The pin column carries the expectation the register holds from before the run, or says that none exists; the reading column carries what the run or the host read, and the label: measured (a reading inside a pin written first), proved, assumed (a pin without its run; a declared input), open. Sources: the derivation map and the register \cite{derivations,register}.}
+\end{table}
+
+\begin{table}[H]\centering\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{p{0.98in}p{1.2in}p{1.4in}p{1.3in}p{1.3in}}
+\toprule
+The formula & The operations and the premise & The limit and the closed form & The pin, written before the run & The reading; the label \\
+\midrule
+Born's rule & evaluation, the norm, the rung & $|P - W/T| \le 1/(2N)$ ($P$ the click's probability, $W/T$ the weight over the total) & \texttt{mz\_equal} $64/0$, \texttt{mz\_345} $63/1$ (series L) & inside; measured as a limit \\
+The lattice Gleason & rotation, the balanced splitter's conservation, non-negativity & $R(f) = \sum_{j\ \mathrm{odd}} c_j|\sigma_j(f)|^2$; the power $2$ in $[1.917, 2.054)$, the intersection of the windows of $63/1$ and of $27$ & $63/1$ and the first cell $27$ (series L); the power's window derived after the runs from them & the form proved; the counts $63/1$ and $27$ measured, the window derived from them after the runs; the constants open \\
+Tsirelson's bound & evaluation on the pair & $S(N, Q) \to 2\sqrt2$ & $176/64$, $2896/1024$, $11584/4096$ (series L) & inside; measured as a limit, proved (Theorem~\ref{th:bell}) \\
+Young's spacing & the fan's angular measure, the click & the fringes at the wavelength times the distance over the opening & \texttt{slits\_low}'s $64$ clicks row by row (series L2b) & inside for the offers; the clicks at the wheel not run; measured in the limit of every direction, open at the click \\
+Bohr's quantisation & the turn under the action, the push & $2\pi p r = jh$, $r_j \sim j^2$ & closure at $r = 8$, $j = 2$; at $r = 12$, $j = 2.555$ (series H) & no orbit closed; $r = 12$ re-read after the run at $j = 4.01$ under the true sum; the form proved, the levels open \\
+The information law, the click's cost & the one non-bijective read & units per record against bits out; $\log_2(\mathrm{cells})$ per click at most & no pin; a host reading of the registered runs & the four worlds' units per bit $82, 2, 2, 29$; a result of the derivation on recorded runs, proved for the bound, the numbers assumed \\
+Entropy & the count of torus points consistent with the click list & bits read plus bits erased $= \log_2 N$ per record & no pin; a host reading of the registered runs & \texttt{mz\_equal} $0/6$, \texttt{slits\_low} $3.425/2.575$; proved (the identity), the numbers assumed \\
+The moving clock's rate & the frame (translation) & $1$ at every speed; only the crowd slows a clock & the $64$th turn at $64$ (J4, a world defined and not run) & J4 not run; \texttt{s\_mz2} at $z = 0.2636$ against nature's $0.315$ (row 4b); the law's formula stated, its number open \\
+$E = mc^2$, the dispersion & the energy accumulator of the work, the drive $\mathbf p c^2/E$; the Newtonian limit & $E_0 = Q_f S M c^2$ forced; $E^2 - p^2c^2$ kept to $10^{-12}$ (a floating-point check) & the muon's $64$th turn at $70.9$ and $125.2$ & not built, not run; assumed \\
+The time dilation, the Doppler with $\gamma$, the contraction & the turn per proper time, the count per turn, the gradient push & $E_0/E$, $\gamma(1 - \mathbf n\cdot\boldsymbol\beta)$, Lorentz's 1904 pair & $z = 0.315$; the arms equal & not built, not run; assumed \\
+The weak forms & the click against the record (bounded); against a comparison the crowd keeps fresh & the width over the median $2.1$ and $1.6$ against $3.17$ & the width over the median below $0.1$ (series J1); the crowd form's pins & $0.036$: the record's click measured and refuted by nature (row 8a); the crowd form assumed \\
+The strong ratio & the give per contact Link on the bipartite lattice & $4.0$ ($6.0$ with the diagonals) against $12.72$ & the ratio $2.0$ to the deuteron, stated to fail (series N); the pair give's $4$ clicks on the alpha's square (the crowd form, unrun) & $2.0$, measured and refuted; the pair give assumed \\
+\bottomrule
+\end{tabular}
+\caption{\label{tab:recordb}The derivation record of the formulas of the click, the information and the readings of a body in motion, in the same columns and labels as Table~\ref{tab:recorda}.}
+\end{table}
+
 \section*{Reproducibility}
 The code, the worlds of series L with their expectation file written
 before the runs, the reading tool that replays a run's register into its
@@ -2197,6 +2295,7 @@ submission.]
 \bibitem{checks} \texttt{paper/general\_formula/checks/s\_of\_n.py}, \texttt{which\_path\_window.py}, \texttt{tables\_norm.py}, \texttt{information\_transfer.py}, \texttt{limits.py} and \texttt{light\_speed.py} with their outputs, \texttt{figures/summary.json} and \texttt{NUMBERS.md}, in the archived code \cite{zenodo}.
 \bibitem{log} The dated log of 2026-09-20, \texttt{docs/LOG\_2026-09-20.md} of the archived code \cite{zenodo}, records 96 (coherence within one Node), 101 (the landing), 102 (the checks of this paper), 105 (the review of the pair and the gate: the marginals re-read over all 4096 setting pairs, the arms' order), 144 (the cone, L7), 156 (the two slits: the wheel, the exact phase, the 18 intervals), 160 (the fan's angular weights) and, for the pace and Section~\ref{sec:lorentz}, records 186 and 191 (c as the flight's norm; the one operator for rows and bodies), 213, 224 and 228 (the derivation's sections 12, 13 and 12b), 225 and 226 (the group of 48 and its conservation up to the lattice), 230 (the three routes), 231 (a boost not among the 48), 245 (section 12c closes route C), 249 (the first decision: A and B), 259, 260 and 264 (the covariant readings recommended in place of the root; one paper on the general formula), 261, 262 (the owner's finding on 13.2 (a)), 266, 270 (the three decisions: colour-v1 to be tried, the covariant readings in place of the build of lorentz-v1, the periodic universe open), 271 and 278 (one quantum of mass and the crowd addendum ordered; the addendum delivered), 273 and 276 (the masses on the group; the crowd audit), 272, 274 and 275 (the title and the closure), 277 and 281 (the GameBoard reached only through detectors; only a detector's reading is a measurement) 267, 273 and 275 (the quarks' design delivered, the run ordered and registered as series R; its record is the register's entry) and 280 and 282 (the far lamp through a detector).
 \bibitem{lightspeed} c in the vector law, \texttt{docs/designs/light\_speed/FORM.md} with the map \texttt{light\_speed\_map.py} and its output, of the archived code \cite{zenodo}.
+\bibitem{architecture} The architecture and its local integer operation contract, \texttt{docs/ARCHITECTURE.md} of the archived code \cite{zenodo}: generic operations and law ownership (names are data and select no hidden equation; the engine owns no force, energy, momentum or field equation; payloads carry bounded state values and declared identifiers, never formula strings, expression trees or callbacks).
 \bibitem{highlights} The project's decisions and dictionary, \texttt{docs/HIGHLIGHTS.md} of the archived code \cite{zenodo}, section 5.7 (the conversions, the six operations, what is derived and what is input).
 \bibitem{derivations} The derivations of the beam law, \texttt{docs/DERIVATIONS\_BEAM.md} of the archived code \cite{zenodo}, sections 0 (the operator and its two blocks), 2 (Doppler), 3 (Newton and Coulomb), 4 (special relativity as the limit's symmetry), 5 (the delay field), 6 (the information cost and the click's square), 7 (Young and Bohr), 9 (the law of information), 12, 12b and 12c (Lorentz from the delay field; the mover's counter), 13 (the one constant), 14 (entropy), 15 (the growing wall), 16 (the numbers of nature), 17 (the theorem of covariant readings), 18 (the three structural failures under one logic), 19 (the masses generically), 20 (the periodic universe against the measured numbers) and 21 (the derivation map).
 \bibitem{nature} The confrontation register, \texttt{docs/NATURE.md} of the archived code \cite{zenodo}: twenty-one dimensionless detector readings against nature under one parameter set, with each row's arithmetic, source and caveat.
