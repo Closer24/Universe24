@@ -8522,3 +8522,8 @@ the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
   (`amplitude/mz_equal`): the rows as points and the record's pointer at
   the ports, the store's int64 columns and the gather line, and the one
   click D1 read; the register's D1 64, D2 0 beside the run's.
+- [The nucleus](pages/gallery/nucleus.html): series I's `deuteron_1`
+  (bound at one Link, the strong rows' escape clicks on the border
+  `lifetime`), `deuteron_3` (free at three Links, the pair leaving through
+  the faces) and `alpha_square` (sheared apart), run as declared; the
+  pushes, hand-overs, steps and exits of the runs beside the register's.

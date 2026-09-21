@@ -270,11 +270,11 @@ def phase_colour(phase: float, steps: int, value: float = 1.0) -> tuple[int, int
     return int(255 * r), int(255 * g), int(255 * b)
 
 
-def brightness(amount: np.ndarray, largest: float) -> np.ndarray:
+def brightness(amount: np.ndarray, largest: float, floor: float = 0.35) -> np.ndarray:
     """A visible floor and a logarithmic rise: colour is not a linear
     measurement of the amount."""
     largest = max(float(largest), 1.0)
-    return 0.35 + 0.65 * np.log2(1.0 + amount) / math.log2(1.0 + largest)
+    return floor + (1.0 - floor) * np.log2(1.0 + amount) / math.log2(1.0 + largest)
 
 
 @dataclass
@@ -296,6 +296,12 @@ class Plane:
     detector_names: dict[tuple[int, int, int], str] = field(default_factory=dict)
     body_radius: float = 0.55
     body_labels: bool = True
+    # The brightness floor of a lit Node, and per family a weight on its
+    # layer; a family named `on_top` is drawn opaque over the others where
+    # it has rows (the strong rows under a dense fan).
+    floor: float = 0.35
+    weights: dict[str, float] = field(default_factory=dict)
+    on_top: str | None = None
 
     @property
     def size(self) -> tuple[int, int]:
@@ -337,7 +343,7 @@ class Plane:
             return out
         total = np.zeros((nx, ny), dtype=np.float64)
         np.add.at(total, (x, y), amount)
-        value = brightness(total, self.largest.get(rows.family, float(total.max())))
+        value = brightness(total, self.largest.get(rows.family, float(total.max())), self.floor)
         lit = total > 0
         if self.phased.get(rows.family, False):
             angle = rows.phase[keep].astype(np.float64) * (2 * math.pi / self.phase_steps)
@@ -364,9 +370,17 @@ class Plane:
         image, draw = self.canvas()
         nx, ny, _ = self.shape
         rgb = np.zeros((nx, ny, 3), dtype=np.float64)
+        top: np.ndarray | None = None
         for rows in frame.rows:
-            rgb += self.layer(rows)
+            layer = self.layer(rows)
+            if rows.family == self.on_top:
+                top = layer
+                continue
+            rgb += layer * self.weights.get(rows.family, 1.0)
         rgb = np.clip(rgb, 0.0, 1.0)
+        if top is not None:
+            lit_top = top.sum(axis=2) > 0
+            rgb[lit_top] = top[lit_top]
         pixels = (rgb * 255).astype(np.uint8)
         # (x, y) -> image (column x, row from the top): flip y, transpose.
         board = Image.fromarray(np.transpose(pixels[:, ::-1, :], (1, 0, 2)), "RGB")
@@ -1526,6 +1540,275 @@ thing: D1 clicked.</p>
         page(
             "Our world",
             "One record from its birth to its click, seen three times: the vector world, the software world and our world.",
+            body,
+        ),
+    )
+
+
+def by_tick(lines: Sequence[dict[str, object]]) -> dict[int, list[dict[str, object]]]:
+    out: dict[int, list[dict[str, object]]] = {}
+    for line in lines:
+        out.setdefault(int(line["tick"]), []).append(line)  # type: ignore[arg-type]
+    return out
+
+
+def escaped_per_tick(record: dict[str, object], family: str) -> list[int]:
+    """Per completed interval what the family's transit line escaped in it
+    (the faces and the border together), from the books."""
+    audit = record["audit"]
+    assert isinstance(audit, list)
+    totals = [int(a["families"][family]["transit"]["escaped"]) for a in audit]
+    return [b - a for a, b in zip([0] + totals[:-1], totals, strict=True)]
+
+
+def nucleus_player(
+    key: str,
+    world: Path,
+    runs: Path | None,
+    ticks: Sequence[int],
+    caption: str,
+    duration_ms: int,
+) -> tuple[Player, dict[str, object], dict[str, list[dict[str, object]]]]:
+    """One series I world replayed and drawn as the x-y projection (the
+    amounts summed over z), the bodies as discs; per frame the bodies'
+    Nodes, the steps and hand-overs so far, the border's clicks in the
+    interval and the push read by body 1."""
+    record_dir = runner_record(world, runs)
+    record = read_json(record_dir / "run.json")
+    events = scan_events(record_dir / "events.jsonl", ["step", "contact", "read", "become"])
+    face_exits = [
+        line
+        for line in scan_events(record_dir / "events.jsonl", ["click"])["click"]
+        if line.get("measured") is not None and str(line.get("detector", "")).startswith("face")
+    ]
+    events["exit"] = face_exits
+    replay = Replay(world)
+    frames = replay.run(ticks)
+    # The plane of the bodies (z = 10 in every series I world): the rows in
+    # that plane alone, so that the strong rows' halo is visible under the
+    # fan's crowd.
+    plane = plane_for(replay, scale=12, slice_z=int(replay.world.measured[0].position[2]))
+    plane.largest = largest_amounts(frames)
+    plane.floor = 0.12
+    plane.weights = {"p": 0.5, "n": 0.5}
+    plane.on_top = "nuclear"
+    steps = by_tick(events["step"])
+    contacts = by_tick(events["contact"])
+    exits = by_tick(face_exits)
+    pushes: dict[int, int] = {}
+    for line in events["read"]:
+        if int(line["measured"]) == 1:  # type: ignore[arg-type]
+            pushes[int(line["tick"])] = pushes.get(int(line["tick"]), 0) + int(line["push"][0])  # type: ignore[arg-type, index]
+    border = escaped_per_tick(record, "nuclear")
+    images = [plane.image(frame) for frame in frames]
+    readings = []
+    for frame in frames:
+        t = frame.tick
+        lines = {
+            "the bodies (number: family at Node)": "; ".join(
+                f"{b.number}: {b.family} at {b.position}" for b in frame.bodies
+            )
+            or "none on the GameBoard (all left through the faces)",
+            "steps so far (step lines)": num(sum(len(v) for k, v in steps.items() if k <= t)),
+            "hand-overs so far (contact lines)": num(sum(len(v) for k, v in contacts.items() if k <= t)),
+            "the border's clicks of nuclear this interval (run.json, audit)": num(
+                border[t - 1] if 1 <= t <= len(border) else 0
+            ),
+            "the push read by body 1 on x this interval (read lines)": num(pushes.get(t, 0)),
+        }
+        left = [
+            f"{e['measured']} through {e['detector']} at {e['tick']}"
+            for k, v in exits.items()
+            if k <= t
+            for e in v
+        ]
+        if left:
+            lines["bodies that left (face click lines)"] = "; ".join(left)
+        readings.append(lines)
+    player = Player(key, images, list(ticks), readings, caption, duration_ms)
+    return player, record, events
+
+
+@register("nucleus")
+def page_nucleus(out: Path, runs: Path | None) -> Path:
+    """(3) The nucleus, series I: the deuteron bound at one Link and free at
+    three, the alpha square sheared apart; the strong rows' escape clicks
+    at the lifetime."""
+    folder = WORLDS / "nucleus"
+    bound, bound_record, bound_events = nucleus_player(
+        "deuteron_1",
+        folder / "deuteron_1.json",
+        runs,
+        frame_ticks(60),
+        "The deuteron at one Link, `deuteron_1`: the plane z = 10 of the 21^3 cube (the bodies' plane, the rows "
+        "in it alone), 12 pixels per Node; the proton p (red) at (10, 10, 10) and the neutron n (blue) at (11, 10, 10); "
+        "the `nuclear` rows (gold) reach three Links and click on the border `lifetime`, the `p` and `n` rows "
+        "fly to the faces.",
+        120,
+    )
+    free, free_record, free_events = nucleus_player(
+        "deuteron_3",
+        folder / "deuteron_3.json",
+        runs,
+        frame_ticks(360),
+        "The deuteron at three Links, kicked outward, `deuteron_3`: the pair separates and leaves through the "
+        "faces (one frame per three intervals).",
+        100,
+    )
+    square, square_record, square_events = nucleus_player(
+        "alpha_square",
+        folder / "alpha_square.json",
+        runs,
+        frame_ticks(345),
+        "The square p n / n p, `alpha_square`: sheared apart, a proton steps first, the four disperse and leave "
+        "(one frame per three intervals).",
+        100,
+    )
+    world = folder / "deuteron_1.json"
+
+    def first_steps(events: dict[str, list[dict[str, object]]]) -> str:
+        seen: dict[int, dict[str, object]] = {}
+        for line in events["step"]:
+            seen.setdefault(int(line["number"]), line)  # type: ignore[arg-type]
+        return (
+            "; ".join(
+                f"body {n} at the interval {line['tick']} from {tuple(line['node'])} to {tuple(line['to'])}"  # type: ignore[arg-type]
+                for n, line in sorted(seen.items())
+            )
+            or "none"
+        )
+
+    def exits(events: dict[str, list[dict[str, object]]]) -> str:
+        return (
+            "; ".join(
+                f"body {e['measured']} through {e['detector']} at {e['tick']}" for e in events["exit"]
+            )
+            or "none"
+        )
+
+    lifetime_clicks = int(
+        next(d for d in bound_record["detectors"] if d["name"] == "lifetime")["families"]["nuclear"][
+            "clicks"
+        ]
+    )  # type: ignore[index]
+    bound_push = int(bound_record["measured"][0]["momentum"][0])  # type: ignore[index]
+    entry_url = "../../EXPERIMENTS.md#i-the-nucleus-2026-09-20"
+    body = f"""
+{registered_note(world, "I, the nucleus (2026-09-20)", entry_url)}
+<p class="demo">Also registered here: <code>examples/events/nucleus/deuteron_3.json</code> and
+<code>examples/events/nucleus/alpha_square.json</code>, the same series, run as declared. He-5 (the register's
+I9, the core family) was cut from series I for the budget and never run; it is not drawn.</p>
+<h2>The GameBoard</h2>
+<p>An open cube of 21 x 21 x 21 Nodes, K = {
+        num(1 << 20)
+    }, N = 64, the width of the push 2^28, the contact
+through the table. Three free families without a phase circle: <code>p</code> (<code>charge</code> 4),
+<code>n</code>, and <code>nuclear</code> with the column <code>strong</code> of value G = 10 000 and the sign
+minus and the <code>lifetime</code> 3. A <b>proton</b> is a free body of 1836 units of <code>p</code> holding one
+unit of <code>nuclear</code> (M 1837, Q 7344, G 10 000); a <b>neutron</b> 1839 of <code>n</code> holding one
+(1840, 0, 10 000); every body releases one row of its held content per direction of the 290 primitive
+directions with |a| + |b| + |c| at most 6 per interval. No detector is declared: the bodies are the external
+things whose <code>read</code> and <code>contact</code> records are the readings, the six faces and the border
+<code>lifetime</code> the detectors of what leaves. In <code>deuteron_1</code> p is at (10, 10, 10) and n at
+(11, 10, 10); in <code>deuteron_3</code> at (9, 10, 10) and (12, 10, 10), each kicked outward by 10^12; in
+<code>alpha_square</code> p1 (10, 10, 10), n2 (11, 10, 10), n3 (10, 11, 10), p4 (11, 11, 10).</p>
+{
+        legend(
+            [
+                ("the p rows", swatch(FAMILY_COLOURS[0])),
+                ("the n rows", swatch(FAMILY_COLOURS[1])),
+                ("the nuclear rows (the strong column, lifetime 3)", swatch(FAMILY_COLOURS[2])),
+                ("a proton (a body of p)", swatch(BODY_COLOURS["p"])),
+                ("a neutron (a body of n)", swatch(BODY_COLOURS["n"])),
+            ]
+        )
+    }
+<h2>Why this page</h2>
+<p>The owner asked to see the nucleons: bound, and coming apart. In this law a nucleus is bodies at adjacent
+Nodes reading each other's rows through the one coupling, a signed inner product over the columns the
+families declare (gravity, the charge, the strong column), and the strong column has a range that is a
+lifetime: a <code>nuclear</code> row clicks on the border at the age 3, so a body three Links away reads no
+strong row at all. A body that would step onto the other's Node is refused and hands its momentum component
+over through the occupant's table (the contact): the bound pair's labels are handed back and forth and
+return to 0, and nothing steps.</p>
+<h2>Bound: the deuteron at one Link</h2>
+{bound.html()}
+<p>What to see: from the second interval each body reads the other's rows and is pushed toward it by
+{num(bound_push)} label units per interval (the register's designed integer, the <code>n</code> rows
+10 161 754 944 and the <code>nuclear</code> rows 300 805 525 696); the gold halo is the strong rows within
+three Links, clicking on the border <code>lifetime</code> at 580 per interval from the fourth interval
+({
+        num(lifetime_clicks)
+    } over the run's 3000: <code>run.json</code>, the border's <code>clicks</code>); the pair
+never steps in 3000 intervals; its hand-overs: {num(len(bound_events["contact"]))} (<code>contact</code>
+lines), the label 0 after each. The escape click at the lifetime is the strong force's range, seen at the
+border.</p>
+<h2>Free: the deuteron at three Links, kicked</h2>
+{free.html()}
+<p>What to see: no strong row reaches three Links (the reads of <code>nuclear</code>: 0), gravity alone pulls
+by 1 067 524 788 per interval on p (the register), far below the kick of 10^12; the first steps are at the
+intervals {first_steps(free_events)}; the bodies leave: {exits(free_events)}.</p>
+<h2>Coming apart: the square p n / n p</h2>
+{square.html()}
+<p>What to see: the square's bonds are central pushes and the contacts frictionless, and the p-p diagonal bond
+is weaker than the n-n one by exactly Q^2 x U_d, so the rows are sheared apart (the register: 49 090 283 970 per
+row per interval); the first steps: {first_steps(square_events)}; the bodies leave: {
+        exits(square_events)
+    }. The
+register's alpha is the line p n n p (<code>alpha_line</code>), which holds for 3000 intervals; the square
+does not.</p>
+<h2>The readings</h2>
+<table>
+<tr><th>World</th><th>Reading</th><th>Kind</th><th>This run</th><th>The register (the signed-drive re-read)</th></tr>
+<tr><td><code>deuteron_1</code></td><td>the push on p toward n per interval; steps; hand-overs; the border's clicks per interval</td><td>detector; GameBoard; detector; detector</td><td class="num">{
+        num(bound_push)
+    }; {num(len(bound_events["step"]))}; {num(len(bound_events["contact"]))}; {
+        num(lifetime_clicks)
+    } / 3000</td><td class="num">310 967 280 640; 0; 169 on p and 158 on n; 580 per interval from tick 4</td></tr>
+<tr><td><code>deuteron_3</code></td><td>the first steps; the exits</td><td>GameBoard; detector (the faces)</td><td>{
+        first_steps(free_events)
+    }; {exits(free_events)}</td><td>ticks 33 and 34; face:+x at 311 and face:-x at 346</td></tr>
+<tr><td><code>alpha_square</code></td><td>the first steps; the exits</td><td>GameBoard; detector (the faces)</td><td>{
+        first_steps(square_events)
+    }; {
+        exits(square_events)
+    }</td><td>p4 +y at 81, n2 at 89, p1 at 95, n3 at 110; out at 275, 285, 336, 339</td></tr>
+<tr><td>all three</td><td>the books balanced at every interval</td><td>GameBoard</td><td class="num">{
+        bound_record["conserved_at_every_completed_tick"]
+    }, {free_record["conserved_at_every_completed_tick"]}, {
+        square_record["conserved_at_every_completed_tick"]
+    }</td><td>yes</td></tr>
+</table>
+{
+        sources(
+            [
+                (
+                    "the worlds",
+                    "<code>examples/events/nucleus/deuteron_1.json</code>, <code>deuteron_3.json</code>, <code>alpha_square.json</code> (series I, registered), run as declared for 3000 intervals",
+                ),
+                (
+                    "the runs",
+                    "<code>run.json</code> and <code>events.jsonl</code> of each, made by <code>tools/run_series.py</code> (the runner, one process per world)",
+                ),
+                ("the source fingerprint", fingerprint_line(bound_record)),
+                (
+                    "the register",
+                    f'<a href="{entry_url}">I, the nucleus (2026-09-20)</a> and <a href="../../../examples/events/nucleus/README.md">the series README</a> (the expectations pinned before the runs, the re-reads under the step drive and the signed drive)',
+                ),
+                (
+                    "the frames",
+                    "each world replayed in process through <code>NatureBeamSimulation</code>, the stores read at the drawn intervals (a GameBoard reading)",
+                ),
+            ]
+        )
+    }
+"""
+    return write_page(
+        out,
+        "nucleus",
+        page(
+            "The nucleus",
+            "Series I: the deuteron bound at one Link and free at three, the alpha square sheared apart; the strong rows' escape clicks at the lifetime.",
             body,
         ),
     )
