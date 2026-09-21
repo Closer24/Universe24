@@ -302,6 +302,9 @@ class Plane:
     floor: float = 0.35
     weights: dict[str, float] = field(default_factory=dict)
     on_top: str | None = None
+    # Draw only the bodies at this z (a shell of readers projected would
+    # cover the plane); None draws every body.
+    body_slice_z: int | None = None
 
     @property
     def size(self) -> tuple[int, int]:
@@ -397,13 +400,15 @@ class Plane:
         for node in self.detector_nodes:
             if self.slice_z is not None and node[2] != self.slice_z:
                 continue
+            if self.body_slice_z is not None and node[2] != self.body_slice_z:
+                continue
             cx, cy = self.pixel(node[0], node[1])
             half = self.scale / 2
             draw.rectangle([cx - half, cy - half, cx + half - 1, cy + half - 1], outline=(120, 220, 160))
         radius = max(self.scale * self.body_radius, 3.0)
         for body in frame.bodies:
-            if self.slice_z is not None and body.position[2] != self.slice_z and self.shape[2] > 1:
-                pass
+            if self.body_slice_z is not None and body.position[2] != self.body_slice_z:
+                continue
             cx, cy = self.pixel(body.position[0], body.position[1])
             colour = BODY_COLOURS.get(body.family, (230, 230, 230))
             draw.ellipse(
@@ -708,6 +713,18 @@ def legend(items: Sequence[tuple[str, str]]) -> str:
         + "".join(f"<span>{swatch}{html.escape(text)}</span>" for text, swatch in items)
         + "</div>"
     )
+
+
+def family_legend(replay: Replay) -> list[tuple[str, str]]:
+    """One legend entry per family of the world: the wheel for a family with
+    a phase circle (drawn by its phase), its colour otherwise."""
+    entries = []
+    for i, family in enumerate(replay.world.families):
+        if family.phase:
+            entries.append((f"the {family.name} rows, coloured by their phase", '<i class="wheel"></i>'))
+        else:
+            entries.append((f"the {family.name} rows", swatch(FAMILY_COLOURS[i % len(FAMILY_COLOURS)])))
+    return entries
 
 
 def swatch(colour: tuple[int, int, int]) -> str:
@@ -1809,6 +1826,285 @@ does not.</p>
         page(
             "The nucleus",
             "Series I: the deuteron bound at one Link and free at three, the alpha square sheared apart; the strong rows' escape clicks at the lifetime.",
+            body,
+        ),
+    )
+
+
+def decay_player(
+    key: str,
+    world: Path,
+    runs: Path | None,
+    ticks: Sequence[int],
+    caption: str,
+    duration_ms: int,
+    scale: int = 12,
+) -> tuple[Player, dict[str, object], dict[str, list[dict[str, object]]]]:
+    """One series J world replayed in the neutron's plane, the products'
+    rows drawn on top of the crowd; per frame the transformation, the
+    products in flight and the shell's clicks."""
+    record_dir = runner_record(world, runs)
+    record = read_json(record_dir / "run.json")
+    events = scan_events(record_dir / "events.jsonl", ["become", "step", "contact"])
+    shell = [
+        line
+        for line in scan_events(record_dir / "events.jsonl", ["click"])["click"]
+        if line.get("detector") not in (None,)
+        and not str(line.get("detector")).startswith("face")
+        and str(line.get("detector")) != "lifetime"
+        or (
+            str(line.get("detector", "")).startswith("face")
+            and line.get("family") in ("beta", "nu", "w")
+        )
+    ]
+    events["product_click"] = shell
+    replay = Replay(world)
+    frames = replay.run(ticks)
+    plane = plane_for(replay, scale=scale)
+    plane.largest = largest_amounts(frames)
+    plane.floor = 0.12
+    plane.body_slice_z = int(replay.world.measured[0].position[2])
+    plane.weights = {name: 0.35 for name in replay.families if name not in ("beta", "nu", "w")}
+    for name in ("beta", "nu", "w"):
+        if name in replay.families:
+            plane.largest[name] = 1.0
+    plane.on_top = "beta" if "beta" in replay.families else ("w" if "w" in replay.families else None)
+    becomes = by_tick(events["become"])
+    clicks = by_tick(shell)
+    images = [plane.image(frame) for frame in frames]
+    readings = []
+    for frame in frames:
+        t = frame.tick
+        lines: dict[str, str] = {}
+        fired = [b for k, v in becomes.items() if k <= t for b in v]
+        lines["transformations fired so far (become lines)"] = num(len(fired))
+        if fired:
+            last = fired[-1]
+            lines["the last become"] = (
+                f"body {last['measured']} at {tuple(last['node'])}, interval {last['tick']}: {last['from']} into {last['into']}, "  # type: ignore[arg-type]
+                f"the products {', '.join(f'{p[0]} ({p[1]} unit of content {p[2]} on {tuple(p[3])})' for p in last['products'])}, "  # type: ignore[union-attr]
+                f"the recoil {tuple(last['recoil'])}, the count the clock read {num(int(last['counted']))}"  # type: ignore[arg-type]
+            )
+        products = {
+            name: int(r.amount.sum())
+            for r in frame.rows
+            for name in [r.family]
+            if name in ("beta", "nu", "w")
+        }
+        lines["product rows in flight (GameBoard reading)"] = (
+            ", ".join(f"{k} {v}" for k, v in products.items()) or "none"
+        )
+        seen = [c for k, v in clicks.items() if k <= t for c in v]
+        lines["product clicks so far (click lines)"] = (
+            "; ".join(
+                f"{c['family']} at {c['detector']} {tuple(c['node'])} at {c['tick']} (content {c['content']})"
+                for c in seen
+            )
+            or "none"
+        )
+        readings.append(lines)
+    player = Player(key, images, list(ticks), readings, caption, duration_ms)
+    return player, record, events
+
+
+@register("decay")
+def page_decay(out: Path, runs: Path | None) -> Path:
+    """(4) The decay, series J: a neutron family becoming another by the
+    transformation `become`, the products' flight to the shell, the W
+    exchange at one Link; the trigger ticks and counts from the register."""
+    folder = WORLDS / "weak"
+    free_ticks = list(range(0, 501, 25)) + list(range(501, 561))
+    free, free_record, free_events = decay_player(
+        "j3_neutron_free",
+        folder / "j3_neutron_free.json",
+        runs,
+        free_ticks,
+        "The free neutron, `j3_neutron_free`: the x-y projection of the 21^3 cube (the rows' amounts summed over z), "
+        "12 pixels per Node; the neutron n at (10, 10, 10); the shell of readers at r = 8 (its ring in the plane "
+        "z = 10 drawn, the rest of the shell not) is one `beam` "
+        "detector of 762 Nodes measuring beta; the beta row drawn on top (its colour in the legend); one frame per 25 intervals "
+        "until 500, then every interval.",
+        150,
+    )
+    bound_ticks = list(range(0, 551, 25)) + list(range(551, 611))
+    bound, bound_record, bound_events = decay_player(
+        "j3_deuteron",
+        folder / "j3_deuteron.json",
+        runs,
+        bound_ticks,
+        "The bound neutron, `j3_deuteron`: the deuteron of series I with `become` at 512 on the neutron; the "
+        "same shell; the proton p and the neutron n at one Link; one frame per 25 intervals until "
+        "550, then every interval.",
+        150,
+    )
+    exchange, exchange_record, exchange_events = decay_player(
+        "w_exchange",
+        folder / "w_exchange.json",
+        runs,
+        list(range(0, 17)),
+        "The W exchange, `w_exchange`: a bar of 7 x 1 x 1, 40 pixels per Node; the neutron n at x = 2 and the "
+        "proton p at x = 3; the W row (its colour in the legend) born at the interval 8 on +x and measured by the proton at 9.",
+        500,
+        scale=40,
+    )
+    world = folder / "j3_neutron_free.json"
+    entry_url = "../../EXPERIMENTS.md#j-the-weak-force-2026-09-20"
+
+    def become_line(events: dict[str, list[dict[str, object]]]) -> dict[str, object] | None:
+        return events["become"][0] if events["become"] else None
+
+    fb = become_line(free_events)
+    bb = become_line(bound_events)
+    eb = become_line(exchange_events)
+    fc = free_events["product_click"]
+    bc = bound_events["product_click"]
+    ec = exchange_events["product_click"]
+    proton_after = exchange_record["measured"][1]  # type: ignore[index]
+    body = f"""
+{registered_note(world, "J, the weak force (2026-09-20)", entry_url)}
+<p class="demo">Also registered here and run as declared: <code>examples/events/weak/j3_deuteron.json</code> and
+<code>examples/events/weak/w_exchange.json</code>. The counts and the trigger ticks are the register's
+(<a href="../../../examples/events/weak/README.md">the series README</a>, <code>weak/expectations.json</code>).</p>
+<h2>The GameBoard</h2>
+<p><b>J3, the neutron's decay against its clock.</b> An open cube of 21 x 21 x 21, K = {
+        num(1 << 20)
+    }, N = 64,
+<code>release</code> [1, 1], <code>suspension</code> [1, 2^20]. The neutron is a free body of 1839 units of
+<code>n</code> at (10, 10, 10) with the transformation <code>become</code> at 512 into <code>p</code> with the
+products <code>beta</code> (1 unit of content 3, the charge -7344 per unit of amount) and <code>nu</code> (1 unit
+of content 0): at the self-creation whose clock reaches 512 the event becomes a proton and the products are
+born as a re-release is, with the recoil over both. A shell of 762 measured events of the paid family
+<code>d</code> at r = 8 is one <code>beam</code> detector <code>shell</code> measuring <code>beta</code> with
+<code>reads</code> <code>age</code> (the flight time on the click) and passing everything else. In
+<code>j3_deuteron</code> the neutron is bound to a proton at one Link (series I's deuteron, the strong column
+G = 10 000, lifetime 3, the width 2^28) and its clock is slowed by the count it reads, the crowd of the
+proton's rows. <b>The W exchange.</b> A bar of 7 x 1 x 1: the neutron fixed at x = 2 with <code>become</code>
+at 8 into <code>p</code> with the one product <code>w</code> (1 unit of content 3, the paid family with the whole
+charge -7344 per unit of amount and the <code>lifetime</code> 1) on the direction +x, the proton of 1836 fixed
+at x = 3.</p>
+{
+        legend(
+            family_legend(Replay(world))
+            + [
+                ("the neutron, the proton (bodies)", swatch(BODY_COLOURS["n"])),
+                ("a reader of the shell (a body of d)", swatch(BODY_COLOURS["d"])),
+            ]
+        )
+    }
+<h2>Why this page</h2>
+<p>The owner asked to see a family becoming another. In this law the weak force is not a coupling but a rule
+on the one-way side of the border: a measured event of one family becomes an event of another at the
+self-creation whose clock reaches a declared key, the rest released as products with the recoil, the
+charges balancing at load; the clock is slowed by the count it reads as every clock is, so a neutron in a
+crowd fires later and a neutron alone at the key exactly. The hand of the products (series P, the parity
+test) and the neutrino's phase window (series J2, the filter) are cited below from the register; this page
+shows the transformation itself.</p>
+<h2>The free neutron</h2>
+{free.html()}
+<p>What to see: nothing for 511 intervals but the neutron's own rows; at {fb["tick"] if fb else "?"} the
+<code>become</code> line: the neutron becomes a proton, the beta (content 3) leaves on
+{tuple(fb["products"][0][3]) if fb else "?"} and the neutrino on {
+        tuple(fb["products"][1][3]) if fb else "?"
+    }, the
+recoil {tuple(fb["recoil"]) if fb else "?"} on the new proton; the beta clicks the shell at the interval
+{fc[0]["tick"] if fc else "?"} at {
+        tuple(fc[0]["node"]) if fc else "?"
+    } with the content 3 (the register: one
+click, the content 3); the neutrino, a free row of content 0, passes every reader and leaves through a face
+({
+        "; ".join(
+            f"{c['family']} through {c['detector']} at {c['tick']}" for c in fc if c["family"] == "nu"
+        )
+        or "no face click of nu in the run"
+    }).</p>
+<h2>The bound neutron</h2>
+{bound.html()}
+<p>What to see: the same key, later. The neutron's clock counts the proton's crowd at one Link (the count read
+at the trigger {num(int(bb["counted"])) if bb else "?"}), so the transformation fires at
+{
+        bb["tick"] if bb else "?"
+    } (the register under the fraction-free law: 568; the free neutron's 512); the beta
+clicks the shell at {
+        bc[0]["tick"] if bc else "?"
+    } with the content 3; the pair is then two protons at one
+Link and holds ({num(len(bound_events["step"]))} steps of {
+        num(len(bound_events["contact"]))
+    } attempted, every
+attempt a hand-over). Against nature the register states the law's own prediction: a bound neutron that
+decays later where nature's is stable by its binding energy.</p>
+<h2>The W exchange at one Link</h2>
+{exchange.html()}
+<p>What to see: at the interval {
+        eb["tick"] if eb else "?"
+    } the neutron becomes a proton and throws the W on +x
+with the recoil {tuple(eb["recoil"]) if eb else "?"}; at {
+        ec[0]["tick"] if ec else "?"
+    } the proton one Link away
+measures it (the click, the push {tuple(ec[0]["push"]) if ec else "?"}) and has afterwards the charge
+{proton_after["charge"]} and the content {
+        num(int(proton_after["content"]))
+    }: a neutron's, in the detector's
+terms. No W reaches the border <code>lifetime</code>. The exchange is complete at the click; the momenta
+{tuple(exchange_record["measured"][0]["momentum"])} and {tuple(proton_after["momentum"])}.</p>
+<h2>The readings</h2>
+<table>
+<tr><th>World</th><th>Reading</th><th>Kind</th><th>This run</th><th>The register</th></tr>
+<tr><td><code>j3_neutron_free</code></td><td>the trigger tick; the shell's clicks and their content</td><td>GameBoard; detector</td><td class="num">{
+        fb["tick"] if fb else "?"
+    }; {num(len([c for c in fc if c["family"] == "beta"]))} click, content {
+        fc[0]["content"] if fc else "?"
+    } at {fc[0]["tick"] if fc else "?"}</td><td class="num">512 exactly; one click, content 3</td></tr>
+<tr><td><code>j3_deuteron</code></td><td>the trigger tick and the count read; the shell's click; steps of attempts</td><td>GameBoard; detector; GameBoard</td><td class="num">{
+        bb["tick"] if bb else "?"
+    }, {num(int(bb["counted"])) if bb else "?"}; {bc[0]["tick"] if bc else "?"}; {
+        num(len(bound_events["step"]))
+    } of {
+        num(len(bound_events["contact"]))
+    }</td><td class="num">568 (the fraction-free re-read; pinned 574 or up to 3 before), the warm count 128 590; 581; 0 of 33 and 31</td></tr>
+<tr><td><code>w_exchange</code></td><td>the become tick and the recoil; the proton's click; the proton's charge and content after</td><td>GameBoard; detector; detector</td><td class="num">{
+        eb["tick"] if eb else "?"
+    }, {tuple(eb["recoil"]) if eb else "?"}; {ec[0]["tick"] if ec else "?"}; {proton_after["charge"]}, {
+        num(int(proton_after["content"]))
+    }</td><td class="num">8, [-192, 0, 0]; 9; [0, 1], 1839</td></tr>
+<tr><td>J1 (not replayed here)</td><td>64 free neutrons on a lattice: the trigger ticks and the shell's 64 clicks</td><td>GameBoard; detector</td><td>not run for this page (about 4 minutes each)</td><td>522 .. 524 (the lattice) and 523 .. 528 (with a source); the 64 clicks a step from 541 to 563, every click the content 3</td></tr>
+<tr><td>J2 (the neutrino's window)</td><td>the first reader's share of a stride-1 source's arrivals; the 127 readers behind it</td><td>detector</td><td>not replayed here</td><td>exactly 1 / 64; nothing (a filter, not an attenuation); the ladder exhausts the beam after 64 readers</td></tr>
+<tr><td>P (the hand)</td><td>the parity test of the W's hand against the axis; J2's bar with two readers admitting one hand each</td><td>detector</td><td>not replayed here</td><td>the mirror image sends the W to the other side (<code>tests/test_hand.py</code> (d)); 0 and 1022 clicks</td></tr>
+<tr><td>all three</td><td>the books balanced at every interval</td><td>GameBoard</td><td class="num">{
+        free_record["conserved_at_every_completed_tick"]
+    }, {bound_record["conserved_at_every_completed_tick"]}, {
+        exchange_record["conserved_at_every_completed_tick"]
+    }</td><td>yes</td></tr>
+</table>
+{
+        sources(
+            [
+                (
+                    "the worlds",
+                    "<code>examples/events/weak/j3_neutron_free.json</code>, <code>j3_deuteron.json</code>, <code>w_exchange.json</code> (series J, registered), run as declared",
+                ),
+                (
+                    "the runs",
+                    "<code>run.json</code> and <code>events.jsonl</code> of each, made by <code>tools/run_series.py</code>",
+                ),
+                ("the source fingerprint", fingerprint_line(free_record)),
+                (
+                    "the register",
+                    f'<a href="{entry_url}">J, the weak force (2026-09-20)</a>, <a href="../../EXPERIMENTS.md#p-the-hand-2026-09-20">P, the hand (2026-09-20)</a>, <a href="../../../examples/events/weak/README.md">the series README</a> and <code>examples/events/weak/expectations.json</code>',
+                ),
+                (
+                    "the frames",
+                    "each world replayed in process through <code>NatureBeamSimulation</code>, the stores read at the drawn intervals (a GameBoard reading); the beta and W rows drawn on top of the crowd",
+                ),
+            ]
+        )
+    }
+"""
+    return write_page(
+        out,
+        "decay",
+        page(
+            "The decay",
+            "Series J: a neutron family becoming another by the transformation become, the products' flight to the shell, the W exchange at one Link.",
             body,
         ),
     )

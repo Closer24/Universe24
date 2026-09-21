@@ -8527,3 +8527,9 @@ the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
   `lifetime`), `deuteron_3` (free at three Links, the pair leaving through
   the faces) and `alpha_square` (sheared apart), run as declared; the
   pushes, hand-overs, steps and exits of the runs beside the register's.
+- [The decay](pages/gallery/decay.html): series J's `j3_neutron_free`
+  (the transformation `become` at 512, the beta's click at the shell),
+  `j3_deuteron` (the bound neutron firing later, at 568) and `w_exchange`
+  (the W thrown and measured one Link and one interval later), run as
+  declared; the trigger ticks and counts of the runs beside the
+  register's, J1, J2 and P cited from the register.
