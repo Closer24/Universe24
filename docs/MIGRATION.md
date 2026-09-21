@@ -6,6 +6,39 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The group structure named, on 2026-09-21 (host only, no law change)
+
+The architect's item 3 of the proposal on the runs (record 203; the vector
+program, record 191, "everything represented in vectors and matrices, from
+group theory"): the three group objects of the law named and typed, bit-exact
+under the gate set; BEAM_LAW note 42. No rule changed; every registered
+integer the same.
+
+- `core.game_board.cube_symmetries()`: the cube's group of 48 (the signed
+  axis permutations as images of the six Ports), with `IDENTITY_SYMMETRY`,
+  `compose_symmetries`, `inverse_symmetry` and `symmetry_hand` (+1 a
+  rotation, -1 a reflection). The collision test's local `cube_group()`
+  is deleted; it enumerated the same 48 maps.
+- `core.phase.PhaseCircle` and `phase_circle(N)`: the world's circle of N
+  steps as the cyclic group of the phase (`turn`, `difference`,
+  `opposite`, `mask`, `half`) with its unit vectors (`vector`, the tables'
+  (C, S)) and the tables themselves (`cosines`, `sines`). The engine's
+  tables carry it (`NatureBeamTables.circle`, a new field; `cosines` and
+  `sines` stay as arrays), the engine's two scalar turns read it
+  (`circle.turn` in place of `& phase_mask`, the same integers for N a
+  power of two), and the layer holds it (`Layer.circle`, with `steps`,
+  `cosines` and `sines` as before).
+- `nature_beam.CollisionTable` gains `orbit` (the class index per code)
+  and `period` (the class's size per code) and the method `act(code,
+  backward)`, the shift the engine's collision step calls; `forward`,
+  `inverse`, `singles` and `powers` are unchanged.
+- `tests/test_nature_beam_collision.py` (b) states the orbits as
+  properties (the orbit-stabilizer and Burnside counts) in place of the
+  counted sizes; `tests/test_group_structure.py` is new (the group, the
+  circle, the action). TERMINOLOGY gains the cube group, the phase circle
+  and the collision action; ARCHITECTURE's and the README's rows for
+  `core/game_board` and `core/phase` name them.
+
 ## The trimming's part 2, the register split, on 2026-09-21 (host only, no law change)
 
 The Boss's decision under the owner's rule (records 169 and 184 of

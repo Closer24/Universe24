@@ -104,7 +104,7 @@ from event_universe.core.integer import (
     bounded_gcd,
     integer_root,
 )
-from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
+from event_universe.core.phase import PHASE_COSINE_SCALE, PhaseCircle, phase_circle
 from event_universe.events.amplitude import (
     AMPLITUDE_SCALE,
     LABEL_BITS,
@@ -687,13 +687,28 @@ def direction_flight(vectors: tuple[tuple[int, int, int], ...]) -> Flight:
 
 @dataclass(frozen=True)
 class CollisionTable:
-    """The permutation of the 3^8 slot states: `forward[code]`, `inverse[code]`
-    and, per code, its single slots in order (`singles`, padded with -1)."""
+    """The collision as a group action (named on 2026-09-21, the vector
+    program, record 191): the cyclic group acts on the 3^8 slot states by
+    the shift `forward` (its inverse `inverse`), and the orbits of the
+    action are the classes of section 4 (a crowd mask, a number of singles
+    and their headings' sum: the invariants of every move). Per code:
+    `orbit`, the index of its class; `period`, the size of its class, the
+    least power of the shift that returns the code; `singles`, its single
+    slots in order (padded with -1). `act(code)` is one step of the
+    action."""
 
     forward: np.ndarray
     inverse: np.ndarray
     singles: np.ndarray
     powers: np.ndarray
+    orbit: np.ndarray
+    period: np.ndarray
+
+    def act(self, code: np.ndarray, backward: bool = False) -> np.ndarray:
+        """One step of the action on slot-state codes: the shift, or its
+        inverse under `backward`."""
+        result: np.ndarray = (self.inverse if backward else self.forward)[code]
+        return result
 
 
 def slot_heading(slot: int) -> tuple[int, int, int]:
@@ -727,33 +742,41 @@ def collision_table() -> CollisionTable:
     forward = np.zeros(size, dtype=np.int64)
     inverse = np.zeros(size, dtype=np.int64)
     singles = np.full((size, COLLISION_SLOTS), -1, dtype=np.int64)
-    for members in classes.values():
+    orbit = np.zeros(size, dtype=np.int64)
+    period = np.zeros(size, dtype=np.int64)
+    for index, members in enumerate(classes.values()):
         members.sort()
         count = len(members)
         for i, state in enumerate(members):
             target = members[(i + 1) % count]
             forward[state_code(state)] = state_code(target)
             inverse[state_code(target)] = state_code(state)
+            orbit[state_code(state)] = index
+            period[state_code(state)] = count
     for state in itertools.product(range(SLOT_STATES), repeat=COLLISION_SLOTS):
         code = state_code(state)
         found = [i for i, s in enumerate(state) if s == 1]
         singles[code, : len(found)] = found
     powers = SLOT_STATES ** np.arange(COLLISION_SLOTS, dtype=np.int64)
-    for array in (forward, inverse, singles, powers):
+    for array in (forward, inverse, singles, powers, orbit, period):
         array.setflags(write=False)
-    return CollisionTable(forward, inverse, singles, powers)
+    return CollisionTable(forward, inverse, singles, powers, orbit, period)
 
 
 @dataclass(frozen=True)
 class NatureBeamTables:
     """The constants of a world's law: the flight of its direction set (the
     position's accumulator rule per direction, `Flight`), the collision
-    table and the cosines and sines at 1/256. The window is not a table but the one floor
-    `window_admits` of a distance against a width (since 2026-09-20; until
-    then a table over the distances of the half circle)."""
+    table (the group action of the shift on the slot states), the phase
+    circle (`circle`, the cyclic group of N steps with its unit vectors)
+    and its cosines and sines at 1/256 as arrays for the vectorized
+    readings. The window is not a table but the one floor `window_admits`
+    of a distance against a width (since 2026-09-20; until then a table
+    over the distances of the half circle)."""
 
     flight: Flight
     collision: CollisionTable
+    circle: PhaseCircle
     cosines: np.ndarray
     sines: np.ndarray
     # The arc permutations of the direction table (the meeting, 2026-09-20;
@@ -762,13 +785,14 @@ class NatureBeamTables:
 
 
 def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
-    modulus = world.phase_steps
+    circle = phase_circle(world.phase_steps)
     flight = direction_flight(world.directions)
     return NatureBeamTables(
         flight,
         collision_table(),
-        np.array(phase_cosines(modulus), dtype=np.int64),
-        np.array(phase_sines(modulus), dtype=np.int64),
+        circle,
+        np.array(circle.cosines, dtype=np.int64),
+        np.array(circle.sines, dtype=np.int64),
         arc_table(flight.labels),
     )
 
@@ -2461,7 +2485,7 @@ def nature_beam(
         )
         state = np.where(counts == 0, 0, np.where((counts == 1) & (heavy == 0), 1, 2))
         code = (state.reshape(groups, COLLISION_SLOTS) * collision.powers).sum(axis=1)
-        target = (collision.inverse if backward else collision.forward)[code]
+        target = collision.act(code, backward)
         moving = target != code
         if not moving.any():
             return
