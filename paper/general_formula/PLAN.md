@@ -2390,3 +2390,52 @@ diff is colours, hatches, markers and a --png preview option). The PDF
 compiled here with pdflatex (three passes, clean) is 80 pages, not the
 105 of the word-count estimate; the Boss told.
 
+## Wave 28 (2026-09-21): the one non-local operation and no-signalling's scope in the abstract (the reviewer's point 3, the owner's "make sure it is resolved")
+
+The reviewer: P6 and the causal section state the pair's gather from
+both settings (transparent), the title should reflect the exception,
+and no-signalling is proved for equal weights only. In the paper: P6
+names the one non-local operation (wave 23); the theorem's scope
+paragraph and the "What is not claimed" item say no-signalling is
+proved for the equal-weight pair and open beyond it; the abstract now
+says both in one sentence ("Local at every Node, the law has one
+non-local operation, the click of a pair, a gather of one record from
+both settings; no-signalling is proved for equal weights, open
+beyond"), with cuts to stay under 1920 plain characters (1917): the
+pace's parenthesis, "run and replicated at 512 and 4096" (the
+replication stays in "four replicated"), the closing "every claim is
+measured, proved, assumed or open", two shortenings. The title is the
+owner's decision (record 275) and is not changed by the writer; the
+question is put to him with a variant. Referee round 50.
+Referee round 50: CLEAN WITH NOTES; applied: "on paper" restored for the
+covariant readings, "the rule gives" for 5793/2048, "From this law"; the
+abstract at 1917 plain characters. His reading of the title: the
+abstract's fourth sentence states the exception, so title and abstract
+together do not mislead; alone, the title lacks the qualifier, and the
+title is the owner's (record 275).
+Wave 28 extended on the owner's issue 621 (the first-reader review of the
+compiled PDF, six points) and the Boss's order of 16:10Z: (1) a paragraph
+and Table tab:assumptions after the postulates, what Eq. (1) determines
+and what its rates and tables supply, per main recovery the assumptions
+that force it and the freedom left, identities apart from predictions;
+(2) the scope table's four rows carried in that table (c a bound and a
+chosen wall; Born the splitter axiom and the harmonic freedom; Newton a
+shell mean, the spatial run unrun; the uncertainty relation conditional
+on the identification); (3) the abstract's sentence (above); (4) after
+the register paragraph: every verdict the law's beam-v1 at the merge
+commit unless a hypothesis's identity is named, a hypothesis's PASS
+never changing the law's FAIL, incompatible predictions apart from
+capabilities not reached, PASS counts no evidence against a decisive
+FAIL; covariant-readings-v1 built and run (series S) in rows 4a, 4b,
+the Lorentz section and the consequences' rows, the law's rows FAIL,
+the identity's PASS on its domain; (5) the prediction paragraph's
+domain at its first occurrence with the grains, the settings and the
+prepared state, the allowed family, the compatibility not an advantage,
+a rejection criterion at five standard errors, no new physical data;
+(6) every table a longtable with repeated headers (16 tables): the
+compiled PDF 94 pages, no overfull vertical box (the 80-page build lost
+6051 points of the consequences table and the foot of the register).
+Also P10 restated by the Boss's decision (record 435; the Born note's
+line), series G2's status by date (record 408 to follow). The title is
+the owner's; put to him. Referee round 51.
+
