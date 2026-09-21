@@ -30,6 +30,7 @@ a { color: var(--accent); }
 nav.crumbs { font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
 figure.player { margin: 16px 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
 figure.player img.gif { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 4px; }
+figure.player img.gif[hidden], figure.player canvas[hidden], figure.player div.controls[hidden] { display: none; }
 figure.player canvas { display: block; max-width: 100%; height: auto; margin: 0 auto; background: var(--board); border-radius: 4px; }
 figure.player .controls { display: flex; gap: 12px; align-items: center; margin: 10px 0 4px; }
 figure.player input.slider { flex: 1; accent-color: var(--accent); }

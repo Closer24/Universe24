@@ -8809,3 +8809,8 @@ the index is [`docs/pages/gallery/index.html`](pages/gallery/index.html).
   the electron circling the proton with its momentum arrow and its copies
   spreading, its phase turning by its momentum, the proton's shell of
   copies; the steps and the exit of the run beside the register's.
+- [In three dimensions](pages/gallery/volume.html): the deuteron
+  (`nucleus/deuteron_1`), the free neutron's decay (`weak/j3_neutron_free`),
+  the atom (`bohr/r8`, the release and the orbit) and the beam beside the
+  mass (`lensing/mass_meeting`), run as declared, the whole GameBoard drawn
+  in an isometric projection with the bodies' copies and arrows.
