@@ -43,7 +43,13 @@ number) `expectations.json` beside them registers what a test reads of a
 root world (`two_contents`'s face records at its 20th interval,
 `tests/test_nature_beam_worlds.py` (e)), and `gate_set.json` carries each
 lamp-free gate world's `digests` at its cap (the sha256 of its state, its
-books and its events; `tests/test_amplitude_click.py` (d)).
+books and its events; `tests/test_amplitude_click.py` (d)). Every
+`expectations.json` names each entry's source in its `derivations` map
+and, since 2026-09-21 (the owner's rule, record 353), its second runner's
+check in its `replicated` map, one entry per run block pointing at the
+run's line in `docs/REPLICATIONS.md`; an entry absent there is a run
+measured once, awaiting replication
+([TEST_EXPECTATIONS](../../docs/TEST_EXPECTATIONS.md)).
 
 Run one:
 

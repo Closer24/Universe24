@@ -6,6 +6,20 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The register's verification map, on 2026-09-21 (docs and the schema only)
+
+The owner's rule of 2026-09-21 through the paper coordinator (record 353:
+every experiment relied on is done by two different ones and checked from
+every direction). A run is cited as measured only with a second runner and
+a recorded check: every `expectations.json` gains, beside `derivations`, a
+`replicated` map, one entry per run block, its value the run's line in
+`docs/REPLICATIONS.md` (the replicator's document) as the line's anchor;
+an absent map or entry is a run measured once, awaiting replication, and
+the paper labels it so. The replicator fills the map by its own pull
+requests from its lines; a register's key-set check leaves `replicated`
+out (`tests/test_hubble_stars_readings.py`). No number moved; no register
+carries the map yet ([TEST_EXPECTATIONS](TEST_EXPECTATIONS.md)).
+
 ## The host's batches and memos, on 2026-09-21 (host only, bit-exact)
 
 The model owner's order of 2026-09-21 ("optimization and simplify"), part

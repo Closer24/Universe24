@@ -42,6 +42,25 @@ lesson of 2026-09-21: the fraction-free batch re-read the weak README and
 left its register's warm-run counts, which no test compared;
 `tests/test_weak_readings.py` (e) since).
 
+Since 2026-09-21 as well (the owner's rule through the paper coordinator,
+record 353: "every experiment you rely on, make sure that two different
+ones did it and checked it from every direction; let there be no
+experiment that does not pass a check, always"), a run is cited as
+measured only with a second runner and a recorded check. Beside
+`derivations` every register carries a `replicated` map, one entry per
+run block (the keys `derivations` has), whose value is the run's line in
+`docs/REPLICATIONS.md`, the replicator's document (who ran,
+who re-ran on a machine of its own, the readings compared bit-exact or
+inside the pin, the four checks: the 48 signed axis permutations, the
+renaming of the entities, another order where the register allows one,
+the pin against the reading; REPLICATED, FAIL or INCONCLUSIVE), as the
+line's anchor, `docs/REPLICATIONS.md#<anchor>`. An absent map or entry means
+"measured once, awaiting replication", and the paper labels the run so
+until the line exists. The replicator fills the map by its own pull
+requests from its lines (one writer of REPLICATIONS.md and of the map);
+a test that checks a register's key set leaves `replicated` out as it
+leaves `format` and `derivations` out; no number moves with the map.
+
 ## Suite inventory of 2026-09-19: one engine, the Beam Law
 
 Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
