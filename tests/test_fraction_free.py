@@ -107,6 +107,17 @@ fraction-free counts"), written down first:
     placed so far; the rows of `test_nature_beam_body` (c) re-pinned (6, 5,
     5 and 5, 6, 5 for 8, 4, 4 and 4, 8, 4; the lamp on a set at x = 1 for
     x = 2).
+(j) the array form of the primitive (`nature_beam.by_drive_rows`, 2026-09-21,
+    the model owner's word on the flight's accumulator, record 299): on the
+    grid of every accumulator in -30 .. 30, every rate in -25 .. 25 (zero and
+    negative included), every denominator in 1 .. 12 and the caps 0, 1 and 2
+    (61 x 51 x 12 x 3 = 111 996 cases) the counts and the accumulators after
+    equal `by_drive`'s element by element; the named edges: a zero rate
+    counts nothing and leaves the accumulator, a negative rate counts with
+    its sign, a rate above the cap times the denominator counts the cap and
+    keeps the rest, an accumulator one below the wall with a rate of 1
+    counts 1 and leaves 0 (and the mirror at -(d - 1) with -1); a
+    denominator below 1 and a sum past the working register are refused.
 """
 
 from __future__ import annotations
@@ -127,7 +138,7 @@ from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.amplitude import cell_of, choose, rungs
 from event_universe.events.engine import count_owed, step_axis
 from event_universe.events.measured import CountTable, counts_table
-from event_universe.events.nature_beam import NO_ARRIVAL, place_over_nodes, share_of
+from event_universe.events.nature_beam import NO_ARRIVAL, by_drive_rows, place_over_nodes, share_of
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import LABEL_SCALE, MOMENTUM_BOUND, body_nodes
 from event_universe.snapshot_writer import write_snapshot
@@ -659,3 +670,40 @@ def test_a_sets_release_is_placed_by_the_nodes_claims():
             claims = counts.values("place")
             assert sum(claims) == 0 and all(abs(claim) < ways for claim in claims)
             assert all(abs(ways * got - total) < ways for got in placed)
+
+
+# -- (j) ---------------------------------------------------------------------------
+
+
+def test_the_array_form_of_the_primitive_equals_by_drive_on_the_grid():
+    """(j)."""
+    drives = np.arange(-30, 31, dtype=np.int64)
+    rates = np.arange(-25, 26, dtype=np.int64)
+    denominators = np.arange(1, 13, dtype=np.int64)
+    grid = np.array(np.meshgrid(drives, rates, denominators, indexing="ij")).reshape(3, -1)
+    drive, rate, denominator = grid[0], grid[1], grid[2]
+    assert drive.shape[0] == 61 * 51 * 12
+    for at_most in (0, 1, 2):
+        count, after = by_drive_rows(drive, rate, denominator, at_most)
+        expected = [
+            by_drive(int(d), int(r), int(n), at_most)
+            for d, r, n in zip(drive.tolist(), rate.tolist(), denominator.tolist(), strict=True)
+        ]
+        assert count.tolist() == [c for c, _ in expected]
+        assert after.tolist() == [a for _, a in expected]
+    # The named edges, one row each: a zero rate; a negative rate; the cap
+    # reached (a rate of 3 d under the cap 1 counts 1, keeps 2 d); the
+    # accumulator one below the wall with a rate of 1, and its mirror.
+    count, after = by_drive_rows(
+        np.array([5, -5, 0, 9, -9], dtype=np.int64),
+        np.array([0, -12, 30, 1, -1], dtype=np.int64),
+        np.array([10, 10, 10, 10, 10], dtype=np.int64),
+        at_most=1,
+    )
+    assert count.tolist() == [0, -1, 1, 1, -1] and after.tolist() == [5, -7, 20, 0, 0]
+    count, after = by_drive_rows(np.array([0], dtype=np.int64), np.array([30], dtype=np.int64), 10)
+    assert count.tolist() == [3] and after.tolist() == [0]
+    with pytest.raises(ValueError):
+        by_drive_rows(np.array([1], dtype=np.int64), 1, np.array([0], dtype=np.int64))
+    with pytest.raises(OverflowError):
+        by_drive_rows(np.array([np.iinfo(np.int64).max]), np.array([1], dtype=np.int64), 3)

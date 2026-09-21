@@ -1605,3 +1605,163 @@ theirs); "fixed-point transforms" narrowed to "signal processing"; the
 sentence split in two; Part III's "third input" tied to its own list
 of three and to Part I's declaration; PLAN.md's "reverted" corrected
 to "closed unmerged" and the verification claim made concrete.
+
+## Wave 9 (2026-09-21): main at 8c4a9754 taken (row 2a restated, the fan's grain G in the glossary)
+
+Main merged (PRs #502 and #503). NATURE row 2a is restated to the
+clicks under the birth wheel (d66ac8b6): FAIL, 0.966 against 0.98,
+0.014 below the measured and 0.034 below the ideal, the cause named
+(the fan's grain); the paper's row 2a drops "this paper's reading" and
+the register-predates-it note, and the count of this paper's additions
+to the register falls from three cells to two (rows 4a and 5b). The
+glossary's symbols table gains the fan's grain G as a constant of the
+law beside N, Q, P, W and K, distinct from the retired grain of
+doppler-v1 (6d57c7a2); the paper's glossary appendix, its caption and
+the terminology bibitem now cite 6d57c7a2, and the G row's wording
+follows the glossary's. The reproducibility caveat names main at
+8c4a9754. Records 329 to 332 (Kepler, Compton and Malus ordered; the
+Schrodinger question and the owner's yes to massive-rows-v1, PR #500)
+and the derivation's rows 58 and 59 (PR #504) are not on main yet and
+are not cited; the paper keeps Schrodinger "not reached" until the
+derivation is on the tree. Referee round 25 pending.
+
+## Referee round 25 (2026-09-21): wave 9, minor revision, applied
+
+Four findings, all applied: the register's provenance in the paragraph
+and in the caption names row 2a's restatement at d66ac8b6, as
+NUMBERS.md does; the change-history sentence on row 2a replaced by
+"the register's own reading"; the G row's list of constants says whose
+letters they are (the glossary's N, Q, P, W and K, this paper's N, Q_f,
+P, W and eta); row 2a's verdict cell carries the register's correlation
+miss (0.96 pinned, 0.891 read, the pin the screen's fan's). Verified by
+the referee: every number of row 2a against NATURE.md, 0.026 the
+register's own prose, the tally unchanged, the G row in the symbols
+table at 6d57c7a2 (53 rows), nothing of records 329 to 332 cited.
+
+## Wave 10 (2026-09-21): from the Node to the 48, the 24 and the pace; the order of the laws; Kepler, Compton and Malus pinned
+
+The owner's order through the Visualiser, relayed by the Boss (the
+record in PR #500, not yet on main, so not cited): one place that
+explains, from the six-Port Node, the 48 signed permutations, the
+determinant's 24 rotations and 24 improper maps, the hand as that
+determinant, the octahedron of the six Ports and its inscribed sphere
+c = 1 / sqrt 3, and then every law of the paper from Eq. (1) in order
+with how each was reached. Part I gains the paragraph "From the Node
+to the group, the octahedron and the pace" (records 142, 226 and 231
+cited; Theorem th:group, Proposition prop:pace and Figure
+fig:octahedron referenced, nothing re-proved) and the paragraph "What
+follows from Eq. (1), in order" becomes a numbered list in the Boss's
+order (Gauss, Newton and Coulomb, Doppler, the delay field, Born and
+the uncertainty relation, Young, Bohr, the information law, the
+redshift, then the masses, Kepler and Compton), each with its operation
+and how it was reached (limit, pin, run), the derivation record
+appendix holding the numbers. Main at 10f00c94 taken: the derivation's
+rows 58 (Kepler) and 59 (Compton), pinned and not run, enter the table
+of consequences and the derivation record; the Malus note
+(docs/designs/malus/NOTE.md, 70a39d6b) enters as a design from the
+entries in force with the pin 128, 0, 64 of 256 exact, NATURE row 9
+kept NOT YET with the pin named; the introduction's "in the limit only"
+list adds Kepler's laws; the derivations bibitem names 21.5's rows 58
+and 59; a malus bibitem; the log bibitem adds 142. The Visualiser's
+page 10 is not on the tree and is not cited. Referee round 26 pending.
+
+## Referee round 26 (2026-09-21): wave 10, major revision, applied
+
+Fifteen findings, three major, all applied: the pace stated as a bound
+(the value c = 1/sqrt 3 the design's third statement, assumed, as
+tab:recorda says), 48 and 24 counts of the figure and 1/sqrt 3 its
+bound, the constants listed with the fan's grain G and the roundings;
+the Kepler pin said to stand on form B, decided and not built (under the
+drive as built the host's period 687), with s32_r12_lamp named; the
+Compton row saying the law as built gives a different law (the released
+row takes the re-emitter's turn, no shift, the derivation's D on main);
+the parity worlds' qualifier "with an axis"; the duplicated sentence on
+the stand-in cut and "before any rate" corrected; Gauss from the release
+(operation 6) and the walk (operation 1); the source's Doppler read on
+G2 added; Bohr's levels open; Milne's q = 0 read inside; the masses'
+runs not called "not run"; "pin:" prefixed on the three new status
+cells; NATURE row 9's reading cell back to "no polariser built", the pin
+in the verdict cell, the caption naming it with the register's row
+unchanged; the read at a sum set with its cells clicked; the derivations
+bibitem's locator 21.2 with the blocks in 21.5; the log bibitem's 142 in
+order; the introduction's Kepler "(pinned, not run)".
+
+## The owner's review of abdf1115 (2026-09-21), handled
+
+The owner's own review of main at abdf1115 (the paper at 411667c5),
+relayed in conversation: the Doppler of a moving detector along an axis
+built (the crossing rule in the engine, 1 +- v/c, the relativistic
+factor missing); the discrete design of the energy and the clock
+complete, the condition E'^2 <= W < (E'+1)^2 checked by him over 40 000
+small momentum changes (an arithmetic check of the design, not an
+engine run; his check is not on the tree and is not cited); still open:
+(1) the design and the drive with the cap at c not in the main engine,
+(2) the domain, about 0.866 c along an axis, (3) the contraction and the
+energy balance at emission and absorption, (4) no demonstration that a
+moving detector reads the same c in every direction. The paper carried
+(1) and (3) already (not built, not run; the contraction not derived;
+the books' balance withdrawn); the Lorentz section now states the four
+in one sentence at the end of the covariant-readings passage and adds
+beta at most 0.866 to the domain; the integer form of the invariant was
+already in the section (the open item of the floating-point check
+closed) and in Figure fig:square.
+
+## Referee round 27 (2026-09-21): the Lorentz open list, rewritten
+
+Seven findings, three major, all applied: form B is "decided and in
+build, not on main" (HIGHLIGHTS 5.4, record 301), not "not built", at
+every place the paper said so (Part I's special case, the state, the
+Newton section, the Kepler rows); the domain parenthesis once, "gamma at
+most 2, beta at most 0.866, on a heading"; the books "withdrawn until
+derived" in the source's words, not renamed "the energy balance"; a
+moving detector's c stated by the three quantities the derivation keeps
+apart (the one-way count 1 -+ beta, the two-way count of an isotropic
+crowd the rest count exactly, the round-trip time gamma^2 along and
+gamma across, row 5b FAIL (pinned)), the wrong "its pin withdrawn"
+removed; the floating-point sentence dropped as a duplicate of the
+section's own sentence and the figure's caption; the passage reduced to
+one sentence so that nothing in the section is said twice.
+
+## Wave 11 (2026-09-21): Schrodinger reached only in part (section 23), records 329 to 336
+
+Main at 5cc43ae7 merged (PR #500's records 329 to 336; PR #507's
+section 23). Schrodinger's equation for a free particle: on the law as
+built not reached (every row at c); under massive-rows-v1, a hypothesis
+named and not built, the time-independent free equation reached in
+form (the massive row's wall E' = isqrt(E'_0^2 + 3 p . p), the photon
+its E'_0 = 0 case; de Broglie's turn per Link; the phase (N / h) p . x
+on the Nodes; the Helmholtz limit with k = 2 pi p / h, the
+time-independent Klein-Gordon form exactly, Schrodinger's at second
+order in p / E'_0; Born's |psi|^2 the click's Gram form), the
+time-dependent form not reached (no frequency in flight, forced by the
+click; one momentum per record); the pin slits_matter before any run
+(the bands at 36.5, 60, 83.5 within one; Pearson 0.96 +- 0.02; the
+centre's first click at 1 + 828 within 2), the confrontation Jonsson
+1961 and Tonomura 1989; the price stated (a massive quantum in flight a
+record of rows, matter a body after the click; record 332). Changed:
+the QM section's Schrodinger paragraph and its sum, the table of
+consequences, the derivation record, the hypotheses section's one
+sentence (massive-rows-v1 named once), the jonsson1961 bibitem, the
+derivations bibitem (23; row 60; E19), the log bibitem (330 to 336),
+the citations of 334 and 335 in Part I and the tables. Referee round
+28 pending.
+
+## Referee round 28 (2026-09-21): Schrodinger in part, applied
+
+Thirteen findings, two major, all applied: the derivation record's row
+restored to six cells (the order and the error term in their own
+columns; the label "the limit proved under massive-rows-v1, the pin
+assumed"); the consequences row's status prefixed "pin:" as the legend
+binds; "not replicating in flight" in 23.5's words (the birth over the
+fan the one apportioning); the phase exact to the accumulator's
+remainder; Born's |psi|^2 the Gram form at the click and nowhere
+between clicks; the wall E' by comparisons at the birth, no root in
+flight; the QM section's status list gains "under a hypothesis named
+beside it"; the hypotheses section says the design is ordered and not
+delivered (record 336), not run; two commas in the bibitems; record
+333's gloss with the atoms; record 334 cited as the owner's direction,
+not as evidence. Reported, pre-existing: the abstract at 1944 characters
+between its LaTeX markers (the plain-text count for arXiv's 1920 is
+taken at submission, arxiv_metadata.md); the Heisenberg single-opening
+row's status without "pin:".
+

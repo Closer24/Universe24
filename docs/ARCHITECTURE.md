@@ -126,6 +126,22 @@ fraction-free law of 2026-09-20; `core.integer.by_drive`): a whole part
 off the clock at the current rate discards the remainder of a changing
 rate, so it is admitted only as the constant-rate identity of a count, or
 as a comparison of an age against a key.
+The tables the engine carries at run time are declarations of the world,
+each computed once at load from its declared integers and read by the
+rules as a constant ([BEAM_LAW note 41 (viii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+2026-09-21), with the test that pins its entries:
+the flight's constants per direction (`nature_beam.direction_flight`: S_1,
+T_d = isqrt(3 |**v**|^2 Q^2), the period, the Bresenham line, the unit
+label **u**_d; `tests/test_nature_beam_label.py` (a), `tests/test_nature_beam_flight.py` (a) and (g));
+the phase circle (`core.phase.phase_circle`: cos and sin of every step at
+1 / 256 by fixed-point series; `tests/test_group_structure.py` (b), the
+amplitude gate's xfail at N = 4096); the collision table
+(`nature_beam.collision_table`: the shift on the 3^8 slot states, generated
+from the class rule; `tests/test_nature_beam_collision.py` (b),
+`tests/test_group_structure.py` (c)); the arc table of the meeting
+(`meeting.arc_table` on the unit labels, per target on demand;
+`tests/test_meeting.py`); the cube's group (`core.game_board.cube_symmetries`,
+read by no rule at run time; `tests/test_group_structure.py` (a)).
 Keep documented integer split/quantization policies explicit and test their
 accounting. Arithmetic failure must not leave a partially committed transaction.
 
@@ -228,7 +244,7 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 
 | Module | Allowed dependencies |
 | --- | --- |
-| `core/integer` | Standard-library types; owns the working-register bound (`checked_work`) and the Beam Law's integer primitives (`bounded_gcd`, `integer_root`, `by_clock`, `by_drive`, `signed_inner`, `apportion_whole`) |
+| `core/integer` | Standard-library types; owns the working-register bound (`checked_work`) and the Beam Law's integer primitives (`bounded_gcd`, `integer_root`, `by_clock`, `by_drive`, `signed_inner`, `apportion_whole`); the array forms of the two counts over rows (`by_clock_rows`, `by_drive_rows`) live in `events/nature_beam` with numpy |
 | `core/game_board` | `core/integer` (`checked_work`); the GameBoard's addresses, the six Port headings in Port order (`PORT_HEADINGS`, `adjacent_node`), the cube's group of 48 with its hand (`cube_symmetries`, `compose_symmetries`, `inverse_symmetry`, `symmetry_hand`; named 2026-09-21) and the bound of a declared charge and quantum (`MAX_VALUE`) |
 | `core/phase` | `core/integer`; the phase circle's cosine and sine tables from fixed-point series, cached per N, and the circle itself as the cyclic group of N steps with its unit vectors (`PhaseCircle`, `phase_circle`; named 2026-09-21), and their Gram matrix (`phase_gram`, stored through `GRAM_STORED_STEPS`) |
 | `events/world` | `core/integer`, `core/game_board`; the world file of the Beam Law, its keys, defaults, bounds and refusals (`parse_nature_beam_world`, `NatureBeamWorld`), the constants `Q`, `LABEL_SCALE`, `FACE_NAMES`; no execution |

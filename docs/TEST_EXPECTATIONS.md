@@ -59,7 +59,7 @@ kept, their pins the law of events').
 | --- | --- | --- |
 | `test_nature_beam_readings.py` | The one reading: the moments of order 0, 1 and 2 of the arrivals' direction vectors, taken once; equal to the slot decomposition on the six headings, the moments of the fan on a fan, covariant under the 48 GameBoard symmetries, bounded; the push by the flow of every number but the reader's own; the presence over rest and moving rays; the threshold over the set and the window per ray; the dense readings of the GameBoard decomposed on request for the active Nodes ([below](#the-one-reading)) | `test_one_reading_set` (a to d), `test_phaseless_family` (c), `test_detector_sensitivity` (b), `test_event_suspension` (e) |
 | `test_default_table.py` | The table generated from the keys: a free family read, a paid one measured, no window; explicit defaults change nothing; what differs is kept; the kind derived from the quantum and `kind` refused; every example world equal to itself with the defaults written back ([below](#the-table-generated-from-the-keys)) | new |
-| `test_nature_beam_flight.py` | The flight: the table at 1 / sqrt 3 with its periods, a lone unit straight and unchanged, the isotropy, the periodic axis and the stub, the open face's click, `adjacent_node` ([below](#the-flight)) | `test_event_transit` (a), `test_periodic_axis` (a to c), `test_event_boundaries` |
+| `test_nature_beam_flight.py` | The flight: the table at 1 / sqrt 3 with its periods, a lone unit straight and unchanged, the isotropy, the periodic axis and the stub, the open face's click, `adjacent_node`, the accumulator read in one place, and (g) the walk as the one count primitive on every direction of the register's fans over a full period ([below](#the-flight)) | `test_event_transit` (a), `test_periodic_axis` (a to c), `test_event_boundaries`; (g) 2026-09-21 |
 | `test_nature_beam_push.py` | The push as one bilinear form over the arriving rays' labels, the emitter's factor on the record, and the one momentum label the click, the re-emission, the home and the transit line move ([below](#the-push-as-one-form)) | new (2026-09-19, the night: the physics-rule review's F1 and the model owner's proposal 2) |
 | `test_columns.py` | The one coupling as a signed inner product over the columns: the two built-in columns equal to the landed form integer by integer and refusal by refusal on a grid, at the register's scale and on the replay of the series 7 worlds' `read` records; a third column with the sign minus giving the design's integers and the sign as a key; the refusals and the alignment; the bounds at parsing and at the push; every column floored on its own ([below](#the-columns)) | new (2026-09-20, the model owner's "one mechanism for all the laws on the GameBoard"; the mathematician's verified form) |
 | `test_lifetime.py` | The lifetime of a family and the held content: the click on the border `lifetime` booked as a face books an escape (the record 2^26, the ledger lines, the run's record), a ray read at the age L and then booked, the reach of L = 1, 2, 3 on the flight table (the six neighbours, the face diagonals, the cube diagonals and two Links), the inverse refused, the refusals; a measured event holding content of two families (the charges as rational sums, the push, the release of both, the record) and the register's proton ([below](#the-lifetime-and-the-held-content)) | new (2026-09-20, the model owner's "the strong force's range is a lifetime, L"; the physicist's D-1) |
@@ -73,7 +73,7 @@ kept, their pins the law of events').
 | `test_nature_beam_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_nature_beam_clock.py` | The clock under the Beam Law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-beam-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder (since the step drive of 2026-09-20 the same integers, the remainder now the drive on the body's record); the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
-| `test_fraction_free.py` | The fraction-free counts (2026-09-20, BEAM_LAW note 41): every count of a body an accumulator on its record, `by_drive`'s count; the identity at a constant rate on every count over 10^4 intervals, the accumulators carried in `state.json` and a resumed run identical, the bound below the denominator at every tick, a column whose Lambda_c^2 leaves the register refused at load ([below](#the-fraction-free-counts)) | new (2026-09-20, the mathematician's FORM.md, the physics-rule reviewer's REVIEW_COUNTS.md, records 147 and 148) |
+| `test_fraction_free.py` | The fraction-free counts (2026-09-20, BEAM_LAW note 41): every count of a body an accumulator on its record, `by_drive`'s count; the identity at a constant rate on every count over 10^4 intervals, the accumulators carried in `state.json` and a resumed run identical, the bound below the denominator at every tick, a column whose Lambda_c^2 leaves the register refused at load, and (j) the primitive's array form `by_drive_rows` equal to `by_drive` on a grid of 111 996 cases with the named edges ([below](#the-fraction-free-counts)) | new (2026-09-20, the mathematician's FORM.md, the physics-rule reviewer's REVIEW_COUNTS.md, records 147 and 148) |
 | `test_step_drive.py` | The step drive (2026-09-20, BEAM_LAW note 17 as amended): the count of Links as the whole part of the distance the momentum has driven, one bounded integer per axis on the body's record: the identity at a constant momentum with `by_clock(n - 1, \|p\|, D)` over 4000 self-creations and twelve momenta; the identity on two axes (the coincident step lost as before); the integrated distance under a halving momentum (38 within 1, 37 to 39, where the rule as it was made 1); never two Links in one interval under a random momentum over 10 000 intervals with the drive in [0, 2 D - 1); the record (`drive`, `axis_steps`, the `step` line) and a declared `drive` refused; the turn by momentum unchanged; the signed drive under a reversal (no Link until the drive cancels and reaches -D) and the bound pair under a suspension holding for 3000 intervals ([below](#the-step-drive)) | new (2026-09-20, series G2's finding, record 107; the owner's decision, record 108); the drive signed the same day (record 126) |
 | `test_crossing.py` | The crossing rule (2026-09-21, BEAM_LAW note 48; the model owner's record 158 of 2026-09-20, the physicist's design docs/designs/crossing/DESIGN.md): the experimenter's streams read as counts, 45 in 32 and 58 in 48 toward, 19 in 32 and 38 in 48 away with the windows of each step, 48 in 48 at rest, no row twice (the `measure` counts equal), the probe pair -2880 = 64 x 45 and the key `doppler` refused; the streams beyond the axis on a plane of lines, 32, 24 and 36 in 32; one row met once (a `read` line at tick 12, 3, 1 in three worlds); the sums over a period 183, 311, 74, 202; the fast steps reported (18 and 6 at the momentum 96, 20 and 10 at 128, 15 and 0 at 64) ([below](#the-crossing-rule)) | new (2026-09-21; the pins of (c) from the rule transcribed on the lines' geometry, docs/designs/crossing/crossing_2d.py, before the run) |
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
@@ -114,6 +114,7 @@ kept, their pins the law of events').
 | `test_amplitude_gram.py` | The click without amplitudes (2026-09-21): the Gram matrix of the tables (its eight diagonal values, not circulant, rank 2, the antipodal pairs killed, stored through N = 512), the identity f^T G f = X^2 + Y^2 on random vectors and on `mz_equal`'s record at every u, the layer's cells against the click as it was on synthetic one-arm, read, rotated, pair and GHZ records, the turn as a shift exact at the quarter turns and not at t = 3, the tensor form exact and the convolution not, the ring product ([below](#the-click-without-amplitudes)) | new (2026-09-21; record 188; BEAM_LAW note 37 (xii)) |
 | `test_exact_phase.py` | The exact phase at the click (2026-09-21): the axis and the diagonal at the rate 8 (u + 41 with the remainder 48 / 64, u + 42 with the remainder 0 / 128 where the walk read u + 40), the layer's pointer at it, the integer form without it, a face's row (u + 4 where the walk read u + 56), the numerator beyond the register refused, the primitive `exact_phase` ([below](#the-exact-phase-at-the-click)) | new (2026-09-21; record 163 (2); BEAM_LAW note 45) |
 | `test_birth_wheel.py` | The birth wheel at a declared rate (2026-09-21): the key required on every lamp and refused as a bare integer, a rate 0 or a wheel 0; every world file with a lamp declares it; [1, N] the count of births (the lamp's `acc` `wheel`, the rungs on 64); the golden rate's first ten u and phases, the rungs on 4096; the cell read on the wheel (two equal cells: a, b, a, b, a, a, b, a, b, b against 32 a then 32 b); the replay tool reads the wheel from the lamp ([below](#the-birth-wheel)) | new (2026-09-21; record 180; BEAM_LAW note 46) |
+| `test_amplitude_malus.py` | A12 under the click, Malus's law from the table entries in force (2026-09-21): the pin of `docs/designs/malus/NOTE.md` derived again from the three worlds and the engine's half-angle tables of 2N = 512 (the cells' weights the products of C' and S', the rungs b_k = (2 W C_k + T) // (2 T) over the wheel's 256 births) against the register; the replay of `malus_a`, `malus_b` and `malus_c` (u over every residue once, the registered rungs on every gather, the chosen cells 128 / 128, 0 / 256 and 64 each, the books balanced); the rotate keeps the record's u (every `split` line at the rotation `rebirth` False with the record's identity and its u, two per row; the `rotate` and `read` lines) ([below](#the-amplitude-law-malus)); every number read from `expectations.json` under `malus` | new (2026-09-21; the model owner's go, record 330; the mathematician's note) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -276,6 +277,17 @@ one Link per interval, the age modulo the direction's period.
   residue equals (tau r + T_d) mod d and stays in [0, d), and
   `walk_step` is the line's (m mod S_1)-th unit step times [residue + r
   >= d]; a rest direction holds (0, 1) at every age.
+- (g) the flight through the one count primitive (2026-09-21, the model
+  owner's word, record 299; `nature_beam.by_drive_rows`): on every
+  direction of the register's fans (the six headings, the 290 primitive
+  vectors with |a| + |b| + |c| <= 6, the two-slit openings' 91 with a >= 1
+  and a + |b| <= 12; 387 directions with the two rest ones) over one full
+  period plus one, the walk's step at every age is the closed form's, m(tau
+  + 1) - m(tau) on the m(tau)-th unit step of the line, and the primitive
+  applied age by age from T_d at the rate 2 S_1 Q over the wall 2 T_d
+  reproduces `Flight.accumulator`'s (m, residue) at every age, its counts
+  summing to m(tau); one period returns the residue to T_d and makes
+  period x S_1 Q / T_d Manhattan steps exactly.
 
 ## The collision table
 
@@ -713,6 +725,39 @@ register's L7 entry), written before the run: Since 2026-09-21 the test derives 
   part as the walk's 3 x 29 = 87 at the rate 3 (the design's 41.75 and
   42.00 are the rate 8's, `test_exact_phase`); under the integer form no
   `exact` is written; the file's pins under `cone.exact`.
+
+## The amplitude law: Malus
+
+`tests/test_amplitude_malus.py` (A12 under the click; the mathematician's
+note docs/designs/malus/NOTE.md, sections 2 and 3; the model owner's go,
+record 330 of docs/LOG_2026-09-20.md; docs/BEAM_LAW.md note 46), on the
+worlds `malus_a`, `malus_b` and `malus_c` of series L's generator
+(`examples/events/amplitude/make_worlds.py`, `expectations.json` under
+`malus`: the pin written before the run of 2026-09-21 and the run's
+readings beside it, every count a DETECTOR reading, the books GAMEBOARD).
+The expected integers, written down before the first run:
+
+- (a) the pin derived again from the worlds and the engine's tables: on
+  the half-angle tables of 2N = 512, C'[64] = S'[64] = 181 and C'[128] =
+  0, S'[128] = 256; the cells' weights `malus_a` 0+ 181^2, 0- 181^2;
+  `malus_b` 0+ 0, 0- 256^2; `malus_c` 0+, 0-, 1+ and 1- 181^4 each; the
+  rungs [0, 128, 256], [0, 0, 256] and [0, 64, 128, 192, 256]; the counts
+  128 / 128, 0 / 256 and 64 each, the pass (the cell 0+) 128, 0 and 64 of
+  256, equal to the register's;
+- (b) the replay: 256 gathers of the ordinals 1 .. 256 per world, u =
+  ordinal x 159 mod 256 over every residue once; every gather's cells the
+  registered rungs in the click's order (the read's labels ascending, the
+  channels + before -); the chosen cells as (a), bit-exact, and as the
+  run's reading; over every record gathered by the end (289 of 299 born,
+  10 open, the first gather at tick 11) 145 / 144, 0 / 289 and 73 / 72 /
+  72 / 72; the books balanced;
+- (c) `malus_c`: 592 `split` lines at the rotation, `rebirth` False on
+  every one, the record's own identity and its birth u, two per record
+  (the first at tick 4: absorbed 181, born 181, multiplicity 65536); the
+  `rotate` line setting 64, bit 0, turn 0, 2 rows, the record's units 1
+  to 362; the `read` line's rows the labels 0 and 1 at the multiplicity
+  65536 and the amount 181, the phases 0 and 128 (the set bit a half turn
+  on).
 
 ## The birth wheel
 
@@ -2080,6 +2125,22 @@ zero within the number of Nodes and every Node within one unit of its
 equal share; `test_nature_beam_body` (c) re-pinned (6, 5, 5 and 5, 6, 5 for
 8, 4, 4 and 4, 8, 4; the lamp on a set at x = 1 for x = 2 with the claims
 (-1, -1, 2)); `bohr/r2`'s gate digests re-pinned (a body on three Nodes).
+
+**The primitive's array form (2026-09-21, the model owner's word on the
+flight's accumulator, record 299).** `tests/test_fraction_free.py` (j):
+`nature_beam.by_drive_rows` on the grid of every accumulator in -30 .. 30,
+every rate in -25 .. 25 (zero and negative included), every denominator
+in 1 .. 12 and the caps 0, 1 and 2 (111 996 cases) gives the counts and
+the accumulators after that `by_drive` gives element by element; the
+named edges: a zero rate counts nothing and leaves the accumulator (5
+with 0 over 10: 0, 5), a negative rate counts with its sign (-5 with -12:
+-1, -7), a rate above the cap times the denominator counts the cap and
+keeps the rest (0 with 30 over 10 under the cap 1: 1, 20; without the cap
+3, 0), an accumulator one below the wall with a rate of 1 counts 1 and
+leaves 0 (9 with 1; the mirror -9 with -1: -1, 0); a denominator below 1
+is refused and a sum past the working register (2^63 - 1 plus 1) is
+refused before it is formed. The flight reads it: `test_nature_beam_flight`
+(g).
 
 **The turn by momentum as the `action` row (record 155 of 2026-09-20).**
 `test_nature_beam_body` (d) and `test_step_drive` (e) are unchanged: at a

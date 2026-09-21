@@ -166,6 +166,27 @@ pair form [3, 1] (3 per interval of age). Pinned from the flight table
 phase - u at the click 51 and 8 under the integer form, 23 and 23 under
 the pair form (`expectations.json` under `cone`).
 
+A12 under the click, Malus's law from the table entries in force (the
+mathematician's note docs/designs/malus/NOTE.md, section 2; the model
+owner's go, record 330 of docs/LOG_2026-09-20.md; no new key): one bar of
+7, N = 256, the lamp at x = 0 on +x with the golden wheel [159, 256] and no
+`branches` (every row born on the label 0, "along y"), 300 intervals; the
+first polariser's rotation at x = 2 (a `rerelease` whose `rotate` turns
+the label bit by the setting 64, 45 degrees; world `malus_c` alone: in
+`malus_a` and `malus_b` the polariser at 0 degrees is the born axis), the
+projection at x = 4 (a counter's which-path `read`, the detector `first`
+reading `sum`: the pass label 0, the absorbed label 1 whose rows go on to
+the end and click in their own cells), the last polariser at x = 6 (a
+counter's `phase_window` s, the detector `second` reading `sum`: s = 64 in
+`malus_a`, one polariser at 45 degrees; 128 in `malus_b`, two crossed; 64
+in `malus_c`, a third at 45 degrees between two crossed). The pin
+(`expectations.json` under `malus`, from the note's section 3): the cells
+named by the read's label and the end's channel, the pass the cell 0+,
+the counts over the 256 births by the click's rungs on the products of the
+half-angle tables' entries: `malus_a` 0+ 128, 0- 128; `malus_b` 0+ 0, 0-
+256; `malus_c` 0+ 64, 0- 64, 1+ 64, 1- 64; exact at 45 and 90 degrees
+(181 = 181, 0 and 256), no rounding.
+
     python examples/events/amplitude/make_worlds.py [--out DIR]
 """
 
@@ -254,6 +275,26 @@ PYTHAGOREAN_29 = (20, 21)
 PYTHAGOREAN_169 = (119, 120)
 BALANCED = (1, 1)
 PYTHAGOREAN_5 = (3, 4)
+# A12 under the click, Malus's law (docs/designs/malus/NOTE.md, section 2):
+# one bar of 7 at N = 256 (the half-angle tables of 2N = 512 exist), the
+# lamp at x = 0 on the golden wheel [159, 256] (159 the odd integer nearest
+# to 0.618 x 256: u = ordinal x 159 mod 256 runs over every residue once),
+# the rotation at x = 2, the read at x = 4, the window at x = 6, 300
+# intervals (256 births at the rate [1, 1], six Links of flight, the
+# completions). Per world the first polariser's rotation (None: the
+# polariser at 0 degrees is the born axis) and the last polariser's window,
+# settings of the half-angle tables (180 s / N degrees: 64 is 45, 128 is 90).
+MALUS_N = 256
+MALUS_WHEEL = [159, 256]
+MALUS_TICKS = 300
+MALUS_ROTATE_X = 2
+MALUS_READ_X = 4
+MALUS_END_X = 6
+MALUS_SETTINGS: dict[str, tuple[int | None, int]] = {
+    "malus_a": (None, 64),
+    "malus_b": (None, 128),
+    "malus_c": (64, 64),
+}
 
 
 def mirror(position: list[int], direction: list[int]) -> dict[str, object]:
@@ -828,24 +869,31 @@ def ghz(name: str, basis: str) -> dict[str, object]:
 GATE_CLOCK = 1 << 50
 
 
-def lamp(position: list[int], direction: list[int]) -> dict[str, object]:
+def lamp(position: list[int], direction: list[int], wheel: list[int] | None = None) -> dict[str, object]:
+    """A lamp of `light` on one direction at the rate [1, 1]; its birth
+    wheel [1, N] unless another is declared."""
     return {
         "position": position,
         "family": "light",
         "amount": GATE_CLOCK,
         "fixed": True,
-        "lamp": {"rate": [1, 1], "wheel": [1, N], "directions": [direction]},
+        "lamp": {
+            "rate": [1, 1],
+            "wheel": [1, N] if wheel is None else list(wheel),
+            "directions": [direction],
+        },
     }
 
 
-def hadamard(position: list[int], direction: list[int]) -> dict[str, object]:
-    """A re-emitter on one direction rotating the label bit 0 by N/4."""
+def hadamard(position: list[int], direction: list[int], setting: int = QUARTER) -> dict[str, object]:
+    """A re-emitter on one direction rotating the label bit 0 by the
+    setting (N/4, the Hadamard, unless another is declared)."""
     return {
         "position": position,
         "family": "light",
         "amount": 1,
         "fixed": True,
-        "table": {"light": {"rule": "rerelease", "rotate": {"setting": QUARTER}}},
+        "table": {"light": {"rule": "rerelease", "rotate": {"setting": setting}}},
         "directions": [direction],
     }
 
@@ -1002,6 +1050,40 @@ def gate_worlds() -> dict[str, dict[str, object]]:
     found["rotations_3"] = rotations("rotations_3", ROTATIONS_WITHIN_BOUND)
     found["rotations_4"] = rotations("rotations_4", ROTATIONS_WITHIN_BOUND + 1)
     return found
+
+
+def malus(name: str, rotate: int | None, window: int) -> dict[str, object]:
+    """Malus's law from the entries in force (docs/designs/malus/NOTE.md,
+    section 2): a row born on the label 0 (along y) at the lamp on the
+    golden wheel, rotated on the GameBoard by `rotate` where a first
+    polariser is declared, read by the which-path `read` at the detector
+    `first` (the projection: the pass label 0, the absorbed label 1, its
+    rows going on in their own cells), then the last polariser's window
+    at the detector `second`; the pass is the cell 0+."""
+    measured = [lamp([0, 0, 0], PLUS_X, MALUS_WHEEL)]
+    if rotate is not None:
+        measured.append(hadamard([MALUS_ROTATE_X, 0, 0], PLUS_X, rotate))
+    measured.append(
+        {
+            "position": [MALUS_READ_X, 0, 0],
+            "family": "counter",
+            "amount": 1,
+            "fixed": True,
+            "table": {"light": {"rule": "read"}},
+        }
+    )
+    measured.append(counter([MALUS_END_X, 0, 0], window))
+    detectors = [
+        {"name": "first", "positions": [[MALUS_READ_X, 0, 0]], "reading": "sum"},
+        {"name": "second", "positions": [[MALUS_END_X, 0, 0]], "reading": "sum"},
+    ]
+    world = gate_world(name, [MALUS_END_X + 1, 1, 1], measured, detectors, ticks=MALUS_TICKS)
+    world["N"] = MALUS_N
+    return world
+
+
+def malus_worlds() -> dict[str, dict[str, object]]:
+    return {name: malus(name, rotate, window) for name, (rotate, window) in MALUS_SETTINGS.items()}
 
 
 def bell_n(name: str, n: int, a: int, b: int) -> dict[str, object]:
@@ -1174,6 +1256,7 @@ def worlds() -> dict[str, dict[str, object]]:
     found.update(gate_worlds())
     found.update(pair_n_worlds())
     found.update(cone_worlds())
+    found.update(malus_worlds())
     return found
 
 
@@ -1426,6 +1509,63 @@ def ghz_expectations() -> dict[str, object]:
     return found
 
 
+# A12 under the click: the note's reading (docs/designs/malus/NOTE.md,
+# section 3; its host script malus_map.py), in its integers, before any run.
+def malus_cells(rotate: int | None, window: int) -> dict[str, int]:
+    """The cells of one row born on the label 0 through the arrangement,
+    in the click's order (the read's labels ascending, then the channels +
+    before -), with their weights: with the rotation s1 before the read
+    the read's label 0 carries C'[s1] and its label 1 carries S'[s1] (the
+    design's 2.2), the end's channels + and - weigh C'[s2]^2 and S'[s2]^2
+    on the label 0 and S'[s2]^2 and C'[s2]^2 on the label 1 (4.1); without
+    a rotation the row is on the label 0 alone. The amount and the read's
+    factor multiply every cell alike and cancel in the rungs."""
+    c2, s2 = half_angle(window, MALUS_N)
+    if rotate is None:
+        return {"0+": c2 * c2, "0-": s2 * s2}
+    c1, s1 = half_angle(rotate, MALUS_N)
+    return {
+        "0+": (c1 * c2) ** 2,
+        "0-": (c1 * s2) ** 2,
+        "1+": (s1 * s2) ** 2,
+        "1-": (s1 * c2) ** 2,
+    }
+
+
+def malus_expectations() -> dict[str, object]:
+    """Per world the settings, the cells' weights, the rungs and the
+    counts over the 256 births (u = ordinal x 159 mod 256 runs over every
+    residue once, so the cell k holds b_k - b_(k-1) of the births), the
+    pass the cell 0+; the note's table of section 3."""
+    found: dict[str, object] = {
+        "births": MALUS_N,
+        "wheel": list(MALUS_WHEEL),
+        "tables": {
+            str(s): list(half_angle(s, MALUS_N))
+            for s in sorted({s for pair in MALUS_SETTINGS.values() for s in pair if s is not None})
+        },
+    }
+    for name, (rotate, window) in MALUS_SETTINGS.items():
+        weights = malus_cells(rotate, window)
+        order = list(weights)
+        counted = ladder({k: Fraction(v) for k, v in weights.items()}, order, MALUS_N)
+        total = sum(weights.values())
+        rungs, cumulative = [0], 0
+        for cell in order:
+            cumulative += weights[cell]
+            rungs.append((2 * MALUS_N * cumulative + total) // (2 * total))
+        counts = {cell: counted.get(cell, 0) for cell in order}
+        found[name] = {
+            "rotate": rotate,
+            "window": window,
+            "weights": weights,
+            "rungs": rungs,
+            "counts": counts,
+            "pass": counts["0+"],
+        }
+    return found
+
+
 # The GameBoard and layer readings the register split registered beside the
 # design's expectations on 2026-09-21 (the trimming's part 2, PR #422: a test
 # reads a world's numbers from the register, never a literal of its own): the
@@ -1544,6 +1684,63 @@ REGISTERED_RUN_READINGS: dict[str, dict[str, object]] = {
         "ghz_gate_line": {"labels": [[0, 1], [7, 1]], "arms": 3, "rows": 6},
         "rotation_multiplicity": 65536,
     },
+    # A12 under the click: the run of 2026-09-21 (the experimenter, on the
+    # owner's go of record 330), each world once through the runner, 300
+    # intervals, about 2 s each; the pins of section 3 of the note read
+    # exactly, none moved. The counts are DETECTOR readings (the gathers'
+    # chosen cells, the read's label then the end's channel, over the
+    # records of the ordinals 1 .. 256, whose u runs over every residue of
+    # the wheel once, and over every record gathered by the end); the
+    # `split`, `rotate` and `read` lines are the re-emitter's and the
+    # counter's record lines (DETECTOR, the record of a measured event: the
+    # rotate keeps the record's u, no rebirth counted); the books GAMEBOARD.
+    "malus": {
+        "run": {
+            "date": "2026-09-21",
+            "source_sha256": "e81a378ceec0b7f8e65bb5c4ea2c7e48dd93728ab6e84dbe33148eecd919a6af",
+            "intervals": MALUS_TICKS,
+            "born": 299,
+            "gathered": 289,
+            "open": 10,
+            "first_gather_tick": 11,
+            "conserved_at_every_completed_tick": True,
+            "kinds": "counts DETECTOR (the gathers' chosen cells); split, rotate and read lines DETECTOR (the record lines of a measured event); the books GAMEBOARD",
+        },
+    },
+    "malus.malus_a": {
+        "measured": {
+            "initialization_sha256": "eab7bb354b3459acfac5c6ae4a96bf1b426864cd66d43388ebc66fb8949e0ed4",
+            "counts": {"0+": 128, "0-": 128},
+            "all_gathered": {"0+": 145, "0-": 144},
+        }
+    },
+    "malus.malus_b": {
+        "measured": {
+            "initialization_sha256": "1075554cf04a7ee2f192fb16a70e9cb160f6152f31838317c3f2d01ff6b5c460",
+            "counts": {"0+": 0, "0-": 256},
+            "all_gathered": {"0+": 0, "0-": 289},
+        }
+    },
+    "malus.malus_c": {
+        "measured": {
+            "initialization_sha256": "f6a2dc74887ffdb5f716ca15f072573ba610af06e4dd808bdf5365727882c342",
+            "counts": {"0+": 64, "0-": 64, "1+": 64, "1-": 64},
+            "all_gathered": {"0+": 73, "0-": 72, "1+": 72, "1-": 72},
+            "split": {
+                "lines": 592,
+                "per_record": 2,
+                "rebirth": False,
+                "u_kept": True,
+                "first": {"tick": 4, "absorbed": 181, "born": 181, "multiplicity": 65536},
+                "note": "the rotate re-creates the rows and keeps the record's "
+                "identity and its u (the design's 2.2, the rows kept); note "
+                "46's rebirth is a re-emitter chosen by a click, not a rotate",
+            },
+            "rotate_line": {"setting": 64, "bit": 0, "turn": 0, "rows": 2, "units": [1, 362]},
+            "read_rows": [[0, 65536, 181, 0], [1, 65536, 181, 128]],
+            "read_rows_columns": "label, multiplicity, amount, phase (the two rows of a record at the read, the set bit a half turn on)",
+        }
+    },
 }
 
 # The source of every registered entry (the owner's principle of 2026-09-21,
@@ -1560,6 +1757,7 @@ DERIVATIONS: dict[str, str] = {
     "gate": "the Hadamard's amount C[16] = S[16] = 181 of the 128-step tables (core/phase.py; the amplitude 181 x 2^24); the cells and the correlations measured (target 6)",
     "pair_n": "measured (target 6: |E - cos| <= 1/N the design's bound at N = 1024, failing at 4096 by the tables' rounding; 2896/1024 the design's sum)",
     "cone": "DERIVATIONS_BEAM 11.1: the flight's closed form m_D(tau) and tau_k = ceil((2 k - 1) T_D / (2 S_1 Q)), the phase k m_D(tau) under the integer form and floor(tau n / d) under the pair form; `exact` the phase at the exact time of the last Link, the whole part and the remainder of n x Links x T_D over d x S_1 x Q (BEAM_LAW note 45); derived from the worlds and compared by tests/test_amplitude_cone.py",
+    "malus": "docs/designs/malus/NOTE.md section 3 (the mathematician's pin before the run): the cells' weights the products of the half-angle tables' entries of 2N = 512 (core/phase.py: C'[64] = S'[64] = 181, C'[128] = 0, S'[128] = 256; the rotation the design's 2.2, the window's channels 4.1), the counts the click's rungs b_k = (2 W C_k + T) // (2 T) over W = 256 births on the wheel [159, 256] (BEAM_LAW note 46; DERIVATIONS_BEAM 6.2), Malus's cos^2 exact at 45 and 90 degrees; derived from the worlds and compared by tests/test_amplitude_malus.py; the split lines' rebirth, the gathers and the books measured (the run of 2026-09-21)",
 }
 
 
@@ -1575,6 +1773,7 @@ def expectations() -> dict[str, object]:
             "gate": gate_expectations(),
             "pair_n": pair_n_expectations(),
             "cone": cone_expectations(),
+            "malus": malus_expectations(),
         }
     )
     for path, entries in REGISTERED_RUN_READINGS.items():
