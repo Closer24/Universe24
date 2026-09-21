@@ -6,6 +6,42 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The host's batches and memos, on 2026-09-21 (host only, bit-exact)
+
+The model owner's order of 2026-09-21 ("optimization and simplify"), part
+(b): the runner profiled on the gate set's worlds (`cProfile`, the time by
+function), then the measured hot spots of the host made to compute the same
+integers once. No rule, no register, no run moved: the gate set's digests
+read as before (`tests/test_amplitude_click.py` (d)); the expected results
+are in `tests/test_host_batches.py`.
+
+- The store's rows born in an interval were appended one call per
+  measured event and family, each call a copy of the whole store (the cost
+  of a run quadratic in the rows: on `heisenberg/w27_beam` at 40
+  intervals the appends were 46 s of 111 s under the profiler). Step 5
+  collects the born rows per family in the order of the measured events
+  and the families and appends them once (`NatureBeamStore.extend`, one
+  concatenation per field; `append` is `extend` of one batch): the same
+  rows in the same order.
+- A body's charges (`Measured.charges`, the exact rational sum over what
+  it holds per column, reduced) were computed at every read: by the frame
+  once per interval and by the books once per interval per body (on
+  `weak/j3_deuteron` at 700 intervals, 1.45 million computations, 14 s of
+  83 s under the profiler over four worlds). The last result is kept on
+  the body with its inputs (what is held, the units per paid family) and
+  returned again while they are the same: the same pairs, computed once
+  per change.
+- The world's `handed` (a scan of every family, transit row and measured
+  event) is a cached property of the frozen world, read once.
+
+Candidates measured and not changed here: `_measured_arrays` (the measured
+events' tables rebuilt as arrays every interval, 8 s of 83), the
+snapshot's rows materialized one object per row (`NatureBeamStore.rows`,
+`record_line`; 23 s at the end of `w27_beam` at 40 intervals), the per-row
+Python loop over a body's pending rows in `_release_family`, the JSON
+encoding of the record (`run.record`, 6 s of 83; its bytes are pinned by
+the digests).
+
 ## The interval in named steps, on 2026-09-21 (host only, bit-exact)
 
 The model owner's order of 2026-09-21 ("optimization and simplify"). The
