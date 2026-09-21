@@ -153,7 +153,16 @@ intervals, one birth per u): S as the integer ratio at each N against the
 design's 2896/1024, and the bound |E - cos| <= 1/N (`expectations.json`
 under `pair_n`). At N = 4096 the half-angle tables of 2N do not exist
 (the tables end at 4096 steps): the entry at an even setting s is the
-4096 table's at s / 2, the same rounding of the same angle.
+4096 table's at s / 2, the same rounding of the same angle. Since
+2026-09-21 (the pin of DERIVATIONS_BEAM section 24.4, the run the law
+owes before the pin is final; the Boss's order under the model owner's
+record 337) the same geometry, wheel and settings at N = 512
+(`bell_n512_<a>_<b>`, the CHSH labels 0, 64, 128, 192; 532 intervals),
+and the pin written before the run under `bell_24_4`: S = 181 / 64
+exactly at N = 512 and N = 4096 (1448 / 512 and 11584 / 4096), the
+marginals W / 2 exactly, and every count over the W births within one
+of W x its cell's weight over the total, the counts per cell under
+`pair_n`; the run's readings by kind and its run block beside the pin.
 
 L7, the cone (the paper session's question on issue #376; the Boss's
 approval of 2026-09-20): `cone_links` and `cone_intervals`, one geometry
@@ -267,7 +276,9 @@ GATE_BASES = ("XXX", "XYY", "YXY", "YYX")
 ROTATIONS_WITHIN_BOUND = 3
 # A world refused at load is built by the tests and not written as a file.
 UNSHIPPED = {"rotations_4"}
-PAIR_N = (1024, 4096)
+# L6 at N = 1024 and 4096 (2026-09-20); N = 512 added for the pin of
+# DERIVATIONS_BEAM section 24.4 (2026-09-21).
+PAIR_N = (512, 1024, 4096)
 MAX_TABLE = 4096
 PLUS_X = [1, 0, 0]
 PLUS_Y = [0, 1, 0]
@@ -1464,6 +1475,77 @@ def gate_expectations() -> dict[str, object]:
     }
 
 
+# The pin of DERIVATIONS_BEAM section 24.4 (the Boss's order of 2026-09-21
+# under the model owner's record 337): the registered Bell geometry at N =
+# 512 and N = 4096 under the one click and the wheel [1, N], run before the
+# pin is final. Written before the run: S = 181 / 64 exactly at every power
+# of two from 512 (6.2; record 102), the marginals W / 2 exactly, every
+# count over the W births within one of W x its cell's weight over the
+# total. No number moves after the run: a reading outside its pin is
+# reported with its numbers.
+BELL_24_4_N = (512, 4096)
+BELL_24_4_S = (181, 64)
+BELL_24_4_TOLERANCE = 1
+
+
+def cell_widths(
+    weights: dict[tuple[str, ...], int], order: list[tuple[str, ...]], wheel: int
+) -> dict[str, object]:
+    """The ladder's cells on the wheel W: each cell's width W x w_k / T as a
+    reduced pair, and its rung b_k = (2 W C_k + T) // (2 T) at the nearest
+    integer (BEAM_LAW notes 37 (iii) and 46)."""
+    total = sum(weights.values())
+    cumulative = 0
+    rungs: list[int] = []
+    widths: dict[str, list[int]] = {}
+    for key in order:
+        cumulative += weights[key]
+        rungs.append((2 * wheel * cumulative + total) // (2 * total))
+        width = Fraction(wheel * weights[key], total)
+        widths["".join(key)] = [width.numerator, width.denominator]
+    return {"widths": widths, "rungs": rungs}
+
+
+def bell_24_4_expectations() -> dict[str, object]:
+    """The pin of 24.4 per world, derived by the design's reading on the
+    wheel W of each world's lamp (`pair_n` holds the counts per cell): the
+    cells' widths and rungs, E x W, the marginal W / 2, and S x N over the
+    quadruple; the readings of the run are registered beside them."""
+    worlds: dict[str, object] = {}
+    s_times_n: dict[str, int] = {}
+    for n in BELL_24_4_N:
+        correlations: list[int] = []
+        for a, b in chsh_labels(n):
+            name = f"bell_n{n}_{a}_{b}"
+            world = bell_n(name, n, a, b)
+            lamp = next(entry for entry in world["measured"] if "lamp" in entry)  # type: ignore[union-attr]
+            wheel = int(lamp["lamp"]["wheel"][1])
+            weights = joint([(a, 0), (b, 0)], [(0, 1), (3, 1)], n)
+            counts = counts_of(weights, outcomes(2), wheel)
+            e = correlation(counts)
+            correlations.append(e)
+            worlds[name] = {
+                "N": n,
+                "wheel": lamp["lamp"]["wheel"],
+                "W": wheel,
+                "settings": [a, b],
+                "ticks": world["ticks"],
+                "births": wheel,
+                "counts_under": f"pair_n.{n}.pairs.{a}_{b}.counts",
+                "E": e,
+                "marginal": wheel // 2,
+                **cell_widths(weights, outcomes(2), wheel),
+            }
+        s_times_n[str(n)] = correlations[0] - correlations[1] + correlations[2] + correlations[3]
+    return {
+        "reference": "DERIVATIONS_BEAM section 24.4, the pin written before the run",
+        "S": list(BELL_24_4_S),
+        "S_times_N": s_times_n,
+        "tolerance": BELL_24_4_TOLERANCE,
+        "worlds": worlds,
+    }
+
+
 def pair_n_expectations() -> dict[str, object]:
     found: dict[str, object] = {}
     for n in PAIR_N:
@@ -1684,6 +1766,225 @@ REGISTERED_RUN_READINGS: dict[str, dict[str, object]] = {
         "ghz_gate_line": {"labels": [[0, 1], [7, 1]], "arms": 3, "rows": 6},
         "rotation_multiplicity": 65536,
     },
+    # The run of 2026-09-21 for the pin of DERIVATIONS_BEAM section 24.4, its
+    # readings by kind and its run block (the README's section and the
+    # register's L6 entry); read by tests/test_amplitude_bell_24_4.py.
+    "bell_24_4": {
+        "run": {
+            "date": "2026-09-21",
+            "order": "DERIVATIONS_BEAM section 24.4, the run the law owes before the pin is final; the Boss under the model owner's record 337",
+            "runner": "python -m event_universe --init <world> --output <dir>, headless, one world at a time",
+            "main": "a625ec9f",
+            "package_version": "0.3.1",
+            "source_sha256": "47fffbefe2d222b73e448667769667ffc68bc54d75317fb55d9259e1c86d403f",
+            "families_sha256": "438444b1cec9eb47263ac6b4203a1028b94ef9e97819aceadf860e7680ce15ca",
+            "readings_by_kind": "DETECTOR: the gathers of the first W records by ordinal (the counts per cell, E x W, the + counts per party, the rungs and the totals on the gather lines); GAMEBOARD: the books and the layer's counts, a diagnostic",
+            "host_cost": "the runner's wall time per world on a loaded host, apart from the model's cost: the bar's 21 Nodes at fixed local work per interval over the world's intervals, one record's offers held at the layer until its completion",
+            "verdict": "PASS: every pin met on the eight worlds, no number moved",
+            "worlds": {
+                "bell_n512_0_64": {
+                    "initialization_sha256": "08c4264ac4b68a174a21a42b6deb92a5d963bae1f7afd028445ed207bf8a5905",
+                    "expanded_sha256": "bb5d6a5ccc056eec7f6b206ff2e08bfb94573137f4ef9b84846742951559847f",
+                    "completed_ticks": 532,
+                    "elapsed_seconds": 1.24,
+                    "host_wall_seconds": 1.51,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 219, "+-": 37, "-+": 37, "--": 219},
+                            "E": 364,
+                            "alice_plus": 256,
+                            "bob_plus": 256,
+                            "gathered_of_W": 512,
+                            "rungs_on_every_gather": [219, 256, 293, 512],
+                            "distinct_totals": 57,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 531,
+                            "gathered": 519,
+                            "open": 12,
+                        },
+                    },
+                },
+                "bell_n512_0_192": {
+                    "initialization_sha256": "05748a28cb85ba3f732e78debec8a25690bca49581f88cabf7ac60460999d6cd",
+                    "expanded_sha256": "43b824fe37030a7171fc4aa67c1fa953620baf318639037064dd76e812e8d30a",
+                    "completed_ticks": 532,
+                    "elapsed_seconds": 1.26,
+                    "host_wall_seconds": 1.53,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 37, "+-": 219, "-+": 219, "--": 37},
+                            "E": -364,
+                            "alice_plus": 256,
+                            "bob_plus": 256,
+                            "gathered_of_W": 512,
+                            "rungs_on_every_gather": [37, 256, 475, 512],
+                            "distinct_totals": 57,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 531,
+                            "gathered": 519,
+                            "open": 12,
+                        },
+                    },
+                },
+                "bell_n512_128_64": {
+                    "initialization_sha256": "05d8170e360adcb6af675a58aabc1b04e79faeedf774c7a5a4dcc5ea5ac251e2",
+                    "expanded_sha256": "bf0f26267efb40215bb00513248f979313989b6cc97622f93f0ece95f9ec78d2",
+                    "completed_ticks": 532,
+                    "elapsed_seconds": 1.27,
+                    "host_wall_seconds": 1.54,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 218, "+-": 38, "-+": 38, "--": 218},
+                            "E": 360,
+                            "alice_plus": 256,
+                            "bob_plus": 256,
+                            "gathered_of_W": 512,
+                            "rungs_on_every_gather": [218, 256, 294, 512],
+                            "distinct_totals": 57,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 531,
+                            "gathered": 519,
+                            "open": 12,
+                        },
+                    },
+                },
+                "bell_n512_128_192": {
+                    "initialization_sha256": "b5fc4bae939f0044afa4645de3cc2cfb1d5b12b49c670e644edcfdcbda6d7b73",
+                    "expanded_sha256": "01e8e72f47824f5ee026e95c0a695846da68ef9d245fb101fe3c8bfc7b82ac0d",
+                    "completed_ticks": 532,
+                    "elapsed_seconds": 1.24,
+                    "host_wall_seconds": 1.5,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 218, "+-": 38, "-+": 38, "--": 218},
+                            "E": 360,
+                            "alice_plus": 256,
+                            "bob_plus": 256,
+                            "gathered_of_W": 512,
+                            "rungs_on_every_gather": [218, 256, 294, 512],
+                            "distinct_totals": 57,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 531,
+                            "gathered": 519,
+                            "open": 12,
+                        },
+                    },
+                },
+                "bell_n4096_0_512": {
+                    "initialization_sha256": "ad17507dc57bcd6d5dbce3dfcbedca0f7e4ac3be47451447bfb87d71b6c17a3a",
+                    "expanded_sha256": "20338ad6e5b5fd98c5e1df726430f773ae7b9f17a9a69709354c06c50e0a7d29",
+                    "completed_ticks": 4116,
+                    "elapsed_seconds": 8.82,
+                    "host_wall_seconds": 9.4,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 1749, "+-": 299, "-+": 299, "--": 1749},
+                            "E": 2900,
+                            "alice_plus": 2048,
+                            "bob_plus": 2048,
+                            "gathered_of_W": 4096,
+                            "rungs_on_every_gather": [1749, 2048, 2347, 4096],
+                            "distinct_totals": 139,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 4113,
+                            "gathered": 4101,
+                            "open": 12,
+                        },
+                    },
+                },
+                "bell_n4096_0_1536": {
+                    "initialization_sha256": "ae8f717e7eb89f75533dccbff9b6a70542e18dc9ba062e3a2648c30759c38d79",
+                    "expanded_sha256": "a13bed2798814e226c23a72079beca18f1b699d4e40379667476b8f7fbfb8d08",
+                    "completed_ticks": 4116,
+                    "elapsed_seconds": 9.05,
+                    "host_wall_seconds": 9.64,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 299, "+-": 1749, "-+": 1749, "--": 299},
+                            "E": -2900,
+                            "alice_plus": 2048,
+                            "bob_plus": 2048,
+                            "gathered_of_W": 4096,
+                            "rungs_on_every_gather": [299, 2048, 3797, 4096],
+                            "distinct_totals": 139,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 4113,
+                            "gathered": 4101,
+                            "open": 12,
+                        },
+                    },
+                },
+                "bell_n4096_1024_512": {
+                    "initialization_sha256": "ae61a322494fc480197fef70b861459ba54dad0e2d5e34d006fd015b21f8cc01",
+                    "expanded_sha256": "7b70a2e007ffb22fe12dc7fcee0560b57da8717e09ac7a7e1335fb61a2b299c9",
+                    "completed_ticks": 4116,
+                    "elapsed_seconds": 8.74,
+                    "host_wall_seconds": 9.32,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 1747, "+-": 301, "-+": 301, "--": 1747},
+                            "E": 2892,
+                            "alice_plus": 2048,
+                            "bob_plus": 2048,
+                            "gathered_of_W": 4096,
+                            "rungs_on_every_gather": [1747, 2048, 2349, 4096],
+                            "distinct_totals": 139,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 4113,
+                            "gathered": 4101,
+                            "open": 12,
+                        },
+                    },
+                },
+                "bell_n4096_1024_1536": {
+                    "initialization_sha256": "126f70a97d2128ccd24468730a6f318cfb9fcc81d6ca4ec564b47900a492df91",
+                    "expanded_sha256": "c17eeab34bbfb414346d76e4fd9a67fcec79e4ed957bda66f69b3a1ceb8d7318",
+                    "completed_ticks": 4116,
+                    "elapsed_seconds": 8.84,
+                    "host_wall_seconds": 9.44,
+                    "readings": {
+                        "DETECTOR": {
+                            "counts": {"++": 1747, "+-": 301, "-+": 301, "--": 1747},
+                            "E": 2892,
+                            "alice_plus": 2048,
+                            "bob_plus": 2048,
+                            "gathered_of_W": 4096,
+                            "rungs_on_every_gather": [1747, 2048, 2349, 4096],
+                            "distinct_totals": 139,
+                        },
+                        "GAMEBOARD": {
+                            "conserved_at_every_completed_tick": True,
+                            "books_balanced_every_tick": True,
+                            "born": 4113,
+                            "gathered": 4101,
+                            "open": 12,
+                        },
+                    },
+                },
+            },
+        },
+    },
     # A12 under the click: the run of 2026-09-21 (the experimenter, on the
     # owner's go of record 330), each world once through the runner, 300
     # intervals, about 2 s each; the pins of section 3 of the note read
@@ -1756,6 +2057,7 @@ DERIVATIONS: dict[str, str] = {
     "ghz": "measured (target 6; the design's bell.py: the allowed triples and their products)",
     "gate": "the Hadamard's amount C[16] = S[16] = 181 of the 128-step tables (core/phase.py; the amplitude 181 x 2^24); the cells and the correlations measured (target 6)",
     "pair_n": "measured (target 6: |E - cos| <= 1/N the design's bound at N = 1024, failing at 4096 by the tables' rounding; 2896/1024 the design's sum)",
+    "bell_24_4": "DERIVATIONS_BEAM 24.4 and 6.2: S = 181 / 64 exactly from the rungs b_k = (2 W C_k + T) // (2 T) of the ladder on the wheel W = N over the design's joint weights (bell.py, the half-angle tables of 2N), the marginals W / 2, every count within one of W x its weight over the total; the counts per cell under pair_n; the readings measured, the run of 2026-09-21, no number moved",
     "cone": "DERIVATIONS_BEAM 11.1: the flight's closed form m_D(tau) and tau_k = ceil((2 k - 1) T_D / (2 S_1 Q)), the phase k m_D(tau) under the integer form and floor(tau n / d) under the pair form; `exact` the phase at the exact time of the last Link, the whole part and the remainder of n x Links x T_D over d x S_1 x Q (BEAM_LAW note 45); derived from the worlds and compared by tests/test_amplitude_cone.py",
     "malus": "docs/designs/malus/NOTE.md section 3 (the mathematician's pin before the run): the cells' weights the products of the half-angle tables' entries of 2N = 512 (core/phase.py: C'[64] = S'[64] = 181, C'[128] = 0, S'[128] = 256; the rotation the design's 2.2, the window's channels 4.1), the counts the click's rungs b_k = (2 W C_k + T) // (2 T) over W = 256 births on the wheel [159, 256] (BEAM_LAW note 46; DERIVATIONS_BEAM 6.2), Malus's cos^2 exact at 45 and 90 degrees; derived from the worlds and compared by tests/test_amplitude_malus.py; the split lines' rebirth, the gathers and the books measured (the run of 2026-09-21)",
 }
@@ -1772,6 +2074,7 @@ def expectations() -> dict[str, object]:
             "ghz": ghz_expectations(),
             "gate": gate_expectations(),
             "pair_n": pair_n_expectations(),
+            "bell_24_4": bell_24_4_expectations(),
             "cone": cone_expectations(),
             "malus": malus_expectations(),
         }

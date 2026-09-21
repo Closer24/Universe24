@@ -1884,3 +1884,34 @@ zero detector, said so; "form B in build" in the abstract. The
 abstract at 1921 plain characters after the measurement-chapter
 sentence was cut for the prediction's.
 
+## Wave 13 (2026-09-21): the formulas of flow, heat and temperature (section 25, round 1)
+
+Main at c61d2117 merged (PR #529, the derivation's section 25). A
+short section before the confrontation with nature with
+Table tab:continuum: the twenty-three formulas of the continuum, what
+the GameBoard has of each and its standing in the paper's words
+(three exact: the continuity equation, Boltzmann's count, the second
+law at the click; six in form on the six-heading gas with the cubic
+lattice's obstacle; three identities of readings; two by reference;
+nine not reached, five of them falling to elastic-contact-v1, named
+and not designed); one row of the table of consequences pointing to
+it; the derivations bibitem adds 25. Records 341 to 343 are not on the
+log at c61d2117 and are not cited. Referee round 33 pending.
+
+## Referee round 33 (2026-09-21): the continuum section, applied
+
+Eleven findings, four major, all applied: four rows fall to
+elastic-contact-v1 (9, 10, 19, 21), not five, the isotropic
+Navier-Stokes to fan-collision-v1 (25.3's "five" is the source's own
+slip against 25.2's "one identity named for four rows", reported); the
+entropy count cross-referenced to the table's entropy row and the
+derivation's 14, the bijection to its theorem; rows 7 and 15 in the
+legend's words; the bundle row split into DERIVED (fourteen) and NOT
+REACHED (nine), placed before the DIFFERENT block, the overlap with
+existing rows said; the FCHC projection cited to d'Humieres, Lallemand
+and Frisch 1986, not to FHP; D_diff named; row 12 in form at the click;
+row 23's two reasons; "the HPP obstacle of the cubic lattice gas" on
+"the six-Link GameBoard"; the paper's phrase "torus points"; the
+bibitem's commas. Reported as the tree's: section 25's header cites
+record 343, which is on no log at HEAD.
+

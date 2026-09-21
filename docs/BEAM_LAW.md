@@ -625,8 +625,9 @@ the group includes reflections). The table respects them: two states in one
 orbit have classes of equal size and equal (n, S) up to the symmetry. The
 table itself is not O_h-equivariant (no deterministic equivariant choice
 among symmetric outputs exists; the mathematician, 2.4): the tie among
-symmetric outputs is broken by the sorted order, that is by Port order, the
-one undeclared breaking, averaged out over the six orientations of a crowd.
+symmetric outputs is broken by the sorted order, that is by Port order, one
+of the law's two declared ties (the other is the digital line's, note 39),
+averaged out over the six orientations of a crowd.
 The 20 orbit representatives (here = the first rest slot occupied; the row is
 the forward image of the representative; hb the second rest slot):
 
@@ -949,9 +950,9 @@ collision must be vectorized (segment ids, a `bincount` per Node, one table
 read on the 3^8 code, `np.put` of the new directions) to reach the budget.
 Resolved by the implementation and its optimizations (section 10, notes 8
 and 22: 0.11 us per Node on the plane, 0.69 us per row on the two slits).
-(d) The tie by Port order in the collision is the one undeclared breaking;
-a test asserts the six-orientation average of a head-on pair's exits is
-isotropic. (e) The re-registered readings are expectations, not results:
+(d) The tie by Port order in the collision is a declared tie (the digital
+line's tie by axis order is the second, note 39); a test asserts the
+six-orientation average of a head-on pair's exits is isotropic. (e) The re-registered readings are expectations, not results:
 series C item 6's slowing changes power (the accepted price), and the
 register must say so.
 
@@ -2986,7 +2987,21 @@ implementation's part of the contract. The design above is unchanged.
     `w_two_sides` and `nu_hand`; and the full transform (every hand by
     det(g) too, every axis by det(g) g A) is equal under all 48 on every
     world: the law is covariant under the 48 when its data transform as a
-    pseudoscalar and an axial vector, and parity violation on the
+    pseudoscalar and an axial vector, on the headings and on every
+    direction whose digital line has no tie; on a fan the line's tie (an
+    equal deficit on two axes at a step, broken by the axis index, x
+    before y before z, `_bresenham`) breaks the 40 axis permutations for
+    a tied direction: the Nodes crossed and the exit face move, the label
+    **u**_d, the momentum and the hand do not (the auditor's round 2 on a
+    fan world of the five directions (1, 1, 0), (2, 1, 0), (3, 1, 2),
+    (1, -2, 0), (0, 1, -3): the record mapped back through g^-1 equals
+    the base under exactly the 8 elements with the identity axis
+    permutation; the six headings and (2, 1, 0), (1, -2, 0) never tie,
+    (1, 1, 0), (3, 1, 2), (0, 1, -3) do, which is why test (d) on series
+    P, the headings +x and -x alone, reads equal under all 48). This tie
+    and the collision's Port-order tie (section 4) are the law's two
+    declared ties; a tie broken by a datum of the row instead of the axis
+    index is the owner's call. Parity violation on the
     GameBoard is one statement, the catalog's one-handed families (no
     `nubar` of hand -1 and no `nu` of hand +1 is declared anywhere; a
     right-handed neutrino declared in a transit row would be passed by
