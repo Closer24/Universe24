@@ -93,6 +93,12 @@ write the surrounding explanation in English. This instruction update does not
 authorize bulk translation of existing files or Google Docs; edit only the
 content authorized by the current task.
 
+Every symbol is named in English at its first use and never stands alone as a
+Greek letter ("gamma (the Lorentz factor)"), and its kind is shown by its type:
+a scalar plain, a vector in bold lowercase (**p**), a tensor, a matrix or an
+operator in bold uppercase (**C**); see [skills/workflow.md](skills/workflow.md),
+"Notation" (the model owner, 2026-09-21).
+
 Before submitting a change, translate any non-English prose it introduces and run
 `tests/test_repository_language.py`. The script check catches the legacy Hebrew
 text and several other non-Latin scripts; it does not prove that Latin-script prose

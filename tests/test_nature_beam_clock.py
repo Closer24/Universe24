@@ -17,9 +17,21 @@ momentum; no merge. Re-pinned from `test_event_clock`,
     declared direction (the six headings) at its self-creations to ages 4, 7
     and 10: 18 released after 10 intervals, 0 after 3; at K 2 its phase
     steps after four intervals are 1, 3, 4, 6;
-(c) a lamp of content 100 at rate [1, 3] on six headings, K 82 (the turn 1
-    at every self-creation): 18 rays after 9 intervals, each of content 1,
-    the content 82, 9 phase steps, the recoil zero over six headings; two
+(c) a lamp of content 100 at rate [1, 3] on six headings, K 82: the count
+    of the rate's accumulator is 1 at the self-creations of the ages 2, 5
+    and 8 (`by_drive` on [1, 3]: 0, 0, 1, ...), 18 rays after 9 intervals,
+    each of content its turn; the turn is the count of the turn's
+    accumulator over K (the fraction-free law, 2026-09-20): 100, 118, 136
+    give 1, 1, 1 (the remainder 54), the release of the age 2 costs 6 and
+    the content 94, 148, 160 give 1, 1 (78), 172 gives 2 (the remainder
+    8: the exact whole part of the content's history), the release of the
+    age 5 costs 12 (the content 82), then 90 gives 1, 1, 1 (8) and the
+    release of the age 8 costs 6: the content 76, 10 phase steps, 24
+    content released (until the fraction-free law the whole part off the
+    clock at the current content, `by_clock(age, content, 82)`, gave 1 at
+    every age, the content 82 and 9 phase steps: the stall of a falling
+    content read as if it had always been the current one), the recoil
+    zero over six headings; two
     lamps of turns 4 and 8 (K 4096, contents 4 K + 32 and 8 K + 64, one
     ray per self-creation toward a counter 3 Links away on a 7 x 1 x 1
     bar): after 8 intervals A spent 8 x 4 = 32 and B 8 x 8 = 64, the
@@ -45,15 +57,25 @@ momentum; no merge. Re-pinned from `test_event_clock`,
     momentum (1024, 0, 0), the measured line 16), the mover at x = 0 with
     one step for the rest (the rule as it was, the count off the clock,
     stepped the resident in the interval of the hand-over and out at 4);
-(e) the count off the clock: a source of `m` of content k at x = 0 of a
+(e) the owed count (`engine.count_owed`, since the fraction-free law of
+    2026-09-20 the count the owed accumulator gains, `by_drive(acc, k x n,
+    d)`, equal to `by_clock(age, k x n, d)` at a constant k from age 0): a
+    source of `m` of content k at x = 0 of a
     2 x 1 x 1 bar releasing k rays per direction per self-creation at
     `release` [1, 1] and a probe of `light` (content 1, measuring `m`) at
     x = 1 at `suspension` [1, 4]: the probe reads the presence k every
-    interval from the second on (a ray steps at its first interval), and
-    with k = 1 owes `by_clock(age, 1, 4)`, 1 at the self-creations from the
-    ages 3, 7, 11, 15: its age after intervals 1 to 20 is 1, 2, 3, 4, 4, 5,
-    6, 7, 8, 8, 9, 10, 11, 12, 12, 13, 14, 15, 16, 16; with k = 8 it owes 2
-    at every self-creation: 1, 2, 2, 2, 3, 3, 3, 4, 4, 4;
+    interval from the second on (a ray steps at its first interval; 0 at
+    the first self-creation), and with k = 1 owes 1 at every fourth
+    self-creation that read 1, the ages 4, 8, 12, 16 (the accumulator 0,
+    1, 2, 3, 4 -> 1 owed and 0, ...): its age after intervals 1 to 20 is
+    1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 9, 10, 11, 12, 13, 13, 14, 15, 16, 17,
+    waited 3 and 1 owed at the end (until the fraction-free law the whole
+    part off the clock, `by_clock(age, 1, 4)`, counted the first
+    self-creation as if it had read 1 and owed at the ages 3, 7, 11, 15:
+    1, 2, 3, 4, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 12, 13, 14, 15, 16, 16,
+    waited 4); with k = 8 it owes 2 at every self-creation that read 8
+    (the accumulator 8 -> 2, 0): 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, waited 6
+    (the same ages under both forms);
 (f) every age against a key is the one `by_clock` (the four unifications,
     the model owner, 2026-09-20, (2); BEAM_LAW note 33; the integers written
     first): the clock's rate `K` as a pair equal to its integer: the world
@@ -171,11 +193,12 @@ def test_a_lamp_releases_off_its_clock_at_the_cost_of_its_turn_and_takes_the_rec
         simulation.step()
         assert simulation.books()["balanced"]
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
-    assert simulation.ledger.transit_released[LIGHT] == 18 and entry.held == [0, 82]
-    assert simulation.ledger.held_spent[LIGHT] == 18 and entry.momentum == [0, 0, 0]
-    assert entry.turned == 9 and simulation.ledger.content_released[LIGHT] == 18
+    assert simulation.ledger.transit_released[LIGHT] == 18 and entry.held == [0, 76]
+    assert simulation.ledger.held_spent[LIGHT] == 24 and entry.momentum == [0, 0, 0]
+    assert entry.turned == 10 and simulation.ledger.content_released[LIGHT] == 24
+    assert entry.acc_turn == 8 and entry.acc_lamp == 0
     escaped = simulation.ledger.escaped_amount(LIGHT)
-    assert int(light.amount.sum()) + escaped == 18 and set(light.content.tolist()) == {1}
+    assert int(light.amount.sum()) + escaped == 18 and set(light.content.tolist()) == {1, 2}
 
     clock = 4096
     counter = {
@@ -320,12 +343,17 @@ def ages_of_a_probe(presence: int, ticks: int) -> tuple[list[int], int, int]:
 def test_the_count_a_measured_event_owes_is_read_off_its_clock():
     """(e)."""
     assert [by_clock(age, 1, 4) for age in range(8)] == [0, 0, 0, 1, 0, 0, 0, 1]
-    # The owed count, the one place it lives (`engine.count_owed`).
-    assert [count_owed(age, 1, (1, 4)) for age in range(8)] == [0, 0, 0, 1, 0, 0, 0, 1]
-    assert count_owed(2, 8, (1, 4)) == 2 and count_owed(5, 9, (0, 1)) == 0
+    # The owed count, the one place it lives (`engine.count_owed`): the
+    # accumulator's count, `by_clock`'s at a constant presence from 0.
+    owed, accumulator = [], 0
+    for _ in range(8):
+        count, accumulator = count_owed(accumulator, 1, (1, 4))
+        owed.append(count)
+    assert owed == [0, 0, 0, 1, 0, 0, 0, 1] and accumulator == 0
+    assert count_owed(2, 8, (1, 4)) == (2, 2) and count_owed(5, 9, (0, 1)) == (0, 5)
     ages, waited, owed = ages_of_a_probe(1, 20)
-    assert ages == [1, 2, 3, 4, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 12, 13, 14, 15, 16, 16]
-    assert waited == 4 and owed == 0
+    assert ages == [1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 9, 10, 11, 12, 13, 13, 14, 15, 16, 17]
+    assert waited == 3 and owed == 1
     ages, waited, owed = ages_of_a_probe(8, 10)
     assert ages == [1, 2, 2, 2, 3, 3, 3, 4, 4, 4]
     assert waited == 6 and owed == 0

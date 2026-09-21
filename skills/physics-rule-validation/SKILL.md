@@ -144,3 +144,10 @@ Boss must not mark the physics change complete until the required checks pass.
 
 When a change adds a rule or a world key for an effect that relative motion, a varying rate or a meeting could produce by itself, require the emergence test in the review: the same world with the key absent, the expectation pinned before the run (for a reader stepping one Link per k intervals through a stream of one row per interval: k + 1 rows per k intervals toward, k - 1 away, if the step reads the Link it crosses). A rule that reproduces what the flight, the step and the meeting already give is not admissible; a step that misses the effect is the defect to name, fixed in the step, not beside it. Record which case held and cite the file:line of the step and of the read.
 
+## The main course (the owner, 2026-09-21, records 176 and 177)
+
+A review checks the pairing: the formula with its registered integer and with the experiment, in the limit and at finite resolution; and that a new rule was stated first in its generic vector form before its integer form (skills/workflow.md).
+
+## Notation (the owner, 2026-09-21, record 184)
+
+Every symbol is named in English at its first use (never a Greek letter alone: "gamma (the Lorentz factor)"), and its kind is shown by its type: a scalar plain, a vector in bold lowercase (**p**), a tensor, matrix or operator in bold uppercase (**C**); skills/workflow.md, "Notation".

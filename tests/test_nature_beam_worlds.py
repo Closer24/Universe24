@@ -68,6 +68,7 @@ import numpy as np
 import pytest
 
 from event_universe.core.phase import phase_cosines, phase_sines
+from event_universe.diagnostics.shell_readings import shell_readings
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.events.world import MOMENTUM_BOUND
@@ -219,16 +220,27 @@ def test_the_bell_worlds_read_the_triangle_and_the_chsh_bound(tmp_path):
     # The pair lamp's rows are records with the path phase 0 and the
     # counters' windows read the path phase, so every pair of a world lands
     # in one cell, E = +1 or -1 by the settings' half circles, S = 2 and
-    # S' = 2, and 118 of the tool's 340 criteria of the crowd form fail
-    # (re-run under the one click (stage (vii) step 4); the verdict to be re-read; until stage (vii) step 4 the triangle: 0 failed, S = 2,
-    # S' = 3/2, E(0, 16) = 0).
+    # S' = 2, and 115 of the tool's 350 criteria of the crowd form fail
+    # (the minus counters silent on most worlds, every pair in one cell, no
+    # pass; since the fraction-free law of 2026-09-20 the tool reads a pair
+    # by its record and its age as the birth ordinal, ten criteria of the
+    # record on the lines added, and the exact clock's one stall at tick 4
+    # moves no correlation: 118 of 340 under the one click read by tick;
+    # until stage (vii) step 4 the triangle: 0 failed, S = 2, S' = 3/2,
+    # E(0, 16) = 0).
     assert bell.main([str(tmp_path)]) == 1
     checks = bell.Checks()
     runs = {
         run.setting: run
         for run in (bell.analyse(folder, checks) for folder in sorted(tmp_path.iterdir()))
     }
-    assert checks.failed == 118 and len(checks.rows) == 340
+    assert checks.failed == 115 and len(checks.rows) == 350
+    assert runs[(0, 0)].offsets == {
+        "alice_plus": 14,
+        "bob_plus": 14,
+        "alice_minus": 0,
+        "bob_minus": 0,
+    }
     assert bell.chsh(runs, bell.CHSH) == 2 and bell.chsh(runs, bell.PRIME) == 2
     assert (
         runs[(0, 0)].correlation == 1
@@ -265,8 +277,8 @@ def test_one_content_streams_outward_with_the_books_closed():
         assert books["momentum"]["measured"] == [0, 0, 0]
         if tick > 20:
             assert simulation.cube_flux(0, centre, 2) == emission, tick
-            three = simulation.shell_readings(0, centre, 3)
-            four = simulation.shell_readings(0, centre, 4)
+            three = shell_readings(simulation, 0, centre, 3)
+            four = shell_readings(simulation, 0, centre, 4)
             assert (
                 three["arrived"] * three["nodes"] == emission
                 and four["arrived"] * four["nodes"] == emission

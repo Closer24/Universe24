@@ -24,12 +24,16 @@ cancel).
 
 **The world** (the design's section 3.4): a plane of 5 x 5 with z periodic,
 K 2^20, N 64, `release` [0, 1], `suspension` 0, `amplitude` true, 80
-intervals. The source at (0, 0), a lamp of `light` of content 2^20 whose
-turn is one phase step per self-creation for far more births than the run
-holds, so the record born at tick t has the birth phase u = t - 1: the 64
-births of the ticks 1 .. 64 span the circle once and complete by tick 76
-(the ports click eleven or twelve intervals after a birth on the flight
-table); the 11 born after are open at the end. Each birth is one record of two rows of
+intervals. The source at (0, 0), a lamp of `light` of content 2^20 at K
+2^20 whose turn is one phase step per self-creation, paying 2 per birth:
+since the fraction-free law (2026-09-20, BEAM_LAW note 41) its exact
+clock stalls once, at tick 2 (the content 2^20 - 2 short of one turn),
+so the record of ordinal n >= 2 is born at tick n + 1 with the birth
+phase u = n - 1 (until then the record born at tick t had u = t - 1):
+the lamp's first 64 records, read by ordinal, span the circle once and
+complete by tick 76 (the ports click eleven or twelve intervals after a
+birth on the flight table); the 11 born after are open at the end. The
+pair lamps of L3 (content 15 x 2^20) stall once at tick 3. Each birth is one record of two rows of
 amount 1 with the multiplicity 2: +x (arm 1) and +y (arm 2, the
 reflection's quarter turn 16 on the row: the source's own splitter).
 Mirror 1 at (3, 0) re-emits +x arrivals on +y and mirror 2 at (0, 3)

@@ -1,0 +1,50 @@
+A. THE FLIGHT TABLE'S BOUND
+  primitive directions with components within 64: 1780418; Manhattan pace S_1 Q / T_D <= 1 on every one (checked), equal to 1 on 2072 (the cube diagonals (+-1, +-1, +-1): T = 192 = 3 x 64)
+  the Euclidean pace Q |D| / T_D over the table: 0.5774 to 0.5818 Links per interval (1 / sqrt 3 = 0.5774; the heading 64 / 110 = 0.5818): isotropic within isqrt's rounding
+  so c = 1 / sqrt 3 is the largest isotropic speed with at most one Link per interval in every direction: the meeting of the L1 walk with the Euclidean flight (1 / sqrt n in n dimensions)
+
+B. THE DISPERSION v(p) IN UNITS OF c, m = Q S M, on a heading (c = 32 / 55 there)
+  p / m | today p / (m + p), in c | form A c p / (m + p) | form B p / (m + p / c) | relativity p / sqrt(m^2 c^2 + p^2)
+  1/16  | 0.101 | 0.059 | 0.097 | 0.107
+  1/4   | 0.344 | 0.200 | 0.301 | 0.395
+  1/1   | 0.859 | 0.500 | 0.632 | 0.864
+  3/1   | 1.289 | 0.750 | 0.838 | 0.982
+  9/1   | 1.547 | 0.900 | 0.939 | 0.998
+  today caps at 1 Link per interval = 1.72 c (a body outruns light above p = 1.39 m); both forms cap at c; form A rescales every speed by c (Newton's limit v = c p / m), form B keeps Newton's limit v = p / m and bends to c
+
+  the directional drive at one fraction on four directions (form B, p / m = 1, 600 intervals): the Euclidean distance made, isotropic within the flight table's rounding
+    (1, 0, 0): position (220, 0, 0), Euclidean 220.0 Links in 600 intervals = 0.3667 per interval (c x p / (c m + p) on this direction = 0.3678)
+    (1, 1, 0): position (135, 135, 0), Euclidean 190.9 Links in 600 intervals = 0.3182 per interval (c x p / (c m + p) on this direction = 0.3187)
+    (1, 1, 1): position (100, 100, 100), Euclidean 173.2 Links in 600 intervals = 0.2887 per interval (c x p / (c m + p) on this direction = 0.2887)
+    (3, 1, 0): position (190, 63, 0), Euclidean 200.2 Links in 600 intervals = 0.3336 per interval (c x p / (c m + p) on this direction = 0.3340)
+
+C. THE REGISTERED WORLDS' MOVING BODIES AT THEIR DECLARED MOMENTA (content = amount + held)
+  worlds with moving bodies: 47; bodies above c on an axis at the declared momenta: 2 worlds
+    orbit/s1_r12.json                      S = 1          bodies  1  fastest axis speed 0.7500 Links per interval = 1.289 c; under form B 0.4873 (0.650 of today)
+    orbit/s1_r24.json                      S = 1          bodies  1  fastest axis speed 0.7500 Links per interval = 1.289 c; under form B 0.4873 (0.650 of today)
+    orbit/s8_r12.json                      S = 8          bodies  1  fastest axis speed 0.3846 Links per interval = 0.661 c; under form B 0.3013 (0.783 of today)
+    orbit/s8_r24.json                      S = 8          bodies  1  fastest axis speed 0.3846 Links per interval = 0.661 c; under form B 0.3013 (0.783 of today)
+    hubble/coasting_age.json               S = 1048576    bodies 24  fastest axis speed 0.3491 Links per interval = 0.600 c; under form B 0.2791 (0.799 of today)
+    hubble/coasting_scalar.json            S = 1048576    bodies 24  fastest axis speed 0.3491 Links per interval = 0.600 c; under form B 0.2791 (0.799 of today)
+    hubble/pushing_age.json                S = 1048576    bodies 24  fastest axis speed 0.3491 Links per interval = 0.600 c; under form B 0.2791 (0.799 of today)
+    hubble/pushing_scalar.json             S = 1048576    bodies 24  fastest axis speed 0.3491 Links per interval = 0.600 c; under form B 0.2791 (0.799 of today)
+  the run-time momenta: G2's stars reach 1.14 x 10^14 at Q S M = 2.8 x 10^14 (GRAIN.md), v = 0.289 = 0.50 c; the fastest coasting star reads z = 0.2636 (the derivation's 4.5); the only body above c on the register is the doppler bar's outrunning body at 0.75 (FORM.md's map and test_doppler (b)), a test fixture and not a world file
+
+D. ONE FLIGHT PRIMITIVE: light is the directional drive at the fraction 1
+  (1, 0, 0): the flight table's row after 300 intervals (174, 0, 0); the directional drive at m = 0 (174, 0, 0); identical True
+  (1, 1, 0): the flight table's row after 300 intervals (123, 123, 0); the directional drive at m = 0 (123, 123, 0); identical True
+  (5, -3, 2): the flight table's row after 300 intervals (141, -84, 56); the directional drive at m = 0 (141, -84, 56); identical True
+  the register's readers (record 153: M = 21 x 2^16, S = 1, |p| = 7 x 2^22, v = 1 / 4 today) and G2's fastest star, today's per-axis drive against form B on the axis:
+    the k = 4 reader: today 100 Links in 400 intervals (v = 0.2500), form B 84 (v = 0.2119, 0.840 of today); the first interval at which the two part: 4
+    the k = 8 reader: today 50 Links in 400 intervals (v = 0.1250), form B 45 (v = 0.1147, 0.900 of today); the first interval at which the two part: 8
+    G2's fastest star: today 115 Links in 400 intervals (v = 0.2881), form B 95 (v = 0.2387, 0.826 of today); the first interval at which the two part: 4
+
+E. LORENTZ-V1 ON THE MUON OF SERIES J4 (M = 207, S = 1, Q S M = 13248; the trigger at 64 turns of the clock at rate [1, 1])
+  the fraction of c from the drive's own numbers, f_c = |p| T_D / (Q S M S_1 Q + |p| T_D) (the drive's rate over light's rate on the same line); the rate of the clock multiplied by isqrt(G^2 - f_hat^2) / G at G = 2^20 (one root per interval)
+  f_c = 0.4300 (p = 5815, v = 0.2502 Links per interval under form B): gamma = 1.108, the 64th turn at tick 71 (today: tick 64 at every speed), the range 17 Links against 16 at tick 64
+  f_c = 0.8600 (p = 47349, v = 0.5004 Links per interval under form B): gamma = 1.960, the 64th turn at tick 126 (today: tick 64 at every speed), the range 63 Links against 32 at tick 64
+  the derivation's exchange clock (section 10.2): the bond's round trip 1.383 x rest at v / c = 0.43 (k = 4) and 1.173 at 0.21 (k = 8), against gamma 1.107 and 1.024: a slowing larger than gamma and lossy; lorentz-v1 and the exchange clock cannot both be the body's clock (a body with both slows twice)
+
+  the orbit worlds' body at S = 1:
+    orbit/s1_r12.json: amount 1, momentum [0, 192, 0], S = 1: v = 0.7500 Links per interval = 1.289 c
+    orbit/s8_r12.json: amount 1, momentum [0, 320, 0], S = 8: v = 0.3846 Links per interval = 0.661 c

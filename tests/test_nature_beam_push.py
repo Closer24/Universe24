@@ -65,12 +65,19 @@ charge [1, 5]; every pinned integer is unchanged.
     96 exactly on labels of length 64), the gravity -640 per read:
     `pushed` (20 x (-640 + 96), 0, 0) = (-10880, 0, 0);
 (f) a paid emitter: a lamp of `light` (content 2^23 at K 2^20: the turn
-    by_clock(age, held, 2^20) = 8 at every age below 362, `rate` [1, 1] on
-    +X, quantum 1) releases one unit of content 8 per interval from tick 1,
-    its recoil (-512, 0, 0) per release (the label 8 x 64); the probe
+    the count of the turn's accumulator, 8 at the age 0, 7 at the age 1
+    (2^23 - 8 held after the first release: the exact whole part of 2^24
+    - 8 over 2^20 is 15, 8 given), 8 at every later age below 362 (the
+    remainder 2^20 - 8 carries the ninth 2^20); until the fraction-free
+    law of 2026-09-20 `by_clock(age, held, 2^20)` = 8 at every age; `rate`
+    [1, 1] on +X, quantum 1) releases one unit of content 8, 7, 8, 8, ...
+    per interval from tick 1, its recoil (-512, 0, 0) per release (the
+    label 8 x 64; (-448, 0, 0) at tick 2); the probe
     (content 5, `table` {"light": "read"}, `release` [0, 1]) reads one
     unit at every tick 11 through 30 with the push (512, 0, 0) (kappa 1:
-    the label h s x amount x u_d), `pushed` (10240, 0, 0); the lamp's
+    the label h s x amount x u_d; (448, 0, 0) at tick 12, the unit of
+    content 7), `pushed` (10176, 0, 0) (10240 until the fraction-free
+    law); the lamp's
     momentum (-512 x its releases) plus the transit line plus the escaped
     line is (0, 0, 0) at every tick (the recoil is the label of what
     left); the reader's `read` takes the label as a push while the ray
@@ -112,9 +119,16 @@ charge [1, 5]; every pinned integer is unchanged.
     (-1536, 0, 0), (-2304, 0, 0), (-3072, 0, 0), (-3840, 0, 0), (-4608,
     0, 0) (V = 3 x 64 = 192 per read, M_P = 5 at tick 11, then 8, 12, 16,
     20, 24: the clicks of the intervals before, never the click of the
-    same interval), `held` [5, 114] and `pushed` (-356544, 0, 0) after 40
-    intervals; until this pin the order [B, A] read M_P after the same
-    interval's click ((-1536, 0, 0) at tick 11, `pushed` (-378432, 0, 0));
+    same interval), `held` [5, 115] and `pushed` (-356608, 0, 0) after 40
+    intervals (the lamp's turn is the count of its turn accumulator since
+    the fraction-free law of 2026-09-20: over the thirty units clicked the
+    turns 3, 4, 4, 4, 4, 4, 4, 4, 4, 3, ... carry 115 in all, the whole
+    part off the clock at the current content gave 3, 4, 4, 4, 4, 4, 4, 4,
+    3, 4, ... and 114; the A reads' sum -192 x 1819 is the same under
+    both, the B clicks' labels -64 x 115 one unit more: `held` [5, 114]
+    and `pushed` (-356544, 0, 0) until then); until this pin the order
+    [B, A] read M_P after the same interval's click ((-1536, 0, 0) at
+    tick 11, `pushed` (-378432, 0, 0));
 (k) a re-emitted free ray is its family's ray (the architect's B2, the
     orchestrator's D2, 2026-09-20; before the charge per unit of content
     the re-emitted rows were stamped with the re-emitter's charge and its
@@ -138,7 +152,12 @@ charge [1, 5]; every pinned integer is unchanged.
     four unifications (4) of 2026-09-20, (m): re-pinned from the age after
     the frame's advance, tick, with the new integers written first; the
     sum over the 23 reads moves by by_clock(7, 1280, 25) - by_clock(30,
-    1280, 25) = 51 - 52 = -1);
+    1280, 25) = 51 - 52 = -1; since the fraction-free law of the same day
+    the electric part is the count of the reader's charge accumulator,
+    empty at its first read: by_clock(tick - 8, 1280, 25) per read and
+    1177 = floor(23 x 1280 / 25) over the 23 reads, 1178 off the clock
+    from the age 7, the accumulator 23 x 1280 x 16 mod 400 below Lambda^2
+    = 400 at the end);
 (l) the equivalence principle for the electric push (the model owner,
     2026-09-20: the push proportional to the reader's content): the source
     of `m` (content 4, charge [1, 4]: charge 1) and a probe of `p` (charge
@@ -328,16 +347,17 @@ def test_a_paid_ray_pushes_by_its_label_and_the_paid_momentum_book_closes():
         assert books["balanced"]
         momentum = books["momentum"]
         lamp_momentum = simulation.measured[1].momentum
-        assert lamp_momentum == [-512 * simulation.tick, 0, 0]
+        assert lamp_momentum == [-512 * simulation.tick + (64 if simulation.tick > 1 else 0), 0, 0]
         assert [
             a + b + c
             for a, b, c in zip(lamp_momentum, momentum["transit"], momentum["escaped"], strict=True)
         ] == [0, 0, 0], simulation.tick
     reads = reads_of(records, 2)
     assert [tick for tick, _, _ in reads] == list(range(11, 31))
-    assert all(amount == 1 and push == [512, 0, 0] for _, amount, push in reads)
-    assert simulation.measured[2].pushed == [10240, 0, 0]
-    assert simulation.measured[1].momentum == [-15360, 0, 0]
+    assert all(amount == 1 for _, amount, _ in reads)
+    assert [push[0] for _, _, push in reads] == [512, 448] + [512] * 18
+    assert simulation.measured[2].pushed == [10176, 0, 0]
+    assert simulation.measured[1].momentum == [-15296, 0, 0]
 
 
 def test_a_fan_rays_push_is_its_label():
@@ -493,7 +513,7 @@ def test_the_push_reads_the_content_the_frame_read_whatever_the_family_order():
         reads = reads_of(records, 2)
         assert reads[:6] == expected, [f["name"] for f in order]
         probe = simulation.measured[2]
-        assert sorted(probe.held) == [5, 114] and probe.pushed == [-356544, 0, 0], order
+        assert sorted(probe.held) == [5, 115] and probe.pushed == [-356608, 0, 0], order
         assert probe.momentum == probe.pushed
 
 
@@ -533,18 +553,28 @@ def test_a_re_emitted_free_ray_pushes_by_its_familys_charge_per_unit_of_content(
     assert [tick for tick, _, _ in reads] == list(range(15, 31))
     assert all(amount == 4 and push == [-1216, 0, 0] for _, amount, push in reads)
     assert [tick for tick, _, _ in own] == list(range(8, 31))
-    # The electric part at the reader's clock age, tick - 1 (the four
-    # unifications (4), 2026-09-20; until then at the age after the frame's
-    # advance, tick).
+    # The electric part is the count of the reader's charge accumulator
+    # (the fraction-free law, 2026-09-20; BEAM_LAW note 41), empty at its
+    # first read at tick 8, so the k-th read gains by_clock(k - 1, 1280,
+    # 25) (the same rate, 1280 / 25 per read, from age 0; until then the
+    # whole part off the reader's clock age, tick - 1, which had credited
+    # the seven intervals before the first read: the four unifications
+    # (4)); the family B's reads are whole (25600 / 400) and leave it.
     assert all(
-        amount == 4 and push == [-1280 + by_clock(tick - 1, 1280, 25), 0, 0]
+        amount == 4 and push == [-1280 + by_clock(tick - 8, 1280, 25), 0, 0]
         for tick, amount, push in own
     )
     assert simulation.measured[3].pushed == [
-        -19456 - 23 * 1280 + sum(by_clock(t - 1, 1280, 25) for t in range(8, 31)),
+        -19456 - 23 * 1280 + sum(by_clock(t - 8, 1280, 25) for t in range(8, 31)),
         0,
         0,
     ]
+    assert sum(by_clock(t - 8, 1280, 25) for t in range(8, 31)) == 23 * 1280 // 25 == 1177
+    # Lambda of the charge column is lcm(5, 4) = 20: the reader's
+    # accumulator holds 23 x 1280 x 16 mod 400 below 400 (the rate lifted
+    # to the one denominator 20^2), the other columns' 0.
+    assert simulation.measured[3].acc_push == [[0, 0, 0], [23 * 1280 * 16 % 400, 0, 0]]
+    assert simulation.world.column_scales == (1, 20)
     mirror = simulation.measured[2]
     assert mirror.taken[1]["rerelease"] == 92 and mirror.pushed != [0, 0, 0]
     assert simulation.measured[2].charge == (4, 5) and simulation.measured[3].charge == (1, 1)

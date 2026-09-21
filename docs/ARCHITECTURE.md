@@ -112,6 +112,12 @@ denominators. Exact-division operators must reject a zero divisor or a nonexact
 result. A rule that permits division with remainder must declare the existing
 bounded remainder owner, update and lifetime; do not silently discard a remainder,
 round through floating point, wrap overflow or clamp a failed calculation.
+In the Beam Law the owner of every count's remainder is the accumulator on
+the body's own record ([BEAM_LAW note 41](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation), the
+fraction-free law of 2026-09-20; `core.integer.by_drive`): a whole part
+off the clock at the current rate discards the remainder of a changing
+rate, so it is admitted only as the constant-rate identity of a count, or
+as a comparison of an age against a key.
 Keep documented integer split/quantization policies explicit and test their
 accounting. Arithmetic failure must not leave a partially committed transaction.
 
@@ -230,7 +236,8 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 | `configuration_validation` | `events/world`, `world_loading`; read-only |
 | `runner` | `events/run`, `retention`, `world_loading` |
 | `ui` | `configuration_validation`, `json_documents`, `retention`, `world_loading`; local HTTP and isolated CLI process ownership |
-| `diagnostics/numeric_audit` | Standard library; the static integer audit of `core/` |
+| `diagnostics/numeric_audit` | Standard library; the two static audits, `core/` integers only and `events/` integer numpy and nothing that leaves the integers (`run.py`, the artifacts' writer, outside it) |
+| `diagnostics/shell_readings` | `events/engine`, `core/game_board`, numpy; the shell means of the engine's readings, read-only, the one floating-point calculation of the package (a host diagnostic, outside the engine since 2026-09-21) |
 | `tools/` | Readers of the record, loaded by their path and never imported by the package (the architecture review of 2026-09-20: a tool calls the engine's functions, it owns no rule): `coupling_readings` imports `core/integer`, `core/game_board`, `events`, `events/nature_beam`, `events/world`, `json_documents` and numpy; `orbit_readings` `core/integer`, `events`, `events/nature_beam`, `events/world`, `json_documents`; `heisenberg_readings` `core/integer`, `events`, `json_documents`; `redshift_readings` `events`; `migrate_nature_beam_worlds` `events/world`; `bell_chsh`, `run_series` and `check` the standard library; the `derivations_round*` scripts numpy |
 | `tests/` | The package's modules under test, the tools by their path (`importlib`), the gates (`tests/architecture_rules.py`, the repository scanners) the standard library; `tools/check.py` selects a test by its imports and by the files it names |
 
