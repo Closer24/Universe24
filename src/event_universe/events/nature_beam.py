@@ -99,6 +99,7 @@ from __future__ import annotations
 import functools
 import itertools
 from collections.abc import Callable
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -1114,6 +1115,187 @@ def nature_beam_tables(world: NatureBeamWorld) -> NatureBeamTables:
 
 # -- the store -------------------------------------------------------------------
 
+# The host's threads for the store's gathers (`NatureBeamStore.take`), four (a
+# constant of the host, not read from the machine: the engine imports no
+# system module); numpy's
+# `take` releases the interpreter's lock, so the fields of a large store are
+# gathered in parallel; a small store is gathered in the caller's thread. The
+# result of every gather is one field's alone, so the threads change nothing
+# in the numbers (`massive-rows-fast`, 2026-09-21).
+_GATHER_THREADS = 4
+_GATHER_ROWS = 1 << 16
+_gather_pool: ThreadPoolExecutor | None = None
+
+
+def _gather(fields: list[np.ndarray], order: np.ndarray) -> list[np.ndarray]:
+    """`np.take(field, order)` for every field, on the threads for a large order."""
+    global _gather_pool
+    if order.shape[0] < _GATHER_ROWS or _GATHER_THREADS < 2:
+        return [np.take(field, order) for field in fields]
+    return list(_pool().map(lambda field: np.take(field, order), fields))
+
+
+def _walk_rows(
+    table: FamilyFlight,
+    store: NatureBeamStore,
+    periodic: tuple[bool, bool, bool] | list[bool],
+    extents: tuple[int, int, int] | list[int] | np.ndarray,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """The walk's per-row arithmetic (step 1 of BEAM_LAW section 3): the
+    Link each row crosses at its age by the family's flight (`walk_step`),
+    whether it moved, its coordinates after the step (the wrap on a periodic
+    axis) and whether it left through an open face. Row by row the same
+    integers as the block in `_walk` was; a large store is cut into chunks
+    of rows computed on the host's threads and joined (`massive-rows-fast`,
+    2026-09-21)."""
+
+    def rows(lo: int, hi: int) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+        step = table.walk_step(store.direction[lo:hi], store.age[lo:hi])
+        moved = step.any(axis=1)
+        x, y, z = store.coordinates(store.node[lo:hi])
+        coordinates = np.stack([x, y, z], axis=1) + step
+        escaped = np.zeros(hi - lo, dtype=bool)
+        for axis in range(3):
+            if periodic[axis]:
+                coordinates[:, axis] %= extents[axis]
+            else:
+                escaped |= (coordinates[:, axis] < 0) | (coordinates[:, axis] >= extents[axis])
+        return step, moved, coordinates, escaped
+
+    size = store.size
+    if size < _GATHER_ROWS or _GATHER_THREADS < 2:
+        return rows(0, size)
+    bounds = [k * size // _GATHER_THREADS for k in range(_GATHER_THREADS + 1)]
+    chunks = list(
+        _pool().map(lambda lo_hi: rows(*lo_hi), list(zip(bounds[:-1], bounds[1:], strict=True)))
+    )
+    step = np.concatenate([chunk[0] for chunk in chunks])
+    moved = np.concatenate([chunk[1] for chunk in chunks])
+    coordinates = np.concatenate([chunk[2] for chunk in chunks])
+    escaped = np.concatenate([chunk[3] for chunk in chunks])
+    return step, moved, coordinates, escaped
+
+
+def _pool() -> ThreadPoolExecutor:
+    """The host's thread pool for the store's slabs and gathers."""
+    global _gather_pool
+    if _gather_pool is None:
+        _gather_pool = ThreadPoolExecutor(max_workers=_GATHER_THREADS)
+    return _gather_pool
+
+
+def _pack_words(columns: list[np.ndarray], size: int) -> list[np.ndarray]:
+    """`NatureBeamStore.merge_words` on columns of `size` rows."""
+    lows = [int(column.min()) for column in columns]
+    widths = [(int(column.max()) - low).bit_length() for column, low in zip(columns, lows, strict=True)]
+    words: list[np.ndarray] = []
+    word = np.zeros(size, dtype=np.int64)
+    used = 0
+    for column, low, width in zip(columns, lows, widths, strict=True):
+        if used + width > 62:
+            words.append(word)
+            word = np.zeros(size, dtype=np.int64)
+            used = 0
+        word = (word << width) + (column - low)
+        used += width
+    words.append(word)
+    return words
+
+
+def _merge_rows(
+    fields: dict[str, np.ndarray], modulus: int
+) -> tuple[dict[str, np.ndarray], dict[tuple[int, int, int], int]]:
+    """`NatureBeamStore.merge` on one slab of rows (the fields as arrays or
+    views, every field of `FIELDS`): the merged fields as new arrays and
+    what the cancel removed. The body of the merge as it was, row for row
+    (the docstring of `merge`), on a slab: the identity columns and the
+    sign of the cancel (`identity_columns`), the words (`merge_words`), the
+    order (a stable sort of one word or the lexsort of the words), the
+    same-row test on the words, the amounts and the undelivered shares
+    summed per group in the sorted order, every other field gathered once
+    at the first row of each group, then the cancel."""
+    size = fields["node"].shape[0]
+    removed: dict[tuple[int, int, int], int] = {}
+    columns = [fields[name] for name in IDENTITY_FIELDS]
+    sign = np.ones(size, dtype=np.int64)
+    if modulus:
+        recorded = fields["record"] != NO_RECORD
+        if recorded.any():
+            half = modulus // 2
+            far = recorded & (fields["phase"] >= half)
+            columns[PHASE_FIELD] = np.where(recorded, fields["phase"] % half, fields["phase"])
+            sign = np.where(far, -1, 1)
+    words = _pack_words(columns, size)
+    if len(words) == 1:
+        order = np.argsort(words[0], kind="stable")
+    else:
+        order = np.lexsort(tuple(reversed(words)))
+    same = np.zeros(size, dtype=bool)
+    same[1:] = True
+    for word in words:
+        word = np.take(word, order)
+        same[1:] &= word[1:] == word[:-1]
+    starts = np.flatnonzero(~same)
+    kept = np.take(order, starts)
+    amount_sorted = np.take(fields["amount"], order)
+    # The merged amounts are exact: in the register when no group's sum
+    # can leave it, in Python integers otherwise, and bounded.
+    signed = amount_sorted if not modulus else amount_sorted * np.take(sign, order)
+    if int(amount_sorted.max()) * size <= MOMENTUM_BOUND:
+        amount = np.add.reduceat(signed, starts)
+        whole = np.add.reduceat(amount_sorted, starts) if modulus else amount
+    else:
+        merged = np.add.reduceat(signed.astype(object), starts)
+        if max(abs(int(v)) for v in merged) > MOMENTUM_BOUND:
+            raise OverflowError(
+                f"{BEAM_LAW}: the amount of a merged row exceeds the integer bound {MOMENTUM_BOUND}"
+            )
+        amount = merged.astype(np.int64)
+        whole = (
+            np.add.reduceat(amount_sorted.astype(object), starts).astype(np.int64) if modulus else amount
+        )
+    # The undelivered shares of merged rows add (the momentum a row has
+    # not yet delivered is the group's); bounded like the amounts.
+    out: dict[str, np.ndarray] = {}
+    for name in ("share_x", "share_y", "share_z"):
+        column = fields[name]
+        if column.any():
+            summed = np.add.reduceat(np.take(column, order).astype(object), starts)
+            if max(abs(int(v)) for v in summed) > MOMENTUM_BOUND:
+                raise OverflowError(
+                    f"{BEAM_LAW}: the undelivered share of a merged row exceeds the integer "
+                    f"bound {MOMENTUM_BOUND}"
+                )
+            out[name] = summed.astype(np.int64)
+    for name in FIELDS:
+        if name != "amount" and name not in out:
+            out[name] = np.take(fields[name], kept)
+    if modulus:
+        # The cancel: the signed sum's magnitude stays, at the phase of
+        # the larger side (the half-circle phase of the group, plus the
+        # half circle when the far side was larger, which a lone row on
+        # the far half is); an empty group leaves, its units booked per
+        # (record, direction).
+        half = modulus // 2
+        cancelled = whole - np.abs(amount)
+        for k in np.flatnonzero(cancelled > 0).tolist():
+            slot = (int(out["record"][k]), int(out["direction"][k]), int(out["content"][k]))
+            removed[slot] = removed.get(slot, 0) + int(cancelled[k])
+        recorded = out["record"] != NO_RECORD
+        base = np.where(recorded, out["phase"] % half, out["phase"])
+        out["phase"] = np.where(recorded & (amount < 0), base + half, base)
+        out["amount"] = np.abs(amount)
+        out["arrival"] = np.full(out["amount"].shape[0], NO_ARRIVAL, dtype=np.int64)
+        alive = out["amount"] > 0
+        if not alive.all():
+            living = np.flatnonzero(alive)
+            out = {name: np.take(value, living) for name, value in out.items()}
+        return out, removed
+    out["amount"] = amount
+    out["arrival"] = np.full(amount.shape[0], NO_ARRIVAL, dtype=np.int64)
+    return out, removed
+
+
 FIELDS = (
     "node",
     "direction",
@@ -1233,6 +1415,31 @@ def label_overflow_rows(
     reach = np.abs(np.asarray(unit, dtype=np.int64)).max(axis=1)
     result: np.ndarray = ~fits | ((reach > 0) & (weight > MOMENTUM_BOUND // np.maximum(reach, 1)))
     return result
+
+
+def born_recoil(labels: np.ndarray, born: list[BornRow]) -> list[int]:
+    """The recoil of a paid re-creation over its born rows: per row and axis
+    the share `share_of(label, amount, multiplicity)` for a row of a record,
+    the label whole for a row of no record, summed exactly per axis. The
+    same integers as the row-by-row loop: the products `label x amount`
+    are formed in the register when their extremes fit it and in Python
+    integers otherwise (`massive-rows-fast`, 2026-09-21)."""
+    amount = np.array([b[1] for b in born], dtype=np.int64)
+    multiplicity = np.array([b[7] for b in born], dtype=np.int64)
+    recorded = np.array([b[5] != NO_RECORD for b in born], dtype=bool)
+    widest_label = int(np.abs(labels).max(initial=0))
+    widest_amount = int(amount.max(initial=0))
+    if widest_label and widest_amount and widest_label > MAX_WORK_INT // widest_amount:
+        recoil = [0, 0, 0]
+        for k, b in enumerate(born):
+            for axis in range(3):
+                label = int(labels[k, axis])
+                recoil[axis] += share_of(label, b[1], b[7])[0] if b[5] != NO_RECORD else label
+        return recoil
+    total = labels * amount[:, None]
+    whole = np.abs(total) // multiplicity[:, None]
+    share = np.where(total < 0, -whole, whole)
+    return exact_column_sums(np.where(recorded[:, None], share, labels))
 
 
 def share_of(label: int, amount: int, multiplicity: int, accumulator: int = 0) -> tuple[int, int]:
@@ -1540,24 +1747,29 @@ class NatureBeamStore:
             for name, default in COLUMN_DEFAULTS.items():
                 if name not in columns:
                     columns[name] = np.full(count, default, dtype=np.int64)
-        for name in FIELDS:
-            setattr(
-                self,
-                name,
-                np.concatenate(
-                    [getattr(self, name), *[columns[name].astype(np.int64) for columns in batches]]
-                ),
-            )
+        joined = [
+            [getattr(self, name), *[columns[name].astype(np.int64) for columns in batches]]
+            for name in FIELDS
+        ]
+        if self.size >= _GATHER_ROWS and _GATHER_THREADS > 1:
+            values = list(_pool().map(np.concatenate, joined))
+        else:
+            values = [np.concatenate(pieces) for pieces in joined]
+        for name, value in zip(FIELDS, values, strict=True):
+            setattr(self, name, value)
 
     def keep(self, mask: np.ndarray) -> None:
         """Keep the rows the mask selects, in every field."""
-        for name in FIELDS:
-            setattr(self, name, getattr(self, name)[mask])
+        self.take(np.flatnonzero(mask))
 
     def take(self, order: np.ndarray) -> None:
-        """Reorder the rows by the index order given, in every field."""
-        for name in FIELDS:
-            setattr(self, name, getattr(self, name)[order])
+        """Reorder the rows by the index order given, in every field (a
+        gather per field, the fields on the host's threads for a large
+        store: each gather is one field's, the result the same in any
+        order; `massive-rows-fast`, 2026-09-21)."""
+        fields = [getattr(self, name) for name in FIELDS]
+        for name, taken in zip(FIELDS, _gather(fields, order), strict=True):
+            setattr(self, name, taken)
 
     def sort(self) -> None:
         """Sort the rows by Node, stably."""
@@ -1617,22 +1829,7 @@ class NatureBeamStore:
         records and multiplicities carry 32 bits each, the massive rows'
         pin), a lexsort over two or three words in place of one over the
         eleven fields (the same total order; `massive-rows-fast`, 2026-09-21)."""
-        lows = [int(column.min()) for column in columns]
-        widths = [
-            (int(column.max()) - low).bit_length() for column, low in zip(columns, lows, strict=True)
-        ]
-        words: list[np.ndarray] = []
-        word = np.zeros(self.size, dtype=np.int64)
-        used = 0
-        for column, low, width in zip(columns, lows, widths, strict=True):
-            if used + width > 62:
-                words.append(word)
-                word = np.zeros(self.size, dtype=np.int64)
-                used = 0
-            word = (word << width) + (column - low)
-            used += width
-        words.append(word)
-        return words
+        return _pack_words(columns, self.size)
 
     def merge(self, modulus: int = 0) -> dict[tuple[int, int, int], int]:
         """Identical rows (equal in every field but the amount) merged, the
@@ -1659,83 +1856,61 @@ class NatureBeamStore:
         removed: dict[tuple[int, int, int], int] = {}
         if self.size == 0:
             return removed
-        columns, sign = self.identity_columns(modulus)
-        key = self.merge_key(columns)
-        same = np.zeros(self.size, dtype=bool)
-        if key is None:
-            # The words of `merge_words` in place of the eleven fields: the
-            # same total order, the same-row test on the words.
-            words = self.merge_words(columns)
-            order = np.lexsort(tuple(reversed(words)))
-            self.take(order)
-            sign = sign[order]
-            same[1:] = True
-            for word in words:
-                word = word[order]
-                same[1:] &= word[1:] == word[:-1]
-        else:
-            order = np.argsort(key, kind="stable")
-            self.take(order)
-            sign = sign[order]
-            key = key[order]
-            same[1:] = key[1:] == key[:-1]
-        starts = np.flatnonzero(~same)
-        # The merged amounts are exact: in the register when no group's sum
-        # can leave it, in Python integers otherwise, and bounded.
-        signed = self.amount if not modulus else self.amount * sign
-        if int(self.amount.max()) * self.size <= MOMENTUM_BOUND:
-            amount = np.add.reduceat(signed, starts)
-            whole = np.add.reduceat(self.amount, starts) if modulus else amount
-        else:
-            merged = np.add.reduceat(signed.astype(object), starts)
-            if max(abs(int(v)) for v in merged) > MOMENTUM_BOUND:
-                raise OverflowError(
-                    f"{BEAM_LAW}: the amount of a merged row exceeds the integer bound {MOMENTUM_BOUND}"
+        # The merge per Node-aligned slab (`massive-rows-fast`, 2026-09-21):
+        # rows of different Nodes never merge and the Node is the order's
+        # first field, so the total order is the slabs' orders in sequence;
+        # a large store's slabs are merged on the host's threads (the sort,
+        # the reductions and the gathers release the interpreter's lock)
+        # and their rows joined; a small store is one slab.
+        fields = {name: getattr(self, name) for name in FIELDS}
+        slabs: list[dict[str, np.ndarray]] = [fields]
+        if self.size >= _GATHER_ROWS and _GATHER_THREADS > 1:
+            # The store at the merge is the walk's Node-sorted rows followed
+            # by the interval's releases (appended, in no order): the slabs
+            # cut the sorted prefix at Node values, and every appended row
+            # joins the slab of its Node value after the prefix's rows, so
+            # each slab holds whole Nodes in the store's own order.
+            node = self.node
+            breaks = np.flatnonzero(node[1:] < node[:-1])
+            prefix = int(breaks[0]) + 1 if breaks.shape[0] else self.size
+            cuts = [0]
+            thresholds: list[int] = []
+            for k in range(1, _GATHER_THREADS):
+                at = k * prefix // _GATHER_THREADS
+                cut = int(np.searchsorted(node[:prefix], node[at], side="left"))
+                if cut > cuts[-1]:
+                    cuts.append(cut)
+                    thresholds.append(int(node[at]))
+            cuts.append(prefix)
+            if len(cuts) > 2:
+                of_slab = np.searchsorted(
+                    np.array(thresholds, dtype=np.int64), node[prefix:], side="right"
                 )
-            amount = merged.astype(np.int64)
-            whole = (
-                np.add.reduceat(self.amount.astype(object), starts).astype(np.int64)
-                if modulus
-                else amount
-            )
-        # The undelivered shares of merged rows add (the momentum a row has
-        # not yet delivered is the group's); bounded like the amounts.
-        shares_summed: dict[str, np.ndarray] = {}
-        for name in ("share_x", "share_y", "share_z"):
-            column = getattr(self, name)
-            if column.any():
-                summed = np.add.reduceat(column.astype(object), starts)
-                if max(abs(int(v)) for v in summed) > MOMENTUM_BOUND:
-                    raise OverflowError(
-                        f"{BEAM_LAW}: the undelivered share of a merged row exceeds the integer "
-                        f"bound {MOMENTUM_BOUND}"
-                    )
-                shares_summed[name] = summed.astype(np.int64)
-        self.keep(~same)
-        for name, summed in shares_summed.items():
-            setattr(self, name, summed)
-        if modulus:
-            # The cancel: the signed sum's magnitude stays, at the phase of
-            # the larger side (the half-circle phase of the group, plus the
-            # half circle when the far side was larger, which a lone row on
-            # the far half is); an empty group leaves, its units booked per
-            # (record, direction).
-            half = modulus // 2
-            cancelled = whole - np.abs(amount)
-            for k in np.flatnonzero(cancelled > 0).tolist():
-                slot = (int(self.record[k]), int(self.direction[k]), int(self.content[k]))
-                removed[slot] = removed.get(slot, 0) + int(cancelled[k])
-            recorded = self.record != NO_RECORD
-            base = np.where(recorded, self.phase % half, self.phase)
-            self.phase = np.where(recorded & (amount < 0), base + half, base)
-            self.amount = np.abs(amount)
-            self.arrival[:] = NO_ARRIVAL
-            alive = self.amount > 0
-            if not alive.all():
-                self.keep(alive)
-            return removed
-        self.amount = amount
-        self.arrival[:] = NO_ARRIVAL
+                slabs = []
+                for k, (lo, hi) in enumerate(zip(cuts[:-1], cuts[1:], strict=True)):
+                    extra = prefix + np.flatnonzero(of_slab == k)
+                    if extra.shape[0]:
+                        slabs.append(
+                            {
+                                name: np.concatenate((field[lo:hi], np.take(field, extra)))
+                                for name, field in fields.items()
+                            }
+                        )
+                    else:
+                        slabs.append({name: field[lo:hi] for name, field in fields.items()})
+        if len(slabs) == 1:
+            parts = [_merge_rows(slabs[0], modulus)]
+        else:
+            parts = list(_pool().map(lambda slab: _merge_rows(slab, modulus), slabs))
+            joined = _pool().map(lambda name: np.concatenate([part[0][name] for part in parts]), FIELDS)
+            for name, value in zip(FIELDS, joined, strict=True):
+                setattr(self, name, value)
+        if len(parts) == 1:
+            for name in FIELDS:
+                setattr(self, name, parts[0][0][name])
+        for _, part_removed in parts:
+            for slot, units in part_removed.items():
+                removed[slot] = removed.get(slot, 0) + units
         return removed
 
     def slice(self, flat: int) -> tuple[int, int]:
@@ -3017,16 +3192,7 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
         # The flight's rule at the row's age: the position's accumulator
         # per direction, off the age (the rate constant over the flight),
         # by the family's triple.
-        step = table.walk_step(store.direction, store.age)
-        moved = step.any(axis=1)
-        x, y, z = store.coordinates(store.node)
-        coordinates = np.stack([x, y, z], axis=1) + step
-        escaped = np.zeros(store.size, dtype=bool)
-        for axis in range(3):
-            if world.periodic[axis]:
-                coordinates[:, axis] %= extents[axis]
-            else:
-                escaped |= (coordinates[:, axis] < 0) | (coordinates[:, axis] >= extents[axis])
+        step, moved, coordinates, escaped = _walk_rows(table, store, world.periodic, extents)
         # The Port of the Link crossed (a diagnostic of the walk, and the
         # face a ray leaves through) and the direction the ray arrived on.
         port = np.full(store.size, -1, dtype=np.int64)
@@ -3034,6 +3200,7 @@ def _walk(frame: Interval) -> list[ArrivalRows]:
         arrival = np.where(moved, store.direction, NO_ARRIVAL)
         if escaped.any():
             gone = np.flatnonzero(escaped)
+            x, y, z = store.coordinates(store.node)
             labels = store.labels(gone, unit, definition.free)
             for face in ledger.open_faces:
                 on_face = port[gone] == face
@@ -4861,11 +5028,7 @@ def _release_family(
         recoil = list(born_momentum)
         born_records = [k for k, b in enumerate(born) if b[5] != NO_RECORD]
         if born_records:
-            recoil = [0, 0, 0]
-            for k, b in enumerate(born):
-                for axis in range(3):
-                    label = int(labels[k, axis])
-                    recoil[axis] += share_of(label, b[1], b[7])[0] if b[5] != NO_RECORD else label
+            recoil = born_recoil(labels, born)
             ledger.remainder_momentum[family] = [
                 a - (whole - taken)
                 for a, whole, taken in zip(
