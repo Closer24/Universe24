@@ -1,4 +1,5 @@
 """Part 1 of the thirty-page assembly; see assemble.py."""
+
 from pathlib import Path
 
 from cut30_lib import B, cutp, sub
@@ -167,21 +168,43 @@ m = B("Here $s$ is one accumulator of the state", "\\paragraph{From the Node to 
 out.append(r"""\paragraph{The map.} """ + m)
 # the state, the components, the two blocks, the read-out
 st = B("\\paragraph{The state.}", "\\paragraph{The components of")
-st = sub(st, "(the fields per kind and the six verbs on them, F4 of the families' tables \\cite{familiesaudit}).", "(the fields per kind on the tree \\cite{familiesaudit}).")
+st = sub(
+    st,
+    "(the fields per kind and the six verbs on them, F4 of the families' tables \\cite{familiesaudit}).",
+    "(the fields per kind on the tree \\cite{familiesaudit}).",
+)
 out.append(st)
 comp = B("\\paragraph{The components of", "\\paragraph{The two blocks.}")
-comp = sub(comp, "The ladder's rungs $\\rung_k$ of Part~III are walls of this kind. The components", "The ladder's rungs $\\rung_k$ of Section~\\ref{sec:measurement} are walls of this kind. The components")
-comp = sub(comp, "written $n/d$ in Part~III, its", "written $n/d$ in Section~\\ref{sec:measurement}, its")
+comp = sub(
+    comp,
+    "The ladder's rungs $\\rung_k$ of Part~III are walls of this kind. The components",
+    "The ladder's rungs $\\rung_k$ of Section~\\ref{sec:measurement} are walls of this kind. The components",
+)
+comp = sub(
+    comp, "written $n/d$ in Part~III, its", "written $n/d$ in Section~\\ref{sec:measurement}, its"
+)
 comp = cutp(comp, "one row of the lamp's counts table, giving", "$[2531, 4096]$ on the registered")
-comp = cutp(comp, ", the click's one Euclidean division with its remainder kept, from the row's two counts", "\\cite{beamlaw}; and")
+comp = cutp(
+    comp,
+    ", the click's one Euclidean division with its remainder kept, from the row's two counts",
+    "\\cite{beamlaw}; and",
+)
 out.append(comp)
 blocks = B("\\paragraph{The two blocks.}", "\\paragraph{The read-out.}")
-blocks = sub(blocks, "and the limits of Part~II are limits of that formula.", "and the limits of Sections~\\ref{sec:forces} and~\\ref{sec:delay} are limits of that formula.")
+blocks = sub(
+    blocks,
+    "and the limits of Part~II are limits of that formula.",
+    "and the limits of Sections~\\ref{sec:forces} and~\\ref{sec:delay} are limits of that formula.",
+)
 blocks = cutp(blocks, "What each rule reads is audited rule by rule", "\n\n")
 blocks = blocks.rstrip() + "\n\n"
 out.append(blocks)
 ro = B("\\paragraph{The read-out.}", "\\paragraph{The law in five statements.}")
-ro = sub(ro, "forced in form by Section~\\ref{sec:gleason} and free in its constants", "forced in form by Theorem~\\ref{th:gleason} and free in its constants")
+ro = sub(
+    ro,
+    "forced in form by Section~\\ref{sec:gleason} and free in its constants",
+    "forced in form by Theorem~\\ref{th:gleason} and free in its constants",
+)
 out.append(ro)
 out.append(r"""\paragraph{A hand-worked update.} A row on the heading $+x$ has the
 flight accumulator's rate $2S_1N_l = 128$ ($S_1 = 1$, $N_l = 64$) against
@@ -266,5 +289,5 @@ The muon's decay tick under covariant-readings-v1 & the identity's owed count & 
 
 """)
 
-open(str(HERE / 'part1.tex'), 'w').write(''.join(out))
-print('part1 ok', sum(len(x) for x in out))
+open(str(HERE / "part1.tex"), "w").write("".join(out))
+print("part1 ok", sum(len(x) for x in out))

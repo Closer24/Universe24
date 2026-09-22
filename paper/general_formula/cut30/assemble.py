@@ -6,6 +6,7 @@ the new passages of the thirty-page plan (PLAN.md); this script joins them,
 keeps only the cited references, places the references before the appendices
 as the owner's map orders, and writes main.tex with its header.
 """
+
 import re
 import runpy
 import sys
@@ -30,13 +31,15 @@ def main() -> None:
     for i in (1, 2, 3, 4):
         runpy.run_path(str(HERE / f"part{i}.py"), run_name="__main__")
     parts = "".join((HERE / f"part{i}.tex").read_text() for i in (1, 2, 3, 4))
-    s = (parts.replace("sec:newton", "sec:forces")
-         .replace("Part~III", "Section~\\ref{sec:measurement}")
-         .replace("Part~II", "Sections~\\ref{sec:forces} and~\\ref{sec:delay}")
-         .replace("Part~I", "Section~\\ref{sec:law}"))
-    body = s[:s.index("\\begin{thebibliography}")]
+    s = (
+        parts.replace("sec:newton", "sec:forces")
+        .replace("Part~III", "Section~\\ref{sec:measurement}")
+        .replace("Part~II", "Sections~\\ref{sec:forces} and~\\ref{sec:delay}")
+        .replace("Part~I", "Section~\\ref{sec:law}")
+    )
+    body = s[: s.index("\\begin{thebibliography}")]
     cited = {k.strip() for m in re.finditer(r"\\cite\{([^}]*)\}", body) for k in m.group(1).split(",")}
-    bib = s[s.index("\\begin{thebibliography}"):]
+    bib = s[s.index("\\begin{thebibliography}") :]
     items = re.split(r"(?=\\bibitem\{)", bib)
     head, kept = items[0], []
     for it in items[1:]:
@@ -44,8 +47,16 @@ def main() -> None:
         if key in cited:
             kept.append(re.sub(r"\\end\{thebibliography\}.*", "", it, flags=re.S))
     i = body.index("\\appendix")
-    out = (HEADER + body[:i] + "{\\small\n" + head + "".join(kept)
-           + "\\end{thebibliography}}\n\n" + body[i:] + "\\end{document}\n")
+    out = (
+        HEADER
+        + body[:i]
+        + "{\\small\n"
+        + head
+        + "".join(kept)
+        + "\\end{thebibliography}}\n\n"
+        + body[i:]
+        + "\\end{document}\n"
+    )
     (HERE.parent / "main.tex").write_text(out)
     for i in (1, 2, 3, 4):
         (HERE / f"part{i}.tex").unlink()

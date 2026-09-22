@@ -4,6 +4,7 @@ commit b684ba0b, the last form before the cut) selected by anchor.
 The base is read from the repository's history, never from a copy: the one
 canonical text of that form is the commit itself.
 """
+
 import re
 import subprocess
 from pathlib import Path
@@ -12,7 +13,10 @@ ROOT = Path(__file__).resolve().parents[3]
 BASE_COMMIT = "b684ba0b"
 BASE = subprocess.run(
     ["git", "-C", str(ROOT), "show", f"{BASE_COMMIT}:paper/general_formula/main.tex"],
-    check=True, capture_output=True, text=True).stdout
+    check=True,
+    capture_output=True,
+    text=True,
+).stdout
 
 
 def B(start, end=None, include_end=False):
@@ -43,6 +47,6 @@ def cutp(text, start, end):
     pe = r"\s+".join(re.escape(t) for t in end.split())
     ms = re.search(ps, text)
     assert ms, ("cutp start", start[:60])
-    me = re.search(pe, text[ms.end():])
+    me = re.search(pe, text[ms.end() :])
     assert me, ("cutp end", end[:60])
-    return text[:ms.start()] + text[ms.end() + me.start():]
+    return text[: ms.start()] + text[ms.end() + me.start() :]

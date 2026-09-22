@@ -1,4 +1,5 @@
 """Part 4 of the thirty-page assembly; see assemble.py."""
+
 from pathlib import Path
 
 from cut30_lib import B, cutp, sub
@@ -230,9 +231,16 @@ out.append(r"""\appendix
 """)
 pg = B("A map of the six Ports that keeps opposite Ports opposite permutes the", "\\end{proof}")
 pg = cutp(pg, "; series P's parity worlds with an", "That the\nsix operations commute")
-pg = sub(pg, "by definition. That the", "by definition. That the") if "by definition. That the" in pg else pg
+pg = (
+    sub(pg, "by definition. That the", "by definition. That the")
+    if "by definition. That the" in pg
+    else pg
+)
 out.append(pg.rstrip() + "\n\n\\paragraph{Proof of Theorem~\\ref{th:isometry}.}\n")
-pi = B("$\\sum_i (wa_i)^2/(\\mathtt m A) = w^2 \\sum_i a_i^2/(\\mathtt m A) = w^2/\\mathtt m$.", "\\end{proof}")
+pi = B(
+    "$\\sum_i (wa_i)^2/(\\mathtt m A) = w^2 \\sum_i a_i^2/(\\mathtt m A) = w^2/\\mathtt m$.",
+    "\\end{proof}",
+)
 out.append(pi.rstrip() + "\n\n\\paragraph{Proof of Theorem~\\ref{th:bijection}.}\n")
 pb = B("$F$ maps a basis element to a basis element and is injective because the", "\\end{proof}")
 out.append(pb.rstrip() + "\n\n")
@@ -240,30 +248,53 @@ out.append(pb.rstrip() + "\n\n")
 out.append(r"""\section{Technical details}\label{app:technical}
 
 \paragraph{The tables and their rounding.} """)
-tab = B("The circle is $\\Z_{\\Nphi}$ with $4 \\mid \\Nphi$. The tables are", "\\paragraph{The pace of the rows, and the octahedron.}")
+tab = B(
+    "The circle is $\\Z_{\\Nphi}$ with $4 \\mid \\Nphi$. The tables are",
+    "\\paragraph{The pace of the rows, and the octahedron.}",
+)
 tab = tab.replace("Section~\\ref{sec:newton}", "Section~\\ref{sec:forces}")
-out.append(tab.rstrip() + " The integer Mach-Zehnder's total over the $64$ birth phases takes eight values from $65448/65536$ to $65773/65536$, the same eight on every one of its ten worlds \\cite{register}; the normalisation by $C_K$ in Eq.~\\eqref{eq:rung} makes the click's probabilities sum to one at completion, and the paper claims exact unitarity nowhere.\n\n")
+out.append(
+    tab.rstrip()
+    + " The integer Mach-Zehnder's total over the $64$ birth phases takes eight values from $65448/65536$ to $65773/65536$, the same eight on every one of its ten worlds \\cite{register}; the normalisation by $C_K$ in Eq.~\\eqref{eq:rung} makes the click's probabilities sum to one at completion, and the paper claims exact unitarity nowhere.\n\n"
+)
 out.append(r"""\paragraph{The symbols.} """)
 nt = B("{\\small\n\\begin{longtable}{p{1.9in}p{1.05in}p{3.5in}}", "\\part{The formula}")
-nt = nt.replace("{\\small", "{\\footnotesize", 1).replace("p{1.9in}p{1.05in}p{3.5in}", "p{1.75in}p{1.0in}p{3.3in}")
+nt = nt.replace("{\\small", "{\\footnotesize", 1).replace(
+    "p{1.9in}p{1.05in}p{3.5in}", "p{1.75in}p{1.0in}p{3.3in}"
+)
 nt = nt.replace("Section~\\ref{sec:newton}", "Section~\\ref{sec:forces}")
 out.append(nt.rstrip() + "\n\n")
 
 out.append(r"""\section{Reproduction}\label{app:reproduction}
 
 """)
-rep = B("The code, the worlds of series L with their expectation file written", "The long form of this manuscript")
-rep = rep[:rep.index("The commits the body refers to here")].rstrip() + "\n"
-rep = sub(rep, "the runs' summary and the two figure scripts are archived\n\\cite{zenodo}; the register entry of series L carries every run's world,\nduration and source fingerprint, and a table beside the manuscript maps\neach number of this paper to its source.", "the runs' summary and the two figure scripts are archived \\cite{zenodo}; the register entry of each series carries every run's world, duration and source fingerprint, and NUMBERS.md beside the manuscript maps each number of this paper to its source \\cite{checks}.")
+rep = B(
+    "The code, the worlds of series L with their expectation file written",
+    "The long form of this manuscript",
+)
+rep = rep[: rep.index("The commits the body refers to here")].rstrip() + "\n"
+rep = sub(
+    rep,
+    "the runs' summary and the two figure scripts are archived\n\\cite{zenodo}; the register entry of series L carries every run's world,\nduration and source fingerprint, and a table beside the manuscript maps\neach number of this paper to its source.",
+    "the runs' summary and the two figure scripts are archived \\cite{zenodo}; the register entry of each series carries every run's world, duration and source fingerprint, and NUMBERS.md beside the manuscript maps each number of this paper to its source \\cite{checks}.",
+)
 out.append(rep.rstrip() + "\n\n")
 long = B("The long form of this manuscript", "\\section*{Use of AI tools}")
-long = sub(long, "this paper is its cut to what is\nproved, measured or replicated, and cites the tree for the rest.", "this paper is its cut to what is proved, measured after a detector or replicated, built around the general formula; the forty-page cut before it is at the commit \\texttt{b0d1ebf7}; the tree cited for the rest.")
+long = sub(
+    long,
+    "this paper is its cut to what is\nproved, measured or replicated, and cites the tree for the rest.",
+    "this paper is its cut to what is proved, measured after a detector or replicated, built around the general formula; the forty-page cut before it is at the commit \\texttt{b0d1ebf7}; the tree cited for the rest.",
+)
 out.append(long.rstrip() + "\n\n")
 ai = B("\\section*{Use of AI tools}", "\\begin{thebibliography}{99}")
 ai = ai.replace("\\section*{Use of AI tools}", "\\paragraph{Use of AI tools.}")
 out.append(ai)
 bib = B("\\begin{thebibliography}{99}")
-bib = bib.replace("\\bibitem{terminology} Canonical simulation terminology,", "\\bibitem{hypotheses} Hypotheses under test, entry 27, the conditional derivations as declared hypotheses, \\texttt{docs/HYPOTHESES.md} of the archived code \\cite{zenodo}.\n\\bibitem{terminology} Canonical simulation terminology,", 1)
+bib = bib.replace(
+    "\\bibitem{terminology} Canonical simulation terminology,",
+    "\\bibitem{hypotheses} Hypotheses under test, entry 27, the conditional derivations as declared hypotheses, \\texttt{docs/HYPOTHESES.md} of the archived code \\cite{zenodo}.\n\\bibitem{terminology} Canonical simulation terminology,",
+    1,
+)
 out.append(bib)
-open(str(HERE / 'part4.tex'), 'w').write(''.join(out))
-print('part4 ok', sum(len(x) for x in out))
+open(str(HERE / "part4.tex"), "w").write("".join(out))
+print("part4 ok", sum(len(x) for x in out))
