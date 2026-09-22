@@ -470,10 +470,10 @@ def test_a_massive_record_through_the_open_faces_completes_at_one_face():
         # the turn's rate abs(p_a) N can (3 p^2 > p N for every p beyond N /
         # 3), so the ceiling that fires is the energy's, naming the direction
         # (p = 1.4 x 10^9: 3 p^2 = 5.9 x 10^18 beyond 2^62 - 1); beyond that
-        # the label's rounding itself leaves the working register, refused
+        # the label's rounding itself leaves the working bound, refused
         # naming the key before any root is formed.
         (small_world(p=1_400_000_000), "E'_D^2 = E'_0^2 + 3 p_D . p_D ="),
-        (small_world(p=1 << 57), "beyond the working register"),
+        (small_world(p=1 << 57), "beyond the working bound"),
     ],
 )
 def test_the_keys_are_refused_at_load_naming_them(world: dict[str, object], message: str):

@@ -42,6 +42,20 @@ the source's number is the same in the worlds 5, 5P and 6: the replay of
 world 5 serves the three, and the identity is checked at every tick.
 
     PYTHONPATH=src python tools/coupling_readings.py artifacts/coupling
+
+Two kinds of numbers (the model owner, 2026-09-22, records 562 and 564;
+the audit of record 567): a DETECTOR reading is a probe's own record
+(its reads, the amount read, the push, its clock's age, waited and owed)
+and is the only kind compared with an expectation; a GAMEBOARD reading (a
+replay of the world through the API: the ring means of `shell_readings`,
+the cube flux, the age moment at a Node) is a diagnostic, printed with its
+expectation and never counted as PASS, FAIL, inside or outside; the tick
+of a line is the record's ordering, a GameBoard number (the clock audit of
+2026-09-22, record 678), so a check on a tick (the front's tick of item 4,
+1b's one step per interval) or a rate over the host's tick count (item 6's
+share lost, the per-interval columns) is a diagnostic too, the probe's own
+clock (its age) being the detector's time; each
+diagnostic names the detector reading behind it, not yet read.
 """
 
 from __future__ import annotations
@@ -244,9 +258,35 @@ class Checks:
 
     rows: list[tuple[str, bool, str]] = field(default_factory=list)
     readings: list[tuple[str, bool, str]] = field(default_factory=list)
+    diagnostics: list[tuple[str, bool, str]] = field(default_factory=list)
 
     def add(self, name: str, ok: bool, detail: str) -> None:
         self.rows.append((name, ok, detail))
+
+    def diagnostic(self, name: str, found: float, low: float, high: float, behind: str) -> None:
+        """A GAMEBOARD number (a replay of the world) beside its expectation:
+        printed as a diagnostic, never counted as PASS, FAIL, inside or
+        outside (records 562 and 564); `behind` names the detector reading
+        that would decide it, not yet read."""
+        self.diagnostics.append(
+            (
+                name,
+                low <= round(found, 6) <= high,
+                f"found {found:.4f}, the expectation [{low}, {high}]; the detector reading behind it, "
+                f"{behind}, not yet read",
+            )
+        )
+
+    def diagnostic_equal(self, name: str, found: object, expected: object, behind: str) -> None:
+        """A GAMEBOARD identity (a replay against the record): a diagnostic,
+        never counted."""
+        self.diagnostics.append(
+            (
+                name,
+                found == expected,
+                f"found {found}, the replay {expected}; the detector reading behind it, {behind}, not yet read",
+            )
+        )
 
     def reading(self, name: str, found: float, low: float, high: float) -> None:
         """A reading against the expectation of docs/BEAM_LAW.md, section 8: registered
@@ -453,12 +493,15 @@ def item_1(runs: dict[str, Run], checks: Checks) -> list[str]:
             walked,
             by_rule[: len(walked)],
         )
-        checks.equal(
+        # The step ticks are the record's ordering, a GameBoard number (the
+        # clock audit of 2026-09-22): a diagnostic, not a counted criterion.
+        checks.diagnostic_equal(
             f"1b_m{m}: one x-step per interval from the first step to the source, x {PROBE_X[0]} down to {CENTRE[0] + 1}",
             [(int(e["tick"]), vector(e["node"])[0], vector(e["to"])[0]) for e in steps],
             [(ticks[0] + k, PROBE_X[0] - k, PROBE_X[0] - k - 1) for k in range(PROBE_RADIUS - 1)]
             if ticks
             else [],
+            "the probe's own clock (its age at each read, DETECTOR)",
         )
         checks.equal(
             f"1b_m{m}: the momentum at every step m times 1b_m1's",
@@ -633,9 +676,18 @@ def item_4(runs: dict[str, Run], checks: Checks) -> list[str]:
             label_push(heading, found[1], int(probe["content"])),
         )
         checks.equal(
-            f"{name}: the first read of the probe at r = {r} on {axis} is the flight rule's front, whole",
-            found[:2],
-            expected,
+            f"{name}: the first read of the probe at r = {r} on {axis} brings the front whole, 2^17 units",
+            found[1],
+            expected[1],
+        )
+        # The front's tick is the record's ordering, a GameBoard number (the
+        # clock audit of 2026-09-22): a diagnostic; the probe's age at the
+        # read is its own clock, the detector's time.
+        checks.diagnostic_equal(
+            f"{name}: the first read of the probe at r = {r} on {axis} at the flight rule's front tick",
+            found[0],
+            expected[0],
+            "the probe's own clock (its age at the read, DETECTOR)",
         )
         lines.append(f"{name} | {axis} | {r} | {at(axis, r)} | {found} | {expected}")
     lines.append("")
@@ -744,6 +796,9 @@ def replay_world_5(run: Run, window: int) -> Replay:
     )
 
 
+BEHIND_ITEM_5 = "the probes' counts of `5p` at the same radii (`axis_probes`, DETECTOR)"
+
+
 def item_5(
     run: Run, replay: Replay, checks: Checks, label: str = "5", pinned: bool = True
 ) -> tuple[list[str], dict[str, float]]:
@@ -752,8 +807,8 @@ def item_5(
     )
     first, last = replay.window
     lines = [
-        f"GAMEBOARD (a host reading of the GameBoard: `shell_readings` and the cube flux) item 5, the far field (world {label}, the source alone, the ring means over ticks {first}-{last}; q = {Q}; the flow in label units divided by Q_label = {LABEL_SCALE})"
-        + ("" if pinned else " (supplementary, not pinned)"),
+        f"GAMEBOARD (a host reading of the GameBoard: `shell_readings` and the cube flux; a diagnostic, never pinned, records 562 and 564) item 5, the far field (world {label}, the source alone, the ring means over ticks {first}-{last}; q = {Q}; the flow in label units divided by Q_label = {LABEL_SCALE})"
+        + ("" if pinned else " (supplementary)"),
         "",
     ]
     lines.append(
@@ -791,41 +846,56 @@ def item_5(
         f"is the mean stay of a ray at a Node, 1 / c = {STAY:.4f} over the flight rule's period"
     )
     if pinned:
+        # The ring means, the slopes, the cube flux and the escape are a
+        # replay's numbers (GAMEBOARD): diagnostics since the audit of
+        # record 567 (F3), never pinned, never in the PASS/FAIL count.
+        behind = BEHIND_ITEM_5
         for key, name in (("count", "count x r / q"), ("presence", "presence x r / q")):
-            checks.reading(
+            checks.diagnostic(
                 f"{label}: {name} a constant over r >= {FAR_FIELD[0]} (max / min - 1 <= 0.10)",
                 ripple([scaled_readings[key][i] for i in far]),
                 0.0,
                 0.10,
+                behind,
             )
         for i in far:
-            checks.reading(
+            checks.diagnostic(
                 f"{label}: count x r / q on the six headings, r = {FAR_RADII[i]} in [0.15, 0.19]",
                 scaled_readings["count"][i],
                 0.15,
                 0.19,
+                behind,
             )
-            checks.reading(
+            checks.diagnostic(
                 f"{label}: flow x 2 pi r / q about 1 in the far field, r = {FAR_RADII[i]} in [0.90, 1.10]",
                 scaled_readings["flow"][i],
                 0.90,
                 1.10,
+                behind,
             )
-        checks.within(f"{label}: slope of the count -1.00 +- 0.10", slopes["count"], -1.10, -0.90)
-        checks.within(f"{label}: slope of the flow -1.00 +- 0.15", slopes["flow"], -1.15, -0.85)
-        checks.reading(f"{label}: slope of the presence -1.00 +- 0.10", slopes["presence"], -1.10, -0.90)
+        checks.diagnostic(
+            f"{label}: slope of the count -1.00 +- 0.10", slopes["count"], -1.10, -0.90, behind
+        )
+        checks.diagnostic(
+            f"{label}: slope of the flow -1.00 +- 0.15", slopes["flow"], -1.15, -0.85, behind
+        )
+        checks.diagnostic(
+            f"{label}: slope of the presence -1.00 +- 0.10", slopes["presence"], -1.10, -0.90, behind
+        )
         for h in CUBE_HALVES:
-            checks.within(
+            checks.diagnostic(
                 f"{label}: flux through the square / q at h = {h} within 2 % of 1 (Gauss)",
                 replay.cube[h],
                 0.98,
                 1.02,
+                behind,
             )
-        checks.within(
+        checks.diagnostic(
             f"{label}: escape per interval over the window within 2 % of q (a ballistic stream)",
             replay.escape,
             0.98,
             1.02,
+            behind,
         )
     flat = [i for i, r in enumerate(FAR_RADII) if r >= 5]
     flow_values = [scaled_readings["flow"][i] for i in flat]
@@ -843,7 +913,7 @@ def axis_probes(run: Run, replay: Replay, checks: Checks, label: str) -> list[st
     last = run.ticks
     first = last - FAR_WINDOW + 1
     lines = [
-        f"GAMEBOARD (a host reading of the GameBoard, the probes' counts) {label}: the probes on +x, the axis readings over ticks {first}-{last} (the beam's Nodes)",
+        f"DETECTOR (the probes' own records: the reads, the amount read, the push; the column `presence (replay)` alone is GAMEBOARD, a diagnostic; the per-interval columns divide by the host's tick count over the window, GAMEBOARD as a rate, the probe's own clock being its age: the clock audit of 2026-09-22) {label}: the probes on +x, the axis readings over ticks {first}-{last} (the beam's Nodes)",
         "",
     ]
     lines.append(
@@ -922,10 +992,14 @@ def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
                 age_60 = age
         found = (int(probe["age"]), int(probe["waited"]), int(probe["owed"]))
         checks.equal(f"6: age + waited = 200 at r = {r}", found[0] + found[1], run.ticks)
-        checks.equal(
+        # The probe's (age, waited, owed) are its record (DETECTOR); the
+        # replay's are a host computation (GAMEBOARD): their identity is a
+        # diagnostic, out of the PASS/FAIL count (record 567, F4).
+        checks.diagnostic_equal(
             f"6: (age, waited, owed) at r = {r} equal the replay of the age moment read (clock-age-v1)",
             found,
             (age, waited, owed),
+            "the probe's own (age, waited, owed) against a pin written from the law, not from a replay",
         )
         checks.equal(
             f"6: the clock at r = {r} counts until the front's arrival at tick {front(r)[0]} and is "
@@ -934,11 +1008,17 @@ def item_6(runs: dict[str, Run], replay: Replay, checks: Checks) -> list[str]:
             (front(r)[0], True),
         )
         expected_k = Q / (6 * r)
-        checks.reading(
-            f"6: the count's share lost at r = {r} against k / (k + 1) with k = q / (6 r) ~ 1 / r",
+        # The denominator `run.ticks` is the host's interval count, so the
+        # share lost is a GameBoard rate (the clock audit of 2026-09-22): a
+        # diagnostic, out of the inside / outside count; the probe's age is
+        # the detector reading.
+        checks.diagnostic(
+            f"6: the count's share lost at r = {r} against k / (k + 1) with k = q / (6 r) ~ 1 / r "
+            "(the age over the host's tick count)",
             1 - found[0] / run.ticks,
             0.0,
             expected_k / (expected_k + 1),
+            "the probe's age against a clock of the reader's own (a lamp, series S's reader_clock form)",
         )
         first, last = run.ticks - FAR_WINDOW + 1, run.ticks
         k_mean = sum(replay.age_moment_at[r][first - 1 : last]) / FAR_WINDOW * numerator / denominator
@@ -1049,11 +1129,12 @@ def convergence(values: dict[str, float], checks: Checks) -> list[str]:
         f"{values['flow_max']:.4f}): Gauss's constant of a ballistic stream; the mean stay of a ray at a Node "
         f"(presence / count) {values['stay_mean']:.4f} against 1 / c = {STAY:.4f}"
     )
-    checks.reading(
+    checks.diagnostic(
         "(a) flow x 2 pi r / q flat within 10 % over r >= 5",
         values["flow_max"] / values["flow_min"] - 1,
         0.0,
         0.10,
+        BEHIND_ITEM_5,
     )
     lines.append(
         "(b) see item 6: the count owed is the presence read, replayed exactly; on the axis it does not fall with r."
@@ -1061,17 +1142,19 @@ def convergence(values: dict[str, float], checks: Checks) -> list[str]:
     lines.append(
         f"(c) |slope_count - slope_flow| = {abs(values['slope_count'] - values['slope_flow']):.3f}; |slope_presence - slope_count| = {abs(values['slope_presence'] - values['slope_count']):.3f}"
     )
-    checks.within(
+    checks.diagnostic(
         "(c) |slope_count - slope_flow| <= 0.10",
         abs(values["slope_count"] - values["slope_flow"]),
         0.0,
         0.10,
+        BEHIND_ITEM_5,
     )
-    checks.reading(
+    checks.diagnostic(
         "(c) |slope_presence - slope_count| <= 0.10",
         abs(values["slope_presence"] - values["slope_count"]),
         0.0,
         0.10,
+        BEHIND_ITEM_5,
     )
     lines.append("(d) see item 7: electric / gravity = -Qq / (M m) per arrival exactly.")
     return lines
@@ -1136,10 +1219,14 @@ def main(argv: list[str] | None = None) -> int:
     for name, ok, detail in checks.readings:
         print(f"{'INSIDE ' if ok else 'OUTSIDE'}  {name}: {detail}")
     print()
+    for name, ok, detail in checks.diagnostics:
+        print(f"GAMEBOARD diagnostic, not counted ({'agrees' if ok else 'differs'})  {name}: {detail}")
+    print()
     print(
         f"{len(checks.rows) - checks.failed} criteria passed, {checks.failed} failed; "
         f"{len(checks.readings) - checks.outside} readings inside the expectation, "
-        f"{checks.outside} outside (registered, not moved)"
+        f"{checks.outside} outside (registered, not moved); {len(checks.diagnostics)} GameBoard "
+        "diagnostics printed and not counted (records 562 and 564)"
     )
     return 1 if checks.failed else 0
 

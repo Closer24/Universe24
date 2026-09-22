@@ -53,6 +53,13 @@ moved; an orbit that does not close (no full turn, or a return farther
 than a quarter of the radius) is registered as the finding.
 
     PYTHONPATH=src python tools/bohr_readings.py artifacts/bohr
+
+The rule of records 562 and 564 (the model owner, 2026-09-22; the audit of
+record 567): only a detector's reading or a measured event's own record
+(DETECTOR) is compared with an expectation; a number of the GameBoard (the
+step records' positions, a replay, the books) is a diagnostic, printed
+with its expectation as "agrees" or "differs", never counted inside or
+outside, and names the detector reading behind it, not yet read.
 """
 
 from __future__ import annotations
@@ -346,7 +353,12 @@ def expected_closing(j: float) -> bool:
     return abs(j - round(j)) < 0.1
 
 
-def print_world(reading: Reading) -> list[tuple[str, bool]]:
+DIAGNOSTICS: list[tuple[str, bool]] = []
+
+
+def print_world(
+    reading: Reading, diagnostics: list[tuple[str, bool]] = DIAGNOSTICS
+) -> list[tuple[str, bool]]:
     """The readings of one world, each line labelled by its kind; returns
     the criteria (label, inside)."""
     criteria: list[tuple[str, bool]] = []
@@ -382,9 +394,14 @@ def print_world(reading: Reading) -> list[tuple[str, bool]]:
             f"(0 or 1 at a closing radius)"
         )
     if r.reads:
+        # The reads and their pushes are the electron's own record; the mean
+        # per interval divides by the host's tick count, a GameBoard rate (the
+        # clock audit of 2026-09-22), the electron's own clock being its time.
         print(
-            f"[{DETECTOR}] the electron's own reads: {r.reads} `read` records, the mean inward push per "
-            f"interval {r.inward_push / r.ticks / 64:.2f} (in units of Q = 64 per unit of content)"
+            f"[{DETECTOR}] the electron's own reads: {r.reads} `read` records, the inward push summed "
+            f"{r.inward_push / 64:.0f} (in units of Q = 64 per unit of content); "
+            f"[{GAMEBOARD}] per interval over the run's {r.ticks} ticks {r.inward_push / r.ticks / 64:.2f} "
+            "(the host's tick count as the denominator; the electron's own clock is the detector's time)"
         )
     turns = max(1, completed)
     pooled: list[tuple[int, int]] = [(0, 0)] * turns
@@ -407,14 +424,23 @@ def print_world(reading: Reading) -> list[tuple[str, bool]]:
         f"{'-' if growth is None else f'{growth:.2f}'}"
     )
     if completed >= 2:
+        # The turns come from the step records (GAMEBOARD), so the closing
+        # ratio C is a diagnostic since the audit of record 567 (F10): printed
+        # with its expectation, never counted, never compared with nature.
         if closing:
             inside = ratio >= CLOSING_SHARE * turns
-            verdict = f"C >= {CLOSING_SHARE * turns:.1f} (T / 2 after {turns} turns): {'inside' if inside else 'outside'}"
+            verdict = f"C >= {CLOSING_SHARE * turns:.1f} (T / 2 after {turns} turns): {'agrees' if inside else 'differs'}"
         else:
             inside = ratio < BOUNDED_RATIO
-            verdict = f"C < {BOUNDED_RATIO:.0f} (bounded): {'inside' if inside else 'outside'}"
-        print(f"[{DETECTOR}] expected at a {'closing' if closing else 'between'} radius: {verdict}")
-        criteria.append((f"r = {r.radius} ({'closing' if closing else 'between'}): {verdict}", inside))
+            verdict = f"C < {BOUNDED_RATIO:.0f} (bounded): {'agrees' if inside else 'differs'}"
+        print(
+            f"[{GAMEBOARD}] (a diagnostic, not counted: the turns from the step records) expected at a "
+            f"{'closing' if closing else 'between'} radius: {verdict}; the detector reading behind it, "
+            "the turn per orbit from the faces' click phases, not yet read"
+        )
+        diagnostics.append(
+            (f"r = {r.radius} ({'closing' if closing else 'between'}): {verdict}", inside)
+        )
     else:
         print(
             f"[{GAMEBOARD}] fewer than two turns closed: no coherence reading is taken at r = {r.radius} "
@@ -431,7 +457,10 @@ def print_ladder(readings: list[Reading]) -> None:
             f"[{GAMEBOARD}] the ladder: fewer than two closing radii with two turns; no ratio is taken"
         )
         return
-    print(f"[{GAMEBOARD}] the ladder of the closing radii (expected in the ratio of j^2):")
+    print(
+        f"[{GAMEBOARD}] the ladder of the closing radii (a diagnostic from the step records, never compared "
+        "with nature; the detector reading behind it, the faces' clicks with their phases, not yet read):"
+    )
     first = closing[0]
     for r in closing[1:]:
         j1, j2 = round(first.derived_j), round(r.derived_j)
@@ -470,7 +499,8 @@ def main(argv: list[str] | None = None) -> int:
     inside = sum(1 for _, ok in criteria if ok)
     print()
     print(
-        f"{failed} record check(s) failed; {inside} reading(s) inside, {len(criteria) - inside} outside"
+        f"{failed} record check(s) failed; {inside} reading(s) inside, {len(criteria) - inside} outside; "
+        f"{len(DIAGNOSTICS)} GameBoard diagnostic(s) (the closing ratio C) printed and not counted"
     )
     return 1 if failed else 0
 

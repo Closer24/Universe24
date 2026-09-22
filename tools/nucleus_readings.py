@@ -16,14 +16,14 @@ is no such thing" about the host's readings of the GameBoard):
   records, summed over the families and per family, in label units), the
   hand-overs at its refused steps (its `contact` records: the count, the
   first tick, the largest component, whether its label is 0 after each),
-  the tick by which the pushes it read outweigh a declared kick, and the
-  clicks on the border `lifetime` per interval;
+  the tick by which the pushes it read outweigh a declared kick, the sum of
+  the pushes over a row of the square (the shear, the bodies' own reads)
+  and the clicks on the border `lifetime` per interval;
 - GAMEBOARD readings, the host's view of the mechanism, which exist for us
   and not in reality: the bodies' steps (the count, the first step and its
-  direction, the final position, the escape through a face), the
+  direction, the final position, the escape through a face) and the
   separation of a pair over the run (its start, its largest value, whether
-  it ever shrank after growing), and the sum of the pushes over a row of
-  the square (the shear).
+  it ever shrank after growing).
 
 The expectation, written before the runs (README.md, docs/EXPERIMENTS.md):
 the deuteron at one Link reads 310 967 280 640 per interval on each body
@@ -38,6 +38,13 @@ the first hundred intervals; the line p n n p holds. The record checks
 are registered inside or outside their expectation and never moved.
 
     PYTHONPATH=src python tools/nucleus_readings.py artifacts/nucleus
+
+The rule of records 562 and 564 (the model owner, 2026-09-22; the audit of
+record 567): only a detector's reading or a measured event's own record
+(DETECTOR) is compared with an expectation; a number of the GameBoard (the
+step records' positions, a replay, the books) is a diagnostic, printed
+with its expectation as "agrees" or "differs", never counted inside or
+outside, and names the detector reading behind it, not yet read.
 """
 
 from __future__ import annotations
@@ -299,8 +306,8 @@ def print_world(reading: Reading) -> list[tuple[str, bool]]:
         print(f"[{DETECTOR}]   body {body.number}: {handed}")
         if any(body.kick):
             print(
-                f"[{DETECTOR}]   body {body.number}: the kick {vector(body.kick)} outweighed by the pushes read "
-                f"by tick {body.kicked_back_at}"
+                f"[{DETECTOR}]   body {body.number}: the kick {vector(body.kick)} outweighed by the pushes read; "
+                f"[{GAMEBOARD}] by tick {body.kicked_back_at} (the record's ordering)"
             )
         steps = (
             f"{body.steps} steps, the first at tick {body.first_step[0]} to {body.first_step[1]}, "
@@ -315,8 +322,9 @@ def print_world(reading: Reading) -> list[tuple[str, bool]]:
         at = min(clicks)
         steady = clicks.get(REFERENCE_TICK, 0)
         print(
-            f"[{DETECTOR}]   the border `lifetime`: the first clicks at tick {at}, {steady} per interval at tick "
-            f"{REFERENCE_TICK} ({steady // max(1, len(reading.bodies))} per body)"
+            f"[{DETECTOR}]   the border `lifetime`: {steady} per interval at tick {REFERENCE_TICK} "
+            f"({steady // max(1, len(reading.bodies))} per body; a fixed detector at k = 0, its tick its own "
+            f"clock); [{GAMEBOARD}] the first clicks at tick {at} (the onset, the record's ordering)"
         )
     if len(reading.bodies) == 2:
         start, largest, final, returned = separation_summary(reading, 1, 2)
@@ -341,11 +349,34 @@ def print_world(reading: Reading) -> list[tuple[str, bool]]:
         print(f"[{GAMEBOARD}]   the largest separation of two bodies at the end {largest:.2f}")
     criteria += expectations(reading)
     for label, ok in criteria:
-        print(
-            f"[{DETECTOR if 'push' in label or 'read' in label or 'hand' in label or 'kick' in label else GAMEBOARD}]   {label}: {'inside' if ok else 'outside'}"
-        )
+        if deciding(label):
+            print(f"[{DETECTOR}]   {label}: {'inside' if ok else 'outside'}")
+        else:
+            print(
+                f"[{GAMEBOARD}] (a diagnostic, not counted: the step records or an onset tick)   {label}: "
+                f"{'agrees' if ok else 'differs'}; the detector reading behind it, the faces' and the "
+                "border's clicks of the bodies, not yet read"
+            )
     print()
-    return criteria
+    return [c for c in criteria if deciding(c[0])]
+
+
+# The onset of a reading in host ticks (the border's first click, the tick
+# by which the pushes outweigh the kick): the record's ordering, a GameBoard
+# number (the clock audit of 2026-09-22, record 678), a diagnostic beside
+# the rate or the push it belongs to.
+ONSET = "the onset tick (the record's ordering)"
+
+
+def deciding(label: str) -> bool:
+    """A criterion counts inside or outside when it reads a body's own
+    records (its pushes and their row sums, the shear; its reads, hand-overs,
+    kicks and clicks; the border's clicks); a step, a position or a
+    separation is a diagnostic (record 567, F12), and so is an onset in host
+    ticks (the clock audit of 2026-09-22)."""
+    if ONSET in label:
+        return False
+    return any(word in label for word in ("push", "shear", "read", "hand", "kick", "click", "leave"))
 
 
 DEUTERON_PUSH = 310_967_280_640
@@ -390,11 +421,21 @@ def expectations(reading: Reading) -> list[tuple[str, bool]]:
                 all(10**12 <= b.largest_handed <= 10**13 for b in bodies if b.contacts),
             )
         )
+        # The rate is read at the border, a fixed detector at k = 0 whose
+        # tick is its own clock (record 569): counted. The onset "from tick
+        # 4" is the record's ordering: a diagnostic (the clock audit of
+        # 2026-09-22).
         found.append(
             (
-                "290 lifetime clicks per body per interval from tick 4",
-                min(reading.lifetime_clicks, default=0) == 4
-                and reading.lifetime_clicks.get(REFERENCE_TICK) == 290 * len(bodies),
+                f"290 lifetime clicks per body per interval at tick {REFERENCE_TICK} (the border, a fixed "
+                "detector at k = 0: its tick its own clock)",
+                reading.lifetime_clicks.get(REFERENCE_TICK) == 290 * len(bodies),
+            )
+        )
+        found.append(
+            (
+                f"the border's first clicks at tick 4, {ONSET}",
+                min(reading.lifetime_clicks, default=0) == 4,
             )
         )
     elif name == "deuteron_3":
@@ -411,9 +452,17 @@ def expectations(reading: Reading) -> list[tuple[str, bool]]:
         )
         found.append(("both bodies leave through the faces", all(b.escaped is not None for b in bodies)))
     elif name == "deuteron_1_kick":
+        # The pushes read are the bodies' own records: counted. "By tick 5"
+        # is the record's ordering: a diagnostic (the clock audit of 2026-09-22).
         found.append(
             (
-                "the kick outweighed by the pushes read by tick 5",
+                "the kick outweighed by the pushes read",
+                all(b.kicked_back_at is not None for b in bodies),
+            )
+        )
+        found.append(
+            (
+                f"the kick outweighed by tick 5, {ONSET}",
                 all(b.kicked_back_at is not None and b.kicked_back_at <= 5 for b in bodies),
             )
         )
@@ -519,8 +568,8 @@ def main(argv: list[str] | None = None) -> int:
     print()
     print(
         f"every line below is labelled [{GAMEBOARD}] (the host's view of the GameBoard: the steps, the "
-        f"separations; exists for us, not in reality) or [{DETECTOR}] (a measured event's own records: "
-        "the only kind reality has)"
+        f"separations; exists for us, not in reality; a criterion of this kind is a diagnostic, printed "
+        f"and not counted) or [{DETECTOR}] (a measured event's own records: the only kind reality has)"
     )
     print()
     criteria: list[tuple[str, bool]] = []
@@ -528,7 +577,8 @@ def main(argv: list[str] | None = None) -> int:
         criteria += print_world(r)
     inside = sum(1 for _, ok in criteria if ok)
     print(
-        f"{failed} record check(s) failed; {inside} reading(s) inside, {len(criteria) - inside} outside"
+        f"{failed} record check(s) failed; {inside} reading(s) inside, {len(criteria) - inside} outside "
+        "(the GameBoard diagnostics printed above are not counted)"
     )
     return 1 if failed else 0
 

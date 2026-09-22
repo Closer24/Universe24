@@ -268,7 +268,7 @@ the disturbance contract.
    in `core/` or `fields/`. Rational factors use integer numerators, denominators
    and retained integer remainders.
 2. Physical registers are bounded to `[-2147483647, 2147483647]`. Intermediate
-   working registers are bounded to `[-9223372036854775807, 9223372036854775807]`.
+   arithmetic is bounded by the working bound, `[-9223372036854775807, 9223372036854775807]`.
    Exceeding a bound raises `OverflowError`; neither wraparound nor saturation is
    used. Python is the host representation, with explicit bounds at the model
    and commit boundaries; arbitrary precision is not an escape for physical state.
@@ -391,7 +391,7 @@ and external; JSONL recording streams it to disk.
 ## Required regression gates
 
 - Exact signed division and remainder accumulation at denominators 1, 12 and 64.
-- Invalid input, physical-register and working-register overflow rejection.
+- Invalid input, physical-register and working-bound overflow rejection.
 - Static numeric audit over every physical module (`diagnostics/numeric_audit`,
   `tests/test_architecture.py`): `core/` integers only, no numeric library;
   `events/` integer numpy permitted and nothing that leaves the integers (a

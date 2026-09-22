@@ -117,7 +117,7 @@ fraction-free counts"), written down first:
     its sign, a rate above the cap times the denominator counts the cap and
     keeps the rest, an accumulator one below the wall with a rate of 1
     counts 1 and leaves 0 (and the mirror at -(d - 1) with -1); a
-    denominator below 1 and a sum past the working register are refused.
+    denominator below 1 and a sum past the working bound are refused.
 """
 
 from __future__ import annotations

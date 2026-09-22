@@ -129,3 +129,17 @@ def test_the_algebra_of_the_ratio():
     assert abs(ratio(0.5, 1.0) - 4 / 3) < 1e-12
     assert abs(ratio(1.0, 1.0, 0.2, alike=True) - 1.1) < 1e-12
     assert abs((1 + 1.0) / ((1 + 0.0) * 1.0) - 2.0) < 1e-12
+
+
+def test_the_registers_k_is_a_labelled_gameboard_diagnostic():
+    """The crowd's k and every number derived from it alone (a replay of the
+    store) stay in the register unchanged, labelled GAMEBOARD under
+    `gameboard_diagnostics`: a diagnostic, never pinned, out of the deciding
+    set; the pin of the series is 1 + z at the detector (the model owner,
+    2026-09-22, records 562 and 564; the audit of record 567, F1)."""
+    expected = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
+    diagnostics = expected["gameboard_diagnostics"]
+    assert diagnostics["kind"] == "GAMEBOARD"
+    assert any(key.endswith((".k_reader", ".k_source")) for key in diagnostics["keys"])
+    assert "never pinned" in diagnostics["statement"] and "not yet read" in diagnostics["statement"]
+    assert "1 + z at the detector (DETECTOR)" in diagnostics["statement"]

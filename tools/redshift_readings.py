@@ -26,6 +26,16 @@ the readings are registered inside or outside their expectation
 reading (2026-09-20)") and never moved.
 
     PYTHONPATH=src python tools/redshift_readings.py artifacts/redshift
+
+The rule of records 562 and 564 (the model owner, 2026-09-22; the audit of
+record 567): only a detector's reading or a measured event's own record
+(DETECTOR) is compared with an expectation; a number of the GameBoard (the
+step records' positions, a replay, the books) is a diagnostic, printed
+with its expectation as "agrees" or "differs", never counted inside or
+outside, and names the detector reading behind it, not yet read. Here the
+window's k (the world replayed through the API) is such a diagnostic; the
+column `k, whole run` is the probes' own records (DETECTOR), not yet the
+compared column.
 """
 
 from __future__ import annotations
@@ -191,7 +201,9 @@ def print_shells(readings: list[Reading]) -> list[tuple[str, bool]]:
         n, d = r.suspension
         print(
             f"world `{r.kind}` (suspension [{n}, {d}], {r.directions} directions, {r.ticks} "
-            f"intervals, {r.elapsed:.1f} s): the shell means of the owed count per self-creation"
+            f"intervals, {r.elapsed:.1f} s): the shell means of the owed count per self-creation; "
+            "the window's k and k x r^p are a replay's (GAMEBOARD, a diagnostic, not counted); the "
+            "column `k, whole run` is the probes' own records (DETECTOR), not yet the compared column"
         )
         print(
             f"| r | probes | counting (window) | k, whole run | k, window {WINDOW[0]}..{WINDOW[1]} | "
@@ -209,7 +221,7 @@ def print_shells(readings: list[Reading]) -> list[tuple[str, bool]]:
             shell = r.shells[radius]
             product = products[radius]
             inside = abs(product - centre) <= RIPPLE * centre if radius >= 6 else None
-            verdict = "-" if inside is None else ("inside" if inside else "outside")
+            verdict = "-" if inside is None else ("agrees" if inside else "differs")
             print(
                 f"| {radius} | {len(shell.probes)} | {shell.fraction_counting(True):.2f} | "
                 f"{shell.mean(False):.3f} | {shell.mean(True):.3f} | {product:.2f} | "
@@ -267,6 +279,8 @@ def print_redshift(readings: list[Reading]) -> list[tuple[str, bool]]:
         1 for r in radii if r >= 6
     )
     print(
+        "GAMEBOARD (a replay's window means: a diagnostic, not counted; the detector reading behind it, "
+        "the probes' own (age, waited) on their records over the whole run, not yet compared) "
         f"the redshift of the age clocks (the window): rate = 1 / (1 + k), rate(r) / rate({reference}) "
         f"against (1 + k_ref) / (1 + C / r) with C = k_ref x {reference} = {constant:.2f} (and, for "
         f"the reader, with C the shell mean {shell_constant:.2f}), and the first-order line "
@@ -284,7 +298,7 @@ def print_redshift(readings: list[Reading]) -> list[tuple[str, bool]]:
         shell_law = (1 + shell_constant / reference) / (1 + shell_constant / radius)
         first = 1 - constant * (1 / radius - 1 / reference)
         inside = abs(measured - law) <= RIPPLE * abs(1 - law) + 1e-9 if radius >= 6 else None
-        verdict = "-" if inside is None else ("inside" if inside else "outside")
+        verdict = "-" if inside is None else ("agrees" if inside else "differs")
         print(
             f"| {radius} | {k:.3f} | {1 / (1 + k):.4f} | {measured:.4f} | {law:.4f} | {shell_law:.4f} | "
             f"{first:.4f} | the 1 / r law within {RIPPLE * 100:.0f} % of its shift: {verdict} |"
@@ -311,12 +325,14 @@ def main(argv: list[str] | None = None) -> int:
             print(f"{'PASS' if ok else 'FAIL'} {r.kind}: {label}")
             failed += not ok
     print()
-    readings_inside = print_shells(readings)
+    diagnostics = print_shells(readings)
     print_singles(readings)
-    readings_inside += print_redshift(readings)
-    inside = sum(1 for _, ok in readings_inside if ok)
+    diagnostics += print_redshift(readings)
+    agree = sum(1 for _, ok in diagnostics if ok)
     print(
-        f"{failed} record check(s) failed; {inside} reading(s) inside, {len(readings_inside) - inside} outside"
+        f"{failed} record check(s) failed; 0 reading(s) compared; {len(diagnostics)} GameBoard "
+        f"diagnostic(s) printed and not counted ({agree} agree, {len(diagnostics) - agree} differ; "
+        "records 562 and 564: the detector reading behind them, the probes' own records, not yet compared)"
     )
     return 1 if failed else 0
 

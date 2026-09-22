@@ -65,6 +65,11 @@ derivation's algebra and the pinned contact ticks.
   (1.200, 1.409 against nature's 1.225, 1.543); gravity deepens the
   blueshift and brings the contact from tick 254 to 237; the contact is the
   hand-over.
+- **The clock of the reading (the clock audit of 2026-09-22; record 678).** Each 1 + z is read
+  against the reader's own clock (a star reading `age`, or a fixed lab detector
+  at `suspension` 0 whose tick is its own clock, record 569); the contact tick
+  and the speeds at the contact are host and step numbers, named so and not
+  compared with nature.
 - **Run.** 2026-09-21 on main 5cc43ae, the first run (the design's
   section 7): 17 of 24 readings of 1 + z inside and 7 outside, the three
   contacts outside (the derivation's two omissions, the mass rows' flight

@@ -121,3 +121,17 @@ def test_the_algebra_of_the_sum_against_the_product():
     expected = generator.expectations()["cluster_rest"]
     assert abs(expected["z_mean"] - 0.4) < 1e-12
     assert abs(expected["z_dispersion"] - 0.363) < 5e-4
+
+
+def test_the_registers_k_is_a_labelled_gameboard_diagnostic():
+    """The crowd's k and every number derived from it alone (a replay of the
+    store) stay in the register unchanged, labelled GAMEBOARD under
+    `gameboard_diagnostics`: a diagnostic, never pinned, out of the deciding
+    set; the pin of the series is 1 + z at the detector (the model owner,
+    2026-09-22, records 562 and 564; the audit of record 567, F1)."""
+    expected = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
+    diagnostics = expected["gameboard_diagnostics"]
+    assert diagnostics["kind"] == "GAMEBOARD"
+    assert any(key.endswith(".k") or key.endswith("_k_3") for key in diagnostics["keys"])
+    assert "never pinned" in diagnostics["statement"] and "not yet read" in diagnostics["statement"]
+    assert "1 + z at the detector (DETECTOR)" in diagnostics["statement"]

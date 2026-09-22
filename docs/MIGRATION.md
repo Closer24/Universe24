@@ -6,6 +6,18 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The working bound, on 2026-09-22 (a rename in the documents, docstrings and comments; no behaviour)
+
+The model owner's word of 2026-09-22 (record 558 of docs/LOG_2026-09-20.md,
+"go on the rename to working bound"; the Boss's record 553): the host's
+integer bound of `core/integer` (`checked_work`, +-(2^63 - 1)) is named
+"the working bound" everywhere it was called "the working register", so
+that "the register" names the detector readings alone and a Node keeps
+none (record 155); the refusal line of a massive family's label rounding
+says "beyond the working bound"; no identifier, world file or number
+moves ([TERMINOLOGY](TERMINOLOGY.md), "Working bound"). The LOG records
+and the review pages keep the old phrase as history.
+
 ## The massive rows, on 2026-09-21 (`massive-rows-v1`, an identity beside the law; every world without the key byte identical)
 
 The model owner's yes of 2026-09-21 (record 332 of docs/LOG_2026-09-20.md:
@@ -247,7 +259,7 @@ without the key). Under the key:
   whether that remainder is carried at the price of a denominator per
   row is the model owner's footnote on his return). The push
   accumulator's sums **W** + n weight **V** and **W** + Q d content
-  (**u**_D - **u**_D') are tested against the working register before
+  (**u**_D - **u**_D') are tested against the working bound before
   they are formed (S1). `tests/test_optical.py` (g) and (h); the pin
   worlds re-run on the fixed head and the entry re-read with the old
   value beside the new.
@@ -462,7 +474,7 @@ forms.
 - `events.nature_beam.by_drive_rows(drive, rate, denominator, at_most)`:
   `by_drive` over numpy int64 rows, the same integers row by row (signed
   rates, the cap, the remainder kept; a denominator below 1 refused, the
-  accumulator plus the rate bounded to the working register before the
+  accumulator plus the rate bounded to the working bound before the
   sum is formed). It lives beside `by_clock_rows`, the array form of the
   other count, since `core/` stays standard-library integers.
 - `Flight.walk_step` takes the interval's step as the count
