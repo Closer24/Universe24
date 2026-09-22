@@ -5255,3 +5255,25 @@ occurrence, before and after:
   Order 24" (the owner's choice, the name with its apposition).
 The abstract 247 words. No number moved. The PDF compiled from the true
 source and read back. 52 pages.
+
+## Applied (2026-09-23, the owner's word through the Boss's order of 00:55Z): Newton, Lorentz and Einstein named in the abstract
+
+On `paper-abstract-names` off main at dd0c111c, one commit, the
+abstract only. Newton named where the inverse square already stood
+("under a shell average Newton's inverse square and Poisson's
+equation"); one new sentence after the limits: "Under two named
+hypotheses on the click, Lorentz's factors, the equivalence principle
+and Einstein's step are reached, not derived from nothing; the law as
+built meets the first only."; the CHSH value folded into the exact
+results' sentence ("181/64 from 512 to 8192, 1.05 standard errors from
+the measured CHSH value"); "It has no relativistic dynamics; its
+sequential wheel signals in a pair's order, not in its counts." Paid for
+inside the abstract, no claim lost: "of a free family's flux" after
+Gauss's law, "the lattice" after Outside, "positive" before quadratic
+form, "not established" after conjectures, the tally's verbs, "the forms
+of", "above the board", "hypothesis". The owner's central sentence
+untouched. 248 words (mathematics one token each). Accepted usage:
+"recovered in a limit", "reached under named hypotheses" are the forms
+abstracts use for Newton's, Lorentz's and Einstein's laws; "derived
+from" without a qualifier is what desk rejections cite. The PDF from
+the true source, read back. 52 pages.
