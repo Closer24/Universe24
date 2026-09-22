@@ -1,0 +1,70 @@
+drive-b-v1: the host map of the directional drive (HOST computations of the count rule; no run)
+Q = 64, T_h = isqrt(3 Q^2) = 110; the deciding worlds M = 64, S = 1: Q S M = 4096,
+Q^2 S M = 262144; |p|_1 = 6000, the wall W = Q^2 S M + |p|_1 T_h = 922144
+the box 41^3 open, the body at (20, 20, 20); the escape through a face is the DETECTOR reading
+
+(A) The deciding worlds: the pace, the escape and the line, under the key and on main's per-axis drive.
+    pace per axis = |p_a| Q / W Links per interval (the key); |p_a| / (Q S M + |p_a|) (main).
+  axis  p = [6000, 0, 0]: |p|_2 = 6000.0
+    the key : pace per axis [0.4164, 0.0, 0.0], Manhattan 0.4164, Euclidean 0.4164 Links per interval
+              escape at tick 51 through face +x from Node [40, 20, 20] after the Links [21, 0, 0]; the 21st x fire alone would be at ceil(21 W / (|p_x| Q)) = 51 (the deferral 0 interval)
+              every Node within 0.0 Link of the line of p (GAMEBOARD, the step lines)
+    main    : pace per axis [0.5943, 0.0, 0.0]; escape at tick 36 through +x from Node [40, 20, 20] after the Links [21, 0, 0]; coincident fires lost 0; farthest from the line of p 0.0 Links
+  plane p = [3000, 3000, 0]: |p|_2 = 4242.6
+    the key : pace per axis [0.2082, 0.2082, 0.0], Manhattan 0.4164, Euclidean 0.2945 Links per interval
+              escape at tick 101 through face +x from Node [40, 40, 20] after the Links [21, 20, 0]; the 21st x fire alone would be at ceil(21 W / (|p_x| Q)) = 101 (the deferral 0 interval)
+              every Node within 0.707 Link of the line of p (GAMEBOARD, the step lines)
+    main    : pace per axis [0.4228, 0.4228, 0.0]; escape at tick 50 through +x from Node [40, 20, 20] after the Links [21, 0, 0]; coincident fires lost 21; farthest from the line of p 14.142 Links
+  cube  p = [2000, 2000, 2000]: |p|_2 = 3464.1
+    the key : pace per axis [0.1388, 0.1388, 0.1388], Manhattan 0.4164, Euclidean 0.2404 Links per interval
+              escape at tick 152 through face +x from Node [40, 40, 40] after the Links [21, 20, 20]; the 21st x fire alone would be at ceil(21 W / (|p_x| Q)) = 152 (the deferral 0 interval)
+              every Node within 0.816 Link of the line of p (GAMEBOARD, the step lines)
+    main    : pace per axis [0.3281, 0.3281, 0.3281]; escape at tick 65 through +x from Node [40, 20, 20] after the Links [21, 0, 0]; coincident fires lost 42; farthest from the line of p 16.33 Links
+
+(B) The reviewer's pins of record 348 replayed with this map's rule (must equal light_speed/drive_residue_map.out (B)):
+  pin 1: |p|_1 = 6000 wandering over five lines, 1000 intervals: the Links per axis [112, 112, 83],
+         the whole parts floor(sum_t p_a(t) Q / W) [111, 111, 83], the largest deviation at any n 2 Link
+  pin 2: a hand-over transient of -720 on y for the one interval 51 (fired: (0, 1)) leaves the y residue -46080
+         = -0.0500 Link (at most |delta_y| Q / W = 0.0500), and fires no y Link in the 100 intervals after (0 fired)
+
+(C) The cap (record 301's condition: no body outruns its family's rows on any line).
+    the body's Euclidean pace |p|_2 Q / W <= Q / T_h = 64 / 110 = 0.5818 on every direction;
+    on the line of D the body at most |D| Q / (S_1 T_h) against the rows' |D| Q / T_D there:
+    D = (1, 0, 0): S_1 = 1, T_D = 110: the body at most 0.5818, the rows 0.5818, the ratio 1.0000
+    D = (1, 1, 0): S_1 = 2, T_D = 156: the body at most 0.4114, the rows 0.5802, the ratio 0.7091
+    D = (1, 1, 1): S_1 = 3, T_D = 192: the body at most 0.3359, the rows 0.5774, the ratio 0.5818
+    D = (2, 1, 0): S_1 = 3, T_D = 247: the body at most 0.4337, the rows 0.5794, the ratio 0.7485
+    D = (3, 1, 2): S_1 = 6, T_D = 414: the body at most 0.3628, the rows 0.5784, the ratio 0.6273
+    today's per-axis drive on a heading: |p| / (Q S M + |p|) -> 1 Link per interval = 1.72 c (the defect of record 301)
+    at |p|_1 = 6000 on the axis today's pace 0.5943 > the rows' 0.5818; under the key 0.4164
+
+(D) Newton's limit and the isotropy: at |p|_1 << Q S M the pace per axis is p_a / (Q S M) x Q / (Q + |p|_1 T_h / (Q S M)):
+    p = [64, 0, 0]: Euclidean pace 0.015216 against |p|_2 / (Q S M) = 0.015625, the ratio 0.97385
+    p = [32, 32, 0]: Euclidean pace 0.010760 against |p|_2 / (Q S M) = 0.011049, the ratio 0.97385
+    p = [24, 24, 24]: Euclidean pace 0.009851 against |p|_2 / (Q S M) = 0.010149, the ratio 0.97067
+
+(E) Under `covariant_readings` and the key together: W = Q^2 S M (the cap term off), the domain |p|_1 <= Q S M;
+    the J4 muon's |p|_2 = 3640 (17.6 M2) put on the plane and the cube diagonals (the chief physicist's worlds, record 642):
+    p = [3640, 0, 0]: |p|_1 = 3640 <= Q S M = 13248: admitted; |p|_2 = 3640.0; E' = isqrt(W) = 14671 (gamma 1.1074); pace per self-creation per axis [0.2748, 0.0, 0.0], Euclidean 0.2748; per lattice interval x E'_0 / E' = 0.2481
+    p = [2574, 2574, 0]: |p|_1 = 5148 <= Q S M = 13248: admitted; |p|_2 = 3640.2; E' = isqrt(W) = 14671 (gamma 1.1074); pace per self-creation per axis [0.1943, 0.1943, 0.0], Euclidean 0.2748; per lattice interval x E'_0 / E' = 0.2481
+    p = [2101, 2101, 2101]: |p|_1 = 6303 <= Q S M = 13248: admitted; |p|_2 = 3639.0; E' = isqrt(W) = 14670 (gamma 1.1073); pace per self-creation per axis [0.1586, 0.1586, 0.1586], Euclidean 0.2747; per lattice interval x E'_0 / E' = 0.2481
+
+(F) The accumulators' bound: the largest |drive_a| seen in (A) and (B), against W and the working bound 2^63 - 1:
+    axis : largest |drive_a| 919424 = 0.997 W, below W + 2 max|p_a| Q = 1690144
+    plane: largest |drive_a| 1111424 = 1.205 W, below W + 2 max|p_a| Q = 1306144
+    cube : largest |drive_a| 1175424 = 1.275 W, below W + 2 max|p_a| Q = 1178144
+    the wandering body of (B): largest |drive_a| 1039264 = 1.127 W, below W + 2 x 6000 Q = 1690144
+    (observed, not proved: an axis over the wall waits at most while the two others are further over)
+    the check before every addition: |drive_a| + |p_a| Q within 2^62 - 1 (`bounded`), else refused naming the rule;
+    the wall's two products Q^2 S M and |p|_1 T_h tested by division before they are formed, at load and at every push.
+
+(G) The relation to the rows' triple (momentum_pair under optical-v1 and massive-rows-v1, the reviewer's M1):
+    the triple's Euclidean pace |p|_2 / E', E' = isqrt(E'_0^2 + 3 p . p), a root on the state (rung 1, an identity);
+    drive-b's |p|_2 Q / (Q^2 S M + |p|_1 T_h), linear in |p|_1, no root (form B's v = p / (m + p / c), DERIVATIONS 4.4).
+    p = [64, 0, 0]: |p|_2 = 64.0, |p|_2 / (Q S M) = 0.0156: drive-b 0.0152, the triple 0.0156 (E' = 4097), the ratio 0.974
+    p = [6000, 0, 0]: |p|_2 = 6000.0, |p|_2 / (Q S M) = 1.4648: drive-b 0.4164, the triple 0.5372 (E' = 11170), the ratio 0.775
+    p = [3000, 3000, 0]: |p|_2 = 4242.6, |p|_2 / (Q S M) = 1.0358: drive-b 0.2945, the triple 0.5044 (E' = 8412), the ratio 0.584
+    p = [2000, 2000, 2000]: |p|_2 = 3464.1, |p|_2 / (Q S M) = 0.8457: drive-b 0.2404, the triple 0.4769 (E' = 7264), the ratio 0.504
+    p = [4243, 4243, 0]: |p|_2 = 6000.5, |p|_2 / (Q S M) = 1.4650: drive-b 0.3212, the triple 0.5372 (E' = 11171), the ratio 0.598
+    the caps: drive-b Q / T_h = 0.5818 Euclidean on a heading (Manhattan-isotropic: 0.4114 on the plane diagonal, 0.3359 on the cube's); the triple 1 / sqrt 3 = 0.5774 on every direction
+    under covariant_readings both give |p|_2 / E' Euclidean per lattice interval on every direction ((E) above: 0.2481 three times).

@@ -54,3 +54,23 @@ time against the control's, DETECTOR if run; GAMEBOARD arithmetic before any run
     b = 12, gamma 1: the mean shift -4.80 px, the mean arrival -12.55 intervals (unstretched -15.30); (1, 0, 0): -5 px, -14.42 (57 Links; unstretched -5 px, -17.63); (24, 1, 0): -6 px, -15.89 (60 Links; unstretched -6 px, -19.52); (24, -1, 0): -5 px, -28.96 (57 Links; unstretched -5 px, -31.13); (12, 1, 0): +2 px, -15.26 (54 Links; unstretched +2 px, -18.14); (12, -1, 0): -10 px, +11.80 (66 Links; unstretched -10 px, +9.93)
     b = 14, gamma 0: the mean shift -3.80 px, the mean arrival -13.49 intervals (unstretched -20.17); (1, 0, 0): -6 px, -0.92 (58 Links; unstretched -4 px, -15.56); (24, 1, 0): +1 px, -42.73 (53 Links; unstretched +1 px, -44.21); (24, -1, 0): -6 px, -14.12 (58 Links; unstretched -4 px, -28.76); (12, 1, 0): +2 px, -5.85 (54 Links; unstretched +2 px, -7.35); (12, -1, 0): -10 px, -3.80 (62 Links; unstretched -10 px, -4.99)
     b = 14, gamma 1: the mean shift -3.00 px, the mean arrival -19.64 intervals (unstretched -22.26); (1, 0, 0): -4 px, -15.31 (56 Links; unstretched -4 px, -17.62); (24, 1, 0): +1 px, -43.71 (53 Links; unstretched +1 px, -46.77); (24, -1, 0): -4 px, -28.51 (56 Links; unstretched -4 px, -30.82); (12, 1, 0): +2 px, -5.83 (54 Links; unstretched +2 px, -8.46); (12, -1, 0): -10 px, -4.85 (62 Links; unstretched -10 px, -7.60)
+
+  the body's walk under the one wall (step 3, BODY_DRIVE.md): a free body of content 64 at
+  S = 16384 (Q S M = 2^26), |p| = 2^26 (E' = 2^27, the Lorentz factor 2, v^2 = 3/4), from the
+  lamp's Node to the face x = 56, on the beam's five lines at z = 20 + k, k = -2 .. 2; per body
+  the click's tick and Node (DETECTOR when run), the intervals owed (GAMEBOARD); the control
+  without the mass, the drive unstretched and the charge held at (M, 1) beside
+
+    b = 8, gamma 0:
+      (1, 0, 0) at z 20: the control's click at tick 150 from (28, 8, 0); the rule's at tick 159 from (28, 5, 0) (4 owed, 57 Links); the drive unstretched at tick 159 from (28, 5, 0); the charge (M, 1) at tick 155 from (28, 7, 0)
+      (24, 1, 0) at z 21: the control's click at tick 154 from (28, 10, 1); the rule's at tick 154 from (28, 10, 1) (0 owed, 56 Links); the drive unstretched at tick 154 from (28, 10, 1); the charge (M, 1) at tick 154 from (28, 10, 1)
+      (24, -1, 0) at z 19: the control's click at tick 154 from (28, 6, -1); the rule's at tick 155 from (28, 6, -1) (0 owed, 56 Links); the drive unstretched at tick 155 from (28, 6, -1); the charge (M, 1) at tick 154 from (28, 6, -1)
+      (12, 1, 0) at z 22: the control's click at tick 158 from (28, 12, 2); the rule's at tick 157 from (28, 11, 2) (0 owed, 57 Links); the drive unstretched at tick 157 from (28, 11, 2); the charge (M, 1) at tick 158 from (28, 12, 2)
+      (12, -1, 0) at z 18: the control's click at tick 158 from (28, 4, -2); the rule's at tick 161 from (28, 3, -2) (0 owed, 59 Links); the drive unstretched at tick 161 from (28, 3, -2); the charge (M, 1) at tick 159 from (28, 3, -2)
+
+    b = 8, gamma 1:
+      (1, 0, 0) at z 20: the control's click at tick 150 from (28, 8, 0); the rule's at tick 168 from (28, 1, 0) (3 owed, 61 Links); the drive unstretched at tick 164 from (28, 1, 0); the charge (M, 1) at tick 159 from (28, 7, 0)
+      (24, 1, 0) at z 21: the control's click at tick 154 from (28, 10, 1); the rule's at tick 154 from (28, 10, 1) (0 owed, 56 Links); the drive unstretched at tick 154 from (28, 10, 1); the charge (M, 1) at tick 154 from (28, 10, 1)
+      (24, -1, 0) at z 19: the control's click at tick 154 from (28, 6, -1); the rule's at tick 156 from (28, 5, -1) (0 owed, 57 Links); the drive unstretched at tick 156 from (28, 5, -1); the charge (M, 1) at tick 155 from (28, 6, -1)
+      (12, 1, 0) at z 22: the control's click at tick 158 from (28, 12, 2); the rule's at tick 157 from (28, 11, 2) (0 owed, 57 Links); the drive unstretched at tick 156 from (28, 11, 2); the charge (M, 1) at tick 158 from (28, 12, 2)
+      (12, -1, 0) at z 18: the control's click at tick 158 from (28, 4, -2); the rule's at tick 165 from (28, 1, -2) (0 owed, 61 Links); the drive unstretched at tick 164 from (28, 1, -2); the charge (M, 1) at tick 160 from (28, 3, -2)

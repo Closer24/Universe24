@@ -49,9 +49,10 @@ from collections.abc import Iterator
 import numpy as np
 
 from event_universe.core.game_board import Address3, adjacent_node
-from event_universe.core.integer import age_wall, apportion_whole, by_drive, integer_root
+from event_universe.core.integer import age_wall, apportion_whole, by_drive, by_line, integer_root
 from event_universe.events.amplitude import Layer
 from event_universe.events.measured import (
+    DRIVE_MEMBER,
     TALLIES,
     CovariantReadings,
     DetectorSet,
@@ -92,7 +93,9 @@ from event_universe.events.world import (
     MeasuredDefinition,
     NatureBeamWorld,
     body_nodes,
+    body_weight,
     covariant_square,
+    drive_wall,
     step_divisor,
 )
 
@@ -221,6 +224,7 @@ def covariant_frame(
     number: int,
     position: Address3,
     tick: int,
+    drive_b: bool = False,
 ) -> None:
     """The frame's reading of a body's energy under `covariant-readings-v1`
     (DERIVATIONS_BEAM 17.6 M1 to M3, N2, N3; `_frame_all` calls it for every
@@ -231,8 +235,10 @@ def covariant_frame(
     no drift), the domain `|p|_1 <= Q S M` (N2; refused at the frame with a
     diagnostic naming the record), the one-axis domain (a momentum with
     components on more than one axis is refused: on `main`'s per-axis drive
-    the pace p / E' holds on one axis, and form B's directional drive has
-    not landed) and the push ceiling `|dp|_1 <= g` on the
+    the pace p / E' holds on one axis; lifted when the world declares
+    `drive_b`, the directional drive of `drive-b-v1`, which walks the line
+    of the momentum at p_a / (Q S M) per self-creation on every axis) and
+    the push ceiling `|dp|_1 <= g` on the
     push the record took since the last frame (`pushed`, the rows' push of
     the interval; N3; refused likewise; a recoil, a hand-over or a click's
     label is not a push and moves E' by more, counted), then E' by the
@@ -247,11 +253,11 @@ def covariant_frame(
             f"{BEAM_LAW}: covariant-readings-v1: {label}: |p|_1 = {manhattan} exceeds Q x S x M "
             f"= {wall}, the domain of the pace p / E' (DERIVATIONS_BEAM 17.6 N2)"
         )
-    if sum(1 for component in momentum if component) > 1:
+    if not drive_b and sum(1 for component in momentum if component) > 1:
         raise ValueError(
             f"{BEAM_LAW}: covariant-readings-v1: {label}: the momentum {list(momentum)} has "
             "components on more than one axis, outside the one-axis domain of the per-axis base "
-            "(BEAM_LAW note 17, `step_axis`; form B's directional drive has not landed)"
+            "(BEAM_LAW note 17, `step_axis`) unless the world declares `drive_b` (drive-b-v1)"
         )
     push = sum(abs(a - b) for a, b in zip(pushed, readings.previous, strict=True))
     if push > readings.grain:
@@ -664,6 +670,14 @@ class NatureBeamSimulation:
             # after it).
             entry.frame_content = entry.content
             entry.frame_charges = entry.charges(for_push=True)
+            if self.world.drive_b and not entry.fixed:
+                # Every family under one wall, step 3: a moving body's
+                # gravity charge under `drive_b` is the pair
+                # (w, Q S), the rows' weight on the body's own momentum
+                # (`world.body_weight`; gravity's Lambda is Q S then).
+                entry.frame_charges[0] = body_weight(
+                    entry.momentum, entry.frame_content, self.world.width, self.world.optical
+                )
             if entry.covariant is not None:
                 # The energy readings of the frame (`covariant-readings-v1`):
                 # E'_0 from the content read here, W from the record's
@@ -679,6 +693,7 @@ class NatureBeamSimulation:
                     entry.number,
                     entry.position,
                     self.tick,
+                    self.world.drive_b,
                 )
             if entry.owed > 0:
                 entry.owed -= 1
@@ -832,30 +847,87 @@ class NatureBeamSimulation:
         # rate per self-creation is Newton's, and the pace per lattice
         # interval, the product with the proper-time gate, is p / E'.
         cap = self.world.covariant is None
-        counts = entry.counts.advance(
-            "drive",
-            values=entry.momentum,
-            denominators=[step_divisor(p, content, self.world.width, cap) for p in entry.momentum],
-        )
         turns = [0, 0, 0]
-        for axis in range(3):
+        if self.world.drive_b:
+            # The directional drive (`drive-b-v1`, the world key `drive_b`;
+            # docs/designs/drive_b/DESIGN.md section 2, light_speed/FORM.md
+            # 3.1 (c)): the three drive rows gain p_a Q each against the ONE
+            # wall Q^2 S M + |p|_1 T_h (Q^2 S M under the covariant key),
+            # and the axis furthest over the wall makes the Link, the others
+            # keeping their overflow (`core.integer.by_line`, the rows' own
+            # argmax carry): the Bresenham line of the momentum, one Link per
+            # interval, no coincident fire lost. Every accumulator is checked
+            # against the bound before its addition; the wall's products are
+            # tested by division before they are formed (`drive_wall`).
+            wall = drive_wall(entry.momentum, content, self.world.width, cap)
+            rates = [p * LABEL_SCALE for p in entry.momentum]
+            # Every family under one wall, step 3 (2026-09-22,
+            # docs/designs/one_wall/BODY_DRIVE.md; the law's own since the
+            # generic entry): the body's drive is a member of the age
+            # wall's set at the coefficient gamma, the space part (the
+            # clock's owed count carries the time part): the rates x d
+            # against the wall x (d + gamma n A), A the age moment the
+            # body's clock counted at its Node (`Measured.counted`, the
+            # crowd of other numbers there), the one wall function of the
+            # crowd (`core.integer.age_wall`).
+            coefficient = age_wall_coefficient(DRIVE_MEMBER, self.world.optical, True)
+            if coefficient:
+                # At gamma 0 the member is declared at 0: unstretched,
+                # the wall function not called (its coefficient is
+                # positive), the drive as `drive-b-v1` has it.
+                stretched_rate, wall = age_wall(
+                    1, wall, coefficient, entry.counted, self.world.suspension
+                )
+                rates = [rate * stretched_rate for rate in rates]
+            for axis in range(3):
+                if rates[axis]:
+                    bounded(abs(entry.drive[axis]) + abs(rates[axis]), entry, "drive under drive-b-v1")
+            # centred-step-v1: the step at half the wall under the world key
+            # (docs/designs/atom_give/CENTRED_STEP.md section 1); False,
+            # the whole wall, without it.
+            chosen, sign, drives = by_line(entry.drive, rates, wall, self.world.centred_step)
+            entry.drive = drives
+            if chosen is None:
+                return
+            axis = chosen
             momentum = entry.momentum[axis]
-            if momentum == 0 or counts[axis] == 0:
-                continue
             entry.axis_steps[axis] += 1
             if entry.phase_by_momentum and self.world.action is not None:
-                # The turn by momentum, the `action` row of the axis (record
-                # 155: one rule, no exception): the row gains |p| x N at
-                # every Link the step rule counts on the axis, whether the
-                # Link is crossed, lost to an earlier axis's step or refused
-                # at a contact, and the whole part over h is delivered to
-                # the phase only at a Link crossed below (a count at a Link
-                # not crossed is discarded, as the count off the Links
-                # stepped skipped it: note 30 (ii)).
+                # The turn by momentum on the stepped axis alone (no fire
+                # is lost under the key, so no count is discarded): the
+                # `action` row of the axis gains |p_a| x N at every Link the
+                # rule counts on it, crossed or refused at a contact.
                 bounded(abs(momentum) * self.world.phase_steps, entry, "turn by momentum")
                 (turns[axis],) = entry.counts.advance("action", index=axis, values=[abs(momentum)])
-            if fired is None:
-                fired = (axis, momentum, counts[axis])
+            fired = (axis, momentum, sign)
+        else:
+            # centred-step-v1: the count the nearest whole number under the
+            # world key (docs/designs/atom_give/CENTRED_STEP.md section 1);
+            # the whole part, as BEAM_LAW note 17 has it, without it.
+            counts = entry.counts.advance(
+                "drive",
+                values=entry.momentum,
+                denominators=[step_divisor(p, content, self.world.width, cap) for p in entry.momentum],
+                centred=self.world.centred_step,
+            )
+            for axis in range(3):
+                momentum = entry.momentum[axis]
+                if momentum == 0 or counts[axis] == 0:
+                    continue
+                entry.axis_steps[axis] += 1
+                if entry.phase_by_momentum and self.world.action is not None:
+                    # The turn by momentum, the `action` row of the axis (record
+                    # 155: one rule, no exception): the row gains |p| x N at
+                    # every Link the step rule counts on the axis, whether the
+                    # Link is crossed, lost to an earlier axis's step or refused
+                    # at a contact, and the whole part over h is delivered to
+                    # the phase only at a Link crossed below (a count at a Link
+                    # not crossed is discarded, as the count off the Links
+                    # stepped skipped it: note 30 (ii)).
+                    bounded(abs(momentum) * self.world.phase_steps, entry, "turn by momentum")
+                    (turns[axis],) = entry.counts.advance("action", index=axis, values=[abs(momentum)])
+                if fired is None:
+                    fired = (axis, momentum, counts[axis])
         if fired is None:
             return
         axis, momentum, sign = fired
@@ -1544,15 +1616,30 @@ class NatureBeamSimulation:
         # A row's `acc_turn` is written in a world that declares
         # `massive_rows` alone (0 on every row without it).
         massive = self.world.massive_rows
+        denominator = self.world.suspension[1]
         for flat in nodes:
             x, y, z = self.stores[0].coordinates(np.array([flat]))
             entry: dict[str, object] = {"position": [int(x[0]), int(y[0]), int(z[0])], "families": []}
             families = entry["families"]
             assert isinstance(families, list)
-            for family, store in zip(self.families, self.stores, strict=True):
+            for f, (family, store) in enumerate(zip(self.families, self.stores, strict=True)):
                 lo, hi = store.slice(flat)
                 if hi == lo:
                     continue
-                beams = [beam.record_line(vectors, handed, massive) for beam in store.rows(lo, hi)]
+                # A row's flight accumulator is written only where a crowd
+                # moved it off the table's own count at its age (the value
+                # the walk seeds from, `optical_walk_step`), so that every
+                # world in which no crowd acts keeps its state byte for byte
+                # (the generic entry of the bending, 2026-09-22).
+                flight = self.tables.family_flights[f]
+                made0, residue0 = flight.accumulator(store.direction[lo:hi], store.age[lo:hi])
+                memoryless = (
+                    ((store.made[lo:hi] == 0) & (store.residue[lo:hi] == 0))
+                    | ((store.made[lo:hi] == made0) & (store.residue[lo:hi] == residue0 * denominator))
+                ).tolist()
+                beams = [
+                    beam.record_line(vectors, handed, massive, memoryless=plain)
+                    for beam, plain in zip(store.rows(lo, hi), memoryless, strict=True)
+                ]
                 families.append({"family": family.name, "rays": beams})
             yield entry

@@ -11,6 +11,36 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Series X, the directional drive: six runs and the gate set's byte identity against main 166403d8 - 2026-09-22
+
+The branch `drive-b-v1` from main `166403d8` (`drive-b-v1`, the world key
+`drive_b`, off by default; [the design](designs/drive_b/DESIGN.md),
+[the register entry](EXPERIMENTS.md#x-the-directional-drive-2026-09-22)).
+The six worlds of `examples/events/drive_b/` run once through
+`tools/run_series.py --jobs 3` on the head (the source fingerprint
+`fcaf6f194e62...` of `run.json`; Python 3.14.0rc2, numpy 2.5.3, headless):
+`axis_b`, `plane_b`, `cube_b` (200 intervals, 0.10 to 0.11 s; the state
+`97d5da64...`, `f2de6815...`, `a7824708...`; the events `65d837f2...`,
+`92ef9f38...`, `aa3c5a29...`) and the controls `axis_main`, `plane_main`,
+`cube_main` (0.10 s each; the same states, the events `3dcd225e...`,
+`f5a5e395...`, `65c097c0...`), every run completed with the books balanced
+at every tick; the digests, the source sha and the readings are the run
+blocks of `examples/events/drive_b/expectations.json` (`runs`). The
+readings (`tools/drive_b_readings.py`): 0 record checks failed, 19 inside,
+0 outside, nothing moved: the clicks at 51, 101 and 152 on face:+x from
+(40, 20, 20), (40, 40, 20) and (40, 40, 40) under the key, at 36, 50 and 65
+from (40, 20, 20) without it (DETECTOR); every step within one Link of the
+line, every drive below 3 W (GAMEBOARD). The OFF identity: the gate set's
+sixteen worlds keep the digests of `gate_set.json` (`tests/test_drive_b.py`
+(a) replays `detector/grouped_12_nodes`; `tests/test_amplitude_click.py`
+(d) and `tests/test_massive_rows.py` (a) replay every lamp-free gate
+world), and `plane_b` joins the gate set as the first world that declares
+the key (the state `f2de6815...`, the events `92ef9f38...`). What the key
+predicts (DESIGN.md section 4): a world without it reads as it did to the
+byte, which the replay shows; under it the plane body reaches the face at
+(40, 40, 20) where the control reaches it at (40, 20, 20), which the
+readings show.
+
 ## Series S, the covariant readings: four runs and the OFF replay against main f5417ab3 - 2026-09-21
 
 The branch `covariant-readings` from main `f5417ab3` (`covariant-readings-v1`,

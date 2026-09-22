@@ -416,6 +416,164 @@ RUN_2026_09_22_FAST: dict[str, object] = {
 }
 
 
+# The deciding worlds of step 3 (every family under one wall, the body's
+# drive; docs/designs/one_wall/BODY_DRIVE.md section 4): one free body of
+# the shipped family `probe` (content 64) at the label scale S = 16384
+# (the world's `width`, the rows' d: Q S M = 2^26) with the momentum
+# (2^26, 0, 0) (E' = 2^27, the Lorentz factor 2, v^2 = 3/4; the pace 0.368
+# Links per interval by form B's wall), from the lamp's Node x = 2 at
+# y = 20 + b beside the light worlds' mass 2^16, under `optical` gamma and
+# `drive_b` together at the pair [1, 16384]; the body's click on the face
+# x = 56 (`face:+x`) its tick and the Node it left from, DETECTOR; one body
+# per world (no body reads another's rays), b = 10, 12, 14, 16, 18 at
+# gamma 0 and 1, and one control per b without the mass (the click at
+# tick 150 from (56, 20 + b, 20), the same at every gamma). The pins from
+# the map's body walk (every_family_map.py, `body_walk`, the engine's
+# verbs on the stationary crowd: the drive's three accumulators at the
+# stretched wall by `by_line`, the clock's owed count, the push at the
+# charge (w, Q S) over (Q S)^2), written here before the run; the
+# refuting readings the same walk with one verb changed: the drive
+# unstretched (the member refused) and the charge held at (M, 1) (the
+# weight refused). GAMEBOARD beside: the intervals the clock owed.
+BODY_CONTENT = 64
+BODY_WIDTH = SUSPENSION[1]
+BODY_MOMENTUM = 1 << 26
+BODY_TICKS = 300
+BODY_IMPACTS: tuple[int, ...] = (10, 12, 14, 16, 18)
+BODY_TICK_TOLERANCE = 1
+# Per (b, gamma): the click's tick and the Node's y (x = 56, z = 20), the
+# Links on y before the escape (x 54), the intervals owed; then the two
+# refuting readings' (tick, y).
+BODY_PINS: dict[tuple[int, int], dict[str, object]] = {
+    (10, 0): {"tick": 159, "y": 27, "owed": 3, "unstretched": (159, 27), "blind": (156, 29)},
+    (12, 0): {"tick": 158, "y": 29, "owed": 3, "unstretched": (158, 29), "blind": (154, 31)},
+    (14, 0): {"tick": 158, "y": 31, "owed": 3, "unstretched": (158, 31), "blind": (154, 33)},
+    (16, 0): {"tick": 157, "y": 33, "owed": 3, "unstretched": (157, 33), "blind": (154, 35)},
+    (18, 0): {"tick": 156, "y": 36, "owed": 2, "unstretched": (156, 36), "blind": (154, 37)},
+    (10, 1): {"tick": 168, "y": 23, "owed": 3, "unstretched": (164, 23), "blind": (159, 29)},
+    (12, 1): {"tick": 166, "y": 26, "owed": 3, "unstretched": (162, 26), "blind": (158, 31)},
+    (14, 1): {"tick": 166, "y": 28, "owed": 3, "unstretched": (163, 28), "blind": (157, 33)},
+    (16, 1): {"tick": 164, "y": 31, "owed": 3, "unstretched": (161, 31), "blind": (157, 35)},
+    (18, 1): {"tick": 164, "y": 34, "owed": 3, "unstretched": (161, 34), "blind": (157, 37)},
+}
+BODY_CONTROL_TICK = 150
+
+
+def body_world(b: int, gamma: int, mass: bool) -> Json:
+    """One body beside the mass (or its control without it): the lensing
+    box without the screen, the body at (2, 20 + b, 20)."""
+    base = K.world("mass" if mass else "control")
+    centre = K.CENTRE
+    families = [{"name": "probe", "quantum": 0, "charge": 0, "phase": False}]
+    families.extend(f for f in base["families"] if f["name"] != "light")  # type: ignore[union-attr]
+    measured: list[Json] = [
+        {
+            "position": [K.LAMP_X, centre[1] + b, centre[2]],
+            "family": "probe",
+            "amount": BODY_CONTENT,
+            "momentum": [BODY_MOMENTUM, 0, 0],
+        }
+    ]
+    if mass:
+        # The light worlds' mass, 2^16 (series K's 4096 times MASS_FACTOR, the
+        # crowd of the light, matter and fast worlds; the first run of
+        # 2026-09-22 left the factor out, the crowd 16 times weaker, README).
+        entry = dict(next(e for e in base["measured"] if e["family"] == "m"))  # type: ignore[index]
+        entry["amount"] = int(entry["amount"]) * MASS_FACTOR
+        measured.append(entry)
+    name = f"body_b{b}_g{gamma}" if mass else f"body_control_b{b}"
+    document: Json = {
+        "law": "beam",
+        "model_id": f"beam-drive-b-{name}-v1",
+        "shape": list(K.SHAPE),
+        "boundary": "open",
+        "ticks": BODY_TICKS,
+        "K": K.K,
+        "N": K.N,
+        "release": [1, K.SOURCE],
+        "suspension": list(SUSPENSION),
+        "width": BODY_WIDTH,
+        "optical": gamma,
+        "drive_b": True,
+        "directions": [list(v) for v in K.DECLARED],
+        "families": families,
+        "measured": measured,
+    }
+    return families_by_definition(document, K.FAMILY_DEFINITIONS, K.DEFINITIONS_SOURCE)
+
+
+def body_worlds() -> dict[str, Json]:
+    found: dict[str, Json] = {}
+    for b in BODY_IMPACTS:
+        found[f"body_control_b{b}"] = body_world(b, 0, False)
+        for gamma in GAMMAS:
+            found[f"body_b{b}_g{gamma}"] = body_world(b, gamma, True)
+    return found
+
+
+def body_expectations() -> Json:
+    """The register of the body worlds (`body_expectations.json`, read by
+    tools/drive_b_readings.py --expectations): per world the click's pin."""
+    worlds: Json = {}
+    for b in BODY_IMPACTS:
+        worlds[f"body_control_b{b}"] = {
+            "gamma": None,
+            "impact": b,
+            "click": {
+                "tick": BODY_CONTROL_TICK,
+                "tolerance": BODY_TICK_TOLERANCE,
+                "face": "face:+x",
+                "node": [K.SHAPE[0] - 1, K.CENTRE[1] + b, K.CENTRE[2]],
+                "links_before": [K.SHAPE[0] - 1 - K.LAMP_X, 0, 0],
+            },
+            "derivation": "no mass: the drive at the rate 2^26 x 64 against the wall 2^32 + 2^26 x 110, the 54th x Link at tick 150 (body_walk, crowd False)",
+        }
+        for gamma in GAMMAS:
+            pin = BODY_PINS[(b, gamma)]
+            y = int(pin["y"])  # type: ignore[arg-type]
+            worlds[f"body_b{b}_g{gamma}"] = {
+                "gamma": gamma,
+                "flight_coefficient": 1 + gamma,
+                "drive_coefficient": gamma,
+                "impact": b,
+                "control": f"body_control_b{b}",
+                "click": {
+                    "tick": pin["tick"],
+                    "tolerance": BODY_TICK_TOLERANCE,
+                    "face": "face:+x",
+                    "node": [K.SHAPE[0] - 1, y, K.CENTRE[2]],
+                    "links_before": [K.SHAPE[0] - 1 - K.LAMP_X, y - (K.CENTRE[1] + b), 0],
+                },
+                "owed_intervals_gameboard": pin["owed"],
+                "refuting_readings": {
+                    "drive_unstretched": {"tick": pin["unstretched"][0], "y": pin["unstretched"][1]},  # type: ignore[index]
+                    "charge_content_over_one": {"tick": pin["blind"][0], "y": pin["blind"][1]},  # type: ignore[index]
+                },
+            }
+    return {
+        "format": "optical-body-expectations-v1",
+        "identity": ["optical-v1", "drive-b-v1"],
+        "derivation": (
+            "docs/designs/one_wall/BODY_DRIVE.md section 4; the map every_family_map.py, body_walk: the "
+            "engine's verbs integer for integer on the light-bending map's stationary crowd (the drive "
+            "member at gamma, the clock's owed count, the charge (w, Q S)); the click's tick within one "
+            "interval, the face and the Node exact; written before the run (record 205)"
+        ),
+        "constants": {
+            "content": BODY_CONTENT,
+            "width": BODY_WIDTH,
+            "momentum": BODY_MOMENTUM,
+            "rest_energy": 64 * BODY_WIDTH * BODY_CONTENT,
+            "energy": 1 << 27,
+            "lorentz_factor": 2,
+            "v_squared": 0.75,
+            "mass": 1 << 16,
+            "ticks": BODY_TICKS,
+        },
+        "worlds": worlds,
+    }
+
+
 def worlds() -> dict[str, Json]:
     found = {f"{name}_g{gamma}": world(name, gamma) for gamma in GAMMAS for name in NAMES}
     for family, gamma in MATTER_WORLDS:
@@ -867,6 +1025,17 @@ RUN_2026_09_22_FAR: dict[str, object] = {
 
 
 def main() -> None:
+    for name, document in body_worlds().items():
+        (HERE / f"{name}.json").write_text(
+            json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8"
+        )
+    body_register = HERE / "body_expectations.json"
+    expected_bodies = body_expectations()
+    if body_register.exists():
+        previous = json.loads(body_register.read_text(encoding="utf-8"))
+        if "runs" in previous:
+            expected_bodies["runs"] = previous["runs"]
+    body_register.write_text(json.dumps(expected_bodies, indent=1) + "\n", encoding="utf-8")
     for name, document in worlds().items():
         path = HERE / f"{name}.json"
         path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")

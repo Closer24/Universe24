@@ -120,6 +120,57 @@ def test_the_shipped_worlds_are_the_generators_and_the_expectations_are_pinned()
     assert pinned["worlds"]["r24_4m"]["held_mass"] == 4 * pinned["worlds"]["r24"]["held_mass"]
 
 
+def test_the_one_constant_pins_are_the_generators_and_the_worlds_differ_by_the_key_alone():
+    """flow-link-v1 (the generator's docstring): `expectations_flow.json`
+    equals `expectations(flow=True)`, the balance divided by F_plane = 1.2871
+    to the whole n = 8 (T = 377 and 754), and the four one-constant worlds
+    are the registered ones with the key `flow_link` and the momentum at 8,
+    nothing else changed; the ratio's names are the flow worlds', no
+    equivalence world. The world files themselves ship with the key
+    (the loader refuses an unknown key until then)."""
+    pinned = json.loads((WORLDS / "expectations_flow.json").read_text(encoding="utf-8"))
+    pinned.pop(REPLICATED, None)
+    assert pinned == json.loads(json.dumps(GENERATOR.expectations(flow=True)))
+    assert pinned["format"] == GENERATOR.EXPECTATIONS_FORMAT
+    assert pinned[GENERATOR.FLOW_KEY] is True and pinned["orbit_n"] == 8
+    assert abs(pinned["flow_incidence"] - 1.2871) < 5e-5
+    assert abs(pinned["flow_constant"] - 1 / pinned["flow_incidence"]) < 1e-12
+    assert 7.5 < pinned["orbit_n_real"] < 8.0
+    assert abs(pinned["worlds"]["r12_flow"]["period"]["pin"] - 2 * math.pi * 12 * 40 / 8) < 1e-9
+    assert abs(pinned["worlds"]["r24_flow"]["period"]["pin"] - 2 * math.pi * 24 * 40 / 8) < 1e-9
+    assert pinned["worlds"]["r12_flow"]["momentum"] == 8 * 64 * ((1 << 12) + (1 << 20))
+    assert abs(pinned["worlds"]["r12_flow_control"]["escape_tick"]["pin"] - 61 * 40 / 8) < 1e-9
+    assert pinned["ratio"]["worlds"] == ["r12_flow", "r24_flow"]
+    assert pinned["ratio"]["bracket"] == [1.82, 2.18]
+    assert "equivalence" not in pinned
+    for key in ("flow_link", "flow_incidence", "period", "ratio", "control"):
+        assert key in pinned["derivations"], key
+    registered = GENERATOR.worlds()
+    flow = GENERATOR.worlds(flow=True)
+    assert set(flow) == {"r12_flow", "r24_flow", "r12_flow_control", "r24_flow_control"}
+    for name, document in flow.items():
+        base = registered[name.replace(GENERATOR.FLOW_SUFFIX, "")]
+        assert document[GENERATOR.FLOW_KEY] is True and GENERATOR.FLOW_KEY not in base
+        assert document["model_id"] == base["model_id"].replace("-plane-v1", "-flow-plane-v1").replace(
+            "-control-flow-", "-flow-control-"
+        )
+        probe = next(i for i, m in enumerate(document["measured"]) if "lamp" in m)
+        assert document["measured"][probe]["momentum"] == [0, 8 * 64 * ((1 << 12) + (1 << 20)), 0]
+        assert base["measured"][probe]["momentum"] == [0, 9 * 64 * ((1 << 12) + (1 << 20)), 0]
+        stripped = {k: v for k, v in document.items() if k not in (GENERATOR.FLOW_KEY, "model_id")}
+        stripped["measured"] = [
+            {k: v for k, v in m.items() if k != "momentum"} for m in stripped["measured"]
+        ]
+        expected = {k: v for k, v in base.items() if k != "model_id"}
+        expected["measured"] = [
+            {k: v for k, v in m.items() if k != "momentum"} for m in expected["measured"]
+        ]
+        assert stripped == expected, name
+        shipped = WORLDS / f"{name}.json"
+        if shipped.exists():
+            assert json.loads(shipped.read_text(encoding="utf-8")) == document, name
+
+
 def circle_clicks() -> list[dict[str, object]]:
     found: list[dict[str, object]] = []
     for k in range(1, TICKS // BIRTH_INTERVAL + 1):

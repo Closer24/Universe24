@@ -373,6 +373,160 @@ def integer_section() -> None:
             )
 
 
+# -- the body's walk under the one wall (step 3, BODY_DRIVE.md): form B's
+# directional drive stretched at gamma, the clock's owed count, the push
+# at the rows' weight over the label scale, on the stationary crowd ------
+BODY_CONTENT = 64
+BODY_WIDTH = PAIR_D  # S = d: the body's label scale Q S the rows' Q d
+X_FACE = 28  # the last Node inside the box, x = 56, the click on face:+x
+
+
+def by_drive(drive: int, rate: int, denominator: int) -> tuple[int, int]:
+    """core.integer.by_drive, the whole part taken (at_most 0)."""
+    drive += rate
+    count = abs(drive) // denominator
+    if drive < 0:
+        count = -count
+    return count, drive - count * denominator
+
+
+def by_line(drives: list[int], rates: list[int], wall: int) -> tuple[int | None, int, list[int]]:
+    """core.integer.by_line: the argmax carry of three accumulators over one wall."""
+    after = [drive + rate for drive, rate in zip(drives, rates, strict=True)]
+    chosen: int | None = None
+    for axis, (drive, rate) in enumerate(zip(after, rates, strict=True)):
+        if rate == 0 or abs(drive) < wall:
+            continue
+        if chosen is None or abs(drive) > abs(after[chosen]):
+            chosen = axis
+    if chosen is None:
+        return None, 0, after
+    sign = 1 if after[chosen] > 0 else -1
+    after[chosen] -= sign * wall
+    return chosen, sign, after
+
+
+def body_weight(momentum: list[int], content: int, width: int, gamma: int, q: int) -> tuple[int, int]:
+    """world.body_weight: (w, Q S), w = (E'^2 + 3 gamma p . p) // E'."""
+    rest = q * width * content
+    energy = math.isqrt(rest * rest + 3 * sum(c * c for c in momentum))
+    return (energy * energy + 3 * gamma * sum(c * c for c in momentum)) // energy, q * width
+
+
+def body_walk(
+    lines: dict[str, object],
+    b: int,
+    scale: int,
+    gamma: int | None,
+    momentum: tuple[int, int, int],
+    *,
+    z: int = 0,
+    crowd: bool = True,
+    drive_coefficient: int | None = None,
+    weight: str = "energy",
+    ticks: int = 400,
+) -> tuple[int | None, tuple[int, int, int], int, list[int], int]:
+    """One free body of content 64 at the width S = d from the lamp's Node
+    (x = -26, y = b, z) to the face x = +28 by the engine's verbs on the
+    stationary crowd: per interval the frame (the owed count paid or a
+    self-creation), the move (the drive's three accumulators at the rates
+    p_a Q x d against the wall (Q^2 S M + |p|_1 T_h) x (d + c n A), c the
+    drive's coefficient gamma, A the age moment the clock counted at the
+    Node before; `by_line`), the reading at the Node reached (A, and the
+    arrival flow V), the push (gravity's column at the charge (w, Q S),
+    the accumulators over (Q S)^2, the sign minus) and the count owed
+    (`count_owed`, A n over d). `gamma` None is the world without the key
+    (the charge (M, 1), the drive unstretched); `drive_coefficient` 0
+    holds the drive unstretched under the key (the reading that refutes
+    the member); `weight` "content" holds the charge at (M, 1) under the
+    key (the reading that refutes the weight). Returns (the click's tick or
+    None, the Node it left from, the intervals owed, the momentum at the
+    click, the Links walked)."""
+    flow = lines["FLOW"]  # type: ignore[assignment]
+    age_moment = lines["AGE_MOMENT"]  # type: ignore[assignment]
+    n = int(lines["N_PIN"])  # type: ignore[arg-type]
+    q = int(lines["Q"])  # type: ignore[arg-type]
+    x_lamp = int(lines["X_LAMP"])  # type: ignore[arg-type]
+    d = PAIR_D
+    t_h = math.isqrt(3 * q * q)
+    content, width = BODY_CONTENT, BODY_WIDTH
+    node = [x_lamp, b, z]
+    p = list(momentum)
+    drive = [0, 0, 0]
+    acc_push = [0, 0, 0]
+    owed = acc_owed = 0
+    counted = 0
+    waited = links = 0
+    coefficient = gamma if drive_coefficient is None else drive_coefficient
+    for tick in range(1, ticks + 1):
+        creating = owed == 0
+        if not creating:
+            owed -= 1
+            waited += 1
+        if creating:
+            wall = q * q * width * content + sum(abs(c) for c in p) * t_h
+            rates = [c * q for c in p]
+            if gamma is not None and coefficient:
+                wall = wall * (d + coefficient * counted * n)
+                rates = [r * d for r in rates]
+            chosen, sign, drive = by_line(drive, rates, wall)
+            if chosen is not None:
+                if chosen == 0 and sign > 0 and node[0] == X_FACE:
+                    return tick, (node[0], node[1], node[2]), waited, p, links
+                node[chosen] += sign
+                links += 1
+        if crowd:
+            v = flow.get(tuple(node), [0, 0, 0])  # type: ignore[union-attr]
+            counted = age_moment.get(tuple(node), 0) * scale  # type: ignore[union-attr]
+            if any(v):
+                if gamma is None or weight == "content":
+                    charge, scale_c = content, 1
+                else:
+                    charge, scale_c = body_weight(p, content, width, gamma, q)
+                lam = q * width if gamma is not None else 1
+                for axis in range(3):
+                    x_a = v[axis] * scale * charge * (lam // scale_c) * lam
+                    count, acc_push[axis] = by_drive(acc_push[axis], x_a, lam * lam)
+                    p[axis] -= count
+        if creating and gamma is not None:
+            rate, wall = 1 * d, d + counted * n  # count_owed: age_wall(1, 1, 1, A, (n, d))
+            owed, acc_owed = by_drive(acc_owed, wall - rate, d)
+    return None, (node[0], node[1], node[2]), waited, p, links
+
+
+def body_section() -> None:
+    lines = light_bending_lines()
+    p1 = 1 << 26
+    print("\n  the body's walk under the one wall (step 3, BODY_DRIVE.md): a free body of content 64 at")
+    print(
+        f"  S = {PAIR_D} (Q S M = 2^26), |p| = 2^26 (E' = 2^27, the Lorentz factor 2, v^2 = 3/4), from the"
+    )
+    print(
+        "  lamp's Node to the face x = 56, on the beam's five lines at z = 20 + k, k = -2 .. 2; per body"
+    )
+    print("  the click's tick and Node (DETECTOR when run), the intervals owed (GAMEBOARD); the control")
+    print("  without the mass, the drive unstretched and the charge held at (M, 1) beside")
+    beam_z = list(zip(BEAM, (0, 1, -1, 2, -2), strict=True))
+    for b in (8,):
+        for gamma in (0, 1):
+            rows = []
+            for line, z in beam_z:
+                momentum = scaled_label(line, p1)
+                control = body_walk(lines, b, 16, gamma, momentum, z=z, crowd=False)
+                rule = body_walk(lines, b, 16, gamma, momentum, z=z)
+                flat = body_walk(lines, b, 16, gamma, momentum, z=z, drive_coefficient=0)
+                blind = body_walk(lines, b, 16, gamma, momentum, z=z, weight="content")
+                rows.append((line, z, control, rule, flat, blind))
+            print(f"\n    b = {b}, gamma {gamma}:")
+            for line, z, control, rule, flat, blind in rows:
+                print(
+                    f"      {line} at z {20 + z}: the control's click at tick {control[0]} from {control[1]}; "
+                    f"the rule's at tick {rule[0]} from {rule[1]} ({rule[2]} owed, {rule[4]} Links); "
+                    f"the drive unstretched at tick {flat[0]} from {flat[1]}; the charge (M, 1) at tick "
+                    f"{blind[0]} from {blind[1]}"
+                )
+
+
 def main() -> None:
     lines = light_bending_lines()
     print("Every family under one wall, the deciding world: a slow massive row beside series K's")
@@ -416,6 +570,7 @@ def main() -> None:
             f"{unpushed[1] - unpushed[2]:+.2f} (the rule's {base0[1] - base0[2]:+.2f})"
         )
     integer_section()
+    body_section()
 
 
 if __name__ == "__main__":

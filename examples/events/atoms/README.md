@@ -14,6 +14,17 @@ experimenter, registered as rows of series H.
   form B's drive (293783192 in place of 288249497), the action re-fixed
   by series H's rule under the same drive (h = 16 p(8) = 5536242544), a
   `wave` detector `at_proton` on the proton's Node, 7500 intervals.
+- `hydrogen_r12_centred.json` (`rays-atoms-hydrogen-r12-centred-step-v1`):
+  `hydrogen_r12.json` as registered plus the world key `centred_step`
+  (centred-step-v1, off by default: the body's step fires when its
+  accumulated motion reaches half the wall, the whole wall subtracted,
+  so the electron's Node is the nearest to its accumulated motion) and
+  nothing else; the pins before its run are
+  [atom_give/CENTRED_STEP.md](../../../docs/designs/atom_give/CENTRED_STEP.md)
+  section 4 (the loop stays five turns, the crossings within 9 to 20
+  Links, three to four returns, the period 1400 to 2000; an escape face
+  click FAIL), the cause it answers
+  [atom_give/CAUSE.md](../../../docs/designs/atom_give/CAUSE.md).
 - `helium_r12.json` (`rays-atoms-helium-r12-form-b-v1`): binding-v1's
   square ([binding/alpha_square_bond.json](../binding/alpha_square_bond.json):
   `p` of charge 4 and `n`, each with its held `nuclear` and `bond`) fixed
@@ -28,3 +39,23 @@ python examples/events/atoms/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/atoms examples/events/atoms/*.json
 PYTHONPATH=src python tools/bohr_readings.py artifacts/atoms
 ```
+
+## The baseline run of hydrogen at r = 12 as the law stands (2026-09-22)
+
+One run, on the owner's word (record 886 on record 884 (2)), of
+`hydrogen_r12.json` as registered (no new rule, no engine line, no world
+file changed; the drive on `main`, form B's key not declared), the pins
+declared before it and the clicks after it in
+[docs/designs/atom_baseline/RUN.md](../../../docs/designs/atom_baseline/RUN.md).
+A LABELLED BASELINE, not a re-registration of the pins above: the electron
+widens every quarter turn (the crossings at 13, 13, 17 and 26 Links from
+the proton's Node, read as the arrival Nodes of its rows on the faces,
+DETECTOR) and leaves through `face:+y` at count 3407 (DETECTOR); no
+return, no period and no closure are read; the dwell about the three
+crossings inside r = 17 reads 20.0 counts per Link (the formula's 19.05 at
+r = 12; 23.06 over all 16 hops read, FAIL as declared), the proton reads
+one row per crossing (its `read` lines at 30, 442, 882, 1329, 2254; under
+`read` the `at_proton` set clicks 0), the four side faces 342, 337, 342 and
+339 clicks of the electron's rows; four pins FAIL, two NOT READ, one PASSES, nothing
+moved; the radius from the step lines 12.00 to 27.86 (GAMEBOARD, a
+diagnostic). Helium is not run. NATURE row 6 stays NOT YET.
