@@ -142,3 +142,98 @@ mass: 1.1 x the mass world's 400 intervals, about 60 to 120 s; a control
 (no crowd) a few seconds; the 14 worlds at `--jobs 4` about 5 to 8 minutes
 of wall clock, the peak memory below 1 GB per world. Measured after the
 run below.
+
+## The one run (2026-09-22): what was measured, and what the register refused
+
+`tools/run_series.py --jobs 4`, 400 intervals, on the head of this branch
+(Python 3.14.0rc2, numpy 2.5.3, headless; this host: 4 cores, 15 GB). Read
+by `tools/flow_link_readings.py` (the window from interval 200, rows born
+after the crowd filled the box) and, for the calibration,
+`tools/lensing_readings.py --no-replay` against the registered controls
+(the window [110, 400]); the run blocks (the source sha256, the digests of
+the record, the readings, the verdicts) are in `expectations.json` under
+`runs`, `calibration_runs` and `host_cost_measured`; no pin moved.
+
+**The register's refusal (HOST).** Five of the six rings with the mass
+were stopped by the engine's working bound, not by the key: `momentum_pair`
+forms the pair (S_1, T) of a pushed row's whole momentum **P** = Q d
+content **u**_D + **W** over the gcd of its components and refuses the
+wall's square 3 |**P** / g|^2 Q^2 before the root when it leaves 2^63 - 1
+(`|P / g| <= 27 397 079`). At d = 16384 the ring's rows (series K's lamp,
+content 8) carry |**P**| = 2^29 on the heading, and a start off the mass's
+plane is pushed in y and z at once, so the gcd of **W**'s components falls
+to 16 or 2 and the primitive **P** / g is 3.3 x 10^7, over the bound; the
+registered beam lies in the plane (**W**_z = 0), where the gcd stayed at
+128 or more for 400 intervals. The same worlds WITHOUT the key are refused
+alike (a probe of `ring_b6_g1` without `flow_link`: refused at interval
+68; with the key at 80), and rows of content 1 (a lamp of turn 1) are
+refused alike (the same row at interval 80, g = 2): the refusal is the ring
+world's at this pin on the engine as built, a finding of the register, not
+of the hypothesis. The step algebra walks integers without the bound.
+
+| World | status (HOST) | the refusal, the primitive **P** / g at the stop |
+| --- | --- | --- |
+| `ring_b6_g0` | completed, 400 intervals, 64.4 s, 157 MB | |
+| `ring_b6_g1` | refused at interval 79 | **P** / g = (32901461, 1149200, -1147979) |
+| `ring_b3_g0` | refused at 79 | (33507403, 409525, -1064800) |
+| `ring_b3_g1` | refused at 77 | (33523131, 804995, 2102152) |
+| `ring_b8_g0` | refused at 135 | (33568237, 390720, -390115) |
+| `ring_b8_g1` | refused at 89 | (66131823, 1205776, -1203345) |
+| the six controls | completed, 400 intervals, 23 to 34 s | |
+| `calibration_mass_g0`, `_g1` | completed, 400 intervals, 41 s each | |
+
+**The ring at b = 6, gamma 0 (DETECTOR): every pin inside, the arrival
+Nodes the map's, all forty.** The 40 starts' arrival Nodes agree with the
+design's map start by start (40 of 40; the starts moved by 0 / 1 / 2 / 3
+Nodes 34 / 6 / 0 / 0, the map's 34 / 6 / 0 / 0): `(-6, 0)` and `(6, 0)` by
+one Node in y, `(0, 6)`, `(-4, 4)`, `(4, 4)`, `(4, -4)` by one Node, the
+other 34 unmoved; every start's clicks land on one pixel (201 clicks per
+start in the window, 185 on the four moved starts of the axes).
+
+| Reading | Kind | Measured | The pin | Verdict |
+| --- | --- | --- | --- | --- |
+| the ring's mean radial shift of the arrival Node | DETECTOR | 0.128 Links (the radial shifts' sd 0.314) | 0.128 +- 0.025 (0.451 as built) | inside; the key is in the run |
+| the ring's mean tangential shift | DETECTOR | 0.018 Links | 0 +- 0.025 | inside |
+| the ring's mean delay | DETECTOR | 0.40 intervals | 0.40 +- 1 | inside |
+| `C_nodes` | CONVERSION | 0.437 | 0.437 +- 0.085 | inside |
+| `C_ring` through the lever-arm factor 0.242 | CONVERSION | 1.806 | the expected `c_f x 0.990 x L / sqrt(L^2 + b^2)` = 1.929 +- 0.085 | OUTSIDE by 0.038: 1.45 grains below, the algebra's own 1.46 |
+| `C_ring` bare against 2 (gamma 0's `c_f`) | CONVERSION | 1.806 | 2 on the comparison side only | 9.7 per cent below, as the algebra |
+| the controls' mean age | DETECTOR | 89.00 intervals at every ring and gamma, every start at its own (y, z) | the clock's word unchanged | inside |
+
+**The calibration (DETECTOR, `tools/lensing_readings.py` against the
+registered controls run as they are).** The registered `optical/mass_g0`
+and `mass_g1` under the key read the centroid shift -1.573 / -3.180 pixels
+(the design's -1.600 / -3.000 +- 0.5: inside; the register's -1.993 /
+-3.989 as built), the delays 2.65 / 4.92 intervals (the register's 2.95 /
+4.94, within the bracket of 1; the algebra's 2.60 / 5.00), the ratio 3.180
+/ 1.573 = 2.02 (the algebra's 1.88 on the pixels, 2.17 on the momentum;
+2.00 registered as built), 1344 / 1392 clicks in the window (1347 / 1395
+registered), the centroid in z 20.000, no light taken by the mass. The
+key moves the push and nothing else: the controls' digests are one number
+at gamma 0 and 1 (no crowd), and the calibration's delays sit where the
+register's do.
+
+**The verdict, by the pins as written before the run.** At b = 6, gamma 0:
+**CLOSES WITHIN THE STATED FACTORS**: the mean radial shift, the tangential
+mean, the delay and `C_nodes` are inside their pins, the arrival Nodes are
+the map's start by start, and `C_ring` through the stated lever-arm factor
+sits 1.45 grains below `c_f x 0.990 x L / sqrt(L^2 + b^2)` (the design's
+verdict sentence "to one to three grains"; the algebra itself sits 1.46
+grains below there), outside the strict one-grain pin of `expectations.json`
+by 0.038: the run reads what the algebra says, at the gamma 0 grain (six of
+forty starts move one Node). Not CLOSES: 1.806 against 2 bare. The
+deciding pin of the design, the gamma 1 ring's `0.731 +- 0.025` at b = 6,
+is **NOT READ**: the world is refused by the register at interval 79, as
+are b = 3 and b = 8 at both gammas. What decides it is the model owner's
+and the architect's, not this run's: either the pair's bound on a pushed
+row's momentum (an engine rule: the primitive **P** / g at d = 16384 with
+content 8) or the ring's pin (a smaller d with S = d kept, the design's map
+re-run at that pair for new pins before any run); neither is changed here.
+
+What the run establishes: on the engine as built the key is in the run (the
+b = 6, gamma 0 ring reads 0.128 against 0.451 as built, every arrival Node
+where the algebra's walk under **f**_D puts it) and the calibration's shifts
+move from the register's to the algebra's; the clock's word does not move.
+It establishes no physical law: `c_f = 2` is an input, and the ring's
+`2 c_f` at gamma 1 on the one constant stays unread until the refusal is
+resolved.

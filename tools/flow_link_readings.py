@@ -221,6 +221,25 @@ def read_ring(reading: Reading, control: Reading | None, pin: dict[str, object])
         if not ok:
             out.failed += 1
             out.lines.append(f"  RECORD CHECK FAILED: {name}")
+    if not reading.completed:
+        # The runner's log beside the run (`tools/run_series.py`'s layout):
+        # the refusal that stopped the run, a HOST reading of the register.
+        log = reading.folder.parent / "log.txt"
+        refusal = (
+            next(
+                (
+                    line.strip()
+                    for line in reversed(log.read_text(encoding="utf-8").splitlines())
+                    if "Error" in line
+                ),
+                "(no log)",
+            )
+            if log.exists()
+            else "(no log)"
+        )
+        out.lines.append(f"  {HOST}: the run stopped after {reading.ticks} intervals: {refusal[:400]}")
+        out.block = {"refusal": refusal[:400]}
+        return out
     if control is None:
         return out
     radial: list[float] = []
@@ -354,6 +373,19 @@ def read_ring(reading: Reading, control: Reading | None, pin: dict[str, object])
             f"  {kind}: {line}: {fmt(value)} against {expected} +- {tolerance} ({verdict(inside)}"
             f"{'' if inside else f', by {abs(value - expected) - tolerance:.3f}'})"
         )
+    # The residual of C_ring in grains beside the strict pin: the design's
+    # verdict sentence (DESIGN.md section 0, the reviewer's must-fix line)
+    # reads 2 c_f within the two factors "to one to three grains", and its
+    # own algebra sits 1.0 / 2.4 / 1.4 grains off at b = 3 / 6 / 8, gamma 1.
+    grain = float(pin["c_ring"]["grain"])  # type: ignore[index]
+    residual = (c_ring - float(pin["c_ring"]["expected"])) / grain  # type: ignore[index]
+    algebra = (float(pin["c_ring"]["value"]) - float(pin["c_ring"]["expected"])) / grain  # type: ignore[index]
+    block["c_ring_residual_grains"] = round(residual, 2)
+    block["c_ring_algebra_residual_grains"] = round(algebra, 2)
+    out.lines.append(
+        f"  {CONVERSION}: C_ring's residual from the expected in grains: {residual:+.2f} (the algebra's own "
+        f"{algebra:+.2f} at this b and gamma; the design's verdict sentence: within one to three grains)"
+    )
     as_built = float(pin["radial_shift"]["as_built"])  # type: ignore[index]
     out.lines.append(
         f"  {DETECTOR}: the mean radial shift against the law as built ({as_built}): "
@@ -382,7 +414,7 @@ def read_control(reading: Reading) -> Result:
             out.failed += 1
             out.lines.append(f"  RECORD CHECK FAILED: {name}")
     ages = [s.age for s in reading.starts.values() if s.clicks]
-    own = sum(1 for s in reading.starts.values() if s.clicks and s.modal(reading.centre) == (0, 0))
+    own = sum(1 for s in reading.starts.values() if s.clicks and s.modal(reading.centre) == (s.y, s.z))
     out.lines.append(
         f"  {DETECTOR}: {len(ages)} of {len(reading.starts)} starts click in the window; {own} arrive at their own (y, z); "
         f"the mean age {fmt(sum(ages) / len(ages) if ages else math.nan, 2)} intervals "

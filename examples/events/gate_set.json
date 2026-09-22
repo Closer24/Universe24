@@ -155,10 +155,10 @@
    }
   },
   {
-   "path": "flow_link/ring_b6_g1.json",
+   "path": "flow_link/ring_b6_g0.json",
    "ticks": 400,
-   "cap": 60,
-   "covers": "flow-link-v1 (the world key flow_link, 2026-09-22): the flow label f_D per Euclidean Link in every flow sum (CrowdMoments, optical_turn) on series K's box with the ring of 40 lamps at b = 6 under optical 1; a recorded world (lamps), so no digests; the cap the interval by which the first row of the ring has been pushed by the crowd under the key"
+   "cap": 70,
+   "covers": "flow-link-v1 (the world key flow_link, 2026-09-22): the flow label f_D per Euclidean Link in every flow sum (CrowdMoments, optical_turn) on series K's box with the ring of 40 lamps at b = 6 under optical 0; a recorded world (lamps), so no digests; the cap the interval after the first ring row is turned by the crowd under the key (the books' turned line of light first moves at interval 68); the gamma 1 ring is refused by the pair's working bound at d = 16384 (the folder's README), so the gamma 0 ring stands here"
   }
  ]
 }
