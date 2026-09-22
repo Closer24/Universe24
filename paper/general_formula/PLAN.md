@@ -3873,3 +3873,16 @@ attributes themselves. The conversion table's Inside cells open with
 the family and the attributes each formula reads; its caption says so.
 No new number; 39 pages, the count reported. The Boss was told before
 the commit (the writer's line of 07:52Z).
+
+## Applied (2026-09-22, the Boss's condition on the owner's GO): the eighth formula
+
+The Boss's GO of 08:20Z on the family-by-family paragraph (already at
+8f2ce077) carried one condition: keep the eighth formula honest, the
+two-slit spacing lambda = c N d / n, either said absent or added as one
+line if its reading is registered by kind. Its reading is registered
+(L2b: the bands' centres 23.5 pixels apart for the exact two-path law's
+23.3, DETECTOR; Light Outside II.6 on main), so it is one line in
+Section 6's "Interference, by the formulas alone", after Born's rule,
+with Young's lambda D / s named on the comparison side only. 39 pages.
+QUANTA.md and LIGHT.md (PRs #805, #810) are cited when the new-formulas
+section is next touched, as the Boss ordered, not here.

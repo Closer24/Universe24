@@ -1751,6 +1751,12 @@ CORRECTIONS = [
         "the circular momentum under the push, $v^2/r = GM_B/r^2$ &",
         "\\emph{a body} (Node, momentum): the circular momentum under the push, $v^2/r = GM_B/r^2$ &",
     ),
+    # The eighth formula: the two-slit spacing, one line (the Boss's condition on the owner's GO).
+    (
+        "the eighth formula, the two-slit spacing lambda = c N d / n, one line with its registered reading (the Boss's condition)",
+        "Born's to $1/\\Nphi$. What passes:",
+        "Born's to $1/\\Nphi$. The spacing is the law's own: $\\lambda = c\\Nphi d/n$ Links, one turn of the phase per age per fringe, Young's $\\lambda D/s$ only in the paraxial limit \\cite{lightoutside}; the bands' centres are $23.5$ pixels apart for the exact two-path law's $23.3$ (L2b, DETECTOR). What passes:",
+    ),
 ]
 
 
