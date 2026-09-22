@@ -1340,7 +1340,13 @@ states "exactly" and means integer equality at every tick.
   its start on each axis with its momentum's y component of the initial
   sign; T within +- 15 %; the mean radius over the first orbit r +- 1;
   |drift| <= 1 Link per orbit; the ratio 4 +- 15 %; C measured on the
-  orbit against m q L / (2 pi r) 1.00 +- 0.15. The record checks
+  orbit against m q L / (2 pi r) 1.00 +- 0.15. Since the model owner's
+  rule of 2026-09-22 (records 562 and 564; the audit of record 567, F11)
+  the closing, T, the mean radius, the drift and the ratio are read from
+  the probe's step records: GAMEBOARD diagnostics, printed beside their
+  expectation and never counted; the detector reading behind the period,
+  the `beam` sets' click ticks (the lamp's returns), is not yet read; C
+  measured from the probe's own `read` records is DETECTOR. The record checks
   (completed, the books balanced) fail the tool; the readings are
   registered inside or outside, never moved.
 - **The first registration (history; the engine of the D1 commit, before
@@ -3648,14 +3654,14 @@ neutron (the transformation `become`, the identity `weak-v1`).**
 
   | World | Expected (kind) | Measured | Verdict |
   | --- | --- | --- | --- |
-  | `j1_lattice` | every neutron fires at its pinned tick or up to 3 before it: 522 for the 8 inner and the 8 corners, 523 for the 24 faces, 524 for the 24 edges (GAMEBOARD, the warm counts 12, 12, 13 and 14 rows of 1839) | the inner 8 at 522 with the count 22068 (12 rows), the faces 24 at 522 with 23907 (13), the edges 24 at 523 with 25746 (14): 56 inside; the corners 8 at 524 with the count 27585 at the trigger, 15 rows (their three line-mates at 4, 8 and 12 Links on each of three axes: one row dwelling one interval at 4 Links, m(7) = 4, two at 8 and two at 12), where the warm run read 12 rows at tick 100 (a gap: the corners' mates at 4 Links, the edges, one class with one clock, had skipped the self-creation whose row would have been there), the constant-count tick of 15 rows 525: outside by 2 against the pinned 522, the estimator's error and not the clock's | outside (56 of 64 neutrons inside) |
+  | `j1_lattice` | every neutron fires at its pinned tick or up to 3 before it: 522 for the 8 inner and the 8 corners, 523 for the 24 faces, 524 for the 24 edges (the expectation GAMEBOARD, the warm counts 12, 12, 13 and 14 rows of 1839; the reading the neutron's own `become` line, DETECTOR: records 567 F8 and 569) | the inner 8 at 522 with the count 22068 (12 rows), the faces 24 at 522 with 23907 (13), the edges 24 at 523 with 25746 (14): 56 inside; the corners 8 at 524 with the count 27585 at the trigger, 15 rows (their three line-mates at 4, 8 and 12 Links on each of three axes: one row dwelling one interval at 4 Links, m(7) = 4, two at 8 and two at 12), where the warm run read 12 rows at tick 100 (a gap: the corners' mates at 4 Links, the edges, one class with one clock, had skipped the self-creation whose row would have been there), the constant-count tick of 15 rows 525: outside by 2 against the pinned 522, the estimator's error and not the clock's | outside (56 of 64 neutrons inside) |
   | | the shell's 64 beta clicks a step: the width over the median below 0.1 (DETECTOR) | 64 clicks from tick 541 to 563, the median 549, the 10th and 90th percentiles 542 and 562, the width over the median 0.036 (nature's 3.17) | inside |
   | | every click the content 3, a line (DETECTOR); the count the neutrons' (DETECTOR) | {3: 64}; 64 of 64 (the beta of every neutron on -x, the flight ages 17 .. 41) | inside; inside |
-  | `j1_source` | every neutron fires at its pinned tick or up to 3 before it: 524 .. 529 by its warm count 25746 .. 36195 (GAMEBOARD) | 8 at 522 (the count 25746, pinned 524) and 8 at 527 (36195, pinned 529) inside; 16 at 525 (25746, pinned 524), 8 at 527 (26164, pinned 524), 8 at 528 (31681, pinned 527) and 16 at 530 (32096, pinned 527) one to three intervals after their pinned tick: the count read at the trigger is the warm count, the counts read over the clock's history under the fan's dwells at times higher than the one tick's count the estimator took | outside (16 of 64 neutrons inside; every neutron within 3 intervals of its pinned tick) |
+  | `j1_source` | every neutron fires at its pinned tick or up to 3 before it: 524 .. 529 by its warm count 25746 .. 36195 (the expectation GAMEBOARD; the reading the `become` lines, DETECTOR) | 8 at 522 (the count 25746, pinned 524) and 8 at 527 (36195, pinned 529) inside; 16 at 525 (25746, pinned 524), 8 at 527 (26164, pinned 524), 8 at 528 (31681, pinned 527) and 16 at 530 (32096, pinned 527) one to three intervals after their pinned tick: the count read at the trigger is the warm count, the counts read over the clock's history under the fan's dwells at times higher than the one tick's count the estimator took | outside (16 of 64 neutrons inside; every neutron within 3 intervals of its pinned tick) |
   | | the shell's 64 clicks a step (DETECTOR); every click the content 3 (DETECTOR); the count the neutrons' (DETECTOR) | 64 clicks from 541 to 571, the median 555, the percentiles 544 and 565, the width over the median 0.038; {3: 64}; 64 of 64 | inside; inside; inside |
-  | `j3_deuteron` | the neutron fires at 574 or up to 3 before it (GAMEBOARD, the warm count 128590 at one Link from the proton); the pair holds after (GAMEBOARD: no step, every attempted step a hand-over); the beta reaches the shell with the content 3 (DETECTOR) | fired at 577 with the count 128590 at the trigger (65 intervals after the free neutron's 512: later, not never; 3 after the constant-count tick, the counts over the history under the proton's fan at times higher than the one tick's); 0 steps of 39 and 21 attempted, 21 and 39 hand-overs taken, the two protons at one Link at the end; one click at tick 590 with the content 3 (the age 13 on the fan direction (1, 3, -2)) | outside (by 3); inside; inside |
-  | `j3_deuteron_crowd` | no transformation in 700 intervals, the count 128590 above the gate 65536 at every pulse (GAMEBOARD); no beta click (DETECTOR) | none (0 of 1 transformed; the pair holding, 0 steps of 40 and 22 attempted); 0 clicks | inside; inside |
-  | `j3_neutron_free` | the neutron fires at 512 exactly (GAMEBOARD); the beta reaches the shell with the content 3 (DETECTOR) | 512 with the count 0; one click at tick 526 with the content 3 (the age 14 on the fan direction (1, 3, -2)) | inside; inside |
+  | `j3_deuteron` | the neutron fires at 574 or up to 3 before it (the expectation GAMEBOARD, the warm count 128590 at one Link from the proton; the reading the neutron's own `become` line, DETECTOR); the pair holds after (GAMEBOARD: no step, every attempted step a hand-over; the step records, a diagnostic printed and not counted since records 562 and 564, F9; the hand-overs taken are the events' own `contact` records, DETECTOR); the beta reaches the shell with the content 3 (DETECTOR) | fired at 577 with the count 128590 at the trigger (65 intervals after the free neutron's 512: later, not never; 3 after the constant-count tick, the counts over the history under the proton's fan at times higher than the one tick's); 0 steps of 39 and 21 attempted, 21 and 39 hand-overs taken, the two protons at one Link at the end; one click at tick 590 with the content 3 (the age 13 on the fan direction (1, 3, -2)) | outside (by 3); agrees (a diagnostic, not counted); inside |
+  | `j3_deuteron_crowd` | no transformation in 700 intervals, the count 128590 above the gate 65536 at every pulse (the expectation GAMEBOARD; the reading the absence of a `become` line on the neutron's own record, DETECTOR); no beta click (DETECTOR) | none (0 of 1 transformed; the pair holding, 0 steps of 40 and 22 attempted); 0 clicks | inside; inside |
+  | `j3_neutron_free` | the neutron fires at 512 exactly (the expectation GAMEBOARD; the reading the neutron's own `become` line, DETECTOR); the beta reaches the shell with the content 3 (DETECTOR) | 512 with the count 0; one click at tick 526 with the content 3 (the age 14 on the fan direction (1, 3, -2)) | inside; inside |
 
 - **Verdict (J1, J3).** What the detector's world sees is the law's own:
   a population of neutrons decays in a step (the shell's 64 clicks within
@@ -6423,7 +6429,9 @@ sequential gates on an entangled record, the full register replay.
   tick 8 on +x against the axis (the product `[["w", 1, 3, [1, 0, 0],
   -1]]`, the recoil (-192, 0, 0)), clicked at the proton at x = 3 at tick
   9 with the push (192, 0, 0) and `hand` -1, the proton at x = 1 taking
-  nothing, the border 0, the charge line [14688, 1] (two protons; the
+  nothing, the border 0, the charge line [14688, 1] (GAMEBOARD, the books:
+  a diagnostic, not a pin, the proton's own `charge` on its state the
+  detector reading behind it; two protons; the
   design's table wrote 7344, one proton's), the books `left` 1, `right`
   0; `w_two_sides` (the control, no axis, no hand): the one W unit sent by
   the tie of the apportioning at the clock age 7 to the second declared
@@ -6447,7 +6455,8 @@ sequential gates on an entangled record, the full register replay.
   `[["w", 1, 3, [1, 0, 0], -1]]` with the recoil [-192, 0, 0], the click
   at tick 9 at measured 3 with the push [192, 0, 0] and `hand` -1, the
   proton at x = 1 nothing, the border 0, the charge line [14688, 1] at
-  every tick, `left` 1, `right` 0; `w_two_sides` the click at measured 1
+  every tick (GAMEBOARD, the books: a diagnostic, not a pin), `left` 1,
+  `right` 0; `w_two_sides` the click at measured 1
   at tick 9 with the push [-192, 0, 0], no `hand` on any line; `wu` the
   beta's click at x = 0 at tick 21 with `hand` -1 and the push [-192, 0,
   0], the antineutrino through `face:+x` at tick 23 with `hand` +1, the

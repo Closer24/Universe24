@@ -156,7 +156,8 @@ interval over 80 or 150 intervals and one record's offers held at the
 layer until its completion. Verdict: PASS, the power window of 6.5 is
 pinned from above at 2.012 by the register; `tests/test_amplitude_mz_345_n.py`
 derives the pin from the worlds and the engine's tables and ladder and
-replays both worlds bit-exact against the registered readings. The text
+replays both worlds bit-exact against the registered digests, a gate of
+the record's bytes, not a reading (records 562 and 564). The text
 of 6.5 still states the window from N = 64 alone, [1.917, 2.489); the
 narrowing is the register's until the mathematician carries it there.
 

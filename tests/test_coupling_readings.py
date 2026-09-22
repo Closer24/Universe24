@@ -171,3 +171,18 @@ def test_the_declared_charges_are_the_engines_charge_per_unit_of_content():
         entry.charge[0] if entry.charge[1] == 1 else Fraction(*entry.charge)
         for entry in NatureBeamSimulation(world).measured.values()
     ]
+
+
+def test_a_gameboard_diagnostic_is_printed_and_never_counted():
+    """Item 5's ring means, the cube flux and item 6's identity with the
+    replay are GameBoard numbers (records 562 and 564; the audit of record
+    567, F3 and F4): `Checks.diagnostic` keeps the number beside its
+    expectation, names the detector reading behind it and leaves `failed`,
+    `outside`, the rows and the readings untouched."""
+    checks = TOOL.Checks()
+    checks.diagnostic("5: flow x 2 pi r / q at r = 5", 0.97, 0.90, 1.10, TOOL.BEHIND_ITEM_5)
+    checks.diagnostic("5: slope of the count", -1.3, -1.10, -0.90, TOOL.BEHIND_ITEM_5)
+    checks.diagnostic_equal("6: (age, waited, owed)", (1, 2, 3), (1, 2, 4), "the probe's own record")
+    assert [ok for _, ok, _ in checks.diagnostics] == [True, False, False]
+    assert all("not yet read" in detail for _, _, detail in checks.diagnostics)
+    assert checks.rows == [] and checks.readings == [] and checks.failed == 0 and checks.outside == 0

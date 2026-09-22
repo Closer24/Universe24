@@ -232,6 +232,28 @@ def expectations() -> Json:
                     "pin_readable_in_the_shipped_world": False,
                 }
             )
+    out["gameboard_diagnostics"] = {
+        "kind": "GAMEBOARD",
+        "keys": [
+            "worlds.<name>.k_reader",
+            "worlds.<name>.k_source",
+            "clock_age_v1.age_moment_over_presence",
+            "clock_age_v1.worlds.<name>.k_reader",
+            "clock_age_v1.worlds.<name>.k_source",
+            "clock_age_v1.worlds.<name>.k_reader_presence_word",
+            "clock_age_v1.worlds.<name>.k_source_presence_word",
+        ],
+        # The rule of records 562 and 564 (2026-09-22; the audit of record
+        # 567, F1): a crowd's k is a replay of the store, a diagnostic.
+        "statement": (
+            "the crowd's moment at the reader's Node (the count its clock owes, k, and every number "
+            "derived from it alone) is a replay of the store: a diagnostic, never pinned, never "
+            "compared with nature, not in the PASS/FAIL count (the model owner, 2026-09-22, records "
+            "562 and 564; the audit, record 567, F1); the pin of this series is 1 + z at the detector "
+            "(DETECTOR); the detector reading behind k, the reader's own `counted` on its record, "
+            "not yet read"
+        ),
+    }
     return out
 
 
