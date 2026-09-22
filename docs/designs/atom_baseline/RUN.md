@@ -206,7 +206,79 @@ megabytes of records (series H's r12), within the order's half hour.
 
 ## 4. The run and the clicks (written after the run; no pin above edited)
 
-NOT YET RUN (step 1 ends here; step 2 fills this section).
+Run on 2026-09-22 at about 09:25Z on the branch's first commit
+(0ee54703, the engine and the world file those of `origin/main` af39be60):
+`PYTHONPATH=src python tools/run_series.py --jobs 1 --out
+artifacts/atom_baseline examples/events/atoms/hydrogen_r12.json` under
+Python 3.14.0rc2 (`uv`-installed; the host offered no 3.14), headless, no
+render, no frames; completed, 7500 ticks, the books balanced at every tick,
+70.8 s of the runner, 124 MB peak (host), 369 MB of `events.jsonl`; the
+fingerprint `state.json` sha256 7664a7129be6322e4a35bcf67aca80f2fd699f60cae421b6bd2b15ce68983c59,
+the ledger e62c4d48ef87294091320b3d7cf54607924ef96bbd6e86b6c3cb6a68e558ed63,
+`events.jsonl` 24e6ae816901cc365193448b9bd69834e6a08664d292f0e6d4566291981b178a.
+The reading by [baseline_readings.py](baseline_readings.py) (the method of
+section 2; two reader fixes after the run, neither a pin: the `escaped`
+list's shape in `run.json`, and the four units of one release landing on
+different Nodes of the set by the Nodes' claims, so the pairing no longer
+asks the same z); its printout is [baseline_readings.out](baseline_readings.out).
+No pin above was edited.
+
+**The verdict in one line.** The loop does not stay: as the law stands
+the electron widens every quarter turn (the crossings at 13, 13, 17 and 26
+Links from the proton's Node, DETECTOR) and leaves through `face:+y` at
+count 3407 (DETECTOR), so no return, no period and no closure are read;
+the dwell about the three crossings inside r = 17 reads 20.0 counts per
+Link; the proton read one row per crossing; six pins FAIL, one PASSES;
+nothing is moved, nothing is compared with nature, NATURE row 6 stays NOT
+YET.
+
+**What the clicks read (DETECTOR unless labelled).**
+
+| The reading | The number | Kind |
+| --- | --- | --- |
+| the clicks per detector, family `e` | `face:+x` 342, `face:-x` 337, `face:+y` 342, `face:-y` 339, `face:+z` 0, `face:-z` 0, `at_proton` 0 (read, not measured); the escape line of the electron on `face:+y` at count 3407, its momentum then (-172 906 816, 35 392 088, 0) | DETECTOR |
+| the clicks per detector, family `p` | `face:+x` and `face:-x` 328 045 each, `face:+y` and `face:-y` 325 073 each, `face:+z` and `face:-z` 322 101 each; 1 950 438 units escaped; the electron's own reads of the proton's rows 305 (its `read` lines, its own record) | DETECTOR |
+| the releases read from the faces | 334 of 340 paired (+x with +y by the flight delays; 28 clicks left unpaired at the end, the last releases' rows near the face), the release counts 11 to 3402 (1 or 2 modulo 10: the click lands one to two counts after the release plus the table's f(L)) | DETECTOR |
+| the electron's position per release (the arrival Nodes) | the distance from the proton's Node least 12.00, greatest 27.86 Links; the last release read at (29, 52) | DETECTOR |
+| the axis crossings | +y at 412 at (26, 39), 13 Links; -x at 851 at (13, 26), 13 Links; -y at 1302 at (26, 9), 17 Links; +x at 2191 at (52, 26), 26 Links; then no crossing before the escape | DETECTOR |
+| the returns to the +x axis | 1 (at 2191, 14 Links from the start); no count between two +x crossings; no second crossing of any axis | DETECTOR |
+| the dwell about the crossings (first click to first click at the next Node along the motion) | 16 hops: 19, 21, 20, 19, 20, 20, 20, 20, 21, 20, 19, 21 about the +y, -x and -y crossings (12 hops, the mean 20.0) and 29, 40, 30, 30 about the +x crossing at 26 Links (4 hops, the mean 32.3); the mean over all 16, the pin's reading, 23.06 | DETECTOR |
+| the phase per release | the increments 0 to 5 steps, unwrapped; the mean 1.174 steps per release over the run (the formula's 1.75 on the circle at r = 12; the loop widened and slowed) | DETECTOR |
+| the circles per return j and the residue | not read: no return | DETECTOR (none) |
+| the phase stamped at the +x crossing | 53 at 2191 (the start's 0 at count 11) | DETECTOR |
+| the proton's reads of the electron's rows | 5 `read` lines at counts 30, 442, 882, 1329, 2254: one per crossing (1, 1, 1, 1 within 60 of each crossing plus the flight) and the start's | DETECTOR |
+| the radius over the run (the step lines) | least 12.00, greatest 27.86, at the end 26.17 at (29, 52, 26); 1.23 turns of the angle; one closing of the angle at 2181; the momentum's length at the crossings 283, 308, 273, 182 million label units (the start's 294); the loop does not stay | GAMEBOARD (a diagnostic) |
+| the per-axis action over the crossed Links to the closing at 2181 | x 159.66, y 150.47, z 0 quotients of h, the sum 310.1 = 4.85 circles; the body's phase at the closing 53 (a closing of the angle at a radius that grew from 12 to 26 is not a return, so this is not a closure reading) | GAMEBOARD (a diagnostic) |
+| the dwell from the step lines at the same hops | 24 gaps, the mean 22.46, the least 18, the greatest 31 | GAMEBOARD (a diagnostic; agrees with the faces' 23.06 within the release grain) |
+
+**The verdicts against the pins of section 3 (no pin moved).**
+
+| Pin | Declared | Read | Verdict |
+| --- | --- | --- | --- |
+| P1 the dwell per Node | 19.05 to 20.5 counts, the mean over the hops read within 17 to 22.5 | 23.06 over 16 hops (20.0 over the 12 hops inside r = 17, 32.3 over the 4 at r = 26) | FAIL as declared (the mean over all the hops read); the hops at the three crossings the formula's radius covers read 20.0, inside, stated as a reading and not as the pin |
+| P2 the period and the returns | T = 1552 within 15 percent, 4 or 5 returns | 1 crossing of the +x axis at 2191, no period | FAIL |
+| P2b the return within 3 Links of the start | 3 Links | 14 Links | FAIL |
+| P3 the closure j = 4.00 within 0.05 | 4.00 | not read (no return) | FAIL (not readable on this run) |
+| P3b the residue per return within 3 steps | 0.06 steps | not read | FAIL (not readable on this run) |
+| P5 the proton's reads per crossing 0 to 2 | 0.63 in the mean | 1, 1, 1, 1 | PASS |
+| P6 750 clicks of `e` per side face | 750 less the rows in flight | 342, 337, 342, 339 (340 releases before the escape at 3407) | FAIL |
+
+What the run adds to the algebra (ALGEBRA.md section 7's one integer):
+under the declared integers on the drive on `main`, the loop from r = 12
+with the declared momentum does not close on the lattice; it widens by one
+Link at the first quarter turn and by thirteen by the fourth, and the
+register's precedent at this radius (series H's `r12` under the signed
+drive: an escape through `face:+x` at 2059 without a closing, with the
+circle's momentum and the registered h) is repeated with the atoms world's
+momentum and h_B (the escape through `face:+y` at 3407, one closing of the
+angle at 2181). The cause is not read here and not claimed: the fan's
+grain and the whole kicks are what the register names (atoms/PINS.md
+section 2, items 3 and 4), the 1.9 percent excess of the declared momentum
+over the circle's is a perturbation the limit's loop absorbs at a = 12.48
+and cannot widen to 26. This is the baseline the stability rule's design
+reads against: what a detector reads of the atom as the law stands is a
+widening loop and an escape, one row per crossing at the proton, and a
+dwell of 20 counts per Link where the loop is still near r = 12.
 
 ## Links
 

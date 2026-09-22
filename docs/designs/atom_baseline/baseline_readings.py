@@ -180,7 +180,9 @@ def pair_releases(clicks, side: int) -> tuple[list[Release], int]:
             x = node2[0]
             c1 = t1 - delay("face:+x", far - x)
             c2 = t2 - delay("face:+y", far - y)
-            if abs(c1 - c2) <= PAIRING_TOLERANCE and phase1 == phase2 and node1[2] == node2[2]:
+            # The four units of one release land on the set's Nodes by the
+            # Nodes' claims (BEAM_LAW note 41 (viii)), so their z differ.
+            if abs(c1 - c2) <= PAIRING_TOLERANCE and phase1 == phase2:
                 found = (k, x, c1)
                 break
             if t2 - t1 > 70:
@@ -335,7 +337,9 @@ def main(argv: list[str] | None = None) -> int:
         )
         if name in FACE_HEADINGS:
             face_clicks_e[name] = int(families.get(electron_family, {}).get("clicks", 0))
-    for family, values in record.get("escaped", {}).items():
+    escaped_record = record.get("escaped", [])
+    entries = escaped_record.items() if isinstance(escaped_record, dict) else enumerate(escaped_record)
+    for family, values in entries:
         print(f"[{DETECTOR}]   escaped {family}: {values}")
     clicks, proton_reads, electron_reads, steps, escaped = read_events(
         folder, electron_family, proton_family
@@ -367,6 +371,11 @@ def main(argv: list[str] | None = None) -> int:
     if len(releases) < 4:
         print("too few releases to read a loop")
         return 1
+    distances = [math.dist((r.x, r.y), centre) for r in releases]
+    print(
+        f"[{DETECTOR}] the electron's position per release from the arrival Nodes: the distance from the proton's Node "
+        f"least {min(distances):.2f}, greatest {max(distances):.2f} Links; the last release read at ({releases[-1].x}, {releases[-1].y}) at count {releases[-1].count}"
+    )
     crossings = crossings_of(releases, centre)
     print(f"[{DETECTOR}] the axis crossings read from the arrival Nodes: {len(crossings)}")
     for crossing in crossings:
