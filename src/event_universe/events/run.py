@@ -109,6 +109,10 @@ def execute_nature_beam_run(
         # The massive rows (2026-09-21): the world key as declared, false by
         # default; `massive-rows-v1` under `hypotheses` when it is true.
         "massive_rows": world.massive_rows,
+        # The clock stamp (2026-09-22, the moving detector): the world key
+        # as declared, written only when true; a record field, no
+        # hypothesis (every other record byte for byte as it was).
+        **({"clock_stamp": True} if world.clock_stamp else {}),
         # The binding that costs content (2026-09-20): `binding-v1` under
         # `hypotheses` when a measured event holds a paid family at load or
         # gave one during the run (no key; `NatureBeamSimulation.hypotheses`).
