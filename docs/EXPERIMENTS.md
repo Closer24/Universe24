@@ -3980,6 +3980,77 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   is re-read on a longer run is the model owner's question, flagged
   ([the worlds' README](../examples/events/weak/README.md#re-read-under-clock-age-v1-2026-09-21)).
 
+- **Re-read in the detector's own clock (2026-09-22; the model owner's
+  word of records 678 and 707 of docs/LOG_2026-09-20.md; the clock
+  audit's finding 6, [AUDIT_2026-09-22.md](designs/clock_audit/AUDIT_2026-09-22.md);
+  no run: the register's replay of the eleven worlds on main's engine,
+  the age word, by `tools/run_series.py` at their declared durations and
+  the two J1 worlds again at the cap 1024 of record 545, read by
+  `tools/weak_readings.py`; every number DETECTOR unless marked).** The
+  pins restated BEFORE the numbers were read, from the closed form: (i)
+  the trigger is read off the neutron's own `become` line as the count
+  its clock read at the trigger, `counted` (its own clock reads its key
+  `at` = 512 at the trigger by the law: the self-creation whose age
+  reaches the key), pinned within the range of counts the generator
+  wrote over the dwell period (`counts` of `expectations.json`, the
+  range the trigger ticks were derived from by at + floor(at x c /
+  2^20)); the trigger tick `triggered` is the record's ordering, printed
+  as [GAMEBOARD, the lattice's clock] and counted in no criterion; (ii)
+  the survival curve at the shell is keyed by the betas' births, the
+  click's tick less the beta's age on its click line (`reading` under
+  `reads: "age"`, the row's own clock: D3's form), so the flight to the
+  shell (ages 17 to 41) is out of the curve and its 10-to-90 width over
+  its median is the triggers' spread alone, pinned below 0.1 as before
+  (nature's ln 9 / ln 2 = 3.17); the curve in the click ticks printed
+  beside it, not counted; (iii) the W's delay is the row's own clock,
+  its lifetime 1 (a row born at a self-creation is at one Link at the
+  age 1, m(1) = 1), the proton's click read as its own record (one click
+  of `w`, one unit, the content, the charge), the click's tick 9 the
+  ordering, not counted (the proton has no `reads: "age"` entry, so the
+  W's age is not on its click line; the reading of the age would need
+  that word, a world-file change, not made). The reading at the declared
+  durations (650, 650, 700, 700, 600 and 16 intervals): `j1_lattice` 56
+  of 64 fired, the counts at the trigger 154476 to 338172 within their
+  pinned ranges where fired, the criterion outside on the 8 unfired (as
+  the tick criterion was); the shell's 20 clicks in the betas' births
+  from 602 to 621, the median 621, the width over the median 0.0306
+  (inside; in the click ticks 0.0265, the line of record 394);
+  `j1_source` 32 of 64 fired, the count criterion outside on the 32
+  unfired; 8 clicks all born at 607, the width 0.0000 (inside; 0.0110 in
+  the ticks); `j3_deuteron` the count 152471 at the trigger inside its
+  range 47762 .. 152471 (inside; the tick 577 inside 535 .. 586), the
+  beta born at 577, clicked at 590; `j3_deuteron_crowd` never, inside;
+  `j3_neutron_free` the count 0 at the trigger (inside), the tick 512
+  the ordering; `w_exchange` one click of `w` of one unit, the content
+  1839 and the charge [0, 1] after, nothing on the border, the momentum
+  exchanged (5 of 5 inside), the tick 9 not counted; 0 record checks
+  failed, 31 readings inside and 4 outside, 1 diagnostic and 8
+  lattice-clock lines printed and not counted (the line of record 394:
+  13 inside, 5 outside). At the cap 1024 (record 545's reading, the
+  digests as there): `j1_lattice` 64 of 64 fired, the counts 154476 to
+  338172 every one within its pinned range (inside), the trigger ticks
+  602 to 671; the shell's 64 clicks in the betas' births from 602 to
+  671, the median 621, the 10th and 90th percentiles 602 and 671, the
+  width over the median 0.1111: OUTSIDE the step pin, where the same
+  clicks by their ticks read 0.0787 inside (the flight's spread had
+  narrowed the curve relative to its later median); `j1_source` 64 of
+  64, the counts 171027 to 367454, one or more outside its pinned range
+  while every tick is inside its range (outside; the count at the
+  trigger under the fan's dwells is not the dwell period's range), the
+  births from 607 to 689, the width over the median 0.1279: outside
+  (0.1147 in the ticks, outside as record 545 read it); 5 readings inside
+  and 3 outside at the cap. The verdict: in the neutrons' own clocks the
+  decay is a step at the key exactly and the curve the shell reads in
+  the betas' births is the triggers' spread over the crowd's counts, 0.11
+  to 0.13 of the median at the cap, still a step against nature's 3.17
+  (NATURE row 8a's FAIL stands in form; its numbers 0.036 and 0.038 are
+  the click ticks' of the presence word, the lattice's clock, kept as
+  history); the verdict words that move are `j1_lattice`'s step criterion
+  at the cap (inside in the ticks, outside in the births) and
+  `j1_source`'s trigger criterion at the cap (inside on the ticks,
+  outside on the counts); the registered J1 verdict (a step, a line, the
+  bound neutron later) stands.
+
 ### L, the amplitude law (2026-09-20)
 
 - **Confronts.** The model owner's decision of 2026-09-20 (Highlights 5.4,

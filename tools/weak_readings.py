@@ -27,6 +27,33 @@ such thing" about the host's readings of the GameBoard):
   below): printed with its expectation, never counted inside or outside,
   naming the detector reading behind it, not yet read.
 
+Since 2026-09-22 (the model owner's records 678 and 707 of
+docs/LOG_2026-09-20.md: the GameBoard holds the clock of every experiment
+read through a detector, a lamp at its declared rate or a body's own
+clock; a detector's time is the clock of the Node it sits on) every time
+reading of this tool is a clock's count on the record and the tick of a
+line is the record's ordering, printed as [GAMEBOARD, the lattice's clock]
+and counted in no criterion:
+
+- the trigger of a transformation is read off the neutron's own `become`
+  line as the count its clock read at the trigger, `counted` (the clock
+  fired at the self-creation whose age reached its key `at`, so its own
+  clock reads `at` exactly), pinned within the range of counts the
+  generator wrote over the dwell period (`counts` of expectations.json);
+  the tick `triggered` at + floor(at x c / 2^20) is the closed form's
+  ordering, printed beside it;
+- the survival curve at the shell is keyed by the betas' births, the
+  click's tick less the beta's age on the click line (`reading` under
+  `reads: "age"`, the row's own clock: D3's form, tools/
+  orbit_lamp_readings.py), so the flight to the shell is out of the
+  curve and its 10-to-90 width over its median is the triggers' spread
+  alone; the curve keyed by the click ticks is printed beside it;
+- the W's delay is its lifetime 1 on the row's own clock (a row born at a
+  self-creation is at one Link at the age 1, m(1) = 1) and the proton's
+  click is read as its own record (one click of `w`, one unit); the
+  click's tick is the ordering (the proton has no `reads: "age"` entry, so
+  the W's age is not on its click line).
+
 The expectations, written before the runs (README.md, docs/EXPERIMENTS.md):
 J2, a window of width 1 takes exactly 1 / 64 of a stride-1 source's
 arrivals and nothing behind it takes anything (a filter, not an
@@ -75,11 +102,17 @@ DETECTOR: Kind = "DETECTOR"
 # A GameBoard number beside its expectation: printed, never counted
 # (records 562 and 564; the audit of record 567, F9).
 DIAGNOSTIC: Kind = "GAMEBOARD, a diagnostic, not counted"
+# The same reading keyed by the tick of a line, the record's ordering, as
+# the register read it until 2026-09-22: printed beside the clock's count,
+# never counted.
+LATTICE: Kind = "GAMEBOARD, the lattice's clock, not counted"
+NOT_COUNTED = (DIAGNOSTIC, LATTICE)
 
 
 def deciding(criteria: list[tuple[str, bool, Kind]]) -> list[tuple[str, bool, Kind]]:
-    """The criteria that count inside or outside: every kind but DIAGNOSTIC."""
-    return [c for c in criteria if c[2] != DIAGNOSTIC]
+    """The criteria that count inside or outside: every kind but the
+    diagnostics and the lattice's clock."""
+    return [c for c in criteria if c[2] not in NOT_COUNTED]
 
 
 ORDER = (
@@ -151,10 +184,13 @@ class Reading:
     things: list[Thing] = field(default_factory=list)
     # The shell's beta clicks per tick, their contents and their ages (the
     # click record's `reading` under `reads: "age"`, the age moment of one
-    # unit: its age).
+    # unit: its age), and the clicks per the betas' birth (the tick less
+    # the age: the row's own clock read back from its click line, the
+    # trigger's interval; the decay curve since 2026-09-22).
     shell_clicks: dict[int, int] = field(default_factory=dict)
     shell_contents: dict[int, int] = field(default_factory=dict)
     shell_ages: list[int] = field(default_factory=list)
+    shell_births: dict[int, int] = field(default_factory=dict)
     # The border `lifetime`'s clicks per family (the record's detector).
     border_clicks: dict[str, int] = field(default_factory=dict)
 
@@ -257,10 +293,15 @@ def read_run(folder: Path) -> Reading:
                     thing.click_ticks.setdefault(str(event["family"]), []).append(int(event["tick"]))
                 if event.get("detector") in shell and event["family"] == "beta":
                     tick = int(event["tick"])
-                    reading.shell_clicks[tick] = reading.shell_clicks.get(tick, 0) + int(event["amount"])
+                    amount = int(event["amount"])
+                    reading.shell_clicks[tick] = reading.shell_clicks.get(tick, 0) + amount
                     content = int(event["content"])
                     reading.shell_contents[content] = reading.shell_contents.get(content, 0) + 1
                     reading.shell_ages.append(int(event["reading"]))
+                    # The age moment over the group's amount is the age of
+                    # one unit (every beta a row of one unit).
+                    born = tick - int(event["reading"]) // amount
+                    reading.shell_births[born] = reading.shell_births.get(born, 0) + amount
     return reading
 
 
@@ -398,7 +439,9 @@ def tick_range(pinned: object) -> tuple[int, int]:
 
 def become_expectations(reading: Reading, expected: dict[str, object]) -> list[Criterion]:
     """J1 and J3 against the expectations the generator pinned from the
-    engine's own presence reading: the trigger ticks, the shell's curve, the
+    engine's own presence reading: the counts at the trigger (the
+    neutrons' own `become` lines; the trigger ticks beside them as the
+    lattice's clock), the shell's curve in the betas' births, the
     spectrum, the pair's binding."""
     found: list[Criterion] = []
     neutrons = reading.of_family("n")
@@ -414,25 +457,53 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
         found.append(("no beta click at the shell", not reading.shell_clicks, DETECTOR))
         return found
     ticks = expected.get("ticks", {})
+    counts = expected.get("counts", {})
     slack = int(str(expected.get("slack", 0)))
-    assert isinstance(ticks, dict)
+    assert isinstance(ticks, dict) and isinstance(counts, dict)
     # A pinned tick is a range [lo, hi] (since 2026-09-21 the trigger ticks
     # of the range of the count over a dwell period) or one integer (lo =
     # hi, the pin of one tick's count as it was).
     ranges = {number: tick_range(pinned) for number, pinned in ticks.items()}
+    numbers = [thing.number for thing in neutrons]
     inside = all(
         number in fired
         and ranges[str(number)][0] - slack
         <= int(str(fired[number]["triggered"]))
         <= ranges[str(number)][1]
-        for number in (thing.number for thing in neutrons)
+        for number in numbers
     )
+    # The pinned reading (2026-09-22): the count the neutron's own clock
+    # read at the trigger, `counted` on its `become` line, within the
+    # range of counts over the dwell period (the pin the trigger ticks were
+    # derived from, at + floor(at x c / 2^20) at both ends). The neutron's
+    # own clock reads its key `at` at the trigger by the law.
+    count_ranges = {number: tick_range(pinned) for number, pinned in counts.items()}
+    if count_ranges:
+        counted = all(
+            number in fired
+            and str(number) in count_ranges
+            and count_ranges[str(number)][0]
+            <= int(str(fired[number]["counted"]))
+            <= count_ranges[str(number)][1]
+            for number in numbers
+        )
+        found.append(
+            (
+                "every neutron fires at its key on its own clock with the count read at the "
+                "trigger (`counted` on its `become` line) within its pinned range of counts "
+                f"({min(lo for lo, _ in count_ranges.values())} .. "
+                f"{max(hi for _, hi in count_ranges.values())} pinned)",
+                counted,
+                DETECTOR,
+            )
+        )
     found.append(
         (
-            f"every neutron fires within its pinned range or up to {slack} before it "
-            f"({min(lo for lo, _ in ranges.values())} .. {max(hi for _, hi in ranges.values())} pinned)",
+            f"every neutron's trigger tick within its pinned range or up to {slack} before it "
+            f"({min(lo for lo, _ in ranges.values())} .. {max(hi for _, hi in ranges.values())} pinned; "
+            "the ordering at + floor(at x c / 2^20))",
             inside,
-            DETECTOR,
+            LATTICE if count_ranges else DETECTOR,
         )
     )
     found.append(
@@ -450,13 +521,26 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
                 DETECTOR,
             )
         )
+        # The pinned reading (2026-09-22): the curve keyed by the betas'
+        # births (the click's tick less the beta's age, the row's own
+        # clock), the flight to the shell out of it.
+        median, low, high, ratio = curve_shape(reading.shell_births)
+        found.append(
+            (
+                "the survival curve in the betas' births (the click's tick less the beta's age) is "
+                "a step: its 10-to-90 width over its median below 0.1 "
+                f"(nature's memoryless decay {NATURE_WIDTH_OVER_MEDIAN:.2f})",
+                bool(reading.shell_births) and ratio < 0.1,
+                DETECTOR,
+            )
+        )
         median, low, high, ratio = curve_shape(reading.shell_clicks)
         found.append(
             (
-                f"the survival curve is a step: its 10-to-90 width over its median below 0.1 "
-                f"(nature's memoryless decay {NATURE_WIDTH_OVER_MEDIAN:.2f})",
+                "the survival curve in the shell's click ticks (the flight inside it) is a step: "
+                "its 10-to-90 width over its median below 0.1",
                 bool(reading.shell_clicks) and ratio < 0.1,
-                DETECTOR,
+                LATTICE,
             )
         )
     if reading.name == "j3_deuteron":
@@ -475,9 +559,17 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
         keys = sorted({thing.at for thing in neutrons if thing.at is not None})
         found.append(
             (
-                f"the free neutron fires at its key {keys} exactly (its clock counts nothing)",
-                bool(keys) and [b["triggered"] for b in fired.values()] == keys,
+                f"the free neutron fires at its key {keys} on its own clock with the count 0 read "
+                "at the trigger (its clock counts nothing)",
+                bool(keys) and [int(str(b["counted"])) for b in fired.values()] == [0] * len(keys),
                 DETECTOR,
+            )
+        )
+        found.append(
+            (
+                f"the free neutron's trigger tick is its key {keys} exactly (the ordering at + 0)",
+                bool(keys) and [b["triggered"] for b in fired.values()] == keys,
+                LATTICE,
             )
         )
         found.append(("the beta reaches the shell", sum(reading.shell_clicks.values()) == 1, DETECTOR))
@@ -507,9 +599,17 @@ def w_expectations(reading: Reading, expected: dict[str, object]) -> list[Criter
             DETECTOR,
         ),
         (
-            f"the proton takes the W at tick {click_tick} (one Link, the lifetime 1, one interval)",
-            proton.click_ticks.get("w") == [click_tick] and proton.clicks.get("w") == 1,
+            "the proton takes the W: one click of `w` of one unit on its own record (one Link at "
+            "the row's age 1, m(1) = 1, the lifetime 1)",
+            len(proton.click_ticks.get("w", [])) == 1 and proton.clicks.get("w") == 1,
             DETECTOR,
+        ),
+        (
+            f"the proton's click of the W at tick {click_tick} (the ordering: the trigger's tick "
+            "plus the row's age 1; the W's age is not on the click line, the proton having no "
+            '`reads: "age"` entry)',
+            proton.click_ticks.get("w") == [click_tick],
+            LATTICE,
         ),
         (
             f"the proton's charge {list(pair)} and content {content} after: a neutron's",
@@ -625,27 +725,36 @@ def print_world(reading: Reading, pinned: dict[str, object]) -> list[Criterion]:
                 f"[{DETECTOR}] {thing.contacts} hand-overs taken (the event's own `contact` records)"
             )
         total = sum(reading.shell_clicks.values())
-        median, low, high, ratio = curve_shape(reading.shell_clicks)
+        median, low, high, ratio = curve_shape(reading.shell_births)
         print(
             f"[{DETECTOR}]   the shell's beta clicks: {total} in all"
             + (
-                f", from tick {min(reading.shell_clicks)} to {max(reading.shell_clicks)}; the median tick {median}, "
-                f"the 10th and 90th percentiles {low} and {high}, the width over the median {ratio:.4f} "
-                f"(nature's memoryless decay {NATURE_WIDTH_OVER_MEDIAN:.2f})"
+                f"; in the betas' births (the click's tick less the beta's age, the row's own clock: "
+                f"the triggers' intervals) from {min(reading.shell_births)} to {max(reading.shell_births)}, "
+                f"the median {median}, the 10th and 90th percentiles {low} and {high}, the width over "
+                f"the median {ratio:.4f} (nature's memoryless decay {NATURE_WIDTH_OVER_MEDIAN:.2f})"
                 if total
                 else ""
             )
         )
         if total:
+            median, low, high, ratio = curve_shape(reading.shell_clicks)
+            print(
+                f"[{LATTICE}]   the same clicks by their ticks (the flight to the shell inside): from "
+                f"tick {min(reading.shell_clicks)} to {max(reading.shell_clicks)}; the median tick {median}, "
+                f"the 10th and 90th percentiles {low} and {high}, the width over the median {ratio:.4f}"
+            )
             ages = sorted(reading.shell_ages)
             print(
                 f"[{DETECTOR}]   the clicks' contents {dict(sorted(reading.shell_contents.items()))} (the spectrum), "
-                f"their ages {ages[0]} .. {ages[-1]} (the flight to the shell)"
+                f"their ages {ages[0]} .. {ages[-1]} (the flight to the shell, the rows' own clocks)"
             )
     criteria = expectations(reading, pinned)
     for label, ok, kind in criteria:
         if kind == DIAGNOSTIC:
             print(f"[{kind}]   {label}: {'agrees' if ok else 'differs'}")
+        elif kind == LATTICE:
+            print(f"[{kind}]   {label}: {'inside' if ok else 'outside'}, not counted")
         else:
             print(f"[{kind}]   {label}: {'inside' if ok else 'outside'}")
     print()
@@ -675,8 +784,10 @@ def main(argv: list[str] | None = None) -> int:
     print(
         f"every line below is labelled [{GAMEBOARD}] (the host's view of the GameBoard: the expectation "
         f"from the engine's tables, the stride, the steps; exists for us, not in reality; a criterion "
-        f"of this kind is a diagnostic, printed and not counted) or [{DETECTOR}] (a measured event's "
-        "or a detector set's own records, its `become` line included: the only kind reality has)"
+        f"of this kind is a diagnostic, printed and not counted), [{LATTICE}] (a time keyed by the "
+        "tick of a line, the record's ordering, as the register read it until 2026-09-22: printed, "
+        f"not counted) or [{DETECTOR}] (a measured event's or a detector set's own records, its "
+        "`become` line's count included: the only kind reality has)"
     )
     print()
     criteria: list[Criterion] = []
@@ -684,9 +795,11 @@ def main(argv: list[str] | None = None) -> int:
         criteria += print_world(r, pinned)
     counted = deciding(criteria)
     inside = sum(1 for _, ok, _ in counted if ok)
+    lattice = sum(1 for _, _, kind in criteria if kind == LATTICE)
     print(
         f"{failed} record check(s) failed; {inside} reading(s) inside, {len(counted) - inside} outside; "
-        f"{len(criteria) - len(counted)} GameBoard diagnostic(s) printed and not counted"
+        f"{len(criteria) - len(counted) - lattice} GameBoard diagnostic(s) and {lattice} lattice-clock "
+        "line(s) printed and not counted"
     )
     return 1 if failed else 0
 
