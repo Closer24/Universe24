@@ -2492,6 +2492,12 @@ CORRECTIONS = [
         "A detector's clock is what it emits and receives back, on its own record; no Node holds a detector's time; an open face, without a body, has no clock, its tick the record's ordering (a GameBoard diagnostic); a velocity is Nodes apart over counts apart between neighbouring detectors, and the read-out of Definition~\\ref{def:click} is the click.",
         "A detector's clock is its own record's count of what it emits and receives back, no Node holding a time and an open face without a body having none; a velocity is Nodes apart over counts apart between neighbouring detectors; the read-out is the click (Definition~\\ref{def:click}).",
     ),
+    # The owner's word (2026-09-22): the one chain from the board to Einstein's step through Lorentz, both the step above.
+    (
+        "the owner's word: the one chain from the board to Einstein's step through Lorentz, both one step above (Einstein Outside section 3 (a))",
+        "The same road serves Newton (below)",
+        "In one chain, with nothing of Einstein's put in: the Inside step, Eq.~\\eqref{eq:map} on the record with $W$ its invariant; the conversion, an emitter and a click at one Node per interval (A1) and the amplitude's split (A2); the symmetry of that conversion, the Lorentz group up to scale (the click theorem); and its image, the Outside step, a detector's place apart and count apart, whose most general form above the board is Einstein's step as physics writes it, $d\\mathbf p/dt = \\mathbf F$ with $\\mathbf p = \\gamma m\\mathbf v$, $E^2 = E_0^2 + c^2p^2$, $d\\tau/dt = \\sqrt{1 - v^2}$, and the geodesic's first terms (\\cite{einsteinoutside}, section 3). Lorentz is the symmetry of that one step and Einstein's equations its form, both one step above the board and neither put in: the step's $r$-free lines (the round trip, the composition, the aberration) are Einstein's exactly from (A1), (A3) and the conversion alone, and its scaled lines are Einstein's if and only if $r^2 = 1 - v^2$, which (A2) gives to order $m^2v^2$ and the law as built, at $r = 1$, does not. The same road serves Newton (below)",
+    ),
 ]
 
 

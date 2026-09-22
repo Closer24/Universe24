@@ -4263,3 +4263,21 @@ the seven confirmations and the GHZ clause as they are. The count:
 37 pages (the owner's words on his points 2 and 4 had added the
 click's two parts and the algebraic family at f7ac7856, one page's
 last lines, before this); stopped here as ordered.
+
+## Applied (2026-09-22, the owner's word to the writer): the one chain from the board to Einstein's step through Lorentz
+
+The owner (in English, by voice): make sure the step that connects the
+GameBoard to Einstein's equation is there, through Lorentz, both shown
+as the step above, Einstein being the step on the outside of the board.
+Verified against Einstein Outside section 3 (a) on main (e8432e6c) and
+written into "The step beneath and the step above" as one chain: the
+Inside step (Eq. 1 with W its invariant), the conversion (A1, A2), the
+symmetry of the conversion (the Lorentz group up to scale, the click
+theorem), its image the Outside step, whose most general form is
+Einstein's step as physics writes it (dp/dt = F with p = gamma m v,
+E^2 = E_0^2 + c^2 p^2, d tau/dt = sqrt(1 - v^2), the geodesic's first
+terms); Lorentz the symmetry of that one step and Einstein's equations
+its form, both one step above and neither put in; the r-free lines
+Einstein's exactly from A1, A3 and the conversion, the scaled lines
+Einstein's iff r^2 = 1 - v^2, which A2 gives to order m^2 v^2 and the
+law as built (r = 1) does not. The count: 37 pages.
