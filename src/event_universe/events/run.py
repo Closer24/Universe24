@@ -145,6 +145,9 @@ def execute_nature_beam_run(
         # flow-link-v1 (2026-09-22): the world key `flow_link` as declared,
         # written only under the key (every other record byte for byte).
         **({} if not world.flow_link else {"flow_link": True}),
+        # atom-level-v1 (2026-09-22): the world key `atom_level` as declared,
+        # written only under the key (every other record byte for byte).
+        **({} if not world.atom_level else {"atom_level": True}),
         # The world's columns in order, (name, sign): gravity, charge, the
         # declared names; every family's `columns` below is aligned with it.
         "columns": [{"name": name, "sign": sign} for name, sign in world.columns],

@@ -10,7 +10,9 @@ expected integers of docs/TEST_EXPECTATIONS.md ("The centred step"), written
 down before the first run:
 
 (a) the key absent computes nothing: every registered world outside
-    `atoms/hydrogen_r12_centred.json` parses with `centred_step` false and
+    `atoms/hydrogen_r12_centred.json` and the three level worlds
+    `atoms/hydrogen_r*_level.json` (atom-level-v1, which declare the
+    centred step too) parses with `centred_step` false and
     the identity absent from its hypotheses; the gate world
     `detector/grouped_12_nodes` replays to the digests of `gate_set.json`
     byte for byte, its `run.json` without a `centred_step` key; `by_drive`
@@ -142,6 +144,7 @@ def test_the_key_absent_computes_nothing_and_the_gate_world_replays_byte_identic
             not isinstance(document, dict)
             or "format" in document
             or path.name == "hydrogen_r12_centred.json"
+            or path.name.endswith("_level.json")
         ):
             continue
         world = load_world(path.read_bytes(), base_dir=path.parent, root=EXAMPLES).world

@@ -649,7 +649,10 @@ def test_the_turn_is_the_plane_wave_to_one_remainder():
 
 def test_two_rows_of_different_remainders_never_merge():
     """(e): `acc_turn` is an identity field of the merge."""
-    assert IDENTITY_FIELDS[-1] == "acc_turn"
+    # `acc_turn` is followed by one identity field, `turn`, the row's own
+    # phase rate of atom-level-v1 (2026-09-22), constant 0 without the key
+    # `atom_level`; the last field of the massive rows' own is `acc_turn`.
+    assert IDENTITY_FIELDS[-2:] == ("acc_turn", "turn")
     store = NatureBeamStore((4, 1, 1))
     one = np.array([1, 1])
     store.append(

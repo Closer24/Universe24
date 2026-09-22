@@ -1,0 +1,45 @@
+[COMPUTATION] section 1: the ladder from the rung j = 4 (the declared integers)
+  m_i = Q S M = 5301780480; p_1 = 4 p_4 = 1175132768; E_1 = p_1^2 / (2 m_i) = 1348571310964201/10355040 = 130233327.05
+  N E_1 / h = 1.5055 steps (the whole spectrum at the dictionary)
+  j = 1: Delta A_j = j N h = 354319522816; p_j = 1175132768 (1175132768.0); a_j = 3/4 (0.7500) Links; T_j = 731/32 (22.84); E_j = -1348571310964201/10355040 (-130233327.05); N E_j / h = 1.5055 steps
+  j = 2: Delta A_j = j N h = 708639045632; p_j = 587566384 (587566384.0); a_j = 3 (3.0000) Links; T_j = 731/4 (182.75); E_j = -1348571310964201/41420160 (-32558331.76); N E_j / h = 0.3764 steps
+  j = 3: Delta A_j = j N h = 1062958568448; p_j = 1175132768/3 (391710922.7); a_j = 27/4 (6.7500) Links; T_j = 19737/32 (616.78); E_j = -1348571310964201/93195360 (-14470369.67); N E_j / h = 0.1673 steps
+  j = 4: Delta A_j = j N h = 1417278091264; p_j = 293783192 (293783192.0); a_j = 12 (12.0000) Links; T_j = 1462 (1462.00); E_j = -1348571310964201/165680640 (-8139582.94); N E_j / h = 0.0941 steps
+  j = 5: Delta A_j = j N h = 1771597614080; p_j = 1175132768/5 (235026553.6); a_j = 75/4 (18.7500) Links; T_j = 91375/32 (2855.47); E_j = -1348571310964201/258876000 (-5209333.08); N E_j / h = 0.0602 steps
+[COMPUTATION] section 3 (a), (b): the four pairs under both forms
+  (3, 2): action form g = j - i = 1, f = 1/64; momentum form Delta E = 1348571310964201/74556288 = 18087962.09; s at [1, 1] = 0 (0.2091); at [64, 1] = 13 (13.38); at [4096, 1] = 856
+  (4, 2): action form g = j - i = 2, f = 1/32; momentum form Delta E = 1348571310964201/55226880 = 24418748.82; s at [1, 1] = 0 (0.2823); at [64, 1] = 18 (18.07); at [4096, 1] = 1156
+  (5, 2): action form g = j - i = 3, f = 3/64; momentum form Delta E = 9439999176749407/345168000 = 27348998.68; s at [1, 1] = 0 (0.3162); at [64, 1] = 20 (20.23); at [4096, 1] = 1294
+  (2, 1): action form g = j - i = 1, f = 1/64; momentum form Delta E = 1348571310964201/13806720 = 97674995.29; s at [1, 1] = 1 (1.1291); at [64, 1] = 72 (72.27); at [4096, 1] = 4624
+  the action form: nu(4 to 2) / nu(3 to 2) = 2, nu(5 to 2) / nu(3 to 2) = 3, nu(2 to 1) / nu(3 to 2) = 1
+  the momentum form, exact in the limit: 27/20 = 1.35, 189/125 = 1.512, 27/5 = 5.4
+  on the comparison side only: Balmer's 27 / 20 = 1.35 (NATURE row 6)
+[COMPUTATION] section 3 (d): the grain
+  at [64, 1]: s(3 to 2) = 13, s(4 to 2) = 18, the ratio 18/13 = 1.3846, the band 1 / 13
+  at [4096, 1]: s(3 to 2) = 856, s(4 to 2) = 1156, the ratio 289/214 = 1.3505, the band 1 / 856
+  the pair n_l / d_l for s(3 to 2) >= 1: 4.78
+  the pair n_l / d_l for s(3 to 2) >= 10: 47.82
+  the pair n_l / d_l for s(3 to 2) >= 100: 478.24
+[COMPUTATION] section 2 (c): the walls
+  W_l at [1, 1] = 917248207885148160 (9.172e+17); below 2^60: True
+  W_l at [64, 1] = 14332003248205440 (1.433e+16); below 2^60: True
+  3 x (2^30)^2 = 3458764513820540928 < 2^62 = 4611686018427387904: True
+[COMPUTATION from GAMEBOARD] section 5: the gives on the centred world's returns at [64, 1]
+  return 1 at 1341: rate 7.164e+14 (0.050 W_l at [64, 1], 0.0008 at [1, 1]), give 0, remainder 0.05 W_l
+  return 2 at 2772: rate 3.056e+16 (2.132 W_l at [64, 1], 0.0333 at [1, 1]), give 2, remainder 0.18 W_l
+  return 3 at 4272: rate 3.655e+16 (2.551 W_l at [64, 1], 0.0399 at [1, 1]), give 2, remainder 0.73 W_l
+  return 4 at 5422: rate 4.349e+15 (0.303 W_l at [64, 1], 0.0047 at [1, 1]), give 1, remainder 0.04 W_l
+  return 5 at 6462: rate 3.284e+16 (2.291 W_l at [64, 1], 0.0358 at [1, 1]), give 2, remainder 0.33 W_l
+  the sum of the gives 7; the sum of the rates over W_l 7.33
+[GAMEBOARD, a diagnostic] section 5 (i): the level at each return from the momentum, p . p / W_l at [64, 1]
+  6.07, 8.20, 10.75, 11.06, 13.35
+[COMPUTATION from DETECTOR] section 5 (i): the level from the virial form, N n_l j / (2 T)
+  5.90, 5.59, 6.68, 6.89
+[COMPUTATION from DETECTOR] section 5 (ii): the ladder's gives from the read j alone at [64, 1]
+  0.09, 1.10, 1.01
+[COMPUTATION from DETECTOR] section 5, L3: T_k / T_(k+1) against (j_k / j_(k+1))^3
+  returns 1 to 2: T ratio 0.954, (j / i)^3 1.023, off by 6.7 percent
+  returns 2 to 3: T ratio 1.304, (j / i)^3 1.301, off by 0.2 percent
+  returns 3 to 4: T ratio 1.106, (j / i)^3 1.230, off by 10.1 percent
+[COMPUTATION] section 6 (2): the rungs at whole Links by j = 4 sqrt(r / 12) (the shell mean)
+  r = 2: 1.63, r = 3: 2.00, r = 4: 2.31, r = 6: 2.83, r = 7: 3.06, r = 8: 3.27, r = 12: 4.00, r = 15: 4.47, r = 16: 4.62, r = 19: 5.03
