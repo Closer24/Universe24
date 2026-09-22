@@ -20,7 +20,13 @@ its expectation is reported with its numbers, never moved. Every number is
 one of two kinds ([the register](../../../docs/EXPERIMENTS.md), "Two kinds
 of readings"): a DETECTOR reading (the faces' records, the electron's own
 `read` records: the only kind reality has) or a GAMEBOARD reading (the
-orbit, the design: the host's view of the mechanism).
+orbit, the design: the host's view of the mechanism). Since 2026-09-22 the
+law's drive of a body is the line drive (the model owner's word, record
+972; [the design](../../../docs/designs/drive_b/DEFAULT.md)): the shipped
+worlds and the pins of `expectations.json` are derived under it (below),
+and the runs of 2026-09-20 with their re-reads, made under the per-axis
+drive of history (the world key `per_axis_drive` since the flip), stand
+below as registered, each naming its drive.
 
 ## The base
 
@@ -62,14 +68,22 @@ The flux the fan's lines deliver to the body at radius r on the ring of
 the plane z = c is E_body(r) entries per shell, the sum over its three
 Nodes of the entries per Node counted from the engine's own flight lines
 (`nature_beam.flight_table`, the Bresenham lines the walk takes), averaged
-around the ring. The push per interval is F = 16 M_e Q E_body(r) / 10; with
-the width S the speed is v = p / (Q S M_e + p), and a circular orbit needs
-p v / r = F, so with n = p / M_e and A = 16 Q E_body(r) r / 10
+around the ring. The push per interval is F = 16 M_e Q E_body(r) / 10.
+Under the line drive, the law's drive of a body since 2026-09-22 (BEAM_LAW
+note 17 as amended, note 49), the electron's accumulator gains p Q per
+interval against the wall Q^2 S M_e + p T_D (T_D = 110), so with the width
+S its pace on a heading is v = n / (Q S + n T_D / Q) with n = p / M_e, and
+a circular orbit needs p v / r = F, so with A = 16 Q E_body(r) r / 10 and
+T_D / Q = 1.71875
 
-    n^2 / (Q S + n) = A,  n = (A + sqrt(A^2 + 4 Q S A)) / 2,  T = 2 pi r / v.
+    n^2 / (Q S + 1.71875 n) = A,
+    n = (1.71875 A + sqrt(1.71875^2 A^2 + 4 Q S A)) / 2,  T = 2 pi r / v.
 
-S = 45120 makes v = 0.06 on the reference orbit r = 8 (the physicist's
-speed of series F). The turn by momentum turns the phase by |p_axis| N / h
+S = 45120 is the registered width, chosen on 2026-09-20 so that v = 0.06
+on the reference orbit r = 8 under the per-axis drive of history (the
+physicist's speed of series F; the pace n / (Q S + n), the circle n^2 /
+(Q S + n) = A: `expectations(AXIS_DRIVE)` reproduces those pins, the table
+of history below), and kept under the law. The turn by momentum turns the phase by |p_axis| N / h
 per Link stepped on an axis, so over one orbit of a circle of radius r
 stepped on the GameBoard the phase turns by (N / h) x sum over the Links of
 |p_axis| = (N / h) x 4 p r (the Manhattan weighting of the path, 4 r
@@ -80,10 +94,28 @@ against the circle's 2 pi r), and closes on itself when
 de Broglie's condition in the GameBoard's metric. With p proportional to
 1 / sqrt(r) under a 1 / r^2 push the closing radii are proportional to
 j^2, Bohr's ladder. The action is fixed so that j = 2 exactly on the
-reference orbit: h = 16 p(8) = 5414584320. The fan's ring flux falls as
-about r^-1.83 between r = 8 and 18 and is not smooth at r >= 13 (the
+reference orbit: h = 16 p(8) = 5536242544 under the line drive (the atoms
+series' h_B of 2026-09-21, [PINS.md](../../../docs/designs/atoms/PINS.md);
+5414584320 under the per-axis drive of history). The fan's ring flux falls
+as about r^-1.83 between r = 8 and 18 and is not smooth at r >= 13 (the
 lines of a finite fan), so j = 3 falls between the GameBoard radii 15 and
-16; both are run.
+16; both are run. The shipped pins (`expectations.json`, written by the
+generator before any run; the electron's first Link a GAMEBOARD number,
+ceil(W / (p Q)) on the wall W = Q^2 S M_e + p T_D, 10 to 22 intervals):
+
+| r | E_body (entries per shell) | p (label units) | v | T (within 15 percent) | lumps per orbit (degrees each) | j = 4 p r / h | kind | GameBoard | intervals |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2 | 183.33 | 666688231 | 0.1034 | 122 (104 .. 140) | 12 (29.6) | 0.963 | closing (j = 1 within 0.1) | 33^3 | 3000 |
+| 4 | 56.25 | 511320667 | 0.0827 | 304 (258 .. 350) | 30 (11.9) | 1.478 | between | 37^3 | 3000 |
+| 6 | 23.60 | 399263266 | 0.0667 | 565 (480 .. 650) | 57 (6.4) | 1.731 | between | 41^3 | 3000 |
+| 8 | 13.50 | 346015159 | 0.0587 | 857 (728 .. 985) | 86 (4.2) | 2.000 | closing (by construction) | 45^3 | 4300 |
+| 12 | 6.59 | 293783192 | 0.0506 | 1490 (1267 .. 1714) | 149 (2.4) | 2.547 | between | 53^3 | 7500 |
+| 15 | 4.29 | 263735809 | 0.0458 | 2057 (1748 .. 2365) | 206 (1.8) | 2.858 | between (j = 3 within 0.15) | 59^3 | 10300 |
+| 16 | 4.50 | 279779624 | 0.0484 | 2078 (1766 .. 2390) | 208 (1.7) | 3.234 | between | 61^3 | 10400 |
+
+The pins of history, under the per-axis drive (the registered runs of
+2026-09-20 and their re-reads below were read against these; the pace
+n / (Q S + n), h = 5414584320; `expectations(AXIS_DRIVE)`):
 
 | r | E_body (entries per shell) | p (label units) | v | T | lumps per orbit (degrees each) | j = 4 p r / h | kind | GameBoard | intervals |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -133,9 +165,12 @@ PYTHONPATH=src python tools/bohr_readings.py artifacts/bohr
 Each run takes 20 to 90 s (the proton's 262 rays per interval); the
 records are a few hundred megabytes per world.
 
-## What was measured (2026-09-20)
+## What was measured (2026-09-20, under the per-axis drive of history)
 
-(superseded for the pushed worlds by the re-read below, 2026-09-20)
+(superseded for the pushed worlds by the re-read below, 2026-09-20; every
+run and re-read of 2026-09-20 was read under the per-axis drive, the world
+key `per_axis_drive` since the flip of 2026-09-22, against the pins of
+history above)
 No orbit closed well enough for the coherence reading and the finding is
 registered as such: every electron was bound for one to three turns and
 then thrown out at a close pass; at r = 8 (the reference, j = 2) the two

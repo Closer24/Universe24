@@ -32,7 +32,21 @@ written down first:
     at x = 8 leaving through the face at tick 16, their ninth Link, m(15)
     = 9), the electron's reads equal to its `read` lines
     (none), its steps' phases those of the step lines, the orbit's angle
-    below one turn.
+    below one turn;
+(d) the generator's pins under the two drives (docs/designs/drive_b/DEFAULT.md
+    section (c); the line drive the law's since 2026-09-22): the shipped
+    `expectations.json` is `expectations()` under the line drive, h = 16 p(8)
+    = 5536242544 with p(8) = 346015159 and p(12) = 293783192 (the atoms
+    series' integers, derived for form B's circle on 2026-09-21), j = 2 at
+    r = 8, r = 2 closing (0.963) and r = 4 between (1.478); the seven
+    world files carry the register's momentum, action and intervals; under
+    the per-axis drive of history `expectations(AXIS_DRIVE)` gives the
+    registered integers of 2026-09-20, h = 5414584320 with p(8) = 338411520
+    and p(12) = 288249497, and `derive(AXIS_DRIVE)` the width 45120 from
+    v = 0.06; the first Link of the electron at r = 8 is the 18th interval
+    under the line drive by `by_line` on the world's wall (Q^2 S M_e + p
+    T_D = 377 442 ... over p Q per interval), the 9th under `centred_step`,
+    both as `first_link` gives.
 """
 
 from __future__ import annotations
@@ -44,6 +58,7 @@ from pathlib import Path
 
 import numpy as np
 
+from event_universe.core.integer import by_line
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import parse_nature_beam_world
 from event_universe.events.nature_beam import coherent_pointer
@@ -54,6 +69,11 @@ SPEC = importlib.util.spec_from_file_location("bohr_readings_tool", ROOT / "tool
 TOOL = importlib.util.module_from_spec(SPEC)
 sys.modules["bohr_readings_tool"] = TOOL
 SPEC.loader.exec_module(TOOL)
+WORLDS = ROOT / "examples" / "events" / "bohr"
+GENERATOR_SPEC = importlib.util.spec_from_file_location("bohr_make_worlds", WORLDS / "make_worlds.py")
+GENERATOR = importlib.util.module_from_spec(GENERATOR_SPEC)
+sys.modules["bohr_make_worlds"] = GENERATOR
+GENERATOR_SPEC.loader.exec_module(GENERATOR)
 
 IN_PLANE = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0]]
 
@@ -143,3 +163,45 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
         if e["event"] == "click" and e["family"] == "e" and e["detector"] == "face:-x"
     ]
     assert min(minus) == 16
+
+
+def test_the_generators_pins_under_the_two_drives():
+    """(d)."""
+    pinned = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
+    expected = json.loads(json.dumps(GENERATOR.expectations()))
+    expected.pop("replicated", None)
+    pinned.pop("replicated", None)
+    assert pinned == expected
+    assert pinned["format"] == GENERATOR.EXPECTATIONS_FORMAT
+    assert pinned["drive"] == GENERATOR.LINE_DRIVE and pinned["centred"] is False
+    assert pinned["width"] == 45120 and pinned["action"] == 16 * 346015159 == 5536242544
+    worlds = pinned["worlds"]
+    assert worlds["r8"]["momentum"] == 346015159 and worlds["r12"]["momentum"] == 293783192
+    assert worlds["r8"]["j"] == 2.0 and worlds["r8"]["kind"] == "closing"
+    assert abs(worlds["r2"]["j"] - 0.963) < 5e-4 and worlds["r2"]["kind"] == "closing"
+    assert abs(worlds["r4"]["j"] - 1.478) < 5e-4 and worlds["r4"]["kind"] == "between"
+    assert abs(worlds["r8"]["pace"] - 346015159 / (64 * 45120 * 1836 + 346015159 * 110 / 64)) < 1e-12
+    for name, entry in worlds.items():
+        document = json.loads((WORLDS / f"{name}.json").read_text(encoding="utf-8"))
+        assert document["measured"][1]["momentum"] == [0, entry["momentum"], 0], name
+        assert document["action"] == pinned["action"] and document["ticks"] == entry["ticks"], name
+        assert document["width"] == pinned["width"] and "per_axis_drive" not in document, name
+    history = GENERATOR.expectations(GENERATOR.AXIS_DRIVE)
+    assert history["drive"] == GENERATOR.AXIS_DRIVE and history["action"] == 5414584320
+    assert history["worlds"]["r8"]["momentum"] == 338411520
+    assert history["worlds"]["r12"]["momentum"] == 288249497
+    assert abs(history["worlds"]["r8"]["pace"] - 0.06) < 5e-5
+    assert GENERATOR.derive(GENERATOR.AXIS_DRIVE)[1] == 45120
+    # The first Link by the engine's own line rule on the world's wall.
+    p = 346015159
+    wall = 64 * 64 * 45120 * 1836 + p * 110
+    for centred, expected_tick in ((False, 18), (True, 9)):
+        drives = [0, 0, 0]
+        fired = None
+        for tick in range(1, 40):
+            axis, _sign, drives = by_line(drives, [0, p * 64, 0], wall, centred)
+            if axis is not None:
+                fired = tick
+                break
+        assert fired == expected_tick == GENERATOR.first_link(p, 45120, GENERATOR.LINE_DRIVE, centred)
+    assert worlds["r8"]["first_link"] == 18

@@ -1,0 +1,176 @@
+{
+ "format": "bohr-expectations-v1",
+ "derivations": {
+  "fan": "declared: the physicist's shell of 2616 primitive directions with 1016 <= |D|^2 <= 1032, one ray per direction every 10 intervals",
+  "flux": "E_body(r): the entries per shell the electron's three Nodes receive on the ring of the plane z = c, counted from the engine's own flight lines and averaged around the ring (README.md, the derivation)",
+  "drive": "declared: the line drive, the law's drive of a body since 2026-09-22 (BEAM_LAW note 17 as amended, note 49; the model owner's record 972): the pace n / (Q S + n T_D / Q) on a heading, n = p / M_e, T_D / Q = 110 / 64; the circle n^2 / (Q S + 1.71875 n) = A",
+  "width": "declared: the registered width, v = 0.06 at r = 8 under the per-axis drive of history (width_for_speed), kept under the law (docs/designs/drive_b/DEFAULT.md section (b))",
+  "orbit": "the circular orbit p v / r = F with F = (1 + RATIO) M_e Q E_body(r) / SHELL and A = (1 + RATIO) Q E_body(r) r / SHELL: the real root n under the drive, p = round(M_e n), the pace at the whole p, T = 2 pi r / v",
+  "period": "the analytic circle's T = 2 pi r / v at the pace; the bracket 15 percent each side (the criteria, README.md); T is a step record, GAMEBOARD, a diagnostic and not a pin (the clock audit of 2026-09-22)",
+  "action": "h = 4 p(r) r / j at r = 8, j = 2: 4 p r = j h, de Broglie's condition in the GameBoard's metric (the turn by momentum sums |p_axis| over the Links stepped, 4 p r on a circle)",
+  "j": "4 p(r) r / h per radius; closing when whole within 0.1, between otherwise",
+  "lumps": "T / SHELL shells per orbit, each turning the momentum by (1 + RATIO) Q E_body(r) / n radians",
+  "ticks": "max(3000, 5 T rounded up to a hundred): the run's intervals",
+  "first_link": "GAMEBOARD: the interval of the electron's first Link from rest, ceil(W / (p Q)) under the line drive with W = Q^2 S M_e + p T_D (half the wall under centred_step), ceil((Q S M_e + p) / p) under the per-axis drive",
+  "coherence": "DETECTOR: at a closing radius C(T) >= T / 2 after T >= 2 turns and the log-log slope of the cumulative coherent record near 2; between two whole j, C(T) < 2; fewer than two closed turns, no coherence reading (the criteria, README.md)",
+  "return": "GAMEBOARD: closed when at the closing of the angle the electron is within r / 4 of its start"
+ },
+ "drive": "line",
+ "centred": false,
+ "width": 45120,
+ "action": 5536242544,
+ "reference": {
+  "radius": 8,
+  "j": 2
+ },
+ "period_margin": 0.15,
+ "worlds": {
+  "r2": {
+   "radius": 2,
+   "flux": 183.33333333333334,
+   "n": 363119.95164019964,
+   "momentum": 666688231,
+   "pace": 0.10340017530647833,
+   "period": {
+    "pin": 121.53142465293143,
+    "bracket": [
+     103.30171095499172,
+     139.76113835087114
+    ]
+   },
+   "j": 0.9633800913907359,
+   "kind": "closing",
+   "lumps_per_orbit": 12.153142465293143,
+   "degrees_per_lump": 29.62196823759398,
+   "side": 33,
+   "ticks": 3000,
+   "first_link": 10
+  },
+  "r4": {
+   "radius": 4,
+   "flux": 56.25,
+   "n": 278497.09546108166,
+   "momentum": 511320667,
+   "pace": 0.08272976761769135,
+   "period": {
+    "pin": 303.79320470064795,
+    "bracket": [
+     258.22422399555074,
+     349.3621854057451
+    ]
+   },
+   "j": 1.4777406529752646,
+   "kind": "between",
+   "lumps_per_orbit": 30.379320470064794,
+   "degrees_per_lump": 11.850166316778447,
+   "side": 37,
+   "ticks": 3000,
+   "first_link": 13
+  },
+  "r6": {
+   "radius": 6,
+   "flux": 23.6,
+   "n": 217463.65243830145,
+   "momentum": 399263266,
+   "pace": 0.06667707380697953,
+   "period": {
+    "pin": 565.398414936609,
+    "bracket": [
+     480.58865269611766,
+     650.2081771771003
+    ]
+   },
+   "j": 1.730834281165121,
+   "kind": "between",
+   "lumps_per_orbit": 56.5398414936609,
+   "degrees_per_lump": 6.367191530629696,
+   "side": 41,
+   "ticks": 3000,
+   "first_link": 15
+  },
+  "r8": {
+   "radius": 8,
+   "flux": 13.5,
+   "n": 188461.41580610737,
+   "momentum": 346015159,
+   "pace": 0.05868150751508509,
+   "period": {
+    "pin": 856.5813079105898,
+    "bracket": [
+     728.0941117240013,
+     985.0685040971781
+    ]
+   },
+   "j": 2.0,
+   "kind": "closing",
+   "lumps_per_orbit": 85.65813079105898,
+   "degrees_per_lump": 4.2027533996865065,
+   "side": 45,
+   "ticks": 4300,
+   "first_link": 18
+  },
+  "r12": {
+   "radius": 12,
+   "flux": 6.588235294117647,
+   "n": 160012.63196909265,
+   "momentum": 293783192,
+   "pace": 0.05059365265329068,
+   "period": {
+    "pin": 1490.2704140150875,
+    "bracket": [
+     1266.7298519128244,
+     1713.8109761173505
+    ]
+   },
+   "j": 2.547141514109213,
+   "kind": "between",
+   "lumps_per_orbit": 149.02704140150874,
+   "degrees_per_lump": 2.4156689748703304,
+   "side": 53,
+   "ticks": 7500,
+   "first_link": 20
+  },
+  "r15": {
+   "radius": 15,
+   "flux": 4.285714285714286,
+   "n": 143646.95472596106,
+   "momentum": 263735809,
+   "pace": 0.0458266390557796,
+   "period": {
+    "pin": 2056.6155744691773,
+    "bracket": [
+     1748.1232382988007,
+     2365.1079106395537
+    ]
+   },
+   "j": 2.8582831070415615,
+   "kind": "between",
+   "lumps_per_orbit": 205.66155744691773,
+   "degrees_per_lump": 1.7504486706908085,
+   "side": 59,
+   "ticks": 10300,
+   "first_link": 22
+  },
+  "r16": {
+   "radius": 16,
+   "flux": 4.5,
+   "n": 152385.4162946227,
+   "momentum": 279779624,
+   "pace": 0.048382582609402605,
+   "period": {
+    "pin": 2077.833788379381,
+    "bracket": [
+     1766.1587201224738,
+     2389.508856636288
+    ]
+   },
+   "j": 3.2343048184198198,
+   "kind": "between",
+   "lumps_per_orbit": 207.7833788379381,
+   "degrees_per_lump": 1.7325736177130484,
+   "side": 61,
+   "ticks": 10400,
+   "first_link": 21
+  }
+ }
+}

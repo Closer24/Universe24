@@ -7,7 +7,10 @@ nucleus with two electrons of the register's electron. Both are series H's
 base (`../bohr/make_worlds.py`, whose fan, flux count and orbit arithmetic this
 generator imports) with the momentum derived under form B's drive
 (light_speed/FORM.md section 3: a body's pace on an axis n / (Q S + n T_D / Q)
-in place of today's n / (Q S + n), n = p / M_e, T_D / Q = 110 / 64), the
+in place of the per-axis n / (Q S + n), n = p / M_e, T_D / Q = 110 / 64;
+since 2026-09-22 the line drive, the law's drive of a body, the model
+owner's record 972, docs/designs/drive_b/DEFAULT.md: the same integers as
+series H's generator now derives, `bohr/make_worlds.py` under LINE_DRIVE), the
 action re-fixed by series H's own rule (h = 16 p(8) under the same drive), a
 `wave` detector at the nucleus, and, in helium, the electrons' mutual push
 (each electron releases on the fan's band |c| <= 2) with the nucleus fixed as the proton
@@ -54,7 +57,7 @@ DEFINITIONS_SOURCE = (HERE.parent / "entities" / "families.json").read_bytes()
 
 K, N, Q = BOHR.K, BOHR.N, BOHR.Q
 ELECTRON, PROTON, RATIO, SHELL = BOHR.ELECTRON, BOHR.PROTON, BOHR.RATIO, BOHR.SHELL
-WIDTH = 45120  # series H's registered width (v = 0.06 at r = 8 under today's drive)
+WIDTH = 45120  # series H's registered width (v = 0.06 at r = 8 under the per-axis drive of history)
 RADIUS = 12
 REFERENCE_RADIUS, REFERENCE_J = BOHR.REFERENCE_RADIUS, BOHR.REFERENCE_J
 T_D_AXIS = math.isqrt(3 * Q * Q)  # 110: the axis direction's period constant

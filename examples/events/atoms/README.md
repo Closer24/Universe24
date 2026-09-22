@@ -7,7 +7,12 @@ of 2026-09-21 (record 333, "it is important to show one atom or two, to
 close all the corners"). The pins before the runs, every number labelled by
 its kind, are in [docs/designs/atoms/PINS.md](../../../docs/designs/atoms/PINS.md),
 printed by its host map; the runs come after form B lands, by an
-experimenter, registered as rows of series H.
+experimenter, registered as rows of series H. Since 2026-09-22 form B's
+drive is the law's drive of a body, the line drive (the model owner's
+record 972; [the design](../../../docs/designs/drive_b/DEFAULT.md)), so
+the two worlds run under the drive their momenta were derived for with
+nothing declared; series H's generator now derives the same integers
+(`bohr/expectations.json`: p(12) = 293783192, h = 5536242544).
 
 - `hydrogen_r12.json` (`rays-atoms-hydrogen-r12-form-b-v1`): series H's
   `r12` with the electron's momentum derived for the circular orbit under
