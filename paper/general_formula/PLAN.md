@@ -4604,3 +4604,23 @@ ragged right (a column type L in the preamble), which ends the
 stretched word spacing of justified narrow cells; the families table's
 first column widened to 0.95 in so the family names no longer break
 letter by letter. No word changed. 39 pages.
+
+## Applied (2026-09-22, the Boss's order of 11:51Z): Table 3 on the criteria file at the merge SHA f5fe8004 (PR #851)
+
+Every row's reading carries its kind (DETECTOR, GAMEBOARD, COMPUTATION)
+as the file states it; the re-runs at head stand beside the registered
+numbers, none in their place (row 3 -0.104, row 4b 0.2647, rows 7a and
+7b every pin met, row 8a's width 0.08 to 0.13 at the cap in the
+lattice's clock, GAMEBOARD, row 8b the pin met bit for bit); row 2a
+carries the pin derived for this world's fan (0.9659, COMPUTATION, met
+bit for bit) and the two-slit source (Jacques 2005, a biprism's central
+fringe, 0.94 as reported, to verify, NOT COMPARED until then, bound
+against bound), the 0.954 of the weights named as history; row 3's
+criterion in the file's words (0.42 away, the coasting ideal q = 0, no
+term carrying q toward -0.5); row 12 unchanged, the caption calling the
+fourth PASS historical; item (a): the register's settings declared per
+world or balanced over every u, the freedom-of-choice loophole's
+counterpart in the wheel, the reading that would test it; the criteria
+file cited in Appendix C and the caption at its merge SHA; two
+references added (criteria, jacques2005). No number, verdict or
+citation invented. 39 pages.

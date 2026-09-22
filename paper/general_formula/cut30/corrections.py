@@ -2920,6 +2920,92 @@ CORRECTIONS = [
         "\\begin{longtable}{p{1.5in}p{1.75in}p{1.5in}p{1.4in}}",
         "\\begin{longtable}{L{1.5in}L{1.75in}L{1.5in}L{1.4in}}",
     ),
+    # Table 3 (tab:nature) on the Criteria Runner's file at the merge SHA f5fe8004 (PR #851; the Boss's order of 11:51Z): every reading by kind, the re-runs at head beside the registered numbers, the criteria's wording, the three items of the second referee read.
+    (
+        "Table 3 on the criteria file at f5fe8004: the caption, row 12 historical",
+        "Three PASS (replicated \\cite{replications}), a fourth under the clock's assumed word (12); twelve FAIL (seven in a registered run, four by a pin without its run and not in this table, one a declared input refuted, 8c); two BOUND (5a, 7a); one NOT COMPARED (2c).}\\\\",
+        "Three PASS (replicated \\cite{replications}), a fourth historical, under the clock's assumed word and the law before the generic entry (12); twelve FAIL (seven in a registered run, four by a pin without its run and not in this table, one a declared input refuted, 8c); two BOUND (5a, 7a); one NOT COMPARED (2c). Each reading's kind is named: DETECTOR (a click), GAMEBOARD (the host's view, a diagnostic) or COMPUTATION (the algebra's); the criteria row by row, with the re-runs at head, are \\cite{criteria}.}\\\\",
+    ),
+    (
+        "row 1a: the kind",
+        "& $S = 2.75$ at $\\Nphi = 64$, series L & PASS: $1.65$ standard errors above the measured, $0.078$ below the bound \\\\",
+        "& $S = 2.75$ at $\\Nphi = 64$, series L (DETECTOR; replayed at head by the test suite) & PASS: $1.65$ standard errors above the measured, $0.078$ below the bound \\\\",
+    ),
+    (
+        "row 1b: the kind",
+        "1b & The same, the phase-form window & $S = 2$ exactly & FAIL: the local bound, $2.1$ standard errors below \\\\",
+        "1b & The same, the phase-form window & $S = 2$ exactly (DETECTOR, the counters' clicks) & FAIL: the local bound, $2.1$ standard errors below \\\\",
+    ),
+    (
+        "row 2a: the pin for this world's fan, the re-run at head, the two-slit source, the weights' history",
+        "2a & Two-slit visibility of one quantum at a time: $0.98$, the register's source \\cite{grangier1986} a Mach-Zehnder reading and not a two-slit one, a two-slit source not yet registered; the ideal $1$; the criterion the clicks' visibility $(I_{\\max} - I_{\\min})/(I_{\\max} + I_{\\min})$, no apparatus model & $0.966$ in the clicks of \\texttt{slits\\_huygens} (the birth wheel, $4096$ births; L2b), $0.954$ in the record's weights & FAIL: $0.014$ below the measured, $0.034$ below the ideal; the cause named, the screen's fan's grain (the pin derived for the screen's fan, not this world's) \\\\",
+        "2a & Two-slit visibility of one quantum at a time: $0.98$, the register's source \\cite{grangier1986} a Mach-Zehnder reading and not a two-slit one; a two-slit source, a Fresnel biprism's central fringe at $0.94$ as reported \\cite{jacques2005}, its figure to be verified against the source; the ideal $1$; the criterion the clicks' visibility $(I_{\\max} - I_{\\min})/(I_{\\max} + I_{\\min})$, no apparatus model & $0.966$ in the clicks of \\texttt{slits\\_huygens} (the birth wheel, $4096$ births; L2b; DETECTOR), the pin derived for this world's fan by the register's own algebra $0.9659$ (COMPUTATION) and met bit for bit by the re-run at head, $0$ of $121$ pixels differing; the record's weights read the same under the exact phase (the $0.954$ of the built-phase pin of 2026-09-20 is history) & FAIL against the Mach-Zehnder's $0.98$: $0.014$ below the measured, $0.034$ below the ideal; the cause the fan's discreteness, the digital lines' landings; against the two-slit source NOT COMPARED until its figure is verified, and then bound against bound, the biprism's central fringe apparatus-limited as the fan's clicks are \\\\",
+    ),
+    (
+        "row 2b: the kinds",
+        "& the offers $1681/1682$ and $1/1682$; the clicks $64/0$ over $64$ births & PASS as a bound met",
+        "& the offers $1681/1682$ and $1/1682$ (GAMEBOARD, the record's ledger); the clicks $64/0$ over $64$ births (DETECTOR; replayed at head by the tests) & PASS as a bound met",
+    ),
+    (
+        "row 2c: the kind",
+        "& the power's window $[1.917, 2.012)$ from the click cells, a read-back of the built click & NOT COMPARED",
+        "& the power's window $[1.917, 2.012)$ from the click cells (DETECTOR), a read-back of the built click (COMPUTATION) & NOT COMPARED",
+    ),
+    (
+        "row 3: the re-run at head by kind, the criterion's wording",
+        "& $-0.108$ coasting (series G2, the pointer's $z$; $-0.104$ at head, \\cite[record 408]{log}) & FAIL: no term with $q < 0$ \\\\",
+        "& $-0.108$ coasting (series G2, the pointer's $z$; DETECTOR); $-0.104$ at head (\\cite[record 408]{log}; the re-run at head, the pin met, DETECTOR), the reading's own grain $0.004$ between engines and $0.03$ between windows & FAIL: $0.42$ from nature's value, the coasting ideal $q = 0$ and the reading within its grain of it; the law has no term carrying $q$ toward $-0.5$ \\\\",
+    ),
+    (
+        "row 4b: the re-run at head by kind",
+        "& $z = 0.2636$ at $\\beta = v/c = 0.2674$ (series G2) & FAIL: $0.315$ expected, $17$ grains below;",
+        "& $z = 0.2636$ at $\\beta = v/c = 0.2674$ (series G2, DETECTOR); $0.2647$ at head (the re-run, the pin met, DETECTOR) & FAIL: $0.315$ expected, $17$ grains below;",
+    ),
+    (
+        "row 5a: the kinds",
+        "& the flight table's pace $0.5774$ to $0.5818$ at $N_l = 64$ (series Q within it at finite ages, Appendix~\\ref{app:reproduction}) & BOUND on $N_l$",
+        "& the flight table's pace $0.5774$ to $0.5818$ at $N_l = 64$ (COMPUTATION; series Q's $290$ of $290$ clicks within it at finite ages, DETECTOR, Appendix~\\ref{app:reproduction}) & BOUND on $N_l$",
+    ),
+    (
+        "row 7a: the kinds, the re-run at head",
+        "& the escaped content and the mass a detector reads on the lifetime border (series N): the held bond $0.109$ percent & BOUND on a declared input \\\\",
+        "& the bond's two border clicks (DETECTOR) and the escaped $4$ of $3677$ (GAMEBOARD, the books), $0.109$ percent, the mass read $3673$ (series N); the same at head, every pin met & BOUND on a declared input: nature's $4.35$ units of $3677$ reachable by no whole give \\\\",
+    ),
+    (
+        "row 7b: the kind, the re-run at head",
+        "& $2.0$ (series N, the border's clicks) & FAIL: a factor $6.4$; the give once per body \\\\",
+        "& $2.0$ (series N, the border's four clicks against two, DETECTOR; the same at head) & FAIL: a factor $6.4$; the give once per body \\\\",
+    ),
+    (
+        "row 8a: the kinds, the re-run at head at the cap",
+        "& $0.036$, a step (series J1, $64$ clicks) & FAIL: a factor $88$; the registered J1 run predates the one flight wall,",
+        "& a step: every neutron at its key on its own clock, the width $0$ (DETECTOR, the $64$ clicks of content $3$); the width over the median in the lattice's clock $0.036$ in the registered run and $0.08$ to $0.13$ at head at the cap $1024$ (GAMEBOARD, the lattice's clock, counted in no criterion) & FAIL: a factor $88$ in the registered run, $25$ to $40$ at head; the registered J1 run predates the one flight wall,",
+    ),
+    (
+        "row 8b: the kind, the re-run at head",
+        "& $16$ of $1024$ with $0$ behind (series J2, a window) & FAIL \\\\",
+        "& $16$ of $1024$ with $0$ behind (series J2, a window; DETECTOR; the same at head, the pin met bit for bit) & FAIL: $0$ against nature's ratio $1$ \\\\",
+    ),
+    (
+        "row 9: the kind",
+        "& $128$ of $256$ exactly; $219$ of $256$ at $22.5$ degrees (A12) & PASS: exact at $45$ and $90$ degrees;",
+        "& $128$ of $256$ exactly; $219$ of $256$ at $22.5$ degrees (A12; DETECTOR, replayed at head by the tests) & PASS: exact at $45$ and $90$ degrees;",
+    ),
+    (
+        "item (a): the freedom-of-choice loophole's counterpart in the wheel",
+        "gives the second party $+$ at every one of the $64$ births at $\\Nphi = 64$.",
+        "gives the second party $+$ at every one of the $64$ births at $\\Nphi = 64$. On the register the settings are declared per world or balanced over every $u$ (the choosers' $960$ births meet every $u$ with every pair once), so nothing chooses a setting from $u$; nature's freedom-of-choice loophole has its counterpart here in the wheel, not closed by the register, and the reading that would test it is a marginal off $\\Nphi/2$ with the settings chosen from $u$ \\cite{criteria}.",
+    ),
+    (
+        "Appendix C: the criteria file cited at its merge SHA",
+        "and NUMBERS.md beside the manuscript maps each number of this paper to its source \\cite{checks}.",
+        "and NUMBERS.md beside the manuscript maps each number of this paper to its source \\cite{checks}; the criterion of every row of Table~\\ref{tab:nature}, what is measured, its kind, what would refute it and the re-run at head, is \\cite{criteria}.",
+    ),
+    (
+        "the references: the criteria file and the two-slit source",
+        "\\bibitem{ringmean} The ring mean and the orbit's mean over one turn: the proof and the bound,",
+        "\\bibitem{criteria} The criteria of the confrontation table, row by row, with the re-runs at head, \\texttt{docs/designs/paper\\_criteria/CRITERIA.md} of the archived code \\cite{zenodo}, on \\texttt{main} at f5fe8004 (PR \\#851, merged). \\bibitem{jacques2005} V. Jacques, E Wu, T. Toury, F. Treussart, A. Aspect, P. Grangier and J.-F. Roch, Eur. Phys. J. D 35, 561 (2005); the visibility figure to be verified against the source. \\bibitem{ringmean} The ring mean and the orbit's mean over one turn: the proof and the bound,",
+    ),
 ]
 
 
