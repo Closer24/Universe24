@@ -116,7 +116,8 @@ section 5 is the count of rows and hops of section 1 made into a ratio.
 
 ## 3. The world
 
-A bar of 240 x 3 x 3 Nodes, open on every face, no crowd, no `mass`,
+A bar of 240 x 3 x 3 Nodes (320 x 3 x 3 for the quantum world), open on
+every face, no crowd, no `mass`,
 `suspension` 0, N = 64, K as series O (4202496), Q = 64, the width S =
 2^20, the release [1, 65536] (series O's numbers, `examples/events/two_stars/
 symmetric.json`; the massive rows off, no key of any hypothesis). Three
@@ -137,11 +138,19 @@ pattern of period k, the drive's closed form), and beta = `v / c = 55 / (32
 k)` = 55/96, 11/32, 55/288, 55/544. The fifth world, the quantum's, declares
 `p = 3 x 2^46` (the pace 3/7, between 1/3 and 1/2): the accumulator hops at
 its 3rd, 5th, 7th and 10th self-creation and so on, so the counts between
-hops are 2, 2, 3 repeating and never another number. 600 intervals; the cart ends at x = 20
-+ 600 / k (220 at k = 3), within the bar. The window of every ratio is the
-cart's clicks from its 60th count to its last click (the first sixty counts
-let the first pulses return; the round trip from x = 20 to R and back takes
-2 x 19 / c = 65 intervals). Every world file is written by
+hops are 2, 2, 3 repeating and never another number. 600 intervals; the cart
+ends at x = 20 + 600 / k (220 at k = 3) and at x = 277 in the quantum world,
+within its longer bar. The windows: `k_AB` and `k_BA` from the cart's 60th
+count to its last click; the round trip and the radar from the first return,
+which reaches the receding cart at 2 x 19 / (c - v) intervals after the
+start, 153, 100, 81, 73 and 248 for k3, k5, k9, k17 and the quantum world
+(the physics-rule reviewer's correction of the 65 intervals of a cart at
+rest). The cart's own births are never measured by its own table: a row
+of the event's own number that arrives goes home and is created again
+(ENGINE.md, "what comes home"); R's re-stamping of the returned pulse with
+its own number is what makes the return a click at the cart, which is the
+first registered event whose table names its own family. Every world file
+is written by
 `examples/events/moving_detector/make_worlds.py` (to be written at step 3)
 and pinned to it by a test, as series O's are; nothing by hand.
 
@@ -149,7 +158,9 @@ The model identity of the series: `beam-moving-detector-k<k>-v1` and
 `beam-moving-detector-quantum-v1`; the hypothesis list of the run's record
 carries nothing but the amplitude identity every lamp carries (`amplitude-v1`,
 ENGINE.md), the law as it stands and no key of a hypothesis, so that every
-reading is the law's own.
+reading is the law's own; the key `clock_stamp` of section 7 enters neither
+the model identity nor the hypothesis list, since it changes no physics; the
+run's record names it as a record field.
 
 ## 4. The readings, by kind
 
@@ -165,8 +176,9 @@ lines only:
   the window); the round trip (the cart's counts apart between two returns
   over its own ordinals apart between the two births they carry); the
   radar pair `(x_D, t_D)` of every return and the radar velocity over the
-  window; the cart's place at every click, its changes (0 or 1 Node) and
-  the counts between two changes.
+  window; the cart's place at every click, its change against the counts
+  between two clicks (the least step, section 5) and the pace over the
+  window.
 - DETECTOR, on the post's record (its `rerelease` lines with `measured` =
   R's number): R's own count at each arrival and the ordinal of the cart's
   birth it carries. From them: `k_BA` (R's counts apart over the cart's
@@ -181,8 +193,9 @@ lines only:
 
 The ratio `k_BA / k_AB` is a DETECTOR reading of two detectors' counts (the
 cart's and the post's), and by the Einstein Mathematician's sorting fact it
-carries `r_R / r_D`; the round trip and the radar velocity are ratios of the
-cart's own counts alone and carry no r.
+carries the rates: `k_AB` carries `r_D`, `k_BA` carries `r_R / r_D`, so the
+ratio carries `r_R / r_D^2` (as section 6 uses it); the round trip and the
+radar velocity are ratios of the cart's own counts alone and carry no r.
 
 ## 5. The pins, from the formulas, before any run
 
@@ -194,7 +207,7 @@ conversion (section 2); Lorentz's one-way factor, `sqrt((1 + beta) / (1 -
 beta))`, is written beside as the comparison only, the one the law fails at
 second order (NATURE row 4b), and enters no pin.
 
-| World | k | beta | `k_AB` = 1/(1 - beta), the law | `k_BA` = 1 + beta, the law | the ratio, the law `1 - beta^2` | the comparison: Lorentz's one-way factor, both directions | the round trip `(1 + beta)/(1 - beta)` | the radar velocity | the counts between hops |
+| World | k | beta | `k_AB` = 1/(1 - beta), the law | `k_BA` = 1 + beta, the law | the ratio, the law `1 - beta^2` | the comparison: Lorentz's one-way factor, both directions | the round trip `(1 + beta)/(1 - beta)` | the radar velocity | the counts between hops (the drive's pattern; read from the `step` lines, GAMEBOARD; the DETECTOR pin of the least step is the paragraph below) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `k3` | 3 | 55/96 = 0.5729 | 96/41 = 2.3415 | 151/96 = 1.5729 | 6191/9216 = 0.6718 | 1.9191 | 151/41 = 3.6829 | -1/3 | 3 only |
 | `k5` | 5 | 11/32 = 0.34375 | 32/21 = 1.5238 | 43/32 = 1.34375 | 903/1024 = 0.8818 | 1.4310 | 43/21 = 2.0476 | -1/5 | 5 only |
@@ -203,10 +216,22 @@ second order (NATURE row 4b), and enters no pin.
 | `quantum` | 7/3 (the pace 3/7) | 165/224 = 0.7366 | 224/59 = 3.7966 | 389/224 = 1.7366 | 22951/50176 = 0.4574 | 2.5677 | 389/59 = 6.5932 | -3/7 | 2 and 3 only, the pattern 2, 2, 3 |
 
 The radar velocity is in Nodes per count of the cart (`-v`, R receding
-behind it); the least step is pinned in every world as: the cart's Node at
-two consecutive clicks differs by 0 or 1 and never more (Theorem 3 (a) and
-(c)); the round trip's pin is r-free and holds under every r, so it is the
-tool's consistency check of the two one-way factors as well as a reading.
+behind it). The least step (Theorem 3 (a) and (c)) is a statement per count,
+not per click, and is pinned so: between any two clicks of the cart the Node
+changes by at most one per count, `abs(delta node) <= delta count`; in the k
+worlds, where A's rows click every 1 / (1 - beta) = 2.34, 1.52, 1.24, 1.11
+counts, fewer than the k counts between hops, the Node at two consecutive
+clicks of A's rows differs by 0 or 1 and never more; for consecutive returns
+alone (3.68 counts apart at k = 3 against hops every 3) it may differ by 2,
+and no pin is written on them. In the quantum world A's rows click every
+224 / 59 = 3.80 counts while the hops come at gaps 2 and 3, so two hops fall
+between consecutive clicks: the pin there is 1 or 2 Nodes between
+consecutive clicks of A's rows, never 0 and never 3, and the pace over the
+window 3 / 7 within the tolerance; the single gaps 2 and 3 themselves are
+not resolved by clicks 3.80 counts apart and are read from the `step` lines,
+GAMEBOARD, reported beside the pin and not pinned as a detector's number.
+The round trip's pin is r-free and holds under every r, so it is the tool's
+consistency check of the two one-way factors as well as a reading.
 Every ratio is exact in the mean over whole periods of the accumulators (k
 counts for the hops, 55 intervals for 32 Links of a row); within a window
 the reading differs from the closed form by at most the tolerance.
@@ -302,7 +327,10 @@ the other world keys, `massive_rows` at :3803): when true, every line a measured
 `read` and `rerelease` lines of `_apply_plans` (:5127, :5210, :5284), the
 `become` line (:6057), the pair's click (:6187) and the body's face click
 in the engine (:903); about eight lines, one field, no new state, no rule,
-no verb. Without the key no field is written, so every registered record
+no verb; ENGINE.md's line description names the field as the measured
+event's own count of self-creations (its `age`; not the row's `age` on the
+same line, not `clock_age`), and the key enters neither the model identity
+nor the hypothesis list. Without the key no field is written, so every registered record
 stands byte for byte (`tests/test_amplitude_click.py` (d) and
 `tests/test_covariant_readings.py` pin `events_sha256`); the deciding
 worlds declare it. One test: a moving body at v = 1 / k in no crowd
@@ -361,8 +389,10 @@ Lorentz line declared, no r declared, no fit.
    intervals on a bar of 120), its consecutive clicks printed as DETECTOR
    (the count between clicks, the Node at each click, the ordinal read),
    nothing pinned as nature's; the design's pins for that world (`k_AB` =
-   32 / 21, the counts between hops 5 only, the place changing by 0 or 1)
-   compared as "read / not read" only.
+   32 / 21; the Node at consecutive clicks of A's rows changing by 0 or 1
+   and by at most one per count; the pace 1 / 5 over the window; the hops
+   every 5 counts on the `step` lines, GAMEBOARD) compared as "read / not
+   read" only.
 4. Step 5: the transponder worlds of section 3 (the post added), the pins
    of section 5 declared before, run on the owner's word
    (`tools/run_series.py`), the readings written under `runs` in
