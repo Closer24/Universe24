@@ -4345,3 +4345,33 @@ Z_Nphi, Z[Z_Nphi], Z[zeta_Nphi], Z^2 (x) Z^2 and B_3, each with its
 kind and its name, pointing at Theorem 1 and Section 2. No number
 moved; 48 and 24 are Theorem 1's. 36 pages; the PDF rebuilt. The hold
 of record 895 on the last page's candidates A, B and C stands.
+
+## Applied (2026-09-22, the Boss's order of 10:03Z, record 883 closed): the ring mean sentence on PR #840's merge SHA ab96e7e8
+
+Section 4's ground paragraph: the clause "which equals the ring mean
+only where the body's dwell is uniform in angle, a sampling the paper
+does not prove" was not the true statement and goes. In its place the
+Ring Mean Mathematician's sentence in its two forms from
+docs/designs/ring_mean/PROOF.md section 6 (on main at ab96e7e8):
+"proved" for the continuum claim (the orbit's mean over one closed turn
+equals the ring mean at r_* = <r^2>_theta / <r>_theta on the plane and
+sqrt(<r^2>_theta) in space, by the area rule of a radial push, Kepler's
+second law the comparison; against the angle-mean radius the factor
+r_bar^2 / <r^2>_theta between 1 - e^2 and 1; on the lattice up to four
+grain terms, three numbers and one Node's dwell per crossing, GAMEBOARD
+by formula) and "bounded by" beside D3's reading (the turn's e not on
+record, bounded by 0.96 and 0.70, the floors 0.07 and 0.51, deciding
+nothing; the ratio T(24)/T(12) resting on the 1/r push's scale symmetry,
+not on the equality). The reference `ringmean` added. NUMBERS.md rows
+for every number, by kind.
+
+The page: the sentence pushed the roads table's last three rows onto a
+37th page. Trimmed within the same paragraph only, as ordered ("in one
+of three forms", the factor clause, the grain terms and the D3 clause
+compacted; every number kept): the paragraph fell from 24 to 21 lines,
+the spill needs about six more, and the paragraph cannot give them
+without dropping the numbers the order named. Delivered at 37 pages with
+the sentence whole; the choice is the Boss's or the owner's: (i) 37
+pages; (ii) the grain terms' numbers moved to the citation (about two
+lines, not enough alone); (iii) the owner's "cut" on the last page's
+candidates A, B, C (record 895). No cut made.
