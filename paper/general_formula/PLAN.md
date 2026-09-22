@@ -3381,23 +3381,30 @@ test, check.py, one commit, one push, the report.
    a bijection, floor(s_0 + r t), the shift, the conjugate transpose,
    the group ring's addition, the click one bilinear form).
 3. The three formulas as the algebra part's frame (records 787 and the
-   owner's word): THE INSIDE STEP (Eq. 1 with its components; W = E'^2 +
-   3 p.p its invariant, Eq. 14 in its frame, the paper's centre), THE
-   OUTSIDE STEP (Einstein's and Newton's, the known forms the paper
-   names with their experiments), THE CONVERSION (the emitter-to-click
-   map, a detector at every place read, the click theorem its symmetry).
+   owner's word; the direction one way, the Boss's correction of 07:15Z:
+   the basis is Inside and everything is derived from Inside, the two
+   steps never meet): THE INSIDE STEP is the axiom (Eq. 1 with its
+   components, the six verbs; W = E'^2 + 3 p.p its invariant, Eq. 14 in
+   its frame, the paper's centre); THE CONVERSION is the map (the
+   emitter-to-click map, a detector at every place read, the click
+   theorem its symmetry); THE OUTSIDE STEP is the image, a theorem,
+   named as what Einstein and Newton wrote and shown to be the image to
+   the stated order.
    The two-column table Inside | Outside with the map in each row (the
    mathematician's recast of the click frame's section 7 table; part 7
    follows it): the interval to a detector's count, the Node to a click's
    place, the momentum to a velocity of clicks, W to the energy at a
    click, gamma, the rate sqrt(1 - v^2), the two Doppler factors, the
    phase to a frequency; the register's readings on the Outside side
-   only. Beside the frame the paragraph "The step beneath and the step
-   above": W times c^4 as E^2 = E_0^2 + p^2 c^2, the gate E_0 / E' as
-   1 / gamma, the drive's fraction as the click's velocity, the two
-   factors as the step above at two detectors, which exactly and which
-   to second order and where the factor 3 enters taken from part 6's
-   merged text; Eq. 14 then "the Inside identity of the conversion,
+   only. Under the frame the paragraph "The step beneath and the step
+   above", one way: from the step beneath, by the conversion, the step
+   above is derived: W times c^4 is E^2 = E_0^2 + p^2 c^2, the gate
+   E_0 / E' is 1 / gamma, the drive's fraction is the click's velocity,
+   the two Doppler factors are the step above read at two detectors;
+   each named as what Einstein wrote and shown to be the image, which
+   exactly and which to second order and where the factor 3 enters
+   taken from part 6's merged text; never two formulas side by side,
+   never a meeting; Eq. 14 then "the Inside identity of the conversion,
    shown to second order", the rows still hopping whole beside it (the
    reading's identity, not yet the rows' dynamics), one ledger row
    "shown (second order)". Newton Outside after Section 4's ground
