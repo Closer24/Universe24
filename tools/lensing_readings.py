@@ -15,7 +15,11 @@ and prints, per world, two kinds of number, each line labelled (the model
 owner, 2026-09-20: "in reality there is no such thing" about the host's
 readings of the board):
 
-- DETECTOR readings, the only kind reality has: the screen's pixels (each
+- DETECTOR readings, the only kind reality has (the phase rate per
+  interval and the first click's tick count the pixels' own clock: fixed
+  detectors in no crowd at suspension 0, whose tick is their age, record
+  569; the strict form reads the rate against the lamp's counted births;
+  the clock audit of 2026-09-22): the screen's pixels (each
   a `DetectorSet` of one Node) over the late window: the count of clicks
   per pixel and the centroid of the arrival on the screen (in pixels, y
   and z, the deflection against the control with its sign toward the mass

@@ -231,13 +231,17 @@ def test_read_run_reads_a_transformation_and_the_shells_curve(tmp_path):
         assert TOOL.expectations(reading, ranged)[0][1] is inside, pair
     assert [ok for _, ok, _ in criteria] == [True, True, True, True]
     # The trigger tick and the count at the trigger are the neutron's own
-    # `become` line: DETECTOR (the audit of record 567, F8).
+    # `become` line: DETECTOR (the audit of record 567, F8). The curve's
+    # width over its median is keyed by the clicks' ticks, the record's
+    # ordering: a GameBoard diagnostic since the clock audit of 2026-09-22,
+    # printed and out of the deciding set.
     assert [kind for _, _, kind in criteria] == [
         TOOL.DETECTOR,
         TOOL.DETECTOR,
         TOOL.DETECTOR,
-        TOOL.DETECTOR,
+        TOOL.DIAGNOSTIC,
     ]
+    assert len(TOOL.deciding(criteria)) == 3
     # "The pair holds" (the step records) is a GameBoard diagnostic (F9):
     # printed with its verdict, out of the deciding set, the number unchanged.
     reading.name = "j3_deuteron"

@@ -430,7 +430,9 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
     found.append(
         (
             f"every neutron fires within its pinned range or up to {slack} before it "
-            f"({min(lo for lo, _ in ranges.values())} .. {max(hi for _, hi in ranges.values())} pinned)",
+            f"({min(lo for lo, _ in ranges.values())} .. {max(hi for _, hi in ranges.values())} pinned; "
+            "the `become` line is the neutron's own record, its `triggered` tick the record's ordering "
+            "and its `counted` the clock's number: the clock audit of 2026-09-22)",
             inside,
             DETECTOR,
         )
@@ -451,12 +453,18 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
             )
         )
         median, low, high, ratio = curve_shape(reading.shell_clicks)
+        # The curve is keyed by the clicks' ticks, the record's ordering, so
+        # its width over its median is a GameBoard number (the clock audit
+        # of 2026-09-22): a diagnostic, out of the deciding set; the detector
+        # reading behind it is the curve in the betas' ages on their click
+        # lines and the neutrons' `counted`, not yet read.
         found.append(
             (
                 f"the survival curve is a step: its 10-to-90 width over its median below 0.1 "
-                f"(nature's memoryless decay {NATURE_WIDTH_OVER_MEDIAN:.2f})",
+                f"(nature's memoryless decay {NATURE_WIDTH_OVER_MEDIAN:.2f}); the width in click ticks, "
+                "the detector reading behind it, the betas' ages and the neutrons' `counted`, not yet read",
                 bool(reading.shell_clicks) and ratio < 0.1,
-                DETECTOR,
+                DIAGNOSTIC,
             )
         )
     if reading.name == "j3_deuteron":

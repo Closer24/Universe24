@@ -75,6 +75,12 @@ presence 4 F at the lamp's Node once the rows arrive, and the algebra.
   product (1.295), and falls behind it,
   leaving the fan at ticks 181 and 86 within the pinned brackets and reading
   the Doppler alone thereafter (1.85 then 1.21).
+- **The clock of the reading (the clock audit of 2026-09-22; record 678).** The denominator of
+  every 1 + z here is the click's tick at a fixed detector in no crowd at
+  `suspension` 0, which is that detector's own clock to the digit (record
+  569); the exit ticks are host ticks, named so and not compared with
+  nature; the strict form, the reader's own lamp, is
+  `examples/events/reader_clock`.
 - **Re-read under `clock-age-v1` (2026-09-21; the model owner's word of
   record 394: a clock counts the age moment by default).** The eight worlds
   run again through `tools/run_series.py --jobs 2` (500 intervals) on the
