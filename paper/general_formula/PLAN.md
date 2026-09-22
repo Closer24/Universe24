@@ -2624,3 +2624,17 @@ event by Definition def:rules, so a split, an event, restarts it at 0
 by definition and loses nothing; the click is the one deletion. The
 read-out paragraph of Part I says the same. No number moved; 38 pages.
 
+### Newton and Poisson are checked on GameBoard readings, labelled so (the owner's word, 2026-09-22, about 00:30Z)
+
+The owner: "Make sure the law is clear. Newton and Poisson measured after
+a detector. Nobody measures the board. Make sure the law is clear in the
+Highlights." The Highlights carry the rule (records 277 and 281); the
+paper applied it to the register's rows but not to the checks of series
+C and E, which are probe readings of the GameBoard (no detector in those
+worlds). Every such check now says so: the consequences table's rows for
+Gauss, Newton, Coulomb, Poisson, the field's Gauss law and the redshift;
+the Newton and delay sections' "registered" sentences; the rings table's
+caption; the table's legend. Newton's and Poisson's measurement after a
+detector is a run not made, named as such; the owner's word sent to the
+Boss for Highlights 5.4 and the register's labels.
+
