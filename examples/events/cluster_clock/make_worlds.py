@@ -220,8 +220,24 @@ def expectations() -> Json:
             ),
             "age_moment_over_presence": 5.5,
             "cluster_rest": {name: {"one_plus_z": 1 + 5.5 * k} for name, (_, k) in MEMBERS.items()},
+            # The moving members re-declared at the age word's k (2026-09-21,
+            # Far 2's flag of record 463 (ii), the Replicator's re-read on
+            # main e531de5c): k under the age word beside the presence word's;
+            # the shipped world paces every member's sources at 0.2 c / (1 + k)
+            # for the PRESENCE word's k (the world file unchanged), so under
+            # the age word every slowed lamp but the bare one leaves its crowd
+            # and the additive pin is not read in this world (the README's
+            # research reading); the pin stands for a world whose sources
+            # pace the age word's k, the design's re-declaration.
             "cluster_moving": {
-                name: {"one_plus_z_additive": 1 + 5.5 * k + v} for name, (_, k) in MEMBERS.items()
+                name: {
+                    "one_plus_z_additive": 1 + 5.5 * k + v,
+                    "k": 5.5 * k,
+                    "k_presence_word": k,
+                    "sources_emulated_for_k": k,
+                    "pin_readable_in_the_shipped_world": k == 0,
+                }
+                for name, (_, k) in MEMBERS.items()
             },
         },
     }

@@ -214,6 +214,24 @@ def expectations() -> Json:
             "one_plus_z_lattice": lattice,
             "one_plus_z_readers_clock": lattice / (1 + a_r),
         }
+        if moving:
+            # The receding world re-declared at the age word's k (2026-09-21,
+            # Far 2's flag of record 463 (ii), the Replicator's re-read on
+            # main e531de5c): the age word's k beside the presence word's;
+            # the shipped world paces the source's crowd at 0.2 c / (1 + k)
+            # for the PRESENCE word's k (the world file unchanged), so under
+            # the age word the slowed source leaves its crowd and the pin
+            # above is not read in this world (the README's research
+            # reading); it stands for a world whose crowd paces the age
+            # word's k, the design's re-declaration.
+            out["clock_age_v1"]["worlds"][name].update(
+                {
+                    "k_reader_presence_word": k_r,
+                    "k_source_presence_word": k_s,
+                    "crowd_emulated_for_k": k_s,
+                    "pin_readable_in_the_shipped_world": False,
+                }
+            )
     return out
 
 

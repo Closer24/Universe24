@@ -73,3 +73,20 @@ presence 4 F at the reader and the source, and the algebra of the ratio.
   the reader's clock 0.3408 (was 2.2111 and 1.1054 for 2.2 and 1.1); the
   age word's pin (1 + k_s + v / c) / (1 + k_r) = 1.0308 is not read until
   the emulation is re-declared, the design's to do.
+- **Re-read on `main` and the receding world re-declared at the age word's
+  k (2026-09-21, the Replicator; Far 2's flag, record 463 (ii)).** The five
+  worlds run again on `main` at e531de5c (`tools/run_series.py --jobs 3`,
+  500 intervals, 1.6 to 2.2 s each) and read by the same method: every
+  reading above digit for digit (DETECTOR: 6.5011 / 6.5011, 1.0000 /
+  0.1539, 6.5011 / 1.0000, 6.5011 / 1.7353, and `alike_receding` 2.2239 /
+  0.3408; the births 499 / 81, 81 / 499, 81 / 81, 137 / 81, 81 / 196; every
+  ordinal arrived). The register's block `clock_age_v1` now carries, for
+  `alike_receding`, the two k under the age word (5.5 times the presence
+  word's) beside `k_reader_presence_word` and `k_source_presence_word`,
+  and the statement that the shipped world paces the source's crowd at
+  0.2 c / (1 + k) for the presence word's k (the world file unchanged), so
+  the pin 1.0308 is not readable in this world
+  (`pin_readable_in_the_shipped_world` false); it stands for a world whose
+  crowd paces the age word's k, the design's re-declaration. The map
+  `replicated` points at the Replicator's line
+  ([REPLICATIONS](../../../docs/REPLICATIONS.md)).
