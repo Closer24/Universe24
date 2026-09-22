@@ -15,9 +15,13 @@ Euclidean distances from the openings to the pixel, the reading of
 121 pixels, the visibility between the cosine's bright pixels (y = 35 to
 38, 59 to 61, 82 to 85) and its dark ones (13 to 20, 48 to 50, 70 to 72,
 100 to 107), the bands' centres the count-weighted means of the three
-bright bands; the group pace the first `click` line at `screen_60`,
-`screen_37` and `screen_83`. The host's arithmetic on the counts (the
-cosine, Pearson) is the reading tool's, not the engine's.
+bright bands; the group pace the row's `age` on the first `click` line at
+`screen_60`, `screen_37` and `screen_83` (the row's own clock since its
+re-release at the opening: DETECTOR, the model owner's word of 2026-09-22,
+records 678 and 707 of docs/LOG_2026-09-20.md), the line's tick beside it
+as the record's ordering (GAMEBOARD, the lattice's clock: the re-release
+tick plus the age). The host's arithmetic on the counts (the cosine,
+Pearson) is the reading tool's, not the engine's.
 """
 
 from __future__ import annotations
@@ -93,6 +97,7 @@ def read(run: Path, births: int | None = None) -> dict[str, object]:
         weight = sum(counts[y] for y in span)
         bands[name] = round(sum(y * counts[y] for y in span) / weight, 2) if weight else None
     first_click: dict[str, int | None] = {f"screen_{y}": None for y in PACE_PIXELS}
+    first_age: dict[str, int | None] = {f"screen_{y}": None for y in PACE_PIXELS}
     with (run / "events.jsonl").open(encoding="utf-8") as stream:
         for line in stream:
             if '"click"' not in line:
@@ -103,6 +108,7 @@ def read(run: Path, births: int | None = None) -> dict[str, object]:
             detector = event.get("detector")
             if detector in first_click and first_click[detector] is None:
                 first_click[detector] = int(event["tick"])
+                first_age[detector] = int(event["age"]) if "age" in event else None
             if all(v is not None for v in first_click.values()):
                 break
     books = record["audit"][-1]["families"][family["name"]]
@@ -128,9 +134,11 @@ def read(run: Path, births: int | None = None) -> dict[str, object]:
             "dark_counts": dark,
             "dark_max": max(dark),
             "bands": bands,
-            "first_click_tick": first_click,
+            "first_click_age": first_age,
         },
         "GAMEBOARD": {
+            "first_click_tick": first_click,
+            "first_click_tick_kind": "the lattice's clock: the record's ordering, the re-release tick plus the row's age",
             "wall_completions": wall,
             "face_completions": faces,
             "books_at_end": {
