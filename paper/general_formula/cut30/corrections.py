@@ -383,6 +383,269 @@ CORRECTIONS = [
         "a computation \\cite{checks}, not a run, and a consequence of the postulate until the six operations are shown to force it.",
         "a computation \\cite{checks}, not a run, and a consequence of the postulate.",
     ),
+    # The owner's review of the 30 pages (2026-09-22; his word "go"): the
+    # writer's part of the five must-fix items. (1) The Gleason theorem is
+    # about the ideal reading; the built click violates hypothesis (a) by the
+    # tables' rounding (C[1]^2 + S[1]^2 = 65650 at N = 64, a part in 276), the
+    # sentence the generator's cut dropped restored with the norm range as the
+    # error bound; and the power's window read from the click cells is a
+    # read-back of an engine that carries the square, an implementation check
+    # and not evidence about nature. (3) Tsirelson's bound with the tables'
+    # term. (4) hbar under the paper's own dictionary. The age bounded.
+    (
+        "review (1): the power's window an implementation check; the tables' violation of (a) restored",
+        "its upper from $\\Nphi = 128$, containing $2$ and excluding $1$ and $3$. The two-slit clicks",
+        "its upper from $\\Nphi = 128$, containing $2$ and excluding $1$ and $3$. These windows are read back from the built click, which carries the square: a check that the implementation is the form of Theorem~\\ref{th:gleason}, no evidence about nature's power (Table~\\ref{tab:nature}, row 2c). The theorem is about the ideal reading; the built click is this form to the tables' rounding, a record's total over the $64$ birth phases from $65448/65536$ to $65773/65536$, the tables' violation of hypothesis (a) (at $\\Nphi = 64$, $C[1]^2 + S[1]^2 = 65650$; the extreme a part in $276$), the norm range of Appendix~\\ref{app:technical} the error bound. The two-slit clicks",
+    ),
+    (
+        "review (1): the k = 1 and k = 3 aside out (an implementation check needs no counterfactual)",
+        "both windows contain $2$ and exclude $1$ and $3$ ($k = 1$ gives $56/8$ and $23, 9, 9, 23$; $k = 3$ gives $64/0$ and $30, 2, 2, 30$).",
+        "both windows contain $2$ and exclude $1$ and $3$.",
+    ),
+    (
+        "review (1): the introduction's window sentence",
+        "which pinned the power of the click's weight to a window containing $2$ before the form was proved;",
+        "whose window for the click's power, containing $2$, was read back from the built click before the form was proved, a check of the implementation;",
+    ),
+    (
+        "review (1): what excludes the phase-blind detector is interference, not the register alone",
+        "The algebra admits the phase-blind detector; what excludes it is the register.",
+        "The algebra admits the phase-blind detector; what excludes it is interference, nature's (Table~\\ref{tab:nature}, row 2a) and, for the implementation, the built click's.",
+    ),
+    (
+        "review (2): Theorem 3 on the quotient that forgets the age, for the fixed event history (the derivation mathematician's wording, 2026-09-22)",
+        "For an interval without a click, an end at a face or the border, or a collision, $M \\circ R \\circ S \\circ F$ is an injective $\\Z$-linear map from $\\bigoplus_r M_r$ to $\\bigoplus_r M_r$ on the rows' weights, multiplicities and phases, the GameBoard's state alone: no rule of the interval deletes them, and the state at any interval between two clicks determines them at the birth. A row's age is its count of intervals since its last event (Definition~\\ref{def:rules}), so a split, an event, restarts it at $0$ by that definition; the age before the event is read by no rule and is no part of the state after it. The click is the one deletion.",
+        "Let $Q$ be the quotient of $\\bigoplus_r M_r$ that forgets the age (rows differing only in their age identified), and fix the event history of the record, the intervals and Nodes of its births, splits, rotations and re-emissions, which the record keeps. For an interval without a click, an end at a face or the border, or a collision, $M \\circ R \\circ S \\circ F$ induces an injective $\\Z$-linear map of $Q$ into itself: no rule of the interval deletes a weight, a multiplicity or a phase, and the state at any interval between two clicks, with the history, determines them at the birth. The age is not a coordinate of $Q$ but a function of the history, the current interval less the interval of the row's last event; a split restarts it at $0$ by the definition of age (Definition~\\ref{def:rules}) and forgets nothing, since the interval of the split is in the history; the click is the one deletion.",
+    ),
+    (
+        "review (3): Tsirelson's bound with the tables' term in the discussion",
+        "Tsirelson's bound to $8/\\Nphi$, Young's spacing, the attained value of $c$,",
+        "Tsirelson's bound to $8/\\Nphi$ plus the tables' $0.0444$ ($2\\sqrt2$ in the joint limit of $\\Nphi$ and $N_t$), Young's spacing, the attained value of $c$,",
+    ),
+    (
+        "review (4): hbar under the dictionary h = h_q N",
+        "with $\\hbar = h\\Nphi/(2\\pi)$",
+        "with $\\hbar = h/(2\\pi) = h_q\\Nphi/(2\\pi)$",
+    ),
+    (
+        "review (7): the age bounded",
+        "a row's age (the rate $1$, no wall)",
+        "a row's age (the rate $1$, no wall; bounded by the family's lifetime and the run)",
+    ),
+    # The page count: six trims of duplicated or narrative text, no claim.
+    (
+        "page count: the Courant sentence repeated in the positioning paragraph",
+        "the pace $1/\\sqrt3$ is the cubic lattice's Courant bound \\cite{cfl1928} and the lattice Boltzmann sound speed \\cite{qian1992}; the transport",
+        "the transport",
+    ),
+    (
+        "page count: the visibility clause of the limit paragraph",
+        "the Born kernel $\\cos\\theta$ is the first of them, and the visibility of two rows is $\\mathcal K(\\theta)/\\mathcal K(0)$.",
+        "the Born kernel $\\cos\\theta$ is the first of them.",
+    ),
+    (
+        "page count: the clock's word as its fact",
+        "The owner's word of 2026-09-21 (record 394 \\cite{log}) chose the age moment as the clock's word, entered as an assumption of the law (P9) and not as a derivation, where the law as built counts the presence by default and the age moment on an entry that reads the age, the default to follow the word; the presence word stays in the record as the alternative refuted on the form.",
+        "The age moment is the clock's word, an assumption of the law (P9; record 394 \\cite{log}), not a derivation; the law as built counts the presence by default and the age moment on an entry that reads the age; the presence word is the alternative refuted on the form.",
+    ),
+    (
+        "page count: G's makeup said twice in Section 4",
+        "Derived from the update rules in the shell mean, $G$ named; $G$ is a formula of the release rate, the fan and the width, and the width $N_w$ is an input, a choice of units (Table~\\ref{tab:ledger}).",
+        "Derived from the update rules in the shell mean, $G$ named, the width $N_w$ an input, a choice of units (Table~\\ref{tab:ledger}).",
+    ),
+    (
+        "page count: series K's numbers repeated outside Table 2",
+        "blind to the crowd (series K, registered: the mean age $89.40$ in every world, the difference $0.00$).",
+        "blind to the crowd (series K, Table~\\ref{tab:checks}).",
+    ),
+    (
+        "page count: the cone example of the introduction",
+        "explained through $8192$ and beyond; the pace $c = 1/\\sqrt3$ came from a cone world in which two rows on different digital lines reached their counters at the same age.",
+        "explained through $8192$ and beyond.",
+    ),
+    (
+        "page count: the limits paragraph's repeats",
+        "Tsirelson's value is a limit of the two terms of Theorem~\\ref{th:bell}; the light cone is the octahedron scaled by the age, isotropic within $1/T_D$; the content and $\\sum w^2/\\mathtt m$ are conserved exactly, the offered norm only within the tables' rounding.",
+        "The content and $\\sum w^2/\\mathtt m$ are conserved exactly, the offered norm only within the tables' rounding.",
+    ),
+    (
+        "page count and review (1): what the runs support, without the power's window",
+        "After a detector the simulator reads the pace and its isotropy, the click's cells and the power's window, $S$ at four grains, the interference of one record, GHZ's triples, Malus's law and the clock's form at two distances, each inside an expectation written before the run (Table~\\ref{tab:checks}); nothing of the GameBoard's state is read as a measurement.",
+        "After a detector the simulator reads what Table~\\ref{tab:checks} lists, each inside an expectation written before the run; nothing of the GameBoard's state is read as a measurement.",
+    ),
+    (
+        "review (1): the introduction's map of results without the power's window",
+        "the click's cells and the power's window, $S$ at four grains,",
+        "the click's cells, $S$ at four grains,",
+    ),
+    (
+        "page count: the crossing rule's counts are the ledger's",
+        "the crossing rule's tests read $k + 55/32$ rows per $k$ intervals toward a moving source, $k - 55/32$ away and $k$ at rest. These are",
+        "the crossing rule's tests read their pinned counts. These are",
+    ),
+    (
+        "page count: the two loophole-free experiments the model cannot compare",
+        "the loophole-free \\cite{hensen2015} excludes no $\\Nphi$; \\cite{giustina2015,shalm2015} report a quantity whose comparison needs a detector efficiency the model lacks.",
+        "the loophole-free \\cite{hensen2015} excludes no $\\Nphi$.",
+    ),
+    (
+        "page count: Section 7's opening repeats the click's definition",
+        "For a record with arms at two rotated sets $A$ and $B$ the cells are the joint outcomes, the weights are Eq.~\\eqref{eq:joint}, the rungs Eq.~\\eqref{eq:rung}, and the record is gathered once when the rows at both arms have ended. The correlation",
+        "The correlation",
+    ),
+    # Theorem 3 restated on the quotient that forgets the age (the derivation
+    # mathematician's wording): the proof, the introduction, the ledger and
+    # the discussion say the same. Table 3's rows 2a, 2b and 2c carry the
+    # register's criterion (the chief physicist's lines); 2c's verdict is
+    # NOT COMPARED, the power's window an implementation gate; the tallies
+    # follow (three PASS, a fourth under the clock's word, one NOT COMPARED).
+    (
+        "review (2): the proof's F on Q",
+        "$F$ maps a basis element to a basis element and is injective because the age is kept whole: $(D, \\tau) \\mapsto (D, \\tau+1)$ is injective and the Node offset is a function of $(D, \\tau)$.",
+        "$F$ maps a basis element of $Q$ to a basis element, the Node moved by an offset that is a function of $D$ and of the age, the history's; with the history fixed it is injective on the basis.",
+    ),
+    (
+        "review (2): the proof's S on Q and the record as the history",
+        "on the weights, multiplicities and phases it is injective by Theorem~\\ref{th:isometry} (the conjugate transpose inverts it), and the age it restarts is, by definition, the count since this event. (The engine's record of the event, a host diagnostic read by no rule and compared with nothing, keeps the age the row arrived with for the books and the replay; the statement does not use it.)",
+        "on $Q$ it is injective by Theorem~\\ref{th:isometry} (the conjugate transpose inverts it on the weights, multiplicities and phases); on $Q$ there are no two rows differing only in age, and their ages are the history's, the count since this event. (The engine's record of the event, a host diagnostic read by no rule and compared with nothing, is the history the statement fixes; it keeps the age the row arrived with for the books and the replay.)",
+    ),
+    (
+        "review (2): the introduction's sentence on the injective interval",
+        "every step of the linear block is injective on the rows' weights, multiplicities and phases, the GameBoard's state alone (Theorem~\\ref{th:bijection}); the click is the one deletion.",
+        "every step of the linear block is injective on the rows' weights, multiplicities and phases for the event history the record keeps (Theorem~\\ref{th:bijection}); the click is the one deletion.",
+    ),
+    (
+        "review (2): the ledger's row",
+        "The split an isometry; the interval injective on the amplitudes & the six operations & none & exact &",
+        "The split an isometry; the interval injective on the amplitudes for a fixed event history & the six operations & none & exact &",
+    ),
+    (
+        "review (2): the discussion's list of what is proved",
+        "the split's isometry and the injectivity of the interval on the rows' weights, multiplicities and phases; the pace of every direction",
+        "the split's isometry and the injectivity of the interval on the rows' weights, multiplicities and phases for a fixed event history; the pace of every direction",
+    ),
+    (
+        "review (5): Table 3's row 2a with the register's criterion",
+        "2a & Two-slit visibility of one quantum at a time: $0.98$ \\cite{grangier1986} & $0.966$ in the clicks under the birth wheel, $4096$ births (L2b) & FAIL by $0.014$; the cause named, the fan's grain \\\\",
+        "2a & Two-slit visibility of one quantum at a time: $0.98$ \\cite{grangier1986}, the ideal $1$; the criterion the clicks' visibility $(I_{\\max} - I_{\\min})/(I_{\\max} + I_{\\min})$, no apparatus model & $0.966$ in the clicks of \\texttt{slits\\_huygens} (the golden-rate wheel, $4096$ births under the exact phase; L2b), $0.954$ in the record's weights & FAIL: $0.014$ below the measured, $0.034$ below the ideal; the cause named, the screen's fan's grain (the pin derived for the screen's fan, not this world's) \\\\",
+    ),
+    (
+        "review (5): Table 3's row 2b with the register's criterion",
+        "2b & Mach-Zehnder visibility: $0.98$ & the clicks $64/0$ over $64$ births, the dark port $0$ & PASS: the visibility $1.000$ in the clicks, above $0.98$ \\\\",
+        "2b & Mach-Zehnder visibility: $0.98$; the criterion the offers' visibility $(D_1 - D_2)/(D_1 + D_2)$ of \\texttt{mz\\_equal}, no apparatus model & the offers $1681/1682$ and $1/1682$; the clicks $64/0$ over $64$ births & PASS: $0.9988$, above $0.98$ \\\\",
+    ),
+    (
+        "review (5): Table 3's row 2c not compared",
+        "& the power's window $[1.917, 2.012)$ from the click cells & PASS on the power: the window contains $2$; $\\kappa$ an observable the law does not compute here \\\\",
+        "& the power's window $[1.917, 2.012)$ from the click cells, a read-back of the built click, which carries the square & NOT COMPARED ($\\kappa$ not computed): the window a gate on the implementation, no evidence about nature; no three-opening world is registered \\\\",
+    ),
+    (
+        "review (5): the verdict words",
+        "BOUND where the comparison bounds a free parameter.",
+        "BOUND where the comparison bounds a free parameter, NOT COMPARED where the law does not compute the observable.",
+    ),
+    (
+        "review (5): Table 3's tally",
+        "Four PASS (each replicated by the second runner \\cite{replications}) and a fifth under the clock's assumed word (row 12); twelve FAIL: seven in a registered run, four by a pin without its run (not in this table), one a declared input refuted by nature (8c); two BOUND (5a; 7a on a declared input).",
+        "Three PASS (each replicated by the second runner \\cite{replications}) and a fourth under the clock's assumed word (row 12); twelve FAIL: seven in a registered run, four by a pin without its run (not in this table), one a declared input refuted by nature (8c); two BOUND (5a; 7a on a declared input); one NOT COMPARED (2c).",
+    ),
+    (
+        "review (5): the abstract's tally",
+        "nature four readings pass, a fifth under the clock's assumed word, and twelve fail, the failures the law's own.",
+        "nature three readings pass, a fourth under the clock's assumed word, twelve fail and one is not compared, the failures the law's own.",
+    ),
+    (
+        "review (5): the discussion's tally",
+        "Against nature four readings pass, a fifth under the clock's assumed word, and twelve fail",
+        "Against nature three readings pass, a fourth under the clock's assumed word, twelve fail and one is not compared",
+    ),
+    (
+        "review (5) and the page count: the three-slit sentence of Section 6 is Table 3's row 2c",
+        "Theorem~\\ref{th:bell}. Sinha et al.'s three-slit test read the third-order term $\\kappa = 0.0064 \\pm 0.0119$ \\cite{sinha2010}; the click's form, a quadratic, gives $\\kappa = 0$ exactly, and its power's window contains $2$ (Table~\\ref{tab:nature}, row 2c).",
+        "Theorem~\\ref{th:bell}.",
+    ),
+    # The page count after the owner's five: four asides whose numbers Table 2
+    # carries, no claim moved.
+    (
+        "page count: series S's numbers are Table 2's",
+        "(series S: the muon's $64$th self-creation at $70$ and $124$ intervals against $64$ at rest, the face clicks $369$ and $345$ against $392$, inside their pins)",
+        "(series S, Table~\\ref{tab:checks}, inside their pins)",
+    ),
+    (
+        "page count: the Lorentz row's in-hand clause",
+        "their entry into the law is in hand on the owner's word of 2026-09-22, the runs off the one axis pending, and this text claims nothing of it until they land",
+        "their entry into the law in hand (the owner's word of 2026-09-22), the runs off the one axis pending, nothing claimed until they land",
+    ),
+    (
+        "page count: the Newton row's numbers are Table 2's",
+        "Newton's inverse square closed after a detector (the equivalence measured, series D3; the $1/r$ form's scale symmetry consistent, $1.997$ for $2.00 \\pm 0.18$, on loops that are not similar figures; $G$ not read), and Poisson's law measured",
+        "Newton's inverse square closed after a detector (the equivalence measured and the $1/r$ form's scale symmetry consistent, series D3, Table~\\ref{tab:checks}; $G$ not read), and Poisson's law measured",
+    ),
+    (
+        "page count: row 3's aside",
+        "(series G2, the pointer's $z$; reproduced at head as a verdict with the digits moved, $-0.104$, record 408 \\cite{log})",
+        "(series G2, the pointer's $z$; $-0.104$ at head, record 408 \\cite{log})",
+    ),
+    (
+        "page count: the masses row",
+        "every equal split is a fixed point and none is selected; the law gives floors only",
+        "every equal split is a fixed point; the law gives floors only",
+    ),
+    (
+        "page count: the hypotheses' sentence",
+        "the hypotheses under their identities with what would close and what would refute each, is on the tree",
+        "the hypotheses under their identities, is on the tree",
+    ),
+    (
+        "page count: the earlier testbed",
+        "The earlier testbed of this program \\cite{paper1}, with its draw and its return, is history: no rule of it survives here.",
+        "The earlier testbed of this program \\cite{paper1} is history: no rule of it survives here.",
+    ),
+    (
+        "page count: row 4b's aside",
+        "(series G2, read before the crossing rule; not reproduced at head, the re-run pending under the age word)",
+        "(series G2, before the crossing rule; the re-run at head pending)",
+    ),
+    (
+        "page count: the three decisive failures are named once, in the prediction paragraph",
+        "twelve fail and one is not compared (Table~\\ref{tab:nature}), and the three decisive failures, the unslowed clock in motion, light unbent beside a mass and the coasting deceleration, each refute the law as declared.",
+        "twelve fail and one is not compared (Table~\\ref{tab:nature}); each failure refutes the law as declared.",
+    ),
+    (
+        "page count: Table 4's Newton cell",
+        "Newton's inverse square closed after a detector (the equivalence measured and the $1/r$ form's scale symmetry consistent, series D3, Table~\\ref{tab:checks}; $G$ not read), and Poisson's law measured &",
+        "Newton's inverse square closed after a detector (the equivalence measured, the scale symmetry consistent, series D3, Table~\\ref{tab:checks}; $G$ not read), and Poisson's law measured &",
+    ),
+    (
+        "page count: Table 4's Lorentz cell",
+        "against the same pins; their entry into the law in hand (the owner's word of 2026-09-22), the runs off the one axis pending, nothing claimed until they land \\\\",
+        "against the same pins, their entry into the law in hand (the owner's word of 2026-09-22), the off-axis runs pending \\\\",
+    ),
+    (
+        "page count: Table 4's masses cell",
+        "The values of the masses: every rule is linear in the content, so every equal split is a fixed point; the law gives floors only &",
+        "The masses' values: every rule is linear in the content, so every equal split is a fixed point; the law gives floors only &",
+    ),
+    (
+        "page count: Table 4's harmonic cell",
+        "The harmonic constants of the click (the axioms admit every Galois conjugate); the circle read as position, its transform as momentum (a hypothesis, Section~\\ref{sec:measurement}) &",
+        "The click's harmonic constants (the axioms admit every Galois conjugate); the circle as position, its transform as momentum (a hypothesis, Section~\\ref{sec:measurement}) &",
+    ),
+    (
+        "page count: Table 4's Newton cell, the detail in Section 4 and Table 2",
+        "Newton's inverse square closed after a detector (the equivalence measured, the scale symmetry consistent, series D3, Table~\\ref{tab:checks}; $G$ not read), and Poisson's law measured &",
+        "Newton's inverse square and Poisson's law closed after a detector ($G$ not read; series D3, Table~\\ref{tab:checks}) &",
+    ),
+    (
+        "page count: Table 4's masses cell, shorter",
+        "The masses' values: every rule is linear in the content, so every equal split is a fixed point; the law gives floors only &",
+        "The masses' values: every rule is linear in the content, every equal split a fixed point; floors only &",
+    ),
+    (
+        "page count: Table 4's harmonic cell, shorter",
+        "The click's harmonic constants (the axioms admit every Galois conjugate); the circle as position, its transform as momentum (a hypothesis, Section~\\ref{sec:measurement}) &",
+        "The click's harmonic constants (the axioms admit every Galois conjugate); the circle as position (a hypothesis, Section~\\ref{sec:measurement}) &",
+    ),
 ]
 
 

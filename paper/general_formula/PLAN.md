@@ -3160,3 +3160,58 @@ cut30/corrections.py: the ledger's no-dispersion row closes its third
 column on the fact (P9, not forced, the derivation's 27), and the GRB
 sentence stays a consequence of the postulate without the "until"
 clause. No number moved; 30 pages held.
+
+## The owner's review of the thirty pages (2026-09-22, his five must-fix items, his word "go")
+
+The owner read the thirty pages and sent seven points; the Boss relayed
+his word: the five that are the paper's own errors go without waiting
+(record 629), the two decisions he keeps (the title; the S(N) figure at
+half width) move on nothing but his word, and stay as they are. The five,
+each one entry of cut30/corrections.py, none by hand in main.tex:
+
+1. The Gleason theorem and the tables. The theorem is about the ideal
+   reading; the built click is that form to the tables' rounding, the
+   record's total over the 64 birth phases from 65448/65536 to
+   65773/65536, the tables' violation of hypothesis (a) (at N = 64,
+   C[1]^2 + S[1]^2 = 65650; the extreme a part in 276), the norm range of
+   the appendix the error bound: the sentence the generator's cut had
+   dropped, restored. The power's windows read from the click cells are a
+   read-back of the built click, which carries the square: a check that
+   the implementation is the theorem's form, no evidence about nature's
+   power. The introduction's window sentence, the map of results and the
+   discussion's "what the runs support" say the same; the k = 1, k = 3
+   counterfactual goes (an implementation check needs none); what
+   excludes the phase-blind detector is interference, nature's (row 2a)
+   and the built click's.
+2. Theorem 3 (th:bijection), false as printed because the age sat in the
+   basis and a split resets it: restated in the derivation mathematician's
+   wording on the quotient Q that forgets the age, for the fixed event
+   history the record keeps, the age a function of the history; rung 1.
+   The proof follows (F and S on Q, the engine's record the history the
+   statement fixes), and the introduction, the ledger's row and the
+   discussion's list say "for a fixed event history".
+3. Tsirelson in the discussion: 8/N plus the tables' 0.0444, 2 sqrt 2 in
+   the joint limit of N and N_t, no longer "8/N" against the fixed-table
+   limit 186034/65773 of Theorem 6.
+4. hbar = h / (2 pi) = h_q N / (2 pi) under the paper's own dictionary
+   h = h_q N; the age bounded by the family's lifetime and the run.
+5. Table 3's rows 2a, 2b, 2c in the chief physicist's lines, the
+   register's criterion named on each (the clicks' visibility of
+   slits_huygens against 0.98 and the ideal 1; the offers' visibility of
+   mz_equal, 0.9988; no apparatus model), and 2c's verdict NOT COMPARED
+   (kappa not computed): the window an implementation gate, no evidence
+   about nature, no three-opening world registered. The verdict words
+   gain NOT COMPARED; the tally is three PASS, a fourth under the clock's
+   word, twelve FAIL, two BOUND, one NOT COMPARED, in the caption, the
+   abstract and the discussion; Section 6's three-slit sentence is the
+   row.
+
+The page count: 30 held (the body through 25, the references 26 to 27,
+the appendices 28 to 30) by trims of text whose numbers Table 2 carries
+(series S's and D3's numbers in Section 9, Table 4's cells, rows 3 and 4b's
+asides), of the repeated list of the three decisive failures, and of the
+Courant, visibility, clock's-word, cone, crossing-count and Section 7
+repeats; no claim moved. NUMBERS.md carries the new numbers with their
+kinds. The Highlights line, NATURE.md and DERIVATIONS_BEAM are the
+Boss's, the physicist's and the mathematician's commits; the paper
+follows them.
