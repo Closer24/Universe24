@@ -220,7 +220,8 @@ def figure_s_of_n(summary: dict, checks, output: Path) -> None:
     ax.set_ylabel("S at the CHSH labels", fontsize=8)
     ax.tick_params(labelsize=7)
     style(ax)
-    ax.legend(frameon=False, fontsize=6, loc="lower right")
+    # The legend at the lower left, clear of the inset (a referee's read of 2026-09-22).
+    ax.legend(frameon=False, fontsize=6, loc="lower left")
     # The inset: the plateau and its end, where the main panel cannot resolve them.
     powers = [n for n in ns if n & (n - 1) == 0 and n >= 512]
     inset = ax.inset_axes([0.38, 0.33, 0.58, 0.36])
