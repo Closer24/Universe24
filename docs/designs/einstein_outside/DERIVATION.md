@@ -73,6 +73,9 @@ its limit. Every formula of section II follows as the Outside step obtained
 from the Inside step by the conversion, to a stated order; where the
 Inside step by the conversion does not give Einstein's or Newton's
 formula, the row says FAIL or NEITHER with the one line that decides.
+The words (the owner, 07:35Z): a form of Einstein's or Newton's
+FOLLOWS or is RECOVERED, never "derived"; "derived" is kept for what
+was not put in (section III sorts them).
 
 (O) *The order of every formula.* OUTSIDE first: the quantity named
 with its detector and its place, and Einstein's or Newton's formula for
