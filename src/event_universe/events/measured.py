@@ -272,6 +272,7 @@ class CountTable:
         index: int | None = None,
         values: list[int] | None = None,
         denominators: list[int] | None = None,
+        centred: bool = False,
     ) -> list[int]:
         """The one loop: every row of the count `name` (of one `index` when
         given) gains its rate, `row.numerator x values[k]` (`values` per
@@ -281,8 +282,11 @@ class CountTable:
         denominator (`denominators[k]` when the caller hands it: the step's
         divisor), and the count gained is
         the whole part the accumulator then holds, capped at `at_most`; a
-        row idle at zero is left as it is by a rate of 0. Returns the counts
-        gained in row order."""
+        row idle at zero is left as it is by a rate of 0. `centred` (the
+        body's step rows under the world key `centred_step`,
+        `centred-step-v1`; False for every other count): the nearest
+        whole number in place of the whole part (`core.integer.by_drive`).
+        Returns the counts gained in row order."""
         rows = self.of(name, index)
         found: list[int] = []
         for k, row in enumerate(rows):
@@ -291,7 +295,7 @@ class CountTable:
             if row.idle_at_zero and rate == 0:
                 found.append(0)
                 continue
-            count, row.accumulator = by_drive(row.accumulator, rate, denominator, row.at_most)
+            count, row.accumulator = by_drive(row.accumulator, rate, denominator, row.at_most, centred)
             row.denominator = denominator
             found.append(count)
         return found

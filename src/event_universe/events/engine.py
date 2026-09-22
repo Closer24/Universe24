@@ -882,7 +882,10 @@ class NatureBeamSimulation:
             for axis in range(3):
                 if rates[axis]:
                     bounded(abs(entry.drive[axis]) + abs(rates[axis]), entry, "drive under drive-b-v1")
-            chosen, sign, drives = by_line(entry.drive, rates, wall)
+            # centred-step-v1: the step at half the wall under the world key
+            # (docs/designs/atom_give/CENTRED_STEP.md section 1); False,
+            # the whole wall, without it.
+            chosen, sign, drives = by_line(entry.drive, rates, wall, self.world.centred_step)
             entry.drive = drives
             if chosen is None:
                 return
@@ -898,10 +901,14 @@ class NatureBeamSimulation:
                 (turns[axis],) = entry.counts.advance("action", index=axis, values=[abs(momentum)])
             fired = (axis, momentum, sign)
         else:
+            # centred-step-v1: the count the nearest whole number under the
+            # world key (docs/designs/atom_give/CENTRED_STEP.md section 1);
+            # the whole part, as BEAM_LAW note 17 has it, without it.
             counts = entry.counts.advance(
                 "drive",
                 values=entry.momentum,
                 denominators=[step_divisor(p, content, self.world.width, cap) for p in entry.momentum],
+                centred=self.world.centred_step,
             )
             for axis in range(3):
                 momentum = entry.momentum[axis]
