@@ -57,3 +57,14 @@ the box 41^3 open, the body at (20, 20, 20); the escape through a face is the DE
     (observed, not proved: an axis over the wall waits at most while the two others are further over)
     the check before every addition: |drive_a| + |p_a| Q within 2^62 - 1 (`bounded`), else refused naming the rule;
     the wall's two products Q^2 S M and |p|_1 T_h tested by division before they are formed, at load and at every push.
+
+(G) The relation to the rows' triple (momentum_pair under optical-v1 and massive-rows-v1, the reviewer's M1):
+    the triple's Euclidean pace |p|_2 / E', E' = isqrt(E'_0^2 + 3 p . p), a root on the state (rung 1, an identity);
+    drive-b's |p|_2 Q / (Q^2 S M + |p|_1 T_h), linear in |p|_1, no root (form B's v = p / (m + p / c), DERIVATIONS 4.4).
+    p = [64, 0, 0]: |p|_2 = 64.0, |p|_2 / (Q S M) = 0.0156: drive-b 0.0152, the triple 0.0156 (E' = 4097), the ratio 0.974
+    p = [6000, 0, 0]: |p|_2 = 6000.0, |p|_2 / (Q S M) = 1.4648: drive-b 0.4164, the triple 0.5372 (E' = 11170), the ratio 0.775
+    p = [3000, 3000, 0]: |p|_2 = 4242.6, |p|_2 / (Q S M) = 1.0358: drive-b 0.2945, the triple 0.5044 (E' = 8412), the ratio 0.584
+    p = [2000, 2000, 2000]: |p|_2 = 3464.1, |p|_2 / (Q S M) = 0.8457: drive-b 0.2404, the triple 0.4769 (E' = 7264), the ratio 0.504
+    p = [4243, 4243, 0]: |p|_2 = 6000.5, |p|_2 / (Q S M) = 1.4650: drive-b 0.3212, the triple 0.5372 (E' = 11171), the ratio 0.598
+    the caps: drive-b Q / T_h = 0.5818 Euclidean on a heading (Manhattan-isotropic: 0.4114 on the plane diagonal, 0.3359 on the cube's); the triple 1 / sqrt 3 = 0.5774 on every direction
+    under covariant_readings both give |p|_2 / E' Euclidean per lattice interval on every direction ((E) above: 0.2481 three times).

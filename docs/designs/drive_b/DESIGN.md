@@ -3,8 +3,10 @@
 The Drive Builder's design note, 2026-09-22, on the model owner's approval of
 form B ("Form B is approved, go on it", record 652 of
 [docs/LOG_2026-09-20.md](../../LOG_2026-09-20.md), through the Boss). Design
-before build: nothing of this note is in the engine; the build starts on the
-physics-rule reviewer's ADMISSIBLE. Every number below is a HOST computation
+before build: the physics-rule reviewer read the note at 6e245ddd and found it
+ADMISSIBLE WITH CORRECTIONS (the Boss, 2026-09-22, 04:15Z); his must-fix M1
+(section 7) and should-fixes S1 (section 3), S2 (section 4) and S3 (section
+2) are folded in here, in the build's first commit. Every number below is a HOST computation
 of the count rule ([drive_b_map.py](drive_b_map.py), its output
 [drive_b_map.out](drive_b_map.out)) or a derived pin, labelled GAMEBOARD or
 DETECTOR where it names a reading; no run of the engine was made.
@@ -167,7 +169,10 @@ the rule (the neutron star's refusal of record 342 is of this kind).
           the other accumulators keep their overflow for the following self-creations
 
 - A component of 0 leaves its accumulator as it is and never steps (note
-  17's rule: a momentum of 0 never steps); **p** = 0 never steps.
+  17's rule: a momentum of 0 never steps); **p** = 0 never steps. Kept so
+  for byte identity in form with `main`'s rule (S3): on one axis the key's
+  count is `main`'s `by_drive` with both the rate and the wall scaled, the
+  same fires from an empty accumulator, and an idle axis is idle in both.
 - The signed accumulator cancels a reversal first (record 126): a momentum
   reversed by a hand-over discharges nothing toward the partner.
 - The refused step (a contact) and the escape are the chosen axis's step
@@ -205,6 +210,13 @@ ones the table has (`Count("drive", "momentum", ...)`, the accumulators
    the order; one Euclidean division with the remainder kept. No root at run
    time (`T_h` at load), no float, no direction read, no table beyond the
    counts table's rows.
+Newton's limit (S1): `|p|_2 / (Q S M)`, isotropic, holds to zeroth order in
+`v = |p|_2 / (Q S M)`; the Manhattan cap makes a first-order anisotropy, the
+pace's ratio to Newton's being `1 / (1 + (|p|_1 / |p|_2) (T_h / Q) v)`, so
+that two bodies of one `|p|_2` differ by `(|p|_1 / |p|_2 - 1) x 1.72 v`, at
+most `0.73 x 1.72 v` between a heading and the cube diagonal (the map's (D)
+at `v = 1 / 64`: 0.97385 on the heading against 0.97067 on the cube's).
+
 3. **Local: PASS.** Reads the body's own record (**p**, M, the three
    accumulators) and the world's constants; writes its own record; the
    destination's occupant read as today (`_contact`); fixed work (three
@@ -247,9 +259,15 @@ no number.
 GAMEBOARD readings declared beside the pins (diagnostics, never compared
 with nature): every `step` line's Node within one Link of the line of **p**
 (0.707 on the plane, 0.816 on the cube); the `drive` accumulators after
-every step below `W + 2 max_a |p_a| Q` (the map's (F): 1.275 W at most on
-the cube; observed in the replays, not proved, and checked against the
-working bound before every addition); `fast_steps` 0 on the axis world.
+every step below `3 W` (S2, proved: let E be the sum over the axes of the
+excess `max(|drive_a| - W, 0)`; a self-creation's additions raise E by at
+most `|p|_1 Q < W` (since `T_h > Q`); if an axis is then over the wall the
+largest excess e* fires, and E falls by W when `e* >= W`, or to at most
+`2 e* < 2 W` when `e* < W` (the other two excesses are each at most e*);
+so from E = 0, E < 2 W after every self-creation and every `|drive_a| <
+3 W`), and observed below `W + 2 max_a |p_a| Q` (the map's (F): 1.275 W at
+most on the cube); the working-bound check before every addition is the
+declared guard in the code; `fast_steps` 0 on the axis world.
 
 The flight table's rows enter as the cap the body stays below (the map's
 (C)): the rows' Euclidean pace on the line of D, `|D| Q / T_D`, is 0.5818,
@@ -335,7 +353,35 @@ Each fails on `main` (no key, no primitive) and passes on the build.
   3.1), lorentz-v1, any re-registration of the movers, the covariant
   off-axis worlds (the chief physicist's, record 642 (c)).
 
-## 7. What stays with the owner and the reviewer
+## 7. The relation to the rows' triple (`momentum_pair`, the massive rows), the reviewer's M1
+
+Two dispersions are in the tree, both rung 1, and they are NOT one
+construction. The rows' triple (`nature_beam.momentum_pair`, optical-v1's
+verb 3 of PR #702 and the massive rows' pace) takes the wall `2 T(P) d`
+with `T(P) = isqrt(3 |P|^2 Q^2)`, a root of a quadratic form of the state
+taken at run time per pushed row, admitted under optical-v1's identity
+alone (record 631, S5); its body-side reading is the pace `|p|_2 / E'`
+Euclidean with `E' = isqrt(E'_0^2 + 3 p . p)`, isotropic, capped at
+`1 / sqrt 3 = 0.5774` on every direction. drive-b's wall is linear in
+`|p|_1` with no root (form B's `v = p / (m + p / c)`, DERIVATIONS_BEAM
+4.4, the law's letter), capped at `64 / 110 = 0.5818` Euclidean on a
+heading and Manhattan-isotropic off it (0.4114 on the plane diagonal,
+0.3359 on the cube's). The two agree at Newton's limit (the ratio 0.974 at
+`|p|_2 / (Q S M) = 1 / 64`) and at the cap on a heading (0.5818 against
+0.5774), and differ between (the map's (G), M = 64, S = 1, HOST): the
+Euclidean pace 0.4164 against 0.5372 on the axis at `|p|_1 = 6000` (the
+ratio 0.775), 0.2945 against 0.5044 on the plane (0.584), 0.2404 against
+0.4769 on the cube (0.504); at `|p|_2 = 6000` on the plane 0.3212 against
+0.5372. Under `covariant_readings` and the key together they agree: the cap
+off gives `p_a / (Q S M)` per self-creation and the gate's `E'_0 / E'` per
+interval makes `|p|_2 / E'` Euclidean on every direction, the triple's pace
+exactly (the map's (E): 0.2481 on the axis, the plane and the cube). The
+choice this leaves, the body's pace under the law alone (form B's, as the
+owner approved, or the rows' triple, which needs the root), is the chief
+physicist's and the owner's, not the builder's; this build lands form B
+under its key and changes nothing of the triple.
+
+## 8. What stays with the owner and the reviewer
 
 - The cap off the headings is Manhattan-isotropic (`64 / 110` Euclidean on
   every direction), not the flight table's on the body's line: a fast body

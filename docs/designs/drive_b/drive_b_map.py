@@ -300,3 +300,30 @@ print(
 print(
     "    the wall's two products Q^2 S M and |p|_1 T_h tested by division before they are formed, at load and at every push."
 )
+print()
+print(
+    "(G) The relation to the rows' triple (momentum_pair under optical-v1 and massive-rows-v1, the reviewer's M1):"
+)
+print(
+    "    the triple's Euclidean pace |p|_2 / E', E' = isqrt(E'_0^2 + 3 p . p), a root on the state (rung 1, an identity);"
+)
+print(
+    "    drive-b's |p|_2 Q / (Q^2 S M + |p|_1 T_h), linear in |p|_1, no root (form B's v = p / (m + p / c), DERIVATIONS 4.4)."
+)
+E0 = Q * S * M
+for p in ([64, 0, 0], [6000, 0, 0], [3000, 3000, 0], [2000, 2000, 2000], [4243, 4243, 0]):
+    w = Q * Q * S * M + manhattan(p) * T_H
+    energy = math.isqrt(E0 * E0 + 3 * sum(c * c for c in p))
+    b = euclid(p) * Q / w
+    t = euclid(p) / energy
+    print(
+        f"    p = {p}: |p|_2 = {euclid(p):.1f}, |p|_2 / (Q S M) = {euclid(p) / E0:.4f}: drive-b {b:.4f}, the triple {t:.4f}"
+        f" (E' = {energy}), the ratio {b / t:.3f}"
+    )
+print(
+    f"    the caps: drive-b Q / T_h = {Q / T_H:.4f} Euclidean on a heading (Manhattan-isotropic: {euclid([1, 1, 0]) * Q / (2 * T_H):.4f}"
+    f" on the plane diagonal, {euclid([1, 1, 1]) * Q / (3 * T_H):.4f} on the cube's); the triple 1 / sqrt 3 = {1 / math.sqrt(3):.4f} on every direction"
+)
+print(
+    "    under covariant_readings both give |p|_2 / E' Euclidean per lattice interval on every direction ((E) above: 0.2481 three times)."
+)
