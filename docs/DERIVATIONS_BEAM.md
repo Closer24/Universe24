@@ -8015,12 +8015,28 @@ exact on the GameBoard (rung 1):
 - (R3) th:isometry reads the arriving row's weight and phase and
   re-emits by the tables at age 0: no pace enters its statement or its
   proof. th:bijection: the interval's three maps stay injective on
-  weights, multiplicities and phases; for the flight, two rows born at
-  one event with phases `f_0 != f'_0` cannot coincide later in (Node,
-  phase), since the same Node means the same count k of Links crossed
-  and then the phases are `f_0 + k r` and `f'_0 + k r` (r the family's
-  turn per Link), distinct; rows of different families or records are
-  distinct terms already.
+  weights, multiplicities and phases, and the state the injectivity
+  rests on under a state-dependent stride is the row's AGE, which
+  def:rules and th:bijection's statement already carry. On (Node,
+  phase) alone the phase-dependent stride CAN bring two rows of one
+  record together (the physics-rule reviewer's check, 2026-09-22: at N =
+  64, r = 32 on one heading, two rows born at different split events on
+  one line with flight residues `s_A = s_B + T_D N - N_l abs(D)_1 r`,
+  both below the wall, A crossing its Link and B staying, land at the
+  same Node with the same phase and the same residue after the interval:
+  a collision the law's flight, with its constant stride, cannot make).
+  What separates them is the age: rows of one line that reach one (Node,
+  phase) by different strides were born at different ticks and so differ
+  in age, and the age is a component of the state; rows of equal age and
+  equal birth phase share the whole history of the stride and never
+  collide; rows of equal age and different birth phases `f_0 != f'_0`
+  never meet in (Node, phase), since the same Node from the same age
+  means the same count k of Links crossed and then the phases are `f_0 +
+  k r` and `f'_0 + k r` (r the family's turn per Link), distinct; rows of
+  different families or records are distinct terms already. So the
+  theorem holds under the counterexample, on the state as the theorem
+  states it; the argument of the first draft (one birth event) was one
+  case short.
 - (R4) the pace is `(N - f) / N` times the law's `N_l abs(D)_2 / T_D`,
   the factor the same for every direction, so at every f the pace over
   the directions differs by at most `(N - f) / N` of prop:pace's `1 /
@@ -8030,7 +8046,12 @@ exact on the GameBoard (rung 1):
   counterexample multiplies.)
 - (R5) the declared integers of the rule are N_l and T_D (the direction's)
   and N (the circle's, a grain of the law, no family's); no family
-  column is read; f is the record's state, not a declared integer.
+  column is read; f is the record's state, not a declared integer. N is
+  the circle's grain and not a column: f itself is defined on the circle
+  of N steps, and no rule reads f without N, so a flight that reads f
+  reads N with it; and (R5) is read here as its own justification states
+  it, "no family column in the flight", so the refutation does not hang
+  on a reading of the word "declared".
 
 The merge's cancel and the click's interference do not constrain it
 either, for the reason the paper's writer gives and one more: the click
@@ -8067,8 +8088,11 @@ record 165 and 176: a constant-rate component has a closed form
 (`floor(s_0 + r t)`), the exact phase at the click is a function of the
 row's age and direction (24.1 row 24), and a run only confirms; the
 counterexample is of the feedback class (a state-dependent rate, no
-closed form) and would move the click's exact phase off its closed form:
-the method's rule excludes it, again as a choice. (c) The physical
+closed form) and would move the click's exact phase off its closed form
+only in TIME, the arrival tick, never in the phase's value, which counts
+Links (the Mach-Zehnder paragraph above: the fringes, the 64 / 0 and the
+paper's Born form are untouched); the method's rule excludes it, again as
+a choice. (c) The physical
 candidates the writer named do not force it: the retarded field of a
 source with several families (5.1) stays linear and additive under (i)
 and (ii), family by family, and its static Poisson equation holds with a
