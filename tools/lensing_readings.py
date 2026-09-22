@@ -203,6 +203,12 @@ class Reading:
     turned: list[int] = field(default_factory=lambda: [0, 0, 0])
     turned_total: list[int] = field(default_factory=lambda: [0, 0, 0])
     mixed_groups: int = 0
+    # The register's pins of a deciding world of every family under one
+    # wall (the matter block of examples/events/optical/expectations.json,
+    # by the run folder's name): the shift and the arrival with their
+    # brackets; None for the light worlds, whose verdicts are the
+    # derivation's brackets about the control.
+    pins: dict[str, float] | None = None
 
     @property
     def impact(self) -> int:
@@ -431,12 +437,40 @@ def replay_world(reading: Reading, world, light: int, crowd: int | None) -> Repl
     return found
 
 
-def find_runs(root: Path, *, replay: bool = True, window_start: int = WINDOW_START) -> list[Reading]:
+def matter_pins(register: Path | None) -> dict[str, dict[str, float]]:
+    """The register's matter block by world name: the pinned shift and
+    arrival with their brackets (the tool's verdict on a deciding world of
+    every family under one wall; the physics-rule reviewer's S5)."""
+    if register is None or not register.is_file():
+        return {}
+    block = json.loads(register.read_text(encoding="utf-8")).get("matter", {})
+    return {
+        name: {
+            "shift": float(entry["shift"]),
+            "shift_bracket": float(entry["shift_bracket"]),
+            "arrival": float(entry["arrival"]),
+            "arrival_bracket": float(entry["arrival_bracket"]),
+        }
+        for name, entry in block.get("worlds", {}).items()
+    }
+
+
+def find_runs(
+    root: Path,
+    *,
+    replay: bool = True,
+    window_start: int = WINDOW_START,
+    register: Path | None = None,
+) -> list[Reading]:
     found = []
+    pins = matter_pins(register)
     for path in sorted(root.rglob("run.json")):
         record = json.loads(path.read_text(encoding="utf-8"))
         if world_name(str(record.get("model", ""))) is not None:
-            found.append(read_run(path.parent, replay=replay, window_start=window_start))
+            reading = read_run(path.parent, replay=replay, window_start=window_start)
+            # The run folder is named after the world (tools/run_series.py).
+            reading.pins = pins.get(path.parent.parent.name)
+            found.append(reading)
     order = {"control": 0, "mass": 1, "heavy": 2, "near": 3, "lens": 4}
     return sorted(found, key=lambda r: (r.meeting, order.get(r.name, 9), r.name))
 
@@ -592,7 +626,24 @@ def print_space_readings(readings: list[Reading]) -> tuple[int, int]:
             ratio = a.count / base.count if base.count else math.nan
         drate = a.phase_rate - reading.turn
         verdicts = []
-        if reading is not control and base is not None:
+        if reading is not control and base is not None and reading.pins is not None:
+            # A deciding world of every family under one wall: the register's
+            # pins (the shift and the arrival against the control) with
+            # their brackets; the count within the derivation's bracket.
+            pins = reading.pins
+            checks = [
+                (
+                    f"shift {fmt(dy)} against the pin {pins['shift']:+.2f} +- {pins['shift_bracket']:.1f}",
+                    abs(dy - pins["shift"]) <= pins["shift_bracket"],
+                ),
+                ("centroid z", abs(dz) <= CENTROID_BRACKET),
+                (
+                    f"arrival {fmt(dage, 2)} against the pin {pins['arrival']:+.2f} +- {pins['arrival_bracket']:.0f}",
+                    abs(dage - pins["arrival"]) <= pins["arrival_bracket"],
+                ),
+                ("count", abs(ratio - 1.0) <= COUNT_BRACKET),
+            ]
+        elif reading is not control and base is not None:
             checks = [
                 ("centroid y", abs(dy) <= CENTROID_BRACKET),
                 ("centroid z", abs(dz) <= CENTROID_BRACKET),
@@ -600,6 +651,7 @@ def print_space_readings(readings: list[Reading]) -> tuple[int, int]:
                 ("count", abs(ratio - 1.0) <= COUNT_BRACKET),
                 ("phase rate", abs(drate) <= RATE_BRACKET),
             ]
+        if reading is not control and base is not None:
             for label, ok in checks:
                 verdicts.append(f"{label} {verdict(ok)}")
                 inside += ok
@@ -795,8 +847,16 @@ def main(argv: list[str] | None = None) -> int:
         "--no-replay", action="store_true", help="skip the GameBoard replay of every world"
     )
     parser.add_argument("--window-start", type=int, default=WINDOW_START)
+    parser.add_argument(
+        "--register",
+        type=Path,
+        default=None,
+        help="the optical register (expectations.json) whose matter block pins a deciding world by the run folder's name",
+    )
     args = parser.parse_args(argv)
-    readings = find_runs(args.root, replay=not args.no_replay, window_start=args.window_start)
+    readings = find_runs(
+        args.root, replay=not args.no_replay, window_start=args.window_start, register=args.register
+    )
     if not readings:
         print(f"no series K run under {args.root}", file=sys.stderr)
         return 2

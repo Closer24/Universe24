@@ -78,6 +78,155 @@ PINS: dict[str, dict[str, object]] = {
 }
 SHIFT_BRACKET = 0.5
 DELAY_BRACKET = 1.0
+# The deciding worlds of every family under one wall (the chief physicist's
+# design docs/designs/one_wall/EVERY_FAMILY.md section 2, the model owner's
+# "build this with me" of 2026-09-22): series K's geometry at the pair, the
+# mass a quarter of the light pin worlds' (M = 2^14, so that a slow row's
+# turn stays below 0.3 radian), and in place of the light lamp a lamp of a
+# massive family `matter` (quantum 1, massive, momentum_magnitude p = 10 at
+# width 1: E'_0 = Q S M = 64, E' = isqrt(64^2 + 3 x 100) = 66, v^2 = 0.069,
+# the dwell per Node 6.6 intervals) on the heading alone at b = 10, one row
+# per interval from a reservoir of K units (the turn 1); the `matter2` worlds the equivalence
+# (quantum 2, p = 20: E' = 132 exactly twice, the same pace and the same
+# v^2, the content doubled); gamma 0 and 1 for `matter`, gamma 0 for
+# `matter2`, each with its control (the lamp alone, the same family); 1000
+# intervals, the window 500 to 1000 (a row takes about 343 intervals to the
+# screen). The pins by the map docs/designs/one_wall/every_family_map.py
+# (the row followed along its momentum on the light-bending map's lines,
+# the weight (E'^2 + 3 gamma p . p) // E', the pace of the pair on P),
+# before any run: the shift in pixels toward the mass and the arrival in
+# intervals against the control.
+MATTER_MASS_FACTOR = 4
+MATTER_TICKS = 1000
+MATTER_WINDOW_START = 500
+MATTER_ACTION = 1024
+# The largest age a massive row may carry (required with `massive_rows`: a
+# row takes about 343 intervals to the screen at the pace 10 / 66).
+MATTER_AGE_BOUND = 1024
+# The lamp's reservoir: series K's K times the turn 1 (a massive birth
+# needs the turn 1, the row's content quantum x 1; a reservoir below K
+# turns 0 and births nothing), one unit of it per birth.
+MATTER_RESERVOIR_TURN = 1
+MATTER_FAMILIES: dict[str, dict[str, int]] = {
+    "matter": {"quantum": 1, "momentum_magnitude": 10},
+    "matter2": {"quantum": 2, "momentum_magnitude": 20},
+    # The deciding world of the beam's width for the wall's factor on
+    # matter (EVERY_FAMILY.md section 5c, the second follow-up of section
+    # 6): fast massive rows, p = 40 at E'_0 = 64 (E' = 94, v^2 = 3 p^2 / E'^2
+    # = 0.543, the Lorentz factor 1.47), on series K's five beam lines at
+    # b = 8 beside the light worlds' own mass M = 2^16, 400 intervals with
+    # the window from 200 (a row takes about 122 intervals to the screen at
+    # the pace 40 / 94). A slow row's wall stretch is swamped by Newton's
+    # fall (the reviewer's MUST-FIX 1); a fast row falls eight times less
+    # and dwells 2.8 times less, so the stretch is read against the fall.
+    "fast": {
+        "quantum": 1,
+        "momentum_magnitude": 40,
+        "mass_factor": 16,
+        "impact": 8,
+        "ticks": 400,
+        "window_start": 200,
+        "beam": 1,
+    },
+}
+MATTER_WORLDS: tuple[tuple[str, int], ...] = (
+    ("matter", 0),
+    ("matter", 1),
+    ("matter2", 0),
+    ("fast", 0),
+    ("fast", 1),
+)
+# The family's name in every deciding world is `matter` (the catalog's
+# massive quantum, declared inline with its own quantum and momentum as
+# series W declares it); `matter2` names the world, not a second family.
+MATTER_FAMILY_NAME = "matter"
+# The impact distance of the deciding worlds: b = 10 (the lamp at y = 30).
+# The first run at b = 6 (2026-09-22, recorded in README.md) reached the
+# mass's own line before the screen (a turn of 0.25 radian reaches the
+# axis 21 Links past the mass; the shift -6.000 exactly, the width 0), the
+# naive pin of the first map (the deflection times 26 Links, the unpushed
+# dwell) refuted by the geometry; at b = 10 the row stays 4 Links off the
+# axis at the screen.
+MATTER_IMPACT = 10
+# The pins by the map every_family_map.py, the row followed along its
+# momentum on the crowd's lines: the shift in pixels toward the mass and
+# the ARRIVAL against the control's in intervals, negative when earlier
+# (a falling row speeds up, its pace |P| / E'(P) growing under the push,
+# the speed-up of about -8 intervals larger than the wall's stretch).
+MATTER_PINS: dict[tuple[str, int], dict[str, float]] = {
+    ("matter", 0): {"angle": 0.242, "shift": -5.76, "arrival": -8.36},
+    ("matter", 1): {"angle": 0.252, "shift": -6.11, "arrival": -7.42},
+    ("matter2", 0): {"angle": 0.242, "shift": -5.76, "arrival": -8.36},
+}
+# The readings that refute (the map at gamma = 1 with one verb changed):
+# the massive wall unstretched (f = 0 on the massive rows, verb 1 not on
+# every family) puts the gamma 1 arrival at -11.03 intervals (the rule's
+# -7.42, 3.6 intervals apart); the weight blind to the speed ((1 + gamma) E'
+# in place of (E'^2 + 3 gamma p . p) // E', verb 2 light's alone) puts
+# the gamma 1 shift at -10.45 pixels (the rule's -6.11, 4.3 pixels apart);
+# the pace unpushed (no speed-up: the family's own p / E' on the Manhattan
+# length walked, the y-Links paid at that pace) would put the gamma 0
+# arrival at +43.99 (the rule's -8.36; the map's first form of this
+# reading, +2.57 in the note before the run, left the y-Links unpaid and is
+# superseded by the map as kept, `pace="unpushed"`).
+MATTER_REFUTING: dict[str, float] = {
+    "gamma_1_arrival_wall_unstretched": -11.03,
+    "gamma_1_shift_weight_blind_to_speed": -10.45,
+    "gamma_0_arrival_without_the_speed_up": 43.99,
+}
+# The pins of the fast worlds (the beam of five lines at b = 8, M = 2^16),
+# from the map's integer walk (every_family_map.py, `walk`, the engine's
+# three verbs on the stationary crowd; its last section), written before
+# the run (record 205, the reviewer's S6): per line the whole pixel and
+# the arrival against that line's own control, and the beam's means, the
+# numbers the screen's centroid and mean age read. GAMEBOARD arithmetic.
+FAST_LINES: tuple[tuple[int, int, int], ...] = (
+    (1, 0, 0),
+    (24, 1, 0),
+    (24, -1, 0),
+    (12, 1, 0),
+    (12, -1, 0),
+)
+FAST_PINS: dict[int, dict[str, object]] = {
+    0: {
+        "shift": -2.60,
+        "arrival": 1.94,
+        "lines": {
+            "(1, 0, 0)": [-3, 2.0],
+            "(24, 1, 0)": [0, 2.8],
+            "(24, -1, 0)": [-5, 2.0],
+            "(12, 1, 0)": [0, 5.2],
+            "(12, -1, 0)": [-5, -2.3],
+        },
+        "arrival_wall_unstretched": -0.66,
+    },
+    1: {
+        "shift": -4.40,
+        "arrival": 4.49,
+        "lines": {
+            "(1, 0, 0)": [-4, 2.6],
+            "(24, 1, 0)": [-2, 6.5],
+            "(24, -1, 0)": [-7, 4.3],
+            "(12, 1, 0)": [-1, 6.0],
+            "(12, -1, 0)": [-8, 3.0],
+        },
+        "arrival_wall_unstretched": -0.80,
+        "shift_weight_blind_to_speed": -6.40,
+    },
+}
+# The ratio the two fast worlds read (GAMEBOARD): the shifts' 4.40 / 2.60
+# = 1.69 by the integer walk (the weight's continuum 1 + gamma v^2 = 1.54
+# at v^2 = 0.543; light's 2.00; the weight blind to the speed 6.40 / 2.60 =
+# 2.46) and the arrivals' 4.49 / 1.94 = 2.31 (the wall's factor 2 with the
+# grain); the deciding reading the gamma 1 arrival 4.49 +- 1 against the
+# wall unstretched -0.80, 5.3 intervals apart, and the gamma 1 shift
+# -4.40 +- 0.5 against the blind -6.40, 2.0 pixels apart.
+FAST_RATIOS: dict[str, float] = {
+    "shift_g1_over_g0": 1.69,
+    "shift_continuum": 1.54,
+    "shift_blind": 2.46,
+    "arrival_g1_over_g0": 2.31,
+}
 # The ratios' bracket: 0.25 on mass and near as registered (by fiat; a
 # registered pin moves on the model owner's word); on far the brackets
 # propagated in quadrature from +-0.5 pixel and +-1 interval (the chief
@@ -128,8 +277,193 @@ def world(name: str, gamma: int) -> Json:
     return families_by_definition(document, K.FAMILY_DEFINITIONS, K.DEFINITIONS_SOURCE)
 
 
+# Every family under one wall (2026-09-22, branch optical-every-family, the
+# composition of optical-v1 with the massive rows; the physics-rule
+# reviewer's M1 on PR #743): the light worlds at gamma 1 re-read under the
+# weight 221 (the one floor; the Bresenham entry's and the far entry's
+# values beside as "was"; gamma 0 and the controls byte identical, far_g0
+# not re-run) and the three deciding worlds at b = 10 against the matter
+# block's pins (inside / outside as the README has them). DETECTOR unless
+# marked.
+RUN_2026_09_22_EVERY_FAMILY: dict[str, object] = {
+    "branch": "optical-every-family",
+    "after": "the composition of optical-v1 with the massive rows (EVERY_FAMILY.md), the weight per unit 221 on the photon at gamma 1",
+    "read_by": "tools/lensing_readings.py --no-replay (DETECTOR; --window-start 500 on the matter worlds)",
+    "worlds": {
+        "mass_g1": {
+            "shift": -3.989,
+            "delay": 4.94,
+            "clicks": 1395,
+            "taken_by_the_mass": 0,
+            "was": {"shift": -3.989, "delay": 5.10, "clicks": 1394, "taken_by_the_mass": 0},
+        },
+        "near_g1": {
+            "shift": -6.412,
+            "delay": 6.20,
+            "clicks": 1452,
+            "taken_by_the_mass": 0,
+            "was": {"shift": -6.412, "delay": 6.20, "clicks": 1452, "taken_by_the_mass": 0},
+        },
+        "far_g1": {
+            "shift": -3.403,
+            "delay": 4.33,
+            "clicks": 1344,
+            "taken_by_the_mass": 0,
+            "was": {"shift": -3.403, "delay": 4.35, "clicks": 1344, "taken_by_the_mass": 0},
+        },
+        "matter_g0": {
+            "shift": -5.000,
+            "arrival": -12.00,
+            "clicks": 501,
+            "shift_inside": False,
+            "shift_outside_by": 0.26,
+            "arrival_inside": False,
+            "arrival_outside_by": 2.64,
+            "was": None,
+        },
+        "matter_g1": {
+            "shift": -6.000,
+            "arrival": -6.00,
+            "clicks": 501,
+            "shift_inside": True,
+            "arrival_inside": False,
+            "arrival_outside_by": 0.42,
+            "was": None,
+        },
+        "matter2_g0": {
+            "shift": -5.000,
+            "arrival": -12.00,
+            "clicks": 501,
+            "shift_inside": False,
+            "shift_outside_by": 0.26,
+            "arrival_inside": False,
+            "arrival_outside_by": 2.64,
+            "equivalence_on_matter_g0": True,
+            "was": None,
+        },
+    },
+    "ratios": {
+        "mass": {
+            "shift_f2_over_f1": 2.00,
+            "delay_f2_over_f1": 1.67,
+            "delay_outside_by": 0.08,
+            "was": {"shift_f2_over_f1": 2.00, "delay_f2_over_f1": 1.73},
+        },
+        "near": {
+            "shift_f2_over_f1": 2.46,
+            "delay_f2_over_f1": 2.07,
+            "was": {"shift_f2_over_f1": 2.46, "delay_f2_over_f1": 2.07},
+        },
+        "far": {
+            "shift_f2_over_f1": 1.92,
+            "delay_f2_over_f1": 1.69,
+            "was": {"shift_f2_over_f1": 1.92, "delay_f2_over_f1": 1.70},
+        },
+    },
+    "note": (
+        "the weight 221 for 220 moves the mass delay by 0.16 interval and nothing at three "
+        "decimals in the shifts: the mass delays' ratio 4.94 / 2.95 = 1.67 (was 1.73), outside "
+        "2.00 +- 0.25 by 0.08 (was 0.02), the Bresenham entry's deciding reading moved by the "
+        "one floor; the shifts' ratio 2.00 unchanged; far's delays' ratio 1.69 (was 1.70); the "
+        "matter worlds read in whole pixels and whole y-Links on one line, the wall's factor "
+        "on a massive row under that grain; no pin moved"
+    ),
+}
+
+
+# The fast worlds' run (2026-09-22, branch optical-every-family, after the
+# pins' commit 22064bc3; EVERY_FAMILY.md section 5c): the wall's factor on
+# a massive row read at the detector. DETECTOR unless marked.
+RUN_2026_09_22_FAST: dict[str, object] = {
+    "branch": "optical-every-family",
+    "after": "the pins of the fast worlds committed at 22064bc3 (the map's integer walk on the beam's five lines)",
+    "read_by": "tools/lensing_readings.py --no-replay --window-start 200 --register expectations.json (DETECTOR, the verdicts the tool's)",
+    "worlds": {
+        "fast_g0": {
+            "shift": -3.000,
+            "arrival": 1.64,
+            "clicks": 920,
+            "control_clicks": 1005,
+            "taken_by_the_mass": 0,
+            "shift_inside": True,
+            "arrival_inside": True,
+            "was": None,
+        },
+        "fast_g1": {
+            "shift": -4.804,
+            "arrival": 4.44,
+            "clicks": 924,
+            "control_clicks": 1005,
+            "taken_by_the_mass": 0,
+            "shift_inside": True,
+            "arrival_inside": True,
+            "was": None,
+        },
+    },
+    "ratios": {
+        "shift_g1_over_g0": 1.60,
+        "arrival_g1_over_g0": 2.71,
+        "pinned": {"shift_g1_over_g0": 1.69, "arrival_g1_over_g0": 2.31},
+    },
+    "gameboard_crowd_at_b": {"presence": 9.92, "age_moment": 136.3},
+    "note": (
+        "every pin met: verb 1 on a massive row read for the first time at the detector (the gamma 1 "
+        "arrival 4.44 against the pin 4.49 and the wall unstretched -0.80, 5.2 intervals away; gamma 0 "
+        "1.64 against 1.94, the unstretched -0.66); the weight's form read between Newton's and light's "
+        "(the shifts' ratio 1.60 against the continuum's 1.54, light's 2.00 and the blind 2.46; the gamma "
+        "1 shift -4.804 against the blind -6.40); no pin moved"
+    ),
+}
+
+
 def worlds() -> dict[str, Json]:
-    return {f"{name}_g{gamma}": world(name, gamma) for gamma in GAMMAS for name in NAMES}
+    found = {f"{name}_g{gamma}": world(name, gamma) for gamma in GAMMAS for name in NAMES}
+    for family, gamma in MATTER_WORLDS:
+        found[f"{family}_control_g{gamma}"] = matter_world("control", family, gamma)
+        found[f"{family}_g{gamma}"] = matter_world("mass", family, gamma)
+    return found
+
+
+def matter_world(name: str, family: str, gamma: int) -> Json:
+    """Series K's `mass` or `control` at the pin world's pair with the mass
+    a quarter of the light worlds' (M = 2^14), the light lamp replaced by a
+    lamp of the massive family (quantum, momentum_magnitude as
+    `MATTER_FAMILIES`; the reservoir K in `amount`, the turn 1, one row per
+    interval on the heading), the screen's entry reading the family's
+    age, the two keys `optical` and `massive_rows` together; the model id
+    series K's, so that the readings tool reads each against the control
+    of its folder."""
+    keys = MATTER_FAMILIES[family]
+    mass_factor = int(keys.get("mass_factor", MATTER_MASS_FACTOR))
+    impact = int(keys.get("impact", MATTER_IMPACT))
+    directions = [list(v) for v in FAST_LINES] if keys.get("beam") else [[1, 0, 0]]
+    document = K.world(name)
+    document["suspension"] = list(SUSPENSION)
+    document["optical"] = gamma
+    document["ticks"] = int(keys.get("ticks", MATTER_TICKS))
+    document["massive_rows"] = True
+    document["action"] = MATTER_ACTION
+    document["age_bound"] = MATTER_AGE_BOUND
+    families = [{"name": MATTER_FAMILY_NAME, "quantum": keys["quantum"], "massive": True}]
+    families.extend(document["families"])  # type: ignore[arg-type]
+    document["families"] = families
+    centre = K.CENTRE
+    for entry in document["measured"]:
+        if entry["family"] == "m":
+            entry["amount"] = entry["amount"] * mass_factor
+        elif "lamp" in entry:
+            entry["family"] = MATTER_FAMILY_NAME
+            entry["position"] = [K.LAMP_X, centre[1] + impact, centre[2]]
+            entry["amount"] = K.K * MATTER_RESERVOIR_TURN  # the reservoir K x 1: the turn 1
+            entry["lamp"] = {
+                "rate": [1, 1],
+                "wheel": [1, K.N],
+                "directions": directions,
+                "momentum_magnitude": keys["momentum_magnitude"],
+            }
+        elif entry["family"] == "wall":
+            entry["table"] = {MATTER_FAMILY_NAME: {"rule": "measure", "reads": "age"}, "m": "pass"}
+    return families_by_definition(document, K.FAMILY_DEFINITIONS, K.DEFINITIONS_SOURCE)
 
 
 def expectations() -> Json:
@@ -221,6 +555,8 @@ def expectations() -> Json:
     out["run_2026_09_21_m1"] = RUN_2026_09_21_M1
     out["run_2026_09_22_bresenham"] = RUN_2026_09_22_BRESENHAM
     out["run_2026_09_22_far"] = RUN_2026_09_22_FAR
+    out["run_2026_09_22_every_family"] = RUN_2026_09_22_EVERY_FAMILY
+    out["run_2026_09_22_fast"] = RUN_2026_09_22_FAST
     for name, pin in PINS.items():
         ratios: Json = {
             "shift_f2_over_f1": pin["shift"][2] / pin["shift"][1],
@@ -232,6 +568,80 @@ def expectations() -> Json:
             ratios["bracket"] = RATIO_BRACKETS[name]["shift"]
             ratios["delay_bracket"] = RATIO_BRACKETS[name]["delay"]
         out["ratios"][name] = ratios
+    out["matter"] = {
+        "derivation": (
+            "docs/designs/one_wall/EVERY_FAMILY.md section 2 and its map every_family_map.py "
+            "(the light-bending map's crowd lines, the row followed along its own momentum, "
+            "verbs 1 and 2 together: the dwell on the pushed pair's wall over its rate, the push "
+            "at the weight (E'^2 + 3 gamma p . p) // E' per unit of amount, before any run): "
+            "the deciding world of every family under one wall, the mass 2^14, the pair "
+            "[1, 16384], one massive row per interval on the heading at b = 10; the arrival "
+            "carries the wall's stretch and the speed-up of a falling row (the pace |P| / E'(P) "
+            "grows under the push), so the pin is the map's arrival per world and the readings "
+            "that refute are the map's with one verb changed"
+        ),
+        "mass": (1 << 12) * MATTER_MASS_FACTOR,
+        "impact": MATTER_IMPACT,
+        "ticks": MATTER_TICKS,
+        "window_start": MATTER_WINDOW_START,
+        "families": MATTER_FAMILIES,
+        "worlds": {
+            f"{family}_g{gamma}": {
+                "gamma": gamma,
+                "flight_coefficient": 1 + gamma,
+                "family": MATTER_FAMILY_NAME,
+                "quantum": MATTER_FAMILIES[family]["quantum"],
+                "momentum_magnitude": MATTER_FAMILIES[family]["momentum_magnitude"],
+                "angle_radians": pin["angle"],
+                "shift": pin["shift"],
+                "shift_bracket": SHIFT_BRACKET,
+                "arrival": pin["arrival"],
+                "arrival_bracket": DELAY_BRACKET,
+                "control": f"{family}_control_g{gamma}",
+            }
+            for (family, gamma), pin in MATTER_PINS.items()
+        }
+        | {
+            f"fast_g{gamma}": {
+                "gamma": gamma,
+                "flight_coefficient": 1 + gamma,
+                "family": MATTER_FAMILY_NAME,
+                "quantum": 1,
+                "momentum_magnitude": 40,
+                "energy": 94,
+                "v_squared": 0.543,
+                "mass": 1 << 16,
+                "impact": 8,
+                "ticks": 400,
+                "window_start": 200,
+                "beam": [list(v) for v in FAST_LINES],
+                "shift": pin["shift"],
+                "shift_bracket": SHIFT_BRACKET,
+                "arrival": pin["arrival"],
+                "arrival_bracket": DELAY_BRACKET,
+                "lines": pin["lines"],
+                "refuting_readings": {
+                    k: v for k, v in pin.items() if k not in ("shift", "arrival", "lines")
+                },
+                "control": f"fast_control_g{gamma}",
+                "derivation": "every_family_map.py, the integer walk on the beam's five lines (GAMEBOARD, before the run)",
+            }
+            for gamma, pin in FAST_PINS.items()
+        },
+        "fast_ratios": FAST_RATIOS,
+        "refuting_readings": MATTER_REFUTING,
+        "equivalence": (
+            "matter2_g0 (quantum 2, p = 20, E' = 132) on matter_g0's shift within 0.5 pixel and "
+            "its arrival within 1 interval, each against its own control: the same fall at twice "
+            "the content (the pace and v^2 equal to the integer, the push twice on twice the "
+            "momentum; GAMEBOARD arithmetic of the declaration)"
+        ),
+        "readings": (
+            "DETECTOR: the screen's click lines of the massive family (each click's Node and its "
+            "age moment, `reads: age`), the centroid's shift and the mean age's arrival against "
+            "the control in the late window; no store, no replay"
+        ),
+    }
     return out
 
 
