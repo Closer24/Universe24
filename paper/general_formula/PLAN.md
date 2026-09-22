@@ -4860,3 +4860,20 @@ Newton rows, with its values and where the presence absorbs it, the
 orbit read note cited by SHA. Also the cross-reference of this hour's
 not-computed paragraph made unambiguous. The SHOULD-FIX and NIT items
 and "what is missing" wait for the owner's word. 48 pages.
+
+## Applied (2026-09-22, the owner's word): the central formulas boxed; the independent read's issues #882 and #883 answered in the text
+
+The owner asked whether the paper's central formulas, the ones unique
+to it, are boxed: only W (Eq. 14) was. Boxed now: Eq. (1) the map of
+one accumulator, Eq. (9) the rung and the click, Eq. (11) the quadratic
+read-out on the phase lattice, Eq. (13) the finite-grain value 181/64.
+The recovered forms (Newton, Coulomb, the fields, the wave equation)
+stay unboxed, being nature's known forms. The independent read of the
+manuscript on main (batch #877, issues #882 and #883, the comment on
+#872) answered on GitHub with the head's SHA and, where the paper was
+short, in the text: Gauss's law with the crossing's sign, no splitter,
+absorber or cancelling pair inside, a constant release per interval and
+a varying release by the retarded intervals, the crossings' kind named
+(GAMEBOARD on an interior surface, DETECTOR at a face); the injectivity
+theorem's scope, the rows' linear block, a body's drive with its lost
+coincident fire outside it. 48 pages.

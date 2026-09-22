@@ -3406,6 +3406,37 @@ CORRECTIONS = [
         "\\bibitem{stepalgebra} The step algebra of light bending:",
         "\\bibitem{orbitread} The orbit's inward push read on the fan: a body at rest on a fan reads the fan's Manhattan mean $S_1/|\\mathbf D| = 1.287$ shell means, \\texttt{docs/designs/orbit\\_read/NOTE.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 75efe7b5 (host arithmetic, no run). \\bibitem{stepalgebra} The step algebra of light bending:",
     ),
+    # The owner's word of 2026-09-22: the central formulas boxed; the independent read's issues #882 and #883 answered in the text.
+    (
+        "the owner's word: the central formulas boxed, Eq. (1) the map",
+        "s \\leftarrow s + r, \\qquad e \\leftarrow \\operatorname{sign}(s)\\,\\min\\!\\left(\\lfloor |s|/d \\rfloor,\\ a\\right), \\qquad s \\leftarrow s - e\\,d .\n\\end{equation}",
+        "\\boxed{\\,s \\leftarrow s + r, \\qquad e \\leftarrow \\operatorname{sign}(s)\\,\\min\\!\\left(\\lfloor |s|/d \\rfloor,\\ a\\right), \\qquad s \\leftarrow s - e\\,d \\,}.\n\\end{equation}",
+    ),
+    (
+        "the central formulas boxed, the rung (the click)",
+        "\\rung_k = \\left\\lfloor \\frac{2\\Nphi C_k + C_K}{2C_K} \\right\\rfloor \\quad (\\rung_0 = 0,\\ \\rung_K = \\Nphi),\n\\qquad \\text{the click is the } k \\text{ with } \\rung_{k-1} \\le u < \\rung_k,\n\\label{eq:rung}",
+        "\\boxed{\\,\\rung_k = \\left\\lfloor \\frac{2\\Nphi C_k + C_K}{2C_K} \\right\\rfloor \\quad (\\rung_0 = 0,\\ \\rung_K = \\Nphi),\n\\qquad \\text{the click is the } k \\text{ with } \\rung_{k-1} \\le u < \\rung_k\\,},\n\\label{eq:rung}",
+    ),
+    (
+        "the central formulas boxed, the quadratic read-out",
+        "R(f) = \\sum_{j\\ \\mathrm{odd},\\ 1 \\le j < \\Nphi/2} c_j\\,|\\sigma_j(f)|^2, \\qquad c_j \\ge 0,\n\\qquad \\sigma_j(f) = \\sum_p f_p\\,e^{2\\pi i j p/\\Nphi},\n\\end{equation}",
+        "\\boxed{\\,R(f) = \\sum_{j\\ \\mathrm{odd},\\ 1 \\le j < \\Nphi/2} c_j\\,|\\sigma_j(f)|^2, \\qquad c_j \\ge 0,\n\\qquad \\sigma_j(f) = \\sum_p f_p\\,e^{2\\pi i j p/\\Nphi}\\,},\n\\end{equation}",
+    ),
+    (
+        "the central formulas boxed, the finite-grain value",
+        "S_{\\mathrm{U24}} = \\frac{181}{64} = 2.828125 \\ \\text{exactly}, \\qquad\n\\Delta S = S_{\\mathrm{U24}} - 2\\sqrt2 = -3.02 \\times 10^{-4},\n\\end{equation}",
+        "\\boxed{\\,S_{\\mathrm{U24}} = \\frac{181}{64} = 2.828125 \\ \\text{exactly}, \\qquad\n\\Delta S = S_{\\mathrm{U24}} - 2\\sqrt2 = -3.02 \\times 10^{-4}\\,},\n\\end{equation}",
+    ),
+    (
+        "Gauss's law: the conditions complete (issue #883 of the independent read; the mathematician's SHOULD-FIX 18 on a varying release)",
+        "crosses the surface outward once more than inward (a non-convex surface it may leave, re-enter and leave again, the signed crossings summing to one; no collision acts on a fan or on lone beams), so once the front has passed, the net amount crossing the surface per interval equals the release inside it, exactly. Proved from the",
+        "crosses the surface outward once more than inward (a non-convex surface it may leave, re-enter and leave again, the signed crossings summing to one, the crossing counted with the sign of the Port's outward normal; no splitter, absorber or cancelling pair inside the surface; no collision acts on a fan or on lone beams), so once the front has passed, the net amount crossing the surface per interval equals the release inside it for a constant release, exactly, and for a varying release the crossings at the interval $t$ equal the releases at the retarded intervals, direction by direction. The crossings of an interior surface are the host's count (GAMEBOARD, a diagnostic); a face's border clicks are a detector's (DETECTOR). Proved from the",
+    ),
+    (
+        "the injectivity theorem's scope: the rows' linear block, a body's drive outside it (issue #882 of the independent read)",
+        "is not linear; none acts in the worlds of this paper.\n\\end{theorem}",
+        "is not linear; none acts in the worlds of this paper. The theorem is of the rows' linear block; a body's drive, whose later coincident fire is lost under the engine's rule (P5, Section~\\ref{sec:law}), is outside it and is not injective in that case.\n\\end{theorem}",
+    ),
 ]
 
 

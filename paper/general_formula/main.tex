@@ -52,7 +52,7 @@ Inside a cubic GameBoard one update law of bounded integers propagates records a
 every Node of the GameBoard at every interval, per component $s$ of the
 state, each with its own rate $r$ and wall $d$:
 \begin{equation}\label{eq:map}
-s \leftarrow s + r, \qquad e \leftarrow \operatorname{sign}(s)\,\min\!\left(\lfloor |s|/d \rfloor,\ a\right), \qquad s \leftarrow s - e\,d .
+\boxed{\,s \leftarrow s + r, \qquad e \leftarrow \operatorname{sign}(s)\,\min\!\left(\lfloor |s|/d \rfloor,\ a\right), \qquad s \leftarrow s - e\,d \,}.
 \end{equation}
 Each component of the state is a bounded integer accumulator with a
 declared rate and a declared wall: it is translated by its rate,
@@ -395,7 +395,7 @@ content.
 
 \paragraph{Gauss's law, exact.} The walk is a translation: a free unit
 released inside a closed surface that no periodic axis crosses, with no
-absorbing reader inside it and within the unit's lifetime, crosses the surface outward once more than inward (a non-convex surface it may leave, re-enter and leave again, the signed crossings summing to one; no collision acts on a fan or on lone beams), so once the front has passed, the net amount crossing the surface per interval equals the release inside it, exactly. Proved from the
+absorbing reader inside it and within the unit's lifetime, crosses the surface outward once more than inward (a non-convex surface it may leave, re-enter and leave again, the signed crossings summing to one, the crossing counted with the sign of the Port's outward normal; no splitter, absorber or cancelling pair inside the surface; no collision acts on a fan or on lone beams), so once the front has passed, the net amount crossing the surface per interval equals the release inside it for a constant release, exactly, and for a varying release the crossings at the interval $t$ equal the releases at the retarded intervals, direction by direction. The crossings of an interior surface are the host's count (GAMEBOARD, a diagnostic); a face's border clicks are a detector's (DETECTOR). Proved from the
 definitions under those conditions; no detector reading of it is
 registered.
 
@@ -613,8 +613,8 @@ $\mathtt m$. When the record's live count reaches $0$, with $C_K = \sum R$ over 
 offers and the cumulative sums $C_1 \le \dots \le C_K$ (the total) in the declared
 order,
 \begin{equation}
-\rung_k = \left\lfloor \frac{2\Nphi C_k + C_K}{2C_K} \right\rfloor \quad (\rung_0 = 0,\ \rung_K = \Nphi),
-\qquad \text{the click is the } k \text{ with } \rung_{k-1} \le u < \rung_k,
+\boxed{\,\rung_k = \left\lfloor \frac{2\Nphi C_k + C_K}{2C_K} \right\rfloor \quad (\rung_0 = 0,\ \rung_K = \Nphi),
+\qquad \text{the click is the } k \text{ with } \rung_{k-1} \le u < \rung_k\,},
 \label{eq:rung}
 \end{equation}
 and the world's list gains one row: the record, $u$, the chosen set and
@@ -680,7 +680,7 @@ tables' rounding ($65705/65536$ at $\Nphi = 64$, $s = 1$).
 \begin{theorem}[The interval is injective between clicks]\label{th:bijection}
 Let $Q$ be the quotient of $\bigoplus_r M_r$ that forgets the age (rows differing only in their age identified), and fix the event history of the record, the intervals and Nodes of its births, splits, rotations and re-emissions, which the record keeps. For an interval without a click, an end at a face or the border, or a collision, $M \circ R \circ S \circ F$ induces an injective $\Z$-linear map of $Q$ into itself: no rule of the interval deletes a weight, a multiplicity or a phase, and the state at any interval between two clicks, with the history, determines them at the birth. The age is not a coordinate of $Q$ but a function of the history, the current interval less the interval of the row's last event; a split restarts it at $0$ by the definition of age (Definition~\ref{def:rules}) and forgets nothing, since the interval of the split is in the history; the click is the one deletion. A
 collision, where it acts, is a bijection of the GameBoard's states that
-is not linear; none acts in the worlds of this paper.
+is not linear; none acts in the worlds of this paper. The theorem is of the rows' linear block; a body's drive, whose later coincident fire is lost under the engine's rule (P5, Section~\ref{sec:law}), is outside it and is not injective in that case.
 \end{theorem}
 So a record's norm is conserved exactly by $S$ and by the flight, and by
 $R$ and by every read through the tables only within the tables' rounding
@@ -734,8 +734,8 @@ one row, or Theorem~\ref{th:isometry}'s $A = \sum a_i^2$.
 \begin{theorem}[The quadratic read-out on the phase lattice, a Gleason-like characterization]\label{th:gleason}
 Under (a) to (e), with $\Nphi$ a power of two, $A_2 = 2$ and
 \begin{equation}\label{eq:gleason}
-R(f) = \sum_{j\ \mathrm{odd},\ 1 \le j < \Nphi/2} c_j\,|\sigma_j(f)|^2, \qquad c_j \ge 0,
-\qquad \sigma_j(f) = \sum_p f_p\,e^{2\pi i j p/\Nphi},
+\boxed{\,R(f) = \sum_{j\ \mathrm{odd},\ 1 \le j < \Nphi/2} c_j\,|\sigma_j(f)|^2, \qquad c_j \ge 0,
+\qquad \sigma_j(f) = \sum_p f_p\,e^{2\pi i j p/\Nphi}\,},
 \end{equation}
 the $\sigma_j$ the Galois conjugates of $\mathrm{ev}$, $\sigma_1 =
 \mathrm{ev}$. Every such $R$ is a positive quadratic form on the lattice,
@@ -859,8 +859,8 @@ What Theorem~\ref{th:bell} does not say: that $S(\Nphi) \le 2\sqrt2$, false for 
 
 \paragraph{The finite-grain value, and what would make it a prediction.} The construction's number is
 \begin{equation}\label{eq:prediction}
-S_{\mathrm{U24}} = \frac{181}{64} = 2.828125 \ \text{exactly}, \qquad
-\Delta S = S_{\mathrm{U24}} - 2\sqrt2 = -3.02 \times 10^{-4},
+\boxed{\,S_{\mathrm{U24}} = \frac{181}{64} = 2.828125 \ \text{exactly}, \qquad
+\Delta S = S_{\mathrm{U24}} - 2\sqrt2 = -3.02 \times 10^{-4}\,},
 \end{equation}
 at every power of two from $512$ through $8192$, with the tables at
 $N_t = 256$, the wheel at $N_u = \Nphi$, the settings $(0, \Nphi/8, \Nphi/4,
