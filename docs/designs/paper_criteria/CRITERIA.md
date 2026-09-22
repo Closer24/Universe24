@@ -257,7 +257,9 @@ per run, so none waits for the Boss's word.
   uncertainty, nature's q_0 = -0.53 +- 0.01 (Planck 2018 with a flat
   universe, -0.527 +- 0.011): PASS if |q - (-0.527)| <= 0.011 + the
   reading's own grain; the reading is 0.42 away: FAIL, the law having no
-  term with q < 0. The reading's own grain: 0.004 between the engines of
+  term that carries q toward -0.5 (the coasting ideal q = 0, the reading
+  within its grain of it: -0.104 at head and -0.108 registered, both below
+  0 and inside the coasting bracket about Milne's 0). The reading's own grain: 0.004 between the engines of
   2026-09-20 and 2026-09-21 (-0.108 to -0.104), 0.03 between the three
   windows (-0.236 / -0.076 / -0.104 at head). What would refute the FAIL:
   a coasting reading below -0.50 at head. No statistical width (the
@@ -651,7 +653,11 @@ given a dated line, no pin edited after a run, no prior reading deleted.
   the ideal 1): against Jacques 2005's 0.94, once verified, the clicks'
   0.9659 (DETECTOR, the run at head, bit for bit the pin) lies 0.026 ABOVE
   the measured, a bound met, PASS in the caption's sense and still 0.034
-  below the ideal; against Grangier 1986's 0.98 (a Mach-Zehnder, another
+  below the ideal (the reviewer's note for the writer: the 0.94 is the
+  central fringe's visibility of a biprism, an apparatus-limited figure as
+  the model's 0.966 is one, the fan's discreteness, so the comparison is
+  bound against bound; the row stays NOT COMPARED until the source is
+  verified); against Grangier 1986's 0.98 (a Mach-Zehnder, another
   geometry) the row reads FAIL by 0.014 as it stands. The verdict is the
   writer's to word on the Boss's routing; this table reports both
   readings under the one criterion and moves nothing.
