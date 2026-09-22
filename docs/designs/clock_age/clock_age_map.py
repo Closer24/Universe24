@@ -258,3 +258,183 @@ sigma = 1.0e6
 print(
     f"   a cluster member at a velocity dispersion sigma = 1000 km/s: the potential term G M / (r c^2) ~ sigma^2 / c^2 = {sigma**2 / C_LIGHT**2:.1e}; the Doppler spread sigma / c = {sigma / C_LIGHT:.1e}"
 )
+print()
+
+# -- E. the shell's lines: Poisson's source term after a detector --------------
+# Added 2026-09-22 for series X (Poisson after a detector), the chief
+# physicist's design of record 574 of docs/LOG_2026-09-20.md under the
+# owner's word of that day ("build them", records 574 and 581): series T
+# reads a clock's rate after a detector OUTSIDE a point crowd, Laplace's
+# part; Poisson's equation is the source term, so the crowd's point source
+# is replaced by a spherical shell of sources of radius R and the same
+# total release, and a lamp is read INSIDE it (the shell theorem: the age
+# moment flat) and outside it (C / r). The shell's Nodes are selected as
+# the lensing generator selects a shell, |r - R| < 1/2 (section C's
+# `shell`), and every source releases on the full fan of section C.
+#
+# The one thing this section adds to sections B and C: the shell's sources
+# stand in one another's rows, so each one's OWN clock counts the age
+# moment at its Node and owes intervals by the law's default word
+# (clock-age-v1, record 394), and a source releases only at its
+# self-creations (`nature_beam._release` is reached only when the frame
+# left the body creating). A source's release per interval is therefore
+# its declared rate over 1 + its own count, and the shell's effective
+# release is the fixed point of that map, which this section iterates to
+# convergence. With uniform sources the interior is flat exactly; the
+# spread of the sources' own clocks over the lattice shell is the ripple
+# this section names, the one the pin of series X carries.
+SHELL_RADIUS = 6
+SHELL_LAMP_RADII = (2, 4, 12)
+# The reach in Links of the walk from a source: the furthest target is the
+# lamp outside at 12 Links from the centre, 18 Euclidean Links from the far
+# side of the shell, at most sqrt 3 Links of the digital line per Euclidean
+# Link on the cube diagonal.
+SHELL_REACH = 40
+print("E. THE SHELL'S LINES: POISSON'S SOURCE TERM AFTER A DETECTOR (series X; host)")
+shell_nodes = shell(SHELL_RADIUS)
+shell_lamps = {r: (-r, 0, 0) for r in SHELL_LAMP_RADII}
+# The targets of the walk: every source's own Node (for its own clock) and
+# the three lamp Nodes.
+shell_targets = {node: index for index, node in enumerate(shell_nodes)}
+for offset, radius in enumerate(SHELL_LAMP_RADII):
+    shell_targets[shell_lamps[radius]] = len(shell_nodes) + offset
+shell_walk = {d: lines_e.nodes(d, SHELL_REACH) for d in fan_e}
+shell_dwell = {(d, made): lines_e.dwell(d, made) for d in fan_e for _, made in shell_walk[d]}
+# The contribution matrix, one walk of the fan from every source: per
+# source the presence and the age moment it leaves at every target, per
+# unit of its release per direction per interval.
+target_count = len(shell_targets)
+shell_presence = [[0] * target_count for _ in shell_nodes]
+shell_moment = [[0] * target_count for _ in shell_nodes]
+for index, origin in enumerate(shell_nodes):
+    presence_row, moment_row = shell_presence[index], shell_moment[index]
+    for d in fan_e:
+        for (dx, dy, dz), made in shell_walk[d]:
+            target = shell_targets.get((origin[0] + dx, origin[1] + dy, origin[2] + dz))
+            if target is not None:
+                ages = shell_dwell[(d, made)]
+                presence_row[target] += len(ages)
+                moment_row[target] += sum(ages)
+print(
+    f"   the shell |r - {SHELL_RADIUS}| < 1/2: {len(shell_nodes)} Nodes, each releasing on the fan of "
+    f"{len(fan_e)}; the lamp at {', '.join(str(r) for r in SHELL_LAMP_RADII)} Links from the centre"
+)
+for radius in SHELL_LAMP_RADII:
+    target = shell_targets[shell_lamps[radius]]
+    print(
+        f"   uniform sources, r = {radius:2d}: per unit of the release the presence "
+        f"{sum(row[target] for row in shell_presence):5d}, the age moment "
+        f"{sum(row[target] for row in shell_moment):6d}"
+        + ("  (inside)" if radius < SHELL_RADIUS else "  (outside)")
+    )
+uniform_inside = [sum(row[shell_targets[shell_lamps[r]]] for row in shell_moment) for r in (2, 4)]
+print(
+    f"   the shell theorem on the lattice, the age moment: {uniform_inside[0]} at r = 2 and "
+    f"{uniform_inside[1]} at r = 4, the ratio "
+    f"{uniform_inside[0] / uniform_inside[1]:.6f} (the continuum's 1 exactly; the flat interior)"
+)
+uniform_presence = [sum(row[shell_targets[shell_lamps[r]]] for row in shell_presence) for r in (2, 4)]
+print(
+    f"   the presence at the same two Nodes: {uniform_presence[0]} and {uniform_presence[1]}, the "
+    f"ratio {uniform_presence[0] / uniform_presence[1]:.4f} (the flux rises toward the shell: "
+    "1 / r^2 obeys Gauss, not Poisson, and is not flat inside)"
+)
+# The release: series T's crowd's total release pair (two sources at
+# F = 4915 units per direction per interval) spread over the shell's Nodes,
+# the design's scaling of record 574 (each source on the full fan, the
+# release pair per source scaled down by the shell's Node count).
+SHELL_AMOUNT = 2 * F * SUSPENSION[1] // len(shell_nodes)
+shell_rate = SHELL_AMOUNT / SUSPENSION[1]
+# The fixed point of the sources' own clocks: a source's release per
+# interval is its rate over 1 + its own count (the age word).
+effective = [shell_rate] * len(shell_nodes)
+own_count = [0.0] * len(shell_nodes)
+rounds = 0
+move = 0.0
+while rounds < 200:
+    rounds += 1
+    own_count = [
+        sum(
+            effective[source] * shell_moment[source][target]
+            for source in range(len(shell_nodes))
+            if source != target
+        )
+        * SUSPENSION[0]
+        / SUSPENSION[1]
+        for target in range(len(shell_nodes))
+    ]
+    moved = [shell_rate / (1 + count) for count in own_count]
+    move = max(abs(a - b) for a, b in zip(moved, effective, strict=True))
+    effective = moved
+    if move < 1e-12:
+        break
+print(
+    f"   the declared release per source per direction: {SHELL_AMOUNT} / 2^16 = {shell_rate:.4f} units "
+    f"per interval (series T's crowd's total 2 F over {len(shell_nodes)} Nodes)"
+)
+print(
+    f"   the sources' own clocks (the fixed point after {rounds} rounds, the last move "
+    f"{move:.1e}): each source's own count k {min(own_count):.3f} to {max(own_count):.3f} (mean "
+    f"{sum(own_count) / len(own_count):.3f}), so its release per interval is "
+    f"{min(effective):.4f} to {max(effective):.4f} (mean {sum(effective) / len(effective):.4f}), "
+    f"{sum(effective) / len(effective) / shell_rate:.3f} of the declared rate"
+)
+shell_k = {}
+for radius in SHELL_LAMP_RADII:
+    target = shell_targets[shell_lamps[radius]]
+    k_age = (
+        sum(effective[source] * shell_moment[source][target] for source in range(len(shell_nodes)))
+        * SUSPENSION[0]
+        / SUSPENSION[1]
+    )
+    k_presence = (
+        sum(effective[source] * shell_presence[source][target] for source in range(len(shell_nodes)))
+        * SUSPENSION[0]
+        / SUSPENSION[1]
+    )
+    k_age_uniform = shell_rate * sum(row[target] for row in shell_moment) * SUSPENSION[0] / SUSPENSION[1]
+    shell_k[radius] = (k_age, k_presence, k_age_uniform)
+    print(
+        f"   r = {radius:2d}: the age word k = {k_age:.4f} (uniform sources {k_age_uniform:.4f}), "
+        f"1 + z = {1 + k_age:.4f}, the clicks per interval {1 / (1 + k_age):.4f}; the presence word "
+        f"k = {k_presence:.4f}, 1 + z = {1 + k_presence:.4f}"
+    )
+inside_age = shell_k[2][0] / shell_k[4][0]
+inside_presence = shell_k[2][1] / shell_k[4][1]
+outside_age = shell_k[12][0] / shell_k[4][0]
+print(
+    f"   THE PIN INSIDE (the age word): k(2) / k(4) = {inside_age:.4f}, the continuum's 1.0000 "
+    f"(the shell theorem); the ripple {abs(inside_age - 1):.4f} is the spread of the sources' own "
+    "clocks over the lattice shell, nothing else (with uniform sources the two are one integer)"
+)
+print(
+    f"   THE PIN INSIDE (the presence word, expected to FAIL): k(2) / k(4) = {inside_presence:.4f}, "
+    f"{abs(inside_presence - 1) / abs(inside_age - 1):.0f} times the age word's ripple from 1: the "
+    "one reading that tells the two words apart at a source term"
+)
+print(
+    f"   THE PIN OUTSIDE (the age word): k(12) / k(4) = {outside_age:.4f}, the continuum's "
+    f"R / 12 = {SHELL_RADIUS / 12:.4f} (the shell's exterior is the point source's C / r); the "
+    "lattice reads above it by the grain of section C, where the age moment x r rises with r "
+    f"({outside_age / (SHELL_RADIUS / 12):.3f} of the continuum's)"
+)
+print(
+    f"   the rates a detector reads: rate(2) / rate(4) = "
+    f"{(1 + shell_k[4][0]) / (1 + shell_k[2][0]):.4f} inside under the age word, "
+    f"{(1 + shell_k[4][1]) / (1 + shell_k[2][1]):.4f} under the presence word; rate(4) / rate(12) = "
+    f"{(1 + shell_k[12][0]) / (1 + shell_k[4][0]):.4f} outside under the age word"
+)
+print(
+    "   THE PINS OF SERIES X IN ONE LINE (what the register quotes, six decimals; the release "
+    f"{SHELL_AMOUNT} / 2^16 per source per direction):"
+)
+for radius in SHELL_LAMP_RADII:
+    k_age, k_presence, k_age_uniform = shell_k[radius]
+    print(
+        f"     r = {radius:2d}: k_age {k_age:.6f}  k_presence {k_presence:.6f}  "
+        f"k_age_uniform {k_age_uniform:.6f}"
+    )
+print(
+    f"     k_age(2) / k_age(4) {inside_age:.6f}   k_presence(2) / k_presence(4) "
+    f"{inside_presence:.6f}   k_age(12) / k_age(4) {outside_age:.6f}"
+)
