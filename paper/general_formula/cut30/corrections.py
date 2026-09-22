@@ -3270,6 +3270,142 @@ CORRECTIONS = [
         "\\bibitem{darksector} The dark sector against the law's own rules",
         "\\bibitem{stepalgebra} The step algebra of light bending: the walk of a light row past a held mass by the law's integer steps, read at a screen of Nodes and at a ring of starts, \\texttt{docs/designs/light\\_bending/STEP\\_ALGEBRA.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 23ef9ce9 (PR \\#821, merged). \\bibitem{flowalgebra} The algebraic check of flow-link-v1: the step algebra beside a mass, the ring of starts and Newton's rows under the weighted flow, \\texttt{docs/designs/flow\\_weight/ALGEBRA.md} of the archived code \\cite{zenodo}, on \\texttt{main} at d9b6694a. \\bibitem{atomalgebra} The atom's algebra: two closing radii as a ratio of counts at a detector, and the click that moves a row between them, \\texttt{docs/designs/atom\\_algebra/ALGEBRA.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 643b7ae7 (PR \\#823, merged). \\bibitem{ringrun} The ring worlds of flow-link-v1: the pins before the run, the one run of 2026-09-22 and the register's refusal, \\texttt{examples/events/flow\\_link/README.md} and \\texttt{expectations.json} of the archived code \\cite{zenodo}, on the branch \\texttt{flow-link-build} at a3be9ba1 (PR \\#854 opened, not yet merged; the merge commit replaces this). \\bibitem{newtonrun} Series D3 under the one constant: the four worlds, the pins by the generator before any run and the one run of 2026-09-22, \\texttt{examples/events/orbit\\_lamp/README.md}, \\texttt{expectations\\_flow.json} and \\texttt{run\\_flow.out} of the archived code \\cite{zenodo}, on the branch \\texttt{newton-one-constant} at f44a69e5 (PR \\#879 opened, not yet merged; the merge commit replaces this). \\bibitem{darksector} The dark sector against the law's own rules",
     ),
+    # The Boss's consolidated order of 14:23Z, commit 2: the eleven MUST-FIX findings of the two whole-paper reviews (PHYSICS_REVIEW.md 1 to 7, MATH_REVIEW.md 1 to 4; the owner's word, record 974).
+    (
+        "MUST-FIX (a), the one verdict count: Table 2's caption",
+        "Three PASS (replicated \\cite{replications}), a fourth historical, under the clock's assumed word and the law before the generic entry (12); thirteen FAIL (eight in a registered run, 1c among them, four by a pin without its run and not in this table, one a declared input refuted, 8c); two BOUND (5a, 7a); one NOT COMPARED (2c); one NOT YET on its line (6, the atom, its loop's staying PASS and its shape FAIL); two PENDING their run of 2026-09-22 (13, 14).",
+        "The one count, computed from the rows and repeated verbatim in the abstract and in Section~\\ref{sec:discussion}: three readings pass (1a, 2b, 9); twelve fail in the table, eleven in a registered run (1b, 1c, 2a, 3, 4b, 6, 7b, 8a, 8b, 13, 14) and one a declared input refuted (8c), with four more failing by a pin whose run is not made and not in the table (4a, 5b, 11a, 11c); two are bounds (5a, 7a); one is not compared (2c); one is history (12, the lattice pin met under the law before the entry, not a pass against nature); the hypotheses beside rows 6, 13 and 14 change no verdict of the law (the PASS rows replicated \\cite{replications}).",
+    ),
+    (
+        "MUST-FIX (a), the one verdict count: the abstract",
+        "Against nature three readings pass, a fourth under the clock's assumed word (read under the law before the generic entry of 2026-09-22), twelve fail and one is not compared, the failures the law's own.",
+        "Against nature three readings pass (1a, 2b, 9); twelve fail in the table, eleven in a registered run (1b, 1c, 2a, 3, 4b, 6, 7b, 8a, 8b, 13, 14) and one a declared input refuted (8c), with four more failing by a pin whose run is not made and not in the table (4a, 5b, 11a, 11c); two are bounds (5a, 7a); one is not compared (2c); one is history (12, the lattice pin met under the law before the entry, not a pass against nature); the hypotheses beside rows 6, 13 and 14 change no verdict of the law (Table 2), the failures the law's own.",
+    ),
+    (
+        "MUST-FIX (a), the one verdict count: What is proved",
+        "against nature three pass, a fourth under the clock's assumed word, twelve fail and one is not compared (Table~\\ref{tab:nature}).",
+        "against nature three readings pass (1a, 2b, 9); twelve fail in the table, eleven in a registered run (1b, 1c, 2a, 3, 4b, 6, 7b, 8a, 8b, 13, 14) and one a declared input refuted (8c), with four more failing by a pin whose run is not made and not in the table (4a, 5b, 11a, 11c); two are bounds (5a, 7a); one is not compared (2c); one is history (12, the lattice pin met under the law before the entry, not a pass against nature); the hypotheses beside rows 6, 13 and 14 change no verdict of the law (Table~\\ref{tab:nature}).",
+    ),
+    (
+        "MUST-FIX (a), the one verdict count: the failures paragraph lists every FAIL row",
+        "The failures are the law's own results (Table~\\ref{tab:nature}; light unbent is Section~\\ref{sec:delay}'s, against $1.75$ arcseconds): the unslowed clock, the deceleration, light unbent, the weak forms, the strong ratio, the two-slit visibility, the phase-form window, the massless neutrino; each refutes the law as declared on its own, and no count of passes weighs against them.",
+        "The failures are the law's own results, every FAIL row of Table~\\ref{tab:nature} by its number: 1b the phase-form window, 1c the order channel, 2a the two-slit visibility, 3 the deceleration, 4b the moving lamp's redshift, 6 the atom's loop opening, 7b the strong ratio, 8a the neutron's step, 8b the neutrino's passage, 8c the massless neutrino, 13 light unbent (Section~\\ref{sec:delay}, against $1.75$ arcseconds), 14 Newton's periods under the one constant; and by their pins, not in the table, 4a the unslowed clock, 5b the arms' anisotropy, 11a and 11c the far lamp's brightness and Tolman's test; each refutes the law as declared on its own, and no count of passes weighs against them.",
+    ),
+    (
+        "MUST-FIX (a): the sentence naming rows the table does not carry",
+        "seven rows (4a, 5b, 6, 10, 11a to 11c) rest on a pin whose run is not made;",
+        "six rows of the register (4a, 5b, 10, 11a to 11c) rest on a pin whose run is not made and are not in this table, four of them FAIL by their pin (4a, 5b, 11a, 11c);",
+    ),
+    (
+        "MUST-FIX (a), row 12: HISTORY, not a pass; the lattice pin a gate on the code; against nature 4.6 percent off, the weak-field re-read pending",
+        "the new numbers to replace these; PASS, of the law before the entry, under the age word (P9) as the form at two Nodes, the lattice's dwelling ages $5, 6$ and $10, 11$ pinning $1.909$ for the continuum's $2.00$, $4.6$ percent away, a lattice-exact reading and not a fit; FAIL under the presence word \\\\",
+        "the new numbers to replace these; HISTORY, not a pass: under the age word (P9) as the form at two Nodes the lattice pin $1.909 \\pm 0.05$ is met (DETECTOR, a gate on the code, the law before the entry), the lattice's dwelling ages $5, 6$ and $10, 11$ pinning $1.909$ for the continuum's $2.00$; against nature the reading $1.907$ is $4.6$ percent off with no uncertainty stated on either side, so the caption's PASS criterion is met nowhere, PENDING the weak-field re-read; FAIL under the presence word \\\\",
+    ),
+    (
+        "MUST-FIX (b), row 7a: the binding fraction from the DETECTOR mass, the books a labelled diagnostic",
+        "the bond's two border clicks (DETECTOR) and the escaped $4$ of $3677$ (GAMEBOARD, the books), $0.109$ percent, the mass read $3673$ (series N); the same at head, every pin met",
+        "the bond's two border clicks and the mass read $3673$ (DETECTOR) against the declared $3677$, $4$ units, $0.109$ percent (series N); the books' escaped $4$ (GAMEBOARD, a diagnostic) the check; the same at head, every pin met",
+    ),
+    (
+        "MUST-FIX (b), row 8a: the verdict from the DETECTOR width alone, the factors a labelled aside",
+        "(GAMEBOARD, the lattice's clock, counted in no criterion) & FAIL: a factor $88$ in the registered run, $25$ to $40$ at head; the registered J1 run predates",
+        "(GAMEBOARD, the lattice's clock, counted in no criterion; against nature's $3.17$ these widths would read a factor $88$ in the registered run and $25$ to $40$ at head, numbers of the diagnostic that stand in no verdict) & FAIL: a step, the width $0$ against nature's $3.17$ (DETECTOR); the registered J1 run predates",
+    ),
+    (
+        "MUST-FIX (b), row 3: the time base named by kind",
+        "$-0.108$ coasting (series G2, the pointer's $z$; DETECTOR); $-0.104$ at head",
+        "$-0.108$ coasting (series G2, the pointer's $z$: the births DETECTOR per tick of the open-face detector, that tick the host's interval, GAMEBOARD \\cite[record 768]{log}, the detector's own pulse-and-return clock NOT READ); $-0.104$ at head",
+    ),
+    (
+        "MUST-FIX (b), row 4b: the time base named by kind",
+        "$z = 0.2636$ at $\\beta = v/c = 0.2674$ (series G2, DETECTOR); $0.2647$ at head",
+        "$z = 0.2636$ at $\\beta = v/c = 0.2674$ (series G2: the births DETECTOR per tick of the open-face detector, that tick the host's interval, GAMEBOARD \\cite[record 768]{log}, the detector's own pulse-and-return clock NOT READ); $0.2647$ at head",
+    ),
+    (
+        "MUST-FIX (b), row 12: the time base named by kind",
+        "series T: the form measured at a detector at two Nodes, the age clock $1.907$ (the lines' pin $1.909 \\pm 0.05$), the presence clock $1.000$ &",
+        "series T: the form measured at a detector at two Nodes (the births DETECTOR per tick of the open-face detector, that tick the host's interval, GAMEBOARD \\cite[record 768]{log}, the detector's own pulse-and-return clock NOT READ), the age clock $1.907$ (the lines' pin $1.909 \\pm 0.05$), the presence clock $1.000$ &",
+    ),
+    (
+        "MUST-FIX (b), the platform paragraph: the time base of the redshift rows qualified",
+        "Every reading named here is DETECTOR, the self-creations' ticks of series S GAMEBOARD, and a number of the board's state is a diagnostic, never a reading.",
+        "Every reading named here is DETECTOR in its count, the self-creations' ticks of series S GAMEBOARD; where a count is taken per tick of an open-face detector without a body (the redshift rows 3, 4b and 12) the time base is the host's interval, GAMEBOARD \\cite[record 768]{log}, the detector's own clock NOT READ; and a number of the board's state is a diagnostic, never a reading.",
+    ),
+    (
+        "MUST-FIX (c), the Lorentz sentence consistent with the frame: Lorentz of the world is assumed and the conversion brings it",
+        "Lorentz is the symmetry of that one step and Einstein's equations its form, both one step above the board and neither put in: the step's",
+        "Lorentz of the world is assumed, through (A1) and the relativity of the two directions ($k_{AB} = k_{BA}$), and what the chain shows is that the conversion brings it: the Lorentz group up to scale is the symmetry of the click families that preserve (A1) and (A2), and Einstein's equations are the form of the Outside step, one step above the board; nothing here derives the Lorentz group from the six verbs, and ``nothing of Einstein's put in'' says that no factor of Einstein's enters the chain's steps, not that the symmetry is derived: the step's",
+    ),
+    (
+        "MUST-FIX (d), the chain's Inside step named as the click frame's walk, not Eq. (1)",
+        "the Inside step, Eq.~\\eqref{eq:map} on the record with $W$ its invariant;",
+        "the Inside step, the click frame's walk on the record with $W$ its invariant (one amplitude per record that splits each interval between staying and hopping, (A2), whose exact invariant is $\\cos\\omega = \\cos m\\cos\\kappa$; Eq.~\\eqref{eq:map}, which hops whole, carries $W$ only as the declared identity of Eq.~\\eqref{eq:square});",
+    ),
+    (
+        "MUST-FIX (d), the paragraph's opening sentence: the step beneath of this chain is the walk",
+        "\\paragraph{The step beneath and the step above.} The paper's centre is the step beneath the lattice, Eq.~\\eqref{eq:square} in its frame, the six operations on the record with $W$ its invariant;",
+        "\\paragraph{The step beneath and the step above.} The Inside step of this chain is not Eq.~\\eqref{eq:map} but the click frame's walk, one amplitude per record that splits each interval between staying and hopping (A2), whose exact invariant is $\\cos\\omega = \\cos m\\cos\\kappa$; Eq.~\\eqref{eq:map}, which hops whole, carries $W$ only as the declared identity of Eq.~\\eqref{eq:square} (Table~\\ref{tab:roads}). The paper's centre is the step beneath the lattice, Eq.~\\eqref{eq:square} in its frame, the six operations on the record with $W$ its invariant;",
+    ),
+    (
+        "MUST-FIX (e), Eq. (14): the rest energy in whole units",
+        "\\boxed{\\,W = E_0^2 + 3\\,\\mathbf p\\cdot\\mathbf p, \\qquad E_0 = N_l N_w M, \\qquad c^2 = 1/3\\,}",
+        "\\boxed{\\,W = E_0'^2 + 3\\,\\mathbf p\\cdot\\mathbf p, \\qquad E_0' = E_0/c^2 = N_l N_w M, \\qquad c^2 = 1/3\\,}",
+    ),
+    (
+        "MUST-FIX (e), Section 2: the rest energy in whole units",
+        "and is the rest energy $E_0 = N_l N_w M$;",
+        "and is the rest energy in whole units, $E_0' = E_0/c^2 = N_l N_w M$;",
+    ),
+    (
+        "MUST-FIX (e), the symbol table: E_0 and E_0' one statement",
+        "the energy, the rest energy $E_0 = mc^2$, the mass $m = N_l N_w M$ in label units,",
+        "the energy, the rest energy $E_0 = E_0' c^2$ with $E_0' = N_l N_w M$ the rest energy in whole units, the mass $m = N_l N_w M$ in label units,",
+    ),
+    (
+        "MUST-FIX (f), Eq. (2): the beam crosses a shell at S_1/|D| Nodes",
+        "A shell at distance $r$ holds $\\mathcal N(r)$ Nodes and the $K$ beams cross it at $K$ of them, so the mean over the shell of what a body reads is",
+        "A shell at distance $r$ of unit radial width holds $\\mathcal N(r)$ Nodes, and a beam of direction $\\mathbf D$ crosses it at $S_1/|\\mathbf D|$ of them (one Link per Node, $|\\mathbf D|/S_1$ of Euclidean advance per Link), each reading the beam's arrivals, so the mean over the shell of what a body reads is",
+    ),
+    (
+        "MUST-FIX (f), Eq. (2): the factor written",
+        "\\langle a\\rangle(r) = \\frac{q\\,N_l}{\\mathcal N(r)} \\to \\frac{q\\,N_l}{2\\pi r}\n\\ \\text{on the plane},\\qquad \\frac{q\\,N_l}{4\\pi r^2}\\ \\text{in space},",
+        "\\langle a\\rangle(r) = \\frac{q\\,N_l\\,F}{\\mathcal N(r)} \\to \\frac{q\\,N_l\\,F}{2\\pi r}\n\\ \\text{on the plane},\\qquad \\frac{q\\,N_l\\,F}{4\\pi r^2}\\ \\text{in space},\\qquad F = \\langle S_1/|\\mathbf D|\\rangle_{\\mathrm{fan}},",
+    ),
+    (
+        "MUST-FIX (f), after Eq. (2): the factor's values and where it is absorbed",
+        "as $\\mathcal N(r) \\to 2\\pi r$ and $4\\pi r^2$; the departure at finite $r$",
+        "as $\\mathcal N(r) \\to 2\\pi r$ and $4\\pi r^2$, with $F$ the fan's Manhattan factor, $1$ on a heading, $\\sqrt3$ on a body diagonal, $1.287$ in the mean over the registered fan \\cite{orbitread}, $4/\\pi$ for a fan uniform in angle on the plane and $3/2$ for one uniform in solid angle in space, a factor that vanishes neither with $r$ nor with the fan's grain (the presence, Eq.~\\eqref{eq:fields}, carries the dwell $T_D/(S_1 N_l)$ per Link that cancels it into $\\tau_L$; flow-link-v1, rows 13 and 14 of Table~\\ref{tab:nature}, divides every push by the same mean); the departure at finite $r$",
+    ),
+    (
+        "MUST-FIX (f), Eq. (3): G carries the factor",
+        "a = -\\frac{G M_B}{r^2}, \\quad G = \\frac{K\\,\\eta}{4\\pi N_w}\\ \\ \\text{in space};\n\\qquad a = -\\frac{G' M_B}{r}, \\quad G' = \\frac{K\\,\\eta}{2\\pi N_w}\\ \\ \\text{on the plane},",
+        "a = -\\frac{G M_B}{r^2}, \\quad G = \\frac{K\\,\\eta\\,F}{4\\pi N_w}\\ \\ \\text{in space};\n\\qquad a = -\\frac{G' M_B}{r}, \\quad G' = \\frac{K\\,\\eta\\,F}{2\\pi N_w}\\ \\ \\text{on the plane},",
+    ),
+    (
+        "MUST-FIX (f), Eq. (4): the push carries the factor",
+        "\\mathrm{push}_e = q_A q_B\\,\\frac{K\\eta\\,N_l}{4\\pi r^2},",
+        "\\mathrm{push}_e = q_A q_B\\,\\frac{K\\eta\\,N_l\\,F}{4\\pi r^2},",
+    ),
+    (
+        "MUST-FIX (f), the ledger's Newton row: the fan's Manhattan factor among the assumptions",
+        "Newton's inverse square; $G = K\\eta/(4\\pi N_w)$ & the bilinear push on the arriving rows' first moment & two additivities (24.2); an average that covers the shell; $N_w$ an input &",
+        "Newton's inverse square; $G = K\\eta F/(4\\pi N_w)$ & the bilinear push on the arriving rows' first moment & two additivities (24.2); an average that covers the shell; the fan's Manhattan factor $F = \\langle S_1/|\\mathbf D|\\rangle$ ($1.287$ on the registered fan); $N_w$ an input &",
+    ),
+    (
+        "MUST-FIX (f), the roads table's Newton row: G with the factor",
+        "the fall, $a = -GM_B/r^2$, $G = K\\eta/(4\\pi N_w)$; the equivalence &",
+        "the fall, $a = -GM_B/r^2$, $G = K\\eta F/(4\\pi N_w)$ ($F$ the fan's Manhattan factor); the equivalence &",
+    ),
+    (
+        "the not-computed paragraph, item (vi): the cross-reference made unambiguous",
+        "an input in (vii) above",
+        "an input in the dark energy item of the list above",
+    ),
+    (
+        "the references: the orbit read note (the fan's Manhattan mean)",
+        "\\bibitem{stepalgebra} The step algebra of light bending:",
+        "\\bibitem{orbitread} The orbit's inward push read on the fan: a body at rest on a fan reads the fan's Manhattan mean $S_1/|\\mathbf D| = 1.287$ shell means, \\texttt{docs/designs/orbit\\_read/NOTE.md} of the archived code \\cite{zenodo}, on \\texttt{main} at 75efe7b5 (host arithmetic, no run). \\bibitem{stepalgebra} The step algebra of light bending:",
+    ),
 ]
 
 

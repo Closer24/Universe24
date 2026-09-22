@@ -4829,3 +4829,34 @@ channel (main 804a8da0, PR #874), the centred step (a4794cc6, PR #876),
 the Gleason bound (e6809713, PR #875); PR #860 (b12dd253), #879 and #854
 still pending. Five bibitems added (stepalgebra, flowalgebra,
 atomalgebra, ringrun, newtonrun). No figure. 46 pages.
+
+## Applied (2026-09-22, the Boss's consolidated order of 14:23Z, commit 2): the eleven MUST-FIX findings of the two whole-paper reviews (record 974)
+
+PHYSICS_REVIEW.md (main fdc96079) findings 1 to 7 and MATH_REVIEW.md
+(main 5550a2d1) findings 1 to 4, each in the paper's manner: (a) one
+verdict count computed from the rows, written in the caption and
+repeated verbatim in the abstract and "What is proved", the failures
+paragraph listing every FAIL row by number, 1c and 8b among them, row 12
+HISTORY and not a pass (the lattice pin a gate on the code; 4.6 percent
+off nature with no uncertainty stated; the weak-field re-read pending),
+the sentence naming rows the table does not carry corrected; (b) no
+GAMEBOARD number in a verdict: row 7a from the DETECTOR mass, row 8a
+from the DETECTOR width 0 with the factors 88 and 25 to 40 a labelled
+aside, the redshift rows 3, 4b and 12 with their time base named (births
+DETECTOR per tick of the open-face detector, the host's interval,
+GAMEBOARD, record 768; the detector's own clock NOT READ) and the
+platform paragraph qualified the same way; (c) the Lorentz sentence
+after the owner's chain sentence now says once that Lorentz of the world
+is assumed through (A1) and k_AB = k_BA and that the conversion brings
+it, nothing deriving the group from the six verbs, "nothing of
+Einstein's put in" read as no factor of Einstein's entering the steps;
+(d) the chain's Inside step named as the click frame's walk with its
+invariant cos omega = cos m cos kappa, Eq. (1) carrying W only as the
+declared identity of Eq. (14), the paragraph opened with that sentence;
+(e) E_0' = E_0 / c^2 = N_l N_w M the rest energy in whole units in Eq.
+(14), Section 2 and the symbol table; (f) the fan's Manhattan factor F
+= <S_1 / |D|> in Eqs. (2), (3), (4), the ledger's and the roads table's
+Newton rows, with its values and where the presence absorbs it, the
+orbit read note cited by SHA. Also the cross-reference of this hour's
+not-computed paragraph made unambiguous. The SHOULD-FIX and NIT items
+and "what is missing" wait for the owner's word. 48 pages.
