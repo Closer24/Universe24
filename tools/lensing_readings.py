@@ -572,7 +572,9 @@ def print_space_readings(readings: list[Reading]) -> tuple[int, int]:
     base = analyse(control) if control is not None else None
     inside = outside = 0
     print(
-        f"{DETECTOR} | world | M | b | clicks in the window "
+        f"{DETECTOR} (the phase rate per interval and the first click's tick count the pixels' own clock: "
+        "fixed detectors in no crowd at suspension 0, whose tick is their age, record 569; the clock audit "
+        "of 2026-09-22) | world | M | b | clicks in the window "
         "| centroid y (the deflection off the beam's axis, against the control's) | centroid z (deflection) | width rms y (delta) | mean age (delta) | first click "
         "| count ratio | phase rate (delta vs the turn) | light on the faces | light the mass took | verdicts |"
     )
@@ -625,7 +627,9 @@ def print_meeting_readings(readings: list[Reading]) -> tuple[int, int]:
     base = analyse(control) if control is not None else None
     inside = outside = 0
     print(
-        f"{DETECTOR} under `meeting: true` | world | M | b | clicks in the window | centroid y (the shift off the "
+        f"{DETECTOR} under `meeting: true` (the phase rate per interval counts the pixels' own clock: fixed "
+        "detectors at suspension 0, whose tick is their age, record 569; the clock audit of 2026-09-22) "
+        "| world | M | b | clicks in the window | centroid y (the shift off the "
         "beam's axis against the control's; expected) | centroid z (shift; expected 0) | width rms y (delta) "
         "| mean age (delta; expected) | count ratio (expected) | light on the faces (expected) | light the mass took "
         "| phase rate (delta vs the turn) | phase offset, steps of N (expected), resultant, clicks read | verdicts |"
