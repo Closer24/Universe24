@@ -65,7 +65,27 @@ moves information one Node at most, so every Outside passage is a chain
 of neighbour steps; a theorem, not an added assumption, with the one
 exception the title names, the pair's click, one gather of one record
 from both settings, which is not a chain of neighbour steps and is the
-law's one non-local operation.
+law's one non-local operation. THE BASIS INSIDE, THE OPERATION OUTSIDE
+(the owner's word, 2026-09-22, as the Boss relayed it, which may become
+the paper's foundation): "in the real world we are built of clicks; to
+move a click from place to place one puts it into the board and takes
+it out; that is motion in the real world, and the transformation must
+be done there; the basis is Inside, and we are operated Outside, by
+emitters and clicks." Stated as an assumption: what exists Outside is
+made of clicks, and every change of place Outside is an emission into
+the board (a lamp's birth, a transponder's re-emission), a passage
+Inside under the six verbs, and a click out; there is no Outside
+dynamics of its own. Whether it is A1 plus the conversion or more: its
+first half (every Outside passage is Inside's passage read by clicks)
+is A1 with the definition of Outside, as locality Outside is; its second
+half (that WE are built of clicks, that the emitters and the detectors
+are themselves records of the board and not a second kind of thing) is
+MORE than A1: it is the statement that the apparatus is inside the law,
+which the law today does not carry (a detector, a lamp and an external
+body are declarations of the world file, not records that hop; the
+paper's P7 to P8 and the external-body note), so it is an assumption
+about the world, or a programme for the law, and not a theorem of the
+conversion.
 
 **Theorem (the click theorem).** The conversion defined by (A1) and
 (A2), from the lattice's momentum to motion read by clicks, is Lorentz
@@ -911,7 +931,7 @@ law's being the FAIL row of record 270. The last three rows are part
 
 | INSIDE (a GameBoard quantity, from the six verbs; its source) | OUTSIDE (a detector reading) | The conversion, and its order | Inverse | The registered reading on the Outside side (kind) |
 | --- | --- | --- | --- | --- |
-| the exact square `W = E'_0^2 + 3` **p** `.` **p** on the record and `E'` the whole root kept by comparisons (17.6 M3; 24.1 row 38); on the law no square, the wall `Q S M + p` linear (section 5) | the energy a click reads of the record's rows, `E_read = h f_read`; gamma; the rate `r = E'_0 / E'` (the identity) or `r = 1` (the law), read as a detector's own count per tick through the two lamps of section 4 | (A1), (A2) and the Planck map: `E'^2 - E'_0^2 = 3 p . p` is the walk's `omega^2 - kappa^2 = m^2` times `hbar^2` through the unit chain `E^2 = E_0^2 + c^2 p^2` (p per Link), `E' = E / c^2`, the 3 being `1 / c^2 = d` (part (6) (1) (c)); `r = E'_0 / E' = sqrt(1 - beta^2)` exact on the identity's integers, `sqrt(1 - v^2) (1 - kappa^2 / 6)` in the group velocity: up to `m^2 v^2`, the identity's pace within `m^2 / 3` of the clicks' velocity (the group velocity); the law's `r = 1` rung 1 | `E' = E'_0 / r`; `3 p^2 = E'_0^2 beta^2 / (1 - beta^2)`, p the whole root within 1 | series S: the 64th self-creation at 70 and 124 (GAMEBOARD, the `become` lines; gamma 1.1074 and 1.9558; the design's `70.9 +- 1` and `125.2 +- 1`, the derived 70 and 124, 17.6 M2); r itself NOT READ as a measurement (section 4); J4's ratio 1 under the law pinned, not run |
+| the exact square `W = E'_0^2 + 3` **p** `.` **p** on the record and `E'` the whole root kept by comparisons (17.6 M3; 24.1 row 38); on the law no square, the wall `Q S M + p` linear (section 5) | four Outside readings (the paper's "the step beneath and the step above"): (1) `E^2 = E_0^2 + p^2 c^2`, which is W times `c^4` in the whole unit (`E = c^2 E'`, exact on the identity's integers, the factor 3 entering as `1 / c^2` when p is counted per Link); (2) the gate `E'_0 / E'` as `1 / gamma`, the detector's own rate (exact on the identity's integers; the law's `r = 1`), read through the two lamps of section 4; (3) the drive's fraction `p / E'` as the click's velocity, Nodes apart over counts apart (to second order: within `m^2 / 3` of the walk's group velocity, the factor 3 in `beta = sqrt 3 p / E'`); (4) the two Doppler factors `k_BA = gamma (1 + beta)` and `k_AB = sqrt((1 + beta) / (1 - beta))`, the step above read at two detectors (exact in the k-calculus within `1 / T`; the law's `1 + v` and `1 / (1 - v)`); with them the energy a click reads of the record's rows, `E_read = h f_read = (1 + z) E_emit` | (A1), (A2) and the Planck map: `E'^2 - E'_0^2 = 3 p . p` is the walk's `omega^2 - kappa^2 = m^2` times `hbar^2` through the unit chain `E^2 = E_0^2 + c^2 p^2` (p per Link), `E' = E / c^2`, the 3 being `1 / c^2 = d` (part (6) (1) (c)); `r = E'_0 / E' = sqrt(1 - beta^2)` exact on the identity's integers, `sqrt(1 - v^2) (1 - kappa^2 / 6)` in the group velocity: up to `m^2 v^2`, the identity's pace within `m^2 / 3` of the clicks' velocity (the group velocity); the law's `r = 1` rung 1 | `E' = E'_0 / r`; `3 p^2 = E'_0^2 beta^2 / (1 - beta^2)`, p the whole root within 1 | series S: the 64th self-creation at 70 and 124 (GAMEBOARD, the `become` lines; gamma 1.1074 and 1.9558; the design's `70.9 +- 1` and `125.2 +- 1`, the derived 70 and 124, 17.6 M2); r itself NOT READ as a measurement (section 4); J4's ratio 1 under the law pinned, not run |
 | the pace `abs(p_a) / (Q S M + abs(p_a))` per axis (P9, 4.4) and the drive's schedule `by_drive(drive, p, D, at_most = 1)` (`step_axis`); under the identity `p / E'` Links per interval (17.6 M1) | the velocity `v`: Nodes apart over counts apart between two clicks of neighbouring detectors (section 1); `beta = sqrt 3 p / E'` in units of c | (A1): one Node per interval at most, the count's ratio the pace within `1 / T` of the count and `1 / T_D` of the pace; rung 1; the identity's `p / E'` is the walk's group velocity only up to the relative `m^2 / 3` | law: `p = E'_0 v / (1 - v)` exact; identity: as above | series S: beta 0.3040 at the star's declared momentum under the identity's pace, 0.2674 under the law's (GAMEBOARD, the drive's pace; the detector reads only `1 + z` below); D3's controls at their pace to the tick (DETECTOR, `x = 60 + r` on every click) |
 | the phase per age `n / d` steps of the circle N per interval, `omega = 2 pi n / (d N)`, the row's energy `E = h_q n / d = h_A f = hbar omega` with `hbar = h_A / (2 pi)` and its momentum `p` with `lambda = h_A / p` (6.4, 24.1 row 25, 23.2); the rest pair `E_0 = h_q n_0 / d_0` | the frequency a detector counts, `1 + z` (the inverse slope of the birth ordinal against the click's tick, series T's method): `k_BA = (1 + v) / r` for a lamp on the moving record, `k_AB = r / (1 - v)` for a lamp at rest counted by the moving record, the round trip `(1 + v) / (1 - v)` | (A1) and the count: the k-calculus of section 2, rung 1 within `1 / T`; the law `1 + v` and `1 / (1 - v)`, the identity `gamma (1 + beta)` and `sqrt((1 + beta) / (1 - beta))`; the round trip r-free under every r (section 0 (b)) | law: `v = z`; identity: `beta = ((1 + z)^2 - 1) / ((1 + z)^2 + 1)`; r from `k_AB` and `k_BA` together, `k_BA / k_AB = (1 - v^2) / r^2` | NATURE 4b: `z = 0.2636` at beta 0.2674 under the law (DETECTOR, FAIL against nature's 0.315); series S: `z = 0.3674` at beta 0.3040, gamma 1.04967, the pin `0.369 +- 0.003` (DETECTOR, PASS in its domain); `k_AB` NOT READ, the missing direction (section 4) |
 | the age wall: the crowd `a_tau` (the sum of amount times age of the rays at the Node, record 394) stretching the self-creation's wall at coefficient 1, `rate x d` against `wall x (d + a_tau n)` (`core.integer.age_wall`; `AGE_WALL_SET`), the rate `1 / (1 + a_tau n / d)` | the clock rate in a crowd read by a pulse and its return (record 768): the ratio of two lamps' `1 + z` at one detector, `(1 + k_2) / (1 + k_1)`, `k = a_tau n / d`; the detector's own `k_D` cancelling in the ratio | (A1) and the count: the owed intervals are counts the pulses carry; rung 1 within the count's grain | `k = (1 + z) / (1 + z_0) - 1` against a control lamp | series T: 2.6517 at 3 and 4.1500 at 6 Links, the ratio 1.907 against the pin `1.909 +- 0.05` (DETECTOR, the age word; NATURE 12); series X: the controls 1.0000 exactly (DETECTOR) |
@@ -1246,6 +1266,70 @@ Outside: every symbol in them is a count at a click or a ratio of
 counts (a time is a detector's own count, a length Nodes apart, an
 energy `h` times a counted frequency, a mass a rest count), by the
 closing fact of section 7's table.
+
+*The Outside step's own quantum (the owner's clause: "what is the
+minimal distance between a click and a click? the step above as a
+formula").* The Inside step has one interval and one Node; the Outside
+step has its own least units, and they are these. (i) *In place:* the
+least separation of two clicks read as two places is one Link, two
+detectors at neighbouring Nodes (A1: a click moves information one Node,
+so two places a chain of clicks tells apart are at least one Link
+apart); the law makes a detector's cell one Node (the one-Node `wave`
+detectors of series D3, the counters of the Bell worlds) or a declared
+set of Nodes (a face set), whose clicks are read at the set and not at a
+Node, so for a set the least place is the set's own extent. A theorem
+of A1 and the definition of a detector. (ii) *In the detector's own
+time:* two arrivals at one detector can be one own count apart (series
+X's controls read `1 + z = 1.0000` exactly, consecutive births arriving
+one count apart, DETECTOR), so the least separation of two clicks at one
+detector is one count; but the least thing a detector TIMES by itself
+(record 768: the clock is a pulse and its return) is one round trip to
+its neighbour, two intervals in the hop frame (one Node each way at c =
+1), and on the Beam Law's lattice `2 T_D / (N_l abs(D)_1)` per Link in
+the mean, between 2 and 4 intervals on a heading by the flight
+accumulator's remainder (`T_h / N_l = 110 / 64 = 1.72` per Link) and
+exactly 2 on the body diagonal; the tick itself is GAMEBOARD and never
+read, so the detector's least timed unit is its round trip, not the
+interval. A theorem of A1 with record 768's definition of the clock.
+(iii) *For a moving record read by clicks:* the least step is one Node
+per hop with k counts between hops, `v = 1 / k`, so the Outside
+velocities are the ratios of M3 (Q, in the mean) and the quantum of
+velocity between two neighbouring readings is `1 / k - 1 / (k + 1) = 1 /
+(k (k + 1))`, finest near c and coarsest near rest; c Outside is one
+Link per the least count, the pace of a row (`1 / sqrt 3` Links per
+interval, `32 / 55` on a heading, the same in every family by A1). A
+theorem of A1 and the conversion. (iv) *The Outside step formula in
+these quanta:* for the next click of the same record (a transponding
+record re-emitting at each arrival, section 2 (c)),
+
+    place_(j + 1) - place_j = e_j D_hat,   e_j in {0, 1},   count_(j + 1) - count_j = 1 + owed_j   (in the detector's own count),
+
+the image under the conversion of the Inside step's one interval and
+one Node (`e_j` the hop's whole part, capped at 1; `owed_j` the age
+wall's whole part, the crowd's stretch); read at a distance, the
+Outside step's count between two clicks of the record is multiplied by
+the k-calculus factors, `k_BA = (1 + v) / r` for a lamp on the record
+counted at rest and `k_AB = r / (1 - v)` for a lamp at rest counted by
+the record, with r the record's own count per tick (section 2), the
+one quantity of the step above that A1 leaves free: `r = 1` on the law
+(the whole-record hop), `sqrt(1 - v^2)` up to `m^2 v^2` under A2 (section
+0 (ii)); so the place quantum, the velocity's ratios and the count's
+quantum are theorems of A1 and the conversion, and the rate r inside
+the count is the one thing that needs A2 or a declaration. *The
+register, by kind:* the least spacing of clicks at one detector is READ
+by series X's controls (`1 + z = 1.0000`, one count per birth, DETECTOR)
+and by series T (2.6517 and 4.1500 counts per birth at 3 and 6 Links,
+the crowd's stretch of the count's quantum, DETECTOR); the place quantum
+is READ by series D3 (the one-Node detectors' `x` of each birth, 138 of
+139 at the same Node, DETECTOR); series S's face clicks at 369 and 345
+are single arrival ticks at a face set (DETECTOR), not a spacing; the
+muon's 70 and 124 are the gate's own count at the 64th self-creation
+(GAMEBOARD, the `become` lines), not a click spacing; series W's
+first-click ages (815, 876, 876, as the Boss cites them) are the click
+line's `age` field, the host's diagnostic record (record 398), GAMEBOARD,
+not a least spacing; a least spacing of two clicks of one MOVING record
+at one detector (the count between a transponding record's re-emissions)
+is NOT READ, section 4's missing world.
 
 *(III) THE CONVERSION*, the map of this part: the four named steps of
 (2) below (a ring homomorphism, a pure state's square, a threshold, a
