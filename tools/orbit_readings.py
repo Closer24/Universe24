@@ -22,11 +22,22 @@ least and greatest radius, the escape or the refused step if any; and, per
 width, the ratio T(24)^2 / T(12)^2 against (24 / 12)^2 = 4, the plane's
 1 / r force (T proportional to r, k = 2; Kepler's k = 3 would give 8). The
 record checks (completed, the books balanced at every tick) fail the tool;
-the orbit readings are registered inside or outside their expectation
-(docs/EXPERIMENTS.md, "D, the orbit under the Beam Law, on the plane
-(2026-09-19)") and never moved.
+the orbit's T, its ratios and the drift are step records, GAMEBOARD
+diagnostics printed and never pinned (records 562 and 564; the clock audit
+of 2026-09-22: a period is read after a detector off a lamp's births, series
+D3), and "C measured" divides the probe's own pushes (DETECTOR) by the
+host's interval count, a GameBoard rate; the entry is docs/EXPERIMENTS.md,
+"D, the orbit under the Beam Law, on the plane (2026-09-19)", whose
+numbers are never moved.
 
     PYTHONPATH=src python tools/orbit_readings.py artifacts/orbit
+
+The rule of records 562 and 564 (the model owner, 2026-09-22; the audit of
+record 567): only a detector's reading or a measured event's own record
+(DETECTOR) is compared with an expectation; a number of the GameBoard (the
+step records' positions, a replay, the books) is a diagnostic, printed
+with its expectation as "agrees" or "differs", never counted inside or
+outside, and names the detector reading behind it, not yet read.
 """
 
 from __future__ import annotations
@@ -284,6 +295,13 @@ def find_runs(root: Path) -> list[Reading]:
 
 def print_table(readings: list[Reading]) -> None:
     print(
+        "GAMEBOARD (a diagnostic, never pinned: the orbit from the probe's step records: closed, T, the mean "
+        "radius, the drift per orbit, the turns, r min .. max, the end) beside DETECTOR (the probe's own "
+        "`read` records: reads, units; C measured divides their pushes by the host's interval count, "
+        "GAMEBOARD as a rate, the clock audit of 2026-09-22); the detector reading behind the period, the "
+        "`beam` sets' click ticks (the lamp's returns), not yet read"
+    )
+    print(
         "| World | S | r | p (label units) | closed | T | mean radius | drift per orbit | turns | "
         "r min .. max | reads | units (label units) | C measured | end |"
     )
@@ -324,6 +342,10 @@ def print_ratios(readings: list[Reading]) -> None:
     for r in readings:
         by_width.setdefault(r.width, {})[r.radius] = r
     print()
+    print(
+        "GAMEBOARD (a diagnostic, not counted: the periods from the step records; the detector reading "
+        "behind them, the `beam` sets' click ticks, not yet read)"
+    )
     print("| S | T(12) | T(24) | T(24)^2 / T(12)^2 | expected (24 / 12)^2, k = 2 | Kepler k = 3 |")
     print("| --- | --- | --- | --- | --- | --- |")
     for width in sorted(by_width):

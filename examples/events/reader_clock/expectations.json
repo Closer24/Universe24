@@ -1,9 +1,5 @@
 {
  "format": "reader-clock-expectations-v1",
- "replicated": {
-  "worlds": "docs/REPLICATIONS.md#reader_clock-s-a-reader-inside-a-crowd-of-its-own",
-  "clock_age_v1": "docs/REPLICATIONS.md#reader_clock-s-a-reader-inside-a-crowd-of-its-own"
- },
  "c": 0.5818181818181818,
  "ticks": 500,
  "window": [
@@ -110,5 +106,22 @@
     "pin_readable_in_the_shipped_world": false
    }
   }
+ },
+ "gameboard_diagnostics": {
+  "kind": "GAMEBOARD",
+  "keys": [
+   "worlds.<name>.k_reader",
+   "worlds.<name>.k_source",
+   "clock_age_v1.age_moment_over_presence",
+   "clock_age_v1.worlds.<name>.k_reader",
+   "clock_age_v1.worlds.<name>.k_source",
+   "clock_age_v1.worlds.<name>.k_reader_presence_word",
+   "clock_age_v1.worlds.<name>.k_source_presence_word"
+  ],
+  "statement": "the crowd's moment at the reader's Node (the count its clock owes, k, and every number derived from it alone) is a replay of the store: a diagnostic, never pinned, never compared with nature, not in the PASS/FAIL count (the model owner, 2026-09-22, records 562 and 564; the audit, record 567, F1); the pin of this series is 1 + z at the detector (DETECTOR); the detector reading behind k, the reader's own `counted` on its record, not yet read"
+ },
+ "replicated": {
+  "worlds": "docs/REPLICATIONS.md#reader_clock-s-a-reader-inside-a-crowd-of-its-own",
+  "clock_age_v1": "docs/REPLICATIONS.md#reader_clock-s-a-reader-inside-a-crowd-of-its-own"
  }
 }

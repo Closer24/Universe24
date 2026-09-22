@@ -260,5 +260,130 @@
    }
   },
   "note": "the controls byte identical to the first run; the delays' ratios inside 2.00 +- 0.25 as before; the shifts inside 0.5 pixel in two of four (three before M1): near at f = 2 now outside by 1.06, a survivors' reading with 547 taken; the shifts' ratio outside as before; the rule and the pins unchanged"
+ },
+ "run_2026_09_22_bresenham": {
+  "branch": "optical-v1-bresenham",
+  "after": "record 536 (verb 3 by Bresenham) and the chief physicist's word on the pace",
+  "read_by": "tools/lensing_readings.py --no-replay (DETECTOR); tools/optical_readings.py (GAMEBOARD)",
+  "worlds": {
+   "mass_g0": {
+    "shift": -1.993,
+    "delay": 2.95,
+    "clicks": 1347,
+    "taken_by_the_mass": 0,
+    "was": {
+     "shift": -1.622,
+     "delay": 2.97,
+     "clicks": 1398,
+     "taken_by_the_mass": 0
+    }
+   },
+   "mass_g1": {
+    "shift": -3.989,
+    "delay": 5.1,
+    "clicks": 1394,
+    "taken_by_the_mass": 0,
+    "was": {
+     "shift": -3.805,
+     "delay": 5.88,
+     "clicks": 1389,
+     "taken_by_the_mass": 0
+    }
+   },
+   "near_g0": {
+    "shift": -2.608,
+    "delay": 2.99,
+    "clicks": 1453,
+    "taken_by_the_mass": 0,
+    "was": {
+     "shift": -3.0,
+     "delay": 2.4,
+     "clicks": 1455,
+     "taken_by_the_mass": 0
+    }
+   },
+   "near_g1": {
+    "shift": -6.412,
+    "delay": 6.2,
+    "clicks": 1452,
+    "taken_by_the_mass": 0,
+    "was": {
+     "shift": -3.274,
+     "delay": 4.51,
+     "clicks": 1001,
+     "taken_by_the_mass": 547
+    }
+   }
+  },
+  "ratios": {
+   "mass": {
+    "shift_f2_over_f1": 2.0,
+    "delay_f2_over_f1": 1.73,
+    "was": {
+     "shift_f2_over_f1": 2.35,
+     "delay_f2_over_f1": 1.98
+    }
+   },
+   "near": {
+    "shift_f2_over_f1": 2.46,
+    "delay_f2_over_f1": 2.07,
+    "was": {
+     "shift_f2_over_f1": 1.09,
+     "delay_f2_over_f1": 1.88
+    }
+   }
+  },
+  "gameboard_mean_transverse_angle_degrees": {
+   "mass_g0": -4.225,
+   "mass_g1": -9.097,
+   "near_g0": -6.812,
+   "near_g1": -14.478,
+   "was": {
+    "mass_g0": -4.203,
+    "mass_g1": -8.976,
+    "near_g0": -6.993,
+    "near_g1": -8.277
+   }
+  },
+  "note": "the controls byte identical; the law's 2.00 read in the mass world's shifts (the comb gone); the mass delays inside their pins, their ratio 1.73 outside 2.00 +- 0.25 by 0.02, the reading that decides, recorded as it is; near at f = 2 the whole beam (0 taken), outside its shift and delay pins; the rule and the pins unchanged"
+ },
+ "run_2026_09_22_far": {
+  "branch": "optical-v1-bresenham",
+  "after": "the merge of main's far worlds (PR #689) onto verb 3's Bresenham form with the momentum's pace",
+  "read_by": "tools/lensing_readings.py --no-replay (DETECTOR); tools/optical_readings.py (GAMEBOARD)",
+  "worlds": {
+   "far_g0": {
+    "shift": -1.773,
+    "delay": 2.56,
+    "clicks": 1348,
+    "taken_by_the_mass": 0,
+    "lamp_rate": 0.927,
+    "was": null
+   },
+   "far_g1": {
+    "shift": -3.403,
+    "delay": 4.35,
+    "clicks": 1344,
+    "taken_by_the_mass": 0,
+    "lamp_rate": 0.927,
+    "was": null
+   }
+  },
+  "ratios": {
+   "far": {
+    "shift_f2_over_f1": 1.92,
+    "shift_bracket": 0.66,
+    "delay_f2_over_f1": 1.7,
+    "delay_bracket": 1.04,
+    "was": null
+   }
+  },
+  "gameboard_mean_transverse_angle_degrees": {
+   "far_g0": -3.855,
+   "far_g1": -7.788,
+   "ratio": 2.02,
+   "was": null
+  },
+  "note": "the far worlds' first run: both shifts inside 0.5 pixel of the pins -1.69 / -3.37 (read -1.773 / -3.403) and both delays inside 1 interval of 2.15 / 4.29 (read 2.56 / 4.35); the shifts' ratio 1.92 inside 2.00 +- 0.66 and the delays' 1.70 inside 2.00 +- 1.04; no light taken by the mass at either f (the innermost line at 5.83 Links, beyond mass's 3.83); the lamp rate 0.927 read here (the pin was None); the pins untouched"
  }
 }

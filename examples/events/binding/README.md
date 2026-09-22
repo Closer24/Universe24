@@ -84,8 +84,9 @@ gathers) and `state.json` (the bodies' held content and positions).
 ## What was measured (2026-09-20)
 
 The three runs (`tools/run_series.py --jobs 2 --wall-seconds 1200`, 3000
-intervals each, 13 to 53 s, the books balanced at every tick; the digests
-in [validation](../../../docs/VALIDATION.md)), read from `events.jsonl`,
+intervals each, 13 to 53 s, the books balanced at every tick; the digests,
+a bit-exact gate of the record's bytes and not a reading, in
+[validation](../../../docs/VALIDATION.md)), read from `events.jsonl`,
 `run.json` and `state.json`; every reading marked inside or outside its
 pin, nothing moved.
 

@@ -46,7 +46,11 @@ one-line label, a grep, a read of one diff): every session starts from zero
 and rediscovers what the Boss already knows. The sessions kept across tasks
 are the three whose task is one continuing thing: the paper coordinator (the
 paper's one writer), the chief physicist (the law's physics word) and the
-derivation mathematician (DERIVATIONS_BEAM's one writer); a session mid-task
+derivation mathematician (DERIVATIONS_BEAM's one writer); from 2026-09-22
+01:10Z the chief physicist builds the generic bending with the owner directly
+and the Boss routes the physicist's questions of the paper's closing to the
+physics-rule reviewer of the optical line (the owner's word, record 615); a
+session mid-task
 finishes it (Far 2 to the Bresenham merge; the Replicator to the register
 fixes' merge) and is then archived; a runner, a reviewer or an Architect item
 opens a new session per item with its state. The same rule binds the Boss's
@@ -298,6 +302,52 @@ push on a row with its energy as the weight (issue #605, record 421).
 ### Every item as an information-transfer system (the owner, 2026-09-21, record 530)
 
 The owner's word: "Always understand how each item affects as an information-transfer system, what the generic solution is and why it will work; short answers." Before the Boss brings the owner a question, gives a session an order, weighs a review finding or lists a decision, it states three short answers, one line each, never an essay: (1) the information: what the item moves between which records or Nodes, through which Link and Port, at what rate, what is kept and what is lost; (2) the generic solution: the one primitive, for every family alike, from which the number follows (the section above), never a patch beside it; (3) why it will work: the mechanism on the GameBoard, with the reading that would show it and the reading that would refute it; and, in every report that needs the owner's decision, (4) why do this at all: what the item buys the law or a measurement, and what stays unread or wrong if it is not done (the owner, 2026-09-21, record 533); and (5) the Highlights: which decisions of docs/HIGHLIGHTS.md section 5.4 the item keeps and why they still hold, and whether one of them should now change (the owner, 2026-09-21, record 534); a rule kept in Git is kept because it was decided on evidence, and the report says whether the evidence in hand still supports it; and (6) the implementation: what the item changes in the tree (engine, register, documents), which identities and registrations it touches, the time it takes end to end (the build, the runs, the review), and whether it is dangerous: what it can break, what re-run or read guards it, and whether the key stays off by default (the owner, 2026-09-21, record 535). The answers go into the order or the question itself, so the session or the owner reads the reason with the ask. Changing a Highlights decision is an option, not a breach (the owner, 2026-09-21, record 536): when the evidence in hand no longer supports a decision of section 5.4, the report says so and proposes the new line; the change is made on the owner's word and recorded as a new decision line that names the one it supersedes, with the record. Every session reports to the Boss in the same six lines (skills/workflow.md, "The six lines of every report").
+
+### Every agent closes its own tasks (the owner, 2026-09-22, record 622)
+
+The owner's word: "Every agent closes its own tasks by itself and reports
+done. If a run agent hits a problem, it changes the code and does a test.
+Activate an Architect if optimization is needed." Three rules for every
+order the Boss gives: (1) a session closes its item to its end without
+waiting on the Boss for a step already ordered (the build, the runs, the
+readings, the gates, the push) and reports once, with the word done, the
+head's full SHA and the six lines; the Boss's part is the PR, the merge and
+the record, not the steps between; (2) a problem met in a run or a gate (a
+parser refusal, an overflow, a silent lamp, a failing check) is that
+session's to fix in the code with a dedicated test (inputs, expected result,
+an edge case) on its own branch, without asking; the fix and its test are
+named in the report; a physical question (a pin's derivation, a law's
+reading) still comes to the Boss in one line; (3) an optimization problem,
+a bug or anything to fix is that session's own: it does it, in the code with
+a test, and reports that it solved it; the Boss opens no Architect for it
+(the owner, 2026-09-22, record 629, superseding the Architect clause of
+record 622). Two rules beside them (record 629): the Boss works only for the
+paper, coordinating the tasks that set it in order; and no new development
+project (a new rule, series, tool or build) starts without the owner's
+approval, while bugs, labels and small corrections need none. Two more
+(the owner, 2026-09-22, record 639): every open item has one session that
+closes it and reports done, none is left open, the Boss archives the
+session at its merge and re-asks any report overdue by its own stated time;
+and every session the Boss opens is named in two words (Paper Writer,
+Physics Reviewer, Newton Runner), never a sentence, while a Routine carries
+a short name with the order in its prompt. The law's
+rules do not move under this word:
+LOCALITY-1, bounded integers, the measurement rule, no world file by hand,
+the pins declared before the run, `python tools/check.py` before the push.
+
+### The paper is the one course (the owner, 2026-09-22, record 606)
+
+The owner's word: "From now on do only what the paper needs, nothing else;
+just close things; start from what the paper needs." From this word the
+Boss orders nothing that the thirty-page paper (records 573, 595, 605) does
+not need: the open items in flight are closed (reviewed, merged, their
+sessions archived) and no new item outside the paper starts, however small,
+until the owner lifts the word. What the paper needs is decided from the
+plan (paper/general_formula/PLAN.md, "The thirty-page plan"): the cut, its
+checks, the detector readings its pages 19 to 21 cite, the references and
+the reproduction appendix; every other proposal waits, written in one line
+in the log, not ordered. The owner's remaining points are listed to him
+ordered by the paper's need, each with the Boss's recommendation.
 
 ### The main course (the owner, 2026-09-21, record 176)
 

@@ -372,6 +372,10 @@ in [THREE_WORLDS.md](THREE_WORLDS.md); the records' fields by type in
 - **Register**: the recorded detector readings of the worlds of a series,
   `expectations.json`, `gate_set.json` and the READMEs, one source per
   number, which a test reads and never copies (TEST_EXPECTATIONS.md).
+- **Working bound**: the bound of the host's integer arithmetic
+  (`core/integer`, `checked_work`, +-(2^63 - 1)), never called a register:
+  the register is the detector readings alone, and a Node keeps none (the
+  model owner, 2026-09-22, record 558).
 - **Pin**: a detector reading's expected value written before the run,
   derived from the law's operations where a formula exists; a formula
   gives, a run proves, and nothing is tuned backward (records 205 and 305).

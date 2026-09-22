@@ -9,6 +9,13 @@ the host's view of the mechanism). A pin outside is reported with its
 numbers and never moved.
 
     PYTHONPATH=src python tools/quarks_readings.py artifacts/quarks
+
+The rule of records 562 and 564 (the model owner, 2026-09-22; the audit of
+record 567): only a detector's reading or a measured event's own record
+(DETECTOR) is compared with an expectation; a number of the GameBoard (the
+step records' positions, a replay, the books) is a diagnostic, printed
+with its expectation as "agrees" or "differs", never counted inside or
+outside, and names the detector reading behind it, not yet read.
 """
 
 from __future__ import annotations
@@ -198,7 +205,8 @@ def expectations(reading: Reading, pinned: dict[str, object]) -> list[tuple[str,
         inside = gap <= 1
         out.append(
             (
-                f"[{DETECTOR}] body {number} ({body.family}): the push per interval at tick {push_tick}",
+                f"[{DETECTOR}] body {number} ({body.family}): the push per interval at tick {push_tick} "
+                "(per self-creation of the body, its own clock; the tick the record's ordering)",
                 inside,
                 f"expected {vector(expected)}, measured {vector(measured)}"
                 + ("" if gap == 0 else f" (the accumulator's unit: {gap})"),
@@ -207,7 +215,9 @@ def expectations(reading: Reading, pinned: dict[str, object]) -> list[tuple[str,
     rows = int(pinned["border_rows_per_interval"])  # type: ignore[arg-type]
     out.append(
         (
-            f"[{DETECTOR}] the border `{LIFETIME_BORDER}` at tick {BORDER_TICK}",
+            f"[{DETECTOR}] the border `{LIFETIME_BORDER}` at tick {BORDER_TICK} (rows per self-creation of "
+            "the bodies, read at the border, a fixed detector at k = 0 whose tick is its own clock, record "
+            "569; the tick the record's ordering)",
             reading.border_rows_at_border_tick == rows and reading.border_families <= {GLUE},
             f"expected {rows} glue rows and no other family, measured {reading.border_rows_at_border_tick} "
             f"of {sorted(reading.border_families)}",
@@ -231,7 +241,7 @@ def expectations(reading: Reading, pinned: dict[str, object]) -> list[tuple[str,
     if holds:
         out.append(
             (
-                f"[{GAMEBOARD}] the set holds: no step in {reading.ticks} intervals",
+                f"[{GAMEBOARD}] (a diagnostic, not counted: the step records) the set holds: no step in {reading.ticks} intervals",
                 steps == 0,
                 f"steps {steps}, the first at {first}, the largest separation {reading.largest_spread:.2f}, "
                 f"the final {reading.final_spread:.2f}",
@@ -240,20 +250,34 @@ def expectations(reading: Reading, pinned: dict[str, object]) -> list[tuple[str,
     else:
         out.append(
             (
-                f"[{GAMEBOARD}] the set does not hold: a step, the bodies beyond three Links",
+                f"[{GAMEBOARD}] (a diagnostic, not counted: the step records) the set does not hold: a step, the bodies beyond three Links",
                 steps > 0 and reading.largest_spread > 3,
                 f"steps {steps}, the first at {first}, the largest separation {reading.largest_spread:.2f}, "
                 f"the final {reading.final_spread:.2f}; the toy's first step {fate.get('toy_first_step', fate.get('engine_first_step'))}",
             )
         )
+    # The books are the GameBoard's ledger (ENGINE.md's table) and a gate of
+    # the record (record 567): they fail the tool, never a reading counted
+    # inside or outside.
     out.append(
         (
-            f"[{DETECTOR}] the books",
+            f"[{GATE}] the books (a gate of the record, not a reading)",
             reading.conserved,
             "balanced at every tick" if reading.conserved else "NOT balanced",
         )
     )
     return out
+
+
+GATE = "GATE"
+
+
+def deciding(what: str) -> bool:
+    """A pin counts inside or outside when it reads the bodies' own records
+    (DETECTOR); a GameBoard line (the steps, the separations) is a
+    diagnostic, printed and not counted (record 567, F13); the books are a
+    gate of the record, failing the tool and never counted as a reading."""
+    return not what.startswith((f"[{GAMEBOARD}]", f"[{GATE}]"))
 
 
 def report(out_dir: Path) -> int:
@@ -278,9 +302,18 @@ def report(out_dir: Path) -> int:
                 f"final {body.final}"
             )
         for what, ok, numbers in expectations(reading, pinned):
-            verdict = "inside" if ok else "OUTSIDE"
-            inside += ok
-            outside += not ok
+            if what.startswith(f"[{GATE}]"):
+                verdict = "PASS (a gate, not a reading)" if ok else "FAIL (a gate, not a reading)"
+                failed += not ok
+            elif deciding(what):
+                verdict = "inside" if ok else "OUTSIDE"
+                inside += ok
+                outside += not ok
+            else:
+                verdict = (
+                    f"{'agrees' if ok else 'differs'}; the detector reading behind it, the face clicks "
+                    "of a body that left and the read mass, not yet read"
+                )
             print(f"   {what}: {numbers} -> {verdict}")
     print(f"{failed} record checks failed, {inside} readings inside, {outside} outside, nothing moved")
     return 1 if failed else 0

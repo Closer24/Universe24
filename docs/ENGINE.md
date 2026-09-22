@@ -490,10 +490,24 @@ phase reads the stored accumulator), and after the collision every row
 of content in free space is pushed by the interval's arrival flow at its
 Node (the interval's own arrivals, read after the walk and the
 collision, the crossing rule's set), **W** -= n (1 + gamma) content e_D
-**V**, and turns to the fan's neighbour nearest its whole momentum
-Q d content **u**_D + **W**, the momentum conserved across the turn and
-the flight's residue rescaled to the new direction's rate, s' = (s x
-S_new) // S_old, the time of the row's last Link (records 494 and 496;
+**V**, and its label follows the line of its whole momentum **P** =
+Q d content **u**_D + **W** by Bresenham (the model owner's GO of record
+536): the row's error accumulator **c** = the sum of **h** x **P** over
+its walked Links (the fields `cross`, read from the first push on), the
+label chosen among D and its fan neighbours as the one whose next Link
+**h** advances along **P** and keeps |**c** + **h** x **P**|^2 smallest,
+ties to D, the momentum conserved across the turn; a pushed row's pace
+is its momentum's (the chief physicist's word of 2026-09-21, DERIVED:
+the flight's one rule is the Euclidean pace 1 / sqrt 3 along the line
+walked, and the line walked is **P**'s): the pair in its wall is the
+primitive **P**'s (**P** over the gcd of its components), S_1(P) and
+T(P) = isqrt(3 |P|^2 Q^2), the rate 2 S_1(P) Q d against the wall
+2 T(P) (d + f n A) (`nature_beam.momentum_pair`), and its residue is
+rescaled by S_1(P') / S_1(P) at every push, the label's S_1 before the
+first, floor, the sub-unit remainder dropped (record 496's rule for the
+time of the last Link, generalised: the pace's direction changed), not
+at the label's turn; the label D is then the phase's, the click's
+momentum label and the books' alone (records 494 and 496;
 `nature_beam.optical_turn`, the books' `turned` line); refused with `suspension` 0, with `meeting` (one
 turn verb per row), with a direction that has no neighbour within a right
 angle, with gamma out of range, and with the key `massive_rows` (the
@@ -1068,12 +1082,15 @@ things themselves, one row each in the three worlds, are in
 | the share of a record's row | vector | `share` on the `click` line of a record's row: the row's push on matter, label x amount // m | label units | detector |
 | the placed quantum of a completion | scalar M and a vector | `content` and `momentum` on a `gather` line: under `massive-rows-v1` the family's q_F (its `quantum`, M) and q_F x the label-table entry of the chosen row's direction, what the chosen set took at the completion (for every other family what the chosen rows brought, as before; the `click` line reports what arrived, `content` and `push`, for both); after it `held`, `events` and `momentum` of the measured event at the chosen Node, or a face's `content`, `clicks` and `momentum` | units of content; label units | detector |
 | the waiting | scalars and a vector | the `waiting` sub-line under `absorbed` of the transit and content lines and the `waiting` line of the momentum block (`audit` of `run.json`), in a world that declares `massive_rows`: what the open records' rows brought where they ended and was not placed at the arrival ((1 - f_F) x the units, the content and the labels), resolved at the completion (q_F placed, the rest cancelled) | units, units of content, label units | GameBoard |
+| the tick of a line | scalar | every line | intervals | GameBoard (the record's ordering; a duration or rate is read off a clock's clicks) |
 | a Node as a position | vector of Links (x, y, z) | `node` on every line; `position` of a measured event's state; `to` on a `step` line | Links | GameBoard |
 | the step of a measured event | scalars and a vector | `steps` and `axis_steps` of its state; the `step` line | Links | GameBoard |
 | the charge | a reduced pair (n, d) | `charge` of a measured event's state (rho x content, reduced) and `charges` per column by name; the `charge` line of the books | the family's charge per unit of content (a paid family: a whole charge per unit of amount) | detector (the state); GameBoard (the books) |
 | the gather's weight and total | reduced pairs | `weight` and `total` on a `gather` line, `T` the norm, `cells` the rungs | the unit 2^58 (`unit`) | detector (the one click) |
 | a non-absorbing read of a record's rows | a deferred offer, not an outcome | the `read` line of a record's rows that went on: the layer stores a residual selector keyed by the record's current label set (`amplitude.Layer.end`, the read branch) and the rows continue; a later rotation replaces that label set (`Layer.rotate`, `nature_beam.rotate_rows`) and the record's one click gathers at its far completion, so a read followed by a rotation and a second read is not a sequential measurement and is out of the register's contract (sequential-instrument use is unsupported under `amplitude-v1`; issue #584, 2026-09-21) | units of amount | detector (deferred to the gather) |
 | the books | scalars and vectors, exact at every tick | `audit` of `run.json` per completed tick: per family the sums, the `momentum` block (`measured`, `transit`, `escaped`, `turned`), the `charge` line, `balanced` | units, label units, pairs | GameBoard |
+| the `become` and `contact` lines of a measured event | scalars and vectors | the `become` line of `events.jsonl` (`triggered`, the tick its clock fired; `counted`, the count read at the trigger; `into`, `products` with their directions and hands, `recoil`); the `contact` line (the hand-over: `occupant`, the label handed) | intervals, units, label units | detector (the event's own record; the audit of record 567, F6, F8 and F14: never GameBoard) |
+| a replay's or a store's reading | scalars and vectors | the world replayed through the API (`NatureBeamSimulation`) or `state.json` read Node by Node: the shell means and the ring means (`diagnostics/shell_readings.py`), the cube flux, a Node's presence or age moment (a clock's k from the store), a row's push, a body's steps and positions, the periods and separations built from them | as the quantity | GameBoard, a diagnostic: printed with its expectation, never pinned, never compared with nature, never the ground of a PASS/FAIL (the model owner, 2026-09-22, records 562 and 564; the audit of record 567); the detector reading behind it is named as not yet read |
 | the flow and the counts at a Node, the shell means | scalars and vectors | `state.json` Node by Node (the rows' columns); `diagnostics/shell_readings.py` | units, label units | GameBoard |
 
 ## The law of events (`events-v1`)

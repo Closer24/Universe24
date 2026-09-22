@@ -3204,14 +3204,14 @@ def _massive_families(
             )
         p = magnitudes[0]
         assert action is not None
-        # The label's rounding forms (2 p |a|)^2 in the working register
+        # The label's rounding forms (2 p |a|)^2 within the working bound
         # (`scaled_label`, one integer root per direction): bounded here
         # before it is formed, naming the key.
         reach_table = max((abs(c) for vector in table for c in vector), default=1)
         if (2 * p * reach_table) ** 2 > MAX_WORK_INT:
             raise ValueError(
                 f"{BEAM_LAW}: the massive family {family.name!r}: momentum_magnitude {p} forms "
-                f"(2 p |a|)^2 = (2 x {p} x {reach_table})^2 beyond the working register "
+                f"(2 p |a|)^2 = (2 x {p} x {reach_table})^2 beyond the working bound "
                 f"{MAX_WORK_INT} in the label's rounding (p at most {integer_root(MAX_WORK_INT) // (2 * reach_table)})"
             )
         rest = LABEL_SCALE * width * family.quantum

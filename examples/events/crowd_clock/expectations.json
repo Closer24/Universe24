@@ -1,9 +1,5 @@
 {
  "format": "crowd-clock-expectations-v1",
- "replicated": {
-  "worlds": "docs/REPLICATIONS.md#crowd_clock-u-a-lamp-inside-a-crowd",
-  "clock_age_v1": "docs/REPLICATIONS.md#crowd_clock-u-a-lamp-inside-a-crowd"
- },
  "c": 0.5818181818181818,
  "ticks": 500,
  "dwell": 2,
@@ -323,5 +319,23 @@
     "emulation": "the sources' pace 0.2 c / (1 + k) is the world's declaration for the presence word's k; under the age word the lamp's own pace is 0.2 c / (1 + 5.5 k), so it leaves its crowd within the exit bracket above (the age word's k), and the brackets are the block's rule at that k; a re-declaration of the emulation for the age word's k is the design's, not this register's"
    }
   }
+ },
+ "gameboard_diagnostics": {
+  "kind": "GAMEBOARD",
+  "keys": [
+   "worlds.<name>.k",
+   "worlds.<name>.k_bracket",
+   "worlds.<name>.clock_rate",
+   "clock_age_v1.age_moment_over_presence",
+   "clock_age_v1.worlds.<name>.k",
+   "clock_age_v1.moving_worlds.<name>.k",
+   "clock_age_v1.moving_worlds.<name>.k_bracket",
+   "clock_age_v1.moving_worlds.<name>.k_presence_word"
+  ],
+  "statement": "the crowd's moment at the reader's Node (the count its clock owes, k, and every number derived from it alone) is a replay of the store: a diagnostic, never pinned, never compared with nature, not in the PASS/FAIL count (the model owner, 2026-09-22, records 562 and 564; the audit, record 567, F1); the pin of this series is 1 + z at the detector (DETECTOR); the detector reading behind k, the reader's own `counted` on its record, not yet read"
+ },
+ "replicated": {
+  "worlds": "docs/REPLICATIONS.md#crowd_clock-u-a-lamp-inside-a-crowd",
+  "clock_age_v1": "docs/REPLICATIONS.md#crowd_clock-u-a-lamp-inside-a-crowd"
  }
 }

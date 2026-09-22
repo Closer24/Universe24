@@ -98,6 +98,7 @@ from __future__ import annotations
 
 import functools
 import itertools
+import math
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
@@ -281,6 +282,19 @@ class NatureBeam:
     push_x: int = 0
     push_y: int = 0
     push_z: int = 0
+    # optical-v1's verb 3 by Bresenham along the line of **P** (the model
+    # owner's GO of record 536): the row's error accumulator **c** (three
+    # integers), the sum over its walked Links **h** of the cross product
+    # **h** x **P**, read from the first push on, **P** = Q d content
+    # **u**_D + **W** taken afresh at each Link (it changes as **W** does
+    # at a push, so **c** is the running area between the walked path and
+    # **P**'s line); the label is chosen among D and its fan neighbours as
+    # the one whose next Link keeps |**c** + **h** x **P**|^2 smallest
+    # (`optical_turn`). (0, 0, 0) on every row of a world without the key
+    # and on every row never pushed.
+    cross_x: int = 0
+    cross_y: int = 0
+    cross_z: int = 0
     # The turn's accumulator (`massive-rows-v1`, 2026-09-21; the design's
     # section 2): ONE accumulator over the axes on which the row's phase
     # turns at every axis Link it crosses by its family's turn table,
@@ -302,7 +316,7 @@ class NatureBeam:
         holds an undelivered share with its `share`; in a world that
         declares `massive_rows` with its `acc_turn`; under `optical` its
         flight accumulator `flight` [made, residue] and, when it holds one,
-        its push accumulator `push`."""
+        its push accumulator `push` and its error accumulator `cross`."""
         line: dict[str, object] = {
             "direction": [int(v) for v in vectors[self.direction]],
             "age": self.age,
@@ -326,6 +340,8 @@ class NatureBeam:
             line["flight"] = [self.made, self.residue]
         if self.push_x or self.push_y or self.push_z:
             line["push"] = [self.push_x, self.push_y, self.push_z]
+        if self.cross_x or self.cross_y or self.cross_z:
+            line["cross"] = [self.cross_x, self.cross_y, self.cross_z]
         return line
 
 
@@ -582,7 +598,7 @@ def by_drive_rows(
     the same integers as `by_drive` row by row (`tests/test_fraction_free.py`
     (j)). The flight's step reads it at the row's residue
     (`Flight.walk_step`); `by_clock_rows` is its constant-rate identity.
-    The bound: the accumulator plus the rate must fit the working register
+    The bound: the accumulator plus the rate must fit the working bound
     (|drive| + |rate| <= 2^63 - 1), checked on the extremes before the sum
     is formed, as `checked_work` bounds the scalar; a denominator below 1
     is refused."""
@@ -626,7 +642,7 @@ def exact_phase(
         phi = phase - floor(terms n / d) + floor(n made T_d / (d S_1 Q))   (mod N),
 
     ONE floor at the click: a Euclidean division of the numerator n made T_d
-    (within the working register, refused beyond it naming the place) by
+    (within the working bound, refused beyond it naming the place) by
     the denominator d S_1 Q, the remainder kept. Returns (phi, the
     remainder, the denominator). A family without the pair form, or a row
     on a rest slot, reads its phase as it is (the remainder 0 over 1); the
@@ -650,7 +666,7 @@ def exact_phase(
         except OverflowError as error:
             raise OverflowError(
                 f"{BEAM_LAW}: the exact phase at {where}: the numerator n x (age r - s) = "
-                f"{numerator} x {time_numerator} exceeds the working register {MAX_WORK_INT}"
+                f"{numerator} x {time_numerator} exceeds the working bound {MAX_WORK_INT}"
             ) from error
         divisor = denominator * time_denominator
         made_phase, remainder = divmod(product, divisor)
@@ -662,7 +678,7 @@ def exact_phase(
     except OverflowError as error:
         raise OverflowError(
             f"{BEAM_LAW}: the exact phase at {where}: the numerator n x made x T_d = "
-            f"{numerator} x {made} x {resolution} exceeds the working register {MAX_WORK_INT}"
+            f"{numerator} x {made} x {resolution} exceeds the working bound {MAX_WORK_INT}"
         ) from error
     divisor = denominator * s1 * Q
     whole, rest = divmod(product, divisor)
@@ -1434,6 +1450,9 @@ FIELDS = (
     "push_x",
     "push_y",
     "push_z",
+    "cross_x",
+    "cross_y",
+    "cross_z",
     "acc_turn",
 )
 # The fields that make two rows identical (the amount is what the merge
@@ -1461,6 +1480,9 @@ IDENTITY_FIELDS = (
     "push_x",
     "push_y",
     "push_z",
+    "cross_x",
+    "cross_y",
+    "cross_z",
     "acc_turn",
 )
 # The three columns of the amplitude law as a row of no record carries them.
@@ -1481,6 +1503,9 @@ COLUMN_DEFAULTS = {
     "push_x": 0,
     "push_y": 0,
     "push_z": 0,
+    "cross_x": 0,
+    "cross_y": 0,
+    "cross_z": 0,
     "acc_turn": 0,
 }
 # The place of `phase` in the identity fields: the merge of a record's rows
@@ -1847,6 +1872,9 @@ class NatureBeamStore:
         self.push_x: np.ndarray
         self.push_y: np.ndarray
         self.push_z: np.ndarray
+        self.cross_x: np.ndarray
+        self.cross_y: np.ndarray
+        self.cross_z: np.ndarray
         self.acc_turn: np.ndarray
 
     @property
@@ -2080,6 +2108,9 @@ class NatureBeamStore:
                 int(self.push_x[i]),
                 int(self.push_y[i]),
                 int(self.push_z[i]),
+                int(self.cross_x[i]),
+                int(self.cross_y[i]),
+                int(self.cross_z[i]),
                 int(self.acc_turn[i]),
             )
             for k, i in enumerate(range(lo, stop))
@@ -3031,7 +3062,7 @@ class CrowdMoments:
         if largest and fullest > MAX_WORK_INT // max(1, largest * max(oldest, Q)):
             raise OverflowError(
                 f"{BEAM_LAW}: optical-v1's reading of {fullest} rows at one Node exceeds the "
-                f"working register {MAX_WORK_INT}"
+                f"working bound {MAX_WORK_INT}"
             )
         self.moment = np.zeros(self.keys.shape[0], dtype=np.int64)
         np.add.at(self.moment, inverse, moment)
@@ -3395,32 +3426,77 @@ def _inverse_interval(frame: Interval) -> GameBoardDiagnostics:
     return GameBoardDiagnostics(shape, unit, [])
 
 
+def momentum_pair(
+    store: NatureBeamStore, unit: np.ndarray, denominator: int, rows: np.ndarray
+) -> tuple[np.ndarray, np.ndarray]:
+    """The flight's pair (S_1, T) of a pushed row's momentum (the chief
+    physicist's word of 2026-09-21 on verb 3's form, DERIVED: the flight's
+    one rule is the Euclidean pace 1 / sqrt 3 along the line walked, and
+    under Bresenham the line walked is **P**'s): **P** = Q d content
+    **u**_D + **W** in Python integers, divided by the gcd of its three
+    components (exact, the same direction, the content out), S_1 its
+    Manhattan length and T = isqrt(3 |**P**|^2 Q^2) its resolution, the
+    law's own integer root taken per pushed row when **P** changes (a
+    bounded host cost, one isqrt per pushed row per interval). The pair
+    of a row of zero momentum is (0, 0), refused by the wall."""
+    whole = Q * denominator * (store.amount[rows] * store.content[rows])
+    s1 = np.zeros(rows.shape[0], dtype=np.int64)
+    t = np.zeros(rows.shape[0], dtype=np.int64)
+    labels = unit[store.direction[rows]].tolist()
+    pushes = zip(
+        store.push_x[rows].tolist(),
+        store.push_y[rows].tolist(),
+        store.push_z[rows].tolist(),
+        strict=True,
+    )
+    for k, (scale, label, push) in enumerate(zip(whole.tolist(), labels, pushes, strict=True)):
+        momentum = [int(scale) * int(u) + int(w) for u, w in zip(label, push, strict=True)]
+        g = math.gcd(*momentum)
+        if g == 0:
+            continue
+        primitive = [c // g for c in momentum]
+        manhattan = sum(abs(c) for c in primitive)
+        resolution = math.isqrt(3 * sum(c * c for c in primitive) * Q * Q)
+        if 2 * resolution > MAX_WORK_INT // max(1, denominator) or 2 * manhattan * Q > (
+            MAX_WORK_INT // max(1, denominator)
+        ):
+            raise OverflowError(
+                f"{BEAM_LAW}: optical-v1's pair on the momentum, the rate 2 S_1(P) Q d = 2 x "
+                f"{manhattan} x {Q} x {denominator} or the wall 2 T(P) d = 2 x {resolution} x "
+                f"{denominator}, exceeds the working bound {MAX_WORK_INT}"
+            )
+        s1[k] = manhattan
+        t[k] = resolution
+    return s1, t
+
+
 def optical_rate_and_wall(
-    flight: Flight, world: NatureBeamWorld, direction: np.ndarray, age_moment: np.ndarray
+    world: NatureBeamWorld, s1: np.ndarray, t: np.ndarray, age_moment: np.ndarray
 ) -> tuple[np.ndarray, np.ndarray]:
     """optical-v1's verb 1 (docs/designs/one_wall/NOTE.md section 2): the
     row's flight accumulator in the age wall's declared set at the
     coefficient f = 1 + gamma (`measured.age_wall_set`), the one wall
     function `core.integer.age_wall` on the flight's pair (the rate
-    2 S_1 Q, the wall 2 T_D): the rate 2 S_1 Q d against the wall
-    2 T_D (d + f n A), [n, d] the clock's pair and A the crowd's age moment
-    at the row's Node. The largest wall of the rows is tested against the
-    working register before any product is formed, refused naming the rule."""
+    2 S_1 Q, the wall 2 T): the rate 2 S_1 Q d against the wall
+    2 T (d + f n A), [n, d] the clock's pair and A the crowd's age moment
+    at the row's Node; the pair (S_1, T) per row is the label's (S_1(D),
+    T_D) on a row never pushed and the momentum's (`momentum_pair`) on a
+    pushed row, whose line is **P**'s. The largest wall of the rows is
+    tested against the working bound before any product is formed,
+    refused naming the rule."""
     numerator, denominator = world.suspension
     coefficient = age_wall_coefficient(FLIGHT_MEMBER, world.optical)
-    s1 = flight.manhattan[direction]
-    t = flight.resolution[direction]
     largest_t = int(t.max()) if t.size else 1
     largest_a = int(age_moment.max()) if age_moment.size else 0
     stretch = denominator + coefficient * largest_a * numerator
     if 2 * largest_t > MAX_WORK_INT // max(1, stretch):
         raise OverflowError(
             f"{BEAM_LAW}: optical-v1's wall 2 T_D (d + f n A) = 2 x {largest_t} x {stretch} "
-            f"exceeds the working register {MAX_WORK_INT}"
+            f"exceeds the working bound {MAX_WORK_INT}"
         )
-    rate = np.zeros(direction.shape[0], dtype=np.int64)
-    wall = np.zeros(direction.shape[0], dtype=np.int64)
-    for k in range(direction.shape[0]):
+    rate = np.zeros(s1.shape[0], dtype=np.int64)
+    wall = np.zeros(s1.shape[0], dtype=np.int64)
+    for k in range(s1.shape[0]):
         r, w = age_wall(
             2 * int(s1[k]), 2 * int(t[k]), coefficient, int(age_moment[k]), (numerator, denominator)
         )
@@ -3436,13 +3512,7 @@ def optical_walk_step(
     (`optical_rate_and_wall`), the count gained, capped at one Link by the
     primitive's own `at_most` with the surplus kept in the accumulator
     (the rate never exceeds a row's own wall, so a row on its own direction
-    counts 0 or 1 with nothing to keep; a residue carried across a turn is
-    rescaled by `optical_turn` to the new direction's rate, record 496,
-    and may then exceed the new wall by the ratio T_old S_new / (S_old
-    T_new), at most 1.2035 over the pin worlds' fan (GAMEBOARD, the flight
-    table at load: a heading to (0, 4, -1), 110 x 5 / 457; a heading to
-    (24, 1, 0) 1.0331), a Link already paid, which the cap counts once and
-    keeps whatever the surplus: the review of record 494, M1), is the
+    counts 0 or 1 with nothing to keep), is the
     interval's Manhattan step on the
     row's line at the place `made mod S_1`, and the accumulator after is
     kept on the row with the count made. A row whose accumulator is empty
@@ -3450,8 +3520,15 @@ def optical_walk_step(
     flight's off-age
     pair at its age scaled to the stretched units (`Flight.accumulator`
     times d): the same integers as the flight without the key at A = 0.
-    Returns the step and a function giving the time of the last Link of a
-    row as (age r - s, r) for the exact phase (`exact_phase`, `last_link`)."""
+    The pair (S_1, T) of the row is its label's on a row never pushed and
+    its momentum's on a pushed row (`momentum_pair`, the chief physicist's
+    word on verb 3's form: the flight's Euclidean pace along the line
+    walked, which is the row's momentum **P**'s under Bresenham), and the
+    residue is rescaled to the momentum's rate at each push by
+    `optical_turn`, not at the label's turn (record 496 generalised: the
+    rate's ratio whenever the pace's direction changes). Returns the step
+    and a function giving the time of the last Link of a row as
+    (age r - s, r) for the exact phase (`exact_phase`, `last_link`)."""
     flight = frame.flight
     world = frame.world
     assert frame.crowd is not None
@@ -3462,13 +3539,43 @@ def optical_walk_step(
         store.made[fresh] = made0
         store.residue[fresh] = residue0 * denominator
     age_moment = frame.crowd.age_moment(store.node, store.number)
-    rate, wall = optical_rate_and_wall(flight, world, store.direction, age_moment)
+    # The pair per row: the label's, and the momentum's on a pushed row
+    # (its line is P's; the chief physicist's word on verb 3's form).
+    s1 = flight.manhattan[store.direction].copy()
+    t = flight.resolution[store.direction].copy()
+    pushed = np.flatnonzero((store.push_x != 0) | (store.push_y != 0) | (store.push_z != 0))
+    if pushed.shape[0]:
+        s1[pushed], t[pushed] = momentum_pair(store, flight.labels, denominator, pushed)
+    rate, wall = optical_rate_and_wall(world, s1, t, age_moment)
     moved, residue = by_drive_rows(store.residue, rate, wall, at_most=1)
-    s1 = flight.manhattan[store.direction]
+    s1 = flight.manhattan[store.direction]  # the label's line gives the place
     place = np.where(s1 > 0, store.made % np.maximum(s1, 1), 0)
     step: np.ndarray = flight.lines[store.direction, place] * moved[:, None]
     store.residue = residue
     store.made = store.made + moved
+    # Verb 3's error accumulator (record 536): on the rows that hold a
+    # push, c += h x P for the Link h walked, P = Q d content u_D + W the
+    # row's whole momentum before this interval's push; the sum tested
+    # against the register before it is formed.
+    held = np.flatnonzero(moved & ((store.push_x != 0) | (store.push_y != 0) | (store.push_z != 0)))
+    if held.shape[0]:
+        whole = Q * denominator * (store.amount[held] * store.content[held])
+        momentum = whole[:, None] * flight.labels[store.direction[held]] + np.stack(
+            [store.push_x[held], store.push_y[held], store.push_z[held]], axis=1
+        )
+        cross = np.stack([store.cross_x[held], store.cross_y[held], store.cross_z[held]], axis=1)
+        if int(np.abs(cross).max(initial=0)) + int(np.abs(momentum).max(initial=0)) > MAX_WORK_INT:
+            raise OverflowError(
+                f"{BEAM_LAW}: optical-v1's error accumulator |c| + |P| = "
+                f"{int(np.abs(cross).max())} + {int(np.abs(momentum).max())} exceeds the "
+                f"working bound {MAX_WORK_INT}"
+            )
+        cross = cross + np.cross(step[held], momentum)
+        store.cross_x[held], store.cross_y[held], store.cross_z[held] = (
+            cross[:, 0],
+            cross[:, 1],
+            cross[:, 2],
+        )
     rates = rate
 
     def last_link(index: int, age_after: int) -> tuple[int, int]:
@@ -3482,9 +3589,15 @@ def optical_last_link(
     store: NatureBeamStore, flight: Flight, world: NatureBeamWorld, index: int, age: int
 ) -> tuple[int, int]:
     """The time of a row's last Link off its stored accumulator, after the
-    walk: (age r - s, r) with r = 2 S_1 Q d the stretched rate and s the
-    residue (`exact_phase`'s `last_link`)."""
-    r = 2 * int(flight.manhattan[store.direction[index]]) * Q * world.suspension[1]
+    walk: (age r - s, r) with r = 2 S_1 Q d the stretched rate (S_1 the
+    label's on a row never pushed, the momentum's on a pushed row) and s
+    the residue (`exact_phase`'s `last_link`)."""
+    rows = np.array([index], dtype=np.int64)
+    if store.push_x[index] or store.push_y[index] or store.push_z[index]:
+        s1 = int(momentum_pair(store, flight.labels, world.suspension[1], rows)[0][0])
+    else:
+        s1 = int(flight.manhattan[store.direction[index]])
+    r = 2 * s1 * Q * world.suspension[1]
     return age * r - int(store.residue[index]), r
 
 
@@ -3502,34 +3615,46 @@ def optical_turn(frame: Interval) -> None:
     therefore never turns), gravity's sign (**W** -= n weight **V**); then
     the row's whole momentum **P** = Q d content **u**_D + **W** (the
     note's Q S content **u**_D + **w** with S = d / n, cleared of n) is
-    compared with the fan's neighbours of its direction, and when a
-    neighbour D' is nearer to **P** than D (the exact comparison of cosines
-    in Python integers, (**P** . D')^2 |D|^2 > (**P** . D)^2 |D'|^2 with
-    **P** . D' > 0, the nearest of the neighbours taken) the direction
-    label moves to D' and **W** += Q d content (**u**_D - **u**_D'), so
-    that **P** is conserved across the turn; the row's label changes and
-    the books' `turned` line takes the difference, as the meeting's does.
+    the line the row's label follows by Bresenham (verb 3's form, the
+    model owner's GO of record 536 on the chief physicist's
+    recommendation of record 483): the row's error accumulator **c** (the
+    fields `cross`, the sum over its walked Links **h** of **h** x **P**
+    with **P** the row's whole momentum taken afresh at each Link,
+    kept by `optical_walk_step` from the first push on) is read against
+    the next Link of D and of each of its fan neighbours (the line's step
+    at the row's place, `made mod S_1`), and among the Links that advance
+    along **P** (**h** . **P** > 0) the label whose Link keeps
+    |**c** + **h** x **P**|^2 smallest is chosen, in Python integers, ties
+    to D and then to the fan's order (a row none of whose Links advances
+    keeps D); when the label moves to D', **W** += Q d content (**u**_D -
+    **u**_D'), so that **P** is conserved across the turn; the row's label
+    changes and the books' `turned` line takes the difference, as the
+    meeting's does. The mean direction of the walked Links converges to
+    **P**'s as a Bresenham line does, the error bounded by one Link about
+    the line, so a screen reads **P**'s angle and not the fan's nearest
+    tooth (the nearest-neighbour form of the note's section 2, which read
+    the comb's teeth in the pin worlds, is replaced by this one).
     Bounds: n x weight x |V| tested by division before the product, and
     the sums the accumulator takes, W + n weight V and W + Q d content
-    (u_D - u_D'), tested against the working register before they are
+    (u_D - u_D'), tested against the working bound before they are
     formed (the review of record 494, S1); the row's phase, amount,
-    content, number and record untouched. The residue s of the row's
-    flight accumulator crosses the turn as the time of its last Link
-    (the chief physicist's word of record 496 on the review's M1, record
-    494): the accumulator is the row's age paid at its direction's rate
-    r = 2 S_1 Q d (`Flight.accumulator`, note 41 (viii)) and the click
-    reads the last Link's time as age - s / r (`optical_last_link`), so
-    the residue in the new direction's units is s' = (s x S_new) // S_old,
-    exact from a heading (S_old = 1); at a turn between two off-heading
-    directions the remainder under one unit of the accumulator (1 / (2 Q d
-    S_new) of an interval) is dropped, the one truncation of the flight's
-    time, bounded by one unit per turn (the exact form carries a
-    denominator that grows with every turn, refused by the bounded local
-    record). The rescaled residue may exceed the new wall by the ratio
-    T_old S_new / (S_old T_new), at most 1.2035 over the pin worlds' fan
-    (GAMEBOARD, the flight table at load: a heading to (0, 4, -1), 110 x 5
-    / 457; a heading to (24, 1, 0) 1.0331), a Link already paid, which the
-    walk's cap counts once and keeps whatever the surplus."""
+    content, number and record untouched. The row's line under Bresenham
+    is its whole momentum **P**'s, not the label's, so a pushed row's pace
+    is its momentum's (the chief physicist's word of record 496 as
+    generalised on 2026-09-22, DERIVED): the accumulator is the row's age
+    paid at the rate r = 2 S_1(P) Q d of the primitive **P** (its wall
+    `momentum_pair`) and the click reads the last Link's time as
+    age - s / r (`optical_last_link`). At every push, where **P** changes,
+    the residue is rescaled to the new momentum's rate by
+    s' = (s x S_1(P')) // S_1(P) (the label's S_1 before the first push),
+    the time of the last Link carried, floor; the sub-unit remainder,
+    under 1 / (2 Q d S_1(P')) of an interval (9e-14 to 4.8e-7 over the pin
+    worlds' fan), is dropped, the one truncation of the flight's time,
+    now per push rather than per turn (record 496's residue rule
+    generalised: the rate's ratio whenever the pace's direction changes;
+    the exact form carries a denominator that grows with every push,
+    refused by the bounded local record). The residue is not rescaled at
+    the label's turn, where **P** is conserved."""
     assert frame.crowd is not None
     world = frame.world
     flight = frame.flight
@@ -3544,8 +3669,6 @@ def optical_turn(frame: Interval) -> None:
     crowd = CrowdMoments(frame.stores, unit)
     numerator, denominator = world.suspension
     coefficient = age_wall_coefficient(FLIGHT_MEMBER, world.optical)
-    vectors = flight.vectors
-    norms = [int(sum(int(c) * int(c) for c in v)) for v in vectors.tolist()]
     for family, store in enumerate(frame.stores):
         if store.size == 0:
             continue
@@ -3560,7 +3683,7 @@ def optical_turn(frame: Interval) -> None:
         if widest and heaviest and numerator * heaviest > MAX_WORK_INT // (widest * 2):
             raise OverflowError(
                 f"{BEAM_LAW}: optical-v1's push n x weight x V = {numerator} x {heaviest} x "
-                f"{widest} on the family {families[family].name!r} exceeds the working register "
+                f"{widest} on the family {families[family].name!r} exceeds the working bound "
                 f"{MAX_WORK_INT}"
             )
         turn = np.stack([store.push_x[rows], store.push_y[rows], store.push_z[rows]], axis=1)
@@ -3571,14 +3694,61 @@ def optical_turn(frame: Interval) -> None:
             raise OverflowError(
                 f"{BEAM_LAW}: optical-v1's push accumulator |W| + n x weight x V = {largest} + "
                 f"{numerator} x {heaviest} x {widest} on the family {families[family].name!r} "
-                f"exceeds the working register {MAX_WORK_INT}"
+                f"exceeds the working bound {MAX_WORK_INT}"
             )
+        before = turn
         turn = turn - numerator * weight[:, None] * flow
         store.push_x[rows], store.push_y[rows], store.push_z[rows] = turn[:, 0], turn[:, 1], turn[:, 2]
-        # The nearest of the fan for the rows that hold a push.
+        # The residue rescaled by S_1(P') / S_1(P) at every push (record
+        # 496's rule for the time of the last Link, generalised: the pace's
+        # direction changed), the label's S_1 before the first push; floor,
+        # the sub-unit remainder dropped, in Python integers.
+        pushed_now = np.flatnonzero((before != turn).any(axis=1))
+        if pushed_now.shape[0]:
+            index_now = rows[pushed_now]
+            s_new = momentum_pair(store, unit, denominator, index_now)[0]
+            s_old = flight.manhattan[store.direction[index_now]].copy()
+            was_pushed = before[pushed_now].any(axis=1)
+            if was_pushed.any():
+                held_before = np.flatnonzero(was_pushed)
+                keep = np.stack(
+                    [store.push_x[index_now], store.push_y[index_now], store.push_z[index_now]], axis=1
+                )
+                store.push_x[index_now], store.push_y[index_now], store.push_z[index_now] = (
+                    before[pushed_now, 0],
+                    before[pushed_now, 1],
+                    before[pushed_now, 2],
+                )
+                s_old[held_before] = momentum_pair(store, unit, denominator, index_now[held_before])[0]
+                store.push_x[index_now], store.push_y[index_now], store.push_z[index_now] = (
+                    keep[:, 0],
+                    keep[:, 1],
+                    keep[:, 2],
+                )
+            rescaled = [
+                r * n // o
+                for r, n, o in zip(
+                    store.residue[index_now].tolist(), s_new.tolist(), s_old.tolist(), strict=True
+                )
+            ]
+            if rescaled and max(rescaled) > MAX_WORK_INT:
+                raise OverflowError(
+                    f"{BEAM_LAW}: optical-v1's residue rescaled at the push, {max(rescaled)}, exceeds "
+                    f"the working bound {MAX_WORK_INT}"
+                )
+            store.residue[index_now] = np.array(rescaled, dtype=np.int64)
+        # Verb 3 by Bresenham along the line of P (record 536), for the rows
+        # that hold a push: among D and its fan neighbours, the label whose
+        # next Link h (its line's step at the row's place) keeps
+        # |c + h x P|^2 smallest among the Links that advance along P
+        # (h . P > 0), in Python integers; ties keep D, then the first of
+        # the fan's order; a row none of whose candidates advances keeps D;
+        # P conserved by W below.
         held = np.flatnonzero(turn.any(axis=1))
         if held.shape[0] == 0:
             continue
+        lines = flight.lines
+        manhattan = flight.manhattan
         chosen: list[int] = []
         turned: list[int] = []
         for k in held.tolist():
@@ -3587,20 +3757,23 @@ def optical_turn(frame: Interval) -> None:
             label = Q * denominator * int(content[k])
             u = unit[d].tolist()
             momentum = [label * int(u[a]) + int(turn[k, a]) for a in range(3)]
-            v = vectors[d].tolist()
-            dot = sum(momentum[a] * int(v[a]) for a in range(3))
-            best, best_dot, best_norm = d, dot, norms[d]
-            for other in flight.neighbours[d].tolist():
-                if other < 0:
+            c = [int(store.cross_x[index]), int(store.cross_y[index]), int(store.cross_z[index])]
+            made = int(store.made[index])
+            best, best_error = d, -1
+            for candidate in [d, *flight.neighbours[d].tolist()]:
+                if candidate < 0:
                     break
-                w = vectors[other].tolist()
-                dot_other = sum(momentum[a] * int(w[a]) for a in range(3))
-                if dot_other <= 0:
-                    continue
-                if dot_other * dot_other * best_norm > best_dot * best_dot * norms[other] or (
-                    best_dot <= 0
-                ):
-                    best, best_dot, best_norm = other, dot_other, norms[other]
+                h = lines[candidate, made % int(manhattan[candidate])].tolist()
+                if h[0] * momentum[0] + h[1] * momentum[1] + h[2] * momentum[2] <= 0:
+                    continue  # a Link that does not advance along P is no candidate
+                e = [
+                    c[0] + h[1] * momentum[2] - h[2] * momentum[1],
+                    c[1] + h[2] * momentum[0] - h[0] * momentum[2],
+                    c[2] + h[0] * momentum[1] - h[1] * momentum[0],
+                ]
+                error = e[0] * e[0] + e[1] * e[1] + e[2] * e[2]
+                if best_error < 0 or error < best_error:
+                    best, best_error = candidate, error
             if best != d:
                 chosen.append(index)
                 turned.append(best)
@@ -3634,24 +3807,13 @@ def optical_turn(frame: Interval) -> None:
             raise OverflowError(
                 f"{BEAM_LAW}: optical-v1's turn |W| + Q d content |u_D - u_D'| = {largest} + "
                 f"{int(np.abs(shift).max())} on the family {families[family].name!r} exceeds "
-                f"the working register {MAX_WORK_INT}"
+                f"the working bound {MAX_WORK_INT}"
             )
         store.push_x[chosen_rows] += shift[:, 0]
         store.push_y[chosen_rows] += shift[:, 1]
         store.push_z[chosen_rows] += shift[:, 2]
-        # The flight's residue rescaled to the new direction's rate,
-        # s' = (s x S_new) // S_old (the chief physicist's word, record 496):
-        # the time of the row's last Link, age - s / r, is what the row
-        # carries across the turn; the product tested before it is formed.
-        s_old = flight.manhattan[store.direction[chosen_rows]]
-        s_new = flight.manhattan[new_direction]
-        residue = store.residue[chosen_rows]
-        if int(residue.max(initial=0)) > MAX_WORK_INT // max(1, int(s_new.max(initial=1))):
-            raise OverflowError(
-                f"{BEAM_LAW}: optical-v1's turn rescales the residue {int(residue.max())} by "
-                f"S_new {int(s_new.max())} beyond the working register {MAX_WORK_INT}"
-            )
-        store.residue[chosen_rows] = residue * s_new // s_old
+        # The residue is not rescaled at the label's turn: a chosen row is a
+        # pushed row, whose pace is its momentum's, and P is conserved.
         store.direction[chosen_rows] = new_direction
 
 

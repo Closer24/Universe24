@@ -6,6 +6,18 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The working bound, on 2026-09-22 (a rename in the documents, docstrings and comments; no behaviour)
+
+The model owner's word of 2026-09-22 (record 558 of docs/LOG_2026-09-20.md,
+"go on the rename to working bound"; the Boss's record 553): the host's
+integer bound of `core/integer` (`checked_work`, +-(2^63 - 1)) is named
+"the working bound" everywhere it was called "the working register", so
+that "the register" names the detector readings alone and a Node keeps
+none (record 155); the refusal line of a massive family's label rounding
+says "beyond the working bound"; no identifier, world file or number
+moves ([TERMINOLOGY](TERMINOLOGY.md), "Working bound"). The LOG records
+and the review pages keep the old phrase as history.
+
 ## The massive rows, on 2026-09-21 (`massive-rows-v1`, an identity beside the law; every world without the key byte identical)
 
 The model owner's yes of 2026-09-21 (record 332 of docs/LOG_2026-09-20.md:
@@ -190,15 +202,47 @@ without the key). Under the key:
   number's; the crossing rule's set): **W** -= n x (1 + gamma) x content
   x e_D x **V** (e_D = isqrt(3 **u**_D . **u**_D), 110 or 111 on every
   direction, a table at load, never T_D; content the row's amount times
-  its content per unit, so a free family's row never turns), and when a
-  neighbour D' of its direction on the fan (the up-to-six nearest moving
-  directions within a right angle, a table at load) is nearer to its whole
-  momentum **P** = Q d content **u**_D + **W** than D (the exact comparison
-  of cosines in Python integers), the label moves to D' and **W** += Q d
-  content (**u**_D - **u**_D'): **P** is conserved, the books' `turned`
-  line takes the label's change. The push's accumulator is `push` on the
-  row (`push_x`, `push_y`, `push_z`; not massive-rows' `acc_turn`, the
-  phase's turn count, a different thing that is never in the set). The note's Q S content **u**_D + **w**
+  its content per unit, so a free family's row never turns), and its
+  label follows the line of its whole momentum **P** = Q d content
+  **u**_D + **W** by Bresenham (verb 3's form since the model owner's GO
+  of record 536, on the chief physicist's recommendation of record 483;
+  before it, the fan's neighbour nearest **P** by the exact comparison of
+  cosines, which read the comb's teeth in the pin worlds): the row's error
+  accumulator **c** = the sum over its walked Links **h** of the integer
+  cross product **h** x **P** (the fields `cross_x`, `cross_y`,
+  `cross_z`, `cross` in `state.json`, kept by the walk from the first
+  push on, 0 on every row without the key and on every row never
+  pushed), and at the turn the label is chosen among D and its fan
+  neighbours (the up-to-six nearest moving directions within a right
+  angle, a table at load) as the one whose next Link **h** (its line's
+  step at the row's place) advances along **P** and keeps |**c** + **h** x
+  **P**|^2 smallest, ties to D and then to the fan's order; when the label
+  moves to D', **W** += Q d content (**u**_D - **u**_D'): **P** is
+  conserved, the books' `turned` line takes the label's change. A pushed
+  row's pace is its momentum's (the chief physicist's word of 2026-09-21
+  on this form, DERIVED, not a choice: the flight's one rule is the
+  Euclidean pace 1 / sqrt 3 along the line walked; under the nearest-
+  tooth verb the line walked was the label's and the label's pair was
+  right, under Bresenham it is **P**'s, and a row charged the label's
+  pace on **P**'s line walked at the wrong speed, 3.3 to 7.2 per cent
+  faster than the control on the near fan's teeth): the pair in its wall
+  is the primitive **P**'s, **P** over the gcd of its three components
+  (exact, the same direction, the content out), S_1(P) its Manhattan
+  length and T(P) = isqrt(3 |P|^2 Q^2) its resolution
+  (`nature_beam.momentum_pair`, the law's own integer root taken per
+  pushed row when **P** changes, a bounded host cost), the rate 2 S_1(P)
+  Q d against the wall 2 T(P) (d + f n A), refused naming the rule beyond
+  the working bound; its residue is rescaled by S_1(P') / S_1(P) at every
+  push (the label's S_1 before the first push), floor, the sub-unit
+  remainder dropped, under 1 / (2 Q d S_1) of an interval per push, the
+  one truncation of the flight's time, declared in the entry; not
+  rescaled at the label's turn (**P** is conserved there). The label D is
+  then the phase's (`phase_per_link` on the label's Links, the place of
+  the next Link on the label's line), the click's momentum label and the
+  books' alone. The
+  push's accumulator is `push` on the row (`push_x`, `push_y`, `push_z`;
+  not massive-rows' `acc_turn`, the phase's turn count, a different thing
+  that is never in the set). The note's Q S content **u**_D + **w**
   with S = d / n is built cleared of n (**W** = n **w**), so that the turn's
   arithmetic is exact in integers for any pair.
 - The junction of verb 1 and verb 3 (the physics-rule review of 408cf719,
@@ -215,7 +259,7 @@ without the key). Under the key:
   whether that remainder is carried at the price of a denominator per
   row is the model owner's footnote on his return). The push
   accumulator's sums **W** + n weight **V** and **W** + Q d content
-  (**u**_D - **u**_D') are tested against the working register before
+  (**u**_D - **u**_D') are tested against the working bound before
   they are formed (S1). `tests/test_optical.py` (g) and (h); the pin
   worlds re-run on the fixed head and the entry re-read with the old
   value beside the new.
@@ -430,7 +474,7 @@ forms.
 - `events.nature_beam.by_drive_rows(drive, rate, denominator, at_most)`:
   `by_drive` over numpy int64 rows, the same integers row by row (signed
   rates, the cap, the remainder kept; a denominator below 1 refused, the
-  accumulator plus the rate bounded to the working register before the
+  accumulator plus the rate bounded to the working bound before the
   sum is formed). It lives beside `by_clock_rows`, the array form of the
   other count, since `core/` stays standard-library integers.
 - `Flight.walk_step` takes the interval's step as the count

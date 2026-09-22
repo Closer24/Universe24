@@ -14,13 +14,18 @@ such thing" about the host's readings of the GameBoard):
   the far detector's clicks (J2); the shell's beta clicks per interval
   (the decay curve read behind the detector), their contents (the
   spectrum) and their ages (the flight), the nucleons' own clocks (their
-  `age` and `waited`) and their `contact` records (J1, J3);
+  `age` and `waited`), each measured event's `become` line (the tick its
+  clock fired, the count it read: the event's own record, DETECTOR by
+  ENGINE.md's table; the audit of record 567, F8), its `contact` records
+  (the hand-overs taken) and its momentum (J1, J3; record 569);
 - GAMEBOARD readings, the host's view of the mechanism: the expectation
   computed from the engine's flight rule (the rays born early enough to
   reach a distance within the run) or from the engine's own presence
-  reading before the run (`expectations.json`), the source's stride, each
-  measured event's `become` line (the tick its clock fired, the count it
-  read), the bodies' steps.
+  reading before the run (`expectations.json`), the source's stride, the
+  bodies' steps and their attempted steps. Since the model owner's rule of 2026-09-22 (records 562
+  and 564) a GAMEBOARD criterion is a diagnostic (the kind DIAGNOSTIC
+  below): printed with its expectation, never counted inside or outside,
+  naming the detector reading behind it, not yet read.
 
 The expectations, written before the runs (README.md, docs/EXPERIMENTS.md):
 J2, a window of width 1 takes exactly 1 / 64 of a stride-1 source's
@@ -67,6 +72,16 @@ MODEL_SUFFIX = "-v1"
 Kind = str
 GAMEBOARD: Kind = "GAMEBOARD"
 DETECTOR: Kind = "DETECTOR"
+# A GameBoard number beside its expectation: printed, never counted
+# (records 562 and 564; the audit of record 567, F9).
+DIAGNOSTIC: Kind = "GAMEBOARD, a diagnostic, not counted"
+
+
+def deciding(criteria: list[tuple[str, bool, Kind]]) -> list[tuple[str, bool, Kind]]:
+    """The criteria that count inside or outside: every kind but DIAGNOSTIC."""
+    return [c for c in criteria if c[2] != DIAGNOSTIC]
+
+
 ORDER = (
     "j2_filter",
     "j2_ladder",
@@ -393,7 +408,7 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
             (
                 f"no transformation in {reading.ticks} intervals (the count above the gate {expected['gate']})",
                 not fired,
-                GAMEBOARD,
+                DETECTOR,
             )
         )
         found.append(("no beta click at the shell", not reading.shell_clicks, DETECTOR))
@@ -415,9 +430,11 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
     found.append(
         (
             f"every neutron fires within its pinned range or up to {slack} before it "
-            f"({min(lo for lo, _ in ranges.values())} .. {max(hi for _, hi in ranges.values())} pinned)",
+            f"({min(lo for lo, _ in ranges.values())} .. {max(hi for _, hi in ranges.values())} pinned; "
+            "the `become` line is the neutron's own record, its `triggered` tick the record's ordering "
+            "and its `counted` the clock's number: the clock audit of 2026-09-22)",
             inside,
-            GAMEBOARD,
+            DETECTOR,
         )
     )
     found.append(
@@ -436,12 +453,18 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
             )
         )
         median, low, high, ratio = curve_shape(reading.shell_clicks)
+        # The curve is keyed by the clicks' ticks, the record's ordering, so
+        # its width over its median is a GameBoard number (the clock audit
+        # of 2026-09-22): a diagnostic, out of the deciding set; the detector
+        # reading behind it is the curve in the betas' ages on their click
+        # lines and the neutrons' `counted`, not yet read.
         found.append(
             (
                 f"the survival curve is a step: its 10-to-90 width over its median below 0.1 "
-                f"(nature's memoryless decay {NATURE_WIDTH_OVER_MEDIAN:.2f})",
+                f"(nature's memoryless decay {NATURE_WIDTH_OVER_MEDIAN:.2f}); the width in click ticks, "
+                "the detector reading behind it, the betas' ages and the neutrons' `counted`, not yet read",
                 bool(reading.shell_clicks) and ratio < 0.1,
-                DETECTOR,
+                DIAGNOSTIC,
             )
         )
     if reading.name == "j3_deuteron":
@@ -449,9 +472,10 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
         found.append(
             (
                 "the pair holds after the transformation (no step in the run; every "
-                "attempted step refused, a hand-over)",
+                "attempted step refused, a hand-over): the step records; the detector reading "
+                "behind it, a face's click of a body of the pair (none), not yet read",
                 all(b.steps == 0 for b in bodies),
-                GAMEBOARD,
+                DIAGNOSTIC,
             )
         )
         found.append(("the beta reaches the shell", sum(reading.shell_clicks.values()) == 1, DETECTOR))
@@ -461,7 +485,7 @@ def become_expectations(reading: Reading, expected: dict[str, object]) -> list[C
             (
                 f"the free neutron fires at its key {keys} exactly (its clock counts nothing)",
                 bool(keys) and [b["triggered"] for b in fired.values()] == keys,
-                GAMEBOARD,
+                DETECTOR,
             )
         )
         found.append(("the beta reaches the shell", sum(reading.shell_clicks.values()) == 1, DETECTOR))
@@ -488,7 +512,7 @@ def w_expectations(reading: Reading, expected: dict[str, object]) -> list[Criter
             become is not None
             and int(str(become["triggered"])) == at
             and become["products"] == [["w", 1, 3, [1, 0, 0]]],
-            GAMEBOARD,
+            DETECTOR,
         ),
         (
             f"the proton takes the W at tick {click_tick} (one Link, the lifetime 1, one interval)",
@@ -504,7 +528,7 @@ def w_expectations(reading: Reading, expected: dict[str, object]) -> list[Criter
         (
             f"the momentum exchanged: -{label} on the neutron become proton, +{label} on the proton",
             neutron.momentum == (-label, 0, 0) and proton.momentum == (label, 0, 0),
-            GAMEBOARD,
+            DETECTOR,
         ),
     ]
 
@@ -588,7 +612,7 @@ def print_world(reading: Reading, pinned: dict[str, object]) -> list[Criterion]:
         triggered = sorted(int(str(thing.become["triggered"])) for thing in fired if thing.become)
         counts = sorted(int(str(thing.become["counted"])) for thing in fired if thing.become)
         print(
-            f"[{GAMEBOARD}]   {len(fired)} of {len(neutrons)} neutrons transformed"
+            f"[{DETECTOR}]   {len(fired)} of {len(neutrons)} neutrons transformed (their `become` lines)"
             + (
                 f"; the trigger ticks {triggered[0]} .. {triggered[-1]} ({len(set(triggered))} distinct), "
                 f"the counts read at the trigger {counts[0]} .. {counts[-1]}"
@@ -605,8 +629,8 @@ def print_world(reading: Reading, pinned: dict[str, object]) -> list[Criterion]:
         for thing in bodies:
             print(
                 f"[{GAMEBOARD}]   number {thing.number} ({thing.family}) at {thing.position}: {thing.steps} steps "
-                f"of {thing.attempts} attempted (the refused ones handed over); "
-                f"[{DETECTOR}] {thing.contacts} hand-overs taken"
+                f"of {thing.attempts} attempted (the refused ones handed over; the step records, a diagnostic); "
+                f"[{DETECTOR}] {thing.contacts} hand-overs taken (the event's own `contact` records)"
             )
         total = sum(reading.shell_clicks.values())
         median, low, high, ratio = curve_shape(reading.shell_clicks)
@@ -628,7 +652,10 @@ def print_world(reading: Reading, pinned: dict[str, object]) -> list[Criterion]:
             )
     criteria = expectations(reading, pinned)
     for label, ok, kind in criteria:
-        print(f"[{kind}]   {label}: {'inside' if ok else 'outside'}")
+        if kind == DIAGNOSTIC:
+            print(f"[{kind}]   {label}: {'agrees' if ok else 'differs'}")
+        else:
+            print(f"[{kind}]   {label}: {'inside' if ok else 'outside'}")
     print()
     return criteria
 
@@ -655,17 +682,19 @@ def main(argv: list[str] | None = None) -> int:
     print()
     print(
         f"every line below is labelled [{GAMEBOARD}] (the host's view of the GameBoard: the expectation "
-        f"from the engine's tables, the stride, the trigger ticks, the steps; exists for us, not in "
-        f"reality) or [{DETECTOR}] (a measured event's or a detector set's own records: the only kind "
-        "reality has)"
+        f"from the engine's tables, the stride, the steps; exists for us, not in reality; a criterion "
+        f"of this kind is a diagnostic, printed and not counted) or [{DETECTOR}] (a measured event's "
+        "or a detector set's own records, its `become` line included: the only kind reality has)"
     )
     print()
     criteria: list[Criterion] = []
     for r in readings:
         criteria += print_world(r, pinned)
-    inside = sum(1 for _, ok, _ in criteria if ok)
+    counted = deciding(criteria)
+    inside = sum(1 for _, ok, _ in counted if ok)
     print(
-        f"{failed} record check(s) failed; {inside} reading(s) inside, {len(criteria) - inside} outside"
+        f"{failed} record check(s) failed; {inside} reading(s) inside, {len(counted) - inside} outside; "
+        f"{len(criteria) - len(counted)} GameBoard diagnostic(s) printed and not counted"
     )
     return 1 if failed else 0
 

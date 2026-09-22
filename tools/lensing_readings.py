@@ -15,7 +15,11 @@ and prints, per world, two kinds of number, each line labelled (the model
 owner, 2026-09-20: "in reality there is no such thing" about the host's
 readings of the board):
 
-- DETECTOR readings, the only kind reality has: the screen's pixels (each
+- DETECTOR readings, the only kind reality has (the phase rate per
+  interval and the first click's tick count the pixels' own clock: fixed
+  detectors in no crowd at suspension 0, whose tick is their age, record
+  569; the strict form reads the rate against the lamp's counted births;
+  the clock audit of 2026-09-22): the screen's pixels (each
   a `DetectorSet` of one Node) over the late window: the count of clicks
   per pixel and the centroid of the arrival on the screen (in pixels, y
   and z, the deflection against the control with its sign toward the mass
@@ -43,9 +47,12 @@ readings of the board):
   direction outside the lamp's declared ones (a ray a collision or a
   meeting turned) and the Nodes where they were turned, the meetings (the
   Nodes holding a ray of the beam and a ray of the mass in the same
-  interval), the crowd the beam crossed, the books' `turned` line of the
-  light family at the end of the run (`run.json`, the audit) and, for two
-  lamps, the x at which the two beams' mean lines are closest.
+  interval), the crowd the beam crossed, the crowd at the impact b (the
+  presence and the age moment per Node by series E's form: a host
+  computation, out of the DETECTOR table since the audit of record 567,
+  F16), the books' `turned` line of the light family at the end of the
+  run (`run.json`, the audit) and, for two lamps, the x at which the two
+  beams' mean lines are closest.
 
 The expectation, written before the runs (README.md): without the key the
 collision acts per family's store and per (number, content) class, so a
@@ -565,13 +572,12 @@ def print_space_readings(readings: list[Reading]) -> tuple[int, int]:
     base = analyse(control) if control is not None else None
     inside = outside = 0
     print(
-        f"{DETECTOR} | world | M | b | crowd at b: presence (rays per Node), age moment | clicks in the window "
+        f"{DETECTOR} | world | M | b | clicks in the window "
         "| centroid y (the deflection off the beam's axis, against the control's) | centroid z (deflection) | width rms y (delta) | mean age (delta) | first click "
         "| count ratio | phase rate (delta vs the turn) | light on the faces | light the mass took | verdicts |"
     )
     for reading in readings:
         a = analyse(reading)
-        presence, age_moment = crowd_at(reading, reading.impact)
         if base is None or reading is control or control is None:
             dy = dz = dw = dage = math.nan
             ratio = math.nan
@@ -603,7 +609,7 @@ def print_space_readings(readings: list[Reading]) -> tuple[int, int]:
             outside += not ok
         mass = "-" if reading.mass_content is None else str(reading.mass_content)
         print(
-            f"{DETECTOR} | `{reading.name}` | {mass} | {reading.impact} | {fmt(presence, 2)}, {fmt(age_moment, 1)} "
+            f"{DETECTOR} | `{reading.name}` | {mass} | {reading.impact} "
             f"| {a.count} | {fmt(a.centroid_y)} ({fmt(dy)}) | {fmt(a.centroid_z)} ({fmt(dz)}) "
             f"| {fmt(a.width_y)} ({fmt(dw)}) | {fmt(a.mean_age, 2)} ({fmt(dage, 2)}) | {a.first_tick} "
             f"| {fmt(ratio, 4)} | {fmt(a.phase_rate, 3)} ({fmt(drate, 3)}) | {a.escaped} | {reading.mass_took} "
@@ -727,6 +733,12 @@ def print_gameboard(readings: list[Reading]) -> None:
     for reading in readings:
         r = reading.replay
         turned = f"; the books' `turned` line of the light family {reading.turned} (the world {reading.turned_total})"
+        presence, age_moment = crowd_at(reading, reading.impact)
+        print(
+            f"{GAMEBOARD} `{reading.name}`: the crowd at b = {reading.impact}: presence {fmt(presence, 2)} rays "
+            f"per Node, age moment {fmt(age_moment, 1)} (series E's form, a host computation: a diagnostic, "
+            "never pinned; the detector reading behind it, a clock's rate at b, not yet read)"
+        )
         if r is None:
             print(f"{GAMEBOARD} `{reading.name}`{'' if not reading.meeting else turned}")
             continue
