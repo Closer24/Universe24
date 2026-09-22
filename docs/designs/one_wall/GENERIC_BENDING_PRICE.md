@@ -73,6 +73,24 @@ run; the other 28 are the Architect's to remove. The owner's passing
 words of the same minutes about a check "on a click" were withdrawn by
 him: the click is the cart's (the moving detector), not this law's check.
 
+**The suites under the entry (2026-09-22, after main 59c6b811 was merged
+in).** Fourteen failures on the branch's suites, three of them the law's
+own gaps, closed in code: the click's exact time was read off the
+accumulator in every world (the amplitude worlds' clicks moved at
+suspension 0; now the count's own on a row no crowd moved,
+`nature_beam.memoryless_flight`), a row whose direction a collision or the
+meeting changed kept the old line's accumulator (now reseeded from the
+table at its age on the new line, `nature_beam.reseed_flight`), and the
+inverse interval at n = 0 left the accumulators on the rows (now the rows
+go back fresh, the store bit for bit). The rest are the price: the tests
+of `crowd_clock`, `clock_word`, `cluster_clock` and `reader_clock` record
+the refusal lines or the moved presences with the former values in their
+comments; the step drive's (g) world (the register's deuteron at d = 2^27
+with a light lamp) refuses at interval 4 and the bound pair is read on the
+same world without the light; the gate set's `weak/j3_deuteron` refuses at
+interval 596 of its 700, its entry carrying `refusal` beside the digests
+it had. Nothing is deleted or skipped; no pin of a paper row moves.
+
 **The register's digests.** REPLICATIONS.md records for these series the
 world file's sha256 and the readings, not the record's digests, so the
 table carries the registered readings and the refusal line; the six

@@ -305,10 +305,17 @@ def test_a_gate_world_without_a_lamp_reads_as_it_did_before_the_law(tmp_path: Pa
     assert loaded.world.recorded is False and "amplitude" not in json.loads(source)
     out = tmp_path / "run"
     out.mkdir()
+    entry = gate_entry(path)
+    if "refusal" in entry:
+        # The world refuses before its cap under the law as it stands (the
+        # gate set's `refusal`, the generic entry of the bending): the
+        # digests beside it are the base tree's before the entry.
+        with pytest.raises(OverflowError, match=entry["refusal"]["match"]):
+            execute_nature_beam_run(loaded.world, source, out, "test", cap)
+        return
     execute_nature_beam_run(loaded.world, source, out, "test", cap)
     record = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert "amplitude" not in record and "amplitude-v1" not in record["hypotheses"]
-    entry = gate_entry(path)
     digests = entry["digests"]
     assert isinstance(digests, dict) and cap == entry["cap"]
     assert hashlib.sha256((out / "state.json").read_bytes()).hexdigest() == digests["state_sha256"]

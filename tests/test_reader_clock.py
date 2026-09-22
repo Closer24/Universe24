@@ -105,16 +105,23 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
 
 def test_the_presence_at_the_reader_and_the_source():
     """(b)."""
+    # The generic entry of the bending (2026-09-22, record 847; the price,
+    # docs/designs/one_wall/GENERIC_BENDING_PRICE.md): the light in the
+    # crowd at the pair [1, 65536] is stretched by the crowd's age moment
+    # as the clocks are, and the presence at the reader and the source
+    # after 12 intervals is 3.5 times what it was (GAMEBOARD; before the
+    # entry: 4 x 16384 at both of `alike`, 4 x 8192 and 4 x 16384 at
+    # `reader_half`). The worlds are not in the paper (record 871).
     sim = simulation("alike")
     for _ in range(12):
         sim.step()
-    assert sim.measured[1].presence == 4 * 16384
-    assert sim.measured[2].presence == 4 * 16384
+    assert sim.measured[1].presence == 14 * 16384
+    assert sim.measured[2].presence == 14 * 16384
     sim = simulation("reader_half")
     for _ in range(12):
         sim.step()
-    assert sim.measured[1].presence == 4 * 8192
-    assert sim.measured[2].presence == 4 * 16384
+    assert sim.measured[1].presence == 7 * 16384
+    assert sim.measured[2].presence == 14 * 16384
 
 
 def test_the_algebra_of_the_ratio():

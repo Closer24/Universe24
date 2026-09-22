@@ -441,10 +441,28 @@ def deuteron_under_a_suspension() -> dict[str, object]:
 
 def test_the_bound_pair_under_a_suspension_holds():
     """(g)."""
+    # The generic entry of the bending (2026-09-22, record 847; the price,
+    # docs/designs/one_wall/GENERIC_BENDING_PRICE.md): the lamps' light rows
+    # in the nucleons' crowd at d = 2^27 are pushed, and a pushed row's
+    # momentum Q d content u_D + W makes the wall's square exceed the
+    # working bound, the contract's refusal at interval 4; before the entry
+    # the declared world ran its 3000 intervals with the lines below.
+    declared = deuteron_under_a_suspension()
+    simulation = NatureBeamSimulation(parse_nature_beam_world(declared))
+    with pytest.raises(OverflowError, match="exceeds the working bound"):
+        for _ in range(3001):
+            simulation.step()
+    assert simulation.tick == 3
+    # The bound pair on the nucleons, whose tables pass the light: the same
+    # world without the lamps and the counters (the light takes no part in
+    # the lines below; the families stay declared), 3000 intervals.
+    document = dict(declared)
+    document["measured"] = [
+        m for m in declared["measured"] if m.get("family") not in ("light", "counter")
+    ]
+    document["detectors"] = []
     records: list[dict[str, object]] = []
-    simulation = NatureBeamSimulation(
-        parse_nature_beam_world(deuteron_under_a_suspension()), records.append
-    )
+    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
     proton, neutron = simulation.measured[1], simulation.measured[2]
     for tick in range(1, 3001):
         simulation.step()

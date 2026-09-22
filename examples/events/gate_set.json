@@ -17,6 +17,12 @@
     "state_sha256": "b6ebcb93d336ec20406d758f72b33881c7aad3f6378679557cf7fc3b40a8afb5",
     "audit_sha256": "7aa211ab59f9d08befbd7726fa993922c3fef17a558436de98a5217eb3ce2c94",
     "events_sha256": "5344feb60a08ac94c020e6c54ebaacee83e87d890f00c9b8d0d6862cbcba3050"
+   },
+   "refusal": {
+    "since": "2026-09-22",
+    "interval": 596,
+    "match": "exceeds the working bound",
+    "note": "the generic entry of the bending (record 847): a light row pushed by the deuteron's crowd at the pair [1, 1048576] makes the wall's square R^2 + 3 |P|^2 exceed the working bound before the root, the contract's refusal; the digests beside it are the base tree's before the entry, kept as history (docs/designs/one_wall/GENERIC_BENDING_PRICE.md)"
    }
   },
   {

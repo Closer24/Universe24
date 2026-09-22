@@ -541,7 +541,17 @@ as before, its record and its state byte for byte: the stretch is n / d
 times the crowd's age moment and the push n times its flow, and the
 snapshot writes a row's flight accumulator only where a crowd moved it
 off the table's own count at its age, the value the walk seeds from
-(`tests/test_optical.py` (e), the gate set's digests); at the register's
+(`tests/test_optical.py` (e), the gate set's digests), and by the same
+test the click's exact time is the count's own on a row no crowd moved
+and the accumulator's where one did (`nature_beam.memoryless_flight`,
+`optical_last_link`; the amplitude worlds' clicks byte for byte); a row
+whose direction a collision or the meeting changed reads its age on its
+present line, its accumulator the table's own count there
+(`nature_beam.reseed_flight`, the crowd's carry on the old line dropped
+with the old line), so two rows alike on the new line are alike in the
+merge; the inverse interval at n = 0 returns the rows fresh, the store
+bit for bit (`tests/test_nature_beam_bijection.py`, `tests/test_meeting.py`
+(e)); at the register's
 crowd worlds at a pair with n > 0 the light is stretched by the crowd's
 age moment as the clocks are, which is the law and their inputs' number
 (the standing of the 32 registered crowd worlds at such a pair: the

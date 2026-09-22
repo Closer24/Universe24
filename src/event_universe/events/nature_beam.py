@@ -3399,7 +3399,35 @@ def _collide(frame: Interval, store: NatureBeamStore, backward: bool) -> None:
     rank = np.arange(by_slot.shape[0]) - start
     new_slot = collision.singles[target[own_group], rank]
     new_direction = np.where(new_slot >= 6, new_slot - 6, new_slot + HEADING_OFFSET)
-    store.direction[eligible[by_slot]] = new_direction
+    changed = eligible[by_slot]
+    store.direction[changed] = new_direction
+    family = next(k for k, s in enumerate(frame.stores) if s is store)
+    reseed_flight(store, frame.tables.family_flights[family], changed, frame.world.suspension[1])
+
+
+def reseed_flight(
+    store: NatureBeamStore, table: FamilyFlight, rows: np.ndarray, denominator: int
+) -> None:
+    """A row whose direction a collision or the meeting changed reads its
+    age on its present line, as the flight table does for its next step
+    (`exact_phase`): its flight accumulator becomes the table's own count
+    at its age on the new line, scaled to the stretched units (the value
+    `optical_walk_step` seeds a fresh row from), the crowd's carry on the
+    old line dropped with the old line (a row turned to rest carries
+    nothing); two rows alike on the new line are alike in the merge, as
+    they are without a crowd, and a world where no crowd acts walks, merges
+    and reads byte for byte as it did."""
+    if rows.shape[0] == 0:
+        return
+    heading = store.direction[rows] >= REST_DIRECTIONS
+    if heading.any():
+        moving = rows[heading]
+        made0, residue0 = table.accumulator(store.direction[moving], store.age[moving])
+        store.made[moving] = made0
+        store.residue[moving] = residue0 * denominator
+    if (~heading).any():
+        store.made[rows[~heading]] = 0
+        store.residue[rows[~heading]] = 0
 
 
 def _inverse_interval(frame: Interval) -> GameBoardDiagnostics:
@@ -3478,6 +3506,12 @@ def _inverse_interval(frame: Interval) -> GameBoardDiagnostics:
             turned = turned + np.where(resting, 0, by_clock_rows(back, per_age[0], per_age[1]))
         store.phase = (store.phase - turned) % modulus
         store.arrival[:] = NO_ARRIVAL
+        # At a pair with n = 0 (the inverse is refused otherwise) no crowd
+        # moved any accumulator off the table's own count at its age, the
+        # value the next walk seeds a fresh row from: the rows go back
+        # fresh, the store bit for bit what it was.
+        store.made[:] = 0
+        store.residue[:] = 0
         store.merge()
     return GameBoardDiagnostics(shape, unit, [])
 
@@ -3706,21 +3740,44 @@ def optical_walk_step(
         )
     rates = rate
 
-    def last_link(index: int, age_after: int) -> tuple[int, int]:
+    def last_link(index: int, age_after: int) -> tuple[int, int] | None:
+        if memoryless_flight(store, table, denominator, index, age_after):
+            return None
         r = int(rates[index])
         return age_after * r - int(store.residue[index]), r
 
     return step, last_link
 
 
+def memoryless_flight(
+    store: NatureBeamStore, table: FamilyFlight, denominator: int, index: int, age: int
+) -> bool:
+    """Whether a row's flight accumulator after the walk is the table's own
+    count at its age on its line, scaled to the stretched units (the value
+    a fresh row is seeded from): no crowd has moved it, and the time of its
+    last Link is the count's (`exact_phase` without `last_link`), the same
+    reading as without a crowd, byte for byte; the snapshot omits such an
+    accumulator by the same test (`engine.snapshot_stream`)."""
+    made0, residue0 = table.accumulator(
+        store.direction[index : index + 1], np.array([age], dtype=np.int64)
+    )
+    return (
+        int(store.made[index]) == int(made0[0])
+        and int(store.residue[index]) == int(residue0[0]) * denominator
+    )
+
+
 def optical_last_link(
     store: NatureBeamStore, table: FamilyFlight, world: NatureBeamWorld, index: int, age: int
-) -> tuple[int, int]:
+) -> tuple[int, int] | None:
     """The time of a row's last Link off its stored accumulator, after the
     walk: (age r - s, r) with r the row's stretched rate, its family's
     rate times d on a row never pushed (2 S_1 Q d for the photon) and the
     momentum's 2 S_1(P) Q d on a pushed row, and s the residue
-    (`exact_phase`'s `last_link`)."""
+    (`exact_phase`'s `last_link`); None on a row no crowd has moved
+    (`memoryless_flight`), whose last Link's time is the count's own."""
+    if memoryless_flight(store, table, world.suspension[1], index, age):
+        return None
     rows = np.array([index], dtype=np.int64)
     if store.push_x[index] or store.push_y[index] or store.push_z[index]:
         rate0 = 2 * int(momentum_pair(store, table, world.suspension[1], rows)[0][0]) * Q

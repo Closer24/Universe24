@@ -30,6 +30,8 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
+
 from event_universe.events import NatureBeamSimulation
 from event_universe.world_loading import load_world
 
@@ -37,6 +39,16 @@ ROOT = Path(__file__).resolve().parents[1]
 WORLDS = ROOT / "examples" / "events" / "cluster_clock"
 LAMPS = {"m0": 2, "m01": 3, "m03": 6, "m06": 9, "m1": 12}
 FLUX = {"m0": 0, "m01": 1638, "m03": 4915, "m06": 9830, "m1": 16384}
+# The generic entry of the bending (2026-09-22, record 847; the price,
+# docs/designs/one_wall/GENERIC_BENDING_PRICE.md): the light in a crowd at a
+# pair with n > 0 is stretched and pushed by the crowd's age moment as the
+# clocks are, and a pushed row's momentum at d = 65536 makes the wall's
+# square exceed the working bound, the contract's refusal. The worlds
+# below are declared at that pair and are not in the paper (the model
+# owner's word of record 871: not needed; the Register Architect's to
+# remove after the entry merges): the test records what the law does with
+# them as declared, the readings before the entry kept in the comments.
+REFUSED_AT = 6  # both worlds
 
 
 def load_generator():
@@ -82,9 +94,11 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
             else:
                 assert lamp["fixed"] and all(s["fixed"] for s in sources)
         sim = simulation(name)
-        for _ in range(10):
-            sim.step()
-        assert sim.books()["balanced"], name
+        # Before the entry: ten intervals balanced in both worlds.
+        with pytest.raises(OverflowError, match="exceeds the working bound"):
+            for _ in range(10):
+                sim.step()
+        assert sim.tick == REFUSED_AT, name
     expected = json.loads((WORLDS / "expectations.json").read_text(encoding="utf-8"))
     assert expected["format"] == generator.EXPECTATIONS_FORMAT
     assert expected["window"] == [250, 500]
@@ -98,15 +112,15 @@ def test_the_shipped_worlds_are_the_generators_and_run_balanced():
 
 def test_the_presence_at_every_lamp_is_four_times_its_crowds_flux():
     """(b)."""
+    # Before the entry, after 12 intervals of `cluster_rest`: the presence
+    # at every lamp 4 x FLUX[name] (at most 8 at the lamp of no crowd).
+    # Under the law as declared the world refuses at interval 6.
     sim = simulation("cluster_rest")
-    for _ in range(12):
-        sim.step()
-    for name, number in LAMPS.items():
-        presence = sim.measured[number].presence
-        if FLUX[name]:
-            assert presence == 4 * FLUX[name], (name, presence)
-        else:
-            assert presence <= 8, presence
+    with pytest.raises(OverflowError, match="exceeds the working bound"):
+        for _ in range(12):
+            sim.step()
+    assert sim.tick == REFUSED_AT
+    assert all(sim.measured[number].presence >= 0 for number in LAMPS.values())
 
 
 def test_the_algebra_of_the_sum_against_the_product():

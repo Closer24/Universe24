@@ -28,10 +28,35 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   set's digests). The registered crowd worlds at a pair with n > 0 read
   the light stretched by their crowd's age moment as their clocks are (at
   their declared inputs the light freezes in the mass rows and one world
-  refuses on the pushed momentum's square); their standing is the model
-  owner's decision, pending; no pin of theirs moves and none re-runs
-  before his word (docs/designs/one_wall/EVERY_FAMILY.md section 6, step
-  5; ENGINE.md).
+  refuses on the pushed momentum's square); the model owner's word of
+  record 871: they are not needed and not in the paper, the Register
+  Architect's to remove after this entry merges; series T's four stay
+  with NATURE row 12 and are redeclared in the weak field, the pins
+  before any run (docs/designs/one_wall/EVERY_FAMILY.md section 6, step
+  5; docs/designs/one_wall/GENERIC_BENDING_PRICE.md; ENGINE.md).
+- Three rules the entry needed, found by the suites (the law acting where
+  the key never did): the click's exact time is the count's own on a row
+  no crowd moved and the accumulator's where one did
+  (`nature_beam.memoryless_flight`, the same test as the snapshot's; the
+  amplitude worlds' clicks byte for byte); a row whose direction a
+  collision or the meeting changed reads its age on its present line, its
+  accumulator reseeded from the table there (`nature_beam.reseed_flight`;
+  the merge as without a crowd); the inverse interval at n = 0 returns
+  the rows fresh, the store bit for bit. With `drive_b` (PR #813 merged
+  in): the drive member at gamma, at gamma 0 declared at 0 and
+  unstretched; a moving body's weight the pair under `drive_b` alone; a
+  moving body at gamma > 0 without `drive_b` refused at load.
+- The tests of the crowd worlds at a pair with n > 0 record what the law
+  does with them as declared, the readings before the entry kept in the
+  comments, nothing deleted or skipped: `crowd_clock` (5 of 8 refuse at
+  interval 6; `still_1`'s presence 190 F), `clock_word` (all 4 refuse at
+  6 or 11), `cluster_clock` (both refuse at 6), `reader_clock` (the
+  presences 3.5 times), the step drive's (g) (its deuteron world at d =
+  2^27 with a light lamp refuses at interval 4; the bound pair read on
+  the same world without the light), and the gate set's `weak/j3_deuteron`
+  (refuses at interval 596 of its 700: the entry carries `refusal` beside
+  its digests, read by `test_nature_beam_worlds`, `test_massive_rows` and
+  `test_amplitude_click`).
 
 ### Series L6, Bell at N = 2048, 8192 and 16384: the plateau of 24.4 measured (2026-09-22)
 
