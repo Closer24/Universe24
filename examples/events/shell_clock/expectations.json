@@ -1,0 +1,256 @@
+{
+ "format": "shell-clock-expectations-v1",
+ "derivation": "docs/designs/clock_age/clock_age_map.py section E (its output in clock_age_map.out beside it), the shell's lines on the engine's own flight table: per unit of the release the whole shell leaves the age moment 5086 at r = 2 and 5086 at r = 4, one integer (the shell theorem on the lattice: the interior is flat exactly), and 3144 at r = 12, against the presence 499, 596 and 163 (the flux rises toward the shell); then the fixed point of the sources' own clocks, which the shell requires and the design did not foresee (a source stands in its neighbours' rows, counts their age moment by the law's default word and releases only at its self-creations, at its rate over 1 + its own count), whose spread over the lattice shell is the ripple of the inside pin. DERIVATIONS_BEAM section 5.1 (A = q dwell / (4 pi c r) per source, the superposition, Poisson's equation with the release as the density) and 5.2 (the rate 1 / (1 + k_a)); BEAM_LAW section 3 step 5 and note 25; clock-age-v1 (record 394, the age word the law's default)",
+ "c": 0.5818181818181818,
+ "ticks": 500,
+ "flux": 4915,
+ "windows": [
+  [
+   200,
+   350
+  ],
+  [
+   350,
+   500
+  ]
+ ],
+ "shell": {
+  "radius": 6,
+  "nodes": 450,
+  "fan": 290,
+  "amount": 1431597,
+  "declared_rate": 21.844436645507812,
+  "effective_rate": {
+   "lowest": 11.3054,
+   "highest": 12.224,
+   "mean": 11.7078
+  },
+  "source_own_count": {
+   "lowest": 0.787,
+   "highest": 0.932,
+   "mean": 0.866
+  }
+ },
+ "ratio_tolerance": 0.02,
+ "k_fraction": 0.1,
+ "worlds": {
+  "age_2": {
+   "word": "age",
+   "radius": 2,
+   "inside": true,
+   "shape": [
+    112,
+    15,
+    15
+   ],
+   "k": 0.914351,
+   "k_bracket": [
+    0.8229159,
+    1.0057861000000001
+   ],
+   "one_plus_z": 1.914351,
+   "clicks_per_interval": 0.5223702445371826,
+   "flight": 171.875,
+   "uniform_presence": 499,
+   "uniform_age_moment": 5086,
+   "k_uniform_sources": 1.695264
+  },
+  "age_4": {
+   "word": "age",
+   "radius": 4,
+   "inside": true,
+   "shape": [
+    114,
+    15,
+    15
+   ],
+   "k": 0.910783,
+   "k_bracket": [
+    0.8197047000000001,
+    1.0018613
+   ],
+   "one_plus_z": 1.910783,
+   "clicks_per_interval": 0.5233456651016887,
+   "flight": 171.875,
+   "uniform_presence": 596,
+   "uniform_age_moment": 5086,
+   "k_uniform_sources": 1.695264
+  },
+  "age_12": {
+   "word": "age",
+   "radius": 12,
+   "inside": false,
+   "shape": [
+    122,
+    15,
+    15
+   ],
+   "k": 0.56311,
+   "k_bracket": [
+    0.506799,
+    0.619421
+   ],
+   "one_plus_z": 1.56311,
+   "clicks_per_interval": 0.6397502415057161,
+   "flight": 171.875,
+   "uniform_presence": 163,
+   "uniform_age_moment": 3144,
+   "k_uniform_sources": 1.047957
+  },
+  "presence_2": {
+   "word": "presence",
+   "radius": 2,
+   "inside": true,
+   "shape": [
+    112,
+    15,
+    15
+   ],
+   "k": 0.089647,
+   "k_bracket": [
+    0.08068230000000001,
+    0.09861170000000001
+   ],
+   "one_plus_z": 1.089647,
+   "clicks_per_interval": 0.9177284019503563,
+   "flight": 171.875,
+   "uniform_presence": 499,
+   "uniform_age_moment": 5086,
+   "k_uniform_sources": 1.695264
+  },
+  "presence_4": {
+   "word": "presence",
+   "radius": 4,
+   "inside": true,
+   "shape": [
+    114,
+    15,
+    15
+   ],
+   "k": 0.106724,
+   "k_bracket": [
+    0.0960516,
+    0.11739640000000001
+   ],
+   "one_plus_z": 1.106724,
+   "clicks_per_interval": 0.9035676464954225,
+   "flight": 171.875,
+   "uniform_presence": 596,
+   "uniform_age_moment": 5086,
+   "k_uniform_sources": 1.695264
+  },
+  "presence_12": {
+   "word": "presence",
+   "radius": 12,
+   "inside": false,
+   "shape": [
+    122,
+    15,
+    15
+   ],
+   "k": 0.029271,
+   "k_bracket": [
+    0.0263439,
+    0.0321981
+   ],
+   "one_plus_z": 1.029271,
+   "clicks_per_interval": 0.9715614255137859,
+   "flight": 171.875,
+   "uniform_presence": 163,
+   "uniform_age_moment": 3144,
+   "k_uniform_sources": 1.047957
+  },
+  "control_2": {
+   "word": null,
+   "radius": 2,
+   "inside": true,
+   "shape": [
+    112,
+    15,
+    15
+   ],
+   "k": 0.0,
+   "k_bracket": [
+    0.0,
+    0.0
+   ],
+   "one_plus_z": 1.0,
+   "clicks_per_interval": 1.0,
+   "flight": 171.875,
+   "uniform_presence": null,
+   "uniform_age_moment": null,
+   "k_uniform_sources": null
+  },
+  "control_4": {
+   "word": null,
+   "radius": 4,
+   "inside": true,
+   "shape": [
+    114,
+    15,
+    15
+   ],
+   "k": 0.0,
+   "k_bracket": [
+    0.0,
+    0.0
+   ],
+   "one_plus_z": 1.0,
+   "clicks_per_interval": 1.0,
+   "flight": 171.875,
+   "uniform_presence": null,
+   "uniform_age_moment": null,
+   "k_uniform_sources": null
+  },
+  "control_12": {
+   "word": null,
+   "radius": 12,
+   "inside": false,
+   "shape": [
+    122,
+    15,
+    15
+   ],
+   "k": 0.0,
+   "k_bracket": [
+    0.0,
+    0.0
+   ],
+   "one_plus_z": 1.0,
+   "clicks_per_interval": 1.0,
+   "flight": 171.875,
+   "uniform_presence": null,
+   "uniform_age_moment": null,
+   "k_uniform_sources": null
+  }
+ },
+ "ratios": {
+  "inside_age": {
+   "reading": "k(2) / k(4) under the age word",
+   "pinned": 1.003917,
+   "continuum": 1.0,
+   "ripple": 0.003916999999999948,
+   "tolerance": 0.02
+  },
+  "inside_presence": {
+   "reading": "k(2) / k(4) under the presence word",
+   "pinned": 0.839989,
+   "continuum": 1.0,
+   "expected": "FAIL: the flux is not flat inside a shell",
+   "tolerance": 0.02
+  },
+  "outside_age": {
+   "reading": "k(12) / k(4) under the age word",
+   "pinned": 0.61827,
+   "continuum": 0.5,
+   "tolerance": 0.02
+  }
+ },
+ "derivations": {
+  "one_plus_z": "DETECTOR: the lamp's light at the detector, 1 + z the inverse slope of the birth ordinal against the click's tick in the window, series T's reading; k = 1 + z - 1 the count the lamp's clock owes per self-creation, the shell's age moment times the suspension pair under the age word and its presence under the presence word (the map's section E). The click lines of events.jsonl alone are read: no store, no replay, no reading of the GameBoard (the owner's word of 2026-09-22, records 562 and 564)",
+  "inside_age": "THE PIN INSIDE, the age word: k(2) / k(4) = 1.003917, the continuum's 1 (the shell theorem: the potential is flat inside a shell of sources, Poisson's source term); the departure from 1 is the map's ripple, the spread of the sources' own clocks over the lattice shell. Refuted, and Poisson's source term with it, if the reading departs from 1 by more than 0.02, five times that ripple",
+  "inside_presence": "THE PIN INSIDE, the presence word, expected to FAIL: k(2) / k(4) = 0.839989, 41 times the age word's ripple from 1, because 1 / r^2 obeys the flux (Gauss) and not the potential (Poisson) and rises toward the shell. The one reading that tells the two words apart at a source term; reported as it reads",
+  "outside_age": "THE PIN OUTSIDE, the age word: k(12) / k(4) = 0.618270, the exterior of the shell the point source's C / r; the continuum's R / 12 = 0.5 and the lattice above it by the grain of the map's section C, where the age moment times r rises with r (series E's shell means read the same grain). Refuted, and series T's 1 / r with it, if the reading misses the map's value by more than 0.02",
+  "control": "DETECTOR: the lamp alone on the same GameBoard, 1 + z = 1.0000 exactly (no crowd, nothing owed, one birth per interval); the control of each world, the lamp's own spending and the flight read without the shell"
+ }
+}
