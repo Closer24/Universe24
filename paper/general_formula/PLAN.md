@@ -3904,3 +3904,32 @@ FAIL); the model has no cosmological constant and states the supernova
 diagram as a failure, not a resolution. Since the section was touched,
 QUANTA.md (477daa1d) and LIGHT.md (7370d524) are cited on main as the
 full lists, as the Boss ordered. 39 pages, the count reported.
+
+## Applied (2026-09-22, the owner's word to the writer): the platform for formulas, and the discussion in one order
+
+The owner: "the important part is to explain how one arrives at the
+formulas from our basis, from Inside to Outside algebraically and also
+through the simulator, detectors in motion or a detector at a Node;
+give them a platform for formulas; make sure the paper is coherent
+like other papers." One commit: (1) the discussion's second paragraph,
+"The platform: how a formula is arrived at, by the algebra and by the
+simulator": the algebraic road's three steps (the Inside step on the
+family's attributes, the conversion, the Outside form with its rung
+and order, the known form on the comparison side only) and the
+simulator's road (the world file, the pin before the run; a detector
+at a Node, series L, Q, T, X; a lamp in motion read at a detector at
+rest, G, G2, S, the moving detector's own one-way ratio a reading not
+yet made; a lamp on a body and a line at rest, D3, T; the kind), the
+rule that a formula enters with both roads and nature on the
+comparison side, and the recipe for a reader's further formula; one
+sentence each in the abstract and in the introduction's "How the
+simulator led to the results". (2) Coherence: the discussion reordered
+into one argument, the frame, the platform, the step beneath and
+above, the smallest thing, Newton, the road to each and the check,
+family by family with the conversion table, what the Inside gives that
+the continuum cannot, then what is proved, what the runs support, the
+distance, the limits, positioning; text moved, not rewritten; the
+duplicated statements of the Outside step's quantum and of c's
+anisotropy in the new-formulas items reduced to pointers; the light
+chain cites Section 6's formulas. No number moved, no claim changed;
+39 pages. The Boss was told before the commit (08:05Z).
