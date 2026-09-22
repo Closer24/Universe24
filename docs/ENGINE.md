@@ -16,6 +16,13 @@ is the owner. The engines before it (the law of events, `events-v1`, of the
 evening of 2026-09-19; the law of the shadow; the law of the bit) are in git
 ([migration](MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1)).
 
+The physical path (`nature_beam.py`, `meeting.py`, `engine.py`, `world.py`,
+`amplitude.py` on `core/integer.py` and `core/phase.py`) is the six verbs on
+bounded integers and nothing else (the model owner, records 181, 202 and
+929; every coupling of the atom worlds and the light worlds read against
+the six in [COUPLINGS.md](designs/couplings_algebra/COUPLINGS.md)), gated by
+`tests/test_integer_algebra.py` (the Register Architect's, record 920 (A)).
+
 The code: `src/event_universe/events/` (`world.py` the world file and its
 refusals, `measured.py` the measured event's record and the ledger,
 `nature_beam.py` the law (the record, the one reading `read_arrivals`, the
