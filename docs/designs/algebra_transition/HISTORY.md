@@ -814,8 +814,9 @@ of unity; rho, the charge per unit of content).
   `src/event_universe/events/nature_beam.py:6215` (`_merge`) and the
   ring's product `src/event_universe/events/amplitude.py:158`
   (`ring_product`); the permutation, `nature_beam.py:1203`
-  (`collision_table`) and the meeting's arc, `src/event_universe/events/meeting.py:187`
-  (`arc_shift`); the evaluation, `amplitude.py:766` (`Layer.evaluate`);
+  (`collision_table`) and, under the key `meeting` (`meeting-v1`, a
+  hypothesis beside the law), the meeting's arc,
+  `src/event_universe/events/meeting.py:187` (`arc_shift`); the evaluation, `amplitude.py:766` (`Layer.evaluate`);
   the one map per interval, `nature_beam.py:3299` (`nature_beam`). The
   paper's general formula is this map: `paper/general_formula/main.tex:60`
   (the introduction's first paragraph, the equation `eq:map`).
@@ -962,9 +963,12 @@ of unity; rho, the charge per unit of content).
   and a diagonal, the flight Euclidean to one interval's rounding
   (DETECTOR; `amplitude/expectations.json`, `cone`; [record 144](../../LOG_2026-09-20.md)); the
   anisotropy of c by direction at Q = 64, 7.6 x 10^-3 falling as 1 /
-  (sqrt 3 Q), NATURE row 5a, a BOUND on Q against 10^-17 (the flight
-  table's pace, a closed form); the c series read after a detector
-  ([the register, the c series](../../../examples/events/README.md#the-c-series)).
+  (sqrt 3 Q), NATURE row 5a, a BOUND on Q against 10^-17 (the pace of
+  the flight table, a formula's number and not a detector reading; the
+  detector check behind it is the cone); series Q, c measured behind a
+  detector: 290 of 290 clicks at the derived tick, Node and face, the
+  escapes' pace 0.5718 to 0.5893 over the fan against c = 0.5774
+  (DETECTOR; [the register, the c series](../../../examples/events/README.md#the-c-series)).
   The wheel: the two-slit histogram's Pearson with the first record's
   rungs 1.000 over 126 cells (DETECTOR; NATURE row 2a's note). The hand:
   the parity test over all 48 (`hand/wu`, the 16th gate world,
