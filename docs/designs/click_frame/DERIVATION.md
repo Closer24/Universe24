@@ -52,13 +52,16 @@ between staying and hopping, the mass the staying share: the packet
 that passes is converted by its amplitudes.
 
 **Theorem (the click theorem).** The conversion defined by (A1) and
-(A2), from the lattice's momentum to motion read by clicks, is Lorentz:
-to second order in the velocity exactly, with the lattice's own
-corrections beyond. In the algebra: let G be the set of transformations
+(A2), from the lattice's momentum to motion read by clicks, is Lorentz
+up to a correction of relative order `m^2 v^2 / 6` in the rate, second
+order in v at a fixed mass angle m and vanishing as m -> 0 (the spacing
+over the reduced Compton wavelength), exact in the continuum limit,
+with the lattice's own anisotropy beyond. In the algebra: let G be the set of transformations
 between click families that preserve the conversion's structure: they
 carry counts to counts and Nodes to Nodes linearly (the counts of a
-family add, so a transformation is a Z-linear map of the pairs (t, x)
-up to a choice of origin), and they preserve (A1) (a click that moves
+family add, so a transformation is a Q-linear map on the counts'
+ratios in the mean (section 2 (a)) of the pairs (t, x), up to a choice
+of origin), and they preserve (A1) (a click that moves
 one Node per interval in one family moves one Node per interval in
 every family); G is the conversion's symmetry. Then: (i) G is a group,
 and with (A1) alone it is the Lorentz group up to scale: in one dimension the maps `(u, w) -> (k u, w / k)` (and the
@@ -74,19 +77,30 @@ Dirac walk (section 6): the boost carries the walk's dispersion `cos
 omega = cos m cos kappa` to itself to second order (`omega^2 - kappa^2 =
 m^2 + O(4)`, the invariant of (i) on the amplitude's frequency and wave
 number), so the boost also fixes the detector's own rate at `r = m /
-omega = sqrt(1 - v^2)` to second order; the amplitudes with phase are
+omega = sqrt(1 - v^2) (1 - kappa^2 / 6 + O(4))`, `kappa^2 = m^2 v^2 / (1
+- v^2)`, a correction of relative order `m^2 v^2 / 6`, second order in v
+at fixed m and vanishing as m -> 0 (the loss of order is in the step
+from the invariant to r, since `kappa / omega` is not small where the
+angles are); the amplitudes with phase are
 exactly what converts the clicks back to Lorentz: a click structure of
 (A1) gives the group, and only (A2) gives the group something to act on
 whose invariant is the proper time. (iii) The lattice's own symmetries
 are the 48 (the 24 rotations of the six Ports with the hand), which
-contain no boost; hence (ii) holds exactly to second order in v, and the
-board differs from the world, if at all, from the fourth order on (the
-walk's `kappa^4` anisotropy), where the two could be told apart.
+contain no boost; hence (ii) holds up to that correction of order `m^2
+v^2`, and in three dimensions the board differs from the world in
+direction from the fourth order on (the walk's `kappa^4` anisotropy),
+where the two could be told apart.
 
 **Proof sketch, in the algebra.** (a) The group: the composition of two
 structure-preserving maps preserves the structure, the identity does,
-and the inverse of a Z-linear bijection that carries the unit-speed
-clicks onto themselves carries them back; so G is a group. (b) One
+and the inverse of a Q-linear bijection that carries the unit-speed
+clicks onto themselves carries them back; so G is a group. (Over Z it
+would not be: the only cone-preserving bijections of the integer pairs
+are the reflections, the 48 in three dimensions, which is (iii), and the
+inverse of a map such as (2, 1) is not Z-linear; over Q, under the
+axiom, G is the boosts with rational k, `v = (k^2 - 1) / (k^2 + 1)`
+rational, the hop frame's `1 / k`, dense in SO(1, 1), and the Lorentz
+group up to scale is its closure.) (b) One
 dimension: a linear map of (t, x) preserving the cone `{t = x} U {t =
 -x}` maps the light-cone coordinates to multiples of themselves, `u ->
 a u, w -> b w` (or swaps them), and every such map is a boost by `k =
@@ -105,7 +119,10 @@ every family. The law as built fixes it at `r = 1`: `a = 1 / (1 - v)`, `1
 / b = 1 + v`, `lambda = 1 / sqrt(1 - v^2) = gamma = (k + 1 / k) / 2`, a
 dilation by gamma away from Lorentz, which is why its round trip (`a /
 b = k^2`) is Lorentz's and its one-way factors are not (sections 2 and
-6); `k = sqrt((1 + v) / (1 - v))`, `v =
+6) (the reviewer's "dilation by k" reads the same map with `b = 1 + v`,
+the B-to-A factor taken as the multiplier of w rather than its inverse,
+giving `lambda = sqrt(a b) = k`; the two readings differ only in the
+naming of b, and the round trip `a / b` is r-free in either); `k = sqrt((1 + v) / (1 - v))`, `v =
 (k^2 - 1) / (k^2 + 1)`, `gamma = (k + 1 / k) / 2`, the boosts compose by
 `k_1 k_2` (a one-parameter abelian group, SO(1, 1)), the k-calculus of
 section 2 (b) being the theorem's one-dimensional case. The scale: a
@@ -124,10 +141,17 @@ written on `(omega, kappa)` in place of `(t, x)` up to the sign of the
 metric, so the boost of (b) carries the walk's small-angle plane waves
 to plane waves of the same m: the walk is covariant to that order (its
 continuum limit is the Dirac equation, exactly covariant), and its
-group velocity `v = d omega / d kappa = kappa / omega + O(3)` gives `r =
-m / omega = sqrt(1 - v^2) + O(4)`. Beyond second order `cos m cos kappa`
-is not a function of `omega^2 - kappa^2` alone, so the covariance fails
-at the fourth order, which is (iii). (e) The 48 contain no boost because
+group velocity `v = d omega / d kappa = cos m sin kappa / sin omega =
+(kappa / omega) (1 - m^2 / 3 + O(4))` gives `r = m / omega = sqrt(1 -
+v^2) (1 - kappa^2 / 6 + O(4))` with `kappa^2 = m^2 v^2 / (1 - v^2)`,
+from `omega^2 = m^2 + kappa^2 - m^2 kappa^2 / 3 + O(6)`: the lattice's
+correction to the rate is of relative order `m^2 v^2 / 6`, second order
+in v at fixed m and vanishing as m -> 0 (checked here on six pairs of
+angles: `r / sqrt(1 - v^2) - 1` over `kappa^2` between -0.1641 and
+-0.1667, `v / (kappa / omega) - 1` over `m^2` between -0.3334 and
+-0.3451; the section's arithmetic, not a run). Beyond second order in
+the angles `cos m cos kappa` is not a function of `omega^2 - kappa^2`
+alone, so the covariance fails there, which is (iii). (e) The 48 contain no boost because
 they are finite and a boost has infinite order; so no lattice symmetry
 implements a boost exactly, and (ii) is the best the lattice affords.
 
@@ -150,8 +174,10 @@ that this conversion brings it. The symmetry of the conversion, the
 transformations between click families that preserve (A1) and (A2), is
 the Lorentz group up to scale, acting on the amplitudes of the passing
 packet as the Dirac walk's covariance, so that the passage of clicks is
-Lorentz to second order in the velocity, a detector's own rate `sqrt(1 -
-v^2)`, and the lattice's corrections begin at the fourth order. The
+Lorentz up to corrections of order `m^2 v^2`, exact in the continuum
+limit, a detector's own rate `sqrt(1 - v^2) (1 - kappa^2 / 6)` with the
+mass angle m the spacing over the reduced Compton wavelength; in three
+dimensions the lattice's anisotropy begins at the fourth order. The
 conversion is made exactly with the amplitudes, converting the packet
 that passes, and it comes out from there; the law as built satisfies
 (A1) and not (A2), a fact stated for the owner's word.
@@ -480,13 +506,14 @@ automaton: Bialynicki-Birula 1994, Meyer 1996, Strauch 2006). In one
 dimension, with `m` the staying share as an angle (the mass) and `k` the
 wave number, its dispersion is `cos w = cos m cos k`, `w` the frequency
 per interval; its group velocity is `v = dw / dk = cos m sin k / sin w`;
-and at small m and k, `w^2 = m^2 + k^2 + O(4)`, so `v = k / w + O(3)` and
-the rest share of the frequency is
+and at small m and k, `w^2 = m^2 + k^2 - m^2 k^2 / 3 + O(6)`, so `v = (k
+/ w) (1 - m^2 / 3 + O(4))` and the rest share of the frequency is
 
-    r = m / w = sqrt(1 - v^2) + O(k^4, m^2 k^2):
+    r = m / w = sqrt(1 - v^2) (1 - k^2 / 6 + O(4)),   k^2 = m^2 v^2 / (1 - v^2):
 
-the clocks of such an amplitude, read as Bondi's two factors, agree to
-SECOND order, with the lattice's own corrections beyond (in three
+the clocks of such an amplitude, read as Bondi's two factors, agree
+with Lorentz up to a correction of relative order `m^2 v^2 / 6`, second
+order in v at fixed m and vanishing as m -> 0 (section 0 (ii); in three
 dimensions the walk's dispersion is anisotropic from the fourth order on,
 the lattice's `k^4` terms). The square root is the interference of the
 staying amplitude with the hopping one (`cos w = cos m cos k` is a
@@ -526,8 +553,8 @@ order under the first and agree to first order only under the second
 (section 5 (iv)); there is no staying amplitude to interfere with a
 hopping one, so no `sqrt(1 - v^2)` can arise in flight: the clicks of
 the law do not behave like Lorentz in our space. A split with phase
-would give the walk's dispersion, `r = sqrt(1 - v^2)` to second order and
-the anisotropy from the fourth: the clicks would behave like Lorentz in
+would give the walk's dispersion, `r = sqrt(1 - v^2)` up to the
+correction of order `m^2 v^2` and the anisotropy from the fourth: the clicks would behave like Lorentz in
 the long-wave limit. The law is the first.
 
 **(4) The smallest change, as a question for the owner and not a rule.**
@@ -724,7 +751,7 @@ second-order form is `omega^2 = m^2 + kappa_x^2 + kappa_y^2 + kappa_z^2`
 (the walk's continuum limit is the Dirac equation), the exact form
 depending on the order of the three axis shifts (the walk's `kappa^4`
 anisotropy, section 0 (ii)), which is why (ii) is stated to second order
-and the three-dimensional exact form is not written here.
+in the angles and the three-dimensional exact form is not written here.
 
 (b) *The map to the law's integers.* The conversion's variables are
 angles per interval and per Node; the law's are counts. The map is
@@ -780,10 +807,17 @@ per Link, and not exactly: the exact lattice invariant is the cosine
 form, and its fourth-order term makes the walk's frequency fall BELOW
 Eq. 14's root,
 
-    E'_walk = E'_14 (1 - m^2 beta^2 / 6 + O(6)),   beta = kappa / omega = sqrt 3 p / E' the velocity in units of c, m the rest angle in radians per interval,
+    E'_walk = E'_14 (1 - m^2 beta^2 / 6 + O(6)),   beta = kappa / E'_14 = sqrt 3 p / E'_14 the identity's own velocity in units of c, m the rest angle in radians per interval,
 
 so the walk's own rate `r = m / omega` is above `E'_0 / E'_14 = sqrt(1 -
-beta^2)` by the same relative amount and its gate falls earlier. The
+beta^2)` by the same relative amount (checked on four pairs of angles,
+the ratio to `m^2 beta^2 / 6` between 1.000 and 1.020) and its gate falls
+earlier. In the velocity the clicks read, the walk's group velocity `v =
+(kappa / omega) (1 - m^2 / 3 + O(4))`, the same fact is section 0 (ii)
+as corrected: `r = sqrt(1 - v^2) (1 - kappa^2 / 6 + O(4))`, a correction
+of relative order `m^2 v^2 / 6`, second order in v at fixed m; and the
+identity's pace `p / E'` is the walk's group velocity only up to that
+relative `m^2 / 3`. The
 size, on the muon of series S (`E'_0 = 13248`, `p = 3640` and `12856`,
 `W = 215 258 304` and `671 339 712`, `E' = 14671` and `25910`, beta
 0.4297 and 0.8594, gamma 1.1074 and 1.9558, `T_64 = 1 + floor(63 E' /
@@ -804,7 +838,8 @@ rounding, with no root and no square of the momentum; the owner may
 want it named beside the declared square.
 
 **(2) The verdict line.** EQ. 14 IS DERIVED FROM THE CONVERSION (A1,
-A2): YES TO SECOND ORDER. The one line that decides: the conversion's
+A2): YES TO SECOND ORDER (in the angles m and kappa; in the velocity,
+up to corrections of order `m^2 v^2`). The one line that decides: the conversion's
 whole constraint is `cos omega = cos m cos kappa`, whose second order,
 `omega^2 - kappa^2 = m^2`, times `hbar^2` in the hop frame's unit and
 times 3 on the momentum in the Beam Law's Links, is `E'^2 = E'_0^2 + 3`
@@ -821,7 +856,8 @@ amplitude interfering with a hopping one, the walls linear in
 is the READING'S, not yet the ROWS' dynamics. The owner's inference holds
 in this form: Lorentz may be written into the readings without a
 further proof, because the readings are the conversion and the
-conversion is Lorentz to second order; it may not yet be said of the
+conversion is Lorentz up to corrections of order `m^2 v^2`; it may not
+yet be said of the
 rows' motion, which would need the split at every Node (part (5)'s
 smallest change) or stand, as it does, as the law's FAIL row beside the
 readings (HIGHLIGHTS 5.4, record 270).
@@ -835,7 +871,7 @@ E'` Links per interval under the identity, `p / (Q S M + p)` per axis on
 `n_B`, and the crowd `a_tau` at its Node. Outside: what a detector
 reads through clicks, each line an integer formula, its order of
 exactness (rung 1 exact on the GameBoard within the accumulator's
-remainder; second order where the walk's cosine form is the exact one),
+remainder; up to `m^2 v^2` where the walk's cosine form is the exact one),
 its kind, its inverse where one exists, and the registered readings on
 it. The law's forms and the identity's forms are given side by side,
 the law's being the FAIL row of record 270.
@@ -853,8 +889,8 @@ the law's being the FAIL row of record 270.
 Two facts of the table for the owner. First, every DETECTOR line is a
 ratio or a difference of counts, never the tick, so the whole passage
 from inside to outside is the click theorem's conversion, and the
-identity's column is Lorentz's to second order because the conversion
-is; the law's column differs from it only where r enters (`1` against
+identity's column is Lorentz's up to corrections of order `m^2 v^2`
+because the conversion is; the law's column differs from it only where r enters (`1` against
 `sqrt(1 - beta^2)`), which is the one place the register can decide
 (section 4's missing direction). Second, the inverse map exists on
 every line but the last: from `(v, 1 + z, the arrival count)` a detector
