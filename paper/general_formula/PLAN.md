@@ -3087,3 +3087,154 @@ four references with it) left the positioning paragraph and S8's row was
 shortened, so the body ends on page 25 as approved. The owner's word of
 01:48Z made the reviewer the paper's only writer; the coordinator's
 HANDOFF.md and cut30/notes stand as he left them.
+
+## The covariant rule in hand (2026-09-22, the owner's word in the writer's session)
+
+The owner asked how W = E_0^2 + 3 p.p, a hypothesis beside the law
+(covariant-readings-v1), becomes a law with us; the writer answered in
+three steps (the three tests, with E' kept by comparisons and no root;
+the same pins read after a detector off the one axis; the Highlights
+line superseding record 270's) and the owner said "go for it", then:
+the Boss handles the implementation, the paper says it is being
+handled. One correction added to cut30/corrections.py: the distance
+table's Lorentz row cites the displayed exact square (Eq. eq:square)
+instead of restating it and says the rule's entry into the law is in
+hand on the owner's word of 2026-09-22, the runs off the one axis
+pending, the text claiming nothing of it until they land. One finding
+passed to the Boss: the engine refuses a momentum on more than one axis
+until form B's directional drive lands (examples/events/covariant/README.md,
+17.6 N2), so the off-axis runs wait on the Architect's build. 30 pages,
+the split 25 / 2 / 3 held.
+
+## The Newton row (2026-09-22, series D3 on main; the Boss's order of 02:24Z)
+
+Newton after a detector landed as series D3 (PR #718, the physics-rule
+reviewer's ADMISSIBLE WITH CORRECTIONS). What the paper carries, and no
+further: the equivalence principle measured after a detector (the held
+mass four times, the same clicks to the Node on 138 of 139 common birth
+ticks and the same escape tick, rung 1 on the detector); the controls'
+pace to the tick; the 1 / r force's scale symmetry consistent, T(24) /
+T(12) = 1.997 against 2.00 +- 0.18, from one recurrence per radius on
+loops that are not similar figures, not closed; G's value not read; the
+circle's period, amplitude and omega^2 outside their pins as registered.
+Four places changed through cut30/corrections.py: the checks table's new
+row, the distance table's Newton line, Section 4's ground paragraph (the
+"run not made" now Coulomb's and Poisson's), the introduction's open
+list. The row cost about 27 lines of body; the body is held at 25 pages
+by trims that carry no claim: the octahedron figure smaller with its
+caption cut to its facts (Theorem 1 states the rest), the second
+departure's clause on a test fixture (not a registered world), the
+positioning paragraph's "own geometries" clause (three references with
+it), the symmetries' parenthesis on the ties, the code paragraph's list
+of readings, one sentence of the ledger's caption. 30 pages, the split
+25 / 2 / 3 held.
+
+Added in the same commit on the Boss's words of 02:53Z: the ledger's
+no-dispersion row names what is put in (the rate in transit constant, the
+flight blind to the phase, P9; whether the six operations force it is
+open, the mathematician's assignment on the owner's word "go for the proof
+of c"); one sentence in the no-dispersion remark that the constancy of c,
+by the postulate, meets GRB 090510's bound on an energy-dependent speed of
+light (Abdo et al. 2009; a computation of NUMBERS.md rows 97 to 99, not a
+run, not a derived result). Seven further trims of duplicated sentences
+and asides held the body at 25 pages: the anisotropy bound said twice in
+Section 3, the delay section's operations list (Table 1's row carries it),
+Theorem 6's parenthetical repeated in the paragraph after it, the
+harmonic's aside in the limit paragraph (and Lambda from the symbol
+table), the read-out's aside, the introduction's "excluding 1 and 3", the
+GRB sentence itself kept to three lines.
+
+## The constancy of c a postulate (2026-09-22, the mathematician's verdict, DERIVATIONS_BEAM 27)
+
+On the owner's word "go for the proof of c" the derivation mathematician
+asked whether the six operations with locality force a phase-blind
+flight, and refuted it: a dispersive flight (the rate N_l |D|_1 (N - f)
+against the wall T_D N) passes the three tests, the books, the split's
+isometry, the interval's injectivity, the isotropy within 1 / T_D and
+the direction-only requirement, and disperses frequencies in the mean
+for gcd(r, N) > 1. So the constancy of c is the declared postulate P9,
+and what the verbs force is what the paper already carries: given a
+direction-only flight, the pace at every phase and rate, isotropic
+within 1 / T_D, c = 1 / sqrt 3 its limit. Two corrections through
+cut30/corrections.py: the ledger's no-dispersion row closes its third
+column on the fact (P9, not forced, the derivation's 27), and the GRB
+sentence stays a consequence of the postulate without the "until"
+clause. No number moved; 30 pages held.
+
+## The owner's review of the thirty pages (2026-09-22, his five must-fix items, his word "go")
+
+The owner read the thirty pages and sent seven points; the Boss relayed
+his word: the five that are the paper's own errors go without waiting
+(record 629), the two decisions he keeps (the title; the S(N) figure at
+half width) move on nothing but his word, and stay as they are. The five,
+each one entry of cut30/corrections.py, none by hand in main.tex:
+
+1. The Gleason theorem and the tables. The theorem is about the ideal
+   reading; the built click is that form to the tables' rounding, the
+   record's total over the 64 birth phases from 65448/65536 to
+   65773/65536, the tables' violation of hypothesis (a) (at N = 64,
+   C[1]^2 + S[1]^2 = 65650; the extreme a part in 276), the norm range of
+   the appendix the error bound: the sentence the generator's cut had
+   dropped, restored. The power's windows read from the click cells are a
+   read-back of the built click, which carries the square: a check that
+   the implementation is the theorem's form, no evidence about nature's
+   power. The introduction's window sentence, the map of results and the
+   discussion's "what the runs support" say the same; the k = 1, k = 3
+   counterfactual goes (an implementation check needs none); what
+   excludes the phase-blind detector is interference, nature's (row 2a)
+   and the built click's.
+2. Theorem 3 (th:bijection), false as printed because the age sat in the
+   basis and a split resets it: restated in the derivation mathematician's
+   wording on the quotient Q that forgets the age, for the fixed event
+   history the record keeps, the age a function of the history; rung 1.
+   The proof follows (F and S on Q, the engine's record the history the
+   statement fixes), and the introduction, the ledger's row and the
+   discussion's list say "for a fixed event history".
+3. Tsirelson in the discussion: 8/N plus the tables' 0.0444, 2 sqrt 2 in
+   the joint limit of N and N_t, no longer "8/N" against the fixed-table
+   limit 186034/65773 of Theorem 6.
+4. hbar = h / (2 pi) = h_q N / (2 pi) under the paper's own dictionary
+   h = h_q N; the age bounded by the family's lifetime and the run.
+5. Table 3's rows 2a, 2b, 2c in the chief physicist's lines, the
+   register's criterion named on each (the clicks' visibility of
+   slits_huygens against 0.98 and the ideal 1; the offers' visibility of
+   mz_equal, 0.9988; no apparatus model), and 2c's verdict NOT COMPARED
+   (kappa not computed): the window an implementation gate, no evidence
+   about nature, no three-opening world registered. The verdict words
+   gain NOT COMPARED; the tally is three PASS, a fourth under the clock's
+   word, twelve FAIL, two BOUND, one NOT COMPARED, in the caption, the
+   abstract and the discussion; Section 6's three-slit sentence is the
+   row.
+
+The page count: 30 held (the body through 25, the references 26 to 27,
+the appendices 28 to 30) by trims of text whose numbers Table 2 carries
+(series S's and D3's numbers in Section 9, Table 4's cells, rows 3 and 4b's
+asides), of the repeated list of the three decisive failures, and of the
+Courant, visibility, clock's-word, cone, crossing-count and Section 7
+repeats; no claim moved. NUMBERS.md carries the new numbers with their
+kinds. The Highlights line, NATURE.md and DERIVATIONS_BEAM are the
+Boss's, the physicist's and the mathematician's commits; the paper
+follows them.
+
+## The title (2026-09-22, the owner's word "A, go", through the Boss)
+
+The owner keeps candidate 3's frame and adds the word that separates the
+law from its read-out: the law is local (the six operations at a Node and
+its six neighbours), the click is one gather from both detectors,
+non-local. The title is "Universe24: a local integer law of nature with a
+non-local read-out, and what follows from it", and the abstract's first
+sentence names the click "the one non-local step"; no other change on
+the title. With it, the writer's re-read of the five: row 2b's criterion
+written on the bright and dark ports' offers, (b - d) / (b + d), without
+the direction's letter D; row 2a's wheel named "the birth wheel" as the
+paper names it everywhere; Q, the quotient of Theorem 3, in the symbols
+table; the Gleason sentence's end whole ("the norm range of Appendix B is
+the error bound between the two"). No number moved; 30 pages held (the
+body through 25, the references 26 to 27, the appendices 28 to 30). The
+S(N) figure at half width waits for the Bell runner's rows on main, one
+commit after the Boss's SHA.
+The owner's word of the same day on the formulas' places: every central
+formula is a numbered display (the map, the shell, Newton, Coulomb, the
+fields, the wave, the rung, the joint weight, Gleason's form, the bound,
+the prediction, the covariant square), and the covariant square, Eq. 14,
+his "big formula", is set in a frame; 30 pages held.

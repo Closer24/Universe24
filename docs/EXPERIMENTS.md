@@ -1340,7 +1340,13 @@ states "exactly" and means integer equality at every tick.
   its start on each axis with its momentum's y component of the initial
   sign; T within +- 15 %; the mean radius over the first orbit r +- 1;
   |drift| <= 1 Link per orbit; the ratio 4 +- 15 %; C measured on the
-  orbit against m q L / (2 pi r) 1.00 +- 0.15. The record checks
+  orbit against m q L / (2 pi r) 1.00 +- 0.15. Since the model owner's
+  rule of 2026-09-22 (records 562 and 564; the audit of record 567, F11)
+  the closing, T, the mean radius, the drift and the ratio are read from
+  the probe's step records: GAMEBOARD diagnostics, printed beside their
+  expectation and never counted; the detector reading behind the period,
+  the `beam` sets' click ticks (the lamp's returns), is not yet read; C
+  measured from the probe's own `read` records is DETECTOR. The record checks
   (completed, the books balanced) fail the tool; the readings are
   registered inside or outside, never moved.
 - **The first registration (history; the engine of the D1 commit, before
@@ -3648,14 +3654,14 @@ neutron (the transformation `become`, the identity `weak-v1`).**
 
   | World | Expected (kind) | Measured | Verdict |
   | --- | --- | --- | --- |
-  | `j1_lattice` | every neutron fires at its pinned tick or up to 3 before it: 522 for the 8 inner and the 8 corners, 523 for the 24 faces, 524 for the 24 edges (GAMEBOARD, the warm counts 12, 12, 13 and 14 rows of 1839) | the inner 8 at 522 with the count 22068 (12 rows), the faces 24 at 522 with 23907 (13), the edges 24 at 523 with 25746 (14): 56 inside; the corners 8 at 524 with the count 27585 at the trigger, 15 rows (their three line-mates at 4, 8 and 12 Links on each of three axes: one row dwelling one interval at 4 Links, m(7) = 4, two at 8 and two at 12), where the warm run read 12 rows at tick 100 (a gap: the corners' mates at 4 Links, the edges, one class with one clock, had skipped the self-creation whose row would have been there), the constant-count tick of 15 rows 525: outside by 2 against the pinned 522, the estimator's error and not the clock's | outside (56 of 64 neutrons inside) |
+  | `j1_lattice` | every neutron fires at its pinned tick or up to 3 before it: 522 for the 8 inner and the 8 corners, 523 for the 24 faces, 524 for the 24 edges (the expectation GAMEBOARD, the warm counts 12, 12, 13 and 14 rows of 1839; the reading the neutron's own `become` line, DETECTOR: records 567 F8 and 569) | the inner 8 at 522 with the count 22068 (12 rows), the faces 24 at 522 with 23907 (13), the edges 24 at 523 with 25746 (14): 56 inside; the corners 8 at 524 with the count 27585 at the trigger, 15 rows (their three line-mates at 4, 8 and 12 Links on each of three axes: one row dwelling one interval at 4 Links, m(7) = 4, two at 8 and two at 12), where the warm run read 12 rows at tick 100 (a gap: the corners' mates at 4 Links, the edges, one class with one clock, had skipped the self-creation whose row would have been there), the constant-count tick of 15 rows 525: outside by 2 against the pinned 522, the estimator's error and not the clock's | outside (56 of 64 neutrons inside) |
   | | the shell's 64 beta clicks a step: the width over the median below 0.1 (DETECTOR) | 64 clicks from tick 541 to 563, the median 549, the 10th and 90th percentiles 542 and 562, the width over the median 0.036 (nature's 3.17) | inside |
   | | every click the content 3, a line (DETECTOR); the count the neutrons' (DETECTOR) | {3: 64}; 64 of 64 (the beta of every neutron on -x, the flight ages 17 .. 41) | inside; inside |
-  | `j1_source` | every neutron fires at its pinned tick or up to 3 before it: 524 .. 529 by its warm count 25746 .. 36195 (GAMEBOARD) | 8 at 522 (the count 25746, pinned 524) and 8 at 527 (36195, pinned 529) inside; 16 at 525 (25746, pinned 524), 8 at 527 (26164, pinned 524), 8 at 528 (31681, pinned 527) and 16 at 530 (32096, pinned 527) one to three intervals after their pinned tick: the count read at the trigger is the warm count, the counts read over the clock's history under the fan's dwells at times higher than the one tick's count the estimator took | outside (16 of 64 neutrons inside; every neutron within 3 intervals of its pinned tick) |
+  | `j1_source` | every neutron fires at its pinned tick or up to 3 before it: 524 .. 529 by its warm count 25746 .. 36195 (the expectation GAMEBOARD; the reading the `become` lines, DETECTOR) | 8 at 522 (the count 25746, pinned 524) and 8 at 527 (36195, pinned 529) inside; 16 at 525 (25746, pinned 524), 8 at 527 (26164, pinned 524), 8 at 528 (31681, pinned 527) and 16 at 530 (32096, pinned 527) one to three intervals after their pinned tick: the count read at the trigger is the warm count, the counts read over the clock's history under the fan's dwells at times higher than the one tick's count the estimator took | outside (16 of 64 neutrons inside; every neutron within 3 intervals of its pinned tick) |
   | | the shell's 64 clicks a step (DETECTOR); every click the content 3 (DETECTOR); the count the neutrons' (DETECTOR) | 64 clicks from 541 to 571, the median 555, the percentiles 544 and 565, the width over the median 0.038; {3: 64}; 64 of 64 | inside; inside; inside |
-  | `j3_deuteron` | the neutron fires at 574 or up to 3 before it (GAMEBOARD, the warm count 128590 at one Link from the proton); the pair holds after (GAMEBOARD: no step, every attempted step a hand-over); the beta reaches the shell with the content 3 (DETECTOR) | fired at 577 with the count 128590 at the trigger (65 intervals after the free neutron's 512: later, not never; 3 after the constant-count tick, the counts over the history under the proton's fan at times higher than the one tick's); 0 steps of 39 and 21 attempted, 21 and 39 hand-overs taken, the two protons at one Link at the end; one click at tick 590 with the content 3 (the age 13 on the fan direction (1, 3, -2)) | outside (by 3); inside; inside |
-  | `j3_deuteron_crowd` | no transformation in 700 intervals, the count 128590 above the gate 65536 at every pulse (GAMEBOARD); no beta click (DETECTOR) | none (0 of 1 transformed; the pair holding, 0 steps of 40 and 22 attempted); 0 clicks | inside; inside |
-  | `j3_neutron_free` | the neutron fires at 512 exactly (GAMEBOARD); the beta reaches the shell with the content 3 (DETECTOR) | 512 with the count 0; one click at tick 526 with the content 3 (the age 14 on the fan direction (1, 3, -2)) | inside; inside |
+  | `j3_deuteron` | the neutron fires at 574 or up to 3 before it (the expectation GAMEBOARD, the warm count 128590 at one Link from the proton; the reading the neutron's own `become` line, DETECTOR); the pair holds after (GAMEBOARD: no step, every attempted step a hand-over; the step records, a diagnostic printed and not counted since records 562 and 564, F9; the hand-overs taken are the events' own `contact` records, DETECTOR); the beta reaches the shell with the content 3 (DETECTOR) | fired at 577 with the count 128590 at the trigger (65 intervals after the free neutron's 512: later, not never; 3 after the constant-count tick, the counts over the history under the proton's fan at times higher than the one tick's); 0 steps of 39 and 21 attempted, 21 and 39 hand-overs taken, the two protons at one Link at the end; one click at tick 590 with the content 3 (the age 13 on the fan direction (1, 3, -2)) | outside (by 3); agrees (a diagnostic, not counted); inside |
+  | `j3_deuteron_crowd` | no transformation in 700 intervals, the count 128590 above the gate 65536 at every pulse (the expectation GAMEBOARD; the reading the absence of a `become` line on the neutron's own record, DETECTOR); no beta click (DETECTOR) | none (0 of 1 transformed; the pair holding, 0 steps of 40 and 22 attempted); 0 clicks | inside; inside |
+  | `j3_neutron_free` | the neutron fires at 512 exactly (the expectation GAMEBOARD; the reading the neutron's own `become` line, DETECTOR); the beta reaches the shell with the content 3 (DETECTOR) | 512 with the count 0; one click at tick 526 with the content 3 (the age 14 on the fan direction (1, 3, -2)) | inside; inside |
 
 - **Verdict (J1, J3).** What the detector's world sees is the law's own:
   a population of neutrons decays in a step (the shell's 64 clicks within
@@ -6423,7 +6429,9 @@ sequential gates on an entangled record, the full register replay.
   tick 8 on +x against the axis (the product `[["w", 1, 3, [1, 0, 0],
   -1]]`, the recoil (-192, 0, 0)), clicked at the proton at x = 3 at tick
   9 with the push (192, 0, 0) and `hand` -1, the proton at x = 1 taking
-  nothing, the border 0, the charge line [14688, 1] (two protons; the
+  nothing, the border 0, the charge line [14688, 1] (GAMEBOARD, the books:
+  a diagnostic, not a pin, the proton's own `charge` on its state the
+  detector reading behind it; two protons; the
   design's table wrote 7344, one proton's), the books `left` 1, `right`
   0; `w_two_sides` (the control, no axis, no hand): the one W unit sent by
   the tie of the apportioning at the clock age 7 to the second declared
@@ -6447,7 +6455,8 @@ sequential gates on an entangled record, the full register replay.
   `[["w", 1, 3, [1, 0, 0], -1]]` with the recoil [-192, 0, 0], the click
   at tick 9 at measured 3 with the push [192, 0, 0] and `hand` -1, the
   proton at x = 1 nothing, the border 0, the charge line [14688, 1] at
-  every tick, `left` 1, `right` 0; `w_two_sides` the click at measured 1
+  every tick (GAMEBOARD, the books: a diagnostic, not a pin), `left` 1,
+  `right` 0; `w_two_sides` the click at measured 1
   at tick 9 with the push [-192, 0, 0], no `hand` on any line; `wu` the
   beta's click at x = 0 at tick 21 with `hand` -1 and the push [-192, 0,
   0], the antineutrino through `face:+x` at tick 23 with `hand` +1, the
@@ -6904,6 +6913,153 @@ sequential gates on an entangled record, the full register replay.
 - **What is missing before the run:** the units of the free family (the field of matter) carry no energy and no recoil, so they are not the graviton of nature, which is a quantum of a gravitational WAVE, emitted by accelerating masses and carrying energy. The run needs a paid family of gravitational waves (released at a measured event's acceleration, with recoil, with a phase circle and two polarizations as a second circle if wanted), not yet declared; the free family's suspension reads presence, not clicks.
 - **Reading planned:** a lamp of the wave family and a detector at threshold 1 far from it: clicks per interval, their record, and the digital slowing of a clock at the detector's Node; the negative control a threshold above the bundle (no click).
 - **Status:** planned; a catalog entry, no engine change until the wave family is declared by the owner.
+
+### D3, Newton after a detector (2026-09-22)
+
+- **Confronts.** Newton's law of gravitation read after a detector: series
+  C's 1 / r push on the plane (DERIVATIONS_BEAM 3.3, the ring mean q L C /
+  (2 pi r); series C's and series D's readings are GameBoard diagnostics
+  of the probe's own register, records 562 and 564) against the chief
+  physicist's design of records 574 and 594 on the owner's word ("build
+  them", record 581): what a detector can read of a body in an orbit is
+  where its light comes from and when, so series D's probe carries a lamp
+  and a line of one-Node detectors reads its rows; the 1 / r force as the
+  period proportional to the radius (k = 2 on the plane), the second
+  difference of the clicks' x, and the equivalence principle on a second
+  held mass, every number a detector's click or a labelled GameBoard
+  diagnostic (record 281). A run under the [experimenter skill](../skills/experimenter/SKILL.md).
+- **Model prediction, pinned before the runs
+  ([the pins](../examples/events/orbit_lamp/README.md#the-pins-written-before-the-runs-expectationsjson)).**
+  Series D's plane (121 x 121 x 1, z periodic, S = 32, the fan source of
+  q = 12 units per interval at the centre), the probe a body of the paid
+  family `probe` of amount 2^12 (the lamp's reservoir) holding the free
+  mass 2^20 the fan pushes, at r = 12 and 24 on +x with the tangential
+  momentum p = n Q M_total (the first run at n = 10, the orbit register's
+  lamp worlds' circle under the directional drive, form B, which the
+  engine does not run; the re-run at n = 9 on the owner's word of 01:42Z,
+  series D's own p = 576, the circle of the per-axis drive of BEAM_LAW
+  note 17: the pins below are the re-run's, the first run's T = 371 and
+  742 stand in its own rows as history), the lamp
+  of rate [1, 8] on +y and -y (the recoil cancelling by the pair), the
+  detector line at y = 20 of 121 `wall` events read as the one-Node
+  `wave` detectors `line_<x>` with `reads: "age"` for `probe` (every
+  click the probe's x at the row's birth and the birth's tick), the
+  source's content 2^32 at `release` [1, 2^32 x 10] (series D's rate, the
+  held mass releasing nothing within the run); two controls without the
+  source and the equivalence world holding 4 x 2^20 at r = 24. Pinned
+  (n = 9, the pace 9 / 41): T = 2 pi r / v = 343 and 687 within 9 percent
+  (the continuum map's margin; 371 and 742 at the first run's n = 10);
+  T(24) / T(12) = 2.00 +- 0.18; omega^2 = (2 pi / T)^2 from the lagged
+  second difference within T's bracket; the amplitude r - 1 to r + 2; the
+  equivalence within one birth interval on T and one Node on x; the
+  controls' x = 60 + r on every click and the escape through the face +y
+  at the 61st step, 278 +- 6 (the first run's pin counted 60 steps at its
+  pace, 295). Refuted if the ratio leaves its bracket, a period or
+  omega^2 leaves its bracket, or the two held masses differ beyond one
+  birth interval; a record check (completed, the books balanced) fails
+  the tool.
+- **Features.** A paid family's lamp on a moving body holding a free mass
+  (hubble_stars' form) on the plane; a pair of opposite lamp directions
+  cancelling the recoil; the body's `directions` the same pair (a row of
+  its own taken home re-emitted on them); a line of one-Node `wave`
+  detectors with the age moment on the click (the lensing screen's form);
+  `pass` on the line and the source for the other family; `suspension`
+  0; a source content and a release denominator scaled together.
+- **Two kinds of readings.** DETECTOR: the line's `click` lines alone (x
+  the detector's column, the tick, the age), the faces' click of the
+  probe's escape. GAMEBOARD (diagnostics, labelled, not pinned): the
+  probe's position and momentum at the end off `run.json`, the count of
+  `home` lines.
+- **Run.** `examples/events/orbit_lamp/` (five worlds by `make_worlds.py`
+  with `expectations.json`: `r12`, `r24`, `r24_4m`, `r12_control`,
+  `r24_control`, 4000 intervals, the model ids
+  `rays-orbit-lamp-<name>-plane-v1`); `tools/run_series.py --jobs 4`;
+  `tools/orbit_lamp_readings.py` (the click lines, the crossings of the
+  centre column, the lagged second difference; `tests/test_orbit_lamp_readings.py`
+  pins it to the engine on a 9 x 9 x 1 plane and to a hand-made click
+  list).
+- **Result of the first run, n = 10 (2026-09-22, history: measured
+  against its pins, the cause named, none moved).** The checkout of
+  `newton-after-detector` off `origin/main` at `fa2cb6d`, source
+  fingerprint `5a5b79ef438c1c6c`, Python 3.14.0rc2, numpy 2.5.3, headless,
+  four cores; every run completed in 6.7 to 14.2 s with the books balanced
+  at every tick; 0 record checks failed, 3 readings inside, 13 outside,
+  none moved.
+
+  | World | Clicks | x from .. to | Amplitude (expected) | T (expected) | omega^2 (expected) | The probe's escape | Verdicts |
+  | --- | --- | --- | --- | --- | --- | --- | --- |
+  | `r12` | 222 | 28 .. 119 | 45.5 (11 .. 14) | 697 from 3 + 3 crossings (338 .. 404) | 6.42e-5 (2.42e-4 .. 3.47e-4) | `face:+x` at 1940 | outside, outside, outside |
+  | `r24` | 91 | 37 .. 120 | 41.5 (23 .. 26) | none, 2 crossings (675 .. 809) | 1.21e-4 (6.04e-5 .. 8.67e-5) | `face:+x` at 780 | outside, outside, outside |
+  | `r24_4m` | 91 | 37 .. 120 | 41.5 (23 .. 26) | none (675 .. 809) | 1.21e-4 | `face:+x` at 780 | outside, outside, outside |
+  | `r12_control` | 32 | 72 .. 72 | 0 | - | - | `face:+y` at 257 (289 .. 301) | x = 72 on every click: inside; the escape: outside |
+  | `r24_control` | 32 | 84 .. 84 | 0 | - | - | `face:+y` at 257 (289 .. 301) | x = 84 on every click: inside; the escape: outside |
+
+  Across the worlds: the ratio none (no period at r = 24): outside; the
+  equivalence on T none: outside; the equivalence on the clicks: 91
+  common birth ticks, 91 equal, the largest difference 0 Nodes: inside.
+  **The cause, read off the controls, no number moved:** the unpushed
+  probe leaves through the face +y at 257, the pace 0.238 = n / (S + n)
+  of the per-axis drive `main` runs (BEAM_LAW note 17), not the
+  directional drive's 0.2033 the pins assumed (form B, note 49, not
+  landed); under the per-axis drive the circle is at n = 8.83, the whole
+  9 (series D's p = 576), so the declared n = 10 is 25 percent above its
+  circle and makes series D's wide loop, off the plane through the face
+  +x at 780 (r = 24) and 1940 (r = 12). Read and standing: x(t) one
+  birth in every 8 intervals with none late; the equivalence to the Node
+  on every click and to the tick on the escape; the controls' x constant
+  and the pace of the unpushed probe. The same five worlds at n = 9
+  (T = 343 and 687, series D's table) would read the pins: one declared
+  integer, the chief physicist's to order, not run here.
+- **Result of the re-run, n = 9 (2026-09-22, measured against the pins
+  of `expectations.json`, committed at `fccedae` before the run).** The
+  same tree (fingerprint `5a5b79ef438c1c6c`); every run completed in 6.3
+  to 14.6 s with the books balanced at every tick; 0 record checks
+  failed, 7 readings inside, 9 outside, none moved.
+
+  | World | Clicks | x from .. to | Amplitude (expected) | The radius at the births: least .. greatest, mean | T (expected) | omega^2 (expected) | The probe's escape | Verdicts |
+  | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+  | `r12` | 80 | 18 .. 86 | 34 (11 .. 14) | 1.4 .. 73.2, 24.2 | 407 from one recurrence (313 .. 374) | 1.03e-4 (2.82e-4 .. 4.04e-4) | `face:+y` at 698 | outside, outside, outside |
+  | `r24` | 139 | 1 .. 103 | 51 (23 .. 26) | 11.0 .. 62.3, 33.7 | 813 from one recurrence (625 .. 749) | 4.16e-5 (7.04e-5 .. 1.01e-4) | `face:-x` at 1239 | outside, outside, outside |
+  | `r24_4m` | 139 | 1 .. 103 | 51 (23 .. 26) | 11.0 .. 62.3, 33.7 | 813 (625 .. 749) | 4.16e-5 | `face:-x` at 1239 | outside, outside, outside |
+  | `r12_control` | 34 | 72 .. 72 | 0 | 12.0 .. 60.2 (walking +y) | - | - | `face:+y` at 278 (272 .. 284) | x = 72 on every click: inside; the escape: inside |
+  | `r24_control` | 34 | 84 .. 84 | 0 | 24.0 .. 63.7 | - | - | `face:+y` at 278 (272 .. 284) | x = 84 on every click: inside; the escape: inside |
+
+  Across the worlds: the ratio T(24) / T(12) = 1.997 (1.82 .. 2.18):
+  inside; the equivalence on T: 0 (0 .. 8): inside; the equivalence on the
+  clicks: 139 common birth ticks, 138 equal, the largest difference 1
+  Node (0 .. 1): inside. What D3 closes: the equivalence principle after
+  a detector (the 4 M_held world 138 of 139 clicks to the Node, the same
+  escape tick, |dT| = 0) and the controls' pace to the tick. The ratio
+  1.997 is consistent with the 1 / r form and not decisive: a 1 / r
+  force is scale-invariant (r to lambda r, t to lambda t at the same
+  speed), so loops started with the same p at r = 12 and 24 must be
+  similar figures with T(24) / T(12) = 2 for any eccentricity, a property
+  no other power of r has; the loops read are not similar figures (the
+  radii 1.4 to 73.2 about 24.2 against 11.0 to 62.3 about 33.7), one
+  recurrence per radius before the probe leaves the plane (698 and 1239
+  intervals); the scale symmetry of the 1 / r force is the claim it
+  tests, not closed; the deciding reading (similar loops at a finer
+  grain, or several recurrences per radius agreeing) is not run, not
+  proposed. Not read as pinned: the periods (19 percent above their
+  circles alike), the amplitudes and the radii, omega^2 at a quarter
+  period of a loop that is not a circle. Two causes: the grain of the
+  push (the eccentric loops series D registered at the same p = 576,
+  `s32_r24` T 829 against 687, escaped through `face:-x` at 1054; "the
+  grain of the push breaks the rest": whole labels of 64 on 576 per
+  unit, 6.4 degrees per ray, along the fan's lines in shells every 10
+  intervals) and the per-axis drive's own anisotropy (the Euclidean pace
+  on a diagonal heading sqrt 2 x (n / sqrt 2) / (S + n / sqrt 2) =
+  0.2346 against the axis's 0.2195, 6.9 percent faster at 45 degrees:
+  no circle exists under the drive `main` runs even with a continuous
+  push). No pin moved.
+- **Status:** registered twice, none moved: the first run at n = 10 (3
+  inside, 13 outside, the cause the drive's pace) and the re-run at n = 9
+  (7 inside, 9 outside). Closed: the equivalence principle after a
+  detector and the controls' pace to the tick. The ratio 1.997 against
+  2.00: consistent, from one recurrence per radius on loops that are not
+  similar figures; the scale symmetry of the 1 / r force is the claim it
+  tests; not closed. A circle's period, amplitude and omega^2 outside:
+  the grain of the push and the per-axis drive's anisotropy, both named.
 
 ## B. Proof for the paper
 

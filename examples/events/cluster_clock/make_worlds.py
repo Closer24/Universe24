@@ -186,7 +186,7 @@ def expectations() -> Json:
         }
         for name, (_, k) in MEMBERS.items()
     }
-    return {
+    out: Json = {
         "format": EXPECTATIONS_FORMAT,
         "c": C,
         "ticks": TICKS,
@@ -241,6 +241,30 @@ def expectations() -> Json:
             },
         },
     }
+    out["gameboard_diagnostics"] = {
+        "kind": "GAMEBOARD",
+        "keys": [
+            "members.<name>.k",
+            "cluster_moving.members.<name>.speed_over_c_on_the_board",
+            "cluster_rest.z_mean",
+            "cluster_rest.z_dispersion",
+            "cluster_rest.z_minimum",
+            "clock_age_v1.age_moment_over_presence",
+            "clock_age_v1.cluster_moving.<name>.k",
+            "clock_age_v1.cluster_moving.<name>.k_presence_word",
+        ],
+        # The rule of records 562 and 564 (2026-09-22; the audit of record
+        # 567, F1): a crowd's k is a replay of the store, a diagnostic.
+        "statement": (
+            "the crowd's moment at the reader's Node (the count its clock owes, k, and every number "
+            "derived from it alone) is a replay of the store: a diagnostic, never pinned, never "
+            "compared with nature, not in the PASS/FAIL count (the model owner, 2026-09-22, records "
+            "562 and 564; the audit, record 567, F1); the pin of this series is 1 + z at the detector "
+            "(DETECTOR); the detector reading behind k, the reader's own `counted` on its record, "
+            "not yet read"
+        ),
+    }
+    return out
 
 
 def main() -> None:

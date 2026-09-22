@@ -177,3 +177,18 @@ def test_the_replay_of_every_world_reads_as_registered(
     first = min((ticks[0][0] for ticks in steps.values() if ticks), default=None)
     assert pinned["fate"]["engine_first_step"] == first
     assert "step_every_about" not in pinned["fate"]
+
+
+def test_the_holds_line_is_a_diagnostic_out_of_the_deciding_set(readings_tool):
+    """The fate of a set (no step, a step beyond three Links) reads the step
+    records: a GameBoard line, printed and not counted; the pushes, the
+    border and the read mass decide (records 562 and 564; the audit of
+    record 567, F13)."""
+    board = readings_tool.GAMEBOARD
+    assert not readings_tool.deciding(
+        f"[{board}] (a diagnostic, not counted: the step records) the set holds"
+    )
+    # The books are a gate of the record (GameBoard by ENGINE.md's table), out
+    # of the readings count; a body's own push decides.
+    assert not readings_tool.deciding(f"[{readings_tool.GATE}] the books (a gate of the record)")
+    assert readings_tool.deciding(f"[{readings_tool.DETECTOR}] body 1 (u): the push per interval")

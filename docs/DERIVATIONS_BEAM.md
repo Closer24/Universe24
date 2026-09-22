@@ -5165,6 +5165,151 @@ form B's register of its 47 moving-body worlds, not `main`'s. Rows 38 and
 44 of 21.2 and E5 of 21.4 carry the amendment.
 
 
+### 17.7 The proper-time gate without a root: two counters compared, against the whole root (the owner's word, 2026-09-22, records 642 and 647)
+
+**The question.** covariant-readings-v1 gates a body's self-creations by
+the whole root `E' = isqrt(W)` of its exact square `W = m^2 + 3` **p**
+`.` **p** (17.6 M3; m = Q S M the rest energy in the identity's units,
+**p** the momentum label, `c^2 = 1 / 3`), and the physics-rule reviewer's
+vector verdict is that a whole root of the state's quadratic form at run
+time is not a form at most bilinear in the state (record 202). The owner
+names a gate with no root: two counters since a reset, t the intervals
+and n the self-creations, and the n-th self-creation allowed when `t^2
+m^2 >= n^2 W`, a comparison of two integer products (verbs 1, 2 and 6),
+the physics the same, `t / n >= sqrt(W) / m = gamma`. This section
+derives what the counters give against the whole-root gate, exactly, on
+the domain `abs(p)_1 <= m` (`gamma <= 2`), with the enumeration
+[root_free_gate.py](designs/covariant_readings/root_free_gate.py) (its
+output [root_free_gate.out](designs/covariant_readings/root_free_gate.out);
+integers only, no root and no float anywhere; a check, not a run).
+
+**The whole-root gate's closed form.** From an empty proper-time
+accumulator and the first self-creation at tick 1, the body owes
+`by_drive(acc_tau, E' - m, m)` intervals after every self-creation with
+the remainder kept (17.6 M1), so the n-th self-creation falls at
+
+    T_n = n + floor((n - 1) (E' - m) / m) = 1 + floor((n - 1) E' / m),
+
+the form 18.1 (a) uses (`T_64 = 70` and `124` for the muon). Equivalently
+`T_n = min {t : t m > (n - 1) E'}`.
+
+**Two root-free gates on the counters.** (A) The owner's, as stated: the
+n-th self-creation at the first tick t (the first interval after the
+reset is t = 1) with `t^2 m^2 >= n^2 W`, i.e. `T'_n = ceil(n sqrt(W) /
+m)`. (B) The same comparison at the whole-root gate's origin, strict:
+the n-th at the first t with `t^2 m^2 > (n - 1)^2 W`, i.e. `T''_n = 1 +
+floor((n - 1) sqrt(W) / m)`. Both are comparisons of integers; `sqrt(W)`
+is never formed, it only names the value the comparison decides.
+
+**(1) Exactness.** For (B): `T''_n = T_n` unless a multiple of m lies in
+the half-open interval `((n - 1) E', (n - 1) sqrt(W)]`, whose length
+`(n - 1) (sqrt(W) - E')` is below `n - 1`; so for `n <= m + 1` the
+interval holds at most one multiple of m and `T''_n - T_n` is 0 or 1,
+never negative (`E' <= sqrt(W)`); in general `0 <= T''_n - T_n <= ceil((n
+- 1) / m)`. Equality for every n when W is a perfect square (**p** = 0;
+`gamma = 2` exactly, `W = 4 m^2`, where both give `T_n = 2 n - 1`), and
+for every n with `(n - 1) (sqrt(W) - E') < m - ((n - 1) E' mod m)`. For
+(A): `T'_n - T_n = ceil(n gamma) - 1 - floor((n - 1) E' / m)`, which is 0
+at **p** = 0, exactly 1 at `gamma = 2`, never negative, and at most 3 on
+the domain (the enumeration: 3 is attained, at m = 16, 64, 100 and 128
+alike, for n near m); (A) is later than the whole root at almost every
+W (identical for 1 value of W in 2359 at m = 64, the rest case) because
+its first self-creation waits `ceil(gamma)` intervals where the
+whole-root gate fires at tick 1 and owes afterwards. The bound, as an
+integer: (B) 1 for `n <= m + 1`; (A) 3 on the domain. An exact root-free
+form exists with one division: `T_n = min {t : c^2 > W, c = ceil(t m /
+(n - 1))}` for `n >= 2` (`t m > (n - 1) E'` if and only if `ceil(t m / (n -
+1)) > sqrt(W)`, E' being the largest integer below `sqrt(W)`), verbs 6, 2
+and 6, no root; it reproduces every tick of the whole-root gate, but it
+keeps t and n growing like (B).
+
+**(2) The counters' bound and the reset.** The structural fact first,
+the section's theorem: every accumulator of the law is bounded because
+its slope is a rational of declared integers, a rate over a wall, and
+its residue lives below the wall; a slope that is irrational, here
+`sqrt(W) / m`, has no bounded exact accumulator, so a bounded state
+costs a declared rounding of the slope, and two are on offer: the whole
+root `E' / m` (the identity's M3, the comparison walk, the state
+bounded, the period reset below for `m <= 2^15`) or a rational grain
+`m / g` small enough for the run, which coarsens the gate's resolution.
+The counters of (A) and (B) grow with the
+run: `t^2 m^2 <= 2^63 - 1` holds up to `t = floor(sqrt(2^63 - 1) / m)`,
+i.e. 229 242 intervals for the muon's `m = 13 248`, 47 453 132 for `m =
+64`, 2 896 for `m = 2^20` and 181 for `m = 2^24`; and `n^2 W <= 2^63 - 1`
+at `gamma = 2` up to `n = 114 621`, 23 726 566, 1 448 and 90
+self-creations respectively. The registered covariant worlds run 420
+ticks (`j4_muon_3640`, `j4_muon_12856`), so the muon's products stay
+below `2^49` with no reset; a general body at `m = 2^24` overflows the
+working bound within 181 intervals and needs one. A reset of (t, n) to
+(0, 0) at a self-creation with nothing carried moves the ticks: the next
+self-creation would fall at `floor(gamma) + 1 = 2` intervals for every `1
+< gamma < 2`, a rate 1 / 2 in place of `1 / gamma`; and the residue `t^2
+m^2 - n^2 W` is not a state that can be carried, since after the reset
+the comparison needs the old counters themselves (the cross terms `2 T
+t' m^2 - 2 n n' W`) and the residue grows like `2 t m^2`. The reset that
+moves no tick is the sequence's own period: the whole-root gate is
+periodic in n with period m and shift E', `T_(n + m) = T_n + E'` (the
+floor's identity; checked on the muon for every `n <= m + 1` at both
+momenta), so after m self-creations the counters may drop by (E', m)
+with E' read as the elapsed ticks, no root computed; that reset comes
+after `m gamma` intervals, within the working bound for `m <= 2^15`
+(`4 m^4 <= 2^63`) and not beyond. Gate (B) has no exact period (its
+shift per m self-creations is `sqrt(W)`, not an integer), so it has no
+tick-preserving reset at all: its exactness within 1 holds only while
+the counters run unreset, `n <= m + 1`.
+
+**(3) Series S under the root-free gates**, from the tables, no run
+(`m = 13 248`, `c^2 = [1, 3]`; the whole-root values are 18.1 (a)'s, the
+register's pins, the beta product's flight to the +x face as run: 328,
+299 and 221 intervals): at `p = 3640` (`W = 215 258 304`, `E' = 14 671`)
+the 64th self-creation is 70 under the whole root and under (B), 71 under
+(A); the beta click 369 (the run's 369, the pin 367 +- 2) under (B), about
+370 under (A) (the muon gains under one Link in the extra interval), outside
+the pin. At `p = 12 856` (`W = 671 339 712`, `E' = 25 910`): 124 under the
+whole root and (B), 126 under (A); the click 345 (the run's 345, the pin
+345 +- 2) under (B), 346 to 347 under (A), inside the pin by its bracket.
+At rest all three give 64 and the click 392. So (B) reproduces both of
+series S's decay ticks and both clicks exactly; (A) misses the integer
+pins 70 and 124 by 1 and 2. Note 18.1 (a)'s continuum values `64 gamma
+= 70.9` and `125.2`: (A) is the gate that rounds them up (71, 126), the
+whole root and (B) the gate that starts at tick 1 (70, 124); the
+register's pins are the latter's.
+
+**(4) The three tests**, for the gate as a rule of the law. Generic: one
+primitive for every body, the record's own integers m and W (the
+identity's M3), no family name, the counters two more integers of the
+record. Vector: with the two products kept as accumulators, `A <- A + (2
+t + 1) m^2` per interval and `B <- B + (2 n - 1) W` per self-creation,
+the rates are bilinear in the state (`t` with `m^2`, `n` with `W`), the
+gate one comparison `A > B` (verbs 1, 2 and 6), no root and no float:
+the physics-rule reviewer's PASS (2026-09-22) on the condition that
+`m^2` and `W` are record integers formed by verb 2, the rates then
+bilinear and the gate one comparison;
+stated as `t^2 m^2` against `n^2 W` the products are degree four in the
+record's integers, the same admission as the comparisons of 17.6 M3 and
+M7 and the frame's `(p . D)^2 abs(D')^2`, which the reviewer must rule
+on once for all three. Local: the record's own four integers, nothing at
+a Node, the fixed work one multiplication, one addition and one
+comparison per interval and one multiplication per self-creation; the
+storage bounded only on the declared domain of (2), since gate (B) has
+no exact period and no tick-preserving reset.
+
+**The word.** For the owner's gate as stated (A): NOT the same ticks,
+EQUIVALENT WITHIN 3 on the domain, later and never earlier, and outside
+series S's decay pins (71 and 126 for 70 and 124). For the same
+comparison at the whole-root gate's origin and strict (B): EQUIVALENT
+WITHIN 1 for `n <= m + 1`, exact on both of series S's worlds and
+whenever W is a perfect square, with no tick-preserving reset. EXACT
+only with the division form `ceil(t m / (n - 1))^2 > W`, or with the
+whole root itself; the difference between (B) and the whole root is the
+root's own rounding (`E' = floor(sqrt W)`), which (B) removes: (B) is the
+gate nearer to `gamma`, the whole root the one the register pinned.
+The physics-rule reviewer's recommendation to the owner (his, recorded
+here, not this section's): the whole-root gate with its rounding
+declared per frame fits the law's shape; (B) stands as the proof that
+the root's rounding is the only price, exact within 1 and on series S
+exact.
+
 ## 18. The three structural failures of the register under one logic
 
 **The question** (the owner, records 264 and 265, translated: "explain
@@ -7799,3 +7944,191 @@ where it does not (Planck, Dirac, Einstein's equation). Four programs
 are stopped at their statement (the packet, the books, the fan
 collision, the cavity), each the physicist's or the implementer's after
 the owner's word. Nothing enters the law; no run.
+
+## 27. The constancy of c: do the six verbs with locality force a phase-blind flight? (the owner's word through the paper's writer, 2026-09-22: "go for the proof of c")
+
+**The question.** The flight of the law moves a row along its digital
+line by one accumulator, `by_drive(acc, N_l abs(D)_1, T_D)`: N_l the
+label's scale (64), **D** the direction (an integer vector), `abs(D)_1`
+its Manhattan length, `T_D = isqrt(3 abs(D)_2^2 N_l^2)` the direction's
+wall, a carry a Link crossed; the row's phase f (an integer on the
+circle of N steps) is a second accumulator, advanced per Link by the
+family's declared turn (the paper's def:rules, F). The flight reads
+neither f nor the family's phase rate, so the pace `N_l abs(D)_2 / T_D`
+is the same at every phase and every frequency: no dispersion
+(rem:nodispersion, a fact of the definitions, rung 1). The question put
+here is whether that blindness is FORCED: whether any flight whose pace
+depends on the row's phase accumulator f, or on the family's declared
+phase rate n / d, must fail at least one of five requirements: (R1) the
+three tests as written (record 202: generic, vector, local); (R2) the
+books' exactness at every operation; (R3) th:isometry (the split an
+isometry inverted by its conjugate transpose) and th:bijection (the
+interval injective on the rows' weights, multiplicities and phases);
+(R4) the isotropy within `1 / T_D` of prop:pace; (R5) the generic
+requirement that the flight's declared integers are the direction's
+alone, a row being a body of no content, so no family column in the
+flight. The outcome must be one of three: DERIVED (the constancy of c a
+theorem of the six verbs, rung 1), A HYPOTHESIS (one more requirement
+named), or REFUTED (a dispersive flight passes all five, and the
+constancy of c stands as the declared postulate P9 of the paper, "a
+row's rate in transit constant and its wall the direction's T_D").
+
+**Two kinds of dispersion, kept apart.** (i) Frequency dispersion: the
+pace a function of the family's declared phase rate `n / d` (nature's
+`omega(k)` non-linear). (ii) Phase dispersion: the pace a function of
+the row's phase accumulator f, a state integer of the record, not a
+declared column. The assignment names both; they fall differently.
+
+**(i) fails (R5) by the letter and by nothing else.** A wall `T_D d /
+(d + n)` or a rate `N_l abs(D)_1 (d + n) / d` reads the family's column
+`[n, d]`: (R5) forbids a family column in the flight, so (i) is excluded
+by requirement. It is excluded by no theorem: such a flight passes (R1)
+(one primitive with declared integers, the family's pair read as an
+integer, no branch on a name), (R2) (a pace moves no amount), (R3) (the
+split and the interval read no pace; the injectivity argument of
+th:bijection is per row and per family), and (R4) if the family factor
+multiplies the whole rate (the same factor for every direction). So the
+requirement (R5) is the postulate for frequency dispersion, restated: it
+derives nothing.
+
+**(ii) passes all five: the counterexample.** Take the flight
+
+    rate = N_l abs(D)_1 (N - f),    wall = T_D N,    (the carry a Link, the phase f then advanced by the family's turn as before),
+
+N the circle's own integer, no new declared integer; at f = 0 the pace
+is the law's, at f = N - 1 it is `1 / N` of it; a row's pace changes
+with its phase along its line. Against each requirement, each claim
+exact on the GameBoard (rung 1):
+
+- (R1) generic: one primitive, `by_drive`, with the declared integers
+  N_l, T_D and N and the record's own f; no family name or kind; the
+  same rule for every family; a row of no content is its value case.
+  Vector: a translation of an accumulator at a rate that is a product of
+  the declared `N_l abs(D)_1` and the state integer `N - f`, at most
+  bilinear in the state (the push's rate is the same kind, a content
+  times a flow); the wall declared; no root, no float, no rounding
+  beyond the load's. Local: the row's own record; fixed work (one
+  multiplication more per interval) and fixed storage; nothing kept at a
+  Node.
+- (R2) the books: the rule moves positions, never amounts; every ledger
+  line (measured, transit, escaped) is unchanged at every operation.
+- (R3) th:isometry reads the arriving row's weight and phase and
+  re-emits by the tables at age 0: no pace enters its statement or its
+  proof. th:bijection: the interval's three maps stay injective on
+  weights, multiplicities and phases, and the state the injectivity
+  rests on under a state-dependent stride is the row's AGE, a function
+  of the event history the record keeps (the current tick less the tick
+  of the row's last event), which def:rules and th:bijection's
+  statement carry: the paper's Theorem 3 is stated on the quotient that
+  forgets the age for a fixed event history, and 14.1's "injective given
+  the record" is the same conditioning. On (Node,
+  phase) alone the phase-dependent stride CAN bring two rows of one
+  record together (the physics-rule reviewer's check, 2026-09-22: at N =
+  64, r = 32 on one heading, two rows born at different split events on
+  one line with flight residues `s_A = s_B + T_D N - N_l abs(D)_1 r`,
+  both below the wall, A crossing its Link and B staying, land at the
+  same Node with the same phase and the same residue after the interval:
+  a collision the law's flight, with its constant stride, cannot make).
+  What separates them is the age: rows of one line that reach one (Node,
+  phase) by different strides were born at different ticks and so differ
+  in age, and the age is the history's function, so the history the
+  state keeps separates them; rows of equal age and
+  equal birth phase share the whole history of the stride and never
+  collide; rows of equal age and different birth phases `f_0 != f'_0`
+  never meet in (Node, phase), since the same Node from the same age
+  means the same count k of Links crossed and then the phases are `f_0 +
+  k r` and `f'_0 + k r` (r the family's turn per Link), distinct; rows of
+  different families or records are distinct terms already. So the
+  theorem holds under the counterexample, on the state as the theorem
+  states it; the argument of the first draft (one birth event) was one
+  case short.
+- (R4) the pace is `(N - f) / N` times the law's `N_l abs(D)_2 / T_D`,
+  the factor the same for every direction, so at every f the pace over
+  the directions differs by at most `(N - f) / N` of prop:pace's `1 /
+  T_D`: isotropic within `1 / T_D`. (A phase term added to the rate
+  rather than multiplied, `N_l abs(D)_1 + f`, would break isotropy, since
+  the base rate scales with `abs(D)_1` and the term does not; the
+  counterexample multiplies.)
+- (R5) the declared integers of the rule are N_l and T_D (the direction's)
+  and N (the circle's, a grain of the law, no family's); no family
+  column is read; f is the record's state, not a declared integer. N is
+  the circle's grain and not a column: f itself is defined on the circle
+  of N steps, and no rule reads f without N, so a flight that reads f
+  reads N with it; and (R5) is read here as its own justification states
+  it, "no family column in the flight", so the refutation does not hang
+  on a reading of the word "declared".
+
+The merge's cancel and the click's interference do not constrain it
+either, for the reason the paper's writer gives and one more: the click
+reads a record's phase-count vector when the record completes, after
+every one of its rows has ended, so two arms of a Mach-Zehnder whose rows
+arrive at different ticks under this rule still cancel in the
+evaluation `ev(f)` at the dark port (opposite phases, equal amounts,
+whenever they arrive); the fringes and the 64 / 0 are timing-blind, and
+so is Born's form. The phase along a path counts Links, not intervals,
+so the arrival phases are those of the law; only the arrival times move.
+
+**The counterexample disperses frequencies too, with no family column.**
+Over one turn of its phase the row's mean rate factor is the mean of
+`(N - f) / N` over the orbit of f under steps of r, `{s + j g : j = 0 ..
+N / g - 1}` with `g = gcd(r, N)` and `s = f_0 mod g` the birth phase's
+residue: the mean factor is `(N - s - (N - g) / 2) / N`. For r coprime to
+N (g = 1) every family has the same mean pace, `(N + 1) / (2 N)` of the
+law's, whatever its birth phase; for `g > 1` the mean pace depends on the
+family's turn through g and on the birth phase through s (at N = 64 and
+r = 32 the orbit is `{s, s + 32}` and the factor `(48 - s) / 64`, s from 0
+to 31). So a flight reading only the record's own phase, no family
+column, gives a mean pace that depends on the family's declared rate:
+frequency dispersion in the mean arises from (ii) without touching (R5).
+Rung 1 (an exact mean over a finite orbit).
+
+**What would force the blindness, named.** (a) The requirement the law
+already states and the paper numbers P9: the flight's rate and wall are
+declared constants of the direction, the flight table indexed by (**D**,
+tau) alone, the flight in the linear block (the paper's "two blocks": the
+block is linear where its rates are constant); this excludes (ii) by
+forbidding a state integer in the flight's rate, and it is the constancy
+of c itself, not a premise from which it follows. (b) Its method form,
+record 165 and 176: a constant-rate component has a closed form
+(`floor(s_0 + r t)`), the exact phase at the click is a function of the
+row's age and direction (24.1 row 24), and a run only confirms; the
+counterexample is of the feedback class (a state-dependent rate, no
+closed form) and would move the click's exact phase off its closed form
+only in TIME, the arrival tick, never in the phase's value, which counts
+Links (the Mach-Zehnder paragraph above: the fringes, the 64 / 0 and the
+paper's Born form are untouched); the method's rule excludes it, again as
+a choice. (c) The physical
+candidates the writer named do not force it: the retarded field of a
+source with several families (5.1) stays linear and additive under (i)
+and (ii), family by family, and its static Poisson equation holds with a
+coefficient per family; what is lost is one retarded wave operator with
+one c for the sum, a requirement on the DYNAMIC field that the six verbs
+do not state (a hypothesis, if the owner wants it: "the age moment of a
+source of several families is one retarded potential with one c"); and
+the identity's load-time constraint `3 h n = Q S d` (17.6 M7, N5) ties a
+family's phase rate to its quantum, the width and the pair, and says
+nothing of the pace, so it cannot force the pace to ignore the rate. (d)
+Meyer's theorem (the paper's rem:nodispersion, second half) says no local
+linear wave scheme is both isotropic within `1 / T_D` and free of
+dispersion; it shows why a ballistic walker with a passenger phase is the
+form that has both, not that the law must choose it: the counterexample
+is a ballistic walker too, with a phase-dependent stride.
+
+**The outcome: REFUTED.** A dispersive flight, the rule above, passes
+(R1) to (R5), the books, both theorems, the isotropy and the generic
+requirement as written, and it disperses both phases and, in the mean,
+frequencies. The constancy of c is therefore not a theorem of the six
+verbs with locality; it is the declared postulate P9 of the paper (the
+flight's rate constant and its wall the direction's `T_D`, one of the
+"four rules chosen among few"), and 24.1's row 7 keeps its word
+POSTULATE; the ledger's line on dispersion reads "none, by P9", not
+"none, in truth". What the six verbs do force, exactly (rung 1), is
+narrower and already stated: GIVEN a flight whose rate and wall are the
+direction's declared integers, the pace is `N_l abs(D)_2 / T_D` at every
+phase and every rate up to the alias bound (rem:nodispersion), isotropic
+within `1 / T_D` (prop:pace), with `c = 1 / sqrt 3` its limit (13.2
+(a)); and the requirement (R5) closes frequency dispersion by the letter.
+The one addition that would make the blindness a theorem is the linear
+block's constancy itself, so the honest word is the paper's: an
+assumption, not a derivation. No reading is pinned by this section; it
+names no run.

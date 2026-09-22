@@ -23,9 +23,12 @@ below was written before the run, from the design's integers and the
 engine's own documented rules, and a reading outside its expectation is
 reported with its numbers, never moved. Every number is one of two kinds
 ([the register](../../../docs/EXPERIMENTS.md), "Two kinds of readings"): a
-DETECTOR reading (a reader's clicks and passes, a face's click) or a
-GAMEBOARD reading (a body's `become` line, the flight table's first
-arrival, the recoil).
+DETECTOR reading (a reader's clicks and passes, a face's click, a body's
+`become` line with its products and its recoil: the event's own record,
+ENGINE.md's table; the audit of record 567, F14) or a GAMEBOARD reading
+(the flight table's first arrival, the books' charge line: a diagnostic,
+never pinned, never compared with nature, the model owner's rule of
+2026-09-22, records 562 and 564; F15).
 
 ## The worlds
 
@@ -50,12 +53,12 @@ being at - 1). The first-arrival ages off the flight table on a heading
 
 | World | Reading | Expected |
 | --- | --- | --- |
-| `w_hand` | the `become` line at tick 8 (GAMEBOARD) | trigger "clock", from `n` into `p`, the products `[["w", 1, 3, [1, 0, 0], -1]]` (A = -e_x, h = -1: sign(A . u_{+x}) = -1 admits +x, sign(A . u_{-x}) = +1 refuses -x; the admitted set is one direction, the tie has nothing to choose), the recoil `[-192, 0, 0]` |
+| `w_hand` | the `become` line at tick 8 (DETECTOR, the event's own record) | trigger "clock", from `n` into `p`, the products `[["w", 1, 3, [1, 0, 0], -1]]` (A = -e_x, h = -1: sign(A . u_{+x}) = -1 admits +x, sign(A . u_{-x}) = +1 refuses -x; the admitted set is one direction, the tie has nothing to choose), the recoil `[-192, 0, 0]` |
 | `w_hand` | the click (DETECTOR) | tick 9 at measured 3 (x = 3): `w`, amount 1, content 3, push `[192, 0, 0]`, `hand` -1; measured 1 (x = 1): 0 clicks of `w`; the border `lifetime`: 0 |
-| `w_hand` | the charge line (GAMEBOARD) | `[14688, 1]` at every tick: two protons of 7344 (the design's table wrote `[7344, 1]` "unchanged from `w_exchange`", which has one proton; the second proton the design adds carries its own 7344, an arithmetic of the declaration, not of the run) |
+| `w_hand` | the charge line (GAMEBOARD, the books: a diagnostic, not a pin; the detector reading behind it, the proton's own `charge` on its state, DETECTOR) | `[14688, 1]` at every tick: two protons of 7344 (the design's table wrote `[7344, 1]` "unchanged from `w_exchange`", which has one proton; the second proton the design adds carries its own 7344, an arithmetic of the declaration, not of the run) |
 | `w_hand` | the books | `w`: released 1, measured 3 (the content line), `left` 1, `right` 0; `hypotheses` `["columns-v1", "weak-v1", "hand-v1"]` |
 | `w_two_sides` | the click (DETECTOR) | one W unit apportioned over the two declared directions with the leftover at (clock age 7 + 0) mod 2 = 1, the second declared direction `[-1, 0, 0]`: the click at measured 1 (x = 1) at tick 9, push `[-192, 0, 0]`, the recoil `[192, 0, 0]`; no `hand` on any line; `hypotheses` `["columns-v1", "weak-v1"]` (the design's 3.1 read the clock age as 8 and pinned measured 3; the engine's documented tie reads at - 1 = 7, a derivation before the run, and the control's verdict under the mirror below does not depend on which side the tie takes) |
-| `wu` | the `become` line at tick 8 (GAMEBOARD) | `beta` on `[-1, 0, 0]` with `hand` -1 (h = -1: against the axis +x; among the six headings one direction is admitted, the four perpendicular ones refused with the one along), `nubar` on `[1, 0, 0]` with `hand` +1; the labels (-192, 0, 0) and (64, 0, 0); the recoil `[128, 0, 0]` |
+| `wu` | the `become` line at tick 8 (DETECTOR, the event's own record) | `beta` on `[-1, 0, 0]` with `hand` -1 (h = -1: against the axis +x; among the six headings one direction is admitted, the four perpendicular ones refused with the one along), `nubar` on `[1, 0, 0]` with `hand` +1; the labels (-192, 0, 0) and (64, 0, 0); the recoil `[128, 0, 0]` |
 | `wu` | the beta's click (DETECTOR) | tick 8 + 13 = 21 at the reader at x = 0: `beta`, amount 1, content 3, `hand` -1, push `[-192, 0, 0]`; the reader at x = 16: 0 clicks of `beta` |
 | `wu` | the antineutrino (DETECTOR) | a `pass` line at the reader at x = 16 at tick 21 (`hand` +1), then the click on `face:+x` at tick 8 + 15 = 23 (9 Links: the reader is 8 from the neutron, the face one beyond), momentum `[64, 0, 0]`, `hand` +1 |
 | `wu` | the books | `beta`: released 1, `left` 1, `right` 0; `nubar`: released 1, escaped 1, `left` 0, `right` 0; the charge line `[0, 1]` at every tick; `hypotheses` `["weak-v1", "hand-v1"]` |
@@ -93,7 +96,8 @@ Every reading inside its pin (the four runs through `tools/run_series.py`,
 all balanced): `w_hand` the `become` line at tick 8 with the products
 `[["w", 1, 3, [1, 0, 0], -1]]` and the recoil `[-192, 0, 0]`, the click at
 tick 9 at measured 3 with the push `[192, 0, 0]` and `hand` -1, nothing at
-measured 1, the border 0, the charge line `[14688, 1]` at every tick, the
+measured 1, the border 0, the charge line `[14688, 1]` at every tick
+(GAMEBOARD, the books: a diagnostic, not a pin), the
 books `w` released 1, measured 3, `left` 1, `right` 0, `hypotheses`
 `["columns-v1", "weak-v1", "hand-v1"]`; `w_two_sides` the product on
 `[-1, 0, 0]`, the click at measured 1 at tick 9 with the push
