@@ -3785,3 +3785,65 @@ its wording of Eq. 14 is neutral, "an Inside formula on the record, read
 by no detector, whose Outside formulas the conversion gives", and the
 reshaping commit says "shown" with part 6's SHA. The application order
 is unchanged.
+
+### 8b. The three formulas, the paper's spine (the owner's word through the Boss, 06:00Z; the Highlights line of record 787): the frame of the algebra part, prepared, not applied
+
+The owner's words: "W = E'^2 + 3 p.p is the formula of ONE STEP beneath
+the board (Inside). One needs the formula of one step ABOVE the board
+(Outside; Einstein and Newton already wrote it), the formula of one
+step beneath the board, and the conversion between them. That is all
+the formulas we need: the step above, the step beneath, the map between
+them; then one can compute anything, light and every Inside phenomenon,
+without code."
+
+The frame of the algebra part, in the paper, three formulas and one
+sentence between them:
+
+1. THE INSIDE STEP. The six verbs' one-interval update, Eq. 1 with its
+   components (Section 2), on a record's rows; its invariant W = E'^2 +
+   3 p.p (Eq. 14, in its frame), the square of the record's energy on
+   the board, read by no detector. One equation and one identity; the
+   ledger's rows "exact on the GameBoard" are its consequences.
+2. THE OUTSIDE STEP. The equation of motion of one step above the
+   board as physics writes it: for a packet, the energy-momentum
+   relation E^2 = m^2 c^4 + p^2 c^2 and the Lorentz boost of its clicks
+   (Einstein); for a body in a crowd, the inverse square and the fall
+   (Newton). These are not the paper's to derive; they are the known
+   forms the paper names, Outside, with the experiments that read them.
+3. THE CONVERSION. The emitter-to-click map: a detector at every place
+   read (the Highlights line of record 787), the interval to a
+   detector's count, the Node to a click's place, the momentum to a
+   velocity of clicks, W to the energy at a click, the phase to a
+   frequency; a transformation per formula, in the two-column table
+   Inside | Outside of section 8a with the map in each row; the click
+   theorem (A1, A2) its symmetry, Lorentz to second order, the lattice's
+   corrections beyond.
+
+Every result of the paper is then placed as OUTSIDE = THE IMAGE OF
+INSIDE UNDER THE CONVERSION, one row each: the pace c = 1 / sqrt 3
+(Inside: the flight table; Outside: the click's velocity, one Node per
+count); the click's weight (Inside: the bilinear form; Outside: Born's
+rule at the detector); S(N) (Inside: the rungs; Outside: the CHSH counts,
+Tsirelson in the limit); the clock in a crowd (Inside: the owed count;
+Outside: the redshift at two Nodes); the fall and the period (Inside:
+the push; Outside: the equivalence and the 1/r scale symmetry); the two
+Doppler factors (Inside: the crossing count; Outside: r / (1 - v) and
+(1 + v) / r); Newton Outside (Inside: the shell mean of the push;
+Outside: the inverse square for clicks, part 7); light (Inside: the
+row's flight; Outside: the click's straight line, the derivation
+light-outside when it lands). The register's readings are the check by
+kind on the Outside column only: SHOWN where the row is algebra under
+named assumptions, MEASURED where a run Inside was read Outside, both
+where both.
+
+The derivations in writing for this frame, whose SHAs come with PR
+#769's merge SHA and their own: light on light-outside, Einstein on
+einstein-outside (about ninety minutes), and the click frame's parts 8
+(the map's algebra) and 9 (Bell and CHSH by the algebra). Their formulas
+enter the paper's Inside | Outside table and its Outside step only from
+the merged texts, each number with its kind. Nothing applied until the
+owner's GO on the reshaping; the framing commit still goes on PR #769's
+merge SHA as agreed. The cost joins section 8's count: the three
+formulas' frame is one paragraph of about eight lines before the
+Inside | Outside table, paid within section 8's plan (Table 2's seven
+rows to a pointer, the symbols table's single-use letters).
