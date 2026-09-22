@@ -3437,6 +3437,62 @@ CORRECTIONS = [
         "is not linear; none acts in the worlds of this paper.\n\\end{theorem}",
         "is not linear; none acts in the worlds of this paper. The theorem is of the rows' linear block; a body's drive, whose later coincident fire is lost under the engine's rule (P5, Section~\\ref{sec:law}), is outside it and is not injective in that case.\n\\end{theorem}",
     ),
+    # The owner's word (the Boss's order of 15:11Z): the bending's coefficient and the atom's ladder enter as conjectures from the algebra, labelled so, distinguished from what is read.
+    (
+        "(A) the bending's conjecture in Section 5 (the owner's word: the algebraic derivations may enter as conjectures)",
+        "$4 = 2(1 + \\gamma)$ with $\\gamma$ an input read back, not derived \\cite{flowalgebra}. The run after the algebra, and the ring's refusal by the register, are Table~\\ref{tab:nature}, row 13.",
+        "$4 = 2(1 + \\gamma)$ with $\\gamma$ an input read back, not derived \\cite{flowalgebra}. Stated as a conjecture, labelled so and not read: on the one constant the law's deflection coefficient is $2(1 + \\gamma)$ with $\\gamma$ the declared input, the $M/b$ form with Einstein's factor $2$ at $\\gamma = 1$, conjectured from the algebra (the step algebra's simulation of the ring, $3.65$ to $3.92$ against $4$, closing to $2c_f$ within the two stated factors to one to three grains, COMPUTATION), not recovered and not read: what is read is series K's $0.000$ pixel under the law as built (FAIL), the $\\gamma = 0$ ring inside its four pins, and the deciding $\\gamma = 1$ ring NOT READ, refused by the working bound. The run after the algebra, and the ring's refusal by the register, are Table~\\ref{tab:nature}, row 13.",
+    ),
+    (
+        "(A) the bending's conjecture in Section 9 (vi)",
+        "and the $\\gamma = 1$ ring refused by the working bound, NOT DECIDED \\cite{ringrun}.",
+        "and the $\\gamma = 1$ ring refused by the working bound, NOT DECIDED \\cite{ringrun}. The conjecture, labelled so: on the one constant the deflection coefficient is $2(1 + \\gamma)$, $\\gamma$ the declared input, conjectured from the algebra and not read (Section~\\ref{sec:delay}).",
+    ),
+    (
+        "(A) row 13: the conjecture beside the reading",
+        "& FAIL, the law's: $0$ against $1.75$ arcseconds (series K); the ring under the key NOT DECIDED, $\\gamma$ an input",
+        "& FAIL, the law's: $0$ against $1.75$ arcseconds (series K); the ring under the key NOT DECIDED, $\\gamma$ an input; the coefficient $2(1 + \\gamma)$ on the one constant conjectured from the algebra, not read",
+    ),
+    (
+        "(B) the atom's ladder as a conjecture in Section 9 (viii)",
+        "so the transition Bohr reads as one line is not an operation of the law: NEEDS A NEW RULE, named under its own identity. The run after it:",
+        "so the transition Bohr reads as one line is not an operation of the law: NEEDS A NEW RULE, named under its own identity (atom-level-v1, the release at a closure of the difference of two closures, the virial form, \\cite{atomlevels}). Stated as a conjecture, labelled so and not read \\cite{atomalgebra,atomlevels}: every closed loop with $j$ circles per return has, in the shell mean, $a_j = j^2h^2/(4\\pi^2\\kappa m)$, so $a_j/a_i = (j/i)^2$ and $T_j/T_i = (j/i)^3$; the loop's constant $-\\kappa/(2a_j)$ on the virial form, $E_j = -\\Delta A/(2NT_j) = -jh/(2T_j)$, is proportional to $1/j^2$ in the limit, so two lines would stand in the ratios $(1/i^2 - 1/j^2)$, $27/20$ for Balmer's $\\beta$ over $\\alpha$, free of every declared constant; the conjecture is that the law's closed loops form Bohr's ladder in the shell mean's limit, conjectured from the algebra, not recovered. What is read: the $r = 12$ loop's staying under the centred step and its tightening (DETECTOR); no level and no line. At the lattice's grain the three-rung ratio cannot decide between Balmer's form and the fan's departure (the physics-rule reviewer's read of 2026-09-22, \\cite[record 991, pending merge]{log}: $1/j^2$ at the read closures $1.892$, $3.017$, $4.001$ gives $1.280$; the generator $1.373$; the fan's $1.431$; the band about $\\pm 0.13$ to $0.29$), so a reading of the levels enters as a reading with its band, not a match, and row 6 stays NOT YET on the line. The run after it:",
+    ),
+    (
+        "(B) row 6: the ladder conjectured beside the reading",
+        "; the lines NOT COMPUTABLE by any run of the law as built (no rule of the six quantises a body's loop; $27/20$ waits on the new rule) \\\\",
+        "; the lines NOT COMPUTABLE by any run of the law as built (no rule of the six quantises a body's loop; $27/20$ waits on the new rule); the ladder $a_j/a_i = (j/i)^2$, $E_j \\propto 1/j^2$ and Balmer's $27/20$ conjectured from the algebra in the shell mean's limit, not read (Section~\\ref{sec:discussion} (viii)) \\\\",
+    ),
+    (
+        "(C) the abstract: the two conjectures named and distinguished from what is read",
+        "The law as built meets (A1) and not (A2), so it recovers no relativistic dynamics;",
+        "Two relations enter as conjectures from the algebra, labelled so and distinguished from what a detector reads: the bending's coefficient $2(1 + \\gamma)$ on the one constant, and the atom's ladder $1/j^2$ with Balmer's $27/20$; neither is read. The law as built meets (A1) and not (A2), so it recovers no relativistic dynamics;",
+    ),
+    (
+        "(C) What is proved: the two conjectures named",
+        "the value $1/\\sqrt3$, Tsirelson's limit and the dictionary's identities claim no novelty.",
+        "the value $1/\\sqrt3$, Tsirelson's limit and the dictionary's identities claim no novelty. Conjectured from the algebra and not read, labelled so wherever they appear (Sections~\\ref{sec:delay} and~\\ref{sec:discussion}, Table~\\ref{tab:ledger}): the bending's coefficient $2(1 + \\gamma)$ on the one constant, and the atom's ladder $a_j/a_i = (j/i)^2$, $E_j \\propto 1/j^2$, with Balmer's $27/20$ in the shell mean's limit.",
+    ),
+    (
+        "(C) the not-computed paragraph, item (i): conjectured, not computed",
+        "Bohr's $27/20$ waits on that rule, under its own identity.",
+        "Bohr's $27/20$ waits on that rule, under its own identity; the ladder itself, $a_j/a_i = (j/i)^2$ and $E_j \\propto 1/j^2$ with $27/20$, is conjectured from the algebra, not computed (item (viii) of the list above).",
+    ),
+    (
+        "(C) the not-computed paragraph, item (viii): the bending conjectured, not computed",
+        "(viii) The inverse square in space and the bending's full deflection, pending their run (rows 13, 14).",
+        "(viii) The inverse square in space, pending its run (row 14); the bending's full deflection, its coefficient $2(1 + \\gamma)$ on the one constant conjectured from the algebra, not computed, the deciding ring NOT READ (row 13).",
+    ),
+    (
+        "the ledger: two rows, conjectured from the algebra, not read",
+        "Newton's cooling within one birth's cost & the release & none & exact (a bound) & 25.9 \\\\",
+        "Newton's cooling within one birth's cost & the release & none & exact (a bound) & 25.9 \\\\\nThe bending's coefficient $2(1 + \\gamma)$ on the one constant, the $M/b$ form & the flow counted per Euclidean Link (flow-link-v1), the ring of starts & a hypothesis beside the law; $c_f$ and $\\gamma$ inputs; the two stated factors & conjectured from the algebra, not read & \\ref{sec:delay} \\\\\nThe atom's ladder $a_j/a_i = (j/i)^2$, $E_j \\propto 1/j^2$, Balmer's $27/20$ & the closure congruence of the action rows, the balance of the shell mean, the virial form & the shell mean's limit; atom-level-v1 (a hypothesis) for the release & conjectured from the algebra, not read & \\ref{sec:discussion} \\\\",
+    ),
+    (
+        "the references: the atom's levels design at its head pending merge",
+        "\\bibitem{ringrun} The ring worlds of flow-link-v1:",
+        "\\bibitem{atomlevels} atom-level-v1: the release at a closure of the difference of two closures, the ladder of levels in the law's integers and what the rule gives against Balmer's ratio, \\texttt{docs/designs/atom\\_levels/LEVELS.md} of the archived code \\cite{zenodo}, on the branch \\texttt{atom-levels} at cd0c2029 (PR \\#891 opened, not yet merged; the merge commit replaces this). \\bibitem{ringrun} The ring worlds of flow-link-v1:",
+    ),
 ]
 
 

@@ -4877,3 +4877,28 @@ a varying release by the retarded intervals, the crossings' kind named
 (GAMEBOARD on an interior surface, DETECTOR at a face); the injectivity
 theorem's scope, the rows' linear block, a body's drive with its lost
 coincident fire outside it. 48 pages.
+
+## Applied (2026-09-22, the owner's word through the Boss's order of 15:11Z): the bending and the atom as conjectures from the algebra
+
+The owner: last attempts on the light bending and the atom so that
+they are in the paper; algebraic formulas thought derived may enter as
+conjectured. (A) The bending: in Section 5, Section 9 (vi), row 13 and
+the ledger, the coefficient 2 (1 + gamma) on the one constant stated as
+a conjecture, labelled "conjectured from the algebra, not read", from
+flow_weight/ALGEBRA.md's ring (3.65 / 3.82 / 3.92 against 4, closing to
+2 c_f within the two stated factors); what is read stays: series K's
+0.000 pixel (FAIL), the gamma 0 ring inside its pins, the gamma 1 ring
+NOT READ; the verdict word NOT DECIDED. (B) The atom: in Section 9
+(viii), row 6 and the ledger, the ladder a_j = j^2 h^2 / (4 pi^2 kappa
+m), (j / i)^2, (j / i)^3, the virial form E_j = -j h / (2 T_j)
+proportional to 1 / j^2, two lines in (1 / i^2 - 1 / j^2), 27 / 20, as
+a conjecture in the shell mean's limit, from ALGEBRA.md and LEVELS.md
+(atom-levels at cd0c2029, PR #891, pending merge); what is read stays
+(the r = 12 loop's staying and tightening); the reviewer's read (record
+991, pending merge) that the three-rung ratio at the lattice's grain
+cannot decide (1.280, 1.373, 1.431, the band +- 0.13 to 0.29); row 6
+NOT YET on the line. (C) One sentence in the abstract and one in "What
+is proved" naming the two conjectures and distinguishing them from what
+is read; in the not-computed paragraph the two moved to "conjectured,
+not computed". Never "recovered", never "matches nature". (D) No SHA
+swapped; the citations as they stand. 49 pages.
