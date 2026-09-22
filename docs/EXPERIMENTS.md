@@ -6832,6 +6832,143 @@ sequential gates on an entangled record, the full register replay.
   grain); the choice of the word is the owner's, the readings that would
   move with it listed in NOTE.md section 2; it establishes no physical law.
 
+### X, Poisson after a detector (2026-09-22)
+
+- **Confronts.** Poisson's equation as the law states it
+  ([DERIVATIONS_BEAM 5.1](DERIVATIONS_BEAM.md#51-the-two-fields-of-one-stream-and-the-equation-they-obey)):
+  the age moment of a stream, `A = q dwell / (4 pi c r)` per source, is the
+  retarded potential and obeys `Laplacian(A) = -(dwell / c) q delta(x)`,
+  while the presence is the retarded flux and obeys Gauss's law. Series T
+  read a clock's rate after a detector at two distances from a point crowd
+  ([NATURE row 12](NATURE.md), REPLICATED): that is Laplace's part, the
+  field outside its source. THE SOURCE TERM, the other half of the
+  equation, had no detector reading: series E's `1 / r` is a GameBoard
+  reading of probes in a world with no detector, struck from the paper by
+  the owner's word (records 562, 564 and 575), and the paper says in six
+  places that Poisson's measurement after a detector is a run not made.
+  This series makes it, after a detector, at both sides of the source. The
+  chief physicist's design of 2026-09-22 ([record 574](LOG_2026-09-20.md),
+  part 2, POISSON AFTER A DETECTOR) under the model owner's word of that
+  day ("build them", records 574 and 581); the folder
+  [examples/events/shell_clock/](../examples/events/shell_clock/README.md).
+  What a shell asks that no point source can: inside it the potential is
+  flat (the shell theorem) and the flux is not, so the interior tells the
+  clock's two words apart at a source term, where outside a source they
+  differ only in how fast they fall.
+- **Model prediction, pinned before the run** (the folder's
+  [README](../examples/events/shell_clock/README.md),
+  `examples/events/shell_clock/expectations.json` with its `derivations`
+  map, written by `make_worlds.py`; every number of it from section E of
+  [docs/designs/clock_age/clock_age_map.py](designs/clock_age/clock_age_map.py),
+  whose output is [clock_age_map.out](designs/clock_age/clock_age_map.out)
+  beside it; committed before the first interval ran). Series T's geometry
+  with the crowd's point source replaced by a shell: the lamp `s_px1` at
+  rest at x = 103 (2^20 units, one unit per self-creation on -x, the wheel
+  [1, 64]), the detector fixed at x = 3 measuring `s_px1` with
+  `reads: "age"` (series T's flight of 100 Links and series T's windows,
+  200 to 350 and 350 to 500 of 500 intervals), and 450 fixed `mass` sources
+  at the Nodes with `|distance - 6| < 1/2` (series E's selection of a
+  shell) about a centre 2, 4 or 12 Links from the lamp on +x, each
+  releasing on series E's full fan of 290 at `amount` 1431597 and `release`
+  [1, 2^16], which is 21.8444 units per source per direction per interval:
+  series T's crowd's total release pair, 2 F with F = 4915, spread over the
+  shell's Nodes, the design's scaling. `suspension` [1, 2^16]; the bar
+  110 + r x 15 x 15. Nine worlds: the lamp's `mass` entry
+  `{"rule": "pass", "reads": "age"}` (the age word, the law's default since
+  clock-age-v1) or `{"rule": "pass", "reads": "presence"}` (the presence
+  word, run beside it as series T ran the two words), at r = 2 and 4
+  (inside) and 12 (outside), each with its control, the lamp alone on the
+  same GameBoard.
+  **The interior by the map:** the map's interior on the axis runs 5009 to 5246 with uniform sources (the age moment at r = 0 to 5: 5162, 5009, 5086, 5130, 5086, 5246; with the sources' own clocks k = 0.932, 0.898, 0.914, 0.919, 0.911, 0.943), a lattice ripple of about +-2.4 percent about the shell theorem's flat interior; the equality 5086 at r = 2 and at r = 4 is a coincidence of the lattice at the two Nodes the design named before the map (record 574); at r = 12 the age moment is 3144; the
+  presence 499, 596 and 163 rises toward the shell as a flux does. **The one thing the design did not
+  foresee, which the map states and solves:** the shell's sources stand in
+  one another's rows, so each source's own clock counts the age moment of
+  its neighbours by the law's default word and a source releases only at
+  its self-creations, at its declared rate over 1 + its own count; the map
+  iterates that fixed point (the sources' own k 0.787 to 0.932, mean 0.866,
+  so each keeps 11.31 to 12.22 of its declared 21.84 units, 0.536 of the
+  rate). It is the law's own nonlinearity, not a rule added here: a dense
+  shell slows its own clocks and so releases less. At the two Nodes the
+  design named the uniform sources give one integer, and the spread of the
+  sources' own clocks over the lattice shell is what moves the inside pin off
+  1 there; the lattice interior's own ripple, +-2.4 percent by the map, is
+  not read at two Nodes.
+  DETECTOR, the lamp's light at x = 3, `1 + z` the inverse slope of the
+  birth ordinal against the click's tick in each window and `k = 1 + z - 1`:
+  the pinned k 0.914351 (r = 2), 0.910783 (r = 4) and 0.563110 (r = 12)
+  under the age word, 0.089647, 0.106724 and 0.029271 under the presence
+  word, the controls 1.0000 exactly, each k within a tenth of itself (the
+  bracket is what the fixed point does not model, the bursts of a slowed
+  source's release). **The three ratios that decide, pinned within 0.02**
+  (a common factor on the shell's release cancels in a ratio of k exactly,
+  so these are robust where the absolute k is not): inside under the age
+  word `k(2) / k(4)` = 1.003917 against the continuum's 1, the departure
+  being the map's ripple 0.0039; inside under the presence word
+  `k(2) / k(4)` = 0.839989, forty-one ripples from 1, the FAIL the design
+  expects, since `1 / r^2` obeys the flux and not the potential; outside
+  under the age word `k(12) / k(4)` = 0.618270, the continuum's `R / 12` =
+  0.5 and the lattice above it by the grain of the map's section C, where
+  the age moment times r rises with r (series E's shell means read the same
+  grain). Refuted: the inside ratio departing from 1 by more than 0.02 (no
+  Poisson's source term), the outside ratio missing its pin by more than
+  0.02 (series T's `1 / r` with it), any control departing from 1.0000.
+- **Features.** The clock's count per table entry (`count_component`,
+  `counts_age` in `nature_beam`) under both words; a free family's release
+  whole on every direction of a 290-direction fan from 450 sources at once;
+  a source's directions named by the indices of the world's direction
+  table; the lamp's births as the clock's record and the record form's
+  click line with `age`; `examples/events/shell_clock/read_runs.py`, which
+  reads the detector's `click` lines and nothing else, no store, no
+  `state.json`, no replay (the owner's word of 2026-09-22, records 562 and
+  564); `tests/test_shell_clock.py` (the shipped worlds the generator's,
+  the algebra of the pin, the tool on a hand-made click list, and the rule
+  the reading rests on: a detector whose own clock is slowed by a crowd at
+  its Node clicks on the same lattice ticks as one with no crowd, so the
+  shell's rows reaching the detector cannot move `1 + z`; only the lamp's
+  clock does). The reading's denominator is the host tick, the detector's own clock only at k_D = 0 (record 569); the map gives k_D = 0.0945, 0.0927 and 0.1357 at x = 3 (the detector in the shell's on-axis rows); in the strict form (records 678 and 709) the inside ratio is 0.9994, the outside 0.5134 and the presence word's k near zero or negative; the convention is the owner's (the clock audit's uncertainty (a)), the same as series T's.
+- **Run (2026-09-22, `tools/run_series.py --jobs 1` one world at a time on
+  the branch at cb634db, headless, 500 intervals each, the nine worlds
+  completed (the books balanced at every tick, GAMEBOARD, a gate of the
+  record); the readings by
+  `examples/events/shell_clock/read_runs.py` from the detector's click
+  lines alone, shipped as `examples/events/shell_clock/readings.json`, no
+  number typed by hand; DETECTOR unless said; measured once, awaiting
+  replication).** `1 + z` in the two windows: the age word 1.9056 and
+  1.9176 at r = 2 (k read 0.9116, the pin 0.914351), 1.9061 and 1.9118 at
+  r = 4 (0.9089, the pin 0.910783), 1.5782 and 1.5643 at r = 12 (0.5712,
+  the pin 0.563110); the presence word 1.0891 and 1.0893 at r = 2 (0.0892,
+  the pin 0.089647), 1.1063 and 1.1063 at r = 4 (0.1063, the pin 0.106724),
+  1.0297 and 1.0291 at r = 12 (0.0294, the pin 0.029271); the three controls
+  1.0000 and 1.0000. Every world MET: the absolute k within 1.5 percent of
+  the map's fixed point everywhere and within half a percent inside, so the
+  sources' own clocks are read as the map iterated them; no ordinal missing
+  in any world (the light escapes whole, through the shell's Nodes when the
+  lamp is inside); the age read 172 in every world. The ratios: inside under
+  the age word `k(2) / k(4)` = 1.0029 (the pin 1.003917 +- 0.02, MET, flat
+  within the tolerance); inside under the presence word 0.8390 (the pin
+  0.839989, MET, NOT flat, the FAIL the design expected); outside under the
+  age word `k(12) / k(4)` = 0.6285 (the pin 0.618270, MET; the continuum's
+  0.5 outside the tolerance by the lattice's grain, as pinned). Per window the three ratios read inside under the age word 0.9994 / 1.0063, inside under the presence word 0.8379 / 0.8401, outside under the age word 0.6381 / 0.6189, and k drifts from the first window to the second by +1.3, +0.6 and -2.4 percent (the presence word +0.3, 0.0 and -2.0), so the outside MET is met at the reading's resolution (the windows 0.638 and 0.619 against the tolerance 0.02). **Verdict per world: every one of the nine MET; every pin of the
+  entry met, nothing moved, nothing failed.** The host's cost, apart from
+  the readings (GAMEBOARD): 1396 to 1465 s and 1284 to 1349 MB peak per
+  shell world, about 12 GB of record each (450 sources on the fan of 290:
+  the rows leaving through the faces and the sources reading one another),
+  read for the detector's clicks and reclaimed before the next world, the
+  runner's digests kept from its summary first; about a second per control;
+  the events' fingerprints 5a228c2c398f, 63335a44c98c, 2e6f934ce491 (the age
+  word at 2, 4, 12), 0b76092af867, e8cf7b0e15d9, 1518bec744b7 (the presence
+  word), bb1df5874c84 (the three controls, the same light in three boxes;
+  the full sha256 in `readings.json`). What the run establishes: on the
+  engine as built a clock inside a shell of sources reads the same age
+  moment within 0.02 at the two Nodes the design named, 2 and 4 Links from
+  its centre (the windows 0.9994 and 1.0063; the lattice interior's own
+  ripple, +-2.4 percent by the map, is not resolved by this run) and a clock outside it reads the point source's
+  `C / r` as the lattice gives it, while the same clock under the presence
+  word reads a flux that rises toward the shell and is not flat; the shell's
+  own sources slow one another as the law's default word says they must,
+  and the map's fixed point for that is what the detector read. It
+  establishes no physical law.
+
 ### optical-v1's pin worlds, light beside a mass under the key (2026-09-21)
 
 - **Confronts.** The bending and the delay of light beside a mass, the
