@@ -6836,6 +6836,48 @@ sequential gates on an entangled record, the full register replay.
   its Node clicks on the same lattice ticks as one with no crowd, so the
   shell's rows reaching the detector cannot move `1 + z`; only the lamp's
   clock does).
+- **Run (2026-09-22, `tools/run_series.py --jobs 1` one world at a time on
+  the branch at cb634db, headless, 500 intervals each, the nine worlds
+  completed and conserved at every tick; the readings by
+  `examples/events/shell_clock/read_runs.py` from the detector's click
+  lines alone, shipped as `examples/events/shell_clock/readings.json`, no
+  number typed by hand; DETECTOR unless said; measured once, awaiting
+  replication).** `1 + z` in the two windows: the age word 1.9056 and
+  1.9176 at r = 2 (k read 0.9116, the pin 0.914351), 1.9061 and 1.9118 at
+  r = 4 (0.9089, the pin 0.910783), 1.5782 and 1.5643 at r = 12 (0.5712,
+  the pin 0.563110); the presence word 1.0891 and 1.0893 at r = 2 (0.0892,
+  the pin 0.089647), 1.1063 and 1.1063 at r = 4 (0.1063, the pin 0.106724),
+  1.0297 and 1.0291 at r = 12 (0.0294, the pin 0.029271); the three controls
+  1.0000 and 1.0000. Every world MET: the absolute k within 1.5 percent of
+  the map's fixed point everywhere and within half a percent inside, so the
+  sources' own clocks are read as the map iterated them; no ordinal missing
+  in any world (the light escapes whole, through the shell's Nodes when the
+  lamp is inside); the age read 172 in every world. The ratios: inside under
+  the age word `k(2) / k(4)` = 1.0029 (the pin 1.003917 +- 0.02, MET, flat
+  within the tolerance); inside under the presence word 0.8390 (the pin
+  0.839989, MET, NOT flat, the FAIL the design expected); outside under the
+  age word `k(12) / k(4)` = 0.6285 (the pin 0.618270, MET; the continuum's
+  0.5 outside the tolerance by the lattice's grain, as pinned). The presence
+  word's departure from flatness is 56 times the age word's on the same
+  shell. **Verdict per world: every one of the nine MET; every pin of the
+  entry met, nothing moved, nothing failed.** The host's cost, apart from
+  the readings (GAMEBOARD): 1396 to 1465 s and 1284 to 1349 MB peak per
+  shell world, about 12 GB of record each (450 sources on the fan of 290:
+  the rows leaving through the faces and the sources reading one another),
+  read for the detector's clicks and reclaimed before the next world, the
+  runner's digests kept from its summary first; about a second per control;
+  the events' fingerprints 5a228c2c398f, 63335a44c98c, 2e6f934ce491 (the age
+  word at 2, 4, 12), 0b76092af867, e8cf7b0e15d9, 1518bec744b7 (the presence
+  word), bb1df5874c84 (the three controls, the same light in three boxes;
+  the full sha256 in `readings.json`). What the run establishes: on the
+  engine as built a clock inside a shell of sources reads the same age
+  moment 2 and 4 Links from its centre (the potential flat: Poisson's source
+  term after a detector) and a clock outside it reads the point source's
+  `C / r` as the lattice gives it, while the same clock under the presence
+  word reads a flux that rises toward the shell and is not flat; the shell's
+  own sources slow one another as the law's default word says they must,
+  and the map's fixed point for that is what the detector read. It
+  establishes no physical law.
 
 ### optical-v1's pin worlds, light beside a mass under the key (2026-09-21)
 

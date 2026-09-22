@@ -134,6 +134,32 @@ kept from its summary first; the readings and the digests are what the
 register carries, as the [retention policy](../../../docs/RETENTION.md) has
 it for every run's evidence.
 
+**Measured (2026-09-22, one run each, `readings.json` beside the worlds,
+written by `read_runs.py` from the detector's click lines alone; measured
+once, awaiting replication).** DETECTOR, `1 + z` in the windows 200 to 350
+and 350 to 500: the age word 1.9056 / 1.9176 at r = 2 (k read 0.9116, the
+pin 0.914351), 1.9061 / 1.9118 at r = 4 (0.9089, the pin 0.910783), 1.5782 /
+1.5643 at r = 12 (0.5712, the pin 0.563110); the presence word 1.0891 /
+1.0893 at r = 2 (0.0892, the pin 0.089647), 1.1063 / 1.1063 at r = 4
+(0.1063, the pin 0.106724), 1.0297 / 1.0291 at r = 12 (0.0294, the pin
+0.029271); the three controls 1.0000 / 1.0000. Every world MET, the
+absolute k within 1.5 percent of the map's fixed point everywhere and within
+half a percent inside; no ordinal missing in any world (the light escapes
+whole, through the shell's Nodes when the lamp is inside it); the age read
+172 in every world, the flight of 100 Links. THE RATIOS THAT DECIDE: inside
+under the age word `k(2) / k(4)` = 1.0029 (the pin 1.003917, MET; flat
+within the tolerance: YES), inside under the presence word 0.8390 (the pin
+0.839989, MET; flat: NO, the FAIL expected), outside under the age word
+`k(12) / k(4)` = 0.6285 (the pin 0.618270, MET; the continuum's 0.5 outside
+the tolerance, as the map said before the run). The presence word's
+departure from flatness is 56 times the age word's on the same shell: the
+one reading that tells the two words apart at a source term. Host cost
+(GAMEBOARD, apart from the readings): 1396 to 1465 s and 1284 to 1349 MB
+peak per shell world, about a second per control; the events' fingerprints
+5a228c2c398f, 63335a44c98c, 2e6f934ce491 (age), 0b76092af867, e8cf7b0e15d9,
+1518bec744b7 (presence), bb1df5874c84 (the three controls, the same light);
+the full sha256 in `readings.json`.
+
 `tests/test_shell_clock.py` pins the shipped worlds to the generator, the
 algebra of the pin, the readings tool on a hand-made click list, and the
 rule the whole reading rests on: a detector whose own clock is slowed by a
