@@ -5064,3 +5064,23 @@ made from the clicks' places, the diagnosis's 3.3), not DETECTOR; the
 ledger's page-count rows HOST from here on. Nothing else; the #891 merge
 SHA and the orbitread bibitem rename wait for the later one-line commit.
 No physics, no pin moved. 51 pages.
+
+## Applied (2026-09-22, the Boss's order of 20:26Z): the follow-up, three items, on a fresh branch from main
+
+On `paper-followup-891` off main at d8afc87c, one commit. (1) The atom's
+levels cited at PR #891's merge on main, d8afc87c, LEVELS.md unchanged
+from the branch head. (2) The first of the two references keyed
+orbitread renamed orbitlegs; it is cited nowhere, and the generator keeps
+only cited references, so it leaves the list (88 references); the one
+citation, the fan's Manhattan mean 1.287, keeps the second entry. (3) The
+CHSH refutation sentence restricted to the proved subset (issue #938,
+option 1): the registered grains, the powers of two from 512 to 32768;
+17/6 at 768; the scan 2.82443 to 2.83212 over 1024 to 4096 as the check's
+scan, not a bound beyond it; the kind named. Found on the way and fixed
+in the same commit: the three merge citations carried "PR #NNN", and the
+character # does not compile; rewritten without the number (the
+submission form's rule). Found and recorded: the PDFs of PR #930's two
+commits were compiled from a stale copy of main.tex (f82e73d1) left in
+the compile directory, so the committed PDF on main is f82e73d1's text;
+this commit's PDF is compiled from the true source and read back. 52
+pages, not 51: the true count of the text since PR #930.
