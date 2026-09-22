@@ -2730,3 +2730,92 @@ Two register kinds to confirm before step 2, by the physicist's audit of record 
 
 Page 1 carries Eq. (1) as it stands, s <- s + r; e <- sign(s) min(floor(abs(s) / d), a); s <- s - e d, with four lines: one map at every Node of a cubic GameBoard at every interval; each component of the state is a bounded integer accumulator with a declared rate r and a declared wall d, translated by its rate, counted in walls (capped at one for the drive), reduced by the walls it holds; every wall counted is an event (a Link crossed, a phase step, a count completed, a birth, a push), and nothing else happens; the rates and walls are made of six integer operations (translation, a declared integer matrix or bilinear form, the group-ring sum, a permutation, the evaluation at the roots of unity with its norm, the division with the remainder kept and the comparison); one comparison, the click, is the only read-out, and only a detector's reading is a measurement. The full definition (the state, the components, the two blocks, the read-out, the rules apart from the parameters and the initial conditions) is chapter 2 (pages 3-5); every derivation of the paper names which of these rules it starts from.
 
+### 5. The guiding statement for the cut (the owner, 2026-09-22, about 00:50Z, in Hebrew; translated; its record to follow)
+
+The owner's words: "Use only the things that are closed with us, that
+have a clear claim and a clear proof; throw out what is not clear; you
+know from the reviews what is clear and proved, use that. In my view the
+central thing in the paper is the claim that several different physical
+phenomena can be produced from one shared discrete update law and a
+small number of assumptions. The general formula is the starting point.
+The possible novelty lies in showing how the same mechanism leads to the
+geometry of propagation, to the flux and the forces, and further to
+measurement and to correlations. The decisive question is how many of
+the results the law really forces. If for every phenomenon a rule must
+be added that puts the desired result in beforehand, the law's
+explanatory power shrinks; if the same rules force several different
+results with little freedom of choice, that is the strong scientific
+contribution. So the three things must work together: the general
+formula defines the mechanism; the derivations show what follows from
+it and under what conditions; the simulator and the comparison with
+experiment check the results and their limits. In the version I read,
+the contribution that can be established now is an explicit model with
+several conditional mathematical results and numerical checks; the
+broad claim that it describes nature still needs completions. I would
+build the paper around a precise statement of the distance between
+these two."
+
+What this fixes for step 2, on top of sections 1 to 4:
+
+1. **The spine is the forcing ledger.** Every result the paper keeps
+   carries three columns in its five-step path: the rules of Eq. (1)
+   it starts from (nothing added), the assumptions added beside the
+   rules (each named once, with its kind: an axiom of the apparatus,
+   a calibration, a limit, an input), and the freedom left (the
+   parameters). The paper's central table is this ledger, one row per
+   result, so that a reader counts what the law forces and what was
+   put in: the flight table forces c = 1/sqrt 3 and the isotropy bound;
+   the walk and the books force Gauss's flux exactly; the bilinear push
+   forces the inverse square in the shell mean under the dense fan; the
+   same rows' moments force the retarded potential and Poisson under
+   the same fan; the evaluation at the roots of unity plus one axiom
+   (the balanced splitter's conservation) forces the quadratic form of
+   power 2; the one gather forces exact marginals; the rungs force
+   S(N) exactly with its limit 2 sqrt 2; no rule of the law forces the
+   Lorentz factor, the bending, the masses' values or the harmonic
+   constants, and the paper says so in the same table.
+2. **What stays: the closed results only.** The derivation
+   mathematician's closure (record 398, CLOSED) and this paper's
+   theorems: the click rule and the rung rounding (6.2); the split
+   identities and the norm rule (6.5); the group count and the second
+   law at the click as a count (14); the pace bound and c = 1/sqrt 3
+   (FORM.md 1; prop:pace); S(N) exact with the plateau 512 to 8192
+   (24.4; th:bell); the quadratic-form classification under its axioms
+   (6.5; th:gleason); the continuity equation from the books (25.4);
+   the 24 rotations (th:group); the isometry and the bijection on the
+   GameBoard alone (th:isometry, th:bijection); exact marginals
+   (th:marginals); Gauss's flux (3.1); the shell mean and Newton's
+   inverse square, and the retarded potential and Poisson, each with
+   its stated condition (the dense fan, the shell mean: 3.3, 5.1),
+   since a result with its condition written is a clear claim.
+3. **What leaves: everything without a clear claim and proof.** Every
+   "in form", "pinned, not run", "not reached" and hypothesis row
+   (Kepler, Bohr's condition, Bradley, the geodesics, Compton,
+   E = m c^2, Schrodinger, Faraday-Maxwell, the masses in form, the
+   expansion under a wall, the smallest mass's theorem given an input)
+   leaves the body; the hypotheses stay on the tree (HYPOTHESES 27)
+   and the discussion names them in one sentence as the completions
+   the broad claim needs. The DIFFERENT rows stay, because a
+   difference from nature with the law's number and nature's is a
+   clear claim (the unslowed clock, the Doppler without the factor,
+   light unbent, the weak forms' step and window, the coasting q):
+   they are the measured distance the owner asks for.
+4. **The distance, stated precisely.** The discussion (pages 22-23)
+   states in one table what is established now (an explicit model; the
+   theorems above; the numerical checks after a detector that agree
+   with the theorems: the pace, the cells, S at four N, Malus, the
+   clock's form at two distances) and what the broad claim still
+   needs, item by item with the check that would decide it: the
+   detector runs of Newton's and Poisson's laws; the muon in flight
+   under the law (row 4a, a pin); the bending under a rule that reads
+   the crowd (optical-v1's pins); the Lorentz factor (the FAIL rows and
+   the covariant readings beside them); the harmonic constants and the
+   identification of position and momentum; the masses' values; a CHSH
+   measurement at 1e-4. Nothing in between: no "reached in form", no
+   number of the board.
+5. **The abstract says the two things and the distance**: what the
+   law forces (the list of item 1), what was assumed beside it (the
+   splitter axiom, the least-rank click, the calibration of the clock,
+   the dense fan, the inputs), and that the description of nature is
+   a program with named completions, with the twelve failures counted.
+
