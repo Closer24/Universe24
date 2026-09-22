@@ -12,7 +12,11 @@ IT.** And for part (4), the board's own cost of a hop with no square as an
 input (section 5): LORENTZ FROM THE BOARD'S OWN COST OF A HOP: NO; every
 wall of the law is linear in the Manhattan momentum, the cost gives `r =
 1 - beta` or 1, and the square that would give YES is the Minkowski norm
-declared into the wall. Under the law as it stands the two factors differ (`k_BA / k_AB =
+declared into the wall. And for part (5), the hop as an amplitude
+(section 6): CLICKS BEHAVE LIKE LORENTZ IN OUR SPACE: NO; the law's hop
+is a whole-record pattern (`by_drive` with `at_most` 1), not a split of
+amount and phase between staying and hopping, so no interference in
+flight makes the square root. Under the law as it stands the two factors differ (`k_BA / k_AB =
 1 - v^2`), under the loop's resident count they differ the other way
 (`(1 + v) / (1 - v)`), and under covariant-readings-v1 they are equal
 by that identity's declared rate. The measurable that decides is the
@@ -299,7 +303,105 @@ three tests apply to any such cost, and nothing is kept at a Node beyond
 the events there under either wall. The earlier "only by declaration"
 is this: the declaration is the square in the wall.
 
-## 6. Links
+## 6. Part (5): does a click carry its information from Node to Node the way an amplitude does? The hop as a pattern or as a split with phase (the owner's word, record 737)
+
+**(1) The known mathematics, as the comparison and not as our law.** An
+amplitude on a line that at each interval either hops one Node (at c =
+1 Node per interval) or stays, the two with a phase between them and in
+superposition, is the discrete-time Dirac walk (the Dirac cellular
+automaton: Bialynicki-Birula 1994, Meyer 1996, Strauch 2006). In one
+dimension, with `m` the staying share as an angle (the mass) and `k` the
+wave number, its dispersion is `cos w = cos m cos k`, `w` the frequency
+per interval; its group velocity is `v = dw / dk = cos m sin k / sin w`;
+and at small m and k, `w^2 = m^2 + k^2 + O(4)`, so `v = k / w + O(3)` and
+the rest share of the frequency is
+
+    r = m / w = sqrt(1 - v^2) + O(k^4, m^2 k^2):
+
+the clocks of such an amplitude, read as Bondi's two factors, agree to
+SECOND order, with the lattice's own corrections beyond (in three
+dimensions the walk's dispersion is anisotropic from the fourth order on,
+the lattice's `k^4` terms). The square root is the interference of the
+staying amplitude with the hopping one (`cos w = cos m cos k` is a
+product of two cosines, and `w^2 = m^2 + k^2` the square it gives at
+small angles); it is not a fraction of resident intervals and cannot be
+made from one. Rung: mathematics, cited, not the law's.
+
+**(2) The law's row, read from the tree.** The law's hop is a
+deterministic schedule of the whole record, never a split of its amount
+between staying and hopping. The body (`engine.step_axis`, the
+docstring): "the step fires exactly when `floor(n |p| / D)` increments
+over the self-creations n ... never two in one self-creation ... The
+count primitive is `core.integer.by_drive` ... with `at_most` 1: the
+step's own rule of one Link per interval, the residual of a larger
+momentum kept in the drive"; and `engine._move`: "its centre moves one
+Link and its set with it", "at most one per interval", the phase turning
+at the Link "by the difference of two floors". The row (`nature_beam.py`,
+`walk_step`): "the residue gains the rate over the wall
+(`by_drive_rows`)", the digital line of its direction, the whole amount
+on one Node at every interval (the flight table indexed by (D, tau),
+rem:nodispersion). The massive rows (`massive_rows`, `amplitude.py`):
+"the record's waiting state ... per Node the units, the content and the
+labels of the rows that ended there and were NOT placed at their
+arrival", "resolved at the completion: the chosen end's quantum placed,
+the rest cancelled": a rule of the click's placement over rows that have
+ENDED, not a split of a row in flight. So: at every interval a record's
+whole amount is at one Node, and either it hops or it stays by a
+Bresenham-like accumulator; no amplitude stays behind while another
+hops; the law has amplitudes only at the click, over ended rows (the
+phase-count vector, 6.5). Rung 1 (the definitions).
+
+**(3) Which the law is today, and what follows.** Deterministic. Under a
+deterministic pattern a clock that counts resident intervals gives `r =
+1 - abs(v)_1` (stage 1; section 5's linear wall by the second road) and
+the clock as built gives `r = 1`; the two Doppler factors part at first
+order under the first and agree to first order only under the second
+(section 5 (iv)); there is no staying amplitude to interfere with a
+hopping one, so no `sqrt(1 - v^2)` can arise in flight: the clicks of
+the law do not behave like Lorentz in our space. A split with phase
+would give the walk's dispersion, `r = sqrt(1 - v^2)` to second order and
+the anisotropy from the fourth: the clicks would behave like Lorentz in
+the long-wave limit. The law is the first.
+
+**(4) The smallest change, as a question for the owner and not a rule.**
+Make the hop at every Node of free space a split: each interval a row of
+amount a at a Node becomes two rows, one hopping one Link along its
+direction and one staying, their amounts and phases by a declared table
+over the circle of N (the splitter's own tables `C'`, `S'`, th:isometry's
+verb), the staying row turned by the family's rest turn (the pair `[n,
+d]`, the family's E_0 = h n / d: the mass angle of (1) IS the family's
+declared phase rate) and the hopping row by the flight's phase per Link;
+rows of equal (Node, direction, phase) merged by the group ring's
+addition. The verbs: the split (verb 2, a bilinear form with a declared
+table) and the merge (verb 3), no root, no float, the tables' rounding
+the declared one (record 328). The integers: the family's `[n, d]` and
+the split table, nothing new. The three tests: generic, one split table
+per interval for every family, no name read; vector, verbs 2 and 3 with
+rates at most bilinear; local, the row's own Node and its six
+neighbours, the storage per Node bounded by 6 N rows (one per direction
+and phase after the merge), fixed work per row, nothing kept beyond the
+rows present. What it would cost the registered pins: everything the
+flight's exactness pinned moves, since every beam spreads: series Q's
+face clicks (290 of 290 at the derived interval), L7's cone (the age 29
+on both rows), series C's "no dilution", L2's fringes (the fan's
+geometry replaced by the walk's own diffraction), the massive rows'
+bands of 23.3 (36.5, 60, 83.5, the turn `abs(p) N / h` replaced by the
+walk's group velocity), and the covariant identity's gate (its r would be
+the walk's, not a declared square); the two-slit and Bell clicks would
+keep their form (the click's evaluation is unchanged) with new numbers.
+It would be a hypothesis under its own identity beside the law, the
+pins rewritten before any run; not built here. The question: does the
+owner want the flight to be a split with phase at every Node?
+
+**(5) The verdict for part (5): CLICKS BEHAVE LIKE LORENTZ IN OUR SPACE:
+NO.** The hop is a pattern and the resident count is linear. The one
+line that decides: every hop of the law is `by_drive` with `at_most` 1
+on the whole record (`step_axis`, `walk_step`), the amount never splits
+between staying and hopping, so no staying amplitude interferes with a
+hopping one in flight, and the only square the law forms is at the
+click over rows that have ended.
+
+## 7. Links
 
 [DERIVATIONS_BEAM 4.3](../../DERIVATIONS_BEAM.md#43-a-moving-clock-the-rate-is-one-at-every-speed),
 [17.6](../../DERIVATIONS_BEAM.md#176-amended-per-the-physics-rule-review-of-covariant-readings-v1-record-297-the-nine-must-fixes-the-integer-forms-the-should-fixes),
