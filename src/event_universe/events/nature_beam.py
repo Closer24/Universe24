@@ -3670,7 +3670,7 @@ def optical_rate_and_wall(
 
 def optical_walk_step(
     frame: Interval, store: NatureBeamStore, table: FamilyFlight
-) -> tuple[np.ndarray, Callable[[int, int], tuple[int, int]]]:
+) -> tuple[np.ndarray, Callable[[int, int], tuple[int, int] | None]]:
     """Step 1 under `optical`: the row's stored accumulator gains the
     stretched rate against the wall the crowd's age moment stretches
     (`optical_rate_and_wall`), the count gained, capped at one Link by the
