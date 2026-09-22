@@ -4325,3 +4325,23 @@ cite worlds main.tex no longer carries; on the Register Architect's
 merge SHA they are marked "world removed from the register, record
 871, SHA ..." and not deleted; shell_clock's six worlds (series X) stay
 in the register, cited by the paper.
+
+## Applied (2026-09-22, the owner's word to the writer, after the hold of record 895): the groups and rings of the six verbs in the symbols table
+
+The owner asked whether the paper names the operations of the group,
+the groups' symbols and how everything is computed. The body does: the
+six verbs named in Section 2 and written as algebra in Section 2's
+"Written as algebra" sentence (the carry a bijection, the flight the
+translation group's shift, the split's table with its conjugate
+transpose, the rotation an integer matrix, the merge the addition in
+Z[Z_Nphi] with its cancel the quotient by x^{Nphi/2} + 1, the click one
+bilinear form); the map of Eq. (map) with the 5-against-2 example and
+the hand-worked update (238, 146, 274, ...; Links at 1, 3, 5, 7, 8;
+128/220 = 0.5818); the 48 and its 24 rotations in Theorem 1 and its
+proof (Appendix A). The one gap was Appendix B's symbols table, which
+carried physics' letters, the grains and the map but no group symbol.
+On the owner's word one row was added to Table B (the symbols):
+Z_Nphi, Z[Z_Nphi], Z[zeta_Nphi], Z^2 (x) Z^2 and B_3, each with its
+kind and its name, pointing at Theorem 1 and Section 2. No number
+moved; 48 and 24 are Theorem 1's. 36 pages; the PDF rebuilt. The hold
+of record 895 on the last page's candidates A, B and C stands.

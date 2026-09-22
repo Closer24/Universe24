@@ -2535,6 +2535,12 @@ CORRECTIONS = [
         "the quantum of the step above & (A1), (A3), the drive's one Link per self-creation, Theorem 2 (a) & Einstein Outside, section 3 (b) :510 & follows (a theorem; no run) \\\\",
         "",
     ),
+    # Appendix B: the symbols table names the groups and rings the six verbs are written in (the owner's word of 2026-09-22).
+    (
+        "Appendix B: the groups and rings of the six verbs, one row (the owner's word of 2026-09-22)",
+        "$z$, $G$, $\\rho$ & scalars & the redshift, Newton's constant, a family's charge per unit of content \\\\",
+        "$z$, $G$, $\\rho$ & scalars & the redshift, Newton's constant, a family's charge per unit of content \\\\\n$\\Z_{\\Nphi}$, $\\Z[\\Z_{\\Nphi}]$, $\\Z[\\zeta_{\\Nphi}]$, $\\Z^2 \\otimes \\Z^2$, $B_3$ & a cyclic group, a group ring, a ring, a module, a group & the phase circle, the turn its shift; the arrivals' group ring, the merge its addition; its quotient by $x^{\\Nphi/2} + 1$, the cyclotomic integers, where opposite phases cancel; the pair's arms, the settings acting by integer matrices; the six Ports' hyperoctahedral group, $48$ signed permutations, its $24$ rotations (Theorem~\\ref{th:group}); the flight is the translation group's shift along the digital line (Section~\\ref{sec:law}) \\\\",
+    ),
 ]
 
 
