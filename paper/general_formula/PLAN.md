@@ -5084,3 +5084,47 @@ commits were compiled from a stale copy of main.tex (f82e73d1) left in
 the compile directory, so the committed PDF on main is f82e73d1's text;
 this commit's PDF is compiled from the true source and read back. 52
 pages, not 51: the true count of the text since PR #930.
+
+## Applied (2026-09-22, the Boss's order of 21:08Z): issue #941, the two sentences of the timing claim, option 1
+
+On `paper-941` off main at d7c0ddc0, one commit, words only, no number.
+Definition 8: the first party's outcome "determined at its arrival by u
+alone, computable there from the record's own wheel, and written only at
+the completion" in place of "fixed at its arrival". After Theorem 6:
+"No-signalling in the arrival intervals and in the counts" in place of
+"in the times as well as in the counts", with the clause that neither
+party's recorded outcome exists as a row before the completion, whose
+interval is the last arm's, so the availability of the record, unlike
+the arrival, waits on the far arm's length, and the paper claims no
+independence for that latency. The count theorem and the
+sequential-order FAIL unchanged; no engine change. The PDF compiled from
+the true source (no copy of main.tex in the compile directory) and read
+back. 52 pages.
+
+## Applied (2026-09-22, the Boss's order of 21:16Z): the reviewer's read AA of paper-941, three lines
+
+A second commit on `paper-941`, words only. The reviewer's reason: u is
+fixed at the record's birth (amplitude.py, the wheel reading u = ordinal
+x r mod W; LiveRecord.birth), not at the arrival, so "at its arrival" was
+the overreach even with "determined"; and the arrival interval is the
+host's tick at the arm's set, GAMEBOARD, which the two sentences did not
+say. (i) Definition 8: u the record's wheel reading fixed at its birth,
+so determined before either arrival and known at the first party's
+arrival from the record's own wheel under the hypotheses of Theorem 6,
+computed by nothing at that arm and written only at the completion. (ii)
+After Theorem 6: the first party's outcome determined by u at the
+record's birth and the second's at the completion, both written at the
+completion; the non-local step on the labels, its interval, the record's,
+the last arm's. (iii) The arrival interval the host's tick at the arm's
+set, GAMEBOARD (record 768); the arm's own count read only under the
+later key clock_stamp, outside this paper's law. No number moved. The PDF
+compiled from the true source and read back. 52 pages.
+
+## Applied (2026-09-22, the Boss's order of 21:22Z): the Positioning paragraph's phrase, paper-941's third commit
+
+The one remaining "not on the times" (the Positioning paragraph: the
+click's assignment of the second outcome a non-local step on the labels)
+brought to the clause after the marginals theorem (Theorem 5 in the
+PDF's numbering, label th:marginals; the sentence follows its proof):
+"its interval the last arm's (as after Theorem 5)". Nothing else; words only; the PDF compiled from the
+true source and read back. 52 pages.

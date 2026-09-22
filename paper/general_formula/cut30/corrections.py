@@ -3916,6 +3916,41 @@ CORRECTIONS = [
         "(the merge of PR #891 from \\texttt{atom-levels};",
         "(the merge of \\texttt{atom-levels};",
     ),
+    (
+        "Definition 8: the first party's outcome determined at its arrival by u alone and written only at the completion (issue #941, option 1; the Boss's order of 21:08Z)",
+        "the coarse rung at $\\Nphi/2$, a function of $u$ alone, fixed at its arrival; for the second",
+        "the coarse rung at $\\Nphi/2$, a function of $u$ alone, determined at its arrival by $u$ alone, computable there from the record's own wheel, and written only at the completion; for the second",
+    ),
+    (
+        "after Theorem 6: no-signalling in the arrival intervals and in the counts, the record's availability waiting on the last arm (issue #941, option 1)",
+        "No-signalling in the times as well as in the counts: the arrival interval at either arm is that arm's flight alone, independent of the other arm's setting and length (Definition~\\ref{def:click}, the flight blind);",
+        "No-signalling in the arrival intervals and in the counts: the arrival interval at either arm is that arm's flight alone, independent of the other arm's setting and length (Definition~\\ref{def:click}, the flight blind); neither party's recorded outcome exists as a row before the completion, whose interval is the last arm's, so the availability of the record, unlike the arrival, waits on the far arm's length, and the paper claims no independence for that latency;",
+    ),
+    (
+        "read AA (i), Definition 8: u the record's wheel reading fixed at its birth, determined before either arrival, computed by nothing at that arm, written only at the completion (the Boss's order of 21:16Z)",
+        "the coarse rung at $\\Nphi/2$, a function of $u$ alone, determined at its arrival by $u$ alone, computable there from the record's own wheel, and written only at the completion; for the second",
+        "the coarse rung at $\\Nphi/2$, a function of $u$ alone, $u$ the record's wheel reading fixed at its birth ($u = $ ordinal $\\times\\, r \\bmod W$), so determined before either arrival and known at the first party's arrival from the record's own wheel under the hypotheses of Theorem~\\ref{th:marginals}, computed by nothing at that arm and written only at the completion; for the second",
+    ),
+    (
+        "read AA (ii), after Theorem 6: the first party's outcome determined by u at the record's birth, both outcomes written at the completion",
+        "the first party's outcome is fixed at its arrival by $u$ and the second's at the completion by the joint weights, with the marginal",
+        "the first party's outcome is determined by $u$ at the record's birth (Theorem~\\ref{th:marginals}) and the second's at the completion by the joint weights, both written at the completion, with the marginal",
+    ),
+    (
+        "read AA (ii), the same sentence: the non-local step on the labels; its interval, the record's, is the last arm's",
+        "on the labels and not on the times",
+        "on the labels; its interval, the record's, is the last arm's",
+    ),
+    (
+        "read AA (iii), after Theorem 6: the arrival interval the host's tick at the arm's set, GAMEBOARD, record 768; the arm's own count only under the later key clock_stamp",
+        "(Definition~\\ref{def:click}, the flight blind);",
+        "(Definition~\\ref{def:click}, the flight blind) (that interval the host's tick at the arm's set, GAMEBOARD \\cite[record 768]{log}; the arm's own count is read only under the later key \\texttt{clock\\_stamp}, outside this paper's law);",
+    ),
+    (
+        "the Positioning paragraph: the click's assignment a non-local step on the labels, its interval the last arm's, as after Theorem 6 (the Boss's order of 21:22Z; the last occurrence of 'not on the times')",
+        "a non-local step on the labels, not on the times, forced by Bell's theorem",
+        "a non-local step on the labels, its interval the last arm's (as after Theorem~\\ref{th:marginals}), forced by Bell's theorem",
+    ),
 ]
 
 
